@@ -33,7 +33,7 @@ namespace CIAO
   ::CORBA::Object_ptr
   Facet_Servant_Base_T<BASE, EXEC, CONTEXT>::_get_component (void)
   {
-    CONTEXT::_var_type sc = CONTEXT::_narrow (this->ctx_.in ());
+    typename CONTEXT::_var_type sc = CONTEXT::_narrow (this->ctx_.in ());
 
     if (! ::CORBA::is_nil (sc.in ()))
       {

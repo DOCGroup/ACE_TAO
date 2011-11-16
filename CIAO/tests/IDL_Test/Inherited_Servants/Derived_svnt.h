@@ -28,8 +28,8 @@
 // TAO_IDL - Generated from
 // be/be_codegen.cpp:1073
 
-#ifndef CIAO_SESSION_DERIVED_SVNT_WDTBI5_H_
-#define CIAO_SESSION_DERIVED_SVNT_WDTBI5_H_
+#ifndef CIAO_SESSION_DERIVED_SVNT_7LDT8W_H_
+#define CIAO_SESSION_DERIVED_SVNT_7LDT8W_H_
 
 #include /**/ "ace/pre.h"
 
@@ -48,33 +48,33 @@
 
 #include "DerivedS.h"
 
-// namespace CIAO_FACET_Inherited
-// {
-//   class derived_interface_Servant
-//     : public virtual POA_Inherited::derived_interface
-//   {
-//   public:
-//     derived_interface_Servant (
-//       ::Inherited::CCM_derived_interface_ptr executor,
-//       ::Components::CCMContext_ptr ctx);
-//
-//     virtual ~derived_interface_Servant (void);
-//
-//     virtual void do_derived (
-//       void);
-//
-//     /// Get component implementation.
-//     virtual CORBA::Object_ptr _get_component (void);
-//
-//   protected:
-//     /// Facet executor.
-//     ::Inherited::CCM_derived_interface_var executor_;
-//
-//     /// Context object.
-//     ::Components::CCMContext_var ctx_;
-//   };
-//
-// }
+namespace CIAO_FACET_Inherited
+{
+  class derived_interface_Servant
+    : public virtual POA_Inherited::derived_interface
+  {
+  public:
+    derived_interface_Servant (
+      ::Inherited::CCM_derived_interface_ptr executor,
+      ::Components::CCMContext_ptr ctx);
+    
+    virtual ~derived_interface_Servant (void);
+
+    virtual void do_derived (
+      void);
+
+    /// Get component implementation.
+    virtual CORBA::Object_ptr _get_component (void);
+  
+  protected:
+    /// Facet executor.
+    ::Inherited::CCM_derived_interface_var executor_;
+
+    /// Context object.
+    ::Components::CCMContext_var ctx_;
+  };
+  
+}
 
 namespace CIAO_Inherited_Derived_comp_Impl
 {
@@ -95,7 +95,7 @@ namespace CIAO_Inherited_Derived_comp_Impl
         ::Inherited::CCM_Derived_comp_Context,
         ::Inherited::Derived_comp>
       base_type;
-
+    
     typedef base_type::context_type context_type;
     typedef base_type::component_type component_type;
     typedef ::CIAO::Connector_Servant_Impl_Base svnt_base_type;
@@ -105,25 +105,25 @@ namespace CIAO_Inherited_Derived_comp_Impl
       ::CIAO::Session_Container_ptr c,
       PortableServer::Servant sv,
       const char *id);
-
+    
     virtual ~Derived_comp_Context (void);
 
     /** @name Operations and members for Derived_comp receptacles and event sources,
      * defined in ::Inherited::CCM_Derived_comp_Context.
      */
     //@{
-
+  
   public:
     virtual ::Inherited::derived_interface_ptr
     get_connection_uses_derived (void);
-
+    
   protected:
     virtual void
     connect_uses_derived (::Inherited::derived_interface_ptr);
 
     virtual ::Inherited::derived_interface_ptr
     disconnect_uses_derived (void);
-
+  
   private:
     /// Simplex uses_derived connection.
     ::Inherited::derived_interface_var
@@ -140,30 +140,30 @@ namespace CIAO_Inherited_Derived_comp_Impl
   {
   public:
     typedef ::Inherited::CCM_Derived_comp _exec_type;
-
+    
     Derived_comp_Servant (
       ::Inherited::CCM_Derived_comp_ptr executor,
       ::Components::CCMHome_ptr h,
       const char * ins_name,
       ::CIAO::Home_Servant_Impl_Base *hs,
       ::CIAO::Session_Container_ptr c);
-
+    
     virtual ~Derived_comp_Servant (void);
-
+    
     /// Supported operations and attributes.
-
+  
   public:
     virtual ::Inherited::derived_interface_ptr
     provide_prov_derived (void);
-
+  
   private:
     void
     setup_prov_derived_i (void);
-
+  
   private:
     ::Inherited::derived_interface_var
     provide_prov_derived_;
-
+  
   public:
     virtual ::Inherited::derived_interface_ptr
     get_connection_uses_derived (void);
@@ -175,7 +175,7 @@ namespace CIAO_Inherited_Derived_comp_Impl
     disconnect_uses_derived (void);
 
     // Base class overrides.
-
+  
   public:
     virtual ::Components::Cookie *
     connect (const char * name, ::CORBA::Object_ptr connection);
@@ -198,36 +198,36 @@ namespace CIAO_Inherited_Derived_comp_Impl
     const char * ins_name);
 }
 
-// namespace CIAO_FACET_Inherited
-// {
-//   class derived_2_interface_Servant
-//     : public virtual POA_Inherited::derived_2_interface
-//   {
-//   public:
-//     derived_2_interface_Servant (
-//       ::Inherited::CCM_derived_2_interface_ptr executor,
-//       ::Components::CCMContext_ptr ctx);
-//
-//     virtual ~derived_2_interface_Servant (void);
-//
-//     virtual void do_derived (
-//       void);
-//
-//     virtual void do_derived_2 (
-//       void);
-//
-//     /// Get component implementation.
-//     virtual CORBA::Object_ptr _get_component (void);
-//
-//   protected:
-//     /// Facet executor.
-//     ::Inherited::CCM_derived_2_interface_var executor_;
-//
-//     /// Context object.
-//     ::Components::CCMContext_var ctx_;
-//   };
-//
-// }
+namespace CIAO_FACET_Inherited
+{
+  class derived_2_interface_Servant
+    : public virtual POA_Inherited::derived_2_interface
+  {
+  public:
+    derived_2_interface_Servant (
+      ::Inherited::CCM_derived_2_interface_ptr executor,
+      ::Components::CCMContext_ptr ctx);
+    
+    virtual ~derived_2_interface_Servant (void);
+
+    virtual void do_derived (
+      void);
+
+    virtual void do_derived_2 (
+      void);
+
+    /// Get component implementation.
+    virtual CORBA::Object_ptr _get_component (void);
+  
+  protected:
+    /// Facet executor.
+    ::Inherited::CCM_derived_2_interface_var executor_;
+
+    /// Context object.
+    ::Components::CCMContext_var ctx_;
+  };
+  
+}
 
 namespace CIAO_Inherited_Derived_2_comp_Impl
 {
@@ -248,7 +248,7 @@ namespace CIAO_Inherited_Derived_2_comp_Impl
         ::Inherited::CCM_Derived_2_comp_Context,
         ::Inherited::Derived_2_comp>
       base_type;
-
+    
     typedef base_type::context_type context_type;
     typedef base_type::component_type component_type;
     typedef ::CIAO::Connector_Servant_Impl_Base svnt_base_type;
@@ -258,41 +258,41 @@ namespace CIAO_Inherited_Derived_2_comp_Impl
       ::CIAO::Session_Container_ptr c,
       PortableServer::Servant sv,
       const char *id);
-
+    
     virtual ~Derived_2_comp_Context (void);
 
     /** @name Operations and members for Derived_2_comp receptacles and event sources,
      * defined in ::Inherited::CCM_Derived_2_comp_Context.
      */
     //@{
-
+  
   public:
     virtual ::Inherited::derived_2_interface_ptr
     get_connection_uses_derived_2 (void);
-
+    
   protected:
     virtual void
     connect_uses_derived_2 (::Inherited::derived_2_interface_ptr);
 
     virtual ::Inherited::derived_2_interface_ptr
     disconnect_uses_derived_2 (void);
-
+  
   private:
     /// Simplex uses_derived_2 connection.
     ::Inherited::derived_2_interface_var
     ciao_uses_uses_derived_2_;
-
+  
   public:
     virtual ::Inherited::derived_interface_ptr
     get_connection_uses_derived (void);
-
+    
   protected:
     virtual void
     connect_uses_derived (::Inherited::derived_interface_ptr);
 
     virtual ::Inherited::derived_interface_ptr
     disconnect_uses_derived (void);
-
+  
   private:
     /// Simplex uses_derived connection.
     ::Inherited::derived_interface_var
@@ -309,30 +309,30 @@ namespace CIAO_Inherited_Derived_2_comp_Impl
   {
   public:
     typedef ::Inherited::CCM_Derived_2_comp _exec_type;
-
+    
     Derived_2_comp_Servant (
       ::Inherited::CCM_Derived_2_comp_ptr executor,
       ::Components::CCMHome_ptr h,
       const char * ins_name,
       ::CIAO::Home_Servant_Impl_Base *hs,
       ::CIAO::Session_Container_ptr c);
-
+    
     virtual ~Derived_2_comp_Servant (void);
-
+    
     /// Supported operations and attributes.
-
+  
   public:
     virtual ::Inherited::derived_2_interface_ptr
     provide_prov_derived_2 (void);
-
+  
   private:
     void
     setup_prov_derived_2_i (void);
-
+  
   private:
     ::Inherited::derived_2_interface_var
     provide_prov_derived_2_;
-
+  
   public:
     virtual ::Inherited::derived_2_interface_ptr
     get_connection_uses_derived_2 (void);
@@ -342,19 +342,19 @@ namespace CIAO_Inherited_Derived_2_comp_Impl
 
     virtual ::Inherited::derived_2_interface_ptr
     disconnect_uses_derived_2 (void);
-
+  
   public:
     virtual ::Inherited::derived_interface_ptr
     provide_prov_derived (void);
-
+  
   private:
     void
     setup_prov_derived_i (void);
-
+  
   private:
     ::Inherited::derived_interface_var
     provide_prov_derived_;
-
+  
   public:
     virtual ::Inherited::derived_interface_ptr
     get_connection_uses_derived (void);
@@ -366,7 +366,7 @@ namespace CIAO_Inherited_Derived_2_comp_Impl
     disconnect_uses_derived (void);
 
     // Base class overrides.
-
+  
   public:
     virtual ::Components::Cookie *
     connect (const char * name, ::CORBA::Object_ptr connection);
