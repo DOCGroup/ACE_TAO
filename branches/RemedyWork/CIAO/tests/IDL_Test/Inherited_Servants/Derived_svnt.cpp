@@ -683,26 +683,20 @@ namespace CIAO_Inherited_Derived_2_comp_Impl
 
     PortableServer::POA_var POA = cnt_safe->the_port_POA ();
     ::CORBA::Object_var tmp = this->get_facet_executor ("prov_derived_2");
-    ::CORBA::Object_var tmp_base = this->get_facet_executor ("prov_derived");
 
     typedef ::CIAO_FACET_Inherited::derived_interface_2_Servant_T<POA_Inherited::derived_2_interface,
-                                                                ::Inherited::CCM_derived_2_interface,
-                                                                POA_Inherited::derived_interface,
-                                                                ::Inherited::CCM_derived_interface>
+                                                                ::Inherited::CCM_derived_2_interface>
             derived_2_interface_Servant_type;
 
     //TODO: pass tmp to the Servant_type and narrow this in Servant_Interface_Base_T
     ::Inherited::CCM_derived_2_interface_var tmp_var =
       ::Inherited::CCM_derived_2_interface::_narrow (tmp.in());
-    ::Inherited::CCM_derived_interface_var tmp_var_base =
-      ::Inherited::CCM_derived_interface::_narrow (tmp_base.in());
 
     derived_2_interface_Servant_type * prov_derived_2_servant_impl = 0;
     ACE_NEW_THROW_EX (
       prov_derived_2_servant_impl,
       derived_2_interface_Servant_type (
         tmp_var.in(),
-        tmp_var_base.in (),
         this->context_),
       CORBA::NO_MEMORY ());
 

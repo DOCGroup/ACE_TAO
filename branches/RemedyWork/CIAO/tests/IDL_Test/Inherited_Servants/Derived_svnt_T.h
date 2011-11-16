@@ -39,17 +39,13 @@ namespace CIAO_FACET_Inherited
 
 namespace CIAO_FACET_Inherited
 {
-  template <typename BASE,
-            typename EXEC,
-            typename BASE_BASE,
-            typename EXEC_BASE>
+  template <typename BASE, typename EXEC>
   class derived_interface_2_Servant_T
-    : public derived_interface_Servant_T<BASE_BASE, EXEC_BASE>
+    : public derived_interface_Servant_T<BASE, EXEC>
   {
   public:
     derived_interface_2_Servant_T (
       typename EXEC::_ptr_type exec,
-      typename EXEC_BASE::_ptr_type exec_base,
       ::Components::CCMContext_ptr ctx);
     virtual ~derived_interface_2_Servant_T (void);
 
