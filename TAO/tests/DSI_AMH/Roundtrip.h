@@ -19,7 +19,7 @@
 
 /// Implement the Test::Roundtrip interface
 class Roundtrip
-  : public virtual ORB reference to conver stringsPortableServer::DynamicImplementation
+  : public virtual PortableServer::DynamicImplementation
 {
 public:
   /// Constructor
