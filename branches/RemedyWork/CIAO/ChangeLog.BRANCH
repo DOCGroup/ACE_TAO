@@ -1,3 +1,12 @@
+Wed Nov 16 14:12:44 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * ciao/Servants/Facet_Servant_Base_T.h:
+        * ciao/Servants/Facet_Servant_Base_T.cpp:
+          Created an extra template argument: CONTEXT.
+
+        * tests/IDL_Test/Inherited_Servants/Derived_svnt_T.cpp:
+          Used the CONTEXT template argument.
+
 Wed Nov 16 14:04:17 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * ciao/Servants/Facet_Servant_Base_T.h:

@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file    Servant_Interface_Base_T.h
+ *  @file    Facet_Servant_Base_T.h
  *
  *  $Id$
  *
@@ -24,15 +24,15 @@
 
 namespace CIAO
 {
-  template <typename BASE, typename EXEC>
-  class Servant_Interface_Base_T
+  template <typename BASE, typename EXEC, typename CONTEXT>
+  class Facet_Servant_Base_T
     : public virtual BASE
   {
   public:
-    Servant_Interface_Base_T (typename EXEC::_ptr_type exec,
-                              ::Components::CCMContext_var ctx);
+    Facet_Servant_Base_T (typename EXEC::_ptr_type exec,
+                          ::Components::CCMContext_var ctx);
 
-    virtual ~Servant_Interface_Base_T (void);
+    virtual ~Facet_Servant_Base_T (void);
 
     /// Get component implementation.
     virtual CORBA::Object_ptr _get_component (void);
@@ -46,11 +46,11 @@ namespace CIAO
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "Servant_Interface_Base_T.cpp"
+#include "Facet_Servant_Base_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Servant_Interface_Base_T.cpp")
+#pragma implementation ("Facet_Servant_Base_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
