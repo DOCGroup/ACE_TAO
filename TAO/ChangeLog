@@ -1,3 +1,36 @@
+Wed Nov 16 22:23:08 UTC 2011  Trevor Fields  <fields_t@ociweb.com>
+
+        * orbsvcs/tests/Security/MT_BiDir_SSL:
+        * orbsvcs/tests/Security/MT_BiDir_SSL/client.conf:
+        * orbsvcs/tests/Security/MT_BiDir_SSL/client.conf.xml:
+        * orbsvcs/tests/Security/MT_BiDir_SSL/client.cpp:
+        * orbsvcs/tests/Security/MT_BiDir_SSL/Client_Task.cpp:
+        * orbsvcs/tests/Security/MT_BiDir_SSL/Client_Task.h:
+        * orbsvcs/tests/Security/MT_BiDir_SSL/MT_BiDir_SSL.mpc:
+        * orbsvcs/tests/Security/MT_BiDir_SSL/README:
+        * orbsvcs/tests/Security/MT_BiDir_SSL/Receiver.idl:
+        * orbsvcs/tests/Security/MT_BiDir_SSL/Receiver_i.cpp:
+        * orbsvcs/tests/Security/MT_BiDir_SSL/Receiver_i.h:
+        * orbsvcs/tests/Security/MT_BiDir_SSL/run_test.pl:
+        * orbsvcs/tests/Security/MT_BiDir_SSL/Sender.idl:
+        * orbsvcs/tests/Security/MT_BiDir_SSL/Sender_i.cpp:
+        * orbsvcs/tests/Security/MT_BiDir_SSL/Sender_i.h:
+        * orbsvcs/tests/Security/MT_BiDir_SSL/server.conf:
+        * orbsvcs/tests/Security/MT_BiDir_SSL/server.conf.xml:
+        * orbsvcs/tests/Security/MT_BiDir_SSL/server.cpp:
+        * orbsvcs/tests/Security/MT_BiDir_SSL/Server_Task.cpp:
+        * orbsvcs/tests/Security/MT_BiDir_SSL/Server_Task.h:
+        * orbsvcs/tests/Security/MT_BiDir_SSL/ssl:
+        * orbsvcs/tests/Security/MT_BiDir_SSL/ssl/ca.pem:
+        * orbsvcs/tests/Security/MT_BiDir_SSL/ssl/client-cert.pem:
+        * orbsvcs/tests/Security/MT_BiDir_SSL/ssl/client-key.pem:
+        * orbsvcs/tests/Security/MT_BiDir_SSL/ssl/make-client-keys:
+        * orbsvcs/tests/Security/MT_BiDir_SSL/ssl/server-cert.pem:
+        * orbsvcs/tests/Security/MT_BiDir_SSL/ssl/server-key.pem:
+
+          Test for SSLIOP creating connections to exceed the
+          ORBMuxedConnectionMax setting.
+
 Tue Nov 15 22:13:12 UTC 2011  Trevor Fields  <fields_t@ociweb.com>
 
         * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
