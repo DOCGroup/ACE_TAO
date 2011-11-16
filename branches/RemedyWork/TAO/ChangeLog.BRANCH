@@ -1,3 +1,9 @@
+Wed Nov 16 07:26:18 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_DynamicImplementation.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedProxyPushConsumer.h:
+          Doxygen changes
+
 Wed Nov 16 07:18:56 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/performance-tests/LoadBalancing/LBPerf/CPU/Roundtrip.h:
