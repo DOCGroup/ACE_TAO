@@ -1,3 +1,10 @@
+Wed Nov 16 16:51:47 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/IDL_Test/Inherited_Servants/Derived_svnt.h:
+        * tests/IDL_Test/Inherited_Servants/Derived_svnt.cpp:
+          CIAO_FACET_xxx_Servant namespaces/classes are not generated
+          anymore in these files.
+
 Wed Nov 16 16:28:31 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * ciao/Servants/Facet_Servant_Base_T.cpp:
