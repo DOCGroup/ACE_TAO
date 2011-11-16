@@ -32,7 +32,6 @@ class TAO_CEC_TypedEvent;
 class TAO_CEC_TypedEventChannel;
 class TAO_CEC_DynamicImplementationServer;
 
-//Class TAO_CEC_TypedProxyPushConsumer
 class TAO_Event_Serv_Export TAO_CEC_TypedProxyPushConsumer
   : public virtual POA_CosTypedEventChannelAdmin::TypedProxyPushConsumer
 {
@@ -40,13 +39,12 @@ public:
   typedef CosTypedEventChannelAdmin::TypedProxyPushConsumer_ptr _ptr_type;
   typedef CosTypedEventChannelAdmin::TypedProxyPushConsumer_var _var_type;
 
-  //Constructor
+  /// Constructor
   TAO_CEC_TypedProxyPushConsumer (
       TAO_CEC_TypedEventChannel* typed_event_channel,
-      const ACE_Time_Value &timeout
-    );
+      const ACE_Time_Value &timeout);
 
-  //Destructor
+  /// Destructor
   virtual ~TAO_CEC_TypedProxyPushConsumer (void);
 
   /// Activate in the POA
@@ -81,8 +79,7 @@ public:
   virtual void disconnect_push_consumer (void);
 
   // = The CosTypedEventComm::TypedPushConsumer methods (abstract overloads)...
-  virtual CORBA::Object_ptr get_typed_consumer (
-    );
+  virtual CORBA::Object_ptr get_typed_consumer (void);
 
   // = The Servant methods
   virtual PortableServer::POA_ptr _default_POA (void);
@@ -90,7 +87,7 @@ public:
   virtual void _remove_ref (void);
 
 protected:
-  // The guard needs access to the following protected methods.
+  /// The guard needs access to the following protected methods.
   friend class TAO_CEC_TypedProxyPushConsumer_Guard;
 
   /// The private version (without locking) of is_connected().
