@@ -70,6 +70,43 @@ public:
   /// Destructor.
   virtual ~TAO_ServantBase (void);
 
+
+  static void _is_a_skel (TAO_ServerRequest & req,
+                          TAO::Portable_Server::Servant_Upcall* servant_upcall,
+                          void * servant);
+
+  static void _is_a_thru_poa_skel (TAO_ServerRequest & server_request,
+                                   TAO::Portable_Server::Servant_Upcall* servant_upcall,
+                                   void * servant);
+
+#if (TAO_HAS_MINIMUM_CORBA == 0)
+  static void _non_existent_skel (TAO_ServerRequest & req,
+                                  TAO::Portable_Server::Servant_Upcall* servant_upcall,
+                                  void * servant);
+  static void _non_existent_thru_poa_skel (TAO_ServerRequest & server_request,
+                                           TAO::Portable_Server::Servant_Upcall* servant_upcall,
+                                           void * servant);
+
+# if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
+  static void _interface_skel (TAO_ServerRequest & req,
+                               TAO::Portable_Server::Servant_Upcall* servant_upcall,
+                               void * servant);
+
+  static void _component_skel (TAO_ServerRequest & req,
+                               TAO::Portable_Server::Servant_Upcall* servant_upcall,
+                               void * servant);
+  static void _component_thru_poa_skel (TAO_ServerRequest & server_request,
+                                        TAO::Portable_Server::Servant_Upcall* servant_upcall,
+                                        void * servant);
+# endif /* !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO) */
+  static void _repository_id_skel (TAO_ServerRequest & req,
+                                  TAO::Portable_Server::Servant_Upcall* servant_upcall,
+                                  void * servant);
+  static void _repository_id_thru_poa_skel (TAO_ServerRequest & server_request,
+                                            TAO::Portable_Server::Servant_Upcall* servant_upcall,
+                                            void * servant);
+#endif /* TAO_HAS_MINIMUM_CORBA */
+
   /// Returns the default POA for this servant.
   virtual PortableServer::POA_ptr _default_POA (void);
 
@@ -98,7 +135,9 @@ public:
    * results and out parameters (if any) or the exceptions thrown into
    * @a request.
    */
-  virtual void _dispatch (TAO_ServerRequest &request, void *servant_upcall) = 0;
+  virtual void _dispatch (
+    TAO_ServerRequest &request,
+    TAO::Portable_Server::Servant_Upcall* servant_upcall) = 0;
 
   /// Please see documentation in tao/Abstract_Servant_Base.h for
   /// details.
@@ -154,13 +193,15 @@ protected:
   /// Assignment operator.
   TAO_ServantBase &operator= (const TAO_ServantBase &);
 
-  virtual void synchronous_upcall_dispatch (TAO_ServerRequest & req,
-                                            void * servant_upcall,
-                                            void * derived_this);
+  virtual void synchronous_upcall_dispatch (
+    TAO_ServerRequest & req,
+    TAO::Portable_Server::Servant_Upcall* servant_upcall,
+    void * derived_this);
 
-  virtual void asynchronous_upcall_dispatch (TAO_ServerRequest & req,
-                                             void * servant_upcall,
-                                             void * derived_this);
+  virtual void asynchronous_upcall_dispatch (
+    TAO_ServerRequest & req,
+    TAO::Portable_Server::Servant_Upcall* servant_upcall,
+    void * derived_this);
 
 protected:
   /// Reference counter.

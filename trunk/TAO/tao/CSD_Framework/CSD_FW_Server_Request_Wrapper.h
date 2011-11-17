@@ -71,11 +71,12 @@ namespace TAO
       void clone();
 
       /// Dispatch the request to the servant.
-      void dispatch(PortableServer::Servant servant);
+      void dispatch(
+        PortableServer::Servant servant,
+        TAO::Portable_Server::Servant_Upcall *servant_upcall);
 
       /// Cancel the request.
       void cancel();
-
 
     private:
 

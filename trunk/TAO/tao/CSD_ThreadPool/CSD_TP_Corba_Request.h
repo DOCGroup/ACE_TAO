@@ -73,9 +73,7 @@ namespace TAO
       /// Delegate to the FW_Server_Request_Wrapper cancel() method.
       void do_cancel();
 
-
     private:
-
       /// The ObjectId for the target servant.
       PortableServer::ObjectId object_id_;
 
@@ -88,7 +86,6 @@ namespace TAO
       /// The TAO_ServerRequest object wrapper.
       FW_Server_Request_Wrapper server_request_;
     };
-
   }
 }
 

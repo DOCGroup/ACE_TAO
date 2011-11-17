@@ -24,7 +24,7 @@ public:
   virtual Test::Shutdown_Helper_ptr get_shutdown_helper (void);
 
 private:
-  /// Use an ORB reference to conver strings to objects and shutdown
+  /// Use an ORB reference to convert strings to objects and shutdown
   /// the application.
   CORBA::ORB_var orb_;
 };

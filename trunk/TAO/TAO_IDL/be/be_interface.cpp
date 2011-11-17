@@ -94,6 +94,7 @@ be_interface::be_interface (UTL_ScopedName *n,
     skel_count_ (0),
     in_mult_inheritance_ (-1),
     original_interface_ (0),
+    is_amh_rh_ (false),
     is_ami_rh_ (false),
     is_ami4ccm_rh_ (false),
     full_skel_name_ (0),
@@ -929,6 +930,19 @@ int
 be_interface::gen_operation_table (const char *flat_name,
                                    const char *skeleton_class_name)
 {
+  // TODO:
+  // find another way to determine whether this is an AMH class
+  // Create 'is_amh' methods, just like AMI. Problem is finding where
+  // to invoke these methods since an AMH class is generated twice:
+  // once for AMH and once the 'normal' way.
+
+  bool amh = false;
+  ACE_CString tmp (skeleton_class_name);
+  if (tmp.strstr ("AMH_") != ACE_String_Base_Const::npos)
+    {
+      amh = true;
+    }
+
   // Check out the op_lookup_strategy.
   switch (be_global->lookup_strategy ())
   {
@@ -970,39 +984,96 @@ be_interface::gen_operation_table (const char *flat_name,
           }
 
         // Generate the skeleton for the is_a method.
-        *os << "{\"_is_a\", &" << skeleton_class_name
-            << "::_is_a_skel, 0}," << be_nl;
+        if (amh)
+          {
+            *os << "{\"_is_a\", &TAO_AMH_Skeletons::_is_a_amh_skel, 0}," << be_nl;
+          }
+        else if (be_global->gen_thru_poa_collocation ())
+          {
+            *os << "{\"_is_a\", &TAO_ServantBase::_is_a_thru_poa_skel, 0}," << be_nl;
+          }
+        else
+          {
+            *os << "{\"_is_a\", &TAO_ServantBase::_is_a_skel, 0}," << be_nl;
+          }
 
         ++this->skel_count_;
 
         if (!be_global->gen_minimum_corba ())
           {
-            *os << "{\"_non_existent\", &" << skeleton_class_name
-                << "::_non_existent_skel, 0}," << be_nl;
+            if (amh)
+              {
+                *os << "{\"_non_existent\", &TAO_AMH_Skeletons"
+                    << "::_non_existent_amh_skel, 0}," << be_nl;
+              }
+            else if (be_global->gen_thru_poa_collocation ())
+              {
+                *os << "{\"_non_existent\", &TAO_ServantBase"
+                    << "::_non_existent_thru_poa_skel, 0}," << be_nl;
+              }
+            else
+              {
+                *os << "{\"_non_existent\", &TAO_ServantBase"
+                    << "::_non_existent_skel, 0}," << be_nl;
+              }
 
             ++this->skel_count_;
           }
 
         if (!be_global->gen_corba_e () && !be_global->gen_minimum_corba ())
           {
-            *os << "{\"_component\", &" << skeleton_class_name
-                << "::_component_skel, 0}," << be_nl;
+            if (amh)
+              {
+                *os << "{\"_component\", &TAO_AMH_Skeletons"
+                    << "::_component_amh_skel, 0}," << be_nl;
+              }
+            else if (be_global->gen_thru_poa_collocation ())
+              {
+                *os << "{\"_component\", &TAO_ServantBase"
+                    << "::_component_thru_poa_skel, 0}," << be_nl;
+              }
+            else
+              {
+                *os << "{\"_component\", &TAO_ServantBase"
+                    << "::_component_skel, 0}," << be_nl;
+              }
 
             ++this->skel_count_;
           }
 
         if (!be_global->gen_corba_e () && !be_global->gen_minimum_corba ())
           {
-            *os << "{\"_interface\", &" << skeleton_class_name
-                << "::_interface_skel, 0}," << be_nl;
+            if (amh)
+              {
+                *os << "{\"_interface\", &TAO_AMH_Skeletons"
+                    << "::_interface_amh_skel, 0}," << be_nl;
+              }
+            else
+              {
+                *os << "{\"_interface\", &TAO_ServantBase"
+                    << "::_interface_skel, 0}," << be_nl;
+              }
 
             ++this->skel_count_;
           }
 
         if (!be_global->gen_minimum_corba ())
           {
-            *os << "{\"_repository_id\", &" << skeleton_class_name
-                << "::_repository_id_skel, 0}" << be_uidt_nl;
+            if (amh)
+              {
+                *os << "{\"_repository_id\", &TAO_AMH_Skeletons"
+                    << "::_repository_id_amh_skel, 0}" << be_uidt_nl;
+              }
+            else if (be_global->gen_thru_poa_collocation ())
+              {
+                *os << "{\"_repository_id\", &TAO_ServantBase"
+                    << "::_repository_id_thru_poa_skel, 0}" << be_uidt_nl;
+              }
+            else
+              {
+                *os << "{\"_repository_id\", &TAO_ServantBase"
+                    << "::_repository_id_skel, 0}" << be_uidt_nl;
+              }
 
             ++this->skel_count_;
           }
@@ -1137,43 +1208,98 @@ be_interface::gen_operation_table (const char *flat_name,
                               -1);
           }
 
-        *os << "_is_a,&"
-            << skeleton_class_name
-            << "::_is_a_skel, 0" << be_nl;
+        if (amh)
+          {
+            *os << "_is_a,&TAO_AMH_Skeletons"
+                << "::_is_a_amh_skel, 0" << be_nl;
+          }
+        else if (be_global->gen_thru_poa_collocation ())
+          {
+            *os << "_is_a,&TAO_ServantBase"
+                << "::_is_a_thru_poa_skel, 0" << be_nl;
+          }
+        else
+          {
+            *os << "_is_a,&TAO_ServantBase"
+                << "::_is_a_skel, 0" << be_nl;
+          }
 
         ++this->skel_count_;
 
         if (!be_global->gen_minimum_corba ())
           {
-            *os << "_non_existent,&"
-                << skeleton_class_name
-                << "::_non_existent_skel, 0" << be_nl;
+            if (amh)
+              {
+                *os << "_non_existent,&TAO_AMH_Skeletons"
+                    << "::_non_existent_amh_skel, 0" << be_nl;
+              }
+            else if (be_global->gen_thru_poa_collocation ())
+              {
+                *os << "_non_existent,&TAO_ServantBase"
+                    << "::_non_existent_thru_poa_skel, 0" << be_nl;
+              }
+            else
+              {
+                *os << "_non_existent,&TAO_ServantBase"
+                    << "::_non_existent_skel, 0" << be_nl;
+              }
 
             ++this->skel_count_;
           }
 
         if (!be_global->gen_corba_e () && !be_global->gen_minimum_corba ())
           {
-            *os << "_component,&"
-                << skeleton_class_name
-                << "::_component_skel, 0" << be_nl;
+            if (amh)
+              {
+                *os << "_component,&TAO_AMH_Skeletons"
+                    << "::_component_amh_skel, 0" << be_nl;
+              }
+            else if (be_global->gen_thru_poa_collocation ())
+              {
+                *os << "_component,&TAO_ServantBase"
+                    << "::_component_thru_poa_skel, 0" << be_nl;
+              }
+            else
+              {
+                *os << "_component,&TAO_ServantBase"
+                    << "::_component_skel, 0" << be_nl;
+              }
             ++this->skel_count_;
           }
 
         if (!be_global->gen_corba_e () && !be_global->gen_minimum_corba ())
           {
-            *os << "_interface,&"
-                << skeleton_class_name
-                << "::_interface_skel, 0" << be_nl;
+            if (amh)
+              {
+                *os << "_interface,&TAO_AMH_Skeletons"
+                    << "::_interface_amh_skel, 0" << be_nl;
+              }
+            else
+              {
+                *os << "_interface,&TAO_ServantBase"
+                    << "::_interface_skel, 0" << be_nl;
+              }
 
             ++this->skel_count_;
           }
 
         if (!be_global->gen_minimum_corba ())
           {
-            *os << "_repository_id,&"
-                << skeleton_class_name
-                << "::_repository_id_skel, 0" << be_nl;
+            if (amh)
+              {
+                *os << "_repository_id,&TAO_AMH_Skeletons"
+                    << "::_repository_id_amh_skel, 0" << be_nl;
+              }
+            else if (be_global->gen_thru_poa_collocation ())
+              {
+                *os << "_repository_id,&TAO_ServantBase"
+                    << "::_repository_id_thru_poa_skel, 0" << be_nl;
+              }
+            else
+              {
+                *os << "_repository_id,&TAO_ServantBase"
+                    << "::_repository_id_skel, 0" << be_nl;
+              }
 
             ++this->skel_count_;
           }
@@ -2189,9 +2315,9 @@ be_interface::gen_skel_helper (be_interface *derived,
                   *os << "static void" << be_nl
                       << d->local_name ()
                       << "_skel (" << be_idt << be_idt_nl
-                      << "TAO_ServerRequest & server_request," << be_nl
-                      << "void * servant_upcall," << be_nl
-                      << "void * servant);" << be_uidt
+                      << "TAO_ServerRequest &server_request," << be_nl
+                      << "TAO::Portable_Server::Servant_Upcall *servant_upcall," << be_nl
+                      << "void *servant);" << be_uidt
                       << be_uidt;
                 }
               else
@@ -2202,9 +2328,9 @@ be_interface::gen_skel_helper (be_interface *derived,
                       << derived->full_skel_name () << "::"
                       << d->local_name ()
                       << "_skel (" << be_idt_nl
-                      << "TAO_ServerRequest & server_request," << be_nl
-                      << "void * servant_upcall," << be_nl
-                      << "void * servant)"
+                      << "TAO_ServerRequest &server_request," << be_nl
+                      << "TAO::Portable_Server::Servant_Upcall *servant_upcall," << be_nl
+                      << "void *servant)"
                       << be_uidt_nl
                       << "{" << be_idt_nl;
 
@@ -2241,8 +2367,8 @@ be_interface::gen_skel_helper (be_interface *derived,
                   *os << "static void" << be_nl
                       << "_get_" << d->local_name ()
                       << "_skel (" << be_idt << be_idt_nl
-                      << "TAO_ServerRequest & server_request," << be_nl
-                      << "void * servant_upcall," << be_nl
+                      << "TAO_ServerRequest &server_request," << be_nl
+                      << "TAO::Portable_Server::Servant_Upcall *servant_upcall," << be_nl
                       << "void * servant);" << be_uidt
                       << be_uidt;
                 }
@@ -2254,9 +2380,9 @@ be_interface::gen_skel_helper (be_interface *derived,
                       << derived->full_skel_name () << "::_get_"
                       << d->local_name ()
                       << "_skel (" << be_idt << be_idt_nl
-                      << "TAO_ServerRequest & server_request," << be_nl
-                      << "void * servant_upcall," << be_nl
-                      << "void * servant)" << be_uidt
+                      << "TAO_ServerRequest &server_request," << be_nl
+                      << "TAO::Portable_Server::Servant_Upcall *servant_upcall," << be_nl
+                      << "void *servant)" << be_uidt
                       << be_uidt_nl
                       << "{" << be_idt_nl;
 
@@ -2286,8 +2412,8 @@ be_interface::gen_skel_helper (be_interface *derived,
                       *os << "static void" << be_nl
                           << "_set_" << d->local_name ()
                           << "_skel (" << be_idt << be_idt_nl
-                          << "TAO_ServerRequest & server_request," << be_nl
-                          << "void * servant_upcall," << be_nl
+                          << "TAO_ServerRequest &server_request," << be_nl
+                          << "TAO::Portable_Server::Servant_Upcall *servant_upcall," << be_nl
                           << "void * servant);" << be_uidt
                           << be_uidt;
                     }
@@ -2301,7 +2427,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                           << "::_set_" << d->local_name ()
                           << "_skel (" << be_idt << be_idt_nl
                           << "TAO_ServerRequest & server_request," << be_nl
-                          << "void * servant_upcall," << be_nl
+                          << "TAO::Portable_Server::Servant_Upcall *servant_upcall," << be_nl
                           << "void * servant)" << be_uidt
                           << be_uidt_nl
                           << "{" << be_idt_nl;

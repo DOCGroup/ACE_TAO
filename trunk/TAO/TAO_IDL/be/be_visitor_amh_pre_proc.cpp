@@ -115,7 +115,6 @@ be_visitor_amh_pre_proc::visit_interface (be_interface *node)
   be_interface *response_handler =
     this->create_response_handler (node,
                                    excep_holder);
-
   if (response_handler == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,

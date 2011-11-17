@@ -118,15 +118,15 @@ be_visitor_amh_interface_ss::dispatch_method (be_interface *node)
 
   *os << "void" << be_nl
       << full_skel_name << "::_dispatch (" << be_idt << be_idt_nl
-      << "TAO_ServerRequest & req," << be_nl
-      << "void * context" << be_uidt_nl
-      << ")" << be_uidt_nl
+      << "TAO_ServerRequest &req," << be_nl
+      << "TAO::Portable_Server::Servant_Upcall *context)" << be_uidt
+      << be_uidt_nl
       << "{" << be_idt_nl
-      << "this->asynchronous_upcall_dispatch (" << be_idt << be_idt_nl
-      << "req," << be_nl
-      << "context," << be_nl
-      << "this" << be_uidt_nl
-      << ");" << be_uidt << be_uidt_nl
+      << "this->asynchronous_upcall_dispatch ("
+      << "req,"
+      << "context,"
+      << "this"
+      << ");" << be_uidt_nl
       << "}";
 }
 

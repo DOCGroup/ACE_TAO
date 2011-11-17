@@ -69,12 +69,13 @@ TAO::CSD::FW_Server_Request_Wrapper::~FW_Server_Request_Wrapper()
 
 // Assumes that the servant argument is not a NULL pointer.
 void
-TAO::CSD::FW_Server_Request_Wrapper::dispatch
-                                            (PortableServer::Servant servant)
+TAO::CSD::FW_Server_Request_Wrapper::dispatch (
+  PortableServer::Servant servant,
+  TAO::Portable_Server::Servant_Upcall *servant_upcall)
 {
   try
     {
-      servant->_dispatch(*this->request_, 0);
+      servant->_dispatch(*this->request_, servant_upcall);
     }
   // Only CORBA exceptions are caught here.
   catch (const ::CORBA::Exception& ex)

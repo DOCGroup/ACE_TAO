@@ -412,6 +412,9 @@ protected:
   /// applies only to implied IDL
   be_interface *original_interface_;
 
+  /// Are we an AMH reply handler?
+  bool is_amh_rh_;
+
   /// Are we an AMI reply handler?
   bool is_ami_rh_;
 
