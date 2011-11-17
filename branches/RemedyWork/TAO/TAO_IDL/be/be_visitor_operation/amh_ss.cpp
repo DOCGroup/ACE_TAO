@@ -337,7 +337,7 @@ be_visitor_amh_operation_ss::generate_shared_prologue (be_decl *node,
       << "_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest & _tao_server_request," << be_nl
       << "TAO::Portable_Server::Servant_Upcall * /* context */," << be_nl
-      << "void * _tao_servant)" << be_uidt
+      << "TAO_ServantBase * _tao_servant)" << be_uidt
       << be_uidt_nl;
 
   // Generate the actual code for the skeleton.
@@ -346,7 +346,7 @@ be_visitor_amh_operation_ss::generate_shared_prologue (be_decl *node,
 
   // Get the right object implementation.
   *os << amh_skel_name.c_str () << " * const _tao_impl =" << be_idt_nl
-      << "static_cast<" << amh_skel_name.c_str () << " *> ("
+      << "dynamic_cast<" << amh_skel_name.c_str () << " *> ("
       << "_tao_servant" << ");" << be_uidt_nl;
 
   return 0;

@@ -2317,7 +2317,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                       << "_skel (" << be_idt << be_idt_nl
                       << "TAO_ServerRequest &server_request," << be_nl
                       << "TAO::Portable_Server::Servant_Upcall *servant_upcall," << be_nl
-                      << "void *servant);" << be_uidt
+                      << "TAO_ServantBase *servant);" << be_uidt
                       << be_uidt;
                 }
               else
@@ -2330,13 +2330,13 @@ be_interface::gen_skel_helper (be_interface *derived,
                       << "_skel (" << be_idt_nl
                       << "TAO_ServerRequest &server_request," << be_nl
                       << "TAO::Portable_Server::Servant_Upcall *servant_upcall," << be_nl
-                      << "void *servant)"
+                      << "TAO_ServantBase *servant)"
                       << be_uidt_nl
                       << "{" << be_idt_nl;
 
                    *os << ancestor->full_skel_name ()
                       << " * const impl =" << be_idt_nl
-                      << "static_cast<"
+                      << "dynamic_cast<"
                       << derived->full_skel_name ()
                       << " *> (servant);" << be_uidt_nl;
 
@@ -2369,7 +2369,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                       << "_skel (" << be_idt << be_idt_nl
                       << "TAO_ServerRequest &server_request," << be_nl
                       << "TAO::Portable_Server::Servant_Upcall *servant_upcall," << be_nl
-                      << "void * servant);" << be_uidt
+                      << "TAO_ServantBase *servant);" << be_uidt
                       << be_uidt;
                 }
               else
@@ -2382,12 +2382,12 @@ be_interface::gen_skel_helper (be_interface *derived,
                       << "_skel (" << be_idt << be_idt_nl
                       << "TAO_ServerRequest &server_request," << be_nl
                       << "TAO::Portable_Server::Servant_Upcall *servant_upcall," << be_nl
-                      << "void *servant)" << be_uidt
+                      << "TAO_ServantBase *servant)" << be_uidt
                       << be_uidt_nl
                       << "{" << be_idt_nl;
 
                    *os << ancestor->full_skel_name ()
-                      << " * const impl = static_cast<"
+                      << " * const impl = dynamic_cast<"
                       << derived->full_skel_name ()
                       << " *> (servant);" << be_nl;
 
@@ -2414,7 +2414,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                           << "_skel (" << be_idt << be_idt_nl
                           << "TAO_ServerRequest &server_request," << be_nl
                           << "TAO::Portable_Server::Servant_Upcall *servant_upcall," << be_nl
-                          << "void * servant);" << be_uidt
+                          << "TAO_ServantBase *servant);" << be_uidt
                           << be_uidt;
                     }
                   else
@@ -2428,12 +2428,12 @@ be_interface::gen_skel_helper (be_interface *derived,
                           << "_skel (" << be_idt << be_idt_nl
                           << "TAO_ServerRequest & server_request," << be_nl
                           << "TAO::Portable_Server::Servant_Upcall *servant_upcall," << be_nl
-                          << "void * servant)" << be_uidt
+                          << "TAO_ServantBase *servant)" << be_uidt
                           << be_uidt_nl
                           << "{" << be_idt_nl;
 
                       *os << ancestor->full_skel_name ()
-                          << " * const impl = static_cast<"
+                          << " * const impl = dynamic_cast<"
                           << derived->full_skel_name ()
                           << " *> (servant);" << be_nl;
 

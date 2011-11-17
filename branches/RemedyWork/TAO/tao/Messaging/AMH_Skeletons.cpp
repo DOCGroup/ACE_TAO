@@ -45,7 +45,7 @@ _is_a_amh_Upcall_Command::execute (void)
 void
 TAO_AMH_Skeletons::_is_a_amh_skel (TAO_ServerRequest & server_request,
                                   TAO::Portable_Server::Servant_Upcall* TAO_INTERCEPTOR (servant_upcall),
-                                  void * servant)
+                                  TAO_ServantBase *servant)
 {
 #if TAO_HAS_INTERCEPTORS == 1
   static ::CORBA::TypeCode_ptr const * const exceptions = 0;
@@ -63,11 +63,8 @@ TAO_AMH_Skeletons::_is_a_amh_skel (TAO_ServerRequest & server_request,
 
   static size_t const nargs = 2;
 
-  TAO_ServantBase * const impl =
-    static_cast<TAO_ServantBase *> (servant);
-
   _is_a_amh_Upcall_Command command (
-    impl,
+    servant,
     server_request.operation_details (),
     args);
 
@@ -101,7 +98,7 @@ _non_existent_amh_Upcall_Command::execute (void)
 
 void TAO_AMH_Skeletons::_non_existent_amh_skel (TAO_ServerRequest & server_request,
                                                 TAO::Portable_Server::Servant_Upcall* TAO_INTERCEPTOR (servant_upcall),
-                                                void * servant)
+                                                TAO_ServantBase *servant)
 {
 #if TAO_HAS_INTERCEPTORS == 1
   static ::CORBA::TypeCode_ptr const * const exceptions = 0;
@@ -116,11 +113,9 @@ void TAO_AMH_Skeletons::_non_existent_amh_skel (TAO_ServerRequest & server_reque
     };
 
   static size_t const nargs = 1;
-  TAO_ServantBase * const impl =
-    static_cast<TAO_ServantBase *> (servant);
 
   _non_existent_amh_Upcall_Command command (
-    impl,
+    servant,
     server_request.operation_details (),
     args);
 
@@ -143,7 +138,7 @@ void TAO_AMH_Skeletons::_non_existent_amh_skel (TAO_ServerRequest & server_reque
 void
 TAO_AMH_Skeletons::_interface_amh_skel (TAO_ServerRequest & server_request,
                                         TAO::Portable_Server::Servant_Upcall* /* servant_upcall */,
-                                        void * servant)
+                                        TAO_ServantBase *servant)
 {
   TAO_IFR_Client_Adapter *_tao_adapter =
     ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance (
@@ -154,9 +149,7 @@ TAO_AMH_Skeletons::_interface_amh_skel (TAO_ServerRequest & server_request,
       throw ::CORBA::INTF_REPOS (::CORBA::OMGVMCID | 1, ::CORBA::COMPLETED_NO);
     }
 
-  TAO_ServantBase * const impl =
-    static_cast<TAO_ServantBase *> (servant);
-  ::CORBA::InterfaceDef_ptr _tao_retval = impl->_get_interface ();
+  ::CORBA::InterfaceDef_ptr _tao_retval = servant->_get_interface ();
   server_request.init_reply ();
   TAO_OutputCDR &_tao_out = *server_request.outgoing ();
 
@@ -186,7 +179,7 @@ _get_component_amh_Upcall_Command::execute (void)
 void
 TAO_AMH_Skeletons::_component_amh_skel (TAO_ServerRequest & server_request,
                                         TAO::Portable_Server::Servant_Upcall* TAO_INTERCEPTOR (servant_upcall),
-                                        void * servant)
+                                        TAO_ServantBase *servant)
 {
 #if TAO_HAS_INTERCEPTORS == 1
   static ::CORBA::TypeCode_ptr const * const exceptions = 0;
@@ -202,11 +195,8 @@ TAO_AMH_Skeletons::_component_amh_skel (TAO_ServerRequest & server_request,
 
   static size_t const nargs = 1;
 
-  TAO_ServantBase * const impl =
-    static_cast<TAO_ServantBase *> (servant);
-
   _get_component_amh_Upcall_Command command (
-    impl,
+    servant,
     server_request.operation_details (),
     args);
 
@@ -240,7 +230,7 @@ _repository_id_amh_Upcall_Command::execute (void)
 void
 TAO_AMH_Skeletons::_repository_id_amh_skel (TAO_ServerRequest & server_request,
                                             TAO::Portable_Server::Servant_Upcall* TAO_INTERCEPTOR (servant_upcall),
-                                            void * servant)
+                                            TAO_ServantBase *servant)
 {
 #if TAO_HAS_INTERCEPTORS == 1
   static ::CORBA::TypeCode_ptr const * const exceptions = 0;
@@ -256,11 +246,8 @@ TAO_AMH_Skeletons::_repository_id_amh_skel (TAO_ServerRequest & server_request,
 
   static size_t const nargs = 1;
 
-  TAO_ServantBase * const impl =
-    static_cast<TAO_ServantBase *> (servant);
-
   _repository_id_amh_Upcall_Command command (
-    impl,
+    servant,
     server_request.operation_details (),
     args);
 
