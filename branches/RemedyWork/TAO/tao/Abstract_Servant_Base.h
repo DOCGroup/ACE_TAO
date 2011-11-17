@@ -158,11 +158,6 @@ protected:
     TAO_ServerRequest &request,
     TAO::Portable_Server::Servant_Upcall *servant_upcall) = 0;
 
-  virtual void synchronous_upcall_dispatch (
-    TAO_ServerRequest &req,
-    TAO::Portable_Server::Servant_Upcall *servant_upcall,
-    void *derived_this) = 0;
-
   /// Get this interface's repository id (TAO specific).
   virtual const char *_interface_repository_id (void) const = 0;
 };

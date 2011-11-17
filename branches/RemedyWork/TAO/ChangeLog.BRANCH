@@ -1,3 +1,20 @@
+Thu Nov 17 11:33:52 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Abstract_Servant_Base.h:
+          synchronous_upcall_dispatch is not needed here
+
+        * tao/PortableServer/PS_ForwardC.h:
+          Removed LocalServantBase, not part of CORBA anymore
+
+        * tao/PortableServer/Servant_Base.h:
+        * tao/PortableServer/Servant_Base.cpp:
+          Start changing void* to TAO_ServantBase*
+
+        * tao/PortableServer/Local_Servant_Base.cpp:
+        * tao/PortableServer/Local_Servant_Base.inl:
+        * tao/PortableServer/Local_Servant_Base.h:
+          Removed these files, not part of the CORBA spec anymore
+
 Thu Nov 17 10:46:22 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * MPC/config/taobaseidldefaults.mpb:
@@ -19,7 +36,7 @@ Thu Nov 17 10:46:22 UTC 2011  Marcel Smit  <msmit@remedy.nl>
         * TAO_IDL/be_include/be_visitor_root/root_svts.h:
           The IDL compileren doesn't generated the facet servants
           in the _svnt.cpp/h files.
-          The IDL compiler now uses the template facet servant 
+          The IDL compiler now uses the template facet servant
           implementation (which still need to be generated)
           in the _svnt.cpp file.
           The IDL compiler now creates the _svnt_T.cpp/h files and

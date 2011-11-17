@@ -70,7 +70,6 @@ public:
   /// Destructor.
   virtual ~TAO_ServantBase (void);
 
-
   static void _is_a_skel (TAO_ServerRequest & req,
                           TAO::Portable_Server::Servant_Upcall* servant_upcall,
                           void * servant);
@@ -193,15 +192,15 @@ protected:
   /// Assignment operator.
   TAO_ServantBase &operator= (const TAO_ServantBase &);
 
-  virtual void synchronous_upcall_dispatch (
+  void synchronous_upcall_dispatch (
     TAO_ServerRequest & req,
     TAO::Portable_Server::Servant_Upcall* servant_upcall,
-    void * derived_this);
+    TAO_ServantBase *derived_this);
 
-  virtual void asynchronous_upcall_dispatch (
+  void asynchronous_upcall_dispatch (
     TAO_ServerRequest & req,
     TAO::Portable_Server::Servant_Upcall* servant_upcall,
-    void * derived_this);
+    TAO_ServantBase *derived_this);
 
 protected:
   /// Reference counter.
