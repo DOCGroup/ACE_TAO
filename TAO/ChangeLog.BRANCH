@@ -1,3 +1,10 @@
+Thu Nov 17 07:35:20 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * performance-tests/Latency/DSI/Roundtrip.h:
+        * performance-tests/Sequence_Latency/DSI/Roundtrip.h:
+        * tests/DSI_AMI_Gateway/test_dsi.h:
+          Last runtime fixes
+
 Wed Nov 16 07:26:18 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/CosEvent/CEC_DynamicImplementation.h:
