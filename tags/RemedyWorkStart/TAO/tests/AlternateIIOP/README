@@ -1,0 +1,20 @@
+/**
+
+$Id$
+
+@page AlternateIIOP Test README File
+
+	This test uses the binaries from the Hello test, but builds an
+IOR that contains multiple endpoints. The "hostname_in_ior" option is
+used to add two unreachable endpoints along with a third that is
+successful.
+
+- The ior file for the test, altiiop.ior is not unlinked at the end of
+the test to allow for manual inspection using
+$TAO_ROOT/utils/catior/catior.
+
+	To run the test use the run_test.pl script:
+
+$ ./run_test.pl
+
+	the script returns 0 if the test was successful.

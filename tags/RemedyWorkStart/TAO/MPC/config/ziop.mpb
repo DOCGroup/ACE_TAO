@@ -1,0 +1,7 @@
+// -*- MPC -*-
+// $Id$
+
+project : taolib, compression, pi {
+  after   += ZIOP
+  libs    += TAO_ZIOP
+}

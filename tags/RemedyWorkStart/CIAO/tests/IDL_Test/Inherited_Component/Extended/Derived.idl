@@ -1,0 +1,32 @@
+// $Id$
+
+#ifndef DERIVED_IDL
+#define DERIVED_IDL
+
+#include <Components.idl>
+
+#include "Base.idl"
+
+#pragma ciao lem "DerivedE.idl"
+
+module Inherited
+{
+  interface Tester
+  {
+    void set_long_base (in long base);
+    long get_long_base ();
+
+    void set_long_derived (in long derived);
+    long get_long_derived ();
+  };
+
+  component Derived_comp : Inherited::Base_comp supports Inherited::Tester
+  {
+    provides Inherited::derived_interface prov_derived;
+    uses     Inherited::derived_interface uses_derived;
+
+    attribute long derived;
+  };
+};
+
+#endif

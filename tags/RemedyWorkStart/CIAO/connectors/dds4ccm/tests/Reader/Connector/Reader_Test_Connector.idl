@@ -1,0 +1,23 @@
+// $Id$
+
+/**
+ * @file Reader_Test_Connector.idl
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef READER_TEST_CONNECTOR_IDL_
+#define READER_TEST_CONNECTOR_IDL_
+
+#include <Components.idl>
+#include <ccm_dds.idl>
+
+#include "Base/Reader_Test_Base.idl"
+
+#pragma ciao lem "Connector/Reader_Test_ConnectorE.idl"
+
+module Reader_Test
+{
+  module ::CCM_DDS::Typed < ::ReaderTest, ::ReaderTestSeq> ReaderTestConnector;
+};
+
+#endif /* Reader_Test_CONNECTOR_IDL_ */

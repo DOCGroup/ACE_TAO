@@ -1,0 +1,31 @@
+// -*- MPC -*-
+// $Id$
+
+project(*Server): rteventexe, rtevent_serv {
+  exename   = server
+
+  specific(automake) {
+    includes += $(srcdir)/../Common
+  } else {
+    includes += ../Common
+  }
+
+  Source_Files {
+    TestAddrServer.cpp
+    Server.cpp
+  }
+}
+
+project(*Client): rteventexe,  {
+  exename   = client
+
+  specific(automake) {
+    includes += $(srcdir)/../Common
+  } else {
+    includes += ../Common
+  }
+
+  Source_Files {
+    Client.cpp
+  }
+}
