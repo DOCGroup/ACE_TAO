@@ -1,3 +1,9 @@
+Thu Nov 17 17:15:35 UTC 2011  Trevor Fields  <fields_t@ociweb.com>
+
+        * bin/tao_other_tests.lst:
+
+          Added orbsvcs/tests/Security/MT_BiDir_SSL test.
+
 Thu Nov 17 11:30:59 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/ForwardUponObjectNotExist/client.cpp:
