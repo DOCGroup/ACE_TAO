@@ -558,7 +558,7 @@ void
 TAO_ServantBase::synchronous_upcall_dispatch (
   TAO_ServerRequest & req,
   TAO::Portable_Server::Servant_Upcall* servant_upcall,
-  void * derived_this)
+  TAO_ServantBase *derived_this)
 {
   TAO_Skeleton skel;
   char const * const opname = req.operation ();
@@ -590,7 +590,7 @@ TAO_ServantBase::synchronous_upcall_dispatch (
     {
       // Invoke the skeleton, it will demarshal the arguments, invoke
       // the right operation on the skeleton class, and marshal any
-      // results.  De/marshaling will only occur in the uncollocated
+      // results.  De/marshaling will only occur in the not collocated
       // case.
       skel (req, servant_upcall, derived_this);
 
@@ -629,9 +629,9 @@ TAO_ServantBase::synchronous_upcall_dispatch (
 
 void
 TAO_ServantBase::asynchronous_upcall_dispatch (
-  TAO_ServerRequest & req,
-  TAO::Portable_Server::Servant_Upcall* servant_upcall,
-  void * derived_this)
+  TAO_ServerRequest &req,
+  TAO::Portable_Server::Servant_Upcall *servant_upcall,
+  TAO_ServantBase *derived_this)
 {
   TAO_Skeleton skel;
   const char *opname = req.operation ();
@@ -658,7 +658,7 @@ TAO_ServantBase::asynchronous_upcall_dispatch (
     {
       // Invoke the skeleton, it will demarshal the arguments, invoke
       // the right operation on the skeleton class, and marshal any
-      // results.  De/marshaling will only occur in the uncollocated
+      // results.  De/marshaling will only occur in the not collocated
       // case.
       skel (req, servant_upcall, derived_this);
 
@@ -675,8 +675,6 @@ TAO_ServantBase::asynchronous_upcall_dispatch (
       // the appropriate reply to the client
       req.tao_send_reply_exception (ex);
     }
-
-  return;
 }
 
 void
