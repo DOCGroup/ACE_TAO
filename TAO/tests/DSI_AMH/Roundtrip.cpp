@@ -96,8 +96,7 @@ Roundtrip::_primary_interface (const PortableServer::ObjectId &,
 
 void
 Roundtrip::_dispatch (TAO_ServerRequest &request,
-                         void * //context
-                     )
+                      TAO::Portable_Server::Servant_Upcall * /* context */)
 {
   // No need to do any of this if the client isn't waiting.
   if (request.response_expected ())
@@ -148,8 +147,7 @@ Roundtrip::_dispatch (TAO_ServerRequest &request,
 }
 
 void
-Roundtrip::invoke (CORBA::ServerRequest_ptr request)
+Roundtrip::invoke (CORBA::ServerRequest_ptr)
 {
-  ACE_UNUSED_ARG (request);
   throw CORBA::NO_IMPLEMENT();
 }

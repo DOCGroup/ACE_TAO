@@ -54,7 +54,7 @@ public:
   void shutdown (Test::AMH_RoundtripResponseHandler_ptr _tao_rh);
 
 private:
-  /// Use an ORB reference to conver strings to objects and shutdown
+  /// Use an ORB reference to convert strings to objects and shutdown
   /// the application.
   CORBA::ORB_var orb_;
 };

@@ -26,7 +26,7 @@ TAO::CSD::Strategy_Proxy::dispatch_request
   if (this->strategy_impl_ == 0)
     {
       // This is the "default" strategy implementation.
-      upcall.servant()->_dispatch(server_request, (void*)&upcall);
+      upcall.servant()->_dispatch(server_request, &upcall);
     }
   else
     {

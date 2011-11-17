@@ -118,58 +118,12 @@ be_visitor_amh_interface_sh::visit_interface (be_interface *node)
       << be_nl
       << "virtual ::CORBA::Boolean _is_a (const char* logical_type_id);" << be_nl_2;
 
-  // Add a skeleton for our _is_a method.
-  *os << "static void _is_a_skel (" << be_idt << be_idt_nl
-      << "TAO_ServerRequest &req," << be_nl
-      << "void *obj," << be_nl
-      << "void *servant_upcall" << be_uidt_nl
-      << ");" << be_uidt_nl << be_nl;
-
-  if (!be_global->gen_minimum_corba ())
-    {
-      // Add a skeleton for our _non_existent method.
-      *os << "static void _non_existent_skel (" << be_idt << be_idt_nl
-          << "TAO_ServerRequest &req," << be_nl
-          << "void *obj," << be_nl
-          << "void *servant_upcall" << be_uidt_nl
-          << ");" << be_uidt_nl << be_nl;
-    }
-
-  if (!be_global->gen_corba_e () && !be_global->gen_minimum_corba ())
-    {
-      // Add a skeleton for our _interface method.
-      *os << "static void _interface_skel (" << be_idt << be_idt_nl
-          << "TAO_ServerRequest &req," << be_nl
-          << "void *obj," << be_nl
-          << "void *servant_upcall" << be_uidt_nl
-          << ");" << be_uidt_nl << be_nl;
-    }
-
-  if (!be_global->gen_corba_e () && !be_global->gen_minimum_corba ())
-    {
-      // Add a skeleton for our _component method.
-      *os << "static void _component_skel (" << be_idt << be_idt_nl
-          << "TAO_ServerRequest &req," << be_nl
-          << "void *obj," << be_nl
-          << "void *servant_upcall" << be_uidt_nl
-          << ");" << be_uidt_nl << be_nl;
-    }
-
-  if (!be_global->gen_minimum_corba ())
-    {
-      // Add a skeleton for our _repository_id method.
-      *os << "static void _repository_id_skel (" << be_idt << be_idt_nl
-          << "TAO_ServerRequest &req," << be_nl
-          << "void *obj," << be_nl
-          << "void *servant_upcall" << be_uidt_nl
-          << ");" << be_uidt_nl << be_nl;
-    }
 
   // Add the dispatch method.
   *os << "virtual void _dispatch (" << be_idt << be_idt_nl
       << "TAO_ServerRequest &req," << be_nl
-      << "void *_servant_upcall" << be_uidt_nl
-      << ");" << be_uidt_nl << be_nl;
+      << "TAO::Portable_Server::Servant_Upcall *_servant_upcall);" << be_uidt
+      << be_uidt_nl << be_nl;
 
   this->this_method (node);
 

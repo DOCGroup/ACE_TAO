@@ -127,8 +127,7 @@ void
 be_visitor_amh_operation_sh::generate_shared_prologue (
     be_decl *node,
     TAO_OutStream *os,
-    const char *skel_prefix
-  )
+    const char *skel_prefix)
 {
   *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
@@ -138,9 +137,9 @@ be_visitor_amh_operation_sh::generate_shared_prologue (
       << node->local_name ()
       << "_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest &_tao_req," << be_nl
-      << "void *_tao_obj," << be_nl
-      << "void *_tao_servant_upcall" << be_uidt_nl
-      << ");" << be_uidt_nl << be_nl;
+      << "TAO::Portable_Server::Servant_Upcall *_tao_obj," << be_nl
+      << "void *_tao_servant_upcall"
+      << ");" << be_uidt_nl << be_uidt_nl;
 
   // We need the interface node in which this operation was defined. However,
   // if this operation node was an attribute node in disguise, we get this

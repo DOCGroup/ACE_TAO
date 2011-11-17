@@ -112,8 +112,9 @@ TAO_DynamicImplementation::_create_stub (void)
 }
 
 void
-TAO_DynamicImplementation::_dispatch (TAO_ServerRequest &request,
-                                      void * /* context */)
+TAO_DynamicImplementation::_dispatch (
+  TAO_ServerRequest &request,
+  TAO::Portable_Server::Servant_Upcall * /* context */)
 {
   // No need to do any of this if the client isn't waiting.
   if (request.response_expected ())

@@ -1,3 +1,245 @@
+Thu Nov 17 10:05:08 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        Merged changes from Remedy work branch.
+
+        === start changelog ===
+
+        Thu Nov 17 07:35:20 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * performance-tests/Latency/DSI/Roundtrip.h:
+                * performance-tests/Sequence_Latency/DSI/Roundtrip.h:
+                * tests/DSI_AMI_Gateway/test_dsi.h:
+                  Last runtime fixes
+
+        Wed Nov 16 07:26:18 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * orbsvcs/orbsvcs/CosEvent/CEC_DynamicImplementation.h:
+                * orbsvcs/orbsvcs/CosEvent/CEC_TypedProxyPushConsumer.h:
+                  Doxygen changes
+
+        Wed Nov 16 07:18:56 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * orbsvcs/performance-tests/LoadBalancing/LBPerf/CPU/Roundtrip.h:
+                * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/Roundtrip.h:
+                * orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/Roundtrip.h:
+                * orbsvcs/tests/Bug_2285_Regression/Hello.h:
+                * orbsvcs/tests/Bug_2287_Regression/Hello.h:
+                * orbsvcs/tests/Bug_2615_Regression/Hello.h:
+                * orbsvcs/tests/Bug_2800_Regression/Hello.h:
+                * orbsvcs/tests/Bug_2800_Regression/NsShutdown.h:
+                * orbsvcs/tests/Bug_3215_Regression/Hello.h:
+                * orbsvcs/tests/Bug_3216_Regression/Hello.h:
+                * orbsvcs/tests/Bug_3598b_Regression/Hello.h:
+                * orbsvcs/tests/Bug_3673_Regression/Hello.h:
+                * orbsvcs/tests/Bug_3673_Regression/NsShutdown.h:
+                * orbsvcs/tests/COIOP_Naming_Test/Hello.h:
+                * orbsvcs/tests/HTIOP/Hello/Hello.h:
+                * orbsvcs/tests/InterfaceRepo/IFR_Self_Recursive_IDL_Test/GoodDay.h:
+                * performance-tests/Latency/AMH_Single_Threaded/Roundtrip.h:
+                * performance-tests/Latency/AMI/Roundtrip.h:
+                * performance-tests/Latency/Collocation/Roundtrip.h:
+                * performance-tests/Latency/DII/Roundtrip.h:
+                * performance-tests/Latency/Deferred/Roundtrip.h:
+                * performance-tests/Latency/Single_Threaded/Roundtrip.h:
+                * performance-tests/Latency/Thread_Per_Connection/Roundtrip.h:
+                * performance-tests/Latency/Thread_Pool/Roundtrip.h:
+                * performance-tests/Memory/IORsize/Memory_Growth.h:
+                * performance-tests/Memory/Single_Threaded/Memory_Growth.h:
+                * performance-tests/Sequence_Latency/AMH_Single_Threaded/Roundtrip.h:
+                * performance-tests/Sequence_Latency/AMI/Roundtrip.h:
+                * performance-tests/Sequence_Latency/DII/Roundtrip.h:
+                * performance-tests/Sequence_Latency/Deferred/Roundtrip.h:
+                * performance-tests/Sequence_Latency/Single_Threaded/Roundtrip.h:
+                * performance-tests/Sequence_Latency/Thread_Per_Connection/Roundtrip.h:
+                * performance-tests/Sequence_Latency/Thread_Pool/Roundtrip.h:
+                * tests/Bug_1330_Regression/Test_i.h:
+                * tests/Bug_1482_Regression/Hello.h:
+                * tests/Bug_2084_Regression/EventNode.h:
+                * tests/Bug_2084_Regression/Hello.h:
+                * tests/Bug_2183_Regression/Hello.h:
+                * tests/Bug_2186_Regression/Hello.h:
+                * tests/Bug_2241_Regression/Hello.h:
+                * tests/Bug_2328_Regression/Hello.h:
+                * tests/Bug_2593_Regression/Hello.h:
+                * tests/Bug_2654_Regression/Hello.h:
+                * tests/Bug_2683_Regression/test_i.h:
+                * tests/Bug_2768_Regression/Messenger_i.h:
+                * tests/Bug_2966_Regression/Hello.h:
+                * tests/Bug_3299_Regression/Hello.h:
+                * tests/Bug_3333_Regression/Hello.h:
+                * tests/Bug_3430_Regression/Hello.h:
+                * tests/Bug_3479_Regression/Hello.h:
+                * tests/Bug_3547_Regression/Stock_Quoter_i.h:
+                * tests/Bug_3553_Regression/Hello.h:
+                * tests/Bug_3558_Regression/Hello.h:
+                * tests/Bug_3598a_Regression/Hello.h:
+                * tests/Bug_3636_Regression/Hello.h:
+                * tests/Bug_3676_Regression/Hello.h:
+                * tests/Bug_3746_Regression/Test_i.h:
+                * tests/Bug_3748_Regression/Hello.h:
+                * tests/Bug_3790_Regression/simple_test_i.h:
+                * tests/Bug_3837_Regression/Hello.h:
+                * tests/Bug_3896_Regression/Hello.h:
+                * tests/Bug_3954_Regression/Hello.h:
+                * tests/Bug_933_Regression/Messenger_i.h:
+                * tests/COIOP/Hello.h:
+                * tests/CSD_Strategy_Tests/TP_Test_Dynamic/Hello.h:
+                * tests/Cache_Growth_Test/Hello.h:
+                * tests/Client_Leaks/Process.h:
+                * tests/Client_Leaks/Process_Factory.h:
+                * tests/Collocated_Best/Collocated_Best_Direct/Hello.h:
+                * tests/Collocated_Best/Collocated_Best_NoColl/Hello.h:
+                * tests/Collocated_Best/Collocated_Best_ThuP/Hello.h:
+                * tests/Collocated_DerivedIF/Hello.h:
+                * tests/Collocated_NoColl/Hello.h:
+                * tests/Collocated_ThruP_Sp/Hello.h:
+                * tests/Collocated_ThruP_Sp_Gd/Hello.h:
+                * tests/Collocation_Exception_Test/Hello.h:
+                * tests/Collocation_Oneway_Tests/Hello.h:
+                * tests/Collocation_Tests/Hello.h:
+                * tests/Connect_Strategy_Test/Hello.h:
+                * tests/DII_Collocation_Tests/oneway/Hello.h:
+                * tests/DII_Collocation_Tests/twoway/Hello.h:
+                * tests/DSI_AMH/Roundtrip.h:
+                * tests/Hello/Hello.h:
+                * tests/IPV6/Hello.h:
+                * tests/LongDouble/LongDoubleTest.h:
+                * tests/MT_Timeout/Sleep_Service.h:
+                * tests/ORB_Local_Config/Two_DLL_ORB/Test_i.h:
+                * tests/ORB_shutdown/Foo_Bar.h:
+                * tests/Ondemand_Write/Hello.h:
+                * tests/POA/Deactivate_Object/Hello.h:
+                * tests/POA/EndpointPolicy/Hello.h:
+                * tests/Parallel_Connect_Strategy/Test_i.h:
+                * tests/Portable_Interceptors/Bug_2133/Hello.h:
+                * tests/Reliable_Oneways/Oneway_Receiver.h:
+                * tests/Reliable_Oneways/Shutdown_Helper.h:
+                * tests/Servant_To_Reference_Test/Test_i.h:
+                * tests/Server_Leaks/Ping_Service.h:
+                * tests/Server_Port_Zero/Hello.h:
+                * tests/Skeleton_Inheritance/interface_3_i.h:
+                * tests/Two_Objects/First_i.h:
+                * tests/Two_Objects/Object_Factory_i.h:
+                * tests/Two_Objects/Second_i.h:
+                * tests/ZIOP/Hello.h:
+                  Fixed typo in comment
+
+        Wed Nov 16 07:14:48 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * tao/DynamicInterface/Dynamic_Implementation.h:
+                * tao/DynamicInterface/Dynamic_Implementation.cpp:
+                * tao/PortableServer/Servant_Base.cpp:
+                * tests/DSI_AMH/Roundtrip.h:
+                * tests/DSI_AMH/Roundtrip.cpp:
+                  Fixed compile problems due to change of signature of _dispatch
+
+        Tue Nov 15 09:36:35 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * TAO_IDL/be/be_interface.cpp:
+                * TAO_IDL/be/be_visitor_interface/amh_sh.cpp:
+                * TAO_IDL/be/be_visitor_interface/amh_si.cpp:
+                * TAO_IDL/be/be_visitor_interface/amh_ss.cpp:
+                * TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+                * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+                * TAO_IDL/be/be_visitor_operation/amh_sh.cpp:
+                * TAO_IDL/be/be_visitor_operation/amh_ss.cpp:
+                * TAO_IDL/be/be_visitor_operation/operation_sh.cpp:
+                * TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+                * tao/Abstract_Servant_Base.h:
+                * tao/CSD_Framework/CSD_FW_Server_Request_Wrapper.h:
+                * tao/CSD_Framework/CSD_FW_Server_Request_Wrapper.cpp:
+                * tao/CSD_Framework/CSD_Strategy_Base.inl:
+                * tao/CSD_Framework/CSD_Strategy_Proxy.inl:
+                * tao/CSD_ThreadPool/CSD_TP_Corba_Request.h:
+                * tao/CSD_ThreadPool/CSD_TP_Corba_Request.inl:
+                * tao/Messaging/AMH_Skeletons.h:
+                * tao/Messaging/AMH_Skeletons.cpp:
+                * tao/PI_Server/ServerInterceptorAdapter.h:
+                * tao/PI_Server/ServerInterceptorAdapter.cpp:
+                * tao/PortableServer/Local_Servant_Base.h:
+                * tao/PortableServer/Local_Servant_Base.cpp:
+                * tao/PortableServer/Operation_Table.h:
+                * tao/PortableServer/PolicyS.h:
+                * tao/PortableServer/PolicyS.cpp:
+                * tao/PortableServer/Servant_Base.h:
+                * tao/PortableServer/Servant_Base.cpp:
+                * tao/PortableServer/Upcall_Wrapper.h:
+                * tao/PortableServer/Upcall_Wrapper.cpp:
+                * tao/ServerRequestInterceptor_Adapter.h:
+                  Changed the second argument of all skel methods from void* to
+                  TAO::Portable_Server::Servant_Upcall*. I found  CSD_TP_Corba_Request
+                  just passes 0 for this argument, reported bugzilla 3993 for this,
+                  when CSD passes always a valid pointer we could even use a reference
+                  instead of a pointer
+
+        Tue Nov 15 09:13:11 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * TAO_IDL/be/be_interface.cpp:
+                  _repository_id occured twice in the op table. Fixed this.
+
+        Mon Nov 14 13:24:54 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * TAO_IDL/be/be_interface.cpp:
+                  Added some more comments on the AMH detection.
+
+        Fri Nov 11 15:29:15 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * tests/Skeleton_Inheritance/skel_inheritance.mpc:
+                  Fixed linker errors on windows.
+
+        Fri Nov 11 14:33:22 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * TAO_IDL/be/be_interface.cpp:
+                * TAO_IDL/be/be_visitor_amh_pre_proc.cpp:
+                * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+                * TAO_IDL/be_include/be_interface.h:
+                  Changed the AMH is detected.
+
+        Fri Nov 11 13:56:31 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * TAO_IDL/be/be_codegen.cpp:
+                * TAO_IDL/be/be_interface.cpp:
+                * TAO_IDL/be/be_visitor_amh_pre_proc.cpp:
+                * TAO_IDL/be_include/be_interface.h:
+                  Invoking amh specific _*_skel methods in
+                  case AMH.
+
+                * tao/Messaging/AMH_Skeletons.h:
+                * tao/Messaging/AMH_Skeletons.cpp:
+                * tao/PortableServer/Servant_Base.h:
+                * tao/PortableServer/Servant_Base.cpp:
+                  Created a set of _*_skel methods for amh.
+                  Put these in Messaging since we don't want to
+                  bother the core with AMH stuff.
+
+        Fri Nov 11 09:52:26 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * TAO_IDL/be/be_interface.cpp:
+                * TAO_IDL/be/be_visitor_interface/amh_sh.cpp:
+                * TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+                * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+                * tao/PortableServer/SUpcall_commands.h:
+                * tao/PortableServer/SUpcall_commands.cpp:
+                * tao/PortableServer/Servant_Base.h:
+                * tao/PortableServer/Servant_Base.cpp:
+                  Moved the default _*_skel method to the core. This mean
+                  a lot less generated code.
+
+                * bin/tao_orb_tests.lst:
+                * tests/Skeleton_Inheritance:
+                * tests/Skeleton_Inheritance/client.cpp:
+                * tests/Skeleton_Inheritance/idl_1.idl:
+                * tests/Skeleton_Inheritance/idl_2.idl:
+                * tests/Skeleton_Inheritance/idl_3.idl:
+                * tests/Skeleton_Inheritance/interface_3_i.h:
+                * tests/Skeleton_Inheritance/interface_3_i.cpp:
+                * tests/Skeleton_Inheritance/run_test.pl:
+                * tests/Skeleton_Inheritance/server.cpp:
+                * tests/Skeleton_Inheritance/skel_inheritance.mpc:
+                  New test.
+
+        === end changelog ===
+
 Wed Nov 16 22:23:08 UTC 2011  Trevor Fields  <fields_t@ociweb.com>
 
         * orbsvcs/tests/Security/MT_BiDir_SSL:
