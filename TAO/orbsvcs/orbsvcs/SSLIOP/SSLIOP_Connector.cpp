@@ -483,12 +483,14 @@ TAO::SSLIOP::Connector::ssliop_connect (
     }
 
   // Check the Cache first for connections
-  size_t busy_count = 0; //not used but needed for the call
-  if (this->orb_core ()->lane_resources ().transport_cache ().find_transport (
+  size_t busy_count = 0;
+  TAO::Transport_Cache_Manager::Find_Result found =
+    this->orb_core ()->lane_resources ().transport_cache ().find_transport (
         desc,
         transport,
-        busy_count)
-        == TAO::Transport_Cache_Manager::CACHE_FOUND_AVAILABLE)
+        busy_count);
+
+  if (found == TAO::Transport_Cache_Manager::CACHE_FOUND_AVAILABLE)
     {
       // ...eliminate svc_handle memory leak...
       ACE_Event_Handler_var
@@ -517,223 +519,238 @@ TAO::SSLIOP::Connector::ssliop_connect (
     }
   else
     {
-      if (TAO_debug_level > 4)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) - SSLIOP_Connector::ssliop_connect, ")
-                    ACE_TEXT ("making a new connection\n")));
 
-      // Purge connections (if necessary)
-      this->orb_core ()->lane_resources ().transport_cache ().purge ();
+      bool make_new_connection =
+        (found == TAO::Transport_Cache_Manager::CACHE_FOUND_NONE) ||
+        (found == TAO::Transport_Cache_Manager::CACHE_FOUND_BUSY
+            && this->new_connection_is_ok (busy_count));
 
-      // The svc_handler is created beforehand so that we can get
-      // access to the underlying ACE_SSL_SOCK_Stream (the peer) and
-      // its SSL pointer member prior to descending into the
-      // ACE_Strategy_Connector (the "base_connector_").  This is
-      // thread-safe and reentrant, hence no synchronization is
-      // necessary.
-      if (svc_handler == 0 &&
-          this->base_connector_.creation_strategy ()->make_svc_handler (
-               svc_handler) != 0)
+      if (make_new_connection)
         {
-          if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_ERROR,
-                        ACE_TEXT ("TAO (%P|%t) Unable to create SSLIOP ")
-                        ACE_TEXT ("service handler.\n")));
 
-          return 0;
-        }
+          if (TAO_debug_level > 4)
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("TAO (%P|%t) - SSLIOP_Connector::ssliop_connect, ")
+                        ACE_TEXT ("making a new connection\n")));
 
-      ACE_Event_Handler_var
-        safe_handler (svc_handler);
+          // Purge connections (if necessary)
+          this->orb_core ()->lane_resources ().transport_cache ().purge ();
 
-      // Setup the establishment of trust connection properties, if
-      // any.
-      int verify_mode = 0;
-
-      // On the server side, "trust_in_client" requires that a peer
-      // (client) certificate exist.  Fail if one doesn't exist.
-      //
-      // In SSLIOP's case, trust_in_client also implies
-      // trust_in_target.
-      if (trust.trust_in_client)
-        verify_mode = SSL_VERIFY_PEER | SSL_VERIFY_FAIL_IF_NO_PEER_CERT;
-
-      // Require verification of the target's certificate.
-      else if (trust.trust_in_target)
-        verify_mode = SSL_VERIFY_PEER;
-
-      // Trust in neither the client nor the target is explicitly
-      // specified.  Use the default setting.
-      else
-        verify_mode = ACE_SSL_Context::instance ()->default_verify_mode ();
-
-      ::SSL_set_verify (svc_handler->peer ().ssl (), verify_mode, 0);
-
-      // The "eNULL" cipher disables encryption but still uses a
-      // secure hash (e.g. SHA1 or MD5) to ensure integrity.  (Try the
-      // command "openssl ciphers -v eNULL".)
-      //
-      // Note that it is not possible to completely disable protection
-      // here.
-      if ((qop == ::Security::SecQOPNoProtection
-          || qop == ::Security::SecQOPIntegrity)
-          && ::SSL_set_cipher_list (svc_handler->peer ().ssl (),
-                                    "eNULL") == 0)
-        {
-          if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) Unable to set eNULL ")
-                        ACE_TEXT ("SSL cipher.\n")));
-
-          throw CORBA::INV_POLICY ();
-        }
-
-      // svc_handler is never reset..it still has the value
-      (void)safe_handler.release ();
-
-      // Get the right synch options
-      ACE_Synch_Options synch_options;
-
-      this->active_connect_strategy_->synch_options (max_wait_time,
-                                                     synch_options);
-
-      // The code used to set the timeout to zero, with the intent of
-      // polling the reactor for connection completion. However, the side-effect
-      // was to cause the connection to timeout immediately.
-
-      // We obtain the transport in the <svc_handler> variable.  As we
-      // know now that the connection is not available in Cache we can
-      // make a new connection
-      result = this->base_connector_.connect (svc_handler,
-                                              remote_address,
-                                              synch_options);
-
-      // Make sure that we always do a remove_reference
-      ACE_Event_Handler_var svc_handler_auto_ptr (svc_handler);
-
-      transport =
-        svc_handler->transport ();
-
-      if (result == -1)
-        {
-          // No immediate result, wait for completion
-          if (errno == EWOULDBLOCK)
+          // The svc_handler is created beforehand so that we can get
+          // access to the underlying ACE_SSL_SOCK_Stream (the peer) and
+          // its SSL pointer member prior to descending into the
+          // ACE_Strategy_Connector (the "base_connector_").  This is
+          // thread-safe and reentrant, hence no synchronization is
+          // necessary.
+          if (svc_handler == 0 &&
+              this->base_connector_.creation_strategy ()->make_svc_handler (
+                   svc_handler) != 0)
             {
-              // Try to wait until connection completion. Incase we block, then we
-              // get a connected transport or not. In case of non block we get
-              // a connected or not connected transport
-              if (!this->wait_for_connection_completion (resolver,
-                                                         *desc,
-                                                         transport,
-                                                         max_wait_time))
+              if (TAO_debug_level > 0)
+                ACE_DEBUG ((LM_ERROR,
+                            ACE_TEXT ("TAO (%P|%t) Unable to create SSLIOP ")
+                            ACE_TEXT ("service handler.\n")));
+
+              return 0;
+            }
+
+          ACE_Event_Handler_var
+            safe_handler (svc_handler);
+
+          // Setup the establishment of trust connection properties, if
+          // any.
+          int verify_mode = 0;
+
+          // On the server side, "trust_in_client" requires that a peer
+          // (client) certificate exist.  Fail if one doesn't exist.
+          //
+          // In SSLIOP's case, trust_in_client also implies
+          // trust_in_target.
+          if (trust.trust_in_client)
+            verify_mode = SSL_VERIFY_PEER | SSL_VERIFY_FAIL_IF_NO_PEER_CERT;
+
+          // Require verification of the target's certificate.
+          else if (trust.trust_in_target)
+            verify_mode = SSL_VERIFY_PEER;
+
+          // Trust in neither the client nor the target is explicitly
+          // specified.  Use the default setting.
+          else
+            verify_mode = ACE_SSL_Context::instance ()->default_verify_mode ();
+
+          ::SSL_set_verify (svc_handler->peer ().ssl (), verify_mode, 0);
+
+          // The "eNULL" cipher disables encryption but still uses a
+          // secure hash (e.g. SHA1 or MD5) to ensure integrity.  (Try the
+          // command "openssl ciphers -v eNULL".)
+          //
+          // Note that it is not possible to completely disable protection
+          // here.
+          if ((qop == ::Security::SecQOPNoProtection
+              || qop == ::Security::SecQOPIntegrity)
+              && ::SSL_set_cipher_list (svc_handler->peer ().ssl (),
+                                        "eNULL") == 0)
+            {
+              if (TAO_debug_level > 0)
+                ACE_DEBUG ((LM_ERROR,
+                            ACE_TEXT ("(%P|%t) Unable to set eNULL ")
+                            ACE_TEXT ("SSL cipher.\n")));
+
+              throw CORBA::INV_POLICY ();
+            }
+
+          // svc_handler is never reset..it still has the value
+          (void)safe_handler.release ();
+
+          // Get the right synch options
+          ACE_Synch_Options synch_options;
+
+          this->active_connect_strategy_->synch_options (max_wait_time,
+                                                         synch_options);
+
+          // The code used to set the timeout to zero, with the intent of
+          // polling the reactor for connection completion. However, the side-effect
+          // was to cause the connection to timeout immediately.
+
+          // We obtain the transport in the <svc_handler> variable.  As we
+          // know now that the connection is not available in Cache we can
+          // make a new connection
+          result = this->base_connector_.connect (svc_handler,
+                                                  remote_address,
+                                                  synch_options);
+
+          // Make sure that we always do a remove_reference
+          ACE_Event_Handler_var svc_handler_auto_ptr (svc_handler);
+
+          transport =
+            svc_handler->transport ();
+
+          if (result == -1)
+            {
+              // No immediate result, wait for completion
+              if (errno == EWOULDBLOCK)
                 {
-                  if (TAO_debug_level > 2)
-                    ACE_ERROR ((LM_ERROR, "TAO (%P|%t) - SSLIOP_Connector::"
-                                          "ssliop_connect, "
-                                          "wait for completion failed\n"));
+                  // Try to wait until connection completion. Incase we block, then we
+                  // get a connected transport or not. In case of non block we get
+                  // a connected or not connected transport
+                  if (!this->wait_for_connection_completion (resolver,
+                                                             *desc,
+                                                             transport,
+                                                             max_wait_time))
+                    {
+                      if (TAO_debug_level > 2)
+                        ACE_ERROR ((LM_ERROR, "TAO (%P|%t) - SSLIOP_Connector::"
+                                              "ssliop_connect, "
+                                              "wait for completion failed\n"));
+                    }
+                }
+              else
+                {
+                  // Transport is not usable
+                  transport = 0;
                 }
             }
-          else
-            {
-              // Transport is not usable
-              transport = 0;
-            }
-        }
 
-      // In case of errors transport is zero
-      if (transport == 0)
-        {
-          // Give users a clue to the problem.
-          if (TAO_debug_level)
+          // In case of errors transport is zero
+          if (transport == 0)
             {
-              char buffer [MAXHOSTNAMELEN + 6 + 1];
-              ssl_endpoint->addr_to_string (buffer,
-                                            sizeof (buffer) - 1);
-              ACE_DEBUG ((LM_ERROR,
-                          ACE_TEXT ("TAO (%P|%t) - SSL connection to ")
-                          ACE_TEXT ("<%s:%d> failed (%p)\n"),
-                          buffer,
-                          remote_address.get_port_number (),
-                          ACE_TEXT ("errno")));
+              // Give users a clue to the problem.
+              if (TAO_debug_level)
+                {
+                  char buffer [MAXHOSTNAMELEN + 6 + 1];
+                  ssl_endpoint->addr_to_string (buffer,
+                                                sizeof (buffer) - 1);
+                  ACE_DEBUG ((LM_ERROR,
+                              ACE_TEXT ("TAO (%P|%t) - SSL connection to ")
+                              ACE_TEXT ("<%s:%d> failed (%p)\n"),
+                              buffer,
+                              remote_address.get_port_number (),
+                              ACE_TEXT ("errno")));
+                }
+
+              return 0;
             }
 
-          return 0;
-        }
-
-      // fix for bug 2654
-      if (svc_handler->keep_waiting ())
-        {
-          svc_handler->connection_pending ();
-        }
-
-      // fix for bug 2654
-      if (svc_handler->error_detected ())
-        {
-          svc_handler->cancel_pending_connection ();
-        }
-
-      // At this point, the connection has be successfully connected.
-      // #REFCOUNT# is one.
-      if (TAO_debug_level > 2)
-        ACE_DEBUG ((LM_DEBUG,
-                    "TAO (%P|%t) - SSLIOP_Connector::ssliop_connect, "
-                    "new SSL connection to port %d on transport[%d]\n",
-                    remote_address.get_port_number (),
-                    svc_handler->peer ().get_handle ()));
-
-      // Add the handler to Cache
-      int retval =
-        this->orb_core ()->
-          lane_resources ().transport_cache ().cache_transport (desc,
-                                                                transport);
-
-      // Failure in adding to cache.
-      if (retval == -1)
-        {
-          // Close the handler.
-          svc_handler->close ();
-
-          if (TAO_debug_level > 0)
+          // fix for bug 2654
+          if (svc_handler->keep_waiting ())
             {
-              ACE_ERROR ((LM_ERROR,
-                          "TAO (%P|%t) - SLIIOP_Connector::ssliop_connect, "
-                          "could not add the new connection to cache\n"));
+              svc_handler->connection_pending ();
             }
 
-          return 0;
-        }
+          // fix for bug 2654
+          if (svc_handler->error_detected ())
+            {
+              svc_handler->cancel_pending_connection ();
+            }
 
-      // fix for bug 2654
-      if (svc_handler->error_detected ())
+          // At this point, the connection has be successfully connected.
+          // #REFCOUNT# is one.
+          if (TAO_debug_level > 2)
+            ACE_DEBUG ((LM_DEBUG,
+                        "TAO (%P|%t) - SSLIOP_Connector::ssliop_connect, "
+                        "new SSL connection to port %d on transport[%d]\n",
+                        remote_address.get_port_number (),
+                        svc_handler->peer ().get_handle ()));
+
+          // Add the handler to Cache
+          int retval =
+            this->orb_core ()->
+              lane_resources ().transport_cache ().cache_transport (desc,
+                                                                    transport);
+
+          // Failure in adding to cache.
+        if (retval == -1)
+            {
+              // Close the handler.
+              svc_handler->close ();
+
+              if (TAO_debug_level > 0)
+                {
+                  ACE_ERROR ((LM_ERROR,
+                              "TAO (%P|%t) - SLIIOP_Connector::ssliop_connect, "
+                              "could not add the new connection to cache\n"));
+                }
+
+              return 0;
+            }
+
+          // fix for bug 2654
+          if (svc_handler->error_detected ())
+            {
+              svc_handler->cancel_pending_connection ();
+              transport->purge_entry();
+              return 0;
+            }
+
+          if (transport->is_connected () &&
+              transport->wait_strategy ()->register_handler () != 0)
+            {
+              // Registration failures.
+
+              // Purge from the connection cache, if we are not in the cache, this
+              // just does nothing.
+              (void) transport->purge_entry ();
+
+              // Close the handler.
+              (void) transport->close_connection ();
+
+              if (TAO_debug_level > 0)
+                ACE_ERROR ((LM_ERROR,
+                            "TAO (%P|%t) - SSLIOP_Connector [%d]::ssliop_connect, "
+                            "could not register the transport "
+                            "in the reactor.\n",
+                            transport->id ()));
+
+              return 0;
+            }
+
+          svc_handler_auto_ptr.release ();
+
+        }
+      else // not making new connection
         {
-          svc_handler->cancel_pending_connection ();
-          transport->purge_entry();
-          return 0;
+          (void) this->wait_for_transport (resolver, transport, max_wait_time, true);
         }
-
-      if (transport->is_connected () &&
-          transport->wait_strategy ()->register_handler () != 0)
-        {
-          // Registration failures.
-
-          // Purge from the connection cache, if we are not in the cache, this
-          // just does nothing.
-          (void) transport->purge_entry ();
-
-          // Close the handler.
-          (void) transport->close_connection ();
-
-          if (TAO_debug_level > 0)
-            ACE_ERROR ((LM_ERROR,
-                        "TAO (%P|%t) - SSLIOP_Connector [%d]::ssliop_connect, "
-                        "could not register the transport "
-                        "in the reactor.\n",
-                        transport->id ()));
-
-          return 0;
-        }
-
-      svc_handler_auto_ptr.release ();
     }
 
   return transport;

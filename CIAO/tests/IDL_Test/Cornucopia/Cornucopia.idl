@@ -44,13 +44,11 @@ interface umface {};
 abstract interface IfAb
 {
   long op (out long value);
-  attribute long attr;
 };
 
 interface IfConcr : IfAb
 {
   long concr_op (out long value);
-  attribute long concr_attr;
 };
 
 #if !defined (CCM_LW)

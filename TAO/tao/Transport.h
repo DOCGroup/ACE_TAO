@@ -474,6 +474,9 @@ public:
    */
   virtual int register_handler (void);
 
+  /// Remove the handler from the reactor.
+  virtual int remove_handler (void);
+
   /// Write the complete Message_Block chain to the connection.
   /**
    * This method serializes on handler_lock_, guaranteeing that only
@@ -757,7 +760,7 @@ public:
    */
   virtual int send_message (TAO_OutputCDR &stream,
                             TAO_Stub *stub = 0,
-                            TAO_Message_Semantics message_semantics = TAO_TWOWAY_REQUEST,
+                            TAO_Message_Semantics message_semantics = TAO_Message_Semantics (),
                             ACE_Time_Value *max_time_wait = 0) = 0;
 
   /// Sent the contents of @a message_block

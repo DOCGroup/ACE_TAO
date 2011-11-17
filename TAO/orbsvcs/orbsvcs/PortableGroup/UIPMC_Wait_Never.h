@@ -43,7 +43,7 @@ public:
 
   // = Documented in TAO_Wait_Strategy.
   virtual int sending_request (TAO_ORB_Core *orb_core,
-                               int two_way);
+                               TAO_Message_Semantics msg_semantics);
   virtual int wait (ACE_Time_Value *max_wait_time,
                     TAO_Synch_Reply_Dispatcher &rd);
   virtual int register_handler (void);

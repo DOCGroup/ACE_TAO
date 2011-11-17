@@ -56,17 +56,17 @@ namespace CIAO
 
     virtual CORBA::Boolean same_component (CORBA::Object_ptr object_ref);
 
-    virtual ::Components::CCMHome_ptr get_ccm_home (void);
+    virtual ::Components::CCMHome_ptr get_ccm_home ();
 
-    virtual CORBA::Object_ptr _get_component (void);
+    virtual CORBA::Object_ptr _get_component ();
 
-    virtual Components::EnterpriseComponent_ptr get_executor (void);
+    virtual Components::EnterpriseComponent_ptr get_executor ();
 
-    void configuration_complete (void);
+    void configuration_complete ();
 
-    virtual void activate_component (void);
+    virtual void activate_component ();
 
-    virtual void passivate_component (void);
+    virtual void passivate_component ();
 
   protected:
     virtual void ccm_remove (void);

@@ -68,7 +68,7 @@ public:
 // NOTE: Do *NOT* put the same msg into the msg queue more than once.
 // This will confuse the msg queue and result it in dropping messages
 //////////////////////////////////////////////////////////////////////
-class Worker: public ACE_Task<ACE_MT_SYNCH>
+class Worker: public ACE_Task<ACE_SYNCH>
 {
 public:
   Worker (void)
@@ -288,7 +288,7 @@ public:
 
   virtual int send_message (TAO_OutputCDR &,
                             TAO_Stub * = 0,
-                            TAO_Message_Semantics  = TAO_TWOWAY_REQUEST,
+                            TAO_Message_Semantics  = TAO_Message_Semantics (),
                             ACE_Time_Value * = 0)
   {
     return 0;

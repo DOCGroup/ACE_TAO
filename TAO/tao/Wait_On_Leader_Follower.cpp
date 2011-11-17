@@ -46,7 +46,7 @@ TAO_Wait_On_Leader_Follower::non_blocking (void) const
 
 int
 TAO_Wait_On_Leader_Follower::sending_request (TAO_ORB_Core *orb_core,
-                                              int two_way)
+                                              TAO_Message_Semantics msg_semantics)
 {
   // Register the handler.
   if (!this->is_registered_)
@@ -56,7 +56,7 @@ TAO_Wait_On_Leader_Follower::sending_request (TAO_ORB_Core *orb_core,
 
   // Send the request.
 //@@ LF_WAIT_STRATEGY_SPL_SENDING_REQUEST_HOOK
-  return this->TAO_Wait_Strategy::sending_request (orb_core, two_way);
+  return this->TAO_Wait_Strategy::sending_request (orb_core, msg_semantics);
 }
 
 int

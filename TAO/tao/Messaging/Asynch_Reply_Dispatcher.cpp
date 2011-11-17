@@ -6,6 +6,7 @@
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
 #include "tao/Transport.h"
+#include "tao/Transport_Mux_Strategy.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -41,6 +42,13 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (TAO_Pluggable_Reply_Params &params)
       this->timeout_handler_ = 0;
       // AMI Timeout Handling End
     }
+
+  // With Asynch requests the invocation handler can't call idle_after_reply ()
+  // since it does not handle the reply.
+  // So we have to do that here in case f.i. the Exclusive TMS left the transport
+  // busy after the send
+  if (this->transport_ != 0)
+    this->transport_->tms ()->idle_after_reply ();
 
   if (!params.input_cdr_)
     return -1;
@@ -202,6 +210,13 @@ TAO_Asynch_Reply_Dispatcher::reply_timed_out (void)
           this->timeout_handler_->remove_reference ();
           this->timeout_handler_ = 0;
         }
+
+      // With Asynch requests the invocation handler can't call idle_after_reply ()
+      // since it does not handle the reply.
+      // So we have to do that here in case f.i. the Exclusive TMS left the transport
+      // busy after the send
+      if (this->transport_ != 0)
+        this->transport_->tms ()->idle_after_reply ();
 
       // This is okay here... Everything relies on our refcount being
       // held by the timeout handler, whose refcount in turn is held
