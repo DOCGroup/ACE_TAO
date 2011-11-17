@@ -59,11 +59,11 @@ project: build_files {
     }
 
     optional(source_pre_extension) {
-      commandflags(-Gsv) += _svnt
+      commandflags(-Gsv) += _svnt, _svnt_T
     }
 
     optional(header_pre_extension) {
-      commandflags(-Gsv) += _svnt
+      commandflags(-Gsv) += _svnt, _svnt_T
     }
 
     optional(source_pre_extension) {

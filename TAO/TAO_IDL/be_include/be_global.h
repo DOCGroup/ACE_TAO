@@ -111,8 +111,14 @@ public:
   static const char *be_get_ciao_svnt_hdr_fname (
     bool base_name_only = false);
 
+  static const char *be_get_ciao_tmpl_svnt_hdr_fname (
+    bool base_name_only=false);
+
   static const char *be_get_ciao_svnt_src_fname (
     bool base_name_only = false);
+
+  static const char *be_get_ciao_tmpl_svnt_src_fname (
+    bool base_name_only=false);
 
   static const char *be_get_ciao_exec_hdr_fname (
     bool base_name_only = false);
@@ -196,7 +202,15 @@ public:
     UTL_String *idl_file_name,
     bool base_name_only = false);
 
+  static const char *be_get_ciao_svnt_template_header (
+    UTL_String *idl_file_name,
+    bool base_name_only = false);
+
   static const char *be_get_ciao_svnt_source (
+    UTL_String *idl_file_name,
+    bool base_name_only = false);
+
+  static const char *be_get_ciao_svnt_template_source (
     UTL_String *idl_file_name,
     bool base_name_only = false);
 
@@ -501,6 +515,12 @@ public:
 
   /// Similar to above, but for CIAO servant and executor
   /// impl and executor IDL files, if generated.
+  void ciao_svnt_header_template_ending (const char* s);
+  const char* ciao_svnt_header_template_ending (void) const;
+
+  void ciao_svnt_source_template_ending (const char* s);
+  const char* ciao_svnt_source_template_ending (void) const;
+
   void ciao_svnt_header_ending (const char* s);
   const char* ciao_svnt_header_ending (void) const;
 
@@ -989,6 +1009,12 @@ private:
 
   /// Anyop source file name ending. Default is "A.cpp".
   char* anyop_src_ending_;
+
+  /// CIAO servant template header file name ending. Default is "_svnt_T.h".
+  char* ciao_svnt_hdr_template_ending_;
+
+  /// CIAO servant template source file name ending. Default is "_svnt_T.cpp".
+  char* ciao_svnt_src_template_ending_;
 
   /// CIAO servant header file name ending. Default is "_svnt.h".
   char* ciao_svnt_hdr_ending_;
