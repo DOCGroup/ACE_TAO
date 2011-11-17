@@ -1,0 +1,114 @@
+Description: SSLv2 was disabled in Debian in OpenSSL 1.0.0d, remove it from ACE too
+Forwarded: yes
+Author: Pau Garcia i Quiles <pgquiles@elpauer.org>
+Last-Update: 2011-04-26
+
+--- a/ace/SSL/SSL_Context.cpp
++++ b/ace/SSL/SSL_Context.cpp
+@@ -236,15 +236,6 @@ ACE_SSL_Context::set_mode (int mode)
+ 
+   switch (mode)
+     {
+-    case ACE_SSL_Context::SSLv2_client:
+-      method = ::SSLv2_client_method ();
+-      break;
+-    case ACE_SSL_Context::SSLv2_server:
+-      method = ::SSLv2_server_method ();
+-      break;
+-    case ACE_SSL_Context::SSLv2:
+-      method = ::SSLv2_method ();
+-      break;
+     case ACE_SSL_Context::SSLv3_client:
+       method = ::SSLv3_client_method ();
+       break;
+@@ -254,15 +245,6 @@ ACE_SSL_Context::set_mode (int mode)
+     case ACE_SSL_Context::SSLv3:
+       method = ::SSLv3_method ();
+       break;
+-    case ACE_SSL_Context::SSLv23_client:
+-      method = ::SSLv23_client_method ();
+-      break;
+-    case ACE_SSL_Context::SSLv23_server:
+-      method = ::SSLv23_server_method ();
+-      break;
+-    case ACE_SSL_Context::SSLv23:
+-      method = ::SSLv23_method ();
+-      break;
+     case ACE_SSL_Context::TLSv1_client:
+       method = ::TLSv1_client_method ();
+       break;
+@@ -335,14 +317,10 @@ ACE_SSL_Context::load_trusted_ca (const
+ 
+   // For TLS/SSL servers scan all certificates in ca_file and ca_dir and
+   // list them as acceptable CAs when requesting a client certificate.
+-  if (mode_ == SSLv23
+-      || mode_ == SSLv23_server
+-      || mode_ == TLSv1
++  if (mode_ == TLSv1
+       || mode_ == TLSv1_server
+       || mode_ == SSLv3
+-      || mode_ == SSLv3_server
+-      || mode_ == SSLv2
+-      || mode_ == SSLv2_server)
++      || mode_ == SSLv3_server)
+     {
+       // Note: The STACK_OF(X509_NAME) pointer is a copy of the pointer in
+       // the CTX; any changes to it by way of these function calls will
+--- a/ace/SSL/SSL_Context.h
++++ b/ace/SSL/SSL_Context.h
+@@ -82,16 +82,16 @@ public:
+ 
+   enum {
+     INVALID_METHOD = -1,
+-    SSLv2_client = 1,
++/*    SSLv2_client = 1,
+     SSLv2_server,
+-    SSLv2,
+-    SSLv3_client,
++    SSLv2, */
++    SSLv3_client = 4,
+     SSLv3_server,
+     SSLv3,
+-    SSLv23_client,
++/*    SSLv23_client,
+     SSLv23_server,
+-    SSLv23,
+-    TLSv1_client,
++    SSLv23, */
++    TLSv1_client = 10,
+     TLSv1_server,
+     TLSv1
+   };
+@@ -114,7 +114,7 @@ public:
+    * If the mode is not set, then the class automatically initializes
+    * itself to the default mode.
+    */
+-  int set_mode (int mode = ACE_SSL_Context::SSLv23);
++  int set_mode (int mode = ACE_SSL_Context::SSLv3);
+ 
+   int get_mode (void) const;
+ 
+--- a/protocols/ace/INet/HTTP_Simple_exec.cpp
++++ b/protocols/ace/INet/HTTP_Simple_exec.cpp
+@@ -35,7 +35,7 @@ usage (void)
+   std::cout << "\t-p <port>       \t\tproxy port to connect to\n";
+   std::cout << "\t-o <filename>   \t\tfile to write output to\n";
+ #if defined (ACE_HAS_SSL) && ACE_HAS_SSL == 1
+-  std::cout << "\t-v <ssl version>\t\tSSL version to use: 2, 23, 3\n";
++  std::cout << "\t-v <ssl version>\t\tSSL version to use: '3' for SSLv3 or '1' for TLS 1.0\n";
+   std::cout << "\t-n              \t\tno peer certificate verification\n";
+   std::cout << "\t-i              \t\tignore peer certificate verification failures\n";
+   std::cout << "\t-c <filename>   \t\tcertificate file (PEM format)\n";
+@@ -78,10 +78,8 @@ parse_args (int argc, ACE_TCHAR *argv []
+         case 'v':
+           {
+             ACE_CString ver = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ());
+-            if (ver == "2")
+-              ssl_mode = ACE_SSL_Context::SSLv2;
+-            else if (ver == "23")
+-              ssl_mode = ACE_SSL_Context::SSLv23;
++            if (ver == "1")
++              ssl_mode = ACE_SSL_Context::TLSv1;
+             else if (ver != "3") // default mode
+               {
+                 std::cerr << "ERROR: Invalid SSL mode [" << ver << "] specfied!" << std::endl;

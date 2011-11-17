@@ -1,0 +1,26 @@
+// $Id$
+
+/**
+ * @file Threading.idl
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef THREADING_IDL_
+#define THREADING_IDL_
+
+#include <Components.idl>
+
+#pragma ciao lem "Base/ThreadingE.idl"
+
+module Threading
+{
+  interface interface_1 {
+    void invoke_on_interface_1 ();
+  };
+
+  interface interface_2 {
+    void invoke_on_interface_2 ();
+  };
+};
+
+#endif /* THREADING_IDL_ */

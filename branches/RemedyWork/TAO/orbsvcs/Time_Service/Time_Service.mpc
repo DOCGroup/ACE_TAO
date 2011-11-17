@@ -1,0 +1,18 @@
+// -*- MPC -*-
+// $Id$
+
+project(Time_Service_Server) : orbsvcsexe, install, time_serv, naming, utils, avoids_corba_e_micro {
+  exename  = tao_costime_server
+  Source_Files {
+    Server_i.cpp
+    Time_Service_Server.cpp
+  }
+}
+
+project(Time_Service_Clerk) : orbsvcsexe, install, time_serv, naming, utils, avoids_corba_e_micro {
+  exename  = tao_costime_clerk
+  Source_Files {
+    Clerk_i.cpp
+    Time_Service_Clerk.cpp
+  }
+}
