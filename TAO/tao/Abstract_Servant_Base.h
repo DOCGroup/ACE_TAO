@@ -51,13 +51,17 @@ namespace CORBA
 namespace TAO
 {
   class Argument;
+
+  namespace Portable_Server
+  {
+    class Servant_Upcall;
+  };
 }
 
 typedef void (*TAO_Skeleton)(
     TAO_ServerRequest &,
-    void *,
-    void *
-  );
+    TAO::Portable_Server::Servant_Upcall *,
+    void *);
 
 typedef void (*TAO_Collocated_Skeleton)(
     TAO_Abstract_ServantBase *,
@@ -150,12 +154,14 @@ protected:
    * invokes the operation, storing the results and out parameters (if
    * any) or the exceptions thrown into @a request.
    */
-  virtual void _dispatch (TAO_ServerRequest &request,
-                          void *servant_upcall) = 0;
+  virtual void _dispatch (
+    TAO_ServerRequest &request,
+    TAO::Portable_Server::Servant_Upcall *servant_upcall) = 0;
 
-  virtual void synchronous_upcall_dispatch (TAO_ServerRequest &req,
-                                            void *servant_upcall,
-                                            void *derived_this) = 0;
+  virtual void synchronous_upcall_dispatch (
+    TAO_ServerRequest &req,
+    TAO::Portable_Server::Servant_Upcall *servant_upcall,
+    void *derived_this) = 0;
 
   /// Get this interface's repository id (TAO specific).
   virtual const char *_interface_repository_id (void) const = 0;

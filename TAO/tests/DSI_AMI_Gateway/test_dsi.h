@@ -40,7 +40,7 @@ public:
    *
    */
   virtual void _dispatch (TAO_ServerRequest &request,
-                          void *context);
+                          TAO::Portable_Server::Servant_Upcall *context);
 
   // we need this because it is a pure virtual method in
   // its parent class
@@ -50,11 +50,9 @@ public:
 
   virtual CORBA::RepositoryId _primary_interface (
       const PortableServer::ObjectId &oid,
-      PortableServer::POA_ptr poa
-    );
+      PortableServer::POA_ptr poa);
 
-  virtual PortableServer::POA_ptr _default_POA (
-    );
+  virtual PortableServer::POA_ptr _default_POA (void);
 
 private:
   /// The ORB

@@ -28,7 +28,7 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
                              size_t nargs,
                              TAO::Upcall_Command & command
 #if TAO_HAS_INTERCEPTORS == 1
-                             , void * servant_upcall
+                             , TAO::Portable_Server::Servant_Upcall *servant_upcall
                              , CORBA::TypeCode_ptr const * exceptions
                              , CORBA::ULong nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */

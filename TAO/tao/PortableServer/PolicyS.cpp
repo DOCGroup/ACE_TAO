@@ -317,21 +317,16 @@ namespace POA_CORBA
     TAO_Operation_Details const * const operation_details_;
     TAO::Argument * const * const args_;
   };
-
 }
-
 
 // TAO_IDL - Generated from
 // be\be_visitor_operation/operation_ss.cpp:192
 
 void POA_CORBA::Policy::_get_policy_type_skel (
     TAO_ServerRequest & server_request,
-    void * TAO_INTERCEPTOR (servant_upcall),
-    void * servant
-
-  )
+    TAO::Portable_Server::Servant_Upcall * TAO_INTERCEPTOR (servant_upcall),
+    void * servant)
 {
-
 
 #if TAO_HAS_INTERCEPTORS == 1
   static CORBA::TypeCode_ptr const * const exceptions = 0;
@@ -397,9 +392,7 @@ namespace POA_CORBA
           this->args_);
 
 
-      retval =
-        this->servant_->copy (
-          );
+      retval = this->servant_->copy ();
 
     }
 
@@ -417,7 +410,7 @@ namespace POA_CORBA
 
 void POA_CORBA::Policy::copy_skel (
     TAO_ServerRequest & server_request,
-    void * TAO_INTERCEPTOR (servant_upcall),
+    TAO::Portable_Server::Servant_Upcall * TAO_INTERCEPTOR (servant_upcall),
     void * servant
 
   )
@@ -495,7 +488,7 @@ namespace POA_CORBA
 
 void POA_CORBA::Policy::destroy_skel (
     TAO_ServerRequest & server_request,
-    void * TAO_INTERCEPTOR (servant_upcall),
+    TAO::Portable_Server::Servant_Upcall * TAO_INTERCEPTOR (servant_upcall),
     void * servant
 
   )
@@ -590,7 +583,7 @@ namespace POA_CORBA
 }
 void POA_CORBA::Policy::_is_a_skel (
     TAO_ServerRequest & server_request,
-    void * TAO_INTERCEPTOR (servant_upcall),
+    TAO::Portable_Server::Servant_Upcall * TAO_INTERCEPTOR (servant_upcall),
     void * servant
 
   )
@@ -679,7 +672,7 @@ namespace POA_CORBA
 }
 void POA_CORBA::Policy::_non_existent_skel (
     TAO_ServerRequest & server_request,
-    void * TAO_INTERCEPTOR (servant_upcall),
+    TAO::Portable_Server::Servant_Upcall * TAO_INTERCEPTOR (servant_upcall),
     void * servant
 
   )
@@ -731,7 +724,7 @@ void POA_CORBA::Policy::_non_existent_skel (
 
 void POA_CORBA::Policy::_interface_skel (
     TAO_ServerRequest & server_request,
-    void * /* servant_upcall */,
+    TAO::Portable_Server::Servant_Upcall * /* servant_upcall */,
     void * servant
 
   )
@@ -812,7 +805,7 @@ namespace POA_CORBA
 }
 void POA_CORBA::Policy::_component_skel (
     TAO_ServerRequest & server_request,
-    void * TAO_INTERCEPTOR (servant_upcall),
+    TAO::Portable_Server::Servant_Upcall * TAO_INTERCEPTOR (servant_upcall),
     void * servant
 
   )
@@ -883,14 +876,12 @@ const char* POA_CORBA::Policy::_interface_repository_id (void) const
 
 void POA_CORBA::Policy::_dispatch (
     TAO_ServerRequest & req,
-    void * servant_upcall
-
+    TAO::Portable_Server::Servant_Upcall *servant_upcall
   )
 {
   this->synchronous_upcall_dispatch (req,
                                      servant_upcall,
-                                     this
-                                    );
+                                     this);
 }
 
 // TAO_IDL - Generated from

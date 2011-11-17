@@ -66,7 +66,7 @@ TAO::CSD::Strategy_Base::dispatch_request
       case DISPATCH_DEFERRED:
         // Perform the "default" dispatching strategy logic for this request
         // right now, using the current thread.
-        upcall.servant()->_dispatch(server_request, (void*)&upcall);
+        upcall.servant()->_dispatch(server_request, &upcall);
         break;
 
       default:

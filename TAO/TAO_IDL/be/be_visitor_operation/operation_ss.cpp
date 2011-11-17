@@ -191,7 +191,7 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
   *os << this->ctx_->port_prefix ().c_str () << node->local_name ()
       << "_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest & server_request," << be_nl
-      << "void * TAO_INTERCEPTOR (servant_upcall)," << be_nl
+      << "TAO::Portable_Server::Servant_Upcall *TAO_INTERCEPTOR (servant_upcall)," << be_nl
       << "void * servant)" << be_uidt << be_uidt_nl;
 
   // Generate the actual code for the skeleton. However, if any of the

@@ -31,7 +31,9 @@ ACE_INLINE
 void
 TAO::CSD::TP_Corba_Request::do_dispatch(void)
 {
-  this->server_request_.dispatch(this->servant());
+  // Pass 0 for the upcall wrapper. If we have it here, we can change the
+  // upcall wrapper to a reference in the full TAO Core
+  this->server_request_.dispatch(this->servant(), 0);
 }
 
 ACE_INLINE

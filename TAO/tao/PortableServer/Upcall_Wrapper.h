@@ -43,6 +43,11 @@ namespace TAO
   class Argument;
   class Upcall_Command;
 
+  namespace Portable_Server
+  {
+    class Servant_Upcall;
+  };
+
   /**
    * @class Upcall_Wrapper
    *
@@ -68,7 +73,6 @@ namespace TAO
      *                       argument list.
      * @param command        @c Command object that performs the
      *                       actual upcall into the servant.
-     *
      * @param servant_upcall Object containing information for POA
      *                       that dispatched the servant.
      * @param exceptions     Array of user exceptions the operation
@@ -81,7 +85,7 @@ namespace TAO
                  size_t nargs,
                  TAO::Upcall_Command & command
 #if TAO_HAS_INTERCEPTORS == 1
-                 , void * servant_upcall
+                 , TAO::Portable_Server::Servant_Upcall *servant_upcall
                  , CORBA::TypeCode_ptr const * exceptions
                  , CORBA::ULong nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */

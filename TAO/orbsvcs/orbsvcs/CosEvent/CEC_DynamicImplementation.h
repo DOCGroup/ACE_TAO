@@ -23,22 +23,21 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+/**
+ * DSI TAO_CEC_DynamicImplementationServer implementation
+ *
+ * Implements the DSI impl object
+ */
 class TAO_CEC_DynamicImplementationServer : public TAO_DynamicImplementation
 {
-  // = TITLE
-  //   DSI TAO_CEC_DynamicImplementationServer implementation
-  //
-  // = DESCRIPTION
-  //   Implements the DSI impl object
-  //
 public:
 
-  // Constructure
+  /// Constructor
   TAO_CEC_DynamicImplementationServer (PortableServer::POA_ptr poa,
                                        TAO_CEC_TypedProxyPushConsumer *typed_pp_consumer,
                                        TAO_CEC_TypedEventChannel *typed_event_channel);
 
-  //Destructor
+  /// Destructor
   virtual ~TAO_CEC_DynamicImplementationServer (void);
 
   // = The DynamicImplementation methods.
@@ -50,20 +49,20 @@ public:
 
   virtual PortableServer::POA_ptr _default_POA (void);
 
-  // Handles the _is_a call
+  /// Handles the _is_a call
   virtual void is_a (CORBA::ServerRequest_ptr request);
 
 private:
-  // The POA
+  /// The POA
   PortableServer::POA_var poa_;
 
-  // The Typed Proxy Push Consumer Implementation
+  /// The Typed Proxy Push Consumer Implementation
   TAO_CEC_TypedProxyPushConsumer *typed_pp_consumer_;
 
-  // The Typed Event Channel Implementation
+  /// The Typed Event Channel Implementation
   TAO_CEC_TypedEventChannel *typed_event_channel_;
 
-  // The RepositoryId
+  /// The RepositoryId
   CORBA::RepositoryId repository_id_;
 };
 

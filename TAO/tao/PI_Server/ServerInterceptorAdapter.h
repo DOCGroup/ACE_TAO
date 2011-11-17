@@ -87,7 +87,7 @@ namespace TAO
         TAO_ServerRequest &server_request,
         TAO::Argument * const args[],
         size_t nargs,
-        void * servant_upcall,
+        TAO::Portable_Server::Servant_Upcall *servant_upcall,
         CORBA::TypeCode_ptr const * exceptions,
         CORBA::ULong nexceptions,
         CORBA::OctetSeq_out oc);
@@ -104,7 +104,7 @@ namespace TAO
         TAO_ServerRequest &server_request,
         TAO::Argument * const args[],
         size_t nargs,
-        void * servant_upcall,
+        TAO::Portable_Server::Servant_Upcall *servant_upcall,
         CORBA::TypeCode_ptr const * exceptions,
         CORBA::ULong nexceptions);
 
@@ -113,7 +113,7 @@ namespace TAO
         TAO_ServerRequest &server_request,
         TAO::Argument * const args[],
         size_t nargs,
-        void * servant_upcall,
+        TAO::Portable_Server::Servant_Upcall *servant_upcall,
         CORBA::TypeCode_ptr const * exceptions,
         CORBA::ULong nexceptions);
 
@@ -123,7 +123,7 @@ namespace TAO
         TAO_ServerRequest &server_request,
         TAO::Argument * const args[],
         size_t nargs,
-        void * servant_upcall,
+        TAO::Portable_Server::Servant_Upcall *servant_upcall,
         CORBA::TypeCode_ptr const * exceptions,
         CORBA::ULong nexceptions);
 
@@ -133,7 +133,7 @@ namespace TAO
         TAO_ServerRequest &server_request,
         TAO::Argument * const args[],
         size_t nargs,
-        void * servant_upcall,
+        TAO::Portable_Server::Servant_Upcall *servant_upcall,
         CORBA::TypeCode_ptr const * exceptions,
         CORBA::ULong nexceptions);
 
@@ -143,15 +143,14 @@ namespace TAO
         TAO_ServerRequest &server_request,
         TAO::Argument * const args[],
         size_t nargs,
-        void * servant_upcall,
+        TAO::Portable_Server::Servant_Upcall *servant_upcall,
         CORBA::TypeCode_ptr const * exceptions,
         CORBA::ULong nexceptions);
     //@}
 
     /// Register an interceptor.
     virtual void add_interceptor (
-      PortableInterceptor::ServerRequestInterceptor_ptr interceptor
-     );
+      PortableInterceptor::ServerRequestInterceptor_ptr interceptor);
 
     virtual void add_interceptor (
       PortableInterceptor::ServerRequestInterceptor_ptr interceptor,
