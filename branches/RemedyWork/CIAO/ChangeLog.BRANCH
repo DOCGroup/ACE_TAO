@@ -1,3 +1,18 @@
+Thu Nov 17 10:54:54 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * ciao/Servants/Facet_Servant_Base_T.h:
+        * ciao/Servants/Facet_Servant_Base_T.cpp:
+          Templated base class for facet servants.
+
+        * tests/IDL_Test/Inherited_Servants:
+        * tests/IDL_Test/Inherited_Servants/Base.idl:
+        * tests/IDL_Test/Inherited_Servants/Base.mpc:
+        * tests/IDL_Test/Inherited_Servants/Derived.idl:
+        * tests/IDL_Test/Inherited_Servants/Derived.mpc:
+        * tests/IDL_Test/Inherited_Servants/Tester:
+        * tests/IDL_Test/Inherited_Servants/Tester.cpp:
+          Added compilation test.
+
 
 Local Variables:
 mode: change-log
