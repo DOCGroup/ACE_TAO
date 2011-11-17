@@ -74,6 +74,8 @@
 #include "be_visitor_root/root_ih.cpp"
 #include "be_visitor_root/root_svh.cpp"
 #include "be_visitor_root/root_svs.cpp"
+#include "be_visitor_root/root_svth.cpp"
+#include "be_visitor_root/root_svts.cpp"
 #include "be_visitor_root/root_ex_idl.cpp"
 #include "be_visitor_root/root_exh.cpp"
 #include "be_visitor_root/root_exs.cpp"

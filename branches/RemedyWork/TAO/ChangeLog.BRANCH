@@ -1,3 +1,30 @@
+Thu Nov 17 10:46:22 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * MPC/config/taobaseidldefaults.mpb:
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be/be_produce.cpp:
+        * TAO_IDL/be/be_visitor_component/component.cpp:
+        * TAO_IDL/be/be_visitor_component/facet_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/facet_svs.cpp:
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+        * TAO_IDL/be/be_visitor_module/module.cpp:
+        * TAO_IDL/be/be_visitor_root.cpp:
+        * TAO_IDL/be/be_visitor_root/root_svth.cpp:
+        * TAO_IDL/be/be_visitor_root/root_svts.cpp:
+        * TAO_IDL/be_include/be_codegen.h:
+        * TAO_IDL/be_include/be_global.h:
+        * TAO_IDL/be_include/be_visitor_root.h:
+        * TAO_IDL/be_include/be_visitor_root/root_svth.h:
+        * TAO_IDL/be_include/be_visitor_root/root_svts.h:
+          The IDL compileren doesn't generated the facet servants
+          in the _svnt.cpp/h files.
+          The IDL compiler now uses the template facet servant 
+          implementation (which still need to be generated)
+          in the _svnt.cpp file.
+          The IDL compiler now creates the _svnt_T.cpp/h files and
+          initialize them.
+
 
 Local Variables:
 mode: change-log

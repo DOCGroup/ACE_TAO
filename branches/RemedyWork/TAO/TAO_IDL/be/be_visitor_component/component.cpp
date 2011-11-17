@@ -281,6 +281,8 @@ be_visitor_component::visit_typedef (be_typedef *node)
     case TAO_CodeGen::TAO_ROOT_SS:
     case TAO_CodeGen::TAO_ROOT_SVH:
     case TAO_CodeGen::TAO_ROOT_SVS:
+    case TAO_CodeGen::TAO_ROOT_SVTH:
+    case TAO_CodeGen::TAO_ROOT_SVTS:
     case TAO_CodeGen::TAO_ROOT_EXH:
     case TAO_CodeGen::TAO_ROOT_EXS:
     case TAO_CodeGen::TAO_ROOT_CNH:

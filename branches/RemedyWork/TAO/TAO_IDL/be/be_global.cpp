@@ -75,6 +75,8 @@ BE_GlobalData::BE_GlobalData (void)
     server_inline_ending_ (ACE::strnew ("S.inl")),
     anyop_hdr_ending_ (ACE::strnew ("A.h")),
     anyop_src_ending_ (ACE::strnew ("A.cpp")),
+    ciao_svnt_hdr_template_ending_ (ACE::strnew ("_svnt_T.h")),
+    ciao_svnt_src_template_ending_ (ACE::strnew ("_svnt_T.cpp")),
     ciao_svnt_hdr_ending_ (ACE::strnew ("_svnt.h")),
     ciao_svnt_src_ending_ (ACE::strnew ("_svnt.cpp")),
     ciao_exec_hdr_ending_ (ACE::strnew ("_exec.h")),
@@ -431,11 +433,30 @@ BE_GlobalData::be_get_ciao_svnt_header (UTL_String *idl_file_name,
 }
 
 const char *
+BE_GlobalData::be_get_ciao_svnt_template_header (UTL_String *idl_file_name,
+                                                bool base_name_only)
+{
+  return be_change_idl_file_extension (idl_file_name,
+                                       be_global->ciao_svnt_header_template_ending (),
+                                       base_name_only);
+}
+
+
+const char *
 BE_GlobalData::be_get_ciao_svnt_source (UTL_String *idl_file_name,
                                         bool base_name_only)
 {
   return be_change_idl_file_extension (idl_file_name,
                                        be_global->ciao_svnt_source_ending (),
+                                       base_name_only);
+}
+
+const char *
+BE_GlobalData::be_get_ciao_svnt_template_source (UTL_String *idl_file_name,
+                                                bool base_name_only)
+{
+  return be_change_idl_file_extension (idl_file_name,
+                                       be_global->ciao_svnt_source_template_ending (),
                                        base_name_only);
 }
 
@@ -674,12 +695,30 @@ BE_GlobalData::be_get_ciao_svnt_hdr_fname (
 }
 
 const char *
+BE_GlobalData::be_get_ciao_tmpl_svnt_hdr_fname (
+    bool base_name_only)
+{
+  return
+    be_get_ciao_svnt_template_header (idl_global->stripped_filename (),
+                                      base_name_only);
+}
+
+const char *
 BE_GlobalData::be_get_ciao_svnt_src_fname (
   bool base_name_only)
 {
   return
     be_get_ciao_svnt_source (idl_global->stripped_filename (),
                              base_name_only);
+}
+
+const char *
+BE_GlobalData::be_get_ciao_tmpl_svnt_src_fname (
+    bool base_name_only)
+{
+  return
+    be_get_ciao_svnt_template_source (idl_global->stripped_filename (),
+                                      base_name_only);
 }
 
 const char *
@@ -1349,6 +1388,32 @@ const char*
 BE_GlobalData::ciao_svnt_source_ending (void) const
 {
   return this->ciao_svnt_src_ending_;
+}
+
+void
+BE_GlobalData::ciao_svnt_header_template_ending (const char* s)
+{
+  ACE::strdelete (this->ciao_svnt_hdr_template_ending_);
+  this->ciao_svnt_hdr_template_ending_ = ACE::strnew (s);
+}
+
+const char*
+BE_GlobalData::ciao_svnt_header_template_ending (void) const
+{
+  return this->ciao_svnt_hdr_template_ending_;
+}
+
+void
+BE_GlobalData::ciao_svnt_source_template_ending (const char* s)
+{
+  ACE::strdelete (this->ciao_svnt_src_template_ending_);
+  this->ciao_svnt_src_template_ending_ = ACE::strnew (s);
+}
+
+const char*
+BE_GlobalData::ciao_svnt_source_template_ending (void) const
+{
+  return this->ciao_svnt_src_template_ending_;
 }
 
 void
