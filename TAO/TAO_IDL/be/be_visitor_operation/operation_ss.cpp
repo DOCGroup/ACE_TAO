@@ -192,7 +192,7 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
       << "_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest & server_request," << be_nl
       << "TAO::Portable_Server::Servant_Upcall *TAO_INTERCEPTOR (servant_upcall)," << be_nl
-      << "void * servant)" << be_uidt << be_uidt_nl;
+      << "TAO_ServantBase *servant)" << be_uidt << be_uidt_nl;
 
   // Generate the actual code for the skeleton. However, if any of the
   // argument types is "native", we do not generate any skeleton
@@ -246,7 +246,7 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
 
   // Get the right object implementation.
   *os << intf->full_skel_name () << " * const impl =" << be_idt_nl
-      << "static_cast<"
+      << "dynamic_cast<"
       << intf->full_skel_name () << " *> (servant);" << be_uidt << be_uidt_nl;
 
   // Upcall_Command instantiation.

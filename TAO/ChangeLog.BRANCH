@@ -1,3 +1,24 @@
+Thu Nov 17 15:55:04 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_visitor_interface/amh_si.cpp:
+        * TAO_IDL/be/be_visitor_operation/amh_sh.cpp:
+        * TAO_IDL/be/be_visitor_operation/amh_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_sh.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+        * tao/Abstract_Servant_Base.h:
+        * tao/Messaging/AMH_Skeletons.h:
+        * tao/Messaging/AMH_Skeletons.cpp:
+        * tao/PortableServer/Operation_Table.h:
+        * tao/PortableServer/PolicyS.h:
+        * tao/PortableServer/PolicyS.cpp:
+        * tao/PortableServer/Servant_Base.h:
+        * tao/PortableServer/Servant_Base.cpp:
+          Changed the third argument of the skel methods from void* to
+          TAO_ServantBase*. As a result the static_cast in the skeleton
+          methods has been replaced with a dynamic_cast, something we couldn't
+          use in the past when we wheren't allowed to use RTTI.
+
 Thu Nov 17 11:33:52 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Abstract_Servant_Base.h:

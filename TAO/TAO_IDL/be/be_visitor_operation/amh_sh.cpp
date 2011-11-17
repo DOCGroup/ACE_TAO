@@ -138,7 +138,7 @@ be_visitor_amh_operation_sh::generate_shared_prologue (
       << "_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest &_tao_req," << be_nl
       << "TAO::Portable_Server::Servant_Upcall *_tao_obj," << be_nl
-      << "void *_tao_servant_upcall"
+      << "TAO_ServantBase *_tao_servant_upcall"
       << ");" << be_uidt_nl << be_uidt_nl;
 
   // We need the interface node in which this operation was defined. However,
