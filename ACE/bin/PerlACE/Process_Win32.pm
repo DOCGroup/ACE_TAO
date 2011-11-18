@@ -12,7 +12,7 @@ use Cwd;
 
 # Make sure the File::Which module is installed on the machine
 # before trying to use it. If the module is installed on this
-# machine, then it will be included because of the eval () 
+# machine, then it will be included because of the eval ()
 # statement below.
 my $has_which = eval ("use File::Which; 1;") ? 1 : 0;
 
