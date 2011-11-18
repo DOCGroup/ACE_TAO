@@ -1,3 +1,9 @@
+Fri Nov 18 03:54:50 UTC 2011  James H. Hill  <hillj at cs dot iupui dot edu>
+
+        * bin/PerlACE/Process_Win32.pm:
+
+          Fixed fuzz errors.
+
 Mon Nov 14 06:02:05 UTC 2011  James H. Hill  <hillj at cs dot iupui dot edu>
 
         * bin/PerlACE/Process_Win32.pm:
