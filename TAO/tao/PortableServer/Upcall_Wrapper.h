@@ -46,7 +46,7 @@ namespace TAO
   namespace Portable_Server
   {
     class Servant_Upcall;
-  };
+  }
 
   /**
    * @class Upcall_Wrapper
