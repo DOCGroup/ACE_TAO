@@ -48,6 +48,7 @@ protected:
   const char *scope_name_;
   const char *iface_name_;
   const char *smart_scope_;
+  bool sync_;
 
 private:
   int gen_reply_handler_class (void);
