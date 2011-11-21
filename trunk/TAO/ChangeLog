@@ -1,8 +1,12 @@
+Mon Nov 21 11:59:40 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Upcall_Wrapper.h:
+          Fixed gcc warnings
+
 Mon Nov 21 08:37:38 UTC 2011  Martin Corino  <mcorino@remedy.nl>
 
         * tests/Mixed_Sync_ASync_Events/test_i.h:
         * tests/Mixed_Sync_ASync_Events/test_i.cpp:
-
           New attempt to silence some compiler warnings.
 
 Sun Nov 20 19:22:58 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
