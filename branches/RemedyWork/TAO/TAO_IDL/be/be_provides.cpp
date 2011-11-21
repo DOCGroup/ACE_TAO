@@ -95,7 +95,7 @@ be_provides::gen_facet_svnt_tmpl_decl (TAO_OutStream &os)
   const char *global = (sname_str == "" ? "" : "::");
 
   os << lname << "_Servant_T (" << be_idt_nl
-     << "typename EXEC::_ptr_type execturor,"
+     << "typename EXEC::_ptr_type executor," << be_nl
      << "::Components::CCMContext_ptr ctx);" << be_uidt_nl << be_nl;
 
   os << "virtual ~" << lname << "_Servant_T (void);";
@@ -124,7 +124,7 @@ be_provides::gen_facet_svnt_tmpl_decl (TAO_OutStream &os)
         }
     }
 
-  os << "};" << be_nl << be_uidt_nl;
+  os << be_uidt_nl << "};" << be_nl << be_uidt_nl;
 
   os << "}";
 
