@@ -19,7 +19,8 @@ be_visitor_facet_ami_exh::be_visitor_facet_ami_exh (
     iface_ (0),
     callback_iface_ (0),
     scope_name_ (0),
-    iface_name_ (0)
+    iface_name_ (0),
+  sync_ (false)
 {
   // This is initialized in the base class to svnt_export_macro()
   // or skel_export_macro(), since there are many more visitor
@@ -53,13 +54,14 @@ be_visitor_facet_ami_exh::visit_provides (be_provides *node)
 
   if (this->gen_reply_handler_class () == -1)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_facet_ami_exh")
-                         ACE_TEXT ("::visit_provides - ")
-                         ACE_TEXT ("gen_reply_handler_class() ")
-                         ACE_TEXT ("failed\n")),
-                        -1);
-    }
+    ACE_ERROR_RETURN ((LM_ERROR,
+             ACE_TEXT ("be_visitor_facet_ami_exh")
+             ACE_TEXT ("::visit_provides - ")
+             ACE_TEXT ("gen_reply_handler_class() ")
+             ACE_TEXT ("failed\n")),
+            -1);
+   }
+
 
   if (this->gen_facet_executor_class () == -1)
     {
@@ -88,6 +90,8 @@ be_visitor_facet_ami_exh::visit_operation (be_operation *node)
     {
       return  0;
     }
+  os_ << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
 
   /// We're generating implementation operation declarations,
   /// so we can just use this visitor.
@@ -139,6 +143,9 @@ be_visitor_facet_ami_exh::init (bool for_impl)
   AST_Decl *d = s->lookup_by_name (sn, true, false);
   this->callback_iface_ = be_interface::narrow_from_decl (d);
 
+  if (this->callback_iface_ == 0)
+    this->sync_  = true;
+
   sn->destroy ();
   delete sn;
   sn = 0;
@@ -147,9 +154,14 @@ be_visitor_facet_ami_exh::init (bool for_impl)
 int
 be_visitor_facet_ami_exh::gen_reply_handler_class (void)
 {
+  os_ << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
+
+
   const char *suffix = "_reply_handler";
   this->init (false);
-
+  if (this->sync_)
+    return 0;
   os_ << be_nl
       << "class " << this->export_macro_.c_str () << " "
       << this->iface_name_ << suffix << be_idt_nl
@@ -194,6 +206,9 @@ be_visitor_facet_ami_exh::gen_reply_handler_class (void)
 int
 be_visitor_facet_ami_exh::gen_facet_executor_class (void)
 {
+    os_ << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
+
   const char *suffix = "_exec_i";
   const char *scope_name =
     ScopeAsDecl (this->iface_->defined_in ())->full_name ();
@@ -257,4 +272,3 @@ be_visitor_facet_ami_exh::gen_facet_executor_class (void)
 
   return 0;
 }
-

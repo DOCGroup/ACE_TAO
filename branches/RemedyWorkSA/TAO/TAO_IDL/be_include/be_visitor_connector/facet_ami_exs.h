@@ -41,10 +41,12 @@ public:
   virtual int post_process (be_decl *node);
 
 private:
+  void init (void);
   int gen_reply_handler_class (void);
   int gen_facet_executor_class (void);
   int gen_reply_hander_op (be_operation *node);
   int gen_facet_executor_op (be_operation *node);
+  int gen_facet_executor_sync_op (be_operation *node);
 
 private:
   /// Storage for the interface type of the facet.
@@ -53,6 +55,7 @@ private:
   /// Flag to tell us which operation body (reply handler
   /// or sendc_* class) we are generating.
   bool for_reply_handler_;
+  bool sync_;
 };
 
 //==============================================================

@@ -1,18 +1,17 @@
 
 //=============================================================================
 /**
- *  @file    connector_ami_exs.cpp
+ *  @file    connactor_ami_exs.cpp
  *
  *  $Id$
  *
- *  Visitor generating code for AMI4CCM Connectors in the exec
+ * Visitor generating code for AMI4CCM Connectors in the exec
  *  impl source.
- *
+ **
  *
  *  @author Jeff Parsons
  */
 //=============================================================================
-
 be_visitor_connector_ami_exs::be_visitor_connector_ami_exs (
       be_visitor_context *ctx)
   : be_visitor_component_scope (ctx)
@@ -91,4 +90,5 @@ be_visitor_connector_ami_exs::gen_entrypoint (void)
       << "return retval;" << be_uidt_nl
       << "}";
 }
+
 
