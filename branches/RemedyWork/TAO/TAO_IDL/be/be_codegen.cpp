@@ -3398,6 +3398,10 @@ TAO_CodeGen::gen_svnt_hdr_includes (TAO_OutStream *stream)
     stream,
     "ciao/Servants/Home_Servant_Impl_T.h");
 
+  this->gen_standard_include (
+    stream,
+    "ciao/Servants/Facet_Servant_Base_T.h");
+
   *stream << be_nl;
 
   this->gen_standard_include (

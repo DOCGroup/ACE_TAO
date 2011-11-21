@@ -32,7 +32,8 @@ public:
 
   ~be_visitor_facet_svs (void);
 
-  virtual int visit_component (be_provides *node);
+  virtual int visit_component (be_component *node);
+  virtual int visit_provides (be_provides *node);
 };
 
 #endif /* _BE_COMPONENT_FACET_SVS_H_ */

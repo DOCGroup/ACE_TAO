@@ -23,9 +23,9 @@ be_visitor_facet_svs::~be_visitor_facet_svs (void)
 }
 
 int
-be_visitor_facet_svs::visit_component (be_provides *node)
+be_visitor_facet_svs::visit_provides (be_provides *node)
 {
-  if (node->gen_facet_svnt_defn (os_) == -1)
+  if (node->gen_facet_svnt_tmpl_defn (os_) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("be_visitor_facet_svs")
@@ -34,6 +34,12 @@ be_visitor_facet_svs::visit_component (be_provides *node)
                          ACE_TEXT ("failed\n")),
                         -1);
     }
+}
+
+int
+be_visitor_facet_svs::visit_component (be_component *node)
+{
+  this->visit_component_scope (node);
   return 0;
 }
 
