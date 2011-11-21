@@ -1,3 +1,24 @@
+Mon Nov 21 15:21:53 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_provides.cpp:
+        * TAO_IDL/be/be_visitor_component.cpp:
+        * TAO_IDL/be/be_visitor_component/executor_exh.cpp:
+        * TAO_IDL/be/be_visitor_component/facet_svth.cpp:
+        * TAO_IDL/be/be_visitor_component/facet_svts.cpp:
+        * TAO_IDL/be/be_visitor_component/servant_svh.cpp:
+        * TAO_IDL/be_include/be_provides.h:
+        * TAO_IDL/be_include/be_visitor_component.h:
+        * TAO_IDL/be_include/be_visitor_component/facet_svth.h:
+        * TAO_IDL/be_include/be_visitor_component/facet_svts.h:
+          Template code for header is saved to _svnt_T.h.
+
+        * TAO_IDL/be/be_visitor_component/facet_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/facet_svs.cpp:
+        * TAO_IDL/be_include/be_visitor_component/facet_svh.h:
+        * TAO_IDL/be_include/be_visitor_component/facet_svs.h:
+          Renamed these files.
+
 Mon Nov 21 09:17:14 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * TAO_IDL/be/be_codegen.cpp:

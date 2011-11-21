@@ -47,15 +47,15 @@ be_provides::provides_type (void) const
 }
 
 int
-be_provides::gen_facet_svnt_decl (TAO_OutStream &os)
+be_provides::gen_facet_svnt_tmpl_decl (TAO_OutStream &os)
 {
-   be_type *impl =
+  be_type *impl =
     be_type::narrow_from_decl (this->provides_type ());
 
-   if (impl->is_local () || impl->svnt_hdr_facet_gen ())
-     {
-       return 0;
-     }
+  if (impl->is_local () || impl->svnt_hdr_facet_gen ())
+    {
+      return 0;
+    }
 
   // No '_cxx_' prefix>
   const char *lname =
@@ -82,10 +82,11 @@ be_provides::gen_facet_svnt_decl (TAO_OutStream &os)
       impl_name =
         be_interface::narrow_from_decl (impl)->full_skel_name ();
     }
-
-  os << "class " << lname << "_Servant" << be_idt_nl
-     << ": public virtual " << impl_name << be_uidt_nl
-     << "{" << be_nl
+  os << "template <typename BASE, typename EXEC>" << be_nl
+     << "class " << lname << "_Servant_T" << be_idt_nl
+     << ": public virtual ::CIAO::Facet_Servant_Base_T<BASE, EXEC, "
+     << "::Components::" << be_global->ciao_container_type ()
+     << "Context>" << be_uidt_nl << "{" << be_nl
      << "public:" << be_idt_nl;
 
   AST_Decl *s = ScopeAsDecl (impl->defined_in ());
@@ -93,12 +94,11 @@ be_provides::gen_facet_svnt_decl (TAO_OutStream &os)
   const char *sname = sname_str.c_str ();
   const char *global = (sname_str == "" ? "" : "::");
 
-  os << lname << "_Servant (" << be_idt_nl
-     << global << sname << "::CCM_"
-     << lname << "_ptr executor," << be_nl
+  os << lname << "_Servant_T (" << be_idt_nl
+     << "typename EXEC::_ptr_type execturor,"
      << "::Components::CCMContext_ptr ctx);" << be_uidt_nl << be_nl;
 
-  os << "virtual ~" << lname << "_Servant (void);";
+  os << "virtual ~" << lname << "_Servant_T (void);";
 
   if (is_intf)
     {
@@ -124,19 +124,6 @@ be_provides::gen_facet_svnt_decl (TAO_OutStream &os)
         }
     }
 
-  os << be_nl_2 << "/// Get component implementation." << be_nl
-     << "virtual CORBA::Object_ptr _get_component (void);"
-     << be_uidt_nl << be_nl;
-
-  os << "protected:" << be_idt_nl;
-
-  os << "/// Facet executor." << be_nl
-     << global << sname << "::CCM_"
-     << lname << "_var executor_;" << be_nl_2;
-
-  os << "/// Context object." << be_nl
-     << "::Components::CCMContext_var ctx_;" << be_uidt_nl;
-
   os << "};" << be_nl << be_uidt_nl;
 
   os << "}";
@@ -146,7 +133,7 @@ be_provides::gen_facet_svnt_decl (TAO_OutStream &os)
 }
 
 int
-be_provides::gen_facet_svnt_defn (TAO_OutStream &os)
+be_provides::gen_facet_svnt_tmpl_defn (TAO_OutStream &os)
 {
   be_type *impl =
     be_type::narrow_from_decl (this->provides_type ());
