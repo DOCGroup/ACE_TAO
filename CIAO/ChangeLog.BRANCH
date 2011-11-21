@@ -1,3 +1,8 @@
+Mon Nov 21 13:30:15 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
+
+        * connectors/ami4ccm/ami4ccm/ami4ccm.idl:
+        Add sync port to connector
+
 Tue Nov  8 08:53:04 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/ami4ccm/tests/PragmaT/Receiver/PragmaT_Receiver.mpc:
