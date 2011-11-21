@@ -142,7 +142,7 @@ project(IS_Base_Derived_svnt) : ciao_servant   {
 }
 
 
-project (ID_Derived_Tester) : ccm_stub, valuetype {
+project (IS_Derived_Tester) : ccm_stub, valuetype {
   exename = Tester
   after += IS_Base_Derived_stub
   libs  += IS_Derived_stub IS_Base_stub
