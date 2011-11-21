@@ -680,9 +680,19 @@ be_visitor_module::visit_component (be_component *node)
     case TAO_CodeGen::TAO_ROOT_IS:
     case TAO_CodeGen::TAO_ROOT_CNH:
     case TAO_CodeGen::TAO_ROOT_CNS:
-    case TAO_CodeGen::TAO_ROOT_SVTH:
-    case TAO_CodeGen::TAO_ROOT_SVTS:
       break;
+    case TAO_CodeGen::TAO_ROOT_SVTH:
+      {
+        be_visitor_facet_svh visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_ROOT_SVTS:
+      {
+        be_visitor_facet_svs visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_ROOT_SVH:
       {
         be_visitor_component_svh visitor (&ctx);

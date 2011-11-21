@@ -1114,7 +1114,7 @@ TAO_CodeGen::start_ciao_svnt_header (const char *fname)
      << "# pragma once\n"
      << "#endif /* ACE_LACKS_PRAGMA_ONCE */\n";
 
-  this->gen_svnt_hdr_includes ();
+  this->gen_svnt_hdr_includes (this->ciao_svnt_header_);
 
   return 0;
 }
@@ -1163,7 +1163,7 @@ TAO_CodeGen::start_ciao_svnt_source (const char *fname)
     << be_global->be_get_ciao_tmpl_svnt_hdr_fname(true)
     << "\"";
 
-  this->gen_svnt_src_includes ();
+  this->gen_svnt_src_includes (this->ciao_svnt_source_);
 
   return 0;
 }
@@ -1172,15 +1172,15 @@ int
 TAO_CodeGen::start_ciao_svnt_template_header (const char *fname)
 {
   // Clean up between multiple files.
-  delete this->ciao_svnt_header_;
+  delete this->ciao_svnt_template_header_;
 
-  ACE_NEW_RETURN (this->ciao_svnt_header_,
+  ACE_NEW_RETURN (this->ciao_svnt_template_header_,
                   TAO_OutStream,
                   -1);
 
   int status =
-    this->ciao_svnt_header_->open (fname,
-                                   TAO_OutStream::CIAO_SVNT_HDR);
+    this->ciao_svnt_template_header_->open (fname,
+                                            TAO_OutStream::CIAO_SVNT_T_HDR);
 
   if (status == -1)
     {
@@ -1190,7 +1190,7 @@ TAO_CodeGen::start_ciao_svnt_template_header (const char *fname)
                         -1);
     }
 
-  TAO_OutStream &os = *this->ciao_svnt_header_;
+  TAO_OutStream &os = *this->ciao_svnt_template_header_;
 
   os << be_nl
      << "// TAO_IDL - Generated from" << be_nl
@@ -1198,11 +1198,11 @@ TAO_CodeGen::start_ciao_svnt_template_header (const char *fname)
      << be_nl_2;
 
   // Generate the #ident string, if any.
-  this->gen_ident_string (this->ciao_svnt_header_);
+  this->gen_ident_string (this->ciao_svnt_template_header_);
 
   // Generate the #ifndef clause.
   this->gen_ifndef_string (fname,
-                           this->ciao_svnt_header_,
+                           this->ciao_svnt_template_header_,
                            "CIAO_SESSION_",
                            "_H_");
 
@@ -1236,7 +1236,7 @@ TAO_CodeGen::start_ciao_svnt_template_header (const char *fname)
      << "# pragma once\n"
      << "#endif /* ACE_LACKS_PRAGMA_ONCE */\n";
 
-  this->gen_svnt_hdr_includes ();
+  this->gen_svnt_hdr_includes (this->ciao_svnt_template_header_);
 
   return 0;
 }
@@ -1245,15 +1245,15 @@ int
 TAO_CodeGen::start_ciao_svnt_template_source (const char *fname)
 {
   // Clean up between multiple files.
-  delete this->ciao_svnt_source_;
+  delete this->ciao_svnt_template_source_;
 
-  ACE_NEW_RETURN (this->ciao_svnt_source_,
+  ACE_NEW_RETURN (this->ciao_svnt_template_source_,
                   TAO_OutStream,
                   -1);
 
   int status =
-    this->ciao_svnt_source_->open (fname,
-                                   TAO_OutStream::CIAO_SVNT_IMPL);
+    this->ciao_svnt_template_source_->open (fname,
+                                            TAO_OutStream::CIAO_SVNT_T_IMPL);
 
   if (status == -1)
     {
@@ -1264,7 +1264,7 @@ TAO_CodeGen::start_ciao_svnt_template_source (const char *fname)
                         -1);
     }
 
-  TAO_OutStream &os = *this->ciao_svnt_source_;
+  TAO_OutStream &os = *this->ciao_svnt_template_source_;
 
   os << be_nl
      << "// TAO_IDL - Generated from" << be_nl
@@ -1272,20 +1272,20 @@ TAO_CodeGen::start_ciao_svnt_template_source (const char *fname)
      << be_nl_2;
 
   // Generate the #ident string, if any.
-  this->gen_ident_string (this->ciao_svnt_source_);
+  this->gen_ident_string (this->ciao_svnt_template_source_);
 
   // Generate the include statement for the server header.
-  *this->ciao_svnt_source_
+  *this->ciao_svnt_template_source_
     << "#include \""
     << be_global->be_get_ciao_svnt_hdr_fname (true)
     << "\"" << be_nl;
 
-  *this->ciao_svnt_source_
+  *this->ciao_svnt_template_source_
     << "#include \""
     << be_global->be_get_ciao_tmpl_svnt_hdr_fname(true)
     << "\"";
 
-  this->gen_svnt_src_includes ();
+  this->gen_svnt_src_includes (this->ciao_svnt_template_source_);
 
   return 0;
 }
@@ -2014,12 +2014,12 @@ TAO_CodeGen::end_ciao_svnt_template_header (void)
 {
   if (be_global->post_include () != 0)
     {
-      *this->ciao_svnt_header_ << "\n\n#include /**/ \""
-                               << be_global->post_include ()
-                               << "\"";
+      *this->ciao_svnt_template_header_ << "\n\n#include /**/ \""
+                                        << be_global->post_include ()
+                                        << "\"";
     }
 
-  *this->ciao_svnt_header_ << "\n\n#endif /* ifndef */\n";
+  *this->ciao_svnt_template_header_ << "\n\n#endif /* ifndef */\n";
 
   return 0;
 }
@@ -2027,7 +2027,7 @@ TAO_CodeGen::end_ciao_svnt_template_header (void)
 int
 TAO_CodeGen::end_ciao_svnt_template_source (void)
 {
-  *this->ciao_svnt_source_ << "\n";
+  *this->ciao_svnt_template_source_ << "\n";
 
   return 0;
 }
@@ -3364,7 +3364,7 @@ TAO_CodeGen::gen_typecode_includes (TAO_OutStream * stream)
 }
 
 void
-TAO_CodeGen::gen_svnt_hdr_includes (void)
+TAO_CodeGen::gen_svnt_hdr_includes (TAO_OutStream *stream)
 {
   ACE_CString container_file ("ciao/Containers/");
   container_file += be_global->ciao_container_type ();
@@ -3373,7 +3373,7 @@ TAO_CodeGen::gen_svnt_hdr_includes (void)
   container_file += "_ContainerC.h";
 
   this->gen_standard_include (
-    this->ciao_svnt_header_,
+    stream,
     container_file.c_str ());
 
   ACE_CString context_file ("ciao/Contexts/");
@@ -3383,55 +3383,55 @@ TAO_CodeGen::gen_svnt_hdr_includes (void)
   context_file += "_Context_T.h";
 
   this->gen_standard_include (
-    this->ciao_svnt_header_,
-       context_file.c_str ());
+    stream,
+    context_file.c_str ());
 
   ACE_CString servant_file ("ciao/Servants/");
   servant_file += be_global->ciao_container_type ();
   servant_file += "/Servant_Impl_T.h";
 
   this->gen_standard_include (
-    this->ciao_svnt_header_,
+    stream,
     servant_file.c_str ());
 
   this->gen_standard_include (
-    this->ciao_svnt_header_,
+    stream,
     "ciao/Servants/Home_Servant_Impl_T.h");
 
-  *this->ciao_svnt_header_ << be_nl;
+  *stream << be_nl;
 
   this->gen_standard_include (
-    this->ciao_svnt_header_,
+    stream,
     be_global->be_get_ciao_exec_stub_hdr_fname (true));
 
-  *this->ciao_svnt_header_ << be_nl;
+  *stream << be_nl;
 
   this->gen_standard_include (
-    this->ciao_svnt_header_,
+    stream,
     be_global->be_get_server_hdr_fname (true));
 }
 
 void
-TAO_CodeGen::gen_svnt_src_includes (void)
+TAO_CodeGen::gen_svnt_src_includes (TAO_OutStream *stream)
 {
   this->gen_standard_include (
-    this->ciao_svnt_source_,
+    stream,
     "ciao/Valuetype_Factories/Cookies.h");
 
   this->gen_standard_include (
-    this->ciao_svnt_source_,
+    stream,
     "tao/SystemException.h");
 
   this->gen_standard_include (
-    this->ciao_svnt_source_,
+    stream,
     "tao/Valuetype/ValueFactory.h");
 
   this->gen_standard_include (
-    this->ciao_svnt_source_,
+    stream,
     "tao/ORB_Core.h");
 
   this->gen_standard_include (
-    this->ciao_svnt_source_,
+    stream,
     "ace/SString.h");
 }
 

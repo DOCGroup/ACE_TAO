@@ -1,3 +1,17 @@
+Mon Nov 21 09:17:14 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_visitor_component/component_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/component_svs.cpp:
+        * TAO_IDL/be/be_visitor_component/facet_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/facet_svs.cpp:
+        * TAO_IDL/be/be_visitor_module/module.cpp:
+        * TAO_IDL/be_include/be_codegen.h:
+        * TAO_IDL/be_include/be_helper.h:
+        * TAO_IDL/be_include/be_visitor_component/facet_svh.h:
+        * TAO_IDL/be_include/be_visitor_component/facet_svs.h:
+          Determined the right file to write to (_svnt_T.cpp/h).
+
 Thu Nov 17 15:55:04 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_interface.cpp:

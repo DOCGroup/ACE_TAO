@@ -23,17 +23,17 @@ be_visitor_facet_svh::~be_visitor_facet_svh (void)
 }
 
 int
-be_visitor_facet_svh::visit_provides (be_provides *node)
+be_visitor_facet_svh::visit_component (be_provides *node)
 {
-//   if (node->gen_facet_svnt_decl (os_) == -1)
-//     {
-//       ACE_ERROR_RETURN ((LM_ERROR,
-//                          ACE_TEXT ("be_visitor_facet_svh")
-//                          ACE_TEXT ("::visit_provides - ")
-//                          ACE_TEXT ("gen_facet_svnt_decl() ")
-//                          ACE_TEXT ("failed\n")),
-//                         -1);
-//     }
+  if (node->gen_facet_svnt_decl (os_) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_visitor_facet_svh")
+                         ACE_TEXT ("::visit_provides - ")
+                         ACE_TEXT ("gen_facet_svnt_decl() ")
+                         ACE_TEXT ("failed\n")),
+                        -1);
+    }
 
   return 0;
 }
