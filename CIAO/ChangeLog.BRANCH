@@ -1,3 +1,27 @@
+Mon Nov 21 15:10:06 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * bin/ciao_tests.lst:
+        * connectors/ami4ccm/tests/SyncPortConn:
+        * connectors/ami4ccm/tests/SyncPortConn/Base:
+        * connectors/ami4ccm/tests/SyncPortConn/Base/Hello.idl:
+        * connectors/ami4ccm/tests/SyncPortConn/Base/SyncPortConn.mpc:
+        * connectors/ami4ccm/tests/SyncPortConn/Receiver:
+        * connectors/ami4ccm/tests/SyncPortConn/Receiver/Hello_Receiver.idl:
+        * connectors/ami4ccm/tests/SyncPortConn/Receiver/Hello_Receiver.mpc:
+        * connectors/ami4ccm/tests/SyncPortConn/Receiver/Hello_Receiver_exec.h:
+        * connectors/ami4ccm/tests/SyncPortConn/Receiver/Hello_Receiver_exec.cpp:
+        * connectors/ami4ccm/tests/SyncPortConn/Sender:
+        * connectors/ami4ccm/tests/SyncPortConn/Sender/Hello_Sender.idl:
+        * connectors/ami4ccm/tests/SyncPortConn/Sender/Hello_Sender.mpc:
+        * connectors/ami4ccm/tests/SyncPortConn/Sender/Hello_Sender_exec.h:
+        * connectors/ami4ccm/tests/SyncPortConn/Sender/Hello_Sender_exec.cpp:
+        * connectors/ami4ccm/tests/SyncPortConn/descriptors:
+        * connectors/ami4ccm/tests/SyncPortConn/descriptors/.dance_artifacts:
+        * connectors/ami4ccm/tests/SyncPortConn/descriptors/Plan.cdp:
+        * connectors/ami4ccm/tests/SyncPortConn/descriptors/Plan_no_sync_amiconn.cdp:
+        * connectors/ami4ccm/tests/SyncPortConn/descriptors/run_test.pl:
+        Test using sync port on AMI connector.
+
 Mon Nov 21 13:30:15 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
 
         * connectors/ami4ccm/ami4ccm/ami4ccm.idl:
