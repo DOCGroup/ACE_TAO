@@ -24,7 +24,8 @@ Test_i::Test_i (CORBA::ORB_ptr orb,
      max_count_ (max_count),
      mode_(mode)
 {
-  this->seed_ = ACE_OS::time ();
+  time_t _tm = ACE_OS::time ();
+  this->seed_ = (unsigned int)_tm;
 }
 
 void
@@ -48,8 +49,7 @@ Test_i::request (
               counter));
 
   const char* follow_up_str;
-  unsigned int* p_seed = reinterpret_cast<unsigned int*> (&this->seed_);
-  switch (ACE_OS::rand_r (p_seed) % 2)
+  switch (ACE_OS::rand_r (&this->seed_) % 2)
   {
   case 0:
     follow_up = (reqmode == A::RQM_SYNCH ? A::FU_TIMER : A::FU_NOTIFICATION);
@@ -160,7 +160,8 @@ TestHandler::TestHandler (CORBA::ORB_ptr orb,
     mode_ (mode),
     counter_ (0)
 {
-  this->seed_ = ACE_OS::time ();
+  time_t _tm = ACE_OS::time ();
+  this->seed_ = (unsigned int)_tm;
 }
 
 void
@@ -186,8 +187,7 @@ TestHandler::handle_timeout (const ACE_Time_Value &,
                             const void *)
 {
   this->orb_->orb_core ()->reactor ()->cancel_timer (this);
-  unsigned int* p_seed = reinterpret_cast<unsigned int*> (&this->seed_);
-  if ((ACE_OS::rand_r (p_seed) % 2) == 0)
+  if ((ACE_OS::rand_r (&this->seed_) % 2) == 0)
   {
     A::FollowUp followup;
     if (!CORBA::is_nil (this->opponent_))
@@ -209,8 +209,7 @@ TestHandler::handle_timeout (const ACE_Time_Value &,
 int
 TestHandler::handle_exception (ACE_HANDLE)
 {
-  unsigned int* p_seed = reinterpret_cast<unsigned int*> (&this->seed_);
-  if ((ACE_OS::rand_r (p_seed) % 2) == 0)
+  if ((ACE_OS::rand_r (&this->seed_) % 2) == 0)
   {
     A::FollowUp followup;
     if (!CORBA::is_nil (this->opponent_))
