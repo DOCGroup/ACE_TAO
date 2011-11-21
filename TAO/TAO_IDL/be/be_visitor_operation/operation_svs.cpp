@@ -58,7 +58,7 @@ be_visitor_operation_svs::visit_operation (be_operation *node)
   // Generate the operation name, avoiding possible _cxx_ prefix.
   os_ << be_nl
      << scope_->original_local_name ()->get_string ()
-     << "_Servant";
+     << "_Servant_T<BASE, EXEC>";
 
   os_ << "::" << node->local_name ();
 

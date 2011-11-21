@@ -1,3 +1,11 @@
+Mon Nov 21 16:48:25 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * TAO_IDL/be/be_provides.cpp:
+          Removed _get_component method.
+
+        * TAO_IDL/be/be_visitor_operation/operation_svs.cpp:
+          Added template argument to method declaration.
+
 Mon Nov 21 15:35:54 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * TAO_IDL/be/be_provides.cpp:

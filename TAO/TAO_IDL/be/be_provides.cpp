@@ -166,22 +166,21 @@ be_provides::gen_facet_svnt_tmpl_defn (TAO_OutStream &os)
      << "namespace CIAO_FACET" << suffix.c_str () << be_nl
      << "{" << be_idt_nl;
 
-  os << lname << "_Servant::"
-     << lname << "_Servant (" << be_idt << be_idt_nl
-     << global << sname << "::CCM_"
-     << lname << "_ptr executor," << be_nl
+  os << "template <typename BASE, typename EXEC>" << be_nl
+     << lname << "_Servant_T::"
+     << lname << "_Servant_T (" << be_idt << be_idt_nl
+     << "EXEC::_ptr_type executor," << be_nl
      << "::Components::CCMContext_ptr ctx)" << be_uidt_nl
-     << ": executor_ ( " << global << sname
-     << "::CCM_" << lname
-     << "::_duplicate (executor))," << be_idt_nl
-     << "ctx_ ( ::Components::CCMContext::_duplicate (ctx))"
-     << be_uidt << be_uidt_nl
+     << ": " << global << "CIAO::Facet_Servant_Base_T<BASE, EXEC, "
+     << be_global->ciao_container_type ()
+     << "Context> (executor, ctx)"
+     << be_uidt_nl
      << "{" << be_nl
      << "}";
 
-  os << be_nl_2
-     << lname << "_Servant::~"
-     << lname << "_Servant (void)" << be_nl
+  os << be_nl_2 << "template <typename BASE, typename EXEC>" << be_nl
+     << lname << "_Servant_T<BASE, EXEC>::~"
+     << lname << "_Servant_T (void)" << be_nl
      << "{" << be_nl
      << "}";
 
@@ -219,36 +218,6 @@ be_provides::gen_facet_svnt_tmpl_defn (TAO_OutStream &os)
                             -1);
         }
     }
-
-  os << be_nl_2
-     << "::CORBA::Object_ptr" << be_nl
-     << lname << "_Servant::_get_component (void)"
-     << be_nl
-     << "{" << be_idt_nl
-     << "::Components::" << be_global->ciao_container_type ()
-     << "Context_var sc =" << be_idt_nl
-     << "::Components::" << be_global->ciao_container_type ()
-     << "Context::_narrow (this->ctx_.in ());"
-     << be_uidt_nl << be_nl
-     << "if (! ::CORBA::is_nil (sc.in ()))" << be_idt_nl
-     << "{" << be_idt_nl;
-
-  if (ACE_OS::strcmp (be_global->ciao_container_type (), "Session") == 0)
-    {
-      os << "return sc->get_CCM_object ();";
-    }
-  else
-    {
-      os << "return ::CORBA::Object::_nil ();";
-    }
-
-  os << be_uidt_nl << "}" << be_uidt_nl << be_nl;
-
-  os << "throw ::CORBA::INTERNAL ();" << be_uidt_nl
-     << "}";
-
-  os << be_uidt_nl
-     << "}";
 
   impl->svnt_src_facet_gen (true);
   return 0;
