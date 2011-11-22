@@ -186,13 +186,6 @@ BE_produce (void)
   be_visitor_root_sh root_sh_visitor (&ctx);
   BE_visit_root (root_sh_visitor, "server header");
 
-  if (be_global->gen_server_inline ())
-    {
-      ctx.state (TAO_CodeGen::TAO_ROOT_SI);
-      be_visitor_root_si root_si_visitor (&ctx);
-      BE_visit_root (root_si_visitor, "server inline");
-    }
-
   if (be_global->gen_server_skeleton ())
     {
       ctx.state (TAO_CodeGen::TAO_ROOT_SS);

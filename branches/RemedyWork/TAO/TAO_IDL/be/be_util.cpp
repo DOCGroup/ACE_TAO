@@ -858,16 +858,11 @@ be_util::usage (void)
   ACE_DEBUG ((
       LM_DEBUG,
       ACE_TEXT (" -SS\t\t\tsuppress generating skeleton implementation")
-      ACE_TEXT (" and inline file (disabled by default)\n")
-    ));
-  ACE_DEBUG ((
-      LM_DEBUG,
-      ACE_TEXT (" -Sci\t\t\tsuppress generating client inline file")
       ACE_TEXT (" (disabled by default)\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,
-      ACE_TEXT (" -Ssi\t\t\tsuppress generating server inline file")
+      ACE_TEXT (" -Sci\t\t\tsuppress generating client inline file")
       ACE_TEXT (" (disabled by default)\n")
     ));
   ACE_DEBUG ((
