@@ -669,13 +669,13 @@ be_visitor_module::visit_component (be_component *node)
       break;
     case TAO_CodeGen::TAO_ROOT_SVTH:
       {
-        be_visitor_facet_svh visitor (&ctx);
+        be_visitor_facet_svth visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
     case TAO_CodeGen::TAO_ROOT_SVTS:
       {
-        be_visitor_facet_svs visitor (&ctx);
+        be_visitor_facet_svts visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }

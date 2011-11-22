@@ -32,7 +32,8 @@
 class be_visitor_operation_svs : public be_visitor_scope
 {
 public:
-  be_visitor_operation_svs (be_visitor_context *ctx);
+  be_visitor_operation_svs (be_visitor_context *ctx,
+                            bool templated=false);
 
   ~be_visitor_operation_svs (void);
 
@@ -48,6 +49,7 @@ private:
 
 private:
   be_decl *scope_;
+  bool templated_;
 };
 
 #endif /* _BE_VISITOR_OPERATION_OPERATION_SVS_H_ */

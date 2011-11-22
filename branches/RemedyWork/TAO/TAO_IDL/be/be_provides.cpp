@@ -82,11 +82,10 @@ be_provides::gen_facet_svnt_tmpl_decl (TAO_OutStream &os)
       impl_name =
         be_interface::narrow_from_decl (impl)->full_skel_name ();
     }
-  os << "template <typename BASE, typename EXEC>" << be_nl
+  os << "template <typename BASE, typename EXEC, typename CONTEXT>" << be_nl
      << "class " << lname << "_Servant_T" << be_idt_nl
      << ": public virtual ::CIAO::Facet_Servant_Base_T<BASE, EXEC, "
-     << "::Components::" << be_global->ciao_container_type ()
-     << "Context>" << be_uidt_nl << "{" << be_nl
+     << "CONTEXT>" << be_uidt_nl << "{" << be_nl
      << "public:" << be_idt_nl;
 
   AST_Decl *s = ScopeAsDecl (impl->defined_in ());
@@ -166,20 +165,19 @@ be_provides::gen_facet_svnt_tmpl_defn (TAO_OutStream &os)
      << "namespace CIAO_FACET" << suffix.c_str () << be_nl
      << "{" << be_idt_nl;
 
-  os << "template <typename BASE, typename EXEC>" << be_nl
+  os << "template <typename BASE, typename EXEC, typename CONTEXT>" << be_nl
      << lname << "_Servant_T::"
      << lname << "_Servant_T (" << be_idt << be_idt_nl
      << "EXEC::_ptr_type executor," << be_nl
      << "::Components::CCMContext_ptr ctx)" << be_uidt_nl
      << ": " << global << "CIAO::Facet_Servant_Base_T<BASE, EXEC, "
-     << be_global->ciao_container_type ()
-     << "Context> (executor, ctx)"
+     << "CONTEXT> (executor, ctx)"
      << be_uidt_nl
      << "{" << be_nl
      << "}";
 
-  os << be_nl_2 << "template <typename BASE, typename EXEC>" << be_nl
-     << lname << "_Servant_T<BASE, EXEC>::~"
+  os << be_nl_2 << "template <typename BASE, typename EXEC, typename CONTEXT>" << be_nl
+     << lname << "_Servant_T<BASE, EXEC, CONTEXT>::~"
      << lname << "_Servant_T (void)" << be_nl
      << "{" << be_nl
      << "}";
@@ -258,6 +256,7 @@ be_facet_op_attr_defn_helper::emit (be_interface * /* derived_interface */,
       return 0;
     }
 
+    //TODO TAO_ROOT_SVTS
   be_visitor_context ctx;
   ctx.stream (os);
   ctx.state (TAO_CodeGen::TAO_ROOT_SVS);
@@ -284,7 +283,7 @@ be_facet_op_attr_defn_helper::emit (be_interface * /* derived_interface */,
                   continue;
                 }
 
-              be_visitor_operation_svs v (&ctx);
+              be_visitor_operation_svs v (&ctx, true);
               v.scope (op_scope_);
 
               if (v.visit_operation (op) == -1)
