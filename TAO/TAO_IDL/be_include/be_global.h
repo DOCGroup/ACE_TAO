@@ -99,9 +99,6 @@ public:
   static const char *be_get_server_template_skeleton_fname (
     bool base_name_only = false);
 
-  static const char *be_get_server_inline_fname (
-    bool base_name_only = false);
-
   static const char *be_get_anyop_source_fname (
     bool base_name_only = false);
 
@@ -185,10 +182,6 @@ public:
   static const char *be_get_server_template_skeleton (
       UTL_String *idl_file_name,
       bool base_name_only = false);
-
-  static const char *be_get_server_inline (
-    UTL_String *idl_file_name,
-    bool base_name_only = false);
 
   static const char *be_get_anyop_header (
     UTL_String *idl_file_name,
@@ -494,12 +487,6 @@ public:
 
   /// Get the server_template_skeleton_ending.
   const char* server_template_skeleton_ending (void) const;
-
-  /// Set the server_inline_ending.
-  void server_inline_ending (const char* s);
-
-  /// Get the server_inline_ending.
-  const char* server_inline_ending (void) const;
 
   /// Set the anyop_header_ending.
   void anyop_header_ending (const char* s);
@@ -831,10 +818,6 @@ public:
   bool gen_client_inline (void) const;
   void gen_client_inline (bool val);
 
-  /// Accessors for the member gen_server_inline_.
-  bool gen_server_inline (void) const;
-  void gen_server_inline (bool val);
-
   /// Accessors for the member gen_client_stub_.
   bool gen_client_stub (void) const;
   void gen_client_stub (bool val);
@@ -1000,9 +983,6 @@ private:
   /// Server's template skeleton file name ending. Default is
   /// "S_T.cpp".
   char* server_template_skeleton_ending_;
-
-  /// Server's inline file name ending. Default is "S.i".
-  char* server_inline_ending_;
 
   /// Anyop header file name ending. Default is "A.h".
   char* anyop_hdr_ending_;
@@ -1206,10 +1186,6 @@ private:
   /// True by default, but a command line option can turn this off so
   /// that we don't generate a client inline file
   bool gen_client_inline_;
-
-  /// True by default, but a command line option can turn this off so
-  /// that we don't generate a server inline file
-  bool gen_server_inline_;
 
   /// True by default, but a command line option can turn this off so
   /// that we don't generate a client stub file

@@ -1,3 +1,55 @@
+Tue Nov 22 10:51:12 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL:
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_produce.cpp:
+        * TAO_IDL/be/be_util.cpp:
+
+        * TAO_IDL/be/be_visitor_component/component.cpp:
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+
+        * TAO_IDL/be/be_visitor_interface.cpp:
+
+        * TAO_IDL/be/be_visitor_interface/amh_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/amh_ss.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+
+        * TAO_IDL/be/be_visitor_module/module.cpp:
+
+        * TAO_IDL/be/be_visitor_root.cpp:
+        * TAO_IDL/be/be_visitor_valuetype.cpp:
+
+        * TAO_IDL/be/be_visitor_valuetype/valuetype.cpp:
+
+        * TAO_IDL/be_include/be_codegen.h:
+        * TAO_IDL/be_include/be_global.h:
+        * TAO_IDL/be_include/be_interface.h:
+        * TAO_IDL/be_include/be_visitor_interface.h:
+
+        * TAO_IDL/be_include/be_visitor_interface/amh_ss.h:
+        * TAO_IDL/be_include/be_visitor_interface/interface_ss.h:
+
+        * TAO_IDL/be_include/be_visitor_root.h:
+        * TAO_IDL/be_include/be_visitor_valuetype.h:
+
+        * TAO_IDL/tao_idl.1:
+          Merged in skeleton refactoring which now should work, no S.inl
+          files are generated anymore
+
+        * TAO_IDL/be/be_visitor_interface/interface_si.cpp:
+        * TAO_IDL/be/be_visitor_root/root_si.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_si.cpp:
+        * TAO_IDL/be_include/be_visitor_interface/amh_si.h:
+        * TAO_IDL/be_include/be_visitor_interface/interface_si.h:
+        * TAO_IDL/be_include/be_visitor_root/root_si.h:
+        * TAO_IDL/be_include/be_visitor_valuetype/valuetype_si.h:
+          Removed these files.
+
 Mon Nov 21 16:48:25 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * TAO_IDL/be/be_provides.cpp:
