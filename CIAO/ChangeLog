@@ -1,3 +1,11 @@
+Tue Nov 22 14:04:21 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        * ciao/Servants/Home_Servant_Impl_T.h:
+        * ciao/Servants/Home_Servant_Impl_T.cpp:
+
+          Implemented separate method for removal of all components
+          (moving code out of destructor).
+
 Sun Nov 20 19:35:18 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/CollocatedPubSub/PubSubComponent/PubSub_Component_exec.cpp:
