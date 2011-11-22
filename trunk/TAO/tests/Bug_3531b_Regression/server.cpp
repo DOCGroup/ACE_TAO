@@ -13,6 +13,8 @@
 #include "tao/TAO_Export.h"
 #include "ace/TP_Reactor.h"
 
+#if defined (ACE_HAS_THREADS)
+
 int nthreads = 4;
 bool debug = false;
 
@@ -1101,5 +1103,17 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   return 0;
 }
+
+#else
+
+int
+ACE_TMAIN(int /*argc*/, ACE_TCHAR * /*argv*/ [])
+{
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("This test only makes sense in an MT build.\n")));
+
+  return 0;
+}
+
+#endif // !ACE_HAS_THREADS
 
 // ****************************************************************
