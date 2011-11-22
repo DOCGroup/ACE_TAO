@@ -11,10 +11,13 @@
  *  @author Jeff Parsons
  */
 //=============================================================================
+#include <be_visitor_operation/operation_svs.h>
 
 be_visitor_operation_svs::be_visitor_operation_svs (
-      be_visitor_context *ctx)
+      be_visitor_context *ctx,
+      bool templated)
   : be_visitor_scope (ctx),
+    templated_ (templated),
     scope_ (0)
 {
 }
@@ -56,9 +59,18 @@ be_visitor_operation_svs::visit_operation (be_operation *node)
     }
 
   // Generate the operation name, avoiding possible _cxx_ prefix.
-  os_ << be_nl
-     << scope_->original_local_name ()->get_string ()
-     << "_Servant_T<BASE, EXEC>";
+  if (this->templated_)
+    {
+      os_ << be_nl
+        << scope_->original_local_name ()->get_string ()
+        << "_Servant_T<BASE, EXEC, CONTEXT>";
+    }
+  else
+    {
+      os_ << be_nl
+        << scope_->original_local_name ()->get_string ()
+        << "_Servant";
+    }
 
   os_ << "::" << node->local_name ();
 

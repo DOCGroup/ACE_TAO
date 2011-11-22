@@ -13,22 +13,22 @@
  */
 //=============================================================================
 
-be_visitor_facet_svh::be_visitor_facet_svh (be_visitor_context *ctx)
+be_visitor_facet_svth::be_visitor_facet_svth (be_visitor_context *ctx)
   : be_visitor_component_scope (ctx)
 {
 }
 
-be_visitor_facet_svh::~be_visitor_facet_svh (void)
+be_visitor_facet_svth::~be_visitor_facet_svth (void)
 {
 }
 
 int
-be_visitor_facet_svh::visit_provides (be_provides *node)
+be_visitor_facet_svth::visit_provides (be_provides *node)
 {
   if (node->gen_facet_svnt_tmpl_decl (os_) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_facet_svh")
+                         ACE_TEXT ("be_visitor_facet_svth")
                          ACE_TEXT ("::visit_provides - ")
                          ACE_TEXT ("gen_facet_svnt_decl() ")
                          ACE_TEXT ("failed\n")),
@@ -37,7 +37,7 @@ be_visitor_facet_svh::visit_provides (be_provides *node)
 }
 
 int
-be_visitor_facet_svh::visit_component (be_component *node)
+be_visitor_facet_svth::visit_component (be_component *node)
 {
   this->visit_component_scope (node);
 
