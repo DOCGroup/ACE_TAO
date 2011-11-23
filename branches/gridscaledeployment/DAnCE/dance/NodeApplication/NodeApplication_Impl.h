@@ -34,6 +34,9 @@
 #include <map>
 #include <vector>
 
+#include "ace/High_Res_Timer.h"
+#include <ostream>
+
 using namespace DAnCE::Utility;
 
 namespace DAnCE
@@ -92,6 +95,10 @@ namespace DAnCE
     PLAN_MAP sub_plans_;
 
     CORBA::ULong spawn_delay_;
+    
+    ACE_High_Res_Timer timer_;
+    
+    std::ofstream timer_out_;
   };
 }
 #endif /*NODEAPPLICATION_IMPL_H_*/

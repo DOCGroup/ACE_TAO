@@ -15,6 +15,9 @@
 
 #include "Plan_Launcher_Base.h"
 
+#include "ace/High_Res_Timer.h"
+#include <ostream>
+
 namespace DAnCE
 {
   /**
@@ -75,6 +78,9 @@ namespace DAnCE
 
     /// Object reference of the Manager
     Manager_var manager_;
+    
+    ACE_High_Res_Timer timer_;
+    std::ofstream outfile_;
   }; // class Plan_Launcher_Impl
 
 }

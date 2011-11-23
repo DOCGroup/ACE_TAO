@@ -75,8 +75,18 @@ namespace DAnCE
 
   try
     {
+      timer_.reset ();
+      timer_.start ();
+
       ::Deployment::ApplicationManager_var l_manager =
         this->manager_->preparePlan (plan, 0);
+
+      timer_.stop ();
+
+      ACE_hrtime_t elapsed (0);
+      timer_.elapsed_microseconds (elapsed);
+      outfile_ << "PreparePlan time: " << elapsed << '\n';
+
       app_manager = app_manager = AppManager::_narrow (l_manager.in ());
     }
   catch (::Deployment::PlanError &ex)
@@ -174,7 +184,18 @@ Plan_Launcher_Base_Impl< Manager, AppManager, Application>
                    (LM_DEBUG, DLINFO
                     ACE_TEXT("Plan_Launcher_Base_Impl::start_launch - ")
                     ACE_TEXT("before startLaunch...\n")));
+
+      timer_.reset ();
+      timer_.start ();
+
       da = app_manager->startLaunch (properties, connections);
+
+      timer_.stop ();
+
+      ACE_hrtime_t elapsed (0);
+      timer_.elapsed_microseconds (elapsed);
+      outfile_ << "PreparePlan time: " << elapsed << '\n';
+
       DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
                    (LM_DEBUG, DLINFO
                     ACE_TEXT("Plan_Launcher_Base_Impl::start_launch - ")
@@ -323,8 +344,17 @@ Plan_Launcher_Base_Impl< Manager, AppManager, Application>
                    (LM_DEBUG, DLINFO
                     ACE_TEXT("Plan_Launcher_Base_Impl::launch_plan - ")
                     ACE_TEXT("before finishLaunch\n")));
+
+      timer_.reset ();
+      timer_.start ();
+
       application->finishLaunch (provided_connections,
                                  start);
+
+      ACE_hrtime_t elapsed (0);
+      timer_.elapsed_microseconds (elapsed);
+      outfile_ << "PreparePlan time: " << elapsed << '\n';
+
       DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
                    (LM_DEBUG, DLINFO
                     ACE_TEXT("Plan_Launcher_Base_Impl::launch_plan - ")
@@ -455,6 +485,14 @@ Plan_Launcher_Base_Impl< Manager, AppManager, Application>
 
   try
     {
+      std::string filename = plan.UUID.in ();
+      filename += ".timing";
+      outfile_.open (filename.c_str ());
+      
+      ACE_High_Res_Timer timer;
+      timer.reset ();
+      timer.start ();
+ 
       CORBA::Object_var app_mgr = this->prepare_plan (plan);
 
       ::Deployment::Connections_var conns;
@@ -468,6 +506,15 @@ Plan_Launcher_Base_Impl< Manager, AppManager, Application>
                            false);
 
       this->start (app.in ());
+
+         
+      timer.stop ();
+      
+      ACE_hrtime_t elapsed (0);
+      timer.elapsed_microseconds (elapsed);
+      outfile_ << "Total plan deployment time: " << elapsed << '\n';
+      
+      outfile_.close ();
 
       DANCE_DEBUG (DANCE_LOG_MAJOR_EVENT,
                    (LM_DEBUG, DLINFO
