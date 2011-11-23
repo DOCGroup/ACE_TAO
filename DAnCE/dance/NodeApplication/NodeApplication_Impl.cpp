@@ -56,11 +56,18 @@ NodeApplication_Impl::NodeApplication_Impl (CORBA::ORB_ptr orb,
   // @Todo:  We can probably move this up into the NodeManager and
   // share the thread pool among several node applications.
   this->scheduler_.activate_scheduler (0);
+  
+  timer_out_.open (node_name_.c_str (), 
+                   std::ios_base::out & std::ios_base::trunc);
+  timer_.reset ();
+  timer_.start ();
 }
 
 NodeApplication_Impl::~NodeApplication_Impl()
 {
   DANCE_TRACE( "NodeApplication_Impl::~NodeApplication_Impl()");
+  timer_.stop ();
+  timer_out_.close ();
   this->scheduler_.terminate_scheduler ();
 }
 
@@ -68,11 +75,15 @@ void
 NodeApplication_Impl::prepare_instances (const LocalitySplitter::TSubPlans& plans)
 {
   DANCE_TRACE ("NodeApplication_Impl::prepare_instances");
+  
+  ACE_hrtime_t time (0);
+  timer_.elapsed_microseconds (time);
+  timer_out_ << "prepare_instances start:" << time << '\n';
 
   CORBA::ULong plan (0);
   std::list < Event_Future > prepared_instances;
   Deployment_Completion completion (this->scheduler_);
-
+  
   // for each sub plan
   LocalitySplitter::TSubPlanConstIterator plans_end (plans, 1);
   for (LocalitySplitter::TSubPlanConstIterator i (plans);
@@ -201,6 +212,9 @@ NodeApplication_Impl::prepare_instances (const LocalitySplitter::TSubPlans& plan
                     ACE_TEXT ("Successfully executed preparePlan on locality %C\n"),
                     event.id_.c_str ()));
     }
+  
+  timer_.elapsed_microseconds (time);
+  timer_out_ << "prepare_instances end:" << time << '\n';
 }
 
 void
@@ -224,7 +238,7 @@ NodeApplication_Impl::prepare_instance (const char *name,
     {
       DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR, (LM_ERROR, DLINFO
                        ACE_TEXT ("NodeApplication_Impl::prepare_instance - ")
-                       ACE_TEXT ("Caugt unexpected CORBA exception while invoking preparePlan %C\n"),
+                       ACE_TEXT ("Caught unexpected CORBA exception while invoking preparePlan %C\n"),
                        ex._info ().c_str ()));
     }
   // @@ TODO:  Ouch! We're swallowing exceptions here!
@@ -248,6 +262,10 @@ void
 NodeApplication_Impl::start_launch_instances (const Deployment::Properties &prop,
                                               Deployment::Connections_out providedReference)
 {
+  ACE_hrtime_t time (0);
+  timer_.elapsed_microseconds (time);
+  timer_out_ << "start_launch_instances start:" << time << '\n';
+
   DANCE_TRACE ("NodeApplication_Impl::start_launch_instances");
   Deployment::Connections *tmp (0);
 
@@ -313,12 +331,19 @@ NodeApplication_Impl::start_launch_instances (const Deployment::Properties &prop
           throw;
         }
     }
+
+  timer_.elapsed_microseconds (time);
+  timer_out_ << "start_launch_instances end:" << time << '\n';
 }
 
 void
 NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedReference,
                                     ::CORBA::Boolean start)
 {
+  ACE_hrtime_t time (0);
+  timer_.elapsed_microseconds (time);
+  timer_out_ << "finishLaunch start:" << time << '\n';
+
   DANCE_TRACE ("NodeApplication_Impl::finishLaunch");
 
 
@@ -346,11 +371,18 @@ NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedRe
           throw;
         }
     }
+  
+  timer_.elapsed_microseconds (time);
+  timer_out_ << "finishLaunch end:" << time << '\n';
 }
 
 void
 NodeApplication_Impl::start ()
 {
+  ACE_hrtime_t time (0);
+  timer_.elapsed_microseconds (time);
+  timer_out_ << "start start:" << time << '\n';
+
   DANCE_TRACE( "NodeApplication_Impl::start");
 
   for (LOCALITY_MAP::const_iterator i = this->localities_.begin ();
@@ -376,6 +408,8 @@ NodeApplication_Impl::start ()
           throw;
         }
     }
+  timer_.elapsed_microseconds (time);
+  timer_out_ << "start end:" << time << '\n';
 }
 
 void

@@ -10,6 +10,9 @@
 #ifndef DANCE_PLAN_LAUNCHER_BASE
 #define DANCE_PLAN_LAUNCHER_BASE
 
+#include "ace/High_Res_Timer.h"
+#include <ostream>
+
 #include "dance/Deployment/Deployment_DeploymentPlanC.h"
 #include "dance/Deployment/Deployment_ConnectionC.h"
 #include "dance/Plan_Launcher/Plan_Launcher_Export.h"
@@ -52,6 +55,12 @@ namespace DAnCE
     /// Instructs the Manager to destroy the ApplicationManager.
     virtual void destroy_app_manager (CORBA::Object_ptr app_mgr) = 0;
 
+  private:
+     
+  private:
+    ACE_High_Res_Timer timer_;
+    std::ofstream outfile_;
+    
   };
 }
 
