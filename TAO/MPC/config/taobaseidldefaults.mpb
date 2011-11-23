@@ -74,14 +74,6 @@ project: build_files {
       commandflags(-Gcn) += _conn
     }
 
-    optional(source_pre_extension) {
-      commandflags(-Gex) += _exec
-    }
-
-    optional(header_pre_extension) {
-      commandflags(-Gex) += _exec
-    }
-
     optional(generic_outputext) {
       commandflags(-Glem || -GM) += .idl
     }
