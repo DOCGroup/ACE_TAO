@@ -1,3 +1,8 @@
+Wed Nov 23 07:39:56 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * ace/Time_Value.inl:
+          Added a workaround for GCC 3.4 'internal compiler error' issue.
+
 Fri Nov 18 03:54:50 UTC 2011  James H. Hill  <hillj at cs dot iupui dot edu>
 
         * bin/PerlACE/Process_Win32.pm:
