@@ -556,16 +556,16 @@ public:
                    size_t size,
                    const ACE_TCHAR *text = 0);
 
-  static void init_hook (ACE_OS_Log_Msg_Attributes &attributes
-# if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
-                         , ACE_SEH_EXCEPT_HANDLER selector = 0
-                         , ACE_SEH_EXCEPT_HANDLER handler = 0
-# endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
   /**
    * Init hook, create a Log_Msg_Attribute object, initialize its
    * attributes from the TSS Log_Msg and save the object in the
    * @a attributes argument
    */
+  static void init_hook (ACE_OS_Log_Msg_Attributes &attributes
+# if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+                         , ACE_SEH_EXCEPT_HANDLER selector = 0
+                         , ACE_SEH_EXCEPT_HANDLER handler = 0
+# endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
                          );
 
   /**
