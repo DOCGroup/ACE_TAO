@@ -107,7 +107,6 @@ project(DDS_Get_Invoker_svnt) : ciao_servant, dds4ccm_lem_stub, dds4ccm_skel {
   }
 
   Inline_Files {
-    Get_InvokerS.inl
   }
 }
 

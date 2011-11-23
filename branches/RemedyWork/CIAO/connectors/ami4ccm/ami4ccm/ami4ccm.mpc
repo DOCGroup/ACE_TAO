@@ -115,7 +115,6 @@ project (AMI4CCM_svnt) : install, ciao_servant, ciao_lib {
   }
 
   Inline_Files {
-    ami4ccmS.inl
   }
 
   specific {

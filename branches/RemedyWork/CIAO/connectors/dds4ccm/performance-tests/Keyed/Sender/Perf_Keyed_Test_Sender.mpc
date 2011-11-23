@@ -141,7 +141,6 @@ project(DDS_Perf_Keyed_Test_Sender_svnt) : ciao_servant, dds4ccm_skel {
   }
 
   Inline_Files {
-    Perf_Keyed_Test_SenderS.inl
   }
 }
 

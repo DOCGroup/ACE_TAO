@@ -100,7 +100,6 @@ project(Stock_Base_skel) : ciao_executor, avoids_ccm_noevent  {
   }
 
   Inline_Files {
-    Stock_BaseS.inl
   }
 }
 

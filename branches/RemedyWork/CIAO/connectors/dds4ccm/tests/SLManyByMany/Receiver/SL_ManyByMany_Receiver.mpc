@@ -132,7 +132,6 @@ project(DDS_SL_ManyByMany_Receiver_svnt) : ciao_servant, dds4ccm_lem_stub, dds4c
   }
 
   Inline_Files {
-    SL_ManyByMany_ReceiverS.inl
   }
 }
 

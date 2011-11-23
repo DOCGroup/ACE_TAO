@@ -104,7 +104,6 @@ project(SimpleCommon_Progressive_svnt) : ciao_servant {
   }
 
   Inline_Files {
-    ProgressiveS.inl
   }
 }
 

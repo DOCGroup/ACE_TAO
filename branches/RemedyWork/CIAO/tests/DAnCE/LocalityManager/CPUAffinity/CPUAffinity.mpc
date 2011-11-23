@@ -118,7 +118,6 @@ project(CPUAffinity_svnt) : ciao_servant {
   }
 
   Inline_Files {
-    CPUAffinityS.inl
   }
 }
 

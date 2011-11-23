@@ -71,7 +71,6 @@ project(Thread_Base_skel) : ccm_svnt {
   }
 
   Inline_Files {
-    Thread_BaseS.inl
   }
 }
 

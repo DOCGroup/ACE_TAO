@@ -137,7 +137,6 @@ project(DDS_InstanceHandleConnector_svnt) : ciao_servant, dds4ccm_impl {
   }
 
   Inline_Files {
-    Writer_ConnectorS.inl
   }
 }
 

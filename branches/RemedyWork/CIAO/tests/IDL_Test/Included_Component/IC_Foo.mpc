@@ -97,7 +97,6 @@ project(IC_Foo_svnt) : ciao_servant {
   }
 
   Inline_Files {
-    IC_FooS.inl
   }
 }
 

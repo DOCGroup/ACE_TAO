@@ -71,7 +71,6 @@ project(Benchmark_skel) : ciao_executor {
   }
 
   Inline_Files {
-    BenchmarkS.inl
   }
 }
 

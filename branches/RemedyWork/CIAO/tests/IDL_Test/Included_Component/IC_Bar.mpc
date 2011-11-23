@@ -98,7 +98,6 @@ project(IC_Bar_svnt) : ciao_servant {
   }
 
   Inline_Files {
-    IC_BarS.inl
   }
 }
 

@@ -140,7 +140,6 @@ project(AMI_Quoter_skel) : ciao_executor, ami, ami4ccm_servant {
   }
 
   Inline_Files {
-    QuoterS.inl
   }
 }
 

@@ -105,7 +105,6 @@ project(DDS_Coh_Update_ReaderStarter_svnt) : ciao_servant, dds4ccm_lem_stub, dds
   }
 
   Inline_Files {
-    Reader_StarterS.inl
   }
 }
 

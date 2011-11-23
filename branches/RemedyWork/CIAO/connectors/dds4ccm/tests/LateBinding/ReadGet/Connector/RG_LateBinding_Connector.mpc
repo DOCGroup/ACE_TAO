@@ -141,7 +141,6 @@ project (RG_LateBindingConnector_svnt) : ciao_servant, dds4ccm_impl {
   }
 
   Inline_Files {
-    RG_LateBinding_ConnectorS.inl
   }
 }
 
