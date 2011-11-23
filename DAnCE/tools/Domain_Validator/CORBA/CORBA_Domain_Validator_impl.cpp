@@ -197,7 +197,7 @@ DAnCE_Domain_Validator_i::convert_time_value (const ::DAnCE::Time_Value &time_va
       break;
 
     case DAnCE::ttUSECONDS:
-      retval.set (0, time_value.useconds ());
+      retval.set (0, static_cast <suseconds_t> (time_value.useconds ()));
       break;
 
     case DAnCE::ttFRACTIONAL:
@@ -490,4 +490,3 @@ DAnCE_Domain_Validator_i::block_for_plan (const ::Deployment::DeploymentPlan & ,
   //  ACE_Time_Value tv = this->convert_time_value (max_block_time);
   throw CORBA::NO_IMPLEMENT ();
 }
-
