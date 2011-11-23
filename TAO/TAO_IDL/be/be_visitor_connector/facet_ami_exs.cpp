@@ -617,12 +617,9 @@ be_visitor_facet_ami_exs::gen_facet_executor_sync_op (be_operation *node)
   AST_PredefinedType *pdt = 0;
   pdt = AST_PredefinedType::narrow_from_decl (bt);
   bool ret = true;
-  if (pdt == 0 || pdt->pt () == AST_PredefinedType::PT_void)
+  if ((pdt != 0) && (pdt->pt () == AST_PredefinedType::PT_void))
     ret =false;
-  if (ret)
-  {  bt->accept (&oro_visitor);
-  os_ << " ret_val;" << be_nl;
-  }
+
   os_  << "::" << scope->full_name () << smart_scope
       << orig_iface_name << "_var receptacle_objref =" << be_idt_nl
       << "this->context_->get_connection_ami4ccm_port_ami4ccm_uses ();"
@@ -630,11 +627,17 @@ be_visitor_facet_ami_exs::gen_facet_executor_sync_op (be_operation *node)
 
   os_ << "if (! ::CORBA::is_nil (receptacle_objref.in ()))"
       << be_idt_nl
+      << "{" << be_idt_nl
+      << "throw ::CORBA::INV_OBJREF ();" << be_uidt_nl
+      << "}" <<  be_uidt_nl
+      << "else" << be_idt_nl
       << "{" << be_idt_nl;
   if (ret)
-  os_  << "ret_val = " ;
+    {
+      os_  << "return " ;
+    }
   os_ << "receptacle_objref->" << node->local_name ()
-      << " (" << be_idt_nl;
+      << " (" << be_idt << be_idt_nl;
 
   unsigned long index = 0UL;
 
@@ -655,18 +658,8 @@ be_visitor_facet_ami_exs::gen_facet_executor_sync_op (be_operation *node)
      }
     }
 
-  os_ << ");" << be_uidt << be_uidt_nl
-      << "}" << be_uidt << be_nl;
-
-  /// Throw an INV_OBJREF exception because there is no connection
-  /// see AMI4CCM mars/11-xx-yy , 2011
-
-  os_ << "else" << be_idt_nl
-      << "{" << be_idt_nl
-      << "throw ::CORBA::INV_OBJREF ();" << be_uidt_nl
-      << "}" << be_uidt << be_uidt_nl;
-  if (ret)
-    os_ << "return ret_val;" << be_nl ;
+  os_ << ");" << be_uidt << be_uidt << be_uidt_nl
+      << "}" << be_uidt << be_uidt << be_nl;
   os_ << "}";
 
   return 0;
