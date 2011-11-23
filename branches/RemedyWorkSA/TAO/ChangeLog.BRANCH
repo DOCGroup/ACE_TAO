@@ -1,3 +1,8 @@
+Wed Nov 23 14:00:38 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_connector/facet_ami_exs.cpp:
+        Changed return of sync operations.
+
 Mon Nov 21 13:32:38 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
 
         * TAO_IDL/be/be_codegen.cpp:
