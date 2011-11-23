@@ -77,9 +77,6 @@ project(CosTrading_Skel) : orbsvcslib, orbsvcs_output, install, trading, portabl
   }
 
   Inline_Files {
-    CosTradingS.inl
-    CosTradingReposS.inl
-    CosTradingDynamicS.inl
   }
 
   Template_Files {

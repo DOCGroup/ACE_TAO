@@ -1,3 +1,29 @@
+Fri Nov  4 15:45:54 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * examples/AMI/FL_Callback/FL_Callback.mpc:
+        * examples/RTScheduling/Job.mpc:
+        * examples/RTScheduling/Synch.mpc:
+        * orbsvcs/orbsvcs/CosConcurrency.mpc:
+        * orbsvcs/orbsvcs/CosEvent.mpc:
+        * orbsvcs/orbsvcs/CosLifeCycle.mpc:
+        * orbsvcs/orbsvcs/CosNaming_Skel.mpc:
+        * orbsvcs/orbsvcs/CosNotification.mpc:
+        * orbsvcs/orbsvcs/CosProperty.mpc:
+        * orbsvcs/orbsvcs/CosTime.mpc:
+        * orbsvcs/orbsvcs/CosTrading.mpc:
+        * orbsvcs/orbsvcs/DsEventLogAdmin.mpc:
+        * orbsvcs/orbsvcs/DsLogAdmin.mpc:
+        * orbsvcs/orbsvcs/DsNotifyLogAdmin.mpc:
+        * orbsvcs/orbsvcs/RTEventLogAdmin.mpc:
+        * orbsvcs/orbsvcs/RTEvent_Skel.mpc:
+        * orbsvcs/orbsvcs/ec_typed_events_skel.mpb:
+        * tao/IFR_Client/IFR_Client.mpc:
+        * tests/Alt_Mapping/alt_mapping.mpc:
+        * tests/IDL_Inherited_Operation/InheritedOp.mpc:
+        * tests/Monitor/Marshal_Buffer/marshal_buffer.mpc:
+        * tests/Param_Test/Param_Test.mpc:
+          Removed all S.inl entries from the MPC files
+
 Fri Nov  4 16:17:33 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * TAO_IDL/tao_idl.1:
