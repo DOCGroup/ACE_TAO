@@ -1,8 +1,14 @@
+Wed Nov 23 16:13:17 UTC 2011  James H. Hill  <hillj at cs dot iupui dot edu>
+
+        * adbc/ODBC/ODBC_Types.h:
+
+          Added support for versioned namespace builds.
+
 Wed Jun  1 03:05:15 UTC 2011  James H. Hill  <hillj@cs.iupui.edu>
 
         * adbc/ODBC/ODBC.mpc:
 
-	  Added 'odbc' as a required feature.
+          Added 'odbc' as a required feature.
 
 Thu Apr 28 19:53:33 UTC 2011  James H. Hill  <hillj at cs dot iupui dot edu>
 
