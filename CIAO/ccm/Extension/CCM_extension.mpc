@@ -33,7 +33,6 @@ project(CCM_extension_stub_idl) : install, ciaolib_with_idl {
   }
 
   IDL_Files {
-    idlflags += -Ssi
     CCM_QoS.idl
   }
 
