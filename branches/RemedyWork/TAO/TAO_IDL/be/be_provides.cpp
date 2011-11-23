@@ -74,14 +74,8 @@ be_provides::gen_facet_svnt_tmpl_decl (TAO_OutStream &os)
      << "namespace CIAO_FACET" << suffix.c_str () << be_nl
      << "{" << be_idt_nl;
 
-  const char *impl_name = "::CORBA::Object";
   bool is_intf = impl->node_type () == AST_Decl::NT_interface;
 
-  if (is_intf)
-    {
-      impl_name =
-        be_interface::narrow_from_decl (impl)->full_skel_name ();
-    }
   os << "template <typename BASE, typename EXEC, typename CONTEXT>" << be_nl
      << "class " << lname << "_Servant_T" << be_idt_nl
      << ": public virtual ::CIAO::Facet_Servant_Base_T<BASE, EXEC, "
@@ -90,8 +84,6 @@ be_provides::gen_facet_svnt_tmpl_decl (TAO_OutStream &os)
 
   AST_Decl *s = ScopeAsDecl (impl->defined_in ());
   ACE_CString sname_str (s->full_name ());
-  const char *sname = sname_str.c_str ();
-  const char *global = (sname_str == "" ? "" : "::");
 
   os << lname << "_Servant_T (" << be_idt_nl
      << "typename EXEC::_ptr_type executor," << be_nl
@@ -151,7 +143,6 @@ be_provides::gen_facet_svnt_tmpl_defn (TAO_OutStream &os)
 
   ACE_CString sname_str (scope->full_name ());
 
-  const char *sname = sname_str.c_str ();
   const char *global = (sname_str == "" ? "" : "::");
 
   ACE_CString suffix (scope->flat_name ());
@@ -256,10 +247,9 @@ be_facet_op_attr_defn_helper::emit (be_interface * /* derived_interface */,
       return 0;
     }
 
-    //TODO TAO_ROOT_SVTS
   be_visitor_context ctx;
   ctx.stream (os);
-  ctx.state (TAO_CodeGen::TAO_ROOT_SVS);
+  ctx.state (TAO_CodeGen::TAO_ROOT_SVTS);
 
   for (UTL_ScopeActiveIterator i (base_interface, UTL_Scope::IK_decls);
        !i.is_done ();
@@ -283,7 +273,7 @@ be_facet_op_attr_defn_helper::emit (be_interface * /* derived_interface */,
                   continue;
                 }
 
-              be_visitor_operation_svs v (&ctx, true);
+              be_visitor_operation_svs v (&ctx);
               v.scope (op_scope_);
 
               if (v.visit_operation (op) == -1)

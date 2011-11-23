@@ -1,3 +1,11 @@
+Wed Nov 23 10:17:10 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * TAO_IDL/be/be_provides.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_svs.cpp:
+        * TAO_IDL/be_include/be_visitor_operation/operation_svs.h:
+          Found a better way whether we need to use a templated
+          class definition
+
 Fri Nov  4 16:24:26 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * MPC/config/taobaseidldefaults.mpb:
