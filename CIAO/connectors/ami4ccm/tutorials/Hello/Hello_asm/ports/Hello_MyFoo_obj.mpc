@@ -152,7 +152,6 @@ project(AMI_Hello_Tuto_skel) : ciao_executor, ami, ami4ccm_servant {
   }
 
   Inline_Files {
-    ../GeneratedCode/Hello_MyFoo_objS.inl
   }
 }
 

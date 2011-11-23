@@ -143,7 +143,6 @@ project(SetAttribute_Component_svnt) : ciao_servant, dds4ccm_lem_stub, dds4ccm_s
   }
 
   Inline_Files {
-    SetConnectorAttribute_ComponentS.inl
   }
 }
 

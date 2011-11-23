@@ -128,7 +128,6 @@ project(AMI_AsynchT_Base_Sender_svnt) : ciao_servant, ami {
   }
 
   Inline_Files {
-    AsynchT_SenderS.inl
   }
 }
 

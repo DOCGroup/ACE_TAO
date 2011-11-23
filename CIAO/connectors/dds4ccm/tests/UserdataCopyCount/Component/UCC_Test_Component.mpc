@@ -142,7 +142,6 @@ project(UCC_Test_Component_svnt) : ciao_servant, dds4ccm_lem_stub, dds4ccm_skel 
   }
 
   Inline_Files {
-    UCC_Test_ComponentS.inl
   }
 }
 

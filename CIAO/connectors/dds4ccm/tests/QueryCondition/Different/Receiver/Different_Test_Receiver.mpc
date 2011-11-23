@@ -142,7 +142,6 @@ project(QC_Different_Test_Receiver_svnt) : ciao_servant, dds4ccm_lem_stub, dds4c
   }
 
   Inline_Files {
-    Different_Test_ReceiverS.inl
   }
 }
 

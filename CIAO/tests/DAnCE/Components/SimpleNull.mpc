@@ -100,7 +100,6 @@ project(SimpleNull_svnt) : ciao_servant {
   }
 
   Inline_Files {
-    SimpleNullS.inl
   }
 }
 

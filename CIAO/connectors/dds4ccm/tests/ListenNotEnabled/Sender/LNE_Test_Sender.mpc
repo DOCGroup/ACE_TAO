@@ -141,7 +141,6 @@ project(DDS_LNE_Test_Sender_svnt) : ciao_servant, dds4ccm_lem_stub, dds4ccm_skel
   }
 
   Inline_Files {
-    LNE_Test_SenderS.inl
   }
 }
 

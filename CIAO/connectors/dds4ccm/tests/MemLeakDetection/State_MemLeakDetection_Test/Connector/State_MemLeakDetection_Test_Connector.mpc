@@ -137,7 +137,6 @@ project(DDS_SMLDT_Connector_svnt) : ciao_servant, dds4ccm_impl {
   }
 
   Inline_Files {
-    State_MemLeakDetection_Test_ConnectorS.inl
   }
 }
 

@@ -72,7 +72,6 @@ project(SimpleCommon_skel) : ccm_svnt {
   }
 
   Inline_Files {
-    SimpleCommonS.inl
   }
 }
 

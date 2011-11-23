@@ -141,7 +141,6 @@ project(DDS_QCLE_Test_Sender_svnt) : ciao_servant, dds4ccm_lem_stub, dds4ccm_ske
   }
 
   Inline_Files {
-    QCLE_Test_SenderS.inl
   }
 }
 

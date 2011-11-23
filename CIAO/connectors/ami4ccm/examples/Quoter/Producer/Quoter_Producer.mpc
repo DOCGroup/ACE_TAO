@@ -128,7 +128,6 @@ project(AMI_Quoter_Producer_svnt) : ciao_servant, messaging {
   }
 
   Inline_Files {
-    Quoter_ProducerS.inl
   }
 }
 

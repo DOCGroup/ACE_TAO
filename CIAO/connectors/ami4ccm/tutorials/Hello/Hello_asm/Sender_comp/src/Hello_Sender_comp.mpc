@@ -154,6 +154,5 @@ project(AMI_Hello_Tuto_Hello_Sender_svnt) : ciao_servant, ami {
   }
 
   Inline_Files {
-    ../../GeneratedCode/Hello_Sender_compS.inl
   }
 }

@@ -133,7 +133,6 @@ project(DDS_Broker_svnt) : ciao_servant, dds4ccm_lem_stub, dds4ccm_skel {
   }
 
   Inline_Files {
-    BrokerS.inl
   }
 }
 

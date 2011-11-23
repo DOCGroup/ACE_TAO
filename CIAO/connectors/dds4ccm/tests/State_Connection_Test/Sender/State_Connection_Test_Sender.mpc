@@ -134,7 +134,6 @@ project(DDS_SCT_Sender_svnt) : ciao_servant, dds4ccm_lem_stub, dds4ccm_skel {
   }
 
   Inline_Files {
-    State_Connection_Test_SenderS.inl
   }
 }
 

@@ -134,7 +134,6 @@ project(DDS_PSL_SampleLost_Sender_svnt) : ciao_servant, dds4ccm_lem_stub, dds4cc
   }
 
   Inline_Files {
-    PSL_SampleLost_SenderS.inl
   }
 }
 

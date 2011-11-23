@@ -128,7 +128,6 @@ project(AMI_UsesSM_Base_Sender_svnt) : ciao_servant, ami {
   }
 
   Inline_Files {
-    UsesSM_SenderS.inl
   }
 }
 

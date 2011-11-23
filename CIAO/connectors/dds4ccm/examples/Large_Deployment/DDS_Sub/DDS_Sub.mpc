@@ -130,7 +130,6 @@ project(Large_DDS_Sub_svnt) : ciao_servant, dds4ccm_base {
   }
 
   Inline_Files {
-    DDS_SubS.inl
   }
 }
 

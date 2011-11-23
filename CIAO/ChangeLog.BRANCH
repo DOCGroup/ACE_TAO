@@ -1,3 +1,8 @@
+Fri Nov  4 15:47:29 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * *.mpc:
+          Removed all S.inl entries.
+
 Fri Nov  4 16:16:35 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * bin/generate_component_mpc.pl:

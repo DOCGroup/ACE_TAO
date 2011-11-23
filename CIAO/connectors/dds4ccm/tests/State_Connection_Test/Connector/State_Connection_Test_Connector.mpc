@@ -137,7 +137,6 @@ project(DDS_SCT_Connector_svnt) : ciao_servant, dds4ccm_impl {
   }
 
   Inline_Files {
-    State_Connection_Test_ConnectorS.inl
   }
 }
 

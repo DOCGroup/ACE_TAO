@@ -137,7 +137,6 @@ project(DDS_ECT_Connector_svnt) : ciao_servant, dds4ccm_impl {
   }
 
   Inline_Files {
-    Event_Connection_Test_ConnectorS.inl
   }
 }
 
