@@ -24,7 +24,7 @@ project(AMI_Hello_Tuto_Hello_Receiver_idl_gen) : componentidldefaults {
 project(AMI_Hello_Hello_Receiver_exec_idl_gen) : componentidldefaults {
   requires += dummy_label
   custom_only = 1
-  idlflags += -Gex -SS -Sci -Ssi \
+  idlflags += -Gex -SS -Sci \
               -I../ports \
               -I../../ports \
               -o ../../../Tutorial/Code/GeneratedExec
