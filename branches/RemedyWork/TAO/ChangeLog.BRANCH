@@ -1,3 +1,12 @@
+Fri Nov  4 16:17:33 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * TAO_IDL/tao_idl.1:
+        * docs/compiler.html:
+        * docs/tutorials/Quoter/Simple/Client/index.html:
+        * orbsvcs/tests/Bug_1393_Regression/run_test.pl:
+        * tests/Bug_3743_Regression/run_test.pl:
+          Removed references to S.inl files.
+
 Wed Nov 23 10:17:10 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * TAO_IDL/be/be_provides.cpp:

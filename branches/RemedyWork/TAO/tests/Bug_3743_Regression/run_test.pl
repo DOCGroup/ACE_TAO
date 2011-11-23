@@ -21,7 +21,7 @@ if (exists $ENV{HOST_ROOT}) {
 my $test_idlfile = $test->LocalFile ("Test.idl");
 
 # Files to delete after test
-my @generated_files = ("TestC.cpp", "TestS.cpp", "TestC.inl", "TestS.inl", "Test.skel.h", "Test.stub.h");
+my @generated_files = ("TestC.cpp", "TestS.cpp", "TestC.inl", "Test.skel.h", "Test.stub.h");
 
 # The IDL compiler
 $TAO_IDL = $test->CreateProcess ("$tao_idl");
