@@ -1,3 +1,9 @@
+Wed Nov 23 15:07:59 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * MPC/config/taobaseidldefaults.mpb:
+          Prevent building a second time when make was invoked a
+          second time.
+
 Fri Nov  4 15:45:54 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * examples/AMI/FL_Callback/FL_Callback.mpc:
