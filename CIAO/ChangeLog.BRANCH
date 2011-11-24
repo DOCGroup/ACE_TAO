@@ -1,3 +1,10 @@
+Thu Nov 24 07:40:14 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/IDL_Test/Inherited_Servants/Base.idl:
+        * tests/IDL_Test/Inherited_Servants/Derived.idl:
+          Enabled all IDL code again and added an extra component 
+          and interface without a module.
+
 Fri Nov  4 15:47:29 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * *.mpc:

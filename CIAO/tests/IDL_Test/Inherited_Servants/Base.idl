@@ -19,9 +19,9 @@ module Inherited
 {
    component Base_comp
    {
-//       provides Inherited::base_interface prov_base;
-//       uses     Inherited::base_interface uses_base;
-//       attribute long base;
+      provides Inherited::base_interface prov_base;
+      uses     Inherited::base_interface uses_base;
+      attribute long base;
    };
 };
 
