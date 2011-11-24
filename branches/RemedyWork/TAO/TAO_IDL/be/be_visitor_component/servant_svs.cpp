@@ -312,7 +312,7 @@ be_visitor_servant_svs::visit_provides (be_provides *node)
         << global << sname <<"::CCM_" << lname
         << "::_narrow (tmp.in());" << be_uidt_nl << be_nl
         << "typedef " << global << "CIAO_FACET" << prefix_connector
-        << scope->flat_name () << global << lname << "_Servant_T <" << be_idt_nl
+        << scope->flat_name () << "::" << lname << "_Servant_T <" << be_idt_nl
         << "POA_" << sname << global << lname
         << "," << be_nl << global << sname <<"::CCM_" << lname << "," << be_nl
         << global << "Components::" << be_global->ciao_container_type ()
