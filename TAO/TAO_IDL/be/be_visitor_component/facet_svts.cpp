@@ -34,6 +34,7 @@ be_visitor_facet_svts::visit_provides (be_provides *node)
                          ACE_TEXT ("failed\n")),
                         -1);
     }
+  return 0;
 }
 
 int
