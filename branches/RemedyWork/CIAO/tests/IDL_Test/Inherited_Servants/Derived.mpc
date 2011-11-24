@@ -30,7 +30,8 @@ project(IS_Base_Derived_lem_gen) : ciaoidldefaults {
 }
 
 project(IS_Base_Derived_lem_stub) : ccm_svnt   {
-  after += IS_Base_Derived_stub \
+  after += IS_Base_Derived_lem_gen \
+           IS_Base_Derived_stub \
            IS_Base_stub \
            IS_Base_lem_stub
   libs  += IS_Base_stub \
@@ -82,7 +83,8 @@ project(IS_Base_Derived_stub) : ccm_stub   {
 }
 
 project(IS_Base_Derived_exec) : ciao_executor   {
-  after   += IS_Base_Derived_lem_stub \
+  after   += IS_Base_Derived_lem_gen \
+             IS_Base_Derived_lem_stub \
              IS_Base_Derived_stub \
              IS_Base_exec
   sharedname = IS_Derived_exec
