@@ -62,14 +62,14 @@ Test_i::request (
     break;
   }
 
-  if (!CORBA::is_nil(this->opponent_))
+  if (!CORBA::is_nil(this->opponent_.in ()))
   {
     char buf[1024];
     ACE_OS::snprintf (buf, sizeof(buf), "request #%d followup [%s]", counter, follow_up_str);
 
     if (reqmode == A::RQM_SYNCH)
     {
-      if (!CORBA::is_nil (this->rh_))
+      if (!CORBA::is_nil (this->rh_.in ()))
         this->opponent_->sendc_report(this->rh_.in (), buf);
     }
     else
