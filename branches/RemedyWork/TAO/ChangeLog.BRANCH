@@ -1,3 +1,12 @@
+Thu Nov 24 14:23:25 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * TAO_IDL/be/be_codegen.cpp:
+          Added appropriate ifdefs for including templated source
+          files.
+
+        * TAO_IDL/be/be_visitor_attribute/attribute.cpp:
+          Also generate the setters in case templated code,
+
 Thu Nov 24 12:19:07 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * TAO_IDL/be/be_visitor_attribute/attribute.cpp:

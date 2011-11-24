@@ -1234,11 +1234,6 @@ TAO_CodeGen::start_ciao_svnt_template_source (const char *fname)
     << be_global->be_get_ciao_svnt_hdr_fname (true)
     << "\"" << be_nl;
 
-  *this->ciao_svnt_template_source_
-    << "#include \""
-    << be_global->be_get_ciao_tmpl_svnt_hdr_fname(true)
-    << "\"";
-
   this->gen_svnt_src_includes (this->ciao_svnt_template_source_);
 
   return 0;
@@ -1943,9 +1938,19 @@ TAO_CodeGen::end_ciao_svnt_source (void)
 int
 TAO_CodeGen::end_ciao_svnt_template_header (void)
 {
-  *this->ciao_svnt_template_header_ << "\n#include \""
+  *this->ciao_svnt_template_header_ << be_nl
+                                    << "#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)"
+                                    << be_nl << "#include \""
                                     << be_global->be_get_ciao_tmpl_svnt_src_fname (true)
-                                    << "\"";
+                                    << "\"" << be_nl
+                                    << "#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */"
+                                    << be_nl_2
+                                    << "#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)"
+                                    << be_nl << "#pragma implementation (\""
+                                    << be_global->be_get_ciao_tmpl_svnt_src_fname (true)
+                                    << "\")"
+                                    << be_nl << "#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */"
+                                    << be_nl;
 
   if (be_global->post_include () != 0)
     {
