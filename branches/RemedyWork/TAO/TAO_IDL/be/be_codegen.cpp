@@ -1943,6 +1943,10 @@ TAO_CodeGen::end_ciao_svnt_source (void)
 int
 TAO_CodeGen::end_ciao_svnt_template_header (void)
 {
+  *this->ciao_svnt_template_header_ << "\n#include \""
+                                    << be_global->be_get_ciao_tmpl_svnt_src_fname ()
+                                    << "\"";
+
   if (be_global->post_include () != 0)
     {
       *this->ciao_svnt_template_header_ << "\n\n#include /**/ \""
