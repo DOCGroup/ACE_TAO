@@ -1,8 +1,15 @@
+Thu Nov 24 08:33:42 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        * tests/Mixed_Sync_ASync_Events/main.cpp:
+        * tests/Mixed_Sync_ASync_Events/test_i.cpp:
+        
+          Fixed OpenVMS build errors.
+
 Wed Nov 23 14:37:02 UTC 2011  Martin Corino  <mcorino@remedy.nl>
 
         * MPC/config/taobaseidldefaults.mpb:
         * MPC/modules/IDLHelper.pm:
-        
+
           Moved addition of generated executor files (-Gex) from
           taobaseidldefaults.mpb to IDLHelper.pm to be able to
           correctly and transparently handle -oE and -oN switches.
