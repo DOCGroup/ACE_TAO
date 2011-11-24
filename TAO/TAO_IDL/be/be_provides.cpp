@@ -157,9 +157,9 @@ be_provides::gen_facet_svnt_tmpl_defn (TAO_OutStream &os)
      << "{" << be_idt_nl;
 
   os << "template <typename BASE, typename EXEC, typename CONTEXT>" << be_nl
-     << lname << "_Servant_T::"
+     << lname << "_Servant_T<BASE, EXEC, CONTEXT>::"
      << lname << "_Servant_T (" << be_idt << be_idt_nl
-     << "EXEC::_ptr_type executor," << be_nl
+     << "typename EXEC::_ptr_type executor," << be_nl
      << "::Components::CCMContext_ptr ctx)" << be_uidt_nl
      << ": " << global << "CIAO::Facet_Servant_Base_T<BASE, EXEC, "
      << "CONTEXT> (executor, ctx)"
@@ -207,6 +207,8 @@ be_provides::gen_facet_svnt_tmpl_defn (TAO_OutStream &os)
                             -1);
         }
     }
+
+  os << be_uidt_nl << "}";
 
   impl->svnt_src_facet_gen (true);
   return 0;
