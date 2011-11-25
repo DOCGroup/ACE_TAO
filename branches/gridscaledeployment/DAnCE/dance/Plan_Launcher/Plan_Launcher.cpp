@@ -31,6 +31,7 @@ namespace
         FINISHLAUNCH,
         START,
         STOPAPP,
+        STARTAPP,
         TEARDOWN,
         INVALID
       };
@@ -121,6 +122,7 @@ usage(const ACE_TCHAR*)
               ACE_TEXT ("(Requires Plan, UUID, or APP/AM references\n")
 
               ACE_TEXT ("\t--stop-application\t\t\tStop an application, but not destroy DAM\n")
+              ACE_TEXT ("\t--start-application\t\t\t Start an application from existing DAM\n")
 
               ACE_TEXT ("\t-f|--force\t\t\tDo not stop teardown on errors")
 
@@ -168,6 +170,7 @@ parse_args(int argc, ACE_TCHAR *argv[], Options &options)
   get_opt.long_option(ACE_TEXT("domain-timeout"), ACE_Get_Opt::ARG_REQUIRED);
   get_opt.long_option(ACE_TEXT("domain-file"), ACE_Get_Opt::ARG_REQUIRED);
   get_opt.long_option(ACE_TEXT("stop-application"), ACE_Get_Opt::NO_ARG);
+  get_opt.long_option(ACE_TEXT("start-application"), ACE_Get_Opt::NO_ARG);
 
   int c;
   ACE_CString s;
@@ -342,6 +345,17 @@ parse_args(int argc, ACE_TCHAR *argv[], Options &options)
               break;
             }
           if ((ACE_OS::strcmp (get_opt.long_option (),
+                               ACE_TEXT ("start-application")) == 0))
+            {
+              DANCE_DEBUG (DANCE_LOG_MAJOR_DEBUG_INFO,
+                           (LM_DEBUG, DLINFO
+                            ACE_TEXT ("Plan_Launcher::parse_args - ")
+                            ACE_TEXT ("Setting mode for starting app from existing AM: %C\n"),
+                            get_opt.opt_arg ()));
+              options.mode_ = Options::STARTAPP;
+              break;
+            }
+          if ((ACE_OS::strcmp (get_opt.long_option (),
                                ACE_TEXT ("domain-timeout")) == 0))
             {
               DANCE_DEBUG (DANCE_LOG_MAJOR_DEBUG_INFO,
@@ -392,6 +406,17 @@ parse_args(int argc, ACE_TCHAR *argv[], Options &options)
                    (LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher::parse_args - ")
                     ACE_TEXT ("Invalid set of plan identification ")
                     ACE_TEXT ("as required for stop application\n")));
+      return false;
+    }
+
+  if ((options.mode_ == Options::STARTAPP)
+      // Either way (EM/NM), we ca use a combination of a AM and a APP.
+      && !(options.am_ior_))
+    {
+      DANCE_ERROR (DANCE_LOG_EMERGENCY,
+                   (LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher::parse_args - ")
+                    ACE_TEXT ("Invalid set of plan identification ")
+                    ACE_TEXT ("as required for start application\n")));
       return false;
     }
 
@@ -604,6 +629,106 @@ stop_plan (const Options &opts,
   try
     {
       pl_base->teardown_application (am, app);
+    }
+  catch (const DAnCE::Deployment_Failure &ex)
+    {
+      if (!opts.quiet_)
+        {
+          DANCE_ERROR (DANCE_LOG_EMERGENCY, (LM_ERROR, DLINFO
+                                             ACE_TEXT ("Plan_Launcher::teardown_plan - ")
+                                             ACE_TEXT ("Application Teardown failed, exception: %C\n"),
+                                             ex.ex_.c_str ()));
+        }
+      rc = 1;
+    }
+  catch (const CORBA::Exception &ex)
+    {
+      if (!opts.quiet_)
+        {
+          DANCE_ERROR (DANCE_LOG_EMERGENCY, (LM_ERROR, DLINFO
+                                             ACE_TEXT ("Plan_Launcher::teardown_plan - ")
+                                             ACE_TEXT ("Application Teardown failed, ")
+                                             ACE_TEXT ("caught CORBA exception %C\n"),
+                                             ex._info ().c_str ()));
+        }
+      rc = 1;
+    }
+  catch (...)
+    {
+      if (!opts.quiet_)
+        {
+          DANCE_ERROR (DANCE_LOG_EMERGENCY, (LM_ERROR, DLINFO
+                                             ACE_TEXT ("Plan_Launcher::teardown_plan - ")
+                                             ACE_TEXT ("Application Teardown failed, ")
+                                             ACE_TEXT ("caught unknown C++ exception\n")));
+        }
+      rc = 1;
+    }
+
+  return rc;
+}
+
+int
+start_application (const Options &opts,
+		   DAnCE::Plan_Launcher_Base *pl_base,
+		   const ::Deployment::DeploymentPlan *plan,
+		   CORBA::ORB_ptr orb)
+{
+  CORBA::Object_var am;
+  CORBA::Object_var app;
+
+  int rc = 0;
+
+  if (opts.am_ior_)
+    {
+      DANCE_DEBUG (DANCE_LOG_MAJOR_EVENT,
+                   (LM_DEBUG, DLINFO
+                    ACE_TEXT ("Plan_Launcher::teardown_plan - ")
+                    ACE_TEXT ("Starting application with explicitly ")
+                    ACE_TEXT ("nominated AM IOR.\n")));
+      am = orb->string_to_object (opts.am_ior_);
+    }
+  else
+    {
+      DANCE_ERROR (DANCE_LOG_EMERGENCY,
+                   (LM_DEBUG, DLINFO
+                    ACE_TEXT ("Plan_Launcher::stop_plan - ")
+                    ACE_TEXT ("Start application curently requires an AM reference\n")));
+      return -1;
+    }
+
+  try
+    {
+      pl_base->start_application (am.in (), app.out ());
+
+
+      DANCE_DEBUG (DANCE_LOG_MAJOR_EVENT,
+                   (LM_NOTICE, DLINFO
+                    ACE_TEXT ("Plan_Launcher::launch_plan - ")
+                    ACE_TEXT ("Successfully deployed application\n")));
+
+      if (!opts.output_)
+        return 0;
+
+      ACE_TString app_output;
+
+      if (opts.output_prefix_)
+        app_output = opts.output_prefix_;
+      else
+	app_output = ACE_TEXT_CHAR_TO_TCHAR (opts.uuid_);
+
+      app_output += ACE_TEXT ("_APP.ior");
+
+      DANCE_DEBUG (DANCE_LOG_MINOR_EVENT,
+                   (LM_DEBUG, DLINFO
+                    ACE_TEXT ("Plan_Launcher::start_application - ")
+                    ACE_TEXT ("Writing Application IOR to <%s>\n"),
+                    app_output.c_str ()));
+
+      CORBA::String_var tmp = orb->object_to_string (app.in ());
+      write_IOR (app_output.c_str (),
+                 tmp.in ());
+
     }
   catch (const DAnCE::Deployment_Failure &ex)
     {
@@ -1091,6 +1216,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         case Options::STOPAPP:
           retval = stop_plan (options, pl_base.get (), dp, orb.in ());
           break;
+
+	case Options::STARTAPP:
+	  retval = start_application (options, pl_base.get (), dp, orb.in ());
+	  break;
 
         default:
           if (!options.quiet_)

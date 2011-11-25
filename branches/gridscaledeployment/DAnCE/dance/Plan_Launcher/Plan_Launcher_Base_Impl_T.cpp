@@ -565,6 +565,75 @@ Plan_Launcher_Base_Impl< Manager, AppManager, Application>
 template <typename Manager, typename AppManager, typename Application>
 void
 Plan_Launcher_Base_Impl< Manager, AppManager, Application>
+::start_application (CORBA::Object_ptr am,
+		     CORBA::Object_out app)
+{
+  DANCE_TRACE ("Plan_Launcher_Base_Impl::start_application");
+
+  try
+    {
+      std::string filename = "Redeployment";
+      filename += ".timing";
+      outfile_.open (filename.c_str ());
+      
+      ACE_High_Res_Timer timer;
+      timer.reset ();
+      timer.start ();
+ 
+      ::Deployment::Connections_var conns;
+
+      CORBA::Object_var app = this->start_launch (am,
+                                                  0,
+                                                  conns.out ());
+
+      this->finish_launch (app.in (),
+                           conns,
+                           false);
+
+      this->start (app.in ());
+
+         
+      timer.stop ();
+      
+      ACE_hrtime_t elapsed (0);
+      timer.elapsed_microseconds (elapsed);
+      outfile_ << "Total plan deployment time: " << elapsed << '\n';
+      
+      outfile_.close ();
+
+      DANCE_DEBUG (DANCE_LOG_MAJOR_EVENT,
+                   (LM_DEBUG, DLINFO
+                    ACE_TEXT ("Plan_Launcher_Base_Impl::start_application - ")
+                    ACE_TEXT ("Application Deployed successfully\n")));
+
+      app = app._retn ();
+    }
+  catch (const CORBA::Exception& ex)
+    {
+      char buf[1024];
+      ACE_OS::sprintf (buf, "Plan_Launcher_Base_Impl::start_application - CORBA EXCEPTION: <%s>\n",
+                       ex._info().fast_rep());
+      DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
+                   (LM_ERROR, DLINFO ACE_TEXT("%C"), buf));
+      throw Deployment_Failure (buf);
+    }
+  catch (const Deployment_Failure &)
+    {
+      throw;
+    }
+  catch (...)
+    {
+      char buf[1024];
+      ACE_OS::sprintf (buf, "Plan_Launcher_Base_Impl::start_application - EXCEPTION: non-CORBA exception\n");
+      DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
+                   (LM_ERROR, DLINFO ACE_TEXT("%C"), buf));
+      throw Deployment_Failure (buf);
+    }
+}
+
+template <typename Manager, typename AppManager, typename Application>
+void
+Plan_Launcher_Base_Impl< Manager, AppManager, Application>
 ::teardown_application (CORBA::Object_ptr am_obj,
                         CORBA::Object_ptr app_obj)
 {
