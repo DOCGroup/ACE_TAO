@@ -44,3 +44,10 @@ be_visitor_facet_svts::visit_component (be_component *node)
   return 0;
 }
 
+int
+be_visitor_facet_svts::visit_connector (be_connector *node)
+{
+  return this->visit_component (node);
+}
+
+
