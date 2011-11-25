@@ -1,3 +1,11 @@
+Fri Nov 25 13:28:08 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/facet_svth.cpp:
+        * TAO_IDL/be/be_visitor_component/facet_svts.cpp:
+        * TAO_IDL/be_include/be_visitor_component/facet_svth.h:
+        * TAO_IDL/be_include/be_visitor_component/facet_svts.h:
+          Templated servants for connector were not generated. Fixed this.
+
 Thu Nov 24 14:23:25 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * TAO_IDL/be/be_codegen.cpp:

@@ -32,6 +32,7 @@ public:
 
   ~be_visitor_facet_svth (void);
 
+  virtual int visit_connector (be_connector *node);
   virtual int visit_component (be_component *node);
   virtual int visit_provides (be_provides *node);
 };
