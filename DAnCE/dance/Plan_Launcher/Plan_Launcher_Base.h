@@ -15,6 +15,7 @@
 
 #include "dance/Deployment/Deployment_DeploymentPlanC.h"
 #include "dance/Deployment/Deployment_ConnectionC.h"
+#include "dance/Deployment/Deployment_ApplicationManagerC.h"
 #include "dance/Plan_Launcher/Plan_Launcher_Export.h"
 
 namespace DAnCE
@@ -29,6 +30,10 @@ namespace DAnCE
     virtual const char * launch_plan (const ::Deployment::DeploymentPlan &plan,
                                       CORBA::Object_out am,
                                       CORBA::Object_out app) = 0;
+    
+    /// Starts a new instance of a plan from an existing ApplicationManager reference.
+    virtual void start_application (CORBA::Object_ptr am,
+				    CORBA::Object_out app) = 0;
 
     /// Invokes prepareplan for the provided plan, returning a reference to
     /// the ApplicationManager.

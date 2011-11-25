@@ -54,6 +54,9 @@ namespace DAnCE
                                       CORBA::Object_out am,
                                       CORBA::Object_out app);
 
+    virtual void start_application (CORBA::Object_ptr am,
+				    CORBA::Object_out app);
+
     virtual CORBA::Object_ptr prepare_plan (const ::Deployment::DeploymentPlan &plan);
 
     virtual CORBA::Object_ptr start_launch (CORBA::Object_ptr app_mgr,
