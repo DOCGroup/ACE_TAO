@@ -128,7 +128,21 @@ NodeApplicationManager_Impl::preparePlan (const Deployment::DeploymentPlan& plan
                 ACE_TEXT("Performing locality split on plan %C.\n"),
                 plan.UUID.in ()));
 
+  std::ofstream timer_out_;
+  timer_out_.open (node_name_.c_str (), 
+                   std::ios_base::out & std::ios_base::trunc);
+  ACE_High_Res_Timer timer_;
+  timer_.reset ();
+  timer_.start ();
+
   this->split_plan_.split_plan (plan);
+
+  ACE_hrtime_t elapsed (0);
+  timer_.elapsed_microseconds (elapsed);
+  timer_out_ << "Local split plan time: " << elapsed << '\n';
+  
+  timer_out_.close ();
+
 
   DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
                (LM_TRACE, DLINFO

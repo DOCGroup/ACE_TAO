@@ -58,15 +58,13 @@ NodeApplication_Impl::NodeApplication_Impl (CORBA::ORB_ptr orb,
   this->scheduler_.activate_scheduler (0);
   
   timer_out_.open (node_name_.c_str (), 
-                   std::ios_base::out & std::ios_base::trunc);
+                   std::ios_base::out & ios_base::app);
   timer_.reset ();
-  timer_.start ();
 }
 
 NodeApplication_Impl::~NodeApplication_Impl()
 {
   DANCE_TRACE( "NodeApplication_Impl::~NodeApplication_Impl()");
-  timer_.stop ();
   timer_out_.close ();
   this->scheduler_.terminate_scheduler ();
 }
@@ -76,9 +74,8 @@ NodeApplication_Impl::prepare_instances (const LocalitySplitter::TSubPlans& plan
 {
   DANCE_TRACE ("NodeApplication_Impl::prepare_instances");
   
-  ACE_hrtime_t time (0);
-  timer_.elapsed_microseconds (time);
-  timer_out_ << "prepare_instances start:" << time << '\n';
+  timer_.reset ();
+  timer_.start ();
 
   CORBA::ULong plan (0);
   std::list < Event_Future > prepared_instances;
@@ -212,9 +209,13 @@ NodeApplication_Impl::prepare_instances (const LocalitySplitter::TSubPlans& plan
                     ACE_TEXT ("Successfully executed preparePlan on locality %C\n"),
                     event.id_.c_str ()));
     }
-  
-  timer_.elapsed_microseconds (time);
-  timer_out_ << "prepare_instances end:" << time << '\n';
+
+  timer_.stop ();
+      
+  ACE_hrtime_t elapsed (0);
+  timer_.elapsed_microseconds (elapsed);
+  timer_out_ << "PreparePlan time: " << elapsed << '\n';
+
 }
 
 void
@@ -262,9 +263,8 @@ void
 NodeApplication_Impl::start_launch_instances (const Deployment::Properties &prop,
                                               Deployment::Connections_out providedReference)
 {
-  ACE_hrtime_t time (0);
-  timer_.elapsed_microseconds (time);
-  timer_out_ << "start_launch_instances start:" << time << '\n';
+  timer_.reset ();
+  timer_.start ();
 
   DANCE_TRACE ("NodeApplication_Impl::start_launch_instances");
   Deployment::Connections *tmp (0);
@@ -332,17 +332,19 @@ NodeApplication_Impl::start_launch_instances (const Deployment::Properties &prop
         }
     }
 
-  timer_.elapsed_microseconds (time);
-  timer_out_ << "start_launch_instances end:" << time << '\n';
+  timer_.stop ();
+      
+  ACE_hrtime_t elapsed (0);
+  timer_.elapsed_microseconds (elapsed);
+  timer_out_ << "StartLaunch time: " << elapsed << '\n';
 }
 
 void
 NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedReference,
                                     ::CORBA::Boolean start)
 {
-  ACE_hrtime_t time (0);
-  timer_.elapsed_microseconds (time);
-  timer_out_ << "finishLaunch start:" << time << '\n';
+  timer_.reset ();
+  timer_.start ();
 
   DANCE_TRACE ("NodeApplication_Impl::finishLaunch");
 
@@ -371,17 +373,19 @@ NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedRe
           throw;
         }
     }
-  
-  timer_.elapsed_microseconds (time);
-  timer_out_ << "finishLaunch end:" << time << '\n';
+
+  timer_.stop ();
+      
+  ACE_hrtime_t elapsed (0);
+  timer_.elapsed_microseconds (elapsed);
+  timer_out_ << "FinishLaunch time: " << elapsed << '\n';
 }
 
 void
 NodeApplication_Impl::start ()
 {
-  ACE_hrtime_t time (0);
-  timer_.elapsed_microseconds (time);
-  timer_out_ << "start start:" << time << '\n';
+  timer_.reset ();
+  timer_.start ();
 
   DANCE_TRACE( "NodeApplication_Impl::start");
 
@@ -408,8 +412,13 @@ NodeApplication_Impl::start ()
           throw;
         }
     }
-  timer_.elapsed_microseconds (time);
-  timer_out_ << "start end:" << time << '\n';
+  
+    timer_.stop ();
+      
+  ACE_hrtime_t elapsed (0);
+  timer_.elapsed_microseconds (elapsed);
+  timer_out_ << "start time: " << elapsed << '\n';
+
 }
 
 void

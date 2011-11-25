@@ -194,7 +194,7 @@ Plan_Launcher_Base_Impl< Manager, AppManager, Application>
 
       ACE_hrtime_t elapsed (0);
       timer_.elapsed_microseconds (elapsed);
-      outfile_ << "PreparePlan time: " << elapsed << '\n';
+      outfile_ << "StartLaunch time: " << elapsed << '\n';
 
       DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
                    (LM_DEBUG, DLINFO
@@ -350,10 +350,12 @@ Plan_Launcher_Base_Impl< Manager, AppManager, Application>
 
       application->finishLaunch (provided_connections,
                                  start);
+      
+      timer_.stop ();
 
       ACE_hrtime_t elapsed (0);
       timer_.elapsed_microseconds (elapsed);
-      outfile_ << "PreparePlan time: " << elapsed << '\n';
+      outfile_ << "FinishLaunch time: " << elapsed << '\n';
 
       DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
                    (LM_DEBUG, DLINFO
@@ -432,7 +434,18 @@ Plan_Launcher_Base_Impl< Manager, AppManager, Application>
                    (LM_DEBUG, DLINFO
                     ACE_TEXT("Plan_Launcher_Base_Impl::start - ")
                     ACE_TEXT("before invoking start on application...\n")));
+
+      timer_.reset ();
+      timer_.start ();
+
       application->start ();
+
+      timer_.stop ();
+
+      ACE_hrtime_t elapsed (0);
+      timer_.elapsed_microseconds (elapsed);
+      outfile_ << "Start time: " << elapsed << '\n';
+
       DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
                    (LM_DEBUG,
                     DLINFO ACE_TEXT("Plan_Launcher_Base_Impl::start - ")
