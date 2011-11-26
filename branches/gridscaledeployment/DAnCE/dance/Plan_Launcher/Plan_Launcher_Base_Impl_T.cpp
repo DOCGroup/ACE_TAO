@@ -663,7 +663,23 @@ Plan_Launcher_Base_Impl< Manager, AppManager, Application>
 
   try
     {
+      std::string filename = "Teardown";
+      filename += ".timing";
+      outfile_.open (filename.c_str ());
+
+      ACE_High_Res_Timer timer;
+      timer.reset ();
+      timer.start ();
+      
       am->destroyApplication (app.in ());
+
+      timer.stop ();
+      
+      ACE_hrtime_t elapsed (0);
+      timer.elapsed_microseconds (elapsed);
+      outfile_ << "Total plan teardown time: " << elapsed << '\n';
+      
+      outfile_.close ();
     }
   catch (const ::Deployment::StopError &ex)
     {
