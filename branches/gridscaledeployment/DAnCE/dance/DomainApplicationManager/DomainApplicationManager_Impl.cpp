@@ -161,6 +161,26 @@ DomainApplicationManager_Impl::destroyApplication (
 
   try
     {
+      DANCE_DEBUG (DANCE_LOG_TRACE,
+		   (LM_TRACE, DLINFO
+		    ACE_TEXT("DomainApplicationManager_impl::destroyApplication - ")
+		    ACE_TEXT("Considering %u running applications.\n"),
+		    this->running_app_.size ()));
+      
+      if (this->running_app_.size () == 0)
+	{
+	   DANCE_ERROR (DANCE_LOG_ERROR,
+               (LM_ERROR, DLINFO
+                ACE_TEXT("DomainApplicationManager_impl::destroyApplication - ")
+                ACE_TEXT("No running applications.\n")));
+	   CORBA::Exception* stop_ex = new Deployment::StopError(this->getPlanUUID (),
+								 "No running applications.");
+
+	   ::Deployment::AMH_ApplicationManagerExceptionHolder amh_exholder (stop_ex);
+	   _tao_rh->destroyApplication_excep (&amh_exholder); 
+	   return;
+	}
+
       for (TApplications::size_type i = 0; i < this->running_app_.size(); ++i)
         {
           DomainApplication_Impl* p = this->running_app_[i];
