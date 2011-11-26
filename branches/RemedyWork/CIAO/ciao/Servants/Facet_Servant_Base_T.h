@@ -13,8 +13,8 @@
  */
 //=============================================================================
 
-#ifndef CIAO_SERVANT_INTERFACE_BASE_T_H
-#define CIAO_SERVANT_INTERFACE_BASE_T_H
+#ifndef CIAO_FACET_INTERFACE_BASE_T_H
+#define CIAO_FACET_INTERFACE_BASE_T_H
 
 #include /**/ "ace/pre.h"
 
@@ -56,4 +56,4 @@ namespace CIAO
 #include /**/ "ace/post.h"
 
 
-#endif /* CIAO_SERVANT_INTERFACE_BASE_T_H */
+#endif /* CIAO_FACET_INTERFACE_BASE_T_H */
