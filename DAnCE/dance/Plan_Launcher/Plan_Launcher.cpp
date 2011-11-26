@@ -699,6 +699,8 @@ start_application (const Options &opts,
     {
       pl_base->start_application (am.in (), app.out ());
 
+      if (CORBA::is_nil (app))
+	throw DAnCE::Deployment_Failure ("start_application returned a nil reference");
 
       DANCE_DEBUG (DANCE_LOG_MAJOR_EVENT,
                    (LM_NOTICE, DLINFO
@@ -722,8 +724,14 @@ start_application (const Options &opts,
                     ACE_TEXT ("Plan_Launcher::start_application - ")
                     ACE_TEXT ("Writing Application IOR to <%s>\n"),
                     app_output.c_str ()));
-
       CORBA::String_var tmp = orb->object_to_string (app.in ());
+      
+      DANCE_DEBUG (DANCE_LOG_TRACE,
+                   (LM_TRACE, DLINFO
+                    ACE_TEXT ("Plan_Launcher::start_application - ")
+                    ACE_TEXT ("Application IOR to <%C>\n"),
+                    tmp.in ()));
+     
       write_IOR (app_output.c_str (),
                  tmp.in ());
 
@@ -733,8 +741,8 @@ start_application (const Options &opts,
       if (!opts.quiet_)
         {
           DANCE_ERROR (DANCE_LOG_EMERGENCY, (LM_ERROR, DLINFO
-                                             ACE_TEXT ("Plan_Launcher::teardown_plan - ")
-                                             ACE_TEXT ("Application Teardown failed, exception: %C\n"),
+                                             ACE_TEXT ("Plan_Launcher::start_application - ")
+                                             ACE_TEXT ("Application Launch failed, exception: %C\n"),
                                              ex.ex_.c_str ()));
         }
       rc = 1;
@@ -744,8 +752,8 @@ start_application (const Options &opts,
       if (!opts.quiet_)
         {
           DANCE_ERROR (DANCE_LOG_EMERGENCY, (LM_ERROR, DLINFO
-                                             ACE_TEXT ("Plan_Launcher::teardown_plan - ")
-                                             ACE_TEXT ("Application Teardown failed, ")
+                                             ACE_TEXT ("Plan_Launcher::start_application - ")
+                                             ACE_TEXT ("Application Launch failed, ")
                                              ACE_TEXT ("caught CORBA exception %C\n"),
                                              ex._info ().c_str ()));
         }
@@ -756,8 +764,8 @@ start_application (const Options &opts,
       if (!opts.quiet_)
         {
           DANCE_ERROR (DANCE_LOG_EMERGENCY, (LM_ERROR, DLINFO
-                                             ACE_TEXT ("Plan_Launcher::teardown_plan - ")
-                                             ACE_TEXT ("Application Teardown failed, ")
+                                             ACE_TEXT ("Plan_Launcher::start_application - ")
+                                             ACE_TEXT ("Application Launch failed, ")
                                              ACE_TEXT ("caught unknown C++ exception\n")));
         }
       rc = 1;
