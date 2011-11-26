@@ -339,8 +339,7 @@ parse_args(int argc, ACE_TCHAR *argv[], Options &options)
               DANCE_DEBUG (DANCE_LOG_MAJOR_DEBUG_INFO,
                            (LM_DEBUG, DLINFO
                             ACE_TEXT ("Plan_Launcher::parse_args - ")
-                            ACE_TEXT ("Setting mode for destroyApplication: %C\n"),
-                            get_opt.opt_arg ()));
+                            ACE_TEXT ("Setting mode for destroyApplication\n")));
               options.mode_ = Options::STOPAPP;
               break;
             }
@@ -350,8 +349,7 @@ parse_args(int argc, ACE_TCHAR *argv[], Options &options)
               DANCE_DEBUG (DANCE_LOG_MAJOR_DEBUG_INFO,
                            (LM_DEBUG, DLINFO
                             ACE_TEXT ("Plan_Launcher::parse_args - ")
-                            ACE_TEXT ("Setting mode for starting app from existing AM: %C\n"),
-                            get_opt.opt_arg ()));
+                            ACE_TEXT ("Setting mode for starting app from existing AM\n")));
               options.mode_ = Options::STARTAPP;
               break;
             }
