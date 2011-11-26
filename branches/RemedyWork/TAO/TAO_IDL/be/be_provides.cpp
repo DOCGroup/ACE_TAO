@@ -57,9 +57,8 @@ be_provides::gen_facet_svnt_tmpl_decl (TAO_OutStream &os)
       return 0;
     }
 
-  // No '_cxx_' prefix>
   const char *lname =
-    impl->original_local_name ()->get_string ();
+    impl->local_name ()->get_string ();
 
   be_decl *scope =
     be_scope::narrow_from_scope (impl->defined_in ())->decl ();
@@ -134,9 +133,8 @@ be_provides::gen_facet_svnt_tmpl_defn (TAO_OutStream &os)
       return 0;
     }
 
-  // No '_cxx_' prefix.
   const char *lname =
-    impl->original_local_name ()->get_string ();
+    impl->local_name ()->get_string ();
 
   be_decl *scope =
     be_scope::narrow_from_scope (impl->defined_in ())->decl ();
