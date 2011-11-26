@@ -30,7 +30,7 @@ namespace CIAO
   {
   public:
     Facet_Servant_Base_T (typename EXEC::_ptr_type exec,
-                          ::Components::CCMContext_var ctx);
+                          ::Components::CCMContext_ptr ctx);
 
     virtual ~Facet_Servant_Base_T (void);
 

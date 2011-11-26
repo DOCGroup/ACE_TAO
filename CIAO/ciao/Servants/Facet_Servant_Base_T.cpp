@@ -12,7 +12,7 @@ namespace CIAO
   template <typename BASE, typename EXEC, typename CONTEXT>
   Facet_Servant_Base_T<BASE, EXEC, CONTEXT>::Facet_Servant_Base_T (
       typename EXEC::_ptr_type exec,
-      ::Components::CCMContext_var ctx)
+      ::Components::CCMContext_ptr ctx)
     : executor_ (EXEC::_duplicate (exec)),
       ctx_ (::Components::CCMContext::_duplicate (ctx))
   {
