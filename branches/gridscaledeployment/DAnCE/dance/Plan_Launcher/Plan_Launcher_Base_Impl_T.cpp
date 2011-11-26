@@ -582,15 +582,20 @@ Plan_Launcher_Base_Impl< Manager, AppManager, Application>
  
       ::Deployment::Connections_var conns;
 
-      CORBA::Object_var app = this->start_launch (am,
+      CORBA::Object_var app_obj = this->start_launch (am,
                                                   0,
                                                   conns.out ());
+      
+      if (CORBA::is_nil (app_obj))
+	{
+	  throw Deployment_Failure ("Nil ApplicationManager reference from startLaunch");
+	}
 
-      this->finish_launch (app.in (),
+      this->finish_launch (app_obj.in (),
                            conns,
                            false);
 
-      this->start (app.in ());
+      this->start (app_obj.in ());
 
          
       timer.stop ();
@@ -606,7 +611,7 @@ Plan_Launcher_Base_Impl< Manager, AppManager, Application>
                     ACE_TEXT ("Plan_Launcher_Base_Impl::start_application - ")
                     ACE_TEXT ("Application Deployed successfully\n")));
 
-      app = app._retn ();
+      app = app_obj._retn ();
     }
   catch (const CORBA::Exception& ex)
     {
