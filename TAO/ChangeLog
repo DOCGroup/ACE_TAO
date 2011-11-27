@@ -1,8 +1,307 @@
+Sun Nov 27 18:19:18 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        Merging in another set of changes. The skeletons got refactored even
+        more and now the S.inl files are not generated anymore. For CIAO
+        we now generate the facet servants in new _svnt_T.{h,cpp} files, which
+        is the first step in a major refactoring and simplification of the
+        CCM servants which is also a first step in the direction of a Common
+        Component Model
+
+        === start changelog ===
+
+        Sat Nov 26 11:58:18 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * TAO_IDL/be/be_provides.cpp:
+                * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+                  Fixed keyword clash regarding c++ keywords.
+
+        Fri Nov 25 13:28:08 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_component/facet_svth.cpp:
+                * TAO_IDL/be/be_visitor_component/facet_svts.cpp:
+                * TAO_IDL/be_include/be_visitor_component/facet_svth.h:
+                * TAO_IDL/be_include/be_visitor_component/facet_svts.h:
+                  Templated servants for connector were not generated. Fixed this.
+
+        Thu Nov 24 14:23:25 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * TAO_IDL/be/be_codegen.cpp:
+                  Added appropriate ifdefs for including templated source
+                  files.
+
+                * TAO_IDL/be/be_visitor_attribute/attribute.cpp:
+                  Also generate the setters in case templated code,
+
+        Thu Nov 24 12:19:07 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_attribute/attribute.cpp:
+                  Fixed an issues related to the generation of attribute
+                  getter and setter methods.
+
+        Thu Nov 24 11:14:31 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * TAO_IDL/be/be_codegen.cpp:
+                  Don't use the fullname for the included template source.
+
+        Thu Nov 24 10:59:28 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * TAO_IDL/be/be_codegen.cpp:
+                * TAO_IDL/be/be_provides.cpp:
+                * TAO_IDL/be/be_visitor_operation/operation_svs.cpp:
+                  Included templated source file into the templated header.
+                  Fixed some compile issues related to this.
+
+        Thu Nov 24 07:43:27 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_component/facet_svth.cpp:
+                * TAO_IDL/be/be_visitor_component/facet_svts.cpp:
+                  Fixed warnings on windows.
+
+        Thu Nov 24 07:25:47 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+                  Fixed generation issue in case a component is not part of
+                  module.
+
+        Wed Nov 23 15:07:59 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * MPC/config/taobaseidldefaults.mpb:
+                  Prevent building a second time when make was invoked a
+                  second time.
+
+        Fri Nov  4 15:45:54 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * examples/AMI/FL_Callback/FL_Callback.mpc:
+                * examples/RTScheduling/Job.mpc:
+                * examples/RTScheduling/Synch.mpc:
+                * orbsvcs/orbsvcs/CosConcurrency.mpc:
+                * orbsvcs/orbsvcs/CosEvent.mpc:
+                * orbsvcs/orbsvcs/CosLifeCycle.mpc:
+                * orbsvcs/orbsvcs/CosNaming_Skel.mpc:
+                * orbsvcs/orbsvcs/CosNotification.mpc:
+                * orbsvcs/orbsvcs/CosProperty.mpc:
+                * orbsvcs/orbsvcs/CosTime.mpc:
+                * orbsvcs/orbsvcs/CosTrading.mpc:
+                * orbsvcs/orbsvcs/DsEventLogAdmin.mpc:
+                * orbsvcs/orbsvcs/DsLogAdmin.mpc:
+                * orbsvcs/orbsvcs/DsNotifyLogAdmin.mpc:
+                * orbsvcs/orbsvcs/RTEventLogAdmin.mpc:
+                * orbsvcs/orbsvcs/RTEvent_Skel.mpc:
+                * orbsvcs/orbsvcs/ec_typed_events_skel.mpb:
+                * tao/IFR_Client/IFR_Client.mpc:
+                * tests/Alt_Mapping/alt_mapping.mpc:
+                * tests/IDL_Inherited_Operation/InheritedOp.mpc:
+                * tests/Monitor/Marshal_Buffer/marshal_buffer.mpc:
+                * tests/Param_Test/Param_Test.mpc:
+                  Removed all S.inl entries from the MPC files
+
+        Fri Nov  4 16:17:33 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * TAO_IDL/tao_idl.1:
+                * docs/compiler.html:
+                * docs/tutorials/Quoter/Simple/Client/index.html:
+                * orbsvcs/tests/Bug_1393_Regression/run_test.pl:
+                * tests/Bug_3743_Regression/run_test.pl:
+                  Removed references to S.inl files.
+
+        Wed Nov 23 10:17:10 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * TAO_IDL/be/be_provides.cpp:
+                * TAO_IDL/be/be_visitor_operation/operation_svs.cpp:
+                * TAO_IDL/be_include/be_visitor_operation/operation_svs.h:
+                  Found a better way whether we need to use a templated
+                  class definition
+
+        Fri Nov  4 16:24:26 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * MPC/config/taobaseidldefaults.mpb:
+                  Don't generate S.inl extensions in the make files.
+
+        Tue Nov 22 15:53:18 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * TAO_IDL/be/be_provides.cpp:
+                * TAO_IDL/be/be_visitor_component/facet_svth.cpp:
+                * TAO_IDL/be/be_visitor_component/facet_svts.cpp:
+                * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+                * TAO_IDL/be/be_visitor_module/module.cpp:
+                * TAO_IDL/be/be_visitor_operation/operation_svs.cpp:
+                * TAO_IDL/be_include/be_visitor_component/facet_svth.h:
+                * TAO_IDL/be_include/be_visitor_component/facet_svts.h:
+                * TAO_IDL/be_include/be_visitor_operation/operation_svs.h:
+                  Rename actions and prevented template declarations when not needed.
+
+        Tue Nov 22 10:51:12 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * TAO_IDL:
+
+                * TAO_IDL/be/be_codegen.cpp:
+                * TAO_IDL/be/be_global.cpp:
+                * TAO_IDL/be/be_interface.cpp:
+                * TAO_IDL/be/be_produce.cpp:
+                * TAO_IDL/be/be_util.cpp:
+
+                * TAO_IDL/be/be_visitor_component/component.cpp:
+                * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+
+                * TAO_IDL/be/be_visitor_interface.cpp:
+
+                * TAO_IDL/be/be_visitor_interface/amh_sh.cpp:
+                * TAO_IDL/be/be_visitor_interface/amh_ss.cpp:
+                * TAO_IDL/be/be_visitor_interface/interface.cpp:
+                * TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+                * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+
+                * TAO_IDL/be/be_visitor_module/module.cpp:
+
+                * TAO_IDL/be/be_visitor_root.cpp:
+                * TAO_IDL/be/be_visitor_valuetype.cpp:
+
+                * TAO_IDL/be/be_visitor_valuetype/valuetype.cpp:
+
+                * TAO_IDL/be_include/be_codegen.h:
+                * TAO_IDL/be_include/be_global.h:
+                * TAO_IDL/be_include/be_interface.h:
+                * TAO_IDL/be_include/be_visitor_interface.h:
+
+                * TAO_IDL/be_include/be_visitor_interface/amh_ss.h:
+                * TAO_IDL/be_include/be_visitor_interface/interface_ss.h:
+
+                * TAO_IDL/be_include/be_visitor_root.h:
+                * TAO_IDL/be_include/be_visitor_valuetype.h:
+
+                * TAO_IDL/tao_idl.1:
+                  Merged in skeleton refactoring which now should work, no S.inl
+                  files are generated anymore
+
+                * TAO_IDL/be/be_visitor_interface/interface_si.cpp:
+                * TAO_IDL/be/be_visitor_root/root_si.cpp:
+                * TAO_IDL/be/be_visitor_valuetype/valuetype_si.cpp:
+                * TAO_IDL/be_include/be_visitor_interface/amh_si.h:
+                * TAO_IDL/be_include/be_visitor_interface/interface_si.h:
+                * TAO_IDL/be_include/be_visitor_root/root_si.h:
+                * TAO_IDL/be_include/be_visitor_valuetype/valuetype_si.h:
+                  Removed these files.
+
+        Mon Nov 21 16:48:25 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * TAO_IDL/be/be_provides.cpp:
+                  Removed _get_component method.
+
+                * TAO_IDL/be/be_visitor_operation/operation_svs.cpp:
+                  Added template argument to method declaration.
+
+        Mon Nov 21 15:35:54 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * TAO_IDL/be/be_provides.cpp:
+                  Layout changes in generated code.
+
+        Mon Nov 21 15:21:53 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * TAO_IDL/be/be_codegen.cpp:
+                * TAO_IDL/be/be_provides.cpp:
+                * TAO_IDL/be/be_visitor_component.cpp:
+                * TAO_IDL/be/be_visitor_component/executor_exh.cpp:
+                * TAO_IDL/be/be_visitor_component/facet_svth.cpp:
+                * TAO_IDL/be/be_visitor_component/facet_svts.cpp:
+                * TAO_IDL/be/be_visitor_component/servant_svh.cpp:
+                * TAO_IDL/be_include/be_provides.h:
+                * TAO_IDL/be_include/be_visitor_component.h:
+                * TAO_IDL/be_include/be_visitor_component/facet_svth.h:
+                * TAO_IDL/be_include/be_visitor_component/facet_svts.h:
+                  Template code for header is saved to _svnt_T.h.
+
+                * TAO_IDL/be/be_visitor_component/facet_svh.cpp:
+                * TAO_IDL/be/be_visitor_component/facet_svs.cpp:
+                * TAO_IDL/be_include/be_visitor_component/facet_svh.h:
+                * TAO_IDL/be_include/be_visitor_component/facet_svs.h:
+                  Renamed these files.
+
+        Mon Nov 21 09:17:14 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * TAO_IDL/be/be_codegen.cpp:
+                * TAO_IDL/be/be_visitor_component/component_svh.cpp:
+                * TAO_IDL/be/be_visitor_component/component_svs.cpp:
+                * TAO_IDL/be/be_visitor_component/facet_svh.cpp:
+                * TAO_IDL/be/be_visitor_component/facet_svs.cpp:
+                * TAO_IDL/be/be_visitor_module/module.cpp:
+                * TAO_IDL/be_include/be_codegen.h:
+                * TAO_IDL/be_include/be_helper.h:
+                * TAO_IDL/be_include/be_visitor_component/facet_svh.h:
+                * TAO_IDL/be_include/be_visitor_component/facet_svs.h:
+                  Determined the right file to write to (_svnt_T.cpp/h).
+
+        Thu Nov 17 15:55:04 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * TAO_IDL/be/be_interface.cpp:
+                * TAO_IDL/be/be_visitor_interface/amh_si.cpp:
+                * TAO_IDL/be/be_visitor_operation/amh_sh.cpp:
+                * TAO_IDL/be/be_visitor_operation/amh_ss.cpp:
+                * TAO_IDL/be/be_visitor_operation/operation_sh.cpp:
+                * TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+                * tao/Abstract_Servant_Base.h:
+                * tao/Messaging/AMH_Skeletons.h:
+                * tao/Messaging/AMH_Skeletons.cpp:
+                * tao/PortableServer/Operation_Table.h:
+                * tao/PortableServer/PolicyS.h:
+                * tao/PortableServer/PolicyS.cpp:
+                * tao/PortableServer/Servant_Base.h:
+                * tao/PortableServer/Servant_Base.cpp:
+                  Changed the third argument of the skel methods from void* to
+                  TAO_ServantBase*. As a result the static_cast in the skeleton
+                  methods has been replaced with a dynamic_cast, something we couldn't
+                  use in the past when we wheren't allowed to use RTTI.
+
+        Thu Nov 17 11:33:52 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * tao/Abstract_Servant_Base.h:
+                  synchronous_upcall_dispatch is not needed here
+
+                * tao/PortableServer/PS_ForwardC.h:
+                  Removed LocalServantBase, not part of CORBA anymore
+
+                * tao/PortableServer/Servant_Base.h:
+                * tao/PortableServer/Servant_Base.cpp:
+                  Start changing void* to TAO_ServantBase*
+
+                * tao/PortableServer/Local_Servant_Base.cpp:
+                * tao/PortableServer/Local_Servant_Base.inl:
+                * tao/PortableServer/Local_Servant_Base.h:
+                  Removed these files, not part of the CORBA spec anymore
+
+        Thu Nov 17 10:46:22 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * MPC/config/taobaseidldefaults.mpb:
+                * TAO_IDL/be/be_codegen.cpp:
+                * TAO_IDL/be/be_global.cpp:
+                * TAO_IDL/be/be_produce.cpp:
+                * TAO_IDL/be/be_visitor_component/component.cpp:
+                * TAO_IDL/be/be_visitor_component/facet_svh.cpp:
+                * TAO_IDL/be/be_visitor_component/facet_svs.cpp:
+                * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+                * TAO_IDL/be/be_visitor_module/module.cpp:
+                * TAO_IDL/be/be_visitor_root.cpp:
+                * TAO_IDL/be/be_visitor_root/root_svth.cpp:
+                * TAO_IDL/be/be_visitor_root/root_svts.cpp:
+                * TAO_IDL/be_include/be_codegen.h:
+                * TAO_IDL/be_include/be_global.h:
+                * TAO_IDL/be_include/be_visitor_root.h:
+                * TAO_IDL/be_include/be_visitor_root/root_svth.h:
+                * TAO_IDL/be_include/be_visitor_root/root_svts.h:
+                  The IDL compileren doesn't generated the facet servants
+                  in the _svnt.cpp/h files.
+                  The IDL compiler now uses the template facet servant
+                  implementation (which still need to be generated)
+                  in the _svnt.cpp file.
+                  The IDL compiler now creates the _svnt_T.cpp/h files and
+                  initialize them.
+
+        === end changelog ===
+
 Thu Nov 24 08:33:42 UTC 2011  Martin Corino  <mcorino@remedy.nl>
 
         * tests/Mixed_Sync_ASync_Events/main.cpp:
         * tests/Mixed_Sync_ASync_Events/test_i.cpp:
-        
+
           Fixed OpenVMS build errors.
 
 Wed Nov 23 14:37:02 UTC 2011  Martin Corino  <mcorino@remedy.nl>

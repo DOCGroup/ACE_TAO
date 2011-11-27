@@ -36,6 +36,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_ServerRequest;
 class TAO_Stub;
 class TAO_Abstract_ServantBase;
+class TAO_ServantBase;
 
 namespace CORBA
 {
@@ -61,7 +62,7 @@ namespace TAO
 typedef void (*TAO_Skeleton)(
     TAO_ServerRequest &,
     TAO::Portable_Server::Servant_Upcall *,
-    void *);
+    TAO_ServantBase *);
 
 typedef void (*TAO_Collocated_Skeleton)(
     TAO_Abstract_ServantBase *,
@@ -157,11 +158,6 @@ protected:
   virtual void _dispatch (
     TAO_ServerRequest &request,
     TAO::Portable_Server::Servant_Upcall *servant_upcall) = 0;
-
-  virtual void synchronous_upcall_dispatch (
-    TAO_ServerRequest &req,
-    TAO::Portable_Server::Servant_Upcall *servant_upcall,
-    void *derived_this) = 0;
 
   /// Get this interface's repository id (TAO specific).
   virtual const char *_interface_repository_id (void) const = 0;

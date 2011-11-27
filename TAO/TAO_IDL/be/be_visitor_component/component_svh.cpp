@@ -47,18 +47,6 @@ be_visitor_component_svh::visit_component (be_component *node)
   /// code generation.
   node->scan (node);
 
-  // Generate the facet servant class declaration.
-  be_visitor_facet_svh facet_visitor (this->ctx_);
-
-  if (facet_visitor.visit_component_scope (node) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_component_svh::")
-                         ACE_TEXT ("visit_component - ")
-                         ACE_TEXT ("facet visitor failed\n")),
-                        -1);
-    }
-
   /// CIDL-generated namespace used 'CIDL_' + composition name.
   /// Now we use 'CIAO_' + component's flat name.
   os_ << be_nl_2

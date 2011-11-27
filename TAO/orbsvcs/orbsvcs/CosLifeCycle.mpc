@@ -67,8 +67,6 @@ project(CosLifeCycle_Skel) : orbsvcslib, orbsvcs_output, install, lifecycle, por
   }
 
   Inline_Files {
-    CosLifeCycleS.inl
-    LifeCycleServiceS.inl
   }
 
   Template_Files {

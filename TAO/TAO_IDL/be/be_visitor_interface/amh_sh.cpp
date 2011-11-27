@@ -118,7 +118,6 @@ be_visitor_amh_interface_sh::visit_interface (be_interface *node)
       << be_nl
       << "virtual ::CORBA::Boolean _is_a (const char* logical_type_id);" << be_nl_2;
 
-
   // Add the dispatch method.
   *os << "virtual void _dispatch (" << be_idt << be_idt_nl
       << "TAO_ServerRequest &req," << be_nl
@@ -138,18 +137,6 @@ be_visitor_amh_interface_sh::visit_interface (be_interface *node)
                          "(%N:%l) be_visitor_amh_interface_sh::"
                          "visit_interface - "
                          "codegen for scope failed\n"),
-                        -1);
-    }
-
-  // Generate skeletons for operations of our base classes. These
-  // skeletons just cast the pointer to the appropriate type
-  // before invoking the call.
-  if (node->traverse_inheritance_graph (be_interface::gen_skel_helper, os) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_amh_interface_sh::"
-                         "visit_interface - "
-                         "inheritance graph traversal failed\n"),
                         -1);
     }
 

@@ -150,7 +150,6 @@ project(CoherentUpdate_Test_Receiver_svnt) : ciao_servant, dds4ccm_lem_stub, dds
   }
 
   Inline_Files {
-    CoherentUpdate_Test_ReceiverS.inl
   }
 }
 

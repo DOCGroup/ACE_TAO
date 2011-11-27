@@ -140,6 +140,7 @@ be_visitor_servant_svh::visit_attribute (be_attribute *node)
   return v.visit_attribute (node);
 }
 
+
 int
 be_visitor_servant_svh::visit_provides (be_provides *node)
 {

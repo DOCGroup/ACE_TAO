@@ -137,7 +137,6 @@ project(DDS_VT_Valuetype_Connector_svnt) : ciao_servant, dds4ccm_impl {
   }
 
   Inline_Files {
-    VT_Valuetype_ConnectorS.inl
   }
 }
 

@@ -64,7 +64,6 @@
 #include "be_visitor_interface/interface_cs.cpp"
 #include "be_visitor_interface/interface_sh.cpp"
 #include "be_visitor_interface/interface_ih.cpp"
-#include "be_visitor_interface/interface_si.cpp"
 #include "be_visitor_interface/interface_ss.cpp"
 #include "be_visitor_interface/interface_is.cpp"
 #include "be_visitor_interface/interface_ex_idl.cpp"
@@ -91,7 +90,6 @@
 // AMH
 #include "be_visitor_interface/amh_ch.cpp"
 #include "be_visitor_interface/amh_ss.cpp"
-#include "be_visitor_interface/amh_si.cpp"
 #include "be_visitor_interface/amh_sh.cpp"
 #include "be_visitor_interface/amh_rh_ss.cpp"
 #include "be_visitor_interface/amh_rh_sh.cpp"

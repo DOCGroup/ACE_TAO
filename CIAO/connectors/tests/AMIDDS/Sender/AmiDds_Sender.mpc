@@ -127,6 +127,5 @@ project(AMI_AmiDds_Base_AmiDds_Sender_svnt) : ciao_servant, ami, dds4ccm_lem_stu
   }
 
   Inline_Files {
-    AmiDds_SenderS.inl
   }
 }

@@ -11,6 +11,7 @@
  *  @author Jeff Parsons
  */
 //=============================================================================
+#include <be_visitor_operation/operation_svs.h>
 
 be_visitor_operation_svs::be_visitor_operation_svs (
       be_visitor_context *ctx)
@@ -30,6 +31,12 @@ be_visitor_operation_svs::visit_operation (be_operation *node)
 
   os_ << be_nl_2;
 
+
+  if (this->ctx_->state () == TAO_CodeGen::TAO_ROOT_SVTS)
+    {
+      os_ << "template <typename BASE, typename EXEC, typename CONTEXT>"
+          << be_nl;
+    }
   // Retrieve the operation return type.
   be_type *bt = be_type::narrow_from_decl (node->return_type ());
 
@@ -56,9 +63,19 @@ be_visitor_operation_svs::visit_operation (be_operation *node)
     }
 
   // Generate the operation name, avoiding possible _cxx_ prefix.
-  os_ << be_nl
-     << scope_->original_local_name ()->get_string ()
-     << "_Servant";
+  // USE STATE con the context!!!!!!!
+  if (this->ctx_->state () == TAO_CodeGen::TAO_ROOT_SVTS)
+    {
+      os_ << be_nl
+          << scope_->original_local_name ()->get_string ()
+          << "_Servant_T<BASE, EXEC, CONTEXT>";
+    }
+  else
+    {
+      os_ << be_nl
+          << scope_->original_local_name ()->get_string ()
+          << "_Servant";
+    }
 
   os_ << "::" << node->local_name ();
 

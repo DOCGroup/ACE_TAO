@@ -29,10 +29,6 @@ project(RTEvent_Skel) : orbsvcslib, orbsvcs_output, install, rtevent, portablese
   }
 
   Inline_Files {
-    RtecDefaultEventDataS.inl
-    RtecEventCommS.inl
-    RtecEventChannelAdminS.inl
-    RtecUDPAdminS.inl
   }
 
   Template_Files {

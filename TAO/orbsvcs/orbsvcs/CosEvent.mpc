@@ -71,8 +71,6 @@ project (CosEvent_Skel) : orbsvcslib, orbsvcs_output, install, avoids_minimum_co
   }
 
   Inline_Files {
-    CosEventCommS.inl
-    CosEventChannelAdminS.inl
   }
 
   Template_Files {

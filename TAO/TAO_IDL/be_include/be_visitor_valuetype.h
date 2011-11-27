@@ -26,7 +26,6 @@
 #include "be_visitor_valuetype/valuetype_ci.h"
 #include "be_visitor_valuetype/valuetype_cs.h"
 #include "be_visitor_valuetype/valuetype_sh.h"
-#include "be_visitor_valuetype/valuetype_si.h"
 #include "be_visitor_valuetype/valuetype_ss.h"
 #include "be_visitor_valuetype/any_op_ch.h"
 #include "be_visitor_valuetype/any_op_cs.h"

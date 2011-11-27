@@ -121,7 +121,6 @@ project(Shapes_Control_obj_svnt) : ciao_servant {
   }
 
   Inline_Files {
-    GeneratedCode/Shapes_Control_objS.inl
   }
 }
 

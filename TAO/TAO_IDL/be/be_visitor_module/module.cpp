@@ -289,12 +289,6 @@ be_visitor_module::visit_interface (be_interface *node)
         status = node->accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_ROOT_SI:
-      {
-        be_visitor_interface_si visitor (&ctx);
-        status = node->accept (&visitor);
-        break;
-      }
     case TAO_CodeGen::TAO_ROOT_SS:
       {
         be_visitor_interface_ss visitor (&ctx);
@@ -353,6 +347,8 @@ be_visitor_module::visit_interface (be_interface *node)
     case TAO_CodeGen::TAO_ROOT_EXS:
     case TAO_CodeGen::TAO_ROOT_CNH:
     case TAO_CodeGen::TAO_ROOT_CNS:
+    case TAO_CodeGen::TAO_ROOT_SVTH:
+    case TAO_CodeGen::TAO_ROOT_SVTS:
       {
         // Nothing to be done for these cases.
         return 0;
@@ -484,7 +480,6 @@ be_visitor_module::visit_valuebox (be_valuebox *node)
         break;
       }
     case TAO_CodeGen::TAO_ROOT_SH:
-    case TAO_CodeGen::TAO_ROOT_SI:
     case TAO_CodeGen::TAO_ROOT_SS:
       {
         break;
@@ -561,12 +556,6 @@ be_visitor_module::visit_valuetype (be_valuetype *node)
     case TAO_CodeGen::TAO_ROOT_SH:
       {
         be_visitor_valuetype_sh visitor (&ctx);
-        status = node->accept (&visitor);
-        break;
-      }
-    case TAO_CodeGen::TAO_ROOT_SI:
-      {
-         be_visitor_valuetype_si visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
@@ -669,7 +658,6 @@ be_visitor_module::visit_component (be_component *node)
     case TAO_CodeGen::TAO_ROOT_ANY_OP_CH:
     case TAO_CodeGen::TAO_ROOT_ANY_OP_CS:
     case TAO_CodeGen::TAO_ROOT_SH:
-    case TAO_CodeGen::TAO_ROOT_SI:
     case TAO_CodeGen::TAO_ROOT_SS:
       return this->visit_interface (node);
 
@@ -679,6 +667,18 @@ be_visitor_module::visit_component (be_component *node)
     case TAO_CodeGen::TAO_ROOT_CNH:
     case TAO_CodeGen::TAO_ROOT_CNS:
       break;
+    case TAO_CodeGen::TAO_ROOT_SVTH:
+      {
+        be_visitor_facet_svth visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_ROOT_SVTS:
+      {
+        be_visitor_facet_svts visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_ROOT_SVH:
       {
         be_visitor_component_svh visitor (&ctx);

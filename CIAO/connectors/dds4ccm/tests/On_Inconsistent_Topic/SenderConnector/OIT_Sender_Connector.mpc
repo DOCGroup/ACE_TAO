@@ -137,7 +137,6 @@ project(OIT_Sender_Connector_svnt) : ciao_servant, dds4ccm_impl {
   }
 
   Inline_Files {
-    OIT_Sender_ConnectorS.inl
   }
 }
 

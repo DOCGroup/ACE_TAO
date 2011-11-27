@@ -101,7 +101,6 @@ project(KitchenSink_svnt) : ciao_servant {
   }
 
   Inline_Files {
-    KitchenSinkS.inl
   }
 }
 
@@ -141,7 +140,6 @@ project(KitchenSink_IDL2_skel) : ciao_executor, avoids_ccm_noevent{
 
   Inline_Files {
     KitchenSink_IDL2C.inl
-    KitchenSink_IDL2S.inl
   }
 }
 

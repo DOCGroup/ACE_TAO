@@ -137,7 +137,6 @@ project (WL_ResetTopicSender_svnt) : ciao_servant, dds4ccm_lem_stub, dds4ccm_ske
   }
 
   Inline_Files {
-    WL_ResetTopic_SenderS.inl
   }
 }
 

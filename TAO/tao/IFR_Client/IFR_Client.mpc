@@ -83,10 +83,6 @@ project(IFR_Client_skel) : ifr_client, taolib, tao_output, install, anytypecode,
   }
 
   Inline_Files {
-    IFR_BaseS.inl
-    IFR_BasicS.inl
-    IFR_ComponentsS.inl
-    IFR_ExtendedS.inl
   }
 
   specific {

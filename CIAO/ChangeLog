@@ -1,3 +1,53 @@
+Sun Nov 27 18:19:18 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        Merging in our workbranch
+
+        === start changelog ===
+
+        Thu Nov 24 12:31:23 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * tests/IDL_Test/Inherited_Servants/Derived.mpc:
+                  Fixed afters.
+
+        Thu Nov 24 07:40:14 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * tests/IDL_Test/Inherited_Servants/Base.idl:
+                * tests/IDL_Test/Inherited_Servants/Derived.idl:
+                  Enabled all IDL code again and added an extra component
+                  and interface without a module.
+
+        Fri Nov  4 15:47:29 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * *.mpc:
+                  Removed all S.inl entries.
+
+        Fri Nov  4 16:16:35 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * bin/generate_component_mpc.pl:
+                  Removed reference to S.inl
+
+        Mon Nov 21 15:21:00 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * tests/IDL_Test/Inherited_Servants/Derived.mpc:
+                  Fixed mpc issue
+
+        Thu Nov 17 10:54:54 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * ciao/Servants/Facet_Servant_Base_T.h:
+                * ciao/Servants/Facet_Servant_Base_T.cpp:
+                  Templated base class for facet servants.
+
+                * tests/IDL_Test/Inherited_Servants:
+                * tests/IDL_Test/Inherited_Servants/Base.idl:
+                * tests/IDL_Test/Inherited_Servants/Base.mpc:
+                * tests/IDL_Test/Inherited_Servants/Derived.idl:
+                * tests/IDL_Test/Inherited_Servants/Derived.mpc:
+                * tests/IDL_Test/Inherited_Servants/Tester:
+                * tests/IDL_Test/Inherited_Servants/Tester.cpp:
+                  Added compilation test.
+
+        === end changelog ===
+
 Tue Nov 22 14:04:21 UTC 2011  Martin Corino  <mcorino@remedy.nl>
 
         * ciao/Servants/Home_Servant_Impl_T.h:

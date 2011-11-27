@@ -130,7 +130,6 @@ project(Stock_Base_StockDistributor_svnt) : ciao_servant, avoids_ccm_noevent  {
   }
 
   Inline_Files {
-    StockDistributorS.inl
   }
 }
 

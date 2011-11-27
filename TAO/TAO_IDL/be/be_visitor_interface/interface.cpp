@@ -497,7 +497,6 @@ be_visitor_interface::visit_operation (be_operation *node)
     case TAO_CodeGen::TAO_ROOT_CDR_OP_CH:
     case TAO_CodeGen::TAO_ROOT_CDR_OP_CS:
     case TAO_CodeGen::TAO_ROOT_CI:
-    case TAO_CodeGen::TAO_ROOT_SI:
       return 0; // nothing to be done
     default:
       {
