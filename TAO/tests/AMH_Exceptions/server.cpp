@@ -84,7 +84,7 @@ public:
   virtual void run_event_loop ();
 
 public:
-  /// Accesor method (for servants) to the initialised ORB
+  /// Accesor method (for servants) to the initialized ORB
   CORBA::ORB_ptr orb () { return this->orb_.in (); }
 
 protected:

@@ -143,7 +143,6 @@ project(OneFile_Connector_svnt) : ciao_servant, dds4ccm_impl {
   }
 
   Inline_Files {
-    OneFile_ConnectorS.inl
   }
 }
 

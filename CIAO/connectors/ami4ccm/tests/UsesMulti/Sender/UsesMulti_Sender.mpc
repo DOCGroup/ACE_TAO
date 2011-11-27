@@ -128,7 +128,6 @@ project(AMI_UsesMulti_Base_Sender_svnt) : ciao_servant, ami {
   }
 
   Inline_Files {
-    UsesMulti_SenderS.inl
   }
 }
 

@@ -119,7 +119,6 @@ public:
       TAO_ROOT_CI,
       TAO_ROOT_CS,
       TAO_ROOT_SH,
-      TAO_ROOT_SI,
       TAO_ROOT_SS,
       TAO_ROOT_TIE_SH,
       TAO_ROOT_TIE_SS,
@@ -127,6 +126,8 @@ public:
       TAO_ROOT_IS,
       TAO_ROOT_SVH,
       TAO_ROOT_SVS,
+      TAO_ROOT_SVTH,
+      TAO_ROOT_SVTS,
       TAO_ROOT_EXH,
       TAO_ROOT_EXS,
       TAO_ROOT_CNH,
@@ -226,9 +227,6 @@ public:
   /// Set the server template header stream.
   int start_server_template_header (const char *fname);
 
-  /// Set the server inline stream.
-  int start_server_inline (const char *fname);
-
   /// Set the server skeletons stream.
   int start_server_skeletons (const char *fname);
 
@@ -243,6 +241,8 @@ public:
 
   int start_ciao_svnt_header (const char *fname);
   int start_ciao_svnt_source (const char *fname);
+  int start_ciao_svnt_template_header (const char *fname);
+  int start_ciao_svnt_template_source (const char *fname);
   int start_ciao_exec_header (const char *fname);
   int start_ciao_exec_source (const char *fname);
   int start_ciao_exec_idl (const char *fname);
@@ -262,9 +262,6 @@ public:
 
   /// Put a last #endif in the server header.
   int end_server_header (void);
-
-  /// Generate necessary code at end of server inline file.
-  void end_server_inline (void);
 
   /// Put a last #endif in the server header.
   int end_implementation_header (const char *fname);
@@ -289,6 +286,8 @@ public:
 
   int end_ciao_svnt_header (void);
   int end_ciao_svnt_source (void);
+  int end_ciao_svnt_template_header (void);
+  int end_ciao_svnt_template_source (void);
   int end_ciao_exec_header (void);
   int end_ciao_exec_source (void);
   int end_ciao_exec_idl (void);
@@ -323,9 +322,6 @@ public:
   /// Get the server template skeletons stream.
   TAO_OutStream *server_template_skeletons (void);
 
-  /// Get the server inline stream.
-  TAO_OutStream *server_inline (void);
-
   /// Get the server template inline stream.
   TAO_OutStream *server_template_inline (void);
 
@@ -340,6 +336,12 @@ public:
 
   /// Get the CIAO servant source stream.
   TAO_OutStream *ciao_svnt_source (void);
+
+  /// Get the CIAO template servant header stream.
+  TAO_OutStream *ciao_svnt_template_header (void);
+
+  /// Get the CIAO template servant source stream.
+  TAO_OutStream *ciao_svnt_template_source (void);
 
   /// Get the CIAO executor impl header stream.
   TAO_OutStream *ciao_exec_header (void);
@@ -417,8 +419,8 @@ private:
   void gen_typecode_includes (TAO_OutStream * stream);
 
   /// Used if one or both of the CIAO code gen flags are set.
-  void gen_svnt_hdr_includes (void);
-  void gen_svnt_src_includes (void);
+  void gen_svnt_hdr_includes (TAO_OutStream *stream);
+  void gen_svnt_src_includes (TAO_OutStream *stream);
   void gen_exec_hdr_includes (void);
   void gen_exec_src_includes (void);
   void gen_exec_idl_includes (void);
@@ -463,9 +465,6 @@ private:
   /// Server skeleton template stream.
   TAO_OutStream *server_template_skeletons_;
 
-  /// Server side inline file.
-  TAO_OutStream *server_inline_;
-
   /// Anyop header file.
   TAO_OutStream *anyop_header_;
 
@@ -480,6 +479,12 @@ private:
 
   /// Component servant source file.
   TAO_OutStream *ciao_svnt_source_;
+
+  /// Template component servant header file.
+  TAO_OutStream *ciao_svnt_template_header_;
+
+  /// Template component servant source file.
+  TAO_OutStream *ciao_svnt_template_source_;
 
   /// Component executor impl header file.
   TAO_OutStream *ciao_exec_header_;

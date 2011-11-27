@@ -82,7 +82,6 @@ project(PartialShutdown_skel) : ciao_executor   {
   }
 
   Inline_Files {
-    PartialShutdownS.inl
   }
 }
 

@@ -110,7 +110,6 @@ project(Moo_CompA_svnt) : ciao_servant   {
   }
 
   Inline_Files {
-    CompAS.inl
   }
 }
 

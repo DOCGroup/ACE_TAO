@@ -43,17 +43,6 @@ be_visitor_component_svs::visit_component (be_component *node)
       return 0;
     }
 
-  be_visitor_facet_svs facet_visitor (this->ctx_);
-
-  if (facet_visitor.visit_component_scope (node) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_component_svs::")
-                         ACE_TEXT ("visit_component - ")
-                         ACE_TEXT ("facet visitor failed\n")),
-                        -1);
-    }
-
   /// CIDL-generated namespace used 'CIDL_' + composition name.
   /// Now we use 'CIAO_' + component's flat name.
   os_ << be_nl_2

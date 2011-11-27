@@ -18,8 +18,6 @@ feature(ec_typed_events) {
   }
 
   Inline_Files {
-    CosTypedEventCommS.inl
-    CosTypedEventChannelAdminS.inl
   }
 
   Template_Files {

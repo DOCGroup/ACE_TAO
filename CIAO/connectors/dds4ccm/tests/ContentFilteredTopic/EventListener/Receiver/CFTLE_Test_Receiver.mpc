@@ -142,7 +142,6 @@ project(DDS_CFTLE_Test_Receiver_svnt) : ciao_servant, dds4ccm_lem_stub, dds4ccm_
   }
 
   Inline_Files {
-    CFTLE_Test_ReceiverS.inl
   }
 }
 

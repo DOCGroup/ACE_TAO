@@ -170,7 +170,6 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
   *os << be_nl_2;
 
-
   // Generate code for the _is_a override.
   *os << be_nl_2
       << "::CORBA::Boolean " << full_skel_name
@@ -417,12 +416,6 @@ be_visitor_interface_ss::this_method (be_interface *node)
 
   *os << be_uidt << be_uidt << be_uidt << be_uidt_nl
       << "}";
-}
-
-void
-be_visitor_interface_ss::generate_send_reply (TAO_OutStream *)
-{
-  // no-op for regular interfaces
 }
 
 void

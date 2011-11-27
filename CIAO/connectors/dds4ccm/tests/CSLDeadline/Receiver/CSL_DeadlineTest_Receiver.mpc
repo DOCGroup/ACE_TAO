@@ -131,7 +131,6 @@ project(DDS_CSL_DeadlineTest_Receiver_svnt) : ciao_servant, dds4ccm_lem_stub, dd
   }
 
   Inline_Files {
-    CSL_DeadlineTest_ReceiverS.inl
   }
 }
 

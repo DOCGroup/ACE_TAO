@@ -47,19 +47,18 @@ be_provides::provides_type (void) const
 }
 
 int
-be_provides::gen_facet_svnt_decl (TAO_OutStream &os)
+be_provides::gen_facet_svnt_tmpl_decl (TAO_OutStream &os)
 {
-   be_type *impl =
+  be_type *impl =
     be_type::narrow_from_decl (this->provides_type ());
 
-   if (impl->is_local () || impl->svnt_hdr_facet_gen ())
-     {
-       return 0;
-     }
+  if (impl->is_local () || impl->svnt_hdr_facet_gen ())
+    {
+      return 0;
+    }
 
-  // No '_cxx_' prefix>
   const char *lname =
-    impl->original_local_name ()->get_string ();
+    impl->local_name ()->get_string ();
 
   be_decl *scope =
     be_scope::narrow_from_scope (impl->defined_in ())->decl ();
@@ -74,31 +73,22 @@ be_provides::gen_facet_svnt_decl (TAO_OutStream &os)
      << "namespace CIAO_FACET" << suffix.c_str () << be_nl
      << "{" << be_idt_nl;
 
-  const char *impl_name = "::CORBA::Object";
   bool is_intf = impl->node_type () == AST_Decl::NT_interface;
 
-  if (is_intf)
-    {
-      impl_name =
-        be_interface::narrow_from_decl (impl)->full_skel_name ();
-    }
-
-  os << "class " << lname << "_Servant" << be_idt_nl
-     << ": public virtual " << impl_name << be_uidt_nl
-     << "{" << be_nl
+  os << "template <typename BASE, typename EXEC, typename CONTEXT>" << be_nl
+     << "class " << lname << "_Servant_T" << be_idt_nl
+     << ": public virtual ::CIAO::Facet_Servant_Base_T<BASE, EXEC, "
+     << "CONTEXT>" << be_uidt_nl << "{" << be_nl
      << "public:" << be_idt_nl;
 
   AST_Decl *s = ScopeAsDecl (impl->defined_in ());
   ACE_CString sname_str (s->full_name ());
-  const char *sname = sname_str.c_str ();
-  const char *global = (sname_str == "" ? "" : "::");
 
-  os << lname << "_Servant (" << be_idt_nl
-     << global << sname << "::CCM_"
-     << lname << "_ptr executor," << be_nl
+  os << lname << "_Servant_T (" << be_idt_nl
+     << "typename EXEC::_ptr_type executor," << be_nl
      << "::Components::CCMContext_ptr ctx);" << be_uidt_nl << be_nl;
 
-  os << "virtual ~" << lname << "_Servant (void);";
+  os << "virtual ~" << lname << "_Servant_T (void);";
 
   if (is_intf)
     {
@@ -124,20 +114,7 @@ be_provides::gen_facet_svnt_decl (TAO_OutStream &os)
         }
     }
 
-  os << be_nl_2 << "/// Get component implementation." << be_nl
-     << "virtual CORBA::Object_ptr _get_component (void);"
-     << be_uidt_nl << be_nl;
-
-  os << "protected:" << be_idt_nl;
-
-  os << "/// Facet executor." << be_nl
-     << global << sname << "::CCM_"
-     << lname << "_var executor_;" << be_nl_2;
-
-  os << "/// Context object." << be_nl
-     << "::Components::CCMContext_var ctx_;" << be_uidt_nl;
-
-  os << "};" << be_nl << be_uidt_nl;
+  os << be_uidt_nl << "};" << be_nl << be_uidt_nl;
 
   os << "}";
 
@@ -146,7 +123,7 @@ be_provides::gen_facet_svnt_decl (TAO_OutStream &os)
 }
 
 int
-be_provides::gen_facet_svnt_defn (TAO_OutStream &os)
+be_provides::gen_facet_svnt_tmpl_defn (TAO_OutStream &os)
 {
   be_type *impl =
     be_type::narrow_from_decl (this->provides_type ());
@@ -156,16 +133,14 @@ be_provides::gen_facet_svnt_defn (TAO_OutStream &os)
       return 0;
     }
 
-  // No '_cxx_' prefix.
   const char *lname =
-    impl->original_local_name ()->get_string ();
+    impl->local_name ()->get_string ();
 
   be_decl *scope =
     be_scope::narrow_from_scope (impl->defined_in ())->decl ();
 
   ACE_CString sname_str (scope->full_name ());
 
-  const char *sname = sname_str.c_str ();
   const char *global = (sname_str == "" ? "" : "::");
 
   ACE_CString suffix (scope->flat_name ());
@@ -179,22 +154,20 @@ be_provides::gen_facet_svnt_defn (TAO_OutStream &os)
      << "namespace CIAO_FACET" << suffix.c_str () << be_nl
      << "{" << be_idt_nl;
 
-  os << lname << "_Servant::"
-     << lname << "_Servant (" << be_idt << be_idt_nl
-     << global << sname << "::CCM_"
-     << lname << "_ptr executor," << be_nl
+  os << "template <typename BASE, typename EXEC, typename CONTEXT>" << be_nl
+     << lname << "_Servant_T<BASE, EXEC, CONTEXT>::"
+     << lname << "_Servant_T (" << be_idt << be_idt_nl
+     << "typename EXEC::_ptr_type executor," << be_nl
      << "::Components::CCMContext_ptr ctx)" << be_uidt_nl
-     << ": executor_ ( " << global << sname
-     << "::CCM_" << lname
-     << "::_duplicate (executor))," << be_idt_nl
-     << "ctx_ ( ::Components::CCMContext::_duplicate (ctx))"
-     << be_uidt << be_uidt_nl
+     << ": " << global << "CIAO::Facet_Servant_Base_T<BASE, EXEC, "
+     << "CONTEXT> (executor, ctx)"
+     << be_uidt_nl
      << "{" << be_nl
      << "}";
 
-  os << be_nl_2
-     << lname << "_Servant::~"
-     << lname << "_Servant (void)" << be_nl
+  os << be_nl_2 << "template <typename BASE, typename EXEC, typename CONTEXT>" << be_nl
+     << lname << "_Servant_T<BASE, EXEC, CONTEXT>::~"
+     << lname << "_Servant_T (void)" << be_nl
      << "{" << be_nl
      << "}";
 
@@ -233,35 +206,7 @@ be_provides::gen_facet_svnt_defn (TAO_OutStream &os)
         }
     }
 
-  os << be_nl_2
-     << "::CORBA::Object_ptr" << be_nl
-     << lname << "_Servant::_get_component (void)"
-     << be_nl
-     << "{" << be_idt_nl
-     << "::Components::" << be_global->ciao_container_type ()
-     << "Context_var sc =" << be_idt_nl
-     << "::Components::" << be_global->ciao_container_type ()
-     << "Context::_narrow (this->ctx_.in ());"
-     << be_uidt_nl << be_nl
-     << "if (! ::CORBA::is_nil (sc.in ()))" << be_idt_nl
-     << "{" << be_idt_nl;
-
-  if (ACE_OS::strcmp (be_global->ciao_container_type (), "Session") == 0)
-    {
-      os << "return sc->get_CCM_object ();";
-    }
-  else
-    {
-      os << "return ::CORBA::Object::_nil ();";
-    }
-
-  os << be_uidt_nl << "}" << be_uidt_nl << be_nl;
-
-  os << "throw ::CORBA::INTERNAL ();" << be_uidt_nl
-     << "}";
-
-  os << be_uidt_nl
-     << "}";
+  os << be_uidt_nl << "}";
 
   impl->svnt_src_facet_gen (true);
   return 0;
@@ -304,7 +249,7 @@ be_facet_op_attr_defn_helper::emit (be_interface * /* derived_interface */,
 
   be_visitor_context ctx;
   ctx.stream (os);
-  ctx.state (TAO_CodeGen::TAO_ROOT_SVS);
+  ctx.state (TAO_CodeGen::TAO_ROOT_SVTS);
 
   for (UTL_ScopeActiveIterator i (base_interface, UTL_Scope::IK_decls);
        !i.is_done ();

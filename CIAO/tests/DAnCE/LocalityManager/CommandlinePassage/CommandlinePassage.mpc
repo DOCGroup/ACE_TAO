@@ -118,7 +118,6 @@ project(CommandlinePassage_svnt) : ciao_servant {
   }
 
   Inline_Files {
-    CommandlinePassageS.inl
   }
 }
 

@@ -63,7 +63,6 @@ project(CosConcurrency_Skel): orbsvcslib, orbsvcs_output, install, concurrency, 
   }
 
   Inline_Files {
-    CosConcurrencyControlS.inl
   }
 
   Template_Files {

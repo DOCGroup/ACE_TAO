@@ -141,7 +141,6 @@ project(PortUsageState_Component_svnt) : ciao_servant, dds4ccm_lem_stub, dds4ccm
   }
 
   Inline_Files {
-    PortUsageState_ComponentS.inl
   }
 }
 

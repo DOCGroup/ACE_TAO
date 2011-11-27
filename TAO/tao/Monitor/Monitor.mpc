@@ -12,7 +12,7 @@ project (*idl): tao_versioning_idl_defaults, install {
 
   IDL_Files {
    idlflags += -Wb,include_guard=TAO_MONITOR_SAFE_INCLUDE \
-     -Wb,safe_include=tao/Monitor/Monitor.h -Ssi
+     -Wb,safe_include=tao/Monitor/Monitor.h
     Monitor.pidl
   }
 

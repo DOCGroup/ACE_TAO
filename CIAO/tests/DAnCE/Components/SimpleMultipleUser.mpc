@@ -103,7 +103,6 @@ project(SimpleCommon_SimpleMultipleUser_svnt) : ciao_servant {
   }
 
   Inline_Files {
-    SimpleMultipleUserS.inl
   }
 }
 

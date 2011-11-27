@@ -137,7 +137,6 @@ project(DDS_VTopic_Connector_svnt) : ciao_servant, dds4ccm_impl {
   }
 
   Inline_Files {
-    VTopic_ConnectorS.inl
   }
 }
 

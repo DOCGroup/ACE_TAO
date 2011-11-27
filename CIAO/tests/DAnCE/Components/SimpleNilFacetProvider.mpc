@@ -105,7 +105,6 @@ project(SimpleCommon_SNFP_svnt) : ciao_servant {
   }
 
   Inline_Files {
-    SimpleNilFacetProviderS.inl
   }
 }
 

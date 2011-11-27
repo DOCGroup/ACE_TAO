@@ -69,7 +69,6 @@
 #include "be_visitor_valuetype/valuetype_ci.cpp"
 #include "be_visitor_valuetype/valuetype_cs.cpp"
 #include "be_visitor_valuetype/valuetype_sh.cpp"
-#include "be_visitor_valuetype/valuetype_si.cpp"
 #include "be_visitor_valuetype/valuetype_ss.cpp"
 #include "be_visitor_valuetype/valuetype_obv_ch.cpp"
 #include "be_visitor_valuetype/valuetype_obv_ci.cpp"

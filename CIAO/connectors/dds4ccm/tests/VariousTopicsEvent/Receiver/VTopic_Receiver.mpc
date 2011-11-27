@@ -162,7 +162,6 @@ project(DDS_VTopic_Receiver_svnt) : ciao_servant, dds4ccm_lem_stub, dds4ccm_skel
   }
 
   Inline_Files {
-    VTopic_ReceiverS.inl
   }
 }
 

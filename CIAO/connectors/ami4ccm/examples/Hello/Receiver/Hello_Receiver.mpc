@@ -128,7 +128,6 @@ project(AMI_Hello_Base_Hello_Receiver_svnt) : ciao_servant, messaging {
   }
 
   Inline_Files {
-    Hello_ReceiverS.inl
   }
 }
 

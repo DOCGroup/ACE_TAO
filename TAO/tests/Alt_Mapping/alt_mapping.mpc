@@ -30,7 +30,6 @@ project(*Server): taoserver, codeset, avoids_minimum_corba, avoids_corba_e_compa
   }
   
   Inline_Files {
-    alt_mappingS.inl
     alt_mappingC.inl
   }
 }

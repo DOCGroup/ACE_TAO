@@ -149,7 +149,6 @@ project(CoherentUpdate_Test_Sender_svnt) : ciao_servant, dds4ccm_lem_stub, dds4c
   }
 
   Inline_Files {
-    CoherentUpdate_Test_SenderS.inl
   }
 }
 

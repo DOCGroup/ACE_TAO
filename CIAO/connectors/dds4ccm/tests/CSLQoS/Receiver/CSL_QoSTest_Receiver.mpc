@@ -131,7 +131,6 @@ project(DDS_CSL_QoSTest_Receiver_svnt) : ciao_servant, dds4ccm_lem_stub, dds4ccm
   }
 
   Inline_Files {
-    CSL_QoSTest_ReceiverS.inl
   }
 }
 

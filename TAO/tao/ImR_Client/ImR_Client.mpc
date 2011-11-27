@@ -2,7 +2,7 @@
 project(*idl) : tao_versioning_idl_defaults, install {
   custom_only = 1
   IDL_Files {
-    idlflags += -Gp -Ssi -Gd -Sorb -GA \
+    idlflags += -Gp -Gd -Sorb -GA \
                 -Wb,export_macro=TAO_IMR_Client_Export \
                 -Wb,export_include=tao/ImR_Client/imr_client_export.h \
                 -iC tao/ImR_Client
@@ -11,7 +11,7 @@ project(*idl) : tao_versioning_idl_defaults, install {
   }
 
   IDL_Files {
-    idlflags += -Gp -Ssi -Gd -Sorb -GX \
+    idlflags += -Gp -Gd -Sorb -GX \
                 -Wb,export_macro=TAO_IMR_Client_Export \
                 -Wb,export_include=tao/ImR_Client/imr_client_export.h \
                 -iC tao/ImR_Client

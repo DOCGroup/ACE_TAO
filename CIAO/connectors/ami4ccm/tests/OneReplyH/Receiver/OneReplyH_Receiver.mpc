@@ -128,7 +128,6 @@ project(AMI_OneReplyH_Base_Receiver_svnt) : ciao_servant, messaging {
   }
 
   Inline_Files {
-    OneReplyH_ReceiverS.inl
   }
 }
 

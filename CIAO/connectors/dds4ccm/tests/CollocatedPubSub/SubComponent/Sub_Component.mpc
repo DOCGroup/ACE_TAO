@@ -140,7 +140,6 @@ project(SubComponent_svnt) : ciao_servant, dds4ccm_lem_stub, dds4ccm_skel {
   }
 
   Inline_Files {
-    Sub_ComponentS.inl
   }
 }
 

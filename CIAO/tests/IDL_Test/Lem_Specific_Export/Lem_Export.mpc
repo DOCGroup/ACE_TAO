@@ -121,7 +121,6 @@ project(Lem_Export_svnt) : ciao_servant   {
   }
 
   Inline_Files {
-    Lem_ExportS.inl
   }
 }
 

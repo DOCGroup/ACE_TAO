@@ -132,7 +132,6 @@ project(DDS_PSL_SampleLost_Receiver_svnt) : ciao_servant, dds4ccm_lem_stub, dds4
   }
 
   Inline_Files {
-    PSL_SampleLost_ReceiverS.inl
   }
 }
 
