@@ -26,7 +26,6 @@ project(*Server): taoserver {
   
   Inline_Files {
     InheritedOpC.inl
-    InheritedOpS.inl
   }
 
   IDL_Files {

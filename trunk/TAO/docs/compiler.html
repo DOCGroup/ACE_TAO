@@ -53,7 +53,7 @@ these files:) <P>
   <LI> <B><EM>Client stubs</EM></B>, <EM>i.e.</EM>, <tt>*C.h</tt>,
       <tt>*C.inl</tt>, and <tt>*C.cpp</tt>.  Pure client applications
       only need to <code>#include</code> and link with these files.
-  <LI> <B><EM>Server skeletons</EM></B>, <EM>i.e.</EM>,  <tt>*S.h</tt>, <tt>*S.inl</tt>, and
+  <LI> <B><EM>Server skeletons</EM></B>, <EM>i.e.</EM>,  <tt>*S.h</tt>, and
       <tt>*S.cpp</tt>.  Servers need to <code>#include</code> and link
       with these files. Generation of these files may be suppressed with the <tt>-SS</tt> option.
   <LI> <B><EM>Server skeleton templates</EM></B>, <EM>i.e.</EM>, <tt>*S_T.h</tt>, <tt>S_T.inl</tt>,
@@ -742,13 +742,6 @@ also receives other options that are specific to it.<p>
     <td><tt>-sT</tt></td>
 
     <td>Server template skeleton file name ending. Default is "S_T.cpp".</td>
-    <td>&nbsp;</td>
-  </tr>
-
-  <tr><a name="si">
-    <td><tt>-si</tt></td>
-
-    <td>Server inline skeleton file name ending. Default is "S.inl".</td>
     <td>&nbsp;</td>
   </tr>
 

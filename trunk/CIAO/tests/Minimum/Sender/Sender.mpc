@@ -106,7 +106,6 @@ project(Minimum_Base_Sender_svnt) : ciao_servant {
   }
 
   Inline_Files {
-    SenderS.inl
   }
 }
 

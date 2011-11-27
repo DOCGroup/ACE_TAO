@@ -109,7 +109,7 @@ be_visitor_operation_sh::visit_operation (be_operation *node)
           << "_skel (" << be_idt << be_idt_nl
           << "TAO_ServerRequest &server_request," << be_nl
           << "TAO::Portable_Server::Servant_Upcall *servant_upcall," << be_nl
-          << "void * servant);" << be_uidt
+          << "TAO_ServantBase *servant);" << be_uidt
           << be_uidt;
     }
 

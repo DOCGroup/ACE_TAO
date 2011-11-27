@@ -128,7 +128,6 @@ project(AMI_InterInArgsT_Base_Sender_svnt) : ciao_servant, ami {
   }
 
   Inline_Files {
-    InterInArgsT_SenderS.inl
   }
 }
 

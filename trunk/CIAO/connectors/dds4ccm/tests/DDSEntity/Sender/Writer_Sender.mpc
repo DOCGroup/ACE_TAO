@@ -145,7 +145,6 @@ project(DDS_DDSWriterEntitySender_svnt) : ciao_servant, dds4ccm_lem_stub, dds4cc
   }
 
   Inline_Files {
-    Writer_SenderS.inl
   }
 }
 

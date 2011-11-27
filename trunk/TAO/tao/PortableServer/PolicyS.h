@@ -90,26 +90,6 @@ namespace POA_CORBA
     virtual CORBA::Boolean _is_a (
         const char* logical_type_id);
 
-    static void _is_a_skel (
-        TAO_ServerRequest & req,
-        TAO::Portable_Server::Servant_Upcall *servant_upcall,
-        void * servant);
-
-    static void _non_existent_skel (
-        TAO_ServerRequest & req,
-        TAO::Portable_Server::Servant_Upcall *servant_upcall,
-        void * servant);
-
-    static void _interface_skel (
-        TAO_ServerRequest & req,
-        TAO::Portable_Server::Servant_Upcall *servant_upcall,
-        void * servant);
-
-    static void _component_skel (
-        TAO_ServerRequest & req,
-        TAO::Portable_Server::Servant_Upcall *servant_upcall,
-        void * servant);
-
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
@@ -126,7 +106,7 @@ namespace POA_CORBA
     static void _get_policy_type_skel (
         TAO_ServerRequest & server_request,
         TAO::Portable_Server::Servant_Upcall *servant_upcall,
-        void * servant);
+        TAO_ServantBase* servant);
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_sh.cpp:45
@@ -136,7 +116,7 @@ namespace POA_CORBA
     static void copy_skel (
         TAO_ServerRequest & server_request,
         TAO::Portable_Server::Servant_Upcall *servant_upcall,
-        void * servant);
+        TAO_ServantBase* servant);
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_sh.cpp:45
@@ -146,7 +126,7 @@ namespace POA_CORBA
     static void destroy_skel (
         TAO_ServerRequest & server_request,
         TAO::Portable_Server::Servant_Upcall *servant_upcall,
-        void * servant);
+        TAO_ServantBase* servant);
   };
 
   // TAO_IDL - Generated from

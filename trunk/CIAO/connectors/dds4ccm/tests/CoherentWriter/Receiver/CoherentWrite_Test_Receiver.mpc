@@ -151,7 +151,6 @@ project(CoherentWrite_Test_Receiver_svnt) : ciao_servant, dds4ccm_lem_stub, dds4
   }
 
   Inline_Files {
-    CoherentWrite_Test_ReceiverS.inl
   }
 }
 

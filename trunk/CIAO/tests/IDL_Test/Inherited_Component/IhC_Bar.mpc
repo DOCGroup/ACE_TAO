@@ -138,7 +138,6 @@ project(IhC_Foo_IhC_Bar_svnt) : ciao_servant   {
   }
 
   Inline_Files {
-    IhC_BarS.inl
   }
 }
 

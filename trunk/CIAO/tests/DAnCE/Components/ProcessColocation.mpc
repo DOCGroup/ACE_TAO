@@ -101,7 +101,6 @@ project(ProcessColocation_svnt) : ciao_servant {
   }
 
   Inline_Files {
-    ProcessColocationS.inl
   }
 }
 

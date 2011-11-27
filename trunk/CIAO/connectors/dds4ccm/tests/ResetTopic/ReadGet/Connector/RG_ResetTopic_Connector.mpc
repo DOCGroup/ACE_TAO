@@ -141,7 +141,6 @@ project (RG_ResetTopicConnector_svnt) : ciao_servant, dds4ccm_impl {
   }
 
   Inline_Files {
-    RG_ResetTopic_ConnectorS.inl
   }
 }
 

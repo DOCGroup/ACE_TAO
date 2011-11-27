@@ -71,7 +71,6 @@ project(Null_Interface_skel) : ciao_executor {
   }
 
   Inline_Files {
-    Null_InterfaceS.inl
   }
 }
 

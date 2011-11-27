@@ -141,7 +141,6 @@ project (TE_ResetTopicConnector_svnt) : ciao_servant, dds4ccm_impl {
   }
 
   Inline_Files {
-    TE_ResetTopic_ConnectorS.inl
   }
 }
 

@@ -98,7 +98,6 @@ project(Cornucopia_skel) : ccm_svnt {
   }
 
   Inline_Files {
-    CornucopiaS.inl
   }
 }
 

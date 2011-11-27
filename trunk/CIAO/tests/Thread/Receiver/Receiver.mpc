@@ -107,7 +107,6 @@ project(Thread_Receiver_skel) : ccm_svnt {
   }
 
   Inline_Files {
-    ReceiverS.inl
   }
 }
 

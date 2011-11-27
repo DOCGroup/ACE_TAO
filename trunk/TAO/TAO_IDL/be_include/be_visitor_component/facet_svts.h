@@ -18,20 +18,22 @@
 #define _BE_COMPONENT_FACET_SVS_H_
 
 /**
- * @class be_visitor_facet_svs
+ * @class be_visitor_facet_svts
  *
- * @brief be_visitor_facet_svs
+ * @brief be_visitor_facet_svts
  *
  * This is a concrete visitor to generate the facet servant defn
  * for a component.
  */
-class be_visitor_facet_svs : public be_visitor_component_scope
+class be_visitor_facet_svts : public be_visitor_component_scope
 {
 public:
-  be_visitor_facet_svs (be_visitor_context *ctx);
+  be_visitor_facet_svts (be_visitor_context *ctx);
 
-  ~be_visitor_facet_svs (void);
+  ~be_visitor_facet_svts (void);
 
+  virtual int visit_connector (be_connector *node);
+  virtual int visit_component (be_component *node);
   virtual int visit_provides (be_provides *node);
 };
 

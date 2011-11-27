@@ -69,7 +69,6 @@ namespace PortableServer
     typedef Servant_var<TAO_ServantBase> ServantBase_var;
     typedef ServantBase *Servant;
 
-    typedef TAO_Local_ServantBase LocalServantBase;
     typedef TAO_DynamicImplementation DynamicImplementation;
 
   // TAO_IDL - Generated from

@@ -21,7 +21,7 @@ project(Shapes_Receiver_idl_gen) : componentidldefaults, dds4ccm {
 project(Shapes_Receiver_executor_gen) : componentidldefaults, dds4ccm {
   requires += dummy_label
   custom_only = 1
-  idlflags += -Gex -SS -Sci -Ssi \
+  idlflags += -Gex -SS -Sci \
               -I../../ports \
               -o ../../../Tutorial/Code/Shapes_Receiver_comp
 
@@ -167,7 +167,6 @@ project(Shapes_Receiver_comp_svnt) : ciao_servant, dds4ccm_lem_stub, dds4ccm_ske
   }
 
   Inline_Files {
-    GeneratedCode/Shapes_Receiver_compS.inl
   }
 }
 

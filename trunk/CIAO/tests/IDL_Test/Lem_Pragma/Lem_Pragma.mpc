@@ -127,9 +127,6 @@ project(Lem_Pragma_svnt) : ciao_servant {
   }
 
   Inline_Files {
-    AS.inl
-    BS.inl
-    CS.inl
   }
 }
 

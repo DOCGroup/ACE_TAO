@@ -137,7 +137,6 @@ project(DDS_Perf_Keyed_Test_Connector_svnt) : ciao_servant, dds4ccm_skel, dds4cc
   }
 
   Inline_Files {
-    Perf_Keyed_Test_ConnectorS.inl
   }
 }
 

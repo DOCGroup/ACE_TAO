@@ -21,7 +21,7 @@ project(Shapes_Sender_idl_gen) : componentidldefaults, dds4ccm {
 project(Shapes_Sender_executor_gen) : componentidldefaults, dds4ccm {
   requires += dummy_label
   custom_only = 1
-  idlflags += -Gex -SS -Sci -Ssi \
+  idlflags += -Gex -SS -Sci \
               -I../ports \
               -I../../ports \
               -o ../../../Tutorial/Code/Shapes_Sender_comp
@@ -176,7 +176,6 @@ project(Shapes_Sender_comp_svnt) : ciao_servant, dds4ccm_lem_stub, dds4ccm_skel 
   }
 
   Inline_Files {
-    GeneratedCode/Shapes_Sender_compS.inl
   }
 }
 

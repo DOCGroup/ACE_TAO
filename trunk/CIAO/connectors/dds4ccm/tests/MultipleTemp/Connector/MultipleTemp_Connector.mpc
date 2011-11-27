@@ -161,7 +161,6 @@ project(DDS_MT_Connector_svnt) : ciao_servant, dds4ccm_impl {
   }
 
   Inline_Files {
-    MultipleTemp_ConnectorS.inl
   }
 }
 

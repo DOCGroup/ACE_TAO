@@ -105,7 +105,6 @@ project(DDS_Coherent_Reader_Starter_svnt) : ciao_servant, dds4ccm_lem_stub, dds4
   }
 
   Inline_Files {
-    Reader_StarterS.inl
   }
 }
 

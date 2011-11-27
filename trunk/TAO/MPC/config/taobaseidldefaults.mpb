@@ -30,9 +30,6 @@ project: build_files {
       commandflags(!-SS && !-Ssi || !-Sci || -GT && !-SS && !-oS) += .inl, .i
     }
     optional(inline_pre_extension) {
-      commandflags(!-SS && !-Ssi && !-oS) += S
-    }
-    optional(inline_pre_extension) {
       commandflags(!-Sci) += C
     }
 
@@ -59,11 +56,11 @@ project: build_files {
     }
 
     optional(source_pre_extension) {
-      commandflags(-Gsv) += _svnt
+      commandflags(-Gsv) += _svnt, _svnt_T
     }
 
     optional(header_pre_extension) {
-      commandflags(-Gsv) += _svnt
+      commandflags(-Gsv) += _svnt, _svnt_T
     }
 
     optional(source_pre_extension) {

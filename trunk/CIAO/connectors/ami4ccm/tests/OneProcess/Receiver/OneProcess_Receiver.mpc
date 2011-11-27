@@ -127,7 +127,6 @@ project(AMI_OneProcess_Base_Receiver_svnt) : ciao_servant, messaging {
   }
 
   Inline_Files {
-    OneProcess_ReceiverS.inl
   }
 }
 
