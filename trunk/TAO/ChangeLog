@@ -1,3 +1,8 @@
+Mon Nov 28 19:14:23 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/tao.mpc:
+          Policy.pidl shouldn't use -Sorb
+
 Mon Nov 28 15:41:10 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_interface.cpp:
