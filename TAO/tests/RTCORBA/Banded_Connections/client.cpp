@@ -272,14 +272,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   try
     {
       // Initialize ORB.
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc,
-                         argv);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       // Parse arguments.
-      int result =
-        parse_args (argc,
-                    argv);
+      int result = parse_args (argc, argv);
       if (result != 0)
         return result;
 
@@ -324,6 +320,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       result =
         thread_manager.wait ();
       ACE_ASSERT (result != -1);
+
+      orb->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {
