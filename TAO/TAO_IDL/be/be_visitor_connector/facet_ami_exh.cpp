@@ -20,7 +20,7 @@ be_visitor_facet_ami_exh::be_visitor_facet_ami_exh (
     callback_iface_ (0),
     scope_name_ (0),
     iface_name_ (0),
-  sync_ (false)
+    sync_ (false)
 {
   // This is initialized in the base class to svnt_export_macro()
   // or skel_export_macro(), since there are many more visitor
@@ -75,7 +75,12 @@ be_visitor_facet_ami_exh::visit_provides (be_provides *node)
 
   return 0;
 }
-
+int
+be_visitor_facet_ami_exh::visit_attribute (be_operation *node)
+{
+  // do something
+  return 0;
+}
 int
 be_visitor_facet_ami_exh::visit_operation (be_operation *node)
 {
@@ -95,6 +100,8 @@ be_visitor_facet_ami_exh::visit_operation (be_operation *node)
 
   /// We're generating implementation operation declarations,
   /// so we can just use this visitor.
+  if (this->sync_)
+    this->ctx_->state (TAO_CodeGen::TAO_ROOT_IH);
   be_visitor_operation_ih v (this->ctx_);
 
   if (v.visit_operation (node) == -1)
@@ -227,7 +234,7 @@ be_visitor_facet_ami_exh::gen_facet_executor_class (void)
       << "virtual ~" << iface_name << suffix
       << " (void);";
 
-  if (this->visit_scope (this->iface_) == -1)
+ /* if (this->visit_scope (this->iface_) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("be_visitor_connector_ami_exh")
@@ -236,6 +243,71 @@ be_visitor_facet_ami_exh::gen_facet_executor_class (void)
                          ACE_TEXT ("interface failed\n")),
                         -1);
     }
+*/
+
+  ACE_CString handler_str (
+  ScopeAsDecl (this->iface_->defined_in ())->full_name ());
+  ACE_CString tmp (this->iface_->local_name ());
+  handler_str += "::";
+  handler_str += tmp;
+
+  if (ACE_OS::strstr (tmp.c_str(), "AMI4CCM") != 0)
+    this->sync_ = false;
+  else
+    this->sync_ = true;
+  if (this->sync_)
+   {
+     UTL_Scope *ss = this->iface_->defined_in();
+     UTL_ScopedName *sn =
+     FE_Utils::string_to_scoped_name (handler_str.c_str ());
+     AST_Decl *d = ss->lookup_by_name (sn, true);
+
+     sn->destroy ();
+     delete sn;
+     sn = 0;
+
+
+     be_interface *sync_iface =
+     be_interface::narrow_from_decl (d);
+
+     /// The overload of traverse_inheritance_graph() used here
+     /// doesn't automatically prime the queues.
+     sync_iface->get_insert_queue ().reset ();
+     sync_iface->get_del_queue ().reset ();
+     sync_iface->get_insert_queue ().enqueue_tail (sync_iface);
+
+
+
+     Facet_AMI_ExecH_Op_Attr_Generator op_attr_gen (this);
+     int status =
+         sync_iface->traverse_inheritance_graph(
+             op_attr_gen,
+             &os_,
+             false,
+             false);
+
+     if (status == -1)
+       {
+         ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("be_visitor_facet_ami_exh")
+                      ACE_TEXT ("::gen_facet_executor_class - ")
+                      ACE_TEXT ("traverse_inheritance_graph() on ")
+                      ACE_TEXT ("interface failed\n")));
+
+       }
+   }
+ else
+   {
+     if (this->visit_scope (this->iface_) == -1)
+       {
+         ACE_ERROR_RETURN ((LM_ERROR,
+                                ACE_TEXT ("be_visitor_connector_ami_exh")
+                                ACE_TEXT ("::gen_facet_executor_class - ")
+                                ACE_TEXT ("visit_scope() on sendc ")
+                                ACE_TEXT ("interface failed\n")),
+                               -1);
+       }
+   }
 
   const char *container_type = be_global->ciao_container_type ();
 
@@ -271,4 +343,19 @@ be_visitor_facet_ami_exh::gen_facet_executor_class (void)
       << "};";
 
   return 0;
+}
+// ==================================================
+
+Facet_AMI_ExecH_Op_Attr_Generator::Facet_AMI_ExecH_Op_Attr_Generator (
+      be_visitor_scope * visitor)
+  : visitor_ (visitor)
+{
+}
+
+int
+Facet_AMI_ExecH_Op_Attr_Generator::emit (be_interface * /*derived_interface */,
+                                        TAO_OutStream * /* os */,
+                                        be_interface * base_interface)
+{
+  return visitor_->visit_scope (base_interface);
 }

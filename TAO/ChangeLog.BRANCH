@@ -1,3 +1,12 @@
+Mon Nov 28 15:26:03 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_connector/executor_ami_exh.cpp:
+        * TAO_IDL/be/be_visitor_connector/facet_ami_exh.cpp:
+        * TAO_IDL/be/be_visitor_connector/facet_ami_exs.cpp:
+        * TAO_IDL/be_include/be_visitor_connector/facet_ami_exh.h:
+        * TAO_IDL/be_include/be_visitor_connector/facet_ami_exs.h:
+        Add traverse_inheritance_graph, needed  for derived interfaces 
+
 Wed Nov 23 14:00:38 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
 
         * TAO_IDL/be/be_visitor_connector/facet_ami_exs.cpp:
@@ -15,7 +24,7 @@ Mon Nov 21 13:32:38 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
         * TAO_IDL/be/be_visitor_connector/facet_ami_exs.cpp:
         * TAO_IDL/be_include/be_visitor_connector/facet_ami_exh.h:
         * TAO_IDL/be_include/be_visitor_connector/facet_ami_exs.h:
-       Changes for sync port on AMI connector 
+       Changes for sync port on AMI connector
 
 Mon Nov  7 13:02:55 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
 
