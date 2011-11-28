@@ -185,18 +185,6 @@ public:
                                              be_interface *,
                                              TAO_OutStream *os);
 
-  /// Helper method passed to the template method to generate code for the
-  /// collocated functions in the header file.
-  static int gen_colloc_op_decl_helper (be_interface *derived,
-                                        be_interface *ancestor,
-                                        TAO_OutStream *os);
-
-  /// Helper method passed to the template method to generate code for the
-  /// collocated functions in the source file.
-  static int gen_colloc_op_defn_helper (be_interface *derived,
-                                        be_interface *ancestor,
-                                        TAO_OutStream *os);
-
   /// Helper method passed to the template method to invoke ctors of all the
   /// base classes.
   static int copy_ctor_helper (be_interface *,
@@ -240,15 +228,6 @@ public:
   /// If we are local, regenerate non-local base class operations as
   /// pure virtual.
   int convert_parent_ops (be_visitor *visitor);
-
-  /// Common code called from gen_colloc_op_defn_helper().
-  static void gen_collocated_skel_body (be_interface *derived,
-                                        be_interface *ancestor,
-                                        AST_Decl *d,
-                                        const char *prefix,
-                                        bool direct,
-                                        UTL_ExceptList *list,
-                                        TAO_OutStream *os);
 
   /// Overridden from class be_type.
   virtual void gen_ostream_operator (TAO_OutStream *os,
