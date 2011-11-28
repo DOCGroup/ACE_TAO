@@ -130,6 +130,7 @@ project(AnyTypeCode) : taolib, tao_output, install, extra_anytypecode, taoidldef
     OctetSeqA.h
     PI_ForwardA.h
     ParameterModeA.h
+    PolicyA.h
     Policy_CurrentA.h
     Policy_ForwardA.h
     Policy_ManagerA.h

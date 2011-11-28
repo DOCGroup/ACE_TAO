@@ -91,6 +91,7 @@ project(PortableServer) : taolib, tao_output, install, anytypecode, taoidldefaul
     POAManagerC.cpp
     POAManagerFactoryC.cpp
     POAC.cpp
+    PolicyS.cpp
     PS_CurrentC.cpp
     PortableServer_includeC.cpp
     PortableServerC.cpp
@@ -122,6 +123,8 @@ project(PortableServer) : taolib, tao_output, install, anytypecode, taoidldefaul
     POAC.h
     POAManagerC.h
     POAManagerFactoryC.h
+    PolicyS.h
+    PolicyS_T.h
     PortableServerC.h
     PortableServer_includeC.h
     PS_CurrentC.h
@@ -169,6 +172,7 @@ project(PortableServer) : taolib, tao_output, install, anytypecode, taoidldefaul
 
   Template_Files {
     Servant_var.cpp
+    PolicyS_T.cpp
     *_T.cpp
   }
 
