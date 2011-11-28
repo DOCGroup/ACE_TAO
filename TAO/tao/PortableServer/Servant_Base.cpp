@@ -95,7 +95,7 @@ TAO_ServantBase::_default_POA (void)
 
 void
 TAO_ServantBase::_is_a_skel (TAO_ServerRequest & server_request,
-                             TAO::Portable_Server::Servant_Upcall* servant_upcall,
+                             TAO::Portable_Server::Servant_Upcall* TAO_INTERCEPTOR(servant_upcall),
                              TAO_ServantBase *servant)
 {
 #if TAO_HAS_INTERCEPTORS == 1
