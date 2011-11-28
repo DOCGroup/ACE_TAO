@@ -1,3 +1,32 @@
+Mon Nov 28 10:49:43 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/taobaseidldefaults.mpb:
+          Handle the S extension also manually, needed when using -oS
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+          When generating CORBA::Policy add some special methods
+
+        * tao/AnyTypeCode/AnyTypeCode.mpc:
+        * tao/PolicyS.h:
+        * tao/PortableServer/PortableServer.mpc:
+        * tao/tao.mpc:
+          Generate the Policy.pidl as part of the build process, prevents
+          us from doing manual hacks in the generated code
+
+        * tao/AnyTypeCode/PolicyA.h:
+        * tao/AnyTypeCode/PolicyA.cpp:
+        * tao/PolicyC.h:
+        * tao/PolicyC.inl:
+        * tao/PolicyC.cpp:
+        * tao/PortableServer/PolicyS.h:
+        * tao/PortableServer/PolicyS.cpp:
+        * tao/PortableServer/PolicyS_T.h:
+        * tao/PortableServer/PolicyS_T.inl:
+        * tao/PortableServer/PolicyS_T.cpp:
+          Removed these files.
+
 Mon Nov 28 08:26:29 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * TAO_IDL/be/be_visitor_component/facet_svth.cpp:

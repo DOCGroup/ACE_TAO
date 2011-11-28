@@ -20,5 +20,4 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
 #endif /* TAO_PIDL_POLICY_S_H*/
