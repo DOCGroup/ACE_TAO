@@ -1,3 +1,10 @@
+Mon Nov 28 12:57:57 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+	  
+	  Removed !FIXED_BUGS_ONLY for Bug_3000_Regression since this
+	  might be fixed.
+
 Mon Nov 28 12:28:14 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Servant_Base.h:
