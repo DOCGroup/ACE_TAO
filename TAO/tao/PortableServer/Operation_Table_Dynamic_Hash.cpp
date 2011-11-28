@@ -74,8 +74,7 @@ int
 TAO_Dynamic_Hash_OpTable::bind (const char *opname,
                                 const TAO::Operation_Skeletons skel_ptr)
 {
-  return this->hash_.bind (CORBA::string_dup (opname),
-                           skel_ptr);
+  return this->hash_.bind (CORBA::string_dup (opname), skel_ptr);
 }
 
 int
@@ -86,9 +85,7 @@ TAO_Dynamic_Hash_OpTable::find (const char *opname,
   ACE_FUNCTION_TIMEPROBE (TAO_DYNAMIC_HASH_OPTABLE_FIND_START);
   TAO::Operation_Skeletons s;
 
-  int retval =
-    this->hash_.find ((const char *)opname,
-                      s);
+  int const retval = this->hash_.find (opname, s);
 
   if (retval != -1)
     {
@@ -108,8 +105,7 @@ TAO_Dynamic_Hash_OpTable::find (const char *opname,
 
   TAO::Operation_Skeletons skel;
 
-  int retval =
-    this->hash_.find ((const char *)opname, skel);
+  int const retval = this->hash_.find (opname, skel);
 
   if (retval != -1)
     {

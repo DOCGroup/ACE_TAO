@@ -1,3 +1,11 @@
+Mon Nov 28 14:29:45 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ImR_Client/ImR_Client.cpp:
+        * tao/ImR_Client/ImplRepo.pidl:
+        * tao/PortableServer/Operation_Table_Dynamic_Hash.cpp:
+        * tao/PortableServer/Operation_Table_Perfect_Hash.cpp:
+          Const and layout changes
+
 Mon Nov 28 14:09:16 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
