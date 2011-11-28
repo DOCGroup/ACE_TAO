@@ -1,3 +1,11 @@
+Mon Nov 28 14:29:45 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Log_Msg.h:
+          Doxygen change
+
+        * include/makeinclude/wrapper_macros.GNU:
+          S.inl files are not generated anymore
+
 Wed Nov 23 07:39:56 UTC 2011  Olli Savia  <ops@iki.fi>
 
         * ace/Time_Value.inl:
