@@ -69,9 +69,14 @@ be_visitor_facet_ami_exs::visit_provides (be_provides *node)
   return 0;
 }
 int
-be_visitor_facet_ami_exs::visit_attribute (be_operation *node)
+be_visitor_facet_ami_exs::visit_attribute (be_attribute *node)
 {
   // Do something, do we come here?
+  os_ << be_nl_2 << "// TAO_IDL - Generated from be_visitor_facet_ami_exs::visit_attribute !!!!!!!!!!!!!!!!!!!!!!" << be_nl
+        << "// " << __FILE__ << ":" << __LINE__;
+  // Yes, we come here! to do : implement
+  os_ << "// name = " << node->local_name()->get_string ();
+
   return 0;
 }
 int
