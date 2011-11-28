@@ -10,7 +10,7 @@ project(Stock_Base_StockDistributor_idl_gen) : componentidldefaults, avoids_ccm_
               -Wb,skel_export_include=StockDistributor_svnt_export.h \
               -Wb,exec_export_macro=STOCKDISTRIBUTOR_EXEC_Export \
               -Wb,exec_export_include=StockDistributor_exec_export.h \
-              -Gxhex -Gxhsk -Gxhst
+              -Gxhex -Gxhsk -Gxhst 
 
   IDL_Files {
     StockDistributor.idl
@@ -22,7 +22,7 @@ project(Stock_Base_StockDistributor_lem_gen) : ciaoidldefaults, avoids_ccm_noeve
   custom_only = 1
   idlflags += -Wb,stub_export_macro=STOCKDISTRIBUTOR_LEM_STUB_Export \
               -Wb,stub_export_include=StockDistributor_lem_stub_export.h \
-              -SS -Gxhst
+              -SS -Gxhst 
 
   IDL_Files {
     StockDistributorE.idl
@@ -32,6 +32,7 @@ project(Stock_Base_StockDistributor_lem_gen) : ciaoidldefaults, avoids_ccm_noeve
 project(Stock_Base_StockDistributor_lem_stub) : ccm_svnt, avoids_ccm_noevent {
   after += Stock_Base_StockDistributor_lem_gen Stock_Base_StockDistributor_stub Stock_Base_stub Stock_Base_lem_stub
   libs  += Stock_Base_stub Stock_Base_lem_stub StockDistributor_stub
+  
   libpaths += ../lib
   libout = ../lib
   sharedname = StockDistributor_lem_stub
@@ -57,6 +58,7 @@ project(Stock_Base_StockDistributor_lem_stub) : ccm_svnt, avoids_ccm_noevent {
 project(Stock_Base_StockDistributor_stub) : ccm_stub, avoids_ccm_noevent {
   after += Stock_Base_StockDistributor_idl_gen Stock_Base_stub Stock_Base_lem_stub
   libs  += Stock_Base_stub Stock_Base_lem_stub
+  
   libpaths += ../lib
   libout = ../lib
   sharedname = StockDistributor_stub
@@ -83,6 +85,7 @@ project(Stock_Base_StockDistributor_exec) : ciao_executor, avoids_ccm_noevent {
   after   += Stock_Base_lem_stub Stock_Base_StockDistributor_lem_stub Stock_Base_StockDistributor_stub
   sharedname = StockDistributor_exec
   libs += Stock_Base_lem_stub StockDistributor_stub StockDistributor_lem_stub Stock_Base_stub Stock_Base_lem_stub
+  
   libpaths += ../lib
   libout = ../lib
   dynamicflags += STOCKDISTRIBUTOR_EXEC_BUILD_DLL
@@ -111,6 +114,7 @@ project(Stock_Base_StockDistributor_svnt) : ciao_servant, avoids_ccm_noevent  {
                 Stock_Base_skel \
                 Stock_Base_stub \
                 Stock_Base_lem_stub
+  
   libpaths += ../lib
   libout = ../lib
   dynamicflags += STOCKDISTRIBUTOR_SVNT_BUILD_DLL
@@ -126,7 +130,12 @@ project(Stock_Base_StockDistributor_svnt) : ciao_servant, avoids_ccm_noevent  {
   Header_Files {
     StockDistributorS.h
     StockDistributor_svnt.h
+    StockDistributor_svnt_T.h
     StockDistributor_svnt_export.h
+  }
+
+  Template_Files {
+    StockDistributor_svnt_T.cpp
   }
 
   Inline_Files {
@@ -137,6 +146,7 @@ project (Stock_Base_StockDistributorDriver) : ccm_stub, valuetype, avoids_ccm_no
   exename = StockDistributorDriver
   after += Stock_Base_StockDistributor_stub
   libs  += StockDistributor_stub Stock_Base_stub Stock_Base_lem_stub
+  
   libpaths += ../lib
   exeout = ../lib
   IDL_Files {
