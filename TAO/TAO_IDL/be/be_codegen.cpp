@@ -496,7 +496,7 @@ TAO_CodeGen::start_server_header (const char *fname)
   // We must include all the skeleton headers corresponding to
   // IDL files included by the current IDL file.
   // We will use the included IDL file names as they appeared
-  // in the original main IDL file, not the one  which went
+  // in the original main IDL file, not the one which went
   // thru CC preprocessor.
   for (size_t j = 0;
        j < idl_global->n_included_idl_files ();
