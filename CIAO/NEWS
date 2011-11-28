@@ -33,6 +33,9 @@ USER VISIBLE CHANGES BETWEEN CIAO-1.0.5 and CIAO-1.1.0
   user components to be compiled with direct collocation enabled. Enabling
   direct collocation does increase the size of the generated code
 
+. All facet servants are now generated in the new _svnt_T.{h,cpp} files. This
+  is a first step in more refactoring in the CIAO servants
+
 USER VISIBLE CHANGES BETWEEN CIAO-1.0.4 and CIAO-1.0.5
 =======================================================
 
