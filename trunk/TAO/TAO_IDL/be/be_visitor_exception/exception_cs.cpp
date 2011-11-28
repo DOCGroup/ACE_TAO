@@ -277,6 +277,27 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       *os << "}" << be_nl_2;
     }
 
+  if ((ACE_OS::strcmp (node->full_name (), "CORBA::InvalidPolicies") == 0) ||
+      (ACE_OS::strcmp (node->full_name (), "CORBA::PolicyError") == 0))
+    {
+      *os << "// TAO extension - the virtual _type method." << be_nl
+          << "::CORBA::TypeCode_ptr " << node->name ()
+          << "::_tao_type (void) const" << be_nl
+          << "{" << be_idt_nl
+          << "TAO_AnyTypeCode_Adapter *adapter =" << be_idt_nl
+          << "ACE_Dynamic_Service<TAO_AnyTypeCode_Adapter>::instance ("
+          << "\"AnyTypeCode_Adapter\");" << be_uidt_nl
+          << "if (adapter == 0)" << be_idt_nl
+          << "{" << be_idt_nl
+          << "ACE_ERROR_RETURN ((LM_ERROR," << be_idt_nl
+          << "ACE_TEXT (\"TAO \")," << be_nl
+          << "ACE_TEXT (\"Unable to find the \")" << be_nl
+          << "ACE_TEXT (\"AnyTypeCode Adapter instance\")), 0);" << be_uidt << be_uidt_nl
+          << "}" << be_uidt_nl
+          << "return adapter->_tao_type_" << node->local_name () <<  "();" << be_uidt_nl
+          << "}";
+    }
+
   // Switch streams to the *A.cpp file if we are using this option.
   if (be_global->gen_anyop_files ())
     {
