@@ -1,0 +1,55 @@
+--- Constraint_l.cpp.orig	2006-12-29 11:48:44.000000000 -0600
++++ Constraint_l.cpp	2006-12-29 11:48:44.000000000 -0600
+@@ -11,6 +11,7 @@
+ 
+ #include "ace/os_include/os_stdio.h"
+ #include "ace/OS_NS_unistd.h"
++#include /**/ "tao/Versioned_Namespace.h"
+ 
+ 
+ /* cfront 1.2 defines "c_plusplus" instead of "__cplusplus" */
+@@ -94,6 +95,8 @@
+ /* Size of default input buffer. */
+ #define YY_BUF_SIZE 16384
+ 
++TAO_BEGIN_VERSIONED_NAMESPACE_DECL
++
+ typedef struct yy_buffer_state *YY_BUFFER_STATE;
+ 
+ extern int yyleng;
+@@ -499,6 +502,8 @@
+ #define YY_NO_TOP_STATE 1
+ #endif
+ 
++TAO_END_VERSIONED_NAMESPACE_DECL
++
+ #ifdef YY_MALLOC_DECL
+ YY_MALLOC_DECL
+ #else
+@@ -589,6 +594,8 @@
+ #define YY_RULE_SETUP \
+ 	YY_USER_ACTION
+ 
++TAO_BEGIN_VERSIONED_NAMESPACE_DECL
++
+ YY_DECL
+ 	{
+ 	register yy_state_type yy_current_state;
+@@ -831,7 +838,7 @@
+ case 30:
+ YY_RULE_SETUP
+ {}
+-	YY_BREAK
++	break;
+ case 31:
+ YY_RULE_SETUP
+ {
+@@ -841,7 +848,7 @@
+ case 32:
+ YY_RULE_SETUP
+ TAO_TRADER_ECHO;
+-	YY_BREAK
++	break;
+ case YY_STATE_EOF(INITIAL):
+ 	yyterminate();
+ 

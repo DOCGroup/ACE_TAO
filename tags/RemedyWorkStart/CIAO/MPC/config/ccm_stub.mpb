@@ -1,0 +1,8 @@
+// -*- MPC -*-
+// $Id$
+
+project : ifr_client, valuetype, pi, codecfactory, ciao_vcwarnings, ccm, ciaoidldefaults {
+  includes += $(CIAO_ROOT)
+  after += CCM_stub
+  libs  += CCM_stub
+}

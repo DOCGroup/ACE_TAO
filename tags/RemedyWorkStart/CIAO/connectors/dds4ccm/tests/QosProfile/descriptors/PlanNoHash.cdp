@@ -1,0 +1,206 @@
+<!-- $Id$ -->
+<Deployment:DeploymentPlan
+   xmlns:Deployment="http://www.omg.org/Deployment"
+   xmlns:xmi="http://www.omg.org/XMI"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+  <label>QosProfile_Test_Depl_1</label>
+  <UUID>QosProfile_Test_Depl_1</UUID>
+
+  <implementation xmi:id="ComponentComponentImplementation">
+    <name>ComponentComponentImplementation</name>
+    <source/>
+    <artifact xmi:idref="Component_ExecArtifact" />
+    <artifact xmi:idref="Component_SvntArtifact" />
+    <execParameter>
+      <!-- entrypoint as exec parameter (see 10.6.1) -->
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_QosProfile_Test_Component_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_QosProfile_Test_QosProfileComponent_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Component_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Component_exec</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+  <implementation xmi:id="QosProfile_Test_ConnectorComponentImplementation">
+    <name>QosProfile_Test_ConnectorComponentImplementation</name>
+    <source/>
+    <artifact xmi:idref="QosProfile_Test_Connector_ExecArtifact" />
+    <artifact xmi:idref="QosProfile_Test_Connector_SvntArtifact" />
+    <execParameter>
+      <!-- entrypoint as exec parameter (see 10.6.1) -->
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_QosProfile_Test_QosProfileTestConnector_DDS_Event_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_QosProfile_Test_QosProfileTestConnector_DDS_Event_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>QosProfile_Test_Connector_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>QosProfile_Test_Connector_exec</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+  <instance xmi:id="ComponentComponentInstance">
+    <name>ComponentComponent</name>
+    <node>ComponentNode</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="ComponentComponentImplementation" />
+  </instance>
+  <instance xmi:id="QosProfile_Test_ConnectorComponentInstance">
+    <name>QosProfile_Test_ConnectorComponent</name>
+    <node>ComponentNode</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="QosProfile_Test_ConnectorComponentImplementation" />
+    <configProperty>
+      <name>qos_profile</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>QosProfile_Library::QosProfile_Profile</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>topic_name</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>QosProfile_Test</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <connection>
+    <name>info_write_data</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>info_write_data</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ComponentComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>supplier_data</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="QosProfile_Test_ConnectorComponentInstance" />
+    </internalEndpoint>
+  </connection>
+
+  <artifact xmi:id="QosProfile_Test_Connector_ExecArtifact">
+    <name>QosProfile_Test_Connector_exec</name>
+    <source/>
+    <node/>
+    <location>QosProfile_Test_Connector_exec</location>
+  </artifact>
+  <artifact xmi:id="QosProfile_Test_Connector_SvntArtifact">
+    <name>QosProfile_Test_Connector_svnt</name>
+    <source/>
+    <node/>
+    <location>QosProfile_Test_Connector_svnt</location>
+  </artifact>
+  <artifact xmi:id="QosProfile_Test_Connector_StubArtifact">
+    <name>QosProfile_Test_Connector_stub</name>
+    <source/>
+    <node/>
+    <location>QosProfile_Test_Connector_stub</location>
+  </artifact>
+  <artifact xmi:id="Component_ExecArtifact">
+    <name>Component_exec</name>
+    <source/>
+    <node/>
+    <location>Component_exec</location>
+  </artifact>
+  <artifact xmi:id="Component_SvntArtifact">
+    <name>Component_svnt</name>
+    <source/>
+    <node/>
+    <location>Component_svnt</location>
+  </artifact>
+  <artifact xmi:id="Component_StubArtifact">
+    <name>Component_stub</name>
+    <source/>
+    <node/>
+    <location>Component_stub</location>
+  </artifact>
+</Deployment:DeploymentPlan>
