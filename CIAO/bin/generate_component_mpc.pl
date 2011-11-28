@@ -240,6 +240,8 @@ $svr_after = "";
 
 $svr_libs = "$com_name".'_stub '. "$com_name".'_lem_stub ';
 
+$svr_tmpl = '';
+
 if (defined $options{n}) {
     $svr_after = "$unique_prefix"."$com_name".'_stub';
 
@@ -273,8 +275,15 @@ else {
 '
     '."$com_name".'S.h
     '."$com_name".'_svnt.h
+    '."$com_name".'_svnt_T.h
     '."$com_name".'_svnt_export.h
 ';
+
+    $svr_tmpl  =
+'
+    '."$com_name".'_svnt_T.cpp
+';
+
 }
 
 $mpc_template = '// $Id$
@@ -331,7 +340,15 @@ project('."$unique_prefix"."$com_name"."$svr_suffix".') : '."$svr_base". "$base_
   Source_Files {'."$svr_src".'  }
 
   Header_Files {'."$svr_hdr".'  }
+';
 
+if (!defined $options{n}) {
+    $mpc_template = $mpc_template.'
+  Template_Files {'."$svr_tmpl".'  }
+';
+}
+
+$mpc_template = $mpc_template.'
   Inline_Files {
   }
 }
