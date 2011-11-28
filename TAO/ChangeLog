@@ -1,3 +1,16 @@
+Mon Nov 28 15:41:10 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_visitor_interface/direct_proxy_impl_sh.cpp:
+        * TAO_IDL/be_include/be_interface.h:
+          Reduced amount of static methods generated for direct collocation.
+          Next step is to move the direct collocation static methods into
+          the regular skeleton, there is really no need for its own
+          special class hierarchy
+
+        * tests/Skeleton_Inheritance/skel_inheritance.mpc:
+          Enable direct collocation
+
 Mon Nov 28 14:29:45 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ImR_Client/ImR_Client.cpp:
