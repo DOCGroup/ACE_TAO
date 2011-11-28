@@ -1,6 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project(EC_Multiple): rteventexe, rtevent_serv, rtschedevent, naming, iortable, messaging {
-  exename  = EC_Multiple
-}
