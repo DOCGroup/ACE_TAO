@@ -1,3 +1,12 @@
+Mon Nov 28 08:26:29 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/facet_svth.cpp:
+        * TAO_IDL/be/be_visitor_component/facet_svts.cpp:
+        * TAO_IDL/be_include/be_visitor_component/facet_svth.h:
+        * TAO_IDL/be_include/be_visitor_component/facet_svts.h:
+        * TAO_IDL/be_include/be_visitor_root/root_svth.h:
+          Fuzz.
+
 Sun Nov 27 18:19:18 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         Merging in another set of changes. The skeletons got refactored even
