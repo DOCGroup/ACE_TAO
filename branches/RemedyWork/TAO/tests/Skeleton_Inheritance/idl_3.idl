@@ -1,0 +1,17 @@
+//
+// $Id$
+//
+
+#include "idl_2.idl"
+
+module Skeleton_Inheritance
+{
+  interface Interface_3 : Interface_2
+  {
+    string operation_3 ();
+
+    oneway void shutdown ();
+
+    attribute short attribute_3;
+  };
+};

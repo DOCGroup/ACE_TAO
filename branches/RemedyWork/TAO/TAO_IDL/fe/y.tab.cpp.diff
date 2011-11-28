@@ -1,0 +1,31 @@
+--- y.tab.cpp.orig	2009-06-23 14:56:31.000000000 -0500
++++ y.tab.cpp	2009-06-23 15:04:04.000000000 -0500
+@@ -1935,13 +1935,9 @@ tao_yy_symbol_value_print (tao_yyoutput,
+   if (tao_yytype < TAO_YYNTOKENS)
+     TAO_YYPRINT (tao_yyoutput, tao_yytoknum[tao_yytype], *tao_yyvaluep);
+ # else
++  TAO_YYUSE (tao_yytype);
+   TAO_YYUSE (tao_yyoutput);
+ # endif
+-  switch (tao_yytype)
+-    {
+-      default:
+-        break;
+-    }
+ }
+ 
+ 
+@@ -2298,13 +2298,6 @@ tao_yydestruct (tao_yymsg, tao_yytype, t
+   if (!tao_yymsg)
+     tao_yymsg = "Deleting";
+   TAO_YY_SYMBOL_PRINT (tao_yymsg, tao_yytype, tao_yyvaluep, tao_yylocationp);
+-
+-  switch (tao_yytype)
+-    {
+-
+-      default:
+-        break;
+-    }
+ }
+ 
+ 

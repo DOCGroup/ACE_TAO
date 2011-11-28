@@ -1,0 +1,18 @@
+// $Id$
+
+#ifndef QUOTER_PRODUCER_IDL
+#define QUOTER_PRODUCER_IDL
+
+#include <Components.idl>
+
+#include "Base/Quoter.idl"
+
+module Quoter
+{
+  component Producer
+  {
+    /// Provides
+    provides StockManager my_quoter;
+  };
+};
+#endif

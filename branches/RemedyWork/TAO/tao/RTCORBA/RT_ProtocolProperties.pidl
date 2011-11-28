@@ -1,0 +1,21 @@
+/**
+ * @file RT_ProtocolProperties.pidl
+ *
+ * $Id$
+ *
+ * @brief Pre-compiled IDL source for the ProtocolProperties module.
+ *
+ */
+
+#ifndef _RT_PROTOCOLPROPERTIES_IDL_
+#define _RT_PROTOCOLPROPERTIES_IDL_
+
+#pragma prefix "omg.org"
+
+module RTCORBA
+{
+  // Protocol Properties.
+  local interface ProtocolProperties {};
+};
+
+#endif /* _RT_PROTOCOLPROPERTIES_IDL_ */
