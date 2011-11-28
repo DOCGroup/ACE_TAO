@@ -64,7 +64,9 @@ project(TAO_Core_idl) : tao_versioning_idl_defaults, gen_ostream, install, pidl_
 
   IDL_Files {
     idlflags += -GT -oS PortableServer -Gd \
-                -Wb,safe_include=tao/PolicyC.h
+                -Wb,safe_include=tao/PolicyC.h \
+                -Wb,skel_export_macro=TAO_PortableServer_Export \
+                -Wb,skel_export_include=tao/PortableServer/portableserver_export.h
     idlflags -= -SS
     idlflags -= -Sorb
     Policy.pidl >> PortableServer/PolicyS.h PortableServer/PolicyS.cpp PortableServer/PolicyS_T.h PortableServer/PolicyS_T.cpp AnyTypeCode/PolicyA.h AnyTypeCode/PolicyA.cpp

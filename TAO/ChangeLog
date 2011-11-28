@@ -1,3 +1,9 @@
+Mon Nov 28 20:36:09 UTC 2011  Adam Mitz  <mitza@ociweb.com>
+
+        * tao/tao.mpc:
+
+          Set skel_export_macro and skel_export_include for Policy.pidl.
+
 Mon Nov 28 19:14:23 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/tao.mpc:
