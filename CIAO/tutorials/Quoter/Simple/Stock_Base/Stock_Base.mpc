@@ -1,5 +1,5 @@
 // $Id$
-// This file is generated with "generate_component_mpc.pl -ne -l ../lib -o ../lib Stock_Base"
+// This file is generated with "generate_component_mpc.pl -n -e -l ../lib -o ../lib Stock_Base"
 
 project(Stock_Base_idl_gen) : componentidldefaults, avoids_ccm_noevent {
   custom_only = 1
@@ -8,7 +8,7 @@ project(Stock_Base_idl_gen) : componentidldefaults, avoids_ccm_noevent {
               -Wb,stub_export_include=Stock_Base_stub_export.h \
               -Wb,skel_export_macro=STOCK_BASE_SKEL_Export \
               -Wb,skel_export_include=Stock_Base_skel_export.h \
-              -Gxhex -Gxhsk -Gxhst
+              -Gxhex -Gxhsk -Gxhst 
 
   IDL_Files {
     Stock_Base.idl
@@ -20,7 +20,7 @@ project(Stock_Base_lem_gen) : ciaoidldefaults, avoids_ccm_noevent {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=STOCK_BASE_LEM_STUB_Export \
               -Wb,stub_export_include=Stock_Base_lem_stub_export.h \
-              -SS -Gxhst
+              -SS -Gxhst 
 
   IDL_Files {
     Stock_BaseE.idl
@@ -30,6 +30,7 @@ project(Stock_Base_lem_gen) : ciaoidldefaults, avoids_ccm_noevent {
 project(Stock_Base_lem_stub) : ccm_svnt, avoids_ccm_noevent {
   after += Stock_Base_lem_gen Stock_Base_stub 
   libs  +=  Stock_Base_stub
+  
   libpaths += ../lib
   libout = ../lib
   sharedname = Stock_Base_lem_stub
@@ -55,6 +56,7 @@ project(Stock_Base_lem_stub) : ccm_svnt, avoids_ccm_noevent {
 project(Stock_Base_stub) : ccm_stub, avoids_ccm_noevent {
   after += Stock_Base_idl_gen 
   libs  += 
+  
   libpaths += ../lib
   libout = ../lib
   sharedname = Stock_Base_stub
@@ -83,6 +85,7 @@ project(Stock_Base_skel) : ciao_executor, avoids_ccm_noevent  {
   sharedname  = Stock_Base_skel
   libs       += Stock_Base_stub
  
+  
   libpaths += ../lib
   libout = ../lib
   dynamicflags += STOCK_BASE_SKEL_BUILD_DLL
