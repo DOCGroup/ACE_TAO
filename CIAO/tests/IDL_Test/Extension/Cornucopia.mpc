@@ -58,6 +58,7 @@ project(Cornucopia_Ext_stub) : ccm_stub {
 }
 
 project(Cornucopia_Ext_exec) : ciao_executor, ccm_extension_stub {
+  requires += dummy_label
   after   += Cornucopia_Ext_lem_gen Cornucopia_Ext_stub
   sharedname = Cornucopia_exec
   libs += Cornucopia_stub
