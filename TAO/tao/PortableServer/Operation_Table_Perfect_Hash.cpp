@@ -65,8 +65,7 @@ TAO_Perfect_Hash_OpTable::find (const char *opname,
 {
   ACE_FUNCTION_TIMEPROBE (TAO_PERFECT_HASH_OPTABLE_FIND_START);
 
-  TAO_operation_db_entry const * const entry = lookup (opname,
-                                                       length);
+  TAO_operation_db_entry const * const entry = lookup (opname, length);
   if (entry == 0)
     {
       skelfunc = 0; // insure that somebody can't call a wrong function!

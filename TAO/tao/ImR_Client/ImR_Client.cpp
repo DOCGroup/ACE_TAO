@@ -121,13 +121,13 @@ namespace TAO
           ACE_CString serverId = poa->orb_core ().server_id ();
           ACE_CString name;
           if (serverId.empty ())
-          {
-            name = poa->name();
-          }
+            {
+              name = poa->name();
+            }
           else
-          {
-            name = serverId + ":" + poa->name();
-          }
+            {
+              name = serverId + ":" + poa->name();
+            }
 
           imr_locator->server_is_running (name.c_str (),
                                           partial_ior.c_str(),
@@ -216,7 +216,7 @@ namespace TAO
 
           root_poa->deactivate_object_i (id.in());
 
-          server_object_ = 0;
+          this->server_object_ = 0;
         }
     }
 
