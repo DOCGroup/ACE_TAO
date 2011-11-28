@@ -91,23 +91,6 @@ be_visitor_interface_direct_proxy_impl_sh::visit_interface (
                         -1);
     }
 
-  // Generate static collocated operations for operations of our base
-  // classes.
-  int status =
-    node->traverse_inheritance_graph (
-              be_interface::gen_colloc_op_decl_helper,
-              os
-            );
-
-  if (status == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_interface_direct_proxy_impl_sh::"
-                         "visit_interface - "
-                         "inheritance graph traversal failed\n"),
-                        -1);
-    }
-
   *os << be_uidt_nl
       << "};" << be_nl_2
       << "//" << be_nl
