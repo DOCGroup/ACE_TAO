@@ -103,7 +103,7 @@ module ImplementationRepository
     */
   interface Administration
   {
-    /// Activate server that is named <server>.
+    /// Activate server that is named @a server.
     ///
     /// The <NotFound> exception is raised when <server> is not found
     /// in the Implementation Repository.  The <CannotActivate> exception
@@ -112,37 +112,37 @@ module ImplementationRepository
     void activate_server (in string server)
       raises (NotFound, CannotActivate);
 
-    /// Add/Update the the <server>
+    /// Add/Update the the @a server.
     /// The <NotFound> exception is raised when the activator specified
     /// in the options is not registered.
     void add_or_update_server (in string server, in StartupOptions options)
       raises(NotFound);
 
-    /// Remove <server> from the Implementation Repository.
+    /// Remove @a server from the Implementation Repository.
     ///
-    /// The <NotFound> exception is raised when <server> is not found
+    /// The <NotFound> exception is raised when @a server is not found
     /// in the Implementation Repository.
     void remove_server (in string server)
       raises (NotFound);
 
     /// Tries to shutdown the server, first gracefully, then ungracefully.
     ///
-    /// The <NotFound> exception is raised when <server> is not found
+    /// The <NotFound> exception is raised when @a server is not found
     /// in the Implementation Repository.
     void shutdown_server (in string server)
       raises (NotFound);
 
-    /// Used to notify the Implementation Repository that <server> is alive
-    /// and well at <partial_ior>.
+    /// Used to notify the Implementation Repository that @a server is alive
+    /// and well at @a partial_ior.
     ///
-    /// The <NotFound> exception is raised when <server> is not found
+    /// The <NotFound> exception is raised when @a server is not found
     /// in the Implementation Repository.
     void server_is_running (in string server,
                             in string partial_ior,
                             in ServerObject server_object)
       raises (NotFound);
 
-    /// Used to tell the Implementation Repository that <server> is shutting
+    /// Used to tell the Implementation Repository that @a server is shutting
     /// down.
     ///
     /// The <NotFound> exception is raised when <server> is not found
@@ -151,14 +151,14 @@ module ImplementationRepository
     void server_is_shutting_down (in string server)
       raises (NotFound);
 
-    /// Returns the startup information for a given <server>.
+    /// Returns the startup information for a given @a server.
     void find (in string server, out ServerInformation info);
 
-    /// Returns at most <how_many> servers in <server_list>.  If there
+    /// Returns at most @a how_many servers in @a server_list.  If there
     /// are additional servers, they can be received through the
-    /// <server_iterator>.  If there are no more servers, then
-    /// <server_iterator> is null.
-    /// If how_many == 0, then returns all servers.
+    /// @a server_iterator.  If there are no more servers, then
+    /// @a server_iterator is null.
+    /// If @a how_many == 0, then returns all servers.
     void list (in unsigned long how_many,
                out ServerInformationList server_list,
                out ServerInformationIterator server_iterator);
