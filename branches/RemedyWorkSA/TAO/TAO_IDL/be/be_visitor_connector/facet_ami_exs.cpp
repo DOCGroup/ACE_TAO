@@ -68,7 +68,12 @@ be_visitor_facet_ami_exs::visit_provides (be_provides *node)
 
   return 0;
 }
-
+int
+be_visitor_facet_ami_exs::visit_attribute (be_operation *node)
+{
+  // Do something, do we come here?
+  return 0;
+}
 int
 be_visitor_facet_ami_exs::visit_operation (be_operation *node)
 {
@@ -285,7 +290,7 @@ be_visitor_facet_ami_exs::gen_facet_executor_class (void)
       << "}";
 
 
-  if (this->visit_scope (this->iface_) == -1)
+/*  if (this->visit_scope (this->iface_) == -1)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("be_visitor_connector_ami_exs")
@@ -293,6 +298,49 @@ be_visitor_facet_ami_exs::gen_facet_executor_class (void)
                   ACE_TEXT ("visit_scope() on sendc ")
                   ACE_TEXT ("interface failed\n")));
     }
+*/
+
+    ACE_CString handler_str (
+    ScopeAsDecl (this->iface_->defined_in ())->full_name ());
+    ACE_CString tmp (this->iface_->local_name ());
+    handler_str += "::";
+    handler_str += tmp;
+
+    UTL_Scope *ss = this->iface_->defined_in();
+    UTL_ScopedName *sn =
+       FE_Utils::string_to_scoped_name (handler_str.c_str ());
+    AST_Decl *d = ss->lookup_by_name (sn, true);
+
+    sn->destroy ();
+    delete sn;
+    sn = 0;
+
+    be_interface *sync_iface =
+       be_interface::narrow_from_decl (d);
+
+    /// The overload of traverse_inheritance_graph() used here
+    /// doesn't automatically prime the queues.
+    sync_iface->get_insert_queue ().reset ();
+    sync_iface->get_del_queue ().reset ();
+    sync_iface->get_insert_queue ().enqueue_tail (sync_iface);
+
+    Facet_AMI_Exec_Op_Attr_Generator op_attr_gen (this);
+    int status =
+           sync_iface->traverse_inheritance_graph(
+               op_attr_gen,
+               &os_,
+               false,
+               false);
+
+    if (status == -1)
+      {
+        ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("be_visitor_facet_ami_exh")
+                        ACE_TEXT ("::gen_facet_executor_class - ")
+                        ACE_TEXT ("traverse_inheritance_graph() on ")
+                        ACE_TEXT ("interface failed\n")));
+
+      }
 
   ACE_CString scope_str (scope_name, 0, false);
 
@@ -448,7 +496,11 @@ be_visitor_facet_ami_exs::gen_facet_executor_op (be_operation *node)
   os_ << be_nl_2 << "// TAO_IDL - Generated from gen_facet_executor_op" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
-  os_ << be_nl_2
+  // do not handle not sendc operations.
+  if (ACE_OS::strstr (node->local_name()->get_string (), "sendc_")== 0)
+     return 0;
+
+    os_ << be_nl_2
       << "void" << be_nl
       << this->iface_->local_name () << "_exec_i::"
       << node->local_name ();
@@ -555,6 +607,7 @@ be_visitor_facet_ami_exs::gen_facet_executor_sync_op (be_operation *node)
 {
    os_ << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl_2 ;
+
    if (node->is_sendc_ami())
      return 0;
 
@@ -565,7 +618,7 @@ be_visitor_facet_ami_exs::gen_facet_executor_sync_op (be_operation *node)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("be_visitor_operation_ch::")
-                         ACE_TEXT ("visit_operation - ")
+                         ACE_TEXT ("gen_facet_executor_sync_op - ")
                          ACE_TEXT ("Bad return type\n")),
                         -1);
     }
@@ -577,15 +630,14 @@ be_visitor_facet_ami_exs::gen_facet_executor_sync_op (be_operation *node)
   if (bt->accept (&oro_visitor) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) favet_ami_exs::"
-                         "visit_operation - "
+                         "(%N:%l) facet_ami_exs::"
+                         "gen_facet_executor_sync_op - "
                          "codegen for return type failed\n"),
                         -1);
     }
 
 
   os_ << be_nl
-//      << "void" << be_nl
       << this->iface_->local_name () << "_exec_i::"
       << node->local_name ();
 
