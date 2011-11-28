@@ -4,6 +4,8 @@ USER VISIBLE CHANGES BETWEEN ACE-6.0.5 and ACE-6.1.0
 . Removed autoconf support, only traditional way of
   compilation is shipped from now
 
+. Add support for RHEL 6.1 64bit
+
 USER VISIBLE CHANGES BETWEEN ACE-6.0.4 and ACE-6.0.5
 ====================================================
 

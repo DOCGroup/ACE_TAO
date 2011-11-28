@@ -10,7 +10,7 @@ project(Stock_Base_StockBroker_idl_gen) : componentidldefaults, avoids_ccm_noeve
               -Wb,skel_export_include=StockBroker_svnt_export.h \
               -Wb,exec_export_macro=STOCKBROKER_EXEC_Export \
               -Wb,exec_export_include=StockBroker_exec_export.h \
-              -Gxhex -Gxhsk -Gxhst
+              -Gxhex -Gxhsk -Gxhst 
 
   IDL_Files {
     StockBroker.idl
@@ -22,7 +22,7 @@ project(Stock_Base_StockBroker_lem_gen) : ciaoidldefaults, avoids_ccm_noevent {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=STOCKBROKER_LEM_STUB_Export \
               -Wb,stub_export_include=StockBroker_lem_stub_export.h \
-              -SS -Gxhst
+              -SS -Gxhst 
 
   IDL_Files {
     StockBrokerE.idl
@@ -32,6 +32,7 @@ project(Stock_Base_StockBroker_lem_gen) : ciaoidldefaults, avoids_ccm_noevent {
 project(Stock_Base_StockBroker_lem_stub) : ccm_svnt, avoids_ccm_noevent {
   after += Stock_Base_StockBroker_lem_gen Stock_Base_StockBroker_stub Stock_Base_stub Stock_Base_lem_stub
   libs  += Stock_Base_stub Stock_Base_lem_stub StockBroker_stub
+  
   libpaths += ../lib
   libout = ../lib
   sharedname = StockBroker_lem_stub
@@ -57,6 +58,7 @@ project(Stock_Base_StockBroker_lem_stub) : ccm_svnt, avoids_ccm_noevent {
 project(Stock_Base_StockBroker_stub) : ccm_stub, avoids_ccm_noevent {
   after += Stock_Base_StockBroker_idl_gen Stock_Base_stub Stock_Base_lem_stub
   libs  += Stock_Base_stub Stock_Base_lem_stub
+  
   libpaths += ../lib
   libout = ../lib
   sharedname = StockBroker_stub
@@ -83,6 +85,7 @@ project(Stock_Base_StockBroker_exec) : ciao_executor, avoids_ccm_noevent {
   after   += Stock_Base_lem_stub Stock_Base_StockBroker_lem_stub Stock_Base_StockBroker_stub
   sharedname = StockBroker_exec
   libs += Stock_Base_lem_stub StockBroker_stub StockBroker_lem_stub Stock_Base_stub Stock_Base_lem_stub
+  
   libpaths += ../lib
   libout = ../lib
   dynamicflags += STOCKBROKER_EXEC_BUILD_DLL
@@ -111,6 +114,7 @@ project(Stock_Base_StockBroker_svnt) : ciao_servant, avoids_ccm_noevent  {
                 Stock_Base_skel \
                 Stock_Base_stub \
                 Stock_Base_lem_stub
+  
   libpaths += ../lib
   libout = ../lib
   dynamicflags += STOCKBROKER_SVNT_BUILD_DLL
@@ -126,7 +130,12 @@ project(Stock_Base_StockBroker_svnt) : ciao_servant, avoids_ccm_noevent  {
   Header_Files {
     StockBrokerS.h
     StockBroker_svnt.h
+    StockBroker_svnt_T.h
     StockBroker_svnt_export.h
+  }
+
+  Template_Files {
+    StockBroker_svnt_T.cpp
   }
 
   Inline_Files {
@@ -137,6 +146,7 @@ project (Stock_Base_StockBrokerDriver) : ccm_stub, valuetype, avoids_ccm_noevent
   exename = StockBrokerDriver
   after += Stock_Base_StockBroker_stub
   libs  += StockBroker_stub Stock_Base_stub Stock_Base_lem_stub
+  
   libpaths += ../lib
   exeout = ../lib
   IDL_Files {

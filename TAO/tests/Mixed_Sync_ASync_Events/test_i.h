@@ -52,7 +52,7 @@ private:
 
   A::RunMode mode_;
 
-  time_t seed_;
+  unsigned int seed_;
 };
 
 class TestHandler
@@ -90,7 +90,7 @@ private:
   CORBA::ULong max_count_;
   A::RunMode mode_;
   CORBA::ULong counter_;
-  time_t seed_;
+  unsigned int seed_;
 };
 
 class Test_Reply_i : public POA_A::AMI_TestHandler

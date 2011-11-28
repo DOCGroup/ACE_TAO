@@ -256,7 +256,7 @@ module Ast<typename T,
       raises (S);
   };
 
-  alias second<T, S> second_ref;
+  alias second<S, T> second_ref;
 
   valuetype VT_T : V supports T
   {

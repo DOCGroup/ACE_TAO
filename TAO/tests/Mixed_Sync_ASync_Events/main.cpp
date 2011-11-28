@@ -148,7 +148,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         // get object reference for opponent
         object = orb->string_to_object (input_ior);
         opponent =  A::Test::_narrow (object.in ());
-      } while (mode_flag == A::RM_SLAVE && CORBA::is_nil (opponent));
+      } while (mode_flag == A::RM_SLAVE && CORBA::is_nil (opponent.in ()));
 
       if (CORBA::is_nil (opponent))
       {

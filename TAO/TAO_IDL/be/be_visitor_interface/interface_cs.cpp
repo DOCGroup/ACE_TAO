@@ -101,6 +101,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "{" << be_idt_nl
           << "return ";
 
+
       if (node->is_abstract () || c != 0)
         {
           *os << "cdr << p;";
@@ -112,6 +113,32 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
       *os << be_uidt_nl
           << "}";
+    }
+
+  // If we are generating CORBA Policy we need to add some more methods
+  if (ACE_OS::strcmp (node->full_name (), "CORBA::Policy") == 0)
+    {
+      *os << be_nl
+          << "CORBA::Boolean" << be_nl
+          << "CORBA::Policy::_tao_encode (TAO_OutputCDR &)" << be_nl
+          << "{" << be_nl
+          << "  return false;" << be_nl
+          << "}" << be_nl << be_nl
+          << "CORBA::Boolean" << be_nl
+          << "CORBA::Policy::_tao_decode (TAO_InputCDR &)" << be_nl
+          << "{" << be_nl
+          << "  return false;" << be_nl
+          << "}" << be_nl << be_nl
+          << "TAO_Cached_Policy_Type" << be_nl
+          << "CORBA::Policy::_tao_cached_type (void) const" << be_nl
+          << "{" << be_nl
+            << "return TAO_CACHED_POLICY_UNCACHED;" << be_nl
+          << "}" << be_nl << be_nl
+          << "TAO_Policy_Scope" << be_nl
+          << "CORBA::Policy::_tao_scope (void) const" << be_nl
+          << "{" << be_nl
+          << "  return TAO_POLICY_DEFAULT_SCOPE;" << be_nl
+          << "}" << be_nl;
     }
 
   if (c == 0 && be_global->gen_ostream_operators ())

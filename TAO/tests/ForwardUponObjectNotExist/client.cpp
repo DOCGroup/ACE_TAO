@@ -6,9 +6,9 @@
 
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int nthreads = 1;
-int do_shutdown = 0;
+bool do_shutdown = 0;
 static const ACE_TCHAR corbaloc_prefix[] = ACE_TEXT("corbaloc:");
-int expected_object_not_exist = 0;
+bool expected_object_not_exist = false;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -20,7 +20,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'x':
-        do_shutdown = 1;
+        do_shutdown = true;
         break;
 
       case 'k':
@@ -54,22 +54,21 @@ parse_args (int argc, ACE_TCHAR *argv[])
 class Worker : public ACE_Task_Base
 {
 public:
+  /// Constructor
   Worker (CORBA::ORB_ptr orb);
-  // Constructor
 
+  /// The actual implementation of the test
   virtual void run_test (void);
-  // The actual implementation of the test
 
-  // = The Task_Base methods
   virtual int svc (void);
 
-  // Caught OBJECT_NOT_EXIST exception ?
-  int got_object_not_exist () const;
+  /// Caught OBJECT_NOT_EXIST exception ?
+  bool got_object_not_exist () const;
 
 private:
   CORBA::ORB_var orb_;
   // The ORB reference
-  int got_object_not_exist_;
+  bool got_object_not_exist_;
 };
 
 int
@@ -111,9 +110,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           server->shutdown ();
         }
 
-      orb->destroy ();
+      orb->shutdown ();
 
       worker.thr_mgr ()->wait ();
+
+      orb->destroy ();
 
       if (worker.got_object_not_exist () != expected_object_not_exist)
       {
@@ -139,7 +140,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 Worker::Worker (CORBA::ORB_ptr orb)
   :  orb_ (CORBA::ORB::_duplicate (orb)),
-     got_object_not_exist_ (0)
+     got_object_not_exist_ (false)
 {
 }
 
@@ -152,7 +153,7 @@ Worker::svc (void)
     }
   catch (const CORBA::OBJECT_NOT_EXIST &)
     {
-      got_object_not_exist_ = 1;
+      got_object_not_exist_ = true;
     }
   catch (...)
     {
@@ -187,7 +188,7 @@ Worker::run_test (void)
                 r));
 }
 
-int
+bool
 Worker::got_object_not_exist () const
 {
   return got_object_not_exist_;

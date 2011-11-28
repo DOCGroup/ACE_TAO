@@ -14,7 +14,7 @@
 #endif /* __ACE_INLINE__ */
 
 void
-DSI_Simple_Server::_dispatch (TAO_ServerRequest &request, void *)
+DSI_Simple_Server::_dispatch (TAO_ServerRequest &request, TAO::Portable_Server::Servant_Upcall *)
 {
   // No need to do any of this if the client isn't waiting.
   if (request.response_expected ())

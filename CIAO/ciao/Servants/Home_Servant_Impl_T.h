@@ -64,6 +64,8 @@ namespace CIAO
 
     virtual void update_component_map (PortableServer::ObjectId &oid);
 
+    void remove_components (void);
+
   protected:
     /// CIAO-specific operations.
     typename COMP_SVNT::_stub_ptr_type

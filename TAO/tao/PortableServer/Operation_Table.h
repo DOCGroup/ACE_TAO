@@ -35,8 +35,8 @@ namespace TAO
   namespace Portable_Server
   {
     class Servant_Upcall;
-  };
-};
+  }
+}
 
 typedef void (*TAO_Skeleton)(
     TAO_ServerRequest &,
