@@ -76,10 +76,13 @@ be_visitor_facet_ami_exh::visit_provides (be_provides *node)
   return 0;
 }
 int
-be_visitor_facet_ami_exh::visit_attribute (be_operation *node)
+be_visitor_facet_ami_exh::visit_attribute (be_attribute *node)
 {
-  // do something
-  return 0;
+  // Do something, do we come here?
+  os_ << be_nl_2 << "// TAO_IDL - Generated from be_visitor_facet_ami_exh::visit_attribute !!!!!!!!!!!!!!!!!!!!!!" << be_nl
+        << "// " << __FILE__ << ":" << __LINE__;
+  // Yes, we come here, to do :implement
+   return 0;
 }
 int
 be_visitor_facet_ami_exh::visit_operation (be_operation *node)
@@ -353,9 +356,25 @@ Facet_AMI_ExecH_Op_Attr_Generator::Facet_AMI_ExecH_Op_Attr_Generator (
 }
 
 int
-Facet_AMI_ExecH_Op_Attr_Generator::emit (be_interface * /*derived_interface */,
-                                        TAO_OutStream * /* os */,
+Facet_AMI_ExecH_Op_Attr_Generator::emit (be_interface * derived_interface,
+                                        TAO_OutStream *  os,
                                         be_interface * base_interface)
 {
+  /*be_visitor_context ctx;
+  ctx.stream (os);
+  ctx.state (TAO_CodeGen::TAO_ROOT_IH);
+  AST_Decl::NodeType nt = derived_interface->node_type();
+  if (nt == AST_Decl::NT_attr)
+    {
+      AST_Decl *d = derived_interface;
+      be_attribute *attr = be_attribute::narrow_from_decl (d);
+      be_visitor_attribute v (&ctx);
+      v.op_scope (derived_interface);
+      v.visit_attribute (attr);
+      return 0;
+
+    }
+  else
+*/
   return visitor_->visit_scope (base_interface);
 }
