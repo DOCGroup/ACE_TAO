@@ -8,14 +8,6 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_Countdown_Time::ACE_Countdown_Time (ACE_Time_Value *max_wait_time)
-  : max_wait_time_ (max_wait_time),
-    stopped_ (false),
-    gettimeofday_ (0)
-{
-  this->start ();
-}
-
 ACE_Countdown_Time::ACE_Countdown_Time (ACE_Time_Value *max_wait_time,
                                         ACE_Time_Value (*gettimeofday)(void))
 : max_wait_time_ (max_wait_time),
