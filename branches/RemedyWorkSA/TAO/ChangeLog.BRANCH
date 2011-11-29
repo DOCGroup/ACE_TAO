@@ -1,3 +1,7 @@
+Tue Nov 29 12:59:03 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+        * TAO_IDL/be/be_visitor_connector/facet_ami_exs.cpp:
+        Correct check nil pointer in facet operation
+
 Mon Nov 28 15:26:03 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
 
         * TAO_IDL/be/be_visitor_connector/executor_ami_exh.cpp:
