@@ -1,3 +1,18 @@
+Tue Nov 29 15:50:06 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/Timer_Queue_T.h:
+        * ace/Timer_Queue_T.inl:
+        
+          Added get_timer_method() to be able reuse timer method
+          setting.
+          
+        * ace/Countdown_Time.h:
+        * ace/Countdown_Time.inl:
+        * ace/Countdown_Time.cpp:
+        
+          Added option to use application defined timer like
+          timer queue.
+
 Mon Nov 28 14:29:45 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Log_Msg.h:
