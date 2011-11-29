@@ -305,14 +305,18 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       *os << be_nl_2;
     }
 
-  if (be_global->tc_support ())
+  if ((ACE_OS::strcmp (node->full_name (), "CORBA::InvalidPolicies") != 0) &&
+      (ACE_OS::strcmp (node->full_name (), "CORBA::PolicyError") != 0))
     {
-      *os << "// TAO extension - the virtual _type method." << be_nl;
-      *os << "::CORBA::TypeCode_ptr " << node->name ()
-          << "::_tao_type (void) const" << be_nl;
-      *os << "{" << be_idt_nl;
-      *os << "return ::" << node->tc_name () << ";" << be_uidt_nl;
-      *os << "}";
+      if (be_global->tc_support ())
+        {
+          *os << "// TAO extension - the virtual _type method." << be_nl;
+          *os << "::CORBA::TypeCode_ptr " << node->name ()
+              << "::_tao_type (void) const" << be_nl;
+          *os << "{" << be_idt_nl;
+          *os << "return ::" << node->tc_name () << ";" << be_uidt_nl;
+          *os << "}";
+        }
     }
 
   // Make sure we are generating to *C.cpp regardless of the above.
