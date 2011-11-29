@@ -1,3 +1,12 @@
+Tue Nov 29 09:54:05 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_exception/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
+          Layout and fixed msvc problems
+
+        * TAO_IDL/be/be_visitor_operation/direct_proxy_impl_ss.cpp:
+          First do a dynamic_cast and check the result before using it
+
 Mon Nov 28 20:36:09 UTC 2011  Adam Mitz  <mitza@ociweb.com>
 
         * tao/tao.mpc:
