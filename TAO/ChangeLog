@@ -1,3 +1,11 @@
+Tue Nov 29 12:15:13 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/tao.mpc:
+          Added PolicyC.inl
+
+        * TAO_IDL/be/be_visitor_interface/interface_ci.cpp:
+          Layout changes to the generated code
+
 Tue Nov 29 09:54:05 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_exception/any_op_cs.cpp:
