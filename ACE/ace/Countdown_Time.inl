@@ -17,4 +17,13 @@ ACE_Countdown_Time::update (void)
   this->start ();
 }
 
+ACE_INLINE ACE_Time_Value
+ACE_Countdown_Time::gettimeofday (void)
+{
+  if (this->gettimeofday_)
+    return this->gettimeofday_ ();
+  else
+    return ACE_OS::gettimeofday ();
+}
+
 ACE_END_VERSIONED_NAMESPACE_DECL
