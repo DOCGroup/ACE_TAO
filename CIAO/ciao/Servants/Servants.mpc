@@ -16,6 +16,7 @@ project(CIAO_Servant_Impl) : install, ciao_container_base_stub, ccm_svnt, ccm_se
      Home_Servant_Impl_T.cpp
      Connector_Servant_Impl_Utils_T.cpp
      Servant_Impl_Utils_T.cpp
+     Facet_Servant_Base_T.cpp
    }
 
    Header_Files {
@@ -25,10 +26,10 @@ project(CIAO_Servant_Impl) : install, ciao_container_base_stub, ccm_svnt, ccm_se
      Home_Servant_Impl_T.h
      Servant_Impl_Base.h
      StandardConfigurator_Impl.h
+     Facet_Servant_Base_T.h
    }
 
   specific {
     install_dir = ciao/Servants
   }
-
 }
