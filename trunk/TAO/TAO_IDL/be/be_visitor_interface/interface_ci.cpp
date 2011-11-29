@@ -91,9 +91,9 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
           << be_idt << be_idt_nl
           << "::IOP::IOR *ior," << be_nl
           << "TAO_ORB_Core *oc)" << be_uidt_nl;
-      *os << ": ::CORBA::Object (ior, oc)" << be_idt_nl;
+      *os << ": ::CORBA::Object (ior, oc)";
 
-      *os << be_uidt << be_uidt_nl
+      *os << be_uidt_nl
           << "{" << be_nl
           << "}" ;
     }

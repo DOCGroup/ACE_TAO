@@ -665,6 +665,7 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, taoid
 
   Inline_Files {
     GIOPC.inl
+    PolicyC.inl
     *.inl
   }
 
