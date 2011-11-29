@@ -1,5 +1,4 @@
 // $Id$
-#include "../../../../../../wb/ACE_wrappers/TAO/TAO_IDL/be_include/be_helper.h"
 
 be_visitor_operation_direct_proxy_impl_ss::
 be_visitor_operation_direct_proxy_impl_ss (be_visitor_context *ctx)
