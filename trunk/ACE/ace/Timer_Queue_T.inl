@@ -208,9 +208,15 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::gettimeofday (void)
 }
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK> ACE_INLINE void
-ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::gettimeofday (ACE_Time_Value (*gettimeofday)(void))
+ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::gettimeofday (TIMER_METHOD gettimeofday)
 {
   this->gettimeofday_ = gettimeofday;
+}
+
+template <class TYPE, class FUNCTOR, class ACE_LOCK> ACE_INLINE typename ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::TIMER_METHOD
+ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::get_timer_method (void) const
+{
+  return this->gettimeofday_;
 }
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK> ACE_INLINE FUNCTOR &

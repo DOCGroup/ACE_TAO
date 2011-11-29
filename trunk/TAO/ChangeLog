@@ -1,3 +1,21 @@
+Tue Nov 29 15:50:06 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        * tao/ORB_Core.cpp:
+        * tao/params.h:
+        * tao/params.inl:
+        * tao/params.cpp:
+        
+          Added -ORBUseHighresTimer ORB parameter switch to specifiy
+          if the ORB should use the HR timer for the reactor timer queue
+          and related objects (like countdowns). 
+
+        * tao/Transport.cpp:
+        * tao/Leader_Follower.cpp:
+        * tao/Messaging/Messaging_Queueing_Strategies.h:
+        * tao/Messaging/Messaging_Queueing_Strategies.cpp:
+        
+          Changes to support the new UseHighresTimer switch.
+
 Tue Nov 29 14:07:11 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Messaging/AMH_Skeletons.h:

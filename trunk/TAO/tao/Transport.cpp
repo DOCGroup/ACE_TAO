@@ -29,6 +29,7 @@
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/Reactor.h"
+#include "ace/Timer_Queue.h"
 #include "ace/os_include/sys/os_uio.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Countdown_Time.h"
@@ -1325,7 +1326,8 @@ TAO_Transport::check_buffering_constraints_i (TAO_Stub *stub, bool &must_flush)
       ACE_Event_Handler *eh = this->event_handler_i ();
       ACE_Reactor * const reactor = eh->reactor ();
       this->current_deadline_ = new_deadline;
-      ACE_Time_Value delay = new_deadline - ACE_OS::gettimeofday ();
+      ACE_Time_Value delay =
+          new_deadline - reactor->timer_queue ()->gettimeofday ();
 
       if (this->flush_timer_pending ())
         {

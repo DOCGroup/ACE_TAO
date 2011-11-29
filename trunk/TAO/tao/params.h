@@ -147,6 +147,10 @@ public:
   bool std_profile_components (void) const;
   void std_profile_components (bool x);
 
+  /// Use Highres Timer for all timer events and countdowns
+  bool use_highres_timer (void) const;
+  void use_highres_timer (bool x);
+
   /// Scheduling policy.
   /**
    * Scheduling policy specified by the user through the
@@ -338,6 +342,9 @@ private:
 
   /// If true then the standard OMG components are not generated.
   bool std_profile_components_;
+
+  /// Use Highres timer for all timer events and countdowns
+  bool use_highres_timer_;
 
   /// Scheduling policy.
   /**
