@@ -1,4 +1,5 @@
 // $Id$
+#include "../../../../../../wb/ACE_wrappers/TAO/TAO_IDL/be_include/be_helper.h"
 
 be_visitor_operation_direct_proxy_impl_ss::
 be_visitor_operation_direct_proxy_impl_ss (be_visitor_context *ctx)
@@ -88,6 +89,15 @@ be_visitor_operation_direct_proxy_impl_ss::visit_operation (
   *os << be_uidt_nl
       << "{" << be_idt_nl;
 
+  *os << intf->full_skel_name () << "_ptr _tao_ptr = " << be_idt_nl
+      << "dynamic_cast<" << intf->full_skel_name () << "_ptr> ("
+      << "servant);" << be_uidt_nl;
+
+  *os << "if (!_tao_ptr)" << be_idt_nl
+      << "{" << be_idt_nl
+      << "throw CORBA::INTERNAL ();" << be_uidt_nl
+      << "}" << be_uidt_nl << be_nl;
+
   if (!node->void_return_type ())
     {
       *os << "((TAO::Arg_Traits< ";
@@ -99,9 +109,7 @@ be_visitor_operation_direct_proxy_impl_ss::visit_operation (
       *os << ">::ret_val *) args[0])->arg () =" << be_idt_nl;
     }
 
-  *os << "dynamic_cast<" << be_idt
-      << intf->full_skel_name () << "_ptr>" << be_nl << "("
-      << "servant)" << be_uidt_nl;
+  *os << "_tao_ptr";
 
   be_visitor_context ctx;
 
