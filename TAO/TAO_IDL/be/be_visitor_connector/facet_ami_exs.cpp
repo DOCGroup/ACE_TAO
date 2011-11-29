@@ -682,13 +682,11 @@ be_visitor_facet_ami_exs::gen_facet_executor_sync_op (be_operation *node)
       << "this->context_->get_connection_ami4ccm_port_ami4ccm_uses ();"
       << be_uidt_nl << be_nl;
 
-  os_ << "if (! ::CORBA::is_nil (receptacle_objref.in ()))"
+  os_ << "if (::CORBA::is_nil (receptacle_objref.in ()))"
       << be_idt_nl
       << "{" << be_idt_nl
       << "throw ::CORBA::INV_OBJREF ();" << be_uidt_nl
-      << "}" <<  be_uidt_nl
-      << "else" << be_idt_nl
-      << "{" << be_idt_nl;
+      << "}" <<  be_uidt_nl << be_nl;
   if (ret)
     {
       os_  << "return " ;
@@ -704,19 +702,18 @@ be_visitor_facet_ami_exs::gen_facet_executor_sync_op (be_operation *node)
        i.next (), ++index)
     {
       AST_Decl *d = i.item ();
-     if (index == 0UL)
+      if (index == 0UL)
         {
           os_ << d->local_name ();
-      }
-   else
-     {
+        }
+     else
+        {
           os_ << "," << be_nl
           << d->local_name ();
-     }
+        }
     }
 
-  os_ << ");" << be_uidt << be_uidt << be_uidt_nl
-      << "}" << be_uidt << be_uidt << be_nl;
+  os_ << ");" << be_uidt << be_uidt << be_uidt_nl;
   os_ << "}";
 
   return 0;
