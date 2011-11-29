@@ -23,10 +23,11 @@ static const int DEFAULT_START_LIMIT = 1;
 static const int PING_RETRY_SCHEDULE[] = {0, 10, 100, 500, 1000, 1000, 1000, 1000, 5000, 5000};
 
 static const ACE_Time_Value DEFAULT_SERVER_TIMEOUT (0, 10 * 1000); // 10ms
-// We want to give shutdown a little more time to work, so that we
-// can guarantee to the tao_imr utility that it has shutdown. The tao_imr
-// utility prints a different message depending on whether shutdown succeeds
-// or times out.
+
+/// We want to give shutdown a little more time to work, so that we
+/// can guarantee to the tao_imr utility that it has shutdown. The tao_imr
+/// utility prints a different message depending on whether shutdown succeeds
+/// or times out.
 static const ACE_Time_Value DEFAULT_SHUTDOWN_TIMEOUT (0, 5000 * 1000);
 
 static PortableServer::POA_ptr
@@ -111,7 +112,7 @@ ImR_Locator_i::init_with_orb (CORBA::ORB_ptr orb, Options& opts)
   obj = this->imr_poa_->id_to_reference (id.in ());
   if (startup_timeout_ > ACE_Time_Value::zero)
     {
-      obj = set_timeout_policy (obj.in (), startup_timeout_);
+      obj = this->set_timeout_policy (obj.in (), startup_timeout_);
     }
   waiter_ = ImplementationRepository::AsyncStartupWaiter::_narrow (obj.in ());
 
@@ -923,7 +924,7 @@ ImR_Locator_i::shutdown_server (const char* server)
       throw ImplementationRepository::NotFound ();
     }
 
-  connect_server (*info);
+  this->connect_server (*info);
 
   if (CORBA::is_nil (info->server.in ()))
     {
@@ -934,7 +935,7 @@ ImR_Locator_i::shutdown_server (const char* server)
 
   try
     {
-      CORBA::Object_var obj = set_timeout_policy (info->server.in (), DEFAULT_SHUTDOWN_TIMEOUT);
+      CORBA::Object_var obj = this->set_timeout_policy (info->server.in (), DEFAULT_SHUTDOWN_TIMEOUT);
       ImplementationRepository::ServerObject_var server =
         ImplementationRepository::ServerObject::_unchecked_narrow (obj.in ());
       server->shutdown ();
@@ -1087,7 +1088,7 @@ ImR_Locator_i::server_is_shutting_down (const char* server)
 
   info->reset ();
 
-  int err = this->repository_.update_server (*info);
+  int const err = this->repository_.update_server (*info);
   ACE_ASSERT (err == 0);
   ACE_UNUSED_ARG (err);
 }
@@ -1110,7 +1111,7 @@ ImR_Locator_i::find (const char* server,
     {
       ACE_NEW_THROW_EX (imr_info, ImplementationRepository::ServerInformation, CORBA::NO_MEMORY ());
       imr_info->startup.activation= ImplementationRepository::NORMAL;
-      if (debug_ > 1)
+      if (this->debug_ > 1)
         ACE_DEBUG ((LM_DEBUG, "ImR: Cannot find server <%C>\n", server));
     }
 }
@@ -1214,7 +1215,7 @@ ImR_Locator_i::connect_activator (Activator_Info& info)
 
       if (startup_timeout_ > ACE_Time_Value::zero)
         {
-          obj = set_timeout_policy (obj.in (), startup_timeout_);
+          obj = this->set_timeout_policy (obj.in (), startup_timeout_);
         }
 
       info.activator =
@@ -1299,7 +1300,7 @@ ImR_Locator_i::connect_server (Server_Info& info)
           return;
         }
 
-      obj = set_timeout_policy (obj.in (), DEFAULT_SERVER_TIMEOUT);
+      obj = this->set_timeout_policy (obj.in (), DEFAULT_SERVER_TIMEOUT);
 
       info.server =
         ImplementationRepository::ServerObject::_unchecked_narrow (obj.in ());
@@ -1414,7 +1415,7 @@ ImR_Locator_i::is_alive_i (Server_Info& info)
       return 1;
     }
 
-  connect_server (info);
+  this->connect_server (info);
 
   if (CORBA::is_nil (info.server.in ()))
     {

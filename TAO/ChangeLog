@@ -1,3 +1,11 @@
+Tue Nov 29 12:21:12 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Enable some more tests in the static configuration
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+          Doxygen changes and small code improvements
+
 Tue Nov 29 12:15:13 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/tao.mpc:
