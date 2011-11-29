@@ -39,13 +39,10 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Countdown_Time : private ACE_Copy_Disabled
 {
 public:
-  /// Cache the @a max_wait_time and call @c start().
-  ACE_Countdown_Time (ACE_Time_Value *max_wait_time);
-
   /// Cache the @a max_wait_time and call @c start(), use
   /// application supplied gettimeofday function.
-  ACE_Countdown_Time (ACE_Time_Value *max_wait_time,
-                      ACE_Time_Value (*gettimeofday)(void));
+  explicit ACE_Countdown_Time (ACE_Time_Value *max_wait_time,
+                               ACE_Time_Value (*gettimeofday)(void) = 0);
 
   /// Destructor, makes sure the max_wait_time that got passed as pointer
   /// to the constructor is updated with the time elapsed.
