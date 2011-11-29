@@ -30,14 +30,14 @@
 
 #include /**/ "ace/pre.h"
 
+#include "tao/PortableServer/Upcall_Command.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
 #include "tao/Messaging/messaging_export.h"
 
-#include "tao/PortableServer/Upcall_Command.h"
 #include "tao/PortableServer/Upcall_Wrapper.h"
 #include "tao/operation_details.h"
 
