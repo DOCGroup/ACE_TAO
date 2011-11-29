@@ -1,3 +1,9 @@
+Tue Nov 29 14:07:11 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Messaging/AMH_Skeletons.h:
+        * tao/PortableServer/SUpcall_commands.h:
+          Fixed pragma once warnings
+
 Tue Nov 29 12:21:12 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
