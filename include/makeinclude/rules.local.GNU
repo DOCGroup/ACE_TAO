@@ -467,19 +467,7 @@ ifeq ($(findstring depgen.pl, $(notdir $(DEPGEN))), depgen.pl)
   endif
 endif
 
-depend_idl.local: $(MAKEFILE) idl_stubs.local
-ifdef IDL_DEPS
-	@$(RM) $(DEPENDENCY_FILE)_idl.old
-	@cp $(DEPENDENCY_FILE) $(DEPENDENCY_FILE)_idl.old
-	$(DEPGEN_ENV) $(DEPGEN) -A $(DEPEND_CMD_ARGS) -f $(DEPENDENCY_FILE) \
-	$(TAO_IDLFLAGS) -a -t gnuidl -DMAKEDEPEND $(IDL_DEPS)
-	@if cmp -s $(DEPENDENCY_FILE) $(DEPENDENCY_FILE)_idl.old ;\
-	then echo "GNUmakefile idl dependencies unchanged." ;\
-	else \
-		echo "GNUmakefile idl dependencies updated." ;\
-	fi ;\
-	$(RM) $(DEPENDENCY_FILE)_idl.old ;
-endif
+depend_idl.local: $(MAKEFILE) idl_stubs.local incremental_depend_idl
 
 depend.local: $(MAKEFILE) idl_stubs.local
 	@$(RM) $(DEPENDENCY_FILE).old

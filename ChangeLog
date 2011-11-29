@@ -1,3 +1,15 @@
+Tue Nov 29 18:42:09 UTC 2011  Chip Jones  <jonesc@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Changes to support incremental generation of IDL 
+          dependencies. This is necessary since IDL files
+          in the same project may not have the same flags.
+
+        * include/makeinclude/rules.local.GNU:
+
+          Added incremental IDL dependency rule.
+
 Wed Nov  9 17:06:46 UTC 2011  Chip Jones  <jonesc@ociweb.com>
 
         * include/makeinclude/rules.local.GNU:
