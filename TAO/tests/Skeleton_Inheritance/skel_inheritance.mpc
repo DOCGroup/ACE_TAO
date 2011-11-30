@@ -8,7 +8,7 @@ project(idl_one_gen): taoidldefaults {
               -Wb,stub_export_include=skeleton_inheritance_stub_1_export.h \
               -Wb,skel_export_macro=SKELETON_INHERITANCE_SKEL_1_Export \
               -Wb,skel_export_include=skeleton_inheritance_skel_1_export.h \
-              -Gxhst -Gxhsk
+              -Gxhst -Gxhsk -Gd
 
   IDL_Files {
     idl_1.idl
@@ -22,7 +22,7 @@ project(idl_two_gen): taoidldefaults {
               -Wb,stub_export_include=skeleton_inheritance_stub_2_export.h \
               -Wb,skel_export_macro=SKELETON_INHERITANCE_SKEL_2_Export \
               -Wb,skel_export_include=skeleton_inheritance_skel_2_export.h \
-              -Gxhst -Gxhsk
+              -Gxhst -Gxhsk -Gd
 
   IDL_Files {
     idl_2.idl
@@ -36,7 +36,7 @@ project(idl_three_gen): taoidldefaults {
               -Wb,stub_export_include=skeleton_inheritance_stub_3_export.h \
               -Wb,skel_export_macro=SKELETON_INHERITANCE_SKEL_3_Export \
               -Wb,skel_export_include=skeleton_inheritance_skel_3_export.h \
-              -Gxhst -Gxhsk
+              -Gxhst -Gxhsk -Gd
 
   IDL_Files {
     idl_3.idl

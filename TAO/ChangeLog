@@ -1,3 +1,76 @@
+Tue Nov 29 15:50:06 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        * tao/ORB_Core.cpp:
+        * tao/params.h:
+        * tao/params.inl:
+        * tao/params.cpp:
+        
+          Added -ORBUseHighresTimer ORB parameter switch to specifiy
+          if the ORB should use the HR timer for the reactor timer queue
+          and related objects (like countdowns). 
+
+        * tao/Transport.cpp:
+        * tao/Leader_Follower.cpp:
+        * tao/Messaging/Messaging_Queueing_Strategies.h:
+        * tao/Messaging/Messaging_Queueing_Strategies.cpp:
+        
+          Changes to support the new UseHighresTimer switch.
+
+Tue Nov 29 14:07:11 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Messaging/AMH_Skeletons.h:
+        * tao/PortableServer/SUpcall_commands.h:
+          Fixed pragma once warnings
+
+Tue Nov 29 12:21:12 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Enable some more tests in the static configuration
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+          Doxygen changes and small code improvements
+
+Tue Nov 29 12:15:13 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/tao.mpc:
+          Added PolicyC.inl
+
+        * TAO_IDL/be/be_visitor_interface/interface_ci.cpp:
+          Layout changes to the generated code
+
+Tue Nov 29 09:54:05 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_exception/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
+          Layout and fixed msvc problems
+
+        * TAO_IDL/be/be_visitor_operation/direct_proxy_impl_ss.cpp:
+          First do a dynamic_cast and check the result before using it
+
+Mon Nov 28 20:36:09 UTC 2011  Adam Mitz  <mitza@ociweb.com>
+
+        * tao/tao.mpc:
+
+          Set skel_export_macro and skel_export_include for Policy.pidl.
+
+Mon Nov 28 19:14:23 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/tao.mpc:
+          Policy.pidl shouldn't use -Sorb
+
+Mon Nov 28 15:41:10 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_visitor_interface/direct_proxy_impl_sh.cpp:
+        * TAO_IDL/be_include/be_interface.h:
+          Reduced amount of static methods generated for direct collocation.
+          Next step is to move the direct collocation static methods into
+          the regular skeleton, there is really no need for its own
+          special class hierarchy
+
+        * tests/Skeleton_Inheritance/skel_inheritance.mpc:
+          Enable direct collocation
+
 Mon Nov 28 14:29:45 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ImR_Client/ImR_Client.cpp:
