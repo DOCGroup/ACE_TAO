@@ -1,0 +1,31 @@
+/**
+ * @file Test.idl
+ *
+ * $Id$
+ *
+ * @author Carlos O'Ryan <coryan@atdesk.com>
+ */
+module Foo
+{
+  module Bar
+  {
+    interface A
+    {
+      long op1();
+      long op2();
+    };
+
+    interface B
+    {
+      long op3();
+    };
+  };
+};
+
+module Baz
+{
+  interface C : Foo::Bar::A, Foo::Bar::B
+  {
+    long op4();
+  };
+};

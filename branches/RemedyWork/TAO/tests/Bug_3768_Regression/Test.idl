@@ -1,0 +1,28 @@
+//
+// $Id: Test.idl
+//
+
+/// Put the interfaces in a module, to avoid global namespace pollution
+module Test
+{
+  /// Interface for the client, which is called back from the server
+  interface TestCallback
+  {
+    /// Called to cause the client to start worker threads to handle
+    /// further calls: does not return
+    void start_threads_and_block ();
+
+    /// Called to check that the client is able to perform CORBA work
+    void test_call ();
+
+    /// A method to stop the client waiting for any more calls
+    oneway void shutdown ();
+  };
+
+  /// Interface for the server, called from the client to start the test
+  interface TestServer
+  {
+    /// Pass the callback object to the server, which the server then calls on
+    void pass_callback (in TestCallback test);
+  };
+};

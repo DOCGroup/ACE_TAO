@@ -1,0 +1,37 @@
+// $Id$
+
+#ifndef BASE_IDL
+#define BASE_IDL
+
+#include <Components.idl>
+
+#pragma ciao lem "BaseE.idl"
+
+module Inherited
+{
+  interface base_interface {
+    void do_base ();
+
+    attribute string str_base_interface;
+  };
+
+  // TODO: derive this interface from a base interface...
+  interface derived_interface {
+    void do_derived ();
+
+    readonly attribute string str_derived_interface;
+  };
+};
+
+module Inherited
+{
+   component Base_comp
+   {
+      provides Inherited::base_interface prov_base;
+      uses     Inherited::base_interface uses_base;
+
+      attribute long base;
+   };
+};
+
+#endif
