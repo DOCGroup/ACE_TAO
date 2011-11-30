@@ -34,7 +34,11 @@ USER VISIBLE CHANGES BETWEEN CIAO-1.0.5 and CIAO-1.1.0
   direct collocation does increase the size of the generated code
 
 . All facet servants are now generated in the new _svnt_T.{h,cpp} files. This
-  is a first step in more refactoring in the CIAO servants
+  is a first step in more refactoring in the CIAO servants. Together with the
+  TAO skeleton refactoring the skeleton for the Null_Component example decreased
+  from 40206 bytes to 24971 bytes, the generated servant from 56959 bytes to
+  54933 bytes. The skeleton for the related Null_Interface reduced from
+  9559 bytes to 4526 bytes.
 
 USER VISIBLE CHANGES BETWEEN CIAO-1.0.4 and CIAO-1.0.5
 =======================================================
