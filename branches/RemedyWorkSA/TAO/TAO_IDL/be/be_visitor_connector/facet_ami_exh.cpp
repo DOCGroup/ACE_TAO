@@ -80,8 +80,6 @@ be_visitor_facet_ami_exh::visit_provides (be_provides *node)
 int
 be_visitor_facet_ami_exh::visit_attribute (be_attribute *node)
 {
-  os_ << be_nl_2 << "// TAO_IDL - Generated from be_visitor_facet_ami_exh::visit_attribute" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
 
   be_operation get_op (node->field_type (),
                        AST_Operation::OP_noflags,
@@ -160,8 +158,6 @@ be_visitor_facet_ami_exh::visit_operation (be_operation *node)
     {
       return  0;
     }
-  os_ << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
 
   /// We're generating implementation operation declarations,
   /// so we can just use this visitor.

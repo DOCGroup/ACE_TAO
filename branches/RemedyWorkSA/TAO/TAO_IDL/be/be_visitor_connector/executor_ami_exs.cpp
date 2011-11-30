@@ -36,7 +36,6 @@ be_visitor_executor_ami_exs::visit_connector (be_connector *node)
   os_ << be_nl_2
       << class_name << "::"
       << class_name << " (void)" << be_idt_nl;
-//      << ": facet_exec_ (new ";
 
   /// The port is the only item in the connector's scope.
   UTL_ScopeActiveIterator j (node, UTL_Scope::IK_decls);
@@ -55,22 +54,22 @@ be_visitor_executor_ami_exs::visit_connector (be_connector *node)
       if (p != 0)
         {
           if (first)
-      {
-       os_  << ": facet_exec_" << port_nr << "_ (new ";
-       first = false;
-      }
-      else
-      {
-       os_  << ", facet_exec_" << port_nr << "_ (new ";
-      }
-          os_ << p->provides_type ()->local_name ();
-          os_ << suffix << " ())" << be_uidt_nl;
-         port_nr++;
-
+            {
+             os_  << ": facet_exec_" << port_nr << "_ (new ";
+             os_ << p->provides_type ()->local_name ();
+             os_ << suffix << " ())" << be_nl;
+             first = false;
+            }
+          else
+            {
+             os_  << ", facet_exec_" << port_nr << "_ (new ";
+             os_ << p->provides_type ()->local_name ();
+             os_ << suffix << " ())" << be_uidt_nl;
+            }
+          port_nr++;
         }
     }
 
-//  os_ << suffix << " ())" << be_uidt_nl
   os_ << "{" << be_nl
       << "}";
 
@@ -80,9 +79,10 @@ be_visitor_executor_ami_exs::visit_connector (be_connector *node)
       << "{" << be_idt_nl;
   for (int i = 0; i < port_nr; i ++)
     {
-      os_ << "::CORBA::release (this->facet_exec_" << i <<"_);" << be_uidt_nl;
+      os_ << "::CORBA::release (this->facet_exec_" << i <<"_);" << be_nl;
     }
-  os_ << "}";
+  os_ << be_uidt_nl
+      << "}";
 
   if (this->visit_scope (node) == -1)
     {

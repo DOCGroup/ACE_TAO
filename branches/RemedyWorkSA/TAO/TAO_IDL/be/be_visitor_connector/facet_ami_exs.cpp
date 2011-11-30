@@ -43,8 +43,6 @@ be_visitor_facet_ami_exs::visit_component (be_component *node)
 int
 be_visitor_facet_ami_exs::visit_provides (be_provides *node)
 {
- os_ << be_nl_2 << "// TAO_IDL - Generated from visit_provides" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
 
   this->iface_ =
     be_interface::narrow_from_decl (node->provides_type ());
@@ -74,8 +72,6 @@ be_visitor_facet_ami_exs::visit_provides (be_provides *node)
 int
 be_visitor_facet_ami_exs::visit_attribute (be_attribute *node)
 {
-  os_ << be_nl_2 << "// TAO_IDL - Generated from be_visitor_facet_ami_exs::visit_attribute" << be_nl
-        << "// " << __FILE__ << ":" << __LINE__;
 
   be_operation get_op (node->field_type (),
                          AST_Operation::OP_noflags,
@@ -242,8 +238,6 @@ int
 be_visitor_facet_ami_exs::gen_reply_handler_class (void)
 {
   this->for_reply_handler_ = true;
- os_ << be_nl_2 << "// TAO_IDL - Generated from gen_reply_handler_class" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
 
   this->init ();
   if (this->sync_)
@@ -335,8 +329,6 @@ be_visitor_facet_ami_exs::gen_reply_handler_class (void)
 int
 be_visitor_facet_ami_exs::gen_facet_executor_class (void)
 {
- os_ << be_nl_2 << "// TAO_IDL - Generated from gen_facet_executor_class" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
 
   this->for_reply_handler_ = false;
 
@@ -461,9 +453,6 @@ be_visitor_facet_ami_exs::gen_facet_executor_class (void)
 int
 be_visitor_facet_ami_exs::gen_reply_hander_op (be_operation *node)
 {
-  os_ << be_nl_2 << "// TAO_IDL - Generated from gen_reply_hander_op" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
-
 
   os_ << be_nl_2
       << "void" << be_nl
@@ -550,8 +539,6 @@ be_visitor_facet_ami_exs::gen_reply_hander_op (be_operation *node)
 int
 be_visitor_facet_ami_exs::gen_facet_executor_op (be_operation *node)
 {
-  os_ << be_nl_2 << "// TAO_IDL - Generated from gen_facet_executor_op" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
 
   // do not handle not sendc operations.
   if (ACE_OS::strstr (node->local_name()->get_string (), "sendc_")== 0)
@@ -662,12 +649,11 @@ be_visitor_facet_ami_exs::gen_facet_executor_op (be_operation *node)
 int
 be_visitor_facet_ami_exs::gen_facet_executor_sync_op (be_operation *node)
 {
-   os_ << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2 ;
 
    if (node->is_sendc_ami())
      return 0;
 
+   os_ << be_nl_2;
   // generate the return type.
   be_type *bt = be_type::narrow_from_decl (node->return_type ());
 

@@ -1,3 +1,9 @@
+Wed Nov 30 16:45:10 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_connector/executor_ami_exs.cpp:
+        * TAO_IDL/be/be_visitor_connector/facet_ami_exh.cpp:
+        * TAO_IDL/be/be_visitor_connector/facet_ami_exs.cpp:
+
 Wed Nov 30 14:19:10 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * TAO_IDL/be/be_codegen.cpp:
