@@ -1,6 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-feature(ccm_direct_collocation) {
-  avoids += ccm_direct_collocation
-}
