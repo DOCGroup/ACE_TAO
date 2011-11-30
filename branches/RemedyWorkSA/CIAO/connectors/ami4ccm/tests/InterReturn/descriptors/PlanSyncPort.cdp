@@ -246,23 +246,25 @@
       <instance xmi:idref="InterReturnT.ComponentImplementations.InterReturnTImplementation.InterReturnT.AMI" />
     </internalEndpoint>
   </connection>
-
-  <connection>
+ <connection>
     <name>synch_foo_connection</name>
-    <internalEndpoint>
-      <portName>do_my_foo</portName>
-      <provider>true</provider>
-      <kind>Facet</kind>
-      <instance xmi:idref="InterReturnT.ComponentImplementations.InterReturnTImplementation.InterReturnT.Receiver" />
-    </internalEndpoint>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
     <internalEndpoint>
       <portName>run_my_foo</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="InterReturnT.ComponentImplementations.InterReturnTImplementation.InterReturnT.Sender" />
     </internalEndpoint>
+    <internalEndpoint>
+      <portName>ami4ccm_port_ami4ccm_sync_provides</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="InterReturnT.ComponentImplementations.InterReturnTImplementation.InterReturnT.AMI" />
+    </internalEndpoint>
   </connection>
-
 
   <artifact xmi:id="InterReturnT_AMI_SvntArtifact">
     <name>InterReturnT.ImplementationArtifacts.AMIArtifacts.AMI_svnt</name>
