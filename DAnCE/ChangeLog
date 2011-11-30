@@ -1,3 +1,9 @@
+Wed Nov 30 11:31:40 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * dance/DAnCE_Core.mpc:
+        * dance/Deployment/Deployment_Core.mpc:
+          Remove S.inl files
+
 Wed Nov 23 17:27:01 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tools/Domain_Validator/CORBA/CORBA_Domain_Validator_impl.cpp:

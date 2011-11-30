@@ -307,7 +307,6 @@ project(Deployment_AM_skel) : install, dance_output, dance_deployment_skel, danc
   }
 
   Inline_Files {
-    Deployment_ApplicationManagerS.inl
   }
 
   Header_Files {
@@ -357,7 +356,6 @@ project(Deployment_DAM_skel) : install, dance_output, dance_applicationmanager_s
   }
 
   Inline_Files {
-    Deployment_DomainApplicationManagerS.inl
   }
 
   specific {
@@ -440,7 +438,6 @@ project(Deployment_DomainApplication_skel) : install, dance_output, dance_deploy
   }
 
   Inline_Files {
-    Deployment_DomainApplicationS.inl
   }
 
   specific {
@@ -484,7 +481,6 @@ project(Deployment_NAM_skel) : install, dance_output, dance_applicationmanager_s
   }
 
   Inline_Files {
-    Deployment_NodeApplicationManagerS.inl
   }
 
   specific {
@@ -528,7 +524,6 @@ project(Deployment_NodeManager_skel) : install, dance_output, dance_deployment_s
   }
 
   Inline_Files {
-    Deployment_NodeManagerS.inl
   }
 
   specific {
@@ -611,7 +606,6 @@ project(Deployment_RepositoryManager_skel) : install, dance_output, dance_deploy
   }
 
   Inline_Files {
-    Deployment_RepositoryManagerS.inl
   }
 
   specific {
@@ -655,7 +649,6 @@ project(Deployment_NodeApplication_skel) : install, dance_output, dance_deployme
   }
 
   Inline_Files {
-    Deployment_NodeApplicationS.inl
   }
 
   specific {
@@ -676,13 +669,12 @@ project(Deployment_skel) : install, dance_deployment_stub, dance_output, danceli
     Deployment_ApplicationS.cpp
     Deployment_ResourceCommitmentManagerS.cpp
   }
-  
+
   Header_Files {
     Deployment_skel_export.h
   }
 
   Inline_Files {
-    Deployment_ApplicationS.inl
   }
 
   specific {
