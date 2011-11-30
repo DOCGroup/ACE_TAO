@@ -1,3 +1,8 @@
+Wed Nov 30 11:32:44 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * dance/LocalityManager/Scheduler/Plugin_Manager.cpp:
+          Initialise pointer with 0
+
 Wed Nov 30 11:31:40 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * dance/DAnCE_Core.mpc:
