@@ -3371,9 +3371,9 @@ TAO_CodeGen::gen_exec_idl_includes (void)
 
       const char *exec_idl_fname =
         be_global->be_get_ciao_exec_idl_fname (true);
-      //mh  cmp Base/HelloE.idl with Hello.idl ?
+
       bool skip_incl = false;
-          // special case for ami4ccm, if xxxE.idl. don't inlude xxxAE.idl.
+      // special case for ami4ccm, if xxxE.idl. don't include xxxAE.idl.
       char *exe_idl_fname = ACE_OS::strdup(exec_idl_fname);
       char * base = ACE_OS::strstr(exe_idl_fname, "E.idl");
       if (base != 0)

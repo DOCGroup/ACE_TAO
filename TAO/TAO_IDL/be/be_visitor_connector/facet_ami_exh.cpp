@@ -12,6 +12,8 @@
  *  @author Jeff Parsons
  */
 //=============================================================================
+#include "ast_generator.h"
+#include "be_predefined_type.h"
 
 be_visitor_facet_ami_exh::be_visitor_facet_ami_exh (
       be_visitor_context *ctx)
@@ -78,12 +80,70 @@ be_visitor_facet_ami_exh::visit_provides (be_provides *node)
 int
 be_visitor_facet_ami_exh::visit_attribute (be_attribute *node)
 {
-  // Do something, do we come here?
-  os_ << be_nl_2 << "// TAO_IDL - Generated from be_visitor_facet_ami_exh::visit_attribute !!!!!!!!!!!!!!!!!!!!!!" << be_nl
-        << "// " << __FILE__ << ":" << __LINE__;
-  // Yes, we come here, to do :implement
-   return 0;
+  os_ << be_nl_2 << "// TAO_IDL - Generated from be_visitor_facet_ami_exh::visit_attribute" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
+
+  be_operation get_op (node->field_type (),
+                       AST_Operation::OP_noflags,
+                       node->name (),
+                       0,
+                       0);
+
+  get_op.set_name ((UTL_IdList *) node->name ()->copy ());
+  if (this->visit_operation (&get_op) == -1)
+    {
+       ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_facet_ami_exh::"
+                             "visit_attribute - "
+                             "codegen for get_attribute failed\n"),
+                            -1);
+    }
+  get_op.destroy ();
+
+  if (node->readonly ())
+    {
+      // Nothing else to do.
+      return 0;
+    }
+  Identifier id ("void");
+  UTL_ScopedName sn (&id, 0);
+
+  // Create the return type, which is "void"
+  be_predefined_type rt (AST_PredefinedType::PT_void, &sn);
+
+  // Argument type is the same as the attribute type.
+  AST_Argument *arg =
+    idl_global->gen ()->create_argument (AST_Argument::dir_IN,
+                                         node->field_type (),
+                                         node->name ());
+
+  arg->set_name ((UTL_IdList *) node->name ()->copy ());
+
+  // Create the operation.
+  be_operation set_op (&rt,
+                       AST_Operation::OP_noflags,
+                       node->name (),
+                       0,
+                       0);
+
+  set_op.set_name ((UTL_IdList *) node->name ()->copy ());
+  set_op.be_add_argument (arg);
+
+  if (this->visit_operation (&set_op) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                        "(%N:%l) be_visitor_facet_ami_exh::"
+                        "visit_attribute - "
+                        "codegen for set_attribute failed\n"),
+                        -1);
+    }
+
+    set_op.destroy ();
+    rt.destroy ();
+
+  return 0;
 }
+
 int
 be_visitor_facet_ami_exh::visit_operation (be_operation *node)
 {
@@ -94,7 +154,9 @@ be_visitor_facet_ami_exh::visit_operation (be_operation *node)
   /// connector. We want to skip the CCM-related operations
   /// that were added to the connector since it's a component.
   /// We want only the facet interface operations.
-  if (d->node_type () != AST_Decl::NT_interface)
+  /// In case of sync. attribute operations we have a node_type NT_root
+  if ((d->node_type () != AST_Decl::NT_interface) &&
+      (d->node_type () != AST_Decl::NT_root))
     {
       return  0;
     }
@@ -103,8 +165,6 @@ be_visitor_facet_ami_exh::visit_operation (be_operation *node)
 
   /// We're generating implementation operation declarations,
   /// so we can just use this visitor.
-  if (this->sync_)
-    this->ctx_->state (TAO_CodeGen::TAO_ROOT_IH);
   be_visitor_operation_ih v (this->ctx_);
 
   if (v.visit_operation (node) == -1)
@@ -237,16 +297,6 @@ be_visitor_facet_ami_exh::gen_facet_executor_class (void)
       << "virtual ~" << iface_name << suffix
       << " (void);";
 
- /* if (this->visit_scope (this->iface_) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_connector_ami_exh")
-                         ACE_TEXT ("::gen_facet_executor_class - ")
-                         ACE_TEXT ("visit_scope() on sendc ")
-                         ACE_TEXT ("interface failed\n")),
-                        -1);
-    }
-*/
 
   ACE_CString handler_str (
   ScopeAsDecl (this->iface_->defined_in ())->full_name ());
@@ -268,7 +318,6 @@ be_visitor_facet_ami_exh::gen_facet_executor_class (void)
      sn->destroy ();
      delete sn;
      sn = 0;
-
 
      be_interface *sync_iface =
      be_interface::narrow_from_decl (d);
@@ -356,25 +405,9 @@ Facet_AMI_ExecH_Op_Attr_Generator::Facet_AMI_ExecH_Op_Attr_Generator (
 }
 
 int
-Facet_AMI_ExecH_Op_Attr_Generator::emit (be_interface * derived_interface,
-                                        TAO_OutStream *  os,
+Facet_AMI_ExecH_Op_Attr_Generator::emit (be_interface * /*derived_interface*/,
+                                        TAO_OutStream *  /*os*/,
                                         be_interface * base_interface)
 {
-  /*be_visitor_context ctx;
-  ctx.stream (os);
-  ctx.state (TAO_CodeGen::TAO_ROOT_IH);
-  AST_Decl::NodeType nt = derived_interface->node_type();
-  if (nt == AST_Decl::NT_attr)
-    {
-      AST_Decl *d = derived_interface;
-      be_attribute *attr = be_attribute::narrow_from_decl (d);
-      be_visitor_attribute v (&ctx);
-      v.op_scope (derived_interface);
-      v.visit_attribute (attr);
-      return 0;
-
-    }
-  else
-*/
   return visitor_->visit_scope (base_interface);
 }
