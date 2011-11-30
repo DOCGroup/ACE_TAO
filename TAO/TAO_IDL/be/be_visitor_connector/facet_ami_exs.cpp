@@ -143,7 +143,6 @@ be_visitor_facet_ami_exs::visit_operation (be_operation *node)
 {
   AST_Decl *d =
     ScopeAsDecl (node->defined_in ());
-  os_ << "// visit_operatio "  << be_nl;
 
   /// We end up here also from the visit_scope() call on the
   /// connector. We want to skip the CCM-related operations
