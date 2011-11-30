@@ -1,3 +1,11 @@
+Wed Nov 30 16:11:09 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
+
+        * connectors/ami4ccm/tests/InterReturn/Sender/InterReturnT_Sender_exec.cpp:
+        * connectors/ami4ccm/tests/InterReturn/descriptors/Plan.cdp:
+        * connectors/ami4ccm/tests/InterReturn/descriptors/PlanSyncPort.cdp:
+        * connectors/ami4ccm/tests/InterReturn/descriptors/run_test.pl:
+        Run test also with sync port on AMI connector.
+
 Mon Nov 21 15:10:06 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * bin/ciao_tests.lst:
