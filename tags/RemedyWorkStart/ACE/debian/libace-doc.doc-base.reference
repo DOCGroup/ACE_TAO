@@ -1,0 +1,10 @@
+Document: libace-reference
+Title: ACE online documentation
+Author: Douglas C. Schmidt and his research group
+Abstract: This set of documents provides help for developing applications
+ using the ACE, TAO and CIAO libraries.
+Section: Programming/C++
+
+Format: html
+Index: /usr/share/doc/libace-doc/index.html
+Files: /usr/share/doc/libace-doc/*.html

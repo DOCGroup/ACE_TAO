@@ -1,0 +1,20 @@
+// $Id$
+
+#ifndef B_IDL
+#define B_IDL
+
+#include "a.idl"
+
+module M
+{
+
+    interface a;
+
+    interface b
+    {
+        attribute a a1;
+    };
+
+};
+
+#endif // B_IDL

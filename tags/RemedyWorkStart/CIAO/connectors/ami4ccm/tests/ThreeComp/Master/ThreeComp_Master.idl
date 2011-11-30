@@ -1,0 +1,21 @@
+// $Id$
+
+#ifndef THREECOMP_MASTER_IDL
+#define THREECOMP_MASTER_IDL
+
+#include <Components.idl>
+
+#include "Base/ThreeComp.idl"
+
+#pragma ciao ami4ccm receptacle "ThreeComp::Master::run_my_state"
+
+module ThreeComp
+{
+  component Master
+  {
+    /// For synchronous invocation
+    uses State run_my_state;
+  };
+};
+
+#endif

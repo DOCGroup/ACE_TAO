@@ -1,0 +1,3 @@
+usr/lib/ace/bin/mpc.pl        usr/bin/mpc-ace                 
+usr/lib/ace/bin/mwc.pl        usr/bin/mwc-ace                 
+usr/share/man/man1/mpc-ace.1.gz usr/share/man/man1/mwc-ace.1.gz
