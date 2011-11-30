@@ -150,7 +150,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         opponent =  A::Test::_narrow (object.in ());
       } while (mode_flag == A::RM_SLAVE && CORBA::is_nil (opponent.in ()));
 
-      if (CORBA::is_nil (opponent))
+      if (CORBA::is_nil (opponent.in ()))
       {
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot resolve opponent IOR: %s",
