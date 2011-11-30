@@ -39,7 +39,6 @@ public:
   virtual int visit_argument (be_argument *node);
   virtual int visit_attribute (be_attribute *node);
 
-
   virtual int post_process (be_decl *node);
 
 private:
