@@ -1,3 +1,9 @@
+Thu Dec  1 13:51:38 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/servant_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+        Facet on AMI connector svnt wasn't local.
+
 Wed Nov 30 16:45:10 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
 
         * TAO_IDL/be/be_visitor_connector/executor_ami_exs.cpp:
