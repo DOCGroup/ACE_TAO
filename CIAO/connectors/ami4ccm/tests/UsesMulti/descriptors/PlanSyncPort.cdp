@@ -386,54 +386,6 @@
     </internalEndpoint>
   </connection>
 
-
-
-  <!connection>
-    <name>synch_one_connectionA</name>
-    <internalEndpoint>
-      <portName>do_my_one</portName>
-      <provider>true</provider>
-      <kind>Facet</kind>
-      <instance xmi:idref="UsesMulti.ComponentImplementations.UsesMultiImplementation.UsesMulti.ReceiverA" />
-    </internalEndpoint>
-    <internalEndpoint>
-      <portName>run_my_um_one</portName>
-      <provider>false</provider>
-      <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="UsesMulti.ComponentImplementations.UsesMultiImplementation.UsesMulti.Sender" />
-    </internalEndpoint>
-  </connection-->
-  <!--connection>
-    <name>synch_one_connectionB</name>
-    <internalEndpoint>
-      <portName>do_my_one</portName>
-      <provider>true</provider>
-      <kind>Facet</kind>
-      <instance xmi:idref="UsesMulti.ComponentImplementations.UsesMultiImplementation.UsesMulti.ReceiverB" />
-    </internalEndpoint>
-    <internalEndpoint>
-      <portName>run_my_um_one</portName>
-      <provider>false</provider>
-      <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="UsesMulti.ComponentImplementations.UsesMultiImplementation.UsesMulti.Sender" />
-    </internalEndpoint>
-  </connection-->
-  <!--connection>
-    <name>synch_one_connectionC</name>
-    <internalEndpoint>
-      <portName>do_my_one</portName>
-      <provider>true</provider>
-      <kind>Facet</kind>
-      <instance xmi:idref="UsesMulti.ComponentImplementations.UsesMultiImplementation.UsesMulti.ReceiverC" />
-    </internalEndpoint>
-    <internalEndpoint>
-      <portName>run_my_um_one</portName>
-      <provider>false</provider>
-      <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="UsesMulti.ComponentImplementations.UsesMultiImplementation.UsesMulti.Sender" />
-    </internalEndpoint>
-  </connection-->
-
  <connection>
     <name>synch_one_connectionA</name>
     <deployRequirement>
