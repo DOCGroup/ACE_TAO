@@ -1,3 +1,20 @@
+Thu Dec  1 08:37:33 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_visitor_component.cpp:
+        * TAO_IDL/be/be_visitor_component/component_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/component_svs.cpp:
+        * TAO_IDL/be/be_visitor_component/component_svth.cpp:
+        * TAO_IDL/be/be_visitor_component/component_svts.cpp:
+        * TAO_IDL/be/be_visitor_component/context_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/context_svs.cpp:
+        * TAO_IDL/be/be_visitor_module/module.cpp:
+        * TAO_IDL/be_include/be_visitor_component.h:
+        * TAO_IDL/be_include/be_visitor_component/component_svth.h:
+        * TAO_IDL/be_include/be_visitor_component/component_svts.h:
+          Moved the generated Context code to the _svnt_T files. Later on
+          these classes will be templated.
+
 
 Local Variables:
 mode: change-log

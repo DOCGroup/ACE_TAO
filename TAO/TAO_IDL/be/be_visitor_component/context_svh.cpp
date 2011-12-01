@@ -12,6 +12,7 @@
  *  @author Jeff Parsons
  */
 //=============================================================================
+#include <be_helper.h>
 
 be_visitor_context_svh::be_visitor_context_svh (be_visitor_context *ctx)
   : be_visitor_component_scope (ctx)
@@ -44,14 +45,17 @@ be_visitor_context_svh::visit_component (be_component *node)
       << "class " << lname << "_Servant;"
       << be_nl_2;
 
+
   os_ << "class " << export_macro_.c_str () << " " << lname
       << "_Context" << be_idt_nl
       << ": public virtual ::CIAO::"
       << be_global->ciao_container_type ()
-      << "_Context_Impl<" << be_idt << be_idt_nl
+      << "_Context_Impl_T<" << be_idt << be_idt_nl
       << global << sname << "::CCM_" << lname
       << "_Context," << be_nl
-      << "::" << node->name () << ">" << be_uidt << be_uidt << be_uidt_nl
+      << "::" << node->name () << ">";
+
+  os_ << be_uidt << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "public:" << be_idt_nl;
 
@@ -62,7 +66,7 @@ be_visitor_context_svh::visit_component (be_component *node)
   os_ << "/// Some useful typedefs." << be_nl
       << "typedef" << be_nl
       << "::CIAO::" << be_global->ciao_container_type ()
-      << "_Context_Impl<" << be_idt << be_idt_nl
+      << "_Context_Impl_T<" << be_idt << be_idt_nl
       << global << sname << "::CCM_"
       << lname << "_Context," << be_nl
       << "::" << node->name () << ">" << be_uidt_nl
