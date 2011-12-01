@@ -1,3 +1,8 @@
+Thu Dec  1 09:05:31 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/idl/dds4ccm_stub.mpc:
+          Prevent compilation after invoking make for a second time
+
 Thu Dec  1 08:36:22 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * ciao/Contexts/Session/Session_Context_T.h:
