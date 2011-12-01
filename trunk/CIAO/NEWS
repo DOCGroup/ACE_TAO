@@ -40,6 +40,8 @@ USER VISIBLE CHANGES BETWEEN CIAO-1.0.5 and CIAO-1.1.0
   54933 bytes. The skeleton for the related Null_Interface reduced from
   9559 bytes to 4526 bytes.
 
+. Added support for DDS4CCM using RTI DDS 4.5e on RHEL 6.1
+
 USER VISIBLE CHANGES BETWEEN CIAO-1.0.4 and CIAO-1.0.5
 =======================================================
 
