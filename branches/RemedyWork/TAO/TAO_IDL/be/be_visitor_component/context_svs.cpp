@@ -49,7 +49,7 @@ be_visitor_context_svs::visit_component (be_component *node)
       << be_global->ciao_container_type () << "_Container> (h, c, id),"
       << be_idt_nl
       << "::CIAO::" << be_global->ciao_container_type ()
-      << "_Context_Impl<" << be_idt_nl
+      << "_Context_Impl_T<" << be_idt_nl
       << global << sname << "::CCM_"
       << lname << "_Context," << be_nl
       << "::" << node->full_name () << "> (h, c, sv, id)";

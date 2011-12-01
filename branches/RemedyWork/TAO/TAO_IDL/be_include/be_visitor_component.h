@@ -21,10 +21,12 @@
 
 #include "be_visitor_component/component.h"
 #include "be_visitor_component/component_svh.h"
+#include "be_visitor_component/component_svth.h"
 #include "be_visitor_component/facet_svth.h"
 #include "be_visitor_component/context_svh.h"
 #include "be_visitor_component/servant_svh.h"
 #include "be_visitor_component/component_svs.h"
+#include "be_visitor_component/component_svts.h"
 #include "be_visitor_component/facet_svts.h"
 #include "be_visitor_component/context_svs.h"
 #include "be_visitor_component/servant_svs.h"

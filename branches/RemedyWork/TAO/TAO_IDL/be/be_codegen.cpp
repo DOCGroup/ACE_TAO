@@ -1068,6 +1068,12 @@ TAO_CodeGen::start_ciao_svnt_header (const char *fname)
      << "# pragma once\n"
      << "#endif /* ACE_LACKS_PRAGMA_ONCE */\n";
 
+
+  *this->ciao_svnt_header_
+    << "#include \""
+    << be_global->be_get_ciao_tmpl_svnt_hdr_fname(true)
+    << "\"";
+
   this->gen_svnt_hdr_includes (this->ciao_svnt_header_);
 
   return 0;
@@ -1111,11 +1117,6 @@ TAO_CodeGen::start_ciao_svnt_source (const char *fname)
     << "#include \""
     << be_global->be_get_ciao_svnt_hdr_fname (true)
     << "\"" << be_nl;
-
-  *this->ciao_svnt_source_
-    << "#include \""
-    << be_global->be_get_ciao_tmpl_svnt_hdr_fname(true)
-    << "\"";
 
   this->gen_svnt_src_includes (this->ciao_svnt_source_);
 
@@ -1820,7 +1821,7 @@ TAO_CodeGen::end_server_template_header (void)
 
   // Insert the code to include the template source file.
   *this->server_template_header_
-      << "\n\n#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)";
+      << be_nl << "#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)";
   *this->server_template_header_
       << "\n#include \""
       << be_global->be_get_server_template_skeleton_fname (1)

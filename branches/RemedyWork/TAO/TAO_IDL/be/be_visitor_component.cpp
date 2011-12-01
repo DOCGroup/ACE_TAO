@@ -66,10 +66,12 @@
 
 #include "be_visitor_component/component.cpp"
 #include "be_visitor_component/component_svh.cpp"
+#include "be_visitor_component/component_svth.cpp"
 #include "be_visitor_component/facet_svth.cpp"
 #include "be_visitor_component/context_svh.cpp"
 #include "be_visitor_component/servant_svh.cpp"
 #include "be_visitor_component/component_svs.cpp"
+#include "be_visitor_component/component_svts.cpp"
 #include "be_visitor_component/facet_svts.cpp"
 #include "be_visitor_component/context_svs.cpp"
 #include "be_visitor_component/servant_svs.cpp"
