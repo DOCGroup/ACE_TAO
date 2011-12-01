@@ -3,7 +3,8 @@
 <Deployment:DeploymentPlan xmlns:Deployment="http://www.omg.org/Deployment" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
 
   <UUID>6D382DAE-9024-4C4D-B91B-A0F9176AFACF</UUID>
-  <!--this plan is made for using the synchronous connection between Sender and Receiver-->
+  <!-- instead of using the synchronous connection between Sender and Receiver,>
+  < this plan is made for using the synchronous port of the AMI-connector-->
 
   <implementation xmi:id="Hello_ReceiverHomeImplementation">
     <name>Hello_ReceiverHomeImplementation</name>
@@ -247,12 +248,12 @@
       <instance xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.AMI" />
     </internalEndpoint>
   </connection>
- 
-  <!-- this plan is made for using the synchronous connection between Sender and Receiver>
-  <instead of using the synchronous port on the AMI connector-->
+
+  <!-- instead of using the synchronous connection between Sender and Receiver,>
+  < this plan is made for using the synchronous port of the AMI-connector-->
 
   <!--synchronous connection between Sender and Receiver-->
-  <connection>
+  <!--connection>
     <name>synch_foo_connection</name>
     <internalEndpoint>
       <portName>do_my_foo</portName>
@@ -266,10 +267,10 @@
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.Sender" />
     </internalEndpoint>
-  </connection>
+  </connection-->
 
   <!--the synchronous port on the AMI connector -->
-  <!--connection>
+  <connection>
     <name>synch_foo_connection</name>
     <deployRequirement>
       <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
@@ -287,7 +288,8 @@
       <kind>Facet</kind>
       <instance xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.AMI" />
     </internalEndpoint>
-  </connection-->
+  </connection>
+
   <artifact xmi:id="Hello_AMI_SvntArtifact">
     <name>Hello.ImplementationArtifacts.AMIArtifacts.AMI_svnt</name>
     <source/>
