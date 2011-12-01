@@ -24,6 +24,7 @@ module Inherited
   {
     provides Inherited::derived_interface prov_derived;
     uses     Inherited::derived_interface uses_derived;
+    uses     Inherited::another_interface uses_another;
 
     attribute long derived;
   };

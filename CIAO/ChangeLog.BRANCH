@@ -1,3 +1,13 @@
+Thu Dec  1 08:36:22 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * ciao/Contexts/Session/Session_Context_T.h:
+        * ciao/Contexts/Session/Session_Context_T.cpp:
+          Renamed class, using _T postfix.
+
+        * tests/IDL_Test/Inherited_Component/Extended/Base.idl:
+        * tests/IDL_Test/Inherited_Component/Extended/Derived.idl:
+          Expanded.
+
 
 Local Variables:
 mode: change-log
