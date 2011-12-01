@@ -21,6 +21,10 @@ module Inherited
 
     readonly attribute string str_derived_interface;
   };
+
+  interface another_interface {
+    void do_another ();
+  };
 };
 
 module Inherited
