@@ -1,3 +1,12 @@
+Thu Dec  1 09:15:53 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/ami4ccm/tests/InterMulti/descriptors/PlanSyncPort.cdp:
+        * connectors/ami4ccm/tests/InterMulti/descriptors/run_test.pl:
+
+        * connectors/ami4ccm/tests/UsesMulti/descriptors/PlanSyncPort.cdp:
+        * connectors/ami4ccm/tests/UsesMulti/descriptors/run_test.pl:
+        Changes for using now sync port ami connector beside Sender-Receiver connection
+
 Wed Nov 30 16:11:09 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
 
         * connectors/ami4ccm/tests/InterReturn/Sender/InterReturnT_Sender_exec.cpp:
