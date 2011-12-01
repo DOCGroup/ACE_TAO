@@ -40,9 +40,7 @@ be_visitor_facet_svth::visit_provides (be_provides *node)
 int
 be_visitor_facet_svth::visit_component (be_component *node)
 {
-  this->visit_component_scope (node);
-
-  return 0;
+  return this->visit_component_scope (node);
 }
 
 int

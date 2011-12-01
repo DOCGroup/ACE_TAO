@@ -1,3 +1,9 @@
+Thu Dec  1 09:06:16 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/facet_svth.cpp:
+        * TAO_IDL/be/be_visitor_component/facet_svts.cpp:
+          Fixed coverity warning.
+
 Thu Dec  1 08:37:33 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * TAO_IDL/be/be_codegen.cpp:
