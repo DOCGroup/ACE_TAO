@@ -210,9 +210,6 @@ public:
   /// Type of Iterator.
   typedef ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR, ACE_LOCK> ITERATOR;
 
-  /// Timer method type
-  typedef ACE_Time_Value (* TIMER_METHOD)(void);
-
   // = Initialization and termination methods.
   /**
    * Default constructor. @a upcall_functor is the instance of the
@@ -351,11 +348,7 @@ public:
 
   /// Allows applications to control how the timer queue gets the time
   /// of day.
-  void gettimeofday (TIMER_METHOD gettimeofday);
-
-  /// Allows to propagate application defined timer method to other
-  /// timing methods/objects.
-  TIMER_METHOD get_timer_method (void) const;
+  void gettimeofday (ACE_Time_Value (*gettimeofday)(void));
 
   /// Determine the next event to timeout.  Returns @a max if there are
   /// no pending timers or if all pending timers are longer than max.
@@ -450,7 +443,7 @@ protected:
   ACE_Free_List<ACE_Timer_Node_T<TYPE> > *free_list_;
 
   /// Pointer to function that returns the current time of day.
-  TIMER_METHOD gettimeofday_;
+  ACE_Time_Value (*gettimeofday_)(void);
 
   /// Upcall functor
   FUNCTOR *upcall_functor_;

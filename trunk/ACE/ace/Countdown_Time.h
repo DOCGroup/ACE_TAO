@@ -23,7 +23,6 @@
 
 #include "ace/Time_Value.h"
 #include "ace/Copy_Disabled.h"
-#include "ace/OS_NS_sys_time.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -39,10 +38,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Countdown_Time : private ACE_Copy_Disabled
 {
 public:
-  /// Cache the @a max_wait_time and call @c start(), use
-  /// application supplied gettimeofday function.
-  explicit ACE_Countdown_Time (ACE_Time_Value *max_wait_time,
-                               ACE_Time_Value (*gettimeofday)(void) = 0);
+  /// Cache the @a max_wait_time and call @c start().
+  ACE_Countdown_Time (ACE_Time_Value *max_wait_time);
 
   /// Destructor, makes sure the max_wait_time that got passed as pointer
   /// to the constructor is updated with the time elapsed.
@@ -62,13 +59,6 @@ public:
   /// Returns true if we've already been stopped, else false.
   bool stopped (void) const;
 
-  /**
-   * Returns the current time of day.  This method allows different
-   * instantiations of the countdown to use special high resolution
-   * timers.
-   */
-  ACE_Time_Value gettimeofday (void);
-
 private:
   /// Maximum time we were willing to wait.
   ACE_Time_Value *max_wait_time_;
@@ -78,9 +68,6 @@ private:
 
   /// Keeps track of whether we've already been stopped.
   bool stopped_;
-
-  /// Pointer to function that returns the current time of day.
-  ACE_Time_Value (*gettimeofday_)(void);
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

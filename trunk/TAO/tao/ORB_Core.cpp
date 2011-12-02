@@ -50,8 +50,6 @@
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
 #include "ace/Reactor.h"
-#include "ace/Timer_Queue.h"
-#include "ace/High_Res_Timer.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/Arg_Shifter.h"
 #include "ace/Argv_Type_Converter.h"
@@ -782,16 +780,6 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
           arg_shifter.consume_arg ();
         }
       else if (0 != (current_arg = arg_shifter.get_the_parameter
-                (ACE_TEXT("-ORBUseHighresTimer"))))
-        {
-          // Use Highres Timer or not (default).
-          int const use_highres_timer =
-            ACE_OS::atoi (current_arg);
-          this->orb_params ()->use_highres_timer (use_highres_timer != 0);
-
-          arg_shifter.consume_arg ();
-        }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBAMICollocation"))))
         {
           int const ami_collocation = ACE_OS::atoi (current_arg);
@@ -1262,16 +1250,6 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
           TAO_ORB_CORE_INIT_LOCATION_CODE,
           0),
         CORBA::COMPLETED_NO);
-    }
-
-  // handle the ORB timer setting
-  if (this->orb_params ()->use_highres_timer ())
-    {
-      // intialize GSF now
-      (void) ACE_High_Res_Timer::global_scale_factor ();
-      // install highres timer for reactor timer queue
-      reactor->timer_queue ()->gettimeofday
-        (&ACE_High_Res_Timer::gettimeofday_hr);
     }
 
   TAO_Server_Strategy_Factory *ssf = this->server_factory ();

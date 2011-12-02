@@ -1,3 +1,14 @@
+Fri Dec  2 10:07:48 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/Countdown_Time.h:
+        * ace/Countdown_Time.inl:
+        * ace/Countdown_Time.cpp:
+        * ace/Timer_Queue_T.h:
+        * ace/Timer_Queue_T.inl:
+        
+          Reverting timer changes to be replaced by better and more
+          flexible changes after the coming release.
+
 Tue Nov 29 19:28:56 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Countdown_Time.h:

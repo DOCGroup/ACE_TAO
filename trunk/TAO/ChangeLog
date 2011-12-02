@@ -1,3 +1,17 @@
+Fri Dec  2 10:07:48 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        * tao/Leader_Follower.cpp:
+        * tao/Messaging/Messaging_Queueing_Strategies.h:
+        * tao/Messaging/Messaging_Queueing_Strategies.cpp:
+        * tao/ORB_Core.cpp:
+        * tao/Transport.cpp:
+        * tao/params.h:
+        * tao/params.inl:
+        * tao/params.cpp:
+
+          Reverting timer changes to be replaced by better and more
+          flexible changes after the coming release.
+
 Wed Nov 30 15:55:22 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Bug_2285_Regression/Hello.cpp:

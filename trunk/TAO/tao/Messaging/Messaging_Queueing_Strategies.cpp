@@ -3,13 +3,10 @@
 #include "tao/Messaging/Messaging_Queueing_Strategies.h"
 #include "tao/Messaging/Buffering_Constraint_Policy.h"
 #include "tao/Stub.h"
-#include "tao/ORB_Core.h"
 #include "tao/debug.h"
 
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_sys_time.h"
-#include "ace/Reactor.h"
-#include "ace/Timer_Queue.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -84,8 +81,7 @@ namespace TAO
         constraints_reached = true;
       }
 
-    if (this->timer_check (stub,
-                           buffering_constraint,
+    if (this->timer_check (buffering_constraint,
                            current_deadline,
                            set_timer,
                            new_deadline))
@@ -98,7 +94,6 @@ namespace TAO
 
   bool
   Eager_Transport_Queueing_Strategy::timer_check (
-    TAO_Stub *stub,
     const TAO::BufferingConstraint &buffering_constraint,
     const ACE_Time_Value &current_deadline,
     bool &set_timer,
@@ -113,9 +108,7 @@ namespace TAO
       }
 
     // Compute the next deadline...
-    ACE_Reactor * const reactor = stub->orb_core ()->reactor ();
-    ACE_Time_Value const now =
-        reactor->timer_queue ()->gettimeofday ();
+    ACE_Time_Value const now = ACE_OS::gettimeofday ();
     ACE_Time_Value timeout =
       this->time_conversion (buffering_constraint.timeout);
     new_deadline = now + timeout;
