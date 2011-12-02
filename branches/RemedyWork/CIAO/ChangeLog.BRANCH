@@ -1,3 +1,17 @@
+Fri Dec  2 07:58:40 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * ciao/Contexts/Extension/Extension_Context_T.h:
+        * ciao/Contexts/Extension/Extension_Context_T.cpp:
+        * ciao/Servants/Extension/Servant_Impl_T.h:
+        * ciao/Servants/Extension/Servant_Impl_T.cpp:
+        * ciao/Servants/Session/Servant_Impl_T.h:
+        * ciao/Servants/Session/Servant_Impl_T.cpp:
+          Added _T to templated classes. This fixes compile error
+          since the IDL compiler was already prepared for this.
+
+        * tests/IDL_Test/Inherited_Component/Extended/Base.idl:
+          Let derived_interface derive from the base_interface.
+
 Thu Dec  1 09:05:31 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/idl/dds4ccm_stub.mpc:

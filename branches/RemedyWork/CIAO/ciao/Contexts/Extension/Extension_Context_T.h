@@ -11,8 +11,8 @@
 //=============================================================================
 
 
-#ifndef CIAO_EXTENSIONCONTEXT_H
-#define CIAO_EXTENSIONCONTEXT_H
+#ifndef CIAO_EXTENSIONCONTEXT_T_H
+#define CIAO_EXTENSIONCONTEXT_T_H
 
 #include /**/ "ace/pre.h"
 
@@ -29,7 +29,7 @@ namespace CIAO
 {
   template <typename BASE_CTX,
             typename COMP>
-  class Extension_Context_Impl
+  class Extension_Context_Impl_T
     : public virtual BASE_CTX,
       public virtual ::CIAO::Context_Impl_Base_T < ::CIAO::Extension_Container>,
       public virtual ::CORBA::LocalObject
@@ -44,12 +44,12 @@ namespace CIAO
     /// Type definition of the component type.
     typedef COMP component_type;
 
-    Extension_Context_Impl(Components::CCMHome_ptr home,
+    Extension_Context_Impl_T(Components::CCMHome_ptr home,
                           ::CIAO::Extension_Container_ptr c,
                           PortableServer::Servant sv,
                           const char* id);
 
-    virtual ~Extension_Context_Impl (void);
+    virtual ~Extension_Context_Impl_T (void);
 
     virtual ::Components::ContainerPortableInterceptor::ClientContainerInterceptorRegistration_ptr
     get_client_interceptor_registration (void);
@@ -86,4 +86,4 @@ namespace CIAO
 
 #include /**/ "ace/post.h"
 
-#endif /* CIAO_EXTENSIONCONTEXT_H */
+#endif /* CIAO_EXTENSIONCONTEXT_T_H */
