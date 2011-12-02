@@ -112,7 +112,7 @@ be_visitor_context_svth::visit_component (be_component *node)
       << "::Components::CCMHome_ptr h," << be_nl
       << "typename CONTAINER_TYPE::_ptr_type c," << be_nl
       << "PortableServer::Servant sv," << be_nl
-      << "const char *id);" << be_uidt_nl << be_nl;
+      << "const char *id);" << be_uidt << be_nl_2;
 
   os_ << "virtual ~" << lname << "_Context_T (void);";
 
