@@ -341,6 +341,30 @@ BE_GlobalData::be_get_server_hdr (UTL_String *idl_file_name,
 }
 
 const char *
+BE_GlobalData::be_get_svnt_template_hdr (UTL_String *idl_file_name,
+                                        bool base_name_only)
+{
+  // User-defined file extensions don't apply to .pidl files.
+  ACE_CString fn (idl_file_name->get_string ());
+  ACE_CString fn_ext = fn.substr (fn.length () - 5);
+  bool orb_file = (fn_ext == ".pidl" || fn_ext == ".PIDL");
+
+  if (!orb_file && !be_global->gen_custom_ending ()
+      && FE_Utils::validate_orb_include (idl_file_name))
+    {
+      orb_file = true;
+    }
+
+  return be_change_idl_file_extension (idl_file_name,
+                                       orb_file
+                                         ? "S.h"
+                                         : be_global->ciao_svnt_header_template_ending (),
+                                       base_name_only,
+                                       false,
+                                       true);
+}
+
+const char *
 BE_GlobalData::be_get_implementation_hdr (UTL_String *idl_file_name,
                                           bool base_name_only)
 {
