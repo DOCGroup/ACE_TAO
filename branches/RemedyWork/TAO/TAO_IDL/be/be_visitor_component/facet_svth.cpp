@@ -25,6 +25,10 @@ be_visitor_facet_svth::~be_visitor_facet_svth (void)
 int
 be_visitor_facet_svth::visit_provides (be_provides *node)
 {
+  if (node->imported ())
+    {
+      return 0;
+    }
   if (node->gen_facet_svnt_tmpl_decl (os_) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,

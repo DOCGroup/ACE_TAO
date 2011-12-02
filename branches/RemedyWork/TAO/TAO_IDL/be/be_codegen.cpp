@@ -1184,6 +1184,7 @@ TAO_CodeGen::start_ciao_svnt_template_header (const char *fname)
          << be_global->skel_export_include ()
          << "\"\n";
     }
+  // For base components/connectors.
 
   // Some compilers don't optimize the #ifndef header include
   // protection, but do optimize based on #pragma once.
@@ -1192,6 +1193,29 @@ TAO_CodeGen::start_ciao_svnt_template_header (const char *fname)
      << "#endif /* ACE_LACKS_PRAGMA_ONCE */\n";
 
   this->gen_svnt_hdr_includes (this->ciao_svnt_template_header_);
+
+  size_t const nfiles = idl_global->n_included_idl_files ();
+
+  if (nfiles > 0)
+    {
+      os << be_nl;
+    }
+  for (size_t j = 0; j < nfiles; ++j)
+    {
+      char* idl_name = idl_global->included_idl_files ()[j];
+
+      if (this->is_system_file (idl_name))
+        {
+          continue;
+        }
+      UTL_String str (idl_name);
+
+      this->gen_standard_include (
+        this->ciao_svnt_template_header_,
+        BE_GlobalData::be_get_svnt_template_hdr (&str, true));
+
+      str.destroy ();
+    }
 
   return 0;
 }
@@ -1941,7 +1965,7 @@ TAO_CodeGen::end_ciao_svnt_source (void)
 int
 TAO_CodeGen::end_ciao_svnt_template_header (void)
 {
-  *this->ciao_svnt_template_header_ << be_nl
+  *this->ciao_svnt_template_header_ << be_nl_2
                                     << "#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)"
                                     << be_nl << "#include \""
                                     << be_global->be_get_ciao_tmpl_svnt_src_fname (true)
@@ -3493,6 +3517,16 @@ TAO_CodeGen::gen_exec_idl_includes (void)
     }
 }
 
+bool
+TAO_CodeGen::is_system_file (const char * idl_name) const
+{
+  return
+    ACE_OS::strcmp (idl_name, "Components.idl") == 0
+    || ACE_OS::strcmp (
+          idl_name,
+          "connectors/ami4ccm/ami4ccm/ami4ccm.idl") == 0;
+}
+
 void
 TAO_CodeGen::gen_conn_hdr_includes (void)
 {
@@ -3575,13 +3609,8 @@ TAO_CodeGen::gen_conn_hdr_includes (void)
       char * const idl_name =
         idl_global->included_idl_files ()[j];
 
-      bool const system_file =
-        ACE_OS::strcmp (idl_name, "Components.idl") == 0
-        || ACE_OS::strcmp (
-             idl_name,
-             "connectors/ami4ccm/ami4ccm/ami4ccm.idl") == 0;
 
-      if (system_file)
+      if (this->is_system_file (idl_name))
         {
           continue;
         }

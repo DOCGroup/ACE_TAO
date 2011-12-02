@@ -428,6 +428,8 @@ private:
   void gen_conn_src_includes (void);
   void gen_ami_conn_idl_includes (void);
 
+  bool is_system_file (const char * idl_name) const;
+
   void gen_export_file (const char *filename,
                         const char *macro,
                         const char *msg,

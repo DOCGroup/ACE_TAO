@@ -164,6 +164,10 @@ public:
     UTL_String *idl_file_name,
     bool base_name_only = false);
 
+  static const char *be_get_svnt_template_hdr (
+    UTL_String *idl_file_name,
+    bool base_name_only = false);
+
   static const char *be_get_implementation_hdr (
     UTL_String *idl_file_name,
     bool base_name_only = false);
