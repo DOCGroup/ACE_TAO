@@ -77,7 +77,7 @@ be_provides::gen_facet_svnt_tmpl_decl (TAO_OutStream &os)
 
   os << "template <typename BASE, typename EXEC, typename CONTEXT>" << be_nl
      << "class " << lname << "_Servant_T" << be_idt_nl
-     << ": public virtual ::CIAO::Facet_Servant_Base_T<BASE, EXEC, "
+     << ": public ::CIAO::Facet_Servant_Base_T<BASE, EXEC, "
      << "CONTEXT>" << be_uidt_nl << "{" << be_nl
      << "public:" << be_idt_nl;
 

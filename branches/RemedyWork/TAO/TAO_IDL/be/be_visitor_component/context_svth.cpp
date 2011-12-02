@@ -65,7 +65,7 @@ be_visitor_context_svth::visit_component (be_component *node)
     }
   else
     {
-      os_ << ": public virtual BASE";
+      os_ << ": public BASE";
     }
 
 

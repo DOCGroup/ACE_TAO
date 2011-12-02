@@ -12,6 +12,7 @@
  *  @author Jeff Parsons
  */
 //=============================================================================
+#include <be_helper.h>
 
 be_visitor_context_svts::be_visitor_context_svts (be_visitor_context *ctx)
   : be_visitor_component_scope (ctx)
@@ -48,6 +49,7 @@ be_visitor_context_svts::visit_component (be_component *node)
       << "const char *id)" << be_uidt_nl
       << ": ::CIAO::Context_Impl_Base_T <CONTAINER_TYPE> (h, c, id),"
       << be_idt_nl;
+
   // Spec: no multiple inheritance allowed for components.
   AST_Component * base = node->base_component ();
   if (base)
