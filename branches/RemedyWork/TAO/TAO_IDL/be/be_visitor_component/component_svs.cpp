@@ -50,7 +50,7 @@ be_visitor_component_svs::visit_component (be_component *node)
       << "_Impl" << be_nl
       << "{" << be_idt;
 
-//   be_visitor_context_svs context_visitor (this->ctx_);
+//   be_visitor_context_svts context_visitor (this->ctx_);
 
 //   if (context_visitor.visit_component (node) == -1)
 //     {

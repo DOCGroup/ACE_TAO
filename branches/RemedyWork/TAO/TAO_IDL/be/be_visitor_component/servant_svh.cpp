@@ -40,16 +40,24 @@ be_visitor_servant_svh::visit_component (be_component *node)
 
   const char *global = (sname_str == "" ? "" : "::");
 
+// ::CIAO::Session_Context_Impl<
+//       ::Inherited::CCM_Base_comp_Context,
+//       ::Inherited::Base_comp>
+
   os_ << be_nl_2
       << "class " << export_macro_.c_str () << " " << lname
       << "_Servant" << be_idt_nl
       << ": public virtual" << be_idt << be_idt_nl
       << "::CIAO::" << be_global->ciao_container_type ()
-      << "_Servant_Impl<" << be_idt_nl
+      << "_Servant_Impl_T<" << be_idt_nl
       << "::" << node_->full_skel_name () << "," << be_nl
       << global << sname << "::CCM_" << lname << "," << be_nl
-      << lname << "_Context>"
-      << be_uidt << be_uidt << be_uidt << be_uidt_nl
+      << lname << "_Context_T< " << be_idt_nl
+      << "::CIAO::" << be_global->ciao_container_type ()
+      << "_Container, ::CIAO::" << be_global->ciao_container_type () << "_Context_Impl_T< "
+      << be_idt_nl << global << sname << "::CCM_" << lname << "_Context, " << be_nl
+      << global << sname << "::" << lname << "> > >"
+      << be_uidt << be_uidt << be_uidt << be_uidt << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "public:" << be_idt_nl;
 

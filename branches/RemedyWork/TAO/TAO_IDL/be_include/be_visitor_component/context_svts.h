@@ -18,19 +18,19 @@
 #define _BE_COMPONENT_CONTEXT_SVS_H_
 
 /**
- * @class be_visitor_context_svs
+ * @class be_visitor_context_svts
  *
- * @brief be_visitor_context_svs
+ * @brief be_visitor_context_svts
  *
  * This is a concrete visitor to generate the context class defn
  * for a component.
  */
-class be_visitor_context_svs : public be_visitor_component_scope
+class be_visitor_context_svts : public be_visitor_component_scope
 {
 public:
-  be_visitor_context_svs (be_visitor_context *ctx);
+  be_visitor_context_svts (be_visitor_context *ctx);
 
-  ~be_visitor_context_svs (void);
+  ~be_visitor_context_svts (void);
 
   virtual int visit_component (be_component *node);
   virtual int visit_connector (be_connector *node);

@@ -55,7 +55,7 @@ be_visitor_component_svh::visit_component (be_component *node)
       << "{" << be_idt;
 
 //   // Generate the context class declaration.
-//   be_visitor_context_svh context_visitor (this->ctx_);
+//   be_visitor_context_svth context_visitor (this->ctx_);
 //
 //   if (context_visitor.visit_component (node) == -1)
 //     {

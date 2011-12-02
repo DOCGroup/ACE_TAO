@@ -1,3 +1,27 @@
+Fri Dec  2 08:00:16 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_visitor_component.cpp:
+        * TAO_IDL/be/be_visitor_component/component_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/component_svs.cpp:
+        * TAO_IDL/be/be_visitor_component/component_svth.cpp:
+        * TAO_IDL/be/be_visitor_component/component_svts.cpp:
+        * TAO_IDL/be/be_visitor_component/context_svth.cpp:
+        * TAO_IDL/be/be_visitor_component/context_svts.cpp:
+        * TAO_IDL/be/be_visitor_component/servant_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+        * TAO_IDL/be_include/be_visitor_component.h:
+        * TAO_IDL/be_include/be_visitor_component/context_svth.h:
+        * TAO_IDL/be_include/be_visitor_component/context_svts.h:
+          Context implementation is now templated. Therefor
+          renamed context_sv* files.
+
+        * TAO_IDL/be/be_visitor_component/context_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/context_svs.cpp:
+        * TAO_IDL/be_include/be_visitor_component/context_svh.h:
+        * TAO_IDL/be_include/be_visitor_component/context_svs.h:
+          Removed these files.
+
 Thu Dec  1 09:06:16 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * TAO_IDL/be/be_visitor_component/facet_svth.cpp:

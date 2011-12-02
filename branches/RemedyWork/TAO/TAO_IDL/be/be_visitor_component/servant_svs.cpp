@@ -67,13 +67,17 @@ be_visitor_servant_svs::visit_component (be_component *node)
       << ": ::CIAO::" << opt_conn
       << "Servant_Impl_Base (h, hs, c)," << be_idt_nl
       << "::CIAO::" << be_global->ciao_container_type ()
-      << "_Servant_Impl<" << be_idt_nl
+      << "_Servant_Impl_T<" << be_idt_nl
       << "::" << node_->full_skel_name ()
       << "," << be_nl
       << global << sname << "::CCM_"
       << lname << "," << be_nl
-      << lname << "_Context> (exe, h, ins_name, hs, c)"
-      << be_uidt << be_uidt << be_uidt_nl
+      << lname << "_Context_T< " << be_idt_nl
+      << "::CIAO::" << be_global->ciao_container_type ()
+      << "_Container, ::CIAO::" << be_global->ciao_container_type () << "_Context_Impl_T< "
+      << be_idt_nl << global << sname << "::CCM_" << lname << "_Context, " << be_nl
+      << global << sname << "::" << lname << "> > > (exe, h, ins_name, hs, c)"
+      << be_uidt << be_uidt << be_uidt << be_uidt << be_uidt_nl
       << "{" << be_idt_nl;
 
   be_visitor_obv_factory_reg ofr_visitor (this->ctx_);

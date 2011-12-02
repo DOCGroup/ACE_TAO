@@ -1821,21 +1821,23 @@ TAO_CodeGen::end_server_template_header (void)
 
   // Insert the code to include the template source file.
   *this->server_template_header_
-      << be_nl << "#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)";
+      << be_nl_2 << "#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)";
   *this->server_template_header_
-      << "\n#include \""
+      << be_nl << "#include \""
       << be_global->be_get_server_template_skeleton_fname (1)
       << "\"";
-  *this->server_template_header_ << "\n#endif /* defined REQUIRED SOURCE */";
+  *this->server_template_header_ << be_nl
+      << "#endif /* defined REQUIRED SOURCE */";
 
   // Insert the code to include the template pragma.
   *this->server_template_header_
-      << "\n\n#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)";
+      << be_nl_2 << "#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)";
   *this->server_template_header_
-      << "\n#pragma implementation (\""
+      << be_nl << "#pragma implementation (\""
       << be_global->be_get_server_template_skeleton_fname (1)
       << "\")";
-  *this->server_template_header_ << "\n#endif /* defined REQUIRED PRAGMA */";
+  *this->server_template_header_ << be_nl
+      << "#endif /* defined REQUIRED PRAGMA */";
 
   // Code to put the last #endif.
   *this->server_template_header_ << "\n\n";
