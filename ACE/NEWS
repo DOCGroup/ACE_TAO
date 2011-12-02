@@ -1,4 +1,4 @@
-USER VISIBLE CHANGES BETWEEN ACE-6.0.5 and ACE-6.1.0
+USER VISIBLE CHANGES BETWEEN ACE-6.0.5 and ACE-6.0.6
 ====================================================
 
 . Removed autoconf support, only traditional way of
