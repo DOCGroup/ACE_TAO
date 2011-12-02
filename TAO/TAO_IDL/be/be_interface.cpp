@@ -2874,7 +2874,7 @@ be_interface::gen_facet_svnt_hdr (be_visitor *visitor,
   os << lname << "_Servant (" << be_idt_nl
      << global << sname << "::CCM_"
      << lname << "_ptr executor," << be_nl
-     << "::Components::CCMContext_ptr ctx);" << be_uidt_nl << be_nl;
+     << "::Components::CCMContext_ptr ctx);" << be_uidt << be_nl_2;
 
   os << "virtual ~" << lname << "_Servant (void);";
 
@@ -2915,7 +2915,7 @@ be_interface::gen_facet_svnt_hdr (be_visitor *visitor,
 
   os << "};" << be_nl_2;
 
-  os << be_uidt_nl
+  os << be_uidt
      << "}";
 
   return 0;
