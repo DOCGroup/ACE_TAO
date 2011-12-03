@@ -108,7 +108,7 @@ project(stub_two): taolib {
 
 project(skel_two): taolib, portableserver {
   after += idl_two_gen stub_two skel_one
-  libs += skel_one stub_two stub_one
+  libs += stub_two skel_one stub_one
 
   sharedname = skel_two
   dynamicflags += SKELETON_INHERITANCE_SKEL_2_BUILD_DLL
