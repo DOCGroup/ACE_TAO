@@ -1194,27 +1194,37 @@ TAO_CodeGen::start_ciao_svnt_template_header (const char *fname)
 
   this->gen_svnt_hdr_includes (this->ciao_svnt_template_header_);
 
-  size_t const nfiles = idl_global->n_included_idl_files ();
-
-  if (nfiles > 0)
+  if (idl_global->ami_connector_seen_)
     {
-      os << be_nl;
+      *this->ciao_svnt_template_header_ << be_nl
+        << "#include \""
+        << "connectors/ami4ccm/ami4ccm/ami4ccm_svnt_T.h\""
+        << be_nl;
     }
-  for (size_t j = 0; j < nfiles; ++j)
+  else
     {
-      char* idl_name = idl_global->included_idl_files ()[j];
+      size_t const nfiles = idl_global->n_included_idl_files ();
 
-      if (this->is_system_file (idl_name))
+      if (nfiles > 0)
         {
-          continue;
+          os << be_nl;
         }
-      UTL_String str (idl_name);
+      for (size_t j = 0; j < nfiles; ++j)
+        {
+          const char* idl_name = idl_global->included_idl_files ()[j];
 
-      this->gen_standard_include (
-        this->ciao_svnt_template_header_,
-        BE_GlobalData::be_get_svnt_template_hdr (&str, true));
+          if (this->is_system_file (idl_name))
+            {
+              continue;
+            }
+          UTL_String str (idl_name);
 
-      str.destroy ();
+          this->gen_standard_include (
+            this->ciao_svnt_template_header_,
+            BE_GlobalData::be_get_svnt_template_hdr (&str, true));
+
+          str.destroy ();
+        }
     }
 
   return 0;
