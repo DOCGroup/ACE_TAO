@@ -1,0 +1,22 @@
+// $Id$
+
+/**
+ * @file MultiTopic_Connector.idl
+ * @author
+ */
+
+#ifndef MULTITOPIC_CONNECTOR_IDL_
+#define MULTITOPIC_CONNECTOR_IDL_
+
+#include <Components.idl>
+#include <Connector/ccm_dds_mt.idl>
+
+#include "Base/MultiTopic_Base.idl"
+
+#pragma ciao lem "Connector/MultiTopic_ConnectorE.idl"
+
+module ::CCM_DDS_MT::Typed_MT < ::ShapeType, ::ShapeTypeSeq> Shapes;
+
+#endif /* MULTITOPIC_CONNECTOR_IDL_ */
+
+

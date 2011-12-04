@@ -1,0 +1,48 @@
+// -*- MPC -*-
+// $Id$
+
+project(*idl): taoidldefaults {
+  IDL_Files {
+    Test.idl
+  }
+  custom_only = 1
+}
+
+project(*Server): taoserver {
+  after += *idl
+  Source_Files {
+    TestC.cpp
+    TestS.cpp
+    Process_Factory.cpp
+    Startup_Callback.cpp
+    Server_Task.cpp
+    server.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*Client): taoclient, anytypecode {
+  after += *idl
+  Source_Files {
+    TestC.cpp
+    Client_Task.cpp
+    client.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*Child): taoserver {
+  exename = child
+  after += *idl
+  after += *Client
+  Source_Files {
+    TestC.cpp
+    TestS.cpp
+    Process.cpp
+    child.cpp
+  }
+  IDL_Files {
+  }
+}

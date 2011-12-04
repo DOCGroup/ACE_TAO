@@ -1,0 +1,14 @@
+// $Id$
+
+#ifndef _TEST_IDL_
+#define _TEST_IDL_
+
+module Test
+{
+  interface Server
+  {
+    oneway void shutdown ();
+  };
+};
+
+#endif // _TEST_IDL_

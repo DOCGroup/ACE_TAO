@@ -1,0 +1,18 @@
+Description: define $ACE_ROOT in generated GNUmakefile if needed
+ TODO: not sure whether we need it.
+Forwarded: no
+Author: Thomas Girard <thomas.g.girard@free.fr>
+Last-Update: 2010-05-24
+
+--- a/bin/MakeProjectCreator/modules/GNUACEWorkspaceCreator.pm
++++ b/bin/MakeProjectCreator/modules/GNUACEWorkspaceCreator.pm
+@@ -94,6 +94,9 @@
+             "ifeq (\$(findstring k,\$(MAKEFLAGS)),k)$crlf",
+             "  KEEP_GOING = -$crlf",
+             "endif$crlf$crlf",
++            "ifndef ACE_ROOT$crlf",
++            "  export ACE_ROOT = /usr/lib/ace$crlf",
++            "endif$crlf",
+             "include \$(ACE_ROOT)/include/makeinclude/macros.GNU$crlf";
+ 
+   if ($named) {
