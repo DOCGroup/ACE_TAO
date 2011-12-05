@@ -148,12 +148,6 @@ be_visitor_servant_svh::visit_provides (be_provides *node)
       return 0;
     }
 
-  // special case sync port AMI connector, treat as local
-  if (ACE_OS::strstr (node->local_name ()->get_string (), "ami4ccm_sync_provides") != 0)
-    {
-      return 0;
-    }
-
   ACE_CString prefix (this->ctx_->port_prefix ());
   prefix += node->local_name ()->get_string ();
   const char *port_name = prefix.c_str ();
