@@ -59,13 +59,13 @@ project(*IDL): taoserver, messaging, gen_ostream {
     sequence.idl
     union.idl
     anyunion.idl
+    valuetype.idl
   }
 
   IDL_Files {
     idlflags += -GA -as
     anonymous.idl
     dif2.idl
-    valuetype.idl
   }
 
   IDL_Files {
