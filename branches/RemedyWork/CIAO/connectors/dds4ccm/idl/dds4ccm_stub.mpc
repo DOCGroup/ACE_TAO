@@ -22,7 +22,7 @@ project (DDS4CCM_idl_gen) : install, dds4ccm, componentidldefaults {
   }
 
   IDL_Files {
-    idlflags -= -Gxhst -Gxhsk -Gsv
+    idlflags -= -Gxhst -Gxhsk -Gsv -Glem
     idlflags += -Sci -SS
     dds4ccm_Entity.idl
     ccm_dds.idl
