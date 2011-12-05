@@ -16,8 +16,7 @@
 
 
 be_visitor_valuetype_field_cs::be_visitor_valuetype_field_cs (
-    be_visitor_context *ctx
-  )
+    be_visitor_context *ctx)
   : be_visitor_decl (ctx),
     in_obv_space_ (0)
 {
@@ -144,7 +143,7 @@ be_visitor_valuetype_field_cs::visit_array (be_array *node)
   *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
-  *os << "// Accessor to set the member." << be_nl
+  *os << "/// Accessor to set the member." << be_nl
       << this->pre_op () << "void" << be_nl;
 
   this->op_name (bu,
@@ -589,7 +588,7 @@ be_visitor_valuetype_field_cs::visit_predefined_type (be_predefined_type *node)
   *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
-  *os << "// Accessor to set the member." << be_nl
+  *os << "/// Accessor to set the member." << be_nl
       << this->pre_op () << "void" << be_nl;
 
   this->op_name (bu, os);
@@ -646,7 +645,7 @@ be_visitor_valuetype_field_cs::visit_predefined_type (be_predefined_type *node)
   {
     case AST_PredefinedType::PT_pseudo:
     case AST_PredefinedType::PT_object:
-      *os << "// Retrieve the member" << be_nl
+      *os << "/// Retrieve the member" << be_nl
           << this->pre_op () << "::" << bt->name () << "_ptr" << be_nl;
 
       this->op_name (bu,
@@ -765,7 +764,7 @@ be_visitor_valuetype_field_cs::visit_sequence (be_sequence *node)
       << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   // (1) set from a const
-  *os << "// Accessor to set the member." << be_nl
+  *os << "/// Accessor to set the member." << be_nl
       << this->pre_op () << "void" << be_nl;
 
   this->op_name (bu,
@@ -781,7 +780,7 @@ be_visitor_valuetype_field_cs::visit_sequence (be_sequence *node)
       << " = val;" << be_uidt_nl;
   *os << "}" << be_nl_2;
 
-  *os << "// Readonly get method." << be_nl
+  *os << "/// Readonly get method." << be_nl
       << this->pre_op () << "const " << bt->name () << " &" << be_nl;
 
   this->op_name (bu,
@@ -796,7 +795,7 @@ be_visitor_valuetype_field_cs::visit_sequence (be_sequence *node)
       << ";" << be_uidt_nl
       << "}" << be_nl_2;
 
-  *os << "// Read/write get method." << be_nl
+  *os << "/// Read/write get method." << be_nl
       << this->pre_op () << bt->name () << " &" << be_nl;
 
   this->op_name (bu,
@@ -836,7 +835,7 @@ be_visitor_valuetype_field_cs::visit_string (be_string *node)
   *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
-  *os << "// Accessor to set the member." << be_nl
+  *os << "/// Accessor to set the member." << be_nl
       << this->pre_op () << "void" << be_nl;
 
   this->op_name (bu,
@@ -860,7 +859,7 @@ be_visitor_valuetype_field_cs::visit_string (be_string *node)
       << "}" << be_nl_2;
 
   // (2) Set method from const char * or const wchar*.
-  *os << "// Accessor to set the member." << be_nl
+  *os << "/// Accessor to set the member." << be_nl
       << this->pre_op () << "void" << be_nl;
 
   this->op_name (bu,
@@ -896,7 +895,7 @@ be_visitor_valuetype_field_cs::visit_string (be_string *node)
   *os << "}" << be_nl_2;
 
   // (3) Set from const String_var&.
-  *os << "// Accessor to set the member." << be_nl
+  *os << "/// Accessor to set the member." << be_nl
       << this->pre_op () << "void" << be_nl;
 
   this->op_name (bu,
@@ -1006,7 +1005,7 @@ be_visitor_valuetype_field_cs::visit_structure (be_structure *node)
       << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   // (1) Set from a const.
-  *os << "// Accessor to set the member." << be_nl
+  *os << "/// Accessor to set the member." << be_nl
       << this->pre_op () << "void" << be_nl;
 
   this->op_name (bu,
@@ -1023,7 +1022,7 @@ be_visitor_valuetype_field_cs::visit_structure (be_structure *node)
 
   *os << "}" << be_nl;
 
-  *os << "// Readonly get method." << be_nl
+  *os << "/// Readonly get method." << be_nl
       << this->pre_op () << "const " << bt->name () << " &" << be_nl;
 
   this->op_name (bu,
@@ -1037,7 +1036,7 @@ be_visitor_valuetype_field_cs::visit_structure (be_structure *node)
       << ";" << be_uidt_nl;
   *os << "}" << be_nl;
 
-  *os << "// Read/write get method." << be_nl
+  *os << "/// Read/write get method." << be_nl
       << this->pre_op () << bt->name () << " &" << be_nl;
 
   this->op_name (bu,
@@ -1122,7 +1121,7 @@ be_visitor_valuetype_field_cs::visit_union (be_union *node)
   *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
-  *os << "// Accessor to set the member" << be_nl
+  *os << "/// Accessor to set the member" << be_nl
       << this->pre_op () << "void" << be_nl;
 
   this->op_name (bu,
@@ -1135,7 +1134,7 @@ be_visitor_valuetype_field_cs::visit_union (be_union *node)
       << bu->field_pd_postfix () << " = val;" << be_uidt_nl;
   *os << "}" << be_nl;
 
-  *os << "// Readonly get method." << be_nl
+  *os << "/// Readonly get method." << be_nl
       << this->pre_op () << "const " << bt->name () << " &" << be_nl;
 
   this->op_name (bu,
@@ -1149,7 +1148,7 @@ be_visitor_valuetype_field_cs::visit_union (be_union *node)
       << ";" << be_uidt_nl
       << "}" << be_nl;
 
-  *os << "// Read/write get method." << be_nl
+  *os << "/// Read/write get method." << be_nl
       << this->pre_op () << bt->name () << " &" << be_nl;
 
   this->op_name (bu,

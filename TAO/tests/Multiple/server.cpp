@@ -71,7 +71,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       Multiple::Bottom_var bottom =
         Multiple::Bottom::_narrow (object_act.in ());
 
-      // Now we stringfy the object reference.
+      // Now we stringify the object reference.
       CORBA::String_var ior =
         orb->object_to_string (bottom.in ());
 

@@ -20,6 +20,9 @@ write_iors_to_file (const char *first_ior)
   int result = ACE_OS::fprintf (output_file,
                                 "%s",
                                 first_ior);
+
+  ACE_OS::fclose (output_file);
+
   if (result <= 0
       || static_cast<size_t> (result) != ACE_OS::strlen (first_ior))
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -28,7 +31,6 @@ write_iors_to_file (const char *first_ior)
                        ior_output_file),
                       -1);
 
-  ACE_OS::fclose (output_file);
   return 0;
 }
 

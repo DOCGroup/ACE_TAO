@@ -54,8 +54,8 @@ int
 Server_i::write_iors_to_file (const char *first_ior,
                               const char *second_ior)
 {
+  // No filename was specified; simply return
   if (ior_output_file_ == 0)
-    // No filename was specified; simply return
     return 0;
 
   ACE_TCHAR ior_output_file_1[BUFSIZ];
@@ -83,10 +83,11 @@ Server_i::write_iors_to_file (const char *first_ior,
   int result = ACE_OS::fprintf (output_file_1,
                                 "%s",
                                 first_ior);
+  ACE_OS::fclose (output_file_1);
   if (result <= 0
       || static_cast<size_t> (result) != ACE_OS::strlen (first_ior))
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "ACE_OS::fprintf failed while writing %s to %s\n",
+                       "ACE_OS::fprintf failed while writing %C to %s\n",
                        first_ior,
                        ior_output_file_1),
                       -1);
@@ -94,24 +95,21 @@ Server_i::write_iors_to_file (const char *first_ior,
   result = ACE_OS::fprintf (output_file_2,
                             "%s",
                             second_ior);
+  ACE_OS::fclose (output_file_2);
   if (result <= 0
       || static_cast<size_t> (result) != ACE_OS::strlen (second_ior))
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "ACE_OS::fprintf failed while writing %s to %s\n",
+                       "ACE_OS::fprintf failed while writing %C to %s\n",
                        second_ior,
                        ior_output_file_2),
                       -1);
-  ACE_OS::fclose (output_file_1);
-  ACE_OS::fclose (output_file_2);
   return 0;
 }
 
-// Initialisation of the ORB and POA.
-
+// Initialization of the ORB and POA.
 int
 Server_i::init (int argc, ACE_TCHAR **argv)
 {
-
   try
     {
       // Initialize the ORB.
