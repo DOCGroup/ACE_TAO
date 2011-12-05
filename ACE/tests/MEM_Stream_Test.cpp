@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
@@ -28,8 +27,6 @@
 #include "ace/Svc_Handler.h"
 #include "ace/Singleton.h"
 #include "ace/Atomic_Op.h"
-
-
 
 #if (defined (ACE_HAS_THREADS) || defined (ACE_HAS_PROCESS_SPAWN)) && \
     (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)

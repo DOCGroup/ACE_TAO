@@ -265,14 +265,12 @@ ACE_HANDLE DgramHandler::get_handle () const
   return peer_.get_handle ();
 }
 
-int DgramHandler::handle_input (ACE_HANDLE handle)
+int DgramHandler::handle_input (ACE_HANDLE)
 {
-  ACE_UNUSED_ARG (handle);
   int recvBuffer;
   ACE_INET_Addr peerAddress;
-  int result;
 
-  result = peer_.recv (&recvBuffer, sizeof (recvBuffer) , peerAddress);
+  int result = peer_.recv (&recvBuffer, sizeof (recvBuffer) , peerAddress);
 
   if (0 >= result)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -865,11 +863,8 @@ TCPAcceptorHandler::~TCPAcceptorHandler ()
   ACE_TRACE ("TCPAcceptorHandler::~TCPAcceptorHandler");
 }
 
-void testNativeReactor (int argc, ACE_TCHAR *argv[])
+void testNativeReactor (int, ACE_TCHAR *[])
 {
-  ACE_UNUSED_ARG (argc);
-  ACE_UNUSED_ARG (argv);
-
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("Testing autotest using native reactor\n")));
 
   ACE_Reactor      reactor;
