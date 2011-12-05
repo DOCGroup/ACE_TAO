@@ -1,3 +1,19 @@
+Mon Dec  5 12:32:50 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Containers/Container_Base_T.cpp:
+          Removed some commented out code and use a switch instead of an if
+
+        * ciao/Deployment/Handlers/CIAO_Handler_Common.cpp:
+          Removed return statement which we never could reach
+
+        * ciao/Servants/Session/Servant_Impl_T.cpp:
+          Some code restructuring
+
+        * ciao/Valuetype_Factories/ConfigValue.cpp:
+          Small performance increase
+
+        * examples/DevGuideExamples/Messenger/Messenger_exec_i.cpp:
+          Fixed memory leak
 
 Local Variables:
 mode: change-log

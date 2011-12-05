@@ -45,9 +45,9 @@ namespace CIAO
                     "Component_Handler_i::get_implementation - "
                     "Unable to locate artifact <%C>\n",
                     name));
+
     throw ::Deployment::PlanError (name,
                                    "Nonexistent artifact");
-    return 0;
   }
 
   void
