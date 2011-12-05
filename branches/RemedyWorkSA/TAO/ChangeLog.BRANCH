@@ -1,3 +1,9 @@
+Mon Dec  5 12:51:38 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/servant_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+        Reverted previous commit.
+
 Thu Dec  1 13:51:38 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * TAO_IDL/be/be_visitor_component/servant_svh.cpp:
