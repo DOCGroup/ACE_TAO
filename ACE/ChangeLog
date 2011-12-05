@@ -1,3 +1,16 @@
+Mon Dec  5 20:16:51 UTC 2011  Steve Huston  <shuston@riverace.com>
+
+        * ace/Atomic_Op.{h inl}:
+        * ace/Atomic_Op_T.{h inl}:
+        * ace/Atomic_Op_GCC_T.{h inl}:
+          Added new method TYPE exchange (TYPE newval) which exchanges the
+          ACE_Atomic_Op's value with the specified new value. Thanks to John
+          Lilley for contributing this addition.
+
+        * tests/Atomic_Op_Test.cpp: Added test for exchange().
+
+        * NEWS: Added description of the new exchange() method.
+
 Mon Dec  5 12:27:54 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/TTY_IO.h:
