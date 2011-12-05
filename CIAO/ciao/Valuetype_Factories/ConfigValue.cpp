@@ -15,11 +15,8 @@ namespace CIAO
 
    ConfigValue_impl::ConfigValue_impl(const char*       the_name,
                                       const CORBA::Any& the_value)
-      : OBV_Components::ConfigValue()
+      : OBV_Components::ConfigValue(the_name, the_value)
    {
-      CORBA::Any any = the_value;
-      name (the_name);
-      value (any);
    }
 
    CORBA::ValueBase* ConfigValue_impl::_copy_value()

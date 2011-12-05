@@ -46,7 +46,6 @@ namespace CIAO
             typename CONTEXT>
   Session_Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::~Session_Servant_Impl (void)
   {
-    //TODO: thread safe? How?
     if (this->executor_->_refcount_value () > 1)
       {
         CIAO_ERROR (1,
@@ -112,12 +111,12 @@ namespace CIAO
     ::Components::SessionContext_var sc =
       ::Components::SessionContext::_narrow (this->context_);
 
-    if (! ::CORBA::is_nil (sc.in ()))
+    if (::CORBA::is_nil (sc.in ()))
       {
-        return sc->get_CCM_object ();
+        throw ::CORBA::INTERNAL ();
       }
 
-    throw ::CORBA::INTERNAL ();
+    return sc->get_CCM_object ();
   }
 
   // CIAO-specific operations.
@@ -188,14 +187,12 @@ namespace CIAO
     ::Components::SessionComponent_var temp =
       ::Components::SessionComponent::_narrow (this->executor_.in ());
 
-    if (! ::CORBA::is_nil (temp.in ()))
-      {
-        temp->ccm_remove ();
-      }
-    else
+    if (::CORBA::is_nil (temp.in ()))
       {
         throw ::CORBA::INTERNAL ();
       }
+
+    temp->ccm_remove ();
   }
 }
 
