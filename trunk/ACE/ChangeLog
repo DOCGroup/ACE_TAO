@@ -1,3 +1,9 @@
+Mon Dec  5 22:23:25 UTC 2011  Steve Huston  <shuston@riverace.com>
+
+        * ace/DLL.h:
+        * ace/DLL_Manager.h: Corrected and expanded the descriptions of how
+          DLL/library names are handled, decorated, and located.
+
 Mon Dec  5 20:16:51 UTC 2011  Steve Huston  <shuston@riverace.com>
 
         * ace/Atomic_Op.{h inl}:
