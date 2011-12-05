@@ -1,3 +1,8 @@
+Mon Dec  5 08:35:54 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/Download.html:
+          Release has vc9/vc10
+
 Mon Dec  5 08:22:11 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/diff-builds-and-group-fixed-tests-only.sh:
