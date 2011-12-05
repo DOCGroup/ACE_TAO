@@ -1421,7 +1421,6 @@ TAO_CodeGen::start_ciao_exec_svnt (const char *fname)
   ACE_NEW_RETURN (this->ciao_exec_svnt_,
                   TAO_OutStream,
                   -1);
-
   int status =
     this->ciao_exec_svnt_->open (fname,
                                 TAO_OutStream::CIAO_EXEC_SVNT);
@@ -1463,8 +1462,7 @@ TAO_CodeGen::start_ciao_exec_svnt (const char *fname)
      << "# pragma once\n"
      << "#endif /* ACE_LACKS_PRAGMA_ONCE */\n";
 
-  // detect from the pragma's whether an _T has been created
-  if (be_global->gen_ciao_svnt () || !idl_global->ciao_lem_file_names().is_empty())
+  if (be_global->gen_ciao_svnt ())
     {
       *this->ciao_exec_svnt_
           << be_nl

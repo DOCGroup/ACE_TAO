@@ -82,7 +82,7 @@ BE_GlobalData::BE_GlobalData (void)
     ciao_exec_src_ending_ (ACE::strnew ("_exec.cpp")),
     ciao_exec_stub_hdr_ending_ (ACE::strnew ("EC.h")),
     ciao_exec_idl_ending_ (ACE::strnew ("E.idl")),
-    ciao_exec_svnt_ending_ (ACE::strnew ("_svnt.h")),
+    ciao_exec_svnt_ending_ (ACE::strnew ("E_svnt.h")),
     ciao_conn_hdr_ending_ (ACE::strnew ("_conn.h")),
     ciao_conn_src_ending_ (ACE::strnew ("_conn.cpp")),
     dds_typesupport_hdr_ending_ (ACE::strnew ("Support.h")),
