@@ -130,6 +130,13 @@ ACE_Atomic_Op_GCC<T>::operator= (
 
 template <typename T>
 ACE_INLINE T
+ACE_Atomic_Op_GCC<T>::exchange (T newval)
+{
+  return __sync_val_compare_and_swap (&this->value_, this->value_, newval);
+}
+
+template <typename T>
+ACE_INLINE T
 ACE_Atomic_Op_GCC<T>::value (void) const
 {
   return this->value_;

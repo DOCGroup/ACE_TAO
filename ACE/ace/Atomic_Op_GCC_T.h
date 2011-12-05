@@ -74,6 +74,9 @@ public:
   /// Atomically check if @c value_ less than rhs.
   bool operator< (T rhs) const;
 
+  /// Exchange value with @a newval.
+  T exchange (T newval);
+
   /// Explicitly return @c value_.
   T value (void) const;
 
