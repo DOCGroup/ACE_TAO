@@ -133,6 +133,7 @@ public:
       TAO_ROOT_CNH,
       TAO_ROOT_CNS,
       TAO_ROOT_EX_IDL,
+      TAO_ROOT_EX_SVNT,
       TAO_ROOT_ANY_OP_CH,
       TAO_ROOT_ANY_OP_CS,
       TAO_ROOT_CDR_OP_CH,
@@ -246,6 +247,7 @@ public:
   int start_ciao_exec_header (const char *fname);
   int start_ciao_exec_source (const char *fname);
   int start_ciao_exec_idl (const char *fname);
+  int start_ciao_exec_svnt (const char *fname);
   int start_ciao_conn_header (const char *fname);
   int start_ciao_conn_source (const char *fname);
   int start_ciao_ami_conn_idl (const char *fname);
@@ -291,6 +293,7 @@ public:
   int end_ciao_exec_header (void);
   int end_ciao_exec_source (void);
   int end_ciao_exec_idl (void);
+  int end_ciao_exec_svnt (void);
   int end_ciao_conn_header (void);
   int end_ciao_conn_source (void);
   int end_ciao_ami_conn_idl (void);
@@ -351,6 +354,9 @@ public:
 
   /// Get the CIAO executor IDL source stream.
   TAO_OutStream *ciao_exec_idl (void);
+
+  /// Get the CIAO executor svnt source stream.
+  TAO_OutStream *ciao_exec_svnt (void);
 
   /// Get the CIAO connector impl header stream.
   TAO_OutStream *ciao_conn_header (void);
@@ -496,6 +502,9 @@ private:
 
   /// Component executor impl source file.
   TAO_OutStream *ciao_exec_idl_;
+
+  /// Component executor svnt header file.
+  TAO_OutStream *ciao_exec_svnt_;
 
   /// Component connector impl header file.
   TAO_OutStream *ciao_conn_header_;

@@ -33,6 +33,7 @@
 #include "be_visitor_root/root_svth.h"
 #include "be_visitor_root/root_svts.h"
 #include "be_visitor_root/root_ex_idl.h"
+#include "be_visitor_root/root_ex_svnt.h"
 #include "be_visitor_root/root_exh.h"
 #include "be_visitor_root/root_exs.h"
 #include "be_visitor_root/root_cnh.h"
