@@ -1,3 +1,16 @@
+Mon Dec  5 19:57:02 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/AMH/Sink_Server/Base_Server.h:
+        * examples/AMH/Sink_Server/Base_Server.cpp:
+        * examples/AMH/Sink_Server/Client_Task.cpp:
+        * examples/AMH/Sink_Server/MT_AMH_Server.cpp:
+        * examples/AMH/Sink_Server/client.cpp:
+        * examples/AMH/Sink_Server/mt_server.cpp:
+        * examples/AMH/Sink_Server/run_test.pl:
+        * examples/AMH/Sink_Server/st_server.cpp:
+          Improving this test, looks the crashing on some build systems is
+          mostly timing due to a badly written example
+
 Mon Dec  5 12:30:15 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_connector/facet_ami_exs.cpp:
