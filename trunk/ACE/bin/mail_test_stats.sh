@@ -1,7 +1,7 @@
 #!/bin/sh
 # $Id$
 
-export TREE_ROOT=$HOME/ACE/trunk
+export TREE_ROOT=$HOME/ACE/latest
 export ACE_ROOT=$TREE_ROOT/ACE_wrappers
 export TAO_ROOT=$ACE_ROOT/TAO
 export CIAO_ROOT=$TAO_ROOT/CIAO
