@@ -76,7 +76,6 @@ if ($client->PutFile ($iorbase) == -1) {
     exit 1;
 }
 
-
 # Run client.
 print STDERR "\n     Client making $iterations calls to server: \n";
 $evt_per_sec = 1000/$delay_time/1000;
