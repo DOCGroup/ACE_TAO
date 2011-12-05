@@ -89,21 +89,25 @@ be_visitor_servant_svs::visit_component (be_component *node)
 
   /// If a component has neither facets nor event sinks, the
   /// setup methods aren't generated.
-  if (this->node_->n_remote_provides () > 0UL
-      || this->node_->n_consumes () > 0UL)
+  if (!is_connector)
     {
-      be_visitor_populate_port_tables ppt_visitor (this->ctx_);
 
-      if (ppt_visitor.visit_component_scope (node) == -1)
-      {
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "be_visitor_component_svs::"
-                           "visit_component - "
-                           "populate port tables visitor failed\n"),
-                          -1);
-      }
+      if (this->node_->n_remote_provides () > 0UL
+          || this->node_->n_consumes () > 0UL)
+        {
+
+          be_visitor_populate_port_tables ppt_visitor (this->ctx_);
+
+          if (ppt_visitor.visit_component_scope (node) == -1)
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "be_visitor_component_svs::"
+                               "visit_component - "
+                               "populate port tables visitor failed\n"),
+                              -1);
+          }
+        }
     }
-
   os_ << be_uidt_nl << "}";
 
   os_ << be_nl_2
@@ -182,7 +186,6 @@ be_visitor_servant_svs::visit_component (be_component *node)
 
   /// Port operations that require scope traversal to get all the
   /// possible string name matches.
-
   this->gen_provides_top ();
   this->gen_uses_top ();
 
@@ -193,17 +196,19 @@ be_visitor_servant_svs::visit_component (be_component *node)
       this->gen_emits_top ();
     }
 
-  /// This call will generate all other operations and attributes,
-  /// including inherited ones.
-  if (this->visit_component_scope (node) == -1)
+  if (!is_connector)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_component_svs::"
-                         "visit_component - "
-                         "visit_component_scope() failed\n"),
-                        -1);
+      /// This call will generate all other operations and attributes,
+      /// including inherited ones.
+      if (this->visit_component_scope (node) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "be_visitor_component_svs::"
+                             "visit_component - "
+                             "visit_component_scope() failed\n"),
+                            -1);
+        }
     }
-
   return 0;
 }
 
@@ -1531,7 +1536,14 @@ be_visitor_populate_port_tables::visit_provides (
     {
       return 0;
     }
+/*  AST_Decl::NodeType nt = node->node_type ();
+    bool is_connector = (nt == AST_Decl::NT_connector);
 
+    if (is_connector)
+      {
+        return 0;
+      }
+*/
   ACE_CString prefix (this->ctx_->port_prefix ());
   prefix += node->local_name ()->get_string ();
   const char *port_name = prefix.c_str ();
