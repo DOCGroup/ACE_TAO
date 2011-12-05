@@ -100,9 +100,9 @@ namespace CIAO_Messenger_Impl
   }
 
   void
-  Messenger_exec_i::subject ( const char* subject)
+  Messenger_exec_i::subject (const char* subject)
   {
-    this->subject_ = CORBA::string_dup( subject );
+    this->subject_ = subject;
   }
 
   // Port operations.
