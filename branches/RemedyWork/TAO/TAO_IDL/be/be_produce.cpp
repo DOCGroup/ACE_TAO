@@ -242,8 +242,8 @@ BE_produce (void)
       BE_visit_root (root_ex_idl_visitor, "CIAO executor IDL");
 
       ctx.state (TAO_CodeGen::TAO_ROOT_EX_SVNT);
-      be_visitor_root_ex_svnt root_ex_svnt_visitor (&ctx);
-      BE_visit_root (root_ex_svnt_visitor, "CIAO executor servant");
+      be_visitor_root_ex_svs root_ex_svs_visitor (&ctx);
+      BE_visit_root (root_ex_svs_visitor, "CIAO executor servant");
     }
 
   if (be_global->gen_ciao_exec_impl ())
