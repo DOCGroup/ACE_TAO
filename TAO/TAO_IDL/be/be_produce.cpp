@@ -224,7 +224,7 @@ BE_produce (void)
       BE_visit_root (root_svs_visitor, "CIAO servant source");
     }
   // if a servant need to be created or when explicitly a #pragma ciao lem is defined.
-  if (be_global->gen_ciao_svnt () || !idl_global->ciao_lem_file_names().is_empty())
+  if (be_global->gen_ciao_svnt ())
     {
       ctx.state (TAO_CodeGen::TAO_ROOT_SVTH);
       be_visitor_root_svth root_svth_visitor (&ctx);

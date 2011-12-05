@@ -1,3 +1,10 @@
+Mon Dec  5 18:43:32 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be/be_produce.cpp:
+          Reduced the restrictions for generating an executor servant.
+
 Mon Dec  5 16:08:50 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * TAO_IDL/be/be_codegen.cpp:
