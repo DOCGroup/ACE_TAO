@@ -127,7 +127,6 @@ Client_Task::run_test (void)
       this->roundtrip_->end_test ();
 
       test_end = ACE_OS::gethrtime ();
-
     }
   catch (const CORBA::Exception&)
     {
