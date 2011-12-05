@@ -1,3 +1,17 @@
+Mon Dec  5 12:27:54 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/TTY_IO.h:
+          Doxygen fix
+
+        * ace/config-linux.h:
+          Layout changes
+
+        * tests/Cached_Accept_Conn_Test.h:
+        * tests/Cached_Accept_Conn_Test.cpp:
+        * tests/MEM_Stream_Test.cpp:
+        * tests/QtReactor_Test.cpp:
+          Layout changes and removed some ACE_UNUSED_ARG usage
+
 Mon Dec  5 11:25:31 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/cleanbuilds.sh:

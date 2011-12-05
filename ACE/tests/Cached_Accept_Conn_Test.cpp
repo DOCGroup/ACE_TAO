@@ -33,8 +33,6 @@
 #pragma warning(disable:4503)
 #endif /* _MSC_VER */
 
-
-
 // Note: To keep both sunCC5.0 without debugging symbols and gcc2.7.3
 // happy, it was necessary to have the definitions of the methods of
 // the Accept_Strategy before the instantiations.
@@ -59,8 +57,7 @@ template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
 Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open (const ACE_PEER_ACCEPTOR_ADDR &local_addr,
                                                          bool restart)
 {
-  int result = ACCEPT_STRATEGY_BASE::open (local_addr,
-                                           restart);
+  int result = ACCEPT_STRATEGY_BASE::open (local_addr, restart);
 
   if (result == 0)
     return result;
