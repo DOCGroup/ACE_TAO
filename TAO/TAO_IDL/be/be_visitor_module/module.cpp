@@ -349,6 +349,7 @@ be_visitor_module::visit_interface (be_interface *node)
     case TAO_CodeGen::TAO_ROOT_CNS:
     case TAO_CodeGen::TAO_ROOT_SVTH:
     case TAO_CodeGen::TAO_ROOT_SVTS:
+    case TAO_CodeGen::TAO_ROOT_EX_SVNT:
       {
         // Nothing to be done for these cases.
         return 0;
@@ -666,6 +667,7 @@ be_visitor_module::visit_component (be_component *node)
     case TAO_CodeGen::TAO_ROOT_IS:
     case TAO_CodeGen::TAO_ROOT_CNH:
     case TAO_CodeGen::TAO_ROOT_CNS:
+    case TAO_CodeGen::TAO_ROOT_EX_SVNT:
       break;
     case TAO_CodeGen::TAO_ROOT_SVTH:
       {
