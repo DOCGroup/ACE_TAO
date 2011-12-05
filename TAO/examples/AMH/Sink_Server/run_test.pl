@@ -81,7 +81,7 @@ print STDERR "\n     Client making $iterations calls to server: \n";
 $evt_per_sec = 1000/$delay_time/1000;
 print STDERR "\n(Expect less than $evt_per_sec Events/sec) \n\n";
 
-$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + 285);
+$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + 60);
 
 if ($client_status != 0) {
     print STDERR "ERROR: client returned $client_status\n";

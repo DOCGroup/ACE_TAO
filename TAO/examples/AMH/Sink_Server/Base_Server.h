@@ -59,6 +59,8 @@ public:
   /// ORB inititalisation stuff
   int start_orb_and_poa (void);
 
+  int shutdown_orb_and_poa (void);
+
   /// register the servant with the poa
   virtual void register_servant (AMH_Servant *servant);
 

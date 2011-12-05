@@ -41,6 +41,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   amh_server.register_servant (&servant);
   amh_server.run_event_loop ();
+  amh_server.shutdown_orb_and_poa ();
 
   return 0;
 }

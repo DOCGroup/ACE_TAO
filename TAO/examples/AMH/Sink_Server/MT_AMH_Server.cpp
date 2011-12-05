@@ -30,7 +30,7 @@ MT_AMH_Server::usage (const char *message)
   //    something we normally do.
   //
   // Mayur: Seems cleaner to me this way.
-  ACE_ERROR ((LM_ERROR, "%s : %s", message, usage));
+  ACE_ERROR ((LM_ERROR, "%C : %C", message, usage));
 }
 
 
