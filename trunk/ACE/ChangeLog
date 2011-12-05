@@ -1,3 +1,13 @@
+Mon Dec  5 08:22:11 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/diff-builds-and-group-fixed-tests-only.sh:
+        * docs/Download.html:
+        * etc/index.html:
+          Made 6.0.6 publicly available
+
+        * docs/bczar/bczar.html:
+          Updated for next release and added wget step to get subversion config
+          file to make sure we checkout using commit timestamps
 
 Local Variables:
 mode: change-log
