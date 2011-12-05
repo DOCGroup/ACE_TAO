@@ -1,7 +1,7 @@
 
 //=============================================================================
 /**
- *  @file    root_ex_svnt.cpp
+ *  @file    root_ex_svs.cpp
  *
  *  $Id$
  *
@@ -16,23 +16,23 @@
 // Root visitor for CIAO executor IDL
 // ********************************
 
-be_visitor_root_ex_svnt::be_visitor_root_ex_svnt (
+be_visitor_root_ex_svs::be_visitor_root_ex_svs (
     be_visitor_context *ctx)
   : be_visitor_root (ctx)
 {
 }
 
-be_visitor_root_ex_svnt::~be_visitor_root_ex_svnt (void)
+be_visitor_root_ex_svs::~be_visitor_root_ex_svs (void)
 {
 }
 
 int
-be_visitor_root_ex_svnt::visit_root (be_root *node)
+be_visitor_root_ex_svs::visit_root (be_root *node)
 {
   if (this->init () == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_root_ex_svnt::init - ")
+                         ACE_TEXT ("be_visitor_root_ex_svs::init - ")
                          ACE_TEXT ("failed to initialize\n")),
                         -1);
     }
@@ -40,7 +40,7 @@ be_visitor_root_ex_svnt::visit_root (be_root *node)
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_root_ex_svnt::visit_root - ")
+                         ACE_TEXT ("be_visitor_root_ex_svs::visit_root - ")
                          ACE_TEXT ("codegen for scope failed\n")),
                         -1);
     }
@@ -51,7 +51,7 @@ be_visitor_root_ex_svnt::visit_root (be_root *node)
 }
 
 int
-be_visitor_root_ex_svnt::init (void)
+be_visitor_root_ex_svs::init (void)
 {
   // First open the client-side header file for writing.
   int const status =
@@ -61,7 +61,7 @@ be_visitor_root_ex_svnt::init (void)
   if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_root_ex_svnt::init - ")
+                         ACE_TEXT ("be_visitor_root_ex_svs::init - ")
                          ACE_TEXT ("Error opening CIAO executor ")
                          ACE_TEXT ("IDL file\n")),
                         -1);

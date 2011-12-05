@@ -1,3 +1,13 @@
+Mon Dec  5 19:33:12 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * TAO_IDL/be/be_produce.cpp:
+        * TAO_IDL/be/be_visitor_root.cpp:
+        * TAO_IDL/be/be_visitor_root/root_ex_svs.cpp:
+        * TAO_IDL/be_include/be_visitor_root.h:
+        * TAO_IDL/be_include/be_visitor_root/root_ex_svs.h:
+        * TAO_IDL/be/be_visitor_root/root_ex_svnt.cpp:
+          Renamed _svnt files since these are ignored by subversion
+
 Mon Dec  5 18:43:32 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * TAO_IDL/be/be_codegen.cpp:
