@@ -1,10 +1,11 @@
 #!/bin/sh
 # $Id$
 
-export TREE_ROOT=$HOME/ACE/latest
+export TREE_ROOT=$HOME/ACE/trunk
 export ACE_ROOT=$TREE_ROOT/ACE_wrappers
 export TAO_ROOT=$ACE_ROOT/TAO
 export CIAO_ROOT=$TAO_ROOT/CIAO
+export DANCE_ROOT=$TAO_ROOT/DAnCE
 mkdir -p $TREE_ROOT
 cd $TREE_ROOT
 svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/sets-anon/ACE+TAO+CIAO .
@@ -13,7 +14,10 @@ rm *Tests.txt
 rm *TestRev.txt
 rm *Ignore.txt
 rm *Builds.txt
+rm cleanbuildresults.txt
+
 ./diff-builds-and-group-fixed-tests-only.sh
+./cleanbuilds.sh
 
 MAILTO="devo-group@list.isis.vanderbilt.edu"
 MAIL="mail -S smtp=mail.remedy.nl"
@@ -44,3 +48,13 @@ $MAIL -r $MAILFROM -s "ACE/TAO/CIAO test statistics for $CURRENTDATE" $MAILTO < 
 
 rm -f $mailfile
 
+mailfile="/tmp/rsmailfile"
+{
+   echo "Sending failing tests for " $CURRENTDATE
+   echo
+   cat cleanbuildresults.txt
+} > $mailfile
+
+$MAIL -r $MAILFROM -s "ACE/TAO/CIAO failing tests for $CURRENTDATE" $MAILTO < $mailfile
+
+rm -f $mailfile
