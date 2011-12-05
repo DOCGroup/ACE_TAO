@@ -1,3 +1,28 @@
+Mon Dec  5 12:30:15 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_connector/facet_ami_exs.cpp:
+          const fix
+
+        * TAO_IDL/be/be_visitor_valuetype/field_cs.cpp:
+          Layout changes and generate doxygen style documentation
+
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_obv_cs.cpp:
+          Layout changes to the generated code
+
+        * examples/AMH/Sink_Server/run_test.pl:
+        * tao/PortableServer/Adapter_Activator.h:
+        * tests/Multiple/Multiple_Impl.h:
+          Zapped empty lines
+
+        * tests/Multiple/server.cpp:
+          Fixed typo in comment
+
+        * tests/POA/DSI/server.cpp:
+        * tests/POA/Explicit_Activation/server.cpp:
+        * tests/POA/On_Demand_Act_Direct_Coll/Server_Task.cpp:
+        * tests/POA/On_Demand_Loading/Server_Manager.cpp:
+        * tests/POA/Reference_Counted_Servant/server.cpp:
+          Close file descriptors earlier to resolve Coverity errors
 
 Local Variables:
 mode: change-log

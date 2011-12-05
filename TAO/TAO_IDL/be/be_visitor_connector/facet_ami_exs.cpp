@@ -186,7 +186,7 @@ be_visitor_facet_ami_exs::gen_reply_handler_class (void)
 
   Facet_AMI_Exec_Op_Attr_Generator op_attr_gen (this);
 
-  int status =
+  int const status =
     callback_iface->traverse_inheritance_graph (
       op_attr_gen,
       &os_,
