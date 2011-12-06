@@ -152,7 +152,7 @@ be_visitor_context_svth::visit_connector (be_connector *node)
 int
 be_visitor_context_svth::visit_uses (be_uses *node)
 {
-  if (node->imported ())
+  if (node->imported () && node->is_local ())
     {
       return 0;
     }
@@ -229,7 +229,7 @@ be_visitor_context_svth::visit_uses (be_uses *node)
 int
 be_visitor_context_svth::visit_publishes (be_publishes *node)
 {
-  if (node->imported ())
+  if (node->imported () && node->is_local ())
     {
       return 0;
     }
@@ -273,7 +273,7 @@ be_visitor_context_svth::visit_publishes (be_publishes *node)
 int
 be_visitor_context_svth::visit_emits (be_emits *node)
 {
-  if (node->imported ())
+  if (node->imported () && node->is_local ())
     {
       return 0;
     }
@@ -306,5 +306,3 @@ be_visitor_context_svth::visit_emits (be_emits *node)
 
   return 0;
 }
-
-
