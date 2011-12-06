@@ -1273,6 +1273,15 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
                   continue;
                 }
 
+              // No server-side operation generation on connector,
+              AST_Decl::NodeType nt =
+                ScopeAsDecl (op->defined_in ())->node_type ();
+
+               if (nt == AST_Decl::NT_connector)
+                {
+                  continue;
+                }
+
               // We are an operation node.
               *os << "{\"" << d->original_local_name () << "\", &"
                   << full_skeleton_name << "::"
@@ -1370,6 +1379,15 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
                 be_operation::narrow_from_decl (d);
 
               if (op->is_sendc_ami ())
+                {
+                  continue;
+                }
+
+              // No server-side operation generation on connector,
+              AST_Decl::NodeType nt =
+                ScopeAsDecl (op->defined_in ())->node_type ();
+
+               if (nt == AST_Decl::NT_connector)
                 {
                   continue;
                 }
