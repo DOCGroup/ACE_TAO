@@ -34,6 +34,16 @@ be_visitor_operation_sh::visit_operation (be_operation *node)
       return 0;
     }
 
+  /// No server-side code generation on connector,
+  /// except for operations derived from attributes.
+  AST_Decl::NodeType nt =
+    ScopeAsDecl (node->defined_in ())->node_type ();
+
+  if (nt == AST_Decl::NT_connector && !this->ctx_->attribute ())
+    {
+      return 0;
+    }
+
   TAO_OutStream *os = this->ctx_->stream ();
   this->ctx_->node (node);
 
