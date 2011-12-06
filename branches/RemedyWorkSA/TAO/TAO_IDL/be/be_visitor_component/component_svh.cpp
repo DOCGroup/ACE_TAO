@@ -47,22 +47,16 @@ be_visitor_component_svh::visit_component (be_component *node)
   /// code generation.
   node->scan (node);
 
-  AST_Decl::NodeType nt = node->node_type ();
-  bool is_connector = (nt == AST_Decl::NT_connector);
+  // Generate the facet servant class declaration.
+  be_visitor_facet_svh facet_visitor (this->ctx_);
 
-  if (! is_connector)
+  if (facet_visitor.visit_component_scope (node) == -1)
     {
-      // Generate the facet servant class declaration.
-      be_visitor_facet_svh facet_visitor (this->ctx_);
-
-      if (facet_visitor.visit_component_scope (node) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("be_visitor_component_svh::")
-                             ACE_TEXT ("visit_component - ")
-                             ACE_TEXT ("facet visitor failed\n")),
-                            -1);
-        }
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_visitor_component_svh::")
+                         ACE_TEXT ("visit_component - ")
+                         ACE_TEXT ("facet visitor failed\n")),
+                        -1);
     }
 
   /// CIDL-generated namespace used 'CIDL_' + composition name.

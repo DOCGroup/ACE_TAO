@@ -29,8 +29,6 @@ be_visitor_servant_svh::visit_component (be_component *node)
   // which already does a check for imported node, so none
   // is needed here.
   node_ = node;
-  AST_Decl::NodeType nt = node->node_type ();
-  bool is_connector = (nt == AST_Decl::NT_connector);
 
   AST_Decl *scope = ScopeAsDecl (node_->defined_in ());
   ACE_CString sname_str (scope->full_name ());
@@ -100,12 +98,9 @@ be_visitor_servant_svh::visit_component (be_component *node)
                         -1);
     }
 
-   if (! is_connector)
-     {
-       status = this->visit_component_scope (node);
-     }
+  status = this->visit_component_scope (node);
 
-   if (status == -1)
+  if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "be_visitor_servant_svh::"
