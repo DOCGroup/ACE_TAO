@@ -45,7 +45,7 @@ be_visitor_root_ex_svs::visit_root (be_root *node)
                         -1);
     }
 
-  (void) tao_cg->end_ciao_exec_svnt ();
+//   (void) tao_cg->end_ciao_exec_svnt ();
 
   return 0;
 }
@@ -54,21 +54,21 @@ int
 be_visitor_root_ex_svs::init (void)
 {
   // First open the client-side header file for writing.
-  int const status =
-    tao_cg->start_ciao_exec_svnt (
-      be_global->be_get_ciao_exec_svnt_fname ());
+//   int const status =
+//     tao_cg->start_ciao_exec_svnt (
+//       be_global->be_get_ciao_exec_svnt_fname ());
 
-  if (status == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_root_ex_svs::init - ")
-                         ACE_TEXT ("Error opening CIAO executor ")
-                         ACE_TEXT ("IDL file\n")),
-                        -1);
-    }
+//   if (status == -1)
+//     {
+//       ACE_ERROR_RETURN ((LM_ERROR,
+//                          ACE_TEXT ("be_visitor_root_ex_svs::init - ")
+//                          ACE_TEXT ("Error opening CIAO executor ")
+//                          ACE_TEXT ("IDL file\n")),
+//                         -1);
+//     }
 
   // Initialize the stream.
-  this->ctx_->stream (tao_cg->ciao_exec_svnt ());
+//   this->ctx_->stream (tao_cg->ciao_exec_svnt ());
 
   return 0;
 }

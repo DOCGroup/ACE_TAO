@@ -53,7 +53,6 @@ TAO_CodeGen::TAO_CodeGen (void)
     ciao_exec_header_ (0),
     ciao_exec_source_ (0),
     ciao_exec_idl_ (0),
-    ciao_exec_svnt_ (0),
     ciao_conn_header_ (0),
     ciao_conn_source_ (0),
     ciao_ami_conn_idl_ (0),
@@ -517,14 +516,14 @@ TAO_CodeGen::start_server_header (const char *fname)
                                    server_hdr);
     }
 
-  if (be_global->gen_ciao_exec_idl())
-    {
-      *this->server_header_
-        << be_nl
-        << "#include \""
-        << be_global->be_get_ciao_exec_svnt_fname (true)
-        << "\"";
-    }
+//   if (be_global->gen_ciao_exec_idl())
+//     {
+//       *this->server_header_
+//         << be_nl
+//         << "#include \""
+//         << be_global->be_get_ciao_exec_svnt_fname (true)
+//         << "\"";
+//     }
 
   /// These are generated regardless, so we put it before the
   /// check below.
@@ -1076,7 +1075,37 @@ TAO_CodeGen::start_ciao_svnt_header (const char *fname)
   // protection, but do optimize based on #pragma once.
   os << "\n#if !defined (ACE_LACKS_PRAGMA_ONCE)\n"
      << "# pragma once\n"
-     << "#endif /* ACE_LACKS_PRAGMA_ONCE */\n";
+     << "#endif /* ACE_LACKS_PRAGMA_ONCE */\n"
+     << be_nl;
+
+
+  char **path_tmp = 0;
+
+  for (ACE_Unbounded_Queue_Iterator<char *>riter (
+         idl_global->ciao_lem_file_names ());
+       riter.done () == 0;
+       riter.advance ())
+    {
+      riter.next (path_tmp);
+
+      ACE_CString filename (*path_tmp);
+      // sanity
+      if (filename.substr (filename.length() - 5) == "E.idl")
+        {
+          os  << "#include \""
+              << filename.substr(0, filename.length() - 5) << "_svnt.h\""
+              << be_nl;
+        }
+    }
+
+  // Generate the include statement for the template server header.
+  if (be_global->gen_ciao_svnt ())
+    {
+      os  << "#include \""
+          << be_global->be_get_ciao_tmpl_svnt_hdr_fname (true)
+          << "\"" << be_nl;
+    }
+
 
   this->gen_svnt_hdr_includes (this->ciao_svnt_header_);
 
@@ -1188,7 +1217,6 @@ TAO_CodeGen::start_ciao_svnt_template_header (const char *fname)
          << be_global->skel_export_include ()
          << "\"\n";
     }
-  // For base components/connectors.
 
   // Some compilers don't optimize the #ifndef header include
   // protection, but do optimize based on #pragma once.
@@ -1410,78 +1438,6 @@ TAO_CodeGen::ciao_exec_idl (void)
 {
   return this->ciao_exec_idl_;
 }
-
-
-int
-TAO_CodeGen::start_ciao_exec_svnt (const char *fname)
-{
-  // Clean up between multiple files.
-  delete this->ciao_exec_svnt_;
-
-  ACE_NEW_RETURN (this->ciao_exec_svnt_,
-                  TAO_OutStream,
-                  -1);
-  int status =
-    this->ciao_exec_svnt_->open (fname,
-                                TAO_OutStream::CIAO_EXEC_SVNT);
-
-  if (status == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("TAO_CodeGen::start_ciao_exec_svnt - ")
-                         ACE_TEXT ("Error opening file\n")),
-                        -1);
-    }
-
-  TAO_OutStream &os = *this->ciao_exec_svnt_;
-
-  os << be_nl
-     << "// TAO_IDL - Generated from" << be_nl
-     << "// " << __FILE__ << ":" << __LINE__
-     << be_nl_2;
-
-  // Generate the #ident string, if any.
-  this->gen_ident_string (this->ciao_exec_svnt_);
-
-  // Generate the #ifndef clause.
-  this->gen_ifndef_string (fname,
-                           this->ciao_exec_svnt_,
-                           "CIAO_SESSION_",
-                           "_H_");
-
-  if (be_global->pre_include () != 0)
-    {
-      os << "#include /**/ \""
-         << be_global->pre_include ()
-         << "\"\n";
-    }
-
-  // Some compilers don't optimize the #ifndef header include
-  // protection, but do optimize based on #pragma once.
-  os << "\n#if !defined (ACE_LACKS_PRAGMA_ONCE)\n"
-     << "# pragma once\n"
-     << "#endif /* ACE_LACKS_PRAGMA_ONCE */\n";
-
-  if (be_global->gen_ciao_svnt ())
-    {
-      *this->ciao_exec_svnt_
-          << be_nl
-          << "#include \""
-          << be_global->be_get_ciao_tmpl_svnt_hdr_fname (true)
-          << "\"";
-    }
-
-  this->gen_svnt_hdr_includes (this->ciao_exec_svnt_);
-
-  return 0;
-}
-
-TAO_OutStream *
-TAO_CodeGen::ciao_exec_svnt (void)
-{
-  return this->ciao_exec_svnt_;
-}
-
 
 int
 TAO_CodeGen::start_ciao_conn_header (const char *fname)
@@ -2084,22 +2040,6 @@ TAO_CodeGen::end_ciao_exec_idl (void)
 
   return 0;
 }
-
-int
-TAO_CodeGen::end_ciao_exec_svnt (void)
-{
-  if (be_global->post_include () != 0)
-    {
-      *this->ciao_exec_svnt_  << "\n\n#include /**/ \""
-                              << be_global->post_include ()
-                              << "\"";
-    }
-
-  *this->ciao_exec_svnt_ << "\n\n#endif /* ifndef */\n";
-
-  return 0;
-}
-
 
 int
 TAO_CodeGen::end_ciao_conn_header (void)

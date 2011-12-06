@@ -129,9 +129,6 @@ public:
   static const char *be_get_ciao_exec_idl_fname (
     bool base_name_only = false);
 
-  static const char *be_get_ciao_exec_svnt_fname (
-    bool base_name_only = false);
-
   static const char *be_get_ciao_conn_hdr_fname (
     bool base_name_only = false);
 
@@ -227,10 +224,6 @@ public:
     bool base_name_only = false);
 
   static const char *be_get_ciao_exec_idl (
-    UTL_String *idl_file_name,
-    bool base_name_only = false);
-
-  static const char *be_get_ciao_exec_svnt (
     UTL_String *idl_file_name,
     bool base_name_only = false);
 
@@ -536,9 +529,6 @@ public:
 
   void ciao_exec_idl_ending (const char* s);
   const char* ciao_exec_idl_ending (void) const;
-
-  void ciao_exec_svnt_ending (const char* s);
-  const char* ciao_exec_svnt_ending (void) const;
 
   void ciao_conn_header_ending (const char* s);
   const char* ciao_conn_header_ending (void) const;
@@ -1027,9 +1017,6 @@ private:
 
   /// CIAO executor IDL file name ending. Default is "E.idl".
   char* ciao_exec_idl_ending_;
-
-  /// CIAO executor svnt file name ending. Default is "E_svnt.idl".
-  char* ciao_exec_svnt_ending_;
 
   /// CIAO connector impl header file name ending. Default is "_conn.h".
   char* ciao_conn_hdr_ending_;
