@@ -35,23 +35,6 @@ be_visitor_component_svts::~be_visitor_component_svts (void)
 {
 }
 
-// int
-// be_visitor_component_svts::visit_provides (be_provides *node)
-// {
-//   be_visitor_facet_svts facet_svts (this->ctx_);
-//
-//
-//   if (facet_svts.visit_provides (node) == -1)
-//     {
-//       ACE_ERROR_RETURN ((LM_ERROR,
-//                          ACE_TEXT ("be_visitor_component_svts::")
-//                          ACE_TEXT ("visit_provides - ")
-//                          ACE_TEXT ("facet visitor failed\n")),
-//                         -1);
-//     }
-//   return 0;
-// }
-
 int
 be_visitor_component_svts::visit_component (be_component *node)
 {

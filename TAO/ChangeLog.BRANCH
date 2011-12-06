@@ -1,3 +1,17 @@
+Tue Dec  6 09:22:09 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/component_svts.cpp:
+          Removed comments.
+
+        * TAO_IDL/be/be_visitor_root.cpp:
+        * TAO_IDL/be_include/be_visitor_root.h:
+          Removed reference to the files below.
+
+        * TAO_IDL/be/be_visitor_root/root_ex_svs.cpp:
+        * TAO_IDL/be_include/be_visitor_root/root_ex_svs.h:
+          Removed these files since a separate servant file
+          is not needed.
+
 Tue Dec  6 09:15:52 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * TAO_IDL/be/be_codegen.cpp:
