@@ -1,3 +1,18 @@
+Tue Dec  6 09:15:52 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be/be_produce.cpp:
+        * TAO_IDL/be/be_visitor_component/component.cpp:
+        * TAO_IDL/be/be_visitor_module/module.cpp:
+        * TAO_IDL/be/be_visitor_root/root_ex_svs.cpp:
+        * TAO_IDL/be_include/be_global.h:
+          No need to create a new type of svnt file.
+
+        * TAO_IDL/be_include/be_codegen.h:
+          Using pragma ciao lem to determine which files
+          to include.
+
 Mon Dec  5 19:33:12 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * TAO_IDL/be/be_produce.cpp:

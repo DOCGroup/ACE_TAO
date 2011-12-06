@@ -82,7 +82,6 @@ BE_GlobalData::BE_GlobalData (void)
     ciao_exec_src_ending_ (ACE::strnew ("_exec.cpp")),
     ciao_exec_stub_hdr_ending_ (ACE::strnew ("EC.h")),
     ciao_exec_idl_ending_ (ACE::strnew ("E.idl")),
-    ciao_exec_svnt_ending_ (ACE::strnew ("E_svnt.h")),
     ciao_conn_hdr_ending_ (ACE::strnew ("_conn.h")),
     ciao_conn_src_ending_ (ACE::strnew ("_conn.cpp")),
     dds_typesupport_hdr_ending_ (ACE::strnew ("Support.h")),
@@ -521,18 +520,6 @@ BE_GlobalData::be_get_ciao_exec_idl (
 }
 
 const char *
-BE_GlobalData::be_get_ciao_exec_svnt (
-  UTL_String *idl_file_name,
-  bool base_name_only)
-{
-  return
-    be_change_idl_file_extension (
-      idl_file_name,
-      be_global->ciao_exec_svnt_ending (),
-      base_name_only);
-}
-
-const char *
 BE_GlobalData::be_get_ciao_conn_header (UTL_String *idl_file_name,
                                         bool base_name_only)
 {
@@ -770,16 +757,6 @@ BE_GlobalData::be_get_ciao_exec_idl_fname (
 {
   return
     be_get_ciao_exec_idl (
-      idl_global->stripped_filename (),
-      base_name_only);
-}
-
-const char *
-BE_GlobalData::be_get_ciao_exec_svnt_fname (
-  bool base_name_only)
-{
-  return
-    be_get_ciao_exec_svnt (
       idl_global->stripped_filename (),
       base_name_only);
 }
@@ -1481,19 +1458,6 @@ BE_GlobalData::ciao_exec_idl_ending (void) const
 }
 
 void
-BE_GlobalData::ciao_exec_svnt_ending (const char* s)
-{
-  ACE::strdelete (this->ciao_exec_svnt_ending_);
-  this->ciao_exec_svnt_ending_ = ACE::strnew (s);
-}
-
-const char*
-BE_GlobalData::ciao_exec_svnt_ending (void) const
-{
-  return this->ciao_exec_svnt_ending_;
-}
-
-void
 BE_GlobalData::ciao_conn_header_ending (const char* s)
 {
   ACE::strdelete (this->ciao_conn_hdr_ending_);
@@ -2116,9 +2080,6 @@ BE_GlobalData::destroy (void)
 
   ACE::strdelete (this->ciao_exec_idl_ending_);
   this->ciao_exec_idl_ending_ = 0;
-
-  ACE::strdelete (this->ciao_exec_svnt_ending_);
-  this->ciao_exec_svnt_ending_ = 0;
 
   ACE::strdelete (this->ciao_conn_hdr_ending_);
   this->ciao_conn_hdr_ending_ = 0;

@@ -213,7 +213,7 @@ BE_produce (void)
       BE_visit_root (root_is_visitor, "implementation skeleton");
     }
 
-  if (be_global->gen_ciao_svnt ())
+  if (be_global->gen_ciao_svnt () || be_global->gen_ciao_exec_idl ())
     {
       ctx.state (TAO_CodeGen::TAO_ROOT_SVH);
       be_visitor_root_svh root_svh_visitor (&ctx);
@@ -240,10 +240,6 @@ BE_produce (void)
       ctx.state (TAO_CodeGen::TAO_ROOT_EX_IDL);
       be_visitor_root_ex_idl root_ex_idl_visitor (&ctx);
       BE_visit_root (root_ex_idl_visitor, "CIAO executor IDL");
-
-      ctx.state (TAO_CodeGen::TAO_ROOT_EX_SVNT);
-      be_visitor_root_ex_svs root_ex_svs_visitor (&ctx);
-      BE_visit_root (root_ex_svs_visitor, "CIAO executor servant");
     }
 
   if (be_global->gen_ciao_exec_impl ())
