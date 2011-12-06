@@ -1,5 +1,5 @@
+﻿//=============================================================================
 
-//=============================================================================
 /**
  *  @file    valuetype.idl
  *
@@ -13,6 +13,7 @@
  *
  *  @author Gary Duzan <gduzan@bbn.com> Jeff Parsons <j.parsons@vanderbilt.edu>
  */
+
 //=============================================================================
 
 
@@ -23,6 +24,7 @@
 
 // A valuetype factory can have exceptions, so the declaration must pull in
 // an #include of SystemException.h.
+
 valuetype MyValueType
 {
   public string my_string_value;
@@ -72,4 +74,43 @@ module X
   typedef sequence<BXXX> BSeq;
 };
 
+// The original problem with the construct below was probably the
+// union member, but other features from the original example IDL
+// have been left in just in case.
+module ModSelection
+{
+  module SelectionDefns
+  {
+    abstract valuetype Criterion
+    {
+      void setCriterionRequiredAttributes (inout string theSelectedAttrs);
+      boolean isValid (in wstring theTrackSelectionAttrs);
+    };
+
+    valuetype CriterionExpr : Criterion
+    {
+      struct RightCriterionInfos
+      {
+        long theCriterionId;
+        CriterionExpr theRightExpr;
+      };
+
+      union RightCriterionExpr switch (boolean)
+      {
+        case TRUE: string theRightCriterionInfos;
+      };
+
+      public Criterion theLeftCriterion;
+      public RightCriterionExpr theRightCriterionExpr;
+
+      factory createWithCriterionLink (in Criterion theLeftCriterion,
+                                       in string link,
+                                       in CriterionExpr theRightCriterion);
+
+      factory createWithSingleCriterion (in Criterion theSingleCriterion);
+    };
+  };
+};
+
 #endif /* IDL_TEST_VALUETYPE_IDL */
+
