@@ -1,3 +1,11 @@
+Wed Dec  7 07:34:56 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be_include/be_codegen.h:
+          Reduced the number of generated include files.
+          Also generated a include guard for the servant
+          template source code.
+
 Tue Dec  6 13:25:04 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * TAO_IDL/be/be_visitor_component/context_svth.cpp:
