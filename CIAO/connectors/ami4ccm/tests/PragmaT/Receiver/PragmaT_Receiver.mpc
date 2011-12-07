@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -p PragmaT_Base PragmaT_Receiver"
 
-project(AMI_PragmaT_Base_PragmaT_Receiver_idl_gen) : componentidldefaults {
+project(AMI_PTB_PragmaT_Receiver_idl_gen) : componentidldefaults {
   custom_only = 1
   after += AMI_PragmaT_idl_gen
   idlflags += -Wb,stub_export_macro=PRAGMAT_RECEIVER_STUB_Export \
@@ -17,8 +17,8 @@ project(AMI_PragmaT_Base_PragmaT_Receiver_idl_gen) : componentidldefaults {
   }
 }
 
-project(AMI_PragmaT_Base_PragmaT_Receiver_lem_gen) : ciaoidldefaults {
-  after += AMI_PragmaT_Base_PragmaT_Receiver_idl_gen
+project(AMI_PTB_PragmaT_Receiver_lem_gen) : ciaoidldefaults {
+  after += AMI_PTB_PragmaT_Receiver_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=PRAGMAT_RECEIVER_LEM_STUB_Export \
               -Wb,stub_export_include=PragmaT_Receiver_lem_stub_export.h \
@@ -29,8 +29,8 @@ project(AMI_PragmaT_Base_PragmaT_Receiver_lem_gen) : ciaoidldefaults {
   }
 }
 
-project(AMI_PragmaT_Base_PragmaT_Receiver_l_stub) : ccm_svnt, messaging {
-  after += AMI_PragmaT_Base_PragmaT_Receiver_lem_gen AMI_PragmaT_Base_PragmaT_Receiver_stub AMI_PragmaT_stub
+project(AMI_PTB_PragmaT_Receiver_l_stub) : ccm_svnt, messaging {
+  after += AMI_PTB_PragmaT_Receiver_lem_gen AMI_PTB_PragmaT_Receiver_stub AMI_PragmaT_stub
   libs  += PragmaT_stub PragmaT_Receiver_stub
   libpaths += ../lib
   libout = ../lib
@@ -54,8 +54,8 @@ project(AMI_PragmaT_Base_PragmaT_Receiver_l_stub) : ccm_svnt, messaging {
   }
 }
 
-project(AMI_PragmaT_Base_PragmaT_Receiver_stub) : ccm_stub, messaging {
-  after += AMI_PragmaT_Base_PragmaT_Receiver_idl_gen AMI_PragmaT_stub
+project(AMI_PTB_PragmaT_Receiver_stub) : ccm_stub, messaging {
+  after += AMI_PTB_PragmaT_Receiver_idl_gen AMI_PragmaT_stub
   libs  += PragmaT_stub
   libpaths += ../lib
   libout = ../lib
@@ -79,8 +79,8 @@ project(AMI_PragmaT_Base_PragmaT_Receiver_stub) : ccm_stub, messaging {
   }
 }
 
-project(AMI_PragmaT_Base_PragmaT_Receiver_exec) : ciao_executor, messaging {
-  after   += AMI_PragmaT_Base_PragmaT_Receiver_l_stub AMI_PragmaT_Base_PragmaT_Receiver_stub AMI_PragmaT_stub AMI_PragmaT_lem_stub
+project(AMI_PTB_PragmaT_Receiver_exec) : ciao_executor, messaging {
+  after   += AMI_PTB_PragmaT_Receiver_l_stub AMI_PTB_PragmaT_Receiver_stub AMI_PragmaT_stub AMI_PragmaT_lem_stub
   sharedname = PragmaT_Receiver_exec
   libs += PragmaT_Receiver_stub PragmaT_Receiver_lem_stub PragmaT_stub PragmaT_lem_stub
   libpaths += ../lib
@@ -103,8 +103,8 @@ project(AMI_PragmaT_Base_PragmaT_Receiver_exec) : ciao_executor, messaging {
   }
 }
 
-project(AMI_PragmaT_Base_PragmaT_Receiver_svnt) : ciao_servant, messaging {
-  after      += AMI_PragmaT_Base_skel AMI_PragmaT_Base_PragmaT_Receiver_l_stub AMI_PragmaT_stub AMI_PragmaT_skel AMI_PragmaT_lem_stub
+project(AMI_PTB_PragmaT_Receiver_svnt) : ciao_servant, messaging {
+  after      += AMI_PragmaT_Base_skel AMI_PTB_PragmaT_Receiver_l_stub AMI_PragmaT_stub AMI_PragmaT_skel AMI_PragmaT_lem_stub
   sharedname  = PragmaT_Receiver_svnt
   libs       += PragmaT_Receiver_stub PragmaT_Receiver_lem_stub  \
                 PragmaT_skel \
