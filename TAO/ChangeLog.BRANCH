@@ -1,3 +1,10 @@
+Wed Dec  7 12:34:49 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/context_svth.cpp:
+        * TAO_IDL/be/be_visitor_component/context_svts.cpp:
+          No need to visit the component_scope; just visit
+          the scope is enough..
+
 Wed Dec  7 07:34:56 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * TAO_IDL/be/be_codegen.cpp:
