@@ -1,3 +1,9 @@
+Wed Dec  7 07:34:23 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * ciao/Servants/Facet_Servant_Base_T.h:
+        * ciao/Servants/Session/Servant_Impl_T.h:
+          Added some necessary includes.
+
 Mon Dec  5 19:10:07 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/idl/dds4ccm_stub.mpc:

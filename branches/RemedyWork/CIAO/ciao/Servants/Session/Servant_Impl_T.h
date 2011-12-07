@@ -26,6 +26,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ccm/Session/CCM_SessionComponentC.h"
+#include "ciao/Containers/Session/Session_Container.h"
 
 namespace CIAO
 {
