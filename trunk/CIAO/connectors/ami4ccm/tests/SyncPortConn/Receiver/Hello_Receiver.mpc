@@ -17,7 +17,7 @@ project(SPC_Base_Hello_Receiver_idl_gen) : componentidldefaults {
   }
 }
 
-project(SyncPortCon_Base_Hello_Receiver_lem_gen) : ciaoidldefaults {
+project(SPC_Base_Hello_Receiver_lem_gen) : ciaoidldefaults {
   after += SPC_Base_Hello_Receiver_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=HELLO_RECEIVER_LEM_STUB_Export \
@@ -29,8 +29,8 @@ project(SyncPortCon_Base_Hello_Receiver_lem_gen) : ciaoidldefaults {
   }
 }
 
-project(SyncPortCon_Base_Hello_Receiver_l_stub) : ccm_svnt, messaging {
-  after += SyncPortCon_Base_Hello_Receiver_lem_gen SyncPortCon_Base_Hello_Receiver_stub SyncPortCon_stub
+project(SPC_Base_Hello_Receiver_l_stub)) : ccm_svnt, messaging {
+  after += SPC_Base_Hello_Receiver_lem_gen SyncPortCon_Base_Hello_Receiver_stub SyncPortCon_stub
   libs  += Hello_stub Hello_Receiver_stub
   libpaths += ../lib
   libout = ../lib
@@ -80,7 +80,7 @@ project(SyncPortCon_Base_Hello_Receiver_stub) : ccm_stub, messaging {
 }
 
 project(SyncPortCon_Base_Hello_Receiver_exec) : ciao_executor, messaging {
-  after   += SyncPortCon_Base_Hello_Receiver_l_stub SyncPortCon_Base_Hello_Receiver_stub SyncPortCon_stub SyncPortCon_lem_stub
+  after   += SPC_Base_Hello_Receiver_l_stub) SyncPortCon_Base_Hello_Receiver_stub SyncPortCon_stub SyncPortCon_lem_stub
   sharedname = Hello_Receiver_exec
   libs += Hello_Receiver_stub Hello_Receiver_lem_stub Hello_stub Hello_lem_stub
   libpaths += ../lib
@@ -104,7 +104,7 @@ project(SyncPortCon_Base_Hello_Receiver_exec) : ciao_executor, messaging {
 }
 
 project(SyncPortCon_Base_Hello_Receiver_svnt) : ciao_servant, messaging {
-  after      += SyncPortCon_Base_skel SyncPortCon_Base_Hello_Receiver_l_stub SyncPortCon_stub SyncPortCon_skel SyncPortCon_lem_stub
+  after      += SyncPortCon_Base_skel SPC_Base_Hello_Receiver_l_stub) SyncPortCon_stub SyncPortCon_skel SyncPortCon_lem_stub
   sharedname  = Hello_Receiver_svnt
   libs       += Hello_Receiver_stub Hello_Receiver_lem_stub  \
                 Hello_skel \
