@@ -421,6 +421,7 @@ private:
   /// Used if one or both of the CIAO code gen flags are set.
   void gen_svnt_hdr_includes (TAO_OutStream *stream);
   void gen_svnt_src_includes (TAO_OutStream *stream);
+  void gen_svnt_tmpl_hdr_includes (TAO_OutStream *stream);
   void gen_exec_hdr_includes (void);
   void gen_exec_src_includes (void);
   void gen_exec_idl_includes (void);

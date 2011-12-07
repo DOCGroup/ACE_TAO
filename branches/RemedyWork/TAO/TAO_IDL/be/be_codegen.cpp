@@ -1191,7 +1191,7 @@ TAO_CodeGen::start_ciao_svnt_template_header (const char *fname)
   // Generate the #ifndef clause.
   this->gen_ifndef_string (fname,
                            this->ciao_svnt_template_header_,
-                           "CIAO_SESSION_",
+                           "CIAO_SERVANT_",
                            "_H_");
 
   if (be_global->pre_include () != 0)
@@ -1224,7 +1224,7 @@ TAO_CodeGen::start_ciao_svnt_template_header (const char *fname)
      << "# pragma once\n"
      << "#endif /* ACE_LACKS_PRAGMA_ONCE */\n\n";
 
-  this->gen_svnt_hdr_includes (this->ciao_svnt_template_header_);
+  this->gen_svnt_tmpl_hdr_includes (this->ciao_svnt_template_header_);
 
   if (idl_global->ami_connector_seen_)
     {
@@ -1269,6 +1269,12 @@ TAO_CodeGen::start_ciao_svnt_template_source (const char *fname)
 
   // Generate the #ident string, if any.
   this->gen_ident_string (this->ciao_svnt_template_source_);
+
+  // Generate the #ifndef clause.
+  this->gen_ifndef_string (fname,
+                           this->ciao_svnt_template_source_,
+                           "CIAO_SERVANT_",
+                           "_CPP_");
 
   this->gen_svnt_src_includes (this->ciao_svnt_template_source_);
 
@@ -2005,6 +2011,8 @@ TAO_CodeGen::end_ciao_svnt_template_header (void)
 int
 TAO_CodeGen::end_ciao_svnt_template_source (void)
 {
+  *this->ciao_svnt_template_source_ << "\n\n#endif /* ifndef */\n";
+
   *this->ciao_svnt_template_source_ << "\n";
 
   return 0;
@@ -3364,6 +3372,38 @@ TAO_CodeGen::gen_svnt_hdr_includes (TAO_OutStream *stream)
     stream,
     context_file.c_str ());
 
+  ACE_CString servant_file ("ciao/Servants/");
+  servant_file += be_global->ciao_container_type ();
+  servant_file += "/Servant_Impl_T.h";
+
+  this->gen_standard_include (
+    stream,
+    servant_file.c_str ());
+
+  this->gen_standard_include (
+    stream,
+    "ciao/Servants/Home_Servant_Impl_T.h");
+
+  this->gen_standard_include (
+    stream,
+    "ciao/Servants/Facet_Servant_Base_T.h");
+
+  *stream << be_nl;
+
+  this->gen_standard_include (
+    stream,
+    be_global->be_get_ciao_exec_stub_hdr_fname (true));
+
+  *stream << be_nl;
+
+  this->gen_standard_include (
+    stream,
+    be_global->be_get_server_hdr_fname (true));
+}
+
+void
+TAO_CodeGen::gen_svnt_tmpl_hdr_includes (TAO_OutStream *stream)
+{
   ACE_CString servant_file ("ciao/Servants/");
   servant_file += be_global->ciao_container_type ();
   servant_file += "/Servant_Impl_T.h";
