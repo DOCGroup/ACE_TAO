@@ -1,6 +1,9 @@
 USER VISIBLE CHANGES BETWEEN CIAO-1.0.6 and CIAO-1.1.0
 =======================================================
 
+. CIAO now supports the synchronous port and the ami4ccm lem pragma as
+  documented in the AMI4CCM Initial submission by Remedy IT (mars/11-06-01)
+
 USER VISIBLE CHANGES BETWEEN CIAO-1.0.5 and CIAO-1.0.6
 =======================================================
 
