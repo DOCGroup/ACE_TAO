@@ -80,13 +80,13 @@ be_visitor_context_svts::visit_component (be_component *node)
       << "{" << be_nl
       << "}";
 
-  if (this->visit_component_scope (node) == -1)
+  if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_context_svts")
-                         ACE_TEXT ("::visit_component - ")
-                         ACE_TEXT ("visit_component_scope() ")
-                         ACE_TEXT ("failed\n")),
+                        ACE_TEXT ("be_visitor_context_svts")
+                        ACE_TEXT ("::visit_component - ")
+                        ACE_TEXT ("visit_component_scope() ")
+                        ACE_TEXT ("failed\n")),
                         -1);
     }
 
@@ -102,10 +102,6 @@ be_visitor_context_svts::visit_connector (be_connector *node)
 int
 be_visitor_context_svts::visit_uses (be_uses *node)
 {
-  if (node->imported () && node->is_local ())
-    {
-      return 0;
-    }
 
   ACE_CString prefix (this->ctx_->port_prefix ());
   prefix += node->local_name ()->get_string ();
@@ -129,11 +125,6 @@ be_visitor_context_svts::visit_uses (be_uses *node)
 int
 be_visitor_context_svts::visit_publishes (be_publishes *node)
 {
-  if (node->imported () && node->is_local ())
-    {
-      return 0;
-    }
-
   AST_Type *obj = node->publishes_type ();
   const char *port_name =
     node->local_name ()->get_string ();
@@ -270,11 +261,6 @@ be_visitor_context_svts::visit_publishes (be_publishes *node)
 int
 be_visitor_context_svts::visit_emits (be_emits *node)
 {
-  if (node->imported () && node->is_local ())
-    {
-      return 0;
-    }
-
   AST_Type *obj = node->emits_type ();
   const char *port_name =
     node->local_name ()->get_string ();
