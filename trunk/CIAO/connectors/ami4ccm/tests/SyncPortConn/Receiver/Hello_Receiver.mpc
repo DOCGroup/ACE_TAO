@@ -29,7 +29,7 @@ project(SPC_Base_Hello_Receiver_lem_gen) : ciaoidldefaults {
   }
 }
 
-project(SPC_Base_Hello_Receiver_l_stub)) : ccm_svnt, messaging {
+project(SPC_Base_Hello_Receiver_l_stub) : ccm_svnt, messaging {
   after += SPC_Base_Hello_Receiver_lem_gen SyncPortCon_Base_Hello_Receiver_stub SyncPortCon_stub
   libs  += Hello_stub Hello_Receiver_stub
   libpaths += ../lib
