@@ -916,7 +916,8 @@ private:
   // ...but we need to do it only once.
 
   ACE_Unbounded_Queue<char *> ciao_ami_idl_fnames_;
-  // Stores directives from #pragma ciao ami4ccm idl "xxx".
+  // Stores directives from #pragma ciao ami4ccm idl "xxx"
+  // or  #pragma ami4ccm idl "xxx".
 
   ACE_Unbounded_Queue<char *> dds4ccm_impl_fnames_;
   // Stores directives from #pragma dds4ccm impl "xxx".

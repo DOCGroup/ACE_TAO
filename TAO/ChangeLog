@@ -1,3 +1,77 @@
+Wed Dec  7 10:47:15 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        Merged in the changes to update AMI4CCM to match the initial revision
+        with the synchronous port and the new pragma's added
+
+        === start changelog ===
+
+        Tue Dec  6 14:42:39 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+                * TAO_IDL/be/be_interface.cpp:
+                * TAO_IDL/be/be_visitor_component/component_svh.cpp:
+                * TAO_IDL/be/be_visitor_component/component_svs.cpp:
+                * TAO_IDL/be/be_visitor_component/servant_svh.cpp:
+                * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+                * TAO_IDL/be/be_visitor_operation/operation_sh.cpp:
+                * TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+                revert changes after 2011-11-30 (ChangeLog.BRANCH missing those items)
+
+        Wed Nov 30 16:45:10 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_connector/executor_ami_exs.cpp:
+                * TAO_IDL/be/be_visitor_connector/facet_ami_exh.cpp:
+                * TAO_IDL/be/be_visitor_connector/facet_ami_exs.cpp:
+
+        Wed Nov 30 14:19:10 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+                * TAO_IDL/be/be_codegen.cpp:
+                // remove debug info
+                * TAO_IDL/be/be_visitor_connector/facet_ami_exh.cpp:
+                * TAO_IDL/be/be_visitor_connector/facet_ami_exs.cpp:
+                * TAO_IDL/be_include/be_visitor_connector/facet_ami_exs.h:
+                Add visit_attribute functionality.
+
+        Tue Nov 29 12:59:03 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+                * TAO_IDL/be/be_visitor_connector/facet_ami_exs.cpp:
+                Correct check nil pointer in facet operation
+
+        Mon Nov 28 15:26:03 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_connector/executor_ami_exh.cpp:
+                * TAO_IDL/be/be_visitor_connector/facet_ami_exh.cpp:
+                * TAO_IDL/be/be_visitor_connector/facet_ami_exs.cpp:
+                * TAO_IDL/be_include/be_visitor_connector/facet_ami_exh.h:
+                * TAO_IDL/be_include/be_visitor_connector/facet_ami_exs.h:
+                Add traverse_inheritance_graph, needed  for derived interfaces
+
+        Wed Nov 23 14:00:38 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_connector/facet_ami_exs.cpp:
+                Changed return of sync operations.
+
+        Mon Nov 21 13:32:38 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
+
+                * TAO_IDL/be/be_codegen.cpp:
+                Exclude include *.AE.idl in *E.idl
+
+                * TAO_IDL/be/be_visitor_connector/connector_ami_exs.cpp:
+                * TAO_IDL/be/be_visitor_connector/executor_ami_exh.cpp:
+                * TAO_IDL/be/be_visitor_connector/executor_ami_exs.cpp:
+                * TAO_IDL/be/be_visitor_connector/facet_ami_exh.cpp:
+                * TAO_IDL/be/be_visitor_connector/facet_ami_exs.cpp:
+                * TAO_IDL/be_include/be_visitor_connector/facet_ami_exh.h:
+                * TAO_IDL/be_include/be_visitor_connector/facet_ami_exs.h:
+              Changes for sync port on AMI connector
+
+        Mon Nov  7 13:02:55 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
+
+                * TAO_IDL/fe/idl.ll:
+                * TAO_IDL/fe/lex.yy.cpp:
+                Add beside pragma's 'ciao ami4ccm ...' the pragma's 'ami4ccm ...' , according to ami4ccm spec.
+                In the future '#pragma ciao ami4ccm ...' has to  be removed.
+
+        === end changelog ===
+
 Wed Dec  7 10:28:00 UTC 2011  Simon Massey <simon dot massey at prismtech dot com>
 
         * tests/IDL_Test/IDL_Tests.mpc:
