@@ -1,3 +1,13 @@
+Wed Dec  7 10:28:00 UTC 2011  Simon Massey <simon dot massey at prismtech dot com>
+
+        * tests/IDL_Test/IDL_Tests.mpc:
+
+          Since the below modification removed the -GA from the valuetype.idl
+          generation step in the mpc file, the valuetypeA.cpp is now
+          not generated, thus this file should not be mentioned in the
+          DLL projects Source_Files section. Machines were compiling and
+          linking the old file or stating that it was not found.
+
 Mon Dec  5 20:32:56 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_valuetype/valuetype.cpp:

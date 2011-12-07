@@ -210,7 +210,6 @@ project(*DLL): taoidldefaults, taolib, messaging {
     typeprefixS.cpp
     unionC.cpp
     unionS.cpp
-    valuetypeA.cpp
     valuetypeC.cpp
     valuetypeS.cpp
   }
