@@ -4,11 +4,11 @@
 
   <UUID>6D382DAE-9024-4C4D-B91B-A0F9176AFACF</UUID>
 
-  <implementation xmi:id="InterReturnT_ReceiverHomeImplementation">
-    <name>InterReturnT_ReceiverHomeImplementation</name>
+  <implementation xmi:id="Hello_ReceiverHomeImplementation">
+    <name>Hello_ReceiverHomeImplementation</name>
     <source/>
-    <artifact xmi:idref="InterReturnT_Receiver_ExecArtifact"/>
-    <artifact xmi:idref="InterReturnT_Receiver_SvntArtifact"/>
+    <artifact xmi:idref="Hello_Receiver_ExecArtifact"/>
+    <artifact xmi:idref="Hello_Receiver_SvntArtifact"/>
     <execParameter>
       <name>component factory</name>
       <value>
@@ -16,7 +16,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_InterReturnT_Receiver_Impl</string>
+          <string>create_Hello_AMI_Receiver_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -27,7 +27,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>InterReturnT.ImplementationArtifacts.ReceiverArtifacts.Receiver_exec</string>
+          <string>Hello.ImplementationArtifacts.ReceiverArtifacts.Receiver_exec</string>
         </value>
       </value>
     </execParameter>
@@ -38,7 +38,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_InterReturnT_Receiver_Servant</string>
+          <string>create_Hello_Receiver_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -49,17 +49,17 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>InterReturnT.ImplementationArtifacts.ReceiverArtifacts.Receiver_svnt</string>
+          <string>Hello.ImplementationArtifacts.ReceiverArtifacts.Receiver_svnt</string>
         </value>
       </value>
     </execParameter>
   </implementation>
 
-  <implementation xmi:id="InterReturnT_SenderHomeImplementation">
-    <name>InterReturnT_SenderHomeImplementation</name>
+  <implementation xmi:id="Hello_SenderHomeImplementation">
+    <name>Hello_SenderHomeImplementation</name>
     <source/>
-    <artifact xmi:idref="InterReturnT_Sender_ExecArtifact"/>
-    <artifact xmi:idref="InterReturnT_Sender_SvntArtifact"/>
+    <artifact xmi:idref="Hello_Sender_ExecArtifact"/>
+    <artifact xmi:idref="Hello_Sender_SvntArtifact"/>
     <execParameter>
       <name>component factory</name>
       <value>
@@ -67,7 +67,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_InterReturnT_Sender_Impl</string>
+          <string>create_Hello_Sender_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -78,7 +78,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>InterReturnT.ImplementationArtifacts.SenderArtifacts.Sender_exec</string>
+          <string>Hello.ImplementationArtifacts.SenderArtifacts.Sender_exec</string>
         </value>
       </value>
     </execParameter>
@@ -89,7 +89,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_InterReturnT_Sender_Servant</string>
+          <string>create_Hello_Sender_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -100,17 +100,17 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>InterReturnT.ImplementationArtifacts.SenderArtifacts.Sender_svnt</string>
+          <string>Hello.ImplementationArtifacts.SenderArtifacts.Sender_svnt</string>
         </value>
       </value>
     </execParameter>
   </implementation>
 
-  <implementation xmi:id="InterReturnT_AMIHomeImplementation">
-    <name>InterReturnT_AMIHomeImplementation</name>
+  <implementation xmi:id="Hello_AMIHomeImplementation">
+    <name>Hello_AMIHomeImplementation</name>
     <source/>
-    <artifact xmi:idref="InterReturnT_AMI_ExecArtifact"/>
-    <artifact xmi:idref="InterReturnT_AMI_SvntArtifact"/>
+    <artifact xmi:idref="Hello_AMI_ExecArtifact"/>
+    <artifact xmi:idref="Hello_AMI_SvntArtifact"/>
     <execParameter>
       <name>component factory</name>
       <value>
@@ -118,7 +118,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_InterReturnT_AMI4CCM_MyFoo_Connector_Impl</string>
+          <string>create_Hello_AMI4CCM_MyFoo_Connector_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -129,7 +129,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>InterReturnT.ImplementationArtifacts.AMIArtifacts.AMI_exec</string>
+          <string>Hello.ImplementationArtifacts.AMIArtifacts.AMI_exec</string>
         </value>
       </value>
     </execParameter>
@@ -140,7 +140,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_InterReturnT_AMI4CCM_MyFoo_Connector_AMI4CCM_Connector_Servant</string>
+          <string>create_Hello_AMI4CCM_MyFoo_Connector_AMI4CCM_Connector_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -151,17 +151,17 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>InterReturnT.ImplementationArtifacts.AMIArtifacts.AMI_svnt</string>
+          <string>Hello.ImplementationArtifacts.AMIArtifacts.AMI_svnt</string>
         </value>
       </value>
     </execParameter>
   </implementation>
 
-  <instance xmi:id="InterReturnT.ComponentImplementations.InterReturnTImplementation.InterReturnT.Receiver">
-    <name>InterReturnT.ComponentImplementations.InterReturnTImplementation.InterReturnT.Receiver</name>
+  <instance xmi:id="Hello.ComponentImplementations.HelloImplementation.Hello.Receiver">
+    <name>Hello.ComponentImplementations.HelloImplementation.Hello.Receiver</name>
     <node>Receiver</node>
     <source/>
-    <implementation xmi:idref="InterReturnT_ReceiverHomeImplementation"/>
+    <implementation xmi:idref="Hello_ReceiverHomeImplementation"/>
     <configProperty>
       <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
       <value>
@@ -175,11 +175,11 @@
     </configProperty>
   </instance>
 
-  <instance xmi:id="InterReturnT.ComponentImplementations.InterReturnTImplementation.InterReturnT.Sender">
-    <name>InterReturnT.ComponentImplementations.InterReturnTImplementation.InterReturnT.Sender</name>
+  <instance xmi:id="Hello.ComponentImplementations.HelloImplementation.Hello.Sender">
+    <name>Hello.ComponentImplementations.HelloImplementation.Hello.Sender</name>
     <node>Sender</node>
     <source/>
-    <implementation xmi:idref="InterReturnT_SenderHomeImplementation"/>
+    <implementation xmi:idref="Hello_SenderHomeImplementation"/>
     <configProperty>
       <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
       <value>
@@ -193,11 +193,11 @@
     </configProperty>
   </instance>
 
-  <instance xmi:id="InterReturnT.ComponentImplementations.InterReturnTImplementation.InterReturnT.AMI">
-    <name>InterReturnT.ComponentImplementations.InterReturnTImplementation.InterReturnT.AMI</name>
+  <instance xmi:id="Hello.ComponentImplementations.HelloImplementation.Hello.AMI">
+    <name>Hello.ComponentImplementations.HelloImplementation.Hello.AMI</name>
     <node>Sender</node>
     <source/>
-    <implementation xmi:idref="InterReturnT_AMIHomeImplementation"/>
+    <implementation xmi:idref="Hello_AMIHomeImplementation"/>
     <configProperty>
       <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
       <value>
@@ -211,7 +211,7 @@
     </configProperty>
   </instance>
 
-  <connection>
+ <connection>
     <name>run_asynch_foo_connection</name>
     <deployRequirement>
       <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
@@ -221,13 +221,13 @@
       <portName>sendc_run_my_foo</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="InterReturnT.ComponentImplementations.InterReturnTImplementation.InterReturnT.Sender" />
+      <instance xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.Sender" />
     </internalEndpoint>
     <internalEndpoint>
       <portName>ami4ccm_port_ami4ccm_provides</portName>
       <provider>true</provider>
       <kind>Facet</kind>
-      <instance xmi:idref="InterReturnT.ComponentImplementations.InterReturnTImplementation.InterReturnT.AMI" />
+      <instance xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.AMI" />
     </internalEndpoint>
   </connection>
 
@@ -237,13 +237,13 @@
       <portName>do_my_foo</portName>
       <provider>true</provider>
       <kind>Facet</kind>
-      <instance xmi:idref="InterReturnT.ComponentImplementations.InterReturnTImplementation.InterReturnT.Receiver" />
+      <instance xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.Receiver" />
     </internalEndpoint>
     <internalEndpoint>
       <portName>ami4ccm_port_ami4ccm_uses</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="InterReturnT.ComponentImplementations.InterReturnTImplementation.InterReturnT.AMI" />
+      <instance xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.AMI" />
     </internalEndpoint>
   </connection>
 
@@ -253,22 +253,41 @@
       <portName>do_my_foo</portName>
       <provider>true</provider>
       <kind>Facet</kind>
-      <instance xmi:idref="InterReturnT.ComponentImplementations.InterReturnTImplementation.InterReturnT.Receiver" />
+      <instance xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.Receiver" />
     </internalEndpoint>
     <internalEndpoint>
       <portName>run_my_foo</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="InterReturnT.ComponentImplementations.InterReturnTImplementation.InterReturnT.Sender" />
+      <instance xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.Sender" />
     </internalEndpoint>
   </connection>
 
+ <!--connection>
+    <name>run_synch_foo_connection</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>run_my_foo</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.Sender" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>ami4ccm_port_ami4ccm_sync_provides</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.AMI" />
+    </internalEndpoint>
+  </connection-->
 
-  <artifact xmi:id="InterReturnT_AMI_SvntArtifact">
-    <name>InterReturnT.ImplementationArtifacts.AMIArtifacts.AMI_svnt</name>
+  <artifact xmi:id="Hello_AMI_SvntArtifact">
+    <name>Hello.ImplementationArtifacts.AMIArtifacts.AMI_svnt</name>
     <source/>
     <node/>
-    <location>InterReturnT_svnt</location>
+    <location>Hello_svnt</location>
     <execParameter>
       <name>entryPoint</name>
       <value>
@@ -276,17 +295,17 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_InterReturnT_AMI4CCM_MyFoo_Connector_AMI4CCM_Connector_Servant</string>
+          <string>create_Hello_AMI4CCM_MyFoo_Connector_AMI4CCM_Connector_Servant</string>
         </value>
       </value>
     </execParameter>
   </artifact>
 
-  <artifact xmi:id="InterReturnT_AMI_ExecArtifact">
-    <name>InterReturnT.ImplementationArtifacts.AMIArtifacts.AMI_exec</name>
+  <artifact xmi:id="Hello_AMI_ExecArtifact">
+    <name>Hello.ImplementationArtifacts.AMIArtifacts.AMI_exec</name>
     <source/>
     <node/>
-    <location>InterReturnT_conn</location>
+    <location>Hello_conn</location>
     <execParameter>
       <name>entryPoint</name>
       <value>
@@ -294,17 +313,17 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_InterReturnT_AMI4CCM_MyFoo_Connector_Impl</string>
+          <string>create_Hello_AMI4CCM_MyFoo_Connector_Impl</string>
         </value>
       </value>
     </execParameter>
   </artifact>
 
-  <artifact xmi:id="InterReturnT_Receiver_SvntArtifact">
-    <name>InterReturnT.ImplementationArtifacts.ReceiverArtifacts.Receiver_svnt</name>
+  <artifact xmi:id="Hello_Receiver_SvntArtifact">
+    <name>Hello.ImplementationArtifacts.ReceiverArtifacts.Receiver_svnt</name>
     <source/>
     <node/>
-    <location>InterReturnT_Receiver_svnt</location>
+    <location>Hello_Receiver_svnt</location>
     <execParameter>
       <name>entryPoint</name>
       <value>
@@ -312,17 +331,17 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_InterReturnT_AMI_ReceiverHome_Servant</string>
+          <string>create_Hello_AMI_ReceiverHome_Servant</string>
         </value>
       </value>
     </execParameter>
   </artifact>
 
-  <artifact xmi:id="InterReturnT_Receiver_ExecArtifact">
-    <name>InterReturnT.ImplementationArtifacts.ReceiverArtifacts.Receiver_exec</name>
+  <artifact xmi:id="Hello_Receiver_ExecArtifact">
+    <name>Hello.ImplementationArtifacts.ReceiverArtifacts.Receiver_exec</name>
     <source/>
     <node/>
-    <location>InterReturnT_Receiver_exec</location>
+    <location>Hello_Receiver_exec</location>
     <execParameter>
       <name>entryPoint</name>
       <value>
@@ -330,17 +349,17 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_InterReturnT_AMI_ReceiverHome_Impl</string>
+          <string>create_Hello_AMI_ReceiverHome_Impl</string>
         </value>
       </value>
     </execParameter>
   </artifact>
 
-  <artifact xmi:id="InterReturnT_Sender_SvntArtifact">
-    <name>InterReturnT.ImplementationArtifacts.SenderArtifacts.Sender_svnt</name>
+  <artifact xmi:id="Hello_Sender_SvntArtifact">
+    <name>Hello.ImplementationArtifacts.SenderArtifacts.Sender_svnt</name>
     <source/>
     <node/>
-    <location>InterReturnT_Sender_svnt</location>
+    <location>Hello_Sender_svnt</location>
     <execParameter>
       <name>entryPoint</name>
       <value>
@@ -348,17 +367,17 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_InterReturnT_AMI_SenderHome_Servant</string>
+          <string>create_Hello_AMI_SenderHome_Servant</string>
         </value>
       </value>
     </execParameter>
   </artifact>
 
-  <artifact xmi:id="InterReturnT_Sender_ExecArtifact">
-    <name>InterReturnT.ImplementationArtifacts.SenderArtifacts.Sender_exec</name>
+  <artifact xmi:id="Hello_Sender_ExecArtifact">
+    <name>Hello.ImplementationArtifacts.SenderArtifacts.Sender_exec</name>
     <source/>
     <node/>
-    <location>InterReturnT_Sender_exec</location>
+    <location>Hello_Sender_exec</location>
     <execParameter>
       <name>entryPoint</name>
       <value>
@@ -366,7 +385,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_InterReturnT_AMI_SenderHome_Impl</string>
+          <string>create_Hello_AMI_SenderHome_Impl</string>
         </value>
       </value>
     </execParameter>

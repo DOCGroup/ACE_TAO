@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file    facet_ami_exs.cpp
@@ -12,11 +11,15 @@
  *  @author Jeff Parsons
  */
 //=============================================================================
+#include "ast_generator.h"
+#include "be_predefined_type.h"
+
 
 be_visitor_facet_ami_exs::be_visitor_facet_ami_exs (
       be_visitor_context *ctx)
   : be_visitor_component_scope (ctx),
-    for_reply_handler_ (true)
+    for_reply_handler_ (true),
+    sync_(false)
 {
 }
 
@@ -40,17 +43,18 @@ be_visitor_facet_ami_exs::visit_component (be_component *node)
 int
 be_visitor_facet_ami_exs::visit_provides (be_provides *node)
 {
+
   this->iface_ =
     be_interface::narrow_from_decl (node->provides_type ());
 
-  if (this->gen_reply_handler_class () == -1)
+    if (this->gen_reply_handler_class () == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_facet_ami_exs")
-                         ACE_TEXT ("::visit_provides - ")
-                         ACE_TEXT ("gen_reply_handler_class() ")
-                         ACE_TEXT ("failed\n")),
-                        -1);
+               ACE_TEXT ("be_visitor_facet_ami_exs")
+               ACE_TEXT ("::visit_provides - ")
+               ACE_TEXT ("gen_reply_handler_class() ")
+               ACE_TEXT ("failed\n")),
+              -1);
     }
 
   if (this->gen_facet_executor_class () == -1)
@@ -65,6 +69,70 @@ be_visitor_facet_ami_exs::visit_provides (be_provides *node)
 
   return 0;
 }
+int
+be_visitor_facet_ami_exs::visit_attribute (be_attribute *node)
+{
+
+  be_operation get_op (node->field_type (),
+                         AST_Operation::OP_noflags,
+                         node->name (),
+                         0,
+                         0);
+  get_op.set_name ((UTL_IdList *) node->name ()->copy ());
+  if (this->visit_operation (&get_op) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%N:%l) be_visitor_facet_ami_exs::"
+                           "visit_attribute - "
+                           "codegen for get_attribute failed\n"),
+                          -1);
+    }
+
+  get_op.destroy ();
+
+  if (node->readonly ())
+    {
+      // Nothing else to do.
+      return 0;
+    }
+  Identifier id ("void");
+  UTL_ScopedName sn (&id, 0);
+
+  // Create the return type, which is "void"
+  be_predefined_type rt (AST_PredefinedType::PT_void, &sn);
+
+  // Argument type is the same as the attribute type.
+  AST_Argument *arg =
+      idl_global->gen ()->create_argument (AST_Argument::dir_IN,
+                                           node->field_type (),
+                                           node->name ());
+
+  arg->set_name ((UTL_IdList *) node->name ()->copy ());
+
+  // Create the operation.
+  be_operation set_op (&rt,
+                       AST_Operation::OP_noflags,
+                       node->name (),
+                       0,
+                       0);
+
+  set_op.set_name ((UTL_IdList *) node->name ()->copy ());
+  set_op.be_add_argument (arg);
+
+  if (this->visit_operation (&set_op) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%N:%l) be_visitor_facet_ami_exs::"
+                           "visit_attribute - "
+                           "codegen for set_attribute failed\n"),
+                          -1);
+    }
+
+  set_op.destroy ();
+  rt.destroy ();
+
+  return 0;
+}
 
 int
 be_visitor_facet_ami_exs::visit_operation (be_operation *node)
@@ -76,19 +144,37 @@ be_visitor_facet_ami_exs::visit_operation (be_operation *node)
   /// connector. We want to skip the CCM-related operations
   /// that were added to the connector since it's a component.
   /// We want only the facet interface operations.
+
+  // Coming for sync attribute operations, node_type is NT_root
+  if (d->node_type () == AST_Decl::NT_root)
+    {
+       return gen_facet_executor_sync_op (node);
+    }
+
   if (d->node_type () != AST_Decl::NT_interface)
     {
       return  0;
     }
 
-  if (this->for_reply_handler_)
+  if ((this->for_reply_handler_) && (this->sync_))
+    {
+      return 0;
+   }
+
+  if ((this->for_reply_handler_) && (!this->sync_))
     {
       return this->gen_reply_hander_op (node);
     }
-  else
+  else if ((!this->for_reply_handler_) && (this->sync_))
+    {
+      return gen_facet_executor_sync_op (node);
+    }
+  else if ((!this->for_reply_handler_) && (!this->sync_))
     {
       return this->gen_facet_executor_op (node);
     }
+  else
+    return 0;
 }
 
 int
@@ -118,11 +204,45 @@ be_visitor_facet_ami_exs::post_process (be_decl *node)
 
   return 0;
 }
+void
+be_visitor_facet_ami_exs::init (void)
+{
+  UTL_Scope *s = this->iface_->defined_in ();
+  ACE_CString handler_str (
+    ScopeAsDecl (this->iface_->defined_in ())->full_name ());
+  handler_str += "::AMI_";
+  ACE_CString tmp (this->iface_->local_name ());
+  handler_str += tmp.substr (ACE_OS::strlen ("AMI4CCM_"));
+  handler_str += "Handler";
 
+  UTL_ScopedName *sn =
+    FE_Utils::string_to_scoped_name (handler_str.c_str ());
+  AST_Decl *d = s->lookup_by_name (sn, true);
+
+  sn->destroy ();
+  delete sn;
+  sn = 0;
+
+
+  be_interface *callback_iface =
+    be_interface::narrow_from_decl (d);
+
+  if (callback_iface == 0)
+   this->sync_ = true;
+  else
+    this->sync_ = false;
+
+
+}
 int
 be_visitor_facet_ami_exs::gen_reply_handler_class (void)
 {
   this->for_reply_handler_ = true;
+
+  this->init ();
+  if (this->sync_)
+    return 0;
+
 
   const char *suffix = "_reply_handler";
   UTL_Scope *s = this->iface_->defined_in ();
@@ -175,6 +295,7 @@ be_visitor_facet_ami_exs::gen_reply_handler_class (void)
   delete sn;
   sn = 0;
 
+
   be_interface *callback_iface =
     be_interface::narrow_from_decl (d);
 
@@ -208,6 +329,7 @@ be_visitor_facet_ami_exs::gen_reply_handler_class (void)
 int
 be_visitor_facet_ami_exs::gen_facet_executor_class (void)
 {
+
   this->for_reply_handler_ = false;
 
   const char *suffix = "_exec_i";
@@ -227,15 +349,47 @@ be_visitor_facet_ami_exs::gen_facet_executor_class (void)
       << "{" << be_nl
       << "}";
 
+    ACE_CString handler_str (
+    ScopeAsDecl (this->iface_->defined_in ())->full_name ());
+    ACE_CString tmp (this->iface_->local_name ());
+    handler_str += "::";
+    handler_str += tmp;
 
-  if (this->visit_scope (this->iface_) == -1)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("be_visitor_connector_ami_exs")
-                  ACE_TEXT ("::gen_reply_handler_class - ")
-                  ACE_TEXT ("visit_scope() on sendc ")
-                  ACE_TEXT ("interface failed\n")));
-    }
+    UTL_Scope *ss = this->iface_->defined_in();
+    UTL_ScopedName *sn =
+       FE_Utils::string_to_scoped_name (handler_str.c_str ());
+    AST_Decl *d = ss->lookup_by_name (sn, true);
+
+    sn->destroy ();
+    delete sn;
+    sn = 0;
+
+    be_interface *sync_iface =
+       be_interface::narrow_from_decl (d);
+
+    /// The overload of traverse_inheritance_graph() used here
+    /// doesn't automatically prime the queues.
+    sync_iface->get_insert_queue ().reset ();
+    sync_iface->get_del_queue ().reset ();
+    sync_iface->get_insert_queue ().enqueue_tail (sync_iface);
+
+    Facet_AMI_Exec_Op_Attr_Generator op_attr_gen (this);
+    int status =
+           sync_iface->traverse_inheritance_graph(
+               op_attr_gen,
+               &os_,
+               false,
+               false);
+
+    if (status == -1)
+      {
+        ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("be_visitor_facet_ami_exh")
+                        ACE_TEXT ("::gen_facet_executor_class - ")
+                        ACE_TEXT ("traverse_inheritance_graph() on ")
+                        ACE_TEXT ("interface failed\n")));
+
+      }
 
   ACE_CString scope_str (scope_name, 0, false);
 
@@ -299,6 +453,7 @@ be_visitor_facet_ami_exs::gen_facet_executor_class (void)
 int
 be_visitor_facet_ami_exs::gen_reply_hander_op (be_operation *node)
 {
+
   os_ << be_nl_2
       << "void" << be_nl
       << this->iface_->local_name () << "_reply_handler::"
@@ -384,7 +539,12 @@ be_visitor_facet_ami_exs::gen_reply_hander_op (be_operation *node)
 int
 be_visitor_facet_ami_exs::gen_facet_executor_op (be_operation *node)
 {
-  os_ << be_nl_2
+
+  // do not handle not sendc operations.
+  if (ACE_OS::strstr (node->local_name()->get_string (), "sendc_")== 0)
+     return 0;
+
+    os_ << be_nl_2
       << "void" << be_nl
       << this->iface_->local_name () << "_exec_i::"
       << node->local_name ();
@@ -486,7 +646,110 @@ be_visitor_facet_ami_exs::gen_facet_executor_op (be_operation *node)
 
   return 0;
 }
+int
+be_visitor_facet_ami_exs::gen_facet_executor_sync_op (be_operation *node)
+{
 
+   if (node->is_sendc_ami())
+     return 0;
+
+   os_ << be_nl_2;
+  // generate the return type.
+  be_type *bt = be_type::narrow_from_decl (node->return_type ());
+
+  if (!bt)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_visitor_operation_ch::")
+                         ACE_TEXT ("gen_facet_executor_sync_op - ")
+                         ACE_TEXT ("Bad return type\n")),
+                        -1);
+    }
+
+  // Grab the right visitor to generate the return type.
+  be_visitor_operation_rettype oro_visitor (this->ctx_);
+
+  if (bt->accept (&oro_visitor) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) facet_ami_exs::"
+                         "gen_facet_executor_sync_op - "
+                         "codegen for return type failed\n"),
+                        -1);
+    }
+
+  os_ << be_nl
+      << this->iface_->local_name () << "_exec_i::"
+      << node->local_name ();
+
+  be_visitor_operation_arglist al_visitor (this->ctx_);
+
+  if (node->accept (&al_visitor) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_visitor_facet_ami_exs::")
+                         ACE_TEXT ("gen_facet_executor_op - ")
+                         ACE_TEXT ("codegen for argument ")
+                         ACE_TEXT ("list failed\n")),
+                        -1);
+    }
+
+  AST_Decl *scope = ScopeAsDecl (this->iface_->defined_in ());
+  bool global = (scope->node_type () == AST_Decl::NT_root);
+  const char *smart_scope = (global ? "" : "::");
+
+  ACE_CString iface_str (this->iface_->local_name ());
+  const char *orig_iface_name = iface_str.c_str ();
+  os_ << be_nl
+      << "{" << be_idt_nl;
+
+  AST_PredefinedType *pdt = 0;
+  pdt = AST_PredefinedType::narrow_from_decl (bt);
+  bool ret = true;
+  if ((pdt != 0) && (pdt->pt () == AST_PredefinedType::PT_void))
+    ret =false;
+
+  os_  << "::" << scope->full_name () << smart_scope
+      << orig_iface_name << "_var receptacle_objref =" << be_idt_nl
+      << "this->context_->get_connection_ami4ccm_port_ami4ccm_uses ();"
+      << be_uidt_nl << be_nl;
+
+  os_ << "if (::CORBA::is_nil (receptacle_objref.in ()))"
+      << be_idt_nl
+      << "{" << be_idt_nl
+      << "throw ::CORBA::INV_OBJREF ();" << be_uidt_nl
+      << "}" <<  be_uidt_nl << be_nl;
+  if (ret)
+    {
+      os_  << "return " ;
+    }
+  os_ << "receptacle_objref->" << node->local_name ()
+      << " (" << be_idt << be_idt_nl;
+
+  unsigned long index = 0UL;
+
+  /// Quick scope iteration to catch all the args .
+  for (UTL_ScopeActiveIterator i (node, UTL_Scope::IK_decls);
+       !i.is_done ();
+       i.next (), ++index)
+    {
+      AST_Decl *d = i.item ();
+      if (index == 0UL)
+        {
+          os_ << d->local_name ();
+        }
+     else
+        {
+          os_ << "," << be_nl
+          << d->local_name ();
+        }
+    }
+
+  os_ << ");" << be_uidt << be_uidt << be_uidt_nl;
+  os_ << "}";
+
+  return 0;
+}
 // ==================================================
 
 Facet_AMI_Exec_Op_Attr_Generator::Facet_AMI_Exec_Op_Attr_Generator (
@@ -496,10 +759,11 @@ Facet_AMI_Exec_Op_Attr_Generator::Facet_AMI_Exec_Op_Attr_Generator (
 }
 
 int
-Facet_AMI_Exec_Op_Attr_Generator::emit (be_interface * /*derived_interface */,
-                                        TAO_OutStream * /* os */,
+Facet_AMI_Exec_Op_Attr_Generator::emit (be_interface * /*derived_interface*/,
+                                        TAO_OutStream * /*os*/ ,
                                         be_interface * base_interface)
 {
   return visitor_->visit_scope (base_interface);
 }
+
 

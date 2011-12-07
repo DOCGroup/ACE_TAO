@@ -12,7 +12,6 @@
  *  @author Jeff Parsons
  */
 //=============================================================================
-
 be_visitor_executor_ami_exs::be_visitor_executor_ami_exs (
       be_visitor_context *ctx)
   : be_visitor_component_scope (ctx)
@@ -36,14 +35,15 @@ be_visitor_executor_ami_exs::visit_connector (be_connector *node)
 
   os_ << be_nl_2
       << class_name << "::"
-      << class_name << " (void)" << be_idt_nl
-      << ": facet_exec_ (new ";
+      << class_name << " (void)" << be_idt_nl;
 
   /// The port is the only item in the connector's scope.
   UTL_ScopeActiveIterator j (node, UTL_Scope::IK_decls);
   AST_Extended_Port *p =
     AST_Extended_Port::narrow_from_decl (j.item ());
 
+  bool first = true;
+  int port_nr = 0;
   for (UTL_ScopeActiveIterator i (p->port_type (), UTL_Scope::IK_decls);
        !i.is_done ();
        i.next ())
@@ -53,19 +53,35 @@ be_visitor_executor_ami_exs::visit_connector (be_connector *node)
 
       if (p != 0)
         {
-          os_ << p->provides_type ()->local_name ();
+          if (first)
+            {
+             os_  << ": facet_exec_" << port_nr << "_ (new ";
+             os_ << p->provides_type ()->local_name ();
+             os_ << suffix << " ())" << be_nl;
+             first = false;
+            }
+          else
+            {
+             os_  << ", facet_exec_" << port_nr << "_ (new ";
+             os_ << p->provides_type ()->local_name ();
+             os_ << suffix << " ())" << be_uidt_nl;
+            }
+          port_nr++;
         }
     }
 
-  os_ << suffix << " ())" << be_uidt_nl
-      << "{" << be_nl
+  os_ << "{" << be_nl
       << "}";
 
   os_ << be_nl_2
       << class_name << "::~"
       << class_name << " (void)" << be_nl
-      << "{" << be_idt_nl
-      << "::CORBA::release (this->facet_exec_);" << be_uidt_nl
+      << "{" << be_idt_nl;
+  for (int i = 0; i < port_nr; i ++)
+    {
+      os_ << "::CORBA::release (this->facet_exec_" << i <<"_);" << be_nl;
+    }
+  os_ << be_uidt_nl
       << "}";
 
   if (this->visit_scope (node) == -1)
@@ -87,19 +103,25 @@ be_visitor_executor_ami_exs::visit_connector (be_connector *node)
       << "::Components::" << be_global->ciao_container_type ()
       << "Context_ptr ctx)"
       << be_uidt_nl
-      << "{" << be_idt_nl
-      << "this->facet_exec_->set_"
+      << "{" << be_idt_nl;
+   for (int i = 0; i < port_nr; i ++)
+    {
+      os_ << "this->facet_exec_" << i << "_->set_"
       << tao_cg->downcase (container_type)
       << "_context "
-      << "(ctx);" << be_uidt_nl
-      << "}";
+      << "(ctx);" << be_nl;
+   }
+   os_  << be_uidt_nl << "}";
 
   os_ << be_nl_2
       << "void" << be_nl
       << class_name << "::configuration_complete (void)" << be_nl
-      << "{" << be_idt_nl
-      << "this->facet_exec_->_set_component (this);" << be_uidt_nl
-      << "}";
+      << "{" << be_idt_nl;
+   for (int i = 0; i < port_nr; i ++)
+    {
+      os_ << "this->facet_exec_" << i << "_->_set_component (this);" << be_nl;
+    }
+  os_ << be_uidt_nl << "}";
 
   os_ << be_nl_2
       << "void" << be_nl
@@ -121,12 +143,15 @@ be_visitor_executor_ami_exs::visit_connector (be_connector *node)
   os_ << be_nl_2
       << "void" << be_nl
       << class_name << "::ccm_remove (void)" << be_nl
-      << "{" << be_idt_nl
-      << "this->facet_exec_->_set_component (" << be_idt_nl
+      << "{" << be_idt_nl;
+   for (int i = 0; i < port_nr; i ++)
+    {
+      os_ << "this->facet_exec_" << i <<"_->_set_component (" << be_idt_nl
       << "::" << s->name () << smart_scope
       << "CCM_" << this->node_->local_name ()
-      << "::_nil ());" << be_uidt << be_uidt_nl
-      << "}";
+      << "::_nil ());" << be_uidt_nl;
+   }
+  os_ << be_uidt_nl << "}";
 
   return 0;
 }
@@ -135,7 +160,7 @@ int
 be_visitor_executor_ami_exs::visit_provides (be_provides *node)
 {
   AST_Type *t = node->provides_type ();
-  AST_Decl *scope = ScopeAsDecl (t->defined_in ());
+   AST_Decl *scope = ScopeAsDecl (t->defined_in ());
   bool global = (scope->node_type () == AST_Decl::NT_root);
   const char *smart_scope = (global ? "" : "::");
 
@@ -150,14 +175,16 @@ be_visitor_executor_ami_exs::visit_provides (be_provides *node)
   UTL_ScopeActiveIterator i (this->node_, UTL_Scope::IK_decls);
   AST_Decl *d = i.item ();
 
-  os_ << d->local_name () << "_"
+  const char * loc_name = node->local_name()->get_string();
+  const char *exec_ext = (strstr (loc_name, "sync") ? "1" : "0");
+
+    os_ << d->local_name () << "_"
       << node->local_name () << " (void)" << be_nl
       << "{" << be_idt_nl
       << "return "
       << smart_scope << scope->full_name () << "::CCM_" << t->local_name () << "::_duplicate ("
-      << "this->facet_exec_);" << be_uidt_nl
+      << "this->facet_exec_" << exec_ext << "_);" << be_uidt_nl
       << "}";
 
   return 0;
 }
-

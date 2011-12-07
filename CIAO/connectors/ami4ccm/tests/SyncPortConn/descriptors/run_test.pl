@@ -12,13 +12,18 @@ $CIAO_ROOT = "$ENV{'CIAO_ROOT'}";
 $TAO_ROOT = "$ENV{'TAO_ROOT'}";
 $DANCE_ROOT = "$ENV{'DANCE_ROOT'}";
 
+#$ENV{'DANCE_LOG_LEVEL'}=9;
+#$ENV{'CIAO_LOG_LEVEL'}=10;
+$ENV{'DANCE_TRACE_ENABLE'}=1;
+$ENV{'CIAO_TRACE_ENABLE'}=1;
+
 $daemons_running = 0;
 $em_running = 0;
 $ns_running = 0;
 
-$nr_daemon = 3;
+$nr_daemon = 2;
 @ports = ( 60000, 60001 );
-@iorbases = ( "Sender.ior", "Receiver.ior", "AMI.ior" );
+@iorbases = ( "Sender.ior", "Receiver.ior");
 @iorfiles = 0;
 @nodenames = ( "Sender", "Receiver" );
 
@@ -133,8 +138,6 @@ sub run_node_daemons {
     return 0;
 }
 
-create_targets ();
-init_ior_files ();
 if ($#ARGV == -1) {
     opendir(DIR, ".");
     @files = grep(/\.cdp$/,readdir(DIR));
@@ -143,8 +146,12 @@ if ($#ARGV == -1) {
 else {
     @files = @ARGV;
 }
+
+create_targets ();
+init_ior_files ();
+
 foreach $file (@files) {
-    print "=============================\nStarting test for deployment $file\n================================\n";
+    print "+++++++++++++++++++++++++++++++++++++++++++++++++++\nStarting test for deployment $file\n======================================================\n";
 
   # Invoke naming service
 
@@ -228,26 +235,26 @@ foreach $file (@files) {
       }
   }
 
-  print "Sleeping 30 seconds to allow task to complete\n";
-  sleep (30);
+  print "Sleeping 15 seconds to allow task to complete\n";
+  sleep (15);
 
   # Invoke executor - stop the application -.
   print "Invoking executor - stop the application -\n";
-  print "by running dance_plan_launcher.exe with -k file://$ior_emfile -x $file\n";
+  print "by running dance_plan_launcher.exe with -k file://$ior_emfile -x $cdp_file\n";
 
   $E = $tg_executor->CreateProcess ("$DANCE_ROOT/bin/dance_plan_launcher",
                                     "-k file://$ior_emfile -x $file -s");
-  $pl_status = $E->SpawnWaitKill (2 * $tg_executor->ProcessStartWaitInterval ());
+  $pl_status = $E->SpawnWaitKill ($tg_executor->ProcessStartWaitInterval ());
 
   if ($pl_status != 0) {
       print STDERR "ERROR: dance_plan_launcher returned $pl_status\n";
       kill_open_processes ();
-      exit 1;
+ #     exit 1;
   }
-      delete_ior_files ();
-      kill_open_processes ();
-          # Sleep for a couple seconds to make sure everything has a chance to shut down.
-      sleep 5;
+    delete_ior_files ();
+    kill_open_processes ();
+        # Sleep for a couple seconds to make sure everything has a chance to shut down.
+    sleep 5;
 }
 print "Executor returned.\n";
 print "Shutting down rest of the processes.\n";

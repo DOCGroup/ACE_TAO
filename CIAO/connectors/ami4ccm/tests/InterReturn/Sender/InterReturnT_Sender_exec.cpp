@@ -135,6 +135,76 @@ namespace CIAO_InterReturnT_Sender_Impl
         ACE_ERROR ((LM_ERROR, "ERROR: synch_foo_generator::ret_array: "
                                "Unexpected exception.\n"));
       }
+
+
+    InterReturnT::TestStruct *struct_return_val =
+            my_foo_ami_->ret_struct ("Send me synch struct",out_str, l_cmd);
+    if (l_cmd != 4)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR MyFoo_callback_exec_i::ret_struct: "
+                              "received the wrong long, expected 4,"
+                              " received %u\n",
+                              l_cmd));
+      }
+    else if ((ACE_OS::strcmp (struct_return_val->key.in(), "aaa") != 0) ||
+             (struct_return_val->x != 10))
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR MyFoo_callback_exec_i::ret_struct: "
+                              "received the struct return, expected 'aaa' "
+                               "and 10, received %C and %u\n",
+                               struct_return_val->key.in(),
+                               struct_return_val->x));
+      }
+    else
+      {
+        ++this->nr_of_received_;
+      }
+
+    const InterReturnT::TestSeq *seq_return_val =
+          my_foo_ami_->ret_seq ("Send me synch struct",out_str, l_cmd);
+    if ((l_cmd != 6) || (!seq_return_val))
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR MyFoo_callback_exec_i::ret_seq: "
+                   "received the wrong long, expected 6,"
+                   " received %u\n",
+                   l_cmd));
+      }
+    else
+      {
+        ++this->nr_of_received_;
+      }
+
+
+    const InterReturnT::X_Union *union_return_val =
+        my_foo_ami_->ret_union ("Send me synch union",out_str, l_cmd);
+    if ((l_cmd != 7) || (union_return_val->x_long() != 11))
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR MyFoo_callback_exec_i::ret_union: "
+               "received the wrong long or union, expected 7"
+               " and 11, received %u and %u\n",
+               l_cmd, union_return_val->x_long()));
+      }
+
+    else
+      {
+        ++this->nr_of_received_;
+      }
+
+    InterReturnT::test_enum enum_return_val =
+        my_foo_ami_->ret_enum ("Send me synch enum",out_str, l_cmd);
+
+    if ((l_cmd != 8) || (enum_return_val != InterReturnT::TWO))
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR MyFoo_callback_exec_i::ret_enum: "
+            "received the wrong long or enum value, expected 8"
+            " and TWO, received %u and %u\n",
+            l_cmd, enum_return_val));
+      }
+    else
+      {
+        ++this->nr_of_received_;
+      }
+
     return 0;
   }
   /**
@@ -198,7 +268,7 @@ namespace CIAO_InterReturnT_Sender_Impl
   void
   Sender_exec_i::ccm_remove (void)
   {
-    if (this->nr_of_received_.value() == 10)
+    if (this->nr_of_received_.value() == 14)
       {
         ACE_DEBUG ((LM_DEBUG, "OK: Sender received all expected return data"
                               " for syn- and asynchronous calls\n"));

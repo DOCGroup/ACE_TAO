@@ -3482,11 +3482,31 @@ TAO_CodeGen::gen_exec_idl_includes (void)
       const char *exec_idl_fname =
         be_global->be_get_ciao_exec_idl_fname (true);
 
-      /// No need to have the exec IDL file include itself.
-      if (ACE_OS::strcmp (*path_tmp, exec_idl_fname) != 0)
+      bool skip_incl = false;
+      // special case for ami4ccm, if xxxE.idl. don't include xxxAE.idl.
+      char *exe_idl_fname = ACE_OS::strdup(exec_idl_fname);
+      char * base = ACE_OS::strstr(exe_idl_fname, "E.idl");
+      if (base != 0)
         {
-          this->gen_standard_include (this->ciao_exec_idl_, *path_tmp);
-        }
+          static char test[MAXPATHLEN];
+          ACE_OS::memset (test, 0, MAXPATHLEN);
+
+          ACE_OS::strncpy(test, exe_idl_fname, base - exe_idl_fname);
+          ACE_OS::strcat (test, "AE.idl");
+
+          if (ACE_OS::strstr ( *path_tmp,  test) != 0)
+           {
+             //skip include
+             skip_incl = true;
+           }
+
+       }
+        /// No need to have the exec IDL file include itself.
+       if ((ACE_OS::strcmp (*path_tmp, exec_idl_fname) != 0) &&
+           (!skip_incl))
+         {
+            this->gen_standard_include (this->ciao_exec_idl_, *path_tmp);
+         }
     }
 }
 
