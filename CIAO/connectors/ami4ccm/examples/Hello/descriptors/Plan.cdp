@@ -247,7 +247,7 @@
       <instance xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.AMI" />
     </internalEndpoint>
   </connection>
- 
+
   <!-- this plan is made for using the synchronous connection between Sender and Receiver>
   <instead of using the synchronous port on the AMI connector-->
 
