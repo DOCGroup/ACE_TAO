@@ -1,3 +1,8 @@
+Wed Dec  7 19:00:59 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/ami4ccm/tests/SyncPortConn/Receiver/Hello_Receiver.mpc:
+          Fix problem in this mpc file
+
 Wed Dec  7 10:47:15 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         Merged in the changes to update AMI4CCM to match the initial revision
