@@ -1,3 +1,14 @@
+Wed Dec  7 17:54:41 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/util/utl_stack.cpp(UTL_ScopeStack::pop):
+
+          Checks if the top scope has a #pragma prefix associated with it,
+          and if so, pops the prefix (from its own stack) along with the
+          scope. Fixed the check to be more robust. Thanks to Simon Massey
+          for reporting the problem, which was revealed as an error message
+          reporting a bogus prefix inconsistency between a forward declared
+          struct and its full definition.
+
 Wed Dec  7 10:47:15 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         Merged in the changes to update AMI4CCM to match the initial revision
