@@ -29,7 +29,7 @@ project(SyncPortCon_Base_Hello_Sender_lem_gen) : ciaoidldefaults {
   }
 }
 
-project(SyncPortCon_Base_Hello_Sender_lem_stub) : ccm_svnt, ami   {
+project(SPC_Base_Hello_Sender_lem_stub) : ccm_svnt, ami   {
   after += SyncPortCon_Base_Hello_Sender_lem_gen SyncPortCon_stub Conn_Hello_Base_stub
   libs  += Hello_stub
   libpaths += ../lib
@@ -80,7 +80,7 @@ project(SyncPortCon_Base_Hello_Sender_stub) : ccm_stub, ami   {
 }
 
 project(SyncPortCon_Base_Hello_Sender_exec) : ciao_executor, ami, ami4ccm_stub {
-  after   += SyncPortCon_Base_Hello_Sender_lem_stub SyncPortCon_Base_Hello_Sender_stub SyncPortCon_Base_exec Conn_Hello_Base_stub SyncPortCon_lem_stub
+  after   += SPC_Base_Hello_Sender_lem_stub SyncPortCon_Base_Hello_Sender_stub SyncPortCon_Base_exec Conn_Hello_Base_stub SyncPortCon_lem_stub
   sharedname = Hello_Sender_exec
   libs += Hello_Sender_stub Hello_Sender_lem_stub Hello_stub Hello_stub Hello_lem_stub
   libpaths += ../lib
@@ -104,7 +104,7 @@ project(SyncPortCon_Base_Hello_Sender_exec) : ciao_executor, ami, ami4ccm_stub {
 }
 
 project(SyncPortCon_Base_Hello_Sender_svnt) : ciao_servant, ami {
-  after      += SyncPortCon_Base_skel SyncPortCon_Base_Hello_Sender_lem_stub SyncPortCon_Base_Hello_Sender_stub SyncPortCon_Base_exec SyncPortCon_skel
+  after      += SyncPortCon_Base_skel SPC_Base_Hello_Sender_lem_stub SyncPortCon_Base_Hello_Sender_stub SyncPortCon_Base_exec SyncPortCon_skel
   sharedname  = Hello_Sender_svnt
   libs       += Hello_Sender_stub Hello_Sender_lem_stub  \
                 Hello_skel \

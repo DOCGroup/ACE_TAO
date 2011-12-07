@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -p Hello_Base Hello_Receiver"
 
-project(SyncPortCon_Base_Hello_Receiver_idl_gen) : componentidldefaults {
+project(SPC_Base_Hello_Receiver_idl_gen) : componentidldefaults {
   custom_only = 1
   after += SyncPortCon_idl_gen
   idlflags += -Wb,stub_export_macro=HELLO_RECEIVER_STUB_Export \
@@ -18,7 +18,7 @@ project(SyncPortCon_Base_Hello_Receiver_idl_gen) : componentidldefaults {
 }
 
 project(SyncPortCon_Base_Hello_Receiver_lem_gen) : ciaoidldefaults {
-  after += SyncPortCon_Base_Hello_Receiver_idl_gen
+  after += SPC_Base_Hello_Receiver_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=HELLO_RECEIVER_LEM_STUB_Export \
               -Wb,stub_export_include=Hello_Receiver_lem_stub_export.h \
@@ -55,7 +55,7 @@ project(SyncPortCon_Base_Hello_Receiver_l_stub) : ccm_svnt, messaging {
 }
 
 project(SyncPortCon_Base_Hello_Receiver_stub) : ccm_stub, messaging {
-  after += SyncPortCon_Base_Hello_Receiver_idl_gen SyncPortCon_stub
+  after += SPC_Base_Hello_Receiver_idl_gen SyncPortCon_stub
   libs  += Hello_stub
   libpaths += ../lib
   libout = ../lib
