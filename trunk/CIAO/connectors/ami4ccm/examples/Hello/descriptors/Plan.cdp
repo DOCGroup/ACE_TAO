@@ -3,6 +3,7 @@
 <Deployment:DeploymentPlan xmlns:Deployment="http://www.omg.org/Deployment" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
 
   <UUID>6D382DAE-9024-4C4D-B91B-A0F9176AFACF</UUID>
+  <!--this plan is made for using the synchronous connection between Sender and Receiver-->
 
   <implementation xmi:id="Hello_ReceiverHomeImplementation">
     <name>Hello_ReceiverHomeImplementation</name>
@@ -246,7 +247,11 @@
       <instance xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.AMI" />
     </internalEndpoint>
   </connection>
+ 
+  <!-- this plan is made for using the synchronous connection between Sender and Receiver>
+  <instead of using the synchronous port on the AMI connector-->
 
+  <!--synchronous connection between Sender and Receiver-->
   <connection>
     <name>synch_foo_connection</name>
     <internalEndpoint>
@@ -263,6 +268,26 @@
     </internalEndpoint>
   </connection>
 
+  <!--the synchronous port on the AMI connector -->
+  <!--connection>
+    <name>synch_foo_connection</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>run_my_foo</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.Sender" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>ami4ccm_port_ami4ccm_sync_provides</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.AMI" />
+    </internalEndpoint>
+  </connection-->
   <artifact xmi:id="Hello_AMI_SvntArtifact">
     <name>Hello.ImplementationArtifacts.AMIArtifacts.AMI_svnt</name>
     <source/>

@@ -1,0 +1,134 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl -p PragmaT_Base PragmaT_Receiver"
+
+project(AMI_PragmaT_Base_PragmaT_Receiver_idl_gen) : componentidldefaults {
+  custom_only = 1
+  after += AMI_PragmaT_idl_gen
+  idlflags += -Wb,stub_export_macro=PRAGMAT_RECEIVER_STUB_Export \
+              -Wb,stub_export_include=PragmaT_Receiver_stub_export.h \
+              -Wb,skel_export_macro=PRAGMAT_RECEIVER_SVNT_Export \
+              -Wb,skel_export_include=PragmaT_Receiver_svnt_export.h \
+              -Wb,exec_export_macro=PRAGMAT_RECEIVER_EXEC_Export \
+              -Wb,exec_export_include=PragmaT_Receiver_exec_export.h \
+              -Glem -I..
+
+  IDL_Files {
+    PragmaT_Receiver.idl
+  }
+}
+
+project(AMI_PragmaT_Base_PragmaT_Receiver_lem_gen) : ciaoidldefaults {
+  after += AMI_PragmaT_Base_PragmaT_Receiver_idl_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=PRAGMAT_RECEIVER_LEM_STUB_Export \
+              -Wb,stub_export_include=PragmaT_Receiver_lem_stub_export.h \
+              -SS -Gxhst -I..
+
+  IDL_Files {
+    PragmaT_ReceiverE.idl
+  }
+}
+
+project(AMI_PragmaT_Base_PragmaT_Receiver_l_stub) : ccm_svnt, messaging {
+  after += AMI_PragmaT_Base_PragmaT_Receiver_lem_gen AMI_PragmaT_Base_PragmaT_Receiver_stub AMI_PragmaT_stub
+  libs  += PragmaT_stub PragmaT_Receiver_stub
+  libpaths += ../lib
+  libout = ../lib
+  sharedname = PragmaT_Receiver_lem_stub
+  dynamicflags += PRAGMAT_RECEIVER_LEM_STUB_BUILD_DLL
+  includes += ..
+  IDL_Files {
+  }
+
+  Source_Files {
+    PragmaT_ReceiverEC.cpp
+  }
+
+  Header_Files {
+    PragmaT_ReceiverEC.h
+    PragmaT_Receiver_lem_stub_export.h
+  }
+
+  Inline_Files {
+    PragmaT_ReceiverEC.inl
+  }
+}
+
+project(AMI_PragmaT_Base_PragmaT_Receiver_stub) : ccm_stub, messaging {
+  after += AMI_PragmaT_Base_PragmaT_Receiver_idl_gen AMI_PragmaT_stub
+  libs  += PragmaT_stub
+  libpaths += ../lib
+  libout = ../lib
+  sharedname = PragmaT_Receiver_stub
+  dynamicflags += PRAGMAT_RECEIVER_STUB_BUILD_DLL
+  includes += ..
+  IDL_Files {
+  }
+
+  Source_Files {
+    PragmaT_ReceiverC.cpp
+  }
+
+  Header_Files {
+    PragmaT_ReceiverC.h
+    PragmaT_Receiver_stub_export.h
+  }
+
+  Inline_Files {
+    PragmaT_ReceiverC.inl
+  }
+}
+
+project(AMI_PragmaT_Base_PragmaT_Receiver_exec) : ciao_executor, messaging {
+  after   += AMI_PragmaT_Base_PragmaT_Receiver_l_stub AMI_PragmaT_Base_PragmaT_Receiver_stub AMI_PragmaT_stub AMI_PragmaT_lem_stub
+  sharedname = PragmaT_Receiver_exec
+  libs += PragmaT_Receiver_stub PragmaT_Receiver_lem_stub PragmaT_stub PragmaT_lem_stub
+  libpaths += ../lib
+  libout = ../lib
+  dynamicflags += PRAGMAT_RECEIVER_EXEC_BUILD_DLL
+  includes += ..
+  IDL_Files {
+  }
+
+  Source_Files {
+    PragmaT_Receiver_exec.cpp
+  }
+
+  Header_Files {
+    PragmaT_Receiver_exec.h
+    PragmaT_Receiver_exec_export.h
+  }
+
+  Inline_Files {
+  }
+}
+
+project(AMI_PragmaT_Base_PragmaT_Receiver_svnt) : ciao_servant, messaging {
+  after      += AMI_PragmaT_Base_skel AMI_PragmaT_Base_PragmaT_Receiver_l_stub AMI_PragmaT_stub AMI_PragmaT_skel AMI_PragmaT_lem_stub
+  sharedname  = PragmaT_Receiver_svnt
+  libs       += PragmaT_Receiver_stub PragmaT_Receiver_lem_stub  \
+                PragmaT_skel \
+                PragmaT_stub PragmaT_lem_stub
+  libpaths += ../lib
+  libout = ../lib
+  dynamicflags += PRAGMAT_RECEIVER_SVNT_BUILD_DLL
+  includes += ..
+  IDL_Files {
+  }
+
+  Source_Files {
+    PragmaT_ReceiverS.cpp
+    PragmaT_Receiver_svnt.cpp
+  }
+
+  Header_Files {
+    PragmaT_ReceiverS.h
+    PragmaT_Receiver_svnt.h
+    PragmaT_Receiver_svnt_export.h
+  }
+
+  Inline_Files {
+    PragmaT_ReceiverS.inl
+  }
+}
+

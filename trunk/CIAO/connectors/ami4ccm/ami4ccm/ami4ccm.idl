@@ -37,6 +37,7 @@ module CCM_AMI
     porttype AMI4CCM_Port_Type
     {
       provides AMI4CCM_T ami4ccm_provides;
+      provides T ami4ccm_sync_provides;
       uses T ami4ccm_uses;
     };
 

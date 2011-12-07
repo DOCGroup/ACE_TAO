@@ -1,3 +1,96 @@
+Wed Dec  7 10:47:15 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        Merged in the changes to update AMI4CCM to match the initial revision
+        with the synchronous port and the new pragma's added
+
+        === start changelog ===
+
+        Thu Dec  1 09:50:06 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+                * connectors/ami4ccm/examples/Hello/descriptors/Plan.cdp:
+                * connectors/ami4ccm/examples/Hello/descriptors/PlanSyncPort.cdp:
+                * connectors/ami4ccm/examples/Hello/descriptors/run_test.pl:
+                * connectors/ami4ccm/tests/InterMulti/descriptors/run_test.pl:
+                * connectors/ami4ccm/tests/UsesMulti/descriptors/PlanSyncPort.cdp:
+                * connectors/ami4ccm/tests/UsesMulti/descriptors/run_test.pl:
+                Changes for using now sync port ami connector beside Sender-Receiver connection
+
+        Thu Dec  1 09:15:53 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+                * connectors/ami4ccm/tests/InterMulti/descriptors/PlanSyncPort.cdp:
+                * connectors/ami4ccm/tests/InterMulti/descriptors/run_test.pl:
+
+                * connectors/ami4ccm/tests/UsesMulti/descriptors/PlanSyncPort.cdp:
+                * connectors/ami4ccm/tests/UsesMulti/descriptors/run_test.pl:
+                Changes for using now sync port ami connector beside Sender-Receiver connection
+
+        Wed Nov 30 16:11:09 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
+
+                * connectors/ami4ccm/tests/InterReturn/Sender/InterReturnT_Sender_exec.cpp:
+                * connectors/ami4ccm/tests/InterReturn/descriptors/Plan.cdp:
+                * connectors/ami4ccm/tests/InterReturn/descriptors/PlanSyncPort.cdp:
+                * connectors/ami4ccm/tests/InterReturn/descriptors/run_test.pl:
+                Run test also with sync port on AMI connector.
+
+        Mon Nov 21 15:10:06 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+                * bin/ciao_tests.lst:
+                * connectors/ami4ccm/tests/SyncPortConn:
+                * connectors/ami4ccm/tests/SyncPortConn/Base:
+                * connectors/ami4ccm/tests/SyncPortConn/Base/Hello.idl:
+                * connectors/ami4ccm/tests/SyncPortConn/Base/SyncPortConn.mpc:
+                * connectors/ami4ccm/tests/SyncPortConn/Receiver:
+                * connectors/ami4ccm/tests/SyncPortConn/Receiver/Hello_Receiver.idl:
+                * connectors/ami4ccm/tests/SyncPortConn/Receiver/Hello_Receiver.mpc:
+                * connectors/ami4ccm/tests/SyncPortConn/Receiver/Hello_Receiver_exec.h:
+                * connectors/ami4ccm/tests/SyncPortConn/Receiver/Hello_Receiver_exec.cpp:
+                * connectors/ami4ccm/tests/SyncPortConn/Sender:
+                * connectors/ami4ccm/tests/SyncPortConn/Sender/Hello_Sender.idl:
+                * connectors/ami4ccm/tests/SyncPortConn/Sender/Hello_Sender.mpc:
+                * connectors/ami4ccm/tests/SyncPortConn/Sender/Hello_Sender_exec.h:
+                * connectors/ami4ccm/tests/SyncPortConn/Sender/Hello_Sender_exec.cpp:
+                * connectors/ami4ccm/tests/SyncPortConn/descriptors:
+                * connectors/ami4ccm/tests/SyncPortConn/descriptors/.dance_artifacts:
+                * connectors/ami4ccm/tests/SyncPortConn/descriptors/Plan.cdp:
+                * connectors/ami4ccm/tests/SyncPortConn/descriptors/Plan_no_sync_amiconn.cdp:
+                * connectors/ami4ccm/tests/SyncPortConn/descriptors/run_test.pl:
+                Test using sync port on AMI connector.
+
+        Mon Nov 21 13:30:15 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
+
+                * connectors/ami4ccm/ami4ccm/ami4ccm.idl:
+                Add sync port to connector
+
+        Tue Nov  8 08:53:04 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+                * connectors/ami4ccm/tests/PragmaT/Receiver/PragmaT_Receiver.mpc:
+                Missing file.
+
+        Mon Nov  7 13:29:04 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+                * bin/ciao_tests.lst:
+                * connectors/ami4ccm/tests/PragmaT:
+                * connectors/ami4ccm/tests/PragmaT/Base:
+                * connectors/ami4ccm/tests/PragmaT/Base/PragmaT.idl:
+                * connectors/ami4ccm/tests/PragmaT/Base/PragmaT.mpc:
+                * connectors/ami4ccm/tests/PragmaT/README:
+                * connectors/ami4ccm/tests/PragmaT/Receiver:
+                * connectors/ami4ccm/tests/PragmaT/Receiver/PragmaT_Receiver.idl:
+                * connectors/ami4ccm/tests/PragmaT/Receiver/PragmaT_Receiver_exec.h:
+                * connectors/ami4ccm/tests/PragmaT/Receiver/PragmaT_Receiver_exec.cpp:
+                * connectors/ami4ccm/tests/PragmaT/Sender:
+                * connectors/ami4ccm/tests/PragmaT/Sender/PragmaT_Sender.idl:
+                * connectors/ami4ccm/tests/PragmaT/Sender/PragmaT_Sender.mpc:
+                * connectors/ami4ccm/tests/PragmaT/Sender/PragmaT_Sender_exec.h:
+                * connectors/ami4ccm/tests/PragmaT/Sender/PragmaT_Sender_exec.cpp:
+                * connectors/ami4ccm/tests/PragmaT/descriptors:
+                * connectors/ami4ccm/tests/PragmaT/descriptors/Plan.cdp:
+                * connectors/ami4ccm/tests/PragmaT/descriptors/run_test.pl:
+                Test use of new pragma's 'ami4ccm interface', 'ami4ccm receptacle' and 'ami4ccm idl'.
+                New pragma's work besides old ones 'ciao ami4ccm ...' .
+
+        === end changelog ===
+
 Mon Dec  5 12:32:50 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Containers/Container_Base_T.cpp:
