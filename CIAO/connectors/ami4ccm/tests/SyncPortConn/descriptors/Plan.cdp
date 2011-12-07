@@ -262,7 +262,7 @@
       <instance xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.Sender" />
     </internalEndpoint>
   </connection-->
-  
+
  <connection>
     <name>run_synch_foo_connection</name>
     <deployRequirement>
