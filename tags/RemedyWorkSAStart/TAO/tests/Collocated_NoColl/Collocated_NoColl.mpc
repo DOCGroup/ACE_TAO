@@ -1,8 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-// Thru_Pu is default enabled
-project(Collocated_NoColl): taoserver {
-  exename = Collocated_NoColl
-
-}
