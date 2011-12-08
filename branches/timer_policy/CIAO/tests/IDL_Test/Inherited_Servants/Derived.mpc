@@ -1,0 +1,163 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl -p IhC_Foo Derived"
+
+project(IS_Base_Derived_idl_gen) : componentidldefaults {
+  custom_only = 1
+  after += IS_Base_idl_gen
+  idlflags += -Wb,stub_export_macro=IS_DERIVED_STUB_Export \
+              -Wb,stub_export_include=Derived_stub_export.h \
+              -Wb,skel_export_macro=IS_DERIVED_SVNT_Export \
+              -Wb,skel_export_include=Derived_svnt_export.h \
+              -Wb,exec_export_macro=IS_DERIVED_EXEC_Export \
+              -Wb,exec_export_include=Derived_exec_export.h \
+              -Gex
+
+  IDL_Files {
+    Derived.idl
+  }
+}
+
+project(IS_Base_Derived_lem_gen) : ciaoidldefaults {
+  after += IS_Base_Derived_idl_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=IS_DERIVED_LEM_STUB_Export \
+              -Wb,stub_export_include=Derived_lem_stub_export.h \
+              -SS -Gxhst
+
+  IDL_Files {
+    DerivedE.idl
+  }
+}
+
+project(IS_Base_Derived_lem_stub) : ccm_svnt   {
+  after += IS_Base_Derived_lem_gen \
+           IS_Base_Derived_stub \
+           IS_Base_stub \
+           IS_Base_lem_stub
+  libs  += IS_Base_stub \
+           IS_Base_lem_stub \
+           IS_Derived_stub
+
+  sharedname = IS_Derived_lem_stub
+  dynamicflags += IS_DERIVED_LEM_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    DerivedEC.cpp
+  }
+
+  Header_Files {
+    DerivedEC.h
+    Derived_lem_stub_export.h
+  }
+
+  Inline_Files {
+    DerivedEC.inl
+  }
+}
+
+project(IS_Base_Derived_stub) : ccm_stub   {
+  after += IS_Base_Derived_idl_gen IS_Base_stub
+  libs  += IS_Base_stub
+
+  sharedname = IS_Derived_stub
+  dynamicflags += IS_DERIVED_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    DerivedC.cpp
+  }
+
+  Header_Files {
+    DerivedC.h
+    Derived_stub_export.h
+  }
+
+  Inline_Files {
+    DerivedC.inl
+  }
+}
+
+project(IS_Base_Derived_exec) : ciao_executor   {
+  after   += IS_Base_Derived_lem_gen \
+             IS_Base_Derived_lem_stub \
+             IS_Base_Derived_stub \
+             IS_Base_exec
+  sharedname = IS_Derived_exec
+  libs += IS_Derived_stub \
+          IS_Derived_lem_stub \
+          IS_Base_stub \
+          IS_Base_lem_stub \
+          IS_Base_exec
+
+  dynamicflags += IS_DERIVED_EXEC_BUILD_DLL IS_BASE_EXEC_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Derived_exec.cpp
+  }
+
+  Header_Files {
+    Derived_exec.h
+    Derived_exec_export.h
+  }
+
+  Inline_Files {
+  }
+}
+
+
+project(IS_Base_Derived_svnt) : ciao_servant   {
+  after      += IS_Base_svnt IS_Base_Derived_lem_stub
+  sharedname  = IS_Derived_svnt
+  libs       += IS_Derived_stub \
+                IS_Derived_lem_stub  \
+                IS_Base_stub \
+                IS_Base_lem_stub \
+                IS_Base_svnt
+
+  dynamicflags += IS_DERIVED_SVNT_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    DerivedS.cpp
+    Derived_svnt.cpp
+  }
+
+  Header_Files {
+    DerivedS.h
+    Derived_svnt.h
+    Derived_svnt_export.h
+  }
+
+  Inline_Files {
+    DerivedS.inl
+  }
+}
+
+
+project (IS_Derived_Tester) : ccm_stub, valuetype {
+  exename = Tester
+  after += IS_Base_Derived_stub
+  libs  += IS_Derived_stub IS_Base_stub
+  IDL_Files {
+  }
+
+  Source_Files {
+    Tester.cpp
+  }
+
+  Header_Files {
+  }
+
+  Inline_Files {
+  }
+}

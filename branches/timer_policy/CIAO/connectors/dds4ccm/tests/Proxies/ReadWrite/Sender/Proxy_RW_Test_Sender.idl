@@ -1,0 +1,31 @@
+// $Id$
+
+/**
+ * @file
+ * @author Marcel Smit <msmit@remedy.nl>
+ *
+ * by-hand idl3 translation of sender components.
+ */
+
+#ifndef PROXY_RW_TEST_SENDER_IDL
+#define PROXY_RW_TEST_SENDER_IDL
+
+#include "Connector/Proxy_RW_Test_Connector.idl"
+#include "Base/Reader_Starter.idl"
+
+module Proxy_RW_Test
+{
+  component Sender
+  {
+    port ProxyReadWriteTestConnector::DDS_Write info_write;
+    provides CCM_DDS::ConnectorStatusListener info_out_connector_status;
+
+    uses ReaderStarter start_reader;
+    provides WriterRestarter restart_writer;
+
+    attribute unsigned short keys;
+    attribute unsigned short iterations;
+  };
+};
+
+#endif /* PROXY_RW_TEST_SENDER_IDL */

@@ -1,0 +1,127 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl Base"
+
+project(IS_Base_idl_gen) : componentidldefaults {
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=IS_BASE_STUB_Export \
+              -Wb,stub_export_include=Base_stub_export.h \
+              -Wb,skel_export_macro=IS_BASE_SVNT_Export \
+              -Wb,skel_export_include=Base_svnt_export.h \
+              -Wb,exec_export_macro=IS_BASE_EXEC_Export \
+              -Wb,exec_export_include=Base_exec_export.h \
+              -Gex
+
+  IDL_Files {
+    Base.idl
+  }
+}
+
+project(IS_Base_lem_gen) : ciaoidldefaults {
+  after += IS_Base_idl_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=IS_BASE_LEM_STUB_Export \
+              -Wb,stub_export_include=Base_lem_stub_export.h \
+              -SS -Gxhst
+
+  IDL_Files {
+    BaseE.idl
+  }
+}
+
+project(IS_Base_lem_stub) : ccm_svnt   {
+  after += IS_Base_lem_gen IS_Base_stub
+  libs  += IS_Base_stub
+
+  sharedname = IS_Base_lem_stub
+  dynamicflags += IS_BASE_LEM_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    BaseEC.cpp
+  }
+
+  Header_Files {
+    BaseEC.h
+    Base_lem_stub_export.h
+  }
+
+  Inline_Files {
+    BaseEC.inl
+  }
+}
+
+project(IS_Base_stub) : ccm_stub   {
+  after += IS_Base_idl_gen
+  libs  +=
+
+  sharedname = IS_Base_stub
+  dynamicflags += IS_BASE_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    BaseC.cpp
+  }
+
+  Header_Files {
+    BaseC.h
+    Base_stub_export.h
+  }
+
+  Inline_Files {
+    BaseC.inl
+  }
+}
+
+project(IS_Base_exec) : ciao_executor   {
+  after   += IS_Base_lem_stub IS_Base_stub
+  sharedname = IS_Base_exec
+  libs += IS_Base_stub IS_Base_lem_stub
+
+  dynamicflags += IS_BASE_EXEC_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Base_exec.cpp
+  }
+
+  Header_Files {
+    Base_exec.h
+    Base_exec_export.h
+  }
+
+  Inline_Files {
+  }
+}
+
+
+project(IS_Base_svnt) : ciao_servant   {
+  after      += IS_Base_lem_stub
+  sharedname  = IS_Base_svnt
+  libs       += IS_Base_stub IS_Base_lem_stub
+
+  dynamicflags += IS_BASE_SVNT_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    BaseS.cpp
+    Base_svnt.cpp
+  }
+
+  Header_Files {
+    BaseS.h
+    Base_svnt.h
+    Base_svnt_export.h
+  }
+
+  Inline_Files {
+    BaseS.inl
+  }
+}
