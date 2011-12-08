@@ -23,6 +23,8 @@
 #include "ace/Trace.h"
 #include "ace/Recursive_Thread_Mutex.h"
 #include "ace/Log_Msg.h"
+#include "ace/Timer_Heap.h"
+#include "ace/Auto_Ptr.h"
 
 
 
@@ -246,8 +248,31 @@ run_main (int argc, ACE_TCHAR *[])
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("Running with high-res timer queue\n")));
       ACE_Reactor *r = ACE_Reactor::instance ();
+
       (void) ACE_High_Res_Timer::global_scale_factor ();
-      r->timer_queue ()->gettimeofday (&ACE_High_Res_Timer::gettimeofday_hr);
+
+      // Change the source of time in the Reactor to the
+      // high-resolution  timer.  Why does this test require such
+      // precision for a 1 second timer is beyond me ...  I think it
+      // is a cut&paste error.
+      //
+      // The use of auto_ptr<> is optional, ACE uses dangerous memory
+      // management idioms everywhere, I thought I could demonstrate how
+      // to do it right in at least one test.  Notice the lack of
+      // ACE_NEW_RETURN, that monstrosity has no business in proper C++
+      // code ...
+      auto_ptr<ACE_Timer_Heap_Variable_Time_Source> tq(
+          new ACE_Timer_Heap_Variable_Time_Source);
+      // ... notice how the policy is in the derived timer queue type.
+      // The abstract timer queue does not have a time policy ...
+      tq->set_time_policy(&ACE_High_Res_Timer::gettimeofday_hr);
+      // ... and then the timer queue is replaced.  Strangely, the
+      // Reactor does *not* copy the timers, it just deletes the
+      // existing timer queue ....
+      r->timer_queue(tq.get());
+      // ... the Reactor has assumed ownership, release the
+      // auto_ptr<> ...
+      tq.release();
     }
 
   // Register all different handlers, i.e., one per timer.

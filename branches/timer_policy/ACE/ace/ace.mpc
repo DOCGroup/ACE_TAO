@@ -48,7 +48,6 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     Connection_Recycling_Strategy.cpp
     Containers.cpp
     Copy_Disabled.cpp
-    Countdown_Time.cpp
     Date_Time.cpp
     DEV.cpp
     DEV_Addr.cpp
@@ -63,6 +62,7 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     Dynamic_Message_Strategy.cpp
     Event.cpp
     Event_Handler.cpp
+    Event_Handler_Handle_Timeout_Upcall.cpp
     FIFO.cpp
     FIFO_Recv.cpp
     FIFO_Recv_Msg.cpp
@@ -259,6 +259,7 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     Thread_Mutex.cpp
     Thread_Semaphore.cpp
     Throughput_Stats.cpp
+    Time_Policy.cpp
     Time_Value.cpp
     Timeprobe.cpp
     TLI.cpp
@@ -281,6 +282,7 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
   }
 
   Template_Files {
+    Abstract_Timer_Queue.cpp
     Acceptor.cpp
     Active_Map_Manager_T.cpp
     ARGV.cpp
@@ -303,6 +305,7 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     Condition_T.cpp
     Connector.cpp
     Containers_T.cpp
+    Countdown_Time_T.cpp
     Dump_T.cpp
     Dynamic_Service.cpp
     Env_Value_T.cpp
@@ -353,10 +356,12 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     Task_T.cpp
     Test_and_Set.cpp
     Timeprobe_T.cpp
+    Time_Policy_T.cpp
     Timer_Hash_T.cpp
     Timer_Heap_T.cpp
     Timer_List_T.cpp
     Timer_Queue_Adapters.cpp
+    Timer_Queue_Iterator.cpp
     Timer_Queue_T.cpp
     Timer_Wheel_T.cpp
     Tokenizer_T.cpp
@@ -393,6 +398,7 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     CORBA_macros.h
     Codeset_Symbols.h
     Condition_T.h
+    Countdown_Time.h
     Default_Constants.h
     Global_Macros.h
     Guard_T.h

@@ -40,4 +40,14 @@ ACE_Command_Base::~ACE_Command_Base (void)
 {
 }
 
+ACE_Noop_Command::ACE_Noop_Command()
+{
+}
+
+int
+ACE_Noop_Command::execute(void*)
+{
+  return 0;
+}
+
 ACE_END_VERSIONED_NAMESPACE_DECL
