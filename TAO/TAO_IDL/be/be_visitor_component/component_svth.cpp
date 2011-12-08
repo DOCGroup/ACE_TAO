@@ -46,18 +46,6 @@ be_visitor_component_svth::visit_component (be_component *node)
   /// code generation.
   node->scan (node);
 
-  be_visitor_facet_svth facet_svth(this->ctx_);
-
-
-  if (facet_svth.visit_component (node) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_component_svth::")
-                         ACE_TEXT ("visit_provides - ")
-                         ACE_TEXT ("facet visitor failed\n")),
-                        -1);
-    }
-
   /// CIDL-generated namespace used 'CIDL_' + composition name.
   /// Now we use 'CIAO_' + component's flat name.
   os_ << be_nl_2

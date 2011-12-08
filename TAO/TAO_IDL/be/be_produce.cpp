@@ -213,7 +213,7 @@ BE_produce (void)
       BE_visit_root (root_is_visitor, "implementation skeleton");
     }
 
-  if (be_global->gen_ciao_svnt () || be_global->gen_ciao_exec_idl ())
+  if (be_global->gen_ciao_svnt ())
     {
       ctx.state (TAO_CodeGen::TAO_ROOT_SVH);
       be_visitor_root_svh root_svh_visitor (&ctx);
@@ -222,10 +222,7 @@ BE_produce (void)
       ctx.state (TAO_CodeGen::TAO_ROOT_SVS);
       be_visitor_root_svs root_svs_visitor (&ctx);
       BE_visit_root (root_svs_visitor, "CIAO servant source");
-    }
-  // if a servant need to be created or when explicitly a #pragma ciao lem is defined.
-  if (be_global->gen_ciao_svnt ())
-    {
+
       ctx.state (TAO_CodeGen::TAO_ROOT_SVTH);
       be_visitor_root_svth root_svth_visitor (&ctx);
       BE_visit_root (root_svth_visitor, "CIAO template servant header");

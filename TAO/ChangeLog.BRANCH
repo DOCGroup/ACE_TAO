@@ -1,3 +1,32 @@
+Thu Dec  8 14:16:52 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * TAO_IDL/be/be_produce.cpp:
+        * TAO_IDL/be/be_provides.cpp:
+        * TAO_IDL/be/be_visitor_component.cpp:
+        * TAO_IDL/be/be_visitor_component/component_svth.cpp:
+        * TAO_IDL/be/be_visitor_component/component_svts.cpp:
+        * TAO_IDL/be/be_visitor_interface.cpp:
+        * TAO_IDL/be/be_visitor_interface/facet_svth.cpp:
+        * TAO_IDL/be/be_visitor_interface/facet_svts.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_svth.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_svts.cpp:
+        * TAO_IDL/be/be_visitor_module/module.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_svs.cpp:
+        * TAO_IDL/be_include/be_provides.h:
+        * TAO_IDL/be_include/be_visitor_component.h:
+        * TAO_IDL/be_include/be_visitor_interface.h:
+        * TAO_IDL/be_include/be_visitor_interface/facet_svth.h:
+        * TAO_IDL/be_include/be_visitor_interface/facet_svts.h:
+        * TAO_IDL/be_include/be_visitor_interface/interface_svth.h:
+        * TAO_IDL/be_include/be_visitor_interface/interface_svts.h:
+        * TAO_IDL/be/be_visitor_component/facet_svth.cpp:
+        * TAO_IDL/be/be_visitor_component/facet_svts.cpp:
+        * TAO_IDL/be_include/be_visitor_component/facet_svth.h:
+        * TAO_IDL/be_include/be_visitor_component/facet_svts.h:
+          Moved the generation of the facet servants to the place
+          where they are declared (from the place where they were
+          used). -Gsv needs to set as command line option.
+
 Wed Dec  7 13:26:49 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
