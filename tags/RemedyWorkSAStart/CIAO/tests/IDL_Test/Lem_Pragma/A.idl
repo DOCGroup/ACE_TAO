@@ -1,0 +1,12 @@
+// $Id$
+
+#ifndef A_IDL
+#define A_IDL
+
+#pragma ciao lem "AE.idl"
+
+interface A
+{
+};
+
+#endif /* A_IDL */

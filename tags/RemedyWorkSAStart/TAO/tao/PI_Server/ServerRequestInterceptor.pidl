@@ -1,0 +1,37 @@
+// -*- IDL -*-
+
+/**
+ * @file ServerRequestInterceptor.pidl
+ *
+ * $Id$
+ *
+ * @brief Pre-compiled IDL source for the PortableInterceptor
+ * components in the ORB.
+ */
+
+#ifndef _SERVER_REQUEST_INTERCEPTOR_IDL_
+#define _SERVER_REQUEST_INTERCEPTOR_IDL_
+
+#include "tao/PI/Interceptor.pidl"
+#include "tao/PI/PI_include.pidl"
+#include "tao/OctetSeq.pidl"
+
+module PortableInterceptor {
+
+  typeprefix PortableInterceptor "omg.org";
+
+  local interface ServerRequestInfo;
+
+  local interface ServerRequestInterceptor : Interceptor
+  {
+    /// Proprietary method in TAO for fault tolerance
+    void tao_ft_interception_point (in ServerRequestInfo ri, out CORBA::OctetSeq os) raises (ForwardRequest);
+    void receive_request_service_contexts (in ServerRequestInfo ri) raises (ForwardRequest);
+    void receive_request (in ServerRequestInfo ri) raises (ForwardRequest);
+    void send_reply (in ServerRequestInfo ri);
+    void send_exception (in ServerRequestInfo ri) raises (ForwardRequest);
+    void send_other (in ServerRequestInfo ri) raises (ForwardRequest);
+  };
+};
+
+#endif  /* _SERVER_REQUEST_INTERCEPTOR_IDL_ */

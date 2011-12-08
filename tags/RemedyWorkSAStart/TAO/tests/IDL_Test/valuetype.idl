@@ -1,0 +1,116 @@
+﻿//=============================================================================
+
+/**
+ *  @file    valuetype.idl
+ *
+ *  $Id$
+ *
+ *  This file contains examples of IDL code that has
+ *  caused problems in the past for the TAO IDL
+ *  compiler. This test is to make sure the problems
+ *  stay fixed.
+ *
+ *
+ *  @author Gary Duzan <gduzan@bbn.com> Jeff Parsons <j.parsons@vanderbilt.edu>
+ */
+
+//=============================================================================
+
+
+#ifndef IDL_TEST_VALUETYPE_IDL
+#define IDL_TEST_VALUETYPE_IDL
+
+#include "included.idl"
+
+// A valuetype factory can have exceptions, so the declaration must pull in
+// an #include of SystemException.h.
+
+valuetype MyValueType
+{
+  public string my_string_value;
+  factory make_one ();
+};
+
+enum ValueSort2 {
+  SYMBOL_TYPE2
+};
+
+union MyValueTypeUnion switch (ValueSort2) {
+  case SYMBOL_TYPE2:
+    MyValueType symbol_val;
+};
+
+// The original bug was caused by the default factory visitor
+// constructing a temporary arg of this field type. When the
+// arg was then destroyed, it called its base destroyer
+// AST_Field::destroy() which in turn destroyed the member
+// because it was anonymous. This declaration was copied from
+// an unautomated TAO/tests directory and authored by Simon McQueen
+// <sm@prismtechnologies>.
+valuetype RecValueType
+{
+  private sequence<RecValueType> rec_value_types;
+  private sequence<RecValueType,2> rec_value_types2;
+};
+
+// Inherits an anonymous sequence member, which was not named
+// correctly in the original bug when used in the arglist for
+// this valuetype's constructor from values.
+valuetype GetsDeprecatedMember : IncludedBase
+{
+  public string StringMember;
+};
+
+module X
+{
+  abstract valuetype AXXX
+  {
+    Object make_object ();
+  };
+
+  abstract valuetype BXXX : AXXX
+  {
+  };
+  typedef sequence<BXXX> BSeq;
+};
+
+// The original problem with the construct below was probably the
+// union member, but other features from the original example IDL
+// have been left in just in case.
+module ModSelection
+{
+  module SelectionDefns
+  {
+    abstract valuetype Criterion
+    {
+      void setCriterionRequiredAttributes (inout string theSelectedAttrs);
+      boolean isValid (in wstring theTrackSelectionAttrs);
+    };
+
+    valuetype CriterionExpr : Criterion
+    {
+      struct RightCriterionInfos
+      {
+        long theCriterionId;
+        CriterionExpr theRightExpr;
+      };
+
+      union RightCriterionExpr switch (boolean)
+      {
+        case TRUE: string theRightCriterionInfos;
+      };
+
+      public Criterion theLeftCriterion;
+      public RightCriterionExpr theRightCriterionExpr;
+
+      factory createWithCriterionLink (in Criterion theLeftCriterion,
+                                       in string link,
+                                       in CriterionExpr theRightCriterion);
+
+      factory createWithSingleCriterion (in Criterion theSingleCriterion);
+    };
+  };
+};
+
+#endif /* IDL_TEST_VALUETYPE_IDL */
+

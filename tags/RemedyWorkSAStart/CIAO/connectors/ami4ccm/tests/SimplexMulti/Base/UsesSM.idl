@@ -1,0 +1,34 @@
+// $Id$
+
+#ifndef USESSM_IDL
+#define USESSM_IDL
+
+#pragma ciao lem "Base/UsesSME.idl"
+#pragma ciao ami4ccm interface "UsesSM::One"
+#pragma ciao ami4ccm interface "UsesSM::Two"
+#pragma ciao lem "Base/UsesSMAE.idl"
+//needed for uses multiple
+#pragma ciao ami4ccm idl "Base/UsesSMA.idl"
+
+module UsesSM
+{
+  exception InternalError
+    {
+      long id;
+      string error_string;
+    };
+
+  // Sender/Receiver interfaces
+  interface One
+    {
+      long foo (in string in_str, in long cmd, out string answer)
+        raises (InternalError);
+    };
+  interface Two
+    {
+      void bar (in long cmd, out string answer)
+        raises (InternalError);
+    };
+};
+
+#endif

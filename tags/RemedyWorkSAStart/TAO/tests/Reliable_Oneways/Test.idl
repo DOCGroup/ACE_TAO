@@ -1,0 +1,29 @@
+//
+// $Id$
+//
+
+module Test
+{
+  interface Shutdown_Helper;
+
+  /// An interface to send oneway messages
+  interface Oneway_Receiver
+  {
+    /// The server raises a system exception, only the
+    /// SYNC_WITH_TARGET can detect that.
+    oneway void raise_no_permission ();
+
+    /// Destroy the object
+    oneway void destroy ();
+
+    /// Return a helper interface
+    Shutdown_Helper get_shutdown_helper ();
+  };
+
+  /// A simple interface to shutdown the server
+  interface Shutdown_Helper
+  {
+    /// Shutdown the server
+    void shutdown ();
+  };
+};

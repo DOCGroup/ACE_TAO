@@ -1,0 +1,41 @@
+// -*- MPC -*-
+// $Id: Bug_3768_Test.mpc
+
+project(*idl): taoidldefaults {
+  idlflags += -Sp
+  IDL_Files {
+    Test.idl
+  }
+  custom_only = 1
+}
+
+project(*Server): taoserver {
+  after += *idl
+  exename = server
+  Source_Files {
+    TestServer.cpp
+    server.cpp
+  }
+  Source_Files {
+    TestC.cpp
+    TestS.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*Client): taoserver {
+  after += *idl
+  exename = client
+  Source_Files {
+    TestCallback.cpp
+    client.cpp
+  }
+  Source_Files {
+    TestC.cpp
+    TestS.cpp
+  }
+  IDL_Files {
+  }
+}
+

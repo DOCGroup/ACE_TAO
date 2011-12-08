@@ -1,0 +1,19 @@
+// $Id$
+
+#ifndef USESSM_RECEIVER_IDL
+#define USESSM_RECEIVER_IDL
+
+#include <Components.idl>
+
+#include "Base/UsesSM.idl"
+
+module UsesSM
+{
+  component Receiver
+  {
+    /// Provides
+    provides One do_my_one;
+    provides Two do_my_two;
+  };
+};
+#endif
