@@ -5,7 +5,7 @@
  *
  *  $Id$
  *
- *  Concrete visitor for the Component node.
+ *  Concrete visitor for the Interface node.
  *  This provides for code generation for the facet servant
  *  class declaration
  *
@@ -25,16 +25,14 @@
  * This is a concrete visitor to generate the facet servant decl
  * for a component.
  */
-class be_visitor_facet_svth : public be_visitor_component_scope
+class be_visitor_facet_svth : public be_visitor_interface
 {
 public:
   be_visitor_facet_svth (be_visitor_context *ctx);
 
   ~be_visitor_facet_svth (void);
 
-  virtual int visit_connector (be_connector *node);
-  virtual int visit_component (be_component *node);
-  virtual int visit_provides (be_provides *node);
+  virtual int visit_interface (be_interface *node);
 };
 
 #endif /* _BE_COMPONENT_FACET_SVH_H_ */
