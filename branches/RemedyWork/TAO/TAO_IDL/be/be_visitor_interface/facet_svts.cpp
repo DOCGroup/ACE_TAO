@@ -25,7 +25,6 @@ be_visitor_facet_svts::~be_visitor_facet_svts (void)
 int
 be_visitor_facet_svts::visit_interface (be_interface *node)
 {
-  // TODO: ANOTHER CHECK IS NEEDED !!!!!!!!!!
   if (node->imported () ||
       node->svnt_src_facet_gen () ||
       idl_global->ami_connector_seen_ ||

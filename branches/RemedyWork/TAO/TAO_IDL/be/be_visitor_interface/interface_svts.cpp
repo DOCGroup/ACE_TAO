@@ -41,6 +41,7 @@ be_visitor_interface_svts::visit_interface (be_interface *node)
                          ACE_TEXT ("facet visitor failed\n")),
                         -1);
     }
+  return 0;
 }
 
 int
