@@ -21,6 +21,8 @@ static const char *size_leadin = 0;
 static size_t leadin_len = 0;
 static const size_t giop_header_len = 12;
 
+static const int date_format = 2;
+
 // GIOP 1.2 header: 12 bytes
 // Magic: 4
 // ver:   2
@@ -138,6 +140,12 @@ Invocation::GIOP_Buffer::GIOP_Buffer(const char *text,
       ACE_OS::strncpy(timebuf, text, (time_tok - text));
       timebuf[time_tok - text] = 0;
       char *hms = ACE_OS::strchr (timebuf,' ');
+      if (Session::date_format() == 2) // MMM DD hh:mm:ss.msec YYYY
+        {
+          if (hms != 0)
+            hms = ACE_OS::strchr (hms+1,' ');
+        }
+
       if (hms != 0)
         {
           int hr, min, sec, msec;

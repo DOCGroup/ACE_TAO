@@ -10,6 +10,12 @@ use Win32::Process;
 use File::Basename;
 use Cwd;
 
+# Make sure the File::Which module is installed on the machine
+# before trying to use it. If the module is installed on this
+# machine, then it will be included because of the eval ()
+# statement below.
+my $has_which = eval ("use File::Which; 1;") ? 1 : 0;
+
 ###############################################################################
 
 # This is what GetExitCode will return if the process is still running.
@@ -133,10 +139,21 @@ sub Executable
         $executable = $self->Normalize_Executable_Name ($executable);
     }
     else {
-        if ($executable !~ m/\.(BAT|EXE)$/i) {
+        if ($executable !~ m/\.(BAT|EXE|COM)$/i) {
             $executable = $executable.".EXE";
         }
+
         $executable =~ s/\//\\/g; # / <- # color coding issue in devenv
+
+        # If there is no directory in the executable name, then we are going
+        # to search the PATH for the executable.
+        if ($has_which && $executable !~ m/\//) {
+            my $which = File::Which::which ($executable);
+
+            if ($which ne "") {
+                $executable = $which;
+            }
+        }
     }
 
     return $executable;
@@ -178,6 +195,7 @@ sub IgnoreExeSubDir
         $self->{IGNOREEXESUBDIR} = shift;
     }
     elsif (@_ != 0 && $self->{EXECUTABLE} =~ /perl$/) {
+        print ("==== automatically ignoring...\n");
         $self->{IGNOREEXESUBDIR} = shift;
     }
 

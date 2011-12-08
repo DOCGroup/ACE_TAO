@@ -25,8 +25,8 @@ public:
   be_type *provides_type (void) const;
 
   // Common code called by visitors.
-  int gen_facet_svnt_decl (TAO_OutStream &os);
-  int gen_facet_svnt_defn (TAO_OutStream &os);
+  int gen_facet_svnt_tmpl_decl (TAO_OutStream &os);
+  int gen_facet_svnt_tmpl_defn (TAO_OutStream &os);
 
   // Narrowing.
   DEF_NARROW_FROM_DECL(be_provides);

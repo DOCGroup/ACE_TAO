@@ -141,8 +141,6 @@ project(AMI_OneReplyH_skel) : ciao_executor, ami, ami4ccm_servant {
   }
 
   Inline_Files {
-    OneReplyHS.inl
-   
   }
 }
 

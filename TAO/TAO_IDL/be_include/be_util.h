@@ -63,7 +63,14 @@ public:
 
   /// Called from various places.
   static const char *
-  get_output_path (bool for_anyop, bool for_skel);
+  get_output_path (bool for_anyop, bool for_skel, bool for_exec);
+
+  static const char *
+  get_complete_file_name (bool for_exec);
+
+  /// Called from various places.
+  static bool
+  overwrite_ciao_exec_files (void);
 
   // Called by each node upon construction.
   static void set_arg_seen_bit (be_type *);

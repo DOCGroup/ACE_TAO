@@ -70,8 +70,6 @@ project(DsLogAdmin_Skel) : orbsvcslib, orbsvcs_output, install, dslogadmin, port
   }
 
   Inline_Files {
-    DsLogAdminS.inl
-    DsLogNotificationS.inl
   }
 
   Template_Files {

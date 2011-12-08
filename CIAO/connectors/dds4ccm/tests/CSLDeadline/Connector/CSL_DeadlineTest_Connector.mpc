@@ -137,7 +137,6 @@ project(DDS_CSL_DeadlineTest_Connector_svnt) : ciao_servant, dds4ccm_impl {
   }
 
   Inline_Files {
-    CSL_DeadlineTest_ConnectorS.inl
   }
 }
 

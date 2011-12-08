@@ -23,7 +23,7 @@ project(AMI_Hello_Tuto_Hello_Sender_idl_gen) : componentidldefaults {
 project(AMI_Hello_Hello_Sender_exec_idl_gen) : componentidldefaults {
   requires += dummy_label
   custom_only = 1
-  idlflags += -Gex -SS -Sci -Ssi \
+  idlflags += -Gex -SS -Sci \
               -I../ports \
               -I../../ports \
               -o ../../../Tutorial/Code/GeneratedExec
@@ -38,7 +38,7 @@ project(AMI_Hello_Tuto_Hello_Sender_lem_gen) : ciaoidldefaults {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=HELLO_SENDER_COMP_LEM_STUB_Export \
               -Wb,stub_export_include=Hello_Sender_comp_lem_stub_export.h \
-              -SS -Gxhst\ 
+              -SS -Gxhst\
               -I../../ports \
               -I../../GeneratedCode\
               -o ../../GeneratedCode
@@ -57,7 +57,7 @@ project(AMI_Hello_Tuto_Hello_Sender_lem_stub) : ccm_svnt, ami   {
   libout = ../../lib
   sharedname = Hello_Sender_comp_lem_stub
   dynamicflags += HELLO_SENDER_COMP_LEM_STUB_BUILD_DLL
-  includes += ../../GeneratedCode ../.. 
+  includes += ../../GeneratedCode ../..
   IDL_Files {
   }
 
@@ -154,6 +154,5 @@ project(AMI_Hello_Tuto_Hello_Sender_svnt) : ciao_servant, ami {
   }
 
   Inline_Files {
-    ../../GeneratedCode/Hello_Sender_compS.inl
   }
 }

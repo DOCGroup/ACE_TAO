@@ -146,7 +146,6 @@ project(DDS_Throughput_Receiver_svnt) : ciao_servant, dds4ccm_lem_stub, dds4ccm_
   }
 
   Inline_Files {
-    Throughput_ReceiverS.inl
   }
 }
 

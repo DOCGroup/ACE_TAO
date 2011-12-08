@@ -12,6 +12,8 @@
  *  @author Jeff Parsons
  */
 //=============================================================================
+#include "ast_generator.h"
+#include "be_predefined_type.h"
 
 be_visitor_facet_ami_exh::be_visitor_facet_ami_exh (
       be_visitor_context *ctx)
@@ -19,7 +21,8 @@ be_visitor_facet_ami_exh::be_visitor_facet_ami_exh (
     iface_ (0),
     callback_iface_ (0),
     scope_name_ (0),
-    iface_name_ (0)
+    iface_name_ (0),
+    sync_ (false)
 {
   // This is initialized in the base class to svnt_export_macro()
   // or skel_export_macro(), since there are many more visitor
@@ -53,13 +56,14 @@ be_visitor_facet_ami_exh::visit_provides (be_provides *node)
 
   if (this->gen_reply_handler_class () == -1)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_facet_ami_exh")
-                         ACE_TEXT ("::visit_provides - ")
-                         ACE_TEXT ("gen_reply_handler_class() ")
-                         ACE_TEXT ("failed\n")),
-                        -1);
-    }
+    ACE_ERROR_RETURN ((LM_ERROR,
+             ACE_TEXT ("be_visitor_facet_ami_exh")
+             ACE_TEXT ("::visit_provides - ")
+             ACE_TEXT ("gen_reply_handler_class() ")
+             ACE_TEXT ("failed\n")),
+            -1);
+   }
+
 
   if (this->gen_facet_executor_class () == -1)
     {
@@ -70,6 +74,70 @@ be_visitor_facet_ami_exh::visit_provides (be_provides *node)
                          ACE_TEXT ("failed\n")),
                         -1);
     }
+
+  return 0;
+}
+int
+be_visitor_facet_ami_exh::visit_attribute (be_attribute *node)
+{
+
+  be_operation get_op (node->field_type (),
+                       AST_Operation::OP_noflags,
+                       node->name (),
+                       0,
+                       0);
+
+  get_op.set_name ((UTL_IdList *) node->name ()->copy ());
+  if (this->visit_operation (&get_op) == -1)
+    {
+       ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_facet_ami_exh::"
+                             "visit_attribute - "
+                             "codegen for get_attribute failed\n"),
+                            -1);
+    }
+  get_op.destroy ();
+
+  if (node->readonly ())
+    {
+      // Nothing else to do.
+      return 0;
+    }
+  Identifier id ("void");
+  UTL_ScopedName sn (&id, 0);
+
+  // Create the return type, which is "void"
+  be_predefined_type rt (AST_PredefinedType::PT_void, &sn);
+
+  // Argument type is the same as the attribute type.
+  AST_Argument *arg =
+    idl_global->gen ()->create_argument (AST_Argument::dir_IN,
+                                         node->field_type (),
+                                         node->name ());
+
+  arg->set_name ((UTL_IdList *) node->name ()->copy ());
+
+  // Create the operation.
+  be_operation set_op (&rt,
+                       AST_Operation::OP_noflags,
+                       node->name (),
+                       0,
+                       0);
+
+  set_op.set_name ((UTL_IdList *) node->name ()->copy ());
+  set_op.be_add_argument (arg);
+
+  if (this->visit_operation (&set_op) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                        "(%N:%l) be_visitor_facet_ami_exh::"
+                        "visit_attribute - "
+                        "codegen for set_attribute failed\n"),
+                        -1);
+    }
+
+    set_op.destroy ();
+    rt.destroy ();
 
   return 0;
 }
@@ -84,7 +152,9 @@ be_visitor_facet_ami_exh::visit_operation (be_operation *node)
   /// connector. We want to skip the CCM-related operations
   /// that were added to the connector since it's a component.
   /// We want only the facet interface operations.
-  if (d->node_type () != AST_Decl::NT_interface)
+  /// In case of sync. attribute operations we have a node_type NT_root
+  if ((d->node_type () != AST_Decl::NT_interface) &&
+      (d->node_type () != AST_Decl::NT_root))
     {
       return  0;
     }
@@ -139,6 +209,9 @@ be_visitor_facet_ami_exh::init (bool for_impl)
   AST_Decl *d = s->lookup_by_name (sn, true, false);
   this->callback_iface_ = be_interface::narrow_from_decl (d);
 
+  if (this->callback_iface_ == 0)
+    this->sync_  = true;
+
   sn->destroy ();
   delete sn;
   sn = 0;
@@ -147,9 +220,14 @@ be_visitor_facet_ami_exh::init (bool for_impl)
 int
 be_visitor_facet_ami_exh::gen_reply_handler_class (void)
 {
+  os_ << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
+
+
   const char *suffix = "_reply_handler";
   this->init (false);
-
+  if (this->sync_)
+    return 0;
   os_ << be_nl
       << "class " << this->export_macro_.c_str () << " "
       << this->iface_name_ << suffix << be_idt_nl
@@ -194,6 +272,9 @@ be_visitor_facet_ami_exh::gen_reply_handler_class (void)
 int
 be_visitor_facet_ami_exh::gen_facet_executor_class (void)
 {
+    os_ << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
+
   const char *suffix = "_exec_i";
   const char *scope_name =
     ScopeAsDecl (this->iface_->defined_in ())->full_name ();
@@ -212,15 +293,69 @@ be_visitor_facet_ami_exh::gen_facet_executor_class (void)
       << "virtual ~" << iface_name << suffix
       << " (void);";
 
-  if (this->visit_scope (this->iface_) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_connector_ami_exh")
-                         ACE_TEXT ("::gen_facet_executor_class - ")
-                         ACE_TEXT ("visit_scope() on sendc ")
-                         ACE_TEXT ("interface failed\n")),
-                        -1);
-    }
+
+  ACE_CString handler_str (
+  ScopeAsDecl (this->iface_->defined_in ())->full_name ());
+  ACE_CString tmp (this->iface_->local_name ());
+  handler_str += "::";
+  handler_str += tmp;
+
+  if (ACE_OS::strstr (tmp.c_str(), "AMI4CCM") != 0)
+    this->sync_ = false;
+  else
+    this->sync_ = true;
+  if (this->sync_)
+   {
+     UTL_Scope *ss = this->iface_->defined_in();
+     UTL_ScopedName *sn =
+     FE_Utils::string_to_scoped_name (handler_str.c_str ());
+     AST_Decl *d = ss->lookup_by_name (sn, true);
+
+     sn->destroy ();
+     delete sn;
+     sn = 0;
+
+     be_interface *sync_iface =
+     be_interface::narrow_from_decl (d);
+
+     /// The overload of traverse_inheritance_graph() used here
+     /// doesn't automatically prime the queues.
+     sync_iface->get_insert_queue ().reset ();
+     sync_iface->get_del_queue ().reset ();
+     sync_iface->get_insert_queue ().enqueue_tail (sync_iface);
+
+
+
+     Facet_AMI_ExecH_Op_Attr_Generator op_attr_gen (this);
+     int status =
+         sync_iface->traverse_inheritance_graph(
+             op_attr_gen,
+             &os_,
+             false,
+             false);
+
+     if (status == -1)
+       {
+         ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("be_visitor_facet_ami_exh")
+                      ACE_TEXT ("::gen_facet_executor_class - ")
+                      ACE_TEXT ("traverse_inheritance_graph() on ")
+                      ACE_TEXT ("interface failed\n")));
+
+       }
+   }
+ else
+   {
+     if (this->visit_scope (this->iface_) == -1)
+       {
+         ACE_ERROR_RETURN ((LM_ERROR,
+                                ACE_TEXT ("be_visitor_connector_ami_exh")
+                                ACE_TEXT ("::gen_facet_executor_class - ")
+                                ACE_TEXT ("visit_scope() on sendc ")
+                                ACE_TEXT ("interface failed\n")),
+                               -1);
+       }
+   }
 
   const char *container_type = be_global->ciao_container_type ();
 
@@ -257,4 +392,18 @@ be_visitor_facet_ami_exh::gen_facet_executor_class (void)
 
   return 0;
 }
+// ==================================================
 
+Facet_AMI_ExecH_Op_Attr_Generator::Facet_AMI_ExecH_Op_Attr_Generator (
+      be_visitor_scope * visitor)
+  : visitor_ (visitor)
+{
+}
+
+int
+Facet_AMI_ExecH_Op_Attr_Generator::emit (be_interface * /*derived_interface*/,
+                                        TAO_OutStream *  /*os*/,
+                                        be_interface * base_interface)
+{
+  return visitor_->visit_scope (base_interface);
+}

@@ -224,6 +224,7 @@ be_visitor_executor_exh::visit_component (be_component *node)
   return 0;
 }
 
+
 int
 be_visitor_executor_exh::visit_provides (be_provides *node)
 {

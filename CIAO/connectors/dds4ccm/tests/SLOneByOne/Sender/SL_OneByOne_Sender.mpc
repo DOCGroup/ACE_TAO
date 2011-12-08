@@ -134,7 +134,6 @@ project(DDS_SL_OneByOne_Sender_svnt) : ciao_servant, dds4ccm_lem_stub, dds4ccm_s
   }
 
   Inline_Files {
-    SL_OneByOne_SenderS.inl
   }
 }
 

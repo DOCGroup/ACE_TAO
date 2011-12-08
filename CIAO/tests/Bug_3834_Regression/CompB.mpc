@@ -110,7 +110,6 @@ project(Moo_CompB_svnt) : ciao_servant   {
   }
 
   Inline_Files {
-    CompBS.inl
   }
 }
 

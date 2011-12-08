@@ -58,7 +58,6 @@ project(Minimum_Base_skel) : ccm_stub, portableserver {
   }
 
   Inline_Files {
-    Minimum_BaseS.inl
   }
 }
 

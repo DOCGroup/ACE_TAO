@@ -137,7 +137,6 @@ project(DDS_Quoter_Connector_svnt) : ciao_servant, dds4ccm_impl {
   }
 
   Inline_Files {
-    Quoter_ConnectorS.inl
   }
 }
 

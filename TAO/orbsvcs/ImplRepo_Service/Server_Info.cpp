@@ -13,8 +13,7 @@ Server_Info::Server_Info
  int limit,
  const ACE_CString& partial_ior,
  const ACE_CString& server_ior,
- ImplementationRepository::ServerObject_ptr svrobj
- )
+ ImplementationRepository::ServerObject_ptr svrobj)
  : server_id (serverId)
  , name (server_name)
  , activator (aname)

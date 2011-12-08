@@ -10,6 +10,19 @@ sub get_output {
   my($self, $file, $flags) = @_;
   my @out;
 
+  # handle generated executor files (if any)
+  if ($flags =~ /-Gex/ && !($flags =~ /-oN/)) {
+    my $gendir = '';
+    if ($flags =~ /-oE\s*(\S+)/) {
+      $gendir = $1;
+      if (!($gendir =~ /(\\|\/)$/)) {
+        $gendir .= '/';
+      }
+    }
+    $file =~ /^(.*)(\.p?idl)$/;
+    push(@out, $gendir.$1."_exec.h");
+    push(@out, $gendir.$1."_exec.cpp");
+  }
   if ($flags =~ /-Gxhex/ && $flags =~ /-Wb,exec_export_include=(\S*)/) {
     push(@out, $1);
   }

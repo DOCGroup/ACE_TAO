@@ -101,7 +101,8 @@ namespace DAnCE
     }
   }
 
-  Plugin_Manager::Plugin_Manager (void)
+  Plugin_Manager::Plugin_Manager (void) :
+     config_ (0)
   {
   }
 

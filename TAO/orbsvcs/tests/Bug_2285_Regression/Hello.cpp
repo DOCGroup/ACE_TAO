@@ -3,10 +3,8 @@
 //
 #include "Hello.h"
 
-
-
 CORBA::Boolean
-Hello::ids_differ_ = 1;
+Hello::ids_differ_ = true;
 
 Hello::Hello (CORBA::ORB_ptr orb, Test::Hello_ptr server, CORBA::ULong server_id)
   : orb_ (CORBA::ORB::_duplicate (orb)),

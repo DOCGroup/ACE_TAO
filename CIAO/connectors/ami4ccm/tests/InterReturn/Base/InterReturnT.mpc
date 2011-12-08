@@ -141,8 +141,6 @@ project(AMI_InterReturnT_skel) : ciao_executor, ami, ami4ccm_servant {
   }
 
   Inline_Files {
-    InterReturnTS.inl
-   
   }
 }
 

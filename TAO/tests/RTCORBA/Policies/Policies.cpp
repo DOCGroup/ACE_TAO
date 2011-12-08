@@ -173,6 +173,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   "%s successful\n",
                   argv[0]));
 
+      orb->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {

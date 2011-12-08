@@ -1,8 +1,18 @@
-USER VISIBLE CHANGES BETWEEN ACE-6.0.5 and ACE-6.1.0
+USER VISIBLE CHANGES BETWEEN ACE-6.0.6 and ACE-6.1.0
+====================================================
+
+. Added a new method to ACE_Atomic_Op<LOCK, TYPE>, TYPE exchange (TYPE newval)
+  which does an atomic exchange of the new value with ACE_Atomic_Op's value
+  and returns the old value. The tests/Atomic_Op_Test.cpp test program has a
+  test case that exemplifies its usage; see the Exchange_Tester class.
+
+USER VISIBLE CHANGES BETWEEN ACE-6.0.5 and ACE-6.0.6
 ====================================================
 
 . Removed autoconf support, only traditional way of
   compilation is shipped from now
+
+. Add support for RHEL 6.1 64bit
 
 USER VISIBLE CHANGES BETWEEN ACE-6.0.4 and ACE-6.0.5
 ====================================================

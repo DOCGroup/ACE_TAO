@@ -101,7 +101,6 @@ project(SimpleAttribute_svnt) : ciao_servant {
   }
 
   Inline_Files {
-    SimpleAttributeS.inl
   }
 }
 

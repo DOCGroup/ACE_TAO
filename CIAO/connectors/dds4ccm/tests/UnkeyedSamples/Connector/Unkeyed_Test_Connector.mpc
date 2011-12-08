@@ -141,7 +141,6 @@ project(DDS_Unkeyed_Test_Connector_svnt) : ciao_servant, dds4ccm_impl {
   }
 
   Inline_Files {
-    Unkeyed_Test_ConnectorS.inl
   }
 }
 

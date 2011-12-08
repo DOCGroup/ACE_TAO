@@ -128,7 +128,6 @@ project(AMI_AsynchT_Base_Receiver_svnt) : ciao_servant, messaging {
   }
 
   Inline_Files {
-    AsynchT_ReceiverS.inl
   }
 }
 

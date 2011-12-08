@@ -57,7 +57,7 @@ typedef ACE_Allocator TAO_AMH_BUFFER_ALLOCATOR;
  *
  * One RH is created for every client request and the RH can be used
  * only once i.e.,  the asynchronous method can be called only once.
- * This class also encapsulates various initialisation and
+ * This class also encapsulates various initialization and
  * response-sending functionality that is common to all RHs (generated
  * by the IDL compiler). Thus the IDL-compiler has to generate less
  * code which in turn reduces the overall code size for an

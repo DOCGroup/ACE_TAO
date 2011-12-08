@@ -141,7 +141,6 @@ project (WU_LateBindingConnector_svnt) : ciao_servant, dds4ccm_impl {
   }
 
   Inline_Files {
-    WU_LateBinding_ConnectorS.inl
   }
 }
 

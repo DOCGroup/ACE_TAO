@@ -54,9 +54,9 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
           << "template<>" << be_nl
           << "::CORBA::Boolean" << be_nl
           << "Any_Dual_Impl_T<" << node->name ()
-          << ">::demarshal_value (" << be_idt << be_idt_nl
-          << "TAO_InputCDR & cdr" << be_uidt_nl
-          << ")" << be_uidt_nl
+          << ">::demarshal_value ("
+          << "TAO_InputCDR & cdr"
+          << ")" << be_nl
           << "{" << be_idt_nl
           << "::CORBA::String_var id;" << be_nl_2
           << "if (!(cdr >> id.out ()))" << be_idt_nl

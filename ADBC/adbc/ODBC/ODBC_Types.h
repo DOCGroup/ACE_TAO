@@ -17,7 +17,9 @@
 #include "adbc/Types.h"
 
 // Forward decl.
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Date_Time;
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 namespace ADBC
 {

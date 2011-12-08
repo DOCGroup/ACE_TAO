@@ -171,12 +171,14 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
         status = get_op.accept (&visitor);
         break;
       }
+    case TAO_CodeGen::TAO_ROOT_SVTH:
     case TAO_CodeGen::TAO_ROOT_SVH:
       {
         be_visitor_operation_ch visitor (&ctx);
         status = get_op.accept (&visitor);
         break;
       }
+    case TAO_CodeGen::TAO_ROOT_SVTS:
     case TAO_CodeGen::TAO_ROOT_SVS:
       {
         be_visitor_operation_svs visitor (&ctx);
@@ -340,12 +342,14 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
         status = set_op.accept (&visitor);
         break;
       }
+    case TAO_CodeGen::TAO_ROOT_SVTH:
     case TAO_CodeGen::TAO_ROOT_SVH:
       {
         be_visitor_operation_ch visitor (&ctx);
         status = set_op.accept (&visitor);
         break;
       }
+    case TAO_CodeGen::TAO_ROOT_SVTS:
     case TAO_CodeGen::TAO_ROOT_SVS:
       {
         be_visitor_operation_svs visitor (&ctx);

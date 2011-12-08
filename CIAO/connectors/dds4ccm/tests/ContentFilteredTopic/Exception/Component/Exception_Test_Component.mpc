@@ -141,7 +141,6 @@ project(CFT_Exception_Test_Component_svnt) : ciao_servant, dds4ccm_lem_stub, dds
   }
 
   Inline_Files {
-    Exception_Test_ComponentS.inl
   }
 }
 

@@ -108,7 +108,6 @@ project(Null_Component_svnt) : ciao_servant {
   }
 
   Inline_Files {
-    Null_ComponentS.inl
   }
 }
 

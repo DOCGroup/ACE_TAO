@@ -35,7 +35,8 @@ TAO_UIPMC_Wait_Never::can_process_upcalls (void) const
 }
 
 int
-TAO_UIPMC_Wait_Never::sending_request (TAO_ORB_Core *, int)
+TAO_UIPMC_Wait_Never::sending_request (TAO_ORB_Core *,
+                                       TAO_Message_Semantics )
 {
   return 0;
 }

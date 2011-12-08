@@ -86,7 +86,11 @@ be_visitor_executor_ami_exh::visit_connector (be_connector *node)
   ACE_CString half_stripped_name (
     connector_name.substr (0, connector_name.find ("_Connector")));
 
-  os_ << half_stripped_name.c_str () <<  "_exec_i *facet_exec_;";
+  os_ << half_stripped_name.c_str () <<  "_exec_i *facet_exec_0_;" << be_nl;;
+
+  ACE_CString double_stripped_name (
+     half_stripped_name.substr (ACE_OS::strlen ("AMI4CCM_")));
+  os_ << double_stripped_name.c_str () <<  "_exec_i *facet_exec_1_;";
 
   os_ << be_uidt_nl
       << "};";

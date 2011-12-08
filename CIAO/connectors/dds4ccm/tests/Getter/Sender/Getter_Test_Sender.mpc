@@ -145,7 +145,6 @@ project(DDS_Getter_Test_Sender_svnt) : ciao_servant, dds4ccm_lem_stub, dds4ccm_s
   }
 
   Inline_Files {
-    Getter_Test_SenderS.inl
   }
 }
 

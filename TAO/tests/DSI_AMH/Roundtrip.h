@@ -27,9 +27,9 @@ public:
 
   // = The DSI methods
 
+  /// Turns around and calls invoke, but using AMH style handler
   virtual void _dispatch (TAO_ServerRequest &request,
-                          void *context);
-  // Turns around and calls invoke, but using AMH style handler
+                          TAO::Portable_Server::Servant_Upcall *context);
 
   void invoke (CORBA::ServerRequest_ptr request);
 
@@ -40,7 +40,7 @@ public:
       PortableServer::POA_ptr poa);
 
 private:
-  /// Use an ORB reference to conver strings to objects and shutdown
+  /// Use an ORB reference to convert strings to objects and shutdown
   /// the application.
   CORBA::ORB_var orb_;
 };

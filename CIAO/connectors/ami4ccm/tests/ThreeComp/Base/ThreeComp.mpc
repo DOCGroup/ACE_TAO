@@ -166,8 +166,6 @@ project(AMI_ThreeComp_skel) : ciao_executor, ami, ami4ccm_servant {
   }
 
   Inline_Files {
-    ThreeCompS.inl
-    ThreeComp_no_amiS.inl
   }
 }
 

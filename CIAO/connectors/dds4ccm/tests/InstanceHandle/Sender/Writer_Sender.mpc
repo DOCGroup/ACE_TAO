@@ -143,7 +143,6 @@ project(DDS_DDSInstanceHandleSender_svnt) : ciao_servant, dds4ccm_lem_stub, dds4
   }
 
   Inline_Files {
-    Writer_SenderS.inl
   }
 }
 

@@ -140,7 +140,6 @@ project(DDS_VTS_Valuetype_Connector_svnt) : ciao_servant, dds4ccm_impl {
   }
 
   Inline_Files {
-    VTS_Valuetype_ConnectorS.inl
   }
 }
 

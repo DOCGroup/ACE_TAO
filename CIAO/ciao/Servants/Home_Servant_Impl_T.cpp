@@ -44,13 +44,30 @@ namespace CIAO
   {
     CIAO_TRACE ("Home_Servant_Impl<>::destructor");
 
-    OBJ_ITERATOR const end = this->objref_map_.end ();
+    this->remove_components ();
+  }
 
-    for (OBJ_ITERATOR iter = this->objref_map_.begin ();
-         iter != end;
-         ++iter)
+  template <typename BASE_SKEL,
+            typename EXEC,
+            typename COMP_SVNT,
+            typename CONTAINER>
+  void
+  Home_Servant_Impl<BASE_SKEL,
+                    EXEC,
+                    COMP_SVNT,
+                    CONTAINER>::remove_components (void)
+  {
+    while (this->objref_map_.current_size () > 0)
       {
-        this->remove_component (((*iter).int_id_).in ());
+        OBJ_ITERATOR const first = this->objref_map_.begin ();
+        this->remove_component (((*first).int_id_).in ());
+        if (this->objref_map_.unbind (first) != 0)
+          {
+            CIAO_ERROR (1, (LM_WARNING, CLINFO
+                        "Home_Servant_Impl<>::remove_components - "
+                        "Failed to unbind component\n"));
+            throw Components::RemoveFailure ();
+          }
       }
   }
 

@@ -132,7 +132,6 @@ project(DDS_MultiTopic_Receiver_svnt) : ciao_servant, dds4ccm_lem_stub, dds4ccm_
   }
 
   Inline_Files {
-    MultiTopic_ReceiverS.inl
   }
 }
 

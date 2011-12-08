@@ -109,7 +109,6 @@ project(Basic_CodeGen_svnt) : ciao_servant {
   }
 
   Inline_Files {
-    CodeGenS.inl
   }
 }
 
