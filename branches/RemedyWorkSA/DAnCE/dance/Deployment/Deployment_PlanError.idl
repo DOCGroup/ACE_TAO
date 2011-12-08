@@ -1,0 +1,13 @@
+// $Id$
+
+#ifndef DEPLOYMENT_PLANERROR_IDL
+#define DEPLOYMENT_PLANERROR_IDL
+
+module Deployment {
+  exception PlanError {
+    string name;
+    string reason;
+  };
+};
+
+#endif /* DEPLOYMENT_PLANERROR_IDL */

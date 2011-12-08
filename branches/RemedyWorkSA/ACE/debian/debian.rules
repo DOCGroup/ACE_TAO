@@ -1,0 +1,134 @@
+#!/usr/bin/make -f
+
+# debian/rules file for ACE+TAO Debian GNU/Linux packages
+# written February 2002 by Ossama Othman <ossama@debian.org>
+# Modified August 2003 by Brian Nelson <pyro@debian.org>
+# Copyright (C) 2004  Raphael Bossek <bossekr@debian.org>
+# Copyright © 2005-2011 Thomas Girard <thomas.g.girard@free.fr>
+
+MWCFLAGS := -type gnuace -noreldefs
+DSO_MAKE_FLAG := versioned_so=2
+INSTALL_FLAGS := DESTDIR=$(CURDIR)/debian/tmp INSTALL_PREFIX=/usr install_rpath=0 $(DSO_MAKE_FLAG)
+
+MAN1 := debian/ace_netsvcs.1 \
+	debian/tao_catior.1 \
+	debian/tao_nslist.1 \
+	debian/tao_nsadd.1 \
+	debian/tao_nsdel.1 \
+	debian/tao_tls_basic.1 \
+	debian/tao_tls_event.1 \
+	debian/tao_tls_notify.1 \
+	debian/tao_tls_rtevent.1 \
+	debian/TAO_ORB_Options.1 \
+	debian/mpc-ace.1
+# Where we install every file before calling dh_install
+DT := debian/tmp
+
+DOXYGEN_FILES_TO_REMOVE := -name '*.md5' -o \
+                           -name '*.map' -o \
+                           -name '*.tag'
+
+# Package names, used when overriding dh_installchangelogs
+ALL_PACKAGES := $(shell dh_listpackages)
+ALL_TAO      := $(filter tao% libtao%,$(ALL_PACKAGES))
+ALL_ACEXML   := $(filter libacexml%,$(ALL_PACKAGES))
+
+export ACE_ROOT := $(shell pwd)
+export MPC_ROOT := $(ACE_ROOT)/MPC
+export TAO_ROOT := $(ACE_ROOT)/TAO
+export LD_LIBRARY_PATH := $(LD_LIBRARY_PATH):$(ACE_ROOT)/lib
+export QTDIR := /usr/share/qt4
+
+.PHONY: build
+build %:
+	dh $@
+
+# Implement our own configure machinery; it will copy Debian specific
+# configuration before launching MPC to generate ACE+TAO GNUmakefile
+override_dh_auto_configure:
+	cp debian/platform_macros.GNU $(ACE_ROOT)/include/makeinclude
+	cp debian/config*.h $(ACE_ROOT)/ace/
+	cp debian/default.features $(ACE_ROOT)/bin/MakeProjectCreator/config
+	cp debian/ACE-DPKG.mwc $(ACE_ROOT)
+	cd $(ACE_ROOT) && $(ACE_ROOT)/bin/mwc.pl $(MWCFLAGS) ACE-DPKG.mwc
+	cp debian/TAO-DPKG.mwc $(TAO_ROOT)
+	cd $(TAO_ROOT) && $(ACE_ROOT)/bin/mwc.pl $(MWCFLAGS) TAO-DPKG.mwc
+
+override_dh_auto_build: build-stamp manpages-stamp doxygen-stamp
+
+build-stamp:
+	$(MAKE) -C $(ACE_ROOT) $(DSO_MAKE_FLAG)
+	$(MAKE) -C $(TAO_ROOT) $(DSO_MAKE_FLAG)
+	touch $@
+
+override_dh_auto_install:
+	$(MAKE) -C $(ACE_ROOT) install $(INSTALL_FLAGS)
+	$(MAKE) -C $(TAO_ROOT) install $(INSTALL_FLAGS)
+	mkdir -p $(DT)/usr/share/man/man1
+	cp $(ACE_ROOT)/apps/gperf/ace_gperf.1 $(DT)/usr/share/man/man1
+#	Relocate .idl and .pidl files
+	cd $(DT) && for f in $$(find usr/include -name '*.idl' -o -name '*.pidl') ; do \
+	   g=$$(echo $${f%%include*}share/idl/$${f##*usr/include/}) ; \
+	   mkdir -p $$(dirname $$g) ; \
+	   mv $$f $$g ; \
+	   done
+#	We provide scripts replacement for tao_idl and tao_ifr; they
+#	automatically define ACE_ROOT and TAO_ROOT
+	mkdir -p $(DT)/usr/lib/ace/TAO
+	mv $(DT)/usr/bin/tao_idl $(DT)/usr/bin/tao_ifr $(DT)/usr/lib/ace/TAO
+	cp debian/tao_idl debian/tao_ifr $(DT)/usr/bin
+
+override_dh_auto_clean:
+	[ -f $(ACE_ROOT)/GNUmakefile ] && $(MAKE) -C $(ACE_ROOT) realclean $(DSO_MAKE_FLAG) || true
+	[ -f $(TAO_ROOT)/GNUmakefile ] && $(MAKE) -C $(TAO_ROOT) realclean $(DSO_MAKE_FLAG) || true
+	find $(ACE_ROOT) -name 'GNUmakefile*' -o -name '.depend.*' | xargs -r rm
+	rm -f $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
+	rm -f $(ACE_ROOT)/bin/MakeProjectCreator/config/default.features
+	rm -f $(ACE_ROOT)/ace/config.h $(ACE_ROOT)/ace/config-hurd.h
+	rm -f $(ACE_ROOT)/ACE-DPKG.mwc $(TAO_ROOT)/TAO-DPKG.mwc
+	rm -f debian/*.1 debian/mpc-ace.sgml
+	rm -Rf $(ACE_ROOT)/html/libace-doc $(ACE_ROOT)/html/libtao-doc $(ACE_ROOT)/html/libacexml-doc
+	rm -f *-stamp
+# Remove stubs that get generated during TAO compilation but for some reason
+# are not removed on make realclean
+	rm -f `cat debian/TOREMOVE`
+
+override_dh_compress:
+	dh_compress -Xexamples -Xtutorials
+
+# Add --list-missing to make sure we don't miss new binaries
+override_dh_install:
+	dh_install --list-missing
+
+# ACE+TAO has different changelogs. Use the right one in every package.
+override_dh_installchangelogs:
+	dh_installchangelogs -pace-gperf -pgperf-ace apps/gperf/ChangeLog
+	dh_installchangelogs -pmpc-ace MPC/ChangeLog
+	dh_installchangelogs $(addprefix -p,$(ALL_TAO)) TAO/ChangeLog
+	dh_installchangelogs $(addprefix -p,$(ALL_ACEXML)) ACEXML/ChangeLog
+	dh_installchangelogs --remaining-packages ChangeLog
+
+override_dh_fixperms:
+	chmod -x debian/libtao-doc/usr/share/doc/libtao-doc/examples/RTCORBA/Activity/svc.conf.client
+	chmod -x debian/libtao-doc/usr/share/doc/libtao-doc/examples/RTCORBA/Activity/svc.conf.server
+	chmod -x debian/libtao-doc/usr/share/doc/libtao-doc/examples/Simulator/DOVEBrowser/make.bat
+	find debian -name '*.pl' | xargs -r sed -i -e '1i#!/usr/bin/perl'
+	dh_fixperms
+
+debian/mpc-ace.sgml: MPC/docs/MPC.sgml
+	sed -e 's/mpc\.pl/mpc-ace/g' -e 's/mwc\.pl/mwc-ace/g' $< > $@
+
+debian/%.1: debian/%.sgml
+	docbook-to-man $< > $@
+
+.PHONY: doxygen
+doxygen: doxygen-stamp
+doxygen-stamp:
+	cd $(ACE_ROOT) && bin/generate_doxygen.pl -is_release -exclude_ciao -exclude_dance
+	find $(ACE_ROOT)/html $(DOXYGEN_FILES_TO_REMOVE) | xargs -r rm -f
+	touch $@
+
+.PHONY: manpages
+manpages: manpages-stamp
+manpages-stamp: $(MAN1)
+	touch $@

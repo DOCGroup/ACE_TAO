@@ -1,0 +1,159 @@
+Wed Dec  7 17:54:41 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/util/utl_stack.cpp(UTL_ScopeStack::pop):
+
+          Checks if the top scope has a #pragma prefix associated with it,
+          and if so, pops the prefix (from its own stack) along with the
+          scope. Fixed the check to be more robust. Thanks to Simon Massey
+          for reporting the problem, which was revealed as an error message
+          reporting a bogus prefix inconsistency between a forward declared
+          struct and its full definition.
+
+Wed Dec  7 10:47:15 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        Merged in the changes to update AMI4CCM to match the initial revision
+        with the synchronous port and the new pragma's added
+
+        === start changelog ===
+
+        Tue Dec  6 14:42:39 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+                * TAO_IDL/be/be_interface.cpp:
+                * TAO_IDL/be/be_visitor_component/component_svh.cpp:
+                * TAO_IDL/be/be_visitor_component/component_svs.cpp:
+                * TAO_IDL/be/be_visitor_component/servant_svh.cpp:
+                * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+                * TAO_IDL/be/be_visitor_operation/operation_sh.cpp:
+                * TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+                revert changes after 2011-11-30 (ChangeLog.BRANCH missing those items)
+
+        Wed Nov 30 16:45:10 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_connector/executor_ami_exs.cpp:
+                * TAO_IDL/be/be_visitor_connector/facet_ami_exh.cpp:
+                * TAO_IDL/be/be_visitor_connector/facet_ami_exs.cpp:
+
+        Wed Nov 30 14:19:10 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+                * TAO_IDL/be/be_codegen.cpp:
+                // remove debug info
+                * TAO_IDL/be/be_visitor_connector/facet_ami_exh.cpp:
+                * TAO_IDL/be/be_visitor_connector/facet_ami_exs.cpp:
+                * TAO_IDL/be_include/be_visitor_connector/facet_ami_exs.h:
+                Add visit_attribute functionality.
+
+        Tue Nov 29 12:59:03 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+                * TAO_IDL/be/be_visitor_connector/facet_ami_exs.cpp:
+                Correct check nil pointer in facet operation
+
+        Mon Nov 28 15:26:03 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_connector/executor_ami_exh.cpp:
+                * TAO_IDL/be/be_visitor_connector/facet_ami_exh.cpp:
+                * TAO_IDL/be/be_visitor_connector/facet_ami_exs.cpp:
+                * TAO_IDL/be_include/be_visitor_connector/facet_ami_exh.h:
+                * TAO_IDL/be_include/be_visitor_connector/facet_ami_exs.h:
+                Add traverse_inheritance_graph, needed  for derived interfaces
+
+        Wed Nov 23 14:00:38 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_connector/facet_ami_exs.cpp:
+                Changed return of sync operations.
+
+        Mon Nov 21 13:32:38 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
+
+                * TAO_IDL/be/be_codegen.cpp:
+                Exclude include *.AE.idl in *E.idl
+
+                * TAO_IDL/be/be_visitor_connector/connector_ami_exs.cpp:
+                * TAO_IDL/be/be_visitor_connector/executor_ami_exh.cpp:
+                * TAO_IDL/be/be_visitor_connector/executor_ami_exs.cpp:
+                * TAO_IDL/be/be_visitor_connector/facet_ami_exh.cpp:
+                * TAO_IDL/be/be_visitor_connector/facet_ami_exs.cpp:
+                * TAO_IDL/be_include/be_visitor_connector/facet_ami_exh.h:
+                * TAO_IDL/be_include/be_visitor_connector/facet_ami_exs.h:
+              Changes for sync port on AMI connector
+
+        Mon Nov  7 13:02:55 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
+
+                * TAO_IDL/fe/idl.ll:
+                * TAO_IDL/fe/lex.yy.cpp:
+                Add beside pragma's 'ciao ami4ccm ...' the pragma's 'ami4ccm ...' , according to ami4ccm spec.
+                In the future '#pragma ciao ami4ccm ...' has to  be removed.
+
+        === end changelog ===
+
+Wed Dec  7 10:28:00 UTC 2011  Simon Massey <simon dot massey at prismtech dot com>
+
+        * tests/IDL_Test/IDL_Tests.mpc:
+
+          Since the below modification removed the -GA from the valuetype.idl
+          generation step in the mpc file, the valuetypeA.cpp is now
+          not generated, thus this file should not be mentioned in the
+          DLL projects Source_Files section. Machines were compiling and
+          linking the old file or stating that it was not found.
+
+Mon Dec  5 20:32:56 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_valuetype/valuetype.cpp:
+
+          Added missing switch cases in visit_union() and visit_typedef().
+          Not all context states were covered and we were seeing errors
+          and bailouts.
+
+        * tests/IDL_Test/valuetype.idl:
+        * tests/IDL_Test/IDL_Tests.mpc:
+
+          Added test case for the above problem, also removed -GA IDL
+          compiler option for valuetype.idl, since the new test case
+          has IDL constructed types declared inside a valuetype - the
+          generated typecode for the nested types cannot be in a separate
+          file since the generated valuetype class declaration cannot
+          be reopened. Thanks to Simon Massey <simon dot massey at
+          prismtech dot com> for reporting the problem and supplying
+          example IDL.
+
+Mon Dec  5 19:57:02 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/AMH/Sink_Server/Base_Server.h:
+        * examples/AMH/Sink_Server/Base_Server.cpp:
+        * examples/AMH/Sink_Server/Client_Task.cpp:
+        * examples/AMH/Sink_Server/MT_AMH_Server.cpp:
+        * examples/AMH/Sink_Server/client.cpp:
+        * examples/AMH/Sink_Server/mt_server.cpp:
+        * examples/AMH/Sink_Server/run_test.pl:
+        * examples/AMH/Sink_Server/st_server.cpp:
+          Improving this test, looks the crashing on some build systems is
+          mostly timing due to a badly written example
+
+Mon Dec  5 12:30:15 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_connector/facet_ami_exs.cpp:
+          const fix
+
+        * TAO_IDL/be/be_visitor_valuetype/field_cs.cpp:
+          Layout changes and generate doxygen style documentation
+
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_obv_cs.cpp:
+          Layout changes to the generated code
+
+        * examples/AMH/Sink_Server/run_test.pl:
+        * tao/PortableServer/Adapter_Activator.h:
+        * tests/Multiple/Multiple_Impl.h:
+          Zapped empty lines
+
+        * tests/Multiple/server.cpp:
+          Fixed typo in comment
+
+        * tests/POA/DSI/server.cpp:
+        * tests/POA/Explicit_Activation/server.cpp:
+        * tests/POA/On_Demand_Act_Direct_Coll/Server_Task.cpp:
+        * tests/POA/On_Demand_Loading/Server_Manager.cpp:
+        * tests/POA/Reference_Counted_Servant/server.cpp:
+          Close file descriptors earlier to resolve Coverity errors
+
+Local Variables:
+mode: change-log
+add-log-time-format: (lambda () (progn (setq tz (getenv "TZ")) (set-time-zone-rule "UTC") (setq time (format-time-string "%a %b %e %H:%M:%S %Z %Y" (current-time))) (set-time-zone-rule tz) time))
+indent-tabs-mode: nil
+End:
