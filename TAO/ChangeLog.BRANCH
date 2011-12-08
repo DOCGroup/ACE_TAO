@@ -1,3 +1,15 @@
+Thu Dec  8 14:43:36 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/context_svth.cpp:
+        * TAO_IDL/be/be_visitor_component/context_svts.cpp:
+          Removed export macro for contextes.
+
+        * TAO_IDL/be/be_visitor_component.cpp:
+        * TAO_IDL/be/be_visitor_interface/facet_svts.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_svth.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_svts.cpp:
+          Fixed warnings.
+
 Thu Dec  8 14:16:52 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * TAO_IDL/be/be_produce.cpp:

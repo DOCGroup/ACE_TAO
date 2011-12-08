@@ -48,15 +48,11 @@ be_visitor_context_svth::visit_component (be_component *node)
 
   os_ << "template <typename CONTAINER_TYPE, typename BASE>" << be_nl;
 
-  os_ << "class " << export_macro_.c_str () << " " << lname
-      << "_Context_T" << be_idt_nl;
+  os_ << "class " << lname << "_Context_T" << be_idt_nl;
   // Spec: no multiple inheritance allowed for components.
   AST_Component * base = node->base_component ();
   if (base)
     {
-      AST_Decl *base_scope = ScopeAsDecl (base->defined_in ());
-      ACE_CString sbase_name_str (scope->full_name ());
-      const char *sbase_name = sbase_name_str.c_str ();
       const char *lbase_name =
         base->original_local_name ()->get_string ();
 
