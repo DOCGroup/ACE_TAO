@@ -1,3 +1,11 @@
+Thu Dec  8 14:38:45 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * ciao/Servants/Extension/Servant_Impl_T.h:
+          Added missing include.
+
+        * connectors/ami4ccm/examples/Hello/Base/Hello.mpc:
+          Removed -Gsv IDL compiler flag.
+
 Wed Dec  7 07:34:23 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * ciao/Servants/Facet_Servant_Base_T.h:

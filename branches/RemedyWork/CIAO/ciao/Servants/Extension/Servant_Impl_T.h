@@ -25,6 +25,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ciao/Containers/Extension/Extension_Container.h"
 #include "ccm/Extension/CCM_ExtensionComponentC.h"
 
 namespace CIAO
