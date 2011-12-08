@@ -110,6 +110,8 @@ public:
       TAO_GPERF_INPUT,
       CIAO_SVNT_HDR,
       CIAO_SVNT_IMPL,
+      CIAO_SVNT_T_HDR,
+      CIAO_SVNT_T_IMPL,
       CIAO_EXEC_HDR,
       CIAO_EXEC_IMPL,
       CIAO_EXEC_IDL,

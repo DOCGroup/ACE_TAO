@@ -137,7 +137,6 @@ project(DDS_LOBO_Test_Connector_svnt) : ciao_servant, dds4ccm_impl {
   }
 
   Inline_Files {
-    LOBO_Test_ConnectorS.inl
   }
 }
 

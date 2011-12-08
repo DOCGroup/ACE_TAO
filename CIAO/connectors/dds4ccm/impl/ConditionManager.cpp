@@ -440,7 +440,7 @@ namespace CIAO
                 }
             }
         }
-      // Now we can savely remove the read condition (in a thread safe manner)
+      // Now we can safely remove the read condition (in a thread safe manner)
       if (! ::CORBA::is_nil (this->rd_condition_.in ()))
         {
           retcode = ::DDS::RETCODE_OK;

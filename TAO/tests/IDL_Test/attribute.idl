@@ -9,9 +9,15 @@ module Hello
     {
     };
 
+  typedef short MyType;
+
   // Sender/Receiver interface
   interface MyFoo
     {
+      attribute MyType rw_attrib_mytype
+        getraises (InternalErrorA)
+        setraises (InternalErrorB);
+
       attribute short rw_attrib
         getraises (InternalErrorA)
         setraises (InternalErrorB);

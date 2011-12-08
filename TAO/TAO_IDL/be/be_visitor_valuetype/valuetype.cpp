@@ -193,7 +193,6 @@ be_visitor_valuetype::visit_constant (be_constant *node)
     case TAO_CodeGen::TAO_ROOT_SH:
     case TAO_CodeGen::TAO_ROOT_IH:
     case TAO_CodeGen::TAO_ROOT_IS:
-    case TAO_CodeGen::TAO_ROOT_SI:
     case TAO_CodeGen::TAO_ROOT_SS:
       return 0; // Nothing to be done.
     default:
@@ -268,7 +267,6 @@ be_visitor_valuetype::visit_enum (be_enum *node)
     case TAO_CodeGen::TAO_ROOT_SH:
     case TAO_CodeGen::TAO_ROOT_IH:
     case TAO_CodeGen::TAO_ROOT_IS:
-    case TAO_CodeGen::TAO_ROOT_SI:
     case TAO_CodeGen::TAO_ROOT_SS:
       return 0; // Nothing to be done.
     default:
@@ -512,10 +510,11 @@ be_visitor_valuetype::visit_union (be_union *node)
         break;
       }
     case TAO_CodeGen::TAO_VALUETYPE_OBV_CH:
+    case TAO_CodeGen::TAO_MODULE_OBV_CI:
+    case TAO_CodeGen::TAO_MODULE_OBV_CS:
     case TAO_CodeGen::TAO_ROOT_SH:
     case TAO_CodeGen::TAO_ROOT_IH:
     case TAO_CodeGen::TAO_ROOT_IS:
-    case TAO_CodeGen::TAO_ROOT_SI:
     case TAO_CodeGen::TAO_ROOT_SS:
       return 0; // Nothing to be done.
     default:
@@ -630,7 +629,6 @@ be_visitor_valuetype::visit_typedef (be_typedef *node)
     case TAO_CodeGen::TAO_ROOT_SH:
     case TAO_CodeGen::TAO_ROOT_IH:
     case TAO_CodeGen::TAO_ROOT_IS:
-    case TAO_CodeGen::TAO_ROOT_SI:
     case TAO_CodeGen::TAO_ROOT_SS:
       return 0; // Nothing to be done.
     default:

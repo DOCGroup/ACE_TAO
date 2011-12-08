@@ -171,16 +171,16 @@ namespace CIAO
             catch (const CORBA::INV_OBJREF&)
               {
                 CIAO_ERROR (6, (LM_INFO, CLINFO
-                                ACE_TEXT("CIAO_ReferenceLookup_i::pre_connect - ")
-                                ACE_TEXT("Unable to resolve external reference for connection %C\n"),
+                                "CIAO_ReferenceLookup_i::pre_connect - "
+                                "Unable to resolve external reference for connection %C\n",
                                 plan.connection[connRef].name.in ()));
               }
             catch (CORBA::Exception &ex)
               {
                 CIAO_ERROR (1, (LM_ERROR, CLINFO
-                                ACE_TEXT("CIAO_ReferenceLookup_i::pre_connect - ")
-                                ACE_TEXT("Caught CORBA Exception while resolving external")
-                                ACE_TEXT ("reference for connection %C: %C\n"),
+                                "CIAO_ReferenceLookup_i::pre_connect - "
+                                "Caught CORBA Exception while resolving external"
+                                "reference for connection %C: %C\n",
                                 plan.connection[connRef].name.in (),
                                 ex._info ().c_str ()));
                 throw;
@@ -188,9 +188,9 @@ namespace CIAO
             catch (...)
               {
                 CIAO_ERROR (1, (LM_ERROR, CLINFO
-                                ACE_TEXT("CIAO_ReferenceLookup_i::pre_connect - ")
-                                ACE_TEXT("Caught C Exception while resolving external reference")
-                                ACE_TEXT("for connection %C\n"),
+                                "CIAO_ReferenceLookup_i::pre_connect - "
+                                "Caught C Exception while resolving external reference"
+                                "for connection %C\n",
                                 plan.connection[connRef].name.in ()));
                 throw;
               }

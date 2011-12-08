@@ -154,6 +154,16 @@ ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::operator= (
 
 template <class ACE_LOCK, class TYPE>
 ACE_INLINE TYPE
+ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::exchange (TYPE newval)
+{
+  // ACE_TRACE ("ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::exchange");
+  ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, this->value_);
+  std::swap (this->value_, newval);
+  return newval;
+}
+
+template <class ACE_LOCK, class TYPE>
+ACE_INLINE TYPE
 ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::value (void) const
 {
   // ACE_TRACE ("ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::value");
@@ -304,6 +314,13 @@ ACE_Atomic_Op<ACE_LOCK, TYPE>::operator< (
   typename ACE_Atomic_Op<ACE_LOCK, TYPE>::arg_type rhs) const
 {
   return this->impl_ < rhs;
+}
+
+template <class ACE_LOCK, class TYPE>
+ACE_INLINE TYPE
+ACE_Atomic_Op<ACE_LOCK, TYPE>::exchange (TYPE newval)
+{
+  return this->impl_.exchange (newval);
 }
 
 template <class ACE_LOCK, class TYPE>

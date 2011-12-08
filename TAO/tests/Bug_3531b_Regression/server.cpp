@@ -13,6 +13,8 @@
 #include "tao/TAO_Export.h"
 #include "ace/TP_Reactor.h"
 
+#if defined (ACE_HAS_THREADS)
+
 int nthreads = 4;
 bool debug = false;
 
@@ -32,9 +34,9 @@ bool debug = false;
 class Worker;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "d");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("d"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -68,7 +70,7 @@ public:
 // NOTE: Do *NOT* put the same msg into the msg queue more than once.
 // This will confuse the msg queue and result it in dropping messages
 //////////////////////////////////////////////////////////////////////
-class Worker: public ACE_Task<ACE_MT_SYNCH>
+class Worker: public ACE_Task<ACE_SYNCH>
 {
 public:
   Worker (void)
@@ -92,7 +94,7 @@ ACE_TSS<Worker> *workers_p = 0;
 int Worker::svc (void)
 {
   if (debug)
-    ACE_DEBUG ((LM_DEBUG, "(%P|%t) Worker thread starting up.\n"));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Worker thread starting up.\n")));
   // Register this worker
   workers.ts_object (const_cast<Worker*> (this));
   int retval = 0;
@@ -101,7 +103,7 @@ int Worker::svc (void)
       retval = this->process_cmd ();
     }
   if (debug)
-    ACE_DEBUG ((LM_DEBUG, "(%P|%t) Worker thread shutting down.\n"));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Worker thread shutting down.\n")));
   return retval;
 }
 
@@ -122,7 +124,7 @@ int Worker::process_cmd (void)
   ACE_Message_Block *mb = 0;
   if (this->getq (mb, 0) == -1)
     {
-      ACE_ERROR ((LM_ERROR, "Error calling getq: $!\n"));
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error calling getq: $!\n")));
       // Strangely, message queues return this instead of ETIME
       if (errno == EWOULDBLOCK || errno == ESHUTDOWN)
         return 0;
@@ -161,7 +163,7 @@ public:
   virtual int handle_events (ACE_Time_Value * = 0)
   {
     if (TAO_debug_level > 10)
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) Executing Test_Reactor::handle_events\n"));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Executing Test_Reactor::handle_events\n")));
     // This is called by client leader threads.  Note, the loop here
     // glosses over the fact that the Leader_Follower code does not
     // work quite the way we want it to.  Namely, this logic:
@@ -185,6 +187,11 @@ public:
       workers->process_cmd ();
     return 0;
   };
+
+  virtual int handle_events (ACE_Time_Value &)
+  {
+    return this->handle_events ();
+  }
 };
 
 // Our own Resource_Factory for testing purposes.  This just returns
@@ -242,7 +249,7 @@ public:
   void complete_event (TAO_Leader_Follower &lf)
   {
     if (debug)
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) Completing event\n"));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Completing event\n")));
     this->state_changed (TAO_LF_Event::LFS_SUCCESS, lf);
   }
 
@@ -283,7 +290,7 @@ public:
 
   virtual int send_message (TAO_OutputCDR &,
                             TAO_Stub * = 0,
-                            TAO_Message_Semantics  = TAO_TWOWAY_REQUEST,
+                            TAO_Message_Semantics  = TAO_Message_Semantics (),
                             ACE_Time_Value * = 0)
   {
     return 0;
@@ -337,7 +344,7 @@ public:
   virtual int execute (Worker* worker)
   {
     if (debug)
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) Shutdown cmd\n"));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Shutdown cmd\n")));
     worker->shutdown (true);
     return 0;
   }
@@ -360,7 +367,7 @@ public:
   virtual int execute (Worker*)
   {
     if (debug)
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) Executing TSS_Assert(%d,%d,%d) cmd\n",
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Executing TSS_Assert(%d,%d,%d) cmd\n"),
                   elt_count_, clt_count_, leader_available_));
     TAO_Leader_Follower &leader_follower = orb_core_->leader_follower ();
     TAO_ORB_Core_TSS_Resources* tss = orb_core_->get_tss_resources ();
@@ -388,7 +395,7 @@ public:
   virtual int execute (Worker*)
   {
     if (debug)
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) Executing Wait_For_Event cmd\n"));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Executing Wait_For_Event cmd\n")));
     int retval = lf_.wait_for_event (&event_, &transport_, 0);
     // The worker has probably been shutdown in order for the client
     // leader event loop to exit - reactivate the worker so it from
@@ -414,7 +421,7 @@ public:
   virtual int execute (Worker*)
   {
     if (debug)
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) Executing Cond_Signal cmd\n"));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Executing Cond_Signal cmd\n")));
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard ,this->cond_.mutex (), 0);
     return this->cond_.signal ();
   }
@@ -454,7 +461,7 @@ public:
   virtual int execute (Worker* worker)
   {
     if (debug)
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) Executing Event_Loop_Thread cmd\n"));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Executing Event_Loop_Thread cmd\n")));
     TAO_LF_Event_Loop_Thread_Helper elt (lf_, lf_strategy_, 0);
     while (!worker->shutdown())
       worker->process_cmd ();
@@ -479,7 +486,7 @@ public:
   virtual int execute (Worker*)
   {
     if (debug)
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) Executing Set_Upcall_Thread cmd\n"));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Executing Set_Upcall_Thread cmd\n")));
     lf_.set_upcall_thread ();
     return 0;
   }
@@ -509,8 +516,8 @@ void Test_1 (TAO_ORB_Core* orb_core)
   TAO_Leader_Follower &leader_follower = orb_core->leader_follower ();
   TAO_ORB_Core_TSS_Resources* tss = orb_core->get_tss_resources ();
 
-  ACE_DEBUG ((LM_DEBUG, "==========\n"));
-  ACE_DEBUG ((LM_DEBUG, "TEST #1 - Simple Event Loop call\n"));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("==========\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TEST #1 - Simple Event Loop call\n")));
 
   TSS_ASSERT (tss, leader_follower, 0, 0, false);
 
@@ -530,8 +537,8 @@ void Test_2 (TAO_ORB_Core* orb_core)
   TAO_LF_Strategy &lf_strategy = orb_core->lf_strategy ();
   TAO_Leader_Follower &leader_follower = orb_core->leader_follower ();
   TAO_ORB_Core_TSS_Resources* tss = orb_core->get_tss_resources ();
-  ACE_DEBUG ((LM_DEBUG, "==========\n"));
-  ACE_DEBUG ((LM_DEBUG, "TEST #2 - 2 nested Event Loop calls\n"));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("==========\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TEST #2 - 2 nested Event Loop calls\n")));
 
   TSS_ASSERT (tss, leader_follower, 0, 0, false);
 
@@ -558,8 +565,8 @@ void Test_3 (TAO_ORB_Core* orb_core)
   TAO_LF_Strategy &lf_strategy = orb_core->lf_strategy ();
   TAO_Leader_Follower &leader_follower = orb_core->leader_follower ();
   TAO_ORB_Core_TSS_Resources* tss = orb_core->get_tss_resources ();
-  ACE_DEBUG ((LM_DEBUG, "==========\n"));
-  ACE_DEBUG ((LM_DEBUG, "TEST #3 - 2 nested Event Loop calls with set_upcall_thread\n"));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("==========\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TEST #3 - 2 nested Event Loop calls with set_upcall_thread\n")));
 
   TSS_ASSERT (tss, leader_follower, 0, 0, false);
 
@@ -587,8 +594,8 @@ void Test_3 (TAO_ORB_Core* orb_core)
 void Test_4 (TAO_ORB_Core* orb_core)
 {
   TAO_Leader_Follower &leader_follower = orb_core->leader_follower ();
-  ACE_DEBUG ((LM_DEBUG, "==========\n"));
-  ACE_DEBUG ((LM_DEBUG, "TEST #4 - Simple Client Leader thread\n"));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("==========\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TEST #4 - Simple Client Leader thread\n")));
 
   // Activate a thread
   Worker wrk1;
@@ -626,8 +633,8 @@ void Test_4 (TAO_ORB_Core* orb_core)
 void Test_5 (TAO_ORB_Core* orb_core)
 {
   TAO_Leader_Follower &leader_follower = orb_core->leader_follower ();
-  ACE_DEBUG ((LM_DEBUG, "==========\n"));
-  ACE_DEBUG ((LM_DEBUG, "TEST #5 - 2 nested Client Leader calls\n"));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("==========\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TEST #5 - 2 nested Client Leader calls\n")));
 
   // Activate a thread
   Worker wrk1;
@@ -687,8 +694,8 @@ void Test_5 (TAO_ORB_Core* orb_core)
 void Test_6 (TAO_ORB_Core* orb_core)
 {
   TAO_Leader_Follower &leader_follower = orb_core->leader_follower ();
-  ACE_DEBUG ((LM_DEBUG, "==========\n"));
-  ACE_DEBUG ((LM_DEBUG, "TEST #6 - 2 nested Client Leader calls with set_upcall_thread\n"));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("==========\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TEST #6 - 2 nested Client Leader calls with set_upcall_thread\n")));
 
   // Activate a thread
   Worker wrk1;
@@ -752,8 +759,8 @@ void Test_6 (TAO_ORB_Core* orb_core)
 void Test_7 (TAO_ORB_Core* orb_core)
 {
   TAO_Leader_Follower &leader_follower = orb_core->leader_follower ();
-  ACE_DEBUG ((LM_DEBUG, "==========\n"));
-  ACE_DEBUG ((LM_DEBUG, "TEST #7 - Client Leader yields to another client thread\n"));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("==========\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TEST #7 - Client Leader yields to another client thread\n")));
 
   // Activate a thread
   Worker wrk1;
@@ -821,8 +828,8 @@ void Test_8 (TAO_ORB_Core* orb_core)
 {
   TAO_LF_Strategy &lf_strategy = orb_core->lf_strategy ();
   TAO_Leader_Follower &leader_follower = orb_core->leader_follower ();
-  ACE_DEBUG ((LM_DEBUG, "==========\n"));
-  ACE_DEBUG ((LM_DEBUG, "TEST #8 - client becomes leader when event thread dispatched\n"));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("==========\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TEST #8 - client becomes leader when event thread dispatched\n")));
 
   // Activate a thread
   Worker wrk1;
@@ -886,8 +893,8 @@ void Test_9 (TAO_ORB_Core* orb_core)
 {
   TAO_LF_Strategy &lf_strategy = orb_core->lf_strategy ();
   TAO_Leader_Follower &leader_follower = orb_core->leader_follower ();
-  ACE_DEBUG ((LM_DEBUG, "==========\n"));
-  ACE_DEBUG ((LM_DEBUG, "TEST #9 - Client Leader thread yields to Event Loop thread\n"));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("==========\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TEST #9 - Client Leader thread yields to Event Loop thread\n")));
 
   // Activate a thread
   Worker wrk1;
@@ -967,8 +974,8 @@ void Test_10 (TAO_ORB_Core* orb_core )
 {
   TAO_LF_Strategy &lf_strategy = orb_core->lf_strategy ();
   TAO_Leader_Follower &leader_follower = orb_core->leader_follower ();
-  ACE_DEBUG ((LM_DEBUG, "==========\n"));
-  ACE_DEBUG ((LM_DEBUG, "TEST #10 - ET1437460\n"));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("==========\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TEST #10 - ET1437460\n")));
 
   // This scenario involves:
   //  - an event loop thread
@@ -1096,5 +1103,17 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   return 0;
 }
+
+#else
+
+int
+ACE_TMAIN(int /*argc*/, ACE_TCHAR * /*argv*/ [])
+{
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("This test only makes sense in an MT build.\n")));
+
+  return 0;
+}
+
+#endif // !ACE_HAS_THREADS
 
 // ****************************************************************

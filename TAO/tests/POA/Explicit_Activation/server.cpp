@@ -78,6 +78,9 @@ write_iors_to_file (const char *first_ior,
   result = ACE_OS::fprintf (output_file_1,
                             "%s",
                             first_ior);
+
+  ACE_OS::fclose (output_file_1);
+
   if (result != ACE_OS::strlen (first_ior))
     ACE_ERROR_RETURN ((LM_ERROR,
                        "ACE_OS::fprintf failed while writing %C to %s\n",
@@ -88,6 +91,9 @@ write_iors_to_file (const char *first_ior,
   result = ACE_OS::fprintf (output_file_2,
                             "%s",
                             second_ior);
+
+  ACE_OS::fclose (output_file_2);
+
   if (result != ACE_OS::strlen (second_ior))
     ACE_ERROR_RETURN ((LM_ERROR,
                        "ACE_OS::fprintf failed while writing %C to %s\n",
@@ -98,6 +104,9 @@ write_iors_to_file (const char *first_ior,
   result = ACE_OS::fprintf (output_file_3,
                             "%s",
                             third_ior);
+
+  ACE_OS::fclose (output_file_3);
+
   if (result != ACE_OS::strlen (third_ior))
     ACE_ERROR_RETURN ((LM_ERROR,
                        "ACE_OS::fprintf failed while writing %C to %s\n",
@@ -105,9 +114,6 @@ write_iors_to_file (const char *first_ior,
                        ior_output_file_3),
                       -1);
 
-  ACE_OS::fclose (output_file_1);
-  ACE_OS::fclose (output_file_2);
-  ACE_OS::fclose (output_file_3);
 
   return 0;
 }

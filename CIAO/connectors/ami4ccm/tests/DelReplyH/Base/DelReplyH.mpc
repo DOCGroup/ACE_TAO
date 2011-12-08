@@ -136,13 +136,11 @@ project(AMI_DelReplyH_skel) : ciao_executor, ami, ami4ccm_servant {
 
   Header_Files {
     DelReplyHS.h
-   
+
     DelReplyH_skel_export.h
   }
 
   Inline_Files {
-    DelReplyHS.inl
-   
   }
 }
 

@@ -158,10 +158,20 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
   *os << "virtual const char* _interface_repository_id "
       << "(void) const;";
 
-  // The virtual marshal method, to prevent marshal of local iterfaces.
+  // The virtual marshal method, to prevent marshal of local interfaces.
   *os << be_nl
       << "virtual ::CORBA::Boolean marshal "
       << "(TAO_OutputCDR &cdr);";
+
+  // If we are generating CORBA Policy we need to add some more methods
+  if (ACE_OS::strcmp (node->full_name (), "CORBA::Policy") == 0)
+    {
+      *os << be_nl
+          << "virtual CORBA::Boolean _tao_encode (TAO_OutputCDR &);" << be_nl
+          << "virtual CORBA::Boolean _tao_decode (TAO_InputCDR &);" << be_nl
+          << "virtual TAO_Cached_Policy_Type _tao_cached_type (void) const;" << be_nl
+          << "virtual TAO_Policy_Scope _tao_scope (void) const;" << be_nl;
+    }
 
   if (c == 0 && be_global->gen_ostream_operators ())
     {

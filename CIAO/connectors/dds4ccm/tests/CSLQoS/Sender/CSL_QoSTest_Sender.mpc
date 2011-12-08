@@ -134,7 +134,6 @@ project(DDS_CSL_QoSTest_Sender_svnt) : ciao_servant, dds4ccm_lem_stub, dds4ccm_s
   }
 
   Inline_Files {
-    CSL_QoSTest_SenderS.inl
   }
 }
 

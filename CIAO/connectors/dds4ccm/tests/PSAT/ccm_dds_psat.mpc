@@ -200,7 +200,6 @@ project(DDS_PSAT_Connector_svnt) : ciao_servant, dds4ccm_impl {
   }
 
   Inline_Files {
-    PSAT_ConnectorS.inl
   }
 }
 

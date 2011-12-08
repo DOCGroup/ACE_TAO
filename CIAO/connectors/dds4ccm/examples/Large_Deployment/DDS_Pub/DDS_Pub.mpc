@@ -131,7 +131,6 @@ project(Large_DDS_Pub_svnt) : ciao_servant, dds4ccm_base {
   }
 
   Inline_Files {
-    DDS_PubS.inl
   }
 }
 

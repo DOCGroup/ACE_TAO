@@ -84,6 +84,5 @@ project(Display_NavDisplayGUI_svnt) : ciao_servant, ace_qt4, avoids_ccm_noevent 
   }
 
   Inline_Files {
-    ../NavDisplay/NavDisplayS.inl
   }
 }

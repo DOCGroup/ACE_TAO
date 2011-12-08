@@ -137,7 +137,6 @@ project(DDS_SL_ManyByMany_Connector_svnt) : ciao_servant, dds4ccm_impl {
   }
 
   Inline_Files {
-    SL_ManyByMany_ConnectorS.inl
   }
 }
 

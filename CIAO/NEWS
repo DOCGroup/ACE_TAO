@@ -1,4 +1,10 @@
-USER VISIBLE CHANGES BETWEEN CIAO-1.0.5 and CIAO-1.1.0
+USER VISIBLE CHANGES BETWEEN CIAO-1.0.6 and CIAO-1.1.0
+=======================================================
+
+. CIAO now supports the synchronous port and the ami4ccm lem pragma as
+  documented in the AMI4CCM Initial submission by Remedy IT (mars/11-06-01)
+
+USER VISIBLE CHANGES BETWEEN CIAO-1.0.5 and CIAO-1.0.6
 =======================================================
 
 . It is now possible to connect connections in a deployment plan
@@ -32,6 +38,15 @@ USER VISIBLE CHANGES BETWEEN CIAO-1.0.5 and CIAO-1.1.0
   to use the new -ORBCollocationStrategy best which does not require all
   user components to be compiled with direct collocation enabled. Enabling
   direct collocation does increase the size of the generated code
+
+. All facet servants are now generated in the new _svnt_T.{h,cpp} files. This
+  is a first step in more refactoring in the CIAO servants. Together with the
+  TAO skeleton refactoring the skeleton for the Null_Component example decreased
+  from 40206 bytes to 24971 bytes, the generated servant from 56959 bytes to
+  54933 bytes. The skeleton for the related Null_Interface reduced from
+  9559 bytes to 4526 bytes.
+
+. Added support for DDS4CCM using RTI DDS 4.5e on RHEL 6.1
 
 USER VISIBLE CHANGES BETWEEN CIAO-1.0.4 and CIAO-1.0.5
 =======================================================

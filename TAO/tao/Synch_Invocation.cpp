@@ -92,7 +92,7 @@ namespace TAO
 
         cdr.message_attributes (this->details_.request_id (),
                                 this->resolver_.stub (),
-                                TAO_TWOWAY_REQUEST,
+                                TAO_Message_Semantics (),
                                 max_wait_time);
 
         this->write_header (cdr);
@@ -118,7 +118,7 @@ namespace TAO
         countdown.update ();
 
         s = this->send_message (cdr,
-                                TAO_TWOWAY_REQUEST,
+                                TAO_Message_Semantics (),
                                 max_wait_time);
 
         ace_mon.release();
@@ -143,7 +143,7 @@ namespace TAO
         countdown.update ();
 
         // For some strategies one may want to release the transport
-        // back to  cache. If the idling is successful let the
+        // back to cache. If the idling is successful let the
         // resolver about that.
         if (transport->idle_after_send ())
           this->resolver_.transport_released ();
@@ -152,7 +152,7 @@ namespace TAO
         // here; need to investigate.  Client threads would frequently be
         // canceled sometime during recv_request ... the correct action to
         // take on being canceled is to issue a CancelRequest message to the
-        // server and then imediately let other client-side cancellation
+        // server and then immediately let other client-side cancellation
         // handlers do their jobs.
         //
         // In C++, that basically means to unwind the stack using almost
@@ -690,7 +690,7 @@ namespace TAO
 
     cdr.message_attributes (this->details_.request_id (),
           this->resolver_.stub (),
-          TAO_ONEWAY_REQUEST,
+          TAO_Message_Semantics (TAO_Message_Semantics::TAO_ONEWAY_REQUEST),
           max_wait_time);
 
     this->write_header (cdr);
@@ -703,7 +703,7 @@ namespace TAO
       {
         // We have a connected transport so we can send the message
         s = this->send_message (cdr,
-              TAO_ONEWAY_REQUEST,
+            TAO_Message_Semantics (TAO_Message_Semantics::TAO_ONEWAY_REQUEST),
               max_wait_time);
       }
     else

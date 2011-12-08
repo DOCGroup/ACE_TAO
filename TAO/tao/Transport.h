@@ -244,14 +244,14 @@ namespace TAO
  *  - Minimize locking and copying overhead when trying to attack the
  *    above.
  *
- * <H3> Parsing messages (GIOP) & processing the message:</H3>
+ * <H3>Parsing messages (GIOP) & processing the message:</H3>
  *
  * The messages should be checked for validity and the right
  * information should be sent to the higher layer for processing. The
  * process of doing a sanity check and preparing the messages for the
  * higher layers of the ORB are done by the messaging protocol.
  *
- * <H3> Design forces and Challenges </H3>
+ * <H3>Design forces and Challenges </H3>
  *
  * To keep things as efficient as possible for medium sized requests,
  * it would be good to minimize data copying and locking along the
@@ -293,7 +293,7 @@ namespace TAO
  *       message from the queue and processes that. Once the queue
  *       is drained the last thread resumes the handle.
  *
- * <H3> Sending Replies </H3>
+ * <H3>Sending Replies </H3>
  *
  * We could use the outgoing path of the ORB to send replies. This
  * would allow us to reuse most of the code in the outgoing data
@@ -304,7 +304,7 @@ namespace TAO
  * Reactor could potentially handle other messages (incoming or
  * outgoing) and the stack starts growing leading to crashes.
  *
- * <H4> Solution to the nesting problem </H4>
+ * <H4>Solution to the nesting problem </H4>
  *
  * The solution that we (plan to) adopt is pretty straight
  * forward. The thread sending replies will not block to send the
@@ -473,6 +473,9 @@ public:
    * in the Reactor would produce unpredictable results anyway.
    */
   virtual int register_handler (void);
+
+  /// Remove the handler from the reactor.
+  virtual int remove_handler (void);
 
   /// Write the complete Message_Block chain to the connection.
   /**
@@ -757,7 +760,7 @@ public:
    */
   virtual int send_message (TAO_OutputCDR &stream,
                             TAO_Stub *stub = 0,
-                            TAO_Message_Semantics message_semantics = TAO_TWOWAY_REQUEST,
+                            TAO_Message_Semantics message_semantics = TAO_Message_Semantics (),
                             ACE_Time_Value *max_time_wait = 0) = 0;
 
   /// Sent the contents of @a message_block

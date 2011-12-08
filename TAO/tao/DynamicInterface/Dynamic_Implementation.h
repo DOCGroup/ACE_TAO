@@ -85,7 +85,9 @@ protected:
   virtual TAO_Stub *_create_stub (void);
 
   /// Turns around and calls invoke.
-  virtual void _dispatch (TAO_ServerRequest &request, void *context);
+  virtual void _dispatch (
+    TAO_ServerRequest &request,
+    TAO::Portable_Server::Servant_Upcall *context);
 
 private:
   /// Encapsulates code common to _is_a(), _get_interface() and _create_stub().

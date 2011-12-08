@@ -281,12 +281,12 @@ The following sections explain how to build ACE on:
 <hr align="left" width="50%">
 <h2><a name="unix">Building and Installing ACE on UNIX</a></h2>
 
-As of ACE 6.1, you can building ACE on
+As of ACE 6.0.6, you can building ACE on
 UNIX with:
 <ol>
   <li><a href="#unix_traditional">Traditional ACE/GNU Make Configuration</a></li>
 </ol>
-The <a href="#win32">build process for Windows</a> is different from both of
+The <a href="#win32">build process for Windows</a> is different from 
 the UNIX methods.
 
 <h3><a name="unix_traditional">Using the Traditional ACE/GNU Configuration</a></h3>
@@ -625,41 +625,10 @@ card.  This is one method:
       MS Loopback Adapter<p>
 </p></li></a></ol>
 
-<a name="win32nonic"><b>WIN32 ALPHA CONFIGURATIONS</b>
-
-</a><p><a name="win32nonic">The project files for Visual C++ no longer contain any configurations
-targetted to Windows NT on the DEC Alpha.  Below are the steps needed to
-recreate the Alpha configurations:</a></p>
-
-<ol>
-<a name="win32nonic">  <li>Load the project on the Alpha machine.
-  </li><li>Go to the Build menu and then select Configurations.
-  </li><li>Select the project that you want to convert.
-  </li><li>Click on Add.
-  </li><li>Select the x86 configuration to "Copy settings from"
-      (either Debug or Release versions).
-  </li><li>Prepend "Alpha " to the beginning of the name under
-      "Configuration".
-  </li><li>Click OK.
-  </li><li>Close the "Configurations" window.
-  </li><li>Now go to the Project settings.
-  </li><li>For the General Settings, change the output directories to standard ACE
-      output directories. Intermediate Directories are "Debug" and
-          "Release" in most cases.  The Output Directories are blank,
-          except for Release versions of executables, in which it is also
-          "Release".
-  </li><li>For the C/C++ Settings, make sure that the Code Generation's runtime
-      library is set to "Multithreaded DLL" or "Debug Multithreaded
-          DLL".
-</li></a></ol>
-
-<p><a name="win32nonic"><b>Note:</b> MSVC 6 has a bug where if a .dsp is converted from version 5 to 6 on
-x86, the Alpha configuration can get corrupted.  This seems to happen when additional
-include or library directories are specified using backslashes instead of forward
-slashes.  If this occurs, the easiest way to fix it is to recreate it.</a></p>
-
 <hr align="left" width="50%"><p>&nbsp;</p>
 <h3><a name="codegear">Building and Installing ACE on Windows with Embarcadero C++</a></h3>
+
+<b>The Embarcadero C++ port is not maintained anymore due to lack of funding.</b><p>
 
 If you are building for a machine without a network card, you may want
 to check <a href="#win32nonic">here</a> first. <p>

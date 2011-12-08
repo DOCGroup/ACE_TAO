@@ -153,7 +153,7 @@ namespace CIAO_CoPubSub_PubSub_comp_Impl
                     "Sample has been written: <%C> - <%d>\n",
                     sample.hello.in (), sample.msgId));
       }
-    catch (CCM_DDS::InternalError & ex) // catch "normal" exception
+    catch (const CCM_DDS::InternalError &) // catch "normal" exception
       {
         ACE_ERROR ((LM_ERROR, "PubSub_comp_exec_i::tick - "
                   "ERROR: caught InternalError.\n"));

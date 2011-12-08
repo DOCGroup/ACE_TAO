@@ -129,7 +129,23 @@ TAO_Exclusive_TMS::reply_timed_out (CORBA::ULong request_id)
 bool
 TAO_Exclusive_TMS::idle_after_send (void)
 {
-  return false;
+  // if there is no reply dispatcher (possible in case of AMI requests)
+  // release the transport now
+  if (this->rd_ != 0)
+    {
+      return false;
+    }
+  else
+    {
+      if (this->transport_ != 0)
+        {
+          // let WS know we're finished
+          this->transport_->wait_strategy ()->finished_request ();
+
+          (void) this->transport_->make_idle ();
+        }
+      return true;
+    }
 }
 
 bool
@@ -139,7 +155,12 @@ TAO_Exclusive_TMS::idle_after_reply (void)
   // return true. If *this* class is not successful in idling the
   // transport no one can.
   if (this->transport_ != 0)
+  {
+    // let WS know we're finished
+    this->transport_->wait_strategy ()->finished_request ();
+
     (void) this->transport_->make_idle ();
+  }
 
   return true;
 }

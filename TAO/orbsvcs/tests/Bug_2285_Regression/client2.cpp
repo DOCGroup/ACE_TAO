@@ -154,9 +154,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           result = 1;
           ACE_DEBUG ((LM_ERROR, "Error: REGRESSION identified by server %u. Test Failed !!\n", last_server));
         }
-      catch (const CORBA::COMM_FAILURE& my_ex)
+      catch (const CORBA::COMM_FAILURE&)
         {
-          ACE_UNUSED_ARG (my_ex);
           // We can't use the word exception for fear of upsetting the build log parser
           ACE_DEBUG ((LM_DEBUG, "Client caught one of those things that is normally used to indicate a problem ("
                       "although it doesn't in this case) and which we cannot name because the autobuild "

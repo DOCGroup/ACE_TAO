@@ -117,7 +117,7 @@ namespace TAO
 
       countdown.update ();
 
-      s = this->send_message (cdr, TAO_TWOWAY_REQUEST, max_wait_time);
+      s = this->send_message (cdr, TAO_Message_Semantics (), max_wait_time);
     }
 
     if (s != TAO_INVOKE_SUCCESS)

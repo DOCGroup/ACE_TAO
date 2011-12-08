@@ -137,7 +137,6 @@ project(DDS_LatencyTT_Test_Connector_svnt) : ciao_servant, dds4ccm_skel, dds4ccm
   }
 
   Inline_Files {
-    LatencyTT_Test_ConnectorS.inl
   }
 }
 

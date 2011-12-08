@@ -14,6 +14,11 @@ PeerNode::PeerNode (long h, PeerProcess *p)
 {
 }
 
+PeerNode::~PeerNode (void)
+{
+  delete peer_;
+}
+
 HostProcess::HostProcess (const ACE_CString &src, long pid)
   : pid_(pid),
     logfile_name_(src)
@@ -34,15 +39,24 @@ HostProcess::~HostProcess (void)
     {
       delete reinterpret_cast<Thread *>(i.next()->item_);
     }
-#if 0
-  for (PeerProcs::ITERATOR i = by_addr_.begin(); i != servers_.end(); i++)
+
+  for (PeerArray::ITERATOR i(this->by_handle_); !i.done(); i++)
     {
-      PeerProcs::ENTRY *entry;
+      ACE_DLList_Node *entry;
       if (i.next(entry) == 0)
         break;
-      delete entry->item();
+      //i.remove ();
+
+      PeerNode *node = reinterpret_cast<PeerNode*>(entry->item_);
+      PeerProcess *pp = node->peer_;
+      const ACE_CString &addr = pp->is_server() ?
+        pp->server_addr() : pp->last_client_addr();
+      this->by_addr_.unbind (addr);
+      delete node;
     }
-#endif
+
+  this->by_addr_.close();
+
 }
 
 void

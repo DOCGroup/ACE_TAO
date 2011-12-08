@@ -1,5 +1,4 @@
 // -*- IDL -*-
-
 // $Id$
 
 #include "ImR_Activator.idl"
@@ -8,14 +7,15 @@ module ImplementationRepository
 {
   interface Locator : Administration
   {
-    // returns a token that can be used (along with activator name) to unregister the activator.
+    /// returns a token that can be used (along with activator name) to
+    /// unregister the activator.
     long register_activator (in string name, in Activator act);
 
-    // You must pass in the token returned from register_activator.
+    /// You must pass in the token returned from register_activator.
     void unregister_activator (in string name, in long token);
 
-    // The ImR_Activator calls this method to notify death of child
-    // process that it had started.
+    /// The ImR_Activator calls this method to notify death of child
+    /// process that it had started.
     void notify_child_death (in string name);
   };
 };

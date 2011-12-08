@@ -103,7 +103,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // Run a CORBA worker thread
       Worker work (orb.in());
-      work.activate (0,1);
+      work.activate (THR_NEW_LWP | THR_JOINABLE | THR_INHERIT_SCHED, 1);
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - waiting for client to call\n"));
       ACE_OS::sleep (10);
       if (test_impl->got_callback() == false) {
@@ -122,6 +122,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       test_impl->shutdown_client();
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - test completed\n"));
+
+      orb->shutdown (); // shutdown our ORB
+
+      work.wait (); // wait for the worker to finish
 
       root_poa->destroy (1, 1);
 
