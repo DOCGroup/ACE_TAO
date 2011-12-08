@@ -1,0 +1,27 @@
+Thu Dec  8 16:08:07 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/dds4ccm/tests/HomeTest:
+        * connectors/dds4ccm/tests/HomeTest/Base:
+        * connectors/dds4ccm/tests/HomeTest/Base/HomeT_Base.idl:
+        * connectors/dds4ccm/tests/HomeTest/Base/HomeT_Base.mpc:
+        * connectors/dds4ccm/tests/HomeTest/Connector:
+        * connectors/dds4ccm/tests/HomeTest/Connector/HomeT_Connector.idl:
+        * connectors/dds4ccm/tests/HomeTest/Connector/HomeT_Connector.mpc:
+        * connectors/dds4ccm/tests/HomeTest/HomeComp:
+        * connectors/dds4ccm/tests/HomeTest/HomeComp/HomeT_Home.mpc:
+        * connectors/dds4ccm/tests/HomeTest/HomeComp/HomeT_HomeC.idl:
+        * connectors/dds4ccm/tests/HomeTest/HomeComp/HomeT_HomeC_exec.h:
+        * connectors/dds4ccm/tests/HomeTest/HomeComp/HomeT_HomeC_exec.cpp:
+        * connectors/dds4ccm/tests/HomeTest/HomeComp/client.cpp:
+        * connectors/dds4ccm/tests/HomeTest/descriptors:
+        * connectors/dds4ccm/tests/HomeTest/descriptors/DeploymentPlanConnOnly.cdp:
+        * connectors/dds4ccm/tests/HomeTest/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/HomeTest/descriptors/run_test.pl:
+        First commit new test for Connector Homes.
+
+
+Local Variables:
+mode: change-log
+add-log-time-format: (lambda () (progn (setq tz (getenv "TZ")) (set-time-zone-rule "UTC") (setq time (format-time-string "%a %b %e %H:%M:%S %Z %Y" (current-time))) (set-time-zone-rule tz) time))
+indent-tabs-mode: nil
+End:
