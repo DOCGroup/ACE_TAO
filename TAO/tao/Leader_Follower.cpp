@@ -1,6 +1,5 @@
 // $Id$
 
-#include "ace/Countdown_Time.h"
 #include "ace/OS_NS_sys_time.h"
 #include "ace/Reactor.h"
 #include "ace/Auto_Ptr.h"
@@ -13,6 +12,7 @@
 #include "tao/Transport.h"
 #include "tao/GUIResource_Factory.h"
 #include "tao/ORB_Core.h"
+#include "tao/ORB_Time_Policy.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Leader_Follower.inl"
@@ -92,7 +92,7 @@ int
 TAO_Leader_Follower::wait_for_client_leader_to_complete (ACE_Time_Value *max_wait_time)
 {
   int result = 0;
-  ACE_Countdown_Time countdown (max_wait_time);
+  TAO::ORB_Countdown_Time countdown (max_wait_time);
 
   // Note that we are waiting.
   ++this->event_loop_threads_waiting_;
@@ -253,7 +253,7 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
   // Obtain the lock.
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock (), -1);
 
-  ACE_Countdown_Time countdown (max_wait_time);
+  TAO::ORB_Countdown_Time countdown (max_wait_time);
 
   // Optimize the first iteration [no access to errno]
   int result = 1;

@@ -30,11 +30,12 @@
 #include "ace/Timer_Queue_Adapters.h"
 #include "ace/svc_export.h"
 #include "ace/Condition_Recursive_Thread_Mutex.h"
+#include "ace/Event_Handler_Handle_Timeout_Upcall.h"
 #include "Driver.h"
 
 // These typedefs ensure that we use the minimal amount of locking
 // necessary.
-typedef ACE_Event_Handler_Handle_Timeout_Upcall<ACE_Null_Mutex>
+typedef ACE_Event_Handler_Handle_Timeout_Upcall
         Upcall;
 typedef ACE_Timer_Heap_T<ACE_Event_Handler *,
                          Upcall,

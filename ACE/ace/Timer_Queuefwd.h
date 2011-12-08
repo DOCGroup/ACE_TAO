@@ -17,19 +17,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/Synch_Traits.h"
+#include "ace/config-all.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-template <class TYPE, class FUNCTOR, class ACE_LOCK> class ACE_Timer_Queue_T;
-template <class ACE_LOCK> class ACE_Event_Handler_Handle_Timeout_Upcall;
-
 class ACE_Event_Handler;
-
-typedef ACE_Timer_Queue_T<ACE_Event_Handler *,
-                          ACE_Event_Handler_Handle_Timeout_Upcall<ACE_SYNCH_RECURSIVE_MUTEX>,
-                          ACE_SYNCH_RECURSIVE_MUTEX>
-        ACE_Timer_Queue;
+template <class TYPE> class ACE_Abstract_Timer_Queue;
+typedef ACE_Abstract_Timer_Queue<ACE_Event_Handler*> ACE_Timer_Queue;
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
