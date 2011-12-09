@@ -1,3 +1,18 @@
+Fri Dec  9 10:17:37 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/ciao_tests.lst:
+        * examples/Null_Component_Glfa:
+        * examples/Null_Component_Glfa/Null_Component.idl:
+        * examples/Null_Component_Glfa/Null_Component.mpc:
+        * examples/Null_Component_Glfa/Null_Interface.idl:
+        * examples/Null_Component_Glfa/Null_Interface.mpc:
+        * examples/Null_Component_Glfa/descriptors:
+        * examples/Null_Component_Glfa/descriptors/NodeMap.dat:
+        * examples/Null_Component_Glfa/descriptors/Null_Homed.cdp:
+        * examples/Null_Component_Glfa/descriptors/Null_Unhomed.cdp:
+        * examples/Null_Component_Glfa/descriptors/run_test.pl:
+          Removed this test. No need to test this anymore.
+
 Fri Dec  9 10:15:44 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
 
