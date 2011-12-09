@@ -1,3 +1,11 @@
+Fri Dec  9 11:48:53 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/tests/AMIDDS/Base/AmiDds_Base.mpc:
+        * tests/DAnCE/Components/SimpleCommon.mpc:
+        * tests/IDL_Test/Reused_Facet_Interface/Basic.mpc:
+          Fixed compile errors related to the movement of the facet
+          servants.
+
 Fri Dec  9 10:41:34 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/Large_Deployment/Common/Single_Service_Common.mpc:

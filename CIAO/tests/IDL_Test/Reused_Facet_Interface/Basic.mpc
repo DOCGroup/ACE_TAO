@@ -7,7 +7,7 @@ project(Reused_Facet_Interface_Basic_idl_gen) : ciaoidldefaults, anytypecode {
               -Wb,stub_export_include=Basic_stub_export.h \
               -Wb,skel_export_macro=BASIC_SKEL_Export \
               -Wb,skel_export_include=Basic_skel_export.h \
-              -Gxhst -Gxhsk -Glem
+              -Gxhst -Gxhsk -Glem -Gsv
 
   IDL_Files {
     Basic.idl
@@ -21,7 +21,7 @@ project(Reused_Facet_Interface_Basic_lem_gen) : ciaoidldefaults, anytypecode {
               -Wb,stub_export_include=Basic_stub_export.h \
               -Wb,skel_export_macro=BASIC_SKEL_Export \
               -Wb,skel_export_include=Basic_skel_export.h \
-              -Gxhst 
+              -Gxhst
 
   IDL_Files {
     BasicE.idl
