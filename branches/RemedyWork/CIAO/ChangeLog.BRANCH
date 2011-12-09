@@ -1,3 +1,11 @@
+Fri Dec  9 13:24:31 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Large_Deployment/Single_Service/Single_Service.mpc:
+        * tests/Bug_2130_Regression/SEC_CheckPoint/TSEC_CheckPoint.mpc:
+        * tests/Bug_3834_Regression/CompA.mpc:
+        * tests/Bug_3834_Regression/CompB.mpc:
+          Removed the -Glfa option since it is obsolete.
+
 Fri Dec  9 11:48:53 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/tests/AMIDDS/Base/AmiDds_Base.mpc:

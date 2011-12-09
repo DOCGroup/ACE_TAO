@@ -3,7 +3,6 @@
 
 project(Moo_CompB_idl_gen) : componentidldefaults   {
   custom_only = 1
-  idlflags += -Glfa
   idlflags += -Wb,stub_export_macro=COMPB_STUB_Export \
               -Wb,stub_export_include=CompB_stub_export.h \
               -Wb,skel_export_macro=COMPB_SVNT_Export \
@@ -34,8 +33,8 @@ project(Moo_CompB_lem_gen) : ciaoidldefaults   {
 project(Moo_CompB_stub) : ccm_stub   {
   after += Moo_CompB_idl_gen Moo_stub
   libs  += Moo_stub
-  
-  
+
+
   sharedname = CompB_stub
   dynamicflags += COMPB_STUB_BUILD_DLL
 
@@ -60,8 +59,8 @@ project(Moo_CompB_exec) : ciao_executor   {
   after   += Moo_CompB_lem_gen Moo_CompB_stub
   sharedname = CompB_exec
   libs += CompB_stub Moo_stub
-  
-  
+
+
   dynamicflags += COMPB_EXEC_BUILD_DLL
 
   IDL_Files {
@@ -91,10 +90,10 @@ project(Moo_CompB_svnt) : ciao_servant   {
                 CompB_stub \
                 Moo_skel   \
                 Moo_stub
-  
-  
+
+
   dynamicflags += COMPB_SVNT_BUILD_DLL
-  
+
   IDL_Files {
   }
 
