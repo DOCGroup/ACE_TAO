@@ -57,7 +57,7 @@ project(Moo_CompA_stub) : ccm_stub   {
 project(Moo_CompA_exec) : ciao_executor   {
   after   += Moo_CompA_lem_gen Moo_CompA_stub
   sharedname = CompA_exec
-  libs += CompA_stub Moo_stub
+  libs += CompA_stub Moo_stub Moo_lem_stub
 
 
   dynamicflags += COMPA_EXEC_BUILD_DLL
@@ -83,12 +83,13 @@ project(Moo_CompA_exec) : ciao_executor   {
 
 
 project(Moo_CompA_svnt) : ciao_servant   {
-  after      += Moo_skel  Moo_CompA_exec
+  after      += Moo_skel Moo_CompA_exec
   sharedname  = CompA_svnt
   libs       += CompA_exec \
                 CompA_stub \
                 Moo_skel   \
-                Moo_stub
+                Moo_stub   \
+                Moo_lem_stub
 
 
   dynamicflags += COMPA_SVNT_BUILD_DLL
