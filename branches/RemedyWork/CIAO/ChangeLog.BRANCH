@@ -1,3 +1,9 @@
+Fri Dec  9 14:15:16 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/Bug_3834_Regression/CompA.mpc:
+        * tests/Bug_3834_Regression/Moo.mpc:
+          Fixed link issues on windows.
+
 Fri Dec  9 13:42:40 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * tests/Bug_3834_Regression/CompA.idl:
