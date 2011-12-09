@@ -1,3 +1,13 @@
+Fri Dec  9 10:15:44 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+
+        * tests/IDL_Test/Glfa:
+        * tests/IDL_Test/Glfa/A.idl:
+        * tests/IDL_Test/Glfa/A.mpc:
+        * tests/IDL_Test/Glfa/B.idl:
+        * tests/IDL_Test/Glfa/B.mpc:
+          Removed these files. No need to test this anymore.
+
 Fri Dec  9 08:34:00 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/ami4ccm/tutorials/Hello/Hello_asm/ports/Hello_MyFoo_obj.mpc:
