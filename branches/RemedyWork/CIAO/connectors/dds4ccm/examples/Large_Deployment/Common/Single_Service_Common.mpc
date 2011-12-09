@@ -18,7 +18,7 @@ project(Single_Service_Common_idl_lem_gen) : ciaoidldefaults {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=SINGLE_SERVICE_COMMON_LEM_STUB_Export \
               -Wb,stub_export_include=Single_Service_Common_lem_stub_export.h \
-              -SS -Gxhst
+              -SS -Gxhst -I..
 
   IDL_Files {
     Single_Service_CommonE.idl
@@ -26,11 +26,14 @@ project(Single_Service_Common_idl_lem_gen) : ciaoidldefaults {
 }
 
 project(Single_Service_Common_lem_stub) : ccm_svnt   {
-  after +=  Single_Service_Common_lem_gen \
+  after +=  Single_Service_Common_idl_lem_gen \
             Single_Service_Common_stub
   libs  +=  Single_Service_Common_stub
 
-  sharedname = Base_lem_stub
+  libpaths += ../lib
+  libout = ../lib
+
+  sharedname = Single_Service_Common_lem_stub
   dynamicflags += SINGLE_SERVICE_COMMON_LEM_STUB_BUILD_DLL
 
   IDL_Files {
