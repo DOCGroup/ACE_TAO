@@ -6,7 +6,7 @@ project(Single_Service_Common_idl_gen) : taoidldefaults {
               -Wb,stub_export_include=Single_Service_Common_stub_export.h \
               -Wb,skel_export_macro=SINGLE_SERVICE_COMMON_SKEL_Export \
               -Wb,skel_export_include=Single_Service_Common_skel_export.h \
-              -Gxhst -Gxhsk
+              -Gxhst -Gxhsk -Gsv
 
   IDL_Files {
     Single_Service_Common.idl
