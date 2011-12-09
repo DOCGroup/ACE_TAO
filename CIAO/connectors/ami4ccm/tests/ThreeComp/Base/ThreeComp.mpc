@@ -10,7 +10,6 @@ project(AMI_ThreeComp_no_ami_dl_gen) : componentidldefaults {
               -Wb,exec_export_macro=THREECOMP_EXEC_Export \
               -Wb,exec_export_include=ThreeComp_exec_export.h \
               -I..
-  idlflags -= -Gsv
 
   IDL_Files {
     ThreeComp_no_ami.idl
@@ -27,7 +26,6 @@ project(AMI_ThreeComp_idl_gen) : componentidldefaults, ami, ami4ccm_stub {
               -Wb,exec_export_macro=THREECOMP_EXEC_Export \
               -Wb,exec_export_include=ThreeComp_exec_export.h \
               -I.. -GM -Gxhcn
-  idlflags -= -Gsv
 
   IDL_Files {
     ThreeComp.idl
@@ -161,7 +159,7 @@ project(AMI_ThreeComp_skel) : ciao_executor, ami, ami4ccm_servant {
   Header_Files {
     ThreeCompS.h
     ThreeComp_no_amiS.h
-   
+
     ThreeComp_skel_export.h
   }
 
