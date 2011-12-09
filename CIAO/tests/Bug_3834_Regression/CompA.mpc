@@ -12,7 +12,6 @@ project(Moo_CompA_idl_gen) : componentidldefaults   {
               -Wb,svnt_export_macro=COMPA_SVNT_Export \
               -Wb,svnt_export_include=CompA_svnt_export.h
 
-
   IDL_Files {
     CompA.idl
   }
