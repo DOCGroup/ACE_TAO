@@ -1,3 +1,8 @@
+Fri Dec  9 10:41:02 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * docs/svn/config:
+          Subversion should ignore *_svnt_T.*.
+
 
 Local Variables:
 mode: change-log
