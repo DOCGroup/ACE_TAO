@@ -1,3 +1,8 @@
+Fri Dec  9 14:28:24 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/Bug_3834_Regression/Moo.mpc:
+          Fixed afters and linker errors on windows.
+
 Fri Dec  9 14:15:16 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * tests/Bug_3834_Regression/CompA.mpc:
