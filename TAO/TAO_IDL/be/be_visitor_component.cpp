@@ -74,7 +74,6 @@
 #include "be_visitor_component/context_svts.cpp"
 #include "be_visitor_component/servant_svs.cpp"
 #include "be_visitor_component/component_ex_idl.cpp"
-#include "be_visitor_component/facet_ex_idl.cpp"
 #include "be_visitor_component/executor_ex_idl.cpp"
 #include "be_visitor_component/context_ex_idl.cpp"
 #include "be_visitor_component/component_exh.cpp"

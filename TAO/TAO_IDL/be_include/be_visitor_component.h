@@ -29,7 +29,6 @@
 #include "be_visitor_component/context_svts.h"
 #include "be_visitor_component/servant_svs.h"
 #include "be_visitor_component/component_ex_idl.h"
-#include "be_visitor_component/facet_ex_idl.h"
 #include "be_visitor_component/executor_ex_idl.h"
 #include "be_visitor_component/context_ex_idl.h"
 #include "be_visitor_component/component_exh.h"

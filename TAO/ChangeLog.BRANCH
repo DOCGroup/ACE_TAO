@@ -1,3 +1,22 @@
+Fri Dec  9 13:23:29 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be/be_util.cpp:
+        * TAO_IDL/be/be_visitor_component.cpp:
+        * TAO_IDL/be/be_visitor_component/component_ex_idl.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ex_idl.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_svh.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_svs.cpp:
+        * TAO_IDL/be_include/be_global.h:
+        * TAO_IDL/be_include/be_visitor_component.h:
+        * docs/compiler.html:
+          Removed the -Glfa option from the IDL compiler.
+
+        * TAO_IDL/be/be_visitor_component/facet_ex_idl.cpp:
+        * TAO_IDL/be_include/be_visitor_component/facet_ex_idl.h:
+          Removed these files.
+
 Thu Dec  8 14:43:36 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * TAO_IDL/be/be_visitor_component/context_svth.cpp:
