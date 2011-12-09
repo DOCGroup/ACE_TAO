@@ -31,11 +31,6 @@ be_visitor_interface_svs::~be_visitor_interface_svs (void)
 int
 be_visitor_interface_svs::visit_interface (be_interface *node)
 {
-  if (! be_global->gen_lem_force_all ())
-    {
-      return 0;
-    }
-
   // Skip implied IDL nodes.
   if (node->original_interface () != 0)
     {

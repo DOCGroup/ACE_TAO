@@ -149,7 +149,6 @@ BE_GlobalData::BE_GlobalData (void)
     gen_svnt_export_hdr_file_ (false),
     gen_exec_export_hdr_file_ (false),
     gen_conn_export_hdr_file_ (false),
-    gen_lem_force_all_ (false),
     tab_size_ (2),
     alt_mapping_ (false),
     in_facet_servant_ (false),
@@ -2593,18 +2592,6 @@ BE_GlobalData::gen_conn_export_hdr_file (bool val)
 }
 
 bool
-BE_GlobalData::gen_lem_force_all (void) const
-{
-  return this->gen_lem_force_all_;
-}
-
-void
-BE_GlobalData::gen_lem_force_all (bool val)
-{
-  this->gen_lem_force_all_ = val;
-}
-
-bool
 BE_GlobalData::alt_mapping (void) const
 {
   return this->alt_mapping_;
@@ -3331,10 +3318,6 @@ BE_GlobalData::parse_args (long &i, char **av)
             if (av[i][3] == 'e' && av[i][4] == 'm')
               {
                 be_global->gen_ciao_exec_idl (true);
-              }
-            else if (av[i][3] == 'f' && av[i][4] == 'a')
-              {
-                be_global->gen_lem_force_all (true);
               }
             else
               {

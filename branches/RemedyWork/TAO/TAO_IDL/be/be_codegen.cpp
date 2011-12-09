@@ -3392,12 +3392,6 @@ TAO_CodeGen::gen_svnt_hdr_includes (TAO_OutStream *stream)
 
   this->gen_standard_include (
     stream,
-    be_global->be_get_ciao_exec_stub_hdr_fname (true));
-
-  *stream << be_nl;
-
-  this->gen_standard_include (
-    stream,
     be_global->be_get_server_hdr_fname (true));
 }
 
@@ -3422,11 +3416,14 @@ TAO_CodeGen::gen_svnt_tmpl_hdr_includes (TAO_OutStream *stream)
 
   *stream << be_nl;
 
-  this->gen_standard_include (
-    stream,
-    be_global->be_get_ciao_exec_stub_hdr_fname (true));
+  if (be_global->gen_ciao_exec_idl())
+    {
+      this->gen_standard_include (
+        stream,
+        be_global->be_get_ciao_exec_stub_hdr_fname (true));
 
-  *stream << be_nl;
+      *stream << be_nl;
+    }
 
   this->gen_standard_include (
     stream,
