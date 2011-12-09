@@ -1,3 +1,10 @@
+Fri Dec  9 15:41:59 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Large_Deployment/Common/Single_Service_Common.idl:
+        * connectors/dds4ccm/examples/Large_Deployment/Common/Single_Service_Common.mpc:
+        * connectors/dds4ccm/examples/Large_Deployment/DDS_Pub/DDS_Pub.mpc:
+          Also generate a Single_Service_Common lem.
+
 Fri Dec  9 14:28:24 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * tests/Bug_3834_Regression/Moo.mpc:

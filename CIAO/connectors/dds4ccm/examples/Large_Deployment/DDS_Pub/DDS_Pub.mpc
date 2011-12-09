@@ -17,7 +17,8 @@ project(Large_DDS_Pub_idl_gen) : componentidldefaults, dds4ccm {
 }
 
 project(Large_DDS_Pub_lem_gen) : ciaoidldefaults, dds4ccm {
-  after += Large_DDS_Pub_idl_gen Large_Connector_idl_gen
+  after +=  Large_DDS_Pub_idl_gen Large_Connector_idl_gen \
+            Single_Service_Common_lem_stub
   custom_only = 1
   idlflags += -Wb,stub_export_macro=DDS_PUB_LEM_STUB_Export \
               -Wb,stub_export_include=DDS_Pub_lem_stub_export.h \
