@@ -1,3 +1,10 @@
+Fri Dec  9 08:31:15 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/idl/dds4ccm_stub.mpc:
+        * connectors/dds4ccm/idl/ndds/ndds_idltocpp_stub.mpc:
+          Fixed compile errors related to the movement of the facet
+          servants.
+
 Fri Dec  9 07:57:33 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/ami4ccm/examples/Quoter/Base/Quoter.mpc:
