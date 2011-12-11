@@ -18,7 +18,7 @@ project(Moo_CompA_idl_gen) : componentidldefaults   {
 }
 
 project(Moo_CompA_lem_gen) : ciaoidldefaults   {
-  after += Moo_CompA_idl_gen Moo_idl_gen
+  after += Moo_CompA_idl_gen Moo_idl_gen Moo_lem_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=COMPA_EXEC_Export \
               -Wb,stub_export_include=CompA_exec_export.h \
