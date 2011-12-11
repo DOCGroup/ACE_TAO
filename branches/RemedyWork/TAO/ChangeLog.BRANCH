@@ -1,3 +1,9 @@
+Sun Dec 11 19:13:21 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_interface/facet_svth.cpp:
+        * TAO_IDL/be/be_visitor_interface/facet_svts.cpp:
+          No servant is needed for local interfaces
+
 Sun Dec 11 18:23:17 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_util.cpp:

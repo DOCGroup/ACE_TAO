@@ -28,7 +28,8 @@ be_visitor_facet_svts::visit_interface (be_interface *node)
   if (node->imported () ||
       node->svnt_src_facet_gen () ||
       idl_global->ami_connector_seen_ ||
-      node->original_interface ())
+      node->original_interface () ||
+      node->is_local ())
     {
       return 0;
     }
