@@ -30,8 +30,6 @@
 #include "be_visitor_interface/interface_ss.h"
 #include "be_visitor_interface/interface_is.h"
 #include "be_visitor_interface/interface_ex_idl.h"
-#include "be_visitor_interface/interface_svh.h"
-#include "be_visitor_interface/interface_svs.h"
 #include "be_visitor_interface/interface_svth.h"
 #include "be_visitor_interface/interface_svts.h"
 #include "be_visitor_interface/any_op_ch.h"

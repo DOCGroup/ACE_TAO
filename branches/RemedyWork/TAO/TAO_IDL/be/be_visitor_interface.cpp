@@ -67,8 +67,6 @@
 #include "be_visitor_interface/interface_ss.cpp"
 #include "be_visitor_interface/interface_is.cpp"
 #include "be_visitor_interface/interface_ex_idl.cpp"
-#include "be_visitor_interface/interface_svh.cpp"
-#include "be_visitor_interface/interface_svs.cpp"
 #include "be_visitor_interface/interface_svth.cpp"
 #include "be_visitor_interface/interface_svts.cpp"
 #include "be_visitor_interface/tie_sh.cpp"

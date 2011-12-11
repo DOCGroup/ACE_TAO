@@ -1,3 +1,18 @@
+Sun Dec 11 12:32:28 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_visitor_interface.cpp:
+        * TAO_IDL/be/be_visitor_module/module.cpp:
+        * TAO_IDL/be_include/be_interface.h:
+        * TAO_IDL/be_include/be_visitor_interface.h:
+        * TAO_IDL/be/be_visitor_interface/interface_svh.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_svs.cpp:
+          Removed some old stuff we don't need anymore, fixes cornucopia
+
+        * TAO_IDL/be_include/be_visitor_interface/interface_svh.h:
+        * TAO_IDL/be_include/be_visitor_interface/interface_svs.h:
+          Removed these files.
+
 Fri Dec  9 13:23:29 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * TAO_IDL/be/be_codegen.cpp:
