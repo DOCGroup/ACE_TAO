@@ -1,3 +1,9 @@
+Sun Dec 11 19:40:16 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_operation/direct_proxy_impl_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+          Throw exception when dynamic_cast fails
+
 Sun Dec 11 19:13:21 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_interface/facet_svth.cpp:
