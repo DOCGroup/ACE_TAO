@@ -8,7 +8,7 @@ project(Moo_idl_gen) : componentidldefaults {
               -Wb,exec_export_macro=MOO_EXEC_Export \
               -Wb,exec_export_include=Moo_exec_export.h \
               -Wb,skel_export_macro=MOO_SKEL_Export \
-              -Wb,skel_export_include=Moo_skel_export.h \
+              -Wb,skel_export_include=Moo_skel_export.h
 
   IDL_Files {
     Moo.idl
