@@ -1963,7 +1963,6 @@ sub check_for_non_bool_operators ()
 }
 
 # This test verifies that all filenames are short enough
-
 sub check_for_long_file_names ()
 {
     my $max_filename = 50;
