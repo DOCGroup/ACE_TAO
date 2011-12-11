@@ -1,3 +1,8 @@
+Sun Dec 11 18:23:17 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_util.cpp:
+          Removed mentioning of -Gsc which got removed a long time ago
+
 Sun Dec 11 12:32:28 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_interface.cpp:
