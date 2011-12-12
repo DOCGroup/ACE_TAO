@@ -1,3 +1,8 @@
+Mon Dec 12 19:28:51 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/ami4ccm/ami4ccm/ami4ccm.mpc:
+          Added missing template files
+
 Mon Dec 12 07:33:25 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         Merged changes from our work branch. Facet servants are now generated
