@@ -1,0 +1,20 @@
+// $Id$
+
+#ifndef INTERMULTI_RECEIVER_IDL
+#define INTERMULTI_RECEIVER_IDL
+
+#include <Components.idl>
+
+#include "Base/InterMulti.idl"
+
+module InterMulti
+{
+  component Receiver
+  {
+    /// Provides
+    provides One do_my_one;
+    provides Two do_my_two;
+    provides Three do_my_three;
+  };
+};
+#endif
