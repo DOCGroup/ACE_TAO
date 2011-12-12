@@ -137,9 +137,9 @@ project(HomeT_HomeC_svnt) : ciao_servant, avoids_ccm_noevent, dds4ccm_base {
   }
 }
 
-project (HomeT_HomeC_client) : ccm_stub ,  dds4ccm_base{
+project (HomeT_HomeC_control) : ccm_stub ,  dds4ccm_base{
  after += HomeT_HomeC_stub
-  exename = client
+  exename = controller
   libs += HomeT_HomeC_stub HomeT_Base_stub
   includes += ..
   libout = ../lib
@@ -152,7 +152,7 @@ project (HomeT_HomeC_client) : ccm_stub ,  dds4ccm_base{
   }
 
   Source_Files {
-    client.cpp
+    controller.cpp
   }
 
   Inline_Files {

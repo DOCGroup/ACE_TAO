@@ -25,9 +25,12 @@ $ns_running = 0;
 
 $nr_daemon = 2;
 @ports = ( 60001, 60002 );
-@iorbases = ( "Sender.ior", "Receiver.ior" );
+@iorbases = ( "HomeC.ior", "Sender.ior" );
 @iorfiles = 0;
-@nodenames = ( "SenderNode", "ReceiverNode" );
+@nodenames = ("ReceiverNode" , "SenderNode");
+
+$controller_exec = "$CIAO_ROOT/connectors/dds4ccm/tests/HomeTest/HomeComp/controller";
+
 
 # ior files other than daemon
 # ior files other than daemon
@@ -225,8 +228,32 @@ for ($i = 0; $i < $nr_daemon; ++$i) {
     }
 }
 
-print "Sleeping 60 seconds to allow task to complete\n";
-sleep (60);
+print "Sleeping 5 seconds to allow task to complete\n";
+sleep (5);
+print "Invoking the controller\n";
+$controller = $tg_executor->CreateProcess ("$controller_exec", "-k file://HomeC.ior -o");
+$result = $controller->SpawnWaitKill ($tg_executor->ProcessStopWaitInterval ());
+if ($result != 0) {
+    print STDERR "ERROR: The controller returned $result\n";
+    $status = 1;
+}
+
+# put some delay here.
+sleep (30);
+
+# invoking the controller again to stop the rategen
+print "Invoking the controller to stop RateGen\n";
+$controller = $tg_executor->CreateProcess ("$controller_exec", "-k file://HomeC.ior -f");
+$result = $controller->SpawnWaitKill ($tg_executor->ProcessStopWaitInterval ());
+if ($result != 0) {
+    print STDERR "ERROR: The controller returned $result\n";
+    $status = 1;
+}
+print "Sleeping 5 seconds to allow task to complete\n";
+sleep (5);
+
+
+
 
 # Invoke executor - stop the application -.
 print "Invoking executor - stop the application -\n";
