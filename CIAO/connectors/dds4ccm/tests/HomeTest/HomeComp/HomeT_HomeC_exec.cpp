@@ -27,7 +27,7 @@
 
 #include "HomeT_HomeC_exec.h"
 #include "./Connector/HomeT_Connector_conn.h"
-/*
+
 namespace CIAO_ConnComp_Impl
 {
 
@@ -104,6 +104,7 @@ namespace CIAO_ConnComp_Impl
 
   ConnHome_exec_i::ConnHome_exec_i (void)
   {
+    new_ConnComp();
   }
 
   ConnHome_exec_i::~ConnHome_exec_i (void)
@@ -113,9 +114,10 @@ namespace CIAO_ConnComp_Impl
   ::Components::EnterpriseComponent_ptr
   ConnHome_exec_i::new_ConnComp (void)
   {
+    printf("ConnHome_exec_i::new_ConnComp  !!!!!!!!!!!1");
     /* Your code here. */
     //return ::CCM_ConnComp::_nil ();
-    return CIAO_HomeCompTest_DDS_Event_Impl::create_HomeCompTest_DDS_Event_Impl();
+ //   return CIAO_HomeCompTest_DDS_Event_Impl::create_HomeCompTest_DDS_Event_Impl();
   }
 
   // Implicit operations.
@@ -126,10 +128,10 @@ namespace CIAO_ConnComp_Impl
     ::Components::EnterpriseComponent_ptr retval =
       ::Components::EnterpriseComponent::_nil ();
 
- //   ACE_NEW_THROW_EX (
- //     retval,
- //     ConnComp_exec_i,
- //     ::CORBA::NO_MEMORY ());
+    ACE_NEW_THROW_EX (
+      retval,
+      ConnComp_exec_i,
+      ::CORBA::NO_MEMORY ());
 
     return retval;
   }

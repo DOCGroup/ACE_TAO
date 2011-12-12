@@ -24,6 +24,12 @@ home ConnHome manages ConnComp
   factory new_ConnComp ();
 };
 
+// Interface for IDL2.x client
+interface IDL2Client {
+//  short get_number ();
+};
+
+
 
 #endif /* HOMET_HOMEC_IDL_ */
 
