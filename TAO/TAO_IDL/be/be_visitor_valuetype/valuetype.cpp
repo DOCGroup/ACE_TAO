@@ -510,6 +510,8 @@ be_visitor_valuetype::visit_union (be_union *node)
         break;
       }
     case TAO_CodeGen::TAO_VALUETYPE_OBV_CH:
+    case TAO_CodeGen::TAO_MODULE_OBV_CI:
+    case TAO_CodeGen::TAO_MODULE_OBV_CS:
     case TAO_CodeGen::TAO_ROOT_SH:
     case TAO_CodeGen::TAO_ROOT_IH:
     case TAO_CodeGen::TAO_ROOT_IS:

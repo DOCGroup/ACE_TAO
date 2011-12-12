@@ -151,17 +151,6 @@ TAO_ORB_Parameters::std_profile_components (bool x)
   this->std_profile_components_ = x;
 }
 
-ACE_INLINE bool
-TAO_ORB_Parameters::use_highres_timer (void) const
-{
-  return this->use_highres_timer_;
-}
-ACE_INLINE void
-TAO_ORB_Parameters::use_highres_timer (bool x)
-{
-  this->use_highres_timer_ = x;
-}
-
 ACE_INLINE int
 TAO_ORB_Parameters::nodelay (void) const
 {

@@ -47,7 +47,6 @@ namespace TAO
                                       const char *name);
 
     protected:
-
       /// POA Manager
       PortableServer::POAManager_var poa_manager_;
     };

@@ -62,7 +62,6 @@ namespace TAO
     /// Check if the buffering constraint includes any timeouts and
     /// compute the right timeout interval if needed.
     /**
-     * @param stub
      * @param buffering_constraint The constraints defined by the
      *        application
      * @param current_deadline The current deadline
@@ -74,8 +73,7 @@ namespace TAO
      *         returns false then flushing may need to be delayed, use @c
      *         set_timer and
      */
-    bool timer_check (TAO_Stub *stub,
-                      const TAO::BufferingConstraint &buffering_constraint,
+    bool timer_check (const TAO::BufferingConstraint &buffering_constraint,
                       const ACE_Time_Value &current_deadline,
                       bool &set_timer,
                       ACE_Time_Value &new_deadline) const;

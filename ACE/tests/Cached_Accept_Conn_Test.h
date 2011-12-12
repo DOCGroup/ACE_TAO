@@ -100,7 +100,6 @@ typedef ACE_NOOP_Concurrency_Strategy<Client_Svc_Handler>
 typedef ACE_Cached_Connect_Strategy_Ex<Client_Svc_Handler, ACE_SOCK_CONNECTOR, CACHING_STRATEGY, ATTRIBUTES, ACE_SYNCH_NULL_MUTEX>
         CACHED_CONNECT_STRATEGY;
 
-
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
 class Accept_Strategy : public ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>
 {

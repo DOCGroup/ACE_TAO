@@ -92,7 +92,7 @@ Test_i::report (
 void
 Test_i::shutdown (void)
 {
-  if (this->mode_ == A::RM_SLAVE && !CORBA::is_nil (this->opponent_))
+  if (this->mode_ == A::RM_SLAVE && !CORBA::is_nil (this->opponent_.in ()))
   {
     this->opponent_->shutdown ();
   }
@@ -190,7 +190,7 @@ TestHandler::handle_timeout (const ACE_Time_Value &,
   if ((ACE_OS::rand_r (&this->seed_) % 2) == 0)
   {
     A::FollowUp followup;
-    if (!CORBA::is_nil (this->opponent_))
+    if (!CORBA::is_nil (this->opponent_.in ()))
     {
       this->opponent_->request(A::RQM_SYNCH, this->counter_, followup);
       this->handle_followup (followup, this->counter_);
@@ -198,9 +198,9 @@ TestHandler::handle_timeout (const ACE_Time_Value &,
   }
   else
   {
-    if (!CORBA::is_nil (this->opponent_))
+    if (!CORBA::is_nil (this->opponent_.in ()))
     {
-      this->opponent_->sendc_request(this->rh_, A::RQM_ASYNCH, this->counter_);
+      this->opponent_->sendc_request(this->rh_.in (), A::RQM_ASYNCH, this->counter_);
     }
   }
   return 0;
@@ -222,7 +222,7 @@ TestHandler::handle_exception (ACE_HANDLE)
   {
     if (!CORBA::is_nil (this->opponent_))
     {
-      this->opponent_->sendc_request(this->rh_, A::RQM_ASYNCH, this->counter_);
+      this->opponent_->sendc_request(this->rh_.in (), A::RQM_ASYNCH, this->counter_);
     }
   }
   return 0;

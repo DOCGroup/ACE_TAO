@@ -207,6 +207,9 @@ public:
   ACE_Atomic_Op_Ex<ACE_LOCK, TYPE> &operator= (
     ACE_Atomic_Op_Ex<ACE_LOCK, TYPE> const & rhs);
 
+  /// Exchange value with @a newval.
+  TYPE exchange (TYPE newval);
+
   /// Explicitly return @c value_.
   TYPE value (void) const;
 
@@ -317,6 +320,9 @@ public:
 
   /// Atomically check if @c value_ less than @a rhs.
   bool operator< (arg_type rhs) const;
+
+  /// Exchange value with @a newval.
+  TYPE exchange (TYPE newval);
 
   /// Explicitly return @c value_.
   TYPE value (void) const;

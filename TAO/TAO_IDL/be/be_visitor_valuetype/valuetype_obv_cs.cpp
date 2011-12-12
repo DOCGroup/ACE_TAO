@@ -74,8 +74,7 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
       unsigned long index = 0;
       this->gen_obv_init_constructor_args (node, index);
 
-      *os << be_uidt_nl
-          << ")" << be_uidt << be_uidt_nl
+      *os << ")" << be_uidt << be_uidt << be_uidt_nl
           << ": require_truncation_ (false)" << be_nl
           << "{" << be_idt;
 

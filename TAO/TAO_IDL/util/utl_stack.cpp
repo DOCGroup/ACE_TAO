@@ -129,9 +129,11 @@ UTL_ScopeStack::pop (void)
       return;
     }
 
+  UTL_Scope *current = this->top ();
+
   // If our top scope has a #pragma prefix associated with it,
   // it goes away with the scope.
-  if (this->top_non_null ()->has_prefix ())
+  if (current != 0 && current->has_prefix ())
     {
       char *trash = 0;
       idl_global->pragma_prefixes ().pop (trash);

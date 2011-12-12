@@ -22,17 +22,6 @@ Base_Server::Base_Server (int &argc, ACE_TCHAR **argv)
 
 Base_Server::~Base_Server (void)
 {
-  try
-    {
-      this->root_poa_->destroy (1, 1);
-
-      this->orb_->destroy ();
-    }
-  catch (const CORBA::Exception& ex)
-    {
-      ex._tao_print_exception (
-        "Exception caught while destroying Base_Server\n");
-    }
 }
 
 int
@@ -103,6 +92,28 @@ Base_Server::try_RT_scheduling (void)
 }
 
 int
+Base_Server::shutdown_orb_and_poa (void)
+{
+  try
+    {
+      this->root_poa_->destroy (1, 1);
+      this->root_poa_ = PortableServer::POA::_nil ();
+
+      this->orb_->destroy ();
+      this->orb_ = CORBA::ORB::_nil ();
+    }
+  catch (const CORBA::Exception& ex)
+    {
+      ex._tao_print_exception ("Exception raised shutting down ORB or POA");
+      return -1;
+    }
+
+  // If we have got to this point, everything has gone well.  return
+  // normally
+  return 1;
+}
+
+int
 Base_Server::start_orb_and_poa (void)
 {
   try
@@ -123,7 +134,6 @@ Base_Server::start_orb_and_poa (void)
         this->root_poa_->the_POAManager ();
 
       poa_manager->activate ();
-
     }
   catch (const CORBA::Exception& ex)
     {

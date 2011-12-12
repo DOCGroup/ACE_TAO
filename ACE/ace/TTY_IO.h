@@ -46,7 +46,7 @@ public:
   {
     Serial_Params (void);
 
-    /** Specifies the baudrate at which the communnication port operates. */
+    /** Specifies the baudrate at which the communication port operates. */
     int baudrate;
     /** Specifies the minimum number of bytes in input buffer before XON char
         is sent. Negative value indicates that default value should

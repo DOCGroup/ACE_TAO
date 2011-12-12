@@ -26,6 +26,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
 
       task.run_test();
+
+      orb->destroy ();
     }
   catch (const ::CORBA::Exception &ex)
     {

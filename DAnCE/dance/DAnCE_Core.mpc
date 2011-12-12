@@ -81,8 +81,6 @@ project (DAnCE_skel) : dancelib_with_idl, dance_output, dance_stub, \
   }
 
   Inline_Files {
-    DAnCE_LocalityManagerS.inl
-    DAnCE_ArtifactInstallationS.inl
   }
 
   Header_Files {

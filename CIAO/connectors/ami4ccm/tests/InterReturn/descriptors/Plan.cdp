@@ -263,6 +263,7 @@
     </internalEndpoint>
   </connection>
 
+
   <artifact xmi:id="InterReturnT_AMI_SvntArtifact">
     <name>InterReturnT.ImplementationArtifacts.AMIArtifacts.AMI_svnt</name>
     <source/>

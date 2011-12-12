@@ -17,7 +17,6 @@ namespace CIAO
                                   PortableServer::POA_ptr root_poa)
     : orb_ (::CORBA::ORB::_duplicate (o)),
       root_poa_ (::PortableServer::POA::_duplicate (root_poa))
-      //, sa_ (0)
   {
   }
 
@@ -30,7 +29,6 @@ namespace CIAO
   void
   Container_i<BASE>::fini (void)
   {
-
     ::PortableServer::POA_var comp_poa_safe = this->component_poa_._retn ();
 
     if (! CORBA::is_nil (comp_poa_safe.in ()))
@@ -95,14 +93,15 @@ namespace CIAO
 
     PortableServer::POA_var poa_safe;
 
-    if (t == Container_Types::COMPONENT_t ||
-        t == Container_Types::HOME_t)
+    switch (t)
       {
-        poa_safe = PortableServer::POA::_duplicate(this->component_poa_.in ());
-      }
-    else
-      {
-        poa_safe = PortableServer::POA::_duplicate(this->facet_cons_poa_.in ());
+        case Container_Types::COMPONENT_t:
+        case Container_Types::HOME_t:
+          poa_safe = PortableServer::POA::_duplicate(this->component_poa_.in ());
+          break;
+        default:
+          poa_safe = PortableServer::POA::_duplicate(this->facet_cons_poa_.in ());
+          break;
       }
 
     PortableServer::ObjectId_var tmp_id = poa_safe->activate_object (p);

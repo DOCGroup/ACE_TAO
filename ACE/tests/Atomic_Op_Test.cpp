@@ -18,12 +18,65 @@
 
 #include "test_config.h"
 
-
-
 #include "ace/Atomic_Op.h"
 #include "ace/Synch_Traits.h"
 #include "ace/Time_Value.h"
 #include "ace/OS_NS_sys_time.h"
+#include "ace/Barrier.h"
+#include "ace/Task.h"
+
+
+/*
+ * Exchange_Test tests the exchange() operation in ACE_Atomic_Op. It runs
+ * a number of threads and each tries to "claim" the op_ by exchanging it
+ * with '1'. Only one thread should do this. The claimed_ member counts
+ * the number of threads that actually do claim it.
+ */
+template <typename T>
+class Exchange_Tester : public ACE_Task<ACE_NULL_SYNCH>
+{
+public:
+  Exchange_Tester (unsigned int thr_count);
+  int result (void) const;
+
+private:
+  Exchange_Tester () {}
+  int svc (void);
+
+  ACE_Barrier barrier_;
+  ACE_Atomic_Op<ACE_SYNCH_MUTEX, T> op_;
+  ACE_Atomic_Op<ACE_SYNCH_MUTEX, int> claimed_;
+};
+
+template <typename T>
+Exchange_Tester<T>::Exchange_Tester (unsigned int thr_count)
+  : barrier_(thr_count), op_ (0), claimed_ (0)
+{
+  this->activate (THR_NEW_LWP | THR_JOINABLE | THR_INHERIT_SCHED,
+                  (int)thr_count);
+}
+
+template <typename T>
+int
+Exchange_Tester<T>::result (void) const
+{
+  return this->claimed_ == 1 ? 0 : 1;
+}
+
+template <typename T>
+int
+Exchange_Tester<T>::svc (void)
+{
+  this->barrier_.wait ();     // Want all threads to try to claim "at once"
+  bool claimed = this->op_.exchange (1) == 0;
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("Thread %t %s claim.\n"),
+              claimed ? ACE_TEXT ("DID") : ACE_TEXT ("DID NOT")));
+  if (claimed)
+    ++this->claimed_;
+  return 0;
+}
+
 
 template <typename TYPE, typename dummy>
 int test (const ACE_TCHAR* type, int iterations)
@@ -266,6 +319,24 @@ run_main (int, ACE_TCHAR *[])
 #if !defined (ACE_LACKS_LONGLONG_T)
   retval += test <long long, int> (ACE_TEXT("long long"), ITERATIONS);
 #endif
+
+#if defined (ACE_HAS_THREADS)
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing exchange with long\n")));
+  Exchange_Tester<long> e1 (5);
+  e1.wait ();
+  retval += e1.result ();
+
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing exchange with unsigned long\n")));
+  Exchange_Tester<unsigned long> e2 (5);
+  e2.wait ();
+  retval += e2.result ();
+
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing exchange with int\n")));
+  Exchange_Tester<int> e3 (5);
+  e3.wait ();
+  retval += e3.result ();
+
+#endif /* ACE_HAS_THREADS */
 
   ACE_END_TEST;
   return retval;

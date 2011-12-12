@@ -87,14 +87,14 @@ write_iors_to_file (const char *ior)
   result = ACE_OS::fprintf (output_file,
                             "%s",
                             ior);
+  ACE_OS::fclose (output_file);
+
   if (result != ACE_OS::strlen (ior))
     ACE_ERROR_RETURN ((LM_ERROR,
                        "ACE_OS::fprintf failed while writing %C to %s\n",
                        ior,
                        ior_output_file),
                       -1);
-
-  ACE_OS::fclose (output_file);
 
   return 0;
 }

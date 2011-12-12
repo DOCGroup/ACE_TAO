@@ -124,6 +124,9 @@ public:
   /// Atomically assign <rhs> to @c value_.
   ACE_Atomic_Op<ACE_Thread_Mutex, long> &operator= (const ACE_Atomic_Op<ACE_Thread_Mutex, long> &rhs);
 
+  /// Exchange value with @a newval.
+  long exchange (long newval);
+
   /// Explicitly return @c value_.
   long value (void) const;
 
@@ -220,6 +223,9 @@ public:
 
   /// Atomically assign <rhs> to @c value_.
   ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long> &operator= (const ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long> &rhs);
+
+  /// Exchange value with @a newval.
+  unsigned long exchange (unsigned long newval);
 
   /// Explicitly return @c value_.
   unsigned long value (void) const;
