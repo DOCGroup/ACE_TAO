@@ -7,7 +7,8 @@ project(SimpleCommon_idl_gen) : ciaoidldefaults, anytypecode {
               -Wb,stub_export_macro=SIMPLECOMMON_STUB_Export \
               -Wb,stub_export_include=SimpleCommon_stub_export.h \
               -Wb,skel_export_macro=SIMPLECOMMON_SKEL_Export \
-              -Wb,skel_export_include=SimpleCommon_skel_export.h -Glem
+              -Wb,skel_export_include=SimpleCommon_skel_export.h \
+              -Glem -Gsv
 
   IDL_Files {
     SimpleCommon.idl

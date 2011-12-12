@@ -3,6 +3,8 @@
 #ifndef SINGLE_SERVICE_COMMON_IDL_
 #define SINGLE_SERVICE_COMMON_IDL_
 
+#pragma ciao lem "Common/Single_Service_CommonE.idl"
+
 interface Simple_Service
 {
   oneway void ping ();

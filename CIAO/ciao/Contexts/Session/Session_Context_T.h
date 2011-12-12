@@ -30,7 +30,7 @@
 namespace CIAO
 {
   /**
-   * @class Session_Context_Impl
+   * @class Session_Context_Impl_T
    *
    * @brief Mixin base class for generated context.
    *
@@ -39,7 +39,7 @@ namespace CIAO
    */
   template <typename BASE_CTX,
             typename COMP>
-  class Session_Context_Impl : public virtual BASE_CTX,
+  class Session_Context_Impl_T : public virtual BASE_CTX,
                                public virtual Context_Impl_Base_T< ::CIAO::Session_Container>,
                                public virtual ::CORBA::LocalObject
   {
@@ -53,12 +53,12 @@ namespace CIAO
     /// Type definition of the component type.
     typedef COMP component_type;
 
-    Session_Context_Impl (Components::CCMHome_ptr the_home,
+    Session_Context_Impl_T (Components::CCMHome_ptr the_home,
                           ::CIAO::Session_Container_ptr c,
                           PortableServer::Servant sv,
                           const char* id);
 
-    virtual ~Session_Context_Impl (void);
+    virtual ~Session_Context_Impl_T (void);
 
     /// Operation from ::Components::SessionContext.
     virtual CORBA::Object_ptr get_CCM_object ();

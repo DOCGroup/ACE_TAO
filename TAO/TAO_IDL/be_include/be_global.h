@@ -164,6 +164,10 @@ public:
     UTL_String *idl_file_name,
     bool base_name_only = false);
 
+  static const char *be_get_svnt_template_hdr (
+    UTL_String *idl_file_name,
+    bool base_name_only = false);
+
   static const char *be_get_implementation_hdr (
     UTL_String *idl_file_name,
     bool base_name_only = false);
@@ -876,9 +880,6 @@ public:
   bool gen_conn_export_hdr_file (void) const;
   void gen_conn_export_hdr_file (bool val);
 
-  bool gen_lem_force_all (void) const;
-  void gen_lem_force_all (bool val);
-
   bool alt_mapping (void) const;
   void alt_mapping (bool val);
 
@@ -1251,10 +1252,6 @@ private:
   bool gen_svnt_export_hdr_file_;
   bool gen_exec_export_hdr_file_;
   bool gen_conn_export_hdr_file_;
-
-  /// Toggles generation of exec IDL for facets with imported
-  /// interface types (not in main IDL file).
-  bool gen_lem_force_all_;
 
   /// 2 spaces by default, can be set from the command line.
   unsigned int tab_size_;

@@ -149,7 +149,6 @@ BE_GlobalData::BE_GlobalData (void)
     gen_svnt_export_hdr_file_ (false),
     gen_exec_export_hdr_file_ (false),
     gen_conn_export_hdr_file_ (false),
-    gen_lem_force_all_ (false),
     tab_size_ (2),
     alt_mapping_ (false),
     in_facet_servant_ (false),
@@ -335,6 +334,30 @@ BE_GlobalData::be_get_server_hdr (UTL_String *idl_file_name,
                                        orb_file
                                          ? "S.h"
                                          : be_global->server_hdr_ending (),
+                                       base_name_only,
+                                       false,
+                                       true);
+}
+
+const char *
+BE_GlobalData::be_get_svnt_template_hdr (UTL_String *idl_file_name,
+                                        bool base_name_only)
+{
+  // User-defined file extensions don't apply to .pidl files.
+  ACE_CString fn (idl_file_name->get_string ());
+  ACE_CString fn_ext = fn.substr (fn.length () - 5);
+  bool orb_file = (fn_ext == ".pidl" || fn_ext == ".PIDL");
+
+  if (!orb_file && !be_global->gen_custom_ending ()
+      && FE_Utils::validate_orb_include (idl_file_name))
+    {
+      orb_file = true;
+    }
+
+  return be_change_idl_file_extension (idl_file_name,
+                                       orb_file
+                                         ? "S.h"
+                                         : be_global->ciao_svnt_header_template_ending (),
                                        base_name_only,
                                        false,
                                        true);
@@ -2569,18 +2592,6 @@ BE_GlobalData::gen_conn_export_hdr_file (bool val)
 }
 
 bool
-BE_GlobalData::gen_lem_force_all (void) const
-{
-  return this->gen_lem_force_all_;
-}
-
-void
-BE_GlobalData::gen_lem_force_all (bool val)
-{
-  this->gen_lem_force_all_ = val;
-}
-
-bool
 BE_GlobalData::alt_mapping (void) const
 {
   return this->alt_mapping_;
@@ -3307,10 +3318,6 @@ BE_GlobalData::parse_args (long &i, char **av)
             if (av[i][3] == 'e' && av[i][4] == 'm')
               {
                 be_global->gen_ciao_exec_idl (true);
-              }
-            else if (av[i][3] == 'f' && av[i][4] == 'a')
-              {
-                be_global->gen_lem_force_all (true);
               }
             else
               {

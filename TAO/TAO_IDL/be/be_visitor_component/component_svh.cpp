@@ -54,17 +54,17 @@ be_visitor_component_svh::visit_component (be_component *node)
       << "_Impl" << be_nl
       << "{" << be_idt;
 
-  // Generate the context class declaration.
-  be_visitor_context_svh context_visitor (this->ctx_);
-
-  if (context_visitor.visit_component (node) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_component_svh::")
-                         ACE_TEXT ("visit_component - ")
-                         ACE_TEXT ("context visitor failed\n")),
-                        -1);
-    }
+//   // Generate the context class declaration.
+//   be_visitor_context_svth context_visitor (this->ctx_);
+//
+//   if (context_visitor.visit_component (node) == -1)
+//     {
+//       ACE_ERROR_RETURN ((LM_ERROR,
+//                          ACE_TEXT ("be_visitor_component_svh::")
+//                          ACE_TEXT ("visit_component - ")
+//                          ACE_TEXT ("context visitor failed\n")),
+//                         -1);
+//     }
 
   // Generate the servant class declaration.
   be_visitor_servant_svh servant_visitor (this->ctx_);

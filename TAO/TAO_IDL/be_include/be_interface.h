@@ -256,10 +256,6 @@ public:
    * facet generation for all interfaces.
    */
   void gen_facet_idl (TAO_OutStream &os);
-  int gen_facet_svnt_hdr (be_visitor *visitor,
-                          TAO_OutStream &os);
-  int gen_facet_svnt_src (be_visitor *visitor,
-                          TAO_OutStream &os);
 
   /// Used with ami4ccm.
   int gen_ami4ccm_idl (TAO_OutStream *os);

@@ -516,6 +516,15 @@ TAO_CodeGen::start_server_header (const char *fname)
                                    server_hdr);
     }
 
+//   if (be_global->gen_ciao_exec_idl())
+//     {
+//       *this->server_header_
+//         << be_nl
+//         << "#include \""
+//         << be_global->be_get_ciao_exec_svnt_fname (true)
+//         << "\"";
+//     }
+
   /// These are generated regardless, so we put it before the
   /// check below.
   if (be_global->gen_arg_traits ())
@@ -1066,7 +1075,37 @@ TAO_CodeGen::start_ciao_svnt_header (const char *fname)
   // protection, but do optimize based on #pragma once.
   os << "\n#if !defined (ACE_LACKS_PRAGMA_ONCE)\n"
      << "# pragma once\n"
-     << "#endif /* ACE_LACKS_PRAGMA_ONCE */\n";
+     << "#endif /* ACE_LACKS_PRAGMA_ONCE */\n"
+     << be_nl;
+
+
+  char **path_tmp = 0;
+
+  for (ACE_Unbounded_Queue_Iterator<char *>riter (
+         idl_global->ciao_lem_file_names ());
+       riter.done () == 0;
+       riter.advance ())
+    {
+      riter.next (path_tmp);
+
+      ACE_CString filename (*path_tmp);
+      // sanity
+      if (filename.substr (filename.length() - 5) == "E.idl")
+        {
+          os  << "#include \""
+              << filename.substr(0, filename.length() - 5) << "_svnt.h\""
+              << be_nl;
+        }
+    }
+
+  // Generate the include statement for the template server header.
+  if (be_global->gen_ciao_svnt ())
+    {
+      os  << "#include \""
+          << be_global->be_get_ciao_tmpl_svnt_hdr_fname (true)
+          << "\"" << be_nl;
+    }
+
 
   this->gen_svnt_hdr_includes (this->ciao_svnt_header_);
 
@@ -1112,11 +1151,6 @@ TAO_CodeGen::start_ciao_svnt_source (const char *fname)
     << be_global->be_get_ciao_svnt_hdr_fname (true)
     << "\"" << be_nl;
 
-  *this->ciao_svnt_source_
-    << "#include \""
-    << be_global->be_get_ciao_tmpl_svnt_hdr_fname(true)
-    << "\"";
-
   this->gen_svnt_src_includes (this->ciao_svnt_source_);
 
   return 0;
@@ -1157,7 +1191,7 @@ TAO_CodeGen::start_ciao_svnt_template_header (const char *fname)
   // Generate the #ifndef clause.
   this->gen_ifndef_string (fname,
                            this->ciao_svnt_template_header_,
-                           "CIAO_SESSION_",
+                           "CIAO_SERVANT_",
                            "_H_");
 
   if (be_global->pre_include () != 0)
@@ -1188,9 +1222,17 @@ TAO_CodeGen::start_ciao_svnt_template_header (const char *fname)
   // protection, but do optimize based on #pragma once.
   os << "\n#if !defined (ACE_LACKS_PRAGMA_ONCE)\n"
      << "# pragma once\n"
-     << "#endif /* ACE_LACKS_PRAGMA_ONCE */\n";
+     << "#endif /* ACE_LACKS_PRAGMA_ONCE */\n\n";
 
-  this->gen_svnt_hdr_includes (this->ciao_svnt_template_header_);
+  this->gen_svnt_tmpl_hdr_includes (this->ciao_svnt_template_header_);
+
+  if (idl_global->ami_connector_seen_)
+    {
+      *this->ciao_svnt_template_header_ << be_nl
+        << "#include \""
+        << "connectors/ami4ccm/ami4ccm/ami4ccm_svnt_T.h\""
+        << be_nl;
+    }
 
   return 0;
 }
@@ -1228,11 +1270,11 @@ TAO_CodeGen::start_ciao_svnt_template_source (const char *fname)
   // Generate the #ident string, if any.
   this->gen_ident_string (this->ciao_svnt_template_source_);
 
-  // Generate the include statement for the server header.
-  *this->ciao_svnt_template_source_
-    << "#include \""
-    << be_global->be_get_ciao_svnt_hdr_fname (true)
-    << "\"" << be_nl;
+  // Generate the #ifndef clause.
+  this->gen_ifndef_string (fname,
+                           this->ciao_svnt_template_source_,
+                           "CIAO_SERVANT_",
+                           "_CPP_");
 
   this->gen_svnt_src_includes (this->ciao_svnt_template_source_);
 
@@ -1820,21 +1862,23 @@ TAO_CodeGen::end_server_template_header (void)
 
   // Insert the code to include the template source file.
   *this->server_template_header_
-      << "\n\n#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)";
+      << be_nl_2 << "#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)";
   *this->server_template_header_
-      << "\n#include \""
+      << be_nl << "#include \""
       << be_global->be_get_server_template_skeleton_fname (1)
       << "\"";
-  *this->server_template_header_ << "\n#endif /* defined REQUIRED SOURCE */";
+  *this->server_template_header_ << be_nl
+      << "#endif /* defined REQUIRED SOURCE */";
 
   // Insert the code to include the template pragma.
   *this->server_template_header_
-      << "\n\n#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)";
+      << be_nl_2 << "#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)";
   *this->server_template_header_
-      << "\n#pragma implementation (\""
+      << be_nl << "#pragma implementation (\""
       << be_global->be_get_server_template_skeleton_fname (1)
       << "\")";
-  *this->server_template_header_ << "\n#endif /* defined REQUIRED PRAGMA */";
+  *this->server_template_header_ << be_nl
+      << "#endif /* defined REQUIRED PRAGMA */";
 
   // Code to put the last #endif.
   *this->server_template_header_ << "\n\n";
@@ -1938,7 +1982,7 @@ TAO_CodeGen::end_ciao_svnt_source (void)
 int
 TAO_CodeGen::end_ciao_svnt_template_header (void)
 {
-  *this->ciao_svnt_template_header_ << be_nl
+  *this->ciao_svnt_template_header_ << be_nl_2
                                     << "#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)"
                                     << be_nl << "#include \""
                                     << be_global->be_get_ciao_tmpl_svnt_src_fname (true)
@@ -1967,6 +2011,8 @@ TAO_CodeGen::end_ciao_svnt_template_header (void)
 int
 TAO_CodeGen::end_ciao_svnt_template_source (void)
 {
+  *this->ciao_svnt_template_source_ << "\n\n#endif /* ifndef */\n";
+
   *this->ciao_svnt_template_source_ << "\n";
 
   return 0;
@@ -3346,9 +3392,38 @@ TAO_CodeGen::gen_svnt_hdr_includes (TAO_OutStream *stream)
 
   this->gen_standard_include (
     stream,
-    be_global->be_get_ciao_exec_stub_hdr_fname (true));
+    be_global->be_get_server_hdr_fname (true));
+}
+
+void
+TAO_CodeGen::gen_svnt_tmpl_hdr_includes (TAO_OutStream *stream)
+{
+  ACE_CString servant_file ("ciao/Servants/");
+  servant_file += be_global->ciao_container_type ();
+  servant_file += "/Servant_Impl_T.h";
+
+  this->gen_standard_include (
+    stream,
+    servant_file.c_str ());
+
+  this->gen_standard_include (
+    stream,
+    "ciao/Servants/Home_Servant_Impl_T.h");
+
+  this->gen_standard_include (
+    stream,
+    "ciao/Servants/Facet_Servant_Base_T.h");
 
   *stream << be_nl;
+
+  if (be_global->gen_ciao_exec_idl())
+    {
+      this->gen_standard_include (
+        stream,
+        be_global->be_get_ciao_exec_stub_hdr_fname (true));
+
+      *stream << be_nl;
+    }
 
   this->gen_standard_include (
     stream,
@@ -3510,6 +3585,16 @@ TAO_CodeGen::gen_exec_idl_includes (void)
     }
 }
 
+bool
+TAO_CodeGen::is_system_file (const char * idl_name) const
+{
+  return
+    ACE_OS::strcmp (idl_name, "Components.idl") == 0
+    || ACE_OS::strcmp (
+          idl_name,
+          "connectors/ami4ccm/ami4ccm/ami4ccm.idl") == 0;
+}
+
 void
 TAO_CodeGen::gen_conn_hdr_includes (void)
 {
@@ -3592,13 +3677,8 @@ TAO_CodeGen::gen_conn_hdr_includes (void)
       char * const idl_name =
         idl_global->included_idl_files ()[j];
 
-      bool const system_file =
-        ACE_OS::strcmp (idl_name, "Components.idl") == 0
-        || ACE_OS::strcmp (
-             idl_name,
-             "connectors/ami4ccm/ami4ccm/ami4ccm.idl") == 0;
 
-      if (system_file)
+      if (this->is_system_file (idl_name))
         {
           continue;
         }

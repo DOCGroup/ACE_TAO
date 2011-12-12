@@ -8,7 +8,7 @@ namespace CIAO
   template <typename BASE_SKEL,
             typename EXEC,
             typename CONTEXT>
-  Session_Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::Session_Servant_Impl (
+  Session_Servant_Impl_T<BASE_SKEL, EXEC, CONTEXT>::Session_Servant_Impl_T (
         EXEC * exe,
         Components::CCMHome_ptr home,
         const char * ins_name,
@@ -35,7 +35,7 @@ namespace CIAO
       {
         CIAO_DEBUG (6,
                     (LM_DEBUG, CLINFO
-                     "Session_Servant_Impl_T::Session_Servant_Impl_T - "
+                     "Session_Servant_Impl_T_T::Session_Servant_Impl_T_T - "
                      "Couldn't set session context for %C\n",
                      ins_name));
       }
@@ -44,13 +44,13 @@ namespace CIAO
   template <typename BASE_SKEL,
             typename EXEC,
             typename CONTEXT>
-  Session_Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::~Session_Servant_Impl (void)
+  Session_Servant_Impl_T<BASE_SKEL, EXEC, CONTEXT>::~Session_Servant_Impl_T (void)
   {
     if (this->executor_->_refcount_value () > 1)
       {
         CIAO_ERROR (1,
                     (LM_ERROR, CLINFO
-                     "Session_Servant_Impl_T::~Session_Servant_Impl_T - "
+                     "Session_Servant_Impl_T_T::~Session_Servant_Impl_T_T - "
                      "Executor object reference count is %u\n",
                      this->executor_->_refcount_value ()));
       }
@@ -63,7 +63,7 @@ namespace CIAO
             typename EXEC,
             typename CONTEXT>
   CORBA::Boolean
-  Session_Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::same_component (
+  Session_Servant_Impl_T<BASE_SKEL, EXEC, CONTEXT>::same_component (
       CORBA::Object_ptr object_ref)
   {
     if (::CORBA::is_nil (object_ref))
@@ -88,7 +88,7 @@ namespace CIAO
             typename EXEC,
             typename CONTEXT>
   ::Components::CCMHome_ptr
-  Session_Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::get_ccm_home (void)
+  Session_Servant_Impl_T<BASE_SKEL, EXEC, CONTEXT>::get_ccm_home (void)
   {
     return this->context_->get_CCM_home ();
   }
@@ -97,7 +97,7 @@ namespace CIAO
             typename EXEC,
             typename CONTEXT>
   Components::EnterpriseComponent_ptr
-  Session_Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::get_executor (void)
+  Session_Servant_Impl_T<BASE_SKEL, EXEC, CONTEXT>::get_executor (void)
   {
     return ::Components::EnterpriseComponent::_duplicate (this->executor_.in ());
   }
@@ -106,7 +106,7 @@ namespace CIAO
             typename EXEC,
             typename CONTEXT>
   CORBA::Object_ptr
-  Session_Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::_get_component (void)
+  Session_Servant_Impl_T<BASE_SKEL, EXEC, CONTEXT>::_get_component (void)
   {
     ::Components::SessionContext_var sc =
       ::Components::SessionContext::_narrow (this->context_);
@@ -125,7 +125,7 @@ namespace CIAO
             typename EXEC,
             typename CONTEXT>
   void
-  Session_Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::activate_component (void)
+  Session_Servant_Impl_T<BASE_SKEL, EXEC, CONTEXT>::activate_component (void)
   {
     if (this->configuration_completed_ && !this->activated_)
       {
@@ -144,7 +144,7 @@ namespace CIAO
             typename EXEC,
             typename CONTEXT>
   void
-  Session_Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::passivate_component (void)
+  Session_Servant_Impl_T<BASE_SKEL, EXEC, CONTEXT>::passivate_component (void)
   {
     if (this->activated_)
       {
@@ -163,7 +163,7 @@ namespace CIAO
             typename EXEC,
             typename CONTEXT>
   void
-  Session_Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::configuration_complete (void)
+  Session_Servant_Impl_T<BASE_SKEL, EXEC, CONTEXT>::configuration_complete (void)
   {
     if (!this->configuration_completed_)
       {
@@ -182,7 +182,7 @@ namespace CIAO
             typename EXEC,
             typename CONTEXT>
   void
-  Session_Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::ccm_remove (void)
+  Session_Servant_Impl_T<BASE_SKEL, EXEC, CONTEXT>::ccm_remove (void)
   {
     ::Components::SessionComponent_var temp =
       ::Components::SessionComponent::_narrow (this->executor_.in ());

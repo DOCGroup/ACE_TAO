@@ -22,6 +22,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ciao/Contexts/Context_Impl_Base_T.h"
+
 namespace CIAO
 {
   template <typename BASE, typename EXEC, typename CONTEXT>

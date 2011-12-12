@@ -15,11 +15,14 @@ module Inherited
     attribute string str_base_interface;
   };
 
-  // TODO: derive this interface from a base interface...
-  interface derived_interface {
+  interface derived_interface : base_interface {
     void do_derived ();
 
     readonly attribute string str_derived_interface;
+  };
+
+  interface another_interface {
+    void do_another ();
   };
 };
 

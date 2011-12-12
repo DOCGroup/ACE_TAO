@@ -421,12 +421,15 @@ private:
   /// Used if one or both of the CIAO code gen flags are set.
   void gen_svnt_hdr_includes (TAO_OutStream *stream);
   void gen_svnt_src_includes (TAO_OutStream *stream);
+  void gen_svnt_tmpl_hdr_includes (TAO_OutStream *stream);
   void gen_exec_hdr_includes (void);
   void gen_exec_src_includes (void);
   void gen_exec_idl_includes (void);
   void gen_conn_hdr_includes (void);
   void gen_conn_src_includes (void);
   void gen_ami_conn_idl_includes (void);
+
+  bool is_system_file (const char * idl_name) const;
 
   void gen_export_file (const char *filename,
                         const char *macro,

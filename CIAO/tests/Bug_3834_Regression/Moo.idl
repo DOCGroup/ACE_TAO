@@ -3,6 +3,8 @@
 #ifndef MOO_IDL_
 #define MOO_IDL_
 
+#pragma ciao lem "MooE.idl"
+
 interface Moo
 {
   void do_something();

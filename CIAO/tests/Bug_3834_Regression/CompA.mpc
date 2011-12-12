@@ -3,7 +3,6 @@
 
 project(Moo_CompA_idl_gen) : componentidldefaults   {
   custom_only = 1
-  idlflags += -Glfa
   idlflags += -Wb,stub_export_macro=COMPA_STUB_Export \
               -Wb,stub_export_include=CompA_stub_export.h \
               -Wb,skel_export_macro=COMPA_SVNT_Export \
@@ -13,14 +12,13 @@ project(Moo_CompA_idl_gen) : componentidldefaults   {
               -Wb,svnt_export_macro=COMPA_SVNT_Export \
               -Wb,svnt_export_include=CompA_svnt_export.h
 
-
   IDL_Files {
     CompA.idl
   }
 }
 
 project(Moo_CompA_lem_gen) : ciaoidldefaults   {
-  after += Moo_CompA_idl_gen
+  after += Moo_CompA_idl_gen Moo_idl_gen Moo_lem_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=COMPA_EXEC_Export \
               -Wb,stub_export_include=CompA_exec_export.h \
@@ -34,8 +32,8 @@ project(Moo_CompA_lem_gen) : ciaoidldefaults   {
 project(Moo_CompA_stub) : ccm_stub   {
   after += Moo_CompA_idl_gen Moo_stub
   libs  += Moo_stub
-  
-  
+
+
   sharedname = CompA_stub
   dynamicflags += COMPA_STUB_BUILD_DLL
 
@@ -57,11 +55,10 @@ project(Moo_CompA_stub) : ccm_stub   {
 }
 
 project(Moo_CompA_exec) : ciao_executor   {
-  after   += Moo_CompA_lem_gen Moo_CompA_stub
+  after   += Moo_CompA_lem_gen Moo_CompA_stub Moo_lem_stub
   sharedname = CompA_exec
-  libs += CompA_stub Moo_stub
-  
-  
+  libs += CompA_stub Moo_stub Moo_lem_stub
+
   dynamicflags += COMPA_EXEC_BUILD_DLL
 
   IDL_Files {
@@ -85,16 +82,17 @@ project(Moo_CompA_exec) : ciao_executor   {
 
 
 project(Moo_CompA_svnt) : ciao_servant   {
-  after      += Moo_skel  Moo_CompA_exec
+  after      += Moo_skel Moo_CompA_exec
   sharedname  = CompA_svnt
   libs       += CompA_exec \
                 CompA_stub \
                 Moo_skel   \
-                Moo_stub
-  
-  
+                Moo_stub   \
+                Moo_lem_stub
+
+
   dynamicflags += COMPA_SVNT_BUILD_DLL
-  
+
   IDL_Files {
   }
 

@@ -7,7 +7,7 @@ namespace CIAO
 {
   template <typename BASE_CTX,
             typename COMP>
-  Extension_Context_Impl<BASE_CTX, COMP>::Extension_Context_Impl (
+  Extension_Context_Impl_T<BASE_CTX, COMP>::Extension_Context_Impl_T (
       Components::CCMHome_ptr the_home,
       ::CIAO::Extension_Container_ptr c,
       PortableServer::Servant sv,
@@ -19,14 +19,14 @@ namespace CIAO
 
   template <typename BASE_CTX,
             typename COMP>
-  Extension_Context_Impl<BASE_CTX, COMP>::~Extension_Context_Impl (void)
+  Extension_Context_Impl_T<BASE_CTX, COMP>::~Extension_Context_Impl_T (void)
   {
   }
 
   template <typename BASE_CTX,
             typename COMP>
   ::Components::ContainerPortableInterceptor::ClientContainerInterceptorRegistration_ptr
-  Extension_Context_Impl<BASE_CTX, COMP>::get_client_interceptor_registration (void)
+  Extension_Context_Impl_T<BASE_CTX, COMP>::get_client_interceptor_registration (void)
   {
     ::CIAO::Extension_Container_var cnt_safe =
       ::CIAO::Extension_Container::_duplicate (this->container_.in ());
@@ -36,7 +36,7 @@ namespace CIAO
   template <typename BASE_CTX,
             typename COMP>
   ::Components::ContainerPortableInterceptor::ServantContainerInterceptorRegistration_ptr
-  Extension_Context_Impl<BASE_CTX, COMP>::get_servant_interceptor_registration (void)
+  Extension_Context_Impl_T<BASE_CTX, COMP>::get_servant_interceptor_registration (void)
   {
     ::CIAO::Extension_Container_var cnt_safe =
       ::CIAO::Extension_Container::_duplicate (this->container_.in ());
@@ -46,7 +46,7 @@ namespace CIAO
   template <typename BASE_CTX,
             typename COMP>
   ::Components::ContainerPortableInterceptor::ServerContainerInterceptorRegistration_ptr
-  Extension_Context_Impl<BASE_CTX, COMP>::get_server_interceptor_registration (void)
+  Extension_Context_Impl_T<BASE_CTX, COMP>::get_server_interceptor_registration (void)
   {
     ::CIAO::Extension_Container_var cnt_safe =
       ::CIAO::Extension_Container::_duplicate (this->container_.in ());
@@ -56,7 +56,7 @@ namespace CIAO
   template <typename BASE_CTX,
             typename COMP>
   ::Components::ContainerPortableInterceptor::StubContainerInterceptorRegistration_ptr
-  Extension_Context_Impl<BASE_CTX, COMP>::get_stub_interceptor_registration (void)
+  Extension_Context_Impl_T<BASE_CTX, COMP>::get_stub_interceptor_registration (void)
   {
     ::CIAO::Extension_Container_var cnt_safe =
       ::CIAO::Extension_Container::_duplicate (this->container_.in ());
@@ -66,7 +66,7 @@ namespace CIAO
   template <typename BASE_CTX,
             typename COMP>
   ::Components::Cookie *
-  Extension_Context_Impl<BASE_CTX, COMP>::install_service_reference (
+  Extension_Context_Impl_T<BASE_CTX, COMP>::install_service_reference (
         const char * service_id,
         ::CORBA::Object_ptr objref)
   {
@@ -79,7 +79,7 @@ namespace CIAO
   template <typename BASE_CTX,
             typename COMP>
   ::CORBA::Object_ptr
-  Extension_Context_Impl<BASE_CTX, COMP>::uninstall_service_reference (
+  Extension_Context_Impl_T<BASE_CTX, COMP>::uninstall_service_reference (
     ::Components::Cookie * ck)
   {
     ::CIAO::Extension_Container_var cnt_safe =

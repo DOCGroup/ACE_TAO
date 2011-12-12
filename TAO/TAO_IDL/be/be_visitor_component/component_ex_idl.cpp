@@ -32,20 +32,6 @@ be_visitor_component_ex_idl::visit_component (
       return 0;
     }
 
-  if (be_global->gen_lem_force_all ())
-    {
-      be_visitor_facet_ex_idl facet_visitor (this->ctx_);
-
-      if (facet_visitor.visit_scope (node) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("be_visitor_component_ex_idl::")
-                             ACE_TEXT ("visit_component - ")
-                             ACE_TEXT ("facet visitor failed\n")),
-                            -1);
-        }
-    }
-
   be_util::gen_nesting_open (os_, node);
 
   be_visitor_executor_ex_idl exec_visitor (this->ctx_);

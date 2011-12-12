@@ -50,16 +50,16 @@ be_visitor_component_svs::visit_component (be_component *node)
       << "_Impl" << be_nl
       << "{" << be_idt;
 
-  be_visitor_context_svs context_visitor (this->ctx_);
+//   be_visitor_context_svts context_visitor (this->ctx_);
 
-  if (context_visitor.visit_component (node) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_component_svs::")
-                         ACE_TEXT ("visit_component - ")
-                         ACE_TEXT ("context visitor failed\n")),
-                        -1);
-    }
+//   if (context_visitor.visit_component (node) == -1)
+//     {
+//       ACE_ERROR_RETURN ((LM_ERROR,
+//                          ACE_TEXT ("be_visitor_component_svs::")
+//                          ACE_TEXT ("visit_component - ")
+//                          ACE_TEXT ("context visitor failed\n")),
+//                         -1);
+//     }
 
   be_visitor_servant_svs servant_visitor (this->ctx_);
 
