@@ -111,7 +111,12 @@ project (AMI4CCM_svnt) : install, ciao_servant, ciao_lib {
   Header_Files {
     ami4ccmS.h
     ami4ccm_svnt.h
+    ami4ccm_svnt_T.h
     ami4ccm_svnt_export.h
+  }
+
+  Template_Files {
+    ami4ccm_svnt_T.cpp
   }
 
   Inline_Files {
