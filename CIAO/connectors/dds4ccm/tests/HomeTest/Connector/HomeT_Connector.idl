@@ -2,7 +2,7 @@
 
 /**
  * @file Home_Connector.idl
- * @author Marcel Smit <msmit@remedy.nl>
+ * @author
  */
 
 #ifndef HOMET_CONNECTOR_IDL_
@@ -15,7 +15,7 @@
 
 #pragma ciao lem "Connector/HomeT_ConnectorE.idl"
 
-module ::CCM_DDS::Typed < ::HomeTest, ::HomeTestSeq> HomeCompTest;
+module ::CCM_DDS::Typed < ::HomeTest, ::HomeTestSeq> ConnComp;
 
 #endif /* HOMET_CONNECTOR_IDL_ */
 
