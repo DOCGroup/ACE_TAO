@@ -1,0 +1,558 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!-- $Id$ -->
+<Deployment:DeploymentPlan xmlns:Deployment="http://www.omg.org/Deployment" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+
+  <UUID>6D382DAE-9024-4C4D-B91B-A0F9176AFACF</UUID>
+
+  <implementation xmi:id="UsesMulti_ReceiverHomeImplementation">
+    <name>UsesMulti_ReceiverHomeImplementation</name>
+    <source/>
+    <artifact xmi:idref="UsesMulti_Receiver_ExecArtifact"/>
+    <artifact xmi:idref="UsesMulti_Receiver_SvntArtifact"/>
+    <execParameter>
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_UsesMulti_Receiver_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>UsesMulti.ImplementationArtifacts.ReceiverArtifacts.Receiver_exec</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_UsesMulti_Receiver_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>UsesMulti.ImplementationArtifacts.ReceiverArtifacts.Receiver_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+  <implementation xmi:id="UsesMulti_SenderHomeImplementation">
+    <name>UsesMulti_SenderHomeImplementation</name>
+    <source/>
+    <artifact xmi:idref="UsesMulti_Sender_ExecArtifact"/>
+    <artifact xmi:idref="UsesMulti_Sender_SvntArtifact"/>
+    <execParameter>
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_UsesMulti_Sender_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>UsesMulti.ImplementationArtifacts.SenderArtifacts.Sender_exec</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_UsesMulti_Sender_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>UsesMulti.ImplementationArtifacts.SenderArtifacts.Sender_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+<!-- conn one-->
+  <implementation xmi:id="UsesMulti_AMIOneHomeImplementation">
+    <name>UsesMulti_AMIHomeImplementation</name>
+    <source/>
+    <artifact xmi:idref="UsesMulti_AMIOne_ExecArtifact"/>
+    <artifact xmi:idref="UsesMulti_AMIOne_SvntArtifact"/>
+    <execParameter>
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_UsesMulti_AMI4CCM_One_Connector_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>UsesMulti.ImplementationArtifacts.AMIArtifacts.AMI_exec</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_UsesMulti_AMI4CCM_One_Connector_AMI4CCM_Connector_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>UsesMulti.ImplementationArtifacts.AMIArtifacts.AMI_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+    <instance xmi:id="UsesMulti.ComponentImplementations.UsesMultiImplementation.UsesMulti.ReceiverA">
+    <name>UsesMulti.ComponentImplementations.UsesMultiImplementation.UsesMulti.ReceiverA</name>
+    <node>Receiver</node>
+    <source/>
+    <implementation xmi:idref="UsesMulti_ReceiverHomeImplementation"/>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Receiver.ior</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+  <instance xmi:id="UsesMulti.ComponentImplementations.UsesMultiImplementation.UsesMulti.ReceiverB">
+    <name>UsesMulti.ComponentImplementations.UsesMultiImplementation.UsesMulti.ReceiverB</name>
+    <node>Receiver</node>
+    <source/>
+    <implementation xmi:idref="UsesMulti_ReceiverHomeImplementation"/>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Receiver.ior</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+  <instance xmi:id="UsesMulti.ComponentImplementations.UsesMultiImplementation.UsesMulti.ReceiverC">
+    <name>UsesMulti.ComponentImplementations.UsesMultiImplementation.UsesMulti.ReceiverC</name>
+    <node>Receiver</node>
+    <source/>
+    <implementation xmi:idref="UsesMulti_ReceiverHomeImplementation"/>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Receiver.ior</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <instance xmi:id="UsesMulti.ComponentImplementations.UsesMultiImplementation.UsesMulti.Sender">
+    <name>UsesMulti.ComponentImplementations.UsesMultiImplementation.UsesMulti.Sender</name>
+    <node>Sender</node>
+    <source/>
+    <implementation xmi:idref="UsesMulti_SenderHomeImplementation"/>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Sender.ior</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <instance xmi:id="UsesMulti.ComponentImplementations.UsesMultiImplementation.UsesMulti.AMIOneA">
+    <name>UsesMulti.ComponentImplementations.UsesMultiImplementation.UsesMulti.AMIOneA</name>
+    <node>Sender</node>
+    <source/>
+    <implementation xmi:idref="UsesMulti_AMIOneHomeImplementation"/>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>AMI.ior</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+  <instance xmi:id="UsesMulti.ComponentImplementations.UsesMultiImplementation.UsesMulti.AMIOneB">
+    <name>UsesMulti.ComponentImplementations.UsesMultiImplementation.UsesMulti.AMIOneB</name>
+    <node>Sender</node>
+    <source/>
+    <implementation xmi:idref="UsesMulti_AMIOneHomeImplementation"/>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>AMI.ior</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+  <instance xmi:id="UsesMulti.ComponentImplementations.UsesMultiImplementation.UsesMulti.AMIOneC">
+    <name>UsesMulti.ComponentImplementations.UsesMultiImplementation.UsesMulti.AMIOneC</name>
+    <node>Sender</node>
+    <source/>
+    <implementation xmi:idref="UsesMulti_AMIOneHomeImplementation"/>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>AMI.ior</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+
+  <connection>
+    <name>run_asynch_one_connectionA</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>sendc_run_my_um_one</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="UsesMulti.ComponentImplementations.UsesMultiImplementation.UsesMulti.Sender" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>ami4ccm_port_ami4ccm_provides</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="UsesMulti.ComponentImplementations.UsesMultiImplementation.UsesMulti.AMIOneA" />
+    </internalEndpoint>
+  </connection>
+  <connection>
+    <name>run_asynch_one_connectionB</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>sendc_run_my_um_one</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="UsesMulti.ComponentImplementations.UsesMultiImplementation.UsesMulti.Sender" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>ami4ccm_port_ami4ccm_provides</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="UsesMulti.ComponentImplementations.UsesMultiImplementation.UsesMulti.AMIOneB" />
+    </internalEndpoint>
+  </connection>
+  <connection>
+    <name>run_asynch_one_connectionC</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>sendc_run_my_um_one</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="UsesMulti.ComponentImplementations.UsesMultiImplementation.UsesMulti.Sender" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>ami4ccm_port_ami4ccm_provides</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="UsesMulti.ComponentImplementations.UsesMultiImplementation.UsesMulti.AMIOneC" />
+    </internalEndpoint>
+  </connection>
+
+
+  <connection>
+    <name>do_one_connectionA</name>
+    <internalEndpoint>
+      <portName>do_my_one</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="UsesMulti.ComponentImplementations.UsesMultiImplementation.UsesMulti.ReceiverA" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>ami4ccm_port_ami4ccm_uses</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="UsesMulti.ComponentImplementations.UsesMultiImplementation.UsesMulti.AMIOneA" />
+    </internalEndpoint>
+  </connection>
+  <connection>
+    <name>do_one_connectionB</name>
+    <internalEndpoint>
+      <portName>do_my_one</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="UsesMulti.ComponentImplementations.UsesMultiImplementation.UsesMulti.ReceiverB" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>ami4ccm_port_ami4ccm_uses</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="UsesMulti.ComponentImplementations.UsesMultiImplementation.UsesMulti.AMIOneB" />
+    </internalEndpoint>
+  </connection>
+  <connection>
+    <name>do_one_connectionC</name>
+    <internalEndpoint>
+      <portName>do_my_one</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="UsesMulti.ComponentImplementations.UsesMultiImplementation.UsesMulti.ReceiverC" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>ami4ccm_port_ami4ccm_uses</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="UsesMulti.ComponentImplementations.UsesMultiImplementation.UsesMulti.AMIOneC" />
+    </internalEndpoint>
+  </connection>
+
+ <connection>
+    <name>synch_one_connectionA</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>run_my_um_one</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="UsesMulti.ComponentImplementations.UsesMultiImplementation.UsesMulti.Sender" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>ami4ccm_port_ami4ccm_sync_provides</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="UsesMulti.ComponentImplementations.UsesMultiImplementation.UsesMulti.AMIOneA" />
+    </internalEndpoint>
+  </connection>
+  <connection>
+    <name>synch_one_connectionB</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>run_my_um_one</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="UsesMulti.ComponentImplementations.UsesMultiImplementation.UsesMulti.Sender" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>ami4ccm_port_ami4ccm_sync_provides</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="UsesMulti.ComponentImplementations.UsesMultiImplementation.UsesMulti.AMIOneB" />
+    </internalEndpoint>
+  </connection>
+  <connection>
+    <name>synch_one_connectionC</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>run_my_um_one</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="UsesMulti.ComponentImplementations.UsesMultiImplementation.UsesMulti.Sender" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>ami4ccm_port_ami4ccm_sync_provides</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="UsesMulti.ComponentImplementations.UsesMultiImplementation.UsesMulti.AMIOneC" />
+    </internalEndpoint>
+  </connection>
+
+
+  <artifact xmi:id="UsesMulti_AMIOne_SvntArtifact">
+    <name>UsesMulti.ImplementationArtifacts.AMIArtifacts.AMI_svnt</name>
+    <source/>
+    <node/>
+    <location>UsesMulti_svnt</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_UsesMulti_AMI4CCM_One_Connector_AMI4CCM_Connector_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+
+
+  <artifact xmi:id="UsesMulti_AMIOne_ExecArtifact">
+    <name>UsesMulti.ImplementationArtifacts.AMIArtifacts.AMI_exec</name>
+    <source/>
+    <node/>
+    <location>UsesMulti_conn</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_UsesMulti_AMI_One_Connector_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+
+  <artifact xmi:id="UsesMulti_Receiver_SvntArtifact">
+    <name>UsesMulti.ImplementationArtifacts.ReceiverArtifacts.Receiver_svnt</name>
+    <source/>
+    <node/>
+    <location>UsesMulti_Receiver_svnt</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_UsesMulti_AMI_ReceiverHome_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact xmi:id="UsesMulti_Receiver_ExecArtifact">
+    <name>UsesMulti.ImplementationArtifacts.ReceiverArtifacts.Receiver_exec</name>
+    <source/>
+    <node/>
+    <location>UsesMulti_Receiver_exec</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_UsesMulti_AMI_ReceiverHome_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact xmi:id="UsesMulti_Sender_SvntArtifact">
+    <name>UsesMulti.ImplementationArtifacts.SenderArtifacts.Sender_svnt</name>
+    <source/>
+    <node/>
+    <location>UsesMulti_Sender_svnt</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_UsesMulti_AMI_SenderHome_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact xmi:id="UsesMulti_Sender_ExecArtifact">
+    <name>UsesMulti.ImplementationArtifacts.SenderArtifacts.Sender_exec</name>
+    <source/>
+    <node/>
+    <location>UsesMulti_Sender_exec</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_UsesMulti_AMI_SenderHome_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+</Deployment:DeploymentPlan>
