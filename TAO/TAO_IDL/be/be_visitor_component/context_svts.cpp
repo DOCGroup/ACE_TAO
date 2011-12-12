@@ -1,12 +1,12 @@
 
 //=============================================================================
 /**
- *  @file    context_svs.cpp
+ *  @file    context_svts.cpp
  *
  *  $Id$
  *
  *  Visitor generating code for a context class in the
- *  servant sourece.
+ *  servant source.
  *
  *
  *  @author Jeff Parsons
