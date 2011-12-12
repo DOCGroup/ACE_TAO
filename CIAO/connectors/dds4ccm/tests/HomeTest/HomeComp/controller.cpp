@@ -73,17 +73,20 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::Object_var obj
         = orb->string_to_object (home_comp_ior_);
 
-      ConnHome_var home
+      ConnHome_var home_comp
         = ConnHome::_narrow (obj.in ());
-      if (CORBA::is_nil (home.in ()))
+      if (CORBA::is_nil (home_comp.in ()))
         ACE_ERROR_RETURN ((LM_ERROR, "Unable to acquire ConnHome objref\n"), -1);
 
       // starting Connector component
-      printf("starting Connector component home->new_ConnComp ()\n");
+      ACE_DEBUG ((LM_DEBUG, "Controller: Starting Connector component home->new_ConnComp ()\n"));
 
-      home->new_ConnComp ();
+      CORBA::Object  * tmp  = home_comp->new_ConnComp ();
 
-      printf("started Connector component home->new_ConnComp ()\n");
+      if (CORBA::is_nil (tmp))
+        ACE_ERROR((LM_ERROR, "Unable to start home_comp->new_ConnComp\n"));
+
+      ACE_DEBUG ((LM_DEBUG, "Controller: Started Connector component home->new_ConnComp ()\n"));
 
       // Place to plug in the rate
 

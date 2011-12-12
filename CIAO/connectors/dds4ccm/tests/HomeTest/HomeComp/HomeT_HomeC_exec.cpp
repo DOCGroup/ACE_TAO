@@ -27,7 +27,7 @@
 
 #include "HomeT_HomeC_exec.h"
 #include "./Connector/HomeT_Connector_conn.h"
-
+/*
 namespace CIAO_ConnComp_Impl
 {
 
@@ -111,22 +111,27 @@ namespace CIAO_ConnComp_Impl
   {
   }
 
-  ::Components::EnterpriseComponent_ptr
+  ::Components::EnterpriseComponent_ptr //ConnComp::DDS_Event_ptr
   ConnHome_exec_i::new_ConnComp (void)
   {
+  //  ConnComp::DDS_Event_ptr tmp = 0;
+    ::Components::EnterpriseComponent_ptr tmp = 0;
+
     printf("ConnHome_exec_i::new_ConnComp  !!!!!!!!!!!1");
     /* Your code here. */
     //return ::CCM_ConnComp::_nil ();
  //   return CIAO_HomeCompTest_DDS_Event_Impl::create_HomeCompTest_DDS_Event_Impl();
+    return tmp;
   }
 
   // Implicit operations.
 
-  ::Components::EnterpriseComponent_ptr
+ ::Components::EnterpriseComponent_ptr
   ConnHome_exec_i::create (void)
   {
     ::Components::EnterpriseComponent_ptr retval =
       ::Components::EnterpriseComponent::_nil ();
+    printf("ConnHome_exec_i::create  !!!!!!!!!!!1");
 
     ACE_NEW_THROW_EX (
       retval,
