@@ -1,3 +1,9 @@
+Mon Dec 12 19:04:55 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/vc11.features:
+        * bin/MakeProjectCreator/config/vc11nmake.mpb:
+          New files for vc11
+
 Mon Dec 12 07:33:25 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         === start changelog ===
