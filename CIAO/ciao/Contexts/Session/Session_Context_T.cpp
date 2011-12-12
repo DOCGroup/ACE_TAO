@@ -7,7 +7,7 @@ namespace CIAO
 {
   template <typename BASE_CTX,
             typename COMP>
-  Session_Context_Impl<BASE_CTX, COMP>::Session_Context_Impl (
+  Session_Context_Impl_T<BASE_CTX, COMP>::Session_Context_Impl_T (
       Components::CCMHome_ptr the_home,
       ::CIAO::Session_Container_ptr c,
       PortableServer::Servant sv,
@@ -19,14 +19,14 @@ namespace CIAO
 
   template <typename BASE_CTX,
             typename COMP>
-  Session_Context_Impl<BASE_CTX, COMP>::~Session_Context_Impl (void)
+  Session_Context_Impl_T<BASE_CTX, COMP>::~Session_Context_Impl_T (void)
   {
   }
 
   template <typename BASE_CTX,
             typename COMP>
   ::CORBA::Object_ptr
-  Session_Context_Impl<BASE_CTX, COMP>::get_CCM_object (void)
+  Session_Context_Impl_T<BASE_CTX, COMP>::get_CCM_object (void)
   {
     ::CORBA::Object_var obj;
 
@@ -39,7 +39,7 @@ namespace CIAO
             CIAO_ERROR (1,
                         (LM_ERROR,
                         CLINFO
-                        "Session_Context_Impl::get_CCM_object - "
+                        "Session_Context_Impl_T::get_CCM_object - "
                         "Error: Container is nil\n"));
             throw ::CORBA::INV_OBJREF ();
           }

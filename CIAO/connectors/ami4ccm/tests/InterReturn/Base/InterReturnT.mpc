@@ -11,7 +11,6 @@ project(AMI_InterReturnT_idl_gen) : componentidldefaults, ami, ami4ccm_stub {
               -Wb,exec_export_macro=INTERRETURN_T_EXEC_Export \
               -Wb,exec_export_include=InterReturnT_exec_export.h \
               -I.. -GM -Gxhcn
-  idlflags -= -Gsv
 
   IDL_Files {
     InterReturnT.idl
@@ -136,7 +135,7 @@ project(AMI_InterReturnT_skel) : ciao_executor, ami, ami4ccm_servant {
 
   Header_Files {
     InterReturnTS.h
-   
+
     InterReturnT_skel_export.h
   }
 

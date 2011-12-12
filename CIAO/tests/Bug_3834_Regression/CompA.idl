@@ -6,6 +6,8 @@
 #include <Components.idl>
 #include "Moo.idl"
 
+#pragma ciao lem "CompAE.idl"
+
 component CompA
 {
   provides Moo my_moo;

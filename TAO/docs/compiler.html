@@ -1003,7 +1003,7 @@ also receives other options that are specific to it.<p>
         (if Any support in general is not suppressed) the generation
         of <code>Any_Insert_Policy_AnyTypeCode_Adapter</code> for the
         last template parameter. This option is used when generating
-        arg traits for the sequences of basic types in the ORB, so 
+        arg traits for the sequences of basic types in the ORB, so
         their arg traits may be included in files generated from
         application IDL whether Any support is suppressed in the
         application IDL processing or not.</td>
@@ -1058,20 +1058,6 @@ also receives other options that are specific to it.<p>
 
     <td>Generate CIAO executor IDL for component and home IDL declarations</td>
     <td>Replaces code generation formerly done by the CIAO CIDL compiler.</td>
-  </tr>
-
-  <tr><a name="Glfa">
-    <td><tt>-Glfa</tt></td>
-
-    <td>Generate CIAO facet servant IDL and C++ for all interfaces</td>
-    <td>Replaces the CIDL compiler option <tt>--lem-force-all</tt>. This
-    option causes facet executor IDL and a facet servant C++ class to be
-    gnerated for each interface in the translation unit (default behavior
-    is to navigate to such interfaces from component <tt>provides</tt>
-    declarations). This option allows facet servant code to be shared
-    among components that use the same interface as a facet. Care must be
-    taken by the user to apply this option consistently to all builds
-    where this behavior is desired.</td>
   </tr>
 
   <tr><a name="Gsw">

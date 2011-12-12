@@ -1,57 +1,51 @@
 
 //=============================================================================
 /**
- *  @file    interface_svs.cpp
+ *  @file    interface_svts.cpp
  *
  *  $Id$
  *
  *  Visitor generating code for Interfaces in the
- *  CIAO servant source file.
+ *  CIAO template servant source file.
  *
  *
- *  @author Jeff Parsons <j.parsons@vanderbilt.edu>
+ *  @author Marcel Smit
  */
 //=============================================================================
 
 
 // ************************************************************
-// Interface visitor for CIAO servant source.
+// Interface visitor for CIAO template servant source.
 // ************************************************************
 
-be_visitor_interface_svs::be_visitor_interface_svs (
+be_visitor_interface_svts::be_visitor_interface_svts (
   be_visitor_context *ctx)
   : be_visitor_interface (ctx)
 {
 }
 
-be_visitor_interface_svs::~be_visitor_interface_svs (void)
+be_visitor_interface_svts::~be_visitor_interface_svts (void)
 {
 }
 
 int
-be_visitor_interface_svs::visit_interface (be_interface *node)
+be_visitor_interface_svts::visit_interface (be_interface *node)
 {
-  if (! be_global->gen_lem_force_all ())
-    {
-      return 0;
-    }
+  be_visitor_facet_svts facet_svts (this->ctx_);
 
-  // Skip implied IDL nodes.
-  if (node->original_interface () != 0)
+  if (facet_svts.visit_interface (node) == -1)
     {
-      return 0;
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_visitor_component_svts::")
+                         ACE_TEXT ("visit_provides - ")
+                         ACE_TEXT ("facet visitor failed\n")),
+                        -1);
     }
-
-  if (node->is_local () || node->imported () || node->is_abstract ())
-    {
-      return 0;
-    }
-
-  return node->gen_facet_svnt_src (this, *this->ctx_->stream ());
+  return 0;
 }
 
 int
-be_visitor_interface_svs::visit_operation (be_operation *node)
+be_visitor_interface_svts::visit_operation (be_operation *node)
 {
   be_visitor_operation_svs v (this->ctx_);
   v.scope (be_interface::narrow_from_decl (
@@ -61,7 +55,7 @@ be_visitor_interface_svs::visit_operation (be_operation *node)
 }
 
 int
-be_visitor_interface_svs::visit_attribute (be_attribute *node)
+be_visitor_interface_svts::visit_attribute (be_attribute *node)
 {
   be_visitor_attribute v (this->ctx_);
 

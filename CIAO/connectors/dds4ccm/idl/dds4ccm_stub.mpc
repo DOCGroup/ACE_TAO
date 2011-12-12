@@ -6,10 +6,9 @@ project (DDS4CCM_idl_gen) : install, dds4ccm, componentidldefaults {
               -Wb,stub_export_include=dds4ccm_stub_export.h \
               -Wb,skel_export_macro=DDS4CCM_SKEL_Export \
               -Wb,skel_export_include=dds4ccm_skel_export.h \
-              -I$(CIAO_ROOT)/connectors -Glem
+              -I$(CIAO_ROOT)/connectors
 
   IDL_Files {
-    idlflags -= -Gsv
     idlflags += -Gxhst -Gxhsk -SS
     dds4ccm_Base.idl
   }
@@ -22,8 +21,8 @@ project (DDS4CCM_idl_gen) : install, dds4ccm, componentidldefaults {
   }
 
   IDL_Files {
-    idlflags -= -Gxhst -Gxhsk -Gsv
-    idlflags += -Sci -SS -Scc
+    idlflags -= -Gxhst -Gxhsk -Gsv -Glem
+    idlflags += -Sci -SS
     dds4ccm_Entity.idl
     ccm_dds.idl
   }

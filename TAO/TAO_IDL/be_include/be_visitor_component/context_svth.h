@@ -18,19 +18,19 @@
 #define _BE_COMPONENT_CONTEXT_SVH_H_
 
 /**
- * @class be_visitor_context_svh
+ * @class be_visitor_context_svth
  *
- * @brief be_visitor_context_svh
+ * @brief be_visitor_context_svth
  *
  * This is a concrete visitor to generate the context class decl
  * for a component.
  */
-class be_visitor_context_svh : public be_visitor_component_scope
+class be_visitor_context_svth : public be_visitor_component_scope
 {
 public:
-  be_visitor_context_svh (be_visitor_context *ctx);
+  be_visitor_context_svth (be_visitor_context *ctx);
 
-  ~be_visitor_context_svh (void);
+  ~be_visitor_context_svth (void);
 
   virtual int visit_component (be_component *node);
   virtual int visit_connector (be_connector *node);

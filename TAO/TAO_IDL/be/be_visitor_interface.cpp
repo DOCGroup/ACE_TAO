@@ -67,8 +67,8 @@
 #include "be_visitor_interface/interface_ss.cpp"
 #include "be_visitor_interface/interface_is.cpp"
 #include "be_visitor_interface/interface_ex_idl.cpp"
-#include "be_visitor_interface/interface_svh.cpp"
-#include "be_visitor_interface/interface_svs.cpp"
+#include "be_visitor_interface/interface_svth.cpp"
+#include "be_visitor_interface/interface_svts.cpp"
 #include "be_visitor_interface/tie_sh.cpp"
 #include "be_visitor_interface/tie_ss.cpp"
 #include "be_visitor_interface/any_op_ch.cpp"
@@ -77,6 +77,10 @@
 #include "be_visitor_interface/cdr_op_cs.cpp"
 #include "be_visitor_interface/smart_proxy_ch.cpp"
 #include "be_visitor_interface/smart_proxy_cs.cpp"
+
+// Facets
+#include "be_visitor_interface/facet_svth.cpp"
+#include "be_visitor_interface/facet_svts.cpp"
 
 // Proxy Impls
 #include "be_visitor_interface/direct_proxy_impl_sh.cpp"

@@ -11,7 +11,6 @@ project(AMI_ExceptionT_idl_gen) : componentidldefaults, ami, ami4ccm_stub {
               -Wb,exec_export_macro=EXCEPTION_T_EXEC_Export \
               -Wb,exec_export_include=ExceptionT_exec_export.h \
               -I.. -GM -Gxhcn
-  idlflags -= -Gsv
 
   IDL_Files {
     ExceptionT.idl
@@ -136,12 +135,12 @@ project(AMI_ExceptionT_skel) : ciao_executor, ami, ami4ccm_servant {
 
   Header_Files {
     ExceptionTS.h
-   
+
     ExceptionT_skel_export.h
   }
 
   Inline_Files {
-   
+
   }
 }
 

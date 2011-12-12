@@ -25,12 +25,13 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ciao/Containers/Extension/Extension_Container.h"
 #include "ccm/Extension/CCM_ExtensionComponentC.h"
 
 namespace CIAO
 {
   /**
-   * @class Extension_Servant_Impl
+   * @class Extension_Servant_Impl_T
    *
    * @brief Mixin base class for generated servant.
    *
@@ -40,18 +41,18 @@ namespace CIAO
   template <typename BASE_SKEL,
             typename EXEC,
             typename CONTEXT>
-  class Extension_Servant_Impl :
+  class Extension_Servant_Impl_T :
     public virtual BASE_SKEL,
     public virtual CONTEXT::svnt_base_type
   {
   public:
-    Extension_Servant_Impl (EXEC * exe,
+    Extension_Servant_Impl_T (EXEC * exe,
                             Components::CCMHome_ptr home,
                             const char * ins_name,
                             Home_Servant_Impl_Base *home_servant,
                             ::CIAO::Extension_Container_ptr c);
 
-    virtual ~Extension_Servant_Impl (void);
+    virtual ~Extension_Servant_Impl_T (void);
 
     // Operations for CCMObject interface.
 
