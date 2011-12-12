@@ -30,7 +30,6 @@ project(HomeT_HomeC_lem_gen) : ciaoidldefaults, dds4ccm {
   }
 }
 project(HomeT_HomeC_lem_stub) : ccm_svnt, dds4ccm_base {
-  avoids += ace_for_tao
   after  += HomeT_HomeC_lem_gen HomeT_HomeC_stub HomeT_Base_stub
   libs   += HomeT_Base_stub HomeT_HomeC_stub
   libpaths += ../lib

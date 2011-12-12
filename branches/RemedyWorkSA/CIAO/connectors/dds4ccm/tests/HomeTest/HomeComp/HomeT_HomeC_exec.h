@@ -37,13 +37,13 @@
 
 #include /**/ "HomeT_HomeC_exec_export.h"
 #include "tao/LocalObject.h"
-/*
+
 namespace CIAO_ConnComp_Impl
 {
 
   //Component Executor Implementation Class: ConnComp_exec_i
-  /
 
+/*
   class ConnComp_exec_i
     : public virtual ConnComp_Exec,
       public virtual ::CORBA::LocalObject
@@ -108,12 +108,12 @@ namespace CIAO_ConnComp_Impl
 
     virtual ~ConnHome_exec_i (void);
 
-    virtual ::Components::EnterpriseComponent_ptr
+    virtual ::Components::EnterpriseComponent_ptr //ConnComp::DDS_Event_ptr
     new_ConnComp (void);
 
     // Implicit operations.
 
-    virtual ::Components::EnterpriseComponent_ptr
+    virtual ::Components::EnterpriseComponent_ptr //ConnComp::DDS_Event_ptr
     create (void);
   };
 
