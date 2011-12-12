@@ -1,3 +1,191 @@
+Mon Dec 12 07:33:25 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        Merged changes from our work branch. Facet servants are now generated
+        as C++ template at the moment the interface is declared, this reduces
+        the amount of code generated heavily. Component/Connector context is
+        now also generated as C++ template
+
+        === start changelog ===
+
+        Fri Dec  9 16:07:48 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * connectors/dds4ccm/examples/Large_Deployment/Common/Single_Service_Common.idl:
+                * connectors/dds4ccm/examples/Large_Deployment/Common/Single_Service_Common.mpc:
+                * connectors/dds4ccm/examples/Large_Deployment/Single_Service/Single_Service.mpc:
+                  Fixed compile errors.
+
+        Fri Dec  9 15:41:59 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * connectors/dds4ccm/examples/Large_Deployment/Common/Single_Service_Common.idl:
+                * connectors/dds4ccm/examples/Large_Deployment/Common/Single_Service_Common.mpc:
+                * connectors/dds4ccm/examples/Large_Deployment/DDS_Pub/DDS_Pub.mpc:
+                  Also generate a Single_Service_Common lem.
+
+        Fri Dec  9 14:28:24 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * tests/Bug_3834_Regression/Moo.mpc:
+                  Fixed afters and linker errors on windows.
+
+        Fri Dec  9 14:15:16 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * tests/Bug_3834_Regression/CompA.mpc:
+                * tests/Bug_3834_Regression/Moo.mpc:
+                  Fixed link issues on windows.
+
+        Fri Dec  9 13:42:40 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * tests/Bug_3834_Regression/CompA.idl:
+                * tests/Bug_3834_Regression/CompA.mpc:
+                * tests/Bug_3834_Regression/Moo.idl:
+                * tests/Bug_3834_Regression/Moo.mpc:
+                  Fixed compile issues on Linux.
+
+        Fri Dec  9 13:24:31 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * connectors/dds4ccm/examples/Large_Deployment/Single_Service/Single_Service.mpc:
+                * tests/Bug_2130_Regression/SEC_CheckPoint/TSEC_CheckPoint.mpc:
+                * tests/Bug_3834_Regression/CompA.mpc:
+                * tests/Bug_3834_Regression/CompB.mpc:
+                  Removed the -Glfa option since it is obsolete.
+
+        Fri Dec  9 11:48:53 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * connectors/tests/AMIDDS/Base/AmiDds_Base.mpc:
+                * tests/DAnCE/Components/SimpleCommon.mpc:
+                * tests/IDL_Test/Reused_Facet_Interface/Basic.mpc:
+                  Fixed compile errors related to the movement of the facet
+                  servants.
+
+        Fri Dec  9 10:41:34 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * connectors/dds4ccm/examples/Large_Deployment/Common/Single_Service_Common.mpc:
+                  Generate svnt code as well.
+
+                * connectors/dds4ccm/examples/Large_Deployment/Single_Service/Single_Service.mpc:
+                * connectors/dds4ccm/examples/Large_Deployment/Single_Service/Single_Service_exec.h:
+                * connectors/dds4ccm/examples/Large_Deployment/Single_Service/Single_Service_exec.cpp:
+                  Removed these files since they can be generated.
+
+        Fri Dec  9 10:17:37 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * bin/ciao_tests.lst:
+                * examples/Null_Component_Glfa:
+                * examples/Null_Component_Glfa/Null_Component.idl:
+                * examples/Null_Component_Glfa/Null_Component.mpc:
+                * examples/Null_Component_Glfa/Null_Interface.idl:
+                * examples/Null_Component_Glfa/Null_Interface.mpc:
+                * examples/Null_Component_Glfa/descriptors:
+                * examples/Null_Component_Glfa/descriptors/NodeMap.dat:
+                * examples/Null_Component_Glfa/descriptors/Null_Homed.cdp:
+                * examples/Null_Component_Glfa/descriptors/Null_Unhomed.cdp:
+                * examples/Null_Component_Glfa/descriptors/run_test.pl:
+                  Removed this test. No need to test this anymore.
+
+        Fri Dec  9 10:15:44 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+
+                * tests/IDL_Test/Glfa:
+                * tests/IDL_Test/Glfa/A.idl:
+                * tests/IDL_Test/Glfa/A.mpc:
+                * tests/IDL_Test/Glfa/B.idl:
+                * tests/IDL_Test/Glfa/B.mpc:
+                  Removed these files. No need to test this anymore.
+
+        Fri Dec  9 08:34:00 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * connectors/ami4ccm/tutorials/Hello/Hello_asm/ports/Hello_MyFoo_obj.mpc:
+                  Fixed compile errors related to the movement of the facet
+                  servants.
+
+        Fri Dec  9 08:31:15 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * connectors/dds4ccm/idl/dds4ccm_stub.mpc:
+                * connectors/dds4ccm/idl/ndds/ndds_idltocpp_stub.mpc:
+                  Fixed compile errors related to the movement of the facet
+                  servants.
+
+        Fri Dec  9 07:57:33 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * connectors/ami4ccm/examples/Quoter/Base/Quoter.mpc:
+                * connectors/ami4ccm/tests/AsynchT/Base/AsynchT.mpc:
+                * connectors/ami4ccm/tests/DelReplyH/Base/DelReplyH.mpc:
+                * connectors/ami4ccm/tests/Exceptions/Base/ExceptionT.mpc:
+                * connectors/ami4ccm/tests/GetComp/Base/GetComp.mpc:
+                * connectors/ami4ccm/tests/IDL_Test/AMI4CCM_IDLTest.mpc:
+                * connectors/ami4ccm/tests/InterInArgs/Base/InterInArgsT.mpc:
+                * connectors/ami4ccm/tests/InterInOutArgs/Base/InterInOutT.mpc:
+                * connectors/ami4ccm/tests/InterMulti/Base/InterMulti.mpc:
+                * connectors/ami4ccm/tests/InterOutArgs/Base/InterOutArgsT.mpc:
+                * connectors/ami4ccm/tests/InterReturn/Base/InterReturnT.mpc:
+                * connectors/ami4ccm/tests/NoConnection/Base/HelloT.mpc:
+                * connectors/ami4ccm/tests/NoReplyH/Base/NoReplyH.mpc:
+                * connectors/ami4ccm/tests/OneProcess/Base/OneProcess.mpc:
+                * connectors/ami4ccm/tests/OneReplyH/Base/OneReplyH.mpc:
+                * connectors/ami4ccm/tests/SimplexMulti/Base/UsesSM.mpc:
+                * connectors/ami4ccm/tests/ThreeComp/Base/ThreeComp.mpc:
+                * connectors/ami4ccm/tests/UsesMulti/Base/UsesMulti.mpc:
+                  Fixed compile errors related to the movement of the facet
+                  servants.
+
+        Thu Dec  8 14:38:45 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * ciao/Servants/Extension/Servant_Impl_T.h:
+                  Added missing include.
+
+                * connectors/ami4ccm/examples/Hello/Base/Hello.mpc:
+                  Removed -Gsv IDL compiler flag.
+
+        Wed Dec  7 07:34:23 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * ciao/Servants/Facet_Servant_Base_T.h:
+                * ciao/Servants/Session/Servant_Impl_T.h:
+                  Added some necessary includes.
+
+        Mon Dec  5 19:10:07 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * connectors/dds4ccm/idl/dds4ccm_stub.mpc:
+                  Removed -Glem for generation of dds4ccm_entity.idl
+                  and ccm_dds.idl since it was not necessary to create
+                  the local executor mapping (at least, the generated
+                  files were not compiled)
+
+        Mon Dec  5 18:41:32 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * connectors/dds4ccm/idl/dds4ccm_stub.mpc:
+                  Removed -Glem since it was added a second time. At that point
+                  dds4ccm_QueryFilter was generated with -Glem
+                  (which is not necessary).
+
+        Fri Dec  2 07:58:40 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * ciao/Contexts/Extension/Extension_Context_T.h:
+                * ciao/Contexts/Extension/Extension_Context_T.cpp:
+                * ciao/Servants/Extension/Servant_Impl_T.h:
+                * ciao/Servants/Extension/Servant_Impl_T.cpp:
+                * ciao/Servants/Session/Servant_Impl_T.h:
+                * ciao/Servants/Session/Servant_Impl_T.cpp:
+                  Added _T to templated classes. This fixes compile error
+                  since the IDL compiler was already prepared for this.
+
+                * tests/IDL_Test/Inherited_Component/Extended/Base.idl:
+                  Let derived_interface derive from the base_interface.
+
+        Thu Dec  1 09:05:31 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * connectors/dds4ccm/idl/dds4ccm_stub.mpc:
+                  Prevent compilation after invoking make for a second time
+
+        Thu Dec  1 08:36:22 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * ciao/Contexts/Session/Session_Context_T.h:
+                * ciao/Contexts/Session/Session_Context_T.cpp:
+                  Renamed class, using _T postfix.
+
+                * tests/IDL_Test/Inherited_Component/Extended/Base.idl:
+                * tests/IDL_Test/Inherited_Component/Extended/Derived.idl:
+                  Expanded.
+
+        === end changelog ===
 Wed Dec  7 19:00:59 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/ami4ccm/tests/SyncPortConn/Receiver/Hello_Receiver.mpc:

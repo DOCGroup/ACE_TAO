@@ -115,6 +115,7 @@ public:
       CIAO_EXEC_HDR,
       CIAO_EXEC_IMPL,
       CIAO_EXEC_IDL,
+      CIAO_EXEC_SVNT,
       CIAO_CONN_HDR,
       CIAO_CONN_IMPL,
       CIAO_AMI4CCM_CONN_IDL,

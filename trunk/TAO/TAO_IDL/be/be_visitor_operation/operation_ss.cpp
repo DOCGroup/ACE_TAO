@@ -189,10 +189,10 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
     }
 
   *os << this->ctx_->port_prefix ().c_str () << node->local_name ()
-      << "_skel (" << be_idt << be_idt_nl
+      << "_skel (" << be_idt_nl
       << "TAO_ServerRequest & server_request," << be_nl
       << "TAO::Portable_Server::Servant_Upcall *TAO_INTERCEPTOR (servant_upcall)," << be_nl
-      << "TAO_ServantBase *servant)" << be_uidt << be_uidt_nl;
+      << "TAO_ServantBase *servant)" << be_uidt_nl;
 
   // Generate the actual code for the skeleton. However, if any of the
   // argument types is "native", we do not generate any skeleton
@@ -247,11 +247,15 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
   // Get the right object implementation.
   *os << intf->full_skel_name () << " * const impl =" << be_idt_nl
       << "dynamic_cast<"
-      << intf->full_skel_name () << " *> (servant);" << be_uidt << be_uidt_nl;
+      << intf->full_skel_name () << " *> (servant);" << be_uidt << be_nl_2;
+
+  *os << "if (!impl)" << be_idt_nl
+      << "{" << be_idt_nl
+      << "throw ::CORBA::INTERNAL ();" << be_uidt_nl
+      << "}" << be_uidt << be_nl_2;
 
   // Upcall_Command instantiation.
-  *os << be_idt_nl
-      << upcall_command_name.c_str()
+  *os << upcall_command_name.c_str()
       << " command (" << be_idt_nl
       << "impl";
 

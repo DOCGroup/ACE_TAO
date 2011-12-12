@@ -94,7 +94,7 @@ be_visitor_operation_direct_proxy_impl_ss::visit_operation (
 
   *os << "if (!_tao_ptr)" << be_idt_nl
       << "{" << be_idt_nl
-      << "throw CORBA::INTERNAL ();" << be_uidt_nl
+      << "throw ::CORBA::INTERNAL ();" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl;
 
   if (!node->void_return_type ())

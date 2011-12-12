@@ -9,12 +9,11 @@ project (CIAO_NDDS_idl_gen) : install, ndds_idltocpp, componentidldefaults {
               -I$(CIAO_ROOT)/connectors -Glem
 
   IDL_Files {
-    idlflags -= -Gsv
     ndds_dcps.idl
   }
 
   IDL_Files {
-    idlflags -= -Gxhst -Gxhsk -Gsv
+    idlflags -= -Gxhst -Gxhsk
     ndds_dcps_i_handle.idl
   }
 

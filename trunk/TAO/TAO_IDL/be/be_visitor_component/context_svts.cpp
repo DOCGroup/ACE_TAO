@@ -12,18 +12,19 @@
  *  @author Jeff Parsons
  */
 //=============================================================================
+#include <be_helper.h>
 
-be_visitor_context_svs::be_visitor_context_svs (be_visitor_context *ctx)
+be_visitor_context_svts::be_visitor_context_svts (be_visitor_context *ctx)
   : be_visitor_component_scope (ctx)
 {
 }
 
-be_visitor_context_svs::~be_visitor_context_svs (void)
+be_visitor_context_svts::~be_visitor_context_svts (void)
 {
 }
 
 int
-be_visitor_context_svs::visit_component (be_component *node)
+be_visitor_context_svts::visit_component (be_component *node)
 {
   // This visitor is spawned by be_visitor_component_svh,
   // which already does a check for imported node, so none
@@ -33,44 +34,55 @@ be_visitor_context_svs::visit_component (be_component *node)
 
   AST_Decl *scope = ScopeAsDecl (node->defined_in ());
   ACE_CString sname_str (scope->full_name ());
-  const char *sname = sname_str.c_str ();
   const char *lname = node_->local_name ();
   const char *global = (sname_str == "" ? "" : "::");
 
   os_ << be_nl
-      << lname <<"_Context::" << lname << "_Context ("
+      << "template <typename CONTAINER_TYPE, typename BASE>" << be_nl
+      << lname <<"_Context_T<CONTAINER_TYPE, BASE>::"
+      << lname << "_Context_T ("
       << be_idt << be_idt_nl
       << "::Components::CCMHome_ptr h," << be_nl
-      << "::CIAO::" << be_global->ciao_container_type ()
-      << "_Container_ptr c," << be_nl
+      << "typename CONTAINER_TYPE::_ptr_type c," << be_nl
       << "PortableServer::Servant sv," << be_uidt_nl
       << "const char *id)" << be_uidt_nl
-      << ": ::CIAO::Context_Impl_Base_T < ::CIAO::"
-      << be_global->ciao_container_type () << "_Container> (h, c, id),"
-      << be_idt_nl
-      << "::CIAO::" << be_global->ciao_container_type ()
-      << "_Context_Impl<" << be_idt_nl
-      << global << sname << "::CCM_"
-      << lname << "_Context," << be_nl
-      << "::" << node->full_name () << "> (h, c, sv, id)";
+      << ": ::CIAO::Context_Impl_Base_T <CONTAINER_TYPE> (h, c, id),"
+      << be_idt_nl;
 
-  os_ << be_uidt << be_uidt_nl
+  // Spec: no multiple inheritance allowed for components.
+  AST_Component * base = node->base_component ();
+  if (base)
+    {
+      const char *lbase_name =
+        base->original_local_name ()->get_string ();
+
+      os_ << global << "CIAO_" << base->flat_name ()
+          << "_Impl::" << lbase_name << "_Context_T<CONTAINER_TYPE, BASE>";
+    }
+  else
+    {
+      os_ << "BASE";
+    }
+  os_ << " (h, c, sv, id)";
+
+  os_ << be_uidt_nl
       << "{" << be_nl
       << "}";
 
   os_ << be_nl_2
-      << lname << "_Context::~"
-      << lname << "_Context (void)" << be_nl
+      << "template <typename CONTAINER_TYPE, typename BASE>" << be_nl
+      << lname << "_Context_T<CONTAINER_TYPE, BASE>::~"
+      << lname << "_Context_T (void)" << be_nl
       << "{" << be_nl
       << "}";
 
-  if (this->visit_component_scope (node) == -1)
+  if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_context_svs")
-                         ACE_TEXT ("::visit_component - ")
-                         ACE_TEXT ("visit_component_scope() ")
-                         ACE_TEXT ("failed\n")),
+                        ACE_TEXT ("be_visitor_context_svts")
+                        ACE_TEXT ("::visit_component - ")
+                        ACE_TEXT ("visit_component_scope() ")
+                        ACE_TEXT ("failed\n")),
                         -1);
     }
 
@@ -78,14 +90,15 @@ be_visitor_context_svs::visit_component (be_component *node)
 }
 
 int
-be_visitor_context_svs::visit_connector (be_connector *node)
+be_visitor_context_svts::visit_connector (be_connector *node)
 {
   return this->visit_component (node);
 }
 
 int
-be_visitor_context_svs::visit_uses (be_uses *node)
+be_visitor_context_svts::visit_uses (be_uses *node)
 {
+
   ACE_CString prefix (this->ctx_->port_prefix ());
   prefix += node->local_name ()->get_string ();
   const char *port_name = prefix.c_str ();
@@ -106,7 +119,7 @@ be_visitor_context_svs::visit_uses (be_uses *node)
 }
 
 int
-be_visitor_context_svs::visit_publishes (be_publishes *node)
+be_visitor_context_svts::visit_publishes (be_publishes *node)
 {
   AST_Type *obj = node->publishes_type ();
   const char *port_name =
@@ -117,8 +130,9 @@ be_visitor_context_svs::visit_publishes (be_publishes *node)
     ScopeAsDecl (obj->defined_in ())->full_name ());
 
   os_ << be_nl_2
+      << "template <typename CONTAINER_TYPE, typename BASE>" << be_nl
       << "void" << be_nl
-      << node_->local_name () << "_Context::push_"
+      << node_->local_name () << "_Context_T<CONTAINER_TYPE, BASE>::push_"
       << port_name << " (" << be_idt_nl
       << "::" << fname << " * ev)" << be_uidt_nl
       << "{" << be_idt_nl;
@@ -142,8 +156,9 @@ be_visitor_context_svs::visit_publishes (be_publishes *node)
       << "}";
 
   os_ << be_nl_2
+      << "template <typename CONTAINER_TYPE, typename BASE>" << be_nl
       << "::Components::Cookie *" << be_nl
-      << node_->local_name () << "_Context::subscribe_"
+      << node_->local_name () << "_Context_T<CONTAINER_TYPE, BASE>::subscribe_"
       << port_name << " (" << be_idt_nl
       << "::" << fname << "Consumer_ptr c)" << be_uidt_nl
       << "{" << be_idt_nl
@@ -189,8 +204,9 @@ be_visitor_context_svs::visit_publishes (be_publishes *node)
       << "}";
 
   os_ << be_nl_2
+      << "template <typename CONTAINER_TYPE, typename BASE>" << be_nl
       << "::" << fname << "Consumer_ptr" << be_nl
-      << node_->local_name () << "_Context::unsubscribe_"
+      << node_->local_name () << "_Context_T<CONTAINER_TYPE, BASE>::unsubscribe_"
       << port_name << " (" << be_idt_nl
       << "::Components::Cookie * ck)" << be_uidt_nl
       << "{" << be_idt_nl
@@ -239,7 +255,7 @@ be_visitor_context_svs::visit_publishes (be_publishes *node)
 }
 
 int
-be_visitor_context_svs::visit_emits (be_emits *node)
+be_visitor_context_svts::visit_emits (be_emits *node)
 {
   AST_Type *obj = node->emits_type ();
   const char *port_name =
@@ -249,8 +265,9 @@ be_visitor_context_svs::visit_emits (be_emits *node)
   const char *lname = obj->local_name ()->get_string ();
 
   os_ << be_nl_2
+      << "template <typename CONTAINER_TYPE, typename BASE>" << be_nl
       << "void" << be_nl
-      << node_->local_name () << "_Context::push_" << port_name
+      << node_->local_name () << "_Context_T<CONTAINER_TYPE, BASE>::push_" << port_name
       << " (" << be_idt_nl
       << "::" << fname << " * ev)" << be_uidt_nl
       << "{" << be_idt_nl
@@ -263,8 +280,9 @@ be_visitor_context_svs::visit_emits (be_emits *node)
       << "}";
 
   os_ << be_nl_2
+      << "template <typename CONTAINER_TYPE, typename BASE>" << be_nl
       << "void" << be_nl
-      << node_->local_name () << "_Context::connect_" << port_name
+      << node_->local_name () << "_Context_T<CONTAINER_TYPE, BASE>::connect_" << port_name
       << " (" << be_idt_nl
       << "::" << fname << "Consumer_ptr c)" << be_uidt_nl
       << "{" << be_idt_nl
@@ -284,8 +302,9 @@ be_visitor_context_svs::visit_emits (be_emits *node)
       << "}";
 
   os_ << be_nl_2
+      << "template <typename CONTAINER_TYPE, typename BASE>" << be_nl
       << "::" << fname << "Consumer_ptr" << be_nl
-      << node_->local_name () << "_Context::disconnect_"
+      << node_->local_name () << "_Context_T<CONTAINER_TYPE, BASE>::disconnect_"
       << port_name << " (void)" << be_nl
       << "{" << be_idt_nl
       << "::" << fname << "Consumer_var ciao_emits_" << port_name << " =" << be_idt_nl
@@ -303,14 +322,15 @@ be_visitor_context_svs::visit_emits (be_emits *node)
 }
 
 void
-be_visitor_context_svs::gen_uses_simplex (AST_Type *obj,
+be_visitor_context_svts::gen_uses_simplex (AST_Type *obj,
                                           const char *port_name)
 {
   const char *fname = obj->full_name ();
 
   os_ << be_nl_2
+      << "template <typename CONTAINER_TYPE, typename BASE>" << be_nl
       << "::" << fname << "_ptr" << be_nl
-      << node_->local_name () << "_Context::get_connection_"
+      << node_->local_name () << "_Context_T<CONTAINER_TYPE, BASE>::get_connection_"
       << port_name << " (void)" << be_nl
       << "{" << be_idt_nl
       << "return ::" << fname << "::_duplicate (" << be_idt_nl
@@ -319,8 +339,9 @@ be_visitor_context_svs::gen_uses_simplex (AST_Type *obj,
       << "}";
 
   os_ << be_nl_2
+      << "template <typename CONTAINER_TYPE, typename BASE>" << be_nl
       << "void" << be_nl
-      << node_->local_name () << "_Context::connect_"
+      << node_->local_name () << "_Context_T<CONTAINER_TYPE, BASE>::connect_"
       << port_name << " (" << be_idt_nl
       << "::" << fname << "_ptr c)" << be_uidt_nl
       << "{" << be_idt_nl
@@ -339,8 +360,9 @@ be_visitor_context_svs::gen_uses_simplex (AST_Type *obj,
       << "}";
 
   os_ << be_nl_2
+      << "template <typename CONTAINER_TYPE, typename BASE>" << be_nl
       << "::" << fname << "_ptr" << be_nl
-      << node_->local_name () << "_Context::disconnect_"
+      << node_->local_name () << "_Context_T<CONTAINER_TYPE, BASE>::disconnect_"
       << port_name << " (void)" << be_nl
       << "{" << be_idt_nl
       << "::" << fname << "_var ciao_uses_" << port_name << " =" << be_idt_nl
@@ -356,16 +378,17 @@ be_visitor_context_svs::gen_uses_simplex (AST_Type *obj,
 }
 
 void
-be_visitor_context_svs::gen_uses_multiplex (
+be_visitor_context_svts::gen_uses_multiplex (
   AST_Type *obj,
   const char *port_name)
 {
   const char *fname = obj->full_name ();
 
   os_ << be_nl_2
+      << "template <typename CONTAINER_TYPE, typename BASE>" << be_nl
       << "::" << node_->full_name () << "::" << port_name
       << "Connections *" << be_nl
-      << node_->local_name () << "_Context::get_connections_"
+      << node_->local_name () << "_Context_T<CONTAINER_TYPE, BASE>::get_connections_"
       << port_name << " (void)" << be_nl
       << "{" << be_idt_nl;
 
@@ -407,8 +430,9 @@ be_visitor_context_svs::gen_uses_multiplex (
       << "}";
 
   os_ << be_nl_2
+      << "template <typename CONTAINER_TYPE, typename BASE>" << be_nl
       << "::Components::Cookie *" << be_nl
-      << node_->local_name () << "_Context::connect_"
+      << node_->local_name () << "_Context_T<CONTAINER_TYPE, BASE>::connect_"
       << port_name << " (" << be_idt_nl
       << "::" << fname << "_ptr c)" << be_uidt_nl
       << "{" << be_idt_nl
@@ -453,8 +477,9 @@ be_visitor_context_svs::gen_uses_multiplex (
       << "}";
 
   os_ << be_nl_2
+      << "template <typename CONTAINER_TYPE, typename BASE>" << be_nl
       << "::" << fname << "_ptr" << be_nl
-      << node_->local_name  () << "_Context::disconnect_"
+      << node_->local_name  () << "_Context_T<CONTAINER_TYPE, BASE>::disconnect_"
       << port_name << " (" << be_idt_nl
       << "::Components::Cookie * ck)" << be_uidt_nl
       << "{" << be_idt_nl

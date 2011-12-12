@@ -6,13 +6,52 @@ project(Single_Service_Common_idl_gen) : taoidldefaults {
               -Wb,stub_export_include=Single_Service_Common_stub_export.h \
               -Wb,skel_export_macro=SINGLE_SERVICE_COMMON_SKEL_Export \
               -Wb,skel_export_include=Single_Service_Common_skel_export.h \
-              -Gxhst -Gxhsk
+              -Gxhst -Gxhsk -Gsv -Glem
 
   IDL_Files {
     Single_Service_Common.idl
   }
 }
 
+project(Single_Service_Common_idl_lem_gen) : ciaoidldefaults {
+  after += Single_Service_Common_idl_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=SINGLE_SERVICE_COMMON_LEM_STUB_Export \
+              -Wb,stub_export_include=Single_Service_Common_lem_stub_export.h \
+              -SS -Gxhst -I..
+
+  IDL_Files {
+    Single_Service_CommonE.idl
+  }
+}
+
+project(Single_Service_Common_lem_stub) : ccm_svnt   {
+  after +=  Single_Service_Common_idl_lem_gen \
+            Single_Service_Common_stub
+  libs  +=  Single_Service_Common_stub
+
+  libpaths += ../lib
+  libout = ../lib
+
+  sharedname = Single_Service_Common_lem_stub
+  dynamicflags += SINGLE_SERVICE_COMMON_LEM_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Single_Service_CommonEC.cpp
+  }
+
+  Header_Files {
+    Single_Service_CommonEC.h
+    Single_Service_Common_lem_stub_export.h
+  }
+
+  Inline_Files {
+    Single_Service_CommonEC.inl
+  }
+}
 
 project(Single_Service_Common_stub) : ccm_stub {
   after += Single_Service_Common_idl_gen

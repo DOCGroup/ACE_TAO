@@ -13,7 +13,6 @@ project(AMI_Hello_Tuto_idl_gen) : componentidldefaults, ami, ami4ccm_stub {
               -Wb,exec_export_include=Hello_MyFoo_obj_exec_export.h \
                -o ../GeneratedCode\
               -GM -Gxhcn
-  idlflags -= -Gsv
 
   IDL_Files {
     Hello_MyFoo_obj.idl
@@ -26,7 +25,7 @@ project(AMI_Hello_Tuto_lem_gen) : ciaoidldefaults {
   custom_only = 1
   idlflags += -Wb,export_macro=HELLO_MYFOO_OBJ_LEM_STUB_Export \
               -Wb,export_include=Hello_MyFoo_obj_lem_stub_export.h \
-              -I ../GeneratedCode\ 
+              -I ../GeneratedCode\
               -o ../GeneratedCode\
               -SS -Gxhst
 

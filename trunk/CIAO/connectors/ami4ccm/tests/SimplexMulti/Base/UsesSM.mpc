@@ -11,8 +11,7 @@ project(AMI_UsesSM_idl_gen) : componentidldefaults, ami, ami4ccm_stub {
               -Wb,exec_export_macro=USESSM_EXEC_Export \
               -Wb,exec_export_include=UsesSM_exec_export.h \
               -I.. -GM -Gxhcn
-            
-  idlflags -= -Gsv
+
 
   IDL_Files {
     UsesSM.idl
@@ -43,7 +42,7 @@ project(AMI_UsesSM_lema_gen) : ciaoidldefaults, typecode {
               -Wb,skel_export_macro=USESSM_SKEL_Export \
               -Wb,skel_export_include=UsesSM_skel_export.h \
               -I.. -Gsv -Gcn -Glem -GC -Gxhst -Gxhsv
-      
+
   IDL_Files {
     UsesSMA.idl
   }
@@ -137,7 +136,7 @@ project(AMI_UsesSM_skel) : ciao_executor, ami, ami4ccm_servant {
 
   Header_Files {
     UsesSMS.h
-   
+
     UsesSM_skel_export.h
   }
 

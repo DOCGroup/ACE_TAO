@@ -1,3 +1,272 @@
+Mon Dec 12 07:33:25 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        Merged changes from our work branch. Facet servants are now generated
+        as C++ template at the moment the interface is declared, this reduces
+        the amount of code generated heavily. Component/Connector context is
+        now also generated as C++ template
+
+        === start changelog ===
+
+        Sun Dec 11 19:40:16 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_operation/direct_proxy_impl_ss.cpp:
+                * TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+                  Throw exception when dynamic_cast fails
+
+        Sun Dec 11 19:13:21 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_interface/facet_svth.cpp:
+                * TAO_IDL/be/be_visitor_interface/facet_svts.cpp:
+                  No servant is needed for local interfaces
+
+        Sun Dec 11 18:23:17 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * TAO_IDL/be/be_util.cpp:
+                  Removed mentioning of -Gsc which got removed a long time ago
+
+        Sun Dec 11 12:32:28 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * TAO_IDL/be/be_interface.cpp:
+                * TAO_IDL/be/be_visitor_interface.cpp:
+                * TAO_IDL/be/be_visitor_module/module.cpp:
+                * TAO_IDL/be_include/be_interface.h:
+                * TAO_IDL/be_include/be_visitor_interface.h:
+                * TAO_IDL/be/be_visitor_interface/interface_svh.cpp:
+                * TAO_IDL/be/be_visitor_interface/interface_svs.cpp:
+                  Removed some old stuff we don't need anymore, fixes cornucopia
+
+                * TAO_IDL/be_include/be_visitor_interface/interface_svh.h:
+                * TAO_IDL/be_include/be_visitor_interface/interface_svs.h:
+                  Removed these files.
+
+        Fri Dec  9 13:23:29 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * TAO_IDL/be/be_codegen.cpp:
+                * TAO_IDL/be/be_global.cpp:
+                * TAO_IDL/be/be_util.cpp:
+                * TAO_IDL/be/be_visitor_component.cpp:
+                * TAO_IDL/be/be_visitor_component/component_ex_idl.cpp:
+                * TAO_IDL/be/be_visitor_interface/interface_ex_idl.cpp:
+                * TAO_IDL/be/be_visitor_interface/interface_svh.cpp:
+                * TAO_IDL/be/be_visitor_interface/interface_svs.cpp:
+                * TAO_IDL/be_include/be_global.h:
+                * TAO_IDL/be_include/be_visitor_component.h:
+                * docs/compiler.html:
+                  Removed the -Glfa option from the IDL compiler.
+
+                * TAO_IDL/be/be_visitor_component/facet_ex_idl.cpp:
+                * TAO_IDL/be_include/be_visitor_component/facet_ex_idl.h:
+                  Removed these files.
+
+        Thu Dec  8 14:43:36 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_component/context_svth.cpp:
+                * TAO_IDL/be/be_visitor_component/context_svts.cpp:
+                  Removed export macro for contextes.
+
+                * TAO_IDL/be/be_visitor_component.cpp:
+                * TAO_IDL/be/be_visitor_interface/facet_svts.cpp:
+                * TAO_IDL/be/be_visitor_interface/interface_svth.cpp:
+                * TAO_IDL/be/be_visitor_interface/interface_svts.cpp:
+                  Fixed warnings.
+
+        Thu Dec  8 14:16:52 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * TAO_IDL/be/be_produce.cpp:
+                * TAO_IDL/be/be_provides.cpp:
+                * TAO_IDL/be/be_visitor_component.cpp:
+                * TAO_IDL/be/be_visitor_component/component_svth.cpp:
+                * TAO_IDL/be/be_visitor_component/component_svts.cpp:
+                * TAO_IDL/be/be_visitor_interface.cpp:
+                * TAO_IDL/be/be_visitor_interface/facet_svth.cpp:
+                * TAO_IDL/be/be_visitor_interface/facet_svts.cpp:
+                * TAO_IDL/be/be_visitor_interface/interface_svth.cpp:
+                * TAO_IDL/be/be_visitor_interface/interface_svts.cpp:
+                * TAO_IDL/be/be_visitor_module/module.cpp:
+                * TAO_IDL/be/be_visitor_operation/operation_svs.cpp:
+                * TAO_IDL/be_include/be_provides.h:
+                * TAO_IDL/be_include/be_visitor_component.h:
+                * TAO_IDL/be_include/be_visitor_interface.h:
+                * TAO_IDL/be_include/be_visitor_interface/facet_svth.h:
+                * TAO_IDL/be_include/be_visitor_interface/facet_svts.h:
+                * TAO_IDL/be_include/be_visitor_interface/interface_svth.h:
+                * TAO_IDL/be_include/be_visitor_interface/interface_svts.h:
+                * TAO_IDL/be/be_visitor_component/facet_svth.cpp:
+                * TAO_IDL/be/be_visitor_component/facet_svts.cpp:
+                * TAO_IDL/be_include/be_visitor_component/facet_svth.h:
+                * TAO_IDL/be_include/be_visitor_component/facet_svts.h:
+                  Moved the generation of the facet servants to the place
+                  where they are declared (from the place where they were
+                  used). -Gsv needs to set as command line option.
+
+        Wed Dec  7 13:26:49 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+                  Fixed errors in logging.
+
+        Wed Dec  7 12:34:49 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_component/context_svth.cpp:
+                * TAO_IDL/be/be_visitor_component/context_svts.cpp:
+                  No need to visit the component_scope; just visit
+                  the scope is enough..
+
+        Wed Dec  7 07:34:56 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * TAO_IDL/be/be_codegen.cpp:
+                * TAO_IDL/be_include/be_codegen.h:
+                  Reduced the number of generated include files.
+                  Also generated a include guard for the servant
+                  template source code.
+
+        Tue Dec  6 13:25:04 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_component/context_svth.cpp:
+                * TAO_IDL/be/be_visitor_component/context_svts.cpp:
+                  Fixed generation issues in case dds4ccm
+
+        Tue Dec  6 09:22:09 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_component/component_svts.cpp:
+                  Removed comments.
+
+                * TAO_IDL/be/be_visitor_root.cpp:
+                * TAO_IDL/be_include/be_visitor_root.h:
+                  Removed reference to the files below.
+
+                * TAO_IDL/be/be_visitor_root/root_ex_svs.cpp:
+                * TAO_IDL/be_include/be_visitor_root/root_ex_svs.h:
+                  Removed these files since a separate servant file
+                  is not needed.
+
+        Tue Dec  6 09:15:52 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * TAO_IDL/be/be_codegen.cpp:
+                * TAO_IDL/be/be_global.cpp:
+                * TAO_IDL/be/be_produce.cpp:
+                * TAO_IDL/be/be_visitor_component/component.cpp:
+                * TAO_IDL/be/be_visitor_module/module.cpp:
+                * TAO_IDL/be/be_visitor_root/root_ex_svs.cpp:
+                * TAO_IDL/be_include/be_global.h:
+                  No need to create a new type of svnt file.
+
+                * TAO_IDL/be_include/be_codegen.h:
+                  Using pragma ciao lem to determine which files
+                  to include.
+
+        Mon Dec  5 19:33:12 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * TAO_IDL/be/be_produce.cpp:
+                * TAO_IDL/be/be_visitor_root.cpp:
+                * TAO_IDL/be/be_visitor_root/root_ex_svs.cpp:
+                * TAO_IDL/be_include/be_visitor_root.h:
+                * TAO_IDL/be_include/be_visitor_root/root_ex_svs.h:
+                * TAO_IDL/be/be_visitor_root/root_ex_svnt.cpp:
+                  Renamed _svnt files since these are ignored by subversion
+
+        Mon Dec  5 18:43:32 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * TAO_IDL/be/be_codegen.cpp:
+                * TAO_IDL/be/be_global.cpp:
+                * TAO_IDL/be/be_produce.cpp:
+                  Reduced the restrictions for generating an executor servant.
+
+        Mon Dec  5 16:08:50 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * TAO_IDL/be/be_codegen.cpp:
+                * TAO_IDL/be/be_global.cpp:
+                * TAO_IDL/be/be_produce.cpp:
+                * TAO_IDL/be/be_visitor_component/component.cpp:
+                * TAO_IDL/be/be_visitor_module/module.cpp:
+                * TAO_IDL/be/be_visitor_root.cpp:
+                * TAO_IDL/be/be_visitor_root/root_ex_svnt.cpp:
+                * TAO_IDL/be_include/be_codegen.h:
+                * TAO_IDL/be_include/be_global.h:
+                * TAO_IDL/be_include/be_helper.h:
+                * TAO_IDL/be_include/be_visitor_root.h:
+                  Generate a new svnt.h which is a place holder for the
+                  _svnt_T.h files. This will be included via S.h.
+                  The new _svnt.h is only generated when the ciao lem
+                  pragma is used or when -Glem is part of the command
+                  line options.
+
+        Sun Dec  4 16:04:04 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * TAO_IDL/be/be_codegen.cpp:
+                  One step closer in solving AMI4CCM compile issues.
+
+        Fri Dec  2 15:57:52 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * TAO_IDL/be/be_provides.cpp:
+                * TAO_IDL/be/be_visitor_component/context_svth.cpp:
+                * TAO_IDL/be/be_visitor_component/context_svts.cpp:
+                  No multiple inheritance so no virtual needed.
+
+        Fri Dec  2 14:59:28 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * TAO_IDL/be/be_codegen.cpp:
+                * TAO_IDL/be/be_global.cpp:
+                * TAO_IDL/be_include/be_codegen.h:
+                * TAO_IDL/be_include/be_global.h:
+                  Include base file into inherited template header file.
+
+                * TAO_IDL/be/be_visitor_component/component_svth.cpp:
+                * TAO_IDL/be/be_visitor_component/component_svts.cpp:
+                * TAO_IDL/be/be_visitor_component/facet_svth.cpp:
+                * TAO_IDL/be/be_visitor_component/facet_svts.cpp:
+                * TAO_IDL/be_include/be_visitor_component/component_svts.h:
+                  Contexts are now template classes which derive from their template
+                  base classes.
+
+        Fri Dec  2 08:00:16 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * TAO_IDL/be/be_codegen.cpp:
+                * TAO_IDL/be/be_visitor_component.cpp:
+                * TAO_IDL/be/be_visitor_component/component_svh.cpp:
+                * TAO_IDL/be/be_visitor_component/component_svs.cpp:
+                * TAO_IDL/be/be_visitor_component/component_svth.cpp:
+                * TAO_IDL/be/be_visitor_component/component_svts.cpp:
+                * TAO_IDL/be/be_visitor_component/context_svth.cpp:
+                * TAO_IDL/be/be_visitor_component/context_svts.cpp:
+                * TAO_IDL/be/be_visitor_component/servant_svh.cpp:
+                * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+                * TAO_IDL/be_include/be_visitor_component.h:
+                * TAO_IDL/be_include/be_visitor_component/context_svth.h:
+                * TAO_IDL/be_include/be_visitor_component/context_svts.h:
+                  Context implementation is now templated. Therefor
+                  renamed context_sv* files.
+
+                * TAO_IDL/be/be_visitor_component/context_svh.cpp:
+                * TAO_IDL/be/be_visitor_component/context_svs.cpp:
+                * TAO_IDL/be_include/be_visitor_component/context_svh.h:
+                * TAO_IDL/be_include/be_visitor_component/context_svs.h:
+                  Removed these files.
+
+        Thu Dec  1 09:06:16 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_component/facet_svth.cpp:
+                * TAO_IDL/be/be_visitor_component/facet_svts.cpp:
+                  Fixed coverity warning.
+
+        Thu Dec  1 08:37:33 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * TAO_IDL/be/be_codegen.cpp:
+                * TAO_IDL/be/be_visitor_component.cpp:
+                * TAO_IDL/be/be_visitor_component/component_svh.cpp:
+                * TAO_IDL/be/be_visitor_component/component_svs.cpp:
+                * TAO_IDL/be/be_visitor_component/component_svth.cpp:
+                * TAO_IDL/be/be_visitor_component/component_svts.cpp:
+                * TAO_IDL/be/be_visitor_component/context_svh.cpp:
+                * TAO_IDL/be/be_visitor_component/context_svs.cpp:
+                * TAO_IDL/be/be_visitor_module/module.cpp:
+                * TAO_IDL/be_include/be_visitor_component.h:
+                * TAO_IDL/be_include/be_visitor_component/component_svth.h:
+                * TAO_IDL/be_include/be_visitor_component/component_svts.h:
+                  Moved the generated Context code to the _svnt_T files. Later on
+                  these classes will be templated.
+
+        === end changelog ===
+
 Wed Dec  7 17:54:41 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/util/utl_stack.cpp(UTL_ScopeStack::pop):

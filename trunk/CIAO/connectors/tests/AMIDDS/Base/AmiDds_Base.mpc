@@ -11,7 +11,6 @@ project(AMI_AmiDds_Base_idl_gen) : componentidldefaults, ami, ami4ccm_stub {
               -Wb,exec_export_macro=AMIDDS_BASE_EXEC_Export \
               -Wb,exec_export_include=AmiDds_Base_exec_export.h \
               -I.. -GM -Gxhcn
-  idlflags -= -Gsv
 
   IDL_Files {
     AmiDds_Base.idl

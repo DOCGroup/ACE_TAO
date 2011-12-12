@@ -30,8 +30,8 @@
 #include "be_visitor_interface/interface_ss.h"
 #include "be_visitor_interface/interface_is.h"
 #include "be_visitor_interface/interface_ex_idl.h"
-#include "be_visitor_interface/interface_svh.h"
-#include "be_visitor_interface/interface_svs.h"
+#include "be_visitor_interface/interface_svth.h"
+#include "be_visitor_interface/interface_svts.h"
 #include "be_visitor_interface/any_op_ch.h"
 #include "be_visitor_interface/any_op_cs.h"
 #include "be_visitor_interface/cdr_op_ch.h"
@@ -40,6 +40,10 @@
 #include "be_visitor_interface/tie_ss.h"
 #include "be_visitor_interface/smart_proxy_ch.h"
 #include "be_visitor_interface/smart_proxy_cs.h"
+
+// Facets
+#include "be_visitor_interface/facet_svth.h"
+#include "be_visitor_interface/facet_svts.h"
 
 // Proxy Impls
 #include "be_visitor_interface/direct_proxy_impl_sh.h"

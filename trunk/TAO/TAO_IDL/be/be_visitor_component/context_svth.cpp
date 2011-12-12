@@ -12,18 +12,19 @@
  *  @author Jeff Parsons
  */
 //=============================================================================
+#include <be_helper.h>
 
-be_visitor_context_svh::be_visitor_context_svh (be_visitor_context *ctx)
+be_visitor_context_svth::be_visitor_context_svth (be_visitor_context *ctx)
   : be_visitor_component_scope (ctx)
 {
 }
 
-be_visitor_context_svh::~be_visitor_context_svh (void)
+be_visitor_context_svth::~be_visitor_context_svth (void)
 {
 }
 
 int
-be_visitor_context_svh::visit_component (be_component *node)
+be_visitor_context_svth::visit_component (be_component *node)
 {
   // This visitor is spawned by be_visitor_component_svh,
   // which already does a check for imported node, so none
@@ -44,14 +45,27 @@ be_visitor_context_svh::visit_component (be_component *node)
       << "class " << lname << "_Servant;"
       << be_nl_2;
 
-  os_ << "class " << export_macro_.c_str () << " " << lname
-      << "_Context" << be_idt_nl
-      << ": public virtual ::CIAO::"
-      << be_global->ciao_container_type ()
-      << "_Context_Impl<" << be_idt << be_idt_nl
-      << global << sname << "::CCM_" << lname
-      << "_Context," << be_nl
-      << "::" << node->name () << ">" << be_uidt << be_uidt << be_uidt_nl
+
+  os_ << "template <typename CONTAINER_TYPE, typename BASE>" << be_nl;
+
+  os_ << "class " << lname << "_Context_T" << be_idt_nl;
+  // Spec: no multiple inheritance allowed for components.
+  AST_Component * base = node->base_component ();
+  if (base)
+    {
+      const char *lbase_name =
+        base->original_local_name ()->get_string ();
+
+      os_ << ": public " << global << "CIAO_" << base->flat_name ()
+          << "_Impl::" << lbase_name << "_Context_T<CONTAINER_TYPE, BASE>";
+    }
+  else
+    {
+      os_ << ": public BASE";
+    }
+
+
+  os_ << be_uidt_nl
       << "{" << be_nl
       << "public:" << be_idt_nl;
 
@@ -59,18 +73,18 @@ be_visitor_context_svh::visit_component (be_component *node)
       << "friend class " << lname << "_Servant;"
       << be_nl_2;
 
-  os_ << "/// Some useful typedefs." << be_nl
-      << "typedef" << be_nl
-      << "::CIAO::" << be_global->ciao_container_type ()
-      << "_Context_Impl<" << be_idt << be_idt_nl
-      << global << sname << "::CCM_"
-      << lname << "_Context," << be_nl
-      << "::" << node->name () << ">" << be_uidt_nl
-      << "base_type;" << be_uidt_nl << be_nl;
-
-  os_ << "typedef base_type::context_type context_type;" << be_nl
-      << "typedef base_type::component_type component_type;"
-      << be_nl;
+//   os_ << "/// Some useful typedefs." << be_nl
+//       << "typedef" << be_nl
+//       << "::CIAO::" << be_global->ciao_container_type ()
+//       << "_Context_Impl_T<" << be_idt << be_idt_nl
+//       << global << sname << "::CCM_"
+//       << lname << "_Context," << be_nl
+//       << "::" << node->name () << ">" << be_uidt_nl
+//       << "base_type;" << be_uidt_nl << be_nl;
+//
+//   os_ << "typedef base_type::context_type context_type;" << be_nl
+//       << "typedef base_type::component_type component_type;"
+//       << be_nl;
 
   AST_Decl::NodeType nt = this->node_->node_type ();
   bool const is_connector = (nt == AST_Decl::NT_connector);
@@ -90,14 +104,13 @@ be_visitor_context_svh::visit_component (be_component *node)
       << (de_facto ? "Connector_" : "")
       << "Servant_Impl_Base svnt_base_type;" << be_nl_2;
 
-  os_ << lname << "_Context (" << be_idt_nl
+  os_ << lname << "_Context_T (" << be_idt_nl
       << "::Components::CCMHome_ptr h," << be_nl
-      << "::CIAO::" << be_global->ciao_container_type ()
-      << "_Container_ptr c," << be_nl
+      << "typename CONTAINER_TYPE::_ptr_type c," << be_nl
       << "PortableServer::Servant sv," << be_nl
-      << "const char *id);" << be_uidt_nl << be_nl;
+      << "const char *id);" << be_uidt << be_nl_2;
 
-  os_ << "virtual ~" << lname << "_Context (void);";
+  os_ << "virtual ~" << lname << "_Context_T (void);";
 
   os_ << be_nl_2
       << "/** @name Operations and members for " << lname
@@ -108,13 +121,13 @@ be_visitor_context_svh::visit_component (be_component *node)
       << be_nl
       << "//@{";
 
-  if (this->visit_component_scope (node) == -1)
+  if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_context_svh")
-                         ACE_TEXT ("::visit_component - ")
-                         ACE_TEXT ("visit_component_scope() ")
-                         ACE_TEXT ("failed\n")),
+                        ACE_TEXT ("be_visitor_context_svth")
+                        ACE_TEXT ("::visit_component - ")
+                        ACE_TEXT ("visit_component_scope() ")
+                        ACE_TEXT ("failed\n")),
                         -1);
     }
 
@@ -127,13 +140,13 @@ be_visitor_context_svh::visit_component (be_component *node)
 }
 
 int
-be_visitor_context_svh::visit_connector (be_connector *node)
+be_visitor_context_svth::visit_connector (be_connector *node)
 {
   return this->visit_component (node);
 }
 
 int
-be_visitor_context_svh::visit_uses (be_uses *node)
+be_visitor_context_svth::visit_uses (be_uses *node)
 {
   ACE_CString prefix (this->ctx_->port_prefix ());
   prefix += node->local_name ()->get_string ();
@@ -205,7 +218,7 @@ be_visitor_context_svh::visit_uses (be_uses *node)
 }
 
 int
-be_visitor_context_svh::visit_publishes (be_publishes *node)
+be_visitor_context_svth::visit_publishes (be_publishes *node)
 {
   const char *obj_name = node->publishes_type ()->full_name ();
   const char *port_name = node->local_name ()->get_string ();
@@ -244,7 +257,7 @@ be_visitor_context_svh::visit_publishes (be_publishes *node)
 }
 
 int
-be_visitor_context_svh::visit_emits (be_emits *node)
+be_visitor_context_svth::visit_emits (be_emits *node)
 {
   const char *obj_name = node->emits_type ()->full_name ();
   const char *port_name = node->local_name ()->get_string ();
@@ -274,5 +287,3 @@ be_visitor_context_svh::visit_emits (be_emits *node)
 
   return 0;
 }
-
-

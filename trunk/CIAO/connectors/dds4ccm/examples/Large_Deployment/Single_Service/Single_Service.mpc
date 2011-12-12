@@ -9,7 +9,7 @@ project(Single_Service_idl_gen) : componentidldefaults   {
               -Wb,skel_export_include=Single_Service_svnt_export.h \
               -Wb,exec_export_macro=SINGLE_SERVICE_EXEC_Export \
               -Wb,exec_export_include=Single_Service_exec_export.h \
-              -Gxhex -Gxhsk -Gxhst -I.. -Glfa
+              -Gxhex -Gxhsk -Gxhst -I.. -Gex
 
   IDL_Files {
     Single_Service.idl
@@ -81,9 +81,15 @@ project(Single_Service_stub) : ccm_stub   {
 }
 
 project(Single_Service_exec) : ciao_executor   {
-  after   += Single_Service_lem_stub Single_Service_stub Single_Service_Common_stub
+  after +=  Single_Service_lem_stub \
+            Single_Service_stub \
+            Single_Service_Common_stub \
+            Single_Service_Common_lem_stub
   sharedname = Single_Service_exec
-  libs += Single_Service_stub Single_Service_lem_stub Single_Service_Common_stub
+  libs += Single_Service_stub \
+          Single_Service_lem_stub \
+          Single_Service_Common_stub \
+          Single_Service_Common_lem_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -107,10 +113,16 @@ project(Single_Service_exec) : ciao_executor   {
 
 
 project(Single_Service_svnt) : ciao_servant {
-  after      += Single_Service_lem_stub Single_Service_Common_skel Single_Service_Common_stub
+  after      += Single_Service_lem_stub \
+        Single_Service_Common_skel \
+        Single_Service_Common_stub \
+        Single_Service_Common_lem_stub
   sharedname  = Single_Service_svnt
-  libs       += Single_Service_stub Single_Service_lem_stub \
-                Single_Service_Common_skel Single_Service_Common_stub
+  libs       += Single_Service_stub \
+        Single_Service_lem_stub \
+                Single_Service_Common_skel \
+                Single_Service_Common_stub \
+                Single_Service_Common_lem_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -133,5 +145,3 @@ project(Single_Service_svnt) : ciao_servant {
   Inline_Files {
   }
 }
-
-
