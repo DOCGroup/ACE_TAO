@@ -1,13 +1,12 @@
 
 //=============================================================================
 /**
- *  @file    context_svh.cpp
+ *  @file    context_svth.cpp
  *
  *  $Id$
  *
  *  Visitor generating code for a context class in the
  *  servant header.
- *
  *
  *  @author Jeff Parsons
  */
