@@ -76,6 +76,9 @@ public:
   /// visit a forward declared valuetype node
   int visit_valuetype_fwd (be_valuetype_fwd *node);
 
+  /// visit a connector node
+  int visit_connector (be_connector *node);
+
   /// visit a component node
   int visit_component (be_component *node);
 
