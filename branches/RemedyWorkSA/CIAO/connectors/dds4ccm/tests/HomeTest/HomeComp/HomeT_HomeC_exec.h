@@ -24,8 +24,8 @@
  * Information about TAO is available at:
  *     http://www.cs.wustl.edu/~schmidt/TAO.html
  **/
-#ifndef CIAO_HOMET_HOMEC_EXEC_MB9IO0_H_
-#define CIAO_HOMET_HOMEC_EXEC_MB9IO0_H_
+#ifndef CIAO_HOMET_HOMEC_EXEC_P2A1KH_H_
+#define CIAO_HOMET_HOMEC_EXEC_P2A1KH_H_
 
 #include /**/ "ace/pre.h"
 
@@ -38,66 +38,7 @@
 #include /**/ "HomeT_HomeC_exec_export.h"
 #include "tao/LocalObject.h"
 
-namespace CIAO_ConnComp_Impl
-{
-
-  //Component Executor Implementation Class: ConnComp_exec_i
-
-/*
-  class ConnComp_exec_i
-    : public virtual ConnComp_Exec,
-      public virtual ::CORBA::LocalObject
-  {
-  public:
-    ConnComp_exec_i (void);
-    virtual ~ConnComp_exec_i (void);
-
-    // @name Supported operations and attributes.
-    //@{
-
-    //@}
-
-    // @name Component attributes and port operations.
-    //@{
-    //@}
-
-    // @name Operations from Components::SessionComponent.
-    //@{
-    virtual void set_session_context (::Components::SessionContext_ptr ctx);
-    virtual void configuration_complete (void);
-    virtual void ccm_activate (void);
-    virtual void ccm_passivate (void);
-    virtual void ccm_remove (void);
-    //@}
-
-    // @name User defined public operations.
-    //@{
-
-    //@}
-
-  private:
-    ::CCM_ConnComp_Context_var ciao_context_;
-
-    // @name Component attributes.
-    //@{
-    //@}
-
-    // @name User defined members.
-    //@{
-
-    //@}
-
-    // @name User defined private operations.
-    //@{
-
-    //@}
-  };
-
-  extern "C" HOMET_HOMEC_EXEC_Export ::Components::EnterpriseComponent_ptr
-  create_ConnComp_Impl (void);
-}
-*/
-namespace CIAO_ConnComp_Impl
+namespace CIAO_ConnComp_DDS_Event_Impl
 {
   class HOMET_HOMEC_EXEC_Export ConnHome_exec_i
     : public virtual ConnHome_Exec,
@@ -108,12 +49,12 @@ namespace CIAO_ConnComp_Impl
 
     virtual ~ConnHome_exec_i (void);
 
-    virtual ::Components::EnterpriseComponent_ptr //ConnComp::DDS_Event_ptr
+    virtual ::Components::EnterpriseComponent_ptr
     new_ConnComp (void);
 
     // Implicit operations.
 
-    virtual ::Components::EnterpriseComponent_ptr //ConnComp::DDS_Event_ptr
+    virtual ::Components::EnterpriseComponent_ptr
     create (void);
   };
 
