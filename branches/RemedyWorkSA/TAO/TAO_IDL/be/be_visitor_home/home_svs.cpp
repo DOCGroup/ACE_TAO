@@ -15,6 +15,7 @@
 // ******************************************************
 // Home visitor for server source
 // ******************************************************
+#include "../../../../../../wb/TAO/TAO_IDL/be_include/be_helper.h"
 
 be_visitor_home_svs::be_visitor_home_svs (be_visitor_context *ctx)
   : be_visitor_scope (ctx),
@@ -153,11 +154,10 @@ be_visitor_home_svs::visit_factory (be_factory *node)
           << "::_duplicate (this->executor_.in ());" << be_uidt
           << be_nl_2;
 
-      os_ << "if ( ::CORBA::is_nil (executor.in ()))"
-          << be_idt_nl
+      os_ << "if ( ::CORBA::is_nil (executor.in ()))" << be_idt_nl
           << "{"<< be_idt_nl
           << "throw ::CORBA::INV_OBJREF ();" << be_uidt_nl
-          << "}" << be_uidt_nl << be_nl;
+          << "}" << be_uidt << be_nl_2;
 
       os_ << "::Components::EnterpriseComponent_var _ciao_ec ="
           << be_idt_nl
@@ -179,11 +179,16 @@ be_visitor_home_svs::visit_factory (be_factory *node)
           os_ << be_uidt;
         }
 
-      os_ << ");" << be_uidt_nl << be_nl
+      os_ << ");" << be_uidt << be_nl_2
           << global << comp_sname << "::CCM_" << comp_lname
           << "_var _ciao_comp =" << be_idt_nl
           << global << comp_sname << "::CCM_" << comp_lname
-          << "::_narrow (_ciao_ec.in ());" << be_uidt_nl << be_nl
+          << "::_narrow (_ciao_ec.in ());" << be_uidt << be_nl_2
+          << "if ( ::CORBA::is_nil (_ciao_ec.in ()))" <<  be_idt_nl
+          << "{" << be_idt_nl
+          << "throw ::Components::CreateFailure ();" << be_uidt_nl
+          << "}" << be_uidt << be_nl_2
+
           << "return this->_ciao_activate_component "
           << "(_ciao_comp.in ());";
     }
