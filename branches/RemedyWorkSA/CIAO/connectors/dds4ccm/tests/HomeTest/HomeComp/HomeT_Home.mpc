@@ -109,7 +109,7 @@ project(HomeT_HomeC_exec) : ciao_executor, dds4ccm_lem_stub {
   }
 }
 
-project(HomeT_HomeC_svnt) : ciao_servant, avoids_ccm_noevent, dds4ccm_base {
+project(HomeT_HomeC_svnt) : ciao_servant, dds4ccm_base {
   after += HomeT_Base_svnt HomeT_HomeC_exec
   includes += ..
 
@@ -126,7 +126,7 @@ project(HomeT_HomeC_svnt) : ciao_servant, avoids_ccm_noevent, dds4ccm_base {
 
   Header_Files {
    HomeT_HomeCS.h
-    HomeT_HomeC_svnt.h
+   HomeT_HomeC_svnt.h
    HomeT_HomeC_svnt_export.h
   }
 
