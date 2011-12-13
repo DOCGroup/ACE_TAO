@@ -147,9 +147,9 @@ be_visitor_home_svs::visit_factory (be_factory *node)
 
       ACE_CString sname_str (ScopeAsDecl (node_->defined_in ())->full_name ());
 
-      os_ << "::" << sname_str << global << "CCM_" << node_->original_local_name ()
+      os_ << sname_str << global << "CCM_" << node_->original_local_name ()
           << "_var executor = " << be_idt_nl
-          << "::" << sname_str << global << "CCM_" << node_->original_local_name ()
+          << sname_str << global << "CCM_" << node_->original_local_name ()
           << "::_duplicate (this->executor_.in ());" << be_uidt
           << be_nl_2;
 
