@@ -9,7 +9,7 @@ project(HomeT_HomeC_idl_gen): componentidldefaults, dds4ccm_ts_default {
               -Wb,skel_export_include=HomeT_HomeC_svnt_export.h \
               -Wb,exec_export_macro=HOMET_HOMEC_EXEC_Export \
               -Wb,exec_export_include=HomeT_HomeC_exec_export.h \
-              -I.. -Gex
+              -I..
 
   IDL_Files {
     HomeT_HomeC.idl
