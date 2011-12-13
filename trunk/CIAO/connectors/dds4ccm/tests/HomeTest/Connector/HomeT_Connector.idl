@@ -1,0 +1,22 @@
+// $Id$
+
+/**
+ * @file Home_Connector.idl
+ * @author
+ */
+
+#ifndef HOMET_CONNECTOR_IDL_
+#define HOMET_CONNECTOR_IDL_
+
+#include <Components.idl>
+#include <ccm_dds.idl>
+
+#include "Base/HomeT_Base.idl"
+
+#pragma ciao lem "Connector/HomeT_ConnectorE.idl"
+
+module ::CCM_DDS::Typed < ::HomeTest, ::HomeTestSeq> ConnComp;
+
+#endif /* HOMET_CONNECTOR_IDL_ */
+
+

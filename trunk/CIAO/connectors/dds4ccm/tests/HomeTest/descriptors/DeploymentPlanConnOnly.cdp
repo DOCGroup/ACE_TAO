@@ -1,0 +1,110 @@
+<!-- $Id$ -->
+<Deployment:DeploymentPlan
+   xmlns:Deployment="http://www.omg.org/Deployment"
+   xmlns:xmi="http://www.omg.org/XMI"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+  <label>Hello_Depl_1</label>
+  <UUID>Hello_Depl_1</UUID>
+   
+  <implementation xmi:id="HomeTest_HomeImplementation">
+    <name>HomeTest_HomeImplementation</name>
+    <source/>
+    <artifact xmi:idref="HomeTest_Home_ExecArtifact" />
+    <artifact xmi:idref="HomeTest_Home_SvntArtifact" />
+    <execParameter>
+      <!-- entrypoint as exec parameter (see 10.6.1) -->
+      <name>home factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_ConnHome_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_ConnHome_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>HomeT_HomeC_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>HomeT_HomeC_exec</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+  
+ <instance xmi:id="HomeTest_HomeInstance">
+    <name>HomeTest_HomeInstance</name>
+    <node>ReceiverNode</node>
+    <source/>
+    <implementation xmi:idref="HomeTest_HomeImplementation" />
+   <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>HomeC.ior</string>
+        </value>
+      </value>
+    </configProperty>
+     <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.RegisterNaming</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>HomeC</string>
+        </value>
+      </value>
+    </configProperty>   
+  </instance>
+   
+   <artifact xmi:id="HomeTest_Home_ExecArtifact">
+    <name>HomeT_HomeC_exec</name>
+    <source/>
+    <node/>
+    <location>HomeT_HomeC_exec</location>
+  </artifact>
+  <artifact xmi:id="HomeTest_Home_SvntArtifact">
+    <name>HomeT_HomeC_svnt</name>
+    <source/>
+    <node/>
+    <location>HomeT_HomeC_svnt</location>
+  </artifact>
+    <artifact xmi:id="HomeTest_Home_StubArtifact">
+    <name>HomeT_HomeC_stub</name>
+    <source/>
+    <node/>
+    <location>HomeT_HomeC_stub</location>
+  </artifact>
+  
+ </Deployment:DeploymentPlan>
