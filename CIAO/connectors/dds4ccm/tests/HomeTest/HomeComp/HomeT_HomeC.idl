@@ -9,17 +9,12 @@
 #define HOMET_HOMEC_IDL_
 
 #include <Components.idl>
-#include <ccm_dds.idl>
-
-#include "Base/HomeT_Base.idl"
 #include "Connector/HomeT_Connector.idl"
-
 
 home ConnHome manages ConnComp::DDS_Event
 {
   factory new_ConnComp ();
 };
-
 
 #endif /* HOMET_HOMEC_IDL_ */
 
