@@ -321,13 +321,11 @@ FooConnector_Connector_T<CCM_TYPE, DDS_TYPE_T, FIXED_T, SEQ_TYPE_T, DDS_TYPE_Y, 
   this->observable_t_.configuration_complete (
           this->topic_t_.in (),
           this->publisher_t_.in (),
-          this->library_name_,
-          this->profile_name_);
+          this->qos_profile_);
   this->observable_y_.configuration_complete (
            this->topic_y_.in (),
            this->publisher_y_.in (),
-           this->library_name_,
-           this->profile_name_);
+           this->qos_profile_);
 
   this->dl_t_ = this->context_->get_connection_push_consumer_t_data_listener ();
   this->dl_y_ = this->context_->get_connection_push_consumer_y_data_listener ();
@@ -342,14 +340,11 @@ FooConnector_Connector_T<CCM_TYPE, DDS_TYPE_T, FIXED_T, SEQ_TYPE_T, DDS_TYPE_Y, 
   this->push_consumer_t_.configuration_complete (
                                       this->topic_t_.in (),
                                       this->subscriber_t_.in (),
-                                      this->library_name_,
-                                      this->profile_name_);
+                                      this->qos_profile_);
   this->push_consumer_y_.configuration_complete (
                                        this->topic_y_.in (),
                                        this->subscriber_y_.in (),
-                                       this->library_name_,
-                                       this->profile_name_);
-
+                                       this->qos_profile_);
 }
 
 template <typename CCM_TYPE, typename DDS_TYPE_T, bool FIXED_T, typename SEQ_TYPE_T, typename DDS_TYPE_Y, bool FIXED_Y, typename SEQ_TYPE_Y>
