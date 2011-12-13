@@ -33,6 +33,7 @@
 #include "be_valuetype_fwd.h"
 #include "be_component.h"
 #include "be_component_fwd.h"
+#include "be_connector.h"
 #include "be_eventtype.h"
 #include "be_eventtype_fwd.h"
 #include "be_home.h"

@@ -1,0 +1,21 @@
+// $Id$
+
+/**
+ * @file Home_Home.idl
+ * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
+ */
+
+#ifndef HOMET_HOMEC_IDL_
+#define HOMET_HOMEC_IDL_
+
+#include <Components.idl>
+#include "Connector/HomeT_Connector.idl"
+
+home ConnHome manages ConnComp::DDS_Event
+{
+  factory new_ConnComp ();
+};
+
+#endif /* HOMET_HOMEC_IDL_ */
+
+

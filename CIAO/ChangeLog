@@ -1,3 +1,57 @@
+Tue Dec 13 13:37:25 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        Merged changes from our work branch. Test Home with connectors.F
+        === start changelog ===
+
+        Tue Dec 13 13:17:07 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+                * bin/ciao_tests.lst
+                Added HomeTest
+
+        Tue Dec 13 13:00:07 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+                * connectors/dds4ccm/tests/HomeTest/HomeComp/HomeT_Home.mpc:
+                * connectors/dds4ccm/tests/HomeTest/HomeComp/HomeT_HomeC.idl:
+                * connectors/dds4ccm/tests/HomeTest/HomeComp/HomeT_HomeC_exec.cpp:
+                * connectors/dds4ccm/tests/HomeTest/HomeComp/controller.cpp:
+                * connectors/dds4ccm/tests/HomeTest/descriptors/run_test.pl:
+                Home created now a connector instance, without activating it.
+
+        Mon Dec 12 10:59:27 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+                * connectors/dds4ccm/tests/HomeTest/HomeComp/HomeT_Home.mpc:
+                * connectors/dds4ccm/tests/HomeTest/HomeComp/HomeT_HomeC.idl:
+                * connectors/dds4ccm/tests/HomeTest/HomeComp/HomeT_HomeC_exec.cpp:
+                * connectors/dds4ccm/tests/HomeTest/HomeComp/controller.cpp:
+                * connectors/dds4ccm/tests/HomeTest/descriptors/DeploymentPlanConnOnly.cdp:
+                * connectors/dds4ccm/tests/HomeTest/descriptors/run_test.pl:
+              Add controller, acting on Home component
+
+                * connectors/dds4ccm/tests/HomeTest/HomeComp/client.cpp:
+                  Removed this file.
+
+        Thu Dec  8 16:08:07 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+                * connectors/dds4ccm/tests/HomeTest:
+                * connectors/dds4ccm/tests/HomeTest/Base:
+                * connectors/dds4ccm/tests/HomeTest/Base/HomeT_Base.idl:
+                * connectors/dds4ccm/tests/HomeTest/Base/HomeT_Base.mpc:
+                * connectors/dds4ccm/tests/HomeTest/Connector:
+                * connectors/dds4ccm/tests/HomeTest/Connector/HomeT_Connector.idl:
+                * connectors/dds4ccm/tests/HomeTest/Connector/HomeT_Connector.mpc:
+                * connectors/dds4ccm/tests/HomeTest/HomeComp:
+                * connectors/dds4ccm/tests/HomeTest/HomeComp/HomeT_Home.mpc:
+                * connectors/dds4ccm/tests/HomeTest/HomeComp/HomeT_HomeC.idl:
+                * connectors/dds4ccm/tests/HomeTest/HomeComp/HomeT_HomeC_exec.h:
+                * connectors/dds4ccm/tests/HomeTest/HomeComp/HomeT_HomeC_exec.cpp:
+                * connectors/dds4ccm/tests/HomeTest/HomeComp/client.cpp:
+                * connectors/dds4ccm/tests/HomeTest/descriptors:
+                * connectors/dds4ccm/tests/HomeTest/descriptors/DeploymentPlanConnOnly.cdp:
+                * connectors/dds4ccm/tests/HomeTest/descriptors/USER_QOS_PROFILES.xml:
+                * connectors/dds4ccm/tests/HomeTest/descriptors/run_test.pl:
+                First commit new test for Connector Homes.
+        === end changelog ===
+
 Mon Dec 12 19:28:51 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/ami4ccm/ami4ccm/ami4ccm.mpc:
