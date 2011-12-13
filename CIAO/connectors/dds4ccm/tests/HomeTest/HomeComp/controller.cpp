@@ -4,7 +4,7 @@
 /**
  * @file controller.cpp
  *
- * This is a controller tat interact with the Home-component implementation.
+ * This is a controller that interact with the Home-component implementation.
  * This test uses the explicit factory
  * operation in the home interface to create a connector component
  * instance, run it for a while, and destroy the component instance.
@@ -12,6 +12,7 @@
 //==============================================================
 
 #include "HomeT_HomeCC.h"
+#include "Connector/HomeT_ConnectorEC.h"
 #include "ace/streams.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Get_Opt.h"
@@ -79,26 +80,33 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         ACE_ERROR_RETURN ((LM_ERROR, "Unable to acquire ConnHome objref\n"), -1);
 
       // starting Connector component
-      ACE_DEBUG ((LM_DEBUG, "Controller: Starting Connector component home->new_ConnComp ()\n"));
+      ACE_DEBUG ((LM_DEBUG, "Controller: Start create Connector component\n"));
 
-      CORBA::Object  * tmp  = home_comp->new_ConnComp ();
+      CORBA::Object_var tmp  = home_comp->new_ConnComp ();
+      ConnComp::DDS_Event_var ce = ConnComp::DDS_Event::_narrow (tmp.in ());
 
-      if (CORBA::is_nil (tmp))
-        ACE_ERROR((LM_ERROR, "Unable to start home_comp->new_ConnComp\n"));
+      if (CORBA::is_nil (ce.in ()))
+        ACE_ERROR((LM_ERROR, "Unable to start create Connector component\n"));
 
-      ACE_DEBUG ((LM_DEBUG, "Controller: Started Connector component home->new_ConnComp ()\n"));
+      ACE_DEBUG ((LM_DEBUG, "Controller: Started Connector component\n"));
 
-      // Place to plug in the rate
+      // Place to plug in some connector settings
+      ce->topic_name ("Shapes");
+      ce->configuration_complete();
+      // activate not possible
+      //ce->ccm_activate ();
 
       ACE_OS::sleep (5);
 
-  //    home->remove_component ();
+      ce->remove ();
+
+      ACE_DEBUG ((LM_DEBUG, "Controller: removed Connector component\n"));
 
       orb->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("Who is the culprit\n");
+      ex._tao_print_exception ("Exception\n");
       ACE_ERROR_RETURN ((LM_ERROR,
                          "Uncaught CORBA exception\n"),
                         1);

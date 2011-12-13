@@ -46,7 +46,17 @@ namespace CIAO_ConnComp_DDS_Event_Impl
   ConnHome_exec_i::new_ConnComp (void)
   {
     /* Your code here. */
-    return ::ConnComp::CCM_DDS_Event::_nil ();
+    ACE_DEBUG ((LM_DEBUG, "ConnHome_exec_i::new_ConnComp: create connector.\n"));
+
+    ::Components::EnterpriseComponent_ptr retval =
+      ::Components::EnterpriseComponent::_nil ();
+
+    ACE_NEW_THROW_EX (
+      retval,
+      CIAO_ConnComp_DDS_Event_Impl::DDS_Event_exec_i,
+      ::CORBA::NO_MEMORY ());
+
+    return retval;
   }
 
   // Implicit operations.

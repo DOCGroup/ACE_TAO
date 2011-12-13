@@ -14,20 +14,20 @@ $DANCE_ROOT = "$ENV{'DANCE_ROOT'}";
 $DDS4CCM_TRACE_ENABLE = "$ENV{'DDS4CCM_TRACE_ENABLE'}";
 
 
-$ENV{'DANCE_LOG_LEVEL'}=10;
-$ENV{'CIAO_LOG_LEVEL'}=10;
-$ENV{'DANCE_TRACE_ENABLE'}=1;
-$ENV{'CIAO_TRACE_ENABLE'}=1;
+$ENV{'DANCE_LOG_LEVEL'}=0;
+$ENV{'CIAO_LOG_LEVEL'}=0;
+$ENV{'DANCE_TRACE_ENABLE'}=0;
+$ENV{'CIAO_TRACE_ENABLE'}=0;
 
 $daemons_running = 0;
 $em_running = 0;
 $ns_running = 0;
 
-$nr_daemon = 2;
-@ports = ( 60001, 60002 );
-@iorbases = ( "HomeC.ior", "Sender.ior" );
+$nr_daemon = 1;
+@ports = ( 60001 );
+@iorbases = ( "HomeC.ior" );
 @iorfiles = 0;
-@nodenames = ("ReceiverNode" , "SenderNode");
+@nodenames = ("ReceiverNode");
 
 $controller_exec = "$CIAO_ROOT/connectors/dds4ccm/tests/HomeTest/HomeComp/controller";
 
@@ -239,19 +239,8 @@ if ($result != 0) {
 }
 
 # put some delay here.
-sleep (30);
-
-# invoking the controller again to stop the rategen
-print "Invoking the controller to stop RateGen\n";
-$controller = $tg_executor->CreateProcess ("$controller_exec", "-k file://HomeC.ior -f");
-$result = $controller->SpawnWaitKill ($tg_executor->ProcessStopWaitInterval ());
-if ($result != 0) {
-    print STDERR "ERROR: The controller returned $result\n";
-    $status = 1;
-}
-print "Sleeping 5 seconds to allow task to complete\n";
+print "Sleeping 10 seconds to allow task to complete\n";
 sleep (5);
-
 
 
 

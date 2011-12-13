@@ -1,3 +1,12 @@
+Tue Dec 13 13:00:07 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
+
+        * connectors/dds4ccm/tests/HomeTest/HomeComp/HomeT_Home.mpc:
+        * connectors/dds4ccm/tests/HomeTest/HomeComp/HomeT_HomeC.idl:
+        * connectors/dds4ccm/tests/HomeTest/HomeComp/HomeT_HomeC_exec.cpp:
+        * connectors/dds4ccm/tests/HomeTest/HomeComp/controller.cpp:
+        * connectors/dds4ccm/tests/HomeTest/descriptors/run_test.pl:
+        Home created now a connector instance, without activating it.
+
 Mon Dec 12 10:59:27 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
 
         * connectors/dds4ccm/tests/HomeTest/HomeComp/HomeT_Home.mpc:
@@ -6,7 +15,7 @@ Mon Dec 12 10:59:27 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
         * connectors/dds4ccm/tests/HomeTest/HomeComp/controller.cpp:
         * connectors/dds4ccm/tests/HomeTest/descriptors/DeploymentPlanConnOnly.cdp:
         * connectors/dds4ccm/tests/HomeTest/descriptors/run_test.pl:
-       Add controller, acting on Home component 
+       Add controller, acting on Home component
 
         * connectors/dds4ccm/tests/HomeTest/HomeComp/client.cpp:
           Removed this file.
