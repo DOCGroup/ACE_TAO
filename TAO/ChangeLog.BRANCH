@@ -1,0 +1,9 @@
+Tue Dec 13 10:19:29 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/context_svs.cpp:
+        * TAO_IDL/be/be_visitor_operation.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype.cpp:
+        * TAO_IDL/be_include/be_connector.h:
+        * TAO_IDL/be_include/be_visitor_operation/rettype.h:
+          Generate the needed return type when we have a home factory method
+          that returns a connector type

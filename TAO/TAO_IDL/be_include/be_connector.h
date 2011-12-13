@@ -21,7 +21,6 @@ public:
   virtual void destroy (void);
 
   // Narrowing.
-
   DEF_NARROW_FROM_DECL (be_connector);
   DEF_NARROW_FROM_SCOPE (be_connector);
 
