@@ -26,77 +26,9 @@
  **/
 
 #include "HomeT_HomeC_exec.h"
-#include "./Connector/HomeT_Connector_conn.h"
-/*
-namespace CIAO_ConnComp_Impl
-{
+#include "../Connector/HomeT_Connector_conn.h"
 
-  // Component Executor Implementation Class: ConnComp_exec_i
-
-
-  ConnComp_exec_i::ConnComp_exec_i (void)
-  {
-  }
-
-  ConnComp_exec_i::~ConnComp_exec_i (void)
-  {
-  }
-
-  // Supported operations and attributes.
-
-  // Component attributes and port operations.
-
-  // Operations from Components::SessionComponent.
-
-  void
-  ConnComp_exec_i::set_session_context (
-    ::Components::SessionContext_ptr ctx)
-  {
-    this->ciao_context_ =
-      ::CCM_ConnComp_Context::_narrow (ctx);
-
-    if ( ::CORBA::is_nil (this->ciao_context_.in ()))
-      {
-        throw ::CORBA::INTERNAL ();
-      }
-  }
-
-  void
-  ConnComp_exec_i::configuration_complete (void)
-  {
-
-  }
-
-  void
-  ConnComp_exec_i::ccm_activate (void)
-  {
-  }
-
-  void
-  ConnComp_exec_i::ccm_passivate (void)
-  {
-  }
-
-  void
-  ConnComp_exec_i::ccm_remove (void)
-  {
-  }
-
-  extern "C" HOMET_HOMEC_EXEC_Export ::Components::EnterpriseComponent_ptr
-  create_ConnComp_Impl (void)
-  {
-    ::Components::EnterpriseComponent_ptr retval =
-      ::Components::EnterpriseComponent::_nil ();
-
-    ACE_NEW_NORETURN (
-      retval,
-      ConnComp_exec_i);
-
-    return retval;
-  }
-}
-*/
-namespace CIAO_ConnComp_Impl
+namespace CIAO_ConnComp_DDS_Event_Impl
 {
   /**
    * Home Executor Implementation Class: ConnHome_exec_i
@@ -104,38 +36,30 @@ namespace CIAO_ConnComp_Impl
 
   ConnHome_exec_i::ConnHome_exec_i (void)
   {
-    new_ConnComp();
   }
 
   ConnHome_exec_i::~ConnHome_exec_i (void)
   {
   }
 
-  ::Components::EnterpriseComponent_ptr //ConnComp::DDS_Event_ptr
+  ::Components::EnterpriseComponent_ptr
   ConnHome_exec_i::new_ConnComp (void)
   {
-  //  ConnComp::DDS_Event_ptr tmp = 0;
-    ::Components::EnterpriseComponent_ptr tmp = 0;
-
-    printf("ConnHome_exec_i::new_ConnComp  !!!!!!!!!!!1");
     /* Your code here. */
-    //return ::CCM_ConnComp::_nil ();
- //   return CIAO_HomeCompTest_DDS_Event_Impl::create_HomeCompTest_DDS_Event_Impl();
-    return tmp;
+    return ::ConnComp::CCM_DDS_Event::_nil ();
   }
 
   // Implicit operations.
 
- ::Components::EnterpriseComponent_ptr
+  ::Components::EnterpriseComponent_ptr
   ConnHome_exec_i::create (void)
   {
     ::Components::EnterpriseComponent_ptr retval =
       ::Components::EnterpriseComponent::_nil ();
-    printf("ConnHome_exec_i::create  !!!!!!!!!!!1");
 
     ACE_NEW_THROW_EX (
       retval,
-      ConnComp_exec_i,
+      CIAO_ConnComp_DDS_Event_Impl::DDS_Event_exec_i,
       ::CORBA::NO_MEMORY ());
 
     return retval;
@@ -147,10 +71,9 @@ namespace CIAO_ConnComp_Impl
     ::Components::HomeExecutorBase_ptr retval =
       ::Components::HomeExecutorBase::_nil ();
 
-    ACE_NEW_RETURN (
+    ACE_NEW_NORETURN (
       retval,
-      ConnHome_exec_i,
-      ::Components::HomeExecutorBase::_nil ());
+      ConnHome_exec_i);
 
     return retval;
   }
