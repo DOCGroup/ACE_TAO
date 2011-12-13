@@ -1,0 +1,24 @@
+// $Id$
+
+/**
+ * @file Home_Base.idl
+ * @author 
+ */
+
+#ifndef HOMET_BASE_IDL
+#define HOMET_BASE_IDL
+
+#pragma ndds typesupport "Base/HomeT_BaseSupport.h"
+#pragma opendds typesupport "Base/HomeT_BaseTypeSupportImpl.h"
+#pragma splice typesupport "Base/HomeT_BaseDcpsC.h"
+
+#pragma DCPS_DATA_TYPE "HomeTest"
+
+struct HomeTest {
+  string hello;
+  short iterator;
+};
+
+typedef sequence<HomeTest> HomeTestSeq;
+
+#endif

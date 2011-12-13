@@ -1,3 +1,29 @@
+Tue Dec 13 13:33:25 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        Merged changes from our work branch. Changes for home factory with a connector.
+
+        === start changelog ===
+        Tue Dec 13 11:23:20 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_home/home_svs.cpp:
+                  If the factory method returns nil throw a CreateFailure
+
+        Tue Dec 13 11:03:39 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_home/home_svs.cpp:
+                  Fixed scoping
+
+        Tue Dec 13 10:19:29 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_component/context_svs.cpp:
+                * TAO_IDL/be/be_visitor_operation.cpp:
+                * TAO_IDL/be/be_visitor_operation/rettype.cpp:
+                * TAO_IDL/be_include/be_connector.h:
+                * TAO_IDL/be_include/be_visitor_operation/rettype.h:
+                  Generate the needed return type when we have a home factory method
+                  that returns a connector type
+        === end changelog ===
+
 Mon Dec 12 07:33:25 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         Merged changes from our work branch. Facet servants are now generated

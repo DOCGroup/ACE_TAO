@@ -242,6 +242,13 @@ be_visitor_operation_rettype::visit_component (
 }
 
 int
+be_visitor_operation_rettype::visit_connector (
+  be_connector *node)
+{
+  return this->visit_component (node);
+}
+
+int
 be_visitor_operation_rettype::visit_component_fwd (
   be_component_fwd *node)
 {
