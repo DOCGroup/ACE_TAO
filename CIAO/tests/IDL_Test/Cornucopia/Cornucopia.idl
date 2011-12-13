@@ -275,3 +275,18 @@ module FooConnector_T<interface T, interface AMI4CCM_T>
 };
 
 module FooConnector_T<Supported::IfacePawPaw, Supported::IfacePawPaw> FooPawPaw;
+
+module BasicHomes
+{
+  interface foo_interface {};
+
+  component Foo supports foo_interface {};
+
+  home FooHome manages Foo
+    {
+    };
+};
+
+home SecondFooHome manages BasicHomes::Foo
+{
+};
