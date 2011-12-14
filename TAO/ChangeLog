@@ -1,3 +1,8 @@
+Wed Dec 14 07:59:43 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_home/home_svs.cpp:
+          Removed include that shouldn't have been added
+
 Tue Dec 13 13:33:25 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         Merged changes from our work branch. Changes for home factory with a connector.
