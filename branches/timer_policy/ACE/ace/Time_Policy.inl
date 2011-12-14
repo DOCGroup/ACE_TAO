@@ -8,15 +8,25 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE ACE_Time_Value
-ACE_Default_Time_Policy::operator()() const
+ACE_System_Time_Policy::operator()() const
 {
   return ACE_OS::gettimeofday();
+}
+
+ACE_INLINE void
+ACE_System_Time_Policy::set_gettimeofday (ACE_Time_Value (*)(void))
+{
 }
 
 ACE_INLINE ACE_Time_Value
 ACE_HR_Time_Policy::operator()() const
 {
   return ACE_High_Res_Timer::gettimeofday_hr ();
+}
+
+ACE_INLINE void
+ACE_HR_Time_Policy::set_gettimeofday (ACE_Time_Value (*)(void))
+{
 }
 
 ACE_INLINE
@@ -38,10 +48,21 @@ ACE_FPointer_Time_Policy::operator()() const
   return (*this->function_)();
 }
 
+ACE_INLINE void
+ACE_FPointer_Time_Policy::set_gettimeofday (ACE_Time_Value (*f)(void))
+{
+  this->function_ = f;
+}
+
 ACE_INLINE ACE_Time_Value
 ACE_Dynamic_Time_Policy_Base::operator()() const
 {
   return this->gettimeofday ();
+}
+
+ACE_INLINE void
+ACE_Dynamic_Time_Policy_Base::set_gettimeofday (ACE_Time_Value (*)(void))
+{
 }
 
 ACE_INLINE
@@ -54,6 +75,11 @@ ACE_INLINE ACE_Time_Value
 ACE_Delegating_Time_Policy::operator()() const
 {
   return (*this->delegate_) ();
+}
+
+ACE_INLINE void
+ACE_Delegating_Time_Policy::set_gettimeofday (ACE_Time_Value (*)(void))
+{
 }
 
 ACE_INLINE void

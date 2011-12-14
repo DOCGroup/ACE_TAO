@@ -279,6 +279,7 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, taoid
     Synch_Invocation.cpp
     Synch_Queued_Message.cpp
     Synch_Reply_Dispatcher.cpp
+    System_Time_Policy_Strategy.cpp
     SystemException.cpp
     Tagged_Components.cpp
     Tagged_Profile.cpp
@@ -592,6 +593,7 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, taoid
     Synch_Invocation.h
     Synch_Queued_Message.h
     Synch_Reply_Dispatcher.h
+    System_Time_Policy_Strategy.h
     SystemException.h
     Tagged_Components.h
     Tagged_Profile.h

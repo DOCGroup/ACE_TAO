@@ -46,6 +46,8 @@ public:
   /// of day.
   void set_time_policy(TIME_POLICY const & time_policy);
 
+  /// Noop. Just here to satisfy backwards compatibility demands.
+  void set_gettimeofday (ACE_Time_Value (*gettimeofday)(void));
 protected:
   /// Return the current time according to policy implementation.
   virtual ACE_Time_Value gettimeofday () const;

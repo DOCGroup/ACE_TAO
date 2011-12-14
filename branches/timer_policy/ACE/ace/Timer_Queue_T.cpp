@@ -68,6 +68,12 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::gettimeofday()
   return this->gettimeofday_static();
 }
 
+template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> void
+ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::gettimeofday (ACE_Time_Value (*gettimeofday)(void))
+{
+  this->time_policy_.set_gettimeofday (gettimeofday);
+}
+
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> ACE_Time_Value *
 ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::calculate_timeout (ACE_Time_Value *max_wait_time)
 {

@@ -1,0 +1,27 @@
+    Wed Dec 14 08:56:00 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+    
+            * connectors/dds4ccm/performance-tests/DDSLatency/DDS_Sender/Latency_Sender.cpp:
+            
+              Fixed compile error.
+
+    Tue Dec 13 10:28:00 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+    
+            * connectors/dds4ccm/performance-tests/DDSLatency/DDS_Sender/Latency_Sender.cpp:
+            * connectors/dds4ccm/performance-tests/Keyed/Sender/Perf_Keyed_Test_Sender_exec.cpp:
+            * connectors/dds4ccm/performance-tests/Keyed/descriptors/Plan.cdp:
+            * connectors/dds4ccm/performance-tests/Keyed/descriptors/Plan_pub.cdp:                                                                                                                                                                                   
+            * connectors/dds4ccm/performance-tests/Keyed/descriptors/Plan_pub3.cdp:                                                                                                                                                                                  
+            * connectors/dds4ccm/performance-tests/Keyed/descriptors/Plan_pub_BE.cdp:                                                                                                                                                                                
+            * connectors/dds4ccm/performance-tests/Latency/Sender/LatencyTT_Test_Sender_exec.cpp:                                                                                                                                                                    
+            * connectors/dds4ccm/performance-tests/Latency/descriptors/Plan_SharedMem.cdp:                                                                                                                                                                           
+            * connectors/dds4ccm/performance-tests/Latency/descriptors/Plan_UDPv4.cdp:                                                                                                                                                                               
+            * connectors/dds4ccm/performance-tests/Throughput/Sender/Throughput_Sender_exec.cpp:                                                                                                                                                                     
+            * connectors/dds4ccm/performance-tests/Throughput/descriptors/Plan_pub.cdp:
+            
+              Adapted tests to new time policy support.
+
+Local Variables:
+mode: change-log
+add-log-time-format: (lambda () (progn (setq tz (getenv "TZ")) (set-time-zone-rule "UTC") (setq time (format-time-string "%a %b %e %H:%M:%S %Z %Y" (current-time))) (set-time-zone-rule tz) time))
+indent-tabs-mode: nil
+End:

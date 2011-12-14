@@ -7,6 +7,22 @@
   <label>Throughput_Depl_2</label>
   <UUID>Throughput_Depl_2</UUID>
 
+  <implementation xmi:id="CompSvrImpl">
+    <name>CompSvr</name>
+    <source />
+    <artifact xmi:idref="CompSvrArt" />
+    <execParameter>
+      <name>edu.vanderbilt.dre.DAnCE.ImplementationType</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>edu.vanderbilt.dre.DAnCE.LocalityManager</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
 
   <implementation xmi:id="Throughput_ConnectorComponentImplementation">
     <name>Throughput_ConnectorComponentImplementation</name>
@@ -224,6 +240,23 @@
     </configProperty>
   </instance>
 
+  <instance xmi:id="CompSvrInst">
+    <name>ComponentServerInstance</name>
+    <node>SenderNode</node>
+    <source />
+    <implementation xmi:idref="CompSvrImpl" />
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.LocalityArguments</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>-ORBSvcConfDirective "static Time_Policy_Manager '-ORBTimePolicyStrategy HR'"</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
   <instance xmi:id="SenderComponentInstance">
     <name>SenderComponent</name>
     <node>SenderNode</node>
@@ -358,6 +391,12 @@
     </internalEndpoint>
   </connection>
 
+  <artifact xmi:id="CompSvrArt">
+    <name>CompoSvrArtifactName</name>
+    <source />
+    <node />
+    <location>dance_locality_manager</location>
+  </artifact>
   <artifact xmi:id="Sender_ExecArtifact">
     <name>Sender_exec</name>
     <source/>
@@ -412,4 +451,11 @@
     <node/>
     <location>DDS_Throughput_Sec_Connector_stub</location>
   </artifact>
+  
+  <localityConstraint>
+    <constraint>SameProcess</constraint>
+    <constrainedInstance xmi:idref="CompSvrInst" />
+    <constrainedInstance xmi:idref="SenderComponentInstance" />
+  </localityConstraint>
+
  </Deployment:DeploymentPlan>

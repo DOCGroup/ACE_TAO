@@ -161,6 +161,13 @@ public:
    */
   virtual ACE_Time_Value gettimeofday (void) = 0;
 
+  /**
+   * Allows applications to control how the timer queue gets the time
+   * of day.
+   * @deprecated Use TIME_POLICY support instead. See Timer_Queue_T.h
+   */
+  virtual void gettimeofday (ACE_Time_Value (*gettimeofday)(void)) = 0;
+
   /// Determine the next event to timeout.  Returns @a max if there are
   /// no pending timers or if all pending timers are longer than max.
   /// This method acquires a lock internally since it modifies internal state.

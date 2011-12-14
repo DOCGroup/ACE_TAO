@@ -22,19 +22,22 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
- * @class ACE_Default_Time_Policy
+ * @class ACE_System_Time_Policy
  *
- * @brief Implement the default time policy for ACE.
+ * @brief Implement the system time policy for ACE.
  *
  * The most common time policy is to simply use
  * ACE_OS::gettimeofday(), this class implements that policy, i.e., it
  * simply calls that function.
  */
-class ACE_Export ACE_Default_Time_Policy
+class ACE_Export ACE_System_Time_Policy
 {
 public:
   /// Return the current time according to this policy
   ACE_Time_Value operator() () const;
+
+  /// Noop. Just here to satisfy backwards compatibility demands.
+  void set_gettimeofday (ACE_Time_Value (*gettimeofday)(void));
 };
 
 /**
@@ -48,6 +51,9 @@ class ACE_Export ACE_HR_Time_Policy
 public:
   /// Return the current time according to this policy
   ACE_Time_Value operator() () const;
+
+  /// Noop. Just here to satisfy backwards compatibility demands.
+  void set_gettimeofday (ACE_Time_Value (*gettimeofday)(void));
 };
 
 /**
@@ -88,7 +94,8 @@ public:
   /// Return the current time according to this policy
   ACE_Time_Value operator()() const;
 
-
+  /// Satisfy backwards compatibility demands.
+  void set_gettimeofday (ACE_Time_Value (*gettimeofday)(void));
 private:
   FPtr function_;
 };
@@ -108,6 +115,8 @@ public:
   /// Return the current time according to this policy
   ACE_Time_Value operator()() const;
 
+  /// Noop. Just here to satisfy backwards compatibility demands.
+  void set_gettimeofday (ACE_Time_Value (*gettimeofday)(void));
 protected:
   /// Return the current time according to policy implementation.
   virtual ACE_Time_Value gettimeofday () const = 0;
@@ -134,6 +143,8 @@ public:
   /// Copy policy
   ACE_Delegating_Time_Policy& operator =(ACE_Delegating_Time_Policy const & pol);
 
+  /// Noop. Just here to satisfy backwards compatibility demands.
+  void set_gettimeofday (ACE_Time_Value (*gettimeofday)(void));
 private:
   ACE_Dynamic_Time_Policy_Base const * delegate_;
 
@@ -145,6 +156,11 @@ private:
 
   static NULL_Time_Policy null_policy_;
 };
+
+/// Temporarily, for backwards compatibility reasons, this will
+/// be the default time policy. In time to be replaced by
+/// ACE_System_Time_Policy.
+typedef ACE_FPointer_Time_Policy ACE_Default_Time_Policy;
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
