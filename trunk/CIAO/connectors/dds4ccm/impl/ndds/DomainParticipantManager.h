@@ -61,24 +61,32 @@ namespace CIAO
       /// Destructor
       ~DomainParticipantManager (void);
 
-      bool add_topic (DDSDomainParticipant *dp, DDSTopic * tp);
+      bool add_topic (DDSDomainParticipant *dp,
+                      DDSTopic * tp);
 
-      bool remove_topic (DDSDomainParticipant * dp, DDSTopic *tp);
+      bool remove_topic (DDSDomainParticipant * dp,
+                         DDSTopic *tp);
 
-      DDSDomainParticipant * get_participant (const char * qos_profile);
+      DDSDomainParticipant * get_participant (const DDS_DomainId_t domain_id,
+                                              const char * qos_profile);
 
       bool
-      add_participant (const char * qos_profile, DDSDomainParticipant * dp);
+      add_participant (const char * qos_profile,
+                       DDSDomainParticipant * dp);
 
       bool remove_participant (DDSDomainParticipant * dp);
 
-      void _inc_ref (DDSDomainParticipant * dp, DDSTopic * tp);
+      void _inc_ref (DDSDomainParticipant * dp,
+                     DDSTopic * tp);
 
     private:
       TAO_SYNCH_MUTEX dps_mutex_;
-      typedef std::map <ACE_CString, DDSParticipantTopic *> DomainParticipants;
-      typedef DomainParticipants::iterator DomainParticipants_iterator;
+
+      typedef std::pair <std::string, DDS_DomainId_t> IdQosProfile;
+      typedef std::map < IdQosProfile, DDSParticipantTopic *> DomainParticipants;
       DomainParticipants dps_;
+
+      typedef DomainParticipants::iterator DomainParticipants_iterator;
 
       DomainParticipants_iterator
       get_participanttopic_by_participant (DDSDomainParticipant * dp);

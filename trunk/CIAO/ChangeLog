@@ -1,3 +1,46 @@
+Wed Dec 14 11:33:48 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        Merged changes from our work branch.
+        === start changelog ===
+        Wed Dec 14 10:22:44 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * connectors/dds4ccm/impl/ndds/DomainParticipantManager.h:
+                * connectors/dds4ccm/impl/ndds/DomainParticipantManager.cpp:
+                  Used a std::pair instead of a separate list for the domain ID.
+
+        Mon Dec 12 15:37:43 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+
+                * connectors/dds4ccm/impl/ndds/DomainParticipantFactory.cpp:
+                * connectors/dds4ccm/impl/ndds/DomainParticipantManager.h:
+                * connectors/dds4ccm/impl/ndds/DomainParticipantManager.cpp:
+                  Domain partipants should be created per domain ID and QOS profile.
+
+                * bin/ciao_tests.lst:
+                * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDomainID:
+                * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDomainID/Base:
+                * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDomainID/Base/Base.idl:
+                * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDomainID/Base/Base.mpc:
+                * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDomainID/Component:
+                * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDomainID/Component/Component.idl:
+                * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDomainID/Component/Component.mpc:
+                * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDomainID/Component/Component_exec.h:
+                * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDomainID/Component/Component_exec.cpp:
+                * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDomainID/Connector1:
+                * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDomainID/Connector1/Connector1.idl:
+                * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDomainID/Connector1/Connector1.mpc:
+                * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDomainID/Connector2:
+                * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDomainID/Connector2/Connector2.idl:
+                * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDomainID/Connector2/Connector2.mpc:
+                * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDomainID/Connector3:
+                * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDomainID/Connector3/Connector3.idl:
+                * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDomainID/Connector3/Connector3.mpc:
+                * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDomainID/descriptors:
+                * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDomainID/descriptors/Plan.cdp:
+                * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDomainID/descriptors/USER_QOS_PROFILES.xml:
+                * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDomainID/descriptors/run_test.pl:
+                  Added test to verify this.
+
 Wed Dec 14 09:00:48 UTC 2011  Marijke  <mhengstmengel@remedy.nl>
 
         * connectors/dds4ccm/tests/HomeTest/Base/HomeT_Base.idl:

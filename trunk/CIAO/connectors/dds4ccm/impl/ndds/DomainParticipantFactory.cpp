@@ -48,7 +48,7 @@ namespace CIAO
       ACE_CString qos_profile = "default";
 
       DDSDomainParticipant *dds_dp =
-        DPMANAGER->get_participant (qos_profile.c_str ());
+        DPMANAGER->get_participant (domain_id, qos_profile.c_str ());
 
       if (!dds_dp)
         {
@@ -147,7 +147,7 @@ namespace CIAO
         }
 
       DDSDomainParticipant *dds_dp =
-        DPMANAGER->get_participant (qos_profile);
+        DPMANAGER->get_participant (domain_id, qos_profile);
 
       if (!dds_dp)
         {
