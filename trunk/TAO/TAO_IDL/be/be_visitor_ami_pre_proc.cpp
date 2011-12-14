@@ -457,6 +457,10 @@ be_visitor_ami_pre_proc::create_sendc_operation (be_operation *node)
 
   if (0 == handler)
     {
+      op->destroy ();
+      delete op;
+      op = 0;
+
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("be_visitor_ami_pre_proc::")
                          ACE_TEXT ("create_sendc_operation - ")
@@ -643,10 +647,14 @@ be_visitor_ami_pre_proc::create_reply_handler_operation (
 
           if (d == 0)
             {
+              operation->destroy ();
+              delete operation;
+              operation = 0;
+
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%N:%l) be_visitor_ami_pre_proc::"
-                                 "create_reply_handler_operation - "
-                                 "bad node in this scope\n"),
+                                 ACE_TEXT ("be_visitor_ami_pre_proc::")
+                                 ACE_TEXT ("create_reply_handler_operation - ")
+                                 ACE_TEXT ("bad node in this scope\n")),
                                 -1);
 
             }

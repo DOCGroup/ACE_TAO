@@ -1,3 +1,14 @@
+Wed Dec 14 14:53:17 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be/be_visitor_amh_pre_proc.cpp:
+        * TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
+        * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
+        * TAO_IDL/be/be_visitor_interface/amh_sh.cpp:
+        * TAO_IDL/fe/fe_init.cpp:
+
+          Fixed some Coverity errors
+
 Wed Dec 14 07:59:43 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_home/home_svs.cpp:
