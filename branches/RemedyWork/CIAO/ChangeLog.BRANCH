@@ -1,3 +1,9 @@
+Wed Dec 14 10:22:44 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DomainParticipantManager.h:
+        * connectors/dds4ccm/impl/ndds/DomainParticipantManager.cpp:
+          Used a std::pair instead of a separate list for the domain ID.
+
 Mon Dec 12 15:37:43 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
 

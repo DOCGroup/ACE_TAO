@@ -143,19 +143,9 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("DomainParticipantManager::add_topic");
 
-      DomainParticipantIDs::iterator it = this->dps_.find(dp->get_domain_id ());
-      if (it == this->dps_.end ())
-        {
-          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-          "DomainParticipantManager::add_topic- "
-          "Error: List of domain participants for domain id <%d> not found\n",
-          dp->get_domain_id ()));
-          return false;
-        }
-
       DomainParticipants_iterator iter =
-        this->get_participanttopic_by_participant (it, dp);
-      if (iter != it->second.end ())
+        this->get_participanttopic_by_participant (dp);
+      if (iter != this->dps_.end ())
         {
           return iter->second->add_topic (tp);
         }
@@ -171,19 +161,9 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("DomainParticipantManager::remove_topic");
 
-      DomainParticipantIDs::iterator it = this->dps_.find(dp->get_domain_id ());
-      if (it == this->dps_.end ())
-        {
-          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-          "DomainParticipantManager::remove_topic- "
-          "Error: List of domain participants for domain id <%d> not found\n",
-          dp->get_domain_id ()));
-          return false;
-        }
-
       DomainParticipants_iterator iter =
-        this->get_participanttopic_by_participant (it, dp);
-      if (iter != it->second.end ())
+        this->get_participanttopic_by_participant (dp);
+      if (iter != this->dps_.end ())
         {
           return iter->second->remove_topic (tp);
         }
@@ -197,31 +177,21 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("DomainParticipantManager::get_participant");
 
-      ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, _guard,
-                      this->dps_mutex_, CORBA::INTERNAL ());
+      IdQosProfile idqos =
+        std::make_pair<std::string, DDS_DomainId_t>(qos_profile, domain_id);
+      DomainParticipants_iterator it_found = this->dps_.find (idqos);
 
-      DomainParticipantIDs::iterator it = this->dps_.find(domain_id);
-      if (it == this->dps_.end ())
+      if (it_found != this->dps_.end () && it_found->second)
         {
-          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-          "DomainParticipantManager::get_participant- "
-          "List of domain participants for domain id <%d> not found\n",
-          domain_id));
-          return 0;
-        }
-
-      DDSParticipantTopic * dpt = it->second[qos_profile];
-      if (dpt)
-        {
-          dpt->_inc_ref ();
+          it_found->second->_inc_ref ();
           DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
                         "DomainParticipantManager::get_participant - "
                         "DomainParticipant found. domain <%d> - "
                         "profile <%C> - ref_count <%d>\n",
                         domain_id,
                         qos_profile,
-                        dpt->_ref_count ()));
-          return dpt->get_participant ();
+                        it_found->second->_ref_count ()));
+          return it_found->second->get_participant ();
         }
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
                     "DomainParticipantManager::get_participant - "
@@ -241,53 +211,38 @@ namespace CIAO
                       this->dps_mutex_, CORBA::INTERNAL ());
 
       const DDS_DomainId_t domain_id = dp->get_domain_id ();
-      DomainParticipantIDs::iterator it_found = this->dps_.find(domain_id);
+      IdQosProfile idqos =
+        std::make_pair<std::string, DDS_DomainId_t>(qos_profile, domain_id);
+      DomainParticipants_iterator it_found = this->dps_.find (idqos);
 
       if (it_found == this->dps_.end())
         {
-          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
-                        "DomainParticipantManager::add_participant - "
-                        "List of DomainParticipants not yet available for "
-                        "domain ID <%d>\n",
-                        domain_id));
-          DomainParticipants dps;
-          std::pair<DomainParticipantIDs::iterator, bool> it_new =
-            this->dps_.insert(
-              std::pair< DDS_DomainId_t, DomainParticipants>(domain_id, dps));
-          if (!it_new.second)
-            {
-              DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-                            "DomainParticipantManager::add_participant - "
-                            "Unable to insert a new domain id <%d>.\n",
-                            domain_id));
-              return false;
-            }
-          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
-                        "DomainParticipantManager::add_participant - "
-                        "Succesfully created entry for domain ID <%d>\n",
-                        domain_id));
-          // reassing the iterator
-          it_found = this->dps_.find (domain_id);
-        }
-
-      DomainParticipants_iterator iter =
-        this->get_participanttopic_by_participant (it_found, dp);
-      if (iter == it_found->second.end())
-        {
-
           DDSParticipantTopic * dpt = 0;
           ACE_NEW_THROW_EX (dpt,
                             DDSParticipantTopic (dp),
                             ::CORBA::NO_MEMORY ());
-
-          it_found->second[qos_profile] = dpt;
+          std::pair <DomainParticipants_iterator, bool> to_insert =
+            this->dps_.insert (std::make_pair<IdQosProfile,
+                                              DDSParticipantTopic *>(idqos, dpt));
+          if (!to_insert.second)
+            {
+              DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                            "DomainParticipantManager::add_participant - "
+                            "Unable to insert a new DomainParticipant/Topic "
+                            "combination for <%d, %C>.\n",
+                            domain_id, qos_profile));
+              return false;
+            }
 
           DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
                         "DomainParticipantManager::add_participant - "
-                        "Added participant for domain <%d> with profile <%C>.\n",
+                        "Added a new DomainParticipant/Topic "
+                        " combination for <%d, %C>.\n",
                         domain_id, qos_profile));
           return true;
+
         }
+
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
                     "DomainParticipantManager::add_participant - "
                     "Don't add participant for domain <%d> with profile <%C> since it already "
@@ -305,19 +260,9 @@ namespace CIAO
                       this->dps_mutex_, CORBA::INTERNAL ());
 
       const DDS_DomainId_t domain_id = dp->get_domain_id ();
-      DomainParticipantIDs::iterator it = this->dps_.find(domain_id);
-      if (it == this->dps_.end ())
-        {
-          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-          "DomainParticipantManager::remove_participant- "
-          "Error: List of domain participants for domain id <%d> not found\n",
-          domain_id));
-          return false;
-        }
-
       DomainParticipants_iterator iter =
-        this->get_participanttopic_by_participant (it, dp);
-      if (iter != it->second.end ())
+        this->get_participanttopic_by_participant (dp);
+      if (iter != this->dps_.end ())
         {
           if (iter->second->_ref_count () == 1)
             {
@@ -328,7 +273,7 @@ namespace CIAO
               delete iter->second;
 
               // Save to remove from list
-              it->second.erase (iter);
+              this->dps_.erase (iter);
             }
           else
             {
@@ -351,34 +296,21 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("DomainParticipantManager::_inc_ref");
 
-      DomainParticipantIDs::iterator it = this->dps_.find(dp->get_domain_id ());
-      if (it == this->dps_.end ())
-        {
-          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-          "DomainParticipantManager::_inc_ref- "
-          "Error: List of domain participants for domain id <%d> not found. "
-          "Unable to increment reference count\n",
-          dp->get_domain_id ()));
-          return;
-        }
-
-
       DomainParticipants_iterator iter =
-        this->get_participanttopic_by_participant (it, dp);
-      if (iter != it->second.end ())
+        this->get_participanttopic_by_participant (dp);
+      if (iter != this->dps_.end ())
         {
           iter->second->_inc_ref_topic (tp);
         }
     }
 
     DomainParticipantManager::DomainParticipants_iterator
-    DomainParticipantManager::get_participanttopic_by_participant (DomainParticipantIDs::iterator it,
-      DDSDomainParticipant * dp)
+    DomainParticipantManager::get_participanttopic_by_participant (DDSDomainParticipant * dp)
     {
       DDS4CCM_TRACE ("DomainParticipantManager::get_participanttopic_by_participant");
 
-      DomainParticipants_iterator pos = it->second.begin();
-      while (pos != it->second.end())
+      DomainParticipants_iterator pos = this->dps_.begin();
+      while (pos != this->dps_.end())
         {
           if (pos->second && pos->second->get_participant () == dp)
             {
