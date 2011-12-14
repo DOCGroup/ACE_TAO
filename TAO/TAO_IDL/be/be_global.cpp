@@ -2068,6 +2068,12 @@ BE_GlobalData::destroy (void)
   ACE::strdelete (this->ciao_svnt_src_ending_);
   this->ciao_svnt_src_ending_ = 0;
 
+  ACE::strdelete (this->ciao_svnt_hdr_template_ending_);
+  this->ciao_svnt_hdr_template_ending_ = 0;
+
+  ACE::strdelete (this->ciao_svnt_src_template_ending_);
+  this->ciao_svnt_src_template_ending_ = 0;
+
   ACE::strdelete (this->ciao_exec_hdr_ending_);
   this->ciao_exec_hdr_ending_ = 0;
 

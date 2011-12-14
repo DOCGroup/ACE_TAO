@@ -883,6 +883,10 @@ be_visitor_ccm_pre_proc::gen_subscribe (be_publishes *node)
 
   if (i == 0)
     {
+      op->destroy ();
+      delete op;
+      op = 0;
+
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("be_visitor_ccm_pre_proc::")
                          ACE_TEXT ("gen_subscribe - ")
@@ -1003,6 +1007,10 @@ be_visitor_ccm_pre_proc::gen_emits_connect (be_emits *node)
 
   if (i == 0)
     {
+      op->destroy ();
+      delete op;
+      op = 0;
+
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("be_visitor_ccm_pre_proc::")
                          ACE_TEXT ("gen_emits_connect - ")
