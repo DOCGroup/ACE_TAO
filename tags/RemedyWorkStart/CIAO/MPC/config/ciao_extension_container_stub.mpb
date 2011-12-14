@@ -1,7 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project :  ciao_container_base_stub, ccm_direct_collocation {
-  libs += CIAO_Extension_Container_stub
-  after += CIAO_Extension_Container_stub
-}
