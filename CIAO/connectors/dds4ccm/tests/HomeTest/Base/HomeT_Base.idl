@@ -1,8 +1,8 @@
 // $Id$
 
 /**
- * @file Home_Base.idl
- * @author 
+ * @file HomeT_Base.idl
+ * @author  Marijke Hengstmengel <mhengstmengel@remedy.nl>
  */
 
 #ifndef HOMET_BASE_IDL
