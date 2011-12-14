@@ -1,3 +1,13 @@
+Wed Dec 14 09:00:48 UTC 2011  Marijke  <mhengstmengel@remedy.nl>
+
+        * connectors/dds4ccm/tests/HomeTest/Base/HomeT_Base.idl:
+        * connectors/dds4ccm/tests/HomeTest/Connector/HomeT_Connector.idl:
+        * connectors/dds4ccm/tests/HomeTest/HomeComp/HomeT_HomeC.idl:
+        * connectors/dds4ccm/tests/HomeTest/descriptors/DeploymentPlanConnOnly.cdp:
+        * tests/IDL3/Homes/Basic/Basic.idl:
+        * tests/IDL_Test/Cornucopia/Cornucopia.idl:
+        Fuzz errors
+
 Tue Dec 13 13:37:25 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         Merged changes from our work branch. Test Home with connectors.F
