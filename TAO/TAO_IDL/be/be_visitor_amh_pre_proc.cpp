@@ -481,10 +481,14 @@ be_visitor_amh_pre_proc::add_normal_reply (be_operation *node,
 
       if (!d)
         {
+          operation->destroy ();
+          delete operation;
+          operation = 0;
+
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_amh_pre_proc::"
-                             "add_normal_reply - "
-                             "bad node in this scope\n"),
+                             ACE_TEXT ("be_visitor_amh_pre_proc::")
+                             ACE_TEXT ("add_normal_reply - ")
+                             ACE_TEXT ("bad node in this scope\n")),
                             -1);
 
         }

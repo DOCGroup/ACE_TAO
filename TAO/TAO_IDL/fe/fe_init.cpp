@@ -475,8 +475,10 @@ FE_store_env_include_paths (void)
   for (ACE_Unbounded_Queue_Iterator<ACE_CString>iter (list);
        !iter.done (); iter.advance ())
     {
-      iter.next (path_tmp);
-      idl_global->add_include_path (path_tmp->fast_rep (), false);
+      if (iter.next (path_tmp) != 0)
+        {
+          idl_global->add_include_path (path_tmp->fast_rep (), false);
+        }
     }
 }
 

@@ -289,10 +289,14 @@ be_visitor_amh_interface_sh::add_amh_operation (be_operation *node,
 
           if (!d)
             {
+              operation->destroy ();
+              delete operation;
+              operation = 0;
+
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%N:%l) be_visitor_amh_pre_proc::"
-                                 "create_response_handler_operation - "
-                                 "bad node in this scope\n"),
+                                 ACE_TEXT ("be_visitor_amh_pre_proc::")
+                                 ACE_TEXT ("create_response_handler_operation - ")
+                                 ACE_TEXT ("bad node in this scope\n")),
                                 -1);
 
             }
