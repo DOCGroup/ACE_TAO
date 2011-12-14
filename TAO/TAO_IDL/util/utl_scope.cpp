@@ -136,7 +136,8 @@ UTL_Scope::UTL_Scope (void)
     pd_name_referenced (0),
     pd_name_referenced_allocated (0),
     pd_name_referenced_used (0),
-    has_prefix_ (0)
+    has_prefix_ (0),
+    which_pseudo_ (PSEUDO_ABSTRACTBASE)
 {
 }
 
@@ -154,7 +155,8 @@ UTL_Scope::UTL_Scope (AST_Decl::NodeType nt)
     pd_name_referenced (0),
     pd_name_referenced_allocated (0),
     pd_name_referenced_used (0),
-    has_prefix_ (0)
+    has_prefix_ (0),
+    which_pseudo_ (PSEUDO_ABSTRACTBASE)
 {
 }
 
