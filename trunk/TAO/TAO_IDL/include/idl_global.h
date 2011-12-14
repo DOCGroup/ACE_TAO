@@ -570,10 +570,6 @@ public:
   void last_seen_index (long val);
   // Accessors for last_seen_index_ member.
 
-  bool repeat_include (void) const;
-  void repeat_include (bool val);
-  // Accessors for repeat_include_ member.
-
   bool preserve_cpp_keywords (void);
   // Whether we should not mung idl element names that are
   // C++ keywords e.g. delete, operator etc. with _cxx_ prefix.
@@ -822,9 +818,6 @@ private:
 
   ACE_Unbounded_Stack<char *> pragma_prefixes_;
   // Container for all the #pragma prefix declarations.
-
-  bool repeat_include_;
-  // Has this IDL file been included before?
 
   bool preserve_cpp_keywords_;
   // Do we allow C++ keywords as identifiers in the idl to stay as they are ?

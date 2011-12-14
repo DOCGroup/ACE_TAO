@@ -27,7 +27,8 @@
 #include "ace/OS_NS_unistd.h"
 
 FE_Utils::T_Param_Info::T_Param_Info (void)
-  : const_type_ (AST_Expression::EV_none),
+  : type_ (AST_Decl::NT_fixed),
+    const_type_ (AST_Expression::EV_none),
     enum_const_type_decl_ (0)
 {
 }

@@ -67,6 +67,11 @@ be_visitor_typecode_defn::be_visitor_typecode_defn (be_visitor_context * ctx)
       // The context is always a copy, so this is ok.
       this->ctx_->stream (tao_cg->anyop_source ());
     }
+
+  for (unsigned long i = 0UL; i < TAO_BE_VISITOR_TYPECODE_DEFN_MAX_STACK_SIZE; ++i)
+    {
+      scope_stack_[i] = 0;
+    }
 }
 
 be_visitor_typecode_defn::~be_visitor_typecode_defn (void)
