@@ -56,7 +56,8 @@ TAO_CodeGen::TAO_CodeGen (void)
     ciao_conn_header_ (0),
     ciao_conn_source_ (0),
     ciao_ami_conn_idl_ (0),
-    gperf_input_filename_ (0)
+    gperf_input_filename_ (0),
+    strategy_ (TAO_PERFECT_HASH)
 {
 }
 

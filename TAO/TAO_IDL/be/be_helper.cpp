@@ -82,6 +82,7 @@ const TAO_UNINDENT be_uidt_nl (1);
 
 TAO_OutStream::TAO_OutStream (void)
   : fp_ (0),
+    st_ (TAO_CLI_HDR),
     indent_level_ (0)
 {
   for (unsigned long i = 0; i < be_global->tab_size (); ++i)

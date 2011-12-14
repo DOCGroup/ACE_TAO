@@ -1,3 +1,18 @@
+Wed Dec 14 20:51:28 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_sequence.cpp:
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_helper.cpp:
+        * TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/amh_rh_sh.cpp:
+        * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/field_ch.cpp:
+        * TAO_IDL/fe/fe_utils.cpp:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/util/utl-scope.cpp:
+
+          Fixed more Coverity-reported errors.
+
 Wed Dec 14 14:53:17 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_global.cpp:
@@ -7,7 +22,7 @@ Wed Dec 14 14:53:17 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/be/be_visitor_interface/amh_sh.cpp:
         * TAO_IDL/fe/fe_init.cpp:
 
-          Fixed some Coverity errors
+          Fixed some Coverity-reported errors.
 
 Wed Dec 14 07:59:43 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 

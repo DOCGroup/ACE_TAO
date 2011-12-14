@@ -9,7 +9,8 @@
  *  for valuetype fields in the valuetype class (header).
  *
  *
- *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de> derived from be_visitor_union_branch/public_ch.cpp
+ *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
+ *   derived from be_visitor_union_branch/public_ch.cpp
  */
 //=============================================================================
 
@@ -17,7 +18,8 @@
 be_visitor_valuetype_field_ch::be_visitor_valuetype_field_ch (
     be_visitor_context *ctx
   )
-  : be_visitor_decl (ctx)
+  : be_visitor_decl (ctx),
+    visibility_ (AST_Field::vis_NA)
 {
   setenclosings ("", ";");
 }

@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 #include "be_visitor_typecode/typecode_defn.h"
 
 // ***************************************************************************
@@ -44,9 +43,9 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_exception::"
-                         "visit_exception -"
-                         "code for stub failed\n"),
+                         ACE_TEXT ("be_visitor_exception::")
+                         ACE_TEXT ("visit_exception - ")
+                         ACE_TEXT ("code for stub failed\n")),
                         -1);
     }
 
@@ -63,9 +62,9 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       if (node->accept (&ec_visitor) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_exception::"
-                             "visit_exception - "
-                             "codegen for ctor failed\n"),
+                             ACE_TEXT ("be_visitor_exception::")
+                             ACE_TEXT ("visit_exception - ")
+                             ACE_TEXT ("codegen for ctor failed\n")),
                             -1);
         }
 
@@ -88,9 +87,9 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       if (node->accept (&eca_visitor) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_exception_cs::"
-                             "visit_exception -"
-                             "codegen for scope failed\n"),
+                             ACE_TEXT ("be_visitor_exception_cs::")
+                             ACE_TEXT ("visit_exception - ")
+                             ACE_TEXT ("codegen for scope failed\n")),
                             -1);
         }
 
@@ -137,9 +136,9 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       if (node->accept (&visitor) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_exception_cs::"
-                             "visit_exception -"
-                             "codegen for scope failed\n"),
+                             ACE_TEXT ("be_visitor_exception_cs::")
+                             ACE_TEXT ("visit_exception - ")
+                             ACE_TEXT ("codegen for scope failed\n")),
                             -1);
         }
     }
@@ -162,9 +161,9 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
   if (node->accept (&ca_visitor) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_exception_cs::"
-                         "visit_exception -"
-                         "codegen for scope failed\n"),
+                         ACE_TEXT ("be_visitor_exception_cs::")
+                         ACE_TEXT ("visit_exception - ")
+                         ACE_TEXT ("codegen for scope failed\n")),
                         -1);
     }
 
@@ -319,9 +318,6 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
         }
     }
 
-  // Make sure we are generating to *C.cpp regardless of the above.
-  os = tao_cg->client_stubs ();
-
   if (be_global->tc_support ())
     {
       ctx = *this->ctx_;
@@ -330,9 +326,9 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       if (tc_visitor.visit_exception (node) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                              "(%N:%l) be_visitor_exception_cs::"
-                              "visit_exception - "
-                              "TypeCode definition failed\n"),
+                             ACE_TEXT ("be_visitor_exception_cs::")
+                             ACE_TEXT ("visit_exception - ")
+                             ACE_TEXT ("TypeCode definition failed\n")),
                             -1);
         }
     }

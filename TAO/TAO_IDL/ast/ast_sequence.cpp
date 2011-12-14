@@ -105,6 +105,7 @@ AST_Sequence::AST_Sequence (AST_Expression *ms,
                       n),
     pd_max_size (ms),
     pd_base_type (bt),
+    unbounded_ (true),
     owns_base_type_ (false)
 {
   FE_Utils::tmpl_mod_ref_check (this, bt);
@@ -131,14 +132,7 @@ AST_Sequence::AST_Sequence (AST_Expression *ms,
   // check altogether, this node will trigger no code generation.
   if (ms->param_holder () == 0)
     {
-      if (ms->ev ()->u.ulval == 0)
-        {
-          this->unbounded_ = true;
-        }
-      else
-        {
-          this->unbounded_ = false;
-        }
+      this->unbounded_ = (ms->ev ()->u.ulval == 0);
     }
 
   // A sequence data type is always VARIABLE.
