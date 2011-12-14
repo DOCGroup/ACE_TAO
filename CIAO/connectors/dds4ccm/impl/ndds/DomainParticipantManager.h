@@ -81,16 +81,15 @@ namespace CIAO
 
     private:
       TAO_SYNCH_MUTEX dps_mutex_;
-      typedef std::map <ACE_CString, DDSParticipantTopic *> DomainParticipants;
 
-      typedef std::map < DDS_DomainId_t, DomainParticipants > DomainParticipantIDs;
-      DomainParticipantIDs dps_;
+      typedef std::pair <std::string, DDS_DomainId_t> IdQosProfile;
+      typedef std::map < IdQosProfile, DDSParticipantTopic *> DomainParticipants;
+      DomainParticipants dps_;
 
       typedef DomainParticipants::iterator DomainParticipants_iterator;
 
       DomainParticipants_iterator
-      get_participanttopic_by_participant (const DomainParticipantIDs::iterator it,
-                                          DDSDomainParticipant * dp);
+      get_participanttopic_by_participant (DDSDomainParticipant * dp);
     };
 
     typedef ACE_Singleton<DomainParticipantManager,
