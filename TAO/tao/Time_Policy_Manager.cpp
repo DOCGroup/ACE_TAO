@@ -72,58 +72,52 @@ TAO_Time_Policy_Manager::parse_args (int argc, ACE_TCHAR* argv[])
 
 ACE_Timer_Queue * TAO_Time_Policy_Manager::create_timer_queue (void)
 {
-  if (this->time_policy_setting_ != TAO_OS_TIME_POLICY)
-    {
-      // locking scope
-      {
-        ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
-                          monitor,
-                          this->lock_,
-                          0);
+  // locking scope
+  {
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                      monitor,
+                      this->lock_,
+                      0);
 
-        // check if time policy strategy has already been initialized
+    // check if time policy strategy has already been initialized
+    if (this->time_policy_strategy_ == 0)
+      {
+        // load strategy
+        if (this->time_policy_setting_ == TAO_OS_TIME_POLICY)
+          {
+            this->time_policy_name_ = ACE_TEXT ("TAO_SYSTEM_TIME_POLICY");
+          }
+        else if (this->time_policy_setting_ == TAO_HR_TIME_POLICY)
+          {
+            this->time_policy_name_ = ACE_TEXT ("TAO_HR_TIME_POLICY");
+          }
+        this->time_policy_strategy_ =
+            ACE_Dynamic_Service<TAO_Time_Policy_Strategy>::instance (
+                this->time_policy_name_.c_str ());
         if (this->time_policy_strategy_ == 0)
           {
-            // load strategy
-            if (this->time_policy_setting_ == TAO_HR_TIME_POLICY)
-              {
-                this->time_policy_name_ = ACE_TEXT ("TAO_HR_TIME_POLICY");
-                this->time_policy_strategy_ =
-                    ACE_Dynamic_Service<TAO_Time_Policy_Strategy>::instance (
-                        this->time_policy_name_.c_str ());
-              }
-            else
-              this->time_policy_strategy_ =
-                  ACE_Dynamic_Service<TAO_Time_Policy_Strategy>::instance (
-                      this->time_policy_name_.c_str ());
-            if (this->time_policy_strategy_ == 0)
-              {
-                ACE_ERROR ((LM_ERROR,
-                            ACE_TEXT ("TAO (%P|%t) - TAO_Time_Policy_Manager: ")
-                            ACE_TEXT ("FAILED to load time policy strategy '%C'\n"),
-                            this->time_policy_name_.c_str ()));
-                return 0;
-              }
-
-            if (TAO_debug_level > 1)
-              {
-                ACE_DEBUG ((LM_INFO,
-                    ACE_TEXT ("TAO (%P|%t) - TAO_Time_Policy_Manager: ")
-                    ACE_TEXT ("loaded time policy strategy '%C'\n"),
-                    this->time_policy_name_.c_str ()));
-              }
-
-            // handle one time initialization of ORB_Time_Policy
-            TAO::ORB_Time_Policy::set_time_policy (
-                this->time_policy_strategy_->get_time_policy ());
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("TAO (%P|%t) - TAO_Time_Policy_Manager: ")
+                        ACE_TEXT ("FAILED to load time policy strategy '%C'\n"),
+                        this->time_policy_name_.c_str ()));
+            return 0;
           }
+
+        if (TAO_debug_level > 1)
+          {
+            ACE_DEBUG ((LM_INFO,
+                ACE_TEXT ("TAO (%P|%t) - TAO_Time_Policy_Manager: ")
+                ACE_TEXT ("loaded time policy strategy '%C'\n"),
+                this->time_policy_name_.c_str ()));
+          }
+
+        // handle one time initialization of ORB_Time_Policy
+        TAO::ORB_Time_Policy::set_time_policy (
+            this->time_policy_strategy_->get_time_policy ());
       }
+  }
 
-      return this->time_policy_strategy_->create_timer_queue ();
-    }
-
-  // OS time policy is builtin default
-  return 0;
+  return this->time_policy_strategy_->create_timer_queue ();
 }
 
 void
@@ -137,7 +131,7 @@ TAO_Time_Policy_Manager::destroy_timer_queue (ACE_Timer_Queue *tmq)
                    monitor,
                    this->lock_);
 
-        // check if time policy strategy has already been initialized
+        // check if time policy strategy has been initialized
         if (this->time_policy_strategy_ == 0)
           {
             return;

@@ -126,6 +126,16 @@ public:
   virtual ACE_Time_Value gettimeofday (void);
   //@}
 
+  /**
+   * Allows applications to control how the timer queue gets the time
+   * of day.
+   * @deprecated Use TIME_POLICY support instead.
+   *             This will only have effect when the TIME_POLICY used
+   *             is ACE_FPointer_Time_Policy. Other standard ACE time
+   *             policies will ignore this.
+   */
+  virtual void gettimeofday (ACE_Time_Value (*gettimeofday)(void));
+
   /// Implement an inlined, non-abstract version of gettimeofday(),
   /// through this  member function the internals of the class can
   /// make calls to  ACE_OS::gettimeofday() with zero overhead.

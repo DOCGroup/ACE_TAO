@@ -17,6 +17,11 @@ ACE_Time_Policy_T<TIME_POLICY>::operator() () const
 }
 
 template <typename TIME_POLICY> ACE_INLINE void
+ACE_Time_Policy_T<TIME_POLICY>::set_gettimeofday (ACE_Time_Value (*)(void))
+{
+}
+
+template <typename TIME_POLICY> ACE_INLINE void
 ACE_Time_Policy_T<TIME_POLICY>::set_time_policy(TIME_POLICY const & time_policy)
 {
   this->time_policy_ = time_policy;

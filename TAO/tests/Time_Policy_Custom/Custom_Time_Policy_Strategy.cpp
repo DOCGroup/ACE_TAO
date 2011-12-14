@@ -17,6 +17,8 @@ public:
     ACE_Time_Value tv = ACE_High_Res_Timer::gettimeofday_hr ();
     return (tv += ACE_Time_Value (10, 0));
   }
+  /// Noop. Just here to satisfy backwards compatibility demands.
+  void set_gettimeofday (ACE_Time_Value (*)(void)) {}
 };
 
 static ACE_Time_Policy_T<Custom_Time_Policy>  custom_time_policy_;

@@ -22,6 +22,7 @@
 #include "tao/Codeset_Manager_Factory_Base.h"
 #include "tao/Codeset_Manager.h"
 #include "tao/Time_Policy_Manager.h"
+#include "tao/System_Time_Policy_Strategy.h"
 #include "tao/HR_Time_Policy_Strategy.h"
 #include "tao/debug.h"
 
@@ -684,6 +685,7 @@ namespace
     pcfg->process_directive (ace_svc_desc_TAO_Default_Collocation_Resolver);
 #if (TAO_HAS_TIME_POLICY == 1)
     pcfg->process_directive (ace_svc_desc_TAO_Time_Policy_Manager);
+    pcfg->process_directive (ace_svc_desc_TAO_System_Time_Policy_Strategy);
     pcfg->process_directive (ace_svc_desc_TAO_HR_Time_Policy_Strategy);
 #endif
 

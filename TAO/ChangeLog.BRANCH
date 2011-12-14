@@ -1,3 +1,18 @@
+    Mon Dec 12 21:28:00 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+    
+            * tao/System_Time_Policy_Strategy.cpp:
+            * tao/System_Time_Policy_Strategy.h:
+            * tao/TAO_Internal.cpp:
+            * tao/Time_Policy_Manager.cpp:
+            * tao/tao.mpc:
+            
+              Added new time policy strategy to replace backwards
+              compatible default time policy in ACE.
+            
+            * tests/Time_Policy_Custom/Custom_Time_Policy_Strategy.cpp:
+            
+              Added backwards compatibility support.
+
     Thu Dec 08 15:34:00 UTC 2011  Martin Corino  <mcorino@remedy.nl>
 
             * tao/HR_Time_Policy_Strategy.h

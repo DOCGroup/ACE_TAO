@@ -389,8 +389,6 @@ namespace CIAO_Perf_Keyed_Test_Sender_Impl
     // if sleep and spin both > 0, use sleep value and ignore spin value
     if (this->sleep_ > 0) // use reactor timer to sleep
       {
-        (void) ACE_High_Res_Timer::global_scale_factor ();
-        this->reactor ()->timer_queue()->gettimeofday (&ACE_High_Res_Timer::gettimeofday_hr);
         if (this->reactor ()->schedule_timer(
                     this->ticker_,
                     0,

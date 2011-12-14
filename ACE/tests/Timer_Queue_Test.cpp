@@ -683,7 +683,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   ACE_Timer_Heap_Variable_Time_Source *tq_heap =
     new ACE_Timer_Heap_Variable_Time_Source;
-  tq_heap->set_time_policy(&ACE_High_Res_Timer::gettimeofday_hr);
+  tq_heap->gettimeofday(&ACE_High_Res_Timer::gettimeofday_hr);
   ACE_NEW_RETURN (tq_stack,
                   Timer_Queue_Stack (tq_heap,
                                      ACE_TEXT ("ACE_Timer_Heap (high-res timer)"),
