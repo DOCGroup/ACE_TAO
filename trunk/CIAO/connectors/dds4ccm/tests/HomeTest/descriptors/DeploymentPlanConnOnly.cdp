@@ -6,7 +6,7 @@
    xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
   <label>Hello_Depl_1</label>
   <UUID>Hello_Depl_1</UUID>
-   
+
   <implementation xmi:id="HomeTest_HomeImplementation">
     <name>HomeTest_HomeImplementation</name>
     <source/>
@@ -58,7 +58,7 @@
       </value>
     </execParameter>
   </implementation>
-  
+
  <instance xmi:id="HomeTest_HomeInstance">
     <name>HomeTest_HomeInstance</name>
     <node>ReceiverNode</node>
@@ -85,9 +85,9 @@
           <string>HomeC</string>
         </value>
       </value>
-    </configProperty>   
+    </configProperty>
   </instance>
-   
+
    <artifact xmi:id="HomeTest_Home_ExecArtifact">
     <name>HomeT_HomeC_exec</name>
     <source/>
@@ -106,5 +106,5 @@
     <node/>
     <location>HomeT_HomeC_stub</location>
   </artifact>
-  
+
  </Deployment:DeploymentPlan>
