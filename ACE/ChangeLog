@@ -1,3 +1,8 @@
+Wed Dec 14 16:09:22 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/auto_run_tests.pl:
+          Fixed DANCE_ROOT
+
 Mon Dec 12 19:04:55 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/vc11.features:

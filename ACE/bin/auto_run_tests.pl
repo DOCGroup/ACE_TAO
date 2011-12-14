@@ -25,8 +25,8 @@ if (!defined $TAO_ROOT && -d "$ACE_ROOT/TAO") {
 if (!defined $CIAO_ROOT && -d "$ACE_ROOT/TAO/CIAO") {
     $CIAO_ROOT = "$ACE_ROOT/TAO/CIAO";
 }
-if (!defined $DANCE_ROOT && -d "$ACE_ROOT/TAO/CIAO/DAnCE") {
-    $CIAO_ROOT = "$ACE_ROOT/TAO/CIAO/DAnCE";
+if (!defined $DANCE_ROOT && -d "$ACE_ROOT/TAO/DAnCE") {
+    $DANCE_ROOT = "$ACE_ROOT/TAO/DAnCE";
 }
 
 ################################################################################
