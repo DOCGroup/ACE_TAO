@@ -1,3 +1,9 @@
+Thu Dec 15 07:49:48 UTC 2011  Marijke  <mhengstmengel@remedy.nl>
+
+         * connectors/dds4ccm/tests/HomeTest/HomeComp/HomeT_Home.mpc:
+         Solved dependency error.
+
+
 Wed Dec 14 11:33:48 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         Merged changes from our work branch.

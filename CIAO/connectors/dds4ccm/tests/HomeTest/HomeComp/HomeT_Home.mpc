@@ -112,11 +112,10 @@ project(HomeT_HomeC_exec) : ciao_executor, dds4ccm_lem_stub {
   Inline_Files {
   }
 }
-
+ 
 project(HomeT_HomeC_svnt) : ciao_servant, dds4ccm_base {
-  after += HomeT_Base_svnt HomeT_HomeC_exec
+  after += HomeT_Base_svnt HomeT_HomeC_exec HomeT_Connector_svnt
   includes += ..
-
   sharedname = HomeT_HomeC_svnt
 
   libs    += HomeT_HomeC_stub HomeT_HomeC_exec
