@@ -35,7 +35,7 @@ typedef ACE_Timer_Wheel_T<ACE_Event_Handler *,
 typedef ACE_Timer_Wheel_Iterator_T<ACE_Event_Handler *,
                                    ACE_Event_Handler_Handle_Timeout_Upcall,
                                    ACE_SYNCH_RECURSIVE_MUTEX,
-				   ACE_Default_Time_Policy>
+                                   ACE_Default_Time_Policy>
         ACE_Timer_Wheel_Iterator;
 
 ACE_END_VERSIONED_NAMESPACE_DECL

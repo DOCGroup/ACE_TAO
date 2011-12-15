@@ -82,8 +82,8 @@ public:
    * timer nodes.  If 0, then a default freelist will be created.
    */
   ACE_Timer_Queue_T (FUNCTOR *upcall_functor = 0,
-                     ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist = 0,
-		     TIME_POLICY const & time_policy = TIME_POLICY());
+                    ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist = 0,
+                    TIME_POLICY const & time_policy = TIME_POLICY());
 
   /// Destructor - make virtual for proper destruction of inherited
   /// classes.

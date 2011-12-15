@@ -184,7 +184,7 @@ public:
   ACE_Timer_Hash_T (size_t table_size,
                     FUNCTOR *upcall_functor = 0,
                     ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist = 0,
-		    TIME_POLICY const & time_policy = TIME_POLICY());
+                    TIME_POLICY const & time_policy = TIME_POLICY());
 
   /**
    * Default constructor. @a upcall_functor is the instance of the
@@ -194,8 +194,8 @@ public:
    * size will be ACE_DEFAULT_TIMERS and there will be no preallocation.
    */
   ACE_Timer_Hash_T (FUNCTOR *upcall_functor = 0,
-		    ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist = 0,
-		    TIME_POLICY const & time_policy = TIME_POLICY());
+                    ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist = 0,
+                    TIME_POLICY const & time_policy = TIME_POLICY());
 
   /// Destructor
   virtual ~ACE_Timer_Hash_T (void);

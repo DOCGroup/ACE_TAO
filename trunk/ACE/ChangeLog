@@ -1,3 +1,24 @@
+Thu Dec 15 13:12:39 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * ace/Event_Handler_Handle_Timeout_Upcall.inl:
+        * ace/Event_Handler_Handle_Timeout_Upcall.cpp:
+        * ace/Proactor.cpp:
+        * ace/Timer_Hash.h:
+        * ace/Timer_Hash_T.h:
+        * ace/Timer_Hash_T.cpp:
+        * ace/Timer_Heap.h:
+        * ace/Timer_Heap_T.h:
+        * ace/Timer_Heap_T.cpp:
+        * ace/Timer_List.h:
+        * ace/Timer_List_T.h:
+        * ace/Timer_List_T.cpp:
+        * ace/Timer_Queue_Adapters.cpp:
+        * ace/Timer_Queue_T.h:
+        * ace/Timer_Queue_T.cpp:
+        * ace/Timer_Wheel.h:
+        * ace/Timer_Wheel_T.h:
+          Fuzz. Removed tab character
+
 Thu Dec 15 12:52:18 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * ace/Abstract_Timer_Queue.h:

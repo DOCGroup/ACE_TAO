@@ -296,8 +296,8 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::ACE_Timer_Hash_T
     {
       ACE_NEW (this->table_[i],
                BUCKET (&this->table_functor_,
-                       this->free_list_,
-		       time_policy));
+                      this->free_list_,
+                      time_policy));
     }
 
   ACE_NEW (iterator_,
@@ -331,8 +331,8 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::ACE_Timer_Hash_T
     {
       ACE_NEW (this->table_[i],
                BUCKET (&this->table_functor_,
-                       this->free_list_,
-		       time_policy));
+                      this->free_list_,
+                      time_policy));
     }
 
   ACE_NEW (iterator_,

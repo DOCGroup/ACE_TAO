@@ -39,7 +39,7 @@ typedef ACE_Timer_Heap_Iterator_T<ACE_Event_Handler *,
 typedef ACE_Timer_Heap_T<ACE_Event_Handler *,
                          ACE_Event_Handler_Handle_Timeout_Upcall,
                          ACE_SYNCH_RECURSIVE_MUTEX,
-			 ACE_FPointer_Time_Policy>
+                         ACE_FPointer_Time_Policy>
         ACE_Timer_Heap_Variable_Time_Source;
 
 ACE_END_VERSIONED_NAMESPACE_DECL

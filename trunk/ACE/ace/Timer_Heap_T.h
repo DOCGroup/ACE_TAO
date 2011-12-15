@@ -111,7 +111,7 @@ public:
                     bool preallocated = false,
                     FUNCTOR *upcall_functor = 0,
                     ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist = 0,
-		    TIME_POLICY const & time_policy = TIME_POLICY());
+                    TIME_POLICY const & time_policy = TIME_POLICY());
 
   /**
    * Default constructor. @c upcall_functor is the instance of the
@@ -122,7 +122,7 @@ public:
    */
   ACE_Timer_Heap_T (FUNCTOR *upcall_functor = 0,
                     ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist = 0,
-		    TIME_POLICY const & time_policy = TIME_POLICY());
+                    TIME_POLICY const & time_policy = TIME_POLICY());
 
   /// Destructor.
   virtual ~ACE_Timer_Heap_T (void);
