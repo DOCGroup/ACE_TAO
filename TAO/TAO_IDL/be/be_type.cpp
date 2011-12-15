@@ -167,7 +167,7 @@ be_type::nested_sp_type_name (be_decl *use_scope,
                : 0;
 
   ACE_OS::strcat (fu_name,
-                  fu_scope->full_name ());
+                  (fu_scope != 0 ? fu_scope->full_name () : ""));
 
   ACE_OS::strcat (fu_name,
                   "::TAO_");
