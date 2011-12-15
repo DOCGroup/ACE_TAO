@@ -27,11 +27,12 @@
 #include "ace/Task.h"
 #include "ace/Timer_Heap_T.h"
 #include "ace/Timer_Queue_Adapters.h"
+#include "ace/Event_Handler_Handle_Timeout_Upcall.h"
 #include "BPR_Drivers.h"
 
 // These typedefs ensure that we use the minimal amount of locking
 // necessary.
-typedef ACE_Event_Handler_Handle_Timeout_Upcall<ACE_Null_Mutex>
+typedef ACE_Event_Handler_Handle_Timeout_Upcall
         Upcall;
 typedef ACE_Timer_Heap_T<ACE_Event_Handler *,
                          Upcall,

@@ -4,7 +4,7 @@
 #include "tao/Transport.h"
 #include "tao/Queued_Message.h"
 #include "tao/Connection_Handler.h"
-#include "ace/Countdown_Time.h"
+#include "tao/ORB_Time_Policy.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -31,7 +31,7 @@ TAO_Block_Flushing_Strategy::call_handle_output (TAO_Transport *transport,
     case TAO_Transport::DR_OK: return 0;
     case TAO_Transport::DR_WOULDBLOCK:
       {
-        ACE_Countdown_Time counter (dc.timeout ());
+        TAO::ORB_Countdown_Time counter (dc.timeout ());
         TAO_Connection_Handler &ch = *transport->connection_handler ();
         if (ch.handle_write_ready (dc.timeout ()) == -1)
           {

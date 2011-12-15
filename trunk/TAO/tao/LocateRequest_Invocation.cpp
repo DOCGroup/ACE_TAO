@@ -14,7 +14,7 @@
 #include "tao/SystemException.h"
 #include "ace/Intrusive_Auto_Ptr.h"
 
-#include "ace/Countdown_Time.h"
+#include "tao/ORB_Time_Policy.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -71,7 +71,7 @@ namespace TAO
   Invocation_Status
   LocateRequest_Invocation::invoke (ACE_Time_Value *max_wait_time)
   {
-    ACE_Countdown_Time countdown (max_wait_time);
+    TAO::ORB_Countdown_Time countdown (max_wait_time);
 
     TAO_Synch_Reply_Dispatcher *rd_p = 0;
     ACE_NEW_NORETURN (rd_p, TAO_Synch_Reply_Dispatcher (this->resolver_.stub ()->orb_core (),

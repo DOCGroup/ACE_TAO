@@ -25,13 +25,13 @@
 #include "tao/SystemException.h"
 #include "tao/operation_details.h"
 #include "tao/Transport_Descriptor_Interface.h"
+#include "tao/ORB_Time_Policy.h"
 
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/Reactor.h"
 #include "ace/os_include/sys/os_uio.h"
 #include "ace/High_Res_Timer.h"
-#include "ace/Countdown_Time.h"
 #include "ace/CORBA_macros.h"
 
 /*
@@ -1002,7 +1002,7 @@ TAO_Transport::drain_queue_helper (int &iovcnt, iovec iov[],
   // As a side-effect, this decrements the timeout() pointed-to value by
   // the time used in this function.  That might be important as there are
   // potentially long running system calls invoked from here.
-  ACE_Countdown_Time countdown(dc.timeout());
+  TAO::ORB_Countdown_Time countdown(dc.timeout());
 
   size_t byte_count = 0;
 

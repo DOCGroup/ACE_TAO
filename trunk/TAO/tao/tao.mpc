@@ -155,6 +155,7 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, taoid
     GIOP_Message_State.cpp
     GIOP_Message_Version.cpp
     GIOPC.cpp
+    HR_Time_Policy_Strategy.cpp
     HTTP_Client.cpp
     HTTP_Handler.cpp
     HTTP_Parser.cpp
@@ -225,6 +226,7 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, taoid
     ORB_Core_Auto_Ptr.cpp
     ORB_Core_TSS_Resources.cpp
     ORB_Table.cpp
+    ORB_Time_Policy.cpp
     ParameterModeC.cpp
     params.cpp
     Parser_Registry.cpp
@@ -277,6 +279,7 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, taoid
     Synch_Invocation.cpp
     Synch_Queued_Message.cpp
     Synch_Reply_Dispatcher.cpp
+    System_Time_Policy_Strategy.cpp
     SystemException.cpp
     Tagged_Components.cpp
     Tagged_Profile.cpp
@@ -288,6 +291,7 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, taoid
     Thread_Lane_Resources.cpp
     Thread_Lane_Resources_Manager.cpp
     Thread_Per_Connection_Handler.cpp
+    Time_Policy_Manager.cpp
     TimeBaseC.cpp
     Transport.cpp
     Transport_Acceptor.cpp
@@ -427,6 +431,7 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, taoid
     GIOPS.h
     GIOP_Utils.h
     GUIResource_Factory.h
+    HR_Time_Policy_Strategy.h
     HTTP_Client.h
     HTTP_Handler.h
     HTTP_Parser.h
@@ -515,6 +520,7 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, taoid
     ORBInitializer_Registry.h
     ORBInitializer_Registry_Adapter.h
     ORB_Table.h
+    ORB_Time_Policy.h
     orb_typesC.h
     orb_typesS.h
     ParameterModeC.h
@@ -587,6 +593,7 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, taoid
     Synch_Invocation.h
     Synch_Queued_Message.h
     Synch_Reply_Dispatcher.h
+    System_Time_Policy_Strategy.h
     SystemException.h
     Tagged_Components.h
     Tagged_Profile.h
@@ -601,6 +608,8 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, taoid
     Thread_Lane_Resources.h
     Thread_Lane_Resources_Manager.h
     Thread_Per_Connection_Handler.h
+    Time_Policy_Manager.h
+    Time_Policy_Strategy.h
     TimeBaseC.h
     TimeBaseS.h
     Timeprobe.h

@@ -40,7 +40,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
         Timer::instance ()->schedule
           (&cb[i],
            &args[i],
-           timer_queue->gettimeofday () + (ACE_Time_Value)5,
+           timer_queue->gettimeofday () + ACE_Time_Value(5),
            timeout);
 
       // Set the timerID state variable of the handler.

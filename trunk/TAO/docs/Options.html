@@ -984,6 +984,11 @@ creating strategies useful for clients such as request multiplexing
 strategies, wait strategies, connect strategies etc.
     <p></p>
   </li>
+  <li> <a href="#TTSM">Time Policy Strategy Manager.</a> This factory
+manages the TIME_POLICY strategy used by the ORB for timers and 
+countdowns.
+    <p></p>
+  </li>
 </ol>
 Options specified via a <code>svc.conf</code> file can represent
 either the components provided by TAO (including the
@@ -1630,6 +1635,49 @@ threaded applications. Finally, the <em>blocked</em> strategy as the
 name implies, blocks the thread until connection is complete. Some of
 the protocols in TAO (such as SHMIOP and SSLIOP) can only use the <em>blocked</em>
 strategy.
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  </p>
+</blockquote>
+<h4><a name="TTSM">4. Time_Policy_Manager</a></h4>
+The TIME_POLICY manager controls the actual TIME_POLICY strategy used for
+ORB timers and countdowns. TAO provides a default strategy manager called
+<code>Time_Policy_Manager</code>.
+<p>Typically, the following options is set via the service
+configurator
+(<code>svc.conf</code>) file. The following line in the
+<code>svc.conf</code> file (all in one line)</p>
+<p><code>static
+Time_Policy_Manager "[option]"</code></p>
+<p> would load the option listed within "". 
+An <a href="../tests/Time_Policy/hr_time.conf">example</a>
+is available that shows how to specify this option in the <code>svc.conf</code>
+file.</p>
+<p></p>
+<blockquote>
+  <p>
+  <table border="2" cellpadding="0" cellspacing="2">
+    <tbody>
+      <tr>
+        <th>Option</th>
+        <th>Description</th>
+      </tr>
+      <tr>
+        <td><code>-ORBTimePolicyStrategy</code> <em>strategy</em></td>
+        <td><p><a name="-ORBTimePolicyStrategy"></a>The <em>strategy</em> argument 
+defines the TIME_POLICY strategy to load. TAO provides two
+standard TIME_POLICY strategies:</p>          
+<p><em>OS</em> denotes the system time policy strategy which uses the systems
+equivalent of <code>gettimeofday</code> to return a current time value. This is the default for
+TAO (unless <code>TAO_USE_HR_TIME_POLICY_STRATEGY</code> has been defined).</p>
+<p><em>HR</em> denotes the highres time policy strategy which uses the systems
+equivalent of a <code>MONOTONIC</code> timer source to return a current time value (when
+<code>TAO_USE_HR_TIME_POLICY_STRATEGY</code> has been defined this becomes the default for TAO).</p>
+<p>Any other value is assumed to denote the exact name of a dynamically loadable
+TIME_POLICY strategy. The <a href="../tests/Time_Policy_Custom">Time_Policy_Custom</a>
+test provides an example of this functionality.</p> 
         </td>
       </tr>
     </tbody>

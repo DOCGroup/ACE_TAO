@@ -39,6 +39,7 @@
 #include "ace/Guard_T.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_sys_time.h"
+#include "ace/Functor_T.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -1090,37 +1091,10 @@ ACE_Dev_Poll_Reactor::dispatch (Token_Guard &guard)
 int
 ACE_Dev_Poll_Reactor::dispatch_timer_handler (Token_Guard &guard)
 {
-  if (this->timer_queue_->is_empty ())
-    return 0;       // Empty timer queue so cannot have any expired timers.
+  typedef ACE_Member_Function_Command<Token_Guard> Guard_Release;
 
-  // Get the current time
-  ACE_Time_Value cur_time (this->timer_queue_->gettimeofday () +
-                           this->timer_queue_->timer_skew ());
-
-  // Look for a node in the timer queue whose timer <= the present
-  // time.
-  ACE_Timer_Node_Dispatch_Info info;
-  if (this->timer_queue_->dispatch_info (cur_time, info))
-    {
-      const void *upcall_act = 0;
-
-      // Preinvoke (handles refcount if needed, etc.)
-      this->timer_queue_->preinvoke (info, cur_time, upcall_act);
-
-      // Release the token before expiration upcall.
-      guard.release_token ();
-
-      // call the functor
-      this->timer_queue_->upcall (info, cur_time);
-
-      // Postinvoke (undo refcount if needed, etc.)
-      this->timer_queue_->postinvoke (info, cur_time, upcall_act);
-
-      // We have dispatched a timer
-      return 1;
-    }
-
-  return 0;
+  Guard_Release release(guard, &Token_Guard::release_token);
+  return this->timer_queue_->expire_single(release);
 }
 
 #if 0

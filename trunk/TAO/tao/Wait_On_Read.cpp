@@ -6,8 +6,8 @@
 #include "tao/Synch_Reply_Dispatcher.h"
 #include "tao/Client_Strategy_Factory.h"
 #include "tao/ORB_Core.h"
+#include "tao/ORB_Time_Policy.h"
 #include "ace/Reactor.h"
-#include "ace/Countdown_Time.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -80,7 +80,7 @@ TAO_Wait_On_Read::wait (ACE_Time_Value * max_wait_time,
 {
   // Start the count down timer to account for the time spent in this
   // method.
-  ACE_Countdown_Time countdown (max_wait_time);
+  TAO::ORB_Countdown_Time countdown (max_wait_time);
 
   rd.state_changed (TAO_LF_Event::LFS_ACTIVE,
                     this->transport_->orb_core ()->leader_follower ());
