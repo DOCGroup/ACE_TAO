@@ -111,6 +111,16 @@ AST_Template_Module::match_param_refs (UTL_StrList *refs,
       s = ScopeAsDecl (s)->defined_in ();
     }
 
+  if (enclosing == 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("AST_Template_Module::")
+                         ACE_TEXT ("match_param_refs - ")
+                         ACE_TEXT ("enclosing template ")
+                         ACE_TEXT ("module scope not found\n")),
+                        false);
+    }
+
   for (UTL_StrlistActiveIterator i (refs);
        !i.is_done ();
        i.next ())

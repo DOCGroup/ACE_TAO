@@ -747,9 +747,12 @@ be_visitor_xplicit_pre_proc::visit_array (be_array *node)
   // No need to add this new node to any scope - it's anonymous
   // and owned by the node that references it.
 
-  v_list->destroy ();
-  delete v_list;
-  v_list = 0;
+  if (v_list != 0)
+    {
+      v_list->destroy ();
+      delete v_list;
+      v_list = 0;
+    }
 
   AST_Type *base_type =
     AST_Type::narrow_from_decl (this->type_holder_);

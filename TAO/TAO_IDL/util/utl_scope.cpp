@@ -484,7 +484,7 @@ UTL_Scope::fe_add_decl (AST_Decl *t)
   // Already defined and cannot be redefined? Or already used?
   AST_Decl *d = this->lookup_for_add (t);
 
-  if (d)
+  if (d != 0)
     {
       if (!FE_Utils::can_be_redefined (d, t))
         {
@@ -1920,6 +1920,14 @@ UTL_Scope::match_param (UTL_ScopedName *e)
                       alias_param = iter.item ();
                       break;
                     }
+                }
+
+              if (alias_param == 0)
+                {
+                  ACE_ERROR_RETURN ((LM_ERROR,
+                                     ACE_TEXT ("UTL_Scope::match_param - ")
+                                     ACE_TEXT ("param not matched\n")),
+                                    0);
                 }
 
               Identifier id (alias_param->get_string ());
