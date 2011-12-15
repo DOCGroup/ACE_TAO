@@ -94,9 +94,10 @@ be_visitor_valuetype_marshal_cs::visit_valuetype (be_valuetype *node)
   if (field_out_cdr.visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_valuetype_marshal_cs::"
-                         "visit_valuetype - "
-                         "codegen for field out cdr scope failed\n"),
+                         ACE_TEXT ("be_visitor_valuetype_marshal_cs::")
+                         ACE_TEXT ("visit_valuetype - ")
+                         ACE_TEXT ("codegen for field out ")
+                         ACE_TEXT ("cdr scope failed\n")),
                         -1);
     }
 
@@ -182,7 +183,16 @@ be_visitor_valuetype_marshal_cs::visit_valuetype (be_valuetype *node)
     }
 
   be_visitor_valuetype_field_cdr_decl field_in_cdr (&new_ctx);
-  field_in_cdr.visit_scope (node);
+
+  if (field_in_cdr.visit_scope (node) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_visitor_valuetype_marshal_cs::")
+                         ACE_TEXT ("visit_valuetype - ")
+                         ACE_TEXT ("codegen for field in ")
+                         ACE_TEXT ("cdr scope failed\n")),
+                        -1);
+    }
 
   if (node->data_members_count () > 0)
     {
@@ -262,8 +272,8 @@ be_visitor_valuetype_marshal_cs::gen_fields (be_valuetype *node,
       if (!d)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_scope::visit_scope - "
-                             "bad node in this scope\n"),
+                             ACE_TEXT ("be_visitor_scope::visit_scope - ")
+                             ACE_TEXT ("bad node in this scope\n")),
                             -1);
         }
 
@@ -288,9 +298,9 @@ be_visitor_valuetype_marshal_cs::gen_fields (be_valuetype *node,
           if (visitor.visit_field (field) == -1)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%N:%l) be_visitor_valuetype_marshal_cs::"
-                                 "visit_valuetype - "
-                                 "codegen for scope failed\n"),
+                                 ACE_TEXT ("be_visitor_valuetype_marshal_cs::")
+                                 ACE_TEXT ("visit_valuetype - ")
+                                 ACE_TEXT ("codegen for scope failed\n")),
                                 -1);
             }
         }
