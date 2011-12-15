@@ -1,6 +1,10 @@
+//$Id$
+
 #ifndef ACE_TIMER_QUEUE_ITERATOR_H
 #define ACE_TIMER_QUEUE_ITERATOR_H
+
 #include /**/ "ace/pre.h"
+
 /**
  * @file Timer_Queue_Iterator.h
  *

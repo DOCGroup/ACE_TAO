@@ -1,5 +1,8 @@
+//$Id$
+
 #ifndef ACE_ABSTRACT_TIMER_QUEUE_H
 #define ACE_ABSTRACT_TIMER_QUEUE_H
+
 #include /**/ "ace/pre.h"
 /**
  * @file Abstract_Timer_Queue.h
