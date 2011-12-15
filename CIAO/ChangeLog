@@ -1,3 +1,8 @@
+Thu Dec 15 14:01:48 UTC 2011  Marijke  <mhengstmengel@remedy.nl>
+
+         * connectors/dds4ccm/tests/HomeTest/HomeComp/HomeT_Home.mpc:
+         Solved error.
+
 Thu Dec 15 12:49:05 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/performance-tests/Keyed/descriptors/Plan.cdp:

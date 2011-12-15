@@ -1,6 +1,6 @@
 // $Id$
 
-project(HomeT_HomeC_idl_gen): componentidldefaults, dds4ccm_ts_default {
+project(HomeT_HomeC_idl_gen): componentidldefaults, dds4ccm {
   custom_only = 1
   after = HomeT_Base_stub HomeT_Connector_idl_gen
   idlflags += -Wb,stub_export_macro=HOMET_HOMEC_STUB_Export \
