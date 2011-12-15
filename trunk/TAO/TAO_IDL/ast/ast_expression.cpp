@@ -640,7 +640,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
         case AST_Expression::EV_short:
           if (ev->u.sval < 0)
             {
-                    return 0;
+              return 0;
             }
 
           ev->u.usval = (unsigned short) ev->u.sval;
@@ -652,7 +652,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
           if (ev->u.lval > (long) ACE_UINT16_MAX
               || ev->u.lval < 0)
             {
-                    return 0;
+              return 0;
             }
 
           ev->u.usval = (unsigned short) ev->u.lval;
@@ -661,7 +661,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
         case AST_Expression::EV_ulong:
           if (ev->u.ulval > (unsigned long) ACE_UINT16_MAX)
             {
-                    return 0;
+              return 0;
             }
 
           ev->u.usval = (unsigned short) ev->u.ulval;
@@ -672,7 +672,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
           if (ev->u.llval > (ACE_CDR::LongLong) ACE_UINT16_MAX
               || ev->u.llval < 0)
             {
-                    return 0;
+              return 0;
             }
 
           ev->u.usval = (unsigned short) ev->u.llval;
@@ -685,7 +685,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
 #if ! defined (ACE_LACKS_LONGLONG_T)
           if ((ev->u.ullval & ACE_UINT16_MAX) != ev->u.ullval)
             {
-                    return 0;
+              return 0;
             }
 
           ev->u.usval = (unsigned short) ev->u.ullval;
@@ -702,7 +702,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
           if (ev->u.fval < 0.0
               || ev->u.fval > (float) ACE_UINT16_MAX)
             {
-                    return 0;
+              return 0;
             }
 
           ev->u.usval = (unsigned short) ev->u.fval;
@@ -712,7 +712,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
           if (ev->u.dval < 0.0
               || ev->u.dval > (double) ACE_UINT16_MAX)
             {
-                    return 0;
+              return 0;
             }
 
           ev->u.usval = (unsigned short) ev->u.dval;
@@ -721,7 +721,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
         case AST_Expression::EV_char:
           if ((signed char) ev->u.cval < 0)
             {
-                    return 0;
+              return 0;
             }
 
           ev->u.usval = (unsigned short) ev->u.cval;
@@ -761,7 +761,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
         case AST_Expression::EV_ulong:
           if (ev->u.ulval > (unsigned long) ACE_INT32_MAX)
             {
-                    return 0;
+              return 0;
             }
 
           ev->u.lval = (long) ev->u.ulval;
@@ -772,7 +772,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
           if (ev->u.llval > (ACE_CDR::LongLong) ACE_INT32_MAX
               || ev->u.llval < (ACE_CDR::LongLong) ACE_INT32_MIN)
             {
-                    return 0;
+              return 0;
             }
           ev->u.lval = (long) ev->u.llval;
           ev->et = AST_Expression::EV_long;
@@ -784,7 +784,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
 #if ! defined (ACE_LACKS_LONGLONG_T)
           if ((ev->u.ullval & ACE_INT32_MAX) != ev->u.ullval)
             {
-                    return 0;
+              return 0;
             }
 
           ev->u.lval = (long) ev->u.ullval;
@@ -801,7 +801,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
           if (ev->u.fval > (float) LONG_MAX
               || ev->u.fval < (float) ACE_INT32_MIN)
             {
-                    return 0;
+              return 0;
             }
 
           ev->u.lval = (long) ev->u.fval;
@@ -811,7 +811,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
           if (ev->u.dval > (double) LONG_MAX
               || ev->u.dval < (double) ACE_INT32_MIN)
             {
-                    return 0;
+              return 0;
             }
 
           ev->u.lval = (long) ev->u.dval;
@@ -845,7 +845,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
         case AST_Expression::EV_short:
           if (ev->u.sval < 0)
             {
-                    return 0;
+              return 0;
             }
 
           ev->u.ulval = (unsigned long) ev->u.sval;
@@ -858,7 +858,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
         case AST_Expression::EV_long:
           if (ev->u.lval < 0)
             {
-                    return 0;
+              return 0;
             }
 
           ev->u.ulval = (unsigned long) ev->u.lval;
@@ -871,7 +871,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
           if (ev->u.llval > (ACE_CDR::LongLong) ACE_UINT32_MAX
               || ev->u.llval < 0)
             {
-                    return 0;
+              return 0;
             }
 
           ev->u.ulval = (unsigned long) ev->u.llval;
@@ -884,7 +884,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
 #if ! defined (ACE_LACKS_LONGLONG_T)
           if ((ev->u.ullval & ACE_UINT32_MAX) != ev->u.ullval)
             {
-                    return 0;
+              return 0;
             }
           ev->u.ulval = (unsigned long) ev->u.ullval;
           ev->et = AST_Expression::EV_ulong;
@@ -900,7 +900,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
           if (ev->u.fval < 0.0
               || ev->u.fval > (float) ACE_UINT32_MAX)
             {
-                    return 0;
+              return 0;
             }
 
           ev->u.ulval = (unsigned long) ev->u.fval;
@@ -910,7 +910,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
           if (ev->u.dval < 0.0
               || ev->u.dval > (double) ACE_UINT32_MAX)
             {
-                    return 0;
+              return 0;
             }
 
           ev->u.ulval = (unsigned long) ev->u.dval;
@@ -919,7 +919,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
         case AST_Expression::EV_char:
           if ((signed char) ev->u.cval < 0)
             {
-                    return 0;
+              return 0;
             }
 
           ev->u.ulval = (unsigned long) ev->u.cval;
@@ -968,7 +968,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
         case AST_Expression::EV_ulonglong:
           if (ev->u.ullval > ACE_INT64_MAX)
             {
-                    return 0;
+              return 0;
             }
 
           ev->u.llval =
@@ -983,7 +983,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
           if (ev->u.fval > (float) ACE_INT64_MAX
               || ev->u.fval < (float) ACE_INT64_MIN)
             {
-                    return 0;
+              return 0;
             }
 
           ev->u.llval = (ACE_CDR::LongLong) ev->u.fval;
@@ -993,7 +993,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
           if (ev->u.dval > (double) ACE_INT64_MAX
               || ev->u.dval < (double) ACE_INT64_MIN)
             {
-                    return 0;
+              return 0;
             }
 
           ev->u.llval = (ACE_CDR::LongLong) ev->u.dval;
@@ -1031,7 +1031,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
         case AST_Expression::EV_short:
           if (ev->u.sval < 0)
             {
-                    return 0;
+              return 0;
             }
 
           ev->u.ullval =  ev->u.sval;
@@ -1044,7 +1044,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
         case AST_Expression::EV_long:
           if (ev->u.lval < 0)
             {
-                    return 0;
+              return 0;
             }
 
           ev->u.ullval = ev->u.lval;
@@ -1057,7 +1057,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
         case AST_Expression::EV_longlong:
           if (ev->u.llval < 0)
             {
-                    return 0;
+              return 0;
             }
 
           ev->u.ullval =
@@ -1075,7 +1075,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
           if (ev->u.fval < 0.0
               || ev->u.fval > (float) ACE_INT64_MAX)
             {
-                    return 0;
+              return 0;
             }
 
           ev->u.ullval = static_cast<ACE_UINT32> (ev->u.fval);
@@ -1083,7 +1083,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
           if (ev->u.fval < 0.0
               || ev->u.fval > (float) ACE_UINT64_MAX)
             {
-                    return 0;
+              return 0;
             }
 
           ev->u.ullval = static_cast<ACE_UINT64> (ev->u.fval);
@@ -1096,7 +1096,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
           if (ev->u.dval < 0.0
               || ev->u.dval > (double) ACE_INT64_MAX)
             {
-                    return 0;
+              return 0;
             }
 
           ev->u.ullval = static_cast<ACE_UINT32> (ev->u.dval);
@@ -1104,7 +1104,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
           if (ev->u.dval < 0.0
               || ev->u.dval > (double) ACE_UINT64_MAX)
             {
-                    return 0;
+              return 0;
             }
 
           ev->u.ullval = static_cast<ACE_UINT64> (ev->u.dval);
@@ -1115,7 +1115,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
         case AST_Expression::EV_char:
           if ((signed char) ev->u.cval < 0)
             {
-                    return 0;
+              return 0;
             }
 
           ev->u.ullval = ev->u.cval;
@@ -1259,7 +1259,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
           if (ev->u.dval > ACE_FLT_MAX
               || ev->u.dval < -(ACE_FLT_MAX))
             {
-                    return 0;
+              return 0;
             }
 
           ev->u.fval = (float) ev->u.dval;
@@ -1368,7 +1368,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
           if (ev->u.sval > (short) ACE_CHAR_MAX
               || ev->u.sval < (short) ACE_CHAR_MIN)
             {
-                    return 0;
+              return 0;
             }
 
           ev->u.cval = (char) ev->u.sval;
@@ -1377,7 +1377,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
         case AST_Expression::EV_ushort:
           if (ev->u.usval > (unsigned short) ACE_CHAR_MAX)
             {
-                    return 0;
+              return 0;
             }
 
           ev->u.cval = (char) ev->u.usval;
@@ -1387,7 +1387,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
           if (ev->u.lval > (long) ACE_CHAR_MAX
               || ev->u.lval < (long) ACE_CHAR_MIN)
             {
-                    return 0;
+              return 0;
             }
 
           ev->u.cval = (char) ev->u.lval;
@@ -1407,7 +1407,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
           if (ev->u.llval > (ACE_CDR::LongLong) ACE_CHAR_MAX
               || ev->u.llval < (ACE_CDR::LongLong) ACE_CHAR_MIN)
             {
-                    return 0;
+              return 0;
             }
 
           ev->u.cval = (char) ev->u.llval;
@@ -1420,7 +1420,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
 #if ! defined (ACE_LACKS_LONGLONG_T)
           if (( ev->u.ullval & ACE_CHAR_MAX) != ev->u.ullval)
             {
-                    return 0;
+              return 0;
             }
 
           ev->u.cval = (char) ev->u.ullval;
@@ -1437,7 +1437,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
           if (ev->u.fval > (float) ACE_CHAR_MAX
               || ev->u.fval < (float) ACE_CHAR_MIN)
             {
-                    return 0;
+              return 0;
             }
 
           ev->u.cval = (char) ev->u.fval;
@@ -1447,7 +1447,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
           if (ev->u.dval > (double) ACE_CHAR_MAX
               || ev->u.dval < (double) ACE_CHAR_MIN)
             {
-                    return 0;
+              return 0;
             }
 
           ev->u.cval = (char) ev->u.dval;
@@ -1467,7 +1467,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
         case AST_Expression::EV_octet:
           if (ev->u.oval > (unsigned char) ACE_CHAR_MAX)
             {
-                    return 0;
+              return 0;
             }
 
           ev->u.cval = (char) ev->u.oval;
@@ -1489,7 +1489,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
         case AST_Expression::EV_short:
           if (ev->u.sval < 0)
             {
-                    return 0;
+              return 0;
             }
 
           ev->u.wcval = (ACE_CDR::WChar) ev->u.sval;
@@ -1503,7 +1503,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
           if (ev->u.lval < 0
               || ev->u.lval > ACE_WCHAR_MAX)
             {
-                    return 0;
+              return 0;
             }
 
           ev->u.wcval = (ACE_CDR::WChar) ev->u.lval;
@@ -1523,7 +1523,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
           if (ev->u.llval > (ACE_CDR::LongLong) ACE_WCHAR_MAX
               || ev->u.llval < 0)
             {
-                    return 0;
+              return 0;
             }
 
           ev->u.wcval = (ACE_CDR::WChar) ev->u.llval;
@@ -1536,7 +1536,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
 #if ! defined (ACE_LACKS_LONGLONG_T)
           if ((ev->u.ullval & ACE_WCHAR_MAX) != ev->u.ullval )
             {
-                    return 0;
+              return 0;
             }
 
           ev->u.wcval = (ACE_CDR::WChar) ev->u.ullval;
@@ -1553,7 +1553,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
           if (ev->u.fval > (float) ACE_WCHAR_MAX
               || ev->u.fval < 0)
             {
-                    return 0;
+              return 0;
             }
 
           ev->u.wcval = (ACE_CDR::WChar) ev->u.fval;
@@ -1563,7 +1563,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
           if (ev->u.dval > (double) ACE_WCHAR_MAX
               || ev->u.dval < 0)
             {
-                    return 0;
+              return 0;
             }
 
           ev->u.wcval = (ACE_CDR::WChar) ev->u.dval;
@@ -1601,7 +1601,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
           if (ev->u.sval < 0
               || ev->u.sval > (short) ACE_OCTET_MAX)
             {
-                    return 0;
+              return 0;
             }
 
           ev->u.oval = (unsigned char) ev->u.sval;
@@ -1610,7 +1610,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
         case AST_Expression::EV_ushort:
           if (ev->u.usval > (unsigned short) ACE_OCTET_MAX)
             {
-                    return 0;
+              return 0;
             }
 
           ev->u.oval = (unsigned char) ev->u.usval;
@@ -1620,7 +1620,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
           if (ev->u.lval < 0
               || ev->u.lval > (long) ACE_OCTET_MAX)
             {
-                    return 0;
+              return 0;
             }
 
           ev->u.oval = (unsigned char) ev->u.lval;
@@ -1629,7 +1629,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
         case AST_Expression::EV_ulong:
           if (ev->u.ulval > (unsigned long) ACE_OCTET_MAX)
             {
-                    return 0;
+              return 0;
             }
 
           ev->u.oval = (unsigned char) ev->u.ulval;
@@ -1640,7 +1640,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
           if (ev->u.llval < 0
               || ev->u.llval > (ACE_CDR::LongLong) ACE_OCTET_MAX)
             {
-                    return 0;
+              return 0;
             }
 
           ev->u.oval = (unsigned char) ev->u.llval;
@@ -1653,7 +1653,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
 #if ! defined (ACE_LACKS_LONGLONG_T)
           if ((ev->u.ullval & ACE_OCTET_MAX) != ev->u.ullval)
             {
-                    return 0;
+              return 0;
             }
 
           ev->u.oval = (unsigned char) ev->u.ullval;
@@ -1670,7 +1670,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
           if (ev->u.fval < 0.0
               || ev->u.fval > (float) ACE_OCTET_MAX)
             {
-                    return 0;
+              return 0;
             }
 
           ev->u.oval = (unsigned char) ev->u.fval;
@@ -1680,7 +1680,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
           if (ev->u.dval < 0.0
               || ev->u.dval > (double) ACE_OCTET_MAX)
             {
-                    return 0;
+              return 0;
             }
 
           ev->u.oval = (unsigned char) ev->u.dval;
@@ -1689,7 +1689,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
         case AST_Expression::EV_char:
           if ((signed char) ev->u.cval < 0)
             {
-                    return 0;
+              return 0;
             }
 
           ev->u.oval = (unsigned char) ev->u.cval;
@@ -1943,6 +1943,8 @@ AST_Expression::eval_bin_op (AST_Expression::EvalKind ek)
   case EC_div:
     if (this->pd_v2->ev ()->u.ullval == 0)
       {
+        delete retval;
+        retval = 0;
         return 0;
       }
 
@@ -1950,6 +1952,8 @@ AST_Expression::eval_bin_op (AST_Expression::EvalKind ek)
       this->pd_v1->ev ()->u.ullval / this->pd_v2->ev  ()->u.ullval;
     break;
   default:
+    delete retval;
+    retval = 0;
     return 0;
   }
     }
@@ -1976,6 +1980,8 @@ AST_Expression::eval_bin_op (AST_Expression::EvalKind ek)
   case EC_div:
     if (this->pd_v2->ev ()->u.llval == 0)
       {
+        delete retval;
+        retval = 0;
         return 0;
       }
 
@@ -1983,6 +1989,8 @@ AST_Expression::eval_bin_op (AST_Expression::EvalKind ek)
       this->pd_v1->ev ()->u.llval / this->pd_v2->ev  ()->u.llval;
     break;
   default:
+    delete retval;
+    retval = 0;
     return 0;
   }
     }
@@ -2010,6 +2018,8 @@ AST_Expression::eval_bin_op (AST_Expression::EvalKind ek)
   case EC_div:
     if (ACE::is_equal (this->pd_v2->ev ()->u.dval, 0.0))
       {
+        delete retval;
+        retval = 0;
         return 0;
       }
 
@@ -2017,6 +2027,8 @@ AST_Expression::eval_bin_op (AST_Expression::EvalKind ek)
       this->pd_v1->ev ()->u.dval / this->pd_v2->ev  ()->u.dval;
     break;
   default:
+    delete retval;
+    retval = 0;
     return 0;
   }
     }
@@ -2057,6 +2069,8 @@ AST_Expression::eval_mod_op (AST_Expression::EvalKind ek)
 
       if (this->pd_v2->ev ()->u.ullval == 0)
         {
+          delete retval;
+          retval = 0;
           return 0;
         }
 
@@ -2071,6 +2085,8 @@ AST_Expression::eval_mod_op (AST_Expression::EvalKind ek)
 
       if (this->pd_v2->ev ()->u.llval == 0)
         {
+          delete retval;
+          retval = 0;
           return 0;
         }
 
@@ -2087,6 +2103,8 @@ AST_Expression::eval_mod_op (AST_Expression::EvalKind ek)
 
       if (this->pd_v2->ev ()->u.ulval == 0)
         {
+          delete retval;
+          retval = 0;
           return 0;
         }
 
@@ -2101,6 +2119,8 @@ AST_Expression::eval_mod_op (AST_Expression::EvalKind ek)
 
       if (this->pd_v2->ev ()->u.lval == 0)
         {
+          delete retval;
+          retval = 0;
           return 0;
         }
 
@@ -2109,6 +2129,8 @@ AST_Expression::eval_mod_op (AST_Expression::EvalKind ek)
     }
   else
     {
+      delete retval;
+      retval = 0;
       return 0;
     }
 
@@ -2172,6 +2194,8 @@ AST_Expression::eval_bit_op (AST_Expression::EvalKind ek)
             this->pd_v1->ev ()->u.ullval >> this->pd_v2->ev ()->u.ullval;
           break;
         default:
+          delete retval;
+          retval = 0;
           return 0;
       }
     }
@@ -2206,6 +2230,8 @@ AST_Expression::eval_bit_op (AST_Expression::EvalKind ek)
             this->pd_v1->ev ()->u.llval >> this->pd_v2->ev ()->u.llval;
           break;
         default:
+          delete retval;
+          retval = 0;
           return 0;
       }
     }
@@ -2241,6 +2267,8 @@ AST_Expression::eval_bit_op (AST_Expression::EvalKind ek)
             this->pd_v1->ev ()->u.ulval >> this->pd_v2->ev ()->u.ulval;
           break;
         default:
+          delete retval;
+          retval = 0;
           return 0;
       }
     }
@@ -2275,6 +2303,8 @@ AST_Expression::eval_bit_op (AST_Expression::EvalKind ek)
             this->pd_v1->ev ()->u.lval >> this->pd_v2->ev ()->u.lval;
           break;
         default:
+          delete retval;
+          retval = 0;
           return 0;
       }
     }
@@ -2309,6 +2339,8 @@ AST_Expression::eval_bit_op (AST_Expression::EvalKind ek)
             this->pd_v1->ev ()->u.usval >> this->pd_v2->ev ()->u.usval;
           break;
         default:
+          delete retval;
+          retval = 0;
           return 0;
       }
     }
@@ -2343,6 +2375,8 @@ AST_Expression::eval_bit_op (AST_Expression::EvalKind ek)
             this->pd_v1->ev ()->u.sval >> this->pd_v2->ev ()->u.sval;
           break;
         default:
+          delete retval;
+          retval = 0;
           return 0;
       }
     }
@@ -2377,6 +2411,8 @@ AST_Expression::eval_bit_op (AST_Expression::EvalKind ek)
             this->pd_v1->ev ()->u.ulval >> this->pd_v2->ev ()->u.ulval;
           break;
         default:
+          delete retval;
+          retval = 0;
           return 0;
       }
     }
@@ -2420,12 +2456,16 @@ AST_Expression::eval_bit_op (AST_Expression::EvalKind ek)
             this->pd_v1->ev ()->u.oval >> this->pd_v2->ev ()->u.oval;
           break;
         default:
+          delete retval;
+          retval = 0;
           return 0;
       }
     }
 
     break;
   default:
+    delete retval;
+    retval = 0;
     return 0;
   }
 
@@ -2470,6 +2510,8 @@ AST_Expression::eval_un_op (AST_Expression::EvalKind ek)
 
       if (this->pd_v1->ev () == 0)
         {
+          delete retval;
+          retval = 0;
           return 0;
         }
 
@@ -2480,6 +2522,8 @@ AST_Expression::eval_un_op (AST_Expression::EvalKind ek)
 
       if (this->pd_v1->ev () == 0)
         {
+          delete retval;
+          retval = 0;
           return 0;
         }
 
@@ -2488,6 +2532,8 @@ AST_Expression::eval_un_op (AST_Expression::EvalKind ek)
     case EC_bit_neg:
       if (this->pd_v1->ev () == 0)
         {
+          delete retval;
+          retval = 0;
           return 0;
         }
 
@@ -2524,11 +2570,15 @@ AST_Expression::eval_un_op (AST_Expression::EvalKind ek)
           retval->u.oval = ~this->pd_v1->ev ()->u.oval;
           break;
         default:
+          delete retval;
+          retval = 0;
           return 0;
       }
 
       break;
     default:
+      delete retval;
+      retval = 0;
       return 0;
   }
 
@@ -2737,6 +2787,7 @@ AST_Expression::coerce (AST_Expression::ExprType t)
     case EV_void:
     case EV_none:
       delete copy;
+      copy = 0;
       return 0;
     case EV_enum:
       copy->u.ulval = this->pd_ev->u.ulval;
@@ -2759,6 +2810,7 @@ AST_Expression::coerce (AST_Expression::ExprType t)
       break;
 #else /* ! defined (ACE_LACKS_LONGLONG_T) */
       delete copy;
+      copy = 0;
       return 0;
 #endif /* ! defined (ACE_LACKS_LONGLONG_T) */
     case EV_ulonglong:
@@ -2767,6 +2819,7 @@ AST_Expression::coerce (AST_Expression::ExprType t)
       break;
 #else /* ! defined (ACE_LACKS_LONGLONG_T) */
       delete copy;
+      copy = 0;
       return 0;
 #endif /* ! defined (ACE_LACKS_LONGLONG_T) */
     case EV_bool:
@@ -2803,7 +2856,19 @@ AST_Expression::coerce (AST_Expression::ExprType t)
     }
   else
     {
-      return coerce_value (copy, t);
+      AST_ExprValue *ev = coerce_value (copy, t);
+
+      if (ev == 0)
+        {
+          // coerce_value() will either return 'copy' or
+          // return 0 without freeing 'copy'. It's
+          // deleted here instead of putting a zillion
+          // delete statments inside coerce_value().
+          delete copy;
+          copy = 0;
+        }
+
+      return ev;
     }
 }
 

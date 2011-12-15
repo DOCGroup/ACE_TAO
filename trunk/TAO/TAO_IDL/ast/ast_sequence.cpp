@@ -161,18 +161,18 @@ AST_Sequence::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
   list.enqueue_tail(this);
 
   AST_Type *type = AST_Type::narrow_from_decl (this->base_type ());
-  AST_Decl::NodeType nt = type->node_type ();
 
-  if (!type)
+  if (type == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("(%N:%l) AST_Sequence::")
-                         ACE_TEXT ("in_recursion - ")
+                         ACE_TEXT ("AST_Sequence::in_recursion - ")
                          ACE_TEXT ("bad base type\n")),
-                        0);
+                        false);
     }
 
-  if (type->node_type () == AST_Decl::NT_typedef)
+  AST_Decl::NodeType nt = type->node_type ();
+
+  if (nt == AST_Decl::NT_typedef)
     {
       AST_Typedef *td = AST_Typedef::narrow_from_decl (type);
       type = td->primitive_base_type ();

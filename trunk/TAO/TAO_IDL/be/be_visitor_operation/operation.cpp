@@ -83,7 +83,7 @@ be_visitor_operation::count_non_out_parameters (be_operation *node)
       be_valuetype *vt =
         be_valuetype::narrow_from_decl (bd->field_type ());
 
-      if (bd && (bd->direction () != AST_Argument::dir_OUT) && !vt)
+      if (bd != 0 && bd->direction () != AST_Argument::dir_OUT && vt == 0)
         {
           ++count;
         }
