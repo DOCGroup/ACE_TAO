@@ -13,6 +13,6 @@ namespace TAO
     return (*active_policy_) ();
   }
 
-};
+}
 
 TAO_END_VERSIONED_NAMESPACE_DECL

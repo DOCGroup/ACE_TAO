@@ -1,3 +1,9 @@
+Thu Dec 15 13:25:37 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * tao/ORB_Time_Policy.h:
+        * tao/ORB_Time_Policy.inl:
+          Fixed warning for gcc 4.6.2
+
 Thu Dec 15 11:00:00 UTC 2011  Martin Corino  <mcorino@remedy.nl>
 
         Merged timer_policy branch.
