@@ -55,7 +55,7 @@ namespace TAO
   // Declare a countdown timer type based on ORB time policy
   typedef ACE_Countdown_Time_T<ORB_Time_Policy> ORB_Countdown_Time;
 
-}; // TAO
+} // TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
