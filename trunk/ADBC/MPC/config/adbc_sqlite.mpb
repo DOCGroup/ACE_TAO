@@ -1,6 +1,0 @@
-// $Id$
-
-project : sqlite3, adbclib {
-  libs  += ADBC_SQLite
-  after += ADBC_SQLite
-}
