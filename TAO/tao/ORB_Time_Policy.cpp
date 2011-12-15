@@ -10,7 +10,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-
   ACE_Time_Policy_T<ACE_Default_Time_Policy> ORB_Time_Policy::default_policy_;
   ACE_Dynamic_Time_Policy_Base const * ORB_Time_Policy::active_policy_ = &ORB_Time_Policy::default_policy_;
 
@@ -26,7 +25,6 @@ namespace TAO
   {
     active_policy_ = &default_policy_;
   }
-
-};
+}
 
 TAO_END_VERSIONED_NAMESPACE_DECL
