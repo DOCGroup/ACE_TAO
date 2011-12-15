@@ -1,3 +1,5 @@
+//$Id$
+
 #ifndef ACE_ABSTRACT_TIMER_QUEUE_CPP
 #define ACE_ABSTRACT_TIMER_QUEUE_CPP
 #include "ace/config-all.h"
