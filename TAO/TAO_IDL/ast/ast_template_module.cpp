@@ -197,7 +197,10 @@ AST_Template_Module::match_one_param (FE_Utils::T_Param_Info *param,
                                               param->const_type_);
         }
 
-      return (ev != 0);
+      bool retval = (ev != 0);
+      delete ev;
+      ev = 0;
+      return retval;
     }
 
   return (param->type_ == other_type);
