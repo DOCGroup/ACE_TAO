@@ -1,3 +1,9 @@
+Thu Dec 15 13:22:07 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * ace/Event_Handler_Handle_Timeout_Upcall.inl:
+        * tests/Timer_Queue_Test.cpp:
+          Fuzz. Removed tab character
+
 Thu Dec 15 13:12:39 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * ace/Event_Handler_Handle_Timeout_Upcall.inl:

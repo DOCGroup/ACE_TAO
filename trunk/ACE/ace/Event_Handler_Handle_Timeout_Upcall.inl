@@ -7,8 +7,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_INLINE int
 ACE_Event_Handler_Handle_Timeout_Upcall::
 registration (ACE_Timer_Queue &,
-	      ACE_Event_Handler *event_handler,
-	      const void *)
+              ACE_Event_Handler *event_handler,
+              const void *)
 {
   event_handler->add_reference ();
   return 0;

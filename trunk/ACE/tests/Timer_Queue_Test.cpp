@@ -330,7 +330,7 @@ test_performance (ACE_Timer_Queue *tq,
   for (i = 0; i < max_iterations; ++i)
     {
       times[i] = (tq->gettimeofday()
-		  + ACE_Time_Value(0, i * TIMER_DISTANCE * 1000));
+        + ACE_Time_Value(0, i * TIMER_DISTANCE * 1000));
     }
 
   ACE_Time_Value last_time = times[max_iterations-1];
