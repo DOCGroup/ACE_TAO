@@ -635,7 +635,7 @@
     <node/>
     <location>DDS_LatencyTT_TestSec_Connector_stub</location>
   </artifact-->
-  
+
   <localityConstraint>
     <constraint>SameProcess</constraint>
     <constrainedInstance xmi:idref="CompSvrInst" />
