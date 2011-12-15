@@ -34,6 +34,7 @@
 #include "ace/Local_Memory_Pool.h"
 #include "ace/Null_Mutex.h"
 #include "ace/OS_NS_strings.h"
+#include "ace/Auto_Ptr.h"
 
 #if !defined (TAO_DEFAULT_REACTOR_TYPE)
 #define TAO_DEFAULT_REACTOR_TYPE TAO_REACTOR_TP
@@ -421,13 +422,16 @@ TAO_Advanced_Resource_Factory::allocate_reactor_impl (void) const
   /*
    * Hook for specializing the Reactor implementation in TAO.
    */
+  // get a timer queue (or not) from a possibly configured
+  // time policy
+  TAO_RSF_Timer_Queue_Ptr tmq (*this, this->create_timer_queue ());
 //@@ TAO_ADVANCED_RESOURCE_REACTOR_SPL_COMMENT_HOOK_START
   switch (this->reactor_type_)
     {
     case TAO_REACTOR_SELECT_MT:
       ACE_NEW_RETURN (impl,
                       TAO_REACTOR ((ACE_Sig_Handler*)0,
-                                   (ACE_Timer_Queue*)0,
+                                   tmq.get (),
                                    0,
                                    (ACE_Reactor_Notify*)0,
                                    this->reactor_mask_signals_),
@@ -437,7 +441,7 @@ TAO_Advanced_Resource_Factory::allocate_reactor_impl (void) const
     case TAO_REACTOR_SELECT_ST:
       ACE_NEW_RETURN (impl,
                       TAO_NULL_LOCK_REACTOR ((ACE_Sig_Handler*)0,
-                                             (ACE_Timer_Queue*)0,
+                                             tmq.get (),
                                              0,
                                              (ACE_Reactor_Notify*)0,
                                              this->reactor_mask_signals_),
@@ -446,7 +450,7 @@ TAO_Advanced_Resource_Factory::allocate_reactor_impl (void) const
 
     case TAO_REACTOR_WFMO:
 #if defined(ACE_WIN32)
-      ACE_NEW_RETURN (impl, ACE_WFMO_Reactor, 0);
+      ACE_NEW_RETURN (impl, ACE_WFMO_Reactor (0, tmq.get ()), 0);
 #endif /* ACE_WIN32 */
       break;
 
@@ -455,7 +459,7 @@ TAO_Advanced_Resource_Factory::allocate_reactor_impl (void) const
   && !defined (ACE_HAS_WINCE)      \
   && !defined (ACE_HAS_PHARLAP)
     case TAO_REACTOR_MSGWFMO:
-      ACE_NEW_RETURN (impl, ACE_Msg_WFMO_Reactor, 0);
+      ACE_NEW_RETURN (impl, ACE_Msg_WFMO_Reactor (0, tmq.get ()), 0);
       break;
 #endif /* ACE_WIN32 && !ACE_LACKS_MSG_WFMO */
 
@@ -465,7 +469,7 @@ TAO_Advanced_Resource_Factory::allocate_reactor_impl (void) const
                       ACE_Dev_Poll_Reactor (ACE::max_handles (),
                                             1,  // restart
                                             (ACE_Sig_Handler*)0,
-                                            (ACE_Timer_Queue*)0,
+                                            tmq.get (),
                                             0, // Do not disable notify
                                             0, // Allocate notify handler
                                             this->reactor_mask_signals_,
@@ -480,7 +484,7 @@ TAO_Advanced_Resource_Factory::allocate_reactor_impl (void) const
           ACE_TP_Reactor (ACE::max_handles (),
               1,
               (ACE_Sig_Handler*)0,
-              (ACE_Timer_Queue*)0,
+              tmq.get (),
               this->reactor_mask_signals_,
               this->threadqueue_type_ == TAO_THREAD_QUEUE_FIFO ?
               ACE_Select_Reactor_Token::FIFO :
@@ -491,6 +495,8 @@ TAO_Advanced_Resource_Factory::allocate_reactor_impl (void) const
 
 //@@ TAO_ADVANCED_RESOURCE_REACTOR_SPL_COMMENT_HOOK_END
 
+  // safe to release timer queue
+  tmq.release ();
   return impl;
 }
 

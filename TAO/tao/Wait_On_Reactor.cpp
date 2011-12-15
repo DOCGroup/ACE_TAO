@@ -4,9 +4,9 @@
 #include "tao/ORB_Core.h"
 #include "tao/Transport.h"
 #include "tao/Synch_Reply_Dispatcher.h"
+#include "tao/ORB_Time_Policy.h"
 
 #include "ace/Reactor.h"
-#include "ace/Countdown_Time.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -25,7 +25,7 @@ TAO_Wait_On_Reactor::wait (ACE_Time_Value *max_wait_time,
 {
   // Start the count down timer to account for the time spent in this
   // method.
-  ACE_Countdown_Time countdown (max_wait_time);
+  TAO::ORB_Countdown_Time countdown (max_wait_time);
 
   // Reactor does not change inside the loop.
   ACE_Reactor *const reactor =

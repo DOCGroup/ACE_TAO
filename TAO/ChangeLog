@@ -1,3 +1,158 @@
+Thu Dec 15 11:00:00 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        Merged timer_policy branch.
+
+        === start changelog ===
+
+        Thu Dec 15 09:45:00 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+                * NEWS:
+                * docs/Options.html:
+
+                  Added descriptions of new TIME_POLICY strategy features.
+
+        Mon Dec 12 21:28:00 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+                * tao/System_Time_Policy_Strategy.cpp:
+                * tao/System_Time_Policy_Strategy.h:
+                * tao/TAO_Internal.cpp:
+                * tao/Time_Policy_Manager.cpp:
+                * tao/tao.mpc:
+
+                  Added new time policy strategy to replace backwards
+                  compatible default time policy in ACE.
+
+                * tests/Time_Policy_Custom/Custom_Time_Policy_Strategy.cpp:
+
+                  Added backwards compatibility support.
+
+        Thu Dec 08 15:34:00 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+                * tao/HR_Time_Policy_Strategy.h
+
+                  Fixed class comment.
+
+                * tests/Time_Policy/main.cpp
+
+                  Fixed comments.
+
+                * tests/Time_Policy_Custom/Custom_Time_Policy.mpc
+                * tests/Time_Policy_Custom/Custom_Time_Policy_Strategy.cpp
+                * tests/Time_Policy_Custom/Custom_Time_Policy_Strategy.h
+                * tests/Time_Policy_Custom/TPTest_Export.h
+                * tests/Time_Policy_Custom/custom_time.conf
+                * tests/Time_Policy_Custom/custom_time.conf.xml
+                * tests/Time_Policy_Custom/main.cpp
+                * tests/Time_Policy_Custom/run_test.pl
+                * tests/Time_Policy_Custom/run_test_dyn.pl
+                * bin/tao_orb_tests.lst
+
+                  Added new tests for custom TAO Time policy support.
+
+        Thu Dec 08 12:00:00 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+                * tao/Time_Policy_Manager.cpp
+                * tao/default_resource.cpp
+
+                  Logging improvements.
+
+                * tests/Time_Policy/Time_Policy.mpc
+                * tests/Time_Policy/hr_time.conf
+                * tests/Time_Policy/hr_time.conf.xml
+                * tests/Time_Policy/main.cpp
+                * tests/Time_Policy/run_test.pl
+                * tests/Time_Policy/run_test_hr.pl
+                * bin/tao_orb_tests.lst
+
+                  Added new tests for TAO Time policy support.
+
+        Wed Dec 07 12:34:00 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+                * tao/TAO_Internal.cpp:
+
+                  Added loading HR_Time_Policy_Strategy static service.
+
+                * tao/Time_Policy_Manager.cpp:
+
+                  Improved error reporting.
+
+        Wed Dec 07 11:20:00 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+                * tao/default_resource.cpp:
+                * tao/default_resource.h;
+                * tao/default_resource.inl:
+
+                  Improved protection for dynamically allocated
+                  timer queues.
+
+                * tao/Strategies/advanced_resource.cpp:
+
+                  Added support for ORB time policies.
+
+        Tue Dec 06 15:45:00 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+                * tao/HR_Time_Policy_Strategy.h:
+                * tao/Time_Policy_Manager.h:
+                * tao/Time_Policy_Strategy.h:
+
+                  Fixed potential compile problems because of
+                  #include placements.
+
+        Tue Dec 06 15:30:00 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+                * tao/ORB_Time_Policy.cpp:
+                * tao/ORB_Time_Policy.h:
+                * tao/ORB_Time_Policy.inl:
+
+                  Added dynamic time policy and a
+                  countdown template instantiation based
+                  on that policy.
+
+                * tao/Block_Flushing_Strategy.cpp:
+                * tao/Leader_Follower.cpp:
+                * tao/LocateRequest_Invocation.cpp:
+                * tao/Profile_Transport_Resolver.cpp:
+                * tao/Synch_Invocation.cpp:
+                * tao/Transport.cpp:
+                * tao/Wait_On_Reactor.cpp:
+                * tao/Wait_On_Read.cpp:
+
+                  Replaced ACE_Countdown_Time by new ORB time
+                  policy based countdown class.
+
+                * tao/Time_Policy_Manager.cpp:
+                * tao/Time_Policy_Manager.h:
+
+                  Added ORB time policy manager service object
+                  for managing dynamically configured ORB time
+                  policy.
+
+                * tao/Time_Policy_Strategy.h:
+
+                  Added base for loadable ORB time policies.
+
+                * tao/HR_Time_Policy_Strategy.cpp:
+                * tao/HR_Time_Policy_Strategy.h:
+
+                  Added HR ORB time policy implementation.
+
+                * tao/default_resource.cpp:
+                * tao/default_resource.h:
+                * tao/TAO_Internal.cpp:
+
+                  Added support for ORB time policies.
+
+                * tao/orbconf.h:
+
+                  Added ACE_HAS_TIME_POLICY compile time configuration
+                  to enable/disable ORB time policy support.
+
+                * tao/tao.mpc:
+
+                  Added new files.
+
+        === end changelog ===
+
 Wed Dec 14 20:51:28 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_sequence.cpp:

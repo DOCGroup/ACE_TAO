@@ -4,6 +4,7 @@
 #include "ace/High_Res_Timer.h"
 #include "tao/ORB_Core.h"
 #include "ace/Timer_Queue.h"
+#include "ace/Timer_Heap.h"
 #include "ace/Reactor.h"
 #include "ace/Env_Value_T.h"
 #include "Latency_Base.h"
@@ -466,6 +467,12 @@ int ACE_TMAIN(int argc, ACE_TCHAR* argv[])
   DummyPublisherListener * pub_listener = 0;
   ::DDS::Publisher * pub = 0;
 
+  typedef ACE_Timer_Heap_T<ACE_Event_Handler *,
+                           ACE_Event_Handler_Handle_Timeout_Upcall,
+                           ACE_SYNCH_RECURSIVE_MUTEX,
+                           ACE_HR_Time_Policy> timer_queue_type;
+  timer_queue_type hr_timer_q_;
+
   try
     {
       ACE_Env_Value<int> id (ACE_TEXT("DDS4CCM_DEFAULT_DOMAIN_ID"), domain_id_);
@@ -479,7 +486,7 @@ int ACE_TMAIN(int argc, ACE_TCHAR* argv[])
         }
 
       (void) ACE_High_Res_Timer::global_scale_factor ();
-      ACE_Reactor::instance ()->timer_queue()->gettimeofday (&ACE_High_Res_Timer::gettimeofday_hr);
+      ACE_Reactor::instance ()->timer_queue(&hr_timer_q_);
 
       /* Create the domain participant */
       DDSDomainParticipant * participant =

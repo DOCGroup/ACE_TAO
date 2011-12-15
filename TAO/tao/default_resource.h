@@ -29,12 +29,16 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Reactor_Impl;
 ACE_END_VERSIONED_NAMESPACE_DECL
 
+#include "ace/Timer_Queuefwd.h"
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Object_Adapter;
 class TAO_IOR_Parser;
 class TAO_LF_Strategy;
 class TAO_Codeset_Descriptor_Base;
+class TAO_Time_Policy_Manager;
+class TAO_RSF_Timer_Queue_Ptr;
 
 /**
  * @class TAO_Codeset_Parameters
@@ -190,6 +194,16 @@ public:
 
 protected:
 
+  friend class TAO_RSF_Timer_Queue_Ptr;
+
+#if (TAO_HAS_TIME_POLICY == 1)
+  TAO_Time_Policy_Manager* time_policy_manager (void) const;
+#endif
+
+  ACE_Timer_Queue * create_timer_queue (void) const;
+
+  void destroy_timer_queue (ACE_Timer_Queue *tmq) const;
+
   /// Obtain the reactor implementation
   virtual ACE_Reactor_Impl *allocate_reactor_impl (void) const;
 
@@ -313,7 +327,32 @@ private:
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_Default_Resource_Factory)
 ACE_FACTORY_DECLARE (TAO, TAO_Default_Resource_Factory)
 
+/**
+ * @class TAO_RSF_Timer_Queue_Ptr
+ *
+ * @brief A simple auto_ptr like class to manage timer queues dynamically
+ *        allocated by a time policy.
+ */
+class TAO_Export TAO_RSF_Timer_Queue_Ptr
+{
+public:
+  TAO_RSF_Timer_Queue_Ptr (TAO_Default_Resource_Factory const &, ACE_Timer_Queue*);
+  ~TAO_RSF_Timer_Queue_Ptr ();
+
+  ACE_Timer_Queue* get ();
+  void release ();
+
+private:
+  TAO_Default_Resource_Factory const & resource_factory_;
+  ACE_Timer_Queue * timer_queue_;
+};
+
 TAO_END_VERSIONED_NAMESPACE_DECL
 
+#if defined (__ACE_INLINE__)
+#include "tao/default_resource.inl"
+#endif /* __ACE_INLINE__ */
+
 #include /**/ "ace/post.h"
+
 #endif /* TAO_DEFAULT_CLIENT_H */

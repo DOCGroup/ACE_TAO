@@ -23,7 +23,7 @@
 
 #include "ace/Auto_Ptr.h"
 #include "ace/OS_NS_string.h"
-#include "ace/Countdown_Time.h"
+#include "tao/ORB_Time_Policy.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Synch_Invocation.inl"
@@ -48,7 +48,7 @@ namespace TAO
   Invocation_Status
   Synch_Twoway_Invocation::remote_twoway (ACE_Time_Value *max_wait_time)
   {
-    ACE_Countdown_Time countdown (max_wait_time);
+    TAO::ORB_Countdown_Time countdown (max_wait_time);
 
     TAO_Synch_Reply_Dispatcher *rd_p = 0;
     ACE_NEW_NORETURN (rd_p, TAO_Synch_Reply_Dispatcher (this->resolver_.stub ()->orb_core (),
@@ -649,7 +649,7 @@ namespace TAO
   Invocation_Status
   Synch_Oneway_Invocation::remote_oneway (ACE_Time_Value *max_wait_time)
   {
-    ACE_Countdown_Time countdown (max_wait_time);
+    TAO::ORB_Countdown_Time countdown (max_wait_time);
 
     CORBA::Octet const response_flags = this->details_.response_flags ();
 
