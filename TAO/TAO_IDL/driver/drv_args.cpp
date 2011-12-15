@@ -66,6 +66,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 // drv_args.cpp - Argument parsing for IDL compiler main driver
 
+#include <string>
+
 #include "idl_defines.h"
 #include "global_extern.h"
 #include "drv_extern.h"
@@ -98,22 +100,18 @@ DRV_push_file (const char *s)
 static void
 DRV_prep_cpp_arg (char *s)
 {
-  char *newarg = 0;
-  ACE_NEW (newarg,
-           char[512]);
-  char *farg;
-
-  newarg[0] = '\0';
-
-  for (farg = ACE_OS::strtok (s, ",");
-       farg != 0;
-       farg = ACE_OS::strtok (0, ","))
+  std::string instr (s);
+  std::string newarg;
+  newarg.reserve (512);
+  
+  for (std::string::size_type pos = instr.find_first_of (',');
+       pos != std::string::npos;
+       instr = instr.substr (pos + 1), pos = instr.find_first_of (','))
     {
-      ACE_OS::strcat (newarg,
-                      farg);
+      newarg.append (instr.substr (0, pos));
     }
 
-  DRV_cpp_putarg (newarg);
+  DRV_cpp_putarg (newarg.c_str ());
 }
 
 // Print a usage message and exit.

@@ -65,6 +65,15 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
       else
         {
           intf = this->ctx_->interface ();
+
+          if (intf == 0)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("be_visitor_operation_cs::")
+                                 ACE_TEXT ("visit_operation - ")
+                                 ACE_TEXT ("bad scope\n")),
+                                -1);
+            }
         }
     }
 

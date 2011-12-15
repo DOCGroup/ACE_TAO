@@ -365,6 +365,13 @@ ast_visitor_reifying::visit_array (AST_Array *node)
         {
           if (this->visit_param_holder (ph) != 0)
             {
+              if (v_list != 0)
+                {
+                  v_list->destroy ();
+                  delete v_list;
+                  v_list = 0;
+                }
+
               ACE_ERROR_RETURN ((LM_ERROR,
                                  ACE_TEXT ("ast_visitor_reifying::")
                                  ACE_TEXT ("visit_array - ")

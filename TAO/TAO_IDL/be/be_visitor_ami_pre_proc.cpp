@@ -1067,6 +1067,7 @@ be_visitor_ami_pre_proc::create_inheritance_list (be_interface *node,
       // Just a sanity check until we're sure this works in all use cases.
       if (n_rh_parents != index)
         {
+          delete [] retval;
           ACE_ERROR_RETURN ((LM_ERROR,
                              "reply handler parent iteration mismatch\n"),
                             0);
