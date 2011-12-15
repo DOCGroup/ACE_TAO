@@ -105,7 +105,7 @@ public:
 
   /// Default constructor
   ACE_Timer_Wheel_T (FUNCTOR* upcall_functor = 0, FreeList* freelist = 0,
-		     TIME_POLICY const & time_policy = TIME_POLICY());
+                     TIME_POLICY const & time_policy = TIME_POLICY());
 
   /// Constructor with opportunities to set the wheelsize and resolution
   ACE_Timer_Wheel_T (u_int spoke_count,
@@ -113,7 +113,7 @@ public:
                      size_t prealloc = 0,
                      FUNCTOR* upcall_functor = 0,
                      FreeList* freelist = 0,
-		     TIME_POLICY const & time_policy = TIME_POLICY());
+                     TIME_POLICY const & time_policy = TIME_POLICY());
 
   /// Destructor
   virtual ~ACE_Timer_Wheel_T (void);

@@ -81,8 +81,8 @@ ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::iter (void)
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY>
 ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::ACE_Timer_List_T (FUNCTOR* uf,
-									  FreeList* fl,
-									  TIME_POLICY const & time_policy)
+                    FreeList* fl,
+                    TIME_POLICY const & time_policy)
   : Base_Timer_Queue (uf, fl, time_policy)
   , head_ (new ACE_Timer_Node_T<TYPE>)
   , id_counter_ (0)

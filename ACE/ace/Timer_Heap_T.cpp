@@ -103,8 +103,8 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::ACE_Timer_Heap_T (
   ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist,
   TIME_POLICY const & time_policy)
   : Base_Time_Policy (upcall_functor,
-		      freelist,
-		      time_policy),
+      freelist,
+      time_policy),
     max_size_ (size),
     cur_size_ (0),
     cur_limbo_ (0),
@@ -171,8 +171,8 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::ACE_Timer_Heap_T (
   ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist,
   TIME_POLICY const & time_policy)
   : Base_Time_Policy (upcall_functor,
-		      freelist,
-		      time_policy),
+          freelist,
+          time_policy),
     max_size_ (ACE_DEFAULT_TIMERS),
     cur_size_ (0),
     cur_limbo_ (0),
