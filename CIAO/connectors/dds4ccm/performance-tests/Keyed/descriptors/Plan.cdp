@@ -530,7 +530,7 @@
     <node/>
     <location>Receiver_stub</location>
   </artifact>
-  
+
   <localityConstraint>
     <constraint>SameProcess</constraint>
     <constrainedInstance xmi:idref="CompSvrInst" />

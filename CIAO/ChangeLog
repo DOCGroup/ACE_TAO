@@ -1,3 +1,14 @@
+Thu Dec 15 12:49:05 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/performance-tests/Keyed/descriptors/Plan.cdp:
+        * connectors/dds4ccm/performance-tests/Keyed/descriptors/Plan_pub.cdp:
+        * connectors/dds4ccm/performance-tests/Keyed/descriptors/Plan_pub3.cdp:
+        * connectors/dds4ccm/performance-tests/Keyed/descriptors/Plan_pub_BE.cdp:
+        * connectors/dds4ccm/performance-tests/Latency/descriptors/Plan_SharedMem.cdp:
+        * connectors/dds4ccm/performance-tests/Latency/descriptors/Plan_UDPv4.cdp:
+        * connectors/dds4ccm/performance-tests/Throughput/descriptors/Plan_pub.cdp:
+          Fuzz. Whitespaces.
+
 Thu Dec 15 11:00:00 UTC 2011  Martin Corino  <mcorino@remedy.nl>
 
         Merged timer_policy branch.
