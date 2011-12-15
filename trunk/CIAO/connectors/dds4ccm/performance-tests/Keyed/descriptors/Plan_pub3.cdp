@@ -382,7 +382,7 @@
     <node/>
     <location>DDS_Perf_Keyed_Test_Connector_stub</location>
   </artifact>
-  
+
   <localityConstraint>
     <constraint>SameProcess</constraint>
     <constrainedInstance xmi:idref="CompSvrInst" />
