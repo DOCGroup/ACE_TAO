@@ -429,6 +429,14 @@ const size_t TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE = 128;
 # define TAO_DISABLE_CORBA_MESSAGING_POLICIES 0
 #endif  /* !TAO_DISABLE_CORBA_MESSAGING_POLICIES */
 
+// To explicitly disable TIME_POLICY support uncomment the following
+// #define TAO_HAS_TIME_POLICY 0
+
+// Default TIME_POLICY settings
+#if !defined (TAO_HAS_TIME_POLICY)
+# define TAO_HAS_TIME_POLICY 1
+#endif  /* !TAO_HAS_TIME_POLICY */
+
 // To explicitly disable REBIND_POLICY support uncomment the following
 // #define TAO_HAS_REBIND_POLICY 0
 

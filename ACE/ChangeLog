@@ -1,3 +1,408 @@
+Thu Dec 15 11:00:00 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        Merged timer_policy branch.
+
+        === start changelog ===
+
+        Thu Dec 15 09:45:00 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+                * NEWS:
+
+                  Added description of new TIME_POLICY features.
+
+                * tests/Timer_Queue_Test.cpp:
+
+                  Added explicit test of specific TIME_POLICY feature.
+
+        Mon Dec 12 21:28:00 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+                * ace/Abstract_Timer_Queue.h:
+                * ace/Time_Policy.h:
+                * ace/Time_Policy.inl:
+                * ace/Time_Policy_T.h:
+                * ace/Time_Policy_T.inl:
+                * ace/Timer_Queue_T.cpp:
+                * ace/Timer_Queue_T.h:
+                * tests/Timer_Queue_Test.cpp:
+
+                  Added backwards compatibility support.
+
+        Mon Dec 05 10:26:00 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+                * ace/Time_Policy.inl
+
+                  Prevent setting delegate to null pointer.
+
+        Sun Dec 04 15:40:00 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+                * ace/Countdown_Time.cpp:
+                * ace/Countdown_Time.inl:
+
+                  Renamed to *_T.*
+
+                * ace/Countdown_Time.h
+                * ace/Countdown_Time_T.cpp
+                * ace/Countdown_Time_T.h
+                * ace/Countdown_Time_T.inl
+
+                  Changed ACE_Countdown_Time to TIME_POLICY based
+                  template class ACE_Countdown_Time_T,
+                  Created typedef for default template instantiation
+                  as ACE_Countdown_Time.
+
+                * ace/Time_Policy.cpp
+                * ace/Time_Policy.h
+                * ace/Time_Policy.inl
+                * ace/Time_Policy_T.cpp
+                * ace/Time_Policy_T.h
+                * ace/Time_Policy_T.inl
+
+                  Added support for dynamically loadable/shared time
+                  policies.
+
+                * ace/ace.mpc
+
+                  Updated for file changes.
+
+        Fri Dec 02 11:48:00 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+                * ace/Timer_Queue_T.h:
+                * ace/Timer_Queue_T.inl:
+
+                  Reverting set_time_policy() change. Interpretation error.
+
+        Thu Dec 01 17:52:00 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+                * ace/Time_Policy.h:
+                * ace/Time_Policy.inl:
+
+                  Added ACE_HR_Time_Policy.
+
+                * ace/Timer_Queue_T.h:
+                * ace/Timer_Queue_T.inl:
+
+                  Replaced set_time_policy() by get_time_policy() since setting
+                  the policy is not possible but configuring might be.
+
+        Thu Dec 01 14:05:00 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+                * ace/Proactor.cpp:
+                * ace/Timer_Queue_T.cpp:
+                * ace/Timer_Queue_T.h:
+
+                  Fixed compile errors.
+
+        Thu Dec 01 13:34:00 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+                * ace/Timer_Hash_T.cpp:
+                * ace/Timer_Hash_T.h:
+                * ace/Timer_Heap_T.h:
+                * ace/Timer_Wheel_T.h:
+
+                  Small cleanup to prevent potential compiler warnings.
+
+        Mon Aug 24 02:27:36 UTC 2009  Carlos O'Ryan  <coryan@glamdring>
+
+                * ace/Timer_Queue_T.cpp:
+                  Need to release the internal timer queue lock before dispatching
+                  calls in expire_single(), otherwise we get nasty deadlocks in
+                  the TP_Reactor implementation.
+
+        Thu Jul  2 02:55:09 UTC 2009  Carlos O'Ryan  <coryan@glamdring>
+
+                * ace/Abstract_Timer_Queue.h:
+                * ace/Timer_Queue_T.h:
+                * ace/Timer_Queue_T.inl:
+                * ace/Timer_Queue_T.cpp:
+                  I wanted to use gettimeofday() for the pure virtual function and
+                  some other name for the inline function used in the timer queue
+                  internals.
+                  This is the second and final pass to get that change in.  This
+                  time, I renamed the internal function to gettimeofday_static(),
+                  used the compiler (and grep) to find all uses.  Once that
+                  compiled I renamed the virtual function from
+                  gettimeofday_abstract() to the gettimeofday() function.
+                  I know it is convoluted, but it gets the job done without me
+                  having to think too much.
+
+                * ace/Timer_Hash_T.h:
+                * ace/Timer_Hash_T.cpp:
+                * ace/Select_Reactor_T.cpp:
+                * ace/Dev_Poll_Reactor.cpp:
+                * ace/Proactor.cpp:
+                * ace/Timer_Queue_Adapters.cpp:
+                * tests/Timer_Queue_Reference_Counting_Test.cpp:
+                * tests/Timer_Queue_Test.cpp:
+                * examples/APG/Timers/Timers.cpp:
+                * examples/APG/Timers/TimerDispatcher.cpp:
+                * examples/C++NPv2/Logging_Event_Handler_Ex.cpp:
+                  Fixed users and tests to use the real name for gettimeofday() in
+                  ACE_Abstract_Timer_Queue<>
+
+        Wed Jul  1 02:09:44 UTC 2009  Carlos O'Ryan  <coryan@glamdring>
+
+                * ace/ace.mpc:
+                * ace/Makefile.am:
+                * ace/Event_Handler_Handle_Timeout_Upcall.h:
+                * ace/Event_Handler_Handle_Timeout_Upcall.inl:
+                * ace/Event_Handler_Handle_Timeout_Upcall.cpp:
+                  First I noticed that this class did not depend on the lock type
+                  at all, this was fortunate because I wanted to use it in a
+                  generic way.  So, change the class from a template class to a
+                  regular class.  That required moving the class to its own file too.
+
+                * ace/Timer_List_T.h:
+                * ace/Timer_List_T.cpp:
+                * ace/Timer_Wheel_T.h:
+                * ace/Timer_Wheel_T.cpp:
+                * ace/Timer_Hash_T.h:
+                * ace/Timer_Hash_T.cpp:
+                * ace/Timer_Heap_T.h:
+                * ace/Timer_Heap_T.cpp:
+                  Fixed several inconsistencies across these classes, for example,
+                  most of them had typedef as a shorthand for the base class, but
+                  the name of this typedef was not consistent.
+                  Likewise, not all of the classes made the TIME_POLICY parameter
+                  a default template parameter.
+
+                * ace/Timer_Queue_T.h:
+                * ace/Timer_Queue_T.inl:
+                * ace/Timer_Queue_T.cpp:
+                  Introduced an intermediate class between Abstract_Timer_Queue<>
+                  and Timer_Queue_T<>.  This is ugly, but the Proactor "needs" to
+                  set a back-pointer from the FUNCTOR to the Proacter instance
+                  whenever a timer queue is assigned to the Proactor.
+                  This code smells funny.  Either the API is wrong (the Proactor
+                  should always create the functor with the backpointer,) or the
+                  need for the back pointer is suspicious (I think there is a
+                  thread in the Proactor that signals timers, but maybe it should
+                  be contained in the Upcall object itself?)
+                  The more I look here, the uglier the smell.
+
+                * ace/Select_Reactor_T.cpp:
+                * ace/Timer_Queue_Adapters.cpp:
+                * tests/Timer_Queue_Reference_Counting_Test.cpp:
+                * tests/Timer_Queue_Test.cpp:
+                  As a temporary measure, I appended "_abstract" to the
+                  gettimeofday() function name in Abstract_Timer_Queue<>.
+                  Shortly, I will change the Timer_Queue_T<> class to use
+                  gettimeofday_non_virtual() or _static() or something similar.
+                  Had to make the change in two steps to find all the uses of the
+                  original function.
+                  There was probably an easier/cleaner way to do this.
+
+                * tests/Timer_Queue_Test.cpp:
+                  Take advantage of the new ACE_Abstract_Timer_Queue<> to make the
+                  different types of queues more compatible in ths test, including
+                  queues with different time source policies.
+
+                * ace/Proactor.h:
+                  As with the Reactive version, I noticed that
+                  ACE_Proactor_Handle_Timeout_Upcall did not depend on its
+                  template parameter, so I changed the class to a non-template
+                  version.
+
+                * ace/Proactor.cpp:
+                  Instead of making the Proactor a friend of the Timer_Handler
+                  task, expose a safe interface to do what the proactor wants to
+                  do.
+                  The proactor needed access to timer queue internal details to
+                  implement schedule(), but the reactor did not... hmmm... well,
+                  turns out the Reactor had nicely refactor that work to the
+                  upcall functor.  So I did the same in the Proactor case.
+
+
+                * ace/Timer_List.h:
+                * ace/Timer_Wheel.h:
+                * ace/Timer_Hash.h:
+                * ace/Timer_Heap.h:
+                  Use Event_Handler_Handle_Timeout_Upcall without the template
+                  parameter.
+
+                * ace/Abstract_Timer_Queue.h:
+                  Remove the setter for getimeofday(), this is implemented by the
+                  TIME_POLICY template parameter in Timer_Queue_T<>
+
+                * tests/Reactor_Timer_Test.cpp:
+                * tests/Network_Adapters_Test.cpp:
+                * tests/Proactor_Timer_Test.cpp:
+                  Use a different idiom to set the time policy for this test.
+
+                * examples/Timer_Queue/Thread_Timer_Queue_Test.h:
+                * examples/Bounded_Packet_Relay/Thread_Bounded_Packet_Relay.h:
+                * examples/APG/Timers/Timers.cpp:
+                * examples/APG/Timers/TimerDispatcher.cpp:
+                * examples/Reactor/Misc/test_timer_queue.cpp:
+                * examples/C++NPv2/Logging_Event_Handler_Ex.cpp:
+                  Need an additional #include for ACE_Event_Handler_Handle_Timeout
+                  Said class class is no longer a template class, so use it
+                  correctly.
+                  Changed name of gettimeofday() in timer queue to
+                  gettimeofday_abstract()  This is a temporary change to find all
+                  the uses, will revert again soon.
+
+                * Merged in changes from bug-3607 branch.
+
+                * ace/ace.mpc:
+                * ace/Abstract_Timer_Queue.h:
+                * ace/Abstract_Timer_Queue.cpp:
+                * ace/Timer_Queue_Iterator.h:
+                * ace/Timer_Queue_Iterator.inl:
+                * ace/Timer_Queue_Iterator.cpp:
+                * ace/Timer_Queuefwd.h:
+                * ace/Timer_Queue.h:
+                * ace/Timer_Queue_T.h:
+                * ace/Timer_Queue_T.inl:
+                * ace/Timer_Queue_T.cpp:
+                * ace/Timer_List_T.h:
+                * ace/Timer_List_T.cpp:
+                * ace/Timer_Wheel_T.h:
+                * ace/Timer_Wheel_T.cpp:
+                * ace/Timer_Hash_T.h:
+                * ace/Timer_Hash_T.cpp:
+                * ace/Timer_Heap_T.h:
+                * ace/Timer_Heap_T.cpp:
+                  Heavy refactoring in ACE_Timer_Queue_T class and friends.
+                  First, created a template base class (ACE_Abstract_Timer_Queue) that:
+                  1) Only depends on the type held by the timer queue, not to lock
+                    or upcall strategy.
+                  2) It is a pure abstract class, i.e., none of its member
+                    functions have any implementation.
+                  3) Provides new pure virtual functions to encapsulates some
+                    logic that was spread between tests, TP_Reactor and
+                    Dev_Poll_Reactor.
+                  Then I re-wrote all the standard timer queue objects in terms of
+                  this class.  In particular, the reactors use only the abstract
+                  interface.
+                  I also re-factored the Timer_Queue_Iterator to only depend on
+                  the type of objects held by the timer queue.  The rest of the
+                  parameters where not used either.
+                  Implement functionality that was spread in Dev_Poll_Reactor,
+                  TP_Reactor and a test into expire_single.
+
+                * ace/Proactor.h:
+                * ace/TP_Reactor.cpp:
+                * ace/Dev_Poll_Reactor.cpp:
+                  Both classes implemented the logic to dispatch a single timer
+                  but release a mutex before the upcall.  This was confusing as
+                  well as required exposing too much detail about the Timer_Queue
+                  classes.
+                  The new mechanism is a single function in (expire_single)
+                  ACE_Abstract_Timer_Queue<> (implemented in ACE_Timer_Queue_T<>)
+                  which receives a command object to encapsulate the mutex release.
+
+                * ace/Functor.h:
+                * ace/Functor.cpp:
+                * ace/Functor_T.h:
+                * ace/Functor_T.inl:
+                  Add helper ACE_Command_* objects.  One is a no-op, for the test
+                  below.  The other is a callback that ignores the silly void*
+                  argument in the ACE_Command_Base::execute() member function.
+
+                * tests/Timer_Queue_Reference_Counting_Test.cpp:
+                  Re-factored test in terms of expire_single()
+
+        Tue Jun 30 01:10:04 UTC 2009  Carlos O'Ryan  <coryan@glamdring>
+
+                * This is a temporary commit into the 3707 branch.  I realized too
+                  late that the changes from 3706 will be needed to make this work.
+
+                * ace/ace.mpc:
+                * ace/Time_Policy.h:
+                * ace/Time_Policy.inl:
+                * ace/Time_Policy.cpp:
+                  New classes to encapsulate how "now" is computed in the Timer
+                  Queues.   This will be an additional template parameter, so the
+                  default configuration has zero overhead.
+
+                * ace/Timer_Queuefwd.h:
+                * ace/Timer_List.h:
+                * ace/Timer_List_T.h:
+                * ace/Timer_List_T.cpp:
+                * ace/Timer_Queue_T.h:
+                * ace/Timer_Queue_T.inl:
+                * ace/Timer_Queue_T.cpp:
+                * ace/Timer_Wheel.h:
+                * ace/Timer_Wheel_T.h:
+                * ace/Timer_Wheel_T.cpp:
+                * ace/Timer_Hash.h:
+                * ace/Timer_Hash_T.h:
+                * ace/Timer_Hash_T.cpp:
+                * ace/Timer_Heap.h:
+                * ace/Timer_Heap_T.h:
+                * ace/Timer_Heap_T.cpp:
+                  Re-factor timer queue classes to use new TIMER_POLICY
+                  parameter.
+
+                * tests/Timer_Queue_Test.cpp:
+                  Modify test to use TIMER_POLICY.  But here is the rub, the test
+                  does not compile because all timer queue types are "different"
+                  to each other.  I need to introduce the base class from the
+                  bug-3706 branch to make things work.
+
+        Sun Jun 28 22:15:47 UTC 2009  Carlos O'Ryan  <coryan@glamdring>
+
+                * ace/ace.mpc:
+                * ace/Abstract_Timer_Queue.h:
+                * ace/Abstract_Timer_Queue.cpp:
+                * ace/Timer_Queue_Iterator.h:
+                * ace/Timer_Queue_Iterator.inl:
+                * ace/Timer_Queue_Iterator.cpp:
+                * ace/Timer_Queuefwd.h:
+                * ace/Timer_Queue.h:
+                * ace/Timer_Queue_T.h:
+                * ace/Timer_Queue_T.inl:
+                * ace/Timer_Queue_T.cpp:
+                * ace/Timer_List_T.h:
+                * ace/Timer_List_T.cpp:
+                * ace/Timer_Wheel_T.h:
+                * ace/Timer_Wheel_T.cpp:
+                * ace/Timer_Hash_T.h:
+                * ace/Timer_Hash_T.cpp:
+                * ace/Timer_Heap_T.h:
+                * ace/Timer_Heap_T.cpp:
+                  Heavy refactoring in ACE_Timer_Queue_T class and friends.
+                  First, created a template base class (ACE_Abstract_Timer_Queue) that:
+                  1) Only depends on the type held by the timer queue, not to lock
+                    or upcall strategy.
+                  2) It is a pure abstract class, i.e., none of its member
+                    functions have any implementation.
+                  3) Provides new pure virtual functions to encapsulates some
+                    logic that was spread between tests, TP_Reactor and
+                    Dev_Poll_Reactor.
+                  Then I re-wrote all the standard timer queue objects in terms of
+                  this class.  In particular, the reactors use only the abstract
+                  interface.
+                  I also re-factored the Timer_Queue_Iterator to only depend on
+                  the type of objects held by the timer queue.  The rest of the
+                  parameters where not used either.
+                  Implement functionality that was spread in Dev_Poll_Reactor,
+                  TP_Reactor and a test into expire_single.
+
+                * ace/Proactor.h:
+                * ace/TP_Reactor.cpp:
+                * ace/Dev_Poll_Reactor.cpp:
+                  Both classes implemented the logic to dispatch a single timer
+                  but release a mutex before the upcall.  This was confusing as
+                  well as required exposing too much detail about the Timer_Queue
+                  classes.
+                  The new mechanism is a single function in (expire_single)
+                  ACE_Abstract_Timer_Queue<> (implemented in ACE_Timer_Queue_T<>)
+                  which receives a command object to encapsulate the mutex release.
+
+                * ace/Functor.h:
+                * ace/Functor.cpp:
+                * ace/Functor_T.h:
+                * ace/Functor_T.inl:
+                  Add helper ACE_Command_* objects.  One is a no-op, for the test
+                  below.  The other is a callback that ignores the silly void*
+                  argument in the ACE_Command_Base::execute() member function.
+
+                * tests/Timer_Queue_Reference_Counting_Test.cpp:
+                  Re-factored test in terms of expire_single()
+
+        === end changelog ===
+
 Wed Dec 14 16:09:22 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/auto_run_tests.pl:

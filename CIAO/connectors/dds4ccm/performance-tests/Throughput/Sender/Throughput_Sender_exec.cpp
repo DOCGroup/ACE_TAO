@@ -279,8 +279,6 @@ namespace CIAO_Throughput_Sender_Impl
   Sender_exec_i::start (void)
   {
     ACE_UINT64 const sec = this->duration_run_ + 5;
-    (void) ACE_High_Res_Timer::global_scale_factor ();
-    this->reactor ()->timer_queue()->gettimeofday (&ACE_High_Res_Timer::gettimeofday_hr);
     if (this->reactor ()->schedule_timer (
                     this->ticker_,
                     0,

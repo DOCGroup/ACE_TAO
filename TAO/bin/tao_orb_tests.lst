@@ -329,6 +329,10 @@ TAO/tests/Policies/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST
 TAO/tests/Timeout/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/tests/MT_Timeout/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !OpenVMS_IA64Crash
 TAO/tests/Timed_Buffered_Oneways/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
+TAO/tests/Time_Policy/run_test.pl:
+TAO/tests/Time_Policy/run_test_hr.pl:
+TAO/tests/Time_Policy_Custom/run_test.pl: !STATIC
+TAO/tests/Time_Policy_Custom/run_test_dyn.pl: !STATIC
 TAO/tests/Single_Read/run_test.pl:
 TAO/tests/Connection_Timeout/run_test.pl: !VxWorks !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO
 #TAO/tests/Connection_Failure/run_test.pl ! Timesout for good reasons

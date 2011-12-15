@@ -4,6 +4,27 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
+template<class RECEIVER> ACE_INLINE
+ACE_Member_Function_Command<RECEIVER>::
+ACE_Member_Function_Command (RECEIVER &recvr, PTMF ptmf)
+  : receiver_(recvr)
+  , ptmf_(ptmf)
+{
+}
+
+template<class RECEIVER> ACE_INLINE
+ACE_Member_Function_Command<RECEIVER>::
+~ACE_Member_Function_Command (void)
+{
+}
+
+template<class RECEIVER> ACE_INLINE int
+ACE_Member_Function_Command<RECEIVER>::execute (void *)
+{
+  (this->receiver_.*ptmf_)();
+  return 0;
+}
+
 template <class TYPE> ACE_INLINE unsigned long
 ACE_Hash<TYPE>::operator () (const TYPE &t) const
 {

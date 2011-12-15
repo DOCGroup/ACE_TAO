@@ -1,3 +1,33 @@
+Thu Dec 15 11:00:00 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        Merged timer_policy branch.
+
+        === start changelog ===
+
+        Wed Dec 14 08:56:00 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+                * connectors/dds4ccm/performance-tests/DDSLatency/DDS_Sender/Latency_Sender.cpp:
+
+                  Fixed compile error.
+
+        Tue Dec 13 10:28:00 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+                * connectors/dds4ccm/performance-tests/DDSLatency/DDS_Sender/Latency_Sender.cpp:
+                * connectors/dds4ccm/performance-tests/Keyed/Sender/Perf_Keyed_Test_Sender_exec.cpp:
+                * connectors/dds4ccm/performance-tests/Keyed/descriptors/Plan.cdp:
+                * connectors/dds4ccm/performance-tests/Keyed/descriptors/Plan_pub.cdp:
+                * connectors/dds4ccm/performance-tests/Keyed/descriptors/Plan_pub3.cdp:
+                * connectors/dds4ccm/performance-tests/Keyed/descriptors/Plan_pub_BE.cdp:
+                * connectors/dds4ccm/performance-tests/Latency/Sender/LatencyTT_Test_Sender_exec.cpp:
+                * connectors/dds4ccm/performance-tests/Latency/descriptors/Plan_SharedMem.cdp:
+                * connectors/dds4ccm/performance-tests/Latency/descriptors/Plan_UDPv4.cdp:
+                * connectors/dds4ccm/performance-tests/Throughput/Sender/Throughput_Sender_exec.cpp:
+                * connectors/dds4ccm/performance-tests/Throughput/descriptors/Plan_pub.cdp:
+
+                  Adapted tests to new time policy support.
+
+        === end changelog ===
+
 Thu Dec 15 07:49:48 UTC 2011  Marijke  <mhengstmengel@remedy.nl>
 
          * connectors/dds4ccm/tests/HomeTest/HomeComp/HomeT_Home.mpc:

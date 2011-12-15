@@ -25,10 +25,11 @@
   // supporting POSIX aio calls.
 
 #include "ace/OS_NS_unistd.h"
-#include "ace/Timer_Queue.h"
 #include "ace/Proactor.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Asynch_IO.h"
+#include "ace/Timer_Heap.h"
+#include "ace/Auto_Ptr.h"
 
 static int    done = 0;
 static size_t counter = 0;
@@ -297,8 +298,32 @@ run_main (int argc, ACE_TCHAR *[])
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("Running with high-res timer queue\n")));
       ACE_Proactor *r = ACE_Proactor::instance ();
+
       (void) ACE_High_Res_Timer::global_scale_factor ();
-      r->timer_queue ()->gettimeofday (&ACE_High_Res_Timer::gettimeofday_hr);
+
+      // Change the source of time in the Proactor to the
+      // high-resolution  timer.  Why does this test require such
+      // precision for a 1 second timer is beyond me ...  I think it
+      // is a cut&paste error.
+      //
+      // The use of auto_ptr<> is optional, ACE uses dangerous memory
+      // management idioms everywhere, I thought I could demonstrate how
+      // to do it right in at least one test.  Notice the lack of
+      // ACE_NEW_RETURN, that monstrosity has no business in proper C++
+      // code ...
+      typedef ACE_Timer_Heap_T<ACE_Handler*,ACE_Proactor_Handle_Timeout_Upcall,ACE_SYNCH_RECURSIVE_MUTEX,ACE_FPointer_Time_Policy> Timer_Queue;
+
+      auto_ptr<Timer_Queue> tq(new Timer_Queue);
+      // ... notice how the policy is in the derived timer queue type.
+      // The abstract timer queue does not have a time policy ...
+      tq->set_time_policy(&ACE_High_Res_Timer::gettimeofday_hr);
+      // ... and then the timer queue is replaced.  Strangely, the
+      // Proactor does *not* copy the timers, it just deletes the
+      // existing timer queue ....
+      r->timer_queue(tq.get());
+      // ... the Proactor has assumed ownership, release the
+      // auto_ptr<> ...
+      tq.release();
     }
 
   // Register all different handlers, i.e., one per timer.

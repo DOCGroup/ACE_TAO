@@ -1,6 +1,23 @@
 USER VISIBLE CHANGES BETWEEN TAO-2.0.6 and TAO-2.1.0
 ====================================================
 
+. Added Time_Policy_Manager, a TIME_POLICY strategy manager configurable
+  through the service configurator framework.
+  This allows the dynamic configuration of the TIME_POLICY strategy used for
+  ORB timers and countdowns. TAO includes two default TIME_POLICY strategies as
+  statically linked service objects; TAO_System_Time_Policy_Strategy and
+  TAO_HR_Time_Policy_Strategy (the first being used as default strategy).
+  The docs/Options.html file describes the configuration options in detail.
+  Two new tests have been added exemplifying these new options; tests/Time_Policy
+  and tests/Time_Policy_Custom.
+  Furthermore two new compile time option macros have been added related to
+  TIME_POLICY strategies:
+  - TAO_USE_HR_TIME_POLICY_STRATEGY if defined will force the use of the new
+    TAO_HR_Time_Policy_Strategy as default time strategy instead of 
+    TAO_System_Time_Policy_Strategy;
+  - TAO_HAS_TIME_POLICY if explicitly defined as 0 ('#define TAO_HAS_TIME_POLICY 0')
+    will build TAO without the new TIME_POLICY strategy support.
+
 USER VISIBLE CHANGES BETWEEN TAO-2.0.5 and TAO-2.0.6
 ====================================================
 

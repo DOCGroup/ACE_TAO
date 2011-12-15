@@ -79,6 +79,38 @@ private:
   ACTION action_;
 };
 
+/**
+ * @class ACE_Member_Function_Command
+ *
+ * @brief Defines a class template that allows us to invoke a member
+ * function using the GoF command style callback.
+ *
+ */
+template <class RECEIVER>
+class ACE_Member_Function_Command : public ACE_Command_Base
+{
+public:
+  typedef void (RECEIVER::*PTMF)(void);
+
+  /// Con Constructor: sets the <receiver_> of the Command to recvr, and the
+  /// <action_> of the Command to <action>.
+  ACE_Member_Function_Command (RECEIVER &recvr, PTMF ptmf);
+
+  /// Virtual destructor.
+  virtual ~ACE_Member_Function_Command (void);
+
+  /// Invokes the method <action_> from the object <receiver_>.  The
+  /// parameter is ignored
+  virtual int execute (void *);
+
+private:
+  /// Object where the method resides.
+  RECEIVER &receiver_;
+
+  /// Method that is going to be invoked.
+  PTMF ptmf_;
+};
+
 /////////////////////////////////
 // STL-style Functor Templates //
 /////////////////////////////////

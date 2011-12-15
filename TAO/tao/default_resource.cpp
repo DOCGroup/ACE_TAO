@@ -1,5 +1,5 @@
 // -*- C++ -*-
-// $Id: default_resource.cpp 93496 2011-03-07 09:37:27Z johnnyw $
+// $Id$
 
 #include "tao/default_resource.h"
 
@@ -19,6 +19,7 @@
 #include "tao/On_Demand_Fragmentation_Strategy.h"
 #include "tao/MMAP_Allocator.h"
 #include "tao/Load_Protocol_Factory_T.h"
+#include "tao/Time_Policy_Manager.h"
 
 #include "ace/TP_Reactor.h"
 #include "ace/Malloc.h"
@@ -27,6 +28,10 @@
 #include "ace/Local_Memory_Pool.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_strings.h"
+
+#if !defined (__ACE_INLINE__)
+#include "tao/default_resource.inl"
+#endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -705,6 +710,50 @@ TAO_Default_Resource_Factory::get_connector_registry (void)
   return cr;
 }
 
+#if (TAO_HAS_TIME_POLICY == 1)
+TAO_Time_Policy_Manager*
+TAO_Default_Resource_Factory::time_policy_manager (void) const
+{
+  // get time policy manager service
+  TAO_Time_Policy_Manager * tpm =
+    ACE_Dynamic_Service<TAO_Time_Policy_Manager>::instance (ACE_TEXT ("Time_Policy_Manager"));
+
+  if (tpm == 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("TAO (%P|%t) - TAO_Default_Resource_Factory::time_policy_manager: ")
+                  ACE_TEXT ("FAILED to retrieve service Time_Policy_Manager\n")));
+    }
+
+  return tpm;
+}
+#endif /* TAO_HAS_TIME_POLICY */
+
+ACE_Timer_Queue *
+TAO_Default_Resource_Factory::create_timer_queue (void) const
+{
+#if (TAO_HAS_TIME_POLICY == 1)
+  TAO_Time_Policy_Manager * tpm = this->time_policy_manager ();
+  if (tpm)
+    {
+      return tpm->create_timer_queue ();
+    }
+#endif /* TAO_HAS_TIME_POLICY */
+  return 0;
+}
+
+void
+TAO_Default_Resource_Factory::destroy_timer_queue (ACE_Timer_Queue *tmq) const
+{
+#if (TAO_HAS_TIME_POLICY == 1)
+  TAO_Time_Policy_Manager * tpm = this->time_policy_manager ();
+  if (tpm)
+    {
+      tpm->destroy_timer_queue (tmq);
+    }
+#endif /* TAO_HAS_TIME_POLICY */
+}
+
 ACE_Reactor_Impl*
 TAO_Default_Resource_Factory::allocate_reactor_impl (void) const
 {
@@ -712,16 +761,21 @@ TAO_Default_Resource_Factory::allocate_reactor_impl (void) const
   /*
    * Hook to specialize TAO's reactor implementation.
    */
+  // get a timer queue (or not) from a possibly configured
+  // time policy
+  TAO_RSF_Timer_Queue_Ptr tmq (*this, this->create_timer_queue ());
 //@@ TAO_REACTOR_SPL_COMMENT_HOOK_START
   ACE_NEW_RETURN (impl,
                   ACE_TP_Reactor (ACE::max_handles (),
                                   1,
                                   (ACE_Sig_Handler*)0,
-                                  (ACE_Timer_Queue*)0,
+                                  tmq.get (),
                                   this->reactor_mask_signals_,
                                   ACE_Select_Reactor_Token::LIFO),
                   0);
 //@@ TAO_REACTOR_SPL_COMMENT_HOOK_END
+  // safe to release timer queue
+  tmq.release ();
   return impl;
 }
 
@@ -735,8 +789,13 @@ TAO_Default_Resource_Factory::get_reactor (void)
 
   if (reactor->initialized () == 0)
     {
+      // backup timer queue
+      ACE_Timer_Queue *tmq = reactor->timer_queue ();
+      // clean up reactor
       delete reactor;
       reactor = 0;
+      // clean up timer queue in case it was created by time policy
+      this->destroy_timer_queue (tmq);
     }
   else
     this->dynamically_allocated_reactor_ = true;
@@ -748,7 +807,14 @@ void
 TAO_Default_Resource_Factory::reclaim_reactor (ACE_Reactor *reactor)
 {
   if (this->dynamically_allocated_reactor_)
-    delete reactor;
+    {
+      // backup timer queue
+      ACE_Timer_Queue *tmq = reactor->timer_queue ();
+      // clean up reactor
+      delete reactor;
+      // clean up timer queue in case it was created by time policy
+      this->destroy_timer_queue (tmq);
+    }
 }
 
 
