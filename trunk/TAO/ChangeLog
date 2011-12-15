@@ -1,3 +1,9 @@
+Thu Dec 15 14:02:06 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+
+          Fixed signed/unsigned mismatch warning.
+
 Thu Dec 15 13:25:37 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * tao/ORB_Time_Policy.h:
