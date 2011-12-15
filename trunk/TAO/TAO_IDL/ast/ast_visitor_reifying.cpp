@@ -423,9 +423,12 @@ ast_visitor_reifying::visit_array (AST_Array *node)
   // No need to add this new node to any scope - it's anonymous
   // and owned by the node that references it.
 
-  v_list->destroy ();
-  delete v_list;
-  v_list = 0;
+  if (v_list != 0)
+    {
+      v_list->destroy ();
+      delete v_list;
+      v_list = 0;
+    }
 
   arr->set_base_type (bt);
   this->reified_node_ = arr;

@@ -242,28 +242,25 @@ AST_Enum::fe_add_enum_val (AST_EnumVal *t)
   AST_Decl *d = 0;
   AST_EnumVal *t1 = 0;
 
-  if (t != 0)
-    {
-      AST_Expression::AST_ExprValue *ev =
-        t->constant_value ()->coerce (AST_Expression::EV_ulong);
+  AST_Expression::AST_ExprValue *ev =
+    t->constant_value ()->coerce (AST_Expression::EV_ulong);
 
-      t1 = idl_global->gen ()->create_enum_val (ev->u.ulval,
-                                                t->name ());
+  t1 = idl_global->gen ()->create_enum_val (ev->u.ulval,
+                                            t->name ());
 
-      delete ev;
-      ev = 0;
+  delete ev;
+  ev = 0;
 
-      UTL_ScopedName *sn =
-        munge_name_for_enumval ((UTL_IdList *) t->name ()->copy (),
-                                t->local_name ());
+  UTL_ScopedName *sn =
+    munge_name_for_enumval ((UTL_IdList *) t->name ()->copy (),
+                            t->local_name ());
 
-      t->set_name (sn);
+  t->set_name (sn);
 
-      sn = munge_name_for_enumval ((UTL_IdList *) t1->name ()->copy (),
-                                   t1->local_name ());
+  sn = munge_name_for_enumval ((UTL_IdList *) t1->name ()->copy (),
+                                t1->local_name ());
 
-      t1->set_name (sn);
-    }
+  t1->set_name (sn);
 
   // Already defined and cannot be redefined? Or already used?
   if ((d = this->lookup_for_add (t)) != 0)

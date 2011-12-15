@@ -65,6 +65,10 @@ IdentifierHelper::type_name (be_type *t, be_visitor *visitor)
             default:
               break;
           }
+
+        // Not reached.
+        return "";
+        break;
       default:
         IdentifierHelper::tmp_retval_ = "::";
         IdentifierHelper::tmp_retval_ +=

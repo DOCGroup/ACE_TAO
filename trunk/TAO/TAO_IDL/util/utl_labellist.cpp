@@ -148,6 +148,8 @@ UTL_LabellistActiveIterator::item (void)
       return 0;
     }
 
-  return (dynamic_cast<UTL_LabelList *> (this->source))->head ();
+  UTL_LabelList *llist = dynamic_cast<UTL_LabelList *> (this->source);
+
+  return (llist != 0 ? llist->head () : 0);
 }
 

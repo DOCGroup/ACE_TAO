@@ -142,7 +142,14 @@ void
 be_valuetype::redefine (AST_Interface *from)
 {
   be_valuetype *bv = be_valuetype::narrow_from_decl (from);
-  bv->var_out_seq_decls_gen_ = bv->var_out_seq_decls_gen_;
+
+  // This should always be TRUE, but our signature is inherited, so
+  // the narrow is necessary and should always be checked.
+  if (bv != 0)
+    {
+      this->var_out_seq_decls_gen_ = bv->var_out_seq_decls_gen_;
+    }
+
   this->AST_ValueType::redefine (from);
 }
 
