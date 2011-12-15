@@ -37,7 +37,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * updated.
  */
 template <typename TIME_POLICY = ACE_Default_Time_Policy>
-class ACE_Export ACE_Countdown_Time_T : private ACE_Copy_Disabled
+class ACE_Countdown_Time_T : private ACE_Copy_Disabled
 {
 public:
   /// Cache the @a max_wait_time and call @c start().
