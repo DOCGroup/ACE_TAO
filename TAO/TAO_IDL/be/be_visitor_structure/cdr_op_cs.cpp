@@ -40,9 +40,9 @@ be_visitor_structure_cdr_op_cs::visit_structure (be_structure *node)
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_structure_cdr_op_cs::"
-                         "visit_structure - "
-                         "codegen for scope failed\n"),
+                         ACE_TEXT ("be_visitor_structure_cdr_op_cs::")
+                         ACE_TEXT ("visit_structure - ")
+                         ACE_TEXT ("codegen for scope failed\n")),
                         -1);
     }
 
@@ -64,16 +64,24 @@ be_visitor_structure_cdr_op_cs::visit_structure (be_structure *node)
 
   be_visitor_context new_ctx (*this->ctx_);
   be_visitor_cdr_op_field_decl field_decl (&new_ctx);
-  field_decl.visit_scope (node);
+
+  if (field_decl.visit_scope (node) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_visitor_structure_cdr_op_cs::")
+                         ACE_TEXT ("visit_structure - ")
+                         ACE_TEXT ("codegen for field decl failed\n")),
+                        -1);
+    }
 
   *os << "return" << be_idt_nl;
 
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_structure_cdr_op_cs::"
-                         "visit_structure - "
-                         "codegen for scope failed\n"),
+                         ACE_TEXT ("be_visitor_structure_cdr_op_cs::")
+                         ACE_TEXT ("visit_structure - ")
+                         ACE_TEXT ("codegen for scope failed\n")),
                         -1);
     }
 
@@ -113,9 +121,10 @@ be_visitor_structure_cdr_op_cs::visit_structure (be_structure *node)
       if (field_decl.visit_scope (node) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_structure_cdr_op_cs::"
-                             "visit_structure - "
-                             "codegen for field decl scope failed\n"),
+                             ACE_TEXT ("be_visitor_structure_cdr_op_cs::")
+                             ACE_TEXT ("visit_structure - ")
+                             ACE_TEXT ("codegen for field ")
+                             ACE_TEXT ("decl scope failed\n")),
                             -1);
         }
 
@@ -124,9 +133,9 @@ be_visitor_structure_cdr_op_cs::visit_structure (be_structure *node)
       if (this->visit_scope (node) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_structure_cdr_op_cs"
-                             "::visit_structure - "
-                             "codegen for scope failed\n"),
+                             ACE_TEXT ("be_visitor_structure_cdr_op_cs")
+                             ACE_TEXT ("::visit_structure - ")
+                             ACE_TEXT ("codegen for scope failed\n")),
                             -1);
         }
 

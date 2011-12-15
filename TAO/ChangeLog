@@ -1,3 +1,15 @@
+Thu Dec 15 20:46:52 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_exception/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/marshal_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype.cpp:
+        * TAO_IDL/be/be_visitor_structure/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_sequence.cpp:
+
+          Addressed the rest of the Coverity-reported issues for the
+          IDL compiler.
+
 Thu Dec 15 18:03:34 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_valuetype.cpp:
