@@ -23,10 +23,10 @@ ACE_Event_Handler_Handle_Timeout_Upcall::
 int
 ACE_Event_Handler_Handle_Timeout_Upcall::
 timeout (ACE_Timer_Queue &timer_queue,
-	 ACE_Event_Handler *event_handler,
-	 const void *act,
-	 int recurring_timer,
-	 const ACE_Time_Value &cur_time)
+        ACE_Event_Handler *event_handler,
+        const void *act,
+        int recurring_timer,
+        const ACE_Time_Value &cur_time)
 {
   int requires_reference_counting = 0;
 
@@ -58,9 +58,9 @@ timeout (ACE_Timer_Queue &timer_queue,
 int
 ACE_Event_Handler_Handle_Timeout_Upcall::
 cancel_type (ACE_Timer_Queue &,
-	     ACE_Event_Handler *event_handler,
-	     int dont_call,
-	     int &requires_reference_counting)
+            ACE_Event_Handler *event_handler,
+            int dont_call,
+            int &requires_reference_counting)
 {
   requires_reference_counting =
     event_handler->reference_counting_policy ().value () ==
@@ -77,8 +77,8 @@ cancel_type (ACE_Timer_Queue &,
 int
 ACE_Event_Handler_Handle_Timeout_Upcall::
 deletion (ACE_Timer_Queue &timer_queue,
-	  ACE_Event_Handler *event_handler,
-	  const void *)
+          ACE_Event_Handler *event_handler,
+          const void *)
 {
   int requires_reference_counting = 0;
 

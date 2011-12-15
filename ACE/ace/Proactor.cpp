@@ -141,7 +141,7 @@ ACE_Proactor_Timer_Handler::svc (void)
           // Get current time from timer queue since we don't know
           // which <gettimeofday> was used.
           ACE_Time_Value cur_time =
-	    this->proactor_.timer_queue ()->gettimeofday ();
+            this->proactor_.timer_queue ()->gettimeofday ();
 
           // Compare absolute time with curent time received from the
           // timer queue.
@@ -681,8 +681,10 @@ ACE_Proactor::schedule_timer (ACE_Handler &handler,
   // absolute time.
   ACE_Time_Value absolute_time =
     this->timer_queue_->gettimeofday () + time;
-  long result = this->timer_queue_->schedule(&handler, act,
-					     absolute_time, interval);
+  long result = this->timer_queue_->schedule (&handler,
+                                              act,
+                                              absolute_time,
+                                              interval);
   if (result != -1)
     {
       // Signal the timer thread to make sure that new events are
