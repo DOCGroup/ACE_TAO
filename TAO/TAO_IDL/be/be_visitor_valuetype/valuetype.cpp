@@ -726,9 +726,9 @@ be_visitor_valuetype::gen_field_pd (be_field *node)
   if (!bt || !vt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_field_ch::"
-                         "visit_field - "
-                         "Bad field type\n"),
+                         ACE_TEXT ("be_visitor_valuetype::")
+                         ACE_TEXT ("gen_field_pd - ")
+                         ACE_TEXT ("Bad field type\n")),
                         -1);
     }
 
@@ -743,9 +743,9 @@ be_visitor_valuetype::gen_field_pd (be_field *node)
   if (bt->accept (&visitor) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_field_ch::"
-                         "visit_field - "
-                         "codegen for field type failed\n"),
+                         ACE_TEXT ("be_visitor_valuetype::")
+                         ACE_TEXT ("gen_field_pd - ")
+                         ACE_TEXT ("codegen for field type failed\n")),
                         -1);
     }
 
@@ -805,7 +805,14 @@ be_visitor_valuetype::gen_obv_init_constructor_args (be_valuetype *node,
                        ft,
                        &sn);
       ft->seen_in_operation (seen);
-      visitor.visit_argument (&arg);
+
+      if (visitor.visit_argument (&arg) == -1)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("be_visitor_valuetype::")
+                      ACE_TEXT ("gen_obv_init_constructor_args - ")
+                      ACE_TEXT ("codegen for argument failed\n")));
+        }
 
       // AST_Argument inherits from AST_Field, which will destroy
       // its field type if it is anonymous - we don't want that.

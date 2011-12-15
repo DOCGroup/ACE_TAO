@@ -695,8 +695,7 @@ be_interface::gen_stub_ctor (TAO_OutStream *os)
                   << be_idt << be_idt_nl
                   << "objref," << be_nl
                   << "_tao_collocated," << be_nl
-                  << "servant"
-                  << (the_check ? ", oc" : "") << be_uidt_nl
+                  << "servant" << be_uidt_nl
                   << ")" << be_uidt;
             }
 
