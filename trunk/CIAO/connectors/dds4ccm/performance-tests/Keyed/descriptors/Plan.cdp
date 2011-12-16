@@ -535,6 +535,7 @@
     <constraint>SameProcess</constraint>
     <constrainedInstance xmi:idref="CompSvrInst" />
     <constrainedInstance xmi:idref="SenderComponentInstance" />
+    <constrainedInstance xmi:idref="Perf_Keyed_Test_ConnectorComponentInstance" />
   </localityConstraint>
 
 </Deployment:DeploymentPlan>

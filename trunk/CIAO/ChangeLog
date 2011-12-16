@@ -1,3 +1,19 @@
+Fri Dec 16 12:39:56 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/ciao_tests.lst:
+          Added performance-tests/Keyed to the test framework.
+
+        * ciao/Deployment/Handlers/Connection_Handler.cpp:
+          Optimized logging.
+
+        * connectors/dds4ccm/performance-tests/Keyed/descriptors/Plan.cdp:
+        * connectors/dds4ccm/performance-tests/Keyed/descriptors/Plan_pub.cdp:
+        * connectors/dds4ccm/performance-tests/Keyed/descriptors/Plan_pub3.cdp:
+        * connectors/dds4ccm/performance-tests/Latency/descriptors/Plan_SharedMem.cdp:
+        * connectors/dds4ccm/performance-tests/Latency/descriptors/Plan_UDPv4.cdp:
+        * connectors/dds4ccm/performance-tests/Throughput/descriptors/Plan_pub.cdp:
+          Fixed runtime issues. Also cleaned up unused code.
+
 Fri Dec 16 07:37:37 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/idl/dds4ccm_stub.mpc:

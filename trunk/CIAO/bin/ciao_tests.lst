@@ -143,6 +143,7 @@ TAO/CIAO/connectors/dds4ccm/tests/Proxies/ReadWrite/descriptors/run_test.pl: !ST
 TAO/CIAO/connectors/dds4ccm/tests/TypeSupport/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
 TAO/CIAO/connectors/dds4ccm/tests/CollocatedPubSub/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
 TAO/CIAO/connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Deployment/scripts/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
+TAO/CIAO/connectors/dds4ccm/performance-tests/Keyed/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
 TAO/CIAO/connectors/dds4ccm/performance-tests/Latency/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
 TAO/CIAO/connectors/dds4ccm/performance-tests/DDSLatency/descriptors/run_test_dds.pl: !ACE_FOR_TAO !ST NDDS
 TAO/CIAO/connectors/dds4ccm/performance-tests/DDSLatency/descriptors/run_test_ndds.pl: !ACE_FOR_TAO !ST NDDS
