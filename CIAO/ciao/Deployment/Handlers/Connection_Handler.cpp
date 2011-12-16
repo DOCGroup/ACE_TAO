@@ -953,7 +953,7 @@ namespace CIAO
                         conn.internalEndpoint.length ()));
 
         throw ::Deployment::InvalidConnection (conn.name.in (),
-                                                "Local connections require exactly 2 internalEndpoints");
+                                                " Local connections require exactly 2 internalEndpoints");
       }
 
     const ::Deployment::PlanSubcomponentPortEndpoint &facet_endpoint =
