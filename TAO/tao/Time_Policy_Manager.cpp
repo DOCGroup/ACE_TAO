@@ -62,7 +62,7 @@ TAO_Time_Policy_Manager::parse_args (int argc, ACE_TCHAR* argv[])
               else
                 {
                   this->time_policy_setting_ = TAO_DYN_TIME_POLICY;
-                  this->time_policy_name_ = name;
+                  this->time_policy_name_ = ACE_TEXT_ALWAYS_CHAR (name);
                 }
             }
         }
@@ -85,11 +85,11 @@ ACE_Timer_Queue * TAO_Time_Policy_Manager::create_timer_queue (void)
         // load strategy
         if (this->time_policy_setting_ == TAO_OS_TIME_POLICY)
           {
-            this->time_policy_name_ = ACE_TEXT ("TAO_SYSTEM_TIME_POLICY");
+            this->time_policy_name_ = "TAO_SYSTEM_TIME_POLICY";
           }
         else if (this->time_policy_setting_ == TAO_HR_TIME_POLICY)
           {
-            this->time_policy_name_ = ACE_TEXT ("TAO_HR_TIME_POLICY");
+            this->time_policy_name_ = "TAO_HR_TIME_POLICY";
           }
         this->time_policy_strategy_ =
             ACE_Dynamic_Service<TAO_Time_Policy_Strategy>::instance (

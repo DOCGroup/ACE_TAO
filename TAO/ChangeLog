@@ -1,3 +1,9 @@
+Fri Dec 16 18:22:39 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        * tao/Time_Policy_Manager.cpp:
+
+          Changed to fix wchar compile problems.
+
 Thu Dec 15 20:46:52 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_exception/cdr_op_cs.cpp:
