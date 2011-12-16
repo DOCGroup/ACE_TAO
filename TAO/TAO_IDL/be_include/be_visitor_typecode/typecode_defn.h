@@ -135,7 +135,7 @@ private:
 
   // scope related routines
 
-  int index_;
+  unsigned long index_;
 
   int push (ACE_CDR::Long);
 
