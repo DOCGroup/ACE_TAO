@@ -33,7 +33,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  */
 template <typename TIME_POLICY>
-class ACE_Export ACE_Time_Policy_T : public ACE_Dynamic_Time_Policy_Base
+class ACE_Time_Policy_T : public ACE_Dynamic_Time_Policy_Base
 {
 public:
   ACE_Time_Policy_T (TIME_POLICY const & time_policy = TIME_POLICY());
