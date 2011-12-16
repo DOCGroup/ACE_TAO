@@ -1,3 +1,8 @@
+Fri Dec 16 07:37:37 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/idl/dds4ccm_stub.mpc:
+          Added dds4ccm_QueryFilterC.inl to the DDS4CCM_stub project.
+
 Thu Dec 15 14:01:48 UTC 2011  Marijke  <mhengstmengel@remedy.nl>
 
          * connectors/dds4ccm/tests/HomeTest/HomeComp/HomeT_Home.mpc:

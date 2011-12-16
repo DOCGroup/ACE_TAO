@@ -77,6 +77,7 @@ project (DDS4CCM_stub) : install, dds4ccm, ccm_stub, ciaolib_with_idl, ciao_outp
 
   Inline_Files {
     dds4ccm_BaseC.inl
+    dds4ccm_QueryFilterC.inl
     dds4ccm_PortStatusListenerC.inl
     dds4ccm_DataListenerControlC.inl
     dds4ccm_ConnectorStatusListenerC.inl
