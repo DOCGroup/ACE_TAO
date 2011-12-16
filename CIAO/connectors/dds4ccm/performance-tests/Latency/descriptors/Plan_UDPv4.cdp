@@ -128,57 +128,6 @@
     </execParameter>
   </implementation>
 
-  <!--implementation xmi:id="LatencyTT_TestSec_ConnectorComponentImplementation">
-    <name>LatencyTT_TestSec_ConnectorComponentImplementation</name>
-    <source/>
-    <artifact xmi:idref="LatencyTT_TestSec_Connector_ExecArtifact" />
-    <artifact xmi:idref="LatencyTT_TestSec_Connector_SvntArtifact" />
-    <execParameter>
-        <name>component factory</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>create_LatencyTT_Test_LatencyTT_TestSec_Connector_Impl</string>
-        </value>
-      </value>
-    </execParameter>
-    <execParameter>
-      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>create_LatencyTT_Test_LatencyTT_TestSec_Connector_Servant</string>
-        </value>
-      </value>
-    </execParameter>
-    <execParameter>
-      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>LatencyTT_TestSec_Connector_svnt</string>
-        </value>
-      </value>
-    </execParameter>
-    <execParameter>
-      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>LatencyTT_TestSec_Connector_exec</string>
-        </value>
-      </value>
-    </execParameter>
-  </implementation-->
-
   <implementation xmi:id="SenderComponentImplementation">
     <name>SenderComponentImplementation</name>
     <source/>
@@ -316,6 +265,7 @@
       </value>
     </configProperty>
   </instance>
+
   <instance xmi:id="SenderComponentInstance">
     <name>SenderComponent</name>
     <node>SenderNode</node>
@@ -617,29 +567,13 @@
     <node/>
     <location>DDS_LatencyTT_Test_Connector_stub</location>
   </artifact>
-  <!-->artifact xmi:id="LatencyTT_TestSec_Connector_ExecArtifact">
-    <name>LatencyTT_TestSec_Connector_exec</name>
-    <source/>
-    <node/>
-    <location>DDS_LatencyTT_TestSec_Connector_exec</location>
-  </artifact>
-  <artifact xmi:id="LatencyTT_TestSec_Connector_SvntArtifact">
-    <name>LatencyTT_TestSec_Connector_svnt</name>
-    <source/>
-    <node/>
-    <location>DDS_LatencyTT_TestSec_Connector_svnt</location>
-  </artifact>
-  <artifact xmi:id="LatencyTT_TestSec_Connector_StubArtifact">
-    <name>LatencyTT_TestSec_Connector_stub</name>
-    <source/>
-    <node/>
-    <location>DDS_LatencyTT_TestSec_Connector_stub</location>
-  </artifact-->
 
   <localityConstraint>
     <constraint>SameProcess</constraint>
     <constrainedInstance xmi:idref="CompSvrInst" />
     <constrainedInstance xmi:idref="SenderComponentInstance" />
+    <constrainedInstance xmi:idref="LatencyTT_Test_ConnectorComponentInstanceb" />
+    <constrainedInstance xmi:idref="LatencyTT_Test_ConnectorComponentInstance" />
   </localityConstraint>
 
 </Deployment:DeploymentPlan>
