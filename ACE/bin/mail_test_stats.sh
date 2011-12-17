@@ -2,13 +2,13 @@
 # $Id$
 
 export TREE_ROOT=$HOME/ACE/latest
-export ACE_ROOT=$TREE_ROOT/ACE_wrappers
-export TAO_ROOT=$ACE_ROOT/TAO
-export CIAO_ROOT=$TAO_ROOT/CIAO
-export DANCE_ROOT=$TAO_ROOT/DAnCE
+export ACE_ROOT=$TREE_ROOT/DOC_ROOT/ACE
+export TAO_ROOT=$TREE_ROOT/DOC_ROOT/TAO
+export CIAO_ROOT=$TREE_ROOT/DOC_ROOT/CIAO
+export DANCE_ROOT=$TREE_ROOT/DOC_ROOT/DAnCE
 mkdir -p $TREE_ROOT
 cd $TREE_ROOT
-svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/sets-anon/ACE+TAO+CIAO .
+clone --depth 1 http://:@git.remedy.nl/git/atcd.git DOC_ROOT
 cd $ACE_ROOT/bin
 rm *Tests.txt
 rm *TestRev.txt
@@ -44,7 +44,7 @@ mailfile="/tmp/rsmailfile"
    cat *Builds.txt
 } > $mailfile
 
-$MAIL -r $MAILFROM -s "ACE/TAO/CIAO test statistics for $CURRENTDATE" $MAILTO < $mailfile
+$MAIL -r $MAILFROM -s "ACE/TAO/CIAO/DAnCE test statistics for $CURRENTDATE" $MAILTO < $mailfile
 
 rm -f $mailfile
 
@@ -55,6 +55,6 @@ mailfile="/tmp/rsmailfile"
    cat cleanbuildresults.txt
 } > $mailfile
 
-$MAIL -r $MAILFROM -s "ACE/TAO/CIAO failing tests for $CURRENTDATE" $MAILTO < $mailfile
+$MAIL -r $MAILFROM -s "ACE/TAO/CIAO/DAnCE failing tests for $CURRENTDATE" $MAILTO < $mailfile
 
 rm -f $mailfile
