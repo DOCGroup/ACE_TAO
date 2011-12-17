@@ -103,7 +103,7 @@ DRV_prep_cpp_arg (char *s)
   std::string instr (s);
   std::string newarg;
   newarg.reserve (512);
-  
+
   for (std::string::size_type pos = instr.find_first_of (',');
        pos != std::string::npos;
        instr = instr.substr (pos + 1), pos = instr.find_first_of (','))
