@@ -1,3 +1,9 @@
+Sat Dec 17 14:05:24 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        * tests/Time_Policy_Custom/Custom_Time_Policy.mpc:
+
+          Fix for windows compile problem.
+
 Fri Dec 16 18:25:19 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be_include/be_visitor_typecode/typecode_defn.h:

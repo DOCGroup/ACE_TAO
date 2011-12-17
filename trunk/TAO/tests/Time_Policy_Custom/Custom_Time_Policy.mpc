@@ -3,6 +3,7 @@
 
 project(*Lib): taolib {
   sharedname = CustomTimePolicy
+  dynamicflags  = TPTEST_BUILD_DLL
   Source_Files {
     Custom_Time_Policy_Strategy.cpp
   }
