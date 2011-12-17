@@ -1,3 +1,12 @@
+Sat Dec 17 18:13:40 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+
+          Other changes that are fallout from changing the type of
+          the 'index_' member below in
+
+          Fri Dec 16 18:25:19 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
 Sat Dec 17 16:28:17 UTC 2011  Martin Corino  <mcorino@remedy.nl>
 
         * tao/Time_Policy_Manager.cpp:
