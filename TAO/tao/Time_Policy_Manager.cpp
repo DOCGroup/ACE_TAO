@@ -123,23 +123,20 @@ ACE_Timer_Queue * TAO_Time_Policy_Manager::create_timer_queue (void)
 void
 TAO_Time_Policy_Manager::destroy_timer_queue (ACE_Timer_Queue *tmq)
 {
-  if (this->time_policy_setting_ != TAO_OS_TIME_POLICY)
-    {
-      // locking scope
+  // locking scope
+  {
+    ACE_GUARD (TAO_SYNCH_MUTEX,
+                monitor,
+                this->lock_);
+
+    // check if time policy strategy has been initialized
+    if (this->time_policy_strategy_ == 0)
       {
-        ACE_GUARD (TAO_SYNCH_MUTEX,
-                   monitor,
-                   this->lock_);
-
-        // check if time policy strategy has been initialized
-        if (this->time_policy_strategy_ == 0)
-          {
-            return;
-          }
+        return;
       }
+  }
 
-      this->time_policy_strategy_->destroy_timer_queue (tmq);
-    }
+  this->time_policy_strategy_->destroy_timer_queue (tmq);
 }
 
 

@@ -1,3 +1,9 @@
+Sat Dec 17 16:28:17 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        * tao/Time_Policy_Manager.cpp:
+
+          Fix for valgrind memory leak reports.
+
 Sat Dec 17 14:05:24 UTC 2011  Martin Corino  <mcorino@remedy.nl>
 
         * tests/Time_Policy_Custom/Custom_Time_Policy.mpc:
