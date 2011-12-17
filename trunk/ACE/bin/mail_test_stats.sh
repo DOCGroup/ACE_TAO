@@ -8,7 +8,7 @@ export CIAO_ROOT=$TREE_ROOT/DOC_ROOT/CIAO
 export DANCE_ROOT=$TREE_ROOT/DOC_ROOT/DAnCE
 mkdir -p $TREE_ROOT
 cd $TREE_ROOT
-clone --depth 1 http://:@git.remedy.nl/git/atcd.git DOC_ROOT
+git clone --depth 1 http://:@git.remedy.nl/git/atcd.git DOC_ROOT
 cd $ACE_ROOT/bin
 rm *Tests.txt
 rm *TestRev.txt
