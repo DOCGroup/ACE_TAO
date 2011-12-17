@@ -60,7 +60,7 @@ be_visitor_typecode_defn::be_visitor_typecode_defn (be_visitor_context * ctx)
       computed_encap_len_ (0),
       computed_scope_encap_len_ (0),
       tc_offset_ (0),
-      index_ (-1)
+      index_ (0)
 {
   if (be_global->gen_anyop_files ())
     {
@@ -694,8 +694,6 @@ be_visitor_typecode_defn::push (ACE_CDR::Long val)
     {
       return -1;
     }
-  else if (this->index_ < 0)  // (should only be -1)
-    this->index_ = 0;  // Empty.
 
   this->scope_stack_ [this->index_++] = val;  // Must post-increment
                                               // to avoid buffer
@@ -706,11 +704,6 @@ be_visitor_typecode_defn::push (ACE_CDR::Long val)
 int
 be_visitor_typecode_defn::pop (ACE_CDR::Long &val)
 {
-  if (this->index_ < 0)
-    {
-      return -1;
-    }
-
   val = this->scope_stack_[this->index_--];  // Must post-increment!
   return 0;
 }
