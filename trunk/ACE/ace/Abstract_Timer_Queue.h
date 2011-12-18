@@ -206,6 +206,9 @@ public:
 
   /// Reads the earliest node from the queue and returns it.
   virtual ACE_Timer_Node_T<TYPE> *get_first (void) = 0;
+
+  /// Dump the state of a object.
+  virtual void dump (void) const = 0;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

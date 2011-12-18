@@ -1,3 +1,9 @@
+Sun Dec 18 10:29:12 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/Abstract_Timer_Queue.h:
+
+          Added missing abstract method dump().
+
 Fri Dec 16 08:03:07 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * ace/Time_Policy_T.h:
