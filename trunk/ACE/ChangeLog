@@ -1,3 +1,8 @@
+Sun Dec 18 11:35:18 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/generate_compile_stats.sh:
+          Fixed incorrect command
+
 Sun Dec 18 10:29:12 UTC 2011  Martin Corino  <mcorino@remedy.nl>
 
         * ace/Abstract_Timer_Queue.h:

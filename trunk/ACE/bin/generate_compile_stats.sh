@@ -918,7 +918,7 @@ create_page ()
       let VAL_TENTH="$VAL_TMP-($VAL_INT*10)"
       echo "<TD align=right>${VAL_SIGN}${VAL_INT}.${VAL_TENTH}</TD>"
       echo "<TD align=right><a href=\"data/${i}.${EXT}\">Data</a></TD>"
-      ecoo "</TR>"
+      echo "</TR>"
     else
       echo '<TR><TD>'
       echo "${i}"
