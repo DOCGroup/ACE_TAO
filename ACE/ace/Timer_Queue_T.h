@@ -16,11 +16,12 @@
 #define ACE_TIMER_QUEUE_T_H
 #include /**/ "ace/pre.h"
 
+#include "ace/Free_List.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Free_List.h"
 #include "ace/Time_Value.h"
 #include "ace/Abstract_Timer_Queue.h"
 #include "ace/Timer_Queue_Iterator.h"
