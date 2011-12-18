@@ -1,3 +1,9 @@
+Sun Dec 18 11:36:05 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/ciao_tests.lst:
+          Run more tests with noevent, if some of the cdp's are not fit
+          for noevent, than they should move to a different directory
+
 Fri Dec 16 12:39:56 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * bin/ciao_tests.lst:
