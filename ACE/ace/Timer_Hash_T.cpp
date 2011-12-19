@@ -349,12 +349,35 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::~ACE_Timer_Hash_
 
   delete iterator_;
 
+  this->close ();
+
   for (size_t i = 0;
        i < this->table_size_;
        ++i)
     delete this->table_[i];
 
+
   delete [] this->table_;
+}
+
+template <class TYPE, class FUNCTOR, class ACE_LOCK, class BUCKET, typename TIME_POLICY> int
+ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::close (void)
+{
+  ACE_TRACE ("ACE_Timer_Hash_T::close");
+  ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, -1));
+
+  // Remove all remaining items from the queue.
+  while (!this->is_empty())
+    {
+      ACE_Timer_Node_T<TYPE>* n = this->remove_first();
+      this->upcall_functor ().deletion (*this,
+                                        n->get_type(),
+                                        n->get_act());
+      this->free_node (n);
+    }
+
+  // leave the rest to destructor
+  return 0;
 }
 
 // Checks if queue is empty.

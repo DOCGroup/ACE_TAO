@@ -158,6 +158,11 @@ public:
                       int dont_call_handle_close = 1) = 0;
 
   /**
+   * Close timer queue. Cancels all timers.
+   */
+  virtual int close (void) = 0;
+
+  /**
    * Returns the current time of day.  This method allows different
    * implementations of the timer queue to use special high resolution
    * timers.

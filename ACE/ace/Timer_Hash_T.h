@@ -243,6 +243,11 @@ public:
                       int dont_call_handle_close = 1);
 
   /**
+   * Destroy timer queue. Cancels all timers.
+   */
+  virtual int close (void);
+
+  /**
    * Run the <functor> for all timers whose values are <=
    * gettimeofday.  Also accounts for <timer_skew>.  Returns
    * the number of timers canceled.

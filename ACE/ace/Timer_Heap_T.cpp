@@ -212,6 +212,29 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::~ACE_Timer_Heap_T (void)
 
   delete iterator_;
 
+  this->close ();
+
+  delete [] this->heap_;
+  delete [] this->timer_ids_;
+
+  // clean up any preallocated timer nodes
+  if (preallocated_nodes_ != 0)
+    {
+      ACE_Unbounded_Set_Iterator<ACE_Timer_Node_T<TYPE> *>
+        set_iterator (this->preallocated_node_set_);
+
+      for (ACE_Timer_Node_T<TYPE> **entry = 0;
+           set_iterator.next (entry) !=0;
+           set_iterator.advance ())
+        delete [] *entry;
+    }
+}
+
+template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> int
+ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::close (void)
+{
+  ACE_TRACE ("ACE_Timer_Heap_T::close");
+
   size_t current_size =
     this->cur_size_;
 
@@ -228,20 +251,8 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::~ACE_Timer_Heap_T (void)
       this->upcall_functor ().deletion (*this, eh, act);
     }
 
-  delete [] this->heap_;
-  delete [] this->timer_ids_;
-
-  // clean up any preallocated timer nodes
-  if (preallocated_nodes_ != 0)
-    {
-      ACE_Unbounded_Set_Iterator<ACE_Timer_Node_T<TYPE> *>
-        set_iterator (this->preallocated_node_set_);
-
-      for (ACE_Timer_Node_T<TYPE> **entry = 0;
-           set_iterator.next (entry) !=0;
-           set_iterator.advance ())
-        delete [] *entry;
-    }
+  // leave the rest to the destructor
+  return 0;
 }
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY>
