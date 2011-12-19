@@ -45,7 +45,6 @@ $NS = 0;
 $tg_naming = 0;
 $tg_exe_man = 0;
 $tg_executor = 0;
-$tg_convert_plan = 0;
 
 $status = 0;
 
@@ -64,8 +63,6 @@ sub create_targets {
     #   executor (plan_launcher)
     $tg_executor = PerlACE::TestTarget::create_target (1) || die "Create target for executor failed\n";
     #$tg_executor->AddLibPath ('..');
-
-    $tg_convert_plan = PerlACE::TestTarget::create_target (1) || die "Could not create target for convert plan\n";
 }
 
 sub init_ior_files {
@@ -76,7 +73,6 @@ sub init_ior_files {
     }
     $ior_application = $tg_executor->LocalFile ($ior_applicationbase);
     $ior_am = $tg_executor->LocalFile ($ior_ambase);
-
     delete_ior_files ();
 }
 
@@ -90,6 +86,9 @@ sub delete_ior_files {
     for ($i = 0; $i < $nr_daemon; ++$i) {
         $iorfiles[$i] = $tg_daemons[$i]->LocalFile ($iorbases[$i]);
     }
+
+    $tg_executor->DeleteFile ($ior_applicationbase);
+    $tg_executor->DeleteFile ($ior_ambase);
 }
 
 sub kill_node_daemon {
@@ -144,14 +143,25 @@ sub run_node_daemons {
     }
     return 0;
 }
-
+#only run the tests  with  noevent
 if ($#ARGV == -1) {
-   @files =("EmitsConnectionExplicitHome.cdp",
-            "PublishConnectionExplicitHome.cdp")
+    @files = (
+     "LocalSimplexConnectionExplicitHome.cdp",
+     "MultiplexConnectionExplicitHome.cdp",
+     "SimpleAttributeExplicitHome.cdp",
+     "SimpleComponentExplicitHome.cdp",
+     "SimpleComponentUnhomed.cdp",
+     "SimpleHome.cdp",
+     "SimpleProcessColocation.cdp",
+     "SimpleProcessColocation_2.cdp",
+     "SimpleProcessColocation_Default.cdp",
+     "SimplexConnectionExplicitHome.cdp",
+     "TwoComponentsOneHome.cdp")
 }
 else {
     @files = @ARGV;
 }
+
 
 create_targets ();
 init_ior_files ();
@@ -187,36 +197,17 @@ foreach $file (@files) {
 
     $daemons_running = 1;
 
-    print "Converting plan to CDR representation\n";
-    $cdr_planbase = "$file" . ".cdr";
-    $cdr_plan = $tg_convert_plan->LocalFile ($cdr_planbase);
-    $convert = $tg_convert_plan->CreateProcess("$DANCE_ROOT/bin/dance_convert_plan",
-                                               "-x $file -o $cdr_plan");
-
-    $convert->Spawn ();
-
-    if ($tg_convert_plan->WaitForFileTimed ($cdr_planbase,
-                                            30) == -1) {
-        print STDERR "ERROR: Convert Plan failed to output $cdr_plan.\n";
-        kill_open_processes ();
-        next;
-    }
-
-    $convert->Kill ();
-
     # Invoke executor - start the application -.
     print "Invoking executor - launch the application -\n";
     $E = $tg_executor->CreateProcess ("$DANCE_ROOT/bin/dance_plan_launcher",
-                                      "-c $file.cdr -n file://NodeApp1.ior -l -oNode");
+                                      "-x $file -n file://NodeApp1.ior -l -oNode");
     $E->SpawnWaitKill (120);
 
     print "Teardown the application\n";
     $E = $tg_executor->CreateProcess ("$DANCE_ROOT/bin/dance_plan_launcher",
-                                      "-n file://NodeApp1.ior -a file://Node_APP.ior -m file://Node_AM.ior -s");
+                                      "-n file://NodeApp1.ior -a file://$ior_application -m file://$ior_am -s");
     $E->SpawnWaitKill (120);
     print "Executor finished.\n";
-
-    $tg_convert_plan->DeleteFile ($cdr_planbase);
 
     delete_ior_files ();
     kill_open_processes ();
