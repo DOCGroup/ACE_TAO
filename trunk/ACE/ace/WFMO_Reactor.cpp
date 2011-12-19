@@ -1153,6 +1153,8 @@ ACE_WFMO_Reactor::open (size_t size,
   // Timer Queue
   if (this->delete_timer_queue_)
     delete this->timer_queue_;
+  else if (this->timer_queue_)
+    this->timer_queue_->close ();
 
   if (tq == 0)
     {
@@ -1283,8 +1285,14 @@ ACE_WFMO_Reactor::timer_queue (void) const
 int
 ACE_WFMO_Reactor::timer_queue (ACE_Timer_Queue *tq)
 {
-  if (this->timer_queue_ != 0 && this->delete_timer_queue_)
-    delete this->timer_queue_;
+  if (this->delete_timer_queue_)
+    {
+      delete this->timer_queue_;
+    }
+  else if (this->timer_queue_)
+    {
+      this->timer_queue_->close ();
+    }
   this->timer_queue_ = tq;
   this->delete_timer_queue_ = false;
   return 0;
@@ -1325,6 +1333,11 @@ ACE_WFMO_Reactor::~ACE_WFMO_Reactor (void)
       delete this->timer_queue_;
       this->timer_queue_ = 0;
       this->delete_timer_queue_ = false;
+    }
+  else if (this->timer_queue_)
+    {
+      this->timer_queue_->close ();
+      this->timer_queue_ = 0;
     }
 
   if (this->delete_signal_handler_)

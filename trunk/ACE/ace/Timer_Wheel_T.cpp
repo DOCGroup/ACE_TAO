@@ -171,6 +171,23 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::~ACE_Timer_Wheel_T (voi
 
   delete iterator_;
 
+  this->close ();
+  for (u_int i = 0; i < this->spoke_count_; ++i)
+  {
+    // Free all the nodes starting at the root
+    ACE_Timer_Node_T<TYPE>* root = this->spokes_[i];
+    delete root;
+  }
+
+  delete[] this->spokes_;
+}
+
+template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> int
+ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::close (void)
+{
+  ACE_TRACE ("ACE_Timer_Wheel_T::close");
+
+  // Remove any remaining nodes
   for (u_int i = 0; i < this->spoke_count_; ++i)
   {
     // Free all the nodes starting at the root
@@ -184,9 +201,10 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::~ACE_Timer_Wheel_T (voi
       this->free_node (n);
       n = next;
     }
-    delete root;
   }
-  delete[] this->spokes_;
+
+  // Leave rest for destructor
+  return 0;
 }
 
 /// Searches for a node by timer_id within one spoke.

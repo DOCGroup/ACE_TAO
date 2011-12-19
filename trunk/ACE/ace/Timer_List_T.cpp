@@ -129,6 +129,19 @@ ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::~ACE_Timer_List_T (void)
 
   delete iterator_;
 
+  this->close ();
+
+  // delete the dummy node
+  delete this->head_;
+}
+
+template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> int
+ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::close (void)
+{
+  ACE_TRACE ("ACE_Timer_List_T::close");
+  ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, -1));
+
+  // Remove all remaining items in the list.
   if (!this->is_empty())
     {
       for (ACE_Timer_Node_T<TYPE>* n = this->get_first();
@@ -148,8 +161,8 @@ ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::~ACE_Timer_List_T (void)
         }
     }
 
-  // delete the dummy node
-  delete this->head_;
+  // Leave rest to destructor
+  return 0;
 }
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> void

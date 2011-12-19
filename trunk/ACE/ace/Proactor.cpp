@@ -638,6 +638,11 @@ ACE_Proactor::close (void)
       this->timer_queue_ = 0;
       this->delete_timer_queue_ = 0;
     }
+  else if (this->timer_queue_)
+    {
+      this->timer_queue_->close ();
+      this->timer_queue_ = 0;
+    }
 
   return 0;
 }
@@ -767,6 +772,10 @@ ACE_Proactor::timer_queue (ACE_Proactor_Timer_Queue *tq)
     {
       delete this->timer_queue_;
       this->delete_timer_queue_ = 0;
+    }
+  else if (this->timer_queue_)
+    {
+      this->timer_queue_->close ();
     }
 
   // New timer queue.

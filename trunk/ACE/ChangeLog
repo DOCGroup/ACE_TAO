@@ -1,3 +1,36 @@
+Mon Dec 19 13:28:16 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/Abstract_Timer_Queue.h:
+        * ace/Timer_Hash_T.h:
+        * ace/Timer_Hash_T.cpp:
+        * ace/Timer_Heap_T.h:
+        * ace/Timer_Heap_T.cpp:
+        * ace/Timer_List_T.h:
+        * ace/Timer_List_T.cpp:
+        * ace/Timer_Queue_Adapters.inl:
+        * ace/Timer_Queue_Adapters.cpp:
+        * ace/Timer_Wheel_T.h:
+        * ace/Timer_Wheel_T.cpp:
+
+          Added close() method.
+
+        * ace/Dev_Poll_Reactor.cpp:
+        * ace/Proactor.cpp:
+        * ace/Select_Reactor_T.cpp:
+        * ace/WFMO_Reactor.cpp:
+
+          Implemented support for timer queue close ().
+
+        The rationale for these changes is that when using reactors with
+        user defined timer queues the reactor does not delete the timer queue
+        when being deleted itself. Without any other cleanup this created the
+        possibility (as encountered in TAO/tests/Bug_3837_Regression after
+        introduction of the TIME_POLICY changes) of outstanding timer handlers
+        in the queue being triggered and attempting to access the reactor after
+        the reactor has been destroyed.
+        Calling close () for timer queues the reactor does not delete solves
+        this potential problem.
+
 Mon Dec 19 12:12:37 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/fuzz.pl:

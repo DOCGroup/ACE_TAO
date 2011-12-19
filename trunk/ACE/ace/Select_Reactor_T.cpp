@@ -461,7 +461,14 @@ template <class ACE_SELECT_REACTOR_TOKEN> int
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::timer_queue
   (ACE_Timer_Queue *tq)
 {
-  delete this->timer_queue_;
+  if (this->delete_timer_queue_)
+    {
+      delete this->timer_queue_;
+    }
+  else if (this->timer_queue_)
+    {
+      this->timer_queue_->close ();
+    }
   this->timer_queue_ = tq;
   this->delete_timer_queue_ = false;
   return 0;
@@ -575,6 +582,11 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::close (void)
       delete this->timer_queue_;
       this->timer_queue_ = 0;
       this->delete_timer_queue_ = false;
+    }
+  else if (this->timer_queue_)
+    {
+      this->timer_queue_->close ();
+      this->timer_queue_ = 0;
     }
 
   if (this->notify_handler_ != 0)
