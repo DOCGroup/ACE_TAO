@@ -1,3 +1,8 @@
+Mon Dec 19 12:12:37 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          Simplified check
+
 Mon Dec 19 09:17:33 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ace_for_tao.mpc:
