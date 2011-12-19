@@ -141,11 +141,14 @@ sub run_node_daemons {
     }
     return 0;
 }
-
+# only run tests if  noevent is disabled
 if ($#ARGV == -1) {
-    opendir(DIR, ".");
-    @files = grep(/\.cdp$/,readdir(DIR));
-    closedir(DIR);
+    @files = ("PublishConnectionExplicitHome.cdp",
+             "PublishConnectionExplicitHome_NS.cdp",
+             "PublishConnectionExplicitHome_NS_PL_DP.cdp",
+             "PublishConnectionExplicitHome_NS_PL_SP.cdp",
+             "EmitsConnectionExplicitHome.cdp",
+             "EmitsConnectionExplicitHome_NS.cdp")
 }
 else {
     @files = @ARGV;
