@@ -182,6 +182,11 @@ ACE_Thread_Timer_Queue_Adapter<TQ, TYPE>::~ACE_Thread_Timer_Queue_Adapter (void)
       this->timer_queue_ = 0;
       this->delete_timer_queue_ = false;
     }
+  else if (this->timer_queue_)
+    {
+      this->timer_queue_->close ();
+      this->timer_queue_ = 0;
+    }
 }
 
 template<class TQ, class TYPE> ACE_SYNCH_RECURSIVE_MUTEX &
