@@ -49,6 +49,7 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     Dynamic_Message_Strategy.cpp
     Event.cpp
     Event_Handler.cpp
+    Event_Handler_Handle_Timeout_Upcall.cpp
     FILE.cpp
     FILE_Addr.cpp
     Flag_Manip.cpp
@@ -183,6 +184,7 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     Thread_Manager.cpp
     Thread_Mutex.cpp
     Throughput_Stats.cpp
+    Time_Policy.cpp
     Time_Value.cpp
     Timeprobe.cpp
     Token.cpp
@@ -205,6 +207,7 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
   }
 
   Template_Files {
+    Abstract_Timer_Queue.cpp
     Acceptor.cpp
     Active_Map_Manager_T.cpp
     Array_Base.cpp
@@ -224,6 +227,7 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     Condition_T.cpp
     Connector.cpp
     Containers_T.cpp
+    Countdown_Time_T.cpp
     Dump_T.cpp
     Dynamic_Service.cpp
     Env_Value_T.cpp
@@ -265,10 +269,12 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     Task_Ex_T.cpp
     Task_T.cpp
     Timeprobe_T.cpp
+    Time_Policy_T.cpp
     Timer_Hash_T.cpp
     Timer_Heap_T.cpp
     Timer_List_T.cpp
     Timer_Queue_Adapters.cpp
+    Timer_Queue_Iterator.cpp
     Timer_Queue_T.cpp
     Timer_Wheel_T.cpp
     Tokenizer_T.cpp
@@ -300,6 +306,7 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     Bound_Ptr.h
     CORBA_macros.h
     Condition_T.h
+    Countdown_Time.h
     Default_Constants.h
     Exception_Macros.h
     Global_Macros.h
