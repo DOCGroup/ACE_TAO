@@ -61,7 +61,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                             1);
         }
 
-
       server->test_method();
       result =0;
 
