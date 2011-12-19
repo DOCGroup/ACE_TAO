@@ -1,3 +1,10 @@
+Mon Dec 19 18:58:16 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_1330_Regression/client.cpp:
+        * tests/Bug_1670_Regression/client.cpp:
+        * tests/Bug_2243_Regression/ORB_object_to_string.cpp:
+          Fixed valgrind reported memory leaks
+
 Mon Dec 19 10:27:45 UTC 2011  Martin Corino  <mcorino@remedy.nl>
 
         * tests/Time_Policy/main.cpp:

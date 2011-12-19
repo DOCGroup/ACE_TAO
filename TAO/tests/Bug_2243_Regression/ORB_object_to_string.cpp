@@ -62,6 +62,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                       "\n"
                       "ORB_object_to_string test passed with ORBit2 test IOR."));
         }
+
+      orb->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {

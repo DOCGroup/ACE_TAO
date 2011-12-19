@@ -107,6 +107,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       result = aobject->op2 ();
       ACE_ASSERT(result == 2);
 
+      orb->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {
