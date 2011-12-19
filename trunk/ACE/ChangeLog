@@ -1,3 +1,8 @@
+Mon Dec 19 09:17:33 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ace_for_tao.mpc:
+          Added missing files
+
 Sun Dec 18 11:56:00 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Timer_Queue_T.h:
