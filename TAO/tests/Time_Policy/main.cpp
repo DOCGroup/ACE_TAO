@@ -22,7 +22,15 @@
 #include "ace/High_Res_Timer.h"
 #include "ace/Get_Opt.h"
 
-#if (TAO_HAS_TIME_POLICY == 1)
+#if (TAO_HAS_TIME_POLICY == 1) && \
+    (defined (ACE_HAS_HI_RES_TIMER) || \
+     defined (ACE_HAS_AIX_HI_RES_TIMER) || \
+     defined (ACE_WIN32) || \
+     (defined (ghs) && defined (ACE_HAS_PENTIUM)) || \
+     ((defined (__GNUG__) || defined (__INTEL_COMPILER)) && !defined(ACE_VXWORKS) && defined (ACE_HAS_PENTIUM)) || \
+     (defined (linux) && defined (ACE_HAS_ALPHA_TIMER)) || \
+     (defined (ACE_HAS_POWERPC_TIMER) && (defined (ghs) || defined (__GNUG__))) || \
+     (defined (ACE_HAS_CLOCK_GETTIME) && defined (ACE_HAS_CLOCK_GETTIME_MONOTONIC)))
 
 #if defined(TAO_USE_HR_TIME_POLICY_STRATEGY)
 bool uses_hr_time = true;
