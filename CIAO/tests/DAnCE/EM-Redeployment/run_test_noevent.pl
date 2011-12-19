@@ -18,21 +18,19 @@ $daemons_running = 0;
 $em_running = 0;
 $ns_running = 0;
 
-$nr_daemon = 1;
-@ports = ( 60001 );
-@iorbases = ( "NodeApp1.ior" );
+$repeat = 1;
+
+$nr_daemon = 2;
+@ports = ( 60001, 60002 );
+@iorbases = ( "NodeApp1.ior", "NodeApp2.ior" );
 @iorfiles = 0;
-@nodenames = ( "NodeOne" );
+@nodenames = ( "NodeOne", "NodeTwo" );
 
 # ior files other than daemon
 $ior_nsbase = "ns.ior";
 $ior_nsfile = 0;
 $ior_embase = "EM.ior";
 $ior_emfile = 0;
-$ior_applicationbase = "Node_APP.ior";
-$ior_application = 0;
-$ior_ambase = "Node_AM.ior";
-$ior_am = 0;
 
 #  Processes
 $E = 0;
@@ -45,7 +43,6 @@ $NS = 0;
 $tg_naming = 0;
 $tg_exe_man = 0;
 $tg_executor = 0;
-$tg_convert_plan = 0;
 
 $status = 0;
 
@@ -55,17 +52,15 @@ sub create_targets {
     $tg_naming->AddLibPath ('..');
     #   daemon
     for ($i = 0; $i < $nr_daemon; ++$i) {
-        $tg_daemons[$i] = PerlACE::TestTarget::create_target ($i+1) || die "Create target for daemon $i failed\n";
+        $tg_daemons[$i] = PerlACE::TestTarget::create_target ($i+2) || die "Create target for daemon $i failed\n";
         $tg_daemons[$i]->AddLibPath ('../Components');
     }
     #   execution manager
     $tg_exe_man = PerlACE::TestTarget::create_target (1) || die "Create target for EM failed\n";
-    # $tg_exe_man->AddLibPath ('..');
+    $tg_exe_man->AddLibPath ('..');
     #   executor (plan_launcher)
     $tg_executor = PerlACE::TestTarget::create_target (1) || die "Create target for executor failed\n";
-    #$tg_executor->AddLibPath ('..');
-
-    $tg_convert_plan = PerlACE::TestTarget::create_target (1) || die "Could not create target for convert plan\n";
+    $tg_executor->AddLibPath ('..');
 }
 
 sub init_ior_files {
@@ -74,9 +69,6 @@ sub init_ior_files {
     for ($i = 0; $i < $nr_daemon; ++$i) {
         $iorfiles[$i] = $tg_daemons[$i]->LocalFile ($iorbases[$i]);
     }
-    $ior_application = $tg_executor->LocalFile ($ior_applicationbase);
-    $ior_am = $tg_executor->LocalFile ($ior_ambase);
-
     delete_ior_files ();
 }
 
@@ -87,20 +79,25 @@ sub delete_ior_files {
     }
     $tg_naming->DeleteFile ($ior_nsbase);
     $tg_exe_man->DeleteFile ($ior_embase);
+}
+
+sub kill_localities {
     for ($i = 0; $i < $nr_daemon; ++$i) {
-        $iorfiles[$i] = $tg_daemons[$i]->LocalFile ($iorbases[$i]);
+        # in case shutdown did not perform as expected
+        $tg_daemons[$i]->KillAll ('dance_locality_manager');
     }
 }
 
-sub kill_node_daemon {
+sub kill_node_daemons {
     for ($i = 0; $i < $nr_daemon; ++$i) {
         $DEAMONS[$i]->Kill (); $DEAMONS[$i]->TimedWait (1);
     }
+    kill_localities ();
 }
 
 sub kill_open_processes {
     if ($daemons_running == 1) {
-        kill_node_daemon ();
+        kill_node_daemons ();
     }
 
     if ($em_running == 1) {
@@ -110,8 +107,6 @@ sub kill_open_processes {
     if ($ns_running == 1) {
         $NS->Kill (); $NS->TimedWait (1);
     }
-    # in case shutdown did not perform as expected
-    $tg_executor->KillAll ('dance_locality_manager');
 }
 
 
@@ -121,13 +116,15 @@ sub run_node_daemons {
         $iorfile = $iorfiles[$i];
         $port = $ports[$i];
         $nodename = $nodenames[$i];
-        $iiop = "iiop://localhost:$port";
+        $node_host = $tg_daemons[$i]->HostName ();
+        $iiop = "iiop://$node_host:$port";
         $node_app = $tg_daemons[$i]->GetArchDir("$DANCE_ROOT/bin/") . "dance_locality_manager";
 
         $d_cmd = "$DANCE_ROOT/bin/dance_node_manager";
         $d_param = "-ORBEndpoint $iiop -s $node_app -n $nodename=$iorfile -t 30 --domain-nc corbaloc:rir:/NameService --instance-nc corbaloc:rir:/NameService";
 
         print "Run node daemon\n";
+        $tg_daemons[$i]->SetEnv ("NameServiceIOR", $tg_exe_man->GetEnv ("NameServiceIOR"));
 
         $DEAMONS[$i] = $tg_daemons[$i]->CreateProcess ($d_cmd, $d_param);
         $DEAMONS[$i]->Spawn ();
@@ -144,10 +141,22 @@ sub run_node_daemons {
     }
     return 0;
 }
-
+#only test that runs with noevents
 if ($#ARGV == -1) {
-   @files =("EmitsConnectionExplicitHome.cdp",
-            "PublishConnectionExplicitHome.cdp")
+    @files = (
+  "MultiplexConnectionExplicitHome.cdp",
+  "MultiplexConnectionExplicitHome_NS.cdp",
+  "MultiplexConnectionExplicitHome_NS_PL_DP.cdp",
+  "MultiplexConnectionExplicitHome_NS_PL_SP.cdp",
+  "SimpleComponentExplicitHome.cdp",
+  "SimpleProcessColocation.cdp",
+  "SimpleProcessColocation_2.cdp",
+  "SimpleProcessColocation_Default.cdp",
+  "SimplexConnectionExplicitHome.cdp",
+  "SimplexConnectionExplicitHome_NS.cdp",
+  "SimplexConnectionExplicitHome_NS_PL_DP.cdp",
+  "SimplexConnectionExplicitHome_NS_PL_SP.cdp",
+  "SimplexConnectionExplicitHome_NilFacet.cdp")
 }
 else {
     @files = @ARGV;
@@ -157,11 +166,13 @@ create_targets ();
 init_ior_files ();
 
 foreach $file (@files) {
-    print "Starting test for deployment $file\n";
+    $file = '../ExecutionManager-Deployments/'.$file;
+    print "Starting redeployment test for $file\n";
 
     print STDERR "Starting Naming Service\n";
 
-    $NS = $tg_naming->CreateProcess ("$TAO_ROOT/orbsvcs/Naming_Service/tao_cosnaming", "-m 0 -ORBEndpoint iiop://localhost:60003 -o $ior_nsfile");
+    my $ns_host = $tg_naming->HostName ();
+    $NS = $tg_naming->CreateProcess ("$TAO_ROOT/orbsvcs/Naming_Service/tao_cosnaming", "-m 0 -ORBEndpoint iiop://$ns_host:60003 -o $ior_nsfile");
     $NS->Spawn ();
 
     if ($tg_naming->WaitForFileTimed ($ior_nsbase,
@@ -173,7 +184,8 @@ foreach $file (@files) {
 
     $ns_running = 1;
     # Set up NamingService environment
-    $ENV{"NameServiceIOR"} = "corbaloc:iiop:localhost:60003/NameService";
+    $tg_exe_man->SetEnv ("NameServiceIOR", "corbaloc:iiop:$ns_host:60003/NameService");
+    $tg_executor->SetEnv ("NameServiceIOR", "corbaloc:iiop:$ns_host:60003/NameService");
 
     # Invoke node daemon.
     print "Invoking node daemon\n";
@@ -187,41 +199,39 @@ foreach $file (@files) {
 
     $daemons_running = 1;
 
-    print "Converting plan to CDR representation\n";
-    $cdr_planbase = "$file" . ".cdr";
-    $cdr_plan = $tg_convert_plan->LocalFile ($cdr_planbase);
-    $convert = $tg_convert_plan->CreateProcess("$DANCE_ROOT/bin/dance_convert_plan",
-                                               "-x $file -o $cdr_plan");
+    # Invoke execution manager.
+    print "Invoking execution manager\n";
+    $EM = $tg_exe_man->CreateProcess ("$DANCE_ROOT/bin/dance_execution_manager",
+                                    "-e$ior_emfile --domain-nc corbaloc:rir:/NameService");
+    $EM->Spawn ();
 
-    $convert->Spawn ();
-
-    if ($tg_convert_plan->WaitForFileTimed ($cdr_planbase,
-                                            30) == -1) {
-        print STDERR "ERROR: Convert Plan failed to output $cdr_plan.\n";
+    if ($tg_exe_man->WaitForFileTimed ($ior_embase,
+                                    $tg_exe_man->ProcessStartWaitInterval ()) == -1) {
+        print STDERR
+          "ERROR: The ior file of execution manager could not be found\n";
         kill_open_processes ();
-        next;
+        exit 1;
     }
 
-    $convert->Kill ();
+    $em_running = 1;
 
-    # Invoke executor - start the application -.
-    print "Invoking executor - launch the application -\n";
-    $E = $tg_executor->CreateProcess ("$DANCE_ROOT/bin/dance_plan_launcher",
-                                      "-c $file.cdr -n file://NodeApp1.ior -l -oNode");
-    $E->SpawnWaitKill (120);
+    for ($i = 0; $i <= $repeat; ++$i) {
+        my $iteration = $i+1;
+        # Invoke executor - start the application -.
+        print "#$iteration - Invoking executor - launch the application -\n";
+        $E = $tg_executor->CreateProcess ("$DANCE_ROOT/bin/dance_plan_launcher",
+                                          "-x $file -k file://$ior_emfile -l");
+        $E->SpawnWaitKill (120);
 
-    print "Teardown the application\n";
-    $E = $tg_executor->CreateProcess ("$DANCE_ROOT/bin/dance_plan_launcher",
-                                      "-n file://NodeApp1.ior -a file://Node_APP.ior -m file://Node_AM.ior -s");
-    $E->SpawnWaitKill (120);
-    print "Executor finished.\n";
-
-    $tg_convert_plan->DeleteFile ($cdr_planbase);
+        print "#$iteration - Teardown the application\n";
+        $E = $tg_executor->CreateProcess ("$DANCE_ROOT/bin/dance_plan_launcher",
+                                          "-k file://$ior_emfile -x $file -s");
+        $E->SpawnWaitKill (120);
+        print "#$iteration - Executor finished.\n";
+    }
 
     delete_ior_files ();
     kill_open_processes ();
-
-    # Sleep for a couple seconds to make sure everything has a chance to shut down.
     sleep 5;
 }
 

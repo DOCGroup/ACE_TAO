@@ -1,3 +1,21 @@
+Mon Dec 19 11:33:05 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+       * tests/DAnCE/NodeManager-Deployments/run_test.pl:
+       * tests/DAnCE/NodeManager-Deployments/run_test_noevent.pl:
+       * tests/DAnCE/NodeManager-Deployments/run_test_cdr.pl:
+       * tests/DAnCE/NodeManager-Deployments/run_testcdr_noevent.pl:
+       * tests/DAnCE/ExecutionManager-Deployments/run_test.pl:
+       * tests/DAnCE/ExecutionManager-Deployments/run_test_noevent.pl:
+       * tests/DAnCE/ExecutionManager-Deployments/run_test_cdr.pl:
+       * tests/DAnCE/ExecutionManager-Deployments/run_testcdr_noevent.pl:
+       * tests/DAnCE/EM-Redeployment/run_test.pl:
+       * tests/DAnCE/Em_Redeployment/run_test_noevent.pl:
+       * bin/ciao_tests.lst:
+       Splitted tests-runs in runs for noevent disabled and enabled.
+
+
+
+
 Sun Dec 18 11:36:05 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/ciao_tests.lst:

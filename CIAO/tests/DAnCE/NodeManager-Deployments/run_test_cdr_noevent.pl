@@ -144,10 +144,20 @@ sub run_node_daemons {
     }
     return 0;
 }
-
+#run only test with noevent
 if ($#ARGV == -1) {
-   @files =("EmitsConnectionExplicitHome.cdp",
-            "PublishConnectionExplicitHome.cdp")
+    @files = (
+     "LocalSimplexConnectionExplicitHome.cdp",
+     "MultiplexConnectionExplicitHome.cdp",
+     "SimpleAttributeExplicitHome.cdp",
+     "SimpleComponentExplicitHome.cdp",
+     "SimpleComponentUnhomed.cdp",
+     "SimpleHome.cdp",
+     "SimpleProcessColocation.cdp",
+     "SimpleProcessColocation_2.cdp",
+     "SimpleProcessColocation_Default.cdp",
+     "SimplexConnectionExplicitHome.cdp",
+     "TwoComponentsOneHome.cdp")
 }
 else {
     @files = @ARGV;
