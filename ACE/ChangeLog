@@ -1,3 +1,11 @@
+Tue Dec 20 15:36:24 UTC 2011  Steve Huston  <shuston@riverace.com>
+
+        * ace/Thread.inl (disablecancel): Correct size pased to memset.
+        * ace/Thread_Manager.cpp (ACE_Thread_Descriptor::terminate): Don't
+          dereference potentially invalid pointer.
+
+          Resolves Coverity warnings.
+
 Mon Dec 19 19:00:07 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/bczar/bczar.html:
