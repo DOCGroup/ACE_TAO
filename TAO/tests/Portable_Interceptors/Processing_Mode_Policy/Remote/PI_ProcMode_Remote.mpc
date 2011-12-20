@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*idl): taoidldefaults {
+project(*idl): taoidldefaults, avoids_corba_e_micro {
   idlflags -= -St
   IDL_Files {
     test.idl
@@ -9,7 +9,7 @@ project(*idl): taoidldefaults {
   custom_only = 1
 }
 
-project(*RemoteServer): taoserver, pi_server, interceptors {
+project(*RemoteServer): taoserver, pi_server, interceptors, avoids_corba_e_micro {
   exename = PI_ProcMode_Remote_TestServer
   after += *idl
   Source_Files {
@@ -27,7 +27,7 @@ project(*RemoteServer): taoserver, pi_server, interceptors {
   }
 }
 
-project(*RemoteClient): taoclient, portableserver, pi, interceptors {
+project(*RemoteClient): taoclient, portableserver, pi, interceptors, avoids_corba_e_micro {
   exename = PI_ProcMode_Remote_TestClient
   after += *idl
   after += *RemoteServer

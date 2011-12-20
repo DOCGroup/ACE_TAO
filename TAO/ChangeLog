@@ -1,3 +1,10 @@
+Tue Dec 20 13:56:10 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Collocated/PI_ProcMode_Collocated.mpc:
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Remote/PI_ProcMode_Remote.mpc:
+        * tests/Portable_Interceptors/Register_Initial_References/Register_ORBInitializer.mpc:
+          Projects must avoid CORBA-e-micro.
+
 Tue Dec 20 09:55:08 UTC 2011  Martin Corino  <mcorino@remedy.nl>
 
         * tests/Time_Policy_Custom/Custom_Time_Policy_Strategy.cpp:

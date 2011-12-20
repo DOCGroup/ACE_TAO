@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Server): taoserver, pi, interceptors {
+project(*Server): taoserver, pi, interceptors, avoids_corba_e_micro {
   Source_Files {
     test_i.cpp
     Server_ORBInitializer.cpp

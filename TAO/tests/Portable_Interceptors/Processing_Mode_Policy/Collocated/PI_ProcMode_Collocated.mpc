@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Collocated): taoserver, pi, pi_server, interceptors {
+project(*Collocated): taoserver, pi, pi_server, interceptors, avoids_corba_e_micro {
   exename = PI_ProcMode_Collocated_Test
   Source_Files {
     testC.cpp
