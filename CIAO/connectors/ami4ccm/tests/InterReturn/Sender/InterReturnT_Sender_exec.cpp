@@ -110,7 +110,7 @@ namespace CIAO_InterReturnT_Sender_Impl
       }
     try
       {
-        InterReturnT::TestArray_slice *arr =
+        InterReturnT::TestArray_slice * arr =
            my_foo_ami_->ret_array ("Send me synch array",out_str, l_cmd);
         if ((l_cmd != 5) || (arr[1].x_array[2] != 102))
           {
@@ -137,7 +137,7 @@ namespace CIAO_InterReturnT_Sender_Impl
       }
 
 
-    InterReturnT::TestStruct *struct_return_val =
+    InterReturnT::TestStruct_var struct_return_val =
             my_foo_ami_->ret_struct ("Send me synch struct",out_str, l_cmd);
     if (l_cmd != 4)
       {
@@ -160,9 +160,9 @@ namespace CIAO_InterReturnT_Sender_Impl
         ++this->nr_of_received_;
       }
 
-    const InterReturnT::TestSeq *seq_return_val =
+    const InterReturnT::TestSeq_var seq_return_val =
           my_foo_ami_->ret_seq ("Send me synch struct",out_str, l_cmd);
-    if ((l_cmd != 6) || (!seq_return_val))
+    if ((l_cmd != 6)|| (CORBA::is_nil(seq_return_val)))
       {
         ACE_ERROR ((LM_ERROR, "ERROR MyFoo_callback_exec_i::ret_seq: "
                    "received the wrong long, expected 6,"
@@ -175,7 +175,7 @@ namespace CIAO_InterReturnT_Sender_Impl
       }
 
 
-    const InterReturnT::X_Union *union_return_val =
+    const InterReturnT::X_Union_var union_return_val =
         my_foo_ami_->ret_union ("Send me synch union",out_str, l_cmd);
     if ((l_cmd != 7) || (union_return_val->x_long() != 11))
       {
