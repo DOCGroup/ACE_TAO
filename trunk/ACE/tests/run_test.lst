@@ -204,6 +204,7 @@ Sigset_Ops_Test
 Simple_Message_Block_Test
 Singleton_Test
 Svc_Handler_Test: !ACE_FOR_TAO
+Task_Wait_Test
 TP_Reactor_Test: !ACE_FOR_TAO
 TSS_Test
 TSS_Static_Test
