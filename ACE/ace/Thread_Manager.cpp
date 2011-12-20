@@ -188,9 +188,16 @@ ACE_Thread_Descriptor::terminate ()
            }
 #endif /* !ACE_HAS_VXTHREADS */
 
-         // Remove thread descriptor from the table.
+         // Remove thread descriptor from the table. 'this' is invalid
+         // upon return.
          if (this->tm_ != 0)
-           tm_->remove_thr (this, close_handle);
+           {
+             // remove_thr makes use of 'this' invalid on return.
+             // Code below will free log_msg, so clear our pointer
+             // now - it's already been saved in log_msg.
+             this->log_msg_ = 0;
+             tm_->remove_thr (this, close_handle);
+           }
       }
 
      // Check if we need delete ACE_Log_Msg instance
@@ -203,9 +210,6 @@ ACE_Thread_Descriptor::terminate ()
       }
      else
       {
-        // Thread_Descriptor is the owner of the Log_Msg instance!!
-        // deleted.
-        this->log_msg_ = 0;
         delete log_msg;
       }
    }
