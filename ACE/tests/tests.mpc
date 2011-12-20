@@ -134,6 +134,13 @@ project(ACE Init Test) : acemfcexe {
   }
 }
 
+project(Task Wait Test) : acetest {
+  exename = Task_Wait_Test
+  Source_Files {
+    Task_Wait_Test.cpp
+  }
+}
+
 project(ACE Test) : acetest {
   exename = ACE_Test
   Source_Files {
