@@ -8,7 +8,7 @@
 
 #if (TAO_HAS_TIME_POLICY == 1)
 
-class ACE_Export Custom_Time_Policy
+class TPTEST_Export Custom_Time_Policy
 {
 public:
   /// Return the current time according to this policy
