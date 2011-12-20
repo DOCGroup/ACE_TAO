@@ -1,3 +1,9 @@
+Tue Dec 20 09:55:08 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        * tests/Time_Policy_Custom/Custom_Time_Policy_Strategy.cpp:
+
+          Fixed incorrect export macro in class definition.
+
 Mon Dec 19 18:58:16 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_1330_Regression/client.cpp:
