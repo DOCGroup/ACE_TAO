@@ -1,3 +1,11 @@
+Tue Dec 20 15:43:39 UTC 2011  Steve Huston  <shuston@riverace.com>
+
+        * tests/Task_Wait_Test.cpp:
+        * tests/tests.mpc:
+        * tests/run_test.lst:
+          New test program that tests the ACE_Thread_Manager::wait() from a
+          called-back ACE_Task::close() on thread exit.
+
 Tue Dec 20 15:36:24 UTC 2011  Steve Huston  <shuston@riverace.com>
 
         * ace/Thread.inl (disablecancel): Correct size pased to memset.
