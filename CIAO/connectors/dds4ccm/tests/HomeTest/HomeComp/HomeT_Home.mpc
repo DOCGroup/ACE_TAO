@@ -84,7 +84,7 @@ project(HomeT_HomeC_stub): ccm_stub,  dds4ccm_base {
   }
 }
 
-project(HomeT_HomeC_exec) : ciao_executor, dds4ccm_lem_stub {
+project(HomeT_HomeC_exec) : ciao_executor, dds4ccm_lem_stub, dds4ccm_impl {
   after      += HomeT_HomeC_lem_stub HomeT_HomeC_stub HomeT_Connector_lem_stub \
                 HomeT_Connector_stub HomeT_Connector_exec
   sharedname = HomeT_HomeC_exec
@@ -121,10 +121,12 @@ project(HomeT_HomeC_svnt) : ciao_servant, dds4ccm_base {
   includes += ..
   sharedname = HomeT_HomeC_svnt
 
-  libs    += HomeT_HomeC_stub HomeT_HomeC_exec
+  libs    += HomeT_HomeC_stub HomeT_HomeC_lem_stub HomeT_HomeC_exec
   libs    += HomeT_Base_stub \
+             HomeT_Connector_stub \
              HomeT_Connector_exec \
-             HomeT_Connector_svnt 
+             HomeT_Connector_svnt \
+             HomeT_Connector_lem_stub
   
   dynamicflags += HOMET_HOMEC_SVNT_BUILD_DLL
   libout = ../lib
