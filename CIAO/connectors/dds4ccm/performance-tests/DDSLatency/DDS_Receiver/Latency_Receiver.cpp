@@ -304,6 +304,8 @@ clean_exit:
         }
     }
 
+  DDSDomainParticipantFactory::finalize_instance ();
+
   return main_result;
 }
 
