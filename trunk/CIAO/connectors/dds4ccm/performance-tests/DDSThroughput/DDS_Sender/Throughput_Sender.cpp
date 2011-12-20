@@ -323,5 +323,6 @@ clean_exit:
         ex._tao_print_exception("ERROR : Unexpected CORBA exception caught :");
         main_result = 1;
       }
+    DDSDomainParticipantFactory::finalize_instance ();
     return main_result;
 }

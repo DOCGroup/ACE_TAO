@@ -711,6 +711,8 @@ int ACE_TMAIN(int argc, ACE_TCHAR* argv[])
   delete [] datalen_range_;
   delete [] duration_times_;
   delete pub_listener;
+  DDSDomainParticipantFactory::finalize_instance ();
+  ACE_Reactor::instance ()->timer_queue(0);
   return main_result;
 }
 

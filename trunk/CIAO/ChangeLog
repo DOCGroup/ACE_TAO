@@ -1,3 +1,12 @@
+Tue Dec 20 15:10:01 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/performance-tests/DDSLatency/DDS_Receiver/Latency_Receiver.cpp:
+        * connectors/dds4ccm/performance-tests/DDSLatency/DDS_Sender/Latency_Sender.cpp:
+        * connectors/dds4ccm/performance-tests/DDSThroughput/DDS_Receiver/Throughput_Receiver.cpp:
+        * connectors/dds4ccm/performance-tests/DDSThroughput/DDS_Sender/Throughput_Sender.cpp:
+          Reset the timer queue and finalize DDS explicitly to fix a lot of
+          reported memory leaks
+
 Tue Dec 20 09:10:05 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
        * connectors/ami4ccm/tests/InterReturn/Sender/InterReturnT_Sender_exec.cpp:
