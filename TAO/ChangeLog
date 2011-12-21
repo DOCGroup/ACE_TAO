@@ -1,3 +1,9 @@
+Wed Dec 21 09:42:12 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        * examples/RTCORBA/Activity/Activity.cpp:
+
+          Added timer queue reset on global reactor instance.
+
 Tue Dec 20 13:56:10 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * tests/Portable_Interceptors/Processing_Mode_Policy/Collocated/PI_ProcMode_Collocated.mpc:
