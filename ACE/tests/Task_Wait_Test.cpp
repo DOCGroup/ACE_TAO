@@ -16,6 +16,7 @@
 #include "ace/Event.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Task.h"
+#include "ace/OS_NS_unistd.h"
 
 #if defined (ACE_HAS_THREADS)
 
