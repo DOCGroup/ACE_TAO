@@ -138,6 +138,8 @@ Reactor_Timer_Queue_Test_Driver::Reactor_Timer_Queue_Test_Driver (void)
 
 Reactor_Timer_Queue_Test_Driver::~Reactor_Timer_Queue_Test_Driver (void)
 {
+  // unhook our timer queue
+  ACE_Reactor::instance ()->timer_queue (0);
 }
 
 int

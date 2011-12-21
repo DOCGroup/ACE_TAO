@@ -385,6 +385,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   ACE_Timer_Heap timer_queue;
   ACE_Reactor::instance ()->timer_queue (&timer_queue);
 
+  int rc = 0;
   try
     {
       ACTIVITY::instance()->run (argc, argv);
@@ -392,10 +393,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("Caught exception:");
-      return 1;
+      rc = 1;
     }
 
-  return 0;
+  // reset stack based timer queue
+  ACE_Reactor::instance ()->timer_queue (0);
+
+  return rc;
 }
 
 #if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
