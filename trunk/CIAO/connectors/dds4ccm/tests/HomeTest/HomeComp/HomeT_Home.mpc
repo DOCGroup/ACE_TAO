@@ -58,14 +58,11 @@ project(HomeT_HomeC_lem_stub) : ccm_svnt, dds4ccm_base {
 project(HomeT_HomeC_stub): ccm_stub,  dds4ccm_base {
  after += HomeT_Base_stub HomeT_HomeC_idl_gen HomeT_Connector_stub
   sharedname = HomeT_HomeC_stub
-  libs   += HomeT_Base_stub
+  libs   += HomeT_Base_stub HomeT_Connector_stub
   includes += ..
   libpaths += ..
   libout = ../lib
   libpaths += ../lib
-
-  libs += HomeT_Base_stub
-
   dynamicflags += HOMET_HOMEC_STUB_BUILD_DLL
 
   IDL_Files {
