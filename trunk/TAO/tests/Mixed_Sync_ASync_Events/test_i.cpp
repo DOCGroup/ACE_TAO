@@ -212,7 +212,7 @@ TestHandler::handle_exception (ACE_HANDLE)
   if ((ACE_OS::rand_r (&this->seed_) % 2) == 0)
   {
     A::FollowUp followup;
-    if (!CORBA::is_nil (this->opponent_))
+    if (!CORBA::is_nil (this->opponent_.in ()))
     {
       this->opponent_->request(A::RQM_SYNCH, this->counter_, followup);
       this->handle_followup (followup, this->counter_);
