@@ -1,3 +1,8 @@
+Sat Dec 24 11:56:39 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Mixed_Sync_ASync_Events/test_i.cpp:
+          Fixed compile error on OpenVMS
+
 Wed Dec 21 09:42:12 UTC 2011  Martin Corino  <mcorino@remedy.nl>
 
         * examples/RTCORBA/Activity/Activity.cpp:
