@@ -82,6 +82,9 @@ project(skel_one): taolib, portableserver {
   Inline_Files {
   idl_1S.inl
   }
+
+  IDL_Files {
+  }
 }
 
 
@@ -107,7 +110,7 @@ project(stub_two): taolib {
 }
 
 project(skel_two): taolib, portableserver {
-  after += idl_two_gen stub_two skel_one
+  after += idl_two_gen stub_two skel_one idl_one_gen stub_one
   libs += stub_two skel_one stub_one
 
   sharedname = skel_two
@@ -124,6 +127,9 @@ project(skel_two): taolib, portableserver {
 
   Inline_Files {
   idl_2S.inl
+  }
+
+  IDL_Files {
   }
 }
 
@@ -169,6 +175,9 @@ project(skel_three): taolib, portableserver {
   Inline_Files {
   idl_3S.inl
   }
+
+  IDL_Files {
+  }
 }
 
 project(*Server): taoserver {
@@ -177,7 +186,7 @@ project(*Server): taoserver {
             stub_two skel_two \
             stub_three skel_three
   libs +=   skel_three stub_three  \
-            stub_two skel_two \
+            skel_two stub_two \
             skel_one stub_one
 
   Source_Files {
