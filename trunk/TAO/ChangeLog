@@ -1,3 +1,10 @@
+Mon Dec 26 23:50:02 UTC 2011  Adam Mitz  <mitza@ociweb.com>
+
+        * tests/Skeleton_Inheritance/skel_inheritance.mpc:
+
+          Fixed issues with parallel builds running tao_idl from the
+          wrong project.
+
 Sat Dec 24 11:56:39 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Mixed_Sync_ASync_Events/test_i.cpp:
