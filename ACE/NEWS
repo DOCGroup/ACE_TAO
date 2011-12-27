@@ -24,6 +24,8 @@ USER VISIBLE CHANGES BETWEEN ACE-6.0.6 and ACE-6.0.7
 . Added the TIME_POLICY feature also to countdown time class which has now
   become a template (ace/Countdown_Time_T.h)
 
+. Initial support for Microsoft Visual Studio 11
+
 USER VISIBLE CHANGES BETWEEN ACE-6.0.5 and ACE-6.0.6
 ====================================================
 
