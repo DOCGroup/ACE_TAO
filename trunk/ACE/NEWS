@@ -13,9 +13,9 @@ USER VISIBLE CHANGES BETWEEN ACE-6.0.6 and ACE-6.0.7
   This feature is specified through a new template argument and provides the
   timer queue with a policy for a timer (time of day) value. This feature is
   intended to replace (in time) the gettimeofday setter method which has been
-  marked @deprecated. For now backwards compatibility is guarenteed.
+  marked @deprecated. For now backwards compatibility is guaranteed.
   The TIME_POLICY feature provides flexibility with regards to providing a timer
-  source to the timer queues as well as the posibility for a fully optimized
+  source to the timer queues as well as the possibility for a fully optimized
   calling path.
   A number of standard time policies are provided in ace/Time_Policy.h.
   The tests/Timer_Queue_Test.cpp has been updated to reflect and exemplify these
@@ -25,6 +25,8 @@ USER VISIBLE CHANGES BETWEEN ACE-6.0.6 and ACE-6.0.7
   become a template (ace/Countdown_Time_T.h)
 
 . Initial support for Microsoft Visual Studio 11
+
+. Increased overall code quality by using Coverity and Klocwork
 
 USER VISIBLE CHANGES BETWEEN ACE-6.0.5 and ACE-6.0.6
 ====================================================
