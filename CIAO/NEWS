@@ -1,4 +1,7 @@
-USER VISIBLE CHANGES BETWEEN CIAO-1.0.6 and CIAO-1.1.0
+USER VISIBLE CHANGES BETWEEN CIAO-1.0.7 and CIAO-1.0.8
+=======================================================
+
+USER VISIBLE CHANGES BETWEEN CIAO-1.0.6 and CIAO-1.0.7
 =======================================================
 
 . -Glfa has been removed from tao_idl. The local executor mapping can only

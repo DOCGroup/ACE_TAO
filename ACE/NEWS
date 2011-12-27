@@ -1,23 +1,26 @@
-USER VISIBLE CHANGES BETWEEN ACE-6.0.6 and ACE-6.1.0
+USER VISIBLE CHANGES BETWEEN ACE-6.0.7 and ACE-6.0.8
+====================================================
+
+USER VISIBLE CHANGES BETWEEN ACE-6.0.6 and ACE-6.0.7
 ====================================================
 
 . Added a new method to ACE_Atomic_Op<LOCK, TYPE>, TYPE exchange (TYPE newval)
   which does an atomic exchange of the new value with ACE_Atomic_Op's value
   and returns the old value. The tests/Atomic_Op_Test.cpp test program has a
   test case that exemplifies its usage; see the Exchange_Tester class.
-  
+
 . Added a new feature to timer queue templates classes: TIME_POLICY.
   This feature is specified through a new template argument and provides the
   timer queue with a policy for a timer (time of day) value. This feature is
   intended to replace (in time) the gettimeofday setter method which has been
   marked @deprecated. For now backwards compatibility is guarenteed.
-  The TIME_POLICY feature provides flexibility with regards to providing a timer 
+  The TIME_POLICY feature provides flexibility with regards to providing a timer
   source to the timer queues as well as the posibility for a fully optimized
-  calling path.  
+  calling path.
   A number of standard time policies are provided in ace/Time_Policy.h.
   The tests/Timer_Queue_Test.cpp has been updated to reflect and exemplify these
   changes.
-  
+
 . Added the TIME_POLICY feature also to countdown time class which has now
   become a template (ace/Countdown_Time_T.h)
 
