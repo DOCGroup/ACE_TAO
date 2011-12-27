@@ -1,0 +1,13 @@
+Tue Dec 27 10:06:28 CET 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE version 1.0.7 released.
+
+Sun Dec 04 11:51:30 CET 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE version 1.0.6 released.
+
+Local Variables:
+mode: change-log
+add-log-time-format: (lambda () (progn (setq tz (getenv "TZ")) (set-time-zone-rule "UTC") (setq time (format-time-string "%a %b %e %H:%M:%S %Z %Y" (current-time))) (set-time-zone-rule tz) time))
+indent-tabs-mode: nil
+End:

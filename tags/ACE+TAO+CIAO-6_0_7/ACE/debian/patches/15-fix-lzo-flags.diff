@@ -1,0 +1,22 @@
+Description: hardcode LZO headers location
+ Use LZO2 instead of LZO, and replace variable with Debian path
+Forwarded: not-needed
+Author: Thomas Girard <thomas.g.girard@free.fr>
+Last-Update: 2011-02-13
+
+--- a/MPC/config/lzo1.mpb
++++ b/MPC/config/lzo1.mpb
+@@ -8,11 +8,11 @@ feature(lzo1) {
+     LZO1_INCDIR
+     $(LZO1_ROOT)/include
+   }
+-  includes += $(LZO1_INCDIR)
++  includes += /usr/include/lzo
+   libpaths += $(LZO1_ROOT)/lib
+   specific (prop:microsoft) {
+     lit_libs += liblzo
+   } else {
+-    lit_libs += lzo
++    lit_libs += lzo2
+   }
+ }
