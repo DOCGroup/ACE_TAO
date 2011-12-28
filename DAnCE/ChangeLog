@@ -1,3 +1,8 @@
+Wed Dec 28 09:00:54 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * dance/RepositoryManager/RepositoryManager_Impl.cpp:
+          Fixed compile error when ACE_HAS_DUMP is defined
+
 Tue Dec 27 11:40:02 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * NEWS:
