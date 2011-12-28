@@ -220,7 +220,7 @@ TestHandler::handle_exception (ACE_HANDLE)
   }
   else
   {
-    if (!CORBA::is_nil (this->opponent_))
+    if (!CORBA::is_nil (this->opponent_.in ()))
     {
       this->opponent_->sendc_request(this->rh_.in (), A::RQM_ASYNCH, this->counter_);
     }
@@ -238,14 +238,14 @@ TestHandler::handle_followup (A::FollowUp fup, CORBA::ULong counter)
 {
   if (counter > this->max_count_)
   {
-    if (this->mode_ == A::RM_MASTER && !CORBA::is_nil (this->opponent_))
+    if (this->mode_ == A::RM_MASTER && !CORBA::is_nil (this->opponent_.in ()))
     {
       this->opponent_->shutdown ();
     }
   }
   else
   {
-    if (this->mode_ == A::RM_MASTER && !CORBA::is_nil (this->opponent_))
+    if (this->mode_ == A::RM_MASTER && !CORBA::is_nil (this->opponent_.in ()))
     {
       char buf[1024];
       ACE_OS::snprintf (buf, sizeof(buf), "request #%d followup [%s]",
