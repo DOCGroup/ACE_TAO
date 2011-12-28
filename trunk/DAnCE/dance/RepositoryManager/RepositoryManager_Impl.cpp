@@ -1228,13 +1228,12 @@ namespace DAnCE
   {
 #if defined (ACE_HAS_DUMP)
 
-    DANCE_DEBUG(LM_DEBUG, "NAMES:\n");
+    DANCE_DEBUG(DANCE_LOG_MAJOR_DEBUG_INFO, (LM_DEBUG, "NAMES:\n"));
     this->names_.dump ();
-    DANCE_DEBUG(LM_DEBUG, "UUIDs:\n");
+    DANCE_DEBUG(DANCE_LOG_MAJOR_DEBUG_INFO, (LM_DEBUG, "UUIDs:\n"));
     this->uuids_.dump ();
-    DANCE_DEBUG (LM_DEBUG, "Component Interface Types:\n");
+    DANCE_DEBUG (DANCE_LOG_MAJOR_DEBUG_INFO, (LM_DEBUG, "Component Interface Types:\n"));
     this->types_.dump ();
-
 #endif /* ACE_HAS_DUMP */
   }
 
