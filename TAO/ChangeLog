@@ -1,3 +1,8 @@
+Thu Dec 29 13:37:22 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/ziop.mpb:
+          ZIOP doesn't work with corba/e micro
+
 Wed Dec 28 09:05:39 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Mixed_Sync_ASync_Events/test_i.cpp:
