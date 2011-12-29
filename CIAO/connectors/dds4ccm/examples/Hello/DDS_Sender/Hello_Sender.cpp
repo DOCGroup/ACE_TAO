@@ -109,7 +109,7 @@ int ACE_TMAIN(int argc, ACE_TCHAR* argv[]) {
 
     for (int i = 0; i < number_of_iterations; i++)
       {
-        ACE_TCHAR timestamp[16];
+        char timestamp[16];
         ACE_CString msg (send_string);
         ACE_CString ret;
         ACE_Date_Time now;
@@ -123,8 +123,9 @@ int ACE_TMAIN(int argc, ACE_TCHAR* argv[]) {
                             ret.c_str (),
                             DDS_HANDLE_NIL);
         if (retcode != DDS_RETCODE_OK)
-          ACE_ERROR ((LM_ERROR, ACE_TEXT ("Write failed: %d.\n"), retcode));
-        //ACE_ERROR ((LM_ERROR, ACE_TEXT ("%C.\n"), ret.c_str()));
+          {
+            ACE_ERROR ((LM_ERROR, ACE_TEXT ("Write failed: %d.\n"), retcode));
+          }
         ACE_OS::sleep (tv);
     }
 
