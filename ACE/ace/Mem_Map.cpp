@@ -88,7 +88,7 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
   else if ((current_file_type.st_mode & S_IFMT) == S_IFCHR)
     // Set length to length_request
     this->length_ = length_request;
-  else if (current_file_type.st_mode & S_IFMT) == S_IFREG)
+  else if ((current_file_type.st_mode & S_IFMT) == S_IFREG)
     {
       // Get the current filesize
       ACE_OFF_T const current_file_length = ACE_OS::filesize (this->handle_);
