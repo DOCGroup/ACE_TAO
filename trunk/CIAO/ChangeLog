@@ -1,3 +1,8 @@
+Thu Dec 29 20:00:39 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/DDS_Sender/Hello_Sender.cpp:
+          Fixed wchar compile error
+
 Tue Dec 27 11:39:58 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * NEWS:
