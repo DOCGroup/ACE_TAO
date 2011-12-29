@@ -1,3 +1,16 @@
+Thu Dec 29 15:14:45 UTC 2011  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Mem_Map.cpp (ACE_Mem_Map::map_it): Further improved the
+          error checking.  Thanks to JaeSung Lee <berise at gmail dot
+          com> for suggesting this.
+
+Tue Dec 27 15:19:56 UTC 2011  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Mem_Map.cpp (ACE_Mem_Map::map_it): mmap through character
+          device doesn't care about it's size, so map with /dev/* is done
+          with a special case.  Thanks to JaeSung Lee <berise at gmail dot
+          com> for reporting this and providing a fix.
+
 Tue Dec 27 11:39:53 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * NEWS:
