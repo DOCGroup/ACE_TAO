@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : taolib, compression, pi {
+project : taolib, compression, pi, avoids_corba_e_micro {
   after   += ZIOP
   libs    += TAO_ZIOP
 }
