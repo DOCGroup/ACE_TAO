@@ -380,6 +380,54 @@
 #define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
 #define ACE_HAS_REENTRANT_FUNCTIONS
 
+// To support UCLIBC
+#if defined (__UCLIBC__)
+
+#  define ACE_LACKS_STROPTS_H
+#  define ACE_LACKS_GETLOADAVG
+#  define ACE_LACKS_NETDB_REENTRANT_FUNCTIONS
+#  define ACE_LACKS_PTHREAD_SETSTACK
+#  define ACE_LACKS_STRRECVFD
+#  define ACE_HAS_CPU_SET_T
+
+#  if defined (ACE_HAS_STRBUF_T)
+#    undef ACE_HAS_STRBUF_T
+#  endif /* ACE_HAS_STRBUF_T */
+
+#  if defined (ACE_HAS_PTHREAD_SETSTACK)
+#    undef ACE_HAS_PTHREAD_SETSTACK
+#  endif /* ACE_HAS_PTHREAD_SETSTACK */
+
+#  if defined (ACE_HAS_AIO_CALLS)
+#    undef ACE_HAS_AIO_CALLS
+#  endif /* ACE_HAS_AIO_CALLS */
+
+#  if defined (ACE_HAS_GETIFADDRS)
+#    undef ACE_HAS_GETIFADDRS
+#  endif /* ACE_HAS_GETIFADDRS */
+
+#  if defined (ACE_SCANDIR_CMP_USES_VOIDPTR)
+#    undef ACE_SCANDIR_CMP_USES_VOIDPTR
+#  endif /* ACE_SCANDIR_CMP_USES_VOIDPTR */
+
+#  if defined (ACE_SCANDIR_CMP_USES_CONST_VOIDPTR)
+#    undef ACE_SCANDIR_CMP_USES_CONST_VOIDPTR
+#  endif /* ACE_SCANDIR_CMP_USES_CONST_VOIDPTR */
+
+#  if defined (ACE_HAS_EXECINFO_H)
+#    undef ACE_HAS_EXECINFO_H
+#  endif /* ACE_HAS_EXECINFO_H */
+
+#  if defined(__GLIBC__)
+#    undef __GLIBC__
+#  endif /* __GLIBC__ */
+
+#  if defined(ACE_HAS_SEMUN)
+#    undef ACE_HAS_SEMUN
+#  endif /* ACE_HAS_SEMUN */
+
+#endif /* __UCLIBC__ */
+
 #include /**/ "ace/post.h"
 
 #endif /* ACE_CONFIG_LINUX_H */
