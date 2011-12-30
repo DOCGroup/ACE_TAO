@@ -1,3 +1,12 @@
+Fri Dec 30 16:08:56 UTC 2011  Chip Jones  <jonesc@ociweb.com>
+
+        * MPC/config/taoidldefaults.mpb:
+        
+          Made ace_idl_dependencies feature a base project
+          of taoidldefaults. Setting ace_idl_dependencies=1
+          in a .features file will generate idl dependency 
+          rules in gnuace makefiles.
+
 Mon Nov  07 10:31:14 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * docs/compilet.html:
@@ -12,9 +21,9 @@ Mon Nov  07 10:10:14 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
         * TAO_IDL/be_include/be_global.h:
         * TAO_IDL/be_include/be_util.h:
         Add option -oE: Output directory for the generated CIAO executor files
-        and option -oN for not overwrite CIAO executor files.  
-         
- 
+        and option -oN for not overwrite CIAO executor files.
+
+
 
 Sat Nov 05 18:18:13 UTC 2011  Martin Corino  <mcorino@remedy.nl>
 
