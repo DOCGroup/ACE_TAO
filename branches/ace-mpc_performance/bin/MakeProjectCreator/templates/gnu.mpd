@@ -13,6 +13,19 @@
 <%marker(top)%>
 MAKEFILE         = <%project_file%>
 DEPENDENCY_FILE  = .depend.<%project_name%>
+<%if(idl_files)%>
+
+<%if(contains(idlflags,-DGEN_IDL_MAKE_DEPS))%>
+<%foreach(idl_files)%>
+IDL_DEPENDENCY_FILE<%forcount%> = .depend.<%project_name%>_Idl<%forcount%>
+<%endfor%>
+
+IDL_DEPENDENCY_FILES += \
+<%foreach(idl_files)%>
+	.depend.<%project_name%>_Idl<%forcount%><%fornotlast(" \\")%>
+<%endfor%>
+<%endif%>
+<%endif%>
 <%if(exename)%>
 BIN_UNCHECKED    = <%exename%>
 <%endif%>
@@ -69,11 +82,13 @@ FILES = \
 
 <%endif%>
 <%if(idl_files)%>
+<%if(contains(idlflags,-DGEN_IDL_MAKE_DEPS))%>
 <%foreach(idl_files)%>
 IDL_DEPS_FLAGS<%forcount%> = <%if(flag_overrides(idl_file, commandflags))%><%flag_overrides(idl_file, commandflags)%><%else%><%idlflags%><%endif%>
 IDL_DEPS<%forcount%> = <%idl_file%>
 
 <%endfor%>
+<%endif%>
 
 <%endif%>
 <%vpath%>
@@ -691,31 +706,26 @@ $(VBIN): $(addprefix $(VDIR), $(OBJS)) $(DEPLIBS)
 endif
 <%endif%>
 
-incremental_depend_idl:
 <%if(idl_files)%>
-	@$(RM) $(DEPENDENCY_FILE)_idl.old
-	@cp $(DEPENDENCY_FILE) $(DEPENDENCY_FILE)_idl.old
-	$(DEPGEN_ENV) $(DEPGEN) -A $(DEPEND_CMD_ARGS) -f $(DEPENDENCY_FILE) \
-	-t gnuidl -DMAKEDEPEND
-	@if cmp -s $(DEPENDENCY_FILE) $(DEPENDENCY_FILE)_idl.old ;\
-	then echo "GNUmakefile idl dependencies unchanged." ;\
-	else \
-		echo "GNUmakefile idl dependencies updated." ;\
-	fi ;\
-	$(RM) $(DEPENDENCY_FILE)_idl.old ;
+<%if(contains(idlflags,-DGEN_IDL_MAKE_DEPS))%>
+incremental_depend_idl: 
 <%foreach(idl_files)%>
-	@$(RM) $(DEPENDENCY_FILE)_idl.old
-	@cp $(DEPENDENCY_FILE) $(DEPENDENCY_FILE)_idl.old
-	$(DEPGEN_ENV) $(DEPGEN) -A $(DEPEND_CMD_ARGS) -f $(DEPENDENCY_FILE) \
-	$(IDL_DEPS_FLAGS<%forcount%>) -a -t gnuidl -DMAKEDEPEND $(IDL_DEPS<%forcount%>)
-	@if cmp -s $(DEPENDENCY_FILE) $(DEPENDENCY_FILE)_idl.old ;\
+	@$(RM) $(IDL_DEPENDENCY_FILE<%forcount%>)_idl.old
+	@cp $(IDL_DEPENDENCY_FILE<%forcount%>) $(IDL_DEPENDENCY_FILE<%forcount%>)_idl.old
+	$(DEPGEN_ENV) $(DEPGEN) -A $(DEPEND_CMD_ARGS) -f $(IDL_DEPENDENCY_FILE<%forcount%>) \
+	$(IDL_DEPS_FLAGS<%forcount%>) -t gnuidl -DMAKEDEPEND $(IDL_DEPS<%forcount%>)
+	@if cmp -s $(IDL_DEPENDENCY_FILE<%forcount%>) $(IDL_DEPENDENCY_FILE<%forcount%>)_idl.old ;\
 	then echo "GNUmakefile idl dependencies unchanged for $(IDL_DEPS<%forcount%>)." ;\
 	else \
 		echo "GNUmakefile idl dependencies updated for $(IDL_DEPS<%forcount%>)." ;\
 	fi ;\
-	$(RM) $(DEPENDENCY_FILE)_idl.old ;
+	$(RM) $(IDL_DEPENDENCY_FILE<%forcount%>)_idl.old ;
 <%endfor%>
-
+<%else%>
+incremental_depend_idl: ;
+<%endif%>
+<%else%>
+incremental_depend_idl: ;
 <%endif%>
 
 realclean: clean

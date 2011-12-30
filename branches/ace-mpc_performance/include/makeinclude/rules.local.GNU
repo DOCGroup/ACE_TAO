@@ -412,6 +412,7 @@ endif # DO_CLEANUP
 
 MAKEFILE ?= GNUmakefile
 DEPENDENCY_FILE ?= $(MAKEFILE)
+IDL_DEPENDENCY_FILE ?= $(MAKEFILE)
 
 TAO_ROOT ?= $(ACE_ROOT)/TAO
 
@@ -450,6 +451,18 @@ endif
 depend_idl.local depend.local: $(DEPENDENCY_FILE)
 -include $(DEPENDENCY_FILE)
 endif
+
+ifneq ($(MAKEFILE),$(IDL_DEPENDENCY_FILES))
+$(IDL_DEPENDENCY_FILES):
+ifeq ($(lacks_touch),1)
+	copy NUL $@
+else
+	touch $@
+endif
+depend_idl.local: $(IDL_DEPENDENCY_FILES)
+-include $(IDL_DEPENDENCY_FILES)
+endif
+
 
 ifdef COMSPEC
   DEPGEN ?= perl $(ACE_ROOT)/bin/depgen.pl
