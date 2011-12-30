@@ -157,7 +157,7 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
             return -1;
         }
       }
-    else 
+    else
       // Unmappable file type.
       return -1;
 
