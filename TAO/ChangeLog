@@ -1,3 +1,8 @@
+Fri Dec 30 12:14:06 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/PortableServer.h:
+          Added include of AdapterActivatorA.h
+
 Thu Dec 29 13:37:22 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/ziop.mpb:
