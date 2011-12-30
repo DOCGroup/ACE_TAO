@@ -24,6 +24,7 @@ ace_token     = 1
 
 // By default we disable these.
 ace_for_tao   = 0
+ace_idl_dependencies = 0
 cross_compile = 0
 ssl           = 0
 qos           = 0
