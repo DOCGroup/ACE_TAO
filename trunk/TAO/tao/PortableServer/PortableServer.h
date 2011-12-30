@@ -53,6 +53,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #include "tao/PortableServer/ThreadPolicyA.h"
 #include "tao/PortableServer/IdAssignmentPolicyA.h"
 #include "tao/PortableServer/LifespanPolicyA.h"
+#include "tao/PortableServer/AdapterActivatorA.h"
 
 #include /**/ "ace/post.h"
 
