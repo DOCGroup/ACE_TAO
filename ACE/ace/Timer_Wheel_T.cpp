@@ -176,7 +176,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::~ACE_Timer_Wheel_T (voi
   {
     // Free all the nodes starting at the root
     ACE_Timer_Node_T<TYPE>* root = this->spokes_[i];
-    delete root;
+    this->free_node (root);
   }
 
   delete[] this->spokes_;
