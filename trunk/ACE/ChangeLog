@@ -1,3 +1,11 @@
+Sat Dec 31 22:12:53 UTC 2011  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Timer_Wheel_T.cpp: Changed the call to "delete root" in the
+          destructor to "this->free_node (root)" so the ACE_Timer_Wheel_T
+          will work properly when provided a custom allocator.  Thanks to
+          Koh <k_onishi at mtj dot biglobe dot ne dot jp> for reporting
+          this bug and providing a fix.
+
 Fri Dec 30 10:13:59 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-linux.h:
