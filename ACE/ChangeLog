@@ -1,3 +1,12 @@
+Tue Jan  3 18:34:18 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/valgrind.supp:
+          Added default suppress file that can be used for valgrind when using
+          valgrind for ACE/TAO/CIAO/DAnCE
+
+        * docs/bczar/bczar.html:
+          Added package
+
 Tue Jan  3 13:51:18 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/performance_stats.sh:
