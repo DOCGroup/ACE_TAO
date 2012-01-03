@@ -41,7 +41,7 @@ fi
 /bin/sync
 sleep 10
 (
-   cd $ACE_ROOT/TAO/performance-tests/Latency/Single_Threaded;
+   cd $TAO_ROOT/performance-tests/Latency/Single_Threaded;
    ./default_configuration.pl > $DEST/source/Default.log 2>&1
 )
 if grep -q 'Total throughput: ' Default.log; then
@@ -54,7 +54,7 @@ fi
 /bin/sync
 sleep 2
 (
-   cd $ACE_ROOT/TAO/performance-tests/Sequence_Latency/Single_Threaded;
+   cd $TAO_ROOT/performance-tests/Sequence_Latency/Single_Threaded;
 
    for i in $SEQ_TEST_TYPE; do
      (
@@ -74,7 +74,7 @@ for i in $COMMON_TESTS; do
   /bin/sync
   sleep 10
   (
-     cd $ACE_ROOT/TAO/performance-tests/Latency/${i};
+     cd $TAO_ROOT/performance-tests/Latency/${i};
      ./run_test.pl > $DEST/source/${i}.log 2>&1
   )
   if grep -q 'Total throughput: ' ${i}.log; then
@@ -89,7 +89,7 @@ for i in $SEQUENCE_TESTS; do
   /bin/sync
   sleep 10
   (
-     cd $ACE_ROOT/TAO/performance-tests/Sequence_Latency/${i};
+     cd $TAO_ROOT/performance-tests/Sequence_Latency/${i};
      for j in $SEQ_TEST_TYPE; do
          (
              ./run_test.pl -t $j > $DEST/source/Sequence_${i}_${j}.log 2>&1
@@ -190,6 +190,9 @@ if [ -e "/etc/SuSE-release" ]; then
 fi
 if [ -e "/etc/redhat-release" ]; then
   cat /etc/redhat-release > linuxversion.txt
+fi
+if [ -e "/etc/fedora-release" ]; then
+  cat /etc/fedora-release > linuxversion.txt
 fi
 
 cat $ACE_ROOT/ace/config.h > config.h.txt

@@ -1,6 +1,14 @@
+Tue Jan  3 12:52:04 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/performance_stats.sh:
+        * bin/topinfo_iorsize_stats.sh:
+        * bin/topinfo_simple_stats.sh:
+        * bin/topinfo_stats.sh:
+        * bin/footprint_stats.sh:
+          Converting them to support a flat layout
+
 Tue Jan  3 12:40:43 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * bin/footprint_stats.sh:
         * html/Stats/detailed_footprint.shtml:
         * html/Stats/detailed_performance.shtml:
         * html/Stats/footer.html:
