@@ -3,13 +3,12 @@
 # $Id$
 #
 
-if [ $# -lt 2 ]; then
-  echo "Usage: $0 <ACE_ROOT> <DEST>"
+if [ $# -lt 1 ]; then
+  echo "Usage: $0 <DEST>"
   exit 0
 fi
 
-ACE_ROOT=$1
-DEST=$2
+DEST=$1
 DATE=`date +%Y/%m/%d-%H:%M`
 
 mkdir -p $DEST/images

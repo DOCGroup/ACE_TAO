@@ -1,3 +1,11 @@
+Tue Jan  3 18:47:23 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/performance_stats.sh:
+        * bin/topinfo_iorsize_stats.sh:
+        * bin/topinfo_simple_stats.sh:
+        * bin/topinfo_stats.sh:
+          Assume ACE_ROOT is set before running the script, simplified the usage
+
 Tue Jan  3 18:34:18 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/valgrind.supp:
