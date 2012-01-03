@@ -21,7 +21,7 @@ LD_LIBRARY_PATH=$ACE_ROOT/ace
 export LD_LIBRARY_PATH
 PATH=/usr/bin:/bin:$PATH
 export PATH
-cd TAO/performance-tests/Memory/IORsize
+cd $TAO_ROOT/performance-tests/Memory/IORsize
 
 # start the server. If OPT == 1 then start the optimized version, else
 # the non-optimized version

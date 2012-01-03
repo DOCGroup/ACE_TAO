@@ -21,7 +21,7 @@ LD_LIBRARY_PATH=$ACE_ROOT/ace
 export LD_LIBRARY_PATH
 PATH=/usr/bin:/bin:$PATH
 export PATH
-cd TAO/performance-tests/Memory/Single_Threaded
+cd $TAO_ROOT/performance-tests/Memory/Single_Threaded
 # start the server
 ./server &
 s_id=$!;
