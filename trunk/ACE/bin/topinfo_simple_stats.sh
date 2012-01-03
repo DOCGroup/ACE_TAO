@@ -4,19 +4,16 @@
 #
 
 
-if [ $# -lt 3 ]; then
-  echo "Usage: $0 [ROOT] [DEST] [USER]"
+if [ $# -lt 2 ]; then
+  echo "Usage: $0 [DEST] [USER]"
   exit 0
 fi
 
-ROOT=$1
-DEST=$2
-US=$3
+DEST=$1
+US=$2
 
 DATE=`date +%Y/%m/%d-%H:%M`
-cd $ROOT
-ACE_ROOT=$ROOT
-export ACE_ROOT
+cd $ACE_ROOT
 LD_LIBRARY_PATH=$ACE_ROOT/ace
 export LD_LIBRARY_PATH
 PATH=/usr/bin:/bin:$PATH
@@ -74,5 +71,5 @@ FILES="start after_invoke client after_peer_death"
 for i in $FILES ; do
 /usr/bin/tac st_${i}_size.txt > $DEST/data/st_${i}_size.txt
 /usr/bin/tail -5 st_${i}_size.txt > $DEST/data/LAST_st_${i}_size.txt
-$ROOT/bin/generate_topinfo_charts.sh st_${i}_size.txt $DEST/images/st_${i}_size.png st_${i}_size.txt
+$ACE_ROOT/bin/generate_topinfo_charts.sh st_${i}_size.txt $DEST/images/st_${i}_size.png st_${i}_size.txt
 done
