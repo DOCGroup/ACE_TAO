@@ -14,6 +14,7 @@ DATE=`date +%Y/%m/%d-%H:%M`
 
 mkdir -p $DEST/images
 mkdir -p $DEST/data
+mkdir -p $DEST/source
 COMPILER="gcc"
 
 COMMON_TESTS="AMI DII DSI Deferred Single_Threaded Thread_Per_Connection Thread_Pool AMH_Single_Threaded"
