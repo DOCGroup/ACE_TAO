@@ -505,6 +505,7 @@ TAO_Unique_Id_Strategy::bind_using_user_id (
         }
     }
 
+#if (TAO_HAS_MINIMUM_CORBA == 0)
   if (result == 0 && TAO_debug_level > 7)
     {
       CORBA::String_var idstr (PortableServer::ObjectId_to_string (user_id));
@@ -520,6 +521,7 @@ TAO_Unique_Id_Strategy::bind_using_user_id (
                   hex_idstr.c_str()
                   ));
     }
+#endif
 
   return result;
 }
@@ -700,6 +702,7 @@ TAO_Multiple_Id_Strategy::bind_using_user_id (
         }
     }
 
+#if (TAO_HAS_MINIMUM_CORBA == 0)
   if (result == 0 && TAO_debug_level > 7)
     {
       CORBA::String_var idstr (PortableServer::ObjectId_to_string (user_id));
@@ -715,6 +718,7 @@ TAO_Multiple_Id_Strategy::bind_using_user_id (
                   hex_idstr.c_str()
                   ));
     }
+#endif
 
   return result;
 }
@@ -997,6 +1001,7 @@ TAO_System_Id_With_Unique_Id_Strategy::bind_using_system_id (
       delete entry;
     }
 
+#if (TAO_HAS_MINIMUM_CORBA == 0)
   if (result == 0 && TAO_debug_level > 7)
     {
       CORBA::String_var idstr (
@@ -1013,6 +1018,7 @@ TAO_System_Id_With_Unique_Id_Strategy::bind_using_system_id (
                   hex_idstr.c_str()
                   ));
     }
+#endif
 
   return result;
 }
@@ -1053,6 +1059,7 @@ TAO_System_Id_With_Multiple_Id_Strategy::bind_using_system_id (
       delete entry;
     }
 
+#if (TAO_HAS_MINIMUM_CORBA == 0)
   if (result == 0 && TAO_debug_level > 7)
     {
       CORBA::String_var idstr (
@@ -1069,6 +1076,7 @@ TAO_System_Id_With_Multiple_Id_Strategy::bind_using_system_id (
                   hex_idstr.c_str()
                   ));
     }
+#endif
 
   return result;
 }
