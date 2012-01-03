@@ -1,3 +1,8 @@
+Tue Jan  3 14:02:44 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Active_Object_Map.cpp:
+          Disable some logging with minimum corba
+
 Fri Dec 30 12:14:06 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/PortableServer.h:
