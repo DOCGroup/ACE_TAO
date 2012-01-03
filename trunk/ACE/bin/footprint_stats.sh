@@ -4,44 +4,41 @@
 #
 
 
-if [ $# -lt 2 ]; then
-  echo "Usage: $0 [ACE_ROOT] [DEST]"
+if [ $# -lt 1 ]; then
+  echo "Usage: $0 [DEST]"
   exit 0
 fi
 
-ACE_ROOT=$1
-DEST=$2
+DEST=$1
 DATE=`date +%Y/%m/%d-%H:%M`
 
-BINS="TAO/tests/ORB_init/ORB_init TAO/tests/ORB_destroy/ORB_destroy"
+BINS="$TAO_ROOT/tests/ORB_init/ORB_init $TAO_ROOT/tests/ORB_destroy/ORB_destroy"
 
-LIBS="ace/libACE.a \
-    TAO/tao/libTAO.a \
-    TAO/tao/libTAO_PortableServer.a \
-    TAO/tao/libTAO_Strategies.a \
-    TAO/tao/libTAO_SmartProxies.a \
-    TAO/tao/libTAO_DynamicAny.a \
-    TAO/tao/libTAO_DynamicInterface.a \
-    TAO/tao/libTAO_IFR_Client.a \
-    TAO/tao/libTAO_BiDirGIOP.a \
-    TAO/tao/libTAO_Domain.a \
-    TAO/tao/libTAO_IORManip.a \
-    TAO/tao/libTAO_IORTable.a \
-    TAO/tao/libTAO_TypeCodeFactory.a \
-    TAO/tao/libTAO_RTCORBA.a \
-    TAO/tao/libTAO_IORInterceptor.a \
-    TAO/tao/libTAO_Messaging.a \
-    TAO/tao/libTAO_ObjRefTemplate.a \
-    TAO/tao/libTAO_Valuetype.a \
-    TAO/tao/libTAO_RTScheduler.a \
-    TAO/tao/libTAO_AnyTypeCode.a \
-    TAO/tao/libTAO_PI.a \
-    TAO/tao/libTAO_PI_Server.a \
-    TAO/tao/libTAO_Codeset.a \
-    TAO/tao/libTAO_CodecFactory.a \
-    TAO/tao/libTAO_RTPortableServer.a"
-
-cd $ACE_ROOT
+LIBS="$ACE_ROOT/ace/libACE.a \
+    $TAO_ROOT/tao/libTAO.a \
+    $TAO_ROOT/tao/libTAO_PortableServer.a \
+    $TAO_ROOT/tao/libTAO_Strategies.a \
+    $TAO_ROOT/tao/libTAO_SmartProxies.a \
+    $TAO_ROOT/tao/libTAO_DynamicAny.a \
+    $TAO_ROOT/tao/libTAO_DynamicInterface.a \
+    $TAO_ROOT/tao/libTAO_IFR_Client.a \
+    $TAO_ROOT/tao/libTAO_BiDirGIOP.a \
+    $TAO_ROOT/tao/libTAO_Domain.a \
+    $TAO_ROOT/tao/libTAO_IORManip.a \
+    $TAO_ROOT/tao/libTAO_IORTable.a \
+    $TAO_ROOT/tao/libTAO_TypeCodeFactory.a \
+    $TAO_ROOT/tao/libTAO_RTCORBA.a \
+    $TAO_ROOT/tao/libTAO_IORInterceptor.a \
+    $TAO_ROOT/tao/libTAO_Messaging.a \
+    $TAO_ROOT/tao/libTAO_ObjRefTemplate.a \
+    $TAO_ROOT/tao/libTAO_Valuetype.a \
+    $TAO_ROOT/tao/libTAO_RTScheduler.a \
+    $TAO_ROOT/tao/libTAO_AnyTypeCode.a \
+    $TAO_ROOT/tao/libTAO_PI.a \
+    $TAO_ROOT/tao/libTAO_PI_Server.a \
+    $TAO_ROOT/tao/libTAO_Codeset.a \
+    $TAO_ROOT/tao/libTAO_CodecFactory.a \
+    $TAO_ROOT/tao/libTAO_RTPortableServer.a"
 
 mkdir -p $DEST/source
 mkdir -p $DEST/data

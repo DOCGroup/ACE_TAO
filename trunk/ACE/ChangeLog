@@ -1,3 +1,16 @@
+Tue Jan  3 12:40:43 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/footprint_stats.sh:
+        * html/Stats/detailed_footprint.shtml:
+        * html/Stats/detailed_performance.shtml:
+        * html/Stats/footer.html:
+        * html/Stats/index.shtml:
+        * html/Stats/navigation.html:
+          Updated links, docu, status
+
+        * html/Stats/compilation.shtml:
+          Removed this file.
+
 Sat Dec 31 22:12:53 UTC 2011  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/Timer_Wheel_T.cpp: Changed the call to "delete root" in the
