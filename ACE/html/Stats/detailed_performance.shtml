@@ -12,7 +12,7 @@
     
     <P>
       Results for the performance experiments in
-      <CODE>$ACE_ROOT/TAO/performance-tests</CODE>.
+      <CODE>$TAO_ROOT/performance-tests</CODE>.
       The results for all the tests are combined in a single chart.
     </P>
     <DIV align="center">
