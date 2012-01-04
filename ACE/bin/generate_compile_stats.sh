@@ -35,7 +35,7 @@ usage ()
   echo "--base       This option can be used to set the base root directory to"
   echo "             something other than the default \$ACE_ROOT."
   echo "--name       This option can be used to set the software title to something"
-  echo "             other than the default ACE+TAO+CIAO."
+  echo "             other than the default ACE+TAO+CIAO+DAnCE."
   echo "--compiler   This option can be used to set the compiler to something"
   echo "             other than the default gcc."
   echo "input_file   This is the compilation log file."
@@ -789,7 +789,7 @@ create_index_page ()
   echo '<TABLE border="2"><TBODY>'
   for cfg_file in $CFG_FILES; do
     if [ -r $cfg_file ]; then
-      echo "<TR><TD>ACE+TAO+CIAO Configuration</TD><TD>`basename $cfg_file`</TD></TR>"
+      echo "<TR><TD>ACE+TAO+CIAO+DAnCE Configuration</TD><TD>`basename $cfg_file`</TD></TR>"
       echo '<TR><TD colspan="2"><PRE>'
       cat $cfg_file
       echo '</PRE></TD></TR>'
@@ -1021,7 +1021,7 @@ DATE=""
 METRIC="Compilation"
 FUDGE_FACTOR=0
 BASE_ROOT=$ACE_ROOT
-DEFAULT_TITLE=ACE+TAO+CIAO
+DEFAULT_TITLE=ACE+TAO+CIAO+DAnCE
 BASE_TITLE=$DEFAULT_TITLE
 COMPILER="gcc"
 
