@@ -1,3 +1,8 @@
+Wed Jan  4 13:02:12 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/generate_compile_stats.sh:
+          Added link for DAnCE
+
 Wed Jan  4 11:45:43 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * html/Stats/index.shtml:
