@@ -1,3 +1,8 @@
+Wed Jan  4 11:42:13 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/generate_compile_stats.sh:
+          Work with flat layout and added DAnCE
+
 Wed Jan  4 11:06:50 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/generate_compile_stats.sh:
