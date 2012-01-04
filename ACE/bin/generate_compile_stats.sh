@@ -835,12 +835,14 @@ create_index_page ()
 ###############################################################################
 create_page ()
 {
-  # always strip off "TAO___" / "CIAO___"
+  # always strip off "ACE___" / "TAO___" / "CIAO___"
   local BASE=$1
   local TYPE=$2
   local EXT=""
+  local BASE_NAME=${BASE#ACE___}
   local BASE_NAME=${BASE#TAO___}
   local BASE_NAME=${BASE#CIAO___}
+  local BASE_NAME=${BASE#DAnCE___}
   local TITLE="${TYPE} metrics for ${BASE_NAME//___//}"
 
   if [ "$TYPE" = "Compilation" ]; then
@@ -880,10 +882,14 @@ create_page ()
       LAST=0 PRE=0 VAL_TMP=0 VAL_INT=0 VAL_SIGN="+"
       echo '<TR><TD>'
       if [ -e "${DEST}/${i}_${TYPE}.html" ]; then
+        # strip off "ACE___" if it exists
+        NAME=${i#AC___}
         # strip off "TAO___" if it exists
         NAME=${i#TAO___}
         # strip off "CIAO___" if it exists
         NAME=${i#CIAO___}
+        # strip off "DAnCE___" if it exists
+        NAME=${i#DAnCE___}
         echo "<a href=\"${i}_${TYPE}.html\">${NAME//___//}</a>"
       elif [ -e "${DEST}/images/${i}_${TYPE}.png" ]; then
         # since you'll only have images if it's a composite, strip off the
@@ -972,17 +978,20 @@ create_html ()
   local ACE_OBJS=""
   local TAO_OBJS=""
   local CIAO_OBJS=""
+  local DAnCE_OBJS=""
 
   while read base colon files; do
     # create individual page for app/lib
 
     sort_list ${files} | create_page ${base} ${TYPE} \
       > ${DEST}/${base}_${TYPE}.html
-    if [ "${base}" != "${base#TAO___CIAO}" ]; then
+    if [ "${base}" != "${base#DAnCE}" ]; then
+      DAnCE_OBJS="${DAnCE_OBJS} ${base}"
+    elif [ "${base}" != "${base#CIAO}" ]; then
       CIAO_OBJS="${CIAO_OBJS} ${base}"
     elif [ "${base}" != "${base#TAO}" ]; then
       TAO_OBJS="${TAO_OBJS} ${base}"
-    else
+    elif [ "${base}" != "${base#ACE}" ]; then
       ACE_OBJS="${ACE_OBJS} ${base}"
     fi
     ALL_OBJS="${ALL_BASE} ${base}"
@@ -1001,6 +1010,9 @@ create_html ()
 
       name="ciao_${TYPE}.html"
       sort_list ${CIAO_OBJS} | create_page "CIAO" ${TYPE} > ${DEST}/${name}
+
+      name="dance_${TYPE}.html"
+      sort_list ${DAnCE_OBJS} | create_page "DAnCE" ${TYPE} > ${DEST}/${name}
     else
       name="all_${TYPE}.html"
       sort_list ${ACE_OBJS} | create_page $BASE_TITLE ${TYPE} > ${DEST}/${name}
