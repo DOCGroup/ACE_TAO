@@ -1,3 +1,9 @@
+Wed Jan  4 08:50:18 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/cleanbuilds.sh:
+        * bin/mail_test_stats.sh:
+          Accept date and email as arguments
+
 Tue Jan  3 18:47:23 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/performance_stats.sh:
