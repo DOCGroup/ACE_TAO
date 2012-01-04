@@ -1,25 +1,15 @@
 #!/bin/sh
 # $Id$
 
-export TREE_ROOT=$HOME/ACE/latest
-export ACE_ROOT=$TREE_ROOT/DOC_ROOT/ACE
-export TAO_ROOT=$TREE_ROOT/DOC_ROOT/TAO
-export CIAO_ROOT=$TREE_ROOT/DOC_ROOT/CIAO
-export DANCE_ROOT=$TREE_ROOT/DOC_ROOT/DAnCE
-mkdir -p $TREE_ROOT
-cd $TREE_ROOT
-git clone --depth 1 http://:@git.remedy.nl/git/atcd.git DOC_ROOT
+if test -z $1; then CURRENTDATE=`date -u +%Y_%m_%d`; else CURRENTDATE=$1; fi
+if test -z $2; then PREFIX=`date -u +%Y%m%d%a`; else PREFIX=$2; fi
+if test -z $3; then MAILTO="devo-group@list.isis.vanderbilt.edu"; else MAILTO=$3; fi
+
 cd $ACE_ROOT/bin
-rm *Tests.txt
-rm *TestRev.txt
-rm *Ignore.txt
-rm *Builds.txt
-rm cleanbuildresults.txt
 
-./diff-builds-and-group-fixed-tests-only.sh
-./cleanbuilds.sh
+./diff-builds-and-group-fixed-tests-only.sh 2011_12_27 $CURRENTDATE $PREFIX
+./cleanbuilds.sh $CURRENTDATE
 
-MAILTO="devo-group@list.isis.vanderbilt.edu"
 MAIL="mail -S smtp=mail.remedy.nl"
 MAILFROM="jwillemsen@remedy.nl"
 
@@ -30,7 +20,6 @@ done
 for fn in `ls *NoTestRev.txt`; do
    MAIL_ATTACHMENTS=$MAIL_ATTACHMENTS+"-a $fn "
 done
-CURRENTDATE=`date -u +%Y_%m_%d`
 mailfile="/tmp/rsmailfile"
 {
    echo "Sending test statistics for" $CURRENTDATE
