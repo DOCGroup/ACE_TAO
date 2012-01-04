@@ -884,7 +884,7 @@ create_page ()
       echo '<TR><TD>'
       if [ -e "${DEST}/${i}_${TYPE}.html" ]; then
         # strip off "ACE___" if it exists
-        NAME=${i#AC___}
+        NAME=${i#ACE___}
         # strip off "TAO___" if it exists
         NAME=${i#TAO___}
         # strip off "CIAO___" if it exists
