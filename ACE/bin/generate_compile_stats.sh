@@ -750,6 +750,7 @@ create_index_page ()
     echo "<li><a href=\"ace_${TYPE}.html\">ACE</a>"
     echo "<li><a href=\"tao_${TYPE}.html\">TAO</a>"
     echo "<li><a href=\"ciao_${TYPE}.html\">CIAO</a>"
+    echo "<li><a href=\"dance_${TYPE}.html\">DAnCE</a>"
   else
     echo "<li><a href=\"all_${TYPE}.html\">ALL</a>"
   fi
