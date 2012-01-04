@@ -59,7 +59,7 @@ In addition to the statistics described above, a number of other ACE/TAO/CIAO de
   <a href="http://devportalvm.remedy.nl/builds/fc16_fp_corbaems/metrics/x/">Footprint CORBA/e micro single threaded</a>
 </li>
 <li>
-  <a href="http://devportalvm.remedy.nl/builds/fc16_fp_corbaminimum/metrix/x/">Footprint Minimum CORBA</a>
+  <a href="http://devportalvm.remedy.nl/builds/fc16_fp_corbaminimum/metrics/x/">Footprint Minimum CORBA</a>
 </li>
 <li>
   <a href="http://devportalvm.remedy.nl/builds/fc16_fp_regular/metrics/x/">Footprint Regular CORBA</a>
