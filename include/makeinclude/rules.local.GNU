@@ -504,6 +504,13 @@ IDL_CLIENT_HDR_EXT ?=
 idl_stubs.local: $(foreach file, $(IDL_FILES), $(file)$(IDL_CLIENT_HDR_EXT))
 
 #----------------------------------------------------------------------------
+#       no-op idl dependency :: Makefiles append to this rule if there
+#       are idl dependencies.
+#----------------------------------------------------------------------------
+
+incremental_depend_idl:: ;
+
+#----------------------------------------------------------------------------
 #       Variant targets and conditional macros
 #----------------------------------------------------------------------------
 

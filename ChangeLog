@@ -1,25 +1,36 @@
+Thu Jan  5 16:46:35 UTC 2012  Chip Jones  <jonesc@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Modified template so it does not generate empty
+          incremental_depend_idl rule.
+
+        * include/makeinclude/rules.local.GNU:
+
+          Added top-level incremental_depend_idl:: empty rule.
+
 Fri Dec 30 15:58:24 UTC 2011  Chip Jones  <jonesc@ociweb.com>
 
         * bin/MakeProjectCreator/config/ace_idl_dependencies.mpb:
-        
-          Added this file to handle generation of IDL 
+
+          Added this file to handle generation of IDL
           dependencies as a feature.
-        
+
         * bin/MakeProjectCreator/config/acedefaults.mpb:
         * bin/MakeProjectCreator/config/global.features:
-        
+
           Added ace_idl_dependencies as a base project of
           acedefaults and set ace_idl_dependencies=0
 
         * bin/MakeProjectCreator/templates/gnu.mpd:
-        
-          Changes to support incremental IDL dependency 
-          generation. Each IDL file now has its own 
-          .depends file so there is are no collisions when 
+
+          Changes to support incremental IDL dependency
+          generation. Each IDL file now has its own
+          .depends file so there is are no collisions when
           using 'make -j'
 
         * include/makeinclude/rules.local.GNU:
-        
+
           Modified the prerequisite .depend rules to 'touch'
           or 'copy NUL' multiple .depend files as needed to
           support IDL dependency generation.
