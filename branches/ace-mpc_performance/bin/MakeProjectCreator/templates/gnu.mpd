@@ -708,7 +708,7 @@ endif
 
 <%if(idl_files)%>
 <%if(contains(idlflags,-DGEN_IDL_MAKE_DEPS))%>
-incremental_depend_idl: 
+incremental_depend_idl:: 
 <%foreach(idl_files)%>
 	@$(RM) $(IDL_DEPENDENCY_FILE<%forcount%>)_idl.old
 	@cp $(IDL_DEPENDENCY_FILE<%forcount%>) $(IDL_DEPENDENCY_FILE<%forcount%>)_idl.old
@@ -721,11 +721,7 @@ incremental_depend_idl:
 	fi ;\
 	$(RM) $(IDL_DEPENDENCY_FILE<%forcount%>)_idl.old ;
 <%endfor%>
-<%else%>
-incremental_depend_idl: ;
 <%endif%>
-<%else%>
-incremental_depend_idl: ;
 <%endif%>
 
 realclean: clean
