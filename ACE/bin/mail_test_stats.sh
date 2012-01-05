@@ -33,7 +33,7 @@ mailfile="/tmp/rsmailfile"
    cat *Builds.txt
 } > $mailfile
 
-$MAIL -r $MAILFROM -s "ACE/TAO/CIAO/DAnCE test statistics for $CURRENTDATE" $MAILTO < $mailfile
+$MAIL -v -r $MAILFROM -s "ACE/TAO/CIAO/DAnCE test statistics for $CURRENTDATE" $MAILTO < $mailfile
 
 rm -f $mailfile
 
@@ -44,6 +44,6 @@ mailfile="/tmp/rsmailfile"
    cat cleanbuildresults.txt
 } > $mailfile
 
-$MAIL -r $MAILFROM -s "ACE/TAO/CIAO/DAnCE failing tests for $CURRENTDATE" $MAILTO < $mailfile
+$MAIL -v -r $MAILFROM -s "ACE/TAO/CIAO/DAnCE failing tests for $CURRENTDATE" $MAILTO < $mailfile
 
 rm -f $mailfile
