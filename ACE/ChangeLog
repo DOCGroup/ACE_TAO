@@ -1,3 +1,10 @@
+Fri Jan  6 11:16:03 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * html/Stats/configuration.shtml:
+        * html/Stats/index.shtml:
+        * html/Stats/simple_footprint.shtml:
+          Extended data to be shown and updated links
+
 Fri Jan  6 10:28:35 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Stream.cpp:

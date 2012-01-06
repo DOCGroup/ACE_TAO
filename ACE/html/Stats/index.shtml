@@ -15,15 +15,15 @@
   <BODY>
     <HR>
     <LEFT>
-    <P>These pages track <A HREF="footprint.shtml">footprint</A>,
+    <P>These pages track <A HREF="http://devportalvm.remedy.nl/builds/fc16_fp_performance/Stats/footprint.shtml">footprint</A>,
       and <A
-      HREF="performance.shtml"> performance</A> metrics for ACE+TAO+CIAO.
+      HREF="http://devportalvm.remedy.nl/builds/fc16_fp_performance/Stats/performance.shtml"> performance</A> metrics for ACE+TAO+CIAO.
       The results are collected from our <A
       href="http://www.dre.vanderbilt.edu/scoreboard"> nightly</A>
       regression tests.  The complete source for the tests is
       available as part of the ACE+TAO+CIAO+DAnCE <A
-      HREF="http://download.dre.vanderbilt.edu"> distribution
-      </A>. The hardware and software configuration used for these
+      HREF="http://download.dre.vanderbilt.edu"> distribution</A>. 
+      The hardware and software configuration used for these
       tests is described <A
       HREF="configuration.shtml">here</A>. Notice, however, that the
       results contained here may be different from what you will
@@ -65,7 +65,7 @@ In addition to the statistics described above, a number of other ACE/TAO/CIAO de
   <a href="http://devportalvm.remedy.nl/builds/fc16_fp_regular/metrics/x/">Footprint Regular CORBA</a>
 </li>
 <li>
-  <a href="performance.shtml">Performance metrics Regular CORBA</a>
+  <a href="http://devportalvm.remedy.nl/builds/fc16_fp_performance/Stats/performance.shtml">Performance metrics Regular CORBA</a>
 </li>
 </ul>
 The <i>Scoreboard</i>
