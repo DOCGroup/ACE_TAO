@@ -346,34 +346,28 @@ ACE_Stream<ACE_SYNCH_USE>::open (void *a,
 
   if (head == 0)
     {
-      ACE_NEW_RETURN (h1,
-                      ACE_Stream_Head<ACE_SYNCH_USE>,
-                      -1);
-      ACE_NEW_RETURN (h2,
-                      ACE_Stream_Head<ACE_SYNCH_USE>,
-                      -1);
-      ACE_NEW_RETURN (head,
-                      ACE_Module<ACE_SYNCH_USE> (ACE_TEXT ("ACE_Stream_Head"),
-                                                 h1, h2,
-                                                 a,
-                                                 M_DELETE),
-                      -1);
+      ACE_NEW_NORETURN (h1,
+                        ACE_Stream_Head<ACE_SYNCH_USE>);
+      ACE_NEW_NORETURN (h2,
+                        ACE_Stream_Head<ACE_SYNCH_USE>);
+      ACE_NEW_NORETURN (head,
+                        ACE_Module<ACE_SYNCH_USE> (ACE_TEXT ("ACE_Stream_Head"),
+                                                   h1, h2,
+                                                   a,
+                                                   M_DELETE));
     }
 
   if (tail == 0)
     {
-      ACE_NEW_RETURN (t1,
-                      ACE_Stream_Tail<ACE_SYNCH_USE>,
-                      -1);
-      ACE_NEW_RETURN (t2,
-                      ACE_Stream_Tail<ACE_SYNCH_USE>,
-                      -1);
-      ACE_NEW_RETURN (tail,
-                      ACE_Module<ACE_SYNCH_USE> (ACE_TEXT ("ACE_Stream_Tail"),
-                                                 t1, t2,
-                                                 a,
-                                                 M_DELETE),
-                      -1);
+      ACE_NEW_NORETURN (t1,
+                        ACE_Stream_Tail<ACE_SYNCH_USE>);
+      ACE_NEW_NORETURN (t2,
+                        ACE_Stream_Tail<ACE_SYNCH_USE>);
+      ACE_NEW_NORETURN (tail,
+                        ACE_Module<ACE_SYNCH_USE> (ACE_TEXT ("ACE_Stream_Tail"),
+                                                   t1, t2,
+                                                   a,
+                                                   M_DELETE));
     }
 
   // Make sure *all* the allocation succeeded!
