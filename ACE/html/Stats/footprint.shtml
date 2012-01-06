@@ -30,9 +30,10 @@
    <UL> <LI> Detailed Footprint, for a closer look at the sizes of 
    libraries and its dependencies. 
    <UL>
-   <LI><a href="http://www.dre.vanderbilt.edu/Stats/regular/ace_Footprint.html">ACE</a>
-   <LI><a href="http://www.dre.vanderbilt.edu/Stats/regular/tao_Footprint.html">TAO</a>
-   <LI><a href="http://www.dre.vanderbilt.edu/Stats/regular/ciao_Footprint.html">CIAO</a>
+   <LI><a href="http://devportalvm.remedy.nl/builds/fc16_fp_regular/metrics/x/ace_Footprint.html">ACE</a>
+   <LI><a href="http://devportalvm.remedy.nl/builds/fc16_fp_regular/metrics/x/tao_Footprint.html">TAO</a>
+   <LI><a href="http://devportalvm.remedy.nl/builds/fc16_fp_regular/metrics/x/ciao_Footprint.html">CIAO</a>
+   <LI><a href="http://devportalvm.remedy.nl/builds/fc16_fp_regular/metrics/x/dance_Footprint.html">DAnCE</a>
    </UL>
 
 </LI> </UL>
