@@ -1,3 +1,8 @@
+Fri Jan  6 10:28:35 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Stream.cpp:
+          Fixed coverity errors
+
 Wed Jan  4 13:02:12 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/generate_compile_stats.sh:
