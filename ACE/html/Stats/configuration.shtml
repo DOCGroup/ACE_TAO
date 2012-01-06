@@ -15,7 +15,7 @@
       The machine is running Linux
       (<!--#include file="data/linuxversion.txt"-->),
       and we use GCC (<!--#include file="data/gccversion.txt"-->),
-      to compile ACE+TAO, with static libraries
+      to compile ACE+TAO+CIAO+DAnCE, with static libraries
       and optimizations enabled.
     </P>
 
@@ -26,14 +26,14 @@
       </THEAD>
 -->
       <TBODY>
-	<TR><TD>ACE+TAO Configuration</TD><TD>config.h</TD></TR>
+	<TR><TD>ACE+TAO+CIAO+DAnCE Configuration</TD><TD>config.h</TD></TR>
 	<TR><TD colspan="2">
 <PRE>
 <!--#include file="data/config.h.txt"-->
 </PRE>
 	  </TD>
 	</TR>
-	<TR><TD>ACE+TAO Configuration</TD><TD>platform_macros.GNU</TD></TR>
+	<TR><TD>ACE+TAO+CIAO+DAnCE Configuration</TD><TD>platform_macros.GNU</TD></TR>
 	<TR><TD colspan="2">
 <PRE>
 <!--#include file="data/platform_macros.GNU.txt"-->
@@ -41,7 +41,7 @@
 	  </TD>
 	</TR>
 	</TR>
-	<TR><TD>ACE+TAO Configuration</TD><TD>default.features</TD></TR>
+	<TR><TD>ACE+TAO+CIAO+DAnCE Configuration</TD><TD>default.features</TD></TR>
 	<TR><TD colspan="2">
 <PRE>
 <!--#include file="data/default.features.txt"-->
