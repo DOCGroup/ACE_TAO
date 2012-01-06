@@ -30,7 +30,7 @@
 	    </TD>
 	  <TD>
 	      <PRE>
-	    <A HREF="data/LAST_ORB_init_size.txt">[Download]</A>
+<!--#include file="data/LAST_ORB_init_size.txt" -->
 	      </PRE>
 	  </TD>
 	  <TD>
@@ -45,7 +45,7 @@
 	    </TD>
 	  <TD>
 	      <PRE>
-	    <A HREF="data/LAST_ORB_destroy_size.txt">[Download]</A>
+<!--#include file="data/LAST_ORB_destroy_size.txt" -->
 	      </PRE>
 	  </TD>
 	  <TD>
@@ -60,7 +60,7 @@
 	    </TD>
 	  <TD>
 	      <PRE>
-	    <A HREF="data/LAST_libACE.a_size.txt">[Download]</A>
+<!--#include file="data/LAST_libACE.a_size.txt" -->
 	      </PRE>
 	  </TD>
 	  <TD>
@@ -75,7 +75,7 @@
 	    </TD>
 	  <TD>
 	      <PRE>
-	    <A HREF="data/LAST_libTAO.a_size.txt">[Download]</A>
+<!--#include file="data/LAST_libTAO.a_size.txt" -->
 	      </PRE>
 	  </TD>
 	  <TD>
@@ -90,7 +90,7 @@
 	    </TD>
 	  <TD>
 	      <PRE>
-	    <A HREF="data/LAST_libTAO_PortableServer.a_size.txt">[Download]</A>
+<!--#include file="data/LAST_libTAO_PortableServer.a_size.txt" -->
 	      </PRE>
 	  </TD>
 	  <TD>
@@ -105,7 +105,7 @@
 	    </TD>
 	  <TD>
 	      <PRE>
-	    <A HREF="data/LAST_libTAO_Messaging.a_size.txt">[Download]</A>
+<!--#include file="data/LAST_libTAO_Messaging.a_size.txt" -->
 	      </PRE>
 	  </TD>
 	  <TD>
@@ -120,7 +120,7 @@
 	    </TD>
 	  <TD>
 	      <PRE>
-	    <A HREF="data/LAST_libTAO_Strategies.a_size.txt">[Download]</A>
+<!--#include file="data/LAST_libTAO_Strategies.a_size.txt" -->
 	      </PRE>
 	  </TD>
 	  <TD>
@@ -135,7 +135,7 @@
 	    </TD>
 	  <TD>
 	      <PRE>
-	    <A HREF="data/LAST_libTAO_DynamicAny.a_size.txt">[Download]</A>
+<!--#include file="data/LAST_libTAO_DynamicAny.a_size.txt" -->
 	      </PRE>
 	  </TD>
 	  <TD>
@@ -150,7 +150,7 @@
 	    </TD>
 	  <TD>
 	      <PRE>
-	    <A HREF="data/LAST_libTAO_DynamicInterface.a_size.txt">[Download]</A>
+<!--#include file="data/LAST_libTAO_DynamicInterface.a_size.txt" -->
 	      </PRE>
 	  </TD>
 	  <TD>
@@ -165,7 +165,7 @@
 	    </TD>
 	  <TD>
 	      <PRE>
-	    <A HREF="data/LAST_libTAO_IFR_Client.a_size.txt">[Download]</A>
+<!--#include file="data/LAST_libTAO_IFR_Client.a_size.txt" -->
 	      </PRE>
 	  </TD>
 	  <TD>
@@ -180,7 +180,7 @@
 	    </TD>
 	  <TD>
 	      <PRE>
-	    <A HREF="data/LAST_libTAO_BiDirGIOP.a_size.txt">[Download]</A>
+<!--#include file="data/LAST_libTAO_BiDirGIOP.a_size.txt" -->
 	      </PRE>
 	  </TD>
 	  <TD>
@@ -195,7 +195,7 @@
 	    </TD>
 	  <TD>
 	      <PRE>
-	    <A HREF="data/LAST_libTAO_IORManip.a_size.txt">[Download]</A>
+<!--#include file="data/LAST_libTAO_IORManip.a_size.txt" -->
 	      </PRE>
 	  </TD>
 	  <TD>
@@ -210,7 +210,7 @@
 	    </TD>
 	  <TD>
 	      <PRE>
-	    <A HREF="data/LAST_libTAO_IORTable.a_size.txt">[Download]</A>
+<!--#include file="data/LAST_libTAO_IORTable.a_size.txt" -->
 	      </PRE>
 	  </TD>
 	  <TD>
@@ -225,7 +225,7 @@
 	    </TD>
 	  <TD>
 	      <PRE>
-	    <A HREF="data/LAST_libTAO_TypeCodeFactory.a_size.txt">[Download]</A>
+<!--#include file="data/LAST_libTAO_TypeCodeFactory.a_size.txt" -->
 	      </PRE>
 	  </TD>
 	  <TD>
@@ -240,7 +240,7 @@
 	    </TD>
 	  <TD>
 	      <PRE>
-      <A HREF="data/LAST_libTAO_PI.a_size.txt">[Download]</A>
+<!--#include file="data/LAST_libTAO_PI.a_size.txt" -->
 	      </PRE>
 	  </TD>
 	  <TD>
@@ -255,7 +255,7 @@
       </TD>
     <TD>
         <PRE>
-      <A HREF="data/LAST_libTAO_PI_Server.a_size.txt">[Download]</A>
+<!--#include file="data/LAST_libTAO_PI_Server.a_size.txt" -->
         </PRE>
     </TD>
     <TD>
@@ -270,7 +270,7 @@
 	    </TD>
 	  <TD>
 	      <PRE>
-	    <A HREF="data/LAST_libTAO_RTCORBA.a_size.txt">[Download]</A>
+<!--#include file="data/LAST_libTAO_RTCORBA.a_size.txt" -->
 	      </PRE>
 	  </TD>
 	  <TD>
@@ -285,7 +285,7 @@
 	    </TD>
 	  <TD>
 	      <PRE>
-	    <A HREF="data/LAST_libTAO_RTPortableServer.a_size.txt">[Download]</A>
+<!--#include file="data/LAST_libTAO_RTPortableServer.a_size.txt" -->
 	      </PRE>
 	  </TD>
 	  <TD>
