@@ -89,7 +89,7 @@ Compiler_Features_13_Test
 Compiler_Features_14_Test
 Config_Test: !LynxOS !VxWorks !ACE_FOR_TAO
 Conn_Test: !ACE_FOR_TAO
-DLL_Test: !Unicos !STATIC !KCC_Linux
+DLL_Test: !STATIC Linux
 DLList_Test: !ACE_FOR_TAO
 Date_Time_Test: !ACE_FOR_TAO
 Dev_Poll_Reactor_Test: !nsk !ST
@@ -120,7 +120,7 @@ Log_Thread_Inheritance_Test: !ST
 Logging_Strategy_Test: !LynxOS !STATIC !ST
 Manual_Event_Test
 MEM_Stream_Test: !VxWorks !nsk !ACE_FOR_TAO !PHARLAP !QNX !LynxOS
-MM_Shared_Memory_Test: !Unicos !VxWorks !nsk !ACE_FOR_TAO
+MM_Shared_Memory_Test: !VxWorks !nsk !ACE_FOR_TAO
 MT_NonBlocking_Connect_Test: !ST
 MT_Reactor_Timer_Test
 MT_Reactor_Upcall_Test: !nsk
@@ -131,7 +131,7 @@ Malloc_Test: !VxWorks !LynxOS !ACE_FOR_TAO !PHARLAP
 Map_Manager_Test: !ACE_FOR_TAO
 Map_Test: !ACE_FOR_TAO
 Max_Default_Port_Test: !ST
-Mem_Map_Test: !Unicos !VxWorks !nsk !ACE_FOR_TAO
+Mem_Map_Test: !VxWorks !nsk !ACE_FOR_TAO
 Memcpy_Test: !ACE_FOR_TAO
 Message_Block_Test: !ACE_FOR_TAO
 Message_Queue_Notifications_Test
@@ -139,7 +139,7 @@ Message_Queue_Test: !ACE_FOR_TAO
 Message_Queue_Test_Ex: !ACE_FOR_TAO
 Multicast_Test: !ST !NO_MCAST !nsk !LynxOS !LabVIEW_RT
 Multihomed_INET_Addr_Test: !ACE_FOR_TAO
-Naming_Test: !NO_OTHER !LynxOS !Unicos !VxWorks !nsk !ACE_FOR_TAO !PHARLAP
+Naming_Test: !NO_OTHER !LynxOS !VxWorks !nsk !ACE_FOR_TAO !PHARLAP
 Network_Adapters_Test: !ACE_FOR_TAO
 New_Fail_Test: ALL !DISABLED
 NonBlocking_Conn_Test
@@ -153,7 +153,7 @@ OrdMultiSet_Test
 Pipe_Test: !PHARLAP !VxWorks
 Priority_Buffer_Test
 Priority_Reactor_Test: !ACE_FOR_TAO
-Priority_Task_Test: !Unicos
+Priority_Task_Test
 Proactor_Scatter_Gather_Test: !VxWorks !nsk !ACE_FOR_TAO
 Proactor_Test: !VxWorks !LynxOS !nsk !ACE_FOR_TAO !BAD_AIO
 Proactor_Timer_Test: !VxWorks !nsk !ACE_FOR_TAO
@@ -195,7 +195,7 @@ SOCK_Test: !NO_NETWORK
 SPIPE_Test: !nsk !ACE_FOR_TAO
 SString_Test: !ACE_FOR_TAO
 Stack_Trace_Test:
-SV_Shared_Memory_Test: !MSVC !Unicos !VxWorks !RH_7.1 !nsk !ACE_FOR_TAO
+SV_Shared_Memory_Test: !MSVC !VxWorks !nsk !ACE_FOR_TAO
 Semaphore_Test: !ACE_FOR_TAO
 Service_Config_Test: !STATIC
 Missing_Svc_Conf_Test: !STATIC
@@ -211,20 +211,20 @@ TSS_Static_Test
 Task_Test
 Task_Ex_Test
 Thread_Attrs_Test
-Thread_Manager_Test: !Unicos
+Thread_Manager_Test
 Thread_Mutex_Test
 Thread_Pool_Reactor_Resume_Test: !NO_OTHER !ST
 Thread_Pool_Reactor_Test: !NO_OTHER
 Thread_Pool_Test
 Thread_Creation_Threshold_Test
-Time_Service_Test: !STATIC !DISABLED !missing_netsvcs TOKEN !Unicos
+Time_Service_Test: !STATIC !DISABLED !missing_netsvcs TOKEN
 Time_Value_Test
 Timeprobe_Test
 Timer_Cancellation_Test
 Timer_Queue_Reference_Counting_Test
 Timer_Queue_Test: !ACE_FOR_TAO
 Token_Strategy_Test: !ST !nsk
-Tokens_Test: MSVC !DISABLED TOKEN !Unicos
+Tokens_Test: MSVC !DISABLED TOKEN
 UPIPE_SAP_Test: !nsk !ACE_FOR_TAO
 Unbounded_Set_Test
 Upgradable_RW_Test: !ACE_FOR_TAO
