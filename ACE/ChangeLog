@@ -1,3 +1,12 @@
+Mon Jan  9 11:07:54 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Netlink_Addr.h:
+        * ace/Notification_Queue.h:
+          Doxygen fixes
+
+        * tests/run_test.lst:
+          Removed several old config labels
+
 Fri Jan  6 11:16:03 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * html/Stats/configuration.shtml:
