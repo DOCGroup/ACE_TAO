@@ -1,8 +1,3 @@
-#ifndef ACE_NOTIFICATION_QUEUE_H
-#define ACE_NOTIFICATION_QUEUE_H
-
-#include /**/ "ace/pre.h"
-
 /**
  *  @file Notification_Queue.h
  *
@@ -10,6 +5,12 @@
  *
  *  @author Carlos O'Ryan <coryan@atdesk.com>
  */
+
+#ifndef ACE_NOTIFICATION_QUEUE_H
+#define ACE_NOTIFICATION_QUEUE_H
+
+#include /**/ "ace/pre.h"
+
 #include "ace/Copy_Disabled.h"
 #include "ace/Event_Handler.h"
 #include "ace/Intrusive_List.h"
