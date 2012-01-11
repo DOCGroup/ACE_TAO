@@ -75,13 +75,13 @@ struct Tester
   value_type * alloc_and_init_buffer()
   {
     value_type * buf = tested_sequence::allocbuf();
-    delete[] buf[0];
+    tested_element_traits::release (buf[0]);
     buf[0] = helper::to_string(1);
-    delete[] buf[1];
+    tested_element_traits::release (buf[1]);
     buf[1] = helper::to_string(4);
-    delete[] buf[2];
+    tested_element_traits::release (buf[2]);
     buf[2] = helper::to_string(9);
-    delete[] buf[3];
+    tested_element_traits::release (buf[3]);
     buf[3] = helper::to_string(16);
 
     return buf;
