@@ -1,3 +1,11 @@
+Wed Jan 11 15:41:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * ace/config-sunos5.10.h:
+        Is supposed to define ACE_SIZE_T_FORMAT_SPECIFIER_ASCII and ACE_SSIZE_T_FORMAT_SPECIFIER_ASCII
+        correctly for this platform. The old logic was "If already defined - redefine, but if not
+        defined don't define" and wrong. The point of providing the definition of these SIZE_T format
+        specifiers is to provide them if they are not set.
+
 Wed Jan 11 14:36:43 UTC 2012  Martin Corino  <mcorino@remedy.nl>
 
         * ace/config-win32-mingw.h:

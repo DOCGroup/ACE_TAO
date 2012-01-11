@@ -38,15 +38,10 @@
 #endif
 
 // Solaris 10 introduced printf() modifiers for [s]size_t types.
-#if defined (ACE_SSIZE_T_FORMAT_SPECIFIER_ASCII)
-#  undef ACE_SSIZE_T_FORMAT_SPECIFIER_ASCII
-#  define ACE_SSIZE_T_FORMAT_SPECIFIER_ASCII "%zd"
-#endif /* ACE_SSIZE_T_FORMAT_SPECIFIER_ASCII */
-
-#if defined (ACE_SIZE_T_FORMAT_SPECIFIER_ASCII)
-#  undef ACE_SIZE_T_FORMAT_SPECIFIER_ASCII
-#  define ACE_SIZE_T_FORMAT_SPECIFIER_ASCII "%zu"
-#endif /* ACE_SIZE_T_FORMAT_SPECIFIER_ASCII */
+#undef ACE_SSIZE_T_FORMAT_SPECIFIER_ASCII
+#define ACE_SSIZE_T_FORMAT_SPECIFIER_ASCII "%zd"
+#undef ACE_SIZE_T_FORMAT_SPECIFIER_ASCII
+#define ACE_SIZE_T_FORMAT_SPECIFIER_ASCII "%zu"
 
 // Solaris 10 offers wcstoll() and wcstoull()
 #if defined (ACE_LACKS_WCSTOLL)
