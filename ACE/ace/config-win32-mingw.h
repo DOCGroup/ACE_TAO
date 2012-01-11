@@ -28,11 +28,11 @@
 
 #define ACE_HAS_USER_MODE_MASKS
 
-#if (__MINGW32_MAJOR_VERSION < 2)
+#if (__MINGW32_MAJOR_VERSION < 2) && (__MINGW64_VERSION_MAJOR < 3)
 #  error You need a newer version (>= 2.0) of mingw32/w32api
 #endif
 
-#if (__MINGW32_MAJOR_VERSION >= 3)
+#if (__MINGW32_MAJOR_VERSION >= 3) || (__MINGW64_VERSION_MAJOR >= 3)
 #  define ACE_HAS_SSIZE_T
 #  undef ACE_LACKS_STRUCT_DIR
 #  undef ACE_LACKS_OPENDIR
@@ -47,6 +47,22 @@
 
 #if (__MINGW32_MAJOR_VERSION > 3)  || ((__MINGW32_MAJOR_VERSION == 3) && (__MINGW32_MINOR_VERSION >= 15))
 # undef ACE_LACKS_USECONDS_T
+#elif (__MINGW64_VERSION_MAJOR >= 3)
+# undef ACE_LACKS_USECONDS_T
+#endif
+
+#if (__MINGW64_VERSION_MAJOR >= 3)
+# define ACE_HAS_POSIX_TIME 1
+# define ACE_LACKS_TIMESPEC_T 1
+
+# include <stdlib.h>
+# if defined (strtod)
+#  undef strtod
+# endif
+#else
+# if defined (ACE_LACKS_SIGSET_T)
+#   undef ACE_LACKS_SIGSET_T
+# endif
 #endif
 
 #undef ACE_HAS_WTOF
