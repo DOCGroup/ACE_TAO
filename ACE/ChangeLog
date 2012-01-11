@@ -1,3 +1,12 @@
+Wed Jan 11 20:43:47 UTC 2012  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/config-freebsd.h:
+        * ace/config-win32-common.h:
+        * ace/config-win32-mingw.h:
+        * ace/os_include/os_signal.h:
+          Added ACE_LACKS_SIGSET_T to be able to distinguish between the
+          type and the functions being provided or not.
+
 Wed Jan 11 18:43:50 UTC 2012  Martin Corino  <mcorino@remedy.nl>
 
         * ace/config-win32-mingw.h:

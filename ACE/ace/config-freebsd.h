@@ -128,6 +128,7 @@
 
 #if (__FreeBSD_version < 400000)
 # define ACE_LACKS_SIGSET
+# define ACE_LACKS_SIGSET_T
 # define ACE_LACKS_RWLOCK_T
 # define ACE_LACKS_READDIR_R
 # define ACE_LACKS_SETSCHED
