@@ -1,3 +1,13 @@
+Wed Jan 11 12:25:00 UTC 2012  Simon Massey  <sma at prismtech dot com>
+
+        * tests/Sequence_Unit_Tests/bounded_string_sequence_ut.cpp:
+        * tests/Sequence_Unit_Tests/unbounded_string_sequence_ut.cpp:
+          These test were directly calling delete [] on CORBA::strings
+          instead of using CORBA::string_free(). As these delete []
+          calls were inside a template however, they needed to actualy
+          use the tested_element_traits::release () that mapped these
+          to the correct CORBA::string_free() call.
+
 Tue Jan  3 14:02:44 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Active_Object_Map.cpp:
