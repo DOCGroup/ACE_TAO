@@ -48,7 +48,7 @@ extern "C"
 {
 #endif /* __cplusplus */
 
-#if defined (ACE_LACKS_SIGSET) && !defined (__MINGW32__)
+#if defined (ACE_LACKS_SIGSET)
   typedef u_int sigset_t;
 #endif /* ACE_LACKS_SIGSET && !sigset_t */
 

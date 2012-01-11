@@ -1,3 +1,9 @@
+Wed Jan 11 14:36:43 UTC 2012  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/config-win32-mingw.h:
+        * ace/os_include/os_signal.h:
+          Changes to support MinGW64 compiler.
+
 Mon Jan  9 11:07:54 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Netlink_Addr.h:
