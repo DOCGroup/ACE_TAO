@@ -1,3 +1,8 @@
+Wed Jan 11 18:43:50 UTC 2012  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/config-win32-mingw.h:
+          Fixed typo.
+
 Wed Jan 11 15:41:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
 
         * ace/config-sunos5.10.h:
