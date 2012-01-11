@@ -60,8 +60,8 @@
 #  undef strtod
 # endif
 #else
-# if defined (ACE_LACKS_SIGSET)
-#   undef ACE_LACKS_SIGSET
+# if defined (ACE_LACKS_SIGSET_T)
+#   undef ACE_LACKS_SIGSET_T
 # endif
 #endif
 
