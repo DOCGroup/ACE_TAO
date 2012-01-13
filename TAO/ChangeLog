@@ -1,3 +1,19 @@
+Fri Jan 13 23:09:56 UTC 2012  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be_include/be_visitor_component/servant_svs.h:
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+
+          Fixed a bug where the attributes of a component's supported
+          interfaces (if any) were not getting their initialization
+          code block in the generate servant's method set_attributes().
+          Thanks to Michael Frommberger
+          <michael dot frommberger at gmx dot net> for reporting the
+          problem.
+
+        * TAO_IDL/be_include/be_visitor_component_scope.h:
+
+          Cosmetic changes.
+
 Wed Jan 13 16:30:00 UTC 2012  Simon Massey  <sma at prismtech dot com>
 
         * tao/UB_String_Argument_T.cpp:
