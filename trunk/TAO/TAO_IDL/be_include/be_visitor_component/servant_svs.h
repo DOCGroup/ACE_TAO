@@ -82,6 +82,11 @@ public:
   ~be_visitor_attr_set (void);
 
   virtual int visit_attribute (be_attribute *node);
+
+  // This override includes the supported
+  // interfaces, so we can generate code to initialize attribute
+  // inherited from them, if any.
+  virtual int visit_component_scope (be_component *node);
 };
 
 // ======================================================
