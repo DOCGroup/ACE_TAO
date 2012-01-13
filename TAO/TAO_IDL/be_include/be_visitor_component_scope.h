@@ -43,7 +43,7 @@ public:
   int visit_component_scope (be_component *node);
 
   /// These two methods are used instead of overriding
-  // /visit_porttype so we can traverse a porttype only
+  //  visit_porttype so we can traverse a porttype only
   /// when it is referenced.
 
   int visit_porttype_scope (be_porttype *node);

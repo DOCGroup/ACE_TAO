@@ -1111,6 +1111,56 @@ be_visitor_attr_set::visit_attribute (be_attribute *node)
   return 0;
 }
 
+int
+be_visitor_attr_set::visit_component_scope (be_component *node)
+{
+  if (node == 0)
+    {
+      return 0;
+    }
+
+    this->ctx_->interface (node);
+    
+    if (this->visit_scope (node) == -1)
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("be_visitor_attr_set")
+                           ACE_TEXT ("::visit_component_scope - ")
+                           ACE_TEXT ("visit_scope() failed\n")),
+                          -1);
+      }
+   
+    /// This overload of traverse_inheritance_graph() used here
+    /// doesn't automatically prime the queues.
+    node->get_insert_queue ().reset ();
+    node->get_del_queue ().reset ();
+    node->get_insert_queue ().enqueue_tail (node);
+  
+    Component_Op_Attr_Generator component_inher (this);
+  
+    int status =
+      node->traverse_inheritance_graph (component_inher,
+                                        &os_,
+                                        false,
+                                        false);
+    if (status == -1)
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("be_visitor_attr_set")
+                           ACE_TEXT ("::visit_component_scope - ")
+                           ACE_TEXT ("traverse_inheritance_graph() ")
+                           ACE_TEXT ("failed\n")),
+                          -1);
+      }
+   
+   // Recurse to the base class method for the base component(s)
+   // so traverse_inheritance_graph() will not be called again,
+   // which would output assignments for the attributes inherited
+   // from the base componnent's supported interfaces multiple times.
+   return
+    this->be_visitor_component_scope::visit_component_scope (node->base_component ());
+}
+
 // ==========================================================
 
 be_visitor_facet_executor_block::be_visitor_facet_executor_block (
