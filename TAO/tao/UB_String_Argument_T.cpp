@@ -79,7 +79,7 @@ CORBA::Boolean
 TAO::Inout_UB_String_Argument_T<S_var,Insert_Policy>::demarshal (
     TAO_InputCDR & cdr)
 {
-  delete [] this->x_;
+  S_var::s_traits::release (this->x_);
   return cdr >> this->x_;
 }
 
