@@ -1,3 +1,12 @@
+Wed Jan 13 16:30:00 UTC 2012  Simon Massey  <sma at prismtech dot com>
+
+        * tao/UB_String_Argument_T.cpp:
+          Was also directly calling delete [] on CORBA::strings
+          instead of using CORBA::string_free(). As this delete []
+          call was also inside a template however, it needed to actualy
+          use the S_var::s_traits::release () that mapped this
+          to the correct CORBA::string_free() call.
+
 Wed Jan 11 12:25:00 UTC 2012  Simon Massey  <sma at prismtech dot com>
 
         * tests/Sequence_Unit_Tests/bounded_string_sequence_ut.cpp:
