@@ -32,6 +32,25 @@
 #  error You need a newer version (>= 2.0) of mingw32/w32api
 #endif
 
+// When using the --std=c++0x option the compiler omits defining
+// the following required macros (at least with the GCC 4.6.2 version)
+// So we define them ourselves here.
+#if !defined(WIN32)
+#  define _stdcall __attribute__((__stdcall__))
+#  define _cdecl __attribute__((__cdecl__))
+#  define _thiscall __attribute__((__thiscall__))
+#  define _fastcall __attribute__((__fastcall__))
+#  define WIN32 1
+#  define WINNT 1
+#  define i386 1
+#endif
+
+// In strict ANSI mode (default when using --std=c++0x) the fileno()
+// macro is not defined so use the following work around.
+#if defined(__STRICT_ANSI__)
+# define ACE_FILENO_EQUIVALENT ::_fileno
+#endif
+
 #if (__MINGW32_MAJOR_VERSION >= 3) || (__MINGW64_VERSION_MAJOR >= 3)
 #  define ACE_HAS_SSIZE_T
 #  undef ACE_LACKS_STRUCT_DIR
