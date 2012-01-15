@@ -1,3 +1,9 @@
+Sun Jan 15 19:15:48 UTC 2012  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/config-win32-mingw.h:
+          Add some customizations and corrections to support using
+          --std=c++0x with MinGW32.
+
 Fri Jan 13 23:25:59 UTC 2012  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * THANKS:
