@@ -19,7 +19,6 @@
 // and we have to narrow it.
 #include "tao/Object_T.h"
 #include "tao/Stub.h"
-
 #include "ace/Get_Opt.h"
 
 int
