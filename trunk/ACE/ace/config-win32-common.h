@@ -17,6 +17,21 @@
 #  include "ace/config-WinCE.h"
 #endif /* _WIN32_WCE */
 
+#if defined(__MINGW32__)
+// When using the --std=c++0x option with MinGW the compiler omits defining
+// the following required macros (at least with the GCC 4.6.2 version)
+// So we define them ourselves here.
+# if !defined(WIN32)
+#   define _stdcall __attribute__((__stdcall__))
+#   define _cdecl __attribute__((__cdecl__))
+#   define _thiscall __attribute__((__thiscall__))
+#   define _fastcall __attribute__((__fastcall__))
+#   define WIN32 1
+#   define WINNT 1
+#   define i386 1
+# endif
+#endif
+
 // Complain if WIN32 is not already defined.
 #if !defined (WIN32) && !defined (ACE_HAS_WINCE)
 # error Please define WIN32 in your project settings.
