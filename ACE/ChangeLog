@@ -1,3 +1,8 @@
+Mon Jan 16 09:01:20 UTC 2012  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/config-win32-mingw.h:
+          Fixed incorrectly placed macro test.
+
 Sun Jan 15 19:15:48 UTC 2012  Martin Corino  <mcorino@remedy.nl>
 
         * ace/config-win32-mingw.h:
