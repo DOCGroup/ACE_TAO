@@ -52,7 +52,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  PortableServer::POA_var oa_ptr;
   Param_Test_i *param_test = 0;
 
   try
@@ -65,7 +64,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                               // an object which we then have to narrow.
 
       // Get the Root POA
-
       temp = orb_ptr->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (temp.in()))
@@ -73,7 +71,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                            "(%P|%t) Unable to get root poa reference.\n"),
                           1);
 
-      oa_ptr = PortableServer::POA::_narrow (temp.in());
+      PortableServer::POA_var oa_ptr = PortableServer::POA::_narrow (temp.in());
 
       PortableServer::POAManager_var poa_manager =
         oa_ptr->the_POAManager ();

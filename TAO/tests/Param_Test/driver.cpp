@@ -616,6 +616,10 @@ Driver::run (void)
         {
           this->objref_->shutdown ();
         }
+
+      this->objref_ = Param_Test::_nil ();
+      this->orb_->destroy ();
+
     }
   catch (const CORBA::Exception& ex)
     {
