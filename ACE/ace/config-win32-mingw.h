@@ -21,19 +21,6 @@
 #  error You do not seem to be using mingw32
 #endif
 
-// When using the --std=c++0x option the compiler omits defining
-// the following required macros (at least with the GCC 4.6.2 version)
-// So we define them ourselves here.
-#if !defined(WIN32)
-#  define _stdcall __attribute__((__stdcall__))
-#  define _cdecl __attribute__((__cdecl__))
-#  define _thiscall __attribute__((__thiscall__))
-#  define _fastcall __attribute__((__fastcall__))
-#  define WIN32 1
-#  define WINNT 1
-#  define i386 1
-#endif
-
 #include "ace/config-g++-common.h"
 
 #include /**/ <_mingw.h>
