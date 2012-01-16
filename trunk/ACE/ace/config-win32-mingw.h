@@ -21,17 +21,6 @@
 #  error You do not seem to be using mingw32
 #endif
 
-#include "ace/config-g++-common.h"
-
-#include /**/ <_mingw.h>
-#include /**/ <w32api.h>
-
-#define ACE_HAS_USER_MODE_MASKS
-
-#if (__MINGW32_MAJOR_VERSION < 2) && (__MINGW64_VERSION_MAJOR < 3)
-#  error You need a newer version (>= 2.0) of mingw32/w32api
-#endif
-
 // When using the --std=c++0x option the compiler omits defining
 // the following required macros (at least with the GCC 4.6.2 version)
 // So we define them ourselves here.
@@ -43,6 +32,17 @@
 #  define WIN32 1
 #  define WINNT 1
 #  define i386 1
+#endif
+
+#include "ace/config-g++-common.h"
+
+#include /**/ <_mingw.h>
+#include /**/ <w32api.h>
+
+#define ACE_HAS_USER_MODE_MASKS
+
+#if (__MINGW32_MAJOR_VERSION < 2) && (__MINGW64_VERSION_MAJOR < 3)
+#  error You need a newer version (>= 2.0) of mingw32/w32api
 #endif
 
 // In strict ANSI mode (default when using --std=c++0x) the fileno()
