@@ -1,12 +1,8 @@
-Mon Jan 16 08:55:26 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+Mon Jan 16 14:13:36 UTC 2012  Jeff Parsons <j.parsons@vanderbilt.edu>
 
-        * tao/Cleanup_Func_Registry.h:
-          Export this class, needed in some configurations due to inlining
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
 
-        * tests/Param_Test/anyop.cpp:
-        * tests/Param_Test/driver.cpp:
-        * tests/Param_Test/server.cpp:
-          Fixed memory leaks
+          Fixed fuzz errors.
 
 Fri Jan 13 23:09:56 UTC 2012  Jeff Parsons <j.parsons@vanderbilt.edu>
 
