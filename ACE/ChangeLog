@@ -1,3 +1,35 @@
+Tue Jan 17 17:36:31 UTC 2012  Chip Jones  <jonesc@ociweb.com>
+
+        * include/makeinclude/rules.local.GNU:
+          Fixed 'no filename for -include' warning.
+
+Mon Jan 16 21:58:44 UTC 2012  Chip Jones  <jonesc@ociweb.com>
+
+        * bin/DependencyGenerator/GNUIDLDependencyWriter.pm:
+        * bin/DependencyGenerator/GNUIDLObjectGenerator.pm:
+        * bin/MakeProjectCreator/config/ace_idl_dependencies.mpb:
+
+          Added these files to support generation of IDL dependencies
+          for gnuace projects.
+
+        * bin/MakeProjectCreator/config/acedefaults.mpb:
+        * bin/MakeProjectCreator/config/global.features:
+
+          Added IDL dependency as a feature defaulted to off.
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Modified gnuace template to generate IDL dependency rules.
+
+        * include/makeinclude/rules.common.GNU:
+        * include/makeinclude/rules.local.GNU:
+        * include/makeinclude/wrapper_macros.GNU:
+
+          Added depend_idl.local rule.
+
+          This is a merge of work done in the 'ace-mpc_performance'
+          branch.
+
 Mon Jan 16 10:33:37 UTC 2012  Martin Corino  <mcorino@remedy.nl>
 
         * ace/config-win32-common.h:
