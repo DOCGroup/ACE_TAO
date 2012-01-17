@@ -1,3 +1,13 @@
+Mon Jan 16 22:03:43 UTC 2012  Chip Jones  <jonesc@ociweb.com>
+
+        * MPC/config/taoidldefaults.mpb:
+
+          Added ace_idl_dependencies as a base project of 
+          taobaseidldefaults.
+
+          This is a merge of work done in the 'tao-mpc_performance'
+          branch.
+
 Mon Jan 16 14:13:36 UTC 2012  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
