@@ -13,6 +13,19 @@
 <%marker(top)%>
 MAKEFILE         = <%project_file%>
 DEPENDENCY_FILE  = .depend.<%project_name%>
+<%if(idl_files)%>
+
+<%if(contains(idlflags,-DGEN_IDL_MAKE_DEPS))%>
+<%foreach(idl_files)%>
+IDL_DEPENDENCY_FILE<%forcount%> = .depend.<%project_name%>_Idl<%forcount%>
+<%endfor%>
+
+IDL_DEPENDENCY_FILES += \
+<%foreach(idl_files)%>
+	.depend.<%project_name%>_Idl<%forcount%><%fornotlast(" \\")%>
+<%endfor%>
+<%endif%>
+<%endif%>
 <%if(exename)%>
 BIN_UNCHECKED    = <%exename%>
 <%endif%>
@@ -66,6 +79,16 @@ FILES = \
 <%foreach(source_files)%>
   <%source_file%><%fornotlast(" \\")%>
 <%endfor%>
+
+<%endif%>
+<%if(idl_files)%>
+<%if(contains(idlflags,-DGEN_IDL_MAKE_DEPS))%>
+<%foreach(idl_files)%>
+IDL_DEPS_FLAGS<%forcount%> = <%if(flag_overrides(idl_file, commandflags))%><%flag_overrides(idl_file, commandflags)%><%else%><%idlflags%><%endif%>
+IDL_DEPS<%forcount%> = <%idl_file%>
+
+<%endfor%>
+<%endif%>
 
 <%endif%>
 <%vpath%>
@@ -681,6 +704,24 @@ $(VBIN): $(addprefix $(VDIR), $(OBJS)) $(DEPLIBS)
 	$(LINK.cc) $(LDFLAGS) $(CC_OUTPUT_FLAG) $@ $(filter-out %.a,$^) $(VLDLIBS) $(POSTLINK)
   endif
 endif
+<%endif%>
+
+<%if(idl_files)%>
+<%if(contains(idlflags,-DGEN_IDL_MAKE_DEPS))%>
+incremental_depend_idl:: 
+<%foreach(idl_files)%>
+	@$(RM) $(IDL_DEPENDENCY_FILE<%forcount%>)_idl.old
+	@cp $(IDL_DEPENDENCY_FILE<%forcount%>) $(IDL_DEPENDENCY_FILE<%forcount%>)_idl.old
+	$(DEPGEN_ENV) $(DEPGEN) -A $(DEPEND_CMD_ARGS) -f $(IDL_DEPENDENCY_FILE<%forcount%>) \
+	$(IDL_DEPS_FLAGS<%forcount%>) -t gnuidl -DMAKEDEPEND $(IDL_DEPS<%forcount%>)
+	@if cmp -s $(IDL_DEPENDENCY_FILE<%forcount%>) $(IDL_DEPENDENCY_FILE<%forcount%>)_idl.old ;\
+	then echo "GNUmakefile idl dependencies unchanged for $(IDL_DEPS<%forcount%>)." ;\
+	else \
+		echo "GNUmakefile idl dependencies updated for $(IDL_DEPS<%forcount%>)." ;\
+	fi ;\
+	$(RM) $(IDL_DEPENDENCY_FILE<%forcount%>)_idl.old ;
+<%endfor%>
+<%endif%>
 <%endif%>
 
 realclean: clean

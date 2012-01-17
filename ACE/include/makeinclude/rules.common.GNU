@@ -18,7 +18,7 @@ clean_idl_stubs:  clean_idl_stubs.nested clean_idl_stubs.local
 clean:            clean.nested clean.local
 realclean:        realclean.nested realclean.local
 clobber:          clobber.nested clobber.local
-depend:	          depend.nested depend.local
+depend:	          depend.nested depend.local depend_idl.local
 rcs_info:         rcs_info.nested rcs_info.local
 idl_stubs:        idl_stubs.nested idl_stubs.local
 svnignore:	  svnignore.nested svnignore.local
