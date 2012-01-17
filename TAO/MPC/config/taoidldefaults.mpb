@@ -1,5 +1,5 @@
 // -*- MPC -*-
 // $Id$
 
-project: taobaseidldefaults, corba_e_compact, corba_e_micro, minimum_corba, optimize_collocated_invocations {
+project: taobaseidldefaults, corba_e_compact, corba_e_micro, minimum_corba, optimize_collocated_invocations, ace_idl_dependencies {
 }
