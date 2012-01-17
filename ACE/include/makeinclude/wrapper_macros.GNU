@@ -293,6 +293,7 @@ IDL_SERVER_SRC_EXT ?= S.cpp
 IDL_SERVER_THDR_EXT ?= S_T.h
 IDL_SERVER_TINL_EXT ?= S_T.inl
 IDL_SERVER_TSRC_EXT ?= S_T.cpp
+IDL_GEN_FILES_DIR ?= .
 
 ifeq (default,$(origin LEX))
   LEX = flex

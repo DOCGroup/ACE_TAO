@@ -412,6 +412,7 @@ endif # DO_CLEANUP
 
 MAKEFILE ?= GNUmakefile
 DEPENDENCY_FILE ?= $(MAKEFILE)
+IDL_DEPENDENCY_FILE ?= $(MAKEFILE)
 
 TAO_ROOT ?= $(ACE_ROOT)/TAO
 
@@ -447,9 +448,21 @@ ifeq ($(lacks_touch),1)
 else
 	touch $(DEPENDENCY_FILE)
 endif
-depend.local: $(DEPENDENCY_FILE)
+depend_idl.local depend.local: $(DEPENDENCY_FILE)
 -include $(DEPENDENCY_FILE)
 endif
+
+ifneq ($(MAKEFILE),$(IDL_DEPENDENCY_FILES))
+$(IDL_DEPENDENCY_FILES):
+ifeq ($(lacks_touch),1)
+	copy NUL $@
+else
+	touch $@
+endif
+depend_idl.local: $(IDL_DEPENDENCY_FILES)
+-include $(IDL_DEPENDENCY_FILES)
+endif
+
 
 ifdef COMSPEC
   DEPGEN ?= perl $(ACE_ROOT)/bin/depgen.pl
@@ -467,12 +480,13 @@ ifeq ($(findstring depgen.pl, $(notdir $(DEPGEN))), depgen.pl)
   endif
 endif
 
+depend_idl.local: $(MAKEFILE) idl_stubs.local incremental_depend_idl
 
 depend.local: $(MAKEFILE) idl_stubs.local
 	@$(RM) $(DEPENDENCY_FILE).old
 	@cp $(DEPENDENCY_FILE) $(DEPENDENCY_FILE).old
 	$(DEPGEN_ENV) $(DEPGEN) -A $(DEPEND_CMD_ARGS) -f $(DEPENDENCY_FILE) \
-	$(CPPFLAGS) -t gnu -DMAKEDEPEND $(CCFLAGS) $(LSRC) $(SRC) $(PSRC)
+	$(CPPFLAGS) -t gnu -DMAKEDEPEND $(CCFLAGS) $(LSRC) $(SRC) $(PSRC) 
 	@if cmp -s $(DEPENDENCY_FILE) $(DEPENDENCY_FILE).old ;\
 	then echo "GNUmakefile dependencies unchanged." ;\
 	else \
@@ -488,6 +502,13 @@ IDL_FILES ?=
 IDL_CLIENT_HDR_EXT ?=
 
 idl_stubs.local: $(foreach file, $(IDL_FILES), $(file)$(IDL_CLIENT_HDR_EXT))
+
+#----------------------------------------------------------------------------
+#       no-op idl dependency :: Makefiles append to this rule if there
+#       are idl dependencies.
+#----------------------------------------------------------------------------
+
+incremental_depend_idl:: ;
 
 #----------------------------------------------------------------------------
 #       Variant targets and conditional macros
