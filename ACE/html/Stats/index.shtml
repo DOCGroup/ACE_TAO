@@ -8,7 +8,7 @@
   </HEAD>
   <CENTER>
   <TABLE>
-  <h1>Continuous Metrics for ACE+TAO+CIAO</h1>
+  <h1>Continuous Metrics for ACE+TAO+CIAO+DAnCE</h1>
   </TABLE>
   </CENTER>
   <!--#include file="img.html"-->
@@ -19,10 +19,10 @@
        and <A HREF="performance.shtml"> performance</A> metrics for ACE+TAO+CIAO+DAnCE.
       The results are collected from our <A
       href="http://www.dre.vanderbilt.edu/scoreboard"> nightly</A>
-      regression tests.  The complete source for the tests is
+      regression tests. The complete source for the tests is
       available as part of the ACE+TAO+CIAO+DAnCE <A
-      HREF="http://download.dre.vanderbilt.edu"> distribution
-      </A>. The hardware and software configuration used for these
+      HREF="http://download.dre.vanderbilt.edu">distribution</A>. 
+      The hardware and software configuration used for these
       tests is described <A
       HREF="configuration.shtml">here</A>. Notice, however, that the
       results contained here may be different from what you will
@@ -40,10 +40,13 @@
 
 <h3>Additional Development Process Related Pages</h3>
 <p>
-In addition to the statistics described above, a number of other ACE/TAO/CIAO development process related web pages we use are the following:
+In addition to the statistics described above, a number of other ACE/TAO/CIAO/DAnCE development process related web pages we use are the following:
 <ul>
 <li>
   <a href="http://www.dre.vanderbilt.edu/Scoreboard/">Automated Builds</a>
+</li>
+<li>
+  <a href="http://scoreboard.theaceorb.nl/">Graphical scoreboard</a>
 </li>
 <li>
   Xampler Performance benchmarks for <a href="http://www.dre.vanderbilt.edu/~isisbuilds/auto_compile_logs/isislab/emulab/FC6xampler/Template-Display/_Report/">x86</a>
