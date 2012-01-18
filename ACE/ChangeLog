@@ -1,3 +1,8 @@
+Wed Jan 18 09:02:18 UTC 2012  Martin Corino  <mcorino@remedy.nl>
+
+        * bin/fuzz.pl:
+          Added suppress option to selectively disable checks.
+
 Tue Jan 17 17:36:31 UTC 2012  Chip Jones  <jonesc@ociweb.com>
 
         * include/makeinclude/rules.local.GNU:
