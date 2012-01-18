@@ -3,7 +3,7 @@
 <HTML>
   <HEAD>
     <!-- $Id$ -->
-    <TITLE>ACE+TAO+CIAO Metrics</TITLE>
+    <TITLE>ACE+TAO+CIAO+DAnCE Metrics</TITLE>
     <LINK href="Stats.css" rel="stylesheet" type="text/css">
   </HEAD>
   <CENTER>
@@ -15,15 +15,14 @@
   <BODY>
     <HR>
     <LEFT>
-    <P>These pages track <A HREF="http://devportalvm.remedy.nl/builds/fc16_fp_performance/Stats/footprint.shtml">footprint</A>,
-      and <A
-      HREF="http://devportalvm.remedy.nl/builds/fc16_fp_performance/Stats/performance.shtml"> performance</A> metrics for ACE+TAO+CIAO.
+    <P>These pages track <A HREF="footprint.shtml">footprint</A>,
+       and <A HREF="performance.shtml"> performance</A> metrics for ACE+TAO+CIAO+DAnCE.
       The results are collected from our <A
       href="http://www.dre.vanderbilt.edu/scoreboard"> nightly</A>
       regression tests.  The complete source for the tests is
       available as part of the ACE+TAO+CIAO+DAnCE <A
-      HREF="http://download.dre.vanderbilt.edu"> distribution</A>. 
-      The hardware and software configuration used for these
+      HREF="http://download.dre.vanderbilt.edu"> distribution
+      </A>. The hardware and software configuration used for these
       tests is described <A
       HREF="configuration.shtml">here</A>. Notice, however, that the
       results contained here may be different from what you will
@@ -50,22 +49,22 @@ In addition to the statistics described above, a number of other ACE/TAO/CIAO de
   Xampler Performance benchmarks for <a href="http://www.dre.vanderbilt.edu/~isisbuilds/auto_compile_logs/isislab/emulab/FC6xampler/Template-Display/_Report/">x86</a>
 </li>
 <li>
-  <a href="http://devportalvm.remedy.nl/builds/fc16_fp_corbaec/metrics/x/">Footprint CORBA/e compact</a>
+  <a href="CORBAecompact">Footprint CORBA/e compact</a>
 </li>
 <li>
-  <a href="http://devportalvm.remedy.nl/builds/fc16_fp_corbaem/metrics/x/">Footprint CORBA/e micro</a>
+  <a href="CORBAemicro">Footprint CORBA/e micro</a>
 </li>
 <li>
-  <a href="http://devportalvm.remedy.nl/builds/fc16_fp_corbaems/metrics/x/">Footprint CORBA/e micro single threaded</a>
+  <a href="CORBAemicros">Footprint CORBA/e micro single threaded</a>
 </li>
 <li>
-  <a href="http://devportalvm.remedy.nl/builds/fc16_fp_corbaminimum/metrics/x/">Footprint Minimum CORBA</a>
+  <a href="CORBAminimum">Footprint Minimum CORBA</a>
 </li>
 <li>
-  <a href="http://devportalvm.remedy.nl/builds/fc16_fp_regular/metrics/x/">Footprint Regular CORBA</a>
+  <a href="regular">Footprint Regular CORBA</a>
 </li>
 <li>
-  <a href="http://devportalvm.remedy.nl/builds/fc16_fp_performance/Stats/performance.shtml">Performance metrics Regular CORBA</a>
+  <a href="performance.shtml">Performance metrics Regular CORBA</a>
 </li>
 </ul>
 The <i>Scoreboard</i>
