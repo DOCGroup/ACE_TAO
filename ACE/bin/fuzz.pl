@@ -59,6 +59,9 @@ use PerlACE::Run_Test;
 $errors = 0;
 $warnings = 0;
 
+# to register suppressed tests
+%suppressed_tests = ();
+
 ##############################################################################
 
 # Find_Modified_Files will use 'svn -q st' to get a list of locally modified
@@ -197,6 +200,14 @@ sub print_warning ($)
     ++$warnings;
 }
 
+##############################################################################
+## Check if test is suppressed
+
+sub is_suppressed ()
+{
+  my $method = (split (/::/, (caller(1))[3]))[-1];
+  return (defined $suppressed_tests{$method} ? 1 : 0);
+}
 
 ##############################################################################
 ## Tests
@@ -206,6 +217,8 @@ sub print_warning ($)
 # copy/pasted code from a .inl/.i file
 sub check_for_inline_in_cpp ()
 {
+    return if is_suppressed ();
+
     print "Running ACE_INLINE/ASYS_INLINE check\n";
     foreach $file (@files_cpp) {
         if (open (FILE, $file)) {
@@ -231,6 +244,8 @@ sub check_for_inline_in_cpp ()
 # be used locally or to check for files
 sub check_for_id_string ()
 {
+    return if is_suppressed ();
+
     print "Running \$Id\$ string check\n";
     foreach $file (@files_cpp, @files_inl, @files_h, @files_mpc, @files_bor,
                    @files_gnu, @files_html, @files_idl, @files_pl,
@@ -263,6 +278,8 @@ sub check_for_id_string ()
 # check for _MSC_VER
 sub check_for_msc_ver_string ()
 {
+    return if is_suppressed ();
+
     print "Running _MSC_VER check\n";
     foreach $file (@files_cpp, @files_inl, @files_h) {
         my $found = 0;
@@ -324,6 +341,8 @@ sub check_for_msc_ver_string ()
 # This test checks for the newline at the end of a file
 sub check_for_newline ()
 {
+    return if is_suppressed ();
+
     print "Running newline check\n";
     foreach $file (@files_cpp, @files_inl, @files_h,
                    @files_html, @files_idl, @files_pl) {
@@ -348,6 +367,8 @@ sub check_for_newline ()
 # This test checks for files that are not allowed to be in svn
 sub check_for_noncvs_files ()
 {
+    return if is_suppressed ();
+
     print "Running non svn files check\n";
     foreach $file (@files_noncvs, @files_dsp, @files_dsw, @files_makefile, @files_bor) {
         print_error ("File $file should not be in svn!");
@@ -359,6 +380,8 @@ sub check_for_noncvs_files ()
 
 sub check_for_ACE_SYNCH_MUTEX ()
 {
+    return if is_suppressed ();
+
     print "Running ACE_SYNCH_MUTEX check\n";
     ITERATION: foreach $file (@files_cpp, @files_inl, @files_h) {
         if (open (FILE, $file)) {
@@ -402,6 +425,8 @@ sub check_for_ACE_SYNCH_MUTEX ()
 # remove the generated automatically by line
 sub check_for_export_file ()
 {
+    return if is_suppressed ();
+
     print "Running export file check\n";
     ITERATION: foreach $file (@files_h) {
         if (($file =~ /.*CIAO.*export.h/) || ($file =~ /.*DAnCE.*export.h/)) {
@@ -427,6 +452,8 @@ sub check_for_export_file ()
 # in single-threaded builds.
 sub check_for_ACE_Thread_Mutex ()
 {
+    return if is_suppressed ();
+
     print "Running ACE_Thread_Mutex check\n";
     ITERATION: foreach $file (@files_cpp, @files_inl, @files_h) {
         if (open (FILE, $file)) {
@@ -463,6 +490,8 @@ sub check_for_ACE_Thread_Mutex ()
 # in single-threaded builds.
 sub check_for_ACE_Guard ()
 {
+    return if is_suppressed ();
+
     print "Running ACE_Guard check\n";
     ITERATION: foreach $file (@files_cpp, @files_inl, @files_h) {
         if (open (FILE, $file)) {
@@ -497,6 +526,8 @@ sub check_for_ACE_Guard ()
 # This test checks for the use of tabs, spaces should be used instead of tabs
 sub check_for_tab ()
 {
+    return if is_suppressed ();
+
     print "Running tabs check\n";
     ITERATION: foreach $file (@files_cpp, @files_inl, @files_h, @files_idl, @files_cdp, @files_doxygen, @files_changelog) {
         if (open (FILE, $file)) {
@@ -523,6 +554,8 @@ sub check_for_tab ()
 
 sub check_for_trailing_whitespace ()
 {
+    return if is_suppressed ();
+
     print "Running trailing_whitespaces check\n";
     ITERATION: foreach $file (@files_cpp, @files_inl, @files_h, @files_idl,
                               @files_cdp, @files_pl, @files_generic) {
@@ -551,6 +584,8 @@ sub check_for_trailing_whitespace ()
 # This test checks for the lack of ACE_OS
 sub check_for_lack_ACE_OS ()
 {
+    return if is_suppressed ();
+
     $OS_NS_arpa_inet_symbols = "inet_addr|inet_aton|inet_ntoa|inet_ntop|inet_pton";
 
     $OS_NS_ctype_symbols = "isalnum|isalpha|iscntrl|isdigit|isgraph|islower|isprint|ispunct|isspace|isupper|isxdigit|tolower|toupper|isblank|isascii|isctype|iswctype";
@@ -812,6 +847,8 @@ sub check_for_lack_ACE_OS ()
 # should not be used.
 sub check_for_exception_spec ()
 {
+    return if is_suppressed ();
+
     print "Running exception specification check\n";
 
     foreach $file (@files_cpp, @files_inl, @files_h) {
@@ -846,6 +883,8 @@ sub check_for_exception_spec ()
 # NULL shouldn't be used, use 0 instead
 sub check_for_NULL ()
 {
+    return if is_suppressed ();
+
     print "Running NULL usage check\n";
 
     foreach $file (@files_cpp, @files_inl, @files_h) {
@@ -878,6 +917,8 @@ sub check_for_NULL ()
 # int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 sub check_for_improper_main_declaration ()
 {
+    return if is_suppressed ();
+
     print "Running Improper main() declaration check\n";
 
     foreach $file (@files_cpp) {
@@ -980,6 +1021,8 @@ sub check_for_improper_main_declaration ()
 # This test checks for the use of "inline" instead of ACE_INLINE
 sub check_for_inline ()
 {
+    return if is_suppressed ();
+
     print "Running inline check\n";
     foreach $file (@files_inl) {
         if (open (FILE, $file)) {
@@ -1010,6 +1053,8 @@ sub check_for_inline ()
 # cause problems with exception handling
 sub check_for_math_include ()
 {
+    return if is_suppressed ();
+
     print "Running math.h test\n";
     foreach $file (@files_h, @files_cpp, @files_inl) {
         if (open (FILE, $file)) {
@@ -1039,6 +1084,8 @@ sub check_for_math_include ()
 # // FUZZ: disable check_for_streams_include
 sub check_for_streams_include ()
 {
+    return if is_suppressed ();
+
     print "Running ace/streams.h test\n";
     foreach $file (@files_h, @files_cpp, @files_inl) {
         if (open (FILE, $file)) {
@@ -1070,6 +1117,8 @@ sub check_for_streams_include ()
 # This test checks for the inclusion of Synch*.h.
 sub check_for_synch_include ()
 {
+    return if is_suppressed ();
+
     print "Running ace/Synch*.h test\n";
     foreach $file (@files_h, @files_cpp, @files_inl) {
         if (open (FILE, $file)) {
@@ -1104,6 +1153,8 @@ sub check_for_synch_include ()
 # For general readability, lines should not contain more than 80 characters
 sub check_for_line_length ()
 {
+    return if is_suppressed ();
+
     print "Running line length test\n";
     foreach $file (@files_h, @files_cpp, @files_inl) {
         if (open (FILE, $file)) {
@@ -1129,6 +1180,8 @@ sub check_for_line_length ()
 # should be used, not the newer // style.
 sub check_for_preprocessor_comments ()
 {
+    return if is_suppressed ();
+
     print "Running preprocessor comment test\n";
     foreach $file (@files_h, @files_cpp, @files_inl) {
         if (open (FILE, $file)) {
@@ -1149,6 +1202,8 @@ sub check_for_preprocessor_comments ()
 # We should not have empty files in the repo
 sub check_for_empty_files ()
 {
+    return if is_suppressed ();
+
     print "Running empty file test\n";
     foreach $file (@files_inl, @files_cpp) {
         my $found_non_empty_line = 0;
@@ -1178,6 +1233,8 @@ sub check_for_empty_files ()
 # We should only be using the ACE_TCHAR, ACE_TEXT macros instead.
 sub check_for_tchar
 {
+    return if is_suppressed ();
+
     print "Running TCHAR test\n";
     foreach $file (@files_h, @files_cpp, @files_inl) {
         if (open (FILE, $file)) {
@@ -1234,6 +1291,8 @@ sub check_for_tchar
 # whether or not it's in the cvs repo.
 sub check_for_dependency_file ()
 {
+    return if is_suppressed ();
+
     print "Running DEPENDENCY_FILE test\n";
     foreach $file (@files_makefile) {
         if (open (FILE, $file)) {
@@ -1265,6 +1324,8 @@ sub check_for_dependency_file ()
 # name of the GNUmakefile
 sub check_for_makefile_variable ()
 {
+    return if is_suppressed ();
+
     print "Running MAKEFILE variable test\n";
     foreach $file (@files_makefile) {
         if (!(substr($file,-4) eq ".bor")
@@ -1303,6 +1364,8 @@ sub check_for_makefile_variable ()
 # and vice versa.
 sub check_for_pre_and_post ()
 {
+    return if is_suppressed ();
+
     print "Running pre.h/post.h test\n";
     foreach $file (@files_h) {
         my $pre = 0;
@@ -1350,6 +1413,8 @@ sub check_for_pre_and_post ()
 # "#pragma warning(pop)" pragmas are used in a given header.
 sub check_for_push_and_pop ()
 {
+    return if is_suppressed ();
+
     print "Running #pragma (push)/(pop) test\n";
     foreach $file (@files_h) {
         my $push_count = 0;
@@ -1391,6 +1456,8 @@ sub check_for_push_and_pop ()
 # source file.
 sub check_for_versioned_namespace_begin_end ()
 {
+  return if is_suppressed ();
+
   print "Running versioned namespace begin/end test\n";
   foreach $file (@files_cpp, @files_inl, @files_h) {
     my $begin_count = 0;
@@ -1426,6 +1493,8 @@ sub check_for_versioned_namespace_begin_end ()
 # Check doxygen @file comments
 sub check_for_mismatched_filename ()
 {
+    return if is_suppressed ();
+
     print "Running doxygen \@file test\n";
     foreach $file (@files_h, @files_cpp, @files_inl, @files_idl) {
         if (open (FILE, $file)) {
@@ -1454,6 +1523,8 @@ sub check_for_mismatched_filename ()
 # check for bad run_test
 sub check_for_bad_run_test ()
 {
+    return if is_suppressed ();
+
     print "Running run_test.pl test\n";
     foreach $file (@files_run_pl) {
         if (open (FILE, $file)) {
@@ -1615,6 +1686,8 @@ sub check_for_bad_run_test ()
 # documentation
 sub check_for_absolute_ace_wrappers()
 {
+    return if is_suppressed ();
+
     print "Running absolute ACE_wrappers test\n";
     foreach $file (@files_html) {
         if (open (FILE, $file)) {
@@ -1637,6 +1710,8 @@ sub check_for_absolute_ace_wrappers()
 # Check for generated headers in the code documentation
 sub check_for_generated_headers()
 {
+    return if is_suppressed ();
+
     print "Running generated headers test\n";
     foreach $file (@files_cpp, @files_inl, @files_h) {
         if (open (FILE, $file)) {
@@ -1658,6 +1733,8 @@ sub check_for_generated_headers()
 
 sub check_for_numeric_log()
 {
+    return if is_suppressed ();
+
     print "Running check for numeric flags in DAnCE and DDS4CCM\n";
 
     foreach $file (@files_inl, @files_cpp, @files_h) {
@@ -1692,6 +1769,8 @@ sub check_for_numeric_log()
 # Make sure ACE_[OS_]TRACE matches the function/method
 sub check_for_bad_ace_trace()
 {
+    return if is_suppressed ();
+
     print "Running TRACE test\n";
     foreach $file (@files_inl, @files_cpp) {
         if (open (FILE, $file)) {
@@ -1766,6 +1845,8 @@ sub check_for_bad_ace_trace()
 # This test checks for broken ChangeLog entries.
 sub check_for_changelog_errors ()
 {
+    return if is_suppressed ();
+
     print "Running ChangeLog check\n";
     foreach $file (@files_changelog) {
         if (open (FILE, $file)) {
@@ -1798,6 +1879,8 @@ sub check_for_changelog_errors ()
 
 sub check_for_deprecated_macros ()
 {
+    return if is_suppressed ();
+
     ## Take the current working directory and remove everything up to
     ## ACE_wrappers (or ACE for the peer-style checkout).  This will be
     ## used to determine when the use of ACE_THROW_SPEC is an error.
@@ -1835,6 +1918,8 @@ sub check_for_deprecated_macros ()
 # is non-portable.  Use ptrdiff_t instead.
 sub check_for_ptr_arith_t ()
 {
+    return if is_suppressed ();
+
     print "Running ptr_arith_t check\n";
     foreach $file (@files_cpp, @files_inl, @files_h) {
         if (open (FILE, $file)) {
@@ -1866,6 +1951,8 @@ sub check_for_ptr_arith_t ()
 # " " instead of <> to avoid confict with Doxygen.
 sub check_for_include ()
 {
+    return if is_suppressed ();
+
     print "Running the include check\n";
     foreach $file (@files_h, @files_cpp, @files_inl, @files_idl) {
         my $bad_occurance = 0;
@@ -1912,6 +1999,8 @@ sub check_for_include ()
 # NOTE:  This test isn't fool proof yet.
 sub check_for_non_bool_operators ()
 {
+    return if is_suppressed ();
+
     print "Running non-bool equality, relational and logical operator check\n";
     foreach $file (@files_h, @files_inl, @files_cpp) {
         if (open (FILE, $file)) {
@@ -1962,6 +2051,8 @@ sub check_for_non_bool_operators ()
 # This test verifies that all filenames are short enough
 sub check_for_long_file_names ()
 {
+    return if is_suppressed ();
+
     my $max_filename = 50;
     my $max_mpc_projectname = $max_filename - 12; ## GNUmakefile.[project_name]
     print "Running file names check\n";
@@ -2006,6 +2097,8 @@ sub check_for_long_file_names ()
 
 sub check_for_refcountservantbase ()
 {
+    return if is_suppressed ();
+
     print "Running PortableServer::RefCountServantBase derivation check\n";
 
     foreach $file (@files_h, @files_cpp, @files_inl) {
@@ -2027,6 +2120,8 @@ sub check_for_refcountservantbase ()
 
 sub check_for_old_documentation_style ()
 {
+    return if is_suppressed ();
+
     print "Running documentation style check\n";
 
     foreach $file (@files_h, @files_cpp, @files_inl) {
@@ -2048,6 +2143,8 @@ sub check_for_old_documentation_style ()
 
 sub check_for_TAO_Local_RefCounted_Object ()
 {
+    return if is_suppressed ();
+
     print "Running TAO_Local_RefCounted_Object check\n";
 
     ITERATION: foreach $file (@files_h, @files_cpp, @files_inl) {
@@ -2078,6 +2175,8 @@ sub check_for_TAO_Local_RefCounted_Object ()
 # to be compatiable with wide character builds.
 sub check_for_ORB_init ()
 {
+    return if is_suppressed ();
+
     print "Running the ORB_init() wide character incompatability check\n";
     foreach $file (@files_cpp, @files_inl) {
         if (open (FILE, $file)) {
@@ -2161,6 +2260,8 @@ sub check_for_ORB_init ()
 # which should never occur. Only user code is allowed to include OS.h.
 sub check_for_include_OS_h ()
 {
+    return if is_suppressed ();
+
     print "Running the OS.h inclusion check\n";
     foreach $file (@files_h, @files_cpp, @files_inl) {
         if (open (FILE, $file)) {
@@ -2195,9 +2296,9 @@ sub check_for_include_OS_h ()
 
 ##############################################################################
 
-use vars qw/$opt_c $opt_d $opt_h $opt_l $opt_t $opt_m/;
+use vars qw/$opt_c $opt_d $opt_h $opt_l $opt_t $opt_s $opt_m/;
 
-if (!getopts ('cdhl:t:mv') || $opt_h) {
+if (!getopts ('cdhl:t:s:mv') || $opt_h) {
     print "fuzz.pl [-cdhm] [-l level] [-t test_names] [file1, file2, ...]\n";
     print "\n";
     print "    -c             only look at the files passed in\n";
@@ -2206,9 +2307,11 @@ if (!getopts ('cdhl:t:mv') || $opt_h) {
     print "    -l level       set detection level (default = 5)\n";
     print "    -t test_names  specify comma-separated list of tests to run\n".
           "                       this will disable the run level setting\n";
+    print "    -s test_names  specify comma-separated list of tests to suppress\n".
+          "                       this will supplement the run level setting\n";
     print "    -m             only check locally modified files (uses svn)\n";
     print "======================================================\n";
-    print "list of the tests that could be run:\n";
+    print "list of the tests that could be run or suppressed:\n";
     print "\t   check_for_noncvs_files
            check_for_generated_headers
            check_for_synch_include
@@ -2273,6 +2376,13 @@ if ($opt_t) {
     }
     print "\nfuzz.pl - $errors error(s), $warnings warning(s)\n";
     exit ($errors > 0) ? 1 : 0;
+}
+
+if ($opt_s) {
+    my @tests = split '\s*,\s*', $opt_s;
+    for my $test (@tests) {
+      $suppressed_tests{$test} = 1;
+    }
 }
 
 print "--------------------Configuration: Fuzz - Level ",$opt_l,
