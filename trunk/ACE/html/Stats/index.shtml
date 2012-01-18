@@ -49,19 +49,19 @@ In addition to the statistics described above, a number of other ACE/TAO/CIAO de
   Xampler Performance benchmarks for <a href="http://www.dre.vanderbilt.edu/~isisbuilds/auto_compile_logs/isislab/emulab/FC6xampler/Template-Display/_Report/">x86</a>
 </li>
 <li>
-  <a href="CORBAecompact">Footprint CORBA/e compact</a>
+  <a href="CORBAecompact/index.html">Footprint CORBA/e compact</a>
 </li>
 <li>
-  <a href="CORBAemicro">Footprint CORBA/e micro</a>
+  <a href="CORBAemicro/index.html">Footprint CORBA/e micro</a>
 </li>
 <li>
-  <a href="CORBAemicros">Footprint CORBA/e micro single threaded</a>
+  <a href="CORBAemicros/index.html">Footprint CORBA/e micro single threaded</a>
 </li>
 <li>
-  <a href="CORBAminimum">Footprint Minimum CORBA</a>
+  <a href="CORBAminimum/index.html">Footprint Minimum CORBA</a>
 </li>
 <li>
-  <a href="regular">Footprint Regular CORBA</a>
+  <a href="regular/index.html">Footprint Regular CORBA</a>
 </li>
 <li>
   <a href="performance.shtml">Performance metrics Regular CORBA</a>
@@ -78,3 +78,4 @@ of our main development branch.
 
   </BODY>
 </HTML>
+
