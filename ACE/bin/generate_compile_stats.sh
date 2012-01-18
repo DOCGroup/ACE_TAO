@@ -739,7 +739,7 @@ create_index_page ()
   echo '<body text = "#000000" link="#000fff" vlink="#ff0f0f" bgcolor="#ffffff">'
   echo "<br><center><h1>$TITLE</h1></center><br><hr>"
   if [ $BASE_TITLE = $DEFAULT_TITLE ]; then
-    echo '<p>One of the goals of the PCES-TENA project is to decrease compile times.'
+    echo '<p>We are measuring ACE+TAO+CIAO+DAnCE metrics daily.'
   else
     echo '<p>'
   fi
