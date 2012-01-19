@@ -232,7 +232,7 @@ sub generate_doxy_files {
           $value .= ' ' . $line;
 	}
 	my @values = split(' ', $value);
-  print DOXYOUTPUT 'HTML_FOOTER = $footer\n";
+  print DOXYOUTPUT "HTML_FOOTER = $footer\n";
 	map {$_ = $html_output_dir . '/' . $_; } @values;
 	print DOXYOUTPUT 'TAGFILES = ' . join(' ', @values) . "\n";
 	next;
