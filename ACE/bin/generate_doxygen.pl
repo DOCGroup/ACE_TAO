@@ -33,6 +33,7 @@ $exclude_dance = !-r "$DANCE_ROOT/VERSION";
 $verbose = 0;
 $perl_path = '/usr/bin/perl';
 $html_output_dir = '.';
+$footer = '';
 
 $dds = 0;
 if (defined $DDS_ROOT && -r "$DDS_ROOT/VERSION") {
@@ -126,6 +127,9 @@ sub parse_args {
       $verbose = 1;
     } elsif ($ARGV[0] eq "-perl_path" && $#ARGV >= 1) {
       $perl_path = $ARGV[1];
+      shift;
+    } elsif ($ARGV[0] eq "-footer" && $#ARGV >= 1) {
+      $footer = $ARGV[1];
       shift;
     } elsif ($ARGV[0] eq "-html_output" && $#ARGV >= 1) {
       $html_output_dir = $ARGV[1];
@@ -228,6 +232,7 @@ sub generate_doxy_files {
           $value .= ' ' . $line;
 	}
 	my @values = split(' ', $value);
+  print DOXYOUTPUT 'HTML_FOOTER = '$footer\n";
 	map {$_ = $html_output_dir . '/' . $_; } @values;
 	print DOXYOUTPUT 'TAGFILES = ' . join(' ', @values) . "\n";
 	next;
