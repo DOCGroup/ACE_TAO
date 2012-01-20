@@ -1,3 +1,10 @@
+Fri Jan 20 09:58:21 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/idl/dds4ccm_lem_stub.mpc:
+        * connectors/dds4ccm/idl/dds4ccm_skel.mpc:
+        * connectors/dds4ccm/idl/dds4ccm_stub.mpc:
+          Reduced the amount of files being generated
+
 Fri Jan 20 09:28:45 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/idl/dds4ccm_stub.mpc:
