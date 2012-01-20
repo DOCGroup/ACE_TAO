@@ -6,10 +6,10 @@ project (DDS4CCM_lem_gen) : install, dds4ccm, ciaoidldefaults {
   after += DDS4CCM_idl_gen
   idlflags += -I$(CIAO_ROOT)/connectors \
               -Wb,stub_export_macro=DDS4CCM_LEM_STUB_Export \
-              -Wb,stub_export_include=dds4ccm_lem_stub_export.h -SS
+              -Wb,stub_export_include=dds4ccm_lem_stub_export.h -SS -Sci
 
   IDL_Files {
-     idlflags += -Gxhst
+     idlflags += -Gxhst -Sci
      dds_rtf2_dcpsE.idl
   }
 
@@ -61,13 +61,6 @@ project (DDS4CCM_lem_stub) : install, dds4ccm, ccm_lem_stub, ccm_session_stub, \
   }
 
   Inline_Files {
-   dds4ccm_BaseEC.inl
-   dds_rtf2_dcpsEC.inl
-   dds4ccm_PortStatusListenerEC.inl
-   dds4ccm_DataListenerControlEC.inl
-   dds4ccm_ConnectorStatusListenerEC.inl
-   dds4ccm_StateListenerControlEC.inl
-   dds4ccm_ConnectorEC.inl
   }
 
   specific {
