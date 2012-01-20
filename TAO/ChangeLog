@@ -1,3 +1,12 @@
+Fri Jan 20 19:01:04 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_1670_Regression/Test.idl:
+        * tests/Bug_1670_Regression/client.cpp:
+        * tests/Bug_1670_Regression/run_test.pl:
+        * tests/Bug_1670_Regression/server.cpp:
+          Fixed gcc warning, added shutdown method to the server to get
+          a clean shutdown without hundreds of valgrind errors
+
 Fri Jan 20 18:50:58 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Portable_Interceptors/Bug_2088/client.cpp:
