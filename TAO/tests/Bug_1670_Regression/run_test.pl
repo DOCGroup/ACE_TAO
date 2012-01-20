@@ -60,7 +60,7 @@ if ($client_status != 0) {
     $status = 1;
 }
 
-$server_status = $SV->TerminateWaitKill ($server->ProcessStopWaitInterval());
+$server_status = $SV->WaitKill ($server->ProcessStopWaitInterval());
 
 if ($server_status != 0) {
     print STDERR "ERROR: server returned $server_status\n";
