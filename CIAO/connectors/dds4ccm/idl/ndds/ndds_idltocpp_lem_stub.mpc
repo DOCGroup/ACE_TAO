@@ -13,7 +13,7 @@ project (CIAO_NDDS_lem_gen) : install, ndds_idltocpp, ciaoidldefaults {
   }
 
   IDL_Files {
-     idlflags += -Scc
+     idlflags += -Sci
      ndds_dcps_i_handleE.idl
   }
 
@@ -32,6 +32,7 @@ project (CIAO_NDDS_lem_stub) : install, ndds_idltocpp_stub, ccm_lem_stub, ccm_se
 
   Source_Files {
    ndds_dcpsEC.cpp
+   ndds_dcps_i_handleEC.cpp
   }
 
   Header_Files {

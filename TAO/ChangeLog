@@ -1,3 +1,16 @@
+Fri Jan 20 10:30:24 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/taobaseidldefaults.mpb:
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be/be_produce.cpp:
+        * TAO_IDL/be/be_util.cpp:
+        * TAO_IDL/be/be_visitor_root/root_svth.cpp:
+        * TAO_IDL/be_include/be_global.h:
+        * docs/compiler.html:
+          Changed the arguments a little bit more, -Ssvntc suppreses _svnt.cpp,
+          -Ssvntt suppresses _svnt_T.{h,cpp}
+
 Fri Jan 20 09:27:41 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/taobaseidldefaults.mpb:

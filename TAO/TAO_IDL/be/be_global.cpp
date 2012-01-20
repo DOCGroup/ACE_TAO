@@ -128,7 +128,7 @@ BE_GlobalData::BE_GlobalData (void)
     gen_anyop_files_ (false),
     gen_skel_files_ (true),
     gen_svnt_cpp_files_ (true),
-    gen_svnt_tpp_files_ (true),
+    gen_svnt_t_files_ (true),
     gen_client_inline_ (true),
     gen_client_stub_ (true),
     gen_server_skeleton_ (true),
@@ -2394,15 +2394,15 @@ BE_GlobalData::gen_svnt_cpp_files (bool val)
 }
 
 bool
-BE_GlobalData::gen_svnt_tpp_files (void) const
+BE_GlobalData::gen_svnt_t_files (void) const
 {
-  return this->gen_svnt_tpp_files_;
+  return this->gen_svnt_t_files_;
 }
 
 void
-BE_GlobalData::gen_svnt_tpp_files (bool val)
+BE_GlobalData::gen_svnt_t_files (bool val)
 {
-  this->gen_svnt_tpp_files_ = val;
+  this->gen_svnt_t_files_ = val;
 }
 
 bool
@@ -3492,13 +3492,13 @@ BE_GlobalData::parse_args (long &i, char **av)
                 be_global->any_support (false);
               }
           }
-        else if (av[i][2] == 's' && av[i][3] == 'v' && av[i][4] == 'c' && av[i][5] == 'p' && '\0' == av[i][6])
+        else if (av[i][2] == 's' && av[i][3] == 'v' && av[i][4] == 'n' && av[i][5] == 't' && av[i][6] == 'c' && '\0' == av[i][7])
           {
             be_global->gen_svnt_cpp_files (false);
           }
-        else if (av[i][2] == 's' && av[i][3] == 'v' && av[i][4] == 't' && av[i][5] == 'p' && '\0' == av[i][6])
+        else if (av[i][2] == 's' && av[i][3] == 'v' && av[i][4] == 'n' && av[i][5] == 't' && av[i][6] == 't' && '\0' == av[i][7])
           {
-            be_global->gen_svnt_tpp_files (false);
+            be_global->gen_svnt_t_files (false);
           }
         else if (av[i][2] == 'o' && av[i][3] == 'r' && av[i][4] == 'b' && '\0' == av[i][5])
           {
@@ -3536,7 +3536,7 @@ BE_GlobalData::parse_args (long &i, char **av)
               }
             else if (av[i][3] == 'c')
               {
-                // No stub inline.
+                // No stub
                 be_global->gen_client_stub (false);
               }
             else if (av[i][3] == 'd' && av[i][4] == 'r')

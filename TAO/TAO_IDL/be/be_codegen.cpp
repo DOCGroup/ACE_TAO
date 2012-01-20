@@ -1090,7 +1090,7 @@ TAO_CodeGen::start_ciao_svnt_header (const char *fname)
     }
 
   // Generate the include statement for the template server header.
-  if (be_global->gen_ciao_svnt ())
+  if (be_global->gen_svnt_t_files ())
     {
       os  << "#include \""
           << be_global->be_get_ciao_tmpl_svnt_hdr_fname (true)
@@ -1220,7 +1220,7 @@ TAO_CodeGen::start_ciao_svnt_template_header (const char *fname)
     {
       *this->ciao_svnt_template_header_ << be_nl
         << "#include \""
-        << "connectors/ami4ccm/ami4ccm/ami4ccm_svnt_T.h\""
+        << "connectors/ami4ccm/ami4ccm/ami4ccm_svnt.h\""
         << be_nl;
     }
 
@@ -1972,22 +1972,19 @@ TAO_CodeGen::end_ciao_svnt_source (void)
 int
 TAO_CodeGen::end_ciao_svnt_template_header (void)
 {
-  if (be_global->gen_svnt_tpp_files ())
-    {
-      *this->ciao_svnt_template_header_ << be_nl_2
-                                        << "#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)"
-                                        << be_nl << "#include \""
-                                        << be_global->be_get_ciao_tmpl_svnt_src_fname (true)
-                                        << "\"" << be_nl
-                                        << "#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */"
-                                        << be_nl_2
-                                        << "#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)"
-                                        << be_nl << "#pragma implementation (\""
-                                        << be_global->be_get_ciao_tmpl_svnt_src_fname (true)
-                                        << "\")"
-                                        << be_nl << "#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */"
-                                        << be_nl;
-    }
+  *this->ciao_svnt_template_header_ << be_nl_2
+                                    << "#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)"
+                                    << be_nl << "#include \""
+                                    << be_global->be_get_ciao_tmpl_svnt_src_fname (true)
+                                    << "\"" << be_nl
+                                    << "#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */"
+                                    << be_nl_2
+                                    << "#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)"
+                                    << be_nl << "#pragma implementation (\""
+                                    << be_global->be_get_ciao_tmpl_svnt_src_fname (true)
+                                    << "\")"
+                                    << be_nl << "#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */"
+                                    << be_nl;
 
   if (be_global->post_include () != 0)
     {
