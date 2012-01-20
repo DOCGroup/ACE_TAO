@@ -1,3 +1,8 @@
+Fri Jan 20 09:28:45 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/idl/dds4ccm_stub.mpc:
+          Use new -Ssvcp and -Ssvtp
+
 Thu Dec 29 20:00:39 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/DDS_Sender/Hello_Sender.cpp:

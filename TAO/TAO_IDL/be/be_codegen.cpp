@@ -331,8 +331,7 @@ TAO_CodeGen::start_client_header (const char *fname)
   *this->client_header_ << "\n\n#if TAO_MAJOR_VERSION != " << TAO_MAJOR_VERSION
                         << " || TAO_MINOR_VERSION != " << TAO_MINOR_VERSION
                         << " || TAO_BETA_VERSION != " << TAO_BETA_VERSION
-                        << "\n#error This file should be regenerated with TAO_IDL from version "
-                        << TAO_VERSION
+                        << "\n#error This file should be regenerated with TAO_IDL"
                         << "\n#endif";
 
   // Generate the TAO_EXPORT_MACRO macro.
@@ -516,15 +515,6 @@ TAO_CodeGen::start_server_header (const char *fname)
       this->server_header_->print ("\n#include \"%s\"",
                                    server_hdr);
     }
-
-//   if (be_global->gen_ciao_exec_idl())
-//     {
-//       *this->server_header_
-//         << be_nl
-//         << "#include \""
-//         << be_global->be_get_ciao_exec_svnt_fname (true)
-//         << "\"";
-//     }
 
   /// These are generated regardless, so we put it before the
   /// check below.
@@ -1106,7 +1096,6 @@ TAO_CodeGen::start_ciao_svnt_header (const char *fname)
           << be_global->be_get_ciao_tmpl_svnt_hdr_fname (true)
           << "\"" << be_nl;
     }
-
 
   this->gen_svnt_hdr_includes (this->ciao_svnt_header_);
 
@@ -1983,19 +1972,22 @@ TAO_CodeGen::end_ciao_svnt_source (void)
 int
 TAO_CodeGen::end_ciao_svnt_template_header (void)
 {
-  *this->ciao_svnt_template_header_ << be_nl_2
-                                    << "#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)"
-                                    << be_nl << "#include \""
-                                    << be_global->be_get_ciao_tmpl_svnt_src_fname (true)
-                                    << "\"" << be_nl
-                                    << "#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */"
-                                    << be_nl_2
-                                    << "#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)"
-                                    << be_nl << "#pragma implementation (\""
-                                    << be_global->be_get_ciao_tmpl_svnt_src_fname (true)
-                                    << "\")"
-                                    << be_nl << "#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */"
-                                    << be_nl;
+  if (be_global->gen_svnt_tpp_files ())
+    {
+      *this->ciao_svnt_template_header_ << be_nl_2
+                                        << "#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)"
+                                        << be_nl << "#include \""
+                                        << be_global->be_get_ciao_tmpl_svnt_src_fname (true)
+                                        << "\"" << be_nl
+                                        << "#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */"
+                                        << be_nl_2
+                                        << "#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)"
+                                        << be_nl << "#pragma implementation (\""
+                                        << be_global->be_get_ciao_tmpl_svnt_src_fname (true)
+                                        << "\")"
+                                        << be_nl << "#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */"
+                                        << be_nl;
+    }
 
   if (be_global->post_include () != 0)
     {

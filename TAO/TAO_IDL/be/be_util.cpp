@@ -852,6 +852,16 @@ be_util::usage (void)
     ));
   ACE_DEBUG ((
       LM_DEBUG,
+      ACE_TEXT (" -Ssvcp\t\t\tsuppress generating servant implementation")
+      ACE_TEXT (" (disabled by default)\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Ssvtp\t\t\tsuppress generating servant template implementation")
+      ACE_TEXT (" (disabled by default)\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
       ACE_TEXT (" -Sci\t\t\tsuppress generating client inline file")
       ACE_TEXT (" (disabled by default)\n")
     ));

@@ -52,8 +52,8 @@ be_visitor_root_svs::visit_root (be_root *node)
 int
 be_visitor_root_svs::init (void)
 {
-  // First open the client-side header file for writing.
-  int status =
+  // First open the ciao servant source file for writing.
+  int const status =
     tao_cg->start_ciao_svnt_source (
       be_global->be_get_ciao_svnt_src_fname ());
 
