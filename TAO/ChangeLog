@@ -1,3 +1,8 @@
+Fri Jan 20 18:46:22 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/UNKNOWN_Exception/client.cpp:
+          Fixed memory leak and gcc warning
+
 Fri Jan 20 10:30:24 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/taobaseidldefaults.mpb:

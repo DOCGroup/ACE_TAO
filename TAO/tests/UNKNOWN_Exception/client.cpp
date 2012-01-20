@@ -78,13 +78,21 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                       "\tThis is expected behavior\n\n"));
         }
 
-      ACE_ASSERT (unknown_exception_raised == 1);
+      if  (unknown_exception_raised != 1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                            "Failure: unknown excep not raised\n"),
+                            -1);
+        }
+
       unknown_exception_raised = 0;
 
       test->unknown_exception_during_deactivation ();
 
       if (shutdown_server)
         test_factory->shutdown ();
+
+      orb->destroy ();
     }
   catch (...)
     {
