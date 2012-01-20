@@ -53,7 +53,7 @@ int
 be_visitor_root_svth::init (void)
 {
   /// First open the file for writing.
-  int status =
+  int const status =
     tao_cg->start_ciao_svnt_template_header (
       be_global->be_get_ciao_tmpl_svnt_hdr_fname ());
 

@@ -9,7 +9,7 @@ project (DDS4CCM_idl_gen) : install, dds4ccm, componentidldefaults {
               -I$(CIAO_ROOT)/connectors
 
   IDL_Files {
-    idlflags += -Gxhst -Gxhsk -SS -Ssvcp -Ssvtp -Sci
+    idlflags += -Gxhst -Gxhsk -SS -Ssvntc -Ssvntt -Sci
     dds4ccm_Base.idl
   }
 
@@ -34,7 +34,7 @@ project (DDS4CCM_idl_gen) : install, dds4ccm, componentidldefaults {
 
   IDL_Files {
     idlflags -= -Gxhst -Gxhsk
-    idlflags += -Ssvcp -Ssvtp -SS -Sci
+    idlflags += -Ssvntc -Ssvntt -SS -Sci
     dds4ccm_ConnectorStatusListener.idl
     dds4ccm_DataListenerControl.idl
     dds4ccm_PortStatusListener.idl

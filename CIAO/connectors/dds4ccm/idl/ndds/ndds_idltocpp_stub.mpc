@@ -6,7 +6,7 @@ project (CIAO_NDDS_idl_gen) : install, ndds_idltocpp, componentidldefaults {
               -Wb,stub_export_include=ndds_stub_export.h \
               -Wb,skel_export_macro=NDDS_SKEL_Export \
               -Wb,skel_export_include=ndds_skel_export.h \
-              -I$(CIAO_ROOT)/connectors -Glem -Ssvcp -Ssvtp
+              -I$(CIAO_ROOT)/connectors -Glem -Ssvntc -Ssvntt
 
   IDL_Files {
     ndds_dcps.idl
