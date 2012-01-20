@@ -19,11 +19,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                   Client_ORBInitializer,
                   -1);  // No exceptions yet!
 
-  PortableInterceptor::ORBInitializer_var initializer_var1 =
-    initializer1;
-
-  PortableInterceptor::ORBInitializer_var initializer_var2 =
-    initializer2;
+  PortableInterceptor::ORBInitializer_var initializer_var1 = initializer1;
+  PortableInterceptor::ORBInitializer_var initializer_var2 = initializer2;
 
   try
     {
@@ -31,9 +28,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       PortableInterceptor::register_orb_initializer (initializer_var2.in ());
 
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv);
-
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
     }
   catch (const CORBA::NO_MEMORY&)
     {
@@ -48,11 +43,36 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   // Only the pre init for initalizer 1 must be called, other initializers
   // shouldn't be caught
-  ACE_ASSERT (initializer1->pre_init_called == true);
-  ACE_ASSERT (initializer2->pre_init_called == false);
-  ACE_ASSERT (initializer1->post_init_called == false);
-  ACE_ASSERT (initializer2->post_init_called == false);
-  ACE_ASSERT (caught_exception == true);
+  if (initializer1->pre_init_called != true)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Pre init not called for 1\n"),
+                        -1);
+    }
+  if (initializer2->pre_init_called != false)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Pre init called for 2\n"),
+                        -1);
+    }
+  if (initializer1->post_init_called != false)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Post init not called for 1\n"),
+                        -1);
+    }
+  if (initializer2->post_init_called != false)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Post init not called for 1\n"),
+                        -1);
+    }
+  if (caught_exception != true)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Excep not caught\n"),
+                        -1);
+    }
 
   return 0;
 }
