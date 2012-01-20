@@ -5,7 +5,7 @@ project (CIAO_NDDS_lem_gen) : install, ndds_idltocpp, ciaoidldefaults {
   after += CIAO_NDDS_idl_gen
   idlflags += -I$(CIAO_ROOT)/connectors \
               -Wb,stub_export_macro=NDDS_LEM_STUB_Export \
-              -Wb,stub_export_include=ndds_lem_stub_export.h -SS
+              -Wb,stub_export_include=ndds_lem_stub_export.h -SS -Sci
 
   IDL_Files {
      idlflags += -Gxhst
@@ -13,6 +13,7 @@ project (CIAO_NDDS_lem_gen) : install, ndds_idltocpp, ciaoidldefaults {
   }
 
   IDL_Files {
+     idlflags += -Scc
      ndds_dcps_i_handleE.idl
   }
 
@@ -31,7 +32,6 @@ project (CIAO_NDDS_lem_stub) : install, ndds_idltocpp_stub, ccm_lem_stub, ccm_se
 
   Source_Files {
    ndds_dcpsEC.cpp
-   ndds_dcps_i_handleEC.cpp
   }
 
   Header_Files {
@@ -41,8 +41,6 @@ project (CIAO_NDDS_lem_stub) : install, ndds_idltocpp_stub, ccm_lem_stub, ccm_se
   }
 
   Inline_Files {
-   ndds_dcpsEC.inl
-   ndds_dcps_i_handleEC.inl
   }
 
   specific {
