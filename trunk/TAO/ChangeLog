@@ -1,3 +1,8 @@
+Fri Jan 20 18:50:58 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Portable_Interceptors/Bug_2088/client.cpp:
+          Fixed gcc warning
+
 Fri Jan 20 18:46:22 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/UNKNOWN_Exception/client.cpp:
