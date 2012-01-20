@@ -22,7 +22,7 @@ public:
     while (count++ < 10)
       {
         int result = this->gmutex_.acquire ();
-        ACE_ASSERT (result == 0);
+        ACE_TEST_ASSERT (result == 0);
 
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("(%P| %t) has the mutex\n")));
@@ -31,7 +31,7 @@ public:
         ACE_OS::sleep (1);
 
         result = this->gmutex_.release ();
-        ACE_ASSERT (result == 0);
+        ACE_TEST_ASSERT (result == 0);
         ACE_OS::sleep (1);     // Give other process a chance.
       }
   }

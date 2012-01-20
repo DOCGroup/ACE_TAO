@@ -9,7 +9,7 @@
  * extraction operators for various IDL types.
  *
  *
- *  @author Carlos O'RyanJeff Parsons
+ *  @author Carlos O'Ryan Jeff Parsons
  */
 //=============================================================================
 
@@ -863,7 +863,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                         "String extraction test finished\n"));
           }
 
-        ACE_ASSERT (result);
+        ACE_TEST_ASSERT (result);
 
         ACE_DEBUG ((LM_DEBUG,
                     "High resolution timer calibration...."));

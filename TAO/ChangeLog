@@ -1,3 +1,9 @@
+Fri Jan 20 19:30:53 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * performance-tests/Anyop/anyop.cpp:
+          Use ACE_TEST_ASSERT instead of ACE_ASSERT to fix warnings in gcc 4.6
+          release builds
+
 Fri Jan 20 19:05:55 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/InterfaceRepo/IFR_Test/Admin_Client.cpp:
