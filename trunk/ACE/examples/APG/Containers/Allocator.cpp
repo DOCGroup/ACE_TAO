@@ -33,7 +33,7 @@ int StackExample::run (void)
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n# of live objects %d\n"),
               DataElement::numOfActiveObjects ()));
 
-  ACE_ASSERT (this->runUnboundedStack (allocator) != -1);
+  ACE_TEST_ASSERT (this->runUnboundedStack (allocator) != -1);
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n# of live objects %d\n"),
               DataElement::numOfActiveObjects ()));
@@ -64,7 +64,7 @@ int StackExample::runUnboundedStack (ACE_Allocator* allocator)
   void* furtherMemory = 0;
   furtherMemory = allocator->malloc
     (sizeof(ACE_Node<DataElement>));
-  ACE_ASSERT (furtherMemory == 0);
+  ACE_TEST_ASSERT (furtherMemory == 0);
 
   // No memory left..
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%p\n"),
@@ -79,7 +79,7 @@ int StackExample::runUnboundedStack (ACE_Allocator* allocator)
 
   furtherMemory =
     allocator->malloc (sizeof (ACE_Node<DataElement>));
-  ACE_ASSERT (furtherMemory != 0);
+  ACE_TEST_ASSERT (furtherMemory != 0);
 
   return 0;
 }
