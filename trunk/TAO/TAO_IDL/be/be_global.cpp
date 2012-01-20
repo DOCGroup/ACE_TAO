@@ -127,6 +127,8 @@ BE_GlobalData::BE_GlobalData (void)
     messaging_replyhandler_ (0),
     gen_anyop_files_ (false),
     gen_skel_files_ (true),
+    gen_svnt_cpp_files_ (true),
+    gen_svnt_tpp_files_ (true),
     gen_client_inline_ (true),
     gen_client_stub_ (true),
     gen_server_skeleton_ (true),
@@ -687,8 +689,7 @@ BE_GlobalData::be_get_anyop_header_fname (
 }
 
 const char *
-BE_GlobalData::be_get_ciao_svnt_hdr_fname (
-  bool base_name_only)
+BE_GlobalData::be_get_ciao_svnt_hdr_fname (bool base_name_only)
 {
   return
     be_get_ciao_svnt_header (idl_global->stripped_filename (),
@@ -696,8 +697,7 @@ BE_GlobalData::be_get_ciao_svnt_hdr_fname (
 }
 
 const char *
-BE_GlobalData::be_get_ciao_tmpl_svnt_hdr_fname (
-    bool base_name_only)
+BE_GlobalData::be_get_ciao_tmpl_svnt_hdr_fname (bool base_name_only)
 {
   return
     be_get_ciao_svnt_template_header (idl_global->stripped_filename (),
@@ -2382,6 +2382,30 @@ BE_GlobalData::gen_skel_files (bool val)
 }
 
 bool
+BE_GlobalData::gen_svnt_cpp_files (void) const
+{
+  return this->gen_svnt_cpp_files_;
+}
+
+void
+BE_GlobalData::gen_svnt_cpp_files (bool val)
+{
+  this->gen_svnt_cpp_files_ = val;
+}
+
+bool
+BE_GlobalData::gen_svnt_tpp_files (void) const
+{
+  return this->gen_svnt_tpp_files_;
+}
+
+void
+BE_GlobalData::gen_svnt_tpp_files (bool val)
+{
+  this->gen_svnt_tpp_files_ = val;
+}
+
+bool
 BE_GlobalData::gen_client_inline (void) const
 {
   return this->gen_client_inline_;
@@ -3467,6 +3491,14 @@ BE_GlobalData::parse_args (long &i, char **av)
                 // Suppress all Any support.
                 be_global->any_support (false);
               }
+          }
+        else if (av[i][2] == 's' && av[i][3] == 'v' && av[i][4] == 'c' && av[i][5] == 'p' && '\0' == av[i][6])
+          {
+            be_global->gen_svnt_cpp_files (false);
+          }
+        else if (av[i][2] == 's' && av[i][3] == 'v' && av[i][4] == 't' && av[i][5] == 'p' && '\0' == av[i][6])
+          {
+            be_global->gen_svnt_tpp_files (false);
           }
         else if (av[i][2] == 'o' && av[i][3] == 'r' && av[i][4] == 'b' && '\0' == av[i][5])
           {
