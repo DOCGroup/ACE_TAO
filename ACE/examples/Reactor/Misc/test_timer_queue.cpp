@@ -9,8 +9,6 @@
 #include "ace/Null_Mutex.h"
 #include "ace/Event_Handler.h"
 
-
-
 class Example_Handler : public ACE_Event_Handler
 {
 public:
@@ -39,8 +37,8 @@ test_functionality (ACE_Timer_Queue *tq)
 {
   Example_Handler eh;
 
-  ACE_ASSERT (tq->is_empty ());
-  ACE_ASSERT (ACE_Time_Value::zero == ACE_Time_Value (0));
+  ACE_TEST_ASSERT (tq->is_empty ());
+  ACE_TEST_ASSERT (ACE_Time_Value::zero == ACE_Time_Value (0));
   const void *timer_act = 0;
 
   ACE_NEW (timer_act, int (1));
@@ -50,41 +48,41 @@ test_functionality (ACE_Timer_Queue *tq)
   // warnings with ACE_NDEBUG about it being unused.
   if (timer_id1 == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "schedule () failed"));
-  ACE_ASSERT (timer_id1 != -1);
+  ACE_TEST_ASSERT (timer_id1 != -1);
 
   ACE_NEW (timer_act, int (42));
   long result = tq->schedule (&eh, timer_act, ACE_OS::gettimeofday ());
-  ACE_ASSERT (result != -1);
+  ACE_TEST_ASSERT (result != -1);
   ACE_NEW (timer_act, int (42));
   result = tq->schedule (&eh, timer_act, ACE_OS::gettimeofday ());
-  ACE_ASSERT (result != -1);
+  ACE_TEST_ASSERT (result != -1);
 
   result = tq->cancel (timer_id1, &timer_act);
-  ACE_ASSERT (result == 1);
+  ACE_TEST_ASSERT (result == 1);
   delete (int *) timer_act;
   result = tq->is_empty ();
-  ACE_ASSERT (!result);
+  ACE_TEST_ASSERT (!result);
 
   result = tq->expire ();
-  ACE_ASSERT (result == 2);
+  ACE_TEST_ASSERT (result == 2);
 
   ACE_NEW (timer_act, int (4));
   timer_id1 = tq->schedule (&eh, timer_act, ACE_OS::gettimeofday ());
-  ACE_ASSERT (timer_id1 != -1);
+  ACE_TEST_ASSERT (timer_id1 != -1);
   ACE_NEW (timer_act, int (5));
   long timer_id2 = tq->schedule (&eh, timer_act, ACE_OS::gettimeofday ());
-  ACE_ASSERT (timer_id2 != -1);
+  ACE_TEST_ASSERT (timer_id2 != -1);
 
   result = tq->cancel (timer_id1, &timer_act);
-  ACE_ASSERT (result == 1);
+  ACE_TEST_ASSERT (result == 1);
   delete (int *) timer_act;
   result = tq->cancel (timer_id2, &timer_act);
-  ACE_ASSERT (result == 1);
+  ACE_TEST_ASSERT (result == 1);
   delete (int *) timer_act;
   result = tq->is_empty ();
-  ACE_ASSERT (result == 1);
+  ACE_TEST_ASSERT (result == 1);
   result = tq->expire ();
-  ACE_ASSERT (result == 0);
+  ACE_TEST_ASSERT (result == 0);
 }
 
 struct Timer_Queues
