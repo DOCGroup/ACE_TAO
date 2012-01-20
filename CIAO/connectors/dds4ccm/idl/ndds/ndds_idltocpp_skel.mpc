@@ -16,7 +16,6 @@ project (CIAO_NDDS_skel) : install, ndds_idltocpp_stub, ciaolib_with_idl, ciao_o
 
   Source_Files {
     ndds_dcpsS.cpp
-    ndds_dcps_i_handleS.cpp
   }
 
   Inline_Files {
