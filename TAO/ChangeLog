@@ -1,8 +1,23 @@
+Fri Jan 20 09:27:41 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/taobaseidldefaults.mpb:
+          Extended rules
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be/be_produce.cpp:
+        * TAO_IDL/be/be_util.cpp:
+        * TAO_IDL/be/be_visitor_root/root_svs.cpp:
+        * TAO_IDL/be_include/be_global.h:
+        * docs/compiler.html:
+          Added -Ssvcp to suppress generation of _svnt.cpp and -Svtp to
+          suppress generation of _svnt_T.cpp
+
 Mon Jan 16 22:03:43 UTC 2012  Chip Jones  <jonesc@ociweb.com>
 
         * MPC/config/taoidldefaults.mpb:
 
-          Added ace_idl_dependencies as a base project of 
+          Added ace_idl_dependencies as a base project of
           taobaseidldefaults.
 
           This is a merge of work done in the 'tao-mpc_performance'

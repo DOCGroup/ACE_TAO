@@ -219,17 +219,23 @@ BE_produce (void)
       be_visitor_root_svh root_svh_visitor (&ctx);
       BE_visit_root (root_svh_visitor, "CIAO servant header");
 
-      ctx.state (TAO_CodeGen::TAO_ROOT_SVS);
-      be_visitor_root_svs root_svs_visitor (&ctx);
-      BE_visit_root (root_svs_visitor, "CIAO servant source");
+      if (be_global->gen_svnt_cpp_files ())
+        {
+          ctx.state (TAO_CodeGen::TAO_ROOT_SVS);
+          be_visitor_root_svs root_svs_visitor (&ctx);
+          BE_visit_root (root_svs_visitor, "CIAO servant source");
+        }
 
       ctx.state (TAO_CodeGen::TAO_ROOT_SVTH);
       be_visitor_root_svth root_svth_visitor (&ctx);
       BE_visit_root (root_svth_visitor, "CIAO template servant header");
 
-      ctx.state (TAO_CodeGen::TAO_ROOT_SVTS);
-      be_visitor_root_svts root_svts_visitor (&ctx);
-      BE_visit_root (root_svts_visitor, "CIAO template servant source");
+      if (be_global->gen_svnt_tpp_files ())
+        {
+          ctx.state (TAO_CodeGen::TAO_ROOT_SVTS);
+          be_visitor_root_svts root_svts_visitor (&ctx);
+          BE_visit_root (root_svts_visitor, "CIAO template servant source");
+        }
     }
 
   if (be_global->gen_ciao_exec_idl ())

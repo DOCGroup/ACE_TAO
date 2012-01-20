@@ -818,6 +818,14 @@ public:
   bool gen_skel_files (void) const;
   void gen_skel_files (bool val);
 
+  /// Accessors for the member gen_svnt_cpp_files_.
+  bool gen_svnt_cpp_files (void) const;
+  void gen_svnt_cpp_files (bool val);
+
+  /// Accessors for the member gen_svnt_tpp_files_.
+  bool gen_svnt_tpp_files (void) const;
+  void gen_svnt_tpp_files (bool val);
+
   /// Accessors for the member gen_client_inline_.
   bool gen_client_inline (void) const;
   void gen_client_inline (bool val);
@@ -1180,9 +1188,17 @@ private:
   /// Separate files for generated Any operators?
   bool gen_anyop_files_;
 
-  /// True by default, but a command line option can turn this off so
-  /// we generate only an empty *S.h file on the skeleton side.
+  /// True by default, but a command line option can turn this off so that
+  /// we don't generate a S.cpp file
   bool gen_skel_files_;
+
+  /// True by default, but a command line option can turn this of so that
+  /// we don't generate a svnt.cpp file
+  bool gen_svnt_cpp_files_;
+
+  /// True by default, but a command line option can turn this of so that
+  /// we don't generate a svnt_T.cpp file
+  bool gen_svnt_tpp_files_;
 
   /// True by default, but a command line option can turn this off so
   /// that we don't generate a client inline file
