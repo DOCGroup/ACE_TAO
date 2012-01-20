@@ -27,5 +27,6 @@ module Baz
   interface C : Foo::Bar::A, Foo::Bar::B
   {
     long op4();
+    oneway void shutdown ();
   };
 };

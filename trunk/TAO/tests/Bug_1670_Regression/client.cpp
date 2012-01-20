@@ -65,16 +65,36 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       CORBA::Long result;
       result = cobject->op1 ();
-      ACE_ASSERT(result == 1);
+      if (result != 1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                                "Result not 1\n"),
+                            1);
+        }
 
       result = cobject->op2 ();
-      ACE_ASSERT(result == 2);
+      if (result != 2)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                                "Result not 2\n"),
+                            1);
+        }
 
       result = cobject->op3 ();
-      ACE_ASSERT(result == 3);
+      if (result != 3)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                                "Result not 3\n"),
+                            1);
+        }
 
       result = cobject->op4 ();
-      ACE_ASSERT(result == 4);
+      if (result != 4)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                                "Result not 4\n"),
+                            1);
+        }
 
       Foo::Bar::B_var bobject =
         Foo::Bar::B::_narrow (object.in ());
@@ -88,7 +108,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
 
       result = bobject->op3 ();
-      ACE_ASSERT(result == 3);
+      if (result != 3)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                                "Result not 3\n"),
+                            1);
+        }
 
       Foo::Bar::A_var aobject =
         Foo::Bar::A::_narrow (object.in ());
@@ -102,10 +127,22 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
 
       result = aobject->op1 ();
-      ACE_ASSERT(result == 1);
+      if (result != 1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                                "Result not 1\n"),
+                            1);
+        }
 
       result = aobject->op2 ();
-      ACE_ASSERT(result == 2);
+      if (result != 2)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                                "Result not 2\n"),
+                            1);
+        }
+
+      cobject->shutdown ();
 
       orb->destroy ();
     }
