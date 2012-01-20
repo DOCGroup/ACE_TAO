@@ -1,3 +1,9 @@
+Fri Jan 20 19:30:51 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/APG/Processes/Process_Mutex.cpp:
+          Use ACE_TEST_ASSERT instead of ACE_ASSERT to fix warnings in gcc 4.6
+          release builds
+
 Fri Jan 20 19:06:02 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/APG/Containers/Allocator.cpp:
