@@ -20,10 +20,25 @@ project (DDS4CCM_skel) : install, dds4ccm_lem_stub, ciaolib_with_idl, \
     dds4ccm_ConnectorStatusListenerS.h
     dds4ccm_ConnectorS.h
     dds_rtf2_dcpsS.h
+    dds4ccm_Base_svnt.h
+    dds4ccm_Connector_svnt.h
+    dds4ccm_Connector_svnt_T.h
+    dds4ccm_PortStatusListener_svnt.h
+    dds4ccm_DataListenerControl_svnt.h
+    dds4ccm_ConnectorStatusListener_svnt.h
+    dds4ccm_StateListenerControl_svnt.h
   }
 
   Source_Files {
     dds4ccm_ConnectorS.cpp
+    dds4ccm_Connector_svnt.cpp
+  }
+
+  Inline_Files {
+  }
+
+  Template_Files {
+    dds4ccm_Connector_svnt_T.cpp
   }
 
   Inline_Files {
