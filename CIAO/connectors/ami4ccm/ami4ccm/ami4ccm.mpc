@@ -26,7 +26,7 @@ project (AMI4CCM_lem_gen) : install, ciaoidldefaults {
               -Wb,stub_export_include=ami4ccm_lem_stub_export.h -SS
 
   IDL_Files {
-     idlflags += -Gxhst
+     idlflags += -Gxhst -Sci
      ami4ccmE.idl
   }
 
@@ -85,7 +85,6 @@ project (AMI4CCM_lem_stub) : install, ccm_session_stub, ciao_lib, ciao_output, t
   }
 
   Inline_Files {
-   ami4ccmEC.inl
   }
 
   specific {
