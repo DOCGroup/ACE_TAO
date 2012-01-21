@@ -1,3 +1,9 @@
+Sat Jan 21 12:15:51 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/idl/dds4ccm_skel.mpc:
+        * connectors/dds4ccm/idl/ndds/ndds_idltocpp_stub.mpc:
+          Added missing files
+
 Fri Jan 20 10:31:19 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/idl/dds4ccm_stub.mpc:
