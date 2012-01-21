@@ -1,3 +1,8 @@
+Sat Jan 21 14:40:46 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/ami4ccm/ami4ccm/ami4ccm.mpc:
+          Reduced number of files generated
+
 Sat Jan 21 14:40:07 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/idl/ndds/ndds_idltocpp_stub.mpc:
