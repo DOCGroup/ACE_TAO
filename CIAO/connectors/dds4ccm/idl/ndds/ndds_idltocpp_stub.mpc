@@ -56,6 +56,7 @@ project (CIAO_NDDS_stub) : install, ndds_idltocpp, ccm_stub, ciaolib_with_idl, c
   verbatim(gnuace, postinstall) {
 "	cp ndds_dcps_instance_handle.idl $(INSTALL_PREFIX)/include/connectors/dds4ccm/idl/ndds/"
 "	cp ndds_dcps_instance_handle*.h $(INSTALL_PREFIX)/include/connectors/dds4ccm/idl/ndds/"
+" cp *_svnt.h $(INSTALL_PREFIX)/include/connectors/dds4ccm/idl/ndds/"
   }
 
 }
