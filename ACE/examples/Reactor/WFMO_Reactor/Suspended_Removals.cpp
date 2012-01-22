@@ -44,15 +44,10 @@ public:
                                      size_t handles_to_be_resumed,
                                      size_t handles_to_be_deleted)
   {
-    ACE_UNUSED_ARG (wfmo_reactor);  // for release builds where ACE_ASSERT is noop
-    ACE_UNUSED_ARG (handles_to_be_added);
-    ACE_UNUSED_ARG (handles_to_be_suspended);
-    ACE_UNUSED_ARG (handles_to_be_resumed);
-    ACE_UNUSED_ARG (handles_to_be_deleted);
-    ACE_ASSERT (wfmo_reactor.handler_rep_.handles_to_be_added_ == handles_to_be_added);
-    ACE_ASSERT (wfmo_reactor.handler_rep_.handles_to_be_suspended_ == handles_to_be_suspended);
-    ACE_ASSERT (wfmo_reactor.handler_rep_.handles_to_be_resumed_ == handles_to_be_resumed);
-    ACE_ASSERT (wfmo_reactor.handler_rep_.handles_to_be_deleted_ == handles_to_be_deleted);
+    ACE_TEST_ASSERT (wfmo_reactor.handler_rep_.handles_to_be_added_ == handles_to_be_added);
+    ACE_TEST_ASSERT (wfmo_reactor.handler_rep_.handles_to_be_suspended_ == handles_to_be_suspended);
+    ACE_TEST_ASSERT (wfmo_reactor.handler_rep_.handles_to_be_resumed_ == handles_to_be_resumed);
+    ACE_TEST_ASSERT (wfmo_reactor.handler_rep_.handles_to_be_deleted_ == handles_to_be_deleted);
   }
 };
 
@@ -69,7 +64,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
   int result =
     reactor.register_handler (&handler);
-  ACE_ASSERT (result == 0);
+  ACE_TEST_ASSERT (result == 0);
 
   ACE_WFMO_Reactor_Test::check_for_valid_state (reactor,
                                                 1, 0, 0, 0);
@@ -78,33 +73,33 @@ ACE_TMAIN (int, ACE_TCHAR *[])
     reactor.remove_handler (&handler,
                             ACE_Event_Handler::DONT_CALL |
                             ACE_Event_Handler::ALL_EVENTS_MASK);
-  ACE_ASSERT (result == 0);
+  ACE_TEST_ASSERT (result == 0);
 
   ACE_WFMO_Reactor_Test::check_for_valid_state (reactor,
                                                 1, 0, 0, 1);
 
   result = base_reactor.run_reactor_event_loop (time);
-  ACE_ASSERT (result != -1);
+  ACE_TEST_ASSERT (result != -1);
 
   ACE_WFMO_Reactor_Test::check_for_valid_state (reactor,
                                                 0, 0, 0, 0);
 
   result =
     reactor.register_handler (&handler);
-  ACE_ASSERT (result == 0);
+  ACE_TEST_ASSERT (result == 0);
 
   ACE_WFMO_Reactor_Test::check_for_valid_state (reactor,
                                                 1, 0, 0, 0);
 
   result = base_reactor.run_reactor_event_loop (time);
-  ACE_ASSERT (result != -1);
+  ACE_TEST_ASSERT (result != -1);
 
   ACE_WFMO_Reactor_Test::check_for_valid_state (reactor,
                                                 0, 0, 0, 0);
 
   result =
     reactor.suspend_handler (&handler);
-  ACE_ASSERT (result == 0);
+  ACE_TEST_ASSERT (result == 0);
 
   ACE_WFMO_Reactor_Test::check_for_valid_state (reactor,
                                                 0, 1, 0, 0);
@@ -113,40 +108,40 @@ ACE_TMAIN (int, ACE_TCHAR *[])
     reactor.remove_handler (&handler,
                             ACE_Event_Handler::DONT_CALL |
                             ACE_Event_Handler::ALL_EVENTS_MASK);
-  ACE_ASSERT (result == 0);
+  ACE_TEST_ASSERT (result == 0);
 
   ACE_WFMO_Reactor_Test::check_for_valid_state (reactor,
                                                 0, 0, 0, 1);
 
   result = base_reactor.run_reactor_event_loop (time);
-  ACE_ASSERT (result != -1);
+  ACE_TEST_ASSERT (result != -1);
 
   ACE_WFMO_Reactor_Test::check_for_valid_state (reactor,
                                                 0, 0, 0, 0);
 
   result =
     reactor.register_handler (&handler);
-  ACE_ASSERT (result == 0);
+  ACE_TEST_ASSERT (result == 0);
 
   ACE_WFMO_Reactor_Test::check_for_valid_state (reactor,
                                                 1, 0, 0, 0);
 
   result =
     reactor.suspend_handler (&handler);
-  ACE_ASSERT (result == 0);
+  ACE_TEST_ASSERT (result == 0);
 
   ACE_WFMO_Reactor_Test::check_for_valid_state (reactor,
                                                 1, 1, 0, 0);
 
   result = base_reactor.run_reactor_event_loop (time);
-  ACE_ASSERT (result != -1);
+  ACE_TEST_ASSERT (result != -1);
 
   ACE_WFMO_Reactor_Test::check_for_valid_state (reactor,
                                                 0, 0, 0, 0);
 
   result =
     reactor.resume_handler (&handler);
-  ACE_ASSERT (result == 0);
+  ACE_TEST_ASSERT (result == 0);
 
   ACE_WFMO_Reactor_Test::check_for_valid_state (reactor,
                                                 0, 0, 1, 0);
@@ -155,13 +150,13 @@ ACE_TMAIN (int, ACE_TCHAR *[])
     reactor.remove_handler (&handler,
                             ACE_Event_Handler::DONT_CALL |
                             ACE_Event_Handler::ALL_EVENTS_MASK);
-  ACE_ASSERT (result == 0);
+  ACE_TEST_ASSERT (result == 0);
 
   ACE_WFMO_Reactor_Test::check_for_valid_state (reactor,
                                                 0, 0, 0, 1);
 
   result = base_reactor.run_reactor_event_loop (time);
-  ACE_ASSERT (result != -1);
+  ACE_TEST_ASSERT (result != -1);
 
   ACE_WFMO_Reactor_Test::check_for_valid_state (reactor,
                                                 0, 0, 0, 0);

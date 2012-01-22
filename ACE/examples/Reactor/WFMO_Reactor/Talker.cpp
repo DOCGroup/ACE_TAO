@@ -539,7 +539,7 @@ STDIN_Handler::handle_signal (int, siginfo_t *si, ucontext_t *)
 {
   if (si != 0)
     {
-      ACE_ASSERT (this->thr_handle_ == si->si_handle_);
+      ACE_TEST_ASSERT (this->thr_handle_ == si->si_handle_);
       ACE_Reactor::end_event_loop ();
     }
   return 0;

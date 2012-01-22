@@ -57,8 +57,7 @@ Network_Handler::Network_Handler (ACE_SOCK_Stream &s)
   this->reactor (ACE_Reactor::instance ());
 
   int result = this->reactor ()->register_handler (this, READ_MASK);
-  ACE_ASSERT (result == 0);
-  ACE_UNUSED_ARG (result);
+  ACE_TEST_ASSERT (result == 0);
 }
 
 ACE_HANDLE
@@ -136,8 +135,7 @@ Network_Listener::Network_Listener (void)
   this->reactor (ACE_Reactor::instance ());
   int result = this->reactor ()->register_handler (this,
                                                    ACE_Event_Handler::ACCEPT_MASK);
-  ACE_ASSERT (result == 0);
-  ACE_UNUSED_ARG (result);
+  ACE_TEST_ASSERT (result == 0);
 }
 
 Network_Listener::~Network_Listener (void)
@@ -170,13 +168,12 @@ Network_Listener::handle_input (ACE_HANDLE handle)
                                        0, // timeout
                                        1, // restart
                                        reset_new_handle);  // reset new handler
-  ACE_ASSERT (result == 0);
-  ACE_UNUSED_ARG (result);
+  ACE_TEST_ASSERT (result == 0);
 
   ACE_DEBUG ((LM_DEBUG, "Remote connection from: "));
   remote_address.dump ();
 
-  Network_Handler *handler;
+  Network_Handler *handler = 0;
   ACE_NEW_RETURN (handler, Network_Handler (stream), -1);
 
   return 0;

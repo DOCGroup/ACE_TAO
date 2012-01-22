@@ -109,7 +109,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   Event_Handler handler (reactor);
 
   int result = ACE_OS::thr_create ((ACE_THR_FUNC) worker, 0, 0, 0);
-  ACE_ASSERT (result == 0);
+  ACE_TEST_ASSERT (result == 0);
 
   for (result = 0; result != -1; result = reactor.handle_events ())
     continue;
