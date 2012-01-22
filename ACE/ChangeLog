@@ -1,3 +1,8 @@
+Sun Jan 22 12:35:11 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/make_release.py:
+          Use the new MPC -workers option to speedup the release process
+
 Fri Jan 20 19:30:51 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/APG/Processes/Process_Mutex.cpp:
