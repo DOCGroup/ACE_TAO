@@ -9,6 +9,7 @@ using namespace std;
 #include "BaseSupport.h"
 
 #include "ace/OS_main.h"
+#include "ace/OS_NS_stdlib.h"
 
 #define LIBRARY_NAME  "QueryCondition_Library"
 #define PROFILE_NAME  "QueryCondition_Profile"
@@ -265,7 +266,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 //       static_cast <NDDS_Config_LogVerbosity> (3);
 //     NDDSConfigLogger::get_instance()->set_verbosity (n_verbosity);
 
-  const char * env_domain_id = 0;
+  const ACE_TCHAR * env_domain_id = 0;
   if (argc > 1)
     {
       env_domain_id = argv[1];
@@ -279,7 +280,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   else
     printf ("Domain ID set to %s\n", env_domain_id);
 
-  const int domain_id = atoi (env_domain_id);
+  const int domain_id = ACE_OS::atoi (env_domain_id);
   /* Create the domain participant on domain ID 0 */
   DDSDomainParticipant *participant = DDSDomainParticipantFactory::get_instance()->
       create_participant_with_profile (domain_id,    /* Domain ID */
