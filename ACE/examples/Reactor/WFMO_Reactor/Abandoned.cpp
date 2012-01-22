@@ -99,8 +99,7 @@ Event_Handler::handle_timeout (const ACE_Time_Value &,
                       ACE_Process_Mutex,
                       -1);
       int result = ACE_Thread_Manager::instance ()->spawn (&worker, this);
-      ACE_ASSERT (result != -1);
-      ACE_UNUSED_ARG (result);
+      ACE_TEST_ASSERT (result != -1);
     }
 
   return 0;
@@ -115,14 +114,14 @@ ACE_TMAIN (int , ACE_TCHAR *[])
   int result = ACE_Reactor::instance ()->register_handler
     (&event_handler,
      event_handler.handle_.handle ());
-  ACE_ASSERT (result == 0);
+  ACE_TEST_ASSERT (result == 0);
 
   ACE_Time_Value timeout (2);
   result = ACE_Reactor::instance ()->schedule_timer (&event_handler,
                                                      0,
                                                      timeout,
                                                      timeout);
-  ACE_ASSERT (result != -1);
+  ACE_TEST_ASSERT (result != -1);
 
   ACE_Reactor::run_event_loop ();
 
