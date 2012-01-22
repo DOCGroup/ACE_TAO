@@ -5,6 +5,7 @@ project (CIAO_NDDS_skel) : install, ndds_idltocpp_stub, ciaolib_with_idl, ciao_o
   includes += $(CIAO_ROOT)/connectors
 
   dynamicflags += NDDS_SKEL_BUILD_DLL
+
   IDL_Files {
   }
 
@@ -12,6 +13,7 @@ project (CIAO_NDDS_skel) : install, ndds_idltocpp_stub, ciaolib_with_idl, ciao_o
     ndds_skel_export.h
     ndds_dcpsS.h
     ndds_dcps_i_handleS.h
+    ndds_dcps_instance_handleS.h
   }
 
   Source_Files {

@@ -32,12 +32,17 @@ project (CIAO_NDDS_stub) : install, ndds_idltocpp, ccm_stub, ciaolib_with_idl, c
   IDL_Files {
   }
 
+  PIDL_Files {
+    ndds_dcps_instance_handle.idl
+  }
+
   Header_Files {
     ndds_stub_export.h
     ndds_dscp_svnt.h
     ndds_dcpsC.h
     ndds_dcps_i_handleC.h
     ndds_dcps_instance_handleC.h
+    ndds_dcps_instance_handleEC.h
   }
 
   Source_Files {
@@ -54,12 +59,6 @@ project (CIAO_NDDS_stub) : install, ndds_idltocpp, ccm_stub, ciaolib_with_idl, c
   specific {
     install_dir = connectors/dds4ccm/idl/ndds
   }
-
-  verbatim(gnuace, postinstall) {
-"	cp ndds_dcps_instance_handle.idl $(INSTALL_PREFIX)/include/connectors/dds4ccm/idl/ndds/"
-"	cp ndds_dcps_instance_handle*.h $(INSTALL_PREFIX)/include/connectors/dds4ccm/idl/ndds/"
-  }
-
 }
 
 project (CIAO_NDDS_idl_install_only) {
