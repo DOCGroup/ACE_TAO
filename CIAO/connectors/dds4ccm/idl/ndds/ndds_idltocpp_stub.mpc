@@ -20,6 +20,10 @@ project (CIAO_NDDS_idl_gen) : install, ndds_idltocpp, componentidldefaults {
   specific {
     install_dir = connectors/dds4ccm/idl/ndds
   }
+
+  verbatim(gnuace, postinstall) {
+"	cp ndds_dcps_instance_handle.idl $(INSTALL_PREFIX)/include/connectors/dds4ccm/idl/ndds/"
+  }
 }
 
 project (CIAO_NDDS_stub) : install, ndds_idltocpp, ccm_stub, ciaolib_with_idl, ciao_output, taolib {
@@ -30,10 +34,6 @@ project (CIAO_NDDS_stub) : install, ndds_idltocpp, ccm_stub, ciaolib_with_idl, c
   dynamicflags += NDDS_STUB_BUILD_DLL
 
   IDL_Files {
-  }
-
-  PIDL_Files {
-    ndds_dcps_instance_handle.idl
   }
 
   Header_Files {
