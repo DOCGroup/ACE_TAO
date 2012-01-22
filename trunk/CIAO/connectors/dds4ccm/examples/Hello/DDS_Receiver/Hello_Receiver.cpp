@@ -32,7 +32,7 @@ int ACE_TMAIN(int argc, ACE_TCHAR** argv) {
 
   if (argc == 2)
     {
-      char *end = 0;
+      ACE_TCHAR *end = 0;
       num_samples = ACE_OS::strtol (argv[1], &end, 10);
 
       if (end == argv[1] && num_samples < 0)
