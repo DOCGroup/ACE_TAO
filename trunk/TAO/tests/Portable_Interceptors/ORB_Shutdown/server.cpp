@@ -38,9 +38,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
     {
+#if TAO_HAS_INTERCEPTORS == 1
       bool destroy_called = false;
 
-#if TAO_HAS_INTERCEPTORS == 1
       Server_ORBInitializer *temp_initializer = 0;
       ACE_NEW_RETURN (temp_initializer,
                       Server_ORBInitializer (destroy_called),
@@ -109,7 +109,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
 
-      ACE_ASSERT (destroy_called == true);
+#if TAO_HAS_INTERCEPTORS == 1
+      ACE_TEST_ASSERT (destroy_called == true);
+#endif
 
       ACE_DEBUG ((LM_DEBUG, "Event loop finished.\n"));
     }

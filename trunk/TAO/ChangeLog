@@ -1,3 +1,9 @@
+Sun Jan 22 13:58:55 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Portable_Interceptors/ORB_Shutdown/client.cpp:
+        * tests/Portable_Interceptors/ORB_Shutdown/server.cpp:
+          Fixed gcc 4.6 warning, fixed valgrind reported memory leaks
+
 Fri Jan 20 19:30:53 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/Anyop/anyop.cpp:
