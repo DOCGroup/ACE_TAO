@@ -1,3 +1,18 @@
+Sun Jan 22 19:41:27 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Reactor/WFMO_Reactor/APC.cpp:
+        * examples/Reactor/WFMO_Reactor/Abandoned.cpp:
+        * examples/Reactor/WFMO_Reactor/Directory_Changes.cpp:
+        * examples/Reactor/WFMO_Reactor/Handle_Close.cpp:
+        * examples/Reactor/WFMO_Reactor/Network_Events.cpp:
+        * examples/Reactor/WFMO_Reactor/Prerun_State_Changes.cpp:
+        * examples/Reactor/WFMO_Reactor/Registration.cpp:
+        * examples/Reactor/WFMO_Reactor/Registry_Changes.cpp:
+        * examples/Reactor/WFMO_Reactor/Suspended_Removals.cpp:
+        * examples/Reactor/WFMO_Reactor/Talker.cpp:
+        * examples/Reactor/WFMO_Reactor/Window_Messages.cpp:
+          Fixed GCC 4.6.2 release warnings
+
 Sun Jan 22 12:35:11 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/make_release.py:

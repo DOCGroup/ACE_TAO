@@ -74,7 +74,7 @@ ACE_TMAIN (int, ACE_TCHAR*[])
   int result =
     ACE_Reactor::instance ()->register_handler (&event_handler,
                                                 event_handler.handle_.handle ());
-  ACE_ASSERT (result == 0);
+  ACE_TEST_ASSERT (result == 0);
 
   ACE_Time_Value timeout (1);
   result =
@@ -84,7 +84,7 @@ ACE_TMAIN (int, ACE_TCHAR*[])
                   timeout.msec (),               // time-out value
                   (TIMERPROC) &timer_callback)); // address of timer procedure
 
-  ACE_ASSERT (result != 0);
+  ACE_TEST_ASSERT (result != 0);
 
   ACE_Reactor::run_event_loop ();
 
