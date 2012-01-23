@@ -1,3 +1,9 @@
+Mon Jan 23 14:35:42 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/taobaseidl3toidl2defaults.mpb:
+        * MPC/config/taoidl3toxmidefaults.mpb:
+          Fixes for install builds
+
 Mon Jan 23 12:55:55 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ccm/CCM_stub.mpc:
