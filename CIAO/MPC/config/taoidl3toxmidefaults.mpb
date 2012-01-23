@@ -21,5 +21,4 @@ project : xerces {
   after += CIAO_IDL3_TO_XMI_EXE
   // This is necessary for MPC to pull in rules.ciao.GNU
   includes += $(CIAO_ROOT)
-  idl3toxmiflags += $(TAO_IDL3_TO_XMI_FLAGS)
 }
