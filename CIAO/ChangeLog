@@ -1,3 +1,9 @@
+Mon Jan 23 07:53:26 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/idl/ndds/ndds_idltocpp_skel.mpc:
+        * connectors/dds4ccm/idl/ndds/ndds_idltocpp_stub.mpc:
+          Fixes for install build
+
 Sun Jan 22 19:03:34 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/DDS_Receiver/Hello_Receiver.cpp:
