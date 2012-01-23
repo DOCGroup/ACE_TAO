@@ -1,3 +1,8 @@
+Mon Jan 23 12:55:55 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ccm/CCM_stub.mpc:
+          Reverted change below, the install is needed
+
 Mon Jan 23 12:07:30 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ccm/CCM_stub.mpc:
