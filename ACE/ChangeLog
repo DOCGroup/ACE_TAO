@@ -1,3 +1,8 @@
+Mon Jan 23 20:21:50 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+          Fixed support for idl3toxmi and idl3toidl2 flags
+
 Mon Jan 23 12:02:07 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:

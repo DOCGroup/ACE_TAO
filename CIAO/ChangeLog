@@ -1,3 +1,9 @@
+Mon Jan 23 20:21:32 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/taobaseidl3toidl2defaults.mpb:
+        * MPC/config/taoidl3toxmidefaults.mpb:
+          Fixed again
+
 Mon Jan 23 20:12:06 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/taobaseidl3toidl2defaults.mpb:
