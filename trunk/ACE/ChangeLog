@@ -1,3 +1,8 @@
+Mon Jan 23 12:02:07 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+          Added support for idl3toxmi and idl3toidl2 flags
+
 Sun Jan 22 19:41:27 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Reactor/WFMO_Reactor/APC.cpp:
