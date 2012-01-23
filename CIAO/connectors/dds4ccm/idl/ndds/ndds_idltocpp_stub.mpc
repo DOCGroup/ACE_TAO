@@ -38,7 +38,6 @@ project (CIAO_NDDS_stub) : install, ndds_idltocpp, ccm_stub, ciaolib_with_idl, c
 
   Header_Files {
     ndds_stub_export.h
-    ndds_dcps_svnt.h
     ndds_dcpsC.h
     ndds_dcps_i_handleC.h
     ndds_dcps_instance_handleC.h
