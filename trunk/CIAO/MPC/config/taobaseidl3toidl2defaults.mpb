@@ -20,4 +20,5 @@ project {
   }
 
   after += TAO_IDL3_TO_IDL2_EXE
+  idl3toidl2flags += $(TAO_IDL3_TO_IDL2_FLAGS)
 }
