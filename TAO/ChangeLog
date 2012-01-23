@@ -1,3 +1,8 @@
+Mon Jan 23 12:51:26 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/util/utl_err.cpp:
+          Implemented exprtype_to_string for all types
+
 Sun Jan 22 13:58:55 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Portable_Interceptors/ORB_Shutdown/client.cpp:
