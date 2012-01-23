@@ -1,3 +1,8 @@
+Mon Jan 23 09:45:53 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * CIAO_TAO_DAnCE.mwc:
+          Also build tools
+
 Mon Jan 23 07:53:26 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/idl/ndds/ndds_idltocpp_skel.mpc:
