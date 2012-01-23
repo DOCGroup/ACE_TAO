@@ -16,6 +16,7 @@ workspace {
   $(TAO_ROOT)/orbsvcs/orbsvcs/Svc_Utils.mpc
   ccm
   ciao
+  tools
   $(DANCE_ROOT)/dance
   $(DANCE_ROOT)/tools
   connectors/ami4ccm/ami4ccm
