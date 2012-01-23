@@ -138,10 +138,4 @@ project(CCM_stub) : install, ciaolib_with_idl, ciao_output, valuetype, ifr_clien
     CCM_ExceptionsC.cpp
     ComponentsC.cpp
   }
-
-  verbatim(gnuace, postinstall) {
-"	$(MKDIR) $(INSTALL_PREFIX)/share/ciao/ccm"
-"	ln -sf $(INSTALL_PREFIX)/include/ccm/Components.idl $(INSTALL_PREFIX)/share/ciao/ccm"
-  }
-
 }
