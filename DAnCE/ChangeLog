@@ -1,3 +1,8 @@
+Mon Jan 23 09:49:47 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * dance/LocalityManager/Scheduler/Scheduler.mpc:
+          Removed postinstall that is not needed
+
 Wed Dec 28 09:00:54 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * dance/RepositoryManager/RepositoryManager_Impl.cpp:
