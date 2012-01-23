@@ -287,12 +287,17 @@ exprtype_to_string (AST_Expression::ExprType t)
   case AST_Expression::EV_wchar:
     return "wchar";
   case AST_Expression::EV_longlong:
+    return "longlong";
   case AST_Expression::EV_ulonglong:
+    return "ulonglong";
   case AST_Expression::EV_longdouble:
+    return "longdouble";
   case AST_Expression::EV_wstring:
+    return "wstring";
   case AST_Expression::EV_any:
+    return "any";
   case AST_Expression::EV_object:
-    return 0;
+    return "object";
   }
   return 0;
 }
