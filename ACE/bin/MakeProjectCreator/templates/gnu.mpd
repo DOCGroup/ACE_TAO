@@ -130,11 +130,17 @@ TAO_IDL3_TO_IDL2 = <%tao_idl3_to_idl2%>
 <%if(tao_idl3_to_idl2_dep)%>
 TAO_IDL3_TO_IDL2_DEP = <%tao_idl3_to_idl2_dep%>$(EXEEXT)
 <%endif%>
+<%if(idl3toidl2flags)%>
+TAO_IDL3_TO_IDL2_FLAGS = <%idl3toidl2flags%>
+<%endif%>
 <%if(tao_idl3_to_xmi)%>
 TAO_IDL3_TO_XMI = <%tao_idl3_to_xmi%>
 <%endif%>
 <%if(tao_idl3_to_xmi_dep)%>
 TAO_IDL3_TO_XMI_DEP = <%tao_idl3_to_xmi_dep%>$(EXEEXT)
+<%endif%>
+<%if(idl3toxmiflags)%>
+TAO_IDL3_TO_XMI_FLAGS = <%idl3toxmiflags%>
 <%endif%>
 
 <%if(exename)%>
@@ -708,7 +714,7 @@ endif
 
 <%if(idl_files)%>
 <%if(contains(idlflags,-DGEN_IDL_MAKE_DEPS))%>
-incremental_depend_idl:: 
+incremental_depend_idl::
 <%foreach(idl_files)%>
 	@$(RM) $(IDL_DEPENDENCY_FILE<%forcount%>)_idl.old
 	@cp $(IDL_DEPENDENCY_FILE<%forcount%>) $(IDL_DEPENDENCY_FILE<%forcount%>)_idl.old
