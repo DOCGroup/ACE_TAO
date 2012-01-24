@@ -56,7 +56,12 @@ union Data2 switch (DataType2)
   case dtShortType: short shortData;
 };
 
-component Foo
+interface FooSupport
+{
+    attribute short supported_short;
+};
+
+component Foo supports FooSupport
 {
   attribute short  my_short;
   attribute long   my_long;

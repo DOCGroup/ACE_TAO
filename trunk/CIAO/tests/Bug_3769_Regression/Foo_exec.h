@@ -26,6 +26,12 @@ namespace CIAO_Foo_Impl
     //@{
     /** Supported operations and attributes. */
 
+    virtual ::CORBA::Short 
+    supported_short (void);
+
+    virtual void 
+    supported_short (
+        ::CORBA::Short supported_short);
     //@}
 
     //@{
@@ -224,7 +230,8 @@ namespace CIAO_Foo_Impl
       my_baz_struct_,
       my_string_sequence_,
       my_fixed_string_,
-      my_variable_string_;
+      my_variable_string_,
+      supported_short_;
 
   };
 
