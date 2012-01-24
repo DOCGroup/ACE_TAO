@@ -84,7 +84,9 @@ namespace CIAO_GCE_Test_GetComponentEventTestComponent_Impl
         if (! ::CORBA::is_nil (writer_data.in ()))
           {
             CORBA::Object_var cmp = writer_data->_get_component ();
-            if (::CORBA::is_nil (cmp.in ()))
+            ::GCETestConnector::CCM_DDS_Event_var conn =
+              ::GCETestConnector::CCM_DDS_Event::_narrow (cmp.in ());
+            if (::CORBA::is_nil (conn.in ()))
               {
                 ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Component_exec_i::test_writer - ")
                                       ACE_TEXT ("Unable to get component interface of ")
@@ -129,7 +131,9 @@ namespace CIAO_GCE_Test_GetComponentEventTestComponent_Impl
         if (! ::CORBA::is_nil (getter_data.in ()))
           {
             CORBA::Object_var cmp = getter_data->_get_component ();
-            if (::CORBA::is_nil (cmp.in ()))
+            ::GCETestConnector::CCM_DDS_Event_var conn =
+              ::GCETestConnector::CCM_DDS_Event::_narrow (cmp.in ());
+            if (::CORBA::is_nil (conn.in ()))
               {
                 ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Component_exec_i::test_getter - ")
                                       ACE_TEXT ("Unable to get component interface of ")
@@ -170,7 +174,9 @@ namespace CIAO_GCE_Test_GetComponentEventTestComponent_Impl
         if (! ::CORBA::is_nil (getter_fresh_data.in ()))
           {
             CORBA::Object_var cmp = getter_fresh_data->_get_component ();
-            if (::CORBA::is_nil (cmp.in ()))
+            ::GCETestConnector::CCM_DDS_Event_var conn =
+              ::GCETestConnector::CCM_DDS_Event::_narrow (cmp.in ());
+            if (::CORBA::is_nil (conn.in ()))
               {
                 ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Component_exec_i::test_getter - ")
                                       ACE_TEXT ("Unable to get component interface of ")
@@ -215,7 +221,9 @@ namespace CIAO_GCE_Test_GetComponentEventTestComponent_Impl
         if (! ::CORBA::is_nil (listen_data.in ()))
           {
             CORBA::Object_var cmp = listen_data->_get_component ();
-            if (::CORBA::is_nil (cmp.in ()))
+            ::GCETestConnector::CCM_DDS_Event_var conn =
+              ::GCETestConnector::CCM_DDS_Event::_narrow (cmp.in ());
+            if (::CORBA::is_nil (conn.in ()))
               {
                 ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Component_exec_i::test_listener - ")
                                       ACE_TEXT ("Unable to get component interface of ")
@@ -255,7 +263,9 @@ namespace CIAO_GCE_Test_GetComponentEventTestComponent_Impl
         if (! ::CORBA::is_nil (listen_data_control.in ()))
           {
             CORBA::Object_var cmp = listen_data_control->_get_component ();
-            if (::CORBA::is_nil (cmp.in ()))
+            ::GCETestConnector::CCM_DDS_Event_var conn =
+              ::GCETestConnector::CCM_DDS_Event::_narrow (cmp.in ());
+            if (::CORBA::is_nil (conn.in ()))
               {
                 ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Component_exec_i::test_listener - ")
                                       ACE_TEXT ("Unable to get component interface of ")
