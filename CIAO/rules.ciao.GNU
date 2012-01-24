@@ -8,14 +8,10 @@
 #
 #----------------------------------------------------------------------------
 
-ifndef TAO_ROOT
-  TAO_ROOT = $(ACE_ROOT)/TAO
-endif
+TAO_ROOT ?= $(ACE_ROOT)/TAO
+CIAO_ROOT ?= $(TAO_ROOT)/CIAO
 
-ifndef CIAO_ROOT
-  CIAO_ROOT = $(TAO_ROOT)/CIAO
-endif
-
+TAO_ROOT := $(subst \,/,$(TAO_ROOT))
 CIAO_ROOT := $(subst \,/,$(CIAO_ROOT))
 
 ifndef TAO_IDL3_TO_IDL2
