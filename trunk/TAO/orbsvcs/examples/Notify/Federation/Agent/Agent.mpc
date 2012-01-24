@@ -6,10 +6,5 @@ project : rmcast, orbsvcsexe, notification, notification_skel, notification_serv
   after += Gate
   libs += Gate
   libpaths += ../Gate/.
-
-  specific (automake) {
-    includes += $(srcdir)/..
-  } else {
-    includes += ..
-  }
+  includes += ..
 }

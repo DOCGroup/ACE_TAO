@@ -6,8 +6,6 @@ project(Netsvcs_server) : aceexe, avoids_ace_for_tao {
   libs     += netsvcs
   after    += netsvcs
   includes += $(ACE_ROOT)/netsvcs/lib
-
-  // For automake's sake
   avoids += ace_for_tao
 
   Source_Files {

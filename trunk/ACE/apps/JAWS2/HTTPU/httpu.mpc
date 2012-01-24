@@ -7,12 +7,7 @@ project(HTTPU) : ace_output, acelib {
     avoids += uses_wchar ace_for_tao
     after += JAWS2
     libs += JAWS2
-
-    specific (automake) {
-      includes += $(srcdir)/..
-    } else {
-      includes += ..
-    }
+    includes += ..
 
     Source_Files {
         *.cpp

@@ -37,12 +37,7 @@ project(*Sender): rt_client {
   avoids += ace_for_tao
   exename = sender
   after += *IDL
-
-  specific (automake ) {
-    includes += $(srcdir)/../../tests/RTCORBA/Diffserv
-  } else {
-    includes += ../../tests/RTCORBA/Diffserv
-  }
+  includes += ../../tests/RTCORBA/Diffserv
 
   Source_Files {
     sender.cpp

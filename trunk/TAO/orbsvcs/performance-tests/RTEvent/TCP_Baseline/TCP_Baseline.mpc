@@ -3,12 +3,7 @@ project(*server): orbsvcsexe, rtcorbaevent, strategies, avoids_minimum_corba, av
   after    += RTEC_Perf
   libs     += TAO_RTEC_Perf
   libpaths += ../lib
-
-  specific (automake) {
-    includes += $(srcdir)/../lib
-  } else {
-    includes += ../lib
-  }
+  includes += ../lib
 
   Source_Files {
     server.cpp
@@ -19,12 +14,7 @@ project(*client): orbsvcsexe, rtcorbaevent, strategies, avoids_minimum_corba, av
   after    += RTEC_Perf
   libs     += TAO_RTEC_Perf
   libpaths += ../lib
-
-  specific (automake) {
-    includes += $(srcdir)/../lib
-  } else {
-    includes += ../lib
-  }
+  includes += ../lib
 
   Source_Files {
     client.cpp

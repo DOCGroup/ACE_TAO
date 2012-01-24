@@ -18,12 +18,6 @@ project(Test_Output) : acelib, script {
     run_test.pl
     run_test.lst
   }
-
-  verbatim(automake,local) {
-dist_check_SCRIPTS = run_test.pl run_test.lst
-TESTS = $(noinst_PROGRAMS)
-TESTS_ENVIRONMENT = $(srcdir)/run_test.pl -t
-  }
 }
 
 project(Framework Component DLL) : acelib {

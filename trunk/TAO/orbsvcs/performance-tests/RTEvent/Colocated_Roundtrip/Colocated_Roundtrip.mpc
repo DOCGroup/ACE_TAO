@@ -3,12 +3,7 @@ project: orbsvcsexe, rtcorbaevent, strategies, avoids_minimum_corba, avoids_corb
   after    += RTEC_Perf
   libs     += TAO_RTEC_Perf
   libpaths += ../lib
-
-  specific (automake) {
-    includes += $(srcdir)/../lib
-  } else {
-    includes += ../lib
-  }
+  includes += ../lib
 
   Source_Files {
     driver.cpp

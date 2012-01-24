@@ -4,13 +4,8 @@
 project(*Server): taoserver, tc_iiop, pi_server {
   after += Current_Test_Lib_Client Current_Test_Lib_Server
   libs  += Current_Test_Lib_Client Current_Test_Lib_Server
-
-  specific (automake) {
-    includes += $(srcdir)/../lib ../lib
-  } else {
-    includes += . ../lib
-    libpaths += ../lib
-  }
+  includes += . ../lib
+  libpaths += ../lib
 
   Source_Files {
     IIOP_Tester.cpp

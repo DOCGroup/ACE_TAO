@@ -4,10 +4,6 @@
 project(*client) : taoexe, portableserver {
   libs += Quoter_Idl_Lib
   after += Quoter_Idl_Lib
-
-  specific (automake) {
-    includes += $(srcdir)/../../idl
-  }
   includes += ../../idl
   libpaths += ../../idl
 
@@ -19,10 +15,6 @@ project(*client) : taoexe, portableserver {
 project(*server) : taoserver, avoids_corba_e_micro {
   libs += Quoter_Idl_Lib
   after += Quoter_Idl_Lib
-
-  specific (automake) {
-    includes += $(srcdir)/../../idl
-  }
   includes += ../../idl
   libpaths += ../../idl
 

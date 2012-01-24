@@ -10,10 +10,4 @@ project {
     LIBS += $(PLATFORM_FOX_LIBS)
     LDFLAGS += $(PLATFORM_FOX_LDFLAGS)
   }
-
-  specific(automake) {
-    compile_flags += $(ACE_FOX_CPPFLAGS)
-    linkflags += $(ACE_FOX_LDFLAGS)
-    pure_libs += $(ACE_FOX_LIBS)
-  }
 }

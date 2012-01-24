@@ -1,15 +1,4 @@
 // $Id$
 
 feature(bzip2): bzip2 {
-  specific(automake) {
-    // Undo everything that comes from bzip2
-    includes -= $(BZIP2_ROOT)/include 
-    libpaths -= $(BZIP2_ROOT)/lib 
-    lit_libs -= bz2
-    macros   -= USE_BZIP2 
-
-    compile_flags += $(ACE_BZIP2_CPPFLAGS)
-    linkflags     += $(ACE_BZIP2_LDFLAGS)
-    pure_libs     += $(ACE_BZIP2_LIBS)
-  }
 }

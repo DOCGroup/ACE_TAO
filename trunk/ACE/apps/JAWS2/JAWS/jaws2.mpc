@@ -5,12 +5,7 @@ project(JAWS2) : ace_output, acelib {
     sharedname = JAWS2
     dynamicflags += JAWS_BUILD_DLL
     avoids += uses_wchar ace_for_tao
-
-    specific (automake) {
-      includes += $(srcdir)/..
-    } else {
-      includes += ..
-    }
+    includes += ..
 
     Source_Files {
         Assoc_Array.cpp

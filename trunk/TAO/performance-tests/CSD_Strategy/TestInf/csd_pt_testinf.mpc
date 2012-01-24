@@ -5,10 +5,6 @@ project : taolib_with_idl, csd_threadpool, avoids_corba_e_micro {
   idlflags  += -Wb,export_macro=CSD_PT_TestInf_Export -Wb,export_include=TestInf/CSD_PT_TestInf_Export.h
   includes += ..
 
-  specific (automake) {
-    includes += $(TAO_BUILDDIR)/performance-tests/CSD_Strategy
-  }
-
   IDL_Files {
     FooException.idl
     TestAppException.idl

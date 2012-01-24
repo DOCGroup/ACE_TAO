@@ -11,11 +11,5 @@ project {
     LDLIBS   += $(PLATFORM_WX_LIBS)
   }
 
-  specific(automake) {
-    compile_flags += $(ACE_WX_CPPFLAGS)
-    linkflags += $(ACE_WX_LDFLAGS)
-    pure_libs += $(ACE_WX_LIBS)
-  }
-
  // TBD - support other platforms
 }

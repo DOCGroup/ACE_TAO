@@ -5,12 +5,6 @@ project(*Client) : orbsvcsexe, event, event_skel, rtevent_serv, rtsched {
   after   += CosEC_RtEC_Based_lib
   exename  = Basic
   libs    += CosEC_RtEC_Based
-
-  specific (automake) {
-    includes += $(srcdir)/../../lib
-  } else {
-    includes += ../../lib
-  }
-
+  includes += ../../lib
   libpaths += ../../lib
 }

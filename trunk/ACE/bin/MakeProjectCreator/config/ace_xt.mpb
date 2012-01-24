@@ -11,10 +11,4 @@ project: ace_x11 {
 	LIBS += $(PLATFORM_XT_LIBS) $(PLATFORM_X11_LIBS)
 	LDFLAGS += $(PLATFORM_XT_LDFLAGS) $(PLATFORM_X11_LDFLAGS)
   }
-
-  specific(automake) {
-	compile_flags += $(ACE_XT_CPPFLAGS)
-	linkflags += $(ACE_XT_LDFLAGS)
-	pure_libs += $(ACE_XT_LIBS)
-  }
 }
