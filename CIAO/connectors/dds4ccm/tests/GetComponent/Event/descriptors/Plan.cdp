@@ -207,6 +207,25 @@
       <instance xmi:idref="GCE_Test_ConnectorInstance1" />
     </internalEndpoint>
   </connection>
+  <connection>
+    <name>write_dds_entity</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>info_write_dds_entity</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ComponentInstance1" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>supplier_dds_entity</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="GCE_Test_ConnectorInstance1" />
+    </internalEndpoint>
+  </connection>
 
   <!-- RECEIVER COMPONENT CONNECTIONS -->
   <!--   DDS_Get port -->
@@ -224,6 +243,25 @@
     </internalEndpoint>
     <internalEndpoint>
       <portName>pull_consumer_data</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="GCE_Test_ConnectorInstance2" />
+    </internalEndpoint>
+  </connection>
+  <connection>
+    <name>get_dds_entity_port</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>info_get_dds_entity</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ComponentInstance2" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>pull_consumer_dds_entity</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="GCE_Test_ConnectorInstance2" />

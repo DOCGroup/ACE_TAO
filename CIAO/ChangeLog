@@ -1,3 +1,18 @@
+Tue Jan 24 19:14:53 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/CCM_DataReader.h:
+        * connectors/dds4ccm/impl/CCM_DataWriter.h:
+        * connectors/dds4ccm/impl/DDS_Subscriber_Base_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Update_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Write_T.cpp:
+          Make it possible to also use _get_component on the dds_entity ports
+
+        * connectors/dds4ccm/tests/GetComponent/Event/Component/GCE_Test_Component_exec.cpp:
+        * connectors/dds4ccm/tests/GetComponent/Event/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/GetComponent/State/Component/GCS_Test_Component_exec.cpp:
+        * connectors/dds4ccm/tests/GetComponent/State/descriptors/Plan.cdp:
+          Test _get_component on the dds_entity ports
+
 Tue Jan 24 18:31:45 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_3769_Regression/Foo.idl:
