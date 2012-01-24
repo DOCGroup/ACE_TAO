@@ -197,6 +197,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 {
   Network_Listener *listener = 0;
   listener = new Network_Listener;
+  ACE_UNUSED_ARG (listener);
 
   ACE_Reactor::run_event_loop ();
 
