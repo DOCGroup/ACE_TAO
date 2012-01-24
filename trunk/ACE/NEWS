@@ -1,6 +1,11 @@
 USER VISIBLE CHANGES BETWEEN ACE-6.0.7 and ACE-6.0.8
 ====================================================
 
+. Added support for MPC's new feature that creates dependency files for IDL 
+  files when generating '-type gnuace' projects. Turned off by default, it
+  can be enabled in a features file or on the command line with 
+  '-features ace_idl_dependencies=1'.
+
 USER VISIBLE CHANGES BETWEEN ACE-6.0.6 and ACE-6.0.7
 ====================================================
 
