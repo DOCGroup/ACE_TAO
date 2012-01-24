@@ -93,8 +93,7 @@ MyImpl::BMClosedED_exec_i::push_in_avail (BasicSP::DataAvailable *)
 // Operations from Components::SessionComponent
 void
 MyImpl::BMClosedED_exec_i::set_session_context (
-    Components::SessionContext_ptr ctx
-  )
+    Components::SessionContext_ptr ctx)
 {
   ACE_DEBUG ((LM_EMERGENCY,
               "MyImpl::BMClosedED_exec_i::set_session_context\n"));
