@@ -2,5 +2,7 @@
 // $Id$
 
 project {
-  install_this_target = 1
+ specific {
+   install_this_target = 1
+ }
 }
