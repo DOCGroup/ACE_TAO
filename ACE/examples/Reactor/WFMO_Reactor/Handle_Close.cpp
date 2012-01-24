@@ -71,19 +71,17 @@ public:
     return this->pipe_.read_handle ();
   }
 
-  int handle_close (ACE_HANDLE handle,
+  int handle_close (ACE_HANDLE,
                     ACE_Reactor_Mask close_mask)
   {
-    ACE_UNUSED_ARG (handle);
     ACE_DEBUG ((LM_DEBUG,
                 "Handler::handle_close called with mask = %d\n",
                 close_mask));
     return 0;
   }
 
-  int handle_input (ACE_HANDLE handle)
+  int handle_input (ACE_HANDLE)
   {
-    ACE_UNUSED_ARG (handle);
     ACE_DEBUG ((LM_DEBUG, "Handler::handle_input\n"));
 
     // Remove for reading
