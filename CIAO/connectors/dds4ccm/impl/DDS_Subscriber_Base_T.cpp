@@ -24,6 +24,7 @@ DDS_Subscriber_Base_T<CCM_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::s
     ::CORBA::Object_ptr component)
 {
   this->dds_read_->_set_component (component);
+  this->ccm_data_reader_->_set_component (component);
 }
 
 template <typename CCM_TYPE, typename TYPED_DDS_READER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>

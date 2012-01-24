@@ -12,13 +12,15 @@
 #include "dds4ccm/idl/dds_rtf2_dcpsEC.h"
 #include "dds4ccm/impl/dds4ccm_dds_impl_export.h"
 #include "dds4ccm/impl/dds4ccm_conf.h"
+#include "dds4ccm/impl/LocalObject.h"
 
 namespace CIAO
 {
   namespace DDS4CCM
   {
     class DDS4CCM_DDS_IMPL_Export CCM_DataReader
-      : public ::DDS::CCM_DataReader
+      : public virtual ::DDS::CCM_DataReader,
+        public virtual LocalObject
     {
     public:
       /// Constructor

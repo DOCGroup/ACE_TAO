@@ -207,6 +207,25 @@
       <instance xmi:idref="GCS_Test_ConnectorInstance1" />
     </internalEndpoint>
   </connection>
+  <connection>
+    <name>update_dds_entity</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>info_update_dds_entity</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ComponentInstance1" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>observable_dds_entity</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="GCS_Test_ConnectorInstance1" />
+    </internalEndpoint>
+  </connection>
 
   <!-- RECEIVER COMPONENT CONNECTIONS -->
   <!--   DDS_Get port -->
@@ -248,6 +267,25 @@
       <instance xmi:idref="GCS_Test_ConnectorInstance2" />
     </internalEndpoint>
   </connection>
+  <connection>
+    <name>get_dds_entity_port</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>info_get_dds_entity</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ComponentInstance2" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>pull_observer_dds_entity</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="GCS_Test_ConnectorInstance2" />
+    </internalEndpoint>
+  </connection>
 
   <!--   DDS_Read port -->
   <connection>
@@ -264,6 +302,25 @@
     </internalEndpoint>
     <internalEndpoint>
       <portName>passive_observer_data</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="GCS_Test_ConnectorInstance2" />
+    </internalEndpoint>
+  </connection>
+  <connection>
+    <name>read_dds_entity_port</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>info_read_dds_entity</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ComponentInstance2" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>passive_observer_dds_entity</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="GCS_Test_ConnectorInstance2" />
