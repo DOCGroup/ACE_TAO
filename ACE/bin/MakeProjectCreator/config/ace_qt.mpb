@@ -10,17 +10,6 @@ project: qt {
     LDFLAGS += $(PLATFORM_QT_LDFLAGS)
   }
 
-  specific(automake) {
-    includes -= $(QTDIR)/include
-    libpaths -= $(QTDIR)/lib
-    macros   -= QT_THREAD_SUPPORT
-    lit_libs -= qt-mt$(QT_VERSION)
-
-    compile_flags += $(ACE_QT_CPPFLAGS)
-    linkflags += $(ACE_QT_LDFLAGS)
-    pure_libs += $(ACE_QT_LIBS)
-  }
-
   specific(prop:microsoft) {
     lit_libs -= qt-mt$(QT_VERSION)
     pure_libs += $(PLATFORM_QT_LIBS)

@@ -5,12 +5,6 @@ project : tao_vc8warnings {
   staticflags += TAO_AS_STATIC_LIBS
   includes    += $(TAO_ROOT)
   libpaths    += $(ACE_ROOT)/lib
-
-  specific(automake) {
-    am_version = @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
-    includes += $(TAO_BUILDDIR)
-    libpaths -= $(ACE_ROOT)/lib
-  }
 }
 
 // If the corba_messaging feature is disabled, then we need

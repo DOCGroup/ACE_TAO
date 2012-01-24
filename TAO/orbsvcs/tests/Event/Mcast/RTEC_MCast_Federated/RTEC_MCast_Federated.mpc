@@ -4,11 +4,7 @@
 project(*Supplier): namingexe, rteventexe, rtevent_serv {
   exename   = EchoEventSupplier
 
-  specific(automake) {
-    includes += $(srcdir)/../Common
-  } else {
-    includes += ../Common
-  }
+  includes += ../Common
 
   Source_Files {
     SimpleAddressServer.cpp
@@ -20,11 +16,7 @@ project(*Supplier): namingexe, rteventexe, rtevent_serv {
 project(*Consumer): namingexe, rteventexe,  {
   exename   = EchoEventConsumer
 
-  specific(automake) {
-    includes += $(srcdir)/../Common
-  } else {
-    includes += ../Common
-  }
+  includes += ../Common
 
   Source_Files {
     EchoEventConsumerMain.cpp

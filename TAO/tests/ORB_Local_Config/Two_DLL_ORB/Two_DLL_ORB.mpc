@@ -69,11 +69,7 @@ project(*) : taoserver {
   IDL_Files {
   }
 
-  specific (automake) {
-    includes += $(srcdir)/../lib
-  } else {
-    includes += ../lib
-  }
+  includes += ../lib
 
   Source_Files {
     Test.cpp

@@ -6,12 +6,7 @@ project(*Cons) : orbsvcsexe, event, event_skel, rtevent, rtsched, rtevent_serv {
   exename   = Consumer
   libs     += CosEC_RtEC_Based
   libpaths += ../../lib
-
-  specific (automake) {
-    includes += $(srcdir)/../../lib
-  } else {
-    includes += ../../lib
-  }
+  includes += ../../lib
 
   source_files {
     Consumer.cpp

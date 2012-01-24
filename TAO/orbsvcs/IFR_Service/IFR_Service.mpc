@@ -47,10 +47,6 @@ project(TAO_IFR_EXE) : aceexe, install, ifr_client, avoids_minimum_corba, avoids
   includes       += $(TAO_ROOT)/orbsvcs/IFR_Service
   install         = $(ACE_ROOT)/bin
 
-  specific(automake) {
-    macros += TAO_IDL_INCLUDE_DIR=\"\\"$(includedir)/tao\\"\"
-  }
-
   verbatim(gnuace, local) {
     ifeq ($(TAO_IDL_PREPROCESSOR),)
       CPPFLAGS += -DTAO_IDL_PREPROCESSOR=\\\"$(strip $(CXX))\\\"

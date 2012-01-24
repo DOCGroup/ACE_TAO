@@ -1,3 +1,29 @@
+Tue Jan 24 13:48:49 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * apps/JAWS2/HTTPU/httpu.mpc:
+        * apps/JAWS2/JAWS/jaws2.mpc:
+        * apps/JAWS3/jaws3/jaws3.mpc:
+        * apps/gperf/tests/gperf_test.mpb:
+        * bin/MakeProjectCreator/config/ace_bzip2.mpb:
+        * bin/MakeProjectCreator/config/ace_fl.mpb:
+        * bin/MakeProjectCreator/config/ace_fox.mpb:
+        * bin/MakeProjectCreator/config/ace_openssl.mpb:
+        * bin/MakeProjectCreator/config/ace_output.mpb:
+        * bin/MakeProjectCreator/config/ace_qt.mpb:
+        * bin/MakeProjectCreator/config/ace_tk.mpb:
+        * bin/MakeProjectCreator/config/ace_x11.mpb:
+        * bin/MakeProjectCreator/config/ace_xt.mpb:
+        * bin/MakeProjectCreator/config/ace_zlib.mpb:
+        * bin/MakeProjectCreator/config/ace_zzip.mpb:
+        * bin/MakeProjectCreator/config/acedefaults.mpb:
+        * bin/MakeProjectCreator/config/conv_lib.mpb:
+        * bin/MakeProjectCreator/config/wxwindows.mpb:
+        * netsvcs/servers/servers.mpc:
+        * performance-tests/Synch-Benchmarks/Base_Test/Synch_Benchmarks_Base_Test.mpc:
+        * performance-tests/Synch-Benchmarks/Perf_Test/Synch_Benchmarks_Perf_Test.mpc:
+        * tests/tests.mpc:
+          Removed left over from automake removal
+
 Tue Jan 24 13:31:49 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Reactor/WFMO_Reactor/Network_Events.cpp:

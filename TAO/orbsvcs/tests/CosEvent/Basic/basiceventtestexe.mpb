@@ -5,10 +5,5 @@ project : orbsvcsexe, messaging, taoserver, event_serv, naming, svc_utils, iorta
   after    += CosEvent_Test_Lib
   libs     += CECTests
   libpaths += ../lib
-
-  specific (automake) {
-    includes += $(srcdir)/../lib
-  } else {
-    includes += ../lib
-  }
+  includes += ../lib
 }

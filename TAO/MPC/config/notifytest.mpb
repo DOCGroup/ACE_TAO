@@ -6,8 +6,4 @@ project: orbsvcsexe, notification, notification_skel, notification_serv, naming,
   libs     += TAO_NotifyTests
   includes += ../lib ../../lib
   libpaths += ../lib ../../lib
-
-  specific(automake) {
-   includes += $(TAO_BUILDDIR)/orbsvcs/tests/Notify/lib
-  }
 }

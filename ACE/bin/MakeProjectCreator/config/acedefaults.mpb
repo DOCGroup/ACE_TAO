@@ -13,12 +13,6 @@ project: ipv6, vc_warnings, build_files, test_files, svc_conf_files, ace_unicode
     debug_macros += ACE_NO_INLINE=1
   }
 
-  specific(automake) {
-    am_release = @ACE_VERSION_NAME@
-    includes += $(ACE_BUILDDIR)
-    libpaths -= $(ACE_ROOT)/lib
-  }
-
   specific(prop:microsoft) {
     macro_for_lib_modifier=1
   }

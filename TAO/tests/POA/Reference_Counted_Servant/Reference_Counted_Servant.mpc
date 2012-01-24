@@ -5,10 +5,6 @@ project(*Server): taoexe, portableserver, avoids_minimum_corba, avoids_corba_e_c
    exename  = server
    libs    += Generic_Servant
    after   += POA_Generic_Servant_Lib
-
-   specific (automake) {
-     includes += $(srcdir)/../Generic_Servant
-   }
    includes += ../Generic_Servant
    libpaths += ../Generic_Servant
 

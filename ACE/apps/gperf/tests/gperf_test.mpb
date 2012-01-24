@@ -13,10 +13,6 @@ project: aceexe, crosscompile {
     keyword gperf_cmd = command
   }
 
-  specific(automake) {
-    gperf_cmd = ../src/ace_gperf
-  }
-
   Source_Files {
     test.cpp
   }
