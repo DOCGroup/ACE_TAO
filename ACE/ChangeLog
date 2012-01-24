@@ -1,3 +1,9 @@
+Tue Jan 24 14:40:00 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          Can't check mpc files, when they contain gnuace specific stuff they
+          need tabs
+
 Tue Jan 24 14:29:18 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/fuzz.pl:
