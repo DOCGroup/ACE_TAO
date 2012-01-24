@@ -1,3 +1,11 @@
+Tue Jan 24 13:33:32 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/BasicSP/BMClosedED/BMClosedED_exec.cpp:
+          Layout changes
+
+        * rules.ciao.GNU:
+          Small simplification
+
 Tue Jan 24 12:05:47 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/GetComponent/Event/Component/GCE_Test_Component_exec.cpp:
