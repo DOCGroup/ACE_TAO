@@ -22,6 +22,7 @@ DDS_Write_T<CCM_TYPE, TYPED_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::set_component (
   ::CORBA::Object_ptr component)
 {
   this->dds_write_->_set_component (component);
+  this->ccm_data_writer_->_set_component (component);
 }
 
 template <typename CCM_TYPE, typename TYPED_WRITER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>

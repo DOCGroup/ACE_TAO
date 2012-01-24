@@ -72,7 +72,6 @@ namespace CIAO_GCE_Test_GetComponentEventTestComponent_Impl
   {
   }
 
-
   void
   Component_exec_i::test_writer ()
   {
@@ -96,7 +95,7 @@ namespace CIAO_GCE_Test_GetComponentEventTestComponent_Impl
               {
                 ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OK: Component_exec_i::test_writer - ")
                                       ACE_TEXT ("Writer on DDS_Write port returned a ")
-                                      ACE_TEXT ("pointer on _get_component.\n")));
+                                      ACE_TEXT ("reference on _get_component.\n")));
               }
           }
         else
@@ -111,6 +110,48 @@ namespace CIAO_GCE_Test_GetComponentEventTestComponent_Impl
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Component_exec_i::test_writer - ")
                               ACE_TEXT ("CORBA exception caught while testing ")
                               ACE_TEXT ("writer_data\n")));
+      }
+    catch (...)
+      {
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Component_exec_i::test_writer - ")
+                              ACE_TEXT ("Unknown exception caught while testing ")
+                              ACE_TEXT ("writer_data\n")));
+      }
+
+    try
+      {
+        ::DDS::DataWriter_var writer_dds_entity =
+          this->context_->get_connection_info_write_dds_entity ();
+        if (! ::CORBA::is_nil (writer_dds_entity.in ()))
+          {
+            CORBA::Object_var cmp = writer_dds_entity->_get_component ();
+            ::GCETestConnector::CCM_DDS_Event_var conn =
+              ::GCETestConnector::CCM_DDS_Event::_narrow (cmp.in ());
+            if (::CORBA::is_nil (conn.in ()))
+              {
+                ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Component_exec_i::test_writer - ")
+                                      ACE_TEXT ("Unable to get component interface of ")
+                                      ACE_TEXT ("writer_dds_entity\n")));
+              }
+            else
+              {
+                ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OK: Component_exec_i::test_writer - ")
+                                      ACE_TEXT ("dds_entity on DDS_Write port returned a ")
+                                      ACE_TEXT ("reference on _get_component.\n")));
+              }
+          }
+        else
+          {
+            ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Component_exec_i::test_writer - "
+                                  ACE_TEXT ("writer_dds_entity is NIL.\n"))));
+          }
+      }
+    catch (const ::CORBA::Exception& ex)
+      {
+        ex._tao_print_exception ("ERROR: Component_exec_i::test_writer: ");
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Component_exec_i::test_writer - ")
+                              ACE_TEXT ("CORBA exception caught while testing ")
+                              ACE_TEXT ("write_dds_entity\n")));
       }
     catch (...)
       {
@@ -143,7 +184,7 @@ namespace CIAO_GCE_Test_GetComponentEventTestComponent_Impl
               {
                 ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OK: Component_exec_i::test_getter - ")
                                       ACE_TEXT ("Reader on DDS_Get port returned a ")
-                                      ACE_TEXT ("pointer on _get_component.\n")));
+                                      ACE_TEXT ("reference on _get_component.\n")));
               }
           }
         else
@@ -186,7 +227,7 @@ namespace CIAO_GCE_Test_GetComponentEventTestComponent_Impl
               {
                 ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OK: Component_exec_i::test_getter - ")
                                       ACE_TEXT ("Getter on DDS_Get port returned a ")
-                                      ACE_TEXT ("pointer on _get_component.\n")));
+                                      ACE_TEXT ("reference on _get_component.\n")));
               }
           }
         else
@@ -207,6 +248,49 @@ namespace CIAO_GCE_Test_GetComponentEventTestComponent_Impl
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Component_exec_i::test_getter - ")
                               ACE_TEXT ("Unknown exception caught while testing ")
                               ACE_TEXT ("getter_fresh_data\n")));
+      }
+
+    //Getter on DDS_Get
+    try
+      {
+        ::DDS::DataReader_var getter_dds_entity =
+          this->context_->get_connection_info_get_dds_entity ();
+        if (! ::CORBA::is_nil (getter_dds_entity.in ()))
+          {
+            CORBA::Object_var cmp = getter_dds_entity->_get_component ();
+            ::GCETestConnector::CCM_DDS_Event_var conn =
+              ::GCETestConnector::CCM_DDS_Event::_narrow (cmp.in ());
+            if (::CORBA::is_nil (conn.in ()))
+              {
+                ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Component_exec_i::test_getter - ")
+                                      ACE_TEXT ("Unable to get component interface of ")
+                                      ACE_TEXT ("getter_dds_entity\n")));
+              }
+            else
+              {
+                ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OK: Component_exec_i::test_getter - ")
+                                      ACE_TEXT ("dds_entity on DDS_Get port returned a ")
+                                      ACE_TEXT ("reference on _get_component.\n")));
+              }
+          }
+        else
+          {
+            ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Component_exec_i::test_getter - ")
+                                  ACE_TEXT ("getter_dds_entity is NIL.\n")));
+          }
+      }
+    catch (const ::CORBA::Exception& ex)
+      {
+        ex._tao_print_exception ("ERROR: Component_exec_i::test_getter: ");
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Component_exec_i::test_getter - ")
+                              ACE_TEXT ("CORBA exception caught while testing ")
+                              ACE_TEXT ("get_dds_entity\n")));
+      }
+    catch (...)
+      {
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Component_exec_i::test_getter - ")
+                              ACE_TEXT ("Unknown exception caught while testing ")
+                              ACE_TEXT ("get_dds_entity\n")));
       }
   }
 
@@ -233,7 +317,7 @@ namespace CIAO_GCE_Test_GetComponentEventTestComponent_Impl
               {
                 ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OK: Component_exec_i::test_listener - ")
                                       ACE_TEXT ("Reader on DDS_Listen port returned a ")
-                                      ACE_TEXT ("pointer on _get_component.\n")));
+                                      ACE_TEXT ("reference on _get_component.\n")));
               }
           }
         else
@@ -275,7 +359,7 @@ namespace CIAO_GCE_Test_GetComponentEventTestComponent_Impl
               {
                 ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OK: Component_exec_i::test_listener - ")
                                       ACE_TEXT ("DataControl on DDS_Listen port returned a ")
-                                      ACE_TEXT ("pointer on _get_component.\n")));
+                                      ACE_TEXT ("reference on _get_component.\n")));
               }
           }
         else
@@ -311,7 +395,6 @@ namespace CIAO_GCE_Test_GetComponentEventTestComponent_Impl
         this->test_getter ();
         this->test_listener ();
       }
-
   }
 
   void
