@@ -1,3 +1,13 @@
+Tue Jan 24 18:31:45 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3769_Regression/Foo.idl:
+        * tests/Bug_3769_Regression/Foo_exec.h:
+        * tests/Bug_3769_Regression/Foo_exec.cpp:
+        * tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
+          Extended this test for supports with attributes, thanks to
+          Michael Frommberger <michael dot frommberger at gmx dot net>
+          for extending this test
+
 Tue Jan 24 13:33:32 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/BasicSP/BMClosedED/BMClosedED_exec.cpp:

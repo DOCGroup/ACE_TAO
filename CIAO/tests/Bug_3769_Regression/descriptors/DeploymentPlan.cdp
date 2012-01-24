@@ -531,6 +531,17 @@
         </value>
       </value>
     </configProperty>
+    <configProperty>
+      <name>supported_short</name>
+      <value>
+        <type>
+          <kind>tk_short</kind>
+        </type>
+        <value>
+          <short>11</short>
+        </value>
+      </value>
+    </configProperty>
   </instance>
 
   <artifact xmi:id="_669DBD2E-E130-11DE-B472-00242C889DAA">

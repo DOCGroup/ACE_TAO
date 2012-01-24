@@ -23,7 +23,8 @@ namespace CIAO_Foo_Impl
       my_baz_struct_ (false),
       my_string_sequence_ (false),
       my_fixed_string_ (false),
-      my_variable_string_ (false)
+      my_variable_string_ (false),
+      supported_short_ (false)
   {
   }
 
@@ -32,6 +33,23 @@ namespace CIAO_Foo_Impl
   }
 
   // Supported operations and attributes.
+  
+  ::CORBA::Short
+  Foo_exec_i::supported_short (void)
+  {
+    /* Your code here. */
+    return 0;
+  }
+
+  void
+  Foo_exec_i::supported_short (
+    const ::CORBA::Short supported_short)
+  {
+    if(supported_short != 11)
+      ACE_ERROR ((LM_ERROR, "ERROR: supported_short != 11, it is %d\n", supported_short));
+    else supported_short_ = true;
+
+  }
 
   // Component attributes and port operations.
 
@@ -540,7 +558,8 @@ namespace CIAO_Foo_Impl
           my_baz_struct_ &&
           my_string_sequence_ &&
           my_fixed_string_ &&
-          my_variable_string_))
+          my_variable_string_ &&
+          supported_short_))
       {
         ACE_ERROR ((LM_ERROR, "ERROR: Not all expected attributes were initialized\n"));
       }
