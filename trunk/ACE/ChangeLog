@@ -1,3 +1,8 @@
+Tue Jan 24 14:29:18 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          Fixed problem
+
 Tue Jan 24 13:52:20 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/fuzz.pl:
