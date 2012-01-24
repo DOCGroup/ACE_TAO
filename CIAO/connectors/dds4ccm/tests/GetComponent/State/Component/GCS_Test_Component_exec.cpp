@@ -95,7 +95,9 @@ namespace CIAO_GCS_Test_GetComponentStateTestComponent_Impl
         if (! ::CORBA::is_nil (updater_data.in ()))
           {
             CORBA::Object_var cmp = updater_data->_get_component ();
-            if (::CORBA::is_nil (cmp.in ()))
+            ::GCSTestConnector::CCM_DDS_State_var conn =
+              ::GCSTestConnector::CCM_DDS_State::_narrow (cmp.in ());
+            if (::CORBA::is_nil (conn.in ()))
               {
                 ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Component_exec_i::test_updater - ")
                                       ACE_TEXT ("Unable to get component interface of ")
@@ -140,7 +142,9 @@ namespace CIAO_GCS_Test_GetComponentStateTestComponent_Impl
         if (! ::CORBA::is_nil (reader_data.in ()))
           {
             CORBA::Object_var cmp = reader_data->_get_component ();
-            if (::CORBA::is_nil (cmp.in ()))
+            ::GCSTestConnector::CCM_DDS_State_var conn =
+              ::GCSTestConnector::CCM_DDS_State::_narrow (cmp.in ());
+            if (::CORBA::is_nil (conn.in ()))
               {
                 ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Component_exec_i::test_reader - ")
                                       ACE_TEXT ("Unable to get component interface of ")
@@ -185,7 +189,9 @@ namespace CIAO_GCS_Test_GetComponentStateTestComponent_Impl
         if (! ::CORBA::is_nil (getter_data.in ()))
           {
             CORBA::Object_var cmp = getter_data->_get_component ();
-            if (::CORBA::is_nil (cmp.in ()))
+            ::GCSTestConnector::CCM_DDS_State_var conn =
+              ::GCSTestConnector::CCM_DDS_State::_narrow (cmp.in ());
+            if (::CORBA::is_nil (conn.in ()))
               {
                 ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Component_exec_i::test_getter - ")
                                       ACE_TEXT ("Unable to get component interface of ")
@@ -226,7 +232,9 @@ namespace CIAO_GCS_Test_GetComponentStateTestComponent_Impl
         if (! ::CORBA::is_nil (getter_fresh_data.in ()))
           {
             CORBA::Object_var cmp = getter_fresh_data->_get_component ();
-            if (::CORBA::is_nil (cmp.in ()))
+            ::GCSTestConnector::CCM_DDS_State_var conn =
+              ::GCSTestConnector::CCM_DDS_State::_narrow (cmp.in ());
+            if (::CORBA::is_nil (conn.in ()))
               {
                 ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Component_exec_i::test_getter - ")
                                       ACE_TEXT ("Unable to get component interface of ")
@@ -271,7 +279,9 @@ namespace CIAO_GCS_Test_GetComponentStateTestComponent_Impl
         if (! ::CORBA::is_nil (listen_data.in ()))
           {
             CORBA::Object_var cmp = listen_data->_get_component ();
-            if (::CORBA::is_nil (cmp.in ()))
+            ::GCSTestConnector::CCM_DDS_State_var conn =
+              ::GCSTestConnector::CCM_DDS_State::_narrow (cmp.in ());
+            if (::CORBA::is_nil (conn.in ()))
               {
                 ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Component_exec_i::test_listener - ")
                                       ACE_TEXT ("Unable to get component interface of ")
@@ -311,7 +321,9 @@ namespace CIAO_GCS_Test_GetComponentStateTestComponent_Impl
         if (! ::CORBA::is_nil (listen_data_control.in ()))
           {
             CORBA::Object_var cmp = listen_data_control->_get_component ();
-            if (::CORBA::is_nil (cmp.in ()))
+            ::GCSTestConnector::CCM_DDS_State_var conn =
+              ::GCSTestConnector::CCM_DDS_State::_narrow (cmp.in ());
+            if (::CORBA::is_nil (conn.in ()))
               {
                 ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Component_exec_i::test_listener - ")
                                       ACE_TEXT ("Unable to get component interface of ")
@@ -356,7 +368,9 @@ namespace CIAO_GCS_Test_GetComponentStateTestComponent_Impl
         if (! ::CORBA::is_nil (statelisten_data.in ()))
           {
             CORBA::Object_var cmp = statelisten_data->_get_component ();
-            if (::CORBA::is_nil (cmp.in ()))
+            ::GCSTestConnector::CCM_DDS_State_var conn =
+              ::GCSTestConnector::CCM_DDS_State::_narrow (cmp.in ());
+            if (::CORBA::is_nil (conn.in ()))
               {
                 ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Component_exec_i::test_statelistener - ")
                                       ACE_TEXT ("Unable to get component interface of ")
@@ -396,7 +410,9 @@ namespace CIAO_GCS_Test_GetComponentStateTestComponent_Impl
         if (! ::CORBA::is_nil (statelisten_data_control.in ()))
           {
             CORBA::Object_var cmp = statelisten_data_control->_get_component ();
-            if (::CORBA::is_nil (cmp.in ()))
+            ::GCSTestConnector::CCM_DDS_State_var conn =
+              ::GCSTestConnector::CCM_DDS_State::_narrow (cmp.in ());
+            if (::CORBA::is_nil (conn.in ()))
               {
                 ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Component_exec_i::test_statelistener - ")
                                       ACE_TEXT ("Unable to get component interface of ")
