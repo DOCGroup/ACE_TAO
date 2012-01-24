@@ -1,3 +1,8 @@
+Tue Jan 24 15:26:24 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/conv_lib.mpb:
+          Fixed cleanup bug
+
 Tue Jan 24 14:40:00 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/fuzz.pl:
