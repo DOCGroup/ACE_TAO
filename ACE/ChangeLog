@@ -1,3 +1,8 @@
+Tue Jan 24 16:44:22 UTC 2012  Chip Jones  <jonesc@ociweb.com>
+
+        * NEWS:
+          Added information about IDL dependency generation.
+
 Tue Jan 24 15:26:24 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/conv_lib.mpb:
