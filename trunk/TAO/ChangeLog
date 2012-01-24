@@ -1,3 +1,9 @@
+Tue Jan 24 16:33:35 UTC 2012  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * NEWS:
+
+          Updated file with IDL compiler bug fix.
+
 Tue Jan 24 13:48:46 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/csd_pt_testinf_lib.mpb:
