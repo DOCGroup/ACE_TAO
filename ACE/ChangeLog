@@ -1,3 +1,8 @@
+Tue Jan 24 13:52:20 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          Also check mpc files for tabs
+
 Tue Jan 24 13:48:49 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * apps/JAWS2/HTTPU/httpu.mpc:
