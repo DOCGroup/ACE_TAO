@@ -33,7 +33,7 @@ namespace CIAO_Foo_Impl
   }
 
   // Supported operations and attributes.
-  
+
   ::CORBA::Short
   Foo_exec_i::supported_short (void)
   {

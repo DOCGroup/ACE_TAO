@@ -26,10 +26,10 @@ namespace CIAO_Foo_Impl
     //@{
     /** Supported operations and attributes. */
 
-    virtual ::CORBA::Short 
+    virtual ::CORBA::Short
     supported_short (void);
 
-    virtual void 
+    virtual void
     supported_short (
         ::CORBA::Short supported_short);
     //@}
