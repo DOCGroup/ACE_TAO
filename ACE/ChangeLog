@@ -1,3 +1,8 @@
+Tue Jan 24 13:31:49 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Reactor/WFMO_Reactor/Network_Events.cpp:
+          Fixed gcc warning
+
 Mon Jan 23 20:21:50 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:
