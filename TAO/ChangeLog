@@ -1,3 +1,66 @@
+Tue Jan 24 13:48:46 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/csd_pt_testinf_lib.mpb:
+        * MPC/config/csd_tp_foo_a_lib.mpb:
+        * MPC/config/csd_tp_foo_b_lib.mpb:
+        * MPC/config/csd_tp_foo_c_lib.mpb:
+        * MPC/config/csd_tp_test_lib.mpb:
+        * MPC/config/ftrteventchannel.mpb:
+        * MPC/config/kokyu_dsrt_schedulers.mpb:
+        * MPC/config/notifytest.mpb:
+        * MPC/config/orbsvcslib.mpb:
+        * MPC/config/rtcorbacommon.mpb:
+        * MPC/config/taobaseidldefaults.mpb:
+        * MPC/config/taodefaults.mpb:
+        * TAO_IDL/tao_idl.mpc:
+        * TAO_IDL/tao_idl_be.mpc:
+        * TAO_IDL/tao_idl_fe.mpc:
+        * docs/tutorials/Quoter/Naming_Service/Quoter_Naming_Service.mpc:
+        * docs/tutorials/Quoter/Simple/Client/Quoter_Simple_Client.mpc:
+        * docs/tutorials/Quoter/Simple/Impl-Repo/Quoter_Simple_Impl_Repo.mpc:
+        * docs/tutorials/Quoter/Simple/ImprovedServer/Quoter_Simple_ImprovedServer.mpc:
+        * docs/tutorials/Quoter/Simple/Persistent/Quoter_Simple_Persistent.mpc:
+        * docs/tutorials/Quoter/Simple/Server/Quoter_Simple_Server.mpc:
+        * examples/RTScheduling/Fixed_Priority_Scheduler/Fixed_Priority_Scheduler.mpc:
+        * examples/RTScheduling/MIF_Scheduler/MIF_Scheduler.mpc:
+        * orbsvcs/IFR_Service/IFR_Service.mpc:
+        * orbsvcs/examples/CosEC/RtEC_Based/bin/CosEC_RtEC_Based_bin.mpc:
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Basic/CosEC_RtEC_Based_tests_Basic.mpc:
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/CosEC_RtEC_Based_Mult.mpc:
+        * orbsvcs/examples/Notify/Federation/Agent/Agent.mpc:
+        * orbsvcs/examples/Notify/Federation/SpaceCraft/SpaceCraft.mpc:
+        * orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/Colocated_Roundtrip.mpc:
+        * orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/Federated_Roundtrip.mpc:
+        * orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/RTCORBA_Baseline.mpc:
+        * orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/RTCORBA_Callback.mpc:
+        * orbsvcs/performance-tests/RTEvent/Roundtrip/Roundtrip.mpc:
+        * orbsvcs/performance-tests/RTEvent/TCP_Baseline/TCP_Baseline.mpc:
+        * orbsvcs/tests/CosEvent/Basic/basiceventtestexe.mpb:
+        * orbsvcs/tests/Event/Basic/rteventtestexe.mpb:
+        * orbsvcs/tests/Event/Mcast/AddrServer/AddrServer.mpc:
+        * orbsvcs/tests/Event/Mcast/Complex/Complex.mpc:
+        * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/RTEC_MCast_Federated.mpc:
+        * orbsvcs/tests/Event/Mcast/Simple/Simple.mpc:
+        * orbsvcs/tests/Event/Mcast/Two_Way/Two_Way.mpc:
+        * orbsvcs/tests/Event/Performance/eventperftestexe.mpb:
+        * performance-tests/CSD_Strategy/TestInf/csd_pt_testinf.mpc:
+        * performance-tests/Protocols/Protocols.mpc:
+        * tests/ORB_Local_Config/Bug_1459/Bug_1459.mpc:
+        * tests/ORB_Local_Config/Bug_3049/Bug_3049.mpc:
+        * tests/ORB_Local_Config/Bunch/Bunch.mpc:
+        * tests/ORB_Local_Config/Separation/Separation.mpc:
+        * tests/ORB_Local_Config/Service_Dependency/Service_Dependency.mpc:
+        * tests/ORB_Local_Config/Shared/Shared.mpc:
+        * tests/ORB_Local_Config/Simple/Simple.mpc:
+        * tests/ORB_Local_Config/Two_DLL_ORB/Two_DLL_ORB.mpc:
+        * tests/POA/Adapter_Activator/POA_Adapter_Activator.mpc:
+        * tests/POA/Explicit_Activation/POA_Explicit_Activation.mpc:
+        * tests/POA/On_Demand_Activation/POA_On_Demand_Activation.mpc:
+        * tests/POA/Reference_Counted_Servant/Reference_Counted_Servant.mpc:
+        * tests/TransportCurrent/Framework/Framework.mpc:
+        * tests/TransportCurrent/IIOP/IIOP.mpc:
+          Removed left over from automake removal
+
 Mon Jan 23 12:51:26 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/util/utl_err.cpp:

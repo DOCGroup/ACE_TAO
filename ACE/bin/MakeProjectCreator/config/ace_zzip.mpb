@@ -1,15 +1,4 @@
 // $Id$
 
 feature(zzip): zzip {
-  specific(automake) {
-    // Undo everything that comes from zzip and zlib
-    includes -= $(ZLIB_ROOT)/include $(ZZIP_ROOT)/include
-    libpaths -= $(ZLIB_ROOT)/lib $(ZZIP_ROOT)/lib 
-    lit_libs -= zzip z
-    macros   -= ZLIB USE_ZZIP
-
-    compile_flags += $(ACE_ZZIP_CPPFLAGS) $(ACE_ZLIB_CPPFLAGS)
-    linkflags     += $(ACE_ZZIP_LDFLAGS) $(ACE_ZLIB_LDFLAGS)
-    pure_libs     += $(ACE_ZZIP_LIBS) $(ACE_ZLIB_LIBS)
-  }
 }

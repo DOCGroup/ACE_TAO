@@ -7,9 +7,4 @@ project : taolib_with_idl, csd_threadpool, pi {
   libs += CSD_TP_Test
   libpaths += ../../CSD_Strategy_Tests/TP_Common
   idlflags  +=  -I../../CSD_Strategy_Tests/TP_Common
-
-  specific(automake) {
-   includes += $(TAO_BUILDDIR)/tests/CSD_Strategy_Tests/TP_Common
-  }
-
 }

@@ -5,12 +5,7 @@ project(*supplier): messaging, rteventexe, rtevent_serv, naming {
   after  += ECMcastTests_lib
   libs     += ECMcastTests
   libpaths += ../Common
-
-  specific (automake) {
-    includes += $(srcdir)/../Common
-  } else {
-    includes += ../Common
-  }
+  includes += ../Common
 
   exename   = supplier
 
@@ -23,12 +18,7 @@ project(*consumer): messaging, rteventexe, rtevent_serv, naming {
   after  += ECMcastTests_lib
   libs     += ECMcastTests
   libpaths += ../Common
-
-  specific (automake) {
-    includes += $(srcdir)/../Common
-  } else {
-    includes += ../Common
-  }
+  includes += ../Common
 
   exename   = consumer
 
@@ -41,12 +31,7 @@ project(*gateway-ec): messaging, rteventexe, rtevent_serv, naming {
   after  += ECMcastTests_lib
   libs     += ECMcastTests
   libpaths += ../Common
-
-  specific (automake) {
-    includes += $(srcdir)/../Common
-  } else {
-    includes += ../Common
-  }
+  includes += ../Common
 
   exename   = gateway-ec
 

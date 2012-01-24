@@ -6,9 +6,4 @@ project : ftrtevent, utils, corba_messaging, pi_server {
   libs      += TAO_FTRT_EventChannel
   includes  += $(TAO_ROOT)/orbsvcs/FtRtEvent/EventChannel
   tagchecks += FTRT_EventChannel
-
-  specific(automake) {
-   includes += $(TAO_BUILDDIR)/orbsvcs/FtRtEvent/EventChannel
-  }
-
 }

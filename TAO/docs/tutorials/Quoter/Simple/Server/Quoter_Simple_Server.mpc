@@ -4,10 +4,6 @@
 project : taoserver {
   libs += Quoter_Idl_Lib
   after += Quoter_Idl_Lib
-
-  specific (automake) {
-    includes += $(srcdir)/../../idl
-  }
   includes += ../../idl
   libpaths += ../../idl
 }

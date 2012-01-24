@@ -5,12 +5,7 @@ project(TAO_IDL_BE) : acelib, conv_lib, tao_output, tao_vc8warnings, tao_idl_fe 
   sharedname   = TAO_IDL_BE
   dynamicflags += TAO_IDL_BE_BUILD_DLL
   includes    += $(TAO_ROOT)
-
-  specific (automake) {
-    includes    += $(srcdir)/include $(srcdir)/be_include $(srcdir)/fe
-  } else {
-    includes    += include be_include fe
-  }
+  includes    += include be_include fe
 
   specific {
     // Override the template value for optimize.  Building the backend

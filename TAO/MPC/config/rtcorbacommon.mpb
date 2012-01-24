@@ -5,10 +5,5 @@ project : portableserver, avoids_minimum_corba, avoids_corba_e_compact, avoids_c
   after    += RTCORBA_Common
   libs     += RTCORBA_Common
   libpaths += ../Common
-
-  specific (automake) {
-    includes += $(srcdir)/../Common
-  }
-
   includes += ../Common
 }

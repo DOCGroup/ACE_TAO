@@ -2,22 +2,13 @@
 // $Id$
 
 project : openssl {
-  // For both automake and gnuace, we want to use built-in macros instead of
+  // For gnuace we want to use built-in macros instead of
   // the values provided by the openssl base project.
-  specific (automake, gnuace) {
+  specific (gnuace) {
     lit_libs -= ssl crypto
     includes -= $(SSL_ROOT)/include
     includes -= /usr/kerberos/include
     libpaths -= $(SSL_ROOT)/lib
-  }
-
-  // The ACE/TAO configure scripts set ace_TLS_CFLAGS and ace_TLS_LIBS 
-  // instead of $(SSL_ROOT)/include and $(SSL_ROOT)/lib as set by MPC's
-  // openssl.mpb.
-  specific (automake) {
-    compile_flags += @ACE_TLS_CPPFLAGS@
-    linkflags     += @ACE_TLS_LDFLAGS@
-    pure_libs     += @ACE_TLS_LIBS@
   }
 
   // These values get set in platform_macros.GNU or defaulted

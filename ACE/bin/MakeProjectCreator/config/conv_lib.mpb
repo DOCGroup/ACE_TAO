@@ -2,7 +2,5 @@
 // $Id$
 
 project {
-  specific(!automake) {
-    install_this_target = 1
-  }
+  install_this_target = 1
 }

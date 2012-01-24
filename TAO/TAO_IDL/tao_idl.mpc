@@ -7,13 +7,7 @@ project(TAO_IDL_EXE) : aceexe, install, tao_output, tao_idl_fe {
   exeout       = $(ACE_ROOT)/bin
   after       += TAO_IDL_BE gperf
   includes    += $(TAO_ROOT)
-
-  specific (automake) {
-    includes    += $(srcdir)/include $(srcdir)/be_include $(srcdir)/fe $(TAO_ROOT)
-    macros      += TAO_IDL_INCLUDE_DIR=\"\\"$(includedir)/tao\\"\"
-  } else {
-    includes    += include be_include fe ..
-  }
+  includes    += include be_include fe ..
 
   specific {
     // Override the template value for optimize.  Building the exe

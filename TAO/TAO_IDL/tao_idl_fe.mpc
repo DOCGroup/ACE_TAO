@@ -87,12 +87,7 @@ project(TAO_IDL_FE) : acelib, conv_lib, tao_output {
   sharedname   = TAO_IDL_FE
   dynamicflags += TAO_IDL_FE_BUILD_DLL
   includes    += $(TAO_ROOT)
-
-  specific (automake) {
-    includes    += $(srcdir)/include $(srcdir)/fe
-  } else {
-    includes    += include fe
-  }
+  includes    += include fe
 
   specific {
     // Override the template value for optimize.  Building the frontend
@@ -113,7 +108,7 @@ project(TAO_IDL_FE) : acelib, conv_lib, tao_output {
     include
     fe
   }
-  
+
   Template_Files {
     include/utl_scope_T.cpp
   }

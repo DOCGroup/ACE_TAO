@@ -1,15 +1,4 @@
 // $Id$
 
 feature(zlib): zlib {
-  specific(automake) {
-    // Undo everything that comes from zlib
-    includes -= $(ZLIB_ROOT)/include 
-    libpaths -= $(ZLIB_ROOT)/lib 
-    lit_libs -= z
-    macros   -= ZLIB 
-
-    compile_flags += $(ACE_ZLIB_CPPFLAGS)
-    linkflags     += $(ACE_ZLIB_LDFLAGS)
-    pure_libs     += $(ACE_ZLIB_LIBS)
-  }
 }
