@@ -1,3 +1,8 @@
+Wed Jan 25 11:57:00 UTC 2012  Simon Massey <simon dot massey at prismtech dot com>
+
+        * MPC/config/bzip2compressor.mpb:
+          Fixed typo in after += Bzip22Compressor, should be Bzip2Compressor.
+
 Tue Jan 24 16:50:39 UTC 2012  Chip Jones  <jonesc@ociweb.com>
 
         * NEWS:
