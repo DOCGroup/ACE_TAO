@@ -1,3 +1,13 @@
+Thu Jan 26 20:38:47 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/Condition_T.cpp:
+
+          In order to allow building with inlining on MacOSX Lion,
+          Condition_T.cpp needs to explicitly include Time_Value.h. In many
+          cases, Time_Value.h was being incidentally included, such as
+          through Atomic_Op_GCC_T.cpp, but that is specifically excluded for
+          Lion builds using the clang compiler.
+
 Tue Jan 24 16:44:22 UTC 2012  Chip Jones  <jonesc@ociweb.com>
 
         * NEWS:
