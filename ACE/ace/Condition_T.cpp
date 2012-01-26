@@ -15,6 +15,7 @@
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Condition_T.inl"
+#include "ace/Time_Value.h"
 #endif /* __ACE_INLINE__ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
