@@ -1,3 +1,11 @@
+Fri Jan 27 09:39:57 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/FlReactor/FlReactor.cpp:
+          Const change
+
+        * bin/valgrind.supp:
+          Added another suppress
+
 Fri Jan 27 09:01:51 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * NEWS:

@@ -256,7 +256,7 @@ ACE_FlReactor::reset_timer_interval
   ACE_TRACE ("ACE_FlReactor::reset_timer_interval");
   ACE_MT (ACE_GUARD_RETURN (ACE_Select_Reactor_Token, ace_mon, this->token_, -1));
 
-  int result =
+  int const result =
     ACE_Select_Reactor::reset_timer_interval (timer_id,
                                               interval);
 

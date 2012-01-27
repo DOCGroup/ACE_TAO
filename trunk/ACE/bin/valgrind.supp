@@ -30,6 +30,12 @@
 }
 
 {
+   <Invalid read>
+   Memcheck:Addr8
+   fun:__memcpy_ssse3_back
+}
+
+{
    <IIOP error>
    Memcheck:Addr8
    fun:__strspn_sse42
