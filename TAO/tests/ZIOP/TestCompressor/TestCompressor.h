@@ -33,8 +33,8 @@ namespace TAO
   class TAO_TESTCOMPRESSOR_Export TestCompressor : public BaseCompressor
   {
     public:
-      TestCompressor (::Compression::CompressionLevel compression_level,
-                      ::Compression::CompressorFactory_ptr compressor_factory);
+      TestCompressor (::Compression::CompressorFactory_ptr compressor_factory,
+                      ::Compression::CompressionLevel compression_level);
 
       virtual void compress (
           const ::Compression::Buffer &,

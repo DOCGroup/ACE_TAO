@@ -1,3 +1,10 @@
+Fri Jan 27 18:47:34 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Compression/RLECompressorTest.cpp:
+        * tests/ZIOP/TestCompressor/TestCompressor.h:
+        * tests/ZIOP/TestCompressor/TestCompressor.cpp:
+          Fixed compile errors
+
 Fri Jan 27 10:51:42 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/IORManipulation/IORManipulation.cpp:
