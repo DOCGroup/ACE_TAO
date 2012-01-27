@@ -1,3 +1,8 @@
+Fri Jan 27 10:51:42 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IORManipulation/IORManipulation.cpp:
+          Fixed gcc 4.7 warning
+
 Fri Jan 27 10:26:55 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/rlecompressor.mpb:
