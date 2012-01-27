@@ -21,7 +21,7 @@ Zlib_CompressorFactory::get_compressor (
   // @todo, make a array based on compression level
   if (CORBA::is_nil (compressor_.in ()))
     {
-      compressor_ = new ZlibCompressor (compression_level, this);
+      compressor_ = new ZlibCompressor (this, compression_level);
     }
 
   return ::Compression::Compressor::_duplicate (compressor_.in ());

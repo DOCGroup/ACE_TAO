@@ -36,8 +36,8 @@ namespace TAO
     public virtual ::CORBA::LocalObject
   {
   public:
-    BaseCompressor (::Compression::CompressionLevel compression_level,
-                    ::Compression::CompressorFactory_ptr compressor_factory);
+    BaseCompressor (::Compression::CompressorFactory_ptr compressor_factory,
+                    ::Compression::CompressionLevel compression_level);
 
     virtual void compress (const ::Compression::Buffer &source,
                            ::Compression::Buffer &target) = 0;
