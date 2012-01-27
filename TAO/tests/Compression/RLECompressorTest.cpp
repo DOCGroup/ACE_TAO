@@ -102,7 +102,11 @@ static int init_compressor(::CORBA::ORB_ptr orb)
             ACE_ERROR_RETURN((LM_ERROR, ACE_TEXT("ERROR: nil compression manager.\n")),-1);
         }
 
-        manager->register_factory(::Compression::CompressorFactory_var(new TAO::RLE_CompressorFactory()));
+        Compression::CompressorFactory_ptr compressor_factory;
+        ACE_NEW_RETURN (compressor_factory, TAO::RLE_CompressorFactory (), 1);
+        Compression::CompressorFactory_var compr_fact = compressor_factory;
+
+        manager->register_factory (compr_fact.in ());
 
     } catch (...) {
         ACE_ERROR_RETURN((LM_ERROR,
@@ -163,7 +167,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
         ::CORBA::ORB_var orb = ::CORBA::ORB_init(argc, argv);
 
-        if (init_compressor(orb) != 0) {
+        if (init_compressor(orb.in ()) != 0) {
             ACE_ERROR_RETURN((LM_ERROR,
                 ACE_TEXT("ERROR: Unable to initialise RLE compressor.\n")),-1);
         }

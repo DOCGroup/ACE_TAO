@@ -7,9 +7,9 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
 TestCompressor::TestCompressor (
-  ::Compression::CompressionLevel compression_level,
-  ::Compression::CompressorFactory_ptr compressor_factory) :
-    BaseCompressor (compression_level, compressor_factory)
+  ::Compression::CompressorFactory_ptr compressor_factory,
+  ::Compression::CompressionLevel compression_level) :
+    BaseCompressor (compressor_factory, compression_level)
 {
 }
 
