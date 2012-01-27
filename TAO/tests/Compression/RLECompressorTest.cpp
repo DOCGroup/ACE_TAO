@@ -119,7 +119,7 @@ static int  test_compressor(const ::Compression::Compressor_var &compressor)
             ACE_TEXT("ERROR: nil Compressor.\n")),-1);
     }
 
-    ::CORBA::ULong	in_len = static_cast< ::CORBA::ULong>(sizeof(test_array));
+    ::CORBA::ULong  in_len = static_cast< ::CORBA::ULong>(sizeof(test_array));
     ::CORBA::Octet* in_buf = reinterpret_cast< ::CORBA::Octet*>(test_array);
 
     ::Compression::Buffer in_data(in_len, in_len, in_buf, false);
@@ -156,7 +156,8 @@ static int  test_compressor(const ::Compression::Compressor_var &compressor)
     ACE_ERROR_RETURN((LM_INFO, ACE_TEXT("Compression Ratio = %f : 1\n\n"), ratio), 0);
 }
 
-int main(int argc, char *argv[])
+int
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
     try {
 
@@ -178,7 +179,7 @@ int main(int argc, char *argv[])
                 ACE_TEXT("ERROR: nil compression manager.\n")),-1);
         }
 
-        ACE_HEX_DUMP((	LM_INFO,
+        ACE_HEX_DUMP((LM_INFO,
                         test_array,
                         sizeof(test_array),
                         ACE_TEXT("Original Buffer")
