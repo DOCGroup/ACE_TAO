@@ -1,0 +1,9 @@
+<?xml version='1.0'?>
+<!-- Converted from custom_time.conf by svcconf-convert.pl -->
+<ACE_Svc_Conf>
+ <!--  $Id$ -->
+ <dynamic id="CUSTOM_TIME_POLICY" type="Service_Object">
+   <initializer path="CustomTimePolicy" init="_make_Custom_Time_Policy_Strategy"/>
+ </dynamic>
+ <static id="Time_Policy_Manager" params="-ORBTimePolicyStrategy CUSTOM_TIME_POLICY"/>
+</ACE_Svc_Conf>

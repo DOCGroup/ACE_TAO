@@ -1,0 +1,37 @@
+Fri Jan 27 08:58:54 CET 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE version 1.0.8 released.
+
+Thu Jan 26 10:57:30 UTC 2012  Martin Corino  <mcorino@remedy.nl>
+
+        * dance/LocalityManager/Interceptors/Best_Effort.cpp:
+          Fixed incorrect log texts.
+
+Mon Jan 23 09:49:47 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * dance/LocalityManager/Scheduler/Scheduler.mpc:
+          Removed postinstall that is not needed
+
+Wed Dec 28 09:00:54 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * dance/RepositoryManager/RepositoryManager_Impl.cpp:
+          Fixed compile error when ACE_HAS_DUMP is defined
+
+Tue Dec 27 11:40:02 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+          Updated for next release
+
+Tue Dec 27 10:06:28 CET 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE version 1.0.7 released.
+
+Sun Dec 04 11:51:30 CET 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE version 1.0.6 released.
+
+Local Variables:
+mode: change-log
+add-log-time-format: (lambda () (progn (setq tz (getenv "TZ")) (set-time-zone-rule "UTC") (setq time (format-time-string "%a %b %e %H:%M:%S %Z %Y" (current-time))) (set-time-zone-rule tz) time))
+indent-tabs-mode: nil
+End:

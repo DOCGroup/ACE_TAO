@@ -1,0 +1,28 @@
+// -*- MPC -*-
+// $Id$
+
+project(*application): messaging, rteventexe, rtevent_serv, naming {
+  after  += ECMcastTests_lib
+  libs     += ECMcastTests
+  libpaths += ../Common
+  includes += ../Common
+
+  exename   = application
+
+  Source_Files {
+    application.cpp
+  }
+}
+
+project(*gateway-ec): messaging, rteventexe, rtevent_serv, naming {
+  after  += ECMcastTests_lib
+  libs     += ECMcastTests
+  libpaths += ../Common
+  includes += ../Common
+
+  exename   = gateway-ec
+
+  Source_Files {
+    gateway-ec.cpp
+  }
+}

@@ -1,0 +1,26 @@
+// $Id$
+
+project (Collocated_Base_stub) : taoidldefaults, dds4ccm_ts_default {
+  sharedname = Collocated_Base_stub
+  dynamicflags += COLLACATED_BASE_STUB_BUILD_DLL
+  libout = ../lib
+
+  idlflags += -SS -Sci \
+              -Wb,stub_export_macro=COLLACATED_BASE_STUB_Export \
+              -Wb,stub_export_include=Collocated_Base_stub_export.h
+
+  IDL_Files {
+    idlflags += -Gxhst
+    Collocated_Base.idl
+  }
+
+  opendds_ts_flags += --export=COLLACATED_BASE_STUB_Export
+
+  DDSGenerator_Files {
+    Collocated_Base.idl
+  }
+
+  Source_Files {
+  }
+}
+

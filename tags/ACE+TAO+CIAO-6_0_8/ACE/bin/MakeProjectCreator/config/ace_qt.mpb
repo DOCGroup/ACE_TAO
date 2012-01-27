@@ -1,0 +1,17 @@
+// -*- MPC -*-
+// $Id$
+
+
+project: qt {
+  // Depends on configuration from include/makeinclude/platform_*.GNU
+  verbatim(gnuace,local) {
+    CPPFLAGS += $(PLATFORM_QT_CPPFLAGS)
+    LIBS += $(PLATFORM_QT_LIBS)
+    LDFLAGS += $(PLATFORM_QT_LDFLAGS)
+  }
+
+  specific(prop:microsoft) {
+    lit_libs -= qt-mt$(QT_VERSION)
+    pure_libs += $(PLATFORM_QT_LIBS)
+  }
+}

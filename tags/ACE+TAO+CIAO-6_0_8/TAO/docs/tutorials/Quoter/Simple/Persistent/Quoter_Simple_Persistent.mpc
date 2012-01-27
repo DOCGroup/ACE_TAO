@@ -1,0 +1,26 @@
+// -*- MPC -*-
+// $Id$
+
+project(*client) : taoexe, portableserver {
+  libs += Quoter_Idl_Lib
+  after += Quoter_Idl_Lib
+  includes += ../../idl
+  libpaths += ../../idl
+
+  source_files {
+    client.cpp
+  }
+}
+
+project(*server) : taoserver, avoids_corba_e_micro {
+  libs += Quoter_Idl_Lib
+  after += Quoter_Idl_Lib
+  includes += ../../idl
+  libpaths += ../../idl
+
+  source_files {
+    server.cpp
+    Stock_Factory_i.cpp
+    Stock_i.cpp
+  }
+}

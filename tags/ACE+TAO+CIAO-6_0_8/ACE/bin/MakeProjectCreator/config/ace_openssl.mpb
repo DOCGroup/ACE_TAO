@@ -1,0 +1,21 @@
+// -*- MPC -*-
+// $Id$
+
+project : openssl {
+  // For gnuace we want to use built-in macros instead of
+  // the values provided by the openssl base project.
+  specific (gnuace) {
+    lit_libs -= ssl crypto
+    includes -= $(SSL_ROOT)/include
+    includes -= /usr/kerberos/include
+    libpaths -= $(SSL_ROOT)/lib
+  }
+
+  // These values get set in platform_macros.GNU or defaulted
+  // in wrapper_macros.GNU if the GNU make variable ssl is set to 1.
+  specific (gnuace) {
+    compile_flags += $(PLATFORM_SSL_CPPFLAGS)
+    linkflags     += $(PLATFORM_SSL_LDFLAGS)
+    pure_libs     += $(PLATFORM_SSL_LIBS)
+  }
+}

@@ -1,0 +1,4 @@
+// $Id$
+
+feature(bzip2): bzip2 {
+}

@@ -1,0 +1,26 @@
+// -*- MPC -*-
+// $Id$
+
+project(*client) : orbsvcsexe, portableserver, naming  {
+  libs += Quoter_Idl_Lib
+  after += Quoter_Idl_Lib
+  includes += ../idl
+  libpaths += ../idl
+
+  source_files {
+    client.cpp
+  }
+}
+
+project(*server) : orbsvcsexe, portableserver, naming {
+  libs += Quoter_Idl_Lib
+  after += Quoter_Idl_Lib
+  includes += ../idl
+  libpaths += ../idl
+
+  source_files {
+    server.cpp
+    Stock_Factory_i.cpp
+    Stock_i.cpp
+  }
+}

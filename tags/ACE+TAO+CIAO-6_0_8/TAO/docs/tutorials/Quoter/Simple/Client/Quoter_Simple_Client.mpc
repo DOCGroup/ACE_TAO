@@ -1,0 +1,9 @@
+// -*- MPC -*-
+// $Id$
+
+project : taoexe, portableserver {
+  libs += Quoter_Idl_Lib
+  after += Quoter_Idl_Lib
+  includes += ../../idl
+  libpaths += ../../idl
+}
