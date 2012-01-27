@@ -1,7 +1,7 @@
 #!/bin/sh
 # $Id$
 
-if test -z $1; then olddate=2011_12_27; else olddate=$1; fi
+if test -z $1; then olddate=2012_01_27; else olddate=$1; fi
 if test -z $2; then newdate=`date -u +%Y_%m_%d`; else newdate=$2; fi
 if test -z $3; then prefix=`date -u +%Y%m%d%a`; else prefix=$3; fi
 if test -z $ACE_ROOT; then ACE_ROOT=..; fi
