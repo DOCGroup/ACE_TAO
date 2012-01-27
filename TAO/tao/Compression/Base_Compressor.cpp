@@ -6,10 +6,9 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-  BaseCompressor::BaseCompressor (::Compression::CompressionLevel
-                                  compression_level,
-                                  ::Compression::CompressorFactory_ptr
-                                  compressor_factory)
+  BaseCompressor::BaseCompressor (
+    ::Compression::CompressorFactory_ptr compressor_factory,
+    ::Compression::CompressionLevel compression_level)
     : compression_level_ (compression_level),
       compressor_factory_ (::Compression::CompressorFactory::_duplicate (
                            compressor_factory)),

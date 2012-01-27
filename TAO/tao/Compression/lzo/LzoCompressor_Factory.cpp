@@ -23,7 +23,7 @@ Lzo_CompressorFactory::get_compressor (
   // @todo, make a array based on compression level
   if (CORBA::is_nil (compressor_.in ()))
     {
-      compressor_ = new LzoCompressor (compression_level, this);
+      compressor_ = new LzoCompressor (this, compression_level);
     }
 
   return ::Compression::Compressor::_duplicate (compressor_.in ());

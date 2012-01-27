@@ -54,6 +54,8 @@ module Compression
     const CompressorId COMPRESSORID_RZIP = 7;
     const CompressorId COMPRESSORID_7X = 8;
     const CompressorId COMPRESSORID_XAR = 9;
+    const CompressorId COMPRESSORID_RLE = 10;
+
 
     /**
      * CompressionLevel type.

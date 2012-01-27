@@ -249,7 +249,7 @@ const size_t TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE = 128;
 #endif
 
 #if !defined (TAO_HAS_ZIOP)
-# define TAO_HAS_ZIOP 0
+# define TAO_HAS_ZIOP 1
 #endif
 
 // Avoid namespace pollution that's common on older UNIXes...
