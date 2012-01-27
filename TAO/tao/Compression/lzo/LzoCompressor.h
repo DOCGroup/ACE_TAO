@@ -33,8 +33,8 @@ namespace TAO
   class TAO_LZOCOMPRESSOR_Export LzoCompressor : public BaseCompressor
   {
     public:
-      LzoCompressor (::Compression::CompressionLevel compression_level,
-                       ::Compression::CompressorFactory_ptr compressor_factory);
+      LzoCompressor (::Compression::CompressorFactory_ptr compressor_factory,
+                     ::Compression::CompressionLevel compression_level);
 
       virtual void compress (
           const ::Compression::Buffer & source,

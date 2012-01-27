@@ -1,3 +1,35 @@
+Fri Jan 27 09:48:07 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/rlecompressor.mpb:
+        * tao/Compression/rle/RLECompressor.h:
+        * tao/Compression/rle/RLECompressor.cpp:
+        * tao/Compression/rle/RLECompressor.mpc:
+        * tao/Compression/rle/RLECompressor_Factory.h:
+        * tao/Compression/rle/RLECompressor_Factory.cpp:
+        * tao/Compression/rle/RLECompressor_export.h:
+        * tao/Compression/rle/TAO_RLECompressor.rc:
+          Added new rle compressor which has been contributed by Derek Dominish
+          <derek dot dominish at dsto dot defence dot gov dot au>
+
+        * tao/Compression/Base_Compressor.h:
+        * tao/Compression/Base_Compressor.cpp:
+        * tao/Compression/Compression.pidl:
+        * tao/Compression/bzip2/Bzip2Compressor.h:
+        * tao/Compression/bzip2/Bzip2Compressor.cpp:
+        * tao/Compression/bzip2/Bzip2Compressor_Factory.cpp:
+        * tao/Compression/lzo/LzoCompressor.h:
+        * tao/Compression/lzo/LzoCompressor.cpp:
+        * tao/Compression/lzo/LzoCompressor_Factory.cpp:
+        * tao/Compression/zlib/ZlibCompressor.h:
+        * tao/Compression/zlib/ZlibCompressor.cpp:
+        * tao/Compression/zlib/ZlibCompressor_Factory.cpp:
+          Changed base compressor constructor to first accept factory and
+          then the level
+
+        * tao/orbconf.h:
+          Given the fact that we now have the rle compressor that doesn't
+          depend on any external project we enable ZIOP by default in the ORB
+
 Fri Jan 27 09:02:30 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * NEWS:

@@ -33,8 +33,8 @@ namespace TAO
   class TAO_BZIP2COMPRESSOR_Export Bzip2Compressor : public BaseCompressor
   {
     public:
-      Bzip2Compressor (::Compression::CompressionLevel compression_level,
-                       ::Compression::CompressorFactory_ptr compressor_factory);
+      Bzip2Compressor (::Compression::CompressorFactory_ptr compressor_factory,
+                       ::Compression::CompressionLevel compression_level);
 
       virtual void compress (
           const ::Compression::Buffer & source,

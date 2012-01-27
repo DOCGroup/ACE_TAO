@@ -1,0 +1,10 @@
+//$Id$
+
+project(RLECompressor) : taolib, tao_output, install, compression, taoidldefaults {
+  sharedname    = TAO_RLECompressor
+  dynamicflags += TAO_RLECOMPRESSOR_BUILD_DLL
+
+  specific {
+    install_dir = tao/Compression/rle
+  }
+}
