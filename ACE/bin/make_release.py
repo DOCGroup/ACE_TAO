@@ -909,7 +909,7 @@ def generate_workspaces (stage_dir):
     # Create option strings
     mpc_command = os.path.join (stage_dir, "ACE_wrappers", "bin", "mwc.pl")
     exclude_option = ' -exclude TAO/TAO_*.mwc,TAO/CIAO/CIAO_*.mwc '
-    workers_option = ' -workers ' + cpu_count
+    workers_option = ' -workers ' + str(cpu_count)
     mpc_option = ' -recurse -hierarchy -relative ACE_ROOT=' + stage_dir + '/ACE_wrappers '
     mpc_option += ' -relative TAO_ROOT=' + stage_dir + '/ACE_wrappers/TAO '
     mpc_option += ' -relative CIAO_ROOT=' + stage_dir + '/ACE_wrappers/TAO/CIAO '
