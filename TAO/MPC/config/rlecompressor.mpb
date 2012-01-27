@@ -1,7 +1,7 @@
 // -*- MPC -*-
+// $Id$
 
 project : taolib, compression {
-  requires += rle
   after   += RLECompressor
   libs    += TAO_RLECompressor
 }

@@ -14,6 +14,7 @@ my @tests = qw(
                zlibserver
                bzip2server
                lzoserver
+               rleserver
               );
 
 foreach my $process (@tests) {
