@@ -1,3 +1,8 @@
+Mon Jan 30 10:39:58 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Compression/RLECompressorTest.cpp:
+          Fixed unicode compile error
+
 Mon Jan 30 10:17:02 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Compression/Compression_Test.mpc:

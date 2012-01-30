@@ -78,12 +78,12 @@ static char test_array[] = {
 
 struct HRTimer : ACE_High_Res_Timer
 {
-    std::string msg_;
-    HRTimer(const std::string &msg) : msg_(msg) {
+    const char* msg_;
+    HRTimer(const char* msg) : msg_(msg) {
         this->reset(); this->start();
     }
     ~HRTimer(void) {
-        this->stop(); this->print_ave(this->msg_.c_str(), 1);
+        this->stop(); this->print_ave(this->msg_, 1);
     }
 };
 
