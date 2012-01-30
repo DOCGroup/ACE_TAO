@@ -392,7 +392,7 @@
 
 /// Max udp packet size
 #if !defined (ACE_MAX_UDP_PACKET_SIZE)
-#define ACE_MAX_UDP_PACKET_SIZE 65536
+#define ACE_MAX_UDP_PACKET_SIZE 65507
 #endif
 
 /**
