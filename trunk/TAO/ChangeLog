@@ -1,3 +1,11 @@
+Mon Jan 30 09:48:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp:
+          Redefined MIOP_MAX_DGRAM_SIZE to use the ACE_MAX_UDP_PACKET_SIZE
+          instead of the much more limited ACE_MAX_DGRAM_SIZE.
+          There are still other inherent problems with large MIOP packets
+          but at least the end user can try and send any reasonable length.
+
 Fri Jan 27 18:47:34 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Compression/RLECompressorTest.cpp:

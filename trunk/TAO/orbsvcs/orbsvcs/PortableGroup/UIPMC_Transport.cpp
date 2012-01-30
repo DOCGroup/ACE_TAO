@@ -29,7 +29,7 @@
 // into.
 #define MIOP_MAX_FRAGMENTS    (1)
 #define MIOP_MAX_HEADER_SIZE  (272) // See MIOP Spec.  Must be a multiple of 8.
-#define MIOP_MAX_DGRAM_SIZE   (ACE_MAX_DGRAM_SIZE)
+#define MIOP_MAX_DGRAM_SIZE   (ACE_MAX_UDP_PACKET_SIZE)
 
 #define MIOP_MAGIC_OFFSET             (0)
 #define MIOP_VERSION_OFFSET           (4)

@@ -1,3 +1,13 @@
+Mon Jan 30 09:48:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * ace/Default_Constants.h:
+          Redefined ACE_MAX_UDP_PACKET_SIZE to 65507 bytes. The actual field size
+          sets a theoretical limit of 65,535 bytes (so 65536 was completly wrong)
+          which is composed of 8 byte header +65,527 bytes of data for a UDP datagram.
+          However the practical limit for the data length which is imposed by the
+          underlying IPv4 protocol is only 65,507 bytes (65507 bytes of data +8 bytes
+          UDP header +20 bytes IP header).
+
 Fri Jan 27 09:39:57 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/FlReactor/FlReactor.cpp:
