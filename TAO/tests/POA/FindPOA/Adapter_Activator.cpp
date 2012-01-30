@@ -1,7 +1,7 @@
 // -*- C++ -*-
 // $Id$
 
-#include "tao/PortableServer/Adapter_Activator.h"
+#include "Adapter_Activator.h"
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 #if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
@@ -9,8 +9,6 @@
 #include "tao/PortableServer/AdapterActivatorC.h"
 #include "tao/PortableServer/POAManagerC.h"
 #include "tao/PortableServer/PortableServer.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -49,8 +47,6 @@ namespace TAO
     }
   }
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif
 #endif /* TAO_HAS_MINIMUM_POA == 0 */

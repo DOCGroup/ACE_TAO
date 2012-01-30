@@ -1,3 +1,17 @@
+Mon Jan 30 10:17:02 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Compression/Compression_Test.mpc:
+          Added missing base project
+
+        * tests/POA/FindPOA/Adapter_Activator.h:
+        * tests/POA/FindPOA/Adapter_Activator.cpp:
+        * tests/POA/FindPOA/FindPOA.cpp:
+          Moved the adapter activator to this test
+
+        * tao/PortableServer/Adapter_Activator.h:
+        * tao/PortableServer/Adapter_Activator.cpp:
+          Removed these files, shouldn't be part of the core
+
 Mon Jan 30 09:48:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
 
         * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp:
