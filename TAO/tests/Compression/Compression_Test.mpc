@@ -22,7 +22,7 @@ project(*Lzo_Server): taoserver, compression, lzocompressor,  {
   }
 }
 
-project(*Lre_Server) : taolib, rlecompressor {
+project(*Rle_Server) : taolib, compression, rlecompressor {
   exename = rleserver
   Source_Files {
     RLECompressorTest.cpp

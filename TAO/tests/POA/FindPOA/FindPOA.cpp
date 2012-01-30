@@ -14,11 +14,10 @@
 
 
 #include "tao/PortableServer/PortableServer.h"
-#include "tao/PortableServer/Adapter_Activator.h"
-
 #include "tao/ORB.h"
 #include "ace/Log_Msg.h"
 #include "ace/SString.h"
+#include "Adapter_Activator.h"
 
 void
 find_non_existant_POA (PortableServer::POA_ptr parent,
