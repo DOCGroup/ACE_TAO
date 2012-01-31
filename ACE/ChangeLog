@@ -1,3 +1,8 @@
+Tue Jan 31 20:17:35 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/IPC_SAP/SOCK_SAP/CPP-memclient.cpp:
+          Fixed gcc 4.7 warning
+
 Mon Jan 30 09:48:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
 
         * ace/Default_Constants.h:
