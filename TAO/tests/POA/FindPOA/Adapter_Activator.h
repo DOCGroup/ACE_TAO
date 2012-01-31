@@ -18,8 +18,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PortableServer/AdapterActivatorC.h"
-
 #if (TAO_HAS_MINIMUM_POA == 0)
 #if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 
@@ -35,7 +33,7 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    class TAO_PortableServer_Export Adapter_Activator
+    class Adapter_Activator
       : public PortableServer::AdapterActivator
     {
     public:
