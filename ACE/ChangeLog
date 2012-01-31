@@ -1,3 +1,9 @@
+Tue Jan 31 20:19:16 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Web_Crawler/Iterators.cpp:
+        * performance-tests/Misc/context_switch_time.cpp:
+          Fixed gcc 4.7 warning
+
 Tue Jan 31 20:17:35 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/IPC_SAP/SOCK_SAP/CPP-memclient.cpp:
