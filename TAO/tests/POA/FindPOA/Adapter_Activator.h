@@ -13,6 +13,7 @@
 #include /**/ "ace/pre.h"
 
 #include "tao/PortableServer/AdapterActivatorC.h"
+#include "tao/PortableServer/POAManagerC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -20,14 +21,6 @@
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 #if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
-
-namespace PortableServer
-{
-  class POAManager;
-
-  typedef POAManager *POAManager_ptr;
-  typedef TAO_Objref_Var_T<POAManager> POAManager_var;
-}
 
 namespace TAO
 {
