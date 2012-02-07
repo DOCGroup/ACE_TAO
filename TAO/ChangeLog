@@ -1,18 +1,30 @@
+Tue Feb  7 11:05:19 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/XtResource/XtResource_Factory.h:
+        * tao/XtResource/XtResource_Factory.cpp:
+        * tao/XtResource/XtResource_Loader.h:
+        * tao/XtResource/XtResource_Loader.cpp:
+          Added versioned namespace macros
+
 Tue Feb  7 09:54:31 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/compression.mpb:
+          Added anytypecode
 
         * tao/DynamicInterface/Request.h:
+          Doxygen fix
 
         * tao/GIOP_Message_Base.cpp:
-        * tao/ORB.cpp:
         * tao/Tagged_Profile.cpp:
+          Typo fixe
 
         * tao/ZIOP/ZIOP.cpp:
+          Added rle
 
         * tests/POA/FindPOA/Adapter_Activator.h:
         * tests/POA/FindPOA/Adapter_Activator.cpp:
         * tests/POA/FindPOA/FindPOA.cpp:
+          Fixed compile problems with versioned namespaces
 
 Mon Jan 30 10:39:58 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
