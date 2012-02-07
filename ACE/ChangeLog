@@ -1,3 +1,8 @@
+Tue Feb  7 12:56:41 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/XtReactor/XtReactor.cpp:
+          Use C++ cast to silence warning
+
 Tue Jan 31 20:19:16 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Web_Crawler/Iterators.cpp:
