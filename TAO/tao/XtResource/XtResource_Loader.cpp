@@ -3,6 +3,8 @@
 #include "tao/ORB_Core.h"
 #include "tao/XtResource/XtResource_Factory.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
 
@@ -20,3 +22,5 @@ namespace TAO
   {
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
