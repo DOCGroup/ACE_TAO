@@ -78,8 +78,8 @@ static char test_array[] = {
 
 struct HRTimer : ACE_High_Res_Timer
 {
-    const char* msg_;
-    HRTimer(const char* msg) : msg_(msg) {
+    const ACE_TCHAR* msg_;
+    HRTimer(const ACE_TCHAR* msg) : msg_(msg) {
         this->reset(); this->start();
     }
     ~HRTimer(void) {
@@ -133,7 +133,8 @@ static int  test_compressor(const ::Compression::Compressor_var &compressor)
     comp_out.length(static_cast< ::CORBA::ULong>(in_len * 1.1));
 
     {
-        HRTimer _hrt("Compress Time - "); compressor->compress(in_data, comp_out);
+      HRTimer _hrt(ACE_TEXT("Compress Time - "));
+      compressor->compress(in_data, comp_out);
     }
 
     Compression::CompressionRatio ratio = compressor->compression_ratio();
@@ -147,7 +148,8 @@ static int  test_compressor(const ::Compression::Compressor_var &compressor)
     ::Compression::Buffer decomp_out; decomp_out.length(1024);
 
     {
-        HRTimer _hrt("DeCompress Time - "); compressor->decompress(comp_out, decomp_out);
+        HRTimer _hrt(ACE_TEXT("DeCompress Time - "));
+        compressor->decompress(comp_out, decomp_out);
     }
 
     // Make sure we got back the original OK.
