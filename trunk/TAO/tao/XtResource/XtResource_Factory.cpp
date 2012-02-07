@@ -4,6 +4,8 @@
 #include "tao/debug.h"
 #include "ace/XtReactor/XtReactor.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
 
@@ -39,3 +41,5 @@ namespace TAO
     return this->reactor_impl_;
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
