@@ -75,7 +75,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                              1);
 
       // Get a TAO_Adapter_Activator reference
-      TAO::Portable_Server::Adapter_Activator activator (poa_manager.in ());
+      Adapter_Activator activator (poa_manager.in ());
 
       // Register the TAO_Adapter_Activator reference to be the RootPOA's
       // Adapter Activator.

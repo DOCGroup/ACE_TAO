@@ -1411,8 +1411,8 @@ TAO_GIOP_Message_Base::
                          TAO_Transport *transport)
 {
   // static CORBA::Octet
-  // I hate  this in every method. Till the time I figure out a way
-  // around  I will have them here hanging around.
+  // I hate this in every method. Till the time I figure out a way
+  // around I will have them here hanging around.
   const char close_message [TAO_GIOP_MESSAGE_HEADER_LEN] =
   {
     // The following works on non-ASCII platforms, such as MVS (which

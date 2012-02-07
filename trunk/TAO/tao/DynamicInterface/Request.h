@@ -126,8 +126,8 @@ namespace CORBA
      * If the method returns successfully, its result is placed in
      * the result argument specified on @c create_request. The behavior
      * is undefined if this @c Request has already been used with a
-     * previous call to @c invoke>, @c send>, or
-     * @send_multiple_requests.
+     * previous call to @c invoke, @c send, or
+     * @c send_multiple_requests.
      *
      * @note A default argument is set, but please note that this not
      *       recommended as the user may not be able to propagate the
@@ -206,7 +206,6 @@ namespace CORBA
 
     // The following are not allowed except when called from the
     // friend class.
-
     Request (CORBA::Object_ptr obj,
              CORBA::ORB_ptr orb,
              const CORBA::Char *op,

@@ -1,3 +1,19 @@
+Tue Feb  7 09:54:31 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/compression.mpb:
+
+        * tao/DynamicInterface/Request.h:
+
+        * tao/GIOP_Message_Base.cpp:
+        * tao/ORB.cpp:
+        * tao/Tagged_Profile.cpp:
+
+        * tao/ZIOP/ZIOP.cpp:
+
+        * tests/POA/FindPOA/Adapter_Activator.h:
+        * tests/POA/FindPOA/Adapter_Activator.cpp:
+        * tests/POA/FindPOA/FindPOA.cpp:
+
 Mon Jan 30 10:39:58 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Compression/RLECompressorTest.cpp:
