@@ -114,6 +114,7 @@ TAO_ZIOP_Loader::ziop_compressorid_name (::Compression::CompressorId st)
       case ::Compression::COMPRESSORID_RZIP: return "RZIP";
       case ::Compression::COMPRESSORID_7X: return "7X";
       case ::Compression::COMPRESSORID_XAR: return "XAR";
+      case ::Compression::COMPRESSORID_RLE: return "RLE";
     }
   return "Unknown";
 }
@@ -647,7 +648,6 @@ TAO_ZIOP_Loader::marshal_data (TAO_OutputCDR& cdr, TAO_ORB_Core& orb_core)
 
 #endif
 }
-
 
 ACE_STATIC_SVC_DEFINE (TAO_ZIOP_Loader,
                        ACE_TEXT ("ZIOP_Loader"),
