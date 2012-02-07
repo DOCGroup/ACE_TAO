@@ -1404,7 +1404,6 @@ CORBA::ORB::object_to_string (CORBA::Object_ptr obj)
 
   // Application writer controls what kind of objref strings they get,
   // maybe along with other things, by how they initialize the ORB.
-
   if (use_omg_ior_format_)
     {
       // By default, orbs use IOR strings; these are ugly (and error

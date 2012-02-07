@@ -164,7 +164,7 @@ TAO_Tagged_Profile::unmarshall_ref_addr_i (TAO_InputCDR &input)
       input.skip_bytes (id_length);
     }
 
-  // Unmarshall the sequnce of TaggedProfiles
+  // Unmarshall the sequence of TaggedProfiles
   IOP::TaggedProfileSeq ior_profiles;
 
   hdr_status &= input >> ior_profiles;

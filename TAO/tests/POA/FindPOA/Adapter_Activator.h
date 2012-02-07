@@ -22,25 +22,19 @@
 #if (TAO_HAS_MINIMUM_POA == 0)
 #if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 
-namespace TAO
+class Adapter_Activator
+  : public PortableServer::AdapterActivator
 {
-  namespace Portable_Server
-  {
-    class Adapter_Activator
-      : public PortableServer::AdapterActivator
-    {
-    public:
-      Adapter_Activator (PortableServer::POAManager_ptr poa_manager);
+public:
+  Adapter_Activator (PortableServer::POAManager_ptr poa_manager);
 
-      CORBA::Boolean unknown_adapter (PortableServer::POA_ptr parent,
-                                      const char *name);
+  CORBA::Boolean unknown_adapter (PortableServer::POA_ptr parent,
+                                  const char *name);
 
-    protected:
-      /// POA Manager
-      PortableServer::POAManager_var poa_manager_;
-    };
-  }
-}
+protected:
+  /// POA Manager
+  PortableServer::POAManager_var poa_manager_;
+};
 
 #endif
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
