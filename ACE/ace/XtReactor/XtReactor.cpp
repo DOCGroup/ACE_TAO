@@ -323,7 +323,7 @@ ACE_XtReactor::synchronize_XtInput(ACE_HANDLE handle)
   // Finally, add input handler.
   (*XtID)->id_ = ::XtAppAddInput (this->context_,
                                   (int) handle,
-                                  (XtPointer) condition,
+                                  reinterpret_cast <XtPointer> (condition),
                                   InputCallbackProc,
                                   (XtPointer) this);
 }
