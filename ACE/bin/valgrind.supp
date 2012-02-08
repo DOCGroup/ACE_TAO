@@ -284,3 +284,10 @@
    fun:malloc
    fun:dl_open_worker
 }
+
+{
+   <wcscmp-uses-mmx>
+   <see https://bugzilla.redhat.com/show_bug.cgi?id=755242>
+   Memcheck:Addr8
+   fun:wcscmp
+}
