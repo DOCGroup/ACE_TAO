@@ -287,7 +287,6 @@
 
 {
    <see https://bugzilla.redhat.com/show_bug.cgi?id=755242>
-   wcscmp-uses-mmx
    Memcheck:Addr8
    fun:wcscmp
 }
