@@ -61,9 +61,11 @@ AR      = ${COMPARCH}ar
 RANLIB  = ${COMPARCH}ranlib
 
 DCFLAGS    += -g
+DCCFLAGS   += -g
 DLD        = $(CXX)
 LD         = $(CXX)
 OCFLAGS    += -O3
+OCCFLAGS   += -O3
 ARFLAGS    = rsuv
 SOEXT      = dll
 EXEEXT     = .exe
