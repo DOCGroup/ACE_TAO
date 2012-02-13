@@ -1,3 +1,9 @@
+Mon Feb 13 16:38:15 UTC 2012  Adam Mitz  <mitza@ociweb.com>
+
+        * include/makeinclude/platform_gnuwin32_common.GNU:
+
+          Set DCCFLAGS and OCCFLAGS to get debug=X and optimize=X to work.
+
 Tue Feb  7 12:56:41 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/XtReactor/XtReactor.cpp:
