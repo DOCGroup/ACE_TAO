@@ -64,7 +64,7 @@ ACE::out_of_handles (int error)
 #elif defined (HPUX)
       // On HPUX, we need to check for EADDRNOTAVAIL also.
       error == EADDRNOTAVAIL ||
-#elif defined (linux)
+#elif defined (ACE_LINUX)
       // On linux, we need to check for ENOENT also.
       error == ENOENT ||
       // For RedHat5.2, need to check for EINVAL too.

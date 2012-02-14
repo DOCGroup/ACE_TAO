@@ -34,7 +34,7 @@
 #endif
 
 /* Linux is not currently supported */
-#ifdef linux
+#ifdef ACE_LINUX
 
 #define FILE_UNIX
 #undef FILE_STDIO

@@ -153,7 +153,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   // checks on, for example, HP-UX (pstat_getproc, pstat_getpathname) and
   // AIX (/proc is available, but there's no self and the fds are not links
   // to the opened file names), the code isn't here at present.
-#if defined (ACE_LACKS_FORK) || defined (ACE_LACKS_READLINK) || !defined(linux)
+#if defined (ACE_LACKS_FORK) || defined (ACE_LACKS_READLINK) || !defined(ACE_LINUX)
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);
 

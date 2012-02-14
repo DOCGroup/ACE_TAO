@@ -249,14 +249,14 @@ public:
   static void hrtime_to_tv (ACE_Time_Value &tv,
                             const ACE_hrtime_t hrt);
 
-#if defined (linux)
+#if defined (ACE_LINUX)
   /**
    * This is used to find out the Mhz of the machine for the scale
    * factor.  If there are any problems getting it, we just return 1
    * (the default).
    */
   static ACE_UINT32 get_cpuinfo (void);
-#endif /* defined (linux) */
+#endif /* defined (ACE_LINUX) */
 
 private:
   /**

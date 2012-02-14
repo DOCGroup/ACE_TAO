@@ -39,7 +39,7 @@ typedef ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex> MALLOC;
 #define MMAP_FILENAME ACE_TEXT ("test_file")
 #define MUTEX_NAME ACE_TEXT ("test_lock")
 
-#if !defined (linux) && !defined (ACE_OPENVMS) \
+#if !defined (ACE_LINUX) && !defined (ACE_OPENVMS) \
     && !(defined (ACE_WIN32) \
          && (defined (ghs) || defined (__MINGW32__) )) \
     && !(defined (__OpenBSD__) && defined (ACE_HAS_PTHREADS))
@@ -50,7 +50,7 @@ typedef ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex> MALLOC;
 // Win9x doesn't support remaps.
 // OpenBSD causes this test to hang in the child when pthreads are enabled.
 // On these plarforms, we make sure the remapping will never occur.
-#endif /* linux && Win32 GHS*/
+#endif /* ACE_LINUX && Win32 GHS*/
 
 #if defined (ACE_WIN32)
 // When looking for the file to execute a process on Win32, the directory from

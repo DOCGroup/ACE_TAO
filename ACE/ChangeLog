@@ -1,3 +1,52 @@
+Tue Feb 14 22:57:00 UTC 2012  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ace/ACE.cpp:
+        * ace/Dev_Poll_Reactor.cpp:
+        * ace/Handle_Set.cpp:
+        * ace/High_Res_Timer.h:
+        * ace/High_Res_Timer.cpp:
+        * ace/INET_Addr.h:
+        * ace/INET_Addr.cpp:
+        * ace/Monitor_Control/Bytes_Received_Monitor.h:
+        * ace/Monitor_Control/Bytes_Received_Monitor.cpp:
+        * ace/Monitor_Control/Bytes_Sent_Monitor.h:
+        * ace/Monitor_Control/Bytes_Sent_Monitor.cpp:
+        * ace/Monitor_Control/CPU_Load_Monitor.h:
+        * ace/Monitor_Control/CPU_Load_Monitor.cpp:
+        * ace/Monitor_Control/Linux_Network_Interface_Monitor.h:
+        * ace/Monitor_Control/Linux_Network_Interface_Monitor.cpp:
+        * ace/Monitor_Control/Num_Threads_Monitor.h:
+        * ace/Monitor_Control/Num_Threads_Monitor.cpp:
+        * ace/Monitor_Control/Packets_Received_Monitor.h:
+        * ace/Monitor_Control/Packets_Received_Monitor.cpp:
+        * ace/Monitor_Control/Packets_Sent_Monitor.h:
+        * ace/Monitor_Control/Packets_Sent_Monitor.cpp:
+        * ace/OS_NS_netdb.cpp:
+        * ace/OS_NS_sys_socket.h:
+        * ace/OS_NS_sys_socket.inl:
+        * ace/OS_NS_time.inl:
+        * ace/OS_NS_unistd.inl:
+        * ace/SOCK_Dgram.cpp:
+        * ace/SOCK_Dgram_Mcast.cpp:
+        * ace/Select_Reactor_T.cpp:
+        * ace/config-linux.h:
+        * ace/os_include/os_pthread.h:
+        * apps/JAWS/clients/WebSTONE/src/nsapi-includes/base/systems.h:
+        * examples/APG/Signals/SigInfo.cpp:
+        * tests/INET_Addr_Test_IPV6.cpp:
+        * tests/MT_Reference_Counted_Event_Handler_Test.cpp:
+        * tests/Malloc_Test.cpp:
+        * tests/Multicast_Test.cpp:
+        * tests/Naming_Test.cpp:
+        * tests/Proactor_Test.cpp:
+        * tests/Proactor_Test_IPV6.cpp:
+        * tests/Proactor_UDP_Test.cpp:
+        * tests/Process_Test.cpp:
+        * tests/SSL/Bug_2912_Regression_Test.cpp:
+
+          Created a new macro, ACE_LINUX, which replaces all non-standard
+          tests for linux, __linux, and __linux__.
+
 Mon Feb 13 16:38:15 UTC 2012  Adam Mitz  <mitza@ociweb.com>
 
         * include/makeinclude/platform_gnuwin32_common.GNU:

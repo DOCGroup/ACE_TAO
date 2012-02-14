@@ -18,7 +18,7 @@ namespace ACE
 #if defined (ACE_HAS_WIN32_PDH)
       , Windows_Multi_Instance_Monitor (
             ACE_TEXT ("\\Network Interface(*)\\Bytes Received/sec"))
-#elif defined (linux) || defined (AIX)
+#elif defined (ACE_LINUX) || defined (AIX)
       , Linux_Network_Interface_Monitor (
             " %*[^:]: %lu %*u %*u %*u %*u %*u %*u %*u %*u %*u")
             /// Scan format for /proc/net/dev

@@ -8,7 +8,7 @@
 #include "ace/os_include/net/os_if.h"
 #include "ace/os_include/arpa/os_inet.h"
 
-#if defined (__linux__) && defined (ACE_HAS_IPV6)
+#if defined (ACE_LINUX) && defined (ACE_HAS_IPV6)
 #include "ace/OS_NS_sys_socket.h"
 #endif
 
@@ -257,7 +257,7 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
       if (mcast_addr.get_type () == AF_INET6)
         {
           size_t nr_subscribed = 0;
-# if defined(__linux__)
+# if defined(ACE_LINUX)
           struct if_nameindex *intf = 0;
 
           intf = ACE_OS::if_nameindex ();
@@ -552,7 +552,7 @@ ACE_SOCK_Dgram_Mcast::subscribe_i (const ACE_INET_Addr &mcast_addr,
   ip_mreq  mreq;
 #if defined (ACE_HAS_IPV6)
   ipv6_mreq mreq6;
-#endif /* __linux__ && ACE_HAS_IPV6 */
+#endif /* ACE_LINUX && ACE_HAS_IPV6 */
 
   // Open the socket IFF this is the first ::subscribe and ::open
   // was not explicitly invoked.
@@ -616,7 +616,7 @@ ACE_SOCK_Dgram_Mcast::unsubscribe_ifs (const ACE_INET_Addr &mcast_addr,
       if (mcast_addr.get_type () == AF_INET6)
         {
           size_t nr_unsubscribed = 0;
-# if defined(__linux__)
+# if defined(ACE_LINUX)
 
           struct if_nameindex *intf;
 

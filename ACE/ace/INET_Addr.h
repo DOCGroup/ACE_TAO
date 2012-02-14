@@ -250,13 +250,13 @@ public:
                    int encode = 1,
                    int map = 0);
 
-#if (defined (__linux__) || defined (ACE_WIN32)) && defined (ACE_HAS_IPV6)
+#if (defined (ACE_LINUX) || defined (ACE_WIN32)) && defined (ACE_HAS_IPV6)
   /**
    * Sets the interface that should be used for this address. This only has
    * an effect when the address is link local, otherwise it does nothing.
    */
   int set_interface (const char *intf_name);
-#endif /* (__linux__ || ACE_WIN32) && ACE_HAS_IPV6 */
+#endif /* (ACE_LINUX || ACE_WIN32) && ACE_HAS_IPV6 */
 
   /// Return the port number, converting it into host byte-order.
   u_short get_port_number (void) const;

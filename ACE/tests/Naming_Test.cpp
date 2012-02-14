@@ -221,7 +221,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   ** mapped areas of memory, like the heap, or the C library, and get very
   ** unexpected results.    (Steve Huston, 24-August-2007)
   */
-# if defined (linux) && defined (__x86_64__)
+# if defined (ACE_LINUX) && defined (__x86_64__)
   name_options->base_address ((char*)0x3c00000000);
 #endif
   bool unicode = false;

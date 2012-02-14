@@ -478,7 +478,7 @@ ACE_OS::getpgid (pid_t pid)
 #if defined (ACE_LACKS_GETPGID)
   ACE_UNUSED_ARG (pid);
   ACE_NOTSUP_RETURN (-1);
-#elif defined (linux) && __GLIBC__ > 1 && __GLIBC_MINOR__ >= 0
+#elif defined (ACE_LINUX) && __GLIBC__ > 1 && __GLIBC_MINOR__ >= 0
   // getpgid() is from SVR4, which appears to be the reason why GLIBC
   // doesn't enable its prototype by default.
   // Rather than create our own extern prototype, just use the one
