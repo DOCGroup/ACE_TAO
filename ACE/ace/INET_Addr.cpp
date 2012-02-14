@@ -1008,7 +1008,7 @@ int ACE_INET_Addr::set_address (const char *ip_addr,
 
 }
 
-#if (defined (__linux__) || defined (ACE_WIN32)) && defined (ACE_HAS_IPV6)
+#if (defined (ACE_LINUX) || defined (ACE_WIN32)) && defined (ACE_HAS_IPV6)
 int
 ACE_INET_Addr::set_interface (const char *intf_name)
 {
@@ -1016,7 +1016,7 @@ ACE_INET_Addr::set_interface (const char *intf_name)
       (IN6_IS_ADDR_LINKLOCAL (&this->inet_addr_.in6_.sin6_addr) ||
        IN6_IS_ADDR_MC_LINKLOCAL (&this->inet_addr_.in6_.sin6_addr)))
     {
-#if defined (__linux__)
+#if defined (ACE_LINUX)
       this->inet_addr_.in6_.sin6_scope_id =
         ACE_OS::if_nametoindex (intf_name);
 #else
@@ -1033,7 +1033,7 @@ ACE_INET_Addr::set_interface (const char *intf_name)
     return 0;
 
 }
-#endif /* __linux && ACE_HAS_IPV6 */
+#endif /* ACE_LINUX && ACE_HAS_IPV6 */
 
 const char *
 ACE_INET_Addr::get_host_addr (char *dst, int size) const
@@ -1070,7 +1070,7 @@ ACE_INET_Addr::get_host_addr (char *dst, int size) const
                                           &this->inet_addr_.in6_.sin6_addr,
                                           dst,
                                           size);
-#if defined (__linux__)
+#if defined (ACE_LINUX)
       if ((IN6_IS_ADDR_LINKLOCAL (&this->inet_addr_.in6_.sin6_addr) ||
            IN6_IS_ADDR_MC_LINKLOCAL (&this->inet_addr_.in6_.sin6_addr)) &&
           this->inet_addr_.in6_.sin6_scope_id != 0)

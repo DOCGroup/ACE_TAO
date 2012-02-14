@@ -70,7 +70,7 @@ namespace ACE
     private:
       static const char* default_name_;
 
-#if defined (linux)
+#if defined (ACE_LINUX)
       FILE *file_ptr_;
       char buf_[1024];
       unsigned long nthreads_;

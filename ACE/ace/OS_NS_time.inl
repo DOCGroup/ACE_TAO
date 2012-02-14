@@ -312,7 +312,7 @@ ACE_OS::gethrtime (const ACE_HRTimer_Op op)
 # else  /* ! ACE_LACKS_LONGLONG_T */
   return now;
 # endif /* ! ACE_LACKS_LONGLONG_T */
-#elif defined (linux) && defined (ACE_HAS_ALPHA_TIMER)
+#elif defined (ACE_LINUX) && defined (ACE_HAS_ALPHA_TIMER)
   // NOTE:  alphas only have a 32 bit tick (cycle) counter.  The rpcc
   // instruction actually reads 64 bits, but the high 32 bits are
   // implementation-specific.  Linux and Digital Unix, for example,
@@ -505,7 +505,7 @@ ACE_OS::timezone (void)
 {
   return ::ace_timezone ();
 }
-#endif /* linux */
+#endif /* ACE_LINUX */
 
 ACE_INLINE void
 ACE_OS::tzset (void)

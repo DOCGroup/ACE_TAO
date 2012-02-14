@@ -75,7 +75,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 int ACE_High_Res_Timer::global_scale_factor_status_ = 0;
 
 
-#if defined (linux)
+#if defined (ACE_LINUX)
 // Determine the apparent CPU clock speed from /proc/cpuinfo
 ACE_UINT32
 ACE_High_Res_Timer::get_cpuinfo (void)
@@ -188,7 +188,7 @@ ACE_High_Res_Timer::get_cpuinfo (void)
 
   return scale_factor;
 }
-#endif /* linux */
+#endif /* ACE_LINUX */
 
 ACE_UINT32
 ACE_High_Res_Timer::global_scale_factor (void)
@@ -232,9 +232,9 @@ ACE_High_Res_Timer::global_scale_factor (void)
 
             return ACE_High_Res_Timer::global_scale_factor_;
 
-#         elif defined (linux)
+#         elif defined (ACE_LINUX)
             ACE_High_Res_Timer::global_scale_factor (ACE_High_Res_Timer::get_cpuinfo ());
-#         endif /* ! ACE_WIN32 && ! (linux && __alpha__) */
+#         endif /* ! ACE_WIN32 && ! (ACE_LINUX && __alpha__) */
 
 #         if !defined (ACE_WIN32)
           if (ACE_High_Res_Timer::global_scale_factor_ <= 1u)

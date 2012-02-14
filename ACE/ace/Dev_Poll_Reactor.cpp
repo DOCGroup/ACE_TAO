@@ -12,13 +12,13 @@
 # include "ace/OS_NS_stropts.h"
 
 # if defined (ACE_HAS_DEV_POLL)
-#    if defined (linux)
+#    if defined (ACE_LINUX)
 #      include /**/ <linux/devpoll.h>
 #    elif defined (HPUX_VERS) && HPUX_VERS < 1123
 #      include /**/ <devpoll.h>
 #    else
 #      include /**/ <sys/devpoll.h>
-#    endif  /* linux */
+#    endif  /* ACE_LINUX */
 # endif  /* ACE_HAS_DEV_POLL */
 
 #if !defined (__ACE_INLINE__)

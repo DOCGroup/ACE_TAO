@@ -32,7 +32,7 @@ public:
         return 0;
       }
     // Listing A
-#if defined (__linux__)
+#if defined (ACE_LINUX)
     // Listing B code/ch11
     ACE_DEBUG ((LM_INFO,
                 ACE_TEXT ("errno for this signal is %d [%s]\n"),

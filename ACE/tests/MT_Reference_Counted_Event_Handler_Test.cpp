@@ -1288,7 +1288,7 @@ test<REACTOR_IMPL>::test (int ignore_nested_upcalls,
            nested_upcalls == test_configs[i][4]))
         {
 
-#if 0 // defined (linux)
+#if 0 /* defined (ACE_LINUX) */
 
           // @@ I am not sure why but when <make_invocations> is 0 and
           // there is no purger thread, the receiver thread does not

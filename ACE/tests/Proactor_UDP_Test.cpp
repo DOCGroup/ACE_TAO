@@ -2067,7 +2067,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
   xfer_limit = 50 * ACE_OS::strlen (complete_message);
 
   // Linux kernels up to at least 2.6.9 (RHEL 4) can't do full duplex aio.
-# if defined (linux)
+# if defined (ACE_LINUX)
   duplex = 0;
 #endif
 
