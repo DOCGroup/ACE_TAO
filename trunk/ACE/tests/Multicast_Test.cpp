@@ -448,7 +448,7 @@ public:
                       = ACE_SOCK_Dgram_Mcast::DEFOPTS);
   virtual ~MCT_Event_Handler (void);
 
-#if defined (__linux__)
+#if defined (ACE_LINUX)
   int join (const ACE_INET_Addr &mcast_addr,
             int reuse_addr = 1,
             const ACE_TCHAR *net_if = ACE_TEXT ("lo"));
@@ -787,7 +787,7 @@ int producer (MCT_Config &config)
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("Starting producer...\n")));
   ACE_SOCK_Dgram socket (ACE_sap_any_cast (ACE_INET_Addr &), PF_INET);
   //FUZZ: enable check_for_lack_ACE_OS
-#if defined (__linux__)
+#if defined (ACE_LINUX)
   socket.set_nic (ACE_TEXT("lo"));
 #endif
   // Note that is is IPv4 specific and needs to be changed once

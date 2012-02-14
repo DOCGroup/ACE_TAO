@@ -25,7 +25,7 @@
 
 #if defined (ACE_HAS_PDH_H) && !defined (ACE_LACKS_PDH_H)
 #include "ace/Monitor_Control/Windows_Multi_Instance_Monitor.h"
-#elif defined (linux) || defined (AIX)
+#elif defined (ACE_LINUX) || defined (AIX)
 #include "ace/Monitor_Control/Linux_Network_Interface_Monitor.h"
 #elif defined (ACE_HAS_KSTAT)
 #include "ace/Monitor_Control/Solaris_Network_Interface_Monitor.h"
@@ -54,7 +54,7 @@ namespace ACE
       : public Monitor_Base
 #if defined (ACE_HAS_WIN32_PDH)
       , public Windows_Multi_Instance_Monitor
-#elif defined (linux) || defined (AIX)
+#elif defined (ACE_LINUX) || defined (AIX)
       , public Linux_Network_Interface_Monitor
 #elif defined (ACE_HAS_KSTAT)
       , public Solaris_Network_Interface_Monitor

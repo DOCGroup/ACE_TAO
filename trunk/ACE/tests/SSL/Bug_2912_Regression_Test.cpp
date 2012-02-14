@@ -41,7 +41,7 @@
    test requires */
 #if defined (ACE_HAS_THREADS) && \
     (defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)) && \
-    !defined (linux)
+    !defined (ACE_LINUX)
 
 /**
  * Data payload sent between client and server.  Test is not dependent

@@ -369,7 +369,7 @@ public:
                                              const struct timespec * abstime);
 #    endif  /* _XOPEN_SOURCE && _XOPEN_SOURCE < 600 */
 
-#  endif  /* linux && ((__GLIBC__ > 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 2)) */
+#  endif  /* ACE_LINUX && ((__GLIBC__ > 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 2)) */
 
 #elif defined (ACE_HAS_STHREADS)
 #  if !defined (ACE_THR_PRI_FIFO_MIN)

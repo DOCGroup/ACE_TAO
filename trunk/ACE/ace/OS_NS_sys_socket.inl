@@ -987,7 +987,7 @@ ACE_OS::socketpair (int domain, int type,
 #endif /* ACE_LACKS_SOCKETPAIR */
 }
 
-#if defined (__linux__) && defined (ACE_HAS_IPV6)
+#if defined (ACE_LINUX) && defined (ACE_HAS_IPV6)
 ACE_INLINE unsigned int
 ACE_OS::if_nametoindex (const char *ifname)
 {
@@ -1016,6 +1016,6 @@ ACE_OS::if_freenameindex (struct if_nameindex *ptr)
   if (ptr != 0)
     ::if_freenameindex (ptr);
 }
-#endif /* __linux__ && ACE_HAS_IPV6 */
+#endif /* ACE_LINUX && ACE_HAS_IPV6 */
 
 ACE_END_VERSIONED_NAMESPACE_DECL
