@@ -6,6 +6,7 @@
 // #include Message_Queue.h instead of Message_Queue_T.h to avoid
 // circular include problems.
 #include "ace/Message_Queue.h"
+#include "ace/Message_Queue_Vx.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_sys_time.h"
 

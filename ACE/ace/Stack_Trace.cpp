@@ -222,7 +222,12 @@ ACE_Stack_Trace::generate_trace (ssize_t starting_frame_offset,
   TRC_OS_CTX osCtx;
   osCtx.stackBase = desc.td_pStackBase;
   osCtx.stackEnd = desc.td_pStackEnd;
+#if (ACE_VXWORKS < 0x690)
   osCtx.pcValidateRtn = reinterpret_cast<FUNCPTR> (ace_vx_rtp_pc_validate);
+#else
+  // reinterpret_cast causes an error
+  osCtx.pcValidateRtn = ace_vx_rtp_pc_validate;
+#endif
 
   char *fp = _WRS_FRAMEP_FROM_JMP_BUF (regs);
   INSTR *pc = _WRS_RET_PC_FROM_JMP_BUF (regs);
