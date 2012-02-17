@@ -1,6 +1,9 @@
 USER VISIBLE CHANGES BETWEEN ACE-6.0.8 and ACE-6.0.9
 ====================================================
 
+. Added compilation support for VxWorks 6.9, no runtime
+  testing has been performed
+
 USER VISIBLE CHANGES BETWEEN ACE-6.0.7 and ACE-6.0.8
 ====================================================
 

@@ -33,6 +33,8 @@
 #    define ACE_VXWORKS 0x670
 #   elif (_WRS_VXWORKS_MINOR == 8)
 #    define ACE_VXWORKS 0x680
+#   elif (_WRS_VXWORKS_MINOR == 9)
+#    define ACE_VXWORKS 0x690
 #   endif
 #  endif
 # endif
@@ -48,6 +50,8 @@
 # include "ace/config-vxworks6.7.h"
 #elif (ACE_VXWORKS == 0x680)
 # include "ace/config-vxworks6.8.h"
+#elif (ACE_VXWORKS == 0x690)
+# include "ace/config-vxworks6.9.h"
 #else
 #error Unknown or unsupported VxWorks version
 #endif

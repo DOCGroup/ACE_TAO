@@ -1,3 +1,21 @@
+Fri Feb 17 23:10:37 UTC 2012  Adam Mitz  <mitza@ociweb.com>
+
+        * NEWS:
+        * ace/Message_Queue_T.cpp:
+        * ace/Message_Queue_Vx.cpp:
+        * ace/OS_NS_Thread.inl:
+        * ace/OS_NS_arpa_inet.cpp:
+        * ace/OS_NS_unistd.inl:
+        * ace/Stack_Trace.cpp:
+        * ace/config-vxworks.h:
+        * ace/config-vxworks6.9.h:
+        * ace/os_include/sys/os_types.h:
+        * include/makeinclude/platform_vxworks.GNU:
+        * include/makeinclude/platform_vxworks6.9.GNU:
+        * tests/Bug_3943_Regression_Test.cpp:
+
+          Added support for VxWorks version 6.9.
+
 Tue Feb 14 22:57:00 UTC 2012  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ace/ACE.cpp:

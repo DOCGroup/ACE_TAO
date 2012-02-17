@@ -235,7 +235,7 @@ namespace {
     // Shutdown the <Svc_Handler>.
 
   private:
-    enum Direction { READ, WRITE };
+    enum Direction { READX, WRITEX }; // VxWorks defines READ and WRITE
     bool wait_for_completion(Direction direction);
 
     ssize_t send (IovecGuard& iovec_array,
@@ -590,7 +590,7 @@ Svc_Handler::send_data (void)
   send_desc = ACE_TEXT ("indicating no more messages");
   this->send(FINISHED_CHAR, send_desc);
 
-  this->wait_for_completion(READ);
+  this->wait_for_completion(READX);
   if (close () == -1)
     {
       ACE_ERROR ((LM_ERROR,
@@ -807,7 +807,7 @@ Svc_Handler::recv_data (void)
 
   for (;;)
     {
-      if (!this->wait_for_completion(READ))
+      if (!this->wait_for_completion(READX))
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) %p\n"),
                     ACE_TEXT ("select")));
@@ -934,7 +934,7 @@ Svc_Handler::wait_for_completion(Direction direction)
 #endif /* ACE_WIN64 */
 
   int result =
-   (direction == READ) ?
+   (direction == READX) ?
     ACE_OS::select (select_width, handle_set, 0, 0, &DEFAULT_TIME_VALUE) :
     ACE_OS::select (select_width, 0, handle_set, 0, &DEFAULT_TIME_VALUE);
   return result != -1;
