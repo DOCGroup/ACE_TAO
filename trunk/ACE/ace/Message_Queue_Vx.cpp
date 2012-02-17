@@ -1,5 +1,6 @@
 // $Id$
 
+#include "ace/Message_Queue.h"
 #include "ace/Message_Queue_Vx.h"
 #include "ace/Log_Msg.h"
 
