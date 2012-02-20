@@ -28,7 +28,6 @@
 #include "utl_identifier.h"
 #include "idl_defines.h"
 #include "nr_extern.h"
-#include <TAO_IDL/be_include/be_helper.h>
 
 be_type::be_type (AST_Decl::NodeType nt,
                   UTL_ScopedName *n)
