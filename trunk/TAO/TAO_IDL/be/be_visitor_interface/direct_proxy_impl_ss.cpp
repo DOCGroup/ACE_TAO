@@ -2,23 +2,22 @@
 //$Id$
 //
 
+#include "interface.h"
+
 be_visitor_interface_direct_proxy_impl_ss::
 be_visitor_interface_direct_proxy_impl_ss (be_visitor_context *ctx)
   : be_visitor_interface (ctx)
 {
-  // No-Op.
 }
 
 be_visitor_interface_direct_proxy_impl_ss::
 ~be_visitor_interface_direct_proxy_impl_ss (void)
 {
-  // No-Op.
 }
 
 int
 be_visitor_interface_direct_proxy_impl_ss::visit_interface (
-    be_interface *node
-  )
+    be_interface *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 

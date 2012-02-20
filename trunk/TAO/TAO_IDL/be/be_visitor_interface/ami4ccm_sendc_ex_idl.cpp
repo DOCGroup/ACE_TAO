@@ -12,6 +12,8 @@
  */
 //=============================================================================
 
+#include "interface.h"
+
 be_visitor_ami4ccm_sendc_ex_idl::be_visitor_ami4ccm_sendc_ex_idl (
       be_visitor_context *ctx)
   : be_visitor_scope (ctx),

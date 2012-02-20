@@ -12,6 +12,8 @@
  */
 //=============================================================================
 
+#include "operation.h"
+
 // ****************************************************************************
 // Operation visitor for return types. This generates the mapping for a return
 // type in an operation signature

@@ -12,6 +12,8 @@
  */
 //=============================================================================
 
+#include "argument.h"
+
 // ************************************************************
 // be_visitor_args_arglist for parameter list in method declarations and
 // definitions

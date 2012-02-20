@@ -13,6 +13,8 @@
  */
 //=============================================================================
 
+#include "argument.h"
+
 // ************************************************************************
 // Visitor to generate code for passing argument to the marshal/demarshal
 // routines

@@ -13,6 +13,8 @@
  */
 //=============================================================================
 
+#include "operation.h"
+
 be_visitor_operation_upcall_command_ss::be_visitor_operation_upcall_command_ss (
       be_visitor_context *ctx)
   : be_visitor_operation (ctx)

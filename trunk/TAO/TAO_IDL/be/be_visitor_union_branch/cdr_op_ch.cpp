@@ -1,5 +1,3 @@
-
-
 //=============================================================================
 /**
  *  @file    cdr_op_ch.cpp
@@ -13,14 +11,10 @@
  */
 //=============================================================================
 
-
-// **********************************************
-//  Visitor for union_branch in the client header file.
-// **********************************************
+#include "union_branch.h"
 
 be_visitor_union_branch_cdr_op_ch::be_visitor_union_branch_cdr_op_ch (
-    be_visitor_context *ctx
-  )
+    be_visitor_context *ctx)
   : be_visitor_decl (ctx)
 {
 }

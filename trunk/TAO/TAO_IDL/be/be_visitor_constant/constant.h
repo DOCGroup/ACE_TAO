@@ -1,24 +1,25 @@
 
 //=============================================================================
 /**
- *  @file    be_visitor_native.cpp
+ *  @file    be_visitor_constant.cpp
  *
  *  $Id$
  *
- *  Visitors for generation of code for native
+ *  Visitors for generation of code for Constant
  *
  *
- *  @author Johnny Willemsen
+ *  @author Aniruddha Gokhale
  */
 //=============================================================================
 
-
-#include "be_native.h"
+#include "be_constant.h"
+#include "be_module.h"
 #include "be_helper.h"
 #include "be_extern.h"
+#include "be_typedef.h"
+#include "utl_identifier.h"
 
-#include "be_visitor_native.h"
+#include "be_visitor_constant.h"
 #include "be_visitor_context.h"
 
-#include "be_visitor_native/native_ch.cpp"
 

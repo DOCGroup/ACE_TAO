@@ -13,15 +13,10 @@
  */
 //=============================================================================
 
-
-// ***************************************************************************
-// Array visitor for generating Any operator declarations in the client
-// stubs file
-// ***************************************************************************
+#include "array.h"
 
 be_visitor_array_any_op_cs::be_visitor_array_any_op_cs (
-    be_visitor_context *ctx
-  )
+    be_visitor_context *ctx)
   : be_visitor_decl (ctx)
 {
 }

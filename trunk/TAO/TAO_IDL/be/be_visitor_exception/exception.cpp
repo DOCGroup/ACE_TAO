@@ -12,6 +12,8 @@
  */
 //=============================================================================
 
+#include "exception.h"
+
 // Generic exception visitor.
 be_visitor_exception::be_visitor_exception (be_visitor_context *ctx)
   : be_visitor_scope (ctx)

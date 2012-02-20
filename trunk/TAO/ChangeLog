@@ -1,3 +1,11 @@
+Mon Feb 20 12:28:01 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/*.*:
+          Reworked TAO_IDL to compile all source files one by one. This way
+          a change to one visitor will trigger the needed recompile with
+          any make environment. Also external tools are now much easier able
+          to handle TAO_IDL
+
 Mon Feb 20 11:16:47 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_type.cpp:

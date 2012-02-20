@@ -12,6 +12,7 @@
  */
 //=============================================================================
 
+#include "valuetype_fwd.h"
 
 be_visitor_valuetype_fwd_ch::be_visitor_valuetype_fwd_ch (
     be_visitor_context *ctx

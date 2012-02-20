@@ -37,13 +37,3 @@
 #include "be_visitor_enum.h"
 #include "be_visitor_structure.h"
 #include "be_visitor_union.h"
-
-#include "be_visitor_array/array.cpp"
-#include "be_visitor_array/array_ch.cpp"
-#include "be_visitor_array/array_ci.cpp"
-#include "be_visitor_array/array_cs.cpp"
-#include "be_visitor_array/any_op_ch.cpp"
-#include "be_visitor_array/any_op_cs.cpp"
-#include "be_visitor_array/cdr_op_ch.cpp"
-#include "be_visitor_array/cdr_op_cs.cpp"
-

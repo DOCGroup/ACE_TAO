@@ -12,9 +12,7 @@
  */
 //=============================================================================
 
-// ******************************************************
-// Root visitor for server skeletons
-// ******************************************************
+#include "root.h"
 
 be_visitor_root_ss::be_visitor_root_ss (be_visitor_context *ctx)
   : be_visitor_root (ctx)

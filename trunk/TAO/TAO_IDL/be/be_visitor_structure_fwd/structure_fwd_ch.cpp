@@ -12,10 +12,10 @@
  */
 //=============================================================================
 
+#include "structure_fwd.h"
 
 be_visitor_structure_fwd_ch::be_visitor_structure_fwd_ch (
-    be_visitor_context *ctx
-  )
+    be_visitor_context *ctx)
   : be_visitor_decl (ctx)
 {
 }

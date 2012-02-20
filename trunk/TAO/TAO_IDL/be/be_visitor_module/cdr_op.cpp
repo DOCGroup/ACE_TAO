@@ -13,11 +13,7 @@
  */
 //=============================================================================
 
-
-// ***************************************************************************
-// Module visitor for generating CDR operator declarations in the client header
-// and stub
-// ***************************************************************************
+#include "module.h"
 
 be_visitor_module_cdr_op::be_visitor_module_cdr_op (be_visitor_context *ctx)
   : be_visitor_module (ctx)

@@ -12,10 +12,7 @@
  */
 //=============================================================================
 
-
-// **************************************************
-// Interface visitor for client inline
-// **************************************************
+#include "interface.h"
 
 be_visitor_interface_ci::be_visitor_interface_ci (be_visitor_context *ctx)
   : be_visitor_interface (ctx)

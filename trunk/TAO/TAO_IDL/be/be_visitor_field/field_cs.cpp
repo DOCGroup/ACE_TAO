@@ -12,6 +12,7 @@
  */
 //=============================================================================
 
+#include "field.h"
 #include "be_visitor_array/array_cs.h"
 #include "be_visitor_enum/enum_cs.h"
 #include "be_visitor_sequence/sequence_cs.h"

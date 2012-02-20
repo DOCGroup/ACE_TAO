@@ -12,6 +12,7 @@
  */
 //=============================================================================
 
+#include "structure.h"
 
 // ***************************************************************************
 // Structure visitor for generating Any operator declarations in the client header

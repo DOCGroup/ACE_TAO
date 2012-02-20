@@ -12,6 +12,7 @@
  */
 //=============================================================================
 
+#include "typecode.h"
 
 TAO::be_visitor_alias_typecode::be_visitor_alias_typecode (
   be_visitor_context * ctx)

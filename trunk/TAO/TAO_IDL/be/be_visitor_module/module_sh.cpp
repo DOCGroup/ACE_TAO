@@ -12,10 +12,7 @@
  */
 //=============================================================================
 
-
-// ************************************************************
-// Module visitor for server header
-// ************************************************************
+#include "module.h"
 
 be_visitor_module_sh::be_visitor_module_sh (be_visitor_context *ctx)
   : be_visitor_module (ctx)

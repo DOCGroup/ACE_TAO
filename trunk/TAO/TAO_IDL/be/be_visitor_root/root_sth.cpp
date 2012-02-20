@@ -12,9 +12,7 @@
  */
 //=============================================================================
 
-// ****************************************
-// Root visitor for server template header
-// ****************************************
+#include "root.h"
 
 be_visitor_root_sth::be_visitor_root_sth (be_visitor_context *ctx)
   : be_visitor_root (ctx)

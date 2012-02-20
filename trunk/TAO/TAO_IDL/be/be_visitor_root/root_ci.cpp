@@ -12,9 +12,7 @@
  */
 //=============================================================================
 
-// *********************************
-// Root visitor for client inline
-// *********************************
+#include "root.h"
 
 be_visitor_root_ci::be_visitor_root_ci (be_visitor_context *ctx)
   : be_visitor_root (ctx)

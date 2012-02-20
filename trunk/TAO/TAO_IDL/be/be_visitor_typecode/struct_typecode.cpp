@@ -12,6 +12,8 @@
  */
 //=============================================================================
 
+#include "typecode.h"
+
 TAO::be_visitor_struct_typecode::be_visitor_struct_typecode (
   be_visitor_context * ctx)
   : be_visitor_typecode_defn (ctx)

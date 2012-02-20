@@ -13,13 +13,10 @@
  */
 //=============================================================================
 
-// ************************************************************
-// Operation visitor for server header for TIE class operations.
-// ************************************************************
+#include "operation.h"
 
 be_visitor_operation_tie_sh::be_visitor_operation_tie_sh (
-    be_visitor_context *ctx
-  )
+    be_visitor_context *ctx)
   : be_visitor_scope (ctx)
 {
 }

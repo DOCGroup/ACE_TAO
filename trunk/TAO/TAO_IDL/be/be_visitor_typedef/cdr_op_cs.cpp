@@ -12,6 +12,7 @@
  */
 //=============================================================================
 
+#include "typedef.h"
 
 // ***************************************************************************
 // Typedef visitor for generating CDR operator declarations in the client
@@ -19,8 +20,7 @@
 // ***************************************************************************
 
 be_visitor_typedef_cdr_op_cs::be_visitor_typedef_cdr_op_cs (
-    be_visitor_context *ctx
-  )
+    be_visitor_context *ctx)
   : be_visitor_typedef (ctx)
 {
 }

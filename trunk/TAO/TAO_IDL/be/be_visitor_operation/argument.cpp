@@ -12,6 +12,8 @@
  */
 //=============================================================================
 
+#include "operation.h"
+
 // ************************************************************
 // Generic operation visitor to handle the pre/post
 // do_static_call/upcall stuff with arguments.

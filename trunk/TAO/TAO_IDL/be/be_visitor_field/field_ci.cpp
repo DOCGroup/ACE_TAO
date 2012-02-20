@@ -12,6 +12,7 @@
  */
 //=============================================================================
 
+#include "field.h"
 #include "be_visitor_array/array_ci.h"
 #include "be_visitor_structure/structure_ci.h"
 #include "be_visitor_union/union_ci.h"

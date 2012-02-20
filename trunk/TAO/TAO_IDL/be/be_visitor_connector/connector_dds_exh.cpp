@@ -12,6 +12,8 @@
  */
 //=============================================================================
 
+#include "connector.h"
+
 #include "global_extern.h"
 #include "utl_strlist.h"
 #include "utl_string.h"
@@ -20,6 +22,7 @@
 #include "ast_union.h"
 #include "ast_template_module_ref.h"
 #include "ast_template_module.h"
+#include "ast_typedef.h"
 
 be_visitor_connector_dds_exh::be_visitor_connector_dds_exh (
       be_visitor_context *ctx)

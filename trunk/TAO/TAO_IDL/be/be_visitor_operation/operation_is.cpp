@@ -12,9 +12,7 @@
  */
 //=============================================================================
 
-// ************************************************************
-// Operation visitor for implementation skeleton
-// ************************************************************
+#include "operation.h"
 
 be_visitor_operation_is::be_visitor_operation_is (be_visitor_context *ctx)
   : be_visitor_operation (ctx)

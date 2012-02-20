@@ -12,9 +12,7 @@
  */
 //=============================================================================
 
-// ********************************
-// Root visitor for CIAO servant source
-// ********************************
+#include "root.h"
 
 be_visitor_root_svs::be_visitor_root_svs (be_visitor_context *ctx)
   : be_visitor_root (ctx)

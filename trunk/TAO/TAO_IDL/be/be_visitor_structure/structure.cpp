@@ -12,6 +12,8 @@
  */
 //=============================================================================
 
+#include "structure.h"
+
 be_visitor_structure::be_visitor_structure (be_visitor_context *ctx)
   : be_visitor_scope (ctx)
 {

@@ -13,9 +13,7 @@
  */
 //=============================================================================
 
-// ************************************************************
-// Interface visitor for CIAO executor IDL.
-// ************************************************************
+#include "interface.h"
 
 be_visitor_interface_ex_idl::be_visitor_interface_ex_idl (
   be_visitor_context *ctx)

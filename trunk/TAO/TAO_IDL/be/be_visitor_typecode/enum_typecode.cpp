@@ -12,7 +12,7 @@
  */
 //=============================================================================
 
-
+#include "typecode.h"
 #include "utl_scope.h"
 
 TAO::be_visitor_enum_typecode::be_visitor_enum_typecode (

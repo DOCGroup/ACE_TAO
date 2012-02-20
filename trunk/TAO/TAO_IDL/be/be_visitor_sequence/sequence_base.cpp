@@ -12,6 +12,7 @@
  */
 //=============================================================================
 
+#include "sequence.h"
 
 // ****************************************************************
 // We have to generate the parameters for the template that implements

@@ -1,6 +1,6 @@
-//
 // $Id$
-//
+
+#include "interface.h"
 
 be_visitor_interface_direct_proxy_impl_sh::
 be_visitor_interface_direct_proxy_impl_sh (be_visitor_context *ctx)

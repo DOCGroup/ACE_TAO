@@ -12,10 +12,10 @@
  */
 //=============================================================================
 
+#include "structure.h"
 
 be_visitor_structure_cdr_op_cs::be_visitor_structure_cdr_op_cs (
-    be_visitor_context *ctx
-  )
+    be_visitor_context *ctx)
   : be_visitor_structure (ctx)
 {
 }

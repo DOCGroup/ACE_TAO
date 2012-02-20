@@ -13,14 +13,10 @@
  */
 //=============================================================================
 
-
-// ***************************************************************************
-// Generates Any operator declarations in the client header
-// ***************************************************************************
+#include "component_fwd.h"
 
 be_visitor_component_fwd_any_op_ch::be_visitor_component_fwd_any_op_ch (
-    be_visitor_context *ctx
-  )
+    be_visitor_context *ctx)
   : be_visitor_decl (ctx)
 {
 }

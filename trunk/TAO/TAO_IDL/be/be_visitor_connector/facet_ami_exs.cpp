@@ -11,9 +11,10 @@
  *  @author Jeff Parsons
  */
 //=============================================================================
+
+#include "connector.h"
 #include "ast_generator.h"
 #include "be_predefined_type.h"
-
 
 be_visitor_facet_ami_exs::be_visitor_facet_ami_exs (
       be_visitor_context *ctx)
