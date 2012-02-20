@@ -1,3 +1,35 @@
+Mon Feb 20 12:58:20 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_argument/argument.h:
+        * TAO_IDL/be/be_visitor_array/array.h:
+        * TAO_IDL/be/be_visitor_attribute/attribute.h:
+        * TAO_IDL/be/be_visitor_component/component.h:
+        * TAO_IDL/be/be_visitor_component_fwd/component_fwd.h:
+        * TAO_IDL/be/be_visitor_connector/connector.h:
+        * TAO_IDL/be/be_visitor_constant/constant.h:
+        * TAO_IDL/be/be_visitor_enum/enum.h:
+        * TAO_IDL/be/be_visitor_exception/exception.h:
+        * TAO_IDL/be/be_visitor_field/field.h:
+        * TAO_IDL/be/be_visitor_home/home.h:
+        * TAO_IDL/be/be_visitor_interface/interface.h:
+        * TAO_IDL/be/be_visitor_interface_fwd/interface_fwd.h:
+        * TAO_IDL/be/be_visitor_module/module.h:
+        * TAO_IDL/be/be_visitor_native/native.h:
+        * TAO_IDL/be/be_visitor_operation/operation.h:
+        * TAO_IDL/be/be_visitor_root/root.h:
+        * TAO_IDL/be/be_visitor_sequence/sequence.h:
+        * TAO_IDL/be/be_visitor_structure/structure.h:
+        * TAO_IDL/be/be_visitor_structure_fwd/structure_fwd.h:
+        * TAO_IDL/be/be_visitor_typecode/typecode.h:
+        * TAO_IDL/be/be_visitor_typedef/typedef.h:
+        * TAO_IDL/be/be_visitor_union/union.h:
+        * TAO_IDL/be/be_visitor_union_branch/union_branch.h:
+        * TAO_IDL/be/be_visitor_union_fwd/union_fwd.h:
+        * TAO_IDL/be/be_visitor_valuebox/valuebox.h:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype.h:
+        * TAO_IDL/be/be_visitor_valuetype_fwd/valuetype_fwd.h:
+          Fuzz
+
 Mon Feb 20 12:28:01 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/*.*:
