@@ -12,13 +12,10 @@
  */
 //=============================================================================
 
+#include "interface.h"
 #include "global_extern.h"
 #include "ast_generator.h"
 #include "ast_string.h"
-
-// ************************************************************
-// Interface visitor for server skeletons.
-// ************************************************************
 
 be_visitor_interface_ss::be_visitor_interface_ss (be_visitor_context *ctx)
   : be_visitor_interface (ctx)

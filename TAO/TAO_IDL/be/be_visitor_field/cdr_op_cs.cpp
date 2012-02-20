@@ -12,14 +12,11 @@
  */
 //=============================================================================
 
+#include "field.h"
 #include "be_visitor_array/cdr_op_cs.h"
 #include "be_visitor_sequence/cdr_op_cs.h"
 #include "be_visitor_structure/cdr_op_cs.h"
 #include "be_visitor_union/cdr_op_cs.h"
-
-// **********************************************
-//  visitor for field in the client stubs file
-// **********************************************
 
 be_visitor_field_cdr_op_cs::be_visitor_field_cdr_op_cs (
       be_visitor_context *ctx)

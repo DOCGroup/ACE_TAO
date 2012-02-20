@@ -13,14 +13,10 @@
  */
 //=============================================================================
 
-
-// ************************************************************************
-// Interface visitor for server inline
-// ************************************************************************
+#include "interface.h"
 
 be_visitor_interface_tie_ss::be_visitor_interface_tie_ss (
-    be_visitor_context *ctx
-  )
+    be_visitor_context *ctx)
   : be_visitor_interface (ctx)
 {
 }

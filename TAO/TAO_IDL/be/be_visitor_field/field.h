@@ -41,9 +41,3 @@
 #include "be_visitor_union.h"
 #include "be_visitor_context.h"
 #include "ace/Log_Msg.h"
-
-#include "be_visitor_field/field_ch.cpp"
-#include "be_visitor_field/field_ci.cpp"
-#include "be_visitor_field/field_cs.cpp"
-#include "be_visitor_field/cdr_op_ch.cpp"
-#include "be_visitor_field/cdr_op_cs.cpp"

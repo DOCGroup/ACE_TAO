@@ -13,9 +13,7 @@
  */
 //=============================================================================
 
-// ********************************
-// Root visitor for CIAO connector impl source
-// ********************************
+#include "root.h"
 
 be_visitor_root_cns::be_visitor_root_cns (be_visitor_context *ctx)
   : be_visitor_root (ctx)

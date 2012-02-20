@@ -12,9 +12,7 @@
  */
 //=============================================================================
 
-// ************************************************************
-// Interface visitor for implementation header.
-// ************************************************************
+#include "interface.h"
 
 be_visitor_interface_ih::be_visitor_interface_ih (be_visitor_context *ctx)
   : be_visitor_interface (ctx)

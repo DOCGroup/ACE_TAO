@@ -11,9 +11,7 @@
  */
 //=============================================================================
 
-// ******************************************************
-// Root visitor for implementation  skeletons
-// ******************************************************
+#include "root.h"
 
 be_visitor_root_is::be_visitor_root_is (be_visitor_context *ctx)
   : be_visitor_root (ctx)

@@ -12,9 +12,7 @@
  */
 //=============================================================================
 
-// ***************************************************************************
-// Sequence visitor for generating Any operator declarations in the client header
-// ***************************************************************************
+#include "sequence.h"
 
 be_visitor_sequence_any_op_ch::be_visitor_sequence_any_op_ch (
                                                               be_visitor_context *ctx

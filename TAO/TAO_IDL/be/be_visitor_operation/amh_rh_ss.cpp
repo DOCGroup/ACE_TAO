@@ -10,9 +10,10 @@
  */
 //=============================================================================
 
+#include "operation.h"
+
 be_visitor_amh_rh_operation_ss::be_visitor_amh_rh_operation_ss (
-    be_visitor_context *ctx
-  )
+    be_visitor_context *ctx)
   : be_visitor_operation (ctx)
 {
 }

@@ -12,9 +12,7 @@
  */
 //=============================================================================
 
-// ************************************************************
-// Interface visitor for server header.
-// ************************************************************
+#include "interface.h"
 
 be_visitor_interface_sh::be_visitor_interface_sh (be_visitor_context *ctx)
   : be_visitor_interface (ctx)

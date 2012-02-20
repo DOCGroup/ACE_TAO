@@ -12,10 +12,7 @@
  */
 //=============================================================================
 
-
-// ******************************************************
-// for client inline
-// ******************************************************
+#include "exception.h"
 
 be_visitor_exception_ci::be_visitor_exception_ci (be_visitor_context *ctx)
   : be_visitor_exception (ctx)

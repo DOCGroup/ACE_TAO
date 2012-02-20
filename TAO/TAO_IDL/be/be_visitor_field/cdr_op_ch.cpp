@@ -12,6 +12,7 @@
  */
 //=============================================================================
 
+#include "field.h"
 #include "be_visitor_array/cdr_op_ch.h"
 #include "be_visitor_enum/cdr_op_ch.h"
 #include "be_visitor_sequence/cdr_op_ch.h"
@@ -19,10 +20,6 @@
 #include "be_visitor_structure/cdr_op_ch.h"
 #include "be_visitor_union/union.h"
 #include "be_visitor_union/cdr_op_ch.h"
-
-// **********************************************
-//  Visitor for field in the client header file.
-// **********************************************
 
 // Constructor.
 be_visitor_field_cdr_op_ch::be_visitor_field_cdr_op_ch (be_visitor_context *ctx)

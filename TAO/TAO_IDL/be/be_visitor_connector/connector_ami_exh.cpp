@@ -12,6 +12,8 @@
  */
 //=============================================================================
 
+#include "connector.h"
+
 be_visitor_connector_ami_exh::be_visitor_connector_ami_exh (
       be_visitor_context *ctx)
   : be_visitor_component_scope (ctx)

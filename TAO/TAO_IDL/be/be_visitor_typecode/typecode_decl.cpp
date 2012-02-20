@@ -12,9 +12,7 @@
  */
 //=============================================================================
 
-// ******************************************************
-// TypeCode declarations
-// ******************************************************
+#include "typecode.h"
 
 be_visitor_typecode_decl::be_visitor_typecode_decl (be_visitor_context *ctx)
   : be_visitor_decl (ctx)

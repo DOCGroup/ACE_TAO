@@ -12,15 +12,10 @@
  */
 //=============================================================================
 
-
-// ********************************************************************
-// Visitor implementation for the Component_Fwd type
-// This one for the client header file
-// ********************************************************************
+#include "component_fwd.h"
 
 be_visitor_component_fwd_ch::be_visitor_component_fwd_ch (
-    be_visitor_context *ctx
-  )
+    be_visitor_context *ctx)
   : be_visitor_decl (ctx)
 {
 }

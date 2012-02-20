@@ -12,6 +12,9 @@
  */
 //=============================================================================
 
+#include "connector.h"
+#include "ast_typedef.h"
+
 be_visitor_connector_dds_exs::be_visitor_connector_dds_exs (
       be_visitor_context *ctx)
   : be_visitor_connector_dds_ex_base (ctx)

@@ -12,6 +12,7 @@
  */
 //=============================================================================
 
+#include "valuebox.h"
 
 be_visitor_valuebox_ci::be_visitor_valuebox_ci (be_visitor_context *ctx)
   : be_visitor_valuebox (ctx)

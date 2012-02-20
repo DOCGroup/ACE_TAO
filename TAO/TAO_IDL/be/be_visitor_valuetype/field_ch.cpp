@@ -14,6 +14,7 @@
  */
 //=============================================================================
 
+#include "valuetype.h"
 
 be_visitor_valuetype_field_ch::be_visitor_valuetype_field_ch (
     be_visitor_context *ctx

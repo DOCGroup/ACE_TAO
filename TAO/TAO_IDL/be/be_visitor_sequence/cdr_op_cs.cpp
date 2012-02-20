@@ -13,6 +13,7 @@
  */
 //=============================================================================
 
+#include "sequence.h"
 
 // ***************************************************************************
 // Sequence visitor for generating CDR operator declarations in the client

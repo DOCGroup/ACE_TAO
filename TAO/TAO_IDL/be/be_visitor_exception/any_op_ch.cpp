@@ -12,10 +12,7 @@
  */
 //=============================================================================
 
-
-// ***************************************************************************
-// Exception visitor for generating Any operator declarations in the client header
-// ***************************************************************************
+#include "exception.h"
 
 be_visitor_exception_any_op_ch::be_visitor_exception_any_op_ch (
     be_visitor_context *ctx

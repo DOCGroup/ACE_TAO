@@ -13,6 +13,7 @@
  */
 //=============================================================================
 
+#include "valuebox.h"
 
 be_visitor_valuebox_cdr_op_cs::be_visitor_valuebox_cdr_op_cs (
     be_visitor_context *ctx

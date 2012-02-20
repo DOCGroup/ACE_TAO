@@ -13,15 +13,10 @@
  */
 //=============================================================================
 
-
-// ***************************************************************************
-// Forward declared interface visitor for generating CDR operator declarations
-// in the client header. Called if this node is not later defined in the file.
-// ***************************************************************************
+#include "interface_fwd.h"
 
 be_visitor_interface_fwd_cdr_op_ch::be_visitor_interface_fwd_cdr_op_ch (
-    be_visitor_context *ctx
-  )
+    be_visitor_context *ctx)
   : be_visitor_decl (ctx)
 {
 }

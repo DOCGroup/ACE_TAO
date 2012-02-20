@@ -12,13 +12,10 @@
  */
 //=============================================================================
 
-// ************************************************************
-// Operation visitor for client stubs
-// ************************************************************
+#include "operation.h"
 
 be_visitor_operation_smart_proxy_cs::be_visitor_operation_smart_proxy_cs (
-    be_visitor_context *ctx
-  )
+    be_visitor_context *ctx)
   : be_visitor_operation (ctx)
 {
 }

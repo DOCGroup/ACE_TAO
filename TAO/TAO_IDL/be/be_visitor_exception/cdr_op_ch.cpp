@@ -13,10 +13,7 @@
  */
 //=============================================================================
 
-
-// ***************************************************************************
-// Exception visitor for generating CDR operator declarations in the client header
-// ***************************************************************************
+#include "exception.h"
 
 be_visitor_exception_cdr_op_ch::be_visitor_exception_cdr_op_ch (
     be_visitor_context *ctx

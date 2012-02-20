@@ -13,14 +13,10 @@
  */
 //=============================================================================
 
-
-// ***************************************************************************
-// Union visitor for generating CDR operator declarations in the client header
-// ***************************************************************************
+#include "union.h"
 
 be_visitor_union_cdr_op_ch::be_visitor_union_cdr_op_ch (
-    be_visitor_context *ctx
-  )
+    be_visitor_context *ctx)
   : be_visitor_union (ctx)
 {
 }

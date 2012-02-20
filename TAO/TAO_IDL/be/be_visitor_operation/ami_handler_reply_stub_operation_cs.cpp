@@ -12,14 +12,11 @@
  */
 //=============================================================================
 
-// ************************************************************
-// Operation visitor for client stubs.
-// ************************************************************
+#include "operation.h"
 
 be_visitor_operation_ami_handler_reply_stub_operation_cs::
 be_visitor_operation_ami_handler_reply_stub_operation_cs (
-    be_visitor_context *ctx
-  )
+    be_visitor_context *ctx)
   : be_visitor_operation (ctx)
 {
 }

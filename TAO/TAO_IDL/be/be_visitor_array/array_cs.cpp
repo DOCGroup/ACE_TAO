@@ -12,10 +12,7 @@
  */
 //=============================================================================
 
-
-// ************************************************************************
-//  visitor for array declaration in client stubs
-// ************************************************************************
+#include "array.h"
 
 be_visitor_array_cs::be_visitor_array_cs (be_visitor_context *ctx)
   : be_visitor_array (ctx)

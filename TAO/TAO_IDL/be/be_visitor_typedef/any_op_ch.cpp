@@ -12,14 +12,14 @@
  */
 //=============================================================================
 
+#include "typedef.h"
 
 // ***************************************************************************
 // Typedef visitor for generating Any operator declarations in the client header
 // ***************************************************************************
 
 be_visitor_typedef_any_op_ch::be_visitor_typedef_any_op_ch (
-    be_visitor_context *ctx
-  )
+    be_visitor_context *ctx)
   : be_visitor_typedef (ctx)
 {
 }

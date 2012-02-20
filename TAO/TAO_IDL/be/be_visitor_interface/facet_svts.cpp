@@ -13,6 +13,8 @@
  */
 //=============================================================================
 
+#include "interface.h"
+
 be_visitor_facet_svts::be_visitor_facet_svts (be_visitor_context *ctx)
   : be_visitor_interface (ctx)
 {

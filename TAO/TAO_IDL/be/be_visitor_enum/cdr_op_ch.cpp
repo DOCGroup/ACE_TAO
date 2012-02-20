@@ -12,10 +12,7 @@
  */
 //=============================================================================
 
-
-// ***************************************************************************
-// Enum visitor for generating Cdr operator declarations in the client header
-// ***************************************************************************
+#include "enum.h"
 
 be_visitor_enum_cdr_op_ch::be_visitor_enum_cdr_op_ch (be_visitor_context *ctx)
   : be_visitor_decl (ctx)

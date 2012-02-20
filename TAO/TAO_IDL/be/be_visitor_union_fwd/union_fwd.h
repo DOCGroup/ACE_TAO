@@ -20,5 +20,3 @@
 #include "be_visitor_context.h"
 #include "be_helper.h"
 
-#include "be_visitor_union_fwd/union_fwd_ch.cpp"
-

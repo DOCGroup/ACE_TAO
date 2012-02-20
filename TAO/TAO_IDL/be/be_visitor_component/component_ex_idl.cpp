@@ -12,6 +12,8 @@
  */
 //=============================================================================
 
+#include "component.h"
+
 be_visitor_component_ex_idl::be_visitor_component_ex_idl (
       be_visitor_context *ctx)
   : be_visitor_decl (ctx),

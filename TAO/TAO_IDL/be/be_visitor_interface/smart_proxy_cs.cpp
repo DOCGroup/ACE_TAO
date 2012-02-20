@@ -13,14 +13,10 @@
  */
 //=============================================================================
 
-
-// ************************************************************
-//  be_visitor_interface_smart_proxy_cs
-// ************************************************************
+#include "interface.h"
 
 be_visitor_interface_smart_proxy_cs::be_visitor_interface_smart_proxy_cs (
-    be_visitor_context *ctx
-  )
+    be_visitor_context *ctx)
   : be_visitor_interface (ctx)
 {
 }

@@ -12,6 +12,9 @@
  *  @author Jeff Parsons
  */
 //=============================================================================
+
+#include "connector.h"
+
 be_visitor_executor_ami_exs::be_visitor_executor_ami_exs (
       be_visitor_context *ctx)
   : be_visitor_component_scope (ctx)

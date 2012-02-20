@@ -20,5 +20,3 @@
 #include "be_visitor_context.h"
 #include "be_helper.h"
 
-#include "be_visitor_structure_fwd/structure_fwd_ch.cpp"
-

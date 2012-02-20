@@ -12,9 +12,10 @@
  */
 //=============================================================================
 
+#include "interface.h"
+
 be_visitor_interface_cdr_op_cs::be_visitor_interface_cdr_op_cs (
-    be_visitor_context *ctx
-  )
+    be_visitor_context *ctx)
   : be_visitor_interface (ctx)
 {
 }

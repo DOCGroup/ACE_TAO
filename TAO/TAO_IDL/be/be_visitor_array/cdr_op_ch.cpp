@@ -13,16 +13,11 @@
  */
 //=============================================================================
 
-
+#include "array.h"
 #include "be_visitor_sequence/cdr_op_ch.h"
 
-// ***************************************************************************
-// Array visitor for generating CDR operator declarations in the client header
-// ***************************************************************************
-
 be_visitor_array_cdr_op_ch::be_visitor_array_cdr_op_ch (
-    be_visitor_context *ctx
-  )
+    be_visitor_context *ctx)
   : be_visitor_decl (ctx)
 {
 }

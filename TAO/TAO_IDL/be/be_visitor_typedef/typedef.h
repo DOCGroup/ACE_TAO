@@ -41,11 +41,3 @@
 #include "utl_identifier.h"
 #include "ace/Log_Msg.h"
 
-#include "be_visitor_typedef/typedef.cpp"
-#include "be_visitor_typedef/typedef_ch.cpp"
-#include "be_visitor_typedef/typedef_ci.cpp"
-#include "be_visitor_typedef/typedef_cs.cpp"
-#include "be_visitor_typedef/any_op_ch.cpp"
-#include "be_visitor_typedef/any_op_cs.cpp"
-#include "be_visitor_typedef/cdr_op_ch.cpp"
-#include "be_visitor_typedef/cdr_op_cs.cpp"

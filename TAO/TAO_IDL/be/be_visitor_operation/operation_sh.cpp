@@ -12,9 +12,7 @@
  */
 //=============================================================================
 
-// ************************************************************
-// Operation visitor for server header
-// ************************************************************
+#include "operation.h"
 
 be_visitor_operation_sh::be_visitor_operation_sh (be_visitor_context *ctx)
   : be_visitor_operation (ctx)

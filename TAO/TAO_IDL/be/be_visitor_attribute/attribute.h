@@ -37,14 +37,9 @@
 #include "be_visitor_operation.h"
 #include "be_visitor_any_extracted_type_decl.h"
 
-
 #include "ast_generator.h"
 #include "utl_identifier.h"
 #include "utl_exceptlist.h"
 #include "global_extern.h"
 #include "ace/Log_Msg.h"
-
-#include "be_visitor_attribute/attribute.cpp"
-#include "be_visitor_attribute/set_from_extracted.cpp"
-#include "be_visitor_attribute/ccm_init.cpp"
 

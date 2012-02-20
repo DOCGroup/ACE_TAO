@@ -13,10 +13,7 @@
  */
 //=============================================================================
 
-
-// ************************************************************
-// Interface visitor for CIAO template servant source.
-// ************************************************************
+#include "interface.h"
 
 be_visitor_interface_svts::be_visitor_interface_svts (
   be_visitor_context *ctx)

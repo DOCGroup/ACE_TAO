@@ -12,9 +12,7 @@
  */
 //=============================================================================
 
-// ***********************************
-// Root visitor for client stubs
-// ***********************************
+#include "root.h"
 
 be_visitor_root_cs::be_visitor_root_cs (be_visitor_context *ctx)
   : be_visitor_root (ctx)

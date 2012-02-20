@@ -12,6 +12,8 @@
  *  @author Jeff Parsons
  */
 //=============================================================================
+
+#include "connector.h"
 #include "ast_generator.h"
 #include "be_predefined_type.h"
 

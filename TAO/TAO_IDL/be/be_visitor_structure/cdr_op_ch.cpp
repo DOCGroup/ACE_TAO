@@ -13,6 +13,7 @@
  */
 //=============================================================================
 
+#include "structure.h"
 
 // ***************************************************************************
 // Structure visitor for generating CDR operator declarations in the client header

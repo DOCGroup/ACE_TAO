@@ -12,6 +12,8 @@
  */
 //=============================================================================
 
+#include "union_branch.h"
+
 // *****************************************************
 //  visitor for union_branch in the client
 //  stubs file for the reset method

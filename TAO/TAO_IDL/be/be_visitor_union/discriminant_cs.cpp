@@ -12,10 +12,7 @@
  */
 //=============================================================================
 
-
-// *************************************************************************
-// Visitor for discriminant in client stubs.
-// *************************************************************************
+#include "union.h"
 
 be_visitor_union_discriminant_cs::be_visitor_union_discriminant_cs (
     be_visitor_context *ctx

@@ -12,9 +12,7 @@
  */
 //=============================================================================
 
-// ******************************************************
-// Home visitor for server source
-// ******************************************************
+#include "home.h"
 
 be_visitor_home_svs::be_visitor_home_svs (be_visitor_context *ctx)
   : be_visitor_scope (ctx),
