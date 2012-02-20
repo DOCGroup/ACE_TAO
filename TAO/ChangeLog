@@ -1,3 +1,11 @@
+Mon Feb 20 13:10:08 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IFR_Client/IFR_Base.pidl:
+        * tao/IFR_Client/IFR_Basic.pidl:
+        * tao/IFR_Client/IFR_Components.pidl:
+        * tao/IFR_Client/IFR_Extended.pidl:
+          header cleanup and removed not needed include
+
 Mon Feb 20 12:58:20 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_argument/argument.h:

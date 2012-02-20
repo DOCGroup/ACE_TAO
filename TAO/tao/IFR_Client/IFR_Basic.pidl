@@ -10,41 +10,6 @@
  * keep the generated files to a manageable size and reduce build
  * time. This IDL file contains the concrete base interfaces of
  * the IFR, except for fixed types, valuetypes and CORBA components.
- *
- * The command used to generate code from this IDL file is:
- *
- *     tao_idl -GT -I../.. \
- *          -Wb,export_macro=TAO_IFR_Client_Export \
- *          -Wb,export_include=ifr_client_export.h \
- *          -Wb,pre_include="ace/pre.h" \
- *          -Wb,post_include="ace/post.h" \
- *          -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL \
- *          -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL \
- *          IFR_Basic.pidl
- *
- *   Only the stub files are used in the TAO_IFR_Client library. The
- *   skeleton files can be deleted from this directory.
- *
- *   No patching of the generated stub files is necessary.
- *
- *   To generate the skeleton files for the IFR Service, the command is:
- *
- *     tao_idl -o ../../orbsvcs/orbsvcs/IFRService \
- *          -Wb,pre_include="ace/pre.h" \
- *          -Wb,post_include="ace/post.h" \
- *          IFR_Basic.pidl
- *
- *   The only modification necessary to the skeleton files is to
- *   change
- *
- *   #include "IFR_BasicC.h"
- *
- *   to
- *
- *   #include "tao/IFR_Client/IFR_BasicC.h"
- *
- *   in IFR_BasicS.h. The stub files may be deleted from the IFRService
- *   directory.
  */
 
 #ifndef _IFR_BASIC_IDL_
