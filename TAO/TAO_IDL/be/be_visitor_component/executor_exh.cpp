@@ -11,7 +11,6 @@
  *  @author Jeff Parsons
  */
 //=============================================================================
-#include <TAO_IDL/be_include/be_helper.h>
 
 be_visitor_executor_exh::be_visitor_executor_exh (
       be_visitor_context *ctx)

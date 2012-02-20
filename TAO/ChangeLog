@@ -1,3 +1,10 @@
+Mon Feb 20 11:16:47 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_type.cpp:
+        * TAO_IDL/be/be_visitor_component/executor_exh.cpp:
+        * TAO_IDL/be/be_visitor_component/executor_exs.cpp:
+          Removed not needed includes
+
 Tue Feb  7 11:27:58 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Compression/RLECompressorTest.cpp:
