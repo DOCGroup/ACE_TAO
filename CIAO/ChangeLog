@@ -1,3 +1,8 @@
+Mon Feb 20 13:12:42 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ccm/CCM_EventConsumerBase.idl:
+          Removed not needed include
+
 Fri Jan 27 09:02:30 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * NEWS:

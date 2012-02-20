@@ -5,7 +5,6 @@
 #define CCM_EVENTCONSUMERBASE_IDL
 
 #include "ccm/CCM_EventBase.idl"
-#include "tao/Typecode_types.pidl"
 #include "tao/orb_types.pidl"
 
 #if !defined (CCM_NOEVENT)
