@@ -13,6 +13,8 @@
  */
 //=============================================================================
 
+#include "attribute.h"
+
 be_visitor_attribute_set_from_extracted::be_visitor_attribute_set_from_extracted (
     be_visitor_context *ctx)
   : be_visitor_any_extracted_type_decl (ctx)

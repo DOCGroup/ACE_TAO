@@ -12,6 +12,7 @@
  */
 //=============================================================================
 
+#include "typecode.h"
 #include "be_interface_fwd.h"
 
 // This is an implementation of C++ "scoped lock" idiom in order to

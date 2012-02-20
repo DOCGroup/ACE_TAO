@@ -12,15 +12,10 @@
  */
 //=============================================================================
 
-
-// ***************************************************************************
-// Union visitor for generating Any operator declarations in the client
-// stubs file
-// ***************************************************************************
+#include "union.h"
 
 be_visitor_union_any_op_cs::be_visitor_union_any_op_cs (
-    be_visitor_context *ctx
-  )
+    be_visitor_context *ctx)
   : be_visitor_union (ctx)
 {
 }

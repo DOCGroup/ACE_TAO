@@ -5,16 +5,14 @@
  *
  *  $Id$
  *
- *  Visitor generating code for HOmes in the servant header.
+ *  Visitor generating code for Homes in the servant header.
  *
  *
  *  @author Jeff Parsons
  */
 //=============================================================================
 
-// ******************************************************
-// Home visitor for server header
-// ******************************************************
+#include "home.h"
 
 be_visitor_home_svh::be_visitor_home_svh (be_visitor_context *ctx)
   : be_visitor_scope (ctx),

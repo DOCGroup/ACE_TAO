@@ -40,14 +40,3 @@
 #include "be_visitor_typecode.h"
 #include "ace/Log_Msg.h"
 
-#include "be_visitor_exception/exception.cpp"
-#include "be_visitor_exception/exception_ch.cpp"
-#include "be_visitor_exception/exception_ci.cpp"
-#include "be_visitor_exception/exception_cs.cpp"
-#include "be_visitor_exception/exception_ctor.cpp"
-#include "be_visitor_exception/ctor_assign.cpp"
-#include "be_visitor_exception/any_op_ch.cpp"
-#include "be_visitor_exception/any_op_cs.cpp"
-#include "be_visitor_exception/cdr_op_ch.cpp"
-#include "be_visitor_exception/cdr_op_cs.cpp"
-

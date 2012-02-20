@@ -12,14 +12,10 @@
  */
 //=============================================================================
 
-
-// ************************************************************
-//  smart proxy class in header
-// ************************************************************
+#include "interface.h"
 
 be_visitor_interface_smart_proxy_ch::be_visitor_interface_smart_proxy_ch (
-    be_visitor_context *ctx
-   )
+    be_visitor_context *ctx)
   : be_visitor_interface (ctx)
 {
 }

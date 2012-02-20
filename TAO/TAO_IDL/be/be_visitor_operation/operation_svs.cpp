@@ -11,7 +11,9 @@
  *  @author Jeff Parsons
  */
 //=============================================================================
-#include <be_visitor_operation/operation_svs.h>
+
+#include "operation.h"
+#include "be_visitor_operation/operation_svs.h"
 
 be_visitor_operation_svs::be_visitor_operation_svs (
       be_visitor_context *ctx)

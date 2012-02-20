@@ -13,6 +13,8 @@
  */
 //=============================================================================
 
+#include "connector.h"
+
 #include "ast_structure.h"
 #include "ast_typedef.h"
 #include "ast_template_module.h"

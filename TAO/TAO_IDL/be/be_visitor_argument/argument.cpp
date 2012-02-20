@@ -12,6 +12,9 @@
  */
 //=============================================================================
 
+#include "argument.h"
+#include "argument.h"
+
 be_visitor_args::be_visitor_args (be_visitor_context *ctx)
   : be_visitor_decl (ctx),
     fixed_direction_ (-1)

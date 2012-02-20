@@ -12,9 +12,7 @@
  */
 //=============================================================================
 
-// ******************************************************
-// Generic Interface visitor
-// ******************************************************
+#include "interface.h"
 
 be_visitor_interface::be_visitor_interface (be_visitor_context *ctx)
   : be_visitor_scope (ctx)

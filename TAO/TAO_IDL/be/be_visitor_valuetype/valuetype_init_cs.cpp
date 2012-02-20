@@ -13,6 +13,7 @@
  */
 //=============================================================================
 
+#include "valuetype.h"
 
 be_visitor_valuetype_init_cs::be_visitor_valuetype_init_cs (
     be_visitor_context *ctx

@@ -12,6 +12,8 @@
  */
 //=============================================================================
 
+#include "union_branch.h"
+
 // **********************************************
 //  visitor for union_branch in the client stubs file generating the code for
 //  the copy ctor and assignment operator

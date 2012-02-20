@@ -12,15 +12,10 @@
  */
 //=============================================================================
 
-
-// ***************************************************************************
-// Enum visitor for generating Any operator declarations in the client
-// stubs file
-// ***************************************************************************
+#include "enum.h"
 
 be_visitor_enum_any_op_cs::be_visitor_enum_any_op_cs (
-    be_visitor_context *ctx
-  )
+    be_visitor_context *ctx)
   : be_visitor_scope (ctx)
 {
 }

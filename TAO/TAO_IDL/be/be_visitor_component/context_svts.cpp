@@ -12,7 +12,8 @@
  *  @author Jeff Parsons
  */
 //=============================================================================
-#include <be_helper.h>
+
+#include "component.h"
 
 be_visitor_context_svts::be_visitor_context_svts (be_visitor_context *ctx)
   : be_visitor_component_scope (ctx)

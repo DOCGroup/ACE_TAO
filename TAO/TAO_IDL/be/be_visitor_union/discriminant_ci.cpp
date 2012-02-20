@@ -12,13 +12,10 @@
  */
 //=============================================================================
 
-// *************************************************************************
-// be_visitor_discriminant_ci - visitor for discriminant in client inline file
-// *************************************************************************
+#include "union.h"
 
 be_visitor_union_discriminant_ci::be_visitor_union_discriminant_ci (
-    be_visitor_context *ctx
-  )
+    be_visitor_context *ctx)
   : be_visitor_decl (ctx)
 {
 }

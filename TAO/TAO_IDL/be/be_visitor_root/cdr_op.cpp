@@ -13,6 +13,8 @@
  */
 //=============================================================================
 
+#include "root.h"
+
 // ***************************************************************************
 // Root visitor for generating CDR operator declarations in the client header
 // and stub

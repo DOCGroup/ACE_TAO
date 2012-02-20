@@ -12,9 +12,7 @@
  */
 //=============================================================================
 
-// ********************************
-// Root visitor for CIAO template servant header
-// ********************************
+#include "root.h"
 
 be_visitor_root_svth::be_visitor_root_svth (be_visitor_context *ctx)
   : be_visitor_root (ctx)

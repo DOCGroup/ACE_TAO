@@ -12,13 +12,10 @@
  */
 //=============================================================================
 
-// ************************************************************
-// Operation visitor for server inline for TIE class operations.
-// ************************************************************
+#include "operation.h"
 
 be_visitor_operation_tie_ss::be_visitor_operation_tie_ss (
-    be_visitor_context *ctx
-  )
+    be_visitor_context *ctx)
   : be_visitor_scope (ctx)
 {
 }

@@ -13,6 +13,8 @@
  */
 //=============================================================================
 
+#include "union_branch.h"
+
 // **********************************************
 //  visitor for union_branch in the client header generating the private information
 // **********************************************

@@ -12,9 +12,7 @@
  */
 //=============================================================================
 
-// ********************************
-// Root visitor for CIAO executor IDL
-// ********************************
+#include "root.h"
 
 be_visitor_root_ex_idl::be_visitor_root_ex_idl (
     be_visitor_context *ctx)

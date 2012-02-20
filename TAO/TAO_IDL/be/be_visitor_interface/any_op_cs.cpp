@@ -13,15 +13,10 @@
  */
 //=============================================================================
 
-
-// ***************************************************************************
-// Interface visitor for generating Any operator declarations in the client
-// stubs file
-// ***************************************************************************
+#include "interface.h"
 
 be_visitor_interface_any_op_cs::be_visitor_interface_any_op_cs (
-    be_visitor_context *ctx
-  )
+    be_visitor_context *ctx)
   : be_visitor_interface (ctx)
 {
 }

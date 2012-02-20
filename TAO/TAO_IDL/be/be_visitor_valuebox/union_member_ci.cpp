@@ -14,6 +14,8 @@
  */
 //=============================================================================
 
+#include "valuebox.h"
+
 be_visitor_valuebox_union_member_ci::be_visitor_valuebox_union_member_ci (
     be_visitor_context *ctx
   )

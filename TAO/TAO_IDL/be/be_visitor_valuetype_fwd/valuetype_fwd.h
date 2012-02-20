@@ -26,7 +26,3 @@
 #include "be_visitor_context.h"
 #include "ace/Log_Msg.h"
 
-#include "be_visitor_valuetype_fwd/valuetype_fwd_ch.cpp"
-#include "be_visitor_valuetype_fwd/any_op_ch.cpp"
-#include "be_visitor_valuetype_fwd/cdr_op_ch.cpp"
-

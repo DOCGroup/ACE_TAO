@@ -12,10 +12,7 @@
  */
 //=============================================================================
 
-// ********************************************************************
-// Visitor implementation for the Constant type
-// This one for the client header file
-// ********************************************************************
+#include "constant.h"
 
 be_visitor_constant_ch::be_visitor_constant_ch (be_visitor_context *ctx)
   : be_visitor_decl (ctx)

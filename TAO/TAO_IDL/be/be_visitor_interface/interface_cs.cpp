@@ -11,9 +11,7 @@
  */
 //=============================================================================
 
-// ************************************************************
-// Interface visitor for client stubs
-// ************************************************************
+#include "interface.h"
 
 be_visitor_interface_cs::be_visitor_interface_cs (be_visitor_context *ctx)
   : be_visitor_interface (ctx)

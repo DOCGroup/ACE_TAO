@@ -12,9 +12,7 @@
  */
 //=============================================================================
 
-// ******************************************************
-// Component visitor for servant source
-// ******************************************************
+#include "component.h"
 
 be_visitor_component_svs::be_visitor_component_svs (be_visitor_context *ctx)
   : be_visitor_component (ctx),

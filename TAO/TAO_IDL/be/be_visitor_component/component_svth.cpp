@@ -12,9 +12,8 @@
  */
 //=============================================================================
 
-// ******************************************************
-// Component visitor for server header
-// ******************************************************
+#include "component.h"
+
 be_visitor_component_svth::be_visitor_component_svth (be_visitor_context *ctx)
   : be_visitor_component (ctx),
     os_ (*ctx->stream ()),

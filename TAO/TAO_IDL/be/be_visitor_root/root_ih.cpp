@@ -12,9 +12,7 @@
  */
 //=============================================================================
 
-// ***********************************
-// Root visitor for implementation header
-// ***********************************
+#include "root.h"
 
 be_visitor_root_ih::be_visitor_root_ih (be_visitor_context *ctx)
   : be_visitor_root (ctx)

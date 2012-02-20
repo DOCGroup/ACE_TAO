@@ -10,6 +10,7 @@
 */
 //=============================================================================
 
+#include "operation.h"
 #include "ace/SString.h"
 
 be_visitor_amh_operation_ss::be_visitor_amh_operation_ss (

@@ -11,9 +11,10 @@
 */
 //=============================================================================
 
+#include "interface.h"
+
 be_visitor_amh_rh_interface_ss::be_visitor_amh_rh_interface_ss (
-    be_visitor_context *ctx
-  )
+    be_visitor_context *ctx)
   : be_visitor_interface_ss (ctx)
 {
 }

@@ -13,9 +13,7 @@
  */
 //=============================================================================
 
-// ************************************************************************
-// Used for the body of the assignment operator and the copy constructor.
-// ************************************************************************
+#include "exception.h"
 
 be_visitor_exception_ctor_assign::be_visitor_exception_ctor_assign (
     be_visitor_context *ctx

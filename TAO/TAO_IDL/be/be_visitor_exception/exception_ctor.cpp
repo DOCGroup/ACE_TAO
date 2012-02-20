@@ -12,9 +12,7 @@
  */
 //=============================================================================
 
-// ************************************************************************
-//  code to generate the special ctor
-// ************************************************************************
+#include "exception.h"
 
 be_visitor_exception_ctor::be_visitor_exception_ctor (be_visitor_context *ctx)
   : be_visitor_scope (ctx)

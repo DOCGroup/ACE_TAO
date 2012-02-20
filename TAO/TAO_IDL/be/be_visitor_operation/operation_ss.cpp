@@ -12,9 +12,7 @@
  */
 //=============================================================================
 
-// ************************************************************
-// Operation visitor for server skeletons
-// ************************************************************
+#include "operation.h"
 
 be_visitor_operation_ss::be_visitor_operation_ss (be_visitor_context *ctx)
   : be_visitor_operation (ctx)

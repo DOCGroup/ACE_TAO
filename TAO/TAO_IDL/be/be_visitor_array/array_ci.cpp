@@ -12,10 +12,7 @@
  */
 //=============================================================================
 
-
-// ************************************************************************
-//  visitor for array declaration in client inline
-// ************************************************************************
+#include "array.h"
 
 be_visitor_array_ci::be_visitor_array_ci (be_visitor_context *ctx)
   : be_visitor_array (ctx)
