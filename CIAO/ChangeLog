@@ -1,3 +1,12 @@
+Tue Feb 21 15:36:44 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Containers/Container_Base_T.h:
+        * ciao/Containers/Container_Base_T.cpp:
+        * ciao/Containers/Extension/Extension_Container.cpp:
+        * ciao/Containers/Session/Session_Container.cpp:
+          Changed open_mode as argument, more work has to be done to let the
+          user control this mode
+
 Mon Feb 20 13:12:42 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ccm/CCM_EventConsumerBase.idl:
