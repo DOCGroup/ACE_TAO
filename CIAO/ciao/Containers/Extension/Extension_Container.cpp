@@ -80,6 +80,7 @@ namespace CIAO
 
     ACE_DLL executor_dll;
     ACE_DLL servant_dll;
+    int open_mode = ACE_DEFAULT_SHLIB_MODE;
 
     Container_i < ::CIAO::Extension_Container>::prepare_installation ("Extension Home",
                                                                     primary_artifact,
@@ -87,6 +88,7 @@ namespace CIAO
                                                                     servant_artifact,
                                                                     servant_entrypoint,
                                                                     name,
+                                                                    open_mode,
                                                                     executor_dll,
                                                                     servant_dll);
 
@@ -207,6 +209,7 @@ namespace CIAO
 
     ACE_DLL executor_dll;
     ACE_DLL servant_dll;
+    int open_mode = ACE_DEFAULT_SHLIB_MODE;
 
     Container_i < ::CIAO::Extension_Container>::prepare_installation ("Extension Component",
                                                                     primary_artifact,
@@ -214,6 +217,7 @@ namespace CIAO
                                                                     servant_artifact,
                                                                     servant_entrypoint,
                                                                     name,
+                                                                    open_mode,
                                                                     executor_dll,
                                                                     servant_dll);
 

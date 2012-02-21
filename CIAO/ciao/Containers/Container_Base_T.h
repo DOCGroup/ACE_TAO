@@ -152,6 +152,7 @@ namespace CIAO
                             const char *servant_artifact,
                             const char *servant_entrypoint,
                             const char *name,
+                            int open_mode,
                             ACE_DLL &executor_dll,
                             ACE_DLL &servant_dll);
 
