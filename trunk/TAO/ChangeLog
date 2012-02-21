@@ -1,3 +1,9 @@
+Tue Feb 21 14:47:05 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Compression/Base_Compressor.h:
+        * tao/Compression/Base_Compressor.cpp:
+          Fixed wrong order of arguments of update_stats
+
 Mon Feb 20 13:20:41 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/IFR_Client/IFR_Base.pidl:

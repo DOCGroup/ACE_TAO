@@ -56,8 +56,8 @@ namespace TAO
     virtual ::Compression::CompressionRatio compression_ratio (void);
 
   protected:
-    void update_stats (::CORBA::ULongLong compressed_bytes,
-                       ::CORBA::ULongLong uncompressed_bytes);
+    void update_stats (::CORBA::ULongLong uncompressed_bytes,
+                       ::CORBA::ULongLong compressed_bytes);
 
     TAO_SYNCH_MUTEX mutex_;
     ::Compression::CompressionLevel compression_level_;
