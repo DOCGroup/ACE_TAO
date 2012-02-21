@@ -71,12 +71,12 @@ namespace TAO
 
   void
   BaseCompressor::update_stats (
-    ::CORBA::ULongLong compressed_bytes,
-    ::CORBA::ULongLong uncompressed_bytes)
+    ::CORBA::ULongLong uncompressed_bytes,
+    ::CORBA::ULongLong compressed_bytes)
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
-    this->compressed_bytes_ += compressed_bytes;
     this->uncompressed_bytes_ += uncompressed_bytes;
+    this->compressed_bytes_ += compressed_bytes;
   }
 }
 
