@@ -17,7 +17,7 @@
 #include "ace/config-vxworks6.8.h"
 
 #ifndef ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
-// already defined for earlier RTP versions  
+// already defined for earlier RTP versions
 # define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R 1
 #endif
 
