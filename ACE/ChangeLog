@@ -1,3 +1,10 @@
+Tue Feb 21 14:52:02 UTC 2012  Adam Mitz  <mitza@ociweb.com>
+
+        * ace/OS_NS_Thread.inl:
+        * ace/config-vxworks6.9.h:
+
+          Fixed errors from fuzz script.
+
 Tue Feb 21 14:37:47 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * PROBLEM-REPORT-FORM:

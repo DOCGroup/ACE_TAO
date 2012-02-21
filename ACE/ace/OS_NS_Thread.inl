@@ -45,9 +45,9 @@ void **&
 ACE_TSS_Emulation::tss_base ()
 {
 #    if defined (ACE_HAS_VXTHREADS)
-  #if (ACE_VXWORKS <= 0x680) 
+  #if (ACE_VXWORKS <= 0x680)
   int &spare = taskIdCurrent->ACE_VXWORKS_SPARE;
-  #else // VxWorks 6.9 updated datatype (WIND00241209) see taskLib.h 
+  #else // VxWorks 6.9 updated datatype (WIND00241209) see taskLib.h
   long  &spare = taskIdCurrent->ACE_VXWORKS_SPARE;
   #endif
   return reinterpret_cast <void **&> (spare);
