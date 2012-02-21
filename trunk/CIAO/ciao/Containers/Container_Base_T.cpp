@@ -146,6 +146,7 @@ namespace CIAO
                                            const char *servant_artifact,
                                            const char *servant_entrypoint,
                                            const char *name,
+                                           int open_mode,
                                            ACE_DLL &executor_dll,
                                            ACE_DLL &servant_dll)
   {
@@ -241,7 +242,7 @@ namespace CIAO
       }
 
     if (executor_dll.open (ACE_TEXT_CHAR_TO_TCHAR (primary_artifact),
-                           ACE_DEFAULT_SHLIB_MODE,
+                           open_mode,
                            false) != 0)
       {
         std::ostringstream err;
@@ -272,7 +273,7 @@ namespace CIAO
       }
 
     if (servant_dll.open (ACE_TEXT_CHAR_TO_TCHAR (servant_artifact),
-                          ACE_DEFAULT_SHLIB_MODE,
+                          open_mode,
                           false) != 0)
       {
         std::ostringstream err;
