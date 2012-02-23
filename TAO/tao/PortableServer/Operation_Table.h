@@ -79,7 +79,7 @@ namespace TAO
    * This is not used by the IDL compiler. This is used internally
    * within different strategies.
    */
-  struct Operation_Skeletons
+  struct TAO_PortableServer_Export Operation_Skeletons
   {
     Operation_Skeletons (void);
 
