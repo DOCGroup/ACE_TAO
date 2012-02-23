@@ -1,3 +1,8 @@
+Thu Feb 23 08:06:40 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/orbconf.h:
+          ZIOP depends on messaging
+
 Thu Feb 23 08:00:29 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/rlecompressor.mpb:
