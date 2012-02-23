@@ -44,13 +44,13 @@ namespace CIAO
                                      const char *entry_point,
                                      const char *servant_artifact,
                                      const char *servant_entrypoint,
-                                     const char *name)
+                                     const char *name,
+                                     CORBA::Long open_mode)
   {
     CIAO_TRACE ("Session_Container_i::install_home");
 
     ACE_DLL executor_dll;
     ACE_DLL servant_dll;
-    int open_mode = ACE_DEFAULT_SHLIB_MODE;
 
     Container_i < ::CIAO::Session_Container>::prepare_installation ("Session Home",
                                                                     primary_artifact,
@@ -178,13 +178,13 @@ namespace CIAO
                                           const char *entry_point,
                                           const char *servant_artifact,
                                           const char *servant_entrypoint,
-                                          const char *name)
+                                          const char *name,
+                                          CORBA::Long open_mode)
   {
     CIAO_TRACE ("Session_Container_i::install_component");
 
     ACE_DLL executor_dll;
     ACE_DLL servant_dll;
-    int open_mode = ACE_DEFAULT_SHLIB_MODE;
 
     Container_i < ::CIAO::Session_Container>::prepare_installation ("Session Component",
                                                                     primary_artifact,

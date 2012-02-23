@@ -77,7 +77,8 @@ module CIAO
                                       in string entry_point,
                                       in string servant_artifact,
                                       in string servant_entrypoint,
-                                      in string name);
+                                      in string name,
+                                      in long open_mode);
 
     void uninstall_home (in Components::CCMHome homeptr);
 
@@ -85,7 +86,8 @@ module CIAO
                                              in string entry_point,
                                              in string servant_artifact,
                                              in string servant_entrypoint,
-                                             in string name);
+                                             in string name,
+                                             in long open_mode);
 
     void set_attributes (in Object name,
                          in Components::ConfigValues values);

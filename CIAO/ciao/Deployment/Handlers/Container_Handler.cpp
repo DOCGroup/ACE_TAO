@@ -247,7 +247,7 @@ namespace CIAO
   }
 
   void
-  Container_Handler_i::configure (const ::Deployment::Properties &props )
+  Container_Handler_i::configure (const ::Deployment::Properties &props)
   {
     CIAO_DEBUG (6, (LM_DEBUG, CLINFO
                     "Container_Handler_i::configure - "

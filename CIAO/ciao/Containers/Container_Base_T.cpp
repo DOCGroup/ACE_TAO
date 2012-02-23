@@ -267,9 +267,11 @@ namespace CIAO
                     (LM_TRACE,
                      CLINFO
                      "Container_i::prepare_installation <%C> - "
-                     "Executor DLL [%C] successfully opened\n",
+                     "Executor DLL [%C] successfully opened with mode <%d>\n",
                      entity,
-                     primary_artifact));
+                     primary_artifact,
+                     open_mode
+                    ));
       }
 
     if (servant_dll.open (ACE_TEXT_CHAR_TO_TCHAR (servant_artifact),
@@ -298,9 +300,10 @@ namespace CIAO
                     (LM_TRACE,
                      CLINFO
                      "Container_i::prepare_installation <%C> - "
-                     "Servant DLL [%C] successfully openend\n",
+                     "Servant DLL [%C] successfully opened with mode <%d>\n",
                      entity,
-                     servant_artifact));
+                     servant_artifact,
+                     open_mode));
       }
   }
 

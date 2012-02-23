@@ -64,7 +64,8 @@ namespace CIAO
                                                   const char *entry_point,
                                                   const char *servant_artifact,
                                                   const char *servant_entrypoint,
-                                                  const char *name) = 0;
+                                                  const char *name,
+                                                  CORBA::Long open_mode) = 0;
 
     /// Uninstall a servant for component or home.
     virtual void uninstall_home (Components::CCMHome_ptr homeref);
@@ -73,7 +74,8 @@ namespace CIAO
                                                          const char *entry_point,
                                                          const char *servant_artifact,
                                                          const char *servant_entrypoint,
-                                                         const char *name) = 0;
+                                                         const char *name,
+                                                         CORBA::Long open_mode) = 0;
 
     virtual void set_attributes (CORBA::Object_ptr compref,
                                  const ::Components::ConfigValues & values);
