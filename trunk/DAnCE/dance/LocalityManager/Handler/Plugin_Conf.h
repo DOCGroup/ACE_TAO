@@ -25,6 +25,7 @@ namespace DAnCE
     void create_entry (const char *artifact,
                        const char *entrypoint,
                        const char *type,
+                       int open_mode,
                        ::Deployment::DeploymentPlan &plan,
                        CORBA::ULong pos);
   };

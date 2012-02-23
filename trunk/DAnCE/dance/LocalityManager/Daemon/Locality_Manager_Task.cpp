@@ -77,9 +77,9 @@ namespace DAnCE
         DAnCE::LocalityManager_i *lm_srv = 0;
         ACE_NEW_NORETURN (lm_srv,
                           LocalityManager_i (this->uuid_,
-                                            this->plugin_config_,
-                                            this->orb_.in (),
-                                            root_poa.in ()));
+                                             this->plugin_config_,
+                                             this->orb_.in (),
+                                             root_poa.in ()));
 
         if (lm_srv == 0)
           {

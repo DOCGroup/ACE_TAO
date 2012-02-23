@@ -96,6 +96,7 @@ module DAnCE
   /// Instance types that must be installed before the instance handled by the decorated handler
   const string DANCE_PLUGIN_ENTRYPT = "edu.vanderbilt.dre.DAnCE.InstanceHandler.EntryPoint";
   const string DANCE_PLUGIN_ARTIFACT = "edu.vanderbilt.dre.DAnCE.InstanceHandler.Artifact";
+  const string DANCE_PLUGIN_OPENMODE = "edu.vanderbilt.dre.DAnCE.InstanceHandler.OpenMode";
   const string DANCE_IDH_DEPENDSON = "edu.vanderbilt.dre.DAnCE.InstanceHandler.DependsOn";
 
 };

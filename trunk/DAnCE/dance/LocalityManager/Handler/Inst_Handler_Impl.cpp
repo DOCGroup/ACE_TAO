@@ -46,7 +46,6 @@ namespace DAnCE
   void
   Inst_Handler_Impl::close (void)
   {
-
   }
 
   char * Inst_Handler_Impl::instance_type (void)
@@ -128,6 +127,19 @@ namespace DAnCE
                                         "No artifact found for plug-in initialization\n");
       }
 
+    int open_mode = ACE_DEFAULT_SHLIB_MODE;
+    if (!DAnCE::Utility::get_property_value (DAnCE::DANCE_PLUGIN_OPENMODE,
+                                             mdd.execParameter,
+                                             open_mode))
+      {
+        DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
+                     (LM_ERROR, DLINFO
+                      ACE_TEXT ("Inst_Handler_Impl::install_instance - ")
+                      ACE_TEXT ("No open mode found for plug-in initialization\n")));
+        throw ::Deployment::StartError (idd.name.in (),
+                                        "No open mode found for plug-in initialization\n");
+      }
+
     Plugin_Manager::IH_DEPS deps;
 
     for (CORBA::ULong i = 0; i < idd.configProperty.length (); ++i)
@@ -156,7 +168,8 @@ namespace DAnCE
     CORBA::String_var plugin_id =
       PLUGIN_MANAGER::instance ()->register_installation_handler (ACE_TEXT_CHAR_TO_TCHAR (artifact),
                                                                   ACE_TEXT_CHAR_TO_TCHAR (entrypt),
-                                                                  deps);
+                                                                  deps,
+                                                                  open_mode);
 
     (*outany) <<= CORBA::Any::from_string (plugin_id.in (), 0);
   }
@@ -188,8 +201,7 @@ namespace DAnCE
   {
     ::DAnCE::Utility::PROPERTY_MAP pmap (prop.length ());
 
-    ::DAnCE::Utility::build_property_map (pmap,
-                                          prop);
+    ::DAnCE::Utility::build_property_map (pmap, prop);
   }
 }
 

@@ -13,14 +13,15 @@ namespace DAnCE
     template <typename PLUGIN>
     typename PLUGIN::_ptr_type
     load_plugin (const ACE_TCHAR *artifact,
-                 const ACE_TCHAR *entrypoint)
+                 const ACE_TCHAR *entrypoint,
+                 int open_mode)
     {
       if (!artifact || !entrypoint)
         {
           DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
                        (LM_ERROR, DLINFO
                         ACE_TEXT ("Plugin_Manager::load_plugin - ")
-                        ACE_TEXT ("Must provide non-nill artifact and entrypoint names\n")));
+                        ACE_TEXT ("Must provide non-nil artifact and entrypoint names\n")));
           throw ::Deployment::PlanError ("",
                                          "Invalid parameters for plug-in installation");
         }
@@ -35,7 +36,7 @@ namespace DAnCE
       ACE_DLL plugin_dll;
 
       if (plugin_dll.open (artifact,
-                           ACE_DEFAULT_SHLIB_MODE,
+                           open_mode,
                            false) != 0)
         {
           const ACE_TCHAR *error = plugin_dll.error ();
@@ -43,8 +44,9 @@ namespace DAnCE
           DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
                        (LM_ERROR, DLINFO
                         ACE_TEXT ("Plugin_Manager::load_plugin - ")
-                        ACE_TEXT ("Error while loading artifact <%s>: %s\n"),
+                        ACE_TEXT ("Error while loading artifact <%s> with mode <%d>: %s\n"),
                         artifact,
+                        open_mode,
                         error));
 
           throw ::Deployment::PlanError (ACE_TEXT_ALWAYS_CHAR (artifact),
@@ -92,10 +94,10 @@ namespace DAnCE
       DANCE_DEBUG (DANCE_LOG_MINOR_EVENT,
                    (LM_TRACE, DLINFO
                     ACE_TEXT ("Plugin_Manager::load_plugin - ")
-                    ACE_TEXT ("Successfully created plugin from <%s>:<%s>.\n"),
+                    ACE_TEXT ("Successfully created plugin from <%s> with mode <%d>:<%s>.\n"),
                     artifact,
+                    open_mode,
                     entrypoint));
-
 
       return plugin._retn ();
     }
@@ -158,11 +160,13 @@ namespace DAnCE
   char *
   Plugin_Manager::register_installation_handler (const ACE_TCHAR *artifact,
                                                  const ACE_TCHAR *entrypoint,
-                                                 const Plugin_Manager::IH_DEPS &depends)
+                                                 const Plugin_Manager::IH_DEPS &depends,
+                                                 int open_mode)
   {
     ::DAnCE::InstanceDeploymentHandler_var plugin =
       load_plugin< ::DAnCE::InstanceDeploymentHandler > (artifact,
-                                                         entrypoint);
+                                                         entrypoint,
+                                                         open_mode);
 
     try
       {
@@ -226,12 +230,14 @@ namespace DAnCE
 
   void
   Plugin_Manager::register_interceptor (const ACE_TCHAR *artifact,
-                                        const ACE_TCHAR *entrypoint)
+                                        const ACE_TCHAR *entrypoint,
+                                        int open_mode)
   {
 
     ::DAnCE::DeploymentInterceptor_var plugin =
       load_plugin< ::DAnCE::DeploymentInterceptor > (artifact,
-                                                     entrypoint);
+                                                     entrypoint,
+                                                     open_mode);
     try
       {
         plugin->configure (*this->config_);
@@ -301,11 +307,13 @@ namespace DAnCE
 
   void
   Plugin_Manager::register_configuration_plugin (const ACE_TCHAR *artifact,
-                                                 const ACE_TCHAR *entrypoint)
+                                                 const ACE_TCHAR *entrypoint,
+                                                 int open_mode)
   {
     DAnCE::LocalityConfiguration_var plugin =
       load_plugin< DAnCE::LocalityConfiguration > (artifact,
-                                                   entrypoint);
+                                                   entrypoint,
+                                                   open_mode);
 
     try
       {

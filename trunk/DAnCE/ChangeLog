@@ -1,3 +1,18 @@
+Thu Feb 23 11:58:41 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * dance/DAnCE_Properties.idl:
+        * dance/LocalityManager/Daemon/Locality_Manager_Task.cpp:
+        * dance/LocalityManager/Handler/Config_Handler_Impl.cpp:
+        * dance/LocalityManager/Handler/Inst_Handler_Impl.cpp:
+        * dance/LocalityManager/Handler/Interceptor_Handler_Impl.cpp:
+        * dance/LocalityManager/Handler/Plugin_Conf.h:
+        * dance/LocalityManager/Handler/Plugin_Conf.cpp:
+        * dance/LocalityManager/Scheduler/Plugin_Manager.h:
+        * dance/LocalityManager/Scheduler/Plugin_Manager.cpp:
+        * docs/LocalityManager-Plugins.txt:
+          Added support for specify an additional open_mode for each dance
+          plugin. This open mode is than passed to ACE_DLL::open.
+
 Fri Jan 27 09:02:30 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * NEWS:
