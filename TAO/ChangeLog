@@ -1,3 +1,13 @@
+Thu Feb 23 18:13:22 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.cpp:
+          Applied patch from Thomas Lockhart for a problem when
+          TAO_HAS_CORBA_MESSAGING is non-zero and TAO_HAS_TYPED_EVENT_CHANNEL
+          is undefined
+
+        * tao/PortableServer/Operation_Table.h:
+          Exported a struct from the dll
+
 Thu Feb 23 12:30:56 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/rlecompressor.mpb:

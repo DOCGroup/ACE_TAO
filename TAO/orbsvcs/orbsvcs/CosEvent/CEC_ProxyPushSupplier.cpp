@@ -456,6 +456,7 @@ TAO_CEC_ProxyPushSupplier::apply_policy_obj (CORBA::Object_ptr pre)
     {
       CORBA::PolicyList policy_list;
       policy_list.length (1);
+#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
       if (this->typed_event_channel_)
         {
           policy_list[0] = this->typed_event_channel_->
@@ -463,9 +464,12 @@ TAO_CEC_ProxyPushSupplier::apply_policy_obj (CORBA::Object_ptr pre)
         }
       else
         {
+#endif
           policy_list[0] = this->event_channel_->
             create_roundtrip_timeout_policy (this->timeout_);
+#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
         }
+#endif
       post = pre->_set_policy_overrides (policy_list, CORBA::ADD_OVERRIDE);
 
       policy_list[0]->destroy ();
