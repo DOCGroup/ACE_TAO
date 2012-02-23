@@ -15,6 +15,7 @@ module CIAO
     const string SVNT_ENTRYPT = "edu.vanderbilt.dre.CIAO.ServantEntrypoint";
     const string SVNT_ARTIFACT = "edu.vanderbilt.dre.CIAO.ServantArtifact";
     const string EXEC_ARTIFACT = "edu.vanderbilt.dre.CIAO.ExecutorArtifact";
+    const string OPEN_MODE = "edu.vanderbilt.dre.CIAO.OpenMode";
     const string COMPONENT_FACTORY = "component factory";
     const string HOME_FACTORY = "home factory";
     const string COMPONENT_HOME = "edu.vanderbilt.dre.CIAO.ComponentHomeId";
