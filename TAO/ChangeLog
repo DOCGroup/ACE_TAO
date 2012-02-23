@@ -1,3 +1,14 @@
+Thu Feb 23 19:08:43 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+          Differentiate a connection timeout vs message timeout when checking
+          to see if a server is alive. On some Windows platforms at least, a
+          dead server does not result in a TRANSIENT exception as one would
+          expect, rather the connection attempt simply times out. Since the
+          IMR already assumes that a TIMEOUT was due to a server simply being
+          busy but otherwise alive, it was incorrectly assuming a dead server
+          was really alive, and forwarding the client to a bogus endpoint.
+
 Thu Feb 23 18:13:22 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.cpp:
