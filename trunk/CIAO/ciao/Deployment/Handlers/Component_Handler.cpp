@@ -87,34 +87,34 @@ namespace CIAO
 
     CORBA::String_var exec_art, exec_entry, svnt_art, svnt_entry, cont_id;
 
-    using namespace CIAO::Deployment;
     CORBA::Any val;
     const char *tmp = 0;
+    int open_mode = ACE_DEFAULT_SHLIB_MODE;
 
-    if (pmap->find (SVNT_ENTRYPT, val) == 0)
+    if (pmap->find (CIAO::Deployment::SVNT_ENTRYPT, val) == 0)
         {
           val >>= tmp;
           svnt_entry = tmp;
           CIAO_DEBUG (9, (LM_TRACE, CLINFO
                           "Component_Handler_i::install_instance - "
-                          "Found Servant entrypoint %C\n", svnt_entry.in ()));
-        }
-      else
-        {
-          CIAO_ERROR (1, (LM_ERROR, CLINFO
-                       "Component_Handler_i::install_instance - "
-                       "Error: No Servant entrypoint provided, aborting installation\n"));
-          throw ::Deployment::PlanError (idd.name.in (),
-                                         "No servant entrypoint identified.");
+                          "Found Servant entrypoint <%C>\n", svnt_entry.in ()));
         }
 
-      if (pmap->find (SVNT_ARTIFACT, val) == 0)
+      if (pmap->find (CIAO::Deployment::OPEN_MODE, val) == 0)
+        {
+          val >>= open_mode;
+          CIAO_DEBUG (9, (LM_TRACE, CLINFO
+                          "Component_Handler_i::install_instance - "
+                          "Found open mode <%d>\n", open_mode));
+        }
+
+      if (pmap->find (CIAO::Deployment::SVNT_ARTIFACT, val) == 0)
         {
           val >>= tmp;
           svnt_art = Deployment_Common::get_implementation (tmp, plan);
           CIAO_DEBUG (9, (LM_TRACE, CLINFO
                        "Component_Handler_i::install_instance - "
-                       "Found Servant artifact %C\n", svnt_art.in ()));
+                       "Found Servant artifact <%C>\n", svnt_art.in ()));
         }
       else
         {
@@ -126,13 +126,13 @@ namespace CIAO
         }
 
 
-      if (pmap->find (EXEC_ARTIFACT, val) == 0)
+      if (pmap->find (CIAO::Deployment::EXEC_ARTIFACT, val) == 0)
         {
           val >>= tmp;
           exec_art = Deployment_Common::get_implementation (tmp, plan);
           CIAO_DEBUG (9, (LM_TRACE, CLINFO
                        "Component_Handler_i::install_instance - "
-                       "Found executor artifact: %C\n", exec_art.in ()));
+                       "Found executor artifact: <%C>\n", exec_art.in ()));
         }
       else
         {
@@ -143,13 +143,13 @@ namespace CIAO
                                          "No executory artifact identified.\n");
         }
 
-      if (pmap->find (COMPONENT_FACTORY, val) == 0)
+      if (pmap->find (CIAO::Deployment::COMPONENT_FACTORY, val) == 0)
         {
           val >>= tmp;
           exec_entry = tmp;
           CIAO_DEBUG (9, (LM_TRACE, CLINFO
                        "Component_Handler_i::install_instance - "
-                          "Found executor entrypoint: %C\n", exec_entry.in ()));
+                          "Found executor entrypoint: <%C>\n", exec_entry.in ()));
         }
       else
         {
@@ -160,13 +160,13 @@ namespace CIAO
                                          "No executor entrypoint provided\n");
         }
 
-      if (pmap->find (CONTAINER_ID, val) == 0)
+      if (pmap->find (CIAO::Deployment::CONTAINER_ID, val) == 0)
         {
           val >>= tmp;
           cont_id = tmp;
           CIAO_DEBUG (9, (LM_TRACE, CLINFO
                           "Component_Handler_i::install_instance - "
-                          "Found executor entrypoint: %C\n", exec_entry.in ()));
+                          "Found executor entrypoint: <%C>\n", exec_entry.in ()));
         }
       else
         {
@@ -197,14 +197,14 @@ namespace CIAO
                                                    exec_entry,
                                                    svnt_art,
                                                    svnt_entry,
-                                                   idd.name.in ());
+                                                   idd.name.in (),
+                                                   open_mode);
 
           ::Components::ConfigValues attr_config;
           Deployment_Common::create_attribute_configuration (idd.configProperty,
                                                              attr_config);
 
-          container->set_attributes (comp_ref.in (),
-                                     attr_config);
+          container->set_attributes (comp_ref.in (), attr_config);
         }
       catch (::CIAO::InvalidComponent &ex)
         {

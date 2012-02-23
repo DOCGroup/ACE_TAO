@@ -1,3 +1,27 @@
+Thu Feb 23 12:27:54 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/ciao_tests.lst:
+        * ciao/Base/CIAO_Properties.idl:
+        * ciao/Containers/Container_Base.idl:
+        * ciao/Containers/Container_Base_T.h:
+        * ciao/Containers/Container_Base_T.cpp:
+        * ciao/Containers/Extension/Extension_Container.h:
+        * ciao/Containers/Extension/Extension_Container.cpp:
+        * ciao/Containers/Session/Session_Container.h:
+        * ciao/Containers/Session/Session_Container.cpp:
+        * ciao/Deployment/Handlers/Component_Handler.cpp:
+        * ciao/Deployment/Handlers/Container_Handler.cpp:
+        * ciao/Deployment/Handlers/Home_Handler.cpp:
+          Added support for new ciao config property "edu.vanderbilt.dre.CIAO.OpenMode"
+          which controls the mode that is used to load the shared libraries for
+          a home or component. By default we use ACE_DEFAULT_SHLIB_MODE
+          which can be controlled through config.h, but now it can also
+          be controlled using the deployment plan. This property is of type long
+
+        * tests/DAnCE/LocalityManager/CommandlinePassage/Component_OpenMode.cdp:
+        * tests/DAnCE/LocalityManager/CommandlinePassage/run_test_openmode.pl:
+          Example cdp using the new open mode property
+
 Tue Feb 21 15:36:44 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Containers/Container_Base_T.h:

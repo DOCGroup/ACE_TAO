@@ -77,14 +77,16 @@ namespace CIAO
                                                   const char *entry_point,
                                                   const char *servant_artifact,
                                                   const char *servant_entrypoint,
-                                                  const char *name);
+                                                  const char *name,
+                                                  CORBA::Long open_mode);
 
     /// Install a new component
     virtual Components::CCMObject_ptr install_component (const char *primary_artifact,
                                                          const char *entry_point,
                                                          const char *servant_artifact,
                                                          const char *servant_entrypoint,
-                                                         const char *name);
+                                                         const char *name,
+                                                         CORBA::Long open_mode);
 
     // @{
     /// Inherited from extension context.
