@@ -48,11 +48,13 @@ namespace DAnCE
     /// Registers a new installation handler.
     char * register_installation_handler (const ACE_TCHAR *artifact,
                                           const ACE_TCHAR *entrypoint,
-                                          const IH_DEPS &dependencies);
+                                          const IH_DEPS &dependencies,
+                                          int open_mode);
 
     /// Registers a new deployment interceptor
     void register_interceptor (const ACE_TCHAR *artifact,
-                               const ACE_TCHAR *entrypoint);
+                               const ACE_TCHAR *entrypoint,
+                               int open_mode);
 
 
     typedef Dependency_Sorter::Invalid_Install_Order Invalid_Install_Order;
@@ -69,7 +71,8 @@ namespace DAnCE
     const INTERCEPTORS & fetch_interceptors (void);
 
     void register_configuration_plugin (const ACE_TCHAR *artifact,
-                                        const ACE_TCHAR *entrypoint);
+                                        const ACE_TCHAR *entrypoint,
+                                        int open_mode);
 
     ::DAnCE::LocalityConfiguration_ptr
         get_configuration_handler (const char *id);
