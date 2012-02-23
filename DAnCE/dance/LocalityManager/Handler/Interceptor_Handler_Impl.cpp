@@ -128,8 +128,22 @@ namespace DAnCE
                                         "No artifact found for plug-in initialization\n");
       }
 
+    int open_mode = ACE_DEFAULT_SHLIB_MODE;
+    if (!DAnCE::Utility::get_property_value (DAnCE::DANCE_PLUGIN_OPENMODE,
+                                             mdd.execParameter,
+                                             open_mode))
+      {
+        DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
+                     (LM_ERROR, DLINFO
+                      ACE_TEXT ("Interceptor_Handler_Impl::install_instance - ")
+                      ACE_TEXT ("No open mode found for plug-in initialization\n")));
+        throw ::Deployment::StartError (idd.name.in (),
+                                        "No open mode found for plug-in initialization\n");
+      }
+
     PLUGIN_MANAGER::instance ()->register_interceptor (ACE_TEXT_CHAR_TO_TCHAR (artifact),
-                                                       ACE_TEXT_CHAR_TO_TCHAR (entrypt));
+                                                       ACE_TEXT_CHAR_TO_TCHAR (entrypt),
+                                                       open_mode);
   }
 
   void
