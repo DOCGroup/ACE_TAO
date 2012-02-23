@@ -32,11 +32,13 @@
 */
 
 #include "RLECompressor.h"
+#include "ace/Compression/rle/RLECompressor.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
+
 RLECompressor::RLECompressor(::Compression::CompressorFactory_ptr compressor_factory)
     : BaseCompressor (compressor_factory, 0)
 {
@@ -45,94 +47,20 @@ RLECompressor::RLECompressor(::Compression::CompressorFactory_ptr compressor_fac
 void
 RLECompressor::compress(const ::Compression::Buffer &source, ::Compression::Buffer &target)
 {
-    size_t  in_len  = static_cast<size_t>(source.length());
-    size_t  out_len = static_cast<size_t>((in_len * 1.1) + 32); // Slightly bigger than input
+    ACE_UINT64  in_len  = source.length();
+    ACE_UINT64  max_len = static_cast<ACE_UINT64>((in_len * 1.1) + 32U); // Slightly bigger than input
 
-    target.length(static_cast< ::CORBA::ULong>(out_len)); // Set a length
+    target.length(static_cast< CORBA::ULong>(max_len)); // Ensure we set a length.
 
-    const unsigned char *in_p   = static_cast<const unsigned char*>(source.get_buffer());
-    unsigned char *out_p        = static_cast<unsigned char*>(target.get_buffer());
-
-    size_t  out_index   = 0;
-    size_t  out_base    = 0;
-    size_t  run_count   = 0;
-    size_t  dup_count   = 0;
-
-    bool    run_code    = false;
-    unsigned char nxt_byte, cur_byte;
-
-    if (in_p && out_p) while (in_len-- > 0) {
-
-        if (run_code) switch (run_count) {
-
-        default:
-
-            out_p[out_index = out_base] = ::CORBA::Octet(run_count++ | 0x80);
-            out_p[++out_index] = cur_byte = *in_p++;
-
-            if (in_len ? cur_byte == (nxt_byte = *in_p) : true) {
-                continue;
-            }
-
-            // Fall Through
-
-        case 128:
-
-            if (++out_index >= out_len) {
-                throw ::Compression::CompressionException();
-            } else if (in_len == 0) {
-                continue;
-            }
-
-            run_code  = false;
-            out_p[out_base = out_index] = 0;
-            dup_count = run_count = 0;
-            continue;
-        }
-
-        switch (run_count) {
-
-        case 128:
-
-            if (++out_index >= out_len) {
-                throw ::Compression::CompressionException();
-            }
-            out_p[out_base = out_index] = 0;
-            dup_count = run_count = 0;
-
-            // Fall Through
-
-        default :
-
-            cur_byte = *in_p++;
-
-            if (in_len > 0) {
-                if (cur_byte == (nxt_byte = *in_p)) {
-                    if (dup_count++ == 1) {
-                        if (run_count >= dup_count) {
-                            out_p[out_base] = static_cast<unsigned char>(run_count - dup_count);
-                            out_base += run_count;
-                        }
-                        run_code  = true;
-                        run_count = dup_count - 1;
-                        dup_count = 0;
-                        out_p[out_index = out_base] = static_cast<unsigned char>(run_count++ | 0x80);
-                        break;
-                    }
-                } else dup_count = 0;
-            }
-            out_p[out_base] = char(run_count++);
-            break;
-        }
-
-        if (++out_index >= out_len) {
-            throw ::Compression::CompressionException();
-        }
-
-        out_p[out_index] = cur_byte;
+    ACE_UINT64 out_len = ACE_RLECompression::instance()->compress( source.get_buffer(),
+                                                                   in_len,
+                                                                   target.get_buffer(),
+                                                                   max_len );
+    if (ACE_UINT64(-1) == out_len) { // Overrun
+        throw ::Compression::CompressionException();
     }
 
-    target.length(++out_index);
+    target.length(static_cast< CORBA::ULong>(out_len)); // Set Output Buffer to the right size now.
 
     // Update statistics for this compressor
     this->update_stats(source.length(), target.length());
@@ -141,35 +69,12 @@ RLECompressor::compress(const ::Compression::Buffer &source, ::Compression::Buff
 void
 RLECompressor::decompress(const ::Compression::Buffer &source, ::Compression::Buffer &target)
 {
-    size_t  in_len  = static_cast<size_t>(source.length());
-    size_t  max_len = static_cast<size_t>(target.length());
-
-    size_t  out_len = 0;
-
-    const unsigned char *in_p   = static_cast<const unsigned char*>(source.get_buffer());
-    unsigned char *out_p        = static_cast<unsigned char*>(target.get_buffer());
-
-    if (in_p && out_p) while(in_len--) {
-        unsigned char cur_byte = *in_p++;
-        size_t cpy_len = size_t((cur_byte & 0x7F) + 1U);
-
-        if (cpy_len > max_len) {
-            throw ::Compression::CompressionException();
-        } else if (cur_byte & 0x80) {  // compressed
-            if (in_len--) {
-                ACE_OS::memset(out_p, *in_p++, cpy_len);
-            } else {
-                throw ::Compression::CompressionException();
-            }
-        } else if (in_len >= cpy_len) {
-            ACE_OS::memcpy(out_p, in_p, cpy_len); in_p += cpy_len; in_len -= cpy_len;
-        } else {
-            throw ::Compression::CompressionException();
-        }
-
-        out_p   += cpy_len;
-        max_len -= cpy_len;
-        out_len += cpy_len;
+    ACE_UINT64 out_len = ACE_RLECompression::instance()->decompress(source.get_buffer(),
+                                                                    source.length(),
+                                                                    target.get_buffer(),
+                                                                    target.length() );
+    if (ACE_UINT64(-1) == out_len) { // Overrun
+        throw ::Compression::CompressionException();
     }
 
     target.length(static_cast<CORBA::ULong>(out_len));

@@ -1,3 +1,17 @@
+Thu Feb 23 08:00:29 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/rlecompressor.mpb:
+        * tao/Compression/rle/RLECompressor.cpp:
+        * tao/Compression/rle/RLECompressor.mpc:
+        * tao/Compression/rle/RLECompressor_Factory.cpp:
+        * tao/Compression/rle/TAO_RLECompressor.rc:
+        * tests/Compression/RLECompressorTest.cpp:
+          Updated for the move of the rle compressor to a new ACE library
+
+        * tao/AnyTypeCode/Any.cpp:
+        * tao/AnyTypeCode/NVList.cpp:
+          Layout changes
+
 Tue Feb 21 14:47:05 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Compression/Base_Compressor.h:

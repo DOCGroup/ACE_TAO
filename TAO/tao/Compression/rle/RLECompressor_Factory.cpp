@@ -17,10 +17,13 @@ Compression::Compressor_ptr
 RLE_CompressorFactory::get_compressor(Compression::CompressionLevel)
 {
     if (::CORBA::is_nil(this->compressor_.in())) {
-        this->compressor_ = new ::TAO::RLECompressor(this);
+         ::Compression::Compressor_ptr compressor;
+         ACE_NEW_RETURN( compressor, ::TAO::RLECompressor(this), 0 );
+         this->compressor_ = compressor;
     }
     return ::Compression::Compressor::_duplicate(this->compressor_.in());
 }
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
+

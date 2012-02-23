@@ -295,10 +295,10 @@ CORBA::NVList::_tao_encode (TAO_OutputCDR &cdr, int flag)
     {
       if (this->max_ == 0)
         {
-          // The list is empty aggresively reduce copies and just send
+          // The list is empty aggressively reduce copies and just send
           // the CDR stream, we assume that
           // TAO_Server_Request::init_reply
-          // has inserted appropiated padding already to make this
+          // has inserted appropriated padding already to make this
           // operation correct
           cdr.write_octet_array_mb (this->incoming_->start ());
           return;
