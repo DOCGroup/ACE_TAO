@@ -1,3 +1,8 @@
+Thu Feb 23 12:30:56 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/rlecompressor.mpb:
+          Fuzz fix
+
 Thu Feb 23 08:06:40 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/orbconf.h:
