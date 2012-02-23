@@ -1481,12 +1481,24 @@ ImR_Locator_i::is_alive_i (Server_Info& info)
         return 0;
         }
     }
-  catch (const CORBA::TIMEOUT&)
+  catch (const CORBA::TIMEOUT& ex)
     {
+      if (ex.completed() == CORBA::COMPLETED_NO)
+        {
+          if (debug_ > 1)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "ImR: <%C> Ping timed out during connection. alive=false.\n", info.name.c_str ()));
+            }
+          info.last_ping = ACE_Time_Value::zero;
+          return 0; // still potentially ambiguous, the server could be so busy it couldn't
+          // even accept a connection. However the more likely assumption is the server is on
+          // windows, and is dead, but the host ignored the request rather than rejecting it.
+        }
       if (debug_ > 1)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "ImR: <%C> Ping timed out. alive=true.\n", info.name.c_str ()));
+                      "ImR: <%C> Ping timed out, maybe completed. alive=true.\n", info.name.c_str ()));
         }
       return 1; // This is "alive" as far as we're concerned. Presumably the client
       // will have a less stringent timeout policy, or will want to know
@@ -1501,7 +1513,7 @@ ImR_Locator_i::is_alive_i (Server_Info& info)
           ex._tao_print_exception ("\n");
         }
       info.last_ping = ACE_Time_Value::zero;
-      return false;
+      return 0;
     }
   return 1;
 }
