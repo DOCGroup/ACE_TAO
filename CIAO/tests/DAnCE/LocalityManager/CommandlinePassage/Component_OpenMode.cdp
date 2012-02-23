@@ -57,17 +57,6 @@
       </value>
     </execParameter>
     <execParameter>
-      <name>edu.vanderbilt.dre.CIAO.OpenMode</name>
-      <value>
-        <type>
-          <kind>tk_long</kind>
-        </type>
-        <value>
-          <long>3</long>
-        </value>
-      </value>
-    </execParameter>
-    <execParameter>
       <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
       <value>
         <type>
@@ -114,6 +103,17 @@
         </type>
         <value>
           <long>33</long>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>edu.vanderbilt.dre.CIAO.OpenMode</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>3</long>
         </value>
       </value>
     </configProperty>
