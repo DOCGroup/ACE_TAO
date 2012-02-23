@@ -129,8 +129,7 @@ CORBA::Any::_tao_byte_order (void) const
 }
 
 void
-CORBA::Any::type (CORBA::TypeCode_ptr tc
-                  )
+CORBA::Any::type (CORBA::TypeCode_ptr tc)
 {
   CORBA::Boolean equiv = false;
 
@@ -782,9 +781,7 @@ namespace TAO
 {
   template<>
   CORBA::Boolean
-  Any_Impl_T<CORBA::Object>::to_object (
-      CORBA::Object_ptr &_tao_elem
-    ) const
+  Any_Impl_T<CORBA::Object>::to_object (CORBA::Object_ptr &_tao_elem) const
   {
     _tao_elem = CORBA::Object::_duplicate (this->value_);
     return true;
