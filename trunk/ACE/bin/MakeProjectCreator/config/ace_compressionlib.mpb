@@ -1,0 +1,4 @@
+project : acelib {
+    libs    += ACE_Compression
+    after   += ACE_Compression
+}
