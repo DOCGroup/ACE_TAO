@@ -1,0 +1,20 @@
+// -*- MPC -*-
+// $Id:
+
+project(ACE_RLECompression) : ace_compressionlib, install, ace_output {
+  sharedname   = *
+  dynamicflags += ACE_RLECOMPRESSION_BUILD_DLL
+
+  Source_Files {
+    RLECompressor.cpp
+  }
+
+  Header_Files {
+    RLECompressor.h
+    ACE_RLECompression_export.h
+  }
+
+  specific {
+    install_dir = ace/lib
+  }
+}
