@@ -47,7 +47,7 @@ enum ACE_CompressorId
     ACE_COMPRESSORID_RLE    = 10
 };
 
-class ACE_Compression_Export ACE_Compressor : ACE_Copy_Disabled
+class ACE_Compression_Export ACE_Compressor : private ACE_Copy_Disabled
 {
 public:
 
