@@ -61,6 +61,8 @@ public:
   */
   ACE_RLECompressor(void);
 
+  virtual ~ACE_RLECompressor(void);
+
   /**
   * Compress the @a in_ptr buffer for @a in_len into the
   * @a dest_ptr buffer with a maximum @a max_out_len using
