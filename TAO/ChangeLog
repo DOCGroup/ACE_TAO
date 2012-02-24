@@ -1,3 +1,8 @@
+Fri Feb 24 09:18:00 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/orbconf.h:
+          If ZIOP is not defined and we have messaging, set it to 0
+
 Thu Feb 23 19:08:43 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
