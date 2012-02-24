@@ -252,6 +252,8 @@ const size_t TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE = 128;
 # if (TAO_HAS_CORBA_MESSAGING == 1)
 // ZIOP needs corba messaging to work
 #  define TAO_HAS_ZIOP 1
+#else
+#  define TAO_HAS_ZIOP 0
 # endif
 #endif
 
