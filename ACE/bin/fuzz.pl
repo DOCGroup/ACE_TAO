@@ -54,6 +54,7 @@ use PerlACE::Run_Test;
 @files_generic = ();
 @files_doxygen = ();
 @files_conf = ();
+@files_rb = ();
 
 # To keep track of errors and warnings
 $errors = 0;
@@ -137,6 +138,9 @@ sub store_file ($)
     }
     elsif ($name =~ /\.py$/i) {
         push @files_py, ($name);
+    }
+    elsif ($name =~ /\.(rb|erb)$/i) {
+        push @files_rb, ($name);
     }
     elsif ($name =~ /\.vcproj$/i) {
         push @files_vcproj, ($name);
@@ -254,14 +258,17 @@ sub check_for_id_string ()
         if (open (FILE, $file)) {
             print "Looking at file $file\n" if $opt_d;
             while (<FILE>) {
-                if (/\$Id\:/ or /\$Id\$/) {
-                    $found = 1;
-                }
                 if (/\$id\$/) {
                     print_error ("$file:$.: Incorrect \$id\$ found (correct casing)");
                 }
                 if (/\$Id:\$/) {
                     print_error ("$file:$.: Incorrect \$Id:\$ found (remove colon)");
+                }
+                if (/\$Id$/) {
+                    print_error ("$file:$.: Incorrect \$Id: found (remove colon, added \$)");
+                }
+                if (/\$Id\:/ or /\$Id\$/) {
+                    $found = 1;
                 }
             }
             close (FILE);
