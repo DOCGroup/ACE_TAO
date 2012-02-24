@@ -1,3 +1,8 @@
+Fri Feb 24 09:19:40 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Compression/Compressor.h:
+          Fixed compile warning
+
 Fri Feb 24 09:14:22 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Compression/Compressor.h:
