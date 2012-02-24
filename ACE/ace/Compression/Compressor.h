@@ -106,6 +106,8 @@ public:
     */
   virtual void        reset_stats(void);
 
+  virtual ~ACE_Compressor (void);
+
 protected:
   ACE_Compressor(ACE_CompressorId compressor_id,
                   ACE_UINT32 compression_level = 0); // Must be inherited.

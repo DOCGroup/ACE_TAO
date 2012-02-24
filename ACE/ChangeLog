@@ -1,3 +1,11 @@
+Fri Feb 24 09:14:22 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Compression/Compressor.h:
+        * ace/Compression/Compressor.cpp:
+        * ace/Compression/rle/RLECompressor.h:
+        * ace/Compression/rle/RLECompressor.cpp:
+          Added virtual destructors
+
 Fri Feb 24 08:45:08 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Compression/ACE_Compression.mpc:
