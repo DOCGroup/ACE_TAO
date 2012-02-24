@@ -1,5 +1,5 @@
 // -*- MPC -*-
-// $Id:
+// $Id$
 
 project(ACE_Compression) : acelib, install, ace_output {
   sharedname   = *
@@ -21,6 +21,6 @@ project(ACE_Compression) : acelib, install, ace_output {
   }
 
   specific {
-    install_dir = ace/lib
+    install_dir = ace/Compression
   }
 }
