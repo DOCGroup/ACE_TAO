@@ -49,7 +49,7 @@ namespace TAO
     private:
 
         // Ensure we can lock with imutability (i.e. const)
-        mutable ACE_SYNCH_MUTEX mutex_;
+        mutable TAO_SYNCH_MUTEX mutex_;
         ZlibCompressorMap       compressors_;
     };
 }

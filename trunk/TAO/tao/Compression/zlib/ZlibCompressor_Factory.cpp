@@ -2,9 +2,7 @@
 
 #include "tao/Compression/zlib/ZlibCompressor_Factory.h"
 #include "tao/Compression/zlib/ZlibCompressor.h"
-
 #include "ace/Min_Max.h"
-
 #include "zlib.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -31,7 +29,7 @@ Zlib_CompressorFactory::get_compressor (
 
     {   // Ensure scoped lock for compressor Map container
 
-        ACE_GUARD_RETURN( ACE_SYNCH_MUTEX, ace_mon, this->mutex_, 0 );
+        ACE_GUARD_RETURN( TAO_SYNCH_MUTEX, ace_mon, this->mutex_, 0 );
 
         try {
             // Try and locate the compressor (we may already have it)
