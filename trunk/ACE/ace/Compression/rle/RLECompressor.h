@@ -18,17 +18,17 @@
  *  images such as icons, line drawings, and animations. It is not useful
  *  with files that don't have many runs as it could slightly increase the
  *  output size.
- *  ALGORITHM: This algorithm is an optimised version of the traditional
+ *  ALGORITHM: This algorithm is an optimized version of the traditional
  *  RLE algorithm in that it behaves better with very few runs.
  *
  *  With a run of a character where that run is >= 3 this is
  *  replaced with the repeat indicator 0X80 and then the repeat count OR'd
  *  over this ident.  This repeat count is therefore has a maximum value
- *  of 127 (0x7F) which is to be interpreted as the next charater repeated
+ *  of 127 (0x7F) which is to be interpreted as the next character repeated
  *  another 'repeat count' times (i.e. a maximum of 128 characters can be
  *  represented in any single dupal). if the repeat ident is not present
  *  then the count is to be interpreted as a copy of the next repeat count
- *  charaters + 1.
+ *  characters + 1.
  *
  *  EXAMPLE: the following arbitary string of 67 bytes:-
  *  WWWWWWWWWWWWBWWWWWWWWWWWWBBBWWWWWWWWWWWWWWWWWWWWWWWWBWWWWWWWWWWWWWW

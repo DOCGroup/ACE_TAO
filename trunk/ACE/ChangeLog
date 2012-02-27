@@ -1,3 +1,11 @@
+Mon Feb 27 08:11:06 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Compression/rle/RLECompressor.h:
+          Doxygen fix
+
+        * ace/Compression/rle/RLECompressor.cpp:
+          Fixed gcc warning
+
 Fri Feb 24 09:19:40 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Compression/Compressor.h:

@@ -69,7 +69,7 @@ ACE_RLECompressor::compress( const void *in_ptr,
         case 128:
 
             if (++out_index >= max_out_len) {
-                return -1; // Output Exhausted
+                return ACE_UINT64(-1); // Output Exhausted
             }
             out_p[out_base = out_index] = 0;
             dup_count = run_count = 0;
