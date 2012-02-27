@@ -1,3 +1,9 @@
+Mon Feb 27 08:16:27 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Compression/zlib/ZlibCompressor_Factory.h:
+        * tao/Compression/zlib/ZlibCompressor_Factory.cpp:
+          Put compressors into a map for reuse
+
 Fri Feb 24 09:18:00 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/orbconf.h:
