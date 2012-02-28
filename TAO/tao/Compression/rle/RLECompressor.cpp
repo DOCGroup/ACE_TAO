@@ -44,7 +44,7 @@ void
 RLECompressor::compress(const ::Compression::Buffer &source, ::Compression::Buffer &target)
 {
     // Ensure maximum is at least X 1.1 input length.
-    target.length(static_cast<CORBA::ULong>((source.length() * 1.1) + 32U)); 
+    target.length(static_cast<CORBA::ULong>((source.length() * 1.1) + 32U));
 
     ACE_UINT64 out_len = ACE_RLECompression::instance()->compress( source.get_buffer(),
                                                                    source.length(),
@@ -77,4 +77,4 @@ RLECompressor::decompress(const ::Compression::Buffer &source, ::Compression::Bu
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-                                                                                                                                                 
+
