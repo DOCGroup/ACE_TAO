@@ -29,7 +29,7 @@ module Deployment {
 
   struct Capability {
     string name;
-    ::CORBA::StringSeq resourceType;
+    CORBA::StringSeq resourceType;
     SatisfierProperties property;
   };
 

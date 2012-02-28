@@ -16,7 +16,7 @@ module Deployment {
         typedef sequence < PackageConfiguration > PackageConfigurations;
 
         struct ComponentPackageImport {
-                ::CORBA::StringSeq location;
+                CORBA::StringSeq location;
         };
 
         typedef sequence < ComponentPackageImport > ComponentPackageImports;
@@ -72,7 +72,7 @@ module Deployment {
         struct ImplementationArtifactDescription {
                 string label;
                 string UUID;
-                ::CORBA::StringSeq location;
+                CORBA::StringSeq location;
                 Properties execParameter;
                 Requirements deployRequirement;
                 NamedImplementationArtifacts dependsOn;
@@ -104,7 +104,7 @@ module Deployment {
 
         struct Locality {
                 LocalityKind constraint;
-                ::CORBA::ULongSeq constrainedInstanceRef;
+                CORBA::ULongSeq constrainedInstanceRef;
         };
 
         typedef sequence < Locality > Localities;
@@ -192,7 +192,7 @@ module Deployment {
 
         struct RequirementSatisfier {
                 string name;
-                ::CORBA::StringSeq resourceType;
+                CORBA::StringSeq resourceType;
                 SatisfierProperties property;
         };
 

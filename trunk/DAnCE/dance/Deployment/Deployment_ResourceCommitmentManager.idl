@@ -19,7 +19,7 @@ module Deployment {
     string reason;
     long index;
     string propertyName;
-    ::CORBA::AnySeq propertyValue;
+    CORBA::AnySeq propertyValue;
   };
 
   interface ResourceCommitmentManager {
