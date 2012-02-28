@@ -1,3 +1,10 @@
+Tue Feb 28 19:26:48 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/Getter_T.cpp:
+        * connectors/dds4ccm/tests/LateBinding/ReadGet/Sender/RG_LateBinding_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/ResetTopic/ReadGet/Sender/RG_ResetTopic_Sender_exec.cpp:
+          Fixed coverity errors
+
 Thu Feb 23 14:16:48 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/DAnCE/LocalityManager/CommandlinePassage/Component_OpenMode.cdp:

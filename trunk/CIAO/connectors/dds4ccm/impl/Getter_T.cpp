@@ -9,7 +9,8 @@ namespace CIAO
   {
     template <typename GETTER_TYPE, typename TYPED_DDS_READER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
     Getter_Base_T<GETTER_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::Getter_Base_T (void)
-      : time_out_ (),
+      : condition_manager_ (0),
+        time_out_ (),
         max_delivered_data_ (0)
     {
       DDS4CCM_TRACE ("Getter_Base_T::Getter_Base_T");
@@ -268,8 +269,11 @@ namespace CIAO
           throw ::CORBA::INTERNAL ();
         }
       this->condition_manager_ = condition_manager;
-      this->condition_manager_->set_dds_entity (dr);
-      this->condition_manager_->init_readcondition ();
+      if (this->condition_manager_)
+        {
+          this->condition_manager_->set_dds_entity (dr);
+          this->condition_manager_->init_readcondition ();
+        }
     }
 
     template <typename GETTER_TYPE, typename TYPED_DDS_READER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
