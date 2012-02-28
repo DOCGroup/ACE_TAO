@@ -38,7 +38,6 @@ project(Deployment_IDL) : install, dancelib_with_idl, dance_output, valuetype, g
   }
 
   IDL_Files {
-    idlflags += -Ssi
     Deployment_ResourceCommitmentManager.idl
   }
   specific {

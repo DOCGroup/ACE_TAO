@@ -1,3 +1,17 @@
+Tue Feb 28 14:55:48 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * dance/Deployment/Deployment_Core.mpc:
+          Removed obsolete argument
+
+        * dance/Deployment/Deployment_Data.idl:
+        * dance/Deployment/Deployment_DeploymentPlan.idl:
+        * dance/Deployment/Deployment_Packaging_Data.idl:
+        * dance/Deployment/Deployment_RepositoryManager.idl:
+        * dance/Deployment/Deployment_ResourceCommitmentManager.idl:
+        * dance/Deployment/Deployment_TargetData.idl:
+        * dance/Deployment/Deployment_TargetManager.idl:
+          Don't fully scope CORBA
+
 Tue Feb 28 10:48:18 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * dance/Deployment/Deployment_DeploymentPlan.idl:

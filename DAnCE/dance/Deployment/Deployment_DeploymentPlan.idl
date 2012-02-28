@@ -21,13 +21,13 @@ module Deployment {
         struct ComponentPortDescription {
                 string name;
                 string specificType;
-                ::CORBA::StringSeq supportedType;
+                CORBA::StringSeq supportedType;
                 boolean provider;
                 boolean exclusiveProvider;
                 boolean exclusiveUser;
                 boolean optional;
                 CCMComponentPortKind kind;
-               ::CORBA::StringSeq templateParam; // New from DDS4CCM
+                CORBA::StringSeq templateParam; // New from DDS4CCM
         };
 
         typedef sequence < ComponentPortDescription > ComponentPortDescriptions;
@@ -43,8 +43,8 @@ module Deployment {
                 string label;
                 string UUID;
                 string specificType;
-                ::CORBA::StringSeq supportedType;
-                ::CORBA::StringSeq idlFile;
+                CORBA::StringSeq supportedType;
+                CORBA::StringSeq idlFile;
                 Properties configProperty;
                 ComponentPortDescriptions _port;
                 ComponentPropertyDescriptions property;
@@ -53,8 +53,8 @@ module Deployment {
 
         struct MonolithicDeploymentDescription {
                 string name;
-                ::CORBA::StringSeq source;
-                ::CORBA::ULongSeq artifactRef;
+                CORBA::StringSeq source;
+                CORBA::ULongSeq artifactRef;
                 Properties execParameter;
                 Requirements deployRequirement;
         };
@@ -81,7 +81,7 @@ module Deployment {
         struct InstanceDeploymentDescription {
                 string name;
                 string node;
-                ::CORBA::StringSeq source;
+                CORBA::StringSeq source;
                 unsigned long implementationRef;
                 Properties configProperty;
                 InstanceResourceDeploymentDescriptions deployedResource;
@@ -109,7 +109,7 @@ module Deployment {
                 string location;
                 boolean provider;
                 string portName;
-                ::CORBA::StringSeq supportedType;
+                CORBA::StringSeq supportedType;
         };
 
         typedef sequence < ExternalReferenceEndpoint > ExternalReferenceEndpoints;
@@ -125,7 +125,7 @@ module Deployment {
 
         struct PlanConnectionDescription {
                 string name;
-                ::CORBA::StringSeq source;
+                CORBA::StringSeq source;
                 Requirements deployRequirement;
                 ComponentExternalPortEndpoints externalEndpoint;
                 PlanSubcomponentPortEndpoints internalEndpoint;
@@ -144,7 +144,7 @@ module Deployment {
 
         struct PlanPropertyMapping {
                 string name;
-                ::CORBA::StringSeq source;
+                CORBA::StringSeq source;
                 string externalName;
                 PlanSubcomponentPropertyReferences delegatesTo;
         };
@@ -167,9 +167,9 @@ module Deployment {
 
         struct ArtifactDeploymentDescription {
                 string name;
-                ::CORBA::StringSeq location;
+                CORBA::StringSeq location;
                 string node;
-                ::CORBA::StringSeq source;
+                CORBA::StringSeq source;
                 Properties execParameter;
                 Requirements deployRequirement;
                 ResourceDeploymentDescriptions deployedResource;
@@ -187,7 +187,7 @@ module Deployment {
 
         struct PlanLocality {
                 PlanLocalityKind constraint;
-                ::CORBA::ULongSeq constrainedInstanceRef;
+                CORBA::ULongSeq constrainedInstanceRef;
         };
 
         typedef sequence < PlanLocality > PlanLocalities;

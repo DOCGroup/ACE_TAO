@@ -36,11 +36,11 @@ module Deployment {
     PackageConfiguration findPackageByUUID (in string UUID)
       raises (NoSuchName);
 
-    ::CORBA::StringSeq findNamesByType (in string type);
+    CORBA::StringSeq findNamesByType (in string type);
 
-    ::CORBA::StringSeq getAllNames ();
+    CORBA::StringSeq getAllNames ();
 
-    ::CORBA::StringSeq getAllTypes ();
+    CORBA::StringSeq getAllTypes ();
 
     void deletePackage (in string installationName)
       raises (NoSuchName);
