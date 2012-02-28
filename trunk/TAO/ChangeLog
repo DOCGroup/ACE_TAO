@@ -1,3 +1,8 @@
+Tue Feb 28 19:05:53 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_operation/amh_ss.cpp:
+          Check result of dynamic_cast
+
 Tue Feb 28 14:44:28 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/RTScheduling/Current.cpp:
