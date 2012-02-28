@@ -1,3 +1,9 @@
+Tue Feb 28 14:25:06 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/RTScheduling/RTScheduler_Manager.h:
+        * tao/RTScheduling/RTScheduler_Manager.cpp:
+          Fixed coverity error
+
 Tue Feb 28 08:00:57 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Compression/lzo/LzoCompressor.cpp:
