@@ -55,6 +55,7 @@ namespace CIAO_RG_LateBinding_Sender_Impl
   Sender_exec_i::Sender_exec_i (void)
     : iterations_ (0)
       , keys_ (0)
+      , to_handler_ (0)
   {
   }
 
