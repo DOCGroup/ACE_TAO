@@ -25,10 +25,6 @@ ACE_Throughput_Stats::sample (ACE_UINT64 throughput,
 
   if (this->samples_count () == 1u)
     {
-      this->throughput_last_   = throughput;
-    }
-  else
-    {
       this->throughput_last_ = throughput;
     }
 }

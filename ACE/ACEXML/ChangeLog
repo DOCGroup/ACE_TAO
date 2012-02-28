@@ -1,3 +1,10 @@
+Tue Feb 28 03:03:38 UTC 2012  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * parser/parser/Parser.cpp (ACEXML_Parser::parse_reference_name):
+          Expression 'ch != '_' || ch != ':'' is always true. Used the
+          '&&' operator instead.  Thanks to Andrey Karpov <karpov at
+          viva64 dot com> for reporting this.
+
 Fri Oct 21 09:50:19 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * parser/parser/Parser.cpp:
