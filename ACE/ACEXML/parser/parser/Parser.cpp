@@ -1902,7 +1902,7 @@ ACEXML_Char*
 ACEXML_Parser::parse_reference_name (void)
 {
   ACEXML_Char ch = this->get ();
-  if (!this->isLetter (ch) && (ch != '_' || ch != ':'))
+  if (!this->isLetter (ch) && (ch != '_' && ch != ':'))
     return 0;
   while (ch) {
     this->alt_stack_.grow (ch);

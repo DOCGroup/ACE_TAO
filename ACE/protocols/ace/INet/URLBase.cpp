@@ -202,7 +202,7 @@ namespace ACE
         // may get a url passed without the actual prefix
 
         ACE_CString::size_type pos = url_string.find (':');
-        if (pos > 0 && url_string[pos+1] == '/' && url_string[pos+1] == '/')
+        if (pos > 0 && url_string[pos+1] == '/' && url_string[pos+2] == '/')
           {
             // in case we find a scheme check for the right protocol
             if (this->get_protocol () != url_string.substr (0, pos))
