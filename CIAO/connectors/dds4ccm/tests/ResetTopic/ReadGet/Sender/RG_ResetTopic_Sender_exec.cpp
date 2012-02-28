@@ -35,6 +35,7 @@ namespace CIAO_RG_ResetTopic_Sender_Impl
   Sender_exec_i::Sender_exec_i (void)
     : iterations_ (0)
     , keys_ (0)
+    , to_handler_ (0)
     , topic_name_ (TOPIC_2)
     , run_(0)
     , start_key_ (1)
