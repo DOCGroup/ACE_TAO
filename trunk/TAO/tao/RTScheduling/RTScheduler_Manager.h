@@ -35,11 +35,10 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Manager :
   public virtual ::CORBA::LocalObject
 {
 public:
-
   TAO_RTScheduler_Manager (void);
 
   /// Constructor.
-  TAO_RTScheduler_Manager (TAO_ORB_Core*);
+  TAO_RTScheduler_Manager (TAO_ORB_Core* orb);
 
   void rtscheduler (RTScheduling::Scheduler_ptr rtscheduler);
 
