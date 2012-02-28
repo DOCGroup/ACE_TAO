@@ -1,3 +1,8 @@
+Tue Feb 28 10:48:18 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * dance/Deployment/Deployment_DeploymentPlan.idl:
+          Include orb.idl instead of multiple pidl files
+
 Thu Feb 23 11:58:41 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * dance/DAnCE_Properties.idl:
