@@ -1,3 +1,15 @@
+Tue Feb 28 08:00:57 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Compression/lzo/LzoCompressor.cpp:
+          Layout changes
+
+        * tao/Compression/rle/RLECompressor.cpp:
+        * tao/Compression/zlib/ZlibCompressor.cpp:
+          Fixed some bugs in these compressors
+
+        * tao/Valuetype/StringValue.pidl:
+          Layout changes
+
 Mon Feb 27 09:47:29 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Compression/zlib/ZlibCompressor_Factory.h:

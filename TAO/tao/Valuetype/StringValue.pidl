@@ -1,12 +1,10 @@
 // -*- IDL -*-
-//
 // $Id$
 
 // ================================================================
 //   Standard Value Box Definitions
 //   as specified in OMG document formal/01-12-35
 // ================================================================
-
 
 #ifndef TAO_CORBA_STRING_VALUE_IDL
 #define TAO_CORBA_STRING_VALUE_IDL
@@ -17,7 +15,6 @@ module CORBA
 {
   valuetype StringValue string;
   valuetype WStringValue wstring;
-
 };
 
 #endif  /* TAO_CORBA_STRING_VALUE_IDL */

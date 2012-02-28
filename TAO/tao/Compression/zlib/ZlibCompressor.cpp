@@ -17,12 +17,12 @@ ZlibCompressor::ZlibCompressor (
 void
 ZlibCompressor::compress (
     const ::Compression::Buffer & source,
-    ::Compression::Buffer & target
-  )
+    ::Compression::Buffer & target)
 {
-  uLongf max_length =
-    static_cast <uLongf> (source.length () * 1.001) + 12;
-  target.length (static_cast <CORBA::ULong> (max_length));
+  // Ensure maximum is at least a bit bigger than input length.
+  target.length(static_cast<CORBA::ULong>((source.length() * 1.001) + 12));
+
+  uLongf max_length = static_cast <uLongf>(target.maximum());
 
   int const retval = ::compress2 (reinterpret_cast <Bytef*>(target.get_buffer ()),
                                   &max_length,
@@ -48,7 +48,7 @@ ZlibCompressor::decompress (
   const ::Compression::Buffer & source,
   ::Compression::Buffer & target)
 {
-  uLongf max_length = static_cast <uLongf> (target.length ());
+  uLongf max_length = static_cast <uLongf> (target.maximum ());
   int const retval = uncompress (reinterpret_cast <Bytef*>(target.get_buffer ()),
                                  &max_length,
                                  reinterpret_cast <const Bytef*>(source.get_buffer ()),

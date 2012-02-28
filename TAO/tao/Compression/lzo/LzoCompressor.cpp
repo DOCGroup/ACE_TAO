@@ -18,8 +18,7 @@ LzoCompressor::LzoCompressor (
 void
 LzoCompressor::compress (
     const ::Compression::Buffer & source,
-    ::Compression::Buffer & target
-  )
+    ::Compression::Buffer & target)
 {
   void* wrkmem = (lzo_bytep) lzo_malloc(LZO1X_1_MEM_COMPRESS);
   lzo_uint max_length = static_cast <lzo_uint> (source.length () * 1.1) + 12;
