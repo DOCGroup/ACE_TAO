@@ -9,7 +9,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_RTScheduler_Manager::TAO_RTScheduler_Manager (void)
+TAO_RTScheduler_Manager::TAO_RTScheduler_Manager (void) :
+  orb_ (0)
 {
 
 }
