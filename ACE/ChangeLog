@@ -1,3 +1,8 @@
+Tue Feb 28 14:35:36 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Process.cpp:
+          Fixed coverity error
+
 Tue Feb 28 03:27:28 UTC 2012  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         *
@@ -14,13 +19,13 @@ Tue Feb 28 03:18:56 UTC 2012  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 Tue Feb 28 03:15:37 UTC 2012  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * protocols/ace/INet/URLBase.cpp (ACE): Changed
-        
+
           if (pos > 0 && url_string[pos+1] == '/' && url_string[pos+1] == '/')
-  
+
           to
-  
+
           if (pos > 0 && url_string[pos+1] == '/' && url_string[pos+2] == '/')
-          
+
           Thanks to Andrey Karpov <karpov at viva64 dot com> for reporting
           this.
 
