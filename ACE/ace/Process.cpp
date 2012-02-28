@@ -1223,7 +1223,10 @@ ACE_Process_Options::command_line (const ACE_TCHAR *format, ...)
   va_start (argp, format);
 
   if (command_line_buf_len_ < 1)
-    return -1;
+    {
+      va_end (argp);
+      return -1;
+    }
 
 #if !defined (ACE_LACKS_VSNPRINTF) || defined (ACE_HAS_TRIO)
   // vsnprintf the format and args into command_line_buf__.
