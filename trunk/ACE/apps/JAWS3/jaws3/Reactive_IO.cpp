@@ -414,6 +414,9 @@ JAWS_IO_Reactive_Transmit::handle_output_source (ACE_HANDLE handle)
 {
   ACE_Message_Block *mb = this->source_buf_;
 
+  if (mb == 0)
+    return -1;
+
   // Try to read data into the mb if data is still available.
   if (mb->space () && this->source_ != ACE_INVALID_HANDLE)
     {
