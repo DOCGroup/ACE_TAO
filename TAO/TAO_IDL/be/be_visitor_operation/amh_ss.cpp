@@ -350,6 +350,9 @@ be_visitor_amh_operation_ss::generate_shared_prologue (be_decl *node,
       << "dynamic_cast<" << amh_skel_name.c_str () << " *> ("
       << "_tao_servant" << ");" << be_uidt_nl;
 
+  *os << "if (!_tao_impl)" << be_idt_nl
+      << "throw ::CORBA::INTERNAL ();" << be_uidt_nl;
+
   return 0;
 }
 
