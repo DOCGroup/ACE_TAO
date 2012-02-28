@@ -22,7 +22,8 @@ TAO_DTId_Hash::operator () (const IdType &id) const
                         id.length ());
 }
 
-TAO_RTScheduler_Current::TAO_RTScheduler_Current (void)
+TAO_RTScheduler_Current::TAO_RTScheduler_Current (void) :
+  orb_ (0)
 {
 }
 
