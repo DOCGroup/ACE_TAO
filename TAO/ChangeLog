@@ -1,3 +1,8 @@
+Wed Feb 29 12:19:53 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IFR_Client/IFR_Base.pidl:
+          Use orb.idl
+
 Wed Feb 29 09:38:23 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h:
