@@ -433,6 +433,7 @@ ACE_Handle_Set_Iterator::ACE_Handle_Set_Iterator (const ACE_Handle_Set &hs)
     handle_index_ (0),
     word_num_ (-1)
 #elif defined (ACE_HAS_BIG_FD_SET)
+    handle_index_ (0),
     oldlsb_ (0),
     word_max_ (hs.max_handle_ == ACE_INVALID_HANDLE
                ? 0
