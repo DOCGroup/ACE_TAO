@@ -126,7 +126,6 @@ namespace TAO
 
       /// TCP configuration for this connection.
       TAO_IIOP_Properties *tcp_properties_;
-
     };
 
     // ****************************************************************
@@ -178,9 +177,7 @@ namespace TAO
       /// Flag that specifies whether or not setup of the SSLIOP::Current
       /// object completed for the current thread and invocation.
       bool setup_done_;
-
     };
-
   }  // End SSLIOP namespace.
 }  // End TAO namespace.
 

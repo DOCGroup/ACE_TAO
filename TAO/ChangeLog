@@ -1,3 +1,11 @@
+Wed Feb 29 09:38:23 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+        * orbsvcs/tests/AVStreams/Multicast/ftp.h:
+        * orbsvcs/tests/AVStreams/Multicast/ftp.cpp:
+          Fixed coverity error
+
 Wed Feb 29 07:21:40 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Compression/bzip2/Bzip2Compressor.cpp:

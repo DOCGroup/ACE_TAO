@@ -42,7 +42,6 @@ public:
   virtual int set_protocol_object (const char *flowname,
                                    TAO_AV_Protocol_Object *object);
 protected:
-  //  FTP_Client_Flow_Handler *handler_;
   FTP_Client_Callback *callback_;
 };
 
