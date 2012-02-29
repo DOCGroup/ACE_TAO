@@ -1,3 +1,10 @@
+Wed Feb 29 07:25:21 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Handle_Set.cpp:
+        * ace/Select_Reactor_Base.cpp:
+        * ace/Service_Types.cpp:
+          Fixed coverity errors
+
 Tue Feb 28 14:35:36 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Process.cpp:
