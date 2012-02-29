@@ -3,7 +3,7 @@
 #include "ftp.h"
 
 FTP_Client_Callback::FTP_Client_Callback (void)
-  :count_ (0)
+  : count_ (0)
 {
 }
 
@@ -15,6 +15,7 @@ FTP_Client_Callback::handle_end_stream (void)
 }
 
 FTP_Client_StreamEndPoint::FTP_Client_StreamEndPoint (void)
+  : callback_ (0)
 {
 
 }
