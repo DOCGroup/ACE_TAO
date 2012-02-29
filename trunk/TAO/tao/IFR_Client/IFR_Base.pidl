@@ -16,7 +16,7 @@
 #ifndef _IFR_BASE_IDL_
 #define _IFR_BASE_IDL_
 
-#include "tao/orb.idl"
+#include "tao/orb_types.pidl"
 
 module CORBA
 {
