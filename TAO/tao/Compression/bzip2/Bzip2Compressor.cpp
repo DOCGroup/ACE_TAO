@@ -20,9 +20,10 @@ Bzip2Compressor::compress (
     ::Compression::Buffer & target
   )
 {
-  unsigned int max_length =
-    static_cast <unsigned int> (source.length () * 1.01) + 600;
-  target.length (static_cast <CORBA::ULong> (max_length));
+  // Ensure maximum is at least a bit bigger than input length.
+  target.length (static_cast <CORBA::ULong> ((source.length () * 1.01) + 600));
+
+  unsigned int max_length = static_cast <unsigned int> ( target.maximum () );
 
   int const retval = ::BZ2_bzBuffToBuffCompress (reinterpret_cast <char*>(target.get_buffer ()),
                                   &max_length,
@@ -50,7 +51,7 @@ Bzip2Compressor::decompress (
   const ::Compression::Buffer & source,
   ::Compression::Buffer & target)
 {
-  unsigned int max_length = static_cast <unsigned int> (target.length ());
+  unsigned int max_length = static_cast <unsigned int> (target.maximum ());
   // todo, check 0,1 values
   int const retval = ::BZ2_bzBuffToBuffDecompress (reinterpret_cast <char*>(target.get_buffer ()),
                                  &max_length,

@@ -21,8 +21,9 @@ LzoCompressor::compress (
     ::Compression::Buffer & target)
 {
   void* wrkmem = (lzo_bytep) lzo_malloc(LZO1X_1_MEM_COMPRESS);
-  lzo_uint max_length = static_cast <lzo_uint> (source.length () * 1.1) + 12;
-  target.length (static_cast <CORBA::ULong> (max_length));
+  // Ensure maximum is at least a bit bigger than input length.
+  target.length (static_cast <CORBA::ULong> ((source.length () * 1.1) + 12));
+  lzo_uint max_length = static_cast <lzo_uint> (target.maximum ());
 
   int const retval = ::lzo1x_1_compress (
             reinterpret_cast <const unsigned char*>(source.get_buffer ()),
@@ -51,7 +52,7 @@ LzoCompressor::decompress (
   const ::Compression::Buffer & source,
   ::Compression::Buffer & target)
 {
-  lzo_uint max_length = static_cast <lzo_uint> (target.length ());
+  lzo_uint max_length = static_cast <lzo_uint> (target.maximum ());
 
   int const retval = ::lzo1x_decompress (
                                  reinterpret_cast <const unsigned char*>(source.get_buffer ()),
