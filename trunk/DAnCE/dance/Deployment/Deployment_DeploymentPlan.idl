@@ -3,7 +3,7 @@
 #ifndef DEPLOYMENT_DEPLOYMENTPLAN_IDL
 #define DEPLOYMENT_DEPLOYMENTPLAN_IDL
 
-#include "orb.idl"
+#include "tao/orb.idl"
 #include "dance/Deployment/Deployment_Base.idl"
 
 module Deployment {
