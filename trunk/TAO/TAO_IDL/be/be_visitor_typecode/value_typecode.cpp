@@ -143,10 +143,12 @@ TAO::be_visitor_value_typecode::visit_valuetype (be_valuetype * node)
 
   // ValueModifier
   //
-  // TAO doesn't support CUSTOM or TRUNCATABLE valuetypes.  Go
-  // with VM_NONE or VM_ABSTRACT.
+  // TAO doesn't support CUSTOM valuetypes.  Go
+  // with VM_TRUNCATABLE, VM_NONE or VM_ABSTRACT.
   os << "::CORBA::"
-     << (node->is_abstract () ? "VM_ABSTRACT" : "VM_NONE") << "," << be_nl;
+     << (node->is_abstract () ? "VM_ABSTRACT" :
+        (node->truncatable () ? "VM_TRUNCATABLE" :
+        "VM_NONE")) << "," << be_nl;
 
   // Concrete base type.
   AST_Type * const concrete_base =

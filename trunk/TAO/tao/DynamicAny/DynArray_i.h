@@ -46,7 +46,7 @@ class TAO_DynamicAny_Export TAO_DynArray_i
 {
 public:
   /// Constructor.
-  TAO_DynArray_i (void);
+  TAO_DynArray_i (CORBA::Boolean allow_truncation=true);
 
   /// Destructor.
   ~TAO_DynArray_i (void);

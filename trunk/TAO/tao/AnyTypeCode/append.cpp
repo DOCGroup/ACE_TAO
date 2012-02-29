@@ -1178,41 +1178,47 @@ TAO_Marshal_Value::append (CORBA::TypeCode_ptr  tc,
         }
     }
 
-  // Handle our base valuetype if any.
-  CORBA::TypeCode_var param =
-    tc->concrete_base_type ();
-
-  CORBA::TCKind const param_kind = param->kind ();
-
-  if (param_kind != CORBA::tk_null)
+  CORBA::TypeCode_var param;
+  if (CORBA::tk_value_box == tc->kind ())
     {
-      retval = this->append (param.in (),
-                             src,
-                             dest
-                            );
-
-      if (retval != TAO::TRAVERSE_CONTINUE)
-        {
-          return retval;
-        }
+      param = tc->content_type ();
+      retval = TAO_Marshal_Object::perform_append (param.in (),
+                                                   src,
+                                                   dest
+                                                   );
     }
-
-  // Number of fields in the struct.
-  const CORBA::ULong member_count =
-    tc->member_count ();
-
-  for (CORBA::ULong i = 0;
-       i < member_count && retval == TAO::TRAVERSE_CONTINUE;
-       ++i)
+  else // tc->kind () must be  tk_value  or  tk_event
     {
-      // get member type
-      param = tc->member_type (i);
+      // Handle our base valuetype if any.
+      param = tc->concrete_base_type ();
+      if (CORBA::tk_null != param->kind ())
+        {
+          retval = this->append (param.in (),
+                                 src,
+                                 dest
+                                );
+        }
 
-      retval =
-        TAO_Marshal_Object::perform_append (param.in (),
-                                            src,
-                                            dest
-                                           );
+      if (retval == TAO::TRAVERSE_CONTINUE)
+        {
+          // Number of fields in the struct.
+          const CORBA::ULong member_count =
+            tc->member_count ();
+
+          for (CORBA::ULong i = 0;
+               i < member_count && retval == TAO::TRAVERSE_CONTINUE;
+               ++i)
+            {
+              // get member type
+              param = tc->member_type (i);
+
+              retval =
+                TAO_Marshal_Object::perform_append (param.in (),
+                                                    src,
+                                                    dest
+                                                   );
+            }
+        }
     }
 
   if (retval == TAO::TRAVERSE_CONTINUE)

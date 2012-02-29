@@ -352,6 +352,7 @@ TAO/tests/DSI_AMH/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/tests/DII_AMI_Forward/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/tests/DynAny_Test/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/tests/DynUnion_Test/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
+TAO/tests/DynValue_Test/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/tests/Connection_Purging/run_test.pl: !ST !ACE_FOR_TAO
 TAO/tests/Server_Connection_Purging/run_test.pl: !Win32
 TAO/tests/LongUpcalls/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO

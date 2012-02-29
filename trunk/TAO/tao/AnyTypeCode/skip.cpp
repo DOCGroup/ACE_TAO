@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file     skip.cpp
@@ -851,7 +850,6 @@ TAO::traverse_status
 TAO_Marshal_Value::skip (CORBA::TypeCode_ptr tc, TAO_InputCDR *stream)
 {
   TAO::traverse_status retval = TAO::TRAVERSE_CONTINUE;
-  CORBA::TypeCode_var param;
 
   // Use the same method to skip over our base valuetype.
   // To achive this we'll need to distinguish between
@@ -932,32 +930,37 @@ TAO_Marshal_Value::skip (CORBA::TypeCode_ptr tc, TAO_InputCDR *stream)
 
     }
 
-  // Handle our base valuetype if any.
-  param = tc->concrete_base_type ();
+  CORBA::TypeCode_var param;
 
-  CORBA::TCKind const k = param->kind ();
-
-  if (k != CORBA::tk_null)
+  if (CORBA::tk_value_box == tc->kind ())
     {
-      retval = this->skip (param.in (), stream);
-
-      if (retval != TAO::TRAVERSE_CONTINUE)
-        {
-          return retval;
-        }
-    }
-
-  // Number of fields in the valuetype.
-  CORBA::ULong const member_count =
-    tc->member_count ();
-
-  for (CORBA::ULong i = 0;
-       i < member_count && retval == TAO::TRAVERSE_CONTINUE;
-       ++i)
-    {
-      param = tc->member_type (i);
-
+      param = tc->content_type ();
       retval = TAO_Marshal_Object::perform_skip (param.in (), stream);
+    }
+  else // tc->kind () must be  tk_value  or  tk_event
+    {
+      // Handle our base valuetype if any.
+      param = tc->concrete_base_type ();
+      if (CORBA::tk_null != param->kind ())
+        {
+          retval = this->skip (param.in (), stream);
+        }
+
+      if (retval == TAO::TRAVERSE_CONTINUE)
+        {
+          // Number of fields in the valuetype.
+          CORBA::ULong const member_count =
+            tc->member_count ();
+
+          for (CORBA::ULong i = 0;
+               i < member_count && retval == TAO::TRAVERSE_CONTINUE;
+               ++i)
+            {
+              param = tc->member_type (i);
+              retval = TAO_Marshal_Object::perform_skip (
+                         param.in (), stream);
+            }
+        }
     }
 
   if (retval == TAO::TRAVERSE_CONTINUE)

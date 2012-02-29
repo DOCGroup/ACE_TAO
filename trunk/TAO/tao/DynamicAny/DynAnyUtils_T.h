@@ -56,21 +56,32 @@ namespace TAO
   };
 
   // Used by MakeDynAnyUtils below, parameterized on the type of
-  // impl class and on {Any | TypeCode}.
+  // impl class and on {Any | TypeCode | inputCDR}.
   template<typename DA_IMPL, typename ANY_TC>
   struct CreateDynAnyUtils
   {
     static DynamicAny::DynAny_ptr
-    create_dyn_any_t (ANY_TC any_tc);
+      create_dyn_any_t (
+        ANY_TC any_tc,
+        CORBA::Boolean allow_truncation= true);
+
+    static DynamicAny::DynAny_ptr
+      create_dyn_any_t (
+        CORBA::TypeCode_ptr tc,
+        ANY_TC any_tc,
+        CORBA::Boolean allow_truncation= true);
   };
 
   // Code common to DynAnyFactory create_* calls, parameterized on
-  // {Any | TypeCode}.
+  // {Any | TypeCode | inputCDR}.
   namespace MakeDynAnyUtils
   {
     template<typename ANY_TC>
     DynamicAny::DynAny_ptr
-    make_dyn_any_t (CORBA::TypeCode_ptr tc, ANY_TC any_tc);
+      make_dyn_any_t (
+        CORBA::TypeCode_ptr tc,
+        ANY_TC any_tc,
+        CORBA::Boolean allow_truncation= true);
   }
 }
 

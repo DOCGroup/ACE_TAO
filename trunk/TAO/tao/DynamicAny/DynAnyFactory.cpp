@@ -36,7 +36,8 @@ TAO_DynAnyFactory::create_dyn_any (const CORBA::Any & value)
   return
     TAO::MakeDynAnyUtils::make_dyn_any_t<const CORBA::Any&> (
       value._tao_get_typecode (),
-      value);
+      value,
+      true );  // Allow truncation
 }
 
 DynamicAny::DynAny_ptr
@@ -47,29 +48,81 @@ TAO_DynAnyFactory::create_dyn_any_from_type_code (CORBA::TypeCode_ptr type)
   return
     TAO::MakeDynAnyUtils::make_dyn_any_t<CORBA::TypeCode_ptr> (
       type,
-      type);
+      type,
+      true );  // Allow truncation
 }
 
 DynamicAny::DynAny_ptr
 TAO_DynAnyFactory::create_dyn_any_without_truncation (
-    const CORBA::Any & /* value */)
+  const CORBA::Any &value)
 {
-  throw ::CORBA::NO_IMPLEMENT ();
+  return
+    TAO::MakeDynAnyUtils::make_dyn_any_t<const CORBA::Any&> (
+      value._tao_get_typecode (),
+      value,
+      false );  // Do NOT allow truncation
 }
 
 DynamicAny::DynAnySeq *
 TAO_DynAnyFactory::create_multiple_dyn_anys (
-    const DynamicAny::AnySeq & /* values */,
-    ::CORBA::Boolean /* allow_truncate */)
+    const DynamicAny::AnySeq &values,
+    ::CORBA::Boolean allow_truncate)
 {
-  throw ::CORBA::NO_IMPLEMENT ();
+  // NOTE: Since each any is self contained and holds a streamed
+  // representation of the DynAny contents, it is not possiable
+  // to make the collection of the anys we are creating to
+  // refer to the same duplicate DynValue if it crops up in
+  // seporate enteries of the values sequence. Internally
+  // within each any, indirection will occur if a DynValue
+  // self references with one of its own members.
+
+  const CORBA::ULong length = values.length ();
+
+  DynamicAny::DynAnySeq_var retseq;
+  ACE_NEW_THROW_EX (
+    retseq.out (),
+    DynamicAny::DynAnySeq (length),
+    CORBA::NO_MEMORY ());
+  retseq->length (length);
+
+  for (CORBA::ULong i= 0u; i < length; ++i)
+    {
+      retseq[i]=
+        (allow_truncate ?
+        this->create_dyn_any (values[i]) :
+        this->create_dyn_any_without_truncation (values[i]));
+    }
+
+  return retseq._retn ();
 }
 
 DynamicAny::AnySeq *
 TAO_DynAnyFactory::create_multiple_anys (
-    const DynamicAny::DynAnySeq & /* values */)
+    const DynamicAny::DynAnySeq &values)
 {
-  throw ::CORBA::NO_IMPLEMENT ();
+  // NOTE: Since each any is self contained and holds a streamed
+  // representation of the DynAny contents, it is not possiable
+  // to make the collection of the anys we are creating to
+  // refer to the same duplicate DynValue if it crops up in
+  // seporate enteries of the values sequence. Internally
+  // within each any, indirection will occur if a DynValue
+  // self references with one of its own members.
+
+  const CORBA::ULong length = values.length ();
+
+  DynamicAny::AnySeq_var retseq;
+  ACE_NEW_THROW_EX (
+    retseq.out (),
+    DynamicAny::AnySeq (length),
+    CORBA::NO_MEMORY ());
+  retseq->length (length);
+
+  for (CORBA::ULong i= 0u; i < length; ++i)
+    {
+      retseq[i]= *values[i]->to_any ();
+    }
+
+  return retseq._retn ();
 }
 
 // Utility function called by all the DynAny classes
