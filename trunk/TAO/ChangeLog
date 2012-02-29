@@ -1,3 +1,9 @@
+Wed Feb 29 07:21:40 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Compression/bzip2/Bzip2Compressor.cpp:
+        * tao/Compression/lzo/LzoCompressor.cpp:
+          Fixed bugs in these compressors
+
 Tue Feb 28 19:05:53 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_operation/amh_ss.cpp:
