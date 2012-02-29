@@ -165,6 +165,7 @@ ACE_Module_Type::ACE_Module_Type (void *m,
                                   u_int f,
                                   int stype)
   : ACE_Service_Type_Impl (m, m_name, f, 0, stype)
+  , link_ (0)
 {
   ACE_TRACE ("ACE_Module_Type::ACE_Module_Type");
 }
