@@ -34,6 +34,13 @@ TAO::Unknown_IDL_Type::Unknown_IDL_Type (CORBA::TypeCode_ptr tc,
     }
   catch (::CORBA::Exception const &)
     {
+      if (TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+            ACE_TEXT ("TAO (%P|%t) %N:%l ")
+            ACE_TEXT ("silent marshaling exception ")
+            ACE_TEXT ("in TAO::Unknown_IDL_Type::Unknown_IDL_Type\n")));
+        }
     }
 }
 

@@ -1682,7 +1682,17 @@ ACE_InputCDR::skip_string (void)
   ACE_CDR::ULong len = 0;
   if (this->read_ulong (len))
     {
-      if (this->rd_ptr () + len <= this->wr_ptr ())
+      if (static_cast<ACE_CDR::ULong> (~0u) == len)
+        {
+          // Indirection, next Long in stream is signed offset to actual
+          // string location (backwards in same stream from here).
+          ACE_CDR::Long offset = 0;
+          if (this->read_long (offset))
+            {
+              return true;
+            }
+        }
+      else if (this->rd_ptr () + len <= this->wr_ptr ())
         {
           this->rd_ptr (len);
           return true;

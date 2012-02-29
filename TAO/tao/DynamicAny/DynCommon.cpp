@@ -25,7 +25,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_DynCommon::TAO_DynCommon (void)
+TAO_DynCommon::TAO_DynCommon (CORBA::Boolean allow_truncation)
+  : allow_truncation_ (allow_truncation)
 {
 }
 
@@ -334,7 +335,7 @@ TAO_DynCommon::insert_val (CORBA::ValueBase *value)
   if (this->has_components_)
     {
       DynamicAny::DynAny_var cc =
-        this->check_component ();
+        this->check_component (true);
 
       cc->insert_val (value);
     }
@@ -668,7 +669,8 @@ TAO_DynCommon::get_dyn_any (void)
   return
     TAO::MakeDynAnyUtils::make_dyn_any_t<const CORBA::Any&> (
       any.in ()._tao_get_typecode (),
-      any.in ());
+      any.in (),
+      this->allow_truncation_ );
 }
 
 CORBA::ValueBase *
@@ -682,7 +684,7 @@ TAO_DynCommon::get_val (void)
   if (this->has_components_)
     {
       DynamicAny::DynAny_var cc =
-        this->check_component ();
+        this->check_component (true);
 
       return cc->get_val ();
     }
@@ -800,7 +802,8 @@ TAO_DynCommon::copy (void)
   DynamicAny::DynAny_ptr retval =
     TAO::MakeDynAnyUtils::make_dyn_any_t<const CORBA::Any&> (
       any.in ()._tao_get_typecode (),
-      any.in ());
+      any.in (),
+      this->allow_truncation_ );
 
   return retval;
 }
@@ -1168,9 +1171,15 @@ TAO_DynCommon::set_flag (DynamicAny::DynAny_ptr component,
       TAO::DynAnyFlagUtils<TAO_DynUnion_i>::set_flag_t (component,
                                                         destroying);
       break;
-    case CORBA::tk_fixed:
     case CORBA::tk_value:
+      TAO::DynAnyFlagUtils<TAO_DynValue_i>::set_flag_t (component,
+                                                        destroying);
+      break;
     case CORBA::tk_value_box:
+      TAO::DynAnyFlagUtils<TAO_DynValueBox_i>::set_flag_t (component,
+                                                           destroying);
+      break;
+    case CORBA::tk_fixed:
       throw ::CORBA::NO_IMPLEMENT ();
     default:
       TAO::DynAnyFlagUtils<TAO_DynAny_i>::set_flag_t (component,
@@ -1180,7 +1189,7 @@ TAO_DynCommon::set_flag (DynamicAny::DynAny_ptr component,
 }
 
 DynamicAny::DynAny_ptr
-TAO_DynCommon::check_component (void)
+TAO_DynCommon::check_component (CORBA::Boolean isValueType)
 {
   if (this->current_position_ == -1)
     {
@@ -1192,31 +1201,37 @@ TAO_DynCommon::check_component (void)
 
   CORBA::TypeCode_var tc = cc->type ();
 
-  CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc.in ());
-
   // We are here because we are a component that is the target of
   // an insert_*() call on our container. It is
   // illegal to insert anything into a component that itself has
   // components.
-  switch (kind)
-  {
+  switch (TAO_DynAnyFactory::unalias (tc.in ()))
+    {
     case CORBA::tk_array:
     case CORBA::tk_except:
     case CORBA::tk_struct:
     case CORBA::tk_union:
       throw DynamicAny::DynAny::TypeMismatch ();
-    case CORBA::tk_sequence:
-      if (TAO_DynCommon::is_basic_type_seq (tc.in ()))
-        {
-          return cc._retn ();
-        }
-      else
+
+    case CORBA::tk_value:
+      if (!isValueType)
         {
           throw DynamicAny::DynAny::TypeMismatch ();
         }
+      break;
+
+    case CORBA::tk_sequence:
+      if (!TAO_DynCommon::is_basic_type_seq (tc.in ()))
+        {
+          throw DynamicAny::DynAny::TypeMismatch ();
+        }
+      break;
+
     default:
-      return cc._retn ();
-  }
+      break;
+    }
+
+  return cc._retn ();
 }
 
 void

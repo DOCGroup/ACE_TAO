@@ -17,7 +17,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_DynAny_i::TAO_DynAny_i (void)
+TAO_DynAny_i::TAO_DynAny_i (CORBA::Boolean allow_truncation)
+  : TAO_DynCommon (allow_truncation)
 {
 }
 
@@ -381,12 +382,14 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
         DynamicAny::DynAny_var rhs_dyn =
           TAO::MakeDynAnyUtils::make_dyn_any_t<const CORBA::Any&> (
             rhs_v->_tao_get_typecode (),
-            *rhs_v);
+            *rhs_v,
+            this->allow_truncation_ );
 
         DynamicAny::DynAny_var lhs_dyn =
           TAO::MakeDynAnyUtils::make_dyn_any_t<const CORBA::Any&> (
             lhs_v->_tao_get_typecode (),
-            *lhs_v);
+            *lhs_v,
+            this->allow_truncation_ );
 
         CORBA::Boolean const b = rhs_dyn->equal (lhs_dyn.in ());
 

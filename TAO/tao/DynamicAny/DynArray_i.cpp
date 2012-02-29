@@ -13,7 +13,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_DynArray_i::TAO_DynArray_i (void)
+TAO_DynArray_i::TAO_DynArray_i (CORBA::Boolean allow_truncation)
+  : TAO_DynCommon (allow_truncation)
 {
 }
 
@@ -91,7 +92,8 @@ TAO_DynArray_i::init (const CORBA::Any & any)
       this->da_members_[i] =
         TAO::MakeDynAnyUtils::make_dyn_any_t<const CORBA::Any&> (
           field_any._tao_get_typecode (),
-          field_any);
+          field_any,
+          this->allow_truncation_ );
 
       // Move to the next field in the CDR stream.
       (void) TAO_Marshal_Object::perform_skip (field_tc.in (), &cdr);
@@ -125,7 +127,8 @@ TAO_DynArray_i::init (CORBA::TypeCode_ptr tc)
       this->da_members_[i] =
         TAO::MakeDynAnyUtils::make_dyn_any_t<CORBA::TypeCode_ptr> (
           elemtype.in (),
-          elemtype.in ());
+          elemtype.in (),
+          this->allow_truncation_ );
     }
 }
 
@@ -243,7 +246,8 @@ TAO_DynArray_i::set_elements (const DynamicAny::AnySeq & value)
           this->da_members_[i] =
             TAO::MakeDynAnyUtils::make_dyn_any_t<const CORBA::Any&> (
               value[i]._tao_get_typecode (),
-              value[i]);
+              value[i],
+              this->allow_truncation_ );
         }
       else
         {
@@ -383,7 +387,8 @@ TAO_DynArray_i::from_any (const CORBA::Any& any)
           this->da_members_[i] =
             TAO::MakeDynAnyUtils::make_dyn_any_t<const CORBA::Any&> (
               field_any._tao_get_typecode (),
-              field_any);
+              field_any,
+              this->allow_truncation_ );
 
           // Move to the next field in the CDR stream.
           (void) TAO_Marshal_Object::perform_skip (field_tc.in (), &cdr);
