@@ -23,16 +23,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-#define DEFAULT_INDIRECTION_MAP_SIZE 10
-
-#define VERIFY_MAP(CDR, MAPNAME, MAPCLASSNAME)                                               \
-  if (strm.get_##MAPNAME ().is_nil ())                                                       \
-    {                                                                                        \
-      CDR::MAPCLASSNAME##_Handle handle (                                                    \
-          new CDR::RC_##MAPCLASSNAME (new CDR::MAPCLASSNAME (DEFAULT_INDIRECTION_MAP_SIZE)));\
-      strm.set_##MAPNAME (handle);                                                           \
-    }
-
 // Static operations in namespace CORBA.
 
 void
@@ -176,16 +166,16 @@ CORBA::ValueBase::_tao_unmarshal (TAO_InputCDR &strm,
   //  new_object->_tao_unmarshal_v ()
   //  new_object->_tao_unmarshal_post ()
 
-  CORBA::Boolean is_null_object = false;
-  CORBA::Boolean is_indirected = false;
-  CORBA::Boolean const retval =
-    CORBA::ValueBase::_tao_unmarshal_pre (strm,
-                                          new_object,
-                                          0,
-                                          is_null_object,
-                                          is_indirected);
+  CORBA::Boolean
+    is_null_object = false,
+    is_indirected = false;
 
-  if (!retval)
+  if (!CORBA::ValueBase::_tao_unmarshal_pre (
+         strm,
+         new_object,
+         0, // repo_id to be obtained from strm
+         is_null_object,
+         is_indirected  ))
     {
       return false;
     }
@@ -195,30 +185,20 @@ CORBA::ValueBase::_tao_unmarshal (TAO_InputCDR &strm,
     return true;
   }
 
-  // In this case, the codebase url and repo id is read,
-  // so continue unmarshal values.
-  if (new_object && ! new_object->_tao_unmarshal_v (strm))
-    {
-      return false;
-    }
-
-  return retval;
+  // If we have now obtained the ValueType
+  // continue by unmarshalling the values into it.
+  return (new_object) ?
+    new_object->_tao_unmarshal_v (strm) : false;
 }
 
-
 CORBA::Boolean
-CORBA::ValueBase::_tao_unmarshal_pre (TAO_InputCDR &strm,
-                                      CORBA::ValueBase *&valuetype,
-                                      const char * const repo_id,
-                                      CORBA::Boolean& is_null_object,
-                                      CORBA::Boolean& is_indirected)
+CORBA::ValueBase::_tao_unmarshal_pre (
+  TAO_InputCDR &strm,
+  CORBA::ValueBase *&valuetype,
+  const char *const fallback_repo_id,
+  CORBA::Boolean &is_null_object,
+  CORBA::Boolean &is_indirected)
 {
-  void* pos = strm.rd_ptr();
-
-  // Value factories are reference counted.  When we get a new value
-  // factory from the ORB, its reference count is increased.
-  CORBA::ValueFactory_var factory;
-
   // %! yet much to do ... look for +++ !
 
   // 1. Get the <value-tag> (else it may be <indirection-tag> or <null-ref>).
@@ -241,152 +221,214 @@ CORBA::ValueBase::_tao_unmarshal_pre (TAO_InputCDR &strm,
   //    from the <value-tag>, then use the repository id parameter
   //    (it _must_ be right).
 
-  CORBA::Long valuetag;
-  Repository_Id_List ids;
-  ACE_CString codebase_url;
+  CORBA::Boolean is_chunked = false;
 
+  // Save the position of the start of the ValueType
+  // to allow caching for later indirection.
+  if (strm.align_read_ptr (ACE_CDR::LONG_SIZE))
+    {
+      return false;
+    }
+  void *const start_of_valuetype = strm.rd_ptr();
+
+  Repository_Id_List ids;
+  CORBA::Boolean result =
+    CORBA::ValueBase::_tao_unmarshal_header (
+      strm, fallback_repo_id, ids,
+      is_null_object, is_indirected, is_chunked);
+
+  if (!result || is_null_object)
+    {
+      valuetype = 0;
+      return result;
+    }
+  if (is_indirected)
+    {
+      return _tao_unmarshal_value_indirection (strm, valuetype);
+    }
+
+  CORBA::ValueBase::_tao_unmarshal_find_factory (
+    strm, start_of_valuetype, valuetype, ids, is_chunked);
+
+  return true;
+}
+
+CORBA::Boolean
+CORBA::ValueBase::_tao_unmarshal_header (
+  TAO_InputCDR &strm,
+  const char *const fallback_repo_id,
+  Repository_Id_List &ids,
+  CORBA::Boolean &is_null_object,
+  CORBA::Boolean &is_indirected,
+  CORBA::Boolean &is_chunked)
+{
   is_indirected = false;
   is_null_object = false;
+  is_chunked = false;
 
-  if (! strm.read_long (valuetag))
+  CORBA::Long valuetag;
+  if (!strm.read_long (valuetag))
     {
       return false;
     }
 
-  if (TAO_OBV_GIOP_Flags::is_indirection_tag (valuetag))
-    {
-      is_indirected = true;
-
-      // value is redirected
-      return _tao_unmarshal_value_indirection (strm, valuetype);
-    }
+  is_chunked = TAO_OBV_GIOP_Flags::is_chunked (valuetag);
 
   if (TAO_OBV_GIOP_Flags::is_null_ref (valuetag))
     {
       // null reference is unmarshalled.
-      valuetype = 0;
       is_null_object = true;
+      return true;
+    }
+
+  if (TAO_OBV_GIOP_Flags::is_indirection_tag (valuetag))
+    {
+      // value is redirected
+      is_indirected = true;
       return true;
     }
 
   if (TAO_OBV_GIOP_Flags::has_codebase_url (valuetag))
     {
+      // We don't do anything with this url, but it needs
+      // to be read and ignored.
       ACE_CString codebase_url;
-      if (! _tao_read_codebase_url (strm, codebase_url))
+      if (!_tao_read_codebase_url (strm, codebase_url))
         {
           return false;
         }
     }
+
+  // Obtain the repo_id(s) of the type we are reading
 
   if (TAO_OBV_GIOP_Flags::has_single_type_info (valuetag))
     {
       ACE_CString id;
-      if (! _tao_read_repository_id(strm, id))
+      if (!_tao_read_repository_id(strm, id))
         {
           return false;
         }
-
       ids.push_back (id);
     }
   else if (TAO_OBV_GIOP_Flags::has_list_type_info (valuetag))
     {
-      if (! _tao_read_repository_id_list(strm, ids))
+      if (!_tao_read_repository_id_list(strm, ids))
         {
           return false;
         }
     }
   else if (TAO_OBV_GIOP_Flags::has_no_type_info (valuetag))
     {
-      ids.push_back (repo_id);
+      if (fallback_repo_id)
+        {
+          ids.push_back (fallback_repo_id);
+        }
+      else
+        {
+          ACE_ERROR ((
+            LM_ERROR,
+            ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_unmarshal_pre, ")
+            ACE_TEXT ("unknown repo_id\n") ));
+          return false;
+        }
     }
   else
     {
-      if (TAO_debug_level > 0)
+      if (TAO_debug_level)
         {
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("TAO (%P|%t) - ValueBase::_tao_unmarshal_pre, ")
-                      ACE_TEXT ("unknown value tag: %x\n"),
-                      valuetag));
+          ACE_ERROR ((
+            LM_ERROR,
+            ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_unmarshal_pre, ")
+            ACE_TEXT ("unknown value tag: %x\n"),
+            valuetag  ));
         }
 
-      return 0;
+      return false;
     }
+
+  return true;
+}
+
+void
+CORBA::ValueBase::_tao_unmarshal_find_factory (
+  TAO_InputCDR &strm,
+  void *const start_of_valuetype,
+  CORBA::ValueBase *&valuetype,
+  Repository_Id_List &ids,
+  CORBA::Boolean &is_chunked)
+{
+  valuetype = 0;
 
   TAO_ORB_Core *orb_core = strm.orb_core ();
-
-  if (orb_core == 0)
+  if (!orb_core)
     {
       orb_core = TAO_ORB_Core_instance ();
-
-      if (TAO_debug_level > 0)
+      if (TAO_debug_level)
         {
-          ACE_DEBUG ((LM_WARNING,
-                      ACE_TEXT ("TAO (%P|%t) - ValueBase::_tao_unmarshal_pre, ")
-                      ACE_TEXT ("WARNING: extracting valuetype using ")
-                      ACE_TEXT ("default ORB_Core\n")));
+          ACE_DEBUG ((
+            LM_WARNING,
+            ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_unmarshal_find_factory, ")
+            ACE_TEXT ("WARNING: extracting valuetype using default ORB_Core\n") ));
         }
     }
-
-  CORBA::Boolean require_truncation = false;
-  CORBA::Boolean const chunking =
-    TAO_OBV_GIOP_Flags::is_chunked (valuetag);
-  CORBA::ULong const num_ids = ids.size ();
 
   // Find the registered factory for this unmarshalling valuetype. If any
   // factory for the valuetype in its truncatable derivation hierarchy
   // is registered, the factory is used to create value for unmarshalling.
-  for (CORBA::ULong i = 0; i < num_ids; ++i)
+  // Value factories are reference counted. When we get a new value factory
+  // from the ORB, its reference count is increased.
+
+  CORBA::ValueFactory_var factory;
+  CORBA::Boolean requires_truncation = false;
+  const CORBA::ULong num_ids = ids.size ();
+  const char *id = (num_ids) ? ids[0].c_str () : "{Null}";
+  for (CORBA::ULong i = 0u; i < num_ids; ++i)
     {
       factory = orb_core->orb ()->lookup_value_factory (ids[i].c_str ());
-
       if (factory.in() != 0)
         {
-          if (i != 0 && chunking)
-            {
-              require_truncation = true;
-            }
+          id = ids[i].c_str ();
+          requires_truncation = (i != 0u);
           break;
         }
     }
 
-  if (factory.in() == 0)
+  // Obtain the actual ValueType from the factory
+  if (factory.in() == 0 || !(valuetype = factory->create_for_unmarshal ()))
     {
-      if (TAO_debug_level > 0)
+      if (TAO_debug_level)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("TAO (%P|%t) - ValueBase::_tao_unmarshal_pre, ")
-                      ACE_TEXT ("OBV factory is null, id = %C\n"),
-                      repo_id));
+            ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_unmarshal_find_factory, ")
+            ACE_TEXT ("OBV factory is null, id=%C\n"),
+            id));
         }
 
       throw ::CORBA::MARSHAL (CORBA::OMGVMCID | 1, CORBA::COMPLETED_MAYBE);
     }
 
-  valuetype = factory->create_for_unmarshal ();
-
-  if (require_truncation)
+  if (requires_truncation)
     {
       valuetype->truncation_hook ();
     }
+  valuetype->chunking_ = is_chunked;
 
-  if (valuetype == 0)
+  // Cache the start of this ValueType for later possiable indirection
+  VERIFY_MAP (TAO_InputCDR, value_map, Value_Map);
+  if (strm.get_value_map ()->get()->bind (start_of_valuetype, valuetype) != 0)
     {
-      return 0;  // %! except.?
+      ACE_DEBUG ((LM_DEBUG,
+        ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_unmarshal_find_factory, ")
+        ACE_TEXT ("Failed to bound value %x=%x, id=%C\n"),
+        start_of_valuetype, valuetype, id ));
     }
-
-  valuetype->chunking_ = chunking;
-
-  VERIFY_MAP(TAO_InputCDR, value_map, Value_Map)
-
-  if (strm.get_value_map ()->get()->bind (pos, valuetype ) != 0)
-      throw CORBA::INTERNAL ();
-  else if (TAO_debug_level > 0)
-  {
-    ACE_DEBUG ((LM_DEBUG,
-      ACE_TEXT ("TAO (%P|%t) - ValueBase::_tao_unmarshal_pre, bound value %X - %X\n"),
-      pos, valuetype));
-  }
-  return true;
+  else if (TAO_debug_level)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+        ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_unmarshal_find_factory, ")
+        ACE_TEXT ("bound value %x=%x, id=%C\n"),
+        start_of_valuetype, valuetype, id ));
+    }
 }
 
 CORBA::Boolean
@@ -442,7 +484,7 @@ CORBA::ValueBase::_tao_validate_box_type (TAO_InputCDR &strm,
   if (!TAO_OBV_GIOP_Flags::is_value_tag (value_tag))
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - CORBA::ValueBase::_tao_validate_box_type, ")
+                  ACE_TEXT ("TAO (%P|%t) - %N:%l CORBA::ValueBase::_tao_validate_box_type, ")
                   ACE_TEXT ("not value_tag\n")));
       return false;
     }
@@ -526,25 +568,30 @@ CORBA::ValueBase::_tao_unmarshal_value_indirection (TAO_InputCDR &strm,
 
   void* pos = strm.rd_ptr () + offset - sizeof (CORBA::Long);
 
-  if (TAO_debug_level > 9)
+  if (9 < TAO_debug_level)
     {
       ACE_DEBUG ((LM_DEBUG,
-        ACE_TEXT ("TAO (%P|%t) ValueBase::_tao_unmarshal_value_indirection, pos %X \n"), pos));
+        ACE_TEXT ("TAO (%P|%t) ValueBase::_tao_unmarshal_value_indirection, pos %x\n"), pos));
       TAO_InputCDR::Value_Map* map = strm.get_value_map()->get ();
       for (TAO_InputCDR::Value_Map::ITERATOR it = map->begin (); it != map->end (); ++ it)
         {
-          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) ValueBase::_tao_unmarshal_value_indirection, %X - %X \n"), it->ext_id_, it->int_id_));
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) ValueBase::_tao_unmarshal_value_indirection, %x=%x\n"), it->ext_id_, it->int_id_));
         }
     }
   void * v = 0;
   if (strm.get_value_map()->get()->find (pos, v) != 0)
     {
+      ACE_DEBUG ((LM_DEBUG,
+        ACE_TEXT ("TAO (%P|%t) - %N:%l ")
+        ACE_TEXT ("ValueBase::_tao_unmarshal_value_indirection, ")
+        ACE_TEXT ("did not find %x in map %x\n"),
+        pos, (void *) strm.get_value_map()->get()));
       throw CORBA::INTERNAL ();
     }
-  else if (TAO_debug_level > 0)
+  else if (TAO_debug_level)
     {
       ACE_DEBUG ((LM_DEBUG,
-        ACE_TEXT ("TAO (%P|%t) - ValueBase::_tao_unmarshal_value_indirection, found %X - %X\n"),
+        ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_unmarshal_value_indirection, found %x=%x\n"),
         pos,v));
     }
 
@@ -568,10 +615,10 @@ CORBA::ValueBase::_tao_unmarshal_repo_id_indirection (TAO_InputCDR &strm,
     {
       throw CORBA::INTERNAL ();
     }
-  else if (TAO_debug_level > 0)
+  else if (TAO_debug_level)
     {
       ACE_DEBUG ((LM_DEBUG,
-        ACE_TEXT ("TAO (%P|%t) - ValueBase::_tao_unmarshal_repo_id_indirection, found %X - %C\n"),
+        ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_unmarshal_repo_id_indirection, found %x=%C\n"),
         pos, id.c_str ()));
     }
 
@@ -594,10 +641,10 @@ CORBA::ValueBase::_tao_unmarshal_codebase_url_indirection (TAO_InputCDR &strm,
     {
       throw CORBA::INTERNAL ();
     }
-  else if (TAO_debug_level > 0)
+  else if (TAO_debug_level)
     {
       ACE_DEBUG ((LM_DEBUG,
-        ACE_TEXT ("TAO (%P|%t) - ValueBase::_tao_unmarshal_codebase_url_indirection, found %X - %C\n"),
+        ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_unmarshal_codebase_url_indirection, found %x=%C\n"),
         pos, codebase_url.c_str ()));
     }
 
@@ -639,29 +686,29 @@ CORBA::ValueBase::_tao_write_special_value (TAO_OutputCDR &strm,
 #ifdef TAO_HAS_VALUETYPE_OUT_INDIRECTION
     // value indirection
 
-    VERIFY_MAP(TAO_OutputCDR, value_map, Value_Map)
-
+    VERIFY_MAP (TAO_OutputCDR, value_map, Value_Map);
     char* pos = 0;
     if (strm.get_value_map ()->get()->find (
       reinterpret_cast<void*>(const_cast <CORBA::ValueBase *> (value)), pos) == 0)
     {
-      if (TAO_debug_level > 0)
+      if (TAO_debug_level)
         {
           ACE_DEBUG ((LM_DEBUG,
-            ACE_TEXT ("(%P|%t)ValueBase::_tao_write_special_value, found value %X - %X\n"),
+            ACE_TEXT ("(%P|%t)ValueBase::_tao_write_special_value, found value %x=%x\n"),
             value, pos));
         }
 
-      if (! strm.write_long (TAO_OBV_GIOP_Flags::Indirection_tag))
+      if (!strm.write_long (TAO_OBV_GIOP_Flags::Indirection_tag))
         {
           return false;
         }
 
-      CORBA::Long const offset = - strm.offset (pos);
-      if (TAO_debug_level > 0)
+      CORBA::Long const offset= -strm.offset (pos);
+      if (TAO_debug_level)
         {
           ACE_DEBUG ((LM_DEBUG,
-            ACE_TEXT ("TAO (%P|%t) - ValueBase::_tao_write_special_value, indirection %d\n"), offset));
+            ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_write_special_value, indirection %d=%x\n"),
+            offset, (void *)(strm.current()->wr_ptr () + offset) ));
         }
 
       return strm.write_long (offset);
@@ -677,10 +724,10 @@ CORBA::ValueBase::_tao_write_special_value (TAO_OutputCDR &strm,
         {
           throw CORBA::INTERNAL ();
         }
-      else if (TAO_debug_level > 0)
+      else if (TAO_debug_level)
         {
           ACE_DEBUG ((LM_DEBUG,
-            ACE_TEXT ("TAO (%P|%t) - ValueBase::_tao_marshal, bound value %X - %X \n"),
+            ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_marshal, bound value %x=%x\n"),
             value, strm.current()->wr_ptr()));
         }
 
@@ -798,30 +845,25 @@ CORBA::ValueBase::_tao_write_repository_id (TAO_OutputCDR &strm,
 {
 #ifdef TAO_HAS_VALUETYPE_OUT_INDIRECTION
 
-  VERIFY_MAP(TAO_OutputCDR, repo_id_map, Repo_Id_Map)
-
-  if (strm.get_repo_id_map().is_nil ())
-    {
-      throw CORBA::INTERNAL ();
-    }
-
+  VERIFY_MAP (TAO_OutputCDR, repo_id_map, Repo_Id_Map);
   char* pos = 0;
   if (strm.get_repo_id_map ()->get()->find (id, pos) == 0)
   {
-    if (! strm.write_long (TAO_OBV_GIOP_Flags::Indirection_tag))
-      return 0;
-
-    CORBA::Long offset = - strm.offset (pos);
-
-    if (TAO_debug_level > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-        ACE_TEXT ("TAO (%P|%t) - ValueBase::_tao_write_repository_id,  id %C indirection %d\n"),
-        id.c_str(), offset));
-    }
-
-    if (! strm.write_long (offset))
-      return false;
+    if (!strm.write_long (TAO_OBV_GIOP_Flags::Indirection_tag))
+      {
+        return false;
+      }
+    CORBA::Long offset= -strm.offset (pos);
+    if (TAO_debug_level)
+      {
+        ACE_DEBUG ((LM_DEBUG,
+          ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_write_repository_id,  id %C indirection %d\n"),
+          id.c_str(), offset));
+      }
+    if (!strm.write_long (offset))
+      {
+        return false;
+      }
   }
   else
   {
@@ -829,23 +871,26 @@ CORBA::ValueBase::_tao_write_repository_id (TAO_OutputCDR &strm,
       {
         throw CORBA::INTERNAL ();
       }
-
     if (strm.get_repo_id_map ()->get ()->bind (id, strm.current()->wr_ptr ()) != 0)
       {
         throw CORBA::INTERNAL ();
       }
-    else if (TAO_debug_level > 0)
+    if (TAO_debug_level)
       {
         ACE_DEBUG ((LM_DEBUG,
-          ACE_TEXT ("TAO (%P|%t) - ValueBase::_tao_write_repository_id, bound %C - %X\n"),
+          ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_write_repository_id, bound %C - %x\n"),
           id.c_str (), strm.current()->wr_ptr ()));
       }
     if (! strm.write_string (id.c_str ()))
-      return false;
+      {
+        return false;
+      }
   }
 #else
   if (! strm.write_string (id.c_str ()))
-    return 0;
+    {
+      return 0;
+    }
 #endif
 
   return 1;
@@ -1007,7 +1052,7 @@ TAO_ChunkInfo::handle_chunking (TAO_InputCDR &strm)
       if (-tag > this->value_nesting_level_)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("TAO (%P|%t) - TAO_ChunkInfo::handle_chunking, received end tag ")
+                             ACE_TEXT ("TAO (%P|%t) - %N:%l TAO_ChunkInfo::handle_chunking, received end tag ")
                              ACE_TEXT ("%d > value_nesting_level %d\n"),
                              -tag,
                              this->value_nesting_level_),
@@ -1128,11 +1173,7 @@ CORBA::ValueBase::_tao_read_repository_id (TAO_InputCDR& strm,
       return 0;
     }
 
-  VERIFY_MAP(TAO_InputCDR, repo_id_map, Repo_Id_Map)
-
-  if (strm.get_repo_id_map ().is_nil ())
-    throw CORBA::INTERNAL ();
-
+  VERIFY_MAP (TAO_InputCDR, repo_id_map, Repo_Id_Map);
   char * pos = strm.rd_ptr();
 
   // 'length' may not be the repo id length - it could be the
@@ -1165,24 +1206,29 @@ CORBA::ValueBase::_tao_read_repository_id (TAO_InputCDR& strm,
   ACE_CString mapped_id;
   if (strm.get_repo_id_map ()->get()->find (pos, mapped_id) == 0)
   {
-    if (TAO_debug_level > 0)
+    if (TAO_debug_level)
     {
       ACE_DEBUG ((LM_DEBUG,
-        ACE_TEXT ("TAO (%P|%t) - ValueBase::_tao_read_repository_id, found %X - %C\n"),
+        ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_read_repository_id, found %x=%C\n"),
         pos, mapped_id.c_str ()));
     }
 
     if (ACE_OS::strcmp (mapped_id.c_str (), id.c_str ()) != 0)
-      throw CORBA::INTERNAL ();
+      {
+        ACE_DEBUG ((LM_DEBUG,
+          ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_read_repository_id, found %C in map for %C\n"),
+          mapped_id.c_str (), id.c_str ()));
+        throw CORBA::INTERNAL ();
+      }
   }
   else if (strm.get_repo_id_map ()->get ()->bind (pos, id) != 0)
   {
     throw CORBA::INTERNAL ();
   }
-  else if (TAO_debug_level > 0)
+  else if (TAO_debug_level)
   {
     ACE_DEBUG ((LM_DEBUG,
-      ACE_TEXT ("TAO (%P|%t) - ValueBase::_tao_read_repository_id, bound %X - %C\n"),
+      ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_read_repository_id, bound %x=%C\n"),
       pos, id.c_str ()));
   }
 
@@ -1209,8 +1255,7 @@ CORBA::ValueBase::_tao_read_codebase_url (TAO_InputCDR& strm,
       return 0;
     }
 
-  VERIFY_MAP(TAO_InputCDR, codebase_url_map, Codebase_URL_Map)
-
+  VERIFY_MAP (TAO_InputCDR, codebase_url_map, Codebase_URL_Map);
   char * pos = strm.rd_ptr();
 
   // 'length' may not be the codebase url length - it could be the
@@ -1243,10 +1288,10 @@ CORBA::ValueBase::_tao_read_codebase_url (TAO_InputCDR& strm,
   ACE_CString mapped_url;
   if (strm.get_codebase_url_map ()->get()->find (pos, mapped_url) == 0)
   {
-    if (TAO_debug_level > 0)
+    if (TAO_debug_level)
     {
       ACE_DEBUG ((LM_DEBUG,
-        ACE_TEXT ("TAO (%P|%t) - ValueBase::_tao_read_codebase_url, found %X - %C\n"),
+        ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_read_codebase_url, found %x=%C\n"),
         pos, mapped_url.c_str ()));
     }
     if (ACE_OS::strcmp (mapped_url.c_str (), codebase_url.c_str ()) != 0)
@@ -1258,10 +1303,10 @@ CORBA::ValueBase::_tao_read_codebase_url (TAO_InputCDR& strm,
   }
   else
   {
-    if (TAO_debug_level > 0)
+    if (TAO_debug_level)
     {
       ACE_DEBUG ((LM_DEBUG,
-        ACE_TEXT ("TAO (%P|%t) - ValueBase::_tao_read_codebase_url, bound %X - %C\n"),
+        ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_read_codebase_url, bound %x=%C\n"),
         pos, codebase_url.c_str ()));
     }
   }

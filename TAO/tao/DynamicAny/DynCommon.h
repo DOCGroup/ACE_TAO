@@ -34,7 +34,7 @@ class TAO_DynamicAny_Export TAO_DynCommon
 {
 public:
   /// Constructor.
-  TAO_DynCommon (void);
+  TAO_DynCommon (CORBA::Boolean allow_truncation);
 
   /// Destructor.
   virtual ~TAO_DynCommon (void);
@@ -202,7 +202,7 @@ public:
 
   // Utility functions.
 
-  DynamicAny::DynAny_ptr check_component (void);
+  DynamicAny::DynAny_ptr check_component (CORBA::Boolean isValueType = false);
 
   void check_type (CORBA::TypeCode_ptr tc);
 
@@ -244,6 +244,9 @@ protected:
   /// Gets a value only for basic types, but used in insert_*
   /// and get_*, defined in this base class.
   CORBA::Any any_;
+
+  /// Are we allowed to truncate any valuetypes in our hyarchy?
+  CORBA::Boolean allow_truncation_;
 
 private:
   // Utility functions used by insert_* and get_*.

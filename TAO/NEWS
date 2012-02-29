@@ -3,6 +3,27 @@ USER VISIBLE CHANGES BETWEEN TAO-2.0.8 and TAO-2.1.0
 
 . Added new rle compressor and enabled ZIOP by default
 
+. Implimented DynValue, DynValueBox and DynValueCommon and their
+  creation/use by TAO_DynAnyFactory::
+    create_dyn_any (), create_dyn_any_from_type_code (),
+    create_dyn_any_without_truncation (), create_multiple_dyn_anys ()
+    and create_multiple_anys ().
+
+. Correct the interaction of CORBA::ValueTypes and CORBA::Anys.
+    The insertion into an Any of a ValueType base pointer
+    used to set the Anys typecode to the fully derived valuetype.
+    This allowed the any to be marshaled correctly sending the
+    derived typecode and value over the wire. However it also
+    stopped the user from extracting the valuetype from the any
+    as the typecode for, or the actual pointer type being used for,
+    the extraction couldn't match the any's internal two different
+    types. The any's typecode is now simply set to match the base
+    pointer which allows for the correct insertion/extraction from
+    the any, whilst the marshalling code for anys containing
+    valuetypes now sends the fully derived typecode of the fully
+    derived data it is marshalling instead of the anys embedded
+    (possiably base valuetype) typecode.
+
 USER VISIBLE CHANGES BETWEEN TAO-2.0.7 and TAO-2.0.8
 ====================================================
 

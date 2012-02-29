@@ -1,3 +1,8 @@
+Wed Feb 29 16:30:00 UTC 2012  Simon Massey <simon dot massey at prismtech dot com>
+
+        * ace/CDR_Stream.cpp:
+          Allow strings to be indirected (required for ValueType RepoIDs).
+
 Wed Feb 29 07:25:21 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Handle_Set.cpp:

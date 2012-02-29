@@ -85,11 +85,9 @@ CORBA::TypeCode::equivalent (TypeCode_ptr tc) const
     const_cast<CORBA::TypeCode_ptr> (this);
 
   CORBA::TypeCode_var unaliased_this = TAO::unaliased_typecode (mutable_this);
-
   CORBA::TypeCode_var unaliased_tc = TAO::unaliased_typecode (tc);
 
   CORBA::TCKind const this_kind = unaliased_this->kind ();
-
   CORBA::TCKind const tc_kind = unaliased_tc->kind ();
 
   if (tc_kind != this_kind)
@@ -98,17 +96,12 @@ CORBA::TypeCode::equivalent (TypeCode_ptr tc) const
   try
     {
       char const * const this_id = unaliased_this->id ();
-
       char const * const tc_id = unaliased_tc->id ();
 
-      if (ACE_OS::strlen (this_id) == 0
-          || ACE_OS::strlen (tc_id) == 0)
+      if (ACE_OS::strlen (this_id) != 0
+          && ACE_OS::strlen (tc_id) != 0)
         {
-          return unaliased_this->equivalent_i (unaliased_tc.in ());
-        }
-      else if (ACE_OS::strcmp (this_id, tc_id) != 0)
-        {
-          return false;
+          return ACE_OS::strcmp (this_id, tc_id) == 0;
         }
     }
   catch (const ::CORBA::TypeCode::BadKind&)
@@ -116,10 +109,9 @@ CORBA::TypeCode::equivalent (TypeCode_ptr tc) const
       // Some TypeCodes do not support the id() operation.  Ignore the
       // failure, and continue equivalence verification using TypeCode
       // subclass-specific techniques.
-      return unaliased_this->equivalent_i (unaliased_tc.in ());
     }
 
-  return true;
+  return unaliased_this->equivalent_i (unaliased_tc.in ());
 }
 
 char const *

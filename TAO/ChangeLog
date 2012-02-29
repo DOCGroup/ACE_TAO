@@ -1,3 +1,92 @@
+Wed Feb 29 16:30:00 UTC 2012  Simon Massey <simon dot massey at prismtech dot com>
+
+        * TAO_IDL/be/be_visitor_typecode/value_typecode.cpp:
+          Allow VM_TRUNCATABLE to be recorded in the typecode.
+
+        * TAO_IDL/be/be_visitor_valuetype/any_op_cs.cpp:
+          Stop the Any insertion of Valuetypes setting the any typecode to
+          the fully derived type. This was stopping the value from being
+          extracted (as the tc was wrong at extraction, or the embedded
+          Any_Impl_T<base *> class wouldn't dynamic_cast to the Any_Impl_T<derived *>.
+
+        * tao/AnyTypeCode/Amy_Impl.cpp:
+          When marshaling the any, If it is holding a valueType, send the
+          fully derived typecode of the type being held instead of the
+          Any embedded typecode. This effectivly takes over from the change
+          to Any insertion above. (The value of the valuetype is always
+          sent as the fully derived type, so the typecode must match what is
+          actually sent.) This allows CORBA::Anys to hold a base pointer to
+          a derived valuetype and marshal it correctly whilst still allowing
+          the user to manipulate the value in the Any without locking
+          themselves out!
+
+        * tao/AnyTypeCode/Any_Unknown_IDL_Type.cpp:
+          Add debug output to a silent Marshaling exception.
+
+        * tao/AnyTypeCode/append.cpp:
+        * tao/AnyTypeCode/skip.cpp:
+          The code for value/event types needed to recognise ValueBox types
+          and behave slightly differently.
+
+        * tao/AnyTypeCode/typecode.cpp:
+          Tidy up of code.
+
+        * tao/Valuetype/ValueBase.h:
+        * tao/Valuetype/ValueBase.cpp:
+          Add quite a lot of extra debug output during error cases.
+          Fix some CDR alignment bugs with indirection.
+          Added missing _copy_value () virtual call.
+          Split _tao_unmarshal_pre() into two sub functions
+          _tao_unmarshal_header () and _tao_unmarshal_find_factory().
+          Make _tao_write_repository_id () and _tao_write_special_value ()
+          accessable (should be friends of DynValue but proved problematic
+          so made them public).
+          Move indirection Map macros from code to header for sharing with
+          DynValue_i.cpp
+
+        * tao/DynaicAny/DynAny_i.h:
+        * tao/DynaicAny/DynAny_i.cpp:
+        * tao/DynaicAny/DynAnyFactory.cpp:
+        * tao/DynaicAny/DynArray_i.h:
+        * tao/DynaicAny/DynArray_i.cpp:
+        * tao/DynaicAny/DynEnum_i.h:
+        * tao/DynaicAny/DynEnum_i.cpp:
+        * tao/DynaicAny/DynSequence_i.h:
+        * tao/DynaicAny/DynSequence_i.cpp:
+        * tao/DynaicAny/DynStruct_i.h:
+        * tao/DynaicAny/DynStruct_i.cpp:
+        * tao/DynaicAny/DynUnion_i.h:
+        * tao/DynaicAny/DynUnion_i.cpp:
+          Modified to cater for the "Allow_Truncation" boolean and
+          creation methods.
+
+        * tao/DynaicAny/DynAnyUtils_T.h:
+        * tao/DynaicAny/DynAnyUtils_T.cpp:
+        * tao/DynaicAny/DynCommon.h:
+        * tao/DynaicAny/DynCommon.cpp:
+          Modified to cater for the "Allow_Truncation" boolean and
+          creation methods and to add the ValueType and ValueBox
+          types to the list.
+
+        * tao/DynaicAny/DynValue_i.h:
+        * tao/DynaicAny/DynValue_i.cpp:
+        * tao/DynaicAny/DynValueBox_i.h:
+        * tao/DynaicAny/DynValueBox_i.cpp:
+        * tao/DynaicAny/DynValueCommon_i.h:
+        * tao/DynaicAny/DynValueCommon_i.cpp:
+          Impliment these types.
+
+        * tao/bin/tao_orb_tests.lst
+        * tests/DynValue_Test/Analyzer.h:
+        * tests/DynValue_Test/Analyzer.cpp:
+        * tests/DynValue_Test/DynValue_Test.idl:
+        * tests/DynValue_Test/DynValue_Test.mpc:
+        * tests/DynValue_Test/main.cpp:
+        * tests/DynValue_Test/run_test.pl:
+        * tests/DynValue_Test/ValueTypes_impl.h:
+        * tests/DynValue_Test/ValueTypes_impl.cpp:
+          Added test for changes above.
+
 Wed Feb 29 12:19:53 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/IFR_Client/IFR_Base.pidl:

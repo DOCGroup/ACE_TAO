@@ -12,7 +12,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_DynEnum_i::TAO_DynEnum_i (void)
+TAO_DynEnum_i::TAO_DynEnum_i (CORBA::Boolean allow_truncation)
+  : TAO_DynCommon (allow_truncation)
 {
 }
 

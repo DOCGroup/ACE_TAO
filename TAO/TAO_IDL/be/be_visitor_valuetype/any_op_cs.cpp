@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file    any_op_cs.cpp
@@ -115,7 +114,7 @@ be_visitor_valuetype_any_op_cs::visit_valuetype (be_valuetype *node)
           << be_idt << be_idt_nl
           << "_tao_any," << be_nl
           << node->local_name () << "::_tao_any_destructor," << be_nl
-          << "(*_tao_elem)->_tao_type ()," << be_nl
+          << node->tc_name ()->last_component () << "," << be_nl
           << "*_tao_elem" << be_uidt_nl
           << ");" << be_uidt << be_uidt_nl
           << "}" << be_nl_2;
@@ -167,7 +166,7 @@ be_visitor_valuetype_any_op_cs::visit_valuetype (be_valuetype *node)
       << be_idt << be_idt_nl
       << "_tao_any," << be_nl
       << node->name () << "::_tao_any_destructor," << be_nl
-      << "(*_tao_elem)->_tao_type ()," << be_nl
+      << node->tc_name () << "," << be_nl
       << "*_tao_elem" << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl
       << "}" << be_nl_2;

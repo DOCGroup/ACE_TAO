@@ -43,6 +43,15 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+#define DEFAULT_INDIRECTION_MAP_SIZE 10
+#define VERIFY_MAP(CDR, MAPNAME, MAPCLASSNAME)                                               \
+  if (strm.get_##MAPNAME ().is_nil ())                                                       \
+    {                                                                                        \
+      CDR::MAPCLASSNAME##_Handle handle (                                                    \
+          new CDR::RC_##MAPCLASSNAME (new CDR::MAPCLASSNAME (DEFAULT_INDIRECTION_MAP_SIZE)));\
+      strm.set_##MAPNAME (handle);                                                           \
+    } else do {} while (0)
+
 class TAO_Valuetype_Export TAO_ChunkInfo
 {
 public:
@@ -132,9 +141,23 @@ namespace CORBA
 
     typedef ACE_Vector < ACE_CString > Repository_Id_List;
 
-    // Reference counting.
-    /// %! virtual CORBA::ValueBase* _copy_value (void) = 0;
+    // This is only temporary, it is _not_ the Right Thing To Do.
+    // Currently nothing should break, as TAO neither uses
+    // _copy_value() nor generates code which uses _copy_value(), and
+    // any user code which depends on the declaration of
+    // _copy_value() must override it anyway, so it should never get
+    // called.
+    // N.B. - see bugzilla #1391 / TAO#84. Fix is pending.
+    virtual CORBA::ValueBase* _copy_value (void)
+    {
+      ACE_VERSIONED_NAMESPACE_NAME::__ace_assert (
+        __FILE__,
+        __LINE__,
+        ACE_TEXT_CHAR_TO_TCHAR ("CORBA::ValueBase::_copy_value() Not implimented see bugzilla #1391"));
+      return 0;
+    };
 
+    // Reference counting.
     virtual void _add_ref (void) = 0;
     virtual void _remove_ref (void) = 0;
     virtual CORBA::ULong _refcount_value (void) = 0;
@@ -179,9 +202,17 @@ namespace CORBA
     /// Both used internally and are called from T::_tao_unmarshal ()
     static CORBA::Boolean _tao_unmarshal_pre (TAO_InputCDR &strm,
                                               CORBA::ValueBase *&valuetype,
-                                              const char * const repo_id,
-                                              CORBA::Boolean& is_null_object,
-                                              CORBA::Boolean& is_indirected);
+                                              const char *const repo_id,
+                                              CORBA::Boolean &is_null_object,
+                                              CORBA::Boolean &is_indirected);
+
+    static CORBA::Boolean _tao_unmarshal_header (
+      TAO_InputCDR &strm,
+      const char *const fallback_repo_id,
+      Repository_Id_List &ids,
+      CORBA::Boolean &is_null_object,
+      CORBA::Boolean &is_indirected,
+      CORBA::Boolean &is_chunked);
 
     CORBA::Boolean _tao_unmarshal_post (TAO_InputCDR &strm);
 
@@ -239,6 +270,12 @@ namespace CORBA
     virtual CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const = 0;
 
   private:
+    static void _tao_unmarshal_find_factory (
+      TAO_InputCDR &strm,
+      void *start_of_valuetype,
+      CORBA::ValueBase *&valuetype,
+      Repository_Id_List &ids,
+      CORBA::Boolean &is_chunked);
 
     static CORBA::Boolean _tao_unmarshal_value_indirection_pre (TAO_InputCDR &strm,
                                                                 TAO_InputCDR &indirected_strm);
@@ -251,13 +288,14 @@ namespace CORBA
 
     static CORBA::Boolean _tao_unmarshal_codebase_url_indirection (TAO_InputCDR &strm,
                                                                    ACE_CString& codebase_url);
-
+  public:
     static CORBA::Boolean _tao_write_repository_id (TAO_OutputCDR &strm,
                                                     ACE_CString& id);
 
     /// Write some special values such as null value or indirection value.
     static CORBA::Boolean _tao_write_special_value(TAO_OutputCDR &strm,
                                               const CORBA::ValueBase * value);
+  private:
     /// Write whole value.
     static CORBA::Boolean _tao_write_value(TAO_OutputCDR &strm,
                                       const CORBA::ValueBase * value,

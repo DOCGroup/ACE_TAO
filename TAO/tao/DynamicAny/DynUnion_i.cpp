@@ -14,7 +14,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_DynUnion_i::TAO_DynUnion_i (void)
+TAO_DynUnion_i::TAO_DynUnion_i (CORBA::Boolean allow_truncation)
+  : TAO_DynCommon (allow_truncation)
 {
 }
 
@@ -91,7 +92,8 @@ TAO_DynUnion_i::init (CORBA::TypeCode_ptr tc)
       this->discriminator_ =
         TAO::MakeDynAnyUtils::make_dyn_any_t<CORBA::TypeCode_ptr> (
           disc_tc.in (),
-          disc_tc.in ());
+          disc_tc.in (),
+          this->allow_truncation_ );
       CORBA::ULong label_val;
       first_label >>= label_val;
       TAO_DynEnum_i::_narrow (this->discriminator_.in ())
@@ -102,7 +104,8 @@ TAO_DynUnion_i::init (CORBA::TypeCode_ptr tc)
       this->discriminator_ =
         TAO::MakeDynAnyUtils::make_dyn_any_t<const CORBA::Any&> (
           first_label.in ()._tao_get_typecode (),
-          first_label.in ());
+          first_label.in (),
+          this->allow_truncation_ );
     }
 
   CORBA::TypeCode_var first_type =
@@ -113,7 +116,8 @@ TAO_DynUnion_i::init (CORBA::TypeCode_ptr tc)
   this->member_ =
     TAO::MakeDynAnyUtils::make_dyn_any_t<CORBA::TypeCode_ptr> (
       first_type.in (),
-      first_type.in ());
+      first_type.in (),
+      this->allow_truncation_ );
 }
 
 // ****************************************************************
@@ -185,7 +189,8 @@ TAO_DynUnion_i::set_from_any (const CORBA::Any & any)
   this->discriminator_ =
     TAO::MakeDynAnyUtils::make_dyn_any_t<const CORBA::Any&> (
       disc_any._tao_get_typecode (),
-      disc_any);
+      disc_any,
+      this->allow_truncation_ );
 
   // Move to the next field in the CDR stream.
   (void) TAO_Marshal_Object::perform_skip (disc_tc.in (), &in);
@@ -231,7 +236,8 @@ TAO_DynUnion_i::set_from_any (const CORBA::Any & any)
       this->member_ =
         TAO::MakeDynAnyUtils::make_dyn_any_t<const CORBA::Any&> (
           member_any._tao_get_typecode (),
-          member_any);
+          member_any,
+          this->allow_truncation_ );
 
       this->member_slot_ = i;
     }
@@ -269,7 +275,8 @@ TAO_DynUnion_i::set_from_any (const CORBA::Any & any)
           this->member_ =
             TAO::MakeDynAnyUtils::make_dyn_any_t<const CORBA::Any&> (
               default_any._tao_get_typecode (),
-              default_any);
+              default_any,
+              this->allow_truncation_ );
 
           this->member_slot_ = index;
         }
@@ -376,7 +383,8 @@ TAO_DynUnion_i::set_discriminator (DynamicAny::DynAny_ptr value)
       this->member_ =
         TAO::MakeDynAnyUtils::make_dyn_any_t<CORBA::TypeCode_ptr> (
           member_tc.in (),
-          member_tc.in ());
+          member_tc.in (),
+          this->allow_truncation_ );
 
       // Named active member (CORBA 2.3.1).
       this->current_position_ = 1;
@@ -451,7 +459,8 @@ TAO_DynUnion_i::set_to_default_member (void)
       this->member_ =
         TAO::MakeDynAnyUtils::make_dyn_any_t<CORBA::TypeCode_ptr> (
           default_tc.in (),
-          default_tc.in ());
+          default_tc.in (),
+          this->allow_truncation_ );
 
       // Default member active (CORBA 2.3.1).
       this->current_position_ = 0;

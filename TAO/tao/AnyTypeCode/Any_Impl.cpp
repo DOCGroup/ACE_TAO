@@ -4,6 +4,7 @@
 #include "tao/AnyTypeCode/Any_Impl.h"
 #include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/AnyTypeCode/Marshal.h"
+#include "tao/Valuetype/ValueBase.h"
 
 #include "tao/CORBA_String.h"
 #include "tao/SystemException.h"
@@ -29,11 +30,27 @@ TAO::Any_Impl::~Any_Impl (void)
 CORBA::Boolean
 TAO::Any_Impl::marshal (TAO_OutputCDR &cdr)
 {
-  if ((cdr << this->type_) == 0)
+  CORBA::ValueBase * vb = 0;
+  if (this->to_value (vb) && vb)
+    {
+      // Since we ARE a value type, we need to
+      // send the ACTUAL derived typecode for
+      // the type we are marshaling NOT the
+      // typecode of the base pointer that may
+      // have been inserted into the any.
+      if (cdr << vb->_tao_type () == 0)
+        {
+          return false;
+        }
+    }
+  // Otherwise send the typecode of the inserted type.
+  else if ((cdr << this->type_) == 0)
     {
       return false;
     }
 
+  // Once the typecode has been marshaled send the actual
+  // value (this is polymorphic for valuetypes)
   return this->marshal_value (cdr);
 }
 
