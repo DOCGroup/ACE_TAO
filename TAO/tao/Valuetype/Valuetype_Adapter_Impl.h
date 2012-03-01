@@ -66,6 +66,8 @@ public:
 
   virtual CORBA::ValueFactory vf_map_find (const char *);
 
+  virtual CORBA::TypeCode_ptr derived_type (CORBA::ValueBase *);
+
 private:
   TAO_ValueFactory_Map map_;
 };

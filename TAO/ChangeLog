@@ -1,3 +1,11 @@
+Thu Mar 1 11:27:00 UTC 2012  Simon Massey <simon dot massey at prismtech dot com>
+
+        * tao/Valuetype_Adapter.h:
+        * tao/AnyTypeCode/Any_Impl.cpp:
+        * tao/Valuetype/Valuetype_Adapter_Impl.h:
+        * tao/Valuetype/Valuetype_Adapter_Impl.cpp:
+          Removed dependancy on ValueBase.h within Any_Impl.cpp using the adapter.
+
 Wed Feb 29 16:30:00 UTC 2012  Simon Massey <simon dot massey at prismtech dot com>
 
         * TAO_IDL/be/be_visitor_typecode/value_typecode.cpp:
@@ -9,7 +17,7 @@ Wed Feb 29 16:30:00 UTC 2012  Simon Massey <simon dot massey at prismtech dot co
           extracted (as the tc was wrong at extraction, or the embedded
           Any_Impl_T<base *> class wouldn't dynamic_cast to the Any_Impl_T<derived *>.
 
-        * tao/AnyTypeCode/Amy_Impl.cpp:
+        * tao/AnyTypeCode/Any_Impl.cpp:
           When marshaling the any, If it is holding a valueType, send the
           fully derived typecode of the type being held instead of the
           Any embedded typecode. This effectivly takes over from the change

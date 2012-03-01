@@ -4,7 +4,8 @@
 #include "tao/AnyTypeCode/Any_Impl.h"
 #include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/AnyTypeCode/Marshal.h"
-#include "tao/Valuetype/ValueBase.h"
+#include "tao/ORB_Core.h"
+#include "tao/Valuetype_Adapter.h"
 
 #include "tao/CORBA_String.h"
 #include "tao/SystemException.h"
@@ -38,7 +39,9 @@ TAO::Any_Impl::marshal (TAO_OutputCDR &cdr)
       // the type we are marshaling NOT the
       // typecode of the base pointer that may
       // have been inserted into the any.
-      if (cdr << vb->_tao_type () == 0)
+      if (cdr << TAO_ORB_Core_instance ()
+                 ->valuetype_adapter()
+                 ->derived_type (vb) == 0)
         {
           return false;
         }
