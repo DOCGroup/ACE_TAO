@@ -140,7 +140,7 @@ TAO_DynValue_i::get_base_types (
 
       base_types.size (numberOfBases + 1);
       base_types[numberOfBases++] =
-        CORBA::TypeCode::_duplicate (base);
+        CORBA::TypeCode::_duplicate (base.in ());
       base = base->concrete_base_type();
     }
 }
@@ -776,7 +776,7 @@ TAO_DynValue_i::to_outputCDR (TAO_OutputCDR &out_cdr)
       // are stored in the da_base_types_[] list.
       CORBA::ULong i= 0u;
       for (CORBA::TypeCode_var
-             next (CORBA::TypeCode::_duplicate (this->type_));
+             next (CORBA::TypeCode::_duplicate (this->type_.in ()));
            i < trunc_ids;
            ++i)
         {

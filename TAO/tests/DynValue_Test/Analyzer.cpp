@@ -90,7 +90,7 @@ DynAnyAnalyzer::get_base_types (
         }
 
       base_types.size (numberOfBases + 1);
-      base_types[numberOfBases++] = CORBA::TypeCode::_duplicate (base);
+      base_types[numberOfBases++] = CORBA::TypeCode::_duplicate (base.in ());
       base = base->concrete_base_type();
     }
 }
@@ -201,7 +201,7 @@ DynAnyAnalyzer::analyze (
           }
 
         BaseTypesList_t base_types;
-        get_base_types (tc, base_types);
+        get_base_types (tc.in (), base_types);
 
         for (CORBA::ULong i= 0u; i < base_types.size(); ++i)
           {
