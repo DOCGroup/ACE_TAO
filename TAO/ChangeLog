@@ -1,3 +1,10 @@
+Thu Mar 1 11:45:00 UTC 2012  Simon Massey <simon dot massey at prismtech dot com>
+
+        * tests/DynValue_Test/main.cpp:
+          Removed fuzz warning about NULL by changing case to Null.
+          These are ACE_DEBUG text messages about Null ValueTypes not
+          NULL pointer checks.
+
 Thu Mar 1 11:27:00 UTC 2012  Simon Massey <simon dot massey at prismtech dot com>
 
         * tao/Valuetype_Adapter.h:
