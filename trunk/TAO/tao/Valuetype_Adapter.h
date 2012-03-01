@@ -77,6 +77,8 @@ public:
   virtual int vf_map_unbind (const char *) = 0;
 
   virtual CORBA::ValueFactory vf_map_find (const char *) = 0;
+
+  virtual CORBA::TypeCode_ptr derived_type (CORBA::ValueBase *) = 0;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

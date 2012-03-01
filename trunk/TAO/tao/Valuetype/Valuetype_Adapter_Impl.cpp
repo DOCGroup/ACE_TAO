@@ -97,4 +97,9 @@ TAO_Valuetype_Adapter_Impl::vf_map_find (const char *repo_id)
   return factory;
 }
 
+CORBA::TypeCode_ptr TAO_Valuetype_Adapter_Impl::derived_type (CORBA::ValueBase *vb)
+{
+  return vb->_tao_type ();
+}
+
 TAO_END_VERSIONED_NAMESPACE_DECL
