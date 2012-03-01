@@ -83,7 +83,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
       if (dvc->is_null ())
         {
-          ACE_DEBUG ((LM_DEBUG, "..%N:%l FAILED this dynamic any is NULL!\n"));
+          ACE_DEBUG ((LM_DEBUG, "..%N:%l FAILED this dynamic any is Null!\n"));
           return 1;
         }
 
@@ -94,7 +94,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       analyzer.analyze (dany.in ());
 
       ACE_DEBUG ((LM_DEBUG,
-        "..%N:%l Testing typecode generated dynamic any for null\n"));
+        "..%N:%l Testing typecode generated dynamic any for Null\n"));
       dvc= dynamic_cast<DynamicAny::DynValueCommon *> (dany.in ());
       if (!dvc)
         {
@@ -144,12 +144,12 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       ACE_DEBUG ((LM_DEBUG,
-        "..%N:%l Setting typecode dynamic any back to NULL\n"));
+        "..%N:%l Setting typecode dynamic any back to Null\n"));
       dvc->set_to_null ();
       analyzer.analyze (dany.in ());
 
       ACE_DEBUG ((LM_DEBUG,
-        "..%N:%l Setting the original dynamic any to NULL object\n"));
+        "..%N:%l Setting the original dynamic any to Null object\n"));
       dvc= dynamic_cast<DynamicAny::DynValueCommon *> (dany_boxed.in ());
       if (!dvc)
         {
@@ -169,7 +169,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       ACE_DEBUG ((LM_DEBUG,
-        "..%N:%l Converting from NULL dynamic any back to any\n"));
+        "..%N:%l Converting from Null dynamic any back to any\n"));
       CORBA::Any_var myAny_var (dany_boxed->to_any ());
 
       ACE_DEBUG ((LM_DEBUG, "..%N:%l Extracting from this any\n"));
@@ -188,7 +188,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
       if (myBoxedLongExtracted)
         {
-          ACE_DEBUG ((LM_DEBUG, "..%N:%l FAILED non-null pointer extracted\n"));
+          ACE_DEBUG ((LM_DEBUG, "..%N:%l FAILED non-Null pointer extracted\n"));
           return 1;
         }
 
@@ -223,7 +223,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
       if (!myBoxedLongExtracted)
         {
-          ACE_DEBUG ((LM_DEBUG, "..%N:%l FAILED null pointer extracted\n"));
+          ACE_DEBUG ((LM_DEBUG, "..%N:%l FAILED Null pointer extracted\n"));
           return 1;
         }
       if (reinterpret_cast<DynValue_Test::BoxedLong *> (9)
@@ -322,7 +322,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       DynamicAny::DynAny_var dany_nested = analyzer.DynAny (myAny);
       analyzer.analyze (dany_nested.in ());
 
-      ACE_DEBUG ((LM_DEBUG, "..%N:%l Testing dynamic any for non-null\n"));
+      ACE_DEBUG ((LM_DEBUG, "..%N:%l Testing dynamic any for non-Null\n"));
       dvc = dynamic_cast<DynamicAny::DynValueCommon *>
               (dany_nested.in ());
       if (!dvc)
@@ -333,7 +333,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
       if (dvc->is_null ())
         {
-          ACE_DEBUG ((LM_DEBUG, "..%N:%l FAILED this dynamic any is NULL!\n"));
+          ACE_DEBUG ((LM_DEBUG, "..%N:%l FAILED this dynamic any is Null!\n"));
           return 1;
         }
 
@@ -343,7 +343,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       analyzer.analyze (dany.in ());
 
       ACE_DEBUG ((LM_DEBUG,
-        "..%N:%l Testing typecode generated dynamic any for null\n"));
+        "..%N:%l Testing typecode generated dynamic any for Null\n"));
       dvc= dynamic_cast<DynamicAny::DynValueCommon *> (dany.in ());
       if (!dvc)
         {
@@ -400,12 +400,12 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       ACE_DEBUG ((LM_DEBUG,
-        "..%N:%l Setting typecode dynamic any back to NULL\n"));
+        "..%N:%l Setting typecode dynamic any back to Null\n"));
       dvc->set_to_null ();
       analyzer.analyze (dany.in ());
 
       ACE_DEBUG ((LM_DEBUG,
-        "..%N:%l Setting the original dynamic any to NULL object\n"));
+        "..%N:%l Setting the original dynamic any to Null object\n"));
       dvc= dynamic_cast<DynamicAny::DynValueCommon *> (dany_nested.in ());
       if (!dvc)
         {
@@ -425,7 +425,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       ACE_DEBUG ((LM_DEBUG,
-        "..%N:%l Converting from NULL dynamic any back to any\n"));
+        "..%N:%l Converting from Null dynamic any back to any\n"));
       myAny_var = dany_nested->to_any ();
 
       ACE_DEBUG ((LM_DEBUG, "..%N:%l Extracting from this any\n"));
@@ -444,7 +444,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
       if (myNestedValueExtracted)
         {
-          ACE_DEBUG ((LM_DEBUG, "..%N:%l FAILED non-null pointer extracted\n"));
+          ACE_DEBUG ((LM_DEBUG, "..%N:%l FAILED non-Null pointer extracted\n"));
           return 1;
         }
 
@@ -591,7 +591,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       DynamicAny::DynAny_var dany_null (analyzer.DynAny (myAny));
       analyzer.analyze (dany_null.in ());
 
-      ACE_DEBUG ((LM_DEBUG, "..%N:%l Testing dynamic any for non-null\n"));
+      ACE_DEBUG ((LM_DEBUG, "..%N:%l Testing dynamic any for non-Null\n"));
       dvc= dynamic_cast<DynamicAny::DynValueCommon *> (dany_null.in ());
       if (!dvc)
         {
@@ -601,7 +601,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
       if (dvc->is_null ())
         {
-          ACE_DEBUG ((LM_DEBUG, "..%N:%l FAILED this dynamic any is NULL!\n"));
+          ACE_DEBUG ((LM_DEBUG, "..%N:%l FAILED this dynamic any is Null!\n"));
           return 1;
         }
 
@@ -611,7 +611,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       analyzer.analyze (dany.in ());
 
       ACE_DEBUG ((LM_DEBUG,
-        "..%N:%l Testing typecode generated dynamic any for null\n"));
+        "..%N:%l Testing typecode generated dynamic any for Null\n"));
       dvc= dynamic_cast<DynamicAny::DynValueCommon *> (dany.in ());
       if (!dvc)
         {
@@ -644,11 +644,11 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           return 1;
         }
 
-      ACE_DEBUG ((LM_DEBUG, "..%N:%l Setting typecode dynamic any back to NULL\n"));
+      ACE_DEBUG ((LM_DEBUG, "..%N:%l Setting typecode dynamic any back to Null\n"));
       dvc->set_to_null ();
       analyzer.analyze (dany.in ());
 
-      ACE_DEBUG ((LM_DEBUG, "..%N:%l Setting the original dynamic any to NULL object\n"));
+      ACE_DEBUG ((LM_DEBUG, "..%N:%l Setting the original dynamic any to Null object\n"));
       dvc= dynamic_cast<DynamicAny::DynValueCommon *> (dany_null.in ());
       if (!dvc)
         {
@@ -666,7 +666,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           return 1;
         }
 
-      ACE_DEBUG ((LM_DEBUG, "..%N:%l Converting from NULL dynamic any back to any\n"));
+      ACE_DEBUG ((LM_DEBUG, "..%N:%l Converting from Null dynamic any back to any\n"));
       myAny_var= dany_null->to_any ();
 
       ACE_DEBUG ((LM_DEBUG, "..%N:%l Extracting from this any\n"));
@@ -684,7 +684,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
       if (myNullValueExtracted)
         {
-          ACE_DEBUG ((LM_DEBUG, "..%N:%l FAILED non-null pointer extracted\n"));
+          ACE_DEBUG ((LM_DEBUG, "..%N:%l FAILED non-Null pointer extracted\n"));
           return 1;
         }
 
@@ -828,7 +828,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       DynamicAny::DynAny_var dany_trunc (analyzer.DynAny (myAny));
       analyzer.analyze (dany_trunc.in ());
 
-      ACE_DEBUG ((LM_DEBUG, "..%N:%l Testing dynamic any for non-null\n"));
+      ACE_DEBUG ((LM_DEBUG, "..%N:%l Testing dynamic any for non-Null\n"));
       dvc= dynamic_cast<DynamicAny::DynValueCommon *> (dany_trunc.in ());
       if (!dvc)
         {
@@ -837,7 +837,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
       if (dvc->is_null ())
         {
-          ACE_DEBUG ((LM_DEBUG, "..%N:%l FAILED this dynamic any is NULL!\n"));
+          ACE_DEBUG ((LM_DEBUG, "..%N:%l FAILED this dynamic any is Null!\n"));
           return 1;
         }
 
@@ -845,7 +845,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       dany = analyzer.DynAny (DynValue_Test::_tc_Trunc);
       analyzer.analyze (dany.in ());
 
-      ACE_DEBUG ((LM_DEBUG, "..%N:%l Testing typecode generated dynamic any for null\n"));
+      ACE_DEBUG ((LM_DEBUG, "..%N:%l Testing typecode generated dynamic any for Null\n"));
       dvc= dynamic_cast<DynamicAny::DynValueCommon *> (dany.in ());
       if (!dvc)
         {
@@ -958,11 +958,11 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           return 1;
         }
 
-      ACE_DEBUG ((LM_DEBUG, "..%N:%l Setting typecode dynamic any back to NULL\n"));
+      ACE_DEBUG ((LM_DEBUG, "..%N:%l Setting typecode dynamic any back to Null\n"));
       dvc->set_to_null ();
       analyzer.analyze (dany.in ());
 
-      ACE_DEBUG ((LM_DEBUG, "..%N:%l Setting the original dynamic any to NULL object\n"));
+      ACE_DEBUG ((LM_DEBUG, "..%N:%l Setting the original dynamic any to Null object\n"));
       dvc = dynamic_cast<DynamicAny::DynValueCommon *> (dany_trunc.in ());
       if (!dvc)
         {
@@ -979,7 +979,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           return 1;
         }
 
-      ACE_DEBUG ((LM_DEBUG, "..%N:%l Converting from NULL dynamic any back to any\n"));
+      ACE_DEBUG ((LM_DEBUG, "..%N:%l Converting from Null dynamic any back to any\n"));
       myAny_var= dany_trunc->to_any ();
 
       ACE_DEBUG ((LM_DEBUG, "..%N:%l Extracting from this any\n"));
@@ -996,7 +996,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
       if (myTruncExtracted)
         {
-          ACE_DEBUG ((LM_DEBUG, "..%N:%l FAILED non-null pointer extracted\n"));
+          ACE_DEBUG ((LM_DEBUG, "..%N:%l FAILED non-Null pointer extracted\n"));
           return 1;
         }
 
@@ -1141,7 +1141,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       DynamicAny::DynAny_var dany_base (analyzer.DynAny (myAny_trunc));
       analyzer.analyze (dany_base.in ());
 
-      ACE_DEBUG ((LM_DEBUG, "..%N:%l Testing dynamic any for non-null\n"));
+      ACE_DEBUG ((LM_DEBUG, "..%N:%l Testing dynamic any for non-Null\n"));
       dvc= dynamic_cast<DynamicAny::DynValueCommon *> (dany_base.in ());
       if (!dvc)
         {
@@ -1150,7 +1150,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
       if (dvc->is_null ())
         {
-          ACE_DEBUG ((LM_DEBUG, "..%N:%l FAILED this dynamic any is NULL!\n"));
+          ACE_DEBUG ((LM_DEBUG, "..%N:%l FAILED this dynamic any is Null!\n"));
           return 1;
         }
 
