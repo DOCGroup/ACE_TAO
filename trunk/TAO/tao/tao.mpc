@@ -438,6 +438,7 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, taoid
     IFR_Client_Adapter.h
     IIOP_Acceptor.h
     IIOPC.h
+    IIOPS.h
     IIOP_Connection_Handler.h
     IIOP_Connector.h
     IIOP_Endpoint.h
