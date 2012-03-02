@@ -97,14 +97,9 @@ public:
                                   ACE_UINT64 max_out_len );
 };
 
-typedef class ACE_Singleton<ACE_RLECompressor, ACE_SYNCH_MUTEX> ACE_RLECompression;
+ACE_SINGLETON_DECLARE(ACE_Singleton, ACE_RLECompressor, ACE_SYNCH_MUTEX);
 
-// This is needed to get only one of these defined across a set of DLLs and EXE
-#if defined(ACE_RLECOMPRESSION_BUILD_DLL)
- ACE_EXPORT_SINGLETON_DECLARE(ACE_Singleton, ACE_RLECompressor, ACE_SYNCH_MUTEX);
-#else
- ACE_IMPORT_SINGLETON_DECLARE(ACE_Singleton, ACE_RLECompressor, ACE_SYNCH_MUTEX);
-#endif
+typedef class ACE_Singleton<ACE_RLECompressor, ACE_SYNCH_MUTEX> ACE_RLECompression;
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
