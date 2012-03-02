@@ -37,16 +37,12 @@ project(IFR_Client) : taolib, tao_output, install, anytypecode, taoidldefaults {
   Header_Files {
     *.h
     IFR_BaseC.h
-    IFR_BaseS.h
     IFR_BaseA.h
     IFR_BasicC.h
-    IFR_BasicS.h
     IFR_BasicA.h
     IFR_ComponentsC.h
-    IFR_ComponentsS.h
     IFR_ComponentsA.h
     IFR_ExtendedC.h
-    IFR_ExtendedS.h
     IFR_ExtendedA.h
   }
 
@@ -80,6 +76,17 @@ project(IFR_Client_skel) : ifr_client, taolib, tao_output, install, anytypecode,
     IFR_BasicS.h
     IFR_ComponentsS.h
     IFR_ExtendedS.h
+    IFR_BaseS_T.h
+    IFR_BasicS_T.h
+    IFR_ComponentsS_T.h
+    IFR_ExtendedS_T.h
+  }
+
+  Template_Files {
+    IFR_BaseS_T.cpp
+    IFR_BasicS_T.cpp
+    IFR_ComponentsS_T.cpp
+    IFR_ExtendedS_T.cpp
   }
 
   Inline_Files {

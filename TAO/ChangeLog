@@ -1,3 +1,9 @@
+Fri Mar  2 12:33:17 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IFR_Client/IFR_Client.mpc:
+        * tao/tao.mpc:
+          Added missing files for install
+
 Thu Mar 1 13:52:00 UTC 2012  Simon Massey <simon dot massey at prismtech dot com>
 
         * tao/DynaicAny/DynValue_i.cpp:
