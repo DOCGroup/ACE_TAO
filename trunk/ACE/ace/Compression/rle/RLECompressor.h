@@ -97,7 +97,7 @@ public:
                                   ACE_UINT64 max_out_len );
 };
 
-ACE_SINGLETON_DECLARE(ACE_Singleton, ACE_RLECompressor, ACE_SYNCH_MUTEX);
+ACE_RLECOMPRESSION_SINGLETON_DECLARE(ACE_Singleton, ACE_RLECompressor, ACE_SYNCH_MUTEX);
 
 typedef class ACE_Singleton<ACE_RLECompressor, ACE_SYNCH_MUTEX> ACE_RLECompression;
 
