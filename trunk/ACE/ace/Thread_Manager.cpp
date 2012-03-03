@@ -261,6 +261,7 @@ ACE_Thread_Descriptor::dump (void) const
 ACE_Thread_Descriptor::ACE_Thread_Descriptor (void)
   : log_msg_ (0),
     at_exit_list_ (0),
+    tm_ (0),
     terminated_ (false)
 {
   ACE_TRACE ("ACE_Thread_Descriptor::ACE_Thread_Descriptor");
