@@ -11,7 +11,8 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_Event_Handler_Handle_Timeout_Upcall::
-ACE_Event_Handler_Handle_Timeout_Upcall (void)
+ACE_Event_Handler_Handle_Timeout_Upcall (void) :
+  requires_reference_counting_ (0)
 {
 }
 
