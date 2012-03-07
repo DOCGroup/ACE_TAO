@@ -1,3 +1,10 @@
+Wed Mar  7 18:33:32 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IFR_Client/IFR_Client.mpc:
+        * tao/IFR_Client/IFR_Client_Adapter_Impl.h:
+        * tao/IFR_Client/IFR_Client_Adapter_Impl.cpp:
+          Fixed export macros
+
 Wed Mar  7 15:27:00 UTC 2012  Simon Massey <simon dot massey at prismtech dot com>
 
         * tests/DynValue_Test/Analyzer.cpp:
