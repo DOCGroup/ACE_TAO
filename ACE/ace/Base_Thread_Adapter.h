@@ -43,7 +43,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * @class ACE_OS_Thread_Descriptor
  *
  * @brief Parent class of all ACE_Thread_Descriptor classes.
- * =
+ *
  * Container for ACE_Thread_Descriptor members that are
  * used in ACE_OS.
  */
@@ -52,6 +52,8 @@ class ACE_Export ACE_OS_Thread_Descriptor
 public:
   /// Get the thread creation flags.
   long flags (void) const;
+
+  virtual ~ACE_OS_Thread_Descriptor (void);
 
 protected:
   /// For use by ACE_Thread_Descriptor.

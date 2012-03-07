@@ -85,6 +85,10 @@ ACE_Base_Thread_Adapter::sync_log_msg (const ACE_TCHAR *prg)
     (*ACE_Base_Thread_Adapter::sync_log_msg_hook_) (prg);
 }
 
+ACE_OS_Thread_Descriptor::~ACE_OS_Thread_Descriptor (void)
+{
+}
+
 ACE_OS_Thread_Descriptor *
 ACE_Base_Thread_Adapter::thr_desc_log_msg (void)
 {

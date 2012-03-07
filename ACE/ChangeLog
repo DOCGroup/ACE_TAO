@@ -1,3 +1,14 @@
+Wed Mar  7 13:31:58 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Base_Thread_Adapter.h:
+        * ace/Base_Thread_Adapter.cpp:
+        * ace/ETCL/ETCL_Constraint.inl:
+        * ace/Module.cpp:
+        * ace/Stream.cpp:
+        * ace/Thread_Manager.h:
+        * ace/Timer_Hash_T.cpp:
+          Fixed coverity errors
+
 Wed Mar  7 10:55:28 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * rpmbuild/ace-tao.spec:

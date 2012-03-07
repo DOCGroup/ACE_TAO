@@ -162,6 +162,7 @@ ETCL_Component_Array::component (void) const
 
 ACE_INLINE
 ETCL_Special::ETCL_Special (void)
+  : type_ (0)
 {}
 
 ACE_INLINE

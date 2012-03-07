@@ -174,7 +174,7 @@ class ACE_Export ACE_Thread_Descriptor_Base : public ACE_OS_Thread_Descriptor
   friend class ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>;
 public:
   ACE_Thread_Descriptor_Base (void);
-  ~ACE_Thread_Descriptor_Base (void);
+  virtual ~ACE_Thread_Descriptor_Base (void);
 
   // = We need the following operators to make Borland happy.
 

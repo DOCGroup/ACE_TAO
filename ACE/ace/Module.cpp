@@ -158,7 +158,9 @@ ACE_Module<ACE_SYNCH_USE>::sibling (ACE_Task<ACE_SYNCH_USE> *orig)
 
 template <ACE_SYNCH_DECL>
 ACE_Module<ACE_SYNCH_USE>::ACE_Module (void)
-  : flags_ (M_FLAGS_NOT_SET)
+  : next_ (0)
+  , arg_ (0)
+  , flags_ (M_FLAGS_NOT_SET)
 {
   ACE_TRACE ("ACE_Module<ACE_SYNCH_USE>::ACE_Module");
   this->name (ACE_TEXT ("<unknown>"));
