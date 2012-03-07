@@ -1,3 +1,8 @@
+Wed Mar  7 10:56:00 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/Component/Component_exec.cpp:
+          Fixed coverity error
+
 Wed Mar  7 10:03:02 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * NEWS:
