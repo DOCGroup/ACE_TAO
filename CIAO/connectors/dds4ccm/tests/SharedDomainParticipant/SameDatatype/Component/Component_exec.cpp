@@ -26,6 +26,14 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
 
   Component_exec_i::Component_exec_i (void)
     : perform_test_ (false)
+    , dds_dp1_ (0)
+    , dds_dp2_ (0)
+    , dds_dp3_ (0)
+    , dds_dp4_ (0)
+    , dds_tp1_ (0)
+    , dds_tp2_ (0)
+    , dds_tp3_ (0)
+    , dds_tp4_ (0)
   {
   }
 
