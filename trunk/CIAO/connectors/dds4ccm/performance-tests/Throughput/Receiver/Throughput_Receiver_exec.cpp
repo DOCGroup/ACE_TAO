@@ -110,6 +110,8 @@ namespace CIAO_Throughput_Receiver_Impl
       interval_data_length_(0L),
       run_(0),
       first_time_ (0L),
+      demand_ (0L),
+      seq_num_ (0L),
       messages_lost_(0),
       log_(false)
   {
