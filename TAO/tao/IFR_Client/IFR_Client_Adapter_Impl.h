@@ -37,7 +37,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * which use the Interface Repository. This is the derived class
  * that contains the actual implementations.
  */
-class TAO_IFR_Client_Export TAO_IFR_Client_Adapter_Impl
+class TAO_IFR_CLIENT_Export TAO_IFR_Client_Adapter_Impl
   : public TAO_IFR_Client_Adapter
 {
 public:
@@ -77,7 +77,7 @@ TAO_Requires_IFR_Client_Initializer =
 
 
 ACE_STATIC_SVC_DECLARE (TAO_IFR_Client_Adapter_Impl)
-ACE_FACTORY_DECLARE (TAO_IFR_Client, TAO_IFR_Client_Adapter_Impl)
+ACE_FACTORY_DECLARE (TAO_IFR_CLIENT, TAO_IFR_Client_Adapter_Impl)
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
