@@ -1,3 +1,7 @@
+Wed Mar 07 09:04:40 CET 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * CIAO version 1.1.0 released.
+
 Tue Feb 28 19:26:48 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/Getter_T.cpp:
