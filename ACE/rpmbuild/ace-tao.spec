@@ -911,6 +911,12 @@ buildbits = 64
 EOF
 %endif
 
+%ifarch ppc64
+cat >> $ACE_ROOT/include/makeinclude/platform_macros.GNU <<EOF
+minimaltoc = 1
+EOF
+%endif
+
 %if %{?_with_opt:0}%{!?_with_opt:1}
 cat >> $ACE_ROOT/include/makeinclude/platform_macros.GNU <<EOF
 optimize = 0
