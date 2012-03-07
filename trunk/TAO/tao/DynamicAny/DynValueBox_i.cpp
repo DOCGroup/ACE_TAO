@@ -15,7 +15,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_DynValueBox_i::TAO_DynValueBox_i (CORBA::Boolean allow_truncation)
   : TAO_DynCommon (allow_truncation)
-  , TAO_DynAny_i(allow_truncation)
+  , TAO_DynAny_i (allow_truncation)
   , TAO_DynValueCommon_i (allow_truncation)
 {
 }
@@ -202,7 +202,7 @@ TAO_DynValueBox_i::equal (DynamicAny::DynAny_ptr rhs)
 
   DynamicAny::DynValueBox_ptr rhs_v=
     dynamic_cast<DynamicAny::DynValueBox_ptr> (rhs);
-  if (this->is_null () != rhs_v->is_null ())
+  if (!rhs_v || this->is_null () != rhs_v->is_null ())
     {
       return false;
     }

@@ -26,7 +26,13 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_DynCommon::TAO_DynCommon (CORBA::Boolean allow_truncation)
-  : allow_truncation_ (allow_truncation)
+  : ref_to_component_ (false)
+  , container_is_destroying_ (false)
+  , has_components_ (false)
+  , destroyed_ (false)
+  , current_position_ (-1)
+  , component_count_ (0)
+  , allow_truncation_ (allow_truncation)
 {
 }
 
