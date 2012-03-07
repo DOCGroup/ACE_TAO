@@ -1,5 +1,11 @@
+USER VISIBLE CHANGES BETWEEN DAnCE-1.1.0 and DAnCE-1.1.1
+=======================================================
+
 USER VISIBLE CHANGES BETWEEN DAnCE-1.0.8 and DAnCE-1.1.0
 =======================================================
+
+. Added support for specify an additional open_mode for each dance
+  plugin. This open mode is than passed to ACE_DLL::open.
 
 USER VISIBLE CHANGES BETWEEN DAnCE-1.0.7 and DAnCE-1.0.8
 =======================================================

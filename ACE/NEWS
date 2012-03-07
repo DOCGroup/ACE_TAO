@@ -1,8 +1,15 @@
+USER VISIBLE CHANGES BETWEEN ACE-6.1.0 and ACE-6.1.1
+====================================================
+
 USER VISIBLE CHANGES BETWEEN ACE-6.0.8 and ACE-6.1.0
 ====================================================
 
 . Added compilation support for VxWorks 6.9, no runtime
   testing has been performed
+
+. Added ACE Run-length encoding compressor
+
+. Fixed several Coverity reported issues
 
 USER VISIBLE CHANGES BETWEEN ACE-6.0.7 and ACE-6.0.8
 ====================================================

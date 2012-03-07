@@ -1,5 +1,12 @@
+USER VISIBLE CHANGES BETWEEN CIAO-1.1.0 and CIAO-1.1.1
+=======================================================
+
 USER VISIBLE CHANGES BETWEEN CIAO-1.0.8 and CIAO-1.1.0
 =======================================================
+
+. Added support for new ciao config property "edu.vanderbilt.dre.CIAO.OpenMode"
+  which controls the mode that is used to load the shared libraries for
+  a home or component. By default we use ACE_DEFAULT_SHLIB_MODE
 
 USER VISIBLE CHANGES BETWEEN CIAO-1.0.7 and CIAO-1.0.8
 =======================================================
