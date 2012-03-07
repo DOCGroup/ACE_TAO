@@ -1,3 +1,8 @@
+Wed Mar  7 14:58:07 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/Download.html:
+          Added new download link for latest minor with versioned namespaces
+
 Wed Mar  7 14:37:18 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * rpmbuild/ace-tao.spec:
