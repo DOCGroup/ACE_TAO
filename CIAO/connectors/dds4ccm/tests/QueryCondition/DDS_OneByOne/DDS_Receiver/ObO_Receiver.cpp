@@ -331,7 +331,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                                      PROFILE_NAME,
                                                      0,
                                                      0);
-  if (!topic) {
+  if (!sub) {
     cerr << "RECEIVER: Error creating subscriber" << endl;
     return clean_up (participant);
   }
