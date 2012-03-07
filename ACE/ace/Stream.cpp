@@ -597,7 +597,9 @@ template <ACE_SYNCH_DECL>
 ACE_Stream<ACE_SYNCH_USE>::ACE_Stream (void * a,
                                        ACE_Module<ACE_SYNCH_USE> *head,
                                        ACE_Module<ACE_SYNCH_USE> *tail)
-  : linked_us_ (0),
+  : stream_head_ (0),
+    stream_tail_ (0),
+    linked_us_ (0),
     final_close_ (lock_)
 {
   ACE_TRACE ("ACE_Stream<ACE_SYNCH_USE>::ACE_Stream");
