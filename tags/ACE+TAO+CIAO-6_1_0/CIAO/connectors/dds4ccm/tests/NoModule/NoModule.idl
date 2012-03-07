@@ -1,0 +1,18 @@
+// $Id$
+
+#ifndef NOMODULE_IDL
+#define NOMODULE_IDL
+
+#pragma ndds typesupport "NoModuleSupport.h"
+#pragma opendds typesupport "NoModuleTypeSupportImpl.h"
+
+#pragma DCPS_DATA_TYPE "NoModuleType"
+#pragma DCPS_DATA_KEY "NoModuleType value"
+
+struct NoModuleType {
+  string value; //@key
+};
+
+typedef sequence<NoModuleType> NoModuleTypeSeq;
+
+#endif

@@ -1,0 +1,152 @@
+// $Id$
+
+project(HomeT_Connector_idl_gen) : connectoridldefaults, dds4ccm {
+  after  += DDS4CCM_idl_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=HOMET_CONNECTOR_STUB_Export \
+              -Wb,stub_export_include=HomeT_Connector_stub_export.h \
+              -Wb,skel_export_macro=HOMET_CONNECTOR_SVNT_Export \
+              -Wb,skel_export_include=HomeT_Connector_svnt_export.h \
+              -Wb,svnt_export_macro=HOMET_CONNECTOR_SVNT_Export \
+              -Wb,svnt_export_include=HomeT_Connector_svnt_export.h \
+              -Wb,conn_export_macro=HOMET_CONNECTOR_CONN_Export \
+              -Wb,conn_export_include=HomeT_Connector_conn_export.h \
+              -I ..
+
+  IDL_Files {
+    HomeT_Connector.idl
+  }
+}
+
+project(HomeT_Connector_lem_gen) : ciaoidldefaults, dds4ccm {
+  custom_only = 1
+  after += HomeT_Connector_idl_gen
+  idlflags += -Wb,stub_export_macro=HOMET_CONNECTOR_LEM_STUB_Export \
+              -Wb,stub_export_include=HomeT_Connector_lem_stub_export.h \
+              -SS -Gxhst \
+              -I ..
+
+  IDL_Files {
+    HomeT_ConnectorE.idl
+  }
+}
+
+project(HomeT_Connector_lem_stub) : ccm_svnt, dds4ccm_lem_stub {
+  after  += HomeT_Connector_lem_gen \
+            HomeT_Connector_stub \
+            HomeT_Base_stub
+  libs   += HomeT_Base_stub \
+            HomeT_Connector_stub
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  sharedname = HomeT_Connector_lem_stub
+  dynamicflags += HOMET_CONNECTOR_LEM_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    HomeT_ConnectorEC.cpp
+  }
+
+  Header_Files {
+    HomeT_ConnectorEC.h
+    HomeT_Connector_lem_stub_export.h
+  }
+
+  Inline_Files {
+    HomeT_ConnectorEC.inl
+  }
+}
+
+project(HomeT_Connector_stub) : ccm_stub, dds4ccm_base {
+  after  += HomeT_Connector_idl_gen HomeT_Base_stub
+  libs   += HomeT_Base_stub
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  sharedname = HomeT_Connector_stub
+  dynamicflags += HOMET_CONNECTOR_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    HomeT_ConnectorC.cpp
+  }
+
+  Header_Files {
+    HomeT_ConnectorC.h
+    HomeT_Connector_stub_export.h
+  }
+
+  Inline_Files {
+    HomeT_ConnectorC.inl
+  }
+}
+
+project(HomeT_Connector_exec) : ciao_executor, dds4ccm_impl {
+  after  += HomeT_Connector_lem_stub \
+            HomeT_Connector_stub \
+            HomeT_Base_stub
+  sharedname = HomeT_Connector_exec
+  libs += HomeT_Connector_stub \
+          HomeT_Connector_lem_stub \
+          HomeT_Base_stub
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  dynamicflags += HOMET_CONNECTOR_CONN_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+   HomeT_Connector_conn.cpp
+  }
+
+  Header_Files {
+    HomeT_Connector_conn.h
+    HomeT_Connector_conn_export.h
+  }
+
+  Inline_Files {
+  }
+}
+
+
+project(HomeT_Connector_svnt) : ciao_servant, dds4ccm_impl {
+  after      += HomeT_Connector_lem_stub \
+                HomeT_Connector_exec \
+                HomeT_Connector_stub
+  sharedname  = HomeT_Connector_svnt
+  libs       += HomeT_Connector_stub \
+                HomeT_Connector_lem_stub  \
+                HomeT_Base_stub \
+                HomeT_Connector_exec
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  dynamicflags += HOMET_CONNECTOR_SVNT_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    HomeT_ConnectorS.cpp
+    HomeT_Connector_svnt.cpp
+  }
+
+  Header_Files {
+    HomeT_ConnectorS.h
+    HomeT_Connector_svnt.h
+    HomeT_Connector_svnt_export.h
+  }
+
+  Inline_Files {
+    HomeT_ConnectorS.inl
+  }
+}
+
+

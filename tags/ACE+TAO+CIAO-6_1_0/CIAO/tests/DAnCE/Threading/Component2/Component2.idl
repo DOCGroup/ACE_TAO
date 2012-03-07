@@ -1,0 +1,22 @@
+// $Id$
+
+/**
+ * @file Component2.idl
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef COMPONENT2_IDL_
+#define COMPONENT2_IDL_
+
+#include "Base/Threading.idl"
+
+module Threading
+{
+  component Component2
+  {
+    provides interface_2 prov_interface_2;
+    uses interface_1 use_interface_1;
+  };
+};
+
+#endif /* COMPONENT2_IDL_ */

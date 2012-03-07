@@ -1,0 +1,7 @@
+// -*- MPC -*-
+// $Id$
+
+project : ace_rlecompressionlib, taolib, compression {
+  after   += RLECompressor
+  libs    += TAO_RLECompressor
+}

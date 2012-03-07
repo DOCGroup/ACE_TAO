@@ -1,0 +1,25 @@
+// $Id$
+
+/**
+ * @file Proxy_RW_Test_Receiver.idl
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef RECEIVER_IDL
+#define RECEIVER_IDL
+
+#include "Connector/Proxy_RW_Test_Connector.idl"
+#include "Base/Reader_Starter.idl"
+
+module Proxy_RW_Test
+{
+  component Receiver
+  {
+    port ProxyReadWriteTestConnector::DDS_Listen info_out;
+
+    provides ReaderStarter reader_start;
+    uses WriterRestarter writer_restart;
+  };
+};
+
+#endif /* RECEIVER_IDL */

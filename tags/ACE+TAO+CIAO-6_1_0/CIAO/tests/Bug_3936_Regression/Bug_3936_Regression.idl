@@ -1,0 +1,26 @@
+// $Id$
+
+#include <Components.idl>
+
+module Foo <typename T, sequence <T> TSeq>
+{
+  local interface Bar
+  {
+    void ope ();
+  };
+  porttype Write
+  {
+    provides Bar mybar;
+  };
+  connector MyBaseEvent
+  {
+    mirrorport Write supplier;
+  };
+};
+
+module Foo <typename T, sequence <T> TSeq>
+{
+  connector MyConn : Typed::MyBaseEvent
+  {
+  };
+};

@@ -1,0 +1,23 @@
+// $Id$
+
+/**
+ * @file TL_ResetTopic_Connector.idl
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef TL_RESETTOPIC_CONNECTOR_IDL_
+#define TL_RESETTOPIC_CONNECTOR_IDL_
+
+#include <Components.idl>
+#include <ccm_dds.idl>
+
+#include "Base/TL_ResetTopic_Base.idl"
+
+#pragma ciao lem "Connector/TL_ResetTopic_ConnectorE.idl"
+
+module TL_ResetTopic
+{
+  module ::CCM_DDS::Typed < ::TL_ResetTopicTest, ::TL_ResetTopicTestSeq> TL_ResetTopicTestConnector;
+};
+
+#endif /* TL_ResetTopic_CONNECTOR_IDL_ */

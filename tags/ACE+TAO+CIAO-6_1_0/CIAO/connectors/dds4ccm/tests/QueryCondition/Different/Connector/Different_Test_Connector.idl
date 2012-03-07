@@ -1,0 +1,23 @@
+// $Id$
+
+/**
+ * @file Different_Test_Connector.idl
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef QUERY_CONDITION_TEST_CONNECTOR_IDL_
+#define QUERY_CONDITION_TEST_CONNECTOR_IDL_
+
+#include <Components.idl>
+#include <ccm_dds.idl>
+
+#include "Base/Different_Test_Base.idl"
+
+#pragma ciao lem "Connector/Different_Test_ConnectorE.idl"
+
+module Different_Test
+{
+  module ::CCM_DDS::Typed < ::QueryConditionTest, ::QueryConditionTestSeq> QueryConditionTestConnector;
+};
+
+#endif /* QUERY_CONDITION_TEST_CONNECTOR_IDL_ */

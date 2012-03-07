@@ -1,0 +1,33 @@
+// -*- MPC -*-
+// $Id$
+
+project(*sequence_idl): taoidldefaults, strategies {
+  IDL_Files {
+    Test.idl
+  }
+  custom_only = 1
+}
+
+project(*sequence server): taoserver, strategies {
+  after += *sequence_idl
+  Source_Files {
+    TestC.cpp
+    TestS.cpp
+    Roundtrip.cpp
+    Worker_Thread.cpp
+    server.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*sequence client): taoclient, strategies {
+  after += *sequence_idl
+  Source_Files {
+    TestC.cpp
+    Client_Task.cpp
+    client.cpp
+  }
+  IDL_Files {
+  }
+}

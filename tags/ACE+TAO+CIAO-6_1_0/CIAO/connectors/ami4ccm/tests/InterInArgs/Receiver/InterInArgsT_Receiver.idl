@@ -1,0 +1,18 @@
+// $Id$
+
+#ifndef INTERINARGS_T_RECEIVER_IDL
+#define INTERINARGS_T_RECEIVER_IDL
+
+#include <Components.idl>
+
+#include "Base/InterInArgsT.idl"
+
+module InterInArgsT
+{
+  component Receiver
+  {
+    /// Provides
+    provides MyFoo do_my_foo;
+  };
+};
+#endif

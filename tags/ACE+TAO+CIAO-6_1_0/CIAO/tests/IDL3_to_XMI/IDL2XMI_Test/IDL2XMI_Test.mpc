@@ -1,0 +1,14 @@
+// -*- MPC -*-
+// $Id$
+
+project(*IDL2XMI_Test) : taoexe, dance_xml_utils, xerces {
+  exename = xmlvalidator
+
+  Source_Files {
+    XML_Helper.cpp
+    xmlvalidator.cpp
+  }
+
+  IDL_Files {
+  }
+}

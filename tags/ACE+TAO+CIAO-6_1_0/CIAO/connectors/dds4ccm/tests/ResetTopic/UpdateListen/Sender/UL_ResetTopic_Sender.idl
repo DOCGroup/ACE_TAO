@@ -1,0 +1,31 @@
+// $Id$
+
+/**
+ * @file
+ * @author Marcel Smit <msmit@remedy.nl>
+ *
+ * by-hand idl3 translation of sender components.
+ */
+
+#ifndef UL_RESETTOPIC_SENDER_IDL
+#define UL_RESETTOPIC_SENDER_IDL
+
+#include "Connector/UL_ResetTopic_Connector.idl"
+
+module UL_ResetTopic
+{
+  interface ChangeTopicInterface
+  {
+    void set_new_topic (in string topic_name);
+  };
+
+  component Sender supports ChangeTopicInterface
+  {
+    port UL_ResetTopicTestConnector::DDS_Update info_update;
+
+    attribute unsigned short iterations;
+    attribute unsigned short keys;
+  };
+};
+
+#endif

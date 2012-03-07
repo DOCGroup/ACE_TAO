@@ -1,0 +1,26 @@
+// $Id$
+
+/**
+ * @file
+ * @author Marcel Smit <msmit@remedy.nl>
+ *
+ */
+
+#ifndef DDS_SHARED_DP_COMPONENT_IDL
+#define DDS_SHARED_DP_COMPONENT_IDL
+
+#include "Connector1/Connector1.idl"
+#include "Connector2/Connector2.idl"
+#include "Connector3/Connector3.idl"
+
+module SharedDP
+{
+  component SharedDPComponent
+  {
+    port SharedDP_Connector1::SharedDPTest1Connector::DDS_Write write1;
+    port SharedDP_Connector2::SharedDPTest2Connector::DDS_Write write2;
+    port SharedDP_Connector3::SharedDPTest3Connector::DDS_Write write3;
+  };
+};
+
+#endif
