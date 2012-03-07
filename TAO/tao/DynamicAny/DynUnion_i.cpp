@@ -16,6 +16,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_DynUnion_i::TAO_DynUnion_i (CORBA::Boolean allow_truncation)
   : TAO_DynCommon (allow_truncation)
+  , member_slot_ (0u)
 {
 }
 
