@@ -1,3 +1,13 @@
+Wed Mar  7 15:27:00 UTC 2012  Simon Massey <simon dot massey at prismtech dot com>
+
+        * tests/DynValue_Test/Analyzer.cpp:
+        * tao/DynaicAny/DynCommon.cpp:
+        * tao/DynaicAny/DynEnum_i.cpp:
+        * tao/DynaicAny/DynValueCommon_i.cpp:
+        * tao/DynaicAny/DynValueBox_i.cpp:
+        * tao/DynaicAny/DynUnion_i.cpp:
+          Coverity problems addressed.
+
 Wed Mar  7 14:16:30 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/IFR_Client/IFR_Base.pidl:
