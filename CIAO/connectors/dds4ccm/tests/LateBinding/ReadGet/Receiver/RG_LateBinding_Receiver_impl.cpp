@@ -43,6 +43,7 @@ namespace CIAO_RG_LateBinding_Receiver_Impl
         ::RG_LateBinding::CCM_Receiver_Context::_duplicate (ctx))
     , iterations_ (iterations)
     , keys_ (keys)
+    , checker_ (0)
   {
   }
 
