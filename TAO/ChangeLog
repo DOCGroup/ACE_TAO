@@ -1,3 +1,15 @@
+Wed Mar  7 14:16:30 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IFR_Client/IFR_Base.pidl:
+          Include normal idl file
+
+        * tao/IFR_Client/IFR_Client.mpc:
+          Generate export headers
+
+        * tao/IFR_Client/ifr_client_export.h:
+        * tao/IFR_Client/ifr_client_skel_export.h:
+          Removed from svn, now generated as part of the build
+
 Wed Mar  7 10:02:59 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * NEWS:
