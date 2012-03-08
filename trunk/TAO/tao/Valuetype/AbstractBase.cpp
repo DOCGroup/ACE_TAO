@@ -63,8 +63,7 @@ CORBA::AbstractBase::_add_ref (void)
   // This is required by the C++ Mapping 1.2.
   if (this->is_objref_)
     {
-      this->equivalent_obj_ =
-        CORBA::Object::_duplicate (this->equivalent_obj_.in ());
+      CORBA::Object::_duplicate (this->equivalent_obj_.in ());
     }
 }
 

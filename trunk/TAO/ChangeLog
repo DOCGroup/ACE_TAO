@@ -1,3 +1,8 @@
+Thu Mar  8 16:12:46 UTC 2012  Martin Corino  <mcorino@remedy.nl>
+
+        * tao/Valuetype/AbstractBase.cpp:
+          Fixed reference counting problem.
+
 Thu Mar  8 07:50:47 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/IFR_Client/IFR_Client.mpc:
