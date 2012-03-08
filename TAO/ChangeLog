@@ -1,3 +1,8 @@
+Thu Mar  8 07:50:47 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IFR_Client/IFR_Client.mpc:
+          Fixed export macros
+
 Wed Mar  7 18:33:32 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/IFR_Client/IFR_Client.mpc:
