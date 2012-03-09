@@ -271,7 +271,7 @@ endif # ! LN_S
 # Don't call shell/call directly below since we may need to
 # add the architecture specific suffix to the directory
 ifneq ($(use_pwd_call),1)
-ARCH_SOURCE_DIR := $(patsubst %/,%,$(shell pwd)/$(ARCH))
+ARCH_SOURCE_DIR := $(patsubst %/,%,$(PWD)/$(ARCH))
 else
 ARCH_SOURCE_DIR := $(patsubst %/,%,$(call PWD)/$(ARCH))
 endif

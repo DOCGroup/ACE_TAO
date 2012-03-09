@@ -172,7 +172,7 @@ $(VLIB): $(VLOBJS)
 	$(AR.cc.override)
     else
 	([ "`echo $(TMPINCDIR:%=%/*.o)`" != "$(TMPINCDIR:%=%/*.o)" ] && echo $(TMPINCDIR:%=%/*.o); \
-	echo $(filter %.o, $?)) | xargs $(AR) $(ARFLAGS) $@ $(AREXTRA)
+	echo $(filter %.o, $^)) | xargs $(AR) $(ARFLAGS) $@ $(AREXTRA)
     endif
   endif
   ifdef ibmcxx_build
