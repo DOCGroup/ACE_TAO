@@ -1,3 +1,17 @@
+Fri Mar  9 20:38:22 UTC 2012  Adam Mitz  <mitza@ociweb.com>
+
+        * include/makeinclude/rules.lib.GNU:
+
+          When creating an archive library, use all object files instead of
+          just modified object files.  This fixes a bug that can occur when
+          two different subdirectories have objects files with the same name.
+          The archive dosn't track directory names so "replacing" one changed
+          object could actually be clobbering another one.
+
+        * include/makeinclude/rules.local.GNU:
+
+          Use the $(PWD) make variable for current directory.
+
 Wed Mar  7 14:58:07 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/Download.html:
