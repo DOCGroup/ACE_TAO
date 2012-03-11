@@ -1,3 +1,12 @@
+Sun Mar 11 13:21:48 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Callback_Quoter/Notifier_i.h:
+        * examples/Callback_Quoter/Notifier_i.cpp:
+        * examples/Persistent_Grid/Grid_i.cpp:
+        * examples/PluggableUDP/tests/SimplePerformance/client.cpp:
+        * examples/Simple/bank/AccountManager_i.cpp:
+          Coverity fixes
+
 Thu Mar  8 16:12:46 UTC 2012  Martin Corino  <mcorino@remedy.nl>
 
         * tao/Valuetype/AbstractBase.cpp:

@@ -20,7 +20,8 @@ Grid_i::Grid_i (CORBA::Short x,
                 pool_t *mem_pool)
   : width_ (x),
     height_ (y),
-    array_ (0)
+    array_ (0),
+    pool_t_ (0)
 {
   // First try to locate the matrix in the pool. If it is there then
   // it has already been created. In such a case we just get that

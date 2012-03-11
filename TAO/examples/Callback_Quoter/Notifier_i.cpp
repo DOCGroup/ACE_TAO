@@ -95,7 +95,7 @@ Notifier_i::register_callback (const char *stock_name,
 void
 Notifier_i::orb (CORBA::ORB_ptr orb)
 {
-  this->orb_ = orb;
+  this->orb_ = CORBA::ORB::_duplicate (orb);
 }
 
 // Remove the client handler.

@@ -72,7 +72,7 @@ public:
   //private:
 public:
   /// The ORB manager.
-  CORBA::ORB_ptr orb_;
+  CORBA::ORB_var orb_;
 
   /**
    * @class Consumer_Data
