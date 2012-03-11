@@ -185,7 +185,7 @@ Client::svc (void)
       //ACE_DEBUG ((LM_DEBUG, "...finished\n"));
 
       time_t dur = measured.sec () * 1000000 + measured.usec ();
-      if (dur == 0)
+      if (dur == 0 || this->niterations_ == 0)
         ACE_DEBUG ((LM_DEBUG, "Time not measurable, calculation skipped\n"));
       else
       {
