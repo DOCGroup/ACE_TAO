@@ -9,6 +9,7 @@ project(CosNotification_IDL) : orbsvcslib, orbsvcs_output, install, event, tao_v
     CosNotification.idl
     CosNotifyComm.idl
     CosNotifyFilter.idl
+    CosNotifyFilterExt.idl
     CosNotifyChannelAdmin.idl
     NotifyExt.idl
     Event_Forwarder.idl
@@ -28,6 +29,7 @@ project(CosNotification) : orbsvcslib, orbsvcs_output, install, event {
     CosNotificationC.cpp
     CosNotifyCommC.cpp
     CosNotifyFilterC.cpp
+    CosNotifyFilterExtC.cpp
     CosNotifyChannelAdminC.cpp
     NotifyExtC.cpp
     Event_ForwarderC.cpp
@@ -38,6 +40,7 @@ project(CosNotification) : orbsvcslib, orbsvcs_output, install, event {
     CosNotificationC.h
     CosNotifyCommC.h
     CosNotifyFilterC.h
+    CosNotifyFilterExtC.h
     CosNotifyChannelAdminC.h
     NotifyExtC.h
     Event_ForwarderC.h
@@ -48,6 +51,7 @@ project(CosNotification) : orbsvcslib, orbsvcs_output, install, event {
     CosNotificationC.inl
     CosNotifyCommC.inl
     CosNotifyFilterC.inl
+    CosNotifyFilterExtC.inl
     CosNotifyChannelAdminC.inl
     NotifyExtC.inl
     Event_ForwarderC.inl
@@ -79,6 +83,7 @@ project(CosNotification_Skel) : orbsvcslib, orbsvcs_output, install, notificatio
     CosNotificationS.cpp
     CosNotifyCommS.cpp
     CosNotifyFilterS.cpp
+    CosNotifyFilterExtS.cpp
     CosNotifyChannelAdminS.cpp
     NotifyExtS.cpp
     Event_ForwarderS.cpp
@@ -88,6 +93,7 @@ project(CosNotification_Skel) : orbsvcslib, orbsvcs_output, install, notificatio
     CosNotificationS.h
     CosNotifyCommS.h
     CosNotifyFilterS.h
+    CosNotifyFilterExtS.h
     CosNotifyChannelAdminS.h
     NotifyExtS.h
     Event_ForwarderS.h

@@ -20,7 +20,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/CosNotifyFilterS.h"
+#include "orbsvcs/CosNotifyFilterExtS.h"
 
 #include "orbsvcs/Notify/FilterFactory.h"
 #include "orbsvcs/Notify/ID_Factory.h"
@@ -42,7 +42,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  */
 class TAO_Notify_Serv_Export TAO_Notify_ETCL_FilterFactory :
-  public virtual POA_CosNotifyFilter::FilterFactory,
+  public virtual POA_CosNotifyFilterExt::FilterFactory,
   public virtual TAO_Notify_FilterFactory
 {
 public:
@@ -68,6 +68,9 @@ public:
       const char * constraint_grammar,
       const CORBA::Any & default_value);
 
+  virtual void remove_filter (
+      CosNotifyFilter::Filter_ptr filter);
+
 
   virtual void save_persistent (TAO_Notify::Topology_Saver& saver);
 
@@ -79,6 +82,9 @@ public:
   virtual TAO_Notify_Object::ID get_filter_id (CosNotifyFilter::Filter_ptr filter);
   virtual CosNotifyFilter::Filter_ptr get_filter (const TAO_Notify_Object::ID& id);
 
+  virtual CosNotifyFilter::FilterID get_filterid (CosNotifyFilter::Filter_ptr filter);
+  virtual CosNotifyFilter::Filter_ptr get_filter (CosNotifyFilter::FilterID id);
+
 
 protected:
 
@@ -86,6 +92,9 @@ protected:
     create_filter (const char *constraint_grammar,
                    const TAO_Notify_Object::ID& id,
                    TAO_Notify_ETCL_Filter*& filter);
+
+  TAO_Notify_Object::ID find_filter_id (CosNotifyFilter::Filter_ptr filter);
+  CosNotifyFilter::Filter_ptr find_filter (const TAO_Notify_Object::ID& id);
 
   /// Release this object.
   virtual void release (void);
@@ -101,6 +110,8 @@ protected:
                                 TAO_SYNCH_MUTEX>  FILTERMAP;
 
   FILTERMAP filters_;
+  TAO_SYNCH_MUTEX mtx_;
+
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

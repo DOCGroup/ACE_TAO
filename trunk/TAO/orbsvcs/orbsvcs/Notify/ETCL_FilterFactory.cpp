@@ -18,6 +18,7 @@ TAO_Notify_ETCL_FilterFactory::TAO_Notify_ETCL_FilterFactory (void) :
 
 TAO_Notify_ETCL_FilterFactory::~TAO_Notify_ETCL_FilterFactory ()
 {
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mtx_);
   FILTERMAP::ITERATOR iterator (this->filters_);
 
   for (FILTERMAP::ENTRY *entry = 0;
@@ -105,11 +106,14 @@ TAO_Notify_ETCL_FilterFactory::create_filter (
                                             constraint_grammar,
                                             id),
                     CORBA::NO_MEMORY ());
-
-  if (filters_.bind (id, filter) == -1)
+  // Scope the guard
   {
-    throw CORBA::INTERNAL ();
-    return 0;
+    ACE_GUARD_REACTION (TAO_SYNCH_MUTEX, ace_mon, this->mtx_, throw CORBA::INTERNAL ());
+    if (filters_.bind (id, filter) == -1)
+    {
+      throw CORBA::INTERNAL ();
+      return 0;
+    }
   }
 
   PortableServer::ObjectId_var oid;
@@ -142,6 +146,40 @@ TAO_Notify_ETCL_FilterFactory::create_mapping_filter (const char * /*constraint_
   throw CORBA::NO_IMPLEMENT ();
 }
 
+void
+TAO_Notify_ETCL_FilterFactory::remove_filter (
+  CosNotifyFilter::Filter_ptr filter)
+{
+  ::PortableServer::Servant svt
+    = this->filter_poa_->reference_to_servant (filter);
+
+  ACE_GUARD_REACTION (TAO_SYNCH_MUTEX, ace_mon, this->mtx_, throw CORBA::INTERNAL ());
+
+  FILTERMAP::ITERATOR iterator (this->filters_);
+
+  bool found = false;
+  TAO_Notify_ETCL_Filter* filter_servant = 0;
+  FILTERMAP::ENTRY *entry = 0;
+  while ( !found && iterator.next (entry) != 0 ) {
+    if (svt == entry->int_id_) {
+      filter_servant = entry->int_id_;
+      found = true;
+      if (0 == this->filters_.unbind(entry)) {
+        delete filter_servant;
+      }
+      else {
+        throw CORBA::INTERNAL ();
+      }
+    }
+    else {
+      iterator.advance ();
+    }
+  }
+
+  if ( !found)
+    throw CosNotifyFilter::FilterNotFound();
+}
+
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 
@@ -150,6 +188,8 @@ TAO_Notify_ETCL_FilterFactory::save_persistent (TAO_Notify::Topology_Saver& save
 {
   bool changed = true;
   TAO_Notify::NVPList attrs; // ECF has no attributes
+
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mtx_);
   saver.begin_object(0, "filter_factory", attrs, changed);
 
   if (this->filters_.current_size () > 0)
@@ -212,8 +252,59 @@ TAO_Notify_ETCL_FilterFactory::release (void)
 TAO_Notify_Object::ID
 TAO_Notify_ETCL_FilterFactory::get_filter_id (CosNotifyFilter::Filter_ptr filter)
 {
+  return this->find_filter_id(filter);
+}
+
+
+CosNotifyFilter::Filter_ptr
+TAO_Notify_ETCL_FilterFactory::get_filter (const TAO_Notify_Object::ID& id)
+{
+  return this->find_filter(id);
+}
+
+CosNotifyFilter::FilterID
+TAO_Notify_ETCL_FilterFactory::get_filterid (CosNotifyFilter::Filter_ptr filter)
+{
+  return (CosNotifyFilter::FilterID) this->find_filter_id(filter);
+}
+
+
+CosNotifyFilter::Filter_ptr
+TAO_Notify_ETCL_FilterFactory::get_filter (CosNotifyFilter::FilterID id)
+{
+  return this->find_filter( (TAO_Notify_Object::ID) id);
+}
+
+CosNotifyFilter::Filter_ptr
+TAO_Notify_ETCL_FilterFactory::find_filter (const TAO_Notify_Object::ID& id)
+{
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                    ace_mon,
+                    this->mtx_,
+                    CosNotifyFilter::Filter::_nil ());
+
+  TAO_Notify_ETCL_Filter* filter = 0;
+  if (filters_.find (id, filter) == -1)
+    return CosNotifyFilter::Filter::_nil ();
+  else
+  {
+    CORBA::Object_var obj =
+      this->filter_poa_->servant_to_reference (filter);
+
+    CosNotifyFilter::Filter_var filter
+      = CosNotifyFilter::Filter::_narrow (obj.in ());
+
+    return filter._retn ();
+  }
+}
+
+TAO_Notify_Object::ID
+TAO_Notify_ETCL_FilterFactory::find_filter_id (CosNotifyFilter::Filter_ptr filter)
+{
   ::PortableServer::Servant svt
     = this->filter_poa_->reference_to_servant (filter);
+
+  ACE_GUARD_REACTION (TAO_SYNCH_MUTEX, ace_mon, this->mtx_, throw CORBA::INTERNAL ());
 
   FILTERMAP::ITERATOR iterator (this->filters_);
 
@@ -229,24 +320,6 @@ TAO_Notify_ETCL_FilterFactory::get_filter_id (CosNotifyFilter::Filter_ptr filter
   return 0;
 }
 
-
-CosNotifyFilter::Filter_ptr
-TAO_Notify_ETCL_FilterFactory::get_filter (const TAO_Notify_Object::ID& id)
-{
-  TAO_Notify_ETCL_Filter* filter = 0;
-  if (filters_.find (id, filter) == -1)
-    return CosNotifyFilter::Filter::_nil ();
-  else
-  {
-    CORBA::Object_var obj =
-      this->filter_poa_->servant_to_reference (filter);
-
-    CosNotifyFilter::Filter_var filter
-      = CosNotifyFilter::Filter::_narrow (obj.in ());
-
-    return filter._retn ();
-  }
-}
 
 
 ACE_FACTORY_DEFINE (TAO_Notify_Serv, TAO_Notify_ETCL_FilterFactory)
