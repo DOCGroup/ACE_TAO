@@ -1,3 +1,10 @@
+Mon Mar 12 20:22:17 UTC 2012  Adam Mitz  <mitza@ociweb.com>
+
+        * include/makeinclude/rules.local.GNU:
+
+          Revert this part of Friday's change, with a comment added
+          to describe why this use of 'pwd' is different.
+
 Fri Mar  9 20:38:22 UTC 2012  Adam Mitz  <mitza@ociweb.com>
 
         * include/makeinclude/rules.lib.GNU:
