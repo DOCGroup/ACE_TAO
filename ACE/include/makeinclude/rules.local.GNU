@@ -268,10 +268,11 @@ ifndef LN_S
   endif # ! WIN32
 endif # ! LN_S
 
-# Don't call shell/call directly below since we may need to
-# add the architecture specific suffix to the directory
+# Don't call shell/call directly in the rule below, since we may need to
+# add the architecture specific suffix to the directory.  Using $(shell pwd)
+# instead of just $(PWD) is needed for Korn shell on Solaris.
 ifneq ($(use_pwd_call),1)
-ARCH_SOURCE_DIR := $(patsubst %/,%,$(PWD)/$(ARCH))
+ARCH_SOURCE_DIR := $(patsubst %/,%,$(shell pwd)/$(ARCH))
 else
 ARCH_SOURCE_DIR := $(patsubst %/,%,$(call PWD)/$(ARCH))
 endif
