@@ -73,6 +73,9 @@ $nfs->DeleteFile ($nfsiorfile);
    }, {
     name => "Sequence",
     args => "",
+   }, {
+    name => "ExtendedFilter",
+    args => "",
    }, );
 
 @default_test_configs = (

@@ -1,0 +1,55 @@
+/**
+ * @file CosNotifyFilterExt.idl
+ *
+ * @brief Additional interfaces for Notify filter factory.
+ *
+ * $Id$
+ *
+ * @author Trevor Fields <fields_t@ociweb.com>
+ */
+
+#ifndef _COS_NOTIFY_FILTER_EXT_IDL_
+#define _COS_NOTIFY_FILTER_EXT_IDL_
+
+#include "CosNotifyFilter.idl"
+
+#pragma prefix ""
+
+/**
+ * @namespace CosNotifyFilterExt
+ *
+ * @brief Notify Filter Extensions.
+ */
+module CosNotifyFilterExt
+{
+
+  interface FilterFactory 
+    : CosNotifyFilter::FilterFactory
+  {
+    /// Remove an existing Filter object
+    /**
+     * @param filter A filter created by this FilterFactory that 
+     *   has no other references
+     * @throws FilterNotFound The filter provided is not found
+     *   in the factory
+     */
+    void remove_filter (in CosNotifyFilter::Filter filter)
+                        raises (CosNotifyFilter::FilterNotFound);
+
+    /// Find the filter id of an existing Filter object
+    /**
+     * @param filter A filter created by this FilterFactory
+     */
+    CosNotifyFilter::FilterID get_filterid (in CosNotifyFilter::Filter filter);
+
+    /// Find an existing Filter object
+    /**
+     * @param id A filter id for a filter created by this FilterFactory
+     */
+    CosNotifyFilter::Filter get_filter (in CosNotifyFilter::FilterID id);
+  };
+
+
+};
+
+#endif /* _COS_NOTIFY_FILTER_EXT_IDL_ */

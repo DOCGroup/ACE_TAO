@@ -58,6 +58,13 @@ project(*Notify Filter): notifytest {
   }
 }
 
+project(*Notify Extended Filter): notifytest {
+  exename = ExtendedFilter
+  Source_Files {
+    ExtendedFilter.cpp
+  }
+}
+
 project(*Notify Updates): notifytest {
   exename = Updates
   Source_Files {

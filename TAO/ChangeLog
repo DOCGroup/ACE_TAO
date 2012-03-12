@@ -1,3 +1,25 @@
+Mon Mar 12 20:47:27 UTC 2012  Trevor Fields  <fields_t@ociweb.com>
+
+        * orbsvcs/orbsvcs/CosNotification.mpc:
+        * orbsvcs/orbsvcs/CosNotifyFilterExt.idl:
+
+          Added an extension of the CosNotifyFilter::FilterFactory
+          to allow removal of filter created by the factory.  The extension
+          also has getters for existing filters and ids.
+
+        * orbsvcs/orbsvcs/Notify/ETCL_FilterFactory.cpp:
+        * orbsvcs/orbsvcs/Notify/ETCL_FilterFactory.h:
+
+          Converted TAO_Notify_ETCL_FilterFactory to implement
+          the extended FilterFactory type.
+
+        * orbsvcs/tests/Notify/Basic/Basic.mpc:
+        * orbsvcs/tests/Notify/Basic/ExtendedFilter.cpp:
+        * orbsvcs/tests/Notify/Basic/ExtendedFilter.h:
+        * orbsvcs/tests/Notify/Basic/run_test.pl:
+
+          Test for the extended filterfactory methods.
+
 Sun Mar 11 13:21:48 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Callback_Quoter/Notifier_i.h:
