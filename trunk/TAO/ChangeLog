@@ -1,3 +1,11 @@
+Tue Mar 13 18:50:38 UTC 2012  Trevor Fields  <fields_t@ociweb.com>
+
+        * orbsvcs/orbsvcs/CosNotifyFilterExt.idl:
+        * orbsvcs/tests/Notify/Basic/ExtendedFilter.cpp:
+        * orbsvcs/tests/Notify/Basic/ExtendedFilter.h:
+
+          Fixed fuzz and unused variable warnings on optimized builds.
+
 Tue Mar 13 16:50:37 UTC 2012  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_commponent.cpp(scan):
