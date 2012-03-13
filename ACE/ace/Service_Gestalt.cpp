@@ -1077,16 +1077,25 @@ ACE_Service_Gestalt::open_i (const ACE_TCHAR program_name[],
             {
               add_default = (*sptr != default_svc_conf);
             }
-
-          if (add_default)
+        }
+      if (add_default)
+        {
+          FILE *fp = ACE_OS::fopen (ACE_DEFAULT_SVC_CONF, ACE_TEXT ("r"));
+          if (fp != 0)
             {
-              FILE *fp = ACE_OS::fopen (ACE_DEFAULT_SVC_CONF, ACE_TEXT ("r"));
-              if (fp != 0)
-                ACE_OS::fclose(fp);
-              else
-                add_default = false;
-
+              ACE_OS::fclose(fp);
             }
+          else
+            {
+              add_default = false;
+              if (ACE::debug ()) {
+                  ACE_DEBUG ((LM_ERROR,
+                      ACE_TEXT ("ACE (%P|%t): Unable to load (default) ")
+                      ACE_DEFAULT_SVC_CONF
+                      ACE_TEXT(" file"))
+                      );
+            }
+          }
         }
 
       // Load the default "svc.conf" entry. here if there weren't
