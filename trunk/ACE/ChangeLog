@@ -1,3 +1,8 @@
+Tue Mar 13 11:24:33 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Service_Gestalt.cpp:
+          Reverted change below, breaks Missing_Svc_Conf_Test test
+
 Tue Mar 13 09:36:18 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Service_Gestalt.cpp:
