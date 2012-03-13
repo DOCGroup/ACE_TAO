@@ -23,12 +23,12 @@
 module CosNotifyFilterExt
 {
 
-  interface FilterFactory 
+  interface FilterFactory
     : CosNotifyFilter::FilterFactory
   {
     /// Remove an existing Filter object
     /**
-     * @param filter A filter created by this FilterFactory that 
+     * @param filter A filter created by this FilterFactory that
      *   has no other references
      * @throws FilterNotFound The filter provided is not found
      *   in the factory
