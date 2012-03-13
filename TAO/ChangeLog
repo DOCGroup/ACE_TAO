@@ -1,3 +1,16 @@
+Tue Mar 13 16:50:37 UTC 2012  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_commponent.cpp(scan):
+
+          Modified be_component::scan() to check the component's
+          supported interfaces (if any). They will have no ports,
+          but the presence of one or more read/write attributes
+          will trigger the generation of the servant's set_attribute()
+          method, which was incorrectly getting skipped if the component
+          itself had no attributes. Thanks to Michael Frommberger
+          <michael dot frommberger at gmx dot net> for reporting
+          the problem.
+
 Mon Mar 12 20:47:27 UTC 2012  Trevor Fields  <fields_t@ociweb.com>
 
         * orbsvcs/orbsvcs/CosNotification.mpc:
