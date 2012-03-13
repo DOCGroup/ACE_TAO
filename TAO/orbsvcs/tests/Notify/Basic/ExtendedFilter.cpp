@@ -106,6 +106,9 @@ ExtendedFilter::run_filter_test (CosNotifyFilter::FilterAdmin_ptr filter_admin)
 
   CosNotifyFilter::FilterID id_dup = extffact->get_filterid (filter.in());
   ACE_ASSERT (id_dup == id_1);
+#if defined (ACE_NDEBUG)
+  ACE_UNUSED_ARG (id_dup );
+#endif
 
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG, "Calling CosNotifyFilterExt::FilterFactory::get_filterid of non existent filter\n"));
@@ -113,10 +116,14 @@ ExtendedFilter::run_filter_test (CosNotifyFilter::FilterAdmin_ptr filter_admin)
   bool id_lookup_failed = false;
   try {
     CosNotifyFilter::FilterID id_ne = extffact2->get_filterid (filter.in());
+    ACE_UNUSED_ARG (id_ne );
   } catch (const CORBA::INTERNAL& ) {
     id_lookup_failed = true;
     }
   ACE_ASSERT (id_lookup_failed );
+#if defined (ACE_NDEBUG)
+  ACE_UNUSED_ARG (id_lookup_failed );
+#endif
 
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG, "Calling remove_filter\n"));
