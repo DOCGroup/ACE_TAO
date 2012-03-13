@@ -270,6 +270,16 @@ be_component::scan (UTL_Scope *s)
 
   if (c != 0)
     {
+      for (long i = 0; i < c->n_supports (); ++i)
+        {
+          // See if the supported interfaces (if any) have attributes.
+          // If CORBA::Object is supported, DeclAsScope will evaluate
+          // to 0 and the call to scan() will return immediately.
+          this->scan (DeclAsScope (c->supports ()[i]));
+        }
+
+      // Check the base component. If there is none, the arg to scan()
+      // will be 0 and the call will return immediately.
       this->scan (c->base_component ());
     }
 }
