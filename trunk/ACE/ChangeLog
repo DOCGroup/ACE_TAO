@@ -1,9 +1,18 @@
+Tue Mar 13 09:36:18 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Service_Gestalt.cpp:
+          Fixed bugzilla 4008, thanks to Derek Dominish
+          <derek dot dominish at dsto dot defence dot gov dot au> for
+          creating the fix
+
 Tue Mar 13 09:29:56 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_4008_Regression_Test.cpp:
         * tests/run_test.lst:
         * tests/tests.mpc:
-          New test for bugzilla 4008.
+          New test for bugzilla 4008. Thanks to Derek Dominish
+          <derek dot dominish at dsto dot defence dot gov dot au> for
+          creating this test
 
 Mon Mar 12 20:22:17 UTC 2012  Adam Mitz  <mitza@ociweb.com>
 
