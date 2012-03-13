@@ -467,6 +467,13 @@ project(Bug_3974_Regression_Test) : acetest {
   }
 }
 
+project(Bug_4008_Regression_Test) : acetest {
+  exename = Bug_4008_Regression_Test
+  Source_Files {
+    Bug_4008_Regression_Test.cpp
+  }
+}
+
 project(Cache Map Manager Test) : acetest {
   exename = Cache_Map_Manager_Test
   Source_Files {
