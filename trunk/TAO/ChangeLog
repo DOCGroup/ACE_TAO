@@ -1,3 +1,11 @@
+Tue Mar 13 20:44:11 UTC 2012  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_valuetype(has_supported_op):
+
+          Fixed typo in IF block termination check. Thanks to
+          Michael Frommberger <michael dot frommberger at gmx
+          dot net> for reporting the oversight.
+
 Tue Mar 13 18:50:38 UTC 2012  Trevor Fields  <fields_t@ociweb.com>
 
         * orbsvcs/orbsvcs/CosNotifyFilterExt.idl:
