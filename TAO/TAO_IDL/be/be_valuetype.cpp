@@ -217,9 +217,9 @@ be_valuetype::determine_factory_style (void)
           if (!d)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%N:%l) be_valuetype::"
-                                 "determine_factory_style"
-                                 "bad node in this scope\n"),
+                                 ACE_TEXT ("be_valuetype::")
+                                 ACE_TEXT ("determine_factory_style")
+                                 ACE_TEXT ("bad node in this scope\n")),
                                 factory_style);
 
             }
@@ -278,9 +278,9 @@ be_valuetype::have_operation (void)
           if (!d)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%N:%l) be_valuetype::"
-                                 "has_operation"
-                                 "bad node in this scope\n"),
+                                 ACE_TEXT ("be_valuetype::")
+                                 ACE_TEXT ("has_operation")
+                                 ACE_TEXT ("bad node in this scope\n")),
                                 0);
 
             }
@@ -338,7 +338,7 @@ be_valuetype::have_operation (void)
 bool
 be_valuetype::have_supported_op (be_interface * node)
 {
-  bool have_supported_op = 0;
+  bool have_supported_op = false;
 
   if (node->nmembers () == 0)
     {
@@ -347,17 +347,17 @@ be_valuetype::have_supported_op (be_interface * node)
 
   // Initialize an iterator for supported interface elements
   for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
-       si.is_done ();
+       !si.is_done ();
        si.next())
     {
       AST_Decl *d = si.item ();
 
-      if (!d)
+      if (d == 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_valuetype::"
-                             "have_supported_op"
-                             "bad node in this scope\n"),
+                             ACE_TEXT ("be_valuetype::")
+                             ACE_TEXT ("have_supported_op")
+                             ACE_TEXT ("bad node in this scope\n")),
                             0);
         }
 
@@ -366,7 +366,7 @@ be_valuetype::have_supported_op (be_interface * node)
       // Check the type of each element in the supported interface
       if (nt == AST_Decl::NT_op || nt == AST_Decl::NT_attr)
         {
-          have_supported_op = 1;
+          have_supported_op = true;
           break;
         }
     } // end for loop
@@ -649,8 +649,9 @@ be_valuetype::data_members_count (AST_Field::Visibility vis)
       if (!d)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_valuetype::data_members_count - "
-                             "bad node in this scope\n"), 0);
+                             ACE_TEXT ("be_valuetype::data_members_count - ")
+                             ACE_TEXT ("bad node in this scope\n")),
+                            0);
         }
 
       AST_Field *field = AST_Field::narrow_from_decl (d);
@@ -726,9 +727,9 @@ be_valuetype::traverse_supports_list_graphs (
       if (this->insert_queue.enqueue_tail (supported_interface) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_valuetype::"
-                             "traverse_supports_list_graphs - "
-                             "error generating entries\n"),
+                             ACE_TEXT ("be_valuetype::")
+                             ACE_TEXT ("traverse_supports_list_graphs - ")
+                             ACE_TEXT ("error generating entries\n")),
                             -1);
         }
     }
@@ -762,9 +763,9 @@ be_valuetype::traverse_concrete_inheritance_graph (tao_code_emitter gen,
   if (this->insert_queue.enqueue_tail (concrete) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_valuetype::"
-                         "traverse_concrete_inheritance_graph - "
-                         "error generating entries\n"),
+                         ACE_TEXT ("be_valuetype::")
+                         ACE_TEXT ("traverse_concrete_inheritance_graph - ")
+                         ACE_TEXT ("error generating entries\n")),
                         -1);
     }
 
