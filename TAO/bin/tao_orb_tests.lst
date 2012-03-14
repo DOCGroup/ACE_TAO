@@ -190,7 +190,7 @@ TAO/tests/Bug_3755_Ext_Regression/run_test.pl -diffserv: !STATIC !MINIMUM !CORBA
 TAO/tests/Bug_3755_Ext_Regression/run_test.pl -bidir: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !GIOP10 !DISABLE_BIDIR !LynxOS
 TAO/tests/Bug_3755_Ext_Regression/run_test.pl -messaging: !STATIC !NO_MESSAGING !CORBA_E_MICRO !LynxOS
 TAO/tests/Bug_3755_Ext_Regression/run_test.pl -csd: !STATIC !ST !CORBA_E_MICRO !LynxOS
-TAO/tests/Bug_3755_Ext_Regression/run_test.pl -ziop: !STATIC ZIOP ZLIB !LynxOS
+TAO/tests/Bug_3755_Ext_Regression/run_test.pl -ziop: !STATIC ZLIB !LynxOS
 TAO/tests/Bug_3766_Regression/run_test.pl:
 TAO/tests/Bug_3768_Regression/run_test.pl: !ST !NO_MESSAGING !CORBA_E_MICRO
 TAO/tests/Bug_3790_Regression/run_test.pl:
@@ -459,7 +459,7 @@ TAO/tests/DII_Collocation_Tests/oneway/run_test.pl: !ST !MINIMUM !CORBA_E_COMPAC
 TAO/tests/DII_Collocation_Tests/twoway/run_test.pl: !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/tests/Compression/run_test.pl
 TAO/tests/Collocated_Forwarding/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !ACE_FOR_TAO
-TAO/tests/ZIOP/run_test.pl: ZIOP ZLIB
+TAO/tests/ZIOP/run_test.pl: ZLIB
 TAO/tests/ForwardUponObjectNotExist/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !ACE_FOR_TAO
 TAO/tests/ForwardOnceUponException/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !ACE_FOR_TAO !ST
 TAO/tests/Bug_3853_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !ACE_FOR_TAO
