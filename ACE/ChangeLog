@@ -1,3 +1,11 @@
+Wed Mar 14 10:04:06 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/Download.html:
+          Added link to ORBZone as community site for CORBA/CCM
+
+        * tests/run_test.lst:
+          Mark 4008 as not fixed
+
 Tue Mar 13 11:24:33 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Service_Gestalt.cpp:
