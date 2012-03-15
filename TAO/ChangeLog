@@ -1,3 +1,8 @@
+Thu Mar 15 10:35:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * bin/tao_orb_tests.lst
+          ZIOP test actually require BZIP2 in addition to ZLIB.
+
 Thu Mar 15 09:17:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
 
         * tests/ZIOP/common.h:
