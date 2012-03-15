@@ -1,3 +1,14 @@
+Thu Mar 15 09:17:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * tests/ZIOP/common.h:
+        * tests/ZIOP/client.cpp:
+        * tests/ZIOP/server.cpp:
+          With the recent change (Mon Feb 27 08:16:27 UTC 2012  Johnny Willemsen)
+          Putting the zlib compressors into a map for reuse, the ZIOP test needed to be updated
+          to obtain the correct compressor to determine if the compression had worked.
+          i.e. the client needs to know what level of compression was actually used
+          to talk with the server NOT the level it was advertising it was capable of.
+
 Wed Mar 14 14:05:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
 
         * bin/tao_orb_tests.lst
