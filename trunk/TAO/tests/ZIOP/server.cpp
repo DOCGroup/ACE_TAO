@@ -11,8 +11,7 @@
 #include "tao/Policy_CurrentC.h"
 #include "tao/Transport.h"
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
-int test = 1;
+#include "common.h"
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -82,19 +81,21 @@ create_compressor_id_level_list_policy (CORBA::ORB_ptr orb)
 
   if (test == 2)
     {
+      ACE_DEBUG((LM_DEBUG,
+                 ACE_TEXT("*** NOTE TestCompressor is EXPECTED to throw IDL:omg.org/Compression/CompressionException ***\n")));
       compressor_id_list.length(1);
       compressor_id_list[0].compressor_id = COMPRESSORID_FOR_TESTING;
-      compressor_id_list[0].compression_level = 5;
+      compressor_id_list[0].compression_level = SERVER_COMPRESSION_LEVEL;
     }
   else
     {
-      compressor_id_list.length(3);
+      compressor_id_list.length(2);
       compressor_id_list[0].compressor_id = ::Compression::COMPRESSORID_BZIP2;
-      compressor_id_list[0].compression_level = 5;
+      compressor_id_list[0].compression_level = SERVER_COMPRESSION_LEVEL;
       compressor_id_list[1].compressor_id = ::Compression::COMPRESSORID_ZLIB;
-      compressor_id_list[1].compression_level = 5;
-      compressor_id_list[2].compressor_id = COMPRESSORID_FOR_TESTING;
-      compressor_id_list[2].compression_level = 5;
+      compressor_id_list[1].compression_level = SERVER_COMPRESSION_LEVEL;
+      //compressor_id_list[2].compressor_id = COMPRESSORID_FOR_TESTING;
+      //compressor_id_list[2].compression_level = SERVER_COMPRESSION_LEVEL;
     }
 
   CORBA::Any compressor_id_any;
@@ -249,4 +250,3 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   return 0;
 }
-
