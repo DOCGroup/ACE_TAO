@@ -12,6 +12,7 @@
 #include "tao/Transport.h"
 
 #include "common.h"
+static const ACE_TCHAR *ior_output_file = DEFAULT_IOR_FILENAME;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])

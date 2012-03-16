@@ -8,6 +8,7 @@
 #include "TestCompressor/TestCompressor_Factory.h"
 
 #include "common.h"
+static const ACE_TCHAR *ior = ACE_TEXT("file://") DEFAULT_IOR_FILENAME;
 
 static ::Compression::CompressionManager_var compression_manager = 0;
 
