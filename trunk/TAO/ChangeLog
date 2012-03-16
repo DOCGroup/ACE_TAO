@@ -1,3 +1,10 @@
+Fri Mar 16 10:45:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * tests/ZIOP/common.h:
+        * tests/ZIOP/client.cpp:
+        * tests/ZIOP/server.cpp:
+          Remove scoreboard warnings.
+
 Thu Mar 15 10:35:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
 
         * bin/tao_orb_tests.lst
