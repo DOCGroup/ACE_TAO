@@ -1,3 +1,12 @@
+Fri Mar 16 16:07:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * tao/ZIOP/ZIOP_Service_Context_Handler.cpp:
+          Correction to generate_service_context() to use a new OutputCDR for
+          each policy being encoded. (The later policies were being incorrectly
+          appended to the earlier polices as the slots in the policy sequence
+          were populated.) Provide the decode functionality for later use of
+          these policies in the server via process_service_context().
+
 Fri Mar 16 10:45:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
 
         * tests/ZIOP/common.h:
