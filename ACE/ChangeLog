@@ -1,3 +1,9 @@
+Sat Mar 17 12:11:15 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/cleanbuilds.sh:
+        * bin/diff-builds.pl:
+          Updated teststat links
+
 Wed Mar 14 10:04:06 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/Download.html:

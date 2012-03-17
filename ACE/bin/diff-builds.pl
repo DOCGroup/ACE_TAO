@@ -16,10 +16,10 @@ my $clean_builds_only = 1; # Only diff todays clean builds
 my $append_revision_to_new_test_fails = 0;  # Default to not doing this.
 
 # The root of the test statistics
-my $teststaturl = "http://download.theaceorb.nl/teststat/builds/";
+my $teststaturl = "http://teststat.theaceorb.nl/teststat/builds/";
 
-my $allbuildsurl = "http://download.theaceorb.nl/teststat/buildscore";
-my $cleanbuildsurl = "http://download.theaceorb.nl/teststat/cleanbuildtests";
+my $allbuildsurl = "http://teststat.theaceorb.nl/teststat/buildscore";
+my $cleanbuildsurl = "http://teststat.theaceorb.nl/teststat/cleanbuildtests";
 
 # Determine the available timestamps for a build on a date,
 # by scanning the index page (build.html)
