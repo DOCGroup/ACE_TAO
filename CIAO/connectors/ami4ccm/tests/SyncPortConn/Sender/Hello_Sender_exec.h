@@ -111,8 +111,6 @@ namespace CIAO_Hello_Sender_Impl
     //@}
 
   private:
-    ::Hello::CCM_Sender_Context_var ciao_context_;
-
     //@{
     /** Component attributes. */
     //@}

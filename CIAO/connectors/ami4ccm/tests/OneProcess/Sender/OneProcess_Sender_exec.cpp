@@ -171,8 +171,10 @@ namespace CIAO_OneProcess_Sender_Impl
    * Component Executor Implementation Class: Sender_exec_i
    */
 
-  Sender_exec_i::Sender_exec_i (void)
-  : asynch_(false)
+  Sender_exec_i::Sender_exec_i (void) :
+    asynch_foo_gen(0),
+    synch_foo_gen(0),
+    asynch_(false)
   {
   }
 

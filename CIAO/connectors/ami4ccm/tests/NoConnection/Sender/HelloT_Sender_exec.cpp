@@ -34,54 +34,6 @@ namespace CIAO_HelloT_Sender_Impl
   CORBA::Short nr_of_asyn_called = 0;
   CORBA::Short nr_of_syn_failed = 0;
 
-  /*
-  void HandleException (
-        long id,
-        const char* error_string,
-        const char* test,
-        const char* func)
-  {
-    if (id != 42)
-      {
-        ACE_ERROR ((LM_ERROR, "ERROR Sender: unexpected ID received in except "
-                              "handler <%u> <%C> (%C)\n",
-                               id, error_string,func));
-        return;
-      }
-    if (ACE_OS::strcmp (test, "thrown by receiver") != 0)
-      {
-        ACE_ERROR ((LM_ERROR, "ERROR Sender (%s): unexpected string received in"
-                              " except handler <%s>\n",
-                              func, test));
-        return;
-      }
-    ACE_DEBUG ((LM_DEBUG, "Sender: Caught correct exception <%u,"
-                            "%C> for %C\n",
-                            id, error_string, func));
-    ++nr_of_received;
-  }
-
-  void HandleException (
-        ::CCM_AMI::ExceptionHolder_ptr excep_holder,
-        const char* func)
-  {
-    try
-      {
-        excep_holder->raise_exception ();
-      }
-    catch (const HelloT::InternalError& ex)
-      {
-        CIAO_HelloT_Sender_Impl::HandleException (ex.id,
-                                                      ex.error_string.in (),
-                                                      ex.test.in(), func);
-      }
-    catch (const CORBA::Exception& ex)
-      {
-        ex._tao_print_exception ("ERROR: Caught unexpected exception:");
-      }
-  }
-  */
-
   //============================================================
   // Worker thread for asynchronous invocations for MyFoo
   //============================================================
@@ -234,7 +186,10 @@ namespace CIAO_HelloT_Sender_Impl
    * Component Executor Implementation Class: Sender_exec_i
    */
 
-  Sender_exec_i::Sender_exec_i (void){
+  Sender_exec_i::Sender_exec_i (void) :
+    asynch_foo_gen(0),
+    synch_foo_gen(0)
+  {
   }
 
   Sender_exec_i::~Sender_exec_i (void)
@@ -305,6 +260,7 @@ namespace CIAO_HelloT_Sender_Impl
     delete this->synch_foo_gen;
     this->synch_foo_gen = 0;
   }
+
   AMI4CCM_MyFooReplyHandler_run_my_foo_i::AMI4CCM_MyFooReplyHandler_run_my_foo_i (void)
   {
   }

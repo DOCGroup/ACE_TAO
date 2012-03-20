@@ -207,7 +207,10 @@ namespace CIAO_ExceptionT_Sender_Impl
    * Component Executor Implementation Class: Sender_exec_i
    */
 
-  Sender_exec_i::Sender_exec_i (void){
+  Sender_exec_i::Sender_exec_i (void) :
+    asynch_foo_gen (0),
+    synch_foo_gen (0)
+  {
   }
 
   Sender_exec_i::~Sender_exec_i (void)
