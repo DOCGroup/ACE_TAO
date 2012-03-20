@@ -69,7 +69,7 @@ TAO_Synch_Reply_Dispatcher::dispatch_reply (
   if (this->reply_service_info_.length() > 0)
     {
       orb_core_->service_context_registry ().
-        process_service_contexts (this->reply_service_info_, *(params.transport_));
+        process_service_contexts (this->reply_service_info_, *(params.transport_), 0);
     }
 
   // Must reset the message state, it is possible that the same reply

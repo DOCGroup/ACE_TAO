@@ -30,7 +30,8 @@ class TAO_Codeset_Service_Context_Handler :
 {
 public:
   virtual int process_service_context (TAO_Transport& transport,
-                                       const IOP::ServiceContext& context);
+                                       const IOP::ServiceContext& context,
+                                       TAO_ServerRequest *request);
   virtual int generate_service_context (
     TAO_Stub* stub,
     TAO_Transport &transport,

@@ -1,3 +1,32 @@
+Tue Mar 20 11:45:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * tao/GIOP_Message_Generator_Parser_12.cpp:
+        * tao/Service_Context_Handler.h:
+        * tao/Service_Context_Handler_Registry.cpp:
+        * tao/Service_Context_Handler_Registry.h:
+        * tao/Synch_Reply_Dispatcher.cpp:
+        * tao/BiDir_GIOP/BiDir_Service_Context_Handler.cpp:
+        * tao/BiDir_GIOP/BiDir_Service_Context_Handler.h:
+        * tao/Codeset/Codeset_Service_Context_Handler.cpp:
+        * tao/Codeset/Codeset_Service_Context_Handler.h:
+        * tao/DiffServPolicy/DiffServ_Service_Context_Handler.cpp:
+        * tao/DiffServPolicy/DiffServ_Service_Context_Handler.h:
+        * tao/RTCORBA/RT_Service_Context_Handler.cpp:
+        * tao/RTCORBA/RT_Service_Context_Handler.h:
+          Enable the process_service_context() call to take a pointer
+          to the TAO_ServerRequest object (Null pointer with call
+          to Synch_Reply_Dispatcher.cpp as this is a reply not a request).
+          This allows the framework to decode the policies and save them
+          for future use.
+
+        * tao/TAO_Server_Request.cpp:
+        * tao/TAO_Server_Request.h:
+        * tao/ZIOP/ZIOP_Service_Context_Handler.cpp:
+        * tao/ZIOP/ZIOP_Service_Context_Handler.h:
+          process_service_context() now stores the decoded policies into
+          the TAO_ServerRequest object for later use. This keeps the decoder
+          with the encoder code in ZIOP/ZIOP_Service_Context_Handler.cpp.
+
 Fri Mar 16 16:07:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
 
         * tao/ZIOP/ZIOP_Service_Context_Handler.cpp:
