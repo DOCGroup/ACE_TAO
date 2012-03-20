@@ -114,7 +114,9 @@ namespace CIAO_DelReplyH_Sender_Impl
    */
 
   Sender_exec_i::Sender_exec_i (void)
-    : nr_callbacks_ (0),
+    : asynch_foo_gen (0),
+      synch_foo_gen (0),
+      nr_callbacks_ (0),
       nr_exceptions_ (0)
   {
   }

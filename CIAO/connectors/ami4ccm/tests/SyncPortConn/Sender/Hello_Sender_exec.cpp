@@ -240,7 +240,9 @@ namespace CIAO_Hello_Sender_Impl
   //============================================================
   // Component Executor Implementation Class: Sender_exec_i
   //============================================================
-  Sender_exec_i::Sender_exec_i (void)
+  Sender_exec_i::Sender_exec_i (void) :
+    asynch_foo_gen_ (0),
+    synch_foo_gen_ (0),
   {
   }
 

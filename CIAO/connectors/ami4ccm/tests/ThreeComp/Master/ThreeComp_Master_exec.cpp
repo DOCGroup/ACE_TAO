@@ -129,7 +129,9 @@ namespace CIAO_ThreeComp_Master_Impl
    */
 
   Master_exec_i::Master_exec_i (void)
-  : nr_of_rec_ (0),
+  : asynch_state_gen(0),
+    synch_state_gen(0),
+    nr_of_rec_ (0),
     nr_of_sent_(0)
   {
   }

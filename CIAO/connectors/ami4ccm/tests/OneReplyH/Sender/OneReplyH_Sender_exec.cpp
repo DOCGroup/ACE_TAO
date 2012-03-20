@@ -171,7 +171,11 @@ namespace CIAO_OneReplyH_Sender_Impl
    * Component Executor Implementation Class: Sender_exec_i
    */
 
-  Sender_exec_i::Sender_exec_i (void){
+  Sender_exec_i::Sender_exec_i (void) :
+    asynch_foo_gen(0),
+    synch_foo_gen(0),
+    nr_of_received_(0)
+  {
   }
 
   Sender_exec_i::~Sender_exec_i (void)
