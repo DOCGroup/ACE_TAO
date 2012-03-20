@@ -17,10 +17,11 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 int
 TAO_ZIOP_Service_Context_Handler::process_service_context (
   TAO_Transport&,
-  const IOP::ServiceContext &ctx)
+  const IOP::ServiceContext &ctx,
+  TAO_ServerRequest *req)
 {
   // Ensure this context is actually for us to decode.
-  if (ctx.context_id != IOP::INVOCATION_POLICIES)
+  if (!req || ctx.context_id != IOP::INVOCATION_POLICIES)
     {
       return 0;
     }
@@ -56,22 +57,24 @@ TAO_ZIOP_Service_Context_Handler::process_service_context (
             {
             case ::ZIOP::COMPRESSION_ENABLING_POLICY_ID:
               {
-                TAO::CompressionEnablingPolicy enabled;
-                if (enabled._tao_decode (policy_cdr))
+                TAO::CompressionEnablingPolicy *enabled= 0;
+                ACE_NEW_RETURN (enabled, TAO::CompressionEnablingPolicy (), 0);
+                ACE_Auto_Basic_Ptr<TAO::CompressionEnablingPolicy> guard (enabled);
+                if (enabled->_tao_decode (policy_cdr))
                   {
-                    // TODO deal with this information sent from the client
-                    // ACE_DEBUG ((LM_DEBUG, "*** ENABLING_POLICY decoded ***\n"));
+                    req->clientCompressionEnablingPolicy (guard.release ());
                   }
                 break;
               }
 
             case ::ZIOP::COMPRESSOR_ID_LEVEL_LIST_POLICY_ID:
               {
-                TAO::CompressorIdLevelListPolicy id_list;
-                if (id_list._tao_decode (policy_cdr))
+                TAO::CompressorIdLevelListPolicy *id_list= 0;
+                ACE_NEW_RETURN (id_list, TAO::CompressorIdLevelListPolicy (), 0);
+                ACE_Auto_Basic_Ptr<TAO::CompressorIdLevelListPolicy> guard (id_list);
+                if (id_list->_tao_decode (policy_cdr))
                   {
-                    // TODO deal with this information sent from the client
-                    // ACE_DEBUG ((LM_DEBUG, "*** ID_LEVEL_LIST decoded ***\n"));
+                    req->clientCompressorIdLevelListPolicy (guard.release ());
                   }
                 break;
               }

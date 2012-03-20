@@ -27,6 +27,7 @@ class TAO_Transport;
 class TAO_Operation_Details;
 class TAO_Target_Specification;
 class TAO_Stub;
+class TAO_ServerRequest;
 
 /**
  * This is the base of handler classes that each can process a certain
@@ -40,7 +41,8 @@ class TAO_Export TAO_Service_Context_Handler
     TAO_Service_Context_Handler (void);
     virtual int process_service_context (
       TAO_Transport& transport,
-      const IOP::ServiceContext& context) = 0;
+      const IOP::ServiceContext& context,
+      TAO_ServerRequest *request) = 0;
 
     virtual int generate_service_context (
       TAO_Stub *stub,

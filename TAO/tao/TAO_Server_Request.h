@@ -276,6 +276,13 @@ public:
   PortableInterceptor::ReplyStatus pi_reply_status (void);
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
+#if TAO_HAS_ZIOP == 1
+  CORBA::Policy_ptr clientCompressionEnablingPolicy ();
+  void clientCompressionEnablingPolicy (CORBA::Policy_ptr);
+  CORBA::Policy_ptr clientCompressorIdLevelListPolicy ();
+  void clientCompressorIdLevelListPolicy (CORBA::Policy_ptr);
+#endif /* TAO_HAS_ZIOP == 1 */
+
 private:
   /// Default ctor only used to create a TAO_ServerRequest that is about
   /// to be the target of a clone operation.
@@ -374,6 +381,11 @@ private:
   /// An RAII (resource acquisition is initialization) class instance
   /// for interfacing with TSS storage for the "current" transport.
   TAO::Transport_Selection_Guard transport_;
+
+#if TAO_HAS_ZIOP == 1
+  CORBA::Policy_var clientCompressionEnablingPolicy_;
+  CORBA::Policy_var clientCompressorIdLevelListPolicy_;
+#endif /* TAO_HAS_ZIOP == 1 */
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

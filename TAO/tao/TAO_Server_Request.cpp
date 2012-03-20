@@ -588,4 +588,30 @@ TAO_ServerRequest::rs_pi_current (void)
 
 #endif /* TAO_HAS_INTERCEPTORS */
 
+#if TAO_HAS_ZIOP == 1
+CORBA::Policy_ptr
+TAO_ServerRequest::clientCompressionEnablingPolicy ()
+{
+  return this->clientCompressionEnablingPolicy_.in ();
+}
+
+void
+TAO_ServerRequest::clientCompressionEnablingPolicy (CORBA::Policy_ptr policy)
+{
+  this->clientCompressionEnablingPolicy_ = policy;
+}
+
+CORBA::Policy_ptr
+TAO_ServerRequest::clientCompressorIdLevelListPolicy ()
+{
+  return this->clientCompressorIdLevelListPolicy_.in ();
+}
+
+void
+TAO_ServerRequest::clientCompressorIdLevelListPolicy (CORBA::Policy_ptr policy)
+{
+  this->clientCompressorIdLevelListPolicy_ = policy;
+}
+#endif /* TAO_HAS_ZIOP == 1 */
+
 TAO_END_VERSIONED_NAMESPACE_DECL

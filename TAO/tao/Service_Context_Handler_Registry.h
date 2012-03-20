@@ -30,6 +30,7 @@ class TAO_Service_Context_Handler;
 class TAO_Operation_Details;
 class TAO_Target_Specification;
 class TAO_Stub;
+class TAO_ServerRequest;
 
 class TAO_Export TAO_Service_Context_Registry
 {
@@ -48,7 +49,10 @@ class TAO_Export TAO_Service_Context_Registry
      */
     TAO_Service_Context_Handler* operator[] (IOP::ServiceId id);
 
-    int process_service_contexts (IOP::ServiceContextList &sc, TAO_Transport& transport);
+    int process_service_contexts (
+      IOP::ServiceContextList &sc,
+      TAO_Transport &transport,
+      TAO_ServerRequest *request);
 
     int generate_service_context (
       TAO_Stub *stub,
