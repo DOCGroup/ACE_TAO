@@ -178,7 +178,9 @@ namespace CIAO_ThreeComp_Sender_Impl
    */
 
   Sender_exec_i::Sender_exec_i (void)
-  : nr_of_rec_(0),
+  : asynch_foo_gen (0),
+    synch_foo_gen (0),
+    nr_of_rec_(0),
     nr_of_sent_(0)
   {
   }

@@ -1,3 +1,25 @@
+Tue Mar 20 01:30:58 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/ami4ccm/examples/Quoter/Client/Quoter_Client_exec.h:
+        * connectors/ami4ccm/examples/Quoter/Client/Quoter_Client_exec.cpp:
+        * connectors/ami4ccm/tests/AsynchT/Sender/AsynchT_Sender_exec.cpp:
+        * connectors/ami4ccm/tests/DelReplyH/Sender/DelReplyH_Sender_exec.cpp:
+        * connectors/ami4ccm/tests/Exceptions/Sender/ExceptionT_Sender_exec.cpp:
+        * connectors/ami4ccm/tests/InterInArgs/Sender/InterInArgsT_Sender_exec.cpp:
+        * connectors/ami4ccm/tests/InterInOutArgs/Sender/InterInOutT_Sender_exec.cpp:
+        * connectors/ami4ccm/tests/NoConnection/Sender/HelloT_Sender_exec.cpp:
+        * connectors/ami4ccm/tests/NoReplyH/Sender/NoReplyH_Sender_exec.cpp:
+        * connectors/ami4ccm/tests/OneProcess/Sender/OneProcess_Sender_exec.cpp:
+        * connectors/ami4ccm/tests/OneReplyH/Sender/OneReplyH_Sender_exec.cpp:
+        * connectors/ami4ccm/tests/PragmaT/Sender/PragmaT_Sender_exec.cpp:
+        * connectors/ami4ccm/tests/SimplexMulti/Sender/UsesSM_Sender_exec.cpp:
+        * connectors/ami4ccm/tests/SyncPortConn/Sender/Hello_Sender_exec.h:
+        * connectors/ami4ccm/tests/SyncPortConn/Sender/Hello_Sender_exec.cpp:
+        * connectors/ami4ccm/tests/ThreeComp/Master/ThreeComp_Master_exec.cpp:
+        * connectors/ami4ccm/tests/ThreeComp/Sender/ThreeComp_Sender_exec.cpp:
+        * connectors/ami4ccm/tests/UsesMulti/Sender/UsesMulti_Sender_exec.cpp:
+          Fixed coverity errors
+
 Wed Mar  7 13:09:45 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/performance-tests/Throughput/Receiver/Throughput_Receiver_exec.cpp:

@@ -160,8 +160,10 @@ namespace CIAO_AsynchT_Sender_Impl
   * Component Executor Implementation Class: Sender_exec_i
   */
 
-  Sender_exec_i::Sender_exec_i (void)
-  : nr_of_sent_ (0),
+  Sender_exec_i::Sender_exec_i (void) :
+    asynch_foo_gen (0),
+    synch_foo_gen (0),
+    nr_of_sent_ (0),
     nr_of_rec_ (0)
   {
   }

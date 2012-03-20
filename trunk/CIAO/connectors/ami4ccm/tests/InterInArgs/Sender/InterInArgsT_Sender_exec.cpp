@@ -175,7 +175,9 @@ namespace CIAO_InterInArgsT_Sender_Impl
    */
 
   Sender_exec_i::Sender_exec_i (void)
-  : nr_of_received_(0)
+  : asynch_foo_gen (0),
+    synch_foo_gen (0),
+    nr_of_received_(0)
   {
   }
 
@@ -350,9 +352,6 @@ namespace CIAO_InterInArgsT_Sender_Impl
   {
     excep_holder->raise_exception ();
   }
-
-
-
 
   extern "C" INTERINARGS_T_SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_InterInArgsT_Sender_Impl (void)

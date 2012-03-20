@@ -91,7 +91,9 @@ namespace CIAO_Quoter_Client_Impl
    * Component Executor Implementation Class: Client_exec_i
    */
 
-  Client_exec_i::Client_exec_i (void){
+  Client_exec_i::Client_exec_i (void) :
+    asynch_quoter_gen_ (0)
+  {
   }
 
   Client_exec_i::~Client_exec_i (void)

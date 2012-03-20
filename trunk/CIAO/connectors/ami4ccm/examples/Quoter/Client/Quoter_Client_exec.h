@@ -90,8 +90,6 @@ namespace CIAO_Quoter_Client_Impl
     //@}
 
   private:
-    ::Quoter::CCM_Client_Context_var ciao_context_;
-
     /** @name Component attributes. */
     //@{
     //@}
