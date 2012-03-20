@@ -9,7 +9,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 int
 TAO_Service_Context_Registry::process_service_contexts (
   IOP::ServiceContextList &sc,
-  TAO_Transport& transport)
+  TAO_Transport& transport,
+  TAO_ServerRequest *request)
 {
   for (CORBA::ULong index = 0;
        index != sc.length ();
@@ -21,7 +22,7 @@ TAO_Service_Context_Registry::process_service_contexts (
 
     if (handler_iter != registry_.end ())
       {
-        return handler_iter->second->process_service_context (transport, context);
+        return handler_iter->second->process_service_context (transport, context, request);
       }
   }
   return 0;
