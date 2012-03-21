@@ -1,3 +1,27 @@
+Wed Mar 21 21:57:40 UTC 2012  Steve Huston  <shuston@riverace.com>
+
+        * ace/SOCK_Dgram_Mcast.cpp (subscribe_ifs): Expanded the use of
+          code to scan interfaces to be always, not just for IPv6, when
+          subscribing with OPT_NULLIFACE_ALL and no specific interface.
+          Also replaced use of ACE_OS::if_nameindex with getifaddr() when
+          it's available (which was only on Linux anyway) so checks
+          for interface up and multicastable can be made before joining.
+          The code now works for systems with ACE_HAS_GETIFDADDR (incl.
+          Linux, which was my main issue driving this) and Win32. The others
+          end up in the old get_ip_interfaces code which will never work
+          anywhere as far as I can tell because it tries to subscribe to an
+          interface named with the IP address in string form.
+
+        * tests/Multicast_Test.cpp: Removed hack force of interface "lo0"
+          on join(). No need for that with the fix above. For background, this
+          was added at:
+          Thu Jan 21 15:25:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/Sock_Connect.cpp (get_ip_interfaces_getifaddr): Will no longer
+          return an interface marked 'down'. Partially fixes Bugzilla #1990
+          but other platform-specific changes are needed to resolve it
+          completely.
+
 Sat Mar 17 12:16:15 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/Download.html:
