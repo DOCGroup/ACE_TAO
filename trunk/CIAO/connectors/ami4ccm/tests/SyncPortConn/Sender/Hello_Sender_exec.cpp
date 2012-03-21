@@ -242,7 +242,7 @@ namespace CIAO_Hello_Sender_Impl
   //============================================================
   Sender_exec_i::Sender_exec_i (void) :
     asynch_foo_gen_ (0),
-    synch_foo_gen_ (0),
+    synch_foo_gen_ (0)
   {
   }
 
