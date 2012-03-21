@@ -26,6 +26,7 @@ TAO_ZIOP_Service_Context_Handler::process_service_context (
       return 0;
     }
 
+#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP == 1
   // Create an input CDR from the context buffer
   TAO_InputCDR cdr (reinterpret_cast<const char*> (ctx.context_data.get_buffer ()),
                     ctx.context_data.length () );
@@ -84,6 +85,7 @@ TAO_ZIOP_Service_Context_Handler::process_service_context (
             }
         }
     }
+#endif /* TAO_HAS_ZIOP */
 
   return 0;
 }
