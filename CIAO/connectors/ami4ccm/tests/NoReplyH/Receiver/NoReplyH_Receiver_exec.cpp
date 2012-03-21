@@ -40,6 +40,7 @@ namespace CIAO_NoReplyH_Receiver_Impl
          Atomic_UShort &calls)
     : ciao_context_ (
         ::NoReplyH::CCM_Receiver_Context::_duplicate (ctx)),
+      attrib_ (0),
       calls_(calls)
   {
   }
