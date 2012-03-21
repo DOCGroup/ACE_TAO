@@ -1,3 +1,14 @@
+Wed Mar 21 13:08:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * tao/ZIOP/ZIOP_Service_Context_Handler.cpp:
+        * tao/orbconf.h
+          My system had defined TAO_HAS_ZIOP explicitly so I didn't see that
+          the mod to disable it (Fri Feb 24 09:18:00 UTC 2012  Johnny Willemsen)
+          when TAO_HAS_CORBA_MESSAGING is not defined was put in before this was
+          defaulted in this header. Move the ZIOP definitions to after the
+          TAO_HAS_CORBA_MESSAGING ones. I've also guarded the use in
+          ZIOP_Service_Context_Handler.cpp just to be safe.
+
 Tue Mar 20 11:45:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
 
         * tao/GIOP_Message_Generator_Parser_12.cpp:

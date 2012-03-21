@@ -248,15 +248,6 @@ const size_t TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE = 128;
 # define TAO_HAS_MONITOR_POINTS ACE_HAS_MONITOR_POINTS
 #endif
 
-#if !defined (TAO_HAS_ZIOP)
-# if (TAO_HAS_CORBA_MESSAGING == 1)
-// ZIOP needs corba messaging to work
-#  define TAO_HAS_ZIOP 1
-#else
-#  define TAO_HAS_ZIOP 0
-# endif
-#endif
-
 // Avoid namespace pollution that's common on older UNIXes...
 #if defined (minor)
 #undef minor
@@ -424,6 +415,15 @@ const size_t TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE = 128;
 #if !defined (TAO_HAS_CORBA_MESSAGING)
 #    define TAO_HAS_CORBA_MESSAGING 1
 #endif  /* !TAO_HAS_CORBA_MESSAGING */
+
+#if !defined (TAO_HAS_ZIOP)
+# if (TAO_HAS_CORBA_MESSAGING == 1)
+// ZIOP needs corba messaging to work
+#  define TAO_HAS_ZIOP 1
+#else
+#  define TAO_HAS_ZIOP 0
+# endif
+#endif
 
 // For all the policies, support is enabled by default if TAO is
 // configured for CORBA Messaging.  If TAO is not configured for CORBA
