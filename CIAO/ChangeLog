@@ -1,3 +1,8 @@
+Wed Mar 21 01:35:00 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/ami4ccm/tests/SyncPortConn/Sender/Hello_Sender_exec.cpp:
+          Fixed compile error
+
 Wed Mar 21 01:30:33 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/ami4ccm/tests/NoReplyH/Receiver/NoReplyH_Receiver_exec.cpp:
