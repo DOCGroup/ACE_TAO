@@ -622,7 +622,7 @@ TAO_Transport::format_queue_message (TAO_OutputCDR &stream,
                                      ACE_Time_Value *max_wait_time,
                                      TAO_Stub* stub)
 {
-  if (this->messaging_object ()->format_message (stream, stub) != 0)
+  if (this->messaging_object ()->format_message (stream, stub, 0) != 0)
     return -1;
 
   return this->queue_message_i (stream.begin (), max_wait_time);

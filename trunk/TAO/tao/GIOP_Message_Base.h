@@ -37,6 +37,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Pluggable_Reply_Params;
 class TAO_Queued_Data;
+class TAO_ServerRequest;
 
 /**
  * @class TAO_GIOP_Message_Base
@@ -84,8 +85,10 @@ public:
 
   /// Format the message. As we have not written the message length in
   /// the header, we make use of this opportunity to insert and format
-  /// the message.
-  int format_message (TAO_OutputCDR &cdr, TAO_Stub* stub);
+  /// the message. (Called by client, for requests, provides stub pointer
+  /// but not the req pointer; called by server, for replies, provides req
+  /// pointer, not stub pointer.)
+  int format_message (TAO_OutputCDR &cdr, TAO_Stub *stub, TAO_ServerRequest *req);
 
   /**
    * Parse the details of the next message from the @a incoming

@@ -142,14 +142,18 @@ TAO::HTIOP::Transport::send_request (TAO_Stub *stub,
 {
   if (this->ws_->sending_request (orb_core,
                                   message_semantics) == -1)
-
-    return -1;
+    {
+      return -1;
+    }
 
   if (this->send_message (stream,
                           stub,
+                          0,
                           message_semantics,
                           max_wait_time) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   this->first_request_sent();
 
@@ -159,12 +163,15 @@ TAO::HTIOP::Transport::send_request (TAO_Stub *stub,
 int
 TAO::HTIOP::Transport::send_message (TAO_OutputCDR &stream,
                                      TAO_Stub *stub,
+                                     TAO_ServerRequest *request,
                                      TAO_Message_Semantics message_semantics,
                                      ACE_Time_Value *max_wait_time)
 {
   // Format the message in the stream first
-  if (this->messaging_object ()->format_message (stream, stub) != 0)
-    return -1;
+  if (this->messaging_object ()->format_message (stream, stub, request) != 0)
+    {
+      return -1;
+    }
 
   // This guarantees to send all data (bytes) or return an error.
   ssize_t n = this->send_message_shared (stub,
@@ -179,10 +186,13 @@ TAO::HTIOP::Transport::send_message (TAO_OutputCDR &stream,
       // would return -1 with errno set to ENOENT. %p then would dump
       // a core. %m would then be softer on this.
       if (TAO_debug_level)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) - TAO::HTIOP::Transport[%d]::send_message, ")
-                    ACE_TEXT (" write failure - %m\n"),
-                    this->id ()));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("TAO (%P|%t) - TAO::HTIOP::Transport[%d]::send_message, ")
+                      ACE_TEXT (" write failure - %m\n"),
+                      this->id ()));
+        }
+
       return -1;
     }
 

@@ -290,6 +290,7 @@ public:
 
   virtual int send_message (TAO_OutputCDR &,
                             TAO_Stub * = 0,
+                            TAO_ServerRequest * = 0,
                             TAO_Message_Semantics  = TAO_Message_Semantics (),
                             ACE_Time_Value * = 0)
   {
