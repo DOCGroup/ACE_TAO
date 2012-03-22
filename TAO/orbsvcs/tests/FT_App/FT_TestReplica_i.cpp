@@ -125,6 +125,7 @@ FT_TestReplica_i::FT_TestReplica_i (FT_ReplicaFactory_i * factory, const char * 
   , orb_ (0)
   , poa_ (0)
   , object_id_ (0)
+  , name_persistent_storage
 {
 //  cout << name_.c_str() << '@' << this->factory_->location() << '#' << this->factory_id_ << " Construct" << endl;
 }
