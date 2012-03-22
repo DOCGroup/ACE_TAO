@@ -258,49 +258,43 @@ TAO_GIOP_Message_Base::dump_consolidated_msg (TAO_OutputCDR &stream)
 }
 
 int
-TAO_GIOP_Message_Base::format_message (TAO_OutputCDR &stream, TAO_Stub* stub)
+TAO_GIOP_Message_Base::format_message (TAO_OutputCDR &stream, TAO_Stub *stub, TAO_ServerRequest *request)
 {
   this->set_giop_flags (stream);
 
   bool log_msg = TAO_debug_level > 9;
-
-#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
-  TAO_ZIOP_Adapter* ziop_adapter = this->orb_core_->ziop_adapter ();
-
-  // Ziop adapter found and not compressed yet
-  if (ziop_adapter)
+  if (stub || request)
     {
-      if (TAO_debug_level > 9)
+#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP != 0
+      TAO_ZIOP_Adapter* ziop_adapter = this->orb_core_->ziop_adapter ();
+      if (ziop_adapter)
         {
-          this->dump_consolidated_msg (stream);
-        }
-      bool compressed;
-      if (stub)
-        {
-          compressed = ziop_adapter->marshal_data (stream, *stub);
-        }
-      else
-        {
-          compressed = ziop_adapter->marshal_data (stream, *this->orb_core_);
-        }
+          if (log_msg)
+            {
+              this->dump_consolidated_msg (stream);
+            }
 
-        if (TAO_debug_level > 9)
-          {
-            if (!compressed)
+          const bool compressed=
+            stub ?
+            ziop_adapter->marshal_data (stream, *stub) :
+            ziop_adapter->marshal_data (stream, *this->orb_core_, request);
+
+          if (log_msg && !compressed)
+            {
               ACE_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("TAO (%P|%t) - ")
                           ACE_TEXT ("TAO_GIOP_Message_Base::format_message, ")
                           ACE_TEXT ("GIOP message not compressed\n")));
-            // no need to log. If compressed->ZIOP library dumps message
-            // if not compressed (due to failure or policy settings)
-            // message hasn't changed and was allready dumped
-            // prior to compression...
-            log_msg = false;
-          }
+
+              // no need to log. If compressed->ZIOP library dumps message
+              // if not compressed (due to failure or policy settings)
+              // message hasn't changed and was allready dumped
+              // prior to compression...
+              log_msg = false;
+            }
+        }
+#endif /* TAO_HAS_ZIOP */
     }
-#else
-  ACE_UNUSED_ARG (stub);
-#endif
 
   // Length of all buffers.
   size_t const total_len = stream.total_length ();
@@ -1032,6 +1026,7 @@ TAO_GIOP_Message_Base::process_request (
 
           int const result = transport->send_message (output,
                                                       0,
+                                                      &request,
                                                       TAO_Message_Semantics (TAO_Message_Semantics::TAO_REPLY));
           if (result == -1)
             {
@@ -1285,6 +1280,7 @@ TAO_GIOP_Message_Base::make_send_locate_reply (TAO_Transport *transport,
   // Send the message
   int const result = transport->send_message (output,
                                               0,
+                                              0,
                                               TAO_Message_Semantics (TAO_Message_Semantics::TAO_REPLY));
 
   // Print out message if there is an error
@@ -1502,7 +1498,7 @@ TAO_GIOP_Message_Base::send_reply_exception (
 
   output.more_fragments (false);
 
-  return transport->send_message (output, 0, TAO_Message_Semantics (TAO_Message_Semantics::TAO_REPLY));
+  return transport->send_message (output, 0, 0, TAO_Message_Semantics (TAO_Message_Semantics::TAO_REPLY));
 }
 
 void

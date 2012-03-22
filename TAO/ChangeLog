@@ -1,7 +1,45 @@
+Thu Mar 22 11:10:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Transport.cpp:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Transport.h:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.h:
+        * tao/GIOP_Message_Base.cpp:
+        * tao/GIOP_Message_Base.h:
+        * tao/IIOP_Transport.cpp:
+        * tao/IIOP_Transport.h:
+        * tao/Messaging/AMH_Response_Handler.cpp:
+        * tao/On_Demand_Fragmentation_Strategy.cpp:
+        * tao/TAO_Server_Request.cpp:
+        * tao/Transport.cpp:
+        * tao/Transport.h:
+        * tao/ZIOP_Adapter.h:
+        * tao/Strategies/DIOP_Transport.cpp:
+        * tao/Strategies/DIOP_Transport.h:
+        * tao/Strategies/SHMIOP_Transport.cpp:
+        * tao/Strategies/SHMIOP_Transport.h:
+        * tao/Strategies/UIOP_Transport.cpp:
+        * tao/Strategies/UIOP_Transport.h:
+        * tao/ZIOP/ZIOP.cpp:
+        * tao/ZIOP/ZIOP.h:
+        * tests/Bug_3531b_Regression/server.cpp:
+
+          Provide a pointer to the TAO_ServerRequest object down to
+          TAO_GIOP_Message_Base::format_message() and
+          TAO_ZIOP_LOADER::marshal_data () for server reply.
+          Note this once more changes the transport send_message() api
+          for ZIOP (and other furture uses) to add a possiable
+          TAO_ServerRequest object as well as the possiable stub object.
+          This lets the send_message access the client provided
+          policies that control how the message is being dealt with.
+
 Wed Mar 21 13:08:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
 
         * tao/ZIOP/ZIOP_Service_Context_Handler.cpp:
-        * tao/orbconf.h
+        * tao/orbconf.h:
+
           My system had defined TAO_HAS_ZIOP explicitly so I didn't see that
           the mod to disable it (Fri Feb 24 09:18:00 UTC 2012  Johnny Willemsen)
           when TAO_HAS_CORBA_MESSAGING is not defined was put in before this was

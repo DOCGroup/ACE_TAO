@@ -40,10 +40,10 @@ class TAO_Queued_Data;
 class TAO_Export TAO_ZIOP_Adapter : public ACE_Service_Object
 {
 public:
-  virtual bool decompress (ACE_Data_Block **db, TAO_Queued_Data& qd, TAO_ORB_Core& orb_core) = 0;
+  virtual bool decompress (ACE_Data_Block **db, TAO_Queued_Data &qd, TAO_ORB_Core &orb_core) = 0;
 
-  virtual bool marshal_data (TAO_OutputCDR& cdr, TAO_Stub& stub) = 0;
-  virtual bool marshal_data (TAO_OutputCDR& cdr, TAO_ORB_Core& orb_core) = 0;
+  virtual bool marshal_data (TAO_OutputCDR &cdr, TAO_Stub &stub) = 0;
+  virtual bool marshal_data (TAO_OutputCDR &cdr, TAO_ORB_Core &orb_core, TAO_ServerRequest *request) = 0;
 
   virtual void load_policy_validators (TAO_Policy_Validator &validator) = 0;
 

@@ -546,6 +546,7 @@ TAO_UIPMC_Transport<CONNECTION_HANDLER>::send_request (TAO_Stub *stub,
 
   if (this->send_message (stream,
                           stub,
+                          0,
                           message_semantics,
                           max_wait_time) == -1)
 
@@ -558,12 +559,15 @@ template<typename CONNECTION_HANDLER>
 int
 TAO_UIPMC_Transport<CONNECTION_HANDLER>::send_message (TAO_OutputCDR &stream,
                                                        TAO_Stub *stub,
+                                                       TAO_ServerRequest *request,
                                                        TAO_Message_Semantics message_semantics,
                                                        ACE_Time_Value *max_wait_time)
 {
   // Format the message in the stream first
-  if (this->messaging_object ()->format_message (stream, stub) != 0)
-    return -1;
+  if (this->messaging_object ()->format_message (stream, stub, request) != 0)
+    {
+      return -1;
+    }
 
   // Strictly speaking, should not need to loop here because the
   // socket never gets set to a nonblocking mode ... some Linux
@@ -578,10 +582,12 @@ TAO_UIPMC_Transport<CONNECTION_HANDLER>::send_message (TAO_OutputCDR &stream,
   if (n == -1)
     {
       if (TAO_debug_level)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO: (%P|%t|%N|%l) closing transport %d after fault %m\n"),
-                    this->id (),
-                    ACE_TEXT ("send_message ()\n")));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("TAO: (%P|%t|%N|%l) closing transport %d after fault %m\n"),
+                      this->id (),
+                      ACE_TEXT ("send_message ()\n")));
+        }
 
       return -1;
     }

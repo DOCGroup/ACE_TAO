@@ -31,6 +31,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+class TAO_ServerRequest;
+
 /**
  * @class TAO_ZIOP_Loader
  *
@@ -47,11 +49,11 @@ public:
   /// Destructor
   virtual ~TAO_ZIOP_Loader (void);
 
-  virtual bool decompress (ACE_Data_Block **db, TAO_Queued_Data& qd, TAO_ORB_Core& orb_core);
+  virtual bool decompress (ACE_Data_Block **db, TAO_Queued_Data &qd, TAO_ORB_Core &orb_core);
 
   // Compress the @a stream. Starting point of the compression is rd_ptr()
-  virtual bool marshal_data (TAO_OutputCDR& cdr, TAO_Stub& stub);
-  virtual bool marshal_data (TAO_OutputCDR& cdr, TAO_ORB_Core& orb_core);
+  virtual bool marshal_data (TAO_OutputCDR &cdr, TAO_Stub &stub);
+  virtual bool marshal_data (TAO_OutputCDR &cdr, TAO_ORB_Core &orb_core, TAO_ServerRequest *request);
 
   /// Initialize the BiDIR loader hooks.
   virtual int init (int argc, ACE_TCHAR* []);
