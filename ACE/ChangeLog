@@ -1,3 +1,11 @@
+Thu Mar 22 16:23:14 UTC 2012  Steve Huston  <shuston@riverace.com>
+
+        * ace/SOCK_Dgram_Mcast.h: Corrected the description of conditions
+          under which using OPT_NULLIFACE_ALL works and neatened things up.
+
+        * tests/Multicast_Test.cpp: Turn on IP_MULTICAST_LOOP all the time.
+          This test requires it and it's not universally the default.
+
 Thu Mar 22 13:03:46 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ARGV.cpp:
