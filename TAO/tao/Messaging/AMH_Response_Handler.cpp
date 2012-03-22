@@ -147,6 +147,7 @@ TAO_AMH_Response_Handler::_tao_rh_send_reply (void)
   // Send the message.
   int result = this->transport_->send_message (this->_tao_out,
                                                0,
+                                               0,
                                                TAO_Message_Semantics (TAO_Message_Semantics::TAO_REPLY));
 
   if (result == -1)
@@ -211,6 +212,7 @@ TAO_AMH_Response_Handler::_tao_rh_send_exception (const CORBA::Exception &ex)
 
   // Send the Exception
   if (this->transport_->send_message (this->_tao_out,
+                                      0,
                                       0,
                                       TAO_Message_Semantics (TAO_Message_Semantics::TAO_REPLY)) == -1)
     {
@@ -277,6 +279,7 @@ TAO_AMH_Response_Handler::_tao_rh_send_location_forward (CORBA::Object_ptr fwd,
 
   // Send the Exception
   if (this->transport_->send_message (this->_tao_out,
+                                      0,
                                       0,
                                       TAO_Message_Semantics (TAO_Message_Semantics::TAO_REPLY)) == -1)
     {

@@ -78,6 +78,7 @@ TAO_On_Demand_Fragmentation_Strategy::fragment (
       // bit.
       if (this->transport_->send_message (cdr,
                                           cdr.stub (),
+                                          0,
                                           cdr.message_semantics (),
                                           cdr.timeout ()) == -1
 

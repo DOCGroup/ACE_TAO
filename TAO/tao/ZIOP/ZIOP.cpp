@@ -58,7 +58,8 @@ TAO_ZIOP_Loader::init (int, ACE_TCHAR* [])
           return -1;
         }
     }
-#endif
+#endif /* TAO_HAS_CORBA_MESSAGING */
+
   return 0;
 }
 
@@ -88,9 +89,9 @@ TAO_ZIOP_Loader::load_policy_validators (TAO_Policy_Validator &val)
   // the design simple and not try to avoid an ineficiency of such
   // small proportions.
   val.add_validator (validator);
-#else
+#else /* TAO_HAS_CORBA_MESSAGING */
   ACE_UNUSED_ARG (val);
-#endif
+#endif /* TAO_HAS_CORBA_MESSAGING */
 }
 
 int
@@ -116,6 +117,7 @@ TAO_ZIOP_Loader::ziop_compressorid_name (::Compression::CompressorId st)
       case ::Compression::COMPRESSORID_XAR: return "XAR";
       case ::Compression::COMPRESSORID_RLE: return "RLE";
     }
+
   return "Unknown";
 }
 
@@ -149,6 +151,7 @@ TAO_ZIOP_Loader::dump_msg (const char *type,  const u_char *ptr,
               ratio,
               TAO_ZIOP_Loader::ziop_compressorid_name(compressor_id),
               compression_level));
+
   ACE_HEX_DUMP ((LM_DEBUG,
                  (const char *) ptr,
                  len,
@@ -180,12 +183,7 @@ bool
 TAO_ZIOP_Loader::decompress (ACE_Data_Block **db, TAO_Queued_Data& qd,
                              TAO_ORB_Core& orb_core)
 {
-#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP == 0
-  ACE_UNUSED_ARG (db);
-  ACE_UNUSED_ARG (qd);
-  ACE_UNUSED_ARG (orb_core);
-  return true;
-#else
+#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP != 0
   CORBA::Object_var compression_manager =
     orb_core.resolve_compression_manager();
 
@@ -210,7 +208,9 @@ TAO_ZIOP_Loader::decompress (ACE_Data_Block **db, TAO_Queued_Data& qd,
                         &orb_core);
 
       if (!(cdr >> data))
-        return false;
+        {
+          return false;
+        }
 
       Compression::Compressor_var compressor =
             manager->get_compressor (data.compressor, 6);
@@ -257,9 +257,13 @@ TAO_ZIOP_Loader::decompress (ACE_Data_Block **db, TAO_Queued_Data& qd,
     {
       return false;
     }
+#else /* TAO_HAS_ZIOP */
+  ACE_UNUSED_ARG (db);
+  ACE_UNUSED_ARG (qd);
+  ACE_UNUSED_ARG (orb_core);
+#endif /* TAO_HAS_ZIOP */
 
   return true;
-#endif
 }
 
 CORBA::ULong
@@ -278,9 +282,9 @@ TAO_ZIOP_Loader::compression_low_value (CORBA::Policy_ptr policy) const
           result = srp->low_value ();
         }
     }
-#else
+#else /* TAO_HAS_CORBA_MESSAGING */
   ACE_UNUSED_ARG (policy);
-#endif
+#endif /* TAO_HAS_CORBA_MESSAGING */
   return result;
 }
 
@@ -300,9 +304,9 @@ TAO_ZIOP_Loader::compression_minratio_value (CORBA::Policy_ptr policy) const
           result = srp->ratio ();
         }
     }
-#else
+#else /* TAO_HAS_CORBA_MESSAGING */
   ACE_UNUSED_ARG (policy);
-#endif
+#endif /* TAO_HAS_CORBA_MESSAGING */
   return result;
 }
 
@@ -554,15 +558,9 @@ TAO_ZIOP_Loader::compress_data (TAO_OutputCDR &cdr,
 }
 
 bool
-TAO_ZIOP_Loader::marshal_data (TAO_OutputCDR &cdr, TAO_Stub& stub)
+TAO_ZIOP_Loader::marshal_data (TAO_OutputCDR &cdr, TAO_Stub &stub)
 {
-#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP == 0
-  ACE_UNUSED_ARG (cdr);
-  ACE_UNUSED_ARG (stub);
-  return true;
-#else
-  CORBA::Boolean use_ziop = false;
-
+#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP != 0
   Compression::CompressorId compressor_id = Compression::COMPRESSORID_NONE;
   Compression::CompressionLevel compression_level = 0;
 
@@ -571,11 +569,11 @@ TAO_ZIOP_Loader::marshal_data (TAO_OutputCDR &cdr, TAO_Stub& stub)
   CORBA::Policy_var compression_level_list_policy =
     stub.get_cached_policy (TAO_CACHED_COMPRESSION_ID_LEVEL_LIST_POLICY);
 
-  use_ziop = get_compression_details(compression_enabling_policy.in (),
-                      compression_level_list_policy.in (),
-                      compressor_id, compression_level);
-
-  if (use_ziop)
+  if (get_compression_details (
+        compression_enabling_policy.in (),
+        compression_level_list_policy.in (),
+        compressor_id,
+        compression_level))
     {
       CORBA::Object_var compression_manager =
         stub.orb_core ()->resolve_compression_manager();
@@ -594,19 +592,23 @@ TAO_ZIOP_Loader::marshal_data (TAO_OutputCDR &cdr, TAO_Stub& stub)
                             low_value, min_ratio,
                             compressor_id, compression_level);
     }
+#else /* TAO_HAS_ZIOP */
+  ACE_UNUSED_ARG (cdr);
+  ACE_UNUSED_ARG (stub);
+#endif /* TAO_HAS_ZIOP */
+
   return false;
-#endif
 }
 
 bool
-TAO_ZIOP_Loader::marshal_data (TAO_OutputCDR& cdr, TAO_ORB_Core& orb_core)
+TAO_ZIOP_Loader::marshal_data (TAO_OutputCDR &cdr, TAO_ORB_Core &orb_core, TAO_ServerRequest *request)
 {
-#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP == 0
-  ACE_UNUSED_ARG (cdr);
-  ACE_UNUSED_ARG (orb_core);
-  return true;
-#else
-  CORBA::Boolean use_ziop = false;
+  if (!request)
+    {
+      return false;
+    }
+
+#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP != 0
   Compression::CompressorId compressor_id = Compression::COMPRESSORID_NONE;
   Compression::CompressionLevel compression_level = 0;
 
@@ -618,11 +620,11 @@ TAO_ZIOP_Loader::marshal_data (TAO_OutputCDR& cdr, TAO_ORB_Core& orb_core)
     orb_core.get_cached_policy_including_current
       (TAO_CACHED_COMPRESSION_ID_LEVEL_LIST_POLICY);
 
-  use_ziop = get_compression_details(compression_enabling_policy.in (),
-                      compression_level_list_policy.in (),
-                      compressor_id, compression_level);
-
-  if (use_ziop)
+  if (get_compression_details (
+        compression_enabling_policy.in (),
+        compression_level_list_policy.in (),
+        compressor_id,
+        compression_level))
     {
       CORBA::Object_var compression_manager =
         orb_core.resolve_compression_manager();
@@ -644,9 +646,12 @@ TAO_ZIOP_Loader::marshal_data (TAO_OutputCDR& cdr, TAO_ORB_Core& orb_core)
                            low_value, min_ratio,
                            compressor_id, compression_level);
     }
-  return false;
+#else /* TAO_HAS_ZIOP */
+  ACE_UNUSED_ARG (cdr);
+  ACE_UNUSED_ARG (orb_core);
+#endif /* TAO_HAS_ZIOP */
 
-#endif
+  return false;
 }
 
 ACE_STATIC_SVC_DEFINE (TAO_ZIOP_Loader,
