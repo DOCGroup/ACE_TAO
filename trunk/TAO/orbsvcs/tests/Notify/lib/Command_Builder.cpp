@@ -10,7 +10,8 @@
 
 
 TAO_Notify_Tests_Command_Builder::TAO_Notify_Tests_Command_Builder (void)
-  :start_command_ (0)
+  : start_command_ (0),
+    last_command_ (0)
 {
 }
 

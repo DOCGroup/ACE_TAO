@@ -54,7 +54,8 @@ private:
 TAO_MonitorConsumerAdmin::TAO_MonitorConsumerAdmin (void)
   : stat_name_ (),
     control_name_ (),
-    queue_size_ (0)
+    queue_size_ (0),
+    overflows_ (0)
 {
 }
 

@@ -1,3 +1,16 @@
+Thu Mar 22 14:31:35 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Log/EventLogFactory_i.cpp:
+        * orbsvcs/orbsvcs/Log/EventLog_i.cpp:
+        * orbsvcs/orbsvcs/Log/RTEventLogFactory_i.cpp:
+        * orbsvcs/orbsvcs/Log/RTEventLog_i.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorConsumerAdmin.cpp:
+        * orbsvcs/tests/FT_App/FT_TestReplica_i.cpp:
+        * orbsvcs/tests/FtRtEvent/PushSupplier.h:
+        * orbsvcs/tests/Notify/lib/Command_Builder.cpp:
+        * orbsvcs/tests/Notify/lib/Driver.cpp:
+          Coverity fixes
+
 Thu Mar 22 11:10:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
 
         * orbsvcs/orbsvcs/HTIOP/HTIOP_Transport.cpp:

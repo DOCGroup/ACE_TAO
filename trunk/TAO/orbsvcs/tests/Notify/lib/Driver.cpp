@@ -63,7 +63,8 @@ check_supported_priorities (CORBA::ORB_ptr orb)
 }
 
 /*****************************************************************/
-TAO_Notify_Tests_Worker::TAO_Notify_Tests_Worker (void)
+TAO_Notify_Tests_Worker::TAO_Notify_Tests_Worker (void) :
+  cmd_builder_ (0)
 {
 }
 

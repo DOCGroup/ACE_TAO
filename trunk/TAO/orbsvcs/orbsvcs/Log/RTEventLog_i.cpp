@@ -25,6 +25,9 @@ TAO_RTEventLog_i::TAO_RTEventLog_i (CORBA::ORB_ptr orb,
                                     TAO_LogNotification *log_notifier,
                                     DsLogAdmin::LogId id)
   : TAO_Log_i (orb, logmgr_i, factory, id, log_notifier),
+    event_channel_ (0),
+    my_log_consumer_ (0),
+    observer_strategy_ (0),
     poa_ (PortableServer::POA::_duplicate (poa)),
     log_poa_ (PortableServer::POA::_duplicate (log_poa))
 {
