@@ -46,50 +46,56 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * Supports multiple simultaneous subscriptions, unsubscription from one or
  * all subscriptions, and independent send/recv address and interface
- * specifications.  Template parameters and/or ctor arguments determine
- * per-instance optional functionality.
+ * specifications.  Constructor arguments determine per-instance optional
+ * functionality.
  *
- * Note that multicast semantics and implementation details are _very_
+ * Note that multicast semantics and implementation details are @i very
  * environment-specific; this class is just a wrapper around the underlying
  * implementation and does not try to normalize the concept of multicast
  * communications.
  *
  * Usage Notes:
- * - Send and Recv addresses and network interfaces, but not port#, are
- *   independent.  While this instance is open, 1 send interface (and a default
- *   send address) is in effect and 0, 1, or multiple recv addresses/interfaces
- *   are in effect.
+ * - Send and receive addresses and network interfaces, but not port number,
+ *   are independent. While this instance is open, one send interface (and a
+ *   default send address) is in effect and 0, 1, or multiple receive
+ *   addresses/interfaces are in effect.
  * - The first open()/subscribe() invocation defines the network interface
  *   and default address used for all sends by this instance, defines the
- *   port# and optionally the multicast address bound to the underlying
- *   socket, and defines the (one) port# that is used for all subscribes
- *   (subsequent subscribes must pass the same port# or '0').
+ *   port number and optionally the multicast address bound to the underlying
+ *   socket, and defines the (one) port number that is used for all subscribes
+ *   (subsequent subscribes must pass the same port number or 0).
  * - The default loopback state is not explicitly set; the environment will
- *   determine the default state.  Note that some environments (e.g. some Win32)
- *   do not allow the default to be changed, and that the semantics of
- *   loopback control are environment dependent (e.g. sender vs receiver
- *   control).
+ *   determine the default state.  Note that some environments (e.g. some
+ *   Windows versions) do not allow the default to be changed, and that the
+ *   semantics of loopback control are environment dependent (e.g. sender vs.
+ *   receiver control).
  * - In general, due to multicast design and implementation quirks/bugs, it is
  *   difficult to tell which address a received message was sent to or which
  *   interface it was received on (even if only one subscription is active).
- *   However; there are filtering options that can be applied, to narrow it
+ *   However, there are filtering options that can be applied, to narrow it
  *   down considerably.
  *
  * Interface specification notes (for subscribe() and unsubscribe()):
- * - If net_if == 0, the null_iface_opt option determines whether only the
- *   system "default" interface or all interfaces is affected.  Specifying
- *   "all" interfaces is supported only for environments for which
- *   ACE_Sock_Connect::get_ip_interfaces() is properly implemented.
+ * - If @a net_if == 0, the @c OPT_NULLIFACE_ALL and @c OPT_NULLIFACE_ONE
+ *   options determine whether only the system default interface
+ *   (if @c OPT_NULLIFACE_ONE is set) or all interfaces (if
+ *   @c OPT_NULLIFACE_ALL is set) is affected.  Specifying all interfaces
+ *   functions correctly only on:
+ *      + Windows
+ *      + Platforms with the ACE_HAS_GETIFADDRS config setting (includes Linux)
+ *      + Platforms which accept the IP address as an interface
+ *        name/specification
+ *      + Systems with only one non-loopback interface.
+ *   Other platforms require additional supporting code.
  * - Multiple subscriptions for the same address but different interfaces is
  *   normally supported, but re-subscription to an address/interface that is
  *   already subscribed is normally not allowed.
- * - The <net_if> interface specification syntax is environment-specific.
+ * - The @a net_if interface specification syntax is environment-specific.
  *   UNIX systems will normally use device specifications such as "le0" or
  *   "elxl1", while other systems will use the IP address of the interface.
  *   Some platforms, such as pSoS, support only cardinal numbers as network
  *   interface specifications; for these platforms, just give these numbers in
- *   alphanumeric form and <subscribe> will convert them into numbers via
- *   ACE_OS::atoi().
+ *   string form and join() will convert them into numbers.
  */
 class ACE_Export ACE_SOCK_Dgram_Mcast : public ACE_SOCK_Dgram
 {
@@ -99,28 +105,30 @@ public:
    * @brief Option parameters.
    *
    * These control per-instance optional functionality.  They are set via
-   * optional constructor arguments.
+   * an optional constructor argument.
+   *
    * @note Certain option values are not valid for all environments (see
    * comments in source file for environment-specific restrictions).  Default
    * values are always valid values for the compilation environment.
    */
   enum options
   {
-  // Define whether a specific (multicast) address (in addition to the port#)
-  // is bound to the socket.
-  // Notes:
-  // - Effect of doing this is stack/environment dependent, but in most
-  //   environments can be used to filter out unwanted unicast, broadcast, and
-  //   (other) multicast messages sent to the same port#.
-  // - Some IP stacks (e.g. some Win32) do not support binding multicast
-  //   addresses.  Using this option will always cause an <open> error.
-  // - It's not strictly possible for user code to do this level of filtering
-  //   w/out the bind; some environments support ways to determine which address
-  //   a message was sent _to_, but this class interface does not support access
-  //   to that info.
-  // - The address (and port#) passed to <open> (or the first <subscribe>, if
-  //   <open> is not explicitly invoked) is the one that is bound.
-  //
+    /* Define whether a specific multicast address (in addition to the port
+     * number) is bound to the socket.
+     * @note:
+     * - Effect of doing this is stack/environment dependent, but in most
+     *   environments can be used to filter out unwanted unicast, broadcast,
+     *   and (other) multicast messages sent to the same port number.
+     * - Some IP stacks (e.g. some Windows) do not support binding multicast
+     *   addresses.  Using this option will always cause an open() error.
+     * - It's not strictly possible for user code to do this level of filtering
+     *   without the bind; some environments support ways to determine which
+     *   address a message was sent to, but this class interface does not
+     *   support access to that information.
+     * - The address (and port number) passed to open() (or the first
+     *   join(), if open() is not explicitly invoked) is the one that is bound.
+     */
+
     /// Disable address bind. (Bind only port.)
     /// @note This might seem odd, but we need a way to distinguish between
     /// default behavior, which might or might not be to bind, and explicitly
@@ -142,20 +150,28 @@ public:
       DEFOPT_BINDADDR  = OPT_BINDADDR_NO,
 #endif /* ACE_LACKS_PERFECT_MULTICAST_FILTERING = 1) */
 
-  /// Define the interpretation of 'NULL' as a recv interface specification.
-  /// If the interface part of a multicast address specification is NULL, it
-  /// will be interpreted to mean either "the default interface" or "all
-  /// interfaces", depending on the setting of this option.
-  /// Notes:
-  /// - The 'nulliface_all' option can not be used in environments which do
-  ///   not fully support the ACE_Sock_Connect::get_ip_interfaces() method
-  ///   (e.g. non-Windows).
-  ///   If it is, using NULL for iface will _always_ fail.
-  /// - The default behavior in most IP stacks is to use the 'default' interface,
-  ///   where 'default' has rather ad-hoc semantics.
-  /// - This applies only to receives, not sends (which always use only one
-  ///   interface; NULL means use the "system default" interface).
-  /// Supported values:
+    /*
+     * Define the interpretation of NULL as a join interface specification.
+     * If the interface part of a multicast address specification is NULL, it
+     * will be interpreted to mean either "the default interface" or "all
+     * interfaces", depending on the setting of this option.
+     * @note
+     * - The @c OPT_NULLIFACE_ALL option can be used only in the following
+     *   environments:
+     *      + Windows
+     *      + Platforms with the ACE_HAS_GETIFADDRS config setting (includes
+     *        Linux)
+     *      + Platforms which accept the IP address as an interface
+     *        name/specification and for which
+     *        ACE_Sock_Connect::get_ip_interfaces() is fully implemented
+     *      + Systems with only one non-loopback interface.
+     *   Other platforms require additional supporting code.
+     * - The default behavior in most IP stacks is to use the default
+     *   interface where "default" has rather ad-hoc semantics.
+     * - This applies only to receives, not sends (which always use only one
+     *   interface; NULL means use the "system default" interface).
+     */
+    /// Supported values:
     /// If (net_if==NULL), use default interface.
     /// @note This might seem odd, but we need a way to distinguish between
     /// default behavior, which might or might not be to bind, and explicitly
@@ -179,15 +195,15 @@ public:
 
   // = Initialization routines.
 
-  /// Ctor - Create an unitialized instance and define per-instance optional
+  /// Create an unitialized instance and define per-instance optional
   /// functionality.
   /**
-   * You must invoke open() or subscribe(), to create/bind a socket and define
+   * You must invoke open() or join(), to create/bind a socket and define
    * operational parameters, before performing any I/O with this instance.
    */
   ACE_SOCK_Dgram_Mcast (options opts = DEFOPTS);
 
-  /// Dtor - Release all resources and implicitly or explicitly unsubscribe
+  /// Release all resources and implicitly or explicitly unsubscribe
   /// from all currently subscribed groups.
   /**
    * The OPT_DTORUNSUB_YES_ option defines whether an explicit unsubscribe() is
@@ -196,31 +212,36 @@ public:
    */
   ~ACE_SOCK_Dgram_Mcast (void);
 
-  /// Explicitly open/bind the socket and define the network interface
-  /// and default multicast address used for sending messages.
   /**
-   * This method is optional; if not explicitly invoked, it is invoked by
-   * the first subscribe(), using the subscribed address/port# and network
-   * interface parameters.
-   * The @a mcast_addr parameter defines the default send address/port# and
-   * also the port# and, if the OPT_BINDADDR_YES option is used,
-   * the multicast address that is bound to this socket.
-   * If the @a net_if parameter != 0, it defines the network interface
-   * used for all sends by this instance, otherwise the system "default"
-   * interface is used. (The @a net_if parameter is ignored if this
-   * feature is not supported by the environment.)
-   * The port# in @a mcast_addr may be 0, in which case a system-assigned
-   * (ephemeral) port# is used for sending and receiving.
-   * If @a reuse_addr != 0, the SO_REUSEADDR option and, if it is supported,
-   * the SO_REUSEPORT option are enabled.
+   * Explicitly open/bind the socket and define the network interface
+   * and default multicast address used for sending messages.
    *
-   * Returns: -1 if the call fails.  Failure can occur due to problems with
-   * the address, port#, and/or interface parameters or during system open()
+   * This method is optional; if not explicitly invoked, it is invoked by
+   * the first join(), using the subscribed address/port number and network
+   * interface parameters.
+   *
+   * @param mcast_addr  Defines the default send address/port number and,
+   *        if the @c OPT_BINDADDR_YES option is used, the multicast address
+   *        that is bound to this socket. The port number in @a mcast_addr
+   *        may be 0, in which case a system-assigned (ephemeral) port number
+   *        is used for sending and receiving.
+   *
+   * @param net_if  If @a net_if is not 0, it defines the network interface
+   *        used for all sends by this instance, otherwise the system default
+   *        interface is used. (The @a net_if parameter is ignored if this
+   *        feature is not supported by the environment.)
+   *
+   * @param reuse_addr  If @a reuse_addr is not 0, the @c SO_REUSEADDR option
+   *        and, if it is supported, the SO_REUSEPORT option are enabled.
+   *
+   * @retval 0 on success
+   * @retval -1 if the call fails. Failure can occur due to problems with
+   * the address, port, and/or interface parameters or during system open()
    * or socket option processing.
    */
-  int open (const ACE_INET_Addr &mcast_addr,        // Bound & sendto address.
-            const ACE_TCHAR *net_if = 0,            // Net interface for sends.
-            int reuse_addr = 1);                    // Reuse addr/port sock opt.
+  int open (const ACE_INET_Addr &mcast_addr,
+            const ACE_TCHAR *net_if = 0,
+            int reuse_addr = 1);
 
   // = Multicast group subscribe/unsubscribe routines.
 
