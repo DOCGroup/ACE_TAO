@@ -900,7 +900,10 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
 ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Oneshot_Acceptor (void)
-  : delete_concurrency_strategy_ (false)
+  : svc_handler_ (0),
+    restart_ (false),
+    concurrency_strategy_ (0),
+    delete_concurrency_strategy_ (false)
 {
   ACE_TRACE ("ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Oneshot_Acceptor");
   this->reactor (0);
@@ -911,7 +914,10 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Oneshot_Acceptor
   (const ACE_PEER_ACCEPTOR_ADDR &local_addr,
    ACE_Reactor *reactor,
    ACE_Concurrency_Strategy<SVC_HANDLER> *cs)
-    : delete_concurrency_strategy_ (false)
+    : svc_handler_ (0),
+      restart_ (false),
+      concurrency_strategy_ (0),
+      delete_concurrency_strategy_ (false)
 {
   ACE_TRACE ("ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Oneshot_Acceptor");
   if (this->open (local_addr, reactor, cs) == -1)

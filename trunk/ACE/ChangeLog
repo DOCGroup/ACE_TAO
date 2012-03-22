@@ -1,3 +1,14 @@
+Thu Mar 22 13:03:46 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ARGV.cpp:
+        * ace/Acceptor.cpp:
+        * ace/Asynch_Acceptor.cpp:
+        * ace/Cached_Connect_Strategy_T.cpp:
+        * ace/Lib_Find.cpp:
+        * ace/Strategies_T.cpp:
+        * ace/Timer_Heap_T.cpp:
+          Fixed coverity errors
+
 Wed Mar 21 21:57:40 UTC 2012  Steve Huston  <shuston@riverace.com>
 
         * ace/SOCK_Dgram_Mcast.cpp (subscribe_ifs): Expanded the use of

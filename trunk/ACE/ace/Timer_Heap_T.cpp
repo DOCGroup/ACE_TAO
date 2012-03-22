@@ -650,9 +650,12 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::alloc_node (void)
 
       temp = this->preallocated_nodes_freelist_;
 
-      // Remove the first element from the freelist.
-      this->preallocated_nodes_freelist_ =
-        this->preallocated_nodes_freelist_->get_next ();
+      if (this->preallocated_nodes_freelist_)
+        {
+          // Remove the first element from the freelist.
+          this->preallocated_nodes_freelist_ =
+            this->preallocated_nodes_freelist_->get_next ();
+        }
     }
   return temp;
 }
