@@ -21,7 +21,9 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_RTEventLogFactory_i::TAO_RTEventLogFactory_i (void)
+TAO_RTEventLogFactory_i::TAO_RTEventLogFactory_i (void) :
+  impl (0),
+  notifier_ (0)
 {
 }
 

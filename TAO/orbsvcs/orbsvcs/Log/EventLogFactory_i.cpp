@@ -8,7 +8,9 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_EventLogFactory_i::TAO_EventLogFactory_i (void)
+TAO_EventLogFactory_i::TAO_EventLogFactory_i (void) :
+  impl (0),
+  notifier_ (0)
 {
   TAO_CEC_Default_Factory::init_svcs ();
 
