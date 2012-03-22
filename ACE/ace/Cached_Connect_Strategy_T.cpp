@@ -358,9 +358,12 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
       entry->ext_id_.increment ();
     }
 
-  // For all successful cases: mark the <svc_handler> in the cache
-  // as being <in_use>.  Therefore recyclable is BUSY.
-  entry->ext_id_.recycle_state (ACE_RECYCLABLE_BUSY);
+  if (entry)
+    {
+      // For all successful cases: mark the <svc_handler> in the cache
+      // as being <in_use>.  Therefore recyclable is BUSY.
+      entry->ext_id_.recycle_state (ACE_RECYCLABLE_BUSY);
+    }
 
   return 0;
 }
