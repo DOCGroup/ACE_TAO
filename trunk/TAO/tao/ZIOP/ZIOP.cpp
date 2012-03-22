@@ -588,70 +588,182 @@ TAO_ZIOP_Loader::marshal_data (TAO_OutputCDR &cdr, TAO_Stub &stub)
       Compression::CompressionRatio min_ratio =
         this->compression_minratio_value (policy_min_ratio.in ());
 
-      return compress_data(cdr, compression_manager.in (),
-                            low_value, min_ratio,
-                            compressor_id, compression_level);
+      return this->compress_data (cdr, compression_manager.in (),
+                                  low_value, min_ratio,
+                                  compressor_id, compression_level);
     }
 #else /* TAO_HAS_ZIOP */
   ACE_UNUSED_ARG (cdr);
   ACE_UNUSED_ARG (stub);
 #endif /* TAO_HAS_ZIOP */
 
-  return false;
+  return false; // Did not compress
 }
 
 bool
 TAO_ZIOP_Loader::marshal_data (TAO_OutputCDR &cdr, TAO_ORB_Core &orb_core, TAO_ServerRequest *request)
 {
+  // If there is no TAO_ServerRequest supplied, then there are no client side ZIOP policies to check.
   if (!request)
     {
-      return false;
+      if (6 < TAO_debug_level)
+        {
+          ACE_ERROR((LM_ERROR,
+                      ACE_TEXT("TAO (%P|%t) - ")
+                      ACE_TEXT("TAO_ZIOP_Loader::marshal_data (server_reply), ")
+                      ACE_TEXT("client policies not available (did not compress).\n")));
+        }
+      return false; // Did not compress
     }
 
 #if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP != 0
-  Compression::CompressorId compressor_id = Compression::COMPRESSORID_NONE;
-  Compression::CompressionLevel compression_level = 0;
-
-  CORBA::Policy_var compression_enabling_policy =
-    orb_core.get_cached_policy_including_current
-      (TAO_CACHED_COMPRESSION_ENABLING_POLICY);
-
-  CORBA::Policy_var compression_level_list_policy =
-    orb_core.get_cached_policy_including_current
-      (TAO_CACHED_COMPRESSION_ID_LEVEL_LIST_POLICY);
-
-  if (get_compression_details (
-        compression_enabling_policy.in (),
-        compression_level_list_policy.in (),
-        compressor_id,
-        compression_level))
+  // Check the client supplied the compression enabling policy for this request.
+  ::ZIOP::CompressionEnablingPolicy_var
+    check (::ZIOP::CompressionEnablingPolicy::_narrow (
+             request->clientCompressionEnablingPolicy ()));
+  if (CORBA::is_nil (check.in ()) || !check->compression_enabled ())
     {
-      CORBA::Object_var compression_manager =
-        orb_core.resolve_compression_manager();
+      if (6 < TAO_debug_level)
+        {
+          ACE_ERROR((LM_ERROR,
+                      ACE_TEXT("TAO (%P|%t) - ")
+                      ACE_TEXT("TAO_ZIOP_Loader::marshal_data (server_reply), ")
+                      ACE_TEXT("clientCompressionEnablingPolicy (did not compress).\n")));
+        }
+      return false; // Did not compress
+    }
 
-      CORBA::Policy_var policy_low_value =
-        orb_core.get_cached_policy_including_current
-          (TAO_CACHED_COMPRESSION_LOW_VALUE_POLICY);
+  // Check the server supplied the compression enabling policy.
+  CORBA::Policy_var serverPolicy (
+    orb_core.get_cached_policy_including_current (
+      TAO_CACHED_COMPRESSION_ENABLING_POLICY));
+  check = ::ZIOP::CompressionEnablingPolicy::_narrow (serverPolicy.in ());
+  if (CORBA::is_nil (check.in ()) || !check->compression_enabled ())
+    {
+      if (6 < TAO_debug_level)
+        {
+          ACE_ERROR((LM_ERROR,
+                      ACE_TEXT("TAO (%P|%t) - ")
+                      ACE_TEXT("TAO_ZIOP_Loader::marshal_data (server_reply), ")
+                      ACE_TEXT("serverCompressionEnablingPolicy (did not compress).\n")));
+        }
+      return false; // Did not compress
+    }
 
-      CORBA::Policy_var policy_min_ratio =
-        orb_core.get_cached_policy_including_current
-          (TAO_CACHED_MIN_COMPRESSION_RATIO_POLICY);
+  // Check the client has supplied the available compressor ID list for this request.
+  ZIOP::CompressorIdLevelListPolicy_var clientCompressors (
+    ZIOP::CompressorIdLevelListPolicy::_narrow (
+      request->clientCompressorIdLevelListPolicy ()));
+  if (is_nil (clientCompressors.in ()))
+    {
+      if (6 < TAO_debug_level)
+        {
+          ACE_ERROR((LM_ERROR,
+                      ACE_TEXT("TAO (%P|%t) - ")
+                      ACE_TEXT("TAO_ZIOP_Loader::marshal_data (server_reply), ")
+                      ACE_TEXT("no clientCompressorIdLevelListPolicy (did not compress).\n")));
+        }
+      return false; // Did not compress
+    }
+  ::Compression::CompressorIdLevelList &clientList =
+    *clientCompressors->compressor_ids ();
 
-      CORBA::ULong low_value =
-        this->compression_low_value (policy_low_value.in ());
-      Compression::CompressionRatio min_ratio =
-        this->compression_minratio_value (policy_min_ratio.in ());
+  // Check the server has supplied a compressor ID list.
+  serverPolicy= orb_core.get_cached_policy_including_current (
+    TAO_CACHED_COMPRESSION_ID_LEVEL_LIST_POLICY);
+  ZIOP::CompressorIdLevelListPolicy_var serverCompressors (
+    ZIOP::CompressorIdLevelListPolicy::_narrow (serverPolicy.in ()));
+  if (is_nil (serverCompressors.in ()))
+    {
+      if (6 < TAO_debug_level)
+        {
+          ACE_ERROR((LM_ERROR,
+                      ACE_TEXT("TAO (%P|%t) - ")
+                      ACE_TEXT("TAO_ZIOP_Loader::marshal_data (server_reply), ")
+                      ACE_TEXT("no serverCompressorIdLevelListPolicy (did not compress).\n")));
+        }
+      return false; // Did not compress
+    }
+  ::Compression::CompressorIdLevelList &serverList =
+    *serverCompressors->compressor_ids ();
 
-      return compress_data(cdr, compression_manager.in (),
-                           low_value, min_ratio,
-                           compressor_id, compression_level);
+  // Check the whole server list (in priority order)
+  for (CORBA::ULong server = 0u; server < serverList.length (); ++server)
+    {
+      ::Compression::CompressorIdLevel_var serverEntry (serverList[server]);
+
+      // ...for the first matching client compressor that is available
+      for (CORBA::ULong client = 0u; client < clientList.length (); ++client)
+        {
+          ::Compression::CompressorIdLevel_var clientEntry (clientList[client]);
+          if (serverEntry->compressor_id == clientEntry->compressor_id)
+            {
+              // Found the first matching server in the client's available list.
+              // The correct compression level to use is the smaller of the two
+              // listed compression levels.
+              Compression::CompressionLevel
+                compression_level = ACE_MIN (serverEntry->compression_level,
+                                             clientEntry->compression_level);
+              if (7 < TAO_debug_level)
+                {
+                  ACE_ERROR((LM_ERROR,
+                              ACE_TEXT("TAO (%P|%t) - ")
+                              ACE_TEXT("TAO_ZIOP_Loader::marshal_data (server_reply), ")
+                              ACE_TEXT("Found (Server %d: %s == Client %d: %s) level %d.\n"),
+                              server,
+                              this->ziop_compressorid_name (serverEntry->compressor_id),
+                              client,
+                              this->ziop_compressorid_name (clientEntry->compressor_id),
+                              compression_level));
+                }
+
+              // Obtain the other server supplied policy settings
+              serverPolicy= orb_core.get_cached_policy_including_current (
+                TAO_CACHED_COMPRESSION_LOW_VALUE_POLICY);
+              CORBA::ULong low_value=
+                this->compression_low_value (serverPolicy.in ());
+
+              serverPolicy= orb_core.get_cached_policy_including_current (
+                TAO_CACHED_MIN_COMPRESSION_RATIO_POLICY);
+              Compression::CompressionRatio min_ratio=
+                this->compression_minratio_value (serverPolicy.in ());
+
+              // Attempt to compress the data.
+              CORBA::Object_var compression_manager (
+                orb_core.resolve_compression_manager ());
+              return this->compress_data (cdr, compression_manager.in (),
+                                          low_value, min_ratio,
+                                          serverEntry->compressor_id,
+                                          compression_level);
+            }
+
+          if (7 < TAO_debug_level)
+            {
+              ACE_ERROR((LM_ERROR,
+                          ACE_TEXT("TAO (%P|%t) - ")
+                          ACE_TEXT("TAO_ZIOP_Loader::marshal_data (server_reply), ")
+                          ACE_TEXT("checking (Server %d: %s != Client %d: %s).\n"),
+                          server,
+                          this->ziop_compressorid_name (serverEntry->compressor_id),
+                          client,
+                          this->ziop_compressorid_name (clientEntry->compressor_id)));
+            }
+        } // next clientEntry
+    } // next serverEntry
+
+  if (6 < TAO_debug_level)
+    {
+      ACE_ERROR((LM_ERROR,
+                  ACE_TEXT("TAO (%P|%t) - ")
+                  ACE_TEXT("TAO_ZIOP_Loader::marshal_data (server_reply), ")
+                  ACE_TEXT("no matching CompressorIdLevelListPolicy (did not compress).\n")));
     }
 #else /* TAO_HAS_ZIOP */
   ACE_UNUSED_ARG (cdr);
   ACE_UNUSED_ARG (orb_core);
 #endif /* TAO_HAS_ZIOP */
 
-  return false;
+  return false; // Did not compress
 }
 
 ACE_STATIC_SVC_DEFINE (TAO_ZIOP_Loader,

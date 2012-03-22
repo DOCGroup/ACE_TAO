@@ -1,3 +1,8 @@
+Thu Mar 22 17:05:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * tao/ZIOP/ZIOP.cpp:
+          Attempt to select the correct compressor for the server's reply.
+
 Thu Mar 22 14:31:35 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Log/EventLogFactory_i.cpp:
