@@ -30,7 +30,8 @@ ACE_Asynch_Acceptor<HANDLER>::ACE_Asynch_Acceptor (void)
     pass_addresses_ (false),
     validate_new_connection_ (false),
     reissue_accept_ (1),
-    bytes_to_read_ (0)
+    bytes_to_read_ (0),
+    addr_family_ (0)
 {
 }
 

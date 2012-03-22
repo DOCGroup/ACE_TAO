@@ -659,7 +659,10 @@ ACE::open_temp_file (const ACE_TCHAR *name, int mode, int perm)
   // Unlink it so that the file will be removed automatically when the
   // process goes away.
   if (ACE_OS::unlink (name) == -1)
-    return ACE_INVALID_HANDLE;
+    {
+      ACE_OS::close (handle);
+      return ACE_INVALID_HANDLE;
+    }
   else
     // Return the handle.
     return handle;
