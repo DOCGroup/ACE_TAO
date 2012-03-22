@@ -448,19 +448,11 @@ public:
                       = ACE_SOCK_Dgram_Mcast::DEFOPTS);
   virtual ~MCT_Event_Handler (void);
 
-  //#if defined (ACE_LINUX)
-  //int join (const ACE_INET_Addr &mcast_addr,
-  //          int reuse_addr = 1,
-  //          const ACE_TCHAR *net_if = ACE_TEXT ("lo"));
-  //int leave (const ACE_INET_Addr &mcast_addr,
-  //           const ACE_TCHAR *net_if = ACE_TEXT ("lo"));
-  //#else
   int join (const ACE_INET_Addr &mcast_addr,
             int reuse_addr = 1,
             const ACE_TCHAR *net_if = 0);
   int leave (const ACE_INET_Addr &mcast_addr,
              const ACE_TCHAR *net_if = 0);
-  //#endif
 
   // = Event Handler hooks.
   virtual int handle_input (ACE_HANDLE handle);
