@@ -373,9 +373,9 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
 
       if (if_cnt < 2)
         {
-          if (this->subscribe (mcast_addr,
-                               reuse_addr,
-                               ACE_TEXT ("0.0.0.0")) == 0)
+          if (this->join (mcast_addr,
+                          reuse_addr,
+                          ACE_TEXT ("0.0.0.0")) == 0)
             ++nr_subscribed;
         }
       else
