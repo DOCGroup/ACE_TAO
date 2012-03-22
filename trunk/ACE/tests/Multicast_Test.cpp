@@ -460,6 +460,9 @@ public:
 
   virtual ACE_HANDLE get_handle (void) const;
 
+  // Turn loopback on/off. Must be called after at least 1 join() is performed.
+  int loopback (bool on_off);
+
 protected:
   ACE_SOCK_Dgram_Mcast *mcast (void);
   int find (const char *buf);
@@ -633,6 +636,14 @@ MCT_Event_Handler::get_handle (void) const
   return this->mcast_.get_handle ();
 }
 
+// Turn loopback on/off
+int
+MCT_Event_Handler::loopback (bool on_off)
+{
+  char loopback_on = on_off ? 1 : 0;
+  return this->mcast_.set_option (IP_MULTICAST_LOOP, loopback_on);
+}
+
 /******************************************************************************/
 
 /*
@@ -713,6 +724,13 @@ MCT_Task::open (void *)
 
       advance_addr (addr);
 
+      // This test needs loopback because we're both sending and receiving.
+      // Loopback is usually the default, but be sure.
+      if (-1 == handler->loopback (true))
+        ACE_ERROR ((LM_WARNING,
+                    ACE_TEXT ("%p\n"),
+                    ACE_TEXT ("MCT_Task::open - enable loopback")));
+      
       if (this->reactor ()->register_handler (handler, READ_MASK) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("MCT_Task::open - cannot register ")
