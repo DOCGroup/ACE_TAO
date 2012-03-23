@@ -1,3 +1,10 @@
+Fri Mar 23 20:34:35 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_4009_Regression/Bug_4009_Bar.idl:
+        * tests/Bug_4009_Regression/Bug_4009_Bar.mpc:
+        * tests/Bug_4009_Regression/Bug_4009_Foo.idl:
+          Extended this test with much more typedefs
+
 Fri Mar 23 20:24:42 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_4009_Regression/Bug_4009_Bar.idl:
