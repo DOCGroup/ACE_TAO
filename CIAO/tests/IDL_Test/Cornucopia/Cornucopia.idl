@@ -290,3 +290,13 @@ module BasicHomes
 home SecondFooHome manages BasicHomes::Foo
 {
 };
+
+module SequenceTest
+{
+  typedef sequence<long> TestOfLongSeq;
+
+  component SequenceComp
+    {
+      attribute SequenceTest::TestOfLongSeq myAttribute;
+    };
+};
