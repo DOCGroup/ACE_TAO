@@ -85,9 +85,11 @@ be_visitor_executor_exh::visit_component (be_component *node)
       << "{" << be_nl
       << "public:" << be_idt_nl;
 
-  os_ << lname << "_exec_i (void);";
+  os_ << "/// Constructor" << be_nl
+      << lname << "_exec_i (void);";
 
   os_ << be_nl
+      << "/// Destructor" << be_nl
       << "virtual ~" << lname << "_exec_i (void);";
 
   os_ << be_nl_2
@@ -166,6 +168,7 @@ be_visitor_executor_exh::visit_component (be_component *node)
 
   os_ << be_uidt << be_nl_2
       << "private:" << be_idt_nl
+      << "/// @copydoc " << sname << "::CCM_" << lname << "_Context" << be_nl
       << global << sname << "::CCM_" << lname
       << "_Context_var ciao_context_;" << be_nl_2;
 
