@@ -245,12 +245,24 @@ TAO_ZIOP_Stub::effective_compression_id_list_policy (void)
               if (CORBA::is_nil (idlevellist_policy_var.in ()))
                 return override._retn ();
 
-              idlevellist_policy_var->compressor_ids ()->operator [] (0).compressor_id =
-                    override_compressor->compressor_id;
-              //according to ZIOP spec, return the compressor with the lowest compression level.
-              idlevellist_policy_var.ptr ()->compressor_ids ()->operator [] (0).compression_level =
-                ACE_MIN (override_compressor->compression_level,
-                        exposed_compressor->compression_level);
+              ::Compression::CompressorIdLevelList &entries =
+                *idlevellist_policy_var->compressor_ids ();
+
+              // Since the CompressorIdLevelListPolicy holds a prioritized list
+              // of the compressors we are allowed to use, and this is sent
+              // across to the server, BUT we are going to always use entry 0
+              // here at the client; we must ensure the other compressors are not
+              // lost but that the chosen compressor is placed first in the list
+              // (using the correctly minimized compression_level).
+              for (CORBA::ULong shuffle = nr_override; 0u < shuffle; --shuffle)
+                {
+                  entries[shuffle].compressor_id=     entries[shuffle-1u].compressor_id;
+                  entries[shuffle].compression_level= entries[shuffle-1u].compression_level;
+                }
+              entries[0].compressor_id=     override_compressor->compressor_id;
+              entries[0].compression_level= ACE_MIN (
+                override_compressor->compression_level,
+                exposed_compressor->compression_level);
 
               return idlevellist_policy_var._retn ();
             }
@@ -261,5 +273,4 @@ TAO_ZIOP_Stub::effective_compression_id_list_policy (void)
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
 #endif
