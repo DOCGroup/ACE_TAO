@@ -1,3 +1,10 @@
+Fri Mar 23 21:57:44 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/executor_exh.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_ch.cpp:
+          Generated some documentation into the executor header, mostly
+          using @copydoc to copy the documentation from the IDl file
+
 Fri Mar 23 21:09:02 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_attr_setarg_type.cpp:
