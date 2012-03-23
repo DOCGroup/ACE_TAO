@@ -58,6 +58,8 @@ be_visitor_executor_private_exh::visit_attribute (be_attribute *node)
 
   os_ << be_nl_2;
 
+  os_ << "/// @copydoc " << node->full_name () << be_nl;
+
   be_visitor_member_type_decl v (this->ctx_);
 
   if (node->field_type ()->accept (&v) == -1)

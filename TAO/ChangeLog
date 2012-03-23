@@ -1,3 +1,12 @@
+Fri Mar 23 23:29:21 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/executor_exh.cpp:
+        * TAO_IDL/be/be_visitor_component/executor_private_exh.cpp:
+        * TAO_IDL/be/be_visitor_component/facet_exh.cpp:
+        * TAO_IDL/be/be_visitor_component_scope.cpp:
+        * TAO_IDL/be/be_visitor_home/home_exh.cpp:
+          Generate more documentation into the generated executor
+
 Fri Mar 23 21:57:44 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_component/executor_exh.cpp:

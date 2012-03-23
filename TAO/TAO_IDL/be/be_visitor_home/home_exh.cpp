@@ -79,6 +79,7 @@ int
 be_visitor_home_exh::visit_factory (be_factory *node)
 {
   os_ << be_nl_2
+      << "/// @copydoc " << node->full_name () << be_nl
       << "virtual ::Components::EnterpriseComponent_ptr" << be_nl
       << node->local_name ();
 
@@ -108,6 +109,10 @@ be_visitor_home_exh::gen_exec_class (void)
     node_->original_local_name ()->get_string ();
 
   os_ << be_nl
+      << "/**" << be_nl
+      << " * Home Executor Implementation Class: "
+      << lname << "_exec_i" << be_nl
+      << " */" << be_nl
       << "class " << export_macro_.c_str () << " " << lname
       << "_exec_i" << be_idt_nl
       << ": public virtual " << lname << "_Exec," << be_idt_nl
@@ -117,9 +122,11 @@ be_visitor_home_exh::gen_exec_class (void)
       << "public:" << be_idt;
 
   os_ << be_nl
+      << "/// Constructor" << be_nl
       << lname << "_exec_i (void);";
 
   os_ << be_nl_2
+      << "/// Destructor" << be_nl
       << "virtual ~" << lname << "_exec_i (void);";
 
   be_home *h = node_;
@@ -163,11 +170,10 @@ be_visitor_home_exh::gen_exec_class (void)
     }
 
   os_ << be_nl_2
-      << "// Implicit operations.";
+      << "/// Factory method";
 
-  os_ << be_nl_2
-      << "virtual ::Components::EnterpriseComponent_ptr" << be_nl
-      << "create (void);";
+  os_ << be_nl
+      << "virtual ::Components::EnterpriseComponent_ptr create (void);";
 
   os_ << be_uidt_nl
       << "};";
@@ -179,6 +185,7 @@ void
 be_visitor_home_exh::gen_entrypoint (void)
 {
   os_ << be_nl_2
+      << "/// Factory method for " << node_->full_name () << be_nl
       << "extern \"C\" " << export_macro_.c_str ()
       << " ::Components::HomeExecutorBase_ptr" << be_nl
       << "create_" << node_->flat_name ()
