@@ -117,16 +117,16 @@ public:
       ACE_DEBUG( (LM_INFO, "* Incorrect input value of parameter a\n") );
       throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
     }
-    if (1 != ACE_OS::strlen( c ))
-    {
-      ACE_DEBUG( (LM_INFO, "* Incorrect string length for parameter c\n") );
-      throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
-    }
     if (0 == c)
     {
       //FUZZ: disable check_for_NULL
       ACE_DEBUG( (LM_INFO, "* Incorrect NULL string given for parameter c\n") );
       //FUZZ: enable check_for_NULL
+      throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
+    }
+    if (1 != ACE_OS::strlen( c ))
+    {
+      ACE_DEBUG( (LM_INFO, "* Incorrect string length for parameter c\n") );
       throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
     }
     if ('3' != *c)

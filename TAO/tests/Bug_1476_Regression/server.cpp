@@ -22,6 +22,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         break;
       case 'n' :
         number_of_oneways = ACE_OS::atoi (get_opts.opt_arg ());
+        break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
