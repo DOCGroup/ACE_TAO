@@ -1,0 +1,14 @@
+// $Id$
+
+#include "Bug_4009_Foo.idl"
+
+#pragma ciao lem "Bug_4009_BarE.idl"
+
+module BarMod
+{
+  component SequenceComp
+    {
+      attribute BarMod::TestOfLongSeq myAttribute;
+    };
+};
+

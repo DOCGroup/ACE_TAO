@@ -1,0 +1,18 @@
+// $Id$
+#ifndef IC_Foo_IDL
+#define IC_Foo_IDL
+
+#include <Components.idl>
+
+#pragma ciao lem "Bug_4009_BarE.idl"
+
+component Foo
+{
+};
+
+module BarMod
+{
+  typedef sequence<long> TestOfLongSeq;
+};
+
+#endif
