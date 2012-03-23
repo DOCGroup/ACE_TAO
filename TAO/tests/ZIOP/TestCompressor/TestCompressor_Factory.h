@@ -24,7 +24,7 @@
 #include "tao/Compression/Compression.h"
 #include "tao/Compression/Compressor_Factory.h"
 
-#define COMPRESSORID_FOR_TESTING 10
+#define COMPRESSORID_FOR_TESTING 100
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
