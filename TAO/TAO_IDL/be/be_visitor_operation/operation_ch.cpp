@@ -36,11 +36,8 @@ be_visitor_operation_ch::visit_operation (be_operation *node)
 
   *os << be_nl_2;
 
-  // Only local operations are generated virtual
-//  if (node->is_local ())
-  //  {
-      *os << "virtual ";
-//    }
+  *os << "/// @copydoc " << node->full_name () << be_nl
+      << "virtual ";
 
   // STEP I: generate the return type.
   be_type *bt = be_type::narrow_from_decl (node->return_type ());
