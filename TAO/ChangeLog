@@ -1,3 +1,13 @@
+Fri Mar 23 08:30:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * tao/Strategies/COIOP_Transport.cpp:
+        * tao/Strategies/COIOP_Transport.h:
+        * tao/Strategies/SCIOP_Transport.cpp:
+        * tao/Strategies/SCIOP_Transport.h:
+
+          Missed a couple of alternate transport updates from
+          Thu Mar 22 11:10:00 UTC 2012 Simon Massey below.
+
 Fri Mar 23 00:13:54 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_1476_Regression/server.cpp:
