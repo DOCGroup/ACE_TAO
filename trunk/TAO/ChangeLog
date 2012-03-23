@@ -1,3 +1,14 @@
+Fri Mar 23 00:13:54 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_1476_Regression/server.cpp:
+        * tests/Bug_2234_Regression/server.cpp:
+        * tests/Bug_3470_Regression/test.cpp:
+        * tests/NestedUpcall/Triangle_Test/initiator.cpp:
+        * tests/POA/Forwarding/server.cpp:
+        * tests/Portable_Interceptors/AdvSlotExt/server.cpp:
+        * tests/Portable_Interceptors/Bug_2510_Regression/Server_ORBInitializer.cpp:
+          Fixed coverity errors
+
 Thu Mar 22 17:05:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
 
         * tao/ZIOP/ZIOP.cpp:
