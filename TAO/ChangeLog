@@ -1,3 +1,15 @@
+Fri Mar 23 18:18:30 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/AnyTypeCode/Any_SystemException.cpp:
+        * tao/CSD_Framework/CSD_Strategy_Repository.cpp:
+          Initialize pointer to 0
+
+        * tao/CodecFactory/IOP_Codec.pidl:
+          removed old comments
+
+        * tao/Profile.cpp:
+          layout changes
+
 Fri Mar 23 13:30:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
 
         * NEWS:

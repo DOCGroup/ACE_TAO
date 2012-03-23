@@ -413,8 +413,8 @@ void
 TAO_Profile::get_policies (CORBA::PolicyList& pl)
 {
 #if !defined(CORBA_E_MICRO)
-     if (!this->are_policies_parsed_)
-    // None has already parsed the policies.
+  // None has already parsed the policies.
+  if (!this->are_policies_parsed_)
     {
       IOP::TaggedComponent tagged_component;
       tagged_component.tag = Messaging::TAG_POLICIES;
@@ -484,7 +484,7 @@ TAO_Profile::get_policies (CORBA::PolicyList& pl)
                     }
                   else
                     {
-                      // This case should occure when in the IOR are
+                      // This case should occur when in the IOR are
                       // embedded policies that TAO doesn't support,
                       // so as specified by the RT-CORBA
                       // spec. ptc/99-05-03 we just ignore these

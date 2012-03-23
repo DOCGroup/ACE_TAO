@@ -6,7 +6,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_CSD_Strategy_Repository::TAO_CSD_Strategy_Repository()
+TAO_CSD_Strategy_Repository::TAO_CSD_Strategy_Repository() :
+  strategy_list_head_ (0)
 {
 }
 
