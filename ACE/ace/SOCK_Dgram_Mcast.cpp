@@ -313,7 +313,9 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
 #  endif /* ACE_HAS_IPV6 */
 
           // Ok, now join on this interface.
-          if (this->join (mcast_addr, reuse_addr, p_if->ifa_name) == 0)
+          if (this->join (mcast_addr,
+                          reuse_addr,
+                          ACE_TEXT_CHAR_TO_TCHAR(p_if->ifa_name)) == 0)
             ++nr_subscribed;
         }
 
