@@ -72,7 +72,7 @@ be_visitor_executor_exh::visit_component (be_component *node)
       << lname << "_exec_i" << be_nl
       << comment_end_border_;
 
-  os_ << be_nl_2
+  os_ << be_nl
       << "class ";
 
   os_ << lname
@@ -168,7 +168,7 @@ be_visitor_executor_exh::visit_component (be_component *node)
 
   os_ << be_uidt << be_nl_2
       << "private:" << be_idt_nl
-      << "/// @copydoc " << sname << "::CCM_" << lname << "_Context" << be_nl
+      << "/// Member to store " << sname << "::CCM_" << lname << " context" << be_nl
       << global << sname << "::CCM_" << lname
       << "_Context_var ciao_context_;" << be_nl_2;
 
