@@ -98,6 +98,7 @@ TAO_COIOP_Transport::send_request (TAO_Stub *,
 int
 TAO_COIOP_Transport::send_message (TAO_OutputCDR &,
                                    TAO_Stub *,
+                                   TAO_ServerRequest *,
                                    TAO_Message_Semantics,
                                    ACE_Time_Value *)
 {
