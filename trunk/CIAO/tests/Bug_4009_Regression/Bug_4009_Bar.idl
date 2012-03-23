@@ -9,6 +9,29 @@ module BarMod
   component SequenceComp
     {
       attribute BarMod::TestOfLongSeq myAttribute;
+      attribute short  my_short;
+      attribute long   my_long;
+      attribute float  my_float;
+      attribute double my_double;
+      attribute BarMod::fixed_string my_fixed_string;
+      attribute string my_variable_string;
+      attribute BarMod::fixed_wstring my_fixed_wstring;
+      attribute wstring my_variable_wstring;
+
+      attribute BarMod::long_array my_long_array;
+      attribute BarMod::string_array my_string_array;
+
+      attribute BarMod::short_sequence  my_short_sequence;
+      attribute BarMod::short_sequence  my_empty_sequence;
+      attribute BarMod::long_sequence   my_long_sequence;
+      attribute BarMod::float_sequence  my_float_sequence;
+      attribute BarMod::double_sequence my_double_sequence;
+      attribute BarMod::string_sequence my_string_sequence;
+
+      attribute BarMod::Bar my_bar_struct;
+      attribute BarMod::Baz my_baz_struct;
+      attribute BarMod::Data my_data_union;
+      attribute BarMod::Data2 my_var_data_union;
     };
 };
 

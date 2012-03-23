@@ -13,6 +13,69 @@ component Foo
 module BarMod
 {
   typedef sequence<long> TestOfLongSeq;
+  typedef sequence<short>  short_sequence;
+  typedef sequence<long>   long_sequence;
+  typedef sequence<float>  float_sequence;
+  typedef sequence<double> double_sequence;
+  typedef sequence<string> string_sequence;
+  typedef long long_array[5];
+  typedef string string_array[5];
+  typedef string<50> fixed_string;
+  typedef wstring<50> fixed_wstring;
+
+  struct Bar
+  {
+    short  s;
+    long   l;
+    float  f;
+    double d;
+  };
+
+  typedef sequence<Bar, 5> BarSeq;
+
+  struct Baz
+  {
+    string name;
+    BarSeq my_bar_sequence;
+  };
+
+  enum DataType
+  {
+    dtEmpty,
+    dtLong,
+    dtShort
+  };
+
+  union Data switch (DataType)
+  {
+    case dtLong: long longData;
+    case dtShort: short shortData;
+  };
+
+  enum DataType2
+  {
+    dtString,
+    dtShortType
+  };
+
+  union Data2 switch (DataType2)
+  {
+    case dtString: string stringData;
+    case dtShortType: short shortData;
+  };
+
+  interface FooSupport
+  {
+      attribute short supported_short;
+  };
+};
+
+module BarMod
+{
+  component SequenceCompBar
+    {
+      attribute BarMod::TestOfLongSeq myAttribute;
+    };
 };
 
 #endif
