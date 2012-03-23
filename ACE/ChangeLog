@@ -1,3 +1,11 @@
+Fri Mar 23 22:06:11 UTC 2012  Steve Huston  <shuston@riverace.com>
+
+        * ace/WIN32_Asynch_IO.cpp: Fixed possible heap corruption in
+          ACE_SOCK_Dgram_Read_Dgram::recv(). Thank you to
+          Dmytro Ovdiienko <dmitriy.ovdienko@gmail.com> for unconvering this.
+
+        * THANKS: Added Dmytro to the Hall of Fame.
+
 Thu Mar 22 16:23:14 UTC 2012  Steve Huston  <shuston@riverace.com>
 
         * ace/SOCK_Dgram_Mcast.h: Corrected the description of conditions
