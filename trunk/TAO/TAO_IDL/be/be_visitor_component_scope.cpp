@@ -285,6 +285,7 @@ void
 be_visitor_component_scope::gen_exec_entrypoint_decl (void)
 {
   os_ << be_nl_2
+      << "/// Factory method for " << node_->full_name () << be_nl
       << "extern \"C\" " << export_macro_.c_str ()
       << " ::Components::EnterpriseComponent_ptr" << be_nl
       << "create_" << node_->flat_name ()

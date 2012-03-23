@@ -58,7 +58,7 @@ be_visitor_facet_exh::visit_provides (be_provides *node)
       << lname << "_exec_i" << be_nl
       << comment_end_border_;
 
-  os_ << be_nl_2
+  os_ << be_nl
       << "class "
       << lname << "_exec_i" << be_idt_nl
       << ": public virtual " << global << sname << "::CCM_"
