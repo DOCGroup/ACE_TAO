@@ -115,7 +115,7 @@ be_visitor_attr_setarg_type::visit_sequence (be_sequence *)
       return -1;
     }
 
-  os_ << "const " << bt->full_name () << " & ";
+  os_ << "const ::" << bt->full_name () << " & ";
 
   return 0;
 }
