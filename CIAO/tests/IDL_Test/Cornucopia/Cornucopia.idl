@@ -12,9 +12,12 @@
 
 module Supported
 {
+  /// The IfacePawPaw interface
   interface IfacePawPaw
   {
+    /// Our paw_paw_op stuff
     long paw_paw_op (out short spew);
+    /// A special boolean attribute
     attribute boolean inbred;
   };
 
@@ -26,6 +29,7 @@ module Supported
 
   interface IfaceDad : IfacePawPaw
   {
+    /// Our message attribute
     attribute string msg;
     long long get_big_int (in IfacePawPaw genealogy);
   };
@@ -100,6 +104,7 @@ module T2
   component Base
   {
     port MyPort usage;
+    /// My topic
     attribute string topic_name;
   };
 
