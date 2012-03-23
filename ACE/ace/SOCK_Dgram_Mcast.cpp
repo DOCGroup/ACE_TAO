@@ -12,7 +12,7 @@
 #include "ace/OS_NS_sys_socket.h"
 #endif
 
-#if defined (ACE_HAS_IPV6) && defined (ACE_WIN32)
+#if defined (ACE_WIN32)
 #include /**/ <iphlpapi.h>
 #endif
 
