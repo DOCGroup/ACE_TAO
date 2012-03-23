@@ -57,7 +57,7 @@ project(Bug_4009_Bar_exec) : ciao_executor {
   sharedname = Bug_4009_Bar_exec
   after     += Bug_4009_Bar_lem_gen Bug_4009_Bar_stub
   libs      += Bug_4009_Bar_stub
-requires += dummy_label
+
   dynamicflags += IC_BAR_EXEC_BUILD_DLL
 
   IDL_Files {
