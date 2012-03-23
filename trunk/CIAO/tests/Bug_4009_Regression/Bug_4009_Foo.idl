@@ -4,7 +4,7 @@
 
 #include <Components.idl>
 
-#pragma ciao lem "Bug_4009_BarE.idl"
+#pragma ciao lem "Bug_4009_FooE.idl"
 
 component Foo
 {
