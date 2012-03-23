@@ -1,3 +1,27 @@
+Fri Mar 23 13:30:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * NEWS:
+          Stated ZIOP now working on the return path.
+
+        * tests/ZIOP/TestCompressor_Factory.h:
+          Moved the COMPRESSORID_FOR_TESTING to another unknown slot (100) as
+          the original 10 is now COMPRESSOR_RLE.
+
+        * tao/ZIOP/ZIOP.cpp:
+          Updated the debugging messages (ACE_ERROR -> ACE_DEBUG).
+
+        * tao/ZIOP/ZIOP_Stub.cpp:
+          Corrected the corruption of the client-side policies that
+          were being broadcast to the server. The first, highest, priority
+          slot was being over-written with the policy and actual compression
+          level being used, replacing another possiable compressor ID. This
+          effectivly doubled-up on the found compressor ID in the list (if
+          it was actually found further down the list). The list is now
+          re-ordered to preserve the skipped over compressors (and their relative
+          priorities) so that the server can still see what alternatives are
+          available for it to use based upon it's own priority order as per
+          the ZIOP spec.
+
 Fri Mar 23 11:20:55 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/FT_App/FT_TestReplica_i.cpp:
