@@ -141,13 +141,18 @@ create_servant_manager (CORBA::ORB_ptr orb,
 
   FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
   if (output_file == 0)
-    ACE_ERROR ((LM_ERROR,
-                "Cannot open output file for writing IOR: %s\n",
-                ior_output_file));
-  ACE_OS::fprintf (output_file,
-                   "%s",
-                   ior.in ());
-  ACE_OS::fclose (output_file);
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "Cannot open output file for writing IOR: %s\n",
+                  ior_output_file));
+    }
+  else
+    {
+      ACE_OS::fprintf (output_file,
+                      "%s",
+                      ior.in ());
+      ACE_OS::fclose (output_file);
+    }
 
   return activator;
 }

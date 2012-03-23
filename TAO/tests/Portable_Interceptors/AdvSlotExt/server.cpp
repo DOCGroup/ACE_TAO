@@ -219,60 +219,68 @@ public:
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  ORBInitializer_var orb_initializer (new ORB_Initializer ());
-  register_orb_initializer (orb_initializer.in ());
+  try
+    {
+      ORBInitializer_var orb_initializer (new ORB_Initializer ());
+      register_orb_initializer (orb_initializer.in ());
 
-  ORB_var orb (ORB_init (argc, argv));
+      ORB_var orb (ORB_init (argc, argv));
 
-  if (parse_args (argc, argv) != 0)
-    return 1;
+      if (parse_args (argc, argv) != 0)
+        return 1;
 
-  Object_var obj (orb->resolve_initial_references ("RootPOA"));
+      Object_var obj (orb->resolve_initial_references ("RootPOA"));
 
-  POA_var root_poa (POA::_narrow (obj.in ()));
-  POAManager_var poa_manager (root_poa->the_POAManager ());
+      POA_var root_poa (POA::_narrow (obj.in ()));
+      POAManager_var poa_manager (root_poa->the_POAManager ());
 
-  StateTransferImpl* impl = new StateTransferImpl (orb.in ());
-  ServantBase_var impl_var (impl);
+      StateTransferImpl* impl = new StateTransferImpl (orb.in ());
+      ServantBase_var impl_var (impl);
 
-  PortableServer::ObjectId_var id_act =
-    root_poa->activate_object (impl);
+      PortableServer::ObjectId_var id_act =
+        root_poa->activate_object (impl);
 
-  CORBA::Object_var object = root_poa->id_to_reference (id_act.in ());
+      CORBA::Object_var object = root_poa->id_to_reference (id_act.in ());
 
-  StateTransfer_var ref = StateTransfer::_narrow (object.in ());
-  String_var ior (orb->object_to_string (ref.in ()));
+      StateTransfer_var ref = StateTransfer::_narrow (object.in ());
+      String_var ior (orb->object_to_string (ref.in ()));
 
-  poa_manager->activate ();
-
-
-  // Dump the ior.
-  //
-  FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-  if (output_file == 0)
-  {
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Cannot open output file <%s> for writing "
-                       "IOR: %s",
-                       ior_output_file,
-                       ior.in ()),
-                      1);
-  }
-
-  ACE_OS::fprintf (output_file, "%s", ior.in ());
-  ACE_OS::fclose (output_file);
-
-  ACE_DEBUG ((LM_DEBUG, "Server is ready, IOR is in '%s'\n", ior_output_file));
+      poa_manager->activate ();
 
 
-  // Run the ORB event loop.
-  //
-  orb->run ();
+      // Dump the ior.
+      //
+      FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
+      if (output_file == 0)
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                          "Cannot open output file <%s> for writing "
+                          "IOR: %s",
+                          ior_output_file,
+                          ior.in ()),
+                          1);
+      }
 
-  root_poa->destroy (1, 1);
-  orb->destroy ();
+      ACE_OS::fprintf (output_file, "%s", ior.in ());
+      ACE_OS::fclose (output_file);
 
-  ACE_DEBUG ((LM_DEBUG, "Event loop finished.\n"));
+      ACE_DEBUG ((LM_DEBUG, "Server is ready, IOR is in '%s'\n", ior_output_file));
+
+
+      // Run the ORB event loop.
+      //
+      orb->run ();
+
+      root_poa->destroy (1, 1);
+      orb->destroy ();
+
+      ACE_DEBUG ((LM_DEBUG, "Event loop finished.\n"));
+    }
+  catch (const CORBA::Exception& ex)
+    {
+      ex._tao_print_exception ("Exception caught:");
+      return 1;
+    }
 
   return 0;
 }
