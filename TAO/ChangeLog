@@ -1,3 +1,8 @@
+Fri Mar 23 11:20:55 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/FT_App/FT_TestReplica_i.cpp:
+          Fixed compile error
+
 Fri Mar 23 08:30:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
 
         * tao/Strategies/COIOP_Transport.cpp:
