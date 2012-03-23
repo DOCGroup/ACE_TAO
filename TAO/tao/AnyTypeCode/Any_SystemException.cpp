@@ -37,7 +37,8 @@ TAO::Any_SystemException::Any_SystemException (_tao_destructor destructor,
 
 TAO::Any_SystemException::Any_SystemException (CORBA::TypeCode_ptr tc)
   : Any_Impl (0,
-              tc)
+              tc),
+    value_ (0)
 {
 }
 
