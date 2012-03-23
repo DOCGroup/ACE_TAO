@@ -3367,11 +3367,15 @@ ACE_WIN32_Asynch_Read_Dgram::recv (ACE_Message_Block *message_block,
                   -1);
 
   // do the scatter/gather recv
+  // NOTE! The flags value is in/out to recvfrom() - it's changed AFTER
+  // the call to WSARecvFrom returns and if it completes immediately, the
+  // result object may already be deleted. Since the changed value is not
+  // used, and not needed by result, pass a copy to avoid the race.
   ssize_t initiate_result = ACE_OS::recvfrom (result->handle (),
                                               iov,
                                               iovcnt,
                                               number_of_bytes_recvd,
-                                              result->flags_,
+                                              flags,
                                               result->saddr (),
                                               &(result->addr_len_),
                                               result,
