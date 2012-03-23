@@ -50,7 +50,7 @@ WARN_FORMAT           = "$file:$line: $text"
 #---------------------------------------------------------------------------
 
 INPUT                 = .
-FILE_PATTERNS         = Cornucopia_exec.h Cornucopia_exec.cpp
+FILE_PATTERNS         = Cornucopia_exec.h Cornucopia_exec.cpp Cornucopia.idl CornucopiaE.idl
 RECURSIVE             = YES
 EXCLUDE               =
 EXCLUDE_PATTERNS      =
