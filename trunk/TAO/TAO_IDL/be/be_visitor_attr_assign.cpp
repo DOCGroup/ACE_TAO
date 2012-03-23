@@ -108,13 +108,21 @@ be_visitor_attr_assign::visit_predefined_type (
 
 /// Unused if anonymous types are not allowed.
 int
-be_visitor_attr_assign::visit_sequence (be_sequence *node)
+be_visitor_attr_assign::visit_sequence (be_sequence *)
 {
+  be_type *bt = this->ctx_->alias ();
+
+  if (bt == 0)
+    {
+      /// Support anonymous types?
+      return -1;
+    }
+
   os_ << be_nl
-      << "::" << node->full_name () << " * _ciao_tmp = 0;" << be_nl
+      << "::" << bt->full_name () << " * _ciao_tmp = 0;" << be_nl
       << "ACE_NEW (" << be_idt_nl
       << "_ciao_tmp," << be_nl
-      << node->full_name () << " (" << this->attr_name_
+      << bt->full_name () << " (" << this->attr_name_
       << "));" << be_uidt_nl << be_nl
       << this->attr_name_string_.c_str () << " = _ciao_tmp;";
 
@@ -150,7 +158,7 @@ int
 be_visitor_attr_assign::visit_typedef (be_typedef *node)
 {
   this->ctx_->alias (node);
-  int status = node->primitive_base_type ()->accept (this);
+  int const status = node->primitive_base_type ()->accept (this);
 
   if (status == -1)
     {
