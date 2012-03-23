@@ -144,13 +144,21 @@ be_visitor_attr_return::visit_predefined_type (
 
 /// Unused if anonymous types are not allowed.
 int
-be_visitor_attr_return::visit_sequence (be_sequence *node)
+be_visitor_attr_return::visit_sequence (be_sequence *)
 {
+  be_type *bt = this->ctx_->alias ();
+
+  if (bt == 0)
+    {
+      /// Support anonymous types?
+      return -1;
+    }
+
   os_ << be_nl
-      << "::" << node->full_name () << " * retval = 0;" << be_nl
+      << "::" << bt->full_name () << " * retval = 0;" << be_nl
       << "ACE_NEW_RETURN (" << be_idt_nl
       << "retval," << be_nl
-      << "::" << node->full_name () << " (" << be_idt_nl
+      << "::" << bt->full_name () << " (" << be_idt_nl
       << this->attr_name_string_.c_str ()
       << ".in ())," << be_uidt_nl
       << "0);" << be_uidt_nl << be_nl
