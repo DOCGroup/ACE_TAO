@@ -2,9 +2,5 @@
 // $Id$
 
 feature(ipv6) {
-  specific(prop:windows) {
-    lit_libs += iphlpapi
-  }
-
   macros += ACE_HAS_IPV6
 }
