@@ -17,6 +17,10 @@ project: ipv6, vc_warnings, build_files, test_files, svc_conf_files, ace_unicode
     macro_for_lib_modifier=1
   }
 
+  specific(prop:windows) {
+    lit_libs += iphlpapi
+  }
+
   specific(cdt6) {
     win32::platform_libs += ws2_32 mswsock netapi32
     release::macros += ACE_NDEBUG ACE_USE_RCSID=0

@@ -351,13 +351,29 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
           return -1;
         }
 
-      while (pAddrs)
+      for (; pAddrs; pAddrs = pAddrs->Next)
         {
-          if (this->join (mcast_addr, reuse_addr,
-                          ACE_TEXT_CHAR_TO_TCHAR(pAddrs->AdapterName)) == 0)
-            ++nr_subscribed;
+          if (pAddrs->OperStatus != IfOperStatusUp)
+            continue;
 
-          pAddrs = pAddrs->Next;
+          // The ACE_SOCK_Dgram::make_multicast_ifaddr (IPv4), called by join(),
+          // can only deal with a dotted-decimal address, not an interface name.
+          if (family == AF_INET)
+            {
+              ACE_INET_Addr intf_addr ((sockaddr_in*)(pAddrs->FirstUnicastAddress->Address.lpSockaddr),
+                                       pAddrs->FirstUnicastAddress->Address.iSockaddrLength);
+              char intf_addr_str[INET_ADDRSTRLEN];
+              intf_addr.get_host_addr (intf_addr_str, sizeof (intf_addr_str));
+              if (this->join (mcast_addr, reuse_addr,
+                              ACE_TEXT_CHAR_TO_TCHAR(intf_addr_str)) == 0)
+                ++nr_subscribed;
+            }
+          else
+            {
+              if (this->join (mcast_addr, reuse_addr,
+                              ACE_TEXT_CHAR_TO_TCHAR(pAddrs->AdapterName)) == 0)
+                ++nr_subscribed;
+            }
         }
 
       delete[] buf; // clean up
@@ -389,7 +405,7 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
               --if_cnt;
 
               // Convert to 0-based for indexing, next loop check.
-              if (if_addrs[if_cnt].get_type () != AF_INET || if_addrs[if_cnt].is_loopback ())
+              if (if_addrs[if_cnt].get_type () != family || if_addrs[if_cnt].is_loopback ())
                 continue;
               char addr_buf[INET6_ADDRSTRLEN];
               if (this->join (mcast_addr,
