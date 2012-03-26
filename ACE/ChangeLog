@@ -1,3 +1,8 @@
+Mon Mar 26 11:27:11 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_mingw32.GNU:
+          Added iphlpapi
+
 Sat Mar 24 21:53:13  UTC 2012  Steve Huston  <shuston@riverace.com>
 
         * ace/SOCK_Dgram_Mcast.cpp (subscribe_ifs): For Windows, handle IPv6
