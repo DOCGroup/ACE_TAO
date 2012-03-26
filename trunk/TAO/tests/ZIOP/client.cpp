@@ -173,6 +173,7 @@ create_policies (CORBA::ORB_ptr orb, bool add_zlib_compressor)
 Test::Hello_var
 prepare_tests (CORBA::ORB_ptr orb, bool create_factories=true)
 {
+
 #if defined TAO_HAS_ZIOP && TAO_HAS_ZIOP == 1
   if (create_factories)
     register_factories(orb);
@@ -215,6 +216,7 @@ check_results (CORBA::ORB_ptr orb)
           return start_tests (hello.in (), orb);
         }
       break;
+    case 4:
     case -1:
       {
         ::Compression::Compressor_ptr compressor =
@@ -244,7 +246,6 @@ check_results (CORBA::ORB_ptr orb)
       return 0;
       break;
     case 3:
-    case 4:
       {
         // low value policy test. No compression should be used.
         ::Compression::Compressor_ptr compressor =

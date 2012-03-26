@@ -1,11 +1,19 @@
-Fri Mar 23 23:29:21 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+Mon Mar 26 13:11:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
 
-        * TAO_IDL/be/be_visitor_component/executor_exh.cpp:
-        * TAO_IDL/be/be_visitor_component/executor_private_exh.cpp:
-        * TAO_IDL/be/be_visitor_component/facet_exh.cpp:
-        * TAO_IDL/be/be_visitor_component_scope.cpp:
-        * TAO_IDL/be/be_visitor_home/home_exh.cpp:
-          Generate more documentation into the generated executor
+        * tests/ZIOP/client.cpp:
+          Correct test 4 checks for compression being used. (Was hidden as the client
+          was selecting the wrong compressor).
+
+        * tao/ZIOP/ZIOP.cpp:
+          Updated the debugging messages (Give compressor level found in each list
+          with compressor name).
+
+        * tao/ZIOP/ZIOP_Stub.cpp:
+          Correct client priority compressor selection for sening requests to the
+          server. The client was selecting compression based upon the Server
+          compressor list priority, not the client compressor list priority, and
+          could selecty compression even when the server didn't publish any compression
+          availablitiy.
 
 Fri Mar 23 21:57:44 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
