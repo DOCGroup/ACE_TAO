@@ -709,16 +709,18 @@ TAO_ZIOP_Loader::marshal_data (TAO_OutputCDR &cdr, TAO_ORB_Core &orb_core, TAO_S
               Compression::CompressionLevel
                 compression_level = ACE_MIN (serverEntry->compression_level,
                                              clientEntry->compression_level);
-              if (7 < TAO_debug_level)
+              if (6 < TAO_debug_level)
                 {
                   ACE_DEBUG ((LM_DEBUG,
                               ACE_TEXT("TAO (%P|%t) - ")
                               ACE_TEXT("TAO_ZIOP_Loader::marshal_data (server_reply), ")
-                              ACE_TEXT("Found (Server %d: %s == Client %d: %s) level %d.\n"),
+                              ACE_TEXT("Found (Server %d: %s@%d == Client %d: %s@%d) using @%d.\n"),
                               server,
                               this->ziop_compressorid_name (serverEntry->compressor_id),
+                              serverEntry->compression_level,
                               client,
                               this->ziop_compressorid_name (clientEntry->compressor_id),
+                              clientEntry->compression_level,
                               compression_level));
                 }
 
@@ -747,11 +749,13 @@ TAO_ZIOP_Loader::marshal_data (TAO_OutputCDR &cdr, TAO_ORB_Core &orb_core, TAO_S
               ACE_DEBUG ((LM_DEBUG,
                           ACE_TEXT("TAO (%P|%t) - ")
                           ACE_TEXT("TAO_ZIOP_Loader::marshal_data (server_reply), ")
-                          ACE_TEXT("checking (Server %d: %s != Client %d: %s).\n"),
+                          ACE_TEXT("checking (Server %d: %s@%d != Client %d: %s@%d).\n"),
                           server,
                           this->ziop_compressorid_name (serverEntry->compressor_id),
+                          serverEntry->compression_level,
                           client,
-                          this->ziop_compressorid_name (clientEntry->compressor_id)));
+                          this->ziop_compressorid_name (clientEntry->compressor_id),
+                          clientEntry->compression_level));
             }
         } // next clientEntry
     } // next serverEntry
