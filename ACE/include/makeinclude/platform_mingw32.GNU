@@ -29,7 +29,7 @@ include $(ACE_ROOT)/include/makeinclude/platform_gnuwin32_common.GNU
 PLATFORM_SSL_LIBS ?= -lssl32 -leay32
 
 ifeq ($(winsock2),1)
-  LIBS += -lws2_32 -lmswsock iphlpapi
+  LIBS += -lws2_32 -lmswsock -liphlpapi
 endif
 
 LIBS += -lwsock32 -lnetapi32
