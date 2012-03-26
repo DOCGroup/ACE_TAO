@@ -176,99 +176,134 @@ TAO_ZIOP_Stub::effective_compression_enabling_policy (void)
 CORBA::Policy *
 TAO_ZIOP_Stub::effective_compression_id_list_policy (void)
 {
-  // Get effective override.
-  CORBA::Policy_var override =
-    this->TAO_Stub::get_cached_policy (TAO_CACHED_COMPRESSION_ID_LEVEL_LIST_POLICY);
-
-  // Get the value from the ior.
-  CORBA::Policy_var exposed =
-    this->exposed_compression_id_list_policy ();
-
-  ZIOP::CompressorIdLevelListPolicy_var override_policy_var =
-    ZIOP::CompressorIdLevelListPolicy::_narrow (override.in ());
-
-  ZIOP::CompressorIdLevelListPolicy_var exposed_policy_var =
-    ZIOP::CompressorIdLevelListPolicy::_narrow (exposed.in ());
-
-    // Reconcile client-exposed and locally set values.
-  if (CORBA::is_nil (exposed_policy_var.in ()))
-    return override._retn ();
-
-  if (CORBA::is_nil (override_policy_var.in ()))
-    return exposed._retn ();
-
-  // Check which compressor id we should use and which level
-  for (CORBA::ULong nr_exposed = 0;
-        nr_exposed < exposed_policy_var->compressor_ids ()->length ();
-        ++nr_exposed)
+  // Get the value from the IOR (This is the SERVERS available compressor's list).
+  CORBA::Policy_var policy (
+    this->exposed_compression_id_list_policy ());
+  ZIOP::CompressorIdLevelListPolicy_var serverCompressors (
+    ZIOP::CompressorIdLevelListPolicy::_narrow (policy.in ()));
+  // If SERVER does not have an available compressor's list, compression can't go ahead.
+  if (CORBA::is_nil (serverCompressors.in ()))
     {
-      ::Compression::CompressorIdLevel_var exposed_compressor =
-        exposed_policy_var->compressor_ids ()->operator [](nr_exposed);
-
-      if (TAO_debug_level > 9)
+      if (6 < TAO_debug_level)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) - ")
-                      ACE_TEXT ("TAO_ZIOP_Stub::effective_compression_id_list_policy, ")
-                      ACE_TEXT ("exposed_policy = %d, compressor_id = %C, ")
-                      ACE_TEXT ("compression_level = %d\n"),
-                      nr_exposed,
-                      TAO_ZIOP_Loader::ziop_compressorid_name (
-                            exposed_compressor.ptr ()->compressor_id),
-                      exposed_compressor.ptr ()->compression_level));
+            ACE_TEXT ("TAO (%P|%t) - ")
+            ACE_TEXT ("TAO_ZIOP_Stub::effective_compression_id_list_policy, ")
+            ACE_TEXT ("no serverCompressorIdLevelListPolicy (did not compress).")));
         }
-      // check if a local policy matches this exposed policy
-      for (CORBA::ULong nr_override = 0;
-            nr_override < override_policy_var->compressor_ids ()->length ();
-            ++nr_override)
+      return 0;
+    }
+  ::Compression::CompressorIdLevelList &serverList =
+    *serverCompressors->compressor_ids ();
+
+  // Get effective override (This is the CLIENTS compressor's priority ordered list).
+  policy =
+    this->TAO_Stub::get_cached_policy (TAO_CACHED_COMPRESSION_ID_LEVEL_LIST_POLICY);
+  ZIOP::CompressorIdLevelListPolicy_var clientCompressors (
+    ZIOP::CompressorIdLevelListPolicy::_narrow (policy.in ()));
+  // Likewise if CLIENT does not have a compressor's list, compression can't go ahead.
+  if (CORBA::is_nil (clientCompressors.in ()))
+    {
+      if (6 < TAO_debug_level)
         {
-          ::Compression::CompressorIdLevel_var override_compressor =
-            override_policy_var->compressor_ids ()->operator [] (nr_override);
-          if (TAO_debug_level > 9)
+          ACE_DEBUG ((LM_DEBUG,
+            ACE_TEXT ("TAO (%P|%t) - ")
+            ACE_TEXT ("TAO_ZIOP_Stub::effective_compression_id_list_policy, ")
+            ACE_TEXT ("no clientCompressorIdLevelListPolicy (did not compress).")));
+        }
+      return 0;
+    }
+  ::Compression::CompressorIdLevelList &clientList =
+    *clientCompressors->compressor_ids ();
+
+  // For each CLIENT compressor (in priority order) check...
+  for (CORBA::ULong client = 0u; client < clientList.length (); ++client)
+    {
+      ::Compression::CompressorIdLevel_var clientEntry (clientList[client]);
+
+      // ... which each SERVER compressor id if it is available to use.
+      for (CORBA::ULong server = 0u; server < serverList.length (); ++server)
+        {
+          ::Compression::CompressorIdLevel_var serverEntry (serverList[server]);
+
+          if (clientEntry->compressor_id == serverEntry->compressor_id)
+            {
+              // OK we found a match, however we need to make the highest priority
+              // compressor (the one we are going to employ) use slot 0 in the
+              // list we are returning. Since we can't modify the original list
+              // we have to make a copy and modify that.
+              policy= clientCompressors->copy ();
+              ZIOP::CompressorIdLevelListPolicy_var returningCompressors (
+                ZIOP::CompressorIdLevelListPolicy::_narrow (policy.in ()));
+              if (CORBA::is_nil (returningCompressors.in ()))
+                {
+                  // This shouldn't happen, it's basically an internal error.
+                  if (6 < TAO_debug_level)
+                    {
+                      ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("TAO (%P|%t) - ")
+                        ACE_TEXT ("TAO_ZIOP_Stub::effective_compression_id_list_policy, ")
+                        ACE_TEXT ("could not copy clientCompressorIdLevelListPolicy (did not compress).")));
+                    }
+                  return 0;
+                }
+              ::Compression::CompressorIdLevelList &returningList =
+                *returningCompressors->compressor_ids ();
+
+              // We must ensure the other compressors are not lost, as they tell the server
+              // which compressors are available for it to use with the reply message.
+              for (CORBA::ULong shuffle = client; 0u < shuffle; --shuffle)
+                {
+                  returningList[shuffle].compressor_id=     returningList[shuffle-1u].compressor_id;
+                  returningList[shuffle].compression_level= returningList[shuffle-1u].compression_level;
+                }
+
+              // The one we found is the one we are going to use (now the highest priority)
+              // but with the correct (minimized) compression level of the client and server.
+              returningList[0].compressor_id=     clientEntry->compressor_id;
+              returningList[0].compression_level= ACE_MIN (clientEntry->compression_level,
+                                                           serverEntry->compression_level);
+              if (6 < TAO_debug_level)
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              ACE_TEXT ("TAO (%P|%t) - ")
+                              ACE_TEXT ("TAO_ZIOP_Stub::effective_compression_id_list_policy, ")
+                              ACE_TEXT ("found (Client %d: %s@%d == Server %d: %s@%d) using @%d.\n"),
+                              client,
+                              TAO_ZIOP_Loader::ziop_compressorid_name (clientEntry->compressor_id),
+                              clientEntry->compression_level,
+                              server,
+                              TAO_ZIOP_Loader::ziop_compressorid_name (serverEntry->compressor_id),
+                              serverEntry->compression_level,
+                              returningList[0].compression_level));
+                }
+
+              return returningCompressors._retn ();
+            }
+
+          if (7 < TAO_debug_level)
             {
               ACE_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("TAO (%P|%t) - ")
                           ACE_TEXT ("TAO_ZIOP_Stub::effective_compression_id_list_policy, ")
-                          ACE_TEXT ("checking override_policy = %d, compressor_id = %C, ")
-                          ACE_TEXT ("compression_level = %d\n"),
-                          nr_override,
-                          TAO_ZIOP_Loader::ziop_compressorid_name (
-                                override_compressor->compressor_id),
-                          override_compressor->compression_level));
+                          ACE_TEXT ("checking (Client %d: %s@%d != Server %d: %s@%d).\n"),
+                          client,
+                          TAO_ZIOP_Loader::ziop_compressorid_name (clientEntry->compressor_id),
+                          clientEntry->compression_level,
+                          server,
+                          TAO_ZIOP_Loader::ziop_compressorid_name (serverEntry->compressor_id),
+                          serverEntry->compression_level));
             }
-          if (override_compressor->compressor_id ==
-              exposed_compressor->compressor_id)
-            {
-              CORBA::Policy_var tmp_policy = override_policy_var->copy ();
-              ZIOP::CompressorIdLevelListPolicy_var idlevellist_policy_var =
-                    ZIOP::CompressorIdLevelListPolicy::_narrow (tmp_policy.in ());
-              if (CORBA::is_nil (idlevellist_policy_var.in ()))
-                return override._retn ();
+        } // next serverEntry
+    } // next clientEntry
 
-              ::Compression::CompressorIdLevelList &entries =
-                *idlevellist_policy_var->compressor_ids ();
-
-              // Since the CompressorIdLevelListPolicy holds a prioritized list
-              // of the compressors we are allowed to use, and this is sent
-              // across to the server, BUT we are going to always use entry 0
-              // here at the client; we must ensure the other compressors are not
-              // lost but that the chosen compressor is placed first in the list
-              // (using the correctly minimized compression_level).
-              for (CORBA::ULong shuffle = nr_override; 0u < shuffle; --shuffle)
-                {
-                  entries[shuffle].compressor_id=     entries[shuffle-1u].compressor_id;
-                  entries[shuffle].compression_level= entries[shuffle-1u].compression_level;
-                }
-              entries[0].compressor_id=     override_compressor->compressor_id;
-              entries[0].compression_level= ACE_MIN (
-                override_compressor->compression_level,
-                exposed_compressor->compression_level);
-
-              return idlevellist_policy_var._retn ();
-            }
-        }
+  if (6 < TAO_debug_level)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT("TAO (%P|%t) - ")
+                  ACE_TEXT ("TAO_ZIOP_Stub::effective_compression_id_list_policy, ")
+                  ACE_TEXT("no matching CompressorIdLevelListPolicy (did not compress).\n")));
     }
-
   return 0;
 }
 
