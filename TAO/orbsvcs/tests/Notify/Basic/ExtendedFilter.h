@@ -79,12 +79,6 @@ protected:
 
   /// The supplier admin used by suppliers.
   CosNotifyChannelAdmin::SupplierAdmin_var supplier_admin_;
-
-  /// Consumer.
-  TAO_Notify_Tests_PushConsumer* consumer_;
-
-  /// Supplier.
-  TAO_Notify_Tests_PushSupplier* supplier_;
 };
 
 /***************************************************************************/
