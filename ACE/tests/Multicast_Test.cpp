@@ -730,7 +730,7 @@ MCT_Task::open (void *)
         ACE_ERROR ((LM_WARNING,
                     ACE_TEXT ("%p\n"),
                     ACE_TEXT ("MCT_Task::open - enable loopback")));
-      
+
       if (this->reactor ()->register_handler (handler, READ_MASK) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("MCT_Task::open - cannot register ")
