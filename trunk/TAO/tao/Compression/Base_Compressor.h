@@ -61,7 +61,7 @@ namespace TAO
 
     TAO_SYNCH_MUTEX mutex_;
     ::Compression::CompressionLevel compression_level_;
-    ::Compression::CompressorFactory_var compressor_factory_;
+    ::Compression::CompressorFactory *compressor_factory_;
     ::CORBA::ULongLong compressed_bytes_;
     ::CORBA::ULongLong uncompressed_bytes_;
   };
