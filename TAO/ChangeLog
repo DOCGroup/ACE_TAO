@@ -1,3 +1,17 @@
+Tue Mar 27 14:50:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * tao/Compression/Base_Compressor.cpp:
+        * tao/Compression/Base_Compressor.h:
+          compressor_factory_ should not be a var just a pointer. Each compressor is
+          passed in the "this" pointer of the factory that created it (which holds
+          each compressor that is created inside it in it's own var). When it comes
+          to delete the factory, each compressor held within the factory will keep the
+          factory reference count artificially high so it does not get deleted and
+          so the compressors it holds are also not deleted. Basically the var creates a
+          circular reference counted chain of objects. Now the compressors simply hold a
+          pointer to the factory, when the factory is deleted, each contained compressor
+          will also be deleted.
+
 Tue Mar 27 13:17:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
 
         * tao/ORB_Core.cpp:

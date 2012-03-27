@@ -10,8 +10,7 @@ namespace TAO
     ::Compression::CompressorFactory_ptr compressor_factory,
     ::Compression::CompressionLevel compression_level)
     : compression_level_ (compression_level),
-      compressor_factory_ (::Compression::CompressorFactory::_duplicate (
-                           compressor_factory)),
+      compressor_factory_ (compressor_factory),
       compressed_bytes_ (0),
       uncompressed_bytes_ (0)
   {
@@ -21,7 +20,7 @@ namespace TAO
   BaseCompressor::compressor_factory (void)
   {
     return ::Compression::CompressorFactory::_duplicate (
-      compressor_factory_.in ());
+      compressor_factory_);
   }
 
   ::Compression::CompressionLevel
