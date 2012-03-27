@@ -1,3 +1,9 @@
+Tue Mar 27 15:53:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * tests/ZIOP/client.cpp:
+          compression_manager->get_compressor () needs to be stored in a
+          ::Compression::Compressor_var as it is reference counted.
+
 Tue Mar 27 14:50:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
 
         * tao/Compression/Base_Compressor.cpp:
