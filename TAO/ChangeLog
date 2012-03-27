@@ -1,3 +1,8 @@
+Tue Mar 27 10:40:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * tests/ZIOP/client.cpp:
+          Wrong wide char string being compared should always be narrow char.
+
 Mon Mar 26 22:20:14 UTC 2012  Trevor Fields  <fields_t@ociweb.com>
 
         * orbsvcs/tests/Notify/Basic/ExtendedFilter.h:
@@ -14,10 +19,10 @@ Mon Mar 26 13:11:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot c
           with compressor name).
 
         * tao/ZIOP/ZIOP_Stub.cpp:
-          Correct client priority compressor selection for sening requests to the
+          Correct client priority compressor selection for sending requests to the
           server. The client was selecting compression based upon the Server
           compressor list priority, not the client compressor list priority, and
-          could selecty compression even when the server didn't publish any compression
+          could select compression even when the server didn't publish any compression
           availablitiy.
 
 Fri Mar 23 23:29:21 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
