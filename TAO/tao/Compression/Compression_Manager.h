@@ -32,6 +32,8 @@ namespace TAO
     public virtual ::Compression::CompressionManager,
     public virtual ::CORBA::LocalObject
   {
+    virtual ~CompressionManager ();
+
     virtual void register_factory (::Compression::CompressorFactory_ptr
                                    compressor_factory);
 
@@ -56,5 +58,4 @@ namespace TAO
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
-
 #endif /* TAO_COMPRESSION_MANAGER_H */
