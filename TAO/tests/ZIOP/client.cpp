@@ -197,9 +197,10 @@ check_results (CORBA::ORB_ptr orb)
       try
         {
           // should throw an exception
-          compression_manager->get_compressor (
-            ::Compression::COMPRESSORID_LZO,
-            LEAST_COMPRESSION_LEVEL );
+          ::Compression::Compressor_var compressor (
+            compression_manager->get_compressor (
+              ::Compression::COMPRESSORID_LZO,
+              LEAST_COMPRESSION_LEVEL ));
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("ERROR : check_results, ")
                              ACE_TEXT ("no exception thrown when applying for ")
@@ -219,10 +220,10 @@ check_results (CORBA::ORB_ptr orb)
     case 4:
     case -1:
       {
-        ::Compression::Compressor_ptr compressor =
+        ::Compression::Compressor_var compressor (
           compression_manager->get_compressor (
             ::Compression::COMPRESSORID_ZLIB,
-            LEAST_COMPRESSION_LEVEL );
+            LEAST_COMPRESSION_LEVEL ));
         if (!CORBA::is_nil (compressor))
           {
             if (compressor->compressed_bytes () == 0)
@@ -248,10 +249,10 @@ check_results (CORBA::ORB_ptr orb)
     case 3:
       {
         // low value policy test. No compression should be used.
-        ::Compression::Compressor_ptr compressor =
+        ::Compression::Compressor_var compressor (
         compression_manager->get_compressor (
           ::Compression::COMPRESSORID_ZLIB,
-          LEAST_COMPRESSION_LEVEL );
+          LEAST_COMPRESSION_LEVEL ));
         if (!CORBA::is_nil (compressor))
           {
             if (compressor->compressed_bytes () != 0)
