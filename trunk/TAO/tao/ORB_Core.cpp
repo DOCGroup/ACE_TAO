@@ -1459,6 +1459,8 @@ TAO_ORB_Core::fini (void)
 
   ::CORBA::release (this->codec_factory_);
 
+  ::CORBA::release (this->compression_manager_);
+
   ::CORBA::release (this->dynany_factory_);
 
   ::CORBA::release (this->ior_manip_factory_);

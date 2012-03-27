@@ -7,6 +7,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
+  CompressionManager::~CompressionManager ()
+  {
+    // Require to guard the deletion of the list
+    ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
+    this->factories_.length (0u);
+  }
 
   void
   CompressionManager::register_factory (::Compression::CompressorFactory_ptr
@@ -17,7 +23,7 @@ namespace TAO
         ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
         CORBA::ULong const length = this->factories_.length ();
 
-        for (CORBA::ULong i = 0; i < length; ++i)
+        for (CORBA::ULong i = 0u; i < length; ++i)
           {
             ::Compression::CompressorId const current =
               this->factories_[i]->compressor_id ();
@@ -27,7 +33,7 @@ namespace TAO
                 throw ::Compression::FactoryAlreadyRegistered ();
               }
           }
-        factories_.length (length + 1);
+        factories_.length (length + 1u);
         factories_[length] = ::Compression::CompressorFactory::_duplicate (
           compressor_factory);
       }
@@ -43,22 +49,24 @@ namespace TAO
                                           compressor_id)
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
-
     CORBA::ULong const length = this->factories_.length ();
 
-    for (CORBA::ULong i = 0; i < length; ++i)
+    for (CORBA::ULong i = 0u; i < length; ++i)
       {
         ::Compression::CompressorId const current =
           this->factories_[i]->compressor_id ();
 
-        if (current != compressor_id)
+        if (current == compressor_id)
           {
-            continue;
+            // Shuffle down the remainder
+            while (i < length-1u)
+              {
+                 this->factories_[i] = this->factories_[i+1u];
+                 ++i;
+              }
+            this->factories_.length (length - 1u);
+            return;
           }
-
-        this->factories_[i] = ::Compression::CompressorFactory::_nil ();
-        // make sequence smaller
-        return;
       }
 
     // todo exception
@@ -73,18 +81,16 @@ namespace TAO
 
     CORBA::ULong const length = this->factories_.length ();
 
-    for (CORBA::ULong i = 0; i < length; ++i)
+    for (CORBA::ULong i = 0u; i < length; ++i)
       {
         ::Compression::CompressorId const current =
           this->factories_[i]->compressor_id ();
 
-        if (current != compressor_id)
+        if (current == compressor_id)
           {
-            continue;
+            return ::Compression::CompressorFactory::_duplicate (
+              this->factories_[i]);
           }
-
-        return ::Compression::CompressorFactory::_duplicate (
-          this->factories_[i]);
       }
 
     throw ::Compression::UnknownCompressorId ();
