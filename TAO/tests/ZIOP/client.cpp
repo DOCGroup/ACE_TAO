@@ -309,7 +309,7 @@ run_string_test (Test::Hello_ptr hello)
                                                     "This is a test string");
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%C>\n",
               the_string.in ()));
-  if (ACE_OS::strstr (the_string._retn (), "Hello there") == 0)
+  if (ACE_OS::strstr (the_string.in (), "Hello there") == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("ERROR : run_string_test, unexpected string received\n")),
