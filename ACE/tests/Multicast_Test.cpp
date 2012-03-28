@@ -797,9 +797,7 @@ int producer (MCT_Config &config)
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("Starting producer...\n")));
   ACE_SOCK_Dgram socket (ACE_sap_any_cast (ACE_INET_Addr &), PF_INET);
   //FUZZ: enable check_for_lack_ACE_OS
-#if defined (ACE_LINUX)
-  socket.set_nic (ACE_TEXT("lo"));
-#endif
+
   // Note that is is IPv4 specific and needs to be changed once
   //
   if (config.ttl () > 1)
