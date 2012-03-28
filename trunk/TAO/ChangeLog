@@ -1,3 +1,9 @@
+Wed Mar 28 10:40:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * tests/ZIOP/client.cpp:
+          Correct the test of the contents of the var, use .in() not ._retn() in
+          strstr() call; test was leaking.
+
 Tue Mar 27 15:53:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
 
         * tests/ZIOP/client.cpp:
