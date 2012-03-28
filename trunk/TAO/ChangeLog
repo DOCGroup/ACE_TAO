@@ -1,3 +1,9 @@
+Wed Mar 28 16:43:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * tao/ZIOP/ZIOP.cpp:
+          Correct the debug string %d does not display a float value well. Also
+          correct the maths a bit concerning other uses of ::Compression::CompressionRatio.
+
 Wed Mar 28 12:12:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
 
         * tests/ZIOP/Hello.cpp:

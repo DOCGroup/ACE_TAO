@@ -134,8 +134,9 @@ TAO_ZIOP_Loader::dump_msg (const char *type,  const u_char *ptr,
 
   static const char digits[] = "0123456789ABCD";
   int const byte_order = ptr[TAO_GIOP_MESSAGE_FLAGS_OFFSET] & 0x01;
-  CORBA::Double const ratio = 100 - (((CORBA::Double)len/original_data_length) *
-                                  (CORBA::Double) 100);
+  CORBA::Double const
+    ratio = 100.0 -
+            ( static_cast<CORBA::Double> (len) / static_cast<CORBA::Double> (original_data_length) * 100.0);
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("TAO (%P|%t) - ZIOP_Loader::dump_msg, ")
@@ -339,7 +340,8 @@ TAO_ZIOP_Loader::compress (Compression::Compressor_ptr compressor,
 ::Compression::CompressionRatio
 TAO_ZIOP_Loader::get_ratio (CORBA::OctetSeq& uncompressed, CORBA::OctetSeq& compressed)
 {
-  return (::Compression::CompressionRatio)uncompressed.length () / compressed.length ();
+  return static_cast< ::Compression::CompressionRatio> (uncompressed.length ()) /
+         static_cast< ::Compression::CompressionRatio> (compressed.length ());
 }
 
 bool
@@ -347,12 +349,12 @@ TAO_ZIOP_Loader::check_min_ratio (const ::Compression::CompressionRatio& this_ra
                                   ::Compression::CompressionRatio overall_ratio,
                                   ::Compression::CompressionRatio min_ratio) const
 {
-  bool accepted = ACE::is_equal (min_ratio, 0.0f) || (this_ratio * 10000) > (min_ratio * 10000);
+  bool accepted = ACE::is_equal (min_ratio, 0.0f) || (this_ratio > min_ratio);
   if (TAO_debug_level > 8)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - TAO_ZIOP_Loader::check_min_ratio, ")
-                  ACE_TEXT ("overall_ratio = %d, this_ratio = %d, accepted = %d\n"),
+                  ACE_TEXT ("overall_ratio = %4.2f, this_ratio = %4.2f, accepted = %d\n"),
                   overall_ratio, this_ratio, accepted));
     }
   return accepted;
@@ -552,7 +554,7 @@ TAO_ZIOP_Loader::compress_data (TAO_OutputCDR &cdr,
           Compression::Compressor_var compressor =
             manager->get_compressor (compressor_id, compression_level);
 
-          compressed = complete_compression(compressor.in (), cdr, *current,
+          compressed = complete_compression (compressor.in (), cdr, *current,
                 initial_rd_ptr, low_value, min_ratio,
                 original_data_length, compressor_id);
         }
