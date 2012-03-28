@@ -1,3 +1,9 @@
+Wed Mar 28 22:03:45 UTC 2012  Steve Huston  <shuston@riverace.com>
+
+        * examples/C++NPv1/Process_Per_Connection_Logging_Server.cpp: Changed
+          the +H handle value scan to know this is a hex value on Windows, but
+          a decimal value on everything else. Thanks to Andy Gokhale for this.
+
 Wed Mar 28 21:44:20 UTC 2012  Steve Huston  <shuston@riverace.com>
 
         * tests/Multicast_Test.cpp: Removed the forced set_nic to "lo" for
