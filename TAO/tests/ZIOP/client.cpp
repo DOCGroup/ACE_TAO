@@ -9,7 +9,6 @@
 
 #include "common.h"
 static const ACE_TCHAR *ior = ACE_TEXT("file://") DEFAULT_IOR_FILENAME;
-
 static ::Compression::CompressionManager_var compression_manager = 0;
 
 int start_tests (Test::Hello_ptr hello, CORBA::ORB_ptr orb);
@@ -173,10 +172,11 @@ create_policies (CORBA::ORB_ptr orb, bool add_zlib_compressor)
 Test::Hello_var
 prepare_tests (CORBA::ORB_ptr orb, bool create_factories=true)
 {
-
 #if defined TAO_HAS_ZIOP && TAO_HAS_ZIOP == 1
   if (create_factories)
-    register_factories(orb);
+    {
+      register_factories(orb);
+    }
 
   return create_policies (orb, !create_factories);
 #else
@@ -352,9 +352,14 @@ run_big_reply_test (Test::Hello_ptr hello)
 int
 run_big_request_test (Test::Hello_ptr hello)
 {
-  int length = 40000;
+  const int length = 40000;
   Test::Octet_Seq send_msg(length);
   send_msg.length (length);
+
+  for (int i= 0; i<length; ++i)
+    {
+      send_msg[i]= static_cast<CORBA::Octet> (i & 0xff);
+    }
 
   ACE_DEBUG((LM_DEBUG,
               ACE_TEXT("run_big_request_test, send = %d bytes\n"), length));
