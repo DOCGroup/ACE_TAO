@@ -1,3 +1,9 @@
+Wed Mar 28 21:44:20 UTC 2012  Steve Huston  <shuston@riverace.com>
+
+        * tests/Multicast_Test.cpp: Removed the forced set_nic to "lo" for
+          Linux. It's not needed with the changes from:
+          Wed Mar 21 21:57:40 UTC 2012  Steve Huston  <shuston@riverace.com>
+
 Mon Mar 26 11:27:11 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_mingw32.GNU:
