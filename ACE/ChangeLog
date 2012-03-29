@@ -1,3 +1,10 @@
+Thu Mar 29 21:50:17 UTC 2012  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Postbuild steps need a dependency on the executable or library
+          so that parallel make will run them at the right time.
+
 Wed Mar 28 22:03:45 UTC 2012  Steve Huston  <shuston@riverace.com>
 
         * examples/C++NPv1/Process_Per_Connection_Logging_Server.cpp: Changed
