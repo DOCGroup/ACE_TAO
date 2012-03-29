@@ -757,6 +757,14 @@ endif
 <%if(postbuild)%>
 all: __postbuild__
 
+<%if(exename)%>
+__postbuild__: $(VBIN)
+<%else%>
+<%if(sharedname || staticname)%>
+__postbuild__: $(VLIBS)
+<%endif%>
+<%endif%>
+
 __postbuild__:
 <%foreach(requires)%>
 ifeq ($(<%require%>),1)
