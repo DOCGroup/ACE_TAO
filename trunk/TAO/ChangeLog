@@ -1,3 +1,9 @@
+Fri Mar 30 13:55:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * tao/Compression/Compression_Manager.h:
+          Methods should all be public (being virtual they were public in base and
+          were all callable anyway). Removes some annoying warnings.
+
 Wed Mar 28 16:43:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
 
         * tao/ZIOP/ZIOP.cpp:
