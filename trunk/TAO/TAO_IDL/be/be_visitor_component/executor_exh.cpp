@@ -68,8 +68,8 @@ be_visitor_executor_exh::visit_component (be_component *node)
 
   os_ << be_nl_2
       << comment_start_border_ << be_nl
-      << " * Component Executor Implementation Class: "
-      << lname << "_exec_i" << be_nl
+      << " * Component executor implementation class for "
+      << lname << "" << be_nl
       << comment_end_border_;
 
   os_ << be_nl
@@ -139,6 +139,8 @@ be_visitor_executor_exh::visit_component (be_component *node)
   const char *container_type = be_global->ciao_container_type ();
 
   os_ << be_nl
+      << "/// Setter for container context for this component" << be_nl
+      << "/// @param[in] ctx - Container context" << be_nl
       << "virtual void set_"
       << tao_cg->downcase (container_type)
       << "_context ("
@@ -148,14 +150,19 @@ be_visitor_executor_exh::visit_component (be_component *node)
   if (ACE_OS::strcmp (be_global->ciao_container_type (), "Session") == 0)
     {
       os_ << be_nl
+          << "/// Component state change method to configuration_complete state" << be_nl
           << "virtual void configuration_complete (void);";
 
       os_ << be_nl
+          << "/// Component state change method to activated state" << be_nl
           << "virtual void ccm_activate (void);" << be_nl
+          << "/// Component state change method to passivated state" << be_nl
           << "virtual void ccm_passivate (void);";
     }
 
-  os_ << be_nl << "virtual void ccm_remove (void);";
+  os_ << be_nl
+      << "/// Component state change method to removed state" << be_nl
+      << "virtual void ccm_remove (void);";
 
   os_ << be_nl
       << "//@}";
@@ -168,7 +175,7 @@ be_visitor_executor_exh::visit_component (be_component *node)
 
   os_ << be_uidt << be_nl_2
       << "private:" << be_idt_nl
-      << "/// Member to store " << sname << "::CCM_" << lname << " context" << be_nl
+      << "/// Context for component instance" << be_nl
       << global << sname << "::CCM_" << lname
       << "_Context_var ciao_context_;" << be_nl_2;
 
@@ -219,6 +226,7 @@ be_visitor_executor_exh::visit_component (be_component *node)
     {
       os_ << be_nl_2
           << "/// Get the ACE_Reactor" << be_nl
+          << "/// @return non-owning pointer to reactor" << be_nl
           << "ACE_Reactor* reactor (void);";
     }
 
@@ -249,6 +257,8 @@ be_visitor_executor_exh::visit_provides (be_provides *node)
   const char *global = (sname_str == "" ? "" : "::");
 
   os_ << be_nl_2
+      << "/// Factory method and getter for " << port_name << " facet" << be_nl
+      << "/// @return existing instance of facet if one exists, else creates one" << be_nl
       << "virtual " << global << sname << "::CCM_"
       << lname << "_ptr" << be_nl
       << "get_" << port_name << " (void);";
