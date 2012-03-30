@@ -54,8 +54,8 @@ be_visitor_facet_exh::visit_provides (be_provides *node)
 
   os_ << be_nl_2
       << comment_start_border_ << be_nl
-      << " * Provider Executor Implementation Class: "
-      << lname << "_exec_i" << be_nl
+      << " *  Executor implementation class for "
+      << lname << " facet" << be_nl
       << comment_end_border_;
 
   os_ << be_nl
@@ -67,10 +67,13 @@ be_visitor_facet_exh::visit_provides (be_provides *node)
       << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "public:" << be_idt_nl
+      << "/// Constructor" << be_nl
+      << "/// @param[in] ctx - Container context" << be_nl
       << lname << "_exec_i (" << be_idt_nl
       << smart_scope << c_scope->full_name () << "::CCM_"
       << this->node_->local_name ()
       << "_Context_ptr ctx);" << be_uidt_nl
+      << "/// Destructor" << be_nl
       << "virtual ~" << lname << "_exec_i (void);";
 
   if (impl->node_type () == AST_Decl::NT_interface)
@@ -103,6 +106,7 @@ be_visitor_facet_exh::visit_provides (be_provides *node)
 
   os_ << be_uidt << be_nl_2
       << "private:" << be_idt_nl
+      << "/// Context for component instance" << be_nl
       << smart_scope << c_scope->full_name () << "::CCM_"
       << this->node_->local_name ()
       << "_Context_var ciao_context_;" << be_uidt_nl
