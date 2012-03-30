@@ -32,6 +32,7 @@ namespace TAO
     public virtual ::Compression::CompressionManager,
     public virtual ::CORBA::LocalObject
   {
+  public:
     virtual ~CompressionManager ();
 
     virtual void register_factory (::Compression::CompressorFactory_ptr
