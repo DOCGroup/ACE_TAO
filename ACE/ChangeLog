@@ -1,3 +1,9 @@
+Fri Mar 30 13:39:25 UTC 2012  Adam Mitz  <mitza@ociweb.com>
+
+        * include/makeinclude/platform_win32_msvc.GNU:
+
+          Added iphlpapi to the list of system libraries.
+
 Thu Mar 29 21:50:17 UTC 2012  Adam Mitz  <mitza@ociweb.com>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:
