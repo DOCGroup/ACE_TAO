@@ -155,8 +155,13 @@ Process_Per_Connection_Logging_Server::run_worker (int, char *argv[])
 #  else
   const char *fmt = "%x";
 #  endif /* ACE_WIN64 */
+#  if defined (ACE_HAS_TR24731_2005_CRT)
   if (::sscanf_s (argv[2], fmt, &client_handle_i) == 0)
     return -1;
+#  else
+  if (::sscanf (argv[2], fmt, &client_handle_i) == 0)
+    return -1;
+#  endif /* ACE_HAS_TR24731_2005_CRT */
   ACE_HANDLE client_handle =
     reinterpret_cast<ACE_HANDLE> (client_handle_i);
 #else

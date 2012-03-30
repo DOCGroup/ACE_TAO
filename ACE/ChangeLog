@@ -1,3 +1,9 @@
+Fri Mar 30 14:33:58 UTC 2012  Steve Huston  <shuston@riverace.com>
+
+        * examples/C++NPv1/Process_Per_Connection_Logging_Server.cpp: Changed
+          use of ::sscanf_s() to only those platforms with the setting
+          ACE_HAS_TR24731_2005_CRT (VC8 and up).
+
 Fri Mar 30 13:39:25 UTC 2012  Adam Mitz  <mitza@ociweb.com>
 
         * include/makeinclude/platform_win32_msvc.GNU:
