@@ -327,12 +327,21 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
       // Initial call to determine actual memory size needed
       DWORD dwRetVal;
       ULONG bufLen = 0;
+      // Note... GetAdaptersAddresses returns different bufLen values depending
+      // on how many multicast joins there are on the system. To avoid this,
+      // specify that we don't want to know about multicast addresses. This
+      // does not avoid multicastable interfaces and makes the size-check
+      // more reliable across varying conditions.
+      DWORD flags = GAA_FLAG_SKIP_MULTICAST;
       if ((dwRetVal = ::GetAdaptersAddresses (family,
-                                              0,
+                                              flags,
                                               0,
                                               &tmp_addrs,
                                               &bufLen)) != ERROR_BUFFER_OVERFLOW)
-        return -1; // With output bufferlength 0 this can't be right.
+        {
+          errno = dwRetVal;
+          return -1; // With output bufferlength 0 this can't be right.
+        }
 
       // Get required output buffer and retrieve info for real.
       PIP_ADAPTER_ADDRESSES pAddrs;
@@ -342,12 +351,13 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
                       -1);
       pAddrs = reinterpret_cast<PIP_ADAPTER_ADDRESSES> (buf);
       if ((dwRetVal = ::GetAdaptersAddresses (family,
-                                              0,
+                                              flags,
                                               0,
                                               pAddrs,
                                               &bufLen)) != NO_ERROR)
         {
           delete[] buf; // clean up
+          errno = dwRetVal;
           return -1;
         }
 
