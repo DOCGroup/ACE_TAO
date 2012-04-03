@@ -1,3 +1,13 @@
+Tue Apr  3 16:18:35 UTC 2012  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/ACE.cpp (ACE::timestamp): Fixed an "off-by-one" error that
+          caused corruption of timestamps when using
+          ACE_LOG_TIMESTAMP="TIME" env var.  Thanks to Andrea Sormanni
+          <andrea dot sormanni at gmail dot com> for reporting this and
+          providing a fix.
+          
+          Added Andrea to the Hall of Fame!
+
 Fri Mar 30 14:33:58 UTC 2012  Steve Huston  <shuston@riverace.com>
 
         * examples/C++NPv1/Process_Per_Connection_Logging_Server.cpp: Changed
