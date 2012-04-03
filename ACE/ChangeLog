@@ -1,3 +1,13 @@
+Tue Apr  3 22:49:11 UTC 2012  Steve Huston  <shuston@riverace.com>
+
+        * ace/SOCK_Dgram_Mcast.cpp (subscribe_ifs): Set the error code when
+          a Windows API call fails. Also, when calling GetAdaptersAddresses()
+          to both check size and get the info, supply GAA_FLAG_SKIP_MULTICAST
+          as the flag value. This avoids obtaining info for joined multicast
+          addresses, not multicastable interfaces. Without the flag, and if
+          some other process does a join between the size-check call and the
+          info-gathering call, the size will be wrong.
+
 Tue Apr  3 17:01:33 UTC 2012  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * THANKS:
