@@ -753,8 +753,12 @@ operator >>= (const CORBA::Any &any, std::string &str)
 {
   const char *buf = 0;
   CORBA::Boolean flag = any >>= buf;
-  str.assign (buf);
-  ACE::strdelete (const_cast <char *> (buf));
+
+  if (buf != 0)
+    {
+      str.assign (buf);
+    }
+
   return flag;
 }
 
@@ -763,9 +767,13 @@ CORBA::Boolean
 operator >>= (const CORBA::Any &any, std::wstring &str)
 {
   const wchar_t *buf = 0;
-  CORBA::Boolean const flag = any >>= buf;
-  str.assign (buf);
-  ACE::strdelete (const_cast <wchar_t *> (buf));
+  CORBA::Boolean flag = any >>= buf;
+
+  if (buf != 0)
+    {
+      str.assign (buf);
+    }
+
   return flag;
 }
 #endif

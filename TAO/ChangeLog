@@ -1,3 +1,13 @@
+Tue Apr  3 16:52:21 UTC 2012  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/AnyTypeCode/Any.cpp:
+
+          Removed strdelete of string and wstring buffers returned in Any extraction
+          to std::string and std::wstring, since the Any still owns them and will
+          free them upon its destruction. Thanks to Thomas Stegemann
+          <Thomas dot Stegemann at materna dot de> for reporting the problem and
+          supplying a patch.
+
 Fri Mar 30 13:04:27 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_component/component_exh.cpp:
