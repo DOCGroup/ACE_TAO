@@ -2421,7 +2421,7 @@ ACE::timestamp (const ACE_Time_Value& time_value,
                     tms.tm_sec,
                     static_cast<long> (cur_time.usec()));
   date_and_time[date_and_timelen - 1] = '\0';
-  return &date_and_time[11 + (return_pointer_to_first_digit != 0)];
+  return &date_and_time[10 + (return_pointer_to_first_digit != 0)];
 }
 
 // This function rounds the request to a multiple of the page size.

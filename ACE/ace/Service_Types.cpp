@@ -182,12 +182,12 @@ ACE_Module_Type::init (int argc, ACE_TCHAR *argv[]) const
   void *obj = this->object ();
   MT_Module *mod = (MT_Module *) obj;
   //
-  // Change the Module's name to what's in the svc.conf file.
-  // We must do this so the names match up so everything shuts
-  // down properly during the call to ACE_Stream_Type::fini
-  // which calls MT_Stream::remove([name]) for all the modules.
-  // If the calls to remove fail, we end up with a double delete
-  // during shutdown. Bugzilla #3847
+  // Change the Module's name to what's in the svc.conf file.  We must
+  // do this so the names match up so everything shuts down properly
+  // during the call to ACE_Stream_Type::fini which calls
+  // MT_Stream::remove([name]) for all the modules.  If the calls to
+  // remove fail, we end up with a double delete during
+  // shutdown. Bugzilla #3847
   //
   mod->name (this->name_);
   MT_Task *reader = mod->reader ();
