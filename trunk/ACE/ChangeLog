@@ -1,3 +1,9 @@
+Tue Apr  3 17:01:33 UTC 2012  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * THANKS:
+
+          Added Thomas Stegemann <Thomas dot Stegemann at materna dot de>.
+
 Tue Apr  3 16:18:35 UTC 2012  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/ACE.cpp (ACE::timestamp): Fixed an "off-by-one" error that
