@@ -1,6 +1,13 @@
 USER VISIBLE CHANGES BETWEEN CIAO-1.1.0 and CIAO-1.1.1
 =======================================================
 
+. Fixed problem with component sequence attributes
+
+. Minor bug fixes
+
+. Generated starter executors with -Gex have much more doxygen documentation
+  being generated
+
 USER VISIBLE CHANGES BETWEEN CIAO-1.0.8 and CIAO-1.1.0
 =======================================================
 
