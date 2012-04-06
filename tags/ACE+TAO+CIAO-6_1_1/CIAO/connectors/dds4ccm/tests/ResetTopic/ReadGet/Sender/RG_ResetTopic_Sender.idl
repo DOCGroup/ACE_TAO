@@ -1,0 +1,29 @@
+// $Id$
+
+/**
+ * @file
+ * @author Marcel Smit <msmit@remedy.nl>
+ *
+ * by-hand idl3 translation of sender components.
+ */
+
+#ifndef RG_RESETTOPIC_SENDER_IDL
+#define RG_RESETTOPIC_SENDER_IDL
+
+#include "Connector/RG_ResetTopic_Connector.idl"
+#include "Base/Reader_Starter.idl"
+
+module RG_ResetTopic
+{
+  component Sender
+  {
+    port RG_ResetTopicSampleConnector::DDS_Write  info_write;
+
+    attribute unsigned short iterations;
+    attribute unsigned short keys;
+
+    uses ReaderStarter reader_start;
+  };
+};
+
+#endif

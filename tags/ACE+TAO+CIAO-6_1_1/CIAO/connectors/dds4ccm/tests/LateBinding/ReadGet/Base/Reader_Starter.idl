@@ -1,0 +1,20 @@
+// $Id$
+
+/**
+ * @file Reader_Starter.idl
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef READER_STARTER_IDL
+#define READER_STARTER_IDL
+
+#pragma ciao lem "Base/Reader_StarterE.idl"
+
+interface ReaderStarter
+{
+  void start_read ();
+  void set_reader_properties (in unsigned short nr_keys,
+                              in unsigned short nr_iterations);
+};
+
+#endif /* READER_STARTER_IDL */

@@ -1,0 +1,33 @@
+// $Id$
+
+/**
+ * @file
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef DERIVED_COMPONENT_IDL
+#define DERIVED_COMPONENT_IDL
+
+#include "IDL_Test_Base_Component.idl"
+
+#pragma ciao lem "IDL_Test_Derived_ComponentE.idl"
+// #pragma ciao lem "Base/IDL_Test_BaseE.idl"
+
+component IDL_Test_Derived_Component : IDL_Test_Base_Component
+{
+  port IDL_Connector::DDS_Update  info_derived_update;
+  port IDL_Connector::DDS_Read    info_derived_read;
+  port IDL_Connector::DDS_Get     info_derived_get;
+  port IDL_Connector::DDS_Listen  info_derived_listen;
+  port IDL_Connector::DDS_StateListen info_derived_state_listen;
+  port IDL_Connector::DDS_Write   info_derived_write;
+
+  provides CCM_DDS::ConnectorStatusListener derived_status_listener;
+
+  attribute long derived_attr;
+
+  provides idl_test_derived_interface prov_derived_interface;
+  uses idl_test_base_interface uses_base_interface;
+};
+
+#endif

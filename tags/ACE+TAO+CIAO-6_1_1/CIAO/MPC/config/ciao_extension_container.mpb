@@ -1,0 +1,8 @@
+// -*- MPC -*-
+// $Id$
+
+project : utils, ciao_servant, \
+          ciao_extension_container_stub, ccm_direct_collocation {
+  libs += CIAO_Extension_Container
+  after += CIAO_Extension_Container
+}

@@ -1,0 +1,24 @@
+// $Id$
+
+/**
+ * @file Unkeyed_Test_Base.idl
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef UNKEYED_TEST_BASE_IDL
+#define UNKEYED_TEST_BASE_IDL
+
+#pragma ndds typesupport "Base/Unkeyed_Test_BaseSupport.h"
+#pragma opendds typesupport "Base/Unkeyed_Test_BaseTypeSupportImpl.h"
+
+#pragma DCPS_DATA_TYPE "UnkeyedTest"
+#pragma DCPS_DATA_KEY "UnkeyedTest key"
+
+struct UnkeyedTest {
+  string key;
+  long iteration;
+};
+
+typedef sequence<UnkeyedTest> UnkeyedTestSeq;
+
+#endif

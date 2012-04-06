@@ -1,0 +1,25 @@
+// $Id$
+
+/**
+ * @file SetConnectorAttribute_Connector.idl
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef SETCONNECTORATTRIBUTE_CONNECTOR_IDL_
+#define SETCONNECTORATTRIBUTE_CONNECTOR_IDL_
+
+#include <Components.idl>
+#include <ccm_dds.idl>
+
+#include "Base/SetConnectorAttribute_Base.idl"
+
+#pragma ciao lem "Connector/SetConnectorAttribute_ConnectorE.idl"
+
+module SetConnectorAttribute
+{
+  module ::CCM_DDS::Typed
+    < ::SetConnectorAttributeTest, ::SetConnectorAttributeTestSeq>
+    SetConnectorAttributeTestConnector;
+};
+
+#endif /* SetConnectorAttribute_CONNECTOR_IDL_ */

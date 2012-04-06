@@ -1,0 +1,18 @@
+//$Id$
+
+#ifndef COLLACATED_CONNECTOR_
+#define COLLACATED_CONNECTOR_
+
+#include <Components.idl>
+#include <ccm_dds.idl>
+
+#include "Base/Collocated_Base.idl"
+
+#pragma ciao lem "Connector/Collocated_ConnectorE.idl"
+
+module CoPubSub {
+  module CCM_DDS::Typed <Test_msg, Test_msgSeq> Test_conn;
+};
+
+#endif // COLLACATED_CONNECTOR_
+

@@ -1,0 +1,24 @@
+// $Id$
+
+/**
+ * @file IDL_Test_Base.idl
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef IDL_TEST_BASE_IDL
+#define IDL_TEST_BASE_IDL
+
+#pragma ndds typesupport "Base/IDL_Test_BaseSupport.h"
+#pragma opendds typesupport "Base/IDL_Test_BaseTypeSupportImpl.h"
+
+#pragma DCPS_DATA_TYPE "IDL_Test"
+#pragma DCPS_DATA_KEY "IDL_Test key"
+
+struct IDL_Test {
+  string key; //@key
+  long iteration;
+};
+
+typedef sequence<IDL_Test> IDL_TestSeq;
+
+#endif

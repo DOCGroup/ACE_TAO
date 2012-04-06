@@ -1,0 +1,23 @@
+// $Id$
+
+/**
+ * @file WU_LateBinding_Connector.idl
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef WU_LATEBINDING_CONNECTOR_IDL_
+#define WU_LATEBINDING_CONNECTOR_IDL_
+
+#include <Components.idl>
+#include <ccm_dds.idl>
+
+#include "Base/WU_LateBinding_Base.idl"
+
+#pragma ciao lem "Connector/WU_LateBinding_ConnectorE.idl"
+
+module WU_LateBinding
+{
+  module ::CCM_DDS::Typed < ::WU_LateBindingTest, ::WU_LateBindingTestSeq> WU_LateBindingTestConnector;
+};
+
+#endif /* WU_LateBinding_CONNECTOR_IDL_ */

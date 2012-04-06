@@ -1,0 +1,24 @@
+// $Id$
+
+/**
+ * @file
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef RECEIVER_IDL
+#define RECEIVER_IDL
+
+#include "Connector/QCLE_Test_Connector.idl"
+
+module QCLE_Test
+{
+  component Receiver
+  {
+    port QueryConditionListenEventTestConnector::DDS_Listen info_listen;
+
+    attribute unsigned short keys;
+    attribute unsigned short iterations;
+  };
+};
+
+#endif

@@ -1,0 +1,23 @@
+// $Id$
+
+/**
+ * @file QosProfile_Test_Connector.idl
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef QOS_PROFILE_TEST_CONNECTOR_IDL_
+#define QOS_PROFILE_TEST_CONNECTOR_IDL_
+
+#include <Components.idl>
+#include <ccm_dds.idl>
+
+#include "Base/QosProfile_Test_Base.idl"
+
+#pragma ciao lem "Connector/QosProfile_Test_ConnectorE.idl"
+
+module QosProfile_Test
+{
+  module ::CCM_DDS::Typed < ::QosProfileTest, ::QosProfileTestSeq> QosProfileTestConnector;
+};
+
+#endif /* QOS_PROFILE_TEST_CONNECTOR_IDL_ */

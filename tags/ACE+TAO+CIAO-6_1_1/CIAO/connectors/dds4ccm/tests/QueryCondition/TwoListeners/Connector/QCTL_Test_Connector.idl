@@ -1,0 +1,23 @@
+// $Id$
+
+/**
+ * @file QCTL_Test_Connector.idl
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef QUERY_CONDITION_TWO_LISTENERS_TEST_CONNECTOR_IDL_
+#define QUERY_CONDITION_TWO_LISTENERS_TEST_CONNECTOR_IDL_
+
+#include <Components.idl>
+#include <ccm_dds.idl>
+
+#include "Base/QCTL_Test_Base.idl"
+
+#pragma ciao lem "Connector/QCTL_Test_ConnectorE.idl"
+
+module QCTL_Test
+{
+  module ::CCM_DDS::Typed < ::QueryConditionTwoListenersTest, ::QueryConditionTwoListenersTestSeq> QueryConditionTwoListenersTestConnector;
+};
+
+#endif /* QCTL_Test_CONNECTOR_IDL_ */

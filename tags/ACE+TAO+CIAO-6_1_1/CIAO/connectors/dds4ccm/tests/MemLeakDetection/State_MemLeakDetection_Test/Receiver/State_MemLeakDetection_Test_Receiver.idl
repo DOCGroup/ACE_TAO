@@ -1,0 +1,24 @@
+// $Id$
+
+/**
+ * @file
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef RECEIVER_IDL
+#define RECEIVER_IDL
+
+#include "Connector/State_MemLeakDetection_Test_Connector.idl"
+
+module State_MemLeakDetection_Test
+{
+  component Receiver
+  {
+    port State_MemLeakDetectionTestConnector::DDS_Read info_read;
+    port State_MemLeakDetectionTestConnector::DDS_Get info_get;
+    port State_MemLeakDetectionTestConnector::DDS_Listen info_listen;
+    port State_MemLeakDetectionTestConnector::DDS_StateListen info_statelisten;
+  };
+};
+
+#endif

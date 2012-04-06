@@ -1,0 +1,478 @@
+<!-- $Id$ -->
+<Deployment:DeploymentPlan
+   xmlns:Deployment="http://www.omg.org/Deployment"
+   xmlns:xmi="http://www.omg.org/XMI"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+  <label>SharedDPTest_Depl_1</label>
+  <UUID>SharedDPTest_Depl_1</UUID>
+
+  <implementation xmi:id="Connector1Implementation">
+    <name>Connector1Implementation</name>
+    <source/>
+    <artifact xmi:idref="Connector1_ExecArtifact" />
+    <artifact xmi:idref="Connector1_SvntArtifact" />
+    <execParameter>
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_SharedDP_Connector1_SharedDPTest1Connector_DDS_Event_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_SharedDP_Connector1_SharedDPTest1Connector_DDS_Event_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>DDS_Connector1_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>DDS_Connector1_exec</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+  <implementation xmi:id="Connector2Implementation">
+    <name>Connector2Implementation</name>
+    <source/>
+    <artifact xmi:idref="Connector2_ExecArtifact" />
+    <artifact xmi:idref="Connector2_SvntArtifact" />
+    <execParameter>
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_SharedDP_Connector2_SharedDPTest2Connector_DDS_Event_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_SharedDP_Connector2_SharedDPTest2Connector_DDS_Event_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>DDS_Connector2_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>DDS_Connector2_exec</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+  <implementation xmi:id="Connector3Implementation">
+    <name>Connector3Implementation</name>
+    <source/>
+    <artifact xmi:idref="Connector3_ExecArtifact" />
+    <artifact xmi:idref="Connector3_SvntArtifact" />
+    <execParameter>
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_SharedDP_Connector3_SharedDPTest3Connector_DDS_Event_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_SharedDP_Connector3_SharedDPTest3Connector_DDS_Event_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>DDS_Connector3_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>DDS_Connector3_exec</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+  <implementation xmi:id="ComponentImplementation">
+    <name>ComponentImplementation</name>
+    <source/>
+    <artifact xmi:idref="Component_ExecArtifact" />
+    <artifact xmi:idref="Component_SvntArtifact" />
+    <execParameter>
+      <!-- entrypoint as exec parameter (see 10.6.1) -->
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Component_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_SharedDP_SharedDPComponent_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Component_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Component_exec</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+  <instance xmi:id="Connector1Instance">
+    <name>Connector1Instance</name>
+    <node>ComponentNode</node>
+    <source/>
+    <implementation xmi:idref="Connector1Implementation" />
+    <configProperty>
+      <name>domain_id</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>97</long>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>topic_name</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>SharedDP</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>qos_profile</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Shared_Library#Shared_Profile</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <instance xmi:id="Connector2Instance">
+    <name>Connector2Instance</name>
+    <node>ComponentNode</node>
+    <source/>
+    <implementation xmi:idref="Connector2Implementation" />
+    <configProperty>
+      <name>domain_id</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>98</long>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>topic_name</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>SharedDP2</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>qos_profile</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Shared_Library#Shared_Profile</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <instance xmi:id="Connector3Instance">
+    <name>Connector3Instance</name>
+    <node>ComponentNode</node>
+    <source/>
+    <implementation xmi:idref="Connector3Implementation" />
+    <configProperty>
+      <name>domain_id</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>99</long>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>topic_name</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>SharedDP</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>qos_profile</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Shared_Library#Shared_Profile</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <instance xmi:id="ComponentInstance">
+    <name>Component</name>
+    <node>ComponentNode</node>
+    <source/>
+    <implementation xmi:idref="ComponentImplementation" />
+  </instance>
+
+  <connection>
+    <name>writer_connection1</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>write1_dds_entity</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>supplier_dds_entity</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="Connector1Instance" />
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>writer_connection2</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>write2_dds_entity</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>supplier_dds_entity</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="Connector2Instance" />
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>writer_connection3</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>write3_dds_entity</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>supplier_dds_entity</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="Connector3Instance" />
+    </internalEndpoint>
+  </connection>
+
+  <artifact xmi:id="Component_ExecArtifact">
+    <name>Component_exec</name>
+    <source/>
+    <node/>
+    <location>Component_exec</location>
+  </artifact>
+  <artifact xmi:id="Component_SvntArtifact">
+    <name>Component_svnt</name>
+    <source/>
+    <node/>
+    <location>Component_svnt</location>
+  </artifact>
+  <artifact xmi:id="Component_StubArtifact">
+    <name>Component_stub</name>
+    <source/>
+    <node/>
+    <location>Component_stub</location>
+  </artifact>
+
+  <artifact xmi:id="Connector1_ExecArtifact">
+    <name>DDS_Connector1_exec</name>
+    <source/>
+    <node/>
+    <location>DDS_Connector1_exec</location>
+  </artifact>
+  <artifact xmi:id="Connector1_SvntArtifact">
+    <name>DDS_Connector1_svnt</name>
+    <source/>
+    <node/>
+    <location>DDS_Connector1_svnt</location>
+  </artifact>
+  <artifact xmi:id="Connector1_StubArtifact">
+    <name>DDS_Connector1_stub</name>
+    <source/>
+    <node/>
+    <location>DDS_Connector1_stub</location>
+  </artifact>
+
+  <artifact xmi:id="Connector2_ExecArtifact">
+    <name>DDS_Connector2_exec</name>
+    <source/>
+    <node/>
+    <location>DDS_Connector2_exec</location>
+  </artifact>
+  <artifact xmi:id="Connector2_SvntArtifact">
+    <name>DDS_Connector2_svnt</name>
+    <source/>
+    <node/>
+    <location>DDS_Connector2_svnt</location>
+  </artifact>
+  <artifact xmi:id="Connector2_StubArtifact">
+    <name>DDS_Connector2_stub</name>
+    <source/>
+    <node/>
+    <location>DDS_Connector2_stub</location>
+  </artifact>
+
+  <artifact xmi:id="Connector3_ExecArtifact">
+    <name>DDS_Connector3_exec</name>
+    <source/>
+    <node/>
+    <location>DDS_Connector3_exec</location>
+  </artifact>
+  <artifact xmi:id="Connector3_SvntArtifact">
+    <name>DDS_Connector3_svnt</name>
+    <source/>
+    <node/>
+    <location>DDS_Connector3_svnt</location>
+  </artifact>
+  <artifact xmi:id="Connector3_StubArtifact">
+    <name>DDS_Connector3_stub</name>
+    <source/>
+    <node/>
+    <location>DDS_Connector3_stub</location>
+  </artifact>
+
+</Deployment:DeploymentPlan>

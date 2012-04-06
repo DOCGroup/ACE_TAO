@@ -1,0 +1,21 @@
+// $Id$
+
+#ifndef COLLACATED_BASE_
+#define COLLACATED_BASE_
+
+#pragma ndds typesupport "Base/Collocated_BaseSupport.h"
+#pragma opendds typesupport "Base/Collocated_BaseTypeSupportImpl.h"
+
+#pragma DCPS_DATA_TYPE "CoPubSub::Test_msg"
+
+module CoPubSub {
+  struct Test_msg {
+    string hello;
+    long msgId;
+  };
+  typedef sequence <Test_msg> Test_msgSeq;
+};
+
+
+#endif // COLLACATED_BASE_
+

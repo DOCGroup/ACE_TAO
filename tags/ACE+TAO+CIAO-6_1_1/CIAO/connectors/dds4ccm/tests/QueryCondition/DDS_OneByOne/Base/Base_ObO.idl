@@ -1,0 +1,16 @@
+// $Id$
+
+/**
+ * @file Base_ObO.idl
+ * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
+ */
+
+#ifndef BASE_OBO_IDL_
+#define BASE_OBO_IDL_
+
+struct QueryConditionTest {
+  string symbol; //@key
+  long iteration;
+};
+
+#endif

@@ -1,0 +1,27 @@
+// $Id$
+
+/**
+ * @file HelloGoodbye.idl
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef HELLO_IDL_
+#define HELLO_IDL_
+
+#pragma ndds typesupport "Hello/HelloGoodbyeSupport.h"
+#pragma opendds typesupport "Hello/HelloGoodbyeTypeSupportImpl.h"
+
+#pragma DCPS_DATA_TYPE "Hello::HelloGoodbye"
+#pragma DCPS_DATA_KEY "Hello::HelloGoodbye hello"
+
+module Hello
+{
+  struct HelloGoodbye {
+    string hello;  //@key
+    long iteration;
+  };
+  typedef sequence<HelloGoodbye> HelloGoodbyeSeq;
+};
+
+
+#endif /* HELLO_IDL_ */

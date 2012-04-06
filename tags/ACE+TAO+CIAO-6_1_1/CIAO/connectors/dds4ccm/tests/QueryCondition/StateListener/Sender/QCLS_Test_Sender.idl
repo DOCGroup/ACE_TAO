@@ -1,0 +1,26 @@
+// $Id$
+
+/**
+ * @file
+ * @author Marcel Smit <msmit@remedy.nl>
+ *
+ * by-hand idl3 translation of sender components.
+ */
+
+#ifndef DDS_QUERY_CONDITION_LISTEN_STATE_TEST_SENDER_IDL
+#define DDS_QUERY_CONDITION_LISTEN_STATE_TEST_SENDER_IDL
+
+#include "Connector/QCLS_Test_Connector.idl"
+
+module QCLS_Test
+{
+  component Sender
+  {
+    port QueryConditionListenStateTestConnector::DDS_Update info_update;
+
+    attribute unsigned short keys;
+    attribute unsigned short iterations;
+  };
+};
+
+#endif
