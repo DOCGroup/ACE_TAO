@@ -1,3 +1,12 @@
+Fri Apr  6 10:48:03 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+        * bin/diff-builds-and-group-fixed-tests-only.sh:
+        * docs/Download.html:
+        * docs/bczar/bczar.html:
+        * etc/index.html:
+          Updated for next release
+
 Fri Apr 06 09:03:19 CEST 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ACE version 6.1.1 released.
@@ -25,7 +34,7 @@ Tue Apr  3 16:18:35 UTC 2012  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
           ACE_LOG_TIMESTAMP="TIME" env var.  Thanks to Andrea Sormanni
           <andrea dot sormanni at gmail dot com> for reporting this and
           providing a fix.
-          
+
           Added Andrea to the Hall of Fame!
 
 Fri Mar 30 14:33:58 UTC 2012  Steve Huston  <shuston@riverace.com>
