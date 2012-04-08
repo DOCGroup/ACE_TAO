@@ -1,3 +1,11 @@
+Sun Apr  8 14:25:23 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/ace.mpc:
+
+          Move ace_wchar.inl to the header section so that it is always
+          installed even when the library is built with inline=0. This is
+          required because ace_wchar is always inlined.
+
 Fri Apr  6 11:58:40 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/Download.html:
