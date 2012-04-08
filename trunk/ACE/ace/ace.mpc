@@ -384,7 +384,6 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     Refcounted_Auto_Ptr.inl
     Reverse_Lock_T.inl
     TSS_T.inl
-    ace_wchar.inl
   }
 
   Header_Files {
@@ -456,6 +455,7 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     Version.h
     Versioned_Namespace.h
     ace_wchar.h
+    ace_wchar.inl
     checked_iterator.h
     config-*.h
     config.h
