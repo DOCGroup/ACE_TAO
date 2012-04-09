@@ -1,3 +1,9 @@
+Mon Apr  9 21:57:39 UTC 2012  Steve Huston  <shuston@riverace.com>
+
+        * ace/Timer_Queue_T.cpp (calculate_timeout): Lock the mutex before
+          accessing timer queue elements to calculate the timeout. Thanks to
+          Kannan Ramaswamy for this fix.
+
 Sun Apr  8 14:25:23 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/ace.mpc:
