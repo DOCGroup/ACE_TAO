@@ -798,7 +798,7 @@ CUSTOM_INST_TAGS = $(sort <%custom_install%> <%foreach(custom_types)%><%foreach(
 
 <%if(staticname || sharedname)%>
 <%if(install_headers)%>
-LIB_INST_TAGS = header_files template_files$(if $(findstring 1,$(inline)), inline_files)$(if $(CUSTOM_INST_TAGS), $(CUSTOM_INST_TAGS))
+LIB_INST_TAGS = header_files template_files inline_files$(if $(CUSTOM_INST_TAGS), $(CUSTOM_INST_TAGS))
 LIB_INST_LOCATIONS = $(foreach tag,$(LIB_INST_TAGS),-b $(tag)=include$(INST_DIR))
 
 <%else%>
