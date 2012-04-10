@@ -1933,7 +1933,7 @@ ACE_Dev_Poll_Reactor::resumable_handler (void)
 {
   // @@ Is this correct?
 
-  return 0;
+  return 1;
 }
 
 bool
