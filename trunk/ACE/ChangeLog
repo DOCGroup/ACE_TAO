@@ -1,3 +1,10 @@
+Tue Apr 10 20:10:06 UTC 2012  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Install the Inline_Files even with inline=0.  Many of these files
+          are still needed, especially *_T.inl.  This resolves bug #4002.
+
 Mon Apr  9 21:57:39 UTC 2012  Steve Huston  <shuston@riverace.com>
 
         * ace/Timer_Queue_T.cpp (calculate_timeout): Lock the mutex before
