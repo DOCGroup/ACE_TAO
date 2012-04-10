@@ -1,3 +1,12 @@
+Tue Apr 10 20:09:23 UTC 2012  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Dev_Poll_Reactor.cpp (ACE_Dev_Poll_Reactor::resumable_handler):
+          Changed this method to return 1 instead of 0.  Thanks to David
+          Simmonds <david dot simmonds at iggroup dot com> for providing
+          this fix.  This fixes bugid 4015.
+          
+          Added David to the ACE hall of fame.
+
 Tue Apr 10 20:10:06 UTC 2012  Adam Mitz  <mitza@ociweb.com>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:
