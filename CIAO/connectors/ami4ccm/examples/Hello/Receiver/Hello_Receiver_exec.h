@@ -59,7 +59,6 @@ namespace CIAO_Hello_Receiver_Impl
   private:
     ::Hello::CCM_Receiver_Context_var context_;
     ::Hello::CCM_MyFoo_var ciao_do_my_foo_;
-
   };
 
   extern "C" HELLO_RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr

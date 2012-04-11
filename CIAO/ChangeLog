@@ -1,3 +1,15 @@
+Wed Apr 11 10:41:14 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/ami4ccm/examples/Hello/Receiver/Hello_Receiver_exec.h:
+        * connectors/ami4ccm/examples/Hello/Sender/Hello_Sender_exec.h:
+        * connectors/ami4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp:
+        * connectors/ami4ccm/tests/InterOutArgs/Sender/InterOutArgsT_Sender_exec.h:
+        * connectors/ami4ccm/tests/InterOutArgs/Sender/InterOutArgsT_Sender_exec.cpp:
+        * connectors/ami4ccm/tests/InterReturn/Sender/InterReturnT_Sender_exec.cpp:
+        * connectors/ami4ccm/tests/PragmaT/Sender/PragmaT_Sender_exec.h:
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/Sender_comp/src/Hello_Sender_comp_exec.cpp:
+          Coverity fixes
+
 Fri Apr 06 09:03:19 CEST 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * CIAO version 1.1.1 released.

@@ -60,7 +60,7 @@ namespace CIAO_Hello_Sender_Impl
     virtual int svc (void);
 
   private:
-    ::Hello::CCM_Sender_Context_var context_;
+    ::Hello::CCM_Sender_Context_var ciao_context_;
   };
 
   /// Worker thread for synchronous invocations
@@ -125,7 +125,6 @@ namespace CIAO_Hello_Sender_Impl
     //@{
     /** User defined private operations. */
   private:
-    ::Hello::CCM_Sender_Context_var context_;
     asynch_foo_generator* asynch_foo_gen_;
     synch_foo_generator* synch_foo_gen_;
 

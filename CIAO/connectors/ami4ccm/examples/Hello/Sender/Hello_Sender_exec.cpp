@@ -86,7 +86,7 @@ namespace CIAO_Hello_Sender_Impl
   //============================================================
   asynch_foo_generator::asynch_foo_generator (
      ::Hello::CCM_Sender_Context_ptr context)
-   : context_(::Hello::CCM_Sender_Context::_duplicate (context))
+   : ciao_context_(::Hello::CCM_Sender_Context::_duplicate (context))
   {
   }
 
@@ -94,7 +94,7 @@ namespace CIAO_Hello_Sender_Impl
   {
     ACE_OS::sleep (3);
     ::Hello::AMI4CCM_MyFoo_var my_foo_ami_  =
-       context_->get_connection_sendc_run_my_foo();
+       ciao_context_->get_connection_sendc_run_my_foo();
 
     if (CORBA::is_nil (my_foo_ami_))
       {
@@ -137,7 +137,7 @@ namespace CIAO_Hello_Sender_Impl
   //============================================================
   synch_foo_generator::synch_foo_generator (
      ::Hello::CCM_Sender_Context_ptr context)
-  : context_(::Hello::CCM_Sender_Context::_duplicate (context))
+  : ciao_context_(::Hello::CCM_Sender_Context::_duplicate (context))
   {
   }
 
@@ -145,7 +145,7 @@ namespace CIAO_Hello_Sender_Impl
   {
     ACE_OS::sleep (3);
     ::Hello::MyFoo_var my_foo_ami_ =
-         context_->get_connection_run_my_foo ();
+         ciao_context_->get_connection_run_my_foo ();
 
     //run synch calls
     CORBA::String_var out_str;
@@ -240,7 +240,9 @@ namespace CIAO_Hello_Sender_Impl
   //============================================================
   // Component Executor Implementation Class: Sender_exec_i
   //============================================================
-  Sender_exec_i::Sender_exec_i (void)
+  Sender_exec_i::Sender_exec_i (void) :
+    asynch_foo_gen_ (0),
+    synch_foo_gen_ (0)
   {
   }
 
@@ -259,9 +261,9 @@ namespace CIAO_Hello_Sender_Impl
   Sender_exec_i::set_session_context (
      ::Components::SessionContext_ptr ctx)
   {
-    this->context_ =
+    this->ciao_context_ =
       ::Hello::CCM_Sender_Context::_narrow (ctx);
-    if ( ::CORBA::is_nil (this->context_.in ()))
+    if ( ::CORBA::is_nil (this->ciao_context_.in ()))
       {
         throw ::CORBA::INTERNAL ();
       }
@@ -276,10 +278,10 @@ namespace CIAO_Hello_Sender_Impl
   Sender_exec_i::ccm_activate (void)
   {
     this->asynch_foo_gen_ =
-      new asynch_foo_generator (this->context_.in ());
+      new asynch_foo_generator (this->ciao_context_.in ());
     this->asynch_foo_gen_->activate (THR_NEW_LWP | THR_JOINABLE, 1);
     this->synch_foo_gen_ =
-       new synch_foo_generator (this->context_.in());
+       new synch_foo_generator (this->ciao_context_.in());
     this->synch_foo_gen_->activate (THR_NEW_LWP | THR_JOINABLE, 1);
   }
 
