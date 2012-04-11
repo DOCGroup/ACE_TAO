@@ -111,24 +111,20 @@ namespace CIAO_PragmaT_Sender_Impl
     //@}
 
   private:
-    ::PragmaT::CCM_Sender_Context_var ciao_context_;
-
     //@{
     /** Component attributes. */
     //@}
 
     //@{
     /** User defined members. */
-
+    ::PragmaT::CCM_Sender_Context_var context_;
+    asynch_foo_generator* asynch_foo_gen_;
+    synch_foo_generator* synch_foo_gen_;
     //@}
 
     //@{
     /** User defined private operations. */
   private:
-    ::PragmaT::CCM_Sender_Context_var context_;
-    asynch_foo_generator* asynch_foo_gen_;
-    synch_foo_generator* synch_foo_gen_;
-
     //@}
   };
 

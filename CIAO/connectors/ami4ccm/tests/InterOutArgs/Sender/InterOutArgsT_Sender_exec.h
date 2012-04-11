@@ -82,8 +82,6 @@ namespace CIAO_InterOutArgsT_Sender_Impl
   public:
     Sender_exec_i (void);
     virtual ~Sender_exec_i (void);
-    asynch_foo_generator* asynch_foo_gen;
-    synch_foo_generator* synch_foo_gen;
     //@{
     /** Supported operations and attributes. */
 
@@ -115,6 +113,8 @@ namespace CIAO_InterOutArgsT_Sender_Impl
 
     //@{
     /** User defined members. */
+    asynch_foo_generator* asynch_foo_gen;
+    synch_foo_generator* synch_foo_gen;
     Atomic_UShort nr_of_received_;
     //@}
 
