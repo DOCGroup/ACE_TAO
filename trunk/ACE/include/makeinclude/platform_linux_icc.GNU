@@ -40,7 +40,6 @@ ifeq (11.0,$(findstring 11.0,$(CXX_VERSION)))
   CFLAGS += -wd1684
 endif
 ifeq (12.0,$(findstring 12.0,$(CXX_VERSION)))
-  CPPFLAGS += -std=c++0x
   no_hidden_visibility ?= 0
 endif
 
@@ -58,6 +57,9 @@ ifeq ($(ipo),1)
   CPPFLAGS += -ipo
 endif
 
+ifeq ($(c++0x),1)
+  CCFLAGS += -std=c++0x
+endif
 
 CFLAGS  += -w1
 ifeq ($(threads),1)
