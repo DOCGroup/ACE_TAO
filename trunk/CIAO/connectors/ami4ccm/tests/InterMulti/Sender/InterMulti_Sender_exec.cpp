@@ -184,7 +184,13 @@ namespace CIAO_InterMulti_Sender_Impl
    */
 
   Sender_exec_i::Sender_exec_i (void)
-  : nr_of_received_ (0){
+    : nr_of_received_ (0),
+      asynch_one_gen (0),
+      synch_one_gen (0),
+      asynch_two_gen (0),
+      asynch_three_gen (0),
+      synch_three_gen (0)
+  {
   }
 
   Sender_exec_i::~Sender_exec_i (void)

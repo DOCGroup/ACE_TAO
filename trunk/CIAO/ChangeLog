@@ -1,3 +1,9 @@
+Sun Apr 15 12:35:12 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/ami4ccm/tests/InterMulti/Sender/InterMulti_Sender_exec.h:
+        * connectors/ami4ccm/tests/InterMulti/Sender/InterMulti_Sender_exec.cpp:
+          Fixed coverity error
+
 Thu Apr 12 08:17:57 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/ami4ccm/examples/Hello/Sender/Hello_Sender_exec.h:

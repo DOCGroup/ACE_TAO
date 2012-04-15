@@ -161,12 +161,12 @@ namespace CIAO_InterMulti_Sender_Impl
 
     //@{
     /** User defined members. */
+    Atomic_UShort nr_of_received_;
     asynch_one_generator* asynch_one_gen;
     synch_one_generator* synch_one_gen;
     asynch_two_generator* asynch_two_gen;
     asynch_three_generator* asynch_three_gen;
     synch_three_generator* synch_three_gen;
-    Atomic_UShort nr_of_received_;
     //@}
 
     //@{
