@@ -1,3 +1,8 @@
+Sun Apr 15 12:36:06 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_interface/ami4ccm_sendc_ex_idl.cpp:
+          Fixed coverity error
+
 Fri Apr 06 09:03:19 CEST 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO version 2.1.1 released.
