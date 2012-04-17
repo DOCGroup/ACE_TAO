@@ -1,3 +1,10 @@
+Tue Apr 17 19:09:30 UTC 2012  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/String_Base.h: Made the single parameter constructors
+          explicit to avoid problems with implict conversions.  Thanks to
+          Adam Rymarczuk <adam dot rymarczuk at suntradingllc dot com> for
+          reporting this.
+
 Thu Apr 12 11:25:25 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_linux_icc.GNU:
