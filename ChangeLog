@@ -1,3 +1,62 @@
+Tue Apr  3 22:49:11 UTC 2012  Steve Huston  <shuston@riverace.com>
+
+        * ace/SOCK_Dgram_Mcast.cpp (subscribe_ifs): Set the error code when
+          a Windows API call fails. Also, when calling GetAdaptersAddresses()
+          to both check size and get the info, supply GAA_FLAG_SKIP_MULTICAST
+          as the flag value. This avoids obtaining info for joined multicast
+          addresses, not multicastable interfaces. Without the flag, and if
+          some other process does a join between the size-check call and the
+          info-gathering call, the size will be wrong.
+
+Wed Mar 28 21:44:20 UTC 2012  Steve Huston  <shuston@riverace.com>
+
+        * tests/Multicast_Test.cpp: Removed the forced set_nic to "lo" for
+          Linux. It's not needed with the changes from:
+          Wed Mar 21 21:57:40 UTC 2012  Steve Huston  <shuston@riverace.com>
+
+Sat Mar 24 21:53:13  UTC 2012  Steve Huston  <shuston@riverace.com>
+
+        * ace/SOCK_Dgram_Mcast.cpp (subscribe_ifs): For Windows, handle IPv6
+          and IPv4 differently. The make_multicast_ifaddr() call that will end
+          up being made for IPv4 wants the interface's IP address, not name.
+
+        * bin/MakeProjectCreator/config/acedefaults.mpb:
+        * bin/MakeProjectCreator/config/ipv6.mpb: Moved the lit_lib for iphlpapi
+          on Windows from the IPv6 base to acedefaults. SOCK_Dgram_Mcast.cpp
+          uses it for both IPv4 and IPv6 now.
+
+Thu Mar 22 16:23:14 UTC 2012  Steve Huston  <shuston@riverace.com>
+
+        * ace/SOCK_Dgram_Mcast.h: Corrected the description of conditions
+          under which using OPT_NULLIFACE_ALL works and neatened things up.
+
+        * tests/Multicast_Test.cpp: Turn on IP_MULTICAST_LOOP all the time.
+          This test requires it and it's not universally the default.
+
+Wed Mar 21 21:57:40 UTC 2012  Steve Huston  <shuston@riverace.com>
+
+        * ace/SOCK_Dgram_Mcast.cpp (subscribe_ifs): Expanded the use of
+          code to scan interfaces to be always, not just for IPv6, when
+          subscribing with OPT_NULLIFACE_ALL and no specific interface.
+          Also replaced use of ACE_OS::if_nameindex with getifaddr() when
+          it's available (which was only on Linux anyway) so checks
+          for interface up and multicastable can be made before joining.
+          The code now works for systems with ACE_HAS_GETIFDADDR (incl.
+          Linux, which was my main issue driving this) and Win32. The others
+          end up in the old get_ip_interfaces code which will never work
+          anywhere as far as I can tell because it tries to subscribe to an
+          interface named with the IP address in string form.
+
+        * tests/Multicast_Test.cpp: Removed hack force of interface "lo0"
+          on join(). No need for that with the fix above. For background, this
+          was added at:
+          Thu Jan 21 15:25:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/Sock_Connect.cpp (get_ip_interfaces_getifaddr): Will no longer
+          return an interface marked 'down'. Partially fixes Bugzilla #1990
+          but other platform-specific changes are needed to resolve it
+          completely.
+
 Wed Mar 07 09:04:40 CET 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ACE version 6.1.0 released.
