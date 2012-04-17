@@ -103,9 +103,9 @@ public:
    *    freeing memory.
    * @return ACE_String_Base containing const ACE_CHAR_T *s
    */
-  ACE_String_Base (const ACE_CHAR_T *s,
-                   ACE_Allocator *the_allocator = 0,
-                   bool release = true);
+  explicit ACE_String_Base (const ACE_CHAR_T *s,
+                            ACE_Allocator *the_allocator = 0,
+                            bool release = true);
 
   /**
    * Constructor that copies @a len CHARs of @a s into dynamically
@@ -144,7 +144,7 @@ public:
    *  @param the_allocator ACE_Allocator associated with string
    *  @return ACE_String_Base containing ACE_CHAR_T 'c'
    */
-  ACE_String_Base (ACE_CHAR_T c, ACE_Allocator *the_allocator = 0);
+  explicit ACE_String_Base (ACE_CHAR_T c, ACE_Allocator *the_allocator = 0);
 
   /**
    *  Constructor that allocates a len long string.
@@ -159,9 +159,9 @@ public:
    *  @param the_allocator ACE_Allocator associated with string
    *  @return Empty ACE_String_Base with room for len CHARs
    */
-  ACE_String_Base (size_type len,
-                   ACE_CHAR_T c = 0,
-                   ACE_Allocator *the_allocator = 0);
+  explicit ACE_String_Base (size_type len,
+                            ACE_CHAR_T c = 0,
+                            ACE_Allocator *the_allocator = 0);
 
   /**
    *  Deletes the memory...
