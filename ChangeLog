@@ -1,3 +1,7 @@
+Tue Apr 17 17:46:56 EDT 2012  Steve Huston  <shuston@riverace.com>
+
+	* ACE version 6.0b released.
+
 Tue Apr  3 22:49:11 UTC 2012  Steve Huston  <shuston@riverace.com>
 
         * ace/SOCK_Dgram_Mcast.cpp (subscribe_ifs): Set the error code when
