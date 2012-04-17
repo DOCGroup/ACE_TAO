@@ -448,25 +448,20 @@ public:
                       = ACE_SOCK_Dgram_Mcast::DEFOPTS);
   virtual ~MCT_Event_Handler (void);
 
-#if defined (__linux__)
-  int join (const ACE_INET_Addr &mcast_addr,
-            int reuse_addr = 1,
-            const ACE_TCHAR *net_if = ACE_TEXT ("lo"));
-  int leave (const ACE_INET_Addr &mcast_addr,
-             const ACE_TCHAR *net_if = ACE_TEXT ("lo"));
-#else
   int join (const ACE_INET_Addr &mcast_addr,
             int reuse_addr = 1,
             const ACE_TCHAR *net_if = 0);
   int leave (const ACE_INET_Addr &mcast_addr,
              const ACE_TCHAR *net_if = 0);
-#endif
 
   // = Event Handler hooks.
   virtual int handle_input (ACE_HANDLE handle);
   virtual int handle_close (ACE_HANDLE fd, ACE_Reactor_Mask close_mask);
 
   virtual ACE_HANDLE get_handle (void) const;
+
+  // Turn loopback on/off. Must be called after at least 1 join() is performed.
+  int loopback (bool on_off);
 
 protected:
   ACE_SOCK_Dgram_Mcast *mcast (void);
@@ -641,6 +636,14 @@ MCT_Event_Handler::get_handle (void) const
   return this->mcast_.get_handle ();
 }
 
+// Turn loopback on/off
+int
+MCT_Event_Handler::loopback (bool on_off)
+{
+  char loopback_on = on_off ? 1 : 0;
+  return this->mcast_.set_option (IP_MULTICAST_LOOP, loopback_on);
+}
+
 /******************************************************************************/
 
 /*
@@ -721,6 +724,13 @@ MCT_Task::open (void *)
 
       advance_addr (addr);
 
+      // This test needs loopback because we're both sending and receiving.
+      // Loopback is usually the default, but be sure.
+      if (-1 == handler->loopback (true))
+        ACE_ERROR ((LM_WARNING,
+                    ACE_TEXT ("%p\n"),
+                    ACE_TEXT ("MCT_Task::open - enable loopback")));
+
       if (this->reactor ()->register_handler (handler, READ_MASK) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("MCT_Task::open - cannot register ")
@@ -787,9 +797,7 @@ int producer (MCT_Config &config)
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("Starting producer...\n")));
   ACE_SOCK_Dgram socket (ACE_sap_any_cast (ACE_INET_Addr &), PF_INET);
   //FUZZ: enable check_for_lack_ACE_OS
-#if defined (__linux__)
-  socket.set_nic (ACE_TEXT("lo"));
-#endif
+
   // Note that is is IPv4 specific and needs to be changed once
   //
   if (config.ttl () > 1)
