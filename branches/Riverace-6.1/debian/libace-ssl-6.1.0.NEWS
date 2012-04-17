@@ -1,0 +1,11 @@
+ace (6.0.1-2) unstable; urgency=low
+
+  As of ace 6.0.1-2, SSLv2 support was removed from Debian ACE+TAO
+  packages. This follows change introduced in openssl 1.0.0c-2.
+
+  WARNING: it means existing ACE-based software will default to SSL v3
+  instead of SSL v2 without warning. Recompiling software explicitly
+  using SSL v2 will fail since the ACE_SSL_Context::SSLv2_* enums got
+  removed.
+
+ -- Thomas Girard <thomas.g.girard@free.fr>  Sat, 11 Jun 2011 18:51:20 +0200

@@ -1,0 +1,1225 @@
+Wed Mar 07 09:04:40 CET 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE version 6.1.0 released.
+
+Sat Mar  3 20:48:15 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Thread_Manager.cpp:
+          Coverity fix
+
+Sat Mar  3 20:45:30 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Event_Handler_Handle_Timeout_Upcall.cpp:
+          Coverity fix
+
+Sat Mar  3 20:22:09 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Compression/rle/RLECompressor.h:
+          Fixed export macro
+
+Fri Mar  2 12:41:21 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Compression/rle/RLECompressor.h:
+          Fixed export macro
+
+Wed Feb 29 16:30:00 UTC 2012  Simon Massey <simon dot massey at prismtech dot com>
+
+        * ace/CDR_Stream.cpp:
+          Allow strings to be indirected (required for ValueType RepoIDs).
+
+Wed Feb 29 07:25:21 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Handle_Set.cpp:
+        * ace/Select_Reactor_Base.cpp:
+        * ace/Service_Types.cpp:
+          Fixed coverity errors
+
+Tue Feb 28 14:35:36 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Process.cpp:
+          Fixed coverity error
+
+Tue Feb 28 03:27:28 UTC 2012  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        *
+          apps/JAWS3/jaws3/Reactive_IO.cpp (JAWS_IO_Reactive_Transmit::handle_output_source):
+          Check mb == 0 before using it.  Thanks to Andrey Karpov <karpov
+          at viva64 dot com> for reporting this.
+
+Tue Feb 28 03:18:56 UTC 2012  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Throughput_Stats.cpp (ACE_Throughput_Stats::sample): Zapped
+          a redundant else statement.  Thanks to Andrey Karpov <karpov at
+          viva64 dot com> for reporting this.
+
+Tue Feb 28 03:15:37 UTC 2012  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * protocols/ace/INet/URLBase.cpp (ACE): Changed
+
+          if (pos > 0 && url_string[pos+1] == '/' && url_string[pos+1] == '/')
+
+          to
+
+          if (pos > 0 && url_string[pos+1] == '/' && url_string[pos+2] == '/')
+
+          Thanks to Andrey Karpov <karpov at viva64 dot com> for reporting
+          this.
+
+Mon Feb 27 08:11:06 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Compression/rle/RLECompressor.h:
+          Doxygen fix
+
+        * ace/Compression/rle/RLECompressor.cpp:
+          Fixed gcc warning
+
+Fri Feb 24 09:19:40 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Compression/Compressor.h:
+          Fixed compile warning
+
+Fri Feb 24 09:14:22 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Compression/Compressor.h:
+        * ace/Compression/Compressor.cpp:
+        * ace/Compression/rle/RLECompressor.h:
+        * ace/Compression/rle/RLECompressor.cpp:
+          Added virtual destructors
+
+Fri Feb 24 08:45:08 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Compression/ACE_Compression.mpc:
+        * ace/Compression/rle/ACE_RLECompression.mpc:
+          Fixed id and install problems
+
+        * bin/fuzz.pl:
+          Extended check for incorrect id tags
+
+Thu Feb 23 08:20:56 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Compression/Compressor.h:
+        * ace/Compression/rle/RLECompressor.h:
+        * bin/MakeProjectCreator/config/ace_compressionlib.mpb:
+        * bin/MakeProjectCreator/config/ace_rlecompressionlib.mpb:
+          Fuzz fixes
+
+Thu Feb 23 07:52:58 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Compression:
+        * ace/Compression/ACE_Compression.mpc:
+        * ace/Compression/ACE_Compression_export.h:
+        * ace/Compression/Compressor.h:
+        * ace/Compression/Compressor.inl:
+        * ace/Compression/Compressor.cpp:
+        * ace/Compression/rle:
+        * ace/Compression/rle/ACE_RLECompression.mpc:
+        * ace/Compression/rle/ACE_RLECompression_export.h:
+        * ace/Compression/rle/RLECompressor.h:
+        * ace/Compression/rle/RLECompressor.cpp:
+        * bin/MakeProjectCreator/config/ace_compressionlib.mpb:
+        * bin/MakeProjectCreator/config/ace_rlecompressionlib.mpb:
+          Added new ACE compression and rle compressor libraries. This code
+          was first part of TAO, but now moved to ACE because it provides
+          a basic run length encoding compressor that makes it possible to
+          compress data without depending on any external library
+
+        * docs/bczar/bczar.html:
+          Added package
+
+Tue Feb 21 14:52:02 UTC 2012  Adam Mitz  <mitza@ociweb.com>
+
+        * ace/OS_NS_Thread.inl:
+        * ace/config-vxworks6.9.h:
+
+          Fixed errors from fuzz script.
+
+Tue Feb 21 14:37:47 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * PROBLEM-REPORT-FORM:
+          Removed build method question
+
+Fri Feb 17 23:10:37 UTC 2012  Adam Mitz  <mitza@ociweb.com>
+
+        * NEWS:
+        * ace/Message_Queue_T.cpp:
+        * ace/Message_Queue_Vx.cpp:
+        * ace/OS_NS_Thread.inl:
+        * ace/OS_NS_arpa_inet.cpp:
+        * ace/OS_NS_unistd.inl:
+        * ace/Stack_Trace.cpp:
+        * ace/config-vxworks.h:
+        * ace/config-vxworks6.9.h:
+        * ace/os_include/sys/os_types.h:
+        * include/makeinclude/platform_vxworks.GNU:
+        * include/makeinclude/platform_vxworks6.9.GNU:
+        * tests/Bug_3943_Regression_Test.cpp:
+
+          Added support for VxWorks version 6.9.
+
+Tue Feb 14 22:57:00 UTC 2012  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ace/ACE.cpp:
+        * ace/Dev_Poll_Reactor.cpp:
+        * ace/Handle_Set.cpp:
+        * ace/High_Res_Timer.h:
+        * ace/High_Res_Timer.cpp:
+        * ace/INET_Addr.h:
+        * ace/INET_Addr.cpp:
+        * ace/Monitor_Control/Bytes_Received_Monitor.h:
+        * ace/Monitor_Control/Bytes_Received_Monitor.cpp:
+        * ace/Monitor_Control/Bytes_Sent_Monitor.h:
+        * ace/Monitor_Control/Bytes_Sent_Monitor.cpp:
+        * ace/Monitor_Control/CPU_Load_Monitor.h:
+        * ace/Monitor_Control/CPU_Load_Monitor.cpp:
+        * ace/Monitor_Control/Linux_Network_Interface_Monitor.h:
+        * ace/Monitor_Control/Linux_Network_Interface_Monitor.cpp:
+        * ace/Monitor_Control/Num_Threads_Monitor.h:
+        * ace/Monitor_Control/Num_Threads_Monitor.cpp:
+        * ace/Monitor_Control/Packets_Received_Monitor.h:
+        * ace/Monitor_Control/Packets_Received_Monitor.cpp:
+        * ace/Monitor_Control/Packets_Sent_Monitor.h:
+        * ace/Monitor_Control/Packets_Sent_Monitor.cpp:
+        * ace/OS_NS_netdb.cpp:
+        * ace/OS_NS_sys_socket.h:
+        * ace/OS_NS_sys_socket.inl:
+        * ace/OS_NS_time.inl:
+        * ace/OS_NS_unistd.inl:
+        * ace/SOCK_Dgram.cpp:
+        * ace/SOCK_Dgram_Mcast.cpp:
+        * ace/Select_Reactor_T.cpp:
+        * ace/config-linux.h:
+        * ace/os_include/os_pthread.h:
+        * apps/JAWS/clients/WebSTONE/src/nsapi-includes/base/systems.h:
+        * examples/APG/Signals/SigInfo.cpp:
+        * tests/INET_Addr_Test_IPV6.cpp:
+        * tests/MT_Reference_Counted_Event_Handler_Test.cpp:
+        * tests/Malloc_Test.cpp:
+        * tests/Multicast_Test.cpp:
+        * tests/Naming_Test.cpp:
+        * tests/Proactor_Test.cpp:
+        * tests/Proactor_Test_IPV6.cpp:
+        * tests/Proactor_UDP_Test.cpp:
+        * tests/Process_Test.cpp:
+        * tests/SSL/Bug_2912_Regression_Test.cpp:
+
+          Created a new macro, ACE_LINUX, which replaces all non-standard
+          tests for linux, __linux, and __linux__.
+
+Mon Feb 13 16:38:15 UTC 2012  Adam Mitz  <mitza@ociweb.com>
+
+        * include/makeinclude/platform_gnuwin32_common.GNU:
+
+          Set DCCFLAGS and OCCFLAGS to get debug=X and optimize=X to work.
+
+Tue Feb  7 12:56:41 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/XtReactor/XtReactor.cpp:
+          Use C++ cast to silence warning
+
+Tue Jan 31 20:19:16 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Web_Crawler/Iterators.cpp:
+        * performance-tests/Misc/context_switch_time.cpp:
+          Fixed gcc 4.7 warning
+
+Tue Jan 31 20:17:35 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/IPC_SAP/SOCK_SAP/CPP-memclient.cpp:
+          Fixed gcc 4.7 warning
+
+Mon Jan 30 09:48:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * ace/Default_Constants.h:
+          Redefined ACE_MAX_UDP_PACKET_SIZE to 65507 bytes. The actual field size
+          sets a theoretical limit of 65,535 bytes (so 65536 was completly wrong)
+          which is composed of 8 byte header +65,527 bytes of data for a UDP datagram.
+          However the practical limit for the data length which is imposed by the
+          underlying IPv4 protocol is only 65,507 bytes (65507 bytes of data +8 bytes
+          UDP header +20 bytes IP header).
+
+Fri Jan 27 09:39:57 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/FlReactor/FlReactor.cpp:
+          Const change
+
+        * bin/valgrind.supp:
+          Added another suppress
+
+Fri Jan 27 09:01:51 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+        * bin/diff-builds-and-group-fixed-tests-only.sh:
+        * bin/make_release.py:
+        * docs/Download.html:
+        * docs/bczar/bczar.html:
+        * etc/index.html:
+          Updated for next release
+
+Fri Jan 27 08:58:54 CET 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE version 6.0.8 released.
+
+Thu Jan 26 20:38:47 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/Condition_T.cpp:
+
+          In order to allow building with inlining on MacOSX Lion,
+          Condition_T.cpp needs to explicitly include Time_Value.h. In many
+          cases, Time_Value.h was being incidentally included, such as
+          through Atomic_Op_GCC_T.cpp, but that is specifically excluded for
+          Lion builds using the clang compiler.
+
+Tue Jan 24 16:44:22 UTC 2012  Chip Jones  <jonesc@ociweb.com>
+
+        * NEWS:
+          Added information about IDL dependency generation.
+
+Tue Jan 24 15:26:24 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/conv_lib.mpb:
+          Fixed cleanup bug
+
+Tue Jan 24 14:40:00 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          Can't check mpc files, when they contain gnuace specific stuff they
+          need tabs
+
+Tue Jan 24 14:29:18 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          Fixed problem
+
+Tue Jan 24 13:52:20 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          Also check mpc files for tabs
+
+Tue Jan 24 13:48:49 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * apps/JAWS2/HTTPU/httpu.mpc:
+        * apps/JAWS2/JAWS/jaws2.mpc:
+        * apps/JAWS3/jaws3/jaws3.mpc:
+        * apps/gperf/tests/gperf_test.mpb:
+        * bin/MakeProjectCreator/config/ace_bzip2.mpb:
+        * bin/MakeProjectCreator/config/ace_fl.mpb:
+        * bin/MakeProjectCreator/config/ace_fox.mpb:
+        * bin/MakeProjectCreator/config/ace_openssl.mpb:
+        * bin/MakeProjectCreator/config/ace_output.mpb:
+        * bin/MakeProjectCreator/config/ace_qt.mpb:
+        * bin/MakeProjectCreator/config/ace_tk.mpb:
+        * bin/MakeProjectCreator/config/ace_x11.mpb:
+        * bin/MakeProjectCreator/config/ace_xt.mpb:
+        * bin/MakeProjectCreator/config/ace_zlib.mpb:
+        * bin/MakeProjectCreator/config/ace_zzip.mpb:
+        * bin/MakeProjectCreator/config/acedefaults.mpb:
+        * bin/MakeProjectCreator/config/conv_lib.mpb:
+        * bin/MakeProjectCreator/config/wxwindows.mpb:
+        * netsvcs/servers/servers.mpc:
+        * performance-tests/Synch-Benchmarks/Base_Test/Synch_Benchmarks_Base_Test.mpc:
+        * performance-tests/Synch-Benchmarks/Perf_Test/Synch_Benchmarks_Perf_Test.mpc:
+        * tests/tests.mpc:
+          Removed left over from automake removal
+
+Tue Jan 24 13:31:49 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Reactor/WFMO_Reactor/Network_Events.cpp:
+          Fixed gcc warning
+
+Mon Jan 23 20:21:50 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+          Fixed support for idl3toxmi and idl3toidl2 flags
+
+Mon Jan 23 12:02:07 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+          Added support for idl3toxmi and idl3toidl2 flags
+
+Sun Jan 22 19:41:27 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Reactor/WFMO_Reactor/APC.cpp:
+        * examples/Reactor/WFMO_Reactor/Abandoned.cpp:
+        * examples/Reactor/WFMO_Reactor/Directory_Changes.cpp:
+        * examples/Reactor/WFMO_Reactor/Handle_Close.cpp:
+        * examples/Reactor/WFMO_Reactor/Network_Events.cpp:
+        * examples/Reactor/WFMO_Reactor/Prerun_State_Changes.cpp:
+        * examples/Reactor/WFMO_Reactor/Registration.cpp:
+        * examples/Reactor/WFMO_Reactor/Registry_Changes.cpp:
+        * examples/Reactor/WFMO_Reactor/Suspended_Removals.cpp:
+        * examples/Reactor/WFMO_Reactor/Talker.cpp:
+        * examples/Reactor/WFMO_Reactor/Window_Messages.cpp:
+          Fixed GCC 4.6.2 release warnings
+
+Sun Jan 22 12:35:11 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/make_release.py:
+          Use the new MPC -workers option to speedup the release process
+
+Fri Jan 20 19:30:51 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/APG/Processes/Process_Mutex.cpp:
+          Use ACE_TEST_ASSERT instead of ACE_ASSERT to fix warnings in gcc 4.6
+          release builds
+
+Fri Jan 20 19:06:02 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/APG/Containers/Allocator.cpp:
+        * examples/Reactor/Misc/test_timer_queue.cpp:
+          Use ACE_TEST_ASSERT instead of ACE_ASSERT to fix warnings in gcc 4.6
+          release builds
+
+Wed Jan 18 09:02:18 UTC 2012  Martin Corino  <mcorino@remedy.nl>
+
+        * bin/fuzz.pl:
+          Added suppress option to selectively disable checks.
+
+Tue Jan 17 17:36:31 UTC 2012  Chip Jones  <jonesc@ociweb.com>
+
+        * include/makeinclude/rules.local.GNU:
+          Fixed 'no filename for -include' warning.
+
+Mon Jan 16 21:58:44 UTC 2012  Chip Jones  <jonesc@ociweb.com>
+
+        * bin/DependencyGenerator/GNUIDLDependencyWriter.pm:
+        * bin/DependencyGenerator/GNUIDLObjectGenerator.pm:
+        * bin/MakeProjectCreator/config/ace_idl_dependencies.mpb:
+
+          Added these files to support generation of IDL dependencies
+          for gnuace projects.
+
+        * bin/MakeProjectCreator/config/acedefaults.mpb:
+        * bin/MakeProjectCreator/config/global.features:
+
+          Added IDL dependency as a feature defaulted to off.
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Modified gnuace template to generate IDL dependency rules.
+
+        * include/makeinclude/rules.common.GNU:
+        * include/makeinclude/rules.local.GNU:
+        * include/makeinclude/wrapper_macros.GNU:
+
+          Added depend_idl.local rule.
+
+          This is a merge of work done in the 'ace-mpc_performance'
+          branch.
+
+Mon Jan 16 10:33:37 UTC 2012  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/config-win32-common.h:
+        * ace/config-win32-mingw.h:
+          Moved MinGW specific block to common because the macros
+          it concerns are tested there already.
+
+Mon Jan 16 09:01:20 UTC 2012  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/config-win32-mingw.h:
+          Fixed incorrectly placed macro test.
+
+Sun Jan 15 19:15:48 UTC 2012  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/config-win32-mingw.h:
+          Add some customizations and corrections to support using
+          --std=c++0x with MinGW32.
+
+Fri Jan 13 23:25:59 UTC 2012  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * THANKS:
+
+          Added Michael Frommberger <michael dot frommberger at gmx dot net>
+
+Wed Jan 11 20:43:47 UTC 2012  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/config-freebsd.h:
+        * ace/config-win32-common.h:
+        * ace/config-win32-mingw.h:
+        * ace/os_include/os_signal.h:
+          Added ACE_LACKS_SIGSET_T to be able to distinguish between the
+          type and the functions being provided or not.
+
+Wed Jan 11 18:43:50 UTC 2012  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/config-win32-mingw.h:
+          Fixed typo.
+
+Wed Jan 11 15:41:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * ace/config-sunos5.10.h:
+        Is supposed to define ACE_SIZE_T_FORMAT_SPECIFIER_ASCII and ACE_SSIZE_T_FORMAT_SPECIFIER_ASCII
+        correctly for this platform. The old logic was "If already defined - redefine, but if not
+        defined don't define" and wrong. The point of providing the definition of these SIZE_T format
+        specifiers is to provide them if they are not set.
+
+Wed Jan 11 14:36:43 UTC 2012  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/config-win32-mingw.h:
+        * ace/os_include/os_signal.h:
+          Changes to support MinGW64 compiler.
+
+Mon Jan  9 11:07:54 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Netlink_Addr.h:
+        * ace/Notification_Queue.h:
+          Doxygen fixes
+
+        * tests/run_test.lst:
+          Removed several old config labels
+
+Fri Jan  6 11:16:03 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * html/Stats/configuration.shtml:
+        * html/Stats/index.shtml:
+        * html/Stats/simple_footprint.shtml:
+          Extended data to be shown and updated links
+
+Fri Jan  6 10:28:35 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Stream.cpp:
+          Fixed coverity errors
+
+Wed Jan  4 13:02:12 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/generate_compile_stats.sh:
+          Added link for DAnCE
+
+Wed Jan  4 11:45:43 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * html/Stats/index.shtml:
+          Fixed link
+
+Wed Jan  4 11:42:13 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/generate_compile_stats.sh:
+          Work with flat layout and added DAnCE
+
+Wed Jan  4 11:06:50 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/generate_compile_stats.sh:
+          Updated title to include DAnCE
+
+Wed Jan  4 08:50:18 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/cleanbuilds.sh:
+        * bin/mail_test_stats.sh:
+          Accept date and email as arguments
+
+Tue Jan  3 18:47:23 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/performance_stats.sh:
+        * bin/topinfo_iorsize_stats.sh:
+        * bin/topinfo_simple_stats.sh:
+        * bin/topinfo_stats.sh:
+          Assume ACE_ROOT is set before running the script, simplified the usage
+
+Tue Jan  3 18:34:18 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/valgrind.supp:
+          Added default suppress file that can be used for valgrind when using
+          valgrind for ACE/TAO/CIAO/DAnCE
+
+        * docs/bczar/bczar.html:
+          Added package
+
+Tue Jan  3 13:51:18 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/performance_stats.sh:
+          Create source directory
+
+Tue Jan  3 12:52:04 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/performance_stats.sh:
+        * bin/topinfo_iorsize_stats.sh:
+        * bin/topinfo_simple_stats.sh:
+        * bin/topinfo_stats.sh:
+        * bin/footprint_stats.sh:
+          Converting them to support a flat layout
+
+Tue Jan  3 12:40:43 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * html/Stats/detailed_footprint.shtml:
+        * html/Stats/detailed_performance.shtml:
+        * html/Stats/footer.html:
+        * html/Stats/index.shtml:
+        * html/Stats/navigation.html:
+          Updated links, docu, status
+
+        * html/Stats/compilation.shtml:
+          Removed this file.
+
+Sat Dec 31 22:12:53 UTC 2011  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Timer_Wheel_T.cpp: Changed the call to "delete root" in the
+          destructor to "this->free_node (root)" so the ACE_Timer_Wheel_T
+          will work properly when provided a custom allocator.  Thanks to
+          Koh <k_onishi at mtj dot biglobe dot ne dot jp> for reporting
+          this bug and providing a fix.
+
+Fri Dec 30 10:13:59 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-linux.h:
+          Added support for ulibc, thanks to Chong Wuk Pak
+          <chong dot pak at lmco dot com> for providing the patch. This fixes
+          bugzilla 3999
+
+Thu Dec 29 17:29:06 UTC 2011  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Mem_Map.cpp (ACE_Mem_Map::map_it): Fixed a missing '('.  Thanks to Johnny for reporting this.
+
+Thu Dec 29 15:14:45 UTC 2011  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Mem_Map.cpp (ACE_Mem_Map::map_it): Further improved the
+          error checking.  Thanks to JaeSung Lee <berise at gmail dot
+          com> for suggesting this.
+
+Tue Dec 27 15:19:56 UTC 2011  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Mem_Map.cpp (ACE_Mem_Map::map_it): mmap through character
+          device doesn't care about it's size, so map with /dev/* is done
+          with a special case.  Thanks to JaeSung Lee <berise at gmail dot
+          com> for reporting this and providing a fix.
+
+Tue Dec 27 11:39:53 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+        * bin/diff-builds-and-group-fixed-tests-only.sh:
+        * docs/Download.html:
+        * docs/bczar/bczar.html:
+        * etc/index.html:
+          Updated for next release
+
+Tue Dec 27 10:06:28 CET 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE version 6.0.7 released.
+
+Wed Dec 21 11:25:49 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/Task_Wait_Test.cpp:
+          Fixed compile issue on Solaris 10.
+
+Wed Dec 21 09:41:54 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        * examples/Timer_Queue/Reactor_Timer_Queue_Test.cpp:
+
+          Added timer queue reset on global reactor instance.
+
+Tue Dec 20 15:43:39 UTC 2011  Steve Huston  <shuston@riverace.com>
+
+        * tests/Task_Wait_Test.cpp:
+        * tests/tests.mpc:
+        * tests/run_test.lst:
+          New test program that tests the ACE_Thread_Manager::wait() from a
+          called-back ACE_Task::close() on thread exit.
+
+Tue Dec 20 15:36:24 UTC 2011  Steve Huston  <shuston@riverace.com>
+
+        * ace/Thread.inl (disablecancel): Correct size pased to memset.
+        * ace/Thread_Manager.cpp (ACE_Thread_Descriptor::terminate): Don't
+          dereference potentially invalid pointer.
+
+          Resolves Coverity warnings.
+
+Mon Dec 19 19:00:07 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/bczar/bczar.html:
+          Added another package
+
+Mon Dec 19 13:28:16 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/Abstract_Timer_Queue.h:
+        * ace/Timer_Hash_T.h:
+        * ace/Timer_Hash_T.cpp:
+        * ace/Timer_Heap_T.h:
+        * ace/Timer_Heap_T.cpp:
+        * ace/Timer_List_T.h:
+        * ace/Timer_List_T.cpp:
+        * ace/Timer_Queue_Adapters.inl:
+        * ace/Timer_Queue_Adapters.cpp:
+        * ace/Timer_Wheel_T.h:
+        * ace/Timer_Wheel_T.cpp:
+
+          Added close() method.
+
+        * ace/Dev_Poll_Reactor.cpp:
+        * ace/Proactor.cpp:
+        * ace/Select_Reactor_T.cpp:
+        * ace/WFMO_Reactor.cpp:
+
+          Implemented support for timer queue close ().
+
+        The rationale for these changes is that when using reactors with
+        user defined timer queues the reactor does not delete the timer queue
+        when being deleted itself. Without any other cleanup this created the
+        possibility (as encountered in TAO/tests/Bug_3837_Regression after
+        introduction of the TIME_POLICY changes) of outstanding timer handlers
+        in the queue being triggered and attempting to access the reactor after
+        the reactor has been destroyed.
+        Calling close () for timer queues the reactor does not delete solves
+        this potential problem.
+
+Mon Dec 19 12:12:37 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          Simplified check
+
+Mon Dec 19 09:17:33 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ace_for_tao.mpc:
+          Added missing files
+
+Sun Dec 18 11:56:00 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Timer_Queue_T.h:
+          Fixed CentOS warning
+
+Sun Dec 18 11:41:56 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ace_for_tao.mpc:
+          Removed obsolete file
+
+Sun Dec 18 11:35:18 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/generate_compile_stats.sh:
+          Fixed incorrect command
+
+Sun Dec 18 10:29:12 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/Abstract_Timer_Queue.h:
+
+          Added missing abstract method dump().
+
+Fri Dec 16 08:03:07 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * ace/Time_Policy_T.h:
+          No dllimport/export in template classes.
+
+Thu Dec 15 19:45:30 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Countdown_Time_T.h:
+          No need for an export macro with a C++ template
+
+Thu Dec 15 13:22:07 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * ace/Event_Handler_Handle_Timeout_Upcall.inl:
+        * tests/Timer_Queue_Test.cpp:
+          Fuzz. Removed tab character
+
+Thu Dec 15 13:12:39 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * ace/Event_Handler_Handle_Timeout_Upcall.inl:
+        * ace/Event_Handler_Handle_Timeout_Upcall.cpp:
+        * ace/Proactor.cpp:
+        * ace/Timer_Hash.h:
+        * ace/Timer_Hash_T.h:
+        * ace/Timer_Hash_T.cpp:
+        * ace/Timer_Heap.h:
+        * ace/Timer_Heap_T.h:
+        * ace/Timer_Heap_T.cpp:
+        * ace/Timer_List.h:
+        * ace/Timer_List_T.h:
+        * ace/Timer_List_T.cpp:
+        * ace/Timer_Queue_Adapters.cpp:
+        * ace/Timer_Queue_T.h:
+        * ace/Timer_Queue_T.cpp:
+        * ace/Timer_Wheel.h:
+        * ace/Timer_Wheel_T.h:
+          Fuzz. Removed tab character
+
+Thu Dec 15 12:52:18 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * ace/Abstract_Timer_Queue.h:
+        * ace/Abstract_Timer_Queue.cpp:
+        * ace/Event_Handler_Handle_Timeout_Upcall.h:
+        * ace/Timer_Queue_Iterator.h:
+        * ace/Timer_Queue_Iterator.cpp:
+          Fuzz. Added Id-tags.
+
+Thu Dec 15 11:00:00 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        Merged timer_policy branch.
+
+        === start changelog ===
+
+        Thu Dec 15 09:45:00 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+                * NEWS:
+
+                  Added description of new TIME_POLICY features.
+
+                * tests/Timer_Queue_Test.cpp:
+
+                  Added explicit test of specific TIME_POLICY feature.
+
+        Mon Dec 12 21:28:00 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+                * ace/Abstract_Timer_Queue.h:
+                * ace/Time_Policy.h:
+                * ace/Time_Policy.inl:
+                * ace/Time_Policy_T.h:
+                * ace/Time_Policy_T.inl:
+                * ace/Timer_Queue_T.cpp:
+                * ace/Timer_Queue_T.h:
+                * tests/Timer_Queue_Test.cpp:
+
+                  Added backwards compatibility support.
+
+        Mon Dec 05 10:26:00 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+                * ace/Time_Policy.inl
+
+                  Prevent setting delegate to null pointer.
+
+        Sun Dec 04 15:40:00 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+                * ace/Countdown_Time.cpp:
+                * ace/Countdown_Time.inl:
+
+                  Renamed to *_T.*
+
+                * ace/Countdown_Time.h
+                * ace/Countdown_Time_T.cpp
+                * ace/Countdown_Time_T.h
+                * ace/Countdown_Time_T.inl
+
+                  Changed ACE_Countdown_Time to TIME_POLICY based
+                  template class ACE_Countdown_Time_T,
+                  Created typedef for default template instantiation
+                  as ACE_Countdown_Time.
+
+                * ace/Time_Policy.cpp
+                * ace/Time_Policy.h
+                * ace/Time_Policy.inl
+                * ace/Time_Policy_T.cpp
+                * ace/Time_Policy_T.h
+                * ace/Time_Policy_T.inl
+
+                  Added support for dynamically loadable/shared time
+                  policies.
+
+                * ace/ace.mpc
+
+                  Updated for file changes.
+
+        Fri Dec 02 11:48:00 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+                * ace/Timer_Queue_T.h:
+                * ace/Timer_Queue_T.inl:
+
+                  Reverting set_time_policy() change. Interpretation error.
+
+        Thu Dec 01 17:52:00 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+                * ace/Time_Policy.h:
+                * ace/Time_Policy.inl:
+
+                  Added ACE_HR_Time_Policy.
+
+                * ace/Timer_Queue_T.h:
+                * ace/Timer_Queue_T.inl:
+
+                  Replaced set_time_policy() by get_time_policy() since setting
+                  the policy is not possible but configuring might be.
+
+        Thu Dec 01 14:05:00 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+                * ace/Proactor.cpp:
+                * ace/Timer_Queue_T.cpp:
+                * ace/Timer_Queue_T.h:
+
+                  Fixed compile errors.
+
+        Thu Dec 01 13:34:00 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+                * ace/Timer_Hash_T.cpp:
+                * ace/Timer_Hash_T.h:
+                * ace/Timer_Heap_T.h:
+                * ace/Timer_Wheel_T.h:
+
+                  Small cleanup to prevent potential compiler warnings.
+
+        Mon Aug 24 02:27:36 UTC 2009  Carlos O'Ryan  <coryan@glamdring>
+
+                * ace/Timer_Queue_T.cpp:
+                  Need to release the internal timer queue lock before dispatching
+                  calls in expire_single(), otherwise we get nasty deadlocks in
+                  the TP_Reactor implementation.
+
+        Thu Jul  2 02:55:09 UTC 2009  Carlos O'Ryan  <coryan@glamdring>
+
+                * ace/Abstract_Timer_Queue.h:
+                * ace/Timer_Queue_T.h:
+                * ace/Timer_Queue_T.inl:
+                * ace/Timer_Queue_T.cpp:
+                  I wanted to use gettimeofday() for the pure virtual function and
+                  some other name for the inline function used in the timer queue
+                  internals.
+                  This is the second and final pass to get that change in.  This
+                  time, I renamed the internal function to gettimeofday_static(),
+                  used the compiler (and grep) to find all uses.  Once that
+                  compiled I renamed the virtual function from
+                  gettimeofday_abstract() to the gettimeofday() function.
+                  I know it is convoluted, but it gets the job done without me
+                  having to think too much.
+
+                * ace/Timer_Hash_T.h:
+                * ace/Timer_Hash_T.cpp:
+                * ace/Select_Reactor_T.cpp:
+                * ace/Dev_Poll_Reactor.cpp:
+                * ace/Proactor.cpp:
+                * ace/Timer_Queue_Adapters.cpp:
+                * tests/Timer_Queue_Reference_Counting_Test.cpp:
+                * tests/Timer_Queue_Test.cpp:
+                * examples/APG/Timers/Timers.cpp:
+                * examples/APG/Timers/TimerDispatcher.cpp:
+                * examples/C++NPv2/Logging_Event_Handler_Ex.cpp:
+                  Fixed users and tests to use the real name for gettimeofday() in
+                  ACE_Abstract_Timer_Queue<>
+
+        Wed Jul  1 02:09:44 UTC 2009  Carlos O'Ryan  <coryan@glamdring>
+
+                * ace/ace.mpc:
+                * ace/Makefile.am:
+                * ace/Event_Handler_Handle_Timeout_Upcall.h:
+                * ace/Event_Handler_Handle_Timeout_Upcall.inl:
+                * ace/Event_Handler_Handle_Timeout_Upcall.cpp:
+                  First I noticed that this class did not depend on the lock type
+                  at all, this was fortunate because I wanted to use it in a
+                  generic way.  So, change the class from a template class to a
+                  regular class.  That required moving the class to its own file too.
+
+                * ace/Timer_List_T.h:
+                * ace/Timer_List_T.cpp:
+                * ace/Timer_Wheel_T.h:
+                * ace/Timer_Wheel_T.cpp:
+                * ace/Timer_Hash_T.h:
+                * ace/Timer_Hash_T.cpp:
+                * ace/Timer_Heap_T.h:
+                * ace/Timer_Heap_T.cpp:
+                  Fixed several inconsistencies across these classes, for example,
+                  most of them had typedef as a shorthand for the base class, but
+                  the name of this typedef was not consistent.
+                  Likewise, not all of the classes made the TIME_POLICY parameter
+                  a default template parameter.
+
+                * ace/Timer_Queue_T.h:
+                * ace/Timer_Queue_T.inl:
+                * ace/Timer_Queue_T.cpp:
+                  Introduced an intermediate class between Abstract_Timer_Queue<>
+                  and Timer_Queue_T<>.  This is ugly, but the Proactor "needs" to
+                  set a back-pointer from the FUNCTOR to the Proacter instance
+                  whenever a timer queue is assigned to the Proactor.
+                  This code smells funny.  Either the API is wrong (the Proactor
+                  should always create the functor with the backpointer,) or the
+                  need for the back pointer is suspicious (I think there is a
+                  thread in the Proactor that signals timers, but maybe it should
+                  be contained in the Upcall object itself?)
+                  The more I look here, the uglier the smell.
+
+                * ace/Select_Reactor_T.cpp:
+                * ace/Timer_Queue_Adapters.cpp:
+                * tests/Timer_Queue_Reference_Counting_Test.cpp:
+                * tests/Timer_Queue_Test.cpp:
+                  As a temporary measure, I appended "_abstract" to the
+                  gettimeofday() function name in Abstract_Timer_Queue<>.
+                  Shortly, I will change the Timer_Queue_T<> class to use
+                  gettimeofday_non_virtual() or _static() or something similar.
+                  Had to make the change in two steps to find all the uses of the
+                  original function.
+                  There was probably an easier/cleaner way to do this.
+
+                * tests/Timer_Queue_Test.cpp:
+                  Take advantage of the new ACE_Abstract_Timer_Queue<> to make the
+                  different types of queues more compatible in ths test, including
+                  queues with different time source policies.
+
+                * ace/Proactor.h:
+                  As with the Reactive version, I noticed that
+                  ACE_Proactor_Handle_Timeout_Upcall did not depend on its
+                  template parameter, so I changed the class to a non-template
+                  version.
+
+                * ace/Proactor.cpp:
+                  Instead of making the Proactor a friend of the Timer_Handler
+                  task, expose a safe interface to do what the proactor wants to
+                  do.
+                  The proactor needed access to timer queue internal details to
+                  implement schedule(), but the reactor did not... hmmm... well,
+                  turns out the Reactor had nicely refactor that work to the
+                  upcall functor.  So I did the same in the Proactor case.
+
+
+                * ace/Timer_List.h:
+                * ace/Timer_Wheel.h:
+                * ace/Timer_Hash.h:
+                * ace/Timer_Heap.h:
+                  Use Event_Handler_Handle_Timeout_Upcall without the template
+                  parameter.
+
+                * ace/Abstract_Timer_Queue.h:
+                  Remove the setter for getimeofday(), this is implemented by the
+                  TIME_POLICY template parameter in Timer_Queue_T<>
+
+                * tests/Reactor_Timer_Test.cpp:
+                * tests/Network_Adapters_Test.cpp:
+                * tests/Proactor_Timer_Test.cpp:
+                  Use a different idiom to set the time policy for this test.
+
+                * examples/Timer_Queue/Thread_Timer_Queue_Test.h:
+                * examples/Bounded_Packet_Relay/Thread_Bounded_Packet_Relay.h:
+                * examples/APG/Timers/Timers.cpp:
+                * examples/APG/Timers/TimerDispatcher.cpp:
+                * examples/Reactor/Misc/test_timer_queue.cpp:
+                * examples/C++NPv2/Logging_Event_Handler_Ex.cpp:
+                  Need an additional #include for ACE_Event_Handler_Handle_Timeout
+                  Said class class is no longer a template class, so use it
+                  correctly.
+                  Changed name of gettimeofday() in timer queue to
+                  gettimeofday_abstract()  This is a temporary change to find all
+                  the uses, will revert again soon.
+
+                * Merged in changes from bug-3607 branch.
+
+                * ace/ace.mpc:
+                * ace/Abstract_Timer_Queue.h:
+                * ace/Abstract_Timer_Queue.cpp:
+                * ace/Timer_Queue_Iterator.h:
+                * ace/Timer_Queue_Iterator.inl:
+                * ace/Timer_Queue_Iterator.cpp:
+                * ace/Timer_Queuefwd.h:
+                * ace/Timer_Queue.h:
+                * ace/Timer_Queue_T.h:
+                * ace/Timer_Queue_T.inl:
+                * ace/Timer_Queue_T.cpp:
+                * ace/Timer_List_T.h:
+                * ace/Timer_List_T.cpp:
+                * ace/Timer_Wheel_T.h:
+                * ace/Timer_Wheel_T.cpp:
+                * ace/Timer_Hash_T.h:
+                * ace/Timer_Hash_T.cpp:
+                * ace/Timer_Heap_T.h:
+                * ace/Timer_Heap_T.cpp:
+                  Heavy refactoring in ACE_Timer_Queue_T class and friends.
+                  First, created a template base class (ACE_Abstract_Timer_Queue) that:
+                  1) Only depends on the type held by the timer queue, not to lock
+                    or upcall strategy.
+                  2) It is a pure abstract class, i.e., none of its member
+                    functions have any implementation.
+                  3) Provides new pure virtual functions to encapsulates some
+                    logic that was spread between tests, TP_Reactor and
+                    Dev_Poll_Reactor.
+                  Then I re-wrote all the standard timer queue objects in terms of
+                  this class.  In particular, the reactors use only the abstract
+                  interface.
+                  I also re-factored the Timer_Queue_Iterator to only depend on
+                  the type of objects held by the timer queue.  The rest of the
+                  parameters where not used either.
+                  Implement functionality that was spread in Dev_Poll_Reactor,
+                  TP_Reactor and a test into expire_single.
+
+                * ace/Proactor.h:
+                * ace/TP_Reactor.cpp:
+                * ace/Dev_Poll_Reactor.cpp:
+                  Both classes implemented the logic to dispatch a single timer
+                  but release a mutex before the upcall.  This was confusing as
+                  well as required exposing too much detail about the Timer_Queue
+                  classes.
+                  The new mechanism is a single function in (expire_single)
+                  ACE_Abstract_Timer_Queue<> (implemented in ACE_Timer_Queue_T<>)
+                  which receives a command object to encapsulate the mutex release.
+
+                * ace/Functor.h:
+                * ace/Functor.cpp:
+                * ace/Functor_T.h:
+                * ace/Functor_T.inl:
+                  Add helper ACE_Command_* objects.  One is a no-op, for the test
+                  below.  The other is a callback that ignores the silly void*
+                  argument in the ACE_Command_Base::execute() member function.
+
+                * tests/Timer_Queue_Reference_Counting_Test.cpp:
+                  Re-factored test in terms of expire_single()
+
+        Tue Jun 30 01:10:04 UTC 2009  Carlos O'Ryan  <coryan@glamdring>
+
+                * This is a temporary commit into the 3707 branch.  I realized too
+                  late that the changes from 3706 will be needed to make this work.
+
+                * ace/ace.mpc:
+                * ace/Time_Policy.h:
+                * ace/Time_Policy.inl:
+                * ace/Time_Policy.cpp:
+                  New classes to encapsulate how "now" is computed in the Timer
+                  Queues.   This will be an additional template parameter, so the
+                  default configuration has zero overhead.
+
+                * ace/Timer_Queuefwd.h:
+                * ace/Timer_List.h:
+                * ace/Timer_List_T.h:
+                * ace/Timer_List_T.cpp:
+                * ace/Timer_Queue_T.h:
+                * ace/Timer_Queue_T.inl:
+                * ace/Timer_Queue_T.cpp:
+                * ace/Timer_Wheel.h:
+                * ace/Timer_Wheel_T.h:
+                * ace/Timer_Wheel_T.cpp:
+                * ace/Timer_Hash.h:
+                * ace/Timer_Hash_T.h:
+                * ace/Timer_Hash_T.cpp:
+                * ace/Timer_Heap.h:
+                * ace/Timer_Heap_T.h:
+                * ace/Timer_Heap_T.cpp:
+                  Re-factor timer queue classes to use new TIMER_POLICY
+                  parameter.
+
+                * tests/Timer_Queue_Test.cpp:
+                  Modify test to use TIMER_POLICY.  But here is the rub, the test
+                  does not compile because all timer queue types are "different"
+                  to each other.  I need to introduce the base class from the
+                  bug-3706 branch to make things work.
+
+        Sun Jun 28 22:15:47 UTC 2009  Carlos O'Ryan  <coryan@glamdring>
+
+                * ace/ace.mpc:
+                * ace/Abstract_Timer_Queue.h:
+                * ace/Abstract_Timer_Queue.cpp:
+                * ace/Timer_Queue_Iterator.h:
+                * ace/Timer_Queue_Iterator.inl:
+                * ace/Timer_Queue_Iterator.cpp:
+                * ace/Timer_Queuefwd.h:
+                * ace/Timer_Queue.h:
+                * ace/Timer_Queue_T.h:
+                * ace/Timer_Queue_T.inl:
+                * ace/Timer_Queue_T.cpp:
+                * ace/Timer_List_T.h:
+                * ace/Timer_List_T.cpp:
+                * ace/Timer_Wheel_T.h:
+                * ace/Timer_Wheel_T.cpp:
+                * ace/Timer_Hash_T.h:
+                * ace/Timer_Hash_T.cpp:
+                * ace/Timer_Heap_T.h:
+                * ace/Timer_Heap_T.cpp:
+                  Heavy refactoring in ACE_Timer_Queue_T class and friends.
+                  First, created a template base class (ACE_Abstract_Timer_Queue) that:
+                  1) Only depends on the type held by the timer queue, not to lock
+                    or upcall strategy.
+                  2) It is a pure abstract class, i.e., none of its member
+                    functions have any implementation.
+                  3) Provides new pure virtual functions to encapsulates some
+                    logic that was spread between tests, TP_Reactor and
+                    Dev_Poll_Reactor.
+                  Then I re-wrote all the standard timer queue objects in terms of
+                  this class.  In particular, the reactors use only the abstract
+                  interface.
+                  I also re-factored the Timer_Queue_Iterator to only depend on
+                  the type of objects held by the timer queue.  The rest of the
+                  parameters where not used either.
+                  Implement functionality that was spread in Dev_Poll_Reactor,
+                  TP_Reactor and a test into expire_single.
+
+                * ace/Proactor.h:
+                * ace/TP_Reactor.cpp:
+                * ace/Dev_Poll_Reactor.cpp:
+                  Both classes implemented the logic to dispatch a single timer
+                  but release a mutex before the upcall.  This was confusing as
+                  well as required exposing too much detail about the Timer_Queue
+                  classes.
+                  The new mechanism is a single function in (expire_single)
+                  ACE_Abstract_Timer_Queue<> (implemented in ACE_Timer_Queue_T<>)
+                  which receives a command object to encapsulate the mutex release.
+
+                * ace/Functor.h:
+                * ace/Functor.cpp:
+                * ace/Functor_T.h:
+                * ace/Functor_T.inl:
+                  Add helper ACE_Command_* objects.  One is a no-op, for the test
+                  below.  The other is a callback that ignores the silly void*
+                  argument in the ACE_Command_Base::execute() member function.
+
+                * tests/Timer_Queue_Reference_Counting_Test.cpp:
+                  Re-factored test in terms of expire_single()
+
+        === end changelog ===
+
+Wed Dec 14 16:09:22 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/auto_run_tests.pl:
+          Fixed DANCE_ROOT
+
+Mon Dec 12 19:04:55 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/vc11.features:
+        * bin/MakeProjectCreator/config/vc11nmake.mpb:
+          New files for vc11
+
+Mon Dec 12 07:33:25 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        === start changelog ===
+
+        Fri Dec  9 10:41:02 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * docs/svn/config:
+                  Subversion should ignore *_svnt_T.*.
+
+        === end changelog ===
+
+Mon Dec  5 22:23:25 UTC 2011  Steve Huston  <shuston@riverace.com>
+
+        * ace/DLL.h:
+        * ace/DLL_Manager.h: Corrected and expanded the descriptions of how
+          DLL/library names are handled, decorated, and located.
+
+Mon Dec  5 20:16:51 UTC 2011  Steve Huston  <shuston@riverace.com>
+
+        * ace/Atomic_Op.{h inl}:
+        * ace/Atomic_Op_T.{h inl}:
+        * ace/Atomic_Op_GCC_T.{h inl}:
+          Added new method TYPE exchange (TYPE newval) which exchanges the
+          ACE_Atomic_Op's value with the specified new value. Thanks to John
+          Lilley for contributing this addition.
+
+        * tests/Atomic_Op_Test.cpp: Added test for exchange().
+
+        * NEWS: Added description of the new exchange() method.
+
+Mon Dec  5 12:27:54 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/TTY_IO.h:
+          Doxygen fix
+
+        * ace/config-linux.h:
+          Layout changes
+
+        * tests/Cached_Accept_Conn_Test.h:
+        * tests/Cached_Accept_Conn_Test.cpp:
+        * tests/MEM_Stream_Test.cpp:
+        * tests/QtReactor_Test.cpp:
+          Layout changes and removed some ACE_UNUSED_ARG usage
+
+Mon Dec  5 11:25:31 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/cleanbuilds.sh:
+        * bin/mail_test_stats.sh:
+          Extended our daily test stats with another email, the failing tests
+          for today excluding the not fixed ones
+
+Mon Dec  5 08:35:54 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/Download.html:
+          Release has vc9/vc10
+
+Mon Dec  5 08:22:11 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/diff-builds-and-group-fixed-tests-only.sh:
+        * docs/Download.html:
+        * etc/index.html:
+          Made 6.0.6 publicly available
+
+        * docs/bczar/bczar.html:
+          Updated for next release and added wget step to get subversion config
+          file to make sure we checkout using commit timestamps
+
+Local Variables:
+mode: change-log
+add-log-time-format: (lambda () (progn (setq tz (getenv "TZ")) (set-time-zone-rule "UTC") (setq time (format-time-string "%a %b %e %H:%M:%S %Z %Y" (current-time))) (set-time-zone-rule tz) time))
+indent-tabs-mode: nil
+End:
