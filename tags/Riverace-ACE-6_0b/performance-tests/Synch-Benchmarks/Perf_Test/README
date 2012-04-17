@@ -1,0 +1,76 @@
+The files in this directory support controlled benchmarking of the ACE
+synchronization mechanisms.
+
+  These mechanisms include:
+
+	. Mutexes
+	. Reader/writer locks
+	. Condition variables
+	. Semaphores
+        . Tokens
+        . Adaptive lockings
+
+There are additional tests that measure the memory bandwidth under the
+following conditions:
+
+	. User memory-to-memory copying of data within a single thread
+ 	. User memory-to-kernel-to-user memory copying via pipes
+	  between separate processes, as well as between separate
+	  threads in the same process
+
+There are many options available for this module that can be put into
+svc.conf files.  See the Performance_Test_Options.[Chi] file for more
+details.  Some reasonable options to use to run the tests are:
+
+ -v -B -s 15
+ -v -n 4 -t 4 -s 15
+
+You should experiment with other options as you see fit.  Note that on
+Solaris, you should always make sure that you have more than 1 LWP (by
+using either the -B or the -n options) since otherwise the program may
+get into an infinite loop due to the semantics of SunOS unbound
+threads... (This may no longer be the case.)
+
+
+Available Options in Performance_Test module:
+=============================================
+
+Thread Creation:
+----------------
+      -B:    Create thread with THR_BOUND
+      -D:    Create thread with THR_DETACHED
+      -N:    Create thread with flag THR_NEW_LWP
+      -n:    Set # of lwp's (default is 0)
+      -t:    Set # of threads contending the lock (default is 4)
+
+Run Test:
+---------
+      -s:    Set testing duration (in seconds, default is 100)
+      -T:    Enable/disable tracing.
+
+Misc:
+-----
+      -p:    Toggle whether summary is printed
+      -e:    Perform eager exit (without cleaning up)
+      -M:    Set message size in pipe_[proc|thr]_test
+
+Reserved Flags:
+---------------
+      -a:    Not used.  (do_ack ???)
+      -A:    Not used.  (set rendezvous point)
+      -c:    Not used.  (# of connections)
+      -C:    Not used.  (Toggle calculate checksum)
+      -d:    Not used.  (Enable debugging)
+      -F:    Not used.  (Free memory)
+      -g:    Not used.  (generate data ??)
+      -H:    Not used.  (set high water mark)
+      -i:    Not used.  (# of iterations)
+      -L:    Not used.  (set low water mark)
+      -l:    Not used.  (set initial queue length)
+      -m:    Not used.  (set mapped file name)
+      -P:    Not used.  (set consecutive ports)
+      -S:    Not used.  (set service_entry ???)
+      -u:    Not used.  (use udp)
+      -v:    Not used.  (set display verbosely)
+      -X:    Not used.  (Use xdr conversion)
+      -Z:    Not used.  (Do zero copy)
