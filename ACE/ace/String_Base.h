@@ -103,9 +103,9 @@ public:
    *    freeing memory.
    * @return ACE_String_Base containing const ACE_CHAR_T *s
    */
-  explicit ACE_String_Base (const ACE_CHAR_T *s,
-                            ACE_Allocator *the_allocator = 0,
-                            bool release = true);
+  ACE_String_Base (const ACE_CHAR_T *s,
+                   ACE_Allocator *the_allocator = 0,
+                   bool release = true);
 
   /**
    * Constructor that copies @a len CHARs of @a s into dynamically
