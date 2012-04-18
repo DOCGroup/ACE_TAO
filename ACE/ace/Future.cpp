@@ -98,7 +98,7 @@ ACE_Future_Rep<T>::attach (ACE_Future_Rep<T>*& rep)
 {
   ACE_ASSERT (rep != 0);
   // Use value_ready_mutex_ for both condition and ref count management
-//   ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, r_mon, rep->value_ready_mutex_, 0);
+  ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, r_mon, rep->value_ready_mutex_, 0);
   ++rep->ref_count_;
   return rep;
 }
