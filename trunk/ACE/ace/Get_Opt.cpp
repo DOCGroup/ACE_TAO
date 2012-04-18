@@ -368,7 +368,7 @@ ACE_Get_Opt::short_option_i (void)
   /* Look at and handle the next option-character.  */
   ACE_TCHAR opt = *this->nextchar_++;
   // Set last_option_ to opt
-  this->last_option (opt);
+  this->last_option (ACE_CString (opt));
 
   ACE_TCHAR *oli = 0;
   oli =
