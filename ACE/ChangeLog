@@ -1,3 +1,15 @@
+Wed Apr 18 08:51:31 UTC 2012  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/String_Base.h:
+          Reverted 'explicit' declaration for single arg constructor for
+          const ACE_TCHAR* as implicit conversion of this arg type to
+          ACE string class is the expected behaviour (similar to the
+          STL std::string).
+
+        * ace/Get_Opt.cpp:
+          Introduced explicit ACE_CString constructor call for single
+          arg ACE_TCHAR (not pointer) constructor.
+
 Wed Apr 18 06:31:56 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Future.cpp:
