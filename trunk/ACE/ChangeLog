@@ -1,3 +1,9 @@
+Wed Apr 18 06:31:56 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Future.cpp:
+          Fixed commented out guard. Thanks to Andreas Dröscher
+          <ace at anticat dot ch> for reporting this.
+
 Tue Apr 17 19:09:30 UTC 2012  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/String_Base.h: Made the single parameter constructors
