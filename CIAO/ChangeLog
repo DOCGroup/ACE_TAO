@@ -1,3 +1,8 @@
+Thu Apr 19 07:48:03 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/TypeSupport.cpp:
+          Fixed incorrect loop
+
 Sun Apr 15 12:35:12 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/ami4ccm/tests/InterMulti/Sender/InterMulti_Sender_exec.h:

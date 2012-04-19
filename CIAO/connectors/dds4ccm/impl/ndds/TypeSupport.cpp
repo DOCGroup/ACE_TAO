@@ -266,13 +266,15 @@ namespace CIAO
 
       for(participantfactories::iterator i = participant_factories.begin();
           i != participant_factories.end();
-          ++i )
+          ++i)
         {
           typefactories tf = i->second;
 
-          for(size_t j = tf.size() - 1; j != 0; j--)
+          for(typefactories::iterator j = tf.begin();
+              j != tf.end();
+              ++j)
             {
-              delete tf[j];
+              delete j->second;
             }
           tf.clear();
         }
