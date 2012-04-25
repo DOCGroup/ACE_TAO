@@ -1,10 +1,15 @@
+Wed Apr 25 07:02:16 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Get_Opt.cpp:
+          Reverted Wed Apr 18 08:51:31 UTC 2012  Martin Corino  <mcorino@remedy.nl>
+
 Tue Apr 24 01:18:27 UTC 2012  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/String_Base.h (template): Zapped the 'explicit' keywords
           introduced by the change in
-  
-          Tue Apr 17 19:09:30 UTC 2012  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>  
-  
+
+          Tue Apr 17 19:09:30 UTC 2012  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
           since it was breaking too much code.
 
 Wed Apr 18 08:51:31 UTC 2012  Martin Corino  <mcorino@remedy.nl>
