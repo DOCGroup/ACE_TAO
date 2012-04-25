@@ -65,6 +65,7 @@
         tao_idl -I../ports -I../../Shapes_Control_comp/ports
         -I../ports/GeneratedCode -I../../ports -I%TAO_ROOT%
         -I%TAO_ROOT%/tao -I%CIAO_ROOT% -I%CIAO_ROOT%/ccm -I%CIAO_ROOT%/ciao
+        -I%CIAO_ROOT%/connectors/dds4ccm/idl
         -DCIAO_DDS4CCM_NDDS -Gex Shapes_Sender_comp.idl
     </code>
     <br/><br/>
@@ -87,11 +88,12 @@
     Navigate to the Shapes_asm/Shapes_Receiver_comp/src and invoke the TAO IDL
     compiler by running the following command:
   </p>
-  <p>
+   <p>
     <code>
         tao_idl -I../ports -I../../Shapes_Control_comp/ports
         -I../ports/GeneratedCode -I../../ports -I%TAO_ROOT%
         -I%TAO_ROOT%/tao -I%CIAO_ROOT% -I%CIAO_ROOT%/ccm -I%CIAO_ROOT%/ciao
+        -I%CIAO_ROOT%/connectors/dds4ccm/idl
         -DCIAO_DDS4CCM_NDDS -Gex Shapes_Receiver_comp.idl
     </code>
     <br/><br/>
