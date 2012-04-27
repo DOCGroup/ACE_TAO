@@ -164,7 +164,7 @@ sub Build_All ()
     push @directories, @ciao_core_dirs;
 
     print STDERR "First pass (libraries)\n" if ($print_status == 1);
-    print "\nmsvc_auto_compile: First Pass CORE (libraries)\n";
+    print "\nmsvc_mpc_auto_compile: First Pass CORE (libraries)\n";
 
     Build_Custom ();
 
@@ -226,7 +226,7 @@ sub Build_All_VC7 ()
     push @directories, @ciao_core_dirs;
 
     print STDERR "First pass (libraries)\n" if ($print_status == 1);
-    print "\nmsvc_auto_compile: First Pass CORE (libraries)\n";
+    print "\nmsvc_mpc_auto_compile: First Pass CORE (libraries)\n";
 
     Build_Custom_VC7 ();
 
