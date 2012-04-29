@@ -14,6 +14,9 @@ if (!$ENV{ACE_ROOT}) {
 }
 else {
     $ACE_ROOT = $ENV{ACE_ROOT};
+    $TAO_ROOT = $ENV{TAO_ROOT};
+    $CIAO_ROOT = $ENV{CIAO_ROOT};
+    $DANCE_ROOT = $ENV{DANCE_ROOT};
 }
 
 @directories = ();
@@ -107,7 +110,7 @@ sub Find_Dsw (@)
 
     find (\&wanted_dsw, @dir);
 
-    print "List of dsw's \n" if ($verbose == 1);
+    print "List of dsw's\n" if ($verbose == 1);
     return @array;
 }
 
@@ -116,6 +119,8 @@ sub Find_Sln (@)
     my (@dir) = @_;
     @array = ();
 
+    print "Searching for list of sln's\n" if ($verbose == 1);
+
     sub wanted_sln {
         $array[++$#array] =
             $File::Find::name if ($File::Find::name =~ /\.sln$/i);
@@ -123,7 +128,7 @@ sub Find_Sln (@)
 
     find (\&wanted_sln, @dir);
 
-    print "List of sln's \n" if ($verbose == 1);
+    print "List of sln's\n" if ($verbose == 1);
     return @array;
 }
 
