@@ -27,15 +27,15 @@ else {
                   "$ACE_ROOT\\protocols");
 
 @tao_core_dirs = ("$ACE_ROOT\\apps",
-                  "$ACE_ROOT\\TAO\\TAO_IDL",
-                  "$ACE_ROOT\\TAO\\tao",
-                  "$ACE_ROOT\\TAO\\tests");
+                  "$TAO_ROOT\\TAO_IDL",
+                  "$TAO_ROOT\\tao",
+                  "$TAO_ROOT\\tests");
 
-@orbsvcs_core_dirs = ("$ACE_ROOT\\TAO\\orbsvcs\\orbsvcs");
+@orbsvcs_core_dirs = ("$TAO_ROOT\\orbsvcs\\orbsvcs");
 
-@dance_core_dirs = ("$ACE_ROOT\\TAO\\DAnCE");
+@dance_core_dirs = ("$DANCE_ROOT");
 
-@ciao_core_dirs = ("$ACE_ROOT\\TAO\\CIAO");
+@ciao_core_dirs = ("$CIAO_ROOT");
 
 $debug = 0;
 $verbose = 0;
