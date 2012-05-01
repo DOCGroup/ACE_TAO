@@ -110,7 +110,7 @@ extern "C"
 #  define S_IFDIR FILE_ATTRIBUTE_DIRECTORY
 #  define S_IFREG FILE_ATTRIBUTE_NORMAL
 #  define S_IFLNK 0
-#  deinfe S_IFCHR 0
+#  define S_IFCHR 0
 
 #  if !defined (__MINGW32__)
    // Since CE does not have _stat by default as NT/2000 does, the 'stat'
