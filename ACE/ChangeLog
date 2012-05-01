@@ -1,3 +1,12 @@
+Tue May  1 12:52:45 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_sys_time.cpp:
+        * ace/config-win32-msvc-10.h:
+        * ace/config-win32-msvc-8.h:
+        * ace/config-win32-msvc-9.h:
+          WinCE also has non conformant timeval. When _USE_32BIT_TIME_T is not
+          defined we have to use our workaround in all cases
+
 Tue May  1 11:42:22 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/os_include/sys/os_stat.h:
