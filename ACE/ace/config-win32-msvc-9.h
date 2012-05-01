@@ -64,7 +64,6 @@
 
 #define ACE_LACKS_STRPTIME
 
-// Evaluate this with a WinCE build; maybe things have improved since VC8.
 #if !defined (ACE_HAS_WINCE)
 # define ACE_HAS_INTRIN_H
 # define ACE_HAS_INTRINSIC_INTERLOCKED
