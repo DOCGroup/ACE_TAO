@@ -21,7 +21,6 @@ else {
 
 @directories = ();
 
-
 @ace_core_dirs = ("$ACE_ROOT\\ace",
                   "$ACE_ROOT\\Kokyu",
                   "$ACE_ROOT\\ACEXML",
@@ -29,7 +28,7 @@ else {
                   "$ACE_ROOT\\tests",
                   "$ACE_ROOT\\protocols");
 
-@tao_core_dirs = ("$ACE_ROOT\\apps",
+@tao_core_dirs = ("$ACE_ROOT\\apps\\gperf\\src",
                   "$TAO_ROOT\\TAO_IDL",
                   "$TAO_ROOT\\tao",
                   "$TAO_ROOT\\tests");
@@ -51,6 +50,7 @@ $Build_Cmd = "/BUILD";
 $use_custom_dir = 0;
 $useenv = '';
 $vc7 = 0;
+$project_root = "$ACE_ROOT";
 
 # Build_Config takes in a string of the type "project--configuration" and
 # runs msdev to build it.
@@ -173,7 +173,7 @@ sub Build_All ()
 
     Build_Custom ();
 
-    my @new_directory_search = "$ACE_ROOT";
+    my @new_directory_search = "$project_root";
 
     my @configurations = Find_Dsw (@new_directory_search);
 
@@ -235,7 +235,7 @@ sub Build_All_VC7 ()
 
     Build_Custom_VC7 ();
 
-    my @new_directory_search = "$ACE_ROOT";
+    my @new_directory_search = "$project_root";
 
     my @configurations = Find_Sln (@new_directory_search);
 
@@ -326,6 +326,11 @@ while ( $#ARGV >= 0  &&  $ARGV[0] =~ /^(-|\/)/ )
         $use_custom_dir = 1;
         push @directories, $ARGV[0];
     }
+    elsif ($ARGV[0] =~ '-project_root') {  # use different root than ACE_ROOT
+        shift;
+        print "Using project root $ARGV[0]\n" if ( $verbose );
+        $project_root = $ARGV[0];
+    }
     elsif ($ARGV[0] =~ '-rebuild') {    # Rebuild all
         print "Rebuild all\n" if ( $verbose );
         $Build_Cmd = "/REBUILD";
@@ -358,6 +363,7 @@ while ( $#ARGV >= 0  &&  $ARGV[0] =~ /^(-|\/)/ )
         print "-ORBSVCS   = Build ACE+TAO+ORBSVCS and its tests\n";
         print "-CIAO      = Build ACE+TAO+ORBSVCS+CIAO and its tests\n";
         print "-dir <dir> = Compile custom directories\n";
+        print "-project_root <dir> = Use different root directory than ACE_ROOT\n";
         print "\n";
         print "-rebuild   = Rebuild All\n";
         print "-clean     = Clean\n";
