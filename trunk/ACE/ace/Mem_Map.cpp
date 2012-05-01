@@ -3,6 +3,7 @@
 // Defines the member functions for the memory mapping facility.
 
 #include "ace/Mem_Map.h"
+
 #if !defined (__ACE_INLINE__)
 #include "ace/Mem_Map.inl"
 #endif /* __ACE_INLINE__ */
@@ -16,7 +17,6 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Mem_Map)
-
 
 void
 ACE_Mem_Map::dump (void) const
@@ -83,11 +83,15 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
   int result = ACE_OS::fstat (this->handle_, &current_file_type);
 
   if (result == -1)
-    // Something wrong found, bail out.
-    return -1;
+    {
+      // Something wrong found, bail out.
+      return -1;
+    }
   else if ((current_file_type.st_mode & S_IFMT) == S_IFCHR)
-    // Set length to length_request
-    this->length_ = length_request;
+    {
+      // Set length to length_request
+      this->length_ = length_request;
+    }
   else if ((current_file_type.st_mode & S_IFMT) == S_IFREG)
     {
       // Get the current filesize
