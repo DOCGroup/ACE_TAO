@@ -94,12 +94,30 @@ namespace ACE_OS
     return ACE_STD_NAMESPACE::floor (x);
   }
 
+#if defined (ACE_HAS_WINCE)
+  /// Windows CE has an intrinsic floor for float
+  template <>
+  float floor (float x)
+  {
+    return ACE_STD_NAMESPACE::floorf (x);
+  }
+#endif
+
   /// This method computes the smallest integral value not less than x.
   template <typename T>
   T ceil (T x)
   {
     return ACE_STD_NAMESPACE::ceil (x);
   }
+
+#if defined (ACE_HAS_WINCE)
+  /// Windows CE has an intrinsic ceil for float
+  template <>
+  float ceil (float x)
+  {
+    return ACE_STD_NAMESPACE::ceilf (x);
+  }
+#endif
 
   /// This method computes the base-2 logarithm of x.
   ACE_NAMESPACE_INLINE_FUNCTION

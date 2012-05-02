@@ -1,3 +1,8 @@
+Wed May  2 18:36:25 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_math.h:
+          Fixed compile warning with WinCE
+
 Wed May  2 17:08:28 UTC 2012  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * THANKS:
