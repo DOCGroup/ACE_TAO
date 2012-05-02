@@ -898,6 +898,8 @@ FE_Utils::can_be_redefined (AST_Decl *prev_decl,
     case AST_Decl::NT_const:
     case AST_Decl::NT_factory:
     case AST_Decl::NT_type:
+    case AST_Decl::NT_enum:
+    case AST_Decl::NT_enum_val:
     {
       return !s_eq;
     }
