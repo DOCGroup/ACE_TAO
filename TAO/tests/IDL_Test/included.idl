@@ -68,4 +68,24 @@ module A
   };
 };
 
+// A different enum with the same enum values is 
+// defined in a derived interface in the same scope
+// in another IDL file that includes this one. The
+// construction is legal and should be accepted.
+module RootModule
+{
+	module SUBMODULE1
+  {
+		interface ParentIF
+    {
+			enum Mode
+      {
+				NORMAL,
+			  FAULTY,
+				UNKNOWN
+			};
+		};
+	};
+};
+
 #endif /* IDL_TEST_INCLUDED_IDL */
