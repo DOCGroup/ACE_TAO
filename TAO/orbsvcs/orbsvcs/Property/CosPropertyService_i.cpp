@@ -946,31 +946,31 @@ TAO_PropertySet::delete_properties (const CosPropertyService::PropertyNames &pro
       catch (const CosPropertyService::InvalidPropertyName& )
         {
           // Put this exception in the multiple exception.
-          CORBA::ULong len = multi_ex->exceptions.length ();
-          multi_ex->exceptions.length (len + 1);
-          multi_ex->exceptions[len].reason =
+          CORBA::ULong len = multi_ex.exceptions.length ();
+          multi_ex.exceptions.length (len + 1);
+          multi_ex.exceptions[len].reason =
             CosPropertyService::invalid_property_name;
-          multi_ex->exceptions[len].failing_property_name =
+          multi_ex.exceptions[len].failing_property_name =
             property_names[pi];
         }
       catch (const CosPropertyService::PropertyNotFound& )
         {
           // Put this exception in the multiple exception.
-          CORBA::ULong len = multi_ex->exceptions.length ();
-          multi_ex->exceptions.length (len + 1);
-          multi_ex->exceptions[len].reason =
+          CORBA::ULong len = multi_ex.exceptions.length ();
+          multi_ex.exceptions.length (len + 1);
+          multi_ex.exceptions[len].reason =
             CosPropertyService::property_not_found;
-          multi_ex->exceptions[len].failing_property_name =
+          multi_ex.exceptions[len].failing_property_name =
             property_names[pi];
         }
       catch (const CosPropertyService::FixedProperty& )
         {
           // Put this exception in the multiple exception.
-          CORBA::ULong len = multi_ex->exceptions.length ();
-          multi_ex->exceptions.length (len + 1);
-          multi_ex->exceptions[len].reason =
+          CORBA::ULong len = multi_ex.exceptions.length ();
+          multi_ex.exceptions.length (len + 1);
+          multi_ex.exceptions[len].reason =
             CosPropertyService::fixed_property;
-          multi_ex->exceptions[len].failing_property_name =
+          multi_ex.exceptions[len].failing_property_name =
             property_names[pi];
         }
       catch (const CORBA::SystemException& )
@@ -981,7 +981,7 @@ TAO_PropertySet::delete_properties (const CosPropertyService::PropertyNames &pro
     }
 
   // Raise the multiple exceptions if there are any.
-  if (multi_ex->exceptions.length () > 0)
+  if (multi_ex.exceptions.length () > 0)
     throw CosPropertyService::MultipleExceptions (multi_ex);
 }
 
