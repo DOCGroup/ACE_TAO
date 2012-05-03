@@ -1,3 +1,8 @@
+Thu May  3 08:34:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * orbsvsc/orbsvcs/Property/CosPropertyService_i.cpp:
+          Duh! Also correct the use -> to . of this!
+
 Thu May  3 08:23:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
 
         * orbsvsc/orbsvcs/Property/CosPropertyService_i.cpp:
