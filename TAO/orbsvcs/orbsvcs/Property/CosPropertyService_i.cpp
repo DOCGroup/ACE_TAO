@@ -934,9 +934,7 @@ TAO_PropertySet::delete_properties (const CosPropertyService::PropertyNames &pro
   CORBA::ULong sequence_length = property_names.length ();
 
   // Declare multiple exceptions' object.
-  CosPropertyService::MultipleExceptions *multi_ex = 0;
-  ACE_NEW (multi_ex,
-           CosPropertyService::MultipleExceptions);
+  CosPropertyService::MultipleExceptions multi_ex;
 
   for (CORBA::ULong pi = 0; pi < sequence_length; pi++)
     {
@@ -984,7 +982,7 @@ TAO_PropertySet::delete_properties (const CosPropertyService::PropertyNames &pro
 
   // Raise the multiple exceptions if there are any.
   if (multi_ex->exceptions.length () > 0)
-    throw CosPropertyService::MultipleExceptions (*multi_ex);
+    throw CosPropertyService::MultipleExceptions (multi_ex);
 }
 
 // Delete all the properties in the current ProperySet : Delete the
