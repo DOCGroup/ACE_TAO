@@ -96,24 +96,24 @@ interface MyInt
   A::MyStructA op (in A::MyStructA ab);
 };
 
-// A different enum with the same enum values is 
+// A different enum with the same enum values is
 // defined in the base interface in the same scope
 // in another IDL file included by this one. The
 // construction is legal and should be accepted.
 module RootModule
 {
-	module SUBMODULE1
+  module SUBMODULE1
   {
-		interface ChildIF : ParentIF
+    interface ChildIF : ParentIF
     {
-			enum DifferentMode
+      enum DifferentMode
       {
-				NORMAL,
-			  FAULTY,
-				UNKNOWN
-			};
-		};
-	};
+        NORMAL,
+        FAULTY,
+        UNKNOWN
+      };
+    };
+  };
 };
 
 #endif /* IDL_TEST_INCLUDING_IDL */
