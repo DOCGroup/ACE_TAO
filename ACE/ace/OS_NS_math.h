@@ -89,6 +89,7 @@ namespace ACE_OS
 {
   /// This method computes the largest integral value not greater than x.
   template <typename T>
+  inline
   T floor (T x)
   {
     return ACE_STD_NAMESPACE::floor (x);
@@ -97,6 +98,7 @@ namespace ACE_OS
 #if defined (ACE_HAS_WINCE)
   /// Windows CE has an intrinsic floor for float
   template <>
+  inline
   float floor (float x)
   {
     return ACE_STD_NAMESPACE::floorf (x);
@@ -105,6 +107,7 @@ namespace ACE_OS
 
   /// This method computes the smallest integral value not less than x.
   template <typename T>
+  inline
   T ceil (T x)
   {
     return ACE_STD_NAMESPACE::ceil (x);
@@ -113,6 +116,7 @@ namespace ACE_OS
 #if defined (ACE_HAS_WINCE)
   /// Windows CE has an intrinsic ceil for float
   template <>
+  inline
   float ceil (float x)
   {
     return ACE_STD_NAMESPACE::ceilf (x);
