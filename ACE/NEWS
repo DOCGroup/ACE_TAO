@@ -1,6 +1,9 @@
 USER VISIBLE CHANGES BETWEEN ACE-6.1.1 and ACE-6.1.2
 ====================================================
 
+. Added compile time support for Windows CE 7, no runtime testing has
+  been performed
+
 USER VISIBLE CHANGES BETWEEN ACE-6.1.0 and ACE-6.1.1
 ====================================================
 
