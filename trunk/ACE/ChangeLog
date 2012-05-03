@@ -1,3 +1,8 @@
+Thu May  3 06:42:15 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_math.h:
+          Make floor/ceil template methods inline
+
 Wed May  2 18:36:25 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_math.h:
