@@ -50,13 +50,13 @@ run_main (int, ACE_TCHAR *[])
   }
   catch (...)
   {
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Caugt exception!\n")));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Caught exception!\n")));
     caught_excep = true;
   }
 
   if (!caught_excep)
   {
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Not caugt exception\n")));
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Not caught exception\n")));
     ++result;
   }
   if (!construct_alpha)
