@@ -1,3 +1,10 @@
+Thu May  3 08:23:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * orbsvsc/orbsvcs/Property/CosPropertyService_i.cpp:
+          Fix memory leak in CosPropertyService due to incorrect heap allocation of 
+          CosPropertyService::MultipleExceptions in TAO_PropertySet::define_properties()
+          should have been stack based like the other existing uses in this file.
+
 Wed May  2 17:00:56 UTC 2012  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/fe_utils.cpp(can_be_redefined): Changes to accept
