@@ -1,3 +1,10 @@
+Fri May  4 17:25:53 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Acceptor.cpp:
+          Fixed incorrect check of the return value of schedule_timer,
+          an error is indicated with -1, not 0. Thanks to Deux deVille
+          <dev2 at weitling dot net> for reporting this
+
 Thu May  3 07:15:54 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_3673_Regression_Test.cpp:
