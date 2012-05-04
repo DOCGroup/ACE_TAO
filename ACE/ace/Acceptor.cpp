@@ -1016,7 +1016,7 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::register_handler
       if (tv != 0
           && this->reactor ()->schedule_timer (this,
                                                synch_options.arg (),
-                                               *tv) == 0)
+                                               *tv) == -1)
         return -1;
       else
         return this->reactor ()->register_handler
