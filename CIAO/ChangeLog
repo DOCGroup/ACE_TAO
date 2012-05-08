@@ -1,9 +1,14 @@
+Tue May  8 12:10:12 UTC 2012  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/TypeSupport/main.cpp:
+          Fixed runtime errors (double deletes) in main.
+
 Wed Apr 25 12:02:03 UTC 2012  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/ami4ccm/tutorials/Hello/Tutorial/03_executors.html:
         Fixed typo.
         * connectors/dds4ccm/tutorials/Shapes/Tutorial/03_executors.html:
-        Added include of dds4ccm/idl dir with -Gex command 
+        Added include of dds4ccm/idl dir with -Gex command
 
 
 Thu Apr 19 07:48:03 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>

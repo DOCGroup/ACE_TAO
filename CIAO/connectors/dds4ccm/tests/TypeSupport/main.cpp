@@ -241,6 +241,12 @@ ACE_TMAIN (int , ACE_TCHAR **)
                     type3));
         }
 
+      /// Since we've invoked ::close f3 has been deleted. Therefor we need to create it again.
+      ACE_NEW_THROW_EX (f3,
+                        TestTypeFactory (),
+                        ::CORBA::NO_MEMORY ());
+
+
       /// We should now be able to register type 3 again
       if (::CIAO::NDDS::DDS_TypeSupport_i::register_type(type3, f3, dp1.in()))
         {
@@ -256,11 +262,9 @@ ACE_TMAIN (int , ACE_TCHAR **)
       /// DP1 should now contain one type-factory combination
 
       /// Call Close on TypeSupport. This should remove the last remaining entries.
-      ::CIAO::NDDS::DDS_TypeSupport_i::close();
+     ::CIAO::NDDS::DDS_TypeSupport_i::close();
 
-      delete f3;
-      delete f2;
-      delete f1;
+      /// No need to delete f1, f2, and f3 since ::close will delete them.
 
       pf.delete_participant(dp1);
       pf.delete_participant(dp2);
