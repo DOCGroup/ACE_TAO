@@ -31,6 +31,10 @@ public:
 
   virtual int visit_provides (be_provides *node);
   virtual int visit_attribute (be_attribute *node);
+  virtual void set_flags (bool do_provides, bool do_attribute);
+private:
+  bool do_provides_;
+  bool do_attribute_;
 };
 
 #endif /* _BE_COMPONENT_EXECUTOR_PRIVATE_EXH_H_ */
