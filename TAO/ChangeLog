@@ -1,3 +1,29 @@
+Tue May  8 22:01:10 UTC 2012  Trevor Fields  <fields_t@ociweb.com>
+
+        * tao/Synch_Invocation.cpp:
+
+          Change to oneway calls with Receive-Wait wait strategy and the
+          -ORBConnectionHandlerCleanup 1 to register the handle with the
+          reactor to detect connection closure.  This fixes Bug 4010.
+
+        * tests/Bug_4010_Regression:
+        * tests/Bug_4010_Regression/Bug_4010_Regression.mpc:
+        * tests/Bug_4010_Regression/client.conf:
+        * tests/Bug_4010_Regression/client.cpp:
+        * tests/Bug_4010_Regression/Hello.cpp:
+        * tests/Bug_4010_Regression/Hello.h:
+        * tests/Bug_4010_Regression/README:
+        * tests/Bug_4010_Regression/run_test.pl:
+        * tests/Bug_4010_Regression/server.cpp:
+        * tests/Bug_4010_Regression/Test.idl:
+
+          Test for detecting connection loss from server restart after oneway
+          call.
+
+        * bin/tao_orb_tests.lst:
+
+          Added bug 4010 regression test.
+
 Tue May   8 12:25:13 UTC 2012  Marijke Hengstmengel <m.hengstmengel@remedy.nl>
 
         * TAO_IDL/be/be_visitor_operation/operation_ch.cpp:
