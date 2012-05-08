@@ -1,3 +1,14 @@
+Tue May   8 12:25:13 UTC 2012  Marijke Hengstmengel <m.hengstmengel@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_operation/operation_ch.cpp:
+        * TAO_IDL/be/be_visitor_component/executor_exh.cpp:
+        * TAO_IDL/be/be_visitor_component/component_exh.cpp:
+        * TAO_IDL/be/be_visitor_component/facet_exh.cpp:
+        * TAO_IDL/be/be_visitor_component/executor_private_exh.cpp:
+        * TAO_IDL/be/be_visitor_component_scope.cpp:
+        * TAO_IDL/be_include/be_visitor_component/executor_private_exh.h:
+        Added Doxygen documentation for the CIAO executors.
+
 Thu May  3 12:00:13 UTC 2012  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/IDL_Test/included.idl:

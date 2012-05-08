@@ -67,10 +67,8 @@ be_visitor_executor_exh::visit_component (be_component *node)
   const char *global = (sname_str == "" ? "" : "::");
 
   os_ << be_nl_2
-      << comment_start_border_ << be_nl
-      << " * Component executor implementation class for "
-      << lname << "" << be_nl
-      << comment_end_border_;
+      << "/// Component Executor Implementation Class: "
+      << lname <<  "_exec_i";
 
   os_ << be_nl
       << "class ";
@@ -132,13 +130,14 @@ be_visitor_executor_exh::visit_component (be_component *node)
                         -1);
     }
 
-  os_ << "/** @name Operations from Components::" << be_global->ciao_container_type ()
-      << "Component. */" << be_nl
+  os_ << "/** @name Session component operations */" << be_nl
+  //    Operations from Components::" << be_global->ciao_container_type ()
+  //    << "Component. */" << be_nl
       << "//@{";
 
   const char *container_type = be_global->ciao_container_type ();
 
-  os_ << be_nl
+  os_ << be_nl_2
       << "/// Setter for container context for this component" << be_nl
       << "/// @param[in] ctx - Container context" << be_nl
       << "virtual void set_"
@@ -149,18 +148,18 @@ be_visitor_executor_exh::visit_component (be_component *node)
 
   if (ACE_OS::strcmp (be_global->ciao_container_type (), "Session") == 0)
     {
-      os_ << be_nl
+      os_ << be_nl_2
           << "/// Component state change method to configuration_complete state" << be_nl
           << "virtual void configuration_complete (void);";
 
-      os_ << be_nl
+      os_ << be_nl_2
           << "/// Component state change method to activated state" << be_nl
-          << "virtual void ccm_activate (void);" << be_nl
+          << "virtual void ccm_activate (void);" << be_nl_2
           << "/// Component state change method to passivated state" << be_nl
           << "virtual void ccm_passivate (void);";
     }
 
-  os_ << be_nl
+  os_ << be_nl_2
       << "/// Component state change method to removed state" << be_nl
       << "virtual void ccm_remove (void);";
 
@@ -175,12 +174,18 @@ be_visitor_executor_exh::visit_component (be_component *node)
 
   os_ << be_uidt << be_nl_2
       << "private:" << be_idt_nl
-      << "/// Context for component instance" << be_nl
+      << "/// Context for component instance. Used for all middleware communication" << be_nl
       << global << sname << "::CCM_" << lname
       << "_Context_var ciao_context_;" << be_nl_2;
 
-  /// The overload of traverse_inheritance_graph() used here
-  /// doesn't automatically prime the queues.
+
+  // Traverse inheritance graph twice to group
+  // component attributes and component facets for DOxygen documentation
+
+  // Traverse inheritance grapp for component facets:
+
+  // The overload of traverse_inheritance_graph() used here
+  // doesn't automatically prime the queues.
   node->get_insert_queue ().reset ();
   node->get_del_queue ().reset ();
   node->get_insert_queue ().enqueue_tail (node_);
@@ -188,7 +193,9 @@ be_visitor_executor_exh::visit_component (be_component *node)
   be_visitor_executor_private_exh v (this->ctx_);
   v.node (node);
 
-  os_ << "/** @name Component attributes. */" << be_nl
+  v.set_flags (false, true);
+
+ os_ << "/** @name Component attributes. */" << be_nl
       << "//@{";
 
   Exec_Attr_Decl_Generator attr_decl (&v);
@@ -210,6 +217,43 @@ be_visitor_executor_exh::visit_component (be_component *node)
     }
 
   os_<< be_nl << "//@}" << be_nl_2;
+
+  // Traverse inheritance grapp for component facets:
+
+  // The overload of traverse_inheritance_graph() used here
+  // doesn't automatically prime the queues.
+  node->get_insert_queue ().reset ();
+  node->get_del_queue ().reset ();
+  node->get_insert_queue ().enqueue_tail (node_);
+
+  be_visitor_executor_private_exh v_f (this->ctx_);
+  v_f.node (node);
+
+  v_f.set_flags (true, false);
+
+  os_ << "/** @name Component facets. */" << be_nl
+      << "//@{";
+
+  Exec_Attr_Decl_Generator facet_decl (&v_f);
+
+  status =
+    node->traverse_inheritance_graph (facet_decl,
+                                      &os_,
+                                      false,
+                                      false);
+
+  if (status == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_visitor_executor_exh::")
+                         ACE_TEXT ("visit_component - ")
+                         ACE_TEXT ("traverse_inheritance_graph() ")
+                         ACE_TEXT ("for facet decls failed\n")),
+                        -1);
+    }
+
+  os_<< be_nl << "//@}" << be_nl_2;
+
 
   os_ << "/** @name User defined members. */" << be_nl
       << "//@{";
@@ -294,9 +338,10 @@ Exec_Attr_Decl_Generator::Exec_Attr_Decl_Generator (
 int
 Exec_Attr_Decl_Generator::emit (
   be_interface * /*derived_interface */,
-  TAO_OutStream * /* os */,
+  TAO_OutStream *  os,
   be_interface * base_interface)
 {
+
   // Even though this call seems unaware of CCM types, the
   // visitor must inherit from be_visitor_component_scope so
   // it will pick up attributes via porttypes.

@@ -36,9 +36,6 @@ be_visitor_operation_ch::visit_operation (be_operation *node)
 
   *os << be_nl_2;
 
-  *os << "/// @copydoc " << node->full_name () << be_nl
-      << "virtual ";
-
   // STEP I: generate the return type.
   be_type *bt = be_type::narrow_from_decl (node->return_type ());
 
@@ -50,6 +47,24 @@ be_visitor_operation_ch::visit_operation (be_operation *node)
                          ACE_TEXT ("Bad return type\n")),
                         -1);
     }
+  //Only if we are generating exec header file, generate DOxygen documentation
+  if (this->ctx_->state () == TAO_CodeGen::TAO_ROOT_EXH)
+    {
+      if (this->void_return_type (bt))
+        {
+           *os << "/// Setter for " << node->local_name() << " attribute " << be_nl
+               << "/// @param[in] " << node->local_name() << " - New value for "
+               << node->local_name() << " attribute " << be_nl;
+
+
+        }
+      else
+        {
+          *os << "/// Getter for " << node->local_name() << " attribute " << be_nl
+                 << "/// @return value of " << node->local_name() << " attribute " << be_nl;
+        }
+    }
+  *os << "virtual ";
 
   // Grab the right visitor to generate the return type.
   be_visitor_context ctx (*this->ctx_);

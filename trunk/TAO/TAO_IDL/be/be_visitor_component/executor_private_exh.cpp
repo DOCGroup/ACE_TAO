@@ -17,7 +17,9 @@
 
 be_visitor_executor_private_exh::be_visitor_executor_private_exh (
       be_visitor_context *ctx)
-  : be_visitor_component_scope (ctx)
+  : be_visitor_component_scope (ctx),
+    do_provides_ (true),
+    do_attribute_(true)
 {
 }
 
@@ -28,12 +30,19 @@ be_visitor_executor_private_exh::~be_visitor_executor_private_exh (void)
 int
 be_visitor_executor_private_exh::visit_provides (be_provides *node)
 {
+  if (!this->do_provides_)
+    return 0;
+
   be_type *impl = node->provides_type ();
   AST_Decl *i_scope = ScopeAsDecl (impl->defined_in ());
   bool is_global = (i_scope->node_type () == AST_Decl::NT_root);
   const char *smart_scope = (is_global ? "" : "::");
   ACE_CString scope_name =
     IdentifierHelper::orig_sn (i_scope->name (), false);
+
+  os_ << be_nl_2;
+  os_ << "/// Object reference to "<< this->ctx_->port_prefix ().c_str ()
+      << node->original_local_name () << " facet";
 
   os_ << be_nl
       << smart_scope << scope_name.c_str () << "::CCM_"
@@ -47,6 +56,9 @@ be_visitor_executor_private_exh::visit_provides (be_provides *node)
 int
 be_visitor_executor_private_exh::visit_attribute (be_attribute *node)
 {
+  if (!this->do_attribute_)
+    return 0;
+
   AST_Decl::NodeType nt = this->node_->node_type ();
 
   // Executor attribute code generated for porttype attributes
@@ -58,7 +70,7 @@ be_visitor_executor_private_exh::visit_attribute (be_attribute *node)
 
   os_ << be_nl_2;
 
-  os_ << "/// @copydoc " << node->full_name () << be_nl;
+  os_ << "/// Class member storing value of "<< node->local_name () << " attribute" << be_nl;
 
   be_visitor_member_type_decl v (this->ctx_);
 
@@ -75,4 +87,12 @@ be_visitor_executor_private_exh::visit_attribute (be_attribute *node)
       << node->local_name () << "_;";
 
   return 0;
+}
+
+void
+be_visitor_executor_private_exh::set_flags (bool do_provides,
+                                            bool do_attribute)
+{
+  this->do_provides_ = do_provides;
+  this->do_attribute_ = do_attribute;
 }
