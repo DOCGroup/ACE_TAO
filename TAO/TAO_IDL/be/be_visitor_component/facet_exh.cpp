@@ -53,10 +53,8 @@ be_visitor_facet_exh::visit_provides (be_provides *node)
   const char *smart_scope = (is_global ? "" : "::");
 
   os_ << be_nl_2
-      << comment_start_border_ << be_nl
-      << " *  Executor implementation class for "
-      << lname << " facet" << be_nl
-      << comment_end_border_;
+      << "///  Executor implementation class for "
+      << lname << " facet";
 
   os_ << be_nl
       << "class "
@@ -106,7 +104,7 @@ be_visitor_facet_exh::visit_provides (be_provides *node)
 
   os_ << be_uidt << be_nl_2
       << "private:" << be_idt_nl
-      << "/// Context for component instance" << be_nl
+      << "/// Context for component instance. Uses for all middleware communication." << be_nl
       << smart_scope << c_scope->full_name () << "::CCM_"
       << this->node_->local_name ()
       << "_Context_var ciao_context_;" << be_uidt_nl
