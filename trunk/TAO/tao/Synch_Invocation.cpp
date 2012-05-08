@@ -705,6 +705,35 @@ namespace TAO
         s = this->send_message (cdr,
             TAO_Message_Semantics (TAO_Message_Semantics::TAO_ONEWAY_REQUEST),
               max_wait_time);
+
+        if (transport->wait_strategy ()->non_blocking () == 0 &&
+            transport->orb_core ()->client_factory ()->use_cleanup_options ())
+          {
+            if (!transport->wait_strategy ()->is_registered())
+              {
+                ACE_Event_Handler * const eh =
+                  transport->event_handler_i ();
+
+                ACE_Reactor * const r =
+                  transport->orb_core ()->reactor ();
+
+                if (r->register_handler (eh, ACE_Event_Handler::READ_MASK) == -1)
+                  {
+                    if (TAO_debug_level > 0)
+                      ACE_ERROR ((LM_ERROR,
+                                  "TAO (%P|%t) - Synch_Oneway_Invocation::"
+                                  "remote_oneway transport[%d] registration with"
+                                  "reactor returned an error\n",
+                      transport->id ()));
+                  }
+                else
+                  {
+                    // Only set this flag when registration succeeds
+                    transport->wait_strategy ()->is_registered(true);
+                  }
+              }
+          }
+
       }
     else
       {
