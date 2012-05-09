@@ -1,3 +1,8 @@
+Wed May   9 12:45:13 UTC 2012  Marijke Hengstmengel <m.hengstmengel@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_operation/operation_ch.cpp:
+        Removed whitespaces in documentation.
+
 Wed May   9 08:13:13 UTC 2012  Marijke Hengstmengel <m.hengstmengel@remedy.nl>
 
         * TAO_IDL/be/be_visitor_component/executor_exh.cpp:

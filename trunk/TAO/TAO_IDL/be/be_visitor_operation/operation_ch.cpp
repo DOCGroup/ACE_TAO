@@ -52,16 +52,16 @@ be_visitor_operation_ch::visit_operation (be_operation *node)
     {
       if (this->void_return_type (bt))
         {
-           *os << "/// Setter for " << node->local_name() << " attribute " << be_nl
+           *os << "/// Setter for " << node->local_name() << " attribute" << be_nl
                << "/// @param[in] " << node->local_name() << " - New value for "
-               << node->local_name() << " attribute " << be_nl;
+               << node->local_name() << " attribute" << be_nl;
 
 
         }
       else
         {
-          *os << "/// Getter for " << node->local_name() << " attribute " << be_nl
-                 << "/// @return value of " << node->local_name() << " attribute " << be_nl;
+          *os << "/// Getter for " << node->local_name() << " attribute" << be_nl
+                 << "/// @return value of " << node->local_name() << " attribute" << be_nl;
         }
     }
   *os << "virtual ";
