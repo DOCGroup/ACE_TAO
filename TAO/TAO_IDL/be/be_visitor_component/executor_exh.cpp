@@ -338,7 +338,7 @@ Exec_Attr_Decl_Generator::Exec_Attr_Decl_Generator (
 int
 Exec_Attr_Decl_Generator::emit (
   be_interface * /*derived_interface */,
-  TAO_OutStream *  os,
+  TAO_OutStream *  /*os*/,
   be_interface * base_interface)
 {
 
