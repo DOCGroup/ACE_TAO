@@ -1,3 +1,8 @@
+Wed May   9 08:13:13 UTC 2012  Marijke Hengstmengel <m.hengstmengel@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/executor_exh.cpp:
+        Solved compiler warning.
+
 Tue May  8 22:01:10 UTC 2012  Trevor Fields  <fields_t@ociweb.com>
 
         * tao/Synch_Invocation.cpp:
