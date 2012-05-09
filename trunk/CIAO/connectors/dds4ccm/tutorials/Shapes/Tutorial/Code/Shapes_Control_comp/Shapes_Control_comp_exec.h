@@ -59,53 +59,53 @@ namespace CIAO_Shapes_Control_comp_Impl
     /** @name Component attributes and port operations. */
     //@{
 
-    /// Getter for rate attribute 
-    /// @return value of rate attribute 
+    /// Getter for rate attribute
+    /// @return value of rate attribute
     virtual ::CORBA::ULong rate (
       void);
 
-    /// Setter for rate attribute 
-    /// @param[in] rate - New value for rate attribute 
+    /// Setter for rate attribute
+    /// @param[in] rate - New value for rate attribute
     virtual void rate (
       ::CORBA::ULong rate);
 
-    /// Getter for max_x attribute 
-    /// @return value of max_x attribute 
+    /// Getter for max_x attribute
+    /// @return value of max_x attribute
     virtual ::CORBA::UShort max_x (
       void);
 
-    /// Setter for max_x attribute 
-    /// @param[in] max_x - New value for max_x attribute 
+    /// Setter for max_x attribute
+    /// @param[in] max_x - New value for max_x attribute
     virtual void max_x (
       ::CORBA::UShort max_x);
 
-    /// Getter for max_y attribute 
-    /// @return value of max_y attribute 
+    /// Getter for max_y attribute
+    /// @return value of max_y attribute
     virtual ::CORBA::UShort max_y (
       void);
 
-    /// Setter for max_y attribute 
-    /// @param[in] max_y - New value for max_y attribute 
+    /// Setter for max_y attribute
+    /// @param[in] max_y - New value for max_y attribute
     virtual void max_y (
       ::CORBA::UShort max_y);
 
-    /// Getter for max_size attribute 
-    /// @return value of max_size attribute 
+    /// Getter for max_size attribute
+    /// @return value of max_size attribute
     virtual ::CORBA::UShort max_size (
       void);
 
-    /// Setter for max_size attribute 
-    /// @param[in] max_size - New value for max_size attribute 
+    /// Setter for max_size attribute
+    /// @param[in] max_size - New value for max_size attribute
     virtual void max_size (
       ::CORBA::UShort max_size);
 
-    /// Getter for resize_shape attribute 
-    /// @return value of resize_shape attribute 
+    /// Getter for resize_shape attribute
+    /// @return value of resize_shape attribute
     virtual ::CORBA::Boolean resize_shape (
       void);
 
-    /// Setter for resize_shape attribute 
-    /// @param[in] resize_shape - New value for resize_shape attribute 
+    /// Setter for resize_shape attribute
+    /// @param[in] resize_shape - New value for resize_shape attribute
     virtual void resize_shape (
       ::CORBA::Boolean resize_shape);
     //@}
