@@ -1,3 +1,9 @@
+Fri May 11 17:42:08 UTC 2012  Steve Huston  <shuston@riverace.com>
+
+        * ace/Dev_Poll_Reactor.cpp (mask_ops_i): Return -1 if epoll_ctl
+          fails and we don't recover from it. Fixes Bugzilla #4019. Thanks
+          to David Simmonds for this fix.
+
 Fri May  4 17:25:53 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Acceptor.cpp:
