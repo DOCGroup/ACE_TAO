@@ -2378,8 +2378,8 @@ ACE_Dev_Poll_Reactor::mask_ops_i (ACE_HANDLE handle,
           // If a handle is closed, epoll removes it from the poll set
           // automatically - we may not know about it yet. If that's the
           // case, a mod operation will fail with ENOENT. Retry it as
-          // an add.
-          if (op == EPOLL_CTL_MOD && errno == ENOENT &&
+          // an add. If it's any other failure, just fail outright.
+          if (op != EPOLL_CTL_MOD || errno != ENOENT ||
               ::epoll_ctl (this->poll_fd_, EPOLL_CTL_ADD, handle, &epev) == -1)
             return -1;
         }
