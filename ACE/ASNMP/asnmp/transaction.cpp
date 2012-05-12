@@ -105,7 +105,7 @@ int transaction::run(transaction_result * r)
 
     // register a time handler and a socket with this
     ACE_Time_Value to (params_.get_timeout());
-    if (reactor->schedule_timer(this, 0, to, to) < 0)
+    if (reactor->schedule_timer(this, 0, to, to) == -1)
         return SNMP_CLASS_INTERNAL_ERROR;
 
     if ((rc = this->send()) < 0)      // send pkt to agent

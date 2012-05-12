@@ -41,7 +41,7 @@ Dispatch_Deferrer::dispatch (Dispatch_Queue_Item *qitem)
   long timer_id = this->react_.schedule_timer(this,
                                               0, //NULL arg
                                               tv);
-  if (timer_id < 0)
+  if (timer_id == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                   ACE_TEXT ("EC (%P|%t) cannot schedule Release Guard timer.")
