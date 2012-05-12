@@ -81,13 +81,8 @@ ACE_Time_Value::operator -- (void)
 ///
 /// In the beginning (Jan. 1, 1601), there was no time and no computer.
 /// And Bill said: "Let there be time," and there was time....
-# if defined (ACE_LACKS_LONGLONG_T)
-const ACE_U_LongLong ACE_Time_Value::FILETIME_to_timval_skew =
-ACE_U_LongLong (0xd53e8000, 0x19db1de);
-# else
 const DWORDLONG ACE_Time_Value::FILETIME_to_timval_skew =
 ACE_INT64_LITERAL (0x19db1ded53e8000);
-# endif
 
 ///  Initializes the ACE_Time_Value object from a Win32 FILETIME
 ACE_Time_Value::ACE_Time_Value (const FILETIME &file_time)
@@ -98,15 +93,7 @@ ACE_Time_Value::ACE_Time_Value (const FILETIME &file_time)
 
 void ACE_Time_Value::set (const FILETIME &file_time)
 {
-  //  Initializes the ACE_Time_Value object from a Win32 FILETIME
-#if defined (ACE_LACKS_LONGLONG_T)
-  ACE_U_LongLong LL_100ns(file_time.dwLowDateTime, file_time.dwHighDateTime);
-  LL_100ns -= ACE_Time_Value::FILETIME_to_timval_skew;
-  // Convert 100ns units to seconds;
-  this->tv_.tv_sec = (time_t) (LL_100ns / ((double) (10000 * 1000)));
-  // Convert remainder to microseconds;
-  this->tv_.tv_usec = (suseconds_t)((LL_100ns % ((ACE_UINT32)(10000 * 1000))) / 10);
-#else
+  // Initializes the ACE_Time_Value object from a Win32 FILETIME
   // Don't use a struct initializer, gcc don't like it.
   ULARGE_INTEGER _100ns;
   _100ns.LowPart = file_time.dwLowDateTime;
@@ -118,7 +105,7 @@ void ACE_Time_Value::set (const FILETIME &file_time)
   this->tv_.tv_sec = (time_t) (_100ns.QuadPart / (10000 * 1000));
   // Convert remainder to microseconds;
   this->tv_.tv_usec = (suseconds_t) ((_100ns.QuadPart % (10000 * 1000)) / 10);
-#endif // ACE_LACKS_LONGLONG_T
+
   this->normalize ();
 }
 
@@ -128,15 +115,6 @@ ACE_Time_Value::operator FILETIME () const
   FILETIME file_time;
   // ACE_OS_TRACE ("ACE_Time_Value::operator FILETIME");
 
-#if defined (ACE_LACKS_LONGLONG_T)
-  ACE_U_LongLong LL_sec(this->tv_.tv_sec);
-  ACE_U_LongLong LL_usec(this->tv_.tv_usec);
-  ACE_U_LongLong LL_100ns = LL_sec * (ACE_UINT32)(10000 * 1000) +
-                            LL_usec * (ACE_UINT32)10 +
-                            ACE_Time_Value::FILETIME_to_timval_skew;
-  file_time.dwLowDateTime = LL_100ns.lo();
-  file_time.dwHighDateTime = LL_100ns.hi();
-#else
   ULARGE_INTEGER _100ns;
   _100ns.QuadPart = (((DWORDLONG) this->tv_.tv_sec * (10000 * 1000) +
                      this->tv_.tv_usec * 10) +
@@ -144,11 +122,9 @@ ACE_Time_Value::operator FILETIME () const
 
   file_time.dwLowDateTime = _100ns.LowPart;
   file_time.dwHighDateTime = _100ns.HighPart;
-#endif //ACE_LACKS_LONGLONG_T
 
   return file_time;
 }
-
 #endif /* ACE_WIN32 */
 
 void

@@ -341,11 +341,7 @@ public:
 
 # if defined (ACE_WIN32)
   /// Const time difference between FILETIME and POSIX time.
-#  if defined (ACE_LACKS_LONGLONG_T)
-  static const ACE_U_LongLong FILETIME_to_timval_skew;
-#  else
   static const DWORDLONG FILETIME_to_timval_skew;
-#  endif // ACE_LACKS_LONGLONG_T
 # endif /* ACE_WIN32 */
 
 private:
