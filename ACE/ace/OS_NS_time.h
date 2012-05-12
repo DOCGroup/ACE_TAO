@@ -124,17 +124,12 @@ inline double ace_difftime(time_t t1, time_t t0)
 #endif /* !ACE_LACKS_DIFFTIME */
 
 # if defined (ACE_WIN32)
-#   if !defined (ACE_LACKS_LONGLONG_T)
 // 64-bit quad-word definitions.
 typedef unsigned __int64 ACE_QWORD;
 typedef unsigned __int64 ACE_hrtime_t;
 inline ACE_QWORD ACE_MAKE_QWORD (DWORD lo, DWORD hi) { return ACE_QWORD (lo) | (ACE_QWORD (hi) << 32); }
 inline DWORD ACE_LOW_DWORD  (ACE_QWORD q) { return (DWORD) q; }
 inline DWORD ACE_HIGH_DWORD (ACE_QWORD q) { return (DWORD) (q >> 32); }
-#   else
-// Can't find ANY place that ACE_QWORD is used, but hrtime_t is.
-typedef ACE_UINT64 ACE_hrtime_t;
-#   endif // ACE_LACKS_LONGLONG_T
 # elif defined (_TNS_R_TARGET)
 typedef long long ACE_hrtime_t;
 # else /* !ACE_WIN32 */
