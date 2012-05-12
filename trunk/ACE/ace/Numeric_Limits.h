@@ -44,7 +44,7 @@
 //
 // Ideally, we could prevent those macros from being defined by
 // defining the Windows-specific NOMINMAX symbol before any Windows
-// headers are included, preferrably on the command line.  However,
+// headers are included, preferably on the command line.  However,
 // that would probably break some applications.
 //
 // @@ Why isn't this a problem with MSVC++ and Borland builds?
