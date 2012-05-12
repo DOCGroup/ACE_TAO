@@ -323,7 +323,7 @@
 
 #define ACE_SIZEOF_LONG_LONG 8
 
-#if !defined (ACE_LACKS_LONGLONG_T) && !defined (__MINGW32__)
+#if !defined (__MINGW32__)
 #define ACE_INT64_TYPE  signed __int64
 #define ACE_UINT64_TYPE unsigned __int64
 #endif
