@@ -1,3 +1,15 @@
+Sat May 12 11:11:45 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Time_Value.h:
+        * ace/Time_Value.cpp:
+          None of the windows compilers define ACE_LACKS_LONGLONG_T
+
+        * ace/High_Res_Timer.h:
+        * ace/High_Res_Timer.inl:
+        * ace/High_Res_Timer.cpp:
+          Integrated patches from bugzilla 3703 increasing the precision
+          of the high resolution timers on windows
+
 Sat May 12 11:03:57 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ASNMP/asnmp/transaction.cpp:

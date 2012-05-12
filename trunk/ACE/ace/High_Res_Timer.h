@@ -100,7 +100,11 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_High_Res_Timer
 {
 public:
-  // = Initialization method.
+#if !defined (ACE_WIN32)
+   typedef ACE_UINT32 global_scale_factor_type;
+#else
+   typedef ACE_UINT64 global_scale_factor_type;
+#endif
 
   /**
    * global_scale_factor_ is set to @a gsf.  All High_Res_Timers use
@@ -112,13 +116,13 @@ public:
    * not be set.  Careful, a <scale_factor> of 0 will cause division
    * by zero exceptions.
    * Depending on the platform its units are 1/microsecond or
-   * 1/millisecond. Use <ACE_HR_SCALE_CONVERSION> inside calculations
+   * 1/millisecond. Use @c ACE_HR_SCALE_CONVERSION inside calculations
    * instead a hardcoded value.
    */
-  static void global_scale_factor (ACE_UINT32 gsf);
+  static void global_scale_factor (global_scale_factor_type gsf);
 
   /// Returns the global_scale_factor.
-  static ACE_UINT32 global_scale_factor (void);
+  static global_scale_factor_type global_scale_factor (void);
 
 #ifndef  ACE_HR_SCALE_CONVERSION
 #  define ACE_HR_SCALE_CONVERSION (ACE_ONE_SECOND_IN_USECS)
@@ -289,7 +293,7 @@ private:
 
   /// Converts ticks to microseconds.  That is, ticks /
   /// global_scale_factor_ == microseconds.
-  static ACE_UINT32 global_scale_factor_;
+  static global_scale_factor_type global_scale_factor_;
 
   /**
    * Indicates the status of the global scale factor,
