@@ -15,17 +15,16 @@
  */
 // =========================================================================
 
-
 #ifndef MT_CLIENT_TASK_H
 #define MT_CLIENT_TASK_H
 
 #include "ace/Task.h"
 #include "ace/Basic_Stats.h"
+#include "ace/High_Res_Timer.h"
 
 #include "TestC.h"
 
-
-// Helper class for common client functionalities
+// Helper class for common client functionality
 class Client_Task : public ACE_Task_Base
 {
 public:
@@ -48,7 +47,7 @@ private:
   /// Print Statistics
   void accumulate_and_dump (ACE_Basic_Stats &totals,
                             const ACE_TCHAR *msg,
-                            ACE_UINT32 gsf);
+                            ACE_High_Res_Timer::global_scale_factor_type gsf);
 
 private:
   /// The object reference used for this test
