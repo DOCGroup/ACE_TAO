@@ -4,6 +4,11 @@ USER VISIBLE CHANGES BETWEEN ACE-6.1.1 and ACE-6.1.2
 . Added compile time support for Windows CE 7, no runtime testing has
   been performed
 
+. The High Res Timer global scale factor on Windows is now 64bit, see bugzilla
+  3703 for the background of this. If you use the gsf in your code, use the
+  new ACE_High_Res_Timer::global_scale_factor_type type trait to not get
+  any conversion warnings
+
 USER VISIBLE CHANGES BETWEEN ACE-6.1.0 and ACE-6.1.1
 ====================================================
 
