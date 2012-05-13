@@ -52,7 +52,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * units/second.  Because it's possible that the units/second
  * changes in the future, it's recommended to use it instead
  * of a "hard coded" solution.
- * Dependend on the platform and used class members, there's a
+ * Dependent on the platform and used class members, there's a
  * maximum elapsed period before overflow (which is not checked).
  * Look at the documentation with some members functions.
  * On some (most?) implementations it's not recommended to measure

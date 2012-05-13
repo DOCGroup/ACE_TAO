@@ -36,7 +36,8 @@ extern "C" {
 // global constants
 ACE_CDR::UShort const primerIterations = 100;
 // ace/High_Res_Timer.h describes the need for the following.
-ACE_UINT32 const microsec_clock_scale_factor = ACE_High_Res_Timer::global_scale_factor();
+ACE_High_Res_Timer::global_scale_factor_type const microsec_clock_scale_factor
+  = ACE_High_Res_Timer::global_scale_factor();
 
 // forward declations of functions. Bodies follow main() to improve
 // file readability.

@@ -250,7 +250,8 @@ Client::run (void)
     }
   ACE_hrtime_t test_end = ACE_OS::gethrtime ();
 
-  ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+  ACE_High_Res_Timer::global_scale_factor_type gsf =
+    ACE_High_Res_Timer::global_scale_factor ();
 
   if (dump_history)
     {
