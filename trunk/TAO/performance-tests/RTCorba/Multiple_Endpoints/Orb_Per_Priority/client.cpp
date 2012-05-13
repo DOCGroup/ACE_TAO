@@ -140,7 +140,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   try
     {
-      ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+      ACE_High_Res_Timer::global_scale_factor_type gsf =
+        ACE_High_Res_Timer::global_scale_factor ();
 
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);

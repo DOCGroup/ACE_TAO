@@ -81,7 +81,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                             1);
         }
 
-      ACE_UINT32 gsf =
+      ACE_High_Res_Timer::global_scale_factor_type gsf =
         ACE_High_Res_Timer::global_scale_factor ();
 
       Test::Message message;

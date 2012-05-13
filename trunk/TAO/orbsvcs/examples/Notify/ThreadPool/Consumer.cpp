@@ -163,7 +163,8 @@ TAO_Notify_ThreadPool_Consumer::push_structured_event (const CosNotification::St
 void
 TAO_Notify_ThreadPool_Consumer::dump_throughput (void)
 {
-  ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+  ACE_High_Res_Timer::global_scale_factor_type gsf =
+    ACE_High_Res_Timer::global_scale_factor ();
 
   ACE_DEBUG ((LM_DEBUG, "(%P,%t) Consumer %d\n", proxy_supplier_id_));
 

@@ -50,7 +50,7 @@ class TAO_NOTIFY_TEST_Export Task_Stats
   ~Task_Stats (void);
 
   /// Useful Global Scale Factor
-  static ACE_UINT32 gsf_;
+  static ACE_High_Res_Timer::global_scale_factor_type gsf_;
 
   /// Init
   int init (size_t max_samples);

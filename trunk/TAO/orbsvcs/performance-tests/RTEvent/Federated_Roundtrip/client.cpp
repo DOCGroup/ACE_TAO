@@ -197,7 +197,8 @@ Roundtrip_Peer::run_experiment (CORBA::Long experiment_id,
   ACE_DEBUG ((LM_DEBUG, "Calibrating high res timer ...."));
   ACE_High_Res_Timer::calibrate ();
 
-  ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+  ACE_High_Res_Timer::global_scale_factor_type gsf =
+    ACE_High_Res_Timer::global_scale_factor ();
   ACE_DEBUG ((LM_DEBUG, "Done (%d)\n", gsf));
 
 #if 0

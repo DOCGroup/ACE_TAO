@@ -98,7 +98,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_Sample_History activation (niterations);
 
       ACE_DEBUG ((LM_DEBUG, "High resolution timer calibration...."));
-      ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+      ACE_High_Res_Timer::global_scale_factor_type gsf =
+        ACE_High_Res_Timer::global_scale_factor ();
       ACE_DEBUG ((LM_DEBUG, "done\n"));
 
       ACE_DEBUG ((LM_DEBUG, "Activating %d objects\n", niterations));

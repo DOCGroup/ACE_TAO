@@ -105,7 +105,8 @@ void test_octet_seq (Test::Roundtrip_ptr roundtrip,
   ACE_hrtime_t test_end = ACE_OS::gethrtime ();
 
   ACE_DEBUG ((LM_DEBUG, "High resolution timer calibration...."));
-  ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+  ACE_High_Res_Timer::global_scale_factor_type gsf =
+    ACE_High_Res_Timer::global_scale_factor ();
   ACE_DEBUG ((LM_DEBUG, "done\n"));
 
   roundtrip_handler_impl->dump_results (gsf);
@@ -150,7 +151,8 @@ void test_char_seq  (Test::Roundtrip_ptr roundtrip,
   ACE_hrtime_t test_end = ACE_OS::gethrtime ();
 
   ACE_DEBUG ((LM_DEBUG, "High resolution timer calibration...."));
-  ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+  ACE_High_Res_Timer::global_scale_factor_type gsf =
+    ACE_High_Res_Timer::global_scale_factor ();
   ACE_DEBUG ((LM_DEBUG, "done\n"));
 
   roundtrip_handler_impl->dump_results (gsf);
@@ -195,7 +197,8 @@ void test_long_seq  (Test::Roundtrip_ptr roundtrip,
   ACE_hrtime_t test_end = ACE_OS::gethrtime ();
 
   ACE_DEBUG ((LM_DEBUG, "High resolution timer calibration...."));
-  ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+  ACE_High_Res_Timer::global_scale_factor_type gsf =
+    ACE_High_Res_Timer::global_scale_factor ();
   ACE_DEBUG ((LM_DEBUG, "done\n"));
 
   roundtrip_handler_impl->dump_results (gsf);
@@ -240,7 +243,8 @@ void test_short_seq (Test::Roundtrip_ptr roundtrip,
   ACE_hrtime_t test_end = ACE_OS::gethrtime ();
 
   ACE_DEBUG ((LM_DEBUG, "High resolution timer calibration...."));
-  ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+  ACE_High_Res_Timer::global_scale_factor_type gsf =
+    ACE_High_Res_Timer::global_scale_factor ();
   ACE_DEBUG ((LM_DEBUG, "done\n"));
 
   roundtrip_handler_impl->dump_results (gsf);
@@ -285,7 +289,8 @@ void test_double_seq (Test::Roundtrip_ptr roundtrip,
   ACE_hrtime_t test_end = ACE_OS::gethrtime ();
 
   ACE_DEBUG ((LM_DEBUG, "High resolution timer calibration...."));
-  ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+  ACE_High_Res_Timer::global_scale_factor_type gsf =
+    ACE_High_Res_Timer::global_scale_factor ();
   ACE_DEBUG ((LM_DEBUG, "done\n"));
 
   roundtrip_handler_impl->dump_results (gsf);
@@ -330,7 +335,8 @@ void test_longlong_seq (Test::Roundtrip_ptr roundtrip,
   ACE_hrtime_t test_end = ACE_OS::gethrtime ();
 
   ACE_DEBUG ((LM_DEBUG, "High resolution timer calibration...."));
-  ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+  ACE_High_Res_Timer::global_scale_factor_type gsf =
+    ACE_High_Res_Timer::global_scale_factor ();
   ACE_DEBUG ((LM_DEBUG, "done\n"));
 
   roundtrip_handler_impl->dump_results (gsf);

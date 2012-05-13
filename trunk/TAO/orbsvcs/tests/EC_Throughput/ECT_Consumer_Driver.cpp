@@ -238,7 +238,8 @@ ECT_Consumer_Driver::connect_consumers
 void
 ECT_Consumer_Driver::dump_results (void)
 {
-  ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+  ACE_High_Res_Timer::global_scale_factor_type gsf =
+    ACE_High_Res_Timer::global_scale_factor ();
 
   ACE_Throughput_Stats throughput;
   for (int i = 0; i < this->n_consumers_; ++i)

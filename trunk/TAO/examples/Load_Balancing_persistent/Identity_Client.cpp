@@ -132,7 +132,8 @@ Identity_Client::run (void)
   ACE_hrtime_t throughput_base = ACE_OS::gethrtime ();
 
   ACE_Throughput_Stats throughput;
-  ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+  ACE_High_Res_Timer::global_scale_factor_type gsf =
+    ACE_High_Res_Timer::global_scale_factor ();
 
   for (int i = 0; i < this->iterations_; i++)
     {

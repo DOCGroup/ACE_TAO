@@ -331,7 +331,6 @@ ACE_TMAIN (int argc,
 {
   try
     {
-
       ACE_High_Res_Timer::global_scale_factor ();
 
       CORBA::ORB_var orb =

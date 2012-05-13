@@ -54,7 +54,6 @@ valuetype VBTDfloat      TDfloat;
 valuetype VBTDdouble     TDdouble;
 valuetype VBTDlongdouble TDlongdouble;
 valuetype VBTDenum       TDenum;
-// $Id$
 
 // Any and typedef of any
 valuetype VBany  any;
