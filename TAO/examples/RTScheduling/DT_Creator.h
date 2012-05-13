@@ -104,7 +104,7 @@ class RTSCHEDTESTLIB_Export DT_Creator : public ACE_Service_Object
   CosNaming::NamingContextExt_var naming_;
   ACE_TString file_name_;
   ACE_TString log_file_name_;
-  ACE_UINT32 gsf_;
+  ACE_High_Res_Timer::global_scale_factor_type gsf_;
   PortableServer::Servant_var<Synch_i> synch_;
 };
 

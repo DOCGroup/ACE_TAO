@@ -310,7 +310,8 @@ EC_Observer::dump_results (void)
   ACE_DEBUG ((LM_DEBUG, "===== Results for %d =====\n", this->id_));
 
   ACE_Throughput_Stats throughput;
-  ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+  ACE_High_Res_Timer::global_scale_factor_type gsf =
+    ACE_High_Res_Timer::global_scale_factor ();
   for (int j = 0; j < this->n_consumers_; ++j)
     {
       this->consumers_[j]->accumulate (throughput);

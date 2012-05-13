@@ -152,7 +152,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
        ACE_Throughput_Stats throughput;
        int i=0;
        ACE_DEBUG ((LM_DEBUG, "High res. timer calibration...."));
-       ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+       ACE_High_Res_Timer::global_scale_factor_type gsf =
+        ACE_High_Res_Timer::global_scale_factor ();
        ACE_DEBUG ((LM_DEBUG, "done\n"));
 
        marker.accumulate_into (throughput);
@@ -198,7 +199,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
        ACE_Throughput_Stats throughput1;
 
        ACE_DEBUG ((LM_DEBUG, "High res. timer calibration...."));
-       ACE_UINT32 gsf1 = ACE_High_Res_Timer::global_scale_factor ();
+       ACE_High_Res_Timer::global_scale_factor_type gsf1 =
+        ACE_High_Res_Timer::global_scale_factor ();
        ACE_DEBUG ((LM_DEBUG, "done\n"));
 
        marker1.accumulate_into (throughput1);

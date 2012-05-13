@@ -256,7 +256,8 @@ ECT_Supplier_Driver::disconnect_suppliers (void)
 void
 ECT_Supplier_Driver::dump_results (void)
 {
-  ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+  ACE_High_Res_Timer::global_scale_factor_type gsf =
+    ACE_High_Res_Timer::global_scale_factor ();
 
   ACE_Throughput_Stats throughput;
   for (int i = 0; i < this->n_suppliers_; ++i)

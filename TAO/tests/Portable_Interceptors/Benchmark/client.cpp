@@ -55,7 +55,8 @@ run_test (Test_Interceptors::Secure_Vault_ptr server)
   ACE_Throughput_Stats throughput;
 
   ACE_DEBUG ((LM_DEBUG, "High res. timer calibration...."));
-  ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+  ACE_High_Res_Timer::global_scale_factor_type gsf =
+    ACE_High_Res_Timer::global_scale_factor ();
   ACE_DEBUG ((LM_DEBUG, "done\n"));
 
   marker.accumulate_into (throughput, 1);

@@ -51,7 +51,7 @@ Receiver::done (void)
     }
   else
     {
-      ACE_UINT32 gsf =
+      ACE_High_Res_Timer::global_scale_factor_type gsf =
         ACE_High_Res_Timer::global_scale_factor ();
 
       ACE_hrtime_t elapsed_time =

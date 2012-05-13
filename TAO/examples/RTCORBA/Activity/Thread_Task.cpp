@@ -89,7 +89,8 @@ Thread_Task::svc (void)
   // now wait till the phase_ period expires.
   ACE_OS::sleep (ACE_Time_Value (0, phase_));
 
-  ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+  ACE_High_Res_Timer::global_scale_factor_type gsf =
+    ACE_High_Res_Timer::global_scale_factor ();
 
   ACE_hrtime_t before, after;
 

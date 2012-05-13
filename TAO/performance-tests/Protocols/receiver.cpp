@@ -14,7 +14,7 @@
 static const ACE_TCHAR *ior_file = ACE_TEXT ("receiver.ior");
 static int do_dump_history = 0;
 static int print_missed_invocations = 0;
-static ACE_UINT32 gsf = 0;
+static ACE_High_Res_Timer::global_scale_factor_type gsf = 0;
 
 static int
 parse_args (int argc, ACE_TCHAR **argv)

@@ -135,7 +135,8 @@ Client_Task::run_test (void)
 
 
   // High resolution timer calibration
-  ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+  ACE_High_Res_Timer::global_scale_factor_type gsf =
+    ACE_High_Res_Timer::global_scale_factor ();
 
   ACE_Basic_Stats totals;
 

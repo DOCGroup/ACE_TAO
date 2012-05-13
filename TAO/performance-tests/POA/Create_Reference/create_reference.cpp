@@ -14,7 +14,7 @@
 
 int niterations = 10000;
 int do_dump_history = 0;
-ACE_UINT32 gsf;
+ACE_High_Res_Timer::global_scale_factor_type gsf;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])

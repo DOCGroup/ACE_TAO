@@ -91,7 +91,8 @@ EC_Reconnect::execute_test (void)
   this->execute_consumer_test ();
   this->execute_supplier_test ();
 
-  ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+  ACE_High_Res_Timer::global_scale_factor_type gsf =
+    ACE_High_Res_Timer::global_scale_factor ();
   this->consumer_reconnect_.dump_results (ACE_TEXT("Reconnect/consumer"), gsf);
   this->supplier_reconnect_.dump_results (ACE_TEXT("Reconnect/supplier"), gsf);
 
