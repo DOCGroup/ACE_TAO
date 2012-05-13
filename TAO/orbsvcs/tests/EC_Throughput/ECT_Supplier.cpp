@@ -235,7 +235,7 @@ Test_Supplier::consumer_proxy (void)
 
 void
 Test_Supplier::dump_results (const ACE_TCHAR* name,
-                             ACE_UINT32 gsf)
+                             ACE_Basic_Stats::scale_factor_type gsf)
 {
   this->throughput_.dump_results (name, gsf);
 }

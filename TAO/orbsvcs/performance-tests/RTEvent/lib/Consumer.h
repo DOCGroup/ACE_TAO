@@ -13,6 +13,7 @@
 #include "orbsvcs/RtecEventChannelAdminC.h"
 
 #include "ace/Sample_History.h"
+#include "ace/High_Res_Timer.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -34,7 +35,7 @@ public:
             CORBA::Long event_type,
             CORBA::ULong iterations,
             CORBA::Long workload_in_usecs,
-            ACE_UINT32 gsf,
+            ACE_High_Res_Timer::global_scale_factor_type gsf,
             PortableServer::POA_ptr poa);
 
   /// Connect to the event channel
@@ -74,7 +75,7 @@ private:
   CORBA::ULong workload_in_usecs_;
 
   /// The global scale factor for the high resolution timers
-  ACE_UINT32 gsf_;
+  ACE_High_Res_Timer::global_scale_factor_type gsf_;
 
   /// The default poa
   PortableServer::POA_var default_POA_;

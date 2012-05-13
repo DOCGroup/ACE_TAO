@@ -15,6 +15,7 @@
 
 #include "ace/OS_NS_time.h"
 #include "ace/Singleton.h"
+#include "ace/High_Res_Timer.h"
 #include "tao/orbconf.h"
 #include "tao/debug.h"
 #include "notify_test_export.h"
