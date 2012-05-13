@@ -1,3 +1,8 @@
+Sun May 13 12:50:40 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * dance/NodeApplication/NodeApplication_Impl.cpp:
+          Fixed typo
+
 Fri Apr 06 09:03:19 CEST 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE version 1.1.1 released.
