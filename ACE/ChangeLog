@@ -1,3 +1,11 @@
+Sun May 13 17:13:31 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Sample_History.h:
+        * ace/Sample_History.inl:
+        * ace/Sample_History.cpp:
+          Introduced scale_factor_type traits to handle the fact that the
+          ACE HighResTimer scale factor is now ACE_UINT64
+
 Sun May 13 12:27:03 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/High_Res_Timer.h:
