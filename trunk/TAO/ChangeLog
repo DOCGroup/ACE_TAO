@@ -1,3 +1,9 @@
+Sun May 13 17:24:30 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/AMH/Sink_Server/Client_Task.h:
+        * examples/AMH/Sink_Server/Client_Task.cpp:
+          Use ACE_High_Res_Timer::global_scale_factor_type
+
 Sun May 13 17:22:16 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Kokyu_dsrt_schedulers/Task_Stats.h:

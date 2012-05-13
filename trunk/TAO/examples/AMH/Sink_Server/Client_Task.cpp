@@ -1,12 +1,9 @@
-//
 // $Id$
-//
 
 #include "Client_Task.h"
 #include "tao/Strategies/advanced_resource.h"
 
 #include "ace/Get_Opt.h"
-#include "ace/High_Res_Timer.h"
 #include "ace/Sched_Params.h"
 #include "ace/Stats.h"
 #include "ace/Throughput_Stats.h"
@@ -176,7 +173,7 @@ Client_Task::svc (void)
 void
 Client_Task::accumulate_and_dump (ACE_Basic_Stats &totals,
                                   const ACE_TCHAR *msg,
-                                  ACE_UINT32 gsf)
+                                  ACE_High_Res_Timer::global_scale_factor_type gsf)
 {
   totals.accumulate (this->latency_);
   this->latency_.dump_results (msg, gsf);
