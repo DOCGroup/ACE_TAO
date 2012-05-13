@@ -19,7 +19,7 @@
 #include "Custom_Network_Priority_Mapping.h"
 #include "Sender_exec.h"
 
-static ACE_UINT32 gsf = 0;
+static ACE_High_Res_Timer::global_scale_factor_type gsf = 0;
 
 double
 to_seconds (ACE_UINT64 hrtime,
