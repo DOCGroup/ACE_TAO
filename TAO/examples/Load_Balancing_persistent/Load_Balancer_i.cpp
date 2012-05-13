@@ -398,7 +398,8 @@ Object_Group_Factory_i::resolve (const char * id)
   this->throughput_.sample (0,
                             now - latency_base);
 
-  ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+  ACE_High_Res_Timer::global_scale_factor_type gsf =
+    ACE_High_Res_Timer::global_scale_factor ();
   ACE_OS::printf ("*=*=*=*=Aggregated result *=*=*=*=*=\n");
   this->throughput_.dump_results (ACE_TEXT("Aggregated"), gsf);
 

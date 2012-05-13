@@ -80,7 +80,7 @@ static int shutdown_server = 0;
 static Messaging::SyncScope sync_scope = Messaging::SYNC_WITH_TRANSPORT;
 
 // Global scale factor.
-static ACE_UINT32 gsf = 0;
+static ACE_High_Res_Timer::global_scale_factor_type gsf = 0;
 
 static void
 print_params (void)

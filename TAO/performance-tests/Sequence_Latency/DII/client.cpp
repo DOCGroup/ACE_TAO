@@ -114,7 +114,8 @@ test_octet_seq (const CORBA::Object_var object)
   ACE_DEBUG ((LM_DEBUG, "test finished\n"));
 
   ACE_DEBUG ((LM_DEBUG, "High resolution timer calibration...."));
-  ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+  ACE_High_Res_Timer::global_scale_factor_type gsf =
+    ACE_High_Res_Timer::global_scale_factor ();
   ACE_DEBUG ((LM_DEBUG, "done\n"));
 
   if (do_dump_history)
@@ -162,7 +163,8 @@ test_long_seq (const CORBA::Object_var object)
   ACE_DEBUG ((LM_DEBUG, "test finished\n"));
 
   ACE_DEBUG ((LM_DEBUG, "High resolution timer calibration...."));
-  ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+  ACE_High_Res_Timer::global_scale_factor_type gsf =
+    ACE_High_Res_Timer::global_scale_factor ();
   ACE_DEBUG ((LM_DEBUG, "done\n"));
 
   if (do_dump_history)
@@ -210,7 +212,8 @@ test_short_seq (const CORBA::Object_var object)
   ACE_DEBUG ((LM_DEBUG, "test finished\n"));
 
   ACE_DEBUG ((LM_DEBUG, "High resolution timer calibration...."));
-  ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+  ACE_High_Res_Timer::global_scale_factor_type gsf =
+    ACE_High_Res_Timer::global_scale_factor ();
   ACE_DEBUG ((LM_DEBUG, "done\n"));
 
   if (do_dump_history)
@@ -258,7 +261,8 @@ test_char_seq (const CORBA::Object_var object)
   ACE_DEBUG ((LM_DEBUG, "test finished\n"));
 
   ACE_DEBUG ((LM_DEBUG, "High resolution timer calibration...."));
-  ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+  ACE_High_Res_Timer::global_scale_factor_type gsf =
+    ACE_High_Res_Timer::global_scale_factor ();
   ACE_DEBUG ((LM_DEBUG, "done\n"));
 
   if (do_dump_history)
@@ -306,7 +310,8 @@ test_double_seq (const CORBA::Object_var object)
   ACE_DEBUG ((LM_DEBUG, "test finished\n"));
 
   ACE_DEBUG ((LM_DEBUG, "High resolution timer calibration...."));
-  ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+  ACE_High_Res_Timer::global_scale_factor_type gsf =
+    ACE_High_Res_Timer::global_scale_factor ();
   ACE_DEBUG ((LM_DEBUG, "done\n"));
 
   if (do_dump_history)
@@ -354,7 +359,8 @@ test_longlong_seq (const CORBA::Object_var object)
   ACE_DEBUG ((LM_DEBUG, "test finished\n"));
 
   ACE_DEBUG ((LM_DEBUG, "High resolution timer calibration...."));
-  ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+  ACE_High_Res_Timer::global_scale_factor_type gsf =
+    ACE_High_Res_Timer::global_scale_factor ();
   ACE_DEBUG ((LM_DEBUG, "done\n"));
 
   if (do_dump_history)

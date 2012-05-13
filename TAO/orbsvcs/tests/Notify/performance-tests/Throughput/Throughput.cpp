@@ -509,7 +509,8 @@ void
 Notify_Throughput::dump_results (void)
 {
   ACE_Throughput_Stats throughput;
-  ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+  ACE_High_Res_Timer::global_scale_factor_type gsf =
+    ACE_High_Res_Timer::global_scale_factor ();
   ACE_TCHAR buf[BUFSIZ];
 
   for (int j = 0; j < this->consumer_count_; ++j)

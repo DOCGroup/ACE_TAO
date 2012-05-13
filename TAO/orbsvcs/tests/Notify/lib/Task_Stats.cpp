@@ -8,7 +8,8 @@
 #include "Task_Stats.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_UINT32 Task_Stats::gsf_ = ACE_High_Res_Timer::global_scale_factor ();
+ACE_High_Res_Timer::global_scale_factor_type Task_Stats::gsf_ =
+  ACE_High_Res_Timer::global_scale_factor ();
 
 Base_Time::Base_Time (void)
 {
