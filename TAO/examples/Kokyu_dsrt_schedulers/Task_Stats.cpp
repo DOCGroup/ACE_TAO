@@ -55,8 +55,7 @@ Task_Stats::end_time (ACE_hrtime_t time)
 }
 
 void
-Task_Stats::dump_samples (const ACE_TCHAR *file_name, const ACE_TCHAR *msg,
-                          ACE_UINT32)
+Task_Stats::dump_samples (const ACE_TCHAR *file_name, const ACE_TCHAR *msg)
 {
   FILE* output_file = ACE_OS::fopen (file_name, "w");
 

@@ -215,8 +215,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   ACE_DEBUG ((LM_DEBUG, "Exiting main...\n"));
   task_stats.dump_samples (ACE_TEXT("timeline.txt"),
-                           ACE_TEXT("Time\t\tGUID"),
-                           ACE_High_Res_Timer::global_scale_factor ());
+                           ACE_TEXT("Time\t\tGUID"));
   return 0;
 }
 

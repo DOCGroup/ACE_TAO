@@ -18,7 +18,7 @@ Client_Pair::init (CORBA::Long experiment_id,
                    CORBA::Long base_event_type,
                    CORBA::ULong iterations,
                    CORBA::Long workload_in_usecs,
-                   ACE_UINT32 gsf,
+                   ACE_High_Res_Timer::global_scale_factor_type gsf,
                    PortableServer::POA_ptr supplier_poa,
                    PortableServer::POA_ptr consumer_poa)
 {
@@ -39,7 +39,7 @@ Client_Pair::init (CORBA::Long experiment_id,
                    CORBA::Long source_event_range,
                    CORBA::ULong iterations,
                    CORBA::Long workload_in_usecs,
-                   ACE_UINT32 gsf,
+                   ACE_High_Res_Timer::global_scale_factor_type gsf,
                    PortableServer::POA_ptr supplier_poa,
                    PortableServer::POA_ptr consumer_poa)
 {

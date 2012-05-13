@@ -1,3 +1,24 @@
+Sun May 13 17:22:16 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Kokyu_dsrt_schedulers/Task_Stats.h:
+        * examples/Kokyu_dsrt_schedulers/Task_Stats.cpp:
+        * examples/Kokyu_dsrt_schedulers/fp_example/server.cpp:
+        * examples/Kokyu_dsrt_schedulers/mif_example/server.cpp:
+        * examples/Kokyu_dsrt_schedulers/muf_example/server.cpp:
+        * examples/RTScheduling/DT_Creator.h:
+        * orbsvcs/performance-tests/RTEvent/lib/Client_Group.h:
+        * orbsvcs/performance-tests/RTEvent/lib/Client_Group.cpp:
+        * orbsvcs/performance-tests/RTEvent/lib/Client_Pair.h:
+        * orbsvcs/performance-tests/RTEvent/lib/Client_Pair.cpp:
+        * orbsvcs/performance-tests/RTEvent/lib/Consumer.h:
+        * orbsvcs/performance-tests/RTEvent/lib/Consumer.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Consumer.h:
+        * orbsvcs/tests/EC_Throughput/ECT_Consumer.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Supplier.h:
+        * orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp:
+        * orbsvcs/tests/Notify/lib/Task_Stats.h:
+          Use ACE_High_Res_Timer::global_scale_factor_type
+
 Sun May 13 12:48:34 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/rlecompressor.mpb:

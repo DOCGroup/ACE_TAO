@@ -15,7 +15,7 @@ Consumer::Consumer (CORBA::Long experiment_id,
                     CORBA::Long event_type,
                     CORBA::ULong iterations,
                     CORBA::Long workload_in_usecs,
-                    ACE_UINT32 gsf,
+                    ACE_High_Res_Timer::global_scale_factor_type gsf,
                     PortableServer::POA_ptr poa)
   : experiment_id_ (experiment_id)
   , event_type_ (event_type)

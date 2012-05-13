@@ -93,7 +93,7 @@ Test_Consumer::disconnect (void)
 
 void
 Test_Consumer::dump_results (const ACE_TCHAR* name,
-                             ACE_UINT32 gsf)
+                             ACE_Basic_Stats::scale_factor_type gsf)
 {
   this->throughput_.dump_results (name, gsf);
 }

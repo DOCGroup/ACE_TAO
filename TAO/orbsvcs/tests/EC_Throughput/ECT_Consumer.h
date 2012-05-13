@@ -54,7 +54,7 @@ public:
   // Disconnect from the EC.
 
   void dump_results (const ACE_TCHAR* name,
-                     ACE_UINT32 global_scale_factor);
+                     ACE_Basic_Stats::scale_factor_type global_scale_factor);
   // Print out the results
 
   void accumulate (ACE_Throughput_Stats& stats) const;

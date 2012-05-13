@@ -14,6 +14,7 @@
 #include "ace/Service_Config.h"
 #include "ace/Service_Object.h"
 #include "ace/Arg_Shifter.h"
+#include "ace/High_Res_Timer.h"
 
 class Thread_Task;
 class Task;
