@@ -7,7 +7,7 @@
 
 static int do_dump_history = 0;
 static int print_missed_invocations = 0;
-static ACE_UINT32 gsf = 0;
+static ACE_High_Res_Timer::global_scale_factor_type gsf = 0;
 
 namespace CIDL_ReceiverImpl
 {

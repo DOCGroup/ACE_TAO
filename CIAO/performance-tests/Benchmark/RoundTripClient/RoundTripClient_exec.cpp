@@ -95,7 +95,8 @@ MyImpl::RoundTripClient_exec_i::start ()
   ACE_DEBUG ((LM_DEBUG, "test finished\n"));
 
   ACE_DEBUG ((LM_DEBUG, "High resolution timer calibration...."));
-  ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+  ACE_High_Res_Timer::global_scale_factor_type gsf =
+    ACE_High_Res_Timer::global_scale_factor ();
   ACE_DEBUG ((LM_DEBUG, "done\n"));
 
   ACE_Env_Value<int> envar (ACE_TEXT("CIAO_DUMP_SAMPLE_HISTORY"), 0);
