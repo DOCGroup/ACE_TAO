@@ -61,8 +61,7 @@ class Kokyu_DSRT_Schedulers_Export Task_Stats
   /// Record a sample
   int sample (ACE_UINT32 thr_run_time, int thr_count);
 
-  void dump_samples (const ACE_TCHAR *file_name, const ACE_TCHAR *msg,
-                     ACE_UINT32 scale_factor);
+  void dump_samples (const ACE_TCHAR *file_name, const ACE_TCHAR *msg);
  protected:
   void dump_latency_stats (ACE_TCHAR *out_msg, ACE_UINT32 sf);
 
