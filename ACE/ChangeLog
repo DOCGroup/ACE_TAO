@@ -1,3 +1,25 @@
+Sun May 13 12:27:03 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/High_Res_Timer.h:
+          Fixed typo
+
+        * ace/Basic_Stats.h:
+        * ace/Basic_Stats.cpp:
+        * ace/Throughput_Stats.h:
+        * ace/Throughput_Stats.cpp:
+          Introduced scale_factor_type traits to handle the fact that the
+          ACE HighResTimer scale factor is now ACE_UINT64
+
+        * ace/Timeprobe_T.cpp:
+          Use correct trait for the scale factor
+
+        * performance-tests/RPC/client.cpp:
+        * performance-tests/SCTP/SOCK_SEQPACK_clt.cpp:
+        * performance-tests/SCTP/SOCK_STREAM_clt.cpp:
+        * performance-tests/Server_Concurrency/Latency_Stats.h:
+        * performance-tests/TCP/tcp_test.cpp:
+          Use ACE_High_Res_Timer::global_scale_factor_type
+
 Sat May 12 11:11:45 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Time_Value.h:
