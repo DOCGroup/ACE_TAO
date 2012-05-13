@@ -224,7 +224,7 @@ NodeApplication_Impl::prepare_instance (const char *name,
     {
       DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR, (LM_ERROR, DLINFO
                        ACE_TEXT ("NodeApplication_Impl::prepare_instance - ")
-                       ACE_TEXT ("Caugt unexpected CORBA exception while invoking preparePlan %C\n"),
+                       ACE_TEXT ("Caught unexpected CORBA exception while invoking preparePlan %C\n"),
                        ex._info ().c_str ()));
     }
   // @@ TODO:  Ouch! We're swallowing exceptions here!
