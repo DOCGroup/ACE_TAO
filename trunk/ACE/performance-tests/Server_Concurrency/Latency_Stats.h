@@ -68,7 +68,8 @@ Latency_Stats::dump_results (const ACE_TCHAR *test_name,
   ACE_hrtime_t dev =
     this->sum2_ / this->n_ - avg.lo()*avg.lo();
 #endif
-  ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+  ACE_High_Res_Timer::global_scale_factor_type gsf =
+    ACE_High_Res_Timer::global_scale_factor ();
 
   double min_usec = ACE_CU64_TO_CU32 (this->min_) / gsf;
   double max_usec = ACE_CU64_TO_CU32 (this->max_) / gsf;

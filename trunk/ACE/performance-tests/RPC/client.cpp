@@ -65,7 +65,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
     }
 
   ACE_DEBUG ((LM_DEBUG, "Calibrating high resolution timer . . ."));
-  ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+  ACE_High_Res_Timer::global_scale_factor_type gsf =
+    ACE_High_Res_Timer::global_scale_factor ();
   ACE_DEBUG ((LM_DEBUG, " done\n"));
 
   throughput.dump_results ("Client", gsf);

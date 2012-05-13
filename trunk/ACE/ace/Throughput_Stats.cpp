@@ -49,7 +49,7 @@ ACE_Throughput_Stats::accumulate (const ACE_Throughput_Stats &rhs)
 
 void
 ACE_Throughput_Stats::dump_results (const ACE_TCHAR* msg,
-                                    ACE_UINT32 sf)
+                                    ACE_Basic_Stats::scale_factor_type sf)
 {
   if (this->samples_count () == 0u)
     {
@@ -67,7 +67,7 @@ ACE_Throughput_Stats::dump_results (const ACE_TCHAR* msg,
 
 void
 ACE_Throughput_Stats::dump_throughput (const ACE_TCHAR *msg,
-                                       ACE_UINT32 sf,
+                                       ACE_Basic_Stats::scale_factor_type sf,
                                        ACE_UINT64 elapsed_time,
                                        ACE_UINT32 samples_count)
 {
