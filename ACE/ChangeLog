@@ -1,3 +1,8 @@
+Mon May 14 18:48:14 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * performance-tests/Server_Concurrency/Latency_Stats.h:
+          Fixed conversion warnings
+
 Sun May 13 17:13:31 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Sample_History.h:

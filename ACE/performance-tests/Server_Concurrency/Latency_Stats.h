@@ -71,10 +71,10 @@ Latency_Stats::dump_results (const ACE_TCHAR *test_name,
   ACE_High_Res_Timer::global_scale_factor_type gsf =
     ACE_High_Res_Timer::global_scale_factor ();
 
-  double min_usec = ACE_CU64_TO_CU32 (this->min_) / gsf;
-  double max_usec = ACE_CU64_TO_CU32 (this->max_) / gsf;
-  double avg_usec = ACE_CU64_TO_CU32 (avg) / gsf;
-  double dev_usec = ACE_CU64_TO_CU32 (dev) / (gsf * gsf);
+  ACE_UINT64 min_usec = this->min_ / gsf;
+  ACE_UINT64 max_usec = this->max_ / gsf;
+  ACE_UINT64 avg_usec = avg / gsf;
+  ACE_UINT64 dev_usec = dev / (gsf * gsf);
   ACE_DEBUG ((LM_DEBUG,
               "%s/%s: %.2f/%.2f/%.2f/%.2f (min/avg/max/var^2) [usecs]\n",
               test_name, sub_test,
