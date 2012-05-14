@@ -54,8 +54,7 @@ public:
 protected:
 
   virtual void push_structured_event (
-        const CosNotification::StructuredEvent & notification
-      );
+        const CosNotification::StructuredEvent & notification);
 
   void handle_start_event (const CosNotification::PropertySeq& prop_seq);
   void check_priority (const CosNotification::PropertySeq& prop_seq);

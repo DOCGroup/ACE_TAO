@@ -23,15 +23,15 @@ Throughput_StructuredPushConsumer::Throughput_StructuredPushConsumer (
 
 void
 Throughput_StructuredPushConsumer::accumulate_into (
-    ACE_Throughput_Stats &throughput
-  ) const
+    ACE_Throughput_Stats &throughput) const
 {
   throughput.accumulate (this->throughput_);
 }
 
 void
-Throughput_StructuredPushConsumer::dump_stats (const ACE_TCHAR* msg,
-                                               ACE_UINT32 gsf)
+Throughput_StructuredPushConsumer::dump_stats (
+  const ACE_TCHAR* msg,
+  ACE_High_Res_Timer::global_scale_factor_type gsf)
 {
   this->throughput_.dump_results (msg, gsf);
 }
@@ -110,8 +110,9 @@ Throughput_StructuredPushSupplier::accumulate_into (
 }
 
 void
-Throughput_StructuredPushSupplier::dump_stats (const ACE_TCHAR* msg,
-                                               ACE_UINT32 gsf)
+Throughput_StructuredPushSupplier::dump_stats (
+  const ACE_TCHAR* msg,
+  ACE_High_Res_Timer::global_scale_factor_type gsf)
 {
   this->throughput_.dump_results (msg, gsf);
 }

@@ -36,9 +36,10 @@ Client_Task::svc (void)
 }
 
 void
-Client_Task::accumulate_and_dump (ACE_Basic_Stats &totals,
-                                  const ACE_TCHAR *msg,
-                                  ACE_UINT32 gsf)
+Client_Task::accumulate_and_dump (
+  ACE_Basic_Stats &totals,
+  const ACE_TCHAR *msg,
+  ACE_High_Res_Timer::global_scale_factor_type gsf)
 {
   totals.accumulate (this->latency_);
   this->latency_.dump_results (msg, gsf);

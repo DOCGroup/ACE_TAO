@@ -74,8 +74,7 @@ public:
   /// Create an Event Channel.  Ownership is passed to the caller.
   CosNotifyChannelAdmin::EventChannel_ptr create_event_channel (
                                               const char* name,
-                                              bool resolve
-                                            );
+                                              bool resolve);
 
 protected:
   /// Initializes the ORB.
