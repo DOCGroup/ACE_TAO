@@ -1,3 +1,10 @@
+Mon May 14 05:41:27 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Portable_Interceptors/Benchmark/marker.h:
+        * tests/Portable_Interceptors/Benchmark/marker.cpp:
+        * tests/Smart_Proxies/Benchmark/client.cpp:
+          Use ACE_High_Res_Timer::global_scale_factor_type
+
 Sun May 13 17:24:30 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/AMH/Sink_Server/Client_Task.h:
