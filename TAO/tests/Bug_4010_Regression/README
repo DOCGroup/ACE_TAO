@@ -1,10 +1,12 @@
 /**
 
-@page Bug 4010 Regression Test 
+$Id$
+
+@page Bug 4010 Regression Test
 
 This test demonstrates bug 4010.
 
-The IDL and server code are unchanged from the basic Hello test. 
+The IDL and server code are unchanged from the basic Hello test.
 
 The client is modified to perform the Hello test periodically for
 different instances of the server.
