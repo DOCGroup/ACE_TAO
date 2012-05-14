@@ -38,7 +38,7 @@ class Marker
       throughput.accumulate (this->throughput_);
     }
   void dump_stats (const ACE_TCHAR* msg,
-                   ACE_UINT32 gsf)
+                   ACE_High_Res_Timer::global_scale_factor_type gsf)
     {
       // Print stats
       this->throughput_.dump_results (msg, gsf);

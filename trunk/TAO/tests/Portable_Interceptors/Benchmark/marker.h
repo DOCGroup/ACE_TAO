@@ -14,7 +14,7 @@ class Marker
   // Accumulate the throughput statistics into <throughput>
 
   void dump_stats (const ACE_TCHAR* msg,
-                   ACE_UINT32 gsf,
+                   ACE_High_Res_Timer::global_scale_factor_type gsf,
                    int which_method);
   // Print stats
 
