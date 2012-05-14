@@ -2,6 +2,9 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
      & eval 'exec perl -S $0 $argv:q'
      if 0;
 
+# $Id$
+# -*- perl -*-
+
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
 
@@ -89,7 +92,7 @@ $server_status = $SV2->Spawn ();
 
 if ($server_status != 0) {
     print STDERR "ERROR: server returned $server_status\n";
-    $status = 1; 
+    $status = 1;
 }
 
 if ($server->WaitForFileTimed ($iorbase,

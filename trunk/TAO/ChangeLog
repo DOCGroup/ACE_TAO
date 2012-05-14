@@ -1,3 +1,13 @@
+Mon May 14 22:12:20 UTC 2012  Trevor Fields  <fields_t@ociweb.com>
+
+        * tests/Bug_4010_Regression/Bug_4010_Regression.mpc:
+        * tests/Bug_4010_Regression/client.conf:
+        * tests/Bug_4010_Regression/client.cpp:
+        * tests/Bug_4010_Regression/README:
+        * tests/Bug_4010_Regression/run_test.pl:
+
+          fuzz fixes.
+
 Mon May 14 18:41:01 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Notify/lib/Notify_Test_Client.h:
