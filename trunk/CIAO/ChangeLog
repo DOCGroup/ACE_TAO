@@ -1,3 +1,8 @@
+Mon May 14 05:42:00 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * performance-tests/Protocols/Sender/Sender_exec.cpp:
+          Use ACE_High_Res_Timer::global_scale_factor_type
+
 Sun May 13 12:50:03 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/Benchmark/RoundTrip/client.cpp:
