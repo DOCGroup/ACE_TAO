@@ -38,7 +38,7 @@ to_seconds (ACE_UINT64 hrtime,
 
 ACE_UINT64
 to_hrtime (double seconds,
-           ACE_UINT32 sf)
+           ACE_High_Res_Timer::global_scale_factor_type sf)
 {
   return ACE_UINT64 (seconds * sf * ACE_HR_SCALE_CONVERSION);
 }
