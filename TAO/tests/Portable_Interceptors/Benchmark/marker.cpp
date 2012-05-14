@@ -24,7 +24,7 @@ Marker::accumulate_into (ACE_Throughput_Stats &throughput,
 
 void
 Marker::dump_stats (const ACE_TCHAR* msg,
-                    ACE_UINT32 gsf,
+                    ACE_High_Res_Timer::global_scale_factor_type gsf,
                     int which_method)
 {
   switch (which_method)
