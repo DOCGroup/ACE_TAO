@@ -36,7 +36,7 @@ public:
   void accumulate_into (ACE_Throughput_Stats &throughput) const;
   // Accumulate the throughput statistics into <throughput>
 
-  void dump_stats (const ACE_TCHAR* msg, ACE_UINT32 gsf);
+  void dump_stats (const ACE_TCHAR* msg, ACE_High_Res_Timer::global_scale_factor_type gsf);
   // Output the accumulated statistics.
 
   // = The ACE_Task_Base methods....
@@ -330,7 +330,9 @@ Client::accumulate_into (ACE_Throughput_Stats &throughput) const
 }
 
 void
-Client::dump_stats (const ACE_TCHAR* msg, ACE_UINT32 gsf)
+Client::dump_stats (
+  const ACE_TCHAR* msg,
+  ACE_High_Res_Timer::global_scale_factor_type gsf)
 {
   this->throughput_.dump_results (msg, gsf);
 }

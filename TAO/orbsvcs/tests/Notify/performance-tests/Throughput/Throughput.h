@@ -72,7 +72,8 @@ public:
   void accumulate_into (ACE_Throughput_Stats &throughput) const;
 
   /// Accumulate the throughput statistics into <throughput>
-  void dump_stats (const ACE_TCHAR* msg, ACE_UINT32 gsf);
+  void dump_stats (const ACE_TCHAR* msg,
+                   ACE_High_Res_Timer::global_scale_factor_type gsf);
 
 protected:
   Notify_Throughput * test_client_;
@@ -110,7 +111,8 @@ public:
   void accumulate_into (ACE_Throughput_Stats &throughput) const;
 
   /// Accumulate the throughput statistics into <throughput>
-  void dump_stats (const ACE_TCHAR* msg, ACE_UINT32 gsf);
+  void dump_stats (const ACE_TCHAR* msg,
+                   ACE_High_Res_Timer::global_scale_factor_type gsf);
 
 protected:
   Notify_Throughput* test_client_;

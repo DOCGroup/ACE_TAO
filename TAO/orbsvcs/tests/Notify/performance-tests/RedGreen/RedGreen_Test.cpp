@@ -402,8 +402,9 @@ RedGreen_Test_StructuredPushConsumer::accumulate_into (
 }
 
 void
-RedGreen_Test_StructuredPushConsumer::dump_stats (const ACE_TCHAR* msg,
-                                                  ACE_UINT32 gsf)
+RedGreen_Test_StructuredPushConsumer::dump_stats (
+  const ACE_TCHAR* msg,
+  ACE_High_Res_Timer::global_scale_factor_type gsf)
 {
   this->throughput_.dump_results (msg, gsf);
 }
@@ -546,18 +547,17 @@ RedGreen_Test_StructuredPushSupplier::~RedGreen_Test_StructuredPushSupplier (
 
 void
 RedGreen_Test_StructuredPushSupplier::accumulate_into (
-    ACE_Throughput_Stats &throughput
-  ) const
+    ACE_Throughput_Stats &throughput) const
 {
   throughput.accumulate (this->throughput_);
 }
 
 void
-RedGreen_Test_StructuredPushSupplier::dump_stats (const ACE_TCHAR* msg,
-                                                  ACE_UINT32 gsf)
+RedGreen_Test_StructuredPushSupplier::dump_stats (
+  const ACE_TCHAR* msg,
+  ACE_High_Res_Timer::global_scale_factor_type gsf)
 {
-  this->throughput_.dump_results (msg,
-                                  gsf);
+  this->throughput_.dump_results (msg, gsf);
 }
 
 void
