@@ -1,3 +1,5 @@
+// $Id$
+
 #include "TestC.h"
 #include "ace/Get_Opt.h"
 #include "tao/ORB_Core.h"
@@ -112,8 +114,8 @@ private:
   PeriodicTask(const PeriodicTask &);
   PeriodicTask & operator=(const PeriodicTask &);
   CORBA::ORB_var orb;
-  int iterationsLeft; 
-  int successfulConnections; 
+  int iterationsLeft;
+  int successfulConnections;
 };
 
 int

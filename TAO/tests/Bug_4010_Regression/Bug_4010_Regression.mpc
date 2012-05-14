@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*idl): taoidldefaults {
   idlflags += -Sp
   IDL_Files {
