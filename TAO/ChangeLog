@@ -1,3 +1,29 @@
+Mon May 14 18:41:01 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Notify/lib/Notify_Test_Client.h:
+        * orbsvcs/tests/Notify/lib/Periodic_Consumer.h:
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen_Test.h:
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen_Test.cpp:
+        * orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.h:
+        * orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.cpp:
+        * performance-tests/Latency/AMI/Roundtrip_Handler.h:
+        * performance-tests/Latency/AMI/Roundtrip_Handler.cpp:
+        * performance-tests/Latency/Thread_Per_Connection/Client_Task.h:
+        * performance-tests/Latency/Thread_Per_Connection/Client_Task.cpp:
+        * performance-tests/Latency/Thread_Pool/Client_Task.h:
+        * performance-tests/Latency/Thread_Pool/Client_Task.cpp:
+        * performance-tests/Protocols/sender.cpp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/client.cpp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/client.cpp:
+        * performance-tests/RTCorba/Thread_Pool/client.cpp:
+        * performance-tests/Sequence_Latency/AMI/Roundtrip_Handler.h:
+        * performance-tests/Sequence_Latency/AMI/Roundtrip_Handler.cpp:
+        * performance-tests/Sequence_Latency/Thread_Per_Connection/Client_Task.h:
+        * performance-tests/Sequence_Latency/Thread_Per_Connection/Client_Task.cpp:
+        * performance-tests/Sequence_Latency/Thread_Pool/Client_Task.h:
+        * performance-tests/Sequence_Latency/Thread_Pool/Client_Task.cpp:
+          Use ACE_High_Res_Timer::global_scale_factor_type
+
 Mon May 14 05:41:27 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Portable_Interceptors/Benchmark/marker.h:

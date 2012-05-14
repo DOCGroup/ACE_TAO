@@ -1,6 +1,4 @@
-//
 // $Id$
-//
 
 #ifndef ROUNDTRIP_HANDLER_H
 #define ROUNDTRIP_HANDLER_H
@@ -8,11 +6,7 @@
 
 #include "TestS.h"
 #include "ace/Basic_Stats.h"
-
-#if defined (_MSC_VER)
-# pragma warning(push)
-# pragma warning (disable:4250)
-#endif /* _MSC_VER */
+#include "ace/High_Res_Timer.h"
 
 /// Implement the Test::Roundtrip interface
 class Roundtrip_Handler
@@ -26,7 +20,7 @@ public:
   int pending_callbacks (void) const;
 
   /// Dump the results
-  void dump_results (ACE_UINT32 gsf);
+  void dump_results (ACE_High_Res_Timer::global_scale_factor_type gsf);
 
   // = The skeleton methods for test octet load
   virtual void test_octet_method (Test::Timestamp send_time);
@@ -65,10 +59,6 @@ private:
   /// Collect the latency results
   ACE_Basic_Stats latency_stats_;
 };
-
-#if defined(_MSC_VER)
-# pragma warning(pop)
-#endif /* _MSC_VER */
 
 #include /**/ "ace/post.h"
 #endif /* ROUNDTRIP_H */
