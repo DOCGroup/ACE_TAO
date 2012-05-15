@@ -1,7 +1,7 @@
 // $Id$
 
 project(DDS_FSS_Event_Connector_idl_gen) : connectoridldefaults, dds4ccm {
-  after += DDS4CCM_idl_gen
+  after += DDS4CCM_idl_gen DDS_FSS_Event_Base_stub
   custom_only = 1
   idlflags += -Wb,stub_export_macro=FIXED_SIZE_STRUCT_EVENT_CONNECTOR_STUB_Export \
               -Wb,stub_export_include=FSS_Event_Connector_stub_export.h \
@@ -32,8 +32,8 @@ project(DDS_FSS_Event_Connector_lem_gen) : ciaoidldefaults, dds4ccm {
 }
 
 project(DDS_FSS_Event_Connector_lem_stub) : ccm_svnt, dds4ccm_lem_stub {
-  after += DDS_FSS_Event_Connector_lem_gen DDS_FSS_Event_Connector_stub DDS_FSS_Event_Base_stub 
-  libs  += DDS_FSS_Event_Base_stub DDS_FSS_Event_Connector_stub 
+  after += DDS_FSS_Event_Connector_lem_gen DDS_FSS_Event_Connector_stub DDS_FSS_Event_Base_stub
+  libs  += DDS_FSS_Event_Base_stub DDS_FSS_Event_Connector_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -84,9 +84,9 @@ project(DDS_FSS_Event_Connector_stub) : ccm_stub, dds4ccm_base {
 }
 
 project(DDS_FSS_Event_Connector_exec) : ciao_executor, dds4ccm_impl {
-  after   += DDS_FSS_Event_Connector_lem_stub DDS_FSS_Event_Connector_stub 
+  after   += DDS_FSS_Event_Connector_lem_stub DDS_FSS_Event_Connector_stub
   sharedname = DDS_FSS_Event_Connector_exec
-  libs += DDS_FSS_Event_Connector_stub DDS_FSS_Event_Connector_lem_stub DDS_FSS_Event_Base_stub 
+  libs += DDS_FSS_Event_Connector_stub DDS_FSS_Event_Connector_lem_stub DDS_FSS_Event_Base_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -110,12 +110,12 @@ project(DDS_FSS_Event_Connector_exec) : ciao_executor, dds4ccm_impl {
 
 
 project(DDS_FSS_Event_Connector_svnt) : ciao_servant, dds4ccm_impl {
-  after      += DDS_FSS_Event_Connector_lem_stub DDS_FSS_Event_Connector_exec DDS_FSS_Event_Connector_stub 
+  after      += DDS_FSS_Event_Connector_lem_stub DDS_FSS_Event_Connector_exec DDS_FSS_Event_Connector_stub
   sharedname  = DDS_FSS_Event_Connector_svnt
   libs       += DDS_FSS_Event_Connector_stub \
                 DDS_FSS_Event_Connector_lem_stub  \
                 DDS_FSS_Event_Base_stub \
-                DDS_FSS_Event_Connector_exec 
+                DDS_FSS_Event_Connector_exec
   libpaths += ../lib
   libout = ../lib
   includes += ..

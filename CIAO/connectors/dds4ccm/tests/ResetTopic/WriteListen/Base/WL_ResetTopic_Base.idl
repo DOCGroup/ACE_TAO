@@ -19,6 +19,8 @@ struct WL_ResetTopicTest {
   long iteration;
 };
 
+#if defined DDS4CCM_NEEDS_SEQUENCES_DEFINED
 typedef sequence<WL_ResetTopicTest> WL_ResetTopicTestSeq;
+#endif
 
 #endif

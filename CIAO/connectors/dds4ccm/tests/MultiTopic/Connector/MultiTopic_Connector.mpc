@@ -2,6 +2,7 @@
 
 project (DDS_CCM_Example_MT_idl_gen) : taoidldefaults, anytypecode, dds4ccm {
   custom_only = 1
+  after += DDS_MultiTopic_Base_stub
   idlflags += -Wb,stub_export_macro=CCM_DDS_MT_STUB_Export \
               -Wb,stub_export_include=ccm_dds_mt_stub_export.h \
               -Wb,skel_export_macro=CCM_DDS_MT_SKEL_Export \

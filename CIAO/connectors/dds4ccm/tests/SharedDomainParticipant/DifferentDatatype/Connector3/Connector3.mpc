@@ -1,7 +1,7 @@
 // $Id$
 
 project(DDS_SharedDP_Connector3_idl_gen) : connectoridldefaults, dds4ccm {
-  after += DDS4CCM_idl_gen
+  after += DDS4CCM_idl_gen DDS_SharedDP_DDBase_stub
   custom_only = 1
   idlflags += -Wb,stub_export_macro=SHAREDDP_CONNECTOR3_STUB_Export \
               -Wb,stub_export_include=Connector3_stub_export.h \
@@ -32,8 +32,8 @@ project(DDS_SharedDP_Connector3_lem_gen) : ciaoidldefaults, dds4ccm {
 }
 
 project(DDS_SharedDP_Connector3_lem_stub) : ccm_svnt, dds4ccm_lem_stub {
-  after += DDS_SharedDP_Connector3_lem_gen DDS_SharedDP_Connector3_stub DDS_SharedDP_DDBase_stub 
-  libs  += DDS_SharedDP_DDBase_stub DDS_Connector3_stub 
+  after += DDS_SharedDP_Connector3_lem_gen DDS_SharedDP_Connector3_stub DDS_SharedDP_DDBase_stub
+  libs  += DDS_SharedDP_DDBase_stub DDS_Connector3_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -110,12 +110,12 @@ project(DDS_SharedDP_Connector3_exec) : ciao_executor, dds4ccm_impl {
 
 
 project(DDS_SharedDP_Connector3_svnt) : ciao_servant, dds4ccm_impl {
-  after      += DDS_SharedDP_Connector3_lem_stub DDS_SharedDP_Connector3_exec DDS_SharedDP_Connector3_stub 
+  after      += DDS_SharedDP_Connector3_lem_stub DDS_SharedDP_Connector3_exec DDS_SharedDP_Connector3_stub
   sharedname  = DDS_Connector3_svnt
   libs       += DDS_Connector3_stub \
                 DDS_Connector3_lem_stub  \
                 DDS_SharedDP_DDBase_stub \
-                DDS_Connector3_exec 
+                DDS_Connector3_exec
   libpaths += ../lib
   libout = ../lib
   includes += ..

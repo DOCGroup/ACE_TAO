@@ -15,6 +15,10 @@
 
 #pragma ciao lem "Connector/CSL_USTest_ConnectorE.idl"
 
+#if (CIAO_DDS4CCM_OPENDDS==1)
+# include "Base/CSL_USTest_BaseTypeSupport.idl"
+#endif
+
 module ::CCM_DDS::Typed < ::TestTopic, ::TestTopicSeq> CSL_US_Connector;
 
 #endif /* CSL_USTest_CONNECTOR_IDL_ */

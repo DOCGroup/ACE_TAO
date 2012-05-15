@@ -20,7 +20,9 @@ module Goodbye
     string goodbye;  //@key
     long iteration;
   };
-  typedef sequence<HelloGoodbye> HelloGoodbyeSeq;
+  #if defined DDS4CCM_NEEDS_SEQUENCES_DEFINED
+typedef sequence<HelloGoodbye> HelloGoodbyeSeq;
+#endif
 };
 
 #endif /* GOODBYE_IDL_ */

@@ -20,6 +20,8 @@ struct GCSTest {
   long y;
 };
 
+#if defined DDS4CCM_NEEDS_SEQUENCES_DEFINED
 typedef sequence<GCSTest> GCSTestSeq;
+#endif
 
 #endif /* GET_COMPONENT_STATE_TEST_BASE_IDL */

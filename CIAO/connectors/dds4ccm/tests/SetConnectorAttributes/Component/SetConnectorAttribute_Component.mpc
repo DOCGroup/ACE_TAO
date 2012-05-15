@@ -95,7 +95,7 @@ project(SetAttribute_Component_exec) : ciao_executor, dds4ccm_impl {
   libout = ../lib
   includes += ..
   dynamicflags += COMPONENT_EXEC_BUILD_DLL
-  requires += ndds
+  requires += dds4ccm_ndds
 
   IDL_Files {
   }
@@ -126,7 +126,7 @@ project(SetAttribute_Component_svnt) : ciao_servant, dds4ccm_lem_stub, dds4ccm_s
   libout = ../lib
   includes += ..
   dynamicflags += COMPONENT_SVNT_BUILD_DLL
-  requires += ndds
+  requires += dds4ccm_ndds
 
   IDL_Files {
   }

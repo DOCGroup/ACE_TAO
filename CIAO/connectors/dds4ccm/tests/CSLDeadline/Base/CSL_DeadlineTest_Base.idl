@@ -19,6 +19,8 @@ struct TestTopic {
   long x;
 };
 
+#if defined DDS4CCM_NEEDS_SEQUENCES_DEFINED
 typedef sequence<TestTopic> TestTopicSeq;
-
 #endif
+
+#endif /* CSL_DEADLINETEST_BASE_IDL */

@@ -9,6 +9,8 @@ project(*latency_sender_plain) : nddslib, acelib, taolib, typecode {
   includes += ../Base
   libs  += DDS_Latency_Base_plain_stub
 
+  requires += dds4ccm_ndds
+
   Source_Files {
     Latency_Sender.cpp
   }
@@ -22,6 +24,8 @@ project(*ndds_latency_sender_plain) : nddslib, acelib, taolib, typecode {
   libout = ../lib
   includes += ../Base
   libs  += DDS_Latency_Base_plain_stub
+
+  requires += dds4ccm_ndds
 
   Source_Files {
     NDDS_Latency_Sender.cpp

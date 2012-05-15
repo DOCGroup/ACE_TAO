@@ -3,6 +3,7 @@
 
 project(Large_DDS_Sub_idl_gen) : componentidldefaults, dds4ccm {
   custom_only = 1
+  after += Large_Deployment_stub
   idlflags += -Wb,stub_export_macro=DDS_SUB_STUB_Export \
               -Wb,stub_export_include=DDS_Sub_stub_export.h \
               -Wb,skel_export_macro=DDS_SUB_SVNT_Export \

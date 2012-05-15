@@ -15,9 +15,13 @@
 
 #pragma ciao lem "Connector/CFTLS_Test_ConnectorE.idl"
 
+#if (CIAO_DDS4CCM_OPENDDS==1)
+# include "Base/CFTLS_Test_BaseTypeSupport.idl"
+#endif
+
 module CFTLS_Test
 {
   module ::CCM_DDS::Typed < ::ContentFilteredTopicListenStateTest, ::ContentFilteredTopicListenStateTestSeq> ContentFilteredTopicListenStateTestConnector;
 };
 
-#endif /* CFTLS_Test_CONNECTOR_IDL_ */
+#endif /* CONTENTFILTEREDTOPIC_LISTEN_STATE_TEST_CONNECTOR_IDL_ */

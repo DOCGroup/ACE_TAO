@@ -18,6 +18,8 @@ struct WriterTest {
   string key; //@key
 };
 
+#if defined DDS4CCM_NEEDS_SEQUENCES_DEFINED
 typedef sequence<WriterTest> WriterTestSeq;
+#endif
 
 #endif

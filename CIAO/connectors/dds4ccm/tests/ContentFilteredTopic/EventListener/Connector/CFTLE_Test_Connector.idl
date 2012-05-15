@@ -15,6 +15,10 @@
 
 #pragma ciao lem "Connector/CFTLE_Test_ConnectorE.idl"
 
+#if (CIAO_DDS4CCM_OPENDDS==1)
+# include "Base/CFTLE_Test_BaseTypeSupport.idl"
+#endif
+
 module CFTLE_Test
 {
   module ::CCM_DDS::Typed < ::ContentFilteredTopicListenEventTest, ::ContentFilteredTopicListenEventTestSeq> ContentFilteredTopicListenEventTestConnector;

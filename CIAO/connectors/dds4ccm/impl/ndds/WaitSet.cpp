@@ -103,6 +103,11 @@ namespace CIAO
               return this->rti_entity ()->detach_condition (rc_proxy->get_rti_entity ());
             }
         }
+      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                    "DDS_WaitSet_i::detach_condition - "
+                    "Unable to narrow the given condition to a ReadCondition "
+                    "nor a QueryCondition\n"));
+
       return ::DDS::RETCODE_BAD_PARAMETER;
     }
 

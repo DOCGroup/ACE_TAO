@@ -18,6 +18,8 @@ struct OneFileTopic {
   string hello; //@key
   long iteration;
 };
+#if defined DDS4CCM_NEEDS_SEQUENCES_DEFINED
 typedef sequence<OneFileTopic> OneFileTopicSeq;
+#endif
 
 #endif /* ONEFILE_BASE_IDL_ */

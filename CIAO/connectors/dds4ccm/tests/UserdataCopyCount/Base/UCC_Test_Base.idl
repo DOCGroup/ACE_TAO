@@ -20,7 +20,9 @@ struct UCCVariableSizedStructTest {
   long y;
 };
 
+#if defined DDS4CCM_NEEDS_SEQUENCES_DEFINED
 typedef sequence<UCCVariableSizedStructTest> UCCVariableSizedStructTestSeq;
+#endif
 
 #pragma DCPS_DATA_TYPE "UCCFixedSizedStructTest"
 
@@ -30,6 +32,8 @@ struct UCCFixedSizedStructTest {
   long z;
 };
 
+#if defined DDS4CCM_NEEDS_SEQUENCES_DEFINED
 typedef sequence<UCCFixedSizedStructTest> UCCFixedSizedStructTestSeq;
+#endif
 
 #endif /* USERDATA_COPY_COUNT_TEST_BASE_IDL */

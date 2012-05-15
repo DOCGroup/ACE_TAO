@@ -15,6 +15,10 @@
 
 #pragma ciao lem "EventConnector/PortUsageEvent_ConnectorE.idl"
 
+#if (CIAO_DDS4CCM_OPENDDS==1)
+# include "Base/PortUsage_Test_BaseTypeSupport.idl"
+#endif
+
 module PortUsageEvent_Test
 {
   module ::CCM_DDS::Typed < ::PortUsageTest, ::PortUsageTestSeq> PortUsageTestConnector;

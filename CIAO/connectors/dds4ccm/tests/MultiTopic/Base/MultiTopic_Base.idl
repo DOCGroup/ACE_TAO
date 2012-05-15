@@ -10,7 +10,6 @@
 
 #pragma ndds typesupport "Base/MultiTopic_BaseSupport.h"
 #pragma opendds typesupport "Base/MultiTopic_BaseTypeSupportImpl.h"
-#pragma splice typesupport "Base/MultiTopic_BaseDscpC.h"
 
 #pragma DCPS_DATA_TYPE "ShapeType"
 #pragma DCPS_DATA_KEY "ShapeType color"
@@ -32,8 +31,12 @@ struct Attributes {
   string color; //@key
   float speed;
 };
+#if defined DDS4CCM_NEEDS_SEQUENCES_DEFINED
 typedef sequence<ShapeType> ShapeTypeSeq;
+#endif
+#if defined DDS4CCM_NEEDS_SEQUENCES_DEFINED
 typedef sequence<Attributes> AttributesSeq;
+#endif
 
 #pragma keylist Attributes shape color
 

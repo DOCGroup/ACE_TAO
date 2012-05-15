@@ -15,6 +15,10 @@
 
 #pragma ciao lem "Connector/DNM_ConnectorE.idl"
 
+#if (CIAO_DDS4CCM_OPENDDS==1)
+# include "Base/DNM_BaseTypeSupport.idl"
+#endif
+
 module DNM_Test_Connector
 {
   module Nested_Connector

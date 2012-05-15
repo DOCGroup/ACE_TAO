@@ -19,6 +19,8 @@ struct QueryConditionListenEventTest {
   long iteration;
 };
 
+#if defined DDS4CCM_NEEDS_SEQUENCES_DEFINED
 typedef sequence<QueryConditionListenEventTest> QueryConditionListenEventTestSeq;
+#endif
 
 #endif

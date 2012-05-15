@@ -15,5 +15,9 @@
 
 #pragma ciao lem "Connector/Exception_Test_ConnectorE.idl"
 
+#if (CIAO_DDS4CCM_OPENDDS==1)
+# include "Base/Exception_Test_BaseTypeSupport.idl"
+#endif
+
 module ::CCM_DDS::Typed < ::CFTExceptionTest, ::CFTExceptionTestSeq> CFTExceptionTestConn;
 #endif /* CFT_EXCEPTION_TEST_CONNECTOR_IDL_ */

@@ -15,6 +15,10 @@
 
 #pragma ciao lem "Connector/ReadGet_Test_ConnectorE.idl"
 
+#if (CIAO_DDS4CCM_OPENDDS==1)
+# include "Base/ReadGet_Test_BaseTypeSupport.idl"
+#endif
+
 module ReadGet_Test
 {
   module ::CCM_DDS::Typed < ::QueryConditionTest, ::QueryConditionTestSeq> QueryConditionTestConnector;

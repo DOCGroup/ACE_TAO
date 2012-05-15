@@ -2,6 +2,7 @@
 
 project(Derived_Connector_idl_gen) : connectoridldefaults, dds4ccm {
   custom_only = 1
+  after += Derived_stub
   idlflags += -Wb,stub_export_macro=DERIVED_CONNECTOR_STUB_Export \
               -Wb,stub_export_include=Derived_Connector_stub_export.h \
               -Wb,skel_export_macro=DERIVED_CONNECTOR_SVNT_Export \

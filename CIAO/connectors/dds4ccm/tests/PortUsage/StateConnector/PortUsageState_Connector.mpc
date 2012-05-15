@@ -2,7 +2,7 @@
 // This file is generated with "generate_component_mpc.pl -p PortUsage_Test_Base -l .. -o ../lib -u DDS PortUsageState_Connector"
 
 project(PortUsageState_Connector_idl_gen) : connectoridldefaults, dds4ccm {
-  after += DDS4CCM_idl_gen
+  after += DDS4CCM_idl_gen PortUsage_Test_Base_stub
   custom_only = 1
   idlflags += -Wb,stub_export_macro=PORTUSAGE_EVENT_TEST_CONNECTOR_STUB_Export \
               -Wb,stub_export_include=PortUsageState_Connector_stub_export.h \
@@ -33,8 +33,8 @@ project(PortUsageState_Connector_lem_gen) : ciaoidldefaults, dds4ccm {
 }
 
 project(PortUsageState_Connector_lem_stub) : ccm_svnt, dds4ccm_lem_stub {
-  after += PortUsageState_Connector_lem_gen PortUsageState_Connector_stub PortUsage_Test_Base_stub 
-  libs  += PortUsage_Test_Base_stub PortUsageState_Connector_stub 
+  after += PortUsageState_Connector_lem_gen PortUsageState_Connector_stub PortUsage_Test_Base_stub
+  libs  += PortUsage_Test_Base_stub PortUsageState_Connector_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -111,12 +111,12 @@ project(PortUsageState_Connector_exec) : ciao_executor, dds4ccm_impl {
 
 
 project(PortUsageState_Connector_svnt) : ciao_servant, dds4ccm_impl {
-  after      += PortUsageState_Connector_lem_stub PortUsageState_Connector_exec PortUsageState_Connector_stub 
+  after      += PortUsageState_Connector_lem_stub PortUsageState_Connector_exec PortUsageState_Connector_stub
   sharedname  = PortUsageState_Connector_svnt
   libs       += PortUsageState_Connector_stub \
                 PortUsageState_Connector_lem_stub  \
                 PortUsage_Test_Base_stub \
-                PortUsageState_Connector_exec 
+                PortUsageState_Connector_exec
   libpaths += ../lib
   libout = ../lib
   includes += ..

@@ -34,6 +34,8 @@ project(I2C_ShapeType_lem_stub) : ndds_idltocpp_lem_stub {
   sharedname = I2C_ShapeType_lem_stub
   dynamicflags += I2C_SHAPES_CONNECTOR_LEM_STUB_BUILD_DLL
 
+  requires += dds4ccm_ndds
+
   IDL_Files {
   }
 
@@ -59,6 +61,8 @@ project(I2C_ShapeType_stub) : ndds_idltocpp_stub {
   includes += ..
   sharedname = I2C_ShapeType_stub
   dynamicflags += I2C_SHAPES_CONNECTOR_STUB_BUILD_DLL
+
+  requires += dds4ccm_ndds
 
   IDL_Files {
   }

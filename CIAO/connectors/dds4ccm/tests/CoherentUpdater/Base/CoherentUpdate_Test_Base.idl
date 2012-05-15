@@ -19,6 +19,8 @@ struct CoherentUpdateTest {
   long iteration;
 };
 
+#if defined DDS4CCM_NEEDS_SEQUENCES_DEFINED
 typedef sequence<CoherentUpdateTest> CoherentUpdateTestSeq;
-
 #endif
+
+#endif /* COHERENT_UPDATE_TEST_BASE_IDL */

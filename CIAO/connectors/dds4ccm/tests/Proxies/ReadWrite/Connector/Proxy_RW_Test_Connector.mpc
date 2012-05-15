@@ -2,7 +2,7 @@
 // This file is generated with "generate_component_mpc.pl -p Proxy_RW_Test_Base -l .. -o ../lib -u DDS Proxy_RW_Test_Connector"
 
 project(Proxy_RW_Test_Connector_idl_gen) : connectoridldefaults, dds4ccm {
-  after += DDS4CCM_idl_gen
+  after += DDS4CCM_idl_gen Proxy_RW_Test_Base_stub
   custom_only = 1
   idlflags += -Wb,stub_export_macro=PROXY_RW_TEST_CONNECTOR_STUB_Export \
               -Wb,stub_export_include=Proxy_RW_Test_Connector_stub_export.h \

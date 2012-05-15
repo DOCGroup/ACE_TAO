@@ -15,5 +15,10 @@
 
 #pragma ciao lem "Connector/TypeRegistration_Test_ConnectorE.idl"
 
+#if (CIAO_DDS4CCM_OPENDDS==1)
+# include "Base/TypeRegistration_Test_BaseTypeSupport.idl"
+#endif
+
 module ::CCM_DDS::Typed < ::MLDTypeRegistrationTest, ::MLDTypeRegistrationTestSeq> MLDTypeRegistrationTestConn;
+
 #endif /* MLD_TYPE_REGISTRATION_TEST_CONNECTOR_IDL_ */

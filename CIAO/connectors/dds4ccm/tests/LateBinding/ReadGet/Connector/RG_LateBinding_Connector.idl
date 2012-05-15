@@ -15,6 +15,10 @@
 
 #pragma ciao lem "Connector/RG_LateBinding_ConnectorE.idl"
 
+#if (CIAO_DDS4CCM_OPENDDS==1)
+# include "Base/RG_LateBinding_BaseTypeSupport.idl"
+#endif
+
 module RG_LateBinding
 {
   module ::CCM_DDS::Typed < ::RG_LateBindingTest, ::RG_LateBindingTestSeq> RG_LateBindingTestConnector;

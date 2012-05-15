@@ -15,6 +15,10 @@
 
 #pragma ciao lem "ReceiverConnector/OIT_Receiver_ConnectorE.idl"
 
+#if (CIAO_DDS4CCM_OPENDDS==1)
+# include "Base/OIT_Test_BaseTypeSupport.idl"
+#endif
+
 module OIT_Test
 {
   module ::CCM_DDS::Typed < ::OIT_Receiver_Topic, ::OIT_Receiver_TopicSeq>

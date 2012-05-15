@@ -15,6 +15,10 @@
 
 #pragma ciao lem "Conn_Array/VTS_Array_ConnectorE.idl"
 
+#if (CIAO_DDS4CCM_OPENDDS==1)
+# include "Base/VTopics_BaseTypeSupport.idl"
+#endif
+
 module VTopics
 {
   module ::CCM_DDS::Typed < ::TopicArray, ::TopicArraySeq> TopicArrayConnector;

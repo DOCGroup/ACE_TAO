@@ -20,6 +20,8 @@ struct GCETest {
   long y;
 };
 
+#if defined DDS4CCM_NEEDS_SEQUENCES_DEFINED
 typedef sequence<GCETest> GCETestSeq;
+#endif
 
 #endif /* GET_COMPONENT_EVENT_TEST_BASE_IDL */

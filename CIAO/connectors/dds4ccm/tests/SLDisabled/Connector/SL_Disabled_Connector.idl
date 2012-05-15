@@ -15,6 +15,10 @@
 
 #pragma ciao lem "Connector/SL_Disabled_ConnectorE.idl"
 
+#if (CIAO_DDS4CCM_OPENDDS==1)
+# include "Base/SL_Disabled_BaseTypeSupport.idl"
+#endif
+
 module SL_Disabled
 {
   module ::CCM_DDS::Typed < ::TestTopic, ::TestTopicSeq> SL_DisabledConnector;

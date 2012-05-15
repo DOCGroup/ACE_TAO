@@ -18,6 +18,8 @@ struct FixedStructSizeTest {
   long two;
 };
 
+#if defined DDS4CCM_NEEDS_SEQUENCES_DEFINED
 typedef sequence<FixedStructSizeTest> FixedStructSizeTestSeq;
+#endif
 
 #endif

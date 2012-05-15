@@ -2,7 +2,7 @@
 // This file is generated with "generate_component_mpc.pl -p CoherentUpdate_TestBase -l .. -o ../lib -u DDS CoherentUpdate_Test_Connector"
 
 project(CoherentUpdate_Connector_idl_gen) : connectoridldefaults, dds4ccm {
-  after += DDS4CCM_idl_gen
+  after += DDS4CCM_idl_gen CoherentUpdate_Test_Base_stub
   custom_only = 1
   idlflags += -Wb,stub_export_macro=COHERENT_UPDATE_TEST_CONNECTOR_STUB_Export \
               -Wb,stub_export_include=CoherentUpdate_Connector_stub_export.h \

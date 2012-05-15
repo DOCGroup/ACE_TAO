@@ -14,6 +14,10 @@
 
 #pragma ciao lem "Connector/SL_ManyByMany_ConnectorE.idl"
 
+#if (CIAO_DDS4CCM_OPENDDS==1)
+# include "Base/SL_ManyByMany_BaseTypeSupport.idl"
+#endif
+
 module SL_ManyByMany
 {
   module ::CCM_DDS::Typed < ::TestTopic, ::TestTopicSeq> SLManyByManyConnector;

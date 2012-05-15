@@ -15,6 +15,10 @@
 
 #pragma ciao lem "Connector/ConnectorE.idl"
 
+#if (CIAO_DDS4CCM_OPENDDS==1)
+# include "Base/BaseTypeSupport.idl"
+#endif
+
 module SharedDP
 {
   module ::CCM_DDS::Typed < ::SharedDPTest, ::SharedDPTestSeq> SharedDPTestConnector;

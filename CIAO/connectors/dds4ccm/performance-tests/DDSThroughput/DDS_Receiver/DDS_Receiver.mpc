@@ -8,6 +8,8 @@ project(*receiver_plain) : nddslib, acelib, taolib, typecode {
   includes += ../Base
   libs  += DDS_Throughput_Base_stub
 
+  requires += dds4ccm_ndds
+
   Source_Files {
     Throughput_Receiver.cpp
   }

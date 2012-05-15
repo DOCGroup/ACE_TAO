@@ -30,7 +30,9 @@ struct ThroughputTest {
  OctetSeq data;
  };
 
+#if defined DDS4CCM_NEEDS_SEQUENCES_DEFINED
 typedef sequence<ThroughputTest> ThroughputTestSeq;
+#endif
 
 #pragma DCPS_DATA_TYPE "ThroughputCommand"
 
@@ -42,6 +44,8 @@ struct ThroughputCommand
     unsigned long long final_publisher_effort;
 };
 
+#if defined DDS4CCM_NEEDS_SEQUENCES_DEFINED
 typedef sequence<ThroughputCommand> ThroughputCommandSeq;
+#endif
 
 #endif

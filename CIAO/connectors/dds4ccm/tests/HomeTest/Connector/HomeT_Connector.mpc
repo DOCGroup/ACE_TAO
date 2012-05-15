@@ -1,7 +1,7 @@
 // $Id$
 
 project(HomeT_Connector_idl_gen) : connectoridldefaults, dds4ccm {
-  after  += DDS4CCM_idl_gen
+  after  += DDS4CCM_idl_gen HomeT_Base_stub
   custom_only = 1
   idlflags += -Wb,stub_export_macro=HOMET_CONNECTOR_STUB_Export \
               -Wb,stub_export_include=HomeT_Connector_stub_export.h \

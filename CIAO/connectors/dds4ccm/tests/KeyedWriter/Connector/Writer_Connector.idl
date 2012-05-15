@@ -15,6 +15,10 @@
 
 #pragma ciao lem "Connector/Writer_ConnectorE.idl"
 
+#if (CIAO_DDS4CCM_OPENDDS==1)
+# include "Base/Writer_BaseTypeSupport.idl"
+#endif
+
 module ::CCM_DDS::Typed < ::WriterTest, ::WriterTestSeq> WriterTestConnector;
 
 #endif /* Writer_CONNECTOR_IDL_ */

@@ -15,6 +15,10 @@
 
 #pragma ciao lem "Connector/HomeT_ConnectorE.idl"
 
+#if (CIAO_DDS4CCM_OPENDDS==1)
+# include "Base/HomeT_BaseTypeSupport.idl"
+#endif
+
 module ::CCM_DDS::Typed < ::HomeTest, ::HomeTestSeq> ConnComp;
 
 #endif /* HOMET_CONNECTOR_IDL_ */

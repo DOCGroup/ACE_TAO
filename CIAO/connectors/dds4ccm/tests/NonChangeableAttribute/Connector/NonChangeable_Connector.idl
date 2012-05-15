@@ -15,6 +15,10 @@
 
 #pragma ciao lem "Connector/NonChangeable_ConnectorE.idl"
 
+#if (CIAO_DDS4CCM_OPENDDS==1)
+# include "Base/NonChangeable_BaseTypeSupport.idl"
+#endif
+
 module NonChangeable
 {
   module ::CCM_DDS::Typed

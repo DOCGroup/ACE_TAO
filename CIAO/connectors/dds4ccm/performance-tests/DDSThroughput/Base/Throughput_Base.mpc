@@ -5,6 +5,8 @@ project (DDS_Throughput_Base_stub_plain) : taoidldefaults, dds4ccm_ts_default {
   dynamicflags += THROUGHPUT_BASE_STUB_BUILD_DLL
   libout = ../lib
 
+  requires += dds4ccm_ndds
+
   idlflags += -SS -Sci \
               -Wb,stub_export_macro=THROUGHPUT_BASE_STUB_Export \
               -Wb,stub_export_include=THROUGHPUT_Base_stub_export.h

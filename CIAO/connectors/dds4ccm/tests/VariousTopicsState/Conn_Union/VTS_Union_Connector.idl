@@ -15,6 +15,10 @@
 
 #pragma ciao lem "Conn_Union/VTS_Union_ConnectorE.idl"
 
+#if (CIAO_DDS4CCM_OPENDDS==1)
+# include "Base/VTopics_BaseTypeSupport.idl"
+#endif
+
 module VTopic
 {
   module ::CCM_DDS::Typed < ::TopicUnion, ::TopicUnionSeq> TopicUnionConnector;

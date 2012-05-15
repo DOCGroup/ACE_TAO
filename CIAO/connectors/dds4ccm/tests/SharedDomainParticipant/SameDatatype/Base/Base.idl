@@ -18,6 +18,8 @@ struct SharedDPTest {
   string key;
   long iteration;
 };
+#if defined DDS4CCM_NEEDS_SEQUENCES_DEFINED
 typedef sequence<SharedDPTest> SharedDPTestSeq;
+#endif
 
 #endif

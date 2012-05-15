@@ -15,6 +15,10 @@
 
 #pragma ciao lem "Connector/QCLS_Test_ConnectorE.idl"
 
+#if (CIAO_DDS4CCM_OPENDDS==1)
+# include "Base/QCLS_Test_BaseTypeSupport.idl"
+#endif
+
 module QCLS_Test
 {
   module ::CCM_DDS::Typed < ::QueryConditionListenStateTest, ::QueryConditionListenStateTestSeq> QueryConditionListenStateTestConnector;

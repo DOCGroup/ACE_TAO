@@ -2,7 +2,7 @@
 // This file is generated with "generate_component_mpc.pl -p DDS_Unkeyed_Test_Base -l .. -o ../lib -u DDS Unkeyed_Test_Connector"
 
 project(DDS_Unkeyed_Test_Connector_idl_gen) : connectoridldefaults, dds4ccm {
-  after += DDS4CCM_idl_gen
+  after += DDS4CCM_idl_gen DDS_Unkeyed_Test_Base_stub
   custom_only = 1
   idlflags += -Wb,stub_export_macro=UNKEYED_TEST_CONNECTOR_STUB_Export \
               -Wb,stub_export_include=Unkeyed_Test_Connector_stub_export.h \
@@ -34,8 +34,8 @@ project(DDS_Unkeyed_Test_Connector_lem_gen) : ciaoidldefaults, dds4ccm {
 
 project(DDS_Unkeyed_Test_Connector_lem_stub) : ccm_svnt, dds4ccm_lem_stub {
   after += DDS_Unkeyed_Test_Connector_lem_gen DDS_Unkeyed_Test_Connector_stub \
-           DDS_Unkeyed_Test_Base_stub 
-  libs  += DDS_Unkeyed_Test_Base_stub DDS_Unkeyed_Test_Connector_stub 
+           DDS_Unkeyed_Test_Base_stub
+  libs  += DDS_Unkeyed_Test_Base_stub DDS_Unkeyed_Test_Connector_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -115,12 +115,12 @@ project(DDS_Unkeyed_Test_Connector_exec) : ciao_executor, dds4ccm_impl {
 
 project(DDS_Unkeyed_Test_Connector_svnt) : ciao_servant, dds4ccm_impl {
   after      += DDS_Unkeyed_Test_Connector_lem_stub DDS_Unkeyed_Test_Connector_exec \
-                DDS_Unkeyed_Test_Connector_stub 
+                DDS_Unkeyed_Test_Connector_stub
   sharedname  = DDS_Unkeyed_Test_Connector_svnt
   libs       += DDS_Unkeyed_Test_Connector_stub \
                 DDS_Unkeyed_Test_Connector_lem_stub  \
                 DDS_Unkeyed_Test_Base_stub \
-                DDS_Unkeyed_Test_Connector_exec 
+                DDS_Unkeyed_Test_Connector_exec
   libpaths += ../lib
   libout = ../lib
   includes += ..

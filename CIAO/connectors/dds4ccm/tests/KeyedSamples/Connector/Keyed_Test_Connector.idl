@@ -15,6 +15,10 @@
 
 #pragma ciao lem "Connector/Keyed_Test_ConnectorE.idl"
 
+#if (CIAO_DDS4CCM_OPENDDS==1)
+# include "Base/Keyed_Test_BaseTypeSupport.idl"
+#endif
+
 module ::CCM_DDS::Typed < ::KeyedTest, ::KeyedTestSeq> KeyedTestConnector;
 
-#endif /* Keyed_Test_CONNECTOR_IDL_ */
+#endif /* KEYED_TEST_CONNECTOR_IDL_ */
