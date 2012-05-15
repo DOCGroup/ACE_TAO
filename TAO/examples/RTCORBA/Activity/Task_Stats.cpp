@@ -134,8 +134,8 @@ Task_Stats::dump_latency_stats (
     ACE_UINT32 l_dev = ACE_CU64_TO_CU32 (l_dev_);
     */
 
-    double l_avg = ACE_CU64_TO_CU32 (avg) / sf;
-    double l_dev = ACE_CU64_TO_CU32 (dev) / (sf * sf);
+    double l_avg = avg / sf;
+    double l_dev = dev / (sf * sf);
 
     ACE_UINT64 tmin_ = this->time_inv_[0] / sf;
     ACE_UINT32 tmin = ACE_CU64_TO_CU32 (tmin_);
