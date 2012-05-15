@@ -131,7 +131,5 @@ Thread_Task::dump_stats (void)
                    ACE_SIZE_T_FORMAT_SPECIFIER,
                    count_);
 
-  task_stats_->dump_samples (fname,
-                             msg,
-                             ACE_High_Res_Timer::global_scale_factor ());
+  task_stats_->dump_samples (fname, msg);
 }

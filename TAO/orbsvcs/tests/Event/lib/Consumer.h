@@ -22,6 +22,7 @@
 #include "orbsvcs/RtecEventCommS.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "ace/OS_NS_time.h"
+#include "ace/High_Res_Timer.h"
 
 /**
  * @class EC_Consumer
@@ -71,8 +72,9 @@ public:
   void accumulate (ACE_Throughput_Stats& throughput) const;
 
   /// Printout the statistics
-  virtual void dump_results (const ACE_TCHAR* name,
-                             ACE_UINT32 global_scale_factor);
+  virtual void dump_results (
+    const ACE_TCHAR* name,
+    ACE_High_Res_Timer::global_scale_factor_type global_scale_factor);
 
   // = The RtecEventComm::PushConsumer methods
 

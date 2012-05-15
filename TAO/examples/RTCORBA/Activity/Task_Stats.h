@@ -18,6 +18,7 @@
 #include "tao/orbconf.h"
 #include "tao/debug.h"
 #include "activity_export.h"
+#include "ace/High_Res_Timer.h"
 
 /**
  * @class Base_Time
@@ -62,9 +63,10 @@ class activity_Export Task_Stats
   int sample (ACE_UINT64 inv_start_time, ACE_UINT64 inv_end_time);
 
   void dump_samples (const ACE_TCHAR *file_name, const ACE_TCHAR *msg,
-                     ACE_UINT32 scale_factor);
+                     ACE_High_Res_Timer::global_scale_factor_type scale_factor);
  protected:
-  void dump_latency_stats (ACE_TCHAR *out_msg, ACE_UINT32 sf);
+  void dump_latency_stats (ACE_TCHAR *out_msg,
+                           ACE_High_Res_Timer::global_scale_factor_type sf);
 
   /// Base and end times
   ACE_hrtime_t base_time_;
