@@ -204,7 +204,7 @@ public:
   unsigned long operator () (unsigned long t) const;
 };
 
-#if !defined (ACE_LACKS_LONGLONG_T) && (ACE_SIZEOF_LONG < 8)
+#if (ACE_SIZEOF_LONG < 8)
 /**
  * @brief Function object for hashing a signed 64-bit number
  */
@@ -215,10 +215,8 @@ public:
   /// Simply returns t
   unsigned long operator () (ACE_INT64 t) const;
 };
-#endif /* !ACE_LACKS_LONGLONG_T && ACE_SIZEOF_LONG < 8 */
+#endif /* ACE_SIZEOF_LONG < 8 */
 
-// We can do this even if ACE_LACKS_UNSIGNEDLONGLONG_T because there's an
-// emulation for it in ACE_U_LongLong.
 #if (ACE_SIZEOF_LONG < 8)
 /**
  * @brief Function object for hashing an unsigned 64-bit number

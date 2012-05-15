@@ -59,11 +59,7 @@ namespace TAO_Notify
   {
     ACE_TCHAR buf[128];
     ACE_UINT64 us = p.value();
-#ifdef ACE_LACKS_LONGLONG_T
-    us.as_string(buf);
-#else
     ACE_OS::sprintf(buf, ACE_UINT64_FORMAT_SPECIFIER, us);
-#endif /* ACE_LACKS_LONGLONG_T */
     value = ACE_TEXT_ALWAYS_CHAR (buf);
   }
 

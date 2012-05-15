@@ -316,9 +316,7 @@ run_main (int, ACE_TCHAR *[])
   retval += test <short, int> (ACE_TEXT("short"), ITERATIONS);
   retval += test <unsigned short, int> (ACE_TEXT("unsigned short"), ITERATIONS);
   retval += test <bool> (ACE_TEXT("bool"), ITERATIONS);
-#if !defined (ACE_LACKS_LONGLONG_T)
   retval += test <long long, int> (ACE_TEXT("long long"), ITERATIONS);
-#endif
 
 #if defined (ACE_HAS_THREADS)
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing exchange with long\n")));

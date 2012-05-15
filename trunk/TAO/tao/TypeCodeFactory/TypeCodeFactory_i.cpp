@@ -528,7 +528,6 @@ TAO_TypeCodeFactory_i::create_union_tc (
                                   CORBA::NO_MEMORY ());
               }
               break;
-#if !defined (ACE_LACKS_LONGLONG_T)
             case CORBA::tk_ulonglong:
               {
                 CORBA::ULongLong label;
@@ -550,7 +549,6 @@ TAO_TypeCodeFactory_i::create_union_tc (
                                   CORBA::NO_MEMORY ());
               }
               break;
-#endif  /* !ACE_LACKS_LONGLONG_T */
             default:
               throw ::CORBA::BAD_PARAM (
                 CORBA::OMGVMCID | 20,
@@ -873,9 +871,7 @@ TAO_TypeCodeFactory_i::compute_default_label (
     CORBA::UShort ushort_val;
     CORBA::Long long_val;
     CORBA::ULong ulong_val;
-#if !defined (ACE_LACKS_LONGLONG_T)
     CORBA::ULongLong ulonglong_val;
-#endif /* ACE_LACKS_LONGLONG_T */
     CORBA::ULong enum_val;
     // TODO - handle (u)longlong types
   } dv, u;
@@ -886,9 +882,7 @@ TAO_TypeCodeFactory_i::compute_default_label (
   dv.ushort_val = 0;
   dv.long_val = ACE_INT32_MIN;
   dv.ulong_val = 0;
-#if !defined (ACE_LACKS_LONGLONG_T)
   dv.ulonglong_val = 0;
-#endif /* ACE_LACKS_LONGLONG_T */
   dv.enum_val = 0;
 
   CORBA::ULong const len = members.length ();
@@ -965,7 +959,6 @@ TAO_TypeCodeFactory_i::compute_default_label (
                   success = false;
                 }
               break;
-#if !defined (ACE_LACKS_LONGLONG_T)
             case CORBA::tk_ulonglong:
               members[i].label >>= u.ulonglong_val;
 
@@ -975,7 +968,6 @@ TAO_TypeCodeFactory_i::compute_default_label (
                   success = false;
                 }
               break;
-#endif /* ACE_LACKS_LONGLONG_T */
             case CORBA::tk_enum:
             {
               TAO::Any_Impl *impl = members[i].label.impl ();
@@ -1086,7 +1078,6 @@ TAO_TypeCodeFactory_i::compute_default_label (
                  case_type (dv.ulong_val));
       }
       break;
-#if !defined (ACE_LACKS_LONGLONG_T)
     case CORBA::tk_ulonglong:
       {
         typedef TAO::TypeCode::Case_T<CORBA::ULongLong,
@@ -1097,7 +1088,6 @@ TAO_TypeCodeFactory_i::compute_default_label (
                  case_type (dv.ulonglong_val));
       }
       break;
-#endif /* ACE_LACKS_LONGLONG_T */
     case CORBA::tk_enum:
       {
         // Enumerators are encoded as CORBA::ULong.

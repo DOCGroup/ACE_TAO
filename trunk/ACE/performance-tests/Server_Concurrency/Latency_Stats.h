@@ -35,12 +35,7 @@ inline void
 Latency_Stats::sample (ACE_hrtime_t sample)
 {
   this->sum_  += sample;
-#ifndef ACE_LACKS_LONGLONG_T
   this->sum2_ += sample * sample;
-#else
-  // possible loss of precision here due to lack of 64bit support
-  this->sum2_ += sample * sample.lo();
-#endif
   if (this->n_ == 0)
     {
       this->min_ = sample;
@@ -61,13 +56,8 @@ Latency_Stats::dump_results (const ACE_TCHAR *test_name,
     return;
 
   ACE_hrtime_t avg = this->sum_ / this->n_;
-#ifndef ACE_LACKS_LONGLONG_T
   ACE_hrtime_t dev =
     this->sum2_ / this->n_ - avg*avg;
-#else
-  ACE_hrtime_t dev =
-    this->sum2_ / this->n_ - avg.lo()*avg.lo();
-#endif
   ACE_High_Res_Timer::global_scale_factor_type gsf =
     ACE_High_Res_Timer::global_scale_factor ();
 

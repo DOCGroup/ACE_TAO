@@ -230,7 +230,7 @@ ACE::send_i (ACE_HANDLE handle, const void *buf, size_t len)
 ACE_INLINE ssize_t
 ACE::recv_i (ACE_HANDLE handle, void *buf, size_t len)
 {
-#if defined (ACE_WIN32) || defined (ACE_OPENVMS) || defined (ACE_TANDEM_T1248_PTHREADS)
+#if defined (ACE_WIN32) || defined (ACE_OPENVMS)
   return ACE_OS::recv (handle, (char *) buf, len);
 #else
   return ACE_OS::read (handle, (char *) buf, len);

@@ -1123,16 +1123,12 @@ basic_visitor::gen_label_value (AST_UnionLabel *node)
         *os << ev->u.ulval;
         break;
       case AST_Expression::EV_longlong:
-#if ! defined (ACE_LACKS_LONGLONG_T)
         this->os->print ("%lld", ev->u.llval);
-#endif /* ! defined (ACE_LACKS_LONGLONG_T) */
         break;
       case AST_Expression::EV_ulonglong:
-#if ! defined (ACE_LACKS_LONGLONG_T)
         *os << "ACE_UINT64_LITERAL (";
         this->os->print (ACE_UINT64_FORMAT_SPECIFIER_ASCII, ev->u.ullval);
         *os << ")";
-#endif /* ! defined (ACE_LACKS_LONGLONG_T) */
         break;
       case AST_Expression::EV_char:
         *os << ev->u.cval;

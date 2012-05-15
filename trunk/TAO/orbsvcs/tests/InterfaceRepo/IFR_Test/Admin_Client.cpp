@@ -2109,16 +2109,9 @@ Admin_Client::constant_test (void)
 
   if (this->debug_)
     {
-#if defined (ACE_LACKS_LONGLONG_T)
-      char buffer[32];
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("ConstantDef::value (ulonglong): %C\n"),
-                  out_ull_val.as_string (buffer)));
-#else
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("ConstantDef::value (ulonglong): %Q\n"),
                   out_ull_val));
-#endif
     }
   ACE_TEST_ASSERT (out_ull_val == ull_val);
 

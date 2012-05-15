@@ -81,13 +81,7 @@ namespace TAO
       CORBA::Char c;
       CORBA::Octet o;
       CORBA::LongLong ll;
-#if !defined (ACE_LACKS_LONGLONG_T) && !defined (ACE_LACKS_UNSIGNEDLONGLONG_T)
       CORBA::ULongLong ull;
-#elif defined (ACE_LACKS_UNSIGNEDLONGLONG_T)
-      // Platform has signed long long but not unsigned long long.
-      // Use signed long long as the container.
-      CORBA::LongLong ull;
-#endif
       CORBA::LongDouble ld;
       CORBA::WChar wc;
     }u_;

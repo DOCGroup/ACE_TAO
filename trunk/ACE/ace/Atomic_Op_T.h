@@ -88,22 +88,17 @@ struct ACE_Type_Traits<unsigned long>
   typedef unsigned long parameter_type;
 };
 
-#ifndef ACE_LACKS_LONGLONG_T
 template<>
 struct ACE_Type_Traits<long long>
 {
   typedef long long parameter_type;
 };
-#endif  /* !ACE_LACKS_LONGLONG_T */
 
-#if !defined (ACE_LACKS_LONGLONG_T) \
-  && !defined (ACE_LACKS_UNSIGNEDLONGLONG_T)
 template<>
 struct ACE_Type_Traits<unsigned long long>
 {
   typedef unsigned long long parameter_type;
 };
-#endif  /* !ACE_LACKS_LONGLONG_T && !ACE_LACKS_UNSIGNEDLONGLONG_T */
 
 template<>
 struct ACE_Type_Traits<float>

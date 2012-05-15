@@ -1,3 +1,12 @@
+Tue May 15 18:17:45 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * performance-tests/Protocols/Sender/Sender_exec.cpp:
+        * tools/IDL3_to_IDL2/basic_visitor.cpp:
+        * tools/IDL3_to_XMI/be_sunsoft.cpp:
+          Removed support for Tandem NSK. That was the last platform that
+          needed the emulated versions of ACE_INT64 and ACE_UINT64, that
+          emulation has now been removed
+
 Tue May 15 13:35:32 UTC 2012  Marcel Smit  <msmit@remedy.nl>
 
         * MPC/config/dds4ccm.mpb:

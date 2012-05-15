@@ -41,11 +41,7 @@ Any_String (const CORBA::Any& any)
     }
   else if (any >>= ull)
     {
-#if defined (ACE_LACKS_LONGLONG_T)
-      ACE_OS::strcpy (out, ull.as_string (out));
-#else
       ACE_OS::sprintf (out, ACE_UINT64_FORMAT_SPECIFIER_ASCII, ull);
-#endif /* ACE_LACKS_LONGLONG_T */
     }
   else
     {

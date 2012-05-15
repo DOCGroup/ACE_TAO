@@ -76,10 +76,6 @@ ACE_OS::waitpid (pid_t pid,
   if (handle == 0)
     ::CloseHandle (phandle);
   return result;
-#elif defined(ACE_TANDEM_T1248_PTHREADS)
-  ACE_UNUSED_ARG (handle);
-  ACE_OSCALL_RETURN (::spt_waitpid (pid, status, wait_options),
-                     pid_t, -1);
 #else
   ACE_UNUSED_ARG (handle);
   ACE_OSCALL_RETURN (::waitpid (pid, status, wait_options),

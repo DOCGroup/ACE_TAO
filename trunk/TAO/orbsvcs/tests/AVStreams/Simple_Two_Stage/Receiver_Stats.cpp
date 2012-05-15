@@ -52,12 +52,7 @@ Receiver_Stats::dump_results (const ACE_TCHAR *msg,
 
   ACE_UINT64 avg = this->sum_ / this->samples_count_;
   ACE_UINT64 dev =
-#if defined ACE_LACKS_LONGLONG_T
-    static_cast<ACE_U_LongLong> (this->sum2_ / this->samples_count_)
-    - avg * ACE_U64_TO_U32(avg);
-#else  /* ! ACE_LACKS_LONGLONG_T */
     this->sum2_ / this->samples_count_ - avg * avg;
-#endif /* ! ACE_LACKS_LONGLONG_T */
 
   double l_min = ACE_CU64_TO_CU32 (this->min_) / sf;
   double l_max = ACE_CU64_TO_CU32 (this->max_) / sf;

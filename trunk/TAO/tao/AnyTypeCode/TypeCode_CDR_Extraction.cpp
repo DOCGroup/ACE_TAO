@@ -683,7 +683,6 @@ TAO::TypeCodeFactory::tc_union_factory (CORBA::TCKind /* kind */,
                             false);
           }
           break;
-#if !defined (ACE_LACKS_LONGLONG_T)
         case CORBA::tk_ulonglong:
           {
             CORBA::ULongLong label;
@@ -699,7 +698,6 @@ TAO::TypeCodeFactory::tc_union_factory (CORBA::TCKind /* kind */,
                             false);
           }
           break;
-#endif  /* !ACE_LACKS_LONGLONG_T */
         default:
           return false;
         }

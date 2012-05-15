@@ -108,11 +108,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           ACE_hrtime_t elapsed_time = ACE_OS::gethrtime () - start;
 
           // convert to microseconds
-#if !defined ACE_LACKS_LONGLONG_T
           ACE_UINT32 usecs = ACE_UINT32(elapsed_time / gsf);
-#else  /* ! ACE_LACKS_LONGLONG_T */
-          ACE_UINT32 usecs = elapsed_time / gsf;
-#endif /* ! ACE_LACKS_LONGLONG_T */
 
           double bytes =
             (1000000.0 * message_count * message_size) / usecs;

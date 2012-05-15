@@ -212,11 +212,7 @@ to_seconds (ACE_UINT64 hrtime,
             ACE_High_Res_Timer::global_scale_factor_type sf)
 {
   double seconds =
-#if defined ACE_LACKS_LONGLONG_T
-    hrtime / sf;
-#else  /* ! ACE_LACKS_LONGLONG_T */
-  static_cast<double> (ACE_UINT64_DBLCAST_ADAPTER (hrtime / sf));
-#endif /* ! ACE_LACKS_LONGLONG_T */
+    static_cast<double> (ACE_UINT64_DBLCAST_ADAPTER (hrtime / sf));
   seconds /= ACE_HR_SCALE_CONVERSION;
 
   return seconds;

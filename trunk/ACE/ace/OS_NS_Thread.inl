@@ -2511,10 +2511,7 @@ ACE_OS::sigwait (sigset_t *sset, int *sig)
       // Cygwin has sigwait definition, but it is not implemented
       ACE_UNUSED_ARG (sset);
       ACE_NOTSUP_RETURN (-1);
-#   elif defined (ACE_TANDEM_T1248_PTHREADS)
-      errno = ::spt_sigwait (sset, sig);
-      return errno == 0  ?  *sig  :  -1;
-#   else   /* this is draft 7 or std */
+#   else   /* this is std */
       errno = ::sigwait (sset, sig);
       return errno == 0  ?  *sig  :  -1;
 #   endif /* CYGWIN32 */

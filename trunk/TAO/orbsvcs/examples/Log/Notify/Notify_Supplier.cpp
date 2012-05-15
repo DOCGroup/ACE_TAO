@@ -184,21 +184,13 @@ Supplier::run (int argc, ACE_TCHAR* argv[])
       ACE_DEBUG ((LM_DEBUG,
                   "Calling NotifyLog get_n_records...\n"));
 
-#ifndef ACE_LACKS_LONGLONG_T
       CORBA::ULongLong retval = notify_log_->get_n_records ();
-#else
-      CORBA::Long retval = notify_log_->get_n_records ().lo();
-#endif
 
       ACE_DEBUG ((LM_DEBUG, "Number of records in Log = %d\n", retval));
 
       ACE_DEBUG ((LM_DEBUG,
                   "Calling NotifyLog::get_current_size...\n"));
-#ifndef ACE_LACKS_LONGLONG_T
        retval = notify_log_->get_current_size ();
-#else
-       retval = notify_log_->get_current_size ().lo();
-#endif
 
       ACE_DEBUG ((LM_DEBUG, "Size of data in Log = %d\n", retval));
 
@@ -209,15 +201,9 @@ Supplier::run (int argc, ACE_TCHAR* argv[])
 
       CORBA::ULong j = 0;
       for (; j < rec_list->length();++j)
-#ifndef ACE_LACKS_LONGLONG_T
-       ACE_DEBUG ((LM_DEBUG,
+      ACE_DEBUG ((LM_DEBUG,
                    "id = %Q, time= %Q\n",
                    rec_list[j].id, rec_list[j].time));
-#else
-       ACE_DEBUG ((LM_DEBUG,
-                   "id = %u, time= %u\n",
-                   rec_list[j].id.lo(), rec_list[j].time.lo()));
-#endif
 
      ACE_DEBUG ((LM_DEBUG,
                  "Deleting records...\n"));
@@ -226,21 +212,13 @@ Supplier::run (int argc, ACE_TCHAR* argv[])
 
      ACE_DEBUG ((LM_DEBUG,
                  "Calling NotifyLog::get_n_records...\n"));
-#ifndef ACE_LACKS_LONGLONG_T
      retval = notify_log_->get_n_records ();
-#else
-     retval = notify_log_->get_n_records ().lo();
-#endif
 
      ACE_DEBUG ((LM_DEBUG, "Number of records in Log after delete = %d\n",
                  retval));
 
      ACE_DEBUG ((LM_DEBUG, "Geting the current_size again...\n"));
-#ifndef ACE_LACKS_LONGLONG_T
      retval = notify_log_->get_current_size ();
-#else
-     retval = notify_log_->get_current_size ().lo();
-#endif
 
      ACE_DEBUG ((LM_DEBUG, "Size of data in Log = %d\n", retval));
 

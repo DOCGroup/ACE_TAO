@@ -174,17 +174,10 @@ BasicLog_Test::test_LogAction ()
       ACE_DEBUG ((LM_DEBUG,
                  "The log's full action successfully set to halt\n"));
 
-#ifndef ACE_LACKS_LONGLONG_T
       ACE_DEBUG ((LM_INFO,
                  "The current size %Q, max size %Q\n",
                  basicLog_->get_current_size (),
                  basicLog_->get_max_size()));
-#else
-      ACE_DEBUG ((LM_DEBUG,
-                 "The current size %u , max size %u\n",
-                 basicLog_->get_current_size().lo (),
-                 basicLog_->get_max_size().lo ()));
-#endif
 
       // make sure that it is full and when writing
       this->write_records (0);
@@ -253,15 +246,9 @@ int BasicLog_Test::display_records ()
 
   CORBA::ULong j = 0;
   for (; j < rec_list->length();++j)  //dhanvey added info
-#ifndef ACE_LACKS_LONGLONG_T
    ACE_DEBUG ((LM_DEBUG,
                "id = %Q, time= %Q\n",
                rec_list[j].id, rec_list[j].time));
-#else
-   ACE_DEBUG ((LM_DEBUG,
-               "id = %u, time= %u\n",
-               rec_list[j].id.lo(), rec_list[j].time.lo()));
-#endif
 
   return 0;
 
@@ -275,11 +262,7 @@ int BasicLog_Test::write_records (CORBA::ULongLong numberOfRecords)
       numOfRecs = basicLog_->get_max_size();
     }
 
-#ifndef ACE_LACKS_LONGLONG_T
   ACE_DEBUG ((LM_INFO,"B_test: Write_records: Max size in bytes %Q.\n", numOfRecs));
-#else
-  ACE_DEBUG ((LM_INFO,"B_test: Write_records: currentsize in bytes %u.\n", numOfRecs.lo()));
-#endif
 
   int i = 0;
   CORBA::ULongLong l = 0;
@@ -326,13 +309,8 @@ int BasicLog_Test::write_records (CORBA::ULongLong numberOfRecords)
       }
   }
 
-#ifndef ACE_LACKS_LONGLONG_T
     ACE_DEBUG ((LM_INFO,"B_test: Write_records: currentsize in bytes %Q.\n",
                basicLog_->get_current_size()));
-#else
-    ACE_DEBUG ((LM_DEBUG,"B_test: Write_records: currentsize in bytes %u.\n",
-               basicLog_->get_current_size().lo()));
-#endif
 
 //dhanvey
   CORBA::ULongLong nrecords = basicLog_->get_n_records();
@@ -640,18 +618,10 @@ BasicLog_Test::test_week_mask (void)
 
 int BasicLog_Test::delete_records (CORBA::ULongLong /* numberOfRecords */)
 {
-
-#ifndef ACE_LACKS_LONGLONG_T
   ACE_DEBUG ((LM_INFO,
               " before delete -- curr size %Q, max %Q\n",
               basicLog_->get_current_size (),
               basicLog_->get_max_size()));
-#else
-  ACE_DEBUG ((LM_DEBUG,
-              "2ndThe current size %u , max size %u\n",
-              basicLog_->get_current_size().lo(),
-              basicLog_->get_max_size().lo()));
-#endif
 
   CORBA::ULongLong nrecords = basicLog_->get_n_records ();
 
@@ -666,17 +636,10 @@ int BasicLog_Test::delete_records (CORBA::ULongLong /* numberOfRecords */)
               "Number of records in Log after delete = %d\n",
               retVal));
 
-#ifndef ACE_LACKS_LONGLONG_T
   ACE_DEBUG ((LM_INFO,
               " after delete -- curr size %Q, max %Q\n",
               basicLog_->get_current_size (),
               basicLog_->get_max_size ()));
-#else
-  ACE_DEBUG ((LM_DEBUG,
-              "2ndThe current size %u , max size %u\n",
-              basicLog_->get_current_size ().lo (),
-              basicLog_->get_max_size ().lo ()));
-#endif
 
   nrecords = basicLog_->get_n_records ();
 

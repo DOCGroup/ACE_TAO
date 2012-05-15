@@ -324,11 +324,7 @@ Demux_Test_Client::run_linear_test (void)
 
             m++;
             ACE_OS::fprintf (this->result_fp_, "%d %f\n", m,
-#if defined(ACE_HRTIME_T_IS_BASIC_TYPE)
-                             1.0 * (end - start));
-#else
                              1.0 * ACE_UINT64_DBLCAST_ADAPTER (end - start));
-#endif
           }
 
   return 0;

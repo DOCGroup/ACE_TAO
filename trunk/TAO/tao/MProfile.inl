@@ -1,7 +1,5 @@
 // -*- C++ -*-
-//
 // $Id$
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -41,8 +39,7 @@ TAO_MProfile::operator= (const TAO_MProfile& rhs)
   return *this;
 }
 
-// Cyclic get next.  It will simply cycle through the complete list.
-
+/// Cyclic get next.  It will simply cycle through the complete list.
 ACE_INLINE TAO_Profile *
 TAO_MProfile::get_cnext (void)
 {
@@ -55,9 +52,8 @@ TAO_MProfile::get_cnext (void)
   return pfiles_[current_++];
 }
 
-// This will return the next element until either null is found or the
-// end of list.  It then continues to return NULL until rewind.
-
+/// This will return the next element until either null is found or the
+/// end of list.  It then continues to return NULL until rewind.
 ACE_INLINE TAO_Profile *
 TAO_MProfile::get_next (void)
 {
@@ -96,7 +92,6 @@ TAO_MProfile::get_prev (void)
 }
 
 // does not affect the current_ setting!
-
 ACE_INLINE TAO_Profile *
 TAO_MProfile::get_profile (TAO_PHandle handle)
 {
