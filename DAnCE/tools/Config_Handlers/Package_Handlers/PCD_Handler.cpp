@@ -2,7 +2,7 @@
 #include "tao/AnyTypeCode/AnyTypeCode_methods.h"
 #include "dance/Logger/Log_Macros.h"
 #include "dance/Deployment/Deployment_Packaging_DataC.h"
-#include "XML_Typedefs.h"
+#include "XML/XML_Typedefs.h"
 #include "XML/XercesString.h"
 #include "Utils/Exceptions.h"
 #include "Package_Handlers/PCD_Handler.h"
@@ -24,7 +24,7 @@ namespace DAnCE
       PCD_Handler::package_config (const ACE_TCHAR *uri,
                                    ::Deployment::PackageConfiguration &toconfig)
       {
-        XERCES_CPP_NAMESPACE::DOMDocument *dom = XML_Helper::XML_HELPER.create_dom (uri);
+        XERCES_CPP_NAMESPACE::DOMDocument *dom = XML::XML_Typedef::XML_HELPER.create_dom (uri);
 
         if (dom == 0)
           {
@@ -33,9 +33,9 @@ namespace DAnCE
             throw Parse_Error (error);
           }
 
-        DAnCE::XML::XStr root = dom->getDocumentElement ()->getTagName ();
+        XML::XStr root = dom->getDocumentElement ()->getTagName ();
 
-        if (root == DAnCE::XML::XStr (
+        if (root == XML::XStr (
                     ACE_TEXT ("Deployment:topLevelPackageDescription")))
           {
             TopLevelPackageDescription tpd;
@@ -45,7 +45,7 @@ namespace DAnCE
             PCD_Handler::package_config (*(*tpd.begin_package ()),
                                          toconfig);
           }
-        else if (root == DAnCE::XML::XStr (
+        else if (root == XML::XStr (
           ACE_TEXT ("Deployment:packageConfiguration")))
           {
             PackageConfiguration pcd;
@@ -146,7 +146,7 @@ namespace DAnCE
       PackageConfiguration * PCD_Handler::resolve_package_config (const ACE_TCHAR *uri)
       {
         xercesc::DOMDocument* dom =
-          XML_Helper::XML_HELPER.create_dom (uri);
+          XML::XML_Typedef::XML_HELPER.create_dom (uri);
 
         if (!dom)
           throw Parse_Error (ACE_TEXT ("Unable to create DOM for PackageConfiguration"));

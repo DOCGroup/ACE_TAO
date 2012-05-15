@@ -19,66 +19,64 @@ using std::memcpy;
 
 // Utility class that provides a std::string like facade to XMLString.
 // Doesn't implement all of the methods of std::string.
-#include "XML/DAnCE_XML_Utils_Export.h"
+#include "XML_Utils_Export.h"
 
-namespace DAnCE
+namespace XML
 {
-  namespace XML
+  class XML_Utils_Export XStr
   {
-    class DANCE_XML_Utils_Export XStr
-    {
-    public:
-      XStr() : _wstr(0L) { };
+  public:
+    XStr() : _wstr(0L) { };
 
 // On unicode windows, ACE_TCHAR == XMLCh
 #if !defined (_MSC_VER) || !defined (ACE_USES_WCHAR)
-      XStr (const ACE_TCHAR* str);
+    XStr (const ACE_TCHAR* str);
 #endif
 
-      XStr (XMLCh* wstr);
+    XStr (XMLCh* wstr);
 
-      XStr (const XMLCh* wstr);
+    XStr (const XMLCh* wstr);
 
-      XStr (const XStr& copy);
+    XStr (const XStr& copy);
 
-      XStr& operator= (const XStr& rhs);
+    XStr& operator= (const XStr& rhs);
 
-      ~XStr();
+    ~XStr();
 
-      const XMLCh* begin() const;
+    const XMLCh* begin() const;
 
-      const XMLCh* end() const;
+    const XMLCh* end() const;
 
-      bool append(const XMLCh* tail);
+    bool append(const XMLCh* tail);
 
-      bool erase (const XMLCh* head, const XMLCh* tail);
+    bool erase (const XMLCh* head, const XMLCh* tail);
 
-      int size() const;
+    int size() const;
 
-      XMLCh operator [] (const int i);
+    XMLCh operator [] (const int i);
 
-      XMLCh operator [] (const int i) const;
+    XMLCh operator [] (const int i) const;
 
-      operator const XMLCh* () const { return _wstr; };
+    operator const XMLCh* () const { return _wstr; };
 
-      XMLCh * release (void);
+    XMLCh * release (void);
 
-      /// Release the held string and free its memory.
-      void reset (void);
-    private:
+    /// Release the held string and free its memory.
+    void reset (void);
+  private:
 
-      XMLCh* _wstr; // Internal representation
+    XMLCh* _wstr; // Internal representation
 
-    };
+  };
 
-    DANCE_XML_Utils_Export bool operator== (const XStr& lhs, const XStr& rhs);
-    DANCE_XML_Utils_Export bool operator!= (const XStr& lhs, const XStr& rhs);
+  XML_Utils_Export bool operator== (const XStr& lhs, const XStr& rhs);
+  XML_Utils_Export bool operator!= (const XStr& lhs, const XStr& rhs);
 
-    DANCE_XML_Utils_Export std::ostream&
-    operator<< (std::ostream& o, XStr const& str);
+  XML_Utils_Export std::ostream&
+  operator<< (std::ostream& o, XStr const& str);
 
-  }
 }
+
 #include /**/ "ace/post.h"
 
 #endif /* _XERCESSTRING_H */

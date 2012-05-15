@@ -1,3 +1,51 @@
+Tue May 15 13:43:53 UTC 2012  Marcel Smit  <msmit@remedy.nl>
+
+        * MPC/config/dance_config_handlers.mpb:
+        * MPC/config/dance_config_handlers_base.mpb:
+        * MPC/config/xml_utils.mpb:
+
+        * dance/RepositoryManager/RepositoryManager_Impl.cpp:
+
+        * tools/Config_Handlers/Config_Handlers.mpc:
+        * tools/Config_Handlers/DD_Handler.cpp:
+
+        * tools/Config_Handlers/Package_Handlers/CAD_Handler.h:
+        * tools/Config_Handlers/Package_Handlers/CID_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/CPD_Handler.h:
+        * tools/Config_Handlers/Package_Handlers/CPD_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/Comp_Intf_Descr_Handler.h:
+        * tools/Config_Handlers/Package_Handlers/Comp_Intf_Descr_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/IAD_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/PCD_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/Package_Handlers.mpc:
+        * tools/Config_Handlers/Package_Handlers/SID_Handler.h:
+
+        * tools/Config_Handlers/XML_File_Intf.cpp:
+
+        * tools/XML/XML.mpc:
+        * tools/XML/XML_Error_Handler.h:
+        * tools/XML/XML_Error_Handler.cpp:
+        * tools/XML/XML_Helper.h:
+        * tools/XML/XML_Helper.tpp:
+        * tools/XML/XML_Schema_Resolver.h:
+        * tools/XML/XML_Schema_Resolver.tpp:
+        * tools/XML/XML_Schema_Resolver.cpp:
+        * tools/XML/XML_Typedefs.h:
+        * tools/XML/XML_Typedefs.cpp:
+        * tools/XML/XML_Utils_Export.h:
+        * tools/XML/XercesString.h:
+        * tools/XML/XercesString.cpp:
+
+        * MPC/config/dance_xml_utils.mpb:
+
+        * tools/Config_Handlers/XML_Typedefs.h:
+        * tools/Config_Handlers/XML_Typedefs.cpp:
+
+        * tools/XML/DAnCE_XML_Utils_Export.h:
+
+          Made the XML utils more generic so that it can be used in
+          dds4ccm
+
 Sun May 13 12:50:40 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * dance/NodeApplication/NodeApplication_Impl.cpp:

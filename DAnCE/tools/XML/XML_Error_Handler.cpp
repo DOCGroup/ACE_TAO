@@ -11,60 +11,57 @@
 
 using xercesc::SAXParseException;
 
-namespace DAnCE
+namespace XML
 {
-  namespace XML
+  XML_Error_Handler::XML_Error_Handler (void)
+    : errors_ (false)
   {
-    XML_Error_Handler::XML_Error_Handler (void)
-      : errors_ (false)
-    {
-    }
+  }
 
-    XML_Error_Handler::~XML_Error_Handler()
-    {
-    }
+  XML_Error_Handler::~XML_Error_Handler()
+  {
+  }
 
-    void XML_Error_Handler::warning(const SAXParseException& toCatch)
-    {
-      XStr file (toCatch.getSystemId ());
-      XStr msg (toCatch.getMessage ());
+  void XML_Error_Handler::warning(const SAXParseException& toCatch)
+  {
+    XStr file (toCatch.getSystemId ());
+    XStr msg (toCatch.getMessage ());
 
-      std::cerr << "Warning: " << file << ':' << toCatch.getLineNumber ()
-                << ':' << toCatch.getColumnNumber () << " - "
-                << msg << std::endl;
-    }
+    std::cerr << "Warning: " << file << ':' << toCatch.getLineNumber ()
+              << ':' << toCatch.getColumnNumber () << " - "
+              << msg << std::endl;
+  }
 
-    void XML_Error_Handler::error(const SAXParseException& toCatch)
-    {
-      XStr file (toCatch.getSystemId ());
-      XStr msg (toCatch.getMessage ());
+  void XML_Error_Handler::error(const SAXParseException& toCatch)
+  {
+    XStr file (toCatch.getSystemId ());
+    XStr msg (toCatch.getMessage ());
 
-      std::cerr << "Error: " << file << ':' << toCatch.getLineNumber ()
-                << ':' << toCatch.getColumnNumber () << " - "
-                << msg << std::endl;
-      this->errors_ = true;
-    }
+    std::cerr << "Error: " << file << ':' << toCatch.getLineNumber ()
+              << ':' << toCatch.getColumnNumber () << " - "
+              << msg << std::endl;
+    this->errors_ = true;
+  }
 
-    void XML_Error_Handler::fatalError(const SAXParseException& toCatch)
-    {
-      XStr file (toCatch.getSystemId ());
-      XStr msg (toCatch.getMessage ());
+  void XML_Error_Handler::fatalError(const SAXParseException& toCatch)
+  {
+    XStr file (toCatch.getSystemId ());
+    XStr msg (toCatch.getMessage ());
 
-      std::cerr << "Fatal Error: " << file << ':' << toCatch.getLineNumber ()
-                << ':' << toCatch.getColumnNumber () << " - "
-                << msg << std::endl;
-      this->errors_ = true;
-    }
+    std::cerr << "Fatal Error: " << file << ':' << toCatch.getLineNumber ()
+              << ':' << toCatch.getColumnNumber () << " - "
+              << msg << std::endl;
+    this->errors_ = true;
+  }
 
-    void XML_Error_Handler::resetErrors()
-    {
-      this->errors_ = false;
-    }
+  void XML_Error_Handler::resetErrors()
+  {
+    this->errors_ = false;
+  }
 
-    bool
-    XML_Error_Handler::getErrors (void) const
-    {
-      return this->errors_;
-    }
+  bool
+  XML_Error_Handler::getErrors (void) const
+  {
+    return this->errors_;
   }
 }
