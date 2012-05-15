@@ -13,6 +13,7 @@
 #include "Send_Task.h"
 #include "Send_Task_Stopper.h"
 #include "ace/Auto_Ptr.h"
+#include "ace/High_Res_Timer.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -41,7 +42,7 @@ public:
                       CORBA::Long experiment_id,
                       CORBA::Long base_event_type,
                       int workload,
-                      ACE_UINT32 gsf,
+                      ACE_High_Res_Timer::global_scale_factor_type gsf,
                       int nthreads,
                       int thread_priority,
                       int thread_sched_class,

@@ -163,7 +163,5 @@ Job_i::dump_stats (void)
                    ACE_SIZE_T_FORMAT_SPECIFIER,
                    guid_);
 
-  task_stats_->dump_samples (fname,
-           msg,
-           ACE_High_Res_Timer::global_scale_factor ());
+  task_stats_->dump_samples (fname, msg);
 }

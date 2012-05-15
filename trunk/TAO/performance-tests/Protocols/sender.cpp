@@ -161,7 +161,7 @@ parse_args (int argc, ACE_TCHAR **argv)
 
 double
 to_seconds (ACE_UINT64 hrtime,
-            ACE_UINT32 sf)
+            ACE_High_Res_Timer::global_scale_factor_type sf)
 {
   double seconds = static_cast<double> (
                      ACE_UINT64_DBLCAST_ADAPTER (hrtime / sf));
