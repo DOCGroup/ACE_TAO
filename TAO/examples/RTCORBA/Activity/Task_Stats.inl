@@ -27,11 +27,7 @@ Task_Stats::sample (ACE_UINT64 inv_start_time, ACE_UINT64 inv_end_time)
       this->exec_time_max_ = exec_value;
       this->exec_time_max_at_ = this->samples_count_;
       this->sum_ = exec_value;
-#if defined ACE_LACKS_LONGLONG_T
-      this->sum2_ = exec_value * ACE_U64_TO_U32 (exec_value);
-#else  /* ! ACE_LACKS_LONGLONG_T */
       this->sum2_ = exec_value * exec_value;
-#endif /* ! ACE_LACKS_LONGLONG_T */
     }
   else
     {
@@ -47,11 +43,7 @@ Task_Stats::sample (ACE_UINT64 inv_start_time, ACE_UINT64 inv_end_time)
         }
 
       this->sum_  += exec_value;
-#if defined ACE_LACKS_LONGLONG_T
-      this->sum2_ += exec_value * ACE_U64_TO_U32 (exec_value);
-#else  /* ! ACE_LACKS_LONGLONG_T */
       this->sum2_ += exec_value * exec_value;
-#endif /* ! ACE_LACKS_LONGLONG_T */
  }
     return 0;
 }

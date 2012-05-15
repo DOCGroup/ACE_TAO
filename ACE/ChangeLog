@@ -1,3 +1,50 @@
+Tue May 15 18:16:09 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ACE.inl:
+        * ace/Atomic_Op_T.h:
+        * ace/Basic_Types.h:
+        * ace/Basic_Types.inl:
+        * ace/Basic_Types.cpp:
+        * ace/CDR_Base.h:
+        * ace/Functor.h:
+        * ace/Functor.inl:
+        * ace/Handle_Set.cpp:
+        * ace/High_Res_Timer.cpp:
+        * ace/Log_Msg.cpp:
+        * ace/Numeric_Limits.h:
+        * ace/OS_NS_Thread.inl:
+        * ace/OS_NS_Thread.cpp:
+        * ace/OS_NS_stdlib.inl:
+        * ace/OS_NS_sys_select.inl:
+        * ace/OS_NS_sys_wait.inl:
+        * ace/OS_NS_time.h:
+        * ace/OS_NS_time.inl:
+        * ace/OS_NS_unistd.inl:
+        * ace/Profile_Timer.cpp:
+        * ace/Sched_Params.cpp:
+        * ace/Stats.cpp:
+        * ace/Task.cpp:
+        * ace/Throughput_Stats.cpp:
+        * ace/Time_Value.h:
+        * ace/Time_Value.inl:
+        * ace/Truncate.h:
+        * ace/UUID.cpp:
+        * ace/os_include/os_pthread.h:
+        * performance-tests/Server_Concurrency/Latency_Stats.h:
+        * performance-tests/Server_Concurrency/Leader_Follower/leader_follower.cpp:
+        * performance-tests/Server_Concurrency/Queue_Based_Workers/workers.cpp:
+        * performance-tests/UDP/udp_test.cpp:
+        * tests/Atomic_Op_Test.cpp:
+        * tests/Basic_Types_Test.cpp:
+        * tests/CDR_Array_Test.cpp:
+          Removed support for Tandem NSK. That was the last platform that
+          needed the emulated versions of ACE_INT64 and ACE_UINT64, that
+          emulation has now been removed
+
+        * ace/config-tandem-nsk-mips-v2.h:
+        * ace/config-tandem-nsk-mips-v3.h:
+          Removed these files.
+
 Mon May 14 18:48:14 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/Server_Concurrency/Latency_Stats.h:

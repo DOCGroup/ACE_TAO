@@ -73,14 +73,7 @@ ACE_Throughput_Stats::dump_throughput (const ACE_TCHAR *msg,
 {
 #ifndef ACE_NLOGGING
   double seconds =
-# if defined ACE_LACKS_LONGLONG_T
-    elapsed_time / sf;
-#elif  defined (ACE_LACKS_UNSIGNEDLONGLONG_T)
-    static_cast<double> (ACE_UINT64_DBLCAST_ADAPTER (
-                           ACE_U_LongLong(elapsed_time / sf)));
-# else  /* ! ACE_LACKS_LONGLONG_T */
     static_cast<double> (ACE_UINT64_DBLCAST_ADAPTER (elapsed_time / sf));
-# endif /* ! ACE_LACKS_LONGLONG_T */
   seconds /= ACE_HR_SCALE_CONVERSION;
 
   const double t_avg = samples_count / seconds;

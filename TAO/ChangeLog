@@ -1,3 +1,55 @@
+Tue May 15 18:17:07 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/ast/ast_expression.cpp:
+        * TAO_IDL/ast/ast_union.cpp:
+        * TAO_IDL/be/be_helper.cpp:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/include/ast_expression.h:
+        * examples/RTCORBA/Activity/Task_Stats.inl:
+        * examples/RTCORBA/Activity/Task_Stats.cpp:
+        * examples/RTCORBA/Activity/Thread_Task.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
+        * orbsvcs/examples/Log/Basic/TLS_Client.cpp:
+        * orbsvcs/examples/Log/Event/Event_Supplier.cpp:
+        * orbsvcs/examples/Log/Notify/Notify_Supplier.cpp:
+        * orbsvcs/examples/Log/RTEvent/RTEvent_Supplier.cpp:
+        * orbsvcs/orbsvcs/IFRService/Container_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/UnionDef_i.cpp:
+        * orbsvcs/orbsvcs/Log/Hash_LogRecordStore.cpp:
+        * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp:
+        * orbsvcs/orbsvcs/Notify/Name_Value_Pair.cpp:
+        * orbsvcs/orbsvcs/Notify/XML_Saver.cpp:
+        * orbsvcs/orbsvcs/Time/Timer_Helper.cpp:
+        * orbsvcs/orbsvcs/Time_Utilities.cpp:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/Receiver_Stats.inl:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/Receiver_Stats.cpp:
+        * orbsvcs/tests/InterfaceRepo/IFR_Test/Admin_Client.cpp:
+        * orbsvcs/tests/Log/Basic_Log_Test/Basic_Log_Test.cpp:
+        * orbsvcs/tests/Notify/lib/Task_Stats.inl:
+        * orbsvcs/tests/Notify/lib/Task_Stats.cpp:
+        * orbsvcs/tests/Notify/lib/common.cpp:
+        * orbsvcs/tests/Time/Client_i.cpp:
+        * performance-tests/POA/Demux/demux_test_client.cpp:
+        * performance-tests/RTCorba/Thread_Pool/client.cpp:
+        * performance-tests/Throughput/Receiver.cpp:
+        * performance-tests/Throughput/client.cpp:
+        * tao/AnyTypeCode/Any_Basic_Impl.h:
+        * tao/AnyTypeCode/Any_Basic_Impl.cpp:
+        * tao/AnyTypeCode/TypeCode_CDR_Extraction.cpp:
+        * tao/Default_Endpoint_Selector_Factory.h:
+        * tao/DynamicAny/DynAny_i.cpp:
+        * tao/DynamicAny/DynUnion_i.cpp:
+        * tao/MProfile.inl:
+        * tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
+        * tao/orb.idl:
+        * tests/Param_Test/anyop.cpp:
+        * tests/Param_Test/ulonglong.cpp:
+        * tests/Policies/Manipulation.cpp:
+        * tests/Queued_Message_Test/Queued_Message_Test.cpp:
+          Removed support for Tandem NSK. That was the last platform that
+          needed the emulated versions of ACE_INT64 and ACE_UINT64, that
+          emulation has now been removed
+
 Tue May 15 13:43:00 UTC 2012  Marcel Smit  <msmit@remedy.nl>
 
         * TAO_IDL/be/be_codegen.cpp:

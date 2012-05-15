@@ -61,12 +61,6 @@ ACE_Thread_ID::to_string (char *thr_string) const
                    format,
                    static_cast <unsigned> (this->thread_id_));
 #else
-# if defined (ACE_TANDEM_T1248_PTHREADS)
-                  // Tandem pthread_t is a struct... yuck. So use the ACE 5.0
-                  // code for it.
-                  ACE_OS::strcpy (fp, "u");
-                  ACE_OS::sprintf (thr_string, format, thread_handle_);
-# else
                   // Yes, this is an ugly C-style cast, but the
                   // correct C++ cast is different depending on
                   // whether the t_id is an integral type or a pointer
@@ -77,7 +71,6 @@ ACE_Thread_ID::to_string (char *thr_string) const
                   ACE_OS::sprintf (thr_string,
                                    format,
                                    (unsigned long) thread_handle_);
-# endif /* ACE_TANDEM_T1248_PTHREADS */
 #endif /* ACE_WIN32 */
 }
 
@@ -3510,7 +3503,7 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
 #if defined (ACE_HAS_STHREADS)
   return ACE_OS::set_scheduling_params (sched_params, id);
 #elif defined (ACE_HAS_PTHREADS) && \
-      (!defined (ACE_LACKS_SETSCHED) || defined (ACE_TANDEM_T1248_PTHREADS) || \
+      (!defined (ACE_LACKS_SETSCHED) || \
       defined (ACE_HAS_PTHREAD_SCHEDPARAM))
   if (sched_params.quantum () != ACE_Time_Value::zero)
     {
@@ -3529,15 +3522,15 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
 
   if (sched_params.scope () == ACE_SCOPE_PROCESS)
     {
-# if defined(ACE_TANDEM_T1248_PTHREADS) || defined (ACE_HAS_PTHREAD_SCHEDPARAM)
+# if defined (ACE_HAS_PTHREAD_SCHEDPARAM)
       ACE_UNUSED_ARG (id);
       ACE_NOTSUP_RETURN (-1);
-# else  /* ! ACE_TANDEM_T1248_PTHREADS */
+# else  /* !ACE_HAS_PTHREAD_SCHEDPARAM */
       int result = ::sched_setscheduler (id == ACE_SELF ? 0 : id,
                                          sched_params.policy (),
                                          &param) == -1 ? -1 : 0;
       return result;
-# endif /* ! ACE_TANDEM_T1248_PTHREADS */
+# endif /* !ACE_HAS_PTHREAD_SCHEDPARAM */
     }
   else if (sched_params.scope () == ACE_SCOPE_THREAD)
     {

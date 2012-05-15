@@ -60,8 +60,6 @@ Client_i::test_for_universal_time (void)
       CosTime::UTO_var UTO_server =
         this->clerk_->universal_time ();
 
-
-#ifndef ACE_LACKS_LONGLONG_T
       ACE_DEBUG ((LM_DEBUG,
                   "\nTime = %Q\nInaccuracy = %Q\nTimeDiff = %d\nstruct.time = %Q"
                   "\nstruct.inacclo = %d\nstruct.inacchi = %d\nstruct.Tdf = %d\n",
@@ -72,19 +70,6 @@ Client_i::test_for_universal_time (void)
                   (UTO_server->utc_time ()).inacclo,
                   (UTO_server->utc_time ()).inacchi,
                   (UTO_server->utc_time ()).tdf));
-#else
-      ACE_DEBUG ((LM_DEBUG,
-                  "\nTime = %u\nInaccuracy = %u\nTimeDiff = %d\nstruct.time = %u"
-                  "\nstruct.inacclo = %d\nstruct.inacchi = %d\nstruct.Tdf = %d\n",
-                  UTO_server->time ().lo(),
-                  UTO_server->inaccuracy ().lo(),
-                  UTO_server->tdf (),
-                  (UTO_server->utc_time ()).time.lo(),
-                  (UTO_server->utc_time ()).inacclo,
-                  (UTO_server->utc_time ()).inacchi,
-                  (UTO_server->utc_time ()).tdf));
-#endif
-
     }
   catch (const CORBA::Exception& ex)
     {

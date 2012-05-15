@@ -126,11 +126,7 @@ namespace TAO_Notify
         nowus += tmpus * USECSPERSEC;
 
         ACE_TCHAR nowusstr[128];
-#ifdef ACE_LACKS_LONGLONG_T
-        nowus.as_string(nowusstr);
-#else
         ACE_OS::sprintf(nowusstr, ACE_UINT64_FORMAT_SPECIFIER, nowus);
-#endif /* ACE_LACKS_LONGLONG_T */
 
         attrs.push_back(NVP("version", "1.0"));
         if (this->timestamp_)

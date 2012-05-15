@@ -35,17 +35,7 @@ suseconds_t const ACE_ONE_SECOND_IN_USECS = 1000000;
 // needed to determine if iostreams are present
 #include "ace/iosfwd.h"
 
-// This forward declaration is needed by the set() and FILETIME() functions
-#if defined (ACE_LACKS_LONGLONG_T)
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-class ACE_Export ACE_U_LongLong;
-ACE_END_VERSIONED_NAMESPACE_DECL
-#endif  /* ACE_LACKS_LONGLONG_T */
-
-// -------------------------------------------------------------------
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 
 /**
  * @class ACE_Time_Value

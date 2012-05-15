@@ -955,13 +955,9 @@ ACE_OS::sleep (const ACE_Time_Value &tv)
   // Copy the timeval, because this platform doesn't declare the timeval
   // as a pointer to const.
   timeval tv_copy = tv;
-#  if defined(ACE_TANDEM_T1248_PTHREADS)
-     ACE_OSCALL_RETURN (::spt_select (0, 0, 0, 0, &tv_copy), int, -1);
-#  else
-     //FUZZ: disable check_for_lack_ACE_OS
-     ACE_OSCALL_RETURN (::select (0, 0, 0, 0, &tv_copy), int, -1);
-     //FUZZ: enable check_for_lack_ACE_OS
-#  endif
+  //FUZZ: disable check_for_lack_ACE_OS
+  ACE_OSCALL_RETURN (::select (0, 0, 0, 0, &tv_copy), int, -1);
+  //FUZZ: enable check_for_lack_ACE_OS
 # else  /* ! ACE_HAS_NONCONST_SELECT_TIMEVAL */
   const timeval *tvp = tv;
   //FUZZ: disable check_for_lack_ACE_OS

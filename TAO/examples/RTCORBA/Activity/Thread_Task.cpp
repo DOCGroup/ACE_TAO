@@ -107,15 +107,7 @@ Thread_Task::svc (void)
       if (period_ != 0) // blast mode, no sleep.
         {
           // convert to microseconds
-#if !defined ACE_LACKS_LONGLONG_T
-
           ACE_UINT32 elapsed_microseconds = ACE_UINT32((after - before) / gsf);
-
-#else  /* ! ACE_LACKS_LONGLONG_T */
-
-          ACE_UINT32 elapsed_microseconds = (after - before) / gsf;
-
-#endif /* ! ACE_LACKS_LONGLONG_T */
 
 #if defined (ACE_WIN32)
           elapsed_microseconds*=1000; // convert to uSec on Win32

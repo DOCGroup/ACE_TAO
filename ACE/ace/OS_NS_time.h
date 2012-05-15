@@ -133,12 +133,12 @@ inline DWORD ACE_HIGH_DWORD (ACE_QWORD q) { return (DWORD) (q >> 32); }
 # elif defined (_TNS_R_TARGET)
 typedef long long ACE_hrtime_t;
 # else /* !ACE_WIN32 */
-#   if defined (ACE_HAS_HI_RES_TIMER) &&  !defined (ACE_LACKS_LONGLONG_T)
+#   if defined (ACE_HAS_HI_RES_TIMER)
   /* hrtime_t is defined on systems (Suns) with ACE_HAS_HI_RES_TIMER */
   typedef hrtime_t ACE_hrtime_t;
-#   else  /* ! ACE_HAS_HI_RES_TIMER  ||  ACE_LACKS_LONGLONG_T */
+#   else  /* ! ACE_HAS_HI_RES_TIMER */
   typedef ACE_UINT64 ACE_hrtime_t;
-#   endif /* ! ACE_HAS_HI_RES_TIMER  ||  ACE_LACKS_LONGLONG_T */
+#   endif /* ! ACE_HAS_HI_RES_TIMER */
 # endif /* ACE_WIN32 */
 
 # if defined (ACE_LACKS_UNSIGNEDLONGLONG_T)

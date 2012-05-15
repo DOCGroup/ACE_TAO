@@ -4760,7 +4760,6 @@ tao_yyreduce:
                     }
 
                   break;
-#if !defined (ACE_LACKS_LONGLONG_T)
                 case AST_Expression::EV_ulonglong:
                   if (ev->u.ullval == 0)
                     {
@@ -4768,7 +4767,6 @@ tao_yyreduce:
                     }
 
                   break;
-#endif
                 case AST_Expression::EV_octet:
                   if (ev->u.oval == 0)
                     {

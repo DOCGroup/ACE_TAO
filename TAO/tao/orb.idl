@@ -21,14 +21,8 @@
 #include <tao/UShortSeq.pidl>
 #include <tao/WCharSeq.pidl>
 #include <tao/WStringSeq.pidl>
-
-#if ! defined (ACE_LACKS_LONGLONG_T)
 #include <tao/LongLongSeq.pidl>
-#endif /* ! defined (ACE_LACKS_LONGLONG_T) */
-
-#if ! defined (ACE_LACKS_U_LONGLONG_T)
 #include <tao/ULongLongSeq.pidl>
-#endif /* ! defined (ACE_LACKS_U_LONGLONG_T) */
 
 #include <tao/Policy.pidl>
 #include <tao/Policy_Manager.pidl>

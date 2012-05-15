@@ -788,7 +788,6 @@ struct LongHelper
     }
 };
 
-#if !defined (ACE_LACKS_LONGLONG_T)
 struct LongLongHelper
 {
   static const ACE_TCHAR* name ()
@@ -821,7 +820,6 @@ struct LongLongHelper
       return sizeof(ACE_CDR::LongLong);
     }
 };
-#endif /* ! ACE_LACKS_LONGLONG_T */
 
 struct CharHelper
 {
@@ -981,12 +979,10 @@ run_main (int argc, ACE_TCHAR *argv[])
         CDR_Test<ACE_CDR::Float, FloatHelper>
           test (ftotal, niter, use_array);
       }
-#if !defined (ACE_LACKS_LONGLONG_T)
       {
         CDR_Test<ACE_CDR::LongLong, LongLongHelper>
           test (qtotal, niter, use_array);
       }
-#endif /* ! ACE_LACKS_LONGLONG_T */
       {
         CDR_Test<ACE_CDR::Long, LongHelper>
           test (wtotal, niter, use_array);

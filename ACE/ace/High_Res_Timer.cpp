@@ -305,17 +305,6 @@ ACE_High_Res_Timer::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nglobal_scale_factor_: %u\n"),
              global_scale_factor ()));
-#if defined (ACE_LACKS_LONGLONG_T)
-  ACE_DEBUG ((LM_DEBUG,
-             ACE_TEXT (":\nstart_.hi ():     %8x; start_.lo ():      %8x;\n")
-             ACE_TEXT ("end_.hi ():       %8x; end_.lo ():        %8x;\n")
-             ACE_TEXT ("total_.hi ():     %8x; total_.lo ():      %8x;\n")
-             ACE_TEXT ("start_incr_.hi () %8x; start_incr_.lo (): %8x;\n"),
-             start_.hi (), start_.lo (),
-             end_.hi (), end_.lo (),
-             total_.hi (), total_.lo (),
-             start_incr_.hi (), start_incr_.lo ()));
-#else  /* ! ACE_LACKS_LONGLONG_T */
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT (":\nstart_.hi ():     %8x; start_.lo ():      %8x;\n")
               ACE_TEXT ("end_.hi ():       %8x; end_.lo ():        %8x;\n")
@@ -329,7 +318,6 @@ ACE_High_Res_Timer::dump (void) const
               static_cast<ACE_UINT32> (total_ & 0xfffffffful),
               static_cast<ACE_UINT32> (start_incr_ >> 32),
               static_cast<ACE_UINT32> (start_incr_ & 0xfffffffful)));
-#endif /* ! ACE_LACKS_LONGLONG_T */
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }

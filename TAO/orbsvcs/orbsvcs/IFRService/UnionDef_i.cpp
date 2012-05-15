@@ -403,11 +403,9 @@ TAO_UnionDef_i::fetch_label (const ACE_Configuration_Section_Key member_key,
     case CORBA::tk_ulong:
       member.label <<= static_cast<CORBA::ULong> (value);
       break;
-#if !defined (ACE_LACKS_LONGLONG_T)
     case CORBA::tk_longlong:
       member.label <<= static_cast<CORBA::LongLong> (value);
       break;
-#endif /* ACE_LACKS_LONGLONG_T */
     case CORBA::tk_ulonglong:
       member.label <<= static_cast<CORBA::ULongLong> (value);
       break;
