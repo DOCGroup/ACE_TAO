@@ -14,6 +14,7 @@
 
 #include "connector.h"
 #include "ast_typedef.h"
+#include "ast_native.h"
 
 be_visitor_connector_dds_exs::be_visitor_connector_dds_exs (
       be_visitor_context *ctx)

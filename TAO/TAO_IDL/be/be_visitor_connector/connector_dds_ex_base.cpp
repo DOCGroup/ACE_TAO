@@ -19,6 +19,7 @@
 #include "ast_typedef.h"
 #include "ast_template_module.h"
 #include "ast_template_module_ref.h"
+#include "ast_native.h"
 
 #include "utl_strlist.h"
 #include "utl_string.h"

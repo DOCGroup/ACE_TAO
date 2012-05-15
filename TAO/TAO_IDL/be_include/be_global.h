@@ -782,12 +782,6 @@ public:
   /// Default is NDDS.
   DDS_IMPL dds_impl (void) const;
 
-  /// Set the suffix of OpenDDS-specific native sequences.
-  void opendds_sequence_suffix (const char *val);
-
-  /// Return the suffix of OpenDDS-specific native sequences.
-  const char *opendds_sequence_suffix (void) const;
-
   /// Cleanup function.
   void destroy (void);
 
@@ -1165,10 +1159,6 @@ private:
 
   /// The enumerated value indicating the DDS implementation.
   DDS_IMPL dds_impl_;
-
-  /// Option to customize the suffix of OpenDDS-specific sequences,
-  /// for use with CIAO's dds4ccm implementation.
-  ACE_CString opendds_sequence_suffix_;
 
   /// Used for void operation return types.
   AST_PredefinedType *void_type_;
