@@ -924,7 +924,6 @@ TAO_DynUnion_i::label_match (const CORBA::Any &my_any,
         return my_val == other_val;
       }
 // For platforms without native 64-bit ints.
-#if !defined (ACE_LACKS_LONGLONG_T)
     case CORBA::tk_longlong:
       {
         CORBA::LongLong my_val;
@@ -933,7 +932,6 @@ TAO_DynUnion_i::label_match (const CORBA::Any &my_any,
         other_any >>= other_val;
         return my_val == other_val;
       }
-#endif /* ACE_LACKS_LONGLONG_T */
     case CORBA::tk_ulonglong:
       {
         CORBA::ULongLong my_val;

@@ -210,15 +210,7 @@ ACE_INLINE void
 ACE_Time_Value::to_usec (ACE_UINT64 & usec) const
 {
   // ACE_OS_TRACE ("ACE_Time_Value::to_usec");
-
-#if defined (ACE_LACKS_UNSIGNEDLONGLONG_T)
-  usec = ACE_U_LongLong (static_cast<long long> (this->tv_.tv_sec));
-#elif defined (ACE_LACKS_LONGLONG_T)
-  // No native 64-bit type, meaning time_t is most likely 32 bits.
-  usec = ACE_U_LongLong (this->tv_.tv_sec);
-#else
   usec = static_cast<ACE_UINT64> (this->tv_.tv_sec);
-#endif  /* ACE_LACKS_LONGLONG_T */
   usec *= 1000000;
   usec += this->tv_.tv_usec;
 }

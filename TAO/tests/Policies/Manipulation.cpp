@@ -277,13 +277,8 @@ Manipulation::svc (void)
 {
   try
     {
-#ifndef ACE_LACKS_LONGLONG_T
       unsigned int seed =
         static_cast<unsigned int> (ACE_OS::gethrtime ());
-#else
-      unsigned int seed =
-        static_cast<unsigned int> (ACE_OS::gethrtime().lo());
-#endif
       CORBA::Object_var object =
         this->orb_->resolve_initial_references ("ORBPolicyManager");
 

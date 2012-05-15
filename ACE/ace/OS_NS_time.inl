@@ -270,24 +270,14 @@ ACE_OS::gethrtime (const ACE_HRTimer_Op op)
 
   ::QueryPerformanceCounter (&freq);
 
-#  if defined (ACE_LACKS_LONGLONG_T)
-  ACE_UINT64 uint64_freq (freq.u.LowPart,
-                          static_cast<unsigned int> (freq.u.HighPart));
-  return uint64_freq;
-#  else
   return freq.QuadPart;
-#  endif //ACE_LACKS_LONGLONG_T
 #elif defined (ghs) && defined (ACE_HAS_PENTIUM)
   ACE_UNUSED_ARG (op);
   // Use .obj/gethrtime.o, which was compiled with g++.
   return ACE_GETHRTIME_NAME ();
 #elif (defined (__GNUG__) || defined (__INTEL_COMPILER)) && !defined(ACE_VXWORKS) && defined (ACE_HAS_PENTIUM)
   ACE_UNUSED_ARG (op);
-# if defined (ACE_LACKS_LONGLONG_T)
-  double now;
-# else  /* ! ACE_LACKS_LONGLONG_T */
   ACE_hrtime_t now;
-# endif /* ! ACE_LACKS_LONGLONG_T */
 
 #if defined (__amd64__) || defined (__x86_64__)
   // Read the high res tick counter into 32 bit int variables "eax" and
@@ -301,17 +291,7 @@ ACE_OS::gethrtime (const ACE_HRTimer_Op op)
   asm volatile ("rdtsc" : "=A" (now) : : "memory");
 #endif
 
-# if defined (ACE_LACKS_LONGLONG_T)
-  ACE_UINT32 least, most;
-  ACE_OS::memcpy (&least, &now, sizeof (ACE_UINT32));
-  ACE_OS::memcpy (&most, (u_char *) &now + sizeof (ACE_UINT32),
-                  sizeof (ACE_UINT32));
-
-  ACE_hrtime_t ret (least, most);
-  return ret;
-# else  /* ! ACE_LACKS_LONGLONG_T */
   return now;
-# endif /* ! ACE_LACKS_LONGLONG_T */
 #elif defined (ACE_LINUX) && defined (ACE_HAS_ALPHA_TIMER)
   // NOTE:  alphas only have a 32 bit tick (cycle) counter.  The rpcc
   // instruction actually reads 64 bits, but the high 32 bits are
@@ -348,11 +328,7 @@ ACE_OS::gethrtime (const ACE_HRTimer_Op op)
   } while (most != scratch);
 #endif
 
-#if defined (ACE_LACKS_LONGLONG_T)
-  return ACE_U_LongLong (least, most);
-#else  /* ! ACE_LACKS_LONGLONG_T */
   return 0x100000000llu * most  +  least;
-#endif /* ! ACE_LACKS_LONGLONG_T */
 
 #elif defined (ACE_HAS_CLOCK_GETTIME)
   // e.g., VxWorks (besides POWERPC && GreenHills) . . .

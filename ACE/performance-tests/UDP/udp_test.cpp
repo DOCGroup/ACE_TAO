@@ -261,15 +261,9 @@ Client::run (void)
 
       if (i < 0 )
         {
-#ifndef ACE_LACKS_LONGLONG_T
           ACE_DEBUG ((LM_DEBUG,
                       "Ignoring first sample of %u usecs\n",
                        (ACE_UINT32) (sample)));
-#else
-          ACE_DEBUG ((LM_DEBUG,
-                      "Ignoring first sample of %u usecs\n",
-                      (ACE_UINT32) (sample.lo())));
-#endif
           continue;
         }
       else if (max_allow > 0  &&  sample > max_allow)

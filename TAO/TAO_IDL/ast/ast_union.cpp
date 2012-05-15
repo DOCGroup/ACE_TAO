@@ -825,7 +825,6 @@ AST_Union::compute_default_value (void)
 
                           break;
                         case AST_Expression::EV_longlong:
-#if ! defined (ACE_LACKS_LONGLONG_T)
                           if (this->default_value_.u.longlong_val
                                 == expr->ev ()->u.llval)
                             {
@@ -834,9 +833,7 @@ AST_Union::compute_default_value (void)
                             }
 
                           break;
-#endif
                         case AST_Expression::EV_ulonglong:
-#if ! defined (ACE_LACKS_LONGLONG_T)
                           if (this->default_value_.u.ulonglong_val
                                 == expr->ev ()->u.ullval)
                             {
@@ -845,7 +842,6 @@ AST_Union::compute_default_value (void)
                             }
 
                           break;
-#endif
                         default:
                           // Error.
                           break;

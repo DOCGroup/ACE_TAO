@@ -58,11 +58,7 @@ Receiver::done (void)
         this->last_message_time_ - this->start_time_;
 
       // convert to microseconds
-#if !defined ACE_LACKS_LONGLONG_T
       ACE_UINT32 usecs = ACE_UINT32(elapsed_time / gsf);
-#else  /* ! ACE_LACKS_LONGLONG_T */
-      ACE_UINT32 usecs = elapsed_time / gsf;
-#endif /* ! ACE_LACKS_LONGLONG_T */
 
       if (usecs != 0)
         {

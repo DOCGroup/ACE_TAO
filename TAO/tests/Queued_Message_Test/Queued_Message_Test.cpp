@@ -91,12 +91,8 @@ ACE_TMAIN(int, ACE_TCHAR *[])
   // using command line options.
 
   ACE_hrtime_t current_hrtime = ACE_OS::gethrtime ();
-#if defined(ACE_HRTIME_T_IS_BASIC_TYPE)
-  ACE_UINT32 seed = current_hrtime;
-#else
   ACE_UINT32 seed =
     ACE_CU64_TO_CU32(current_hrtime);
-#endif
   ACE_OS::srand (seed);
 
   ACE_DEBUG ((LM_DEBUG, "Running test SEED = %d\n", seed));

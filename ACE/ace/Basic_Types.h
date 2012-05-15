@@ -32,13 +32,10 @@
  *    - ACE_INT32
  *    - ACE_UINT32
  *    - ACE_UINT64
- *  (@note ACE_INT64 is partly defined, there is no ACE_LongLong for
- *   platforms that don't have a native 8-byte integer type.)
+ *    - ACE_INT64
  *
  *  Byte-order (endian-ness) determination:
  *    ACE_BYTE_ORDER, to either ACE_BIG_ENDIAN or ACE_LITTLE_ENDIAN
- *
- *
  */
 //=============================================================================
 
@@ -58,10 +55,6 @@
 # include "ace/os_include/os_float.h"      // Floating point limits
 # include "ace/os_include/os_stdlib.h"     // Other types
 # include "ace/os_include/os_stddef.h"     // Get ptrdiff_t - see further comments below
-
-# if defined(ACE_LACKS_LONGLONG_T)
-#   include "ace/os_include/os_stdio.h"  // For long long emulation
-# endif  /* ACE_LACKS_LONGLONG_T */
 
 # include "ace/os_include/sys/os_types.h"
 
@@ -99,15 +92,11 @@ typedef ACE::If_Then_Else<
   ACE::If_Then_Else<
     (sizeof (void*) == sizeof (signed long)),
     signed long,
-#ifdef ACE_LACKS_LONGLONG_T
-    void  /* Unknown. Force an invalid type */
-#else
     ACE::If_Then_Else<
       (sizeof (void*) == sizeof (signed long long)),
       signed long long,
       void /* Unknown. Force an invalid type */
       >::result_type
-#endif  /* ACE_LACKS_LONGLONG_T */
     >::result_type
   >::result_type intptr_t;
 
@@ -194,9 +183,7 @@ typedef ACE::If_Then_Else<
 
 // The number of bytes in a long long.
 # if !defined (ACE_SIZEOF_LONG_LONG)
-#   if defined (ACE_LACKS_LONGLONG_T)
-#     define ACE_SIZEOF_LONG_LONG 8
-#   elif defined (ULLONG_MAX)
+#   if defined (ULLONG_MAX)
 #     if ((ULLONG_MAX) == 4294967295ULL)
 #       define ACE_SIZEOF_LONG_LONG 4
 #     elif ((ULLONG_MAX) == 18446744073709551615ULL)
@@ -298,7 +285,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
   typedef int64_t               ACE_INT64;
 #elif ACE_SIZEOF_LONG == 8
   typedef long                  ACE_INT64;
-#elif !defined (ACE_LACKS_LONGLONG_T) && ACE_SIZEOF_LONG_LONG == 8
+#elif ACE_SIZEOF_LONG_LONG == 8
 # ifdef __GNUC__
   // Silence g++ "-pedantic" warnings regarding use of "long long"
   // type.
@@ -307,24 +294,20 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
   typedef long long             ACE_INT64;
 #endif /* defined (ACE_INT64_TYPE) */
 
-#if !(defined (ACE_LACKS_LONGLONG_T) || defined (ACE_LACKS_UNSIGNEDLONGLONG_T))
-/* See matching #if around ACE_U_LongLong class declaration below */
-
-#  if defined (ACE_UINT64_TYPE)
+#if defined (ACE_UINT64_TYPE)
   typedef ACE_UINT64_TYPE       ACE_UINT64;
-#  elif defined (ACE_HAS_UINT64_T)
+#elif defined (ACE_HAS_UINT64_T)
   typedef uint64_t              ACE_UINT64;
-#  elif ACE_SIZEOF_LONG == 8
+#elif ACE_SIZEOF_LONG == 8
   typedef unsigned long         ACE_UINT64;
-#  elif ACE_SIZEOF_LONG_LONG == 8
+#elif ACE_SIZEOF_LONG_LONG == 8
 # ifdef __GNUC__
   // Silence g++ "-pedantic" warnings regarding use of "long long"
   // type.
   __extension__
 # endif  /* __GNUC__ */
   typedef unsigned long long    ACE_UINT64;
-#  endif /* defined (ACE_UINT64_TYPE) */
-#endif /* !(ACE_LACKS_LONGLONG_T || ACE_LACKS_UNSIGNEDLONGLONG_T) */
+#endif /* defined (ACE_UINT64_TYPE) */
 
 /// Define a generic byte for use in codecs
 typedef unsigned char ACE_Byte;
@@ -423,25 +406,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #   define ACE_HTONS(x) x
 #   define ACE_NTOHS(x) x
 # endif /* ACE_LITTLE_ENDIAN */
-
-#if defined (ACE_LACKS_LONGLONG_T)
-  // This throws away the high 32 bits.  It's very unlikely that a
-  // pointer will be more than 32 bits wide if the platform does not
-  // support 64-bit integers.
-# define ACE_LONGLONG_TO_PTR(PTR_TYPE, L) \
-  reinterpret_cast<PTR_TYPE> (L.lo ())
-#elif defined (ACE_OPENVMS) && (!defined (__INITIAL_POINTER_SIZE) || (__INITIAL_POINTER_SIZE < 64))
-# define ACE_LONGLONG_TO_PTR(PTR_TYPE, L) \
-  reinterpret_cast<PTR_TYPE> (static_cast<int> (L))
-#else  /* ! ACE_LACKS_LONGLONG_T */
-# define ACE_LONGLONG_TO_PTR(PTR_TYPE, L) \
-  reinterpret_cast<PTR_TYPE> (static_cast<intptr_t> (L))
-#endif /* ! ACE_LACKS_LONGLONG_T */
-
-// If the platform lacks an unsigned long long, define one.
-#if defined (ACE_LACKS_LONGLONG_T) || defined (ACE_LACKS_UNSIGNEDLONGLONG_T)
-// Forward declaration for streams
-#   include "ace/iosfwd.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -626,38 +590,10 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 #endif // ACE_LACKS_UNSIGNEDLONGLONG_T
   };
 
-  typedef ACE_U_LongLong ACE_UINT64;
-
-#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
-  ostream &operator<< (ostream &, const ACE_U_LongLong &);
-#endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
-
 ACE_END_VERSIONED_NAMESPACE_DECL
-
-# endif /* ACE_LACKS_LONGLONG_T */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Conversions from ACE_UINT64 to ACE_UINT32.  ACE_CU64_TO_CU32 should
-// be used on const ACE_UINT64's.
-# if defined (ACE_LACKS_LONGLONG_T) || defined (ACE_LACKS_UNSIGNEDLONGLONG_T)
-inline ACE_UINT32
-ACE_U64_TO_U32 (ACE_U_LongLong const & n)
-{
-  /**
-   * @note We could add a cast operator to ACE_U_LongLong but that may
-   *       cause more problems than it solves.  Force users to perform
-   *       an explicit cast via ACE_{C}U64_TO_{C}U32.
-   */
-  return n.lo ();
-}
-
-inline ACE_UINT32
-ACE_CU64_TO_CU32 (ACE_U_LongLong const & n)
-{
-  return ACE_U64_TO_U32 (n);
-}
-# else  /* ! ACE_LACKS_LONGLONG_T */
 inline ACE_UINT32
 ACE_U64_TO_U32 (ACE_UINT64 n)
 {
@@ -669,32 +605,24 @@ ACE_CU64_TO_CU32 (ACE_UINT64 n)
 {
   return static_cast<ACE_UINT32> (n);
 }
-# endif /* ! ACE_LACKS_LONGLONG_T */
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-// 64-bit literals require special marking on some platforms.
-# if defined (ACE_LACKS_LONGLONG_T)
-    // Can only specify 32-bit arguments.
-#   define ACE_UINT64_LITERAL(n) n ## UL
-      // This one won't really work, but it'll keep
-      // some compilers happy until we have better support
-#   define ACE_INT64_LITERAL(n) n ## L
-# elif defined (ACE_WIN32)
-#  if defined (__MINGW32__)
-#   define ACE_UINT64_LITERAL(n) n ## ull
-#   define ACE_INT64_LITERAL(n) n ## ll
-#  else
-#   define ACE_UINT64_LITERAL(n) n ## ui64
-#   define ACE_INT64_LITERAL(n) n ## i64
-#  endif /* defined (__MINGW32__) */
-# elif defined (__TANDEM)
+#if defined (ACE_WIN32)
+# if defined (__MINGW32__)
+#  define ACE_UINT64_LITERAL(n) n ## ull
+#  define ACE_INT64_LITERAL(n) n ## ll
+# else
+#  define ACE_UINT64_LITERAL(n) n ## ui64
+#  define ACE_INT64_LITERAL(n) n ## i64
+# endif /* defined (__MINGW32__) */
+#elif defined (__TANDEM)
 #   define ACE_UINT64_LITERAL(n) n ## LL
 #   define ACE_INT64_LITERAL(n) n ## LL
-# else  /* ! ACE_WIN32  &&  ! ACE_LACKS_LONGLONG_T */
+#else  /* ! ACE_WIN32  */
 #   define ACE_UINT64_LITERAL(n) n ## ull
 #   define ACE_INT64_LITERAL(n) n ## ll
-# endif /* ! ACE_WIN32  &&  ! ACE_LACKS_LONGLONG_T */
+#endif /* ! ACE_WIN32*/
 
 #if !defined (ACE_INT8_FORMAT_SPECIFIER_ASCII)
 #  if defined (PRId8)
@@ -858,16 +786,11 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 // Cast from UINT64 to a double requires an intermediate cast to INT64
 // on some platforms.
-# if defined (ACE_LACKS_LONGLONG_T)
-   // Only use the low 32 bits.
-#   define ACE_UINT64_DBLCAST_ADAPTER(n) ACE_U64_TO_U32 (n)
-# elif defined (ACE_LACKS_UNSIGNEDLONGLONG_T)
-#   define ACE_UINT64_DBLCAST_ADAPTER(n) ((n).to_int64 ())
-# elif defined (ACE_WIN32)
-#   define ACE_UINT64_DBLCAST_ADAPTER(n) static_cast<__int64> (n)
-# else  /* ! ACE_WIN32 && ! ACE_LACKS_LONGLONG_T */
-#   define ACE_UINT64_DBLCAST_ADAPTER(n) (n)
-# endif /* ! ACE_WIN32 && ! ACE_LACKS_LONGLONG_T */
+#if defined (ACE_WIN32)
+#  define ACE_UINT64_DBLCAST_ADAPTER(n) static_cast<__int64> (n)
+#else  /* ! ACE_WIN32 && */
+#  define ACE_UINT64_DBLCAST_ADAPTER(n) (n)
+#endif /* ! ACE_WIN32 && */
 
 
 // The number of bytes in a float.
@@ -930,19 +853,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #define ACE_UINT32_MAX 0xFFFFFFFF
 #define ACE_INT64_MAX ACE_INT64_LITERAL(0x7FFFFFFFFFFFFFFF)
 #define ACE_INT64_MIN -(ACE_INT64_MAX)-1
-
-#if defined (ACE_LACKS_UNSIGNEDLONGLONG_T)
-// ACE_U_LongLong's constructor accepts a "long long" in this
-// case.  Set it to ACE_U_LongLong (-1) since the bit pattern for long
-// long (-1) is the same as the maximum unsigned long long value.
-# define ACE_UINT64_MAX ACE_U_LongLong (ACE_INT64_LITERAL (0xFFFFFFFFFFFFFFFF))
-#elif defined (ACE_LACKS_LONGLONG_T)
-// ACE_U_LongLong's constructor accepts an ACE_UINT32 low and high
-// pair of parameters.
-# define ACE_UINT64_MAX ACE_U_LongLong (0xFFFFFFFFu, 0xFFFFFFFFu)
-#else
-# define ACE_UINT64_MAX ACE_UINT64_LITERAL (0xFFFFFFFFFFFFFFFF)
-#endif  /* ACE_LACKS_UNSIGNEDLONGLONG_T */
+#define ACE_UINT64_MAX ACE_UINT64_LITERAL (0xFFFFFFFFFFFFFFFF)
 
 // These use ANSI/IEEE format.
 #define ACE_FLT_MAX 3.402823466e+38F

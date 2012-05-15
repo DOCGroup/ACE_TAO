@@ -224,24 +224,11 @@ ACE_Handle_Set::set_max (ACE_HANDLE current_max)
            maskp[i] == 0;
            i--)
         continue;
-#if defined (ACE_TANDEM_NSK_BIT_ORDER)
-      // bits are in reverse order, MSB (sign bit) = bit 0.
-      this->max_handle_ = ACE_MULT_BY_WORDSIZE (i);
-      for (fd_mask val = maskp[i];
-           (val & ACE_MSB_MASK) != 0;
-           val = (val << 1))
-        ++this->max_handle_;
-#elif 1 /* !defined(ACE_HAS_BIG_FD_SET) */
       this->max_handle_ = ACE_MULT_BY_WORDSIZE (i);
       for (fd_mask val = maskp[i];
            (val & ~1) != 0; // This obscure code is needed since "bit 0" is in location 1...
            val = (val >> 1) & ACE_MSB_MASK)
         ++this->max_handle_;
-#else
-      register u_long val = this->mask_.fds_bits[i];
-      this->max_handle_ = ACE_MULT_BY_WORDSIZE (i)
-        + ACE_Handle_Set::bitpos(val & ~(val - 1));
-#endif /* 1 */
     }
 
   // Do some sanity checking...
@@ -310,12 +297,7 @@ ACE_Handle_Set_Iterator::operator () (void)
       // Increment the iterator and advance to the next bit in this
       // word.
       this->handle_index_++;
-#if defined (ACE_TANDEM_NSK_BIT_ORDER)
-      // bits are in reverse order, MSB (sign bit) = bit 0.
-      this->word_val_ = (this->word_val_ << 1);
-#  else
       this->word_val_ = (this->word_val_ >> 1) & ACE_MSB_MASK;
-#  endif /* ACE_TANDEM_NSK_BIT_ORDER */
 
       // If we've examined all the bits in this word, we'll go onto
       // the next word.
@@ -351,19 +333,10 @@ ACE_Handle_Set_Iterator::operator () (void)
       // bit enabled, keeping track of which <handle_index> this
       // represents (this information is used by subsequent calls to
       // <operator()>).
-
-#if defined (ACE_TANDEM_NSK_BIT_ORDER)
-      // bits are in reverse order, MSB (sign bit) = bit 0.
-      for (;
-           this->word_val_ > 0;
-           this->word_val_ = (this->word_val_ << 1))
-        this->handle_index_++;
-#  else
       for (;
            ACE_BIT_DISABLED (this->word_val_, 1);
            this->handle_index_++)
         this->word_val_ = (this->word_val_ >> 1) & ACE_MSB_MASK;
-#  endif /* ACE_TANDEM_NSK_BIT_ORDER */
 
       return result;
     }
@@ -465,19 +438,11 @@ ACE_Handle_Set_Iterator::ACE_Handle_Set_Iterator (const ACE_Handle_Set &hs)
     // Loop until we get <word_val_> to have its least significant bit
     // enabled, keeping track of which <handle_index> this represents
     // (this information is used by <operator()>).
-#if defined (ACE_TANDEM_NSK_BIT_ORDER)
-    // bits are in reverse order, MSB (sign bit) = bit 0.
-    for (this->word_val_ = maskp[this->word_num_];
-         this->word_val_ > 0;
-         this->word_val_ = (this->word_val_ << 1))
-      this->handle_index_++;
-#  else
     for (this->word_val_ = maskp[this->word_num_];
          ACE_BIT_DISABLED (this->word_val_, 1)
            && this->handle_index_ < maxhandlep1;
          this->handle_index_++)
       this->word_val_ = (this->word_val_ >> 1) & ACE_MSB_MASK;
-#  endif /* ACE_TANDEM_NSK_BIT_ORDER */
 #elif !defined (ACE_WIN32) && defined (ACE_HAS_BIG_FD_SET)
     if (this->word_max_==0)
       {
@@ -492,7 +457,6 @@ ACE_Handle_Set_Iterator::ACE_Handle_Set_Iterator (const ACE_Handle_Set &hs)
       }
 #endif /* !ACE_WIN32 && !ACE_HAS_BIG_FD_SET */
 }
-
 
 void
 ACE_Handle_Set_Iterator::reset_state (void)
@@ -533,19 +497,11 @@ ACE_Handle_Set_Iterator::reset_state (void)
     // Loop until we get <word_val_> to have its least significant bit
     // enabled, keeping track of which <handle_index> this represents
     // (this information is used by <operator()>).
-#if defined (ACE_TANDEM_NSK_BIT_ORDER)
-    // bits are in reverse order, MSB (sign bit) = bit 0.
-    for (this->word_val_ = maskp[this->word_num_];
-         this->word_val_ > 0;
-         this->word_val_ = (this->word_val_ << 1))
-      this->handle_index_++;
-#  else
     for (this->word_val_ = maskp[this->word_num_];
          ACE_BIT_DISABLED (this->word_val_, 1)
            && this->handle_index_ < maxhandlep1;
          this->handle_index_++)
       this->word_val_ = (this->word_val_ >> 1) & ACE_MSB_MASK;
-#  endif /* ACE_TANDEM_NSK_BIT_ORDER */
 #elif !defined (ACE_WIN32) && defined (ACE_HAS_BIG_FD_SET)
     if (this->word_max_==0)
       {

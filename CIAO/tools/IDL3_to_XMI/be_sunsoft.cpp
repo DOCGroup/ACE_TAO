@@ -86,9 +86,6 @@ TAO_SunSoft_OutStream::print (AST_Expression *expr)
         case AST_Expression::EV_ulong:
           this->TAO_OutStream::print (ACE_UINT32_FORMAT_SPECIFIER_ASCII "%c", ev->u.ulval, 'U');
           break;
-        // The ACE_LACKS_LONGLONG_T guards have been removed around
-        // the next 2 cases since the macros now used should work
-        // whether native 64-bit integers are defined or not.
         case AST_Expression::EV_longlong:
           this->TAO_OutStream::print ("ACE_INT64_LITERAL (");
           this->TAO_OutStream::print (ACE_INT64_FORMAT_SPECIFIER_ASCII,

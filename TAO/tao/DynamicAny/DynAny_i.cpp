@@ -102,14 +102,12 @@ TAO_DynAny_i::set_to_default_value (CORBA::TypeCode_ptr tc)
     case CORBA::tk_ulong:
       this->any_ <<= static_cast<CORBA::ULong> (0);
       break;
-#if !defined (ACE_LACKS_LONGLONG_T)
     case CORBA::tk_longlong:
       this->any_ <<= static_cast<CORBA::LongLong> (0);
       break;
     case CORBA::tk_ulonglong:
       this->any_ <<= static_cast<CORBA::ULongLong> (0);
       break;
-#endif /* ACE_LACKS_LONGLONG_T */
     case CORBA::tk_boolean:
       this->any_ <<= CORBA::Any::from_boolean (0);
       break;

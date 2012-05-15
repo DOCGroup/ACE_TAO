@@ -108,13 +108,13 @@ ACE_Hash<unsigned long>::operator () (unsigned long t) const
 }
 
 // This #if needs to match the one in Functor.h
-#if !defined (ACE_LACKS_LONGLONG_T) && (ACE_SIZEOF_LONG < 8)
+#if (ACE_SIZEOF_LONG < 8)
 ACE_INLINE unsigned long
 ACE_Hash<ACE_INT64>::operator () (ACE_INT64 t) const
 {
   return static_cast<unsigned long> (t);
 }
-#endif /* !ACE_LACKS_LONGLONG_T && ACE_SIZEOF_LONG < 8 */
+#endif /* ACE_SIZEOF_LONG < 8 */
 
 #if (ACE_SIZEOF_LONG < 8)
 ACE_INLINE unsigned long

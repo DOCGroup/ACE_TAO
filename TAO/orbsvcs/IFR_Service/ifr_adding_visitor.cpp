@@ -2628,14 +2628,12 @@ ifr_adding_visitor::load_any (AST_Expression::AST_ExprValue *ev,
     case AST_Expression::EV_ulong:
       any <<= static_cast<CORBA::ULong> (ev->u.ulval);
       break;
-#if !defined (ACE_LACKS_LONGLONG_T)
     case AST_Expression::EV_longlong:
       any <<= ev->u.llval;
       break;
     case AST_Expression::EV_ulonglong:
       any <<= ev->u.ullval;
       break;
-#endif /* !defined (ACE_LACKS_LONGLONG_T) */
     case AST_Expression::EV_float:
       any <<= ev->u.fval;
       break;

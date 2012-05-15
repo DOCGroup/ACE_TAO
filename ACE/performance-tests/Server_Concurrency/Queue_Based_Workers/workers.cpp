@@ -144,15 +144,9 @@ Worker_Task::svc (void)
 
       if (debug >= PRINT_INDIVIDUAL_LATENCY)
         {
-#ifndef ACE_LACKS_LONGLONG_T
           ACE_DEBUG ((LM_DEBUG,
                       "(%t) latency from start of burst: %Q\n",
                       latency_from_start_of_burst));
-#else
-          ACE_DEBUG ((LM_DEBUG,
-                      "(%t) latency from start of burst: %u\n",
-                      latency_from_start_of_burst.lo()));
-#endif
         }
     }
 

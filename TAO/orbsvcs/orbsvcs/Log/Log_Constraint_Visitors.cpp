@@ -22,20 +22,12 @@ TAO_Log_Constraint_Visitor::TAO_Log_Constraint_Visitor (const DsLogAdmin::LogRec
   : property_lookup_ (property_lookup_size_)
 {
   CORBA::Any val_id;
-#if defined (ACE_LACKS_LONGLONG_T) || defined (ACE_LACKS_UNSIGNEDLONGLONG_T)
-  val_id <<= ACE_U64_TO_U32 (rec.id);
-#else
   val_id <<= static_cast<ACE_UINT32> (rec.id);
-#endif
   this->property_lookup_.bind (ACE_CString("id", 0, false), val_id);
 
 
   CORBA::Any val_time;
-#if defined (ACE_LACKS_LONGLONG_T) || defined (ACE_LACKS_UNSIGNEDLONGLONG_T)
-  val_time <<= ACE_U64_TO_U32 (rec.time);
-#else
   val_time <<= static_cast<ACE_UINT32> (rec.time);
-#endif
   this->property_lookup_.bind (ACE_CString ("time", 0, false), val_time);
 
   this->property_lookup_.bind (ACE_CString ("info", 0, false), rec.info);

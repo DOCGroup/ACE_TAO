@@ -114,23 +114,6 @@ Test_ULongLong::check_validity (CORBA::Request_ptr )
 void
 Test_ULongLong::print_values (void)
 {
-#if defined(ACE_LACKS_LONGLONG_T)
-  char bufferin[32];
-  char bufferinout[32];
-  char bufferout[32];
-  char bufferret[32];
-  ACE_DEBUG ((LM_DEBUG,
-              "\n=*=*=*=*=*=*\n"
-              "in = %s, "
-              "inout = %s, "
-              "out = %s, "
-              "ret = %s\n"
-              "\n=*=*=*=*=*=*\n",
-              this->in_.as_string (bufferin),
-              this->inout_.as_string (bufferinout),
-              this->out_.as_string (bufferout),
-              this->ret_.as_string (bufferret)));
-#else
   ACE_DEBUG ((LM_DEBUG,
               "\n=*=*=*=*=*=*\n"
               "in = %Q, "
@@ -142,5 +125,4 @@ Test_ULongLong::print_values (void)
               this->inout_,
               this->out_,
               this->ret_));
-#endif
 }

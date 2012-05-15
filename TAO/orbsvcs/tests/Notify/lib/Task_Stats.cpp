@@ -112,13 +112,7 @@ Task_Stats::dump_samples (const ACE_TCHAR *file_name, const ACE_TCHAR *msg, int 
   for (i = 0; i != this->samples_count_; ++i)
     {
       ACE_UINT64 diff = this->time_exec_[i] - this->mean_;
-
-      ACE_UINT64 diff_sq =
-#if defined ACE_LACKS_LONGLONG_T
-        diff * ACE_U64_TO_U32(diff);
-#else  /* ! ACE_LACKS_LONGLONG_T */
-      diff * diff;
-#endif /* ! ACE_LACKS_LONGLONG_T */
+      ACE_UINT64 diff_sq = diff * diff;
 
       this->var_2_ += diff_sq;
     }

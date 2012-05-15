@@ -136,17 +136,10 @@ TAO_Hash_LogRecordStore::log (const DsLogAdmin::LogRecord &const_rec)
   // First, bind the id to the LogRecord in the hash_map
   if (this->rec_map_.bind (rec.id, rec) != 0)
     {
-#if defined (ACE_LACKS_LONGLONG_T)
-           ACE_ERROR_RETURN ((LM_ERROR,
-                         "LogRecordStore (%P|%t):Failed to bind %d in the hash map\n",
-                         ACE_U64_TO_U32(rec.id)),
-                             -1);
-#else
            ACE_ERROR_RETURN ((LM_ERROR,
                          "LogRecordStore (%P|%t):Failed to bind %Q in the hash map\n",
                          rec.id),
                        -1);
-#endif
     }
 
   // Increment the number of records in the log
@@ -384,15 +377,9 @@ TAO_Hash_LogRecordStore::query_i (const char *constraint,
         {
           if (TAO_debug_level > 0)
             {
-#if defined (ACE_LACKS_LONGLONG_T)
-              ACE_DEBUG ((LM_DEBUG,"Matched constraint! d = %d, Time = %d\n",
-                ACE_U64_TO_U32 (iter->item ().id),
-                ACE_U64_TO_U32 (iter->item ().time)));
-#else
               ACE_DEBUG ((LM_DEBUG,"Matched constraint! d = %Q, Time = %Q\n",
                 iter->item ().id,
                 iter->item ().time));
-#endif
             }
 
         (*rec_list)[count] = iter->item ();
@@ -455,15 +442,9 @@ TAO_Hash_LogRecordStore::retrieve (DsLogAdmin::TimeT from_time,
   char constraint[32];
   ACE_TCHAR uint64_formating[32];
 
-#if defined (ACE_LACKS_LONGLONG_T)
-  ACE_OS::sprintf (uint64_formating,
-                   "%u",
-                   ACE_U64_TO_U32 (from_time));
-#else
   ACE_OS::sprintf (uint64_formating,
                    ACE_UINT64_FORMAT_SPECIFIER,
                    from_time);
-#endif
 
   if (how_many >= 0)
     ACE_OS::sprintf (constraint, "time >= %s",

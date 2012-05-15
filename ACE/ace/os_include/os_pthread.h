@@ -48,11 +48,7 @@
 
 #if !defined (ACE_LACKS_PTHREAD_H)
    extern "C" {
-#   if defined (ACE_TANDEM_T1248_PTHREADS)
-#   include /**/ <spthread.h>
-#   else
 #  include /**/ <pthread.h>
-#   endif
    }
 #endif /* !ACE_LACKS_PTHREAD_H */
 
