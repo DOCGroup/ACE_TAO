@@ -1,3 +1,21 @@
+Tue May 15 06:59:12 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/RTCORBA/Activity/Task_Stats.h:
+        * examples/RTCORBA/Activity/Task_Stats.cpp:
+        * examples/RTScheduling/DT_Creator.cpp:
+        * examples/RTScheduling/Job_i.cpp:
+        * examples/RTScheduling/Task_Stats.h:
+        * examples/RTScheduling/Task_Stats.cpp:
+        * examples/RTScheduling/Thread_Task.cpp:
+        * orbsvcs/performance-tests/RTEvent/lib/Low_Priority_Setup.h:
+        * orbsvcs/performance-tests/RTEvent/lib/Low_Priority_Setup.cpp:
+        * orbsvcs/tests/Event/lib/Consumer.h:
+        * orbsvcs/tests/Event/lib/Consumer.cpp:
+        * performance-tests/Anyop/anyop.cpp:
+        * performance-tests/Protocols/sender.cpp:
+        * performance-tests/RTCorba/Thread_Pool/client.cpp:
+          Use ACE_High_Res_Timer::global_scale_factor_type
+
 Mon May 14 22:12:20 UTC 2012  Trevor Fields  <fields_t@ociweb.com>
 
         * tests/Bug_4010_Regression/Bug_4010_Regression.mpc:

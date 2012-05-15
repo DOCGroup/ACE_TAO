@@ -25,7 +25,6 @@
  * @class Base_Time
  *
  * @brief maintains readings recorded by tasks.
- *
  */
 class RTSCHEDTESTLIB_Export Base_Time
 {
@@ -63,8 +62,7 @@ class RTSCHEDTESTLIB_Export Task_Stats
   /// Record a sample
   int sample (time_t thr_run_time, int thr_count);
 
-  void dump_samples (const ACE_TCHAR *file_name, const ACE_TCHAR *msg,
-                     ACE_UINT32 scale_factor);
+  void dump_samples (const ACE_TCHAR *file_name, const ACE_TCHAR *msg);
  protected:
   void dump_latency_stats (ACE_TCHAR *out_msg, ACE_UINT32 sf);
 

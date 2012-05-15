@@ -54,8 +54,10 @@ Task_Stats::end_time (ACE_hrtime_t time)
 }
 
 void
-Task_Stats::dump_samples (const ACE_TCHAR *file_name, const ACE_TCHAR *msg,
-                          ACE_UINT32 scale_factor)
+Task_Stats::dump_samples (
+  const ACE_TCHAR *file_name,
+  const ACE_TCHAR *msg,
+  ACE_High_Res_Timer::global_scale_factor_type scale_factor)
 {
   FILE* output_file = ACE_OS::fopen (file_name, "w");
 
@@ -98,7 +100,9 @@ Task_Stats::dump_samples (const ACE_TCHAR *file_name, const ACE_TCHAR *msg,
 }
 
 void
-Task_Stats::dump_latency_stats (ACE_TCHAR *out_msg, ACE_UINT32 sf)
+Task_Stats::dump_latency_stats (
+  ACE_TCHAR *out_msg,
+  ACE_High_Res_Timer::global_scale_factor_type sf)
 {
   if (this->samples_count_ == 0u)
     {

@@ -559,8 +559,7 @@ DT_Creator::check_ifexit (void)
         }
       */
       TASK_STATS::instance ()->dump_samples (file_name_.c_str (),
-               ACE_TEXT("#Schedule Output"),
-               ACE_High_Res_Timer::global_scale_factor ());
+               ACE_TEXT("#Schedule Output"));
 
       shutdown = 1;
 
