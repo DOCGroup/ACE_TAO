@@ -2,7 +2,7 @@
 // This file is generated with "generate_component_mpc.pl -p ReadGet_Test_Base -l .. -o ../lib -u DDS ReadGet_Test_Connector"
 
 project(QC_ReadGet_Test_Connector_idl_gen) : connectoridldefaults, dds4ccm {
-  after += DDS4CCM_idl_gen
+  after += DDS4CCM_idl_gen QC_ReadGet_Test_Base_stub
   custom_only = 1
   idlflags += -Wb,stub_export_macro=QUERY_CONDITION_TEST_CONNECTOR_STUB_Export \
               -Wb,stub_export_include=ReadGet_Test_Connector_stub_export.h \
@@ -34,8 +34,8 @@ project(QC_ReadGet_Test_Connector_lem_gen) : ciaoidldefaults, dds4ccm {
 
 project(QC_ReadGet_Test_Connector_lem_stub) : ccm_svnt, dds4ccm_lem_stub {
   after += QC_ReadGet_Test_Connector_lem_gen QC_ReadGet_Test_Connector_stub \
-           QC_ReadGet_Test_Base_stub 
-  libs  += QC_ReadGet_Test_Base_stub QC_ReadGet_Test_Connector_stub 
+           QC_ReadGet_Test_Base_stub
+  libs  += QC_ReadGet_Test_Base_stub QC_ReadGet_Test_Connector_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -115,12 +115,12 @@ project(QC_ReadGet_Test_Connector_exec) : ciao_executor, dds4ccm_impl {
 
 project(QC_ReadGet_Test_Connector_svnt) : ciao_servant, dds4ccm_impl {
   after      += QC_ReadGet_Test_Connector_lem_stub QC_ReadGet_Test_Connector_exec \
-                QC_ReadGet_Test_Connector_stub 
+                QC_ReadGet_Test_Connector_stub
   sharedname  = QC_ReadGet_Test_Connector_svnt
   libs       += QC_ReadGet_Test_Connector_stub \
                 QC_ReadGet_Test_Connector_lem_stub  \
                 QC_ReadGet_Test_Base_stub \
-                QC_ReadGet_Test_Connector_exec 
+                QC_ReadGet_Test_Connector_exec
   libpaths += ../lib
   libout = ../lib
   includes += ..

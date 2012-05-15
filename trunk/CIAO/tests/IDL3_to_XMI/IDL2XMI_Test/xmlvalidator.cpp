@@ -41,8 +41,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       return 1;
     }
 
-  DAnCE::XML::XML_Error_Handler handler;
-  Test::XML::Helper helper (handler);
+  XML::XML_Error_Handler handler;
+  Test::Helper helper (handler);
 
   if (0 != helper.validate_dom (inp_file))
     {

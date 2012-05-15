@@ -10,7 +10,13 @@
 
 #pragma ciao lem "Shapes_ShapeType_connE.idl"
 
+#if (CIAO_DDS4CCM_OPENDDS==1)
+#include "GeneratedCode/Shapes_ShapeType_msgTypeSupport.idl"
+#endif
+
+#if defined DDS4CCM_NEEDS_SEQUENCES_DEFINED
 typedef sequence<ShapeType> ShapeTypeSeq;
+#endif
 
 module Shapes
 {

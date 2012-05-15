@@ -15,5 +15,10 @@
 
 #pragma ciao lem "Connector/GCE_Test_ConnectorE.idl"
 
+#if (CIAO_DDS4CCM_OPENDDS==1)
+# include "Base/GCE_Test_BaseTypeSupport.idl"
+#endif
+
 module ::CCM_DDS::Typed < ::GCETest, ::GCETestSeq> GCETestConnector;
+
 #endif /* GET_COMPONENT_EVENT_TEST_CONNECTOR_IDL_ */

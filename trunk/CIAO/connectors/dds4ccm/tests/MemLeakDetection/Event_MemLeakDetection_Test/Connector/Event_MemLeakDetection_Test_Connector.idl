@@ -15,6 +15,10 @@
 
 #pragma ciao lem "Connector/Event_MemLeakDetection_Test_ConnectorE.idl"
 
+#if (CIAO_DDS4CCM_OPENDDS==1)
+# include "Base/Event_MemLeakDetection_Test_BaseTypeSupport.idl"
+#endif
+
 module ::CCM_DDS::Typed < ::Event_MemLeakDetectionTest, ::Event_MemLeakDetectionTestSeq> Event_MemLeakDetectionConnector;
 
 #endif /* Event_MemLeakDetection_Test_CONNECTOR_IDL_ */

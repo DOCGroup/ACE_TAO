@@ -62,7 +62,7 @@ project (CIAO_NDDS_stub) : install, ndds_idltocpp, ccm_stub, ciaolib_with_idl, c
 
 project (CIAO_NDDS_idl_install_only) {
 
-  avoids += dds4ccm_opendds dds4ccm_ndds dds4ccm_splice
+  avoids += dds4ccm_opendds dds4ccm_ndds
 
   custom_only = 1
 

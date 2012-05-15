@@ -13,6 +13,8 @@ struct NoModuleType {
   string value; //@key
 };
 
+#if defined DDS4CCM_NEEDS_SEQUENCES_DEFINED
 typedef sequence<NoModuleType> NoModuleTypeSeq;
+#endif
 
 #endif

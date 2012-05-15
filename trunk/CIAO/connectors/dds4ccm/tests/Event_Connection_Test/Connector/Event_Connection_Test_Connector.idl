@@ -15,6 +15,10 @@
 
 #pragma ciao lem "Connector/Event_Connection_Test_ConnectorE.idl"
 
+#if (CIAO_DDS4CCM_OPENDDS==1)
+# include "Base/Event_Connection_Test_BaseTypeSupport.idl"
+#endif
+
 module ::CCM_DDS::Typed < ::Event_ConnectionTest, ::Event_ConnectionTestSeq> Event_ConnectionConnector;
 
 #endif /* Event_Connection_Test_CONNECTOR_IDL_ */

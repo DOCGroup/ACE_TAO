@@ -61,6 +61,7 @@ struct test {
   short x_test;
   string x_teststr;
 };
+
 typedef sequence<test> testSeq;
 
 #pragma DCPS_DATA_TYPE "TopicSeq"
@@ -89,15 +90,31 @@ struct TopicValuetype {
 #endif
 
 // Sequences
+#if defined DDS4CCM_NEEDS_SEQUENCES_DEFINED
 typedef sequence<TestTopic> TestTopicSeq;
+#endif
+#if defined DDS4CCM_NEEDS_SEQUENCES_DEFINED
 typedef sequence<TopicString> TopicStringSeq;
+#endif
+#if defined DDS4CCM_NEEDS_SEQUENCES_DEFINED
 typedef sequence<TopicArray> TopicArraySeq;
+#endif
+#if defined DDS4CCM_NEEDS_SEQUENCES_DEFINED
 typedef sequence<TopicUnion> TopicUnionSeq;
+#endif
+#if defined DDS4CCM_NEEDS_SEQUENCES_DEFINED
 typedef sequence<X_Union> X_UnionSeq;
+#endif
+#if defined DDS4CCM_NEEDS_SEQUENCES_DEFINED
 typedef sequence<TopicSeq> TopicSeqSeq;
+#endif
 #if !defined (CIAO_DDS4CCM_OPENDDS)
+#if defined DDS4CCM_NEEDS_SEQUENCES_DEFINED
 typedef sequence<TopicValuetype> TopicValuetypeSeq;
 #endif
+#endif
+#if defined DDS4CCM_NEEDS_SEQUENCES_DEFINED
 typedef sequence<X_Valuetype> X_ValuetypeSeq;
+#endif
 
 #endif

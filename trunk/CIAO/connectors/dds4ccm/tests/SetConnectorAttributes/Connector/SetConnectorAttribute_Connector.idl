@@ -15,6 +15,10 @@
 
 #pragma ciao lem "Connector/SetConnectorAttribute_ConnectorE.idl"
 
+#if (CIAO_DDS4CCM_OPENDDS==1)
+# include "Base/SetConnectorAttribute_BaseTypeSupport.idl"
+#endif
+
 module SetConnectorAttribute
 {
   module ::CCM_DDS::Typed

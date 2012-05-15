@@ -67,7 +67,7 @@ using XERCES_CPP_NAMESPACE::DOMElement;
 using XERCES_CPP_NAMESPACE::DOMText;
 using XERCES_CPP_NAMESPACE::DOMDocumentType;
 using XERCES_CPP_NAMESPACE::XMLChar1_1;
-using DAnCE::XML::XStr;
+using XML::XStr;
 
 #if 0
 struct Foo {
@@ -2027,10 +2027,10 @@ namespace DAnCE
 
           target_name += fn;
 
-          DAnCE::XML::NoOp_Resolver res_func;
-          DAnCE::XML::XML_Schema_Resolver<> resolver (res_func);
-          DAnCE::XML::XML_Error_Handler handler;
-          DAnCE::XML::XML_Helper<> helper (&resolver, &handler);
+          XML::NoOp_Resolver res_func;
+          XML::XML_Schema_Resolver<> resolver (res_func);
+          XML::XML_Error_Handler handler;
+          XML::XML_Helper<> helper (&resolver, &handler);
 
           // Create XML document
           std::auto_ptr<DOMDocumentType> doctype (

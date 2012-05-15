@@ -10,6 +10,8 @@ project(*i2c_shapes_sender) : dds4ccm_logger, ndds_idltocpp_impl, ndds_cck_ts_de
   libs += I2C_Shapes_Common I2C_Shapes_Base_stub I2C_ShapeType_stub
   libpaths += ../lib
 
+  requires += dds4ccm_ndds
+
   Source_Files {
     I2C_Shapes_Sender.cpp
   }

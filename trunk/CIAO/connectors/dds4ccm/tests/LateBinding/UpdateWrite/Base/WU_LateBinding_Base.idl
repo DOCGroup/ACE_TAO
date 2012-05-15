@@ -19,6 +19,8 @@ struct WU_LateBindingTest {
   long iteration;
 };
 
+#if defined DDS4CCM_NEEDS_SEQUENCES_DEFINED
 typedef sequence<WU_LateBindingTest> WU_LateBindingTestSeq;
+#endif
 
 #endif

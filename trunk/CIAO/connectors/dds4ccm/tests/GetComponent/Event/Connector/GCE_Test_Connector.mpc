@@ -2,7 +2,7 @@
 // This file is generated with "generate_component_mpc.pl -p GCE_Test_Base -l .. -o ../lib -u DDS GCE_Test_Connector"
 
 project(GCE_Test_Connector_idl_gen) : connectoridldefaults, dds4ccm {
-  after += DDS4CCM_idl_gen
+  after += DDS4CCM_idl_gen GCE_Test_Base_stub
   custom_only = 1
   idlflags += -Wb,stub_export_macro=GET_COMPONENT_EVENT_TEST_CONNECTOR_STUB_Export \
               -Wb,stub_export_include=GCE_Test_Connector_stub_export.h \
@@ -33,8 +33,8 @@ project(GCE_Test_Connector_lem_gen) : ciaoidldefaults, dds4ccm {
 }
 
 project(GCE_Test_Connector_lem_stub) : ccm_svnt, dds4ccm_lem_stub {
-  after += GCE_Test_Connector_lem_gen GCE_Test_Connector_stub GCE_Test_Base_stub 
-  libs  += GCE_Test_Base_stub GCE_Test_Connector_stub 
+  after += GCE_Test_Connector_lem_gen GCE_Test_Connector_stub GCE_Test_Base_stub
+  libs  += GCE_Test_Base_stub GCE_Test_Connector_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -111,12 +111,12 @@ project(GCE_Test_Connector_exec) : ciao_executor, dds4ccm_impl {
 
 
 project(GCE_Test_Connector_svnt) : ciao_servant, dds4ccm_impl {
-  after      += GCE_Test_Connector_lem_stub GCE_Test_Connector_exec GCE_Test_Connector_stub 
+  after      += GCE_Test_Connector_lem_stub GCE_Test_Connector_exec GCE_Test_Connector_stub
   sharedname  = GCE_Test_Connector_svnt
   libs       += GCE_Test_Connector_stub \
                 GCE_Test_Connector_lem_stub  \
                 GCE_Test_Base_stub \
-                GCE_Test_Connector_exec 
+                GCE_Test_Connector_exec
   libpaths += ../lib
   libout = ../lib
   includes += ..

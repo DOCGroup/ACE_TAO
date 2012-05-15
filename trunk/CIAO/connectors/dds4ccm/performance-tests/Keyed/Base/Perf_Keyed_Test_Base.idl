@@ -31,6 +31,9 @@ struct PerfKeyedTest {
   unsigned long long nanotime;
 };
 
+
+#if defined DDS4CCM_NEEDS_SEQUENCES_DEFINED
 typedef sequence<PerfKeyedTest> PerfKeyedTestSeq;
+#endif
 
 #endif

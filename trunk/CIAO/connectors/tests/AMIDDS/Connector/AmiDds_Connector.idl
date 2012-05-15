@@ -15,6 +15,10 @@
 
 #pragma ciao lem "Connector/AmiDds_ConnectorE.idl"
 
+#if (CIAO_DDS4CCM_OPENDDS==1)
+# include "Base/AmiDds_DDSTypeSupport.idl"
+#endif
+
 module AmiDds
 {
   module ::CCM_DDS::Typed < ::TestTopic, ::TestTopicSeq> AmiDdsConnector;

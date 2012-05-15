@@ -15,6 +15,10 @@
 
 #pragma ciao lem "Connector/Quoter_ConnectorE.idl"
 
+#if (CIAO_DDS4CCM_OPENDDS==1)
+# include "Base/Quoter_BaseTypeSupport.idl"
+#endif
+
 module ::CCM_DDS::Typed < ::Quoter::Stock_Info, ::Quoter::Stock_InfoSeq> Quoter;
 
 #endif /* QUOTER_CONNECTOR_IDL_ */

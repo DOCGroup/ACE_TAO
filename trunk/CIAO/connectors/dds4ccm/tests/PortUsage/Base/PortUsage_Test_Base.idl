@@ -19,7 +19,9 @@ struct PortUsageTest {
   long iteration;
 };
 
+#if defined DDS4CCM_NEEDS_SEQUENCES_DEFINED
 typedef sequence<PortUsageTest> PortUsageTestSeq;
+#endif
 
 enum PORT_USAGE_ASSIGNMENT {
   //event ports

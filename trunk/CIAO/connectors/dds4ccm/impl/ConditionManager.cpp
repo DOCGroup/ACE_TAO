@@ -63,9 +63,9 @@ namespace CIAO
                                                             error,
                                                             non_existent);
 #else
-      ACE_UNUSED_ARG (instance_handle);
-      ACE_UNUSED_ARG (lookup_handle);
-      ::DDS::InstanceHandle_t ret = ::DDS::RETCODE_OK;
+      ::DDS::InstanceHandle_t ret = lookup_handle;
+      error = instance_handle != ::DDS::HANDLE_NIL && instance_handle != lookup_handle;
+      non_existent = lookup_handle == ::DDS::HANDLE_NIL;
 #endif
       if (error)
         throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
@@ -111,6 +111,7 @@ namespace CIAO
                                   ::DDS::NOT_READ_SAMPLE_STATE,
                                   ::DDS::NEW_VIEW_STATE | ::DDS::NOT_NEW_VIEW_STATE,
                                   ::DDS::ALIVE_INSTANCE_STATE | ::DDS::NOT_ALIVE_INSTANCE_STATE);
+
           if ( ::CORBA::is_nil (this->rd_condition_.in ()))
             {
               DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
@@ -421,21 +422,24 @@ namespace CIAO
               ::DDS::QueryCondition_var q_condition = this->get_querycondition_getter ();
               if (::CORBA::is_nil (q_condition.in ()))
                 {
-                  // Read condition should be attached to the waitset.
-                  retcode = this->ws_.detach_condition (this->rd_condition_.in ());
-                  if (retcode != ::DDS::RETCODE_OK)
+                  if (!::CORBA::is_nil (this->rd_condition_.in ()))
                     {
-                      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-                                    ACE_TEXT ("ConditionManager::remove_conditions - ")
-                                    ACE_TEXT ("Unable to detach read condition ")
-                                    ACE_TEXT ("from waitset. Error <%C>\n"),
-                                    translate_retcode (retcode)));
-                    }
-                  else
-                    {
-                      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, DDS4CCM_INFO
-                                    ACE_TEXT ("ConditionManager::remove_conditions - ")
-                                    ACE_TEXT ("Read condition successfully detached from waitset.\n")));
+                      // Read condition should be attached to the waitset.
+                      retcode = this->ws_.detach_condition (this->rd_condition_.in ());
+                      if (retcode != ::DDS::RETCODE_OK)
+                        {
+                          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                                        ACE_TEXT ("ConditionManager::remove_conditions - ")
+                                        ACE_TEXT ("Unable to detach read condition ")
+                                        ACE_TEXT ("from waitset. Error <%C>\n"),
+                                        translate_retcode (retcode)));
+                        }
+                      else
+                        {
+                          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, DDS4CCM_INFO
+                                        ACE_TEXT ("ConditionManager::remove_conditions - ")
+                                        ACE_TEXT ("Read condition successfully detached from waitset.\n")));
+                        }
                     }
                 }
             }

@@ -19,6 +19,8 @@ struct ReaderTest {
   long iteration;
 };
 
+#if defined DDS4CCM_NEEDS_SEQUENCES_DEFINED
 typedef sequence<ReaderTest> ReaderTestSeq;
+#endif
 
 #endif

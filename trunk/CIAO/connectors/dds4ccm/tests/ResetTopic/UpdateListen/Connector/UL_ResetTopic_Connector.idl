@@ -15,6 +15,10 @@
 
 #pragma ciao lem "Connector/UL_ResetTopic_ConnectorE.idl"
 
+#if (CIAO_DDS4CCM_OPENDDS==1)
+# include "Base/UL_ResetTopic_BaseTypeSupport.idl"
+#endif
+
 module UL_ResetTopic
 {
   module ::CCM_DDS::Typed < ::UL_ResetTopicTest, ::UL_ResetTopicTestSeq> UL_ResetTopicTestConnector;

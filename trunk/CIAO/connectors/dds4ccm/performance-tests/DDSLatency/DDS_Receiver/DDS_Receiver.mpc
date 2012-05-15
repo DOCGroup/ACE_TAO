@@ -1,12 +1,14 @@
 // $Id$
 
-project(*latency_receiver_plain) : nddslib, acelib, taolib, typecode {
+project(*latency_receiver_plain) : ndds_idltocpp, acelib, taolib, typecode {
   after += DDS_Latency_Base_plain_stub
   exename = DDS_receiver
   libpaths += ../lib
   libout = ../lib
   libs  += DDS_Latency_Base_plain_stub
   includes += ../Base
+
+  requires += dds4ccm_ndds
 
   Source_Files {
     Latency_Receiver.cpp

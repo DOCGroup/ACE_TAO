@@ -13,7 +13,9 @@ struct Topic1 {
   string key_value_topic1; //@key
   long long_value;
 };
+#if defined DDS4CCM_NEEDS_SEQUENCES_DEFINED
 typedef sequence<Topic1> Topic1Seq;
+#endif
 
 #pragma DCPS_DATA_TYPE "Topic2"
 #pragma DCPS_DATA_KEY "Topic2 key_value_topic2"
@@ -22,7 +24,9 @@ struct Topic2 {
   string key_value_topic2; //@key
   float float_value;
 };
+#if defined DDS4CCM_NEEDS_SEQUENCES_DEFINED
 typedef sequence<Topic2> Topic2Seq;
+#endif
 
 #pragma DCPS_DATA_TYPE "Topic3"
 #pragma DCPS_DATA_KEY "Topic3 key_value_topic3"
@@ -31,6 +35,8 @@ struct Topic3 {
   string key_value_topic3; //@key
   short short_value;
 };
+#if defined DDS4CCM_NEEDS_SEQUENCES_DEFINED
 typedef sequence<Topic3> Topic3Seq;
+#endif
 
 #endif

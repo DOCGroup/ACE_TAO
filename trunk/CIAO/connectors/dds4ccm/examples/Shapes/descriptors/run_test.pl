@@ -11,6 +11,7 @@ use PerlACE::TestTarget;
 $CIAO_ROOT = "$ENV{'CIAO_ROOT'}";
 $TAO_ROOT = "$ENV{'TAO_ROOT'}";
 $DANCE_ROOT = "$ENV{'DANCE_ROOT'}";
+$DDS_ROOT = "$ENV{'DDS_ROOT'}";
 
 $daemons_running = 0;
 $em_running = 0;
@@ -22,7 +23,6 @@ $nr_daemon = 2;
 @iorfiles = 0;
 @nodenames = ( "SenderNode", "ReceiverNode" );
 
-# ior files other than daemon
 # ior files other than daemon
 $ior_nsbase = "ns.ior";
 $ior_nsfile = 0;
@@ -159,6 +159,7 @@ if ($tg_naming->WaitForFileTimed ($ior_nsbase,
 }
 
 $ns_running = 1;
+
 # Set up NamingService environment
 $ENV{"NameServiceIOR"} = "corbaloc:iiop:localhost:60003/NameService";
 

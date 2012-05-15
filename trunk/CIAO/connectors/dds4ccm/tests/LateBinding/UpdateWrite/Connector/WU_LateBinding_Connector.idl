@@ -15,6 +15,10 @@
 
 #pragma ciao lem "Connector/WU_LateBinding_ConnectorE.idl"
 
+#if (CIAO_DDS4CCM_OPENDDS==1)
+# include "Base/WU_LateBinding_BaseTypeSupport.idl"
+#endif
+
 module WU_LateBinding
 {
   module ::CCM_DDS::Typed < ::WU_LateBindingTest, ::WU_LateBindingTestSeq> WU_LateBindingTestConnector;

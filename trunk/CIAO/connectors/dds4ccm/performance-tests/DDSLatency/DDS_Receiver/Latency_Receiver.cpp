@@ -5,9 +5,14 @@
 #include "ace/High_Res_Timer.h"
 #include "ace/Env_Value_T.h"
 #include "ace/Tokenizer_T.h"
-#include "Latency_Base.h"
-#include "Latency_BaseSupport.h"
-#include "Latency_BasePlugin.h"
+#if (CIAO_DDS4CCM_NDDS==1)
+# include "Latency_Base.h"
+# include "Latency_BaseSupport.h"
+# include "Latency_BasePlugin.h"
+#else
+# include "Latency_BaseC.h"
+# include "Latency_BaseTypeSupportC.h"
+#endif
 
 #include <ndds/ndds_namespace_cpp.h>
 

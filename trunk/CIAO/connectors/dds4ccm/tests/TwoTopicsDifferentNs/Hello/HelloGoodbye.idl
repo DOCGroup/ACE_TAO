@@ -20,7 +20,9 @@ module Hello
     string hello;  //@key
     long iteration;
   };
-  typedef sequence<HelloGoodbye> HelloGoodbyeSeq;
+  #if defined DDS4CCM_NEEDS_SEQUENCES_DEFINED
+typedef sequence<HelloGoodbye> HelloGoodbyeSeq;
+#endif
 };
 
 

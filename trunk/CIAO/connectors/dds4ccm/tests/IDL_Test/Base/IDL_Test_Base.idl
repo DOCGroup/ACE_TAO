@@ -19,6 +19,8 @@ struct IDL_Test {
   long iteration;
 };
 
+#if defined DDS4CCM_NEEDS_SEQUENCES_DEFINED
 typedef sequence<IDL_Test> IDL_TestSeq;
+#endif
 
 #endif

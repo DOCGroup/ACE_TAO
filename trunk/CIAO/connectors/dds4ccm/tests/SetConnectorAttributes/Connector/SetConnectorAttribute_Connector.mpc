@@ -2,7 +2,7 @@
 // This file is generated with "generate_component_mpc.pl -p DDS_SCABase -l .. -o ../lib -u DDS SetConnectorAttribute_Connector"
 
 project(DDS_SCAConnector_idl_gen) : connectoridldefaults, dds4ccm {
-  after += DDS4CCM_idl_gen
+  after += DDS4CCM_idl_gen DDS_SCABase_stub
   custom_only = 1
   idlflags += -Wb,stub_export_macro=SETCONNECTORATTRIBUTE_CONNECTOR_STUB_Export \
               -Wb,stub_export_include=SetConnectorAttribute_Connector_stub_export.h \
@@ -33,8 +33,8 @@ project(DDS_SCAConnector_lem_gen) : ciaoidldefaults, dds4ccm {
 }
 
 project(DDS_SCAConnector_lem_stub) : ccm_svnt, dds4ccm_lem_stub {
-  after += DDS_SCAConnector_lem_gen DDS_SCAConnector_stub DDS_SCABase_stub 
-  libs  += DDS_SCABase_stub DDS_SCAConnector_stub 
+  after += DDS_SCAConnector_lem_gen DDS_SCAConnector_stub DDS_SCABase_stub
+  libs  += DDS_SCABase_stub DDS_SCAConnector_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -111,12 +111,12 @@ project(DDS_SCAConnector_exec) : ciao_executor, dds4ccm_impl {
 
 
 project(DDS_SCAConnector_svnt) : ciao_servant, dds4ccm_impl {
-  after      += DDS_SCAConnector_lem_stub DDS_SCAConnector_exec DDS_SCAConnector_stub 
+  after      += DDS_SCAConnector_lem_stub DDS_SCAConnector_exec DDS_SCAConnector_stub
   sharedname  = DDS_SCAConnector_svnt
   libs       += DDS_SCAConnector_stub \
                 DDS_SCAConnector_lem_stub  \
                 DDS_SCABase_stub \
-                DDS_SCAConnector_exec 
+                DDS_SCAConnector_exec
   libpaths += ../lib
   libout = ../lib
   includes += ..

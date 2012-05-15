@@ -24,7 +24,9 @@ module X
         string key; //@key
         long iter;
       };
-      typedef sequence<DNM_Test_Struct> DNM_Test_StructSeq;
+      #if defined DDS4CCM_NEEDS_SEQUENCES_DEFINED
+typedef sequence<DNM_Test_Struct> DNM_Test_StructSeq;
+#endif
     };
   };
 };

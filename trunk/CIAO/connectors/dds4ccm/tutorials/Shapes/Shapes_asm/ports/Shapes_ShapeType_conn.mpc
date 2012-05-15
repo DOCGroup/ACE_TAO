@@ -1,7 +1,7 @@
 // $Id$
 
 project(Shapes_ShapeType_conn_idl_gen) : connectoridldefaults, dds4ccm {
-  after += DDS4CCM_idl_gen
+  after += DDS4CCM_idl_gen Shapes_ShapeType_msg_stub
   custom_only = 1
   idlflags += -Wb,stub_export_macro=SHAPES_CONNECTOR_STUB_Export \
               -Wb,stub_export_include=Shapes_ShapeType_conn_stub_export.h \
@@ -70,7 +70,7 @@ project(Shapes_ShapeType_conn_stub) : ccm_stub, dds4ccm_base {
   libpaths += ../lib
   libout = ../lib
 
-  includes += .
+  includes += . ..
 
   sharedname = Shapes_ShapeType_conn_stub
   dynamicflags += SHAPES_CONNECTOR_STUB_BUILD_DLL

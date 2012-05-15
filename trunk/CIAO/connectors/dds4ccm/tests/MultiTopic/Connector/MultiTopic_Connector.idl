@@ -15,6 +15,10 @@
 
 #pragma ciao lem "Connector/MultiTopic_ConnectorE.idl"
 
+#if (CIAO_DDS4CCM_OPENDDS==1)
+# include "Base/MultiTopic_BaseTypeSupport.idl"
+#endif
+
 module ::CCM_DDS_MT::Typed_MT < ::ShapeType, ::ShapeTypeSeq> Shapes;
 
 #endif /* MULTITOPIC_CONNECTOR_IDL_ */

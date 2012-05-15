@@ -15,6 +15,10 @@
 
 #pragma ciao lem "OneFile_ConnectorE.idl"
 
+#if (CIAO_DDS4CCM_OPENDDS==1)
+# include "OneFile_BaseTypeSupport.idl"
+#endif
+
 module OneFile_Connector
 {
   module ::CCM_DDS::Typed < OneFileTopic, OneFileTopicSeq> OneFileConnector;

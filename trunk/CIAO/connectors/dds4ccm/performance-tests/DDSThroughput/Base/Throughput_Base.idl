@@ -8,8 +8,6 @@
 #ifndef THROUGHPUT_BASE_IDL
 #define THROUGHPUT_BASE_IDL
 
-//#pragma ndds typesupport "Base/Throughput_BaseSupport.h"
-
 const short MAX_DATA_SEQUENCE_LENGTH = 8192;
 
 typedef enum ThroughputCommandKind
@@ -27,8 +25,6 @@ struct ThroughputTest {
  OctetSeq data;
  };
 
-//typedef sequence<ThroughputTest> ThroughputTest_Seq;
-
 struct ThroughputCommand
 {
     CommandKind  command;
@@ -36,7 +32,5 @@ struct ThroughputCommand
     unsigned long long current_publisher_effort;
     unsigned long long final_publisher_effort;
 };
-
-//typedef sequence<ThroughputCommand> ThroughputCommand_Seq;
 
 #endif

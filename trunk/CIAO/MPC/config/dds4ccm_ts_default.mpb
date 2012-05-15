@@ -1,16 +1,10 @@
 // -*- MPC -*-
 // $Id$
 
-feature(dds4ccm_opendds) : dds4ccm, dcps_ts_defaults, dcps {
+feature(dds4ccm_opendds) : dds4ccm, dcps_ts_defaults, dcps_rtps {
   Define_Custom(DDSGenerator) : TypeSupport {
-    commandflags += -Wb,opendds_sequence_suffix=DDSSeq -DCIAO_DDS4CCM_OPENDDS=1
+    commandflags += -DCIAO_DDS4CCM_OPENDDS=1 -UDDS4CCM_NEEDS_SEQUENCES_DEFINED
     keyword opendds_ts_flags = commandflags
-    keyword dds_ts_flags = commandflags
-  }
-}
-
-feature(dds4ccm_splice) : dds4ccm, splice_ts_defaults {
-  Define_Custom(DDSGenerator) : SpliceTypeSupport {
     keyword dds_ts_flags = commandflags
   }
 }
@@ -40,14 +34,6 @@ feature(!dds4ccm_ndds) {
   }
 }
 
-feature(!dds4ccm_splice) {
-  // this allows the user's project to reference splice_ts_flags,
-  // which will simply be ignored
-  Define_Custom(SpliceDummyTypeSupport) {
-    keyword splice_ts_flags
-  }
-}
-
 feature(!dds4ccm_coredx) {
   // this allows the user's project to reference coredx_ts_flags,
   // which will simply be ignored
@@ -56,7 +42,7 @@ feature(!dds4ccm_coredx) {
   }
 }
 
-feature(!dds4ccm_opendds, !dds4ccm_ndds, !dds4ccm_splice, !dds4ccm_coredx) : typecode {
+feature(!dds4ccm_opendds, !dds4ccm_ndds, !dds4ccm_coredx) : typecode {
   Define_Custom(DDSGenerator) {
     keyword dds_ts_flags
   }

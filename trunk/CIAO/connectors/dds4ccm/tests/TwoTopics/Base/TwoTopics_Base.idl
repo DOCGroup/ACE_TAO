@@ -18,7 +18,9 @@ struct HelloTopic {
   string hello; //@key
   long iteration;
 };
+#if defined DDS4CCM_NEEDS_SEQUENCES_DEFINED
 typedef sequence<HelloTopic> HelloTopicSeq;
+#endif
 
 #pragma DCPS_DATA_TYPE "GoodbyeTopic"
 #pragma DCPS_DATA_KEY "GoodbyeTopic goodbye"
@@ -27,6 +29,8 @@ struct GoodbyeTopic {
   string goodbye; //@key
   long iteration;
 };
+#if defined DDS4CCM_NEEDS_SEQUENCES_DEFINED
 typedef sequence<GoodbyeTopic> GoodbyeTopicSeq;
+#endif
 
 #endif

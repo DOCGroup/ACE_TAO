@@ -15,6 +15,10 @@
 
 #pragma ciao lem "Connector/PSL_SampleLost_ConnectorE.idl"
 
+#if (CIAO_DDS4CCM_OPENDDS==1)
+# include "Base/PSL_SampleLost_BaseTypeSupport.idl"
+#endif
+
 module PSL_SampleLost
 {
   module ::CCM_DDS::Typed < ::TestTopic, ::TestTopicSeq> PSL_SampleLostConnector;

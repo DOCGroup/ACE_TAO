@@ -148,8 +148,15 @@ namespace CIAO
       ::CCM_DDS::DataNumber_t index)
     {
       DDS4CCM_TRACE ("CIAO::DDS4CCM::Updater_T::delete_i");
+
+      ::DDS::InstanceHandle_t hnd = instance_handle;
+      if (instance_handle == ::DDS::HANDLE_NIL)
+        {
+          hnd = this->dds_writer ()->lookup_instance (an_instance);
+        }
+
       ::DDS::ReturnCode_t result =
-          this->dds_writer ()->dispose (an_instance, instance_handle);
+          this->dds_writer ()->dispose (an_instance, hnd);
       if (result != ::DDS::RETCODE_OK)
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
@@ -158,7 +165,7 @@ namespace CIAO
           translate_retcode (result)));
           throw ::CCM_DDS::InternalError (result, index);
         }
-      result = this->dds_writer ()->unregister_instance (an_instance, instance_handle);
+      result = this->dds_writer ()->unregister_instance (an_instance, hnd);
       if (result != ::DDS::RETCODE_OK)
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
@@ -197,7 +204,7 @@ namespace CIAO
         {
           throw CCM_DDS::NonExistent (0);
         }
-      this->delete_i (an_instance, instance_handle, 0);
+      this->delete_i (an_instance, hnd, 0);
     }
 
     template <typename UPDATER_TYPE, typename TYPED_DDS_WRITER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>

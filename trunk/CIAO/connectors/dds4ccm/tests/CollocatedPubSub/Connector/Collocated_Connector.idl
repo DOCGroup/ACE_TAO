@@ -10,6 +10,10 @@
 
 #pragma ciao lem "Connector/Collocated_ConnectorE.idl"
 
+#if (CIAO_DDS4CCM_OPENDDS==1)
+# include "Base/Collocated_BaseTypeSupport.idl"
+#endif
+
 module CoPubSub {
   module CCM_DDS::Typed <Test_msg, Test_msgSeq> Test_conn;
 };

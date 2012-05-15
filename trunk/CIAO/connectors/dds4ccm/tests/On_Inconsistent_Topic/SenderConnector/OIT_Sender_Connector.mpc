@@ -2,7 +2,7 @@
 // This file is generated with "generate_component_mpc.pl -p OIT_Test_Base -l .. -o ../lib -u DDS OIT_Sender_Connector"
 
 project(OIT_Sender_Connector_idl_gen) : connectoridldefaults, dds4ccm {
-  after += DDS4CCM_idl_gen
+  after += DDS4CCM_idl_gen OIT_Test_Base_stub
   custom_only = 1
   idlflags += -Wb,stub_export_macro=ON_INCONSISTENT_TOPIC_TEST_CONNECTOR_STUB_Export \
               -Wb,stub_export_include=OIT_Sender_Connector_stub_export.h \
@@ -33,8 +33,8 @@ project(OIT_Sender_Connector_lem_gen) : ciaoidldefaults, dds4ccm {
 }
 
 project(OIT_Sender_Connector_lem_stub) : ccm_svnt, dds4ccm_lem_stub {
-  after += OIT_Sender_Connector_lem_gen OIT_Sender_Connector_stub OIT_Test_Base_stub 
-  libs  += OIT_Test_Base_stub OIT_Sender_Connector_stub 
+  after += OIT_Sender_Connector_lem_gen OIT_Sender_Connector_stub OIT_Test_Base_stub
+  libs  += OIT_Test_Base_stub OIT_Sender_Connector_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -111,12 +111,12 @@ project(OIT_Sender_Connector_exec) : ciao_executor, dds4ccm_impl {
 
 
 project(OIT_Sender_Connector_svnt) : ciao_servant, dds4ccm_impl {
-  after      += OIT_Sender_Connector_lem_stub OIT_Sender_Connector_exec OIT_Sender_Connector_stub 
+  after      += OIT_Sender_Connector_lem_stub OIT_Sender_Connector_exec OIT_Sender_Connector_stub
   sharedname  = OIT_Sender_Connector_svnt
   libs       += OIT_Sender_Connector_stub \
                 OIT_Sender_Connector_lem_stub  \
                 OIT_Test_Base_stub \
-                OIT_Sender_Connector_exec 
+                OIT_Sender_Connector_exec
   libpaths += ../lib
   libout = ../lib
   includes += ..

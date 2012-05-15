@@ -19,6 +19,8 @@ struct ContentFilteredTopicListenStateTest {
   long iteration;
 };
 
+#if defined DDS4CCM_NEEDS_SEQUENCES_DEFINED
 typedef sequence<ContentFilteredTopicListenStateTest> ContentFilteredTopicListenStateTestSeq;
+#endif
 
 #endif

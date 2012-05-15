@@ -9,11 +9,15 @@
 #define GETTER_TEST_CONNECTOR_IDL_
 
 #include <Components.idl>
-#include "Base/Getter_Test_Base.idl"
-
 #include <ccm_dds.idl>
 
+#include "Base/Getter_Test_Base.idl"
+
 #pragma ciao lem "Connector/Getter_Test_ConnectorE.idl"
+
+#if (CIAO_DDS4CCM_OPENDDS==1)
+# include "Base/Getter_Test_BaseTypeSupport.idl"
+#endif
 
 module Getter_Test
 {

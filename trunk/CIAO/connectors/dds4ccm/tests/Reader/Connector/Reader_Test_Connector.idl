@@ -15,6 +15,10 @@
 
 #pragma ciao lem "Connector/Reader_Test_ConnectorE.idl"
 
+#if (CIAO_DDS4CCM_OPENDDS==1)
+# include "Base/Reader_Test_BaseTypeSupport.idl"
+#endif
+
 module Reader_Test
 {
   module ::CCM_DDS::Typed < ::ReaderTest, ::ReaderTestSeq> ReaderTestConnector;

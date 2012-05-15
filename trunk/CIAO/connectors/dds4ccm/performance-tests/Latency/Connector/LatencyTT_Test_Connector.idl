@@ -17,6 +17,10 @@
 
 #pragma ciao lem "Connector/LatencyTT_Test_ConnectorE.idl"
 
+#if (CIAO_DDS4CCM_OPENDDS==1)
+# include "Base/LatencyTT_Test_BaseTypeSupport.idl"
+#endif
+
 module LatencyTT_Test
 {
   module ::CCM_DDS::Typed < ::LatencyTTTest, ::LatencyTTTestSeq> LatencyTTTestConn;

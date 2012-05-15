@@ -12,6 +12,9 @@
 struct LargeType {
   string value; //@key
 };
+
+#if defined DDS4CCM_NEEDS_SEQUENCES_DEFINED
 typedef sequence<LargeType> LargeTypeSeq;
+#endif
 
 #endif

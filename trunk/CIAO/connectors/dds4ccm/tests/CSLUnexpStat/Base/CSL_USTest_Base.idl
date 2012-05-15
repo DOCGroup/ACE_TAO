@@ -18,6 +18,8 @@ struct TestTopic {
   string key; //@key
   long x;
 };
+#if defined DDS4CCM_NEEDS_SEQUENCES_DEFINED
 typedef sequence<TestTopic> TestTopicSeq;
-
 #endif
+
+#endif /* CSL_USTEST_BASE_IDL */

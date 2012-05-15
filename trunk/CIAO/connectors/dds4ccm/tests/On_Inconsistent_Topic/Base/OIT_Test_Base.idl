@@ -20,7 +20,9 @@ struct OIT_Receiver_Topic {
   long y;
 };
 
+#if defined DDS4CCM_NEEDS_SEQUENCES_DEFINED
 typedef sequence<OIT_Receiver_Topic> OIT_Receiver_TopicSeq;
+#endif
 
 #pragma DCPS_DATA_TYPE "OIT_Sender_Topic"
 #pragma DCPS_DATA_KEY "OIT_Sender_Topic symbol"
@@ -32,6 +34,8 @@ struct OIT_Sender_Topic {
   long z;
 };
 
+#if defined DDS4CCM_NEEDS_SEQUENCES_DEFINED
 typedef sequence<OIT_Sender_Topic> OIT_Sender_TopicSeq;
+#endif
 
 #endif

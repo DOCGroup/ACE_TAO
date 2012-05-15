@@ -1,7 +1,7 @@
 // $Id$
 
 project(SharedDP_Diff_ID_Connector1_idl_gen) : connectoridldefaults, dds4ccm {
-  after += DDS4CCM_idl_gen
+  after += DDS4CCM_idl_gen SharedDP_Diff_ID_Base_stub
   custom_only = 1
   idlflags += -Wb,stub_export_macro=SHAREDDP_CONNECTOR1_STUB_Export \
               -Wb,stub_export_include=Connector1_stub_export.h \

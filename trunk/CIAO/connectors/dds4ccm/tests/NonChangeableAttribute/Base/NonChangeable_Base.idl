@@ -18,6 +18,8 @@ struct NonChangeableTest {
   long iteration;
 };
 
+#if defined DDS4CCM_NEEDS_SEQUENCES_DEFINED
 typedef sequence<NonChangeableTest> NonChangeableTestSeq;
+#endif
 
 #endif
