@@ -2475,6 +2475,30 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
       this->client_header_
     );
 
+  // Conditionally included.
+  if (idl_global->dds_connector_seen_)
+    {
+      BE_GlobalData::DDS_IMPL const the_dds_impl =
+        be_global->dds_impl ();
+
+      if (the_dds_impl == BE_GlobalData::OPENDDS)
+        {
+          ACE_Unbounded_Queue<char *> &ts_files =
+            idl_global->ciao_oci_ts_file_names ();
+          char **tmp = 0;
+
+          for (ACE_Unbounded_Queue_Iterator<char *> i (ts_files);
+              !i.done ();
+              i.advance ())
+            {
+              i.next (tmp);
+              this->gen_standard_include (this->client_header_,
+                                          *tmp);
+            }
+        }
+    }
+
+
   // DDS/DCPS zero-copy read sequence type support.
   if (idl_global->dcps_support_zero_copy_read ())
     {

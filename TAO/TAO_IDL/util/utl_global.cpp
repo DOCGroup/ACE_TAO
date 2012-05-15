@@ -1520,6 +1520,16 @@ IDL_GlobalData::fini (void)
       ACE::strdelete (*path_tmp);
     }
 
+  for (ACE_Unbounded_Queue_Iterator<char *>iter10 (
+         this->dcps_sequence_types_list_);
+       iter10.done () == 0;
+       iter10.advance ())
+    {
+      iter10.next (path_tmp);
+      ACE::strdelete (*path_tmp);
+    }
+
+
   ACE_Hash_Map_Entry<char *, char *> *entry = 0;
 
   for (ACE_Hash_Map_Iterator<char *, char *, ACE_Null_Mutex> hiter (
@@ -1664,6 +1674,29 @@ IDL_GlobalData::for_new_holder (
   UTL_StrList *params)
 {
   this->for_new_holder_ = params;
+}
+
+void
+IDL_GlobalData::set_dcps_sequence_type (const char* seq_type)
+{
+  this->dcps_sequence_types_list_.enqueue_tail (ACE::strnew (seq_type));
+}
+
+bool
+IDL_GlobalData::dcps_sequence_type_defined (const char* seq_type)
+{
+  char **tmp = 0;
+
+  for (ACE_Unbounded_Queue_Iterator<char *>riter (
+         this->dcps_sequence_types_list_);
+       riter.done () == 0;
+       riter.advance ())
+    {
+      riter.next (tmp);
+      if (ACE_OS::strcmp (*tmp, seq_type) == 0)
+        return true;
+    }
+  return false;
 }
 
 void

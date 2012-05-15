@@ -1,3 +1,32 @@
+Tue May 15 13:43:00 UTC 2012  Marcel Smit  <msmit@remedy.nl>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be/be_util.cpp:
+        * TAO_IDL/be/be_visitor_arg_traits.cpp:
+
+        * TAO_IDL/be/be_visitor_connector/connector_dds_ex_base.cpp:
+        * TAO_IDL/be/be_visitor_connector/connector_dds_exh.cpp:
+        * TAO_IDL/be/be_visitor_connector/connector_dds_exs.cpp:
+
+        * TAO_IDL/be/be_visitor_native/native_ch.cpp:
+
+        * TAO_IDL/be/be_visitor_sequence/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+
+        * TAO_IDL/be_include/be_global.h:
+
+        * TAO_IDL/fe/lex.yy.cpp:
+
+        * TAO_IDL/include/idl_global.h:
+
+        * TAO_IDL/util/utl_global.cpp:
+          Added support for openDDS.
+
 Tue May 15 11:29:04 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/RTCORBA/Activity/Task_Stats.cpp:

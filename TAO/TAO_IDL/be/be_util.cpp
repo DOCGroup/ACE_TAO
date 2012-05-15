@@ -152,7 +152,6 @@ be_util::prep_be_arg (char *s)
   static const char safe_include[]         = "safe_include=";
   static const char unique_include[]       = "unique_include=";
   static const char dds_impl[]             = "dds_impl=";
-  static const char opendds_sequence_suffix[] = "opendds_sequence_suffix=";
 
   char* last = 0;
 
@@ -298,12 +297,6 @@ be_util::prep_be_arg (char *s)
           char const * const val =
             arg + sizeof (dds_impl) - 1;
           be_global->dds_impl (val);
-        }
-      else if (ACE_OS::strstr (arg, opendds_sequence_suffix) == arg)
-        {
-          char const * const val =
-            arg + sizeof (opendds_sequence_suffix) - 1;
-          be_global->opendds_sequence_suffix (val);
         }
       else
         {

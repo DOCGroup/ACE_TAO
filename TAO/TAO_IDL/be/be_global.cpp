@@ -119,7 +119,6 @@ BE_GlobalData::BE_GlobalData (void)
     gen_empty_anyop_header_ (false),
     lookup_strategy_ (TAO_PERFECT_HASH),
     dds_impl_ (DDS_NONE),
-    opendds_sequence_suffix_ ("Seq"),
     void_type_ (0),
     ccmobject_ (0),
     messaging_ (0),
@@ -1946,18 +1945,6 @@ BE_GlobalData::DDS_IMPL
 BE_GlobalData::dds_impl (void) const
 {
   return this->dds_impl_;
-}
-
-void
-BE_GlobalData::opendds_sequence_suffix (const char *val)
-{
-  this->opendds_sequence_suffix_ = val;
-}
-
-const char *
-BE_GlobalData::opendds_sequence_suffix (void) const
-{
-  return this->opendds_sequence_suffix_.c_str ();
 }
 
 void

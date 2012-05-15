@@ -435,6 +435,10 @@ public:
 
   void             reset_flag_seen (void);
 
+  // = Types & methods supporting DDS DCPS sequence definitions (from #pragma)
+  typedef ACE_Unbounded_Queue<char *> DCPS_Sequence_Types_List;
+
+
   // = Types & methods supporting DDS DCPS data type/key definition (from #pragma)
   typedef ACE_Unbounded_Queue<ACE_TString> DCPS_Key_List;
 
@@ -451,7 +455,7 @@ public:
                                    ACE_Hash<char*>,
                                    ACE_Equal_To<char*>,
                                    ACE_Null_Mutex>
-    DCPS_Type_Info_Map ;
+    DCPS_Type_Info_Map;
 
   // FE calls when #pragma DCPS_DATA_TYPE is processed
   void add_dcps_data_type (const char* id);
@@ -467,6 +471,12 @@ public:
 
   // BE calls to check the status of zero-copy read support
   bool dcps_support_zero_copy_read (void) const;
+
+  // FE calls when #pragma DCPS_DATA_SEQUENCE_TYPE is processed
+  void set_dcps_sequence_type (const char* seq_type);
+
+  // BE calls to check whether pragma for this sequence has been set
+  bool dcps_sequence_type_defined (const char* seq_type);
 
   // FE calls when #pragma DCPS_GEN_ZERO_COPY_READ is processed
   void dcps_gen_zero_copy_read (bool value);
@@ -840,8 +850,10 @@ private:
   bool ignore_idl3_;
   // Need this for eventtypes left over after running idl3_to_idl2,
   // we don't want to try to generate another event consumer.
-  DCPS_Type_Info_Map dcps_type_info_map_ ;
+  DCPS_Type_Info_Map dcps_type_info_map_;
   // Map of #pragma DCPS_DATA_TYPE and DCPS_DATA_KEY infomation.
+
+  DCPS_Sequence_Types_List dcps_sequence_types_list_;
 
   bool dcps_support_zero_copy_read_;
   // Are we enabled to support DCPS zero-copy read.
