@@ -659,6 +659,12 @@ be_visitor_arg_traits::visit_sequence (be_sequence *node)
       return 0;
     }
 
+  if (idl_global->dcps_sequence_type_defined (node->full_name ()))
+    {
+      this->generated (node, true);
+      return 0;
+    }
+
   if (this->generated (node))
     {
       return 0;

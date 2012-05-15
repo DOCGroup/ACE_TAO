@@ -3320,6 +3320,13 @@ idl_store_pragma (char *buf)
       // Delete sample_type since add_dcps_data_key() doesn't take its ownership.
       delete [] sample_type;
     }
+  else if (ACE_OS::strncmp (buf + 8, "DCPS_DATA_SEQUENCE_TYPE", 23) == 0)
+    {
+      char *seq_type = idl_get_pragma_string (buf);
+      idl_global->set_dcps_sequence_type (seq_type);
+
+      delete [] seq_type;
+    }
   else if (ACE_OS::strncmp (buf + 8, "DCPS_SUPPORT_ZERO_COPY_READ", 27) == 0)
     {
       idl_global->dcps_support_zero_copy_read (true);

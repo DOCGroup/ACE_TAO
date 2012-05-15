@@ -34,6 +34,12 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
       return 0;
     }
 
+  if (idl_global->dcps_sequence_type_defined (node->full_name ()))
+    {
+      return 0;
+    }
+
+
   be_type *bt = be_type::narrow_from_decl (node->base_type ());
   AST_Decl::NodeType nt = bt->node_type ();
 

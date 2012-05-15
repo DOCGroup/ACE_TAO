@@ -36,6 +36,11 @@ be_visitor_sequence_any_op_ch::visit_sequence (be_sequence *node)
       return 0;
     }
 
+  if (idl_global->dcps_sequence_type_defined (node->full_name ()))
+    {
+      return 0;
+    }
+
   TAO_OutStream *os = this->ctx_->stream ();
   const char *macro = this->ctx_->export_macro ();
 

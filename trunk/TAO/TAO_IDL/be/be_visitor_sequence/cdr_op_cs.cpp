@@ -50,6 +50,11 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
       return 0;
     }
 
+  if (idl_global->dcps_sequence_type_defined (node->full_name ()))
+    {
+      return 0;
+    }
+
   TAO_OutStream *os = this->ctx_->stream ();
 
   be_type *bt =

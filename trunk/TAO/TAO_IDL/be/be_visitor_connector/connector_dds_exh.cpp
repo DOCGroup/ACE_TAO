@@ -23,6 +23,7 @@
 #include "ast_template_module_ref.h"
 #include "ast_template_module.h"
 #include "ast_typedef.h"
+#include "ast_native.h"
 
 be_visitor_connector_dds_exh::be_visitor_connector_dds_exh (
       be_visitor_context *ctx)
@@ -297,10 +298,6 @@ be_visitor_connector_dds_exh::gen_dds_traits (AST_Decl *datatype)
         {
           os_ << "RTI";
         }
-      else if (the_dds_impl == BE_GlobalData::OPENDDS)
-        {
-          os_ << "DDS";
-        }
 
       os_ << "Seq dds_seq_type;" << be_nl;
 
@@ -339,12 +336,24 @@ be_visitor_connector_dds_exh::gen_dds_traits (AST_Decl *datatype)
       os_ << "typedef ::" << dt_name
           << "DataWriter datawriter_type;" << be_nl
           << "typedef ::" << dt_name
-          << "DataReader datareader_type;" << be_nl
-          << "typedef " << (global_comp ? "" : "::") << comp_scope->full_name ()
-          << "::DataWriter typed_writer_type;" << be_nl
-          << "typedef " << (global_comp ? "" : "::") << comp_scope->full_name ()
-          << "::DataReader typed_reader_type;" << be_uidt_nl
-          << "};";
+          << "DataReader datareader_type;" << be_nl;
+
+      if (the_dds_impl == BE_GlobalData::NDDS)
+        {
+          os_ << "typedef " << (global_comp ? "" : "::") << comp_scope->full_name ()
+              << "::DataWriter typed_writer_type;" << be_nl
+              << "typedef " << (global_comp ? "" : "::") << comp_scope->full_name ()
+              << "::DataReader typed_reader_type;" ;
+        }
+      else if (the_dds_impl == BE_GlobalData::OPENDDS)
+        {
+          os_ << "typedef ::" << dt_name
+              << "DataWriter typed_writer_type;" << be_nl
+              << "typedef ::" << dt_name
+              << "DataReader typed_reader_type;";
+        }
+
+      os_ << be_uidt_nl << "};";
     }
 }
 
