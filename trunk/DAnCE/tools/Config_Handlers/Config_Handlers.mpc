@@ -35,7 +35,7 @@ project (XSC_XML_Generation) : install, xscdefaults {
   }
 }
 
-project (XSC_XML_Handlers) : install, acelib, xerces, dance_lib, dance_xml_utils {
+project (XSC_XML_Handlers) : install, acelib, xerces, dance_lib {
   sharedname    += XSC_XML_Handlers
   dynamicflags += XSC_XML_HANDLERS_BUILD_DLL
   macros += XML_USE_PTHREADS
@@ -54,12 +54,10 @@ project (XSC_XML_Handlers) : install, acelib, xerces, dance_lib, dance_xml_utils
     pcd.cpp
     toplevel.cpp
     Basic_Deployment_Data.cpp
-    XML_Typedefs.cpp
   }
 
   Header_Files {
     XSC_XML_Handlers_Export.h
-    XML_Typedefs.h
   }
 
   verbatim(gnuace, macros) {
@@ -77,7 +75,7 @@ project (XSC_Config_Handlers) : install, dance_deployment_stub, dance_config_han
 
   sharedname = XSC_Config_Handlers
   dynamicflags += CONFIG_HANDLERS_BUILD_DLL
-  libs += DAnCE_XML_Utils \
+  libs += XML_Utils \
           XSC_XML_Handlers \
           XSC_DynAny_Handler \
           XSC_Config_Handlers_Common

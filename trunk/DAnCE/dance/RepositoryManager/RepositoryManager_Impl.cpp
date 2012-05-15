@@ -36,7 +36,7 @@
 #include "dance/Logger/Log_Macros.h"
 
 #include "Package_Handlers/PCD_Handler.h"
-#include "XML_Typedefs.h"
+#include "XML/XML_Typedefs.h"
 
 #include "RM_Helper.h"            //to be able to externalize/internalize a PackageConfiguration
 #include "ace/Message_Block.h"    //for ACE_Message_Block
@@ -143,10 +143,10 @@ namespace DAnCE
           DANCE_ERROR (DANCE_LOG_ERROR, (LM_ERROR, "Failed to add the type\n"));
       }
 
-    DAnCE::Config_Handlers::XML_Helper::
+    XML::XML_Typedef::
       XML_HELPER.get_resolver ().get_resolver ().add_path (ACE_TEXT ("DANCE_ROOT"),
                                                            ACE_TEXT ("/docs/schema/"));
-    DAnCE::Config_Handlers::XML_Helper::
+    XML::XML_Typedef::
       XML_HELPER.get_resolver ().get_resolver ().add_path (ACE_TEXT ("CIAO_ROOT"),
                                                            ACE_TEXT ("/docs/schema/"));
 

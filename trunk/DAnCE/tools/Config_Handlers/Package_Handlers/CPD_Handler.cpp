@@ -137,11 +137,11 @@ namespace DAnCE
         const ACE_TCHAR *uri)
       {
         DANCE_TRACE ("CPD_Handler::resolve_cpd");
-        if (!XML_Helper::XML_HELPER.is_initialized ())
+        if (!XML::XML_Typedef::XML_HELPER.is_initialized ())
           return 0;
 
         xercesc::DOMDocument* dom =
-          XML_Helper::XML_HELPER.create_dom (uri);
+          XML::XML_Typedef::XML_HELPER.create_dom (uri);
 
         if (!dom)
           throw Parse_Error ( ACE_TEXT (
