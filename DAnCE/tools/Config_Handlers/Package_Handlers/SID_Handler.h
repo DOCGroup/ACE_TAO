@@ -11,7 +11,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "XML_Typedefs.h"
+#include "XML/XML_Typedefs.h"
 #include "Utils/Functors.h"
 #include "IDREF_Base.h"
 #include "Package_Handlers/Packaging_Handlers_Export.h"
@@ -36,7 +36,7 @@ namespace DAnCE
        */
       class Packaging_Handlers_Export SID_Handler
       {
-        SID_Handler (XML_Helper *xml_helper)
+        SID_Handler (XML::XML_Typedef *xml_helper)
           : xml_helper_ (xml_helper)
         {
 
@@ -54,7 +54,7 @@ namespace DAnCE
       private:
         static SubcomponentInstantiationDescription *resolve_sid (const char *uri);
 
-        XML_Helper *xml_helper_;
+        XML::XML_Typedef *xml_helper_;
 
       };
 

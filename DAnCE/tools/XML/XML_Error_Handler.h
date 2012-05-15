@@ -18,44 +18,41 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "XML/DAnCE_XML_Utils_Export.h"
+#include "XML_Utils_Export.h"
 
 #include <xercesc/sax/ErrorHandler.hpp>
 
 using xercesc::SAXParseException;
 
-namespace DAnCE
+namespace XML
 {
-  namespace XML
+  /**
+    * @class XML_Error_Hander
+    *
+    * @brief Error handler for XERCES
+    *
+    */
+  class XML_Utils_Export XML_Error_Handler
+    : public xercesc::ErrorHandler
   {
-    /**
-     * @class XML_Error_Hander
-     *
-     * @brief Error handler for XERCES
-     *
-     */
-    class DANCE_XML_Utils_Export XML_Error_Handler
-      : public xercesc::ErrorHandler
-    {
-    public:
+  public:
 
-      XML_Error_Handler (void);
+    XML_Error_Handler (void);
 
-      ~XML_Error_Handler (void);
+    ~XML_Error_Handler (void);
 
-      void warning(const SAXParseException& toCatch);
-      void error(const SAXParseException& toCatch);
-      void fatalError(const SAXParseException& toCatch);
-      void resetErrors();
-      bool getErrors (void) const;
-    private :
-      // Disallow copying
-      XML_Error_Handler (const XML_Error_Handler&);
-      XML_Error_Handler& operator= (const XML_Error_Handler&);
+    void warning(const SAXParseException& toCatch);
+    void error(const SAXParseException& toCatch);
+    void fatalError(const SAXParseException& toCatch);
+    void resetErrors();
+    bool getErrors (void) const;
+  private :
+    // Disallow copying
+    XML_Error_Handler (const XML_Error_Handler&);
+    XML_Error_Handler& operator= (const XML_Error_Handler&);
 
-      bool errors_;
-    };
-  }
+    bool errors_;
+  };
 }
 
 #include /**/ "ace/post.h"

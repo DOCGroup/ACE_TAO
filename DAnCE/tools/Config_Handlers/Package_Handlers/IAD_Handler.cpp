@@ -6,7 +6,7 @@
 #include "Req_Handler.h"
 #include "Utils/Functors.h"
 #include "Utils/Exceptions.h"
-#include "XML_Typedefs.h"
+#include "XML/XML_Typedefs.h"
 
 #include "Deployment.hpp"
 #include "dance/Logger/Log_Macros.h"
@@ -105,7 +105,7 @@ namespace DAnCE
       {
         DANCE_TRACE ("IAD_Handler::resolve_iad");
 
-        xercesc::DOMDocument *dom = XML_Helper::XML_HELPER.create_dom (uri);
+        xercesc::DOMDocument *dom = XML::XML_Typedef::XML_HELPER.create_dom (uri);
 
         if (!dom)
           throw Parse_Error (ACE_TEXT ("Unable to create DOM for IAD"));

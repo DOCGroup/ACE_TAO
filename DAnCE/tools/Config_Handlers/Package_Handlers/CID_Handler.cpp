@@ -11,7 +11,7 @@
 
 #include "Basic_Deployment_Data.hpp"
 #include "dance/Deployment/Deployment_DataC.h"
-#include "XML_Typedefs.h"
+#include "XML/XML_Typedefs.h"
 #include "Utils/Exceptions.h"
 
 #include "Deployment.hpp"
@@ -389,7 +389,7 @@ namespace DAnCE
       {
         DANCE_TRACE ("CID_Handler::resolve_cid");
 
-        xercesc::DOMDocument *dom = XML_Helper::XML_HELPER.create_dom (uri);
+        xercesc::DOMDocument *dom = XML::XML_Typedef::XML_HELPER.create_dom (uri);
 
         if (!dom)
           throw Parse_Error (ACE_TEXT ("Unable to create DOM for CID"));

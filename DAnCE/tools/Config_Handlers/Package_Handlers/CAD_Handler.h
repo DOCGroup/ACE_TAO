@@ -10,7 +10,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "XML_Typedefs.h"
+#include "XML/XML_Typedefs.h"
 #include "dance/Deployment/DeploymentC.h"
 #include "Package_Handlers/Packaging_Handlers_Export.h"
 

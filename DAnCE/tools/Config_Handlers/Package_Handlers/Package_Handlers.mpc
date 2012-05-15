@@ -1,6 +1,6 @@
 // $Id$
 
-project (Package_Config_Handlers) : install, acelib, dance_deployment_stub, dance_config_handlers_base, dance, typecodefactory, dance_output  {
+project (Package_Config_Handlers) : install, acelib, dance_deployment_stub, dance_config_handlers_base, dance, typecodefactory, dance_output, xml_utils  {
   sharedname = Package_Config_Handlers
   dynamicflags += PACKAGING_HANDLERS_BUILD_DLL
 
@@ -8,13 +8,11 @@ project (Package_Config_Handlers) : install, acelib, dance_deployment_stub, danc
               XSC_Config_Handlers \
               XSC_DynAny_Handler \
               XSC_XML_Handlers \
-              DAnCE_XML_Utils \
-
+              XML_Utils
   libs     += XSC_Config_Handlers_Common \
               XSC_Config_Handlers \
               XSC_DynAny_Handler \
-              XSC_XML_Handlers \
-              DAnCE_XML_Utils \
+              XSC_XML_Handlers
 
   Source_files {
     CAD_Handler.cpp

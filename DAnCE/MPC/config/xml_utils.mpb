@@ -3,6 +3,6 @@
 
 project : xerces {
   includes += $(DANCE_ROOT)/tools
-  after += DAnCE_XML_Utils
-  libs += DAnCE_XML_Utils
+  after += XML_Utils
+  libs += XML_Utils
 }
