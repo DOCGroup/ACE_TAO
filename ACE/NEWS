@@ -9,6 +9,10 @@ USER VISIBLE CHANGES BETWEEN ACE-6.1.1 and ACE-6.1.2
   new ACE_High_Res_Timer::global_scale_factor_type type trait to not get
   any conversion warnings
 
+. Removed Tandem NSK v2/v3 support which resulted in cleanup throughout all
+  code. The emulations for ACE_INT64/ACE_UINT64 have been removed because no
+  platform is using them anymore
+
 USER VISIBLE CHANGES BETWEEN ACE-6.1.0 and ACE-6.1.1
 ====================================================
 
