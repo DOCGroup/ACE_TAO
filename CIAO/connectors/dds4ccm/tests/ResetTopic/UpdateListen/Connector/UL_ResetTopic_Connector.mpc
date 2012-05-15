@@ -2,7 +2,7 @@
 // This file is generated with "generate_component_mpc.pl -p UL_ResetTopicBase -l .. -o ../lib -u DDS UL_ResetTopic_Connector"
 
 project (UL_ResetTopicConnector_idl_gen) : connectoridldefaults, dds4ccm {
-  after += DDS4CCM_idl_gen
+  after += DDS4CCM_idl_gen UL_ResetTopicBase_stub
   custom_only = 1
   idlflags += -Wb,stub_export_macro=UL_RESETTOPIC_CONNECTOR_STUB_Export \
               -Wb,stub_export_include=ResetTopic_Connector_stub_export.h \

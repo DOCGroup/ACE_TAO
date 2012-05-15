@@ -22,6 +22,8 @@ struct LatencyTTTest {
   BD_oct_seq data;
  };
 
+#if defined DDS4CCM_NEEDS_SEQUENCES_DEFINED
 typedef sequence<LatencyTTTest> LatencyTTTestSeq;
+#endif
 
 #endif

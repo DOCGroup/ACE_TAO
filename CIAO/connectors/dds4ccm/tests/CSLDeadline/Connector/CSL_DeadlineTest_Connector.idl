@@ -15,6 +15,10 @@
 
 #pragma ciao lem "Connector/CSL_DeadlineTest_ConnectorE.idl"
 
+#if (CIAO_DDS4CCM_OPENDDS==1)
+# include "Base/CSL_DeadlineTest_BaseTypeSupport.idl"
+#endif
+
 module ::CCM_DDS::Typed < ::TestTopic, ::TestTopicSeq> CSLDeadlineConnector;
 
 #endif /* CSL_DeadlineTest_CONNECTOR_IDL_ */

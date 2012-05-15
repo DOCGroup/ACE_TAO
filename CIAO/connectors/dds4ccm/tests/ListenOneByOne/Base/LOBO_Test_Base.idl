@@ -19,6 +19,8 @@ struct ListenOneByOneTest {
   long iteration;
 };
 
+#if defined DDS4CCM_NEEDS_SEQUENCES_DEFINED
 typedef sequence<ListenOneByOneTest> ListenOneByOneTestSeq;
+#endif
 
 #endif

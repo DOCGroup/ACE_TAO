@@ -2,6 +2,7 @@
 // This file is generated with "generate_component_mpc.pl -b dds4ccm_base DiffDir_Connector"
 
 project(DiffDir_Connector_idl_gen) : connectoridldefaults, dds4ccm {
+  after += DiffDir_stub
   custom_only = 1
   idlflags += -Wb,stub_export_macro=DIFFDIR_CONNECTOR_STUB_Export \
               -Wb,stub_export_include=DiffDir_Connector_stub_export.h \

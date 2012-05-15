@@ -17,6 +17,10 @@
 
 #pragma ciao lem "Connector/Perf_Keyed_Test_ConnectorE.idl"
 
+#if (CIAO_DDS4CCM_OPENDDS==1)
+# include "Base/Perf_Keyed_Test_BaseTypeSupport.idl"
+#endif
+
 module CCM_DDS
 {
   module ::CCM_DDS::Typed < ::PerfKeyedTest, ::PerfKeyedTestSeq> PerfKeyedTest;

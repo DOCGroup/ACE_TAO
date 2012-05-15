@@ -10,6 +10,8 @@ project(I2C_Shapes_Common) : dds4ccm_logger, ndds_idltocpp_impl {
   libout = ../lib
   libpaths += ../lib
 
+  requires += dds4ccm_ndds
+
   includes += .. $(CIAO_ROOT) $(CIAO_ROOT)/connectors
 
   Header_Files {

@@ -15,6 +15,10 @@
 
 #pragma ciao lem "Connector/Hello_ConnectorE.idl"
 
+#if (CIAO_DDS4CCM_OPENDDS==1)
+# include "Base/Hello_BaseTypeSupport.idl"
+#endif
+
 module ::CCM_DDS::Typed < ::DDSHello, ::DDSHelloSeq> Hello;
 
 #endif /* HELLO_CONNECTOR_IDL_ */

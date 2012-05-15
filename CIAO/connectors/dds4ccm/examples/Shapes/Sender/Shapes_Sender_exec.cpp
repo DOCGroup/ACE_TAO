@@ -331,7 +331,7 @@ namespace CIAO_Shapes_Sender_Impl
   {
     this->start ();
 
-    //Register shape with dds.
+    // Register shape with dds.
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("REGISTER Shape_info for <%C> %u:%u:%u\n"),
                   this->square_->color.in (),
                   this->square_->x,

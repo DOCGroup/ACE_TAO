@@ -24,18 +24,24 @@ struct SharedDPTest1 {
   string key1;
   long iteration1;
 };
+#if defined DDS4CCM_NEEDS_SEQUENCES_DEFINED
 typedef sequence<SharedDPTest1> SharedDPTest1Seq;
+#endif
 
 struct SharedDPTest2 {
   string key2;
   long iteration2;
 };
+#if defined DDS4CCM_NEEDS_SEQUENCES_DEFINED
 typedef sequence<SharedDPTest2> SharedDPTest2Seq;
+#endif
 
 struct SharedDPTest3 {
   string key3;
   long iteration3;
 };
+#if defined DDS4CCM_NEEDS_SEQUENCES_DEFINED
 typedef sequence<SharedDPTest3> SharedDPTest3Seq;
+#endif
 
 #endif

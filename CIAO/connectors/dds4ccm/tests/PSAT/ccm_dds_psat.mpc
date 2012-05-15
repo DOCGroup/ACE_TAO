@@ -54,7 +54,7 @@ project (DDS_CCM_Example_PSAT_stub) : taoidldefaults, anytypecode, dds4ccm_ts_de
 
 
 project(PSAT_Connector_idl_gen) : connectoridldefaults, dds4ccm {
-  after += DDS4CCM_idl_gen
+  after += DDS4CCM_idl_gen DDS_CCM_Example_PSAT_type_stub
   custom_only = 1
   idlflags += -Wb,stub_export_macro=PSAT_CONNECTOR_STUB_Export \
               -Wb,stub_export_include=PSAT_Connector_stub_export.h \

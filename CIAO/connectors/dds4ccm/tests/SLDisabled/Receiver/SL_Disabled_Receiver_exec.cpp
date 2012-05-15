@@ -229,7 +229,7 @@ namespace CIAO_SL_Disabled_Receiver_Impl
       {
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("OK : Haven't received an  unexpected ")
-                    ACE_TEXT (" oparation from StateListener in Receiver\n")
+                    ACE_TEXT (" operation from StateListener in Receiver\n")
                    ));
       }
   }

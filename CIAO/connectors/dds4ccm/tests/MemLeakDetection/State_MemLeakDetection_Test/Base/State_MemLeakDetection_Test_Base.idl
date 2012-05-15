@@ -19,6 +19,8 @@ struct State_MemLeakDetectionTest {
   long iteration;
 };
 
+#if defined DDS4CCM_NEEDS_SEQUENCES_DEFINED
 typedef sequence<State_MemLeakDetectionTest> State_MemLeakDetectionTestSeq;
+#endif
 
 #endif

@@ -28,7 +28,11 @@ struct TestTopicTwo {
   long z;
 };
 
+#if defined DDS4CCM_NEEDS_SEQUENCES_DEFINED
 typedef sequence<TestTopicOne> TestTopicOneSeq;
+#endif
+#if defined DDS4CCM_NEEDS_SEQUENCES_DEFINED
 typedef sequence<TestTopicTwo> TestTopicTwoSeq;
+#endif
 
 #endif

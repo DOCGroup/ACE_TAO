@@ -5,7 +5,6 @@
 
 #pragma ndds typesupport "Shapes_ShapeType_msgSupport.h"
 #pragma opendds typesupport "Shapes_ShapeType_msgTypeSupportImpl.h"
-#pragma splice typesupport "Shapes_ShapeType_msgDscpC.h"
 
 #pragma DCPS_DATA_TYPE "ShapeType"
 #pragma DCPS_DATA_KEY "ShapeType color"

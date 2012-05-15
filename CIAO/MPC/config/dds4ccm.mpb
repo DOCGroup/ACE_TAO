@@ -6,17 +6,6 @@ feature(dds4ccm_opendds) : taoidldefaults, dcps {
   macros += CIAO_DDS4CCM_OPENDDS=1
   idlflags += -DCIAO_DDS4CCM_OPENDDS=1 \
               -Wb,dds_impl=opendds \
-              -Wb,opendds_sequence_suffix=DDSSeq \
-              -I $(CIAO_ROOT)/connectors \
-              -I $(CIAO_ROOT)/connectors/dds4ccm/idl
-  includes += $(CIAO_ROOT)/connectors/dds4ccm/idl \
-              $(CIAO_ROOT)/connectors
-}
-
-feature(dds4ccm_splice) : taoidldefaults {
-  macros += CIAO_DDS4CCM_SPLICE=1
-  idlflags += -DCIAO_DDS4CCM_SPLICE=1 \
-              -Wb,dds_impl=opensplice \
               -I $(CIAO_ROOT)/connectors \
               -I $(CIAO_ROOT)/connectors/dds4ccm/idl
   includes += $(CIAO_ROOT)/connectors/dds4ccm/idl \
@@ -36,6 +25,6 @@ feature(dds4ccm_coredx) : taoidldefaults, taolib {
 feature(dds4ccm_ndds) : ndds_idltocpp_stub {
 }
 
-feature(!dds4ccm_opendds, !dds4ccm_ndds, !dds4ccm_splice, !dds4ccm_coredx) {
+feature(!dds4ccm_opendds, !dds4ccm_ndds, !dds4ccm_coredx) {
   requires += dummy_label
 }

@@ -10,6 +10,10 @@
 
 #pragma ciao lem "OFM_ConnectorE.idl"
 
+#if (CIAO_DDS4CCM_OPENDDS==1)
+# include "OFM_BaseTypeSupport.idl"
+#endif
+
 module ::CCM_DDS::Typed < ::Topic1, ::Topic1Seq> Topic1Connector;
 module ::CCM_DDS::Typed < ::Topic2, ::Topic2Seq> Topic2Connector;
 module ::CCM_DDS::Typed < ::Topic3, ::Topic3Seq> Topic3Connector;

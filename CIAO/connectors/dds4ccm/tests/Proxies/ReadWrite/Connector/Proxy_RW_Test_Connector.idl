@@ -15,6 +15,10 @@
 
 #pragma ciao lem "Connector/Proxy_RW_Test_ConnectorE.idl"
 
+#if (CIAO_DDS4CCM_OPENDDS==1)
+# include "Base/Proxy_RW_Test_BaseTypeSupport.idl"
+#endif
+
 module Proxy_RW_Test
 {
   module ::CCM_DDS::Typed < ::ProxyReadWriteTest, ::ProxyReadWriteTestSeq> ProxyReadWriteTestConnector;

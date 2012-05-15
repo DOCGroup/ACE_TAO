@@ -230,7 +230,7 @@ namespace DAnCE
       ACE_TCHAR * union_label_value (AST_Expression *exp);
 
       typedef ACE_Hash_Map_Manager_Ex< ACE_TString,
-                                       DAnCE::XML::XStr,
+                                       XML::XStr,
                                        ACE_Hash <ACE_TString>,
                                        ACE_Equal_To <ACE_TString>,
                                        ACE_Null_Mutex > XMI_ID_MAP;
@@ -298,7 +298,7 @@ namespace DAnCE
 
       XERCES_CPP_NAMESPACE::DOMElement *associations_;
 
-      DAnCE::XML::XStr base_id_;
+      XML::XStr base_id_;
 
       /// true if for some reason the generated output is bad
       /// and shouldn't be written.

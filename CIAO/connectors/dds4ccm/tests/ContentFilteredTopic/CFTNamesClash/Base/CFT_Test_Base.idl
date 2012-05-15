@@ -20,7 +20,9 @@ struct CFTTwoDimensionalTest {
   long y;
 };
 
+#if defined DDS4CCM_NEEDS_SEQUENCES_DEFINED
 typedef sequence<CFTTwoDimensionalTest> CFTTwoDimensionalTestSeq;
+#endif
 
 #pragma DCPS_DATA_TYPE "CFTThreeDimensionalTest"
 #pragma DCPS_DATA_KEY "CFTThreeDimensionalTest symbol"
@@ -32,6 +34,8 @@ struct CFTThreeDimensionalTest {
   long z;
 };
 
+#if defined DDS4CCM_NEEDS_SEQUENCES_DEFINED
 typedef sequence<CFTThreeDimensionalTest> CFTThreeDimensionalTestSeq;
+#endif
 
 #endif /* CONTENTFILTEREDTOPIC_TEST_BASE_IDL */

@@ -2,7 +2,7 @@
 // This file is generated with "generate_component_mpc.pl -p UCC_Test_Base -l .. -o ../lib -u DDS UCC_Test_Connector"
 
 project(UCC_Test_Connector_idl_gen) : connectoridldefaults, dds4ccm {
-  after += DDS4CCM_idl_gen
+  after += DDS4CCM_idl_gen UCC_Test_Base_stub
   custom_only = 1
   idlflags += -Wb,stub_export_macro=USERDATA_COPY_COUNT_TEST_CONNECTOR_STUB_Export \
               -Wb,stub_export_include=UCC_Test_Connector_stub_export.h \
@@ -33,8 +33,8 @@ project(UCC_Test_Connector_lem_gen) : ciaoidldefaults, dds4ccm {
 }
 
 project(UCC_Test_Connector_lem_stub) : ccm_svnt, dds4ccm_lem_stub {
-  after += UCC_Test_Connector_lem_gen UCC_Test_Connector_stub UCC_Test_Base_stub 
-  libs  += UCC_Test_Base_stub UCC_Test_Connector_stub 
+  after += UCC_Test_Connector_lem_gen UCC_Test_Connector_stub UCC_Test_Base_stub
+  libs  += UCC_Test_Base_stub UCC_Test_Connector_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -111,12 +111,12 @@ project(UCC_Test_Connector_exec) : ciao_executor, dds4ccm_impl {
 
 
 project(UCC_Test_Connector_svnt) : ciao_servant, dds4ccm_impl {
-  after      += UCC_Test_Connector_lem_stub UCC_Test_Connector_exec UCC_Test_Connector_stub 
+  after      += UCC_Test_Connector_lem_stub UCC_Test_Connector_exec UCC_Test_Connector_stub
   sharedname  = UCC_Test_Connector_svnt
   libs       += UCC_Test_Connector_stub \
                 UCC_Test_Connector_lem_stub  \
                 UCC_Test_Base_stub \
-                UCC_Test_Connector_exec 
+                UCC_Test_Connector_exec
   libpaths += ../lib
   libout = ../lib
   includes += ..

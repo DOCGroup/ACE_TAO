@@ -100,7 +100,8 @@ project(SharedDP_Diff_ID_Component_exec) : ciao_executor, dds4ccm_impl {
   includes += ..
   libout = ../lib
   dynamicflags += COMPONENT_EXEC_BUILD_DLL
-  requires += ndds
+
+  requires += dds4ccm_ndds
 
   IDL_Files {
   }

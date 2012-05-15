@@ -17,6 +17,10 @@
 
 #pragma ciao lem "Connector/Throughput_ConnectorE.idl"
 
+#if (CIAO_DDS4CCM_OPENDDS==1)
+# include "Base/Throughput_BaseTypeSupport.idl"
+#endif
+
 module Throughput
 {
   module ::CCM_DDS::Typed < ::ThroughputTest, ::ThroughputTestSeq> ThroughputTestConn;

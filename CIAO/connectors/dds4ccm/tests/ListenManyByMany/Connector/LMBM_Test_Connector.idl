@@ -15,6 +15,10 @@
 
 #pragma ciao lem "Connector/LMBM_Test_ConnectorE.idl"
 
+#if (CIAO_DDS4CCM_OPENDDS==1)
+# include "Base/LMBM_Test_BaseTypeSupport.idl"
+#endif
+
 module LMBM_Test
 {
   module ::CCM_DDS::Typed

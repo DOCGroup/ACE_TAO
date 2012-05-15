@@ -30,37 +30,34 @@ namespace XERCES_CPP_NAMESPACE
 
 namespace Test
 {
-  namespace XML
+  /**
+    * @class Helper
+    *
+    * @brief Helper class for some routine XML stuff.
+    */
+  class Helper
   {
-    /**
-     * @class Helper
-     *
-     * @brief Helper class for some routine XML stuff.
-     */
-    class Helper
-    {
-    public:
-      // Initialize the resolver we should use.
-      Helper (DAnCE::XML::XML_Error_Handler &eh);
+  public:
+    // Initialize the resolver we should use.
+    Helper (XML::XML_Error_Handler &eh);
 
-      ~Helper (void);
+    ~Helper (void);
 
-      int validate_dom (const ACE_TCHAR *uri);
+    int validate_dom (const ACE_TCHAR *uri);
 
-    protected:
-      /// Intialize the parser
-      void init_parser (void);
+  protected:
+    /// Intialize the parser
+    void init_parser (void);
 
-      /// Terminate the parser
-      void terminate_parser (void);
+    /// Terminate the parser
+    void terminate_parser (void);
 
-    private:
-      XERCES_CPP_NAMESPACE::DOMImplementation *impl_;
-      XERCES_CPP_NAMESPACE::XercesDOMParser *parser_;
+  private:
+    XERCES_CPP_NAMESPACE::DOMImplementation *impl_;
+    XERCES_CPP_NAMESPACE::XercesDOMParser *parser_;
 
-      DAnCE::XML::XML_Error_Handler &e_handler_;
-    };
-  }
+    XML::XML_Error_Handler &e_handler_;
+  };
 }
 
 #include /**/ "ace/post.h"

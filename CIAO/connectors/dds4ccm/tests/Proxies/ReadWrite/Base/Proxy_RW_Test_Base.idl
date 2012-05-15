@@ -19,6 +19,8 @@ struct ProxyReadWriteTest {
   long iteration;
 };
 
+#if defined DDS4CCM_NEEDS_SEQUENCES_DEFINED
 typedef sequence<ProxyReadWriteTest> ProxyReadWriteTestSeq;
+#endif
 
 #endif /* PROXY_RW_TEST_BASE_IDL */

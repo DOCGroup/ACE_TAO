@@ -15,6 +15,10 @@
 
 #pragma ciao lem "Connector/RG_ResetTopic_ConnectorE.idl"
 
+#if (CIAO_DDS4CCM_OPENDDS==1)
+# include "Base/RG_ResetTopic_BaseTypeSupport.idl"
+#endif
+
 module RG_ResetTopic
 {
   module ::CCM_DDS::Typed < ::RG_ResetTopicSample, ::RG_ResetTopicSampleSeq> RG_ResetTopicSampleConnector;

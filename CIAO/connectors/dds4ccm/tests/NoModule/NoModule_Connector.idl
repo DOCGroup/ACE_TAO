@@ -10,6 +10,10 @@
 
 #pragma ciao lem "NoModule_ConnectorE.idl"
 
+#if (CIAO_DDS4CCM_OPENDDS==1)
+# include "NoModuleTypeSupport.idl"
+#endif
+
 module ::CCM_DDS::Typed < ::NoModuleType, ::NoModuleTypeSeq> NoModuleTypeConnector;
 
 #endif

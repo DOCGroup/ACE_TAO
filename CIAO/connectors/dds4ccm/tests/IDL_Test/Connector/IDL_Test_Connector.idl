@@ -15,6 +15,10 @@
 
 #pragma ciao lem "Connector/IDL_Test_ConnectorE.idl"
 
+#if (CIAO_DDS4CCM_OPENDDS==1)
+# include "Base/IDL_Test_BaseTypeSupport.idl"
+#endif
+
 module ::CCM_DDS::Typed < ::IDL_Test, ::IDL_TestSeq> IDL_Connector;
 
 #endif /* IDL_Test_CONNECTOR_IDL_ */

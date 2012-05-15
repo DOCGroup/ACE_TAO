@@ -9,10 +9,14 @@
 
 #include  <Components.idl>
 
-#include "psat_type.idl"
 #include "ccm_dds_psat.idl"
+#include "psat_type.idl"
 
 #pragma ciao lem "PSAT_ConnectorE.idl"
+
+#if (CIAO_DDS4CCM_OPENDDS==1)
+# include "psat_typeTypeSupport.idl"
+#endif
 
 module ::CCM_DDS_PSAT::Typed_PSAT < ::TestTopic, ::TestTopicSeq> TestTopicMod;
 

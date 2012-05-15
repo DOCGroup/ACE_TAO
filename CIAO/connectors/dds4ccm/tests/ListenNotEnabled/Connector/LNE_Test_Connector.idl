@@ -15,6 +15,10 @@
 
 #pragma ciao lem "Connector/LNE_Test_ConnectorE.idl"
 
+#if (CIAO_DDS4CCM_OPENDDS==1)
+# include "Base/LNE_Test_BaseTypeSupport.idl"
+#endif
+
 module LNE_Test
 {
   module ::CCM_DDS::Typed < ::ListenNotEnabledTest, ::ListenNotEnabledTestSeq> ListenNotEnabledTestConnector;

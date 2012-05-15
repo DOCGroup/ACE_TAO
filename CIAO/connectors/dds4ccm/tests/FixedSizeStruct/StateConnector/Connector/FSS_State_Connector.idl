@@ -15,6 +15,10 @@
 
 #pragma ciao lem "Connector/FSS_State_ConnectorE.idl"
 
+#if (CIAO_DDS4CCM_OPENDDS==1)
+# include "Base/FSS_State_BaseTypeSupport.idl"
+#endif
+
 module FSS_State
 {
   module ::CCM_DDS::Typed < ::FixedStructSizeTest, ::FixedStructSizeTestSeq> FixedStructSizeTestConnector;

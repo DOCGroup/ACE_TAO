@@ -17,7 +17,10 @@ struct GetterTest {
   string key;
   long iteration;
 };
+
+#if defined DDS4CCM_NEEDS_SEQUENCES_DEFINED
 typedef sequence<GetterTest> GetterTestSeq;
+#endif
 
 #pragma DCPS_DATA_TYPE "GetterFixed"
 
@@ -25,6 +28,9 @@ struct GetterFixed {
   long key;
   long iteration;
 };
-typedef sequence<GetterFixed> GetterFixedSeq;
 
+#if defined DDS4CCM_NEEDS_SEQUENCES_DEFINED
+typedef sequence<GetterFixed> GetterFixedSeq;
 #endif
+
+#endif /* GETTER_TEST_BASE_IDL */

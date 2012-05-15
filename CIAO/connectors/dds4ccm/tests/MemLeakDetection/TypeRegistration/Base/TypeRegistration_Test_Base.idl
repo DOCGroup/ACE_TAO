@@ -18,6 +18,8 @@ struct MLDTypeRegistrationTest {
   unsigned long key;
 };
 
+#if defined DDS4CCM_NEEDS_SEQUENCES_DEFINED
 typedef sequence<MLDTypeRegistrationTest> MLDTypeRegistrationTestSeq;
+#endif
 
 #endif /* MLD_TYPE_REGISTRATION_TEST_BASE_IDL */

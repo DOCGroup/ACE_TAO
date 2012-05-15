@@ -3,6 +3,7 @@
 
 project(NoModule_Connector_idl_gen) : connectoridldefaults, dds4ccm {
   custom_only = 1
+  after += NoModule_stub
   idlflags += -Wb,stub_export_macro=NOMODULE_CONNECTOR_STUB_Export \
               -Wb,stub_export_include=NoModule_Connector_stub_export.h \
               -Wb,skel_export_macro=NOMODULE_CONNECTOR_SVNT_Export \

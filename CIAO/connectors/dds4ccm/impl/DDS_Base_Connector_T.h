@@ -64,6 +64,14 @@ public:
   virtual void ccm_passivate (void);
   //@}
 
+private:
+  /**
+   * Initialization of opendds.
+   */
+#if (CIAO_DDS4CCM_OPENDDS==1)
+  void create_opendds_participant_factory (void);
+#endif
+
 protected:
 
   /**

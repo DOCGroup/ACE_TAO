@@ -2,7 +2,7 @@
 // This file is generated with "generate_component_mpc.pl -p WU_LateBindingBase -l .. -o ../lib -u DDS WU_LateBinding_Connector"
 
 project (WU_LateBindingConnector_idl_gen) : connectoridldefaults, dds4ccm {
-  after += DDS4CCM_idl_gen
+  after += DDS4CCM_idl_gen WU_LateBindingBase_stub
   custom_only = 1
   idlflags += -Wb,stub_export_macro=WU_LATEBINDING_CONNECTOR_STUB_Export \
               -Wb,stub_export_include=LateBinding_Connector_stub_export.h \

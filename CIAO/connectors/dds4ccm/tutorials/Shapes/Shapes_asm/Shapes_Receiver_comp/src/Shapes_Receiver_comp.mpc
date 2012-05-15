@@ -54,7 +54,7 @@ project(Shapes_Receiver_comp_lem_stub) : ccm_svnt, dds4ccm_base {
   libpaths += ../../lib
   libout = ../../lib
 
-  includes += ../../ports/GeneratedCode
+  includes += ../../ports ../../ports/GeneratedCode
 
   sharedname = Shapes_Receiver_comp_lem_stub
   dynamicflags += SHAPES_RECEIVER_COMP_LEM_STUB_BUILD_DLL
@@ -84,7 +84,7 @@ project(Shapes_Receiver_comp_stub) : ccm_stub, dds4ccm_base {
   libpaths += ../../lib
   libout = ../../lib
 
-  includes += ../../ports/GeneratedCode
+  includes += ../../ports ../../ports/GeneratedCode
 
   sharedname = Shapes_Receiver_comp_stub
   dynamicflags += SHAPES_RECEIVER_COMP_STUB_BUILD_DLL
@@ -114,7 +114,7 @@ project(Shapes_Receiver_comp_exec) : ciao_executor, dds4ccm_lem_stub {
   libpaths += ../../lib
   libout = ../../lib
 
-  includes += ./GeneratedCode ../ports/GeneratedCode ../../ports/GeneratedCode
+  includes += ./GeneratedCode ../ports/GeneratedCode ../../ports ../../ports/GeneratedCode
 
   sharedname = Shapes_Receiver_comp_exec
   dynamicflags += SHAPES_RECEIVER_COMP_EXEC_BUILD_DLL
@@ -147,7 +147,7 @@ project(Shapes_Receiver_comp_svnt) : ciao_servant, dds4ccm_lem_stub, dds4ccm_ske
   libpaths += ../../lib
   libout = ../../lib
 
-  includes += ../ports/GeneratedCode ../../ports/GeneratedCode
+  includes += ../ports/GeneratedCode ../../ports ../../ports/GeneratedCode
 
   sharedname  = Shapes_Receiver_comp_svnt
   dynamicflags += SHAPES_RECEIVER_COMP_SVNT_BUILD_DLL

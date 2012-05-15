@@ -10,7 +10,6 @@
 
 #pragma ndds typesupport "Base/HomeT_BaseSupport.h"
 #pragma opendds typesupport "Base/HomeT_BaseTypeSupportImpl.h"
-#pragma splice typesupport "Base/HomeT_BaseDcpsC.h"
 
 #pragma DCPS_DATA_TYPE "HomeTest"
 
@@ -19,6 +18,8 @@ struct HomeTest {
   short iterator;
 };
 
+#if defined DDS4CCM_NEEDS_SEQUENCES_DEFINED
 typedef sequence<HomeTest> HomeTestSeq;
+#endif
 
 #endif

@@ -13,6 +13,8 @@ struct DerivedType {
   string value; //@key
 };
 
+#if defined DDS4CCM_NEEDS_SEQUENCES_DEFINED
 typedef sequence<DerivedType> DerivedTypeSeq;
+#endif
 
 #endif

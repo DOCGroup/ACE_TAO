@@ -25,6 +25,7 @@ project (OneFile_Base_stub) : taoidldefaults, dds4ccm_ts_default {
 
 project(OneFile_Connector_idl_gen) : connectoridldefaults, dds4ccm {
   custom_only = 1
+  after += OneFile_Base_stub
   idlflags += -Wb,stub_export_macro=ONEFILE_CONNECTOR_STUB_Export \
               -Wb,stub_export_include=OneFile_Connector_stub_export.h \
               -Wb,skel_export_macro=ONEFILE_CONNECTOR_SKEL_Export \

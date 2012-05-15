@@ -13,6 +13,8 @@ struct DiffDirType {
   string value; //@key
 };
 
+#if defined DDS4CCM_NEEDS_SEQUENCES_DEFINED
 typedef sequence<DiffDirType> DiffDirTypeSeq;
+#endif
 
 #endif

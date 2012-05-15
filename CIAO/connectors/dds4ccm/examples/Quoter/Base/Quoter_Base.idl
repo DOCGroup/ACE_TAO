@@ -24,7 +24,9 @@ module Quoter
     unsigned long current;
     string symbol; //@key
   };
+  #if defined DDS4CCM_NEEDS_SEQUENCES_DEFINED
   typedef sequence<Stock_Info> Stock_InfoSeq;
+  #endif
 };
 
 #endif

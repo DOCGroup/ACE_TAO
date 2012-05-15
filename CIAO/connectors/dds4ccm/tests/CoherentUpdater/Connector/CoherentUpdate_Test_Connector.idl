@@ -15,6 +15,10 @@
 
 #pragma ciao lem "Connector/CoherentUpdate_Test_ConnectorE.idl"
 
+#if (CIAO_DDS4CCM_OPENDDS==1)
+# include "Base/CoherentUpdate_Test_BaseTypeSupport.idl"
+#endif
+
 module ::CCM_DDS::Typed < ::CoherentUpdateTest, ::CoherentUpdateTestSeq> CoherentUpdate_Test;
 
-#endif /* CoherentUpdate_TestCONNECTOR_IDL_ */
+#endif /* COHERENT_UPDATE_TEST_CONNECTOR_IDL_ */

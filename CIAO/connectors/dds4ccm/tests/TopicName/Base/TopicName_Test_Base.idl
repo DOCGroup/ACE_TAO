@@ -20,6 +20,8 @@ struct TopicNameTest {
   long y;
 };
 
+#if defined DDS4CCM_NEEDS_SEQUENCES_DEFINED
 typedef sequence<TopicNameTest> TopicNameTestSeq;
+#endif
 
 #endif /* TOPICNAME_TEST_BASE_IDL */

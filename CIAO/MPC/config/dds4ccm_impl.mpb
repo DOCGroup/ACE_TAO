@@ -1,14 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-feature(dds4ccm_opendds) : dds4ccm_skel, dds4ccm_lem_stub, dcps_lem_stub, dcps {
-  after += CIAO_DDS4CCM_DDS_Impl
-  libs += CIAO_DDS4CCM_DDS_Impl
-  includes += $(CIAO_ROOT)/connectors \
-              $(CIAO_ROOT)/connectors/dds4ccm/idl
-}
-
-feature(dds4ccm_splice) : dds4ccm_skel, dds4ccm_lem_stub {
+feature(dds4ccm_opendds) : dds4ccm_skel, dds4ccm_lem_stub, dcps_lem_stub, dcps_rtps, dds4ccm_logger {
   after += CIAO_DDS4CCM_DDS_Impl
   libs += CIAO_DDS4CCM_DDS_Impl
   includes += $(CIAO_ROOT)/connectors \
@@ -29,6 +22,6 @@ feature(dds4ccm_coredx) : dds4ccm_skel, dds4ccm_lem_stub {
               $(CIAO_ROOT)/connectors/dds4ccm/idl
 }
 
-feature(!dds4ccm_opendds, !dds4ccm_ndds, !dds4ccm_splice, !dds4ccm_coredx) {
+feature(!dds4ccm_opendds, !dds4ccm_ndds, !dds4ccm_coredx) {
   requires += dummy_label
 }

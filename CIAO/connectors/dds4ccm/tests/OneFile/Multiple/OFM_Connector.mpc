@@ -26,6 +26,7 @@ project (OFM_Base_stub) : taoidldefaults, dds4ccm_ts_default {
 
 project(OFM_Connector_idl_gen) : connectoridldefaults, dds4ccm {
   custom_only = 1
+  after += OFM_Base_stub
   idlflags += -Wb,stub_export_macro=OFM_CONNECTOR_STUB_Export \
               -Wb,stub_export_include=OFM_Connector_stub_export.h \
               -Wb,skel_export_macro=OFM_CONNECTOR_SKEL_Export \
@@ -41,7 +42,7 @@ project(OFM_Connector_idl_gen) : connectoridldefaults, dds4ccm {
 }
 
 project(OFM_Connector_lem_gen) : ciaoidldefaults, dds4ccm {
-  after    += OFM_Connector_idl_gen
+  after += OFM_Connector_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=OFM_CONNECTOR_LEM_STUB_Export \
               -Wb,stub_export_include=OFM_Connector_lem_stub_export.h \

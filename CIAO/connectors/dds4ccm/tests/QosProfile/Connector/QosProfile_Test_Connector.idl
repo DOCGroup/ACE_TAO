@@ -15,6 +15,10 @@
 
 #pragma ciao lem "Connector/QosProfile_Test_ConnectorE.idl"
 
+#if (CIAO_DDS4CCM_OPENDDS==1)
+# include "Base/QosProfile_Test_BaseTypeSupport.idl"
+#endif
+
 module QosProfile_Test
 {
   module ::CCM_DDS::Typed < ::QosProfileTest, ::QosProfileTestSeq> QosProfileTestConnector;

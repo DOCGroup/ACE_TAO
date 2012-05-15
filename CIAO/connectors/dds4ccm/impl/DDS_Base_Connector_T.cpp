@@ -16,7 +16,15 @@
 #endif
 
 #if (CIAO_DDS4CCM_OPENDDS==1)
-#include "dds/DCPS/Marked_Default_Qos.h"
+# include "dds/DCPS/Marked_Default_Qos.h"
+# include "dds/DCPS/RcHandle_T.h"
+# include "dds/DCPS/RTPS/RtpsDiscovery.h"
+# include "dds/DCPS/transport/framework/TransportType_rch.h"
+# include "dds/DCPS/transport/rtps_udp/RtpsUdpInst_rch.h"
+# include "dds/DCPS/transport/rtps_udp/RtpsUdpInst.h"
+# include "dds/DCPS/transport/framework/TransportRegistry.h"
+// # include "dds/DCPS/transport/framework/TransportConfig.h"
+# include "dds/DCPS/transport/framework/TransportConfig_rch.h"
 #endif
 
 template <typename CCM_TYPE>
@@ -35,10 +43,7 @@ DDS_Base_Connector_T<CCM_TYPE>::DDS_Base_Connector_T (void)
       this->dlf_->init ();
     }
 #if (CIAO_DDS4CCM_OPENDDS==1)
-  int argc = 0 ;
-  ACE_TCHAR** argv = 0;
-  this->participant_factory_ = TheParticipantFactoryWithArgs (argc, argv);
-//  OpenDDS::DCPS::set_DCPS_debug_level  (10);
+  this->create_opendds_participant_factory ();
 #endif
 }
 
@@ -57,6 +62,47 @@ DDS_Base_Connector_T<CCM_TYPE>::~DDS_Base_Connector_T (void)
 //  TheServiceParticipant->shutdown ();
 #endif
 }
+
+
+#if (CIAO_DDS4CCM_OPENDDS==1)
+template <typename CCM_TYPE>
+void
+DDS_Base_Connector_T<CCM_TYPE>::create_opendds_participant_factory (void)
+{
+  DDS4CCM_TRACE ("DDS_Base_Connector_T<CCM_TYPE>::create_opendds_participant_factory");
+  try
+    {
+      this->participant_factory_ = TheParticipantFactory;
+      OpenDDS::DCPS::TransportConfig_rch config =
+        OpenDDS::DCPS::TransportRegistry::instance()->create_config("dds4ccm_rtps");
+
+      OpenDDS::DCPS::TransportInst_rch inst =
+        OpenDDS::DCPS::TransportRegistry::instance()->create_inst("the_rtps_transport",
+                                                  "rtps_udp");
+      OpenDDS::DCPS::RtpsUdpInst_rch rui =
+        OpenDDS::DCPS::static_rchandle_cast<OpenDDS::DCPS::RtpsUdpInst>(inst);
+      rui->handshake_timeout_ = 1;
+
+      config->instances_.push_back(inst);
+
+      OpenDDS::DCPS::TransportRegistry::instance()->global_config(config);
+
+      OpenDDS::RTPS::RtpsDiscovery_rch disc =
+        new OpenDDS::RTPS::RtpsDiscovery(OpenDDS::DCPS::Discovery::DEFAULT_RTPS);
+
+      TheServiceParticipant->add_discovery(OpenDDS::DCPS::static_rchandle_cast<OpenDDS::DCPS::Discovery>(disc));
+      TheServiceParticipant->set_repo_domain(this->domain_id (), disc->key());
+    }
+  catch (const CORBA::Exception& e)
+    {
+      DDS4CCM_PRINT_CORBA_EXCEPTION (DDS4CCM_LOG_LEVEL_ERROR, e,
+          "DDS_Base_Connector_T::create_opendds_participant_factory - "
+          "Exception caught whilst setting up openDDS:");
+      throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
+    }
+}
+#endif
+
 
 template <typename CCM_TYPE>
 ::DDS::DomainId_t

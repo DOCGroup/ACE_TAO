@@ -12,6 +12,10 @@
 
 #pragma dds4ccm impl "DDS_Derived_Connector_T.h"
 
+#if (CIAO_DDS4CCM_OPENDDS==1)
+# include "DerivedTypeSupport.idl"
+#endif
+
 module ::CCM_DDS::Typed < ::DerivedType, ::DerivedTypeSeq> DerivedTypeConnector;
 
 interface fooA
