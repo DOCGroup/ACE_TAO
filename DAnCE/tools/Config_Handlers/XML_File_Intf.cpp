@@ -12,8 +12,6 @@
 #include "dance/Deployment/Deployment_TargetDataC.h"
 #include "dance/Logger/Log_Macros.h"
 
-typedef XML::XML_Typedef XML_Helper_type;
-
 namespace DAnCE
 {
   namespace Config_Handlers

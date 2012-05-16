@@ -28,6 +28,11 @@ namespace Deployment
   struct Domain;
 }
 
+namespace XML
+{
+  class XML_Typedef;
+}
+
 namespace DAnCE
 {
   namespace Config_Handlers
@@ -58,6 +63,7 @@ namespace DAnCE
       std::basic_string <ACE_TCHAR> file_;
       ACE_Auto_Ptr< ::Deployment::DeploymentPlan> idl_dp_;
       ACE_Auto_Ptr< ::Deployment::Domain> idl_domain_;
+      typedef XML::XML_Typedef XML_Helper_type;
     };
   }
 }
