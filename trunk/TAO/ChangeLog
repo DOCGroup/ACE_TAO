@@ -1,3 +1,9 @@
+Wed May 16 14:05:33 UTC 2012  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/facet_exh.cpp:
+        * TAO_IDL/be/be_visitor_component_scope.cpp:
+        Changed DOxygen documentation.
+
 Wed May 16 06:42:33 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/PortableGroup/Portable_Group_Map.cpp:

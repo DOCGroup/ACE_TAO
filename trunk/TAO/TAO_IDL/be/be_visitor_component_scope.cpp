@@ -285,7 +285,7 @@ void
 be_visitor_component_scope::gen_exec_entrypoint_decl (void)
 {
   os_ << be_nl_2
-      << "/// Factory method and library entry point used by the middelware" << be_nl
+      << "/// Factory method and library entry point used by the middleware" << be_nl
       << "/// @return new component instance" << be_nl
       << "extern \"C\" " << export_macro_.c_str ()
       << " ::Components::EnterpriseComponent_ptr" << be_nl
