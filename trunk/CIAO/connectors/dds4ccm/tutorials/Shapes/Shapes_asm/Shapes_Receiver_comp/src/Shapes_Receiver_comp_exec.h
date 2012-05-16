@@ -72,7 +72,7 @@ namespace CIAO_Shapes_Receiver_comp_Impl
     //@}
 
   private:
-    /// Context for component instance. Uses for all middleware communication.
+    /// Context for component instance. Used for all middleware communication.
     ::Shapes::CCM_Receiver_comp_Context_var ciao_context_;
   };
 
@@ -104,7 +104,7 @@ namespace CIAO_Shapes_Receiver_comp_Impl
     //@}
 
   private:
-    /// Context for component instance. Uses for all middleware communication.
+    /// Context for component instance. Used for all middleware communication.
     ::Shapes::CCM_Receiver_comp_Context_var ciao_context_;
   };
 
@@ -192,7 +192,7 @@ namespace CIAO_Shapes_Receiver_comp_Impl
     //@}
   };
 
-  /// Factory method and library entry point used by the middelware
+  /// Factory method and library entry point used by the middleware
   /// @return new component instance
   extern "C" SHAPES_RECEIVER_COMP_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_Shapes_Receiver_comp_Impl (void);

@@ -1,3 +1,13 @@
+Wed May  16 14:183:12 UTC 2012  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Control_comp/src/Shapes_Control_comp_exec.h:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Sender_comp/src/Shapes_Sender_comp_exec.h:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Receiver_comp/src/Shapes_Receiver_comp_exec.h:
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/Code/Shapes_Control_comp/Shapes_Control_comp_exec.h:
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/Code/Shapes_Sender_comp/Shapes_Sender_comp_exec.h:
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/Code/Shapes_Receiver_comp/Shapes_Receiver_comp_exec.h:
+        Changes in DOxygen documentation .
+
 Tue May 15 18:17:45 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/Protocols/Sender/Sender_exec.cpp:
