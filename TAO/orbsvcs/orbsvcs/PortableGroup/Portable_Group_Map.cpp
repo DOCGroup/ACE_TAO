@@ -147,8 +147,6 @@ TAO_GroupId_Hash::operator () (const PortableGroup::TagGroupTaggedComponent *id)
                    ACE_OS::strlen ((const char *) id->group_domain_id));
 
   // Truncate the object_group_id in half for the has.
-  // Divide by one so that the ACE_U_LongLong representation
-  // will automatically cast down to a u_long
   hash += (u_long) (id->object_group_id / 1);
 
   hash += id->object_group_ref_version;

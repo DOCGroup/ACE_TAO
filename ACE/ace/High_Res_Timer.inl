@@ -28,7 +28,6 @@ ACE_High_Res_Timer::hrtime_to_tv (ACE_Time_Value &tv,
     tv.sec ((time_t) (hrt / (ACE_UINT32) ACE_HR_SCALE_CONVERSION /
                   global_scale_factor ()));
 
-    // Calculate usec in a manner that's compatible with ACE_U_LongLong.
     // hrt = (tv.sec * ACE_ONE_SECOND_IN_USECS + tv.usec) * global_scale_factor_
     // tv.usec = hrt / global_scale_factor_ - tv.sec * ACE_ONE_SECOND_IN_USECS
     // That first term will be lossy, so factor out global_scale_factor_:

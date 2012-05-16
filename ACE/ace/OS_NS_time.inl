@@ -344,7 +344,6 @@ ACE_OS::gethrtime (const ACE_HRTimer_Op op)
          &ts);
 
   // Carefully create the return value to avoid arithmetic overflow
-  // if ACE_hrtime_t is ACE_U_LongLong.
   return static_cast<ACE_hrtime_t> (ts.tv_sec) *
     ACE_U_ONE_SECOND_IN_NSECS  +  static_cast<ACE_hrtime_t> (ts.tv_nsec);
 #else
@@ -352,7 +351,6 @@ ACE_OS::gethrtime (const ACE_HRTimer_Op op)
   ACE_Time_Value const now = ACE_OS::gettimeofday ();
 
   // Carefully create the return value to avoid arithmetic overflow
-  // if ACE_hrtime_t is ACE_U_LongLong.
   return (static_cast<ACE_hrtime_t> (now.sec ()) * (ACE_UINT32) 1000000  +
           static_cast<ACE_hrtime_t> (now.usec ())) * (ACE_UINT32) 1000;
 #endif /* ACE_HAS_HI_RES_TIMER */

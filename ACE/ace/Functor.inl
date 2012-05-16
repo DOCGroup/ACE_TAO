@@ -126,7 +126,7 @@ ACE_Hash<ACE_UINT64>::operator () (const ACE_UINT64 &t) const
   return static_cast<unsigned long> (t);
 #endif /* ACE_SIZEOF_LONG */
 }
-#endif /* !ACE_LACKS_UNSIGNEDLONGLONG_T */
+#endif /* ACE_SIZEOF_LONG < 8 */
 
 ACE_INLINE unsigned long
 ACE_Hash<const char *>::operator () (const char *t) const

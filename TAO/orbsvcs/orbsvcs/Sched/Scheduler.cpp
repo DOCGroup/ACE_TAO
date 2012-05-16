@@ -204,7 +204,6 @@ void ACE_Scheduler::export_to_file (RT_Info* info, FILE* file)
 
 void ACE_Scheduler::export_to_file (RT_Info& info, FILE* file)
 {
-  // The divide-by-1 is for ACE_U_LongLong support.
   (void) ACE_OS::fprintf (file,
                           ACE_TEXT("%s\n%d\n")
                           ACE_UINT64_FORMAT_SPECIFIER ACE_TEXT("\n")
