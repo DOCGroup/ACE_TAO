@@ -55,7 +55,6 @@ int publish()
   DllORB * p_orb = ACE_Dynamic_Service<DllORB>::instance ("testDllOrb");
   CORBA::ORB_var v_orb = p_orb->orb();
 
-
   TestBroadcaster testBroadcaster;
 
   testBroadcaster.connect(
