@@ -177,7 +177,7 @@ namespace CIAO_Shapes_Control_comp_Impl
     ACE_Reactor* reactor (void);
   };
 
-  /// Factory method and library entry point used by the middelware
+  /// Factory method and library entry point used by the middleware
   /// @return new component instance
   extern "C"  ::Components::EnterpriseComponent_ptr
   create_Shapes_Control_comp_Impl (void);
