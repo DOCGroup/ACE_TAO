@@ -78,13 +78,11 @@ run_main (int, ACE_TCHAR *[])
   errors += check (ACE_TEXT ("ACE_SIZEOF_LONG: %u%s"),
                    sizeof (long), ACE_SIZEOF_LONG);
   errors += check (ACE_TEXT ("ACE_SIZEOF_LONG_LONG: %u%s"),
-#if defined (ACE_LACKS_LONGLONG_T)
-                   sizeof (ACE_U_LongLong),
-#elif defined (ACE_WIN32)
+#if defined (ACE_WIN32)
                    sizeof (unsigned __int64),
-#else  /* ! ACE_WIN32 && ! ACE_LACKS_LONGLONG_T */
+#else  /* ! ACE_WIN32 && */
                    sizeof (long long),
-#endif /* ! ACE_WIN32 && ! ACE_LACKS_LONGLONG_T */
+#endif /* ! ACE_WIN32 && */
                    ACE_SIZEOF_LONG_LONG);
   errors += check (ACE_TEXT ("sizeof 64-bit literal: %u%s"),
                    sizeof ACE_UINT64_LITERAL (1),
