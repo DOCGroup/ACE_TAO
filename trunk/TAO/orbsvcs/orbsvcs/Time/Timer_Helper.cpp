@@ -48,22 +48,6 @@ Timer_Helper::handle_timeout (const ACE_Time_Value &,
           CosTime::UTO_var UTO_server =
             (*value)->universal_time ();
 
-#if defined (ACE_LACKS_LONGLONG_T)
-
-          if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
-                        "\nTime = %Q\nInaccuracy = %Q\nTimeDiff = %d\nstruct.time = %Q\n"
-                        "struct.inacclo = %d\nstruct.inacchi = %d\nstruct.Tdf = %d\n",
-                        ACE_U64_TO_U32 (UTO_server->time ()),
-                        ACE_U64_TO_U32 (UTO_server->inaccuracy ()),
-                        UTO_server->tdf (),
-                        ACE_U64_TO_U32 ((UTO_server->utc_time ()).time),
-                        (UTO_server->utc_time ()).inacclo,
-                        (UTO_server->utc_time ()).inacchi,
-                        (UTO_server->utc_time ()).tdf));
-
-#else
-
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
                         "\nTime = %Q\nInaccuracy = %Q\nTimeDiff = %d\nstruct.time = %Q\n"
@@ -75,7 +59,6 @@ Timer_Helper::handle_timeout (const ACE_Time_Value &,
                         (UTO_server->utc_time ()).inacclo,
                         (UTO_server->utc_time ()).inacchi,
                         (UTO_server->utc_time ()).tdf));
-#endif
 
           CORBA::ULongLong curr_server_time =
             UTO_server->time ();

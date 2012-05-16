@@ -106,15 +106,11 @@ typedef ACE::If_Then_Else<
   ACE::If_Then_Else<
     (sizeof (void*) == sizeof (unsigned long)),
     unsigned long,
-#ifdef ACE_LACKS_UNSIGNEDLONGLONG_T
-    void  /* Unknown. Force an invalid type */
-#else
     ACE::If_Then_Else<
       (sizeof (void*) == sizeof (unsigned long long)),
       unsigned long long,
       void /* Unknown. Force an invalid type */
       >::result_type
-#endif  /* ACE_LACKS_UNSIGNEDLONGLONG_T */
     >::result_type
   >::result_type uintptr_t;
 
@@ -407,190 +403,8 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #   define ACE_NTOHS(x) x
 # endif /* ACE_LITTLE_ENDIAN */
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
-/**
- * @class ACE_U_LongLong
- *
- * @brief Unsigned long long for platforms that don't have one.
- *
- * Provide our own unsigned long long.  This is intended to be
- * use with ACE_High_Res_Timer, so the division operator assumes
- * that the quotient fits into a u_long.
- * Please note that the constructor takes (optionally) two values.
- * The high one contributes 0x100000000 times its value.  So,
- * for example, (0, 2) is _not_ 20000000000, but instead
- * 0x200000000.  To emphasize this, the default values are expressed
- * in hex, and output () dumps the value in hex.
- */
-  class ACE_Export ACE_U_LongLong
-  {
-  public:
-    // = Initialization and termination methods.
-#if defined (ACE_LACKS_UNSIGNEDLONGLONG_T)
-    ACE_U_LongLong (const long long value = 0x0);
-#else
-    ACE_U_LongLong (const ACE_UINT32 lo = 0x0, const ACE_UINT32 hi = 0x0);
-#endif
-    ACE_U_LongLong (const ACE_U_LongLong &);
-    ACE_U_LongLong &operator= (const ACE_U_LongLong &);
-    ACE_U_LongLong &operator= (const ACE_INT32 &);
-    ACE_U_LongLong &operator= (const ACE_UINT32 &);
-    ~ACE_U_LongLong (void);
-
-    // = Overloaded relation operators.
-    bool operator== (const ACE_U_LongLong &) const;
-    bool operator== (const ACE_UINT32) const;
-    bool operator!= (const ACE_U_LongLong &) const;
-    bool operator!= (const ACE_UINT32) const;
-    bool operator< (const ACE_U_LongLong &) const;
-    bool operator< (const ACE_UINT32) const;
-    bool operator<= (const ACE_U_LongLong &) const;
-    bool operator<= (const ACE_UINT32) const;
-    bool operator> (const ACE_U_LongLong &) const;
-    bool operator> (const ACE_UINT32) const;
-    bool operator>= (const ACE_U_LongLong &) const;
-    bool operator>= (const ACE_UINT32) const;
-
-    ACE_U_LongLong operator+ (const ACE_U_LongLong &) const;
-    ACE_U_LongLong operator+ (const ACE_UINT32) const;
-    ACE_U_LongLong operator- (const ACE_U_LongLong &) const;
-    ACE_U_LongLong operator- (const ACE_UINT32) const;
-    ACE_U_LongLong operator* (const ACE_UINT32) const;
-    ACE_U_LongLong &operator*= (const ACE_UINT32);
-
-    ACE_U_LongLong operator<< (const unsigned int) const;
-    ACE_U_LongLong &operator<<= (const unsigned int);
-    ACE_U_LongLong operator>> (const unsigned int) const;
-    ACE_U_LongLong &operator>>= (const unsigned int);
-
-    double operator/ (const double) const;
-
-    ACE_U_LongLong &operator+= (const ACE_U_LongLong &);
-    ACE_U_LongLong &operator+= (const ACE_UINT32);
-    ACE_U_LongLong &operator-= (const ACE_U_LongLong &);
-    ACE_U_LongLong &operator-= (const ACE_UINT32);
-    ACE_U_LongLong &operator++ ();
-    ACE_U_LongLong &operator-- ();
-    const ACE_U_LongLong operator++ (int);
-    const ACE_U_LongLong operator-- (int);
-    ACE_U_LongLong &operator|= (const ACE_U_LongLong);
-    ACE_U_LongLong &operator|= (const ACE_UINT32);
-    ACE_U_LongLong &operator&= (const ACE_U_LongLong);
-    ACE_U_LongLong &operator&= (const ACE_UINT32);
-
-    // Note that the following take ACE_UINT32 arguments.  These are
-    // typical use cases, and easy to implement.  But, they limit the
-    // return values to 32 bits as well.  There are no checks for
-    // overflow.
-    ACE_UINT32 operator/ (const ACE_UINT32) const;
-    ACE_UINT32 operator% (const ACE_UINT32) const;
-
-    // The following only operate on the lower 32 bits (they take only
-    // 32 bit arguments).
-    ACE_UINT32 operator| (const ACE_INT32) const;
-    ACE_UINT32 operator& (const ACE_INT32) const;
-
-    // The following operators convert their arguments to
-    // ACE_UINT32.  So, there may be information loss if they are
-    // used.
-    ACE_U_LongLong operator* (const ACE_INT32) const;
-    ACE_U_LongLong &operator*= (const ACE_INT32);
-    ACE_UINT32 operator/ (const ACE_INT32) const;
-#   if ACE_SIZEOF_INT == 4
-    ACE_UINT32 operator/ (const unsigned long) const;
-    ACE_UINT32 operator/ (const long) const;
-#   else  /* ACE_SIZEOF_INT != 4 */
-    ACE_UINT32 operator/ (const unsigned int) const;
-    ACE_UINT32 operator/ (const int) const;
-#   endif /* ACE_SIZEOF_INT != 4 */
-
-    // = Helper methods.
-    /// Outputs the value to the FILE, in hex.
-    void output (FILE * = stdout) const;
-
-    ACE_TCHAR *as_string (ACE_TCHAR *string,
-                          unsigned int base = 10,
-                          unsigned int uppercase = 0) const;
-
-    ACE_UINT32 hi (void) const;
-    ACE_UINT32 lo (void) const;
-
-    void hi (const ACE_UINT32 hi);
-    void lo (const ACE_UINT32 lo);
-
-#if defined (ACE_LACKS_UNSIGNEDLONGLONG_T)
-    long long to_int64 (void) const;
-#   endif
-
-  private:
-
-#if defined (ACE_LACKS_UNSIGNEDLONGLONG_T)
-    long long data_;
-#else
-  public:
-    struct ace_hi_lo_correct_endian
-    {
-#  if defined (ACE_BIG_ENDIAN)
-      /// High 32 bits.
-      ACE_UINT32 hi_;
-      /// Low 32 bits.
-      ACE_UINT32 lo_;
-
-#  else
-
-      /// Low 32 bits.
-      ACE_UINT32 lo_;
-      /// High 32 bits.
-      ACE_UINT32 hi_;
-#  endif /* ! ACE_BIG_ENDIAN */
-    };
-  private:
-    union
-    {
-      struct ace_hi_lo_correct_endian data_;
-
-      /// To ensure alignment on 8-byte boundary.
-      double for_alignment_;
-    };
-
-    // @note  the following four accessors are inlined here in
-    // order to minimize the extent of the data_ struct.  It's
-    // only used here; the .i and .cpp files use the accessors.
-
-    /// Internal utility function to hide access through struct.
-    const ACE_UINT32 &h_ () const { return data_.hi_; }
-
-    /// Internal utility function to hide access through struct.
-    ACE_UINT32 &h_ () { return data_.hi_; }
-
-    /// Internal utility function to hide access through struct.
-    const ACE_UINT32 &l_ () const { return data_.lo_; }
-
-    /// Internal utility function to hide access through struct.
-    ACE_UINT32 &l_ () { return data_.lo_; }
-
-    // @note  the above four accessors are inlined here in
-    // order to minimize the extent of the data_ struct.  It's
-    // only used here; the .inl and .cpp files use the accessors.
-
-    /// These functions are used to implement multiplication.
-    ACE_UINT32 ul_shift (ACE_UINT32 a,
-                         ACE_UINT32 c_in,
-                         ACE_UINT32 *c_out) const;
-    ACE_U_LongLong ull_shift (ACE_U_LongLong a,
-                              ACE_UINT32 c_in,
-                              ACE_UINT32 *c_out) const;
-    ACE_U_LongLong ull_add (ACE_U_LongLong a,
-                            ACE_U_LongLong b,
-                            ACE_UINT32 *carry) const;
-    ACE_U_LongLong ull_mult (ACE_U_LongLong a,
-                             ACE_UINT32 b,
-                             ACE_UINT32 *carry) const;
-#endif // ACE_LACKS_UNSIGNEDLONGLONG_T
-  };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
+# define ACE_LONGLONG_TO_PTR(PTR_TYPE, L) \
+     reinterpret_cast<PTR_TYPE> (static_cast<intptr_t> (L))
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -860,10 +674,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #define ACE_FLT_MIN 1.175494351e-38F
 #define ACE_DBL_MAX 1.7976931348623158e+308
 #define ACE_DBL_MIN 2.2250738585072014e-308
-
-# if defined (__ACE_INLINE__)
-#   include "ace/Basic_Types.inl"
-# endif /* __ACE_INLINE__ */
 
 # include /**/ "ace/post.h"
 #endif /* ACE_BASIC_TYPES_H */

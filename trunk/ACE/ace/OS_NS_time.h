@@ -141,13 +141,8 @@ typedef long long ACE_hrtime_t;
 #   endif /* ! ACE_HAS_HI_RES_TIMER */
 # endif /* ACE_WIN32 */
 
-# if defined (ACE_LACKS_UNSIGNEDLONGLONG_T)
-#   define ACE_HRTIME_CONVERSION(VAL) ACE_U64_TO_U32(VAL)
-#   define ACE_HRTIME_TO_U64(VAL) ACE_U_LongLong(VAL)
-# else
-#   define ACE_HRTIME_CONVERSION(VAL) (VAL)
-#   define ACE_HRTIME_TO_U64(VAL) (VAL)
-# endif
+#define ACE_HRTIME_CONVERSION(VAL) (VAL)
+#define ACE_HRTIME_TO_U64(VAL) (VAL)
 
 namespace ACE_OS
 {
