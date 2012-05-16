@@ -50,27 +50,18 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 void
 ACE_Thread_ID::to_string (char *thr_string) const
 {
-  char format[128]; // Converted format string
-  char *fp = 0;     // Current format pointer
-  fp = format;
-  *fp++ = '%';   // Copy in the %
-
 #if defined (ACE_WIN32)
-  ACE_OS::strcpy (fp, "u");
-  ACE_OS::sprintf (thr_string,
-                   format,
+  ACE_OS::sprintf (thr_string, "%u",
                    static_cast <unsigned> (this->thread_id_));
 #else
-                  // Yes, this is an ugly C-style cast, but the
-                  // correct C++ cast is different depending on
-                  // whether the t_id is an integral type or a pointer
-                  // type. FreeBSD uses a pointer type, but doesn't
-                  // have a _np function to get an integral type, like
-                  // the OSes above.
-                  ACE_OS::strcpy (fp, "lu");
-                  ACE_OS::sprintf (thr_string,
-                                   format,
-                                   (unsigned long) thread_handle_);
+  // Yes, this is an ugly C-style cast, but the
+  // correct C++ cast is different depending on
+  // whether the t_id is an integral type or a pointer
+  // type. FreeBSD uses a pointer type, but doesn't
+  // have a _np function to get an integral type like
+  // other OSes, so use the bigger hammer.
+  ACE_OS::sprintf (thr_string, "%lu",
+                   (unsigned long) thread_handle_);
 #endif /* ACE_WIN32 */
 }
 
