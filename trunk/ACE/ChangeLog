@@ -1,3 +1,10 @@
+Wed May 16 06:44:23 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/run_test.lst:
+        * tests/tests.mpc:
+        * tests/Bug_4008_Regression_Test.cpp:
+          Removed bug 4008 test, it was testing incorrect assumptions
+
 Wed May 16 06:42:45 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Basic_Types.h:
