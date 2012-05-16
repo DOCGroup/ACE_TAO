@@ -121,8 +121,8 @@ Task_Stats::dump_latency_stats (
   ACE_UINT64 l_max_ = this->exec_time_max_ / sf;
   ACE_UINT32 l_max = ACE_CU64_TO_CU32 (l_max_);
 
-  double l_avg = ACE_UINT64_DBLCAST_ADAPTER(avg) / sf;
-  double l_dev = ACE_UINT64_DBLCAST_ADAPTER(dev) / (sf * sf);
+  double l_avg = ACE_UINT64_DBLCAST_ADAPTER(avg / sf);
+  double l_dev = ACE_UINT64_DBLCAST_ADAPTER(dev / (sf * sf));
 
   ACE_UINT64 tmin_ = this->time_inv_[0] / sf;
   ACE_UINT32 tmin = ACE_CU64_TO_CU32 (tmin_);
