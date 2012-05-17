@@ -818,7 +818,7 @@ For our build we require the packages
        </p><p>
        If you want static libs also, you may run:
 
-       </p><blockquote><code></code><pre>       % make static_libs=1
+       </p><blockquote><code></code><pre>       % make static_libs_only=1
        </pre></blockquote>
 
   </li><li> Run make install:
@@ -964,7 +964,7 @@ setup selects by default:
        </p><p>
        If you want static libs also, you may run:
 
-       </p><blockquote><code></code><pre>       % make static_libs=1
+       </p><blockquote><code></code><pre>       % make static_libs_only=1
        </pre></blockquote>
 
   </li><li> <a name="cygwinrunpath">
@@ -1218,8 +1218,7 @@ broken. This will be remedied(!) as soon as possible.<p>
 
 ACE supports shared libraries for VxWorks, but only with the g++
 compiler.  To build shared libraries instead of the default static
-libraries, added <code>shared_libs=1</code> (<strong>not</strong>
-<code>shared_libs_only=1</code>) to either your
+libraries, added <code>shared_libs_only=1</code> to either your
 <code>ACE_wrappers/include/makeinclude/platform_macros.GNU</code> or
 your <code>make</code> invocation.  Then, be sure to load the ACE (and
 any other) shared library before loading your executable(s).</p><p>
@@ -1261,7 +1260,7 @@ disable the munch step.  The easiest way to do that is to set the
 example, to build a libACE.so for PowerPC that can be linked into
 the kernel:
 <pre>% cd $ACE_ROOT/ace
-% make LD=ldppc shared_libs=1
+% make LD=ldppc shared_libs_only=1
 </pre>
 After building the shared lib, link it into the kernel by setting
 the <code>MACH_EXTRA</code> make variable in the kernel configuration
@@ -1444,7 +1443,7 @@ on Windows NT hosts:
  </li><li>When using cygnus windows GNUTools on WinNT you have to start
  make with "--unix" option, otherwise WinNT shell cmd.exe is responded and
  not sh.exe, i.e.,
- <pre> make --unix static_libs=1
+ <pre> make --unix static_libs_only=1
  </pre>
 </li></ol>
 
@@ -1580,16 +1579,16 @@ C:\Corba\ACE_wrappers\apps\gperf\src\gperf.sln. Build gperf.exe</p>
 
 <p>4) Build ACE in Cygwin</p>
 <p>$cd /Corba/ACE_wrappers/ace </p>
-<p>$make static_libs=1</p>
+<p>$make static_libs_only=1</p>
 <p>This will build your ace library libACE.a for VxWorks. If you use
-option shared_libs=1 then the build will be libACE.so. The other
+option shared_libs_only=1 then the build will be libACE.so. The other
 options are same as follows.</p>
 
 <p>5) Build TAO in Cygwin</p>
 <p>$cd $TAO_ROOT/tao</p>
 <p>$make debug=0 optimize=1 static_libs_only=1 minimum_orb=1
 </p>
-<p>for shared libs use shared_libs=1</p>
+<p>for shared libs use shared_libs_only=1</p>
 
 <p>The minimum Tao does not have following components,</p>
 <p>Dynamic Skeleton Interface</p>
@@ -2885,8 +2884,8 @@ quantify         Quantify all executables.
 repo             Use GNU template repository (g++ with repo patches only).
 rtti             Enable run-time type identification.  On some platforms,
                    it is enabled by default, so this is ignored.
-shared_libs      Build shared libraries. Ignored if static_libs_only is set.
-static_libs      Build shared libraries. Ignored if shared_libs_only is set.
+shared_libs      If migrating from prior version use <code>shared_libs_only</code>
+static_libs      If migrating from prior version use <code>static_libs_only</code>
 shared_libs_only Only build shared libraries.  Ignored if no SHLIBs are
                    specified by the Makefile, as in performance-tests/Misc.
 static_libs_only Only build static libraries.
