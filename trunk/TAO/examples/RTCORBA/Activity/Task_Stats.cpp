@@ -121,8 +121,8 @@ Task_Stats::dump_latency_stats (
   ACE_UINT64 l_max_ = this->exec_time_max_ / sf;
   ACE_UINT32 l_max = ACE_CU64_TO_CU32 (l_max_);
 
-  double l_avg = ACE_UINT64_DBLCAST_ADAPTER(avg / sf);
-  double l_dev = ACE_UINT64_DBLCAST_ADAPTER(dev / (sf * sf));
+  ACE_UINT32 l_avg = ACE_CU64_TO_CU32(avg / sf);
+  ACE_UINT32 l_dev = ACE_CU64_TO_CU32(dev / (sf * sf));
 
   ACE_UINT64 tmin_ = this->time_inv_[0] / sf;
   ACE_UINT32 tmin = ACE_CU64_TO_CU32 (tmin_);
@@ -131,7 +131,7 @@ Task_Stats::dump_latency_stats (
   ACE_UINT32 tmax = ACE_CU64_TO_CU32 (tmax_);
 
   ACE_OS::sprintf(out_msg,
-                ACE_TEXT ("#latency   : %u[%d]/%.2f/%u[%d]/%.2f (min/avg/max/var^2)\n #first invocation time = %u, last invocation time = %u\n"),
+                ACE_TEXT ("#latency   : %u[%d]/%u/%u[%d]/%u (min/avg/max/var^2)\n #first invocation time = %u, last invocation time = %u\n"),
                 l_min, this->exec_time_min_at_,
                 l_avg,
                 l_max, this->exec_time_max_at_,
