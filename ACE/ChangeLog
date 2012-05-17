@@ -1,3 +1,11 @@
+Thu May 17 15:42:36 UTC 2012  Steve Huston  <shuston@riverace.com>
+
+        * ace/Reactor.h: Clarified the timeout conditions on
+          run_reactor_event_loop(). Thank you to Mohsin Zaidi for this
+          clarification.
+
+        * THANKS: Added Mohsin Zaidi to the Hall of Fame.
+
 Wed May 16 17:41:21 UTC 2012  Steve Huston  <shuston@riverace.com>
 
         * ace/OS_NS_Thread.cpp (ACE_Thread_ID::to_string): Use string literals
