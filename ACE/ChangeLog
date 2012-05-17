@@ -1,3 +1,11 @@
+Thu May 17 16:16:09 UTC 2012  Adam Mitz  <mitza@ociweb.com>
+
+        * ACE-INSTALL.html:
+
+          Replaced the make flag static_libs with static_libs_only.
+          Using static_libs implies that both static and shared can
+          be built at the same time, which is not true in general.
+
 Thu May 17 15:42:36 UTC 2012  Steve Huston  <shuston@riverace.com>
 
         * ace/Reactor.h: Clarified the timeout conditions on
