@@ -1,6 +1,13 @@
 USER VISIBLE CHANGES BETWEEN CIAO-1.1.1 and CIAO-1.1.2
 =======================================================
 
+. Added support for DDS4CCM with OpenDDS 3.2 or higher as DDS implementation.
+  At this moment basic integration has been completed, all tests/examples do
+  compile and part of them do run. To be added are support for the QoS XML files
+  and the sharing of domain participants between connectors when using OpenDDS.
+  After these extensions have been implemented we will analyze and resolve
+  the test failures
+
 USER VISIBLE CHANGES BETWEEN CIAO-1.1.0 and CIAO-1.1.1
 =======================================================
 
