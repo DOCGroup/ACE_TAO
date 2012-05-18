@@ -75,32 +75,126 @@ Tue May 15 18:17:07 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue May 15 13:43:00 UTC 2012  Marcel Smit  <msmit@remedy.nl>
 
-        * TAO_IDL/be/be_codegen.cpp:
-        * TAO_IDL/be/be_global.cpp:
-        * TAO_IDL/be/be_util.cpp:
-        * TAO_IDL/be/be_visitor_arg_traits.cpp:
+          Merged DDS4CCM_OpenDDS branch
 
-        * TAO_IDL/be/be_visitor_connector/connector_dds_ex_base.cpp:
-        * TAO_IDL/be/be_visitor_connector/connector_dds_exh.cpp:
-        * TAO_IDL/be/be_visitor_connector/connector_dds_exs.cpp:
+          commit 6ce8768572a8340ee59521fc910f6b5023fe0cbf
+          Author: Marcel Smit <msmit@remedy.nl>
+          Date:   Fri Apr 27 11:15:33 2012 +0200
 
-        * TAO_IDL/be/be_visitor_native/native_ch.cpp:
+                  * CIAO/connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ports/Shapes_ShapeType_conn.idl:
+                    Fixed compile issues.
 
-        * TAO_IDL/be/be_visitor_sequence/any_op_ch.cpp:
-        * TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
-        * TAO_IDL/be/be_visitor_sequence/cdr_op_ch.cpp:
-        * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
-        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
-        * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+                  * TAO/TAO_IDL/be/be_global.cpp:
+                  * TAO/TAO_IDL/be/be_util.cpp:
+                  * TAO/TAO_IDL/be/be_visitor_native/native_ch.cpp:
+                  * TAO/TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+                  * TAO/TAO_IDL/be_include/be_global.h:
+                    Removed opendds_suffix from the code. In openDDS, suffix of
+                    the sequence is defined as 'Seq'.
 
-        * TAO_IDL/be_include/be_global.h:
+          commit d1c45d256337574e7779c088c5d0634be7d024d5
+          Author: Marcel Smit <msmit@remedy.nl>
+          Date:   Thu Apr 26 20:06:13 2012 +0200
 
-        * TAO_IDL/fe/lex.yy.cpp:
+                  * CIAO/MPC/config/ndds_idltocpp.mpb:
+                  * CIAO/MPC/config/ndds_idltocpp_ts_defaults.mpb:
+                    Added -DDDS4CCM_NEEDS_SEQUENCES_DEFINED again.
 
-        * TAO_IDL/include/idl_global.h:
+                  * CIAO/connectors/dds4ccm/examples/Shapes/Base/Shapes_Base.idl:
+                  * CIAO/connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector.idl:
+                    Fixed compile issues for both openDDS and RTI DDS.
 
-        * TAO_IDL/util/utl_global.cpp:
-          Added support for openDDS.
+                  * CIAO/connectors/dds4ccm/idl/ccm_dds.idl:
+                    Removed comment.
+
+                  * TAO/TAO_IDL/be/be_visitor_arg_traits.cpp:
+                  * TAO/TAO_IDL/be/be_visitor_sequence/any_op_ch.cpp:
+                  * TAO/TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
+                  * TAO/TAO_IDL/be/be_visitor_sequence/cdr_op_ch.cpp:
+                  * TAO/TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+                  * TAO/TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+                  * TAO/TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+                    Don't check for which DDS vendor is used. Just check for the
+                    availability of the pragma.
+
+          commit eabcfd1ec51f753d925c3e224c853a598f69c7db
+          Author: Marcel Smit <msmit@remedy.nl>
+          Date:   Thu Apr 26 11:22:35 2012 +0200
+
+                  * CIAO/connectors/dds4ccm/examples/Shapes/Base/Shapes_Base.idl:
+                  * CIAO/connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector.idl:
+                  * CIAO/connectors/dds4ccm/idl/ccm_dds.idl:
+                  * CIAO/connectors/dds4ccm/impl/Updater_T.cpp:
+                  * CIAO/connectors/dds4ccm/impl/Updater_T.h:
+                  * CIAO/connectors/dds4ccm/impl/Writer_T.cpp:
+                  * CIAO/connectors/dds4ccm/impl/Writer_T.h:
+                  * TAO/TAO_IDL/be/be_visitor_arg_traits.cpp:
+                  * TAO/TAO_IDL/be/be_visitor_connector/connector_dds_ex_base.cpp:
+                  * TAO/TAO_IDL/be/be_visitor_connector/connector_dds_exh.cpp:
+                  * TAO/TAO_IDL/be/be_visitor_connector/connector_dds_exs.cpp:
+                  * TAO/TAO_IDL/be/be_visitor_sequence/any_op_ch.cpp:
+                  * TAO/TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
+                  * TAO/TAO_IDL/be/be_visitor_sequence/cdr_op_ch.cpp:
+                  * TAO/TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+                  * TAO/TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+                  * TAO/TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+                  * TAO/TAO_IDL/fe/lex.yy.cpp:
+                  * TAO/TAO_IDL/include/idl_global.h:
+                  * TAO/TAO_IDL/util/utl_global.cpp:
+                    Using a pragma to define the sequences for openDDS. If that pragma is
+                    set, the sequence is generated as it was declared as a native
+
+                  * CIAO/connectors/dds4ccm/tests/SLDisabled/Receiver/SL_Disabled_Receiver_exec.cpp:
+
+                  * CIAO/connectors/dds4ccm/impl/ConditionManager.cpp:
+                    Check whether read condition is there before detaching
+                    it from the waitset. Optimized logging in this case.
+
+          commit ca001a58956fd09ce0aee1ab614ed178c54cbe0a
+          Author: Marcel Smit <msmit@remedy.nl>
+          Date:   Wed Apr 25 12:39:30 2012 +0200
+
+                  * CIAO/MPC/config/dds4ccm_ts_default.mpb:
+                  * CIAO/connectors/dds4ccm/examples/Shapes/Base/Shapes_Base.idl:
+                  * CIAO/connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector.idl:
+                  * CIAO/connectors/dds4ccm/idl/ccm_dds.idl:
+                  * CIAO/connectors/dds4ccm/impl/Updater_T.cpp:
+                  * CIAO/connectors/dds4ccm/impl/Updater_T.h:
+                  * CIAO/connectors/dds4ccm/impl/Writer_T.cpp:
+                  * CIAO/connectors/dds4ccm/impl/Writer_T.h:
+                  * CIAO/connectors/dds4ccm/impl/ndds/WaitSet.cpp:
+                  * CIAO/connectors/dds4ccm/tests/KeyedSamples/Connector/Keyed_Test_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ports/Shapes_ShapeType_conn.idl:
+                  * CIAO/connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ports/Shapes_ShapeType_conn.mpc:
+                  * TAO/TAO_IDL/be/be_visitor_connector/connector_dds_ex_base.cpp:
+                  * TAO/TAO_IDL/be/be_visitor_connector/connector_dds_exh.cpp:
+                  * TAO/TAO_IDL/be/be_visitor_connector/connector_dds_exs.cpp:
+                    Work in progress: Refactoring of typedef sequence declarations. Seems that 'native'
+                    declaration does not work. Need to change openDDS, using a typedef declaration with
+                    a pragma.
+
+          commit 1c7c7c0af71e7908ad02c24f7a0f9cc71f6b71da
+          Author: Marcel Smit <msmit@remedy.nl>
+          Date:   Wed Apr 11 11:54:28 2012 +0200
+
+                  * CIAO/MPC/config/dds4ccm.mpb:
+                  * CIAO/MPC/config/dds4ccm_ts_default.mpb:
+                  * CIAO/connectors/dds4ccm/examples/Hello/Base/Hello_Base.idl:
+                  * CIAO/connectors/dds4ccm/examples/Shapes/Base/Shapes_Base.idl:
+                  * CIAO/connectors/dds4ccm/examples/Shapes/descriptors/run_test.pl:
+                  * CIAO/connectors/dds4ccm/idl/ccm_dds.idl:
+                  * TAO/TAO_IDL/be/be_codegen.cpp:
+                  * TAO/TAO_IDL/be/be_visitor_connector/connector_dds_exh.cpp:
+                    Preparation in order to support OpenDDS in DDS4CCM
+
+          commit 962e780d20ad901717448bb75780b49360d8c972
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Fri Apr 6 20:15:59 2012 +0200
+
+                  * TAO/MPC/config/taobaseidldefaults.mpb:
+                    All _svnt_T files are template files, not source files,
+                    so correct the group we add them to.
+
 
 Tue May 15 11:29:04 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
