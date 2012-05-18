@@ -24,559 +24,715 @@ Tue May 15 18:17:45 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue May 15 13:35:32 UTC 2012  Marcel Smit  <msmit@remedy.nl>
 
-        * MPC/config/dds4ccm.mpb:
-        * MPC/config/dds4ccm_base.mpb:
-        * MPC/config/dds4ccm_impl.mpb:
-        * MPC/config/dds4ccm_ts_default.mpb:
-        * MPC/config/ndds_idltocpp.mpb:
-        * MPC/config/ndds_idltocpp_ts_defaults.mpb:
-
-        * connectors/dds4ccm/examples/Hello/Base/Hello_Base.idl:
-
-        * connectors/dds4ccm/examples/Hello/Connector/Hello_Connector.idl:
-        * connectors/dds4ccm/examples/Hello/Connector/Hello_Connector.mpc:
-
-        * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Base/I2C_ShapeType.mpc:
-
-        * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Common/I2C_Shapes_Common.mpc:
-
-        * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Receiver/I2C_Shapes_Receiver.mpc:
-
-        * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Sender/I2C_Shapes_Sender.mpc:
-
-        * connectors/dds4ccm/examples/Large_Deployment/Common/Common.idl:
-
-        * connectors/dds4ccm/examples/Large_Deployment/Connector/Large_Connector.idl:
-        * connectors/dds4ccm/examples/Large_Deployment/Connector/Large_Connector.mpc:
-
-        * connectors/dds4ccm/examples/Large_Deployment/DDS_Pub/DDS_Pub.mpc:
-
-        * connectors/dds4ccm/examples/Large_Deployment/DDS_Sub/DDS_Sub.mpc:
-
-        * connectors/dds4ccm/examples/Quoter/Base/Quoter_Base.idl:
-
-        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector.idl:
-        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector.mpc:
-
-        * connectors/dds4ccm/examples/Shapes/Base/Shapes_Base.idl:
-
-        * connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector.idl:
-        * connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector.mpc:
-
-        * connectors/dds4ccm/examples/Shapes/Sender/Shapes_Sender_exec.cpp:
-
-        * connectors/dds4ccm/examples/Shapes/descriptors/run_test.pl:
-
-        * connectors/dds4ccm/idl/dds_rtf2_dcps.idl:
-
-        * connectors/dds4ccm/idl/ndds/ndds_idltocpp_stub.mpc:
-
-        * connectors/dds4ccm/impl/ConditionManager.cpp:
-        * connectors/dds4ccm/impl/DDS_Base_Connector_T.h:
-        * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
-        * connectors/dds4ccm/impl/Updater_T.cpp:
-
-        * connectors/dds4ccm/impl/ndds/WaitSet.cpp:
-
-        * connectors/dds4ccm/performance-tests/DDSLatency/Base/Latency_Base.idl:
-        * connectors/dds4ccm/performance-tests/DDSLatency/Base/Latency_Base.mpc:
-
-        * connectors/dds4ccm/performance-tests/DDSLatency/DDS_Receiver/DDS_Receiver.mpc:
-        * connectors/dds4ccm/performance-tests/DDSLatency/DDS_Receiver/Latency_Receiver.cpp:
-
-        * connectors/dds4ccm/performance-tests/DDSLatency/DDS_Sender/DDS_Sender.mpc:
-
-        * connectors/dds4ccm/performance-tests/DDSThroughput/Base/Throughput_Base.idl:
-        * connectors/dds4ccm/performance-tests/DDSThroughput/Base/Throughput_Base.mpc:
-
-        * connectors/dds4ccm/performance-tests/DDSThroughput/DDS_Receiver/DDS_Receiver.mpc:
-
-        * connectors/dds4ccm/performance-tests/DDSThroughput/DDS_Sender/DDS_Sender.mpc:
-
-        * connectors/dds4ccm/performance-tests/Keyed/Base/Perf_Keyed_Test_Base.idl:
-
-        * connectors/dds4ccm/performance-tests/Keyed/Connector/Perf_Keyed_Test_Connector.idl:
-        * connectors/dds4ccm/performance-tests/Keyed/Connector/Perf_Keyed_Test_Connector.mpc:
-
-        * connectors/dds4ccm/performance-tests/Latency/Base/LatencyTT_Test_Base.idl:
-
-        * connectors/dds4ccm/performance-tests/Latency/Connector/LatencyTT_Test_Connector.idl:
-        * connectors/dds4ccm/performance-tests/Latency/Connector/LatencyTT_Test_Connector.mpc:
-
-        * connectors/dds4ccm/performance-tests/Throughput/Base/Throughput_Base.idl:
-
-        * connectors/dds4ccm/performance-tests/Throughput/Connector/Throughput_Connector.idl:
-        * connectors/dds4ccm/performance-tests/Throughput/Connector/Throughput_Connector.mpc:
-
-        * connectors/dds4ccm/performance-tests/Throughput/SecConnector/Throughput_Sec_Connector.idl:
-        * connectors/dds4ccm/performance-tests/Throughput/SecConnector/Throughput_Sec_Connector.mpc:
-
-        * connectors/dds4ccm/tests/CSLDeadline/Base/CSL_DeadlineTest_Base.idl:
-
-        * connectors/dds4ccm/tests/CSLDeadline/Connector/CSL_DeadlineTest_Connector.idl:
-        * connectors/dds4ccm/tests/CSLDeadline/Connector/CSL_DeadlineTest_Connector.mpc:
-
-        * connectors/dds4ccm/tests/CSLQoS/Base/CSL_QoSTest_Base.idl:
-
-        * connectors/dds4ccm/tests/CSLQoS/Connector/CSL_QoSTest_Connector.idl:
-        * connectors/dds4ccm/tests/CSLQoS/Connector/CSL_QoSTest_Connector.mpc:
-
-        * connectors/dds4ccm/tests/CSLSampleRejected/Base/CSL_SRTest_Base.idl:
-
-        * connectors/dds4ccm/tests/CSLSampleRejected/Connector/CSL_SRTest_Connector.idl:
-        * connectors/dds4ccm/tests/CSLSampleRejected/Connector/CSL_SRTest_Connector.mpc:
-
-        * connectors/dds4ccm/tests/CSLUnexpStat/Base/CSL_USTest_Base.idl:
-
-        * connectors/dds4ccm/tests/CSLUnexpStat/Connector/CSL_USTest_Connector.idl:
-        * connectors/dds4ccm/tests/CSLUnexpStat/Connector/CSL_USTest_Connector.mpc:
-
-        * connectors/dds4ccm/tests/CoherentUpdater/Base/CoherentUpdate_Test_Base.idl:
-
-        * connectors/dds4ccm/tests/CoherentUpdater/Connector/CoherentUpdate_Test_Connector.idl:
-        * connectors/dds4ccm/tests/CoherentUpdater/Connector/CoherentUpdate_Test_Connector.mpc:
-
-        * connectors/dds4ccm/tests/CoherentWriter/Base/CoherentWrite_Test_Base.idl:
-
-        * connectors/dds4ccm/tests/CoherentWriter/Connector/CoherentWrite_Test_Connector.idl:
-        * connectors/dds4ccm/tests/CoherentWriter/Connector/CoherentWrite_Test_Connector.mpc:
-
-        * connectors/dds4ccm/tests/CollocatedPubSub/Base/Collocated_Base.idl:
-
-        * connectors/dds4ccm/tests/CollocatedPubSub/Connector/Collocated_Connector.idl:
-        * connectors/dds4ccm/tests/CollocatedPubSub/Connector/Collocated_Connector.mpc:
-
-        * connectors/dds4ccm/tests/ConnectorFilesInDiffDir/DiffDir.idl:
-        * connectors/dds4ccm/tests/ConnectorFilesInDiffDir/DiffDir_Connector.idl:
-        * connectors/dds4ccm/tests/ConnectorFilesInDiffDir/DiffDir_Connector.mpc:
-
-        * connectors/dds4ccm/tests/ContentFilteredTopic/CFTNamesClash/Base/CFT_Test_Base.idl:
-
-        * connectors/dds4ccm/tests/ContentFilteredTopic/CFTNamesClash/Connector/CFT_Test_Connector.idl:
-        * connectors/dds4ccm/tests/ContentFilteredTopic/CFTNamesClash/Connector/CFT_Test_Connector.mpc:
-
-        * connectors/dds4ccm/tests/ContentFilteredTopic/EventListener/Base/CFTLE_Test_Base.idl:
-
-        * connectors/dds4ccm/tests/ContentFilteredTopic/EventListener/Connector/CFTLE_Test_Connector.idl:
-        * connectors/dds4ccm/tests/ContentFilteredTopic/EventListener/Connector/CFTLE_Test_Connector.mpc:
-
-        * connectors/dds4ccm/tests/ContentFilteredTopic/Exception/Base/Exception_Test_Base.idl:
-
-        * connectors/dds4ccm/tests/ContentFilteredTopic/Exception/Connector/Exception_Test_Connector.idl:
-        * connectors/dds4ccm/tests/ContentFilteredTopic/Exception/Connector/Exception_Test_Connector.mpc:
-
-        * connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/Base/ReadGet_Test_Base.idl:
-
-        * connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/Connector/ReadGet_Test_Connector.idl:
-        * connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/Connector/ReadGet_Test_Connector.mpc:
-
-        * connectors/dds4ccm/tests/ContentFilteredTopic/StateListener/Base/CFTLS_Test_Base.idl:
-
-        * connectors/dds4ccm/tests/ContentFilteredTopic/StateListener/Connector/CFTLS_Test_Connector.idl:
-        * connectors/dds4ccm/tests/ContentFilteredTopic/StateListener/Connector/CFTLS_Test_Connector.mpc:
-
-        * connectors/dds4ccm/tests/DDSEntity/Base/Writer_Base.idl:
-
-        * connectors/dds4ccm/tests/DDSEntity/Connector/Writer_Connector.idl:
-        * connectors/dds4ccm/tests/DDSEntity/Connector/Writer_Connector.mpc:
-
-        * connectors/dds4ccm/tests/DDSEntity/Receiver/Writer_Receiver.mpc:
-
-        * connectors/dds4ccm/tests/DDSEntity/Sender/Writer_Sender.mpc:
-
-        * connectors/dds4ccm/tests/Derived/Derived.idl:
-        * connectors/dds4ccm/tests/Derived/Derived_Connector.idl:
-        * connectors/dds4ccm/tests/Derived/Derived_Connector.mpc:
-
-        * connectors/dds4ccm/tests/DoubleNestedModule/Base/DNM_Base.idl:
-
-        * connectors/dds4ccm/tests/DoubleNestedModule/Connector/DNM_Connector.idl:
-        * connectors/dds4ccm/tests/DoubleNestedModule/Connector/DNM_Connector.mpc:
-
-        * connectors/dds4ccm/tests/Event_Connection_Test/Base/Event_Connection_Test_Base.idl:
-
-        * connectors/dds4ccm/tests/Event_Connection_Test/Connector/Event_Connection_Test_Connector.idl:
-        * connectors/dds4ccm/tests/Event_Connection_Test/Connector/Event_Connection_Test_Connector.mpc:
-
-        * connectors/dds4ccm/tests/FixedSizeStruct/EventConnector/Base/FSS_Event_Base.idl:
-
-        * connectors/dds4ccm/tests/FixedSizeStruct/EventConnector/Connector/FSS_Event_Connector.idl:
-        * connectors/dds4ccm/tests/FixedSizeStruct/EventConnector/Connector/FSS_Event_Connector.mpc:
-
-        * connectors/dds4ccm/tests/FixedSizeStruct/StateConnector/Base/FSS_State_Base.idl:
-
-        * connectors/dds4ccm/tests/FixedSizeStruct/StateConnector/Connector/FSS_State_Connector.idl:
-        * connectors/dds4ccm/tests/FixedSizeStruct/StateConnector/Connector/FSS_State_Connector.mpc:
-
-        * connectors/dds4ccm/tests/GetComponent/Event/Base/GCE_Test_Base.idl:
-
-        * connectors/dds4ccm/tests/GetComponent/Event/Connector/GCE_Test_Connector.idl:
-        * connectors/dds4ccm/tests/GetComponent/Event/Connector/GCE_Test_Connector.mpc:
-
-        * connectors/dds4ccm/tests/GetComponent/State/Base/GCS_Test_Base.idl:
-
-        * connectors/dds4ccm/tests/GetComponent/State/Connector/GCS_Test_Connector.idl:
-        * connectors/dds4ccm/tests/GetComponent/State/Connector/GCS_Test_Connector.mpc:
-
-        * connectors/dds4ccm/tests/Getter/Base/Getter_Test_Base.idl:
-
-        * connectors/dds4ccm/tests/Getter/Connector/Getter_Test_Connector.idl:
-        * connectors/dds4ccm/tests/Getter/Connector/Getter_Test_Connector.mpc:
-
-        * connectors/dds4ccm/tests/HomeTest/Base/HomeT_Base.idl:
-
-        * connectors/dds4ccm/tests/HomeTest/Connector/HomeT_Connector.idl:
-        * connectors/dds4ccm/tests/HomeTest/Connector/HomeT_Connector.mpc:
-
-        * connectors/dds4ccm/tests/IDL_Test/Base/IDL_Test_Base.idl:
-
-        * connectors/dds4ccm/tests/IDL_Test/Connector/IDL_Test_Connector.idl:
-        * connectors/dds4ccm/tests/IDL_Test/Connector/IDL_Test_Connector.mpc:
-
-        * connectors/dds4ccm/tests/InstanceHandle/Base/Writer_Base.idl:
-
-        * connectors/dds4ccm/tests/InstanceHandle/Connector/Writer_Connector.idl:
-        * connectors/dds4ccm/tests/InstanceHandle/Connector/Writer_Connector.mpc:
-
-        * connectors/dds4ccm/tests/InstanceHandle/Sender/Writer_Sender.mpc:
-
-        * connectors/dds4ccm/tests/KeyedSamples/Base/Keyed_Test_Base.idl:
-
-        * connectors/dds4ccm/tests/KeyedSamples/Connector/Keyed_Test_Connector.idl:
-        * connectors/dds4ccm/tests/KeyedSamples/Connector/Keyed_Test_Connector.mpc:
-
-        * connectors/dds4ccm/tests/KeyedWriter/Base/Writer_Base.idl:
-
-        * connectors/dds4ccm/tests/KeyedWriter/Connector/Writer_Connector.idl:
-        * connectors/dds4ccm/tests/KeyedWriter/Connector/Writer_Connector.mpc:
-
-        * connectors/dds4ccm/tests/LateBinding/ReadGet/Base/RG_LateBinding_Base.idl:
-
-        * connectors/dds4ccm/tests/LateBinding/ReadGet/Connector/RG_LateBinding_Connector.idl:
-        * connectors/dds4ccm/tests/LateBinding/ReadGet/Connector/RG_LateBinding_Connector.mpc:
-
-        * connectors/dds4ccm/tests/LateBinding/UpdateWrite/Base/WU_LateBinding_Base.idl:
-
-        * connectors/dds4ccm/tests/LateBinding/UpdateWrite/Connector/WU_LateBinding_Connector.idl:
-        * connectors/dds4ccm/tests/LateBinding/UpdateWrite/Connector/WU_LateBinding_Connector.mpc:
-
-        * connectors/dds4ccm/tests/ListenManyByMany/Base/LMBM_Test_Base.idl:
-
-        * connectors/dds4ccm/tests/ListenManyByMany/Connector/LMBM_Test_Connector.idl:
-        * connectors/dds4ccm/tests/ListenManyByMany/Connector/LMBM_Test_Connector.mpc:
-
-        * connectors/dds4ccm/tests/ListenNotEnabled/Base/LNE_Test_Base.idl:
-
-        * connectors/dds4ccm/tests/ListenNotEnabled/Connector/LNE_Test_Connector.idl:
-        * connectors/dds4ccm/tests/ListenNotEnabled/Connector/LNE_Test_Connector.mpc:
-
-        * connectors/dds4ccm/tests/ListenOneByOne/Base/LOBO_Test_Base.idl:
-
-        * connectors/dds4ccm/tests/ListenOneByOne/Connector/LOBO_Test_Connector.idl:
-        * connectors/dds4ccm/tests/ListenOneByOne/Connector/LOBO_Test_Connector.mpc:
-
-        * connectors/dds4ccm/tests/MemLeakDetection/Event_MemLeakDetection_Test/Base/Event_MemLeakDetection_Test_Base.idl:
-
-        * connectors/dds4ccm/tests/MemLeakDetection/Event_MemLeakDetection_Test/Connector/Event_MemLeakDetection_Test_Connector.idl:
-        * connectors/dds4ccm/tests/MemLeakDetection/Event_MemLeakDetection_Test/Connector/Event_MemLeakDetection_Test_Connector.mpc:
-
-        * connectors/dds4ccm/tests/MemLeakDetection/State_MemLeakDetection_Test/Base/State_MemLeakDetection_Test_Base.idl:
-
-        * connectors/dds4ccm/tests/MemLeakDetection/State_MemLeakDetection_Test/Connector/State_MemLeakDetection_Test_Connector.idl:
-        * connectors/dds4ccm/tests/MemLeakDetection/State_MemLeakDetection_Test/Connector/State_MemLeakDetection_Test_Connector.mpc:
-
-        * connectors/dds4ccm/tests/MemLeakDetection/TypeRegistration/Base/TypeRegistration_Test_Base.idl:
-
-        * connectors/dds4ccm/tests/MemLeakDetection/TypeRegistration/Connector/TypeRegistration_Test_Connector.idl:
-        * connectors/dds4ccm/tests/MemLeakDetection/TypeRegistration/Connector/TypeRegistration_Test_Connector.mpc:
-
-        * connectors/dds4ccm/tests/MultiTopic/Base/MultiTopic_Base.idl:
-
-        * connectors/dds4ccm/tests/MultiTopic/Connector/MultiTopic_Connector.idl:
-        * connectors/dds4ccm/tests/MultiTopic/Connector/MultiTopic_Connector.mpc:
-
-        * connectors/dds4ccm/tests/MultipleTemp/Base/MultipleTemp_Base.idl:
-
-        * connectors/dds4ccm/tests/NoModule/NoModule.idl:
-        * connectors/dds4ccm/tests/NoModule/NoModule_Connector.idl:
-        * connectors/dds4ccm/tests/NoModule/NoModule_Connector.mpc:
-
-        * connectors/dds4ccm/tests/NonChangeableAttribute/Base/NonChangeable_Base.idl:
-
-        * connectors/dds4ccm/tests/NonChangeableAttribute/Connector/NonChangeable_Connector.idl:
-        * connectors/dds4ccm/tests/NonChangeableAttribute/Connector/NonChangeable_Connector.mpc:
-
-        * connectors/dds4ccm/tests/On_Inconsistent_Topic/Base/OIT_Test_Base.idl:
-
-        * connectors/dds4ccm/tests/On_Inconsistent_Topic/Receiver/OIT_Test_Receiver_exec.cpp:
-
-        * connectors/dds4ccm/tests/On_Inconsistent_Topic/ReceiverConnector/OIT_Receiver_Connector.idl:
-        * connectors/dds4ccm/tests/On_Inconsistent_Topic/ReceiverConnector/OIT_Receiver_Connector.mpc:
-
-        * connectors/dds4ccm/tests/On_Inconsistent_Topic/SenderConnector/OIT_Sender_Connector.idl:
-        * connectors/dds4ccm/tests/On_Inconsistent_Topic/SenderConnector/OIT_Sender_Connector.mpc:
-
-        * connectors/dds4ccm/tests/OneFile/Multiple/OFM_Base.idl:
-        * connectors/dds4ccm/tests/OneFile/Multiple/OFM_Connector.idl:
-        * connectors/dds4ccm/tests/OneFile/Multiple/OFM_Connector.mpc:
-
-        * connectors/dds4ccm/tests/OneFile/Single/OneFile_Base.idl:
-        * connectors/dds4ccm/tests/OneFile/Single/OneFile_Connector.idl:
-        * connectors/dds4ccm/tests/OneFile/Single/OneFile_Connector.mpc:
-
-        * connectors/dds4ccm/tests/PSAT/PSAT_Connector.idl:
-        * connectors/dds4ccm/tests/PSAT/ccm_dds_psat.mpc:
-        * connectors/dds4ccm/tests/PSAT/psat_type.idl:
-
-        * connectors/dds4ccm/tests/PSLDeadline/Base/PSL_DeadlineTest_Base.idl:
-
-        * connectors/dds4ccm/tests/PSLDeadline/Connector/PSL_DeadlineTest_Connector.idl:
-        * connectors/dds4ccm/tests/PSLDeadline/Connector/PSL_DeadlineTest_Connector.mpc:
-
-        * connectors/dds4ccm/tests/PSLSampleLost/Base/PSL_SampleLost_Base.idl:
-
-        * connectors/dds4ccm/tests/PSLSampleLost/Connector/PSL_SampleLost_Connector.idl:
-        * connectors/dds4ccm/tests/PSLSampleLost/Connector/PSL_SampleLost_Connector.mpc:
-
-        * connectors/dds4ccm/tests/PortUsage/Base/PortUsage_Test_Base.idl:
-
-        * connectors/dds4ccm/tests/PortUsage/EventConnector/PortUsageEvent_Connector.idl:
-        * connectors/dds4ccm/tests/PortUsage/EventConnector/PortUsageEvent_Connector.mpc:
-
-        * connectors/dds4ccm/tests/PortUsage/StateConnector/PortUsageState_Connector.idl:
-        * connectors/dds4ccm/tests/PortUsage/StateConnector/PortUsageState_Connector.mpc:
-
-        * connectors/dds4ccm/tests/Proxies/ReadWrite/Base/Proxy_RW_Test_Base.idl:
-
-        * connectors/dds4ccm/tests/Proxies/ReadWrite/Connector/Proxy_RW_Test_Connector.idl:
-        * connectors/dds4ccm/tests/Proxies/ReadWrite/Connector/Proxy_RW_Test_Connector.mpc:
-
-        * connectors/dds4ccm/tests/QosProfile/Base/QosProfile_Test_Base.idl:
-
-        * connectors/dds4ccm/tests/QosProfile/Connector/QosProfile_Test_Connector.idl:
-        * connectors/dds4ccm/tests/QosProfile/Connector/QosProfile_Test_Connector.mpc:
-
-        * connectors/dds4ccm/tests/QueryCondition/Different/Base/Different_Test_Base.idl:
-
-        * connectors/dds4ccm/tests/QueryCondition/Different/Connector/Different_Test_Connector.idl:
-        * connectors/dds4ccm/tests/QueryCondition/Different/Connector/Different_Test_Connector.mpc:
-
-        * connectors/dds4ccm/tests/QueryCondition/EventListener/Base/QCLE_Test_Base.idl:
-
-        * connectors/dds4ccm/tests/QueryCondition/EventListener/Connector/QCLE_Test_Connector.idl:
-        * connectors/dds4ccm/tests/QueryCondition/EventListener/Connector/QCLE_Test_Connector.mpc:
-
-        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Base/ReadGet_Test_Base.idl:
-
-        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Connector/ReadGet_Test_Connector.idl:
-        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Connector/ReadGet_Test_Connector.mpc:
-
-        * connectors/dds4ccm/tests/QueryCondition/StateListener/Base/QCLS_Test_Base.idl:
-
-        * connectors/dds4ccm/tests/QueryCondition/StateListener/Connector/QCLS_Test_Connector.idl:
-        * connectors/dds4ccm/tests/QueryCondition/StateListener/Connector/QCLS_Test_Connector.mpc:
-
-        * connectors/dds4ccm/tests/QueryCondition/TwoListeners/Base/QCTL_Test_Base.idl:
-
-        * connectors/dds4ccm/tests/QueryCondition/TwoListeners/Connector/QCTL_Test_Connector.idl:
-        * connectors/dds4ccm/tests/QueryCondition/TwoListeners/Connector/QCTL_Test_Connector.mpc:
-
-        * connectors/dds4ccm/tests/QueryCondition/TwoQueries/Base/QCTQ_Test_Base.idl:
-
-        * connectors/dds4ccm/tests/QueryCondition/TwoQueries/Connector/QCTQ_Test_Connector.idl:
-        * connectors/dds4ccm/tests/QueryCondition/TwoQueries/Connector/QCTQ_Test_Connector.mpc:
-
-        * connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany/Base/QCTQM_Test_Base.idl:
-
-        * connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany/Connector/QCTQM_Test_Connector.idl:
-        * connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany/Connector/QCTQM_Test_Connector.mpc:
-
-        * connectors/dds4ccm/tests/Reader/Base/Reader_Test_Base.idl:
-
-        * connectors/dds4ccm/tests/Reader/Connector/Reader_Test_Connector.idl:
-        * connectors/dds4ccm/tests/Reader/Connector/Reader_Test_Connector.mpc:
-
-        * connectors/dds4ccm/tests/ResetTopic/ReadGet/Base/RG_ResetTopic_Base.idl:
-
-        * connectors/dds4ccm/tests/ResetTopic/ReadGet/Connector/RG_ResetTopic_Connector.idl:
-        * connectors/dds4ccm/tests/ResetTopic/ReadGet/Connector/RG_ResetTopic_Connector.mpc:
-
-        * connectors/dds4ccm/tests/ResetTopic/ToEmpty/Base/TE_ResetTopic_Base.idl:
-
-        * connectors/dds4ccm/tests/ResetTopic/ToEmpty/Connector/TE_ResetTopic_Connector.idl:
-        * connectors/dds4ccm/tests/ResetTopic/ToEmpty/Connector/TE_ResetTopic_Connector.mpc:
-
-        * connectors/dds4ccm/tests/ResetTopic/TooLong/Base/TL_ResetTopic_Base.idl:
-
-        * connectors/dds4ccm/tests/ResetTopic/TooLong/Connector/TL_ResetTopic_Connector.idl:
-        * connectors/dds4ccm/tests/ResetTopic/TooLong/Connector/TL_ResetTopic_Connector.mpc:
-
-        * connectors/dds4ccm/tests/ResetTopic/UpdateListen/Base/UL_ResetTopic_Base.idl:
-
-        * connectors/dds4ccm/tests/ResetTopic/UpdateListen/Connector/UL_ResetTopic_Connector.idl:
-        * connectors/dds4ccm/tests/ResetTopic/UpdateListen/Connector/UL_ResetTopic_Connector.mpc:
-
-        * connectors/dds4ccm/tests/ResetTopic/WriteListen/Base/WL_ResetTopic_Base.idl:
-
-        * connectors/dds4ccm/tests/ResetTopic/WriteListen/Connector/WL_ResetTopic_Connector.idl:
-        * connectors/dds4ccm/tests/ResetTopic/WriteListen/Connector/WL_ResetTopic_Connector.mpc:
-
-        * connectors/dds4ccm/tests/SLDisabled/Base/SL_Disabled_Base.idl:
-
-        * connectors/dds4ccm/tests/SLDisabled/Connector/SL_Disabled_Connector.idl:
-        * connectors/dds4ccm/tests/SLDisabled/Connector/SL_Disabled_Connector.mpc:
-
-        * connectors/dds4ccm/tests/SLDisabled/Receiver/SL_Disabled_Receiver_exec.cpp:
-
-        * connectors/dds4ccm/tests/SLManyByMany/Base/SL_ManyByMany_Base.idl:
-
-        * connectors/dds4ccm/tests/SLManyByMany/Connector/SL_ManyByMany_Connector.idl:
-        * connectors/dds4ccm/tests/SLManyByMany/Connector/SL_ManyByMany_Connector.mpc:
-
-        * connectors/dds4ccm/tests/SLOneByOne/Base/SL_OneByOne_Base.idl:
-
-        * connectors/dds4ccm/tests/SLOneByOne/Connector/SLOneByOne_Connector.mpc:
-        * connectors/dds4ccm/tests/SLOneByOne/Connector/SL_OneByOne_Connector.idl:
-
-        * connectors/dds4ccm/tests/SetConnectorAttributes/Base/SetConnectorAttribute_Base.idl:
-
-        * connectors/dds4ccm/tests/SetConnectorAttributes/Component/SetConnectorAttribute_Component.mpc:
-
-        * connectors/dds4ccm/tests/SetConnectorAttributes/Connector/SetConnectorAttribute_Connector.idl:
-        * connectors/dds4ccm/tests/SetConnectorAttributes/Connector/SetConnectorAttribute_Connector.mpc:
-
-        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Base/Base.idl:
-
-        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Component/Component.mpc:
-
-        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Connector1/Connector1.idl:
-        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Connector1/Connector1.mpc:
-
-        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Connector2/Connector2.idl:
-        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Connector2/Connector2.mpc:
-
-        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Connector3/Connector3.idl:
-        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Connector3/Connector3.mpc:
-
-        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDomainID/Base/Base.idl:
-
-        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDomainID/Component/Component.mpc:
-
-        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDomainID/Connector1/Connector1.idl:
-        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDomainID/Connector1/Connector1.mpc:
-
-        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDomainID/Connector2/Connector2.idl:
-        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDomainID/Connector2/Connector2.mpc:
-
-        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDomainID/Connector3/Connector3.idl:
-        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDomainID/Connector3/Connector3.mpc:
-
-        * connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/Base/Base.idl:
-
-        * connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/Component/Component.mpc:
-
-        * connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/Connector/Connector.idl:
-        * connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/Connector/Connector.mpc:
-
-        * connectors/dds4ccm/tests/State_Connection_Test/Base/State_Connection_Test_Base.idl:
-
-        * connectors/dds4ccm/tests/State_Connection_Test/Connector/State_Connection_Test_Connector.idl:
-        * connectors/dds4ccm/tests/State_Connection_Test/Connector/State_Connection_Test_Connector.mpc:
-
-        * connectors/dds4ccm/tests/TopicName/Base/TopicName_Test_Base.idl:
-
-        * connectors/dds4ccm/tests/TopicName/Connector/TopicName_Test_Connector.idl:
-        * connectors/dds4ccm/tests/TopicName/Connector/TopicName_Test_Connector.mpc:
-
-        * connectors/dds4ccm/tests/TwoTopics/Base/TwoTopics_Base.idl:
-
-        * connectors/dds4ccm/tests/TwoTopics/Connector/TwoTopics_Connector.idl:
-        * connectors/dds4ccm/tests/TwoTopics/Connector/TwoTopics_Connector.mpc:
-
-        * connectors/dds4ccm/tests/TwoTopicsDifferentNs/Connector/Connector.idl:
-        * connectors/dds4ccm/tests/TwoTopicsDifferentNs/Connector/Connector.mpc:
-
-        * connectors/dds4ccm/tests/TwoTopicsDifferentNs/Goodbye/HelloGoodbye.idl:
-
-        * connectors/dds4ccm/tests/TwoTopicsDifferentNs/Hello/HelloGoodbye.idl:
-
-        * connectors/dds4ccm/tests/UnkeyedSamples/Base/Unkeyed_Test_Base.idl:
-
-        * connectors/dds4ccm/tests/UnkeyedSamples/Connector/Unkeyed_Test_Connector.idl:
-        * connectors/dds4ccm/tests/UnkeyedSamples/Connector/Unkeyed_Test_Connector.mpc:
-
-        * connectors/dds4ccm/tests/UnkeyedWriter/Base/Writer_Base.idl:
-
-        * connectors/dds4ccm/tests/UnkeyedWriter/Connector/Writer_Connector.idl:
-        * connectors/dds4ccm/tests/UnkeyedWriter/Connector/Writer_Connector.mpc:
-
-        * connectors/dds4ccm/tests/Updater/Base/Updater_Base.idl:
-
-        * connectors/dds4ccm/tests/Updater/Connector/Updater_Connector.idl:
-        * connectors/dds4ccm/tests/Updater/Connector/Updater_Connector.mpc:
-
-        * connectors/dds4ccm/tests/UserdataCopyCount/Base/UCC_Test_Base.idl:
-
-        * connectors/dds4ccm/tests/UserdataCopyCount/Connector/UCC_Test_Connector.idl:
-        * connectors/dds4ccm/tests/UserdataCopyCount/Connector/UCC_Test_Connector.mpc:
-
-        * connectors/dds4ccm/tests/VariousTopicsEvent/Base/VTopic_Base.idl:
-
-        * connectors/dds4ccm/tests/VariousTopicsEvent/Conn_Array/VT_Array_Connector.idl:
-        * connectors/dds4ccm/tests/VariousTopicsEvent/Conn_Array/VT_Array_Connector.mpc:
-
-        * connectors/dds4ccm/tests/VariousTopicsEvent/Conn_Seq/VT_Seq_Connector.idl:
-        * connectors/dds4ccm/tests/VariousTopicsEvent/Conn_Seq/VT_Seq_Connector.mpc:
-
-        * connectors/dds4ccm/tests/VariousTopicsEvent/Conn_String/VT_String_Connector.idl:
-        * connectors/dds4ccm/tests/VariousTopicsEvent/Conn_String/VT_String_Connector.mpc:
-
-        * connectors/dds4ccm/tests/VariousTopicsEvent/Conn_Union/VT_Union_Connector.idl:
-        * connectors/dds4ccm/tests/VariousTopicsEvent/Conn_Union/VT_Union_Connector.mpc:
-
-        * connectors/dds4ccm/tests/VariousTopicsEvent/Connector/VTopic_Connector.idl:
-        * connectors/dds4ccm/tests/VariousTopicsEvent/Connector/VTopic_Connector.mpc:
-
-        * connectors/dds4ccm/tests/VariousTopicsState/Base/VTopics_Base.idl:
-
-        * connectors/dds4ccm/tests/VariousTopicsState/Conn_Array/VTS_Array_Connector.idl:
-        * connectors/dds4ccm/tests/VariousTopicsState/Conn_Array/VTS_Array_Connector.mpc:
-
-        * connectors/dds4ccm/tests/VariousTopicsState/Conn_Seq/VTS_Seq_Connector.idl:
-        * connectors/dds4ccm/tests/VariousTopicsState/Conn_Seq/VTS_Seq_Connector.mpc:
-
-        * connectors/dds4ccm/tests/VariousTopicsState/Conn_String/VTS_String_Connector.idl:
-        * connectors/dds4ccm/tests/VariousTopicsState/Conn_String/VTS_String_Connector.mpc:
-
-        * connectors/dds4ccm/tests/VariousTopicsState/Conn_Union/VTS_Union_Connector.idl:
-        * connectors/dds4ccm/tests/VariousTopicsState/Conn_Union/VTS_Union_Connector.mpc:
-
-        * connectors/dds4ccm/tests/VariousTopicsState/Conn_Valuetype/VTS_Valuetype_Connector.mpc:
-
-        * connectors/dds4ccm/tests/VariousTopicsState/Connector/VTopics_Connector.idl:
-        * connectors/dds4ccm/tests/VariousTopicsState/Connector/VTopics_Connector.mpc:
-
-        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Receiver_comp/src/Shapes_Receiver_comp.mpc:
-
-        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Sender_comp/src/Shapes_Sender_comp.mpc:
-
-        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ports/Shapes_ShapeType_conn.idl:
-        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ports/Shapes_ShapeType_conn.mpc:
-        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ports/Shapes_ShapeType_msg.idl:
-
-        * connectors/tests/AMIDDS/Base/AmiDds_DDS.idl:
-
-        * connectors/tests/AMIDDS/Connector/AmiDds_Connector.idl:
-
-        * tests/IDL3_to_XMI/IDL2XMI_Test/IDL2XMI_Test.mpc:
-        * tests/IDL3_to_XMI/IDL2XMI_Test/XML_Helper.h:
-        * tests/IDL3_to_XMI/IDL2XMI_Test/XML_Helper.cpp:
-        * tests/IDL3_to_XMI/IDL2XMI_Test/xmlvalidator.cpp:
-
-        * tools/IDL3_to_XMI/IDL3_TO_XMI.mpc:
-        * tools/IDL3_to_XMI/IDL3_to_XMI_visitor.h:
-        * tools/IDL3_to_XMI/IDL3_to_XMI_visitor.cpp:
-          Added support for openDDS.
+          Merged DDS4CCM_OpenDDS branch
+
+          commit 4470f90d57735e51dc7d38e1d22ecf3b7ff34a92
+          Author: Marcel Smit <msmit@remedy.nl>
+          Date:   Tue May 15 14:05:24 2012 +0200
+
+                  * CIAO/MPC/config/dds4ccm_base.mpb:
+                  * CIAO/MPC/config/dds4ccm_impl.mpb:
+                    Added base projects in order to fix unresolved
+                    externals on windows.
+
+          commit 69fdc95b7e5ed5f2a79b4ae7cd4e285839f65f23
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Mon May 14 20:25:37 2012 +0200
+
+                  * CIAO/connectors/dds4ccm/examples/Shapes/Sender/Shapes_Sender_exec.cpp:
+                  * CIAO/connectors/dds4ccm/tests/DDSEntity/Receiver/Writer_Receiver.mpc:
+                  * CIAO/connectors/dds4ccm/tests/SetConnectorAttributes/Component/SetConnectorAttribute_Component.mpc:
+                    Use correct requires
+
+          commit 767ef7334d305c4ca189a51805329afc93ca39d8
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Mon May 14 07:46:40 2012 +0200
+
+                  * CIAO/connectors/dds4ccm/tests/PSAT/ccm_dds_psat.mpc:
+                  * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Connector1/Connector1.mpc:
+                  * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Connector2/Connector2.mpc:
+                  * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Connector3/Connector3.mpc:
+                  * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDomainID/Connector1/Connector1.mpc:
+                  * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDomainID/Connector2/Connector2.mpc:
+                  * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDomainID/Connector3/Connector3.mpc:
+                    Added missing after statements
+
+          commit 847866aae0f053bfbb1ffd4edaf7274b6e2e9bab
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Sun May 13 19:36:20 2012 +0200
+
+                  * CIAO/connectors/dds4ccm/performance-tests/Throughput/SecConnector/Throughput_Sec_Connector.mpc:
+                    Added missing after
+
+          commit 05da116efe0de5b68abfecb07b48aa59a93ec946
+          Author: Marcel Smit <msmit@remedy.nl>
+          Date:   Fri May 11 16:28:46 2012 +0200
+
+                  * CIAO/connectors/dds4ccm/performance-tests/DDSLatency/DDS_Receiver/DDS_Receiver.mpc:
+                    CIAO_DDS4CCM_NDDS was not set correctly. Changed base project for that.
+
+          commit 0931cdcf6642d963880d54c51b966d4c10d5da89
+          Author: Marcel Smit <msmit@remedy.nl>
+          Date:   Fri May 11 14:33:51 2012 +0200
+
+                  * CIAO/connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ports/Shapes_ShapeType_conn.idl:
+                    Added sequence definition
+
+          commit 9331312287c935480baf8f3ac0f84762b2243482
+          Author: Marcel Smit <msmit@remedy.nl>
+          Date:   Fri May 11 14:17:40 2012 +0200
+
+                  * CIAO/tests/IDL3_to_XMI/IDL2XMI_Test/XML_Helper.cpp:
+                  * CIAO/tests/IDL3_to_XMI/IDL2XMI_Test/XML_Helper.h:
+                  * CIAO/tests/IDL3_to_XMI/IDL2XMI_Test/xmlvalidator.cpp:
+                  * CIAO/tools/IDL3_to_XMI/IDL3_to_XMI_visitor.cpp:
+                  * CIAO/tools/IDL3_to_XMI/IDL3_to_XMI_visitor.h:
+                    Fixed compile errors due to XML utils renaming
+
+          commit 5efbb98bed19986fe31c661e649c88f2324fbc0e
+          Author: Marcel Smit <msmit@remedy.nl>
+          Date:   Fri May 11 08:54:30 2012 +0200
+
+                  * CIAO/connectors/dds4ccm/performance-tests/Throughput/Connector/Throughput_Connector.mpc:
+                    Added after.
+
+                  * DAnCE/tools/XML/XML_Typedefs.cpp:
+                  * DAnCE/tools/XML/XML_Typedefs.h:
+                  * DAnCE/tools/XML/XML_Utils_Export.h:
+                    Added due to rename actions
+
+          commit 6dab97ffb04eb583d5f0dc876b38ae4034e0b066
+          Author: Marcel Smit <msmit@remedy.nl>
+          Date:   Thu May 10 07:56:10 2012 +0200
+
+                  * CIAO/tests/IDL3_to_XMI/IDL2XMI_Test/IDL2XMI_Test.mpc:
+                  * CIAO/tools/IDL3_to_XMI/IDL3_TO_XMI.mpc:
+                    Renamed dance_xml_utils into xml_utils
+
+          commit 081664cae99505b17cd31e6774b08bd5f05a998c
+          Author: Marcel Smit <msmit@remedy.nl>
+          Date:   Wed May 9 13:18:52 2012 +0200
+
+                  * CIAO/connectors/dds4ccm/performance-tests/Latency/Connector/LatencyTT_Test_Connector.mpc:
+                    Fixed compile issues due to a missing after
+
+          commit 6d23412946c4af026d07eee8fa12ae4ddb076056
+          Author: Marcel Smit <msmit@remedy.nl>
+          Date:   Tue May 8 20:16:19 2012 +0200
+
+                  * CIAO/connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Base/I2C_ShapeType.mpc:
+                  * CIAO/connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Common/I2C_Shapes_Common.mpc:
+                  * CIAO/connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Receiver/I2C_Shapes_Receiver.mpc:
+                  * CIAO/connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Sender/I2C_Shapes_Sender.mpc:
+                    Disabled for open DDS
+
+          commit 8add902213001fb14a67bfea22fc0d8008348df5
+          Author: Marcel Smit <msmit@remedy.nl>
+          Date:   Mon May 7 09:24:20 2012 +0200
+
+                  * CIAO/connectors/dds4ccm/tests/InstanceHandle/Sender/Writer_Sender.mpc:
+                  * CIAO/connectors/dds4ccm/tests/SetConnectorAttributes/Component/SetConnectorAttribute_Component.mpc:
+                    The executor projects require dds4ccm_ndds
+
+          commit 21fd72b48afd93d99b2d03c7d184efc9265a6b25
+          Author: Marcel Smit <msmit@remedy.nl>
+          Date:   Mon May 7 08:59:09 2012 +0200
+
+                  * CIAO/connectors/dds4ccm/examples/Large_Deployment/DDS_Pub/DDS_Pub.mpc:
+                  * CIAO/connectors/dds4ccm/examples/Large_Deployment/DDS_Sub/DDS_Sub.mpc:
+                    Fixed compile issues due to a lacking after
+
+          commit 5a9425df311d7f805e6933d074d791498b81d072
+          Author: Marcel Smit <msmit@remedy.nl>
+          Date:   Tue May 1 18:32:44 2012 +0200
+
+                  * CIAO/connectors/dds4ccm/tests/DDSEntity/Receiver/Writer_Receiver.mpc:
+                  * CIAO/connectors/dds4ccm/tests/DDSEntity/Sender/Writer_Sender.mpc:
+                    Disabled executor project since RTI DDS is used in these tests.
+
+          commit 3016a41bbd84a8f2fd6e41ce8f4c4d50ad1c0240
+          Author: Marcel Smit <msmit@remedy.nl>
+          Date:   Tue May 1 18:28:51 2012 +0200
+
+                  * CIAO/connectors/dds4ccm/examples/Large_Deployment/Connector/Large_Connector.mpc:
+                    Fixed an after
+
+          commit 4ea8bea0051379385a6761ca320fca2d961e129a
+          Author: Marcel Smit <msmit@remedy.nl>
+          Date:   Tue May 1 10:31:19 2012 +0200
+
+                  * CIAO/connectors/dds4ccm/performance-tests/Throughput/Connector/Throughput_Connector.idl:
+                  * CIAO/connectors/dds4ccm/performance-tests/Throughput/Receiver/Throughput_Receiver.idl:
+                  * CIAO/connectors/dds4ccm/performance-tests/Throughput/SecConnector/Throughput_Sec_Connector.idl:
+                  * CIAO/connectors/dds4ccm/performance-tests/Throughput/Sender/Throughput_Sender.idl:
+                  * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Component/Component.idl:
+                  * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Connector1/Connector1.idl:
+                  * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Connector2/Connector2.idl:
+                  * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Connector3/Connector3.idl:
+                  * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDomainID/Component/Component.idl:
+                  * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDomainID/Connector1/Connector1.idl:
+                  * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDomainID/Connector2/Connector2.idl:
+                  * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDomainID/Connector3/Connector3.idl:
+                    Reverted the last changes since the openDDS idl compiler now generates an
+                    include guard.
+
+          commit c86fedea982747310fa4a7dd2329f1674dafd12c
+          Author: Marcel Smit <msmit@remedy.nl>
+          Date:   Tue May 1 09:37:14 2012 +0200
+
+                  * CIAO/connectors/dds4ccm/performance-tests/DDSLatency/DDS_Sender/DDS_Sender.mpc:
+                    Do not build for openDDS
+
+          commit 396f2e3891f0df6e9258ce99c3eb5062fafce8f6
+          Author: Marcel Smit <msmit@remedy.nl>
+          Date:   Tue May 1 09:35:33 2012 +0200
+
+                  * CIAO/connectors/dds4ccm/performance-tests/Throughput/Connector/Throughput_Connector.idl:
+                  * CIAO/connectors/dds4ccm/performance-tests/Throughput/Receiver/Throughput_Receiver.idl:
+                  * CIAO/connectors/dds4ccm/performance-tests/Throughput/SecConnector/Throughput_Sec_Connector.idl:
+                  * CIAO/connectors/dds4ccm/performance-tests/Throughput/Sender/Throughput_Sender.idl:
+                    Prevent the inclusion of the TypeSupport.idl twice.
+
+          commit 88ab89cb93654070ebc6f1a0a14e7b88e642a2b2
+          Author: Marcel Smit <msmit@remedy.nl>
+          Date:   Tue May 1 08:55:02 2012 +0200
+
+                  * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Base/Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Component/Component.idl:
+                  * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Component/Component.mpc:
+                  * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Connector1/Connector1.idl:
+                  * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Connector2/Connector2.idl:
+                  * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Connector3/Connector3.idl:
+                  * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDomainID/Component/Component.idl:
+                  * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDomainID/Component/Component.mpc:
+                  * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDomainID/Connector1/Connector1.idl:
+                  * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDomainID/Connector2/Connector2.idl:
+                  * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDomainID/Connector3/Connector3.idl:
+                  * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/Component/Component.mpc:
+                    Prevent including BaseTypeSupport twice. Also disabled Component executors to be compiled on
+                    opendds
+
+          commit 29d038436fe7e79156b8e5cc4ef6f93f58a5dc04
+          Author: Marcel Smit <msmit@remedy.nl>
+          Date:   Fri Apr 27 18:11:59 2012 +0200
+
+                  * CIAO/connectors/tests/AMIDDS/Connector/AmiDds_Connector.idl:
+                    Added support for openDDS
+
+          commit 5cae521c342abb234e65342c98923f6fe4d48df2
+          Author: Marcel Smit <msmit@remedy.nl>
+          Date:   Fri Apr 27 18:08:02 2012 +0200
+
+                  * CIAO/connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Base/I2C_ShapeType.mpc:
+                    Turned off for openDDS for now
+
+                  * CIAO/connectors/dds4ccm/examples/Hello/Connector/Hello_Connector.idl:
+                  * CIAO/connectors/dds4ccm/examples/Hello/Connector/Hello_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/examples/Large_Deployment/Connector/Large_Connector.idl:
+                  * CIAO/connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector.idl:
+                  * CIAO/connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector.mpc:
+                    Added support for openDDS
+
+          commit 2ff1b8641ea2087c45f12c87b326e46daf1d5b1f
+          Author: Marcel Smit <msmit@remedy.nl>
+          Date:   Fri Apr 27 17:50:05 2012 +0200
+
+                  * CIAO/connectors/dds4ccm/performance-tests/DDSLatency/Base/Latency_Base.mpc:
+                  * CIAO/connectors/dds4ccm/performance-tests/DDSLatency/DDS_Receiver/DDS_Receiver.mpc:
+                  * CIAO/connectors/dds4ccm/performance-tests/DDSLatency/DDS_Receiver/Latency_Receiver.cpp:
+                  * CIAO/connectors/dds4ccm/performance-tests/DDSLatency/DDS_Sender/DDS_Sender.mpc:
+                  * CIAO/connectors/dds4ccm/performance-tests/DDSThroughput/Base/Throughput_Base.mpc:
+                  * CIAO/connectors/dds4ccm/performance-tests/DDSThroughput/DDS_Receiver/DDS_Receiver.mpc:
+                  * CIAO/connectors/dds4ccm/performance-tests/DDSThroughput/DDS_Sender/DDS_Sender.mpc:
+                    Disable these projects for now.
+
+                  * CIAO/connectors/dds4ccm/performance-tests/Keyed/Connector/Perf_Keyed_Test_Connector.idl:
+                  * CIAO/connectors/dds4ccm/performance-tests/Keyed/Connector/Perf_Keyed_Test_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/performance-tests/Latency/Connector/LatencyTT_Test_Connector.idl:
+                  * CIAO/connectors/dds4ccm/performance-tests/Throughput/Connector/Throughput_Connector.idl:
+                  * CIAO/connectors/dds4ccm/performance-tests/Throughput/SecConnector/Throughput_Sec_Connector.idl:
+                    Added support for openDDS
+
+          commit 6fefa31cf3b6d85c16989272375181db07314668
+          Author: Marcel Smit <msmit@remedy.nl>
+          Date:   Fri Apr 27 16:51:37 2012 +0200
+
+                  * CIAO/connectors/dds4ccm/tests/CSLDeadline/Connector/CSL_DeadlineTest_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/CSLDeadline/Connector/CSL_DeadlineTest_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/CSLQoS/Connector/CSL_QoSTest_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/CSLQoS/Connector/CSL_QoSTest_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/CSLSampleRejected/Connector/CSL_SRTest_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/CSLSampleRejected/Connector/CSL_SRTest_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/CSLUnexpStat/Connector/CSL_USTest_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/CSLUnexpStat/Connector/CSL_USTest_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/CoherentWriter/Connector/CoherentWrite_Test_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/CoherentWriter/Connector/CoherentWrite_Test_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/CollocatedPubSub/Connector/Collocated_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/CollocatedPubSub/Connector/Collocated_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/ConnectorFilesInDiffDir/DiffDir_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/ConnectorFilesInDiffDir/DiffDir_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/CFTNamesClash/Connector/CFT_Test_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/CFTNamesClash/Connector/CFT_Test_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/EventListener/Connector/CFTLE_Test_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/EventListener/Connector/CFTLE_Test_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/Exception/Connector/Exception_Test_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/Exception/Connector/Exception_Test_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/Connector/ReadGet_Test_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/Connector/ReadGet_Test_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/StateListener/Connector/CFTLS_Test_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/StateListener/Connector/CFTLS_Test_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/DDSEntity/Connector/Writer_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/DDSEntity/Connector/Writer_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/Derived/Derived_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/Derived/Derived_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/DoubleNestedModule/Connector/DNM_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/DoubleNestedModule/Connector/DNM_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/Event_Connection_Test/Connector/Event_Connection_Test_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/Event_Connection_Test/Connector/Event_Connection_Test_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/FixedSizeStruct/EventConnector/Connector/FSS_Event_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/FixedSizeStruct/EventConnector/Connector/FSS_Event_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/FixedSizeStruct/StateConnector/Connector/FSS_State_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/FixedSizeStruct/StateConnector/Connector/FSS_State_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/GetComponent/Event/Connector/GCE_Test_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/GetComponent/Event/Connector/GCE_Test_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/GetComponent/State/Connector/GCS_Test_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/GetComponent/State/Connector/GCS_Test_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/Getter/Connector/Getter_Test_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/Getter/Connector/Getter_Test_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/HomeTest/Connector/HomeT_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/HomeTest/Connector/HomeT_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/IDL_Test/Connector/IDL_Test_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/IDL_Test/Connector/IDL_Test_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/InstanceHandle/Connector/Writer_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/InstanceHandle/Connector/Writer_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/KeyedSamples/Connector/Keyed_Test_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/KeyedSamples/Connector/Keyed_Test_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/KeyedWriter/Connector/Writer_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/KeyedWriter/Connector/Writer_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/LateBinding/ReadGet/Connector/RG_LateBinding_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/LateBinding/ReadGet/Connector/RG_LateBinding_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/LateBinding/UpdateWrite/Connector/WU_LateBinding_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/LateBinding/UpdateWrite/Connector/WU_LateBinding_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/ListenManyByMany/Connector/LMBM_Test_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/ListenManyByMany/Connector/LMBM_Test_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/ListenNotEnabled/Connector/LNE_Test_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/ListenNotEnabled/Connector/LNE_Test_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/ListenOneByOne/Connector/LOBO_Test_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/ListenOneByOne/Connector/LOBO_Test_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/MemLeakDetection/Event_MemLeakDetection_Test/Connector/Event_MemLeakDetection_Test_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/MemLeakDetection/Event_MemLeakDetection_Test/Connector/Event_MemLeakDetection_Test_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/MemLeakDetection/State_MemLeakDetection_Test/Connector/State_MemLeakDetection_Test_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/MemLeakDetection/State_MemLeakDetection_Test/Connector/State_MemLeakDetection_Test_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/MemLeakDetection/TypeRegistration/Connector/TypeRegistration_Test_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/MemLeakDetection/TypeRegistration/Connector/TypeRegistration_Test_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/MultiTopic/Connector/MultiTopic_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/MultiTopic/Connector/MultiTopic_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/NoModule/NoModule_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/NoModule/NoModule_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/NonChangeableAttribute/Connector/NonChangeable_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/NonChangeableAttribute/Connector/NonChangeable_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/On_Inconsistent_Topic/ReceiverConnector/OIT_Receiver_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/On_Inconsistent_Topic/ReceiverConnector/OIT_Receiver_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/On_Inconsistent_Topic/SenderConnector/OIT_Sender_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/On_Inconsistent_Topic/SenderConnector/OIT_Sender_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/OneFile/Multiple/OFM_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/OneFile/Multiple/OFM_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/OneFile/Single/OneFile_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/OneFile/Single/OneFile_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/PSAT/PSAT_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/PSLDeadline/Connector/PSL_DeadlineTest_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/PSLDeadline/Connector/PSL_DeadlineTest_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/PSLSampleLost/Connector/PSL_SampleLost_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/PSLSampleLost/Connector/PSL_SampleLost_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/PortUsage/EventConnector/PortUsageEvent_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/PortUsage/EventConnector/PortUsageEvent_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/PortUsage/StateConnector/PortUsageState_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/PortUsage/StateConnector/PortUsageState_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/Proxies/ReadWrite/Connector/Proxy_RW_Test_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/Proxies/ReadWrite/Connector/Proxy_RW_Test_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/QosProfile/Connector/QosProfile_Test_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/QosProfile/Connector/QosProfile_Test_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/QueryCondition/Different/Connector/Different_Test_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/QueryCondition/Different/Connector/Different_Test_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/QueryCondition/EventListener/Connector/QCLE_Test_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/QueryCondition/EventListener/Connector/QCLE_Test_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/QueryCondition/ReadGet/Connector/ReadGet_Test_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/QueryCondition/ReadGet/Connector/ReadGet_Test_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/QueryCondition/StateListener/Connector/QCLS_Test_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/QueryCondition/StateListener/Connector/QCLS_Test_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/QueryCondition/TwoListeners/Connector/QCTL_Test_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/QueryCondition/TwoListeners/Connector/QCTL_Test_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/QueryCondition/TwoQueries/Connector/QCTQ_Test_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/QueryCondition/TwoQueries/Connector/QCTQ_Test_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany/Connector/QCTQM_Test_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany/Connector/QCTQM_Test_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/Reader/Connector/Reader_Test_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/Reader/Connector/Reader_Test_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/ResetTopic/ReadGet/Connector/RG_ResetTopic_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/ResetTopic/ReadGet/Connector/RG_ResetTopic_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/ResetTopic/ToEmpty/Connector/TE_ResetTopic_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/ResetTopic/ToEmpty/Connector/TE_ResetTopic_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/ResetTopic/TooLong/Connector/TL_ResetTopic_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/ResetTopic/TooLong/Connector/TL_ResetTopic_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/ResetTopic/UpdateListen/Connector/UL_ResetTopic_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/ResetTopic/UpdateListen/Connector/UL_ResetTopic_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/ResetTopic/WriteListen/Connector/WL_ResetTopic_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/ResetTopic/WriteListen/Connector/WL_ResetTopic_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/SLDisabled/Connector/SL_Disabled_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/SLDisabled/Connector/SL_Disabled_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/SLManyByMany/Connector/SL_ManyByMany_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/SLManyByMany/Connector/SL_ManyByMany_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/SLOneByOne/Connector/SLOneByOne_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/SLOneByOne/Connector/SL_OneByOne_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/SetConnectorAttributes/Connector/SetConnectorAttribute_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/SetConnectorAttributes/Connector/SetConnectorAttribute_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Connector1/Connector1.idl:
+                  * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Connector2/Connector2.idl:
+                  * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Connector3/Connector3.idl:
+                  * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDomainID/Connector1/Connector1.idl:
+                  * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDomainID/Connector2/Connector2.idl:
+                  * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDomainID/Connector3/Connector3.idl:
+                  * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/Connector/Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/Connector/Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/State_Connection_Test/Connector/State_Connection_Test_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/State_Connection_Test/Connector/State_Connection_Test_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/TopicName/Connector/TopicName_Test_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/TopicName/Connector/TopicName_Test_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/TwoTopics/Connector/TwoTopics_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/TwoTopics/Connector/TwoTopics_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/TwoTopicsDifferentNs/Connector/Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/TwoTopicsDifferentNs/Connector/Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/UnkeyedSamples/Connector/Unkeyed_Test_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/UnkeyedSamples/Connector/Unkeyed_Test_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/UnkeyedWriter/Connector/Writer_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/UnkeyedWriter/Connector/Writer_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/Updater/Connector/Updater_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/Updater/Connector/Updater_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/UserdataCopyCount/Connector/UCC_Test_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/UserdataCopyCount/Connector/UCC_Test_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/VariousTopicsEvent/Conn_Array/VT_Array_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/VariousTopicsEvent/Conn_Array/VT_Array_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/VariousTopicsEvent/Conn_Seq/VT_Seq_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/VariousTopicsEvent/Conn_Seq/VT_Seq_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/VariousTopicsEvent/Conn_String/VT_String_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/VariousTopicsEvent/Conn_String/VT_String_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/VariousTopicsEvent/Conn_Union/VT_Union_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/VariousTopicsEvent/Conn_Union/VT_Union_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/VariousTopicsEvent/Connector/VTopic_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/VariousTopicsEvent/Connector/VTopic_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/VariousTopicsState/Conn_Array/VTS_Array_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/VariousTopicsState/Conn_Array/VTS_Array_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/VariousTopicsState/Conn_Seq/VTS_Seq_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/VariousTopicsState/Conn_Seq/VTS_Seq_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/VariousTopicsState/Conn_String/VTS_String_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/VariousTopicsState/Conn_String/VTS_String_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/VariousTopicsState/Conn_Union/VTS_Union_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/VariousTopicsState/Conn_Union/VTS_Union_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/VariousTopicsState/Conn_Valuetype/VTS_Valuetype_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/VariousTopicsState/Connector/VTopics_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/VariousTopicsState/Connector/VTopics_Connector.mpc:
+                    Updated in order to support openDDS.
+
+          commit 9e02fb8bf4fd99b815a13b2aa26819a3837aad8b
+          Author: Marcel Smit <msmit@remedy.nl>
+          Date:   Fri Apr 27 14:11:33 2012 +0200
+
+                  * CIAO/connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector.idl:
+                  * CIAO/connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tests/CoherentUpdater/Connector/CoherentUpdate_Test_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/CoherentUpdater/Connector/CoherentUpdate_Test_Connector.mpc:
+                  * CIAO/connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Receiver_comp/src/Shapes_Receiver_comp.mpc:
+                  * CIAO/connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Sender_comp/src/Shapes_Sender_comp.mpc:
+                  * CIAO/connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ports/Shapes_ShapeType_conn.idl:
+                  * CIAO/connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ports/Shapes_ShapeType_conn.mpc:
+                    Prototyped the idl changes for openDDS.
+
+          commit 6ce8768572a8340ee59521fc910f6b5023fe0cbf
+          Author: Marcel Smit <msmit@remedy.nl>
+          Date:   Fri Apr 27 11:15:33 2012 +0200
+
+                  * CIAO/connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ports/Shapes_ShapeType_conn.idl:
+                    Fixed compile issues.
+
+                  * TAO/TAO_IDL/be/be_global.cpp:
+                  * TAO/TAO_IDL/be/be_util.cpp:
+                  * TAO/TAO_IDL/be/be_visitor_native/native_ch.cpp:
+                  * TAO/TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+                  * TAO/TAO_IDL/be_include/be_global.h:
+                    Removed opendds_suffix from the code. In openDDS, suffix of
+                    the sequence is defined as 'Seq'.
+
+          commit d1c45d256337574e7779c088c5d0634be7d024d5
+          Author: Marcel Smit <msmit@remedy.nl>
+          Date:   Thu Apr 26 20:06:13 2012 +0200
+
+                  * CIAO/MPC/config/ndds_idltocpp.mpb:
+                  * CIAO/MPC/config/ndds_idltocpp_ts_defaults.mpb:
+                    Added -DDDS4CCM_NEEDS_SEQUENCES_DEFINED again.
+
+                  * CIAO/connectors/dds4ccm/examples/Shapes/Base/Shapes_Base.idl:
+                  * CIAO/connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector.idl:
+                    Fixed compile issues for both openDDS and RTI DDS.
+
+                  * CIAO/connectors/dds4ccm/idl/ccm_dds.idl:
+                    Removed comment.
+
+                  * TAO/TAO_IDL/be/be_visitor_arg_traits.cpp:
+                  * TAO/TAO_IDL/be/be_visitor_sequence/any_op_ch.cpp:
+                  * TAO/TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
+                  * TAO/TAO_IDL/be/be_visitor_sequence/cdr_op_ch.cpp:
+                  * TAO/TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+                  * TAO/TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+                  * TAO/TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+                    Don't check for which DDS vendor is used. Just check for the
+                    availability of the pragma.
+
+          commit eabcfd1ec51f753d925c3e224c853a598f69c7db
+          Author: Marcel Smit <msmit@remedy.nl>
+          Date:   Thu Apr 26 11:22:35 2012 +0200
+
+                  * CIAO/connectors/dds4ccm/examples/Shapes/Base/Shapes_Base.idl:
+                  * CIAO/connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector.idl:
+                  * CIAO/connectors/dds4ccm/idl/ccm_dds.idl:
+                  * CIAO/connectors/dds4ccm/impl/Updater_T.cpp:
+                  * CIAO/connectors/dds4ccm/impl/Updater_T.h:
+                  * CIAO/connectors/dds4ccm/impl/Writer_T.cpp:
+                  * CIAO/connectors/dds4ccm/impl/Writer_T.h:
+                  * TAO/TAO_IDL/be/be_visitor_arg_traits.cpp:
+                  * TAO/TAO_IDL/be/be_visitor_connector/connector_dds_ex_base.cpp:
+                  * TAO/TAO_IDL/be/be_visitor_connector/connector_dds_exh.cpp:
+                  * TAO/TAO_IDL/be/be_visitor_connector/connector_dds_exs.cpp:
+                  * TAO/TAO_IDL/be/be_visitor_sequence/any_op_ch.cpp:
+                  * TAO/TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
+                  * TAO/TAO_IDL/be/be_visitor_sequence/cdr_op_ch.cpp:
+                  * TAO/TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+                  * TAO/TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+                  * TAO/TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+                  * TAO/TAO_IDL/fe/lex.yy.cpp:
+                  * TAO/TAO_IDL/include/idl_global.h:
+                  * TAO/TAO_IDL/util/utl_global.cpp:
+                    Using a pragma to define the sequences for openDDS. If that pragma is
+                    set, the sequence is generated as it was declared as a native
+
+                  * CIAO/connectors/dds4ccm/tests/SLDisabled/Receiver/SL_Disabled_Receiver_exec.cpp:
+
+                  * CIAO/connectors/dds4ccm/impl/ConditionManager.cpp:
+                    Check whether read condition is there before detaching
+                    it from the waitset. Optimized logging in this case.
+
+          commit ca001a58956fd09ce0aee1ab614ed178c54cbe0a
+          Author: Marcel Smit <msmit@remedy.nl>
+          Date:   Wed Apr 25 12:39:30 2012 +0200
+
+                  * CIAO/MPC/config/dds4ccm_ts_default.mpb:
+                  * CIAO/connectors/dds4ccm/examples/Shapes/Base/Shapes_Base.idl:
+                  * CIAO/connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector.idl:
+                  * CIAO/connectors/dds4ccm/idl/ccm_dds.idl:
+                  * CIAO/connectors/dds4ccm/impl/Updater_T.cpp:
+                  * CIAO/connectors/dds4ccm/impl/Updater_T.h:
+                  * CIAO/connectors/dds4ccm/impl/Writer_T.cpp:
+                  * CIAO/connectors/dds4ccm/impl/Writer_T.h:
+                  * CIAO/connectors/dds4ccm/impl/ndds/WaitSet.cpp:
+                  * CIAO/connectors/dds4ccm/tests/KeyedSamples/Connector/Keyed_Test_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ports/Shapes_ShapeType_conn.idl:
+                  * CIAO/connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ports/Shapes_ShapeType_conn.mpc:
+                  * TAO/TAO_IDL/be/be_visitor_connector/connector_dds_ex_base.cpp:
+                  * TAO/TAO_IDL/be/be_visitor_connector/connector_dds_exh.cpp:
+                  * TAO/TAO_IDL/be/be_visitor_connector/connector_dds_exs.cpp:
+                    Work in progress: Refactoring of typedef sequence declarations. Seems that 'native'
+                    declaration does not work. Need to change openDDS, using a typedef declaration with
+                    a pragma.
+
+          commit 9002aa673f147c470cf6bc8a4c5de101dc01429f
+          Author: Marcel Smit <msmit@remedy.nl>
+          Date:   Wed Apr 25 09:11:46 2012 +0200
+
+                  * CIAO/MPC/config/dds4ccm.mpb:
+                  * CIAO/MPC/config/dds4ccm_base.mpb:
+                  * CIAO/MPC/config/dds4ccm_impl.mpb:
+                  * CIAO/MPC/config/dds4ccm_ts_default.mpb:
+                  * CIAO/MPC/config/ndds_idltocpp_ts_defaults.mpb:
+                  * CIAO/connectors/dds4ccm/examples/Hello/Base/Hello_Base.idl:
+                  * CIAO/connectors/dds4ccm/examples/Shapes/Base/Shapes_Base.idl:
+                  * CIAO/connectors/dds4ccm/idl/dds_rtf2_dcps.idl:
+                  * CIAO/connectors/dds4ccm/tests/HomeTest/Base/HomeT_Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/MultiTopic/Base/MultiTopic_Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/On_Inconsistent_Topic/Receiver/OIT_Test_Receiver_exec.cpp:
+                  * CIAO/connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ports/Shapes_ShapeType_conn.idl:
+                    REmoved splice support since that didn't work out until now.
+
+                  * CIAO/connectors/dds4ccm/idl/ndds/ndds_idltocpp_stub.mpc:
+                    Define the DDS4CCM_NEEDS_SEQUENCES_DEFINED in case RTI dds.
+
+                  * CIAO/connectors/dds4ccm/impl/Updater_T.cpp:
+                    Need to pass a valid handle to openDDS. Therefor looking up the
+                    handle first.
+
+          commit 53edc627ec77beca80f51ab5fd000dd17567c55f
+          Author: Marcel Smit <msmit@remedy.nl>
+          Date:   Tue Apr 24 15:51:18 2012 +0200
+
+                  * CIAO/connectors/dds4ccm/impl/ConditionManager.cpp:
+                    Implemented check_handle for openDDS.
+
+                  * CIAO/connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ports/Shapes_ShapeType_msg.idl:
+                    Removed splice support.
+
+                  * CIAO/connectors/tests/AMIDDS/Base/AmiDds_DDS.idl:
+                    Fixed compile errors regarding sequences in openDDS
+
+          commit 8622b7527aaa6185fcd8c1196f41fadefc50a025
+          Author: Marcel Smit <msmit@remedy.nl>
+          Date:   Mon Apr 23 15:38:42 2012 +0200
+
+                  * CIAO/connectors/dds4ccm/examples/Hello/Base/Hello_Base.idl:
+                  * CIAO/connectors/dds4ccm/examples/Large_Deployment/Common/Common.idl:
+                  * CIAO/connectors/dds4ccm/examples/Quoter/Base/Quoter_Base.idl:
+                    Fixed compile issues for openDDS. Using the DDS4CCM_NEEDS_SEQUENCES_DEFINED
+                    define around typedef sequence declarations.
+
+          commit 03b781dddd707522891d3c4a153ba3a15a5566f3
+          Author: Marcel Smit <msmit@remedy.nl>
+          Date:   Mon Apr 23 15:32:32 2012 +0200
+
+                  * CIAO/connectors/dds4ccm/performance-tests/DDSLatency/Base/Latency_Base.idl:
+                  * CIAO/connectors/dds4ccm/performance-tests/DDSThroughput/Base/Throughput_Base.idl:
+                    Removed ciao related, commented out code.
+
+                  * CIAO/connectors/dds4ccm/performance-tests/Keyed/Base/Perf_Keyed_Test_Base.idl:
+                  * CIAO/connectors/dds4ccm/performance-tests/Latency/Base/LatencyTT_Test_Base.idl:
+                  * CIAO/connectors/dds4ccm/performance-tests/Throughput/Base/Throughput_Base.idl:
+                    Fixed compile issues for openDDS
+
+          commit ddb71b5d1c9cef74d6e39d4204437841a0539045
+          Author: Marcel Smit <msmit@remedy.nl>
+          Date:   Mon Apr 23 14:43:30 2012 +0200
+
+                  * CIAO/connectors/dds4ccm/impl/ConditionManager.cpp:
+                    Fixed OpenDDS runtime error regarding initialization
+                    of return value.
+
+                  * CIAO/connectors/dds4ccm/impl/Updater_T.cpp:
+                    Fixed runtime error. Passing the lookup instance handle
+                    instead of the given instance handle.
+
+          commit 99091377ad5bbc4246faf234ceba4e6e19229843
+          Author: Marcel Smit <msmit@remedy.nl>
+          Date:   Mon Apr 23 12:15:39 2012 +0200
+
+                  * CIAO/connectors/dds4ccm/examples/Shapes/Base/Shapes_Base.idl:
+                  * CIAO/connectors/dds4ccm/idl/ccm_dds.idl:
+                  * CIAO/connectors/dds4ccm/tests/CSLDeadline/Base/CSL_DeadlineTest_Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/CSLQoS/Base/CSL_QoSTest_Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/CSLSampleRejected/Base/CSL_SRTest_Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/CSLUnexpStat/Base/CSL_USTest_Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/CoherentUpdater/Base/CoherentUpdate_Test_Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/CoherentWriter/Base/CoherentWrite_Test_Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/CollocatedPubSub/Base/Collocated_Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/ConnectorFilesInDiffDir/DiffDir.idl:
+                  * CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/CFTNamesClash/Base/CFT_Test_Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/EventListener/Base/CFTLE_Test_Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/Exception/Base/Exception_Test_Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/Base/ReadGet_Test_Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/StateListener/Base/CFTLS_Test_Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/DDSEntity/Base/Writer_Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/Derived/Derived.idl:
+                  * CIAO/connectors/dds4ccm/tests/DoubleNestedModule/Base/DNM_Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/Event_Connection_Test/Base/Event_Connection_Test_Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/FixedSizeStruct/EventConnector/Base/FSS_Event_Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/FixedSizeStruct/StateConnector/Base/FSS_State_Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/GetComponent/Event/Base/GCE_Test_Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/GetComponent/State/Base/GCS_Test_Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/Getter/Base/Getter_Test_Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/Getter/Connector/Getter_Test_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/HomeTest/Base/HomeT_Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/IDL_Test/Base/IDL_Test_Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/InstanceHandle/Base/Writer_Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/KeyedSamples/Base/Keyed_Test_Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/KeyedWriter/Base/Writer_Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/LateBinding/ReadGet/Base/RG_LateBinding_Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/LateBinding/UpdateWrite/Base/WU_LateBinding_Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/ListenManyByMany/Base/LMBM_Test_Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/ListenNotEnabled/Base/LNE_Test_Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/ListenOneByOne/Base/LOBO_Test_Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/MemLeakDetection/Event_MemLeakDetection_Test/Base/Event_MemLeakDetection_Test_Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/MemLeakDetection/State_MemLeakDetection_Test/Base/State_MemLeakDetection_Test_Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/MemLeakDetection/TypeRegistration/Base/TypeRegistration_Test_Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/MultiTopic/Base/MultiTopic_Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/MultipleTemp/Base/MultipleTemp_Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/NoModule/NoModule.idl:
+                  * CIAO/connectors/dds4ccm/tests/NonChangeableAttribute/Base/NonChangeable_Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/On_Inconsistent_Topic/Base/OIT_Test_Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/OneFile/Multiple/OFM_Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/OneFile/Single/OneFile_Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/PSAT/PSAT_Connector.idl:
+                  * CIAO/connectors/dds4ccm/tests/PSAT/psat_type.idl:
+                  * CIAO/connectors/dds4ccm/tests/PSLDeadline/Base/PSL_DeadlineTest_Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/PSLSampleLost/Base/PSL_SampleLost_Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/PortUsage/Base/PortUsage_Test_Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/Proxies/ReadWrite/Base/Proxy_RW_Test_Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/QosProfile/Base/QosProfile_Test_Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/QueryCondition/Different/Base/Different_Test_Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/QueryCondition/EventListener/Base/QCLE_Test_Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/QueryCondition/ReadGet/Base/ReadGet_Test_Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/QueryCondition/StateListener/Base/QCLS_Test_Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/QueryCondition/TwoListeners/Base/QCTL_Test_Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/QueryCondition/TwoQueries/Base/QCTQ_Test_Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany/Base/QCTQM_Test_Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/Reader/Base/Reader_Test_Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/ResetTopic/ReadGet/Base/RG_ResetTopic_Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/ResetTopic/ToEmpty/Base/TE_ResetTopic_Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/ResetTopic/TooLong/Base/TL_ResetTopic_Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/ResetTopic/UpdateListen/Base/UL_ResetTopic_Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/ResetTopic/WriteListen/Base/WL_ResetTopic_Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/SLDisabled/Base/SL_Disabled_Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/SLManyByMany/Base/SL_ManyByMany_Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/SLOneByOne/Base/SL_OneByOne_Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/SetConnectorAttributes/Base/SetConnectorAttribute_Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Base/Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDomainID/Base/Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/Base/Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/State_Connection_Test/Base/State_Connection_Test_Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/TopicName/Base/TopicName_Test_Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/TwoTopics/Base/TwoTopics_Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/TwoTopicsDifferentNs/Goodbye/HelloGoodbye.idl:
+                  * CIAO/connectors/dds4ccm/tests/TwoTopicsDifferentNs/Hello/HelloGoodbye.idl:
+                  * CIAO/connectors/dds4ccm/tests/UnkeyedSamples/Base/Unkeyed_Test_Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/UnkeyedWriter/Base/Writer_Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/Updater/Base/Updater_Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/UserdataCopyCount/Base/UCC_Test_Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/VariousTopicsEvent/Base/VTopic_Base.idl:
+                  * CIAO/connectors/dds4ccm/tests/VariousTopicsState/Base/VTopics_Base.idl:
+                    Fixed compile issues on OpenDDS. Making use of a define which prevents sequences to be compiled.
+
+          commit 11933d30e07fa7dacf35bc3e523b3be2eb2e8220
+          Author: Marcel Smit <msmit@remedy.nl>
+          Date:   Fri Apr 13 16:11:38 2012 +0200
+
+                  * CIAO/MPC/config/dds4ccm_ts_default.mpb:
+                    Use dcps_rtps instead of dcps as base project.
+
+                  * CIAO/connectors/dds4ccm/examples/Shapes/descriptors/run_test.pl:
+                    Removed the usage of a openDDS repository
+
+                  * CIAO/connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+                  * CIAO/connectors/dds4ccm/impl/DDS_Base_Connector_T.h:
+                    Configuring openDDS to use RTPS discovery. Also configure openDDS
+                    to use the correct domain ID.
+
+          commit 1c7c7c0af71e7908ad02c24f7a0f9cc71f6b71da
+          Author: Marcel Smit <msmit@remedy.nl>
+          Date:   Wed Apr 11 11:54:28 2012 +0200
+
+                  * CIAO/MPC/config/dds4ccm.mpb:
+                  * CIAO/MPC/config/dds4ccm_ts_default.mpb:
+                  * CIAO/connectors/dds4ccm/examples/Hello/Base/Hello_Base.idl:
+                  * CIAO/connectors/dds4ccm/examples/Shapes/Base/Shapes_Base.idl:
+                  * CIAO/connectors/dds4ccm/examples/Shapes/descriptors/run_test.pl:
+                  * CIAO/connectors/dds4ccm/idl/ccm_dds.idl:
+                  * TAO/TAO_IDL/be/be_codegen.cpp:
+                  * TAO/TAO_IDL/be/be_visitor_connector/connector_dds_exh.cpp:
+                    Preparation in order to support OpenDDS in DDS4CCM
 
 Mon May 14 05:42:00 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
