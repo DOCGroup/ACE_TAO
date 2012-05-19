@@ -1,0 +1,26 @@
+// $Id$
+
+/**
+ * @file
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef RECEIVER_IDL
+#define RECEIVER_IDL
+
+#include "Connector/QCTQM_Test_Connector.idl"
+#include "Base/QCTQM_Starter.idl"
+
+module QCTQM_Test
+{
+  component Receiver
+  {
+    port QueryConditionTestConnector::DDS_Get get_port;
+    port QueryConditionTestConnector::DDS_Read read_port;
+
+    provides TwoQueriesStarter reader_start;
+    uses TwoQueriesRestarter writer_restart;
+  };
+};
+
+#endif

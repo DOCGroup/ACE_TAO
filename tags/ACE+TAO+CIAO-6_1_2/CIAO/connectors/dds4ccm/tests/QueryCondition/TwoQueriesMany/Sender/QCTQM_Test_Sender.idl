@@ -1,0 +1,29 @@
+// $Id$
+
+/**
+ * @file
+ * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
+ *
+ * by-hand idl3 translation of sender components.
+ */
+
+#ifndef DDS_QUERY_CONDITION_TEST_SENDER_IDL
+#define DDS_QUERY_CONDITION_TEST_SENDER_IDL
+
+#include "Connector/QCTQM_Test_Connector.idl"
+#include "Base/QCTQM_Starter.idl"
+
+module QCTQM_Test
+{
+  component Sender
+  {
+    port QCTQM_Test::QueryConditionTestConnector::DDS_Write info_write;
+
+    uses TwoQueriesStarter start_reader;
+    provides TwoQueriesRestarter restart_writer;
+
+    attribute unsigned short keys;
+  };
+};
+
+#endif

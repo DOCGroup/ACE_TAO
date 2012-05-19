@@ -1,0 +1,20 @@
+// $Id$
+project : install {
+  custom_only = 1
+  Define_Custom(InstallHeader) {
+    inputext = .h, _T.cpp
+  }
+  InstallHeader_Files {
+    Version.h
+    // The following directories contain header-only code (*.h, *_T.cpp) and
+    // are not already installed by other .mpc files:
+    Contexts
+    Contexts/Extension
+    Contexts/Session
+    Servants/Extension
+    Servants/Session
+  }
+  specific {
+    custom_inst_tags = installheader_files
+  }
+}

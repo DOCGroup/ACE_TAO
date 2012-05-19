@@ -1,0 +1,7 @@
+// -*- MPC -*-
+// $Id$
+
+project(*) : taolib, codeset {
+  sharedname   = UTF16_UCS2
+  dynamicflags += UTF16_UCS2_BUILD_DLL
+}

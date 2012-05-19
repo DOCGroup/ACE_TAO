@@ -1,0 +1,28 @@
+// $Id$
+
+/**
+ * @file
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef RECEIVER_IDL
+#define RECEIVER_IDL
+
+#include "Connector/UL_ResetTopic_Connector.idl"
+
+module UL_ResetTopic
+{
+  interface ChangeTopicInterface
+  {
+    void set_new_topic (in string topic_name);
+  };
+
+  component Receiver supports ChangeTopicInterface
+  {
+    port UL_ResetTopicTestConnector::DDS_StateListen info_out_state;
+
+    attribute unsigned short iterations;
+  };
+};
+
+#endif

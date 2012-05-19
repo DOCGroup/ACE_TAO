@@ -1,0 +1,8 @@
+// -*- MPC -*-
+// $Id$
+
+project : xerces {
+  includes += $(DANCE_ROOT)/tools
+  after += XML_Utils
+  libs += XML_Utils
+}

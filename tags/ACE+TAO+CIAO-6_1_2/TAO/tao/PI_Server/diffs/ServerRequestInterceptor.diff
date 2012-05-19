@@ -1,0 +1,24 @@
+--- orig/ServerRequestInterceptorC.h	2005-05-17 13:50:41.646918400 +0200
++++ ServerRequestInterceptorC.h	2005-05-17 14:00:40.237649600 +0200
+@@ -155,15 +155,19 @@
+     // TAO_IDL - Generated from
+     // be\be_visitor_operation/operation_ch.cpp:46
+     
++#if TAO_HAS_EXTENDED_FT_INTERCEPTORS == 1
++
+     virtual void tao_ft_interception_point (
+         ::PortableInterceptor::ServerRequestInfo_ptr ri,
+         ::CORBA::OctetSeq_out os
+-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
++        ACE_ENV_ARG_DECL_NOT_USED
+       )
+       ACE_THROW_SPEC ((
+         CORBA::SystemException,
+         ::PortableInterceptor::ForwardRequest
+-      )) = 0;
++      )) {}
++
++#endif /* TAO_HAS_EXTENDED_FT_INTERCEPTORS */
+     
+     // TAO_IDL - Generated from
+     // be\be_visitor_operation/operation_ch.cpp:46

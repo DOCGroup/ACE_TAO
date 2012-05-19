@@ -1,0 +1,11 @@
+/*
+ * $Id$
+ */
+
+interface Simple_Server
+{
+  void remote_call ();
+
+  oneway void shutdown ();
+};
+

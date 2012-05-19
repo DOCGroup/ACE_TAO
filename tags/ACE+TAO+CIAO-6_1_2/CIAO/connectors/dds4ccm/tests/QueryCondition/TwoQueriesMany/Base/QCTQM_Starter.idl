@@ -1,0 +1,25 @@
+// $Id$
+
+/**
+ * @file QCTQM_Starter.idl
+ * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
+ */
+
+#ifndef QUERYCONDITION_STARTER_IDL
+#define QUERYCONDITION_STARTER_IDL
+
+#pragma ciao lem "Base/QCTQM_StarterE.idl"
+
+interface TwoQueriesStarter
+{
+  void set_reader_properties (in unsigned short nr_keys,
+                              in unsigned short nr_iterations);
+  void start_read (in unsigned short run);
+};
+
+interface TwoQueriesRestarter
+{
+  void restart_write ();
+};
+
+#endif /* QUERYCONDITION_STARTER_IDL */

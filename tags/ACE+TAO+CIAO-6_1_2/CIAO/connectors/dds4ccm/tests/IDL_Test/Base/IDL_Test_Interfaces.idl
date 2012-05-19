@@ -1,0 +1,18 @@
+// $Id$
+
+#ifndef IDL_TEST_INTERFACES_IDL
+#define IDL_TEST_INTERFACES_IDL
+
+#pragma ciao lem "Base/IDL_Test_InterfacesE.idl"
+
+interface idl_test_base_interface {
+  void do_something_base ();
+  readonly attribute string base_string_attr;
+};
+
+interface idl_test_derived_interface : idl_test_base_interface {
+  void do_something_derived ();
+  attribute string derived_string_attr;
+};
+
+#endif
