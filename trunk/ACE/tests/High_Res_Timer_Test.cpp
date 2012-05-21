@@ -6,11 +6,9 @@
  *
  *  Simple test of ACE_High_Res_Timer.
  *
- *
  *  @author David L. Levine <levine@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #include "test_config.h"
 #include "ace/Log_Msg.h"
@@ -18,8 +16,6 @@
 #include "ace/Sched_Params.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
-
-
 
 static
 u_int
