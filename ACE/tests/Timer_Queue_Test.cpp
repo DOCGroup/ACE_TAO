@@ -19,7 +19,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "randomize.h"
 #include "ace/Profile_Timer.h"
@@ -35,9 +34,6 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/Containers_T.h"
 #include "ace/Event_Handler.h"
-
-
-
 
 // Number of iterations for the performance tests.  Some platforms
 // have a very high ACE_DEFAULT_TIMERS (HP-UX is 400), so limit this
@@ -735,4 +731,3 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_END_TEST;
   return 0;
 }
-

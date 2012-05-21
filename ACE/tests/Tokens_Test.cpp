@@ -21,7 +21,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Process.h"
 #include "ace/Get_Opt.h"
@@ -32,8 +31,6 @@
 #include "ace/Token_Invariants.h"
 #include "ace/Barrier.h"
 #include "ace/OS_NS_unistd.h"
-
-
 
 #if defined (ACE_HAS_THREADS) && defined (ACE_HAS_TOKENS_LIBRARY)
 
