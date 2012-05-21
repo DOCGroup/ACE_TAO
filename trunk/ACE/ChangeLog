@@ -1,3 +1,8 @@
+Mon May 21 18:05:32 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/INTEGRITY.ld:
+          Removed this file.
+
 Mon May 21 07:15:10 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * NEWS:
