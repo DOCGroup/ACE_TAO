@@ -1,3 +1,9 @@
+Mon May 21 14:15:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * docs/dynany/index.html:
+        Missed updating this document with changes of Wed Feb 29 16:30:00 UTC 2012.
+        DynamicAny Value and BoxedValue types are implimented.
+
 Sat May 19 14:28:57 CEST 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO version 2.1.2 released.
