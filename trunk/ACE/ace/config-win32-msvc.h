@@ -6,8 +6,7 @@
  *
  *  @brief  Microsoft Visual C++ configuration file.
  *
- *  This file is the ACE configuration file for Microsoft Visual C++ versions
- *  5.0, 6.0, and 7.0 (.NET)
+ *  This file is the ACE configuration file for Microsoft Visual C++
  *
  *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
  */
