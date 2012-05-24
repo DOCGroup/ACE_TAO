@@ -1,3 +1,15 @@
+Thu May 24 07:58:53 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/High_Res_Timer.h:
+        * ace/config-win32-msvc.h:
+          Documentation updates
+
+        * ace/High_Res_Timer.inl:
+          Layout changes
+
+        * ace/High_Res_Timer.cpp:
+          Use this
+
 Thu May 24 05:56:27 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/MPC.cfg:

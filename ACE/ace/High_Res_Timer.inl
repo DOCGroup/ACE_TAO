@@ -37,7 +37,6 @@ ACE_High_Res_Timer::hrtime_to_tv (ACE_Time_Value &tv,
     tmp *= ((ACE_UINT32) ACE_HR_SCALE_CONVERSION * global_scale_factor ());
     tv.usec ((suseconds_t) ((hrt - tmp) / global_scale_factor ()));
 #else
-
     // This a higher-precision version, specific for Windows systems
     // The following are based on the units of global_scale_factor_
     // being 1/microsecond.  Therefore, dividing by it converts
@@ -48,7 +47,6 @@ ACE_High_Res_Timer::hrtime_to_tv (ACE_Time_Value &tv,
     ACE_hrtime_t tmp = tv.sec ();
     tmp *= global_scale_factor ();
     tv.usec ((suseconds_t) ((hrt - tmp) * ACE_HR_SCALE_CONVERSION / global_scale_factor ()));
-
 #endif
 }
 
