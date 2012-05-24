@@ -238,12 +238,16 @@ find_test_cache (MAP_CACHE &cache)
     {
       VALUE j = 0;
       int result = cache.find (lookup_array[i], j);
-
+      result = cache.find (lookup_array[i]);
       ACE_TEST_ASSERT (result != -1);
       ACE_TEST_ASSERT (j == lookup_array[i]);
 
       if (debug)
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%d  "), j));
+
+      // Once more, with only the key. Test Bugzilla #4029.
+      result = cache.find (lookup_array[i]);
+      ACE_TEST_ASSERT (result != -1);
 
       ACE_UNUSED_ARG (result);
     }
