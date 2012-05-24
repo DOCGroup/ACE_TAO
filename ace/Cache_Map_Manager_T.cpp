@@ -323,7 +323,7 @@ ACE_Cache_Map_Manager<ACE_T2>::find (const KEY &key)
     {
 
       int result = this->caching_strategy_.notify_find (find_result,
-                                                        cache_value.second ());
+                                                        cache_value.second);
 
       // Unless the find and notification operations go thru, this
       // method is not successful.
