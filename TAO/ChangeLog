@@ -1,3 +1,11 @@
+Thu May 24 15:31:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * tao/GIOP_Message_Base.cpp:
+        * tao/ZIOP/ZIOP.cpp:
+        * tao/ZIOP/ZIOP_ORBInitializer.cpp:
+        * tao/ZIOP/ZIOP_Stub.cpp:
+        Minor re-wording and addition of error messages to help pin-point ZIOP miss-configuration problems.
+
 Mon May 21 14:15:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
 
         * docs/dynany/index.html:
