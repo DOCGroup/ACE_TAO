@@ -320,7 +320,7 @@ ACE_Cache_Map_Manager<KEY, VALUE, CMAP_TYPE, ITERATOR_IMPL, REVERSE_ITERATOR_IMP
     {
 
       int result = this->caching_strategy_.notify_find (find_result,
-                                                        cache_value.second ());
+                                                        cache_value.second);
 
       // Unless the find and notification operations go thru, this
       // method is not successful.
