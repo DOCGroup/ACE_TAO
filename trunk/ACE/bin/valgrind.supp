@@ -39,14 +39,6 @@
    <IIOP error>
    Memcheck:Addr8
    fun:__strspn_sse42
-   fun:*ACE_OS*strspn*
-}
-
-{
-   <IIOP error>
-   Memcheck:Addr8
-   fun:__strspn_sse42
-   fun:*ACE_Arg_Shifter*cur_arg_strncasecmp*
 }
 
 {
