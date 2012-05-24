@@ -336,7 +336,7 @@ ACE_High_Res_Timer::reset (void)
 void
 ACE_High_Res_Timer::elapsed_time (ACE_Time_Value &tv) const
 {
-  hrtime_to_tv (tv,
+  this->hrtime_to_tv (tv,
                 ACE_High_Res_Timer::elapsed_hrtime (this->end_, this->start_));
 }
 
@@ -373,7 +373,7 @@ ACE_High_Res_Timer::elapsed_time (struct timespec &elapsed_time) const
 void
 ACE_High_Res_Timer::elapsed_time_incr (ACE_Time_Value &tv) const
 {
-  hrtime_to_tv (tv, total_);
+  this->hrtime_to_tv (tv, total_);
 }
 
 void
