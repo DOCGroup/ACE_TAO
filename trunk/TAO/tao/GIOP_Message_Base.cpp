@@ -746,7 +746,7 @@ TAO_GIOP_Message_Base::decompress (ACE_Data_Block **db, TAO_Queued_Data& qd,
       if (TAO_debug_level > 0)
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("TAO (%P|%t) ERROR: Unable to decompress ")
-                    ACE_TEXT ("data.\n")));
+                    ACE_TEXT ("data (Server is not ZIOP enabled).\n")));
 
       return false;
     }
