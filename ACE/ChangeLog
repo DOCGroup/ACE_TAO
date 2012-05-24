@@ -1,3 +1,12 @@
+Thu May 24 14:35:04 UTC 2012  Steve Huston  <shuston@riverace.com>
+
+        * ace/Cache_Map_Manager_T.cpp (find): Remove extraneous () from
+          'second' - leftover from ACE_Pair days.
+
+        * tests/Cache_Map_Manager_Test.cpp: Add call to the above method.
+
+        * THANKS: Thanks to Milind Pangarkar for the above test, and fix.
+
 Thu May 24 07:58:53 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/High_Res_Timer.h:
