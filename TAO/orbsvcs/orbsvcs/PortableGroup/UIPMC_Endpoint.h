@@ -61,7 +61,7 @@ public:
   virtual TAO_Endpoint *next (void);
   virtual int addr_to_string (char *buffer, size_t length);
 
-  /// Makes a copy of <this>
+  /// Makes a copy of this TAO_Endpoint.
   virtual TAO_Endpoint *duplicate (void);
 
   /// Return true if this endpoint is equivalent to @a other_endpoint.  Two
@@ -75,7 +75,7 @@ public:
 
   // = UIPMC_Endpoint-specific methods.
 
-  /// Return a reference to the <object_addr>.
+  /// Return a reference to the  object_addr .
   const ACE_INET_Addr &object_addr (void) const;
 
   /// Set the IP multicast address and port.
@@ -112,7 +112,7 @@ private:
   /// UDP port number.
   CORBA::UShort port_;
 
-  /// Cached instance of <ACE_INET_Addr> for use in making
+  /// Cached instance of ACE_INET_Addr for use in making
   /// invocations, etc.
   ACE_INET_Addr object_addr_;
 

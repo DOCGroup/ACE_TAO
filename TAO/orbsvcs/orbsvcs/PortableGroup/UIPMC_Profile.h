@@ -76,14 +76,14 @@ public:
   TAO_UIPMC_Profile (const char *string,
                      TAO_ORB_Core *orb_core);
 
-  /// Destructor is to be called only through <_decr_refcnt>.
+  /// Destructor is to be called only through _decr_refcnt.
   ~TAO_UIPMC_Profile (void);
 
   /// Template methods. Please see tao/Profile.h for documentation.
 
   /// N.B. We have to override the TAO_Profile default decode because
   /// in UIPMC there is no object key marshalled and we do not implement
-  /// a useable ::decode_endpoints
+  /// a useable decode_endpoints
   virtual int decode (TAO_InputCDR& cdr);
   virtual void parse_string (const char *string);
   virtual char * to_string (void);
@@ -129,7 +129,7 @@ protected:
    * feature.
    * Addressing info of the default endpoint, i.e., head of the list,
    * is transmitted using standard UIPMC ProfileBody components.  See
-   * <encode_endpoints> method documentation above for how the rest of
+   * encode_endpoints() method documentation above for how the rest of
    * the endpoint list is transmitted.
    */
   TAO_UIPMC_Endpoint endpoint_;
