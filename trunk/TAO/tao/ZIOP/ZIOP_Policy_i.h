@@ -6,7 +6,7 @@
  *
  *  $Id$
  *
- *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
+ *  @author Johnny Willemsen - jwillemsen@remedy.nl
  */
 // ===================================================================
 
@@ -49,7 +49,7 @@ public:
   /// Copy constructor.
   CompressorIdLevelListPolicy (const CompressorIdLevelListPolicy &rhs);
 
-  /// Returns a copy of <this>.
+  /// Returns a copy of this CompressorIdLevelListPolicy.
   virtual CompressorIdLevelListPolicy *clone (void) const;
 
   virtual ::Compression::CompressorIdLevelList * compressor_ids ();
@@ -94,7 +94,7 @@ public:
   /// Copy constructor.
   CompressionEnablingPolicy (const CompressionEnablingPolicy &rhs);
 
-  /// Returns a copy of <this>.
+  /// Returns a copy of this CompressionEnablingPolicy.
   virtual CompressionEnablingPolicy *clone (void) const;
 
   /// = The ZIOP::BidirectionalPolicy methods
@@ -140,7 +140,7 @@ public:
   /// Copy constructor.
   CompressionLowValuePolicy (const CompressionLowValuePolicy &rhs);
 
-  /// Returns a copy of <this>.
+  /// Returns a copy of this CompressionLowValuePolicy.
   virtual CompressionLowValuePolicy *clone (void) const;
 
   /// = The ZIOP::BidirectionalPolicy methods
@@ -177,7 +177,7 @@ public:
   /// Copy constructor.
   CompressionMinRatioPolicy (const CompressionMinRatioPolicy &rhs);
 
-  /// Returns a copy of <this>.
+  /// Returns a copy of this CompressionMinRatioPolicy.
   virtual CompressionMinRatioPolicy *clone (void) const;
 
   virtual ::Compression::CompressionRatio ratio (void);

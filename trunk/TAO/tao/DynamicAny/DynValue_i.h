@@ -8,7 +8,7 @@
  *
  *  $Id$
  *
- *  @author Simon Massey <simon dot massey at prismtech dot com>
+ *  @author simon dot massey at prismtech dot com
  */
 //=============================================================================
 

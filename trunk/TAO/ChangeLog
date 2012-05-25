@@ -1,4 +1,18 @@
-Thu May 24 15:31:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
+Fri May 25 11:14:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.h:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Mcast_Connection_Handler.h:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Endpoint.h:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.h:
+        * orbsvcs/orbsvcs/PortableGroup/PortableGroup_Acceptor_Registry.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.h:
+        * tao/DynamicAny/DynValue_i.h:
+        * tao/DynamicAny/DynValueBox_i.h:
+        * tao/DynamicAny/DynValueCommon_i.h:
+        * tao/ZIOP/ZIOP_Policy_i.h:
+        Doxygen warnings comment tidy-up.
+
+Thu May 24 14:31:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
 
         * tao/GIOP_Message_Base.cpp:
         * tao/ZIOP/ZIOP.cpp:
