@@ -42,9 +42,7 @@ namespace CORBA
 /**
  * @class TAO_PortableGroup_Acceptor_Registry
  *
- * @brief .
- *
- * There is one TAO_PortableGroup_Acceptor_Registry per ORB_Core.
+ * @brief There is one TAO_PortableGroup_Acceptor_Registry per ORB_Core.
  */
 class TAO_PortableGroup_Export TAO_PortableGroup_Acceptor_Registry
 {

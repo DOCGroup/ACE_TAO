@@ -60,7 +60,7 @@ public:
 
   TAO_UIPMC_Mcast_Connection_Handler (ACE_Thread_Manager* t = 0);
 
-  /// Constructor. <arg> parameter is used by the Acceptor to pass the
+  /// Constructor. arg parameter is used by the Acceptor to pass the
   /// protocol configuration properties for this connection.
   TAO_UIPMC_Mcast_Connection_Handler (TAO_ORB_Core *orb_core);
 

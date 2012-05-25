@@ -152,7 +152,7 @@ private:
   /**
    * An ObjectId created by this method will never be reused within
    * the scope of a given ReplicationManager.  A value suitable for
-   * use in a map association <ext_id> is also returned.
+   * use in a map association  ext_id  is also returned.
    */
   void get_ObjectId (CORBA::ULong fcid,
                      PortableServer::ObjectId_out oid);
