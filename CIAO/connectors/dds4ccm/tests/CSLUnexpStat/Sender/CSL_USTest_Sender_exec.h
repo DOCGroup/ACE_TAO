@@ -180,7 +180,6 @@ namespace CIAO_CSL_USTest_Sender_Impl
     ACE_Thread_ID thread_id_listener_liveliness_lost_;
     ACE_Thread_ID thread_id_reliable_dr_activity_changed_;
     ACE_Thread_ID thread_id_reliable_writer_cache_changed_;
-
     pulse_Generator * ticker_;
 
     TAO_SYNCH_MUTEX mutex_;

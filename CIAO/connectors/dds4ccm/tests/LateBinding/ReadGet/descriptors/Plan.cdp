@@ -241,7 +241,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>LateBinding_Library#LateBinding_Profile</string>
+          <string>LateBinding_Library#LateBindingProfile</string>
         </value>
       </value>
     </configProperty>
@@ -270,7 +270,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>LateBinding_Library#LateBinding_Profile</string>
+          <string>LateBinding_Library#LateBindingProfile</string>
         </value>
       </value>
     </configProperty>
@@ -299,7 +299,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>LateBinding_Library#LateBinding_Profile</string>
+          <string>LateBinding_Library#LateBindingProfile</string>
         </value>
       </value>
     </configProperty>

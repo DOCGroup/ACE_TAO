@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<dds xmlns="http://www.omg.org/dds"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:schemaLocation="http://www.omg.org/dds ../../../docs/schema/dds_qos.xsd">
+
+  <qos_profile name="KeyedWriterProfile">
+    <!-- QoS used to configure the data writer created in the example code -->
+    <datawriter_qos>
+      <reliability>
+        <kind>RELIABLE_RELIABILITY_QOS</kind>
+        <max_blocking_time>
+          <sec>10</sec>
+          <nanosec>0</nanosec>
+        </max_blocking_time>
+      </reliability>
+      <durability>
+        <kind>TRANSIENT_DURABILITY_QOS</kind>
+      </durability>
+      <history>
+        <kind>KEEP_LAST_HISTORY_QOS</kind>
+        <depth>20</depth>
+      </history>
+      <resource_limits>
+        <max_instances>1</max_instances>
+        <initial_instances>1</initial_instances>
+      </resource_limits>
+    </datawriter_qos>
+    <!-- QoS used to configure the data reader created in the example code -->
+    <datareader_qos>
+      <reliability>
+        <kind>RELIABLE_RELIABILITY_QOS</kind>
+      </reliability>
+      <history>
+        <kind>KEEP_LAST_HISTORY_QOS</kind>
+        <depth>20</depth>
+      </history>
+      <durability>
+        <kind>TRANSIENT_LOCAL_DURABILITY_QOS</kind>
+      </durability>
+    </datareader_qos>
+  </qos_profile>
+</dds>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Id$ -->
+<dds xmlns="http://www.omg.org/dds"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:schemaLocation="http://www.omg.org/dds ../../../docs/schema/dds_qos.xsd">
+  <qos_profile name="DeadlineProfile">
+     <datawriter_qos>
+          <reliability>
+               <kind>RELIABLE_RELIABILITY_QOS</kind>
+               <max_blocking_time>
+                    <sec>2</sec>
+                    <nanosec>0</nanosec>
+               </max_blocking_time>
+         </reliability>
+          <durability>
+               <kind>TRANSIENT_DURABILITY_QOS</kind>
+          </durability>
+          <durability_service>
+               <history_kind>KEEP_LAST_HISTORY_QOS</history_kind>
+               <history_depth>10</history_depth>
+               <max_samples>10</max_samples>
+               <max_instances>2</max_instances>
+               <max_samples_per_instance>5</max_samples_per_instance>
+          </durability_service>
+          <deadline>
+               <period>
+                    <sec>3</sec>
+                    <nanosec>0</nanosec>
+               </period>
+          </deadline>
+     </datawriter_qos>
+    <datareader_qos>
+          <reliability>
+               <kind>RELIABLE_RELIABILITY_QOS</kind>
+          </reliability>
+          <history>
+               <kind>KEEP_LAST_HISTORY_QOS</kind>
+               <depth>10</depth>
+          </history>
+          <resource_limits>
+               <initial_samples>1</initial_samples>
+               <initial_instances>1</initial_instances>
+               <max_samples>10</max_samples>
+               <max_instances>1</max_instances>
+               <max_samples_per_instance>10</max_samples_per_instance>
+          </resource_limits>
+          <durability>
+                 <kind>TRANSIENT_DURABILITY_QOS</kind>
+          </durability>
+          <deadline>
+               <period>
+                    <sec>3</sec>
+                    <nanosec>0</nanosec>
+               </period>
+          </deadline>
+     </datareader_qos>
+  </qos_profile>
+</dds>

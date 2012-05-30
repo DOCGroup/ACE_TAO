@@ -154,7 +154,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>SetConnectorAttribute_Library#SetConnectorAttribute_Profile</string>
+          <string>SetConnectorAttribute_Library#SetConnectorAttributeProfile</string>
         </value>
       </value>
     </configProperty>

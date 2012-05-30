@@ -1,3 +1,1213 @@
+Wed May 30 11:28:57 CEST 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        Merged git branch DDS4CCM_QOS_Handler which adds support for
+        configuring DDS4CCM QOS through xml files with OpenDDS
+
+        commit 2196ead1f39f5ba8351ead32418d8b5318e4bb55
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Wed May 30 11:08:55 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_Common.h:
+                  Corrected file name in file header.
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_PubSub_T.cpp:
+                  Removed unnecessary comment.
+
+        commit 165994f23185cb70e969affe4efcee0f60ab0f14
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Wed May 30 10:44:56 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/ParticipantQos_Handler.cpp:
+                  Added the parsing of user_data as comment
+
+        commit 354e196184266f36f8097d848b779654b3417500
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Wed May 30 10:36:44 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tests/QoS/dump/qos_dump.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/ParticipantQos_Handler.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/ParticipantQos_Handler.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_XML_Loader.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/XML_File_Intf.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/XML_File_Intf.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/qos_xml_handler.mpc:
+                  Added ParticipantQos handler to the QOS XML parsing library.
+
+        commit 53c7b49ea5bec0200c55a0f56b85409e26c7dd4f
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Wed May 30 09:40:32 2012 +0200
+
+                * CIAO/connectors/dds4ccm/performance-tests/Latency/descriptors/Latency_Library.xml:
+                  Added for openDDS support.
+
+                * CIAO/connectors/dds4ccm/performance-tests/Latency/descriptors/run_test.pl:
+                * CIAO/connectors/dds4ccm/performance-tests/Throughput/descriptors/run_test.pl:
+                  Quit script when the plan launcher returns an error. This prevent sleeping
+                  when not necessary.
+
+        commit 94d45ee0604090c1ec316f41ff3e7fc707fa8449
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Wed May 30 09:11:21 2012 +0200
+
+                * CIAO/connectors/dds4ccm/performance-tests/Throughput/descriptors/Plan_pub.cdp:
+                * CIAO/connectors/dds4ccm/performance-tests/Throughput/descriptors/Plan_sub.cdp:
+                * CIAO/connectors/dds4ccm/performance-tests/Throughput/descriptors/USER_QOS_PROFILES.xml:
+                  Renamed HelloTest_Library to Throughput_Library.
+
+                * CIAO/connectors/dds4ccm/performance-tests/Throughput/descriptors/Throughput_Library.xml:
+                  Added for openDDs support.
+
+        commit 34b58e3e83bef8e5ee27c4c1370813bce6f4f7ef
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Wed May 30 08:55:13 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tests/QueryCondition/Different/descriptors/QueryCondition_Library.xml:
+                * CIAO/connectors/dds4ccm/tests/QueryCondition/TwoQueries/descriptors/QueryCondition_Library.xml:
+                * CIAO/connectors/dds4ccm/tests/ResetTopic/ReadGet/descriptors/ResetTopic_Library.xml:
+                  Added for openDDS support
+
+        commit 41a741b0fc38c82d12a8359023bfde0a97ef24a3
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Wed May 30 08:50:49 2012 +0200
+
+                * DAnCE/MPC/config/dance_config_handlers.mpb:
+                * DAnCE/MPC/config/dance_config_handlers_base.mpb:
+                * DAnCE/tools/Config_Handlers/Config_Handlers.mpc:
+                  Removed visibility override, shouldn't be needed
+
+        commit 36a00caafa85939db4b45ef7faf27acfad605acb
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Wed May 30 08:44:55 2012 +0200
+
+                * CIAO/MPC/config/dds4ccm_qos_xml_handler.mpb:
+                * CIAO/MPC/config/dds4ccm_qos_xml_handler_base.mpb:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/qos_xml_handler.mpc:
+                  Removed all visibility overrides
+
+        commit 266692b66adf4250928ae04c483250df314988a0
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Wed May 30 08:40:11 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tests/QosProfile/descriptors/QosProfile_Library.xml:
+                  Added for openDDS support
+
+        commit 4864845d8fdba020df526c24ea15311c433d6317
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Wed May 30 08:32:15 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tests/QueryCondition/ReadGet/descriptors/QueryCondition_Library.xml:
+                  Added correct XML.
+
+                * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/descriptors/Shared_Library.xml:
+                * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/descriptors/Standalone_Library.xml:
+                  Added for openDDS support.
+
+        commit 028b7e82e57842a3271ae782342c5e0d711f7637
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Tue May 29 21:14:07 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_XML_Loader.h:
+                  Layout change
+
+                * DAnCE/tools/Config_Handlers/Utils/Functors.h:
+                  Removed borland workaround
+
+        commit a81ea59447d5af5fda614d548d9667b5b9aa68bb
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Tue May 29 19:44:32 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_DataReader_T.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_DataWriter_T.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_PubSub_T.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_Topic_T.h:
+                  Removed not needed export macros
+
+        commit fcf7c65010675d8660cb7a8f610dfe6e8a321fb6
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Tue May 29 16:30:53 2012 +0200
+
+                * CIAO/connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+                  Added commented out code to enable opendds logging
+
+                * CIAO/connectors/dds4ccm/performance-tests/Keyed/descriptors/HelloTest_Library.xml:
+                  new file
+
+                * CIAO/connectors/dds4ccm/tests/CSLUnexpStat/Sender/CSL_USTest_Sender_exec.cpp:
+                  layout change
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/Utils.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/XML_File_Intf.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/XML_QOS_XSC_Handler_Export.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/qos_xml_handler.mpc:
+                  only use 1 export file
+
+        commit 7c2c1b238bfb3115b718c589005986ac28c06e5a
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Tue May 29 16:13:47 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tests/Proxies/ReadWrite/Receiver/Proxy_RW_Test_Receiver_exec.cpp:
+                * CIAO/connectors/dds4ccm/tests/Proxies/ReadWrite/Sender/Proxy_RW_Test_Sender_exec.cpp:
+                  Optimized logging.
+
+                * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/descriptors/Shared_Library.xml:
+                * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/descriptors/Standalone_Library.xml:
+                * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDomainID/descriptors/Shared_Library.xml:
+                * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDomainID/descriptors/Standalone_Library.xml:
+                  Added for openDDS support.
+
+        commit 928aa26205f4df1b5fb77a0e991bfd2fe01e794f
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Tue May 29 14:27:02 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tests/Proxies/ReadWrite/descriptors/Proxy_RW_Library.xml:
+                  Created for openDDS support.
+
+                * CIAO/connectors/dds4ccm/tests/Proxies/ReadWrite/descriptors/USER_QOS_PROFILES.xml:
+                  QOS Profile name shouldn't contain an underscore.
+
+        commit bac443928ada09fb26948427d0e69025ad794518
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Tue May 29 14:16:18 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tests/CoherentWriter/descriptors/CoherentWriter_Library.xml:
+                * CIAO/connectors/dds4ccm/tests/LateBinding/ReadGet/descriptors/LateBinding_Library.xml:
+                  Added QOS xml for openDDS.
+
+        commit 3958e589a64b93b701b38b72cb704a4b30a405fa
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Tue May 29 13:37:57 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/descriptors/QueryCondition_Library.xml:
+                  Added and corrected path to dds_qos.xsd
+
+                * CIAO/connectors/dds4ccm/tests/QueryCondition/ReadGet/descriptors/QueryCondition_Library.xml:
+                  Added for openDDS support.
+
+        commit 41a122c6a3736dfd7c1fe9802e2b34cae884af3f
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Tue May 29 13:13:57 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tests/ListenManyByMany/descriptors/ListenManyByMany_Library.xml:
+                  Added for openDDS support.
+
+                * CIAO/connectors/dds4ccm/tests/Reader/Sender/Reader_Test_Sender_exec.cpp:
+                  Error message when publication_matched was not received.
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/XML_File_Intf.cpp:
+                  Added DDS4CCM_INFO define to log message
+
+        commit e25c4785a913b62ffe306178388c2c31b915d62d
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Tue May 29 12:37:51 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tests/CSLUnexpStat/descriptors/CSL_Library.xml:
+                  Corrected profile name
+
+        commit 779f3c5864dc3b9b2a51e6e8e1a52fae14ec3732
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Tue May 29 12:32:32 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tests/CSLUnexpStat/Sender/CSL_USTest_Sender_exec.cpp:
+                * CIAO/connectors/dds4ccm/tests/CSLUnexpStat/Sender/CSL_USTest_Sender_exec.h:
+                  Only check ndds values when ndds is enabled
+
+                * CIAO/connectors/dds4ccm/tests/CSLUnexpStat/descriptors/CSL_Library.xml:
+                  Added new qos file
+
+        commit 6fa0ca5280992a9f366a3b4a938a3a7b127c999b
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Tue May 29 11:58:52 2012 +0200
+
+                * CIAO/MPC/config/dds4ccm_impl.mpb:
+                  Added gen_ostream as base in order to dump qos
+
+                * CIAO/connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+                * CIAO/connectors/dds4ccm/impl/DDS_Subscriber_Base_T.cpp:
+                * CIAO/connectors/dds4ccm/impl/DDS_Update_T.cpp:
+                * CIAO/connectors/dds4ccm/impl/DDS_Write_T.cpp:
+                  Use gen_ostream feature when it is enable to log the
+                  qos as we pass it to dds
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/XML_File_Intf.cpp:
+                  Removed dumping of qos xml, moved to dds4ccm
+
+                * TAO/tao/ORB.h:
+                  Typo
+
+        commit 6fbccfee00f805f0bd1228e4eea2d3c56fd6adb4
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Tue May 29 11:45:40 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tests/UnkeyedWriter/descriptors/UnkeyedWriter_Library.xml:
+                  Added QOS XML file openDDS usage.
+
+        commit 1bdc20ab30b2be587336f50d0bd2cec5a8f5350f
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Tue May 29 11:44:46 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tests/KeyedWriter/descriptors/KeyedWriter_Library.xml:
+                  Added QOS XML file for openDDS usage.
+
+        commit 9278d35882f2c11f235f4c004f58a29c4d523c8a
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Tue May 29 11:43:00 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/XML_File_Intf.cpp:
+                  Added endline characters after QOS dump messages.
+
+        commit 4fb8cd683a4b948c4fb71f7d76d0041330033b09
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Tue May 29 11:34:55 2012 +0200
+
+                * CIAO/MPC/config/dds4ccm.mpb:
+                  Fixed an after. The QOS-dump test didn't build
+                  due to a non-existing header file.
+
+        commit a60950b2e0e8bb7377539a7b7925435e373ba365
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Tue May 29 09:29:54 2012 +0200
+
+                * CIAO/connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Common/I2C_Shapes_Common.h:
+                  Fixed runtime issues regarding renaming QOS profile
+
+        commit e2a5b89d288931ede26f9a1b349a75c1fa0ad95d
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Tue May 29 08:45:25 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tests/QueryCondition/DDS/DDS_Receiver/QC_Receiver.cpp:
+                * CIAO/connectors/dds4ccm/tests/QueryCondition/DDS/DDS_Sender/QC_Sender.cpp:
+                * CIAO/connectors/dds4ccm/tests/QueryCondition/DDS_OneByOne/DDS_Receiver/ObO_Receiver.cpp:
+                * CIAO/connectors/dds4ccm/tests/QueryCondition/DDS_OneByOne/DDS_Sender/ObO_Sender.cpp:
+                  Fixed runtime issues regarding renaming QOS profile.
+
+        commit 986f98484df29ee36bf032050b094be3d8c2267d
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Fri May 25 21:29:40 2012 +0200
+
+                * CIAO/connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+                  Disabled shutdown, could resolve crash at shutdown
+
+        commit ab374ede0c4fb0b1ef49991ee36ad0ac63e87046
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Fri May 25 21:28:03 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tests/CSLDeadline/Sender/CSL_DeadlineTest_Sender_exec.cpp:
+                * CIAO/connectors/dds4ccm/tests/CSLDeadline/Sender/CSL_DeadlineTest_Sender_exec.h:
+                  Fixed compile error
+
+        commit 49e847d930cf8326d30ed880307a65fad1ca7645
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Fri May 25 15:23:22 2012 +0200
+
+                * CIAO/connectors/dds4ccm/examples/Hello/descriptors/HelloTest_Library.xml:
+                  Added QoS XML file for this example
+
+        commit 678fe5718d848fdb771cb4bc4ba1e1e4c5746533
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Fri May 25 13:37:00 2012 +0200
+
+                * CIAO/connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.cpp:
+                  Layout change
+
+                * CIAO/connectors/dds4ccm/tests/PSLSampleLost/descriptors/HelloTest_Library.xml:
+                  Created qos xml file for this test
+
+        commit bac9723c978f3a8b68b3b67d27878ff6164d2108
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Fri May 25 13:26:02 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tests/PSLDeadline/descriptors/Deadline_Library.xml:
+                  QoS XML file for this test. The test does run, but crashes at
+                  shutdown in OpenDDS
+
+        commit cc24a1ae343ab9e23bd264bab0d8e1bc7274c8c7
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Fri May 25 12:48:13 2012 +0200
+
+                * CIAO/connectors/dds4ccm/impl/PublisherListener.cpp:
+                * CIAO/connectors/dds4ccm/impl/SubscriberListener.cpp:
+                  Improved logging
+
+        commit 365df2f1901afa2bf9c56d41e4cd684812a8afb6
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Fri May 25 12:42:42 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_Common.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_DataReader_T.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_DataReader_T.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_DataWriter_T.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_DataWriter_T.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_DwDrTp_Base_T.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_DwDrTp_Base_T.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_DwTp_Base_T.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_DwTp_Base_T.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_PubSub_T.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_PubSub_T.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_Topic_T.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_Topic_T.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/XML_File_Intf.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/XML_File_Intf.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/qos_xml_handler.mpc:
+                  Dump QoS when we have detailed logging. Corrected signature
+                  of read_qos, fixed durability conversion
+
+        commit 3dee3b2ecf2492da0bbb63f42230d2a721b3959f
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Fri May 25 10:18:41 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/XML_File_Intf.cpp:
+                  Fixed incorrect method name in logging
+
+        commit 28f8a8f3edcadb6074238a55d3f3a912098ac2fe
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Fri May 25 09:54:22 2012 +0200
+
+                * CIAO/connectors/dds4ccm/impl/PortStatusListener.cpp:
+                * CIAO/connectors/dds4ccm/impl/SubscriberListener.cpp:
+                  Added error logging to callbacks which we don't expect
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_DwDrTp_Base_T.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_DwTp_Base_T.cpp:
+                  Logging changes
+
+        commit accc5b6398067a04d7134b8ab471443206fe37d8
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Fri May 25 09:30:05 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tests/SLOneByOne/Receiver/SL_OneByOne_Receiver_exec.cpp:
+                  Due to some RTI specific QOS settings, the data of a deleted sample is passed to the
+                  on_deletion handler. Since this is non-standard behaviour, the on_deletion handler has
+                  rewritten. We now just log an message when an on_deletion event comes in.
+
+                * CIAO/connectors/dds4ccm/tests/SLOneByOne/descriptors/SlObO_Library.xml:
+                  Added standard QOS XML
+
+        commit c01508954ca3b86fd3f7cd06fb4af466379080a5
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Fri May 25 09:20:56 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tests/SLManyByMany/Receiver/SL_ManyByMany_Receiver_exec.cpp:
+                  Due to some RTI specific QOS settings, the data of a deleted sample is passed to the
+                  on_deletion handler. Since this is non-standard behaviour, the on_deletion handler has
+                  rewritten. We now just log an message when an on_deletion event comes in.
+
+        commit 77bc43f4019e99f977df20f292394d336261089d
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Fri May 25 09:13:55 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tests/CSLDeadline/Sender/CSL_DeadlineTest_Sender_exec.cpp:
+                  Create topics when we have matched
+
+                * CIAO/connectors/dds4ccm/tests/CSLQoS/Sender/CSL_QoSTest_Sender_exec.cpp:
+                  Layout change
+
+                * CIAO/connectors/dds4ccm/tests/CSLQoS/descriptors/QoSTest_Library.xml:
+                  New qos file for this test, still fails, works with plain OpenDDS,
+                  need to analyze this test further
+
+        commit c832d3628a2159e26a8f9b42593e24aabd1d8acd
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Fri May 25 08:58:39 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tests/SLManyByMany/descriptors/SlMbM_Library.xml:
+                  Added QOS for openDDS.
+
+        commit ff8bf9ffdc581dc1e17dce106e403484e2f1b336
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Thu May 24 21:09:20 2012 +0200
+
+                * CIAO/connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+                  Shutdown OpenDDS at the end, have to check what happens
+                  if we have multiple connectors in the same process
+
+                * CIAO/connectors/dds4ccm/impl/DDS_Subscriber_Base_T.cpp:
+                * CIAO/connectors/dds4ccm/impl/DDS_Update_T.cpp:
+                * CIAO/connectors/dds4ccm/impl/DDS_Write_T.cpp:
+                  Fixed memory leaks
+
+        commit 838c9b631aba86ae0607a7e6393f09ce6d33edf4
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Thu May 24 16:09:34 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tests/CSLDeadline/Sender/CSL_DeadlineTest_Sender_exec.cpp:
+                * CIAO/connectors/dds4ccm/tests/CSLDeadline/Sender/CSL_DeadlineTest_Sender_exec.h:
+                  OpenDDS discovery is slower, so don't start the test on ccm_activate but wait
+                  on publication matched status
+
+                * CIAO/connectors/dds4ccm/tests/CSLDeadline/descriptors/HelloTest_Library.xml:
+                  New qos file for this test
+
+                * CIAO/connectors/dds4ccm/tests/CSLDeadline/descriptors/USER_QOS_PROFILES.xml:
+                  Removed empty line
+
+                * CIAO/connectors/dds4ccm/tests/QoS/dump/qos.xml:
+                  Added id tag
+
+        commit 36d9b2da54171e829e72c8394eff67f37ef16387
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Thu May 24 15:08:07 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tests/QoS/dump/dds4ccm_qos_dump.mpc:
+                  Do not build this test when RTI DDS is used.
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_Common.cpp:
+                  Optimized logging.
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_DwDrTp_Base_T.cpp:
+                  Fixed loggin issue.
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/XML_File_Intf.cpp:
+                  Check for an empty profile string. Optimized logging for that.
+
+        commit 4649a89638765c22e2450f23805099b77d9b0b21
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Thu May 24 15:07:34 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tests/CSLSampleRejected/descriptors/HelloTest_Library.xml:
+                  Added qos xml file for OpenDDS. After rerunning this test it still
+                  doesn't work. Quick code review showed that OpenDDS doesn't support
+                  the on_sample_rejected callback, reported publicly as bugzilla
+                  4028
+
+                * CIAO/connectors/dds4ccm/tests/CSLSampleRejected/descriptors/USER_QOS_PROFILES.xml:
+                  Removed empty line
+
+        commit d997f2f1ab316efa7961d1f89a63f71ffa5e8090
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Thu May 24 14:38:09 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tests/Getter/Sender/Getter_Test_Sender_exec.cpp:
+                  Layout changes
+
+                * CIAO/connectors/dds4ccm/tests/Getter/descriptors/Getter_Library.xml:
+                  Reordered qos so that we more easily can compare it with the rti file
+
+        commit 49b5568d98819745a385626ad48498c7cf00b387
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Thu May 24 13:40:07 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/Utils.cpp:
+                  Guard zero pointers to strdup
+
+        commit 5b6e2a6b8f9e5f4753ae9c6d6d60e6e4da100ac9
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Thu May 24 13:23:51 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_PubSub_T.cpp:
+                  Finished the conversion of the Publisher QOS and Subscriber QOS.
+
+        commit a2c83c1290de06b049f6aa2fd44ecd0e96812c66
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Thu May 24 12:44:31 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tests/QoS/dump/qos.xml:
+                  Extended partion tag for Subscribers and Publishers for testing.
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_PubSub_T.cpp:
+                  Parse partition and entity_factory QOS settings. Presentation still
+                  need to be parsed.
+
+        commit 3f84a2cf5c648b6b55fe602d619032c972394162
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Thu May 24 11:57:01 2012 +0200
+
+                * CIAO/connectors/dds4ccm/docs/schema/dds_qos.xsd:
+                  According to the spec the Publisher QOS, the Subscriber QOS, and
+                  the Participant QOS haven't got the topic_filter attribute.
+
+                * CIAO/connectors/dds4ccm/tests/QoS/dump/qos_dump.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/PublisherQos_Handler.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/PublisherQos_Handler.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_PubSub_T.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_PubSub_T.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_Topic_T.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_XML_Loader.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/SubscriberQos_Handler.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/SubscriberQos_Handler.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/TopicQos_Handler.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/TopicQos_Handler.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/XML_File_Intf.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/XML_File_Intf.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/qos_xml_handler.mpc:
+                  Added the Publisher and Subscriber QOSs to the parsing framework.
+
+        commit 2813ef125b1c8682ef4bcac2030490a3219fb633
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Thu May 24 11:13:27 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/DataReaderQos_Handler.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/DataWriterQos_Handler.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/TopicQos_Handler.cpp:
+                  Prevent reading the QOS while it's not available.
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/XML_File_Intf.cpp:
+                  Removed some unnecessary logging.
+
+        commit 557dd624806d1d090b6375e36d31782c89253737
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Thu May 24 11:06:53 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tests/Getter/Receiver/Getter_Test_Receiver_exec.cpp:
+                * CIAO/connectors/dds4ccm/tests/Getter/Receiver/Getter_Test_Receiver_exec.h:
+                  Fixed coverity error
+
+        commit 0567c8a5a006fa037fb8fc7ab664ff4a652e61f2
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Thu May 24 10:51:35 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/DataReaderQos_Handler.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/DataWriterQos_Handler.cpp:
+                  Optimized logging. Some method name were not logged correct.
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_Topic_T.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_Topic_T.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_XML_Loader.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/TopicQos_Handler.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/TopicQos_Handler.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/XML_File_Intf.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/XML_File_Intf.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/qos_xml_handler.mpc:
+                  Added support for Topic QoSs.
+
+                * CIAO/connectors/dds4ccm/tests/QoS/dump/qos_dump.cpp:
+                  Invoking get_topic_qos.
+
+        commit 81cb02e3a1c54b25c4c6cf9e86a5d178aae82314
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Thu May 24 10:44:15 2012 +0200
+
+                * CIAO/connectors/dds4ccm/examples/Hello/descriptors/1_to_5.cdp:
+                * CIAO/connectors/dds4ccm/examples/Hello/descriptors/5_Receivers.cdp:
+                * CIAO/connectors/dds4ccm/examples/Hello/descriptors/5_Senders.cdp:
+                * CIAO/connectors/dds4ccm/examples/Hello/descriptors/5_to_1.cdp:
+                * CIAO/connectors/dds4ccm/examples/Hello/descriptors/DeploymentPlan.cdp:
+                * CIAO/connectors/dds4ccm/examples/Hello/descriptors/USER_QOS_PROFILES.xml:
+                * CIAO/connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/descriptors/USER_QOS_PROFILES.xml:
+                * CIAO/connectors/dds4ccm/tests/CSLDeadline/descriptors/Plan.cdp:
+                * CIAO/connectors/dds4ccm/tests/CSLDeadline/descriptors/USER_QOS_PROFILES.xml:
+                * CIAO/connectors/dds4ccm/tests/CSLQoS/descriptors/Plan.cdp:
+                * CIAO/connectors/dds4ccm/tests/CSLQoS/descriptors/USER_QOS_PROFILES.xml:
+                * CIAO/connectors/dds4ccm/tests/CSLSampleRejected/descriptors/Plan.cdp:
+                * CIAO/connectors/dds4ccm/tests/CSLSampleRejected/descriptors/USER_QOS_PROFILES.xml:
+                * CIAO/connectors/dds4ccm/tests/CSLUnexpStat/descriptors/Plan.cdp:
+                * CIAO/connectors/dds4ccm/tests/CSLUnexpStat/descriptors/USER_QOS_PROFILES.xml:
+                * CIAO/connectors/dds4ccm/tests/CoherentUpdater/descriptors/Plan.cdp:
+                * CIAO/connectors/dds4ccm/tests/CoherentUpdater/descriptors/USER_QOS_PROFILES.xml:
+                * CIAO/connectors/dds4ccm/tests/CoherentWriter/descriptors/Plan.cdp:
+                * CIAO/connectors/dds4ccm/tests/CoherentWriter/descriptors/USER_QOS_PROFILES.xml:
+                * CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/descriptors/Plan.cdp:
+                * CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/descriptors/USER_QOS_PROFILES.xml:
+                * CIAO/connectors/dds4ccm/tests/Getter/descriptors/Plan.cdp:
+                * CIAO/connectors/dds4ccm/tests/HomeTest/descriptors/USER_QOS_PROFILES.xml:
+                * CIAO/connectors/dds4ccm/tests/KeyedWriter/descriptors/Plan.cdp:
+                * CIAO/connectors/dds4ccm/tests/KeyedWriter/descriptors/USER_QOS_PROFILES.xml:
+                * CIAO/connectors/dds4ccm/tests/LateBinding/ReadGet/descriptors/Plan.cdp:
+                * CIAO/connectors/dds4ccm/tests/LateBinding/ReadGet/descriptors/USER_QOS_PROFILES.xml:
+                * CIAO/connectors/dds4ccm/tests/ListenManyByMany/descriptors/Plan.cdp:
+                * CIAO/connectors/dds4ccm/tests/ListenManyByMany/descriptors/USER_QOS_PROFILES.xml:
+                * CIAO/connectors/dds4ccm/tests/PSLDeadline/descriptors/Plan.cdp:
+                * CIAO/connectors/dds4ccm/tests/PSLDeadline/descriptors/USER_QOS_PROFILES.xml:
+                * CIAO/connectors/dds4ccm/tests/PSLSampleLost/descriptors/Plan.cdp:
+                * CIAO/connectors/dds4ccm/tests/PSLSampleLost/descriptors/USER_QOS_PROFILES.xml:
+                * CIAO/connectors/dds4ccm/tests/Proxies/ReadWrite/descriptors/Plan.cdp:
+                * CIAO/connectors/dds4ccm/tests/Proxies/ReadWrite/descriptors/USER_QOS_PROFILES.xml:
+                * CIAO/connectors/dds4ccm/tests/QosProfile/descriptors/PlanNoHash.cdp:
+                * CIAO/connectors/dds4ccm/tests/QosProfile/descriptors/PlanWrongNames.cdp:
+                * CIAO/connectors/dds4ccm/tests/QosProfile/descriptors/USER_QOS_PROFILES.xml:
+                * CIAO/connectors/dds4ccm/tests/QueryCondition/DDS/descriptors/USER_QOS_PROFILES.xml:
+                * CIAO/connectors/dds4ccm/tests/QueryCondition/DDS_OneByOne/descriptors/USER_QOS_PROFILES.xml:
+                * CIAO/connectors/dds4ccm/tests/QueryCondition/Different/descriptors/Plan.cdp:
+                * CIAO/connectors/dds4ccm/tests/QueryCondition/Different/descriptors/USER_QOS_PROFILES.xml:
+                * CIAO/connectors/dds4ccm/tests/QueryCondition/ReadGet/descriptors/Plan.cdp:
+                * CIAO/connectors/dds4ccm/tests/QueryCondition/ReadGet/descriptors/USER_QOS_PROFILES.xml:
+                * CIAO/connectors/dds4ccm/tests/QueryCondition/TwoQueries/descriptors/Plan.cdp:
+                * CIAO/connectors/dds4ccm/tests/QueryCondition/TwoQueries/descriptors/USER_QOS_PROFILES.xml:
+                * CIAO/connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany/descriptors/Plan.cdp:
+                * CIAO/connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany/descriptors/USER_QOS_PROFILES.xml:
+                * CIAO/connectors/dds4ccm/tests/Reader/descriptors/USER_QOS_PROFILES.xml:
+                * CIAO/connectors/dds4ccm/tests/ResetTopic/ReadGet/descriptors/Plan.cdp:
+                * CIAO/connectors/dds4ccm/tests/ResetTopic/ReadGet/descriptors/USER_QOS_PROFILES.xml:
+                * CIAO/connectors/dds4ccm/tests/SLManyByMany/descriptors/Plan.cdp:
+                * CIAO/connectors/dds4ccm/tests/SLManyByMany/descriptors/USER_QOS_PROFILES.xml:
+                * CIAO/connectors/dds4ccm/tests/SLOneByOne/descriptors/Plan.cdp:
+                * CIAO/connectors/dds4ccm/tests/SLOneByOne/descriptors/USER_QOS_PROFILES.xml:
+                * CIAO/connectors/dds4ccm/tests/SetConnectorAttributes/descriptors/Plan.cdp:
+                * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/descriptors/Plan.cdp:
+                * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/descriptors/USER_QOS_PROFILES.xml:
+                * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDomainID/descriptors/Plan.cdp:
+                * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDomainID/descriptors/USER_QOS_PROFILES.xml:
+                * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/descriptors/DefaultQoS.cdp:
+                * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/descriptors/Plan.cdp:
+                * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/descriptors/USER_QOS_PROFILES.xml:
+                * CIAO/connectors/dds4ccm/tests/UnkeyedWriter/descriptors/Plan.cdp:
+                * CIAO/connectors/dds4ccm/tests/UnkeyedWriter/descriptors/USER_QOS_PROFILES.xml:
+                  The usage of an underscore is not legal in the DDS profile string, removed it
+                  in all existing deployment plans and QoS XML files
+
+        commit 81434c3d2a5c7893d79f179c0d1b1074717198e4
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Thu May 24 10:39:24 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tests/Getter/descriptors/Getter_Library.xml:
+                * CIAO/connectors/dds4ccm/tests/Getter/descriptors/Plan.cdp:
+                * CIAO/connectors/dds4ccm/tests/Getter/descriptors/USER_QOS_PROFILES.xml:
+                  Make the profile name a legal name, spec doesn't allow _
+
+        commit 741410c799ac678353911b632a4aa23411480a7d
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Thu May 24 10:30:16 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tests/QoS/dump/run_test.pl:
+                  Set execute bit
+
+        commit 2313138bb1365693ff212810ba8487963d9c9f68
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Thu May 24 10:28:55 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tests/Getter/descriptors/Getter_Library.xml:
+                  Added new spec compliant QoS XML file for this test
+
+        commit b843062b65831336559d6383efee494d386cad7b
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Thu May 24 10:02:17 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tests/QoS/dump/dw_qos.xml:
+                * CIAO/connectors/dds4ccm/tests/QoS/dump/qos.xml:
+                * CIAO/connectors/dds4ccm/tests/QoS/dump/run_test.pl:
+                  Rename action. qos.xml contains all xml code.
+
+                * CIAO/connectors/dds4ccm/tests/QoS/dump/qos_dump.cpp:
+                  Added DataReaderQos.
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_XML_Loader.cpp:
+                  Check whether init succeeds. If not, return false.
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/XML_File_Intf.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/XML_File_Intf.h:
+                  Added support for DataReaderQos.
+
+        commit 95dcc54fe0c1e398e4e74d9484ffae2595efab8a
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Thu May 24 09:22:14 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/DataReaderQos_Handler.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/DataReaderQos_Handler.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_DataReader_T.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_DataReader_T.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_XML_Loader.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/qos_xml_handler.mpc:
+                  Added support for DataReader QOS.
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/DataWriterQos_Handler.cpp:
+                  Removed unnecessary include.
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_DwDrTp_Base_T.cpp:
+                  Optimized logging.
+
+        commit aee7ed1215ee28d13f621c40543843daf450b7f7
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Thu May 24 08:47:20 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/qos_xml_handler.mpc:
+                  Fixed install location
+
+        commit a94d2e871e0ba73e19e6df32e7b1a22e94f8e553
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Thu May 24 08:32:10 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/DataWriterQos_Handler.cpp:
+                  Removed comments. Optimized logging
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_DwDrTp_Base_T.cpp:
+                  Fixed runtime issue regarding logging.
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/XML_File_Intf.cpp:
+                  Optimized logging.
+
+        commit b3ddbd8634f7894d068fbaa550d1444404cab459
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Thu May 24 08:17:22 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tests/MultiTopic/Connector/MultiTopic_Connector_T.cpp:
+                  Fixed compile issues due to interface changes in configuration_complete
+
+        commit 013d5054cec9b31eb57289fcf9a4f8cc141c6870
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Thu May 24 08:04:31 2012 +0200
+
+                * CIAO/MPC/config/dds4ccm_dcps.mpb:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/qos_xml_handler.mpc:
+                  Fixed MPC issues regarding RTI DDS
+
+        commit 337c946da317ff3ea2c6552db6df23e66cf5c960
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Wed May 23 21:21:17 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_DwDrTp_Base_T.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_DwTp_Base_T.cpp:
+                  Optimized logging. Logging the real QOS IDL value instead of what the
+                  value should be (the QOS XML value).
+
+        commit 356516954b7a253bb52cb3caaa4b0e839d314ce3
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Wed May 23 21:04:19 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_DwTp_Base_T.cpp:
+                  Enabled more QOS setting for DataWriters and Topics.
+
+        commit 819277a41a39704e85c8d69ca10abad25710f151
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Wed May 23 20:57:15 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_Common.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_Common.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_DwDrTp_Base_T.cpp:
+                  Rewritten common QOS setting for DataWriter, DataReaders and Topics.
+
+        commit 8ad139ff96ba6a80d29a5e8bd08923532a85459c
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Wed May 23 15:26:06 2012 +0200
+
+                * CIAO/connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_XML_Loader.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_XML_Loader.h:
+                  Added support for DomainParticipant QOS.
+
+        commit f2b91ec491af6e056690134c4020f734e1258ae1
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Wed May 23 15:10:42 2012 +0200
+
+                * CIAO/connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+                  PublisherQos now is filled by the QOS XML Handler
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_XML_Loader.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_XML_Loader.h:
+                  Prepared the PublisherQos and SubscriberQos
+
+        commit 58f4edfc05e2ff3209075e92295a187cb4b37d0d
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Wed May 23 14:52:55 2012 +0200
+
+                * CIAO/connectors/dds4ccm/impl/DDS_Subscriber_Base_T.cpp:
+                * CIAO/connectors/dds4ccm/impl/DDS_Subscriber_Base_T.h:
+                * CIAO/connectors/dds4ccm/impl/DDS_Get_T.cpp:
+                * CIAO/connectors/dds4ccm/impl/DDS_Get_T.h:
+                * CIAO/connectors/dds4ccm/impl/DDS_Event_Connector_T.cpp:
+                * CIAO/connectors/dds4ccm/impl/DDS_State_Connector_T.cpp:
+                  Passing the QOS XML structure to the reader side in order to
+                  create a DataReaderQos.
+
+                * CIAO/connectors/dds4ccm/impl/DDS_Update_T.cpp:
+                * CIAO/connectors/dds4ccm/impl/DDS_Update_T.h:
+                * CIAO/connectors/dds4ccm/impl/DDS_Write_T.cpp:
+                * CIAO/connectors/dds4ccm/impl/DDS_Write_T.h:
+                  Passing QOS XML structure by reference.
+
+        commit e2148e64ce9f0b1b49e9c34ed81985c156d3c292
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Wed May 23 14:39:01 2012 +0200
+
+                * CIAO/connectors/dds4ccm/impl/DDS_Update_T.cpp:
+                * CIAO/connectors/dds4ccm/impl/DDS_Write_T.cpp:
+                  Passing the topic name to the QOS XML Handler
+
+        commit 9c9921f90817ff04bd4a806cf7ca1b9a4c3b1868
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Wed May 23 14:05:39 2012 +0200
+
+                * CIAO/connectors/dds4ccm/impl/DDS_Event_Connector_T.cpp:
+                * CIAO/connectors/dds4ccm/impl/DDS_Write_T.cpp:
+                  Making difference between RTI DDS and openDDS when passing
+                  arguments.
+
+                * CIAO/connectors/dds4ccm/impl/DDS_State_Connector_T.cpp:
+                * CIAO/connectors/dds4ccm/impl/DDS_Update_T.cpp:
+                * CIAO/connectors/dds4ccm/impl/DDS_Update_T.h:
+                  Passing the QOS instance to the updater so that is able to
+                  create a datawriter with the supplied DataWriterQos.
+
+                * CIAO/connectors/dds4ccm/tests/Reader/descriptors/Plan.cdp:
+                  Renamed Reader_Profile to ReaderProfile since the DDS XSD doesn't
+                  accept underscores in the name.
+
+        commit e832c62456e825cd5aaedb4083b8698463d5b037
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Wed May 23 11:55:44 2012 +0200
+
+                * CIAO/connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+                * CIAO/connectors/dds4ccm/impl/DDS_Write_T.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/Utils.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/Utils.h:
+                  Fixed runtime issues regarding determining the file name.
+
+                * CIAO/connectors/dds4ccm/tests/Reader/descriptors/Reader_Library.xml:
+                  Fixed location of the xsd. Parsing now succeeds.
+
+        commit 4514c259e6079ff817bfd76488a07f50f4ec3dbd
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Wed May 23 11:37:25 2012 +0200
+
+                * CIAO/connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+                  Check OpenDDS config before creating them
+
+        commit 7a3fc436330a0c8f7ee9b023a4b59e2c830c5cf1
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Wed May 23 11:20:41 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_Common.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_DataWriter_T.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_DwDrTp_Base_T.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_DwTp_Base_T.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_XML_Loader.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/XML_File_Intf.cpp:
+                  Using the openDDS IDL QOS structure instead of the DDS4CCM IDL
+                  QOS structure.
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/qos_xml_handler.mpc:
+                  Layout changes.
+
+                * CIAO/connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/Utils.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/Utils.h:
+                  Made get_xml_file_name and get_profile_name const. Fixed
+                  runtime issues due to used sprintf
+
+        commit d2f4a5e59fb5db0f3d5e14b512894d36e630bd0b
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Wed May 23 10:34:21 2012 +0200
+
+                * CIAO/MPC/config/dds4ccm.mpb:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/Utils.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/Utils.h:
+                  Fixed link issues on windows.
+
+        commit d5573ac64ef4ddd20e178272f3a31de02be7dbc6
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Wed May 23 09:53:57 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/qos_xml_handler.mpc:
+                  Fixed link issues on windows.
+
+        commit e7f3c01a7f82e44080860939751a64214e2eeec7
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Wed May 23 09:45:55 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/Utils.cpp:
+                  Fixed compile issues on windows: include correct header.
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/XML_File_Intf.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/XML_QOS_XSC_Handler_Export.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/qos_xml_handler.mpc:
+                  Fixed compile issues on windows: BUILD_DLL define was not set properly,
+                  therefor the export macros was not correctly defined.
+
+        commit 958e79633b5d32dac7332aa4b39df4f796430a44
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Wed May 23 09:26:31 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tests/CSLQoS/Receiver/CSL_QoSTest_Receiver_exec.cpp:
+                  Fixed casing of the callback method name
+
+        commit cc9abbed90097fbf837187edbeb0f4b5742d6921
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Wed May 23 09:20:41 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/XML_File_Intf.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/qos_xml_handler.mpc:
+                  Fixed compile issues regarding paths.
+
+        commit 1e98f6d489dd8b41633931abfb47a0fa8a3de513
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Wed May 23 07:25:13 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/XML_QOS_XSC_Handler_Export.h:
+                  Added.
+
+        commit 3e3ad5e5dc965c3caeb0b1b2b767788d7f7375e8
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Tue May 22 15:52:29 2012 +0200
+
+                * CIAO/MPC/config/dds4ccm_impl.mpb:
+                  Added QOS XML handler as base project.
+
+                * CIAO/connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+                * CIAO/connectors/dds4ccm/impl/DDS_Base_Connector_T.h:
+                * CIAO/connectors/dds4ccm/impl/DDS_Event_Connector_T.cpp:
+                * CIAO/connectors/dds4ccm/impl/DDS_Write_T.cpp:
+                * CIAO/connectors/dds4ccm/impl/DDS_Write_T.h:
+                  Passing the XML library to the writer in case openDDS.
+
+                * CIAO/connectors/dds4ccm/tests/QoS/dump/qos_dump.cpp:
+                  Passing QOS by reference.
+
+                * CIAO/connectors/dds4ccm/tests/Reader/descriptors/Reader_Library.xml:
+                  Added qos for openDDS for testing purposes.
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/Utils.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/Utils.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/qos_xml_handler.mpc:
+                  Added support for parsing QOS profile string
+
+        commit 5501b03128b7d74a0c29ef055e8e0b30c0760a96
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Tue May 22 14:43:01 2012 +0200
+
+                * CIAO/bin/ciao_tests.lst:
+                  Added QoS/dump to the test framework.
+
+                * CIAO/connectors/dds4ccm/tests/QoS/dump/qos_dump.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/DataWriterQos_Handler.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/DataWriterQos_Handler.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_DataWriter_T.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_DwTp_Base_T.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_XML_Loader.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_XML_Loader.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/XML_File_Intf.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/XML_File_Intf.h:
+                  Pass qos by reference.
+
+        commit 990b1ce1c02730adbba92e3ed14452e6d2fbb125
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Tue May 22 14:25:37 2012 +0200
+
+                * CIAO/MPC/config/dds4ccm_base.mpb:
+                  In case of openDDS, DDS4CCM needs the QOS XML handler
+                  library.
+
+                * CIAO/MPC/config/dds4ccm_config_handlers.mpb:
+                * CIAO/MPC/config/dds4ccm_config_handlers_base.mpb:
+                * CIAO/MPC/config/dds4ccm_qos_xml_handler.mpb:
+                * CIAO/MPC/config/dds4ccm_qos_xml_handler_base.mpb:
+                  Rename action.
+
+                * CIAO/connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+                * CIAO/connectors/dds4ccm/impl/DDS_Base_Connector_T.h:
+                  Work in progress : Initialization of the QOS XML library
+
+                * CIAO/connectors/dds4ccm/tests/QoS/dump/dds4ccm_qos_dump.mpc:
+                  Due to rename action.
+
+                * CIAO/connectors/dds4ccm/tests/QoS/dump/qos_dump.cpp:
+                  Due to initialization change.
+
+                * CIAO/connectors/dds4ccm/tests/QoS/dump/run_test.pl:
+                  To support test framework.
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_XML_Loader.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_XML_Loader.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/XML_File_Intf.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/XML_File_Intf.h:
+                  Reworked method headers and initialization. One should pass the
+                  qos in the get_xxx_qos methods. The callee is therefor responsible
+                  for clean up.
+
+        commit d766c172a83211aa48fc404992b3b55df54d8dd5
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Tue May 22 11:40:59 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tests/QoS/dump/dw_qos.xml:
+                  Changed value for testing purposes.
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/XML_File_Intf.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/XML_File_Intf.h:
+                  Keeping the profiles in memory (instead of one profile).
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/dds_qos.cpp:
+                  Removed tracing
+
+        commit fa345aa750c7522ed0ea0a60255fadb8b4062c8b
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Tue May 22 11:03:33 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tests/QoS/dump/dw_qos.xml:
+                  Added to test with
+
+        commit 5e49df59c2b98963a2a0a6ec874330d29c8cb7ae
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Tue May 22 11:02:22 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/DataWriterQos_Handler.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/DataWriterQos_Handler.h:
+                  Work in progress. Disabled code in order to get it compiled and running.
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_Common.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_Common.h:
+                  Added helper methods. Some integer value may contain tekst
+                  (nanosec for instance). This class converts them in the right way.
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_DataWriter_T.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_DataWriter_T.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_DwDrTp_Base_T.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_DwDrTp_Base_T.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_DwTp_Base_T.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_DwTp_Base_T.h:
+                  Hierarchy of Qos's in templated C++ classes.
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_XML_Loader.cpp:
+                  Added dds4ccm/docs/schema to the search path.
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/dds_qos.cpp:
+                  Added some tracing.
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/qos_xml_handler.mpc:
+                  Added QosCommon.
+
+        commit 13d2bebd279ece2760081a26130daf326ceb8b1e
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Tue May 22 08:50:22 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/DataWriterQos_Handler.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/DataWriterQos_Handler.h:
+                  Converting the XML DataWriterQos to an IDL DataWriterQos
+
+        commit bbf94d9c1018e3abfb67c8eba66fa9d0ca49e0e8
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Tue May 22 08:48:40 2012 +0200
+
+                * CIAO/MPC/config/dds4ccm_config_handlers_base.mpb:
+                * CIAO/connectors/dds4ccm/tests/QoS/dump/dds4ccm_qos_dump.mpc:
+                * CIAO/connectors/dds4ccm/tests/QoS/dump/qos_dump.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_XML_Loader.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/XML_File_Intf.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/XML_File_Intf.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/qos_xml_handler.mpc:
+                  Work in progress: First steps of the QOS XML handler using XSC.
+
+        commit 6dc4be2b0cb7e23aa24a68b65e21ec97bc6532b3
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Fri May 18 20:06:46 2012 +0200
+
+                * CIAO/MPC/config/dds4ccm_config_handlers.mpb:
+                * CIAO/MPC/config/dds4ccm_config_handlers_base.mpb:
+                  New base projects for dds4ccm config handlers
+
+                * CIAO/connectors/dds4ccm/tests/QoS/dump/dds4ccm_qos_dump.mpc:
+                * CIAO/connectors/dds4ccm/tests/QoS/dump/qos_dump.cpp:
+                  Starter for new qos xml tests
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_XML_Loader.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_XML_Loader.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/XML_File_Intf.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/XML_File_Intf.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/qos_xml_handler.mpc:
+                  Added more code
+
+                * DAnCE/tests/DeploymentPlanDump/DeploymentPlanDump.mpc:
+                  Removed not needed base project
+
+                * DAnCE/tools/Config_Handlers/DnC_Dump.h:
+                  Layout changes
+
+        commit e383bec8fadbf726ac6684779210ee619f376faf
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Fri May 18 19:07:33 2012 +0200
+
+                * CIAO/CIAO_TAO_DAnCE_OpenDDS.mwc:
+                * CIAO/CIAO_TAO_OpenDDS.mwc:
+                  Reuse the OpenDDS workspace files instead
+                  of duplicating them here
+
+        commit a0971838efcac9b1967cad1612cd055917c1ea5d
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Fri May 18 15:43:50 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/XML_File_Intf.cpp:
+                  Enabled parsing
+
+        commit bceaf0f92476bca8163dbba68d7dfcb8893f8bd0
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Fri May 18 15:19:32 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/XML_File_Intf.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/qos_xml_handler.mpc:
+                  Fixed compile errors, just get it to compile
+
+        commit b95b7e4318a9125eac10ef87e22c991691d191f2
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Fri May 18 15:16:18 2012 +0200
+
+                * CIAO/CIAO_TAO_DAnCE.mwc:
+                * CIAO/CIAO_TAO_DAnCE_OpenDDS.mwc:
+                  Also compile connectors/dds4ccm/tools by
+                  default
+
+        commit fb26c7868fc9a515075aa909bea8b2f12f57856b
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Fri May 18 14:58:01 2012 +0200
+
+                * CIAO/CIAO_TAO_DAnCE_OpenDDS.mwc:
+                * CIAO/CIAO_TAO_OpenDDS.mwc:
+                  New workspaces that compile ACE/TAO/CIAO/DAnCE with
+                  OpenDDS
+
+        commit d69b8370c30a6a204d7fee98efe5c23852c58aaa
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Thu May 17 15:56:27 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_XML_Loader.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/XML_File_Intf.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/XML_File_Intf.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/qos_xml_handler.mpc:
+                  Some starting files, need more work
+
+        commit f9e6292cbc3b37da214edee3386185c651d17ad8
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Thu May 17 15:43:25 2012 +0200
+
+                * CIAO/connectors/dds4ccm/docs/schema/dds_qos.xsd:
+                  Simplified xsd, all restrictive qos are not used
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/dds_qos.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/dds_qos.hpp:
+                  Regenerated and slightly handcrafted
+
+        commit c9f9fb8210a8696d4cece32a3e99f40b2bedddaa
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Wed May 16 20:34:48 2012 +0200
+
+                * CIAO/connectors/dds4ccm/docs/schema/dds_qos.xsd:
+                  Updated with modified file by Will Otte that gets better
+                  handled by XSC
+
+        commit 4d92a57a9e4e695cf38e4291203dbc44814285c9
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Wed May 16 20:32:52 2012 +0200
+
+                * CIAO/connectors/dds4ccm/docs/schema/dds_qos.xsd:
+                  Some fixes
+
+        commit 2b28f0224a2581fc3d176a0d63def384c591d577
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Wed May 16 14:14:56 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/XML_QOS_Handler_Export.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/XML_QOS_XSC_Handler_Export.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/dds_qos.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/dds_qos.hpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/qos_xml_handler.mpc:
+                  Generated dds_qos with some manual handcrafting to get it to compile
+
+        commit 315a80179069abe422a3aba87b997fe1bf718552
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Wed May 16 13:46:02 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/XML_QOS_Handler_Export.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/XML_QOS_XSC_Handler_Export.h:
+                  Renamed to get the correct name
+
+        commit 817e02aa595eca4c77f643ab38ec8f6e3c12018d
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Wed May 16 13:39:58 2012 +0200
+
+                * CIAO/connectors/dds4ccm/docs/schema/dds_qos.xsd:
+                * CIAO/connectors/dds4ccm/docs/schema/xsc-banner.cpp:
+                * CIAO/connectors/dds4ccm/docs/schema/xsc-banner.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_XML_Loader.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_XML_Loader.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/XML_QOS_Handler_Export.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/qos_xml_handler.mpc:
+                  Work in progress: starting up a DDS QOS Handler for DDS4CCM
+
 Sat May 19 14:28:57 CEST 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * CIAO version 1.1.2 released.

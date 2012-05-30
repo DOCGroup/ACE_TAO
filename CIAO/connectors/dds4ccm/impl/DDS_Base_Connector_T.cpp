@@ -42,6 +42,7 @@ DDS_Base_Connector_T<CCM_TYPE>::DDS_Base_Connector_T (void)
     {
       this->dlf_->init ();
     }
+  //OpenDDS::DCPS::DCPS_debug_level = 10;
 #if (CIAO_DDS4CCM_OPENDDS==1)
   this->create_opendds_participant_factory ();
 #endif
@@ -56,10 +57,7 @@ DDS_Base_Connector_T<CCM_TYPE>::~DDS_Base_Connector_T (void)
                 "DDS_Base_Connector_T::~DDS_Base_Connector_T - "
                 "Connector has been destructed\n"));
 #if (CIAO_DDS4CCM_OPENDDS==1)
-//  this->domain_participant_->delete_contained_entities();
-//  this->participant_factory_->delete_participant(this->domain_participant_.in());
-//  TheTransportFactory->release();
-//  TheServiceParticipant->shutdown ();
+  //TheServiceParticipant->shutdown ();
 #endif
 }
 
@@ -72,26 +70,46 @@ DDS_Base_Connector_T<CCM_TYPE>::create_opendds_participant_factory (void)
   DDS4CCM_TRACE ("DDS_Base_Connector_T<CCM_TYPE>::create_opendds_participant_factory");
   try
     {
-      this->participant_factory_ = TheParticipantFactory;
-      OpenDDS::DCPS::TransportConfig_rch config =
-        OpenDDS::DCPS::TransportRegistry::instance()->create_config("dds4ccm_rtps");
+      if (::CORBA::is_nil (this->participant_factory_.in ()))
+        {
+          this->participant_factory_ = TheParticipantFactory;
 
-      OpenDDS::DCPS::TransportInst_rch inst =
-        OpenDDS::DCPS::TransportRegistry::instance()->create_inst("the_rtps_transport",
-                                                  "rtps_udp");
-      OpenDDS::DCPS::RtpsUdpInst_rch rui =
-        OpenDDS::DCPS::static_rchandle_cast<OpenDDS::DCPS::RtpsUdpInst>(inst);
-      rui->handshake_timeout_ = 1;
+          OpenDDS::DCPS::TransportConfig_rch config =
+            OpenDDS::DCPS::TransportRegistry::instance()->get_config("dds4ccm_rtps");
 
-      config->instances_.push_back(inst);
+          if (config.is_nil())
+            {
+              config =
+                OpenDDS::DCPS::TransportRegistry::instance()->create_config("dds4ccm_rtps");
+            }
 
-      OpenDDS::DCPS::TransportRegistry::instance()->global_config(config);
+          OpenDDS::DCPS::TransportInst_rch inst =
+            OpenDDS::DCPS::TransportRegistry::instance()->get_inst("the_rtps_transport");
 
-      OpenDDS::RTPS::RtpsDiscovery_rch disc =
-        new OpenDDS::RTPS::RtpsDiscovery(OpenDDS::DCPS::Discovery::DEFAULT_RTPS);
+          if (inst.is_nil())
+            {
+              inst =
+                OpenDDS::DCPS::TransportRegistry::instance()->create_inst("the_rtps_transport",
+                                                                    "rtps_udp");
+              OpenDDS::DCPS::RtpsUdpInst_rch rui =
+                OpenDDS::DCPS::static_rchandle_cast<OpenDDS::DCPS::RtpsUdpInst>(inst);
 
-      TheServiceParticipant->add_discovery(OpenDDS::DCPS::static_rchandle_cast<OpenDDS::DCPS::Discovery>(disc));
-      TheServiceParticipant->set_repo_domain(this->domain_id (), disc->key());
+              if (!rui.is_nil())
+                {
+                  rui->handshake_timeout_ = ACE_Time_Value (1, 0);
+                }
+
+              config->instances_.push_back(inst);
+
+              OpenDDS::DCPS::TransportRegistry::instance()->global_config(config);
+            }
+
+          OpenDDS::RTPS::RtpsDiscovery_rch disc =
+            new OpenDDS::RTPS::RtpsDiscovery(OpenDDS::DCPS::Discovery::DEFAULT_RTPS);
+
+          TheServiceParticipant->add_discovery(OpenDDS::DCPS::static_rchandle_cast<OpenDDS::DCPS::Discovery>(disc));
+          TheServiceParticipant->set_repo_domain(this->domain_id (), disc->key());
+        }
     }
   catch (const CORBA::Exception& e)
     {
@@ -153,6 +171,18 @@ DDS_Base_Connector_T<CCM_TYPE>::qos_profile (
   else
     {
       this->qos_profile_ = ::CORBA::string_dup (qos_profile);
+
+
+#if (CIAO_DDS4CCM_OPENDDS==1)
+      ACE_CString file_name (DDS4CCM::get_xml_file_name (qos_profile));
+      if (!this->qos_xml_.init (file_name.c_str()))
+        {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+              "DDS_Base_Connector_T::qos_profile - "
+              "Error while initializing QOS Handler\n"));
+          throw ::CCM_DDS::InternalError (0, 0);
+        }
+#endif
     }
 }
 
@@ -189,6 +219,9 @@ DDS_Base_Connector_T<CCM_TYPE>::init_domain (
         this->participant_factory_.get_default_participant_qos (qos);
 #else
         this->participant_factory_->get_default_participant_qos (qos);
+
+        this->qos_xml_.get_participant_qos (qos,
+          DDS4CCM::get_profile_name (this->qos_profile_.in ()).c_str ());
 #endif
 
       if (retcode != DDS::RETCODE_OK)
@@ -199,6 +232,18 @@ DDS_Base_Connector_T<CCM_TYPE>::init_domain (
               ::CIAO::DDS4CCM::translate_retcode (retcode)));
           throw ::CCM_DDS::InternalError (retcode, 0);
         }
+
+#if defined GEN_OSTREAM_OPS
+      if (DDS4CCM_debug_level >= DDS4CCM_LOG_LEVEL_DDS_STATUS)
+        {
+          std::stringstream output;
+          output << qos;
+          std::string message = output.str();
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_INFO, DDS4CCM_INFO
+                        ACE_TEXT ("DDS_Base_Connector_T::init_domain - ")
+                        ACE_TEXT ("Using participant QOS <%C>\n"), message.c_str()));
+        }
+#endif
 
 #if (CIAO_DDS4CCM_NDDS==1)
       participant = this->participant_factory_.create_participant (
@@ -334,7 +379,13 @@ DDS_Base_Connector_T<CCM_TYPE>::init_topic (
       DDS::ReturnCode_t const retcode =
         participant->get_default_topic_qos (tqos);
 
-      if (retcode != DDS::RETCODE_OK)
+#if (CIAO_DDS4CCM_OPENDDS==1)
+          this->qos_xml_.get_topic_qos (tqos,
+            DDS4CCM::get_profile_name (this->qos_profile_.in ()).c_str (),
+            topic_name);
+#endif
+
+       if (retcode != DDS::RETCODE_OK)
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
               "DDS_Base_Connector_T::init_topic - "
@@ -342,6 +393,18 @@ DDS_Base_Connector_T<CCM_TYPE>::init_topic (
               ::CIAO::DDS4CCM::translate_retcode (retcode)));
           throw ::CCM_DDS::InternalError (retcode, 0);
         }
+
+#if defined GEN_OSTREAM_OPS
+      if (DDS4CCM_debug_level >= DDS4CCM_LOG_LEVEL_DDS_STATUS)
+        {
+          std::stringstream output;
+          output << tqos;
+          std::string message = output.str();
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_INFO, DDS4CCM_INFO
+                        ACE_TEXT ("DDS_Base_Connector_T::init_topic - ")
+                        ACE_TEXT ("Using topic QOS <%C>\n"), message.c_str()));
+        }
+#endif
 
       tp = participant->create_topic (topic_name,
                              typesupport_name,
@@ -385,6 +448,11 @@ DDS_Base_Connector_T<CCM_TYPE>::init_publisher (
           DDS::ReturnCode_t const retcode =
             participant->get_default_publisher_qos (pqos);
 
+#if (CIAO_DDS4CCM_OPENDDS==1)
+          this->qos_xml_.get_publisher_qos (pqos,
+            DDS4CCM::get_profile_name (this->qos_profile_.in ()).c_str ());
+#endif
+
           if (retcode != DDS::RETCODE_OK)
             {
               DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
@@ -393,6 +461,19 @@ DDS_Base_Connector_T<CCM_TYPE>::init_publisher (
                   ::CIAO::DDS4CCM::translate_retcode (retcode)));
               throw ::CCM_DDS::InternalError (retcode, 0);
             }
+
+#if defined GEN_OSTREAM_OPS
+      if (DDS4CCM_debug_level >= DDS4CCM_LOG_LEVEL_DDS_STATUS)
+        {
+          std::stringstream output;
+          output << pqos;
+          std::string message = output.str();
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_INFO, DDS4CCM_INFO
+                        ACE_TEXT ("DDS_Base_Connector_T::init_publisher - ")
+                        ACE_TEXT ("Using publisher QOS <%C>\n"), message.c_str()));
+        }
+#endif
+
           publisher = participant->create_publisher (pqos,
                                             ::DDS::PublisherListener::_nil (),
                                             0);
@@ -432,14 +513,32 @@ DDS_Base_Connector_T<CCM_TYPE>::init_subscriber (
           DDS::ReturnCode_t const retcode =
             participant->get_default_subscriber_qos (sqos);
 
+#if (CIAO_DDS4CCM_OPENDDS==1)
+          this->qos_xml_.get_subscriber_qos (sqos,
+            DDS4CCM::get_profile_name (this->qos_profile_.in ()).c_str ());
+#endif
+
           if (retcode != DDS::RETCODE_OK)
             {
               DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-                  "DDS_Base_Connector_T::init_publisher - "
+                  "DDS_Base_Connector_T::init_subscriber - "
                   "Error: Unable to retrieve get_default_subscriber_qos: <%C>\n",
                   ::CIAO::DDS4CCM::translate_retcode (retcode)));
               throw ::CCM_DDS::InternalError (retcode, 0);
             }
+
+#if defined GEN_OSTREAM_OPS
+          if (DDS4CCM_debug_level >= DDS4CCM_LOG_LEVEL_DDS_STATUS)
+            {
+              std::stringstream output;
+              output << sqos;
+              std::string message = output.str();
+              DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_INFO, DDS4CCM_INFO
+                            ACE_TEXT ("DDS_Base_Connector_T::init_subscriber - ")
+                            ACE_TEXT ("Using publisher QOS <%C>\n"), message.c_str()));
+            }
+#endif
+
           subscriber = participant->create_subscriber (sqos,
                                               ::DDS::SubscriberListener::_nil (),
                                               0);

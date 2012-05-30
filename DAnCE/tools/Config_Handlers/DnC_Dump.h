@@ -71,25 +71,21 @@ static void dump (const ::Deployment::ComponentPortDescription
 static void dump (const ::Deployment::ComponentPropertyDescription
 &comppropdesc);
 
-static void dump (const ::Deployment::MonolithicImplementationDescription
-&mid);
+static void dump (const ::Deployment::MonolithicImplementationDescription &mid);
 
 static void dump (const ::Deployment::PackageConfiguration &pc);
 
-static void dump (const ::Deployment::PackagedComponentImplementation
-&pci);
+static void dump (const ::Deployment::PackagedComponentImplementation &pci);
 
 static void dump (const ::Deployment::SubcomponentPortEndpoint &spe);
 
 static void dump (const ::Deployment::Requirement &requirement);
 
-static void dump (const ::Deployment::ComponentExternalPortEndpoint
-&cepe);
+static void dump (const ::Deployment::ComponentExternalPortEndpoint &cepe);
 
 static void dump (const ::Deployment::ComponentPackageReference &cpr);
 
-static void dump (const ::Deployment::ComponentImplementationDescription
-&cid);
+static void dump (const ::Deployment::ComponentImplementationDescription &cid);
 
 static void dump (const ::Deployment::SubcomponentInstantiationDescription
 &sid);
@@ -99,8 +95,7 @@ static void dump (const ::Deployment::NamedImplementationArtifact
 
 static void dump (const ::Deployment::ComponentInterfaceDescription &cid);
 
-static void dump (const ::Deployment::SubcomponentPropertyReference
-&scpr);
+static void dump (const ::Deployment::SubcomponentPropertyReference &scpr);
 
 static void dump (const ::Deployment::ExternalReferenceEndpoint &ere);
 
@@ -108,8 +103,7 @@ static void dump (const ::Deployment::Domain &domain);
 
 static void dump (const ::Deployment::Capability &capability);
 
-static void dump (const ::Deployment::ImplementationArtifactDescription
-&iad);
+static void dump (const ::Deployment::ImplementationArtifactDescription &iad);
 
 static void dump (const ::Deployment::ImplementationRequirement &ir);
 

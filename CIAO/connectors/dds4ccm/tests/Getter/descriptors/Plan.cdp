@@ -235,7 +235,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Getter_Library#Getter_Profile</string>
+          <string>Getter_Library#GetterProfile</string>
         </value>
       </value>
     </configProperty>
@@ -264,7 +264,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Getter_Library#Getter_Profile</string>
+          <string>Getter_Library#GetterProfile</string>
         </value>
       </value>
     </configProperty>

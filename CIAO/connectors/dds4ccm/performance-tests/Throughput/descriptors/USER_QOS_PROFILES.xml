@@ -22,7 +22,7 @@ RTI Data Distribution Service user manual.
 
         A QoS library is a named set of QoS profiles.
     -->
-  <qos_library name="HelloTest_Library">
+  <qos_library name="Throughput_Library">
     <!-- QoS profile used to configure reliable communication between the DataWriter
              and DataReader created in the example code.
 
@@ -31,23 +31,23 @@ RTI Data Distribution Service user manual.
     <qos_profile name="ThroughputQoS" is_default_qos="true">
       <!-- QoS used to configure the data writer created in the example code -->
       <participant_qos>
-      <receiver_pool>
-        <buffer_size>92160</buffer_size>
+        <receiver_pool>
+          <buffer_size>92160</buffer_size>
         </receiver_pool>
-       <property>
-        <value>
-          <element>
-            <name>dds.transport.builtin.mask</name>
-            <value>DDS_TRANSPORTBUILTIN_UDPv4</value>
-            <name>dds.transport.UDPv4.builtin.parent.message_size_max</name>
-            <value>UDP_SIZE_MAX</value>
-            <name>dds.transport.UDPv4.builtin.recv_socket_buffer_size</name>
-            <value>UDP_SOCKET_RECV_BUFFER_SIZE</value>
-            <name>dds.transport.UDPv4.builtin.send_socket_buffer_size</name>
-            <value>UDP_SOCKET_SEND_BUFFER_SIZE</value>
-          </element>
-        </value>
-      </property>
+        <property>
+          <value>
+            <element>
+              <name>dds.transport.builtin.mask</name>
+              <value>DDS_TRANSPORTBUILTIN_UDPv4</value>
+              <name>dds.transport.UDPv4.builtin.parent.message_size_max</name>
+              <value>UDP_SIZE_MAX</value>
+              <name>dds.transport.UDPv4.builtin.recv_socket_buffer_size</name>
+              <value>UDP_SOCKET_RECV_BUFFER_SIZE</value>
+              <name>dds.transport.UDPv4.builtin.send_socket_buffer_size</name>
+              <value>UDP_SOCKET_SEND_BUFFER_SIZE</value>
+            </element>
+          </value>
+        </property>
       </participant_qos>
       <datawriter_qos>
         <reliability>

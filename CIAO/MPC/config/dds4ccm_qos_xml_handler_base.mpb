@@ -1,0 +1,10 @@
+// -*- MPC -*-
+// $Id$
+
+project : xml_utils, dynamicany, typecodefactory {
+  after += QOS_XML_XSC_Handler
+  libs  += QOS_XML_XSC_Handler
+  macros   += XML_USE_PTHREADS
+  includes += $(CIAO_ROOT)/connectors/dds4ccm/tools/QOS_XML_Handler
+  includes += $(DANCE_ROOT)/tools/Config_Handlers
+}

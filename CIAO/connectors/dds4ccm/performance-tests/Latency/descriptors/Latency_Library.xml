@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- $Id$ -->
+<dds xmlns="http://www.omg.org/dds"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:schemaLocation="http://www.omg.org/dds ../../../docs/schema/dds_qos.xsd">
+
+
+  <qos_profile name="UDPv4QoS">
+
+    <datawriter_qos>
+      <reliability>
+        <kind>BEST_EFFORT_RELIABILITY_QOS</kind>
+      </reliability>
+      <history>
+        <kind>KEEP_LAST_HISTORY_QOS</kind>
+        <depth>1</depth>
+      </history>
+      <durability>
+        <kind>VOLATILE_DURABILITY_QOS</kind>
+      </durability>
+      <resource_limits>
+        <max_instances>1</max_instances>
+        <initial_instances>1</initial_instances>
+        <max_samples>3</max_samples>
+        <initial_samples>3</initial_samples>
+        <max_samples_per_instance>3</max_samples_per_instance>
+      </resource_limits>
+    </datawriter_qos>
+
+    <datareader_qos>
+      <reliability>
+        <kind>BEST_EFFORT_RELIABILITY_QOS</kind>
+      </reliability>
+      <history>
+        <kind>KEEP_LAST_HISTORY_QOS</kind>
+        <depth>1</depth>
+      </history>
+      <resource_limits>
+        <initial_samples>100</initial_samples>
+        <initial_instances>1</initial_instances>
+        <max_samples>LENGTH_UNLIMITED</max_samples>
+        <max_instances>1</max_instances>
+        <max_samples_per_instance>LENGTH_UNLIMITED</max_samples_per_instance>
+      </resource_limits>
+      <durability>
+        <kind>VOLATILE_DURABILITY_QOS</kind>
+      </durability>
+    </datareader_qos>
+  </qos_profile>
+
+  <qos_profile name="SharedMemQos">
+
+    <datawriter_qos>
+      <reliability>
+        <kind>RELIABLE_RELIABILITY_QOS</kind>
+      </reliability>
+      <durability>
+        <kind>VOLATILE_DURABILITY_QOS</kind>
+      </durability>
+      <resource_limits>
+        <max_instances>1</max_instances>
+        <initial_instances>1</initial_instances>
+        <max_samples>LENGTH_UNLIMITED</max_samples>
+        <initial_samples>100</initial_samples>
+        <max_samples_per_instance>LENGTH_UNLIMITED</max_samples_per_instance>
+      </resource_limits>
+    </datawriter_qos>
+
+    <datareader_qos>
+      <reliability>
+        <kind>BEST_EFFORT_RELIABILITY_QOS</kind>
+      </reliability>
+      <resource_limits>
+        <initial_samples>100</initial_samples>
+        <initial_instances>1</initial_instances>
+        <max_samples>LENGTH_UNLIMITED</max_samples>
+        <max_instances>1</max_instances>
+        <max_samples_per_instance>LENGTH_UNLIMITED</max_samples_per_instance>
+      </resource_limits>
+      <durability>
+        <kind>VOLATILE_DURABILITY_QOS</kind>
+      </durability>
+    </datareader_qos>
+  </qos_profile>
+
+</dds>

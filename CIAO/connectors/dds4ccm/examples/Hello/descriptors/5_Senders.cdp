@@ -252,7 +252,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>HelloTest_Library#Hello_Profile</string>
+          <string>HelloTest_Library#HelloProfile</string>
         </value>
       </value>
     </configProperty>
@@ -345,7 +345,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>HelloTest_Library#Hello_Profile</string>
+          <string>HelloTest_Library#HelloProfile</string>
         </value>
       </value>
     </configProperty>
@@ -439,7 +439,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>HelloTest_Library#Hello_Profile</string>
+          <string>HelloTest_Library#HelloProfile</string>
         </value>
       </value>
     </configProperty>
@@ -534,7 +534,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>HelloTest_Library#Hello_Profile</string>
+          <string>HelloTest_Library#HelloProfile</string>
         </value>
       </value>
     </configProperty>
@@ -628,7 +628,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>HelloTest_Library#Hello_Profile</string>
+          <string>HelloTest_Library#HelloProfile</string>
         </value>
       </value>
     </configProperty>

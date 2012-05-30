@@ -149,6 +149,9 @@ namespace CIAO
         ::DDS::DataReader_ptr ,
          const ::DDS::RequestedIncompatibleQosStatus & )
     {
+      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+          "PortStatusListener::on_requested_incompatible_qos - "
+          "Unexpected callback occurred\n"));
     }
 
     void
@@ -156,6 +159,9 @@ namespace CIAO
         ::DDS::DataReader_ptr ,
          const ::DDS::SampleRejectedStatus & )
     {
+      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+          "PortStatusListener::on_sample_rejected - "
+          "Unexpected callback occurred\n"));
     }
 
     void
@@ -163,12 +169,17 @@ namespace CIAO
         ::DDS::DataReader_ptr ,
          const ::DDS::LivelinessChangedStatus & )
     {
+      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+          "PortStatusListener::on_liveliness_changed - "
+          "Unexpected callback occurred\n"));
     }
 
     void
-    PortStatusListener::on_data_available (
-        ::DDS::DataReader_ptr )
+    PortStatusListener::on_data_available (::DDS::DataReader_ptr )
     {
+      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+          "PortStatusListener::on_data_available - "
+          "Unexpected callback occurred\n"));
     }
 
     void
@@ -176,6 +187,9 @@ namespace CIAO
         ::DDS::DataReader_ptr ,
          const ::DDS::SubscriptionMatchedStatus & )
     {
+      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+          "PortStatusListener::on_subscription_matched - "
+          "Unexpected callback occurred\n"));
     }
 
     ::DDS::StatusMask

@@ -247,7 +247,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>CoherentWriter_Library#CoherentWriter_Profile</string>
+          <string>CoherentWriter_Library#CoherentWriterProfile</string>
         </value>
       </value>
     </configProperty>
@@ -277,7 +277,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>CoherentWriter_Library#CoherentWriter_Profile</string>
+          <string>CoherentWriter_Library#CoherentWriterProfile</string>
         </value>
       </value>
     </configProperty>

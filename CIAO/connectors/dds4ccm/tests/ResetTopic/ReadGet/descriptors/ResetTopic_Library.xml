@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- $Id$ -->
+<dds xmlns="http://www.omg.org/dds"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:schemaLocation="http://www.omg.org/dds ../../../../docs/schema/dds_qos.xsd">
+
+  <qos_profile name="ResetTopicProfile">
+    <datawriter_qos>
+      <reliability>
+        <kind>RELIABLE_RELIABILITY_QOS</kind>
+        <max_blocking_time>
+          <sec>10</sec>
+          <nanosec>0</nanosec>
+        </max_blocking_time>
+      </reliability>
+      <durability>
+        <kind>TRANSIENT_DURABILITY_QOS</kind>
+      </durability>
+      <history>
+        <kind>KEEP_ALL_HISTORY_QOS</kind>
+      </history>
+    </datawriter_qos>
+    <datareader_qos>
+      <reliability>
+        <kind>RELIABLE_RELIABILITY_QOS</kind>
+      </reliability>
+      <history>
+        <kind>KEEP_ALL_HISTORY_QOS</kind>
+      </history>
+      <durability>
+        <kind>TRANSIENT_LOCAL_DURABILITY_QOS</kind>
+      </durability>
+    </datareader_qos>
+  </qos_profile>
+</dds>

@@ -325,7 +325,7 @@ namespace CIAO_Getter_Test_Receiver_Impl
   void
   Receiver_exec_i::read_many (CORBA::Short keys ,
                               CORBA::Long iterations,
-                              GetterTestSeq gettertest_seq)
+                              const GetterTestSeq& gettertest_seq)
   {
 
 

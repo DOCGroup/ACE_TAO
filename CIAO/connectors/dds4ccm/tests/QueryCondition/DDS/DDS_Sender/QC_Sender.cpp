@@ -12,7 +12,7 @@ using namespace std;
 #include "ace/OS_NS_stdlib.h"
 
 #define LIBRARY_NAME  "QueryCondition_Library"
-#define PROFILE_NAME  "QueryCondition_Profile"
+#define PROFILE_NAME  "QueryConditionProfile"
 
 const int number_of_iterations_ = 3;
 

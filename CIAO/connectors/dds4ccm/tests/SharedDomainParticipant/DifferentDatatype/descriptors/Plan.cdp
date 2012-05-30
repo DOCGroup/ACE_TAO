@@ -235,7 +235,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Shared_Library#Shared_Profile</string>
+          <string>Shared_Library#SharedProfile</string>
         </value>
       </value>
     </configProperty>
@@ -264,7 +264,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Shared_Library#Shared_Profile</string>
+          <string>Shared_Library#SharedProfile</string>
         </value>
       </value>
     </configProperty>
@@ -293,7 +293,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Standalone_Library#Standalone_Profile</string>
+          <string>Standalone_Library#StandaloneProfile</string>
         </value>
       </value>
     </configProperty>

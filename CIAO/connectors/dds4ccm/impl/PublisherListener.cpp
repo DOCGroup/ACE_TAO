@@ -156,7 +156,7 @@ namespace CIAO
                     translate_qospolicyid_t (status.last_policy_id)));
       for (CORBA::ULong i = 0; i < status.policies.length (); ++i)
         {
-          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_DEBUG,
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_DEBUG, DDS4CCM_INFO
                       ACE_TEXT ("\t\tid <%C> - count <%d>\n"),
                       translate_qospolicyid_t (status.policies[i].policy_id),
                       status.policies[i].count));

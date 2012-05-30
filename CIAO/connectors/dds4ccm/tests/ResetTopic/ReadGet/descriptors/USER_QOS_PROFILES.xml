@@ -2,7 +2,7 @@
 <!-- $Id$ -->
 <dds xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="c:/ndds/ndds.4.5d/scripts/../resource/rtiddsgen/../qos_profiles_4.5d/schema/rti_dds_qos_profiles.xsd" version="4.5d">
   <qos_library name="ResetTopic_Library">
-    <qos_profile name="ResetTopic_Profile" is_default_qos="true">
+    <qos_profile name="ResetTopicProfile" is_default_qos="true">
       <datawriter_qos>
         <reliability>
           <kind>RELIABLE_RELIABILITY_QOS</kind>
