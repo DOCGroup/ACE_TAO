@@ -1,3 +1,12 @@
+Wed May 30 13:24:42 UTC 2012  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/docs/schema:
+
+        * connectors/dds4ccm/docs/schema/dds_qos.xsd:
+        * connectors/dds4ccm/docs/schema/xsc-banner.h:
+        * connectors/dds4ccm/docs/schema/xsc-banner.cpp:
+          Added schema for all DDS4CCM QOS files.
+
 Wed May 30 11:26:24 UTC 2012  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/Getter/descriptors/Getter_Library.xml:
