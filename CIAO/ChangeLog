@@ -1,3 +1,12 @@
+Wed May 30 11:26:24 UTC 2012  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/Getter/descriptors/Getter_Library.xml:
+        * connectors/dds4ccm/tests/KeyedWriter/descriptors/KeyedWriter_Library.xml:
+        * connectors/dds4ccm/tests/SLManyByMany/descriptors/SlMbM_Library.xml:
+        * connectors/dds4ccm/tests/SLOneByOne/descriptors/SlObO_Library.xml:
+        * connectors/dds4ccm/tests/UnkeyedWriter/descriptors/UnkeyedWriter_Library.xml:
+          Fuzz: Added missing id-string.
+
 Wed May 30 11:28:57 CEST 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         Merged git branch DDS4CCM_QOS_Handler which adds support for
