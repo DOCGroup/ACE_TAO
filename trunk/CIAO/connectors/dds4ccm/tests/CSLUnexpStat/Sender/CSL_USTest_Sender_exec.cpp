@@ -294,7 +294,7 @@ namespace CIAO_CSL_USTest_Sender_Impl
   void
   Sender_exec_i::ccm_activate (void)
   {
-    //add 2 different instances of topic
+    // Add 2 different instances of topic
     this->add_instance_of_topic ("ONE", 1);
     this->add_instance_of_topic ("TWO", 2);
     // calculate the interval time
@@ -343,6 +343,7 @@ namespace CIAO_CSL_USTest_Sender_Impl
                                ACE_TEXT ("'LIVELINESS_LOST_STATUS'\n")
                     ));
       }
+#if (CIAO_DDS4CCM_NDDS==1)
     if (!this->reliable_dr_activity_changed_received_.value ())
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("SENDER ERROR: Didn't receive the expected ")
@@ -367,6 +368,8 @@ namespace CIAO_CSL_USTest_Sender_Impl
                                ACE_TEXT ("'RELIABLE_WRITER_CACHE_CHANGED_STATUS'\n")
                     ));
       }
+#endif
+
     //get current thread
     char ccm_buf [65];
     ACE_Thread_ID ccm_thread_id;
@@ -419,8 +422,8 @@ namespace CIAO_CSL_USTest_Sender_Impl
       }
     #endif
 
-    //test thread switch for LIVELINESS_LOST_STATUS
-     char list_buf_ll [65];
+    // Test thread switch for LIVELINESS_LOST_STATUS
+    char list_buf_ll [65];
     this->thread_id_listener_liveliness_lost_.to_string(list_buf_ll);
     if (this->thread_id_listener_liveliness_lost_.id () == 0)
       {
@@ -465,6 +468,7 @@ namespace CIAO_CSL_USTest_Sender_Impl
       }
     #endif
 
+#if (CIAO_DDS4CCM_NDDS==1)
     //test thread switch for RELIABLE_READER_ACTIVITY_CHANGED_STATUS
     char list_buf_ra [65];
     this->thread_id_reliable_dr_activity_changed_.to_string(list_buf_ra);
@@ -511,9 +515,11 @@ namespace CIAO_CSL_USTest_Sender_Impl
                               ccm_buf));
       }
     #endif
+#endif
 
+#if (CIAO_DDS4CCM_NDDS==1)
     //test thread switch for RELIABLE_WRITER_CACHE_CHANGED_STATUS
-     char list_buf_rw [65];
+    char list_buf_rw [65];
     this->thread_id_reliable_writer_cache_changed_.to_string (list_buf_rw);
 
     if (this->thread_id_reliable_writer_cache_changed_.id () == 0)
@@ -558,6 +564,7 @@ namespace CIAO_CSL_USTest_Sender_Impl
                               ccm_buf));
       }
     #endif
+#endif
   }
 
   extern "C" SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr

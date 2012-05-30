@@ -172,10 +172,10 @@ namespace CIAO_Getter_Test_Sender_Impl
     GetInvoker_var invoker =
       this->ciao_context_->get_connection_invoke_getter ();
 
-
-    //Prepare the samples.
+    // Prepare the samples.
     GetterTestSeq write_many (this->keys_ * this->iterations_);
     write_many.length (this->keys_ * this->iterations_);
+
     // since the test for get_one already writes samples to DDS with
     // key=KEY_1 we start with key = 2 when writing many samples.
     for (CORBA::UShort key = 2; key < this->keys_ + 2; ++key)

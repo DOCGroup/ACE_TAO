@@ -1,7 +1,8 @@
 // -*- C++ -*-
 // $Id$
 
-// Test for OFFERED_DEADLINE_MISSED status : Writer failed to write data within the deadline time period set in the profile.
+// Test for OFFERED_DEADLINE_MISSED status : Writer failed to write data within
+// the deadline time period set in the profile.
 
 #include "CSL_DeadlineTest_Sender_exec.h"
 #include "ace/Guard_T.h"
@@ -21,9 +22,11 @@ namespace CIAO_CSL_DeadlineTest_Sender_Impl
   //============================================================
   ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (
     Atomic_Boolean &deadline_missed,
-    ACE_Thread_ID &thread_id)
+    ACE_Thread_ID &thread_id,
+    Sender_exec_i &callback)
     : deadline_missed_ (deadline_missed),
-      thread_id_ (thread_id)
+      thread_id_ (thread_id),
+      callback_ (callback)
   {
   }
 
@@ -71,8 +74,17 @@ namespace CIAO_CSL_DeadlineTest_Sender_Impl
 
   void ConnectorStatusListener_exec_i::on_unexpected_status(
     ::DDS::Entity_ptr /*the_entity*/,
-    ::DDS::StatusKind  /*status_kind*/)
+    ::DDS::StatusKind status_kind)
   {
+    if (status_kind == ::DDS::PUBLICATION_MATCHED_STATUS)
+      {
+        // Add 2 different instances of topic
+        this->callback_.add_instance_of_topic ("ONE",1);
+        this->callback_.add_instance_of_topic ("TWO",2);
+
+        // When we have a publication matched start write the data once
+        this->callback_.write ();
+      }
   }
 
   //============================================================
@@ -92,7 +104,8 @@ namespace CIAO_CSL_DeadlineTest_Sender_Impl
   Sender_exec_i::get_test_topic_connector_status (void)
   {
     return new ConnectorStatusListener_exec_i (this->deadline_missed_,
-                                               this->thread_id_listener_);
+                                               this->thread_id_listener_,
+                                               *this);
   }
 
   // Supported operations and attributes.
@@ -120,8 +133,8 @@ namespace CIAO_CSL_DeadlineTest_Sender_Impl
 
     if (! ::CORBA::is_nil (writer.in ()) )
       {
-        //to force an 'offered_deadline_missed'  write the topics with a pause of 2 sec in between and
-        //in the profile the deadline is set to 1 sec.
+        // to force an 'offered_deadline_missed'  write the topics with a pause
+        // of 2 sec in between and in the profile the deadline is set to 1 sec.
         for (CSL_QoSTest_Table::iterator i = this->_ktests_.begin ();
             i != this->_ktests_.end ();
             ++i)
@@ -155,12 +168,6 @@ namespace CIAO_CSL_DeadlineTest_Sender_Impl
   void
   Sender_exec_i::ccm_activate (void)
   {
-    //add 2 different instances of topic
-    this->add_instance_of_topic ("ONE",1);
-    this->add_instance_of_topic ("TWO",2);
-
-    //write the instances once for the test
-    this->write();
   }
 
   void

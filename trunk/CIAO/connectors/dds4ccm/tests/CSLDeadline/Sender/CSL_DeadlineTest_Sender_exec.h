@@ -31,8 +31,9 @@ namespace CIAO_CSL_DeadlineTest_Sender_Impl
       public virtual ::CORBA::LocalObject
   {
   public:
-    ConnectorStatusListener_exec_i (Atomic_Boolean &,
-                                    ACE_Thread_ID &);
+    ConnectorStatusListener_exec_i (Atomic_Boolean &deadline_missed,
+                                    ACE_Thread_ID &thread_id,
+                                    Sender_exec_i &callback);
     virtual ~ConnectorStatusListener_exec_i (void);
 
     virtual
@@ -56,6 +57,7 @@ namespace CIAO_CSL_DeadlineTest_Sender_Impl
   private:
     Atomic_Boolean &deadline_missed_;
     ACE_Thread_ID &thread_id_;
+    Sender_exec_i &callback_;
   };
 
 //============================================================
@@ -77,6 +79,8 @@ namespace CIAO_CSL_DeadlineTest_Sender_Impl
     // Port operations.
     virtual ::CCM_DDS::CCM_ConnectorStatusListener_ptr
     get_test_topic_connector_status(void);
+    void write (void);
+    void add_instance_of_topic (const char *, int x );
 
   private:
     ::CSL_DeadlineTest::CCM_Sender_Context_var context_;
@@ -87,9 +91,6 @@ namespace CIAO_CSL_DeadlineTest_Sender_Impl
     TAO_SYNCH_MUTEX mutex_;
     typedef std::map<ACE_CString, TestTopic_var> CSL_QoSTest_Table;
     CSL_QoSTest_Table _ktests_;
-
-    void add_instance_of_topic (const char *, int x );
-    void write (void);
  };
 
   extern "C" SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr

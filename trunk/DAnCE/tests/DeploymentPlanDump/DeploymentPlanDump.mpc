@@ -1,5 +1,5 @@
 // $Id$
-project : dance, taoexe, xerces, aceexe, dance_config_handlers, dance_logger {
+project : dance, taoexe, xerces, dance_config_handlers, dance_logger {
   exename   = DeploymentPlanDump
 
   Source_Files {

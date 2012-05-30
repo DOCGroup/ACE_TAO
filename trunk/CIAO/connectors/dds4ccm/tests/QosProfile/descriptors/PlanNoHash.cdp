@@ -130,7 +130,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>QosProfile_Library::QosProfile_Profile</string>
+          <string>QosProfile_Library::QosProfileProfile</string>
         </value>
       </value>
     </configProperty>

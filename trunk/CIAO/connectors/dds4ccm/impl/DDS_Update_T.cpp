@@ -32,7 +32,12 @@ void
 DDS_Update_T<CCM_TYPE, TYPED_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::configuration_complete (
   ::DDS::Topic_ptr topic,
   ::DDS::Publisher_ptr publisher,
+#if (CIAO_DDS4CCM_NDDS==1)
   const char * qos_profile)
+#else
+  const char * qos_profile,
+  DDS4CCM::QOS_XML_Loader& qos_xml)
+#endif
 {
   DDS4CCM_TRACE ("DDS_Update_T<CCM_TYPE, TYPED_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::configuration_complete");
   ::DDS::DataWriter_var dw = this->dds_update_->get_dds_writer ();
@@ -49,13 +54,18 @@ DDS_Update_T<CCM_TYPE, TYPED_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::configuration_
               0);
         }
       else
-#else
-        ACE_UNUSED_ARG (qos_profile);
 #endif
         {
           ::DDS::DataWriterQos dwqos;
           DDS::ReturnCode_t const retcode =
             publisher->get_default_datawriter_qos (dwqos);
+
+#if (CIAO_DDS4CCM_OPENDDS==1)
+          CORBA::String_var name = topic->get_name ();
+          qos_xml.get_datawriter_qos (dwqos,
+                                      DDS4CCM::get_profile_name (qos_profile).c_str (),
+                                      name.in ());
+#endif
 
           if (retcode != DDS::RETCODE_OK)
             {
@@ -65,6 +75,19 @@ DDS_Update_T<CCM_TYPE, TYPED_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::configuration_
                   ::CIAO::DDS4CCM::translate_retcode (retcode)));
               throw ::CCM_DDS::InternalError (retcode, 0);
             }
+
+#if defined GEN_OSTREAM_OPS
+          if (DDS4CCM_debug_level >= DDS4CCM_LOG_LEVEL_DDS_STATUS)
+            {
+              std::stringstream output;
+              output << dwqos;
+              std::string message = output.str();
+              DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_INFO, DDS4CCM_INFO
+                            ACE_TEXT ("DDS_Update_T::configuration_complete - ")
+                            ACE_TEXT ("Using datawriter QOS <%C>\n"), message.c_str()));
+            }
+#endif
+
           dwv_tmp = publisher->create_datawriter (
               topic,
               dwqos,

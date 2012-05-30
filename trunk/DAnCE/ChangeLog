@@ -1,3 +1,53 @@
+Wed May 30 11:28:57 CEST 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        Merged git branch DDS4CCM_QOS_Handler which adds support for
+        configuring DDS4CCM QOS through xml files with OpenDDS
+
+        commit 41a741b0fc38c82d12a8359023bfde0a97ef24a3
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Wed May 30 08:50:49 2012 +0200
+
+                * DAnCE/MPC/config/dance_config_handlers.mpb:
+                * DAnCE/MPC/config/dance_config_handlers_base.mpb:
+                * DAnCE/tools/Config_Handlers/Config_Handlers.mpc:
+                  Removed visibility override, shouldn't be needed
+
+        commit 028b7e82e57842a3271ae782342c5e0d711f7637
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Tue May 29 21:14:07 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_XML_Loader.h:
+                  Layout change
+
+                * DAnCE/tools/Config_Handlers/Utils/Functors.h:
+                  Removed borland workaround
+
+        commit 6dc4be2b0cb7e23aa24a68b65e21ec97bc6532b3
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Fri May 18 20:06:46 2012 +0200
+
+                * CIAO/MPC/config/dds4ccm_config_handlers.mpb:
+                * CIAO/MPC/config/dds4ccm_config_handlers_base.mpb:
+                  New base projects for dds4ccm config handlers
+
+                * CIAO/connectors/dds4ccm/tests/QoS/dump/dds4ccm_qos_dump.mpc:
+                * CIAO/connectors/dds4ccm/tests/QoS/dump/qos_dump.cpp:
+                  Starter for new qos xml tests
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_XML_Loader.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_XML_Loader.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/XML_File_Intf.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/XML_File_Intf.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/qos_xml_handler.mpc:
+                  Added more code
+
+                * DAnCE/tests/DeploymentPlanDump/DeploymentPlanDump.mpc:
+                  Removed not needed base project
+
+                * DAnCE/tools/Config_Handlers/DnC_Dump.h:
+                  Layout changes
+
+
 Sat May 19 14:28:57 CEST 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE version 1.1.2 released.

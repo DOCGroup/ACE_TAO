@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Id$ -->
+<dds xmlns="http://www.omg.org/dds"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:schemaLocation="http://www.omg.org/dds ../../../docs/schema/dds_qos.xsd">
+  <qos_profile name="HelloProfile">
+     <datawriter_qos>
+          <reliability>
+               <kind>BEST_EFFORT_RELIABILITY_QOS</kind>
+               <max_blocking_time>
+                    <sec>2</sec>
+                    <nanosec>0</nanosec>
+               </max_blocking_time>
+         </reliability>
+          <durability>
+               <kind>TRANSIENT_DURABILITY_QOS</kind>
+          </durability>
+          <history>
+               <kind>KEEP_LAST_HISTORY_QOS</kind>
+               <depth>20</depth>
+          </history>
+          <deadline>
+               <period>
+                    <sec>1</sec>
+                    <nanosec>0</nanosec>
+               </period>
+          </deadline>
+     </datawriter_qos>
+    <datareader_qos>
+          <reliability>
+               <kind>BEST_EFFORT_RELIABILITY_QOS</kind>
+          </reliability>
+          <history>
+               <kind>KEEP_LAST_HISTORY_QOS</kind>
+               <depth>20</depth>
+          </history>
+          <durability>
+                 <kind>TRANSIENT_LOCAL_DURABILITY_QOS</kind>
+          </durability>
+          <deadline>
+               <period>
+                    <sec>1</sec>
+                    <nanosec>0</nanosec>
+               </period>
+          </deadline>
+     </datareader_qos>
+  </qos_profile>
+</dds>

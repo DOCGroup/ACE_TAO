@@ -218,7 +218,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>UnkeyedWriter_Library#UnkeyedWriter_Profile</string>
+          <string>UnkeyedWriter_Library#UnkeyedWriterProfile</string>
         </value>
       </value>
     </configProperty>
@@ -247,7 +247,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>UnkeyedWriter_Library#UnkeyedWriter_Profile</string>
+          <string>UnkeyedWriter_Library#UnkeyedWriterProfile</string>
         </value>
       </value>
     </configProperty>

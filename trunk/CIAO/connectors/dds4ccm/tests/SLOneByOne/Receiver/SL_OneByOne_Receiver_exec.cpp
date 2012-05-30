@@ -131,6 +131,9 @@ namespace CIAO_SL_OneByOne_Receiver_Impl
         // Because of the settings <serialize_key_with_dispose> and
         // <propagate_dispose_of_unregistered_instances> in the QoS , we expect
         // an existing datum.key
+        // Since these are RTI DDS specific QOS settings, we only need to test
+        // this in case RTI DDS
+#if (CIAO_DDS4CCM_NDDS==1)
         if ((ACE_OS::strncmp (datum.key.in(), "KEY", 3) == 0  ) ||
             (ACE_OS::strncmp (datum.key.in(), "many", 4) == 0  ))
           {
@@ -147,6 +150,12 @@ namespace CIAO_SL_OneByOne_Receiver_Impl
                         ACE_TEXT (", expected <KEY_.> or <many_.>\n"),
                         datum.key.in ()));
           }
+#else
+        ACE_UNUSED_ARG (datum);
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Statelistener:on_deletion : ")
+                    ACE_TEXT ("Received on_deletion event\n")));
+
+#endif
       }
   }
 

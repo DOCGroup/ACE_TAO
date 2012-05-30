@@ -12,7 +12,7 @@ using namespace std;
 #include "Base_ObOSupport.h"
 
 #define LIBRARY_NAME  "QueryCondition_Library"
-#define PROFILE_NAME  "QueryCondition_Profile"
+#define PROFILE_NAME  "QueryConditionProfile"
 
 bool shutdown_flag = false;
 long num_samples = 0;

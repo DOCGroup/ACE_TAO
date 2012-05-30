@@ -130,7 +130,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Wrong_Library#Wrong_Profile</string>
+          <string>Wrong_Library#WrongProfile</string>
         </value>
       </value>
     </configProperty>

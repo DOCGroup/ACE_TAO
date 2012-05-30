@@ -203,7 +203,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>ListenManyByMany_Library#ListenManyByMany_Profile</string>
+          <string>ListenManyByMany_Library#ListenManyByManyProfile</string>
         </value>
       </value>
     </configProperty>
@@ -232,7 +232,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>ListenManyByMany_Library#ListenManyByMany_Profile</string>
+          <string>ListenManyByMany_Library#ListenManyByManyProfile</string>
         </value>
       </value>
     </configProperty>

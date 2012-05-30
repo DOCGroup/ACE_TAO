@@ -45,7 +45,12 @@ public:
   void configuration_complete (
     ::DDS::Topic_ptr topic,
     ::DDS::Subscriber_ptr subscriber,
-    const char* qos_profile);
+#if (CIAO_DDS4CCM_NDDS==1)
+    const char * qos_profile);
+#else
+    const char * qos_profile,
+    DDS4CCM::QOS_XML_Loader& qos_xml);
+#endif
 
   void activate (
     ::CCM_DDS::PortStatusListener_ptr listener,

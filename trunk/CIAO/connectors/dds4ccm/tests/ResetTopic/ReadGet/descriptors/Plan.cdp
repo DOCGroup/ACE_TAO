@@ -241,7 +241,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>ResetTopic_Library#ResetTopic_Profile</string>
+          <string>ResetTopic_Library#ResetTopicProfile</string>
         </value>
       </value>
     </configProperty>
@@ -270,7 +270,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>ResetTopic_Library#ResetTopic_Profile</string>
+          <string>ResetTopic_Library#ResetTopicProfile</string>
         </value>
       </value>
     </configProperty>
@@ -299,7 +299,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>ResetTopic_Library#ResetTopic_Profile</string>
+          <string>ResetTopic_Library#ResetTopicProfile</string>
         </value>
       </value>
     </configProperty>

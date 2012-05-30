@@ -40,7 +40,7 @@ namespace CIAO
       translate_qospolicyid_t (status.last_policy_id)));
       for (CORBA::ULong i = 0; i < status.policies.length (); ++i)
         {
-          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_DEBUG,
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_DEBUG, DDS4CCM_INFO
               ACE_TEXT ("\t\tid <%C> - count <%d>\n"),
               translate_qospolicyid_t (status.policies[i].policy_id),
               status.policies[i].count));
@@ -260,12 +260,18 @@ namespace CIAO
         ::DDS::DataReader_ptr,
          const ::DDS::RequestedDeadlineMissedStatus &)
     {
+      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+          "SubscriberListener::on_requested_deadline_missed - "
+          "Unexpected callback occurred\n"));
     }
 
     void
     SubscriberListener::on_data_available (
         ::DDS::DataReader_ptr)
     {
+      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+          "SubscriberListener::on_data_available - "
+          "Unexpected callback occurred\n"));
     }
 
     void
@@ -273,6 +279,9 @@ namespace CIAO
         ::DDS::DataReader_ptr,
          const ::DDS::SampleLostStatus &)
     {
+      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+          "SubscriberListener::on_sample_lost - "
+          "Unexpected callback occurred\n"));
     }
 
     ::DDS::StatusMask

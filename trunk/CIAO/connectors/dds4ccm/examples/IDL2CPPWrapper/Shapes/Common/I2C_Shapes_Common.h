@@ -13,7 +13,7 @@
  * Pulse generator
  */
 
-#define QOS_PROFILE "Shapes_Library#Shapes_Profile"
+#define QOS_PROFILE "Shapes_Library#ShapesProfile"
 
 class I2C_SHAPES_Export I2C_Shapes_Common
 {

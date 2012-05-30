@@ -12,6 +12,10 @@
 #include "dds4ccm/impl/Writer_T.h"
 #include "dds4ccm/impl/CCM_DataWriter.h"
 
+#if (CIAO_DDS4CCM_OPENDDS==1)
+# include "dds4ccm/tools/QOS_XML_Handler/QOS_XML_Loader.h"
+#endif
+
 template <typename CCM_TYPE, typename TYPED_WRITER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
 class DDS_Write_T
 {
@@ -34,7 +38,12 @@ public:
   void configuration_complete (
     ::DDS::Topic_ptr topic,
     ::DDS::Publisher_ptr publisher,
-    const char* qos_profile);
+#if (CIAO_DDS4CCM_NDDS==1)
+    const char * qos_profile);
+#else
+    const char * qos_profile,
+    DDS4CCM::QOS_XML_Loader& qos_xml);
+#endif
 
   void activate (void);
 

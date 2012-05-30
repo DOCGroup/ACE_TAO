@@ -193,7 +193,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>SlObO_Library#SlObO_Profile</string>
+          <string>SlObO_Library#SlObOProfile</string>
         </value>
       </value>
     </configProperty>
@@ -222,7 +222,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>SlObO_Library#SlObO_Profile</string>
+          <string>SlObO_Library#SlObOProfile</string>
         </value>
       </value>
     </configProperty>
