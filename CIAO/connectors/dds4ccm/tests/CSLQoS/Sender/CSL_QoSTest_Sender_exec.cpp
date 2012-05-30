@@ -1,7 +1,7 @@
 // -*- C++ -*-
 // $Id$
 
-//Test for ConnectorStatusListener: on_offered_incompatible_qos
+// Test for ConnectorStatusListener: on_offered_incompatible_qos
 
 #include "CSL_QoSTest_Sender_exec.h"
 #include "ace/Log_Msg.h"
@@ -13,10 +13,11 @@ namespace CIAO_CSL_QoSTest_Sender_Impl
   //============================================================
   // ConnectorStatusListener_exec_i
   //============================================================
-  ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (Atomic_Boolean &incompatible,
-                                                                  ACE_Thread_ID &thread_id)
-    : incompatible_ (incompatible),
-      thread_id_ (thread_id)
+  ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (
+    Atomic_Boolean &incompatible,
+    ACE_Thread_ID &thread_id)
+      : incompatible_ (incompatible),
+        thread_id_ (thread_id)
   {
   }
 

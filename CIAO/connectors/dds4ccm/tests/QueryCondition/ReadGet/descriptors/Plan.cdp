@@ -233,7 +233,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>QueryCondition_Library#QueryCondition_Profile</string>
+          <string>QueryCondition_Library#QueryConditionProfile</string>
         </value>
       </value>
     </configProperty>
@@ -263,7 +263,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>QueryCondition_Library#QueryCondition_Profile</string>
+          <string>QueryCondition_Library#QueryConditionProfile</string>
         </value>
       </value>
     </configProperty>
@@ -292,7 +292,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>QueryCondition_Library#QueryCondition_Profile</string>
+          <string>QueryCondition_Library#QueryConditionProfile</string>
         </value>
       </value>
     </configProperty>

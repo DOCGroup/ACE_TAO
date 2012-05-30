@@ -89,7 +89,7 @@ namespace CIAO_Reader_Test_Sender_Impl
   ::DDS::StatusKind status_kind)
   {
     if (status_kind == ::DDS::PUBLICATION_MATCHED_STATUS)
-        this->callback_.start ();
+      this->callback_.start ();
   }
 
   /**
@@ -229,7 +229,11 @@ namespace CIAO_Reader_Test_Sender_Impl
   void
   Sender_exec_i::ccm_passivate (void)
   {
-    /* Your code here. */
+    if (!this->done_)
+      {
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Sender didn't receive a "
+                  "DDS::PUBLICATION_MATCHED_STATUS event!\n")));
+      }
   }
 
   void

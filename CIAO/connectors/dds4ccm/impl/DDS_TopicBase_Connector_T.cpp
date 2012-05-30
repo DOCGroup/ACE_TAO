@@ -34,7 +34,6 @@ DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::late_binding (bool late
   this->late_binding_ |= late_binding;
 }
 
-
 template <typename CCM_TYPE, typename DDS_TYPE, typename SEQ_TYPE>
 bool
 DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::stop_dds (

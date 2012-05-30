@@ -393,7 +393,7 @@ namespace CORBA
      *
      * If this function is called with a @ tv value, client threads
      * making invocations will continue their operations. When the
-     * operation timesout and returns, any invocations showing up on
+     * operation times out and returns, any invocations showing up on
      * the server will be buffered by TCP.
      **/
     void run (ACE_Time_Value &tv);

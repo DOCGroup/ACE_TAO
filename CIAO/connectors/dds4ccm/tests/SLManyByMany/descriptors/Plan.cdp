@@ -193,7 +193,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>SlMbM_Library#SlMbM_Profile</string>
+          <string>SlMbM_Library#SlMbMProfile</string>
         </value>
       </value>
     </configProperty>
@@ -222,7 +222,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>SlMbM_Library#SlMbM_Profile</string>
+          <string>SlMbM_Library#SlMbMProfile</string>
         </value>
       </value>
     </configProperty>

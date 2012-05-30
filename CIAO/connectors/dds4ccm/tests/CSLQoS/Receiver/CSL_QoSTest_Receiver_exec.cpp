@@ -139,13 +139,13 @@ namespace CIAO_CSL_QoSTest_Receiver_Impl
     if (!this->incompatible_.value ())
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("RECEIVER ERROR: did not receive the expected ")
-                               ACE_TEXT ("error 'on_requested_incompatible_Qos' in Receiver\n")
+                               ACE_TEXT ("error 'on_requested_incompatible_qos' in Receiver\n")
                     ));
       }
     else
       {
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("RECEIVER OK: Received the expected ")
-                               ACE_TEXT ("'on_requested_incompatible_Qos' in Receiver\n")
+                               ACE_TEXT ("'on_requested_incompatible_qos' in Receiver\n")
                     ));
       }
     //get current thread

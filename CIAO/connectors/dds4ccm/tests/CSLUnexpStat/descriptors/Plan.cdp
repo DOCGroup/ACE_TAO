@@ -184,7 +184,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>CSL_Library#CSL_Profile</string>
+          <string>CSL_Library#CSLProfile</string>
         </value>
       </value>
     </configProperty>
@@ -213,7 +213,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>CSL_Library#CSL_Profile</string>
+          <string>CSL_Library#CSLProfile</string>
         </value>
       </value>
     </configProperty>

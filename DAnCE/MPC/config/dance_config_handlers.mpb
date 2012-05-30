@@ -2,9 +2,6 @@
 // $Id$
 
 project : dance_config_handlers_base, dynamicany, typecodefactory, dance_deployment_stub, dance_logger, xml_utils {
-  verbatim(gnuace, macros) {
-   override no_hidden_visibility = 1
-  }
   after += XSC_DynAny_Handler \
            XSC_Config_Handlers \
            XSC_XML_Handlers \

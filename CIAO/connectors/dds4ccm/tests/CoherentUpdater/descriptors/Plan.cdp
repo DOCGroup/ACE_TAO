@@ -192,7 +192,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>CoherentUpdater_Library#CoherentUpdater_Profile</string>
+          <string>CoherentUpdater_Library#CoherentUpdaterProfile</string>
         </value>
       </value>
     </configProperty>
@@ -221,7 +221,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>CoherentUpdater_Library#CoherentUpdater_Profile</string>
+          <string>CoherentUpdater_Library#CoherentUpdaterProfile</string>
         </value>
       </value>
     </configProperty>

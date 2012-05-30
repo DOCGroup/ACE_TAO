@@ -114,7 +114,7 @@ namespace CIAO_Proxy_RW_Test_Sender_Impl
   ::DDS::StatusKind status_kind)
   {
     if (status_kind == ::DDS::PUBLICATION_MATCHED_STATUS)
-        this->callback_.start ();
+      this->callback_.start ();
   }
 
   /**
@@ -223,6 +223,8 @@ namespace CIAO_Proxy_RW_Test_Sender_Impl
         ACE_ERROR ((LM_ERROR, "Sender_exec_i::write_using_idl_proxy_for_read - "
                   "ERROR: Error retrieving IDL DataWriter\n"));
       }
+    ACE_DEBUG ((LM_DEBUG, "Sender_exec_i::write_using_idl_proxy_for_read - "
+              "Finished writing sample for read.\n"));
   }
 
   void
@@ -287,6 +289,8 @@ namespace CIAO_Proxy_RW_Test_Sender_Impl
   void
   Sender_exec_i::restart_write (::ReaderStarter::assignment task)
   {
+    ACE_DEBUG ((LM_DEBUG, "Sender_exec_i::restart_write - "
+              "New assignment received <%d>", task));
     if (task == ::ReaderStarter::TAKE_USING_IDL_PROXY)
       {
         this->write_using_idl_proxy_for_take ();

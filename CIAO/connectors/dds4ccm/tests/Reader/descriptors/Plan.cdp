@@ -181,7 +181,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Reader_Library#Reader_Profile</string>
+          <string>Reader_Library#ReaderProfile</string>
         </value>
       </value>
     </configProperty>
@@ -210,7 +210,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Reader_Library#Reader_Profile</string>
+          <string>Reader_Library#ReaderProfile</string>
         </value>
       </value>
     </configProperty>

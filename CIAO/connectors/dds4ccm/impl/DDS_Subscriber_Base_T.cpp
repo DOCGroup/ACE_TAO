@@ -32,7 +32,12 @@ void
 DDS_Subscriber_Base_T<CCM_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::configuration_complete (
   ::DDS::Topic_ptr topic,
   ::DDS::Subscriber_ptr subscriber,
+#if (CIAO_DDS4CCM_NDDS==1)
   const char * qos_profile)
+#else
+  const char * qos_profile,
+  DDS4CCM::QOS_XML_Loader& qos_xml)
+#endif
 {
   DDS4CCM_TRACE ("DDS_Subscriber_Base_T<CCM_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::configuration_complete");
 
@@ -71,13 +76,18 @@ DDS_Subscriber_Base_T<CCM_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::c
                                           0);
         }
       else
-#else
-        ACE_UNUSED_ARG (qos_profile);
 #endif
         {
           ::DDS::DataReaderQos drqos;
           DDS::ReturnCode_t const retcode =
             subscriber->get_default_datareader_qos (drqos);
+
+#if (CIAO_DDS4CCM_OPENDDS==1)
+          CORBA::String_var name = topic->get_name ();
+          qos_xml.get_datareader_qos (drqos,
+                                      DDS4CCM::get_profile_name (qos_profile).c_str (),
+                                      name.in ());
+#endif
 
           if (retcode != DDS::RETCODE_OK)
             {
@@ -87,6 +97,19 @@ DDS_Subscriber_Base_T<CCM_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::c
                   ::CIAO::DDS4CCM::translate_retcode (retcode)));
               throw ::CCM_DDS::InternalError (retcode, 0);
             }
+
+#if defined GEN_OSTREAM_OPS
+          if (DDS4CCM_debug_level >= DDS4CCM_LOG_LEVEL_DDS_STATUS)
+            {
+              std::stringstream output;
+              output << drqos;
+              std::string message = output.str();
+              DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_INFO, DDS4CCM_INFO
+                            ACE_TEXT ("DDS_Subscriber_Base_T::configuration_complete - ")
+                            ACE_TEXT ("Using datareader QOS <%C>\n"), message.c_str()));
+            }
+#endif
+
           dr = subscriber->create_datareader (
                                           td.in (),
                                           drqos,

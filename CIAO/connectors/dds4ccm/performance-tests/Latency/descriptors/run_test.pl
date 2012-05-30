@@ -196,7 +196,14 @@ foreach $file (@files) {
     print "Invoking executor - launch the application -\n";
     $E = $tg_executor->CreateProcess ("$DANCE_ROOT/bin/dance_plan_launcher",
                                       "-x $file -k file://$ior_emfile");
-    $E->SpawnWaitKill (5 * $tg_executor->ProcessStartWaitInterval ());
+    $pl_status = $E->SpawnWaitKill (5 * $tg_executor->ProcessStartWaitInterval ());
+
+    if ($pl_status != 0) {
+        print STDERR "ERROR: dance_plan_launcher returned $pl_status\n";
+        kill_open_processes ();
+        exit 1;
+    }
+
 
     print "Sleeping 300 seconds to allow task to complete\n";
     sleep (300);

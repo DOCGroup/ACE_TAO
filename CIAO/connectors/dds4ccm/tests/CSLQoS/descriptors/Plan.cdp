@@ -195,7 +195,7 @@
         <kind>tk_string</kind>
       </type>
       <value>
-        <string>QoSTest_Library#Sender_Profile</string>
+        <string>QoSTest_Library#SenderProfile</string>
       </value>
     </value>
     </configProperty>
@@ -224,7 +224,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>QoSTest_Library#Receiver_Profile</string>
+          <string>QoSTest_Library#ReceiverProfile</string>
         </value>
       </value>
     </configProperty>

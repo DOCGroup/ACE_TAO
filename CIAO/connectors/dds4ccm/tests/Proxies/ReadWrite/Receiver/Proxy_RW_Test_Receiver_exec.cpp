@@ -287,7 +287,11 @@ namespace CIAO_Proxy_RW_Test_Receiver_Impl
     if (!::CORBA::is_nil (restarter.in ()))
       {
         if (task == ::ReaderStarter::READ_USING_IDL_PROXY)
-          restarter->restart_write (::ReaderStarter::TAKE_USING_IDL_PROXY);
+          {
+            ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::check_samples - "
+                      "Inform the Sender that is should write the next bunch.\n"));
+            restarter->restart_write (::ReaderStarter::TAKE_USING_IDL_PROXY);
+          }
       }
     else
       {
@@ -396,6 +400,9 @@ namespace CIAO_Proxy_RW_Test_Receiver_Impl
 
     if (!::CORBA::is_nil (idl_reader.in ()))
       {
+
+        ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::start_read_using_idl_proxy - "
+                  "Start reading."));
         // Start to read
         ProxyReadWriteTestSeq data;
         ::DDS::SampleInfoSeq  info;

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dds xmlns="http://www.omg.org/dds"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:schemaLocation="http://www.omg.org/dds ../../../docs/schema/dds_qos.xsd">
+  <qos_profile name="GetterProfile">
+     <datawriter_qos>
+          <durability>
+               <kind>TRANSIENT_DURABILITY_QOS</kind>
+          </durability>
+          <reliability>
+               <kind>RELIABLE_RELIABILITY_QOS</kind>
+               <max_blocking_time>
+                    <sec>10</sec>
+                    <nanosec>0</nanosec>
+               </max_blocking_time>
+         </reliability>
+          <history>
+               <kind>KEEP_ALL_HISTORY_QOS</kind>
+               <depth>1</depth>
+          </history>
+     </datawriter_qos>
+    <datareader_qos>
+          <durability>
+                 <kind>TRANSIENT_LOCAL_DURABILITY_QOS</kind>
+          </durability>
+          <reliability>
+               <kind>RELIABLE_RELIABILITY_QOS</kind>
+          </reliability>
+          <history>
+               <kind>KEEP_ALL_HISTORY_QOS</kind>
+          </history>
+     </datareader_qos>
+  </qos_profile>
+</dds>

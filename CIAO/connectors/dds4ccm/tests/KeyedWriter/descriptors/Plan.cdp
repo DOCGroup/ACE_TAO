@@ -214,7 +214,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>KeyedWriter_Library#KeyedWriter_Profile</string>
+          <string>KeyedWriter_Library#KeyedWriterProfile</string>
         </value>
       </value>
     </configProperty>
@@ -243,7 +243,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>KeyedWriter_Library#KeyedWriter_Profile</string>
+          <string>KeyedWriter_Library#KeyedWriterProfile</string>
         </value>
       </value>
     </configProperty>

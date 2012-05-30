@@ -30,7 +30,7 @@ RTI Data Distribution Service user manual.
 
              A QoS profile groups a set of related QoS.
         -->
-    <qos_profile name="QueryCondition_Profile" is_default_qos="true">
+    <qos_profile name="QueryConditionProfile" is_default_qos="true">
       <!-- QoS used to configure the data writer created in the example code -->
       <datawriter_qos>
         <reliability>
