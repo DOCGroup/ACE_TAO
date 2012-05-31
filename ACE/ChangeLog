@@ -1,3 +1,8 @@
+Thu May 31 14:05:51 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rpmbuild/ace-tao.spec:
+          Added new library
+
 Thu May 31 12:31:38 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/XML_Utils/XMLSchema:
