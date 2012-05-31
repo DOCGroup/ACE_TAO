@@ -7154,7 +7154,7 @@ namespace dds
   }
 }
 
-#include "XMLSchema/TypeInfo.hpp"
+#include "ace/XML_Utils/XMLSchema/TypeInfo.hpp"
 
 namespace dds
 {

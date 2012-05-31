@@ -8,7 +8,7 @@
 #include <string>
 // #include <iostream> //@@ tmp
 
-#include "XSCRT/Elements.hpp"
+#include "ace/XML_Utils/XMLSchema/XSCRT/Elements.hpp"
 
 namespace XMLSchema
 {
@@ -516,7 +516,7 @@ namespace XMLSchema
 //
 //
 
-#include "XSCRT/Traversal.hpp"
+#include "ace/XML_Utils/XSCRT/Traversal.hpp"
 
 namespace XMLSchema
 {
@@ -571,7 +571,7 @@ namespace XMLSchema
 //
 //
 
-#include "XSCRT/ExtendedTypeInfo.hpp"
+#include "ace/XML_Utils/XSCRT/ExtendedTypeInfo.hpp"
 
 namespace XMLSchema
 {
@@ -582,7 +582,7 @@ namespace XMLSchema
   };
 }
 
-#include "XSCRT/XMLSchema.ipp"
-#include "XSCRT/XMLSchema.tpp"
+#include "ace/XML_Utils/XSCRT/XMLSchema.ipp"
+#include "ace/XML_Utils/XSCRT/XMLSchema.tpp"
 
 #endif  // XSCRT_XMLSCHEMA_HPP

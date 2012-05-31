@@ -12,7 +12,7 @@
 #include "tao/Basic_Types.h" // For CORBA::ULong
 #include "tao/StringSeqC.h"
 
-#include "XMLSchema/Types.hpp"
+#include "ace/XML_Utils/XMLSchema/Types.hpp"
 namespace DAnCE
 {
   namespace Config_Handlers

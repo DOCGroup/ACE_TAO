@@ -6,7 +6,7 @@
 #include "DP_Handler.h"
 #include "DD_Handler.h"
 #include "Common.h"
-#include "XMLSchema/id_map.hpp"
+#include "ace/XML_Utils/XMLSchema/id_map.hpp"
 
 #include "dance/Deployment/Deployment_DataC.h"
 #include "dance/Deployment/Deployment_TargetDataC.h"
