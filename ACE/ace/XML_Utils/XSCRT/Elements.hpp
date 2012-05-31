@@ -11,7 +11,7 @@
 #include "ace/ace_wchar.h"
 // #include <iostream> //@@ tmp
 
-#include <XSCRT/Parser.hpp>
+#include <ace/XML_Utils/XSCRT/Parser.hpp>
 #include "ace/Refcounted_Auto_Ptr.h"
 
 namespace XSCRT
@@ -566,7 +566,6 @@ namespace XSCRT
 
 }
 
-#include <XSCRT/Elements.ipp>
-#include <XSCRT/Elements.tpp>
+#include <ace/XML_Utils/XSCRT/Elements.tpp>
 
 #endif  // XSCRT_ELEMENTS_HPP

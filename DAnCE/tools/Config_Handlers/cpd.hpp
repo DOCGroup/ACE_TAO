@@ -34,8 +34,8 @@ namespace DAnCE
 #include <memory>
 #include <string>
 #include <list>
-#include "XMLSchema/Types.hpp"
-#include "XMLSchema/id_map.hpp"
+#include "ace/XML_Utils/XMLSchema/Types.hpp"
+#include "ace/XML_Utils/XMLSchema/id_map.hpp"
 #include "ace/Refcounted_Auto_Ptr.h"
 #include "ace/Null_Mutex.h"
 #include "ace/TSS_T.h"
@@ -316,7 +316,7 @@ namespace DAnCE
   }
 }
 
-#include "XMLSchema/Traversal.hpp"
+#include "ace/XML_Utils/XMLSchema/Traversal.hpp"
 
 namespace DAnCE
 {
@@ -678,7 +678,7 @@ namespace DAnCE
   }
 }
 
-#include "XMLSchema/Writer.hpp"
+#include "ace/XML_Utils/XMLSchema/Writer.hpp"
 
 namespace DAnCE
 {

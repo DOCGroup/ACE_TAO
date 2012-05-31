@@ -1,3 +1,28 @@
+Thu May 31 12:31:38 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/XML_Utils/XMLSchema:
+        * ace/XML_Utils/XMLSchema/Traversal.hpp:
+        * ace/XML_Utils/XMLSchema/TypeInfo.hpp:
+        * ace/XML_Utils/XMLSchema/Types.hpp:
+        * ace/XML_Utils/XMLSchema/Writer.hpp:
+        * ace/XML_Utils/XMLSchema/id_map.hpp:
+        * ace/XML_Utils/XSCRT:
+        * ace/XML_Utils/XSCRT/Elements.hpp:
+        * ace/XML_Utils/XSCRT/ExtendedTypeInfo.hpp:
+        * ace/XML_Utils/XSCRT/Parser.hpp:
+        * ace/XML_Utils/XSCRT/Traversal.hpp:
+        * ace/XML_Utils/XSCRT/Writer.hpp:
+        * ace/XML_Utils/XSCRT/XML.hpp:
+        * ace/XML_Utils/XSCRT/XMLSchema.hpp:
+          Moved these files from DAnCE to ACE
+
+        * ace/XML_Utils/XSCRT/Elements.ipp:
+        * ace/XML_Utils/XSCRT/Parser.ipp:
+        * ace/XML_Utils/XSCRT/Traversal.ipp:
+        * ace/XML_Utils/XSCRT/Writer.ipp:
+        * ace/XML_Utils/XSCRT/XML.ipp:
+          Removed these files.
+
 Thu May 31 09:12:07 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/XML_Utils:

@@ -6,7 +6,7 @@
 #define XMLSCHEMA_TYPES_HPP
 
 #include <string>
-#include "XSCRT/Elements.hpp"
+#include "ace/XML_Utils/XSCRT/Elements.hpp"
 
 #include "ace/Basic_Types.h"
 /**
@@ -664,7 +664,7 @@ namespace XMLSchema
   };
 }
 
-#include "XMLSchema/Types.ipp"
-#include "XMLSchema/Types.tpp"
+#include "ace/XML_Utils/XMLSchema/Types.ipp"
+#include "ace/XML_Utils/XMLSchema/Types.tpp"
 
 #endif  // XMLSCHEMA_TYPES_HPP

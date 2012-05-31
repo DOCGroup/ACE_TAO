@@ -8,7 +8,7 @@
 #include <stack>
 #include <string>
 
-#include "XSCRT/XML.hpp"
+#include "ace/XML_Utils/XSCRT/XML.hpp"
 
 namespace XSCRT
 {
@@ -75,7 +75,6 @@ namespace XSCRT
   };
 }
 
-#include <XSCRT/Writer.ipp>
-#include <XSCRT/Writer.tpp>
+#include <ace/XML_Utils/XSCRT/Writer.tpp>
 
 #endif  // XSCRT_WRITER_HPP
