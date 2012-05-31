@@ -1874,6 +1874,7 @@ fi
 %{_libdir}/libACE_INet_SSL.so.%{ACEVERSO}
 %{_libdir}/libACE_Compression.so.%{ACEVERSO}
 %{_libdir}/libACE_RLECompression.so.%{ACEVERSO}
+%{_libdir}/libACE_XML_Utils.so.%{ACEVERSO}
 
 %doc ACE-INSTALL.html
 %doc AUTHORS
