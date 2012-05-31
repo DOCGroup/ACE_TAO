@@ -1,0 +1,12 @@
+// $Id$
+
+project : taoexe, xerces, dds4ccm_qos_xml_handler, dds4ccm_logger, dds4ccm {
+  exename   = qos_dump
+
+  requires += dds4ccm_opendds
+
+  Source_Files {
+    qos_dump.cpp
+  }
+}
+
