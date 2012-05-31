@@ -50,7 +50,7 @@
 #include "ace/ACE.h"
 
 #include "Literals.h"
-#include "XML/XercesString.h"
+#include "ace/XML_Utils/XercesString.h"
 
 #include <iostream>
 #include <limits>
@@ -59,7 +59,7 @@
 #include "xercesc/dom/DOM.hpp"
 #include "xercesc/util/XMLChar.hpp"
 
-#include "XML/XML_Helper.h"
+#include "ace/XML_Utils/XML_Helper.h"
 
 using XERCES_CPP_NAMESPACE::DOMDocument;
 using XERCES_CPP_NAMESPACE::DOMAttr;

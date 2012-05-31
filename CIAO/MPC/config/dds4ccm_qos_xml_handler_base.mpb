@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : xml_utils, dynamicany, typecodefactory {
+project : ace_xml_utils, dynamicany, typecodefactory {
   after += QOS_XML_XSC_Handler
   libs  += QOS_XML_XSC_Handler
   macros   += XML_USE_PTHREADS

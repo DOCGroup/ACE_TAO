@@ -18,7 +18,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Config_Handlers/Common.h"
+#include "tools/Config_Handlers/Common.h"
 #include "tao/Versioned_Namespace.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

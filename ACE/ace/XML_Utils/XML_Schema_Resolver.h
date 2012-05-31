@@ -7,8 +7,8 @@
  * Resolves schema locations.
  */
 
-#ifndef CIAO_XML_SCHEMA_RESOLVER_H
-#define CIAO_XML_SCHEMA_RESOLVER_H
+#ifndef ACE_XML_SCHEMA_RESOLVER_H
+#define ACE_XML_SCHEMA_RESOLVER_H
 #include /**/ "ace/pre.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -30,8 +30,8 @@ namespace XML
   struct NoOp_Resolver;
 
   /**
-    * @class CIAO_Schema_Resolver
-    * @brief Resolves schema locations for CIAO.
+    * @class XML_Schema_Resolver
+    * @brief Resolves schema locations
     *
     * Template argument Resolver should be a functor with an operation
     * const ACE_TCHAR * operator () (...arguments from resolveEntity...)
@@ -107,4 +107,4 @@ namespace XML
 
 #include /**/ "ace/post.h"
 
-#endif /*  CIAO_XML_SCHEMA_RESOLVER_H */
+#endif /*  ACE_XML_SCHEMA_RESOLVER_H */

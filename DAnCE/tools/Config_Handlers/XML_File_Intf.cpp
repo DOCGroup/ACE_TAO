@@ -1,7 +1,7 @@
 // $Id$
 
 #include "XML_File_Intf.h"
-#include "tools/XML/XML_Typedefs.h"
+#include "ace/XML_Utils/XML_Typedefs.h"
 #include "Deployment.hpp"
 #include "DP_Handler.h"
 #include "DD_Handler.h"

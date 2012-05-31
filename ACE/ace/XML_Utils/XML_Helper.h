@@ -9,8 +9,8 @@
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
  */
 //============================================================
-#ifndef CIAO_XML_HELPER_H
-#define CIAO_XML_HELPER_H
+#ifndef ACE_XML_HELPER_H
+#define ACE_XML_HELPER_H
 #include /**/ "ace/pre.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -96,4 +96,4 @@ namespace XML
 #include "XML_Helper.tpp"
 
 #include /**/ "ace/post.h"
-#endif/*CIAO_CONFIG_HANDLERS_XML_HELPER_H*/
+#endif/*ACE_XML_HELPER_H*/

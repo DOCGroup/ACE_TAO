@@ -1,6 +1,6 @@
 // $Id$
 
-#include "XML/XML_Typedefs.h"
+#include "ace/XML_Utils/XML_Typedefs.h"
 #include "SatisfierProperty_Handler.h"
 #include "DD_Handler.h"
 #include "Any_Handler.h"

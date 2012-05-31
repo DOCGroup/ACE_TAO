@@ -1,5 +1,5 @@
 // -*- MPC -*-
 // $Id$
 
-project : dds4ccm_qos_xml_handler_base, dynamicany, typecodefactory, xml_utils {
+project : dds4ccm_qos_xml_handler_base, dynamicany, typecodefactory, ace_xml_utils {
 }

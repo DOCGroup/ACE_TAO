@@ -18,7 +18,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "XML/XML_Error_Handler.h"
+#include "ace/XML_Utils/XML_Error_Handler.h"
 
 #include "xercesc/util/XercesDefs.hpp"
 
