@@ -5,7 +5,7 @@
 #ifndef XMLSCHEMA_TYPE_INFO_HPP
 #define XMLSCHEMA_TYPE_INFO_HPP
 
-#include <XSCRT/ExtendedTypeInfo.hpp>
+#include <ace/XML_Utils/XSCRT/ExtendedTypeInfo.hpp>
 
 namespace XMLSchema
 {
@@ -16,7 +16,7 @@ namespace XMLSchema
   };
 }
 
-#include <XMLSchema/TypeInfo.ipp>
-#include <XMLSchema/TypeInfo.tpp>
+#include <ace/XML_Utils/XMLSchema/TypeInfo.ipp>
+#include <ace/XML_Utils/XMLSchema/TypeInfo.tpp>
 
 #endif  // XMLSCHEMA_TYPE_INFO_HPP

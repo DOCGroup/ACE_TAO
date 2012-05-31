@@ -27,15 +27,12 @@ project (XML_QOS_XSC_Generation) : install, xscdefaults {
 
 
 project (QOS_XML_XSC_Handler) : install, acelib, xerces, anytypecode, \
-                                dds4ccm_dcps, dds4ccm_logger, ace_xml_utils, gen_ostream {
+                                dds4ccm_dcps, dds4ccm_logger, ace_xml_utils, gen_ostream, ciao_output {
   sharedname = QOS_XML_XSC_Handler
   after += XML_QOS_XSC_Generation
   dynamicflags += XML_QOS_HANDLER_BUILD_DLL
   macros += XML_USE_PTHREADS
   includes += $(CIAO_ROOT)/connectors/dds4ccm/tools/QOS_XML_Handler $(CIAO_ROOT)/connectors $(DDS_ROOT)
-  includes += $(DANCE_ROOT)/tools/Config_Handlers $(DANCE_ROOT)/tools
-
-  libout = $(ACE_ROOT)/lib
 
   requires += dds4ccm_opendds
 

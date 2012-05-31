@@ -480,7 +480,7 @@ namespace XMI
   }
 }
 
-#include "XMLSchema/TypeInfo.hpp"
+#include "ace/XML_Utils/XMLSchema/TypeInfo.hpp"
 
 namespace XMI
 {

@@ -2,7 +2,7 @@
 
 #include "XML_File_Intf.h"
 #include "ace/XML_Utils/XML_Typedefs.h"
-#include "XMLSchema/id_map.hpp"
+#include "ace/XML_Utils/XMLSchema/id_map.hpp"
 
 #include "dds/DdsDcpsInfrastructureC.h"
 #include "dds4ccm/impl/logger/Log_Macros.h"

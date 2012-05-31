@@ -1,3 +1,66 @@
+Thu May 31 12:31:35 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tools/Config_Handlers/Basic_Deployment_Data.hpp:
+        * tools/Config_Handlers/Basic_Deployment_Data.cpp:
+        * tools/Config_Handlers/Deployment.cpp:
+        * tools/Config_Handlers/Deployment.hpp:
+        * tools/Config_Handlers/Utils/Functors.h:
+        * tools/Config_Handlers/XMI.cpp:
+        * tools/Config_Handlers/XMI.hpp:
+        * tools/Config_Handlers/XML_File_Intf.cpp:
+        * tools/Config_Handlers/ccd.cpp:
+        * tools/Config_Handlers/ccd.hpp:
+        * tools/Config_Handlers/cdd.hpp:
+        * tools/Config_Handlers/cdd.cpp:
+        * tools/Config_Handlers/cdp.cpp:
+        * tools/Config_Handlers/cdp.hpp:
+        * tools/Config_Handlers/cid.hpp:
+        * tools/Config_Handlers/cid.cpp:
+        * tools/Config_Handlers/cpd.cpp:
+        * tools/Config_Handlers/cpd.hpp:
+        * tools/Config_Handlers/iad.cpp:
+        * tools/Config_Handlers/iad.hpp:
+        * tools/Config_Handlers/pcd.hpp:
+        * tools/Config_Handlers/pcd.cpp:
+        * tools/Config_Handlers/toplevel.hpp:
+        * tools/Config_Handlers/toplevel.cpp:
+          Updated for XMLSchema move to ACE
+
+        * tools/Config_Handlers/XMLSchema:
+        * tools/Config_Handlers/XMLSchema/Traversal.hpp:
+        * tools/Config_Handlers/XMLSchema/Traversal.ipp:
+        * tools/Config_Handlers/XMLSchema/Traversal.tpp:
+        * tools/Config_Handlers/XMLSchema/TypeInfo.hpp:
+        * tools/Config_Handlers/XMLSchema/TypeInfo.ipp:
+        * tools/Config_Handlers/XMLSchema/TypeInfo.tpp:
+        * tools/Config_Handlers/XMLSchema/Types.hpp:
+        * tools/Config_Handlers/XMLSchema/Types.ipp:
+        * tools/Config_Handlers/XMLSchema/Types.tpp:
+        * tools/Config_Handlers/XMLSchema/Writer.hpp:
+        * tools/Config_Handlers/XMLSchema/Writer.ipp:
+        * tools/Config_Handlers/XMLSchema/Writer.tpp:
+        * tools/Config_Handlers/XMLSchema/id_map.hpp:
+        * tools/Config_Handlers/XSCRT:
+        * tools/Config_Handlers/XSCRT/Elements.hpp:
+        * tools/Config_Handlers/XSCRT/Elements.ipp:
+        * tools/Config_Handlers/XSCRT/Elements.tpp:
+        * tools/Config_Handlers/XSCRT/ExtendedTypeInfo.hpp:
+        * tools/Config_Handlers/XSCRT/ExtendedTypeInfo.ipp:
+        * tools/Config_Handlers/XSCRT/Parser.hpp:
+        * tools/Config_Handlers/XSCRT/Parser.ipp:
+        * tools/Config_Handlers/XSCRT/Parser.tpp:
+        * tools/Config_Handlers/XSCRT/Traversal.hpp:
+        * tools/Config_Handlers/XSCRT/Traversal.ipp:
+        * tools/Config_Handlers/XSCRT/Traversal.tpp:
+        * tools/Config_Handlers/XSCRT/Writer.hpp:
+        * tools/Config_Handlers/XSCRT/Writer.ipp:
+        * tools/Config_Handlers/XSCRT/Writer.tpp:
+        * tools/Config_Handlers/XSCRT/XML.hpp:
+        * tools/Config_Handlers/XSCRT/XML.ipp:
+        * tools/Config_Handlers/XSCRT/XML.tpp:
+        * tools/Config_Handlers/XSCRT/XMLSchema.hpp:
+          Removed these files, moved to ACE
+
 Thu May 31 09:13:26 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/dance_config_handlers.mpb:

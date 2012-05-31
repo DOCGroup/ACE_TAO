@@ -881,7 +881,7 @@ namespace DAnCE
   }
 }
 
-#include "XMLSchema/TypeInfo.hpp"
+#include "ace/XML_Utils/XMLSchema/TypeInfo.hpp"
 
 namespace DAnCE
 {

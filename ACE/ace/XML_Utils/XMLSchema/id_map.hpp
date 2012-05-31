@@ -25,7 +25,7 @@
 
 //ID_Map makes use of the Types::idref_ data member to set it to the appropriate
 //object created during parsing
-#include "XMLSchema/Types.hpp"
+#include "ace/XML_Utils/XMLSchema/Types.hpp"
 
 //The ID_Map is a Thread Specific Storage element.
 #include "ace/TSS_T.h"

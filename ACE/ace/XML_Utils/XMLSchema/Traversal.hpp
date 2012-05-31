@@ -5,8 +5,8 @@
 #ifndef XMLSCHEMA_TRAVERSAL_HPP
 #define XMLSCHEMA_TRAVERSAL_HPP
 
-#include <XSCRT/Traversal.hpp>
-#include <XMLSchema/Types.hpp>
+#include <ace/XML_Utils/XSCRT/Traversal.hpp>
+#include <ace/XML_Utils/XMLSchema/Types.hpp>
 
 namespace XMLSchema
 {
@@ -71,7 +71,7 @@ namespace XMLSchema
   }
 }
 
-#include <XMLSchema/Traversal.ipp>
-#include <XMLSchema/Traversal.tpp>
+#include <ace/XML_Utils/XMLSchema/Traversal.ipp>
+#include <ace/XML_Utils/XMLSchema/Traversal.tpp>
 
 #endif  // XMLSCHEMA_TRAVERSAL_HPP

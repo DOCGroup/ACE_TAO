@@ -1,3 +1,11 @@
+Thu May 31 12:31:31 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tools/QOS_XML_Handler/XML_File_Intf.cpp:
+        * connectors/dds4ccm/tools/QOS_XML_Handler/dds_qos.cpp:
+        * connectors/dds4ccm/tools/QOS_XML_Handler/dds_qos.hpp:
+        * connectors/dds4ccm/tools/QOS_XML_Handler/qos_xml_handler.mpc:
+          Updated for XSC move from DAnCe to ACE
+
 Thu May 31 09:12:50 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/dds4ccm_qos_xml_handler.mpb:
