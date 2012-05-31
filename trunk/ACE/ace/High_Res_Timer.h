@@ -199,7 +199,7 @@ public:
   /// to start_incr and stop_incr.
   void elapsed_time_incr (ACE_Time_Value &tv) const;
 
-  /// Set <nsec> to the number of nanoseconds elapsed between all calls
+  /// Set @a nanoseconds to the number of nanoseconds elapsed between all calls
   /// to start_incr and stop_incr.
   void elapsed_time_incr (ACE_hrtime_t &nanoseconds) const;
 
