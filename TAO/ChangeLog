@@ -1,3 +1,10 @@
+Thu May 31 21:57:43 UTC 2012  Ken Sedgwick <ken@bonsai.com>
+
+        * docs/Security/SSLIOP-USAGE.html
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp
+        Added SSLCipherList and SSLServerCipherOrder openssl runtime
+        configuration options to SSLIOP_Factory.  Fixes bug 4022.
+
 Fri May 25 11:14:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
 
         * orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.h:

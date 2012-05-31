@@ -329,6 +329,33 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
               rand_path = argv[curarg];
             }
         }
+
+      else if (ACE_OS::strcasecmp (argv[curarg],
+                                   ACE_TEXT("-SSLServerCipherOrder")) == 0)
+        {
+          ::SSL_CTX_set_options (ssl_ctx->context (),
+                                 SSL_OP_CIPHER_SERVER_PREFERENCE);
+        }
+
+      else if (ACE_OS::strcasecmp (argv[curarg],
+                                   ACE_TEXT("-SSLCipherList")) == 0)
+        {
+          curarg++;
+          if (curarg < argc)
+            {
+              if (::SSL_CTX_set_cipher_list (ssl_ctx->context (),
+                                             argv[curarg]) == 0)
+                {
+                  ACE_DEBUG ((LM_ERROR,
+                              ACE_TEXT ("TAO (%P|%t) Unable to set cipher ")
+                              ACE_TEXT ("list in SSLIOP ")
+                              ACE_TEXT ("factory.\n")));
+
+                  return -1;
+                }
+            }
+        }
+
     }
 
   // Load some (more) entropy from the user specified sources
