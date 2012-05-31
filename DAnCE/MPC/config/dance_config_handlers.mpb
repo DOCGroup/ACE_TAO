@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : dance_config_handlers_base, dynamicany, typecodefactory, dance_deployment_stub, dance_logger, xml_utils {
+project : dance_config_handlers_base, dynamicany, typecodefactory, dance_deployment_stub, dance_logger, ace_xml_utils {
   after += XSC_DynAny_Handler \
            XSC_Config_Handlers \
            XSC_XML_Handlers \

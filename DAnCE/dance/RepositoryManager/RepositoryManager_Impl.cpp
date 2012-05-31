@@ -36,7 +36,7 @@
 #include "dance/Logger/Log_Macros.h"
 
 #include "Package_Handlers/PCD_Handler.h"
-#include "XML/XML_Typedefs.h"
+#include "ace/XML_Utils/XML_Typedefs.h"
 
 #include "RM_Helper.h"            //to be able to externalize/internalize a PackageConfiguration
 #include "ace/Message_Block.h"    //for ACE_Message_Block

@@ -1,3 +1,15 @@
+Thu May 31 09:12:07 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/XML_Utils:
+        * ace/XML_Utils/XML.mpc:
+        * ace/XML_Utils/XML_Error_Handler.h:
+        * ace/XML_Utils/XML_Helper.h:
+        * ace/XML_Utils/XML_Schema_Resolver.h:
+        * bin/MakeProjectCreator/config/ace_xml_utils.mpb:
+          New ACE_XML_Utils library. This is coming from DAnCe and had to
+          move to ACE because it is now used in more places and soon will
+          also be used by OpenDDS
+
 Thu May 31 07:57:59 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/High_Res_Timer.h:

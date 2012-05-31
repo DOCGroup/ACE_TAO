@@ -2,7 +2,7 @@
 #include "DomainDataManager.h"
 #include "dance/Deployment/Deployment_NodeManagerC.h"
 
-#include "Config_Handlers/XML_File_Intf.h"
+#include "tools/Config_Handlers/XML_File_Intf.h"
 #include "dance/Logger/Log_Macros.h"
 
 #ifdef GEN_OSTREAM_OPS

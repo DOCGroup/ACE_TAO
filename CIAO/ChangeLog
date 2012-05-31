@@ -1,3 +1,18 @@
+Thu May 31 09:12:50 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/dds4ccm_qos_xml_handler.mpb:
+        * MPC/config/dds4ccm_qos_xml_handler_base.mpb:
+        * connectors/dds4ccm/tools/QOS_XML_Handler/XML_File_Intf.cpp:
+        * connectors/dds4ccm/tools/QOS_XML_Handler/qos_xml_handler.mpc:
+        * tests/IDL3_to_XMI/IDL2XMI_Test/IDL2XMI_Test.mpc:
+        * tests/IDL3_to_XMI/IDL2XMI_Test/XML_Helper.h:
+        * tests/IDL3_to_XMI/IDL2XMI_Test/XML_Helper.cpp:
+        * tools/IDL3_to_XMI/IDL3_TO_XMI.mpc:
+        * tools/IDL3_to_XMI/IDL3_to_XMI_visitor.h:
+        * tools/IDL3_to_XMI/IDL3_to_XMI_visitor.cpp:
+        * tools/IDL3_to_XMI/IR_Simulator_visitor.h:
+          Updated because DAnCE XML_Utils has been moved to ACE as ACE_XML_Utils
+
 Thu May 31 08:12:08 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * etc/ciao.doxygen:

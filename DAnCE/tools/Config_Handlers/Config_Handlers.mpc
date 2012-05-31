@@ -65,14 +65,13 @@ project (XSC_XML_Handlers) : install, acelib, xerces, dance_lib {
   }
 }
 
-project (XSC_Config_Handlers) : install, dance_deployment_stub, dance_config_handlers_base, dance_lib, dance, dance_logger {
+project (XSC_Config_Handlers) : install, dance_deployment_stub, dance_config_handlers_base, dance_lib, dance, dance_logger, ace_xml_utils {
   after += XSC_DynAny_Handler \
            XSC_Config_Handlers_Common
 
   sharedname = XSC_Config_Handlers
   dynamicflags += CONFIG_HANDLERS_BUILD_DLL
-  libs += XML_Utils \
-          XSC_XML_Handlers \
+  libs += XSC_XML_Handlers \
           XSC_DynAny_Handler \
           XSC_Config_Handlers_Common
 

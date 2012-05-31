@@ -1,7 +1,7 @@
 // $Id$
 
 #include "XML_File_Intf.h"
-#include "XML/XML_Typedefs.h"
+#include "ace/XML_Utils/XML_Typedefs.h"
 #include "XMLSchema/id_map.hpp"
 
 #include "dds/DdsDcpsInfrastructureC.h"
