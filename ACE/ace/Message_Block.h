@@ -204,7 +204,7 @@ public:
 
   /**
    * Create a Message Block that assumes it has ownership of @a data,
-   * but in reality it doesnt (i.e., cannot delete it since it didn't
+   * but in reality it doesn't (i.e., cannot delete it since it didn't
    * malloc it!).  Note that the @c size of the Message_Block will
    * be @a size, but the @a length  will be 0 until <wr_ptr> is set.
    */
@@ -276,8 +276,8 @@ public:
   // = Data Block flag accessors and mutators.
   /// Bitwise-or the @a more_flags into the existing message flags and
   /// return the new value.
-  /* @todo: I think the following set of methods could not be used at
-   *  all. May be they are useless. Let us have it so that we dont
+  /** @todo I think the following set of methods could not be used at
+   *  all. May be they are useless. Let us have it so that we don't
    *  mess up memory management of the Message_Block. Somebody correct
    *  me if I am totally totally wrong..
    */
@@ -319,9 +319,9 @@ public:
 
   /**
    * Return a "shallow" copy that increments our reference count by 1.
-   * This is similar to CORBA's <_duplicate> method, which is useful
+   * This is similar to CORBA's _duplicate() method, which is useful
    * if you want to eliminate lots of checks for NULL @a mb pointers
-   * before calling <_duplicate> on them.
+   * before calling _duplicate() on them.
    */
   static ACE_Message_Block *duplicate (const ACE_Message_Block *mb);
 
@@ -355,10 +355,10 @@ public:
   virtual ACE_Message_Block *release (void);
 
   /**
-   * This behaves like the non-static method <release>, except that it
-   * checks if @a mb is 0.  This is similar to <CORBA::release>, which
+   * This behaves like the non-static method release(), except that it
+   * checks if @a mb is 0.  This is similar to CORBA::release(), which
    * is useful if you want to eliminate lots of checks for NULL
-   * pointers before calling <release> on them.  Returns @a mb.
+   * pointers before calling release() on them.  Returns @a mb.
    */
   static ACE_Message_Block *release (ACE_Message_Block *mb);
 
