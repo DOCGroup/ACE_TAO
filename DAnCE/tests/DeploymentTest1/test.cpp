@@ -7,8 +7,8 @@
 #include "dance/Deployment/Deployment_NodeManagerC.h"
 #include "dance/Deployment/Deployment_NodeApplicationManagerC.h"
 #include "dance/Logger/Log_Macros.h"
-#include "Config_Handlers/DnC_Dump.h"
-#include "Config_Handlers/XML_File_Intf.h"
+#include "tools/Config_Handlers/DnC_Dump.h"
+#include "tools/Config_Handlers/XML_File_Intf.h"
 
 int ACE_TMAIN (int argc, ACE_TCHAR * argv[])
 {
