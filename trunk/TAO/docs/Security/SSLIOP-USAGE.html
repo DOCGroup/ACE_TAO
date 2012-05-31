@@ -152,6 +152,17 @@ function MM_nbGroup(event, grpName) { //v3.0
 	    it can be a certificate containing a PEM encoded set of
 	    Diffie-Hellman parameters.</td>
     </tr>
+    <tr>
+      <td><code>-SSLCipherList</code> <em>cipher-spec</em></td>
+      <td>Sets the list of available ciphers.  The cipher specification string
+          should be formatted per the openssl ciphers(1) man page.</td>
+    </tr>
+    <tr>
+      <td><code>-SSLServerCipherOrder</code></td>
+      <td>When choosing a cipher, use the server's preferences instead of
+           the client preferences. When not set, the SSL server will always
+           follow the clients preferences.</td>
+    </tr>
 
   </table>
   <h4>Environment variables</h4>
