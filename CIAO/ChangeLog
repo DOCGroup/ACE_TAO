@@ -1,3 +1,13 @@
+Thu May 31 06:32:23 UTC 2012  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/QoS/dump:
+        * connectors/dds4ccm/tests/QoS/dump/dds4ccm_qos_dump.mpc:
+        * connectors/dds4ccm/tests/QoS/dump/qos.xml:
+        * connectors/dds4ccm/tests/QoS/dump/qos_dump.cpp:
+        * connectors/dds4ccm/tests/QoS/dump/run_test.pl:
+          Added basic QOS XML test. This test just dumps the
+          IDL QOS structure after parsing.
+
 Wed May 30 13:24:42 UTC 2012  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/docs/schema:
