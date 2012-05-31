@@ -1,3 +1,8 @@
+Thu May 31 17:59:02 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/ciaoidldefaults.mpb:
+          Added gen_ostream
+
 Thu May 31 12:31:31 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tools/QOS_XML_Handler/XML_File_Intf.cpp:
