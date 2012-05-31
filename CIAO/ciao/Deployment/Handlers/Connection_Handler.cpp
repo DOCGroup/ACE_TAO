@@ -72,7 +72,9 @@ namespace CIAO
                 endpoint_reference = out;
 
                 if (this->is_local_connection (conn))
-                  (*out) <<= comp.in ();
+                  {
+                    (*out) <<= comp.in ();
+                  }
                 else
                   {
                     switch (conn.internalEndpoint[i].kind)

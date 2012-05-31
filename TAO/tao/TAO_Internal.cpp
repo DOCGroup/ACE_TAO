@@ -189,7 +189,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 /// A little helper class to get around the TAO_Singleton::instance ()
 /// inability to pass default initialization arguments to the
 /// singleton ctor.
-
 class TAO_Ubergestalt_Ready_Condition
   : public ACE_SYNCH_RECURSIVE_CONDITION
 {
@@ -205,7 +204,6 @@ public:
   {
   }
 
-
 private:
   /// The mutex, associated with the condition. Do not use the ACE
   /// global mutex, because it causes deadlocks with other threads that
@@ -213,9 +211,6 @@ private:
   ACE_Recursive_Thread_Mutex mutex_;
 };
 #endif // ACE_HAS_THREADS
-
-
-
 
 // ****************************************************************
 /// Note that the argument vector will be corrupted upon return
