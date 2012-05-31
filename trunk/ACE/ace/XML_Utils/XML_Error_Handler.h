@@ -9,8 +9,8 @@
  *  @author Bala Natarajan <bala@dre.vanderbilt.edu>
  */
 //================================================================
-#ifndef CIAO_XML_ERROR_HANDLER_H
-#define CIAO_XML_ERROR_HANDLER_H
+#ifndef ACE_XML_ERROR_HANDLER_H
+#define ACE_XML_ERROR_HANDLER_H
 
 #include /**/ "ace/pre.h"
 
@@ -57,4 +57,4 @@ namespace XML
 
 #include /**/ "ace/post.h"
 
-#endif /* CIAO_XML_ERROR_HANDLER_H*/
+#endif /* ACE_XML_ERROR_HANDLER_H */

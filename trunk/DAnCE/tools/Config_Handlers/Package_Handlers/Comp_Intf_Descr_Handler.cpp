@@ -1,14 +1,14 @@
 // $Id$
 #include "tao/AnyTypeCode/TypeCode.h"
 #include "Comp_Intf_Descr_Handler.h"
-#include "XML/XML_Typedefs.h"
+#include "ace/XML_Utils/XML_Typedefs.h"
 #include "Utils/Exceptions.h"
 #include "Utils/Functors.h"
 #include "DataType_Handler.h"
 #include "Property_Handler.h"
 #include "Deployment.hpp"
 #include "Package_Handlers/CPD_Handler.h"
-#include "Config_Handlers/CPD_Handler.h"
+#include "tools/Config_Handlers/CPD_Handler.h"
 #include "dance/Logger/Log_Macros.h"
 namespace DAnCE
 {

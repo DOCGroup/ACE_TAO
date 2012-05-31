@@ -6,7 +6,7 @@
 #include "xercesc/dom/DOM.hpp"
 #include "xercesc/parsers/XercesDOMParser.hpp"
 
-#include "XML/XercesString.h"
+#include "ace/XML_Utils/XercesString.h"
 
 namespace Test
 {

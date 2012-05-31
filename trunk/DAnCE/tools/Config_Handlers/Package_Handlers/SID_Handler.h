@@ -11,7 +11,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "XML/XML_Typedefs.h"
+#include "ace/XML_Utils/XML_Typedefs.h"
 #include "Utils/Functors.h"
 #include "IDREF_Base.h"
 #include "Package_Handlers/Packaging_Handlers_Export.h"

@@ -11,7 +11,7 @@
 
 #include "Basic_Deployment_Data.hpp"
 #include "dance/Deployment/Deployment_DataC.h"
-#include "XML/XML_Typedefs.h"
+#include "ace/XML_Utils/XML_Typedefs.h"
 #include "Utils/Exceptions.h"
 
 #include "Deployment.hpp"

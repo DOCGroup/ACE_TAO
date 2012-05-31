@@ -6,7 +6,7 @@
 #include "Req_Handler.h"
 #include "Utils/Functors.h"
 #include "Utils/Exceptions.h"
-#include "XML/XML_Typedefs.h"
+#include "ace/XML_Utils/XML_Typedefs.h"
 
 #include "Deployment.hpp"
 #include "dance/Logger/Log_Macros.h"
