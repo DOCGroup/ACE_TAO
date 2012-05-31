@@ -4,9 +4,9 @@
 #include "dance/Deployment/Deployment_TargetDataC.h"
 #include "dance/Logger/Log_Macros.h"
 #include "dance/Logger/Logger_Service.h"
-#include "Config_Handlers/DnC_Dump.h"
-#include "Config_Handlers/XML_File_Intf.h"
-#include "Config_Handlers/Common.h"
+#include "tools/Config_Handlers/DnC_Dump.h"
+#include "tools/Config_Handlers/XML_File_Intf.h"
+#include "tools/Config_Handlers/Common.h"
 
 int ACE_TMAIN (int argc, ACE_TCHAR * argv[])
 {
