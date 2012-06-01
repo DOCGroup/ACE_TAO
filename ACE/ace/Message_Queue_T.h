@@ -47,11 +47,11 @@ namespace ACE
 /**
  * @class ACE_Message_Queue
  *
- * @brief A message queueing facility with parameterized synchronization
+ * @brief A message queuing facility with parameterized synchronization
  * capability. ACE_Message_Queue is modeled after the queueing facilities
  * in System V STREAMs.
  *
- * ACE_Message_Queue is the primary queueing facility for
+ * ACE_Message_Queue is the primary queuing facility for
  * messages in the ACE framework.  It's one template argument parameterizes
  * the queue's synchronization. The argument specifies a synchronization
  * strategy. The two main strategies available for ACE_SYNCH_DECL are:
