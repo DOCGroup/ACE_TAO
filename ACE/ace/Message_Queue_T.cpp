@@ -1699,7 +1699,6 @@ ACE_Message_Queue<ACE_SYNCH_USE>::peek_dequeue_head (ACE_Message_Block *&first_i
     }
 
   // Wait for at least one item to become available.
-
   if (this->wait_not_empty_cond (timeout) == -1)
     return -1;
 

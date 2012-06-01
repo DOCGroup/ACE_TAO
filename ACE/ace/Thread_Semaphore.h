@@ -47,7 +47,7 @@ public:
                         void * = 0,
                         int max = 0x7FFFFFFF);
 
-  /// Default dtor.
+  /// Default destructor.
   ~ACE_Thread_Semaphore (void);
 
   /// Dump the state of an object.

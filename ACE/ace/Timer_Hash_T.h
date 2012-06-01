@@ -324,8 +324,8 @@ private:
   HASH_ITERATOR *iterator_;
 
 #if defined (ACE_WIN64)
-  // Part of a hack... see comments in schedule().
-  // This is, essentially, the upper 32 bits of a 64-bit pointer on Win64.
+  /// Part of a hack... see comments in schedule().
+  /// This is, essentially, the upper 32 bits of a 64-bit pointer on Win64.
   ptrdiff_t pointer_base_;
 #endif
 

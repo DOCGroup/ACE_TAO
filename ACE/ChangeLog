@@ -1,3 +1,13 @@
+Fri Jun  1 12:43:48 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Condition_Thread_Mutex.cpp:
+        * ace/Message_Queue_T.h:
+        * ace/Message_Queue_T.cpp:
+        * ace/Thread_Semaphore.h:
+        * ace/Time_Policy.h:
+        * ace/Timer_Hash_T.h:
+          Doxygen fixes
+
 Thu May 31 14:05:51 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * rpmbuild/ace-tao.spec:
