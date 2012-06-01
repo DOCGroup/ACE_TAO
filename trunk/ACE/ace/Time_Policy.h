@@ -127,7 +127,6 @@ protected:
  *
  * @brief Implement a time policy that delegates to a dynamic
  *        time policy.
- *
  */
 class ACE_Export ACE_Delegating_Time_Policy
 {
