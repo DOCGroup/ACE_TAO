@@ -1,6 +1,11 @@
 USER VISIBLE CHANGES BETWEEN CIAO-1.1.2 and CIAO-1.1.3
 =======================================================
 
+. DDS4CCM with OpenDDS 3.2 or higher now can use the QoS XML files. The DDS4CCM
+  profile#library convention is handled as filename#profile.
+
+. Further extended and improved support for OpenDDS as DDS vendor
+
 USER VISIBLE CHANGES BETWEEN CIAO-1.1.1 and CIAO-1.1.2
 =======================================================
 
