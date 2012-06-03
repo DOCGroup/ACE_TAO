@@ -141,7 +141,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>HelloTest_Library#BestEffortQoS</string>
+          <string>KeyedTest_Library#BestEffortQoS</string>
         </value>
       </value>
     </configProperty>

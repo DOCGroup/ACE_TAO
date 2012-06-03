@@ -2,7 +2,7 @@
 
 /**
  * @file PartialShutdown.idl
- * @author Marcel Smit <msmit@remedy.nl>
+ * @author Marcel Smit (msmit@remedy.nl)
  */
 
 #ifndef PARTIALSHUTDOWN_IDL_

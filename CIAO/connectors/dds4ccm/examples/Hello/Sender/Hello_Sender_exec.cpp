@@ -79,11 +79,11 @@ namespace CIAO_Hello_Sender_Impl
     ::DDS::Entity_ptr /* the_entity */,
     ::DDS::StatusKind status_kind)
   {
-    if(!this->ready_to_start_.value())
+    if (status_kind == DDS::PUBLICATION_MATCHED_STATUS)
       {
         // be aware that when only the sender runs, ready_to_start will never
         // be true.
-        this->ready_to_start_ = (status_kind == DDS::PUBLICATION_MATCHED_STATUS);
+        this->ready_to_start_ = true;
       }
   }
 
@@ -232,9 +232,10 @@ namespace CIAO_Hello_Sender_Impl
   void
   Sender_exec_i::tick ()
   {
-    // Start writing after DataWriter find first DataReader that matched the Topic
-    // It is stll possible that other Readers aren't yet ready to recieve data, for that case in the
-    // profile the durability is set to TRANSIENT_DURABILITY_QOS, so each Raeder should receive each message.
+    // Start writing after DataWriter find first DataReader that matched the
+    // Topic It is still possible that other Readers aren't yet ready to
+    // receive data, for that case in the profile the durability is set to
+    // TRANSIENT_DURABILITY_QOS, so each Reader should receive each message.
     if(this->ready_to_start_.value())
       {
         if (this->iteration_ < this->iterations_)
@@ -321,6 +322,13 @@ namespace CIAO_Hello_Sender_Impl
       {
         throw ::CORBA::INTERNAL ();
       }
+
+    if (!this->ready_to_start_.value())
+      {
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Sender_exec_i::stop - ")
+                              ACE_TEXT ("Sender never got ready to start")));
+      }
+
   }
 
 

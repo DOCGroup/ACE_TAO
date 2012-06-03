@@ -12,7 +12,6 @@
 #elif (CIAO_DDS4CCM_OPENDDS==1)
 #include "dds/DCPS/Service_Participant.h"
 #include "dds4ccm/tools/QOS_XML_Handler/QOS_XML_Loader.h"
-#include "dds4ccm/tools/QOS_XML_Handler/Utils.h"
 #endif
 #include "dds4ccm/impl/logger/Logger_Service.h"
 #include "ace/Copy_Disabled.h"
@@ -218,7 +217,7 @@ protected:
 
 #if (CIAO_DDS4CCM_OPENDDS==1)
   OpenDDS::DCPS::TransportImpl_rch transport_impl_;
-  DDS4CCM::QOS_XML_Loader qos_xml_;
+  OpenDDS::DCPS::QOS_XML_Loader qos_xml_;
 #endif
 };
 

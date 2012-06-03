@@ -2,7 +2,7 @@
 
 /**
  * @file
- * @author Marcel Smit <msmit@remedy.nl>
+ * @author Marcel Smit (msmit@remedy.nl)
  *
  * by-hand idl3 translation of sender components.
  */
@@ -18,6 +18,7 @@ module ReadGet_Test
   component Sender
   {
     port ReadGet_Test::QueryConditionTestConnector::DDS_Write info_write;
+    provides CCM_DDS::ConnectorStatusListener sender_connector_status;
 
     uses ReadGetStarter start_reader;
     provides ReadGetRestarter restart_writer;

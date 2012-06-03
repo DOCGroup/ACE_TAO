@@ -2,7 +2,7 @@
 
 /**
  * @file Event_Connection_Test_Base.idl
- * @author Marcel Smit <msmit@remedy.nl>
+ * @author Marcel Smit (msmit@remedy.nl)
  */
 
 #ifndef EVENT_CONNECTION_TEST_BASE_IDL

@@ -10,7 +10,7 @@ use PerlACE::TestTarget;
 
 my $program = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 
-$PROG = $program->CreateProcess ("qos_dump", "qos.xml");
+$PROG = $program->CreateProcess ("qos_dump", "qos");
 $program_status = $PROG->Spawn ();
 
 if ($program_status != 0) {

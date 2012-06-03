@@ -545,6 +545,26 @@
     </internalEndpoint>
   </connection>
 
+  <connection>
+    <name>sender_connector_status_sender</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>sender_connector_status</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="SenderComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>error_listener</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ReadGet_Test_SenderConnectorInstance" />
+    </internalEndpoint>
+  </connection>
+
   <artifact xmi:id="Sender_ExecArtifact">
     <name>Sender_exec</name>
     <source/>

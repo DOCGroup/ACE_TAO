@@ -2,7 +2,7 @@
 
 /**
  * @file WU_LateBinding_Base.idl
- * @author Marcel Smit <msmit@remedy.nl>
+ * @author Marcel Smit (msmit@remedy.nl)
  */
 
 #ifndef WU_LATEBINDING_BASE_IDL

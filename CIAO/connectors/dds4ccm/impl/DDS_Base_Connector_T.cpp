@@ -23,8 +23,8 @@
 # include "dds/DCPS/transport/rtps_udp/RtpsUdpInst_rch.h"
 # include "dds/DCPS/transport/rtps_udp/RtpsUdpInst.h"
 # include "dds/DCPS/transport/framework/TransportRegistry.h"
-// # include "dds/DCPS/transport/framework/TransportConfig.h"
 # include "dds/DCPS/transport/framework/TransportConfig_rch.h"
+# include "dds/DCPS/transport/framework/TransportDebug.h"
 #endif
 
 template <typename CCM_TYPE>
@@ -42,8 +42,10 @@ DDS_Base_Connector_T<CCM_TYPE>::DDS_Base_Connector_T (void)
     {
       this->dlf_->init ();
     }
-  //OpenDDS::DCPS::DCPS_debug_level = 10;
 #if (CIAO_DDS4CCM_OPENDDS==1)
+  // Enable to get full opendds logging
+  //OpenDDS::DCPS::DCPS_debug_level = 10;
+  //OpenDDS::DCPS::Transport_debug_level = 5;
   this->create_opendds_participant_factory ();
 #endif
 }
@@ -174,13 +176,14 @@ DDS_Base_Connector_T<CCM_TYPE>::qos_profile (
 
 
 #if (CIAO_DDS4CCM_OPENDDS==1)
-      ACE_CString file_name (DDS4CCM::get_xml_file_name (qos_profile));
-      if (!this->qos_xml_.init (file_name.c_str()))
+      DDS::ReturnCode_t const retcode = this->qos_xml_.init (qos_profile);
+      if (retcode != ::DDS::RETCODE_OK)
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
               "DDS_Base_Connector_T::qos_profile - "
-              "Error while initializing QOS Handler\n"));
-          throw ::CCM_DDS::InternalError (0, 0);
+              "Error while initializing QOS Handler <%C>\n",
+              ::CIAO::DDS4CCM::translate_retcode (retcode)));
+          throw ::CCM_DDS::InternalError (retcode, 0);
         }
 #endif
     }
@@ -219,9 +222,6 @@ DDS_Base_Connector_T<CCM_TYPE>::init_domain (
         this->participant_factory_.get_default_participant_qos (qos);
 #else
         this->participant_factory_->get_default_participant_qos (qos);
-
-        this->qos_xml_.get_participant_qos (qos,
-          DDS4CCM::get_profile_name (this->qos_profile_.in ()).c_str ());
 #endif
 
       if (retcode != DDS::RETCODE_OK)
@@ -232,6 +232,25 @@ DDS_Base_Connector_T<CCM_TYPE>::init_domain (
               ::CIAO::DDS4CCM::translate_retcode (retcode)));
           throw ::CCM_DDS::InternalError (retcode, 0);
         }
+
+#if (CIAO_DDS4CCM_OPENDDS==1)
+      if (!::CORBA::is_nil (this->qos_profile_.in ()))
+        {
+          DDS::ReturnCode_t const retcode_dp_qos = this->qos_xml_.get_participant_qos (
+                            qos,
+                            this->qos_profile_.in ());
+
+          if (retcode_dp_qos != DDS::RETCODE_OK)
+            {
+              DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                  "DDS_Base_Connector_T::init_domain - "
+                  "Error: Unable to retrieve participant QOS from XML: <%C>\n",
+                  ::CIAO::DDS4CCM::translate_retcode (retcode_dp_qos)));
+              throw ::CCM_DDS::InternalError (retcode_dp_qos, 0);
+            }
+        }
+#endif
+
 
 #if defined GEN_OSTREAM_OPS
       if (DDS4CCM_debug_level >= DDS4CCM_LOG_LEVEL_DDS_STATUS)
@@ -379,20 +398,34 @@ DDS_Base_Connector_T<CCM_TYPE>::init_topic (
       DDS::ReturnCode_t const retcode =
         participant->get_default_topic_qos (tqos);
 
+      if (retcode != DDS::RETCODE_OK)
+      {
+        DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+            "DDS_Base_Connector_T::init_topic - "
+            "Error: Unable to retrieve default_topic_qos: <%C>\n",
+            ::CIAO::DDS4CCM::translate_retcode (retcode)));
+        throw ::CCM_DDS::InternalError (retcode, 0);
+      }
+
 #if (CIAO_DDS4CCM_OPENDDS==1)
-          this->qos_xml_.get_topic_qos (tqos,
-            DDS4CCM::get_profile_name (this->qos_profile_.in ()).c_str (),
-            topic_name);
+      if (!::CORBA::is_nil (this->qos_profile_.in ()))
+        {
+          DDS::ReturnCode_t const retcode_tp_qos = this->qos_xml_.get_topic_qos (
+                        tqos,
+                        this->qos_profile_.in (),
+                        topic_name);
+
+          if (retcode_tp_qos != DDS::RETCODE_OK)
+            {
+              DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                  "DDS_Base_Connector_T::init_topic - "
+                  "Error: Unable to retrieve topic QOS from XML: <%C>\n",
+                  ::CIAO::DDS4CCM::translate_retcode (retcode_tp_qos)));
+              throw ::CCM_DDS::InternalError (retcode_tp_qos, 0);
+            }
+        }
 #endif
 
-       if (retcode != DDS::RETCODE_OK)
-        {
-          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-              "DDS_Base_Connector_T::init_topic - "
-              "Error: Unable to retrieve default_topic_qos: <%C>\n",
-              ::CIAO::DDS4CCM::translate_retcode (retcode)));
-          throw ::CCM_DDS::InternalError (retcode, 0);
-        }
 
 #if defined GEN_OSTREAM_OPS
       if (DDS4CCM_debug_level >= DDS4CCM_LOG_LEVEL_DDS_STATUS)
@@ -448,11 +481,6 @@ DDS_Base_Connector_T<CCM_TYPE>::init_publisher (
           DDS::ReturnCode_t const retcode =
             participant->get_default_publisher_qos (pqos);
 
-#if (CIAO_DDS4CCM_OPENDDS==1)
-          this->qos_xml_.get_publisher_qos (pqos,
-            DDS4CCM::get_profile_name (this->qos_profile_.in ()).c_str ());
-#endif
-
           if (retcode != DDS::RETCODE_OK)
             {
               DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
@@ -461,6 +489,24 @@ DDS_Base_Connector_T<CCM_TYPE>::init_publisher (
                   ::CIAO::DDS4CCM::translate_retcode (retcode)));
               throw ::CCM_DDS::InternalError (retcode, 0);
             }
+
+#if (CIAO_DDS4CCM_OPENDDS==1)
+          if (!::CORBA::is_nil (this->qos_profile_.in ()))
+            {
+              DDS::ReturnCode_t const retcode_pub_qos = this->qos_xml_.get_publisher_qos (
+                              pqos,
+                              this->qos_profile_.in ());
+
+              if (retcode_pub_qos != DDS::RETCODE_OK)
+                {
+                  DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                      "DDS_Base_Connector_T::init_publisher - "
+                      "Error: Unable to retrieve publisher QOS from XML: <%C>\n",
+                      ::CIAO::DDS4CCM::translate_retcode (retcode_pub_qos)));
+                  throw ::CCM_DDS::InternalError (retcode_pub_qos, 0);
+                }
+            }
+#endif
 
 #if defined GEN_OSTREAM_OPS
       if (DDS4CCM_debug_level >= DDS4CCM_LOG_LEVEL_DDS_STATUS)
@@ -513,11 +559,6 @@ DDS_Base_Connector_T<CCM_TYPE>::init_subscriber (
           DDS::ReturnCode_t const retcode =
             participant->get_default_subscriber_qos (sqos);
 
-#if (CIAO_DDS4CCM_OPENDDS==1)
-          this->qos_xml_.get_subscriber_qos (sqos,
-            DDS4CCM::get_profile_name (this->qos_profile_.in ()).c_str ());
-#endif
-
           if (retcode != DDS::RETCODE_OK)
             {
               DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
@@ -526,6 +567,25 @@ DDS_Base_Connector_T<CCM_TYPE>::init_subscriber (
                   ::CIAO::DDS4CCM::translate_retcode (retcode)));
               throw ::CCM_DDS::InternalError (retcode, 0);
             }
+
+#if (CIAO_DDS4CCM_OPENDDS==1)
+          if (!::CORBA::is_nil (this->qos_profile_.in ()))
+            {
+              DDS::ReturnCode_t const retcode_sub_qos = this->qos_xml_.get_subscriber_qos (
+                                sqos,
+                                this->qos_profile_.in ());
+
+              if (retcode_sub_qos != DDS::RETCODE_OK)
+                {
+                  DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                      "DDS_Base_Connector_T::init_subscriber - "
+                      "Error: Unable to retrieve publisher QOS from XML: <%C>\n",
+                      ::CIAO::DDS4CCM::translate_retcode (retcode_sub_qos)));
+                  throw ::CCM_DDS::InternalError (retcode_sub_qos, 0);
+                }
+            }
+#endif
+
 
 #if defined GEN_OSTREAM_OPS
           if (DDS4CCM_debug_level >= DDS4CCM_LOG_LEVEL_DDS_STATUS)
@@ -581,7 +641,7 @@ DDS_Base_Connector_T<CCM_TYPE>::activate_topic (
                               reactor),
                             ::CORBA::NO_MEMORY ());
 
-          ::DDS::ReturnCode_t const retcode = topic->set_listener (listener,
+          DDS::ReturnCode_t const retcode = topic->set_listener (listener,
                                                                    mask);
 
           if (retcode != ::DDS::RETCODE_OK)
@@ -622,7 +682,7 @@ DDS_Base_Connector_T<CCM_TYPE>::activate_publisher (
                             ::CORBA::NO_MEMORY ());
         }
 
-      ::DDS::ReturnCode_t const retcode = publisher->set_listener (publisher_listener,
+      DDS::ReturnCode_t const retcode = publisher->set_listener (publisher_listener,
                                                                    mask);
 
       if (retcode != ::DDS::RETCODE_OK)
@@ -662,7 +722,7 @@ DDS_Base_Connector_T<CCM_TYPE>::activate_subscriber (
                             ::CORBA::NO_MEMORY ());
         }
 
-      ::DDS::ReturnCode_t const retcode = subscriber->set_listener (subscriber_listener,
+      DDS::ReturnCode_t const retcode = subscriber->set_listener (subscriber_listener,
                                                                     mask);
 
       if (retcode != ::DDS::RETCODE_OK)
@@ -689,7 +749,7 @@ DDS_Base_Connector_T<CCM_TYPE>::passivate_topic (
 
   if (!::CORBA::is_nil (topic_listener))
     {
-      ::DDS::ReturnCode_t const retcode =
+      DDS::ReturnCode_t const retcode =
         topic->set_listener (::DDS::TopicListener::_nil (), 0);
       if (retcode != ::DDS::RETCODE_OK)
         {
@@ -713,7 +773,7 @@ DDS_Base_Connector_T<CCM_TYPE>::passivate_publisher (
 
   if (!::CORBA::is_nil (publisher_listener))
     {
-      ::DDS::ReturnCode_t const retcode =
+      DDS::ReturnCode_t const retcode =
         publisher->set_listener (::DDS::PublisherListener::_nil (), 0);
 
       if (retcode != ::DDS::RETCODE_OK)
@@ -737,7 +797,7 @@ DDS_Base_Connector_T<CCM_TYPE>::passivate_subscriber (
 
   if (!::CORBA::is_nil (subscriber_listener))
     {
-      ::DDS::ReturnCode_t const retcode =
+      DDS::ReturnCode_t const retcode =
         subscriber->set_listener (::DDS::SubscriberListener::_nil (), 0);
       if (retcode != ::DDS::RETCODE_OK)
         {
@@ -760,7 +820,7 @@ void DDS_Base_Connector_T<CCM_TYPE>::remove_topic (
 {
   DDS4CCM_TRACE ("DDS_Base_Connector_T::remove_topic");
 
-  ::DDS::ReturnCode_t retcode = participant->delete_topic (topic);
+  DDS::ReturnCode_t retcode = participant->delete_topic (topic);
   if (retcode != ::DDS::RETCODE_OK)
     {
       throw ::CCM_DDS::InternalError (retcode, 0);
@@ -796,7 +856,7 @@ DDS_Base_Connector_T<CCM_TYPE>::remove_domain (
 {
   DDS4CCM_TRACE ("DDS_Base_Connector_T::remove_domain");
 
-  ::DDS::ReturnCode_t retcode = ::DDS::RETCODE_OK;
+  DDS::ReturnCode_t retcode = ::DDS::RETCODE_OK;
 #if (CIAO_DDS4CCM_NDDS==1)
   retcode = this->participant_factory_.delete_participant (participant);
 #else

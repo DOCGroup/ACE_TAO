@@ -2,7 +2,7 @@
 
 /**
  * @file Writer_Base.idl
- * @author Marcel Smit <msmit@remedy.nl>
+ * @author Marcel Smit (msmit@remedy.nl)
  */
 
 #ifndef WRITER_BASE_IDL

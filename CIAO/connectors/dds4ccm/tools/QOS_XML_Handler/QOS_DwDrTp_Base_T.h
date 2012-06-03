@@ -1,7 +1,18 @@
 /**
- * @author Marcel Smit <msmit@remedy.nl>
+ * @author Marcel Smit (msmit@remedy.nl)
  *
  * $Id$
+ *
+ * This template contains the parsing of all QOS XML setting
+ * which the DataWriter, the DataReader, and the Topic Qos have
+ * in common.
+ * The DDS_QOS_TYPE template attribute can either contain an
+ * ::DDS::DataReaderQos, an ::DDS::DataWriterQos, or an
+ * ::DDS::TopicQos. These are the IDL representatives.
+ *
+ * The XML_QOS_TYPE can either contain an ::dds::datareaderQos,
+ * an ::dds::datawriterQos, or an ::dds::topicQos. These are the
+ * XML representatives.
  *
  */
 #ifndef QOS_DWDRTP_BASE_T_H_

@@ -3,15 +3,16 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
     <html xmlns="http://www.w3.org/1999/xhtml"><head>
     <title>Building and Installing DDS4CCM</title>
-    <LINK rev="made" href="mailto:schmidt@cs.wustl.edu"></head>
+    <LINK rev="made" href="mailto:jwillemsen@remedy.nl"></head>
   <body text="#000000" vLink="#ff0f0f" link="#000fff" bgColor="#ffffff">
     <hr>
     <h3>Introduction</h3>
     <p>The DDS4CCM connector implements the DDS4LwCCM specification.<br/>
-      DDS4CCM is part of CIAO and intergrates DDS into a Component based framework,
+      DDS4CCM is part of CIAO and integrates DDS into CCM,
       which can be easily deployed, using DAnCE.<br/>
-      For now, the DDS4CCM connector only supports
-      <a href="http://www.rti.com/products/dds/index.html">RTI DDS</a>.
+      The CIAO DDS4CCM connector implementation supports
+      <a href="http://www.rti.com/products/dds/index.html">RTI DDS</a> and
+      <a href="http://www.opendds.org">OpenDDS</a> as underlying DDS vendors.
     </p>
     <h3>Building and Installing DDS4CCM</h3>
     <p>First of all, be sure that CIAO is build and installed and functioning as
@@ -27,15 +28,28 @@
     <p>Besided the flags needed to build ACE, TAO, CIAO, and, DAnCE, the following
       flags should be added for DDS4CCM.
     </p>
-    <p>default.features should contain the following flags:<br/>
+    <p>default.features should contain the following flags for RTI DDS:<br/>
       <ul>
         <li><code>ndds=1</code></li>
         <li><code>dds4ccm_ndds=1</code></li>
       </ul>
     </p>
-    <p>platform_macros.GNU should contain the following flags:<br/>
+    <p>default.features should contain the following flags for OpenDDS:<br/>
+      <ul>
+        <li><code>dds4ccm_opendds=1</code></li>
+        <li><code>dds_suppress_anys=0</code></li>
+      </ul>
+    </p>
+    <p>platform_macros.GNU should contain the following flags for RTI DDS:<br/>
       <ul>
         <li><code>ndds=1</code></li>
+        <li><code>dds4ccm_ndds=1</code></li>
+      </ul>
+    </p>
+    <p>platform_macros.GNU should contain the following flags for OpenDDS:<br/>
+      <ul>
+        <li><code>ndds=1</code></li>
+        <li><code>dds4ccm_ndds=1</code></li>
       </ul>
     </p>
     <p>

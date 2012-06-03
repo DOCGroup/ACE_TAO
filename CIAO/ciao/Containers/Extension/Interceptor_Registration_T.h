@@ -5,7 +5,7 @@
  *
  *  $Id$
  *
- *  @author Marcel Smit <msmit@remedy.nl>
+ *  @author Marcel Smit (msmit@remedy.nl)
  */
 
 #ifndef CIAO_INTERCEPTOR_REGISTRATION_H

@@ -4,9 +4,9 @@
 
 <dds xmlns="http://www.omg.org/dds"
      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-     xsi:schemaLocation="http://www.omg.org/dds ../../../docs/schema/dds_qos.xsd">
+     xsi:schemaLocation="http://www.omg.org/dds dds_qos.xsd">
   <qos_profile name="GetterProfile">
-     <datawriter_qos>
+    <datawriter_qos>
           <durability>
                <kind>TRANSIENT_DURABILITY_QOS</kind>
           </durability>
@@ -21,7 +21,7 @@
                <kind>KEEP_ALL_HISTORY_QOS</kind>
                <depth>1</depth>
           </history>
-     </datawriter_qos>
+    </datawriter_qos>
     <datareader_qos>
           <durability>
                  <kind>TRANSIENT_LOCAL_DURABILITY_QOS</kind>

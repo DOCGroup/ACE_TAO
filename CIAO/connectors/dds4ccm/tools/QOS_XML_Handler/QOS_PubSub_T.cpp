@@ -1,9 +1,8 @@
 // $Id$
 
-#include "dds4ccm/impl/logger/Log_Macros.h"
 #include "dds/DdsDcpsInfrastructureC.h"
 #include "QOS_Common.h"
-
+#include "dds/DCPS/debug.h"
 
 template <typename XML_QOS_TYPE, typename DDS_QOS_TYPE>
 QOS_PubSub_T<XML_QOS_TYPE, DDS_QOS_TYPE>::QOS_PubSub_T (void)
@@ -25,7 +24,7 @@ QOS_PubSub_T<XML_QOS_TYPE, DDS_QOS_TYPE>::read_qos (DDS_QOS_TYPE& dds_qos, const
 
 //       const std::string value = *xml_qos->group_data ()->value ();
 //
-//       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_TRACE, DDS4CCM_INFO
+//       ACE_DEBUG ((LM_TRACE,
 //         ACE_TEXT ("QOS_DataReader_T<XML_QOS_TYPE, DDS_QOS_TYPE>::read_qos - ")
 //         ACE_TEXT ("Set group_data to <%C>\n"),
 //         value.c_str ()));
@@ -50,37 +49,46 @@ QOS_PubSub_T<XML_QOS_TYPE, DDS_QOS_TYPE>::read_qos (DDS_QOS_TYPE& dds_qos, const
                 dds_qos.presentation.access_scope = ::DDS::GROUP_PRESENTATION_QOS;
                 break;
               default:
-                DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_DEBUG, DDS4CCM_INFO
+                ACE_ERROR ((LM_DEBUG,
                   ACE_TEXT ("QOS_PubSub_T::read_qos - ")
                   ACE_TEXT ("Unknown presentation access scope found <%d>; setting it to INSTANCE_PRESENTATION_QOS\n"),
                   xml_qos->presentation ().access_scope ().integral ()));
                 dds_qos.presentation.access_scope = ::DDS::INSTANCE_PRESENTATION_QOS;
                 break;
               }
-            DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_TRACE, DDS4CCM_INFO
-              ACE_TEXT ("QOS_PubSub_T<XML_QOS_TYPE, DDS_QOS_TYPE>::read_qos - ")
-              ACE_TEXT ("Set presentation access scope to <%d>\n"),
-              dds_qos.presentation.access_scope));
+            if (OpenDDS::DCPS::DCPS_debug_level > 9)
+              {
+                ACE_DEBUG ((LM_TRACE,
+                  ACE_TEXT ("QOS_PubSub_T<XML_QOS_TYPE, DDS_QOS_TYPE>::read_qos - ")
+                  ACE_TEXT ("Set presentation access scope to <%d>\n"),
+                  dds_qos.presentation.access_scope));
+              }
           }
         if (xml_qos->presentation ().coherent_access_p ())
           {
             dds_qos.presentation.coherent_access =
               xml_qos->presentation ().coherent_access ();
 
-            DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_TRACE, DDS4CCM_INFO
-              ACE_TEXT ("QOS_PubSub_T<XML_QOS_TYPE, DDS_QOS_TYPE>::read_qos - ")
-              ACE_TEXT ("Set presentation coherent_access to <%d>\n"),
-              dds_qos.presentation.coherent_access));
+            if (OpenDDS::DCPS::DCPS_debug_level > 9)
+              {
+                ACE_DEBUG ((LM_TRACE,
+                  ACE_TEXT ("QOS_PubSub_T<XML_QOS_TYPE, DDS_QOS_TYPE>::read_qos - ")
+                  ACE_TEXT ("Set presentation coherent_access to <%d>\n"),
+                  dds_qos.presentation.coherent_access));
+              }
           }
         if (xml_qos->presentation ().ordered_access_p ())
           {
             dds_qos.presentation.ordered_access =
               xml_qos->presentation ().ordered_access ();
 
-            DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_TRACE, DDS4CCM_INFO
-              ACE_TEXT ("QOS_PubSub_T<XML_QOS_TYPE, DDS_QOS_TYPE>::read_qos - ")
-              ACE_TEXT ("Set presentation ordered_access to <%d>\n"),
-              dds_qos.presentation.ordered_access));
+            if (OpenDDS::DCPS::DCPS_debug_level > 9)
+              {
+                ACE_DEBUG ((LM_TRACE,
+                  ACE_TEXT ("QOS_PubSub_T<XML_QOS_TYPE, DDS_QOS_TYPE>::read_qos - ")
+                  ACE_TEXT ("Set presentation ordered_access to <%d>\n"),
+                  dds_qos.presentation.ordered_access));
+              }
           }
       }
 
@@ -96,10 +104,13 @@ QOS_PubSub_T<XML_QOS_TYPE, DDS_QOS_TYPE>::read_qos (DDS_QOS_TYPE& dds_qos, const
             {
               dds_qos.partition.name[pos] = ::CORBA::string_dup (it->get()->c_str());
 
-              DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_TRACE, DDS4CCM_INFO
-                ACE_TEXT ("QOS_PubSub_T<XML_QOS_TYPE, DDS_QOS_TYPE>::read_qos - ")
-                ACE_TEXT ("New name <%C> inserted in partition at position <%u>\n"),
-                dds_qos.partition.name[pos].in (), pos));
+              if (OpenDDS::DCPS::DCPS_debug_level > 9)
+                {
+                  ACE_DEBUG ((LM_TRACE,
+                    ACE_TEXT ("QOS_PubSub_T<XML_QOS_TYPE, DDS_QOS_TYPE>::read_qos - ")
+                    ACE_TEXT ("New name <%C> inserted in partition at position <%u>\n"),
+                    dds_qos.partition.name[pos].in (), pos));
+                }
             }
         }
     }
@@ -111,10 +122,13 @@ QOS_PubSub_T<XML_QOS_TYPE, DDS_QOS_TYPE>::read_qos (DDS_QOS_TYPE& dds_qos, const
           dds_qos.entity_factory.autoenable_created_entities =
             xml_qos->entity_factory ().autoenable_created_entities ();
 
-          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_TRACE, DDS4CCM_INFO
-            ACE_TEXT ("QOS_PubSub_T<XML_QOS_TYPE, DDS_QOS_TYPE>::read_qos - ")
-            ACE_TEXT ("Set entity_factory autoenable_created_entities to <%d>\n"),
-            dds_qos.entity_factory.autoenable_created_entities));
+          if (OpenDDS::DCPS::DCPS_debug_level > 9)
+            {
+              ACE_DEBUG ((LM_TRACE,
+                ACE_TEXT ("QOS_PubSub_T<XML_QOS_TYPE, DDS_QOS_TYPE>::read_qos - ")
+                ACE_TEXT ("Set entity_factory autoenable_created_entities to <%d>\n"),
+                dds_qos.entity_factory.autoenable_created_entities));
+            }
         }
     }
 }

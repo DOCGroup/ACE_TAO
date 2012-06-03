@@ -198,8 +198,8 @@ foreach $file (@files) {
                                       "-x $file -k file://$ior_emfile");
     $E->SpawnWaitKill (5 * $tg_executor->ProcessStartWaitInterval ());
 
-    print "Sleeping 5 seconds to allow task to complete\n";
-    sleep (5);
+    print "Sleeping 30 seconds to allow task to complete\n";
+    sleep (30);
 
     print "Teardown the application\n";
     $E = $tg_executor->CreateProcess ("$DANCE_ROOT/bin/dance_plan_launcher",
