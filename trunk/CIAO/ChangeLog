@@ -1,3 +1,1042 @@
+Sun Jun 3 19:14:02 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        Merged branch DDS4CCM_QOS_Handler again to trunk
+
+        commit 194fb1fe7b7b6c8c302eb9fdbe8bb52706350991
+        Merge: fd87f4f 203fa8d
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Sun Jun 3 19:14:11 2012 +0200
+
+            Merge branch 'master' into DDS4CCM_QOS_Handler
+
+        commit fd87f4fcb14eb246c8644983ed55458511e5686a
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Fri Jun 1 20:00:11 2012 +0200
+
+                * CIAO/connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+                  Added commented out code to control opendds logging
+
+        commit 98cc0b67f57a5fa3284b1f88240683666a5c71e0
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Fri Jun 1 16:41:03 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tests/ListenManyByMany/Sender/LMBM_Test_Sender.idl:
+                * CIAO/connectors/dds4ccm/tests/ListenManyByMany/Sender/LMBM_Test_Sender_exec.cpp:
+                * CIAO/connectors/dds4ccm/tests/ListenManyByMany/Sender/LMBM_Test_Sender_exec.h:
+                * CIAO/connectors/dds4ccm/tests/ListenManyByMany/descriptors/Plan.cdp:
+                  Added a connector status listener. The sender starts writing once a
+                  publication matched event comes in.
+
+                * CIAO/connectors/dds4ccm/tests/SLManyByMany/Sender/SL_ManyByMany_Sender_exec.cpp:
+                  Layout changes.
+
+        commit 2a227e39896ea3ae785cbae71a402a3223e49141
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Fri Jun 1 16:14:01 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tests/CSLDeadline/Sender/CSL_DeadlineTest_Sender_exec.h:
+                  Code alignment.
+
+                * CIAO/connectors/dds4ccm/tests/SLManyByMany/Sender/SL_ManyByMany_Sender.idl:
+                * CIAO/connectors/dds4ccm/tests/SLManyByMany/Sender/SL_ManyByMany_Sender_exec.cpp:
+                * CIAO/connectors/dds4ccm/tests/SLManyByMany/Sender/SL_ManyByMany_Sender_exec.h:
+                * CIAO/connectors/dds4ccm/tests/SLManyByMany/descriptors/Plan.cdp:
+                  Added a connector status listener. The sender starts writing sample once a
+                  publication matched event is received.
+
+        commit 18476e2bd4f2ea7f7a0a3f7240b3db84883cea72
+        Merge: 9b432e0 c748d37
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Fri Jun 1 15:51:24 2012 +0200
+
+            Merge branch 'DDS4CCM_QOS_Handler' of http://git.remedy.nl/git/atcd into DDS4CCM_QOS_Handler
+
+            Conflicts:
+              CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_XML_Loader.h
+
+        commit 9b432e0c9582be3d0e175b24c760d6503c00c5b4
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Fri Jun 1 15:47:37 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_Common.h:
+                  No need to export this class.
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_XML_Loader.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/XML_File_Intf.h:
+                  Optimized comments.
+
+        commit c748d379dceb796fad1ef35781b298d57469ccc1
+        Merge: 0661ef7 45f7800
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Fri Jun 1 14:54:57 2012 +0200
+
+            Merge branch 'DDS4CCM_QOS_Handler' of http://git.remedy.nl/git/atcd into DDS4CCM_QOS_Handler
+
+        commit 0661ef7b9987148dd4c620cd855a86e40f9fd9d9
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Fri Jun 1 14:54:52 2012 +0200
+
+                * CIAO/ciao/Containers/Extension/ClientContainerInterceptorRegistration_Impl.h:
+                * CIAO/ciao/Containers/Extension/Interceptor_Registration_T.h:
+                * CIAO/ciao/Containers/Extension/ServantContainerInterceptorRegistration_Impl.h:
+                * CIAO/ciao/Containers/Extension/ServerContainerInterceptorRegistration_Impl.h:
+                * CIAO/ciao/Containers/Extension/StubContainerInterceptorRegistration_Impl.h:
+                * CIAO/ciao/Servants/Facet_Servant_Base_T.h:
+                * CIAO/connectors/dds4ccm/examples/Hello/Base/Hello_Base.idl:
+                * CIAO/connectors/dds4ccm/examples/Hello/Connector/Hello_Connector.idl:
+                * CIAO/connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver.idl:
+                * CIAO/connectors/dds4ccm/examples/Hello/Sender/Hello_Sender.idl:
+                * CIAO/connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Base/I2C_Shapes_Base.idl:
+                * CIAO/connectors/dds4ccm/examples/Shapes/Base/Shapes_Base.idl:
+                * CIAO/connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector.idl:
+                * CIAO/connectors/dds4ccm/examples/Shapes/Receiver/Shapes_Receiver.idl:
+                * CIAO/connectors/dds4ccm/examples/Shapes/Sender/Shapes_Sender.idl:
+                * CIAO/connectors/dds4ccm/impl/CCM_DataReader.h:
+                * CIAO/connectors/dds4ccm/impl/CCM_DataWriter.h:
+                * CIAO/connectors/dds4ccm/impl/Coherent_Changes_Guard.h:
+                * CIAO/connectors/dds4ccm/impl/ContentFilterSetting.h:
+                * CIAO/connectors/dds4ccm/impl/DDS_Event_Connector_T.h:
+                * CIAO/connectors/dds4ccm/impl/DDS_Get_T.h:
+                * CIAO/connectors/dds4ccm/impl/DDS_Listen_T.h:
+                * CIAO/connectors/dds4ccm/impl/DDS_Read_T.h:
+                * CIAO/connectors/dds4ccm/impl/DDS_StateListen_T.h:
+                * CIAO/connectors/dds4ccm/impl/DDS_Subscriber_Base_T.h:
+                * CIAO/connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.h:
+                * CIAO/connectors/dds4ccm/impl/DDS_Write_T.h:
+                * CIAO/connectors/dds4ccm/impl/DataReaderHandler_T.h:
+                * CIAO/connectors/dds4ccm/impl/DataReaderListener_T.h:
+                * CIAO/connectors/dds4ccm/impl/DataReaderStateListener_T.h:
+                * CIAO/connectors/dds4ccm/impl/Getter_T.h:
+                * CIAO/connectors/dds4ccm/impl/InstanceHandleManager_T.h:
+                * CIAO/connectors/dds4ccm/impl/PortStatusListener.h:
+                * CIAO/connectors/dds4ccm/impl/PublisherListener.h:
+                * CIAO/connectors/dds4ccm/impl/Reader_T.h:
+                * CIAO/connectors/dds4ccm/impl/SampleInfo.h:
+                * CIAO/connectors/dds4ccm/impl/SubscriberListener.h:
+                * CIAO/connectors/dds4ccm/impl/TimeUtilities.h:
+                * CIAO/connectors/dds4ccm/impl/TopicListener.h:
+                * CIAO/connectors/dds4ccm/impl/Updater_T.h:
+                * CIAO/connectors/dds4ccm/impl/Writer_T.h:
+                * CIAO/connectors/dds4ccm/impl/dds4ccm_conf.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/Condition.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/ContentFilteredTopic.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/DataReader.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/DataReaderListener.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/DataReader_T.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/DataWriter.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/DataWriterListener.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/DataWriter_T.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/DomainParticipant.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/DomainParticipantFactory.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/DomainParticipantListener.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/DomainParticipantManager.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/Publisher.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/PublisherListener.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/QueryCondition.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/ReadCondition.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/StatusCondition.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/Subscriber.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/SubscriberListener.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/Topic.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/TopicDescription.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/TopicListener.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/TypeSupport.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/Utils.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/WaitSet.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/convertors/DataReaderQos.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/convertors/DataReaderResourceLimitsQosPolicy.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/convertors/DataWriterQos.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/convertors/DataWriterResourceLimitsQosPolicy.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/convertors/DeadlineQosPolicy.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/convertors/DestinationOrderQosPolicy.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/convertors/DomainParticipantFactoryQos.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/convertors/DomainParticipantQos.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/convertors/DurabilityQosPolicy.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/convertors/DurabilityServiceQosPolicy.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/convertors/Duration_t.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/convertors/EntityFactoryQosPolicy.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/convertors/GroupDataQosPolicy.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/convertors/HistoryQosPolicy.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/convertors/InconsistentTopicStatus.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/convertors/InstanceHandleSeq.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/convertors/InstanceHandle_t.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/convertors/LatencyBudgetQosPolicy.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/convertors/LifespanQosPolicy.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/convertors/LivelinessChangedStatus.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/convertors/LivelinessLostStatus.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/convertors/LivelinessQosPolicy.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/convertors/OctetSeq.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/convertors/OfferedDeadlineMissedStatus.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/convertors/OfferedIncompatibleQosStatus.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/convertors/OwnershipQosPolicy.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/convertors/OwnershipStrengthQosPolicy.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/convertors/ParticipantBuiltinTopicData.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/convertors/PartitionQosPolicy.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/convertors/PresentationQosPolicy.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/convertors/PublicationBuiltinTopicData.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/convertors/PublicationMatchedStatus.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/convertors/PublisherQos.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/convertors/QosPolicyCountSeq.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/convertors/ReaderDataLifecycleQosPolicy.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/convertors/ReliabilityQosPolicy.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/convertors/ReliableReaderActivityChangedStatus.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/convertors/ReliableWriterCacheChangedStatus.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/convertors/RequestedDeadlineMissedStatus.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/convertors/RequestedIncompatibleQosStatus.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/convertors/ResourceLimitsQosPolicy.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/convertors/SampleInfoSeq.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/convertors/SampleLostStatus.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/convertors/SampleRejectedStatus.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/convertors/StringSeq.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/convertors/SubscriberQos.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/convertors/SubscriptionBuiltinTopicData.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/convertors/SubscriptionMatchedStatus.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/convertors/TimeBasedFilterQosPolicy.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/convertors/Time_t.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/convertors/TopicBuiltinTopicData.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/convertors/TopicDataQosPolicy.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/convertors/TopicQos.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/convertors/TransportPriorityQosPolicy.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/convertors/UserDataQosPolicy.h:
+                * CIAO/connectors/dds4ccm/impl/ndds/convertors/WriterDataLifecycleQosPolicy.h:
+                * CIAO/connectors/dds4ccm/performance-tests/Keyed/Connector/Perf_Keyed_Test_Connector.idl:
+                * CIAO/connectors/dds4ccm/performance-tests/Keyed/Receiver/Perf_Keyed_Test_Receiver.idl:
+                * CIAO/connectors/dds4ccm/tests/CoherentUpdater/Base/CoherentUpdate_Test_Base.idl:
+                * CIAO/connectors/dds4ccm/tests/CoherentUpdater/Base/Reader_Starter.idl:
+                * CIAO/connectors/dds4ccm/tests/CoherentUpdater/Connector/CoherentUpdate_Test_Connector.idl:
+                * CIAO/connectors/dds4ccm/tests/CoherentUpdater/Receiver/CoherentUpdate_Test_Receiver.idl:
+                * CIAO/connectors/dds4ccm/tests/CoherentUpdater/Sender/CoherentUpdate_Test_Sender.idl:
+                * CIAO/connectors/dds4ccm/tests/CoherentWriter/Base/CoherentWrite_Test_Base.idl:
+                * CIAO/connectors/dds4ccm/tests/CoherentWriter/Base/Reader_Starter.idl:
+                * CIAO/connectors/dds4ccm/tests/CoherentWriter/Connector/CoherentWrite_Test_Connector.idl:
+                * CIAO/connectors/dds4ccm/tests/CoherentWriter/Receiver/CoherentWrite_Test_Receiver.idl:
+                * CIAO/connectors/dds4ccm/tests/CoherentWriter/Sender/CoherentWrite_Test_Sender.idl:
+                * CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/CFTNamesClash/Base/CFT_Test_Base.idl:
+                * CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/CFTNamesClash/Component/CFT_Test_Component.idl:
+                * CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/CFTNamesClash/Connector/CFT_Test_Connector.idl:
+                * CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/EventListener/Base/CFTLE_Test_Base.idl:
+                * CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/EventListener/Connector/CFTLE_Test_Connector.idl:
+                * CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/EventListener/Receiver/CFTLE_Test_Receiver.idl:
+                * CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/EventListener/Sender/CFTLE_Test_Sender.idl:
+                * CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/Exception/Base/Exception_Test_Base.idl:
+                * CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/Exception/Component/Exception_Test_Component.idl:
+                * CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/Exception/Connector/Exception_Test_Connector.idl:
+                * CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/Base/ReadGet_Starter.idl:
+                * CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/Base/ReadGet_Test_Base.idl:
+                * CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/Connector/ReadGet_Test_Connector.idl:
+                * CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/Receiver/ReadGet_Test_Receiver.idl:
+                * CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/Sender/ReadGet_Test_Sender.idl:
+                * CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/StateListener/Base/CFTLS_Test_Base.idl:
+                * CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/StateListener/Connector/CFTLS_Test_Connector.idl:
+                * CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/StateListener/Receiver/CFTLS_Test_Receiver.idl:
+                * CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/StateListener/Sender/CFTLS_Test_Sender.idl:
+                * CIAO/connectors/dds4ccm/tests/DDSEntity/Base/Writer_Base.idl:
+                * CIAO/connectors/dds4ccm/tests/DDSEntity/Connector/Writer_Connector.idl:
+                * CIAO/connectors/dds4ccm/tests/DDSEntity/Receiver/Writer_Receiver.idl:
+                * CIAO/connectors/dds4ccm/tests/DDSEntity/Sender/Writer_Sender.idl:
+                * CIAO/connectors/dds4ccm/tests/DoubleNestedModule/Base/DNM_Base.idl:
+                * CIAO/connectors/dds4ccm/tests/DoubleNestedModule/Connector/DNM_Connector.idl:
+                * CIAO/connectors/dds4ccm/tests/DoubleNestedModule/Sender/DNM_Sender.idl:
+                * CIAO/connectors/dds4ccm/tests/Event_Connection_Test/Base/Event_Connection_Test_Base.idl:
+                * CIAO/connectors/dds4ccm/tests/Event_Connection_Test/Connector/Event_Connection_Test_Connector.idl:
+                * CIAO/connectors/dds4ccm/tests/Event_Connection_Test/Receiver/Event_Connection_Test_Receiver.idl:
+                * CIAO/connectors/dds4ccm/tests/Event_Connection_Test/Sender/Event_Connection_Test_Sender.idl:
+                * CIAO/connectors/dds4ccm/tests/FixedSizeStruct/EventConnector/Base/FSS_Event_Base.idl:
+                * CIAO/connectors/dds4ccm/tests/FixedSizeStruct/EventConnector/Connector/FSS_Event_Connector.idl:
+                * CIAO/connectors/dds4ccm/tests/FixedSizeStruct/StateConnector/Base/FSS_State_Base.idl:
+                * CIAO/connectors/dds4ccm/tests/FixedSizeStruct/StateConnector/Connector/FSS_State_Connector.idl:
+                * CIAO/connectors/dds4ccm/tests/GetComponent/Event/Base/GCE_Test_Base.idl:
+                * CIAO/connectors/dds4ccm/tests/GetComponent/Event/Component/GCE_Test_Component.idl:
+                * CIAO/connectors/dds4ccm/tests/GetComponent/Event/Connector/GCE_Test_Connector.idl:
+                * CIAO/connectors/dds4ccm/tests/GetComponent/State/Base/GCS_Test_Base.idl:
+                * CIAO/connectors/dds4ccm/tests/GetComponent/State/Component/GCS_Test_Component.idl:
+                * CIAO/connectors/dds4ccm/tests/GetComponent/State/Connector/GCS_Test_Connector.idl:
+                * CIAO/connectors/dds4ccm/tests/Getter/Base/Get_Invoker.idl:
+                * CIAO/connectors/dds4ccm/tests/Getter/Base/Getter_Test_Base.idl:
+                * CIAO/connectors/dds4ccm/tests/Getter/Connector/Getter_Test_Connector.idl:
+                * CIAO/connectors/dds4ccm/tests/Getter/Receiver/Getter_Test_Receiver.idl:
+                * CIAO/connectors/dds4ccm/tests/Getter/Sender/Getter_Test_Sender.idl:
+                * CIAO/connectors/dds4ccm/tests/IDL_Test/Base/IDL_Test_Base.idl:
+                * CIAO/connectors/dds4ccm/tests/IDL_Test/Component/IDL_Test_Base_Component.idl:
+                * CIAO/connectors/dds4ccm/tests/IDL_Test/Component/IDL_Test_Derived_Component.idl:
+                * CIAO/connectors/dds4ccm/tests/IDL_Test/Connector/IDL_Test_Connector.idl:
+                * CIAO/connectors/dds4ccm/tests/InstanceHandle/Base/Writer_Base.idl:
+                * CIAO/connectors/dds4ccm/tests/InstanceHandle/Connector/Writer_Connector.idl:
+                * CIAO/connectors/dds4ccm/tests/InstanceHandle/Sender/Writer_Sender.idl:
+                * CIAO/connectors/dds4ccm/tests/KeyedSamples/Base/Keyed_Test_Base.idl:
+                * CIAO/connectors/dds4ccm/tests/KeyedSamples/Connector/Keyed_Test_Connector.idl:
+                * CIAO/connectors/dds4ccm/tests/KeyedSamples/Receiver/Keyed_Test_Receiver.idl:
+                * CIAO/connectors/dds4ccm/tests/KeyedSamples/Sender/Keyed_Test_Sender.idl:
+                * CIAO/connectors/dds4ccm/tests/KeyedWriter/Base/Writer_Base.idl:
+                * CIAO/connectors/dds4ccm/tests/KeyedWriter/Connector/Writer_Connector.idl:
+                * CIAO/connectors/dds4ccm/tests/KeyedWriter/Receiver/Writer_Receiver.idl:
+                * CIAO/connectors/dds4ccm/tests/KeyedWriter/Sender/Writer_Sender.idl:
+                * CIAO/connectors/dds4ccm/tests/LateBinding/ReadGet/Base/RG_LateBinding_Base.idl:
+                * CIAO/connectors/dds4ccm/tests/LateBinding/ReadGet/Base/Reader_Starter.idl:
+                * CIAO/connectors/dds4ccm/tests/LateBinding/ReadGet/Connector/RG_LateBinding_Connector.idl:
+                * CIAO/connectors/dds4ccm/tests/LateBinding/ReadGet/Receiver/RG_LateBinding_Receiver.idl:
+                * CIAO/connectors/dds4ccm/tests/LateBinding/ReadGet/Sender/RG_LateBinding_Sender.idl:
+                * CIAO/connectors/dds4ccm/tests/LateBinding/UpdateWrite/Base/WU_LateBinding_Base.idl:
+                * CIAO/connectors/dds4ccm/tests/LateBinding/UpdateWrite/Connector/WU_LateBinding_Connector.idl:
+                * CIAO/connectors/dds4ccm/tests/LateBinding/UpdateWrite/Receiver/WU_LateBinding_Receiver.idl:
+                * CIAO/connectors/dds4ccm/tests/LateBinding/UpdateWrite/Sender/WU_LateBinding_Sender.idl:
+                * CIAO/connectors/dds4ccm/tests/ListenManyByMany/Base/LMBM_Test_Base.idl:
+                * CIAO/connectors/dds4ccm/tests/ListenManyByMany/Connector/LMBM_Test_Connector.idl:
+                * CIAO/connectors/dds4ccm/tests/ListenManyByMany/Receiver/LMBM_Test_Receiver.idl:
+                * CIAO/connectors/dds4ccm/tests/ListenManyByMany/Sender/LMBM_Test_Sender.idl:
+                * CIAO/connectors/dds4ccm/tests/ListenNotEnabled/Base/LNE_Test_Base.idl:
+                * CIAO/connectors/dds4ccm/tests/ListenNotEnabled/Connector/LNE_Test_Connector.idl:
+                * CIAO/connectors/dds4ccm/tests/ListenNotEnabled/Receiver/LNE_Test_Receiver.idl:
+                * CIAO/connectors/dds4ccm/tests/ListenNotEnabled/Sender/LNE_Test_Sender.idl:
+                * CIAO/connectors/dds4ccm/tests/ListenOneByOne/Base/LOBO_Test_Base.idl:
+                * CIAO/connectors/dds4ccm/tests/ListenOneByOne/Connector/LOBO_Test_Connector.idl:
+                * CIAO/connectors/dds4ccm/tests/ListenOneByOne/Receiver/LOBO_Test_Receiver.idl:
+                * CIAO/connectors/dds4ccm/tests/ListenOneByOne/Sender/LOBO_Test_Sender.idl:
+                * CIAO/connectors/dds4ccm/tests/MemLeakDetection/Event_MemLeakDetection_Test/Base/Event_MemLeakDetection_Test_Base.idl:
+                * CIAO/connectors/dds4ccm/tests/MemLeakDetection/Event_MemLeakDetection_Test/Connector/Event_MemLeakDetection_Test_Connector.idl:
+                * CIAO/connectors/dds4ccm/tests/MemLeakDetection/Event_MemLeakDetection_Test/Receiver/Event_MemLeakDetection_Test_Receiver.idl:
+                * CIAO/connectors/dds4ccm/tests/MemLeakDetection/Event_MemLeakDetection_Test/Sender/Event_MemLeakDetection_Test_Sender.idl:
+                * CIAO/connectors/dds4ccm/tests/MemLeakDetection/State_MemLeakDetection_Test/Base/State_MemLeakDetection_Test_Base.idl:
+                * CIAO/connectors/dds4ccm/tests/MemLeakDetection/State_MemLeakDetection_Test/Connector/State_MemLeakDetection_Test_Connector.idl:
+                * CIAO/connectors/dds4ccm/tests/MemLeakDetection/State_MemLeakDetection_Test/Receiver/State_MemLeakDetection_Test_Receiver.idl:
+                * CIAO/connectors/dds4ccm/tests/MemLeakDetection/State_MemLeakDetection_Test/Sender/State_MemLeakDetection_Test_Sender.idl:
+                * CIAO/connectors/dds4ccm/tests/MemLeakDetection/TypeRegistration/Base/TypeRegistration_Test_Base.idl:
+                * CIAO/connectors/dds4ccm/tests/MemLeakDetection/TypeRegistration/Component/TypeRegistration_Test_Component.idl:
+                * CIAO/connectors/dds4ccm/tests/MemLeakDetection/TypeRegistration/Connector/TypeRegistration_Test_Connector.idl:
+                * CIAO/connectors/dds4ccm/tests/NonChangeableAttribute/Base/NonChangeable_Base.idl:
+                * CIAO/connectors/dds4ccm/tests/NonChangeableAttribute/Component/NonChangeable_Component.idl:
+                * CIAO/connectors/dds4ccm/tests/NonChangeableAttribute/Connector/NonChangeable_Connector.idl:
+                * CIAO/connectors/dds4ccm/tests/On_Inconsistent_Topic/Base/OIT_Test_Base.idl:
+                * CIAO/connectors/dds4ccm/tests/On_Inconsistent_Topic/Receiver/OIT_Test_Receiver.idl:
+                * CIAO/connectors/dds4ccm/tests/On_Inconsistent_Topic/ReceiverConnector/OIT_Receiver_Connector.idl:
+                * CIAO/connectors/dds4ccm/tests/On_Inconsistent_Topic/Sender/OIT_Test_Sender.idl:
+                * CIAO/connectors/dds4ccm/tests/On_Inconsistent_Topic/SenderConnector/OIT_Sender_Connector.idl:
+                * CIAO/connectors/dds4ccm/tests/OneFile/Single/OneFile_Base.idl:
+                * CIAO/connectors/dds4ccm/tests/OneFile/Single/OneFile_Connector.idl:
+                * CIAO/connectors/dds4ccm/tests/PortUsage/Base/PortUsage_Test_Base.idl:
+                * CIAO/connectors/dds4ccm/tests/PortUsage/EventComponent/PortUsageEvent_Component.idl:
+                * CIAO/connectors/dds4ccm/tests/PortUsage/EventConnector/PortUsageEvent_Connector.idl:
+                * CIAO/connectors/dds4ccm/tests/PortUsage/StateComponent/PortUsageState_Component.idl:
+                * CIAO/connectors/dds4ccm/tests/PortUsage/StateConnector/PortUsageState_Connector.idl:
+                * CIAO/connectors/dds4ccm/tests/Proxies/ReadWrite/Base/Proxy_RW_Test_Base.idl:
+                * CIAO/connectors/dds4ccm/tests/Proxies/ReadWrite/Base/Reader_Starter.idl:
+                * CIAO/connectors/dds4ccm/tests/Proxies/ReadWrite/Connector/Proxy_RW_Test_Connector.idl:
+                * CIAO/connectors/dds4ccm/tests/Proxies/ReadWrite/Receiver/Proxy_RW_Test_Receiver.idl:
+                * CIAO/connectors/dds4ccm/tests/Proxies/ReadWrite/Sender/Proxy_RW_Test_Sender.idl:
+                * CIAO/connectors/dds4ccm/tests/QosProfile/Base/QosProfile_Test_Base.idl:
+                * CIAO/connectors/dds4ccm/tests/QosProfile/Component/QosProfile_Test_Component.idl:
+                * CIAO/connectors/dds4ccm/tests/QosProfile/Connector/QosProfile_Test_Connector.idl:
+                * CIAO/connectors/dds4ccm/tests/QueryCondition/DDS/Base/Base.idl:
+                * CIAO/connectors/dds4ccm/tests/QueryCondition/Different/Base/Different_Test_Base.idl:
+                * CIAO/connectors/dds4ccm/tests/QueryCondition/Different/Connector/Different_Test_Connector.idl:
+                * CIAO/connectors/dds4ccm/tests/QueryCondition/Different/Receiver/Different_Test_Receiver.idl:
+                * CIAO/connectors/dds4ccm/tests/QueryCondition/Different/Sender/Different_Test_Sender.idl:
+                * CIAO/connectors/dds4ccm/tests/QueryCondition/EventListener/Base/QCLE_Test_Base.idl:
+                * CIAO/connectors/dds4ccm/tests/QueryCondition/EventListener/Connector/QCLE_Test_Connector.idl:
+                * CIAO/connectors/dds4ccm/tests/QueryCondition/EventListener/Receiver/QCLE_Test_Receiver.idl:
+                * CIAO/connectors/dds4ccm/tests/QueryCondition/EventListener/Sender/QCLE_Test_Sender.idl:
+                * CIAO/connectors/dds4ccm/tests/QueryCondition/ReadGet/Base/ReadGet_Starter.idl:
+                * CIAO/connectors/dds4ccm/tests/QueryCondition/ReadGet/Base/ReadGet_Test_Base.idl:
+                * CIAO/connectors/dds4ccm/tests/QueryCondition/ReadGet/Connector/ReadGet_Test_Connector.idl:
+                * CIAO/connectors/dds4ccm/tests/QueryCondition/ReadGet/Receiver/ReadGet_Test_Receiver.idl:
+                * CIAO/connectors/dds4ccm/tests/QueryCondition/ReadGet/Sender/ReadGet_Test_Sender.idl:
+                * CIAO/connectors/dds4ccm/tests/QueryCondition/StateListener/Base/QCLS_Test_Base.idl:
+                * CIAO/connectors/dds4ccm/tests/QueryCondition/StateListener/Connector/QCLS_Test_Connector.idl:
+                * CIAO/connectors/dds4ccm/tests/QueryCondition/StateListener/Receiver/QCLS_Test_Receiver.idl:
+                * CIAO/connectors/dds4ccm/tests/QueryCondition/StateListener/Sender/QCLS_Test_Sender.idl:
+                * CIAO/connectors/dds4ccm/tests/QueryCondition/TwoListeners/Base/QCTL_Test_Base.idl:
+                * CIAO/connectors/dds4ccm/tests/QueryCondition/TwoListeners/Connector/QCTL_Test_Connector.idl:
+                * CIAO/connectors/dds4ccm/tests/QueryCondition/TwoListeners/Receiver/QCTL_Test_Receiver.idl:
+                * CIAO/connectors/dds4ccm/tests/QueryCondition/TwoListeners/Sender/QCTL_Test_Sender.idl:
+                * CIAO/connectors/dds4ccm/tests/QueryCondition/TwoQueries/Base/QCTQ_Starter.idl:
+                * CIAO/connectors/dds4ccm/tests/QueryCondition/TwoQueries/Base/QCTQ_Test_Base.idl:
+                * CIAO/connectors/dds4ccm/tests/QueryCondition/TwoQueries/Connector/QCTQ_Test_Connector.idl:
+                * CIAO/connectors/dds4ccm/tests/QueryCondition/TwoQueries/Receiver/QCTQ_Test_Receiver.idl:
+                * CIAO/connectors/dds4ccm/tests/QueryCondition/TwoQueries/Sender/QCTQ_Test_Sender.idl:
+                * CIAO/connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany/Base/QCTQM_Test_Base.idl:
+                * CIAO/connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany/Connector/QCTQM_Test_Connector.idl:
+                * CIAO/connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany/Receiver/QCTQM_Test_Receiver.idl:
+                * CIAO/connectors/dds4ccm/tests/Reader/Base/Reader_Starter.idl:
+                * CIAO/connectors/dds4ccm/tests/Reader/Base/Reader_Test_Base.idl:
+                * CIAO/connectors/dds4ccm/tests/Reader/Connector/Reader_Test_Connector.idl:
+                * CIAO/connectors/dds4ccm/tests/Reader/Receiver/Reader_Test_Receiver.idl:
+                * CIAO/connectors/dds4ccm/tests/Reader/Sender/Reader_Test_Sender.idl:
+                * CIAO/connectors/dds4ccm/tests/ResetTopic/ReadGet/Base/RG_ResetTopic_Base.idl:
+                * CIAO/connectors/dds4ccm/tests/ResetTopic/ReadGet/Base/Reader_Starter.idl:
+                * CIAO/connectors/dds4ccm/tests/ResetTopic/ReadGet/Connector/RG_ResetTopic_Connector.idl:
+                * CIAO/connectors/dds4ccm/tests/ResetTopic/ReadGet/Receiver/RG_ResetTopic_Receiver.idl:
+                * CIAO/connectors/dds4ccm/tests/ResetTopic/ReadGet/Sender/RG_ResetTopic_Sender.idl:
+                * CIAO/connectors/dds4ccm/tests/ResetTopic/ToEmpty/Base/TE_ResetTopic_Base.idl:
+                * CIAO/connectors/dds4ccm/tests/ResetTopic/ToEmpty/Connector/TE_ResetTopic_Connector.idl:
+                * CIAO/connectors/dds4ccm/tests/ResetTopic/ToEmpty/Sender/TE_ResetTopic_Sender.idl:
+                * CIAO/connectors/dds4ccm/tests/ResetTopic/TooLong/Base/TL_ResetTopic_Base.idl:
+                * CIAO/connectors/dds4ccm/tests/ResetTopic/TooLong/Connector/TL_ResetTopic_Connector.idl:
+                * CIAO/connectors/dds4ccm/tests/ResetTopic/TooLong/Sender/TL_ResetTopic_Sender.idl:
+                * CIAO/connectors/dds4ccm/tests/ResetTopic/UpdateListen/Base/UL_ResetTopic_Base.idl:
+                * CIAO/connectors/dds4ccm/tests/ResetTopic/UpdateListen/Connector/UL_ResetTopic_Connector.idl:
+                * CIAO/connectors/dds4ccm/tests/ResetTopic/UpdateListen/Receiver/UL_ResetTopic_Receiver.idl:
+                * CIAO/connectors/dds4ccm/tests/ResetTopic/UpdateListen/Sender/UL_ResetTopic_Sender.idl:
+                * CIAO/connectors/dds4ccm/tests/ResetTopic/WriteListen/Base/WL_ResetTopic_Base.idl:
+                * CIAO/connectors/dds4ccm/tests/ResetTopic/WriteListen/Connector/WL_ResetTopic_Connector.idl:
+                * CIAO/connectors/dds4ccm/tests/ResetTopic/WriteListen/Receiver/WL_ResetTopic_Receiver.idl:
+                * CIAO/connectors/dds4ccm/tests/ResetTopic/WriteListen/Sender/WL_ResetTopic_Sender.idl:
+                * CIAO/connectors/dds4ccm/tests/SetConnectorAttributes/Base/SetConnectorAttribute_Base.idl:
+                * CIAO/connectors/dds4ccm/tests/SetConnectorAttributes/Component/SetConnectorAttribute_Component.idl:
+                * CIAO/connectors/dds4ccm/tests/SetConnectorAttributes/Connector/SetConnectorAttribute_Connector.idl:
+                * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Base/Base.idl:
+                * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Component/Component.idl:
+                * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Connector1/Connector1.idl:
+                * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Connector2/Connector2.idl:
+                * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Connector3/Connector3.idl:
+                * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDomainID/Base/Base.idl:
+                * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDomainID/Component/Component.idl:
+                * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDomainID/Connector1/Connector1.idl:
+                * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDomainID/Connector2/Connector2.idl:
+                * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDomainID/Connector3/Connector3.idl:
+                * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/Base/Base.idl:
+                * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/Component/Component.idl:
+                * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/Connector/Connector.idl:
+                * CIAO/connectors/dds4ccm/tests/State_Connection_Test/Base/State_Connection_Test_Base.idl:
+                * CIAO/connectors/dds4ccm/tests/State_Connection_Test/Connector/State_Connection_Test_Connector.idl:
+                * CIAO/connectors/dds4ccm/tests/State_Connection_Test/Receiver/State_Connection_Test_Receiver.idl:
+                * CIAO/connectors/dds4ccm/tests/State_Connection_Test/Sender/State_Connection_Test_Sender.idl:
+                * CIAO/connectors/dds4ccm/tests/TopicName/Base/TopicName_Test_Base.idl:
+                * CIAO/connectors/dds4ccm/tests/TopicName/Component/TopicName_Test_Component.idl:
+                * CIAO/connectors/dds4ccm/tests/TopicName/Connector/TopicName_Test_Connector.idl:
+                * CIAO/connectors/dds4ccm/tests/TwoTopics/Base/TwoTopics_Base.idl:
+                * CIAO/connectors/dds4ccm/tests/TwoTopics/Connector/TwoTopics_Connector.idl:
+                * CIAO/connectors/dds4ccm/tests/TwoTopicsDifferentNs/Connector/Connector.idl:
+                * CIAO/connectors/dds4ccm/tests/TwoTopicsDifferentNs/Goodbye/HelloGoodbye.idl:
+                * CIAO/connectors/dds4ccm/tests/TwoTopicsDifferentNs/Hello/HelloGoodbye.idl:
+                * CIAO/connectors/dds4ccm/tests/UnkeyedSamples/Base/Unkeyed_Test_Base.idl:
+                * CIAO/connectors/dds4ccm/tests/UnkeyedSamples/Connector/Unkeyed_Test_Connector.idl:
+                * CIAO/connectors/dds4ccm/tests/UnkeyedSamples/Receiver/Unkeyed_Test_Receiver.idl:
+                * CIAO/connectors/dds4ccm/tests/UnkeyedSamples/Sender/Unkeyed_Test_Sender.idl:
+                * CIAO/connectors/dds4ccm/tests/UnkeyedWriter/Base/Writer_Base.idl:
+                * CIAO/connectors/dds4ccm/tests/UnkeyedWriter/Connector/Writer_Connector.idl:
+                * CIAO/connectors/dds4ccm/tests/UnkeyedWriter/Receiver/Writer_Receiver.idl:
+                * CIAO/connectors/dds4ccm/tests/UnkeyedWriter/Sender/Writer_Sender.idl:
+                * CIAO/connectors/dds4ccm/tests/Updater/Base/Updater_Base.idl:
+                * CIAO/connectors/dds4ccm/tests/Updater/Connector/Updater_Connector.idl:
+                * CIAO/connectors/dds4ccm/tests/UserdataCopyCount/Base/UCC_Test_Base.idl:
+                * CIAO/connectors/dds4ccm/tests/UserdataCopyCount/Component/UCC_Test_Component.idl:
+                * CIAO/connectors/dds4ccm/tests/UserdataCopyCount/Connector/UCC_Test_Connector.idl:
+                * CIAO/connectors/dds4ccm/tests/VariousTopicsEvent/Conn_Union/VT_Union_Connector.idl:
+                * CIAO/connectors/dds4ccm/tests/VariousTopicsEvent/Conn_Valuetype/VT_Valuetype_Connector.idl:
+                * CIAO/connectors/dds4ccm/tests/VariousTopicsState/Conn_Union/VTS_Union_Connector.idl:
+                * CIAO/connectors/dds4ccm/tests/VariousTopicsState/Conn_Valuetype/VTS_Valuetype_Connector.idl:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/DataReaderQos_Handler.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/DataReaderQos_Handler.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/DataWriterQos_Handler.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/DataWriterQos_Handler.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/ParticipantQos_Handler.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/ParticipantQos_Handler.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/PublisherQos_Handler.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/PublisherQos_Handler.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_Common.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_Common.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_DataReader_T.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_DataReader_T.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_DataWriter_T.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_DataWriter_T.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_DwDrTp_Base_T.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_DwDrTp_Base_T.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_DwTp_Base_T.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_DwTp_Base_T.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_PubSub_T.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_PubSub_T.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_Topic_T.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_Topic_T.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_XML_Loader.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_XML_Loader.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/SubscriberQos_Handler.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/SubscriberQos_Handler.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/TopicQos_Handler.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/XML_File_Intf.h:
+                * CIAO/tests/DAnCE/LocalityManager/CPUAffinity/CPUAffinity.idl:
+                * CIAO/tests/DAnCE/LocalityManager/CommandlinePassage/CommandlinePassage.idl:
+                * CIAO/tests/DAnCE/LocalityManager/UnexpectedShutdown/UnexpectedShutdown.idl:
+                * CIAO/tests/DAnCE/PartialShutdown/Base/PartialShutdown.idl:
+                * CIAO/tests/DAnCE/PartialShutdown/Component1/Component1.idl:
+                * CIAO/tests/DAnCE/PartialShutdown/Component2/Component2.idl:
+                * CIAO/tests/DAnCE/PartialShutdown/Component3/Component3.idl:
+                * CIAO/tests/DAnCE/Threading/Base/Threading.idl:
+                * CIAO/tests/DAnCE/Threading/Component1/Component1.idl:
+                * CIAO/tests/DAnCE/Threading/Component2/Component2.idl:
+                * CIAO/tests/IDL_Test/Double_Inherited_Component/Inherited_components.idl:
+                  File header update
+
+        commit 45f7800d0ad7fdfea0b55d2a3fcc2bc3270b8cc9
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Fri Jun 1 14:54:10 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/XML_File_Intf.cpp:
+                  Resticted the number of early returns; just making use of a return
+                  value.
+
+        commit 5421f639fdb38c7e10d7216580d9f343ce33c802
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Fri Jun 1 14:42:20 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/XML_File_Intf.cpp:
+                  Catching exceptions as const.
+
+        commit 945beeedfb53829dd6e26d8fe3fd405678c592f9
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Fri Jun 1 14:38:01 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/DataReaderQos_Handler.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/DataReaderQos_Handler.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/DataWriterQos_Handler.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/DataWriterQos_Handler.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/ParticipantQos_Handler.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/ParticipantQos_Handler.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/PublisherQos_Handler.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/PublisherQos_Handler.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_Common.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_DataReader_T.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_DataReader_T.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_DataWriter_T.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_DataWriter_T.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_DwDrTp_Base_T.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_DwDrTp_Base_T.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_DwTp_Base_T.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_DwTp_Base_T.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_PubSub_T.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_PubSub_T.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_Topic_T.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_Topic_T.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/SubscriberQos_Handler.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/SubscriberQos_Handler.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/TopicQos_Handler.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/TopicQos_Handler.h:
+                  Added uniform file header comments. Also added some documentation to
+                  methods.
+                  In some files, DCPS_debug_level needed to be in the OpenDDS::DCPS namespace
+                  since the class wasnt' in that namespace.
+
+        commit a42f923be5b9b7c796a968035dbadf740235fcfb
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Fri Jun 1 13:54:43 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/DataReaderQos_Handler.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/DataWriterQos_Handler.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/ParticipantQos_Handler.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/PublisherQos_Handler.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_DataReader_T.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_DataWriter_T.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_DwDrTp_Base_T.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_DwTp_Base_T.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_PubSub_T.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/SubscriberQos_Handler.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/TopicQos_Handler.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/XML_File_Intf.cpp:
+                  No need to use namespace for DCPS_debug_level since the QOS XML is now
+                  in the same namespace.
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_XML_Loader.cpp:
+                  No need to use namespace for DCPS_debug_level since the QOS XML is now
+                  in the same namespace.
+                  No need to log an error when no qos_profile is provided; a debug message
+                  will do in this case.
+
+        commit bce2efaad735151e050780dac3115c3d07b92f25
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Fri Jun 1 13:49:38 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_XML_Loader.cpp:
+                  Providing an empty qos_profile is not necessarily an error. The library
+                  generates a debug statement and returns RETCODE_OK.
+
+        commit 2aaf1f763ffe9cd196105cf9a8fd9865e847309f
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Fri Jun 1 13:30:15 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/DataReaderQos_Handler.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/DataWriterQos_Handler.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/ParticipantQos_Handler.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/PublisherQos_Handler.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/SubscriberQos_Handler.h:
+                  No need to export these classes.
+
+        commit 18e73f57852311d7226bff0b2746888ccb0051d8
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Fri Jun 1 13:27:02 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/DataReaderQos_Handler.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/DataWriterQos_Handler.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/ParticipantQos_Handler.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/PublisherQos_Handler.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/SubscriberQos_Handler.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/TopicQos_Handler.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/TopicQos_Handler.h:
+                  Removed forward declarations of DDS entities.
+
+        commit cbcbf1598c6f13d853ef22e646910426b9f4e47c
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Fri Jun 1 13:21:42 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_XML_Loader.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_XML_Loader.h:
+                  No need for qos_profile to be const ACE_TCHAR *; just const char *
+                  is ok.
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/XML_File_Intf.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/XML_File_Intf.h:
+                  No need to export this class.
+                  No need for profile_name to be const ACE_TCHAR *; just const char *
+                  is ok.
+
+        commit 6c18e96bacf9481f30f8ff70a8dfa506a9f363cf
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Fri Jun 1 13:03:50 2012 +0200
+
+                * CIAO/connectors/dds4ccm/impl/DDS_Base_Connector_T.h:
+                * CIAO/connectors/dds4ccm/impl/DDS_Get_T.cpp:
+                * CIAO/connectors/dds4ccm/impl/DDS_Get_T.h:
+                * CIAO/connectors/dds4ccm/impl/DDS_Subscriber_Base_T.cpp:
+                * CIAO/connectors/dds4ccm/impl/DDS_Subscriber_Base_T.h:
+                * CIAO/connectors/dds4ccm/impl/DDS_Update_T.cpp:
+                * CIAO/connectors/dds4ccm/impl/DDS_Update_T.h:
+                * CIAO/connectors/dds4ccm/impl/DDS_Write_T.cpp:
+                * CIAO/connectors/dds4ccm/impl/DDS_Write_T.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_XML_Loader.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_XML_Loader.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/XML_File_Intf.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/XML_File_Intf.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/qos_xml_handler.mpc:
+                  Removed everything from the DDS4CCM namespace and put it in the
+                  OpenDDS::DCPS namespace.
+
+        commit 16718f6989331a9e38edeb6089b8b261d9832472
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Fri Jun 1 12:10:42 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/DataReaderQos_Handler.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/DataWriterQos_Handler.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/ParticipantQos_Handler.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/PublisherQos_Handler.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_DataReader_T.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_DataWriter_T.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_DwDrTp_Base_T.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_DwTp_Base_T.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_PubSub_T.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_XML_Loader.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/SubscriberQos_Handler.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/TopicQos_Handler.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/XML_File_Intf.cpp:
+                  Made ACE_DEBUG depend on the DCPS_debug_level flag.
+
+        commit c903c44523987d03af9f6cf2f8f7271187d40be9
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Fri Jun 1 11:46:14 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/DataReaderQos_Handler.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/DataWriterQos_Handler.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/ParticipantQos_Handler.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/PublisherQos_Handler.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_Common.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_DataReader_T.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_DataWriter_T.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_DwDrTp_Base_T.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_DwTp_Base_T.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_PubSub_T.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_Topic_T.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_XML_Loader.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/SubscriberQos_Handler.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/TopicQos_Handler.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/XML_File_Intf.cpp:
+                  Replaced DDS4CCM_DEBUG and DDS4CCM_ERROR with ACE_DEBUG and ACE_ERROR
+                  in order to get this library to move to openDDS.
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/qos_xml_handler.mpc:
+                  Due to removal of Utils.*
+
+        commit fdd68d3deb26f18d302b876cd6bc1eb9afb6706e
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Fri Jun 1 11:36:14 2012 +0200
+
+                * CIAO/connectors/dds4ccm/impl/DDS_Base_Connector_T.h:
+                  Fixed compile issue related to the removal of
+                  tools/QOS_XML_Handler/Utils.*
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_XML_Loader.cpp:
+                  Fixed compile issue related to the removal of
+                  tools/QOS_XML_Handler/Utils.*
+                  Also created a return value in the get_xxx_qos methods.
+
+        commit d9f1ff34951fcc154068f56b4c11ebfc97572f4f
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Fri Jun 1 11:19:01 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/Utils.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/Utils.h:
+                  Moved get_profile_name and get_xml_file_name to QOS_XML_Loader.
+                  Therefor these files can be removed.
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_XML_Loader.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_XML_Loader.h:
+                  Added get_profile_name and get_xml_file_name
+
+        commit 71c3a6511db487a1aabeb3f91079c3cf02c690b8
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Fri Jun 1 11:09:32 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/DataReaderQos_Handler.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/DataWriterQos_Handler.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/ParticipantQos_Handler.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/PublisherQos_Handler.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_XML_Loader.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/SubscriberQos_Handler.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/TopicQos_Handler.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/XML_File_Intf.cpp:
+                  Removed DDS4CCM_TRACE command from these files. Not necessary anymore.
+
+        commit 34d598e7c981c6a3b252c6f71e8fc0378d37c56b
+        Merge: e8a2587 dd50f82
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Fri Jun 1 09:57:35 2012 +0200
+
+            Merge branch 'DDS4CCM_QOS_Handler' of http://git.remedy.nl/git/atcd into DDS4CCM_QOS_Handler
+
+        commit e8a258743980edcbe852c3c2b4fcc62f41bb0196
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Thu May 31 21:03:29 2012 +0200
+
+                * CIAO/connectors/dds4ccm/DDS4CCM-INSTALL.html:
+                  Document OpenDDS support instructions
+
+        commit 9c4fc8d727e3fadddf7f6b8765a234402d25f3e7
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Thu May 31 20:45:28 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tests/Proxies/ReadWrite/descriptors/Plan.cdp:
+                  Fixed profile name
+
+        commit b5e032b8b49bcc9117b37f922902cc121d0188fa
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Thu May 31 20:43:44 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tests/MemLeakDetection/TypeRegistration/descriptors/run_test.pl:
+                  Increased sleep time
+
+        commit 9c2432cf82209217a99e1397a852f7830b8bdc23
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Thu May 31 20:39:59 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tests/PortUsage/descriptors/run_test.pl:
+                  Increased sleep time, OpenDDS discovery seems to be a little bit
+                  slower at this moment
+
+        commit 3b2df1dc5a445b8656e0914eaf6a12f4c92ff423
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Thu May 31 20:38:07 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tests/QoS/dump/qos.xml:
+                  Updated location xsd
+
+                * CIAO/connectors/dds4ccm/tests/QoS/dump/run_test.pl:
+                  Zapped file extension here
+
+        commit 556a7e35ba195c7457e3c0b3a918812c8c5071cc
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Thu May 31 20:27:04 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tests/PSLSampleLost/descriptors/HelloTest_Library.xml:
+                  Fixed profile name
+
+        commit 8771c8ad48d3bb2fc98d63811574187b10ad2930
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Thu May 31 20:22:26 2012 +0200
+
+                * CIAO/connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp:
+                  Log an error when we didn't got the start, also only set the flag
+                  when we get a publication matches
+
+        commit 2e392a04b7f4ec8680f6a50de8a4b0b976916006
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Thu May 31 15:41:33 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/XML_File_Intf.h:
+                  Removed not needed include
+
+        commit 74242fbe18f245b55c2d8ed91ead1d78940fe87b
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Thu May 31 15:19:45 2012 +0200
+
+                * CIAO/connectors/dds4ccm/performance-tests/Keyed/descriptors/KeyedTest_Library.xml:
+                  Created QOS XML for openDDS.
+
+                * CIAO/connectors/dds4ccm/performance-tests/Keyed/descriptors/Plan.cdp:
+                * CIAO/connectors/dds4ccm/performance-tests/Keyed/descriptors/Plan_pub.cdp:
+                * CIAO/connectors/dds4ccm/performance-tests/Keyed/descriptors/Plan_pub3.cdp:
+                * CIAO/connectors/dds4ccm/performance-tests/Keyed/descriptors/Plan_pub_BE.cdp:
+                * CIAO/connectors/dds4ccm/performance-tests/Keyed/descriptors/Plan_sub.cdp:
+                * CIAO/connectors/dds4ccm/performance-tests/Keyed/descriptors/Plan_sub_BE.cdp:
+                * CIAO/connectors/dds4ccm/performance-tests/Keyed/descriptors/USER_QOS_PROFILES.xml:
+                * CIAO/connectors/dds4ccm/performance-tests/Keyed/descriptors/run_test.pl:
+                * CIAO/connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany/descriptors/QueryCondition_Library.xml:
+                  Renamed HelloTest_Library into KeyedTest_Library.
+
+        commit d340e508f9af65a9049758f270f0042f6b35c89b
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Thu May 31 14:57:56 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/XML_File_Intf.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/XML_File_Intf.h:
+                  Removed DDS forward declarations. Therefor moved the include of
+                  DdsDcpsInfrastructureC.h to the header
+
+        commit 0b0f611b8867f77a7347187f04223ab6b7f21052
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Thu May 31 13:24:01 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tests/Getter/descriptors/Getter_Library.xml:
+                  Layout change.
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_XML_Loader.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_XML_Loader.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/XML_File_Intf.cpp:
+                  Now the user need to pass the complete profile string to the QOS XML library.
+                  The library is responsible for parsing this string.
+
+                * CIAO/connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+                * CIAO/connectors/dds4ccm/impl/DDS_Subscriber_Base_T.cpp:
+                * CIAO/connectors/dds4ccm/impl/DDS_Update_T.cpp:
+                * CIAO/connectors/dds4ccm/impl/DDS_Write_T.cpp:
+                  Due to interface changes regarding QOS profile string. Also
+                  check whether the string is available. If not, don't invoke the
+                  the get_xxx_methods.
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/Utils.h:
+                  No need to export get_profile_name and get_xml_file_name anymore.
+
+        commit 34b11314baa646a8fcf687a0bc810d18cd790589
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Thu May 31 11:03:46 2012 +0200
+
+                * CIAO/connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+                  Check whether the return value of XML loader init is OK. If not,
+                  throw an internal exception.
+
+                * CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/Receiver/ReadGet_Test_Receiver_exec.cpp:
+                  Optimized logging. Fixed some errors in logging.
+
+                * CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/Sender/ReadGet_Test_Sender.idl:
+                * CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/Sender/ReadGet_Test_Sender_exec.cpp:
+                * CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/Sender/ReadGet_Test_Sender_exec.h:
+                * CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/descriptors/Plan.cdp:
+                  Waiting on a Publication matched event before starting the actual test.
+
+                * CIAO/connectors/dds4ccm/tests/QoS/dump/qos_dump.cpp:
+                  Check the return values of the init and get_xxx_qos methods invocations.
+                  Logging an error when a return value is not RETCODE_OK.
+
+        commit 9b0dd58e24ada501473fc43d1a66af491cf6bc16
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Thu May 31 10:11:19 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/Utils.h:
+                  Fixed runtime errors. These methods need an export macro.
+
+        commit 6b0f3a857165e455f1ce04c095257044181e556c
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Thu May 31 09:51:47 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_XML_Loader.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_XML_Loader.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/Utils.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/XML_File_Intf.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/XML_File_Intf.h:
+                  Changed the return value of the get_xxx_qos methods. These methods
+                  now return a DDS error code. This way we can be more specific about
+                  what is wrong.
+
+                * CIAO/connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+                * CIAO/connectors/dds4ccm/impl/DDS_Subscriber_Base_T.cpp:
+                * CIAO/connectors/dds4ccm/impl/DDS_Update_T.cpp:
+                * CIAO/connectors/dds4ccm/impl/DDS_Write_T.cpp:
+                  Due to changing the return value of the get_xxx_qos methods.
+                  Throwing an internal exception when a get_xxx_qos method returns
+                  another value than RETCODE_OK.
+
+        commit cea623030f3db69d53f823918c70d5e16d1607e4
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Thu May 31 08:07:57 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/descriptors/QueryCondition_Library.xml:
+                * CIAO/connectors/dds4ccm/tests/LateBinding/ReadGet/descriptors/LateBinding_Library.xml:
+                * CIAO/connectors/dds4ccm/tests/Proxies/ReadWrite/descriptors/Proxy_RW_Library.xml:
+                * CIAO/connectors/dds4ccm/tests/QueryCondition/Different/descriptors/QueryCondition_Library.xml:
+                * CIAO/connectors/dds4ccm/tests/QueryCondition/ReadGet/descriptors/QueryCondition_Library.xml:
+                * CIAO/connectors/dds4ccm/tests/QueryCondition/TwoQueries/descriptors/QueryCondition_Library.xml:
+                * CIAO/connectors/dds4ccm/tests/ResetTopic/ReadGet/descriptors/ResetTopic_Library.xml:
+                * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/descriptors/Shared_Library.xml:
+                * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/descriptors/Standalone_Library.xml:
+                * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDomainID/descriptors/Shared_Library.xml:
+                * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDomainID/descriptors/Standalone_Library.xml:
+                * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/descriptors/Shared_Library.xml:
+                * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/descriptors/Standalone_Library.xml:
+                  Corrected location of the xsd file
+
+        commit b6ea10422ca83aef55fcb412c0962690b3381781
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Wed May 30 21:29:41 2012 +0200
+
+                * CIAO/connectors/dds4ccm/examples/Hello/descriptors/HelloTest_Library.xml:
+                * CIAO/connectors/dds4ccm/performance-tests/Latency/descriptors/Latency_Library.xml:
+                * CIAO/connectors/dds4ccm/performance-tests/Throughput/descriptors/Throughput_Library.xml:
+                * CIAO/connectors/dds4ccm/tests/CSLDeadline/descriptors/HelloTest_Library.xml:
+                * CIAO/connectors/dds4ccm/tests/CSLQoS/descriptors/QoSTest_Library.xml:
+                * CIAO/connectors/dds4ccm/tests/CoherentWriter/descriptors/CoherentWriter_Library.xml:
+                * CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/descriptors/QueryCondition_Library.xml:
+                * CIAO/connectors/dds4ccm/tests/Getter/descriptors/Getter_Library.xml:
+                * CIAO/connectors/dds4ccm/tests/KeyedWriter/descriptors/KeyedWriter_Library.xml:
+                * CIAO/connectors/dds4ccm/tests/LateBinding/ReadGet/descriptors/LateBinding_Library.xml:
+                * CIAO/connectors/dds4ccm/tests/ListenManyByMany/descriptors/ListenManyByMany_Library.xml:
+                * CIAO/connectors/dds4ccm/tests/PSLDeadline/descriptors/Deadline_Library.xml:
+                * CIAO/connectors/dds4ccm/tests/PSLSampleLost/descriptors/HelloTest_Library.xml:
+                * CIAO/connectors/dds4ccm/tests/Proxies/ReadWrite/descriptors/Proxy_RW_Library.xml:
+                * CIAO/connectors/dds4ccm/tests/QosProfile/descriptors/QosProfile_Library.xml:
+                * CIAO/connectors/dds4ccm/tests/QueryCondition/Different/descriptors/QueryCondition_Library.xml:
+                * CIAO/connectors/dds4ccm/tests/QueryCondition/ReadGet/descriptors/QueryCondition_Library.xml:
+                * CIAO/connectors/dds4ccm/tests/QueryCondition/TwoQueries/descriptors/QueryCondition_Library.xml:
+                * CIAO/connectors/dds4ccm/tests/Reader/descriptors/Reader_Library.xml:
+                * CIAO/connectors/dds4ccm/tests/ResetTopic/ReadGet/descriptors/ResetTopic_Library.xml:
+                * CIAO/connectors/dds4ccm/tests/SLManyByMany/descriptors/SlMbM_Library.xml:
+                * CIAO/connectors/dds4ccm/tests/SLOneByOne/descriptors/SlObO_Library.xml:
+                * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/descriptors/Shared_Library.xml:
+                * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/descriptors/Standalone_Library.xml:
+                * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDomainID/descriptors/Shared_Library.xml:
+                * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDomainID/descriptors/Standalone_Library.xml:
+                * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/descriptors/Shared_Library.xml:
+                * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/descriptors/Standalone_Library.xml:
+                * CIAO/connectors/dds4ccm/tests/UnkeyedWriter/descriptors/UnkeyedWriter_Library.xml:
+                  Removed path from dds_qos.xsd
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_XML_Loader.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/XML_File_Intf.cpp:
+                  Set search path correctly
+
+        commit be819f6c1956eba8dea9549d7981145d466201af
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Wed May 30 16:11:24 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/XML_File_Intf.cpp:
+                  No need to print "No profile specified" as an error.
+
+        commit dd50f8216306d98d4305dbfb800e50aa39df38fc
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Thu May 31 21:03:29 2012 +0200
+
+                * CIAO/connectors/dds4ccm/DDS4CCM-INSTALL.html:
+                  Document OpenDDS support instructions
+
+        commit a25c2a95ff7a6a1b01ccbeea7da1b65c07930550
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Thu May 31 20:45:28 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tests/Proxies/ReadWrite/descriptors/Plan.cdp:
+                  Fixed profile name
+
+        commit c51edadfb7133de860df366722c6ea84c93015cb
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Thu May 31 20:43:44 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tests/MemLeakDetection/TypeRegistration/descriptors/run_test.pl:
+                  Increased sleep time
+
+        commit 921d6d3d39634d74f54db8bc9124f2f3baa5467f
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Thu May 31 20:39:59 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tests/PortUsage/descriptors/run_test.pl:
+                  Increased sleep time, OpenDDS discovery seems to be a little bit
+                  slower at this moment
+
+        commit 4f73e9c77987ca5a868c0a93fb9edbac8f3efadb
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Thu May 31 20:38:07 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tests/QoS/dump/qos.xml:
+                  Updated location xsd
+
+                * CIAO/connectors/dds4ccm/tests/QoS/dump/run_test.pl:
+                  Zapped file extension here
+
+        commit c0b5233a4a7b3aa6f879108fa25d9d133f6f1961
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Thu May 31 20:27:04 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tests/PSLSampleLost/descriptors/HelloTest_Library.xml:
+                  Fixed profile name
+
+        commit 5554094ed0c1c6b1dabb52c17ea0eccf2e160268
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Thu May 31 20:22:26 2012 +0200
+
+                * CIAO/connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp:
+                  Log an error when we didn't got the start, also only set the flag
+                  when we get a publication matches
+
+        commit 509769c6371624d9f49081ff038b6537960ed671
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Thu May 31 15:41:33 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/XML_File_Intf.h:
+                  Removed not needed include
+
+        commit a28c7fc0c93dee3cc688ed3634fd437e948df8dc
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Thu May 31 15:19:45 2012 +0200
+
+                * CIAO/connectors/dds4ccm/performance-tests/Keyed/descriptors/KeyedTest_Library.xml:
+                  Created QOS XML for openDDS.
+
+                * CIAO/connectors/dds4ccm/performance-tests/Keyed/descriptors/Plan.cdp:
+                * CIAO/connectors/dds4ccm/performance-tests/Keyed/descriptors/Plan_pub.cdp:
+                * CIAO/connectors/dds4ccm/performance-tests/Keyed/descriptors/Plan_pub3.cdp:
+                * CIAO/connectors/dds4ccm/performance-tests/Keyed/descriptors/Plan_pub_BE.cdp:
+                * CIAO/connectors/dds4ccm/performance-tests/Keyed/descriptors/Plan_sub.cdp:
+                * CIAO/connectors/dds4ccm/performance-tests/Keyed/descriptors/Plan_sub_BE.cdp:
+                * CIAO/connectors/dds4ccm/performance-tests/Keyed/descriptors/USER_QOS_PROFILES.xml:
+                * CIAO/connectors/dds4ccm/performance-tests/Keyed/descriptors/run_test.pl:
+                * CIAO/connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany/descriptors/QueryCondition_Library.xml:
+                  Renamed HelloTest_Library into KeyedTest_Library.
+
+        commit 84365a719fc21193f61f4219218757c9a6435dc4
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Thu May 31 14:57:56 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/XML_File_Intf.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/XML_File_Intf.h:
+                  Removed DDS forward declarations. Therefor moved the include of
+                  DdsDcpsInfrastructureC.h to the header
+
+        commit d258d8885d3cc2019fb7d84b6febfb5a9df620f8
+        Author: Marcel Smit <msmit@remedy.nl>
+        Date:   Thu May 31 13:24:01 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tests/Getter/descriptors/Getter_Library.xml:
+                  Layout change.
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_XML_Loader.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_XML_Loader.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/XML_File_Intf.cpp:
+                  Now the user need to pass the complete profile string to the QOS XML library.
+                  The library is responsible for parsing this string.
+
+                * CIAO/connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+                * CIAO/connectors/dds4ccm/impl/DDS_Subscriber_Base_T.cpp:
+                * CIAO/connectors/dds4ccm/impl/DDS_Update_T.cpp:
+                * CIAO/connectors/dds4ccm/impl/DDS_Write_T.cpp:
+                  Due to interface changes regarding QOS profile string. Also
+                  check whether the string is available. If not, don't invoke the
+                  the get_xxx_methods.
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/Utils.h:
+                  No need to export get_profile_name and get_xml_file_name anymore.
+
 Thu May 31 17:59:02 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/ciaoidldefaults.mpb:

@@ -2,7 +2,7 @@
 
 /**
  * @file QosProfile_Test_Connector.idl
- * @author Marcel Smit <msmit@remedy.nl>
+ * @author Marcel Smit (msmit@remedy.nl)
  */
 
 #ifndef QOS_PROFILE_TEST_CONNECTOR_IDL_

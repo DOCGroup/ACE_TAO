@@ -218,8 +218,8 @@ for ($i = 0; $i < $nr_daemon; ++$i) {
     }
 }
 
-print "Sleeping 2 seconds to allow task to complete\n";
-sleep (2);
+print "Sleeping 20 seconds to allow task to complete\n";
+sleep (20);
 
 # Invoke executor - stop the application -.
 print "Invoking executor - stop the application -\n";

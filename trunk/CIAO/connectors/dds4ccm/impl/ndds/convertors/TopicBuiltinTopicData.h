@@ -1,5 +1,5 @@
 /**
- * @author Marcel Smit <msmit@remedy.nl>
+ * @author Marcel Smit (msmit@remedy.nl)
  *
  * $Id$
  *

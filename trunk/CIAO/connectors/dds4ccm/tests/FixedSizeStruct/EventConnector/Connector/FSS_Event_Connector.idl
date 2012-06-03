@@ -2,7 +2,7 @@
 
 /**
  * @file FSS_Event_Connector.idl
- * @author Marcel Smit <msmit@remedy.nl>
+ * @author Marcel Smit (msmit@remedy.nl)
  */
 
 #ifndef FIXED_SIZE_STRUCT_EVENT_CONNECTOR_IDL_

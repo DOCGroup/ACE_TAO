@@ -36,7 +36,7 @@ DDS_Update_T<CCM_TYPE, TYPED_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::configuration_
   const char * qos_profile)
 #else
   const char * qos_profile,
-  DDS4CCM::QOS_XML_Loader& qos_xml)
+  OpenDDS::DCPS::QOS_XML_Loader& qos_xml)
 #endif
 {
   DDS4CCM_TRACE ("DDS_Update_T<CCM_TYPE, TYPED_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::configuration_complete");
@@ -60,13 +60,6 @@ DDS_Update_T<CCM_TYPE, TYPED_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::configuration_
           DDS::ReturnCode_t const retcode =
             publisher->get_default_datawriter_qos (dwqos);
 
-#if (CIAO_DDS4CCM_OPENDDS==1)
-          CORBA::String_var name = topic->get_name ();
-          qos_xml.get_datawriter_qos (dwqos,
-                                      DDS4CCM::get_profile_name (qos_profile).c_str (),
-                                      name.in ());
-#endif
-
           if (retcode != DDS::RETCODE_OK)
             {
               DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
@@ -75,6 +68,24 @@ DDS_Update_T<CCM_TYPE, TYPED_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::configuration_
                   ::CIAO::DDS4CCM::translate_retcode (retcode)));
               throw ::CCM_DDS::InternalError (retcode, 0);
             }
+#if (CIAO_DDS4CCM_OPENDDS==1)
+          if (qos_profile)
+            {
+              CORBA::String_var name = topic->get_name ();
+              DDS::ReturnCode_t const retcode_dw_qos = qos_xml.get_datawriter_qos (
+                                          dwqos,
+                                          qos_profile,
+                                          name.in ());
+              if (retcode_dw_qos != DDS::RETCODE_OK)
+                {
+                  DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                      "DDS_Update_T::configuration_complete - "
+                      "Error: Unable to retrieve datawriter QOS from XML: <%C>\n",
+                      ::CIAO::DDS4CCM::translate_retcode (retcode_dw_qos)));
+                  throw ::CCM_DDS::InternalError (retcode_dw_qos, 0);
+                }
+            }
+#endif
 
 #if defined GEN_OSTREAM_OPS
           if (DDS4CCM_debug_level >= DDS4CCM_LOG_LEVEL_DDS_STATUS)
@@ -101,7 +112,7 @@ DDS_Update_T<CCM_TYPE, TYPED_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::configuration_
                         "Error: Proxy returned a nil datawriter.\n"));
           throw ::CORBA::INTERNAL ();
         }
-      ::DDS::ReturnCode_t retcode = dwv_tmp->enable ();
+      DDS::ReturnCode_t retcode = dwv_tmp->enable ();
       if (retcode != ::DDS::RETCODE_OK)
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
@@ -140,7 +151,7 @@ DDS_Update_T<CCM_TYPE, TYPED_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::remove (
   ::DDS::DataWriter_var writer = this->dds_update_->get_dds_writer ();
   if (!::CORBA::is_nil (writer.in ()))
     {
-      ::DDS::ReturnCode_t const retval =
+      DDS::ReturnCode_t const retval =
           publisher->delete_datawriter (writer.in ());
       if (retval != ::DDS::RETCODE_OK)
         {

@@ -22,7 +22,7 @@ RTI Data Distribution Service user manual.
 
         A QoS library is a named set of QoS profiles.
     -->
-  <qos_library name="HelloTest_Library">
+  <qos_library name="KeyedTest_Library">
     <!-- QoS profile used to configure reliable communication between the DataWriter
              and DataReader created in the example code.
 

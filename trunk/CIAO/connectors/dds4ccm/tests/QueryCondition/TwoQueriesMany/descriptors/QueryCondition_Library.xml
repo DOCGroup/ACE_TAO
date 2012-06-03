@@ -1,12 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!-- $Id$ -->
+
 <dds xmlns="http://www.omg.org/dds"
      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
      xsi:schemaLocation="http://www.omg.org/dds dds_qos.xsd">
-
-  <qos_profile name="CoherentWriterProfile">
-    <!-- QoS used to configure the data writer created in the example code -->
+  <qos_profile name="QueryConditionProfile">
     <datawriter_qos>
       <reliability>
         <kind>RELIABLE_RELIABILITY_QOS</kind>
@@ -34,12 +33,5 @@
         <kind>TRANSIENT_LOCAL_DURABILITY_QOS</kind>
       </durability>
     </datareader_qos>
-    <publisher_qos>
-      <presentation>
-        <access_scope>INSTANCE_PRESENTATION_QOS</access_scope>
-        <coherent_access>true</coherent_access>
-        <ordered_access>false</ordered_access>
-      </presentation>
-    </publisher_qos>
   </qos_profile>
 </dds>

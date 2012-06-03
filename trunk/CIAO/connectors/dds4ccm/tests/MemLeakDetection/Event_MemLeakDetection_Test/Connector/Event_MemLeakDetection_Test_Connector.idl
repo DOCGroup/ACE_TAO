@@ -2,7 +2,7 @@
 
 /**
  * @file Event_MemLeakDetection_Test_Connector.idl
- * @author Marcel Smit <msmit@remedy.nl>
+ * @author Marcel Smit (msmit@remedy.nl)
  */
 
 #ifndef KEYED_TEST_CONNECTOR_IDL_

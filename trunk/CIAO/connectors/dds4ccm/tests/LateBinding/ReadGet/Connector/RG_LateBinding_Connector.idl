@@ -2,7 +2,7 @@
 
 /**
  * @file RG_LateBinding_Connector.idl
- * @author Marcel Smit <msmit@remedy.nl>
+ * @author Marcel Smit (msmit@remedy.nl)
  */
 
 #ifndef RG_LATEBINDING_CONNECTOR_IDL_

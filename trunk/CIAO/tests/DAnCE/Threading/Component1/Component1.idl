@@ -2,7 +2,7 @@
 
 /**
  * @file Component1.idl
- * @author Marcel Smit <msmit@remedy.nl>
+ * @author Marcel Smit (msmit@remedy.nl)
  */
 
 #ifndef COMPONENT1_IDL_

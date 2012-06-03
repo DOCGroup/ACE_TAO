@@ -2,10 +2,12 @@
 
 #include "dds4ccm/tools/QOS_XML_Handler/QOS_XML_Loader.h"
 #include "dds4ccm/tools/QOS_XML_Handler/XML_File_Intf.h"
-#include "dds4ccm/impl/logger/Log_Macros.h"
+#include "ace/Tokenizer_T.h"
+#include "dds/DCPS/debug.h"
 
-namespace DDS4CCM
-{
+namespace OpenDDS {
+namespace DCPS {
+
   QOS_XML_Loader::QOS_XML_Loader (void)
   {
   }
@@ -14,214 +16,384 @@ namespace DDS4CCM
   {
   }
 
-  bool
-  QOS_XML_Loader::init (const ACE_TCHAR *filename)
-  {
-    DDS4CCM_TRACE ("QOS_XML_Loader::init");
 
-    if (!filename)
+  ACE_CString
+  QOS_XML_Loader::get_xml_file_name (const char * qos_profile)
+  {
+    ACE_CString name;
+
+    if (qos_profile)
       {
-        DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-          ACE_TEXT ("QOS_XML_Loader::init - ")
-          ACE_TEXT ("Passed an empty file name, returning.\n")));
-        return false;
+        char* buf = ACE_OS::strdup (qos_profile);
+        ACE_Tokenizer_T<char> tok (buf);
+        tok.delimiter_replace ('#', 0);
+        const char * file_name = tok.next ();
+
+        if (file_name == 0)
+          {
+            ACE_OS::free (buf);
+            ACE_ERROR ((LM_ERROR,
+                          "get_xml_file_name <%C> - "
+                          "Error: malformed qos_profile. Expected format: "
+                          "<xml_file_base_name>#<profile_name>\n",
+                          qos_profile));
+            return "";
+          }
+
+        char * ret = ACE_OS::strdup (file_name);
+        ACE_OS::free (buf);
+
+        ACE_CString xml(".xml");
+        name = ret;
+        name = name + xml;
       }
 
-    if (!this->xml_file_.init (filename))
-      return false;
-
-    this->xml_file_.add_search_path (
-      ACE_TEXT("ACE_ROOT"), ACE_TEXT("/docs/schema/"));
-    this->xml_file_.add_search_path (
-      ACE_TEXT("TAO_ROOT"), ACE_TEXT("/docs/schema/"));
-    this->xml_file_.add_search_path (
-      ACE_TEXT("CIAO_ROOT"), ACE_TEXT("/docs/schema/"));
-    this->xml_file_.add_search_path (
-      ACE_TEXT("DANCE_ROOT"), ACE_TEXT("/docs/schema/"));
-    this->xml_file_.add_search_path (
-      ACE_TEXT("CIAO_ROOT"), ACE_TEXT("connectors/dds4ccm/docs/schema/"));
-    return true;
+    return name;
   }
 
-  bool
+  ACE_CString
+  QOS_XML_Loader::get_profile_name (const char * qos_profile)
+  {
+    ACE_CString profile_string;
+
+    if (qos_profile)
+      {
+        char* buf = ACE_OS::strdup (qos_profile);
+        ACE_Tokenizer_T<char> tok (buf);
+        tok.delimiter_replace ('#', 0);
+        const char * lib_name = tok.next ();
+        const char * prof_name = tok.next ();
+
+        if (lib_name == 0 || prof_name == 0 || tok.next () != 0)
+          {
+            ACE_OS::free (buf);
+            ACE_ERROR ((LM_ERROR,
+                          "get_profile_name <%C> - "
+                          "Error: malformed qos_profile. Expected format: "
+                          "<xml_file_base_name>#<profile_name>\n",
+                          qos_profile));
+            return "";
+          }
+
+        char * ret = ACE_OS::strdup (prof_name);
+        ACE_OS::free (buf);
+        profile_string = ret;
+      }
+
+    return profile_string;
+  }
+
+
+  DDS::ReturnCode_t
+  QOS_XML_Loader::init (const char * qos_profile)
+  {
+    if (!qos_profile)
+      {
+        ACE_ERROR ((LM_ERROR,
+          ACE_TEXT ("QOS_XML_Loader::init - ")
+          ACE_TEXT ("Passed an empty qos_profile, returning.\n")));
+        return ::DDS::RETCODE_BAD_PARAMETER;
+      }
+
+    ACE_CString filename = this->get_xml_file_name (qos_profile);
+
+    if (filename.empty ())
+      {
+        ACE_ERROR ((LM_ERROR,
+          ACE_TEXT ("QOS_XML_Loader::init - ")
+          ACE_TEXT ("Unable to extract a file name from <%C>, returning.\n"),
+          qos_profile));
+        return ::DDS::RETCODE_BAD_PARAMETER;
+      }
+
+    this->xml_file_.add_search_path (
+      ACE_TEXT("CIAO_ROOT"),
+      ACE_TEXT("/connectors/dds4ccm/docs/schema/"));
+
+    return this->xml_file_.init (filename.c_str ());
+  }
+
+  DDS::ReturnCode_t
   QOS_XML_Loader::get_datawriter_qos (
     ::DDS::DataWriterQos& dw_qos,
-    const ACE_TCHAR * profile_name,
+    const char * qos_profile,
     const char * topic_name)
   {
-    DDS4CCM_TRACE ("QOS_XML_Loader::get_datawriter_qos");
-
-    if (!profile_name)
+    if (!qos_profile)
       {
-        DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-          ACE_TEXT ("QOS_XML_Loader::get_datawriter_qos - ")
-          ACE_TEXT ("Passed an empty profile name, returning.\n")));
-        return false;
+        if (DCPS_debug_level > 9)
+          {
+            ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("QOS_XML_Loader::get_datawriter_qos - ")
+              ACE_TEXT ("No QOS profile provided. Can't do anything, ")
+              ACE_TEXT ("returning\n")));
+          }
+
+        return DDS::RETCODE_OK;
       }
+
+    ACE_CString const profile_name = this->get_profile_name (qos_profile);
+
+    if (profile_name.empty ())
+      {
+        ACE_ERROR ((LM_ERROR,
+          ACE_TEXT ("QOS_XML_Loader::get_datawriter_qos - ")
+          ACE_TEXT ("Error parsing profile string <%C>, returning.\n"),
+          qos_profile));
+        return ::DDS::RETCODE_BAD_PARAMETER;
+      }
+
+    DDS::ReturnCode_t retcode = DDS::RETCODE_OK;
 
     try
       {
-        return this->xml_file_.get_datawriter_qos (dw_qos,
-                                                   profile_name,
-                                                   topic_name);
+        retcode = this->xml_file_.get_datawriter_qos (dw_qos,
+                                                      profile_name.c_str (),
+                                                      topic_name);
       }
     catch (...)
       {
-        DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+        ACE_ERROR ((LM_ERROR,
           ACE_TEXT ("QOS_XML_Loader::get_datawriter_qos - ")
           ACE_TEXT ("Caught unexpected exception.\n")));
-        return false;
+        retcode = DDS::RETCODE_ERROR;
       }
+    return retcode;
   }
 
-  bool
+  DDS::ReturnCode_t
   QOS_XML_Loader::get_datareader_qos (
     DDS::DataReaderQos& dr_qos,
-    const ACE_TCHAR *profile_name,
-    const char* topic_name)
-  {
-    DDS4CCM_TRACE ("QOS_XML_Loader::get_datareader_qos");
-
-    if (!profile_name)
-      {
-        DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-          ACE_TEXT ("QOS_XML_Loader::get_datareader_qos - ")
-          ACE_TEXT ("Passed an empty profile name, returning.\n")));
-        return false;
-      }
-
-    try
-      {
-        return this->xml_file_.get_datareader_qos (dr_qos,
-                                                   profile_name,
-                                                   topic_name);
-      }
-    catch (...)
-      {
-        DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-          ACE_TEXT ("QOS_XML_Loader::get_datareader_qos - ")
-          ACE_TEXT ("Caught unexpected exception.\n")));
-        return false;
-      }
-  }
-
-  bool
-  QOS_XML_Loader::get_publisher_qos (
-    DDS::PublisherQos& pub_qos,
-    const ACE_TCHAR *profile_name)
-  {
-    DDS4CCM_TRACE ("QOS_XML_Loader::get_publisher_qos");
-
-    if (!profile_name)
-      {
-        DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-          ACE_TEXT ("QOS_XML_Loader::get_publisher_qos - ")
-          ACE_TEXT ("Passed an empty profile name, returning.\n")));
-        return false;
-      }
-
-    try
-      {
-        return this->xml_file_.get_publisher_qos (pub_qos,
-                                                  profile_name);
-      }
-    catch (...)
-      {
-        DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-          ACE_TEXT ("QOS_XML_Loader::get_publisher_qos - ")
-          ACE_TEXT ("Caught unexpected exception.\n")));
-        return false;
-      }
-  }
-
-  bool
-  QOS_XML_Loader::get_subscriber_qos (
-    DDS::SubscriberQos& sub_qos,
-    const ACE_TCHAR *profile_name)
-  {
-    DDS4CCM_TRACE ("QOS_XML_Loader::get_subscriber_qos");
-
-    if (!profile_name)
-      {
-        DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-          ACE_TEXT ("QOS_XML_Loader::get_subscriber_qos - ")
-          ACE_TEXT ("Passed an empty profile name, returning.\n")));
-        return false;
-      }
-
-    try
-      {
-        return this->xml_file_.get_subscriber_qos (sub_qos,
-                                                  profile_name);
-      }
-    catch (...)
-      {
-        DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-          ACE_TEXT ("QOS_XML_Loader::get_subscriber_qos - ")
-          ACE_TEXT ("Caught unexpected exception.\n")));
-        return false;
-      }
-  }
-
-  bool
-  QOS_XML_Loader::get_topic_qos (
-    DDS::TopicQos& topic_qos,
-    const ACE_TCHAR *profile_name,
+    const char * qos_profile,
     const char * topic_name)
   {
-    DDS4CCM_TRACE ("QOS_XML_Loader::get_topic_qos");
-
-    if (!profile_name)
+    if (!qos_profile)
       {
-        DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-          ACE_TEXT ("QOS_XML_Loader::get_topic_qos - ")
-          ACE_TEXT ("Passed an empty profile name, returning.\n")));
-        return false;
+        if (DCPS_debug_level > 9)
+          {
+            ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("QOS_XML_Loader::get_datareader_qos - ")
+              ACE_TEXT ("No QOS profile provided. Can't do anything, ")
+              ACE_TEXT ("returning\n")));
+          }
+
+        return DDS::RETCODE_OK;
       }
+
+    ACE_CString const profile_name = this->get_profile_name (qos_profile);
+
+    if (profile_name.empty ())
+      {
+        ACE_ERROR ((LM_ERROR,
+          ACE_TEXT ("QOS_XML_Loader::get_datareader_qos - ")
+          ACE_TEXT ("Error parsing profile string <%C>, returning.\n"),
+          qos_profile));
+        return ::DDS::RETCODE_BAD_PARAMETER;
+      }
+
+    DDS::ReturnCode_t retcode = DDS::RETCODE_OK;
 
     try
       {
-        return this->xml_file_.get_topic_qos (topic_qos,
-                                              profile_name,
-                                              topic_name);
+        retcode = this->xml_file_.get_datareader_qos (dr_qos,
+                                                      profile_name.c_str (),
+                                                      topic_name);
       }
     catch (...)
       {
-        DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-          ACE_TEXT ("QOS_XML_Loader::get_topic_qos - ")
+        ACE_ERROR ((LM_ERROR,
+          ACE_TEXT ("QOS_XML_Loader::get_datareader_qos - ")
           ACE_TEXT ("Caught unexpected exception.\n")));
-        return false;
+        retcode = ::DDS::RETCODE_ERROR;
       }
+    return retcode;
   }
 
-  bool
+  DDS::ReturnCode_t
+  QOS_XML_Loader::get_publisher_qos (
+    DDS::PublisherQos& pub_qos,
+    const char * qos_profile)
+  {
+    if (!qos_profile)
+      {
+        if (DCPS_debug_level > 9)
+          {
+            ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("QOS_XML_Loader::get_publisher_qos - ")
+              ACE_TEXT ("No QOS profile provided. Can't do anything, ")
+              ACE_TEXT ("returning\n")));
+          }
+
+        return DDS::RETCODE_OK;
+      }
+
+    ACE_CString const profile_name = this->get_profile_name (qos_profile);
+
+    if (profile_name.empty ())
+      {
+        ACE_ERROR ((LM_ERROR,
+          ACE_TEXT ("QOS_XML_Loader::get_publisher_qos - ")
+          ACE_TEXT ("Error parsing profile string <%C>, returning.\n"),
+          qos_profile));
+        return ::DDS::RETCODE_BAD_PARAMETER;
+      }
+
+    DDS::ReturnCode_t retcode = DDS::RETCODE_OK;
+
+    try
+      {
+        retcode = this->xml_file_.get_publisher_qos (pub_qos,
+                                                     profile_name.c_str ());
+      }
+    catch (...)
+      {
+        ACE_ERROR ((LM_ERROR,
+          ACE_TEXT ("QOS_XML_Loader::get_publisher_qos - ")
+          ACE_TEXT ("Caught unexpected exception.\n")));
+        retcode = DDS::RETCODE_ERROR;
+      }
+    return retcode;
+  }
+
+  DDS::ReturnCode_t
+  QOS_XML_Loader::get_subscriber_qos (
+    DDS::SubscriberQos& sub_qos,
+    const char * qos_profile)
+  {
+    if (!qos_profile)
+      {
+        if (DCPS_debug_level > 9)
+          {
+            ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("QOS_XML_Loader::get_subscriber_qos - ")
+              ACE_TEXT ("No QOS profile provided. Can't do anything, ")
+              ACE_TEXT ("returning\n")));
+          }
+
+        return DDS::RETCODE_OK;
+      }
+
+    ACE_CString const profile_name = this->get_profile_name (qos_profile);
+
+    if (profile_name.empty ())
+      {
+        ACE_ERROR ((LM_ERROR,
+          ACE_TEXT ("QOS_XML_Loader::get_subscriber_qos - ")
+          ACE_TEXT ("Error parsing profile string <%C>, returning.\n"),
+          qos_profile));
+        return ::DDS::RETCODE_BAD_PARAMETER;
+      }
+
+    DDS::ReturnCode_t retcode = DDS::RETCODE_OK;
+
+    try
+      {
+        retcode = this->xml_file_.get_subscriber_qos (sub_qos,
+                                                      profile_name.c_str ());
+      }
+    catch (...)
+      {
+        ACE_ERROR ((LM_ERROR,
+          ACE_TEXT ("QOS_XML_Loader::get_subscriber_qos - ")
+          ACE_TEXT ("Caught unexpected exception.\n")));
+        retcode = DDS::RETCODE_ERROR;
+      }
+    return retcode;
+  }
+
+  DDS::ReturnCode_t
+  QOS_XML_Loader::get_topic_qos (
+    DDS::TopicQos& topic_qos,
+    const char * qos_profile,
+    const char * topic_name)
+  {
+    if (!qos_profile)
+      {
+        if (DCPS_debug_level > 9)
+          {
+            ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("QOS_XML_Loader::get_topic_qos - ")
+              ACE_TEXT ("No QOS profile provided. Can't do anything, ")
+              ACE_TEXT ("returning\n")));
+          }
+
+        return DDS::RETCODE_OK;
+      }
+
+    ACE_CString const profile_name = this->get_profile_name (qos_profile);
+
+    if (profile_name.empty ())
+      {
+        ACE_ERROR ((LM_ERROR,
+          ACE_TEXT ("QOS_XML_Loader::get_topic_qos - ")
+          ACE_TEXT ("Error parsing profile string <%C>, returning.\n"),
+          qos_profile));
+        return ::DDS::RETCODE_BAD_PARAMETER;
+      }
+
+    DDS::ReturnCode_t retcode = DDS::RETCODE_OK;
+
+    try
+      {
+        retcode = this->xml_file_.get_topic_qos (topic_qos,
+                                                 profile_name.c_str (),
+                                                 topic_name);
+      }
+    catch (...)
+      {
+        ACE_ERROR ((LM_ERROR,
+          ACE_TEXT ("QOS_XML_Loader::get_topic_qos - ")
+          ACE_TEXT ("Caught unexpected exception.\n")));
+        retcode = DDS::RETCODE_ERROR;
+      }
+    return retcode;
+  }
+
+  DDS::ReturnCode_t
   QOS_XML_Loader::get_participant_qos (
     DDS::DomainParticipantQos& part_qos,
-    const ACE_TCHAR *profile_name)
+    const char * qos_profile)
   {
-    DDS4CCM_TRACE ("QOS_XML_Loader::get_participant_qos");
-
-    if (!profile_name)
+    if (!qos_profile)
       {
-        DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-          ACE_TEXT ("QOS_XML_Loader::get_participant_qos - ")
-          ACE_TEXT ("Passed an empty profile name, returning.\n")));
-        return false;
+        if (DCPS_debug_level > 9)
+          {
+            ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("QOS_XML_Loader::get_participant_qos - ")
+              ACE_TEXT ("No QOS profile provided. Can't do anything, ")
+              ACE_TEXT ("returning\n")));
+          }
+
+        return DDS::RETCODE_OK;
       }
+
+    ACE_CString const profile_name = this->get_profile_name (qos_profile);
+
+    if (profile_name.empty ())
+      {
+        ACE_ERROR ((LM_ERROR,
+          ACE_TEXT ("QOS_XML_Loader::get_participant_qos - ")
+          ACE_TEXT ("Error parsing profile string <%C>, returning.\n"),
+          qos_profile));
+        return ::DDS::RETCODE_BAD_PARAMETER;
+      }
+
+    DDS::ReturnCode_t retcode = DDS::RETCODE_OK;
 
     try
       {
-        return this->xml_file_.get_participant_qos (part_qos,
-                                                    profile_name);
+        retcode = this->xml_file_.get_participant_qos (part_qos,
+                                                       profile_name.c_str ());
       }
     catch (...)
       {
-        DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+        ACE_ERROR ((LM_ERROR,
           ACE_TEXT ("QOS_XML_Loader::get_participant_qos - ")
           ACE_TEXT ("Caught unexpected exception.\n")));
-        return false;
+        retcode = DDS::RETCODE_ERROR;
       }
-    return true;
+    return retcode;
   }
 
+}
 }

@@ -2,7 +2,7 @@
 
 /**
  * @file TL_ResetTopic_Base.idl
- * @author Marcel Smit <msmit@remedy.nl>
+ * @author Marcel Smit (msmit@remedy.nl)
  */
 
 #ifndef TL_RESETTOPIC_BASE_IDL

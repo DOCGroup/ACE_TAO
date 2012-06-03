@@ -36,7 +36,7 @@ DDS_Subscriber_Base_T<CCM_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::c
   const char * qos_profile)
 #else
   const char * qos_profile,
-  DDS4CCM::QOS_XML_Loader& qos_xml)
+  OpenDDS::DCPS::QOS_XML_Loader& qos_xml)
 #endif
 {
   DDS4CCM_TRACE ("DDS_Subscriber_Base_T<CCM_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::configuration_complete");
@@ -82,13 +82,6 @@ DDS_Subscriber_Base_T<CCM_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::c
           DDS::ReturnCode_t const retcode =
             subscriber->get_default_datareader_qos (drqos);
 
-#if (CIAO_DDS4CCM_OPENDDS==1)
-          CORBA::String_var name = topic->get_name ();
-          qos_xml.get_datareader_qos (drqos,
-                                      DDS4CCM::get_profile_name (qos_profile).c_str (),
-                                      name.in ());
-#endif
-
           if (retcode != DDS::RETCODE_OK)
             {
               DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
@@ -97,6 +90,26 @@ DDS_Subscriber_Base_T<CCM_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::c
                   ::CIAO::DDS4CCM::translate_retcode (retcode)));
               throw ::CCM_DDS::InternalError (retcode, 0);
             }
+
+#if (CIAO_DDS4CCM_OPENDDS==1)
+          if (qos_profile)
+            {
+              CORBA::String_var name = topic->get_name ();
+              DDS::ReturnCode_t const retcode_dr_qos = qos_xml.get_datareader_qos (
+                                          drqos,
+                                          qos_profile,
+                                          name.in ());
+
+              if (retcode_dr_qos != DDS::RETCODE_OK)
+                {
+                  DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                      "DDS_Subscriber_Base_T::configuration_complete - "
+                      "Error: Unable to retrieve datawriter QOS from XML: <%C>\n",
+                      ::CIAO::DDS4CCM::translate_retcode (retcode_dr_qos)));
+                  throw ::CCM_DDS::InternalError (retcode_dr_qos, 0);
+                }
+            }
+#endif
 
 #if defined GEN_OSTREAM_OPS
           if (DDS4CCM_debug_level >= DDS4CCM_LOG_LEVEL_DDS_STATUS)
@@ -123,7 +136,7 @@ DDS_Subscriber_Base_T<CCM_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::c
                         "Error: Proxy returned a nil datareader.\n"));
           throw ::CORBA::INTERNAL ();
         }
-      ::DDS::ReturnCode_t const retcode = dr->enable ();
+      DDS::ReturnCode_t const retcode = dr->enable ();
       if (retcode != ::DDS::RETCODE_OK)
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
@@ -163,7 +176,7 @@ DDS_Subscriber_Base_T<CCM_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::a
       ::DDS::DataReader_var dr = this->dds_read_->get_dds_reader ();
       if (!::CORBA::is_nil (dr.in ()))
         {
-          ::DDS::ReturnCode_t const retcode = dr->set_listener (
+          DDS::ReturnCode_t const retcode = dr->set_listener (
               this->listener_.in (), mask);
 
           if (retcode != ::DDS::RETCODE_OK)
@@ -197,7 +210,7 @@ DDS_Subscriber_Base_T<CCM_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::p
   if (!::CORBA::is_nil (reader_listener.in ()) &&
       !::CORBA::is_nil (reader.in ()) )
     {
-      ::DDS::ReturnCode_t const retcode =
+      DDS::ReturnCode_t const retcode =
         reader->set_listener (::DDS::DataReaderListener::_nil (), 0);
       if (retcode != ::DDS::RETCODE_OK)
         {
@@ -220,7 +233,7 @@ DDS_Subscriber_Base_T<CCM_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::r
   ::DDS::DataReader_var dr = this->dds_read_->get_dds_reader ();
   if (!::CORBA::is_nil (dr.in ()))
     {
-      ::DDS::ReturnCode_t const retval =
+      DDS::ReturnCode_t const retval =
         subscriber->delete_datareader (dr.in ());
       if (retval != ::DDS::RETCODE_OK)
         {

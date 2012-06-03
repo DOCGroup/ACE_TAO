@@ -1,5 +1,5 @@
 /**
- * @author Marcel Smit <msmit@remedy.nl>
+ * @author Marcel Smit (msmit@remedy.nl)
  *
  * $Id$
  *
@@ -42,7 +42,7 @@ public:
     const char * qos_profile);
 #else
     const char * qos_profile,
-    DDS4CCM::QOS_XML_Loader& qos_xml);
+    OpenDDS::DCPS::QOS_XML_Loader& qos_xml);
 #endif
 
   void activate (void);

@@ -3,7 +3,7 @@
 <!-- $Id$ -->
 <dds xmlns="http://www.omg.org/dds"
      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-     xsi:schemaLocation="http://www.omg.org/dds ../../../docs/schema/dds_qos.xsd">
+     xsi:schemaLocation="http://www.omg.org/dds dds_qos.xsd">
 
   <qos_profile name="ReaderProfile">
     <datawriter_qos>

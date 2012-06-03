@@ -2,7 +2,7 @@
 
 /**
  * @file Shapes_Base.idl
- * @author Marcel Smit <msmit@remedy.nl>
+ * @author Marcel Smit (msmit@remedy.nl)
  */
 
 #ifndef SHAPES_BASE_IDL

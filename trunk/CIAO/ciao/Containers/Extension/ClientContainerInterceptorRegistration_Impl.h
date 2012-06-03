@@ -3,7 +3,7 @@
  *
  *  $Id$
  *
- *  @author Marcel Smit <msmit@remedy.nl>
+ *  @author Marcel Smit (msmit@remedy.nl)
  */
 #if !defined CLIENTCONTAINERINTERCEPTORREGISTRATION_IMPL_H
 #define CLIENTCONTAINERINTERCEPTORREGISTRATION_IMPL_H

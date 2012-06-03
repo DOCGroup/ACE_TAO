@@ -2,7 +2,7 @@
 
 /**
  * @file Threading.idl
- * @author Marcel Smit <msmit@remedy.nl>
+ * @author Marcel Smit (msmit@remedy.nl)
  */
 
 #ifndef THREADING_IDL_
