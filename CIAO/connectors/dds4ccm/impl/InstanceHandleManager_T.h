@@ -1,5 +1,5 @@
 /**
- * @author Johnny Willemsen <jwillemsen@remedy.nl>
+ * @author Johnny Willemsen (jwillemsen@remedy.nl)
  *
  * $Id$
  *

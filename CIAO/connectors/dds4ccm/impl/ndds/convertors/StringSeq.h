@@ -1,6 +1,6 @@
 /**
- * @author Marcel Smit <msmit@remedy.nl>
- * @author Johnny Willemsen <jwillemsen@remedy.nl>
+ * @author Marcel Smit (msmit@remedy.nl)
+ * @author Johnny Willemsen (jwillemsen@remedy.nl)
  *
  * $Id$
  *

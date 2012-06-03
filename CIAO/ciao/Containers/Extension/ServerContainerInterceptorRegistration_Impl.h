@@ -3,7 +3,7 @@
  *
  *  $Id$
  *
- *  @author Marcel Smit <msmit@remedy.nl>
+ *  @author Marcel Smit (msmit@remedy.nl)
  */
 #if !defined SERVERCONTAINERINTERCEPTORREGISTRATION_IMPL_H
 #define CCM_SERVERCONTAINERINTERCEPTORREGISTRATION_IMPL_H

@@ -3,7 +3,7 @@
  *
  *  $Id$
  *
- *  @author Marcel Smit <msmit@remedy.nl>
+ *  @author Marcel Smit (msmit@remedy.nl)
  */
 #if !defined STUBCONTAINERINTERCEPTORREGISTRATION_IMPL_H
 #define STUBCONTAINERINTERCEPTORREGISTRATION_IMPL_H

@@ -1,8 +1,9 @@
 /**
- * @author Marcel Smit <msmit@remedy.nl>
+ * @author Marcel Smit (msmit@remedy.nl)
  *
  * $Id$
  *
+ * Starting point for parsing the DataReader QOS settings.
  */
 #ifndef QOS_DATAREADER_T_H_
 #define QOS_DATAREADER_T_H_

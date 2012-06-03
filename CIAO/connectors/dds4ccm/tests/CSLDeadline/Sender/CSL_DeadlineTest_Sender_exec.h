@@ -60,7 +60,7 @@ namespace CIAO_CSL_DeadlineTest_Sender_Impl
     Sender_exec_i &callback_;
   };
 
-//============================================================
+  //============================================================
   // Sender_exec_i
   //============================================================
   class Sender_exec_i
@@ -76,9 +76,11 @@ namespace CIAO_CSL_DeadlineTest_Sender_Impl
     virtual void ccm_activate (void);
     virtual void ccm_passivate (void);
     virtual void ccm_remove (void);
+
     // Port operations.
     virtual ::CCM_DDS::CCM_ConnectorStatusListener_ptr
     get_test_topic_connector_status(void);
+
     void write (void);
     void add_instance_of_topic (const char *, int x );
 

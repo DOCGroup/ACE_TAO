@@ -9,7 +9,7 @@
  *  This file contains the declaration of a mixin base class for
  *  the generated interface servant class.
  *
- *  @authors Marcel Smit <msmit@remedy.nl>
+ *  @authors Marcel Smit (msmit@remedy.nl)
  */
 //=============================================================================
 

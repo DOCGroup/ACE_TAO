@@ -2,7 +2,7 @@
 
 /**
  * @file State_MemLeakDetection_Test_Base.idl
- * @author Marcel Smit <msmit@remedy.nl>
+ * @author Marcel Smit (msmit@remedy.nl)
  */
 
 #ifndef STATE_MEMLEAKDETECTION_TEST_BASE_IDL

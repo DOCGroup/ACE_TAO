@@ -30,7 +30,7 @@ DDS_Get_T<CCM_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE, FIXED>::config
   const char * qos_profile)
 #else
   const char * qos_profile,
-  DDS4CCM::QOS_XML_Loader& qos_xml)
+  OpenDDS::DCPS::QOS_XML_Loader& qos_xml)
 #endif
 {
   DDS4CCM_TRACE ("DDS_Get_T<CCM_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE, FIXED>::configuration_complete");

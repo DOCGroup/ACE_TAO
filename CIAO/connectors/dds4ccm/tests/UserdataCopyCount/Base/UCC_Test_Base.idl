@@ -2,7 +2,7 @@
 
 /**
  * @file UCC_Test_Base.idl
- * @author Marcel Smit <msmit@remedy.nl>
+ * @author Marcel Smit (msmit@remedy.nl)
  */
 
 #ifndef USERDATA_COPY_COUNT_TEST_BASE_IDL

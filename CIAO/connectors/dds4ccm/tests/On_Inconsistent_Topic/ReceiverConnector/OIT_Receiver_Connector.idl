@@ -2,7 +2,7 @@
 
 /**
  * @file OIT_Receiver_Connector.idl
- * @author Marcel Smit <msmit@remedy.nl>
+ * @author Marcel Smit (msmit@remedy.nl)
  */
 
 #ifndef ON_INCONSISTENT_TOPIC_TEST_RECEIVER_CONNECTOR_IDL_

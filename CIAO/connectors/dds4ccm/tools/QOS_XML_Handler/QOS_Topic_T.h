@@ -1,7 +1,9 @@
 /**
- * @author Marcel Smit <msmit@remedy.nl>
+ * @author Marcel Smit (msmit@remedy.nl)
  *
  * $Id$
+ *
+ * Starting point for parsing the Topic QOS settings.
  *
  */
 #ifndef QOS_TOPIC_T_H_

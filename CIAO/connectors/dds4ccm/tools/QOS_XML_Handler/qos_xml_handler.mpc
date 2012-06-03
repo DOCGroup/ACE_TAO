@@ -6,7 +6,7 @@ project (XML_QOS_XSC_Generation) : install, xscdefaults {
   xscflags += --cxx-banner-file $(CIAO_ROOT)/connectors/dds4ccm/docs/schema/xsc-banner.cpp
   xscflags += --cxx-header-banner-file $(CIAO_ROOT)/connectors/dds4ccm/docs/schema/xsc-banner.h
   xscflags += --cxx-export-symbol XML_QOS_Handler_Export
-  xscflags += --cxx-namespace-regex  "%.*dds.*DDS4CCM/QOS_XML_Handler%" //<%quote%>
+  xscflags += --cxx-namespace-regex  "%.*dds.*DCPS/QOS_XML_Handler%" //<%quote%>
   xscflags += --cxx-export-header XML_QOS_Handler_Export.h
   xscflags += --search-path "$(CIAO_ROOT)/connectors/dds4ccm/docs/schema"
 
@@ -47,7 +47,6 @@ project (QOS_XML_XSC_Handler) : install, acelib, xerces, anytypecode, \
     SubscriberQos_Handler.cpp
     ParticipantQos_Handler.cpp
     QOS_Common.cpp
-    Utils.cpp
   }
 
   Header_Files {
@@ -60,7 +59,6 @@ project (QOS_XML_XSC_Handler) : install, acelib, xerces, anytypecode, \
     PublisherQos_Handler.h
     SubscriberQos_Handler.h
     ParticipantQos_Handler.h
-    Utils.h
   }
 
   Template_Files {

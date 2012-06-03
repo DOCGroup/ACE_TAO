@@ -326,7 +326,7 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
 
     if (::CORBA::is_nil (read_reader))
       {
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Receiver_exec_i::get_all - ")
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Receiver_exec_i::read_all_on_reader_port - ")
                               ACE_TEXT ("ERROR: No Reader on Reader port\n")));
         return;
       }
@@ -335,7 +335,7 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
     read_reader->read_all (queryfiltertest_info_seq, readinfo_seq);
     if (queryfiltertest_info_seq.length () == 0)
       {
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR : Receiver_exec_i::read_all : ")
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR : Receiver_exec_i::read_all_on_reader_port : ")
                               ACE_TEXT ("No samples available in Reader!\n")));
       }
     for (CORBA::ULong it = 0; it < queryfiltertest_info_seq.length (); ++it)
@@ -353,7 +353,7 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
 
     if (::CORBA::is_nil (get_reader))
       {
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver_exec_i::get_all - ")
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver_exec_i::read_all_on_getter_port - ")
                               ACE_TEXT ("No Reader on Getter port\n")));
         return;
       }
@@ -362,7 +362,7 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
     get_reader->read_all (queryfiltertest_info_seq, readinfo_seq);
     if (queryfiltertest_info_seq.length () == 0)
       {
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR : Receiver_exec_i::read_all : ")
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR : Receiver_exec_i::read_all_on_getter_port : ")
                               ACE_TEXT ("No samples available in Reader!\n")));
       }
     for (CORBA::ULong it = 0; it < queryfiltertest_info_seq.length (); ++it)
@@ -380,7 +380,7 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
 
     if (::CORBA::is_nil (get_getter))
       {
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver_exec_i::get_all - ")
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver_exec_i::get_all_on_getter_port - ")
                               ACE_TEXT ("No Getter on Getter port\n")));
         return;
       }
@@ -395,7 +395,7 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
     CORBA::Boolean result = get_getter->get_one (qf_info.out (), readinfo);
     if (ACE_OS::strlen (qf_info->symbol.in ()) == 0)
       {
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver_exec_i::get_all - ")
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver_exec_i::get_all_on_getter_port - ")
                               ACE_TEXT ("Name of key seems to be empty-> bailing out\n")));
         return;
       }
@@ -406,7 +406,7 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
       }
     else
       {
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver_exec_i::get_all - ")
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver_exec_i::get_all_on_getter_port - ")
                               ACE_TEXT ("time out when retrieving ")
                               ACE_TEXT ("first sample.\n")));
       }

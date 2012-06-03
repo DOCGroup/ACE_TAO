@@ -2,7 +2,7 @@
 
 /**
  * @file OIT_Test_Base.idl
- * @author Marcel Smit <msmit@remedy.nl>
+ * @author Marcel Smit (msmit@remedy.nl)
  */
 
 #ifndef ON_INCONSISTENT_TOPIC_TEST_BASE_IDL

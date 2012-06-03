@@ -19,41 +19,82 @@ int ACE_TMAIN (int argc, ACE_TCHAR * argv[])
         }
 
       DDS4CCM::QOS_XML_Loader xml_loader;
-      if (xml_loader.init (argv[1]))
+      DDS::ReturnCode_t const retcode = xml_loader.init (argv[1]);
+      if (retcode == DDS::RETCODE_OK)
         {
+          DDS::ReturnCode_t retcode_qos;
           ::DDS::DataWriterQos dw_qos;
-          xml_loader.get_datawriter_qos (dw_qos,
-                                         ACE_TEXT ("TestProfile"),
-                                         "TopicName");
-          //dump
+          retcode_qos = xml_loader.get_datawriter_qos (
+                                dw_qos,
+                                ACE_TEXT ("TestProfile"),
+                                "TopicName");
+          if (retcode_qos != DDS::RETCODE_OK)
+            {
+              ACE_ERROR ((LM_ERROR, "MAIN - "
+                "get_datawriter_qos return an error. Retcode <%d>",
+                retcode_qos));
+            }
 
           ::DDS::DataReaderQos dr_qos;
-          xml_loader.get_datareader_qos (dr_qos,
-                                         ACE_TEXT ("TestProfile"),
-                                         "TopicName");
-          //dump
+          retcode_qos = xml_loader.get_datareader_qos (
+                                dr_qos,
+                                ACE_TEXT ("TestProfile"),
+                                "TopicName");
+          if (retcode_qos != DDS::RETCODE_OK)
+            {
+              ACE_ERROR ((LM_ERROR, "MAIN - "
+                "get_datareader_qos return an error. Retcode <%d>",
+                retcode_qos));
+            }
 
           ::DDS::TopicQos tp_qos;
-          xml_loader.get_topic_qos (tp_qos,
-                                    ACE_TEXT ("TestProfile"),
-                                    "TopicName");
-          //dump
+          retcode_qos = xml_loader.get_topic_qos (
+                                tp_qos,
+                                ACE_TEXT ("TestProfile"),
+                                "TopicName");
+          if (retcode_qos != DDS::RETCODE_OK)
+            {
+              ACE_ERROR ((LM_ERROR, "MAIN - "
+                "get_topic_qos return an error. Retcode <%d>",
+                retcode_qos));
+            }
 
           ::DDS::PublisherQos pub_qos;
-          xml_loader.get_publisher_qos (pub_qos,
-                                        ACE_TEXT ("TestProfile"));
-          //dump
+          retcode_qos = xml_loader.get_publisher_qos (
+                                pub_qos,
+                                ACE_TEXT ("TestProfile"));
+          if (retcode_qos != DDS::RETCODE_OK)
+            {
+              ACE_ERROR ((LM_ERROR, "MAIN - "
+                "get_publisher_qos return an error. Retcode <%d>",
+                retcode_qos));
+            }
 
           ::DDS::SubscriberQos sub_qos;
-          xml_loader.get_subscriber_qos (sub_qos,
-                                         ACE_TEXT ("TestProfile"));
-          //dump
+          retcode_qos = xml_loader.get_subscriber_qos (
+                                sub_qos,
+                                ACE_TEXT ("TestProfile"));
+          if (retcode_qos != DDS::RETCODE_OK)
+            {
+              ACE_ERROR ((LM_ERROR, "MAIN - "
+                "get_subscriber_qos return an error. Retcode <%d>",
+                retcode_qos));
+            }
 
           ::DDS::DomainParticipantQos dp_qos;
-          xml_loader.get_participant_qos (dp_qos,
-                                          ACE_TEXT ("TestProfile"));
-          //dump
+          retcode_qos = xml_loader.get_participant_qos (
+                                dp_qos,
+                                ACE_TEXT ("TestProfile"));
+          if (retcode_qos != DDS::RETCODE_OK)
+            {
+              ACE_ERROR ((LM_ERROR, "MAIN - "
+                "get_participant_qos return an error. Retcode <%d>",
+                retcode_qos));
+            }
         }
+      else
+        ACE_ERROR ((LM_ERROR, "MAIN - Init return an error. Retcode <%d>",
+          retcode));
     }
   catch (const CORBA::Exception& ex)
     {

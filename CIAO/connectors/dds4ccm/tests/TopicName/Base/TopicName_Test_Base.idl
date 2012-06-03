@@ -2,7 +2,7 @@
 
 /**
  * @file TopicName_Test_Base.idl
- * @author Marcel Smit <msmit@remedy.nl>
+ * @author Marcel Smit (msmit@remedy.nl)
  */
 
 #ifndef TOPICNAME_TEST_BASE_IDL

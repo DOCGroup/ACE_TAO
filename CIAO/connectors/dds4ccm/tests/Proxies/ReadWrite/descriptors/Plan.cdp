@@ -181,7 +181,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Proxy_RW_Library#Proxy_RWProfile</string>
+          <string>Proxy_RW_Library#ProxyRWProfile</string>
         </value>
       </value>
     </configProperty>
@@ -210,7 +210,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Proxy_RW_Library#Proxy_RWProfile</string>
+          <string>Proxy_RW_Library#ProxyRWProfile</string>
         </value>
       </value>
     </configProperty>
