@@ -1,3 +1,70 @@
+Sun Jun  3 19:02:08 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+          Use the new OpenDDS QOS_XML library, removed the ciao version
+
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.h:
+        * connectors/dds4ccm/impl/DDS_Write_T.h:
+          Updated includes
+
+        * CIAO_TAO_DAnCE.mwc:
+        * CIAO_TAO_DAnCE_OpenDDS.mwc:
+          dds4ccm doesn't have a tools directory anymore
+
+        * MPC/config/dds4ccm.mpb:
+        * MPC/config/dds4ccm_base.mpb:
+        * MPC/config/dds4ccm_impl.mpb:
+          Use OpenDDS base projects
+
+        * MPC/config/dds4ccm_qos_xml_handler.mpb:
+        * MPC/config/dds4ccm_qos_xml_handler_base.mpb:
+        * connectors/dds4ccm/docs/schema:
+        * connectors/dds4ccm/docs/schema/dds_qos.xsd:
+        * connectors/dds4ccm/docs/schema/xsc-banner.h:
+        * connectors/dds4ccm/docs/schema/xsc-banner.cpp:
+        * connectors/dds4ccm/tests/QoS:
+        * connectors/dds4ccm/tests/QoS/dump:
+        * connectors/dds4ccm/tests/QoS/dump/dds4ccm_qos_dump.mpc:
+        * connectors/dds4ccm/tests/QoS/dump/qos.xml:
+        * connectors/dds4ccm/tests/QoS/dump/qos_dump.cpp:
+        * connectors/dds4ccm/tests/QoS/dump/run_test.pl:
+        * connectors/dds4ccm/tools:
+        * connectors/dds4ccm/tools/QOS_XML_Handler:
+        * connectors/dds4ccm/tools/QOS_XML_Handler/DataReaderQos_Handler.h:
+        * connectors/dds4ccm/tools/QOS_XML_Handler/DataReaderQos_Handler.cpp:
+        * connectors/dds4ccm/tools/QOS_XML_Handler/DataWriterQos_Handler.h:
+        * connectors/dds4ccm/tools/QOS_XML_Handler/DataWriterQos_Handler.cpp:
+        * connectors/dds4ccm/tools/QOS_XML_Handler/ParticipantQos_Handler.h:
+        * connectors/dds4ccm/tools/QOS_XML_Handler/ParticipantQos_Handler.cpp:
+        * connectors/dds4ccm/tools/QOS_XML_Handler/PublisherQos_Handler.h:
+        * connectors/dds4ccm/tools/QOS_XML_Handler/PublisherQos_Handler.cpp:
+        * connectors/dds4ccm/tools/QOS_XML_Handler/QOS_Common.h:
+        * connectors/dds4ccm/tools/QOS_XML_Handler/QOS_Common.cpp:
+        * connectors/dds4ccm/tools/QOS_XML_Handler/QOS_DataReader_T.h:
+        * connectors/dds4ccm/tools/QOS_XML_Handler/QOS_DataReader_T.cpp:
+        * connectors/dds4ccm/tools/QOS_XML_Handler/QOS_DataWriter_T.h:
+        * connectors/dds4ccm/tools/QOS_XML_Handler/QOS_DataWriter_T.cpp:
+        * connectors/dds4ccm/tools/QOS_XML_Handler/QOS_DwDrTp_Base_T.h:
+        * connectors/dds4ccm/tools/QOS_XML_Handler/QOS_DwDrTp_Base_T.cpp:
+        * connectors/dds4ccm/tools/QOS_XML_Handler/QOS_DwTp_Base_T.h:
+        * connectors/dds4ccm/tools/QOS_XML_Handler/QOS_DwTp_Base_T.cpp:
+        * connectors/dds4ccm/tools/QOS_XML_Handler/QOS_PubSub_T.h:
+        * connectors/dds4ccm/tools/QOS_XML_Handler/QOS_PubSub_T.cpp:
+        * connectors/dds4ccm/tools/QOS_XML_Handler/QOS_Topic_T.h:
+        * connectors/dds4ccm/tools/QOS_XML_Handler/QOS_Topic_T.cpp:
+        * connectors/dds4ccm/tools/QOS_XML_Handler/QOS_XML_Loader.h:
+        * connectors/dds4ccm/tools/QOS_XML_Handler/QOS_XML_Loader.cpp:
+        * connectors/dds4ccm/tools/QOS_XML_Handler/SubscriberQos_Handler.h:
+        * connectors/dds4ccm/tools/QOS_XML_Handler/SubscriberQos_Handler.cpp:
+        * connectors/dds4ccm/tools/QOS_XML_Handler/TopicQos_Handler.h:
+        * connectors/dds4ccm/tools/QOS_XML_Handler/TopicQos_Handler.cpp:
+        * connectors/dds4ccm/tools/QOS_XML_Handler/XML_File_Intf.h:
+        * connectors/dds4ccm/tools/QOS_XML_Handler/XML_File_Intf.cpp:
+        * connectors/dds4ccm/tools/QOS_XML_Handler/XML_QOS_Handler_Export.h:
+        * connectors/dds4ccm/tools/QOS_XML_Handler/dds_qos.cpp:
+        * connectors/dds4ccm/tools/QOS_XML_Handler/dds_qos.hpp:
+        * connectors/dds4ccm/tools/QOS_XML_Handler/qos_xml_handler.mpc:
+          Removed these files.
+
 Sun Jun 3 19:14:02 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         Merged branch DDS4CCM_QOS_Handler again to trunk
