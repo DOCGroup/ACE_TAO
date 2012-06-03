@@ -13,7 +13,7 @@
 #include "dds4ccm/impl/CCM_DataWriter.h"
 
 #if (CIAO_DDS4CCM_OPENDDS==1)
-# include "dds4ccm/tools/QOS_XML_Handler/QOS_XML_Loader.h"
+# include "dds/DCPS/QOS_XML_Handler/QOS_XML_Loader.h"
 #endif
 
 template <typename CCM_TYPE, typename TYPED_WRITER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>

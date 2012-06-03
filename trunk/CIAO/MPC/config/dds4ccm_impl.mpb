@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-feature(dds4ccm_opendds) : gen_ostream, dds4ccm_skel, dds4ccm_lem_stub, dcps_lem_stub, dds4ccm_qos_xml_handler, dcps_rtps, dds4ccm_logger {
+feature(dds4ccm_opendds) : gen_ostream, dds4ccm_skel, dds4ccm_lem_stub, dcps_lem_stub, dcps_qos_xml_handler, dcps_rtps, dds4ccm_logger {
   after += CIAO_DDS4CCM_DDS_Impl
   libs += CIAO_DDS4CCM_DDS_Impl
   includes += $(CIAO_ROOT)/connectors \
