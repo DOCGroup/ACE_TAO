@@ -14,7 +14,9 @@
 
 #include "tao/LocalObject.h"
 
-#include "dds4ccm/impl/ndds/DataWriter_T.h"
+class DDSDataWriter;
+class DDSPublisher;
+class DDSTopic;
 
 namespace CIAO_SetConnectorAttribute_SetConnectorAttributeComponent_Impl
 {
