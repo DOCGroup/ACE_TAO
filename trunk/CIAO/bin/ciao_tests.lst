@@ -5,175 +5,179 @@
 # Each line has its own test, and a test can be followed by a
 # list of configurations it does _not_ run on.
 #
-# Example: TAO\examples\foo\run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST
+# Example: TAO\examples\foo\run_test.pl:
 #
-TAO/CIAO/examples/Hello/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST !LabVIEW_RT !WinCE !CCM_NOEVENT
-TAO/CIAO/examples/Hello/descriptors/run_test_shs.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST !LabVIEW_RT !WinCE !CCM_NOEVENT
-TAO/CIAO/examples/Hello/descriptors/run_test_PlanLocality_DifferentProcesses.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST !LabVIEW_RT !WinCE !CCM_NOEVENT
-TAO/CIAO/examples/Hello/descriptors/run_test_PlanLocality_SameProcess.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST !LabVIEW_RT !WinCE !CCM_NOEVENT
-TAO/CIAO/examples/BasicSP/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST !LabVIEW_RT !WinCE !CCM_NOEVENT
-TAO/CIAO/examples/Null_Component/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST !LabVIEW_RT !WinCE
-TAO/CIAO/examples/Null_Component/descriptors/run_test_without_ns.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST !LabVIEW_RT !WinCE
-TAO/CIAO/examples/Hello/descriptors/run_test_without_ns.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST !LabVIEW_RT !WinCE !CCM_NOEVENT
-TAO/CIAO/examples/Display/descriptors/run_all_in_one.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST !LabVIEW_RT !WinCE !CCM_NOEVENT
-TAO/CIAO/tutorials/Quoter/Simple/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST !LabVIEW_RT !WinCE !CCM_NOEVENT
-TAO/CIAO/tests/Collocation/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST CCM_DIRECTCOLL
-TAO/CIAO/tests/Bug_3834_Regression/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST !LabVIEW_RT !WinCE
-TAO/CIAO/tests/Bug_3834_Regression/descriptors/run_test_without_ns.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST !LabVIEW_RT !WinCE
-TAO/CIAO/tests/IDL3/Events/Any/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !ST !LabVIEW_RT !WinCE !CCM_NOEVENT
-TAO/CIAO/tests/Bug_3769_Regression/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST
-TAO/CIAO/tests/Thread/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST !CCM_NOEVENT
-TAO/CIAO/tests/Thread/descriptors/run_test_cdd.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST !CCM_NOEVENT
-TAO/CIAO/tests/CIF/descriptors/run_test.pl: !ACE_FOR_TAO !ST !NOXERCES !STATIC
-#TAO/CIAO/DevGuideExamples/Messenger/descriptors/run_test.pl: !LabVIEW_RT !WinCE !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !ST !NOXERCES !CCM_NOEVENT
-TAO/CIAO/tests/IDL_Test/Double_Inherited_Component/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST
-TAO/CIAO/tests/IDL_Test/NonTopic_Connector/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST
+# All DDS4CCM tests are dependent on the DDS4CCM test config. Some tests are
+# testing vendor specific features, these can use DDS4CCM_NDDS and
+# DDS4CCM_OPENDDS
+#
+TAO/CIAO/examples/Hello/descriptors/run_test.pl: !CCM_NOEVENT
+TAO/CIAO/examples/Hello/descriptors/run_test_shs.pl: !CCM_NOEVENT
+TAO/CIAO/examples/Hello/descriptors/run_test_PlanLocality_DifferentProcesses.pl: !CCM_NOEVENT
+TAO/CIAO/examples/Hello/descriptors/run_test_PlanLocality_SameProcess.pl: !CCM_NOEVENT
+TAO/CIAO/examples/BasicSP/descriptors/run_test.pl: !CCM_NOEVENT
+TAO/CIAO/examples/Null_Component/descriptors/run_test.pl:
+TAO/CIAO/examples/Null_Component/descriptors/run_test_without_ns.pl:
+TAO/CIAO/examples/Hello/descriptors/run_test_without_ns.pl: !CCM_NOEVENT
+TAO/CIAO/examples/Display/descriptors/run_all_in_one.pl: !CCM_NOEVENT
+TAO/CIAO/tutorials/Quoter/Simple/descriptors/run_test.pl: !CCM_NOEVENT
+TAO/CIAO/tests/Collocation/descriptors/run_test.pl: CCM_DIRECTCOLL
+TAO/CIAO/tests/Bug_3834_Regression/descriptors/run_test.pl:
+TAO/CIAO/tests/Bug_3834_Regression/descriptors/run_test_without_ns.pl:
+TAO/CIAO/tests/IDL3/Events/Any/run_test.pl: !CCM_NOEVENT
+TAO/CIAO/tests/Bug_3769_Regression/descriptors/run_test.pl:
+TAO/CIAO/tests/Thread/descriptors/run_test.pl: !CCM_NOEVENT
+TAO/CIAO/tests/Thread/descriptors/run_test_cdd.pl: !CCM_NOEVENT
+TAO/CIAO/tests/CIF/descriptors/run_test.pl: ATIC
+#TAO/CIAO/DevGuideExamples/Messenger/descriptors/run_test.pl: !CCM_NOEVENT
+TAO/CIAO/tests/IDL_Test/Double_Inherited_Component/run_test.pl:
+TAO/CIAO/tests/IDL_Test/NonTopic_Connector/descriptors/run_test.pl:
 TAO/CIAO/tests/IDL3/Connectors/run_test.pl !CCM_NOEVENT
-TAO/CIAO/tests/Bug_3832_Regression/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST
+TAO/CIAO/tests/Bug_3832_Regression/run_test.pl:
 TAO/CIAO/tests/Bug_3936_Regression/run_test.pl
 TAO/CIAO/tests/Bug_3937_Regression/run_test.pl
 TAO/CIAO/tests/Bug_3944_Regression/run_test.pl
 TAO/CIAO/tests/IDL_Test/Cornucopia/run_test.pl: DOXYGEN
 TAO/CIAO/tests/Cookies/run_test.pl
 #COPI needs the extension container
-#TAO/CIAO/tests/COPI/Registration/Client/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST
-#TAO/CIAO/tests/COPI/Registration/Servant/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST
-#TAO/CIAO/tests/COPI/Registration/Server/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST
-#TAO/CIAO/tests/COPI/Registration/Stub/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST
-TAO/CIAO/connectors/tests/AMIDDS/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/ami4ccm/examples/Hello/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST
-TAO/CIAO/connectors/ami4ccm/examples/Hello/descriptors/run_fullblock_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST
-TAO/CIAO/connectors/ami4ccm/examples/Quoter/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST
-TAO/CIAO/connectors/ami4ccm/tests/SyncPortConn/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST
-TAO/CIAO/connectors/ami4ccm/tests/PragmaT/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST
-TAO/CIAO/connectors/ami4ccm/tests/Exceptions/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST
-TAO/CIAO/connectors/ami4ccm/tests/NoConnection/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST
-TAO/CIAO/connectors/ami4ccm/tests/NoReplyH/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST
-TAO/CIAO/connectors/ami4ccm/tests/InterInArgs/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST
-TAO/CIAO/connectors/ami4ccm/tests/InterOutArgs/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST
-TAO/CIAO/connectors/ami4ccm/tests/InterInOutArgs/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST
-TAO/CIAO/connectors/ami4ccm/tests/InterReturn/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST
-TAO/CIAO/connectors/ami4ccm/tests/DelReplyH/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST
-TAO/CIAO/connectors/ami4ccm/tests/OneReplyH/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST
-TAO/CIAO/connectors/ami4ccm/tests/InterMulti/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST
-TAO/CIAO/connectors/ami4ccm/tests/AsynchT/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST
-TAO/CIAO/connectors/ami4ccm/tests/OneProcess/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST
-TAO/CIAO/connectors/ami4ccm/tests/UsesMulti/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST
-TAO/CIAO/connectors/ami4ccm/tests/SimplexMulti/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST
-TAO/CIAO/connectors/ami4ccm/tests/GetComp/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST
-TAO/CIAO/connectors/ami4ccm/tests/ThreeComp/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST
-TAO/CIAO/connectors/ami4ccm/tests/IDL_Test/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST
-TAO/CIAO/connectors/ami4ccm/tutorials/Hello/Hello_asm/Deployment/scripts/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST
-TAO/CIAO/connectors/dds4ccm/examples/Hello/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/examples/Hello/descriptors/run_sender.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST !LabVIEW_RT !WinCE NDDS
-TAO/CIAO/connectors/dds4ccm/examples/Hello/descriptors/run_receiver.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST !LabVIEW_RT !WinCE NDDS
-TAO/CIAO/connectors/dds4ccm/examples/Hello/descriptors/run_5_to_1.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/examples/Hello/descriptors/run_1_to_5.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/examples/Hello/descriptors/run_5_to_5.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/examples/Quoter/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/examples/Shapes/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/examples/Large_Deployment/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/EventListener/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/StateListener/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/Deployments/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/Exception/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/tests/KeyedSamples/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/tests/UnkeyedSamples/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/tests/Event_Connection_Test/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/tests/State_Connection_Test/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/tests/KeyedWriter/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/tests/UnkeyedWriter/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/tests/On_Inconsistent_Topic/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/tests/NonChangeableAttribute/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/tests/CSLDeadline/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/tests/CSLQoS/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/tests/Reader/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/tests/CSLSampleRejected/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/tests/CSLUnexpStat/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/tests/PSLDeadline/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/tests/PSLSampleLost/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/tests/Getter/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/tests/ListenNotEnabled/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/tests/ListenOneByOne/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/tests/ListenManyByMany/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/tests/Updater/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/tests/SLDisabled/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/tests/SLOneByOne/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/tests/SLManyByMany/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/tests/DDSEntity/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/tests/VariousTopicsEvent/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/tests/VariousTopicsState/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/descriptors/run_test_default_qos.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDomainID/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/tests/QueryCondition/ReadGet/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/tests/InstanceHandle/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/tests/TimeConversion/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/tests/Policies/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/tests/CoherentWriter/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/tests/QueryCondition/EventListener/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/tests/QueryCondition/StateListener/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/tests/QosProfile/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/tests/PortUsage/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/CFTNamesClash/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/tests/UserdataCopyCount/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/tests/GetComponent/State/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/tests/GetComponent/Event/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/tests/QueryCondition/Different/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/tests/QueryCondition/TwoListeners/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/tests/QueryCondition/TwoQueries/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/tests/QueryCondition/DDS/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/tests/QueryCondition/DDS_OneByOne/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/tests/TopicName/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/tests/MemLeakDetection/Event_MemLeakDetection_Test/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/tests/MemLeakDetection/State_MemLeakDetection_Test/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/tests/MemLeakDetection/TypeRegistration/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/tests/LateBinding/ReadGet/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/tests/LateBinding/UpdateWrite/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/tests/ResetTopic/ReadGet/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/tests/ResetTopic/WriteListen/descriptors/run_test.pl: !FIXED_BUGS_ONLY !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/tests/ResetTopic/UpdateListen/descriptors/run_test.pl: !FIXED_BUGS_ONLY !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/tests/ResetTopic/ToEmpty/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/tests/ResetTopic/TooLong/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/tests/Proxies/ReadWrite/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/tests/TypeSupport/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/tests/CollocatedPubSub/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Deployment/scripts/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/performance-tests/Keyed/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/performance-tests/Latency/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/performance-tests/DDSLatency/descriptors/run_test_dds.pl: !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/performance-tests/DDSLatency/descriptors/run_test_ndds.pl: !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/performance-tests/Throughput/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/performance-tests/DDSThroughput/descriptors/run_test_dds.pl: !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/connectors/dds4ccm/tests/HomeTest/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
-TAO/CIAO/tests/DAnCE/NodeManager-Deployments/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST !LabVIEW_RT !WinCE !CCM_NOEVENT
-TAO/CIAO/tests/DAnCE/NodeManager-Deployments/run_test_cdr.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST !LabVIEW_RT !WinCE !CCM_NOEVENT
-TAO/CIAO/tests/DAnCE/NodeManager-Deployments/run_test_noevent.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST !LabVIEW_RT !WinCE
-TAO/CIAO/tests/DAnCE/NodeManager-Deployments/run_test_cdr_noevent.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST !LabVIEW_RT !WinCE
-TAO/CIAO/tests/DAnCE/ExecutionManager-Deployments/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST !LabVIEW_RT !WinCE  !CCM_NOEVENT
-TAO/CIAO/tests/DAnCE/ExecutionManager-Deployments/run_test_cdr.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST !LabVIEW_RT !WinCE !CCM_NOEVENT
-TAO/CIAO/tests/DAnCE/ExecutionManager-Deployments/run_test_noevent.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST !LabVIEW_RT !WinCE
-TAO/CIAO/tests/DAnCE/ExecutionManager-Deployments/run_test_cdr_noevent.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST !LabVIEW_RT !WinCE
-TAO/CIAO/tests/DAnCE/EM-Redeployment/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST !LabVIEW_RT !WinCE !CCM_NOEVENT
-TAO/CIAO/tests/DAnCE/EM-Redeployment/run_test_noevent.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST !LabVIEW_RT !WinCE
-TAO/CIAO/tests/DAnCE/EM-Launch-Failures/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST !LabVIEW_RT !WinCE
-TAO/CIAO/tests/DAnCE/EM-Shutdown-Failures/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST !LabVIEW_RT !WinCE
-TAO/CIAO/tests/DAnCE/Executor-Destructor/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST !LabVIEW_RT !WinCE
-TAO/CIAO/tests/DAnCE/PartialShutdown/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST !LabVIEW_RT !WinCE
-TAO/CIAO/tests/IDL3_to_XMI/Bug_3607_Regression/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST !LabVIEW_RT !WinCE !NO_IDL3_TO_XMI !CCM_NOEVENT
-TAO/CIAO/tests/IDL3_to_XMI/XMI_For_Array/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST !LabVIEW_RT !WinCE !NO_IDL3_TO_XMI !CCM_NOEVENT
-TAO/CIAO/tests/IDL3_to_XMI/XMI_For_Included_File/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST !LabVIEW_RT !WinCE !NO_IDL3_TO_XMI !CCM_NOEVENT
-TAO/CIAO/tests/IDL3_to_XMI/XMI_For_Module_Reopen/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST !LabVIEW_RT !WinCE !NO_IDL3_TO_XMI !CCM_NOEVENT
-TAO/CIAO/tests/IDL3_to_XMI/XMI_For_Native/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST !LabVIEW_RT !WinCE !NO_IDL3_TO_XMI !CCM_NOEVENT
-TAO/CIAO/tests/IDL3_to_XMI/XMI_For_Sequence/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST !LabVIEW_RT !WinCE !NO_IDL3_TO_XMI !CCM_NOEVENT
-TAO/CIAO/tests/IDL3_to_XMI/IDL2XMI_Test/run_test.pl: !FIXED_BUGS_ONLY !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST !LabVIEW_RT !WinCE !NO_IDL3_TO_XMI !CCM_NOEVENT
-TAO/CIAO/tests/DAnCE/LocalityManager/CPUAffinity/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST LINUX
-TAO/CIAO/tests/DAnCE/LocalityManager/CommandlinePassage/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST
-TAO/CIAO/tests/DAnCE/LocalityManager/CommandlinePassage/run_test_openmode.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST !Win32
-TAO/CIAO/tests/DAnCE/LocalityManager/CommandlinePassage/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST
-TAO/CIAO/tests/DAnCE/Threading/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST
+#TAO/CIAO/tests/COPI/Registration/Client/descriptors/run_test.pl:
+#TAO/CIAO/tests/COPI/Registration/Servant/descriptors/run_test.pl:
+#TAO/CIAO/tests/COPI/Registration/Server/descriptors/run_test.pl:
+#TAO/CIAO/tests/COPI/Registration/Stub/descriptors/run_test.pl:
+TAO/CIAO/connectors/tests/AMIDDS/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/ami4ccm/examples/Hello/descriptors/run_test.pl:
+TAO/CIAO/connectors/ami4ccm/examples/Hello/descriptors/run_fullblock_test.pl:
+TAO/CIAO/connectors/ami4ccm/examples/Quoter/descriptors/run_test.pl:
+TAO/CIAO/connectors/ami4ccm/tests/SyncPortConn/descriptors/run_test.pl:
+TAO/CIAO/connectors/ami4ccm/tests/PragmaT/descriptors/run_test.pl:
+TAO/CIAO/connectors/ami4ccm/tests/Exceptions/descriptors/run_test.pl:
+TAO/CIAO/connectors/ami4ccm/tests/NoConnection/descriptors/run_test.pl:
+TAO/CIAO/connectors/ami4ccm/tests/NoReplyH/descriptors/run_test.pl:
+TAO/CIAO/connectors/ami4ccm/tests/InterInArgs/descriptors/run_test.pl:
+TAO/CIAO/connectors/ami4ccm/tests/InterOutArgs/descriptors/run_test.pl:
+TAO/CIAO/connectors/ami4ccm/tests/InterInOutArgs/descriptors/run_test.pl:
+TAO/CIAO/connectors/ami4ccm/tests/InterReturn/descriptors/run_test.pl:
+TAO/CIAO/connectors/ami4ccm/tests/DelReplyH/descriptors/run_test.pl:
+TAO/CIAO/connectors/ami4ccm/tests/OneReplyH/descriptors/run_test.pl:
+TAO/CIAO/connectors/ami4ccm/tests/InterMulti/descriptors/run_test.pl:
+TAO/CIAO/connectors/ami4ccm/tests/AsynchT/descriptors/run_test.pl:
+TAO/CIAO/connectors/ami4ccm/tests/OneProcess/descriptors/run_test.pl:
+TAO/CIAO/connectors/ami4ccm/tests/UsesMulti/descriptors/run_test.pl:
+TAO/CIAO/connectors/ami4ccm/tests/SimplexMulti/descriptors/run_test.pl:
+TAO/CIAO/connectors/ami4ccm/tests/GetComp/descriptors/run_test.pl:
+TAO/CIAO/connectors/ami4ccm/tests/ThreeComp/descriptors/run_test.pl:
+TAO/CIAO/connectors/ami4ccm/tests/IDL_Test/run_test.pl:
+TAO/CIAO/connectors/ami4ccm/tutorials/Hello/Hello_asm/Deployment/scripts/run_test.pl:
+TAO/CIAO/connectors/dds4ccm/examples/Hello/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/examples/Hello/descriptors/run_sender.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/examples/Hello/descriptors/run_receiver.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/examples/Hello/descriptors/run_5_to_1.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/examples/Hello/descriptors/run_1_to_5.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/examples/Hello/descriptors/run_5_to_5.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/examples/Quoter/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/examples/Shapes/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/examples/Large_Deployment/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/EventListener/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/StateListener/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/Deployments/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/Exception/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/KeyedSamples/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/UnkeyedSamples/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/Event_Connection_Test/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/State_Connection_Test/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/KeyedWriter/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/UnkeyedWriter/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/On_Inconsistent_Topic/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/NonChangeableAttribute/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/CSLDeadline/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/CSLQoS/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/Reader/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/CSLSampleRejected/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/CSLUnexpStat/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/PSLDeadline/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/PSLSampleLost/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/Getter/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/ListenNotEnabled/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/ListenOneByOne/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/ListenManyByMany/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/Updater/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/SLDisabled/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/SLOneByOne/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/SLManyByMany/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/DDSEntity/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/VariousTopicsEvent/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/VariousTopicsState/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/descriptors/run_test_default_qos.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDomainID/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/QueryCondition/ReadGet/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/InstanceHandle/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/TimeConversion/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/Policies/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/CoherentWriter/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/QueryCondition/EventListener/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/QueryCondition/StateListener/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/QosProfile/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/PortUsage/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/CFTNamesClash/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/UserdataCopyCount/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/GetComponent/State/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/GetComponent/Event/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/QueryCondition/Different/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/QueryCondition/TwoListeners/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/QueryCondition/TwoQueries/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/QueryCondition/DDS/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/QueryCondition/DDS_OneByOne/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/TopicName/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/MemLeakDetection/Event_MemLeakDetection_Test/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/MemLeakDetection/State_MemLeakDetection_Test/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/MemLeakDetection/TypeRegistration/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/LateBinding/ReadGet/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/LateBinding/UpdateWrite/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/ResetTopic/ReadGet/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/ResetTopic/WriteListen/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/ResetTopic/UpdateListen/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/ResetTopic/ToEmpty/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/ResetTopic/TooLong/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/Proxies/ReadWrite/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/TypeSupport/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/CollocatedPubSub/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Deployment/scripts/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/performance-tests/Keyed/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/performance-tests/Latency/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/performance-tests/DDSLatency/descriptors/run_test_dds.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/performance-tests/DDSLatency/descriptors/run_test_ndds.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/performance-tests/Throughput/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/performance-tests/DDSThroughput/descriptors/run_test_dds.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/HomeTest/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/tests/DAnCE/NodeManager-Deployments/run_test.pl: !CCM_NOEVENT
+TAO/CIAO/tests/DAnCE/NodeManager-Deployments/run_test_cdr.pl: !CCM_NOEVENT
+TAO/CIAO/tests/DAnCE/NodeManager-Deployments/run_test_noevent.pl:
+TAO/CIAO/tests/DAnCE/NodeManager-Deployments/run_test_cdr_noevent.pl:
+TAO/CIAO/tests/DAnCE/ExecutionManager-Deployments/run_test.pl:  !CCM_NOEVENT
+TAO/CIAO/tests/DAnCE/ExecutionManager-Deployments/run_test_cdr.pl: !CCM_NOEVENT
+TAO/CIAO/tests/DAnCE/ExecutionManager-Deployments/run_test_noevent.pl:
+TAO/CIAO/tests/DAnCE/ExecutionManager-Deployments/run_test_cdr_noevent.pl:
+TAO/CIAO/tests/DAnCE/EM-Redeployment/run_test.pl: !CCM_NOEVENT
+TAO/CIAO/tests/DAnCE/EM-Redeployment/run_test_noevent.pl:
+TAO/CIAO/tests/DAnCE/EM-Launch-Failures/run_test.pl:
+TAO/CIAO/tests/DAnCE/EM-Shutdown-Failures/run_test.pl:
+TAO/CIAO/tests/DAnCE/Executor-Destructor/run_test.pl:
+TAO/CIAO/tests/DAnCE/PartialShutdown/descriptors/run_test.pl:
+TAO/CIAO/tests/IDL3_to_XMI/Bug_3607_Regression/run_test.pl: !NO_IDL3_TO_XMI !CCM_NOEVENT
+TAO/CIAO/tests/IDL3_to_XMI/XMI_For_Array/run_test.pl: !NO_IDL3_TO_XMI !CCM_NOEVENT
+TAO/CIAO/tests/IDL3_to_XMI/XMI_For_Included_File/run_test.pl: !NO_IDL3_TO_XMI !CCM_NOEVENT
+TAO/CIAO/tests/IDL3_to_XMI/XMI_For_Module_Reopen/run_test.pl: !NO_IDL3_TO_XMI !CCM_NOEVENT
+TAO/CIAO/tests/IDL3_to_XMI/XMI_For_Native/run_test.pl: !NO_IDL3_TO_XMI !CCM_NOEVENT
+TAO/CIAO/tests/IDL3_to_XMI/XMI_For_Sequence/run_test.pl: !NO_IDL3_TO_XMI !CCM_NOEVENT
+TAO/CIAO/tests/IDL3_to_XMI/IDL2XMI_Test/run_test.pl: !FIXED_BUGS_ONLY !NO_IDL3_TO_XMI !CCM_NOEVENT
+TAO/CIAO/tests/DAnCE/LocalityManager/CPUAffinity/run_test.pl: LINUX
+TAO/CIAO/tests/DAnCE/LocalityManager/CommandlinePassage/run_test.pl:
+TAO/CIAO/tests/DAnCE/LocalityManager/CommandlinePassage/run_test_openmode.pl: !Win32
+TAO/CIAO/tests/DAnCE/LocalityManager/CommandlinePassage/run_test.pl:
+TAO/CIAO/tests/DAnCE/Threading/descriptors/run_test.pl:
 
