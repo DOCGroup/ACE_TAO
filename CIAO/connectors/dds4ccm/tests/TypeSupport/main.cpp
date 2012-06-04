@@ -4,6 +4,8 @@
 #include "ace/Log_Msg.h"
 #include "ace/Env_Value_T.h"
 
+#if (CIAO_DDS4CCM_NDDS == 1)
+
 #include "dds4ccm/impl/ndds/TypeSupport.h"
 #include "dds4ccm/impl/ndds/DomainParticipant.h"
 #include "dds4ccm/impl/ndds/DomainParticipantFactory.h"
@@ -27,15 +29,12 @@ class TestTypeFactory : public ::CIAO::NDDS::DDS_TypeFactory_i
     return ::DDS::DataReader::_nil ();
   }
 };
+#endif
 
 int
 ACE_TMAIN (int , ACE_TCHAR **)
 {
-#if (CIAO_DDS4CCM_NDDS != 1)
-  ACE_DEBUG ((LM_DEBUG, "RTI DDS only test\n"));
-  return 0;
-#endif
-
+#if (CIAO_DDS4CCM_NDDS == 1)
   // first turn on or off tracing
   ACE_Env_Value<int> trace (ACE_TEXT("DDS4CCM_TRACE_ENABLE"), 0);
   if (trace)
@@ -291,4 +290,8 @@ ACE_TMAIN (int , ACE_TCHAR **)
                   ret));
     }
   return ret;
+#else
+  ACE_DEBUG ((LM_DEBUG, "NDDS only test\n"));
+  return 0;
+#endif
 }

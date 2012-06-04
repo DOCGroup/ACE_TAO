@@ -1,3 +1,9 @@
+Mon Jun  4 08:04:30 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/TypeSupport/TypeSupport.mpc:
+        * connectors/dds4ccm/tests/TypeSupport/main.cpp:
+          Compile this test with opendds, but than it is just doing nothing
+
 Mon Jun  4 07:39:50 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/ciao_tests.lst:
