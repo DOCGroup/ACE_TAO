@@ -76,7 +76,7 @@ TAO/CIAO/connectors/dds4ccm/examples/Hello/descriptors/run_1_to_5.pl: DDS4CCM
 TAO/CIAO/connectors/dds4ccm/examples/Hello/descriptors/run_5_to_5.pl: DDS4CCM
 TAO/CIAO/connectors/dds4ccm/examples/Quoter/descriptors/run_test.pl: DDS4CCM
 TAO/CIAO/connectors/dds4ccm/examples/Shapes/descriptors/run_test.pl: DDS4CCM
-TAO/CIAO/connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/descriptors/run_test.pl: DDS4CCM DDS4CCM_NDDS
 TAO/CIAO/connectors/dds4ccm/examples/Large_Deployment/descriptors/run_test.pl: DDS4CCM
 TAO/CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/EventListener/descriptors/run_test.pl: DDS4CCM
 TAO/CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/StateListener/descriptors/run_test.pl: DDS4CCM
@@ -106,7 +106,7 @@ TAO/CIAO/connectors/dds4ccm/tests/Updater/descriptors/run_test.pl: DDS4CCM
 TAO/CIAO/connectors/dds4ccm/tests/SLDisabled/descriptors/run_test.pl: DDS4CCM
 TAO/CIAO/connectors/dds4ccm/tests/SLOneByOne/descriptors/run_test.pl: DDS4CCM
 TAO/CIAO/connectors/dds4ccm/tests/SLManyByMany/descriptors/run_test.pl: DDS4CCM
-TAO/CIAO/connectors/dds4ccm/tests/DDSEntity/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/DDSEntity/descriptors/run_test.pl: DDS4CCM DDS4CCM_NDDS
 TAO/CIAO/connectors/dds4ccm/tests/VariousTopicsEvent/descriptors/run_test.pl: DDS4CCM
 TAO/CIAO/connectors/dds4ccm/tests/VariousTopicsState/descriptors/run_test.pl: DDS4CCM
 TAO/CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/descriptors/run_test.pl: DDS4CCM
@@ -114,9 +114,9 @@ TAO/CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/descripto
 TAO/CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/descriptors/run_test.pl: DDS4CCM
 TAO/CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDomainID/descriptors/run_test.pl: DDS4CCM
 TAO/CIAO/connectors/dds4ccm/tests/QueryCondition/ReadGet/descriptors/run_test.pl: DDS4CCM
-TAO/CIAO/connectors/dds4ccm/tests/InstanceHandle/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/InstanceHandle/descriptors/run_test.pl: DDS4CCM DDS4CCM_NDDS
 TAO/CIAO/connectors/dds4ccm/tests/TimeConversion/run_test.pl: DDS4CCM
-TAO/CIAO/connectors/dds4ccm/tests/Policies/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/Policies/run_test.pl: DDS4CCM DDS4CCM_NDDS
 TAO/CIAO/connectors/dds4ccm/tests/CoherentWriter/descriptors/run_test.pl: DDS4CCM
 TAO/CIAO/connectors/dds4ccm/tests/QueryCondition/EventListener/descriptors/run_test.pl: DDS4CCM
 TAO/CIAO/connectors/dds4ccm/tests/QueryCondition/StateListener/descriptors/run_test.pl: DDS4CCM
@@ -144,15 +144,15 @@ TAO/CIAO/connectors/dds4ccm/tests/ResetTopic/UpdateListen/descriptors/run_test.p
 TAO/CIAO/connectors/dds4ccm/tests/ResetTopic/ToEmpty/descriptors/run_test.pl: DDS4CCM
 TAO/CIAO/connectors/dds4ccm/tests/ResetTopic/TooLong/descriptors/run_test.pl: DDS4CCM
 TAO/CIAO/connectors/dds4ccm/tests/Proxies/ReadWrite/descriptors/run_test.pl: DDS4CCM
-TAO/CIAO/connectors/dds4ccm/tests/TypeSupport/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/TypeSupport/run_test.pl: DDS4CCM DDS4CCM_NDDS
 TAO/CIAO/connectors/dds4ccm/tests/CollocatedPubSub/descriptors/run_test.pl: DDS4CCM
 TAO/CIAO/connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Deployment/scripts/run_test.pl: DDS4CCM
 TAO/CIAO/connectors/dds4ccm/performance-tests/Keyed/descriptors/run_test.pl: DDS4CCM
 TAO/CIAO/connectors/dds4ccm/performance-tests/Latency/descriptors/run_test.pl: DDS4CCM
-TAO/CIAO/connectors/dds4ccm/performance-tests/DDSLatency/descriptors/run_test_dds.pl: DDS4CCM
-TAO/CIAO/connectors/dds4ccm/performance-tests/DDSLatency/descriptors/run_test_ndds.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/performance-tests/DDSLatency/descriptors/run_test_dds.pl: DDS4CCM DDS4CCM_NDDS
+TAO/CIAO/connectors/dds4ccm/performance-tests/DDSLatency/descriptors/run_test_ndds.pl: DDS4CCM DDS4CCM_NDDS
 TAO/CIAO/connectors/dds4ccm/performance-tests/Throughput/descriptors/run_test.pl: DDS4CCM
-TAO/CIAO/connectors/dds4ccm/performance-tests/DDSThroughput/descriptors/run_test_dds.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/performance-tests/DDSThroughput/descriptors/run_test_dds.pl: DDS4CCM DDS4CCM_NDDS
 TAO/CIAO/connectors/dds4ccm/tests/HomeTest/descriptors/run_test.pl: DDS4CCM
 TAO/CIAO/tests/DAnCE/NodeManager-Deployments/run_test.pl: !CCM_NOEVENT
 TAO/CIAO/tests/DAnCE/NodeManager-Deployments/run_test_cdr.pl: !CCM_NOEVENT
