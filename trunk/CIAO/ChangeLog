@@ -1,3 +1,12 @@
+Mon Jun  4 09:21:26 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/DDSEntity/Sender/Writer_Sender.mpc:
+          Fixed requires
+
+        * connectors/dds4ccm/tests/InstanceHandle/Sender/Writer_Sender.mpc:
+        * connectors/dds4ccm/tests/InstanceHandle/Sender/Writer_Sender_exec.cpp:
+          Made this test compiling with opendds, but than it is just a noop test
+
 Mon Jun  4 08:19:57 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/SetConnectorAttributes/Component/SetConnectorAttribute_Component.mpc:
