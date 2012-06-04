@@ -9,12 +9,12 @@
 # include "Latency_Base.h"
 # include "Latency_BaseSupport.h"
 # include "Latency_BasePlugin.h"
+# include <ndds/ndds_namespace_cpp.h>
 #else
 # include "Latency_BaseC.h"
 # include "Latency_BaseTypeSupportC.h"
 #endif
 
-#include <ndds/ndds_namespace_cpp.h>
 
 bool shutdown_flag_ = false;
 
