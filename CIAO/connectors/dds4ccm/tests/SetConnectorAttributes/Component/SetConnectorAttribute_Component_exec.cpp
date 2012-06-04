@@ -3,10 +3,13 @@
 // $Id$
 
 #include "SetConnectorAttribute_Component_exec.h"
-#include "Base/SetConnectorAttribute_BaseSupport.h"
 #include "Connector/SetConnectorAttribute_Connector_conn.h"
 
 #include "dds4ccm/impl/Utils.h"
+#if (CIAO_DDS4CCM_NDDS == 1)
+#include "dds4ccm/impl/ndds/DataWriter_T.h"
+#include "Base/SetConnectorAttribute_BaseSupport.h"
+#endif
 
 #define DOMAIN_ID_IN_DP 56
 #define TOPIC_NAME_IN_DP "SetConnectorAttribute"
@@ -30,6 +33,7 @@ namespace CIAO_SetConnectorAttribute_SetConnectorAttributeComponent_Impl
   void
   Component_exec_i::check_topic_name (DDSTopic * tp)
   {
+#if (CIAO_DDS4CCM_NDDS == 1)
     if (ACE_OS::strcmp (tp->get_name (), TOPIC_NAME_IN_DP) == 0)
       {
         ACE_DEBUG ((LM_DEBUG, "Component_exec_i::check_topic_name - "
@@ -43,11 +47,15 @@ namespace CIAO_SetConnectorAttribute_SetConnectorAttributeComponent_Impl
                               TOPIC_NAME_IN_DP,
                               tp->get_name ()));
       }
+#else
+    ACE_UNUSED_ARG (tp);
+#endif
   }
 
   void
   Component_exec_i::check_domain_id (DDSPublisher * pub)
   {
+#if (CIAO_DDS4CCM_NDDS == 1)
     DDSDomainParticipant * part = pub->get_participant ();
     if (part->get_domain_id () != DOMAIN_ID_IN_DP)
       {
@@ -62,11 +70,15 @@ namespace CIAO_SetConnectorAttribute_SetConnectorAttributeComponent_Impl
         ACE_DEBUG ((LM_DEBUG, "Component_exec_i::check_domain_id - "
                               "Domain ID set properly.\n"));
       }
+#else
+    ACE_UNUSED_ARG (pub);
+#endif
   }
 
   void
   Component_exec_i::check_attributes (DDSDataWriter * dw)
   {
+#if (CIAO_DDS4CCM_NDDS == 1)
     // Check topic name
     DDSTopic * tp = dw->get_topic ();
     if (!tp)
@@ -90,11 +102,15 @@ namespace CIAO_SetConnectorAttribute_SetConnectorAttributeComponent_Impl
         this->check_domain_id (pub);
         this->check_profile (pub);
       }
+#else
+    ACE_UNUSED_ARG (dw);
+#endif
   }
 
   void
   Component_exec_i::check_profile (DDSPublisher * pub)
   {
+#if (CIAO_DDS4CCM_NDDS == 1)
     DDS_DataWriterQos dw_qos;
     pub->get_default_datawriter_qos (dw_qos);
     if (dw_qos.reliability.max_blocking_time.sec == DW_MAX_BLOCKING_TIME_SEC &&
@@ -112,6 +128,9 @@ namespace CIAO_SetConnectorAttribute_SetConnectorAttributeComponent_Impl
                               dw_qos.reliability.max_blocking_time.nanosec,
                               DW_MAX_BLOCKING_TIME_NSEC));
       }
+#else
+    ACE_UNUSED_ARG (pub);
+#endif
   }
 
   // Operations from Components::SessionComponent.
@@ -135,6 +154,7 @@ namespace CIAO_SetConnectorAttribute_SetConnectorAttributeComponent_Impl
   void
   Component_exec_i::ccm_activate (void)
   {
+#if (CIAO_DDS4CCM_NDDS == 1)
     //check the settings on the connector
     DDS::DataWriter_var dds_dw =
       this->context_->get_connection_info_write_dds_entity ();
@@ -157,6 +177,7 @@ namespace CIAO_SetConnectorAttribute_SetConnectorAttributeComponent_Impl
         ACE_ERROR ((LM_ERROR, "ERROR: Component_exec_i::ccm_activate - "
                               "Unable to retrieve DDSDataWriter.\n"));
       }
+#endif
   }
 
   void

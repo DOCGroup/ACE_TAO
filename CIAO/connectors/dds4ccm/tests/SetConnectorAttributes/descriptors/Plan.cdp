@@ -147,47 +147,6 @@
         </value>
       </value>
     </configProperty>
-    <configProperty>
-      <name>qos_profile</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>SetConnectorAttribute_Library#SetConnectorAttributeProfile</string>
-        </value>
-      </value>
-    </configProperty>
-    <!--configProperty>
-      <name>key_fields</name>
-      <value>
-        <type>
-          <kind>tk_sequence</kind>
-          <sequence>
-            <elementType>
-              <kind>tk_string</kind>
-            </elementType>
-          </sequence>
-        </type>
-        <value>
-          <element>
-            <string>string_1</string>
-          </element>
-          <element>
-            <string>string_2</string>
-          </element>
-          <element>
-            <string>string_3</string>
-          </element>
-          <element>
-            <string>string_4</string>
-          </element>
-          <element>
-            <string>string_5</string>
-          </element>
-        </value>
-      </value>
-    </configProperty-->
   </instance>
 
   <connection>
