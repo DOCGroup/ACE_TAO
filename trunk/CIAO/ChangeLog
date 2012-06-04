@@ -1,3 +1,12 @@
+Mon Jun  4 06:50:39 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp:
+          Added missing newline
+
+        * connectors/dds4ccm/tests/CSLSampleRejected/descriptors/HelloTest_Library.xml:
+        * connectors/dds4ccm/tests/CSLUnexpStat/descriptors/CSL_Library.xml:
+          Updated location of the xsd
+
 Sun Jun  3 19:23:26 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * NEWS:
