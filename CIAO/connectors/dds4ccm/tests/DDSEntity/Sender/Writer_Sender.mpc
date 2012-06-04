@@ -129,7 +129,7 @@ project(DDS_DDSWriterEntitySender_svnt) : ciao_servant, dds4ccm_lem_stub, dds4cc
   libout = ../lib
   includes += ..
   dynamicflags += SENDER_SVNT_BUILD_DLL
-  requires += ndds
+  requires += dds4ccm_ndds
 
   IDL_Files {
   }

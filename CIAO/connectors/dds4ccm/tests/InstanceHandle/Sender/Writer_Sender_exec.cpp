@@ -31,9 +31,10 @@
 
 #include "Connector/Writer_Connector_conn.h"
 #include "dds4ccm/impl/Utils.h"
-#include "dds4ccm/impl/ndds/convertors/InstanceHandle_t.h"
-
-#include "dds4ccm/impl/ndds/DataWriter_T.h"
+#if (CIAO_DDS4CCM_NDDS == 1)
+# include "dds4ccm/impl/ndds/convertors/InstanceHandle_t.h"
+# include "dds4ccm/impl/ndds/DataWriter_T.h"
+#endif
 
 namespace CIAO_Writer_Sender_Impl
 {
@@ -145,6 +146,7 @@ namespace CIAO_Writer_Sender_Impl
   void
   Sender_exec_i::test_equality ()
   {
+#if (CIAO_DDS4CCM_NDDS == 1)
     Writer_Table::iterator i = this->ktests_.begin ();
     for (i = this->ktests_.begin(); i != this->ktests_.end(); ++i)
       {
@@ -183,11 +185,13 @@ namespace CIAO_Writer_Sender_Impl
                           i->first.c_str ()));
           }
       }
+#endif
   }
 
   void
   Sender_exec_i::test_non_equality ()
   {
+#if (CIAO_DDS4CCM_NDDS == 1)
     Writer_Table::iterator i = this->ktests_.begin ();
     for (i = this->ktests_.begin(); i != this->ktests_.end(); ++i)
       {
@@ -235,6 +239,7 @@ namespace CIAO_Writer_Sender_Impl
           }
       }
     unregister_handles ();
+#endif
   }
 
   void
@@ -283,6 +288,7 @@ namespace CIAO_Writer_Sender_Impl
   void
   Sender_exec_i::configuration_complete (void)
   {
+#if (CIAO_DDS4CCM_NDDS == 1)
     typedef ::CIAO::NDDS::DDS_DataWriter_Base DataWriter_type;
 
     ::DDS::DataWriter_var dds_dw =
@@ -340,6 +346,7 @@ namespace CIAO_Writer_Sender_Impl
                     "Error casting DataWriter to CCM DataWriter\n"));
         throw ::CORBA::INTERNAL ();
       }
+#endif
   }
 
   void

@@ -296,9 +296,9 @@ namespace CIAO_Throughput_Sender_Impl
     if (this->ticker_)
       {
         this->reactor ()->cancel_timer (this->ticker_);
-        delete this->ticker_;
-        this->ticker_ = 0;
       }
+    delete this->ticker_;
+    this->ticker_ = 0;
   }
 
   // Component attributes and port operations.
