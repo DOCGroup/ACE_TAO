@@ -3,7 +3,6 @@
 project(DDS_TypeSupport_Test) : taoexe, typecode, dds4ccm_base {
   includes += $(CIAO_ROOT)
   exename = typesupport_test
-  requires += dds4ccm_ndds
 
   Source_Files {
     main.cpp

@@ -14,7 +14,7 @@ $PROG = $program->CreateProcess ("typesupport_test", "");
 $program_status = $PROG->Spawn ();
 
 if ($program_status != 0) {
-    print STDERR "ERROR: GroupDataPolicy returned $program_status\n";
+    print STDERR "ERROR: typesupport test returned $program_status\n";
     exit 1;
 }
 
