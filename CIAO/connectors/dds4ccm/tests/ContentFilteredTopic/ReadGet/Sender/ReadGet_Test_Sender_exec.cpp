@@ -80,6 +80,7 @@ namespace CIAO_ReadGet_Test_Sender_Impl
   ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (
     Sender_exec_i &callback)
     : callback_ (callback)
+    , started_ (false)
   {
   }
 
@@ -122,8 +123,9 @@ namespace CIAO_ReadGet_Test_Sender_Impl
     ::DDS::Entity_ptr /*the_entity*/,
     ::DDS::StatusKind status_kind)
   {
-    if (status_kind == ::DDS::PUBLICATION_MATCHED_STATUS)
+    if (!this->started_ && status_kind == ::DDS::PUBLICATION_MATCHED_STATUS)
       {
+        this->started_ = true;
         this->callback_.get_started ();
       }
   }
