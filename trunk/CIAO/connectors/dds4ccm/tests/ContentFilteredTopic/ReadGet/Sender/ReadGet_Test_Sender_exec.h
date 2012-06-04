@@ -112,6 +112,7 @@ namespace CIAO_ReadGet_Test_Sender_Impl
                                  ::DDS::StatusKind status_kind);
   private:
     Sender_exec_i &callback_;
+    bool started_;
   };
 
   /**

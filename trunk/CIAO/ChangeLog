@@ -1,3 +1,103 @@
+Mon Jun  4 10:40:21 UTC 2012  Marcel Smit  <msmit@remedy.nl>
+
+
+        Merged branch DDS4CCM_QOS_Handler to trunk.
+
+          commit 12469cc7ad40ae7134ff7d258779c39d0c9f63d9
+          Merge: 4a0c74b dfcdbf3
+          Author: Marcel Smit <msmit@remedy.nl>
+          Date:   Mon Jun 4 11:47:28 2012 +0200
+
+              Merge branch 'master' into DDS4CCM_QOS_Handler
+
+          commit 4a0c74b4b0af35f908d731f8462983be6de77a16
+          Merge: 8bc9829 3e77af8
+          Author: Marcel Smit <msmit@remedy.nl>
+          Date:   Mon Jun 4 11:35:55 2012 +0200
+
+              Merge branch 'DDS4CCM_QOS_Handler' of http://git.remedy.nl/git/atcd into DDS4CCM_QOS_Handler
+
+          commit 8bc9829f4a1f99ca2522581af95d2bd842f3fd57
+          Author: Marcel Smit <msmit@remedy.nl>
+          Date:   Mon Jun 4 11:33:07 2012 +0200
+
+                  * CIAO/bin/ciao_tests.lst:
+                    Specified a DDS vendor for certain tests. These tests
+                    are not suitable to run in combination with other DDS vendors.
+
+          commit 3e77af813b19f99d5ff02c5e09531840845f4d06
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Mon Jun 4 11:30:57 2012 +0200
+
+                  * CIAO/bin/ciao_tests.lst:
+                    Tagged some tests as opendds tests
+
+          commit 4e9c586f31c9c60337dff4a1939fe0779a4b6e59
+          Merge: 30f36e6 1221f86
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Mon Jun 4 11:23:27 2012 +0200
+
+              Merge branch 'master' into DDS4CCM_QOS_Handler
+
+          commit 30f36e60e49bfbd5f0757ec073dfbb52177234e0
+          Merge: bb9b94d f666762
+          Author: Marcel Smit <msmit@remedy.nl>
+          Date:   Mon Jun 4 11:14:01 2012 +0200
+
+              Merge branch 'DDS4CCM_QOS_Handler' of http://git.remedy.nl/git/atcd into DDS4CCM_QOS_Handler
+
+          commit bb9b94ddbea7ec36aa32209aafa19c88b71a0aa5
+          Author: Marcel Smit <msmit@remedy.nl>
+          Date:   Mon Jun 4 11:13:33 2012 +0200
+
+                  * CIAO/connectors/dds4ccm/performance-tests/Throughput/descriptors/run_test.pl:
+                    Fixed runtime issues. The Receiver was twice while the sender wasn't started
+                    at all.
+
+          commit f6667627ef8e6cc9d900959b5124cd32f4b84ca2
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Mon Jun 4 11:12:48 2012 +0200
+
+                  * CIAO/bin/ciao_tests.lst:
+                    DDS4CCM policies test is specific for NDDS
+
+          commit be7dd97e09b67777fdac09207da6d9807f939924
+          Merge: 39c4b41 ecf9e44
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Mon Jun 4 10:26:49 2012 +0200
+
+              Merge branch 'master' into DDS4CCM_QOS_Handler
+
+          commit 39c4b41ff4a43fe7ad8cf92464acd33589594a62
+          Merge: c4fe935 093b245
+          Author: Marcel Smit <msmit@remedy.nl>
+          Date:   Mon Jun 4 10:07:47 2012 +0200
+
+              Merge branch 'DDS4CCM_QOS_Handler' of http://git.remedy.nl/git/atcd into DDS4CCM_QOS_Handler
+
+          commit c4fe9351ddaac05547cc1511914fd3cab1edd465
+          Author: Marcel Smit <msmit@remedy.nl>
+          Date:   Mon Jun 4 10:07:30 2012 +0200
+
+                  * CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/Sender/ReadGet_Test_Sender_exec.cpp:
+                  * CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/Sender/ReadGet_Test_Sender_exec.h:
+                    The sender should start writing on the first publication matched event; not on subsequent publication
+                    matched event. This should fix runtime errors.
+
+          commit 093b24540dd4b92213416e12cbc6b0a6e58df2fd
+          Merge: 0e58d66 7f271a6
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Mon Jun 4 10:06:39 2012 +0200
+
+              Merge branch 'master' into DDS4CCM_QOS_Handler
+
+          commit 0e58d661707e374a8698a4d63b2ccbfac254debb
+          Merge: 3974590 a25cfbf
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Mon Jun 4 09:43:04 2012 +0200
+
+              Merge branch 'master' into DDS4CCM_QOS_Handler
+
 Mon Jun  4 09:21:26 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/DDSEntity/Sender/Writer_Sender.mpc:
