@@ -180,14 +180,12 @@ template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
 void
 DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::pull_consumer_tr_filter (const ::CCM_DDS::QueryFilter&)
 {
-
 }
 
 template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
 ::CCM_DDS::CCM_ContentFilterSetting*
 DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_pull_consumer_tr_filter_config(void)
 {
-
   return ::CCM_DDS::CCM_ContentFilterSetting::_nil ();
 }
 
@@ -195,7 +193,6 @@ template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
 ::CCM_DDS::CCM_ContentFilterSetting*
 DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_push_consumer_tr_filter_config(void)
 {
-
   return ::CCM_DDS::CCM_ContentFilterSetting::_nil ();
 }
 
@@ -203,7 +200,6 @@ template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
 ::CCM_DDS::QueryFilter *
 DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::push_consumer_tr_filter (void)
 {
-
   return 0;
 }
 
@@ -212,14 +208,12 @@ void
 DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::push_consumer_tr_filter (
   const ::CCM_DDS::QueryFilter &)
 {
-
 }
 
 template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
 typename CCM_TYPE::push_consumer_tr_traits::data_type::_ptr_type
 DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_push_consumer_tr_data (void)
 {
-
   return CCM_TYPE::push_consumer_tr_traits::data_type::_nil ();
 }
 
@@ -462,57 +456,33 @@ DDS_MT_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::configuration_com
   this->sq_supplier_.configuration_complete (
                                       this->topic_sq_.in (),
                                       this->publisher_.in (),
-#if (CIAO_DDS4CCM_NDDS==1)
-                                      this->qos_profile_);
-#elif (CIAO_DDS4CCM_OPENDDS==1)
                                       this->qos_profile_,
                                       this->qos_xml_);
-#endif
   this->tr_supplier_.configuration_complete (
                                       this->topic_tr_.in (),
                                       this->publisher_.in (),
-#if (CIAO_DDS4CCM_NDDS==1)
-                                      this->qos_profile_);
-#elif (CIAO_DDS4CCM_OPENDDS==1)
                                       this->qos_profile_,
                                       this->qos_xml_);
-#endif
   this->cl_supplier_.configuration_complete (
                                       this->topic_cl_.in (),
                                       this->publisher_.in (),
-#if (CIAO_DDS4CCM_NDDS==1)
-                                      this->qos_profile_);
-#elif (CIAO_DDS4CCM_OPENDDS==1)
                                       this->qos_profile_,
                                       this->qos_xml_);
-#endif
   this->pull_consumer_sq_.configuration_complete (
                                       this->topic_sq_.in (),
                                       this->subscriber_.in (),
-#if (CIAO_DDS4CCM_NDDS==1)
-                                      this->qos_profile_);
-#elif (CIAO_DDS4CCM_OPENDDS==1)
                                       this->qos_profile_,
                                       this->qos_xml_);
-#endif
   this->pull_consumer_tr_.configuration_complete (
                                       this->topic_tr_.in (),
                                       this->subscriber_.in (),
-#if (CIAO_DDS4CCM_NDDS==1)
-                                      this->qos_profile_);
-#elif (CIAO_DDS4CCM_OPENDDS==1)
                                       this->qos_profile_,
                                       this->qos_xml_);
-#endif
   this->push_consumer_cl_.configuration_complete (
                                       this->topic_cl_.in (),
                                       this->subscriber_.in (),
-#if (CIAO_DDS4CCM_NDDS==1)
-                                      this->qos_profile_);
-#elif (CIAO_DDS4CCM_OPENDDS==1)
                                       this->qos_profile_,
                                       this->qos_xml_);
-#endif
 }
 
 template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>

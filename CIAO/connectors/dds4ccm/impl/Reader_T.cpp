@@ -4,6 +4,7 @@
 
 #include "dds4ccm/impl/logger/Log_Macros.h"
 #include "dds4ccm/impl/SampleInfo.h"
+#include "dds4ccm/impl/dds4ccm_conf.h"
 
 namespace CIAO
 {
@@ -108,7 +109,9 @@ namespace CIAO
 
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION_STARTING, (LM_INFO, DDS4CCM_INFO
                     ACE_TEXT ("Reader_T::read_w_instance - ")
-                    ACE_TEXT ("Start reading with instance.\n")));
+                    ACE_TEXT ("Start reading with instance ")
+                    DDS_INSTANCE_HANDLE_FORMAT_SPECIFIER ACE_TEXT ("\n"),
+                    DDS_INSTANCE_HANDLE_LOG (lookup_hnd)));
       ::DDS::ReturnCode_t const retval = this->dds_reader ()->read_instance (
                                             data,
                                             sample_info,

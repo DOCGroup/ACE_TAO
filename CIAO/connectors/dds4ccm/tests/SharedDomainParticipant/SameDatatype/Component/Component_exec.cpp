@@ -8,10 +8,7 @@
 #include "Component_exec.h"
 #include "ace/Log_Msg.h"
 
-#include "Base/BaseSupport.h"
 #include "Connector/Connector_conn.h"
-
-#include "dds4ccm/impl/ndds/DataWriter_T.h"
 
 const char * tp_name_conn_1_ = "SharedDP";
 const char * tp_name_conn_2_ = "SharedDP";
@@ -26,14 +23,14 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
 
   Component_exec_i::Component_exec_i (void)
     : perform_test_ (false)
-    , dds_dp1_ (0)
-    , dds_dp2_ (0)
-    , dds_dp3_ (0)
-    , dds_dp4_ (0)
-    , dds_tp1_ (0)
-    , dds_tp2_ (0)
-    , dds_tp3_ (0)
-    , dds_tp4_ (0)
+    , dp1_hnd_ (DDS::HANDLE_NIL)
+    , dp2_hnd_ (DDS::HANDLE_NIL)
+    , dp3_hnd_ (DDS::HANDLE_NIL)
+    , dp4_hnd_ (DDS::HANDLE_NIL)
+    , tp1_hnd_ (DDS::HANDLE_NIL)
+    , tp2_hnd_ (DDS::HANDLE_NIL)
+    , tp3_hnd_ (DDS::HANDLE_NIL)
+    , tp4_hnd_ (DDS::HANDLE_NIL)
   {
   }
 
@@ -73,7 +70,6 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
   void
   Component_exec_i::ccm_activate (void)
   {
-   typedef ::CIAO::NDDS::DDS_DataWriter_Base DataWriter_type;
     try
       {
         ::DDS::DataWriter_var dw1 =
@@ -93,22 +89,51 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
             ::DDS::DataWriter_var tmp = ccm_dw1->get_dds_entity ();
             if (! ::CORBA::is_nil (tmp.in ()))
               {
-                DataWriter_type * typed_ccm_dw =
-                  dynamic_cast <DataWriter_type *> (tmp.in ());
-                if (typed_ccm_dw)
-                  {
-                    DDSDataWriter * dds_dw1 = typed_ccm_dw->get_rti_entity ();
-                    DDSPublisher * dds_p1 = dds_dw1->get_publisher ();
-                    this->dds_dp1_ = dds_p1->get_participant ();
+                ::DDS::Publisher_var publisher = tmp->get_publisher ();
 
-                    DDSTopicDescription * td1 =
-                      this->dds_dp1_->lookup_topicdescription (tp_name_conn_1_);
-                    this->dds_tp1_ = DDSTopic::narrow (td1);
+                if (! ::CORBA::is_nil (publisher.in ()))
+                  {
+                    ::DDS::DomainParticipant_var dp = publisher->get_participant ();
+
+                    if (! ::CORBA::is_nil (publisher.in ()))
+                      {
+
+                        this->dp1_hnd_ = dp->get_instance_handle ();
+
+                        ::DDS::TopicDescription_var tpd = dp->lookup_topicdescription (tp_name_conn_1_);
+
+                        if (! ::CORBA::is_nil (tpd.in ()))
+                          {
+                            ::DDS::Topic_ptr topic = ::DDS::Topic::_narrow (tpd.in ());
+                            if (! ::CORBA::is_nil (topic))
+                              {
+                                this->tp1_hnd_ = topic->get_instance_handle ();
+                              }
+                            else
+                              {
+                                ACE_ERROR ((LM_ERROR, "ERROR : Receiver_exec_i::ccm_activate - "
+                                            "Error narrowing TopicDescription 1 to Topic 1.\n"));
+                                throw ::CORBA::INTERNAL ();
+                              }
+                          }
+                        else
+                          {
+                            ACE_ERROR ((LM_ERROR, "ERROR : Receiver_exec_i::ccm_activate - "
+                                        "Error getting TopicDescription 1.\n"));
+                            throw ::CORBA::INTERNAL ();
+                          }
+                      }
+                    else
+                      {
+                        ACE_ERROR ((LM_ERROR, "ERROR : Receiver_exec_i::ccm_activate - "
+                                    "Error getting DomainParticipant 1.\n"));
+                        throw ::CORBA::INTERNAL ();
+                      }
                   }
                 else
                   {
-                    ACE_ERROR ((LM_ERROR, "ERROR : Component_exec_i::ccm_activate - "
-                                "Error casting DataWriter 1 to typed DataWriter 1\n"));
+                    ACE_ERROR ((LM_ERROR, "ERROR : Receiver_exec_i::ccm_activate - "
+                                "Error getting Publisher 1.\n"));
                     throw ::CORBA::INTERNAL ();
                   }
               }
@@ -150,22 +175,51 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
             ::DDS::DataWriter_var tmp = ccm_dw2->get_dds_entity ();
             if (! ::CORBA::is_nil (tmp.in ()))
               {
-                DataWriter_type * typed_ccm_dw =
-                  dynamic_cast <DataWriter_type *> (tmp.in ());
-                if (typed_ccm_dw)
-                  {
-                    DDSDataWriter * dds_dw2 = typed_ccm_dw->get_rti_entity ();
-                    DDSPublisher * dds_p2 = dds_dw2->get_publisher ();
-                    this->dds_dp2_ = dds_p2->get_participant ();
+                ::DDS::Publisher_var publisher = tmp->get_publisher ();
 
-                    DDSTopicDescription * td2 =
-                      this->dds_dp2_->lookup_topicdescription (tp_name_conn_2_);
-                    this->dds_tp2_ = DDSTopic::narrow (td2);
+                if (! ::CORBA::is_nil (publisher.in ()))
+                  {
+                    ::DDS::DomainParticipant_var dp = publisher->get_participant ();
+
+                    if (! ::CORBA::is_nil (publisher.in ()))
+                      {
+
+                        this->dp2_hnd_ = dp->get_instance_handle ();
+
+                        ::DDS::TopicDescription_var tpd = dp->lookup_topicdescription (tp_name_conn_2_);
+
+                        if (! ::CORBA::is_nil (tpd.in ()))
+                          {
+                            ::DDS::Topic_ptr topic = ::DDS::Topic::_narrow (tpd.in ());
+                            if (! ::CORBA::is_nil (topic))
+                              {
+                                this->tp2_hnd_ = topic->get_instance_handle ();
+                              }
+                            else
+                              {
+                                ACE_ERROR ((LM_ERROR, "ERROR : Receiver_exec_i::ccm_activate - "
+                                            "Error narrowing TopicDescription 2 to Topic 2.\n"));
+                                throw ::CORBA::INTERNAL ();
+                              }
+                          }
+                        else
+                          {
+                            ACE_ERROR ((LM_ERROR, "ERROR : Receiver_exec_i::ccm_activate - "
+                                        "Error getting TopicDescription 2.\n"));
+                            throw ::CORBA::INTERNAL ();
+                          }
+                      }
+                    else
+                      {
+                        ACE_ERROR ((LM_ERROR, "ERROR : Receiver_exec_i::ccm_activate - "
+                                    "Error getting DomainParticipant 2.\n"));
+                        throw ::CORBA::INTERNAL ();
+                      }
                   }
                 else
                   {
-                    ACE_ERROR ((LM_ERROR, "ERROR : Component_exec_i::ccm_activate - "
-                                "Error casting DataWriter 2 to typed DataWriter 2\n"));
+                    ACE_ERROR ((LM_ERROR, "ERROR : Receiver_exec_i::ccm_activate - "
+                                "Error getting Publisher 2.\n"));
                     throw ::CORBA::INTERNAL ();
                   }
               }
@@ -208,22 +262,51 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
             ::DDS::DataWriter_var tmp = ccm_dw3->get_dds_entity ();
             if (! ::CORBA::is_nil (tmp.in ()))
               {
-                DataWriter_type * typed_ccm_dw =
-                  dynamic_cast <DataWriter_type *> (tmp.in ());
-                if (typed_ccm_dw)
-                  {
-                    DDSDataWriter * dds_dw3 = typed_ccm_dw->get_rti_entity ();
-                    DDSPublisher * dds_p3 = dds_dw3->get_publisher ();
-                    this->dds_dp3_ = dds_p3->get_participant ();
+                ::DDS::Publisher_var publisher = tmp->get_publisher ();
 
-                    DDSTopicDescription * td3 =
-                      this->dds_dp3_->lookup_topicdescription (tp_name_conn_3_);
-                    this->dds_tp3_ = DDSTopic::narrow (td3);
+                if (! ::CORBA::is_nil (publisher.in ()))
+                  {
+                    ::DDS::DomainParticipant_var dp = publisher->get_participant ();
+
+                    if (! ::CORBA::is_nil (publisher.in ()))
+                      {
+
+                        this->dp3_hnd_ = dp->get_instance_handle ();
+
+                        ::DDS::TopicDescription_var tpd = dp->lookup_topicdescription (tp_name_conn_3_);
+
+                        if (! ::CORBA::is_nil (tpd.in ()))
+                          {
+                            ::DDS::Topic_ptr topic = ::DDS::Topic::_narrow (tpd.in ());
+                            if (! ::CORBA::is_nil (topic))
+                              {
+                                this->tp3_hnd_ = topic->get_instance_handle ();
+                              }
+                            else
+                              {
+                                ACE_ERROR ((LM_ERROR, "ERROR : Receiver_exec_i::ccm_activate - "
+                                            "Error narrowing TopicDescription 3 to Topic 3.\n"));
+                                throw ::CORBA::INTERNAL ();
+                              }
+                          }
+                        else
+                          {
+                            ACE_ERROR ((LM_ERROR, "ERROR : Receiver_exec_i::ccm_activate - "
+                                        "Error getting TopicDescription 3.\n"));
+                            throw ::CORBA::INTERNAL ();
+                          }
+                      }
+                    else
+                      {
+                        ACE_ERROR ((LM_ERROR, "ERROR : Receiver_exec_i::ccm_activate - "
+                                    "Error getting DomainParticipant 3.\n"));
+                        throw ::CORBA::INTERNAL ();
+                      }
                   }
                 else
                   {
-                    ACE_ERROR ((LM_ERROR, "ERROR : Component_exec_i::ccm_activate - "
-                                "Error casting DataWriter 3 to typed DataWriter 3\n"));
+                    ACE_ERROR ((LM_ERROR, "ERROR : Receiver_exec_i::ccm_activate - "
+                                "Error getting Publisher 3.\n"));
                     throw ::CORBA::INTERNAL ();
                   }
               }
@@ -265,22 +348,55 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
             ::DDS::DataWriter_var tmp = ccm_dw4->get_dds_entity ();
             if (! ::CORBA::is_nil (tmp.in ()))
               {
-                DataWriter_type * typed_ccm_dw =
-                  dynamic_cast <DataWriter_type *> (tmp.in ());
-                if (typed_ccm_dw)
-                  {
-                    DDSDataWriter * dds_dw4 = typed_ccm_dw->get_rti_entity ();
-                    DDSPublisher * dds_p4 = dds_dw4->get_publisher ();
-                    this->dds_dp4_ = dds_p4->get_participant ();
+                ::DDS::Publisher_var publisher = tmp->get_publisher ();
 
-                    DDSTopicDescription * td4 =
-                      this->dds_dp4_->lookup_topicdescription (tp_name_conn_4_);
-                    this->dds_tp4_ = DDSTopic::narrow (td4);
+                if (! ::CORBA::is_nil (publisher.in ()))
+                  {
+                    ::DDS::DomainParticipant_var dp = publisher->get_participant ();
+
+                    if (! ::CORBA::is_nil (publisher.in ()))
+                      {
+
+                        this->dp4_hnd_ = dp->get_instance_handle ();
+
+                        if (this->perform_test_)
+                          {
+
+                            ::DDS::TopicDescription_var tpd = dp->lookup_topicdescription (tp_name_conn_4_);
+
+                            if (! ::CORBA::is_nil (tpd.in ()))
+                              {
+                                ::DDS::Topic_ptr topic = ::DDS::Topic::_narrow (tpd.in ());
+                                if (! ::CORBA::is_nil (topic))
+                                  {
+                                    this->tp4_hnd_ = topic->get_instance_handle ();
+                                  }
+                                else
+                                  {
+                                    ACE_ERROR ((LM_ERROR, "ERROR : Receiver_exec_i::ccm_activate - "
+                                                "Error narrowing TopicDescription 4 to Topic 4.\n"));
+                                    throw ::CORBA::INTERNAL ();
+                                  }
+                              }
+                            else
+                              {
+                                ACE_ERROR ((LM_ERROR, "ERROR : Receiver_exec_i::ccm_activate - "
+                                            "Error getting TopicDescription 4.\n"));
+                                throw ::CORBA::INTERNAL ();
+                              }
+                          }
+                      }
+                    else
+                      {
+                        ACE_ERROR ((LM_ERROR, "ERROR : Receiver_exec_i::ccm_activate - "
+                                    "Error getting DomainParticipant 4.\n"));
+                        throw ::CORBA::INTERNAL ();
+                      }
                   }
                 else
                   {
-                    ACE_ERROR ((LM_ERROR, "ERROR : Component_exec_i::ccm_activate - "
-                                "Error casting DataWriter 4 to typed DataWriter 4\n"));
+                    ACE_ERROR ((LM_ERROR, "ERROR : Receiver_exec_i::ccm_activate - "
+                                "Error getting Publisher 4.\n"));
                     throw ::CORBA::INTERNAL ();
                   }
               }
@@ -294,7 +410,7 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
         else
           {
             ACE_ERROR ((LM_ERROR, "ERROR : Component_exec_i::ccm_activate - "
-                        "Error casting DataWriter 3 to CCM DataWriter 3\n"));
+                        "Error casting DataWriter 4 to CCM DataWriter 4\n"));
             throw ::CORBA::INTERNAL ();
           }
       }
@@ -309,23 +425,23 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
   {
     if (this->perform_test_)
       {
-        if (!this->dds_dp1_)
-          ACE_ERROR ((LM_ERROR, "ERROR: DomainParticipant for Connector 1 seems to be NIL\n"));
-        if (!this->dds_dp2_)
-          ACE_ERROR ((LM_ERROR, "ERROR: DomainParticipant for Connector 2 seems to be NIL\n"));
-        if (!this->dds_dp3_)
-          ACE_ERROR ((LM_ERROR, "ERROR: DomainParticipant for Connector 3 seems to be NIL\n"));
-        if (!this->dds_dp4_)
-          ACE_ERROR ((LM_ERROR, "ERROR: DomainParticipant for Connector 4 seems to be NIL\n"));
+        if (this->dp1_hnd_ == DDS::HANDLE_NIL)
+          ACE_ERROR ((LM_ERROR, "ERROR: Handle for DomainParticipant for Connector 1 seems to be NIL\n"));
+        if (this->dp2_hnd_ == DDS::HANDLE_NIL)
+          ACE_ERROR ((LM_ERROR, "ERROR: Handle for DomainParticipant for Connector 2 seems to be NIL\n"));
+        if (this->dp3_hnd_ == DDS::HANDLE_NIL)
+          ACE_ERROR ((LM_ERROR, "ERROR: Handle for DomainParticipant for Connector 3 seems to be NIL\n"));
+        if (this->dp4_hnd_ == DDS::HANDLE_NIL)
+          ACE_ERROR ((LM_ERROR, "ERROR: Handle for DomainParticipant for Connector 4 seems to be NIL\n"));
 
-        if (!this->dds_tp1_)
-          ACE_ERROR ((LM_ERROR, "ERROR: Topic for Connector 1 seems to be NIL\n"));
-        if (!this->dds_tp2_)
-          ACE_ERROR ((LM_ERROR, "ERROR: Topic for Connector 2 seems to be NIL\n"));
-        if (!this->dds_tp3_)
-          ACE_ERROR ((LM_ERROR, "ERROR: Topic for Connector 3 seems to be NIL\n"));
-        if (!this->dds_tp4_)
-          ACE_ERROR ((LM_ERROR, "ERROR: Topic for Connector 4 seems to be NIL\n"));
+        if (this->tp1_hnd_ == DDS::HANDLE_NIL)
+          ACE_ERROR ((LM_ERROR, "ERROR: Handle for Topic for Connector 1 seems to be NIL\n"));
+        if (this->tp2_hnd_ == DDS::HANDLE_NIL)
+          ACE_ERROR ((LM_ERROR, "ERROR: Handle for Topic for Connector 2 seems to be NIL\n"));
+        if (this->tp3_hnd_ == DDS::HANDLE_NIL)
+          ACE_ERROR ((LM_ERROR, "ERROR: Handle for Topic for Connector 3 seems to be NIL\n"));
+        if (this->tp4_hnd_ == DDS::HANDLE_NIL)
+          ACE_ERROR ((LM_ERROR, "ERROR: Handle for Topic for Connector 4 seems to be NIL\n"));
       }
   }
 
@@ -335,7 +451,7 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
     if (this->perform_test_)
       {
         //check shared DomainParticipants
-        if (this->dds_dp1_ != this->dds_dp2_)
+        if (this->dp1_hnd_ != this->dp2_hnd_)
           {
             ACE_ERROR ((LM_ERROR, "ERROR: Connector 1 and 2 don't seem to "
                                   "share the same DomainParticipant\n"));
@@ -345,24 +461,24 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
             ACE_DEBUG ((LM_DEBUG, "Connector 1 and 2 seems to  "
                                   "share the same DomainParticipant\n"));
           }
-        if (this->dds_dp1_ == this->dds_dp4_)
+        if (this->dp1_hnd_ == this->dp4_hnd_)
           {
             ACE_ERROR ((LM_ERROR, "ERROR: Connector 1 and 4 seem to "
                                   "share the same DomainParticipant\n"));
           }
-        if (this->dds_dp2_ == this->dds_dp4_)
+        if (this->dp2_hnd_ == this->dp4_hnd_)
           {
             ACE_ERROR ((LM_ERROR, "ERROR: Connector 2 and 4 seem to "
                                   "share the same DomainParticipant\n"));
           }
-        if (this->dds_dp3_ == this->dds_dp4_)
+        if (this->dp3_hnd_ == this->dp4_hnd_)
           {
             ACE_ERROR ((LM_ERROR, "ERROR: Connector 3 and 4 seem to "
                                   "share the same DomainParticipant\n"));
           }
 
         //check shared Topics
-        if (this->dds_tp1_ != this->dds_tp2_)
+        if (this->tp1_hnd_ != this->tp2_hnd_)
           {
             ACE_ERROR ((LM_ERROR, "ERROR: Connector 1 and 2 don't seem to "
                                   "share the same Topic\n"));
@@ -372,12 +488,12 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
             ACE_DEBUG ((LM_DEBUG, "Connector 1 and 2 seems to  "
                                   "share the same Topic\n"));
           }
-        if (this->dds_tp1_ == this->dds_tp3_)
+        if (this->tp1_hnd_ == this->tp3_hnd_)
           {
             ACE_ERROR ((LM_ERROR, "ERROR: Connector 1 and 3 seem to "
                                   "share the same Topic\n"));
           }
-        if (this->dds_tp1_ == this->dds_tp4_)
+        if (this->tp1_hnd_ == this->tp4_hnd_)
           {
             ACE_ERROR ((LM_ERROR, "ERROR: Connector 1 and 4 seem to "
                                   "share the same Topic\n"));

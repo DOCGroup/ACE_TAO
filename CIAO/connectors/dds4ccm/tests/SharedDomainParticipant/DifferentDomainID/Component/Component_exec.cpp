@@ -4,12 +4,9 @@
 #include "Component_exec.h"
 #include "ace/Log_Msg.h"
 
-#include "Base/BaseSupport.h"
 #include "Connector1/Connector1_conn.h"
 #include "Connector2/Connector2_conn.h"
 #include "Connector3/Connector3_conn.h"
-
-#include "dds4ccm/impl/ndds/DataWriter_T.h"
 
 namespace CIAO_SharedDP_SharedDPComponent_Impl
 {
@@ -18,6 +15,9 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
   //============================================================
 
   Component_exec_i::Component_exec_i (void)
+    : dp1_hnd_ (DDS::HANDLE_NIL)
+    , dp2_hnd_ (DDS::HANDLE_NIL)
+    , dp3_hnd_ (DDS::HANDLE_NIL)
   {
   }
 
@@ -45,7 +45,6 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
   void
   Component_exec_i::ccm_activate (void)
   {
-    typedef ::CIAO::NDDS::DDS_DataWriter_Base DataWriter_type;
     try
       {
         ::DDS::DataWriter_var dw1 =
@@ -66,18 +65,28 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
             ::DDS::DataWriter_var tmp = ccm_dw1->get_dds_entity ();
             if (! ::CORBA::is_nil (tmp.in ()))
               {
-                DataWriter_type * typed_ccm_dw =
-                  dynamic_cast <DataWriter_type *> (tmp.in ());
-                if (typed_ccm_dw)
+                ::DDS::Publisher_var publisher = tmp->get_publisher ();
+
+                if (! ::CORBA::is_nil (publisher.in ()))
                   {
-                    DDSDataWriter * dds_dw1 = typed_ccm_dw->get_rti_entity ();
-                    DDSPublisher * dds_p1 = dds_dw1->get_publisher ();
-                    this->dds_dp1_ = dds_p1->get_participant ();
+                    ::DDS::DomainParticipant_var dp = publisher->get_participant ();
+
+                    if (! ::CORBA::is_nil (publisher.in ()))
+                      {
+
+                        this->dp1_hnd_ = dp->get_instance_handle ();
+                      }
+                    else
+                      {
+                        ACE_ERROR ((LM_ERROR, "ERROR : Receiver_exec_i::ccm_activate - "
+                                    "Error getting DomainParticipant 1.\n"));
+                        throw ::CORBA::INTERNAL ();
+                      }
                   }
                 else
                   {
-                    ACE_ERROR ((LM_ERROR, "ERROR : Component_exec_i::ccm_activate - "
-                                "Error casting DataWriter 1 to typed DataWriter 1\n"));
+                    ACE_ERROR ((LM_ERROR, "ERROR : Receiver_exec_i::ccm_activate - "
+                                "Error getting Publisher 1.\n"));
                     throw ::CORBA::INTERNAL ();
                   }
               }
@@ -120,18 +129,28 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
             ::DDS::DataWriter_var tmp = ccm_dw2->get_dds_entity ();
             if (! ::CORBA::is_nil (tmp.in ()))
               {
-                DataWriter_type * typed_ccm_dw =
-                  dynamic_cast <DataWriter_type *> (tmp.in ());
-                if (typed_ccm_dw)
+                ::DDS::Publisher_var publisher = tmp->get_publisher ();
+
+                if (! ::CORBA::is_nil (publisher.in ()))
                   {
-                    DDSDataWriter * dds_dw2 = typed_ccm_dw->get_rti_entity ();
-                    DDSPublisher * dds_p2 = dds_dw2->get_publisher ();
-                    this->dds_dp2_ = dds_p2->get_participant ();
+                    ::DDS::DomainParticipant_var dp = publisher->get_participant ();
+
+                    if (! ::CORBA::is_nil (publisher.in ()))
+                      {
+
+                        this->dp2_hnd_ = dp->get_instance_handle ();
+                      }
+                    else
+                      {
+                        ACE_ERROR ((LM_ERROR, "ERROR : Receiver_exec_i::ccm_activate - "
+                                    "Error getting DomainParticipant 2.\n"));
+                        throw ::CORBA::INTERNAL ();
+                      }
                   }
                 else
                   {
-                    ACE_ERROR ((LM_ERROR, "ERROR : Component_exec_i::ccm_activate - "
-                                "Error casting DataWriter 2 to typed DataWriter 2\n"));
+                    ACE_ERROR ((LM_ERROR, "ERROR : Receiver_exec_i::ccm_activate - "
+                                "Error getting Publisher 2.\n"));
                     throw ::CORBA::INTERNAL ();
                   }
               }
@@ -174,18 +193,27 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
             ::DDS::DataWriter_var tmp = ccm_dw3->get_dds_entity ();
             if (! ::CORBA::is_nil (tmp.in ()))
               {
-                DataWriter_type * typed_ccm_dw =
-                  dynamic_cast <DataWriter_type *> (tmp.in ());
-                if (typed_ccm_dw)
+                ::DDS::Publisher_var publisher = tmp->get_publisher ();
+
+                if (! ::CORBA::is_nil (publisher.in ()))
                   {
-                    DDSDataWriter * dds_dw3 = typed_ccm_dw->get_rti_entity ();
-                    DDSPublisher * dds_p3 = dds_dw3->get_publisher ();
-                    this->dds_dp3_ = dds_p3->get_participant ();
+                    ::DDS::DomainParticipant_var dp = publisher->get_participant ();
+
+                    if (! ::CORBA::is_nil (publisher.in ()))
+                      {
+                        this->dp3_hnd_ = dp->get_instance_handle ();
+                      }
+                    else
+                      {
+                        ACE_ERROR ((LM_ERROR, "ERROR : Receiver_exec_i::ccm_activate - "
+                                    "Error getting DomainParticipant 3.\n"));
+                        throw ::CORBA::INTERNAL ();
+                      }
                   }
                 else
                   {
-                    ACE_ERROR ((LM_ERROR, "ERROR : Component_exec_i::ccm_activate - "
-                                "Error casting DataWriter 3 to typed DataWriter 3\n"));
+                    ACE_ERROR ((LM_ERROR, "ERROR : Receiver_exec_i::ccm_activate - "
+                                "Error getting Publisher 3.\n"));
                     throw ::CORBA::INTERNAL ();
                   }
               }
@@ -212,18 +240,18 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
   void
   Component_exec_i::ccm_passivate (void)
   {
-    if (!this->dds_dp1_)
+    if (this->dp1_hnd_ == DDS::HANDLE_NIL)
       ACE_ERROR ((LM_ERROR, "ERROR: DomainParticipant for Connector 1 seems to be NIL\n"));
-    if (!this->dds_dp2_)
+    if (this->dp2_hnd_ == DDS::HANDLE_NIL)
       ACE_ERROR ((LM_ERROR, "ERROR: DomainParticipant for Connector 2 seems to be NIL\n"));
-    if (!this->dds_dp3_)
+    if (this->dp3_hnd_ == DDS::HANDLE_NIL)
       ACE_ERROR ((LM_ERROR, "ERROR: DomainParticipant for Connector 3 seems to be NIL\n"));
   }
 
   void
   Component_exec_i::ccm_remove (void)
   {
-    if (this->dds_dp1_ == this->dds_dp2_)
+    if (this->dp1_hnd_ == this->dp2_hnd_)
       {
         ACE_ERROR ((LM_ERROR, "ERROR: Connector 1 and 2 seem to "
                               "share the same DomainParticipant. Based on the domain_id the "
@@ -234,12 +262,12 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
         ACE_DEBUG ((LM_DEBUG, "Connector 1 and 2 don't seems to  "
                               "share the same DomainParticipant\n"));
       }
-    if (this->dds_dp1_ == this->dds_dp3_)
+    if (this->dp1_hnd_ == this->dp3_hnd_)
       {
         ACE_ERROR ((LM_ERROR, "ERROR: Connector 1 and 3 seem to "
                               "share the same DomainParticipant\n"));
       }
-    if (this->dds_dp2_ == this->dds_dp3_)
+    if (this->dp2_hnd_ == this->dp3_hnd_)
       {
         ACE_ERROR ((LM_ERROR, "ERROR: Connector 2 and 3 seem to "
                               "share the same DomainParticipant\n"));
