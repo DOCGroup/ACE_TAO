@@ -38,9 +38,9 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
   private:
     ::SharedDP::CCM_SharedDPComponent_Context_var context_;
 
-    DDSDomainParticipant *  dds_dp1_;
-    DDSDomainParticipant *  dds_dp2_;
-    DDSDomainParticipant *  dds_dp3_;
+    ::DDS::InstanceHandle_t dp1_hnd_;
+    ::DDS::InstanceHandle_t dp2_hnd_;
+    ::DDS::InstanceHandle_t dp3_hnd_;
   };
 
   extern "C" COMPONENT_EXEC_Export ::Components::EnterpriseComponent_ptr

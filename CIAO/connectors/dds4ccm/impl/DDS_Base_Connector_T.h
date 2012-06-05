@@ -7,14 +7,16 @@
 #define DDS_BASE_CONNECTOR_T_H_
 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
-#if (CIAO_DDS4CCM_NDDS==1)
-#include "dds4ccm/impl/ndds/DomainParticipantFactory.h"
-#elif (CIAO_DDS4CCM_OPENDDS==1)
-#include "dds/DCPS/Service_Participant.h"
-#include "dds/DCPS/QOS_XML_Handler/QOS_XML_Loader.h"
-#endif
 #include "dds4ccm/impl/logger/Logger_Service.h"
+#include "dds4ccm/impl/dds4ccm_conf.h"
 #include "ace/Copy_Disabled.h"
+
+#if (CIAO_DDS4CCM_NDDS==1)
+# include "dds4ccm/impl/ndds/DomainParticipantFactory.h"
+#elif (CIAO_DDS4CCM_OPENDDS==1)
+# include "dds/DCPS/Service_Participant.h"
+# include "dds/DCPS/QOS_XML_Handler/QOS_XML_Loader.h"
+#endif
 
 template <typename CCM_TYPE>
 class DDS_Base_Connector_T
@@ -22,12 +24,6 @@ class DDS_Base_Connector_T
     public virtual ::CORBA::LocalObject,
     private virtual ACE_Copy_Disabled
 {
-#if (CIAO_DDS4CCM_NDDS==1)
-  typedef ::CIAO::NDDS::DDS_DomainParticipantFactory_i
-    DomainParticipantFactory;
-#elif (CIAO_DDS4CCM_OPENDDS==1)
-  typedef ::DDS::DomainParticipantFactory_var DomainParticipantFactory;
-#endif
 public:
   DDS_Base_Connector_T (void);
   virtual ~DDS_Base_Connector_T (void);
@@ -67,11 +63,9 @@ public:
 
 private:
   /**
-   * Initialization of opendds.
+   * Initialization of the domain participant factory.
    */
-#if (CIAO_DDS4CCM_OPENDDS==1)
-  void create_opendds_participant_factory (void);
-#endif
+  void create_dds_participant_factory (void);
 
 protected:
 
@@ -213,12 +207,12 @@ protected:
   /**
     * DomainParticipantFactory. Administration of Domain Participants
     */
-  DomainParticipantFactory participant_factory_;
+  ::DDS::DomainParticipantFactory_var participant_factory_;
 
 #if (CIAO_DDS4CCM_OPENDDS==1)
   OpenDDS::DCPS::TransportImpl_rch transport_impl_;
-  OpenDDS::DCPS::QOS_XML_Loader qos_xml_;
 #endif
+  DDS_XML_QOS_PARSER_TYPE* qos_xml_;
 };
 
 #include "dds4ccm/impl/DDS_Base_Connector_T.cpp"

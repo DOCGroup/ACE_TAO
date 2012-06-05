@@ -232,6 +232,7 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
   bool
   Receiver_exec_i::check_last ()
   {
+    bool retvalue = false;
     try
       {
         ::ReadGet_Test::QueryConditionTestConnector::Reader_var get_reader =
@@ -253,22 +254,25 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
                 ::DDS::HANDLE_NIL);
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Receiver_exec_i::check_last - ")
                               ACE_TEXT ("last iteration <%d> - <%d>\n"),
-                               queryfiltertest_info.iteration,
-                               this->current_iter_value2_ - 1));
-        return queryfiltertest_info.iteration >= this->current_iter_value2_ - 1;
+                              queryfiltertest_info.iteration,
+                              this->current_iter_value2_ - 1));
+        retvalue = queryfiltertest_info.iteration >= this->current_iter_value2_ - 1;
       }
     catch (const ::CCM_DDS::InternalError &)
       {
+        retvalue = false;
       }
     catch (const ::CCM_DDS::NonExistent &)
       {
+        retvalue = false;
       }
     catch (...)
       {
         ACE_ERROR ((LM_ERROR, "Receiver_exec_i::check_last: "
                               "ERROR: Unexpected exception caught\n"));
+        retvalue = false;
       }
-    return false;
+    return retvalue;
   }
 
   // Supported operations and attributes.
@@ -384,23 +388,23 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
                               ACE_TEXT ("No Getter on Getter port\n")));
         return;
       }
-    //set time_out on getter
+    // Set time_out on getter
     DDS::Duration_t to;
     to.sec = 5;
     to.nanosec = 0;
     get_getter->time_out (to);
 
-    QueryConditionTest_var qf_info;;
+    QueryConditionTest_var qf_info;
     ::CCM_DDS::ReadInfo readinfo;
     CORBA::Boolean result = get_getter->get_one (qf_info.out (), readinfo);
-    if (ACE_OS::strlen (qf_info->symbol.in ()) == 0)
-      {
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver_exec_i::get_all_on_getter_port - ")
-                              ACE_TEXT ("Name of key seems to be empty-> bailing out\n")));
-        return;
-      }
     if (result)
       {
+        if (ACE_OS::strlen (qf_info->symbol.in ()) == 0)
+          {
+            ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver_exec_i::get_all_on_getter_port - ")
+                                  ACE_TEXT ("Name of key seems to be empty-> bailing out\n")));
+            return;
+          }
         this->check_iter_on_getter_port (*qf_info, "GET");
         ++this->samples_received_getter_;
       }

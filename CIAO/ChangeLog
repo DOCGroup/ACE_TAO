@@ -1,3 +1,158 @@
+Tue Jun  5 10:22:38 UTC 2012  Marcel Smit  <msmit@remedy.nl>
+
+        Merged branch DDS4CCM_QOS_Handler to trunk.
+        Making the DDS4CCM independant of the DDS vendor.
+
+          commit a096657b276c719b3d9b29f61431f7f16b2774f7
+          Merge: 6f6e689 f1bc8fc
+          Author: Marcel Smit <msmit@remedy.nl>
+          Date:   Tue Jun 5 12:12:24 2012 +0200
+
+              Merge branch 'master' into DDS4CCM_QOS_Handler
+
+          commit 6f6e6893ae6571abe5239ffa7c0d867dac938378
+          Author: Marcel Smit <msmit@remedy.nl>
+          Date:   Tue Jun 5 12:00:41 2012 +0200
+
+                  * CIAO/connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+                  * CIAO/connectors/dds4ccm/impl/DDS_Event_Connector_T.cpp:
+                    Fixed compilation issues in case RTI DDS.
+
+                  * CIAO/connectors/dds4ccm/impl/dds4ccm_conf.h:
+                    Added include to XML_Noop.
+
+                  * CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/Receiver/ReadGet_Test_Receiver_exec.cpp:
+                    Fixed compilation issues in case RTI DDS.
+
+          commit a4d8e8b951b96ae8dbc6f03497a3d8d8db9c44ae
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Tue Jun 5 11:23:29 2012 +0200
+
+                  * CIAO/connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+                    Fixed error in debug statement
+
+          commit 63e48ca6a34e6a974b6e60e369b733f3f159e58d
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Tue Jun 5 10:24:50 2012 +0200
+
+                  * CIAO/connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+                  * CIAO/connectors/dds4ccm/impl/DDS_Get_T.cpp:
+                  * CIAO/connectors/dds4ccm/impl/DDS_Subscriber_Base_T.cpp:
+                  * CIAO/connectors/dds4ccm/impl/DDS_Update_T.cpp:
+                  * CIAO/connectors/dds4ccm/impl/DDS_Write_T.cpp:
+                  * CIAO/connectors/dds4ccm/impl/DDS_Write_T.h:
+                  * CIAO/connectors/dds4ccm/impl/Utils.cpp:
+                  * CIAO/connectors/dds4ccm/impl/Utils.h:
+                  * CIAO/connectors/dds4ccm/impl/dds4ccm_conf.h:
+                    Added noop xml class that can be used for vendors not
+                    supporting the specification defined xml files
+
+          commit a1c689f37217af23bd22b8c573dc1c70841205d4
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Tue Jun 5 09:56:49 2012 +0200
+
+                  * CIAO/connectors/dds4ccm/impl/ConditionManager.h:
+                    Zapped empty lines
+
+          commit 5755380b50670bd276cfc5d8734628788d719060
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Tue Jun 5 09:54:19 2012 +0200
+
+                  * CIAO/connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+                  * CIAO/connectors/dds4ccm/impl/DDS_Base_Connector_T.h:
+                    Reduced vendor dependent code
+
+          commit 877b27d1b5d11705480e4c952d791664685593b5
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Tue Jun 5 09:28:57 2012 +0200
+
+                  * CIAO/connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+                  * CIAO/connectors/dds4ccm/impl/DDS_Base_Connector_T.h:
+                  * CIAO/connectors/dds4ccm/impl/DDS_Event_Connector_T.cpp:
+                  * CIAO/connectors/dds4ccm/impl/DDS_Get_T.cpp:
+                  * CIAO/connectors/dds4ccm/impl/DDS_Get_T.h:
+                  * CIAO/connectors/dds4ccm/impl/DDS_State_Connector_T.cpp:
+                  * CIAO/connectors/dds4ccm/impl/DDS_Subscriber_Base_T.cpp:
+                  * CIAO/connectors/dds4ccm/impl/DDS_Subscriber_Base_T.h:
+                  * CIAO/connectors/dds4ccm/impl/DDS_Update_T.cpp:
+                  * CIAO/connectors/dds4ccm/impl/DDS_Update_T.h:
+                  * CIAO/connectors/dds4ccm/impl/DDS_Write_T.cpp:
+                  * CIAO/connectors/dds4ccm/impl/DDS_Write_T.h:
+                  * CIAO/connectors/dds4ccm/impl/dds4ccm_conf.h:
+                  * CIAO/connectors/dds4ccm/tests/MultiTopic/Connector/MultiTopic_Connector_T.cpp:
+                    Simplified file headers, made qos_xml a pointer type
+                    and always pass this, independent of the vendor
+
+          commit d0c04168a9180135846443949517ca62ead5b95e
+          Author: Marcel Smit <msmit@remedy.nl>
+          Date:   Tue Jun 5 08:52:08 2012 +0200
+
+                  * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDomainID/Component/Component_exec.cpp:
+                    Removed an unused typedef which caused compilation issues.
+
+          commit 4a31c8c089858128581365ef39c7dcd8eb61a327
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Mon Jun 4 21:40:51 2012 +0200
+
+                  * CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/Receiver/ReadGet_Test_Receiver_exec.cpp:
+                    Only check the name of the key when we have data back
+
+          commit 179e9356023dbd5a6abfe0dc6b6e6f3a8486d3ba
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Mon Jun 4 20:52:58 2012 +0200
+
+                  * CIAO/connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Deployment/scripts/run_test.pl:
+                    Removed double comment
+
+          commit a7a128ba4d0ffbd41198e083b2b446ac5b4ebed4
+          Author: Marcel Smit <msmit@remedy.nl>
+          Date:   Mon Jun 4 17:11:32 2012 +0200
+
+                  * CIAO/connectors/dds4ccm/impl/Reader_T.cpp:
+                    Also logging the value of the instance in 'read_w_instance'
+
+                  * CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/Receiver/ReadGet_Test_Receiver_exec.cpp:
+                    Also check whether a valid sample is received in 'check_last'. If not, no reason to check the
+                    value of 'iteration'; just return false.
+
+          commit 52c32fff8668b22de93d18efdec1884fc311a215
+          Author: Marcel Smit <msmit@remedy.nl>
+          Date:   Mon Jun 4 15:56:47 2012 +0200
+
+                  * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/Component/Component_exec.cpp:
+                    Fixed runtime errors. No need to lookup topic 4 when perform_test is on.
+
+          commit 2bed5a4429ca6be6030821d07d879c335ae35987
+          Merge: af0f5b7 64c7ed3
+          Author: Marcel Smit <msmit@remedy.nl>
+          Date:   Mon Jun 4 15:34:55 2012 +0200
+
+              Merge branch 'DDS4CCM_QOS_Handler' of http://git.remedy.nl/git/atcd into DDS4CCM_QOS_Handler
+
+          commit af0f5b7eb0e4621a0913afdad49f2e0536af7d83
+          Author: Marcel Smit <msmit@remedy.nl>
+          Date:   Mon Jun 4 15:34:33 2012 +0200
+
+                  * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Component/Component.mpc:
+                  * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Component/Component_exec.cpp:
+                  * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Component/Component_exec.h:
+                  * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDomainID/Component/Component.mpc:
+                  * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDomainID/Component/Component_exec.cpp:
+                  * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDomainID/Component/Component_exec.h:
+                  * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/Component/Component.mpc:
+                  * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/Component/Component_exec.cpp:
+                  * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/Component/Component_exec.h:
+                    Made these independant of the DDS vendor. All checks are based on the instance handles of the
+                    domain participants/topics. The test used to test if the pointers of the domain participants/topics
+                    were equal.
+
+          commit 64c7ed3419244d541d647bd8cca99aabe109c6eb
+          Merge: 12469cc 2ab1f7c
+          Author: Marcel Smit <msmit@remedy.nl>
+          Date:   Mon Jun 4 12:48:44 2012 +0200
+
+              Merge branch 'master' into DDS4CCM_QOS_Handler
+
 Mon Jun  4 10:40:21 UTC 2012  Marcel Smit  <msmit@remedy.nl>
 
 

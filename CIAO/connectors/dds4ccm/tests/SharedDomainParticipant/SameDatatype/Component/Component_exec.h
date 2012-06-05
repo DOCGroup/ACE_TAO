@@ -44,15 +44,15 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
 
     CORBA::Boolean perform_test_;
 
-    DDSDomainParticipant * dds_dp1_;
-    DDSDomainParticipant * dds_dp2_;
-    DDSDomainParticipant * dds_dp3_;
-    DDSDomainParticipant * dds_dp4_;
+    ::DDS::InstanceHandle_t dp1_hnd_;
+    ::DDS::InstanceHandle_t dp2_hnd_;
+    ::DDS::InstanceHandle_t dp3_hnd_;
+    ::DDS::InstanceHandle_t dp4_hnd_;
 
-    DDSTopic * dds_tp1_;
-    DDSTopic * dds_tp2_;
-    DDSTopic * dds_tp3_;
-    DDSTopic * dds_tp4_;
+    ::DDS::InstanceHandle_t tp1_hnd_;
+    ::DDS::InstanceHandle_t tp2_hnd_;
+    ::DDS::InstanceHandle_t tp3_hnd_;
+    ::DDS::InstanceHandle_t tp4_hnd_;
   };
 
   extern "C" COMPONENT_EXEC_Export ::Components::EnterpriseComponent_ptr

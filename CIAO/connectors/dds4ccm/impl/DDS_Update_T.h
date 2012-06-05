@@ -27,12 +27,8 @@ public:
   void configuration_complete (
     ::DDS::Topic_ptr topic,
     ::DDS::Publisher_ptr publisher,
-#if (CIAO_DDS4CCM_NDDS==1)
-    const char * qos_profile);
-#else
     const char * qos_profile,
-    OpenDDS::DCPS::QOS_XML_Loader& qos_xml);
-#endif
+    DDS_XML_QOS_PARSER_TYPE* qos_xml);
 
   void activate (void);
 

@@ -32,12 +32,8 @@ void
 DDS_Subscriber_Base_T<CCM_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::configuration_complete (
   ::DDS::Topic_ptr topic,
   ::DDS::Subscriber_ptr subscriber,
-#if (CIAO_DDS4CCM_NDDS==1)
-  const char * qos_profile)
-#else
   const char * qos_profile,
-  OpenDDS::DCPS::QOS_XML_Loader& qos_xml)
-#endif
+  DDS_XML_QOS_PARSER_TYPE* qos_xml)
 {
   DDS4CCM_TRACE ("DDS_Subscriber_Base_T<CCM_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::configuration_complete");
 
@@ -91,11 +87,10 @@ DDS_Subscriber_Base_T<CCM_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::c
               throw ::CCM_DDS::InternalError (retcode, 0);
             }
 
-#if (CIAO_DDS4CCM_OPENDDS==1)
-          if (qos_profile)
+          if (qos_profile && qos_xml)
             {
               CORBA::String_var name = topic->get_name ();
-              DDS::ReturnCode_t const retcode_dr_qos = qos_xml.get_datareader_qos (
+              DDS::ReturnCode_t const retcode_dr_qos = qos_xml->get_datareader_qos (
                                           drqos,
                                           qos_profile,
                                           name.in ());
@@ -109,7 +104,6 @@ DDS_Subscriber_Base_T<CCM_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::c
                   throw ::CCM_DDS::InternalError (retcode_dr_qos, 0);
                 }
             }
-#endif
 
 #if defined GEN_OSTREAM_OPS
           if (DDS4CCM_debug_level >= DDS4CCM_LOG_LEVEL_DDS_STATUS)
