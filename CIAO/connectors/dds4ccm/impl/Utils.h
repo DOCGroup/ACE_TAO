@@ -17,6 +17,7 @@
 #endif
 
 #include "dds4ccm/impl/dds4ccm_conf.h"
+#include "dds4ccm/impl/dds4ccm_dds_impl_export.h"
 #include "ace/String_Base.h"
 
 namespace CIAO
@@ -153,7 +154,7 @@ namespace CIAO
   #undef DDS4CCM_DDS_POLICYID_T
     }
 
-    class QOS_XML_Noop
+    class DDS4CCM_DDS_IMPL_Export QOS_XML_Noop
     {
     public:
       QOS_XML_Noop (void);

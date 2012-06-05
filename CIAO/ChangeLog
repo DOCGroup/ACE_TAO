@@ -1,3 +1,8 @@
+Tue Jun  5 19:15:52 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/Utils.h:
+          Added export macro
+
 Tue Jun  5 10:22:38 UTC 2012  Marcel Smit  <msmit@remedy.nl>
 
         Merged branch DDS4CCM_QOS_Handler to trunk.
