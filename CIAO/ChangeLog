@@ -1,3 +1,8 @@
+Wed Jun  6 09:17:49 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/TimeUtilities.h:
+          Use truncate_cast
+
 Wed Jun  6 06:46:14 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/VariousTopicsEvent/Conn_Valuetype/VT_Valuetype_Connector.idl:
