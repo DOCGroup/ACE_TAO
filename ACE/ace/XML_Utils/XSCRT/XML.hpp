@@ -487,6 +487,4 @@ namespace XSCRT
   }
 }
 
-#include "ace/XML_Utils/XSCRT/XML.tpp"
-
 #endif  // XSCRT_XML_HPP
