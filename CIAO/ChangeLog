@@ -1,3 +1,10 @@
+Wed Jun  6 05:37:36 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+          Removed hand_shake_timeout_ setting, use the OpenDDS default. Added
+          DDS4CCM_OPENDDS_LOG_LEVEL and DDS4CCM_OPENDDS_TRANSPORT_LOG_LEVEL to
+          control OpenDDS logging through environment variables
+
 Tue Jun  5 19:15:52 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/Utils.h:

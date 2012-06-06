@@ -46,9 +46,10 @@ DDS_Base_Connector_T<CCM_TYPE>::DDS_Base_Connector_T (void)
     }
   qos_xml_ = new DDS_XML_QOS_PARSER_TYPE;
 #if (CIAO_DDS4CCM_OPENDDS==1)
-  // Enable to get full opendds logging
-  //OpenDDS::DCPS::DCPS_debug_level = 10;
-  //OpenDDS::DCPS::Transport_debug_level = 5;
+  ACE_Env_Value<int> dcpsdl (ACE_TEXT("DDS4CCM_OPENDDS_LOG_LEVEL"), 0);
+  OpenDDS::DCPS::DCPS_debug_level = dcpsdl;
+  ACE_Env_Value<int> dcpsdtl (ACE_TEXT("DDS4CCM_OPENDDS_TRANSPORT_LOG_LEVEL"), 0);
+  OpenDDS::DCPS::Transport_debug_level = dcpsdtl;
 #endif
   this->create_dds_participant_factory ();
 }
@@ -99,11 +100,6 @@ DDS_Base_Connector_T<CCM_TYPE>::create_dds_participant_factory (void)
                                                                     "rtps_udp");
               OpenDDS::DCPS::RtpsUdpInst_rch rui =
                 OpenDDS::DCPS::static_rchandle_cast<OpenDDS::DCPS::RtpsUdpInst>(inst);
-
-              if (!rui.is_nil())
-                {
-                  rui->handshake_timeout_ = ACE_Time_Value (1, 0);
-                }
 
               config->instances_.push_back(inst);
 
