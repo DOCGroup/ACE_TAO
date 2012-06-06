@@ -1,3 +1,25 @@
+Wed Jun  6 13:09:02 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/XML_Utils/XMLSchema/Traversal.hpp:
+        * ace/XML_Utils/XMLSchema/Types.hpp:
+        * ace/XML_Utils/XMLSchema/Writer.hpp:
+        * ace/XML_Utils/XSCRT/Elements.hpp:
+        * ace/XML_Utils/XSCRT/Parser.hpp:
+        * ace/XML_Utils/XSCRT/Traversal.hpp:
+        * ace/XML_Utils/XSCRT/Writer.hpp:
+        * ace/XML_Utils/XSCRT/XML.hpp:
+          Removed includes
+
+        * ace/XML_Utils/XMLSchema/Traversal.tpp:
+        * ace/XML_Utils/XMLSchema/Types.tpp:
+        * ace/XML_Utils/XMLSchema/Writer.tpp:
+        * ace/XML_Utils/XSCRT/Elements.tpp:
+        * ace/XML_Utils/XSCRT/Parser.tpp:
+        * ace/XML_Utils/XSCRT/Traversal.tpp:
+        * ace/XML_Utils/XSCRT/Writer.tpp:
+        * ace/XML_Utils/XSCRT/XML.tpp:
+          Removed these files.
+
 Wed Jun  6 10:27:33 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/XML_Utils/XML.mpc:

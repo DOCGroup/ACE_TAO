@@ -72,6 +72,5 @@ namespace XMLSchema
 }
 
 #include <ace/XML_Utils/XMLSchema/Traversal.ipp>
-#include <ace/XML_Utils/XMLSchema/Traversal.tpp>
 
 #endif  // XMLSCHEMA_TRAVERSAL_HPP

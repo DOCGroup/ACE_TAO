@@ -665,6 +665,5 @@ namespace XMLSchema
 }
 
 #include "ace/XML_Utils/XMLSchema/Types.ipp"
-#include "ace/XML_Utils/XMLSchema/Types.tpp"
 
 #endif  // XMLSCHEMA_TYPES_HPP
