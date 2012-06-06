@@ -154,6 +154,5 @@ namespace XMLSchema
 }
 
 #include <ace/XML_Utils/XMLSchema/Writer.ipp>
-#include <ace/XML_Utils/XMLSchema/Writer.tpp>
 
 #endif  // XMLSCHEMA_WRITER_HPP

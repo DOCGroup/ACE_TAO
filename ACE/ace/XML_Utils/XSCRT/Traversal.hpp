@@ -260,6 +260,4 @@ namespace XSCRT
   }
 }
 
-#include <ace/XML_Utils/XSCRT/Traversal.tpp>
-
 #endif  // XSCRT_TRAVERSAL_HPP

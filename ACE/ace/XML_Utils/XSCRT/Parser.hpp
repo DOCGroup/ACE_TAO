@@ -61,6 +61,4 @@ namespace XSCRT
   };
 }
 
-#include "ace/XML_Utils/XSCRT/Parser.tpp"
-
 #endif  // XSCRT_PARSER_HPP

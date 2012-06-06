@@ -75,6 +75,4 @@ namespace XSCRT
   };
 }
 
-#include <ace/XML_Utils/XSCRT/Writer.tpp>
-
 #endif  // XSCRT_WRITER_HPP

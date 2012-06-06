@@ -566,6 +566,4 @@ namespace XSCRT
 
 }
 
-#include <ace/XML_Utils/XSCRT/Elements.tpp>
-
 #endif  // XSCRT_ELEMENTS_HPP
