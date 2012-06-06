@@ -1,3 +1,8 @@
+Wed Jun  6 08:12:22 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/XML_Utils/XML.mpc:
+          Install fixes
+
 Fri Jun  1 12:43:48 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Condition_Thread_Mutex.cpp:
