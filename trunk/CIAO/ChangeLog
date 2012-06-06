@@ -1,3 +1,11 @@
+Wed Jun  6 06:46:14 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Conn_Valuetype/VT_Valuetype_Connector.idl:
+        * connectors/dds4ccm/tests/VariousTopicsState/Conn_Valuetype/VTS_Valuetype_Connector.idl:
+          OpenDDS doesn't support valuetype as topic. Added a string connector
+          to the idl as replacement for valuetype, that way the msvc linker
+          does generate the library and this test will than deploy
+
 Wed Jun  6 06:03:29 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
