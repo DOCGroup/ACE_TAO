@@ -15,11 +15,20 @@
 
 #pragma ciao lem "Conn_Valuetype/VTS_Valuetype_ConnectorE.idl"
 
+#if (CIAO_DDS4CCM_OPENDDS==1)
+# include "Base/VTopics_BaseTypeSupport.idl"
+#endif
+
 #if !defined (CIAO_DDS4CCM_OPENDDS)
 module VTopics
 {
   module ::CCM_DDS::Typed < ::TopicValuetype, ::TopicValuetypeSeq> TopicValuetypeConnector;
-  //module ::CCM_DDS::Typed < ::X_Valuetype, ::X_ValuetypeSeq> X_ValuetypeConnector;
+};
+#else
+module VTopics
+{
+  // Just use another topic, that way we get a connector
+  module ::CCM_DDS::Typed < ::TopicString, ::TopicStringSeq> TopicValuetypeConnector;
 };
 #endif
 
