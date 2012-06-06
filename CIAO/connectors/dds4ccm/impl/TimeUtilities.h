@@ -15,12 +15,13 @@
 #define DDS4CCM_TIME_UTILITIES_H
 
 #include "ace/Time_Value.h"
+#include "ace/Truncate.h"
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 
 inline void
 operator<<= (::DDS::Time_t & dds_time, const ::ACE_Time_Value & ace_time)
 {
-  dds_time.sec = static_cast < ::CORBA::Long> (ace_time.sec ());
+  dds_time.sec = ACE_Utils::truncate_cast<CORBA::Long> (ace_time.sec ());
   dds_time.nanosec = ace_time.usec () * 1000;
 }
 
