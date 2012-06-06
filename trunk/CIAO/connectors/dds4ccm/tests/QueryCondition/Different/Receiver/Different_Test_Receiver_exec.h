@@ -190,7 +190,7 @@ namespace CIAO_Different_Test_Receiver_Impl
     void get_all (void);
 
     void check_iter_reader (const QueryConditionTest & sample);
-    void check_iter_getter (const QueryConditionTest & sample);
+    bool check_iter_getter (const QueryConditionTest & sample);
 
     void check_filters (void);
     void check_filter (

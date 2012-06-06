@@ -1,3 +1,9 @@
+Wed Jun  6 11:25:57 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/QueryCondition/Different/Receiver/Different_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/QueryCondition/Different/Receiver/Different_Test_Receiver_exec.cpp:
+          After we get one unexpected sample are bailing out
+
 Wed Jun  6 09:17:49 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/TimeUtilities.h:

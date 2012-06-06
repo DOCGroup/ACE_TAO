@@ -219,7 +219,7 @@ namespace CIAO_Different_Test_Receiver_Impl
       }
   }
 
-  void
+  bool
   Receiver_exec_i::check_iter_getter (const QueryConditionTest & sample)
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("GET ALL : ")
@@ -229,17 +229,20 @@ namespace CIAO_Different_Test_Receiver_Impl
     if (sample.iteration <= ACE_OS::atoi (MIN_ITERATION))
       {
         ACE_ERROR ((LM_ERROR, "ERROR: GET ALL: "
-                              "Didn't expect samples with iterations "
-                              "<= %C\n",
+                              "Didn't expect samples with iteration %C "
+                              "<= %C\n", sample.iteration,
                               MIN_ITERATION));
+        return false;
       }
     if (sample.iteration > ACE_OS::atoi (MAX_ITERATION))
       {
         ACE_ERROR ((LM_ERROR, "ERROR: GET ALL: "
-                              "Didn't expect samples with iterations "
-                              "> %C\n",
+                              "Didn't expect samples with iteration &C"
+                              "> %C\n", sample.iteration,
                               MAX_ITERATION));
+        return false;
       }
+    return true;
   }
 
 
@@ -279,7 +282,12 @@ namespace CIAO_Different_Test_Receiver_Impl
     CORBA::Boolean result = getter->get_one (qf_info.out (), readinfo);
     if (result)
       {
-        this->check_iter_getter (qf_info.in ());
+        if (!this->check_iter_getter (qf_info.in ()))
+          {
+            ACE_ERROR ((LM_ERROR, "Receiver_exec_i::get_all - "
+                                  "ERROR: got unexpected "
+                                  "sample, bailing out\n"));
+          }
       }
     else
       {
@@ -292,7 +300,12 @@ namespace CIAO_Different_Test_Receiver_Impl
         result = getter->get_one (qf_info.out (), readinfo);
         if (result)
           {
-            this->check_iter_getter (qf_info.in ());
+            if (!this->check_iter_getter (qf_info.in ()))
+              {
+                ACE_ERROR ((LM_ERROR, "Receiver_exec_i::get_all - "
+                                      "ERROR: got unexpected "
+                                      "sample, bailing out\n"));
+              }
           }
       }
   }
