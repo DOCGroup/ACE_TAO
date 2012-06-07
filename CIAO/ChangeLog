@@ -1,3 +1,17 @@
+Thu Jun  7 19:44:44 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ConditionManager.cpp:
+          Extended logging, implemented check_condition
+
+        * connectors/dds4ccm/impl/TimeUtilities.h:
+          Added conversion DDS::Duration_t to ACE_Time_Value
+
+        * connectors/dds4ccm/impl/ndds/WaitSet.h:
+          Doxygen changes
+
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueries/Receiver/QCTQ_Test_Receiver_exec.cpp:
+          Comment change
+
 Thu Jun  7 19:10:15 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/dds4ccm_utils.h:
