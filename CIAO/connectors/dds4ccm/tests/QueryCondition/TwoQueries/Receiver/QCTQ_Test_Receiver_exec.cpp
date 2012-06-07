@@ -757,7 +757,7 @@ namespace CIAO_QCTQ_Test_Receiver_Impl
     DDS::Duration_t to;
     to.sec = 5; to.nanosec = 0;
     getter->time_out (to);
-    //set filter for the first run
+    // Set filter for the first run
     this->set_filter (1);
   }
 

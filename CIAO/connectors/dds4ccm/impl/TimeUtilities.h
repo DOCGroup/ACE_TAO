@@ -32,4 +32,11 @@ operator<<= (::ACE_Time_Value & ace_time, const ::DDS::Time_t &dds_time)
   ace_time.usec (dds_time.nanosec/1000);
 }
 
+inline void
+operator<<= (::ACE_Time_Value & ace_time, const ::DDS::Duration_t &dds_time)
+{
+  ace_time.sec (dds_time.sec);
+  ace_time.usec (dds_time.nanosec/1000);
+}
+
 #endif /* DDS4CCM_TIME_UTILITIES_H */

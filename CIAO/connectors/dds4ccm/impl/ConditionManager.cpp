@@ -3,6 +3,7 @@
 #include "dds4ccm/impl/logger/Log_Macros.h"
 #include "dds4ccm/impl/ConditionManager.h"
 #include "dds4ccm/impl/Utils.h"
+#include "dds4ccm/impl/TimeUtilities.h"
 #include "ace/OS_NS_sys_time.h"
 
 namespace CIAO
@@ -86,8 +87,7 @@ namespace CIAO
 #if (CIAO_DDS4CCM_NDDS==1)
       return this->ws_.check_condition (rc.in (), qc.in (), condition);
 #else
-      ACE_UNUSED_ARG (condition);
-      return false;
+      return (condition == rc.ptr () || condition == qc.ptr ());
 #endif
     }
 
@@ -326,10 +326,12 @@ namespace CIAO
 
     #if !defined (DDS4CCM_NLOGGING)
       ACE_Time_Value const waited = ACE_OS::gettimeofday () - start;
+      ACE_Time_Value wait_time;
+      wait_time <<= time_out;
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
                     ACE_TEXT ("ConditionManager::wait - ")
-                    ACE_TEXT ("waited <%#T> return code <%C>\n"),
-                    &waited, ::CIAO::DDS4CCM::translate_retcode (retcode)));
+                    ACE_TEXT ("to wait <%#T> waited <%#T> return code <%C>\n"),
+                    &wait_time, &waited, ::CIAO::DDS4CCM::translate_retcode (retcode)));
     #endif
 
       if (retcode == ::DDS::RETCODE_TIMEOUT)
