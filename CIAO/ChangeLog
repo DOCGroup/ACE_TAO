@@ -1,3 +1,8 @@
+Thu Jun  7 08:21:07 UTC 2012  Marcel Smit  <msmit@remedy.nl>
+
+        * NEWS:
+          Added refactoring of domain participant re-use.
+
 Thu Jun  7 08:13:52 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/Utils.cpp:
