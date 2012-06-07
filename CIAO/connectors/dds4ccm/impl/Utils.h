@@ -18,6 +18,7 @@
 
 #include "dds4ccm/impl/dds4ccm_conf.h"
 #include "dds4ccm/impl/dds4ccm_dds_impl_export.h"
+
 #include "ace/String_Base.h"
 
 namespace CIAO

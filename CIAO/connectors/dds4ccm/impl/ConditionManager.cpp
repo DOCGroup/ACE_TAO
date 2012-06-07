@@ -328,8 +328,8 @@ namespace CIAO
       ACE_Time_Value const waited = ACE_OS::gettimeofday () - start;
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
                     ACE_TEXT ("ConditionManager::wait - ")
-                    ACE_TEXT ("waited <%#T>\n"),
-                    &waited));
+                    ACE_TEXT ("waited <%#T> return code <%C>\n"),
+                    &waited, ::CIAO::DDS4CCM::translate_retcode (retcode)));
     #endif
 
       if (retcode == ::DDS::RETCODE_TIMEOUT)
