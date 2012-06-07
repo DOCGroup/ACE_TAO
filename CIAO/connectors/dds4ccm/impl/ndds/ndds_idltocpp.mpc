@@ -21,7 +21,6 @@ project(CIAO_DDS4CCM_DDS_NDDS) : install, ndds_idltocpp_stub, taolib, \
     DomainParticipant.cpp
     DomainParticipantFactory.cpp
     DomainParticipantListener.cpp
-    DomainParticipantManager.cpp
     Publisher.cpp
     PublisherListener.cpp
     QueryCondition.cpp

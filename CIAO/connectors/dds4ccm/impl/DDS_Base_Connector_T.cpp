@@ -10,6 +10,8 @@
 #include "dds4ccm/impl/PublisherListener.h"
 #include "dds4ccm/impl/SubscriberListener.h"
 
+#include "dds4ccm/impl/DomainParticipantManager.h"
+
 #if (CIAO_DDS4CCM_NDDS==1)
 # include "dds4ccm/impl/ndds/TypeSupport.h"
 # include "dds4ccm/impl/ndds/DomainParticipant.h"
@@ -19,12 +21,16 @@
 # include "dds/DCPS/Marked_Default_Qos.h"
 # include "dds/DCPS/RcHandle_T.h"
 # include "dds/DCPS/RTPS/RtpsDiscovery.h"
+# include "dds/DCPS/Discovery.h"
 # include "dds/DCPS/transport/framework/TransportType_rch.h"
 # include "dds/DCPS/transport/rtps_udp/RtpsUdpInst_rch.h"
 # include "dds/DCPS/transport/rtps_udp/RtpsUdpInst.h"
 # include "dds/DCPS/transport/framework/TransportRegistry.h"
 # include "dds/DCPS/transport/framework/TransportConfig_rch.h"
-# include "dds/DCPS/transport/framework/TransportDebug.h"
+#endif
+
+#if defined (GEN_OSTREAM_OPS)
+#include <sstream>
 #endif
 
 template <typename CCM_TYPE>
@@ -38,6 +44,10 @@ DDS_Base_Connector_T<CCM_TYPE>::DDS_Base_Connector_T (void)
 
   ACE_Env_Value<int> id (ACE_TEXT("DDS4CCM_DEFAULT_DOMAIN_ID"), this->domain_id_);
   this->domain_id_ = id;
+#if (CIAO_DDS4CCM_OPENDDS==1)
+  ACE_Env_Value<int> oid (ACE_TEXT("OPENDDS_RTPS_DEFAULT_D0"), this->domain_id_);
+  this->domain_id_ = oid;
+#endif
   this->dlf_ =
     ACE_Dynamic_Service<CIAO::DDS4CCM::Logger_Service>::instance ("DDS4CCM_Logger");
   if (this->dlf_)
@@ -45,12 +55,6 @@ DDS_Base_Connector_T<CCM_TYPE>::DDS_Base_Connector_T (void)
       this->dlf_->init ();
     }
   qos_xml_ = new DDS_XML_QOS_PARSER_TYPE;
-#if (CIAO_DDS4CCM_OPENDDS==1)
-  ACE_Env_Value<int> dcpsdl (ACE_TEXT("DDS4CCM_OPENDDS_LOG_LEVEL"), 0);
-  OpenDDS::DCPS::DCPS_debug_level = dcpsdl;
-  ACE_Env_Value<int> dcpsdtl (ACE_TEXT("DDS4CCM_OPENDDS_TRANSPORT_LOG_LEVEL"), 0);
-  OpenDDS::DCPS::Transport_debug_level = dcpsdtl;
-#endif
   this->create_dds_participant_factory ();
 }
 
@@ -62,9 +66,6 @@ DDS_Base_Connector_T<CCM_TYPE>::~DDS_Base_Connector_T (void)
   DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_TRACE, DDS4CCM_INFO
                 "DDS_Base_Connector_T::~DDS_Base_Connector_T - "
                 "Connector has been destructed\n"));
-#if (CIAO_DDS4CCM_OPENDDS==1)
-  //TheServiceParticipant->shutdown ();
-#endif
   delete this->qos_xml_;
   this->qos_xml_ = 0;
 }
@@ -111,6 +112,7 @@ DDS_Base_Connector_T<CCM_TYPE>::create_dds_participant_factory (void)
 
           TheServiceParticipant->add_discovery(OpenDDS::DCPS::static_rchandle_cast<OpenDDS::DCPS::Discovery>(disc));
           TheServiceParticipant->set_repo_domain(this->domain_id (), disc->key());
+          //TheServiceParticipant->set_default_discovery (OpenDDS::DCPS::Discovery::DEFAULT_RTPS);
 #else
           this->participant_factory_ =
             new ::CIAO::NDDS::DDS_DomainParticipantFactory_i;
@@ -217,11 +219,40 @@ DDS_Base_Connector_T<CCM_TYPE>::init_domain (
       this->participant_factory_->set_default_participant_qos_with_profile (
                                       this->qos_profile_.in ());
 
-      participant = this->participant_factory_->create_participant_with_profile (
-                                      this->domain_id_,
-                                      this->qos_profile_.in (),
-                                      ::DDS::DomainParticipantListener::_nil (),
-                                      0);
+      DDS::DomainParticipant_var dds_dp =
+        DPMANAGER->get_participant (this->domain_id_, this->qos_profile_.in ());
+
+      if (::CORBA::is_nil (dds_dp.in ()))
+        {
+          // Create a new participant for this qos profile and domain ID.
+          participant = this->participant_factory_->create_participant_with_profile (
+                                          this->domain_id_,
+                                          this->qos_profile_.in (),
+                                          ::DDS::DomainParticipantListener::_nil (),
+                                          0);
+          if (!DPMANAGER->register_participant (this->qos_profile_.in (), participant))
+            {
+              DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                          "DDS_Base_Connector_T::init_domain - "
+                          "Error: Unable to register DomainParticipant for domain <%d>\n",
+                          this->domain_id_));
+              throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
+            }
+        }
+      else
+        {
+          // Re-use the domain_participant for this QOS profile and domain ID
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION_STARTING, (LM_TRACE, DDS4CCM_INFO
+                        "DDS_Base_Connector_T::init_domain - "
+                        "Re-using domainparticipant "
+                        DDS_INSTANCE_HANDLE_FORMAT_SPECIFIER
+                        ". domain <%d> - "
+                        "qos_profile <%C>\n",
+                        DDS_INSTANCE_HANDLE_LOG (dds_dp->get_instance_handle ()),
+                        this->domain_id_, this->qos_profile_.in ()));
+
+          participant = ::DDS::DomainParticipant::_duplicate (dds_dp.in ());
+        }
     }
   else
 #endif
@@ -268,11 +299,48 @@ DDS_Base_Connector_T<CCM_TYPE>::init_domain (
         }
 #endif
 
-      participant = this->participant_factory_->create_participant (
-                                      this->domain_id_,
-                                      qos,
-                                      ::DDS::DomainParticipantListener::_nil (),
-                                      0);
+      DDS::DomainParticipant_var dds_dp =
+        DPMANAGER->get_participant (this->domain_id_, this->qos_profile_.in ());
+      if (::CORBA::is_nil (dds_dp.in ()))
+        {
+          // Create a new participant for this qos profile and domain ID.
+          participant = this->participant_factory_->create_participant (
+                                          this->domain_id_,
+                                          qos,
+                                          ::DDS::DomainParticipantListener::_nil (),
+                                          0);
+
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION_STARTING, (LM_TRACE, DDS4CCM_INFO
+                        "DDS_Base_Connector_T::init_domain - "
+                        "Created domainparticipant "
+                        DDS_INSTANCE_HANDLE_FORMAT_SPECIFIER
+                        ". domain <%d> - "
+                        "qos_profile <%C>\n",
+                        DDS_INSTANCE_HANDLE_LOG (participant->get_instance_handle ()),
+                        this->domain_id_, this->qos_profile_.in ()));
+
+          if (!DPMANAGER->register_participant (this->qos_profile_.in (), participant))
+            {
+              DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                          "DDS_Base_Connector_T::init_domain - "
+                          "Error: Unable to register DomainParticipant for domain <%d>\n",
+                          this->domain_id_));
+              throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
+            }
+        }
+      else
+        {
+          // Re-use the domain_participant for this QOS profile and domain ID
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION_STARTING, (LM_TRACE, DDS4CCM_INFO
+                        "DDS_Base_Connector_T::init_domain - "
+                        "Re-using domainparticipant "
+                        DDS_INSTANCE_HANDLE_FORMAT_SPECIFIER
+                        ". domain <%d> - "
+                        "qos_profile <%C>\n",
+                        DDS_INSTANCE_HANDLE_LOG (dds_dp->get_instance_handle ()),
+                        this->domain_id_, this->qos_profile_.in ()));
+          participant = ::DDS::DomainParticipant::_duplicate (dds_dp.in ());
+        }
     }
 
   if (::CORBA::is_nil (participant))
@@ -381,15 +449,43 @@ DDS_Base_Connector_T<CCM_TYPE>::init_topic (
 {
   DDS4CCM_TRACE ("DDS_Base_Connector_T::init_topic");
 
-  ::DDS::Topic_var tp;
+  ::DDS::TopicDescription_var tpd =
+    participant->lookup_topicdescription (topic_name);
+
+  ::DDS::Topic_var dds_tp = ::DDS::Topic::_narrow (tpd.in ());
+
+
 #if (CIAO_DDS4CCM_NDDS==1)
   if (!::CORBA::is_nil (this->qos_profile_.in ()))
     {
-      tp = participant->create_topic_with_profile (topic_name,
-                                          typesupport_name,
-                                          this->qos_profile_.in (),
-                                          ::DDS::TopicListener::_nil (),
-                                          0);
+      if (CORBA::is_nil (dds_tp.in ()))
+        {
+          // Create a new topic
+          topic = participant->create_topic_with_profile (topic_name,
+                                              typesupport_name,
+                                              this->qos_profile_.in (),
+                                              ::DDS::TopicListener::_nil (),
+                                              0);
+          if (!DPMANAGER->register_topic (participant, topic))
+            {
+              DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                  "DDS_Base_Connector_T::init_topic - "
+                  "Error: Unable to register topic <%C>\n",
+                  topic_name));
+              throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
+            }
+        }
+      else
+        {
+          // Re-use topic.
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION_STARTING, (LM_TRACE, DDS4CCM_INFO
+                        "DDS_Base_Connector_T::init_topic - "
+                        "Re-using topic. topic_name <%C>\n",
+                        topic_name));
+
+          topic = ::DDS::Topic::_duplicate (dds_tp);
+          DPMANAGER->_inc_ref (participant, topic);
+        }
     }
   else
 #endif
@@ -437,21 +533,41 @@ DDS_Base_Connector_T<CCM_TYPE>::init_topic (
         }
 #endif
 
-      tp = participant->create_topic (topic_name,
-                             typesupport_name,
-                             tqos,
-                             ::DDS::TopicListener::_nil (),
-                             0);
+      if (CORBA::is_nil (dds_tp.in ()))
+        {
+          // Create a new topic
+          topic = participant->create_topic (topic_name,
+                                typesupport_name,
+                                tqos,
+                                ::DDS::TopicListener::_nil (),
+                                0);
+          if (!DPMANAGER->register_topic (participant, topic))
+            {
+              DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                  "DDS_Base_Connector_T::init_topic - "
+                  "Error: Unable to register topic <%C>\n",
+                  topic_name));
+              throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
+            }
+        }
+      else
+        {
+          // Re-use topic.
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION_STARTING, (LM_TRACE, DDS4CCM_INFO
+                        "DDS_Base_Connector_T::init_topic - "
+                        "Re-using topic. topic_name <%C>\n",
+                        topic_name));
+          topic = ::DDS::Topic::_duplicate (dds_tp);
+          DPMANAGER->_inc_ref (participant, topic);
+        }
     }
-  if (::CORBA::is_nil (tp.in ()))
+  if (::CORBA::is_nil (topic))
     {
       DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_DDS_NIL_RETURN, (LM_ERROR, DDS4CCM_INFO
                     "DDS_Base_Connector_T::init_topic - "
                     "Error: Proxy returned a nil topic\n"));
       throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
     }
-
-  topic = tp._retn ();
 }
 
 template <typename CCM_TYPE>
@@ -815,7 +931,17 @@ void DDS_Base_Connector_T<CCM_TYPE>::remove_topic (
 {
   DDS4CCM_TRACE ("DDS_Base_Connector_T::remove_topic");
 
-  DDS::ReturnCode_t retcode = participant->delete_topic (topic);
+  DDS::ReturnCode_t retcode = ::DDS::RETCODE_OK;
+
+  if (DPMANAGER->unregister_topic (participant, topic))
+    {
+      CORBA::String_var name = topic->get_name ();
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION_STARTING, (LM_TRACE, DDS4CCM_INFO
+                    "DDS_Base_Connector_T::remove_topic - "
+                    "Going to delete topic <%C>\n",
+                    name.in ()));
+      retcode = participant->delete_topic (topic);
+    }
   if (retcode != ::DDS::RETCODE_OK)
     {
       throw ::CCM_DDS::InternalError (retcode, 0);
@@ -851,8 +977,27 @@ DDS_Base_Connector_T<CCM_TYPE>::remove_domain (
 {
   DDS4CCM_TRACE ("DDS_Base_Connector_T::remove_domain");
 
-  DDS::ReturnCode_t retcode =
-    this->participant_factory_->delete_participant (participant);
+  DDS::ReturnCode_t retcode = DDS::RETCODE_OK;
+
+  if (DPMANAGER->unregister_participant (participant))
+    {
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_TRACE, DDS4CCM_INFO
+                "DDS_Base_Connector_T"
+                "::remove_domain - "
+                "Going to delete participant "
+                DDS_INSTANCE_HANDLE_FORMAT_SPECIFIER
+                ".\n",
+                DDS_INSTANCE_HANDLE_LOG (participant->get_instance_handle ())));
+
+      retcode = this->participant_factory_->delete_participant (participant);
+
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_TRACE, DDS4CCM_INFO
+                "DDS_Base_Connector_T"
+                "::remove_domain - "
+                "Deleted participant. Result <%C>\n",
+                ::CIAO::DDS4CCM::translate_retcode (retcode)));
+    }
+
   if (retcode != ::DDS::RETCODE_OK)
     {
       throw ::CCM_DDS::InternalError (retcode, 0);

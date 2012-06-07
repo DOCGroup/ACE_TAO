@@ -73,7 +73,7 @@ namespace CIAO_SL_ManyByMany_Sender_Impl
    * ConnectorStatusListener_exec_i
    */
 
-  class SENDER_EXEC_Export ConnectorStatusListener_exec_i
+  class ConnectorStatusListener_exec_i
     : public virtual ::CCM_DDS::CCM_ConnectorStatusListener,
       public virtual ::CORBA::LocalObject
   {
