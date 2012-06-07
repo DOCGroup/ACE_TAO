@@ -55,7 +55,7 @@ public:
   typedef ACE_METRICS_TIMEPROBE_TYPE* ACE_METRICS_TIMEPROBE_BASED_PTR_TYPE;
   typedef char* ACE_METRICS_NAME_BASED_PTR_TYPE;
 
-  // Enumerated timeprobe event types.
+  /// Enumerated timeprobe event types.
   enum event_id
   {
     WORK_START = 0,
