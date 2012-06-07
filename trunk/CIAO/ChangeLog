@@ -1,3 +1,21 @@
+Thu Jun  7 19:10:15 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/dds4ccm_utils.h:
+          New file to print access_status as string
+
+        * connectors/dds4ccm/impl/Getter_T.cpp:
+          Only return true from get_one/get_many when we have valid samples
+
+        * connectors/dds4ccm/impl/ConditionManager.cpp:
+          Log dds return code after wait
+
+        * connectors/dds4ccm/tests/Getter/Receiver/Getter_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Receiver/ReadGet_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueries/Receiver/QCTQ_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueries/Receiver/QCTQ_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany/Receiver/QCTQM_Test_Receiver_exec.cpp:
+          Attempt to reduce logging when the test fails, log access_status as string
+
 Thu Jun  7 08:21:07 UTC 2012  Marcel Smit  <msmit@remedy.nl>
 
         * NEWS:

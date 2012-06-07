@@ -298,14 +298,14 @@ namespace CIAO
           return false;
         }
 
+      bool valid_data_read = false;
+
       // Check which conditions have triggered the wait method to 'wake up'.
       for (::CORBA::ULong i = 0; i < active_conditions.length(); ++i)
         {
           // Check whether this condition is the one we were waiting for.
           if (this->condition_manager_->check_condition (active_conditions[i].in ()))
             {
-              bool valid_data_read = false;
-
               // Read the samples one by one until a valid sample
               // has been found.
               while (!valid_data_read)
@@ -327,7 +327,7 @@ namespace CIAO
                     }
                   else if (retcode != ::DDS::RETCODE_OK)
                     {
-                      //something went wrong.
+                      // Something went wrong.
                       DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                             "Getter_T::get_one - "
                             "Error while reading from DDS: <%C>\n",
@@ -347,6 +347,10 @@ namespace CIAO
                     }
                   else if (data.length () == 1 && sample_info[0].valid_data)
                     {
+                      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
+                            "Getter_T::get_one - "
+                            "Read one valid sample from DDS.\n"));
+
                       // Add the valid sample to the list which will be returned
                       // to the caller
                       info <<= sample_info[0];
@@ -376,7 +380,7 @@ namespace CIAO
             }
         }
 
-      return true;
+      return valid_data_read;
     }
 
     template <typename GETTER_TYPE, typename TYPED_DDS_READER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
@@ -392,13 +396,13 @@ namespace CIAO
                         VALUE_TYPE,
                         ::CORBA::NO_MEMORY ());
       ::DDS::ConditionSeq active_conditions;
-      if (!this->condition_manager_->wait (active_conditions,
-                                            this->time_out_))
+      if (!this->condition_manager_->wait (active_conditions, this->time_out_))
         {
           // None of the attached conditions have triggered wait.
           return false;
         }
 
+      bool valid_data_read = false;
       ::DDS::SampleInfoSeq sample_info;
       SEQ_VALUE_TYPE data;
       // Check which conditions have triggered the wait method to 'wake up'.
@@ -407,8 +411,6 @@ namespace CIAO
           // Check whether this condition is the one we were waiting for.
           if (this->condition_manager_->check_condition (active_conditions[i].in ()))
             {
-              bool valid_data_read = false;
-
               // Read the samples one by one until a valid sample
               // has been found.
               while (!valid_data_read)
@@ -472,7 +474,7 @@ namespace CIAO
             }
         }
 
-      return true;
+      return valid_data_read;
     }
   }
 }

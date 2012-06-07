@@ -31,6 +31,7 @@
 
 #include "dds4ccm/impl/dds4ccm_conf.h"
 #include "dds4ccm/impl/Utils.h"
+#include "dds4ccm/impl/dds4ccm_utils.h"
 
 #define QUERY "( (iteration > %0) AND (iteration < %1) )"
 // #define QUERY_2 "( (iteration > %0) AND (iteration < %1) )"
@@ -225,7 +226,7 @@ namespace CIAO_QCTQ_Test_Receiver_Impl
   }
 
   // Supported operations and attributes.
-  void
+  bool
   Receiver_exec_i::check_iter (const QueryConditionTest & sample,
                                ::CORBA::UShort run,
                                ::CCM_DDS::ReadInfo * info)
@@ -233,7 +234,7 @@ namespace CIAO_QCTQ_Test_Receiver_Impl
     if (!info)
       {
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("GET ALL : ")
-            ACE_TEXT ("sample received for <%C>: iteration <%02u>\n"),
+            ACE_TEXT ("sample received for <%C>: iteration <%d>\n"),
             sample.symbol.in (),
             sample.iteration));
       }
@@ -257,20 +258,14 @@ namespace CIAO_QCTQ_Test_Receiver_Impl
                   {
                     // READ ALL since this check is only performed
                     // during a read.
-                    if (info->access_status == ::CCM_DDS::FRESH_INFO)
-                      {
-                        ACE_ERROR ((LM_ERROR, "ERROR: READ ALL: "
-                                    "Unexpected sample access mask - "
-                                    "expected <ALREADY_SEEN> - "
-                                    "received <FRESH_INFO>\n"));
-                      }
-                    else
-                      {
-                        ACE_ERROR ((LM_ERROR, "ERROR: READ ALL: "
-                                    "Unexpected sample access mask - "
-                                    "expected <ALREADY_SEEN> - "
-                                    "received <UNKNOWN>\n"));
-                      }
+                    ACE_ERROR ((LM_ERROR, "ERROR: READ ALL: "
+                                "Unexpected sample access mask - "
+                                "expected <%C> - "
+                                "received <%C>\n",
+                                CIAO::DDS4CCM::translate_ccm_dds_accessstatus (::CCM_DDS::ALREADY_SEEN),
+                                CIAO::DDS4CCM::translate_ccm_dds_accessstatus (info->access_status)
+                                ));
+                    return false;
                   }
               }
             else
@@ -284,6 +279,7 @@ namespace CIAO_QCTQ_Test_Receiver_Impl
                                       ACE_OS::atoi (MAX_ITERATION_1),
                                       ACE_OS::atoi (MIN_ITERATION_2),
                                       ACE_OS::atoi (MAX_ITERATION_2)));
+                return false;
               }
           }
       }
@@ -292,16 +288,18 @@ namespace CIAO_QCTQ_Test_Receiver_Impl
         if (sample.iteration <= current_min_iteration_)
           {
             ACE_ERROR ((LM_ERROR, "ERROR: GET ALL: "
-                                  "Didn't expect samples with iterations "
-                                  "<= %02d\n",
+                                  "Didn't expect samples with iteration %d "
+                                  "<= %d\n", sample.iteration,
                                   this->current_min_iteration_));
+            return false;
           }
         if (sample.iteration > this->current_max_iteration_)
           {
             ACE_ERROR ((LM_ERROR, "ERROR: GET ALL: "
-                                  "Didn't expect samples with iterations "
-                                  "> %02d\n",
+                                  "Didn't expect samples with iteration %d "
+                                  "> %2d\n", sample.iteration,
                                   this->current_max_iteration_));
+            return false;
           }
       }
     if (info != 0)
@@ -314,23 +312,17 @@ namespace CIAO_QCTQ_Test_Receiver_Impl
               {
                 // READ ALL since this check is only performed
                 // during a read.
-                if (info->access_status == ::CCM_DDS::ALREADY_SEEN)
-                  {
-                    ACE_ERROR ((LM_ERROR, "ERROR: READ ALL: "
-                                "Unexpected sample access mask - "
-                                "expected <FRESH_INFO> - "
-                                "received <ALREADY_SEEN>\n"));
-                  }
-                else
-                  {
-                    ACE_ERROR ((LM_ERROR, "ERROR: READ ALL: "
-                                "Unexpected sample access mask - "
-                                "expected <FRESH_INFO> - "
-                                "received <UNKNOWN>\n"));
-                  }
+                ACE_ERROR ((LM_ERROR, "ERROR: READ ALL: "
+                            "Unexpected sample access mask - "
+                            "expected <%C> - "
+                            "received <%C>\n",
+                            CIAO::DDS4CCM::translate_ccm_dds_accessstatus (::CCM_DDS::FRESH_INFO),
+                            CIAO::DDS4CCM::translate_ccm_dds_accessstatus (info->access_status)));
+                return false;
               }
           }
       }
+    return true;
   }
 
 
@@ -364,11 +356,12 @@ namespace CIAO_QCTQ_Test_Receiver_Impl
       {
         ACE_DEBUG ((LM_DEBUG, "READ ALL : Receiver_exec_i::read_all - "
                               "Sample received: key <%C> - iteration <%d> - "
-                              "sample_read_state <%d>\n",
+                              "sample_read_state <%C>\n",
                               qf_info[i].symbol.in (),
                               qf_info[i].iteration,
-                              readinfos[i].access_status));
-        this->check_iter (qf_info[i], run, &readinfos[i]);
+                              CIAO::DDS4CCM::translate_ccm_dds_accessstatus (readinfos[i].access_status)));
+        if (!this->check_iter (qf_info[i], run, &readinfos[i]))
+          break;
       }
   }
 
@@ -405,7 +398,8 @@ namespace CIAO_QCTQ_Test_Receiver_Impl
         result = getter->get_one (qf_info.out (), readinfo);
         if (result)
           {
-            this->check_iter (qf_info.in (), run);
+            if (!this->check_iter (qf_info.in (), run))
+              break;
             ++samples_received;
           }
       }

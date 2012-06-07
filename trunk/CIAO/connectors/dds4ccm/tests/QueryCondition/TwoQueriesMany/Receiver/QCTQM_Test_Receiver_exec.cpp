@@ -32,6 +32,7 @@
 
 #include "dds4ccm/impl/dds4ccm_conf.h"
 #include "dds4ccm/impl/Utils.h"
+#include "dds4ccm/impl/dds4ccm_utils.h"
 
 #define QUERY "( (iteration > %0) AND (iteration < %1) )"
 
@@ -261,20 +262,13 @@ namespace CIAO_QCTQM_Test_Receiver_Impl
                   {
                     // READ ALL since this check is only performed
                     // during a read.
-                    if (info->access_status == ::CCM_DDS::FRESH_INFO)
-                      {
-                        ACE_ERROR ((LM_ERROR, "ERROR: READ ALL: "
-                                    "Unexpected sample access mask - "
-                                    "expected <ALREADY_SEEN> - "
-                                    "received <FRESH_INFO>\n"));
-                      }
-                    else
-                      {
-                        ACE_ERROR ((LM_ERROR, "ERROR: READ ALL: "
-                                    "Unexpected sample access mask - "
-                                    "expected <ALREADY_SEEN> - "
-                                    "received <UNKNOWN>\n"));
-                      }
+                    ACE_ERROR ((LM_ERROR, "ERROR: READ ALL: "
+                                "Unexpected sample access mask - "
+                                "expected <%C> - "
+                                "received <%C>\n",
+                                CIAO::DDS4CCM::translate_ccm_dds_accessstatus (::CCM_DDS::ALREADY_SEEN),
+                                CIAO::DDS4CCM::translate_ccm_dds_accessstatus (info->access_status)
+                                ));
                   }
               }
             else
@@ -321,20 +315,13 @@ namespace CIAO_QCTQM_Test_Receiver_Impl
                   {
                     // READ ALL since this check is only performed
                     // during a read.
-                    if (info->access_status == ::CCM_DDS::ALREADY_SEEN)
-                      {
-                        ACE_ERROR ((LM_ERROR, "ERROR: READ ALL: "
-                                    "Unexpected sample access mask - "
-                                    "expected <FRESH_INFO> - "
-                                    "received <ALREADY_SEEN>\n"));
-                      }
-                    else
-                      {
-                        ACE_ERROR ((LM_ERROR, "ERROR: READ ALL: "
-                                    "Unexpected sample access mask - "
-                                    "expected <FRESH_INFO> - "
-                                    "received <UNKNOWN>\n"));
-                      }
+                    ACE_ERROR ((LM_ERROR, "ERROR: READ ALL: "
+                                "Unexpected sample access mask - "
+                                "expected <%C> - "
+                                "received <%C>\n",
+                                CIAO::DDS4CCM::translate_ccm_dds_accessstatus (::CCM_DDS::FRESH_INFO),
+                                CIAO::DDS4CCM::translate_ccm_dds_accessstatus (info->access_status)
+                                ));
                   }
               }
           }
@@ -420,11 +407,11 @@ namespace CIAO_QCTQM_Test_Receiver_Impl
           {
             ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::get_many: "
                                   "Returned data : key <%C> - iteration <%d>,"
-                                  "instance status <%u> - access status <%u>\n",
+                                  "instance status <%u> - access status <%C>\n",
                                   gettertest_seq[i].symbol.in (),
                                   gettertest_seq[i].iteration,
                                   readinfo[i].instance_status,
-                                  readinfo[i].access_status));
+                                  CIAO::DDS4CCM::translate_ccm_dds_accessstatus(readinfo[i].access_status)));
             this->check_iter (gettertest_seq[i], run);
             ++samples_received;
           }

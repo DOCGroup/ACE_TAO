@@ -202,7 +202,7 @@ namespace CIAO_QCTQ_Test_Receiver_Impl
     ::CORBA::ULong test_all (::CORBA::UShort run);
     ::CORBA::ULong get_all (::CORBA::UShort run);
     void read_all (::CORBA::UShort run);
-    void check_iter (const QueryConditionTest & sample,
+    bool check_iter (const QueryConditionTest & sample,
                      ::CORBA::UShort run,
                      ::CCM_DDS::ReadInfo * info = 0);
     void check_filter (::CORBA::UShort run);
