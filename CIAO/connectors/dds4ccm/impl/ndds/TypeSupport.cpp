@@ -185,9 +185,10 @@ namespace CIAO
                         type));
           return false;
         }
+
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, DDS4CCM_INFO
                     "DDS_TypeSupport_i::register_type - "
-                    "Registered factory for type <%C> and participant <%@>\n",
+                    "Going to register factory for type <%C> and participant <%@>\n",
                     type, dp));
 
       return register_factory_i (type, f, dp);

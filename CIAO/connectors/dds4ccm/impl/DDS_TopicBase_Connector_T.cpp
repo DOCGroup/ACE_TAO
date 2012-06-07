@@ -245,6 +245,11 @@ DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::register_type (
 {
   DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::register_type");
 
+  DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
+                ACE_TEXT ("DDS_TopicBase_Connector_T::register_type - ")
+                ACE_TEXT ("Going to register type <%C>.\n"),
+                typesupport_name));
+
   ::DDS::ReturnCode_t retcode = ::DDS::RETCODE_ERROR;
 #if (CIAO_DDS4CCM_NDDS==1)
   ::CIAO::NDDS::DDS_DomainParticipant_i *part =
@@ -273,7 +278,7 @@ DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::register_type (
     }
 
   retcode = DDS_TYPE::type_support::register_type(
-    part->get_rti_entity (), typesupport_name);
+        part->get_rti_entity (), typesupport_name);
 #else
   typename DDS_TYPE::type_support::_var_type ts = new typename DDS_TYPE::type_support;
   retcode = ts->register_type (participant, typesupport_name);
@@ -282,7 +287,7 @@ DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::register_type (
     {
       DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
           "DDS_TopicBase_Connector_T::register_type - "
-          "Error registering type <%C>\n",
+          "Error registering type <%C> in DDS\n",
           ::CIAO::DDS4CCM::translate_retcode (retcode)));
       throw ::CCM_DDS::InternalError (retcode, 0);
     }

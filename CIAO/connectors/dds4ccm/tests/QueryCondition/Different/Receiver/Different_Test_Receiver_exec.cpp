@@ -237,7 +237,7 @@ namespace CIAO_Different_Test_Receiver_Impl
     if (sample.iteration > ACE_OS::atoi (MAX_ITERATION))
       {
         ACE_ERROR ((LM_ERROR, "ERROR: GET ALL: "
-                              "Didn't expect samples with iteration &C"
+                              "Didn't expect samples with iteration %C"
                               "> %C\n", sample.iteration,
                               MAX_ITERATION));
         return false;
@@ -305,6 +305,7 @@ namespace CIAO_Different_Test_Receiver_Impl
                 ACE_ERROR ((LM_ERROR, "Receiver_exec_i::get_all - "
                                       "ERROR: got unexpected "
                                       "sample, bailing out\n"));
+                break;
               }
           }
       }

@@ -17,6 +17,7 @@ module SL_OneByOne
   component Sender
   {
      port SL_OneByOneConnector::DDS_Update test_topic_update;
+     provides CCM_DDS::ConnectorStatusListener test_topic_connector_status;
   };
 };
 
