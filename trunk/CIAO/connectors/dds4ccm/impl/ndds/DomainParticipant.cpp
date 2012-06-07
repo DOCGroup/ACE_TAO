@@ -12,7 +12,6 @@
 #include "dds4ccm/impl/ndds/StatusCondition.h"
 
 #include "dds4ccm/impl/ndds/TopicListener.h"
-#include "dds4ccm/impl/ndds/DomainParticipantManager.h"
 #include "dds4ccm/impl/ndds/Utils.h"
 
 #include "dds4ccm/impl/ndds/convertors/PublisherQos.h"
@@ -452,80 +451,51 @@ namespace CIAO
                             ::CORBA::NO_MEMORY ());
         }
 
-      DDSTopicDescription * dds_td =
-        this->rti_entity ()->lookup_topicdescription (impl_name);
-      DDSTopic * dds_tp = 0;
-      if (dds_td)
+      DDS_TopicQos ccm_dds_qos;
+      DDS_ReturnCode_t const retcode = this->rti_entity ()->get_default_topic_qos (ccm_dds_qos);
+      if (retcode != DDS_RETCODE_OK)
         {
-          dds_tp = DDSTopic::narrow (dds_td);
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                      "DDS_DomainParticipant_i"
+                      "::create_topic - "
+                      "Error: Unable to retrieve default topic qos\n"));
+          return ::DDS::Topic::_nil ();
         }
+      ccm_dds_qos <<= qos;
+
+      DDSTopic * dds_tp = this->rti_entity ()->create_topic (impl_name,
+                                                             type_name,
+                                                             ccm_dds_qos,
+                                                             ccm_dds_tl,
+                                                             mask);
 
       if (!dds_tp)
         {
-          DDS_TopicQos ccm_dds_qos;
-          DDS_ReturnCode_t const retcode = this->rti_entity ()->get_default_topic_qos (ccm_dds_qos);
-          if (retcode != DDS_RETCODE_OK)
-            {
-              DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-                          "DDS_DomainParticipant_i"
-                          "::create_topic - "
-                          "Error: Unable to retrieve default topic qos\n"));
-              return ::DDS::Topic::_nil ();
-            }
-          ccm_dds_qos <<= qos;
-
-          dds_tp = this->rti_entity ()->create_topic (impl_name,
-                                                      type_name,
-                                                      ccm_dds_qos,
-                                                      ccm_dds_tl,
-                                                      mask);
-
-          if (!dds_tp)
-            {
-              DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_DDS_NIL_RETURN, (LM_ERROR, DDS4CCM_INFO
-                            "DDS_DomainParticipant_i::create_topic - "
-                            "Error: RTI DDS returned a nil topic "
-                            "with name <%C> and type <%C>\n",
-                            impl_name, type_name));
-              delete ccm_dds_tl;
-              return ::DDS::Topic::_nil ();
-            }
-
-          ::DDS::Topic_var retval;
-          ACE_NEW_THROW_EX (retval,
-                            DDS_Topic_i (dds_tp, this),
-                            ::CORBA::NO_MEMORY ());
-
-          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, DDS4CCM_INFO
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_DDS_NIL_RETURN, (LM_ERROR, DDS4CCM_INFO
                         "DDS_DomainParticipant_i::create_topic - "
-                        "Successfully created topic with name <%C> and type <%C>\n",
+                        "Error: RTI DDS returned a nil topic "
+                        "with name <%C> and type <%C>\n",
                         impl_name, type_name));
-
-          DPMANAGER->add_topic (this->rti_entity (), dds_tp);
-
-          if (ccm_dds_tl)
-            {
-              ccm_dds_tl->set_dds_topic (retval.in ());
-            }
-
-          return retval._retn ();
+          delete ccm_dds_tl;
+          return ::DDS::Topic::_nil ();
         }
-      else
+
+      ::DDS::Topic_var retval;
+      ACE_NEW_THROW_EX (retval,
+                        DDS_Topic_i (dds_tp, this),
+                        ::CORBA::NO_MEMORY ());
+
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, DDS4CCM_INFO
+                    "DDS_DomainParticipant_i::create_topic - "
+                    "Successfully created topic with name <%C> and type <%C>\n",
+                    impl_name, type_name));
+
+      if (ccm_dds_tl)
         {
-          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
-                        "DDS_DomainParticipant_i::create_topic - "
-                        "Re-using topic with name <%C> and type <%C>.\n",
-                        impl_name, type_name));
-
-          DPMANAGER->_inc_ref (this->rti_entity (), dds_tp);
-
-          ::DDS::Topic_var retval;
-          ACE_NEW_THROW_EX (retval,
-                            DDS_Topic_i (dds_tp, this),
-                            ::CORBA::NO_MEMORY ());
-
-          return retval._retn ();
+          ccm_dds_tl->set_dds_topic (retval.in ());
         }
+
+      return retval._retn ();
     }
 
 
@@ -572,80 +542,50 @@ namespace CIAO
                             ::CORBA::NO_MEMORY ());
         }
 
-      DDSTopicDescription * dds_td =
-        this->rti_entity ()->lookup_topicdescription (impl_name);
       DDSTopic * dds_tp = 0;
-      if (dds_td)
+
+      char * lib_name = get_library_name(qos_profile);
+      char * prof_name = get_profile_name(qos_profile);
+
+      if (lib_name != 0 && prof_name != 0)
         {
-          dds_tp = DDSTopic::narrow (dds_td);
+          dds_tp = this->rti_entity ()->create_topic_with_profile (
+                                                        impl_name,
+                                                        type_name,
+                                                        lib_name,
+                                                        prof_name,
+                                                        ccm_dds_tl,
+                                                        mask);
         }
+      ACE_OS::free (lib_name);
+      ACE_OS::free (prof_name);
 
       if (!dds_tp)
         {
-          char * lib_name = get_library_name(qos_profile);
-          char * prof_name = get_profile_name(qos_profile);
-
-          if (lib_name != 0 && prof_name != 0)
-            {
-              dds_tp = this->rti_entity ()->create_topic_with_profile (
-                                                            impl_name,
-                                                            type_name,
-                                                            lib_name,
-                                                            prof_name,
-                                                            ccm_dds_tl,
-                                                            mask);
-            }
-          ACE_OS::free (lib_name);
-          ACE_OS::free (prof_name);
-
-          if (!dds_tp)
-            {
-              DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_DDS_NIL_RETURN, (LM_ERROR, DDS4CCM_INFO
-                            "DDS_DomainParticipant_i::create_topic_with_profile <%C> - "
-                            "Error: RTI DDS returned a nil topic\n",
-                            qos_profile));
-              delete ccm_dds_tl;
-              return ::DDS::Topic::_nil ();
-            }
-
-          ::DDS::Topic_var retval;
-          ACE_NEW_THROW_EX (retval,
-                            DDS_Topic_i (dds_tp, this),
-                            ::CORBA::NO_MEMORY ());
-
-          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, DDS4CCM_INFO
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_DDS_NIL_RETURN, (LM_ERROR, DDS4CCM_INFO
                         "DDS_DomainParticipant_i::create_topic_with_profile <%C> - "
-                        "Successfully created topic with name %C and type %C\n",
-                        qos_profile,
-                        impl_name, type_name));
-
-          if (ccm_dds_tl)
-            {
-              ccm_dds_tl->set_dds_topic (retval.in ());
-            }
-          DPMANAGER->add_topic (this->rti_entity (), dds_tp);
-
-          return retval._retn ();
+                        "Error: RTI DDS returned a nil topic\n",
+                        qos_profile));
+          delete ccm_dds_tl;
+          return ::DDS::Topic::_nil ();
         }
-      else
+
+      ::DDS::Topic_var retval;
+      ACE_NEW_THROW_EX (retval,
+                        DDS_Topic_i (dds_tp, this),
+                        ::CORBA::NO_MEMORY ());
+
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, DDS4CCM_INFO
+                    "DDS_DomainParticipant_i::create_topic_with_profile <%C> - "
+                    "Successfully created topic with name %C and type %C\n",
+                    qos_profile,
+                    impl_name, type_name));
+
+      if (ccm_dds_tl)
         {
-          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
-                        "DDS_DomainParticipant_i::create_topic_with_profile <%C> - "
-                        "Re-using topic with name %C and type %C.\n",
-                        qos_profile,
-                        impl_name, type_name));
-          DPMANAGER->_inc_ref (this->rti_entity (), dds_tp);
-
-          ::DDS::Topic_var retval;
-          ACE_NEW_THROW_EX (retval,
-                            DDS_Topic_i (dds_tp, this),
-                            ::CORBA::NO_MEMORY ());
-          if (ccm_dds_tl)
-            {
-              ccm_dds_tl->set_dds_topic (retval.in ());
-            }
-          return retval._retn ();
+          ccm_dds_tl->set_dds_topic (retval.in ());
         }
+      return retval._retn ();
     }
 
 
@@ -676,28 +616,24 @@ namespace CIAO
                     "Successfully casted provided object reference to servant.\n",
                     topic_name.in ()));
 
-      ::DDS::ReturnCode_t retval = DDS::RETCODE_OK;
-      if (DPMANAGER->remove_topic (this->rti_entity (), tp))
+      const DDS_ReturnCode_t retcode = this->rti_entity ()->delete_topic (tp);
+      if (retcode != DDS_RETCODE_OK)
         {
-          retval = this->rti_entity ()->delete_topic (tp);
-
-          if (retval != DDS_RETCODE_OK)
-            {
-              DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-                            "DDS_DomainParticipant_i::delete_topic <%C> - "
-                            "Error: RTI delete_topic returned non-ok error code %C\n",
-                            topic_name.in (),
-                            ::CIAO::DDS4CCM::translate_retcode (retval)));
-            }
-          else
-            {
-              DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, DDS4CCM_INFO
-                            "DDS_DomainParticipant_i::delete_topic <%C> - "
-                            "Provided topic successfully deleted\n",
-                            topic_name.in ()));
-            }
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                        "DDS_DomainParticipant_i::delete_topic <%C> - "
+                        "Error: delete_topic returned non-ok error code %C\n",
+                        topic_name.in (),
+                        ::CIAO::DDS4CCM::translate_retcode (retcode)));
         }
-      return retval;
+      else
+        {
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, DDS4CCM_INFO
+                        "DDS_DomainParticipant_i::delete_topic <%C> - "
+                        "Provided topic successfully deleted\n",
+                        topic_name.in ()));
+        }
+
+      return retcode;
     }
 
 

@@ -330,6 +330,25 @@
       <instance xmi:idref="SL_OneByOne_ConnectorComponentInstance" />
     </internalEndpoint>
   </connection>
+  <connection>
+    <name>test_topic_connector_status_sender</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>test_topic_connector_status</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="SenderComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>error_listener</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="SL_OneByOne_ConnectorComponentInstance" />
+    </internalEndpoint>
+  </connection>
 
   <artifact xmi:id="Sender_ExecArtifact">
     <name>Sender_exec</name>

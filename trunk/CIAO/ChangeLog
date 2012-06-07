@@ -1,3 +1,154 @@
+Thu Jun  7 07:48:27 UTC 2012  Marcel Smit  <msmit@remedy.nl>
+
+        * MPC/config/ciaoidldefaults.mpb:
+          Fixed compile issue related to GEN_OSTREAM.
+
+
+        Merged DDS4CCM_QOS_Handler branch into trunk.
+        Made the DomainParticipantManager more generic.
+        This manager manages the re-use of the DomainParticipants and
+        Topics and was implemented for RTI DDS. After the move, it's
+        available for other vendors (openDDS).
+
+          commit 8a0b18b8170de5e17b809c4ac66e9bf12f721598
+          Merge: ed688a4 c4917dd
+          Author: Marcel Smit <msmit@remedy.nl>
+          Date:   Thu Jun 7 08:48:42 2012 +0200
+
+              Merge branch 'master' into DDS4CCM_QOS_Handler
+
+          commit ed688a4c9dda6280686e8f8e2782d8e5266d7014
+          Author: Marcel Smit <msmit@remedy.nl>
+          Date:   Thu Jun 7 08:39:03 2012 +0200
+
+                  * CIAO/connectors/dds4ccm/impl/DomainParticipantManager.cpp:
+                    Optimized logging.
+
+          commit 3f272fbdc84e3e4983d6e15bcdb8fa7b43637f02
+          Merge: 9c0d8ab 0e4ff1a
+          Author: Marcel Smit <msmit@remedy.nl>
+          Date:   Thu Jun 7 08:32:03 2012 +0200
+
+              Merge branch 'DDS4CCM_QOS_Handler' of http://git.remedy.nl/git/atcd into DDS4CCM_QOS_Handler
+
+          commit 9c0d8abb9d3d9814dce1877aa3ed357468e0c632
+          Author: Marcel Smit <msmit@remedy.nl>
+          Date:   Thu Jun 7 08:31:49 2012 +0200
+
+                  * CIAO/connectors/dds4ccm/impl/DomainParticipantManager.cpp:
+                  * CIAO/connectors/dds4ccm/impl/DomainParticipantManager.h:
+                    Renamed add_xxx and remove_xxx methods to register_xxx and
+                    unregister_xxx respectively.
+                    Also guard the list when a topic is registered or
+                    unregistered.
+
+                  * CIAO/connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+                    Due to rename action. Also check the return value of the
+                    register methods. If a participant or topic cannot be
+                    registered log an error and throw in Internal exception.
+
+          commit 0e4ff1aa6eed5ab1c5454ff66020a3f36b8fc9c7
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Thu Jun 7 08:16:46 2012 +0200
+
+                  * CIAO/connectors/dds4ccm/tests/QueryCondition/Different/Receiver/Different_Test_Receiver_exec.cpp:
+                    Fixed logging, really bail out when we have a problem
+
+          commit c94b19372a805a33248a409aabd0b11f5fb6ac33
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Wed Jun 6 21:06:43 2012 +0200
+
+                  * CIAO/connectors/dds4ccm/impl/DomainParticipantManager.cpp:
+                    Shutdown opendds when no dp's are registered anymore
+
+          commit 878e648328179ceaa0b1b69e8feb4a0cd8d3b4bb
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Wed Jun 6 20:56:30 2012 +0200
+
+                  * CIAO/connectors/dds4ccm/tests/Getter/Sender/Getter_Test_Sender_exec.cpp:
+                    Check done_ in ccm_remove
+
+          commit 755de847ca5258281e8ffb570c23d646d136713a
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Wed Jun 6 20:42:46 2012 +0200
+
+                  * CIAO/connectors/dds4ccm/impl/DomainParticipantManager.cpp:
+                    Documentation fix
+
+          commit 6c0e018a313be100d79b545e556fa6d95ba884ed
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Wed Jun 6 20:41:32 2012 +0200
+
+                  * CIAO/connectors/dds4ccm/impl/DomainParticipantManager.cpp:
+                    Handle that qos_profile pointer can be zero
+
+                  * CIAO/connectors/dds4ccm/tests/PortUsage/descriptors/run_test.pl:
+                    Increased timeout
+
+          commit dad7f336d79e24b1897f446355453383738cc277
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Wed Jun 6 20:21:48 2012 +0200
+
+                  * CIAO/connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+                    Added some commented out code
+
+                  * CIAO/connectors/dds4ccm/impl/DomainParticipantManager.cpp:
+                    When we don't have any dp left, we could shutdown opendds, but
+                    kept that commented out, it leads to all kind of shutdown
+                    crashes
+
+                  * CIAO/connectors/dds4ccm/tests/SLManyByMany/Sender/SL_ManyByMany_Sender_exec.h:
+                    Removed export
+
+                  * CIAO/connectors/dds4ccm/tests/SLOneByOne/Sender/SL_OneByOne_Sender.idl:
+                  * CIAO/connectors/dds4ccm/tests/SLOneByOne/Sender/SL_OneByOne_Sender_exec.cpp:
+                  * CIAO/connectors/dds4ccm/tests/SLOneByOne/Sender/SL_OneByOne_Sender_exec.h:
+                  * CIAO/connectors/dds4ccm/tests/SLOneByOne/descriptors/Plan.cdp:
+                    Use publication_matched status
+
+          commit 423cc156dc943b94eac55676d8566102d9d8afaa
+          Author: Marcel Smit <msmit@remedy.nl>
+          Date:   Wed Jun 6 16:17:52 2012 +0200
+
+                  * CIAO/connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+                    Added the domain participant handle to the logging.
+
+                  * CIAO/connectors/dds4ccm/impl/DomainParticipantManager.cpp:
+                    Fixed runtime issue.
+
+          commit 737b8684e03e4ef575b9acafe7c75d85d3eaad80
+          Author: Marcel Smit <msmit@remedy.nl>
+          Date:   Wed Jun 6 16:03:52 2012 +0200
+
+                  * CIAO/connectors/dds4ccm/impl/DomainParticipantManager.cpp:
+                    Added the domain participant instance to the logging.
+
+          commit 8712ac32bee2d5b63e6f2c3e349b19e4fb280f36
+          Merge: 8f3614e 645e935
+          Author: Marcel Smit <msmit@remedy.nl>
+          Date:   Wed Jun 6 15:33:07 2012 +0200
+
+              Merge branch 'DDS4CCM_QOS_Handler' of http://git.remedy.nl/git/atcd into DDS4CCM_QOS_Handler
+
+          commit 8f3614e7bdd325e89b497ba1c80ded8277a3223d
+          Author: Marcel Smit <msmit@remedy.nl>
+          Date:   Wed Jun 6 15:25:37 2012 +0200
+
+                  * CIAO/connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+                    Added the use of the DPMANAGER.
+
+                  * CIAO/connectors/dds4ccm/impl/DomainParticipantManager.cpp:
+                    Added missing duplicate.
+                    Refactored some of the reference counting on topics.
+
+                  * CIAO/connectors/dds4ccm/impl/DomainParticipantManager.h:
+                    Added some documentation.
+
+                  * CIAO/connectors/dds4ccm/impl/ndds/DomainParticipant.cpp:
+                  * CIAO/connectors/dds4ccm/impl/ndds/DomainParticipantFactory.cpp:
+                    Removed the use of the DPMANAGER.
+
+
 Wed Jun  6 11:25:57 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/QueryCondition/Different/Receiver/Different_Test_Receiver_exec.h:

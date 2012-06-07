@@ -226,7 +226,7 @@ namespace CIAO_Getter_Test_Sender_Impl
                     ACE_Time_Value (0, 500000)) == -1)
           {
             ACE_ERROR ((LM_ERROR, ACE_TEXT ("Sender_exec_i::start : ")
-                                  ACE_TEXT ("Error scheduling timer")));
+                                  ACE_TEXT ("Error scheduling timer\n")));
           }
       }
   }
@@ -351,14 +351,18 @@ namespace CIAO_Getter_Test_Sender_Impl
   void
   Sender_exec_i::ccm_passivate (void)
   {
-    /* Your code here. */
+    this->reactor ()->cancel_timer (this->ticker_);
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Sender_exec_i::stop : Timer canceled.\n")));
   }
 
   void
   Sender_exec_i::ccm_remove (void)
   {
-    this->reactor ()->cancel_timer (this->ticker_);
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Sender_exec_i::stop : Timer canceled.\n")));
+    if (!this->done_)
+      {
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Sender_exec_i::ccm_remove : ")
+                              ACE_TEXT ("Never got start signal\n")));
+      }
   }
 
   extern "C" SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
