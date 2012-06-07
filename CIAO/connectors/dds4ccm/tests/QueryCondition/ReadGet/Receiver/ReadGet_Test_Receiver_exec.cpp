@@ -28,6 +28,7 @@
 #include "ReadGet_Test_Receiver_exec.h"
 #include "tao/ORB_Core.h"
 #include "ace/Reactor.h"
+#include "dds4ccm/impl/dds4ccm_utils.h"
 
 #define QUERY "( (iteration > %0) AND (iteration < %1) )"
 
@@ -364,10 +365,10 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
       {
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\t\tCHECK ALL : ")
             ACE_TEXT ("sample received for <%C>: iteration <%02u> - ")
-            ACE_TEXT ("access_status <%d> - instance_status <%d>\n"),
+            ACE_TEXT ("access_status <%C> - instance_status <%d>\n"),
             queryfiltertest_info_seq[it].symbol.in (),
             queryfiltertest_info_seq[it].iteration,
-            readinfo_seq[it].access_status,
+            CIAO::DDS4CCM::translate_ccm_dds_accessstatus (readinfo_seq[it].access_status),
             readinfo_seq[it].instance_status));
       }
     CORBA::ULong expected = 0;

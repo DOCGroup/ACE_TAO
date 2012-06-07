@@ -30,6 +30,7 @@
 #include "ace/Reactor.h"
 #include "ace/OS_NS_sys_time.h"
 #include "dds4ccm/impl/dds4ccm_conf.h"
+#include "dds4ccm/impl/dds4ccm_utils.h"
 
 namespace CIAO_Getter_Test_Receiver_Impl
 {
@@ -352,10 +353,10 @@ namespace CIAO_Getter_Test_Receiver_Impl
       {
         ACE_DEBUG ((LM_DEBUG, "READ ALL : Receiver_exec_i::read_many - "
                               "Sample received: key <%C> - iteration <%d> - "
-                              "sample_read_state <%d>\n",
+                              "sample_read_state <%C>\n",
                               read_seq[i].key.in (),
                               read_seq[i].iteration,
-                              readinfos[i].access_status));
+                              CIAO::DDS4CCM::translate_ccm_dds_accessstatus (readinfos[i].access_status)));
       }
 
     for (::CORBA::Short key = 0; key < keys; ++key)
@@ -395,9 +396,9 @@ namespace CIAO_Getter_Test_Receiver_Impl
                   {
                     ACE_ERROR ((LM_ERROR, "ERROR: Receiver_exec_i::read_many - "
                                 "Unexpected access state received: "
-                                "expected <%d> - received <%d>\n",
-                                ::CCM_DDS::ALREADY_SEEN,
-                                received_access_status));
+                                "expected <%C> - received <%C>\n",
+                                CIAO::DDS4CCM::translate_ccm_dds_accessstatus (::CCM_DDS::ALREADY_SEEN),
+                                CIAO::DDS4CCM::translate_ccm_dds_accessstatus (received_access_status)));
                   }
               }
           }
@@ -410,11 +411,11 @@ namespace CIAO_Getter_Test_Receiver_Impl
                 ACE_ERROR ((LM_ERROR, "ERROR: Receiver_exec_i::read_many - "
                             "Unexpected access state received for sample "
                             "<%C>:<%d> : "
-                            "expected <%d> - received <%d>\n",
+                            "expected <%C> - received <%C>\n",
                             read_seq[readed].key.in (),
                             read_seq[readed].iteration,
-                            ::CCM_DDS::FRESH_INFO,
-                            received_access_status));
+                            CIAO::DDS4CCM::translate_ccm_dds_accessstatus (::CCM_DDS::FRESH_INFO),
+                            CIAO::DDS4CCM::translate_ccm_dds_accessstatus (received_access_status)));
               }
           }
       }
