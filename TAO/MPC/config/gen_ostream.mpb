@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-feature(gen_ostream) : taoidldefaults {
+feature(gen_ostream) : taobaseidldefaults {
   requires += gen_ostream
   macros += GEN_OSTREAM_OPS
   idlflags += -Gos
