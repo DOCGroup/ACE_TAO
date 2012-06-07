@@ -6,6 +6,10 @@ USER VISIBLE CHANGES BETWEEN CIAO-1.1.2 and CIAO-1.1.3
 
 . Further extended and improved support for OpenDDS as DDS vendor
 
+. Refactored domain participant re-use in DDS4CCM. Domain participant re-use
+  was initially implemented for RTI DDS but now it's available for other DDS
+  vendors as well.
+
 USER VISIBLE CHANGES BETWEEN CIAO-1.1.1 and CIAO-1.1.2
 =======================================================
 
