@@ -1,3 +1,8 @@
+Thu Jun  7 08:13:52 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/Utils.cpp:
+          Fixed msvc warnings
+
 Thu Jun  7 07:48:27 UTC 2012  Marcel Smit  <msmit@remedy.nl>
 
         * MPC/config/ciaoidldefaults.mpb:
