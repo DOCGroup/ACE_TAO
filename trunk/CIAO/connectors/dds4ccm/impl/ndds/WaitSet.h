@@ -41,49 +41,39 @@ namespace CIAO
       virtual ~DDS_WaitSet_i (void);
 
       /**
-        *
         * Waits for DDS until the attached read/query conditions are met
         * or when a timeout occurs.
         *
         * active_conditions will contain conditions DDS has found. The
         * caller should check whether the appropriate conditions for him
         * has been set, using check_conditions
-        *
         */
       virtual ::DDS::ReturnCode_t
       wait (::DDS::ConditionSeq & active_conditions,
             const ::DDS::Duration_t & timeout);
 
       /**
-        *
         * Attaches a condition to the waitset. 'wait' will be waiting for
         * this condition.
-        *
         */
       virtual ::DDS::ReturnCode_t
       attach_condition (::DDS::Condition_ptr cond);
 
       /**
-        *
         * Detaches a condition from the waitset. 'wait' won't be waiting
         * for this condition anymore.
-        *
         */
       virtual ::DDS::ReturnCode_t
       detach_condition (::DDS::Condition_ptr cond);
 
       /**
-        *
         * Retrieves a list of attached conditions.
-        *
         */
       virtual ::DDS::ReturnCode_t
       get_conditions (::DDS::ConditionSeq & attached_conditions);
 
       /**
-        *
         * Returns the RTI waitset
-        *
         */
       DDSWaitSet * get_rti_entity (void);
 
@@ -97,7 +87,7 @@ namespace CIAO
         * occurs and the lookup_handle exists, this method will return
         * the lookup_handle.
         *
-        * TODO: We actually want this method to be in the DDS4CCM
+        * @todp We actually want this method to be in the DDS4CCM
         * connector but since we're not allowed to use RTI specific code
         * there it's located here.
         *
@@ -105,7 +95,6 @@ namespace CIAO
         * when instance_handle != lookup_handle.
         *
         * non_existent will be true is lookup_hnd is DDS_HANDLE_NIL
-        *
         */
       ::DDS::InstanceHandle_t
       check_handle (const ::DDS::InstanceHandle_t & instance_handle,
@@ -114,19 +103,15 @@ namespace CIAO
                     bool & non_existent);
 
       /**
-        *
         * With this method, the caller is able to find out
         * which conditions had triggered 'wait'.
-        *
         */
       bool check_condition (::DDS::ReadCondition_ptr rc,
                             ::DDS::QueryCondition_ptr qc,
                             ::DDS::Condition_ptr condition);
 
       /**
-        *
         * Creates the RTI waitset.
-        *
         */
       void init (void);
 
@@ -136,9 +121,7 @@ namespace CIAO
       DDSWaitSet * rti_entity ();
 
       /**
-        *
         * Converts the RTI condition(s) to the DDS4CCM condition(s)
-        *
         */
       void
       convert_conditions (const DDSConditionSeq& dds_conditions,
