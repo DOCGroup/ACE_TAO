@@ -1,5 +1,5 @@
 /**
- * @file Utils.h
+ * @file dds4ccm_utils.h
  * @author Johnny Willemsen  (jwillemsen@remedy.nl)
  *
  * $Id$
