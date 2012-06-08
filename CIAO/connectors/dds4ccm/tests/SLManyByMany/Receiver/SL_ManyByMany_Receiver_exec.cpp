@@ -206,6 +206,7 @@ namespace CIAO_SL_ManyByMany_Receiver_Impl
                         datum.key.in ()));
           }
 #else
+        ++this->on_deletion_;
         ACE_UNUSED_ARG (datum);
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Statelistener:on_deletion : ")
                     ACE_TEXT ("Received on_deletion event\n")));
