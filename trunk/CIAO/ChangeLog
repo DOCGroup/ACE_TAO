@@ -1,3 +1,9 @@
+Fri Jun  8 11:33:11 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/DomainParticipantManager.cpp:
+          Shutdown OpenDDS, it will cause more crashes at this moment but
+          without a graceful shutdown we will have a lot of memory leaks
+
 Fri Jun  8 10:59:26 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/dds4ccm_conf.h:
