@@ -1,3 +1,10 @@
+Fri Jun  8 11:52:44 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DomainParticipantManager.cpp:
+        * connectors/dds4ccm/impl/dds4ccm_conf.h:
+          Make generic dds entity log macros
+
 Fri Jun  8 11:33:11 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/DomainParticipantManager.cpp:
@@ -16,7 +23,7 @@ Fri Jun  8 10:59:26 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
         * connectors/dds4ccm/impl/DomainParticipantManager.h:
         * connectors/dds4ccm/impl/DomainParticipantManager.cpp:
         * connectors/dds4ccm/impl/ndds/DomainParticipant.cpp:
-          Don't administratie which topics we are using within dds4ccm. We
+          Don't administrate which topics we are using within dds4ccm. We
           are now using find_topic and let DDS handle this administration. At
           the moment we delete a topic which is still used we get a DDS::
           RETCODE_PRECONDITION_NOT_MET which we than log but don't see as

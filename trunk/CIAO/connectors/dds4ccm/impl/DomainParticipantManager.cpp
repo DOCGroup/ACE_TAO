@@ -132,11 +132,11 @@ namespace CIAO
                         "DomainParticipantManager::get_participant - "
                         "DomainParticipant found. domain <%d> - "
                         "profile <%C> - ref_count <%d> - handle "
-                        DDS_PARTICIPANT_FORMAT_SPECIFIER "\n",
+                        DDS_ENTITY_FORMAT_SPECIFIER "\n",
                         domain_id,
                         qos_profile,
                         it_found->second->_ref_count (),
-                        DDS_PARTICIPANT_LOG (dp.in ())));
+                        DDS_ENTITY_LOG (dp.in ())));
 
           return dp._retn ();
         }
@@ -191,9 +191,9 @@ namespace CIAO
                         "DomainParticipantManager::register_participant - "
                         "Added a new DomainParticipant "
                         "for <%d> <%C>. Handle "
-                        DDS_PARTICIPANT_FORMAT_SPECIFIER ".\n",
+                        DDS_ENTITY_FORMAT_SPECIFIER ".\n",
                         domain_id, qos_profile,
-                        DDS_PARTICIPANT_LOG (dp)));
+                        DDS_ENTITY_LOG (dp)));
           return true;
 
         }
@@ -202,9 +202,9 @@ namespace CIAO
                     "DomainParticipantManager::register_participant - "
                     "Don't add participant for domain <%d> with profile <%C> since it already "
                     "exists : <"
-                    DDS_PARTICIPANT_FORMAT_SPECIFIER ">\n",
+                    DDS_ENTITY_FORMAT_SPECIFIER ">\n",
                     domain_id, qos_profile,
-                    DDS_PARTICIPANT_LOG (dp)));
+                    DDS_ENTITY_LOG (dp)));
       return false;
     }
 
@@ -235,9 +235,9 @@ namespace CIAO
               DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_UNIMP_ACTION, (LM_TRACE, DDS4CCM_INFO
                             "DomainParticipantManager::unregister_participant - "
                             "Delete participant "
-                            DDS_PARTICIPANT_FORMAT_SPECIFIER
+                            DDS_ENTITY_FORMAT_SPECIFIER
                             " for domain <%d> since ref_count is one.\n",
-                            DDS_PARTICIPANT_LOG (dp),
+                            DDS_ENTITY_LOG (dp),
                             domain_id));
               delete iter->second;
 
@@ -249,10 +249,10 @@ namespace CIAO
               DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_UNIMP_ACTION, (LM_TRACE, DDS4CCM_INFO
                             "DomainParticipantManager::unregister_participant - "
                             "Don't delete participant "
-                            DDS_PARTICIPANT_FORMAT_SPECIFIER
+                            DDS_ENTITY_FORMAT_SPECIFIER
                             " for domain <%d> since "
                             "it's still used - ref_count is <%d>\n",
-                            DDS_PARTICIPANT_LOG (dp),
+                            DDS_ENTITY_LOG (dp),
                             domain_id,
                             iter->second->_ref_count ()));
               iter->second->_dec_ref ();
