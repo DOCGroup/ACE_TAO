@@ -1,3 +1,8 @@
+Fri Jun  8 17:42:59 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+          Set default discovery to rtps
+
 Fri Jun  8 17:26:02 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/DomainParticipantManager.cpp:
