@@ -75,22 +75,6 @@ namespace CIAO
       return ret;
     }
 
-    bool
-    ConditionManager::check_condition (
-      ::DDS::Condition_ptr condition)
-    {
-      DDS4CCM_TRACE ("CIAO::DDS4CCM::ConditionManager::check_condition");
-
-      ::DDS::ReadCondition_var rc = this->get_readcondition ();
-      ::DDS::QueryCondition_var qc = this->get_querycondition_getter ();
-
-#if (CIAO_DDS4CCM_NDDS==1)
-      return this->ws_.check_condition (rc.in (), qc.in (), condition);
-#else
-      return (condition == rc.ptr () || condition == qc.ptr ());
-#endif
-    }
-
     void
     ConditionManager::init_readcondition (void)
     {
@@ -311,9 +295,7 @@ namespace CIAO
     }
 
     bool
-    ConditionManager::wait (
-        ::DDS::ConditionSeq & active_conditions,
-        ::DDS::Duration_t & time_out)
+    ConditionManager::wait (const ::DDS::Duration_t & time_out)
     {
       DDS4CCM_TRACE ("CIAO::DDS4CCM::ConditionManager::wait");
 
@@ -321,6 +303,7 @@ namespace CIAO
       ACE_Time_Value const start = ACE_OS::gettimeofday ();
     #endif
 
+      DDS::ConditionSeq active_conditions;
       ::DDS::ReturnCode_t const retcode =
         this->ws_.wait (active_conditions, time_out);
 
@@ -341,7 +324,26 @@ namespace CIAO
                         ACE_TEXT ("No data available after timeout.\n")));
           return false;
         }
-      return true;
+
+      ::DDS::ReadCondition_var rc = this->get_readcondition ();
+      if (!CORBA::is_nil (rc.in ()))
+        {
+          if (rc->get_trigger_value() == true)
+            {
+              return true;
+            }
+        }
+
+      ::DDS::QueryCondition_var qc = this->get_querycondition_getter ();
+      if (!CORBA::is_nil (qc.in ()))
+        {
+          if (qc->get_trigger_value() == true)
+            {
+              return true;
+            }
+        }
+
+      return false;
     }
 
     void

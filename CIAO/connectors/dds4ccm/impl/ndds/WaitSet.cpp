@@ -162,22 +162,6 @@ namespace CIAO
       return ret;
     }
 
-    bool
-    DDS_WaitSet_i::check_condition (
-      ::DDS::ReadCondition_ptr rc,
-      ::DDS::QueryCondition_ptr qc,
-      ::DDS::Condition_ptr condition)
-    {
-      DDS_ReadCondition_i * dds_rc = dynamic_cast <DDS_ReadCondition_i *> (rc);
-      DDS_QueryCondition_i * dds_qc = dynamic_cast <DDS_QueryCondition_i *> (qc);
-
-      DDS_ReadCondition_i * rc_cond = dynamic_cast <DDS_ReadCondition_i *> (condition);
-      DDS_QueryCondition_i * qc_cond = dynamic_cast <DDS_QueryCondition_i *> (condition);
-
-      return ((rc_cond && dds_rc && rc_cond->get_rti_entity () == dds_rc->get_rti_entity ()) ||
-              (qc_cond && dds_qc && qc_cond->get_rti_entity () == dds_qc->get_rti_entity ()) );
-    }
-
     DDSWaitSet *
     DDS_WaitSet_i::get_rti_entity (void)
     {
