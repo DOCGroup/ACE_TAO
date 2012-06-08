@@ -246,10 +246,10 @@ DDS_Base_Connector_T<CCM_TYPE>::init_domain (
           DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION_STARTING, (LM_TRACE, DDS4CCM_INFO
                         "DDS_Base_Connector_T::init_domain - "
                         "Re-using domainparticipant "
-                        DDS_PARTICIPANT_FORMAT_SPECIFIER
+                        DDS_ENTITY_FORMAT_SPECIFIER
                         " domain <%d> - "
                         "qos_profile <%C>\n",
-                        DDS_PARTICIPANT_LOG (dds_dp.in ()),
+                        DDS_ENTITY_LOG (dds_dp.in ()),
                         this->domain_id_, this->qos_profile_.in ()));
 
           participant = ::DDS::DomainParticipant::_duplicate (dds_dp.in ());
@@ -314,10 +314,10 @@ DDS_Base_Connector_T<CCM_TYPE>::init_domain (
           DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION_STARTING, (LM_TRACE, DDS4CCM_INFO
                         "DDS_Base_Connector_T::init_domain - "
                         "Created domainparticipant "
-                        DDS_PARTICIPANT_FORMAT_SPECIFIER
+                        DDS_ENTITY_FORMAT_SPECIFIER
                         ". domain <%d> - "
                         "qos_profile <%C>\n",
-                        DDS_PARTICIPANT_LOG (participant),
+                        DDS_ENTITY_LOG (participant),
                         this->domain_id_, this->qos_profile_.in ()));
 
           if (!DPMANAGER->register_participant (
@@ -336,10 +336,10 @@ DDS_Base_Connector_T<CCM_TYPE>::init_domain (
           DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION_STARTING, (LM_TRACE, DDS4CCM_INFO
                         "DDS_Base_Connector_T::init_domain - "
                         "Re-using domainparticipant "
-                        DDS_PARTICIPANT_FORMAT_SPECIFIER
+                        DDS_ENTITY_FORMAT_SPECIFIER
                         ". domain <%d> - "
                         "qos_profile <%C>\n",
-                        DDS_PARTICIPANT_LOG (dds_dp.in ()),
+                        DDS_ENTITY_LOG (dds_dp.in ()),
                         this->domain_id_, this->qos_profile_.in ()));
           participant = ::DDS::DomainParticipant::_duplicate (dds_dp.in ());
         }
@@ -459,9 +459,9 @@ DDS_Base_Connector_T<CCM_TYPE>::init_topic (
                 "DDS_Base_Connector_T::init_topic - "
                 "Finding existing topic "
                 "name <%C> for profile <%C> in participant "
-                DDS_PARTICIPANT_FORMAT_SPECIFIER "\n",
+                DDS_ENTITY_FORMAT_SPECIFIER "\n",
                 topic_name, this->qos_profile_.in (),
-                DDS_PARTICIPANT_LOG (participant)));
+                DDS_ENTITY_LOG (participant)));
 
   ::DDS::Topic_var dds_tp =
     participant->find_topic (topic_name, timeout);
@@ -546,9 +546,9 @@ DDS_Base_Connector_T<CCM_TYPE>::init_topic (
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION_STARTING, (LM_TRACE, DDS4CCM_INFO
                     "DDS_Base_Connector_T::init_topic - "
                     "Created new topic "
-                    DDS_INSTANCE_HANDLE_FORMAT_SPECIFIER
+                    DDS_ENTITY_FORMAT_SPECIFIER
                     " name <%C> for profile <%C>\n",
-                    DDS_INSTANCE_HANDLE_LOG (topic->get_instance_handle ()),
+                    DDS_ENTITY_LOG (topic),
                     topic_name, this->qos_profile_.in ()));
     }
   else
@@ -939,20 +939,20 @@ void DDS_Base_Connector_T<CCM_TYPE>::remove_topic (
   DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION_STARTING, (LM_TRACE, DDS4CCM_INFO
                 "DDS_Base_Connector_T::remove_topic - "
                 "Going to delete topic <%C> from participant"
-                DDS_PARTICIPANT_FORMAT_SPECIFIER
+                DDS_ENTITY_FORMAT_SPECIFIER
                 "\n",
                 name.in (),
-                DDS_PARTICIPANT_LOG (participant)));
+                DDS_ENTITY_LOG (participant)));
 
   DDS::ReturnCode_t retcode = participant->delete_topic (topic);
 
   DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION_STARTING, (LM_TRACE, DDS4CCM_INFO
                 "DDS_Base_Connector_T::remove_topic - "
                 "Deleted topic <%C> from "
-                DDS_PARTICIPANT_FORMAT_SPECIFIER
+                DDS_ENTITY_FORMAT_SPECIFIER
                 " return code <%C>\n",
                 name.in (),
-                DDS_PARTICIPANT_LOG (participant),
+                DDS_ENTITY_LOG (participant),
                 ::CIAO::DDS4CCM::translate_retcode (retcode)));
 
   if (retcode != ::DDS::RETCODE_OK && retcode != ::DDS::RETCODE_PRECONDITION_NOT_MET)
@@ -999,9 +999,9 @@ DDS_Base_Connector_T<CCM_TYPE>::remove_domain (
                 "DDS_Base_Connector_T"
                 "::remove_domain - "
                 "Going to delete participant "
-                DDS_PARTICIPANT_FORMAT_SPECIFIER
+                DDS_ENTITY_FORMAT_SPECIFIER
                 "for domain <%d> with qos <%C>.\n",
-                DDS_PARTICIPANT_LOG (participant),
+                DDS_ENTITY_LOG (participant),
                 this->domain_id_, this->qos_profile_.in ()));
 
       retcode = this->participant_factory_->delete_participant (participant);
@@ -1010,10 +1010,10 @@ DDS_Base_Connector_T<CCM_TYPE>::remove_domain (
                 "DDS_Base_Connector_T"
                 "::remove_domain - "
                 "Deleted participant "
-                DDS_PARTICIPANT_FORMAT_SPECIFIER
+                DDS_ENTITY_FORMAT_SPECIFIER
                 "for domain <%d> with qos <%C> "
                 "return code <%C>\n",
-                DDS_PARTICIPANT_LOG (participant),
+                DDS_ENTITY_LOG (participant),
                 this->domain_id_, this->qos_profile_.in (),
                 ::CIAO::DDS4CCM::translate_retcode (retcode)));
     }
