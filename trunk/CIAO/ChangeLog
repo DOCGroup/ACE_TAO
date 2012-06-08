@@ -1,3 +1,8 @@
+Fri Jun  8 17:26:02 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/DomainParticipantManager.cpp:
+          Shutdown dds vendor when we don't have any dp's anymore
+
 Fri Jun  8 13:01:47 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ConditionManager.h:

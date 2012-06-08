@@ -93,14 +93,7 @@ namespace CIAO
       DDS4CCM_TRACE ("DomainParticipantManager::~DomainParticipantManager");
 
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
-                    "DomainParticipantManager::~DomainParticipantManager - "
-                    "Finalizing DDS\n"));
-
-#if (CIAO_DDS4CCM_NDDS==1)
-      DDSDomainParticipantFactory::finalize_instance ();
-#elif (CIAO_DDS4CCM_OPENDDS==1)
-      TheServiceParticipant->shutdown ();
-#endif
+                    "DomainParticipantManager::~DomainParticipantManager\n"));
     }
 
     DDS::DomainParticipant_ptr
@@ -260,15 +253,17 @@ namespace CIAO
             }
         }
 
-#if (CIAO_DDS4CCM_OPENDDS==1)
       if (this->dps_.empty ())
         {
           DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
                         "DomainParticipantManager::unregister_participant - "
-                        "No participants anymore, shutting down OpenDDS.\n"));
-          // TheServiceParticipant->shutdown ();
-        }
+                        "No participants anymore, shutting down DDS.\n"));
+#if (CIAO_DDS4CCM_OPENDDS==1)
+          TheServiceParticipant->shutdown ();
+#elif (CIAO_DDS4CCM_NDDS==1)
+          DDSDomainParticipantFactory::finalize_instance ();
 #endif
+        }
 
       return true;
     }
