@@ -1,3 +1,8 @@
+Fri Jun  8 06:37:06 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/dds4ccm_utils.h:
+          Fuzz fixes
+
 Thu Jun  7 19:44:44 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ConditionManager.cpp:
