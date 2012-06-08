@@ -1,3 +1,22 @@
+Fri Jun  8 10:59:26 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/dds4ccm_conf.h:
+          Introduced new log macros for the domain participant. With OpenDDS
+          the instance handle is unique for all instance handles contained
+          within a dp, but not for the dp itself.
+
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Subscriber_Base_T.cpp:
+        * connectors/dds4ccm/impl/DomainParticipantManager.h:
+        * connectors/dds4ccm/impl/DomainParticipantManager.cpp:
+        * connectors/dds4ccm/impl/ndds/DomainParticipant.cpp:
+          Don't administratie which topics we are using within dds4ccm. We
+          are now using find_topic and let DDS handle this administration. At
+          the moment we delete a topic which is still used we get a DDS::
+          RETCODE_PRECONDITION_NOT_MET which we than log but don't see as
+          error anymore. Also extended logging to use the new macros above
+          so that we can in more detail what is happening
+
 Fri Jun  8 07:29:26 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:

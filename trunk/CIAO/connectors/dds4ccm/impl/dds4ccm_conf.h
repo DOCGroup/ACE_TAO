@@ -37,6 +37,8 @@
 # define DDS_INSTANCE_HANDLE_T_RETN ::DDS::InstanceHandle_t
 # define DDS_INSTANCE_HANDLE_FORMAT_SPECIFIER ACE_TEXT ("length <%d> - isValid <%d>")
 # define DDS_INSTANCE_HANDLE_LOG(X) X.length, X.isValid
+# define DDS_PARTICIPANT_FORMAT_SPECIFIER ACE_TEXT ("length <%d> - isValid <%d>")
+# define DDS_PARTICIPANT_LOG(X) X->get_instance_handle ().length, X->get_instance_handle ().isValid
 # define DDS_INSTANCE_HANDLE_VALID(X) X.isValid
 # define DDS_INSTANCE_HANDLE_INVALID(X) !X.isValid
 # define DDS_XML_QOS_PARSER_TYPE CIAO::DDS4CCM::QOS_XML_Noop
@@ -45,6 +47,8 @@
 # define DDS_INSTANCE_HANDLE_T_RETN ::DDS::InstanceHandle_t
 # define DDS_INSTANCE_HANDLE_FORMAT_SPECIFIER ACE_TEXT ("<%d>")
 # define DDS_INSTANCE_HANDLE_LOG(X) X
+# define DDS_PARTICIPANT_FORMAT_SPECIFIER ACE_TEXT ("<%d:%@>")
+# define DDS_PARTICIPANT_LOG(X) X->get_instance_handle (), X
 # define DDS_INSTANCE_HANDLE_VALID(X) true
 # define DDS_INSTANCE_HANDLE_INVALID(X) false
 # define DDS_XML_QOS_PARSER_TYPE OpenDDS::DCPS::QOS_XML_Loader
