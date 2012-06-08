@@ -99,7 +99,7 @@ namespace CIAO
 #if (CIAO_DDS4CCM_NDDS==1)
       DDSDomainParticipantFactory::finalize_instance ();
 #elif (CIAO_DDS4CCM_OPENDDS==1)
-//      TheServiceParticipant->shutdown ();
+      TheServiceParticipant->shutdown ();
 #endif
     }
 
