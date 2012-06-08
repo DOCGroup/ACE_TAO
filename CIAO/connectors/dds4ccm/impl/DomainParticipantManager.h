@@ -66,23 +66,6 @@ namespace CIAO
         DDS::DomainParticipant_ptr get_participant ();
 
         /**
-         * Adds a topic to the internal list. Returns
-         * false if the topic is already there or when
-         * the insertion fails.
-         */
-        bool register_topic (DDS::Topic_ptr tp);
-
-        /**
-         * Removes a topic from the internal list when
-         * the reference count for that specific topic
-         * is one. If not, it decrements the reference
-         * count for the given topic.
-         * Returns true if deleted from the list.
-         * Returns false if reference count != 1.
-         */
-        bool unregister_topic (DDS::Topic_ptr tp);
-
-        /**
          * Returns the reference count of this class
          */
         int _ref_count ();
@@ -95,19 +78,9 @@ namespace CIAO
          */
         void _dec_ref ();
 
-        /**
-         * Increments the reference count of the given
-         * topic (ie: search for the topic in the internal
-         * map and increments its refcount
-         */
-        void _inc_ref_topic (DDS::Topic_ptr tp);
       private:
         int ref_count_;
         DDS::DomainParticipant_var dp_;
-
-        typedef std::map <std::string, int> Topics;
-        typedef Topics::iterator Topics_iterator;
-        Topics tps_;
     };
 
     private:
@@ -117,24 +90,6 @@ namespace CIAO
     public:
       /// Destructor
       ~DomainParticipantManager (void);
-
-      /**
-       * Invokes register_topic on the corresponding
-       * DDSParticipantTopic instance.
-       * DDSParticipantTopic is found based on the
-       * given DomainParticipant_ptr
-       */
-      bool register_topic (DDS::DomainParticipant_ptr dp,
-                           DDS::Topic_ptr tp);
-
-      /**
-       * Invokes remove_topic on the corresponding
-       * DDSParticipantTopic instance.
-       * DDSParticipantTopic is found based on the
-       * given DomainParticipant_ptr
-       */
-      bool unregister_topic (DDS::DomainParticipant_ptr dp,
-                             DDS::Topic_ptr tp);
 
       /**
        * Searches for the DomainParticipant_ptr in the internal map.
@@ -151,7 +106,8 @@ namespace CIAO
        * false if there's already an DDSParticipantTopic
        * available (base on domain ID and QOS)
        */
-      bool register_participant (const char * qos_profile,
+      bool register_participant (DDS::DomainId_t domain_id,
+                                 const char * qos_profile,
                                  DDS::DomainParticipant_ptr dp);
 
       /**
@@ -160,10 +116,9 @@ namespace CIAO
        * Returns false if the reference count of the corresponding
        * DDSParticipantTopic was not nil
        */
-      bool unregister_participant (DDS::DomainParticipant_ptr dp);
-
-      void _inc_ref (DDS::DomainParticipant_ptr dp,
-                     DDS::Topic_ptr tp);
+      bool unregister_participant (DDS::DomainId_t domain_id,
+                                 const char * qos_profile,
+                                 DDS::DomainParticipant_ptr dp);
 
     private:
       TAO_SYNCH_MUTEX dps_mutex_;
@@ -173,14 +128,6 @@ namespace CIAO
       DomainParticipants dps_;
 
       typedef DomainParticipants::iterator DomainParticipants_iterator;
-
-      /**
-       * Search for the DomainParticipant in the internal map.
-       * Result is base on the instance handles of the
-       * DomainParticipants
-       */
-      DomainParticipants_iterator
-      get_participanttopic_by_participant (DDS::DomainParticipant_ptr dp);
     };
 
     typedef ACE_Singleton<DomainParticipantManager,
