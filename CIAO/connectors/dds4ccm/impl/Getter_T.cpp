@@ -125,8 +125,7 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("Getter_Base_T::get_many");
 
-      ::DDS::ConditionSeq active_conditions;
-      if (!this->condition_manager_->wait (active_conditions, this->time_out_))
+      if (!this->condition_manager_->wait (this->time_out_))
         {
           // Wait hasn't been triggered (no samples which match the attached
           // conditions are received).
@@ -142,81 +141,74 @@ namespace CIAO
       ::DDS::SampleInfoSeq sample_info;
       SEQ_VALUE_TYPE data;
 
-      // Check which conditions have triggered the wait method to 'wake up'.
-      for (::CORBA::ULong i = 0; i < active_conditions.length(); i++)
+      ::DDS::ReturnCode_t const retcode = this->get (data,
+                                                     sample_info,
+                                                     max_samples);
+
+      if (retcode == ::DDS::RETCODE_OK && data.length () >= 1)
         {
-          // Check whether this condition is the one we were waiting for.
-          if (this->condition_manager_->check_condition (active_conditions[i].in ()))
+          // Determine which samples are valid and return these to
+          // the caller.
+          ::CORBA::ULong number_read = 0;
+          for (::CORBA::ULong index = 0; index < sample_info.length (); index ++)
             {
-              ::DDS::ReturnCode_t const retcode = this->get (data,
-                                                             sample_info,
-                                                             max_samples);
-
-              if (retcode == ::DDS::RETCODE_OK && data.length () >= 1)
+              if (sample_info[index].valid_data)
                 {
-                  // Determine which samples are valid and return these to
-                  // the caller.
-                  ::CORBA::ULong number_read = 0;
-                  for (::CORBA::ULong index = 0; index < sample_info.length (); index ++)
-                    {
-                      if (sample_info[index].valid_data)
-                        {
-                          ++number_read;
-                        }
-                    }
-                  DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG,
-                                ACE_TEXT ("Getter_Base_T::get_many: ")
-                                ACE_TEXT ("read <%d> - valid <%d>\n"),
-                                sample_info.length (),
-                                number_read));
-                  infos.length (number_read);
-                  instances.length (number_read);
-                  number_read = 0;
-                  for (::CORBA::ULong j = 0; j < data.length (); j ++)
-                    {
-                      if (sample_info[j].valid_data)
-                        {
-                          infos.operator[](number_read) <<= sample_info[j];
-                          instances.operator[](number_read) = data[j];
-                          ++number_read;
-                        }
-                    }
+                  ++number_read;
                 }
-              else
+            }
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG,
+                        ACE_TEXT ("Getter_Base_T::get_many: ")
+                        ACE_TEXT ("read <%d> - valid <%d>\n"),
+                        sample_info.length (),
+                        number_read));
+          infos.length (number_read);
+          instances.length (number_read);
+          number_read = 0;
+          for (::CORBA::ULong j = 0; j < data.length (); j ++)
+            {
+              if (sample_info[j].valid_data)
                 {
-                  // RETCODE_NO_DATA should be an error
-                  // because after a timeout there should be
-                  // data.
-                  DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-                        "Getter_Base_T::get_many - "
-                        "Error while reading from DDS: <%C>\n",
-                        translate_retcode (retcode)));
-
-                  ::DDS::ReturnCode_t const retval =
-                    this->dds_reader ()->return_loan (data, sample_info);
-                  if (retval != ::DDS::RETCODE_OK)
-                    {
-                      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-                        "Getter_Base_T::get_many - "
-                        "Error returning loan to DDS - <%C>\n",
-                        translate_retcode (retval)));
-                    }
-                  throw ::CCM_DDS::InternalError (retcode, 1);
-                }
-
-              ::DDS::ReturnCode_t const retval =
-                this->dds_reader ()->return_loan (data, sample_info);
-              if (retval != ::DDS::RETCODE_OK)
-                {
-                  DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-                    "Getter_Base_T::get_many - "
-                    "Error returning loan to DDS - <%C>\n",
-                    translate_retcode (retval)));
-
-                  throw ::CCM_DDS::InternalError (retcode, 1);
+                  infos.operator[](number_read) <<= sample_info[j];
+                  instances.operator[](number_read) = data[j];
+                  ++number_read;
                 }
             }
         }
+      else
+        {
+          // RETCODE_NO_DATA should be an error
+          // because after a timeout there should be
+          // data.
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                "Getter_Base_T::get_many - "
+                "Error while reading from DDS: <%C>\n",
+                translate_retcode (retcode)));
+
+          ::DDS::ReturnCode_t const retval =
+            this->dds_reader ()->return_loan (data, sample_info);
+          if (retval != ::DDS::RETCODE_OK)
+            {
+              DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                "Getter_Base_T::get_many - "
+                "Error returning loan to DDS - <%C>\n",
+                translate_retcode (retval)));
+            }
+          throw ::CCM_DDS::InternalError (retcode, 1);
+        }
+
+      ::DDS::ReturnCode_t const retval =
+        this->dds_reader ()->return_loan (data, sample_info);
+      if (retval != ::DDS::RETCODE_OK)
+        {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+            "Getter_Base_T::get_many - "
+            "Error returning loan to DDS - <%C>\n",
+            translate_retcode (retval)));
+
+          throw ::CCM_DDS::InternalError (retcode, 1);
+        }
+
       return true;
     }
 
@@ -291,8 +283,7 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("Getter_T::get_one");
 
-      ::DDS::ConditionSeq active_conditions;
-      if (!this->condition_manager_->wait (active_conditions, this->time_out_))
+      if (!this->condition_manager_->wait (this->time_out_))
         {
           // None of the attached conditions have triggered wait.
           return false;
@@ -300,83 +291,75 @@ namespace CIAO
 
       bool valid_data_read = false;
 
-      // Check which conditions have triggered the wait method to 'wake up'.
-      for (::CORBA::ULong i = 0; i < active_conditions.length(); ++i)
+      // Read the samples one by one until a valid sample
+      // has been found.
+      while (!valid_data_read)
         {
-          // Check whether this condition is the one we were waiting for.
-          if (this->condition_manager_->check_condition (active_conditions[i].in ()))
+          ::DDS::SampleInfoSeq sample_info;
+          SEQ_VALUE_TYPE data;
+
+          ::DDS::ReturnCode_t const retcode = this->get (data,
+                                                         sample_info,
+                                                         1);
+
+          if (retcode == ::DDS::RETCODE_NO_DATA)
             {
-              // Read the samples one by one until a valid sample
-              // has been found.
-              while (!valid_data_read)
-                {
-                  ::DDS::SampleInfoSeq sample_info;
-                  SEQ_VALUE_TYPE data;
-
-                  ::DDS::ReturnCode_t const retcode = this->get (data,
-                                                                 sample_info,
-                                                                 1);
-
-                  if (retcode == ::DDS::RETCODE_NO_DATA)
-                    {
-                      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
-                                    "Getter_T::get_one - "
-                                    "DDS returned <%C>. No data available in DDS.\n",
-                                    translate_retcode (retcode)));
-                      return false;
-                    }
-                  else if (retcode != ::DDS::RETCODE_OK)
-                    {
-                      // Something went wrong.
-                      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+              DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
                             "Getter_T::get_one - "
-                            "Error while reading from DDS: <%C>\n",
+                            "DDS returned <%C>. No data available in DDS.\n",
                             translate_retcode (retcode)));
+              return false;
+            }
+          else if (retcode != ::DDS::RETCODE_OK)
+            {
+              // Something went wrong.
+              DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                    "Getter_T::get_one - "
+                    "Error while reading from DDS: <%C>\n",
+                    translate_retcode (retcode)));
 
-                      ::DDS::ReturnCode_t const retval =
-                        this->dds_reader ()->return_loan (data, sample_info);
-                      if (retval != ::DDS::RETCODE_OK)
-                        {
-                          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-                            "Getter_Base_T::get_one - "
-                            "Error returning loan to DDS - <%C>\n",
-                            translate_retcode (retval)));
-                        }
-
-                      throw ::CCM_DDS::InternalError (retcode, 1);
-                    }
-                  else if (data.length () == 1 && sample_info[0].valid_data)
-                    {
-                      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
-                            "Getter_T::get_one - "
-                            "Read one valid sample from DDS.\n"));
-
-                      // Add the valid sample to the list which will be returned
-                      // to the caller
-                      info <<= sample_info[0];
-                      an_instance = data[0];
-                      valid_data_read = true;
-                    }
-                  else
-                    {
-                      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
-                            "Getter_T::get_one - "
-                            "No valid data available in DDS.\n"));
-                    }
-
-                  // Return the loan of each read.
-                  ::DDS::ReturnCode_t const retval =
-                    this->dds_reader ()->return_loan (data, sample_info);
-                  if (retval != ::DDS::RETCODE_OK)
-                    {
-                      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-                        "Getter_T::get_one - "
-                        "Error returning loan to DDS - <%C>\n",
-                        translate_retcode (retval)));
-
-                      throw ::CCM_DDS::InternalError (retcode, 1);
-                    }
+              ::DDS::ReturnCode_t const retval =
+                this->dds_reader ()->return_loan (data, sample_info);
+              if (retval != ::DDS::RETCODE_OK)
+                {
+                  DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                    "Getter_Base_T::get_one - "
+                    "Error returning loan to DDS - <%C>\n",
+                    translate_retcode (retval)));
                 }
+
+              throw ::CCM_DDS::InternalError (retcode, 1);
+            }
+          else if (data.length () == 1 && sample_info[0].valid_data)
+            {
+              DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
+                    "Getter_T::get_one - "
+                    "Read one valid sample from DDS.\n"));
+
+              // Add the valid sample to the list which will be returned
+              // to the caller
+              info <<= sample_info[0];
+              an_instance = data[0];
+              valid_data_read = true;
+            }
+          else
+            {
+              DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
+                    "Getter_T::get_one - "
+                    "No valid data available in DDS.\n"));
+            }
+
+          // Return the loan of each read.
+          ::DDS::ReturnCode_t const retval =
+            this->dds_reader ()->return_loan (data, sample_info);
+          if (retval != ::DDS::RETCODE_OK)
+            {
+              DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                "Getter_T::get_one - "
+                "Error returning loan to DDS - <%C>\n",
+                translate_retcode (retval)));
+
+              throw ::CCM_DDS::InternalError (retcode, 1);
             }
         }
 
@@ -395,8 +378,7 @@ namespace CIAO
       ACE_NEW_THROW_EX (an_instance,
                         VALUE_TYPE,
                         ::CORBA::NO_MEMORY ());
-      ::DDS::ConditionSeq active_conditions;
-      if (!this->condition_manager_->wait (active_conditions, this->time_out_))
+      if (!this->condition_manager_->wait (this->time_out_))
         {
           // None of the attached conditions have triggered wait.
           return false;
@@ -405,72 +387,65 @@ namespace CIAO
       bool valid_data_read = false;
       ::DDS::SampleInfoSeq sample_info;
       SEQ_VALUE_TYPE data;
-      // Check which conditions have triggered the wait method to 'wake up'.
-      for (::CORBA::ULong i = 0; i < active_conditions.length(); ++i)
-        {
-          // Check whether this condition is the one we were waiting for.
-          if (this->condition_manager_->check_condition (active_conditions[i].in ()))
-            {
-              // Read the samples one by one until a valid sample
-              // has been found.
-              while (!valid_data_read)
-                {
-                  ::DDS::SampleInfoSeq sample_info;
-                  SEQ_VALUE_TYPE data;
-                  ::DDS::ReturnCode_t const retcode = this->get (data,
-                                                                 sample_info,
-                                                                 1);
-                  if (retcode == ::DDS::RETCODE_NO_DATA)
-                    {
-                      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
-                            "Getter_T::get_one - "
-                            "DDS returned <%C>. No data available in DDS.\n",
-                            translate_retcode (retcode)));
-                      return false;
-                    }
-                  else if (retcode != ::DDS::RETCODE_OK)
-                    {
-                      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-                            "Getter_T::get_one - "
-                            "Error while reading from DDS: <%C>\n",
-                            translate_retcode (retcode)));
 
-                      ::DDS::ReturnCode_t const retval =
-                        this->dds_reader ()->return_loan (data, sample_info);
-                      if (retval != ::DDS::RETCODE_OK)
-                        {
-                          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-                            "Getter_T::get_one - "
-                            "Error returning loan to DDS - <%C>\n",
-                            translate_retcode (retval)));
-                        }
-                      throw ::CCM_DDS::InternalError (retcode, 1);
-                    }
-                  else if (data.length () == 1 && sample_info[0].valid_data)
-                    {
-                      // Add the valid sample to the list which will be returned
-                      // to the caller
-                      info <<= sample_info[0];
-                      *an_instance = data[0];
-                      valid_data_read = true;
-                    }
-                  else
-                    {
-                      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
-                            "Getter_T::get_one - "
-                            "No valid available in DDS.\n"));
-                    }
-                  // Return the loan of each read.
-                  ::DDS::ReturnCode_t const retval = this->dds_reader ()->return_loan (data, sample_info);
-                  if (retval != ::DDS::RETCODE_OK)
-                    {
-                      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-                        "Getter_T::get_one - "
-                        "Error returning loan to DDS - <%C>\n",
-                        translate_retcode (retval)));
-                      throw ::CCM_DDS::InternalError (retval, 0);
-                    }
+      // Read the samples one by one until a valid sample
+      // has been found.
+      while (!valid_data_read)
+        {
+          ::DDS::SampleInfoSeq sample_info;
+          SEQ_VALUE_TYPE data;
+          ::DDS::ReturnCode_t const retcode = this->get (data,
+                                                         sample_info,
+                                                         1);
+          if (retcode == ::DDS::RETCODE_NO_DATA)
+            {
+              DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
+                    "Getter_T::get_one - "
+                    "DDS returned <%C>. No data available in DDS.\n",
+                    translate_retcode (retcode)));
+              return false;
+            }
+          else if (retcode != ::DDS::RETCODE_OK)
+            {
+              DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                    "Getter_T::get_one - "
+                    "Error while reading from DDS: <%C>\n",
+                    translate_retcode (retcode)));
+
+              ::DDS::ReturnCode_t const retval =
+                this->dds_reader ()->return_loan (data, sample_info);
+              if (retval != ::DDS::RETCODE_OK)
+                {
+                  DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                    "Getter_T::get_one - "
+                    "Error returning loan to DDS - <%C>\n",
+                    translate_retcode (retval)));
                 }
+              throw ::CCM_DDS::InternalError (retcode, 1);
+            }
+          else if (data.length () == 1 && sample_info[0].valid_data)
+            {
+              // Add the valid sample to the list which will be returned
+              // to the caller
+              info <<= sample_info[0];
+              *an_instance = data[0];
+              valid_data_read = true;
+            }
+          else
+            {
+              DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
+                    "Getter_T::get_one - "
+                    "No valid available in DDS.\n"));
+            }
+          // Return the loan of each read.
+          ::DDS::ReturnCode_t const retval = this->dds_reader ()->return_loan (data, sample_info);
+          if (retval != ::DDS::RETCODE_OK)
+            {
+              DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                "Getter_T::get_one - "
+                "Error returning loan to DDS - <%C>\n",
+                translate_retcode (retval)));
+              throw ::CCM_DDS::InternalError (retval, 0);
             }
         }
 

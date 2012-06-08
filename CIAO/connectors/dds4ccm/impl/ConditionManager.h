@@ -67,13 +67,6 @@ namespace CIAO
         DDS_INSTANCE_HANDLE_T_IN lookup_handle);
 
       /**
-        * Proxy method.
-        * See WaitSet::check_condition in ndds/WaitSet.h
-        * for more information on this.
-        */
-      bool check_condition (::DDS::Condition_ptr condition);
-
-      /**
         * Getter functionality.
         * Creates a read_condition for the getter.
         * It'll also initialize the waitset and attaches the
@@ -82,15 +75,11 @@ namespace CIAO
       void init_readcondition (void);
 
       /**
-        * Getter functionality
-        * waits for the attached conditions. If a condition is
-        * triggered, DDS has filled active_conditions with
-        * the triggered conditions.
-        * See WaitSet::wait in ndds/WaitSet.h for more
-        * information.
+        * Getter functionality, waits for the attached conditions.
+        * Only returns true when one of the getter conditions has triggered
+        * and we have data
         */
-      bool wait (::DDS::ConditionSeq  & active_conditions,
-                 ::DDS::Duration_t & time_out);
+      bool wait (const ::DDS::Duration_t & time_out);
 
       /**
         * Returns the internal filter. This is the
