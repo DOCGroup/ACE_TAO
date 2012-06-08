@@ -1,3 +1,16 @@
+Fri Jun  8 07:29:26 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DomainParticipantManager.h:
+          Layout change
+
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Conn_Union/VT_Union_Connector.idl:
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Conn_Valuetype/VT_Valuetype_Connector.idl:
+        * connectors/dds4ccm/tests/VariousTopicsState/Conn_Union/VTS_Union_Connector.idl:
+        * connectors/dds4ccm/tests/VariousTopicsState/Conn_Valuetype/VTS_Valuetype_Connector.idl:
+          OpenDDS doesn't support an union as topic type, use another type
+          to get these tests deployed
+
 Fri Jun  8 06:37:06 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/dds4ccm_utils.h:
