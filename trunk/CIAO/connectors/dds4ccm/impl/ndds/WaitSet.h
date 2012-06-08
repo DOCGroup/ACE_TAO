@@ -44,9 +44,7 @@ namespace CIAO
         * Waits for DDS until the attached read/query conditions are met
         * or when a timeout occurs.
         *
-        * active_conditions will contain conditions DDS has found. The
-        * caller should check whether the appropriate conditions for him
-        * has been set, using check_conditions
+        * active_conditions will contain conditions DDS has found.
         */
       virtual ::DDS::ReturnCode_t
       wait (::DDS::ConditionSeq & active_conditions,
@@ -101,14 +99,6 @@ namespace CIAO
                     const ::DDS::InstanceHandle_t & lookup_handle,
                     bool & error,
                     bool & non_existent);
-
-      /**
-        * With this method, the caller is able to find out
-        * which conditions had triggered 'wait'.
-        */
-      bool check_condition (::DDS::ReadCondition_ptr rc,
-                            ::DDS::QueryCondition_ptr qc,
-                            ::DDS::Condition_ptr condition);
 
       /**
         * Creates the RTI waitset.

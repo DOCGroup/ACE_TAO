@@ -1,3 +1,19 @@
+Fri Jun  8 13:01:47 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ConditionManager.h:
+        * connectors/dds4ccm/impl/ConditionManager.cpp:
+        * connectors/dds4ccm/impl/Getter_T.cpp:
+          Simplified the condition manager and getter by using the
+          get_trigger_status call on the condition. The condition manager
+          wait method now only returns true when one of the conditions has
+          triggered, which means we don't have to check the conditions anymore
+          in the getter
+
+        * connectors/dds4ccm/impl/ndds/WaitSet.h:
+        * connectors/dds4ccm/impl/ndds/WaitSet.cpp:
+          Removed check_condition, this isn't a spec defined method but
+          was only here for the condition manager
+
 Fri Jun  8 11:52:44 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
