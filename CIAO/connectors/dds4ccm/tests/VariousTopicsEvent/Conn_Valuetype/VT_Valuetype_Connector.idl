@@ -19,17 +19,14 @@
 # include "Base/VTopic_BaseTypeSupport.idl"
 #endif
 
+module VTopic
+{
 #if !defined (CIAO_DDS4CCM_OPENDDS)
-module VTopic
-{
   module ::CCM_DDS::Typed < ::TopicValuetype, ::TopicValuetypeSeq> TopicValuetypeConnector;
-};
 #else
-module VTopic
-{
   // Just use another topic, that way we get a connector
   module ::CCM_DDS::Typed < ::TopicString, ::TopicStringSeq> TopicValuetypeConnector;
-};
 #endif
+};
 
 #endif /* VT_VALUETYPE_CONNECTOR_IDL_ */

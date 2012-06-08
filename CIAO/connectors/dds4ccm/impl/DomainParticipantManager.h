@@ -152,7 +152,7 @@ namespace CIAO
        * available (base on domain ID and QOS)
        */
       bool register_participant (const char * qos_profile,
-                            DDS::DomainParticipant_ptr dp);
+                                 DDS::DomainParticipant_ptr dp);
 
       /**
        * Removes the DDSParticipantTopic instance when the
