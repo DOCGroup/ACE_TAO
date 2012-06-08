@@ -454,7 +454,6 @@ DDS_Base_Connector_T<CCM_TYPE>::init_topic (
 
   ::DDS::Topic_var dds_tp = ::DDS::Topic::_narrow (tpd.in ());
 
-
 #if (CIAO_DDS4CCM_NDDS==1)
   if (!::CORBA::is_nil (this->qos_profile_.in ()))
     {

@@ -24,6 +24,8 @@ module VTopic
   module ::CCM_DDS::Typed < ::TopicUnion, ::TopicUnionSeq> TopicUnionConnector;
 #if !defined (CIAO_DDS4CCM_OPENDDS)
   module ::CCM_DDS::Typed < ::X_Union, ::X_UnionSeq> X_UnionConnector;
+#else
+  module ::CCM_DDS::Typed < ::TopicString, ::TopicStringSeq> X_UnionConnector;
 #endif
 };
 
