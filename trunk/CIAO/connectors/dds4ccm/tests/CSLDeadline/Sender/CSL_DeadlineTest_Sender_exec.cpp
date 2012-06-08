@@ -8,11 +8,7 @@
 #include "ace/Guard_T.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_unistd.h"
-
 #include "dds4ccm/impl/dds4ccm_conf.h"
-#if (CIAO_DDS4CCM_NDDS==1)
-# include "dds4ccm/impl/ndds/convertors/InstanceHandle_t.h"
-#endif
 
 namespace CIAO_CSL_DeadlineTest_Sender_Impl
 {
