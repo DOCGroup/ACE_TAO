@@ -204,6 +204,10 @@ DDS_Subscriber_Base_T<CCM_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::p
   if (!::CORBA::is_nil (reader_listener.in ()) &&
       !::CORBA::is_nil (reader.in ()) )
     {
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
+                    "DDS_Subscriber_Base_T::passivate - "
+                    "Setting the listener on the reader to nil\n"));
+
       DDS::ReturnCode_t const retcode =
         reader->set_listener (::DDS::DataReaderListener::_nil (), 0);
       if (retcode != ::DDS::RETCODE_OK)

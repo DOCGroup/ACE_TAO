@@ -616,22 +616,13 @@ namespace CIAO
                     "Successfully casted provided object reference to servant.\n",
                     topic_name.in ()));
 
-      const DDS_ReturnCode_t retcode = this->rti_entity ()->delete_topic (tp);
-      if (retcode != DDS_RETCODE_OK)
-        {
-          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-                        "DDS_DomainParticipant_i::delete_topic <%C> - "
-                        "Error: delete_topic returned non-ok error code %C\n",
-                        topic_name.in (),
-                        ::CIAO::DDS4CCM::translate_retcode (retcode)));
-        }
-      else
-        {
-          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, DDS4CCM_INFO
-                        "DDS_DomainParticipant_i::delete_topic <%C> - "
-                        "Provided topic successfully deleted\n",
-                        topic_name.in ()));
-        }
+      DDS_ReturnCode_t const retcode = this->rti_entity ()->delete_topic (tp);
+
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, DDS4CCM_INFO
+                    "DDS_DomainParticipant_i::delete_topic <%C> - "
+                    "delete_topic returned error code <%C>\n",
+                    topic_name.in (),
+                    ::CIAO::DDS4CCM::translate_retcode (retcode)));
 
       return retcode;
     }
