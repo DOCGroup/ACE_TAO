@@ -1016,6 +1016,23 @@ DDS_Base_Connector_T<CCM_TYPE>::remove_domain (
                 DDS_ENTITY_LOG (participant),
                 this->domain_id_, this->qos_profile_.in (),
                 ::CIAO::DDS4CCM::translate_retcode (retcode)));
+
+      if (DPMANAGER->close())
+        {
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_TRACE, DDS4CCM_INFO
+                    "DDS_Base_Connector_T"
+                    "::remove_domain - "
+                    "Closed the domain participant manager, DDS interaction "
+                    "has been shutdown completely.\n"));
+        }
+      else
+        {
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_TRACE, DDS4CCM_INFO
+                    "DDS_Base_Connector_T"
+                    "::remove_domain - "
+                    "Didn't shutdown the domain participant manager, DDS interaction "
+                    "still active.\n"));
+        }
     }
 
   if (retcode != ::DDS::RETCODE_OK)
