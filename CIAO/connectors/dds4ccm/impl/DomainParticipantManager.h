@@ -120,6 +120,12 @@ namespace CIAO
                                  const char * qos_profile,
                                  DDS::DomainParticipant_ptr dp);
 
+      /**
+       * Try to close the DPM, at the moment no domain participants are
+       * registered anymore we are going to shutdown DDS interaction
+       */
+      bool close();
+
     private:
       TAO_SYNCH_MUTEX dps_mutex_;
 
