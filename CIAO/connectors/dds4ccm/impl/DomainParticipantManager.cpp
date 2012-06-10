@@ -253,19 +253,28 @@ namespace CIAO
             }
         }
 
+      return true;
+    }
+
+    bool
+    DomainParticipantManager::close ()
+    {
+      DDS4CCM_TRACE ("DomainParticipantManager::close");
+
       if (this->dps_.empty ())
         {
           DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
-                        "DomainParticipantManager::unregister_participant - "
+                        "DomainParticipantManager::close - "
                         "No participants anymore, shutting down DDS.\n"));
 #if (CIAO_DDS4CCM_OPENDDS==1)
           TheServiceParticipant->shutdown ();
 #elif (CIAO_DDS4CCM_NDDS==1)
           DDSDomainParticipantFactory::finalize_instance ();
 #endif
+          return true;
         }
 
-      return true;
+      return false;
     }
   }
 }
