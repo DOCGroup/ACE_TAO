@@ -1,3 +1,10 @@
+Sun Jun 10 18:39:26 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+          Shutdown DDS in the destructor of the connector, doing it as part
+          of ccm_remove causes the reset of the topic to fail in case we only
+          have one connector in the process
+
 Sun Jun 10 18:01:21 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
