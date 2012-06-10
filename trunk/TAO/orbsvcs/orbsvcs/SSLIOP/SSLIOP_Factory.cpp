@@ -345,7 +345,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
           if (curarg < argc)
             {
               if (::SSL_CTX_set_cipher_list (ssl_ctx->context (),
-                                             argv[curarg]) == 0)
+                                             ACE_TEXT_ALWAYS_CHAR(argv[curarg])) == 0)
                 {
                   ACE_DEBUG ((LM_ERROR,
                               ACE_TEXT ("TAO (%P|%t) Unable to set cipher ")
