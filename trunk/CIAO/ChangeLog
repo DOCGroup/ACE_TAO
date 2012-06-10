@@ -1,3 +1,8 @@
+Sun Jun 10 10:41:08 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/CSLDeadline/Sender/CSL_DeadlineTest_Sender_exec.cpp:
+          Reverted removal of include, needed to compare the instance handle
+
 Fri Jun  8 18:01:51 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/CSLDeadline/Sender/CSL_DeadlineTest_Sender_exec.cpp:
