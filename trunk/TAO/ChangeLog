@@ -1,3 +1,13 @@
+Sun Jun 10 18:27:00 UTC 2012  Ken Sedgwick  <ken@bonsai.com>
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp
+        Added missing ACE_TEXT_ALWAYS_CHAR macro on
+        SSL_CTX_set_cipher_list argument.
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp
+        Removed SSLCipherList and SSLServerCipherOrder features
+        from LynxOS.
+
 Thu Jun  7 08:12:43 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2084_Regression/Server_Task.cpp:
