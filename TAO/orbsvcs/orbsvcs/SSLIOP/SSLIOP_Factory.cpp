@@ -330,6 +330,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
             }
         }
 
+#if !defined (__Lynx__)
       else if (ACE_OS::strcasecmp (argv[curarg],
                                    ACE_TEXT("-SSLServerCipherOrder")) == 0)
         {
@@ -355,6 +356,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
                 }
             }
         }
+#endif
 
     }
 
