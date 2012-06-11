@@ -1,3 +1,11 @@
+Mon Jun 11 18:34:16 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Component/Component_exec.h:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Component/Component_exec.cpp:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/descriptors/run_test.pl:
+          Extended dp checks for OpenDDS, there the instancehandle itself
+          isn't unique between dp
+
 Mon Jun 11 17:54:39 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/UnkeyedSamples/Receiver/Unkeyed_Test_Receiver_exec.cpp:
