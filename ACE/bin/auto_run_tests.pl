@@ -17,7 +17,7 @@ use English;
 use Getopt::Std;
 use Cwd;
 
-use Env qw(ACE_ROOT PATH TAO_ROOT CIAO_ROOT DANCE_ROOT);
+use Env qw(ACE_ROOT PATH TAO_ROOT CIAO_ROOT DANCE_ROOT DDS_ROOT);
 
 if (!defined $TAO_ROOT && -d "$ACE_ROOT/TAO") {
     $TAO_ROOT = "$ACE_ROOT/TAO";
@@ -28,10 +28,13 @@ if (!defined $CIAO_ROOT && -d "$ACE_ROOT/TAO/CIAO") {
 if (!defined $DANCE_ROOT && -d "$ACE_ROOT/TAO/DAnCE") {
     $DANCE_ROOT = "$ACE_ROOT/TAO/DAnCE";
 }
+if (!defined $DDS_ROOT && -d "$ACE_ROOT/TAO/DDS") {
+    $DDS_ROOT = "$ACE_ROOT/TAO/DDS";
+}
 
 ################################################################################
 
-if (!getopts ('adl:os:r:tC') || $opt_h) {
+if (!getopts ('adl:os:r:tCd') || $opt_h) {
     print "auto_run_tests.pl [-a] [-h] [-s sandbox] [-o] [-t]\n";
     print "\n";
     print "Runs the tests listed in auto_run_tests.lst\n";
@@ -44,6 +47,7 @@ if (!getopts ('adl:os:r:tC') || $opt_h) {
     print "    -o             ORB test only\n";
     print "    -t             TAO tests (other than ORB tests) only\n";
     print "    -C             CIAO and DAnCE tests only\n";
+    print "    -d             Run OpenDDS tests only\n";
     print "    -Config cfg    Run the tests for the <cfg> configuration\n";
     print "    -l list        Load the list and run only those tests\n";
     print "    -r dir         Root directory for running the tests\n";
@@ -73,6 +77,12 @@ if (!getopts ('adl:os:r:tC') || $opt_h) {
         print "DAnCE Test Configs: " . $dance_config_list->list_configs ()
             . "\n";
     }
+    if (defined $DDS_ROOT) {
+        $dds_config_list = new PerlACE::ConfigList;
+        $dds_config_list->load ($DDS_ROOT."/bin/dcps_tests.lst");
+        print "DDS Test Configs: " . $dds_config_list->list_configs ()
+            . "\n";
+    }
     exit (1);
 }
 
@@ -93,6 +103,10 @@ push (@file_list, "$TAO_ROOT/bin/tao_other_tests.lst");
 if ($opt_C) {
 push (@file_list, "$CIAO_ROOT/bin/ciao_tests.lst");
 push (@file_list, "$DANCE_ROOT/bin/dance_tests.lst");
+}
+
+if ($opt_d) {
+push (@file_list, "$DDS_ROOT/bin/dcps_tests.lst");
 }
 
 if ($opt_r) {
@@ -117,6 +131,9 @@ if (scalar(@file_list) == 0) {
     }
     if (-d $DANCE_ROOT) {
         push (@file_list, "$DANCE_ROOT/bin/dance_tests.lst");
+    }
+    if (-d $DDS_ROOT) {
+        push (@file_list, "$DDS_ROOT/bin/dcps_tests.lst");
     }
 }
 
@@ -170,12 +187,16 @@ foreach my $test_lst (@file_list) {
         if ($directory =~ m:^DAnCE/(.*):) {
           $directory = $1;
         }
+        if ($directory =~ m:^DDS/(.*):) {
+          $directory = $1;
+        }
 
         $status = undef;
         foreach my $path ($ACE_ROOT."/$directory",
                           $TAO_ROOT."/$directory",
                           $CIAO_ROOT."/$directory",
                           $DANCE_ROOT."/$directory",
+                          $DDS_ROOT."/$directory",
                           $startdir."/$directory",
                           $startdir."/$orig_dir") {
           if (-d $path && ($status = chdir ($path))) {
