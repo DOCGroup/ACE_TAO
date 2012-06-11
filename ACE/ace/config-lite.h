@@ -116,7 +116,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 // Once all C++ compilers support the standard reverse_iterator
 // adapters, we can drop this generator macro or at least drop the
 // MSVC++ or Sun Studio preprocessor conditional blocks.
-#if defined (__SUNPRO_CC) && __SUNPRO_CC <= 0x5110 \
+#if defined (__SUNPRO_CC) && __SUNPRO_CC <= 0x5120 \
       && !defined (_STLPORT_VERSION)
   // If we're not using the stlport4 C++ library (which has standard
   // iterators), we need to ensure this is included in order to test
@@ -131,7 +131,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
   typedef std::reverse_iterator<iterator, value_type> reverse_iterator; \
   typedef std::reverse_iterator<const_iterator, \
                                 value_type const> const_reverse_iterator;
-#elif defined (__SUNPRO_CC) && __SUNPRO_CC <= 0x5110 \
+#elif defined (__SUNPRO_CC) && __SUNPRO_CC <= 0x5120 \
       && defined (_RWSTD_NO_CLASS_PARTIAL_SPEC)
 # define ACE_DECLARE_STL_REVERSE_ITERATORS \
   typedef std::reverse_iterator<iterator, \
