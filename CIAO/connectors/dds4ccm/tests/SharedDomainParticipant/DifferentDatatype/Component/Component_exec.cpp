@@ -18,6 +18,9 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
     : dp1_hnd_ (DDS::HANDLE_NIL)
     , dp2_hnd_ (DDS::HANDLE_NIL)
     , dp3_hnd_ (DDS::HANDLE_NIL)
+    , dp1_ptr_ (DDS::DomainParticipant::_nil ())
+    , dp2_ptr_ (DDS::DomainParticipant::_nil ())
+    , dp3_ptr_ (DDS::DomainParticipant::_nil ())
   {
   }
 
@@ -75,6 +78,7 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
                       {
 
                         this->dp1_hnd_ = dp->get_instance_handle ();
+                        this->dp1_ptr_ = dp.ptr ();
                       }
                     else
                       {
@@ -139,6 +143,7 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
                       {
 
                         this->dp2_hnd_ = dp->get_instance_handle ();
+                        this->dp2_ptr_ = dp.ptr ();
                       }
                     else
                       {
@@ -202,6 +207,7 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
                     if (! ::CORBA::is_nil (publisher.in ()))
                       {
                         this->dp3_hnd_ = dp->get_instance_handle ();
+                        this->dp3_ptr_ = dp.ptr ();
                       }
                     else
                       {
@@ -251,24 +257,47 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
   void
   Component_exec_i::ccm_remove (void)
   {
-    if (this->dp1_hnd_ != this->dp2_hnd_)
+    if ((this->dp1_hnd_ != this->dp2_hnd_)
+#if (CIAO_DDS4CCM_OPENDDS==1)
+        && (this->dp1_ptr_ != this->dp2_ptr_)
+#endif
+        )
       {
         ACE_ERROR ((LM_ERROR, "ERROR: Connector 1 and 2 don't seem to "
                               "share the same DomainParticipant\n"));
       }
     else
       {
-        ACE_DEBUG ((LM_DEBUG, "Connector 1 and 2 seems to  "
+        ACE_DEBUG ((LM_DEBUG, "Connector 1 and 2 seems to "
                               "share the same DomainParticipant\n"));
       }
-    if (this->dp1_hnd_ == this->dp3_hnd_)
+    if ((this->dp1_hnd_ == this->dp3_hnd_)
+#if (CIAO_DDS4CCM_OPENDDS==1)
+        && (this->dp1_ptr_ == this->dp3_ptr_)
+#endif
+       )
       {
         ACE_ERROR ((LM_ERROR, "ERROR: Connector 1 and 3 seem to "
                               "share the same DomainParticipant\n"));
       }
-    if (this->dp2_hnd_ == this->dp3_hnd_)
+    else
+      {
+        ACE_DEBUG ((LM_DEBUG, "Connector 1 and 3 seems to "
+                              "share the same DomainParticipant\n"));
+      }
+
+    if ((this->dp2_hnd_ == this->dp3_hnd_)
+#if (CIAO_DDS4CCM_OPENDDS==1)
+        && (this->dp2_ptr_ == this->dp3_ptr_)
+#endif
+       )
       {
         ACE_ERROR ((LM_ERROR, "ERROR: Connector 2 and 3 seem to "
+                              "share the same DomainParticipant\n"));
+      }
+    else
+      {
+        ACE_DEBUG ((LM_DEBUG, "Connector 2 and 3 seems to "
                               "share the same DomainParticipant\n"));
       }
   }

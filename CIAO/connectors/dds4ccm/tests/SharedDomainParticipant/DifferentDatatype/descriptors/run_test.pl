@@ -227,7 +227,7 @@ print "by running dance_plan_launcher.exe with -k file://$ior_emfile -x $cdp_fil
 
 $E = $tg_executor->CreateProcess ("$DANCE_ROOT/bin/dance_plan_launcher",
                         "-k file://$ior_emfile -x $cdp_file -s");
-$E->SpawnWaitKill (2 * $tg_executor->ProcessStartWaitInterval ());
+$E->SpawnWaitKill (3 * $tg_executor->ProcessStartWaitInterval ());
 
 print "Executor returned.\n";
 print "Shutting down rest of the processes.\n";
