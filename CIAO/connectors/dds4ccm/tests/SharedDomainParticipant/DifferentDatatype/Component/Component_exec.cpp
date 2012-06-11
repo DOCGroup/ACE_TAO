@@ -252,11 +252,7 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
       ACE_ERROR ((LM_ERROR, "ERROR: Handle of DomainParticipant for Connector 2 seems to be NIL\n"));
     if (this->dp3_hnd_ == DDS::HANDLE_NIL)
       ACE_ERROR ((LM_ERROR, "ERROR: Handle of DomainParticipant for Connector 3 seems to be NIL\n"));
-  }
 
-  void
-  Component_exec_i::ccm_remove (void)
-  {
     if ((this->dp1_hnd_ != this->dp2_hnd_)
 #if (CIAO_DDS4CCM_OPENDDS==1)
         && (this->dp1_ptr_ != this->dp2_ptr_)
@@ -300,6 +296,11 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
         ACE_DEBUG ((LM_DEBUG, "Connector 2 and 3 seems to "
                               "share the same DomainParticipant\n"));
       }
+  }
+
+  void
+  Component_exec_i::ccm_remove (void)
+  {
   }
 
   extern "C" COMPONENT_EXEC_Export ::Components::EnterpriseComponent_ptr

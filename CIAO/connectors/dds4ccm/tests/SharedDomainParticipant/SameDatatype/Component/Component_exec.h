@@ -48,11 +48,19 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
     ::DDS::InstanceHandle_t dp2_hnd_;
     ::DDS::InstanceHandle_t dp3_hnd_;
     ::DDS::InstanceHandle_t dp4_hnd_;
+    ::DDS::DomainParticipant_ptr dp1_ptr_;
+    ::DDS::DomainParticipant_ptr dp2_ptr_;
+    ::DDS::DomainParticipant_ptr dp3_ptr_;
+    ::DDS::DomainParticipant_ptr dp4_ptr_;
 
     ::DDS::InstanceHandle_t tp1_hnd_;
     ::DDS::InstanceHandle_t tp2_hnd_;
     ::DDS::InstanceHandle_t tp3_hnd_;
     ::DDS::InstanceHandle_t tp4_hnd_;
+    ::DDS::Topic_ptr tp1_ptr_;
+    ::DDS::Topic_ptr tp2_ptr_;
+    ::DDS::Topic_ptr tp3_ptr_;
+    ::DDS::Topic_ptr tp4_ptr_;
   };
 
   extern "C" COMPONENT_EXEC_Export ::Components::EnterpriseComponent_ptr

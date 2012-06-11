@@ -27,10 +27,18 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
     , dp2_hnd_ (DDS::HANDLE_NIL)
     , dp3_hnd_ (DDS::HANDLE_NIL)
     , dp4_hnd_ (DDS::HANDLE_NIL)
+    , dp1_ptr_ (DDS::DomainParticipant::_nil ())
+    , dp2_ptr_ (DDS::DomainParticipant::_nil ())
+    , dp3_ptr_ (DDS::DomainParticipant::_nil ())
+    , dp4_ptr_ (DDS::DomainParticipant::_nil ())
     , tp1_hnd_ (DDS::HANDLE_NIL)
     , tp2_hnd_ (DDS::HANDLE_NIL)
     , tp3_hnd_ (DDS::HANDLE_NIL)
     , tp4_hnd_ (DDS::HANDLE_NIL)
+    , tp1_ptr_ (DDS::Topic::_nil ())
+    , tp2_ptr_ (DDS::Topic::_nil ())
+    , tp3_ptr_ (DDS::Topic::_nil ())
+    , tp4_ptr_ (DDS::Topic::_nil ())
   {
   }
 
@@ -99,15 +107,17 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
                       {
 
                         this->dp1_hnd_ = dp->get_instance_handle ();
+                        this->dp1_ptr_ = dp.ptr();
 
                         ::DDS::TopicDescription_var tpd = dp->lookup_topicdescription (tp_name_conn_1_);
 
                         if (! ::CORBA::is_nil (tpd.in ()))
                           {
-                            ::DDS::Topic_ptr topic = ::DDS::Topic::_narrow (tpd.in ());
-                            if (! ::CORBA::is_nil (topic))
+                            ::DDS::Topic_var topic = ::DDS::Topic::_narrow (tpd.in ());
+                            if (! ::CORBA::is_nil (topic.in ()))
                               {
                                 this->tp1_hnd_ = topic->get_instance_handle ();
+                                this->tp1_ptr_ = topic.ptr ();
                               }
                             else
                               {
@@ -185,15 +195,17 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
                       {
 
                         this->dp2_hnd_ = dp->get_instance_handle ();
+                        this->dp2_ptr_ = dp.ptr();
 
                         ::DDS::TopicDescription_var tpd = dp->lookup_topicdescription (tp_name_conn_2_);
 
                         if (! ::CORBA::is_nil (tpd.in ()))
                           {
-                            ::DDS::Topic_ptr topic = ::DDS::Topic::_narrow (tpd.in ());
-                            if (! ::CORBA::is_nil (topic))
+                            ::DDS::Topic_var topic = ::DDS::Topic::_narrow (tpd.in ());
+                            if (! ::CORBA::is_nil (topic.in ()))
                               {
                                 this->tp2_hnd_ = topic->get_instance_handle ();
+                                this->tp2_ptr_ = topic.ptr ();
                               }
                             else
                               {
@@ -272,15 +284,17 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
                       {
 
                         this->dp3_hnd_ = dp->get_instance_handle ();
+                        this->dp3_ptr_ = dp.ptr();
 
                         ::DDS::TopicDescription_var tpd = dp->lookup_topicdescription (tp_name_conn_3_);
 
                         if (! ::CORBA::is_nil (tpd.in ()))
                           {
-                            ::DDS::Topic_ptr topic = ::DDS::Topic::_narrow (tpd.in ());
-                            if (! ::CORBA::is_nil (topic))
+                            ::DDS::Topic_var topic = ::DDS::Topic::_narrow (tpd.in ());
+                            if (! ::CORBA::is_nil (topic.in ()))
                               {
                                 this->tp3_hnd_ = topic->get_instance_handle ();
+                                this->tp3_ptr_ = topic.ptr ();
                               }
                             else
                               {
@@ -358,6 +372,7 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
                       {
 
                         this->dp4_hnd_ = dp->get_instance_handle ();
+                        this->dp4_ptr_ = dp.ptr();
 
                         if (this->perform_test_)
                           {
@@ -366,10 +381,11 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
 
                             if (! ::CORBA::is_nil (tpd.in ()))
                               {
-                                ::DDS::Topic_ptr topic = ::DDS::Topic::_narrow (tpd.in ());
-                                if (! ::CORBA::is_nil (topic))
+                                ::DDS::Topic_var topic = ::DDS::Topic::_narrow (tpd.in ());
+                                if (! ::CORBA::is_nil (topic.in ()))
                                   {
                                     this->tp4_hnd_ = topic->get_instance_handle ();
+                                    this->tp4_ptr_ = topic.ptr ();
                                   }
                                 else
                                   {
@@ -442,16 +458,13 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
           ACE_ERROR ((LM_ERROR, "ERROR: Handle for Topic for Connector 3 seems to be NIL\n"));
         if (this->tp4_hnd_ == DDS::HANDLE_NIL)
           ACE_ERROR ((LM_ERROR, "ERROR: Handle for Topic for Connector 4 seems to be NIL\n"));
-      }
-  }
 
-  void
-  Component_exec_i::ccm_remove (void)
-  {
-    if (this->perform_test_)
-      {
         //check shared DomainParticipants
-        if (this->dp1_hnd_ != this->dp2_hnd_)
+        if ((this->dp1_hnd_ != this->dp2_hnd_)
+#if (CIAO_DDS4CCM_OPENDDS==1)
+            && (this->dp1_ptr_ == this->dp2_ptr_)
+#endif
+            )
           {
             ACE_ERROR ((LM_ERROR, "ERROR: Connector 1 and 2 don't seem to "
                                   "share the same DomainParticipant\n"));
@@ -461,24 +474,40 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
             ACE_DEBUG ((LM_DEBUG, "Connector 1 and 2 seems to  "
                                   "share the same DomainParticipant\n"));
           }
-        if (this->dp1_hnd_ == this->dp4_hnd_)
+        if ((this->dp1_hnd_ == this->dp4_hnd_)
+#if (CIAO_DDS4CCM_OPENDDS==1)
+            && (this->dp1_ptr_ == this->dp4_ptr_)
+#endif
+            )
           {
             ACE_ERROR ((LM_ERROR, "ERROR: Connector 1 and 4 seem to "
                                   "share the same DomainParticipant\n"));
           }
-        if (this->dp2_hnd_ == this->dp4_hnd_)
+        if ((this->dp2_hnd_ == this->dp4_hnd_)
+#if (CIAO_DDS4CCM_OPENDDS==1)
+            && (this->dp2_ptr_ == this->dp4_ptr_)
+#endif
+            )
           {
             ACE_ERROR ((LM_ERROR, "ERROR: Connector 2 and 4 seem to "
                                   "share the same DomainParticipant\n"));
           }
-        if (this->dp3_hnd_ == this->dp4_hnd_)
+        if ((this->dp3_hnd_ == this->dp4_hnd_)
+#if (CIAO_DDS4CCM_OPENDDS==1)
+            && (this->dp3_ptr_ == this->dp4_ptr_)
+#endif
+            )
           {
             ACE_ERROR ((LM_ERROR, "ERROR: Connector 3 and 4 seem to "
                                   "share the same DomainParticipant\n"));
           }
 
         //check shared Topics
-        if (this->tp1_hnd_ != this->tp2_hnd_)
+        if ((this->tp1_hnd_ != this->tp2_hnd_)
+#if (CIAO_DDS4CCM_OPENDDS==1)
+            && (this->tp1_ptr_ == this->tp2_ptr_)
+#endif
+            )
           {
             ACE_ERROR ((LM_ERROR, "ERROR: Connector 1 and 2 don't seem to "
                                   "share the same Topic\n"));
@@ -488,18 +517,31 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
             ACE_DEBUG ((LM_DEBUG, "Connector 1 and 2 seems to  "
                                   "share the same Topic\n"));
           }
-        if (this->tp1_hnd_ == this->tp3_hnd_)
+        if ((this->tp1_hnd_ == this->tp3_hnd_)
+#if (CIAO_DDS4CCM_OPENDDS==1)
+            && (this->tp1_ptr_ == this->tp3_ptr_)
+#endif
+            )
           {
             ACE_ERROR ((LM_ERROR, "ERROR: Connector 1 and 3 seem to "
                                   "share the same Topic\n"));
           }
-        if (this->tp1_hnd_ == this->tp4_hnd_)
+        if ((this->tp1_hnd_ == this->tp4_hnd_)
+#if (CIAO_DDS4CCM_OPENDDS==1)
+            && (this->tp1_ptr_ == this->tp4_ptr_)
+#endif
+            )
           {
             ACE_ERROR ((LM_ERROR, "ERROR: Connector 1 and 4 seem to "
                                   "share the same Topic\n"));
           }
       }
-    else
+  }
+
+  void
+  Component_exec_i::ccm_remove (void)
+  {
+    if (!this->perform_test_)
       {
         ACE_DEBUG ((LM_DEBUG, "Don't test this component. It's used for compilation errors.\n"));
       }
