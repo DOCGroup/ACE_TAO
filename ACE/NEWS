@@ -1,6 +1,9 @@
 USER VISIBLE CHANGES BETWEEN ACE-6.1.2 and ACE-6.1.3
 ====================================================
 
+. Added support for Oracle Solaris Studio 12 Update 3 (SunCC 5.12)
+
+
 USER VISIBLE CHANGES BETWEEN ACE-6.1.1 and ACE-6.1.2
 ====================================================
 
