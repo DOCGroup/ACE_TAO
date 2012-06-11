@@ -210,8 +210,11 @@ namespace CIAO_Writer_Sender_Impl
             reply_mesg->length (length);
             this->last_key->second->data = reply_mesg;
             writer->write_one (this->last_key->second, ::DDS::HANDLE_NIL);
+#if (CIAO_DDS4CCM_NDDS==1)
+            // Sending large amount of data fails with RTI DDS
             ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: No InternalError ")
                         ACE_TEXT ("caught while writing a large amount of data.\n")));
+#endif
           }
         catch (const CCM_DDS::InternalError& )
           {
