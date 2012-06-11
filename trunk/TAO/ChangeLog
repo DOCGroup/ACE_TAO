@@ -1,3 +1,14 @@
+Mon Jun 11 11:14:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * tao/ZIOP/ZIOP.cpp:
+        Tidy-up COMPRESSION_MIN_RATIO_POLICY checks and the display of compression ratios.
+        Sometimes they were being calculated as the inverse ratio instead of the
+        correct (compressed_length / uncompressed_length) that the ZIOP specification
+        details. Also check that the compressed size (with overhead) is not larger than
+        the original data length, it is really stupid to use ZIOP messages that are actually
+        larger than the original GIOP message just because the compressed data (without the
+        header is JUST smaller).
+
 Sun Jun 10 18:27:00 UTC 2012  Ken Sedgwick  <ken@bonsai.com>
 
         * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp
