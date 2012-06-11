@@ -1,3 +1,11 @@
+Mon Jun 11 17:05:36 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/auto_run_tests.pl:
+          Added option -d to run OpenDDS tests also
+
+        * bin/diff-builds-and-group-fixed-tests-only.sh:
+          Also check OpenDDS lst files
+
 Thu Jun  7 10:13:13 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Condition_Thread_Mutex.h:
