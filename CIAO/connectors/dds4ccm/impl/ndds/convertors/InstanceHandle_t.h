@@ -30,14 +30,6 @@ operator<<= (::DDS_InstanceHandle_t &ddsinstancehandle, const ::DDS::InstanceHan
 }
 
 inline bool
-operator== (const ::DDS::InstanceHandle_t & instancehandle1, const ::DDS::InstanceHandle_t & instancehandle2)
-{
-  return instancehandle1.length  == instancehandle2.length  &&
-         instancehandle1.isValid == instancehandle2.isValid &&
-         ACE_OS::memcmp (instancehandle1.value, instancehandle2.value, sizeof (instancehandle1.value)) == 0;
-}
-
-inline bool
 operator== (const DDS_InstanceHandle_t & dds_instancehandle, const ::DDS::InstanceHandle_t & ccm_instancehandle)
 {
   return dds_instancehandle.keyHash.length  == ccm_instancehandle.length  &&
@@ -51,14 +43,6 @@ operator== (const ::DDS::InstanceHandle_t & ccm_instancehandle, const DDS_Instan
   return ccm_instancehandle.length  == dds_instancehandle.keyHash.length  &&
          ccm_instancehandle.isValid == static_cast<CORBA::ULong>(dds_instancehandle.isValid) &&
          ACE_OS::memcmp (ccm_instancehandle.value, dds_instancehandle.keyHash.value, sizeof (ccm_instancehandle.value)) == 0;
-}
-
-inline bool
-operator!= (const ::DDS::InstanceHandle_t & instancehandle1, const ::DDS::InstanceHandle_t & instancehandle2)
-{
-  return instancehandle1.length  != instancehandle2.length  ||
-         instancehandle1.isValid != instancehandle2.isValid ||
-         ACE_OS::memcmp (instancehandle1.value, instancehandle2.value, sizeof (instancehandle1.value)) != 0;
 }
 
 inline bool

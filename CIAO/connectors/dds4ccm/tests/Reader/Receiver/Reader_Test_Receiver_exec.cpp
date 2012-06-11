@@ -459,7 +459,7 @@ namespace CIAO_Reader_Test_Receiver_Impl
                     ++nr_keys_changed;
                   }
                 // check readinfo struct.
-                if (DDS_INSTANCE_HANDLE_INVALID(readinfo_seq[it].instance_handle))
+                if (::DDS::HANDLE_NIL == readinfo_seq[it].instance_handle)
                   {
                     ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: READ ALL: ")
                             ACE_TEXT ("received instance handle should be valid ")

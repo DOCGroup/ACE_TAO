@@ -32,7 +32,6 @@
 #include "Connector/Writer_Connector_conn.h"
 #include "dds4ccm/impl/Utils.h"
 #if (CIAO_DDS4CCM_NDDS == 1)
-# include "dds4ccm/impl/ndds/convertors/InstanceHandle_t.h"
 # include "dds4ccm/impl/ndds/DataWriter_T.h"
 #endif
 
@@ -131,7 +130,7 @@ namespace CIAO_Writer_Sender_Impl
       {
         DDS::InstanceHandle_t const hnd =
           ccm_writer->register_instance (i->second);
-        if (DDS_INSTANCE_HANDLE_INVALID(hnd))
+        if (hnd == ::DDS::HANDLE_NIL)
           {
             ACE_ERROR ((LM_ERROR,
                         ACE_TEXT ("ERROR: Unable to register handle for <%C>\n"),
