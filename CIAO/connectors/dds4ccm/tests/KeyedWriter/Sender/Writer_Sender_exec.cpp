@@ -260,9 +260,10 @@ namespace CIAO_Writer_Sender_Impl
         try
           {
             ++this->last_key_->second->iteration;
-            ::DDS::InstanceHandle_t hnd = this->handles_[this->last_key_->first.c_str ()];
+            ::DDS::InstanceHandle_t const hnd =
+              this->handles_[this->last_key_->first.c_str ()];
             writer->write_one (this->last_key_->second, hnd);
-            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Written keyed <%C> - iteration <%d> - ")
+            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Written keyed <%C> - iteration <%d> - handle ")
                     DDS_INSTANCE_HANDLE_FORMAT_SPECIFIER ACE_TEXT ("\n"),
                     this->last_key_->first.c_str (),
                     this->last_key_->second->iteration,
