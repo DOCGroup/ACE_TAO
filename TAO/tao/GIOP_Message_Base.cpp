@@ -27,7 +27,12 @@ TAO_GIOP_Message_Base::TAO_GIOP_Message_Base (TAO_ORB_Core *orb_core,
                                               TAO_Transport *transport,
                                               size_t input_cdr_size)
   : orb_core_ (orb_core)
+#if defined (__SUNPRO_CC) && __SUNPRO_CC == 0x5120
+  // initializing from auto_ptr_ref is broken on SunCC 5.12
+  , fragmentation_strategy_ (orb_core->fragmentation_strategy (transport).release ())
+#else
   , fragmentation_strategy_ (orb_core->fragmentation_strategy (transport))
+#endif
   , out_stream_ (0,
                  input_cdr_size,
                  TAO_ENCAP_BYTE_ORDER,
