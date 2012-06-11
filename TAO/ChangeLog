@@ -1,10 +1,18 @@
+Mon Jun 11 21:45:56 UTC 2012  Adam Mitz  <mitza@ociweb.com>
+
+        * TAO_IDL/tao_idl.mpc:
+        * tao/GIOP_Message_Base.cpp:
+        * tests/IDL_Test/union.idl:
+
+          Added support for Oracle Solaris Studio 12 Update 3 (SunCC 5.12).
+
 Mon Jun 11 12:53:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
 
         * tao/params.cpp:
         * tao/doc/Options.html:
         Changed #define ALLOW_ZIOP_NO_SERVER_POLICIES_DEFAULT name to
         #define TAO_ALLOW_ZIOP_NO_SERVER_POLICIES_DEFAULT at the buildczars request.
-        
+
 Mon Jun 11 12:45:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
 
         * tao/ORB_Core.cpp:
