@@ -469,7 +469,7 @@ namespace CIAO_Getter_Test_Receiver_Impl
                                   gettertest_info.iteration));
           }
         // check readinfo struct.
-        if (DDS_INSTANCE_HANDLE_VALID(readinfo.instance_handle))
+        if (readinfo.instance_handle != ::DDS::HANDLE_NIL)
           {
             ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR FIXED: GET MANY: ")
                     ACE_TEXT ("received instance handle should be invalid ")
@@ -549,7 +549,7 @@ namespace CIAO_Getter_Test_Receiver_Impl
                                   gettertest_info->iteration));
           }
         // check readinfo struct.
-        if (DDS_INSTANCE_HANDLE_VALID(readinfo.instance_handle))
+        if (readinfo.instance_handle != ::DDS::HANDLE_NIL)
           {
             ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR VARIABLE: GET MANY: ")
                     ACE_TEXT ("received instance handle should be invalid ")

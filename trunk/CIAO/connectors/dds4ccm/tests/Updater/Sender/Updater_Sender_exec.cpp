@@ -258,15 +258,15 @@ namespace CIAO_Updater_Sender_Impl
   Sender_exec_i::update_and_delete_one_after_register (
     ::Updater::UpdaterConnector::Updater_ptr updater)
   {
-    //update an instance after registering first, using a handle
+    // Update an instance after registering first, using a handle
     TestTopic i = this->topic_seq_one_[2];
-    //take third instance of table
+    // Take third instance of table
     DDS::InstanceHandle_t const hnd = updater->register_instance(i);
     try
       {
-        if (DDS_INSTANCE_HANDLE_VALID(hnd))
+        if (hnd != ::DDS::HANDLE_NIL)
           {
-            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Updater: update a new  instance after registering instance, key <%C>\n"),
+            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Updater: update a new instance after registering instance, key <%C>\n"),
                         i.key.in ()));
             updater->update_one(i, hnd);
           }
