@@ -1,3 +1,35 @@
+Mon Jun 11 12:45:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * tao/ORB_Core.cpp:
+        * tao/params.h:
+        * tao/params.inl:
+        * tao/params.cpp:
+        * tao/doc/Options.html:
+        * tao/ZIOP/ZIOP_Stub.cpp:
+        Add the -ORBAllowZIOPNoServerPolicies <0|1> option to the ORB.
+        This option takes a boolean 0 (off/disable) or 1 (on/enable);
+        and if enabled, allows a client to ZIOP compress without having
+        any server-side ZIOP available compressor's list policies embedded
+        in the IOR. This option allows the client to use ZIOP with MIOP
+        and/or services configured via CORBALOCs that have no such
+        compression list policies embedded. The client has to trust that
+        the server is configured to match its own compressor's list policy,
+        and compresses accordingly.
+        NOTE that any server that cannot decompress the client's used ZIOP
+        compressor will reject the request as it simply cannot decode or
+        handle it (the client-side comms will timeout or lock-up for any such
+        incorrect two-way requests, or be oblivious to the failure with any
+        incorrectly configured one-way requests).
+        The default setting is 0 (false) i.e. to disallow compression in such
+        cases and conform to the ZIOP specification which requires the
+        server-side policies to be published for the client-side to check;
+        but this can be changed by adding to TAO's config.h the required default e.g.
+        #define ALLOW_ZIOP_NO_SERVER_POLICIES_DEFAULT true
+
+        * tao/orbsvcs/tests/Miop/McastZIOP/*
+        * bin/tao_other_tests.lst:
+        Add the test for the above use case.
+
 Mon Jun 11 11:14:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
 
         * tao/ZIOP/ZIOP.cpp:
