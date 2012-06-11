@@ -11,9 +11,9 @@
 #include "ace/Service_Config.h"
 #include "tao/Invocation_Utils.h"
 
-#if !defined (ALLOW_ZIOP_NO_SERVER_POLICIES_DEFAULT)
-# define ALLOW_ZIOP_NO_SERVER_POLICIES_DEFAULT false
-#endif /* !ALLOW_ZIOP_NO_SERVER_POLICIES_DEFAULT */
+#if !defined (TAO_ALLOW_ZIOP_NO_SERVER_POLICIES_DEFAULT)
+# define TAO_ALLOW_ZIOP_NO_SERVER_POLICIES_DEFAULT false
+#endif /* !TAO_ALLOW_ZIOP_NO_SERVER_POLICIES_DEFAULT */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -65,7 +65,7 @@ TAO_ORB_Parameters::TAO_ORB_Parameters (void)
   , forward_invocation_on_object_not_exist_ (false)
   , forward_once_exception_ (TAO::FOE_NON)
   , collocation_resolver_name_ ("Default_Collocation_Resolver")
-  , allow_ziop_no_server_policies_ (!!ALLOW_ZIOP_NO_SERVER_POLICIES_DEFAULT)
+  , allow_ziop_no_server_policies_ (!!TAO_ALLOW_ZIOP_NO_SERVER_POLICIES_DEFAULT)
 {
   for (int i = 0; i != TAO_NO_OF_MCAST_SERVICES; ++i)
     {
