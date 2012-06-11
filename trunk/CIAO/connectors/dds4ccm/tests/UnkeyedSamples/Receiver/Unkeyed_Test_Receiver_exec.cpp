@@ -68,7 +68,7 @@ namespace CIAO_Unkeyed_Test_Receiver_Impl
                 ACE_TEXT (" should be invalid ")
                 ACE_TEXT ("for unkeyed data ")
                 ACE_TEXT ("key <%C> - iteration <%u>\n"),
-                DDS_INSTANCEHANDLE_LOG (info.instance_handle),
+                DDS_INSTANCE_HANDLE_LOG (info.instance_handle),
                 datum.key.in (),
                 datum.iteration));
       }
