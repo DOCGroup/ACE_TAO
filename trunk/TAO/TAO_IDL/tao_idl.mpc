@@ -21,6 +21,9 @@ project(TAO_IDL_EXE) : aceexe, install, tao_output, tao_idl_fe {
     ifeq ($(TAO_IDL_PREPROCESSOR),)
       ifeq ($(ACE_CC_PREPROCESSOR),)
         CPPFLAGS += -DTAO_IDL_PREPROCESSOR=\\\"$(strip $(CXX))\\\"
+        ifeq (1,$(STUDIO_12_OR_BETTER))
+          CPPFLAGS += -DTAO_IDL_PREPROCESSOR_ARGS='\"-E -features=no%altspell\"'
+        endif
       else
         CPPFLAGS += -DACE_CC_PREPROCESSOR=\\\"$(subst \\,\\,$(ACE_CC_PREPROCESSOR))\\\"
       endif

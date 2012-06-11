@@ -58,7 +58,7 @@ module Necessary
 // At the moment, the SunCC preprocessor separates the negative
 // sign from the number.  This causes problems for the scanner/lexer
 // used by tao_idl.
-#if !defined (__SUNPRO_CC) || (__SUNPRO_CC > 0x5100)
+#if !defined (__SUNPRO_CC) || (__SUNPRO_CC > 0x5120)
 union foo switch (short)
 {
   case -3:
@@ -67,7 +67,7 @@ union foo switch (short)
   default: long   foo_iface_member;
   case  0: long   foo_iface_member2;
 };
-#endif // !__SUNPRO_CC || __SUNPRO_CC > 0x5100
+#endif // !__SUNPRO_CC || __SUNPRO_CC > 0x5120
 
 // Make sure that CORBA_Any::to_* is used everywhere.
 module UnionDiscTest
