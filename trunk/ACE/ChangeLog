@@ -1,3 +1,11 @@
+Mon Jun 11 21:45:19 UTC 2012  Adam Mitz  <mitza@ociweb.com>
+
+        * NEWS:
+        * ace/config-lite.h:
+        * include/makeinclude/platform_sunos5_sunc++.GNU:
+
+          Added support for Oracle Solaris Studio 12 Update 3 (SunCC 5.12).
+
 Mon Jun 11 17:05:36 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/auto_run_tests.pl:
