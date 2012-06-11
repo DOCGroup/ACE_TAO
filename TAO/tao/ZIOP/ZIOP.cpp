@@ -134,22 +134,18 @@ TAO_ZIOP_Loader::dump_msg (const char *type,  const u_char *ptr,
 
   static const char digits[] = "0123456789ABCD";
   int const byte_order = ptr[TAO_GIOP_MESSAGE_FLAGS_OFFSET] & 0x01;
-  CORBA::Double const
-    ratio = 100.0 -
-            ( static_cast<CORBA::Double> (len) / static_cast<CORBA::Double> (original_data_length) * 100.0);
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("ZIOP (%P|%t) ZIOP_Loader::dump_msg, ")
-              ACE_TEXT ("ZIOP message v%c.%c %C, %d data bytes, %s endian, ")
-              ACE_TEXT ("original_data_length = %d, ratio = %4.2f, ")
-              ACE_TEXT ("compressor = %C, compression_level = %d\n"),
+              ACE_TEXT ("ZIOP message v%c.%c %C, %B data bytes, %s endian, ")
+              ACE_TEXT ("original_data_length = %B, ")
+              ACE_TEXT ("compressor = %C@%d\n"),
               digits[ptr[TAO_GIOP_VERSION_MAJOR_OFFSET]],
               digits[ptr[TAO_GIOP_VERSION_MINOR_OFFSET]],
               type,
               len - TAO_GIOP_MESSAGE_HEADER_LEN ,
               (byte_order == TAO_ENCAP_BYTE_ORDER) ? ACE_TEXT ("my") : ACE_TEXT ("other"),
               original_data_length,
-              ratio,
               TAO_ZIOP_Loader::ziop_compressorid_name (compressor_id),
               static_cast <int> (compression_level)));
 
@@ -286,14 +282,14 @@ TAO_ZIOP_Loader::decompress (ACE_Data_Block **db, TAO_Queued_Data& qd,
 CORBA::ULong
 TAO_ZIOP_Loader::compression_low_value (CORBA::Policy_ptr policy) const
 {
-  CORBA::ULong result = 0;
-#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+  // Default if no policy specified (No minimum, i.e. policy ignored).
+  CORBA::ULong result = 0u;
 
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
   if (!CORBA::is_nil (policy))
     {
-      ZIOP::CompressionLowValuePolicy_var srp =
-        ZIOP::CompressionLowValuePolicy::_narrow (policy);
-
+      ZIOP::CompressionLowValuePolicy_var
+        srp (ZIOP::CompressionLowValuePolicy::_narrow (policy));
       if (!CORBA::is_nil (srp.in ()))
         {
           result = srp->low_value ();
@@ -302,20 +298,25 @@ TAO_ZIOP_Loader::compression_low_value (CORBA::Policy_ptr policy) const
 #else /* TAO_HAS_CORBA_MESSAGING */
   ACE_UNUSED_ARG (policy);
 #endif /* TAO_HAS_CORBA_MESSAGING */
+
   return result;
 }
 
 Compression::CompressionRatio
 TAO_ZIOP_Loader::compression_minratio_value (CORBA::Policy_ptr policy) const
 {
-  Compression::CompressionRatio result = 0;
-#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+  // All ratios are computed via (ratio = Compressed_size / Uncompressed_size)
+  // and so are valid between ("Smaller Size" 0.0 < ratio < 1.0 "Full size").
 
+  // Default if no policy specified (ratio of 1.0 = 100% message size, i.e.
+  // this policy is ignored.)
+  Compression::CompressionRatio result = 1.00;
+
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
   if (!CORBA::is_nil (policy))
     {
-      ZIOP::CompressionMinRatioPolicy_var srp =
-        ZIOP::CompressionMinRatioPolicy::_narrow (policy);
-
+      ZIOP::CompressionMinRatioPolicy_var
+        srp (ZIOP::CompressionMinRatioPolicy::_narrow (policy));
       if (!CORBA::is_nil (srp.in ()))
         {
           result = srp->ratio ();
@@ -324,6 +325,7 @@ TAO_ZIOP_Loader::compression_minratio_value (CORBA::Policy_ptr policy) const
 #else /* TAO_HAS_CORBA_MESSAGING */
   ACE_UNUSED_ARG (policy);
 #endif /* TAO_HAS_CORBA_MESSAGING */
+
   return result;
 }
 
@@ -351,24 +353,46 @@ TAO_ZIOP_Loader::compress (Compression::Compressor_ptr compressor,
 ::Compression::CompressionRatio
 TAO_ZIOP_Loader::get_ratio (CORBA::OctetSeq& uncompressed, CORBA::OctetSeq& compressed)
 {
-  return static_cast< ::Compression::CompressionRatio> (uncompressed.length ()) /
-         static_cast< ::Compression::CompressionRatio> (compressed.length ());
+  // All ratios are computed via (ratio = Compressed_size / Uncompressed_size)
+  // and so are valid between ("Smaller Size" 0.0 < ratio < 1.0 "Full size").
+
+  return static_cast< ::Compression::CompressionRatio> (compressed.length ()) /
+         static_cast< ::Compression::CompressionRatio> (uncompressed.length ());
 }
 
 bool
-TAO_ZIOP_Loader::check_min_ratio (const ::Compression::CompressionRatio& this_ratio,
+TAO_ZIOP_Loader::check_min_ratio (const ::Compression::CompressionRatio &this_ratio,
                                   ::Compression::CompressionRatio overall_ratio,
                                   ::Compression::CompressionRatio min_ratio) const
 {
-  bool accepted = ACE::is_equal (min_ratio, 0.0f) || (this_ratio > min_ratio);
-  if (TAO_debug_level > 8)
+   // All ratios are computed via (ratio = Compressed_size / Uncompressed_size)
+   // and so are valid between ("Smaller Size" 0.0 < ratio < 1.0 "Full size").
+
+   // Note we don't want to overload the receiver with messages that have not
+   // compressed enough, i.e. the achieved ratio must be at least as small as
+   // the min_ratio, (i.e. smaller ratios are better).
+  bool allow_compression = this_ratio <= min_ratio;
+  if (allow_compression)
+    {
+      if (TAO_debug_level > 8)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("ZIOP (%P|%t) TAO_ZIOP_Loader::check_min_ratio, ")
+                      ACE_TEXT ("this ratio (%4.2f <= %4.2f) min ratio, ")
+                      ACE_TEXT ("average so far %4.2f (allowed compression).\n"),
+                      this_ratio, min_ratio, overall_ratio));
+        }
+    }
+  else if (TAO_debug_level > 8)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("ZIOP (%P|%t) TAO_ZIOP_Loader::check_min_ratio, ")
-                  ACE_TEXT ("overall_ratio = %4.2f, this_ratio = %4.2f, accepted = %d\n"),
-                  overall_ratio, this_ratio, accepted));
+                  ACE_TEXT ("COMPRESSION_MIN_RATIO_POLICY applied, ")
+                  ACE_TEXT ("this ratio (%4.2f > %4.2f) min ratio, ")
+                  ACE_TEXT ("average so far %4.2f (did not compress).\n"),
+                  this_ratio, min_ratio, overall_ratio));
     }
-  return accepted;
+  return allow_compression;
 }
 
 
@@ -388,9 +412,8 @@ TAO_ZIOP_Loader::get_compressor_details (
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("ZIOP (%P|%t) ")
-                      ACE_TEXT ("TAO_ZIOP_Loader::get_compressor_details,")
-                      ACE_TEXT ("compressor policy found, compressor = %C, ")
-                      ACE_TEXT ("compression_level = %d\n"),
+                      ACE_TEXT ("TAO_ZIOP_Loader::get_compressor_details, ")
+                      ACE_TEXT ("compressor policy found, compressor = %C@%d\n"),
                       TAO_ZIOP_Loader::ziop_compressorid_name (compressor_id),
                       static_cast<int> (compression_level)));
         }
@@ -484,18 +507,51 @@ TAO_ZIOP_Loader::complete_compression (Compression::Compressor_ptr compressor,
                                        CORBA::ULong original_data_length,
                                        Compression::CompressorId compressor_id)
 {
-  if (low_value > 0 && original_data_length > low_value)
+   static const CORBA::ULong
+      Compression_Overhead = sizeof (compressor_id)
+                           + sizeof (original_data_length)
+                           + sizeof (CORBA::ULong); // Compressed data Sequence length
+
+   // NOTE we don't want any compressed block if it is larger or equal to the
+   // original uncompressed length, we may as well use the uncompressed message
+   // in that case (we are trying to send LESS information not MORE).
+
+  if (low_value <= original_data_length)
     {
       CORBA::OctetSeq output;
       CORBA::OctetSeq input (original_data_length, &mb);
       output.length (original_data_length);
 
       if (!this->compress (compressor, input, output))
-        return false;
-      else if ((output.length () < original_data_length) &&
-              (this->check_min_ratio (this->get_ratio (input, output),
-                      compressor->compression_ratio(),
-                      min_ratio)))
+        {
+          if (TAO_debug_level > 0)
+            {
+              ACE_DEBUG ((LM_ERROR,
+                          ACE_TEXT ("ZIOP (%P|%t) ")
+                          ACE_TEXT ("TAO_ZIOP_Loader::complete_compression, ")
+                          ACE_TEXT ("Compressor failed to compress message!\n")));
+            }
+          return false;
+        }
+      else if (original_data_length  <= output.length () + Compression_Overhead)
+        {
+          if (TAO_debug_level > 8)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("ZIOP (%P|%t) ")
+                          ACE_TEXT ("TAO_ZIOP_Loader::complete_compression, ")
+                          ACE_TEXT ("compressed length (%u >= %u) ")
+                          ACE_TEXT ("uncompressed length, (did not compress).\n"),
+                          static_cast <unsigned int> (output.length () + Compression_Overhead),
+                          static_cast <unsigned int> (original_data_length)
+                        ));
+            }
+          return false;
+        }
+      else if (this->check_min_ratio (
+                 this->get_ratio (input, output),
+                 compressor->compression_ratio(),
+                 min_ratio))
         {
           mb.wr_ptr (mb.rd_ptr ());
           cdr.current_alignment (mb.wr_ptr() - mb.base ());
@@ -516,7 +572,6 @@ TAO_ZIOP_Loader::complete_compression (Compression::Compressor_ptr compressor,
                     mb.length (), data.original_length,
                     data.compressor, compressor->compression_level ());
             }
-
         }
       else
         return false;
@@ -525,10 +580,14 @@ TAO_ZIOP_Loader::complete_compression (Compression::Compressor_ptr compressor,
       {
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("ZIOP (%P|%t) ")
-                    ACE_TEXT ("TAO_ZIOP_Loader::compress_data, ")
-                    ACE_TEXT ("no compression used, ")
-                    ACE_TEXT ("low value policy applied\n")));
+                    ACE_TEXT ("TAO_ZIOP_Loader::complete_compression, ")
+                    ACE_TEXT ("COMPRESSION_LOW_VALUE_POLICY applied, ")
+                    ACE_TEXT ("message length %u < %u (did not compress).\n"),
+                    static_cast <unsigned int> (original_data_length),
+                    static_cast <unsigned int> (low_value)));
+        return false;
       }
+
   return true;
 }
 
