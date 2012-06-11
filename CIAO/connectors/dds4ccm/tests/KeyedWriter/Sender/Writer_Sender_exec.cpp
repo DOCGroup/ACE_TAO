@@ -213,7 +213,7 @@ namespace CIAO_Writer_Sender_Impl
 
     Writer_Table::iterator i = this->ktests_.begin ();
     ::DDS::InstanceHandle_t hnd = writer->register_instance (i->second);
-    if (DDS_INSTANCE_HANDLE_INVALID(hnd))
+    if (hnd == ::DDS::HANDLE_NIL)
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Unable to register handle for <%C> - iteration <%d>\n"),
           i->first.c_str (), i->second->iteration));
@@ -228,7 +228,7 @@ namespace CIAO_Writer_Sender_Impl
     // Test exception. In Qos, max_instances is set to 1
     // so only one instance may be registered.
     hnd = writer->register_instance (i->second);
-    if (DDS_INSTANCE_HANDLE_VALID(hnd))
+    if (hnd != ::DDS::HANDLE_NIL)
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Shouldn't be able to register instance for <%C> - iteration <%d>\n"),
           i->first.c_str (), i->second->iteration));

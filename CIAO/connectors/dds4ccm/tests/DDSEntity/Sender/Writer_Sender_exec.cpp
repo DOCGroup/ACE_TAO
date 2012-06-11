@@ -123,7 +123,7 @@ namespace CIAO_Writer_Sender_Impl
     for (i = this->ktests_.begin(); i != this->ktests_.end(); ++i)
       {
         DDS_InstanceHandle_t const hnd = this->writer_->register_instance (i->second);
-        if (DDS_INSTANCE_HANDLE_INVALID(hnd))
+        if (hnd == ::DDS::HANDLE_NIL)
           {
             ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Unable to register handle for <%C> - iteration <%d>\n"),
               i->first.c_str (), i->second->iteration));

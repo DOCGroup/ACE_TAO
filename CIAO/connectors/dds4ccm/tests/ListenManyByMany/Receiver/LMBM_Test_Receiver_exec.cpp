@@ -48,10 +48,10 @@ namespace CIAO_LMBM_Test_Receiver_Impl
                                "key <%C> - iteration <%d>\n",
                                an_instance[i].key.in (),
                                an_instance[i].iteration));
-        if (DDS_INSTANCE_HANDLE_INVALID(info[i].instance_handle))
+        if (info[i].instance_handle == ::DDS::HANDLE_NIL)
           {
             ACE_ERROR ((LM_ERROR, "ERROR: ListenManyByManyTest_Listener_exec_i::on_many_data:"
-                                "instance handle %d seems to be invalid"
+                                "instance handle %d seems to be nil"
                                 "key <%C> - iteration <%d>\n",
                                  i,
                                  an_instance[i].key.in (),

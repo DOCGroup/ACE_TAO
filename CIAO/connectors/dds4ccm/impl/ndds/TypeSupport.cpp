@@ -34,7 +34,7 @@ namespace CIAO
           DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
                         "DDS_TypeSupport_i::get_factory_i - "
                         "A factory of type <%C> and with DomainParticipant <%@> "
-                        "is registered\n",
+                        "has been registered\n",
                         type,
                         dp));
 

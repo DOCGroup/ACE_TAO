@@ -72,7 +72,7 @@ namespace CIAO_QCLE_Test_Receiver_Impl
                             "key <%C> - iteration <%d>\n",
                             datum.key.in (),
                             datum.iteration));
-    if (DDS_INSTANCE_HANDLE_INVALID (info.instance_handle))
+    if (info.instance_handle == ::DDS::HANDLE_NIL)
       {
         ACE_ERROR ((LM_ERROR, "ERROR: QueryConditionListenEventTest_Listener::on_one_data: "
                             "instance handle seems to be invalid "

@@ -36,10 +36,10 @@ namespace CIAO_LOBO_Test_Receiver_Impl
                             "key <%C> - iteration <%d>\n",
                             an_instance.key.in (),
                             an_instance.iteration));
-    if (DDS_INSTANCE_HANDLE_INVALID (info.instance_handle))
+    if (info.instance_handle == ::DDS::HANDLE_NIL)
       {
         ACE_ERROR ((LM_ERROR, "ERROR: ListenOneByOneTest_Listener_exec_i::on_one_data: "
-                            "instance handle seems to be invalid "
+                            "instance handle seems to be nil "
                             "key <%C> - iteration <%d>\n",
                             an_instance.key.in (),
                             an_instance.iteration));
@@ -48,7 +48,7 @@ namespace CIAO_LOBO_Test_Receiver_Impl
         info.source_timestamp.nanosec == 0)
       {
         ACE_ERROR ((LM_ERROR, "ERROR: ListenOneByOneTest_Listener_exec_i::on_one_data: "
-                            "source timestamp seems to be invalid (nil) "
+                            "source timestamp seems to be nil (nil) "
                             "key <%C> - iteration <%d>\n",
                             an_instance.key.in (),
                             an_instance.iteration));

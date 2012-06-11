@@ -59,12 +59,16 @@ namespace CIAO_Unkeyed_Test_Receiver_Impl
             ACE_TEXT ("received keyed_test_info for <%C> at %u\n"),
             datum.key.in (),
             datum.iteration));
-    if (DDS_INSTANCE_HANDLE_VALID (info.instance_handle))
+    if (info.instance_handle != ::DDS::HANDLE_NIL)
       {
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: UnkeyedTest_Listener::on_one_data: ")
-                ACE_TEXT ("received instance handle should be invalid ")
+        ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("ERROR: UnkeyedTest_Listener::on_one_data: ")
+                ACE_TEXT ("received instance handle ")
+                DDS_INSTANCE_HANDLE_FORMAT_SPECIFIER
+                ACE_TEXT (" should be invalid ")
                 ACE_TEXT ("for unkeyed data ")
                 ACE_TEXT ("key <%C> - iteration <%u>\n"),
+                DDS_INSTANCEHANDLE_LOG (info.instance_handle),
                 datum.key.in (),
                 datum.iteration));
       }
