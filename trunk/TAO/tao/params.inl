@@ -376,5 +376,16 @@ TAO_ORB_Parameters::forward_once_exception (const int ef)
   this->forward_once_exception_ |= ef;
 }
 
+ACE_INLINE bool
+TAO_ORB_Parameters::allow_ziop_no_server_policies (void) const
+{
+  return this->allow_ziop_no_server_policies_;
+}
+
+ACE_INLINE void
+TAO_ORB_Parameters::allow_ziop_no_server_policies (bool x)
+{
+  this->allow_ziop_no_server_policies_ = x;
+}
 
 TAO_END_VERSIONED_NAMESPACE_DECL
