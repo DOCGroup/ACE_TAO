@@ -176,32 +176,12 @@ TAO_ZIOP_Stub::effective_compression_enabling_policy (void)
 CORBA::Policy *
 TAO_ZIOP_Stub::effective_compression_id_list_policy (void)
 {
-  // Get the value from the IOR (This is the SERVERS available compressor's list).
-  CORBA::Policy_var policy (
-    this->exposed_compression_id_list_policy ());
-  ZIOP::CompressorIdLevelListPolicy_var serverCompressors (
-    ZIOP::CompressorIdLevelListPolicy::_narrow (policy.in ()));
-  // If SERVER does not have an available compressor's list, compression can't go ahead.
-  if (CORBA::is_nil (serverCompressors.in ()))
-    {
-      if (6 < TAO_debug_level)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-            ACE_TEXT ("ZIOP (%P|%t) ")
-            ACE_TEXT ("TAO_ZIOP_Stub::effective_compression_id_list_policy, ")
-            ACE_TEXT ("no serverCompressorIdLevelListPolicy (did not compress).\n")));
-        }
-      return 0;
-    }
-  ::Compression::CompressorIdLevelList &serverList =
-    *serverCompressors->compressor_ids ();
-
   // Get effective override (This is the CLIENTS compressor's priority ordered list).
-  policy =
-    this->TAO_Stub::get_cached_policy (TAO_CACHED_COMPRESSION_ID_LEVEL_LIST_POLICY);
+  CORBA::Policy_var policy (
+    this->TAO_Stub::get_cached_policy (TAO_CACHED_COMPRESSION_ID_LEVEL_LIST_POLICY));
   ZIOP::CompressorIdLevelListPolicy_var clientCompressors (
     ZIOP::CompressorIdLevelListPolicy::_narrow (policy.in ()));
-  // Likewise if CLIENT does not have a compressor's list, compression can't go ahead.
+  // If CLIENT does not have an available compressor's list, compression can't go ahead.
   if (CORBA::is_nil (clientCompressors.in ()))
     {
       if (6 < TAO_debug_level)
@@ -215,6 +195,45 @@ TAO_ZIOP_Stub::effective_compression_id_list_policy (void)
     }
   ::Compression::CompressorIdLevelList &clientList =
     *clientCompressors->compressor_ids ();
+
+  // Get the value from the IOR (This is the SERVERS available compressor's list).
+  policy = this->exposed_compression_id_list_policy ();
+  ZIOP::CompressorIdLevelListPolicy_var serverCompressors (
+    ZIOP::CompressorIdLevelListPolicy::_narrow (policy.in ()));
+  // Likewise if SERVER does not have an available compressor's list, compression can't go ahead.
+  if (CORBA::is_nil (serverCompressors.in ()))
+    {
+      // OK if we are allowing the client to ZIOP compress without having any server
+      // ZIOP available compressor's list policies, then we simply return the copy of
+      // the client's compressors here and we will go on to use the first compressor
+      // configured. THIS IS GOING DIRECTLY AGAINST THE CORBA Compressed GIOP (ZIOP)
+      // V1.0 specification, but allows us to use ZIOP with MIOP and/or CORBALOCs.
+      // We have to trust the end user knows what his system is configured to allow;
+      // Any servers that cannot decompress the client's used ZIOP compressor will
+      // reject the request as they simply cannot decode or handle it (comms will
+      // simply timeout or lock-up at the client for any such incorrect two-way requests).
+      if (this->orb_core()->orb_params()->allow_ziop_no_server_policies ())
+        {
+          if (6 < TAO_debug_level)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("ZIOP (%P|%t) ")
+                ACE_TEXT ("TAO_ZIOP_Stub::effective_compression_id_list_policy, ")
+                ACE_TEXT ("no serverCompressorIdLevelListPolicy (but allow_ziop_no_server_policies in force).\n")));
+            }
+          return clientCompressors._retn ();
+        }
+      else if (6 < TAO_debug_level)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+            ACE_TEXT ("ZIOP (%P|%t) ")
+            ACE_TEXT ("TAO_ZIOP_Stub::effective_compression_id_list_policy, ")
+            ACE_TEXT ("no serverCompressorIdLevelListPolicy (did not compress).\n")));
+        }
+      return 0;
+    }
+  ::Compression::CompressorIdLevelList &serverList =
+    *serverCompressors->compressor_ids ();
 
   // For each CLIENT compressor (in priority order) check...
   for (CORBA::ULong client = 0u; client < clientList.length (); ++client)
