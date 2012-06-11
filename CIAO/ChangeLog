@@ -1,3 +1,8 @@
+Mon Jun 11 17:54:39 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/UnkeyedSamples/Receiver/Unkeyed_Test_Receiver_exec.cpp:
+          Fixed typo
+
 Mon Jun 11 12:37:55 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/idl/ndds/ndds_dcps_instance_handleC.h:
