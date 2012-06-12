@@ -1,3 +1,28 @@
+Tue Jun 12 17:24:50 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/idl/ndds/ndds_dcps_instance_handleC.h:
+        * connectors/dds4ccm/idl/ndds/ndds_dcps_instance_handleC.cpp:
+        * connectors/dds4ccm/impl/ndds/convertors/InstanceHandle_t.h:
+          Changed the operators to compare instance handles. With RTI DDS
+          it seems there are multiple values that are considered nil, so
+          handle nil values by using DDS_InstanceHandle_is_nil and if both
+          handles are not nil, use DDS_InstanceHandle_equals
+
+        * connectors/dds4ccm/impl/Updater_T.cpp:
+          Added logging when we get an instance back
+
+        * connectors/dds4ccm/impl/ndds/DataWriter_T.cpp:
+          Initialize variable with handl nil
+
+        * connectors/dds4ccm/tests/Getter/Receiver/Getter_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/KeyedWriter/Receiver/Writer_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/ResetTopic/TooLong/Sender/TL_ResetTopic_Sender_exec.cpp:
+          Log instance handle
+
+        * tests/IDL3_to_XMI/IDL2XMI_Test/IDL2XMI_Test.mpc:
+        * tools/IDL3_to_XMI/IDL3_TO_XMI.mpc:
+          Cleaned base projects
+
 Tue Jun 12 13:45:28 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/idl/ndds/ndds_dcps_instance_handleC.cpp:

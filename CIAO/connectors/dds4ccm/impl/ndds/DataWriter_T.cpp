@@ -447,7 +447,7 @@ namespace CIAO
 
       ::DDS_InstanceHandle_t const rtihandle =
         this->rti_entity ()->lookup_instance (instance_data);
-      ::DDS::InstanceHandle_t handle;
+      ::DDS::InstanceHandle_t handle = DDS::HANDLE_NIL;
       handle <<= rtihandle;
       return handle;
     }

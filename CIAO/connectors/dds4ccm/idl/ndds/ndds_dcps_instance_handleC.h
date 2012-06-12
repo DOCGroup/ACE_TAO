@@ -17,27 +17,24 @@
 #include /**/ "tao/Versioned_Namespace.h"
 
 #include "ndds_dcps_i_handleC.h"
+#include "ndds/ndds_cpp.h"
 
 namespace DDS
 {
   extern NDDS_STUB_Export ::DDS::InstanceHandle_t const HANDLE_NIL;
 }
 
-inline bool
-operator== (const ::DDS::InstanceHandle_t & instancehandle1, const ::DDS::InstanceHandle_t & instancehandle2)
-{
-  return instancehandle1.length  == instancehandle2.length  &&
-         instancehandle1.isValid == instancehandle2.isValid &&
-         ACE_OS::memcmp (instancehandle1.value, instancehandle2.value, sizeof (instancehandle1.value)) == 0;
-}
+NDDS_STUB_Export bool
+operator== (const ::DDS::InstanceHandle_t & instancehandle1, const ::DDS::InstanceHandle_t & instancehandle2);
 
-inline bool
-operator!= (const ::DDS::InstanceHandle_t & instancehandle1, const ::DDS::InstanceHandle_t & instancehandle2)
-{
-  return instancehandle1.length  != instancehandle2.length  ||
-         instancehandle1.isValid != instancehandle2.isValid ||
-         ACE_OS::memcmp (instancehandle1.value, instancehandle2.value, sizeof (instancehandle1.value)) != 0;
-}
+NDDS_STUB_Export bool
+operator!= (const ::DDS::InstanceHandle_t & instancehandle1, const ::DDS::InstanceHandle_t & instancehandle2);
+
+NDDS_STUB_Export void
+operator<<= (::DDS::InstanceHandle_t &ddsinstancehandle, const ::DDS_InstanceHandle_t & instancehandle);
+
+NDDS_STUB_Export void
+operator<<= (::DDS_InstanceHandle_t &ddsinstancehandle, const ::DDS::InstanceHandle_t & instancehandle);
 
 #include /**/ "ace/post.h"
 
