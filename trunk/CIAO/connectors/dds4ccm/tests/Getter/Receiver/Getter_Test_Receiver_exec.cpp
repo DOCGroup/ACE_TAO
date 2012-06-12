@@ -474,9 +474,12 @@ namespace CIAO_Getter_Test_Receiver_Impl
             ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR FIXED: GET MANY: ")
                     ACE_TEXT ("received instance handle should be invalid ")
                     ACE_TEXT ("for unkeyed data: ")
-                    ACE_TEXT ("key <%u> - iteration <%u>\n"),
+                    ACE_TEXT ("key <%u> - iteration <%u> handle ")
+                    DDS_INSTANCE_HANDLE_FORMAT_SPECIFIER
+                    ACE_TEXT ("\n"),
                     gettertest_info.key,
-                    gettertest_info.iteration));
+                    gettertest_info.iteration,
+                    DDS_INSTANCE_HANDLE_LOG(readinfo.instance_handle)));
           }
         if (readinfo.source_timestamp.sec == 0 &&
             readinfo.source_timestamp.nanosec == 0)
@@ -554,9 +557,12 @@ namespace CIAO_Getter_Test_Receiver_Impl
             ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR VARIABLE: GET MANY: ")
                     ACE_TEXT ("received instance handle should be invalid ")
                     ACE_TEXT ("for unkeyed data: ")
-                    ACE_TEXT ("key <%C> - iteration <%u>\n"),
+                    ACE_TEXT ("key <%C> - iteration <%u> - handle ")
+                    DDS_INSTANCE_HANDLE_FORMAT_SPECIFIER
+                    ACE_TEXT ("\n"),
                     gettertest_info->key.in (),
-                    gettertest_info->iteration));
+                    gettertest_info->iteration,
+                    DDS_INSTANCE_HANDLE_LOG(readinfo.instance_handle)));
           }
         if (readinfo.source_timestamp.sec == 0 &&
             readinfo.source_timestamp.nanosec == 0)
