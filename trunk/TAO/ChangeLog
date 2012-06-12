@@ -1,3 +1,9 @@
+Tue Jun 12 08:30:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * tao/ZIOP/ZIOP.cpp:
+        * tao/ZIOP/ZIOP_Service_Context_Handler.cpp:
+        Remove _int64 etc. size warnings.
+
 Mon Jun 11 21:45:56 UTC 2012  Adam Mitz  <mitza@ociweb.com>
 
         * TAO_IDL/tao_idl.mpc:

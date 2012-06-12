@@ -45,7 +45,7 @@ TAO_ZIOP_Service_Context_Handler::process_service_context (
     }
 
   // Extract each policy from the slots we recieved.
-  for (size_t i = 0u; i < policy_value_seq.length (); ++i)
+  for (CORBA::ULong i = 0u; i < static_cast<CORBA::ULong> (policy_value_seq.length ()); ++i)
     {
       TAO_InputCDR policy_cdr (
         reinterpret_cast<const char*> (policy_value_seq[i].pvalue.get_buffer ()),

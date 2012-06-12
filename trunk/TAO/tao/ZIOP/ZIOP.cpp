@@ -561,10 +561,10 @@ TAO_ZIOP_Loader::complete_compression (Compression::Compressor_ptr compressor,
           data.data = output;
           cdr << data;
           mb.rd_ptr(initial_rd_ptr);
-          int begin = (mb.rd_ptr() - mb.base ());
+          size_t begin = (mb.rd_ptr() - mb.base ());
           mb.data_block ()->base ()[0 + begin] = 0x5A;
           mb.data_block ()->base ()[TAO_GIOP_MESSAGE_SIZE_OFFSET + begin] =
-            cdr.length() - TAO_GIOP_MESSAGE_HEADER_LEN;
+            static_cast<char> (cdr.length() - TAO_GIOP_MESSAGE_HEADER_LEN);
 
           if (TAO_debug_level > 9)
             {
