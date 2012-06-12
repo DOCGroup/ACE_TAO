@@ -1,3 +1,8 @@
+Tue Jun 12 15:00:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp:
+        Correct debug text string ACE_MAX_DGRAM_SIZE should be MIOP_MAX_DGRAM_SIZE.
+
 Tue Jun 12 08:30:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
 
         * tao/ZIOP/ZIOP.cpp:
