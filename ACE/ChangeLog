@@ -1,3 +1,8 @@
+Tue Jun 12 17:30:47 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/make_release.py:
+          Exclude CIAO_*_OpenDDS workspaces for the moment
+
 Mon Jun 11 21:45:19 UTC 2012  Adam Mitz  <mitza@ociweb.com>
 
         * NEWS:
