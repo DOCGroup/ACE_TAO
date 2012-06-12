@@ -14,7 +14,6 @@
 typedef sequence<octet> OctetSeq;
 
 #pragma DCPS_DATA_TYPE "WriterTest"
-#pragma DCPS_DATA_KEY "WriterTest key"
 
 struct WriterTest {
   string key;
