@@ -307,9 +307,12 @@ namespace CIAO_Getter_Test_Receiver_Impl
         for (CORBA::ULong i = 0; i < gettertest_seq.length (); ++i)
           {
             ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::get_many: "
-                                  "Returned data : key <%C> - iteration <%d>\n",
+                                  "Returned data : key <%C> - iteration <%d> - handle "
+                                  DDS_INSTANCE_HANDLE_FORMAT_SPECIFIER
+                                  "\n",
                                   gettertest_seq[i].key.in (),
-                                  gettertest_seq[i].iteration));
+                                  gettertest_seq[i].iteration,
+                                  DDS_INSTANCE_HANDLE_LOG(readinfo[i].instance_handle)));
           }
       }
     else

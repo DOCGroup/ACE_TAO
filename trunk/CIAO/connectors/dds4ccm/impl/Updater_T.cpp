@@ -83,6 +83,12 @@ namespace CIAO
       ::DDS::InstanceHandle_t const hnd = this->dds_writer ()->lookup_instance (an_instance);
       if (hnd != ::DDS::HANDLE_NIL)
         {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+              ACE_TEXT ("Updater_T::create_one: ")
+              ACE_TEXT ("Instance already registered with handle")
+              DDS_INSTANCE_HANDLE_FORMAT_SPECIFIER
+              ACE_TEXT (".\n"),
+              DDS_INSTANCE_HANDLE_LOG (hnd)));
           throw CCM_DDS::AlreadyCreated (0);
         }
 
