@@ -198,9 +198,12 @@ TAO_UIPMC_Transport<CONNECTION_HANDLER>::send (iovec *iov, int iovcnt,
                               ACE_TEXT ("\n\nTAO (%P|%t) - ")
                               ACE_TEXT ("UIPMC_Transport::send ")
                               ACE_TEXT ("Message of size %d needs too many MIOP fragments (max is %d).\n")
-                              ACE_TEXT ("You may be able to increase ACE_MAX_DGRAM_SIZE.\n"),
-                              bytes_to_send,
-                              MIOP_MAX_FRAGMENTS));
+#if MIOP_MAX_DGRAM_SIZE < ACE_MAX_UDP_PACKET_SIZE
+                              ACE_TEXT ("You may be able to increase MIOP_MAX_DGRAM_SIZE.\n")
+#endif
+                              , bytes_to_send
+                              , MIOP_MAX_FRAGMENTS
+                            ));
                 }
 
               // Pretend it is o.k.  See note by bytes_to_send calculation.
