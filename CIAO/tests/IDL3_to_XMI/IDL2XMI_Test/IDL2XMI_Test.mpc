@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*IDL2XMI_Test) : taoexe, ace_xml_utils, xerces {
+project(*IDL2XMI_Test) : taoexe, ace_xml_utils {
   exename = xmlvalidator
 
   Source_Files {

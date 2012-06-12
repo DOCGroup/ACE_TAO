@@ -282,6 +282,7 @@ namespace CIAO_TL_ResetTopic_Sender_Impl
                     ::TL_ResetTopic::TL_ResetTopicTestConnector:: Writer_var writer =
                       this->ciao_context_->get_connection_info_write_data ();
                     sample.iteration = iter;
+
                     writer->write_one (sample, ::DDS::HANDLE_NIL);
 
                     ACE_DEBUG ((LM_DEBUG, "Sender_exec_i::start_event_test - "

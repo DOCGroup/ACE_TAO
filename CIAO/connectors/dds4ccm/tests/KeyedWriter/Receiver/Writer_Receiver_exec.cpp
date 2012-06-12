@@ -26,6 +26,7 @@
  **/
 
 #include "Writer_Receiver_exec.h"
+#include "dds4ccm/impl/dds4ccm_conf.h"
 
 namespace CIAO_Writer_Receiver_Impl
 {
@@ -53,13 +54,16 @@ namespace CIAO_Writer_Receiver_Impl
 
   void
   info_out_data_listener_exec_i::on_one_data (const ::WriterTest & datum,
-  const ::CCM_DDS::ReadInfo & /* info */)
+  const ::CCM_DDS::ReadInfo & info)
   {
     ++samples_received_;
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("WriterTest_Listener: ")
-            ACE_TEXT ("received writer info for <%C> at %u\n"),
+    ACE_DEBUG ((LM_DEBUG, "WriterTest_Listener: "
+            "received writer info for <%C> at <%u> handle "
+            DDS_INSTANCE_HANDLE_FORMAT_SPECIFIER
+            "\n",
             datum.key.in (),
-            datum.iteration));
+            datum.iteration,
+            DDS_INSTANCE_HANDLE_LOG(info.instance_handle)));
     if (datum.iteration > this->iterations_)
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: received iteration ")
