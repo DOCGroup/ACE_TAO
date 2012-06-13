@@ -31,10 +31,63 @@
 
 namespace CIAO_Unkeyed_Test_Sender_Impl
 {
+  //============================================================
+  // ConnectorStatusListener_exec_i
+  //============================================================
+  ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (
+    Sender_exec_i &callback)
+      : callback_ (callback)
+  {
+  }
+
+  ConnectorStatusListener_exec_i::~ConnectorStatusListener_exec_i (void)
+  {
+  }
+
+  // Operations from ::CCM_DDS::ConnectorStatusListener
+  void ConnectorStatusListener_exec_i::on_inconsistent_topic (
+    ::DDS::Topic_ptr /*the_topic*/,
+    const DDS::InconsistentTopicStatus & /*status*/)
+  {
+  }
+
+  void ConnectorStatusListener_exec_i::on_requested_incompatible_qos (
+    ::DDS::DataReader_ptr /*the_reader*/,
+    const DDS::RequestedIncompatibleQosStatus & /*status*/)
+  {
+  }
+
+  void ConnectorStatusListener_exec_i::on_sample_rejected (
+    ::DDS::DataReader_ptr /*the_reader*/,
+    const DDS::SampleRejectedStatus & /*status*/)
+  {
+  }
+
+  void ConnectorStatusListener_exec_i::on_offered_deadline_missed(
+    ::DDS::DataWriter_ptr /*the_writer*/,
+    const DDS::OfferedDeadlineMissedStatus & /*status*/)
+  {
+  }
+
+  void ConnectorStatusListener_exec_i::on_offered_incompatible_qos(
+    ::DDS::DataWriter_ptr /*the_writer*/,
+    const DDS::OfferedIncompatibleQosStatus & /*status*/)
+  {
+  }
+
+  void ConnectorStatusListener_exec_i::on_unexpected_status(
+    ::DDS::Entity_ptr /*the_entity*/,
+    ::DDS::StatusKind status_kind)
+  {
+    if (status_kind == ::DDS::PUBLICATION_MATCHED_STATUS)
+      {
+        this->callback_.start ();
+      }
+  }
+
   /**
    * Write action generator
    */
-
   pulse_Generator::pulse_Generator (Sender_exec_i &callback)
     : pulse_callback_ (callback)
   {
@@ -200,6 +253,12 @@ namespace CIAO_Unkeyed_Test_Sender_Impl
     this->keys_ = keys;
   }
 
+  ::CCM_DDS::CCM_ConnectorStatusListener_ptr
+  Sender_exec_i::get_test_topic_connector_status (void)
+  {
+    return new ConnectorStatusListener_exec_i (*this);
+  }
+
   // Operations from Components::SessionComponent.
 
   void
@@ -224,8 +283,6 @@ namespace CIAO_Unkeyed_Test_Sender_Impl
   void
   Sender_exec_i::ccm_activate (void)
   {
-    this->start ();
-
     ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, _guard,
                         this->mutex_, CORBA::INTERNAL ());
 
