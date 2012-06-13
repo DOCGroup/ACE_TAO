@@ -13,7 +13,8 @@ module CoPubSub {
     string hello;
     long msgId;
   };
-  #if defined DDS4CCM_NEEDS_SEQUENCES_DEFINED
+
+#if defined DDS4CCM_NEEDS_SEQUENCES_DEFINED
 typedef sequence <Test_msg> Test_msgSeq;
 #endif
 };

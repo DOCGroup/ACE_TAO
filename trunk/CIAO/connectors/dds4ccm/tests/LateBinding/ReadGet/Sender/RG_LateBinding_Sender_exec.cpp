@@ -207,6 +207,7 @@ namespace CIAO_RG_LateBinding_Sender_Impl
   Sender_exec_i::ccm_passivate (void)
   {
     delete this->to_handler_;
+    this->to_handler_ = 0;
   }
 
   void
