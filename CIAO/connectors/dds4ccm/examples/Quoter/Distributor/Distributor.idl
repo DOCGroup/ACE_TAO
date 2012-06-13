@@ -3,8 +3,6 @@
 /**
  * @file Distributor.idl
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
- *
- * by-hand idl3 translation of distributor components.
  */
 
 #ifndef DDS_DISTRIBUTOR_IDL

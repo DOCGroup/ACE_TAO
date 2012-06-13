@@ -1,3 +1,69 @@
+Wed Jun 13 18:23:56 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/UnkeyedSamples/Receiver/Unkeyed_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/UnkeyedSamples/Receiver/Unkeyed_Test_Receiver_exec.cpp:
+          With RTI DDS any unkeyed sample gets handle nil, but with OpenDDS
+          we get always the same handle for all samples of the same type, but
+          not nil. Extended this test to handle both vendors
+
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender.idl:
+        * connectors/dds4ccm/examples/Quoter/Distributor/Distributor.idl:
+        * connectors/dds4ccm/examples/Shapes/Sender/Shapes_Sender.idl:
+        * connectors/dds4ccm/performance-tests/Keyed/Sender/Perf_Keyed_Test_Sender.idl:
+        * connectors/dds4ccm/performance-tests/Latency/Sender/LatencyTT_Test_Sender.idl:
+        * connectors/dds4ccm/performance-tests/Throughput/Sender/Throughput_Sender.idl:
+        * connectors/dds4ccm/tests/CSLDeadline/Sender/CSL_DeadlineTest_Sender.idl:
+        * connectors/dds4ccm/tests/CSLQoS/Sender/CSL_QoSTest_Sender.idl:
+        * connectors/dds4ccm/tests/CSLSampleRejected/Sender/CSL_SRTest_Sender.idl:
+        * connectors/dds4ccm/tests/CSLUnexpStat/Sender/CSL_USTest_Sender.idl:
+        * connectors/dds4ccm/tests/CoherentUpdater/Sender/CoherentUpdate_Test_Sender.idl:
+        * connectors/dds4ccm/tests/CoherentWriter/Sender/CoherentWrite_Test_Sender.idl:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/EventListener/Sender/CFTLE_Test_Sender.idl:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/Sender/ReadGet_Test_Sender.idl:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/StateListener/Sender/CFTLS_Test_Sender.idl:
+        * connectors/dds4ccm/tests/DDSEntity/Sender/Writer_Sender.idl:
+        * connectors/dds4ccm/tests/DoubleNestedModule/Sender/DNM_Sender.idl:
+        * connectors/dds4ccm/tests/Event_Connection_Test/Sender/Event_Connection_Test_Sender.idl:
+        * connectors/dds4ccm/tests/Getter/Sender/Getter_Test_Sender.idl:
+        * connectors/dds4ccm/tests/InstanceHandle/Sender/Writer_Sender.idl:
+        * connectors/dds4ccm/tests/KeyedSamples/Sender/Keyed_Test_Sender.idl:
+        * connectors/dds4ccm/tests/KeyedWriter/Sender/Writer_Sender.idl:
+        * connectors/dds4ccm/tests/LateBinding/ReadGet/Sender/RG_LateBinding_Sender.idl:
+        * connectors/dds4ccm/tests/LateBinding/UpdateWrite/Sender/WU_LateBinding_Sender.idl:
+        * connectors/dds4ccm/tests/ListenManyByMany/Sender/LMBM_Test_Sender.idl:
+        * connectors/dds4ccm/tests/ListenNotEnabled/Sender/LNE_Test_Sender.idl:
+        * connectors/dds4ccm/tests/ListenOneByOne/Sender/LOBO_Test_Sender.idl:
+        * connectors/dds4ccm/tests/MemLeakDetection/Event_MemLeakDetection_Test/Sender/Event_MemLeakDetection_Test_Sender.idl:
+        * connectors/dds4ccm/tests/MemLeakDetection/State_MemLeakDetection_Test/Sender/State_MemLeakDetection_Test_Sender.idl:
+        * connectors/dds4ccm/tests/On_Inconsistent_Topic/Sender/OIT_Test_Sender.idl:
+        * connectors/dds4ccm/tests/PSLDeadline/Sender/PSL_DeadlineTest_Sender.idl:
+        * connectors/dds4ccm/tests/PSLSampleLost/Sender/PSL_SampleLost_Sender.idl:
+        * connectors/dds4ccm/tests/Proxies/ReadWrite/Sender/Proxy_RW_Test_Sender.idl:
+        * connectors/dds4ccm/tests/QueryCondition/Different/Sender/Different_Test_Sender.idl:
+        * connectors/dds4ccm/tests/QueryCondition/EventListener/Sender/QCLE_Test_Sender.idl:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Sender/ReadGet_Test_Sender.idl:
+        * connectors/dds4ccm/tests/QueryCondition/StateListener/Sender/QCLS_Test_Sender.idl:
+        * connectors/dds4ccm/tests/QueryCondition/TwoListeners/Sender/QCTL_Test_Sender.idl:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueries/Sender/QCTQ_Test_Sender.idl:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany/Sender/QCTQM_Test_Sender.idl:
+        * connectors/dds4ccm/tests/Reader/Sender/Reader_Test_Sender.idl:
+        * connectors/dds4ccm/tests/ResetTopic/ReadGet/Sender/RG_ResetTopic_Sender.idl:
+        * connectors/dds4ccm/tests/ResetTopic/ToEmpty/Sender/TE_ResetTopic_Sender.idl:
+        * connectors/dds4ccm/tests/ResetTopic/TooLong/Sender/TL_ResetTopic_Sender.idl:
+        * connectors/dds4ccm/tests/ResetTopic/UpdateListen/Sender/UL_ResetTopic_Sender.idl:
+        * connectors/dds4ccm/tests/ResetTopic/WriteListen/Sender/WL_ResetTopic_Sender.idl:
+        * connectors/dds4ccm/tests/SLDisabled/Sender/SL_Disabled_Sender.idl:
+        * connectors/dds4ccm/tests/SLManyByMany/Sender/SL_ManyByMany_Sender.idl:
+        * connectors/dds4ccm/tests/SLOneByOne/Sender/SL_OneByOne_Sender.idl:
+        * connectors/dds4ccm/tests/State_Connection_Test/Sender/State_Connection_Test_Sender.idl:
+        * connectors/dds4ccm/tests/UnkeyedSamples/Sender/Unkeyed_Test_Sender.idl:
+        * connectors/dds4ccm/tests/UnkeyedWriter/Sender/Writer_Sender.idl:
+        * connectors/dds4ccm/tests/Updater/Sender/Updater_Sender.idl:
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Sender/VTopic_Sender.idl:
+        * connectors/dds4ccm/tests/VariousTopicsState/Sender/VTopics_Sender.idl:
+          Removed left over comments from the time that we manually had to
+          expend IDL3+ to IDL3
+
 Wed Jun 13 17:42:32 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:

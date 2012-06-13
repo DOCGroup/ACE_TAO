@@ -1,10 +1,7 @@
 // $Id$
 
 /**
- * @file
  * @author Marcel Smit (msmit@remedy.nl)
- *
- * by-hand idl3 translation of sender components.
  */
 
 #ifndef DDS_SENDER_IDL

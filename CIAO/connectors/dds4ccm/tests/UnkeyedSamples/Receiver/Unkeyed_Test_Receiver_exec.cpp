@@ -41,6 +41,7 @@ namespace CIAO_Unkeyed_Test_Receiver_Impl
     : ciao_context_ (
         ::Unkeyed_Test::CCM_Receiver_Context::_duplicate (ctx))
       , received_ (received)
+      , handle_ (DDS::HANDLE_NIL)
   {
   }
 
@@ -54,18 +55,29 @@ namespace CIAO_Unkeyed_Test_Receiver_Impl
   info_out_data_listener_exec_i::on_one_data (const ::UnkeyedTest & datum,
   const ::CCM_DDS::ReadInfo & info)
   {
+    // From the first sample store the instance handle, the handle should be
+    // nil (RTI DDS) or stay the same (OpenDDS)
+    if (this->received_ == 0)
+      {
+        this->handle_ = info.instance_handle;
+      }
     ++this->received_;
+
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("UnkeyedTest_Listener: ")
-            ACE_TEXT ("received keyed_test_info for <%C> at %u\n"),
+            ACE_TEXT ("received keyed_test_info for <%C> at iteration <%u> for handle ")
+            DDS_INSTANCE_HANDLE_FORMAT_SPECIFIER
+            ACE_TEXT ("\n"),
             datum.key.in (),
-            datum.iteration));
-    if (info.instance_handle != ::DDS::HANDLE_NIL)
+            datum.iteration,
+            DDS_INSTANCE_HANDLE_LOG (info.instance_handle)));
+    if ((info.instance_handle != ::DDS::HANDLE_NIL) &&
+        (this->handle_ != info.instance_handle))
       {
         ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("ERROR: UnkeyedTest_Listener::on_one_data: ")
                 ACE_TEXT ("received instance handle ")
                 DDS_INSTANCE_HANDLE_FORMAT_SPECIFIER
-                ACE_TEXT (" should be invalid ")
+                ACE_TEXT (" should be nil or stay the same ")
                 ACE_TEXT ("for unkeyed data ")
                 ACE_TEXT ("key <%C> - iteration <%u>\n"),
                 DDS_INSTANCE_HANDLE_LOG (info.instance_handle),
