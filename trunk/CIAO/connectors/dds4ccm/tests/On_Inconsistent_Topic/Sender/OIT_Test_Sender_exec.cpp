@@ -81,7 +81,7 @@ namespace CIAO_OIT_Test_Sender_Impl
   Sender_exec_i::get_connector_status (void)
   {
     return new ConnectorStatusListener_exec_i (this->inconsistent_,
-                                                   this->thread_id_listener_);
+                                               this->thread_id_listener_);
   }
 
   void

@@ -102,7 +102,7 @@ DDS_Write_T<CCM_TYPE, TYPED_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::configuration_c
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_DDS_NIL_RETURN, (LM_ERROR, DDS4CCM_INFO
                         "DDS_Write_T::configuration_complete - "
-                        "Error: Proxy returned a nil datawriter.\n"));
+                        "Error: DDS returned a nil datawriter.\n"));
           throw ::CORBA::INTERNAL ();
         }
       DDS::ReturnCode_t retcode = dwv_tmp->enable ();
