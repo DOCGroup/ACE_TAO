@@ -1,3 +1,9 @@
+Wed Jun 13 07:52:44 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Shapes/Receiver/Shapes_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/MultiTopic/Receiver/MultiTopic_Receiver_exec.cpp:
+          Simplified logging of timestamps
+
 Wed Jun 13 05:52:55 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/CollocatedPubSub/Base/Collocated_Base.idl:

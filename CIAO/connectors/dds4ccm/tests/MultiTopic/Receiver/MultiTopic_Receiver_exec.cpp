@@ -29,6 +29,7 @@
 #include "tao/ORB_Core.h"
 #include "ace/OS_NS_time.h"
 #include "ace/Reactor.h"
+#include "dds4ccm/impl/TimeUtilities.h"
 
 #define TIME_OUT_SEC 1
 
@@ -124,14 +125,10 @@ namespace CIAO_Shapes_Receiver_Impl
           {
             if (getter_sq->get_one (shape_info.out (), readinfo.out ()))
               {
-                time_t tim = readinfo->source_timestamp.sec;
-                tm * time = ACE_OS::localtime(&tim);
+                ACE_Time_Value time;
+                time <<= readinfo->source_timestamp;
                 ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("<GET_ONE - SQUARE> ReadInfo -> ")
-                                      ACE_TEXT ("date = %02d:%02d:%02d.%d\n"),
-                                      time->tm_hour,
-                                      time->tm_min,
-                                      time->tm_sec,
-                                      readinfo->source_timestamp.nanosec));
+                                      ACE_TEXT ("date = %#T\n"), time));
                 ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("<GET_ONE - SQUARE> : ")
                                       ACE_TEXT ("received shape_info for <%C> at %u:%u:%u\n"),
                                       shape_info->color.in (),
@@ -157,14 +154,10 @@ namespace CIAO_Shapes_Receiver_Impl
           {
             if (getter_tr->get_one (shape_info.out (), readinfo.out ()))
               {
-                time_t tim = readinfo->source_timestamp.sec;
-                tm * time = ACE_OS::localtime(&tim);
+                ACE_Time_Value time;
+                time <<= readinfo->source_timestamp;
                 ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("<GET_ONE - TRIANGLE> ReadInfo -> ")
-                                      ACE_TEXT ("date = %02d:%02d:%02d.%d\n"),
-                                      time->tm_hour,
-                                      time->tm_min,
-                                      time->tm_sec,
-                                      readinfo->source_timestamp.nanosec));
+                                      ACE_TEXT ("date = %#T\n"), time));
                 ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("<GET_ONE - TRIANGLE> : ")
                                       ACE_TEXT ("received shape_info for <%C> at %u:%u:%u\n"),
                                       shape_info->color.in (),
