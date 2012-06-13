@@ -2,7 +2,7 @@
 
 /**
  * @file QCTQM_Starter.idl
- * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
+ * @author Marijke Hengstmengel (mhengstmengel@remedy.nl)
  */
 
 #ifndef QUERYCONDITION_STARTER_IDL

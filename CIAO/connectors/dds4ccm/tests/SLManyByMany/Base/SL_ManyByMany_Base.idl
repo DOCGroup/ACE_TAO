@@ -2,7 +2,7 @@
 
 /**
  * @file   SL_ManyByMany_Base.idl
- * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
+ * @author Marijke Hengstmengel (mhengstmengel@remedy.nl)
  */
 
 #ifndef SL_MANYBYMANY_BASE_IDL

@@ -1,7 +1,7 @@
 // $Id$
 
 /**
- * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
+ * @author Marijke Hengstmengel (mhengstmengel@remedy.nl)
  */
 
 #ifndef DDS_PERF_KEYED_TEST_SENDER_IDL

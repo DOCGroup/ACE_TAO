@@ -2,7 +2,7 @@
 
 /**
  * @file HomeT_Base.idl
- * @author  Marijke Hengstmengel <mhengstmengel@remedy.nl>
+ * @author  Marijke Hengstmengel (mhengstmengel@remedy.nl)
  */
 
 #ifndef HOMET_BASE_IDL

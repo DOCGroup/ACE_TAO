@@ -2,7 +2,7 @@
 
 /**
  * @file   PSL_SampleLost_Base.idl
- * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
+ * @author Marijke Hengstmengel (mhengstmengel@remedy.nl)
  */
 
 #ifndef PSL_SAMPLELOST_BASE_IDL

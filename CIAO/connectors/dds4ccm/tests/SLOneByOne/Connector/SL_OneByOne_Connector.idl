@@ -2,7 +2,7 @@
 
 /**
  * @file SL_OneByOne_Connector.idl
- * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
+ * @author Marijke Hengstmengel (mhengstmengel@remedy.nl)
  */
 
 #ifndef SL_ONEBYONE_CONNECTOR_IDL_

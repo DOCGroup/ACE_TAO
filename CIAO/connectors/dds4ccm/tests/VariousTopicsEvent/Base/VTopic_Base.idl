@@ -2,7 +2,7 @@
 
 /**
  * @file   VTopic_Base.idl
- * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
+ * @author Marijke Hengstmengel (mhengstmengel@remedy.nl)
  */
 
 #ifndef VTOPIC_BASE_IDL

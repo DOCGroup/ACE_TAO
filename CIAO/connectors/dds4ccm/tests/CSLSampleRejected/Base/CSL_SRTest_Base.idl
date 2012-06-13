@@ -2,7 +2,7 @@
 
 /**
  * @file   CSL_SRTest_Base.idl
- * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
+ * @author Marijke Hengstmengel (mhengstmengel@remedy.nl)
  */
 
 #ifndef CSL_SRTEST_BASE_IDL

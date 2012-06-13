@@ -2,7 +2,7 @@
 
 /**
  * @file CSL_QoSTest_Connector.idl
- * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
+ * @author Marijke Hengstmengel (mhengstmengel@remedy.nl)
  */
 
 #ifndef CSL_QOSTEST_CONNECTOR_IDL_
