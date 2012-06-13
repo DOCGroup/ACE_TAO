@@ -2,7 +2,7 @@
 
 /**
  * @file PSL_DeadlineTest_Connector.idl
- * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
+ * @author Marijke Hengstmengel (mhengstmengel@remedy.nl)
  */
 
 #ifndef PSL_DeadlineTest_CONNECTOR_IDL_

@@ -2,7 +2,7 @@
 
 /**
  * @file CSL_DeadlineTest_Connector.idl
- * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
+ * @author Marijke Hengstmengel (mhengstmengel@remedy.nl)
  */
 
 #ifndef CSL_DeadlineTest_CONNECTOR_IDL_

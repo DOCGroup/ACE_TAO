@@ -2,7 +2,7 @@
 
 /**
  * @file VT_String_Connector.idl
- * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
+ * @author Marijke Hengstmengel (mhengstmengel@remedy.nl)
  */
 
 #ifndef VT_STRING_CONNECTOR_IDL_
