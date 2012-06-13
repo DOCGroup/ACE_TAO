@@ -123,14 +123,17 @@ namespace CIAO_Writer_Sender_Impl
     for (i = this->ktests_.begin(); i != this->ktests_.end(); ++i)
       {
         DDS_InstanceHandle_t const hnd = this->writer_->register_instance (i->second);
-        if (hnd == DDS_HANDLE_NIL)
+        if (DDS_InstanceHandle_is_nil (&hnd))
           {
             ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Unable to register handle for <%C> - iteration <%d>\n"),
               i->first.c_str (), i->second->iteration));
           }
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Registering instance for <%C>\n"),
-                    i->second->key.in ()));
-        this->handles_[i->first.c_str ()] = hnd;
+        else
+          {
+            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Registering instance for <%C>\n"),
+                        i->second->key.in ()));
+            this->handles_[i->first.c_str ()] = hnd;
+          }
      }
   }
 
