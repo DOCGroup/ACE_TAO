@@ -1,3 +1,12 @@
+Wed Jun 13 18:38:55 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/UnkeyedSamples/Sender/Unkeyed_Test_Sender.idl:
+        * connectors/dds4ccm/tests/UnkeyedSamples/Sender/Unkeyed_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/UnkeyedSamples/Sender/Unkeyed_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/UnkeyedSamples/descriptors/Plan.cdp:
+          Use publication_matched callback to start writing, solves missing
+          samples with OpenDDS
+
 Wed Jun 13 18:23:56 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/UnkeyedSamples/Receiver/Unkeyed_Test_Receiver_exec.h:
