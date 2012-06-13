@@ -28,8 +28,8 @@
 #include "Shapes_Receiver_exec.h"
 #include "tao/ORB_Core.h"
 #include "ace/Reactor.h"
-
 #include "ace/OS_NS_time.h"
+#include "dds4ccm/impl/TimeUtilities.h"
 
 namespace CIAO_Shapes_Receiver_Impl
 {
@@ -85,7 +85,7 @@ namespace CIAO_Shapes_Receiver_Impl
   const ::CCM_DDS::ReadInfo & /* info */)
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ShapeType_Listener: ")
-            ACE_TEXT ("received shape_info for <%C> at %u:%u:%u\n"),
+            ACE_TEXT ("received shape_info for <%C> at X <%u> Y <%u> size <%u>\n"),
             datum.color.in (),
             datum.x,
             datum.y,
@@ -217,16 +217,12 @@ namespace CIAO_Shapes_Receiver_Impl
         if (! ::CORBA::is_nil (reader.in ()))
           {
             reader->read_one_last (shape_info, readinfo, ::DDS::HANDLE_NIL);
-            time_t tim = readinfo.source_timestamp.sec;
-            tm* time = ACE_OS::localtime(&tim);
+            ACE_Time_Value time;
+            time <<= readinfo.source_timestamp;
             ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ONE Read_Info ")
-                      ACE_TEXT (" -> date = %02d:%02d:%02d.%d\n"),
-                                time->tm_hour,
-                                time->tm_min,
-                                time->tm_sec,
-                                readinfo.source_timestamp.nanosec));
+                      ACE_TEXT (" -> date = %#T\n"), time));
             ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ ON shape info : ")
-                ACE_TEXT ("received shape_info for <%C> at %u:%u:%u\n"),
+                ACE_TEXT ("received shape_info for <%C> at X <%u> Y <%u> size <%u>\n"),
                 shape_info.color.in (),
                 shape_info.x,
                 shape_info.y,
@@ -241,7 +237,7 @@ namespace CIAO_Shapes_Receiver_Impl
     catch(const CCM_DDS::NonExistent& )
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("ShapeType_Read_One: ")
-                  ACE_TEXT ("no shape_info receieved\n")));
+                  ACE_TEXT ("no shape_info received\n")));
       }
   }
 
@@ -257,19 +253,15 @@ namespace CIAO_Shapes_Receiver_Impl
         reader->read_all(shape_infos, readinfoseq);
         for(CORBA::ULong i = 0; i < readinfoseq.length(); ++i)
           {
-            time_t tim = readinfoseq[i].source_timestamp.sec;
-            tm* time = ACE_OS::localtime(&tim);
+            ACE_Time_Value time;
+            time <<= readinfoseq[i].source_timestamp;
             ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ALL ReadInfo ")
-                ACE_TEXT ("-> UTC date = %02d:%02d:%02d.%d\n"),
-                                time->tm_hour,
-                                time->tm_min,
-                                time->tm_sec,
-                                readinfoseq[i].source_timestamp.nanosec));
+                ACE_TEXT ("-> UTC date = %#T\n"), time));
           }
         for(CORBA::ULong i = 0; i < shape_infos.length(); ++i)
           {
             ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ALL Shape Info : ")
-                  ACE_TEXT ("Number <%d> : received shape_info for <%C> at %u:%u:%u\n"),
+                ACE_TEXT ("received shape_info for <%C> at X <%u> Y <%u> size <%u>\n"),
                 i,
                 shape_infos[i].color.in (),
                 shape_infos[i].x,
@@ -298,16 +290,12 @@ namespace CIAO_Shapes_Receiver_Impl
           {
             if (getter->get_one (shape_info.out (), readinfo.out ()))
               {
-                time_t tim = readinfo->source_timestamp.sec;
-                tm* time = ACE_OS::localtime(&tim);
+                ACE_Time_Value time;
+                time <<= readinfo->source_timestamp;
                 ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("GET_ONE ReadInfo -> ")
-                                      ACE_TEXT ("date = %02d:%02d:%02d.%d\n"),
-                                    time->tm_hour,
-                                    time->tm_min,
-                                    time->tm_sec,
-                                    readinfo->source_timestamp.nanosec));
+                                      ACE_TEXT ("date = %#T\n"), time));
                 ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("GET_ONE ShapeType : ")
-                                      ACE_TEXT ("received shape_info for <%C> at %u:%u:%u\n"),
+                    ACE_TEXT ("received shape_info for <%C> at X <%u> Y <%u> size <%u>\n"),
                     shape_info->color.in (),
                     shape_info->x,
                     shape_info->y,
