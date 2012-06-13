@@ -649,7 +649,7 @@ DDS_Base_Connector_T<CCM_TYPE>::init_publisher (
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_DDS_NIL_RETURN, (LM_ERROR, DDS4CCM_INFO
                         "DDS_Base_Connector_T::init_publisher - "
-                        "Error: Proxy returned a nil publisher.\n"));
+                        "Error: DDS returned a nil publisher.\n"));
           throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
         }
     }
@@ -726,7 +726,7 @@ DDS_Base_Connector_T<CCM_TYPE>::init_subscriber (
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_DDS_NIL_RETURN, (LM_ERROR, DDS4CCM_INFO
                         "DDS_Base_Connector_T::init_subscriber - "
-                        "Error: Proxy returned a nil subscriber.\n"));
+                        "Error: DDS returned a nil subscriber.\n"));
           throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
         }
     }

@@ -84,8 +84,8 @@ namespace CIAO
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                         ACE_TEXT ("DataReaderStateListener_T::on_data_available_i - ")
-                        ACE_TEXT ("Failed to retrieve pointer to proxy from ")
-                        ACE_TEXT ("DDSDataReader.\n")));
+                        ACE_TEXT ("Failed to narrow DataReader to a type ")
+                        ACE_TEXT ("specific DataReader.\n")));
           return;
         }
 

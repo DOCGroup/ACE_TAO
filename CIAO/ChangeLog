@@ -1,3 +1,17 @@
+Wed Jun 13 17:42:32 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Subscriber_Base_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Update_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Write_T.cpp:
+        * connectors/dds4ccm/impl/DataReaderListener_T.cpp:
+        * connectors/dds4ccm/impl/DataReaderStateListener_T.cpp:
+          Don't use the word proxy in logging, that is only the case with
+          RTI DDS
+
+        * connectors/dds4ccm/tests/On_Inconsistent_Topic/Sender/OIT_Test_Sender_exec.cpp:
+          Layout change
+
 Wed Jun 13 10:42:23 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/DDSEntity/Sender/Writer_Sender_exec.cpp:

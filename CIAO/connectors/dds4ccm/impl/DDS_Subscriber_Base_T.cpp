@@ -127,7 +127,7 @@ DDS_Subscriber_Base_T<CCM_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::c
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_DDS_NIL_RETURN, (LM_ERROR, DDS4CCM_INFO
                         "DDS_Subscriber_Base_T::configuration_complete - "
-                        "Error: Proxy returned a nil datareader.\n"));
+                        "Error: DDS returned a nil datareader.\n"));
           throw ::CORBA::INTERNAL ();
         }
       DDS::ReturnCode_t const retcode = dr->enable ();
