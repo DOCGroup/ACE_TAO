@@ -2,7 +2,7 @@
 
 /**
  * @file   SL_Disabled_Base.idl
- * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
+ * @author Marijke Hengstmengel (mhengstmengel@remedy.nl)
  */
 
 #ifndef SL_DISABLED_BASE_IDL

@@ -2,7 +2,7 @@
 
 /**
  * @file VTS_Seq_Connector.idl
- * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
+ * @author Marijke Hengstmengel (mhengstmengel@remedy.nl)
  */
 
 #ifndef VTS_SEQ_CONNECTOR_IDL_

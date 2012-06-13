@@ -2,7 +2,7 @@
 
 /**
  * @file Throughput_Base.idl
- * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
+ * @author Marijke Hengstmengel (mhengstmengel@remedy.nl)
  */
 
 #ifndef THROUGHPUT_BASE_IDL

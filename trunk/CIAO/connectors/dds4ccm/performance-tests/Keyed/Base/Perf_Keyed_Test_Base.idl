@@ -2,7 +2,7 @@
 
 /**
  * @file Perf_Keyed_Test_Base.idl
- * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
+ * @author Marijke Hengstmengel (mhengstmengel@remedy.nl)
  */
 
 #ifndef PERF_KEYED_TEST_BASE_IDL

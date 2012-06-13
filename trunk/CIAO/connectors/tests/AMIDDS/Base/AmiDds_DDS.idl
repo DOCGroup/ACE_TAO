@@ -2,7 +2,7 @@
 
 /**
  * @file AmiDds_DDS.idl
- * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
+ * @author Marijke Hengstmengel (mhengstmengel@remedy.nl)
  */
 
 #ifndef AMIDDS_DDS_IDL

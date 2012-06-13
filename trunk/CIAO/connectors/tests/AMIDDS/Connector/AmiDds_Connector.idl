@@ -2,7 +2,7 @@
 
 /**
  * @file AmiDds_Connector.idl
- * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
+ * @author Marijke Hengstmengel (mhengstmengel@remedy.nl)
  */
 
 #ifndef AMIDDS_CONNECTOR_IDL_

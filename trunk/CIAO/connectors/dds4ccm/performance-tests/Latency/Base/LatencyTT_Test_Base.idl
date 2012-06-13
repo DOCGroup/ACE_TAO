@@ -2,7 +2,7 @@
 
 /**
  * @file LatencyTT_Test_Base.idl
- * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
+ * @author Marijke Hengstmengel (mhengstmengel@remedy.nl)
  */
 
 #ifndef LATENCYTT_TEST_BASE_IDL
