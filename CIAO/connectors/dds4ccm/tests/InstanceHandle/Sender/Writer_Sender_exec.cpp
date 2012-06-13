@@ -153,20 +153,6 @@ namespace CIAO_Writer_Sender_Impl
 
         DDS_InstanceHandle_t dds_hnd =
           this->dds_writer_->lookup_instance (i->second);
-        if (dds_hnd == ccm_hnd)
-          {
-            ACE_DEBUG ((LM_DEBUG, "Sender_exec_i::test_equality - "
-                          "== operator seems to work for DDS and "
-                          "CCM handles for key <%C>\n",
-                          i->first.c_str ()));
-          }
-        else
-          {
-            ACE_ERROR ((LM_ERROR, "ERROR: Sender_exec_i::test_equality - "
-                          "== operator doesn't seem to work for DDS and "
-                          "CCM handles for key <%C>\n",
-                          i->first.c_str ()));
-          }
         ::DDS::InstanceHandle_t ccm_dds_hnd;
         ccm_dds_hnd <<= dds_hnd;
         if (ccm_hnd == ccm_dds_hnd)
@@ -205,21 +191,6 @@ namespace CIAO_Writer_Sender_Impl
 
         DDS_InstanceHandle_t const dds_hnd =
           this->dds_writer_->lookup_instance (unequal->second);
-        // Compare
-        if (dds_hnd != ccm_hnd)
-          {
-            ACE_DEBUG ((LM_DEBUG, "Sender_exec_i::test_equality - "
-                          "!= operator seems to work for DDS and "
-                          "CCM handles for key <%C>\n",
-                          i->first.c_str ()));
-          }
-        else
-          {
-            ACE_ERROR ((LM_ERROR, "ERROR: Sender_exec_i::test_equality - "
-                          "!= operator doesn't seem to work for DDS and "
-                          "CCM handles for key <%C>\n",
-                          i->first.c_str ()));
-          }
         DDS::InstanceHandle_t ccm_dds_hnd;
         ccm_dds_hnd <<= dds_hnd;
         if (ccm_dds_hnd != ccm_hnd)

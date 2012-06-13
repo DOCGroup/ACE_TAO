@@ -1,3 +1,18 @@
+Wed Jun 13 05:52:55 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/CollocatedPubSub/Base/Collocated_Base.idl:
+          Layout change
+
+        * connectors/dds4ccm/tests/DDSEntity/Sender/Writer_Sender_exec.cpp:
+          Compare with correct nil value
+
+        * connectors/dds4ccm/tests/InstanceHandle/Sender/Writer_Sender_exec.cpp:
+          We don't support comparing rti and dds4ccm instance handles anymore,
+          removed this from the test
+
+        * connectors/dds4ccm/tests/LateBinding/ReadGet/Sender/RG_LateBinding_Sender_exec.cpp:
+          Set point to zero
+
 Tue Jun 12 18:27:26 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/UnkeyedSamples/Base/Unkeyed_Test_Base.idl:
