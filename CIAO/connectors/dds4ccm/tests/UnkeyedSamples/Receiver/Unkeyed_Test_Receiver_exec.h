@@ -41,6 +41,7 @@
 namespace CIAO_Unkeyed_Test_Receiver_Impl
 {
   typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::ULong > Atomic_ULong;
+  typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, DDS::InstanceHandle_t > Atomic_Handle;
 
   /**
    * Provider Executor Implementation Class: info_out_data_listener_exec_i
@@ -71,6 +72,7 @@ namespace CIAO_Unkeyed_Test_Receiver_Impl
   private:
     ::Unkeyed_Test::CCM_Receiver_Context_var ciao_context_;
     Atomic_ULong &received_;
+    Atomic_Handle handle_;
   };
 
   /**

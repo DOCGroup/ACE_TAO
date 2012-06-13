@@ -1,10 +1,7 @@
 // $Id$
 
 /**
- * @file
  * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
- *
- * by-hand idl3 translation of sender components.
  */
 
 #ifndef DDS_PSL_SAMPLELOST_SENDER_IDL
