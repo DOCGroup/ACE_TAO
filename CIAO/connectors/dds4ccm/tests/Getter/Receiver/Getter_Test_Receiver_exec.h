@@ -248,6 +248,8 @@ namespace CIAO_Getter_Test_Receiver_Impl
 
     //@{
     /** User defined members. */
+    DDS::InstanceHandle_t fixed_handle_;
+    DDS::InstanceHandle_t variable_handle_;
 
     //@}
 

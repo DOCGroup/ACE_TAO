@@ -200,7 +200,10 @@ namespace CIAO_Getter_Test_Receiver_Impl
    * Component Executor Implementation Class: Receiver_exec_i
    */
 
-  Receiver_exec_i::Receiver_exec_i (void){
+  Receiver_exec_i::Receiver_exec_i (void) :
+    fixed_handle_ (DDS::HANDLE_NIL),
+    variable_handle_ (DDS::HANDLE_NIL)
+  {
   }
 
   Receiver_exec_i::~Receiver_exec_i (void)
@@ -331,8 +334,6 @@ namespace CIAO_Getter_Test_Receiver_Impl
                               CORBA::Long iterations,
                               const GetterTestSeq& gettertest_seq)
   {
-
-
     ::Getter_Test::GetterTestConnector::Reader_var reader =
       this->ciao_context_->get_connection_info_get_data ();
 
@@ -449,6 +450,10 @@ namespace CIAO_Getter_Test_Receiver_Impl
     CORBA::Boolean const result = fixed->get_one (gettertest_info, readinfo);
     if (result)
       {
+        if (this->fixed_handle_ == DDS::HANDLE_NIL)
+          {
+            this->fixed_handle_ = readinfo.instance_handle;
+          }
         ACE_Time_Value dur = ACE_OS::gettimeofday () - tv;
         ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::get_one_fixed: "
                                "get_one took <%#T>\n",
@@ -472,10 +477,11 @@ namespace CIAO_Getter_Test_Receiver_Impl
                                   gettertest_info.iteration));
           }
         // check readinfo struct.
-        if (readinfo.instance_handle != ::DDS::HANDLE_NIL)
+        if ((readinfo.instance_handle != ::DDS::HANDLE_NIL) &&
+            (this->fixed_handle_ != readinfo.instance_handle))
           {
             ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR FIXED: GET MANY: ")
-                    ACE_TEXT ("received instance handle should be invalid ")
+                    ACE_TEXT ("received instance handle should be nil or not change ")
                     ACE_TEXT ("for unkeyed data: ")
                     ACE_TEXT ("key <%u> - iteration <%u> handle ")
                     DDS_INSTANCE_HANDLE_FORMAT_SPECIFIER
@@ -532,6 +538,10 @@ namespace CIAO_Getter_Test_Receiver_Impl
     CORBA::Boolean const result = getter->get_one (gettertest_info.out (), readinfo);
     if (result)
       {
+        if (this->variable_handle_ == DDS::HANDLE_NIL)
+          {
+            this->variable_handle_ = readinfo.instance_handle;
+          }
         ACE_Time_Value dur = ACE_OS::gettimeofday () - tv;
         ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::get_one_variable: "
                                "get_one took <%#T>\n",
@@ -555,10 +565,11 @@ namespace CIAO_Getter_Test_Receiver_Impl
                                   gettertest_info->iteration));
           }
         // check readinfo struct.
-        if (readinfo.instance_handle != ::DDS::HANDLE_NIL)
+        if ((readinfo.instance_handle != ::DDS::HANDLE_NIL) &&
+            (this->fixed_handle_ != readinfo.instance_handle))
           {
             ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR VARIABLE: GET MANY: ")
-                    ACE_TEXT ("received instance handle should be invalid ")
+                    ACE_TEXT ("received instance handle should be nil or not change ")
                     ACE_TEXT ("for unkeyed data: ")
                     ACE_TEXT ("key <%C> - iteration <%u> - handle ")
                     DDS_INSTANCE_HANDLE_FORMAT_SPECIFIER
