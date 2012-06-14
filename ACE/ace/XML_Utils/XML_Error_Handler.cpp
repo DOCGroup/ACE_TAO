@@ -3,6 +3,7 @@
 #include "XML_Error_Handler.h"
 #include "ace/Log_Msg.h"
 #include "ace/Auto_Ptr.h"
+#include "ace/ACE.h"
 #include <xercesc/util/XMLString.hpp>
 #include <xercesc/dom/DOMLocator.hpp>
 #include <xercesc/sax/SAXParseException.hpp>
@@ -24,33 +25,42 @@ namespace XML
 
   void XML_Error_Handler::warning(const SAXParseException& toCatch)
   {
-    XStr file (toCatch.getSystemId ());
-    XStr msg (toCatch.getMessage ());
+    if (ACE::debug ())
+      {
+        XStr file (toCatch.getSystemId ());
+        XStr msg (toCatch.getMessage ());
 
-    std::cerr << "Warning: " << file << ':' << toCatch.getLineNumber ()
-              << ':' << toCatch.getColumnNumber () << " - "
-              << msg << std::endl;
+        std::cerr << "Warning: " << file << ':' << toCatch.getLineNumber ()
+                  << ':' << toCatch.getColumnNumber () << " - "
+                  << msg << std::endl;
+      }
   }
 
   void XML_Error_Handler::error(const SAXParseException& toCatch)
   {
-    XStr file (toCatch.getSystemId ());
-    XStr msg (toCatch.getMessage ());
+    if (ACE::debug ())
+      {
+        XStr file (toCatch.getSystemId ());
+        XStr msg (toCatch.getMessage ());
 
-    std::cerr << "Error: " << file << ':' << toCatch.getLineNumber ()
-              << ':' << toCatch.getColumnNumber () << " - "
-              << msg << std::endl;
+        std::cerr << "Error: " << file << ':' << toCatch.getLineNumber ()
+                  << ':' << toCatch.getColumnNumber () << " - "
+                  << msg << std::endl;
+      }
     this->errors_ = true;
   }
 
   void XML_Error_Handler::fatalError(const SAXParseException& toCatch)
   {
-    XStr file (toCatch.getSystemId ());
-    XStr msg (toCatch.getMessage ());
+    if (ACE::debug ())
+      {
+        XStr file (toCatch.getSystemId ());
+        XStr msg (toCatch.getMessage ());
 
-    std::cerr << "Fatal Error: " << file << ':' << toCatch.getLineNumber ()
-              << ':' << toCatch.getColumnNumber () << " - "
-              << msg << std::endl;
+        std::cerr << "Fatal Error: " << file << ':' << toCatch.getLineNumber ()
+                  << ':' << toCatch.getColumnNumber () << " - "
+                  << msg << std::endl;
+      }
     this->errors_ = true;
   }
 
