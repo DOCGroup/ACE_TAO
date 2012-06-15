@@ -1,3 +1,9 @@
+Fri Jun 15 19:30:43 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Shapes/Receiver/Shapes_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/MultiTopic/Receiver/MultiTopic_Receiver_exec.cpp:
+          Fixed compile warnings
+
 Fri Jun 15 18:58:24 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/install_ciao_headers.mpc:

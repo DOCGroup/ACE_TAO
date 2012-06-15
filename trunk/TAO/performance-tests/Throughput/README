@@ -4,7 +4,7 @@ $Id$
 
 @page Throughput Performance Test README File
 
-	This test tries to estimate the maximum throughput (int bytes
+	This test tries to estimate the maximum throughput (in bytes
 per second) that the ORB can achieve.  The test sends octet sequences
 of increasing sizes to a remote consumer, and measures both the time
 it takes to receive the data as well as the time required to send it.
