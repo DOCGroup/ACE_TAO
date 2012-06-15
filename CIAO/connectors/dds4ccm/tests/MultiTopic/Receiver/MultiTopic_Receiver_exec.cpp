@@ -128,7 +128,7 @@ namespace CIAO_Shapes_Receiver_Impl
                 ACE_Time_Value time;
                 time <<= readinfo->source_timestamp;
                 ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("<GET_ONE - SQUARE> ReadInfo -> ")
-                                      ACE_TEXT ("date = %#T\n"), time));
+                                      ACE_TEXT ("date = %#T\n"), &time));
                 ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("<GET_ONE - SQUARE> : ")
                                       ACE_TEXT ("received shape_info for <%C> at %u:%u:%u\n"),
                                       shape_info->color.in (),
@@ -157,7 +157,7 @@ namespace CIAO_Shapes_Receiver_Impl
                 ACE_Time_Value time;
                 time <<= readinfo->source_timestamp;
                 ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("<GET_ONE - TRIANGLE> ReadInfo -> ")
-                                      ACE_TEXT ("date = %#T\n"), time));
+                                      ACE_TEXT ("date = %#T\n"), &time));
                 ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("<GET_ONE - TRIANGLE> : ")
                                       ACE_TEXT ("received shape_info for <%C> at %u:%u:%u\n"),
                                       shape_info->color.in (),

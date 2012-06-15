@@ -220,7 +220,7 @@ namespace CIAO_Shapes_Receiver_Impl
             ACE_Time_Value time;
             time <<= readinfo.source_timestamp;
             ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ONE Read_Info ")
-                      ACE_TEXT (" -> date = %#T\n"), time));
+                      ACE_TEXT (" -> date = %#T\n"), &time));
             ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ ON shape info : ")
                 ACE_TEXT ("received shape_info for <%C> at X <%u> Y <%u> size <%u>\n"),
                 shape_info.color.in (),
@@ -256,7 +256,7 @@ namespace CIAO_Shapes_Receiver_Impl
             ACE_Time_Value time;
             time <<= readinfoseq[i].source_timestamp;
             ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ALL ReadInfo ")
-                ACE_TEXT ("-> UTC date = %#T\n"), time));
+                ACE_TEXT ("-> UTC date = %#T\n"), &time));
           }
         for(CORBA::ULong i = 0; i < shape_infos.length(); ++i)
           {
@@ -293,7 +293,7 @@ namespace CIAO_Shapes_Receiver_Impl
                 ACE_Time_Value time;
                 time <<= readinfo->source_timestamp;
                 ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("GET_ONE ReadInfo -> ")
-                                      ACE_TEXT ("date = %#T\n"), time));
+                                      ACE_TEXT ("date = %#T\n"), &time));
                 ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("GET_ONE ShapeType : ")
                     ACE_TEXT ("received shape_info for <%C> at X <%u> Y <%u> size <%u>\n"),
                     shape_info->color.in (),
