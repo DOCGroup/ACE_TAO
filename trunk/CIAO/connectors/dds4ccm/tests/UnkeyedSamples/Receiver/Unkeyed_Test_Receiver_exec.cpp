@@ -71,7 +71,7 @@ namespace CIAO_Unkeyed_Test_Receiver_Impl
             datum.iteration,
             DDS_INSTANCE_HANDLE_LOG (info.instance_handle)));
     if ((info.instance_handle != ::DDS::HANDLE_NIL) &&
-        (this->handle_ != info.instance_handle))
+        (this->handle_.value () != info.instance_handle))
       {
         ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("ERROR: UnkeyedTest_Listener::on_one_data: ")

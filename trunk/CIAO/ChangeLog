@@ -1,3 +1,17 @@
+Fri Jun 15 08:25:58 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+          Don't use the participant after it has been deleted
+
+        * connectors/dds4ccm/impl/DomainParticipantManager.cpp:
+          Improved logging
+
+        * connectors/dds4ccm/tests/ResetTopic/TooLong/descriptors/run_test.pl:
+          Extended timeout
+
+        * connectors/dds4ccm/tests/UnkeyedSamples/Receiver/Unkeyed_Test_Receiver_exec.cpp:
+          Fixed problem in versioned namespace builds
+
 Thu Jun 14 13:26:15 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/Getter/Receiver/Getter_Test_Receiver_exec.h:

@@ -239,8 +239,8 @@ if ($driver_status != 0) {
     exit 1;
 }
 
-print "Sleeping 10 seconds before stopping\n";
-sleep (10);
+print "Sleeping 30 seconds before stopping\n";
+sleep (30);
 
 # Invoke executor - stop the application -.
 print "Invoking executor - stop the application -\n";
