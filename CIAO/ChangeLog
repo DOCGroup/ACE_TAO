@@ -1,3 +1,100 @@
+Fri Jun 15 09:14:56 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Deployment/Handlers/CIAO_Deployment_Handlers.mpc:
+        * MPC/config/ccm_extension_stub.mpb:
+        * MPC/config/ciao_extension_container.mpb:
+        * MPC/config/ciao_extension_container_stub.mpb:
+        * ccm/Extension:
+        * ccm/Extension/CCM_ClientContainerInterceptor.idl:
+        * ccm/Extension/CCM_ClientContainerInterceptorRegistration.idl:
+        * ccm/Extension/CCM_ContainerClientRequestInfo.idl:
+        * ccm/Extension/CCM_ContainerInterceptor.idl:
+        * ccm/Extension/CCM_ContainerRequestInfo.idl:
+        * ccm/Extension/CCM_ContainerServantRequestInfo.idl:
+        * ccm/Extension/CCM_ContainerServerRequestInfo.idl:
+        * ccm/Extension/CCM_ContainerStubRequestInfo.idl:
+        * ccm/Extension/CCM_ExtensionComponent.idl:
+        * ccm/Extension/CCM_ExtensionContext.idl:
+        * ccm/Extension/CCM_InvalidRegistration.idl:
+        * ccm/Extension/CCM_QoS.idl:
+        * ccm/Extension/CCM_ServantContainerInterceptor.idl:
+        * ccm/Extension/CCM_ServantContainerInterceptorRegistration.idl:
+        * ccm/Extension/CCM_ServerContainerInterceptor.idl:
+        * ccm/Extension/CCM_ServerContainerInterceptorRegistration.idl:
+        * ccm/Extension/CCM_StubContainerInterceptor.idl:
+        * ccm/Extension/CCM_StubContainerInterceptorRegistration.idl:
+        * ccm/Extension/CCM_extension.mpc:
+        * ciao/Containers/Extension:
+        * ciao/Containers/Extension/ClientContainerInterceptorRegistration_Impl.h:
+        * ciao/Containers/Extension/ClientContainerInterceptorRegistration_Impl.cpp:
+        * ciao/Containers/Extension/Extension_Container.h:
+        * ciao/Containers/Extension/Extension_Container.cpp:
+        * ciao/Containers/Extension/Extension_Container.idl:
+        * ciao/Containers/Extension/Extension_Container.mpc:
+        * ciao/Containers/Extension/Interceptor_Registration_T.h:
+        * ciao/Containers/Extension/Interceptor_Registration_T.cpp:
+        * ciao/Containers/Extension/README:
+        * ciao/Containers/Extension/ServantContainerInterceptorRegistration_Impl.h:
+        * ciao/Containers/Extension/ServantContainerInterceptorRegistration_Impl.cpp:
+        * ciao/Containers/Extension/ServerContainerInterceptorRegistration_Impl.h:
+        * ciao/Containers/Extension/ServerContainerInterceptorRegistration_Impl.cpp:
+        * ciao/Containers/Extension/StubContainerInterceptorRegistration_Impl.h:
+        * ciao/Containers/Extension/StubContainerInterceptorRegistration_Impl.cpp:
+        * ciao/Contexts/Extension:
+        * ciao/Contexts/Extension/Extension_Context_T.h:
+        * ciao/Contexts/Extension/Extension_Context_T.cpp:
+        * ciao/Contexts/Extension/README:
+        * ciao/Servants/Extension:
+        * ciao/Servants/Extension/README:
+        * ciao/Servants/Extension/Servant_Impl_T.h:
+        * ciao/Servants/Extension/Servant_Impl_T.cpp:
+        * tests/COPI:
+        * tests/COPI/Registration:
+        * tests/COPI/Registration/Client:
+        * tests/COPI/Registration/Client/Component:
+        * tests/COPI/Registration/Client/Component/Component.idl:
+        * tests/COPI/Registration/Client/Component/Component.mpc:
+        * tests/COPI/Registration/Client/Component/Component_exec.h:
+        * tests/COPI/Registration/Client/Component/Component_exec.cpp:
+        * tests/COPI/Registration/Client/descriptors:
+        * tests/COPI/Registration/Client/descriptors/Plan.cdp:
+        * tests/COPI/Registration/Client/descriptors/run_test.pl:
+        * tests/COPI/Registration/Servant:
+        * tests/COPI/Registration/Servant/Component:
+        * tests/COPI/Registration/Servant/Component/Component.idl:
+        * tests/COPI/Registration/Servant/Component/Component.mpc:
+        * tests/COPI/Registration/Servant/Component/Component_exec.h:
+        * tests/COPI/Registration/Servant/Component/Component_exec.cpp:
+        * tests/COPI/Registration/Servant/descriptors:
+        * tests/COPI/Registration/Servant/descriptors/Plan.cdp:
+        * tests/COPI/Registration/Servant/descriptors/run_test.pl:
+        * tests/COPI/Registration/Server:
+        * tests/COPI/Registration/Server/Component:
+        * tests/COPI/Registration/Server/Component/Component.idl:
+        * tests/COPI/Registration/Server/Component/Component.mpc:
+        * tests/COPI/Registration/Server/Component/Component_exec.h:
+        * tests/COPI/Registration/Server/Component/Component_exec.cpp:
+        * tests/COPI/Registration/Server/descriptors:
+        * tests/COPI/Registration/Server/descriptors/Plan.cdp:
+        * tests/COPI/Registration/Server/descriptors/run_test.pl:
+        * tests/COPI/Registration/Stub:
+        * tests/COPI/Registration/Stub/Component:
+        * tests/COPI/Registration/Stub/Component/Component.idl:
+        * tests/COPI/Registration/Stub/Component/Component.mpc:
+        * tests/COPI/Registration/Stub/Component/Component_exec.h:
+        * tests/COPI/Registration/Stub/Component/Component_exec.cpp:
+        * tests/COPI/Registration/Stub/descriptors:
+        * tests/COPI/Registration/Stub/descriptors/Plan.cdp:
+        * tests/COPI/Registration/Stub/descriptors/run_test.pl:
+        * tests/IDL_Test/Extension:
+        * tests/IDL_Test/Extension/Cornucopia.idl:
+        * tests/IDL_Test/Extension/Cornucopia.mpc:
+          Removed the disabled extension container from CIAO. We started with
+          this container as part of QoS4CCM some time ago, but never finished
+          it. The extension container is really CORBA specific and doesn't
+          fit into our plans for CIAO to make it a Common Component Model
+          implementation.
+
 Fri Jun 15 08:25:58 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
