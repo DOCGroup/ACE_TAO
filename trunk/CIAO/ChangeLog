@@ -1,3 +1,8 @@
+Fri Jun 15 10:38:39 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Deployment/Handlers/Container_Handler.cpp:
+          Zapped some code for extension container
+
 Fri Jun 15 09:14:56 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Deployment/Handlers/CIAO_Deployment_Handlers.mpc:
