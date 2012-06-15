@@ -1,3 +1,8 @@
+Fri Jun 15 18:58:24 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/install_ciao_headers.mpc:
+          Removed extension directories
+
 Fri Jun 15 10:38:39 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Deployment/Handlers/Container_Handler.cpp:
