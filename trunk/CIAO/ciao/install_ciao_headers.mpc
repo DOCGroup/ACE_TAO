@@ -9,9 +9,7 @@ project : install {
     // The following directories contain header-only code (*.h, *_T.cpp) and
     // are not already installed by other .mpc files:
     Contexts
-    Contexts/Extension
     Contexts/Session
-    Servants/Extension
     Servants/Session
   }
   specific {
