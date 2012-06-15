@@ -175,7 +175,7 @@ namespace CIAO
               DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                             "DomainParticipantManager::register_participant - "
                             "Unable to insert a new DomainParticipant "
-                            "for <%d> <%C>.\n",
+                            "for domain <%d> with profile <%C>.\n",
                             domain_id, qos_profile));
               return false;
             }
@@ -183,7 +183,7 @@ namespace CIAO
           DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
                         "DomainParticipantManager::register_participant - "
                         "Added a new DomainParticipant "
-                        "for <%d> <%C>. Handle "
+                        "for domain <%d> with profile<%C> handle "
                         DDS_ENTITY_FORMAT_SPECIFIER ".\n",
                         domain_id, qos_profile,
                         DDS_ENTITY_LOG (dp)));
@@ -194,8 +194,8 @@ namespace CIAO
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
                     "DomainParticipantManager::register_participant - "
                     "Don't add participant for domain <%d> with profile <%C> since it already "
-                    "exists : <"
-                    DDS_ENTITY_FORMAT_SPECIFIER ">\n",
+                    "exists as handle "
+                    DDS_ENTITY_FORMAT_SPECIFIER "\n",
                     domain_id, qos_profile,
                     DDS_ENTITY_LOG (dp)));
       return false;

@@ -332,7 +332,7 @@ DDS_Base_Connector_T<CCM_TYPE>::init_domain (
                         "DDS_Base_Connector_T::init_domain - "
                         "Created domainparticipant "
                         DDS_ENTITY_FORMAT_SPECIFIER
-                        ". domain <%d> - "
+                        " domain <%d> - "
                         "qos_profile <%C>\n",
                         DDS_ENTITY_LOG (participant),
                         this->domain_id_, this->qos_profile_.in ()));
@@ -1026,11 +1026,8 @@ DDS_Base_Connector_T<CCM_TYPE>::remove_domain (
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_TRACE, DDS4CCM_INFO
                 "DDS_Base_Connector_T"
                 "::remove_domain - "
-                "Deleted participant "
-                DDS_ENTITY_FORMAT_SPECIFIER
-                "for domain <%d> with qos <%C> "
+                "Deleted participant for domain <%d> with qos <%C> "
                 "return code <%C>\n",
-                DDS_ENTITY_LOG (participant),
                 this->domain_id_, this->qos_profile_.in (),
                 ::CIAO::DDS4CCM::translate_retcode (retcode)));
     }
