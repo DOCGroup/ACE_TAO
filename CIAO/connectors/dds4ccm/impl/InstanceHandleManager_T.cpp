@@ -30,7 +30,7 @@ namespace CIAO
       else
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-                        "Reader_T::dds_writer - "
+                        "InstanceHandleManager_T::dds_writer - "
                         "Throwing BAD_INV_ORDER.\n"));
           throw ::CORBA::BAD_INV_ORDER ();
         }
