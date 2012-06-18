@@ -318,6 +318,12 @@ public:
    */
   char* write_long_placeholder (void);
   char* write_short_placeholder (void);
+  char* write_boolean_placeholder (void);
+  char* write_char_placeholder (void);
+  char* write_longlong_placeholder (void);
+  char* write_octet_placeholder (void);
+  char* write_float_placeholder (void);
+  char* write_double_placeholder (void);
 
   /**
    * Writes a new value into a specific location. This is commonly
@@ -336,7 +342,16 @@ public:
    * @sa write_long_placeholder(), write_short_placeholder ()
    */
   ACE_CDR::Boolean replace (ACE_CDR::Long x, char* loc);
+  ACE_CDR::Boolean replace (ACE_CDR::ULong x, char* loc);
   ACE_CDR::Boolean replace (ACE_CDR::Short x, char* loc);
+  ACE_CDR::Boolean replace (ACE_CDR::UShort x, char* loc);
+  ACE_CDR::Boolean replace (ACE_CDR::Boolean x, char* loc);
+  ACE_CDR::Boolean replace (ACE_CDR::Char x, char* loc);
+  ACE_CDR::Boolean replace (ACE_CDR::LongLong x, char* loc);
+  ACE_CDR::Boolean replace (ACE_CDR::ULongLong x, char* loc);
+  ACE_CDR::Boolean replace (ACE_CDR::Octet x, char* loc);
+  ACE_CDR::Boolean replace (ACE_CDR::Float x, char* loc);
+  ACE_CDR::Boolean replace (ACE_CDR::Double x, char* loc);
   //@}
 
   /**

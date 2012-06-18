@@ -40,7 +40,16 @@ struct CDR_Test_Types
   const ACE_CDR::WChar *wstr;
   ACE_CDR::Double d;
   ACE_CDR::Short reps;
+  ACE_CDR::UShort repus;
   ACE_CDR::Long repl;
+  ACE_CDR::ULong repul;
+  ACE_CDR::Boolean repb;
+  const ACE_CDR::Char repc;
+  ACE_CDR::LongLong repll;
+  ACE_CDR::ULongLong repull;
+  ACE_CDR::Octet repo;
+  ACE_CDR::Float repf;
+  ACE_CDR::Double repd;
 
   int test_put (ACE_OutputCDR& cdr);
   int test_get (ACE_InputCDR& cdr) const;
@@ -63,7 +72,16 @@ CDR_Test_Types::CDR_Test_Types (void)
     wstr (0),
     d (8),
     reps (-123),
-    repl (-65800L)
+    repus (-456),
+    repl (-65800L),
+    repul (65800L),
+    repb (false),
+    repc ('d'),
+    repll (3000000000LL),
+    repull (3000000000LL),
+    repo (5),
+    repf (3.14),
+    repd (6.00)
 {
   for (int i = 0;
        i < CDR_Test_Types::ARRAY_SIZE;
@@ -444,6 +462,7 @@ int
 CDR_Test_Types::test_put_placeholder (ACE_OutputCDR &cdr)
 {
   // Write a placeholder then a bunch of other stuff, then replace.
+  // Long
   char *pos = cdr.write_long_placeholder ();
   if (test_put (cdr) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -454,6 +473,18 @@ CDR_Test_Types::test_put_placeholder (ACE_OutputCDR &cdr)
                        ACE_TEXT ("replace(long) failed\n")),
                       1);
 
+  // ULong
+  pos = cdr.write_long_placeholder ();
+  if (test_put (cdr) != 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("test_put (long placeholder) failed\n")),
+                      1);
+  if (!cdr.replace (this->repul, pos))
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("replace(ulong) failed\n")),
+                      1);
+
+  // Short
   pos = cdr.write_short_placeholder ();
   if (test_put (cdr) != 0)
    ACE_ERROR_RETURN ((LM_ERROR,
@@ -464,6 +495,94 @@ CDR_Test_Types::test_put_placeholder (ACE_OutputCDR &cdr)
                       ACE_TEXT ("replace(short) failed\n")),
                      1);
 
+  // UShort
+  pos = cdr.write_short_placeholder ();
+  if (test_put (cdr) != 0)
+   ACE_ERROR_RETURN ((LM_ERROR,
+                      ACE_TEXT ("test_put (short placeholder) failed\n")),
+                     1);
+  if (!cdr.replace (this->repus, pos))
+   ACE_ERROR_RETURN ((LM_ERROR,
+                      ACE_TEXT ("replace(ushort) failed\n")),
+                     1);
+
+  // Boolean
+  pos = cdr.write_boolean_placeholder ();
+  if (test_put (cdr) != 0)
+   ACE_ERROR_RETURN ((LM_ERROR,
+                      ACE_TEXT ("test_put (boolean placeholder) failed\n")),
+                     1);
+  if (!cdr.replace (this->repb, pos))
+   ACE_ERROR_RETURN ((LM_ERROR,
+                      ACE_TEXT ("replace(boolean) failed\n")),
+                     1);
+
+  // Char
+  pos = cdr.write_char_placeholder ();
+  if (test_put (cdr) != 0)
+   ACE_ERROR_RETURN ((LM_ERROR,
+                      ACE_TEXT ("test_put (char placeholder) failed\n")),
+                     1);
+  if (!cdr.replace (this->repb, pos))
+   ACE_ERROR_RETURN ((LM_ERROR,
+                      ACE_TEXT ("replace(char) failed\n")),
+                     1);
+
+  // LongLong
+  pos = cdr.write_longlong_placeholder ();
+  if (test_put (cdr) != 0)
+   ACE_ERROR_RETURN ((LM_ERROR,
+                      ACE_TEXT ("test_put (longlong placeholder) failed\n")),
+                     1);
+  if (!cdr.replace (this->repll, pos))
+   ACE_ERROR_RETURN ((LM_ERROR,
+                      ACE_TEXT ("replace(longlong) failed\n")),
+                     1);
+
+  // ULongLong
+  pos = cdr.write_longlong_placeholder ();
+  if (test_put (cdr) != 0)
+   ACE_ERROR_RETURN ((LM_ERROR,
+                      ACE_TEXT ("test_put (longlong placeholder) failed\n")),
+                     1);
+  if (!cdr.replace (this->repull, pos))
+   ACE_ERROR_RETURN ((LM_ERROR,
+                      ACE_TEXT ("replace(ulonglong) failed\n")),
+                     1);
+
+  // Octet
+  pos = cdr.write_octet_placeholder ();
+  if (test_put (cdr) != 0)
+   ACE_ERROR_RETURN ((LM_ERROR,
+                      ACE_TEXT ("test_put (octet placeholder) failed\n")),
+                     1);
+  if (!cdr.replace (this->repo, pos))
+   ACE_ERROR_RETURN ((LM_ERROR,
+                      ACE_TEXT ("replace(octet) failed\n")),
+                     1);
+
+  // Float
+  pos = cdr.write_float_placeholder ();
+  if (test_put (cdr) != 0)
+   ACE_ERROR_RETURN ((LM_ERROR,
+                      ACE_TEXT ("test_put (float placeholder) failed\n")),
+                     1);
+  if (!cdr.replace (this->repf, pos))
+   ACE_ERROR_RETURN ((LM_ERROR,
+                      ACE_TEXT ("replace(float) failed\n")),
+                     1);
+
+  // Double
+  pos = cdr.write_double_placeholder ();
+  if (test_put (cdr) != 0)
+   ACE_ERROR_RETURN ((LM_ERROR,
+                      ACE_TEXT ("test_put (double placeholder) failed\n")),
+                     1);
+  if (!cdr.replace (this->repd, pos))
+   ACE_ERROR_RETURN ((LM_ERROR,
+                      ACE_TEXT ("replace(double) failed\n")),
+                     1);
+
   return 0;
 }
 
@@ -471,7 +590,16 @@ int
 CDR_Test_Types::test_get_placeholder (ACE_InputCDR &cdr) const
 {
   ACE_CDR::Short xs;
+  ACE_CDR::UShort xus;
   ACE_CDR::Long xl;
+  ACE_CDR::ULong xul;
+  ACE_CDR::Boolean xb;
+  ACE_CDR::Char xc;
+  ACE_CDR::LongLong xll;
+  ACE_CDR::ULongLong xull;
+  ACE_CDR::Octet xo;
+  ACE_CDR::Float xf;
+  ACE_CDR::Double xd;
 
   if (cdr.read_long (xl) == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -489,6 +617,19 @@ CDR_Test_Types::test_get_placeholder (ACE_InputCDR &cdr) const
                        ACE_TEXT ("test_get (long) failed\n")),
                       1);
 
+  if (cdr.read_ulong (xul) == 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("read_ulong failed\n")), 1);
+  if (xul != this->repul)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("replaced ulong differs\n")),
+                      1);
+
+  if (test_get (cdr) != 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("test_get (ulong) failed\n")),
+                      1);
+
   if (cdr.read_short (xs) == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("read_short failed\n")), 1);
@@ -500,6 +641,111 @@ CDR_Test_Types::test_get_placeholder (ACE_InputCDR &cdr) const
   if (test_get (cdr) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("test_get (short) failed\n")),
+                      1);
+
+  if (cdr.read_ushort (xus) == 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("read_ushort failed\n")), 1);
+  if (xus != this->repus)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("replaced ushort differs\n")),
+                      1);
+
+  if (test_get (cdr) != 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("test_get (ushort) failed\n")),
+                      1);
+
+  if (cdr.read_boolean (xb) == 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("read_boolean failed\n")), 1);
+  if (xb != this->repb)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("replaced boolean differs\n")),
+                      1);
+
+  if (test_get (cdr) != 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("test_get (boolean) failed\n")),
+                      1);
+
+  if (cdr.read_char (xc) == 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("read_char failed\n")), 1);
+  if (xc != this->repc)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("replaced char differs\n")),
+                      1);
+
+  if (test_get (cdr) != 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("test_get (char) failed\n")),
+                      1);
+
+
+  if (cdr.read_longlong (xll) == 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("read_longlong failed\n")), 1);
+  if (xll != this->repll)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("replaced longlong differs\n")),
+                      1);
+
+  if (test_get (cdr) != 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("test_get (longlong) failed\n")),
+                      1);
+
+  if (cdr.read_ulonglong (xull) == 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("read_ulonglong failed\n")), 1);
+  if (xull != this->repull)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("replaced ulonglong differs\n")),
+                      1);
+
+  if (test_get (cdr) != 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("test_get (ulonglong) failed\n")),
+                      1);
+
+  if (cdr.read_octet (xo) == 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("read_octet failed\n")), 1);
+  if (xo != this->repo)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("replaced octet differs\n")),
+                      1);
+
+  if (test_get (cdr) != 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("test_get (octet) failed\n")),
+                      1);
+
+  if (cdr.read_float (xf) == 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("read_float failed\n")), 1);
+  if (xf != this->repf)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("replaced float differs\n")),
+                      1);
+
+  if (test_get (cdr) != 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("test_get (float) failed\n")),
+                      1);
+
+  if (cdr.read_double (xd) == 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("read_double failed\n")), 1);
+  if (xd != this->repd)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("replaced double differs\n")),
+                      1);
+
+  if (test_get (cdr) != 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("test_get (double) failed\n")),
                       1);
 
   return 0;

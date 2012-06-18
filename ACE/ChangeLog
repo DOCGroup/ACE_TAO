@@ -1,3 +1,12 @@
+Mon Jun 18 20:40:29 UTC 2012  James H. Hill  <hillj at cs dot iupui dot edu>
+
+        * ace/CDR_Stream.h:
+        * ace/CDR_Stream.cpp:
+        * tests/CDR_Test.cpp:
+
+          Extended ACE_OutputCDR placeholders to support all ACE_CDR
+          simple types.
+
 Mon Jun 18 13:20:32 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/auto_run_tests.pl:
