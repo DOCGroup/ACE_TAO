@@ -48,6 +48,7 @@ if (!getopts ('adl:os:r:tCd') || $opt_h) {
     print "    -t             TAO tests (other than ORB tests) only\n";
     print "    -C             CIAO and DAnCE tests only\n";
     print "    -d             Run OpenDDS tests only\n";
+    print "    -z             Run debug mode, no tests executed\n";
     print "    -Config cfg    Run the tests for the <cfg> configuration\n";
     print "    -l list        Load the list and run only those tests\n";
     print "    -r dir         Root directory for running the tests\n";
@@ -246,7 +247,7 @@ foreach my $test_lst (@file_list) {
 
         my $result = 0;
 
-        if (defined $opt_d) {
+        if (defined $opt_z) {
             print "Running: $cmd\n";
         }
         else {
