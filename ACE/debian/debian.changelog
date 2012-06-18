@@ -1,3 +1,64 @@
+ace (6.1.2-1) experimental; urgency=low
+
+  * New upstream release.
+  * debian/patches/16-ace-inet-pkgconfig-files.diff: drop, integrated.
+  * debian/patches/prevent_doxygen_ace_manpages.diff: ditto.
+  * debian/patches/reduce-doxygen-doc.diff: reworked since HTMLHelp is
+    no longer generated.
+  * debian/patches/20-versioned_libs.diff: refreshed.
+  * debian/patches/34-bts386713.diff: refreshed.
+  * debian/patches/92-default-ACE_ROOT.diff: refreshed.
+
+ -- Thomas Girard <thomas.g.girard@free.fr>  Sat, 16 Jun 2012 20:51:01 +0200
+
+ace (6.0.3-5) unstable; urgency=low
+
+  * debian/control:
+    o define Build-Depends-Indep: for documentation generation.
+    o Build-Depends on dpkg-dev >= 1.16.2 to have dpkg-buildpackage -B
+      correctly invoke build-arch then binary-arch. Closes: #657844.
+  * debian/libace-dev.README.Debian: mention how to make ACE Service
+    Configuration work in Debian. Closes: #656040.
+
+ -- Thomas Girard <thomas.g.girard@free.fr>  Fri, 30 Mar 2012 20:03:40 +0200
+
+ace (6.0.3-4) unstable; urgency=low
+
+  * Remove work-around for arm now that g++-4.6 ICE is fixed.
+    Closes: #653642, #654743.
+  * Really ensure doxygen is not being run when invoking build-arch.
+    Closes: #657844.
+
+ -- Thomas Girard <thomas.g.girard@free.fr>  Sat, 04 Feb 2012 17:24:25 +0100
+
+ace (6.0.3-3) unstable; urgency=low
+
+  * Build with g++-4.4 on armel to work-around #644722. Closes: #644826.
+    Thanks to Peter Green for the report and work-around investigation.
+  * debian/lib{ace,tao}-dev.install, debian/tao-utils.install: perform brace
+    expansion instead of letting debhelper do it "due to an accident". Helped
+    removing no longer needed expansions.
+  * debian/control: move transitional packages to section oldlibs, priority
+    extra, as per lintian warning recommendation.
+
+ -- Thomas Girard <thomas.g.girard@free.fr>  Wed, 28 Dec 2011 10:46:18 +0100
+
+ace (6.0.3-2) unstable; urgency=low
+
+  * Upload to unstable.
+  * Remove the build part in build %: make rule. GNU make 3.82 doesn't
+    like it. Should fix the FTBFS seen on experimental/amd64 where make 3.82
+    is installed.
+  * debian/rules: prevent long generation of doxygen documentation in arch-dep
+    build by defining binary-arch: and binary-indep: targets. This requires
+    switching to debhelper level 9.
+  * debian/rules: overriding dh_fixperm for needed packages only.
+    Closes: #636028.
+  * debian/*.examples: move examples here.
+  * debian/ace-netsvcs.doc-base: remove extra space at end of document field.
+
+ -- Thomas Girard <thomas.g.girard@free.fr>  Sat, 30 Jul 2011 21:38:07 +0200
+
 ace (6.0.3-1) experimental; urgency=low
 
   [ Thomas Girard ]

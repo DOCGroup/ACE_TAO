@@ -1,4 +1,6 @@
-usr/include/tao/*.{h,i,inl,cpp}
+usr/include/tao/*.h
+usr/include/tao/*.inl
+usr/include/tao/*.cpp
 usr/share/idl/tao
 usr/lib/libTAO.so
 usr/include/tao/AnyTypeCode

@@ -6,8 +6,8 @@ Forwarded: submitted, more work needed before acceptance
 Author: Thomas Girard <thomas.g.girard@free.fr>
 Last-Update: 2010-12-26
 
---- a/include/makeinclude/wrapper_macros.GNU
-+++ b/include/makeinclude/wrapper_macros.GNU
+--- pkg-ace.orig/include/makeinclude/wrapper_macros.GNU
++++ pkg-ace/include/makeinclude/wrapper_macros.GNU
 @@ -78,7 +78,10 @@
  #                   If versioned_so is 1 (enabled), the SOVERSION make
  #                   variable can also be set to specify the version info
@@ -20,8 +20,8 @@ Last-Update: 2010-12-26
  #  wfmo             Build with wfmo support (Win32 only)
  #  winregistry      Build with windows registry support (Win32 only)
  #  winnt            Build WinNT-specific projects (Win32 only)
---- a/MPC/prj_install.pl	2011-04-27 15:26:27.000000000 +0200
-+++ b/MPC/prj_install.pl	2011-07-22 16:01:11.800776071 +0200
+--- pkg-ace.orig/MPC/prj_install.pl
++++ pkg-ace/MPC/prj_install.pl
 @@ -186,7 +186,7 @@
      my $fh   = new FileHandle();
      if (opendir($fh, $odir)) {
@@ -31,9 +31,9 @@ Last-Update: 2010-12-26
              $file =~ /^(lib)?$name.*\.(dll|lib)$/i) {
            push(@libs, "$dir$insdir$binarydir$file");
          }
---- a/include/makeinclude/platform_g++_common.GNU	2011-06-06 19:01:01.000000000 +0200
-+++ b/include/makeinclude/platform_g++_common.GNU	2011-07-22 16:01:11.804776084 +0200
-@@ -97,7 +97,7 @@
+--- pkg-ace.orig/include/makeinclude/platform_g++_common.GNU
++++ pkg-ace/include/makeinclude/platform_g++_common.GNU
+@@ -102,7 +102,7 @@
  # If the platform file didn't already set versioned_so, default to 1.
  versioned_so ?= 1
  with_ld ?=
@@ -42,8 +42,8 @@ Last-Update: 2010-12-26
    ifeq ($(with_ld),hpux)
      SOFLAGS += -Wl,+h -Wl,$(SONAME)
    else
---- a/include/makeinclude/rules.lib.GNU	2010-09-23 18:17:42.000000000 +0200
-+++ b/include/makeinclude/rules.lib.GNU	2011-07-22 16:01:11.804776084 +0200
+--- pkg-ace.orig/include/makeinclude/rules.lib.GNU
++++ pkg-ace/include/makeinclude/rules.lib.GNU
 @@ -11,7 +11,7 @@
  #       Library versioning
  #---------------------------------------------------------------------------
@@ -98,9 +98,9 @@ Last-Update: 2010-12-26
  
  SHLIBA ?=
  VSHLIBA = $(ARCH_SHLIBA:%.$(LIBEXT)=%$(VAR).$(LIBEXT))
---- a/include/makeinclude/rules.local.GNU	2011-05-12 20:11:57.000000000 +0200
-+++ b/include/makeinclude/rules.local.GNU	2011-07-22 16:01:11.804776084 +0200
-@@ -311,13 +311,23 @@
+--- pkg-ace.orig/include/makeinclude/rules.local.GNU
++++ pkg-ace/include/makeinclude/rules.local.GNU
+@@ -312,13 +312,23 @@
  	fi
      else #firstword of LN_S is not cp, so we're using real symlinks
        ifneq ($(SOVERSION),)
@@ -126,7 +126,7 @@ Last-Update: 2010-12-26
        endif #SOVERSION
  	@if test $(ARCH_SOURCE_DIR) != $(@D) ; then \
  		if test ! -s $@ ; then \
-@@ -350,6 +360,8 @@
+@@ -351,6 +361,8 @@
  	-$(RM) $(SHLIB_UNCHECKED)
  ifeq ($(versioned_so),1)
  	-$(RM) $(SHLIB_UNCHECKED)$(SOVERSION)

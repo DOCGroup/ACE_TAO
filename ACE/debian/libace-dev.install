@@ -6,11 +6,14 @@
 ../../bin/DependencyGenerator           usr/lib/ace/bin
 ../../include                           usr/lib/ace
 ../../include/makeinclude/platform_macros.GNU usr/lib/ace/include/makeinclude
-usr/include/ace/*.{h,inl,cpp}
+usr/include/ace/*.h
+usr/include/ace/*.inl
+usr/include/ace/*.cpp
 usr/include/ace/os_include
 usr/lib/libACE.so
-usr/include/ace/ETCL/*.{h,inl,cpp}
-usr/include/ace/Monitor_Control/*.{h,inl,cpp}
+usr/include/ace/ETCL/*.h
+usr/include/ace/ETCL/*.inl
+usr/include/ace/Monitor_Control/*.h
 usr/lib/libACE_ETCL_Parser.so
 usr/lib/libACE_Monitor_Control.so
 usr/lib/libACE_ETCL.so
