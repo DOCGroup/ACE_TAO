@@ -124,11 +124,6 @@ DDS_Base_Connector_T<CCM_TYPE>::create_dds_participant_factory (void)
               OpenDDS::DCPS::TransportRegistry::instance()->global_config(config);
             }
 
-          OpenDDS::RTPS::RtpsDiscovery_rch disc =
-            new OpenDDS::RTPS::RtpsDiscovery(OpenDDS::DCPS::Discovery::DEFAULT_RTPS);
-
-          TheServiceParticipant->add_discovery(OpenDDS::DCPS::static_rchandle_cast<OpenDDS::DCPS::Discovery>(disc));
-          TheServiceParticipant->set_repo_domain(this->domain_id (), disc->key());
           TheServiceParticipant->set_default_discovery (OpenDDS::DCPS::Discovery::DEFAULT_RTPS);
 #else
           this->participant_factory_ =
@@ -168,14 +163,6 @@ DDS_Base_Connector_T<CCM_TYPE>::domain_id (
   else
     {
       this->domain_id_ = domain_id;
-
-#if (CIAO_DDS4CCM_OPENDDS==1)
-      OpenDDS::RTPS::RtpsDiscovery_rch disc =
-        new OpenDDS::RTPS::RtpsDiscovery(OpenDDS::DCPS::Discovery::DEFAULT_RTPS);
-
-      TheServiceParticipant->add_discovery(OpenDDS::DCPS::static_rchandle_cast<OpenDDS::DCPS::Discovery>(disc));
-      TheServiceParticipant->set_repo_domain(this->domain_id (), disc->key());
-#endif
     }
 }
 
@@ -321,6 +308,15 @@ DDS_Base_Connector_T<CCM_TYPE>::init_domain (
         DPMANAGER->get_participant (this->domain_id_, this->qos_profile_.in ());
       if (::CORBA::is_nil (dds_dp.in ()))
         {
+#if (CIAO_DDS4CCM_OPENDDS==1)
+          // Ok, we need to create a new domain participant, let us setup some
+          // special transport settings right now
+          OpenDDS::RTPS::RtpsDiscovery_rch disc =
+            new OpenDDS::RTPS::RtpsDiscovery(OpenDDS::DCPS::Discovery::DEFAULT_RTPS);
+
+          TheServiceParticipant->add_discovery(OpenDDS::DCPS::static_rchandle_cast<OpenDDS::DCPS::Discovery>(disc));
+          TheServiceParticipant->set_repo_domain(this->domain_id (), disc->key());
+#endif
           // Create a new participant for this qos profile and domain ID.
           participant = this->participant_factory_->create_participant (
                                           this->domain_id_,
