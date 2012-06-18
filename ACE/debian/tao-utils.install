@@ -1,2 +1,4 @@
-usr/bin/tao_ns{add,del,list}
+usr/bin/tao_nsadd
+usr/bin/tao_nsdel
+usr/bin/tao_nslist
 usr/bin/tao_catior

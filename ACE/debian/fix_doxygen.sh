@@ -1,7 +1,7 @@
 #!/bin/sh
-# $Id$
+#
 # This script regenerates changes on the Doxygen templates.
-
+#
 set -e
 export QUILT_PATCHES=debian/patches
 
@@ -12,8 +12,7 @@ quilt new reduce-doxygen-doc.diff
 for f in $(find $ACE_ROOT -name '*.doxygen')
 do
     QUILT_PATCHES=debian/patches quilt add $f
-    sed -e 's#GENERATE_HTMLHELP     = YES#GENERATE_HTMLHELP     = NO#' \
-        -e 's#COLLABORATION_GRAPH   = YES#COLLABORATION_GRAPH   = NO#' \
+    sed -e 's#COLLABORATION_GRAPH   = YES#COLLABORATION_GRAPH   = NO#' \
         -e 's#INCLUDE_GRAPH         = YES#INCLUDE_GRAPH         = NO#' \
         -e 's#INCLUDED_BY_GRAPH     = YES#INCLUDED_BY_GRAPH     = NO#' \
         -e 's#SEARCHENGINE          = YES#SEARCHENGINE          = NO#' \
