@@ -4,7 +4,7 @@
 # written February 2002 by Ossama Othman <ossama@debian.org>
 # Modified August 2003 by Brian Nelson <pyro@debian.org>
 # Copyright (C) 2004  Raphael Bossek <bossekr@debian.org>
-# Copyright © 2005-2011 Thomas Girard <thomas.g.girard@free.fr>
+# Copyright © 2005-2012 Thomas Girard <thomas.g.girard@free.fr>
 
 MWCFLAGS := -type gnuace -noreldefs
 DSO_MAKE_FLAG := versioned_so=2
@@ -39,13 +39,14 @@ export TAO_ROOT := $(ACE_ROOT)/TAO
 export LD_LIBRARY_PATH := $(LD_LIBRARY_PATH):$(ACE_ROOT)/lib
 export QTDIR := /usr/share/qt4
 
-.PHONY: build
-build %:
+%:
 	dh $@
 
 # Implement our own configure machinery; it will copy Debian specific
 # configuration before launching MPC to generate ACE+TAO GNUmakefile
-override_dh_auto_configure:
+.PHONY: configure
+configure: configure-stamp
+configure-stamp:
 	cp debian/platform_macros.GNU $(ACE_ROOT)/include/makeinclude
 	cp debian/config*.h $(ACE_ROOT)/ace/
 	cp debian/default.features $(ACE_ROOT)/bin/MakeProjectCreator/config
@@ -53,17 +54,15 @@ override_dh_auto_configure:
 	cd $(ACE_ROOT) && $(ACE_ROOT)/bin/mwc.pl $(MWCFLAGS) ACE-DPKG.mwc
 	cp debian/TAO-DPKG.mwc $(TAO_ROOT)
 	cd $(TAO_ROOT) && $(ACE_ROOT)/bin/mwc.pl $(MWCFLAGS) TAO-DPKG.mwc
-
-override_dh_auto_build: build-stamp manpages-stamp doxygen-stamp
-
-build-stamp:
-	$(MAKE) -C $(ACE_ROOT) $(DSO_MAKE_FLAG)
-	$(MAKE) -C $(TAO_ROOT) $(DSO_MAKE_FLAG)
 	touch $@
 
-override_dh_auto_install:
-	$(MAKE) -C $(ACE_ROOT) install $(INSTALL_FLAGS)
-	$(MAKE) -C $(TAO_ROOT) install $(INSTALL_FLAGS)
+override_dh_auto_build-arch: configure-stamp
+	$(MAKE) -C $(ACE_ROOT) $(DSO_MAKE_FLAG) $(FIXUP)
+	$(MAKE) -C $(TAO_ROOT) $(DSO_MAKE_FLAG) $(FIXUP)
+
+override_dh_auto_install-arch: manpages-stamp
+	$(MAKE) -C $(ACE_ROOT) install $(INSTALL_FLAGS) $(FIXUP)
+	$(MAKE) -C $(TAO_ROOT) install $(INSTALL_FLAGS) $(FIXUP)
 	mkdir -p $(DT)/usr/share/man/man1
 	cp $(ACE_ROOT)/apps/gperf/ace_gperf.1 $(DT)/usr/share/man/man1
 #	Relocate .idl and .pidl files
@@ -78,23 +77,27 @@ override_dh_auto_install:
 	mv $(DT)/usr/bin/tao_idl $(DT)/usr/bin/tao_ifr $(DT)/usr/lib/ace/TAO
 	cp debian/tao_idl debian/tao_ifr $(DT)/usr/bin
 
-override_dh_auto_clean:
-	[ -f $(ACE_ROOT)/GNUmakefile ] && $(MAKE) -C $(ACE_ROOT) realclean $(DSO_MAKE_FLAG) || true
-	[ -f $(TAO_ROOT)/GNUmakefile ] && $(MAKE) -C $(TAO_ROOT) realclean $(DSO_MAKE_FLAG) || true
+override_dh_auto_install-indep:
+
+override_dh_auto_clean-arch:
+	[ -f $(ACE_ROOT)/GNUmakefile ] && $(MAKE) -C $(ACE_ROOT) realclean $(DSO_MAKE_FLAG) $(FIXUP) || true
+	[ -f $(TAO_ROOT)/GNUmakefile ] && $(MAKE) -C $(TAO_ROOT) realclean $(DSO_MAKE_FLAG) $(FIXUP) || true
 	find $(ACE_ROOT) -name 'GNUmakefile*' -o -name '.depend.*' | xargs -r rm
 	rm -f $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
 	rm -f $(ACE_ROOT)/bin/MakeProjectCreator/config/default.features
 	rm -f $(ACE_ROOT)/ace/config.h $(ACE_ROOT)/ace/config-hurd.h
 	rm -f $(ACE_ROOT)/ACE-DPKG.mwc $(TAO_ROOT)/TAO-DPKG.mwc
 	rm -f debian/*.1 debian/mpc-ace.sgml
-	rm -Rf $(ACE_ROOT)/html/libace-doc $(ACE_ROOT)/html/libtao-doc $(ACE_ROOT)/html/libacexml-doc
 	rm -f *-stamp
 # Remove stubs that get generated during TAO compilation but for some reason
 # are not removed on make realclean
 	rm -f `cat debian/TOREMOVE`
 
+override_dh_auto_clean-indep:
+	rm -Rf $(ACE_ROOT)/html/libace-doc $(ACE_ROOT)/html/libtao-doc $(ACE_ROOT)/html/libacexml-doc
+
 override_dh_compress:
-	dh_compress -Xexamples -Xtutorials
+	dh_compress -Xexamples
 
 # Add --list-missing to make sure we don't miss new binaries
 override_dh_install:
@@ -109,10 +112,14 @@ override_dh_installchangelogs:
 	dh_installchangelogs --remaining-packages ChangeLog
 
 override_dh_fixperms:
+ifneq (,$(filter libtao-doc, $(shell dh_listpackages)))
 	chmod -x debian/libtao-doc/usr/share/doc/libtao-doc/examples/RTCORBA/Activity/svc.conf.client
 	chmod -x debian/libtao-doc/usr/share/doc/libtao-doc/examples/RTCORBA/Activity/svc.conf.server
 	chmod -x debian/libtao-doc/usr/share/doc/libtao-doc/examples/Simulator/DOVEBrowser/make.bat
+endif
+ifneq (,$(filter libace-doc libtao-doc, $(shell dh_listpackages)))
 	find debian -name '*.pl' | xargs -r sed -i -e '1i#!/usr/bin/perl'
+endif
 	dh_fixperms
 
 debian/mpc-ace.sgml: MPC/docs/MPC.sgml
@@ -121,12 +128,9 @@ debian/mpc-ace.sgml: MPC/docs/MPC.sgml
 debian/%.1: debian/%.sgml
 	docbook-to-man $< > $@
 
-.PHONY: doxygen
-doxygen: doxygen-stamp
-doxygen-stamp:
+override_dh_auto_build-indep:
 	cd $(ACE_ROOT) && bin/generate_doxygen.pl -is_release -exclude_ciao -exclude_dance
 	find $(ACE_ROOT)/html $(DOXYGEN_FILES_TO_REMOVE) | xargs -r rm -f
-	touch $@
 
 .PHONY: manpages
 manpages: manpages-stamp
