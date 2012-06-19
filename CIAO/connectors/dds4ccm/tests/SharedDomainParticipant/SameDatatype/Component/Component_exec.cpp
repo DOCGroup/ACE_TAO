@@ -471,7 +471,7 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
           }
         else
           {
-            ACE_DEBUG ((LM_DEBUG, "Connector 1 and 2 seems to  "
+            ACE_DEBUG ((LM_DEBUG, "OK: Connector 1 and 2 seems to "
                                   "share the same DomainParticipant\n"));
           }
         if ((this->dp1_hnd_ == this->dp4_hnd_)
@@ -483,6 +483,11 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
             ACE_ERROR ((LM_ERROR, "ERROR: Connector 1 and 4 seem to "
                                   "share the same DomainParticipant\n"));
           }
+        else
+          {
+            ACE_DEBUG ((LM_DEBUG, "OK: Connector 1 and 4 seems to "
+                                  "share the same DomainParticipant\n"));
+          }
         if ((this->dp2_hnd_ == this->dp4_hnd_)
 #if (CIAO_DDS4CCM_OPENDDS==1)
             && (this->dp2_ptr_ == this->dp4_ptr_)
@@ -492,6 +497,11 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
             ACE_ERROR ((LM_ERROR, "ERROR: Connector 2 and 4 seem to "
                                   "share the same DomainParticipant\n"));
           }
+        else
+          {
+            ACE_DEBUG ((LM_DEBUG, "OK: Connector 2 and 4 seems to "
+                                  "share the same DomainParticipant\n"));
+          }
         if ((this->dp3_hnd_ == this->dp4_hnd_)
 #if (CIAO_DDS4CCM_OPENDDS==1)
             && (this->dp3_ptr_ == this->dp4_ptr_)
@@ -499,6 +509,11 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
             )
           {
             ACE_ERROR ((LM_ERROR, "ERROR: Connector 3 and 4 seem to "
+                                  "share the same DomainParticipant\n"));
+          }
+        else
+          {
+            ACE_DEBUG ((LM_DEBUG, "OK: Connector 3 and 4 seems to "
                                   "share the same DomainParticipant\n"));
           }
 
@@ -514,7 +529,7 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
           }
         else
           {
-            ACE_DEBUG ((LM_DEBUG, "Connector 1 and 2 seems to  "
+            ACE_DEBUG ((LM_DEBUG, "OK: Connector 1 and 2 seems to "
                                   "share the same Topic\n"));
           }
         if ((this->tp1_hnd_ == this->tp3_hnd_)
@@ -526,6 +541,11 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
             ACE_ERROR ((LM_ERROR, "ERROR: Connector 1 and 3 seem to "
                                   "share the same Topic\n"));
           }
+        else
+          {
+            ACE_DEBUG ((LM_DEBUG, "OK: Connector 1 and 3 seems to "
+                                  "share the same Topic\n"));
+          }
         if ((this->tp1_hnd_ == this->tp4_hnd_)
 #if (CIAO_DDS4CCM_OPENDDS==1)
             && (this->tp1_ptr_ == this->tp4_ptr_)
@@ -533,6 +553,11 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
             )
           {
             ACE_ERROR ((LM_ERROR, "ERROR: Connector 1 and 4 seem to "
+                                  "share the same Topic\n"));
+          }
+        else
+          {
+            ACE_DEBUG ((LM_DEBUG, "OK: Connector 1 and 4 seems to "
                                   "share the same Topic\n"));
           }
       }
