@@ -50,7 +50,7 @@ WARN_FORMAT           = "$file:$line: $text"
 # configuration options related to the input files
 #---------------------------------------------------------------------------
 
-INPUT                 = CIAO/connectors/dds4ccm/idl CIAO/connectors/dds4ccm/impl
+INPUT                 = TAO/CIAO/connectors/dds4ccm/idl TAO/CIAO/connectors/dds4ccm/impl
 FILE_PATTERNS         = *.cpp *.h *.i *.inl *.pidl *.txt *.idl *.idl3
 RECURSIVE             = YES
 EXCLUDE               =
