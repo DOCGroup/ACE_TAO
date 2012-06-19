@@ -553,7 +553,8 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("DDS_Subscriber_i::get_default_datareader_qos");
       ::DDS_DataReaderQos ccm_dds_qos;
-      ::DDS::ReturnCode_t retcode = this->rti_entity ()->get_default_datareader_qos (ccm_dds_qos);
+      ::DDS::ReturnCode_t const retcode =
+        this->rti_entity ()->get_default_datareader_qos (ccm_dds_qos);
       qos <<= ccm_dds_qos;
       return retcode;
     }

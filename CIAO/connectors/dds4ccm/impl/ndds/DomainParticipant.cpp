@@ -825,7 +825,8 @@ namespace CIAO
       DDS4CCM_TRACE ("DDS_DomainParticipant_i::get_qos");
       ::DDS_DomainParticipantQos ccm_dds_qos;
       ccm_dds_qos <<= qos;
-      ::DDS::ReturnCode_t retcode = this->rti_entity ()-> get_qos (ccm_dds_qos);
+      ::DDS::ReturnCode_t const retcode =
+        this->rti_entity ()-> get_qos (ccm_dds_qos);
       qos <<= ccm_dds_qos;
       return retcode;
     }
@@ -962,7 +963,8 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("DDS_DomainParticipant_i::get_default_publisher_qos");
       ::DDS_PublisherQos ccm_dds_qos;
-      ::DDS::ReturnCode_t retcode = this->rti_entity ()-> get_default_publisher_qos (ccm_dds_qos);
+      ::DDS::ReturnCode_t const retcode =
+        this->rti_entity ()-> get_default_publisher_qos (ccm_dds_qos);
       qos <<= ccm_dds_qos;
       return retcode;
     }
@@ -994,7 +996,7 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("DDS_DomainParticipant_i::get_default_subscriber_qos");
       ::DDS_SubscriberQos ccm_dds_qos;
-      ::DDS::ReturnCode_t retcode =
+      ::DDS::ReturnCode_t const retcode =
             this->rti_entity ()-> get_default_subscriber_qos (ccm_dds_qos);
       qos <<= ccm_dds_qos;
       return retcode;
@@ -1027,7 +1029,7 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("DDS_DomainParticipant_i::get_default_topic_qos");
       ::DDS_TopicQos ccm_dds_qos;
-      ::DDS::ReturnCode_t retcode =
+      ::DDS::ReturnCode_t const retcode =
             this->rti_entity ()-> get_default_topic_qos (ccm_dds_qos);
       qos <<= ccm_dds_qos;
       return retcode;

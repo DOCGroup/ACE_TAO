@@ -130,6 +130,12 @@ DDS_Subscriber_Base_T<CCM_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::c
                         "Error: DDS returned a nil datareader.\n"));
           throw ::CORBA::INTERNAL ();
         }
+
+
+      this->condition_manager_.set_dds_entity (dr.in ());
+      this->dds_read_->set_dds_reader (dr.in (), &this->condition_manager_);
+      this->ccm_data_reader_->set_dds_entity (dr.in ());
+
       DDS::ReturnCode_t const retcode = dr->enable ();
       if (retcode != ::DDS::RETCODE_OK)
         {
@@ -139,11 +145,6 @@ DDS_Subscriber_Base_T<CCM_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::c
                         ::CIAO::DDS4CCM::translate_retcode (retcode)));
           throw ::CORBA::INTERNAL ();
         }
-
-      this->condition_manager_.set_dds_entity (dr.in ());
-      this->dds_read_->set_dds_reader (dr.in (),
-                                       &this->condition_manager_);
-      this->ccm_data_reader_->set_dds_entity (dr.in ());
     }
 }
 
@@ -229,6 +230,12 @@ DDS_Subscriber_Base_T<CCM_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::r
   DDS4CCM_TRACE ("DDS_Subscriber_Base_T<CCM_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::remove");
 
   ::DDS::DataReader_var dr = this->dds_read_->get_dds_reader ();
+
+  this->cft_setting_->delete_contentfilteredtopic (subscriber);
+  this->dds_read_->set_dds_reader (::DDS::DataReader::_nil (), 0);
+  this->condition_manager_.set_dds_entity (::DDS::DataReader::_nil ());
+  this->ccm_data_reader_->set_dds_entity (::DDS::DataReader::_nil ());
+
   if (!::CORBA::is_nil (dr.in ()))
     {
       DDS::ReturnCode_t const retval =
@@ -241,12 +248,13 @@ DDS_Subscriber_Base_T<CCM_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::r
                         ::CIAO::DDS4CCM::translate_retcode (retval)));
           throw ::CORBA::INTERNAL ();
         }
+      else
+        {
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_INFO, DDS4CCM_INFO
+              "DDS_Subscriber_Base_T::remove - "
+              "Deleted DataReader\n"));
+        }
     }
-  this->cft_setting_->delete_contentfilteredtopic (subscriber);
-  this->dds_read_->set_dds_reader (::DDS::DataReader::_nil (),
-                                   0);
-  this->condition_manager_.set_dds_entity (::DDS::DataReader::_nil ());
-  this->ccm_data_reader_->set_dds_entity (::DDS::DataReader::_nil ());
 }
 
 template <typename CCM_TYPE, typename TYPED_DDS_READER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>

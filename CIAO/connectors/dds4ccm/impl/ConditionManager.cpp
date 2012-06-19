@@ -105,7 +105,7 @@ namespace CIAO
             }
         }
 
-      ::DDS::ReturnCode_t retcode =
+      ::DDS::ReturnCode_t const retcode =
         this->ws_.attach_condition (this->rd_condition_.in ());
 
       if (retcode != ::DDS::RETCODE_OK)
@@ -275,7 +275,7 @@ namespace CIAO
         }
 #endif
 
-      ::DDS::ReturnCode_t retcode =
+      ::DDS::ReturnCode_t const retcode =
         this->ws_.attach_condition (this->qc_getter_.in ());
       if (retcode != ::DDS::RETCODE_OK)
         {
@@ -354,7 +354,7 @@ namespace CIAO
       DDS4CCM_TRACE ("CIAO::DDS4CCM::ConditionManager::remove_condition");
       if (! ::CORBA::is_nil (dds_qc))
         {
-          ::DDS::ReturnCode_t retcode = this->dds_entity ()->delete_readcondition (dds_qc);
+          ::DDS::ReturnCode_t const retcode = this->dds_entity ()->delete_readcondition (dds_qc);
           if (retcode == ::DDS::RETCODE_OK)
             {
               DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_CAST_SUCCESSFUL, (LM_DEBUG, DDS4CCM_INFO

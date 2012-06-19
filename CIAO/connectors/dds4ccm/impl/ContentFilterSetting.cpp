@@ -128,7 +128,8 @@ namespace CIAO
           throw ::CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
         }
 
-      ::DDS::ReturnCode_t retcode = this->cft_->set_expression_parameters (parameters);
+      ::DDS::ReturnCode_t const retcode =
+        this->cft_->set_expression_parameters (parameters);
       if (retcode == ::DDS::RETCODE_OK)
         {
           DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
