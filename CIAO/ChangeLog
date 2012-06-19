@@ -1,3 +1,14 @@
+Tue Jun 19 18:30:04 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Component/Component_exec.cpp:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDomainID/Component/Component_exec.h:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDomainID/Component/Component_exec.cpp:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDomainID/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/Component/Component_exec.cpp:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/descriptors/run_test.pl:
+          Improved support for OpenDDS and extended logging
+
 Tue Jun 19 13:25:24 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ConditionManager.cpp:

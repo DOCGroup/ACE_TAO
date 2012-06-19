@@ -264,7 +264,7 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
       }
     else
       {
-        ACE_DEBUG ((LM_DEBUG, "Connector 1 and 2 seems to "
+        ACE_DEBUG ((LM_DEBUG, "OK: Connector 1 and 2 seems to "
                               "share the same DomainParticipant\n"));
       }
     if ((this->dp1_hnd_ == this->dp3_hnd_)
@@ -278,7 +278,7 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
       }
     else
       {
-        ACE_DEBUG ((LM_DEBUG, "Connector 1 and 3 seems to "
+        ACE_DEBUG ((LM_DEBUG, "OK: Connector 1 and 3 seems to "
                               "share the same DomainParticipant\n"));
       }
 
@@ -293,7 +293,7 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
       }
     else
       {
-        ACE_DEBUG ((LM_DEBUG, "Connector 2 and 3 seems to "
+        ACE_DEBUG ((LM_DEBUG, "OK: Connector 2 and 3 seems to "
                               "share the same DomainParticipant\n"));
       }
   }
