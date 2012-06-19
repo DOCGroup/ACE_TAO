@@ -964,7 +964,7 @@ void DDS_Base_Connector_T<CCM_TYPE>::remove_topic (
                 name.in (),
                 DDS_ENTITY_LOG (participant)));
 
-  DDS::ReturnCode_t retcode = participant->delete_topic (topic);
+  DDS::ReturnCode_t const retcode = participant->delete_topic (topic);
 
   DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION_STARTING, (LM_TRACE, DDS4CCM_INFO
                 "DDS_Base_Connector_T::remove_topic - "

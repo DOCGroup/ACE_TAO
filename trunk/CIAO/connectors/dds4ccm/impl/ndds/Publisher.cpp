@@ -256,7 +256,8 @@ namespace CIAO
       DDS4CCM_TRACE ("DDS_Publisher_i::get_qos");
       ::DDS_PublisherQos ccm_dds_qos;
       ccm_dds_qos <<= qos;
-      ::DDS::ReturnCode_t retcode = this->rti_entity ()->get_qos (ccm_dds_qos);
+      ::DDS::ReturnCode_t const retcode =
+        this->rti_entity ()->get_qos (ccm_dds_qos);
       qos <<= ccm_dds_qos;
       return retcode;
     }
@@ -387,7 +388,7 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("DDS_Publisher_i::get_default_datawriter_qos");
       ::DDS_DataWriterQos ccm_dds_qos;
-      ::DDS::ReturnCode_t retcode =
+      ::DDS::ReturnCode_t const retcode =
             this->rti_entity ()->get_default_datawriter_qos (ccm_dds_qos);
       qos <<= ccm_dds_qos;
       return retcode;
