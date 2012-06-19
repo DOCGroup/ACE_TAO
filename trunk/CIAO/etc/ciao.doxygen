@@ -49,7 +49,7 @@ WARN_FORMAT           = "$file:$line: $text"
 # configuration options related to the input files
 #---------------------------------------------------------------------------
 
-INPUT                 = CIAO/ciao CIAO/ccm
+INPUT                 = TAO/CIAO/ciao TAO/CIAO/ccm
 FILE_PATTERNS         = *.cpp *.h *.i *.inl *.pidl *.txt *.idl
 RECURSIVE             = YES
 EXCLUDE               =
