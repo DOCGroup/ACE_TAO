@@ -1,3 +1,8 @@
+Tue Jun 19 08:55:04 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+          Give each domain participant its own unique transport config
+
 Mon Jun 18 15:39:18 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:

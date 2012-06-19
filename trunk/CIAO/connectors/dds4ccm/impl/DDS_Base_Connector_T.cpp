@@ -98,33 +98,13 @@ DDS_Base_Connector_T<CCM_TYPE>::create_dds_participant_factory (void)
         {
 #if (CIAO_DDS4CCM_OPENDDS==1)
           this->participant_factory_ = TheParticipantFactory;
-
-          OpenDDS::DCPS::TransportConfig_rch config =
-            OpenDDS::DCPS::TransportRegistry::instance()->get_config("dds4ccm_rtps");
-
-          if (config.is_nil())
-            {
-              config =
-                OpenDDS::DCPS::TransportRegistry::instance()->create_config("dds4ccm_rtps");
-            }
-
-          OpenDDS::DCPS::TransportInst_rch inst =
-            OpenDDS::DCPS::TransportRegistry::instance()->get_inst("the_rtps_transport");
-
-          if (inst.is_nil())
-            {
-              inst =
-                OpenDDS::DCPS::TransportRegistry::instance()->create_inst("the_rtps_transport",
-                                                                    "rtps_udp");
-              OpenDDS::DCPS::RtpsUdpInst_rch rui =
-                OpenDDS::DCPS::static_rchandle_cast<OpenDDS::DCPS::RtpsUdpInst>(inst);
-
-              config->instances_.push_back(inst);
-
-              OpenDDS::DCPS::TransportRegistry::instance()->global_config(config);
-            }
-
           TheServiceParticipant->set_default_discovery (OpenDDS::DCPS::Discovery::DEFAULT_RTPS);
+
+          OpenDDS::RTPS::RtpsDiscovery_rch disc =
+            new OpenDDS::RTPS::RtpsDiscovery(OpenDDS::DCPS::Discovery::DEFAULT_RTPS);
+
+          TheServiceParticipant->add_discovery(OpenDDS::DCPS::static_rchandle_cast<OpenDDS::DCPS::Discovery>(disc));
+          TheServiceParticipant->set_repo_domain(this->domain_id (), disc->key());
 #else
           this->participant_factory_ =
             new ::CIAO::NDDS::DDS_DomainParticipantFactory_i;
@@ -306,17 +286,9 @@ DDS_Base_Connector_T<CCM_TYPE>::init_domain (
 
       DDS::DomainParticipant_var dds_dp =
         DPMANAGER->get_participant (this->domain_id_, this->qos_profile_.in ());
+
       if (::CORBA::is_nil (dds_dp.in ()))
         {
-#if (CIAO_DDS4CCM_OPENDDS==1)
-          // Ok, we need to create a new domain participant, let us setup some
-          // special transport settings right now
-          OpenDDS::RTPS::RtpsDiscovery_rch disc =
-            new OpenDDS::RTPS::RtpsDiscovery(OpenDDS::DCPS::Discovery::DEFAULT_RTPS);
-
-          TheServiceParticipant->add_discovery(OpenDDS::DCPS::static_rchandle_cast<OpenDDS::DCPS::Discovery>(disc));
-          TheServiceParticipant->set_repo_domain(this->domain_id (), disc->key());
-#endif
           // Create a new participant for this qos profile and domain ID.
           participant = this->participant_factory_->create_participant (
                                           this->domain_id_,
@@ -332,6 +304,41 @@ DDS_Base_Connector_T<CCM_TYPE>::init_domain (
                         "qos_profile <%C>\n",
                         DDS_ENTITY_LOG (participant),
                         this->domain_id_, this->qos_profile_.in ()));
+
+#if (CIAO_DDS4CCM_OPENDDS==1)
+          // Ok, we need to create a new domain participant, let us setup some
+          // special transport settings right now.
+          // Convert the domain id to a string and by concatenating the qos_profile
+          // string we get an unique string
+          char str_domain_id[10];
+          ACE_OS::itoa (this->domain_id (), str_domain_id, 10);
+          std::string config_name = str_domain_id;
+          std::string rtps_transport_name = str_domain_id;
+          config_name.append ("#");
+          rtps_transport_name.append ("#");
+          if (!::CORBA::is_nil (this->qos_profile_.in ()))
+            {
+              config_name.append (this->qos_profile_.in ());
+              rtps_transport_name.append (this->qos_profile_.in ());
+            }
+          rtps_transport_name.append ("#");
+          rtps_transport_name.append ("transport");
+
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION_STARTING, (LM_TRACE, DDS4CCM_INFO
+              "DDS_Base_Connector_T::init_domain - "
+              "Creating OpenDDS config <%C> for transport <%C>\n",
+              config_name.c_str(), rtps_transport_name.c_str ()));
+
+          OpenDDS::DCPS::TransportInst_rch inst =
+            OpenDDS::DCPS::TransportRegistry::instance()->create_inst(rtps_transport_name,
+                                                                      "rtps_udp");
+
+          OpenDDS::DCPS::TransportConfig_rch config =
+            OpenDDS::DCPS::TransportRegistry::instance()->create_config(config_name);
+
+          config->instances_.push_back (inst);
+          TheTransportRegistry->bind_config(config, participant);
+#endif
 
           if (!DPMANAGER->register_participant (
                 this->domain_id_, this->qos_profile_.in (), participant))
