@@ -117,7 +117,8 @@ namespace CIAO
       DDS4CCM_TRACE ("DDS_WaitSet_i::get_conditions");
 
       DDSConditionSeq dds_seq;
-      ::DDS::ReturnCode_t retcode = this->rti_entity ()->get_conditions (dds_seq);
+      ::DDS::ReturnCode_t const retcode =
+        this->rti_entity ()->get_conditions (dds_seq);
 
       if (retcode != ::DDS::RETCODE_OK)
         {

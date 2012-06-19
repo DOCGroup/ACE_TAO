@@ -275,7 +275,7 @@ namespace CIAO
       DDS4CCM_TRACE ("DDS_DomainParticipantFactory_i::"
         "get_default_participant_qos");
       DDS_DomainParticipantQos ccm_dds_qos;
-      ::DDS::ReturnCode_t retcode =
+      ::DDS::ReturnCode_t const retcode =
         DDSDomainParticipantFactory::get_instance ()->
           get_default_participant_qos (ccm_dds_qos);
       qos <<= ccm_dds_qos;
@@ -309,7 +309,7 @@ namespace CIAO
       DDS4CCM_TRACE ("DDS_DomainParticipantFactory_i::get_qos");
       DDS_DomainParticipantFactoryQos ccm_dds_qos;
       ccm_dds_qos <<= qos;
-      ::DDS::ReturnCode_t retcode =
+      ::DDS::ReturnCode_t const retcode =
         DDSDomainParticipantFactory::get_instance ()->get_qos (ccm_dds_qos);
       ccm_dds_qos <<= qos;
       return retcode;

@@ -62,7 +62,8 @@ namespace CIAO
       DDS4CCM_TRACE ("DataWriter_T<TYPED_DDS_WRITER, TYPED_WRITER_TYPE, VALUE_TYPE>::get_qos");
       ::DDS_DataWriterQos ccm_dds_qos;
       ccm_dds_qos <<= qos;
-      ::DDS::ReturnCode_t retcode = this->rti_entity ()->get_qos (ccm_dds_qos);
+      ::DDS::ReturnCode_t const retcode =
+        this->rti_entity ()->get_qos (ccm_dds_qos);
       qos <<= ccm_dds_qos;
       return retcode;
     }

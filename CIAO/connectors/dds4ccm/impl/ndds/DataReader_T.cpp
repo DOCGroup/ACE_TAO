@@ -699,18 +699,17 @@ namespace CIAO
         {
           dds_rc = rc->get_rti_entity ();
         }
-      ::DDS::ReturnCode_t retcode = this->rti_entity ()->delete_readcondition (dds_rc);
-      if (retcode == ::DDS::RETCODE_OK)
+
+      if (rc)
         {
-          if (rc)
-            {
-              rc->set_rti_entity (0);
-            }
-          if (qc)
-            {
-              qc->set_rti_entity (0);
-            }
+          rc->set_rti_entity (0);
         }
+      if (qc)
+        {
+          qc->set_rti_entity (0);
+        }
+
+      ::DDS::ReturnCode_t const retcode = this->rti_entity ()->delete_readcondition (dds_rc);
       return retcode;
     }
 
