@@ -26,6 +26,9 @@ module CIAO
     const string CCM_COMPONENT = "edu.vanderbilt.dre.CCM.Component";
     const string CCM_HOMEDCOMPONENT = "edu.vanderbilt.dre.CCM.HomedComponent";
     const string CCM_CONNECTOR = "edu.vanderbilt.dre.CCM.Connector";
+
+    const string SERVICE_REF = "edu.vanderbilt.dre.CIAO.ServiceReference";
+
   };
 };
 #endif /* CIAO_PROPERTIES_IDL */

@@ -84,6 +84,7 @@ namespace CIAO
   private:
     /// Not allowed to be
     Session_Container_i (void);
+
   };
 }
 

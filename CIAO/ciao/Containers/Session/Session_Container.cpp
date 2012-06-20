@@ -334,3 +334,4 @@ namespace CIAO
     return componentref._retn ();
   }
 }
+
