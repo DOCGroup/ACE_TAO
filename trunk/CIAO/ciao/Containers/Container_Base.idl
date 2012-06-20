@@ -133,6 +133,14 @@ module CIAO
 
     PortableServer::POA the_port_POA ();
 
+    Object get_local_facet(in ::Components::CCMObject provider_ref,
+                           in string provider_port);
+
+    void install_service_component_reference (in string service_id,
+                                         in Object obj);
+
+    Object uninstall_service_component_reference (in string service_id);
+
     Object resolve_service_reference(in string service_id)
       raises (::Components::CCMException);
 

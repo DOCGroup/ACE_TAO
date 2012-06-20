@@ -17,6 +17,7 @@
 #define CIAO_CONTAINER_BASE_T_H
 
 #include /**/ "ace/pre.h"
+#include <map>
 
 #include "tao/LocalObject.h"
 
@@ -124,6 +125,18 @@ namespace CIAO
     /// Get a reference to the underlying ORB.
     CORBA::ORB_ptr the_ORB (void) const;
 
+    virtual
+    CORBA::Object_ptr get_local_facet(::Components::CCMObject_ptr provider_ref,
+                                      const char * provider_port);
+
+    virtual void
+    install_service_component_reference (const char * service_id,
+                               CORBA::Object_ptr objref);
+
+    virtual CORBA::Object_ptr
+    uninstall_service_component_reference (const char * service_id);
+
+
     virtual CORBA::Object_ptr resolve_service_reference (const char *service_id);
 
   protected:
@@ -173,6 +186,13 @@ namespace CIAO
     /// Create POA for the facets and consumers alone.
     void create_facet_consumer_POA (const char *name,
                                     PortableServer::POA_ptr root);
+
+    //Administration of installed service
+    typedef std::map<std::string,
+                     CORBA::Object_var
+                     > InstalledServices;
+    InstalledServices installed_services_;
+
   };
 }
 

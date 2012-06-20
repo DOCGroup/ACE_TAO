@@ -1,0 +1,133 @@
+// $Id$
+
+project(TTSConnector_idl_gen) : connectoridldefaults, anytypecode {
+  custom_only = 1
+  //don' generate CIAO connector implementation code in this example!
+  idlflags -= -Gcn
+  idlflags += -Wb,stub_export_macro=TTSCONNECTOR_STUB_Export \
+              -Wb,stub_export_include=TTSConnector_stub_export.h \
+              -Wb,skel_export_macro=TTSCONNECTOR_SVNT_Export \
+              -Wb,skel_export_include=TTSConnector_svnt_export.h \
+              -Wb,svnt_export_macro=TTSCONNECTOR_SVNT_Export \
+              -Wb,svnt_export_include=TTSConnector_svnt_export.h \
+              -Wb,conn_export_macro=TTSCONNECTOR_EXEC_Export \
+              -Wb,conn_export_include=TTSConnector_conn_export.h
+
+  IDL_Files {
+    TTSConnector.idl
+  }
+
+}
+
+project(TTSConnector_lem_gen) : ciaoidldefaults, anytypecode {
+  custom_only = 1
+  after += TTSConnector_idl_gen
+  idlflags += -Wb,export_macro=TTSCONNECTOR_LEM_STUB_Export \
+              -Wb,export_include=TTSConnector_lem_stub_export.h \
+              -SS -Gxhst
+
+  IDL_Files {
+    TTSConnectorE.idl
+  }
+}
+
+project(TTSConnector_lem_stub) : ccm_executor {
+  after += TTSConnector_lem_gen TTSConnector_stub
+  libs  += TTSConnector_stub
+  libout = ../lib
+  libpaths += ../lib
+  sharedname = TTSConnector_lem_stub
+  dynamicflags += TTSCONNECTOR_LEM_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    TTSConnectorEC.cpp
+  }
+
+  Header_Files {
+    TTSConnectorEC.h
+    TTSConnector_lem_stub_export.h
+  }
+
+  Inline_Files {
+    TTSConnectorEC.inl
+  }
+}
+
+project(TTSConnector_stub) : ccm_stub {
+  after += TTSConnector_lem_gen
+  libout = ../lib
+  libpaths += ../lib
+  sharedname = TTSConnector_stub
+  dynamicflags += TTSCONNECTOR_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    TTSConnectorC.cpp
+  }
+
+  Header_Files {
+    TTSConnectorC.h
+    TTSConnector_stub_export.h
+  }
+
+  Inline_Files {
+    TTSConnectorC.inl
+  }
+}
+
+project(TTSConnector_exec) : ciao_executor {
+  after   += TTSConnector_stub TTSConnector_lem_stub
+  sharedname = TTSConnector_conn
+  libs += TTSConnector_stub TTSConnector_lem_stub
+  libout = ../lib
+  libpaths += ../lib
+  dynamicflags += TTSCONNECTOR_EXEC_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    TTSConnector_conn.cpp
+  }
+
+  Header_Files {
+    TTSConnector_conn.h
+    TTSConnector_conn_export.h
+  }
+
+  Inline_Files {
+  }
+}
+
+project(TTSConnector_svnt) : ciao_servant {
+  after      += TTSConnector_exec TTSConnector_stub TTSConnector_lem_stub
+  sharedname  = TTSConnector_svnt
+  libs       += TTSConnector_stub \
+                TTSConnector_conn \
+                TTSConnector_lem_stub 
+                
+  libout = ../lib
+  libpaths += ../lib
+  dynamicflags += TTSCONNECTOR_SVNT_BUILD_DLL
+
+  IDL_Files {
+  }
+   Source_Files {
+    TTSConnectorS.cpp
+    TTSConnector_svnt.cpp
+  }
+
+  Header_Files {
+    TTSConnectorS.h
+    TTSConnector_svnt.h
+    TTSConnector_svnt_export.h
+  }
+
+  Inline_Files {
+  }
+}

@@ -704,14 +704,122 @@ namespace CIAO
   }
 
   template <typename BASE>
-  CORBA::Object_ptr
-  Container_i<BASE>::resolve_service_reference(const char *service_id)
+  void
+  Container_i<BASE>::install_service_component_reference (
+                                                       const char * service_id,
+                                                       CORBA::Object_ptr objref)
   {
+    CIAO_TRACE ("Container_i::install_service_component_reference");
+    if ((!service_id) || (ACE_OS::strlen(service_id) == 0))
+      {
+        CIAO_ERROR (1,
+                    (LM_ERROR,
+                     CLINFO
+                    "Container_i::install_service_component_reference - "
+                    "service_id is NIL, throwing exception\n"));
+
+        throw Components::CCMException (
+                              ::Components::SERVICE_INSTALLATION_ERROR);
+      }
+    if (CORBA::is_nil(objref))
+      {
+        CIAO_ERROR (1,
+                    (LM_ERROR,
+                    CLINFO
+                    "Container_i::install_service_component_reference - "
+                    "objref is NIL\n"));
+
+        throw Components::CCMException (
+                                    ::Components::SERVICE_INSTALLATION_ERROR);
+      }
+
+    if (this->installed_services_.find(service_id) !=
+         this->installed_services_.end())
+      {
+        CIAO_ERROR (1,
+                    (LM_ERROR,
+                    CLINFO
+                    "Container_i::install_service_component_reference - "
+                    "Service reference <%C> already exists.\n", service_id));
+
+        throw Components::CCMException (
+                                       ::Components::SERVICE_INSTALLATION_ERROR);
+      }
+
+    CORBA::Object_var objvar = CORBA::Object::_duplicate(objref);
+    this->installed_services_[service_id] = objvar;
+   }
+
+  template <typename BASE>
+  CORBA::Object_ptr
+  Container_i<BASE>::uninstall_service_component_reference (
+                                                        const char * service_id)
+  {
+    CIAO_TRACE ("Container_i::uninstall_service_component_reference");
+    if ((service_id) && (ACE_OS::strlen(service_id) > 0))
+      {
+        for (InstalledServices::iterator it = this->installed_services_.begin();
+                it != this->installed_services_.end ();
+                ++it)
+          {
+            if (it->first == service_id)
+              {
+                CORBA::Object_var obj = it->second;
+                this->installed_services_.erase (it);
+                return obj._retn ();
+              }
+          }
+        CIAO_ERROR (1,
+                    (LM_ERROR,
+                     CLINFO
+                      "Container_i::uninstall_service_component_reference - "
+                      "Service reference not found, throwing exception\n"));
+
+        throw Components::CCMException (
+                                  ::Components::SERVICE_INSTALLATION_ERROR);
+      }
+    else
+      {
+        CIAO_ERROR (1,
+                    (LM_ERROR,
+                     CLINFO
+                     "Container_i::uninstall_service_component_reference - "
+                     "Nil service_id provided to uninstall, "
+                     "throwing exception\n"));
+
+        throw Components::CCMException (
+                                 ::Components::SERVICE_INSTALLATION_ERROR);
+      }
+    return CORBA::Object::_nil();
+  }
+
+  template <typename BASE>
+  CORBA::Object_ptr
+  Container_i<BASE>::resolve_service_reference (const char *service_id)
+  {
+    CIAO_TRACE ("Container_i::resolve_service_reference");
+
+    //ami4ccm uses this part of the code,
     if (ACE_OS::strcmp (service_id, "POA") == 0)
       {
         return ::PortableServer::POA::_duplicate (this->component_poa_.in ());
       }
-    throw Components::CCMException (Components::OBJECT_NOT_FOUND);
+
+    //search
+    InstalledServices::iterator it =
+                                   this->installed_services_.find (service_id);
+    if (it != this->installed_services_.end ())
+    {
+      return CORBA::Object::_duplicate(it->second);
+    }
+
+    CIAO_ERROR (1,
+               (LM_ERROR,
+               CLINFO
+               "Container_i::resolve_service_reference - "
+                  "service_i <%C> not found\n", service_id));
+     // not found.
+     throw Components::CCMException (Components::OBJECT_NOT_FOUND);
   }
 
   template <typename BASE>
@@ -775,6 +883,59 @@ namespace CIAO
   }
 
   template <typename BASE>
+  ::CORBA::Object_ptr
+  Container_i<BASE>::get_local_facet(::Components::CCMObject_ptr provider,
+                                     const char * provider_port)
+  {
+    if (!provider_port )
+      {
+        CIAO_ERROR (1,
+                    (LM_ERROR,
+                     CLINFO
+                     "Container_i::get_local_facet - "
+                     "Nil port name provided to get local "
+                     "facet, throwing exception\n"));
+
+        throw ::Components::InvalidConnection ();
+      }
+
+    PortableServer::POA_var poa_safe =
+       PortableServer::POA::_duplicate(this->component_poa_.in ());
+
+    PortableServer::ServantBase_var provider_tmp =
+           poa_safe->reference_to_servant (provider);
+
+    CIAO_DEBUG (9,
+                (LM_TRACE,
+                CLINFO
+                "Container_i::get_local_facet - "
+                "Successfully fetched provider servant"
+                " [%C] from POA\n",
+                 provider_port));
+
+    CIAO::Connector_Servant_Impl_Base *prov_serv =
+       dynamic_cast<CIAO::Connector_Servant_Impl_Base *> (provider_tmp.in ());
+
+    if (!prov_serv)
+      {
+        CIAO_ERROR (1,
+                    (LM_ERROR,
+                    CLINFO
+                    "Container_i::get_local_facet - "
+                    "Unable to cast to provider servant "
+                    "implementation\n"));
+             throw ::Components::InvalidConnection ();
+      }
+
+    ::CORBA::Object_var exec =
+       prov_serv->get_facet_executor (provider_port);
+
+    return exec._retn ();
+
+  }
+
+
+  template <typename BASE>
   ::Components::Cookie *
   Container_i<BASE>::connect_local_facet (::Components::CCMObject_ptr provider,
                                           const char * provider_port,
@@ -795,34 +956,10 @@ namespace CIAO
         throw ::Components::InvalidConnection ();
       }
 
-    PortableServer::POA_var poa_safe =
-      PortableServer::POA::_duplicate(this->component_poa_.in ());
     try
-      {
-        PortableServer::ServantBase_var provider_tmp =
-          poa_safe->reference_to_servant (provider);
-
-        CIAO_DEBUG (9,
-                    (LM_TRACE,
-                     CLINFO
-                     "Container_i::connect_local_facet - "
-                     "Successfully fetched provider servant"
-                     " [%C] from POA\n",
-                     provider_port));
-
-        CIAO::Connector_Servant_Impl_Base *prov_serv =
-          dynamic_cast<CIAO::Connector_Servant_Impl_Base *> (provider_tmp.in ());
-
-        if (!prov_serv)
-          {
-            CIAO_ERROR (1,
-                        (LM_ERROR,
-                         CLINFO
-                         "Container_i::connect_local_facet - "
-                         "Unable to cast to provider servant "
-                         "implementation\n"));
-            throw ::Components::InvalidConnection ();
-          }
+     {
+        PortableServer::POA_var poa_safe =
+             PortableServer::POA::_duplicate(this->component_poa_.in ());
 
         PortableServer::ServantBase_var user_tmp =
           poa_safe->reference_to_servant (user);
@@ -845,8 +982,7 @@ namespace CIAO
             throw ::Components::InvalidConnection ();
           }
 
-        ::CORBA::Object_var exec =
-          prov_serv->get_facet_executor (provider_port);
+        ::CORBA::Object_var exec = this->get_local_facet(provider,provider_port);
 
         // Note: Spec says that facet executor provided by component MAY BE NIL
         if (!::CORBA::is_nil (exec.in ()))
