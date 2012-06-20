@@ -1,3 +1,217 @@
+Wed Jun 20 08:13:50 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        Merged service_connector branch. This adds support for so called
+        service components which are available through the component context
+        using resolve_service_reference. Service components are deployed as
+        regular components, but are installed by the installation handler (see
+        the TTSCTest test) or they install themselves into the service registry
+        (see TTSConnContext). These components can be seen as container plugins
+        which are going to be used for various extensions without causing the
+        container to be huge and unmaintainable
+
+        commit a5d5158d22435059f4488e1ff96ed1862fba8ab7
+        Author: Marijke Hengstmengel <MHengstmengel@remedy.nl>
+        Date:   Tue Jun 19 10:20:23 2012 +0200
+
+                * CIAO/tests/TTSConnContext/README.txt:
+                  Explain test
+
+        commit 859f54123a96f8474cbd7f4be8e10a8cb5e4b776
+        Author: Marijke Hengstmengel <MHengstmengel@remedy.nl>
+        Date:   Mon Jun 18 17:34:33 2012 +0200
+
+                * CIAO/bin/ciao_tests.lst:
+                * CIAO/ccm/CCM_Context.idl:
+                * CIAO/ciao/Contexts/Context_Impl_Base_T.cpp:
+                * CIAO/ciao/Contexts/Context_Impl_Base_T.h:
+                Made (un)install_service_component_reference available on context.
+
+                * CIAO/tests/TTSConnContext/Sender/Sender.idl:
+                * CIAO/tests/TTSConnContext/Sender/Sender.mpc:
+                * CIAO/tests/TTSConnContext/Sender/Sender_exec.cpp:
+                * CIAO/tests/TTSConnContext/Sender/Sender_exec.h:
+                * CIAO/tests/TTSConnContext/TTSCConnector/TTSCConnector.idl:
+                * CIAO/tests/TTSConnContext/TTSCConnector/TTSCConnector.mpc:
+                * CIAO/tests/TTSConnContext/TTSCConnector/TTSCConnector_conn.cpp:
+                * CIAO/tests/TTSConnContext/TTSCConnector/TTSCConnector_conn.h:
+                * CIAO/tests/TTSConnContext/descriptors/DeploymentPlan.cdp:
+                * CIAO/tests/TTSConnContext/descriptors/run_test.pl:
+                New test for ServiceConnector, self installing its service_component_reference, not via cdp file.
+
+        commit c56a6b0fb4a6d72b2b3dc94032f9ec290ebcd004
+        Author: Marijke Hengstmengel <MHengstmengel@remedy.nl>
+        Date:   Mon Jun 18 15:04:13 2012 +0200
+
+                * CIAO/bin/ciao_tests.lst:
+                * CIAO/ciao/Containers/Container_Base.idl:
+                * CIAO/ciao/Containers/Container_Base_T.cpp:
+                * CIAO/ciao/Containers/Container_Base_T.h:
+                * CIAO/ciao/Containers/Session/Session_Container.cpp:
+                * CIAO/ciao/Containers/Session/Session_Container.h:
+                * CIAO/ciao/Deployment/Handlers/Component_Handler.cpp:
+                Remove (un)install_service_reference frm session- to base container
+                Renamed (un)install_service_reference_obj to (un)install_service_component_reference
+                Added extra checks.
+
+                * CIAO/tests/TTSCTest/Sender/Sender_exec.cpp:
+                * CIAO/tests/TTSCTest/TTSConnector/TTSConnector_conn.cpp:
+                Use ACE_time_value in handle_timeout.
+
+                * CIAO/ciao/Base/CIAO_Properties.idl:
+                * CIAO/tests/TTSCTest/TimeTriggerServiceConnector.odt:
+                * CIAO/tests/TTSCTest/descriptors/DeploymentPlan.cdp:
+                Renamed ConfigPropertye FacetServiceId to ServiceReference
+
+        commit 50b0fe093573fead1c9467b4554bbb99ca64612d
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Fri Jun 15 11:38:28 2012 +0200
+
+                * CIAO/ChangeLog.BRANCH:
+                  No need anymore for a branch changelog, git log will
+                  list all changes
+
+        commit 46251df1af9301ac288eb4b20043dd22dce5ab35
+        Author: Marijke Hengstmengel <MHengstmengel@remedy.nl>
+        Date:   Thu Jun 7 14:05:52 2012 +0200
+
+            Removed and added comments.
+
+        commit d9001269233f15621aea6a10d589e9719c3cb1c1
+        Author: Marijke Hengstmengel <MHengstmengel@remedy.nl>
+        Date:   Thu Jun 7 13:47:20 2012 +0200
+
+            Added the use of separate configproperties for ServiceName and portname in a cdp file
+
+        commit e3012f925994adfdcb516de79aed021814705566
+        Author: Marijke Hengstmengel <MHengstmengel@remedy.nl>
+        Date:   Tue Jun 5 12:06:33 2012 +0200
+
+            Tue June 5 10:02:03 UTC 2012  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+                    * tests/TTSCTest/TimeTriggerServiceConnector.odt:
+                    * tests/TTSCTest/Sender/Sender_exec.cpp:
+                    * tests/TTSCTest/Sender/Sender_exec.h:
+                    * tests/TTSCTest/TTSConnector/TTSConnector.idl:
+                    * tests/TTSCTest/TTSConnector/TTSConnector_conn.cpp:
+                    * tests/TTSCTest/TTSConnector/TTSConnector_conn.h:
+                    * tests/TTSCTest/descriptors/DeploymentPlan.cdp:
+                    Changed naming and typedefs.
+
+                    * tests/TTSCTest/TimeTriggerServiceConnector.pdf:
+                    Removed
+
+        commit a8a163c9d8e84fdfd6aba54ff0531efca5133d1e
+        Author: Marijke Hengstmengel <MHengstmengel@remedy.nl>
+        Date:   Thu May 31 16:03:35 2012 +0200
+
+            Thu May 31 14:03:03 UTC 2012  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+                    *  bin/ciao_tests.lst
+                    Corrected path to  TTSConnector test: TimeTrigger ServiceConnector
+
+        commit f76a9cc488f02ed945b58782afa386fc088fdac1
+        Author: Marijke Hengstmengel <MHengstmengel@remedy.nl>
+        Date:   Thu May 31 15:43:21 2012 +0200
+
+            Thu May 31 13:406:03 UTC 2012  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+                    *  tests/TTSCTest/Sender/Sender.idl
+                    *  tests/TTSCTest/descriptors/DeploymentPlan.cdp
+                    *  tests/TTSCTest/TimeTriggerSeviceConnector.pdf
+                    Add document and removed debug lines.
+
+        commit c5aaf93075ac6370a23ca6e6d7c63ccd31efa6ff
+        Author: Marijke Hengstmengel <MHengstmengel@remedy.nl>
+        Date:   Thu May 31 12:39:40 2012 +0200
+
+            Thu May 31 10:36:03 UTC 2012  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+                    *  bin/ciao_tests.lst
+                    Add TTSConnector test: TimeTrigger ServiceConnector
+
+        commit de4da760c21c86f0b50f604d0d0bb18e3b00c11b
+        Author: Marijke Hengstmengel <MHengstmengel@remedy.nl>
+        Date:   Thu May 31 12:34:30 2012 +0200
+
+            Thu May 31 10:26:03 UTC 2012  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+                    *  ciao/Base/CIAO_Properties.idl
+                    *  ciao/Containers/Container_Base.idl
+                    *  ciao/Containers/Container_Base_T.cpp
+                    *  ciao/Containers/Container_Base_T.h
+                    *  ciao/Containers/Session/Session_Container.cpp
+                    *  ciao/Containers/Session/Session_Container.h
+                    *  ciao/Deployment/Handlers/Component_Handler.cpp
+                    Implemented get_local_facet. Use port-name in Config property.
+
+                    *  tests/TTSCTest/Base/Base.idl
+                    *  tests/TTSCTest/Base/Base.mpc
+                    Deleted
+
+                    *  tests/TTSCTest/Sender/Sender.idl
+                    *  tests/TTSCTest/Sender/Sender.mpc
+                    *  tests/TTSCTest/Sender/Sender_exec.cpp
+                    *  tests/TTSCTest/Sender/Sender_exec.h
+                    *  tests/TTSCTest/TTSConnector/TTSConnector.idl
+                    *  tests/TTSCTest/TTSConnector/TTSConnector.mpc
+                    *  tests/TTSCTest/TTSConnector/TTSConnector_conn.cpp
+                    *  tests/TTSCTest/TTSConnector/TTSConnector_conn.h
+                    *  tests/TTSCTest/descriptors/DeploymentPlan.cdp
+                    Completed test , use local interface connector and time struct
+
+        commit 2b4d033f94ffcd83db90c2eb1509e1cb2559d61c
+        Author: Marijke Hengstmengel <MHengstmengel@remedy.nl>
+        Date:   Thu May 24 17:44:45 2012 +0200
+
+            Thu May 24 15:36:03 UTC 2012  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+                    *  ciao/Base/CIAO_Properties.idl:
+                    *  ciao/Containers/Session/Session_Container.cpp:
+                    *  ciao/Deployment/Handlers/Component_Handler.cpp:
+                    *  tests/TTSCTest/Base/Base.idl:
+                    *  tests/TTSCTest/Sender/Sender.idl:
+                    *  tests/TTSCTest/Sender/Sender_exec.cpp:
+                    *  tests/TTSCTest/Sender/Sender_exec.h:
+                    *  tests/TTSCTest/TTSConnector/TTSConnector.idl:
+                    *  tests/TTSCTest/descriptors/DeploymentPlan.cdp:
+                    *  modified:   tests/TTSCTest/descriptors/run_test.pl:
+                    install_service_ref via cdp and via resolve_service_ref in Sender,
+                    it is now possible to get a facet from the connector.
+
+        commit 30f5e90d95adabe0d7f39f362da37d1b3d6460e2
+        Author: Marijke Hengstmengel <MHengstmengel@remedy.nl>
+        Date:   Thu May 24 12:37:57 2012 +0200
+
+            Thu May 24 10:36:03 UTC 2012  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+                    * CIAO/TTSCTest/Base/Base.idl:
+                    * CIAO/TTSCTest/Base/Base.mpc:
+                    * CIAO/TTSCTest/Sender/Sender.idl:
+                    * CIAO/TTSCTest/Sender/Sender.mpc:
+                    * CIAO/TTSCTest/Sender/Sender_exec.cpp:
+                    * CIAO/TTSCTest/Sender/Sender_exec.h:
+                    * CIAO/TTSCTest/TTSConnector/TTSConnector.idl:
+                    * CIAO/TTSCTest/TTSConnector/TTSConnector.mpc:
+                    * CIAO/TTSCTest/TTSConnector/TTSConnector_conn.cpp:
+                    * CIAO/TTSCTest/TTSConnector/TTSConnector_conn.h:
+                    * CIAO/TTSCTest/descriptors/DeploymentPlan.cdp:
+                    * CIAO/TTSCTest/descriptors/run_test.pl:
+                    Start for test TimeTrigger Service-Connector
+
+        commit eb171f8a57639871888adef323762d232f83959e
+        Author: Marijke Hengstmengel <MHengstmengel@remedy.nl>
+        Date:   Thu May 24 12:27:35 2012 +0200
+
+            Thud May 24 10:11:03 UTC 2012  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+                    * CIAO/ciao/Containers/Container_Base.idl
+                    * CIAO/ciao/Containers/Container_Base_T.cpp
+                    * CIAO/ciao/Containers/Container_Base_T.h
+                    * CIAO/ciao/Containers/Session/Session_Container.cpp
+                    * CIAO/ciao/Containers/Session/Session_Container.h
+                    * CIAO/ciao/Deployment/Handlers/Component_Handler.cpp
+                    Changes for registering and resolving service reference on session container
+
 Wed Jun 20 07:48:30 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ContentFilterSetting.cpp:

@@ -1,0 +1,113 @@
+// $Id$
+
+project(TTSCC_Sender_idl_gen) : componentidldefaults {
+  custom_only = 1
+  after += TTSCConnector_idl_gen
+  idlflags +=  \
+              -Wb,stub_export_macro=SENDER_STUB_Export \
+              -Wb,stub_export_include=Sender_stub_export.h \
+              -Wb,skel_export_macro=SENDER_SVNT_Export \
+              -Wb,skel_export_include=Sender_svnt_export.h \
+              -Wb,svnt_export_macro=SENDER_SVNT_Export \
+              -Wb,svnt_export_include=Sender_svnt_export.h \
+              -Wb,exec_export_macro=SENDER_EXEC_Export \
+              -Wb,exec_export_include=Sender_exec_export.h
+
+  IDL_Files {
+    Sender.idl
+  }
+}
+
+project(TTSCC_Sender_lem_gen) : ciaoidldefaults {
+  after += TTSCC_Sender_idl_gen
+  custom_only = 1
+  idlflags += -Wb,export_macro=SENDER_EXEC_Export \
+              -Wb,export_include=Sender_exec_export.h \
+              -SS
+
+  IDL_Files {
+    SenderE.idl
+  }
+}
+
+project(TTSCC_Sender_stub) : ccm_stub {
+  after += TTSCC_Sender_idl_gen TTSCConnector_lem_gen
+  libout = ../lib
+  libpaths += ../lib
+
+  sharedname = Sender_stub
+  dynamicflags += SENDER_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    SenderC.cpp
+  }
+
+  Header_Files {
+    SenderC.h
+    Sender_stub_export.h
+  }
+
+  Inline_Files {
+    SenderC.inl
+  }
+}
+
+project(TTSCC_Sender_exec) : ciao_executor {
+  after   += TTSCC_Sender_lem_gen TTSCC_Sender_stub
+  sharedname = Sender_exec
+  libs += Sender_stub
+  libout = ../lib
+  libpaths += ../lib
+
+  dynamicflags += SENDER_EXEC_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    SenderEC.cpp
+    Sender_exec.cpp
+  }
+
+  Header_Files {
+    SenderEC.h
+    Sender_exec.h
+    Sender_exec_export.h
+  }
+
+  Inline_Files {
+    SenderEC.inl
+  }
+}
+
+
+project(TTSCC_Sender_svnt) : ciao_servant {
+  after      += TTSCC_Sender_exec
+  sharedname  = Sender_svnt
+  libs       += Sender_exec \
+                Sender_stub
+  libout = ../lib
+  libpaths += ../lib
+
+  dynamicflags += SENDER_SVNT_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    SenderS.cpp
+    Sender_svnt.cpp
+  }
+
+  Header_Files {
+    SenderS.h
+    Sender_svnt.h
+    Sender_svnt_export.h
+  }
+
+  Inline_Files {
+  }
+}

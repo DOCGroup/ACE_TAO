@@ -87,11 +87,51 @@ namespace CIAO
         CIAO_ERROR (1,
                     (LM_ERROR,
                      CLINFO
-                     "Extension_Context_Impl::get_client_interceptor_registration - "
+                     "Context_Impl_Base_T::resolve_service_reference - "
                      "Error: Container is nil\n"));
         throw ::CORBA::INV_OBJREF ();
       }
     return cnt_safe->resolve_service_reference (service_id);
+  }
+
+  template <typename CONTAINER_TYPE>
+  void
+  Context_Impl_Base_T<CONTAINER_TYPE>::install_service_component_reference (
+                                                      const char * service_id,
+                                                      CORBA::Object_ptr objref)
+  {
+    typename CONTAINER_TYPE::_var_type cnt_safe =
+      CONTAINER_TYPE::_duplicate (this->container_.in ());
+    if (::CORBA::is_nil (cnt_safe.in ()))
+      {
+        CIAO_ERROR (1,
+                    (LM_ERROR,
+                     CLINFO
+                     "Context_Impl_Base_T::install_service_component_reference - "
+                     "Error: Container is nil\n"));
+        throw ::CORBA::INV_OBJREF ();
+      }
+    return cnt_safe->install_service_component_reference (service_id, objref);
+
+  }
+
+  template <typename CONTAINER_TYPE>
+  CORBA::Object_ptr
+  Context_Impl_Base_T<CONTAINER_TYPE>::uninstall_service_component_reference (
+                                                      const char * service_id)
+  {
+    typename CONTAINER_TYPE::_var_type cnt_safe =
+      CONTAINER_TYPE::_duplicate (this->container_.in ());
+    if (::CORBA::is_nil (cnt_safe.in ()))
+      {
+        CIAO_ERROR (1,
+                    (LM_ERROR,
+                     CLINFO
+                     "Context_Impl_Base_T::uninstall_service_component_reference - "
+                     "Error: Container is nil\n"));
+        throw ::CORBA::INV_OBJREF ();
+      }
+    return cnt_safe->uninstall_service_component_reference (service_id);
   }
 
   template <typename CONTAINER_TYPE>

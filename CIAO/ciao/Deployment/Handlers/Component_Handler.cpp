@@ -8,8 +8,15 @@
 #include "ccm/CCM_ObjectC.h"
 #include "CIAO_State.h"
 
+#include "tao/AnyTypeCode/Struct_TypeCode_Static.h"
+#include "tao/AnyTypeCode/TypeCode_Struct_Field.h"
+
+
+
+
 namespace CIAO
 {
+
   Component_Handler_i::Component_Handler_i (void)
   {
     CIAO_TRACE ("Component_Handler_i::Component_Handler_i");
@@ -89,6 +96,10 @@ namespace CIAO
 
     CORBA::Any val;
     const char *tmp = 0;
+ //   const char *service_id = 0;
+
+
+
     int open_mode = ACE_DEFAULT_SHLIB_MODE;
 
     if (pmap->find (CIAO::Deployment::SVNT_ENTRYPT, val) == 0)
@@ -199,6 +210,57 @@ namespace CIAO
                                                    svnt_entry,
                                                    idd.name.in (),
                                                    open_mode);
+
+          // for installing the service reference, we need a service id
+          // and the port name belonging to that service id
+          if (pmap->find (CIAO::Deployment::SERVICE_REF, val) == 0)
+            {
+              val >>= tmp;
+              char service_id[ACE_OS::strlen(tmp) + 1];
+              ACE_OS::strcpy(service_id,tmp);
+              CIAO_DEBUG (9, (LM_TRACE, CLINFO
+                              "Component_Handler_i::install_instance - "
+                              "Found ServiceRef <%C>\n",service_id));
+
+              //now search for port_name belonging to the service id
+              const char *port_name = 0;
+              int len = ACE_OS::strlen(service_id) + ACE_OS::strlen(CIAO::Deployment::SERVICE_REF) + 2;
+              char port_search[len];
+              ACE_OS::sprintf(port_search, "%s.%s",CIAO::Deployment::SERVICE_REF, service_id);
+
+              if (pmap->find (port_search, val) == 0)
+                {
+                  val >>= port_name;
+                  CIAO_DEBUG (9, (LM_TRACE, CLINFO
+                               "Component_Handler_i::install_instance - "
+                               "Found ServiceRef port_name <%C>\n",port_name));
+                  ::CORBA::Object_var facet_exec_ref =
+                       container->get_local_facet( comp_ref.in (),
+                                                   port_name);
+
+                  if (CORBA::is_nil(facet_exec_ref.in()))
+                    {
+                      CIAO_ERROR (1, (LM_ERROR, CLINFO
+                                  "Component_Handler_i::install_instance - "
+                                  "facet_exec_ref is NIL\n"));
+
+                      throw Components::CCMException (
+                                      ::Components::SERVICE_INSTALLATION_ERROR);
+                    }
+
+                  container->install_service_component_reference (
+                                                       service_id,
+                                                       facet_exec_ref.in ());
+                }
+              else
+              {
+                CIAO_ERROR (1, (LM_ERROR, CLINFO
+                             "Component_Handler_i::install_instance - "
+                             "found service_id, but no port_name.\n"));
+                throw Components::CCMException (
+                                      ::Components::SERVICE_INSTALLATION_ERROR);
+              }
+            }
 
           ::Components::ConfigValues attr_config;
           Deployment_Common::create_attribute_configuration (idd.configProperty,

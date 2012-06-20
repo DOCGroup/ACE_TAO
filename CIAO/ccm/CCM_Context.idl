@@ -48,11 +48,17 @@ module Components
       raises (IllegalState);
 #endif
 
-    /**
-     * Coming for QoS4CCM
-     */
     Object resolve_service_reference(in string service_id)
       raises (CCMException);
+
+    void
+    install_service_component_reference (in string service_id,
+                                         in Object objref);
+
+    Object
+    uninstall_service_component_reference (in string service_id);
+
+
   };
 };
 #endif /* CCM_CONTEXT_IDL */
