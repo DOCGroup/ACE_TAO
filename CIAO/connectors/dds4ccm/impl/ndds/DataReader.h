@@ -27,6 +27,8 @@ namespace CIAO
       virtual ~DDS_DataReader_Base (void);
 
       virtual ::DDSDataReader * get_rti_entity (void) = 0;
+
+      virtual void set_rti_entity (::DDSDataReader* dr, ::DDS::DomainParticipant_ptr dp) = 0;
     };
   }
 }

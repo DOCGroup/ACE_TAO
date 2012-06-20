@@ -178,9 +178,9 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("DDS_Publisher_i::delete_datawriter");
 
-      DDS_DataWriter_Base *top = dynamic_cast< DDS_DataWriter_Base * > (a_datawriter);
+      DDS_DataWriter_Base *dw = dynamic_cast< DDS_DataWriter_Base * > (a_datawriter);
 
-      if (!top)
+      if (!dw)
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_CAST_ERROR, (LM_ERROR, DDS4CCM_INFO
                         "DDS_Publisher_i::delete_datawriter - "
@@ -192,7 +192,10 @@ namespace CIAO
                     "DDS_Publisher_i::delete_datawriter - "
                     "Successfully casted provided object reference to servant.\n"));
 
-      DDS_ReturnCode_t const retval = this->rti_entity ()->delete_datawriter (top->get_rti_entity ());
+      DDSDataWriter* rti_dw = dw->get_rti_entity ();
+      dw->set_rti_entity (0);
+      DDS_ReturnCode_t const retval =
+        this->rti_entity ()->delete_datawriter (rti_dw);
 
       if (retval != DDS_RETCODE_OK)
         {
@@ -223,13 +226,11 @@ namespace CIAO
       return retval._retn ();
     }
 
-
     ::DDS::ReturnCode_t
     DDS_Publisher_i::delete_contained_entities (void)
     {
       return this->rti_entity ()->delete_contained_entities ();
     }
-
 
     ::DDS::ReturnCode_t
     DDS_Publisher_i::set_qos (const ::DDS::PublisherQos & qos)
@@ -450,6 +451,12 @@ namespace CIAO
     DDS_Publisher_i::get_rti_entity (void)
     {
       return this->rti_entity_;
+    }
+
+    void
+    DDS_Publisher_i::set_rti_entity (DDSPublisher * pub)
+    {
+      this->rti_entity_ = pub;
     }
 
     DDSPublisher *

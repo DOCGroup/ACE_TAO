@@ -31,7 +31,6 @@ namespace CIAO
 
       virtual ::DDSDataWriter * get_rti_entity (void) = 0;
 
-    private:
       virtual void set_rti_entity (::DDSDataWriter * dw) = 0;
     };
   }

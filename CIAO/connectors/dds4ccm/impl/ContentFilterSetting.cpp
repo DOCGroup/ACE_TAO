@@ -106,11 +106,31 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("CCM_DDS_ContentFilterSetting_i::delete_contentfilteredtopic");
 
-      ::DDS::DomainParticipant_var dp = subscriber->get_participant ();
-      if (! ::CORBA::is_nil (dp.in ()) &&
-          ! ::CORBA::is_nil (this->cft_.in ()))
+      if (! ::CORBA::is_nil (subscriber))
         {
-          dp->delete_contentfilteredtopic (this->cft_.in ());
+          ::DDS::DomainParticipant_var dp = subscriber->get_participant ();
+          ::DDS::ContentFilteredTopic_var cft =
+            ::DDS::ContentFilteredTopic::_duplicate (this->cft_.in ());
+          if (! ::CORBA::is_nil (dp.in ()) && (! ::CORBA::is_nil (cft.in ())))
+            {
+              this->cft_ = ::DDS::ContentFilteredTopic::_nil ();
+              ::DDS::ReturnCode_t const retcode =
+                dp->delete_contentfilteredtopic (cft.in ());
+              if (retcode == ::DDS::RETCODE_OK)
+                {
+                  DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
+                                "CCM_DDS_ContentFilterSetting_i::delete_contentfilteredtopic: "
+                                "successfully deleted ContentfilteredTopic\n"));
+                }
+              else
+                {
+                  DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                                "CCM_DDS_ContentFilterSetting_i::delete_contentfilteredtopic: "
+                                "Error deleting contentfilteredtopic: <%C>\n",
+                                translate_retcode (retcode)));
+                  throw ::CCM_DDS::InternalError (retcode, 0);
+                }
+            }
         }
     }
 

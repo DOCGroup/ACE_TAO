@@ -204,7 +204,7 @@ namespace CIAO
         ::DDS::PublicationBuiltinTopicData & publication_data,
         DDS_INSTANCE_HANDLE_T_IN publication_handle);
 
-      void set_rti_entity (::DDSDataReader* dr, ::DDS::DomainParticipant_ptr dp);
+      virtual void set_rti_entity (::DDSDataReader* dr, ::DDS::DomainParticipant_ptr dp);
 
       ::DDSDataReader * get_rti_entity (void);
 
