@@ -523,7 +523,7 @@ CDR_Test_Types::test_put_placeholder (ACE_OutputCDR &cdr)
    ACE_ERROR_RETURN ((LM_ERROR,
                       ACE_TEXT ("test_put (char placeholder) failed\n")),
                      1);
-  if (!cdr.replace (this->repb, pos))
+  if (!cdr.replace (this->repc, pos))
    ACE_ERROR_RETURN ((LM_ERROR,
                       ACE_TEXT ("replace(char) failed\n")),
                      1);
