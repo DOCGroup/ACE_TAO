@@ -211,7 +211,9 @@ namespace CIAO
                    "Successfully casted provided object reference to "
                    "DDS_Publisher_i\n"));
 
-      DDS_ReturnCode_t const retval = this->rti_entity ()->delete_publisher (ccm_dds_pub->get_rti_entity ());
+      DDSPublisher* pub = ccm_dds_pub->get_rti_entity ();
+      ccm_dds_pub->set_rti_entity (0);
+      DDS_ReturnCode_t const retval = this->rti_entity ()->delete_publisher (pub);
 
       if (retval != DDS_RETCODE_OK)
         {
@@ -394,7 +396,10 @@ namespace CIAO
                     "DDS_DomainParticipant_i::delete_subscriber - Successfully casted "
                     "provided object reference to Subscriber_type\n"));
 
-      DDS_ReturnCode_t const retval = this->rti_entity ()->delete_subscriber (ccm_dds_sub->get_rti_entity ());
+      DDSSubscriber* sub = ccm_dds_sub->get_rti_entity ();
+      ccm_dds_sub->set_rti_entity (0);
+      DDS_ReturnCode_t const retval =
+        this->rti_entity ()->delete_subscriber (sub);
 
       if (retval != DDS_RETCODE_OK)
         {
@@ -758,7 +763,9 @@ namespace CIAO
                         "Unable to cast provided ContentFilteredTopic.\n"));
           return ::DDS::RETCODE_BAD_PARAMETER;
         }
-      return this->rti_entity ()->delete_contentfilteredtopic (ccm_dds_cft->get_rti_entity ());
+      DDSContentFilteredTopic* tp = ccm_dds_cft->get_rti_entity ();
+      ccm_dds_cft->set_rti_entity (0);
+      return this->rti_entity ()->delete_contentfilteredtopic (tp);
     }
 
 

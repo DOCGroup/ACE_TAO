@@ -108,6 +108,8 @@ namespace CIAO
 
       DDSPublisher * get_rti_entity (void);
 
+      void set_rti_entity (::DDSPublisher * sub);
+
     private:
       DDSPublisher *rti_entity_;
       ::DDS::DomainParticipant_var dp_;

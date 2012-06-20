@@ -340,7 +340,10 @@ namespace CIAO
                     "Successfully casted provided object reference "
                     "to servant.\n"));
 
-      DDS_ReturnCode_t const retval = this->rti_entity ()->delete_datareader (dr->get_rti_entity ());
+      DDSDataReader* rti_dr = dr->get_rti_entity ();
+      dr->set_rti_entity (0, ::DDS::DomainParticipant::_nil ());
+      DDS_ReturnCode_t const retval =
+        this->rti_entity ()->delete_datareader (rti_dr);
 
       if (retval != DDS_RETCODE_OK)
         {

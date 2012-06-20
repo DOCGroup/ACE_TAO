@@ -116,6 +116,7 @@ namespace CIAO
 
       virtual ::DDSDataWriter * get_rti_entity (void);
 
+      virtual void set_rti_entity (::DDSDataWriter * dw);
 
     private:
       TYPED_DDS_WRITER * rti_entity_;
@@ -123,8 +124,6 @@ namespace CIAO
       ::DDS::Publisher_var pub_;
 
       TYPED_DDS_WRITER * rti_entity (void);
-
-      virtual void set_rti_entity (::DDSDataWriter * dw);
     };
   }
 }
