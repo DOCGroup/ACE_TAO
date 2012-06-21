@@ -1,3 +1,12 @@
+Thu Jun 21 13:43:20 UTC 2012  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/QueryCondition/TwoListeners/Sender/QCTL_Test_Sender.idl:
+        * connectors/dds4ccm/tests/QueryCondition/TwoListeners/Sender/QCTL_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/QueryCondition/TwoListeners/Sender/QCTL_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/TwoListeners/descriptors/Plan.cdp:
+          Added connector status listener. The test starts upon receiving a publication matched
+          event from DDS.
+
 Thu Jun 21 10:11:38 UTC 2012  Marijke Hengstmengel <mhengstmengel@remedy.nl>
 
         * ciao/Deployment/Handlers/Component_Handler.cpp:
