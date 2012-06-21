@@ -223,14 +223,13 @@ namespace CIAO
 
               if (pmap->find (port_search, val) == 0)
                 {
-                  const char *port_name = 0;
-                  val >>= port_name;
+                  val >>= tmp;
+                  CORBA::String_var port_name = tmp;
                   CIAO_DEBUG (9, (LM_TRACE, CLINFO
                                "Component_Handler_i::install_instance - "
-                               "Found ServiceRef port_name <%C>\n",port_name));
+                               "Found ServiceRef port_name <%C>\n",port_name.in ()));
                   ::CORBA::Object_var facet_exec_ref =
-                       container->get_local_facet( comp_ref.in (),
-                                                   port_name);
+                       container->get_local_facet(comp_ref.in (), port_name.in ());
 
                   if (CORBA::is_nil(facet_exec_ref.in()))
                     {
@@ -243,7 +242,7 @@ namespace CIAO
                     }
 
                   container->install_service_component_reference (
-                                                       service_id,
+                                                       service_id.in (),
                                                        facet_exec_ref.in ());
                 }
               else
