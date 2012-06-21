@@ -58,12 +58,12 @@ namespace CIAO_Sender_Impl
     TTC_Callback_var  cb = new TTC_Callback_exec_i (*this);
 
     TTC::timeout_t delay;
-    delay.flag = TTC::RELATIVE;
+    delay.flag = TTC::RELATIVE_TIME;
     delay.time_val.seconds= 2;
     delay.time_val.nanosec= 0;
 
     TTC::timeout_t rate;
-    rate.flag = TTC::RELATIVE;
+    rate.flag = TTC::RELATIVE_TIME;
     rate.time_val.seconds= 0;
     rate.time_val.nanosec= 500000000;
 
@@ -147,7 +147,7 @@ namespace CIAO_Sender_Impl
       TTC_Callback_var  cb = new TTC_Callback_exec_i (*this);
 
       TTC::timeout_t time;
-      time.flag = TTC::RELATIVE;
+      time.flag = TTC::RELATIVE_TIME;
       time.time_val.seconds = 3;
       this->timer_id_ = timetrigger->start_scheduler_sporadic(time, cb.in());
     }

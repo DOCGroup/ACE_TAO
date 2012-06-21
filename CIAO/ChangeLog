@@ -1,3 +1,13 @@
+Thu Jun 21 17:34:54 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Containers/Container_Base_T.cpp:
+          Layout changes
+
+        * tests/TTSConnContext/Sender/Sender_exec.cpp:
+        * tests/TTSConnContext/TTSCConnector/TTSCConnector.idl:
+        * tests/TTSConnContext/TTSCConnector/TTSCConnector_conn.cpp:
+          Fixed compile problems with msvc
+
 Thu Jun 21 13:43:20 UTC 2012  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/QueryCondition/TwoListeners/Sender/QCTL_Test_Sender.idl:

@@ -31,7 +31,7 @@ namespace CIAO_TTSCConnector_Impl
     ttime.seconds = tv.sec();
     ttime.nanosec = tv.usec() * 1000;
     TTC::timeout_t tt;
-    tt.flag = TTC::ABSOLUTE;
+    tt.flag = TTC::ABSOLUTE_TIME;
     tt.time_val = ttime;
 
     ACE_DEBUG ((LM_DEBUG,
@@ -84,7 +84,7 @@ namespace CIAO_TTSCConnector_Impl
                 time.time_val.seconds));
     // start a timer implementaton, in this example the ACE_reactor timer
     // is used, which only can handle time-intervals and no absolute timestamp.
-    if (time.flag == TTC::ABSOLUTE)
+    if (time.flag == TTC::ABSOLUTE_TIME)
       ACE_ERROR ((LM_ERROR,
                   "TTC_Scheduler_exec_i::start_scheduler_sporadic "
                   "can't handle absolute time.\n"));

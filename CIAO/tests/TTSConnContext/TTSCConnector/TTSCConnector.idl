@@ -19,8 +19,8 @@ module TTC {
 
   enum timeout_enum_t
    {
-     ABSOLUTE,
-     RELATIVE
+     ABSOLUTE_TIME,
+     RELATIVE_TIME
    };
 
   //timeout can be relative or absolute, as denoted by the flag.
