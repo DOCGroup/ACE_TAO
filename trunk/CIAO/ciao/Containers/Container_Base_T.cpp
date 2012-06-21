@@ -935,13 +935,10 @@ namespace CIAO
                     "Container_i::get_local_facet - "
                     "Unable to cast to provider servant "
                     "implementation\n"));
-             throw ::Components::InvalidConnection ();
+        throw ::Components::InvalidConnection ();
       }
 
-    ::CORBA::Object_var exec =
-       prov_serv->get_facet_executor (provider_port);
-
-    return exec._retn ();
+    return prov_serv->get_facet_executor (provider_port);
 
   }
 
@@ -993,7 +990,8 @@ namespace CIAO
             throw ::Components::InvalidConnection ();
           }
 
-        ::CORBA::Object_var exec = this->get_local_facet(provider,provider_port);
+        ::CORBA::Object_var exec =
+          this->get_local_facet(provider, provider_port);
 
         // Note: Spec says that facet executor provided by component MAY BE NIL
         if (!::CORBA::is_nil (exec.in ()))
