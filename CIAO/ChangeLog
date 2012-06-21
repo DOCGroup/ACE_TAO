@@ -1,3 +1,9 @@
+Thu Jun 21 09:08:38 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Containers/Container_Base_T.cpp:
+        * ciao/Deployment/Handlers/Component_Handler.cpp:
+          More logging
+
 Thu Jun 21 08:40:50 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
       commit f169a288e51231ca120d066e143742d1432a8443

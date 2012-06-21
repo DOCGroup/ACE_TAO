@@ -748,7 +748,13 @@ namespace CIAO
 
     CORBA::Object_var objvar = CORBA::Object::_duplicate(objref);
     this->installed_services_[service_id] = objvar;
-   }
+
+    CIAO_DEBUG (9,
+                (LM_TRACE,
+                  CLINFO
+                  "Container_i::install_service_component_reference - "
+                  "Service reference <%C> installed.\n", service_id));
+  }
 
   template <typename BASE>
   CORBA::Object_ptr
@@ -766,6 +772,11 @@ namespace CIAO
               {
                 CORBA::Object_var obj = it->second;
                 this->installed_services_.erase (it);
+                CIAO_DEBUG (9,
+                            (LM_TRACE,
+                              CLINFO
+                              "Container_i::uninstall_service_component_reference - "
+                              "Service reference <%C> uninstalled.\n", service_id));
                 return obj._retn ();
               }
           }
