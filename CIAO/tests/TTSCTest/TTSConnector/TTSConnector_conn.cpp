@@ -16,6 +16,8 @@ namespace CIAO_TTSConnector_Impl
   pulse_Generator::pulse_Generator (TTC_Callback_ptr callback)
     :pulse_callback_ (TTC_Callback::_duplicate (callback))
   {
+    this->reference_counting_policy ().value
+      (ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
   }
 
   pulse_Generator::~pulse_Generator ()
@@ -134,7 +136,8 @@ namespace CIAO_TTSConnector_Impl
   TTSConnector_conn_i::start_reactor (CORBA::Long delay, CORBA::ULong rate,
                                       TTC_Callback_ptr cb)
    {
-    this->ticker_ = new pulse_Generator (cb);
+    TTC_Callback_var cb_ = TTC_Callback::_duplicate(cb);
+    this->ticker_ = new pulse_Generator (cb_.in ());
 
     // calculate the interval time
     long usec = 0;
@@ -142,7 +145,7 @@ namespace CIAO_TTSConnector_Impl
       usec = rate/1000;
     long timer_id =
          this->reactor ()->schedule_timer (
-                              this->ticker_,
+                              this->ticker_.handler (),
                               0,
                               ACE_Time_Value (delay, 0), //delay
                               ACE_Time_Value (0, usec));  //rate
@@ -198,7 +201,7 @@ namespace CIAO_TTSConnector_Impl
   void
   TTSConnector_conn_i::ccm_passivate (void)
   {
-    this->reactor ()->cancel_timer (this->ticker_);
+    this->reactor ()->cancel_timer (this->ticker_.handler ());
   }
 
   void

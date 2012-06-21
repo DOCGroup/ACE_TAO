@@ -101,7 +101,7 @@ namespace CIAO_TTSCConnector_Impl
   private:
     /** @name User defined members. */
     //@{
-    pulse_Generator * ticker_;
+    ACE_Event_Handler_var ticker_;
     //@}
 
     /// Context for component instance. Used for all middleware communication

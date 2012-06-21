@@ -1,3 +1,15 @@
+Thu Jun 21 08:40:50 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+      commit f169a288e51231ca120d066e143742d1432a8443
+      Author: Marijke Hengstmengel <MHengstmengel@remedy.nl>
+      Date:   Thu Jun 21 10:31:36 2012 +0200
+
+              * CIAO/tests/TTSCTest/TTSConnector/TTSConnector_conn.cpp:
+              * CIAO/tests/TTSCTest/TTSConnector/TTSConnector_conn.h:
+              * CIAO/tests/TTSConnContext/TTSCConnector/TTSCConnector_conn.cpp:
+              * CIAO/tests/TTSConnContext/TTSCConnector/TTSCConnector_conn.h:
+              used reference-counting policy for pulse_Generator to solve memory leaks
+
 Wed Jun 20 08:13:50 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         Merged service_connector branch. This adds support for so called
