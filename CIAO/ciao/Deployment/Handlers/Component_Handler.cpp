@@ -218,8 +218,7 @@ namespace CIAO
                               "Found ServiceRef <%C>\n",service_id.in ()));
 
               //now search for port_name belonging to the service id
-              int len = ACE_OS::strlen(service_id.in ()) + ACE_OS::strlen(CIAO::Deployment::SERVICE_REF) + 2;
-              char port_search[len];
+              char port_search[256];
               ACE_OS::sprintf(port_search, "%s.%s",CIAO::Deployment::SERVICE_REF, service_id.in ());
 
               if (pmap->find (port_search, val) == 0)
