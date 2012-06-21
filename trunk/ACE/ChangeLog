@@ -1,3 +1,16 @@
+Thu Jun 21 17:08:55 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/DLL.h:
+        * ace/DLL_Manager.h:
+        * ace/DLL_Manager.cpp:
+          Changed the order that the ACE_DLL_Manager attempts to open a library
+          Foo so that it will try <prefix>Foo<decorator>.<suffix> before
+          Foo<decorator>.<suffix>. This makes library loading using ACE succeed
+          on the first try instead of the fourth on any platform requiring a
+          library prefix, like Linux. For platforms that don't have a prefix
+          it will also succeed on the first time. Thanks to Trent Nadeau
+          <Trent dot Nadeau at ngc dot com> for providing this improvement
+
 Wed Jun 20 12:54:29 UTC 2012  James H. Hill  <hillj at cs dot iupui dot edu>
 
         * tests/CDR_Test.cpp:
