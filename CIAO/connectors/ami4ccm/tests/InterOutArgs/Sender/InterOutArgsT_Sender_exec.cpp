@@ -43,6 +43,12 @@ namespace CIAO_InterOutArgsT_Sender_Impl
   int asynch_foo_generator::svc ()
   {
     ACE_OS::sleep (3);
+    if (CORBA::is_nil (context_))
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR Sender (ASYNCH) :\tContext is NIL !\n"));
+       return 1;
+      }
+
     ::InterOutArgsT::AMI4CCM_MyFoo_var my_foo_ami_  =
        context_->get_connection_sendc_run_my_foo();
 
