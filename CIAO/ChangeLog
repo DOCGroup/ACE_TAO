@@ -1,3 +1,8 @@
+Thu Jun 21 10:11:38 UTC 2012  Marijke Hengstmengel <mhengstmengel@remedy.nl>
+
+        * ciao/Deployment/Handlers/Component_Handler.cpp:
+        Solved msvc error.
+
 Thu Jun 21 09:08:38 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Containers/Container_Base_T.cpp:
