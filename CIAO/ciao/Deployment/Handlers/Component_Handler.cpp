@@ -96,10 +96,6 @@ namespace CIAO
 
     CORBA::Any val;
     const char *tmp = 0;
- //   const char *service_id = 0;
-
-
-
     int open_mode = ACE_DEFAULT_SHLIB_MODE;
 
     if (pmap->find (CIAO::Deployment::SVNT_ENTRYPT, val) == 0)
@@ -216,20 +212,19 @@ namespace CIAO
           if (pmap->find (CIAO::Deployment::SERVICE_REF, val) == 0)
             {
               val >>= tmp;
-              char service_id[ACE_OS::strlen(tmp) + 1];
-              ACE_OS::strcpy(service_id,tmp);
+              CORBA::String_var service_id = tmp;
               CIAO_DEBUG (9, (LM_TRACE, CLINFO
                               "Component_Handler_i::install_instance - "
-                              "Found ServiceRef <%C>\n",service_id));
+                              "Found ServiceRef <%C>\n",service_id.in ()));
 
               //now search for port_name belonging to the service id
-              const char *port_name = 0;
-              int len = ACE_OS::strlen(service_id) + ACE_OS::strlen(CIAO::Deployment::SERVICE_REF) + 2;
+              int len = ACE_OS::strlen(service_id.in ()) + ACE_OS::strlen(CIAO::Deployment::SERVICE_REF) + 2;
               char port_search[len];
-              ACE_OS::sprintf(port_search, "%s.%s",CIAO::Deployment::SERVICE_REF, service_id);
+              ACE_OS::sprintf(port_search, "%s.%s",CIAO::Deployment::SERVICE_REF, service_id.in ());
 
               if (pmap->find (port_search, val) == 0)
                 {
+                  const char *port_name = 0;
                   val >>= port_name;
                   CIAO_DEBUG (9, (LM_TRACE, CLINFO
                                "Component_Handler_i::install_instance - "
