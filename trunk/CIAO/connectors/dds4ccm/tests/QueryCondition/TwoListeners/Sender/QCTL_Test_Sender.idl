@@ -14,6 +14,8 @@ module QCTL_Test
   component Sender
   {
     port QueryConditionTwoListenersTestConnector::DDS_Write info_write;
+    provides CCM_DDS::ConnectorStatusListener connector_status;
+
 
     attribute unsigned short keys;
     attribute unsigned short iterations;
