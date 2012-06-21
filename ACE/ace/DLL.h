@@ -94,10 +94,10 @@ public:
    *        regardless of platform. The set of name transforms is listed
    *        below. A @i decorator is a platform's name designator for a debug
    *        vs release build. For example, on Windows it is usually "d".
-   *        @li Name + decorator + suffix
-   *        @li Name + suffix
    *        @li Prefix + name + decorator + suffix
    *        @li Prefix + name + suffix
+   *        @li Name + decorator + suffix
+   *        @li Name + suffix
    *        @li Name
    *        Note that the transforms with @i decorator will be avoided if
    *        ACE is built with the @c ACE_DISABLE_DEBUG_DLL_CHECK config macro.
