@@ -1,3 +1,16 @@
+Fri Jun 22 09:14:41 UTC 2012  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/KeyedSamples/Sender/Keyed_Test_Sender.idl:
+        * connectors/dds4ccm/tests/KeyedSamples/Sender/Keyed_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/KeyedSamples/Sender/Keyed_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/KeyedSamples/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/KeyedWriter/Sender/Writer_Sender.idl:
+        * connectors/dds4ccm/tests/KeyedWriter/Sender/Writer_Sender_exec.h:
+        * connectors/dds4ccm/tests/KeyedWriter/Sender/Writer_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/KeyedWriter/descriptors/Plan.cdp:
+          Do not start the test until a publication matched even has been received
+          in the sender component.
+
 Thu Jun 21 17:34:54 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Containers/Container_Base_T.cpp:
