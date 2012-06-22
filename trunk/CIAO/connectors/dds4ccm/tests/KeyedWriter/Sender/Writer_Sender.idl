@@ -14,6 +14,8 @@ module Writer
   component Sender
   {
     port WriterTestConnector::DDS_Write info_write;
+    provides CCM_DDS::ConnectorStatusListener connector_status;
+
     attribute unsigned short rate;
     attribute unsigned short iterations;
     attribute unsigned short keys;
