@@ -72,15 +72,15 @@ CDR_Test_Types::CDR_Test_Types (void)
     wstr (0),
     d (8),
     reps (-123),
-    repus (-456),
+    repus (456),
     repl (-65800L),
     repul (65800L),
     repb (false),
     repc ('d'),
-    repll (3000000000LL),
-    repull (3000000000LL),
-    repo (5),
-    repf (3.14),
+    repll (-5000000000LL),
+    repull (5000000000LL),
+    repo (05),
+    repf (3.14F),
     repd (6.00)
 {
   for (int i = 0;
