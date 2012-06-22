@@ -1,3 +1,9 @@
+Fri Jun 22 00:30:11 UTC 2012  James H. Hill  <hillj at cs dot iupui dot edu>
+
+        * tests/CDR_Test.cpp:
+
+          Fixed compilation warnings on CentOS 3.9 and vc9
+
 Thu Jun 21 17:08:55 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/DLL.h:
