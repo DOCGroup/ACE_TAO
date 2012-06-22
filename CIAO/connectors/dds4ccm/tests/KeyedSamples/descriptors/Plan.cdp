@@ -318,6 +318,26 @@
   </connection>
 
   <connection>
+    <name>connector_status_connection</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>error_listener</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="Keyed_Test_ConnectorComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>connector_status</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="SenderComponentInstance" />
+    </internalEndpoint>
+  </connection>
+
+  <connection>
     <name>writer_connection</name>
     <deployRequirement>
       <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>

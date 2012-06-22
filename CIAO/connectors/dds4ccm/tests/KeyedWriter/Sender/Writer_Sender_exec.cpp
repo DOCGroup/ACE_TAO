@@ -11,6 +11,63 @@
 namespace CIAO_Writer_Sender_Impl
 {
   //============================================================
+  // ConnectorStatusListener_exec_i
+  //============================================================
+  ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (
+    Sender_exec_i &callback)
+    : callback_ (callback)
+  {
+  }
+
+  ConnectorStatusListener_exec_i::~ConnectorStatusListener_exec_i (void)
+  {
+  }
+
+  // Operations from ::CCM_DDS::ConnectorStatusListener
+  void ConnectorStatusListener_exec_i::on_inconsistent_topic (
+    ::DDS::Topic_ptr /*the_topic*/,
+    const DDS::InconsistentTopicStatus & /*status*/)
+  {
+  }
+
+  void ConnectorStatusListener_exec_i::on_requested_incompatible_qos (
+    ::DDS::DataReader_ptr /*the_reader*/,
+    const DDS::RequestedIncompatibleQosStatus & /*status*/)
+  {
+  }
+
+  void ConnectorStatusListener_exec_i::on_sample_rejected (
+    ::DDS::DataReader_ptr /*the_reader*/,
+    const DDS::SampleRejectedStatus & /*status*/)
+  {
+  }
+
+  void ConnectorStatusListener_exec_i::on_offered_deadline_missed(
+    ::DDS::DataWriter_ptr /*the_writer*/,
+    const DDS::OfferedDeadlineMissedStatus & /*status*/)
+  {
+  }
+
+  void ConnectorStatusListener_exec_i::on_offered_incompatible_qos(
+    ::DDS::DataWriter_ptr /*the_writer*/,
+    const DDS::OfferedIncompatibleQosStatus & /*status*/)
+  {
+  }
+
+  void ConnectorStatusListener_exec_i::on_unexpected_status(
+    ::DDS::Entity_ptr /*the_entity*/,
+    ::DDS::StatusKind status_kind)
+  {
+    if (status_kind == ::DDS::PUBLICATION_MATCHED_STATUS)
+      {
+        ACE_DEBUG ((LM_DEBUG, "ConnectorStatusListener_exec_i::on_unexpected_status - "
+          "Publication matched received: starting the test\n"));
+
+        this->callback_.get_started ();
+      }
+  }
+
+  //============================================================
   // pulse_Generator
   //============================================================
   pulse_Generator::pulse_Generator (Sender_exec_i &callback)
@@ -69,6 +126,11 @@ namespace CIAO_Writer_Sender_Impl
   }
 
   // Component attributes and port operations.
+  ::CCM_DDS::CCM_ConnectorStatusListener_ptr
+  Sender_exec_i::get_connector_status (void)
+  {
+    return new ConnectorStatusListener_exec_i  (*this);
+  }
 
   ::CORBA::UShort
   Sender_exec_i::rate (void)
@@ -136,24 +198,6 @@ namespace CIAO_Writer_Sender_Impl
   void
   Sender_exec_i::ccm_activate (void)
   {
-    this->start ();
-
-    ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, _guard,
-                        this->mutex_, CORBA::INTERNAL ());
-
-    for (CORBA::UShort i = 1; i < this->keys_ + 1; ++i)
-      {
-        char key[7];
-        WriterTest *new_key = new WriterTest;
-        ACE_OS::sprintf (key, "KEY_%d", i);
-        new_key->key = CORBA::string_dup(key);
-        new_key->iteration = 1;
-
-        this->ktests_[key] = new_key;
-      }
-    this->last_key_ = this->ktests_.begin ();
-    register_handles ();
-    reset_iterations ();
   }
 
   void
@@ -380,6 +424,29 @@ namespace CIAO_Writer_Sender_Impl
         default:
           break;
       }
+  }
+
+  void
+  Sender_exec_i::get_started (void)
+  {
+    this->start ();
+
+    ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, _guard,
+                        this->mutex_, CORBA::INTERNAL ());
+
+    for (CORBA::UShort i = 1; i < this->keys_ + 1; ++i)
+      {
+        char key[7];
+        WriterTest *new_key = new WriterTest;
+        ACE_OS::sprintf (key, "KEY_%d", i);
+        new_key->key = CORBA::string_dup(key);
+        new_key->iteration = 1;
+
+        this->ktests_[key] = new_key;
+      }
+    this->last_key_ = this->ktests_.begin ();
+    register_handles ();
+    reset_iterations ();
   }
 
   void
