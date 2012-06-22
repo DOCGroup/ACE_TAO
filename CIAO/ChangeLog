@@ -1,3 +1,10 @@
+Fri Jun 22 10:28:59 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/TTSCTest/Sender/Sender_exec.cpp:
+
+        * tests/TTSCTest/TTSConnector/TTSConnector.idl:
+        * tests/TTSCTest/TTSConnector/TTSConnector_conn.cpp:
+
 Fri Jun 22 09:14:41 UTC 2012  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/KeyedSamples/Sender/Keyed_Test_Sender.idl:
