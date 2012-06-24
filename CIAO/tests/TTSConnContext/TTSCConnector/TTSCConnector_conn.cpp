@@ -28,7 +28,7 @@ namespace CIAO_TTSCConnector_Impl
   pulse_Generator::handle_timeout (const ACE_Time_Value &tv, const void *)
   {
     TTC::TimeT ttime;
-    ttime.seconds = tv.sec();
+    ttime.seconds = (long)tv.sec();
     ttime.nanosec = tv.usec() * 1000;
     TTC::timeout_t tt;
     tt.flag = TTC::ABSOLUTE_TIME;
@@ -213,7 +213,7 @@ namespace CIAO_TTSCConnector_Impl
              service_id,
              facet_connector_.in());
     }
-    catch (const ::Components::CCMException &ex)
+    catch (const ::Components::CCMException &/*ex*/)
     {
       ACE_ERROR ((LM_ERROR,
                        "TTSCConnector_conn_i::ccm_activate -"

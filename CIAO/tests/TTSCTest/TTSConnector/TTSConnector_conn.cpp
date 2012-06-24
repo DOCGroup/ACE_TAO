@@ -28,7 +28,7 @@ namespace CIAO_TTSConnector_Impl
   pulse_Generator::handle_timeout (const ACE_Time_Value &tv, const void *)
   {
     TTC::TimeT ttime;
-    ttime.seconds = tv.sec();
+    ttime.seconds = (long)tv.sec();
     ttime.nanosec = tv.usec() * 1000;
     TTC::timeout_t tt;
     tt.flag = TTC::ABSOLUTE_TIME;
