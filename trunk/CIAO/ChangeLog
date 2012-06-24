@@ -1,3 +1,12 @@
+Sun Jun 24 09:11:38 UTC 2012  Marijke Hengstmengel <mhengstmengel@remedy.nl>
+
+        * tests/TTSCTest/Sender/Sender_exec.cpp:
+        * tests/TTSCTest/TTSConnector/TTSConnector_conn.cpp:
+        * tests/TTSConnContext/Sender/Sender_exec.cpp:
+        * tests/TTSConnContext/TTSCConnector/TTSCConnector_conn.cpp:
+        Added ACE_OS::sleep
+
+
 Fri Jun 22 10:28:59 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/TTSCTest/Sender/Sender_exec.cpp:

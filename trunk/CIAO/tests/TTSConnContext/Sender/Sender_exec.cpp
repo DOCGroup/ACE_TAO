@@ -51,7 +51,7 @@ namespace CIAO_Sender_Impl
   Sender_exec_i::start(void)
   {
     //Wait, so that ServiceConnector can install the service reference.
-    sleep(2);
+    ACE_OS::sleep(2);
 
     // set delaytime and rate of  a periodic TimeTrigger
     ACE_DEBUG ((LM_DEBUG, "Sender_exec_i::start start_scheduler_periodic.\n"));
