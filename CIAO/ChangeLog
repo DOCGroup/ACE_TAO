@@ -1,3 +1,12 @@
+Mon Jun 25 08:00:29 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Subscriber_Base_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Update_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Write_T.cpp:
+          Log instance handles of any reader/writer/publisher/subscriber
+          we create
+
 Mon Jun 25 07:45:38 UTC 2012  Marijke Hengstmengel <mhengstmengel@remedy.nl>
 
         * tests/TTSCTest/Sender/Sender_exec.cpp:
