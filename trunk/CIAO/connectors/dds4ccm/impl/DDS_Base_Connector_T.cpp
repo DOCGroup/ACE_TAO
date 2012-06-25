@@ -648,7 +648,19 @@ DDS_Base_Connector_T<CCM_TYPE>::init_publisher (
                                             ::DDS::PublisherListener::_nil (),
                                             0);
         }
-      if (::CORBA::is_nil (publisher))
+      if (!::CORBA::is_nil (publisher))
+        {
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_TRACE, DDS4CCM_INFO
+                      "DDS_Base_Connector_T::init_publisher - "
+                      "Created publisher "
+                      DDS_ENTITY_FORMAT_SPECIFIER
+                      " using participant "
+                      DDS_ENTITY_FORMAT_SPECIFIER
+                      "\n",
+                      DDS_ENTITY_LOG (publisher),
+                      DDS_ENTITY_LOG (participant)));
+        }
+      else
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_DDS_NIL_RETURN, (LM_ERROR, DDS4CCM_INFO
                         "DDS_Base_Connector_T::init_publisher - "
@@ -725,7 +737,19 @@ DDS_Base_Connector_T<CCM_TYPE>::init_subscriber (
                                               ::DDS::SubscriberListener::_nil (),
                                               0);
         }
-      if (::CORBA::is_nil (subscriber))
+      if (!::CORBA::is_nil (subscriber))
+        {
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_TRACE, DDS4CCM_INFO
+                      "DDS_Base_Connector_T::init_subscriber - "
+                      "Created subscriber "
+                      DDS_ENTITY_FORMAT_SPECIFIER
+                      " using participant "
+                      DDS_ENTITY_FORMAT_SPECIFIER
+                      "\n",
+                      DDS_ENTITY_LOG (subscriber),
+                      DDS_ENTITY_LOG (participant)));
+        }
+      else
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_DDS_NIL_RETURN, (LM_ERROR, DDS4CCM_INFO
                         "DDS_Base_Connector_T::init_subscriber - "
