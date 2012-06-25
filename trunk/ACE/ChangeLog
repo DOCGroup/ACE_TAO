@@ -1,3 +1,18 @@
+Mon Jun 25 17:40:35 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_4055_Regression_Test.cpp:
+        * tests/run_test.lst:
+        * tests/tests.mpc:
+          Added new unit test which currently fails. The ACE condition
+          variables use an absolute timeout. If we for example wait for a
+          timeout 3 seconds in the future and the system time is changed 10
+          seconds back we are really waiting 13 seconds now. The ACE timer
+          queues have support for using a monotonic time source using the
+          time policies but this support is not available for conditions at
+          this moment. When that is added, than in the ACE threading code
+          the monotonic time source can be set on the pthread condition
+          to control that we want to use a monotonic time source.
+
 Mon Jun 25 09:31:34 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Condition_Attributes.h:
