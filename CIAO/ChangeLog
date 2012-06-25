@@ -1,3 +1,9 @@
+Mon Jun 25 07:45:38 UTC 2012  Marijke Hengstmengel <mhengstmengel@remedy.nl>
+
+        * tests/TTSCTest/Sender/Sender_exec.cpp:
+        * tests/TTSConnContext/Sender/Sender_exec.cpp:
+        Added missing include
+
 Mon Jun 25 07:21:16 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ContentFilterSetting.cpp:
