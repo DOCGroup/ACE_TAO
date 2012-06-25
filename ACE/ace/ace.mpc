@@ -41,6 +41,7 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     Codeset_IBM1047.cpp
     Codeset_Registry.cpp
     Codeset_Registry_db.cpp
+    Condition_Attributes.cpp
     Condition_Recursive_Thread_Mutex.cpp
     Condition_Thread_Mutex.cpp
     Configuration.cpp

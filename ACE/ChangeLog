@@ -1,3 +1,15 @@
+Mon Jun 25 09:31:34 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Condition_Attributes.h:
+        * ace/Condition_Attributes.inl:
+        * ace/Condition_Attributes.cpp:
+        * ace/Condition_Recursive_Thread_Mutex.h:
+        * ace/Condition_Thread_Mutex.h:
+        * ace/Condition_Thread_Mutex.inl:
+        * ace/ace.mpc:
+        * ace/ace_for_tao.mpc:
+          Moved condition attributes to its own file
+
 Fri Jun 22 00:30:11 UTC 2012  James H. Hill  <hillj at cs dot iupui dot edu>
 
         * tests/CDR_Test.cpp:
