@@ -98,7 +98,19 @@ DDS_Write_T<CCM_TYPE, TYPED_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::configuration_c
               ::DDS::DataWriterListener::_nil (),
               0);
         }
-      if (::CORBA::is_nil (dwv_tmp.in ()))
+      if (!::CORBA::is_nil (dwv_tmp.in ()))
+        {
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_TRACE, DDS4CCM_INFO
+                      "DDS_Write_T::configuration_complete - "
+                      "Created datawriter "
+                      DDS_ENTITY_FORMAT_SPECIFIER
+                      " using publisher "
+                      DDS_ENTITY_FORMAT_SPECIFIER
+                      "\n",
+                      DDS_ENTITY_LOG (dwv_tmp.in ()),
+                      DDS_ENTITY_LOG (publisher)));
+        }
+      else
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_DDS_NIL_RETURN, (LM_ERROR, DDS4CCM_INFO
                         "DDS_Write_T::configuration_complete - "

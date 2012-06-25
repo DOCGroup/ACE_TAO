@@ -123,7 +123,19 @@ DDS_Subscriber_Base_T<CCM_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::c
                                           ::DDS::DataReaderListener::_nil (),
                                           0);
         }
-      if (::CORBA::is_nil (dr.in ()))
+      if (!::CORBA::is_nil (dr.in ()))
+        {
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_TRACE, DDS4CCM_INFO
+                      "DDS_Subscriber_Base_T::configuration_complete - "
+                      "Created DataReader "
+                      DDS_ENTITY_FORMAT_SPECIFIER
+                      " using subscriber "
+                      DDS_ENTITY_FORMAT_SPECIFIER
+                      "\n",
+                      DDS_ENTITY_LOG (dr.in ()),
+                      DDS_ENTITY_LOG (subscriber)));
+        }
+      else
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_DDS_NIL_RETURN, (LM_ERROR, DDS4CCM_INFO
                         "DDS_Subscriber_Base_T::configuration_complete - "
