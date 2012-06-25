@@ -958,15 +958,18 @@ void DDS_Base_Connector_T<CCM_TYPE>::remove_topic (
 
   DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION_STARTING, (LM_TRACE, DDS4CCM_INFO
                 "DDS_Base_Connector_T::remove_topic - "
-                "Going to delete topic <%C> from participant"
+                "Going to delete topic <%C>"
+                DDS_ENTITY_FORMAT_SPECIFIER
+                "from participant"
                 DDS_ENTITY_FORMAT_SPECIFIER
                 "\n",
                 name.in (),
+                DDS_ENTITY_LOG (topic),
                 DDS_ENTITY_LOG (participant)));
 
   DDS::ReturnCode_t const retcode = participant->delete_topic (topic);
 
-  DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION_STARTING, (LM_TRACE, DDS4CCM_INFO
+  DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_TRACE, DDS4CCM_INFO
                 "DDS_Base_Connector_T::remove_topic - "
                 "Deleted topic <%C> from "
                 DDS_ENTITY_FORMAT_SPECIFIER
@@ -989,7 +992,33 @@ DDS_Base_Connector_T<CCM_TYPE>::remove_publisher (
 {
   DDS4CCM_TRACE ("DDS_Base_Connector_T::remove_publisher");
 
-  participant->delete_publisher (publisher);
+  DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION_STARTING, (LM_TRACE, DDS4CCM_INFO
+              "DDS_Base_Connector_T::remove_publisher - "
+              "Going to delete publisher "
+              DDS_ENTITY_FORMAT_SPECIFIER
+              " from participant"
+              DDS_ENTITY_FORMAT_SPECIFIER
+              "\n",
+              DDS_ENTITY_LOG (publisher),
+              DDS_ENTITY_LOG (participant)));
+
+  DDS::ReturnCode_t const retval =
+      participant->delete_publisher (publisher);
+
+  if (retval != ::DDS::RETCODE_OK)
+    {
+      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+          "DDS_Base_Connector_T::remove_publisher - "
+          "Unable to delete publisher: <%C>\n",
+          ::CIAO::DDS4CCM::translate_retcode (retval)));
+      throw ::CORBA::INTERNAL ();
+    }
+  else
+    {
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_INFO, DDS4CCM_INFO
+          "DDS_Base_Connector_T::remove_publisher - "
+          "Deleted publisher\n"));
+    }
 }
 
 template <typename CCM_TYPE>
@@ -1000,7 +1029,33 @@ DDS_Base_Connector_T<CCM_TYPE>::remove_subscriber (
 {
   DDS4CCM_TRACE ("DDS_Base_Connector_T::remove_subscriber");
 
-  participant->delete_subscriber (subscriber);
+  DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION_STARTING, (LM_TRACE, DDS4CCM_INFO
+              "DDS_Base_Connector_T::remove_subscriber - "
+              "Going to delete subscriber "
+              DDS_ENTITY_FORMAT_SPECIFIER
+              " from participant"
+              DDS_ENTITY_FORMAT_SPECIFIER
+              "\n",
+              DDS_ENTITY_LOG (subscriber),
+              DDS_ENTITY_LOG (participant)));
+
+  DDS::ReturnCode_t const retval =
+    participant->delete_subscriber (subscriber);
+
+  if (retval != ::DDS::RETCODE_OK)
+    {
+      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+          "DDS_Base_Connector_T::remove_subscriber - "
+          "Unable to delete subscriber: <%C>\n",
+          ::CIAO::DDS4CCM::translate_retcode (retval)));
+      throw ::CORBA::INTERNAL ();
+    }
+  else
+    {
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_INFO, DDS4CCM_INFO
+          "DDS_Base_Connector_T::remove_subscriber - "
+          "Deleted subscriber\n"));
+    }
 }
 
 template <typename CCM_TYPE>

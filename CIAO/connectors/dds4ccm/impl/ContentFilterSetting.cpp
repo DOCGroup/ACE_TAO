@@ -109,13 +109,13 @@ namespace CIAO
       if (! ::CORBA::is_nil (subscriber))
         {
           ::DDS::DomainParticipant_var dp = subscriber->get_participant ();
-          ::DDS::ContentFilteredTopic_var cft =
+          ::DDS::ContentFilteredTopic_var cft = this->cft_._retn ();
             ::DDS::ContentFilteredTopic::_duplicate (this->cft_.in ());
           if (! ::CORBA::is_nil (dp.in ()) && (! ::CORBA::is_nil (cft.in ())))
             {
-              this->cft_ = ::DDS::ContentFilteredTopic::_nil ();
               ::DDS::ReturnCode_t const retcode =
                 dp->delete_contentfilteredtopic (cft.in ());
+
               if (retcode == ::DDS::RETCODE_OK)
                 {
                   DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO

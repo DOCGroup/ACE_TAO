@@ -151,8 +151,19 @@ DDS_Update_T<CCM_TYPE, TYPED_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::remove (
 
   if (!::CORBA::is_nil (writer.in ()))
     {
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION_STARTING, (LM_TRACE, DDS4CCM_INFO
+                  "DDS_Update_T::remove - "
+                  "Going to delete DataWriter "
+                  DDS_ENTITY_FORMAT_SPECIFIER
+                  " from publisher "
+                  DDS_ENTITY_FORMAT_SPECIFIER
+                  "\n",
+                  DDS_ENTITY_LOG (writer.in ()),
+                  DDS_ENTITY_LOG (publisher)));
+
       DDS::ReturnCode_t const retval =
           publisher->delete_datawriter (writer.in ());
+
       if (retval != ::DDS::RETCODE_OK)
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
