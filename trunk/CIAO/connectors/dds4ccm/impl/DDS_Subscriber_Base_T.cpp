@@ -236,8 +236,19 @@ DDS_Subscriber_Base_T<CCM_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::r
 
   if (!::CORBA::is_nil (dr.in ()))
     {
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION_STARTING, (LM_TRACE, DDS4CCM_INFO
+                  "DDS_Subscriber_Base_T::remove - "
+                  "Going to delete DataReader "
+                  DDS_ENTITY_FORMAT_SPECIFIER
+                  " from subscriber "
+                  DDS_ENTITY_FORMAT_SPECIFIER
+                  "\n",
+                  DDS_ENTITY_LOG (dr.in ()),
+                  DDS_ENTITY_LOG (subscriber)));
+
       DDS::ReturnCode_t const retval =
         subscriber->delete_datareader (dr.in ());
+
       if (retval != ::DDS::RETCODE_OK)
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO

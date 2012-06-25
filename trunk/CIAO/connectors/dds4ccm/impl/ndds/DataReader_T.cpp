@@ -709,8 +709,7 @@ namespace CIAO
           qc->set_rti_entity (0);
         }
 
-      ::DDS::ReturnCode_t const retcode = this->rti_entity ()->delete_readcondition (dds_rc);
-      return retcode;
+      return this->rti_entity ()->delete_readcondition (dds_rc);
     }
 
     template <typename TYPED_DDS_READER, typename TYPED_READER_TYPE, typename VALUE_TYPE, typename SEQ_TYPE, typename RTI_SEQ_TYPE>
