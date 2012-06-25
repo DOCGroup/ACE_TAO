@@ -38,6 +38,7 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     Codeset_IBM1047.cpp
     Codeset_Registry.cpp
     Codeset_Registry_db.cpp
+    Condition_Attributes.cpp
     Condition_Recursive_Thread_Mutex.cpp
     Condition_Thread_Mutex.cpp
     Copy_Disabled.cpp

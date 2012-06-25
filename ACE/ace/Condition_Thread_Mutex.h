@@ -28,36 +28,16 @@
 // ACE platform supports some form of threading.
 
 #include "ace/Thread_Mutex.h"
+#include "ace/Condition_Attributes.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ACE_Time_Value;
 
-class ACE_Export ACE_Condition_Attributes
-{
-public:
-  /// Constructor
-  ACE_Condition_Attributes (int type = ACE_DEFAULT_SYNCH_TYPE);
-
-  /// Destructor
-  ~ACE_Condition_Attributes (void);
-
-private:
-  friend class ACE_Condition_Thread_Mutex;
-
-  /// The attributes
-  ACE_condattr_t attributes_;
-
-private:
-  // = Prevent assignment and initialization.
-  void operator= (const ACE_Condition_Attributes &);
-  ACE_Condition_Attributes (const ACE_Condition_Attributes &);
-};
-
 /**
  * @class ACE_Condition_Thread_Mutex
  *
- * @brief ACE_Condition variable wrapper written using ACE_Mutexes This
+ * @brief ACE_Condition variable wrapper written using ACE_Mutexes. This
  * allows threads to block until shared data changes state.
  * A condition variable enables threads to atomically block and
  * test the condition under the protection of a mutual exclu-
