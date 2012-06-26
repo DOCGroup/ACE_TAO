@@ -1,3 +1,10 @@
+Tue Jun 26 21:47:18 UTC 2012  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/valgrind.supp:
+
+          Made the suppression for dlopen more generic, so that it
+          can work for different linux/glibc versions.
+
 Tue Jun 26 13:18:13 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_4055_Regression_Test.cpp:
