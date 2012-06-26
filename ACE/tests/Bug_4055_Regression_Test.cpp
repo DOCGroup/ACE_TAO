@@ -227,6 +227,7 @@ run_main (int , ACE_TCHAR *[])
                       1);
 
   ACE_Time_Value waittime = ACE_OS::gettimeofday ();
+  //ACE_Time_Value waittime = ACE_High_Res_Timer::gettimeofday_hr();
   waittime += ACE_Time_Value (3,0);
 
   // reset system clock 4 seconds backwords
