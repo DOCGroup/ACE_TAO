@@ -31,7 +31,7 @@ project(TTSCConnector_lem_gen) : ciaoidldefaults, anytypecode {
   }
 }
 
-project(TTSCConnector_lem_stub) : ccm_executor {
+project(TTSCConnector_lem_stub) : ccm_svnt {
   after += TTSCConnector_lem_gen TTSCConnector_stub
   libs  += TTSCConnector_stub
   libout = ../lib
