@@ -1,3 +1,8 @@
+Tue Jun 26 13:18:13 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_4055_Regression_Test.cpp:
+          Added commented out way to get the hr time
+
 Mon Jun 25 17:40:35 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_4055_Regression_Test.cpp:
