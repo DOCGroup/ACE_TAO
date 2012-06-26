@@ -78,7 +78,6 @@ namespace CIAO
     virtual CORBA::Object_ptr
     uninstall_service_component_reference (const char * service_id);
 
-
     /// Temporarily added back for a sponsor, this will be removed at some
     /// moment in favor of a resolve_service_reference() call
     const char *_ciao_instance_id (void) const;
