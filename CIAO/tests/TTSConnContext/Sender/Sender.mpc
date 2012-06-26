@@ -58,7 +58,7 @@ project(TTSCC_Sender_stub) : ccm_stub {
 project(TTSCC_Sender_exec) : ciao_executor {
   after   += TTSCC_Sender_lem_gen TTSCC_Sender_stub
   sharedname = Sender_exec
-  libs += Sender_stub
+  libs += Sender_stub TTSCConnector_stub
   libout = ../lib
   libpaths += ../lib
 
