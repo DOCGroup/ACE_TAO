@@ -94,7 +94,7 @@ namespace CIAO_Sender_Impl
          }
       }
 
-    catch (const ::Components::CCMException &ex)
+    catch (const ::Components::CCMException &)
       {
         ACE_ERROR ((LM_ERROR,
                         "Resolve_service_reference - "
@@ -137,7 +137,7 @@ namespace CIAO_Sender_Impl
               timetrigger->cancel_scheduler(this->timer_id_);
           }
         }
-      catch (const ::Components::CCMException &ex)
+      catch (const ::Components::CCMException &)
         {
           ACE_ERROR ((LM_ERROR,
                           "Resolve_service_reference - "
