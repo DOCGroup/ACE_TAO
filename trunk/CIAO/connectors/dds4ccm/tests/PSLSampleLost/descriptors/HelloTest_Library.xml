@@ -20,7 +20,7 @@
                <history_depth>10</history_depth>
                <max_samples>10</max_samples>
                <max_instances>2</max_instances>
-               <max_samples_per_instance>5</max_samples_per_instance>
+               <max_samples_per_instance>10</max_samples_per_instance>
           </durability_service>
           <deadline>
                <period>

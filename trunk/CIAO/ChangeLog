@@ -1,3 +1,12 @@
+Tue Jun 26 09:32:12 UTC 2012  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/CSLSampleRejected/descriptors/HelloTest_Library.xml:
+        * connectors/dds4ccm/tests/CSLSampleRejected/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/PSLSampleLost/descriptors/HelloTest_Library.xml:
+        * connectors/dds4ccm/tests/PSLSampleLost/descriptors/USER_QOS_PROFILES.xml:
+          Fixed inconsistencies. history depth should be
+          less than resources_limits.max_samples_per_instance.
+
 Mon Jun 25 08:00:29 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
