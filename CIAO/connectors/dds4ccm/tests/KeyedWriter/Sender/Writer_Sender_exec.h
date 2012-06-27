@@ -27,8 +27,6 @@ namespace CIAO_Writer_Sender_Impl
     WRITE_MULTI
   };
 
-  class Sender_exec_i;
-
   //============================================================
   // ConnectorStatusListener_exec_i
   //============================================================
@@ -61,7 +59,6 @@ namespace CIAO_Writer_Sender_Impl
   private:
     Sender_exec_i &callback_;
   };
-
 
   //============================================================
   // pulse_Generator
