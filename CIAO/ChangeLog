@@ -1,3 +1,12 @@
+Wed Jun 27 11:23:34 UTC 2012  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/PSLSampleLost/Sender/PSL_SampleLost_Sender.idl:
+        * connectors/dds4ccm/tests/PSLSampleLost/Sender/PSL_SampleLost_Sender_exec.h:
+        * connectors/dds4ccm/tests/PSLSampleLost/Sender/PSL_SampleLost_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/PSLSampleLost/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/PSLSampleLost/descriptors/run_test.pl:
+          Start the writing upon a publication matched event.
+
 Tue Jun 26 09:32:12 UTC 2012  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/CSLSampleRejected/descriptors/HelloTest_Library.xml:
