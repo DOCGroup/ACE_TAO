@@ -1,3 +1,10 @@
+Wed Jun 27 11:51:29 UTC 2012  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/TTSCTest/Sender/Sender.mpc:
+        * tests/TTSCTest/TTSConnector/TTSConnector.mpc:
+          Fixed link issues on windows. This also fixes afters seen
+          on RedHat.
+
 Wed Jun 27 11:23:34 UTC 2012  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/PSLSampleLost/Sender/PSL_SampleLost_Sender.idl:
