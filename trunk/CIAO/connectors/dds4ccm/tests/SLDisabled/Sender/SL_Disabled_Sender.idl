@@ -13,7 +13,8 @@ module SL_Disabled
 {
   component Sender
   {
-     port SL_DisabledConnector::DDS_Update test_topic_update;
+    port SL_DisabledConnector::DDS_Update test_topic_update;
+    provides CCM_DDS::ConnectorStatusListener connector_status;
   };
 };
 
