@@ -31,7 +31,7 @@ project(TTSConnector_lem_gen) : ciaoidldefaults, anytypecode {
   }
 }
 
-project(TTSConnector_lem_stub) : ccm_executor {
+project(TTSConnector_lem_stub) : ccm_executor, ccm_session_stub {
   after += TTSConnector_lem_gen TTSConnector_stub
   libs  += TTSConnector_stub
   libout = ../lib
@@ -109,8 +109,8 @@ project(TTSConnector_svnt) : ciao_servant {
   sharedname  = TTSConnector_svnt
   libs       += TTSConnector_stub \
                 TTSConnector_conn \
-                TTSConnector_lem_stub 
-                
+                TTSConnector_lem_stub
+
   libout = ../lib
   libpaths += ../lib
   dynamicflags += TTSCONNECTOR_SVNT_BUILD_DLL

@@ -2,7 +2,7 @@
 
 project(TTSC_Sender_idl_gen) : componentidldefaults {
   custom_only = 1
-  after += TTSConnector_idl_gen 
+  after += TTSConnector_idl_gen
   idlflags +=  \
               -Wb,stub_export_macro=SENDER_STUB_Export \
               -Wb,stub_export_include=Sender_stub_export.h \
@@ -31,7 +31,7 @@ project(TTSC_Sender_lem_gen) : ciaoidldefaults {
 }
 
 project(TTSC_Sender_stub) : ccm_stub {
-  after += TTSC_Sender_idl_gen TTSConnector_lem_gen 
+  after += TTSC_Sender_idl_gen TTSConnector_lem_gen
   libout = ../lib
   libpaths += ../lib
 
@@ -56,9 +56,9 @@ project(TTSC_Sender_stub) : ccm_stub {
 }
 
 project(TTSC_Sender_exec) : ciao_executor {
-  after   += TTSC_Sender_lem_gen TTSC_Sender_stub
+  after   += TTSC_Sender_lem_gen TTSC_Sender_stub TTSConnector_stub
   sharedname = Sender_exec
-  libs += Sender_stub
+  libs += Sender_stub TTSConnector_stub
   libout = ../lib
   libpaths += ../lib
 
