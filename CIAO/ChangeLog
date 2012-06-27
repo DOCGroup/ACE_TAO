@@ -1,3 +1,14 @@
+Wed Jun 27 12:58:23 UTC 2012  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/KeyedWriter/Sender/Writer_Sender_exec.h:
+          Removed a double declared forward declaration of Sender_exec_i.
+
+        * connectors/dds4ccm/tests/ListenOneByOne/Sender/LOBO_Test_Sender.idl:
+        * connectors/dds4ccm/tests/ListenOneByOne/Sender/LOBO_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/ListenOneByOne/Sender/LOBO_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/ListenOneByOne/descriptors/Plan.cdp:
+          Start the writing of samples upon a publication matched event.
+
 Wed Jun 27 12:45:56 UTC 2012  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/ListenNotEnabled/Sender/LNE_Test_Sender.idl:

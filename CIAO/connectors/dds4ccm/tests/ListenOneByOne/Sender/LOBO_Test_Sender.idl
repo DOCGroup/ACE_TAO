@@ -14,6 +14,7 @@ module LOBO_Test
   component Sender
   {
     port ListenOneByOneTestConnector::DDS_Write info_write;
+    provides CCM_DDS::ConnectorStatusListener connector_status;
 
     attribute unsigned short keys;
     attribute unsigned short iterations;
