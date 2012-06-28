@@ -34,6 +34,63 @@ namespace CIAO_QCLE_Test_Sender_Impl
   /**
    * Write ticker
    */
+  ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (
+    Sender_exec_i &callback)
+    : callback_ (callback)
+  {
+  }
+
+  ConnectorStatusListener_exec_i::~ConnectorStatusListener_exec_i (void)
+  {
+  }
+
+  // Operations from ::CCM_DDS::ConnectorStatusListener
+  void ConnectorStatusListener_exec_i::on_inconsistent_topic (
+    ::DDS::Topic_ptr /*the_topic*/,
+    const DDS::InconsistentTopicStatus & /*status*/)
+  {
+  }
+
+  void ConnectorStatusListener_exec_i::on_requested_incompatible_qos (
+    ::DDS::DataReader_ptr /*the_reader*/,
+    const DDS::RequestedIncompatibleQosStatus & /*status*/)
+  {
+  }
+
+  void ConnectorStatusListener_exec_i::on_sample_rejected (
+    ::DDS::DataReader_ptr /*the_reader*/,
+    const DDS::SampleRejectedStatus & /*status*/)
+  {
+  }
+
+  void ConnectorStatusListener_exec_i::on_offered_deadline_missed(
+    ::DDS::DataWriter_ptr /*the_writer*/,
+    const DDS::OfferedDeadlineMissedStatus & /*status*/)
+  {
+  }
+
+  void ConnectorStatusListener_exec_i::on_offered_incompatible_qos(
+    ::DDS::DataWriter_ptr /*the_writer*/,
+    const DDS::OfferedIncompatibleQosStatus & /*status*/)
+  {
+  }
+
+  void ConnectorStatusListener_exec_i::on_unexpected_status(
+    ::DDS::Entity_ptr /*the_entity*/,
+    ::DDS::StatusKind status_kind)
+  {
+    if (status_kind == ::DDS::PUBLICATION_MATCHED_STATUS)
+      {
+        ACE_DEBUG ((LM_DEBUG, "ConnectorStatusListener_exec_i::on_unexpected_status - "
+          "Publication matched received: starting the test\n"));
+
+        this->callback_.get_started ();
+      }
+  }
+
+  /**
+   * Write ticker
+   */
 
   WriteTicker::WriteTicker (Sender_exec_i &callback)
     : callback_ (callback)
@@ -134,6 +191,25 @@ namespace CIAO_QCLE_Test_Sender_Impl
       }
   }
 
+  void
+  Sender_exec_i::get_started (void)
+  {
+    try
+      {
+        this->start ();
+      }
+    catch (const ::CORBA::Exception& ex)
+      {
+        ex._tao_print_exception ("Exception caught:");
+        ACE_ERROR ((LM_ERROR,
+          ACE_TEXT ("ERROR: Sender_exec_i::get_started: Exception caught\n")));
+      }
+    catch (...)
+      {
+        ACE_ERROR ((LM_ERROR,
+          ACE_TEXT ("ERROR: Sender_exec_i::get_started: Unknown exception caught\n")));
+      }
+  }
 
   void
   Sender_exec_i::start (void)
@@ -164,6 +240,11 @@ namespace CIAO_QCLE_Test_Sender_Impl
   }
 
   // Component attributes and port operations.
+  ::CCM_DDS::CCM_ConnectorStatusListener_ptr
+  Sender_exec_i::get_connector_status (void)
+  {
+    return new ConnectorStatusListener_exec_i  (*this);
+  }
 
   ::CORBA::UShort
   Sender_exec_i::keys (void)
@@ -215,21 +296,6 @@ namespace CIAO_QCLE_Test_Sender_Impl
   void
   Sender_exec_i::ccm_activate (void)
   {
-    try
-      {
-        start ();
-      }
-    catch (const ::CORBA::Exception& ex)
-      {
-        ex._tao_print_exception ("Exception caught:");
-        ACE_ERROR ((LM_ERROR,
-          ACE_TEXT ("ERROR: Sender_exec_i::ccm_activate: Exception caught\n")));
-      }
-    catch (...)
-      {
-        ACE_ERROR ((LM_ERROR,
-          ACE_TEXT ("ERROR: Sender_exec_i::ccm_activate: Unknown exception caught\n")));
-      }
   }
 
   void

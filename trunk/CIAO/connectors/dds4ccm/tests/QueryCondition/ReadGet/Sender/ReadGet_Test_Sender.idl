@@ -15,6 +15,7 @@ module ReadGet_Test
   component Sender
   {
     port ReadGet_Test::QueryConditionTestConnector::DDS_Write info_write;
+    provides CCM_DDS::ConnectorStatusListener connector_status;
 
     uses ReadGetStarter start_reader;
     provides ReadGetRestarter restart_writer;
