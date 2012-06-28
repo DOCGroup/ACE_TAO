@@ -15,6 +15,7 @@ module QCTQ_Test
   component Sender
   {
     port QCTQ_Test::QueryConditionTestConnector::DDS_Write info_write;
+    provides CCM_DDS::ConnectorStatusListener connector_status;
 
     uses TwoQueriesStarter start_reader;
     provides TwoQueriesRestarter restart_writer;
