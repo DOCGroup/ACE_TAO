@@ -1,3 +1,8 @@
+Thu Jun 28 06:49:20 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/performance-tests/Keyed/Sender/Perf_Keyed_Test_Sender_exec.cpp:
+          Print message when we start
+
 Thu Jun 28 06:29:10 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/performance-tests/Keyed/Receiver/Perf_Keyed_Test_Receiver_exec.cpp:
