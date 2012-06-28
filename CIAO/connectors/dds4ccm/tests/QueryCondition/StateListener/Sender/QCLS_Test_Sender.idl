@@ -14,6 +14,7 @@ module QCLS_Test
   component Sender
   {
     port QueryConditionListenStateTestConnector::DDS_Update info_update;
+    provides CCM_DDS::ConnectorStatusListener connector_status;
 
     attribute unsigned short keys;
     attribute unsigned short iterations;
