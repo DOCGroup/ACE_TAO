@@ -1,3 +1,12 @@
+Thu Jun 28 06:29:10 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/performance-tests/Keyed/Receiver/Perf_Keyed_Test_Receiver_exec.cpp:
+          Layout change
+
+        * connectors/dds4ccm/performance-tests/Throughput/Receiver/Throughput_Receiver_exec.h:
+        * connectors/dds4ccm/performance-tests/Throughput/Receiver/Throughput_Receiver_exec.cpp:
+          Removed const_casts
+
 Thu Jun 28 06:19:21 UTC 2012  Marcel Smit  <msmit@remedy.nl>
 
         * tests/TTSCTest/Sender/Sender_exec.cpp:

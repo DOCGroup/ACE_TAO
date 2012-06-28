@@ -149,8 +149,8 @@ namespace CIAO_Throughput_Receiver_Impl
 
     //@{
     /** User defined public operations. */
-    void record_data (ThroughputTest & an_instance);
-    void handle_run (ThroughputCommand & an_instance);
+    void record_data (const ThroughputTest & an_instance);
+    void handle_run (const ThroughputCommand & an_instance);
 
     //@}
 

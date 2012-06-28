@@ -97,7 +97,7 @@ namespace CIAO_Perf_Keyed_Test_Receiver_Impl
 
   // Supported operations and attributes.
   void
-  Receiver_exec_i::write_one ( PerfKeyedTest & an_instance)
+  Receiver_exec_i::write_one (PerfKeyedTest & an_instance)
   {
     an_instance.latency_ping = -1L;
     this->writer_->write_one (an_instance, ::DDS::HANDLE_NIL);
