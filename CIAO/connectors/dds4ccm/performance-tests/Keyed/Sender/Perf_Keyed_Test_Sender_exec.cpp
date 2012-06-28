@@ -123,6 +123,8 @@ namespace CIAO_Perf_Keyed_Test_Sender_Impl
         ::DDS::ReturnCode_t retval = wr->get_publication_matched_status (stat.out ());
         if (retval == DDS::RETCODE_OK)
           {
+            ACE_DEBUG ((LM_DEBUG, "connector_status_exec_i::on_unexpected_status - "
+                      "on_publication_matched status received. Starting application\n"));
 
             if ((stat.in ().current_count >=
                 (this->number_of_subscribers_ + 1)) &&
