@@ -97,7 +97,8 @@ namespace CIAO_Sender_Impl
       {
         ACE_ERROR ((LM_ERROR,
                         "Resolve_service_reference - "
-                        "Caught exception\n"));
+                        "Caught exception: reason <%d>\n",
+                        ex.reason));
       }
   }
 
@@ -140,7 +141,8 @@ namespace CIAO_Sender_Impl
         {
           ACE_ERROR ((LM_ERROR,
                           "Resolve_service_reference - "
-                          "Caught exception\n"));
+                          "Caught exception: reason <%d>\n",
+                          ex.reason));
         }
 
       //use sporadic Timertrigger, which fired 3 seconds after now.
