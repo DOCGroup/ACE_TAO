@@ -56,7 +56,7 @@ namespace CIAO_Throughput_Receiver_Impl
   info_listen_data_listener_exec_i::on_one_data (const ::ThroughputTest & datum,
   const ::CCM_DDS::ReadInfo & /* info */)
   {
-    this->callback_.record_data (const_cast<ThroughputTest&> (datum));
+    this->callback_.record_data (datum);
   }
 
   void
@@ -89,7 +89,7 @@ namespace CIAO_Throughput_Receiver_Impl
   command_listen_data_listener_exec_i::on_one_data (const ::ThroughputCommand & datum,
   const ::CCM_DDS::ReadInfo & /* info */)
   {
-    this->callback_.handle_run (const_cast<ThroughputCommand&> (datum));
+    this->callback_.handle_run (datum);
   }
 
   void
@@ -143,7 +143,7 @@ namespace CIAO_Throughput_Receiver_Impl
   }
 
   void
-  Receiver_exec_i::handle_run (ThroughputCommand & an_instance)
+  Receiver_exec_i::handle_run (const ThroughputCommand & an_instance)
   {
     if (an_instance.command == THROUGHPUT_COMMAND_START)
       {
@@ -165,7 +165,7 @@ namespace CIAO_Throughput_Receiver_Impl
   }
 
   void
-  Receiver_exec_i::record_data (ThroughputTest & an_instance)
+  Receiver_exec_i::record_data (const ThroughputTest & an_instance)
   {
     ++this->count_; // total count of all received messages
 
