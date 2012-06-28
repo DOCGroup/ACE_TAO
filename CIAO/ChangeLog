@@ -1,3 +1,8 @@
+Thu Jun 28 06:19:21 UTC 2012  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/TTSCTest/Sender/Sender_exec.cpp:
+          Fixed warnings.
+
 Thu Jun 28 06:13:33 UTC 2012  Marcel Smit  <msmit@remedy.nl>
 
         * tests/TTSConnContext/Sender/Sender.mpc:
