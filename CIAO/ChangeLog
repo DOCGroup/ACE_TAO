@@ -1,3 +1,8 @@
+Thu Jun 28 06:13:33 UTC 2012  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/TTSConnContext/Sender/Sender.mpc:
+          Fixed after.
+
 Wed Jun 27 19:07:49 UTC 2012  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/QueryCondition/Different/Sender/Different_Test_Sender.idl:
