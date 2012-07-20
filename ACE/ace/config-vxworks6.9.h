@@ -21,10 +21,6 @@
 # define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R 1
 #endif
 
-#ifndef ACE_LACKS_RAND_R
-# define ACE_LACKS_RAND_R 1
-#endif
-
 #if defined(__RTP__)
 // bzero is in strings.h
 # define ACE_HAS_STRINGS 1

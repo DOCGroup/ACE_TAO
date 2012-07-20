@@ -408,7 +408,7 @@ sub PutFile ($)
     my $self = shift;
     my $src = shift;
     my $dest = $self->LocalFile ($src);
-    if ($src != $dest) {
+    if ($src ne $dest) {
         copy ($src, $dest);
     }
     return 0;
