@@ -38,7 +38,7 @@ Bug_2497_Regression_Test
 Bug_2540_Regression_Test
 Bug_2609_Regression_Test: !ST !ACE_FOR_TAO
 Bug_2610_Regression_Test: !ST !ACE_FOR_TAO !FIXED_BUGS_ONLY
-Bug_2659_Regression_Test: !ST !VxWorks64 !VxWorks65
+Bug_2659_Regression_Test: !ST !VxWorks
 Bug_2653_Regression_Test: !ST
 Bug_2740_Regression_Test: !ST
 Bug_2772_Regression_Test: !ST !FIXED_BUGS_ONLY
@@ -188,7 +188,7 @@ Refcounted_Event_Handler_Test_DevPoll:
 Reverse_Lock_Test
 RW_Process_Mutex_Test: !VxWorks !ACE_FOR_TAO !PHARLAP !Cygwin
 Sendfile_Test: !QNX !NO_NETWORK !VxWorks !LabVIEW_RT
-Signal_Test: !VxWorks63 !VxWorks64 !VxWorks65 !Cygwin
+Signal_Test: !VxWorks !Cygwin
 SOCK_Connector_Test: !NO_NETWORK
 SOCK_Netlink_Test: !ACE_FOR_TAO
 SOCK_Send_Recv_Test: !NO_NETWORK

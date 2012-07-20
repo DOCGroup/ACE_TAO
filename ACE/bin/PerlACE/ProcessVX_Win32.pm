@@ -284,7 +284,21 @@ if (!defined $t) {
 if (!$t->open()) {
     die "ERROR: Telnet open to <" . $telnet_host . ":". $telnet_port . "> " . $t->errmsg;
 }
+__END__
 
+   if (defined $ENV{'ACE_RUN_VX_TERMSERV_DEV'}) {
+     print $oh <<'__END__';
+
+$t->prompt('/' . $ENV{'ACE_RUN_VX_IBOOT_USER'} . '>$/');
+$t->login($ENV{'ACE_RUN_VX_IBOOT_USER'}, $ENV{'ACE_RUN_VX_IBOOT_PASSWORD'});
+$t->print('direct ' . $ENV{'ACE_RUN_VX_TERMSERV_DEV'});
+$t->waitfor('/Entering Direct mode/');
+$t->print('');
+
+__END__
+   }
+
+    print $oh <<'__END__';
 my $target_login = $ENV{'ACE_RUN_VX_LOGIN'};
 my $target_password = $ENV{'ACE_RUN_VX_PASSWORD'};
 
