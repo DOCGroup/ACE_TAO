@@ -180,6 +180,6 @@ TAO/CIAO/tests/IDL3_to_XMI/IDL2XMI_Test/run_test.pl: !FIXED_BUGS_ONLY !NO_IDL3_T
 TAO/CIAO/tests/DAnCE/LocalityManager/CPUAffinity/run_test.pl: LINUX
 TAO/CIAO/tests/DAnCE/LocalityManager/CommandlinePassage/run_test.pl:
 TAO/CIAO/tests/DAnCE/LocalityManager/CommandlinePassage/run_test_openmode.pl: !Win32
-TAO/CIAO/tests/DAnCE/LocalityManager/CommandlinePassage/run_test.pl:
+TAO/CIAO/tests/DAnCE/LocalityManager/CommandlinePassage/run_test_cmd.pl:
 TAO/CIAO/tests/DAnCE/Threading/descriptors/run_test.pl:
 
