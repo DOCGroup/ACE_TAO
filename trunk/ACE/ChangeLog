@@ -1,3 +1,19 @@
+Fri Jul 20 17:37:27 UTC 2012  Adam Mitz  <mitza@ociweb.com>
+
+        * ace/config-vxworks6.8.h:
+        * ace/config-vxworks6.9.h:
+
+          Changes to build for VxWorks 6.8 kernel mode.
+
+        * bin/PerlACE/ProcessVX_Win32.pm:
+        * tests/run_test.lst:
+
+          Changes for VxWorks testing.
+
+        * bin/PerlACE/TestTarget.pm
+
+          Fixed a Perl bug (ne vs. !=).
+
 Tue Jun 26 21:47:18 UTC 2012  Adam Mitz  <mitza@ociweb.com>
 
         * bin/valgrind.supp:
