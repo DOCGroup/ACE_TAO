@@ -277,6 +277,7 @@ DDS_Subscriber_Base_T<CCM_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::r
         }
     }
 
+  dr = ::DDS::DataReader::_nil ();
   this->cft_setting_->delete_contentfilteredtopic (subscriber);
 }
 
