@@ -602,7 +602,7 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is,
   return marshal_flag;
 }
 
-#if !defined(ACE_LACKS_STD_WSTRING)
+#if !defined(ACE_LACKS_STD_WSTRING) && defined (ACE_HAS_WCHAR)
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is,
                                       std::wstring &x)
 {
