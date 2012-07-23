@@ -110,7 +110,6 @@ namespace CIAO
         {
           ::DDS::DomainParticipant_var dp = subscriber->get_participant ();
           ::DDS::ContentFilteredTopic_var cft = this->cft_._retn ();
-            ::DDS::ContentFilteredTopic::_duplicate (this->cft_.in ());
           if (! ::CORBA::is_nil (dp.in ()) && (! ::CORBA::is_nil (cft.in ())))
             {
               ::DDS::ReturnCode_t const retcode =
