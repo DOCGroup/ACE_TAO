@@ -1100,6 +1100,33 @@ DDS_Base_Connector_T<CCM_TYPE>::remove_domain (
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_TRACE, DDS4CCM_INFO
                 "DDS_Base_Connector_T"
                 "::remove_domain - "
+                "Going to delete contained entities of participant "
+                DDS_ENTITY_FORMAT_SPECIFIER
+                "for domain <%d> with qos <%C>.\n",
+                DDS_ENTITY_LOG (participant),
+                this->domain_id_, this->qos_profile_.in ()));
+
+      retcode = participant->delete_contained_entities ();
+
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_TRACE, DDS4CCM_INFO
+                "DDS_Base_Connector_T"
+                "::remove_domain - "
+                "Deleted contained entities for participant "
+                DDS_ENTITY_FORMAT_SPECIFIER
+                "for domain <%d> with qos <%C> "
+                "return code <%C>\n",
+                DDS_ENTITY_LOG (participant),
+                this->domain_id_, this->qos_profile_.in (),
+                ::CIAO::DDS4CCM::translate_retcode (retcode)));
+
+      if (retcode != ::DDS::RETCODE_OK)
+        {
+          throw ::CCM_DDS::InternalError (retcode, 0);
+        }
+
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_TRACE, DDS4CCM_INFO
+                "DDS_Base_Connector_T"
+                "::remove_domain - "
                 "Going to delete participant "
                 DDS_ENTITY_FORMAT_SPECIFIER
                 "for domain <%d> with qos <%C>.\n",
