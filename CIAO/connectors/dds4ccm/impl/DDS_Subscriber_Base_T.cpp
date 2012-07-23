@@ -146,6 +146,7 @@ DDS_Subscriber_Base_T<CCM_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::c
       this->dds_read_->set_dds_reader (dr.in (), &this->condition_manager_);
       this->ccm_data_reader_->set_dds_entity (dr.in ());
       this->condition_manager_.set_dds_entity (dr.in ());
+      this->condition_manager_.init_readcondition ();
 
       DDS::ReturnCode_t const retcode = dr->enable ();
       if (retcode != ::DDS::RETCODE_OK)
