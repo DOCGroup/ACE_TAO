@@ -73,7 +73,7 @@ DDS_Base_Connector_T<CCM_TYPE>::~DDS_Base_Connector_T (void)
     {
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_TRACE, DDS4CCM_INFO
                 "DDS_Base_Connector_T"
-                "::remove_domain - "
+                "::~DDS_Base_Connector_T - "
                 "Closed the domain participant manager, DDS interaction "
                 "has been shutdown completely.\n"));
     }
@@ -81,7 +81,7 @@ DDS_Base_Connector_T<CCM_TYPE>::~DDS_Base_Connector_T (void)
     {
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_TRACE, DDS4CCM_INFO
                 "DDS_Base_Connector_T"
-                "::remove_domain - "
+                "::~DDS_Base_Connector_T - "
                 "Didn't shutdown the domain participant manager, DDS interaction "
                 "still active.\n"));
     }
