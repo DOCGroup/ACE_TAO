@@ -25,9 +25,9 @@ namespace CIAO
   {
     /**
      *
-     * @class : DomainParticipantManager
+     * @class DomainParticipantManager
      *
-     * @brief :
+     * @brief
      *
      * Stores a DDSParticipantTopic per domain ID and QOS profile string.
      * When several connectors are joining the same domain ID, using the
