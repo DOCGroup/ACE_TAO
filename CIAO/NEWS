@@ -4,11 +4,23 @@ USER VISIBLE CHANGES BETWEEN CIAO-1.1.2 and CIAO-1.1.3
 . DDS4CCM with OpenDDS 3.2 or higher now can use the QoS XML files. The DDS4CCM
   profile#library convention is handled as filename#profile.
 
-. Further extended and improved support for OpenDDS as DDS vendor
+. Further extended and improved support for OpenDDS as DDS vendor. Several
+  unit tests have been updated to wait for DDS status callbacks in order
+  to start the test instead of starting on ccm_activate
 
 . Refactored domain participant re-use in DDS4CCM. Domain participant re-use
   was initially implemented for RTI DDS but now it's available for other DDS
   vendors as well.
+
+. Added support for so called service components which are available through
+  the component context using resolve_service_reference. Service components
+  are deployed as regular components, but are installed by the installation
+  handler (see the TTSCTest test) or they install themselves into the service
+  registry (see TTSConnContext). These components can be seen as container
+  plugins which are going to be used for various extensions without causing the
+  container to be huge and unmaintainable
+
+. Removed preliminary support for the extension container
 
 USER VISIBLE CHANGES BETWEEN CIAO-1.1.1 and CIAO-1.1.2
 =======================================================
