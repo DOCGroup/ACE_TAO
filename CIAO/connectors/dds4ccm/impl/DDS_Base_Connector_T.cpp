@@ -1102,7 +1102,7 @@ DDS_Base_Connector_T<CCM_TYPE>::remove_domain (
                 "::remove_domain - "
                 "Going to delete contained entities of participant "
                 DDS_ENTITY_FORMAT_SPECIFIER
-                "for domain <%d> with qos <%C>.\n",
+                " for domain <%d> with qos <%C>.\n",
                 DDS_ENTITY_LOG (participant),
                 this->domain_id_, this->qos_profile_.in ()));
 
@@ -1113,7 +1113,7 @@ DDS_Base_Connector_T<CCM_TYPE>::remove_domain (
                 "::remove_domain - "
                 "Deleted contained entities for participant "
                 DDS_ENTITY_FORMAT_SPECIFIER
-                "for domain <%d> with qos <%C> "
+                " remove_topic - Deleted topic for domain <%d> with qos <%C> "
                 "return code <%C>\n",
                 DDS_ENTITY_LOG (participant),
                 this->domain_id_, this->qos_profile_.in (),
@@ -1129,7 +1129,7 @@ DDS_Base_Connector_T<CCM_TYPE>::remove_domain (
                 "::remove_domain - "
                 "Going to delete participant "
                 DDS_ENTITY_FORMAT_SPECIFIER
-                "for domain <%d> with qos <%C>.\n",
+                " for domain <%d> with qos <%C>.\n",
                 DDS_ENTITY_LOG (participant),
                 this->domain_id_, this->qos_profile_.in ()));
 
