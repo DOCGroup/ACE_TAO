@@ -1,6 +1,8 @@
 USER VISIBLE CHANGES BETWEEN DAnCE-1.1.2 and DAnCE-1.1.3
 =======================================================
 
+. The XML parsing support libraries have been moved to ACE
+
 USER VISIBLE CHANGES BETWEEN DAnCE-1.1.1 and DAnCE-1.1.2
 =======================================================
 
