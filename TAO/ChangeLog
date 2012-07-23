@@ -1,3 +1,11 @@
+Mon Jul 23 20:58:16 UTC 2012  Adam Mitz  <mitza@ociweb.com>
+
+        * tests/Bug_3630_Regression/run_test.pl:
+        * tests/Smart_Proxies/Policy/run_test.pl:
+
+          Fixed long-standing bugs in perl scripts that were only
+          noticed with the TestTarget.pm fix in ACE Fri Jul 20 17:37:27 UTC 2012
+
 Fri Jul 20 17:38:45 UTC 2012  Adam Mitz  <mitza@ociweb.com>
 
         * tao/CDR.inl:
