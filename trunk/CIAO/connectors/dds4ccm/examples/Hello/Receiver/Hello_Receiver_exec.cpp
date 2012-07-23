@@ -26,7 +26,6 @@ namespace CIAO_Hello_Receiver_Impl
         ::Hello::CCM_Receiver_Context::_duplicate (ctx)),
       received_ (received),
       name_ (name)
-
   {
   }
 
