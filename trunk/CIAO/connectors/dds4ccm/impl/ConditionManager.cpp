@@ -132,15 +132,24 @@ namespace CIAO
           // and therefor nil.
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                         ACE_TEXT ("ConditionManager::query - ")
-                        ACE_TEXT ("Error: No QueryCondition set yet. ")
-                        ACE_TEXT ("First set a filter.\n")));
+                        ACE_TEXT ("Error: No QueryCondition set yet, ")
+                        ACE_TEXT ("first set a filter.\n")));
+          throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
+        }
+      if (::CORBA::is_nil (this->qc_reader_.in ()))
+        {
+          // qc reader is nil
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                        ACE_TEXT ("ConditionManager::query - ")
+                        ACE_TEXT ("Error: qc reader is nil, ")
+                        ACE_TEXT ("first set a filter.\n")));
           throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
         }
       ::CCM_DDS::QueryFilter_var filter;
       ACE_NEW_THROW_EX (filter,
                         ::CCM_DDS::QueryFilter(),
                         ::CORBA::NO_MEMORY ());
-      filter->expression= this->qc_reader_->get_query_expression ();
+      filter->expression = this->qc_reader_->get_query_expression ();
       this->qc_reader_->get_query_parameters (filter->parameters);
       return filter._retn ();
     }
@@ -155,7 +164,8 @@ namespace CIAO
       // this should be removed first. Instead of a readcondition, there should
       // be a QueryCondition attached to the waitset
       if (! ::CORBA::is_nil (this->rd_condition_.in ()))
-        { // Getter functionality
+        {
+          // Getter functionality
           // First remove the existing conditions from the waitset
           // Than create a new (query) condition and attach it to the waitset
           // instead of the readcondition

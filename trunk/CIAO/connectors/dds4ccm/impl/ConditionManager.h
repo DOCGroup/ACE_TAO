@@ -69,7 +69,7 @@ namespace CIAO
       /**
         * Getter functionality.
         * Creates a read_condition for the getter.
-        * It'll also initialize the waitset and attaches the
+        * It will also initialize the waitset and attaches the
         * read_condition to the waitset.
         */
       void init_readcondition (void);
@@ -82,13 +82,11 @@ namespace CIAO
       bool wait (const ::DDS::Duration_t & time_out);
 
       /**
-        * Returns the internal filter. This is the
-        * DDS4CCM QueryFilter (a representive of the
-        * DDS query).
+        * Returns the internal filter. This is the DDS4CCM QueryFilter
+        * (a representation of the DDS query).
         *
-        * If the QueryFilter hasn't been initialized,
-        * a ::CCM_DDS::InternalError exception with
-        * error code ::DDS::RETCODE_ERROR is thrown.
+        * If the QueryFilter hasn't been initialized, a ::CCM_DDS::InternalError
+        * exception with error code ::DDS::RETCODE_ERROR is thrown.
         */
       ::CCM_DDS::QueryFilter * query (void);
 
