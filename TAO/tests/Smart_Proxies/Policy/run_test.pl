@@ -7,11 +7,12 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
+use strict;
 
-$status = 0;
-$debug_level = '0';
+my $status = 0;
+my $debug_level = '0';
 
-foreach $i (@ARGV) {
+foreach my $i (@ARGV) {
     if ($i eq '-debug') {
         $debug_level = '10';
     }
@@ -32,16 +33,16 @@ $server2->DeleteFile($iorbase2);
 $client->DeleteFile($iorbase1);
 $client->DeleteFile($iorbase2);
 
-$SV1 = $server1->CreateProcess ("server", "-ORBdebuglevel $debug_level -o $server1_iorfile");
-$SV2 = $server2->CreateProcess ("server", "-ORBdebuglevel $debug_level -o $server2_iorfile");
-$CL = $client->CreateProcess ("client",
-                              "-i file://$client_iorfile1 ".
-                              "-j file://$client_iorfile2");
+my $SV1 = $server1->CreateProcess ("server", "-ORBdebuglevel $debug_level -o $server1_iorfile");
+my $SV2 = $server2->CreateProcess ("server", "-ORBdebuglevel $debug_level -o $server2_iorfile");
+my $CL = $client->CreateProcess ("client",
+                                 "-i file://$client_iorfile1 ".
+                                 "-j file://$client_iorfile2");
 
 print STDERR "\nrunning Smart Proxy test consisting of the client and ".
     "two servers with <one-shot> policy\n\n";
 
-$server_status = $SV1->Spawn ();
+my $server_status = $SV1->Spawn ();
 
 if ($server_status != 0) {
     print STDERR "ERROR: server returned $server_status\n";
@@ -89,14 +90,14 @@ if ($server2->GetFile ($iorbase2) == -1) {
     $SV2->Kill (); $SV2->TimedWait (1);
     exit 1;
 }
-if ($client->PutFile ($iorbase) == -1) {
+if ($client->PutFile ($iorbase2) == -1) {
     print STDERR "ERROR: cannot set file <$client_iorfile2>\n";
     $SV1->Kill (); $SV1->TimedWait (1);
     $SV2->Kill (); $SV2->TimedWait (1);
     exit 1;
 }
 
-$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + 45);
+my $client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + 45);
 
 if ($client_status != 0) {
     print STDERR "ERROR: client returned $client_status\n";
@@ -173,7 +174,7 @@ if ($server2->GetFile ($iorbase2) == -1) {
     $SV2->Kill (); $SV2->TimedWait (1);
     exit 1;
 }
-if ($client->PutFile ($iorbase) == -1) {
+if ($client->PutFile ($iorbase2) == -1) {
     print STDERR "ERROR: cannot set file <$client_iorfile2>\n";
     $SV1->Kill (); $SV1->TimedWait (1);
     $SV2->Kill (); $SV2->TimedWait (1);
