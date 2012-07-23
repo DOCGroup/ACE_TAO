@@ -31,15 +31,13 @@ DDS_Get_T<CCM_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE, FIXED>::config
 {
   DDS4CCM_TRACE ("DDS_Get_T<CCM_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE, FIXED>::configuration_complete");
 
-
   SubscriberBase_type::configuration_complete (topic,
                                                subscriber,
                                                qos_profile,
                                                qos_xml);
 
   ::DDS::DataReader_var dr = this->dds_read_->get_dds_reader ();
-  this->dds_get_->set_dds_reader (dr.in (),
-                                  &this->condition_manager_);
+  this->dds_get_->set_dds_reader (dr.in (), &this->condition_manager_);
 }
 
 template <typename CCM_TYPE, typename TYPED_DDS_READER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE, bool FIXED>
