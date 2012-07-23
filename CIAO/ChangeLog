@@ -1,3 +1,11 @@
+Mon Jul 23 07:56:38 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+          Fixed tracing
+
+        * connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.cpp:
+          Set local variables to nil to improve shutdown behavior
+
 Fri Jul 20 16:13:02 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/ciao_tests.lst:

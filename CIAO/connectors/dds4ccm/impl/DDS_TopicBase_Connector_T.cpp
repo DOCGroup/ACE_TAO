@@ -205,6 +205,7 @@ DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::ccm_remove (void)
     {
       this->remove_topic (this->domain_participant_.in (),
                           topic.in ());
+      topic = ::DDS::Topic::_nil ();
     }
 
   ::CORBA::String_var typesupport_name;
@@ -219,16 +220,18 @@ DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::ccm_remove (void)
                          typesupport_name.in ());
 
   ::DDS::Subscriber_var subscriber = this->subscriber_._retn ();
-  if (! CORBA::is_nil (subscriber.in ()))
+  if (!::CORBA::is_nil (subscriber.in ()))
     {
       this->remove_subscriber (this->domain_participant_.in (),
                                subscriber.in ());
+      subscriber = ::DDS::Subscriber::_nil ();
     }
   ::DDS::Publisher_var publisher = this->publisher_._retn ();
   if (!::CORBA::is_nil (publisher.in ()))
     {
       this->remove_publisher (this->domain_participant_.in (),
                               publisher.in ());
+      publisher = ::DDS::Publisher::_nil ();
     }
   BaseConnector::ccm_remove ();
 }
