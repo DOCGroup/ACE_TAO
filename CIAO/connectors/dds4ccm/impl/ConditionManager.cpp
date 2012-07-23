@@ -141,8 +141,7 @@ namespace CIAO
           // qc reader is nil
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                         ACE_TEXT ("ConditionManager::query - ")
-                        ACE_TEXT ("Error: qc reader is nil, ")
-                        ACE_TEXT ("first set a filter.\n")));
+                        ACE_TEXT ("Error: qc reader is nil.\n")));
           throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
         }
       ::CCM_DDS::QueryFilter_var filter;
