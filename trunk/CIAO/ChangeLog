@@ -1,3 +1,14 @@
+Mon Jul 23 14:01:10 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+          At the moment we delete the domain participant, first delete
+          all contained entities. We have already deleted everything in dds4ccm
+          but it could be that some topic is still registered in the dp, because
+          we can only delete a topic on a dp when it is not used at all. When
+          using find_topic/delete_topic, all delete_topics can only be done when
+          all datareaders/datawriters have been deleted, something which will
+          just not work with dds4ccm
+
 Mon Jul 23 13:36:41 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
