@@ -995,10 +995,13 @@ void DDS_Base_Connector_T<CCM_TYPE>::remove_topic (
 
   DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_TRACE, DDS4CCM_INFO
                 "DDS_Base_Connector_T::remove_topic - "
-                "Deleted topic <%C> from "
+                "Deleted topic <%C>"
+                DDS_ENTITY_FORMAT_SPECIFIER
+                "from "
                 DDS_ENTITY_FORMAT_SPECIFIER
                 " return code <%C>\n",
                 name.in (),
+                DDS_ENTITY_LOG (topic),
                 DDS_ENTITY_LOG (participant),
                 ::CIAO::DDS4CCM::translate_retcode (retcode)));
 

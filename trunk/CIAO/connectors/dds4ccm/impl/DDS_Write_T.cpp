@@ -187,7 +187,8 @@ DDS_Write_T<CCM_TYPE, TYPED_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::remove (
         {
           DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_INFO, DDS4CCM_INFO
               "DDS_Write_T::remove - "
-              "Deleted DataWriter\n"));
+              "Deleted DataWriter: <%C>\n",
+              ::CIAO::DDS4CCM::translate_retcode (retval)));
         }
     }
 }
