@@ -84,10 +84,10 @@ namespace CIAO
         * Set the actual pointer to DDS Datareader
         */
       void set_dds_reader (::DDS::DataReader_ptr reader,
-                            ::CIAO::DDS4CCM::ConditionManager * condition_manager);
+                           ::CIAO::DDS4CCM::ConditionManager * condition_manager);
       ::DDS::DataReader_ptr get_dds_reader (void);
     protected:
-        typename TYPED_DDS_READER::_var_type dds_reader_;
+      typename TYPED_DDS_READER::_var_type dds_reader_;
       ::CIAO::DDS4CCM::ConditionManager * condition_manager_;
 
       ::DDS::Duration_t time_out_;

@@ -57,7 +57,7 @@ namespace CIAO
       virtual void query (const ::CCM_DDS::QueryFilter & filter);
 
       void set_dds_reader (::DDS::DataReader_ptr dr,
-                              ::CIAO::DDS4CCM::ConditionManager * condition_manager);
+                           ::CIAO::DDS4CCM::ConditionManager * condition_manager);
 
       ::DDS::DataReader_ptr get_dds_reader (void);
 
