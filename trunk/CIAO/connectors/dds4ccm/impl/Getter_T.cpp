@@ -261,11 +261,6 @@ namespace CIAO
           throw ::CORBA::INTERNAL ();
         }
       this->condition_manager_ = condition_manager;
-      if (this->condition_manager_)
-        {
-          this->condition_manager_->set_dds_entity (dr);
-          this->condition_manager_->init_readcondition ();
-        }
     }
 
     template <typename GETTER_TYPE, typename TYPED_DDS_READER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
@@ -298,9 +293,7 @@ namespace CIAO
           ::DDS::SampleInfoSeq sample_info;
           SEQ_VALUE_TYPE data;
 
-          ::DDS::ReturnCode_t const retcode = this->get (data,
-                                                         sample_info,
-                                                         1);
+          ::DDS::ReturnCode_t const retcode = this->get (data, sample_info, 1);
 
           if (retcode == ::DDS::RETCODE_NO_DATA)
             {
