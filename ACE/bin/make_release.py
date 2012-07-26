@@ -905,6 +905,7 @@ def generate_workspaces (stage_dir):
     os.putenv ("TAO_ROOT", os.path.join (stage_dir, "ACE_wrappers", "TAO"))
     os.putenv ("CIAO_ROOT", os.path.join (stage_dir, "ACE_wrappers", "TAO", "CIAO"))
     os.putenv ("DANCE_ROOT", os.path.join (stage_dir, "ACE_wrappers", "TAO", "DAnCE"))
+    os.putenv ("DDS_ROOT", "")
 
     # Create option strings
     mpc_command = os.path.join (stage_dir, "ACE_wrappers", "bin", "mwc.pl")
