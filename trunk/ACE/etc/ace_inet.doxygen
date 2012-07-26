@@ -78,7 +78,6 @@ HTML_OUTPUT           = html/libace-doc/inet
 HTML_HEADER           =
 HTML_FOOTER           =
 HTML_STYLESHEET       =
-HTML_ALIGN_MEMBERS    = YES
 GENERATE_HTMLHELP     = NO
 
 #---------------------------------------------------------------------------
