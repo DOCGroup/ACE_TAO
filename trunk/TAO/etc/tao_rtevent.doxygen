@@ -85,7 +85,6 @@ HTML_OUTPUT           = html/libtao-doc/rtevent
 HTML_HEADER           =
 HTML_FOOTER           =
 HTML_STYLESHEET       =
-HTML_ALIGN_MEMBERS    = YES
 GENERATE_HTMLHELP     = NO
 
 #---------------------------------------------------------------------------
