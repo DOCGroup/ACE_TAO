@@ -1,3 +1,12 @@
+Thu Jul 26 10:19:34 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ARGV.h:
+        * ace/Arg_Shifter.h:
+          Doxygen improvements
+
+        * rpmbuild/ace-tao.spec:
+          Removed ACE_XML_Utils, only compiled when xercesc is enabled
+
 Thu Jul 26 09:31:19 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * NEWS:
