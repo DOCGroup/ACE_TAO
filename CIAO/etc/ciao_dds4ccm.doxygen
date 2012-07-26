@@ -77,7 +77,6 @@ HTML_OUTPUT           = html/libciao-doc/dds4ccm
 HTML_HEADER           =
 HTML_FOOTER           =
 HTML_STYLESHEET       =
-HTML_ALIGN_MEMBERS    = YES
 GENERATE_HTMLHELP     = NO
 
 #---------------------------------------------------------------------------
