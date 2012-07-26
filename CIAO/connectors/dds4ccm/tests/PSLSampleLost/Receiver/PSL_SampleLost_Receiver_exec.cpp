@@ -219,35 +219,34 @@ namespace CIAO_PSL_SampleLost_Receiver_Impl
     ::PSL_SampleLost::PSL_SampleLostConnector::Reader_var reader =
       this->ciao_context_->get_connection_info_out_data ();
 
-    if (::CORBA::is_nil (reader.in ()))
+    if (!::CORBA::is_nil (reader.in ()))
       {
-        return;
-      }
-    TestTopicSeq TestTopic_infos;
-    ::CCM_DDS::ReadInfoSeq readinfoseq;
-    try
-      {
-        reader->read_all(TestTopic_infos, readinfoseq);
-        for(CORBA::ULong i = 0; i < readinfoseq.length(); ++i)
+        TestTopicSeq TestTopic_infos;
+        ::CCM_DDS::ReadInfoSeq readinfoseq;
+        try
           {
-            ACE_Time_Value tv;
-            tv <<= readinfoseq[i].source_timestamp;
-            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ALL ReadInfo ")
-                                  ACE_TEXT ("-> UTC date =%#T\n"),
-                                  &tv));
+            reader->read_all(TestTopic_infos, readinfoseq);
+            for(CORBA::ULong i = 0; i < readinfoseq.length(); ++i)
+              {
+                ACE_Time_Value tv;
+                tv <<= readinfoseq[i].source_timestamp;
+                ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ALL ReadInfo ")
+                                      ACE_TEXT ("-> UTC date =%#T\n"),
+                                      &tv));
+              }
+            for(CORBA::ULong i = 0; i < TestTopic_infos.length(); ++i)
+              {
+                ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ALL keyed test info : ")
+                      ACE_TEXT ("Number <%d> : received TestTopic_info for <%C> at %u\n"),
+                    i,
+                    TestTopic_infos[i].key.in (),
+                    TestTopic_infos[i].x));
+              }
           }
-        for(CORBA::ULong i = 0; i < TestTopic_infos.length(); ++i)
+        catch (const CCM_DDS::InternalError& )
           {
-            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ALL keyed test info : ")
-                  ACE_TEXT ("Number <%d> : received TestTopic_info for <%C> at %u\n"),
-                i,
-                TestTopic_infos[i].key.in (),
-                TestTopic_infos[i].x));
+            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("internal error or no data\n")));
           }
-      }
-    catch (const CCM_DDS::InternalError& )
-      {
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("internal error or no data\n")));
       }
   }
 
