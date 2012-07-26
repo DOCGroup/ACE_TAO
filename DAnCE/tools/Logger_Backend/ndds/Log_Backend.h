@@ -25,7 +25,7 @@ namespace DAnCE
 {
   /**
    * @class NDDS_Log_Backend
-   * @breif Provides a logging backend that transmits records over DDS/.
+   * @brief Provides a logging backend that transmits records over DDS/.
    */
   class DAnCE_NDDS_Log_Export NDDS_Log_Backend :
     public virtual ACE_Log_Msg_Backend,
