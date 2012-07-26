@@ -211,10 +211,10 @@ private:
 
   /// The index of <argv_> in which we'll stick the next known
   /// argument.
-  int front_;
-  /* This is not really the "front" at all.  It's the point after
+  /** This is not really the "front" at all.  It's the point after
    * which the unknown arguments end and at which the known arguments begin.
    */
+  int front_;
 };
 
 typedef ACE_Arg_Shifter_T<ACE_TCHAR> ACE_Arg_Shifter;

@@ -206,8 +206,8 @@ public:
    *
    * @param index   Index to the desired element.
    *
-   * @retval   Pointer to the indexed string.
-   * @retval   0 if @a index is out of bounds.
+   * @retval Pointer to the indexed string.
+   * @retval 0 if @a index is out of bounds.
    */
   const CHAR_TYPE *operator[] (size_t index);
 
