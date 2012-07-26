@@ -85,7 +85,7 @@ namespace CIAO
         * occurs and the lookup_handle exists, this method will return
         * the lookup_handle.
         *
-        * @todp We actually want this method to be in the DDS4CCM
+        * @todo We actually want this method to be in the DDS4CCM
         * connector but since we're not allowed to use RTI specific code
         * there it's located here.
         *
