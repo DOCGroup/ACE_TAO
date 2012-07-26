@@ -1,0 +1,96 @@
+$Id$
+
+See http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=2285 for more.
+
+These two test scenarios test that the following FT spec conditions are met:
+
+1 / "The retention_id uniquely identifies the request within the scope of the client and the expiration_time."
+2 / "Each repetition of a request must carry the same client_id, retention_id, and expiration_time as the original request."
+3 / "If a client ORB loses the connection with a server or incurs some other kind of transport fault, the ORB may attempt to retransmit the request message, or retransmit the request message to an alternative destination or using an alternative transport, up to the expiration_time."
+4 / "TimeBase::TimeT expiration_time" and "TimeT represents a single time value, which is 64 bits in size, and holds the number of 100 nanoseconds that have passed since the base time. For absolute time the base is 15 October 1582 00:00 of the Gregorian Calendar. All absolute time shall be computed using dates from the Gregorian Calendar."
+
+Test #1 checks that unique retention IDs are used in two scenarios:
+1/ When a request follows a previous request that concluded with an exception being returned to the application code.
+2/ When a subsequent request is made in a thread when that thread still as a response to a previous request outstanding.
+
+__Test #1 - Regression 1 & 2__
+
+TAO249_ServerRequest_Interceptor::receive_request (24807|3074381504) called for method: throw_exception ... client retention id is: 1
+Client catches a MyException, as expected. No problem !
+TAO249_ServerRequest_Interceptor::receive_request (24807|3074381504) called for method: call_me_back ... client retention id is: 1
+Test Failed - REGRESSION !!! Same client retention id has been used for TWO consecutive independent invocations!!
+TAO249_ServerRequest_Interceptor::receive_request (24807|3074381504) called for method: check_request_id ... client retention id is: 1
+Test Failed - REGRESSION !!! Same client retention id has been used for TWO consecutive independent invocations!!
+TAO249_ServerRequest_Interceptor::receive_request (24807|3074381504) called for method: shutdown ... client retention id is: 2
+(24807|3074381504) server - event loop finished
+Error: REGRESSION identified!!!
+ERROR: client returned 1
+
+__Test #1 - Successful result__
+
+E:\doc_cvs\ACE_wrappers\TAO\orbsvcs\tests\tao249_regression>run_test.pl
+TAO249_ServerRequest_Interceptor::receive_request (2844|1244) called for method: throw_exception ... client retention id is: 1
+Client catches a MyException, as expected. No problem !
+TAO249_ServerRequest_Interceptor::receive_request (2844|1244) called for method: call_me_back ... client retention id is: 2
+TAO249_ServerRequest_Interceptor::receive_request (2844|1244) called for method: check_request_id ... client retention id is: 3
+TAO249_ServerRequest_Interceptor::receive_request (2844|1244) called for method: shutdown ... client retention id is: 4
+(2844|1244) server - event loop finished
+Test passed !!!
+
+Test #2 checks that 4 conditions are met:
+1/ That the conversion from ACE_Time_Value to TimeT used in the calculation of the expiration time is done correctly.
+2/ That the correct offset has been applied to convert from posix to gregorian time.
+3/ That the client reuses the same original expiration time on all retries of the same request.
+4/ That the client stops retrying a request once the expiration time has passed.
+
+__Test #2 - Regression 1__
+
+Test Failed - REGRESSION !!! Expiration time is garbage - it is after 2358 A.D.!!
+Expiration time: 18446744072261958952
+2358 A.D.      : 244385856000000000
+Error: REGRESSION identified by server 0. Test Failed !!
+Error: REGRESSION identified!!!
+ERROR: client returned 1
+
+__Test #2 - Regression 2__
+
+Test Failed - REGRESSION !!! Expiration time is in wrong format - it is before 1970 A.D. !!
+Expiration time: 11301710711718750
+1970 A.D.      : 122192928000000000
+Error: REGRESSION identified by server 0. Test Failed !!
+Error: REGRESSION identified!!!
+ERROR: client returned 1
+
+__Test #2 - Regression 3__
+
+abnormal program termination
+Test Failed - REGRESSION !!! Different expiration times used on consecutive retries of the same op!!
+Previous expiration: 133494646145937500
+Current expiration : 133494646183906250
+Error: REGRESSION identified by server 1. Test Failed !!
+Error: REGRESSION identified!!!
+ERROR: client returned 1
+
+__Test #2 - Regression 4__
+
+abnormal program termination
+...
+abnormal program termination
+Test Failed - REGRESSION !!! Client ORB is still retrying after the expiration time!!
+Expiration time  : 133494661968437500
+Previous attempt : 133494661990000000
+Time now         : 133494662015156250
+Error: REGRESSION identified by server 2. Test Failed !!
+Error: REGRESSION identified!!!
+ERROR: client returned 1
+
+__Test #2 - Successful result:__
+
+abnormal program termination
+
+abnormal program termination
+(4084|3584) EXCEPTION, Client caught transport exception, as expected. No problem !
+
+system exception, ID 'IDL:omg.org/CORBA/COMM_FAILURE:1.0' TAO exception, minor code = 6 (failed to recv request response; ENOENT), completed = MAYBE
+
+Test passed !!!
