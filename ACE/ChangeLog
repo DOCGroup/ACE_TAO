@@ -1,3 +1,23 @@
+Thu Jul 26 09:31:19 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+          Updated for next release
+
+        * bin/diff-builds-and-group-fixed-tests-only.sh:
+        * bin/make_release.py:
+        * docs/Download.html:
+        * docs/bczar/bczar.html:
+          Updated for x.1.3 release
+
+        * etc/ace.doxygen:
+        * etc/ace_inet.doxygen:
+        * etc/ace_qos.doxygen:
+        * etc/ace_rmcast.doxygen:
+        * etc/ace_ssl.doxygen:
+        * etc/acexml.doxygen:
+        * etc/index.html:
+          Removed deprecated tag
+
 Thu Jul 26 09:12:26 CEST 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ACE version 6.1.3 released.
