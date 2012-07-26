@@ -1,3 +1,9 @@
+Thu Jul 26 14:40:45 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/bczar/bczar.html:
+          Set all environment variables explicitly before running the doxygen
+          script
+
 Thu Jul 26 10:19:34 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ARGV.h:

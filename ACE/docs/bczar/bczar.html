@@ -285,7 +285,10 @@
           cd ACE_wrappers</li>
           <li>
             Set the needed environment variables using<br>
-            <code>export ACE_ROOT=$PWD</code></li>
+            <code>export ACE_ROOT=$PWD</code><br>
+        <code>export TAO_ROOT=$ACE_ROOT/TAO</code><br>
+        <code>export CIAO_ROOT=$TAO_ROOT/CIAO</code><br>
+        <code>export DANCE_ROOT=$TAO_ROOT/DAnCE</code><br></li>
           <li>
             Check the doxygen version at the shell by executing the command:<br>
             <code>doxygen --version</code>
@@ -313,6 +316,9 @@
         svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-6_1_3/DAnCE ACE_wrappers/TAO/DAnCE<br>
         cd ACE_wrappers<br>
         export ACE_ROOT=$PWD<br>
+        export TAO_ROOT=$ACE_ROOT/TAO<br>
+        export CIAO_ROOT=$TAO_ROOT/CIAO<br>
+        export DANCE_ROOT=$TAO_ROOT/DAnCE<br>
         $ACE_ROOT/bin/generate_rel_manpages<br>
         scp ACE-html.tar.gz ACE-html.tar.bz2 ACE-html.zip ACE-html.tar.gz.md5 ACE-html.tar.bz2.md5 ACE-html.zip.md5 bczar@download.dre.vanderbilt.edu:/export/www/download.dre/ACE+TAO-distribution
  </code>
