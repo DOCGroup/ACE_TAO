@@ -1,3 +1,11 @@
+Thu Jul 26 16:31:22 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/DAnCE.doxygen:
+          Upgraded with doxygen -u
+
+        * tools/Logger_Backend/ndds/Log_Backend.h:
+          Doxygen fix
+
 Thu Jul 26 09:31:07 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * NEWS:
