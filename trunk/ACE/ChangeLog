@@ -1,3 +1,9 @@
+Thu Jul 26 16:22:35 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/make_release.py:
+        * docs/bczar/bczar.html:
+          Improved instructions
+
 Thu Jul 26 14:40:45 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/bczar/bczar.html:
