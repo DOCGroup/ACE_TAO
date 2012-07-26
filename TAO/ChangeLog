@@ -1,3 +1,39 @@
+Thu Jul 26 09:31:16 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+          Updated for next release
+
+        * etc/tao.doxygen:
+        * etc/tao_anytypecode.doxygen:
+        * etc/tao_av.doxygen:
+        * etc/tao_compression.doxygen:
+        * etc/tao_cosevent.doxygen:
+        * etc/tao_cosnaming.doxygen:
+        * etc/tao_cosnotification.doxygen:
+        * etc/tao_costime.doxygen:
+        * etc/tao_costrader.doxygen:
+        * etc/tao_dynamicany.doxygen:
+        * etc/tao_dynamicinterface.doxygen:
+        * etc/tao_esf.doxygen:
+        * etc/tao_ifr.doxygen:
+        * etc/tao_implrepo.doxygen:
+        * etc/tao_iormanip.doxygen:
+        * etc/tao_iortable.doxygen:
+        * etc/tao_pi.doxygen:
+        * etc/tao_pi_server.doxygen:
+        * etc/tao_portablegroup.doxygen:
+        * etc/tao_portableserver.doxygen:
+        * etc/tao_rtcorba.doxygen:
+        * etc/tao_rtevent.doxygen:
+        * etc/tao_rtportableserver.doxygen:
+        * etc/tao_security.doxygen:
+        * etc/tao_smartproxies.doxygen:
+        * etc/tao_ssliop.doxygen:
+        * etc/tao_strategies.doxygen:
+        * etc/tao_transportcurrent.doxygen:
+        * etc/tao_ziop.doxygen:
+          Removed deprecated tag
+
 Thu Jul 26 09:12:26 CEST 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO version 2.1.3 released.
