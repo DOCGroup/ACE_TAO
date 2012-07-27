@@ -1,3 +1,8 @@
+Fri Jul 27 10:56:52 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/DAnCE.doxygen:
+          Generate UML diagrams, assume stl is buildin
+
 Thu Jul 26 16:31:22 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * etc/DAnCE.doxygen:
