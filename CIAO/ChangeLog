@@ -1,3 +1,10 @@
+Fri Jul 27 10:56:24 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/ciao.doxygen:
+        * etc/ciao_dds4ccm.doxygen:
+        * tests/IDL_Test/Cornucopia/Cornucopia.doxygen:
+          Generate UML diagrams, assume stl is buildin
+
 Fri Jul 27 08:59:40 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/IDL_Test/Cornucopia/Cornucopia.doxygen:
