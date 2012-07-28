@@ -915,7 +915,7 @@ def generate_workspaces (stage_dir):
     mpc_option += ' -relative TAO_ROOT=' + stage_dir + '/ACE_wrappers/TAO '
     mpc_option += ' -relative CIAO_ROOT=' + stage_dir + '/ACE_wrappers/TAO/CIAO '
     mpc_option += ' -relative DANCE_ROOT=' + stage_dir + '/ACE_wrappers/TAO/DAnCE '
-
+    msvc_exclude_option = ' -exclude TAO/CIAO/CIAO_TAO_DAnCE_OpenDDS.mwc,TAO/CIAO/CIAO_TAO_OpenDDS.mwc '
     vc10_option = ' -name_modifier *_vc10 '
     vc9_option = ' -name_modifier *_vc9 '
 
@@ -927,10 +927,10 @@ def generate_workspaces (stage_dir):
     ex (mpc_command + " -type gnuace " + exclude_option + workers_option + mpc_option + redirect_option)
 
     print "\tGenerating VC10 solutions..."
-    ex (mpc_command + " -type vc10 " + mpc_option + workers_option + vc10_option + redirect_option)
+    ex (mpc_command + " -type vc10 "  + msvc_exclude_option + mpc_option + workers_option + vc10_option + redirect_option)
 
     print "\tGenerating VC9 solutions..."
-    ex (mpc_command + " -type vc9 " + mpc_option + workers_option + vc9_option + redirect_option)
+    ex (mpc_command + " -type vc9 "  + msvc_exclude_option + mpc_option + workers_option + vc9_option + redirect_option)
 
     print "\tCorrecting permissions for all generated files..."
     ex ("find ./ -name '*.vc[p,w]' -or -name '*.bmak' -or -name '*.vcproj' -or -name '*.sln' -or -name '*.vcxproj' -or -name '*.filters' -or -name 'GNUmake*' | xargs chmod 0644")
