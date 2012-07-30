@@ -112,10 +112,9 @@ namespace DAnCE
         return -1;
       }
 
-    DDS_ReturnCode_t retval;
-
-    retval = Log_RecordTypeSupport::register_type (this->participant_,
-                                                   Log_RecordTypeSupport::get_type_name ());
+    DDS_ReturnCode_t retval
+      = Log_RecordTypeSupport::register_type (this->participant_,
+                                              Log_RecordTypeSupport::get_type_name ());
 
     if (retval != DDS_RETCODE_OK)
       {
@@ -236,7 +235,8 @@ namespace DAnCE
     instance->pid = log_record.pid ();
     instance->message = ACE_TEXT_ALWAYS_CHAR (log_record.msg_data ());
 
-    DDS_ReturnCode_t retval = this->log_record_writer_->write (*instance, DDS_HANDLE_NIL);
+    DDS_ReturnCode_t const retval =
+      this->log_record_writer_->write (*instance, DDS_HANDLE_NIL);
 
     if (retval != DDS_RETCODE_OK)
       {
