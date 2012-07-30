@@ -1,3 +1,8 @@
+Mon Jul 30 08:03:48 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tools/Logger_Backend/ndds/Log_Backend.cpp:
+          Minor code improvements
+
 Mon Jul 30 07:58:48 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * dance/Logger/Logger_Service.cpp:
