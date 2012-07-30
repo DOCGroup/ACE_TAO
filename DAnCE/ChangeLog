@@ -1,3 +1,9 @@
+Mon Jul 30 07:58:48 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * dance/Logger/Logger_Service.cpp:
+          Added a debug statement at the moment we have successfully opened
+          a logger backend
+
 Fri Jul 27 10:56:52 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * etc/DAnCE.doxygen:
