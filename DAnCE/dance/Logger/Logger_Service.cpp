@@ -93,11 +93,8 @@ namespace DAnCE
 
     if (this->backend_.length () > 0)
       {
-
         ACE_Log_Msg_Backend* logger_be =
           ACE_Dynamic_Service<ACE_Log_Msg_Backend>::instance(this->backend_.c_str ());
-
-        //        backend->open ("");
 
         if (logger_be == 0)
           {
@@ -107,6 +104,14 @@ namespace DAnCE
                           ACE_TEXT ("Unable to load backend %s\n"),
                           this->backend_.c_str ()));
             return -1;
+          }
+        else
+          {
+            DANCE_DEBUG (DANCE_LOG_MAJOR_DEBUG_INFO,
+                         (LM_DEBUG, DLINFO
+                          ACE_TEXT ("Logger_Service::init - ")
+                          ACE_TEXT ("Successfully loaded backend %s\n"),
+                          this->backend_.c_str ()));
           }
 
         ACE_Log_Msg::msg_backend (logger_be);
