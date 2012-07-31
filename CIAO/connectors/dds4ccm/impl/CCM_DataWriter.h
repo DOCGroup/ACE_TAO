@@ -81,9 +81,11 @@ namespace CIAO
       virtual ::DDS::ReturnCode_t
       get_matched_subscriptions (::DDS::InstanceHandleSeq & );
 
+#if !defined (DDS_HAS_MINIMUM_BIT)
       virtual ::DDS::ReturnCode_t
       get_matched_subscription_data (::DDS::SubscriptionBuiltinTopicData & ,
                                      DDS_INSTANCE_HANDLE_T_IN);
+#endif
 
       void set_dds_entity (::DDS::DataWriter_ptr dw);
 

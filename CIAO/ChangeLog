@@ -1,3 +1,14 @@
+Tue Jul 31 12:39:42 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/DDS4CCM-INSTALL.html:
+          Fixed typo
+
+        * connectors/dds4ccm/impl/CCM_DataReader.h:
+        * connectors/dds4ccm/impl/CCM_DataReader.cpp:
+        * connectors/dds4ccm/impl/CCM_DataWriter.h:
+        * connectors/dds4ccm/impl/CCM_DataWriter.cpp:
+          Fixed compile problems when OpenDDS is configured with less features
+
 Fri Jul 27 18:05:48 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/DDS4CCM-INSTALL.html:
