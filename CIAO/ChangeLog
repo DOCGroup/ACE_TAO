@@ -1,3 +1,8 @@
+Tue Jul 31 13:01:24 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/DomainParticipantManager.cpp:
+          Simplified make_pair usage
+
 Tue Jul 31 12:39:42 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/DDS4CCM-INSTALL.html:

@@ -113,8 +113,7 @@ namespace CIAO
         {
           profile = qos_profile;
         }
-      IdQosProfile idqos =
-        std::make_pair<std::string, DDS::DomainId_t>(profile, domain_id);
+      IdQosProfile idqos = std::make_pair (profile, domain_id);
       DomainParticipants_iterator it_found = this->dps_.find (idqos);
 
       if (it_found != this->dps_.end () && it_found->second)
@@ -157,8 +156,7 @@ namespace CIAO
         {
           profile = qos_profile;
         }
-      IdQosProfile idqos =
-        std::make_pair<std::string, DDS::DomainId_t>(profile, domain_id);
+      IdQosProfile idqos = std::make_pair (profile, domain_id);
       DomainParticipants_iterator it_found = this->dps_.find (idqos);
 
       if (it_found == this->dps_.end())
@@ -168,8 +166,7 @@ namespace CIAO
                             DDSParticipantTopic (dp),
                             ::CORBA::NO_MEMORY ());
           std::pair <DomainParticipants_iterator, bool> to_insert =
-            this->dps_.insert (std::make_pair<IdQosProfile,
-                                              DDSParticipantTopic *>(idqos, dpt));
+            this->dps_.insert (std::make_pair (idqos, dpt));
           if (!to_insert.second)
             {
               DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
@@ -217,8 +214,7 @@ namespace CIAO
         {
           profile = qos_profile;
         }
-      IdQosProfile idqos =
-        std::make_pair<std::string, DDS::DomainId_t>(profile, domain_id);
+      IdQosProfile idqos = std::make_pair (profile, domain_id);
       DomainParticipants_iterator iter = this->dps_.find (idqos);
 
       if (iter != this->dps_.end ())
