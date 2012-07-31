@@ -98,9 +98,11 @@ namespace CIAO
       virtual ::DDS::ReturnCode_t
       get_matched_publications (::DDS::InstanceHandleSeq & );
 
+#if !defined (DDS_HAS_MINIMUM_BIT)
       virtual ::DDS::ReturnCode_t
       get_matched_publication_data (::DDS::PublicationBuiltinTopicData & ,
                                     DDS_INSTANCE_HANDLE_T_IN );
+#endif
 
       void set_dds_entity (::DDS::DataReader_ptr dr);
 
