@@ -1,3 +1,8 @@
+Wed Aug  1 07:07:33 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+          Fixed compile error with C++11
+
 Fri Jul 27 10:54:07 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * etc/tao.doxygen:
