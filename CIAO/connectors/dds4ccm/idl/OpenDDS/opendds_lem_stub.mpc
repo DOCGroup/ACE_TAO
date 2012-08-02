@@ -1,12 +1,10 @@
 // $Id$
 
-project(CIAO_OpenDDS_Dcps_idl_gen): dcps_optional_features, \
-                               dcps_ts_defaults, dds_suppress_any_support, \
-                               gen_ostream, ccm_lem_stub, ciaoidldefaults, \
+project(CIAO_OpenDDS_Dcps_idl_gen): gen_ostream, ccm_lem_stub, ciaoidldefaults, \
                                taobaseidldefaults, ccm_lw, ccm_noevent, ccm_direct_collocation {
   requires   += dds4ccm_opendds
   custom_only = 1
-  idlflags += -SS -Sci -Scc -Sch -Ssh \
+  idlflags += -SS -Sci -Scc -Sch -Ssh -Ssc \
               -I$(DDS_ROOT) \
               -Glem -Gsv -Ssvntt -Ssvntc
 
@@ -20,7 +18,7 @@ project(CIAO_OpenDDS_Dcps_idl_gen): dcps_optional_features, \
   }
 }
 
-project (CIAO_OpenDDS_Dcps_lem_gen) : taoidldefaults, dcps_optional_features, install, \
+project (CIAO_OpenDDS_Dcps_lem_gen) : taoidldefaults, install, \
     ciaoidldefaults, taobaseidldefaults, ccm_lw, ccm_noevent, ccm_direct_collocation{
   custom_only = 1
   requires   += dds4ccm_opendds
@@ -50,8 +48,8 @@ project (CIAO_OpenDDS_Dcps_lem_gen) : taoidldefaults, dcps_optional_features, in
   }
 }
 
-project (CIAO_OpenDDS_Dcps_lem_stub) : dcps, taolib, valuetype, \
-                                  dcps_optional_features, gen_ostream, install, \
+project (CIAO_OpenDDS_Dcps_lem_stub) : taolib, valuetype, \
+                                  gen_ostream, install, \
                                   ccm_lem_stub, ciaoidldefaults, taobaseidldefaults, ccm_lw, ccm_noevent, ccm_direct_collocation {
   requires   += dds4ccm_opendds
   after += CIAO_OpenDDS_Dcps_lem_gen CCM_stub_idl CCM_session_idl
