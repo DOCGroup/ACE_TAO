@@ -17,14 +17,25 @@ project: build_files {
     command              = $(TAO_IDL)
     libpath              = $(ACE_ROOT)/lib
     inputext             = .idl
-    source_pre_extension = C
-    source_outputext     = .cpp, .cxx, .cc, .C
-    header_outputext     = .h, .hpp, .hxx, .hh
     keyword idlflags     = commandflags
+
+    optional(header_outputext) {
+      commandflags(!-Sch) += .h, .hpp, .hxx, .hh
+    }
+    optional(header_outputext) {
+      commandflags(!-Ssh) += .h, .hpp, .hxx, .hh
+    }
+
+    optional(header_pre_extension) {
+      commandflags(!-Sch) += C
+    }
+    optional(source_pre_extension) {
+      commandflags(!-Scc) += C
+    }
 
     // Inline related options
     optional(inline_outputext) {
-      commandflags(!-SS || !-Sci || -GT && !-SS && !-oS) += .inl, .i
+      commandflags(!-Sci) += .inl, .i
     }
     optional(inline_pre_extension) {
       commandflags(!-Sci) += C
@@ -38,13 +49,16 @@ project: build_files {
       commandflags(-GA && !-oA) += A
     }
     optional(header_outputext) {
-      commandflags(-SS && !-oS) += S
+      commandflags(-SS && !-oS && !-Ssh) += S
     }
     optional(header_pre_extension) {
       commandflags(!-oS && !-Ssh) += S
     }
-    optional(header_pre_extension) {
-      commandflags(!-Sch) += C
+    optional(source_outputext) {
+      commandflags(!-Scc) += .cpp, .cxx, .cc, .C
+    }
+    optional(source_outputext) {
+      commandflags(!-SS) += .cpp, .cxx, .cc, .C
     }
 
     // Other
