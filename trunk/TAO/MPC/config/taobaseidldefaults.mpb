@@ -17,22 +17,20 @@ project: build_files {
     command              = $(TAO_IDL)
     libpath              = $(ACE_ROOT)/lib
     inputext             = .idl
+    source_pre_extension = C
     source_outputext     = .cpp, .cxx, .cc, .C
     header_outputext     = .h, .hpp, .hxx, .hh
     keyword idlflags     = commandflags
 
     // Inline related options
     optional(inline_outputext) {
-      commandflags(!-SS && !-Ssi || !-Sci || -GT && !-SS && !-oS) += .inl, .i
+      commandflags(!-SS || !-Sci || -GT && !-SS && !-oS) += .inl, .i
     }
     optional(inline_pre_extension) {
       commandflags(!-Sci) += C
     }
 
     // Source related options
-    optional(source_pre_extension) {
-      commandflags(!-Ssc) += C
-    }
     optional(source_pre_extension) {
       commandflags(!-SS && !-oS) += S
     }
@@ -43,7 +41,7 @@ project: build_files {
       commandflags(-SS && !-oS) += S
     }
     optional(header_pre_extension) {
-      commandflags(!-oS) += S
+      commandflags(!-oS && !-Ssh) += S
     }
     optional(header_pre_extension) {
       commandflags(!-Sch) += C
