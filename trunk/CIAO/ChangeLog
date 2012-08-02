@@ -1,3 +1,8 @@
+Thu Aug  2 18:01:01 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/idl/OpenDDS/opendds_lem_stub.mpc:
+          Fixed mpc problems when opendds is not available
+
 Thu Aug  2 13:59:22 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/dds4ccm.mpb:
