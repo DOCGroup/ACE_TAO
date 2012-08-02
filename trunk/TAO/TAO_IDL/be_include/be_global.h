@@ -828,9 +828,17 @@ public:
   bool gen_client_stub (void) const;
   void gen_client_stub (bool val);
 
+  /// Accessors for the member gen_client_header_.
+  bool gen_client_header (void) const;
+  void gen_client_header (bool val);
+
   /// Accessors for the member gen_server_skeleton_.
   bool gen_server_skeleton (void) const;
   void gen_server_skeleton (bool val);
+
+  /// Accessors for the member gen_server_header_.
+  bool gen_server_header (void) const;
+  void gen_server_header (bool val);
 
   /// Accessors for the member gen_local_iface_anyops_.
   bool gen_local_iface_anyops (void) const;
@@ -1199,8 +1207,16 @@ private:
   bool gen_client_stub_;
 
   /// True by default, but a command line option can turn this off so
+  /// that we don't generate a client header file
+  bool gen_client_header_;
+
+  /// True by default, but a command line option can turn this off so
   /// that we don't generate a server skeleton file
   bool gen_server_skeleton_;
+
+  /// True by default, but a command line option can turn this off so
+  /// that we don't generate a server header file
+  bool gen_server_header_;
 
   /// True by default, can be turned off by a command line option
   /// for regenerating internal ORB files.

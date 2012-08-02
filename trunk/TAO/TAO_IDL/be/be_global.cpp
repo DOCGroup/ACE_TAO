@@ -130,7 +130,9 @@ BE_GlobalData::BE_GlobalData (void)
     gen_svnt_t_files_ (true),
     gen_client_inline_ (true),
     gen_client_stub_ (true),
+    gen_client_header_ (true),
     gen_server_skeleton_ (true),
+    gen_server_header_ (true),
     gen_local_iface_anyops_ (true),
     use_clonable_in_args_ (false),
     gen_template_export_ (false),
@@ -2417,6 +2419,18 @@ BE_GlobalData::gen_client_stub (bool val)
 }
 
 bool
+BE_GlobalData::gen_client_header (void) const
+{
+  return this->gen_client_header_;
+}
+
+void
+BE_GlobalData::gen_client_header (bool val)
+{
+  this->gen_client_header_ = val;
+}
+
+bool
 BE_GlobalData::gen_server_skeleton (void) const
 {
   return this->gen_server_skeleton_;
@@ -2426,6 +2440,18 @@ void
 BE_GlobalData::gen_server_skeleton (bool val)
 {
   this->gen_server_skeleton_ = val;
+}
+
+bool
+BE_GlobalData::gen_server_header (void) const
+{
+  return this->gen_server_header_;
+}
+
+void
+BE_GlobalData::gen_server_header (bool val)
+{
+  this->gen_server_header_ = val;
 }
 
 bool
@@ -3526,6 +3552,11 @@ BE_GlobalData::parse_args (long &i, char **av)
                 // No stub
                 be_global->gen_client_stub (false);
               }
+            else if (av[i][3] == 'h')
+              {
+                // No stub
+                be_global->gen_client_header (false);
+              }
             else if (av[i][3] == 'd' && av[i][4] == 'r')
               {
                 // No cdr support.
@@ -3568,6 +3599,11 @@ BE_GlobalData::parse_args (long &i, char **av)
               {
                 // No skeleton inline.
                 be_global->gen_server_skeleton (false);
+              }
+            else if (av[i][3] == 'h')
+              {
+                // No skeleton inline.
+                be_global->gen_server_header (false);
               }
             else
               {
