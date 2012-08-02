@@ -7,24 +7,19 @@ feature(dds4ccm_opendds) : taoidldefaults, dcps_rtps, dcps_qos_xml_handler {
   idlflags += -DCIAO_DDS4CCM_OPENDDS=1 \
               -Wb,dds_impl=opendds \
               -I $(CIAO_ROOT)/connectors \
-              -I $(CIAO_ROOT)/connectors/dds4ccm/idl
+              -I $(CIAO_ROOT)/connectors/dds4ccm/idl \
+              -I $(CIAO_ROOT)/connectors/dds4ccm/idl/OpenDDS \
+              -I $(DDS_ROOT)/dds
   includes += $(CIAO_ROOT)/connectors/dds4ccm/idl \
-              $(CIAO_ROOT)/connectors
-}
-
-feature(dds4ccm_coredx) : taoidldefaults, taolib {
-  macros += CIAO_DDS4CCM_COREDX=1
-  idlflags += -DCIAO_DDS4CCM_COREDX=1 \
-              -Wb,dds_impl=coredx \
-              -I $(CIAO_ROOT)/connectors \
-              -I $(CIAO_ROOT)/connectors/dds4ccm/idl
-  includes += $(CIAO_ROOT)/connectors/dds4ccm/idl \
-              $(CIAO_ROOT)/connectors
+              $(CIAO_ROOT)/connectors \
+              $(CIAO_ROOT)/connectors/dds4ccm/idl/OpenDDS \
+              $(DDS_ROOT)/dds \
+              $(DDS_ROOT)
 }
 
 feature(dds4ccm_ndds) : ndds_idltocpp_stub {
 }
 
-feature(!dds4ccm_opendds, !dds4ccm_ndds, !dds4ccm_coredx) {
+feature(!dds4ccm_opendds, !dds4ccm_ndds) {
   requires += dummy_label
 }
