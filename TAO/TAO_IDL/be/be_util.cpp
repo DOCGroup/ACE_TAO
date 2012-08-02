@@ -860,6 +860,21 @@ be_util::usage (void)
     ));
   ACE_DEBUG ((
       LM_DEBUG,
+      ACE_TEXT (" -Sch\t\t\tsuppress generating client header file")
+      ACE_TEXT (" (disabled by default)\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Scc\t\t\tsuppress generating client source file")
+      ACE_TEXT (" (disabled by default)\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Ssh\t\t\tsuppress generating skeleton header")
+      ACE_TEXT (" (disabled by default)\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
       ACE_TEXT (" -Sorb\t\t\tsuppress generating include of ORB.h")
       ACE_TEXT (" (disabled by default)\n")
     ));
