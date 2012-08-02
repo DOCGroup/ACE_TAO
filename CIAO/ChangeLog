@@ -1,3 +1,8 @@
+Thu Aug  2 09:52:00 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/dds4ccm_opendds_lem_stub.mpb:
+          New file for dds4ccm with opendds
+
 Thu Aug  2 09:34:14 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/idl/OpenDDS/opendds_lem_stub.mpc:
