@@ -2,7 +2,7 @@
 // $Id$
 
 feature(dds4ccm_opendds) : taoidldefaults, dcps_rtps, dcps_qos_xml_handler {
-  after += DdsDcps_lem_gen
+  after += CIAO_OpenDDS_Dcps_lem_gen
   macros += CIAO_DDS4CCM_OPENDDS=1
   idlflags += -DCIAO_DDS4CCM_OPENDDS=1 \
               -Wb,dds_impl=opendds \

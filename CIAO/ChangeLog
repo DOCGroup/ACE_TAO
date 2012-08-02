@@ -1,3 +1,9 @@
+Thu Aug  2 13:59:22 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/dds4ccm.mpb:
+        * connectors/dds4ccm/idl/dds4ccm_lem_stub.mpc:
+          Updated after statements
+
 Thu Aug  2 12:04:57 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/idl/OpenDDS/opendds_lem_stub.mpc:
