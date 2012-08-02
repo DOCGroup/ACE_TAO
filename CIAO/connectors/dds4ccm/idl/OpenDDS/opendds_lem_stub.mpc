@@ -11,11 +11,12 @@ project(CIAO_OpenDDS_Dcps_idl_gen): dcps_optional_features, \
               -Glem -Gsv -Ssvntt -Ssvntc
 
   IDL_Files {
-    $(DDS_ROOT)/dds/DdsDcpsInfrastructure.idl
-    $(DDS_ROOT)/dds/DdsDcpsDomain.idl
-    $(DDS_ROOT)/dds/DdsDcpsPublication.idl
-    $(DDS_ROOT)/dds/DdsDcpsSubscription.idl
-    $(DDS_ROOT)/dds/DdsDcpsTopic.idl
+    gendir = .
+    $(DDS_ROOT)/dds/DdsDcpsInfrastructure.idl >> DdsDcpsInfrastructureE.idl DdsDcpsInfrastructure_svnt.h
+    $(DDS_ROOT)/dds/DdsDcpsDomain.idl >> DdsDcpsDomainE.idl DdsDcpsDomain_svnt.h
+    $(DDS_ROOT)/dds/DdsDcpsPublication.idl >> DdsDcpsPublicationE.idl DdsDcpsPublication_svnt.h
+    $(DDS_ROOT)/dds/DdsDcpsSubscription.idl >> DdsDcpsSubscriptionE.idl DdsDcpsSubscription_svnt.h
+    $(DDS_ROOT)/dds/DdsDcpsTopic.idl >> DdsDcpsTopicE.idl DdsDcpsTopic_svnt.h
   }
 }
 
