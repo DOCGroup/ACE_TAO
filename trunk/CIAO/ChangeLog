@@ -1,3 +1,17 @@
+Thu Aug  2 09:29:22 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/idl/OpenDDS:
+        * connectors/dds4ccm/idl/OpenDDS/opendds_lem_stub.mpc:
+          Generate the lem for OpenDDS as part of ciao
+
+        * MPC/config/dds4ccm.mpb:
+        * MPC/config/dds4ccm_base.mpb:
+        * MPC/config/dds4ccm_impl.mpb:
+          Updated base projects and includes for OpenDDS
+
+        * connectors/dds4ccm/idl/dds_rtf2_dcps.idl:
+          Updated include for opendds
+
 Tue Jul 31 13:01:24 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/DomainParticipantManager.cpp:

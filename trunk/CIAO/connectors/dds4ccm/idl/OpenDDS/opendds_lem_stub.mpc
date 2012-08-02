@@ -1,0 +1,94 @@
+// $Id$
+
+project(OpenDDS_Dcps_idl_gen): dcps_optional_features, \
+                               dcps_ts_defaults, dds_suppress_any_support, \
+                               gen_ostream, ccm_lem_stub, ciaoidldefaults, \
+                               taobaseidldefaults, ccm_lw, ccm_noevent, ccm_direct_collocation {
+  requires   += dds4ccm_opendds
+  custom_only = 1
+  idlflags += -SS -Sci -Scc -Sch -Ssh \
+              -I$(DDS_ROOT) \
+              -Glem -Gsv -Ssvntt -Ssvntc
+
+  IDL_Files {
+    $(DDS_ROOT)/dds/DdsDcpsInfrastructure.idl
+    $(DDS_ROOT)/dds/DdsDcpsDomain.idl
+    $(DDS_ROOT)/dds/DdsDcpsPublication.idl
+    $(DDS_ROOT)/dds/DdsDcpsSubscription.idl
+    $(DDS_ROOT)/dds/DdsDcpsTopic.idl
+  }
+}
+
+project (OpenDDS_Dcps_lem_gen) : taoidldefaults, dcps_optional_features, install, \
+    ciaoidldefaults, taobaseidldefaults, ccm_lw, ccm_noevent, ccm_direct_collocation{
+  custom_only = 1
+  requires   += dds4ccm_opendds
+  after      += OpenDDS_Dcps_idl_gen
+  idlflags   += -I$(CIAO_ROOT)/connectors\
+                -Wb,stub_export_macro=DDSDCPS_LEM_STUB_Export \
+                -Wb,stub_export_include=DdsDcps_lem_stub_export.h \
+                -SS -I$(DDS_ROOT) -Ssvntt -Ssvntc -I$(DDS_ROOT)/dds -Sci
+
+  IDL_Files {
+     idlflags += -Gxhst
+     DdsDcpsDomainE.idl
+  }
+
+  IDL_Files {
+    // DDS specification defined
+    DdsDcpsInfrastructureE.idl
+    DdsDcpsPublicationE.idl
+    DdsDcpsSubscriptionE.idl
+    DdsDcpsTopicE.idl
+  }
+
+  Source_Files {
+  }
+
+  Header_Files {
+  }
+}
+
+project (OpenDDS_Dcps_lem_stub) : dcps, taolib, valuetype, \
+                                  dcps_optional_features, gen_ostream, install, \
+                                  ccm_lem_stub, ciaoidldefaults, taobaseidldefaults, ccm_lw, ccm_noevent, ccm_direct_collocation {
+  requires   += dds4ccm_opendds
+  after += OpenDDS_Dcps_lem_gen CCM_stub_idl CCM_session_idl
+  includes += $(CIAO_ROOT)/connectors $(CIAO_ROOT) $(DDS_ROOT) $(DDS_ROOT)/dds
+  sharedname = OpenDDS_Dcps_lem_stub
+  dynamicflags += DDSDCPS_LEM_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    DdsDcpsDomainEC.cpp
+    DdsDcpsInfrastructureEC.cpp
+    DdsDcpsPublicationEC.cpp
+    DdsDcpsSubscriptionEC.cpp
+    DdsDcpsTopicEC.cpp
+  }
+
+  Header_Files {
+    DdsDcpsDomainEC.h
+    DdsDcpsInfrastructureEC.h
+    DdsDcpsPublicationEC.h
+    DdsDcpsSubscriptionEC.h
+    DdsDcpsTopicEC.h
+    DdsDcps_lem_stub_export.h
+    DdsDcpsDomain_svnt.h
+    DdsDcpsPublication_svnt.h
+    DdsDcpsSubscription_svnt.h
+    DdsDcpsTopic_svnt.h
+    DdsDcpsInfrastructure_svnt.h
+  }
+
+  Inline_Files {
+    DdsDcpsDomainEC.inl
+    DdsDcpsInfrastructureEC.inl
+    DdsDcpsPublicationEC.inl
+    DdsDcpsSubscriptionEC.inl
+    DdsDcpsTopicEC.inl
+  }
+}
+

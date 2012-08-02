@@ -7,7 +7,7 @@
 # include "dds/DdsDcps.idl"
 #endif
 
-#if (CIAO_DDS4CCM_NDDS==1) || (CIAO_DDS4CCM_COREDX == 1)
+#if (CIAO_DDS4CCM_NDDS==1)
 # include "connectors/dds4ccm/idl/ndds/ndds_dcps.idl"
 #endif
 

@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-feature(dds4ccm_opendds) : dds4ccm_stub, ciao_connector_base, dcps_qos_xml_handler, dcps_rtps, dcps_lem_stub {
+feature(dds4ccm_opendds) : dds4ccm_stub, ciao_connector_base, dcps_qos_xml_handler, dcps_rtps, dds4ccm_opendds_lem_stub {
   after += DDS4CCM_lem_gen
 }
 
