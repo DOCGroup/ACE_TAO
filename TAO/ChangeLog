@@ -1,3 +1,9 @@
+Thu Aug  2 17:55:12 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/taobaseidldefaults.mpb:
+          More improvements to file handling, thanks to Adam Mitz for testing
+          more cases
+
 Thu Aug  2 12:28:04 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/taobaseidldefaults.mpb:
