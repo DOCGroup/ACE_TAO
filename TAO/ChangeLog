@@ -1,3 +1,14 @@
+Thu Aug  2 09:20:20 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/taobaseidldefaults.mpb:
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be/be_produce.cpp:
+        * TAO_IDL/be/be_util.cpp:
+        * TAO_IDL/be_include/be_global.h:
+        * docs/compiler.html:
+          Added -Sch to disable stub header generation, -Ssh to disable
+          servant header
+
 Wed Aug  1 07:07:33 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
