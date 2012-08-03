@@ -20,10 +20,7 @@ project: build_files {
     keyword idlflags     = commandflags
 
     optional(header_outputext) {
-      commandflags(!-Sch) += .h, .hpp, .hxx, .hh
-    }
-    optional(header_outputext) {
-      commandflags(!-Ssh) += .h, .hpp, .hxx, .hh
+      commandflags(!-Sch && !-Ssh) += .h, .hpp, .hxx, .hh
     }
 
     optional(header_pre_extension) {
@@ -55,10 +52,7 @@ project: build_files {
       commandflags(!-oS && !-Ssh) += S
     }
     optional(source_outputext) {
-      commandflags(!-Scc) += .cpp, .cxx, .cc, .C
-    }
-    optional(source_outputext) {
-      commandflags(!-SS) += .cpp, .cxx, .cc, .C
+      commandflags(!-Scc && !-SS) += .cpp, .cxx, .cc, .C
     }
 
     // Other
