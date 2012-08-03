@@ -52,7 +52,7 @@ project: build_files {
       commandflags(!-oS && !-Ssh) += S
     }
     optional(source_outputext) {
-      commandflags(!-Scc && !-SS) += .cpp, .cxx, .cc, .C
+      commandflags(!-Scc && !-Ssc) += .cpp, .cxx, .cc, .C
     }
 
     // Other
