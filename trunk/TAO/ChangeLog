@@ -1,3 +1,8 @@
+Fri Aug  3 07:41:33 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/taobaseidldefaults.mpb:
+          Another set of fixes, this file is getting way too complex
+
 Fri Aug  3 07:03:59 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/taobaseidldefaults.mpb:
