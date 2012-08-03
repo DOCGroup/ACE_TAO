@@ -26,7 +26,7 @@ project (CIAO_OpenDDS_Dcps_lem_gen) : taoidldefaults, install, \
   idlflags   += -I$(CIAO_ROOT)/connectors\
                 -Wb,stub_export_macro=DDSDCPS_LEM_STUB_Export \
                 -Wb,stub_export_include=DdsDcps_lem_stub_export.h \
-                -SS -I$(DDS_ROOT) -Ssvntt -Ssvntc -I$(DDS_ROOT)/dds -Sci
+                -Ssc -I$(DDS_ROOT) -Ssvntt -Ssvntc -I$(DDS_ROOT)/dds -Sci
 
   IDL_Files {
      idlflags += -Gxhst
