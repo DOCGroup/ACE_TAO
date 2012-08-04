@@ -16,6 +16,10 @@ project(CIAO_OpenDDS_Dcps_idl_gen): gen_ostream, ccm_lem_stub, ciaoidldefaults, 
     $(DDS_ROOT)/dds/DdsDcpsSubscription.idl >> DdsDcpsSubscriptionE.idl DdsDcpsSubscription_svnt.h
     $(DDS_ROOT)/dds/DdsDcpsTopic.idl >> DdsDcpsTopicE.idl DdsDcpsTopic_svnt.h
   }
+
+  specific {
+     install_dir = connectors/dds4ccm/idl/OpenDDS
+  }
 }
 
 project (CIAO_OpenDDS_Dcps_lem_gen) : taoidldefaults, install, \
@@ -45,6 +49,13 @@ project (CIAO_OpenDDS_Dcps_lem_gen) : taoidldefaults, install, \
   }
 
   Header_Files {
+  }
+
+  Inline_Files {
+  }
+
+  specific {
+     install_dir = connectors/dds4ccm/idl/OpenDDS
   }
 }
 
@@ -83,11 +94,10 @@ project (CIAO_OpenDDS_Dcps_lem_stub) : taolib, valuetype, \
   }
 
   Inline_Files {
-    DdsDcpsDomainEC.inl
-    DdsDcpsInfrastructureEC.inl
-    DdsDcpsPublicationEC.inl
-    DdsDcpsSubscriptionEC.inl
-    DdsDcpsTopicEC.inl
+  }
+
+  specific {
+     install_dir = connectors/dds4ccm/idl/OpenDDS
   }
 }
 
