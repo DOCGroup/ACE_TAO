@@ -1,3 +1,9 @@
+Mon Aug  6 18:22:22 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/dds4ccm.mpb:
+        * connectors/dds4ccm/idl/OpenDDS/opendds_lem_stub.mpc:
+          Install fixes and corrected library name
+
 Mon Aug  6 06:43:33 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/dds4ccm_opendds_lem_stub.mpb:
