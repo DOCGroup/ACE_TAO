@@ -1,3 +1,10 @@
+Mon Aug  6 20:54:17 UTC 2012  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/PerlACE/TestTarget.pm:
+
+          Updated fix from Fri Jul 20 17:37:27 UTC 2012 to work when
+          one of source or destination is a relative path and other is not.
+
 Sat Jul 28 19:22:06 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/make_release.py:
