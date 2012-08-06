@@ -2,6 +2,6 @@
 // $Id$
 
 project : dds4ccm_stub, ccm_session_stub {
-  libs += OpenDDS_Dcps_lem_stub
+  libs += CIAO_OpenDDS_Dcps_lem_stub
   after += CIAO_OpenDDS_Dcps_lem_stub
 }
