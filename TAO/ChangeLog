@@ -1,3 +1,8 @@
+Mon Aug  6 07:57:41 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/taobaseidldefaults.mpb:
+          There is no S.inl file anymore, so cleaned up some rules
+
 Fri Aug  3 08:17:55 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/taobaseidldefaults.mpb:

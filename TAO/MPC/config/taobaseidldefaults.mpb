@@ -32,7 +32,7 @@ project: build_files {
 
     // Inline related options
     optional(inline_outputext) {
-      commandflags(!-SS || !-Sci || -GT && !-SS && !-oS) += .inl, .i
+      commandflags(!-Sci) += .inl, .i
     }
     optional(inline_pre_extension) {
       commandflags(!-Sci) += C
