@@ -10,6 +10,7 @@ use strict;
 use English;
 use POSIX qw(:time_h);
 use File::Copy;
+use File::Spec;
 use PerlACE::Run_Test;
 use Sys::Hostname;
 
@@ -408,7 +409,8 @@ sub PutFile ($)
     my $self = shift;
     my $src = shift;
     my $dest = $self->LocalFile ($src);
-    if ($src ne $dest) {
+    if (($src ne $dest) &&
+        (File::Spec->rel2abs($src) ne File::Spec->rel2abs($dest))) {
         copy ($src, $dest);
     }
     return 0;
