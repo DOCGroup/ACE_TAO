@@ -9,6 +9,7 @@ feature(dds4ccm_opendds) : taoidldefaults, dcps_rtps, dcps_qos_xml_handler {
               -I $(CIAO_ROOT)/connectors \
               -I $(CIAO_ROOT)/connectors/dds4ccm/idl \
               -I $(CIAO_ROOT)/connectors/dds4ccm/idl/OpenDDS \
+              -I $(DDS_ROOT) \
               -I $(DDS_ROOT)/dds
   includes += $(CIAO_ROOT)/connectors/dds4ccm/idl \
               $(CIAO_ROOT)/connectors \
