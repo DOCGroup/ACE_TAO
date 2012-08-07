@@ -1,3 +1,8 @@
+Tue Aug  7 08:01:29 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/idl/OpenDDS/opendds_lem_stub.mpc:
+          Added missing base to get the library installed
+
 Mon Aug  6 18:22:22 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/dds4ccm.mpb:
