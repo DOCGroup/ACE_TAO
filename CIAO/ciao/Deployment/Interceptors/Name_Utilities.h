@@ -1,7 +1,7 @@
 /**
  * @file Name_Utilities.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
- *  // $Id$
+ * $Id$
  * A set of utility methods to manages references.
  *
  */
