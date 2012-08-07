@@ -11,9 +11,6 @@
 #include "tao/AnyTypeCode/Struct_TypeCode_Static.h"
 #include "tao/AnyTypeCode/TypeCode_Struct_Field.h"
 
-
-
-
 namespace CIAO
 {
 
@@ -352,7 +349,7 @@ namespace CIAO
     if (CORBA::is_nil (cont))
       {
         CIAO_ERROR (1, (LM_ERROR, CLINFO
-                        "Component_Handler_i::instance_configured - "
+                        "Component_Handler_i::activate_instance - "
                         "Object reference for container of instance <%C> is nil!\n",
                         plan.instance[instanceRef].name.in ()));
         throw ::Deployment::StartError (plan.instance[instanceRef].name.in (),
@@ -362,7 +359,7 @@ namespace CIAO
     if (CORBA::is_nil (comp))
       {
         CIAO_ERROR (1, (LM_ERROR, CLINFO
-                        "Component_Handler_i::instance_configured - "
+                        "Component_Handler_i::activate_instance - "
                         "Object reference for instance <%C> is nil!\n",
                         plan.instance[instanceRef].name.in ()));
         throw ::Deployment::StartError (plan.instance[instanceRef].name.in (),
@@ -415,7 +412,7 @@ namespace CIAO
     if (CORBA::is_nil (cont))
       {
         CIAO_ERROR (1, (LM_ERROR, CLINFO
-                        "Component_Handler_i::instance_configured - "
+                        "Component_Handler_i::passivate_instance - "
                         "Object reference for container of instance <%C> is nil!\n",
                         plan.instance[instanceRef].name.in ()));
         throw ::Deployment::StopError (plan.instance[instanceRef].name.in (),
@@ -425,7 +422,7 @@ namespace CIAO
     if (CORBA::is_nil (comp))
       {
         CIAO_ERROR (1, (LM_ERROR, CLINFO
-                        "Component_Handler_i::instance_configured - "
+                        "Component_Handler_i::passivate_instance - "
                         "Object reference for instance <%C> is nil!\n",
                         plan.instance[instanceRef].name.in ()));
         throw ::Deployment::StopError (plan.instance[instanceRef].name.in (),
@@ -640,13 +637,11 @@ namespace CIAO
                                         "Unknown C++ exception");
 
       }
-
   }
 
   void
   Component_Handler_i::configure (const ::Deployment::Properties & )
   {
-
   }
 }
 
