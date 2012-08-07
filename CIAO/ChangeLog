@@ -1,3 +1,9 @@
+Tue Aug  7 12:47:24 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Deployment/Handlers/CIAO_Handler_Common.cpp:
+        * ciao/Deployment/Handlers/Connection_Handler.cpp:
+          Fixed incorrect debug statements
+
 Tue Aug  7 12:37:45 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Deployment/Handlers/Component_Handler.cpp:

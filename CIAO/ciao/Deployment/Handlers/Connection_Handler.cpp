@@ -322,7 +322,7 @@ namespace CIAO
         // pass through
         throw;
       }
-    // Since DANCE shuts down the Locality managers simultaniously,
+    // Since DANCE shuts down the Locality managers simultaneously,
     // it could be that one locality manager is shutdown while the
     // other wants to disconnect from this locality manager. Therefor
     // we catch an OBJECT_NOT_EXIST, TRANSIENT and a COMM_FAILURE at this point
