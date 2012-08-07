@@ -32,7 +32,7 @@ namespace CIAO
             else
               {
                 CIAO_ERROR (1, (LM_ERROR, CLINFO
-                                "Component_Handler_i::get_implementation - "
+                                "Deployment_Common::get_implementation - "
                                 "No valid location for artifact <%C>\n",
                                 name));
                 throw ::Deployment::PlanError (name,
@@ -42,7 +42,7 @@ namespace CIAO
       }
 
     CIAO_ERROR (1, (LM_ERROR, CLINFO
-                    "Component_Handler_i::get_implementation - "
+                    "Deployment_Common::get_implementation - "
                     "Unable to locate artifact <%C>\n",
                     name));
 
