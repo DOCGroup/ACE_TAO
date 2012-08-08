@@ -14,6 +14,8 @@
 # define ACE_VXWORKS 0x690
 #endif /* ! ACE_VXWORKS */
 
+#define ACE_HAS_SSIZE_T
+
 #include "ace/config-vxworks6.8.h"
 
 #ifndef ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
