@@ -341,8 +341,11 @@
 // According to man pages Linux uses different (compared to UNIX systems) types
 // for setting IP_MULTICAST_TTL and IPV6_MULTICAST_LOOP / IP_MULTICAST_LOOP
 // in setsockopt/getsockopt.
+// In the current (circa 2012) kernel source however there is an explicit check
+// for IPV6_MULTICAST_LOOP being sizeof(int). Anything else is rejected so it must
+// not be a passed a bool, irrespective of what the man pages (still) say.
+// i.e. #define ACE_HAS_IPV6_MULTICAST_LOOP_AS_BOOL 1 is wrong
 #define ACE_HAS_IP_MULTICAST_TTL_AS_INT 1
-#define ACE_HAS_IPV6_MULTICAST_LOOP_AS_BOOL 1
 #define ACE_HAS_IP_MULTICAST_LOOP_AS_INT 1
 
 #if defined (ACE_LACKS_NETWORKING)
