@@ -108,6 +108,10 @@ public:
                 int n,
                 const ACE_Addr &addr,
                 int flags = 0) const;
+
+  /// Set this to listen on all interfaces
+  void listen_on_all(bool value);
+
   // UIPMC Additions - End
 
 protected:
@@ -119,6 +123,9 @@ protected:
 
   // This is always the local address for the connector
   ACE_INET_Addr local_addr_;
+
+  // Should we listen on all interfaces
+  bool listen_on_all_;
 
   // UIPMC Additions - End
 

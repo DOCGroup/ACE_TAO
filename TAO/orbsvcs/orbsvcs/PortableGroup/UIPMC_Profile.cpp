@@ -162,6 +162,10 @@ TAO_UIPMC_Profile::decode_profile (TAO_InputCDR& cdr)
       // and port with the new data.
       ACE_INET_Addr addr (port, address.c_str ());
       this->endpoint_.object_addr (addr);
+      if (this->orb_core ()->orb_params ()->preferred_interfaces ())
+        {
+          this->endpoint_.preferred_interfaces (this->orb_core ());
+        }
       return 1;
     }
 
@@ -351,12 +355,20 @@ TAO_UIPMC_Profile::parse_string_i (const char *string)
   // Parse the group multicast address.
   // The multicast address is terminated by a ':'.
   string = pos + 1;
-  pos = ACE_OS::strchr (string, ':');
+  pos = ACE_OS::strrchr (string, ':');
 
   if (pos == 0)
     {
       // The multicast address is mandatory, so throw an exception,
       // since it wasn't found.
+      if (TAO_debug_level > 0)
+        {
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("TAO (%P|%t) - UIPMC_Profile: ")
+                        ACE_TEXT ("Invalid ref: can't find multicast address in %s\n"),
+                        string
+                       ));
+        }
       throw CORBA::INV_OBJREF (
         CORBA::SystemException::_tao_minor_code (
           TAO::VMCID,
@@ -470,6 +482,11 @@ TAO_UIPMC_Profile::parse_string_i (const char *string)
   this->set_group_info (group_domain_id.c_str (),
                         group_id,
                         ref_version);
+
+  if (this->orb_core ()->orb_params ()->preferred_interfaces ())
+    {
+      this->endpoint_.preferred_interfaces (this->orb_core ());
+    }
 }
 
 CORBA::Boolean

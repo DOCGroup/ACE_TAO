@@ -283,8 +283,10 @@ TAO_UIPMC_Transport<CONNECTION_HANDLER>::send (iovec *iov, int iovcnt,
             {
               ACE_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("\n\nTAO (%P|%t) - ")
-                          ACE_TEXT ("UIPMC_Transport::send")
+                          ACE_TEXT ("UIPMC_Transport::send to %C (port %u)")
                           ACE_TEXT (" %p\n\n"),
+                          addr.get_host_addr (),
+                          addr.get_port_number (),
                           ACE_TEXT ("Error returned from transport:")));
             }
 

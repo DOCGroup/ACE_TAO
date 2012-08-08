@@ -13,7 +13,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_UIPMC_Protocol_Factory::TAO_UIPMC_Protocol_Factory (void)
   :  TAO_Protocol_Factory (IOP::TAG_UIPMC),
      major_ (TAO_DEF_GIOP_MAJOR),
-     minor_ (TAO_DEF_GIOP_MINOR)
+     minor_ (TAO_DEF_GIOP_MINOR),
+     listen_on_all_(false)
 {
 }
 
@@ -46,16 +47,38 @@ TAO_UIPMC_Protocol_Factory::make_acceptor (void)
   TAO_Acceptor *acceptor = 0;
 
   ACE_NEW_RETURN (acceptor,
-                  TAO_UIPMC_Acceptor,
+                  TAO_UIPMC_Acceptor(this->listen_on_all_),
                   0);
 
   return acceptor;
 }
 
 int
-TAO_UIPMC_Protocol_Factory::init (int /* argc */,
-                                  ACE_TCHAR* /* argv */ [])
+TAO_UIPMC_Protocol_Factory::init (int argc,
+                                  ACE_TCHAR* argv [])
 {
+  for (int curarg = 0; curarg < argc; ++curarg)
+    {
+      // This option lets you override the default
+      if (ACE_OS::strcasecmp (argv[curarg],
+                              ACE_TEXT ("-ORBListenOnAll")) == 0)
+        {
+          ++curarg;
+          if (curarg < argc)
+            {
+              if (curarg < argc)
+                this->listen_on_all_ = (bool) ACE_OS::atoi (argv[curarg]);
+            }
+        }
+      else
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("TAO_UIPMC_Protocol_Factory::init - ")
+                      ACE_TEXT ("ignoring unknown option <%s>\n"),
+                      argv[curarg]));
+        }
+    }
+
   return 0;
 }
 

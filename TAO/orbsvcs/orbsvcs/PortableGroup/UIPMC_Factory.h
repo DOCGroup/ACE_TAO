@@ -60,6 +60,9 @@ private:
   /// compatibility with old clients.
   int major_;
   int minor_;
+  /// Should we override the default behaviour (whatever it is) to listen on
+  /// all interfaces
+  bool listen_on_all_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

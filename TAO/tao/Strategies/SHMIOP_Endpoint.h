@@ -131,7 +131,7 @@ private:
   /// Flag to indicate if the address has been resolved and set.
   int object_addr_set_;
 
-  /// SHMIOP Endpoints can be stringed into a list.  Return the next
+  /// SHMIOP Endpoints can be strung into a list.  Return the next
   /// endpoint in the list, if any.
   TAO_SHMIOP_Endpoint *next_;
 };

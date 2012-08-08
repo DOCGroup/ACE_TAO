@@ -87,7 +87,7 @@ private:
   /// UUID uniquely identifying this COIOP endpoint
   mutable ACE_Utils::UUID uuid_;
 
-  /// COIOP Endpoints can be stringed into a list.  Return the next
+  /// COIOP Endpoints can be strung into a list.  Return the next
   /// endpoint in the list, if any.
   TAO_COIOP_Endpoint *next_;
 };

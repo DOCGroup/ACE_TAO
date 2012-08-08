@@ -1,3 +1,87 @@
+Wed Aug  8 15:20:00 UTC 2012  Simon Massey  <sma at prismtech dot com>
+
+        * NEWS:
+        * tao/String_Alloc.cpp:
+
+          Enhanced CORBA::string_dup() and CORBA::string_free() to use
+          non-allocated and shared static null strings, this allows for
+          optimized default null string initialization in CORBA string
+          members and a reduction in dynamic memory management required
+          for such. This enhancement can be removed by including
+          #define TAO_NO_SHARED_NULL_CORBA_STRING in the config.h
+          NOTE that it is a (CORBA spec) requirement that all
+          CORBA::strings are deleted via the CORBA::string_free()
+          (and allocated via CORBA::string_dup() or CORBA::string_alloc()
+          calls); you must not use the c++ keywords new and delete[]
+          directly. Previously it was possiable to ignore this requirement,
+          however if you do so now, the enhancement for null strings will
+          catch you out, as deleting these null CORBA::strings will cause
+          corrupt heap and/or segfaults.
+
+        for Simon McQueen  <sm at prismtech dot com>
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Acceptor.h:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Acceptor.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Endpoint.h:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Endpoint.inl:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Endpoint.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Factory.h:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Factory.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Mcast_Connection_Handler.h:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Mcast_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp:
+
+          Add support for -ORBPreferredInterfaces option to UIPMC. The form follows
+          the same pattern as IIOP for IPv4 i.e. a local interface IP address should
+          be specified as the mapping. e.g. -ORBPreferredInterfaces 225.*=192.168.0.2.
+          For IPv6 the preferred interface should (neccessarily) be set as an interface
+          name (e.g. 'eth0' for linux, or 'Loopback Pseudo-Interface' on windows) or an
+          interface index number on windows. e.g. -ORBPreferredInterfaces FF01:*=eth0.
+          Also add support an -ORBListenOnAll 0|1 UIPMCFactory option that can
+          be specified in the svc.conf to make the acceptor listen on all multicast
+          enabled interfaces on platforms that this is not the default. This has been
+          observed to be required for the UIPMCAcceptor to open on the most recent
+          Linux distribs. Improve error handling & reporting.
+
+        * tao/IIOP_Endpoint.h:
+        * tao/IIOP_Endpoint.cpp:
+
+          Export the method that handles -ORBPreferredInterfaces values so it can be
+          reused. Add ability to specify interface names when IPv6 is enabled. For now
+          this is ignored in IIOP.
+
+        * tao/IIOP_Profile.cpp:
+        * tao/Strategies/SCIOP_Profile.cpp:
+
+          Added CORBALOC support to the existing -ORBPreferredInterfaces option processing.
+          
+        * tao/Strategies/COIOP_Endpoint.h:
+        * tao/Strategies/DIOP_Endpoint.h:
+        * tao/Strategies/SCIOP_Endpoint.h:
+        * tao/Strategies/SHMIOP_Endpoint.h:
+        * tao/Strategies/UIOP_Endpoint.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.h:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Endpoint.h:
+
+          Correct minor comment annoyance.
+
+        * bin/tao_other_tests.lst:
+        * orbsvcs/tests/Miop/McastPreferredInterfaces/client.cpp:
+        * orbsvcs/tests/Miop/McastPreferredInterfaces/McastPreferredInterfaces.mpc:
+        * orbsvcs/tests/Miop/McastPreferredInterfaces/miop_svc.conf:
+        * orbsvcs/tests/Miop/McastPreferredInterfaces/miop_svc_ipv6.conf:
+        * orbsvcs/tests/Miop/McastPreferredInterfaces/README:
+        * orbsvcs/tests/Miop/McastPreferredInterfaces/run_test_ipv6.pl:
+        * orbsvcs/tests/Miop/McastPreferredInterfaces/run_test.pl:
+        * orbsvcs/tests/Miop/McastPreferredInterfaces/server.cpp:
+        * orbsvcs/tests/Miop/McastPreferredInterfaces/ Test.idl:
+        * orbsvcs/tests/Miop/McastPreferredInterfaces/Test_impl.cpp:
+        * orbsvcs/tests/Miop/McastPreferredInterfaces/Test_impl.h:
+
+          Test for the above.
+
 Mon Aug  6 07:57:41 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/taobaseidldefaults.mpb:

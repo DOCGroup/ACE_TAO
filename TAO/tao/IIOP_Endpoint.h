@@ -30,6 +30,7 @@
 #include "tao/Endpoint.h"
 
 #include "ace/INET_Addr.h"
+#include "ace/Vector_T.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -158,6 +159,15 @@ public:
   /// have to reorder its list of endpoints based on filtering by the EndpointPolicy.
   TAO_IIOP_Endpoint & operator= (const TAO_IIOP_Endpoint& other);
 
+  /// Given a comma separated list of preferred interface directives, which
+  /// are of the form <wild_remote>=<wild_local>, this function will retrieve
+  /// the list of preferred local ip addresses by matching wild_local against
+  /// the list of all local ip interfaces, for any directive where wild_remote
+  /// matches the host from our endpoint.
+  static void find_preferred_interfaces (const ACE_CString& host,
+                                         const ACE_CString& csvPreferred,
+                                         ACE_Vector<ACE_CString>& preferred);
+
 private:
   TAO_IIOP_Endpoint *next_filtered_i (TAO_IIOP_Endpoint *root,
                                       bool ipv6_only,
@@ -220,7 +230,7 @@ private:
   /// Preferred path for this endpoint.
   TAO::IIOP_Endpoint_Info preferred_path_;
 
-  /// IIOP Endpoints can be stringed into a list.  Return the next
+  /// IIOP Endpoints can be strung into a list.  Return the next
   /// endpoint in the list, if any.
   TAO_IIOP_Endpoint *next_;
 

@@ -18,6 +18,7 @@
 #include /**/ "ace/pre.h"
 
 #include "tao/Endpoint.h"
+#include "tao/IIOP_Endpoint.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -93,6 +94,19 @@ public:
 
   //TAO_UIPMC_Connection_Handler *&hint (void);
   // Access to our <hint_>.
+  /// Do we have a preferred local network interface set for this target?
+  bool is_preferred_network (void) const;
+
+  /// Return the preferred network interface if any.
+  const char *preferred_network (void) const;
+
+  /// Transform this endpoint into (potentially) a chain of endpoints
+  /// in preferrence order of specific local interface bind address (if
+  /// the ORB is thus configured)
+  CORBA::ULong preferred_interfaces (TAO_ORB_Core *oc);
+
+  /// Acessor for the preferred network interface name if set
+  const char *preferred_if (void) const;
 
 private:
 
@@ -116,9 +130,15 @@ private:
   /// invocations, etc.
   ACE_INET_Addr object_addr_;
 
-  /// UIPMC Endpoints can be stringed into a list.  Return the next
+  /// Preferred path for routing this endpoint.
+  TAO::IIOP_Endpoint_Info preferred_path_;
+
+  /// UIPMC Endpoints can be strung into a list.  Return the next
   /// endpoint in the list, if any.
   TAO_UIPMC_Endpoint *next_;
+
+  /// Preferred interface name (if set)
+  CORBA::String_var preferred_if_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
