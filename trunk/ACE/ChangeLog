@@ -1,3 +1,25 @@
+Wed Aug  8 22:13:55 UTC 2012  Adam Mitz  <mitza@ociweb.com>
+
+        * ace/ACE.cpp:
+        * ace/ACE_crc_ccitt.cpp:
+        * ace/Basic_Types.h:
+        * ace/Configuration_Import_Export.cpp:
+        * ace/Handle_Set.inl:
+        * ace/INET_Addr.inl:
+        * ace/Message_Queue_Vx.inl:
+        * ace/Name_Request_Reply.cpp:
+        * ace/OS_NS_stdlib.cpp:
+        * ace/OS_NS_unistd.inl:
+        * ace/Select_Reactor_T.inl:
+        * ace/Service_Config.cpp:
+        * ace/Stack_Trace.cpp:
+        * ace/UUID.cpp:
+        * ace/config-vxworks6.9.h:
+        * include/makeinclude/platform_vxworks6.8.GNU:
+        * include/makeinclude/platform_vxworks6.9.GNU:
+
+          Enable compiling for 64-bit VxWorks 6.9 (x86 RTP static).
+
 Wed Aug  8 15:30:00 UTC 2012  Simon Massey  <sma at prismtech dot com>
 
         * ace/config-linux.h:

@@ -601,7 +601,8 @@ void
 ACE_Service_Config::reconfig_occurred (int config_occurred)
 {
   ACE_TRACE ("ACE_Service_Config::reconfig_occurred");
-  ACE_Service_Config::reconfig_occurred_ = config_occurred;
+  ACE_Service_Config::reconfig_occurred_ =
+    static_cast<sig_atomic_t> (config_occurred);
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
