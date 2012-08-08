@@ -6,6 +6,7 @@
 #include "tao/debug.h"
 #include "ace/Guard_T.h"
 #include "tao/ORB_Constants.h"
+#include "tao/ORB_Core.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_Memory.h"
@@ -21,7 +22,9 @@ TAO_UIPMC_Endpoint::TAO_UIPMC_Endpoint (void)
     host_ (),
     port_ (0),
     object_addr_ (),
-    next_ (0)
+    preferred_path_ (),
+    next_ (0),
+    preferred_if_()
 {
 }
 
@@ -30,7 +33,9 @@ TAO_UIPMC_Endpoint::TAO_UIPMC_Endpoint (const ACE_INET_Addr &addr)
     host_ (),
     port_ (0),
     object_addr_ (addr),
-    next_ (0)
+    preferred_path_ (),
+    next_ (0),
+    preferred_if_()
 {
   this->object_addr (addr);
 }
@@ -40,7 +45,9 @@ TAO_UIPMC_Endpoint::TAO_UIPMC_Endpoint (const CORBA::Octet class_d_address[4],
                                         CORBA::UShort port)
   : TAO_Endpoint (IOP::TAG_UIPMC),
     port_ (port),
-    next_ (0)
+    preferred_path_ (),
+    next_ (0),
+    preferred_if_()
 {
   for (int i = 0; i<4; i++)
     this->class_d_address_[i] = class_d_address[i];
@@ -149,6 +156,86 @@ TAO_UIPMC_Endpoint::hash (void)
   }
 
   return this->hash_val_;
+}
+
+CORBA::ULong
+TAO_UIPMC_Endpoint::preferred_interfaces (TAO_ORB_Core *oc)
+{
+  ACE_Vector<ACE_CString> preferred;
+  TAO_IIOP_Endpoint::find_preferred_interfaces(this->host_.in(),
+                                               oc->orb_params ()->preferred_interfaces (),
+                                               preferred);
+
+  TAO_UIPMC_Endpoint *latest = this;
+  CORBA::ULong count = preferred.size();
+  CORBA::ULong i = 0;
+
+  while (i < count)
+    {
+#if defined (ACE_HAS_IPV6)
+      if (ACE_OS::strstr (preferred[i].c_str(), "if=") != 0
+            && this->object_addr_.get_type () == AF_INET6)
+        {
+          latest->preferred_if_ = CORBA::string_dup (preferred[i].c_str() + 3);
+          latest->preferred_path_.host = (const char *) 0;
+          if (TAO_debug_level > 3)
+            ACE_DEBUG ((LM_DEBUG,
+                      "TAO (%P|%t) - TAO_UIPMC_Endpoint::preferred_interfaces, setting network interface name <%s>"
+                      " as preferred path for [%s] \n",
+                      latest->preferred_if_.in(), this->host_.in ()));
+        }
+      else
+#endif /* ACE_HAS_IPV6 */
+        {
+          latest->preferred_path_.host =
+            CORBA::string_dup (preferred[i].c_str());
+
+          if (TAO_debug_level > 3)
+            ACE_DEBUG ((LM_DEBUG,
+                      "TAO (%P|%t) - TAO_UIPMC_Endpoint::preferred_interfaces, adding path [%s]"
+                      " as preferred local address for [%s] \n",
+                      latest->preferred_path_.host.in(), this->host_.in ()));
+        }
+
+      ++i;
+      if (i < count)
+        {
+          TAO_Endpoint *tmp_ep =
+            latest->duplicate ();
+          latest->next_ = dynamic_cast<TAO_UIPMC_Endpoint *> (tmp_ep);
+          if (latest->next_ == 0) return i;
+          latest = latest->next_;
+        }
+    }
+
+  if (count > 0 &&
+      !oc->orb_params ()->enforce_pref_interfaces ())
+    {
+      TAO_Endpoint *tmp_ep = latest->duplicate ();
+
+      latest->next_ =
+        dynamic_cast<TAO_UIPMC_Endpoint *> (tmp_ep);
+
+      if (latest->next_ == 0) return count;
+
+      latest->next_->preferred_path_.host = (const char *) 0;
+      ++count;
+    }
+
+  return count;
+}
+
+bool
+TAO_UIPMC_Endpoint::is_preferred_network (void) const
+{
+  return (this->preferred_path_.host.in () != 0 &&
+          this->preferred_path_.host.in ()[0] != 0);
+}
+
+const char *
+TAO_UIPMC_Endpoint::preferred_network (void) const
+{
+  return this->preferred_path_.host.in ();
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

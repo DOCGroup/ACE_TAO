@@ -188,6 +188,8 @@ TAO/orbsvcs/tests/Security/Null_Cipher/run_test.pl: SSL !STATIC !DISABLE_INTERCE
 TAO/orbsvcs/tests/Security/MT_BiDir_SSL/run_test.pl: SSL !STATIC !DISABLE_INTERCEPTORS !ACE_FOR_TAO !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !GIOP10 !DISABLE_BIDIR !LynxOS
 TAO/orbsvcs/tests/Miop/McastHello/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !STATIC !NO_MCAST
 TAO/orbsvcs/tests/Miop/McastZIOP/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !STATIC !NO_MCAST ZLIB
+TAO/orbsvcs/tests/Miop/McastPreferredInterfaces/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !STATIC !NO_MCAST
+TAO/orbsvcs/tests/Miop/McastPreferredInterfaces/run_test_ipv6.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !STATIC !NO_MCAST IPV6
 # The following 2 tests use dynamic loading to change the default reactor on Windows !VxWorks !VxWorks_RTP !LabVIEW_RT
 TAO/orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !STATIC !ACE_FOR_TAO !LynxOS !ST
 TAO/orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !STATIC !ACE_FOR_TAO !LynxOS

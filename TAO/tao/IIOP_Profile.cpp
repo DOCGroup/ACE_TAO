@@ -299,8 +299,12 @@ TAO_IIOP_Profile::parse_string_i (const char *ior)
                          EINVAL),
                        CORBA::COMPLETED_NO);
         }
-      else
-        this->endpoint_.host_ = CORBA::string_dup (tmp_host);
+
+      this->endpoint_.host_ = CORBA::string_dup (tmp_host);
+      const char* csv = this->orb_core()->orb_params()->preferred_interfaces();
+      bool const enforce =
+        this->orb_core()->orb_params()->enforce_pref_interfaces();
+      this->endpoint_.preferred_interfaces (csv, enforce, *this);
     }
 
   TAO::ObjectKey ok;

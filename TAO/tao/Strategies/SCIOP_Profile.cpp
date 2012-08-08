@@ -220,8 +220,9 @@ TAO_SCIOP_Profile::parse_string_i (const char *ior
                          EINVAL),
                        CORBA::COMPLETED_NO);
         }
-      else
-        this->endpoint_.host_ = CORBA::string_dup (tmp_host);
+
+      this->endpoint_.host_ = CORBA::string_dup (tmp_host);
+      this->endpoint_.preferred_interfaces (this->orb_core ());
     }
 
   TAO::ObjectKey ok;

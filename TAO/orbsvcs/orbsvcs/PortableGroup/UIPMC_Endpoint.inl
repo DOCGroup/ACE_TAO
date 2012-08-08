@@ -49,4 +49,11 @@ TAO_UIPMC_Endpoint::update_object_addr (void)
                           this->uint_ip_addr ());
 }
 
+
+ACE_INLINE const char*
+TAO_UIPMC_Endpoint::preferred_if () const
+{
+  return this->preferred_if_.in();
+}
+
 TAO_END_VERSIONED_NAMESPACE_DECL

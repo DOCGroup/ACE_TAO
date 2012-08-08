@@ -172,7 +172,7 @@ namespace TAO
       /// etc.
       mutable ACE_INET_Addr object_addr_;
 
-      /// IIOP Endpoints can be stringed into a list.  Return the next
+      /// IIOP Endpoints can be strung into a list.  Return the next
       /// endpoint in the list, if any.
       TAO_SSLIOP_Endpoint *next_;
 

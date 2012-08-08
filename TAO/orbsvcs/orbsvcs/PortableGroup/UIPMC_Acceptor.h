@@ -47,7 +47,7 @@ class TAO_PortableGroup_Export TAO_UIPMC_Acceptor : public TAO_Acceptor
 {
 public:
   /// Constructor.
-  TAO_UIPMC_Acceptor (void);
+  TAO_UIPMC_Acceptor (bool listen_on_all_ifs);
 
   /// Destructor.
   ~TAO_UIPMC_Acceptor (void);
@@ -148,6 +148,8 @@ protected:
 private:
 
   TAO_UIPMC_Mcast_Connection_Handler *connection_handler_;
+
+  bool listen_on_all_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
