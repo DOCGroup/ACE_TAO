@@ -199,7 +199,7 @@ TAO_UIPMC_Connection_Handler::open (void*)
         static_cast<DWORD> (protocol_properties.enable_multicast_loop_);
 #elif defined (ACE_HAS_IPV6_MULTICAST_LOOP_AS_BOOL)
       bool enable_loop =
-        static_cast<bool> (protocol_properties.enable_multicast_loop_);
+          static_cast<bool> (protocol_properties.enable_multicast_loop_);
 #else
       unsigned int enable_loop =
         static_cast<unsigned int> (protocol_properties.enable_multicast_loop_);
@@ -236,9 +236,11 @@ TAO_UIPMC_Connection_Handler::open (void*)
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT("TAO (%P|%t) - UIPMC_Connection_Handler::open, ")
-                      ACE_TEXT("couldn't %s multicast packets looping\n\n"),
+                      ACE_TEXT("couldn't %s multicast packets looping %p\n"),
                       protocol_properties.enable_multicast_loop_ ?
-                      ACE_TEXT("enable") : ACE_TEXT("disable")));
+                      ACE_TEXT("enable") : ACE_TEXT("disable"),
+                      ACE_TEXT("errno")
+                     ));
         }
       return -1;
     }

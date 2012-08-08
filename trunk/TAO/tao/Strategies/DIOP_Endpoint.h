@@ -138,7 +138,7 @@ private:
   /// Flag to indicate if the address has been resolved and set.
   mutable bool object_addr_set_;
 
-  /// DIOP Endpoints can be stringed into a list.  Return the next
+  /// DIOP Endpoints can be strung into a list.  Return the next
   /// endpoint in the list, if any.
   TAO_DIOP_Endpoint *next_;
 };

@@ -454,9 +454,10 @@ get_ip_interfaces(ACE_Vector<ACE_CString>& local_ips)
 // the list of preferred local ip addresses by matching wild_local against
 // the list of all local ip interfaces, for any directive where wild_remote
 // matches the host from our endpoint.
-static void find_preferred_interfaces (const ACE_CString& host,
-                                       const ACE_CString& csvPreferred,
-                                       ACE_Vector<ACE_CString>& preferred)
+void
+TAO_IIOP_Endpoint::find_preferred_interfaces (const ACE_CString& host,
+                                              const ACE_CString& csvPreferred,
+                                              ACE_Vector<ACE_CString>& preferred)
 {
   ACE_Vector<ACE_CString> local_ips;
   get_ip_interfaces(local_ips);
@@ -506,8 +507,16 @@ static void find_preferred_interfaces (const ACE_CString& host,
       }
       else
       {
+#if defined (ACE_HAS_IPV6)
+        // We interpret the preferred wild_local as an actual interface name/id.
+        // This is useful for link local IPv6 multicast
+        ACE_CString if_name("if=");
+        if_name += wild_local;
+        preferred.push_back(if_name);
+#else
         // There is no matching local interface, so we can skip
         // to the next preferred interface directive.
+#endif
       }
     }
     else
@@ -528,14 +537,21 @@ TAO_IIOP_Endpoint::preferred_interfaces (const char *csv,
   ACE_Vector<ACE_CString> preferred;
   find_preferred_interfaces(this->host_.in(), csv, preferred);
   CORBA::ULong count = preferred.size();
-  if (count > 0)
+  size_t i = 0;
+  while (i < count && ACE_OS::strstr (preferred[i].c_str(), "if=") != 0)
+    {
+      // For now we disregard these with IIOP
+      ++i;
+    }
+  if (i < count)
   {
     this->is_encodable_ = true;
-    this->preferred_path_.host = CORBA::string_dup(preferred[0].c_str());
+    this->preferred_path_.host = CORBA::string_dup(preferred[i].c_str());
     TAO_IIOP_Endpoint* ep = this;
-    for (size_t i = 1; i < count; ++i)
+    for (++i; i < count; ++i)
     {
-      ep = add_local_endpoint (ep, preferred[i].c_str(), profile);
+      if (ACE_OS::strstr (preferred[i].c_str(), "if=") == 0)
+        ep = add_local_endpoint (ep, preferred[i].c_str(), profile);
     }
 
     // If we're not enforcing the preferred interfaces, then we can just add

@@ -145,7 +145,7 @@ namespace TAO
       /// Flag to indicate if the address has been resolved and set.
       int object_addr_set_;
 
-      /// HTIOP Endpoints can be stringed into a list.  Return the next
+      /// HTIOP Endpoints can be strung into a list.  Return the next
       /// endpoint in the list, if any.
       Endpoint *next_;
     };

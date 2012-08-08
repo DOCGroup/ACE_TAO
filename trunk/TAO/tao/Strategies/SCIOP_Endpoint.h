@@ -155,7 +155,7 @@ private:
   /// Is this endpoint created encodable as part of the IOR?
   bool is_encodable_;
 
-  /// SCIOP Endpoints can be stringed into a list.  Return the next
+  /// SCIOP Endpoints can be strung into a list.  Return the next
   /// endpoint in the list, if any.
   TAO_SCIOP_Endpoint *next_;
 };

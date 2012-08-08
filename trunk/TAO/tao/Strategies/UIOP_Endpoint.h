@@ -88,7 +88,7 @@ private:
   /// invocations, etc.
   ACE_UNIX_Addr object_addr_;
 
-  /// UIOP Endpoints can be stringed into a list.  Return the next
+  /// UIOP Endpoints can be strung into a list.  Return the next
   /// endpoint in the list, if any.
   TAO_UIOP_Endpoint *next_;
 };

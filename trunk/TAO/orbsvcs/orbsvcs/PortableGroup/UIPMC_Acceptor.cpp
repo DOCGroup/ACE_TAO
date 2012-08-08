@@ -19,14 +19,15 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_UIPMC_Acceptor::TAO_UIPMC_Acceptor (void)
+TAO_UIPMC_Acceptor::TAO_UIPMC_Acceptor (bool listen_on_all_ifs)
   : TAO_Acceptor (IOP::TAG_UIPMC),
     addrs_ (0),
     hosts_ (0),
     endpoint_count_ (0),
     version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
     orb_core_ (0),
-    connection_handler_ (0)
+    connection_handler_ (0),
+    listen_on_all_(listen_on_all_ifs)
 {
 }
 
@@ -234,7 +235,15 @@ TAO_UIPMC_Acceptor::open_i (const ACE_INET_Addr& addr,
                   -1);
 
   this->connection_handler_->local_addr (addr);
-  this->connection_handler_->open (0);
+  this->connection_handler_->listen_on_all (this->listen_on_all_);
+  if (this->connection_handler_->open (0))
+    {
+        ACE_DEBUG ((LM_ERROR,
+                      ACE_TEXT("TAO (%P|%t) - TAO_UIPMC_Acceptor::open_i, ")
+                      ACE_TEXT("failed to open connection handler.\n")
+                  ));
+        return -1;
+    }
 
   int result =
     reactor->register_handler (this->connection_handler_,
