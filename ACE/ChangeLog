@@ -1,3 +1,22 @@
+Wed Aug  8 15:30:00 UTC 2012  Simon Massey  <sma at prismtech dot com>
+
+        * ace/config-linux.h:
+
+          According to man pages Linux uses different (compared to UNIX systems) types
+          for setting IP_MULTICAST_TTL and IPV6_MULTICAST_LOOP / IP_MULTICAST_LOOP
+          in setsockopt/getsockopt.
+          In the current (circa 2012) kernel source however there is an explicit check
+          for IPV6_MULTICAST_LOOP being sizeof(int). Anything else is rejected so it must
+          not be a passed a bool, irrespective of what the man pages (still) say.
+          i.e. #define ACE_HAS_IPV6_MULTICAST_LOOP_AS_BOOL 1 is wrong.
+
+        * ace/SOCK_Dgram_Mcast.h:
+        * ace/SOCK_Dgram_Mcast.inl:
+
+          Override read/write acessor for the constructor options
+          This class is typically default instantiated in a connection handler templated
+          framework so these cannot be specified on construction.
+
 Mon Aug  6 20:54:17 UTC 2012  Adam Mitz  <mitza@ociweb.com>
 
         * bin/PerlACE/TestTarget.pm:

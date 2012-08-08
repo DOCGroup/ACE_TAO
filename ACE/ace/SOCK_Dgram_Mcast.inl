@@ -49,4 +49,16 @@ ACE_SOCK_Dgram_Mcast::send (const iovec iov[],
                                      flags);
 }
 
+ACE_INLINE void
+ACE_SOCK_Dgram_Mcast::opts (int opts)
+{
+    this->opts_ = opts;
+}
+
+ACE_INLINE int
+ACE_SOCK_Dgram_Mcast::opts () const
+{
+    return this->opts_;
+}
+
 ACE_END_VERSIONED_NAMESPACE_DECL

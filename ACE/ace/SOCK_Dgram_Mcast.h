@@ -339,6 +339,14 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
+  /// Override write acessor for the constructor options (@see enum options above)
+  /// This class is typically default instantiated in a connection handler templated
+  /// framework so these cannot be specified on construction.
+  void opts (int opts);
+
+  /// Read acessor for the constructor options (@see enum options above)
+  int opts () const;
+
 private:
 
   /// Subscribe to a multicast address on one or more network interface(s).
