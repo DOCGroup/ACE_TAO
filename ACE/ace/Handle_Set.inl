@@ -75,6 +75,8 @@ ACE_Handle_Set::is_set (ACE_HANDLE handle) const
 #elif defined (ACE_HAS_NONCONST_FD_ISSET)
   return FD_ISSET (handle,
                    const_cast<fd_set*> (&this->mask_));
+#elif defined (ACE_VXWORKS) && ACE_VXWORKS >= 0x690
+  return static_cast<int> (FD_ISSET (handle, &this->mask_));
 #else
   return FD_ISSET (handle,
                    &this->mask_);
