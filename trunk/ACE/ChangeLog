@@ -143,6 +143,10 @@ Fri Jul 20 17:37:27 UTC 2012  Adam Mitz  <mitza@ociweb.com>
 
           Fixed a Perl bug (ne vs. !=).
 
+Wed Jul 18 15:40:05 UTC 2012  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * Happy 50th Birthday to me!
+
 Tue Jun 26 21:47:18 UTC 2012  Adam Mitz  <mitza@ociweb.com>
 
         * bin/valgrind.supp:
