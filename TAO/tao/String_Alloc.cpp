@@ -7,8 +7,8 @@
 #include "ace/OS_Memory.h"
 
 #ifndef TAO_NO_SHARED_NULL_CORBA_STRING
-  static char null_char[]  =  "";
-  static CORBA::WChar null_wchar[] = 
+  static char null_char[]= "";
+  static CORBA::WChar null_wchar[]=
 # if defined(ACE_HAS_WCHAR) || defined(ACE_HAS_XPG4_MULTIBYTE_CHAR)
     L"";
 # else
