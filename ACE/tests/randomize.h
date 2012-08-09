@@ -27,7 +27,7 @@ namespace
   /**
    * @class randomize_index
    *
-   * @brief Functor that randomoly swaps the order of two array
+   * @brief Functor that randomly swaps the order of two array
    *        elements.
    *
    * @internal Do not directly use this class.  Use the @c randomize()
