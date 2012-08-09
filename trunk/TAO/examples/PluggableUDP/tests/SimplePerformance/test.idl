@@ -10,6 +10,10 @@ interface Simple_Server
   oneway void sendCharSeq (in Char_Seq charSeq);
   oneway void sendOctetSeq (in Octet_Seq charSeq);
 
+  /// This method won't work since TAO's DIOP operation only supports
+  /// oneway invocations.  It's just there for completeness in case
+  /// someday TAO's DIOP implementation is enhanced to support twoway
+  /// invocations.
   long get_number (in long num);
 
   oneway void shutdown ();

@@ -1,3 +1,11 @@
+Tue Aug  7 15:45:42 UTC 2012  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * examples/PluggableUDP/tests/SimplePerformance/test.idl (Simple_Server): 
+  
+          Added a comment to make it clear that twoway operations don't
+          work with DIOP.  Thanks to Ali Akbar Zarezadeh <akzare at cs dot
+          uni-potsdam dot de> for reporting this.
+
 Thu Aug  9 15:10:00 UTC 2012  Simon Massey  <sma at prismtech dot com>
 
         * orbsvcs/FaultTolerance/FT_Invocation_Endpoint_Selectors.cpp:
