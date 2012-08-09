@@ -59,12 +59,12 @@ project (CIAO_OpenDDS_Dcps_lem_gen) : taoidldefaults, install, \
   }
 }
 
-project (CIAO_OpenDDS_Dcps_lem_stub) : taolib, valuetype, \
+project (CIAO_OpenDDS_Dcps_lem_stub) : taolib, valuetype, dds4ccm, \
                                   gen_ostream, install, ciao_output, \
-                                  ccm_lem_stub, ciaoidldefaults, taobaseidldefaults, ccm_lw, ccm_noevent, ccm_direct_collocation {
-  requires   += dds4ccm_opendds
-  after += CIAO_OpenDDS_Dcps_lem_gen CCM_stub_idl CCM_session_idl
-  includes += $(CIAO_ROOT)/connectors $(CIAO_ROOT) $(DDS_ROOT) $(DDS_ROOT)/dds
+                                  ccm_lem_stub, ciaoidldefaults, taobaseidldefaults, \
+                                  ccm_lw, ccm_noevent, ccm_direct_collocation {
+  requires += dds4ccm_opendds
+  after += CCM_stub_idl CCM_session_idl
   sharedname = CIAO_OpenDDS_Dcps_lem_stub
   dynamicflags += DDSDCPS_LEM_STUB_BUILD_DLL
 
@@ -100,4 +100,3 @@ project (CIAO_OpenDDS_Dcps_lem_stub) : taolib, valuetype, \
      install_dir = connectors/dds4ccm/idl/OpenDDS
   }
 }
-
