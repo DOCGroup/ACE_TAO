@@ -1,3 +1,8 @@
+Thu Aug  9 08:33:00 UTC 2012  Simon Massey  <sma at prismtech dot com>
+
+        * orbsvcs/FaultTolerance/FT_Invocation_Endpoint_Selectors.cpp:
+          Fixed race condition.
+
 Thu Aug  9 07:20:00 UTC 2012  Simon Massey  <sma at prismtech dot com>
 
         * tao/String_Alloc.cpp:
