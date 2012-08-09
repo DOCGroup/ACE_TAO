@@ -1,3 +1,15 @@
+Thu Aug  9 07:20:00 UTC 2012  Simon Massey  <sma at prismtech dot com>
+
+        * tao/String_Alloc.cpp:
+          Removed trailing whitespace.
+
+        * orbsvcs/tests/Miop/McastPreferredInterfaces/TestC.cpp:
+        * orbsvcs/tests/Miop/McastPreferredInterfaces/TestC.h:
+        * orbsvcs/tests/Miop/McastPreferredInterfaces/TestC.inl:
+        * orbsvcs/tests/Miop/McastPreferredInterfaces/TestS.cpp:
+        * orbsvcs/tests/Miop/McastPreferredInterfaces/TestS.h:
+          Removed these generated files they shouldn't have been committed.
+
 Wed Aug  8 15:20:00 UTC 2012  Simon Massey  <sma at prismtech dot com>
 
         * NEWS:
@@ -76,7 +88,7 @@ Wed Aug  8 15:20:00 UTC 2012  Simon Massey  <sma at prismtech dot com>
         * orbsvcs/tests/Miop/McastPreferredInterfaces/run_test_ipv6.pl:
         * orbsvcs/tests/Miop/McastPreferredInterfaces/run_test.pl:
         * orbsvcs/tests/Miop/McastPreferredInterfaces/server.cpp:
-        * orbsvcs/tests/Miop/McastPreferredInterfaces/ Test.idl:
+        * orbsvcs/tests/Miop/McastPreferredInterfaces/Test.idl:
         * orbsvcs/tests/Miop/McastPreferredInterfaces/Test_impl.cpp:
         * orbsvcs/tests/Miop/McastPreferredInterfaces/Test_impl.h:
 
