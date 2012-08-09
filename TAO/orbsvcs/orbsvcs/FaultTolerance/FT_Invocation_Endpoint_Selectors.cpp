@@ -51,6 +51,12 @@ TAO_FT_Invocation_Endpoint_Selector::select_primary (
     TAO::Profile_Transport_Resolver *r,
     ACE_Time_Value *max_wait_time)
 {
+  // Set lock, as forward_profiles might be deleted concurrently.
+  ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
+                            guard,
+                            *r->stub ()->profile_lock (),
+                            false));
+
   // Grab the forwarded list
   TAO_MProfile *prof_list =
     const_cast<TAO_MProfile *> (r->stub ()->forward_profiles ());
@@ -58,7 +64,12 @@ TAO_FT_Invocation_Endpoint_Selector::select_primary (
   TAO_MProfile &basep = r->stub ()->base_profiles ();
 
   if (prof_list ==0)
-    prof_list = &basep;
+    {
+      prof_list = &basep;
+      // No need to hold stub lock any more. We needed it only to use
+      // forward_profiles.
+      guard.release ();
+    }
 
   if (prof_list == 0)
     return false;
@@ -98,6 +109,12 @@ TAO_FT_Invocation_Endpoint_Selector::select_secondary (
     TAO::Profile_Transport_Resolver *r,
     ACE_Time_Value *max_wait_time)
 {
+  // Set lock, as forward_profiles might be deleted concurrently.
+  ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
+                            guard,
+                            *r->stub ()->profile_lock (),
+                            false));
+
   // Grab the forwarded list
   TAO_MProfile *prof_list =
     const_cast<TAO_MProfile *> (r->stub ()->forward_profiles ());
@@ -106,7 +123,12 @@ TAO_FT_Invocation_Endpoint_Selector::select_secondary (
     r->stub ()->base_profiles ();
 
   if (prof_list ==0)
-    prof_list = &basep;
+    {
+      prof_list = &basep;
+      // No need to hold stub lock any more. We needed it only to use
+      // forward_profiles.
+      guard.release ();
+    }
 
   if (prof_list == 0)
     return false;
