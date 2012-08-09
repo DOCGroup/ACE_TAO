@@ -60,7 +60,10 @@ ifeq ($(gprof),1)
 endif
 
 ifeq ($(c++0x),1)
-  CCFLAGS += --std=c++0x
+  CCFLAGS += -std=c++0x
+
+  # This is needed due to the use of the deprecated auto_ptr class
+  CCFLAGS += -Wno-deprecated
 endif
 
 ifeq ($(gcov),1)

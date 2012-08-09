@@ -1,3 +1,14 @@
+Thu Aug  9 07:03:10 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/bczar/bczar.html:
+          Added packages
+
+        * include/makeinclude/platform_g++_common.GNU:
+          Use -Wno-deprecated with C++11 due to the heavy usage of auto_ptr
+
+        * tests/randomize.h:
+          Doxygen fix
+
 Wed Aug  8 22:13:55 UTC 2012  Adam Mitz  <mitza@ociweb.com>
 
         * ace/ACE.cpp:
