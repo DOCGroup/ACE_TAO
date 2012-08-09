@@ -1,3 +1,9 @@
+Thu Aug  9 15:10:00 UTC 2012  Simon Massey  <sma at prismtech dot com>
+
+        * orbsvcs/FaultTolerance/FT_Invocation_Endpoint_Selectors.cpp:
+          Reverted this change until I can work out what has changed
+          from when this change was valid.
+
 Thu Aug  9 08:33:00 UTC 2012  Simon Massey  <sma at prismtech dot com>
 
         * orbsvcs/FaultTolerance/FT_Invocation_Endpoint_Selectors.cpp:
