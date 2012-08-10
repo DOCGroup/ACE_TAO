@@ -1,3 +1,11 @@
+Fri Aug 10 08:30:00 UTC 2012  Simon Massey  <sma at prismtech dot com>
+
+        * orbsvcs/FaultTolerance/FT_Invocation_Endpoint_Selectors.cpp:
+          ReFixed the race condition with the correct mutex code. (Why does
+          the stub->profile_lock () return a const mutex reference, anywhere
+          where this is used, it has to be const_cast to a non-const form
+          doesn't it?)
+
 Tue Aug  7 15:45:42 UTC 2012  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * examples/PluggableUDP/tests/SimplePerformance/test.idl (Simple_Server): 
