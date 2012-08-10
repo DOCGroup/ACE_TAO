@@ -20,24 +20,18 @@ Implementation Notes:
 The current MIOP implementation is usable, but not complete according
 to the final MIOP specification.  The following are current limitations:
 
-  1.  MIOP packet reassembly.  This limits requests to about 5-6K in length
-      depending on the platform.  Miop packet segmentation is available,
-      but not completely tested.
-
-  2.  Disassociating a group reference from a servant is not implemented.
+  1.  Disassociating a group reference from a servant is not implemented.
       If interested in fixing this, be aware of the race conditions if a
       servant disassociates during an upcall.  The TAO event services all
       have code to handle this issue.
 
-  3.  Clients must call _unchecked_narrow to narrow any group references
+  2.  Clients must call _unchecked_narrow to narrow any group references
       since a multicast group manager isn't supported yet (and UIPMC does
       not support twoway invocations)
 
-  4.  TAO does not have a multicast group manager, so groups must be
+  3.  TAO does not have a multicast group manager, so groups must be
       assigned by creating a MIOP CORBALOC formatted reference.  See
       the tests or the MIOP specification for example group references.
 
-  5.  TAO does not have a multicast gateway implementation, so using MIOP
+  4.  TAO does not have a multicast gateway implementation, so using MIOP
       is currently limited to networks that natively support multicast
-
-

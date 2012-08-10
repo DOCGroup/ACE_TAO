@@ -1,3 +1,60 @@
+Fri Aug 10 14:00:00 UTC 2012  Simon Massey  <sma at prismtech dot com>
+
+        * NEWS:
+        * docs/Options.html:
+        * tao/Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/MIOP.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/miopconf.h:
+        * orbsvcs/orbsvcs/PortableGroup/PortableGroup_Loader.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/README:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Acceptor.h:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Acceptor.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.h:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.h:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Endpoint.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Factory.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Mcast_Connection_Handler.h:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Mcast_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Message_Block_Data_Iterator.h:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Message_Block_Data_Iterator.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.h:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.h:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp:
+
+          Enhanced the MIOP protocol to support MIOP Fragmentation.
+
+        * orbsvcs/orbsvcs/PortableGroup/Fragments_Cleanup_Strategy.h:
+        * orbsvcs/orbsvcs/PortableGroup/Fragments_Cleanup_Strategy.inl:
+        * orbsvcs/orbsvcs/PortableGroup/Fragments_Cleanup_Strategy.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/miop_resource.h:
+        * orbsvcs/orbsvcs/PortableGroup/miop_resource.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Mcast_Transport.h:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Mcast_Transport.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport_Recv_Packet.h:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport_Recv_Packet.cpp:
+
+          New files added to support MIOP Fragmentation.
+
+        * bin/tao_other_tests.lst:
+        * orbsvcs/tests/Miop/McastFragmentation/client.cpp:
+        * orbsvcs/tests/Miop/McastFragmentation/Hello_Impl.h:
+        * orbsvcs/tests/Miop/McastFragmentation/Hello_Impl.cpp:
+        * orbsvcs/tests/Miop/McastFragmentation/Hello.idl:
+        * orbsvcs/tests/Miop/McastFragmentation/McastFragmentation.mpc:
+        * orbsvcs/tests/Miop/McastFragmentation/README:
+        * orbsvcs/tests/Miop/McastFragmentation/run_test.pl:
+        * orbsvcs/tests/Miop/McastFragmentation/run_test_ipv6.pl:
+        * orbsvcs/tests/Miop/McastFragmentation/server.cpp:
+        * orbsvcs/tests/Miop/McastFragmentation/uipmc_client.conf:
+        * orbsvcs/tests/Miop/McastFragmentation/uipmc_server.conf:
+        * orbsvcs/tests/Miop/McastFragmentation/uipmc_server_m.conf:
+        * orbsvcs/tests/Miop/McastFragmentation/uipmc_server_n.conf:
+
+          Added a test for MIOP Fragmentation.
+
 Fri Aug 10 08:30:00 UTC 2012  Simon Massey  <sma at prismtech dot com>
 
         * orbsvcs/FaultTolerance/FT_Invocation_Endpoint_Selectors.cpp:

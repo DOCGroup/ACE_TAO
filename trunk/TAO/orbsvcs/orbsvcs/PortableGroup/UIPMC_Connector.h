@@ -23,10 +23,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/PortableGroup/UIPMC_Connection_Handler.h"
-
 #include "tao/Transport_Connector.h"
-#include "ace/Null_Mutex.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

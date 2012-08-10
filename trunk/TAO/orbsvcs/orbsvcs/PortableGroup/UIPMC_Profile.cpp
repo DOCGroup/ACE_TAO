@@ -14,9 +14,10 @@
 
 static const char the_prefix[] = "miop";
 
-// UIPMC doesn't support object keys, so send profiles by default in the GIOP 1.2 target
-// specification.
-static const CORBA::Short default_addressing_mode_ = TAO_Target_Specification::Profile_Addr;
+// UIPMC doesn't support object keys, so send profiles by default in the
+// GIOP 1.2 target specification.
+static const CORBA::Short default_addressing_mode_ =
+  TAO_Target_Specification::Profile_Addr;
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -31,22 +32,38 @@ TAO_UIPMC_Profile::object_key_delimiter (void) const
 TAO_UIPMC_Profile::TAO_UIPMC_Profile (TAO_ORB_Core *orb_core)
   : TAO_Profile (IOP::TAG_UIPMC,
                  orb_core,
-                 TAO_GIOP_Message_Version (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR)),
-    endpoint_ (),
-    tagged_profile_ ()
+                 TAO_GIOP_Message_Version (TAO_DEF_GIOP_MAJOR,
+                                           TAO_DEF_GIOP_MINOR))
+  , endpoint_ ()
+  , tagged_profile_ ()
+  , group_id_ (0)
+  , ref_version_ (0)
+  , has_ref_version_ (false)
 {
-    addressing_mode_ = default_addressing_mode_;
+  // The default for component version is 1.0.
+  this->component_version_.major = 1;
+  this->component_version_.major = 0;
+
+  this->addressing_mode_ = default_addressing_mode_;
 }
 
 TAO_UIPMC_Profile::TAO_UIPMC_Profile (const ACE_INET_Addr &addr,
                                       TAO_ORB_Core *orb_core)
   : TAO_Profile (IOP::TAG_UIPMC,
                  orb_core,
-                 TAO_GIOP_Message_Version (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR)),
-    endpoint_ (addr),
-    tagged_profile_ ()
+                 TAO_GIOP_Message_Version (TAO_DEF_GIOP_MAJOR,
+                                           TAO_DEF_GIOP_MINOR))
+  , endpoint_ (addr)
+  , tagged_profile_ ()
+  , group_id_ (0)
+  , ref_version_ (0)
+  , has_ref_version_ (false)
 {
-    addressing_mode_ = default_addressing_mode_;
+  // The default for component version is 1.0.
+  this->component_version_.major = 1;
+  this->component_version_.major = 0;
+
+  this->addressing_mode_ = default_addressing_mode_;
 }
 
 TAO_UIPMC_Profile::TAO_UIPMC_Profile (const CORBA::Octet class_d_address[4],
@@ -54,29 +71,20 @@ TAO_UIPMC_Profile::TAO_UIPMC_Profile (const CORBA::Octet class_d_address[4],
                                       TAO_ORB_Core *orb_core)
   : TAO_Profile (IOP::TAG_UIPMC,
                  orb_core,
-                 TAO_GIOP_Message_Version (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR)),
-    endpoint_ (class_d_address, port),
-    tagged_profile_ ()
+                 TAO_GIOP_Message_Version (TAO_DEF_GIOP_MAJOR,
+                                           TAO_DEF_GIOP_MINOR))
+  , endpoint_ (class_d_address, port)
+  , tagged_profile_ ()
+  , group_id_ (0)
+  , ref_version_ (0)
+  , has_ref_version_ (false)
 {
-    addressing_mode_ = default_addressing_mode_;
+  // The default for component version is 1.0.
+  this->component_version_.major = 1;
+  this->component_version_.major = 0;
+
+  this->addressing_mode_ = default_addressing_mode_;
 }
-
-/*
-
-TAO_UIPMC_Profile::TAO_UIPMC_Profile (const char *string,
-                                      TAO_ORB_Core *orb_core)
-  : TAO_Profile (TAO_TAG_UIPMC_PROFILE,
-                 orb_core,
-                 TAO_GIOP_Message_Version (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR)),
-    endpoint_ (),
-    tagged_profile_ ()
-{
-  this->add_group_component ();
-  this->parse_string (string);
-  addressing_mode_ = default_addressing_mode_;
-}
-
-*/
 
 TAO_UIPMC_Profile::~TAO_UIPMC_Profile (void)
 {
@@ -91,17 +99,32 @@ TAO_UIPMC_Profile::decode (TAO_InputCDR& cdr)
 
   // Read and verify major, minor versions, ignoring profiles
   // whose versions we don't understand.
-  if (!(cdr.read_octet (this->version_.major)
-        && this->version_.major == TAO_DEF_GIOP_MAJOR
-        && cdr.read_octet (this->version_.minor)
-        && this->version_.minor <= TAO_DEF_GIOP_MINOR))
+  CORBA::Octet major;
+  CORBA::Octet minor;
+  if (!cdr.read_octet (major) || !cdr.read_octet (minor))
     {
-      if (TAO_debug_level > 0)
+      if (TAO_debug_level)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) - UIPMC_Profile::decode - v%d.%d\n"),
-                      this->version_.major,
-                      this->version_.minor));
+                      ACE_TEXT ("TAO (%P|%t) - UIPMC_Profile::decode, ")
+                      ACE_TEXT ("can't read version %d.%d\n"),
+                      major,
+                      minor));
+        }
+
+      return -1;
+    }
+
+  if (major > TAO_DEF_GIOP_MAJOR ||
+        (major == TAO_DEF_GIOP_MAJOR && minor > TAO_DEF_GIOP_MINOR))
+    {
+      if (TAO_debug_level)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("TAO (%P|%t) - UIPMC_Profile::decode, ")
+                      ACE_TEXT ("unsupported version %d.%d\n"),
+                      major,
+                      minor));
         }
 
       return -1;
@@ -124,7 +147,8 @@ TAO_UIPMC_Profile::decode (TAO_InputCDR& cdr)
       // If there is extra data in the profile we are supposed to
       // ignore it, but print a warning just in case...
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("%d bytes out of %d left after profile data\n"),
+                  ACE_TEXT ("TAO (%P|%t) - UIPMC_Profile::decode, %d bytes ")
+                  ACE_TEXT ("out of %u left after profile data\n"),
                   cdr.length (),
                   encap_len));
     }
@@ -144,14 +168,14 @@ TAO_UIPMC_Profile::decode_endpoints (void)
 int
 TAO_UIPMC_Profile::decode_profile (TAO_InputCDR& cdr)
 {
-  CORBA::UShort port = 0;
+  CORBA::UShort port = 0u;
   ACE_CString address;
-  if (!(cdr.read_string (address)
-        && cdr.read_ushort (port)))
+  if (!cdr.read_string (address) ||
+      !cdr.read_ushort (port)      )
     {
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) - UIPMC_Profile::decode - ")
+      if (TAO_debug_level)
+        ACE_DEBUG ((LM_ERROR,
+                    ACE_TEXT ("TAO (%P|%t) - UIPMC_Profile::decode, ")
                     ACE_TEXT ("Couldn't unmarshal address and port!\n")));
       return -1;
     }
@@ -190,8 +214,12 @@ TAO_UIPMC_Profile::parse_string_i (const char *string)
       ACE_OS::ace_isdigit (string [2]) &&
       string[3] == '@')
     {
-      if (string[0] != '1' ||
-          string[2] != '0')
+      char const
+        major= string[0] - '0',
+        minor= string[2] - '0';
+
+      if (major > TAO_DEF_MIOP_MAJOR ||
+           (major == TAO_DEF_MIOP_MAJOR && minor > TAO_DEF_MIOP_MINOR))
         {
           throw CORBA::INV_OBJREF (
             CORBA::SystemException::_tao_minor_code (
@@ -212,27 +240,14 @@ TAO_UIPMC_Profile::parse_string_i (const char *string)
   //
 
   // Parse the group component version.
+  GIOP::Version component_version;
   if (ACE_OS::ace_isdigit (string [0]) &&
       string[1] == '.' &&
       ACE_OS::ace_isdigit (string [2]) &&
       string[3] == '-')
     {
-      CORBA::Char major;
-      CORBA::Char minor;
-
-      major = (char) (string [0] - '0');
-      minor = (char) (string [2] - '0');
-
-      // Verify that a supported version of MIOP is specified.
-      if (major != TAO_DEF_MIOP_MAJOR ||
-          minor >  TAO_DEF_MIOP_MINOR)
-        {
-          throw CORBA::INV_OBJREF (
-            CORBA::SystemException::_tao_minor_code (
-              TAO::VMCID,
-              EINVAL),
-            CORBA::COMPLETED_NO);
-        }
+      component_version.major = string [0] - '0';
+      component_version.minor = string [2] - '0';
 
       // Skip over "N.n-"
       string += 4;
@@ -274,13 +289,13 @@ TAO_UIPMC_Profile::parse_string_i (const char *string)
   string = pos + 1;
   pos = ACE_OS::strchr (string, '-');
 
-  CORBA::Boolean parse_group_ref_version_flag = 0;
+  bool parse_group_ref_version_flag = false;
 
   if (pos != 0)
     {
       // String was terminated by a '-', so there's a group
       // reference version to be parsed.
-      parse_group_ref_version_flag = 1;
+      parse_group_ref_version_flag = true;
     }
   else
     {
@@ -316,7 +331,7 @@ TAO_UIPMC_Profile::parse_string_i (const char *string)
   PortableGroup::ObjectGroupId group_id =
     ACE_OS::strtoull (str_group_id.c_str (), 0, 10);
 
-  this->has_ref_version_ = false;
+  bool has_ref_version = false;
   PortableGroup::ObjectGroupRefVersion ref_version = 0;
   if (parse_group_ref_version_flag)
     {
@@ -349,7 +364,7 @@ TAO_UIPMC_Profile::parse_string_i (const char *string)
 
       ref_version =
         ACE_OS::strtoul (str_group_ref_ver.c_str (), 0, 10);
-      this->has_ref_version_ = true;
+      has_ref_version = true;
     }
 
   // Parse the group multicast address.
@@ -381,8 +396,9 @@ TAO_UIPMC_Profile::parse_string_i (const char *string)
 #if defined (ACE_HAS_IPV6)
   // Check if this is a (possibly) IPv6 supporting profile containing a
   // decimal IPv6 address representation.
-  if ((this->version ().major > TAO_MIN_IPV6_IIOP_MAJOR ||
-        this->version ().minor >= TAO_MIN_IPV6_IIOP_MINOR) &&
+  if ( (this->version ().major > TAO_MIN_IPV6_IIOP_MAJOR     ||
+       (this->version ().major == TAO_MIN_IPV6_IIOP_MAJOR &&
+        this->version ().minor >= TAO_MIN_IPV6_IIOP_MINOR   )  ) &&
       string[0] == '[')
     {
       // In this case we have to find the end of the numeric address and
@@ -391,11 +407,12 @@ TAO_UIPMC_Profile::parse_string_i (const char *string)
       if (pos == 0)
         {
           // No valid IPv6 address specified.
-          if (TAO_debug_level > 0)
+          if (TAO_debug_level)
             {
               ACE_ERROR ((LM_ERROR,
-                          ACE_TEXT ("\nTAO (%P|%t) - UIPMC_Profile: ")
-                          ACE_TEXT ("Invalid IPv6 decimal address specified.\n")));
+                          ACE_TEXT ("\nTAO (%P|%t) - UIPMC_Profile::")
+                          ACE_TEXT ("parse_string_i, Invalid IPv6 ")
+                          ACE_TEXT ("decimal address specified.\n")));
             }
 
           throw CORBA::INV_OBJREF (
@@ -412,13 +429,11 @@ TAO_UIPMC_Profile::parse_string_i (const char *string)
         }
     }
   else
-    {
 #endif /* ACE_HAS_IPV6 */
+    {
       mcast_addr = ACE_CString (string, pos - string);
       string = pos + 1;
-#if defined (ACE_HAS_IPV6)
     }
-#endif /* ACE_HAS_IPV6 */
 
   size_t mcast_addr_len = mcast_addr.length ();
   if (ACE_OS::strspn (mcast_addr.c_str (),
@@ -447,7 +462,7 @@ TAO_UIPMC_Profile::parse_string_i (const char *string)
     }
 
   // Port can have name thus letters and '-' are allowed.
-  const char port_chars[] =
+  static const char port_chars[] =
     "-0123456789ABCDEFGHIGKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
   size_t port_len = ACE_OS::strlen (string);
   if (ACE_OS::strspn (string, port_chars) != port_len)
@@ -479,8 +494,10 @@ TAO_UIPMC_Profile::parse_string_i (const char *string)
   ACE_INET_Addr addr (mcast_port, mcast_addr.c_str ());
   this->endpoint_.object_addr (addr);
 
-  this->set_group_info (group_domain_id.c_str (),
+  this->set_group_info (component_version,
+                        group_domain_id.c_str (),
                         group_id,
+                        has_ref_version,
                         ref_version);
 
   if (this->orb_core ()->orb_params ()->preferred_interfaces ())
@@ -507,7 +524,7 @@ TAO_UIPMC_Profile::hash (CORBA::ULong max)
   // Get the hashvalue for all endpoints.
   CORBA::ULong hashval = this->endpoint_.hash ();
 
-  hashval += this->version_.minor;
+  hashval += TAO_DEF_MIOP_MINOR;
   hashval += this->tag ();
 
   return hashval % max;
@@ -534,15 +551,15 @@ TAO_UIPMC_Profile::endpoint_count (void) const
 char *
 TAO_UIPMC_Profile::to_string (void)
 {
-  // corbaloc:miop:1.2@1.0-group_id-1-1/host:port
+  // corbaloc:miop:1.0@1.0-group_id-1-1/host:port
 
   size_t buflen = (8 /* "corbaloc" */ +
                    1 /* colon separator */ +
                    ACE_OS::strlen (::the_prefix) + /* "miop" */
                    1 /* colon separator */ +
-                   1 /* major version */ +
+                   1 /* miop major version */ +
                    1 /* decimal point */ +
-                   1 /* minor version */ +
+                   1 /* miop minor version */ +
                    1 /* `@' character */ +
                    1 /* component major version */ +
                    1 /* decimal point */ +
@@ -570,10 +587,10 @@ TAO_UIPMC_Profile::to_string (void)
                    "corbaloc:%s:%c.%c@%c.%c-%s-"
                    ACE_UINT64_FORMAT_SPECIFIER_ASCII,
                    ::the_prefix,
-                   digits [this->version_.major],
-                   digits [this->version_.minor],
                    digits [TAO_DEF_MIOP_MAJOR],
                    digits [TAO_DEF_MIOP_MINOR],
+                   digits [this->component_version_.major],
+                   digits [this->component_version_.minor],
                    this->group_domain_id_.c_str (),
                    this->group_id_);
 
@@ -651,90 +668,30 @@ TAO_UIPMC_Profile::create_tagged_profile (void)
 void
 TAO_UIPMC_Profile::create_profile_body (TAO_OutputCDR &encap) const
 {
-  encap.write_octet (TAO_ENCAP_BYTE_ORDER);
-
-  // The GIOP version
-  // Note: Only GIOP 1.2 and above are supported currently for MIOP.
-  encap.write_octet (this->version_.major);
-  encap.write_octet (this->version_.minor);
-
-  // Address.
-  encap.write_string (this->endpoint_.host ());
-
-  // Port number.
-  encap.write_ushort (this->endpoint_.port ());
+  this->encodeAddressInfo (encap);
 
   // UIPMC is only supported by versions of GIOP that have tagged components,
   // so unconditionally encode the components.
   this->tagged_components ().encode (encap);
 }
 
-/*
-int
-TAO_UIPMC_Profile::decode_endpoints (void)
-{
-  IOP::TaggedComponent tagged_component;
-  tagged_component.tag = TAO_TAG_ENDPOINTS;
-
-  if (this->tagged_components_.get_component (tagged_component))
-    {
-      const CORBA::Octet *buf =
-        tagged_component.component_data.get_buffer ();
-
-      TAO_InputCDR in_cdr (reinterpret_cast<const char*> (buf),
-                           tagged_component.component_data.length ());
-
-      // Extract the Byte Order.
-      CORBA::Boolean byte_order;
-      if ((in_cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
-        return -1;
-      in_cdr.reset_byte_order (static_cast<int> (byte_order));
-
-      // Extract endpoints sequence.
-      TAO_UIPMCEndpointSequence endpoints;
-
-      if ((in_cdr >> endpoints) == 0)
-        return -1;
-
-      // Get the priority of the first endpoint (head of the list.
-      // It's other data is extracted as part of the standard profile
-      // decoding.
-      this->endpoint_.priority (endpoints[0].priority);
-
-      // Use information extracted from the tagged component to
-      // populate the profile.  Skip the first endpoint, since it is
-      // always extracted through standard profile body.  Also, begin
-      // from the end of the sequence to preserve endpoint order,
-      // since <add_endpoint> method reverses the order of endpoints
-      // in the list.
-      for (CORBA::ULong i = endpoints.length () - 1;
-           i > 0;
-           --i)
-        {
-          TAO_UIPMC_Endpoint *endpoint = 0;
-          ACE_NEW_RETURN (endpoint,
-                          TAO_UIPMC_Endpoint (endpoints[i].host,
-                                             endpoints[i].port,
-                                             endpoints[i].priority),
-                          -1);
-
-          this->add_endpoint (endpoint);
-        }
-    }
-
-  return 0;
-}
-*/
-
 void
-TAO_UIPMC_Profile::set_group_info (const char *domain_id,
-                                   PortableGroup::ObjectGroupId group_id,
-                                   PortableGroup::ObjectGroupRefVersion ref_version)
+TAO_UIPMC_Profile::set_group_info (
+  GIOP::Version const &component_version,
+  const char *domain_id,
+  PortableGroup::ObjectGroupId group_id,
+  bool has_ref_version,
+  PortableGroup::ObjectGroupRefVersion ref_version)
 {
   // First, record the group information.
+  this->component_version_ = component_version;
   this->group_domain_id_.set (domain_id);
   this->group_id_ = group_id;
-  this->ref_version_ = ref_version;
+  this->has_ref_version_ = has_ref_version;
+  if (has_ref_version)
+    {
+      this->ref_version_ = ref_version;
+    }
 
   // Update the cached version of the group component.
   this->update_cached_group_component ();
@@ -746,8 +703,8 @@ TAO_UIPMC_Profile::update_cached_group_component (void)
   PortableGroup::TagGroupTaggedComponent group;
 
   // Encode the data structure.
-  group.component_version.major = TAO_DEF_MIOP_MAJOR;
-  group.component_version.minor = TAO_DEF_MIOP_MINOR;
+  group.component_version.major = this->component_version_.major;
+  group.component_version.minor = this->component_version_.minor;
 
   group.group_domain_id = CORBA::string_dup (this->group_domain_id_.c_str ());
   group.object_group_id = this->group_id_;
@@ -761,8 +718,11 @@ TAO_UIPMC_Profile::update_cached_group_component (void)
   // Write the group information.
   if ((out_cdr << group) == 0)
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  "Error marshaling group component!"));
+      if (TAO_debug_level)
+        ACE_DEBUG ((LM_ERROR,
+                    ACE_TEXT ("TAO (%P|%t) - UIPMC_Profile::")
+                    ACE_TEXT ("update_cached_group_component, Error ")
+                    ACE_TEXT ("marshaling group component!")));
       return;
     }
 
@@ -791,19 +751,17 @@ TAO_UIPMC_Profile::update_cached_group_component (void)
 
 void
 TAO_UIPMC_Profile::request_target_specifier (
-                      TAO_Target_Specification &target_spec,
-                      TAO_Target_Specification::TAO_Target_Address required_type)
+  TAO_Target_Specification &target_spec,
+  TAO_Target_Specification::TAO_Target_Address required_type)
 {
   // Fill out the target specifier based on the required type.
   switch (required_type)
     {
     case TAO_Target_Specification::Profile_Addr:
-
       // Only using a profile as the target specifier is supported
       // at this time.  Object keys are strictly not supported since
       // UIPMC profiles do not have object keys.
-      target_spec.target_specifier (
-            this->create_tagged_profile ());
+      target_spec.target_specifier (this->create_tagged_profile ());
       break;
 
     case TAO_Target_Specification::Key_Addr:
@@ -845,14 +803,18 @@ TAO_UIPMC_Profile::addressing_mode (CORBA::Short addr_mode)
 }
 
 int
-TAO_UIPMC_Profile::extract_group_component (const IOP::TaggedProfile &profile,
-                                            PortableGroup::TagGroupTaggedComponent &group)
+TAO_UIPMC_Profile::extract_group_component (
+  const IOP::TaggedProfile &profile,
+  PortableGroup::TagGroupTaggedComponent &group)
 {
   // Create the decoding stream from the encapsulation in the buffer,
 //#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
 //  TAO_InputCDR cdr (profile.profile_data.mb ());
 //#else
-  TAO_InputCDR cdr (reinterpret_cast<const char*> (profile.profile_data.get_buffer ()),
+  CORBA::Octet const *buf =
+    profile.profile_data.get_buffer ();
+
+  TAO_InputCDR cdr (reinterpret_cast<const char*> (buf),
                     profile.profile_data.length ());
 //#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
 
@@ -865,33 +827,34 @@ TAO_UIPMC_Profile::extract_group_component (const IOP::TaggedProfile &profile,
   // Read and verify major, minor versions, ignoring UIPMC profiles
   // whose versions we don't understand.
   CORBA::Octet major;
-  CORBA::Octet minor = CORBA::Octet();
+  CORBA::Octet minor;
 
   // Read the version. We just read it here. We don't*do any*
   // processing.
-  if (!(cdr.read_octet (major)
-        && cdr.read_octet (minor)))
-  {
-    if (TAO_debug_level > 0)
-      {
+  if (!cdr.read_octet (major) ||
+      !cdr.read_octet (minor)   )
+    {
+      if (TAO_debug_level)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) - UIPMC_Profile::extract_group_component - v%d.%d\n"),
+                    ACE_TEXT ("TAO (%P|%t) - UIPMC_Profile::")
+                    ACE_TEXT ("extract_group_component, version %d.%d\n"),
                     major,
                     minor));
-      }
-    return -1;
-  }
+      return -1;
+    }
 
   // Decode the endpoint.
   ACE_CString address;
   CORBA::UShort port;
 
-  if (!(cdr.read_string (address)
-        && cdr.read_ushort (port)))
+  if (!cdr.read_string (address) ||
+      !cdr.read_ushort (port)      )
     {
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) - UIPMC_Profile::extract_group_component - Couldn't unmarshal address and port!\n")));
+      if (TAO_debug_level)
+        ACE_DEBUG ((LM_ERROR,
+                    ACE_TEXT ("TAO (%P|%t) - UIPMC_Profile::")
+                    ACE_TEXT ("extract_group_component, Couldn't ")
+                    ACE_TEXT ("unmarshal address and port!\n")));
       return -1;
     }
 
@@ -907,8 +870,7 @@ TAO_UIPMC_Profile::extract_group_component (const IOP::TaggedProfile &profile,
     return -1;
 
   // Found it.
-  const CORBA::Octet *buf =
-    tagged_component.component_data.get_buffer ();
+  buf = tagged_component.component_data.get_buffer ();
 
   TAO_InputCDR in_cdr (reinterpret_cast<const char*> (buf),
                        tagged_component.component_data.length ());
@@ -922,6 +884,22 @@ TAO_UIPMC_Profile::extract_group_component (const IOP::TaggedProfile &profile,
     return -1;
 
   return 0;
+}
+
+void
+TAO_UIPMC_Profile::encodeAddressInfo (TAO_OutputCDR &encap) const
+{
+  encap.write_octet (TAO_ENCAP_BYTE_ORDER);
+
+  // The MIOP version
+  encap.write_octet (TAO_DEF_MIOP_MAJOR);
+  encap.write_octet (TAO_DEF_MIOP_MINOR);
+
+  // Address.
+  encap.write_string (this->endpoint_.host ());
+
+  // Port number.
+  encap.write_ushort (this->endpoint_.port ());
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

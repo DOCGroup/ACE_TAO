@@ -17,8 +17,6 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/PortableGroup/UIPMC_Mcast_Connection_Handler.h"
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -116,8 +114,6 @@ protected:
   /// Parse protocol specific options.
   virtual int parse_options (const char *options);
 
-protected:
-
   /// Array of ACE_INET_Addr instances, each one corresponding to a
   /// given network interface.
   ACE_INET_Addr *addrs_;
@@ -146,9 +142,6 @@ protected:
   TAO_ORB_Core *orb_core_;
 
 private:
-
-  TAO_UIPMC_Mcast_Connection_Handler *connection_handler_;
-
   bool listen_on_all_;
 };
 
