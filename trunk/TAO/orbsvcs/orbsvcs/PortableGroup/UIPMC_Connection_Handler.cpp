@@ -261,7 +261,7 @@ TAO_UIPMC_Connection_Handler::open (void*)
                         ACE_TEXT ("open, -ORBSendHighWaterMark not specified ")
                         ACE_TEXT ("using %u bytes\n"),
                         this->send_hi_water_mark_));
-#else      
+#else
       int size = sizeof (this->send_hi_water_mark_);
       result =
         this->peer ().get_option (SOL_SOCKET,

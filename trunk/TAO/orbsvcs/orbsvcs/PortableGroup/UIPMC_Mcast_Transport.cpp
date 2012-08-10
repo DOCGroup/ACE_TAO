@@ -287,7 +287,7 @@ bool
 TAO_UIPMC_Mcast_Transport::recv_all (void)
 {
   // Only one thread will do recv.
-  ACE_Guard<TAO_SYNCH_MUTEX> recv_guard (this->recv_lock_, 0); // tryacquire
+  ACE_GUARD<TAO_SYNCH_MUTEX> recv_guard (this->recv_lock_, 0); // tryacquire
   if (!recv_guard.locked ())
     return !this->complete_.is_empty ();
 

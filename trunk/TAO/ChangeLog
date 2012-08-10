@@ -1,3 +1,14 @@
+Fri Aug 10 14:42:00 UTC 2012  Simon Massey  <sma at prismtech dot com>
+
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Mcast_Transport.cpp:
+        * orbsvcs/tests/Miop/McastFragmentation/uipmc_client.conf:
+        * orbsvcs/tests/Miop/McastFragmentation/uipmc_server.conf:
+        * orbsvcs/tests/Miop/McastFragmentation/uipmc_server_m.conf:
+        * orbsvcs/tests/Miop/McastFragmentation/uipmc_server_n.conf:
+
+          Fuzz errors corrected.
+
 Fri Aug 10 14:00:00 UTC 2012  Simon Massey  <sma at prismtech dot com>
 
         * NEWS:
