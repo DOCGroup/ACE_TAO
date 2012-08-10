@@ -42,8 +42,7 @@ namespace DAnCE
   {
     DANCE_TRACE ("Install_Instance::invoke_pre_interceptor");
 
-    (*i)->pre_install (this->plan_,
-                                this->instanceRef_);
+    (*i)->pre_install (this->plan_, this->instanceRef_);
   }
 
 
@@ -92,7 +91,6 @@ namespace DAnCE
     this->instance_excep_ =
       DAnCE::Utility::create_any_from_exception (ex_tmp);
   }
-
 
   void
   Install_Instance::create_valid_result (Event_Result &result)
