@@ -164,25 +164,19 @@ namespace DAnCE
                             DAnCE::DANCE_INSTALLATIONHANDLER) == 0)
           {
             CORBA::Any_var any;
-            inst_handler.install_instance (plan,
-                                           i,
-                                           any.out ());
+            inst_handler.install_instance (plan, i, any.out ());
           }
         else if (ACE_OS::strcmp (inst_type.in (),
                                  DAnCE::DANCE_DEPLOYMENTINTERCEPTOR) == 0)
           {
             CORBA::Any_var any;
-            interceptor_handler.install_instance (plan,
-                                                  i,
-                                                  any.out ());
+            interceptor_handler.install_instance (plan, i, any.out ());
           }
         else if (ACE_OS::strcmp (inst_type.in (),
                                  DAnCE::DANCE_CONFIGPLUGIN) == 0)
           {
             CORBA::Any_var any;
-            config_handler.install_instance (plan,
-                                             i,
-                                             any.out ());
+            config_handler.install_instance (plan, i, any.out ());
           }
       }
   }
