@@ -21,14 +21,13 @@ namespace DAnCE
   void
   Standard_Error::configure (const ::Deployment::Properties & )
   {
-
   }
 
   void
   Standard_Error::post_install (const ::Deployment::DeploymentPlan &plan,
-                                         ::CORBA::ULong index,
-                                         const ::CORBA::Any &,
-                                         const ::CORBA::Any &exception)
+                                ::CORBA::ULong index,
+                                const ::CORBA::Any &,
+                                const ::CORBA::Any &exception)
   {
     if (exception.type() != ::CORBA::_tc_null)
       {
@@ -76,8 +75,8 @@ namespace DAnCE
 
   void
   Standard_Error::post_activate (const ::Deployment::DeploymentPlan & plan,
-                                          ::CORBA::ULong index,
-                                          const ::CORBA::Any & exception)
+                                 ::CORBA::ULong index,
+                                 const ::CORBA::Any & exception)
   {
     if (exception.type() != ::CORBA::_tc_null)
       {
@@ -93,8 +92,8 @@ namespace DAnCE
 
   void
   Standard_Error::post_passivate (const ::Deployment::DeploymentPlan & plan,
-                                           ::CORBA::ULong index,
-                                           const ::CORBA::Any & exception)
+                                  ::CORBA::ULong index,
+                                  const ::CORBA::Any & exception)
   {
     if (exception.type() != ::CORBA::_tc_null)
       {
@@ -110,8 +109,8 @@ namespace DAnCE
 
   void
   Standard_Error::post_remove (const ::Deployment::DeploymentPlan & plan,
-                                        ::CORBA::ULong index,
-                                        const ::CORBA::Any & exception)
+                               ::CORBA::ULong index,
+                               const ::CORBA::Any & exception)
   {
     if (exception.type() != ::CORBA::_tc_null)
       {
