@@ -63,8 +63,9 @@ void
 TAO_UIPMC_Endpoint::object_addr (const ACE_INET_Addr &addr)
 {
   this->port_ = addr.get_port_number();
-  this->host_ = CORBA::string_dup (addr.get_host_addr ());
-
+  char tmp[INET6_ADDRSTRLEN];
+  addr.get_host_addr (tmp, sizeof tmp);
+  this->host_ = CORBA::string_dup (tmp);
   this->object_addr_.set (addr);
 }
 
@@ -77,10 +78,13 @@ TAO_UIPMC_Endpoint::host (void) const
 int
 TAO_UIPMC_Endpoint::addr_to_string (char *buffer, size_t length)
 {
+  char tmp[INET6_ADDRSTRLEN];
+  this->object_addr_.get_host_addr (tmp, sizeof tmp);
+
   size_t actual_len =
-    ACE_OS::strlen (this->object_addr_.get_host_addr ()) // chars in host name
-    + sizeof (':')               // delimiter
-    + 5                          // max port
+    ACE_OS::strlen (tmp) // chars in host name
+    + sizeof (':')       // delimiter
+    + 5u                 // max port
     + sizeof ('\0');
 
 #if defined (ACE_HAS_IPV6)
@@ -93,13 +97,13 @@ TAO_UIPMC_Endpoint::addr_to_string (char *buffer, size_t length)
 
 #if defined (ACE_HAS_IPV6)
   if (this->object_addr_.get_type () == AF_INET6)
-    ACE_OS::sprintf (buffer, "[%s]:%d",
-                     this->object_addr_.get_host_addr (),
+    ACE_OS::sprintf (buffer, "[%s]:%u",
+                     tmp,
                      this->port_);
   else
 #endif /* ACE_HAS_IPV6 */
-  ACE_OS::sprintf (buffer, "%s:%d",
-                   this->object_addr_.get_host_addr (),
+  ACE_OS::sprintf (buffer, "%s:%u",
+                   tmp,
                    this->port_);
 
   return 0;

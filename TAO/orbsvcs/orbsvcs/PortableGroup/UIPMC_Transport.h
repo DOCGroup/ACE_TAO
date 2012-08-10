@@ -24,35 +24,30 @@
 
 #include "ace/SOCK_Stream.h"
 #include "ace/Svc_Handler.h"
+#include "ace/Refcountable_T.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward decls.
 class TAO_ORB_Core;
-class TAO_Operation_Details;
-class TAO_Acceptor;
+class TAO_UIPMC_Connection_Handler;
 
 /**
  * @class TAO_UIPMC_Transport
  *
  * @brief Specialization of the base TAO_Transport class to handle the
- *  MIOP protocol.
+ *  client side MIOP protocol.
  */
-template<typename CONNECTION_HANDLER>
-class TAO_UIPMC_Transport : public TAO_Transport
+class TAO_PortableGroup_Export TAO_UIPMC_Transport : public TAO_Transport
 {
 public:
-
   /// Constructor.
-  TAO_UIPMC_Transport (CONNECTION_HANDLER *handler,
+  TAO_UIPMC_Transport (TAO_UIPMC_Connection_Handler *handler,
                        TAO_ORB_Core *orb_core);
 
   /// Default destructor.
   ~TAO_UIPMC_Transport (void);
 
-  /// Look for the documentation in Transport.h.
-  virtual int handle_input (TAO_Resume_Handle &rh,
-                            ACE_Time_Value *max_wait_time = 0);
 protected:
   /** @name Overridden Template Methods
    *
@@ -60,7 +55,7 @@ protected:
    */
   //@{
 
-  virtual ACE_Event_Handler * event_handler_i (void);
+  virtual ACE_Event_Handler *event_handler_i (void);
   virtual TAO_Connection_Handler *connection_handler_i (void);
 
   /// Write the complete Message_Block chain to the connection.
@@ -68,11 +63,10 @@ protected:
                         size_t &bytes_transferred,
                         const ACE_Time_Value *max_wait_time);
 
-
-  /// Read len bytes from into buf.
+  /// Shouldn't ever be called on the client side (read len bytes into buf).
   virtual ssize_t recv (char *buf,
                         size_t len,
-                        const ACE_Time_Value *s = 0);
+                        ACE_Time_Value const *s = 0);
 
   virtual int register_handler (void);
 
@@ -95,24 +89,29 @@ public:
 
 private:
   /// Construct and write a unique ID to the MIOP header.
-  void write_unique_id (TAO_OutputCDR &miop_hdr, unsigned long unique);
+  bool write_unique_id (TAO_OutputCDR &miop_hdr) const;
 
-private:
+  /// Throttle back clients send rate so as to not exceed client/server buffers
+  /// and servant message processing time.
+  void throttle_send_rate (
+    ACE_UINT64 max_fragment_rate,
+    u_long max_fragment_size,
+    u_long this_send_size);
 
   /// The connection service handler used for accessing lower layer
   /// communication protocols.
-  CONNECTION_HANDLER *connection_handler_;
+  TAO_UIPMC_Connection_Handler *connection_handler_;
+
+  /// This UUID used by client for making unique MIOP IDs.
+  u_long uuid_hash_;
+
+  /// On the client side the total amount of outstanding data being
+  /// transmitted and the time when this was last updated.
+  u_long total_bytes_outstanding_;
+  ACE_Time_Value time_last_sent_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "orbsvcs/PortableGroup/UIPMC_Transport.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("orbsvcs/PortableGroup/UIPMC_Transport.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif  /* TAO_UIPMC_TRANSPORT_H */

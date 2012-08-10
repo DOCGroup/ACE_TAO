@@ -21,15 +21,12 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/PortableGroup/UIPMC_Transport.h"
-
 #include "tao/Wait_Strategy.h"
 #include "tao/Connection_Handler.h"
 
 #include "ace/Acceptor.h"
 #include "ace/Reactor.h"
 #include "ace/SOCK_Dgram.h"
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -60,7 +57,7 @@ public:
 
   TAO_UIPMC_Connection_Handler (ACE_Thread_Manager* t = 0);
 
-  /// Constructor.  arg  parameter is used by the Acceptor to pass the
+  /// Constructor. arg parameter is used by the Acceptor to pass the
   /// protocol configuration properties for this connection.
   TAO_UIPMC_Connection_Handler (TAO_ORB_Core *orb_core);
 
@@ -99,20 +96,15 @@ public:
   int set_dscp_codepoint (CORBA::Long dscp_codepoint);
 
   // UIPMC Additions - Begin
-  const ACE_INET_Addr &addr (void);
+  const ACE_INET_Addr &addr (void) const;
 
   void addr (const ACE_INET_Addr &addr);
 
-  const ACE_INET_Addr &local_addr (void);
+  const ACE_INET_Addr &local_addr (void) const;
 
   void local_addr (const ACE_INET_Addr &addr);
 
-  /// This is only to be able to use client and server
-  /// connection handlers in the same way in transport.
-  ssize_t send (const iovec iov[],
-                int n,
-                const ACE_Addr &addr,
-                int flags = 0) const;
+  u_long send_hi_water_mark (void) const;
   // UIPMC Additions - End
 
 protected:
@@ -143,15 +135,11 @@ private:
 
   /// Stores the type of service value.
   int dscp_codepoint_;
+
+  /// How much data can be sent without delays. It defaults to the size
+  /// of the socket buffer.
+  u_long send_hi_water_mark_;
 };
-
-// Transport for this handler.
-typedef TAO_UIPMC_Transport<TAO_UIPMC_Connection_Handler>
-        UIPMC_TRANSPORT;
-
-#if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT
-template class TAO_PortableGroup_Export TAO_UIPMC_Transport<TAO_UIPMC_Connection_Handler>;
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT */
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
