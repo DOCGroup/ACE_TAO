@@ -1,9 +1,9 @@
-// This may look like C, but it's really -*- C++ -*-
 // $Id$
-
 
 #include "orbsvcs/PortableGroup/UIPMC_Connection_Handler.h"
 #include "orbsvcs/PortableGroup/UIPMC_Endpoint.h"
+#include "orbsvcs/PortableGroup/UIPMC_Transport.h"
+#include "orbsvcs/PortableGroup/miop_resource.h"
 
 #include "tao/Timeprobe.h"
 #include "tao/debug.h"
@@ -22,7 +22,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_UIPMC_Connection_Handler::TAO_UIPMC_Connection_Handler (ACE_Thread_Manager *t)
   : TAO_UIPMC_SVC_HANDLER (t, 0 , 0),
     TAO_Connection_Handler (0),
-    dscp_codepoint_ (IPDSFIELD_DSCP_DEFAULT << 2)
+    dscp_codepoint_ (IPDSFIELD_DSCP_DEFAULT << 2),
+    send_hi_water_mark_ (0u)
 {
   // This constructor should *never* get called, it is just here to
   // make the compiler happy: the default implementation of the
@@ -35,11 +36,12 @@ TAO_UIPMC_Connection_Handler::TAO_UIPMC_Connection_Handler (ACE_Thread_Manager *
 TAO_UIPMC_Connection_Handler::TAO_UIPMC_Connection_Handler (TAO_ORB_Core *orb_core)
   : TAO_UIPMC_SVC_HANDLER (orb_core->thr_mgr (), 0, 0),
     TAO_Connection_Handler (orb_core),
-    dscp_codepoint_ (IPDSFIELD_DSCP_DEFAULT << 2)
+    dscp_codepoint_ (IPDSFIELD_DSCP_DEFAULT << 2),
+    send_hi_water_mark_ (0u)
 {
-  UIPMC_TRANSPORT* specific_transport = 0;
+  TAO_UIPMC_Transport* specific_transport = 0;
   ACE_NEW(specific_transport,
-          UIPMC_TRANSPORT (this, orb_core));
+          TAO_UIPMC_Transport (this, orb_core));
 
   // store this pointer (indirectly increment ref count)
   this->transport (specific_transport);
@@ -54,14 +56,14 @@ TAO_UIPMC_Connection_Handler::~TAO_UIPMC_Connection_Handler (void)
   if (result == -1 && TAO_debug_level)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT("TAO (%P|%t) - UIPMC_Connection_Handler::")
-                  ACE_TEXT("~UIPMC_Connection_Handler, ")
-                  ACE_TEXT("release_os_resources() failed %m\n")));
+                  ACE_TEXT ("TAO (%P|%t) - UIPMC_Connection_Handler::")
+                  ACE_TEXT ("~UIPMC_Connection_Handler, ")
+                  ACE_TEXT ("release_os_resources() failed %m\n")));
     }
 }
 
 const ACE_INET_Addr &
-TAO_UIPMC_Connection_Handler::addr (void)
+TAO_UIPMC_Connection_Handler::addr (void) const
 {
   return this->addr_;
 }
@@ -73,24 +75,21 @@ TAO_UIPMC_Connection_Handler::addr (const ACE_INET_Addr &addr)
 }
 
 const ACE_INET_Addr &
-TAO_UIPMC_Connection_Handler::local_addr (void)
+TAO_UIPMC_Connection_Handler::local_addr (void) const
 {
-  return local_addr_;
+  return this->local_addr_;
 }
 
 void
 TAO_UIPMC_Connection_Handler::local_addr (const ACE_INET_Addr &addr)
 {
-  local_addr_ = addr;
+  this->local_addr_ = addr;
 }
 
-ssize_t
-TAO_UIPMC_Connection_Handler::send (const iovec iov[],
-                                    int n,
-                                    const ACE_Addr &addr,
-                                    int flags) const
+u_long
+TAO_UIPMC_Connection_Handler::send_hi_water_mark (void) const
 {
-  return this->peer ().send (iov, n, addr, flags);
+  return this->send_hi_water_mark_;
 }
 
 int
@@ -102,12 +101,20 @@ TAO_UIPMC_Connection_Handler::open_handler (void *v)
 int
 TAO_UIPMC_Connection_Handler::open (void*)
 {
+  TAO_MIOP_Resource_Factory *const factory =
+    ACE_Dynamic_Service<TAO_MIOP_Resource_Factory>::instance (
+      this->orb_core ()->configuration(),
+      ACE_TEXT ("MIOP_Resource_Factory"));
+
   // Since only client can send data over MIOP
   // then ttl is only applicable to client socket.
-
   TAO_DIOP_Protocol_Properties protocol_properties;
 
   // Initialize values from ORB params.
+  protocol_properties.send_buffer_size_ =
+    factory->send_buffer_size () ?
+    factory->send_buffer_size () :
+    this->orb_core ()->orb_params ()->sock_sndbuf_size ();
   protocol_properties.hop_limit_ =
     this->orb_core ()->orb_params ()->ip_hoplimit ();
   protocol_properties.enable_multicast_loop_ =
@@ -130,14 +137,12 @@ TAO_UIPMC_Connection_Handler::open (void*)
 
   this->peer ().open (this->local_addr_);
 
-  if (TAO_debug_level > 5)
-  {
-     ACE_DEBUG ((LM_DEBUG,
-                 ACE_TEXT("TAO (%P|%t) - UIPMC_Connection_Handler::open, ")
-                 ACE_TEXT("listening on: <%s:%u>\n"),
-                 this->local_addr_.get_host_addr (),
-                 this->local_addr_.get_port_number ()));
-  }
+  if (this->set_socket_option (this->peer (),
+                               protocol_properties.send_buffer_size_,
+                               0) == -1)
+    {
+      return -1;
+    }
 
   if (protocol_properties.hop_limit_ >= 0)
     {
@@ -184,7 +189,7 @@ TAO_UIPMC_Connection_Handler::open (void*)
             {
               ACE_ERROR ((LM_ERROR,
                           ACE_TEXT("TAO (%P|%t) - UIPMC_Connection_Handler::open, ")
-                          ACE_TEXT("couldn't set hop limit\n\n")));
+                          ACE_TEXT("couldn't set hop limit '%m'\n")));
             }
           return -1;
         }
@@ -235,14 +240,60 @@ TAO_UIPMC_Connection_Handler::open (void*)
       if (TAO_debug_level)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT("TAO (%P|%t) - UIPMC_Connection_Handler::open, ")
-                      ACE_TEXT("couldn't %s multicast packets looping %p\n"),
+                      ACE_TEXT ("TAO (%P|%t) - UIPMC_Connection_Handler::open, ")
+                      ACE_TEXT ("couldn't %s multicast packets looping '%m'\n"),
                       protocol_properties.enable_multicast_loop_ ?
-                      ACE_TEXT("enable") : ACE_TEXT("disable"),
-                      ACE_TEXT("errno")
+                      ACE_TEXT ("enable") : ACE_TEXT ("disable")
                      ));
         }
       return -1;
+    }
+
+  this->send_hi_water_mark_ = factory->send_hi_water_mark ();
+  if (!this->send_hi_water_mark_)
+    {
+#if defined (ACE_LACKS_SO_SNDBUF)
+          // Assume a small buffer
+          this->send_hi_water_mark_ = 1024u;
+          if (TAO_debug_level)
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("TAO (%P|%t) - UIPMC_Connection_Handler::")
+                        ACE_TEXT ("open, -ORBSendHighWaterMark not specified ")
+                        ACE_TEXT ("using %u bytes\n"),
+                        this->send_hi_water_mark_));
+#else      
+      int size = sizeof (this->send_hi_water_mark_);
+      result =
+        this->peer ().get_option (SOL_SOCKET,
+                                  SO_SNDBUF,
+                                  static_cast<void *> (&this->send_hi_water_mark_),
+                                  &size);
+      if (!result)
+        {
+          // Note unix kernals double the value that is set (to hold the
+          // internal data structures seporating each packet) and this doubled
+          // value is what is returned by the get_option, so it is best to halve.
+          this->send_hi_water_mark_ >>= 1;
+          if (TAO_debug_level)
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("TAO (%P|%t) - UIPMC_Connection_Handler::")
+                        ACE_TEXT ("open, -ORBSendHighWaterMark not specified, ")
+                        ACE_TEXT ("using -ORBSndSock value of %u bytes\n"),
+                        this->send_hi_water_mark_));
+        }
+      else
+        {
+          // Assume a small buffer
+          this->send_hi_water_mark_ = 1024u;
+          if (TAO_debug_level)
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("TAO (%P|%t) - UIPMC_Connection_Handler::")
+                        ACE_TEXT ("open, -ORBSendHighWaterMark not specified ")
+                        ACE_TEXT ("and getsockopt failed '%m', using %u bytes\n"),
+                        this->send_hi_water_mark_));
+          return -1;
+        }
+#endif // defined (ACE_LACKS_SO_SNDBUF)
     }
 
   // Set that the transport is now connected, if fails we return -1
@@ -379,8 +430,9 @@ TAO_UIPMC_Connection_Handler::set_tos (int tos)
           if (TAO_debug_level)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "TAO (%P|%t) - UIPMC_Connection_Handler::"
-                          "set_dscp_codepoint -> IPV6_TCLASS not supported yet\n"));
+                          ACE_TEXT ("TAO (%P|%t) - UIPMC_Connection_Handler::")
+                          ACE_TEXT ("set_dscp_codepoint -> IPV6_TCLASS not ")
+                          ACE_TEXT ("supported yet\n")));
             }
           return 0;
         }
@@ -400,11 +452,13 @@ TAO_UIPMC_Connection_Handler::set_tos (int tos)
       if (TAO_debug_level)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "TAO (%P|%t) - UIPMC_Connection_Handler::"
-                      "set_dscp_codepoint -> dscp: %x; result: %d; %s\n",
+                      ACE_TEXT ("TAO (%P|%t) - UIPMC_Connection_Handler::")
+                      ACE_TEXT ("set_dscp_codepoint -> dscp: %x; ")
+                      ACE_TEXT ("result: %d; %s\n"),
                       tos,
                       result,
-                      result == -1 ? "try running as superuser" : ""));
+                      result == -1 ?
+                        ACE_TEXT ("try running as superuser") : ACE_TEXT ("")));
         }
 
       // On successful setting of TOS field.

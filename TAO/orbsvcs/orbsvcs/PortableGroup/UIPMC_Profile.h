@@ -72,10 +72,6 @@ public:
                      CORBA::UShort port,
                      TAO_ORB_Core *orb_core);
 
-  /// Create object using a string ior.
-  TAO_UIPMC_Profile (const char *string,
-                     TAO_ORB_Core *orb_core);
-
   /// Destructor is to be called only through _decr_refcnt.
   ~TAO_UIPMC_Profile (void);
 
@@ -84,28 +80,29 @@ public:
   /// N.B. We have to override the TAO_Profile default decode because
   /// in UIPMC there is no object key marshalled and we do not implement
   /// a useable decode_endpoints
-  virtual int decode (TAO_InputCDR& cdr);
+  virtual int decode (TAO_InputCDR &cdr);
   virtual void parse_string (const char *string);
   virtual char * to_string (void);
   virtual int encode_endpoints (void);
+  virtual void encodeAddressInfo (TAO_OutputCDR &stream) const;
   virtual TAO_Endpoint *endpoint (void);
   virtual CORBA::ULong endpoint_count (void) const;
   virtual CORBA::ULong hash (CORBA::ULong max);
   virtual IOP::TaggedProfile &create_tagged_profile (void);
   virtual void request_target_specifier (
-                      TAO_Target_Specification &target_spec,
-                      TAO_Target_Specification::TAO_Target_Address r);
+    TAO_Target_Specification &target_spec,
+    TAO_Target_Specification::TAO_Target_Address r);
   virtual int supports_multicast (void) const;
   virtual void addressing_mode (CORBA::Short addr_mode);
   static int extract_group_component (const IOP::TaggedProfile &profile,
                                       PortableGroup::TagGroupTaggedComponent &group);
 
   /// Add the mandatory group component to this profile.
-  void set_group_info (const char *domain_id,
+  void set_group_info (GIOP::Version const &component_version,
+                       const char *domain_id,
                        PortableGroup::ObjectGroupId group_id,
+                       bool has_ref_version,
                        PortableGroup::ObjectGroupRefVersion ref_version);
-
-
 protected:
   /// Template methods, please see documentation in tao/Profile.h
   virtual int decode_profile (TAO_InputCDR& cdr);
@@ -116,7 +113,6 @@ protected:
   virtual void update_cached_group_component (void);
 
 protected:
-
   /**
    * Head of this profile's list of endpoints.  This endpoint is not
    * dynamically allocated because a profile always contains at least
@@ -135,9 +131,11 @@ protected:
   TAO_UIPMC_Endpoint endpoint_;
 
 private:
-
   /// Cached version of our tagged profile.
   IOP::TaggedProfile tagged_profile_;
+
+  /// Group component version.
+  GIOP::Version component_version_;
 
   /// Group Domain ID.
   ACE_CString group_domain_id_;

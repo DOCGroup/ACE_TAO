@@ -38,30 +38,26 @@ public:
   UIPMC_Message_Block_Data_Iterator (iovec *iov, int iovcnt);
 
   /// Get the next data block that has a size less than or equal
-  /// to max_length.  Return the length of the block returned.
-  size_t next_block (size_t max_length,
-                     iovec &block);
+  /// to max_length. Return true if there is anything left.
+  bool next_block (size_t max_length, iovec &block);
 
 private:
-  enum State
-  {
-    INTER_BLOCK,
-    INTRA_BLOCK
-  };
-
   iovec *iov_;
   int iovcnt_;
+  int iov_index_;
 
   // Point internal to a message block, if we have to split one up.
   char *iov_ptr_;
-  int iov_index_;
 
   // Length used in a split message block.
   size_t iov_len_left_;
 
   // Current message iterator state.
-  State state_;
-
+  enum State
+  {
+    INTER_BLOCK,
+    INTRA_BLOCK
+  } state_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

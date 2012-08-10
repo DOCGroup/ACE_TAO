@@ -1,16 +1,12 @@
-// This may look like C, but it's really -*- C++ -*-
 // $Id$
 
 #include "orbsvcs/PortableGroup/UIPMC_Profile.h"
 #include "orbsvcs/PortableGroup/UIPMC_Acceptor.h"
+#include "orbsvcs/PortableGroup/UIPMC_Mcast_Connection_Handler.h"
 
-#include "tao/MProfile.h"
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
-#include "tao/Protocols_Hooks.h"
-#include "tao/ORB_Constants.h"
 
-#include "ace/Auto_Ptr.h"
 #include "ace/os_include/os_netdb.h"
 
 #if !defined(__ACE_INLINE__)
@@ -26,7 +22,6 @@ TAO_UIPMC_Acceptor::TAO_UIPMC_Acceptor (bool listen_on_all_ifs)
     endpoint_count_ (0),
     version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
     orb_core_ (0),
-    connection_handler_ (0),
     listen_on_all_(listen_on_all_ifs)
 {
 }
@@ -92,9 +87,8 @@ TAO_UIPMC_Acceptor::open (TAO_ORB_Core *orb_core,
       // The hostname cache has already been set!
       // This is bad mojo, i.e. an internal TAO error.
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("TAO (%P|%t) ")
-                         ACE_TEXT ("UIPMC_Acceptor::open - ")
-                         ACE_TEXT ("hostname already set\n\n")),
+                         ACE_TEXT ("TAO (%P|%t) - UIPMC_Acceptor::open, ")
+                         ACE_TEXT ("hostname already set\n")),
                         -1);
     }
 
@@ -117,9 +111,12 @@ TAO_UIPMC_Acceptor::open (TAO_ORB_Core *orb_core,
 #if defined (ACE_HAS_IPV6)
   // Check if this is a (possibly) IPv6 supporting profile containing a
   // numeric IPv6 address representation.
-  if ((this->version_.major > TAO_MIN_IPV6_IIOP_MAJOR ||
-        this->version_.minor >= TAO_MIN_IPV6_IIOP_MINOR) &&
-      address[0] == '[')
+  if ( (this->version_.major > TAO_MIN_IPV6_IIOP_MAJOR
+        ||
+          (this->version_.major == TAO_MIN_IPV6_IIOP_MAJOR
+           &&
+           this->version_.minor >= TAO_MIN_IPV6_IIOP_MINOR)
+       ) && address[0] == '[')
     {
       // In this case we have to find the end of the numeric address and
       // start looking for the port separator from there.
@@ -128,9 +125,8 @@ TAO_UIPMC_Acceptor::open (TAO_ORB_Core *orb_core,
         {
           // No valid IPv6 address specified.
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("TAO (%P|%t) - ")
-                             ACE_TEXT ("UIPMC_Acceptor::open, ")
-                             ACE_TEXT ("Invalid IPv6 decimal address specified\n\n")),
+                             ACE_TEXT ("TAO (%P|%t) - UIPMC_Acceptor::open, ")
+                             ACE_TEXT ("Invalid IPv6 decimal address specified\n")),
                             -1);
         }
       else
@@ -160,9 +156,8 @@ TAO_UIPMC_Acceptor::open (TAO_ORB_Core *orb_core,
   if (port_separator_loc == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("TAO (%P|%t) - ")
-                         ACE_TEXT ("UIPMC_Acceptor::open, ")
-                         ACE_TEXT ("port is not specified\n\n")),
+                         ACE_TEXT ("TAO (%P|%t) - UIPMC_Acceptor::open, ")
+                         ACE_TEXT ("port is not specified\n")),
                         -1);
     }
 
@@ -178,10 +173,9 @@ TAO_UIPMC_Acceptor::open (TAO_ORB_Core *orb_core,
        addr.is_ipv4_mapped_ipv6 ()))
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("TAO (%P|%t) - ")
-                         ACE_TEXT ("UIPMC_Acceptor::open, ")
+                         ACE_TEXT ("TAO (%P|%t) - UIPMC_Acceptor::open, ")
                          ACE_TEXT ("non-IPv6 endpoints not allowed when ")
-                         ACE_TEXT ("connect_ipv6_only is set\n\n")),
+                         ACE_TEXT ("connect_ipv6_only is set\n")),
                         -1);
     }
 #endif /* ACE_HAS_IPV6 */
@@ -230,13 +224,14 @@ int
 TAO_UIPMC_Acceptor::open_i (const ACE_INET_Addr& addr,
                             ACE_Reactor *reactor)
 {
-  ACE_NEW_RETURN (this->connection_handler_,
+  TAO_UIPMC_Mcast_Connection_Handler *connection_handler = 0;
+  ACE_NEW_RETURN (connection_handler,
                   TAO_UIPMC_Mcast_Connection_Handler (this->orb_core_),
                   -1);
 
-  this->connection_handler_->local_addr (addr);
-  this->connection_handler_->listen_on_all (this->listen_on_all_);
-  if (this->connection_handler_->open (0))
+  connection_handler->local_addr (addr);
+  connection_handler->listen_on_all (this->listen_on_all_);
+  if (connection_handler->open (0))
     {
         ACE_DEBUG ((LM_ERROR,
                       ACE_TEXT("TAO (%P|%t) - TAO_UIPMC_Acceptor::open_i, ")
@@ -246,17 +241,17 @@ TAO_UIPMC_Acceptor::open_i (const ACE_INET_Addr& addr,
     }
 
   int result =
-    reactor->register_handler (this->connection_handler_,
+    reactor->register_handler (connection_handler,
                                ACE_Event_Handler::READ_MASK);
   if (result == -1)
     {
-      // Close the handler (this will also delete connection_handler_).
-      this->connection_handler_->close ();
+      // Close the handler (this will also delete connection_handler).
+      connection_handler->close ();
       return result;
     }
 
   // Connection handler ownership now belongs to the Reactor.
-  this->connection_handler_->remove_reference ();
+  connection_handler->remove_reference ();
 
   // Set the port for each addr.  If there is more than one network
   // interface then the endpoint created on each interface will be on
@@ -271,8 +266,8 @@ TAO_UIPMC_Acceptor::open_i (const ACE_INET_Addr& addr,
       for (size_t i = 0; i < this->endpoint_count_; ++i)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) - UIPMC_Acceptor::open_i ")
-                      ACE_TEXT ("listening on: <%s:%u>\n"),
+                      ACE_TEXT ("TAO (%P|%t) - UIPMC_Acceptor::open_i, ")
+                      ACE_TEXT ("listening on: <%C:%u>\n"),
                       this->hosts_[i],
                       this->addrs_[i].get_port_number ()));
         }
@@ -295,15 +290,14 @@ int
 TAO_UIPMC_Acceptor::dotted_decimal_address (ACE_INET_Addr &addr,
                                             char *&host)
 {
-  const char *tmp = addr.get_host_addr ();
-  if (tmp == 0)
+  char tmp[INET6_ADDRSTRLEN];
+  if (!addr.get_host_addr (tmp, sizeof tmp))
     {
-      if (TAO_debug_level > 0)
+      if (TAO_debug_level)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("\n\nTAO (%P|%t) ")
-                    ACE_TEXT ("UIPMC_Acceptor::dotted_decimal_address ")
-                    ACE_TEXT ("- %p\n\n"),
-                    ACE_TEXT ("cannot determine hostname")));
+                    ACE_TEXT ("TAO (%P|%t) - UIPMC_Acceptor::")
+                    ACE_TEXT ("dotted_decimal_address, cannot determine ")
+                    ACE_TEXT ("hostname '%m'\n")));
       return -1;
     }
 

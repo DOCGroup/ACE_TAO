@@ -1,8 +1,9 @@
-// This may look like C, but it's really -*- C++ -*-
 // $Id$
 
 #include "orbsvcs/PortableGroup/UIPMC_Mcast_Connection_Handler.h"
 #include "orbsvcs/PortableGroup/UIPMC_Endpoint.h"
+#include "orbsvcs/PortableGroup/UIPMC_Mcast_Transport.h"
+#include "orbsvcs/PortableGroup/miop_resource.h"
 
 #include "tao/Timeprobe.h"
 #include "tao/debug.h"
@@ -38,9 +39,9 @@ TAO_UIPMC_Mcast_Connection_Handler::TAO_UIPMC_Mcast_Connection_Handler (
     TAO_Connection_Handler (orb_core),
     listen_on_all_(false)
 {
-  UIPMC_MULTICAST_TRANSPORT* specific_transport = 0;
+  TAO_UIPMC_Mcast_Transport *specific_transport = 0;
   ACE_NEW(specific_transport,
-          UIPMC_MULTICAST_TRANSPORT (this, orb_core));
+          TAO_UIPMC_Mcast_Transport (this, orb_core));
 
   // store this pointer (indirectly increment ref count)
   this->transport (specific_transport);
@@ -55,14 +56,14 @@ TAO_UIPMC_Mcast_Connection_Handler::~TAO_UIPMC_Mcast_Connection_Handler (void)
   if (result == -1 && TAO_debug_level)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT("TAO (%P|%t) - UIPMC_Mcast_Connection_Handler::")
-                  ACE_TEXT("~UIPMC_Mcast_Connection_Handler, ")
-                  ACE_TEXT("release_os_resources() failed %m\n")));
+                  ACE_TEXT ("TAO (%P|%t) - UIPMC_Mcast_Connection_Handler::")
+                  ACE_TEXT ("~UIPMC_Mcast_Connection_Handler, ")
+                  ACE_TEXT ("release_os_resources() failed '%m'\n")));
     }
 }
 
 const ACE_INET_Addr &
-TAO_UIPMC_Mcast_Connection_Handler::addr (void)
+TAO_UIPMC_Mcast_Connection_Handler::addr (void) const
 {
   return this->addr_;
 }
@@ -74,25 +75,15 @@ TAO_UIPMC_Mcast_Connection_Handler::addr (const ACE_INET_Addr &addr)
 }
 
 const ACE_INET_Addr &
-TAO_UIPMC_Mcast_Connection_Handler::local_addr (void)
+TAO_UIPMC_Mcast_Connection_Handler::local_addr (void) const
 {
-  return local_addr_;
+  return this->local_addr_;
 }
 
 void
 TAO_UIPMC_Mcast_Connection_Handler::local_addr (const ACE_INET_Addr &addr)
 {
-  local_addr_ = addr;
-}
-
-ssize_t
-TAO_UIPMC_Mcast_Connection_Handler::send (const iovec [],
-                                          int,
-                                          const ACE_Addr &,
-                                          int) const
-{
-  ACE_ASSERT (0);
-  return -1;
+  this->local_addr_ = addr;
 }
 
 int
@@ -109,32 +100,66 @@ TAO_UIPMC_Mcast_Connection_Handler::open (void*)
       this->peer ().opts(ACE_SOCK_Dgram_Mcast::OPT_NULLIFACE_ALL | this->peer ().opts());
     }
 
+  TAO_MIOP_Resource_Factory *const factory =
+    ACE_Dynamic_Service<TAO_MIOP_Resource_Factory>::instance (
+      this->orb_core ()->configuration(),
+      ACE_TEXT ("MIOP_Resource_Factory"));
+  TAO_DIOP_Protocol_Properties protocol_properties;
+  protocol_properties.recv_buffer_size_ =
+    factory->receive_buffer_size () ?
+    factory->receive_buffer_size () :
+    this->orb_core ()->orb_params ()->sock_rcvbuf_size ();
+
   if (this->peer ().join (this->local_addr_) == 0)
     {
       if (TAO_debug_level > 5)
-      {
+        {
+          char tmp[INET6_ADDRSTRLEN];
+          this->local_addr_.get_host_addr (tmp, sizeof tmp);
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT("TAO (%P|%t) - UIPMC_Mcast_Connection_Handler::open, ")
-                      ACE_TEXT("subscribed to multicast group at <%s:%d>\n"),
-                      this->local_addr_.get_host_addr (),
+                      ACE_TEXT("subscribed to multicast group at %C:%u\n"),
+                      tmp,
                       this->local_addr_.get_port_number ()
                   ));
-      }
+        }
     }
+#ifndef ALLOW_UNICAST_MIOP
   else
     {
-        ACE_DEBUG ((LM_ERROR,
-                      ACE_TEXT("TAO (%P|%t) - UIPMC_Mcast_Connection_Handler::open, ")
-                      ACE_TEXT("failed to subscribe to multicast group at <%s:%d>%p\n"),
-                      this->local_addr_.get_host_addr (),
-                      this->local_addr_.get_port_number (),
-                      ACE_TEXT(". Errno")
-                  ));
-        return -1;
+      char tmp[INET6_ADDRSTRLEN];
+      this->local_addr_.get_host_addr (tmp, sizeof tmp);
+      ACE_DEBUG ((LM_ERROR,
+                  ACE_TEXT("TAO (%P|%t) - UIPMC_Mcast_Connection_Handler::open, ")
+                  ACE_TEXT("failed to subscribe to multicast group at %C:%u '%m'\n"),
+                  tmp,
+                  this->local_addr_.get_port_number ()
+              ));
+      return -1;
+    }
+#endif // ALLOW_UNICAST_MIOP
+
+  if (this->set_socket_option (this->peer (),
+                               0,
+                               protocol_properties.recv_buffer_size_) == -1)
+    {
+      return -1;
+    }
+
+  // The socket has to be set in non-blocking mode in order to work with
+  // TAO_UIPMC_Mcast_Transport::handle_input().
+  if (this->peer ().enable (ACE_NONBLOCK) == -1)
+    {
+      if (TAO_debug_level)
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("TAO (%P|%t) - UIPMC_Mcast_Connection_Handler::")
+                    ACE_TEXT ("open, failed to set to non-blocking mode ")
+                    ACE_TEXT ("'%m'\n")));
+
+      return -1;
     }
 
   this->transport ()->id ((size_t) this->peer ().get_handle ());
-
   return 0;
 }
 
