@@ -1,3 +1,11 @@
+Fri Aug 10 10:59:29 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * dance/LocalityManager/Daemon/Locality_Manager_Impl.cpp:
+          Fixed incorrect debug statements
+
+        * dance/LocalityManager/Scheduler/Events/Install.cpp:
+          Layout changes
+
 Mon Jul 30 08:03:48 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tools/Logger_Backend/ndds/Log_Backend.cpp:
