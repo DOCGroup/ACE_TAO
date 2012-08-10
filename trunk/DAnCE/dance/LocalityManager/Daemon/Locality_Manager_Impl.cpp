@@ -163,9 +163,9 @@ namespace DAnCE
          i < plan_.instance.length ();
          ++i)
       {
-        CORBA::ULong implRef = plan.instance[i].implementationRef;
+        CORBA::ULong const implRef = plan.instance[i].implementationRef;
 
-        const char  *instance_type =
+        const char *instance_type =
           Utility::get_instance_type (plan.implementation[implRef].execParameter);
 
         instance_handlers_[instance_type].push_back (i);

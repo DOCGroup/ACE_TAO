@@ -44,7 +44,7 @@ namespace DAnCE
       const char * server_UUID,
       ::Deployment::Properties_out config)
     {
-      DANCE_TRACE("DAnCE_LocalityActivator_i::locaity_manager_callback");
+      DANCE_TRACE("DAnCE_LocalityActivator_i::locality_manager_callback");
 
       DANCE_DEBUG (DANCE_LOG_MINOR_EVENT,
                    (LM_TRACE, DLINFO
@@ -468,6 +468,7 @@ namespace DAnCE
 
           DANCE_ERROR (DANCE_LOG_ERROR,
                        (LM_ERROR, DLINFO
+                        ACE_TEXT ("DAnCE_LocalityActivator_i::spawn_locality_manager - ")
                         ACE_TEXT ("Failed to spawn a LocalityManager process\n")));
           throw Deployment::StartError ("locality_manager",
                                         "Failed to spawn process");
