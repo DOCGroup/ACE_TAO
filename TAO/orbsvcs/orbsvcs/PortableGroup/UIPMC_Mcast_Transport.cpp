@@ -286,10 +286,12 @@ TAO_UIPMC_Mcast_Transport::recv_packet (
 bool
 TAO_UIPMC_Mcast_Transport::recv_all (void)
 {
+  // FUZZ: disable check_for_ACE_Guard
   // Only one thread will do recv.
-  ACE_GUARD<TAO_SYNCH_MUTEX> recv_guard (this->recv_lock_, 0); // tryacquire
+  ACE_Guard<TAO_SYNCH_MUTEX> recv_guard (this->recv_lock_, 0); // tryacquire
   if (!recv_guard.locked ())
     return !this->complete_.is_empty ();
+  // FUZZ: enable check_for_ACE_Guard
 
   // The buffer on the stack which will be used to hold the input
   // messages.
