@@ -1,3 +1,10 @@
+Sat Aug 11 08:40:30 UTC 2012  Simon Massey  <sma at prismtech dot com>
+
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.cpp:
+
+          Fuzz error was wrong, need try_aquire here, not ACE_GUARD,
+          macro. Reverted change and disabled the fuzz check.
+
 Fri Aug 10 14:42:00 UTC 2012  Simon Massey  <sma at prismtech dot com>
 
         * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.cpp:
