@@ -23,6 +23,7 @@
 #include "be_codegen.h"
 
 #include "utl_identifier.h"
+#include "utl_string.h"
 
 #include "ast_typedef.h"
 #include "ast_structure.h"
@@ -152,6 +153,7 @@ be_util::prep_be_arg (char *s)
   static const char safe_include[]         = "safe_include=";
   static const char unique_include[]       = "unique_include=";
   static const char dds_impl[]             = "dds_impl=";
+  static const char stripped_filename[]    = "stripped_filename=";
 
   char* last = 0;
 
@@ -270,6 +272,11 @@ be_util::prep_be_arg (char *s)
         {
           char* val = arg + sizeof (unique_include) - 1;
           be_global->unique_include (val);
+        }
+      else if (ACE_OS::strstr (arg, stripped_filename) == arg)
+        {
+          char* val = arg + sizeof (stripped_filename) - 1;
+          be_global->stripped_filename (val);
         }
       else if (ACE_OS::strstr (arg, obv_opt_accessor) == arg)
         {
@@ -488,6 +495,11 @@ be_util::usage (void)
       ACE_TEXT (" -Wb,unique_include=<include path>\t\tinclude that should ")
       ACE_TEXT ("be generated as only contents of the generated client ")
       ACE_TEXT ("header file.\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Wb,stripped_filename=<filename>\t\tfilename that should ")
+      ACE_TEXT ("be used as stripped_filename instead of input filename.\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,

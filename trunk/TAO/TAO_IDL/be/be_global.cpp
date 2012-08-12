@@ -57,6 +57,7 @@ BE_GlobalData::BE_GlobalData (void)
     include_guard_ (0),
     safe_include_ (0),
     unique_include_ (0),
+    stripped_filename_ (0),
     core_versioning_begin_ ("\nTAO_BEGIN_VERSIONED_NAMESPACE_DECL\n"),
     core_versioning_end_   ("\nTAO_END_VERSIONED_NAMESPACE_DECL\n"),
     versioning_begin_ (),
@@ -1096,6 +1097,19 @@ BE_GlobalData::unique_include (const char *s)
   this->unique_include_ = ACE::strnew (s);
 }
 
+const char*
+BE_GlobalData::stripped_filename (void) const
+{
+  return this->stripped_filename_;
+}
+
+void
+BE_GlobalData::stripped_filename (const char *s)
+{
+  ACE::strdelete (this->stripped_filename_);
+  this->stripped_filename_ = ACE::strnew (s);
+}
+
 void
 BE_GlobalData::versioning_begin (const char * s)
 {
@@ -2011,6 +2025,9 @@ BE_GlobalData::destroy (void)
 
   ACE::strdelete (this->unique_include_);
   this->unique_include_ = 0;
+
+  ACE::strdelete (this->stripped_filename_);
+  this->stripped_filename_ = 0;
 
   ACE::strdelete (this->client_hdr_ending_);
   this->client_hdr_ending_ = 0;

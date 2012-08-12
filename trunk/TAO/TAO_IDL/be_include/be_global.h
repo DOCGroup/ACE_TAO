@@ -251,158 +251,165 @@ public:
     UTL_String *idl_file_name,
     bool base_name_only = false);
 
-  //// Returns the macro name for exporting server side classes in Win32
-  //// DLL.
+  /// Returns the macro name for exporting server side classes in Win32
+  /// DLL.
   const char* skel_export_macro (void) const;
 
-  //// Set the macro name for export server side classes in Win32 DLL.
+  /// Set the macro name for export server side classes in Win32 DLL.
   void skel_export_macro (const char* s);
 
-  //// Returns the name of the include file that contains the server
-  //// side export macro definition.
+  /// Returns the name of the include file that contains the server
+  /// side export macro definition.
   const char* skel_export_include (void) const;
 
-  //// Set the name of the include file that contains the server side
-  //// export macro definition.
+  /// Set the name of the include file that contains the server side
+  /// export macro definition.
   void skel_export_include (const char* s);
 
-  //// Returns the name of the include file that will be generated for the
-  //// server side export macro definition.
+  /// Returns the name of the include file that will be generated for the
+  /// server side export macro definition.
   const char* skel_export_file (void) const;
 
-  //// Set the name of the include file that the will be generated for server
-  //// side export macro definition.
+  /// Set the name of the include file that the will be generated for server
+  /// side export macro definition.
   void skel_export_file (const char* s);
 
-  //// Returns the macro name for exporting client side classes in Win32
-  //// DLL.
+  /// Returns the macro name for exporting client side classes in Win32
+  /// DLL.
   const char* stub_export_macro (void) const;
 
-  //// Set the macro name for export client side classes in Win32 DLL.
+  /// Set the macro name for export client side classes in Win32 DLL.
   void stub_export_macro (const char* s);
 
-  //// Returns the name of the include file that contains the client
-  //// side export macro definition.
+  /// Returns the name of the include file that contains the client
+  /// side export macro definition.
   const char* stub_export_include (void) const;
 
-  //// Set the name of the include file that contains the client side
-  //// export macro definition.
+  /// Set the name of the include file that contains the client side
+  /// export macro definition.
   void stub_export_include (const char* s);
 
-  //// Returns the name of the include file will be generated for the client
-  //// side export macro definition.
+  /// Returns the name of the include file will be generated for the client
+  /// side export macro definition.
   const char* stub_export_file (void) const;
 
-  //// Set the name of the include file that will be generated for the client
-  //// side export macro definition.
+  /// Set the name of the include file that will be generated for the client
+  /// side export macro definition.
   void stub_export_file (const char* s);
 
-  //// Returns the macro name for exporting *A.h file classes in Win32
-  //// DLL.
+  /// Returns the macro name for exporting *A.h file classes in Win32
+  /// DLL.
   const char* anyop_export_macro (void) const;
 
-  //// Set the macro name for export *A.h file classes in Win32 DLL.
+  /// Set the macro name for export *A.h file classes in Win32 DLL.
   void anyop_export_macro (const char* s);
 
-  //// Returns the name of the include file that contains the *A.h
-  //// file export macro definition.
+  /// Returns the name of the include file that contains the *A.h
+  /// file export macro definition.
   const char* anyop_export_include (void) const;
 
-  //// Set the name of the include file that contains the *A.h file
-  //// export macro definition.
+  /// Set the name of the include file that contains the *A.h file
+  /// export macro definition.
   void anyop_export_include (const char* s);
 
-  //// Returns the macro name for exporting exec impl classes in Win32
-  //// DLL.
+  /// Returns the macro name for exporting exec impl classes in Win32
+  /// DLL.
   const char* exec_export_macro (void) const;
 
-  //// Set the macro name for export exec impl classes in Win32 DLL.
+  /// Set the macro name for export exec impl classes in Win32 DLL.
   void exec_export_macro (const char* s);
 
-  //// Returns the name of the include file that contains the exec
-  //// impl export macro definition.
+  /// Returns the name of the include file that contains the exec
+  /// impl export macro definition.
   const char* exec_export_include (void) const;
 
-  //// Set the name of the include file that contains the exec impl
-  //// export macro definition.
+  /// Set the name of the include file that contains the exec impl
+  /// export macro definition.
   void exec_export_include (const char* s);
 
-  //// Returns the macro name for exporting CIAO svnt classes in Win32
-  //// DLL.
+  /// Returns the macro name for exporting CIAO svnt classes in Win32
+  /// DLL.
   const char* svnt_export_macro (void) const;
 
-  //// Set the macro name for export CIAO svnt classes in Win32 DLL.
+  /// Set the macro name for export CIAO svnt classes in Win32 DLL.
   void svnt_export_macro (const char* s);
 
-  //// Returns the name of the include file that contains the CIAO
-  //// svnt export macro definition.
+  /// Returns the name of the include file that contains the CIAO
+  /// svnt export macro definition.
   const char* svnt_export_include (void) const;
 
-  //// Set the name of the include file that contains the CIAO svnt
-  //// export macro definition.
+  /// Set the name of the include file that contains the CIAO svnt
+  /// export macro definition.
   void svnt_export_include (const char* s);
 
-  //// Returns the macro name for exporting CIAO connector
-  //// classes in Win32 DLL.
+  /// Returns the macro name for exporting CIAO connector
+  /// classes in Win32 DLL.
   const char* conn_export_macro (void) const;
 
-  //// Set the macro name for export CIAO connector
-  //// classes in Win32 DLL.
+  /// Set the macro name for export CIAO connector
+  /// classes in Win32 DLL.
   void conn_export_macro (const char* s);
 
-  //// Returns the name of the include file that contains the CIAO
-  //// connector export macro definition.
+  /// Returns the name of the include file that contains the CIAO
+  /// connector export macro definition.
   const char* conn_export_include (void) const;
 
-  //// Set the name of the include file that contains the CIAO
-  //// connector export macro definition.
+  /// Set the name of the include file that contains the CIAO
+  /// connector export macro definition.
   void conn_export_include (const char* s);
 
-  //// Returns the name of the include file to be used for precompiled
-  //// header support.
+  /// Returns the name of the include file to be used for precompiled
+  /// header support.
   const char* pch_include (void) const;
 
-  //// Set the name of the include file to be used for precompiled
-  //// header support.
+  /// Set the name of the include file to be used for precompiled
+  /// header support.
   void pch_include (const char* s);
 
-  //// Returns the name of the include file to be put at the top of
-  //// every header file.
+  /// Returns the name of the include file to be put at the top of
+  /// every header file.
   const char* pre_include (void) const;
 
-  //// Set the name of the include file to be put at the top of every
-  //// header file.
+  /// Set the name of the include file to be put at the top of every
+  /// header file.
   void pre_include (const char* s);
 
-  //// Returns the name of the include file to be put at the bottom of
-  //// every header file.
+  /// Returns the name of the include file to be put at the bottom of
+  /// every header file.
   const char* post_include (void) const;
 
-  //// Set the name of the include file to be put at the bottom of every
-  //// header file.
+  /// Set the name of the include file to be put at the bottom of every
+  /// header file.
   void post_include (const char* s);
 
-  //// Returns the guard that is placed in the client header file
+  /// Returns the guard that is placed in the client header file
   const char* include_guard (void) const;
 
-  //// Set the guard that is placed in the client header file
+  /// Set the guard that is placed in the client header file
   void include_guard (const char* s);
 
-  //// Returns the name of the include file that is used instead of the own
-  //// generated client header file
+  /// Returns the name of the include file that is used instead of the own
+  /// generated client header file
   const char* safe_include (void) const;
 
-  //// set the name of the include file that is used instead of the own
-  //// generated client header file
+  /// set the name of the include file that is used instead of the own
+  /// generated client header file
   void safe_include (const char* s);
 
-  //// Returns the name of the include file that should on get
-  //// generated in the client header file
+  /// Returns the name of the include file that should on get
+  /// generated in the client header file
   const char* unique_include (void) const;
 
   /// Set the name of the include file that should on get
   /// generated in the client header file
   void unique_include (const char* s);
+
+  /// Returns the name of the include file that should be used as
+  /// stripped_filename
+  const char* stripped_filename (void) const;
+
+  /// Set the name of the include file that should be used as stripped_filename
+  void stripped_filename (const char* s);
 
   /// Set text that opens a "versioned" namespace.
   void versioning_begin (const char* s);
@@ -946,6 +953,7 @@ private:
   char* include_guard_;
   char* safe_include_;
   char* unique_include_;
+  char* stripped_filename_;
 
   /// Text that opens a "versioned" namespace for core TAO and orbsvcs
   /// related code.
