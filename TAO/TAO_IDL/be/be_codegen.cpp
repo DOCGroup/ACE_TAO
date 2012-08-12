@@ -3555,9 +3555,18 @@ TAO_CodeGen::gen_exec_idl_includes (void)
         "connectors/ami4ccm/ami4ccm/ami4ccm.idl");
     }
 
-  this->gen_standard_include (
-    this->ciao_exec_idl_,
-    idl_global->stripped_filename ()->get_string ());
+  if (be_global->stripped_filename ())
+    {
+      this->gen_standard_include (
+        this->ciao_exec_idl_,
+        be_global->stripped_filename ());
+    }
+  else
+    {
+      this->gen_standard_include (
+        this->ciao_exec_idl_,
+        idl_global->stripped_filename ()->get_string ());
+    }
 
   char **path_tmp = 0;
 
