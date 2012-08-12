@@ -1,3 +1,13 @@
+Sun Aug 12 18:06:49 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        Reverted change below, seems to break VMS and the methods are still
+        declared in the header
+
+        Fri Jul 20 17:38:45 UTC 2012  Adam Mitz  <mitza@ociweb.com>
+        * tao/CDR.inl:
+          Changes to build for VxWorks 6.8 kernel mode
+          which does not define ACE_HAS_WCHAR.
+
 Sat Aug 11 08:40:30 UTC 2012  Simon Massey  <sma at prismtech dot com>
 
         * orbsvcs/orbsvcs/PortableGroup/UIPMC_Mcast_Transport.cpp:
@@ -83,8 +93,8 @@ Fri Aug 10 08:30:00 UTC 2012  Simon Massey  <sma at prismtech dot com>
 
 Tue Aug  7 15:45:42 UTC 2012  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
-        * examples/PluggableUDP/tests/SimplePerformance/test.idl (Simple_Server): 
-  
+        * examples/PluggableUDP/tests/SimplePerformance/test.idl (Simple_Server):
+
           Added a comment to make it clear that twoway operations don't
           work with DIOP.  Thanks to Ali Akbar Zarezadeh <akzare at cs dot
           uni-potsdam dot de> for reporting this.
@@ -170,7 +180,7 @@ Wed Aug  8 15:20:00 UTC 2012  Simon Massey  <sma at prismtech dot com>
         * tao/Strategies/SCIOP_Profile.cpp:
 
           Added CORBALOC support to the existing -ORBPreferredInterfaces option processing.
-          
+
         * tao/Strategies/COIOP_Endpoint.h:
         * tao/Strategies/DIOP_Endpoint.h:
         * tao/Strategies/SCIOP_Endpoint.h:
