@@ -8,14 +8,13 @@ feature(dds4ccm_opendds) : taoidldefaults, dcps_rtps, dcps_qos_xml_handler {
               -Wb,dds_impl=opendds \
               -I $(CIAO_ROOT)/connectors \
               -I $(CIAO_ROOT)/connectors/dds4ccm/idl \
-              -I $(CIAO_ROOT)/connectors/dds4ccm/idl/OpenDDS \
-              -I $(DDS_ROOT) \
-              -I $(DDS_ROOT)/dds
+              -I $(CIAO_ROOT)/connectors/dds4ccm/idl/dds \
+              -I $(DDS_ROOT)
   includes += $(CIAO_ROOT)/connectors/dds4ccm/idl \
               $(CIAO_ROOT)/connectors \
-              $(CIAO_ROOT)/connectors/dds4ccm/idl/OpenDDS \
-              $(DDS_ROOT)/dds \
-              $(DDS_ROOT)
+              $(CIAO_ROOT)/connectors/dds4ccm/idl/dds \
+              $(DDS_ROOT)\
+              $(DDS_ROOT)/dds
 }
 
 feature(dds4ccm_ndds) : ndds_idltocpp_stub {
