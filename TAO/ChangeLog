@@ -1,3 +1,13 @@
+Sun Aug 12 19:05:59 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be/be_util.cpp:
+        * TAO_IDL/be_include/be_global.h:
+        * docs/compiler.html:
+          Added stripped_filename option to overrule stripped filename of
+          input file
+
 Sun Aug 12 18:06:49 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         Reverted change below, seems to break VMS and the methods are still
