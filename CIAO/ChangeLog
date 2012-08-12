@@ -1,3 +1,13 @@
+Sun Aug 12 19:07:08 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/dds4ccm.mpb:
+        * connectors/dds4ccm/idl/dds:
+        * connectors/dds4ccm/idl/dds/opendds_lem_stub.mpc:
+        * connectors/dds4ccm/idl/OpenDDS:
+        * connectors/dds4ccm/idl/OpenDDS/opendds_lem_stub.mpc:
+          Moved OpenDDS to dds and made some more changes to improve the
+          lem generation for OpenDDS
+
 Fri Aug 10 11:59:55 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Deployment/Interceptors/Deployment_Interceptors.cpp:

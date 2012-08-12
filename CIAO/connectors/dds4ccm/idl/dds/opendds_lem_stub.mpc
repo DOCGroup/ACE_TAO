@@ -5,15 +5,33 @@ project(CIAO_OpenDDS_Dcps_idl_gen): gen_ostream, ccm_lem_stub, ciaoidldefaults, 
   requires   += dds4ccm_opendds
   custom_only = 1
   idlflags += -SS -Sci -Scc -Sch -Ssh -Ssc \
-              -I$(DDS_ROOT) \
+              -I$(DDS_ROOT) -I.. \
               -Glem -Gsv -Ssvntt -Ssvntc
 
   IDL_Files {
     gendir = .
+    idlflags += -Wb,stripped_filename=dds/DdsDcpsInfrastructure.idl
     $(DDS_ROOT)/dds/DdsDcpsInfrastructure.idl >> DdsDcpsInfrastructureE.idl DdsDcpsInfrastructure_svnt.h
+  }
+
+  IDL_Files {
+    gendir = .
+    idlflags += -Wb,stripped_filename=dds/DdsDcpsDomain.idl
     $(DDS_ROOT)/dds/DdsDcpsDomain.idl >> DdsDcpsDomainE.idl DdsDcpsDomain_svnt.h
+  }
+  IDL_Files {
+    gendir = .
+    idlflags += -Wb,stripped_filename=dds/DdsDcpsPublication.idl
     $(DDS_ROOT)/dds/DdsDcpsPublication.idl >> DdsDcpsPublicationE.idl DdsDcpsPublication_svnt.h
+  }
+  IDL_Files {
+    gendir = .
+    idlflags += -Wb,stripped_filename=dds/DdsDcpsSubscription.idl
     $(DDS_ROOT)/dds/DdsDcpsSubscription.idl >> DdsDcpsSubscriptionE.idl DdsDcpsSubscription_svnt.h
+  }
+  IDL_Files {
+    gendir = .
+    idlflags += -Wb,stripped_filename=dds/DdsDcpsTopic.idl
     $(DDS_ROOT)/dds/DdsDcpsTopic.idl >> DdsDcpsTopicE.idl DdsDcpsTopic_svnt.h
   }
 
@@ -30,7 +48,7 @@ project (CIAO_OpenDDS_Dcps_lem_gen) : taoidldefaults, install, \
   idlflags   += -I$(CIAO_ROOT)/connectors\
                 -Wb,stub_export_macro=DDSDCPS_LEM_STUB_Export \
                 -Wb,stub_export_include=DdsDcps_lem_stub_export.h \
-                -SS -I$(DDS_ROOT) -Ssvntt -Ssvntc -I$(DDS_ROOT)/dds -Sci
+                -SS -I$(DDS_ROOT) -Ssvntt -Ssvntc -Sci -I..
 
   IDL_Files {
      idlflags += -Gxhst
