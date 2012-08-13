@@ -107,9 +107,7 @@ TAO_UIPMC_Profile::decode (TAO_InputCDR& cdr)
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - UIPMC_Profile::decode, ")
-                      ACE_TEXT ("can't read version %d.%d\n"),
-                      major,
-                      minor));
+                      ACE_TEXT ("can't read version\n")));
         }
 
       return -1;
