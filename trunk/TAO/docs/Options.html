@@ -187,7 +187,7 @@ listening on for multicast requests. </td>
 In addition to being able to define the port where these known services
 are listening for multicast requests, as above, it is possible to set
 an environment variable that specifies the IOR of any named service.
-For example <code>NameServiceIOR=&lt;which&gt;,TradingServiceIOR=&lt;which&gt;,
+For example <code>NameServiceIOR=&lt;which,TradingServiceIOR=&lt;which&gt;,
 ImplRepoServiceIOR=&lt;which&gt;, MyServiceIOR=&lt;which&gt;</code>. This
 will have a similar effect to defining an -ORBInitRef value on the
 command line (see below). Any value set as a command line -ORBInitRef
@@ -1675,19 +1675,26 @@ using a service configurator directive of the form (all on one line):
 <p><code>dynamic MIOP_Resource_Factory Service_Object * TAO_PortableGroup:_make_TAO_MIOP_Resource_Factory () ""</code></p>
 
 Normally in order to setup the MIOP implementation correctly, the application will
-have to use other service configurator directives (for example):
+have to use other service configurator directives as well (for example):
 
 <p><code>dynamic UIPMC_Factory Service_Object * TAO_PortableGroup:_make_TAO_UIPMC_Protocol_Factory() ""<br>
 static Resource_Factory "-ORBProtocolFactory IIOP_Factory -ORBProtocolFactory UIPMC_Factory"<br>
-dynamic PortableGroup_Loader Service_Object * TAO_PortableGroup:_make_TAO_PortableGroup_Loader() ""</code></p>
+dynamic PortableGroup_Loader Service_Object * TAO_PortableGroup:_make_TAO_PortableGroup_Loader() ""
+dynamic MIOP_Resource_Factory Service_Object * TAO_PortableGroup:_make_TAO_MIOP_Resource_Factory () ""</code></p>
 
+Any options required to be given to the MIOP_Resource_Factory should be
+specified between the two double-quotes shown above as a space seporated list;
+however none are required as all options take default values if not specified.
 Since MIOP uses UDP sockets (which is not a "reliable" transport unlike tcp/ip) it is easy to configure MIOP
 in such a way that messages will not actually reach the servant. The options below are
 intended to maximize MIOP reliability but they must be used with care, users of MIOP
 must understand that messages are sent in fragments and they have to be reassembled
-by the server in their entirety to be useable by the servant. If a single fragment
-is lost, the whole message cannot be reconstructed and will be unusable.
-Fragments can be lost due to a variety of reasons:</p>
+by the server in their entirety to be useable by the servant. If even a single data
+fragment/packet is lost, the whole message cannot be reconstructed and will be
+unusable. There is no way for the servant to even know it has missed such a
+MIOP message, and being a one-way protocol, neither will the client be aware that
+the message has been lost. If a single fragment is lost, the whole message cannot be
+reconstructed and will be unusable. Fragments can be lost due to a variety of reasons:</p>
 <li>The client sends too large a message fragment, or sends messages too fast,
 overwhelming the client socket's transmission buffer. (In which case the client-side OS simply
 ignores the excess send requests and some of the fragments are not actually sent on the wire.)</li>
@@ -1741,11 +1748,11 @@ See also the <code>-ORBSndSock</code> option below.</b>
       <tr>
         <td><code>-ORBMaxFragmentRate</code> <em>microseconds</em></td>
         <td>This client-side option specifies a non-zero, positive amount of time (in uSec, i.e. microseconds) that it takes
-to transmit and process an individual message fragment of the maximum size. (This is the total of the client -> server
--> servant processing time.) The client attempts to keep the rate at which it sends messages down to this speed by
-purposly delaying sending message fragments, if it would exceeding this capacity (but also see the
+to transmit and process an individual message fragment of the maximum size. (This is the total of the
+client-&gt;server-&gt;servant processing time that is expected.) The client attempts to keep the rate at which
+it sends messages down to this speed by purposly delaying sending message fragments, if it would exceeding this capacity (but also see the
 <code>-ORBSendHighWaterMark</code> option below). The default is same value as specified, or is
-defaulted by the <code>-ORBMaxFragmentSize</code> option, but this time teated as microseconds not bytes.
+defaulted by, the <code>-ORBMaxFragmentSize</code> option, but this time teated as microseconds not bytes.
 (This default delay value is approximatly the time required to transmit that number of bytes on a 10Base-T
 network.) Larger values will throttle back the clients transmittion rate, smaller values will speed it up.
         </td>
