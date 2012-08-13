@@ -135,9 +135,8 @@ TAO_UIPMC_Connection_Handler::open (void*)
         }
     }
 
-  this->peer ().open (this->local_addr_);
-
-  if (this->set_socket_option (this->peer (),
+  if (this->peer ().open (this->local_addr_) == -1 ||
+      this->set_socket_option (this->peer (),
                                protocol_properties.send_buffer_size_,
                                0) == -1)
     {

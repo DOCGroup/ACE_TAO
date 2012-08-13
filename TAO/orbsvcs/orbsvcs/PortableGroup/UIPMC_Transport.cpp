@@ -338,7 +338,7 @@ TAO_UIPMC_Transport::send (
           // Haven't sent some of the data yet, we need to adjust the fragments iov's
           // to skip the data we have actually manage to send so far.
           while (already_sent)
-            if (current_iov->iov_len <= static_cast<u_long> (already_sent))
+            if (static_cast<u_long> (current_iov->iov_len) <= static_cast<u_long> (already_sent))
               {
                 // This whole iov has been sent, simply skip over it
                 already_sent-= current_iov->iov_len;

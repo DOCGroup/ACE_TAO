@@ -1,3 +1,12 @@
+Mon Aug 13 09:04:00 UTC 2012  Simon Massey  <sma at prismtech dot com>
+
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Message_Block_Data_Iterator.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport_Recv_Packet.h:
+
+          Minor fixes.
+
 Sun Aug 12 19:05:59 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_codegen.cpp:
