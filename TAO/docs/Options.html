@@ -1718,34 +1718,36 @@ are built in the <code>ace/config.h</code>, by specifying the new default limit 
 default (as only a single fragment would be allowed), unless a new limit is specified in the service file.
 Any messages that are too large and require more fragments than allowed by this setting are simply not
 transmitted by the client (the message is effectly lost without any error indication). This setting can be
-used as a safety setting to stop swamping the network and servant with abnormally large messages.
+used as a safty setting to stop swamping the network and servant with abnormally large messages or during
+testing to "lose" large messages for whatever reason.
         </td>
       </tr>
       <tr>
         <td><code>-ORBMaxFragmentSize</code> <em>bytes</em></td>
         <td>Another client-side option used to limit the number of bytes in each individual MIOP fragment,
-which must be between <em>272</em> and <em>65507</em> bytes inclusive. Smaller values increase (and larger
-values decrease) the number of fragments required to send the actual payload data. Each fragment requires the
-overhead of a new MIOP header (32 bytes) prefixing the actual data being sent, with the header reducing
-the actual usable payload data inside each fragment. Roughly this value can be considered as the MTU
-(Maximum Transmission Unit) set for the specific connection. The default takes the same value as the
-<code>ACE_MAX_UDP_PACKET_SIZE</code> for the system (normally <em>65507</em>), but this default can be overridden
-in the <code>ace/config.h</code> by giving a new value for <code>#define TAO_DEFAULT_MIOP_FRAGMENT_SIZE 65507</code>
-when the TAO libraries are built. <b>Note: most gateways and routing networks define an MTU of around <em>1460</em>,
-it is therefore advisable to specify the correct <code>-ORBMaxFragmentSize</code> value otherwise some fragments
-may be lost. See also the <code>-ORBSndSock</code> option below.</b>
+which must be between <em>272</em> and <em>ACE_MAX_UDP_PACKET_SIZE (normally 65507)</em> bytes inclusive.
+Smaller values increase (and larger values decrease) the number of fragments required to send the actual
+payload data. Each fragment requires the overhead of a new MIOP header (32 bytes) prefixing the actual
+data being sent, with the header reducing the actual usable payload data inside each fragment. Roughly
+this value can be considered as the MTU (Maximum Transmission Unit) set for the specific connection.
+The default takes the same value as the <code>ACE_MAX_UDP_PACKET_SIZE</code> for the system, but this
+default can be overridden in the <code>ace/config.h</code> by giving a new value for
+<code>#define TAO_DEFAULT_MIOP_FRAGMENT_SIZE 65507</code> when the TAO libraries are built. <b>Note:
+most gateways and routing networks define an MTU of around <em>1460</em>, it is therefore advisable to
+specify the correct <code>-ORBMaxFragmentSize</code> value or smaller otherwise some fragments may be lost.
+See also the <code>-ORBSndSock</code> option below.</b>
         </td>
       </tr>
       <tr>
         <td><code>-ORBMaxFragmentRate</code> <em>microseconds</em></td>
-        <td>This client-side option specifies a non-zero, positive amount of time (in microseconds) that it takes
+        <td>This client-side option specifies a non-zero, positive amount of time (in uSec, i.e. microseconds) that it takes
 to transmit and process an individual message fragment of the maximum size. (This is the total of the client -> server
 -> servant processing time.) The client attempts to keep the rate at which it sends messages down to this speed by
 purposly delaying sending message fragments, if it would exceeding this capacity (but also see the
-<code>-ORBSendHighWaterMark</code> option below). The default is same value as specified by the
-<code>-ORBMaxFragmentSize</code> option but this time in microseconds, not bytes. (This default delay value is approximatly the time required
-to transmit that number of bytes on a 10Base-T network.) Larger values will throttle back the clients transmittion
-rate, smaller values will speed it up.
+<code>-ORBSendHighWaterMark</code> option below). The default is same value as specified, or is
+defaulted by the <code>-ORBMaxFragmentSize</code> option, but this time teated as microseconds not bytes.
+(This default delay value is approximatly the time required to transmit that number of bytes on a 10Base-T
+network.) Larger values will throttle back the clients transmittion rate, smaller values will speed it up.
         </td>
       </tr>
       <tr>
@@ -1753,17 +1755,32 @@ rate, smaller values will speed it up.
         <td>This client-side option is the usable size of the message buffer, i.e how much data can be sent without
 introducing delays into the transmition of individual MIOP fragments (due to the <code>-ORBMaxFragmentRate</code>
 option above). Its default value is the size of the buffer maintained by the Operating System for the sending socket
-at the client side (see the <code>-ORBSndSock</code> and <code>-ORBRcvSock</code> options below).</b>
+at the client side (see the <code>-ORBSndSock</code> option below).</b>
         </td>
       </tr>
       <tr>
         <td><code>-ORBSndSock</code> <em>bytes</em></td>
-        <td>This client-side option is the size of the outgoing socket's message buffer. If specified in the service configuration file, this value will override (for MIOP only) the value specified by the corresponding ORB_init parameter. If unspecified in either place, the default value for the system itself will be used. <b>NOTE: the <code>-ORBSndSock</code> size normally limits the maximum size of an individual message fragment, larger fragments can be simply ignored (i.e. packet loss) by the client's socket without any error indication; this value and the <code>-ORBMaxFragmentSize</code> should be set with care.</b>
+        <td>This client-side option is the size of the outgoing socket's message buffer. If specified in the service
+         configuration file, this value will override (for MIOP only) the value specified by the corresponding
+         ORB_init parameter. If NOT specified in either place, the default value for the system itself will be used.
+         <b>NOTE: the <code>-ORBSndSock</code> size normally limits the maximum size of an individual message fragment,
+         larger fragments can be simply ignored (i.e. packet loss) by the client's socket without any error indication;
+         this value and the <code>-ORBMaxFragmentSize</code> should be set with care. For a linux type OS, the systems
+         SndSock is usually defaulted to about <b>65535</b> bytes, but whatever value is actually specified it is normally doubled
+         internally to take account of the control structures required to track the messages themselves and so it is not
+         a hard limit.</b>
         </td>
       </tr>
       <tr>
         <td><code>-ORBRcvSock</code> <em>bytes</em></td>
-        <td>This server-side option is the size of the incoming socket's message buffer, i.e how much data can be received directly off the wire and queued for processing by the servant whilst it is busy. If specified in the service configuration file, this value will override (for MIOP only) the value specified by the corresponding ORB_init parameter. If unspecified in either place, the default value for the system itself will be used.
+        <td>This server-side option is the size of the incoming socket's message buffer, i.e how much data can be received
+        directly off the wire and queued for processing by the servant whilst it is busy. If specified in the service
+        configuration file, this value will override (for MIOP only) the value specified by the corresponding ORB_init parameter.
+        If NOT specified in either place, the default value for the system itself will be used. Again for a linux type OS,
+        the systems RcvSock is usually about <b>65535</b> bytes, but whatever value is actually specified it is normally
+        doubled internally to take account of the control structures required to track the messages themselves and so it
+        is not a hard limit. Specifying as large a value as possible (i.e. whatever upper limit the OS will allow) with the MIOP
+        -ORBRcvSock option is advisable to maximize the available sockets receive buffer space.
         </td>
       </tr>
       <tr>
