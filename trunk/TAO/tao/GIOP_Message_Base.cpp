@@ -1422,8 +1422,8 @@ TAO_GIOP_Message_Base::
     0x49, // 'I'
     0x4f, // 'O'
     0x50, // 'P'
-    version.major,
-    version.minor,
+    static_cast<const char> (version.major),
+    static_cast<const char> (version.minor),
     TAO_ENCAP_BYTE_ORDER,
     GIOP::CloseConnection,
     0, 0, 0, 0
