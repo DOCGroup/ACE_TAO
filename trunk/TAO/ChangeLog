@@ -1,3 +1,9 @@
+Mon Aug 13 12:58:00 UTC 2012  Simon Massey  <sma at prismtech dot com>
+
+        * doc/Options.html:
+          Missed copying those extra helpful bits of information from the
+          NEWS file entry of the MIOP_Strategy_Factory options.
+
 Mon Aug 13 12:36:00 UTC 2012  Simon Massey  <sma at prismtech dot com>
 
         * doc/Options.html:
