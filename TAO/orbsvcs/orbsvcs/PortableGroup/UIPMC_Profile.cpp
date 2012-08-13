@@ -42,7 +42,7 @@ TAO_UIPMC_Profile::TAO_UIPMC_Profile (TAO_ORB_Core *orb_core)
 {
   // The default for component version is 1.0.
   this->component_version_.major = 1;
-  this->component_version_.major = 0;
+  this->component_version_.minor = 0;
 
   this->addressing_mode_ = default_addressing_mode_;
 }
@@ -61,7 +61,7 @@ TAO_UIPMC_Profile::TAO_UIPMC_Profile (const ACE_INET_Addr &addr,
 {
   // The default for component version is 1.0.
   this->component_version_.major = 1;
-  this->component_version_.major = 0;
+  this->component_version_.minor = 0;
 
   this->addressing_mode_ = default_addressing_mode_;
 }
@@ -81,7 +81,7 @@ TAO_UIPMC_Profile::TAO_UIPMC_Profile (const CORBA::Octet class_d_address[4],
 {
   // The default for component version is 1.0.
   this->component_version_.major = 1;
-  this->component_version_.major = 0;
+  this->component_version_.minor = 0;
 
   this->addressing_mode_ = default_addressing_mode_;
 }
