@@ -21,12 +21,10 @@
 
 #include "tao/orbconf.h"
 #include "tao/Versioned_Namespace.h"
-
 #include "tao/corba.h"
 
-class TAO_UIPMC_Mcast_Transport;
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+class TAO_UIPMC_Mcast_Transport;
 
 namespace TAO_PG
 {
