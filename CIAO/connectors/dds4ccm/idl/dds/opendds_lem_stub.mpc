@@ -36,7 +36,7 @@ project(CIAO_OpenDDS_Dcps_idl_gen): gen_ostream, ccm_lem_stub, ciaoidldefaults, 
   }
 
   specific {
-     install_dir = connectors/dds4ccm/idl/OpenDDS
+     install_dir = connectors/dds4ccm/idl/dds
   }
 }
 
@@ -73,7 +73,7 @@ project (CIAO_OpenDDS_Dcps_lem_gen) : taoidldefaults, install, \
   }
 
   specific {
-     install_dir = connectors/dds4ccm/idl/OpenDDS
+     install_dir = connectors/dds4ccm/idl/dds
   }
 }
 
@@ -115,6 +115,6 @@ project (CIAO_OpenDDS_Dcps_lem_stub) : taolib, valuetype, dds4ccm, \
   }
 
   specific {
-     install_dir = connectors/dds4ccm/idl/OpenDDS
+     install_dir = connectors/dds4ccm/idl/dds
   }
 }
