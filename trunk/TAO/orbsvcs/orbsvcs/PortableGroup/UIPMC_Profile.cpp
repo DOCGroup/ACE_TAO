@@ -835,9 +835,7 @@ TAO_UIPMC_Profile::extract_group_component (
       if (TAO_debug_level)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) - UIPMC_Profile::")
-                    ACE_TEXT ("extract_group_component, version %d.%d\n"),
-                    major,
-                    minor));
+                    ACE_TEXT ("extract_group_component, couldn't unmarshal version\n")));
       return -1;
     }
 
