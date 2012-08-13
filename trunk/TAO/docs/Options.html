@@ -1693,8 +1693,7 @@ by the server in their entirety to be useable by the servant. If even a single d
 fragment/packet is lost, the whole message cannot be reconstructed and will be
 unusable. There is no way for the servant to even know it has missed such a
 MIOP message, and being a one-way protocol, neither will the client be aware that
-the message has been lost. If a single fragment is lost, the whole message cannot be
-reconstructed and will be unusable. Fragments can be lost due to a variety of reasons:</p>
+the message has been lost. Fragments can be lost due to a variety of reasons:</p>
 <li>The client sends too large a message fragment, or sends messages too fast,
 overwhelming the client socket's transmission buffer. (In which case the client-side OS simply
 ignores the excess send requests and some of the fragments are not actually sent on the wire.)</li>
@@ -1770,12 +1769,12 @@ at the client side (see the <code>-ORBSndSock</code> option below).</b>
         <td>This client-side option is the size of the outgoing socket's message buffer. If specified in the service
          configuration file, this value will override (for MIOP only) the value specified by the corresponding
          ORB_init parameter. If NOT specified in either place, the default value for the system itself will be used.
-         <b>NOTE: the <code>-ORBSndSock</code> size normally limits the maximum size of an individual message fragment,
+         NOTE: the <code>-ORBSndSock</code> size normally limits the maximum size of an individual message fragment,
          larger fragments can be simply ignored (i.e. packet loss) by the client's socket without any error indication;
          this value and the <code>-ORBMaxFragmentSize</code> should be set with care. For a linux type OS, the systems
          SndSock is usually defaulted to about <b>65535</b> bytes, but whatever value is actually specified it is normally doubled
          internally to take account of the control structures required to track the messages themselves and so it is not
-         a hard limit.</b>
+         a hard limit.
         </td>
       </tr>
       <tr>
