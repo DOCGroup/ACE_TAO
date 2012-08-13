@@ -25,7 +25,7 @@ UIPMC_Message_Block_Data_Iterator::next_block (size_t max_length,
         return false;
 
 
-      if (this->iov_[this->iov_index_].iov_len <= max_length)
+      if (static_cast<u_long> (this->iov_[this->iov_index_].iov_len) <= max_length)
         {
           // Return the full data portion.
           block.iov_len  = this->iov_[this->iov_index_].iov_len;
