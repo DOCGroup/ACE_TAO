@@ -1,4 +1,9 @@
-Mon Aug 13 4:38:00 UTC 2012  Simon Massey  <sma at prismtech dot com>
+Mon Aug 13 14:44:00 UTC 2012  Simon Massey  <sma at prismtech dot com>
+
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.cpp:
+          Major and Minor should be set output with debug message!
+
+Mon Aug 13 14:38:00 UTC 2012  Simon Massey  <sma at prismtech dot com>
 
         * orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.cpp:
           Major and Minor should be set not Major and Major!
