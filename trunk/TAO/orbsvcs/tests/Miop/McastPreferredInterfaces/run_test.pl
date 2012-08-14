@@ -24,13 +24,13 @@ $port = $server_box->RandomPort ();
 ## NOTE we duplicate the server's CORBALOC in the client to test for CORBALOC processing of -ORBPreferredInterfaces
 $SV = $server_box->CreateProcess ("server", "-o $server_iorfile -u corbaloc:miop:1.0\@1.0-foo-1/225.1.1.8:$port -ORBSvcConf miop_svc.conf");
 $CL = $client_box->CreateProcess ("client", "-ORBPreferredInterfaces 225.*=127.0.0.1 -ORBEnforcePreferredInterfaces=1 -ORBIPMulticastLoop 1 -ORBSvcConf miop_svc.conf -k corbaloc:miop:1.0\@1.0-foo-1/225.1.1.8:$port");
-$server_status = $SV->Spawn ();
 
+print "Starting first part of test.\n";
+$server_status = $SV->Spawn ();
 if ($server_status != 0) {
     print STDERR "ERROR: server returned $server_status\n";
     exit 1;
 }
-
 if ($server_box->WaitForFileTimed ($iorbase,
                                $server_box->ProcessStartWaitInterval()) == -1) {
     print STDERR "ERROR: cannot find file <$server_iorfile>\n";
@@ -50,30 +50,26 @@ if ($client_box->PutFile ($iorbase) == -1) {
 }
 
 $client_status = $CL->SpawnWaitKill ($client_box->ProcessStartWaitInterval());
-
 if ($client_status != 0) {
     print STDERR "ERROR: client returned $client_status\n";
     $status = 1;
 }
-
-if ($SV->TimedWait(1) != -1)
-{
-    print STDERR "ERROR: REGRESSION - server has exited. This means the server received the 1st client message & so the preferred interfaces option might not have worked.\n";
+if ($SV->TimedWait(1) != -1) {
+    print "Server has exited. This means the server received the 1st client message & so the preferred interfaces option might not have worked.\n";
 }
 
 # Now we run the client again to close down the server cleanly
 # and we use the server written ior file here to test the normal cdr -ORBPreferredInterfaces processing.
+print "Starting second part of test.\n";
 $CL->Arguments("-ORBSvcConf miop_svc.conf -ORBIPMulticastLoop 1 -k file://$client_iorfile");
 
 $client_status = $CL->SpawnWaitKill ($client_box->ProcessStartWaitInterval());
-
 if ($client_status != 0) {
     print STDERR "ERROR: client returned $client_status trying to shutdown server\n";
     $status = 1;
 }
 
 $server_status = $SV->WaitKill ($server_box->ProcessStopWaitInterval());
-
 if ($server_status != 0) {
     print STDERR "ERROR: server returned $server_status\n";
     $status = 1;
@@ -82,4 +78,5 @@ if ($server_status != 0) {
 $server_box->DeleteFile($iorbase);
 $client_box->DeleteFile($iorbase);
 
+print "End of test.\n";
 exit $status;

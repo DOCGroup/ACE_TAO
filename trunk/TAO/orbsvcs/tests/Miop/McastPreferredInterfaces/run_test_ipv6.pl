@@ -24,13 +24,13 @@ $port = $server_box->RandomPort ();
 ## NOTE we duplicate the server's CORBALOC in the client to test for CORBALOC processing of -ORBPreferredInterfaces
 $SV = $server_box->CreateProcess ("server", "-o $server_iorfile -u corbaloc:miop:1.0\@1.0-foo-1/[FF01:0:0:0:0:0:25:334]:$port -ORBSvcConf miop_svc_ipv6.conf");
 $CL = $client_box->CreateProcess ("client", "-ORBPreferredInterfaces FF01:*=lo -ORBEnforcePreferredInterfaces=1 -ORBSvcConf miop_svc_ipv6.conf -ORBIPMulticastLoop 1 -k corbaloc:miop:1.0\@1.0-foo-1/[FF01:0:0:0:0:0:25:334]:$port");
-$server_status = $SV->Spawn ();
 
+print "Starting test.\n";
+$server_status = $SV->Spawn ();
 if ($server_status != 0) {
     print STDERR "ERROR: server returned $server_status\n";
     exit 1;
 }
-
 if ($server_box->WaitForFileTimed ($iorbase,
                                $server_box->ProcessStartWaitInterval()) == -1) {
     print STDERR "ERROR: cannot find file <$server_iorfile>\n";
@@ -63,11 +63,12 @@ if ($^O ne "MSWin32") {
 
     if ($SV->TimedWait(1) != -1)
     {
-        print STDERR "ERROR: server has exited. This means the server received the 1st client message. This is unexpected on this platform but may not be wrong\n";
+        print "Server has exited. This means the server received the 1st client message. This is unexpected on this platform but may not be wrong\n";
     }
 
     # Now we run the client again to close down the server cleanly. We specify the 'new' form of preferred interface which seems to be needed
     # and we use the server writen ior file here to test the normal cdr -ORBPreferredInterfaces processing.
+    print "Starting second part of test.\n";
     $CL->Arguments("-ORBPreferredInterfaces FF01:*=eth0 -ORBEnforcePreferredInterfaces=1 -ORBIPMulticastLoop 1 -ORBSvcConf miop_svc_ipv6.conf -k file://$client_iorfile");
 
     $client_status = $CL->SpawnWaitKill ($client_box->ProcessStartWaitInterval());
@@ -79,7 +80,6 @@ if ($client_status != 0) {
 }
 
 $server_status = $SV->WaitKill ($server_box->ProcessStopWaitInterval());
-
 if ($server_status != 0) {
     print STDERR "ERROR: REGRESSION Server had to be killed and returned $server_status. This means the client message isn't getting through.\n";
     $status = 1;
@@ -88,4 +88,5 @@ if ($server_status != 0) {
 $server_box->DeleteFile($iorbase);
 $client_box->DeleteFile($iorbase);
 
+print "End of test.\n";
 exit $status;
