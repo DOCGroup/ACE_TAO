@@ -1,3 +1,17 @@
+Tue Aug 14 08:41:00 UTC 2012  Simon Massey  <sma at prismtech dot com>
+
+        * NEWS:
+
+          Advisory note added concerning the generic testability
+          of the -ORBPreferredInterfaces feature.
+
+        * orbsvcs/tests/Miop/McastPreferredInterfaces/run_test_ipv6.pl:
+        * orbsvcs/tests/Miop/McastPreferredInterfaces/run_test.pl:
+
+          Stop these tests from erroring due to possiable problems in
+          loopback feature. This test is effectivly for information
+          purposes.
+
 Mon Aug 13 14:55:00 UTC 2012  Simon Massey  <sma at prismtech dot com>
 
         * orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.cpp:
