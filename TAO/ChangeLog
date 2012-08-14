@@ -1,3 +1,9 @@
+Tue Aug 14 11:00:00 UTC 2012  Simon Massey  <sma at prismtech dot com>
+
+        * orbsvcs/tests/Miop/McastZIOP/client.cpp:
+
+          Add .in() to var use to stop warning on lyxos.
+
 Tue Aug 14 08:41:00 UTC 2012  Simon Massey  <sma at prismtech dot com>
 
         * NEWS:

@@ -110,7 +110,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         compression_manager->get_compressor (
           compressor_id_list[0].compressor_id,
           compressor_id_list[0].compression_level));
-      if (CORBA::is_nil (compressor))
+      if (CORBA::is_nil (compressor.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "ERROR : compressor not found!\n"),
