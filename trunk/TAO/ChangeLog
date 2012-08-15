@@ -1,3 +1,8 @@
+Wed Aug 15 08:44:07 UTC 2012  Olli Savia  <ops@iki.fi>
+
+        * docs/tutorials/Quoter/RTCORBA/StockQuoter.mpc:
+          This project needs threads.
+
 Tue Aug 14 11:08:00 UTC 2012  Simon Massey  <sma at prismtech dot com>
 
         * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport_Recv_Packet.h:
