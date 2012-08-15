@@ -30,6 +30,10 @@ ifeq ($(optimize),0)
   CPPFLAGS += -O0
 endif
 
+ifeq ($(c++0x),1)
+  CCFLAGS += -std=c++0x
+endif
+
 SOFLAGS += $(CPPFLAGS) -shared
 SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<; \
           $(SOLINK.cc) -o $@ $(LDFLAGS) $(VSHDIR)$*.o
