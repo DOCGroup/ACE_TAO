@@ -127,7 +127,8 @@ TAO_Notify_ThreadPool_Supplier_Client::create_ec (void)
   if (this->ec_thread_count_)
     {
       NotifyExt::ThreadPoolParams tp_params = { NotifyExt::CLIENT_PROPAGATED, 0,
-                                                0, this->ec_thread_count_, 0, 0, 0, 0, 0 };
+                                                0, static_cast<CORBA::ULong> (this->ec_thread_count_),
+                                                0, 0, 0, 0, 0 };
 
       CosNotification::QoSProperties qos (1);
       qos.length (1);
