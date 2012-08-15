@@ -252,9 +252,9 @@ TAO_IIOP_Connector::make_parallel_connection (
 {
   TAO_Endpoint *root_ep = desc.endpoint();
   unsigned max_count = 1;
-  unsigned long ns_stagger =
+  long ns_stagger =
     this->orb_core ()->orb_params ()->parallel_connect_delay ();
-  unsigned long sec_stagger = ns_stagger/1000;
+  time_t sec_stagger = ns_stagger/1000;
   ns_stagger = (ns_stagger % 1000) * 1000000;
   for (TAO_Endpoint *ep = root_ep->next_filtered (this->orb_core(), 0);
        ep != 0;
