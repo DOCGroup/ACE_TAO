@@ -51,7 +51,7 @@ project(RTCORBA_Quoter_Admin): valuetype, rt_server, naming, stl {
   }
 }
 
-project(RTCORBA_Quoter_Distributor): valuetype, rt_server, naming, utils, stl {
+project(RTCORBA_Quoter_Distributor): valuetype, rt_server, naming, utils, stl, threads {
   libs +=  RTCORBA_Quoter_Common
   after += RTCORBA_Quoter_Common
   exename = distributor
@@ -73,7 +73,7 @@ project(RTCORBA_Quoter_Distributor): valuetype, rt_server, naming, utils, stl {
    }
 }
 
-project(RTCORBA_Quoter_Broker): valuetype, rt_server, naming, utils, stl {
+project(RTCORBA_Quoter_Broker): valuetype, rt_server, naming, utils, stl, threads {
   libs +=  RTCORBA_Quoter_Common
   after += RTCORBA_Quoter_Common
   exename = broker
