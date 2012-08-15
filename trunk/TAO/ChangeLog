@@ -1,3 +1,10 @@
+Wed Aug 15 15:13:00 UTC 2012  Simon Massey  <sma at prismtech dot com>
+
+        * orbsvcs/tests/Miop/McastPreferredInterfaces/run_test.pl:
+
+          Stop running the client for part two to shutdown server, if part
+          one server has already exited.
+
 Wed Aug 15 14:28:00 UTC 2012  Simon Massey  <sma at prismtech dot com>
 
         * orbsvcs/tests/Notify/lib/Options_Parser.cpp:

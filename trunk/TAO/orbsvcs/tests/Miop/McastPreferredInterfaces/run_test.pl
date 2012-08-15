@@ -57,22 +57,23 @@ if ($client_status != 0) {
 if ($SV->TimedWait(1) != -1) {
     print "Server has exited. This means the server received the 1st client message & so the preferred interfaces option might not have worked.\n";
 }
+else {
+  # Now we run the client again to close down the server cleanly
+  # and we use the server written ior file here to test the normal cdr -ORBPreferredInterfaces processing.
+  print "Starting second part of test.\n";
+  $CL->Arguments("-ORBSvcConf miop_svc.conf -ORBIPMulticastLoop 1 -k file://$client_iorfile");
 
-# Now we run the client again to close down the server cleanly
-# and we use the server written ior file here to test the normal cdr -ORBPreferredInterfaces processing.
-print "Starting second part of test.\n";
-$CL->Arguments("-ORBSvcConf miop_svc.conf -ORBIPMulticastLoop 1 -k file://$client_iorfile");
+  $client_status = $CL->SpawnWaitKill ($client_box->ProcessStartWaitInterval());
+  if ($client_status != 0) {
+      print STDERR "ERROR: client returned $client_status trying to shutdown server\n";
+      $status = 1;
+  }
 
-$client_status = $CL->SpawnWaitKill ($client_box->ProcessStartWaitInterval());
-if ($client_status != 0) {
-    print STDERR "ERROR: client returned $client_status trying to shutdown server\n";
-    $status = 1;
-}
-
-$server_status = $SV->WaitKill ($server_box->ProcessStopWaitInterval());
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
-    $status = 1;
+  $server_status = $SV->WaitKill ($server_box->ProcessStopWaitInterval());
+  if ($server_status != 0) {
+      print STDERR "ERROR: server returned $server_status\n";
+      $status = 1;
+  }
 }
 
 $server_box->DeleteFile($iorbase);
