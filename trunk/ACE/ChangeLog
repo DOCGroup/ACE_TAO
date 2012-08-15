@@ -1,3 +1,10 @@
+Wed Aug 15 14:10:00 UTC 2012  Simon Massey <sma at prismtech dot com>
+
+        * test/Bug_3911_Regression_Test.cpp:
+        * test/Bug_3943_Regression_Test.cpp:
+
+          Some compilers warning against ordering pointers with integers.
+
 Wed Aug 15 11:42:28 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_linux_clang.GNU:
