@@ -67,6 +67,10 @@ ifeq ($(no_strict_aliasing), 1)
   CCFLAGS += -fno-strict-aliasing
 endif
 
+ifeq ($(c++0x),1)
+  CCFLAGS += -std=c++0x
+endif
+
 ifeq ($(shared_libs), 1)
   ifneq ($(static_libs_only), 1)
     # Add all symbols to the dynamic symbol table.  Needed to enable
