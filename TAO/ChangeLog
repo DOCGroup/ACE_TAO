@@ -1,3 +1,12 @@
+Wed Aug 15 14:28:00 UTC 2012  Simon Massey  <sma at prismtech dot com>
+
+        * orbsvcs/tests/Notify/lib/Options_Parser.cpp:
+        * orbsvcs/examples/Notify/ThreadPool/Consumer.cpp:
+        * orbsvcs/examples/Notify/ThreadPool/Supplier.cpp:
+        * orbsvcs/examples/Notify/ThreadPool/Supplier_Client.cpp:
+
+          Correct types, removes C++11 warning about {} initalization miss-match.
+
 Wed Aug 15 10:08:20 UTC 2012  Simon Massey  <sma at prismtech dot com>
 
         * tao/IIOP_Connector.cpp:

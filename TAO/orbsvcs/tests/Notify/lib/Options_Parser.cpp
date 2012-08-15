@@ -48,7 +48,7 @@ void
 TAO_Notify_Tests_Options_Parser::execute (CosNotification::QoSProperties& qos, ACE_Arg_Shifter& arg_shifter)
 {
   const ACE_TCHAR *current_arg = 0;
-  int default_priority = ACE_DEFAULT_THREAD_PRIORITY;
+  NotifyExt::Priority default_priority = ACE_DEFAULT_THREAD_PRIORITY;
 
   if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-ThreadPool")) == 0) // -ThreadPool [-Threads static_threads] [-Priority default_priority]
     {
@@ -73,7 +73,7 @@ TAO_Notify_Tests_Options_Parser::execute (CosNotification::QoSProperties& qos, A
 
           current_arg = arg_shifter.get_current ();
 
-          default_priority = ACE_OS::atoi (current_arg);
+          default_priority = static_cast<NotifyExt::Priority> (ACE_OS::atoi (current_arg));
 
           arg_shifter.consume_arg ();
         }
