@@ -837,7 +837,7 @@ Svc_Handler::recv_data (void)
                 {
                   const char* restartLoc =
                     ACE_OS::strchr(partOfBufferStart, RESTART_CHAR);
-                  if ((restartLoc > 0) && (restartLoc < partOfBufferEnd))
+                  if (restartLoc && (restartLoc < partOfBufferEnd))
                     {
                       ++messages;
                       total_bytes_since_last_message = 0;
