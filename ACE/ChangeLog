@@ -1,3 +1,10 @@
+Thu Aug 16 09:24:00 UTC 2012  Simon Massey <sma at prismtech dot com>
+
+        * bin/PerlACE/Process_Win32.pm:
+        * bin/PerlACE/ProcessVX_Win32.pm:
+
+          If we wait for a process to exit, and it does, set the RUNNING status to false.
+
 Thu Aug 16 08:26:12 UTC 2012  Olli Savia  <ops@iki.fi>
 
         * tests/tests.mpc:

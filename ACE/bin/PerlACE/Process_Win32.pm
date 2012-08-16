@@ -457,6 +457,7 @@ sub Wait ($)
       }
     }
     Win32::Process::GetExitCode ($self->{PROCESS}, $result);
+    $self->{RUNNING} = 0;
     return $result;
 }
 
