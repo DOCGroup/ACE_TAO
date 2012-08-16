@@ -1,6 +1,43 @@
 USER VISIBLE CHANGES BETWEEN ACE-6.1.3 and ACE-6.1.4
 ====================================================
 
+. Added a new ACE_Time_Value derived template class (Time_Value_T.h):
+
+  template <class TIME_POLICY> class ACE_Time_Value_T
+
+  This template class overloads 4 new virtual methods from
+  the ACE_Time_Value base class to provide time policy aware
+  time values:
+  to_relative_time ()
+  to_absolute_time ()
+  now ()
+  duplicate ()
+
+. Updated time policy classes to return ACE_Time_Value_T<> instantiations
+  for the corresponding time policy instead of 'common' time values.
+
+. Added new ACE_Monotonic_Time_Policy (Monotonic_Time_Policy.h).
+  This class provides a monotonic time source for supported
+  platforms (Windows and POSIX platforms providing the required
+  clock_gettime() time source; currently verified for Windows and
+  Linux)
+
+. Updated OS_NS_Thread to use the new time policy support in ACE_Time_Value
+  for (relative) time calculations and added new ACE_OS::condattr_setclock ()
+  method.
+
+. Added TIME_POLICY support to ACE_Condition_Attributes to allow for
+  monotonic timer support for ACE_Condition.
+
+. Added TIME_POLICY support to ACE_Message_Queue-s, ACE_Task-s and
+  related classes to enable support for monotonic timers in the timed
+  wait methods (ACE_Condition based).
+
+. Added two new regression tests:
+  Monotonic_Task_Test
+  Monotonic_Message_Queue_Test
+  and updated the Bug_4055_Regression_Test to a fixed state.
+
 USER VISIBLE CHANGES BETWEEN ACE-6.1.2 and ACE-6.1.3
 ====================================================
 

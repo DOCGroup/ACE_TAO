@@ -11,15 +11,15 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-template <typename TIME_POLICY> ACE_INLINE
+template <typename TIME_POLICY>
 ACE_Time_Policy_T<TIME_POLICY>::~ACE_Time_Policy_T ()
 {
 }
 
-template <typename TIME_POLICY> ACE_INLINE ACE_Time_Value
+template <typename TIME_POLICY> ACE_Time_Value_T<ACE_Delegating_Time_Policy>
 ACE_Time_Policy_T<TIME_POLICY>::gettimeofday () const
 {
-  return this->time_policy_ ();
+  return ACE_Time_Value_T<ACE_Delegating_Time_Policy> (this->time_policy_ (), ACE_Delegating_Time_Policy (this));
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

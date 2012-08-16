@@ -13,7 +13,7 @@
 
 #include /**/ "ace/config-all.h"
 
-#include /**/ "ace/Time_Value.h"
+#include /**/ "ace/Time_Value_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -34,7 +34,7 @@ class ACE_Export ACE_System_Time_Policy
 {
 public:
   /// Return the current time according to this policy
-  ACE_Time_Value operator() () const;
+  ACE_Time_Value_T<ACE_System_Time_Policy> operator() () const;
 
   /// Noop. Just here to satisfy backwards compatibility demands.
   void set_gettimeofday (ACE_Time_Value (*gettimeofday)(void));
@@ -50,7 +50,7 @@ class ACE_Export ACE_HR_Time_Policy
 {
 public:
   /// Return the current time according to this policy
-  ACE_Time_Value operator() () const;
+  ACE_Time_Value_T<ACE_HR_Time_Policy> operator() () const;
 
   /// Noop. Just here to satisfy backwards compatibility demands.
   void set_gettimeofday (ACE_Time_Value (*gettimeofday)(void));
@@ -92,12 +92,40 @@ public:
   ACE_FPointer_Time_Policy(FPtr f);
 
   /// Return the current time according to this policy
-  ACE_Time_Value operator()() const;
+  ACE_Time_Value_T<ACE_FPointer_Time_Policy> operator()() const;
 
   /// Satisfy backwards compatibility demands.
   void set_gettimeofday (ACE_Time_Value (*gettimeofday)(void));
 private:
   FPtr function_;
+};
+
+class ACE_Dynamic_Time_Policy_Base; // forward decl
+
+/**
+ * @class ACE_Delegating_Time_Policy
+ *
+ * @brief Implement a time policy that delegates to a dynamic
+ *        time policy.
+ */
+class ACE_Export ACE_Delegating_Time_Policy
+{
+public:
+  ACE_Delegating_Time_Policy (ACE_Dynamic_Time_Policy_Base const * delegate = 0);
+
+  /// Return the current time according to this policy
+  ACE_Time_Value_T<ACE_Delegating_Time_Policy> operator()() const;
+
+  /// Set delegate
+  void set_delegate (ACE_Dynamic_Time_Policy_Base const * delegate);
+
+  /// Copy policy
+  ACE_Delegating_Time_Policy& operator =(ACE_Delegating_Time_Policy const & pol);
+
+  /// Noop. Just here to satisfy backwards compatibility demands.
+  void set_gettimeofday (ACE_Time_Value (*gettimeofday)(void));
+private:
+  ACE_Dynamic_Time_Policy_Base const * delegate_;
 };
 
 /**
@@ -113,53 +141,26 @@ public:
   virtual ~ACE_Dynamic_Time_Policy_Base ();
 
   /// Return the current time according to this policy
-  ACE_Time_Value operator()() const;
+  ACE_Time_Value_T<ACE_Delegating_Time_Policy> operator()() const;
 
   /// Noop. Just here to satisfy backwards compatibility demands.
   void set_gettimeofday (ACE_Time_Value (*gettimeofday)(void));
 protected:
   /// Return the current time according to policy implementation.
-  virtual ACE_Time_Value gettimeofday () const = 0;
-};
-
-/**
- * @class ACE_Delegating_Time_Policy
- *
- * @brief Implement a time policy that delegates to a dynamic
- *        time policy.
- */
-class ACE_Export ACE_Delegating_Time_Policy
-{
-public:
-  ACE_Delegating_Time_Policy (ACE_Dynamic_Time_Policy_Base const * delegate = 0);
-
-  /// Return the current time according to this policy
-  ACE_Time_Value operator()() const;
-
-  /// Set delegate
-  void set_delegate (ACE_Dynamic_Time_Policy_Base const * delegate);
-
-  /// Copy policy
-  ACE_Delegating_Time_Policy& operator =(ACE_Delegating_Time_Policy const & pol);
-
-  /// Noop. Just here to satisfy backwards compatibility demands.
-  void set_gettimeofday (ACE_Time_Value (*gettimeofday)(void));
-private:
-  ACE_Dynamic_Time_Policy_Base const * delegate_;
-
-  class NULL_Time_Policy : public ACE_Dynamic_Time_Policy_Base
-  {
-  protected:
-    virtual ACE_Time_Value gettimeofday () const;
-  };
-
-  static NULL_Time_Policy null_policy_;
+  virtual ACE_Time_Value_T<ACE_Delegating_Time_Policy> gettimeofday () const = 0;
 };
 
 /// Temporarily, for backwards compatibility reasons, this will
 /// be the default time policy. In time to be replaced by
 /// ACE_System_Time_Policy.
 typedef ACE_FPointer_Time_Policy ACE_Default_Time_Policy;
+
+#if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT
+template class ACE_Export ACE_Time_Value_T<ACE_System_Time_Policy>;
+template class ACE_Export ACE_Time_Value_T<ACE_HR_Time_Policy>;
+template class ACE_Export ACE_Time_Value_T<ACE_FPointer_Time_Policy>;
+template class ACE_Export ACE_Time_Value_T<ACE_Delegating_Time_Policy>;
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT */
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

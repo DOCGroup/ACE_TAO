@@ -27,16 +27,18 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward decl
 class ACE_Null_Mutex;
-class ACE_Null_Condition;
 class ACE_Null_Semaphore;
 class ACE_Null_Mutex;
 class ACE_Thread_Mutex;
 class ACE_Process_Mutex;
 class ACE_Recursive_Thread_Mutex;
 class ACE_RW_Thread_Mutex;
-class ACE_Condition_Thread_Mutex;
-class ACE_Condition_Recursive_Thread_Mutex;
 class ACE_Thread_Semaphore;
+
+template <class ACE_LOCK> class ACE_Condition;
+typedef ACE_Condition<ACE_Null_Mutex> ACE_Null_Condition;
+typedef ACE_Condition<ACE_Thread_Mutex> ACE_Condition_Thread_Mutex;
+typedef ACE_Condition<ACE_Recursive_Thread_Mutex> ACE_Condition_Recursive_Thread_Mutex;
 
 /**
  * @class ACE_NULL_SYNCH
@@ -62,7 +64,6 @@ public:
 #if defined (ACE_HAS_THREADS)
 
 class ACE_Process_Mutex;
-class ACE_Condition_Recursive_Thread_Mutex;
 
 /**
  * @class ACE_MT_SYNCH
