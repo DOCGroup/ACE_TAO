@@ -1,3 +1,8 @@
+Thu Aug 16 08:26:12 UTC 2012  Olli Savia  <ops@iki.fi>
+
+        * tests/tests.mpc:
+          Bug_4055_Regression_Test uses threads.
+
 Wed Aug 15 14:10:00 UTC 2012  Simon Massey <sma at prismtech dot com>
 
         * test/Bug_3911_Regression_Test.cpp:
