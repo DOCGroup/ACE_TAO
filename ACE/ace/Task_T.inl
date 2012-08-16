@@ -66,12 +66,12 @@ ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::msg_queue (void)
 }
 
 template <ACE_SYNCH_DECL, class TIME_POLICY>
-ACE_Time_Value_T<TIME_POLICY> 
+ACE_Time_Value_T<TIME_POLICY>
 ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::gettimeofday (void) const
 {
   if (this->msg_queue_ != 0)
     return this->msg_queue_->gettimeofday ();
-    
+
   return ACE_Time_Value_T<TIME_POLICY> (ACE_Time_Value::zero);
 }
 
