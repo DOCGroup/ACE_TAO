@@ -169,12 +169,13 @@ namespace CIAO
       return retval;
     }
 
-    void
+    bool
     DDS_TypeSupport_i::unregister_type (::DDS::DomainParticipant_ptr dp,
                                         const char* type)
     {
       DDS4CCM_TRACE ("DDS_TypeSupport_i::unregister_type");
 
+      bool retval = false;
       participantfactories::iterator dp_entry = participant_factories.find(dp);
 
       if (dp_entry != participant_factories.end())
@@ -187,6 +188,7 @@ namespace CIAO
               // Let us drop the refcount on the type factory, when it drops
               // to zero we delete it
               long const refcount = it->second->_dec_ref ();
+              retval = true;
               if (refcount == 0)
                 {
                   DDS_TypeFactory_i_var* f_var = it->second;
@@ -241,6 +243,7 @@ namespace CIAO
                         "Unable to remove.\n",
                         dp));
         }
+      return retval;
     }
 
     ::DDS::DataWriter_ptr
