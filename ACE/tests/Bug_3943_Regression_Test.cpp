@@ -744,7 +744,7 @@ Svc_Handler::send (IovecGuard& iovec_array,
                       send_func_name, send_desc, errno));
           return -1;
         }
-      send_remainder -= send_status;
+      send_remainder -= static_cast<buffer_len> (send_status);
       offset += send_status;
     }
 
