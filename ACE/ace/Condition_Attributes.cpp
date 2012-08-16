@@ -9,6 +9,7 @@
  * @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 
+#include "ace/Condition_Thread_Mutex.h"
 #include "ace/Condition_Attributes.h"
 
 #if defined (ACE_HAS_THREADS)

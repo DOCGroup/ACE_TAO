@@ -18,7 +18,7 @@
 // This is necessary to work around nasty problems with MVS C++.
 #include "ace/Auto_Ptr.h"
 #include "ace/Thread_Mutex.h"
-#include "ace/Condition_T.h"
+#include "ace/Condition_Thread_Mutex.h"
 #include "ace/Guard_T.h"
 
 extern "C" void
@@ -588,7 +588,7 @@ private:
   static unsigned int reference_count_;
   static ACE_TSS_Cleanup * instance_;
   static ACE_Thread_Mutex* mutex_;
-  static ACE_Thread_Condition<ACE_Thread_Mutex>* condition_;
+  static ACE_Condition_Thread_Mutex* condition_;
 
 private:
   ACE_TSS_Cleanup * ptr_;
@@ -611,7 +611,7 @@ TSS_Cleanup_Instance::TSS_Cleanup_Instance (Purpose purpose)
   if (mutex_ == 0)
     {
       ACE_NEW (mutex_, ACE_Thread_Mutex ());
-      ACE_NEW (condition_, ACE_Thread_Condition<ACE_Thread_Mutex> (*mutex_));
+      ACE_NEW (condition_, ACE_Condition_Thread_Mutex (*mutex_));
     }
 
   ACE_GUARD (ACE_Thread_Mutex, m, *mutex_);
@@ -711,7 +711,7 @@ TSS_Cleanup_Instance::operator ->()
 unsigned int TSS_Cleanup_Instance::reference_count_ = 0;
 ACE_TSS_Cleanup * TSS_Cleanup_Instance::instance_ = 0;
 ACE_Thread_Mutex* TSS_Cleanup_Instance::mutex_ = 0;
-ACE_Thread_Condition<ACE_Thread_Mutex>* TSS_Cleanup_Instance::condition_ = 0;
+ACE_Condition_Thread_Mutex* TSS_Cleanup_Instance::condition_ = 0;
 
 ACE_TSS_Cleanup::~ACE_TSS_Cleanup (void)
 {
@@ -1411,7 +1411,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
       // Note that we must convert between absolute time (which is
       // passed as a parameter) and relative time (which is what
       // WaitForSingleObjects() expects).
-      ACE_Time_Value relative_time (*timeout - ACE_OS::gettimeofday ());
+      ACE_Time_Value relative_time = timeout->to_relative_time ();
 
       // Watchout for situations where a context switch has caused the
       // current time to be > the timeout.
@@ -1584,7 +1584,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
   int msec_timeout = 0;
   int result = 0;
 
-  ACE_Time_Value relative_time (*timeout - ACE_OS::gettimeofday ());
+  ACE_Time_Value relative_time = timeout->to_relative_time ();
   // Watchout for situations where a context switch has caused the
   // current time to be > the timeout.
   if (relative_time > ACE_Time_Value::zero)
@@ -1613,7 +1613,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
       // Note that we must convert between absolute time (which is
       // passed as a parameter) and relative time (which is what
       // WaitForSingleObjects() expects).
-      ACE_Time_Value relative_time (*timeout - ACE_OS::gettimeofday ());
+      ACE_Time_Value relative_time = timeout->to_relative_time ();
 
       // Watchout for situations where a context switch has caused the
       // current time to be > the timeout.
@@ -2145,7 +2145,7 @@ ACE_OS::mutex_lock (ACE_mutex_t *m,
   // Note that we must convert between absolute time (which is passed
   // as a parameter) and relative time (which is what the system call
   // expects).
-  ACE_Time_Value relative_time (timeout - ACE_OS::gettimeofday ());
+  ACE_Time_Value relative_time = timeout.to_relative_time ();
 
   switch (m->type_)
   {
@@ -2179,7 +2179,7 @@ ACE_OS::mutex_lock (ACE_mutex_t *m,
   // Note that we must convert between absolute time (which is passed
   // as a parameter) and relative time (which is what the system call
   // expects).
-  ACE_Time_Value relative_time (timeout - ACE_OS::gettimeofday ());
+  ACE_Time_Value relative_time = timeout.to_relative_time ();
 
   int ticks_per_sec = ::sysClkRateGet ();
 
@@ -3016,7 +3016,7 @@ ACE_OS::event_timedwait (ACE_event_t *event,
         {
           // Time is given in absolute time, we should use
           // gettimeofday() to calculate relative time
-          ACE_Time_Value relative_time (*timeout - ACE_OS::gettimeofday ());
+          ACE_Time_Value relative_time = timeout->to_relative_time ();
 
           // Watchout for situations where a context switch has caused
           // the current time to be > the timeout.  Thanks to Norbert
@@ -3077,7 +3077,7 @@ ACE_OS::event_timedwait (ACE_event_t *event,
           // cond_timewait() expects absolute time, check
           // <use_absolute_time> flag.
           if (use_absolute_time == 0)
-            absolute_timeout += ACE_OS::gettimeofday ();
+            absolute_timeout = timeout->to_absolute_time ();
 
           while (event->eventdata_->is_signaled_ == 0 &&
                  event->eventdata_->auto_event_signaled_ == false)

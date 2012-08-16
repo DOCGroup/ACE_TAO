@@ -39,8 +39,8 @@ public:
   /// Destructor
   ~ACE_Condition_Attributes (void);
 
-private:
-  friend class ACE_Condition_Thread_Mutex;
+protected:
+  template <class MUTEX> friend class ACE_Condition;
 
   /// The attributes
   ACE_condattr_t attributes_;
@@ -49,6 +49,43 @@ private:
   // = Prevent assignment and initialization.
   void operator= (const ACE_Condition_Attributes &);
   ACE_Condition_Attributes (const ACE_Condition_Attributes &);
+};
+
+template <class TIME_POLICY>
+class ACE_Condition_Attributes_T : public ACE_Condition_Attributes
+{
+public:
+  /// Constructor
+  ACE_Condition_Attributes_T (int type = ACE_DEFAULT_SYNCH_TYPE)
+    : ACE_Condition_Attributes (type)
+  {}
+
+  /// Destructor
+  ~ACE_Condition_Attributes_T (void) {}
+
+private:
+  // = Prevent assignment and initialization.
+  void operator= (const ACE_Condition_Attributes_T<TIME_POLICY> &);
+  ACE_Condition_Attributes_T (const ACE_Condition_Attributes_T<TIME_POLICY> &);
+};
+
+class ACE_Monotonic_Time_Policy;
+
+template <>
+class ACE_Export ACE_Condition_Attributes_T<ACE_Monotonic_Time_Policy>
+  : public ACE_Condition_Attributes
+{
+public:
+  /// Constructor
+  ACE_Condition_Attributes_T (int type = ACE_DEFAULT_SYNCH_TYPE);
+
+  /// Destructor
+  ~ACE_Condition_Attributes_T (void);
+
+private:
+  // = Prevent assignment and initialization.
+  void operator= (const ACE_Condition_Attributes_T<ACE_Monotonic_Time_Policy> &);
+  ACE_Condition_Attributes_T (const ACE_Condition_Attributes_T<ACE_Monotonic_Time_Policy> &);
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
