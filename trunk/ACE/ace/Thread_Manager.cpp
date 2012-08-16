@@ -387,6 +387,9 @@ ACE_Thread_Manager::ACE_Thread_Manager (const ACE_Condition_Attributes &attribut
     , thread_desc_freelist_ (ACE_FREE_LIST_WITH_POOL,
                              prealloc, lwm, hwm, inc)
 {
+#if !defined (ACE_HAS_THREADS)
+  ACE_UNUSED_ARG (attributes);
+#endif /* ACE_HAS_THREADS */
   ACE_TRACE ("ACE_Thread_Manager::ACE_Thread_Manager");
 }
 
