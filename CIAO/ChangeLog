@@ -1,3 +1,14 @@
+Thu Aug 16 10:30:43 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.cpp:
+        * connectors/dds4ccm/impl/ndds/TypeSupport.h:
+        * connectors/dds4ccm/impl/ndds/TypeSupport.cpp:
+          Fixed problem when shutting down the system. The type factories
+          wheren't reference counted, the first connector that was
+          shutting down destroyed the type factory. Added a refcount to
+          the typesupport administration and greatly simplified the code
+          and improved the logging.
+
 Tue Aug 14 11:02:10 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ccm/Session/CCM_session.mpc:
