@@ -1,3 +1,8 @@
+Thu Aug 16 12:32:58 UTC 2012  Olli Savia  <ops@iki.fi>
+
+        * orbsvcs/orbsvcs/FTORB.mpc:
+          This project needs threads.
+
 Thu Aug 16 07:57:00 UTC 2012  Simon Massey  <sma at prismtech dot com>
 
         * orbsvcs/tests/Notify/lib/Options_Parser.cpp:
