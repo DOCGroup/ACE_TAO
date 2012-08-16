@@ -28,9 +28,11 @@
      (defined (_POSIX_MONOTONIC_CLOCK) && !defined (ACE_LACKS_MONOTONIC_TIME)) || \
      defined (ACE_HAS_CLOCK_GETTIME_MONOTONIC)
 
-# if defined (ACE_WIN32)
-#   include "ace/Date_Time.h"
-# endif
+# if defined (ACE_HAS_THREADS)
+
+#   if defined (ACE_WIN32)
+#     include "ace/Date_Time.h"
+#   endif
 
 // Create timer queue with hr support
 ACE_Timer_Queue *
@@ -312,11 +314,13 @@ bool test_timer (ACE_Condition_Thread_Mutex& condition_, ACE_Time_Value& waittim
 
   return status;
 }
+# endif
 
 int
 run_main (int , ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Bug_4055_Regression_Test"));
+# if defined (ACE_HAS_THREADS)
   int status = 1;
 
   ACE_Thread_Mutex mutex_;
@@ -339,7 +343,9 @@ run_main (int , ACE_TCHAR *[])
         status = 0;
     }
   }
-
+# else
+  int status = 0;
+# endif
   ACE_END_TEST;
   return status;
 }

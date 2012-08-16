@@ -1,10 +1,17 @@
+Thu Aug 16 13:43:39 UTC 2012  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/Message_Queue_T.cpp:
+        * ace/Stream.cpp:
+        * ace/Thread_Manager.cpp:
+        * tests/Bug_4055_Regression_Test.cpp:
+          Fixed problems with single threaded builds.
+
 Thu Aug 16 12:44:05 UTC 2012  Martin Corino  <mcorino@remedy.nl>
 
         * ace/Task_T.inl:
         * ace/Time_Policy_T.inl:
           Fuzz fixes.
 
-=======
 Thu Aug 16 09:43:00 UTC 2012  Simon Massey <sma at prismtech dot com>
 
         * test/Bug_3943_Regression_Test.cpp:
