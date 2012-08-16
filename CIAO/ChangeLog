@@ -1,3 +1,11 @@
+Thu Aug 16 10:31:55 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/dds4ccm_impl.mpb:
+          Removed obsolete include path
+
+        * connectors/dds4ccm/impl/DomainParticipantManager.h:
+          Doxygen fix
+
 Thu Aug 16 10:30:43 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.cpp:

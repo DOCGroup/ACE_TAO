@@ -43,10 +43,7 @@ namespace CIAO
     friend class ACE_Singleton<DomainParticipantManager, TAO_SYNCH_MUTEX>;
 
     /**
-     *
-     * @class : DDSParticipantTopic
-     *
-     * @brief :
+     * @class DDSParticipantTopic
      *
      * Stores a list of topics for a specific domain. If
      * several connectors run in the same process and those
