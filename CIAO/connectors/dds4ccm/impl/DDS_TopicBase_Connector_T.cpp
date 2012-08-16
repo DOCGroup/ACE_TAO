@@ -271,11 +271,11 @@ DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::register_type (
                     dds_type_factory (),
                     ::CORBA::NO_MEMORY ());
 
-  if (! ::CIAO::NDDS::DDS_TypeSupport_i::register_type (typesupport_name, factory, participant))
+  if (! ::CIAO::NDDS::DDS_TypeSupport_i::register_type (participant, typesupport_name, factory))
     {
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
                     ACE_TEXT ("DDS_TopicBase_Connector_T::register_type - ")
-                    ACE_TEXT ("Type <%C> is already registered.\n"),
+                    ACE_TEXT ("Type <%C> is already registered or failed.\n"),
                     typesupport_name));
       delete factory;
     }
@@ -308,10 +308,9 @@ DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::unregister_type (
   DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::unregister_type");
 
 #if (CIAO_DDS4CCM_NDDS==1)
-  ::CIAO::NDDS::DDS_TypeFactory_i * factory =
-    ::CIAO::NDDS::DDS_TypeSupport_i::unregister_type (typesupport_name, participant);
-
-  delete factory;
+  // Unregister the type from NDDS, it will delete the type factory when
+  // it is not used anymore
+  ::CIAO::NDDS::DDS_TypeSupport_i::unregister_type (participant, typesupport_name);
 #else
   ACE_UNUSED_ARG (participant);
   ACE_UNUSED_ARG (typesupport_name);
