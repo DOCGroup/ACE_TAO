@@ -1,3 +1,10 @@
+Thu Aug 16 12:44:05 UTC 2012  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/Task_T.inl:
+        * ace/Time_Policy_T.inl:
+          Fuzz fixes.
+
+=======
 Thu Aug 16 09:43:00 UTC 2012  Simon Massey <sma at prismtech dot com>
 
         * test/Bug_3943_Regression_Test.cpp:
