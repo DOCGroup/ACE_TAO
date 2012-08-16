@@ -108,9 +108,11 @@ namespace CIAO
       /**
         * Unregistering a type-factory combination for a specific
         * DomainParticipant. At the moment the type factory isn't used anymore
-        * it is automatically destructed
+        * it is automatically destructed.
+        * @retval false Unregistering the type factory failed
+        * @retval true Unregistering the type factory succeeded
         */
-      static void unregister_type (::DDS::DomainParticipant_ptr dp,
+      static bool unregister_type (::DDS::DomainParticipant_ptr dp,
                                    const char* type);
 
       /**
