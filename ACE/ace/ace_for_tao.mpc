@@ -272,6 +272,7 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     Task_T.cpp
     Timeprobe_T.cpp
     Time_Policy_T.cpp
+    Time_Value_T.cpp
     Timer_Hash_T.cpp
     Timer_Heap_T.cpp
     Timer_List_T.cpp
@@ -300,6 +301,7 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     ace_wchar.inl
     MMAP_Memory_Pool.inl
     Mem_Map.inl
+    Time_Value_T.inl
   }
 
   Header_Files {
@@ -349,6 +351,7 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     Synch_Traits.h
     TSS_T.h
     Time_Policy.h
+    Time_Value_T.h
     Timer_Queuefwd.h
     Truncate.h
     Value_Ptr.h
