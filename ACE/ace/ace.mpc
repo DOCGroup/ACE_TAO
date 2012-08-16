@@ -359,6 +359,7 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     Test_and_Set.cpp
     Timeprobe_T.cpp
     Time_Policy_T.cpp
+    Time_Value_T.cpp
     Timer_Hash_T.cpp
     Timer_Heap_T.cpp
     Timer_List_T.cpp
@@ -386,6 +387,7 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     Refcounted_Auto_Ptr.inl
     Reverse_Lock_T.inl
     TSS_T.inl
+    Time_Value_T.inl
   }
 
   Header_Files {
@@ -447,6 +449,7 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     Synch_Traits.h
     TSS_T.h
     Time_Policy.h
+    Time_Value_T.h
     Timer_Hash.h
     Timer_Heap.h
     Timer_List.h
