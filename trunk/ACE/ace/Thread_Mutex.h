@@ -49,7 +49,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  */
 class ACE_Export ACE_Thread_Mutex
 {
-  friend class ACE_Condition_Thread_Mutex;
 public:
   /// Constructor.
   ACE_Thread_Mutex (const ACE_TCHAR *name = 0,

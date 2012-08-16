@@ -5,9 +5,9 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE int
-ACE_Condition_Thread_Mutex::remove (void)
+ACE_Condition<ACE_Thread_Mutex>::remove (void)
 {
-// ACE_TRACE ("ACE_Condition_Thread_Mutex::remove");
+// ACE_TRACE ("ACE_Condition<ACE_Thread_Mutex>::remove");
 
   // <cond_destroy> is called in a loop if the condition variable is
   // BUSY.  This avoids a condition where a condition is signaled and
@@ -32,9 +32,9 @@ ACE_Condition_Thread_Mutex::remove (void)
 }
 
 ACE_INLINE ACE_Thread_Mutex &
-ACE_Condition_Thread_Mutex::mutex (void)
+ACE_Condition<ACE_Thread_Mutex>::mutex (void)
 {
-// ACE_TRACE ("ACE_Condition_Thread_Mutex::mutex");
+// ACE_TRACE ("ACE_Condition<ACE_Thread_Mutex>::mutex");
   return this->mutex_;
 }
 

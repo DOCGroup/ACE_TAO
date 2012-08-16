@@ -1,36 +1,48 @@
+
 //=============================================================================
 /**
- *  @file    Bug_4055_Regression_Test.cpp
+ *  @file    Monotonic_Message_Queue_Test.cpp
  *
  *  $Id$
  *
- *  @author Johnny Willemsen  (jwillemsen@remedy.nl)
+ *    This is a test that verifies the time policy features of the
+ *    ACE_Message_Queue template.
+ *    A template instantiation based on the ACE_Monotonic_Time_Policy
+ *    is used to demonstrate the ability for making the message queue
+ *    timeouts independent from system time changes (time shift).
+ *
+ *  @author Martin Corino <mcorino@remedy.nl>
  */
 //=============================================================================
+
 
 #include "test_config.h"
 #include "ace/Reactor.h"
 #include "ace/Timer_Queue.h"
-#include "ace/Time_Value_T.h"
+#include "ace/Thread_Manager.h"
+#include "ace/Message_Queue.h"
 #include "ace/Monotonic_Time_Policy.h"
-#include "ace/Condition_Thread_Mutex.h"
-#include "ace/Condition_Attributes.h"
-#include "ace/OS_NS_sys_time.h"
-#include "ace/High_Res_Timer.h"
-#include "ace/Get_Opt.h"
+#include "ace/Synch_Traits.h"
 #include "ace/Timer_Heap_T.h"
 #include "ace/Event_Handler_Handle_Timeout_Upcall.h"
 #include "ace/TP_Reactor.h"
 #include "ace/Task_T.h"
 #include "ace/Truncate.h"
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_sys_time.h"
+#include "ace/OS_NS_unistd.h"
 
-# if defined (ACE_WIN32) || \
-     (defined (_POSIX_MONOTONIC_CLOCK) && !defined (ACE_LACKS_MONOTONIC_TIME)) || \
-     defined (ACE_HAS_CLOCK_GETTIME_MONOTONIC)
+#if defined (ACE_WIN32) || \
+    (defined (_POSIX_MONOTONIC_CLOCK) && !defined (ACE_LACKS_MONOTONIC_TIME)) || \
+    defined (ACE_HAS_CLOCK_GETTIME_MONOTONIC)
 
 # if defined (ACE_WIN32)
 #   include "ace/Date_Time.h"
 # endif
+
+# if defined (ACE_HAS_THREADS)
+typedef ACE_Message_Queue<ACE_MT_SYNCH, ACE_Monotonic_Time_Policy> SYNCH_QUEUE;
 
 // Create timer queue with hr support
 ACE_Timer_Queue *
@@ -171,9 +183,9 @@ class TestHandler
   : public ACE_Event_Handler
 {
 public:
-  TestHandler (ACE_Reactor* reactor)
+  TestHandler (ACE_Reactor* reactor, SYNCH_QUEUE &mq)
     : reactor_ (reactor),
-      timeout_triggered_ (false)
+      mq_ (mq)
   {}
 
   virtual int handle_timeout (const ACE_Time_Value &tv,
@@ -181,18 +193,22 @@ public:
 
   bool trigger_in(const ACE_Time_Value &delay);
 
-  bool timeout_triggered () { return this->timeout_triggered_; }
-
 private:
   ACE_Reactor* reactor_;
-  bool timeout_triggered_;
+  SYNCH_QUEUE& mq_;
 };
 
 int TestHandler::handle_timeout (const ACE_Time_Value &,
                                  const void *)
 {
+  const char S1[] = "message";
+
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) TestHandler::handle_timeout - timeout triggered\n"));
-  this->timeout_triggered_ = true;
+
+  ACE_Message_Block* mb1 = new ACE_Message_Block(S1, sizeof S1);
+
+  this->mq_.enqueue_tail (mb1);
+
   return 0;
 }
 
@@ -202,33 +218,10 @@ bool TestHandler::trigger_in(const ACE_Time_Value &delay)
   return -1 != reactor_->schedule_timer (this, 0, delay, ACE_Time_Value (0));
 }
 
-bool test_timer (ACE_Condition_Thread_Mutex& condition_, ACE_Time_Value& waittime, bool monotonic = false)
+void set_system_time(const ACE_Time_Value& tv)
 {
-  bool status = true;
-  MyTask task1;
-  task1.create_reactor ();
-  task1.start (1);
-  TestHandler test_handler (task1.get_reactor ());
-
-  // The second reactor that uses a hrtimer will trigger a timeout in
-  // 5 seconds. At the same moment we calculate a timeout for the condition
-  // 3 seconds in the future. Than we set the time 4 seconds back.
-  // at the moment now the condition timeouts the trigger should have not
-  // been executed. This is because with hrtime the trigger will call in 5
-  // seconds and the condition in 3 seconds, independent of any time change
-  // meaning that the timeout should trigger
-  if (!test_handler.trigger_in (ACE_Time_Value (5, 0)))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                        "(%P|%t) Unable to schedule trigger.\n"),
-                      false);
-
-  waittime += ACE_Time_Value (3,0);
-
-  // reset system clock 4 seconds backwards
-  ACE_Time_Value curtime = ACE_OS::gettimeofday ();
-  curtime -= ACE_Time_Value (4, 0);
-# if defined (ACE_WIN32)
-  ACE_Date_Time curdt (curtime);
+#   if defined (ACE_WIN32)
+  ACE_Date_Time curdt (tv);
   SYSTEMTIME sys_time;
   sys_time.wDay = ACE_Utils::truncate_cast <WORD> (curdt.day ());
   sys_time.wMonth = ACE_Utils::truncate_cast <WORD> (curdt.month ());
@@ -238,70 +231,99 @@ bool test_timer (ACE_Condition_Thread_Mutex& condition_, ACE_Time_Value& waittim
   sys_time.wSecond = ACE_Utils::truncate_cast <WORD> (curdt.second ());
   sys_time.wMilliseconds = ACE_Utils::truncate_cast <WORD> (curdt.microsec () / 1000);
   if (!::SetLocalTime (&sys_time))
-# else
+#   else
   timespec_t curts;
-  curts = curtime;
+  curts = tv;
   if (ACE_OS::clock_settime (CLOCK_REALTIME, &curts) != 0)
-# endif
+#   endif
     {
       ACE_DEBUG((LM_INFO,
                   "(%P|%t) Unable to reset OS time. Insufficient privileges or not supported.\n"));
     }
+}
+
+// Ensure that the timedout dequeue_head() keeps working in case of timeshift when using monotonic timer.
+
+static bool
+timeout_test (void)
+{
+  bool status = true;
+  SYNCH_QUEUE mq;
+  MyTask task1;
+  task1.create_reactor ();
+  task1.start (1);
+  TestHandler test_handler (task1.get_reactor (), mq);
+
+  // The reactor of taks1 that uses a hrtimer will trigger a timeout in
+  // 5 seconds which will enqueue a message block in the queue. At the
+  // same moment we calculate a timeout for the dequeue operation for
+  // 3 seconds in the future. Than we set the system time 4 seconds back.
+  // The condition should timeout because the queue is empty and the trigger
+  // only fires after the condition has timed out.
+  // Next we start another dequeue for 3 seconds in the future which should
+  // return before timing out because by then the trigger should have fired.
+  // In case of using regular system time policy for message queue and
+  // dequeue timeouts the first dequeue would not have timed out because
+  // between calculating the timeout and starting the dequeue the system time
+  // shifted back 4 sec causing the trigger to fire before the timeout elapsed.
+  // In case timeshifting does not work because of priority problems or such
+  // the test should succeed.
+
+  if (!test_handler.trigger_in (ACE_Time_Value (5, 0)))
+    ACE_ERROR_RETURN ((LM_ERROR,
+                        "(%P|%t) Unable to schedule trigger.\n"),
+                      false);
+
+  if (!mq.is_empty ())
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("New queue is not empty!\n")));
+      status = false;
+    }
   else
     {
-      ACE_DEBUG((LM_INFO,
-                  "(%P|%t) Going to wait on condition until %#T.\n", &waittime));
-      if (condition_.wait (&waittime) != -1 || errno != ETIME)
-        {
-          ACE_ERROR ((LM_ERROR, "ERROR: No errno or return -1\n"));
-          status = 1;
-        }
-      ACE_DEBUG((LM_INFO,
-                  "(%P|%t) Condition wait returned at %#T.\n", &waittime));
+      ACE_Message_Block *b;
+      ACE_Time_Value_T<ACE_Monotonic_Time_Policy> tv;
+      tv = (tv.now () + ACE_Time_Value (3,0)); // Now (monotonic time) + 3 sec
 
-      if (test_handler.timeout_triggered ())
+      // shift back in time 4 sec
+      set_system_time (ACE_OS::gettimeofday () - ACE_Time_Value (4, 0));
+
+      if (mq.dequeue_head (b, &tv) != -1)
         {
-          if (monotonic)
-            {
-              ACE_ERROR ((LM_ERROR, "(%P|%t) ERROR: timer handler shouldn't have "
-              "triggered because we used monotonic condition timing!\n"));
-              status = false;
-            }
-          else
-            ACE_DEBUG ((LM_INFO, "(%P|%t) timer handler "
-            "triggered because we used non-monotonic condition timing!\n"));
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Dequeued before timeout elapsed!\n")));
+          status = false;
+        }
+      else if (errno != EWOULDBLOCK)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("%p\n"),
+                      ACE_TEXT ("Dequeue timeout should be EWOULDBLOCK, got")));
+          status = false;
         }
       else
         {
-          if (!monotonic)
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("First dequeue timed out: OK\n")));
+
+          tv = (tv.now () + ACE_Time_Value (3,0)); // Now (monotonic time) + 3 sec
+          if (mq.dequeue_head (b, &tv) != -1)
             {
-              ACE_ERROR ((LM_ERROR, "(%P|%t) ERROR: timer handler should have "
-              "triggered because we used non-monotonic condition timing!\n"));
-              status = false;
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("Second dequeue succeeded: OK\n")));
+              delete b;
             }
           else
-            ACE_DEBUG ((LM_INFO, "(%P|%t) timer handler has not "
-            "triggered because we used monotonic condition timing!\n"));
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("Second dequeue timed out!\n")));
+              status = false;
+            }
         }
 
-      // reset system clock to correct time
-      curtime = ACE_OS::gettimeofday ();
-      curtime += ACE_Time_Value (4, 0);
-# if defined (ACE_WIN32)
-      curdt.update (curtime);
-      SYSTEMTIME sys_time;
-      sys_time.wDay = ACE_Utils::truncate_cast <WORD> (curdt.day ());
-      sys_time.wMonth = ACE_Utils::truncate_cast <WORD> (curdt.month ());
-      sys_time.wYear = ACE_Utils::truncate_cast <WORD> (curdt.year ());
-      sys_time.wHour = ACE_Utils::truncate_cast <WORD> (curdt.hour ());
-      sys_time.wMinute = ACE_Utils::truncate_cast <WORD> (curdt.minute ());
-      sys_time.wSecond = ACE_Utils::truncate_cast <WORD> (curdt.second ());
-      sys_time.wMilliseconds = ACE_Utils::truncate_cast <WORD> (curdt.microsec () / 1000);
-      ::SetLocalTime (&sys_time);
-# else
-      curts = curtime;
-      ACE_OS::clock_settime (CLOCK_REALTIME, &curts);
-# endif
+      // restore time
+      set_system_time (ACE_OS::gettimeofday () + ACE_Time_Value (4, 0));
     }
 
   ACE_DEBUG((LM_INFO,
@@ -312,33 +334,24 @@ bool test_timer (ACE_Condition_Thread_Mutex& condition_, ACE_Time_Value& waittim
 
   return status;
 }
+# endif /* ACE_HAS_THREADS */
 
 int
 run_main (int , ACE_TCHAR *[])
 {
-  ACE_START_TEST (ACE_TEXT ("Bug_4055_Regression_Test"));
-  int status = 1;
+  ACE_START_TEST (ACE_TEXT ("Monotonic_Message_Queue_Test"));
 
-  ACE_Thread_Mutex mutex_;
-  ACE_Condition_Thread_Mutex condition_ (mutex_);
-  ACE_Condition_Thread_Mutex monotonic_condition_ (mutex_, ACE_Condition_Attributes_T<ACE_Monotonic_Time_Policy> ());
+  int status = 0;
 
-  if (mutex_.acquire () != 0)
-  {
-    ACE_ERROR ((LM_ERROR, "(%P|%t) ERROR: Failed to acquire mutex.\n"));
-  }
-  else
-  {
-    ACE_Time_Value waittime;
-    waittime = waittime.now ();
-    if (test_timer (condition_, waittime))
+# if defined (ACE_HAS_THREADS)
+  if (!timeout_test ())
     {
-      ACE_Time_Value_T<ACE_Monotonic_Time_Policy> monotonic_waittime;
-      monotonic_waittime = monotonic_waittime.now ();
-      if (test_timer (monotonic_condition_, monotonic_waittime, true))
-        status = 0;
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("test failed")));
+      status = 1;
     }
-  }
+# endif /* ACE_HAS_THREADS */
 
   ACE_END_TEST;
   return status;
@@ -349,7 +362,7 @@ run_main (int , ACE_TCHAR *[])
 int
 run_main (int , ACE_TCHAR *[])
 {
-  ACE_START_TEST (ACE_TEXT ("Bug_4055_Regression_Test"));
+  ACE_START_TEST (ACE_TEXT ("Monotonic_Message_Queue_Test"));
   ACE_DEBUG((LM_INFO,
               "(%P|%t) ACE not compiled with monotonic time.\n"));
   ACE_END_TEST;

@@ -73,6 +73,22 @@ ACE_Condition<MUTEX>::ACE_Condition (MUTEX &m,
 }
 
 template <class MUTEX>
+ACE_Condition<MUTEX>::ACE_Condition (MUTEX &m,
+                                     const ACE_Condition_Attributes &attributes,
+                                     const ACE_TCHAR *name,
+                                     void *arg)
+  : mutex_ (m)
+{
+// ACE_TRACE ("ACE_Condition<MUTEX>::ACE_Condition<MUTEX>");
+  if (ACE_OS::cond_init (&this->cond_,
+                         const_cast<ACE_Condition_Attributes &> (attributes).attributes_,
+                         name, arg) != 0)
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE_Condition::ACE_Condition")));
+}
+
+template <class MUTEX>
 ACE_Condition<MUTEX>::~ACE_Condition (void)
 {
   // ACE_TRACE ("ACE_Condition<MUTEX>::~ACE_Condition");

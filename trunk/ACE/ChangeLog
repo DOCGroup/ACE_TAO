@@ -1,3 +1,77 @@
+Thu Aug 16 09:22:31 UTC 2012  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/Condition_Attributes.h:
+        * ace/Condition_Attributes.inl:
+        * ace/Condition_Attributes.cpp:
+        * ace/Condition_Recursive_Thread_Mutex.h:
+        * ace/Condition_Recursive_Thread_Mutex.cpp:
+        * ace/Condition_T.h:
+        * ace/Condition_T.cpp:
+        * ace/Condition_Thread_Mutex.h:
+        * ace/Condition_Thread_Mutex.inl:
+        * ace/Condition_Thread_Mutex.cpp:
+        * ace/Message_Queue.h:
+        * ace/Message_Queue_T.h:
+        * ace/Message_Queue_T.cpp:
+        * ace/Module.h:
+        * ace/Module.inl:
+        * ace/Module.cpp:
+        * ace/Monotonic_Time_Policy.h:
+        * ace/Monotonic_Time_Policy.inl:
+        * ace/Monotonic_Time_Policy.cpp:
+        * ace/Null_Condition.h:
+        * ace/OS_NS_Thread.h:
+        * ace/OS_NS_Thread.inl:
+        * ace/OS_NS_Thread.cpp:
+        * ace/Stream.h:
+        * ace/Stream.inl:
+        * ace/Stream.cpp:
+        * ace/Stream_Modules.h:
+        * ace/Stream_Modules.cpp:
+        * ace/Synch_Traits.h:
+        * ace/Task_Ex_T.h:
+        * ace/Task_Ex_T.inl:
+        * ace/Task_Ex_T.cpp:
+        * ace/Task_T.h:
+        * ace/Task_T.inl:
+        * ace/Task_T.cpp:
+        * ace/Thread_Manager.h:
+        * ace/Thread_Manager.cpp:
+        * ace/Thread_Mutex.h:
+        * ace/Time_Policy.h:
+        * ace/Time_Policy.inl:
+        * ace/Time_Policy.cpp:
+        * ace/Time_Policy_T.h:
+        * ace/Time_Policy_T.inl:
+        * ace/Time_Policy_T.cpp:
+        * ace/Time_Value.h:
+        * ace/Time_Value.cpp:
+        * ace/Time_Value_T.h:
+        * ace/Time_Value_T.inl:
+        * ace/Time_Value_T.cpp:
+        * ace/ace.mpc:
+        * ace/ace_for_tao.mpc:
+          Added a Monotonic time policy and a Time_Value template
+          supporting time policies. Refactored OS_NS_Thread time
+          calculations to use new time policy aware functionality
+          of time values. Added support for monotonic timers with
+          condition variables in message queues, tasks and related
+          classes. See NEWS file and new regression tests for more
+          details.
+          Full backward compatibility is maintained.
+
+        * tests/Bug_4055_Regression_Test.cpp:
+          Updated to fixed state.
+
+        * tests/Monotonic_Message_Queue_Test.cpp:
+        * tests/Monotonic_Task_Test.cpp:
+        * tests/run_test.lst:
+        * tests/tests.mpc:
+          Added new monotonic timer regression tests.
+
+        * NEWS:
+          Added detailed update descriptions.
+
 Thu Aug 16 09:24:00 UTC 2012  Simon Massey <sma at prismtech dot com>
 
         * bin/PerlACE/Process_Win32.pm:

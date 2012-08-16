@@ -1088,6 +1088,10 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   int condattr_destroy (ACE_condattr_t &attributes);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
+  int condattr_setclock(ACE_condattr_t &attributes,
+                        clockid_t clock_id);
+
 #if defined (ACE_LACKS_COND_T)
   extern ACE_Export
 #else

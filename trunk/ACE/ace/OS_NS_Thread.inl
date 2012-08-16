@@ -183,6 +183,32 @@ ACE_OS::condattr_init (ACE_condattr_t &attributes, int type)
 # endif /* ACE_HAS_THREADS */
 }
 
+ACE_INLINE int
+ACE_OS::condattr_setclock (ACE_condattr_t &attributes, clockid_t clock_id)
+{
+  ACE_UNUSED_ARG (clock_id);
+# if defined (ACE_HAS_THREADS)
+#   if defined (ACE_HAS_PTHREADS) && !defined (ACE_LACKS_CONDATTR)
+  int result = -1;
+
+#   if defined (_POSIX_CLOCK_SELECTION) && !defined (ACE_LACKS_CONDATTR_SETCLOCK)
+  ACE_ADAPT_RETVAL (pthread_condattr_setclock (&attributes, clock_id), result);
+#   else
+  ACE_UNUSED_ARG (attributes);
+#   endif /* _POSIX_CLOCK_SELECTION) && !ACE_LACKS_CONDATTR_SETCLOCK */
+
+  return result;
+#   else
+  ACE_UNUSED_ARG (attributes);
+  ACE_NOTSUP_RETURN (-1);
+#   endif /* ACE_HAS_PTHREADS && !ACE_LACKS_CONDATTR */
+
+# else
+  ACE_UNUSED_ARG (attributes);
+  ACE_NOTSUP_RETURN (-1);
+# endif /* ACE_HAS_THREADS */
+}
+
 #if !defined (ACE_LACKS_COND_T)
 // NOTE: The ACE_OS::cond_* functions for Unix platforms are defined
 // here because the ACE_OS::sema_* functions below need them.
@@ -390,7 +416,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
   int msec_timeout = 0;
   if (timeout != 0)
     {
-      ACE_Time_Value relative_time (*timeout - ACE_OS::gettimeofday ());
+      ACE_Time_Value relative_time = timeout->to_relative_time ();
       // Watchout for situations where a context switch has caused the
       // current time to be > the timeout.
       if (relative_time > ACE_Time_Value::zero)
@@ -2153,7 +2179,7 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
       {
         result = ACE_OS::sema_trywait (s);
         if (result == -1 && errno == EAGAIN)
-          expired = ACE_OS::gettimeofday () > tv;
+          expired = (tv.to_relative_time () <= ACE_Time_Value::zero);
         else
           expired = false;
 
@@ -2176,7 +2202,7 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
         error = ETIME;
 
 #     if defined (ACE_LACKS_COND_TIMEDWAIT_RESET)
-      tv = ACE_OS::gettimeofday ();
+      tv = tv.now ();
 #     endif /* ACE_LACKS_COND_TIMEDWAIT_RESET */
     }
 
@@ -2191,13 +2217,10 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
 #   endif /* ACE_HAS_POSIX_SEM_TIMEOUT */
 # elif defined (ACE_USES_FIFO_SEM)
   int rc;
-  ACE_Time_Value now = ACE_OS::gettimeofday ();
+  ACE_Time_Value timeout = tv.to_relative_time ();
 
-  while (tv > now)
+  while (timeout > ACE_Time_Value::zero)
     {
-      ACE_Time_Value timeout = tv;
-      timeout -= now;
-
       ACE_Handle_Set  fds_;
 
       fds_.set_bit (s->fd_[0]);
@@ -2217,7 +2240,7 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
 
       // we were woken for input but someone beat us to it
       // so we wait again if there is still time
-      now = ACE_OS::gettimeofday ();
+      timeout = tv.to_relative_time ();
     }
 
   // make sure errno is set right
@@ -2260,7 +2283,7 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
   if (result == 0)
     {
 #     if defined (ACE_LACKS_COND_TIMEDWAIT_RESET)
-      tv = ACE_OS::gettimeofday ();
+      tv = tv.now ();
 #     endif /* ACE_LACKS_COND_TIMEDWAIT_RESET */
       --s->count_;
     }
@@ -2280,7 +2303,7 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
       // Note that we must convert between absolute time (which is
       // passed as a parameter) and relative time (which is what
       // <WaitForSingleObjects> expects).
-      ACE_Time_Value relative_time (tv - ACE_OS::gettimeofday ());
+      ACE_Time_Value relative_time = tv.to_relative_time ();
 
       // Watchout for situations where a context switch has caused the
       // current time to be > the timeout.
@@ -2293,7 +2316,7 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
   switch (::WaitForSingleObject (*s, msec_timeout))
     {
     case WAIT_OBJECT_0:
-      tv = ACE_OS::gettimeofday ();     // Update time to when acquired
+      tv = tv.now ();     // Update time to when acquired
       return 0;
     case WAIT_TIMEOUT:
       errno = ETIME;
@@ -2315,10 +2338,9 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
   // as a shortcut for "now", which works on non-Windows because 0 is
   // always earlier than now. However, the need to convert to relative time
   // means we need to watch out for this case.
-  ACE_Time_Value end_time = tv;
-  if (tv == ACE_Time_Value::zero)
-    end_time = ACE_OS::gettimeofday ();
-  ACE_Time_Value relative_time = end_time - ACE_OS::gettimeofday ();
+  ACE_Time_Value relative_time (ACE_Time_Value::zero);
+  if (tv != ACE_Time_Value::zero)
+    relative_time = tv.to_relative_time ();
   int result = -1;
 
   // While we are not timeout yet. >= 0 will let this go through once
@@ -2350,7 +2372,7 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
           // Only return when we successfully get the semaphore.
           if (result == 0)
             {
-              tv = ACE_OS::gettimeofday ();     // Update to time acquired
+              tv = tv.now ();     // Update to time acquired
               return 0;
             }
           break;
@@ -2369,7 +2391,8 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
 
       // Haven't been able to get the semaphore yet, update the
       // timeout value to reflect the remaining time we want to wait.
-      relative_time = end_time - ACE_OS::gettimeofday ();
+      // in case of tv == 0 relative_time will now be < 0 and we will be out of time
+      relative_time = tv.to_relative_time ();
     }
 
   // We have timed out.
@@ -2380,7 +2403,7 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
   // Note that we must convert between absolute time (which is
   // passed as a parameter) and relative time (which is what
   // the system call expects).
-  ACE_Time_Value relative_time (tv - ACE_OS::gettimeofday ());
+  ACE_Time_Value relative_time = tv.to_relative_time ();
 
   int ticks_per_sec = ::sysClkRateGet ();
 
@@ -2398,7 +2421,7 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
     }
   else
     {
-      tv = ACE_OS::gettimeofday ();  // Update to time acquired
+      tv = tv.now ();  // Update to time acquired
       return 0;
     }
 #   endif /* ACE_HAS_STHREADS */

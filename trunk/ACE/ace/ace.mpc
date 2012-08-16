@@ -131,6 +131,7 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     Monitor_Size.cpp
     Monitor_Control_Types.cpp
     Monitor_Control_Action.cpp
+    Monotonic_Time_Policy.cpp
     Multihomed_INET_Addr.cpp
     Mutex.cpp
     Netlink_Addr.cpp
@@ -414,6 +415,7 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     Metrics_Cache_T.h
     Memory_Pool.h
     Min_Max.h
+    Monotonic_Time_Policy.h
     Netlink_Addr.h
     Null_Barrier.h
     Null_Condition.h
@@ -444,6 +446,7 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     Synch.h
     Synch_Traits.h
     TSS_T.h
+    Time_Policy.h
     Timer_Hash.h
     Timer_Heap.h
     Timer_List.h

@@ -40,7 +40,7 @@ public:
   virtual ~ACE_Time_Policy_T ();
 
   /// Return the current time according to this policy
-  ACE_Time_Value operator()() const;
+  ACE_Time_Value_T<ACE_Delegating_Time_Policy> operator()() const;
 
   /// Allows applications to control how the timer queue gets the time
   /// of day.
@@ -50,7 +50,7 @@ public:
   void set_gettimeofday (ACE_Time_Value (*gettimeofday)(void));
 protected:
   /// Return the current time according to policy implementation.
-  virtual ACE_Time_Value gettimeofday () const;
+  virtual ACE_Time_Value_T<ACE_Delegating_Time_Policy> gettimeofday () const;
 
 private:
   /// The policy to return the current time of day

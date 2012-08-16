@@ -958,6 +958,22 @@ project(Message Queue Test) : acetest {
   }
 }
 
+project(Monotonic_Task Test) : acetest {
+  avoids += ace_for_tao
+  exename = Monotonic_Task_Test
+  Source_Files {
+    Monotonic_Task_Test.cpp
+  }
+}
+
+project(Monotonic_Message Queue Test) : acetest {
+  avoids += ace_for_tao
+  exename = Monotonic_Message_Queue_Test
+  Source_Files {
+    Monotonic_Message_Queue_Test.cpp
+  }
+}
+
 project(Message Queue Test Ex) : acetest {
   avoids += ace_for_tao
   exename = Message_Queue_Test_Ex
