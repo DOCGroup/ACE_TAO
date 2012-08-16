@@ -418,6 +418,7 @@ sub Wait ($)
         }
     }
     Win32::Process::GetExitCode ($self->{PROCESS}, $result);
+    $self->{RUNNING} = 0;
     if ($result != 0) {
           $PerlACE::ProcessVX::DoVxInit = 1; # force reboot on next run
     }
