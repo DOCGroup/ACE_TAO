@@ -48,7 +48,7 @@ void
 TAO_Notify_Tests_Options_Parser::execute (CosNotification::QoSProperties& qos, ACE_Arg_Shifter& arg_shifter)
 {
   const ACE_TCHAR *current_arg = 0;
-  NotifyExt::Priority default_priority = ACE_DEFAULT_THREAD_PRIORITY;
+  NotifyExt::Priority default_priority = NotifyExt::minPriority;
 
   if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-ThreadPool")) == 0) // -ThreadPool [-Threads static_threads] [-Priority default_priority]
     {
@@ -70,10 +70,22 @@ TAO_Notify_Tests_Options_Parser::execute (CosNotification::QoSProperties& qos, A
       if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Priority")) == 0)
         {
           arg_shifter.consume_arg ();
-
           current_arg = arg_shifter.get_current ();
-
-          default_priority = static_cast<NotifyExt::Priority> (ACE_OS::atoi (current_arg));
+          const int priority= ACE_OS::atoi (current_arg);
+          if (priority < NotifyExt::minPriority)
+            {
+              NotifyExt::Priority default_priority = NotifyExt::minPriority;
+              ACE_DEBUG ((LM_DEBUG, "-Priority %d is too small (min priority %d used)\n",
+                          priority, static_cast<int> (default_priority)));
+            }
+          else if (NotifyExt::maxPriority < priority)
+            {
+              NotifyExt::Priority default_priority = NotifyExt::maxPriority;
+              ACE_DEBUG ((LM_DEBUG, "-Priority %d is too large (max priority %d used)\n",
+                          priority, static_cast<int> (default_priority)));
+            }
+          else
+            default_priority = static_cast<NotifyExt::Priority> (priority);
 
           arg_shifter.consume_arg ();
         }
