@@ -604,7 +604,11 @@ ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::ACE_Stream (void * a,
   : stream_head_ (0),
     stream_tail_ (0),
     linked_us_ (0),
+#if defined (ACE_HAS_THREADS)
     final_close_ (lock_, ACE_Condition_Attributes_T<TIME_POLICY> ())
+#else
+    final_close_ (lock_)
+#endif
 {
   ACE_TRACE ("ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::ACE_Stream");
   if (this->open (a, head, tail) == -1)

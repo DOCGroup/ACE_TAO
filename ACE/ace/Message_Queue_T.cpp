@@ -1045,8 +1045,13 @@ template <ACE_SYNCH_DECL, class TIME_POLICY>
 ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::ACE_Message_Queue (size_t hwm,
                                                      size_t lwm,
                                                      ACE_Notification_Strategy *ns)
+#if defined (ACE_HAS_THREADS)
   : not_empty_cond_ (lock_, ACE_Condition_Attributes_T<TIME_POLICY> ())
   , not_full_cond_ (lock_, ACE_Condition_Attributes_T<TIME_POLICY> ())
+#else
+  : not_empty_cond_ (lock_)
+  , not_full_cond_ (lock_)
+#endif
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::ACE_Message_Queue");
 
