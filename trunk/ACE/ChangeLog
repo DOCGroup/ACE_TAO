@@ -1,3 +1,9 @@
+Thu Aug 16 09:43:00 UTC 2012  Simon Massey <sma at prismtech dot com>
+
+        * test/Bug_3943_Regression_Test.cpp:
+
+          Another cast required to remove warning.
+
 Thu Aug 16 09:22:31 UTC 2012  Martin Corino  <mcorino@remedy.nl>
 
         * ace/Condition_Attributes.h:
