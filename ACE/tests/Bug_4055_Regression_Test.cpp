@@ -325,7 +325,8 @@ run_main (int , ACE_TCHAR *[])
 
   ACE_Thread_Mutex mutex_;
   ACE_Condition_Thread_Mutex condition_ (mutex_);
-  ACE_Condition_Thread_Mutex monotonic_condition_ (mutex_, ACE_Condition_Attributes_T<ACE_Monotonic_Time_Policy> ());
+  ACE_Condition_Attributes_T<ACE_Monotonic_Time_Policy> monotonic_cond_attr_;
+  ACE_Condition_Thread_Mutex monotonic_condition_ (mutex_, monotonic_cond_attr_);
 
   if (mutex_.acquire () != 0)
   {

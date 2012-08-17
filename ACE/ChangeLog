@@ -1,3 +1,14 @@
+Fri Aug 17 09:04:50 UTC 2012  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/Message_Queue_T.h:
+        * ace/Message_Queue_T.cpp:
+        * ace/Stream.h:
+        * ace/Stream.cpp:
+        * tests/Bug_4055_Regression_Test.cpp:
+        * tests/Monotonic_Task_Test.cpp:
+          Fixed compile errors for a bunch of crappy compilers
+          like the one on RHEL53 and AIX.
+
 Thu Aug 16 18:47:59 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ace.mpc:

@@ -24,6 +24,9 @@
 #include "ace/IO_Cntl_Msg.h"
 #include "ace/Message_Block.h"
 #include "ace/Module.h"
+#if defined (ACE_HAS_THREADS)
+# include "ace/Condition_Attributes.h"
+#endif
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -187,6 +190,14 @@ private:
   // = Synchronization objects used for thread-safe streams.
   /// Protect the stream against race conditions.
   ACE_SYNCH_MUTEX_T lock_;
+
+#if defined (ACE_HAS_THREADS)
+  /// Attributes to initialize condition with.
+  /* We only need this because some crappy compilers can't
+     properly handle initializing the conditions with
+     temporary objects. */
+  ACE_Condition_Attributes_T<TIME_POLICY> cond_attr_;
+#endif
 
   /// Use to tell all threads waiting on the close that we are done.
   ACE_SYNCH_CONDITION_T final_close_;
