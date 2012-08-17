@@ -1,10 +1,15 @@
+Fri Aug 17 18:05:54 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_Thread.inl:
+          Attempt to fix clang warning
+
 Fri Aug 17 13:38:05 UTC 2012  Martin Corino  <mcorino@remedy.nl>
 
         * ace/Condition_Recursive_Thread_Mutex.h:
         * ace/Condition_Thread_Mutex.h:
         * ace/Null_Condition.h:
         * ace/Synch_Traits.h:
-	  Changes to attempt to fix Solaris9 SUNStudio11 problems.
+          Changes to attempt to fix Solaris9 SUNStudio11 problems.
 
 Fri Aug 17 12:28:32 UTC 2012  Martin Corino  <mcorino@remedy.nl>
 
