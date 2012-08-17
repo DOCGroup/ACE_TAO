@@ -29,10 +29,9 @@
 
 #include "ace/Thread_Mutex.h"
 #include "ace/Condition_Attributes.h"
+#include "ace/Condition_T.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
-template <class ACE_LOCK> class ACE_Condition;
 
 class ACE_Time_Value;
 
