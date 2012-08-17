@@ -1,3 +1,10 @@
+Fri Aug 17 11:19:01 UTC 2012  Martin Corino  <mcorino@remedy.nl>
+
+        * tests/Monotonic_Message_Queue_Test.cpp:
+        * tests/Monotonic_Task_Test.cpp:
+          Added include files because of compile errors in certain
+	  builds.
+
 Fri Aug 17 09:04:50 UTC 2012  Martin Corino  <mcorino@remedy.nl>
 
         * ace/Message_Queue_T.h:
