@@ -35,7 +35,7 @@ class ACE_Recursive_Thread_Mutex;
 class ACE_RW_Thread_Mutex;
 class ACE_Thread_Semaphore;
 
-template <class ACE_LOCK> class ACE_Condition;
+template <class MUTEX> class ACE_Condition;
 typedef ACE_Condition<ACE_Null_Mutex> ACE_Null_Condition;
 typedef ACE_Condition<ACE_Thread_Mutex> ACE_Condition_Thread_Mutex;
 typedef ACE_Condition<ACE_Recursive_Thread_Mutex> ACE_Condition_Recursive_Thread_Mutex;

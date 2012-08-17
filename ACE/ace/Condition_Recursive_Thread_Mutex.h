@@ -27,10 +27,9 @@
 #else /* ACE_HAS_THREADS */
 #include "ace/Recursive_Thread_Mutex.h"
 #include "ace/Condition_Attributes.h"
+#include "ace/Condition_T.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
-template <class ACE_LOCK> class ACE_Condition;
 
 /**
  * @brief ACE_Condition template specialization written using
