@@ -17,6 +17,7 @@
 #include /**/ "ace/pre.h"
 
 #include "ace/Null_Mutex.h"
+#include "ace/Condition_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -25,8 +26,6 @@
 #include "ace/os_include/os_errno.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
-template <class ACE_LOCK> class ACE_Condition;
 
 class ACE_Time_Value;
 class ACE_Condition_Attributes;
