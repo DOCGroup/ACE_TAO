@@ -75,8 +75,8 @@ class MyTask : public ACE_Task<ACE_MT_SYNCH, ACE_Monotonic_Time_Policy>
 public:
   MyTask ()
     : stop_ (false),
-      tm_ (ACE_Condition_Attributes_T<ACE_Monotonic_Time_Policy> ()),
-      cond_ (lock_, ACE_Condition_Attributes_T<ACE_Monotonic_Time_Policy> ()),
+      tm_ (monotonic_cond_attr_),
+      cond_ (lock_, monotonic_cond_attr_),
       status_ (0)
   {
     // set monotonic timer aware thread manager for this task
@@ -97,6 +97,7 @@ public:
 
 private:
   bool stop_;
+  ACE_Condition_Attributes_T<ACE_Monotonic_Time_Policy> monotonic_cond_attr_;
   ACE_Thread_Manager tm_;
   ACE_Thread_Mutex lock_;
   ACE_Condition<ACE_Thread_Mutex> cond_;

@@ -605,7 +605,7 @@ ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::ACE_Stream (void * a,
     stream_tail_ (0),
     linked_us_ (0),
 #if defined (ACE_HAS_THREADS)
-    final_close_ (lock_, ACE_Condition_Attributes_T<TIME_POLICY> ())
+    final_close_ (lock_, cond_attr_)
 #else
     final_close_ (lock_)
 #endif

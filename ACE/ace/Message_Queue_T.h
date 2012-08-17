@@ -21,6 +21,9 @@
 #include "ace/Guard_T.h"
 #include "ace/Time_Policy.h"
 #include "ace/Time_Value_T.h"
+#if defined (ACE_HAS_THREADS)
+# include "ace/Condition_Attributes.h"
+#endif
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -605,6 +608,14 @@ protected:
   // = Synchronization primitives for controlling concurrent access.
   /// Protect queue from concurrent access.
   ACE_SYNCH_MUTEX_T lock_;
+
+#if defined (ACE_HAS_THREADS)
+  /// Attributes to initialize conditions with.
+  /* We only need this because some crappy compilers can't
+     properly handle initializing the conditions with
+     temporary objects. */
+  ACE_Condition_Attributes_T<TIME_POLICY> cond_attr_;
+#endif
 
   /// Used to make threads sleep until the queue is no longer empty.
   ACE_SYNCH_CONDITION_T not_empty_cond_;
