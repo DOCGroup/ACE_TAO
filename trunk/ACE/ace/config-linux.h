@@ -378,6 +378,19 @@
 # endif
 #endif
 
+// This is ghastly, but as long as there are platforms supported
+// which define the right POSIX macros but lack actual support
+// we have no choice.
+// RHEL4 fails (2.6.9) while RHEL5 works (2.6.18)
+#if !defined (ACE_LACKS_CONDATTR_SETCLOCK)
+# if !defined (ACE_LACKS_LINUX_VERSION_H)
+#  include <linux/version.h>
+# endif /* !ACE_LACKS_LINUX_VERSION_H */
+# if (LINUX_VERSION_CODE < KERNEL_VERSION (2,6,18))
+#  define ACE_LACKS_CONDATTR_SETCLOCK
+# endif
+#endif
+
 #define ACE_HAS_SVR4_DYNAMIC_LINKING
 #define ACE_HAS_AUTOMATIC_INIT_FINI
 #define ACE_HAS_DLSYM_SEGFAULT_ON_INVALID_HANDLE
