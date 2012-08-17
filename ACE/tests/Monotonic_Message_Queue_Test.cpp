@@ -31,6 +31,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_sys_time.h"
+#include "ace/OS_NS_time.h"
 #include "ace/OS_NS_unistd.h"
 
 #if defined (ACE_WIN32) || \
