@@ -29,6 +29,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ACE_Time_Value;
 class ACE_Condition_Attributes;
+template <class MUTEX> class ACE_Condition;
 
 /**
  * @brief ACE_Condition template specialization written using
