@@ -1,3 +1,8 @@
+Sat Aug 18 19:25:38 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Null_Condition.h:
+          Fix for single threaded builds
+
 Sat Aug 18 19:23:21 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Condition_Attributes.h:
