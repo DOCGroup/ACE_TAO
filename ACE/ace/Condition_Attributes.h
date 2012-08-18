@@ -26,6 +26,8 @@
 
 #if defined (ACE_HAS_THREADS)
 
+template <class MUTEX> class ACE_Condition;
+
 // ACE platform supports some form of threading.
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

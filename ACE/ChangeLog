@@ -1,3 +1,8 @@
+Sat Aug 18 19:23:21 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Condition_Attributes.h:
+          Added forward declaration, maybe this fixes solaris 9
+
 Fri Aug 17 18:05:54 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_Thread.inl:
