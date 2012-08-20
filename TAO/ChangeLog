@@ -1,3 +1,11 @@
+Mon Aug 20 10:20:00 UTC 2012  Simon Massey  <sma at prismtech dot com>
+
+        * orbsvcs/orbsvcs/PortableGroup/GOA.cpp:
+        * orbsvcs/PortableGroup/PG_ObjectGroupManager.cpp:
+        * orbsvcs/PortableGroup/UIPMC_Endpoint.cpp:
+
+          Coverity detected faults fixed.
+
 Mon Aug 20 09:26:30 UTC 2012  Simon Massey  <sma at prismtech dot com>
 
         * orbsvcs/orbsvcs/PortableGroup/UIPMC_Mcast_Transport.cpp:

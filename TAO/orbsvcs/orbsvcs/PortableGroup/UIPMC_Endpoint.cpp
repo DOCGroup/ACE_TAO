@@ -26,6 +26,7 @@ TAO_UIPMC_Endpoint::TAO_UIPMC_Endpoint (void)
     next_ (0),
     preferred_if_()
 {
+  this->uint_ip_addr (0u);
 }
 
 TAO_UIPMC_Endpoint::TAO_UIPMC_Endpoint (const ACE_INET_Addr &addr)
@@ -62,11 +63,12 @@ TAO_UIPMC_Endpoint::~TAO_UIPMC_Endpoint (void)
 void
 TAO_UIPMC_Endpoint::object_addr (const ACE_INET_Addr &addr)
 {
-  this->port_ = addr.get_port_number();
+  this->port_ = addr.get_port_number ();
   char tmp[INET6_ADDRSTRLEN];
   addr.get_host_addr (tmp, sizeof tmp);
   this->host_ = CORBA::string_dup (tmp);
   this->object_addr_.set (addr);
+  this->uint_ip_addr (addr.get_ip_address ());
 }
 
 const char *
