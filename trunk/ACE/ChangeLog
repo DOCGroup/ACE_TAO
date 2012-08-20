@@ -1,3 +1,8 @@
+Mon Aug 20 10:03:23 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/ACE-monotonic-timer.html:
+          Fixed fuzz
+
 Mon Aug 20 09:03:22 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Module.cpp:
