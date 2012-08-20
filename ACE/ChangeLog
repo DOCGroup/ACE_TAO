@@ -1,3 +1,8 @@
+Mon Aug 20 09:03:22 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Module.cpp:
+          Fixed possible memory leak and dead code, uncovered by Coverity scan
+
 Mon Aug 20 08:36:46 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/ACE-monotonic-timer.html:
