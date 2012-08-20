@@ -57,7 +57,7 @@ ACE_Condition<ACE_Recursive_Thread_Mutex>::ACE_Condition (ACE_Recursive_Thread_M
   : mutex_ (m)
 {
   if (ACE_OS::cond_init (&this->cond_,
-                         const_cast<ACE_Condition_Attributes &> (attributes).attributes_) != 0)
+                         const_cast<ACE_condattr_t &> (attributes.attributes ())) != 0)
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"),
                 ACE_TEXT ("ACE_Condition<ACE_Recursive_Thread_Mutex>::ACE_Condition<ACE_Recursive_Thread_Mutex>")));
 }
