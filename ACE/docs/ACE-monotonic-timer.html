@@ -1,0 +1,238 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="LibreOffice 3.5  (Linux)">
+	<META NAME="AUTHOR" CONTENT="Martin Corino">
+	<META NAME="CREATED" CONTENT="20120802;12245200">
+	<META NAME="CHANGEDBY" CONTENT="Martin Corino">
+	<META NAME="CHANGED" CONTENT="20120816;12280900">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { margin: 0.79in }
+		P { margin-bottom: 0.08in }
+		H1 { margin-bottom: 0.08in }
+		H1.western { font-family: "Liberation Sans", sans-serif; font-size: 16pt }
+		H1.cjk { font-family: "Droid Sans Fallback"; font-size: 16pt }
+		H1.ctl { font-family: "Arial"; font-size: 16pt }
+		H2 { margin-bottom: 0.08in }
+		H2.western { font-family: "Liberation Sans", sans-serif; font-size: 14pt; font-style: italic }
+		H2.cjk { font-family: "Droid Sans Fallback"; font-size: 14pt; font-style: italic }
+		H2.ctl { font-size: 14pt; font-style: italic }
+		H3 { margin-bottom: 0.08in }
+		H3.western { font-family: "Liberation Sans", sans-serif; font-size: 13pt }
+		H3.cjk { font-family: "Droid Sans Fallback" }
+		PRE { margin-left: 0.49in; border-top: none; border-bottom: none; border-left: 1.05pt solid #808080; border-right: none; padding-top: 0in; padding-bottom: 0in; padding-left: 0.02in; padding-right: 0in }
+		PRE.cjk { font-family: "Droid Sans Fallback", monospace }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" DIR="LTR">
+<DIV TYPE=HEADER>
+	<P STYLE="margin-bottom: 0in">Author: M.J.N. Corino		Copyright <FONT FACE="Liberation Serif, serif">©</FONT><FONT FACE="Liberation Serif, serif">
+	2012, Remedy IT</FONT></P>
+	<P STYLE="margin-bottom: 0.2in"><FONT FACE="Liberation Serif, serif">Date:
+	August 20, 2012		The Netherlands</FONT></P>
+</DIV>
+<H1 CLASS="western">Monotonic timer support for ACE condition
+variables</H1>
+<H2 CLASS="western">Introduction</H2>
+<P>This document describes how to use the changes to the ACE API
+which provide support to use monotonic timers for condition variables
+to solve the problem of system timeshift vulnerability of the ACE
+Condition variable timeout functionality.</P>
+<H3 CLASS="western">Background</H3>
+<P>ACE Condition variables implement an API to wait for a condition
+to be signalled with a maximum wait timeout value. This timeout value
+must be specified as <B>absolute time</B><SPAN STYLE="font-weight: normal">
+(this API spec has been derived from the POSIX threading API,
+pthread, the most widely available, standardized, threading API
+available).</SPAN></P>
+<P><SPAN STYLE="font-weight: normal">Currently ACE expects the
+timeout value to be based on the system time clock through the ACE
+API support for that clock (</SPAN><I><SPAN STYLE="font-weight: normal">ACE_OS::gettimeofday
+()</SPAN></I><SPAN STYLE="font-weight: normal">) which is also the
+default for the POSIX API (originally POSIX did not support anything
+else).</SPAN></P>
+<P STYLE="font-weight: normal">This dependency on the system time
+clock however makes ACE Condition variables vulnerable to system
+clock time shifts since a change in the system clock time setting
+after an absolute time value has been determined (based on the
+unchanged system clock) will influence the outstanding wait
+operations based on these time values.</P>
+<P STYLE="font-weight: normal">The ACE implementation for the Windows
+platform does not use the POSIX interface but is still potentially
+vulnerable because the ACE implementation itself performs a
+conversion from absolute to relative time before executing wait
+operation on a Condition variable (as this is what the Win32 API
+expects). Since this conversion is based on the system time clock
+here also a vulnerability exists.</P>
+<P STYLE="font-weight: normal">To resolve this vulnerability the
+notion of MONOTONIC timer sources should be integrated into the ACE
+Condition support. MONOTONIC timers are timer sources which are
+independent of the system time clock and will always return time
+values which are correct relative to previously returned time values
+(at least within the lifetime of a single running process).</P>
+<P STYLE="font-weight: normal">The customer encountered this problem
+while making use of the ACE_Message_Queue classes in the
+implementation of their application. The enqueu/dequeue functionality
+of the message queues makes heavy use of the ACE Condition variable
+timed wait support.</P>
+<H3 CLASS="western">Requirements</H3>
+<P STYLE="font-weight: normal">Prerequisites for the solution are:</P>
+<UL>
+	<LI><P STYLE="font-weight: normal">maintain backward compatibility
+	(as for all changes made to the ACE API) and cross platform
+	stability (if not full support on all platforms);</P>
+	<LI><P STYLE="font-weight: normal">create an implementation that
+	allows for integration in the customers application with minimal
+	code changes;</P>
+	<LI><P STYLE="font-weight: normal">create an implementation allowing
+	for staged completion in the full ACE API, i.e. only change those
+	parts of ACE now that are essential to the solution of the customer
+	problem and postpone any non-essential changes without losing
+	library consistency and stability.</P>
+</UL>
+<H2 CLASS="western"><B>Solution</B></H2>
+<P STYLE="font-weight: normal">The implemented solution involves
+adding support for the ACE Time_Policy traits in the ACE Condition
+API and those classes directly related to the ACE Condition timed
+wait functionality that are used by the customer (like
+ACE_Message_Queue and ACE_Task). Also some classes tightly linked to
+those classes have been updated.</P>
+<P STYLE="font-weight: normal">The newly added monotonic time policy,
+ACE_Monotonic_Time_Policy, provides support for monotonic time values
+(on Windows and any POSIX platform providing the necessary support
+like recent versions of Linux).</P>
+<P STYLE="font-weight: normal">New (virtual) functionality in
+ACE_Time_Value combined with a derived template class
+(ACE_Time_Value_T&lt;&gt;) provide time policy awareness in time
+values.</P>
+<P STYLE="font-weight: normal">Using the combination of these changes
+it is now possible to set up message queues that support monotonic
+time values for timed wait methods in a portable way as will be shown
+in the following section.</P>
+<H3 CLASS="western"><BR><BR>
+</H3>
+<H3 CLASS="western" STYLE="page-break-before: always"><B>User Code
+Changes</B></H3>
+<P STYLE="font-weight: normal">The following are examples of user
+code changes required to update an application to support monotonic
+timed message queues.</P>
+<P STYLE="font-weight: normal">Message_Queue and Task class templates
+have been provided with an additional template argument to specify
+the Time_Policy to use for condition variables. To use monotonic time
+values the new ACE_Monotonic_Time_Policy should be used. 
+</P>
+<P STYLE="font-weight: normal">So, where an existing application
+declared a Message_Queue as:</P>
+<PRE CLASS="western" STYLE="font-weight: normal">ACE_Message_Queue&lt;ACE_MT_SYNCH&gt; msg_queue_;</PRE><P STYLE="font-weight: normal">
+<BR><BR>
+</P>
+<P STYLE="font-weight: normal">this would need to change to:</P>
+<PRE CLASS="western" STYLE="font-weight: normal">ACE_Message_Queue&lt;ACE_MT_SYNCH, ACE_Monotonic_Time_Policy&gt; msg_queue_;</PRE><P STYLE="font-weight: normal">
+<BR><BR>
+</P>
+<P STYLE="font-weight: normal">The changes for task are similar:</P>
+<PRE CLASS="western" STYLE="font-weight: normal">class MyTask : public ACE_Task&lt;ACE_MT_SYNCH&gt;
+{
+  …
+};</PRE><P STYLE="font-weight: normal">
+should change to:</P>
+<PRE CLASS="western" STYLE="font-weight: normal">class MyTask : public ACE_Task&lt;ACE_MT_SYNCH, ACE_Monotonic_Time_Policy&gt;
+{
+  …
+};</PRE><P STYLE="font-weight: normal">
+<BR><BR>
+</P>
+<P STYLE="font-weight: normal">To specify timeout values to these
+message queues on the enqueue/dequeue operations you would have to
+use time values that are Time_Policy aware. To that end a templated
+derivative of ACE_Time_Value has been implemented allowing one to
+declare a time value as:</P>
+<PRE CLASS="western" STYLE="font-weight: normal">ACE_Time_Value_T&lt;ACE_Monotonic_Time_Policy&gt; timeout_;</PRE><P STYLE="font-weight: normal">
+<BR><BR>
+</P>
+<P STYLE="font-weight: normal">The updated Message_Queue and Task
+classes provide a convenience method to initialize such a  time value
+with the time policy based time of day as follows:</P>
+<PRE CLASS="western" STYLE="font-weight: normal">ACE_Time_Value_T&lt;ACE_Monotonic_Time_Policy&gt; 
+	timeout_ (msg_queue_.gettimeofday ());
+<B>// or</B>
+ACE_Time_Value_T&lt;ACE_Monotonic_Time_Policy&gt; timeout_;
+timeout_ = msg_queue_.gettimeofday ();</PRE><P STYLE="font-weight: normal">
+<BR><BR>
+</P>
+<P STYLE="font-weight: normal">The return type of this method is a
+time policy specific time value as follows:</P>
+<PRE CLASS="western" STYLE="font-weight: normal">tempate &lt;ACE_SYNCH_DECL, class TIME_POLICY&gt;
+class ACE_Message_Queue : public ACE_Message_Queue_Base
+{
+…
+ACE_Time_Value_T&lt;TIME_POLICY&gt; gettimeofday () const;
+…
+};</PRE><P STYLE="font-weight: normal">
+<BR><BR>
+</P>
+<P STYLE="font-weight: normal">To define a wait timeout of 5 sec and
+execute an enqueu operation the following would apply:</P>
+<PRE CLASS="western" STYLE="font-weight: normal">...
+ACE_Time_Value_T&lt;ACE_Monotonic_Time_Policy&gt; timeout_;
+timeout_ = msg_queue_.gettimeofday ();
+timeout_ += ACE_Time_Value (5,0);
+msg_queue_.enqueue (msg_block, &amp;timeout_);
+…</PRE><P STYLE="font-weight: normal">
+<BR><BR>
+</P>
+<P><B>NOTE:</B><SPAN STYLE="font-weight: normal"> To function
+properly the ACE_Time_Value pointer passed to the timed wait methods
+</SPAN><B>MUST</B><SPAN STYLE="font-weight: normal"> be the address
+of an ACE_Time_Value_T&lt;TIME_POLICY&gt; instance which matches the
+TIME_POLICY of the message queue or task. This is because the lower
+layers now rely on the new time policy aware virtual methods of the
+ACE_Time_Value classes to perform time calculations (to_relative_time
+(), to_absolute_time (), now ()).<BR>Unfortunately due to backward
+compatibility issues it was not possible to change the signatures of
+the timed wait methods to type safe versions excepting only correct
+time value instances.</SPAN></P>
+<P><B>NOTE2:</B><SPAN STYLE="font-weight: normal"> Please be aware of
+the differences in behaviour of the time calculation operations.</SPAN></P>
+<UL>
+	<LI><P><I><SPAN STYLE="font-weight: normal">unary</SPAN></I><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">
+	calculations (-=, += ,*=, –, ++) maintain time policy awareness,
+	i.e. these operations always return a time policy aware time value
+	(ACE_Time_Value_T&lt;&gt; instance; which may a reference to the
+	time value itself);</SPAN></SPAN></P>
+	<LI><P><I><SPAN STYLE="font-weight: normal">binary</SPAN></I><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">
+	calculations (+, -, *) always return a default ACE_Time_Value
+	instance and thus loose time policy awareness. The basic numeric
+	time values contained in these instances should only be used for
+	comparative purposes or to update the value of a time policy based
+	instance like:</SPAN></SPAN></P>
+</UL>
+<PRE CLASS="western" STYLE="font-style: normal; font-weight: normal">ACE_Time_Value_T&lt;ACE_Monotonic_Time_Policy&gt; t1, t2;
+… // t1 and t2 get assigned values
+// calculate difference between t1 and t2
+ACE_Time_Value tdiff = t2 – t1;
+…
+// at some point calculate new absolute time based on tdiff
+ACE_Time_Value_T&lt;ACE_Monotonic_Time_Policy&gt; tv;
+// now () returns an ACE_Time_Value representing current time according
+// to the active time policy of tv
+tv = tv.now () + tdiff;</PRE><P STYLE="font-style: normal; font-weight: normal">
+<BR><BR>
+</P>
+<P STYLE="font-style: normal; font-weight: normal">More examples code
+can be found in the following regression tests</P>
+<UL>
+	<LI><P STYLE="font-style: normal; font-weight: normal">$ACE_ROOT/tests/Bug_4055_Regression</P>
+	<LI><P STYLE="font-style: normal; font-weight: normal">$ACE_ROOT/tests/Monotonic_Task_Test</P>
+	<LI><P STYLE="font-style: normal; font-weight: normal">$ACE_ROOT/tests/Monotonic_Message_Queue_Test</P>
+</UL>
+<DIV TYPE=FOOTER>
+	<P STYLE="margin-top: 0.2in; margin-bottom: 0in"><BR>
+	</P>
+</DIV>
+</BODY>
+</HTML>

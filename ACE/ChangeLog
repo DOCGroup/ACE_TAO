@@ -1,3 +1,12 @@
+Mon Aug 20 08:36:46 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/ACE-monotonic-timer.html:
+          New document describing the ACE monotonic timer support for conditions,
+          message queues and tasks
+
+        * docs/index.html:
+          Added new page, removed link to site that doesn't work anymore
+
 Mon Aug 20 08:21:00 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/os_include/sys/os_types.h:
