@@ -756,8 +756,8 @@ TAO_PG_ObjectGroupManager::valid_type_id (
   }
 
   // Make sure the group entry still exists.  It may have been
-  // destroyed by another thread.
-  group_entry = this->get_group_entry (object_group);
+  // destroyed by another thread. (Call throws if problem.)
+  static_cast<void> (this->get_group_entry (object_group));
 
   return right_type_id;
 }
