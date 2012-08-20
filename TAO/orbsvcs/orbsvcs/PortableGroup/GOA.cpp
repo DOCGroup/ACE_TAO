@@ -498,6 +498,13 @@ TAO_GOA::associate_group_with_ref (
   PortableGroup_Request_Dispatcher *rd =
     dynamic_cast <PortableGroup_Request_Dispatcher*>(
       this->orb_core_.request_dispatcher());
+  if (!rd)
+    {
+      // Group component was found, but then could not be dynamic_cast.
+      // The group reference that was passed in must be bogus in
+      // some unknown way.
+      throw PortableGroup::NotAGroupObject ();
+    }
 
   // Create the acceptors necessary to receive requests for the
   // specified group reference.
