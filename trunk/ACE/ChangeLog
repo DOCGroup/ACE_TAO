@@ -1,3 +1,9 @@
+Mon Aug 20 08:21:00 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/sys/os_types.h:
+          Define CLOCK_MONOTONIC to 1 when it is not defined, should fix
+          hpux problems
+
 Mon Aug 20 07:57:53 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Condition_Attributes.h:
