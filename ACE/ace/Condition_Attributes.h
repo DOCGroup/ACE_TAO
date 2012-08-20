@@ -26,8 +26,6 @@
 
 #if defined (ACE_HAS_THREADS)
 
-template <class MUTEX> class ACE_Condition;
-
 // ACE platform supports some form of threading.
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -41,9 +39,10 @@ public:
   /// Destructor
   ~ACE_Condition_Attributes (void);
 
-protected:
-  template <class MUTEX> friend class ACE_Condition;
+  /// Accessor for retrieving the current attributes
+  const ACE_condattr_t& attributes (void) const;
 
+protected:
   /// The attributes
   ACE_condattr_t attributes_;
 

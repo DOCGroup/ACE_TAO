@@ -1,3 +1,15 @@
+Mon Aug 20 07:57:53 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Condition_Attributes.h:
+        * ace/Condition_Attributes.inl:
+          Added accessor for attributes and removed friend declaration,
+          that hopefully fixes the Sun Studio 11 problems
+
+        * ace/Condition_Recursive_Thread_Mutex.cpp:
+        * ace/Condition_T.cpp:
+        * ace/Condition_Thread_Mutex.cpp:
+          Use accessor of the attributes.
+
 Sat Aug 18 19:25:38 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Null_Condition.h:
