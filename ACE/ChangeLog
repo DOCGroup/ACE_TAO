@@ -1,3 +1,11 @@
+Mon Aug 20 18:07:25 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Global_Macros.h:
+          Doxyen fixes
+
+        * bin/valgrind.supp:
+          Added another needed suppression
+
 Mon Aug 20 10:03:23 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/ACE-monotonic-timer.html:
