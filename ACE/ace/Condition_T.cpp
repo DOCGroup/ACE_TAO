@@ -81,7 +81,7 @@ ACE_Condition<MUTEX>::ACE_Condition (MUTEX &m,
 {
 // ACE_TRACE ("ACE_Condition<MUTEX>::ACE_Condition<MUTEX>");
   if (ACE_OS::cond_init (&this->cond_,
-                         const_cast<ACE_Condition_Attributes &> (attributes).attributes_,
+                         const_cast<ACE_condattr_t &> (attributes.attributes ()),
                          name, arg) != 0)
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("%p\n"),
