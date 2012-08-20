@@ -103,28 +103,20 @@ ACE_Module<ACE_SYNCH_USE, TIME_POLICY>::open (const ACE_TCHAR *module_name,
   if (writer_q == 0)
     {
       typedef ACE_Thru_Task<ACE_SYNCH_USE, TIME_POLICY> TASK_TYPE;
-      ACE_NEW_RETURN (writer_q,
-                      TASK_TYPE,
-                      -1);
+      ACE_NEW_NORETURN (writer_q,
+                        TASK_TYPE);
       ACE_SET_BITS (flags, M_DELETE_WRITER);
     }
 
   if (reader_q == 0)
     {
       typedef ACE_Thru_Task<ACE_SYNCH_USE, TIME_POLICY> TASK_TYPE;
-      ACE_NEW_RETURN (reader_q,
-                      TASK_TYPE,
-                      -1);
+      ACE_NEW_NORETURN (reader_q,
+                        TASK_TYPE);
       ACE_SET_BITS (flags, M_DELETE_READER);
     }
 
-  this->reader (reader_q);
-  this->writer (writer_q);
-
-  // Save the flags
-  this->flags_ = flags;
-
-  // Make sure that the memory is allocated before proceding.
+  // Make sure that the memory is allocated before proceeding.
   if (writer_q == 0 || reader_q == 0)
     {
       // These calls will delete writer_q and/or reader_q, if
@@ -135,6 +127,12 @@ ACE_Module<ACE_SYNCH_USE, TIME_POLICY>::open (const ACE_TCHAR *module_name,
       errno = ENOMEM;
       return -1;
     }
+
+  this->reader (reader_q);
+  this->writer (writer_q);
+
+  // Save the flags
+  this->flags_ = flags;
 
   // Setup back pointers (this must come last, after we've made sure
   // there's memory allocated here.
