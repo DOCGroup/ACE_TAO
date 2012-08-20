@@ -297,3 +297,10 @@
    ...
    fun:_ZN18TAO_IIOP_Transport12send_messageER13TAO_OutputCDRP8TAO_StubP17TAO_ServerRequest21TAO_Message_SemanticsP14ACE_Time_Value
 }
+
+{
+   <uninitialized buffer>
+   Memcheck:Value8
+   fun:_ZN3ACE10nibble2hexEj
+   fun:_ZN5CORBA3ORB16object_to_stringEPNS_6ObjectE
+}
