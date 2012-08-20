@@ -320,8 +320,17 @@ TAO_UIPMC_Mcast_Transport::recv_all (void)
                            packet_length, packet_number, stop_packet, id_hash);
 
       // The socket buffer is empty. Try to do other useful things.
-      if (start_data == 0 && (errno == EWOULDBLOCK || errno == EAGAIN))
-        break;
+      if (start_data == 0)
+        {
+          if (errno != EWOULDBLOCK && errno != EAGAIN)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("TAO (%P|%t) - UIPMC_Mcast_Transport[%d]::")
+                          ACE_TEXT ("recv_all, unexpected failure of recv_packet '%m'\n"),
+                          this->id ()));
+            }
+          break;
+        }
 
       if (TAO_debug_level >= 10)
         {

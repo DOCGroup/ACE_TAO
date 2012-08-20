@@ -1,3 +1,9 @@
+Mon Aug 20 09:26:30 UTC 2012  Simon Massey  <sma at prismtech dot com>
+
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Mcast_Transport.cpp:
+
+          Coverity detected very unlikely fault fixed.
+
 Thu Aug 16 12:32:58 UTC 2012  Olli Savia  <ops@iki.fi>
 
         * orbsvcs/orbsvcs/FTORB.mpc:
