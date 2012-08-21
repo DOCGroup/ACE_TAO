@@ -1,3 +1,8 @@
+Tue Aug 21 02:45:07 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/config-macosx-leopard.h:
+          setclock not supported on current macs.
+
 Mon Aug 20 18:07:25 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Global_Macros.h:

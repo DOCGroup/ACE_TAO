@@ -204,6 +204,7 @@
 #define ACE_HAS_VOID_UNSETENV
 #endif
 
+#define ACE_LACKS_CONDATTR_SETCLOCK
 
 // dlcompat package (not part of base Darwin) is needed for dlopen().
 // You may download directly from sourceforge and install or use fink
