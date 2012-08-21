@@ -1,3 +1,8 @@
+Tue Aug 21 14:38:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * protocols/ace/INet/SSL_CallbackManager.h:
+          Spelling in comment.
+
 Tue Aug 21 12:25:45 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
 
         * ace/SSL/SSL_Context.h:
