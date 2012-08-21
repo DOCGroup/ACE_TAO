@@ -47,18 +47,9 @@ extern "C"
 
 typedef double ACE_timer_t;
 
-// todo: don't forget to clean this up!  ;-)
-#if !defined (ACE_HAS_CLOCK_GETTIME) && !(defined (_CLOCKID_T_) || defined (_CLOCKID_T))
+#if defined (ACE_LACKS_CLOCKID_T)
    typedef int clockid_t;
-
-#  if !defined (CLOCK_REALTIME)
-#    define CLOCK_REALTIME 0
-#  endif /* CLOCK_REALTIME */
-
-#  if !defined (CLOCK_MONOTONIC)
-#    define CLOCK_MONOTONIC 1
-#  endif /* CLOCK_MONOTONIC */
-#endif /* ! ACE_HAS_CLOCK_GETTIME && ! _CLOCKID_T_ */
+#endif /* ACE_LACKS_CLOCKID_T */
 
 #if defined (ACE_LACKS_DEV_T)
    typedef unsigned int dev_t;

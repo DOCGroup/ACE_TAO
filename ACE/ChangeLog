@@ -1,3 +1,18 @@
+Tue Aug 21 16:55:13 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/sys/os_time.h:
+          Introduced new ACE_LACKS_CLOCKID_T which is used to determine whether
+          we need to define clockid_t in ACE. Moved CLOCK_MONOTONIC and
+          CLOCK_REALTIME to file below
+
+        * ace/os_include/sys/os_types.h:
+          Added CLOCK_MONOTONIC and CLOCK_REALTIME here and introduced new
+          ACE_LACKS_CLOCK_REALTIME and ACE_LACKS_CLOCK_MONOTONIC because on
+          for example HPUX CLOCK_REALTIME is not a define but part of an enum
+
+        * ace/config-win32-common.h:
+          Added ACE_LACKS_CLOCKID_T
+
 Tue Aug 21 14:38:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
 
         * protocols/ace/INet/SSL_CallbackManager.h:
@@ -27,10 +42,10 @@ Tue Aug 21 12:25:45 UTC 2012  Simon Massey  <simon dot massey at prismtech dot c
           parameters. I.e:
 
             class { extern "C" int (*callback_) (int, void *); };
-        
+
           to store an extern "C" function pointer as a data member of the
           class is illegal, as is:
-        
+
             void function (extern "C" int (*callback) (int, void *);
 
           to declare a function (or a class member) that takes a extern "C"
@@ -50,7 +65,7 @@ Tue Aug 21 12:25:45 UTC 2012  Simon Massey  <simon dot massey at prismtech dot c
             extern "C" {
               typedef int (*extern_C_callback_t) (int, void *);
             }
-        
+
           This then results in the correct call type associated with the
           function pointer which may then be used inside the function and
           class declarations to remove these warnings and possiable incorrect

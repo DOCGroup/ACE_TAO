@@ -247,6 +247,8 @@
 #define ACE_LACKS_SEEKDIR
 #define ACE_LACKS_TELLDIR
 
+# define ACE_LACKS_CLOCKID_T
+
 /* LACKS gid/pid/sid/uid facilities */
 #define ACE_LACKS_GETPGID
 #define ACE_LACKS_GETPPID
