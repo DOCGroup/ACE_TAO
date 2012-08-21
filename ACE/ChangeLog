@@ -1,3 +1,72 @@
+Tue Aug 21 12:25:45 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * ace/SSL/SSL_Context.h:
+        * ace/SSL/SSL_Context.inl:
+
+          Solaris studio compilers amongst others were issuing warnings due to an
+          incorrect type of function pointer (i.e. not extern "C", but standard
+          C++ type) being stored/used of the form:
+
+            Warning (Anachronism): Formal argument callback of type
+              extern "C" int(*)(int,x509_store_ctx_st*)
+            in call to
+              SSL_CTX_set_verify(ssl_ctx_st*, int, extern "C" int(*)(int,x509_store_ctx_st*))
+            is being passed
+              int(*)(int,x509_store_ctx_st*)
+
+          when the C++ code was providing callback functions to certain C system SSL
+          library calls.
+
+          Unfortunatly you cannot specify extern "C" linkage anywhere inside a
+          class declaration or inside a function prototype for individual
+          parameters. I.e:
+
+            class { extern "C" int (*callback_) (int, void *); };
+        
+          to store an extern "C" function pointer as a data member of the
+          class is illegal, as is:
+        
+            void function (extern "C" int (*callback) (int, void *);
+
+          to declare a function (or a class member) that takes a extern "C"
+          function pointer as a parameter.
+
+          Since we need to specify an extern "C" function pointer as a parameter
+          to be stored in the class and handled by member functions, we are forced
+          to declare a typedef of that extern "C" function pointer outside of the
+          class that we can then use. Unfortunatly you also are not allowed to
+          simply add the extern "C" to the typedef itself, like this:
+
+            typedef extern "C" int (*extern_C_callback_t) (int, void *);
+
+          instead you have to place the typedef declaration inside an extern "C"
+          block, thus:
+
+            extern "C" {
+              typedef int (*extern_C_callback_t) (int, void *);
+            }
+        
+          This then results in the correct call type associated with the
+          function pointer which may then be used inside the function and
+          class declarations to remove these warnings and possiable incorrect
+          call methods undertaken via the STL C functions. A lot of different
+          compilers ignore extern "C" where it is not allowed, the only way
+          I have found to be universally understood is as stated above.
+
+        * protocols/ace/INet/SSL_CallbackManager.h:
+        * protocols/ace/INet/SSL_CallbackManager.cpp:
+
+          Similar problems and interfacing to the changed calling type of the above
+          extern "C" function pointers. NOTE: just declaring a static function for
+          the class is NOT sufficient to obtain the correct extern "C" calling type.
+          We are therefore forced to declare friend functions external to the class
+          (as again we cannot have a extern "C" declaration inside a class even for
+          a static method) to do this job. Since these are extern "C" functions they
+          also of course cannot be overloaded, i.e. they are required to be unique
+          names. They also cannot be non-class static functions to make them private
+          to the cpp file as they need to actually be seen by the class declaration
+          to be made friends and therefore have to be included in the header file.
+
 Tue Aug 21 12:20:43 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/os_include/sys/os_types.h:
