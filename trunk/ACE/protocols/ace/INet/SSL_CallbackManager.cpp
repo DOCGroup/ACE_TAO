@@ -45,8 +45,8 @@ namespace ACE
 
         this->ssl_ctx_ = ssl_ctx == 0 ? ACE_SSL_Context::instance () : ssl_ctx;
         ::SSL_CTX_set_ex_data (this->ssl_ctx_->context (), ssl_ctx_mngr_index_, this);
-        this->ssl_ctx_->default_verify_callback (verify_certificate_callback);
-        ::SSL_CTX_set_default_passwd_cb (ssl_ctx->context(), passwd_callback);
+        this->ssl_ctx_->default_verify_callback (extern_C_verify_certificate_callback);
+        ::SSL_CTX_set_default_passwd_cb (ssl_ctx->context(), extern_C_passwd_callback);
         ::SSL_CTX_set_default_passwd_cb_userdata (ssl_ctx->context(), this);
       }
 
@@ -74,9 +74,9 @@ namespace ACE
           }
       }
 
-    int SSL_CallbackManager::verify_certificate_callback (int ok, X509_STORE_CTX* cert_ctx)
+    int extern_C_verify_certificate_callback (int ok, X509_STORE_CTX* cert_ctx)
       {
-        if (!ok && ssl_ctx_mngr_index_>=0)
+        if (!ok && SSL_CallbackManager::ssl_ctx_mngr_index_>=0)
         {
           // Retrieve the pointer to the SSL of the connection currently treated
           void* ex_data = ::X509_STORE_CTX_get_ex_data (cert_ctx, ::SSL_get_ex_data_X509_STORE_CTX_idx());
@@ -84,7 +84,7 @@ namespace ACE
           // Retrieve SSL_CTX pointer of the connection currently treated
           ::SSL_CTX* ssl_ctx = ::SSL_get_SSL_CTX (ssl);
           // Retrieve our SSL_CallbackManager
-          ex_data = ::SSL_CTX_get_ex_data (ssl_ctx, ssl_ctx_mngr_index_);
+          ex_data = ::SSL_CTX_get_ex_data (ssl_ctx, SSL_CallbackManager::ssl_ctx_mngr_index_);
           SSL_CallbackManager* cbmngr = reinterpret_cast<SSL_CallbackManager*> (ex_data);
 
           SSL_CertificateCallbackArg arg (cbmngr->context(), cert_ctx);
@@ -94,7 +94,7 @@ namespace ACE
         return ok;
       }
 
-    int SSL_CallbackManager::passwd_callback (char* buf, int size, int /*rwflag*/, void* user_data)
+    int extern_C_passwd_callback (char* buf, int size, int /*rwflag*/, void* user_data)
       {
         if (user_data == 0)
           return 0;
