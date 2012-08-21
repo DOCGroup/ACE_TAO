@@ -1,3 +1,8 @@
+Tue Aug 21 12:20:43 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/sys/os_types.h:
+          Fixed HPUX problem
+
 Tue Aug 21 02:45:07 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/config-macosx-leopard.h:
