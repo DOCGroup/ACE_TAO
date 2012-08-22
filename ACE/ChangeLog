@@ -1,3 +1,8 @@
+Wed Aug 22 06:13:12 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/sys/os_time.h:
+          Fixed incorrect check in this file
+
 Tue Aug 21 16:55:13 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/os_include/sys/os_time.h:
