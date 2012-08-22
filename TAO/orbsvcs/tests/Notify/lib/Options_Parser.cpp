@@ -54,7 +54,7 @@ TAO_Notify_Tests_Options_Parser::execute (CosNotification::QoSProperties& qos, A
     {
       arg_shifter.consume_arg ();
 
-      int static_threads = 1;
+      CORBA::ULong static_threads = 1u;
 
       if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Threads")) == 0)
         {
@@ -62,7 +62,7 @@ TAO_Notify_Tests_Options_Parser::execute (CosNotification::QoSProperties& qos, A
 
           current_arg = arg_shifter.get_current ();
 
-          static_threads = ACE_OS::atoi (current_arg);
+          static_threads = static_cast<CORBA::ULong> (ACE_OS::atoi (current_arg));
 
           arg_shifter.consume_arg ();
         }
