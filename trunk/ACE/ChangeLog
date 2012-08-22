@@ -1,3 +1,9 @@
+Wed Aug 22 11:50:22 UTC 2012  johnny  <johnny@remedy.nl>
+
+        * ace/config-win32-common.h:
+          Added ACE_LACKS_CLOCK_MONOTONIC and 
+          ACE_LACKS_CLOCK_REALTIME
+
 Wed Aug 22 06:13:12 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/os_include/sys/os_time.h:
