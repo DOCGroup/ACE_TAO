@@ -1,3 +1,15 @@
+Wed Aug 22 10:55:00 UTC 2012  Simon Massey  <sma at prismtech dot com>
+
+        * tests/DeploymentPlanDump/NewCcmDance1.cdp:
+        * tests/DeploymentPlanDump/CcmDance2-host1.cdp:
+        * tests/DeploymentPlanDump/CcmDance2.cdp:
+        * tests/DeploymentPlanDump/CcmDance4-host2.cdp:
+        * tests/DeploymentPlanDump/CcmDance2-host2.cdp:
+        * tests/DeploymentPlanDump/CcmDance4-host1.cdp:
+
+          Thales requested name change (thalesgroup.com to cardamom.eu)
+          Redone.
+
 Wed Aug 22 10:10:45 UTC 2012  Simon Massey  <sma at prismtech dot com>
 
         * tests/DeploymentPlanDump/NewCcmDance1.cdp:
