@@ -165,6 +165,7 @@
 #define ACE_HAS_CLOCK_SETTIME
 
 #define ACE_LACKS_CLOCK_MONOTONIC
+#define ACE_LACKS_MONOTONIC_TIME
 
 // Prototypes for both signal() and struct sigaction are consistent.
 #define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
