@@ -1,8 +1,14 @@
+Thu Aug 23 12:33:35 UTC 2012  johnny  <johnny@>
+
+        * ace/Condition_Attributes.inl:
+        * ace/config-hpux-11.00.h:
+          Another fix for hpux ia64 v3
+
 Thu Aug 23 06:35:20 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Condition_Attributes.inl:
           Only check for ACE_LACKS_MONOTONIC_TIME
-          
+
         * ace/Monotonic_Time_Policy.inl:
           Layout change
 
