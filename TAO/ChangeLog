@@ -1,3 +1,11 @@
+Thu Aug 23 15:24:00 UTC 2012  Simon Massey  <sma at prismtech dot com>
+
+        * NEWS:
+        * doc/Options.html:
+          Update the MIOP_Strategy_Factory with more useful configuration help
+          and move the detail of these options out of the NEW files, referring
+          instead to the doc/Options.html section.
+
 Wed Aug 22 09:12:45 UTC 2012  Simon Massey  <sma at prismtech dot com>
 
         * orbsvcs/tests/Notify/lib/Options_Parser.cpp:
