@@ -15,8 +15,7 @@ ACE_Monotonic_Time_Policy::operator()() const
 #elif (defined (_POSIX_MONOTONIC_CLOCK) && !defined (ACE_LACKS_MONOTONIC_TIME)) || defined (ACE_HAS_CLOCK_GETTIME_MONOTONIC)
   struct timespec ts;
 
-  if (ACE_OS::clock_gettime (CLOCK_MONOTONIC,
-                             &ts) == 0)
+  if (ACE_OS::clock_gettime (CLOCK_MONOTONIC, &ts) == 0)
     return ACE_Time_Value_T<ACE_Monotonic_Time_Policy>(ts);
   else
     return ACE_Time_Value_T<ACE_Monotonic_Time_Policy> (ACE_Time_Value::zero);
