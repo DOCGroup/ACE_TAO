@@ -1,3 +1,8 @@
+Fri Aug 24 10:35:48 UTC 2012  johnny  <jwillemsen@remedy.nl>
+
+        * ciao/Servants/Connector_Servant_Impl_Base.h:
+          Doxygen fix
+
 Thu Aug 16 18:30:32 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Common/I2C_Shapes_Common.cpp:
