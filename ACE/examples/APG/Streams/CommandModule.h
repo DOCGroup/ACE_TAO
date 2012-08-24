@@ -9,11 +9,11 @@
 #include "CommandTask.h"
 
 // Listing 01 code/ch18
-class CommandModule : public ACE_Module<ACE_MT_SYNCH>
+class CommandModule : public ACE_Module<ACE_MT_SYNCH, ACE_System_Time_Policy>
 {
 public:
-  typedef ACE_Module<ACE_MT_SYNCH> inherited;
-  typedef ACE_Task<ACE_MT_SYNCH> Task;
+  typedef ACE_Module<ACE_MT_SYNCH, ACE_System_Time_Policy> inherited;
+  typedef ACE_Task<ACE_MT_SYNCH, ACE_System_Time_Policy> Task;
 
   CommandModule (const ACE_TCHAR *module_name,
                    CommandTask *writer,

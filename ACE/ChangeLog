@@ -1,3 +1,12 @@
+Fri Aug 24 10:27:22 UTC 2012  johnny  <jwillemsen@remedy.nl>
+
+        * examples/APG/Streams/CommandModule.h:
+        * tests/Service_Config_Stream_Test.cpp:
+          Add ACE_System_Time_Policy as second template argument
+          to ACE_Module, the default template argument doesn't
+          work with clang which seems to be a bug in that
+          compiler
+
 Thu Aug 23 12:33:35 UTC 2012  johnny  <johnny@>
 
         * ace/Condition_Attributes.inl:
