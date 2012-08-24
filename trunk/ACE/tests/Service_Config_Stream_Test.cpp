@@ -69,14 +69,15 @@ public:
   }
 };
 
-class Decrypter : public ACE_Service_Object, public ACE_Module<ACE_SYNCH>
+class Decrypter : public ACE_Service_Object, public ACE_Module<ACE_SYNCH, ACE_System_Time_Policy>
 {
 public:
   Decrypter ()
-    : ACE_Module<ACE_SYNCH> (ACE_TEXT ("Decrypter"),
-                             &writer_, &reader_,
-                             0,
-                             M_DELETE_NONE) // Tasks are members; don't delete
+    : ACE_Module<ACE_SYNCH, ACE_System_Time_Policy> (
+        ACE_TEXT ("Decrypter"),
+        &writer_, &reader_,
+        0,
+        M_DELETE_NONE) // Tasks are members; don't delete
   {}
 
 private:
