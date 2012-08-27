@@ -1,3 +1,10 @@
+Mon Aug 27 20:38:00 UTC 2012  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/platform_linux.GNU: Make CC and CXX setting
+          conditional again. Conditional behavior is relied upon by users.
+          Reverts the following:
+          Tue Mar  1 11:31:55 UTC 2011  Olli Savia  <ops@iki.fi>
+
 Mon Aug 27 09:43:43 UTC 2012  johnny  <jwillemsen@remedy.nl>
 
         * apps/JAWS/clients/WebSTONE/src/config.cache:
