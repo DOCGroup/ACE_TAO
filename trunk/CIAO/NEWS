@@ -1,6 +1,10 @@
 USER VISIBLE CHANGES BETWEEN CIAO-1.1.3 and CIAO-1.1.4
 =======================================================
 
+. The CIAO DDS4CCM integration with OpenDDS has been reworked in a way
+  that OpenDDS doesn't know anything anymore from CIAO. In order to use
+  DDS4CCM with OpenDDS you need OpenDDS 3.3 or higher.
+
 USER VISIBLE CHANGES BETWEEN CIAO-1.1.2 and CIAO-1.1.3
 =======================================================
 
