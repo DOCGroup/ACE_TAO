@@ -31,7 +31,8 @@ USER VISIBLE CHANGES BETWEEN ACE-6.1.3 and ACE-6.1.4
 
 . Added TIME_POLICY support to ACE_Message_Queue-s, ACE_Task-s and
   related classes to enable support for monotonic timers in the timed
-  wait methods (ACE_Condition based).
+  wait methods (ACE_Condition based). See docs/ACE-monotonic-timer.html
+  for how to use this.
 
 . Added two new regression tests:
   Monotonic_Task_Test
