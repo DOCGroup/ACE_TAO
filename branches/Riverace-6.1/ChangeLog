@@ -1,3 +1,9 @@
+Mon Aug 27 20:38:00 UTC 2012  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/platform_linux.GNU: Make CC and CXX setting
+          conditional again. Reverts the following:
+          Tue Mar  1 11:31:55 UTC 2011  Olli Savia  <ops@iki.fi>
+
 Thu May 24 14:35:04 UTC 2012  Steve Huston  <shuston@riverace.com>
 
         * ace/Cache_Map_Manager_T.cpp (find): Remove extraneous () from
