@@ -1,4 +1,10 @@
-Fri Aug 24 10:35:48 UTC 2012  johnny  <jwillemsen@remedy.nl>
+Tue Aug 28 13:51:23 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/ciao_tests.lst:
+          Removed COPI tests, they have been removed from the repository
+          some time ago
+
+Fri Aug 24 10:35:48 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Servants/Connector_Servant_Impl_Base.h:
           Doxygen fix
