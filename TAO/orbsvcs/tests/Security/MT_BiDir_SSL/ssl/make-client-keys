@@ -1,13 +1,14 @@
 #!/bin/bash -x
+# $Id$
 
-openssl req -new -x509 -days 365 -nodes -newkey rsa:1024 \
+openssl req -new -x509 -days 3650 -nodes -newkey rsa:1024 \
     -out server-cert.pem -keyout server-key.pem \
     -subj "/C=US/ST=MO/L=St. Louis/O=OCI/CN=server"
 
 cat server-cert.pem >>server-key.pem
 cat server-cert.pem >ca.pem
         
-openssl req -new -x509 -days 365 -nodes -newkey rsa:1024 \
+openssl req -new -x509 -days 3650 -nodes -newkey rsa:1024 \
     -out client-cert.pem -keyout client-key.pem \
     -subj "/C=US/ST=MO/L=St. Louis/O=OCI/CN=client"
 
