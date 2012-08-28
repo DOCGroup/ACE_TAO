@@ -1,3 +1,28 @@
+Tue Aug 28 09:30:31 UTC 2012  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Security/BiDirectional/ssl/ca.pem:
+        * orbsvcs/tests/Security/BiDirectional/ssl/client-cert.pem:
+        * orbsvcs/tests/Security/BiDirectional/ssl/client-key.pem:
+        * orbsvcs/tests/Security/BiDirectional/ssl/make-client-keys:
+        * orbsvcs/tests/Security/BiDirectional/ssl/server-cert.pem:
+        * orbsvcs/tests/Security/BiDirectional/ssl/server-key.pem:
+        * orbsvcs/tests/Security/Bug_2908_Regression/client.conf:
+        * orbsvcs/tests/Security/Bug_2908_Regression/run_test.pl:
+        * orbsvcs/tests/Security/Bug_2908_Regression/server.conf:
+        * orbsvcs/tests/Security/MT_BiDir_SSL/ssl/ca.pem:
+        * orbsvcs/tests/Security/MT_BiDir_SSL/ssl/client-cert.pem:
+        * orbsvcs/tests/Security/MT_BiDir_SSL/ssl/client-key.pem:
+        * orbsvcs/tests/Security/MT_BiDir_SSL/ssl/make-client-keys:
+        * orbsvcs/tests/Security/MT_BiDir_SSL/ssl/server-cert.pem:
+        * orbsvcs/tests/Security/MT_BiDir_SSL/ssl/server-key.pem:
+        * orbsvcs/tests/Security/Bug_2908_Regression/cacert.pem:
+        * orbsvcs/tests/Security/Bug_2908_Regression/clientCert.pem:
+        * orbsvcs/tests/Security/Bug_2908_Regression/clientKey.pem:
+        * orbsvcs/tests/Security/Bug_2908_Regression/serverCert.pem:
+        * orbsvcs/tests/Security/Bug_2908_Regression/serverKey.pem:
+          Updated certificates, expired all last week, made them valid
+          for 3650 days
+
 Thu Aug 23 15:24:00 UTC 2012  Simon Massey  <sma at prismtech dot com>
 
         * NEWS:
