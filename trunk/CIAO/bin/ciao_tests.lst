@@ -41,11 +41,6 @@ TAO/CIAO/tests/IDL_Test/Cornucopia/run_test.pl: DOXYGEN
 TAO/CIAO/tests/Cookies/run_test.pl
 TAO/CIAO/tests/TTSCTest/descriptors/run_test.pl:
 TAO/CIAO/tests/TTSConnContext/descriptors/run_test.pl:
-#COPI needs the extension container
-#TAO/CIAO/tests/COPI/Registration/Client/descriptors/run_test.pl:
-#TAO/CIAO/tests/COPI/Registration/Servant/descriptors/run_test.pl:
-#TAO/CIAO/tests/COPI/Registration/Server/descriptors/run_test.pl:
-#TAO/CIAO/tests/COPI/Registration/Stub/descriptors/run_test.pl:
 TAO/CIAO/connectors/tests/AMIDDS/descriptors/run_test.pl: DDS4CCM
 TAO/CIAO/connectors/ami4ccm/examples/Hello/descriptors/run_test.pl:
 TAO/CIAO/connectors/ami4ccm/examples/Hello/descriptors/run_fullblock_test.pl:
