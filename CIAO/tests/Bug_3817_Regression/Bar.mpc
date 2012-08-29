@@ -29,10 +29,9 @@ project(Bar_lem_gen) : ciaoidldefaults   {
 }
 
 project(Bar_lem_stub) : ccm_svnt   {
-  after += Bar_lem_gen Bar_stub 
+  after += Bar_lem_gen Bar_stub
   libs  +=  Bar_stub
-  
-  
+
   sharedname = Bar_lem_stub
   dynamicflags += BAR_LEM_STUB_BUILD_DLL
 
@@ -54,10 +53,9 @@ project(Bar_lem_stub) : ccm_svnt   {
 }
 
 project(Bar_stub) : ccm_stub   {
-  after += Bar_idl_gen 
-  libs  += 
-  
-  
+  after += Bar_idl_gen
+  libs  +=
+
   sharedname = Bar_stub
   dynamicflags += BAR_STUB_BUILD_DLL
 
@@ -81,9 +79,9 @@ project(Bar_stub) : ccm_stub   {
 project(Bar_exec) : ciao_executor   {
   after   += Bar_lem_stub Bar_stub
   sharedname = Bar_exec
-  libs += Bar_stub Bar_lem_stub 
-  
-  
+  libs += Bar_stub Bar_lem_stub
+
+
   dynamicflags += BAR_EXEC_BUILD_DLL
 
   IDL_Files {
@@ -106,11 +104,10 @@ project(Bar_exec) : ciao_executor   {
 project(Bar_svnt) : ciao_servant   {
   after      +=   Bar_lem_stub
   sharedname  = Bar_svnt
-  libs       += Bar_stub Bar_lem_stub  
-  
-  
+  libs       += Bar_stub Bar_lem_stub
+
   dynamicflags += BAR_SVNT_BUILD_DLL
-  
+
   IDL_Files {
   }
 
