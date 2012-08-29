@@ -6,7 +6,7 @@ workspace {
   $(ACE_ROOT)/apps/gperf/src
   $(ACE_ROOT)/apps/JAWS/server
   $(ACE_ROOT)/protocols/ace/INet
-  $(ACE_ROOT)/contrib
+  $(ACE_ROOT)/contrib/minizip
   $(TAO_ROOT)/tao
   $(TAO_ROOT)/TAO_IDL
   $(TAO_ROOT)/utils
