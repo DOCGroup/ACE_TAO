@@ -1,3 +1,7 @@
+Wed Aug 29 08:16:04 CEST 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE version 6.1.4 released.
+
 Mon Aug 27 20:38:00 UTC 2012  Steve Huston  <shuston@riverace.com>
 
         * include/makeinclude/platform_linux.GNU: Make CC and CXX setting
