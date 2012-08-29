@@ -1,3 +1,16 @@
+Wed Aug 29 09:41:28 UTC 2012  johnny  <jwillemsen@remedy.nl>
+
+        * Kokyu/Dispatch_Deferrer.h:
+        * Kokyu/Dispatch_Deferrer.inl:
+        * Kokyu/Dispatch_Deferrer.cpp:
+          These files have been removed. They appear to be completly unreferenced by any
+          other files in the whole ACE/TAO/CIAO/DAnCE distribution and are not even currently
+          built within the Kokyu library itself. They appear to be incomplete relics of the
+          original 2003 development of this library, and include references to an incomplete
+          class Dispatch_Deferrer_Attributes which has no declaration or definition anywhere
+          in the current distribution. These files would not compile even if they where listed
+          in the kokyu MPC file.
+
 Wed Aug 29 07:31:28 UTC 2012  johnny  <jwillemsen@remedy.nl>
 
         * ChangeLog:
