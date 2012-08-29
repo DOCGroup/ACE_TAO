@@ -1,0 +1,50 @@
+#!/bin/sh
+#
+# $Id$
+#
+
+# The number of messages to send.
+MSG_COUNT=100
+
+# The number of high-priority consumers.
+HP_CONSUMERS="1 5 10 20"
+
+# The number of high-priority suppliers
+HP_SUPPLIERS="1 2 10"
+
+HP_INTERVAL=250000
+
+/bin/rm -f NameService.ior NameService.pid EC1.pid EC2.pid EC.pid
+
+for s in $HP_SUPPLIERS; do
+  for c in $HP_CONSUMERS; do
+    ../../Naming_Service/Naming_Service \
+        -o NameService.ior -p NameService.pid >/dev/null 2>&1 &
+    sleep 2
+    NameService=`cat NameService.ior`
+    export NameService
+
+    echo Consumers = $c Suppliers = $s
+    ./EC_Multiple -l ECM1 -p ECM1.pid -s runtime \
+      -h ${s},${c},0,${HP_INTERVAL},${MSG_COUNT},1,2,1,2 > \
+        LTC.LCL.S${s}.C${c}.log 2>&1
+    kill `cat NameService.pid`
+
+   ../../Naming_Service/Naming_Service \
+        -o NameService.ior -p NameService.pid >/dev/null 2>&1 &
+    sleep 2
+    NameService=`cat NameService.ior`
+    export NameService
+
+    ./EC_Multiple -l ECM1 -r ECM2 -p ECM1.pid -s runtime \
+      -h ${s},${c},0,${HP_INTERVAL},${MSG_COUNT},1,2,1,3 > \
+      LTC.ECM1.S${s}.C${c}.log 2>&1 &
+    ./EC_Multiple -l ECM2 -r ECM1 -p ECM2.pid -s runtime \
+      -h ${s},${c},0,${HP_INTERVAL},${MSG_COUNT},4,3,4,2 > \
+      LTC.ECM2.S${s}.C${c}.log 2>&1 &
+    sleep 2
+    wait `cat ECM1.pid`
+    wait `cat ECM2.pid`
+    kill `cat NameService.pid`
+  done
+done

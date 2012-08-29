@@ -1,0 +1,721 @@
+<!-- $Id$ -->
+<Deployment:DeploymentPlan
+                          xmlns:Deployment="http://www.omg.org/Deployment"
+                          xmlns:xmi="http://www.omg.org/XMI"
+                          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                          xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+  <label>State_MemLeakDetection_Test_Depl_1</label>
+  <UUID>State_MemLeakDetection_Test_Depl_1</UUID>
+
+  <implementation xmi:id="ReceiverComponentImplementation">
+    <name>ReceiverComponentImplementation</name>
+    <source/>
+    <artifact xmi:idref="Receiver_ExecArtifact" />
+    <artifact xmi:idref="Receiver_SvntArtifact" />
+    <execParameter>
+      <!-- entrypoint as exec parameter (see 10.6.1) -->
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_State_MemLeakDetection_Test_Receiver_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_State_MemLeakDetection_Test_Receiver_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Receiver_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Receiver_exec</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+  <implementation xmi:id="State_MemLeakDetection_Test_ConnectorComponentImplementation">
+    <name>State_MemLeakDetection_Test_ConnectorComponentImplementation</name>
+    <source/>
+    <artifact xmi:idref="State_MemLeakDetection_Test_Connector_ExecArtifact" />
+    <artifact xmi:idref="State_MemLeakDetection_Test_Connector_SvntArtifact" />
+    <execParameter>
+      <!-- entrypoint as exec parameter (see 10.6.1) -->
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_State_MemLeakDetection_Test_State_MemLeakDetectionTestConnector_DDS_State_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_State_MemLeakDetection_Test_State_MemLeakDetectionTestConnector_DDS_State_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>State_MemLeakDetection_Test_Connector_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>State_MemLeakDetection_Test_Connector_exec</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+  <implementation xmi:id="SenderComponentImplementation">
+    <name>SenderComponentImplementation</name>
+    <source/>
+    <artifact xmi:idref="Sender_ExecArtifact" />
+    <artifact xmi:idref="Sender_SvntArtifact" />
+    <execParameter>
+      <!-- entrypoint as exec parameter (see 10.6.1) -->
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_State_MemLeakDetection_Test_Sender_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_State_MemLeakDetection_Test_Sender_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Sender_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Sender_exec</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+  <instance xmi:id="ReceiverComponentInstance">
+    <name>ReceiverComponent</name>
+    <node>ReceiverNode</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="ReceiverComponentImplementation" />
+  </instance>
+  <instance xmi:id="State_MemLeakDetection_Test_ConnectorComponentInstance">
+    <name>State_MemLeakDetection_Test_ConnectorComponent</name>
+    <node>SenderNode</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="State_MemLeakDetection_Test_ConnectorComponentImplementation" />
+    <configProperty>
+      <name>topic_name</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>State_MemLeakDetection_Test</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+  <instance xmi:id="State_MemLeakDetection_Test_ConnectorComponentInstance2">
+    <name>State_MemLeakDetection_Test_ConnectorComponent2</name>
+    <node>ReceiverNode</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="State_MemLeakDetection_Test_ConnectorComponentImplementation" />
+    <configProperty>
+      <name>topic_name</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>State_MemLeakDetection_Test</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+  <instance xmi:id="SenderComponentInstance">
+    <name>SenderComponent</name>
+    <node>SenderNode</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="SenderComponentImplementation" />
+  </instance>
+
+  <!-- SENDER COMPONENT CONNECTIONS -->
+  <connection>
+    <name>update_data</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>info_update_data</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="SenderComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>observable_data</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="State_MemLeakDetection_Test_ConnectorComponentInstance" />
+    </internalEndpoint>
+  </connection>
+  <connection>
+    <name>update_dds_entity</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>info_update_dds_entity</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="SenderComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>observable_dds_entity</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="State_MemLeakDetection_Test_ConnectorComponentInstance" />
+    </internalEndpoint>
+  </connection>
+
+  <!-- RECEIVER COMPONENT CONNECTIONS -->
+  <!--   DDS_Get port -->
+  <connection>
+    <name>get_data_port</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>info_get_data</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ReceiverComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>pull_observer_data</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="State_MemLeakDetection_Test_ConnectorComponentInstance2" />
+    </internalEndpoint>
+  </connection>
+  <connection>
+    <name>get_fresh_data_port</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>info_get_fresh_data</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ReceiverComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>pull_observer_fresh_data</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="State_MemLeakDetection_Test_ConnectorComponentInstance2" />
+    </internalEndpoint>
+  </connection>
+  <connection>
+    <name>get_dds_entity_port</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>info_get_dds_entity</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ReceiverComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>pull_observer_dds_entity</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="State_MemLeakDetection_Test_ConnectorComponentInstance2" />
+    </internalEndpoint>
+  </connection>
+  <connection>
+    <name>get_filter_config_port</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>info_get_filter_config</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ReceiverComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>pull_observer_filter_config</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="State_MemLeakDetection_Test_ConnectorComponentInstance2" />
+    </internalEndpoint>
+  </connection>
+  <!--   DDS_Get mirrorport -->
+  <connection>
+    <name>get_status_mirrorport</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>info_get_status</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="ReceiverComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>pull_observer_status</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="State_MemLeakDetection_Test_ConnectorComponentInstance2" />
+    </internalEndpoint>
+  </connection>
+
+  <!--   DDS_Read port -->
+  <connection>
+    <name>read_data_port</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>info_read_data</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ReceiverComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>passive_observer_data</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="State_MemLeakDetection_Test_ConnectorComponentInstance2" />
+    </internalEndpoint>
+  </connection>
+  <connection>
+    <name>read_dds_entity_port</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>info_read_dds_entity</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ReceiverComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>passive_observer_dds_entity</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="State_MemLeakDetection_Test_ConnectorComponentInstance2" />
+    </internalEndpoint>
+  </connection>
+  <connection>
+    <name>read_filter_config_port</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>info_read_filter_config</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ReceiverComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>passive_observer_filter_config</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="State_MemLeakDetection_Test_ConnectorComponentInstance2" />
+    </internalEndpoint>
+  </connection>
+  <!--   DDS_Read mirrorport -->
+  <connection>
+    <name>read_status_port</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>info_read_status</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="ReceiverComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>passive_observer_status</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="State_MemLeakDetection_Test_ConnectorComponentInstance2" />
+    </internalEndpoint>
+  </connection>
+
+  <!--   DDS_Listen port -->
+  <connection>
+    <name>listen_data_port</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>info_listen_data</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ReceiverComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>push_observer_data</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="State_MemLeakDetection_Test_ConnectorComponentInstance2" />
+    </internalEndpoint>
+  </connection>
+  <connection>
+    <name>listen_data_control_port</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>info_listen_data_control</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ReceiverComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>push_observer_data_control</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="State_MemLeakDetection_Test_ConnectorComponentInstance2" />
+    </internalEndpoint>
+  </connection>
+  <connection>
+    <name>listen_dds_entity_port</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>info_listen_dds_entity</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ReceiverComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>push_observer_dds_entity</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="State_MemLeakDetection_Test_ConnectorComponentInstance2" />
+    </internalEndpoint>
+  </connection>
+  <connection>
+    <name>listen_filter_config_port</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>info_listen_filter_config</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ReceiverComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>push_observer_filter_config</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="State_MemLeakDetection_Test_ConnectorComponentInstance2" />
+    </internalEndpoint>
+  </connection>
+  <!--   DDS_Listen mirrorport -->
+  <connection>
+    <name>listen_data_listener_port</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>info_listen_data_listener</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="ReceiverComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>push_observer_data_listener</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="State_MemLeakDetection_Test_ConnectorComponentInstance2" />
+    </internalEndpoint>
+  </connection>
+  <connection>
+    <name>listen_status_port</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>info_listen_status</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="ReceiverComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>push_observer_status</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="State_MemLeakDetection_Test_ConnectorComponentInstance2" />
+    </internalEndpoint>
+  </connection>
+
+  <!--   DDS_StateListen port -->
+  <connection>
+    <name>statelisten_data_port</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>info_statelisten_data</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ReceiverComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>push_state_observer_data</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="State_MemLeakDetection_Test_ConnectorComponentInstance2" />
+    </internalEndpoint>
+  </connection>
+  <connection>
+    <name>statelisten_data_control_port</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>info_statelisten_data_control</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ReceiverComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>push_state_observer_data_control</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="State_MemLeakDetection_Test_ConnectorComponentInstance2" />
+    </internalEndpoint>
+  </connection>
+  <connection>
+    <name>statelisten_dds_entity_port</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>info_statelisten_dds_entity</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ReceiverComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>push_state_observer_dds_entity</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="State_MemLeakDetection_Test_ConnectorComponentInstance2" />
+    </internalEndpoint>
+  </connection>
+  <connection>
+    <name>statelisten_filter_config_port</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>info_statelisten_filter_config</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ReceiverComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>push_state_observer_filter_config</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="State_MemLeakDetection_Test_ConnectorComponentInstance2" />
+    </internalEndpoint>
+  </connection>
+  <!--   DDS_Listen mirrorport -->
+  <connection>
+    <name>statelisten_data_listener_port</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>info_statelisten_data_listener</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="ReceiverComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>push_state_observer_data_listener</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="State_MemLeakDetection_Test_ConnectorComponentInstance2" />
+    </internalEndpoint>
+  </connection>
+  <connection>
+    <name>statelisten_status_port</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>info_statelisten_status</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="ReceiverComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>push_state_observer_status</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="State_MemLeakDetection_Test_ConnectorComponentInstance2" />
+    </internalEndpoint>
+  </connection>
+
+  <artifact xmi:id="Sender_ExecArtifact">
+    <name>Sender_exec</name>
+    <source/>
+    <node/>
+    <location>Sender_exec</location>
+  </artifact>
+  <artifact xmi:id="Sender_SvntArtifact">
+    <name>Sender_svnt</name>
+    <source/>
+    <node/>
+    <location>Sender_svnt</location>
+  </artifact>
+  <artifact xmi:id="Sender_StubArtifact">
+    <name>Sender_stub</name>
+    <source/>
+    <node/>
+    <location>Sender_stub</location>
+  </artifact>
+  <artifact xmi:id="State_MemLeakDetection_Test_Connector_ExecArtifact">
+    <name>State_MemLeakDetection_Test_Connector_exec</name>
+    <source/>
+    <node/>
+    <location>DDS_SMLDT_Connector_exec</location>
+  </artifact>
+  <artifact xmi:id="State_MemLeakDetection_Test_Connector_SvntArtifact">
+    <name>State_MemLeakDetection_Test_Connector_svnt</name>
+    <source/>
+    <node/>
+    <location>DDS_SMLDT_Connector_svnt</location>
+  </artifact>
+  <artifact xmi:id="State_MemLeakDetection_Test_Connector_StubArtifact">
+    <name>State_MemLeakDetection_Test_Connector_stub</name>
+    <source/>
+    <node/>
+    <location>DDS_SMLDT_Connector_stub</location>
+  </artifact>
+  <artifact xmi:id="Receiver_ExecArtifact">
+    <name>Receiver_exec</name>
+    <source/>
+    <node/>
+    <location>Receiver_exec</location>
+  </artifact>
+  <artifact xmi:id="Receiver_SvntArtifact">
+    <name>Receiver_svnt</name>
+    <source/>
+    <node/>
+    <location>Receiver_svnt</location>
+  </artifact>
+  <artifact xmi:id="Receiver_StubArtifact">
+    <name>Receiver_stub</name>
+    <source/>
+    <node/>
+    <location>Receiver_stub</location>
+  </artifact>
+</Deployment:DeploymentPlan>

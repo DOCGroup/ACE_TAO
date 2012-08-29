@@ -1,0 +1,4 @@
+debian/Basic_Logging_Service.1
+debian/Event_Logging_Service.1
+debian/Notify_Logging_Service.1
+debian/RTEvent_Logging_Service.1

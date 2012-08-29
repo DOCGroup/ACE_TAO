@@ -1,0 +1,21 @@
+// $Id$
+
+#ifndef NDDS_DCPS_IDL_I
+#define NDDS_DCPS_IDL_I
+
+#pragma ciao lem "connectors/dds4ccm/idl/ndds/ndds_dcps_i_handleE.idl"
+
+module DDS {
+    typedef octet octet_value[16];
+    struct NativeInstanceHandle_t {
+        octet_value value;
+        unsigned long length;
+        unsigned long isValid;
+    };
+    typedef NativeInstanceHandle_t InstanceHandle_t;
+
+    typedef sequence<InstanceHandle_t> InstanceHandleSeq;
+};
+
+#endif
+

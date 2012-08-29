@@ -1,0 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
+project(EC_Mcast): rteventexe, rtevent_serv, messaging {
+  exename  = EC_Mcast
+}
