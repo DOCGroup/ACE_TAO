@@ -115,11 +115,11 @@ module RootModule
   };
 };
 
-interface AA;
+interface AAA;
 
 interface B
 {
-  typedef AA::my_long_type my_b_long;
+  typedef AAA::my_long_type my_b_long;
 };
 
 #endif /* IDL_TEST_INCLUDING_IDL */
