@@ -1,3 +1,10 @@
+Thu Aug 30 06:26:46 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-macosx-leopard.h:
+          Added missing defines to get ACE to compile on MacOSX, thanks to
+          Thomas Lockhart <Thomas dot Lockhart at jpl dot nasa dot gov>
+          for reporting this
+
 Wed Aug 29 09:41:28 UTC 2012  johnny  <jwillemsen@remedy.nl>
 
         * Kokyu/Dispatch_Deferrer.h:
@@ -11,7 +18,7 @@ Wed Aug 29 09:41:28 UTC 2012  johnny  <jwillemsen@remedy.nl>
           in the current distribution. These files would not compile even if they where listed
           in the kokyu MPC file.
 
-Wed Aug 29 07:31:28 UTC 2012  johnny  <jwillemsen@remedy.nl>
+Wed Aug 29 07:31:28 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ChangeLog:
         * ChangeLogs/ChangeLog-2012a:
