@@ -87,7 +87,7 @@ module RootModule
   };
 };
 
-interface AA
+interface AAA
 {
   typedef long my_long_type;
 };
