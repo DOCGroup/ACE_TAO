@@ -15,7 +15,6 @@
  */
 //=============================================================================
 
-
 #ifndef IDL_TEST_INCLUDED_IDL
 #define IDL_TEST_INCLUDED_IDL
 
@@ -86,6 +85,11 @@ module RootModule
       };
     };
   };
+};
+
+interface AA
+{
+  typedef long my_long_type;
 };
 
 #endif /* IDL_TEST_INCLUDED_IDL */
