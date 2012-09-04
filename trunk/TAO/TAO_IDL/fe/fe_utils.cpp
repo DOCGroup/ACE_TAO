@@ -838,8 +838,6 @@ FE_Utils::can_be_redefined (AST_Decl *prev_decl,
   UTL_Scope *curr_scope = curr_decl->defined_in ();
   AST_Structure *s = 0;
   AST_StructureFwd *s_fwd = 0;
-  AST_Interface *i = 0;
-  AST_InterfaceFwd *i_fwd = 0;
   AST_Template_Module *ptm = 0;
   AST_Template_Module *ctm = 0;
 

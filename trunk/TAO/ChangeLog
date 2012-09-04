@@ -1,3 +1,9 @@
+Tue Sep  4 16:02:00 UTC 2012  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/fe_utils.cpp(FE_Utils::can_be_redefined):
+
+          Removed unused local variables.
+
 Thu Aug 30 19:27:46 UTC 2012  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/IDL_Test/included.idl:
