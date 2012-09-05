@@ -84,8 +84,9 @@
 
 // Then glibc/libc5 specific parts
 
-#if defined(__GLIBC__)
-# if (__GLIBC__  < 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ < 3)
+#if defined(__GLIBC__) || defined (__INTEL_COMPILER)
+# if !defined (__INTEL_COMPILER) && \
+     (__GLIBC__  < 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ < 3)
 #   define ACE_HAS_RUSAGE_WHO_ENUM enum __rusage_who
 #   define ACE_HAS_RLIMIT_RESOURCE_ENUM enum __rlimit_resource
 #   define ACE_LACKS_ISCTYPE
