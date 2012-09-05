@@ -1,3 +1,15 @@
+Wed Sep  5 20:09:09 UTC 2012  Steve Huston  <shuston@riverace.com>
+
+        * ace/SSL/SSL_SOCK_Stream.inl (recv_i): Added back in logic to wait
+          for data available to receive when called with a timeout. Thanks
+          to Ossama Othman for helping to sort this out. For reference, the
+          issues involved here are well-explained in "SSL and TLS" by
+          Eric Rescorla, section 8.9.
+
+        * ace/SSL/SSL_SOCK_Stream.cpp (recv_n): Removed the hack-y retry on
+          EWOULDBLOCK - the proper handling of timeouts is now in its proper
+          place in recv_i() - see above.
+
 Thu Aug 30 19:25:33 UTC 2012  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * THANKS:
