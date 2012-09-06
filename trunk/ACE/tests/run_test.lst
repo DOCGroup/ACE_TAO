@@ -32,7 +32,7 @@ Bound_Ptr_Test: !ACE_FOR_TAO
 Buffer_Stream_Test
 Bug_1576_Regression_Test
 Bug_1890_Regression_Test
-Bug_2368_Regression_Test: ALL !DISABLED
+Bug_2368_Regression_Test:
 Bug_2434_Regression_Test
 Bug_2497_Regression_Test
 Bug_2540_Regression_Test

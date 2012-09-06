@@ -84,7 +84,7 @@ run_main (int, ACE_TCHAR *[])
                       -1);
 
   if (ACE_Reactor::instance ()->register_handler
-      (SIGINT,
+      (SIGCHLD,
        &my_handlerB) == -1)
     ACE_ERROR_RETURN ((LM_DEBUG,
                        "%p\n",

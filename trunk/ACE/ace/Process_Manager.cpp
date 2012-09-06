@@ -329,6 +329,19 @@ ACE_Process_Manager::handle_input (ACE_HANDLE)
   return 0;
 }
 
+int
+ACE_Process_Manager::handle_close (ACE_HANDLE /* handle */,
+                                   ACE_Reactor_Mask close_mask)
+{
+  ACE_TRACE ("ACE_Process_Manager::handle_close");
+  if (close_mask == ACE_Event_Handler::SIGNAL_MASK)
+    {
+      // Reactor is telling us we're gone; don't unregister again later.
+      this->reactor (0);
+    }
+  return 0;
+}
+
 #endif /* !ACE_WIN32 */
 
 // On Unix, this routine is called asynchronously when a SIGCHLD is
