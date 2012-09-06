@@ -1,3 +1,25 @@
+Thu Sep  6 18:51:47 UTC 2012  Steve Huston  <shuston@riverace.com>
+
+        * ace/Sig_Handler.h:
+        * ace/Sig_Handler.cpp: Call back to ACE_Event_Handler::handle_close()
+          when a signal handler is removed by any means. The callback was
+          previously made only when dispatched handle_signal() returned -1.
+          This adds the callback when the signal handler is unregistered
+          either explicitly or by a containing reactor closing. Resolves
+          Bugzilla #2368.
+
+        * ace/Process_Manager.h:
+        * ace/Process_Manager.cpp: Added a handle_close() method to be notified
+          when a reactor with which SIGCHLD is registered closes, so no
+          attempt is later made to remove the SIGCHLD registration.
+
+        * NEWS: Describe the above enhancement.
+
+        * tests/Bug_2368_Regression_Test.cpp: Register the two handlers for
+          different signals so they're both tracked and removed properly.
+
+        * tests/run_test.lst: Enable Bug_2368_Regression_Test.
+
 Thu Sep  6 15:06:15 UTC 2012  Steve Huston  <shuston@riverace.com>
 
         * ace/Log_Msg.cpp (close): Don't try to lock/unlock the
