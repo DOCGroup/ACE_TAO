@@ -1,3 +1,8 @@
+Thu Sep  6 15:06:15 UTC 2012  Steve Huston  <shuston@riverace.com>
+
+        * ace/Log_Msg.cpp (close): Don't try to lock/unlock the
+          ACE_LOG_MSG_INSTANCE lock if it's already been freed.
+
 Wed Sep  5 20:09:09 UTC 2012  Steve Huston  <shuston@riverace.com>
 
         * ace/SSL/SSL_SOCK_Stream.inl (recv_i): Added back in logic to wait
