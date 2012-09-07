@@ -1,3 +1,9 @@
+Fri Sep  7 20:00:51 UTC 2012  Steve Huston  <shuston@riverace.com>
+
+        * ace/SSL/SSL_SOCK_Stream.inl (recv_i): Remove the incorrect comment
+          form the syscall case about falling through to the default. That's
+          not right. Thanks to Simon Massey for pointing this out.
+
 Fri Sep  7 19:43:12 UTC 2012  Steve Huston  <shuston@riverace.com>
 
         * ace/Sig_Handler.cpp (remove_handler_i): Check if the event handler

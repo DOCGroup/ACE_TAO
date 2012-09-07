@@ -194,8 +194,6 @@ ACE_SSL_SOCK_Stream::recv_i (void *buf,
             // sent.  This is a protocol error, but we ignore it.
             break;
 
-          // If not an EOF, then fall through to "default" case.
-
           // On some platforms (e.g. MS Windows) OpenSSL does not store
           // the last error in errno so explicitly do so.
           ACE_OS::set_errno_to_last_error ();
