@@ -7,7 +7,7 @@ if test -z $3; then MAILTO="devo-group@list.isis.vanderbilt.edu"; else MAILTO=$3
 
 cd $ACE_ROOT/bin
 
-./diff-builds-and-group-fixed-tests-only.sh 2011_12_27 $CURRENTDATE $PREFIX
+./diff-builds-and-group-fixed-tests-only.sh $CURRENTDATE $PREFIX
 ./cleanbuilds.sh $CURRENTDATE
 
 MAIL="mail -S smtp=mail.remedy.nl"
