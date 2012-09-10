@@ -235,7 +235,7 @@ ACE_DLL::error (void) const
 // means the user temporarily wants to take the handle.
 
 ACE_SHLIB_HANDLE
-ACE_DLL::get_handle (int become_owner) const
+ACE_DLL::get_handle (bool become_owner) const
 {
   ACE_TRACE ("ACE_DLL::get_handle");
 
