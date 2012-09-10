@@ -209,7 +209,7 @@ def check_workspace ():
     # @@TODO: Replace with a svn library
     try:
         rev = svn_client.update (doc_root + "ACE")
-        print "Successfully updated ACE/TAO/CIAO working copy to revision " + rev
+        print "Successfully updated ACE/TAO/CIAO working copy" # to revision "
     except:
         print "Unable to update ACE/TAO/CIAO workspace at " + doc_root
         raise
@@ -579,6 +579,7 @@ def get_comp_versions (component):
             comp_versions[component + "_major"] = int (match.group (1))
             comp_versions[component + "_minor"] = int (match.group (2))
             comp_versions[component + "_beta"] = int (match.group (3))
+            comp_versions[component + "_fix"] = ""
             break
 
         match = minor.search (line)
@@ -589,6 +590,7 @@ def get_comp_versions (component):
             comp_versions[component + "_major"] = int (match.group (1))
             comp_versions[component + "_minor"] = int (match.group (2))
             comp_versions[component + "_beta"] = 0
+            comp_versions[component + "_fix"] = ""
             break
 
         match = major.search (line)
@@ -598,6 +600,7 @@ def get_comp_versions (component):
             comp_versions[component + "_major"] = int (match.group (1))
             comp_versions[component + "_minor"] = 0
             comp_versions[component + "_beta"] = 0
+            comp_versions[component + "_fix"] = ""
             break
 
         print "FATAL ERROR: Unable to locate current version for " + component
@@ -902,22 +905,21 @@ def package (stage_dir, package_dir, decorator):
         print "error removing files", join (stage_dir, "zip-archive.zip"), join (stage_dir, "tar-archive.tar")
         pass # swallow any errors
 
+    text_files, bin_files = create_file_lists (join (stage_dir, "ACE_wrappers"),
+                                               "ACE_wrappers", ["TAO"])
+
+    #    write_file_lists ("fACE" + decorator, text_files, bin_files)
+    update_packages ("\n".join (text_files),
+                     "\n".join (bin_files),
+                     stage_dir,
+                     package_dir)
+
+    move_packages ("ACE" + decorator, stage_dir, package_dir)
+
+    text_files = list ()
+    bin_files = list ()
+
     if opts.ace_only != "yes":
-
-        text_files, bin_files = create_file_lists (join (stage_dir, "ACE_wrappers"),
-                                                   "ACE_wrappers", ["TAO"])
-
-        #    write_file_lists ("fACE" + decorator, text_files, bin_files)
-        update_packages ("\n".join (text_files),
-                         "\n".join (bin_files),
-                         stage_dir,
-                         package_dir)
-
-        move_packages ("ACE" + decorator, stage_dir, package_dir)
-
-        text_files = list ()
-        bin_files = list ()
-
         # for TAO:
         text_files, bin_files = create_file_lists (join (stage_dir, "ACE_wrappers/TAO"),
                                                    "ACE_wrappers/TAO", ["CIAO", "DAnCE"])
@@ -974,7 +976,7 @@ def generate_workspaces (stage_dir):
     if opts.ace_only != "yes":
         os.putenv ("TAO_ROOT", os.path.join (stage_dir, "ACE_wrappers", "TAO"))
         os.putenv ("CIAO_ROOT", os.path.join (stage_dir, "ACE_wrappers", "TAO", "CIAO"))
-    os.putenv ("DANCE_ROOT", os.path.join (stage_dir, "ACE_wrappers", "TAO", "DAnCE"))
+        os.putenv ("DANCE_ROOT", os.path.join (stage_dir, "ACE_wrappers", "TAO", "DAnCE"))
 
     # Create option strings
     mpc_command = os.path.join (stage_dir, "ACE_wrappers", "bin", "mwc.pl")
@@ -983,10 +985,10 @@ def generate_workspaces (stage_dir):
     if opts.ace_only != "yes":
         mpc_option += ' -relative TAO_ROOT=' + stage_dir + '/ACE_wrappers/TAO '
         mpc_option += ' -relative CIAO_ROOT=' + stage_dir + '/ACE_wrappers/TAO/CIAO '
+        mpc_option += ' -relative DANCE_ROOT=' + stage_dir + '/ACE_wrappers/TAO/DAnCE '
         exclude_option = ' -exclude TAO/TAO_*.mwc,TAO/CIAO/CIAO_*.mwc '
     else:
         exclude_option = ' '
-    mpc_option += ' -relative DANCE_ROOT=' + stage_dir + '/ACE_wrappers/TAO/DAnCE '
 
     static_vc9_option = ' -static -name_modifier *_vc9_Static -apply_project -exclude TAO/CIAO '
     static_vc9_option += mpc_option
