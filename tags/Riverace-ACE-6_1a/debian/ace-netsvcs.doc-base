@@ -1,0 +1,10 @@
+Document: ace-netsvcs 
+Title: ACE network services
+Author: Douglas C. Schmidt and his research group
+Abstract: This document describes the ACE network services: naming, time,
+ token, and logging services.
+Section: Programming/C++
+
+Format: html
+Index: /usr/share/doc/ace-netsvcs/ACE-netsvcs.html
+Files: /usr/share/doc/ace-netsvcs/*.html
