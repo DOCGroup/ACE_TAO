@@ -1,3 +1,7 @@
+Mon Sep 10 15:32:15 EDT 2012  Steve Huston  <shuston@riverace.com>
+
+        * ACE version 6.1a released.
+
 Thu Sep  6 15:06:15 UTC 2012  Steve Huston  <shuston@riverace.com>
 
         * ace/Log_Msg.cpp (close): Don't try to lock/unlock the
