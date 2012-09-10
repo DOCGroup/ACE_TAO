@@ -1,9 +1,0 @@
-// $Id$
-
-interface MonitorTestInterface
-{
-  enum Which { NotifyService, Supplier, Consumer };
-
-  oneway void running(in Which proc);
-  oneway void finished(in Which proc);
-};
