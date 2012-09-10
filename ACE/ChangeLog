@@ -1,3 +1,11 @@
+Mon Sep 10 13:57:27 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/DLL.h:
+        * ace/DLL.cpp:
+        * ace/DLL_Manager.h:
+        * ace/DLL_Manager.cpp:
+          Use bool for become_owner
+
 Mon Sep 10 00:16:29 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/diff-builds-and-group-fixed-tests-only.sh:
