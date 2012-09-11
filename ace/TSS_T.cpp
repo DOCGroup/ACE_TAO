@@ -350,11 +350,11 @@ ACE_TSS_Guard<ACE_LOCK>::init_key (void)
   this->key_ = ACE_OS::NULL_key;
   ACE_Thread::keycreate (&this->key_,
 #if defined (ACE_HAS_THR_C_DEST)
-                         &ACE_TSS_C_cleanup,
+                         &ACE_TSS_C_cleanup
 #else
-                         &ACE_TSS_Guard<ACE_LOCK>::cleanup,
+                         &ACE_TSS_Guard<ACE_LOCK>::cleanup
 #endif /* ACE_HAS_THR_C_DEST */
-                         (void *) this);
+                         );
 }
 
 template <class ACE_LOCK>
