@@ -1,3 +1,7 @@
+Tue Sep 11 18:59:35 UTC 2012  Steve Huston  <shuston@riverace.com>
+
+        * ace/TSS_T.cpp (ACE_TSS_Guard::init_key): Fix compile error.
+
 Mon Sep 10 13:57:27 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/DLL.h:
