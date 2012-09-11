@@ -1,3 +1,7 @@
+Tue Sep 11 18:59:35 UTC 2012  Steve Huston  <shuston@riverace.com>
+
+        * ace/TSS_T.cpp (ACE_TSS_Guard::init_key): Fix compile error.
+
 Mon Sep 10 15:32:15 EDT 2012  Steve Huston  <shuston@riverace.com>
 
         * ACE version 6.1a released.
