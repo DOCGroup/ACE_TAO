@@ -1,3 +1,10 @@
+Thu Sep 13 16:46:03 UTC 2012  Steve Huston  <shuston@riverace.com>
+
+        * ace/Atomic_Op.h:
+        * ace/Atomic_Op.inl: Added specializations for "long long" and
+          "unsigned long long" for GCC to get the better performance
+          for 64-bit integers.
+
 Tue Sep 11 18:59:35 UTC 2012  Steve Huston  <shuston@riverace.com>
 
         * ace/TSS_T.cpp (ACE_TSS_Guard::init_key): Fix compile error.

@@ -311,6 +311,27 @@ public:
   ACE_Atomic_Op (const ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long> &c);
   ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long> &operator= (unsigned long rhs);
 };
+template<>
+class ACE_Export ACE_Atomic_Op<ACE_Thread_Mutex, long long>
+: public ACE_Atomic_Op_GCC<long long>
+{
+public:
+  ACE_Atomic_Op (void);
+  ACE_Atomic_Op (long long c);
+  ACE_Atomic_Op (const ACE_Atomic_Op<ACE_Thread_Mutex, long long> &c);
+  ACE_Atomic_Op<ACE_Thread_Mutex, long long> &operator= (long long rhs);
+};
+
+template<>
+class ACE_Export ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long long>
+: public ACE_Atomic_Op_GCC<unsigned long long>
+{
+public:
+  ACE_Atomic_Op (void);
+  ACE_Atomic_Op (unsigned long long c);
+  ACE_Atomic_Op (const ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long long> &c);
+  ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long long> &operator= (unsigned long long rhs);
+};
 
 #if !defined (ACE_LACKS_GCC_ATOMIC_BUILTINS_2)
 template<>
