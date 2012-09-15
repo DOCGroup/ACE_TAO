@@ -525,6 +525,8 @@ ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::operator= (unsigned long rhs)
   return *this;
 }
 
+// The long long intrinsics are not available on PPC
+#if !defined (__powerpc__)
 ACE_INLINE
 ACE_Atomic_Op<ACE_Thread_Mutex, long long>::ACE_Atomic_Op (void) :
   ACE_Atomic_Op_GCC<long long>()
@@ -576,6 +578,7 @@ ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long long>::operator= (unsigned long lo
   ACE_Atomic_Op_GCC<unsigned long long>::operator= (rhs);
   return *this;
 }
+#endif /* !__powerpc__ */
 
 #if !defined (ACE_LACKS_GCC_ATOMIC_BUILTINS_2)
 ACE_INLINE
