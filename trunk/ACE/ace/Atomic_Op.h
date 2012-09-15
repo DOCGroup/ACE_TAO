@@ -311,6 +311,9 @@ public:
   ACE_Atomic_Op (const ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long> &c);
   ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long> &operator= (unsigned long rhs);
 };
+
+// The long long intrinsics are not available on PPC
+#if !defined (__powerpc__)
 template<>
 class ACE_Export ACE_Atomic_Op<ACE_Thread_Mutex, long long>
 : public ACE_Atomic_Op_GCC<long long>
@@ -332,6 +335,7 @@ public:
   ACE_Atomic_Op (const ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long long> &c);
   ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long long> &operator= (unsigned long long rhs);
 };
+#endif /* !__powerpc__ */
 
 #if !defined (ACE_LACKS_GCC_ATOMIC_BUILTINS_2)
 template<>
