@@ -42,7 +42,7 @@ TAO::In_UB_String_Clonable_Argument_T<S_var,Insert_Policy>::~In_UB_String_Clonab
     {
       typename S_var::s_traits::char_type * tmp =
            const_cast<typename S_var::s_traits::char_type *> (this->x_);
-      delete [] tmp;
+      S_var::s_traits::release (tmp);
     }
 }
 
