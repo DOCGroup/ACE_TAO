@@ -1,3 +1,14 @@
+Tue Sep 18 16:26:00 UTC 2012  Simon Massey  <sma at prismtech dot com>
+
+        * tao/UB_String_Argument_T.cpp:
+          Missed one of the changes with the original
+          Wed Jan 13 16:30:00 UTC 2012 change:
+          Was also directly calling delete [] on CORBA::strings
+          instead of using CORBA::string_free(). As this delete []
+          call was also inside a template however, it needed to actualy
+          use the S_var::s_traits::release () that mapped this
+          to the correct CORBA::string_free() call.
+
 Tue Sep  4 16:02:00 UTC 2012  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/fe_utils.cpp(FE_Utils::can_be_redefined):
