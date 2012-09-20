@@ -43,6 +43,13 @@ namespace CIAO
         {
           this->error_listener_->on_unexpected_status (this->entity_, this->status_kind_);
         }
+      catch (const ::CORBA::BAD_INV_ORDER& ex)
+        {
+          DDS4CCM_PRINT_DEBUG_CORBA_EXCEPTION (
+                                  DDS4CCM_LOG_LEVEL_ACTION,
+                                  ex,
+                                  "OnUnexpectedStatusHandler::handle_exception");
+        }
       catch (const ::CORBA::Exception& ex)
         {
           DDS4CCM_PRINT_CORBA_EXCEPTION (
@@ -85,6 +92,13 @@ namespace CIAO
         {
           this->csl_->on_requested_incompatible_qos (this->dr_, this->status_);
         }
+      catch (const ::CORBA::BAD_INV_ORDER& ex)
+        {
+          DDS4CCM_PRINT_DEBUG_CORBA_EXCEPTION (
+                                  DDS4CCM_LOG_LEVEL_ACTION,
+                                  ex,
+                                  "OnRequestedOncompatibleQosHandler::handle_exception");
+        }
       catch (const ::CORBA::Exception& ex)
         {
           DDS4CCM_PRINT_CORBA_EXCEPTION (
@@ -124,6 +138,13 @@ namespace CIAO
       try
         {
           this->csl_->on_sample_rejected (this->dr_, this->status_);
+        }
+      catch (const ::CORBA::BAD_INV_ORDER& ex)
+        {
+          DDS4CCM_PRINT_DEBUG_CORBA_EXCEPTION (
+                                  DDS4CCM_LOG_LEVEL_ACTION,
+                                  ex,
+                                  "OnSampleRejectedHandler::handle_exception");
         }
       catch (const ::CORBA::Exception& ex)
         {
@@ -165,6 +186,13 @@ namespace CIAO
         {
           this->csl_->on_inconsistent_topic (this->tp_, this->status_);
         }
+      catch (const ::CORBA::BAD_INV_ORDER& ex)
+        {
+          DDS4CCM_PRINT_DEBUG_CORBA_EXCEPTION (
+                                  DDS4CCM_LOG_LEVEL_ACTION,
+                                  ex,
+                                  "OnInconsistentTopicHandler::handle_exception");
+        }
       catch (const ::CORBA::Exception& ex)
         {
           DDS4CCM_PRINT_CORBA_EXCEPTION (
@@ -204,6 +232,13 @@ namespace CIAO
       try
         {
           this->csl_->on_offered_deadline_missed (this->dw_, this->status_);
+        }
+      catch (const ::CORBA::BAD_INV_ORDER& ex)
+        {
+          DDS4CCM_PRINT_DEBUG_CORBA_EXCEPTION (
+                                  DDS4CCM_LOG_LEVEL_ACTION,
+                                  ex,
+                                  "OnOfferedDeadlineMissedHandler::handle_exception");
         }
       catch (const ::CORBA::Exception& ex)
         {
@@ -245,6 +280,13 @@ namespace CIAO
         {
           this->csl_->on_offered_incompatible_qos (this->dw_, this->status_);
         }
+      catch (const ::CORBA::BAD_INV_ORDER& ex)
+        {
+          DDS4CCM_PRINT_DEBUG_CORBA_EXCEPTION (
+                                  DDS4CCM_LOG_LEVEL_ACTION,
+                                  ex,
+                                  "OnOfferedIncompatibleQoSHandler::handle_exception");
+        }
       catch (const ::CORBA::Exception& ex)
         {
           DDS4CCM_PRINT_CORBA_EXCEPTION (
@@ -285,6 +327,13 @@ namespace CIAO
         {
           this->psl_->on_requested_deadline_missed (this->dr_, this->status_);
         }
+      catch (const ::CORBA::BAD_INV_ORDER& ex)
+        {
+          DDS4CCM_PRINT_DEBUG_CORBA_EXCEPTION (
+                                  DDS4CCM_LOG_LEVEL_ACTION,
+                                  ex,
+                                  "OnRequestedDeadlineMissedHandler::handle_exception");
+        }
       catch (const ::CORBA::Exception& ex)
         {
           DDS4CCM_PRINT_CORBA_EXCEPTION (
@@ -324,6 +373,13 @@ namespace CIAO
       try
         {
           this->psl_->on_sample_lost (this->dr_, this->status_);
+        }
+      catch (const ::CORBA::BAD_INV_ORDER& ex)
+        {
+          DDS4CCM_PRINT_DEBUG_CORBA_EXCEPTION (
+                                  DDS4CCM_LOG_LEVEL_ACTION,
+                                  ex,
+                                  "OnSampleLostHandler::handle_exception");
         }
       catch (const ::CORBA::Exception& ex)
         {
