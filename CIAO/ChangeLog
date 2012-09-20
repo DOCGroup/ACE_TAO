@@ -1,3 +1,12 @@
+Thu Sep 20 07:08:30 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Containers/Container_Base_T.cpp:
+          Removed not needed ObjectId_to_string, the result is never
+          used
+
+        * ciao/Valuetype_Factories/Cookies.h:
+          Removed not needed include
+
 Thu Sep 20 07:06:41 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/DDSCallbackStatusHandler.cpp:
