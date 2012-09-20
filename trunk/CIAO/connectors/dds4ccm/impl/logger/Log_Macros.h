@@ -121,6 +121,18 @@ extern DDS4CCM_Logger_Export unsigned int DDS4CCM_debug_level;
       } \
   } while (0)
 # endif
+# if !defined (DDS4CCM_PRINT_DEBUG_CORBA_EXCEPTION)
+#  define DDS4CCM_PRINT_DEBUG_CORBA_EXCEPTION(L, E, X) \
+  do { \
+    if (DDS4CCM_debug_level >= L) \
+      { \
+        ACE_CString msg (X);\
+        msg += " - Caught CORBA exception.\n";\
+        DDS4CCM_DEBUG (L, (LM_DEBUG, msg.c_str ()));\
+        E._tao_print_exception (X);\
+      } \
+  } while (0)
+# endif
 # if !defined (DDS4CCM_ERROR_RETURN)
 #  define DDS4CCM_ERROR_RETURN(L, X, Y) \
   do { \
