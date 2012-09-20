@@ -1217,9 +1217,6 @@ namespace CIAO
     PortableServer::ObjectId_var oid =
       PortableServer::string_to_ObjectId (obj_id);
 
-    CORBA::String_var str =
-      PortableServer::ObjectId_to_string (oid.in ());
-
     CORBA::Object_var objref =
       poa_safe->create_reference_with_id (oid.in (), repo_id);
 
