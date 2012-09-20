@@ -1190,11 +1190,8 @@ run_main (int argc, ACE_TCHAR *argv[])
 #else
 
 int
-run_main (int argc, ACE_TCHAR *argv[])
+run_main (int, ACE_TCHAR *[])
 {
-  ACE_UNUSED_ARG (argc);
-  ACE_UNUSED_ARG (argv);
-
   ACE_START_TEST (ACE_TEXT ("Network_Adapters_Test"));
 
   ACE_DEBUG ((LM_INFO,
