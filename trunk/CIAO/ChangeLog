@@ -1,3 +1,9 @@
+Fri Sep 21 07:52:43 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/logger/Log_Macros.h:
+          Added DDS4CCM_PRINT_CORBA_EXCEPTION also in case there is no
+          logging
+
 Thu Sep 20 07:08:30 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Containers/Container_Base_T.cpp:
