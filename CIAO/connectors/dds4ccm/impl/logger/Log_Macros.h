@@ -67,6 +67,7 @@ extern DDS4CCM_Logger_Export unsigned int DDS4CCM_debug_level;
 # define DDS4CCM_DEBUG(L, X) do {} while (0)
 # define DDS4CCM_PRINT_INTERNAL_EXCEPTION(L, E, X) do {} while (0)
 # define DDS4CCM_PRINT_CORBA_EXCEPTION(L, E, X) do {} while (0)
+# define DDS4CCM_PRINT_DEBUG_CORBA_EXCEPTION(L, E, X) do {} while (0)
 # define DDS4CCM_ERROR_RETURN(L, X, Y) return (Y)
 # define DDS4CCM_ERROR_BREAK(L, X) { break; }
 #else
