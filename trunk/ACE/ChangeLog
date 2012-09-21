@@ -1,3 +1,8 @@
+Fri Sep 21 08:06:31 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_linux_icc.GNU:
+          Use -Wno-deprecated with C++11 due to the heavy usage of auto_ptr
+
 Thu Sep 20 07:09:41 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Network_Adapters_Test.cpp:
