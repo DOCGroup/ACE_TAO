@@ -51,7 +51,7 @@
 {
    <cleanup load>
    Memcheck:Leak
-   fun:*
+   ...
    fun:*ACE_Log_Msg*close*
 }
 
