@@ -1,3 +1,8 @@
+Mon Sep 24 12:56:50 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/valgrind.supp:
+          Extended this file to work on OpenSuSE 12.2
+
 Fri Sep 21 08:06:31 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_linux_icc.GNU:
