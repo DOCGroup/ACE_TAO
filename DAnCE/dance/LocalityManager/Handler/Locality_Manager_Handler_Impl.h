@@ -11,7 +11,7 @@
 #ifndef DANCE_LOCALITYMANAGERI_MIGAYG_H_
 #define DANCE_LOCALITYMANAGERI_MIGAYG_H_
 
-#include "dance/DAnCE_LocalityManagerS.h"
+#include "dance/DAnCE_LocalityManagerC.h"
 #include "dance/DAnCE_Utility.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

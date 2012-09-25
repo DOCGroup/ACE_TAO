@@ -1,3 +1,11 @@
+Tue Sep 25 18:36:35 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * dance/LocalityManager/Handler/Config_Handler_Impl.h:
+        * dance/LocalityManager/Handler/Inst_Handler_Impl.h:
+        * dance/LocalityManager/Handler/Interceptor_Handler_Impl.h:
+        * dance/LocalityManager/Handler/Locality_Manager_Handler_Impl.h:
+          Only locality manager stubs are used here
+
 Wed Aug 29 07:34:06 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ChangeLog:
