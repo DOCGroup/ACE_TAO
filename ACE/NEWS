@@ -11,6 +11,8 @@ USER VISIBLE CHANGES BETWEEN ACE-6.1.4 and ACE-6.1.5
 . Some initial ACE unit tests to validate the C++11 support of various
   compilers
 
+. Added support for OpenSuSE 12.2
+
 USER VISIBLE CHANGES BETWEEN ACE-6.1.3 and ACE-6.1.4
 ====================================================
 
