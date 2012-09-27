@@ -13,8 +13,6 @@
 
 /**
  * @interface Null_Interface
- *
- * @brief
  */
 interface Null_Interface
 {
