@@ -11,14 +11,15 @@
 # testing vendor specific features, these can use DDS4CCM_NDDS and
 # DDS4CCM_OPENDDS
 #
-TAO/CIAO/examples/Hello/descriptors/run_test.pl: !CCM_NOEVENT
-TAO/CIAO/examples/Hello/descriptors/run_test_shs.pl: !CCM_NOEVENT
-TAO/CIAO/examples/Hello/descriptors/run_test_PlanLocality_DifferentProcesses.pl: !CCM_NOEVENT
-TAO/CIAO/examples/Hello/descriptors/run_test_PlanLocality_SameProcess.pl: !CCM_NOEVENT
+TAO/CIAO/examples/Hello/descriptors/run_test.pl
+TAO/CIAO/examples/Hello_Event/descriptors/run_test.pl: !CCM_NOEVENT
+TAO/CIAO/examples/Hello_Event/descriptors/run_test_shs.pl: !CCM_NOEVENT
+TAO/CIAO/examples/Hello_Event/descriptors/run_test_PlanLocality_DifferentProcesses.pl: !CCM_NOEVENT
+TAO/CIAO/examples/Hello_Event/descriptors/run_test_PlanLocality_SameProcess.pl: !CCM_NOEVENT
+TAO/CIAO/examples/Hello_Event/descriptors/run_test_without_ns.pl: !CCM_NOEVENT
 TAO/CIAO/examples/BasicSP/descriptors/run_test.pl: !CCM_NOEVENT
 TAO/CIAO/examples/Null_Component/descriptors/run_test.pl:
 TAO/CIAO/examples/Null_Component/descriptors/run_test_without_ns.pl:
-TAO/CIAO/examples/Hello/descriptors/run_test_without_ns.pl: !CCM_NOEVENT
 TAO/CIAO/examples/Display/descriptors/run_all_in_one.pl: !CCM_NOEVENT
 TAO/CIAO/tutorials/Quoter/Simple/descriptors/run_test.pl: !CCM_NOEVENT
 TAO/CIAO/tests/Collocation/descriptors/run_test.pl: CCM_DIRECTCOLL
