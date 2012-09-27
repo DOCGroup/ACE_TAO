@@ -643,6 +643,34 @@ project(Compiler_Features_14_Test) : acetest {
   }
 }
 
+project(Compiler_Features_15_Test) : acetest {
+  exename = Compiler_Features_15_Test
+  Source_Files {
+    Compiler_Features_15_Test.cpp
+  }
+}
+
+project(Compiler_Features_16_Test) : acetest {
+  exename = Compiler_Features_16_Test
+  Source_Files {
+    Compiler_Features_16_Test.cpp
+  }
+}
+
+project(Compiler_Features_17_Test) : acetest {
+  exename = Compiler_Features_17_Test
+  Source_Files {
+    Compiler_Features_17_Test.cpp
+  }
+}
+
+project(Compiler_Features_18_Test) : acetest {
+  exename = Compiler_Features_18_Test
+  Source_Files {
+    Compiler_Features_18_Test.cpp
+  }
+}
+
 project(Config Test) : acetest {
   avoids += ace_for_tao
   exename = Config_Test

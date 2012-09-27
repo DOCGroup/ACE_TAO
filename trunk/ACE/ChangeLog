@@ -1,3 +1,18 @@
+Thu Sep 27 06:30:22 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-g++-common.h:
+          Introduced a new ACE_HAS_CPP11 which is set with GCC 4.7 at
+          the moment the C++11 features are enabled
+
+        * tests/Compiler_Features_15_Test.cpp:
+        * tests/Compiler_Features_16_Test.cpp:
+        * tests/Compiler_Features_17_Test.cpp:
+        * tests/Compiler_Features_18_Test.cpp:
+        * tests/run_test.lst:
+        * tests/tests.mpc:
+          Added some new compiler tests to validate the compiler C++11
+          support
+
 Mon Sep 24 12:56:50 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/valgrind.supp:
