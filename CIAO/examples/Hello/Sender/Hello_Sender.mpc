@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -p Hello_Base Hello_Sender"
 
-project(Hello_Example_Base_Hello_Sender_idl_gen) : componentidldefaults {
+project(Hello_Ex_Base_Hello_Sender_idl_gen) : componentidldefaults {
   after += Hello_Example_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=HELLO_SENDER_STUB_Export \
@@ -17,8 +17,8 @@ project(Hello_Example_Base_Hello_Sender_idl_gen) : componentidldefaults {
   }
 }
 
-project(Hello_Example_Base_Hello_Sender_lem_gen) : ciaoidldefaults {
-  after += Hello_Example_Base_Hello_Sender_idl_gen
+project(Hello_Ex_Base_Hello_Sender_lem_gen) : ciaoidldefaults {
+  after += Hello_Ex_Base_Hello_Sender_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=HELLO_SENDER_LEM_STUB_Export \
               -Wb,stub_export_include=Hello_Sender_lem_stub_export.h \
@@ -29,8 +29,8 @@ project(Hello_Example_Base_Hello_Sender_lem_gen) : ciaoidldefaults {
   }
 }
 
-project(Hello_Example_Base_Hello_Sender_lem_stub) : ccm_svnt {
-  after += Hello_Example_Base_Hello_Sender_lem_gen Hello_Example_stub Conn_Hello_Base_stub
+project(Hello_Ex_Base_Hello_Sender_lem_stub) : ccm_svnt {
+  after += Hello_Ex_Base_Hello_Sender_lem_gen Hello_Example_stub Conn_Hello_Base_stub
   libs  += Hello_stub
   libpaths += ../lib
   libout = ../lib
@@ -54,8 +54,8 @@ project(Hello_Example_Base_Hello_Sender_lem_stub) : ccm_svnt {
   }
 }
 
-project(Hello_Example_Base_Hello_Sender_stub) : ccm_stub {
-  after += Hello_Example_Base_Hello_Sender_idl_gen Hello_Example_Base_stub Hello_Example_stub Conn_Hello_Base_stub
+project(Hello_Ex_Base_Hello_Sender_stub) : ccm_stub {
+  after += Hello_Ex_Base_Hello_Sender_idl_gen Hello_Example_Base_stub Hello_Example_stub Conn_Hello_Base_stub
   libs  += Hello_stub
   libpaths += ../lib
   libout = ../lib
@@ -79,8 +79,8 @@ project(Hello_Example_Base_Hello_Sender_stub) : ccm_stub {
   }
 }
 
-project(Hello_Example_Base_Hello_Sender_exec) : ciao_executor {
-  after   += Hello_Example_Base_Hello_Sender_lem_stub Hello_Example_Base_Hello_Sender_stub Hello_Example_Base_exec Conn_Hello_Base_stub Hello_Example_lem_stub
+project(Hello_Ex_Base_Hello_Sender_exec) : ciao_executor {
+  after   += Hello_Ex_Base_Hello_Sender_lem_stub Hello_Ex_Base_Hello_Sender_stub Hello_Example_Base_exec Conn_Hello_Base_stub Hello_Example_lem_stub
   sharedname = Hello_Sender_exec
   libs += Hello_Sender_stub Hello_Sender_lem_stub Hello_stub Hello_stub Hello_lem_stub
   libpaths += ../lib
@@ -103,8 +103,8 @@ project(Hello_Example_Base_Hello_Sender_exec) : ciao_executor {
   }
 }
 
-project(Hello_Example_Base_Hello_Sender_svnt) : ciao_servant {
-  after      += Hello_Example_Base_skel Hello_Example_Base_Hello_Sender_lem_stub Hello_Example_Base_Hello_Sender_stub Hello_Example_Base_exec Hello_Example_skel
+project(Hello_Ex_Base_Hello_Sender_svnt) : ciao_servant {
+  after      += Hello_Example_Base_skel Hello_Ex_Base_Hello_Sender_lem_stub Hello_Ex_Base_Hello_Sender_stub Hello_Example_Base_exec Hello_Example_skel
   sharedname  = Hello_Sender_svnt
   libs       += Hello_Sender_stub Hello_Sender_lem_stub  \
                 Hello_skel \
