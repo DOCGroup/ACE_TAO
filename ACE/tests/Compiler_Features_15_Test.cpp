@@ -24,9 +24,9 @@ run_main (int, ACE_TCHAR *[])
 
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("Defaulted move constructor and assignment operators work.\n")));
-  
+
   ACE_END_TEST;
-  
+
   return 0;
 }
 
@@ -38,7 +38,7 @@ run_main (int, ACE_TCHAR *[])
 
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("No C++11 support enabled\n")));
-  
+
   ACE_END_TEST;
   return 0;
 }
