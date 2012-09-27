@@ -24,7 +24,7 @@ namespace CORBA {
   };// TCKind
 };
 
-std::ostream& operator<< 
+std::ostream& operator<<
 (std::ostream& strm,CORBA::TCKind _enumerator)
 {
   switch (_enumerator) {
@@ -41,9 +41,9 @@ run_main (int, ACE_TCHAR *[])
 
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("Strongly typed enums work.\n")));
-  
+
   ACE_END_TEST;
-  
+
   return 0;
 }
 
@@ -55,7 +55,7 @@ run_main (int, ACE_TCHAR *[])
 
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("No C++11 support enabled\n")));
-  
+
   ACE_END_TEST;
   return 0;
 }
