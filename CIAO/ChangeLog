@@ -1,3 +1,9 @@
+Thu Sep 27 09:29:38 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/ciao_tests.lst:
+        * examples/Hello:
+          Added new Hello test that isn't dependent on CCM events
+
 Thu Sep 27 08:59:45 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/ciao_tests.lst:
