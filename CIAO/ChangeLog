@@ -1,3 +1,15 @@
+Thu Sep 27 08:59:45 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/ciao_tests.lst:
+        * examples/Hello:
+        * examples/Hello_Event:
+          Renamed Hello to Hello_Event, this version of the
+          Hello example uses the CCM events, will add another
+          version that just uses facet/receptacles
+
+        * examples/Null_Component/Null_Interface.idl:
+          Doxygen change
+
 Tue Sep 25 18:00:53 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Deployment/Handlers/Component_Handler.h:
