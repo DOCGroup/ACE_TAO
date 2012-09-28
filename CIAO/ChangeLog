@@ -1,3 +1,8 @@
+Fri Sep 28 09:39:27 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Hello/Sender/Hello_Sender_exec.h:
+          Added missing file
+
 Thu Sep 27 09:29:38 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/ciao_tests.lst:
