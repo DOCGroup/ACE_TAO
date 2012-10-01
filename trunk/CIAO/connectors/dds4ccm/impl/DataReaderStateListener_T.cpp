@@ -246,6 +246,13 @@ namespace CIAO
               // It will likely causes a crash in their implementation
             }
         }
+      catch (const ::CORBA::BAD_INV_ORDER& ex)
+        {
+          DDS4CCM_PRINT_DEBUG_CORBA_EXCEPTION (
+                                  DDS4CCM_LOG_LEVEL_ACTION,
+                                  ex,
+                                  "DataReaderStateListener_T::on_data_available_i");
+        }
       catch (const ::CORBA::Exception& ex)
         {
           DDS4CCM_PRINT_CORBA_EXCEPTION (

@@ -63,6 +63,13 @@ namespace CIAO
                   this->port_status_listener_->on_requested_deadline_missed (the_reader, status);
                 }
             }
+          catch (const ::CORBA::BAD_INV_ORDER& ex)
+            {
+              DDS4CCM_PRINT_DEBUG_CORBA_EXCEPTION (
+                                      DDS4CCM_LOG_LEVEL_ACTION,
+                                      ex,
+                                      "PortStatusListener::on_requested_deadline_missed");
+            }
           catch (const ::CORBA::Exception& ex)
             {
               DDS4CCM_PRINT_CORBA_EXCEPTION (
@@ -121,6 +128,13 @@ namespace CIAO
                 {
                   this->port_status_listener_->on_sample_lost (the_reader, status);
                 }
+            }
+          catch (const ::CORBA::BAD_INV_ORDER& ex)
+            {
+              DDS4CCM_PRINT_DEBUG_CORBA_EXCEPTION (
+                                      DDS4CCM_LOG_LEVEL_ACTION,
+                                      ex,
+                                      "PortStatusListener::on_sample_lost");
             }
           catch (const ::CORBA::Exception& ex)
             {

@@ -92,103 +92,126 @@ namespace CIAO
           return;
         }
 
-      SEQ_TYPE data;
-      ::DDS::SampleInfoSeq sample_info;
-      ::CORBA::Long max_samples = 0;
-
-      mode == ::CCM_DDS::ONE_BY_ONE
-        ? max_samples = ::DDS::LENGTH_UNLIMITED
-        : this->control_->max_delivered_data() == 0
-          ? max_samples = ::DDS::LENGTH_UNLIMITED
-          : max_samples = this->control_->max_delivered_data ();
-
-      ::DDS::QueryCondition_var qc =
-        this->condition_manager_.get_querycondition_listener ();
-
-      ::DDS::ReturnCode_t result = ::DDS::RETCODE_OK;
-
-      if (! ::CORBA::is_nil (qc.in ()))
+      try
         {
-          ::DDS::ReadCondition_var rd = ::DDS::ReadCondition::_narrow (qc.in ());
-          result = reader->take_w_condition (data,
-                                             sample_info,
-                                             max_samples,
-                                             rd.in ());
-        }
-      else
-        {
-          result = reader->take (data,
-                                 sample_info,
-                                 max_samples,
-                                 ::DDS::NOT_READ_SAMPLE_STATE,
-                                 ::DDS::NEW_VIEW_STATE | ::DDS::NOT_NEW_VIEW_STATE,
-                                 ::DDS::ANY_INSTANCE_STATE);
-        }
+          SEQ_TYPE data;
+          ::DDS::SampleInfoSeq sample_info;
+          ::CORBA::Long max_samples = 0;
 
-      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_INFO, DDS4CCM_INFO
-                          ACE_TEXT ("DataReaderListener_T::on_data_available_i - ")
-                          ACE_TEXT ("Take data returned %C.\n"),
-                          translate_retcode (result)));
+          mode == ::CCM_DDS::ONE_BY_ONE
+            ? max_samples = ::DDS::LENGTH_UNLIMITED
+            : this->control_->max_delivered_data() == 0
+              ? max_samples = ::DDS::LENGTH_UNLIMITED
+              : max_samples = this->control_->max_delivered_data ();
 
-      if (result == ::DDS::RETCODE_OK)
-        {
-          if (mode == ::CCM_DDS::ONE_BY_ONE)
+          ::DDS::QueryCondition_var qc =
+            this->condition_manager_.get_querycondition_listener ();
+
+          ::DDS::ReturnCode_t result = ::DDS::RETCODE_OK;
+
+          if (! ::CORBA::is_nil (qc.in ()))
             {
-              for (::CORBA::ULong i = 0; i < data.length (); ++i)
-                {
-                  if (sample_info[i].valid_data)
-                    {
-                      ::CCM_DDS::ReadInfo info;
-                      info <<= sample_info[i];
-                      this->listener_->on_one_data (data[i], info);
-                    }
-                }
+              ::DDS::ReadCondition_var rd = ::DDS::ReadCondition::_narrow (qc.in ());
+              result = reader->take_w_condition (data,
+                                                sample_info,
+                                                max_samples,
+                                                rd.in ());
             }
           else
             {
-              CORBA::ULong nr_of_samples = 0;
-              for (::CORBA::ULong i = 0 ; i < sample_info.length(); i++)
+              result = reader->take (data,
+                                    sample_info,
+                                    max_samples,
+                                    ::DDS::NOT_READ_SAMPLE_STATE,
+                                    ::DDS::NEW_VIEW_STATE | ::DDS::NOT_NEW_VIEW_STATE,
+                                    ::DDS::ANY_INSTANCE_STATE);
+            }
+
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_INFO, DDS4CCM_INFO
+                              ACE_TEXT ("DataReaderListener_T::on_data_available_i - ")
+                              ACE_TEXT ("Take data returned %C.\n"),
+                              translate_retcode (result)));
+
+          if (result == ::DDS::RETCODE_OK)
+            {
+              if (mode == ::CCM_DDS::ONE_BY_ONE)
                 {
-                  if (sample_info[i].valid_data)
+                  for (::CORBA::ULong i = 0; i < data.length (); ++i)
                     {
-                      ++nr_of_samples;
-                    }
-                }
-
-              if (nr_of_samples > 0)
-                {
-                  SEQ_TYPE inst_seq (nr_of_samples);
-                  ::CCM_DDS::ReadInfoSeq infoseq (nr_of_samples);
-
-                  infoseq.length (nr_of_samples);
-                  inst_seq.length (nr_of_samples);
-
-                  // Copy the valid samples
-                  CORBA::ULong ix = 0;
-                  for (::CORBA::ULong i = 0 ; i < sample_info.length(); i++)
-                    {
-                      if(sample_info[i].valid_data)
+                      if (sample_info[i].valid_data)
                         {
-                          infoseq[ix] <<= sample_info[i];
-                          inst_seq[ix] = data[i];
-                          ++ix;
+                          ::CCM_DDS::ReadInfo info;
+                          info <<= sample_info[i];
+                          this->listener_->on_one_data (data[i], info);
                         }
                     }
-                  this->listener_->on_many_data (inst_seq, infoseq);
+                }
+              else
+                {
+                  CORBA::ULong nr_of_samples = 0;
+                  for (::CORBA::ULong i = 0 ; i < sample_info.length(); i++)
+                    {
+                      if (sample_info[i].valid_data)
+                        {
+                          ++nr_of_samples;
+                        }
+                    }
+
+                  if (nr_of_samples > 0)
+                    {
+                      SEQ_TYPE inst_seq (nr_of_samples);
+                      ::CCM_DDS::ReadInfoSeq infoseq (nr_of_samples);
+
+                      infoseq.length (nr_of_samples);
+                      inst_seq.length (nr_of_samples);
+
+                      // Copy the valid samples
+                      CORBA::ULong ix = 0;
+                      for (::CORBA::ULong i = 0 ; i < sample_info.length(); i++)
+                        {
+                          if(sample_info[i].valid_data)
+                            {
+                              infoseq[ix] <<= sample_info[i];
+                              inst_seq[ix] = data[i];
+                              ++ix;
+                            }
+                        }
+                      this->listener_->on_many_data (inst_seq, infoseq);
+                    }
                 }
             }
-        }
 
-      // Return the loan
-      DDS::ReturnCode_t const retval = reader->return_loan (data, sample_info);
-      if (retval != ::DDS::RETCODE_OK)
+          // Return the loan
+          DDS::ReturnCode_t const retval = reader->return_loan (data, sample_info);
+          if (retval != ::DDS::RETCODE_OK)
+            {
+              DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                            ACE_TEXT ("DataReaderListener_T::on_data_available_i - ")
+                            ACE_TEXT ("Error returning loan to DDS - <%C>\n"),
+                            translate_retcode (retval)));
+              // No exception here since this the DDS vendor doesn't expect this.
+              // It will likely causes a crash in their implementation
+            }
+        }
+      catch (const ::CORBA::BAD_INV_ORDER& ex)
+        {
+          DDS4CCM_PRINT_DEBUG_CORBA_EXCEPTION (
+                                  DDS4CCM_LOG_LEVEL_ACTION,
+                                  ex,
+                                  "DataReaderListener_T::on_data_available_i");
+        }
+      catch (const ::CORBA::Exception& ex)
+        {
+          DDS4CCM_PRINT_CORBA_EXCEPTION (
+                                  DDS4CCM_LOG_LEVEL_ERROR,
+                                  ex,
+                                  "DataReaderListener_T::on_data_available_i");
+        }
+      catch (...)
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                         ACE_TEXT ("DataReaderListener_T::on_data_available_i - ")
-                        ACE_TEXT ("Error returning loan to DDS - <%C>\n"),
-                        translate_retcode (retval)));
-          // No exception here since this the DDS vendor doesn't expect this.
-          // It will likely causes a crash in their implementation
+                        ACE_TEXT ("Unexpected exception caught\n")));
         }
     }
 
