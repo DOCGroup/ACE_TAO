@@ -70,6 +70,13 @@ namespace CIAO
                   this->error_listener_->on_requested_incompatible_qos (reader, status);
                 }
             }
+          catch (const ::CORBA::BAD_INV_ORDER& ex)
+            {
+              DDS4CCM_PRINT_DEBUG_CORBA_EXCEPTION (
+                                      DDS4CCM_LOG_LEVEL_ACTION,
+                                      ex,
+                                      "SubscriberListener::on_requested_incompatible_qos");
+            }
           catch (const ::CORBA::Exception& ex)
             {
               DDS4CCM_PRINT_CORBA_EXCEPTION (
@@ -121,6 +128,13 @@ namespace CIAO
                 {
                   this->error_listener_->on_unexpected_status (entity, status_kind);
                 }
+            }
+          catch (const ::CORBA::BAD_INV_ORDER& ex)
+            {
+              DDS4CCM_PRINT_DEBUG_CORBA_EXCEPTION (
+                                      DDS4CCM_LOG_LEVEL_ACTION,
+                                      ex,
+                                      "SubscriberListener::on_unexpected_status");
             }
           catch (const ::CORBA::Exception& ex)
             {
@@ -204,6 +218,13 @@ namespace CIAO
                 {
                   this->error_listener_->on_sample_rejected (reader, status);
                 }
+            }
+          catch (const ::CORBA::BAD_INV_ORDER& ex)
+            {
+              DDS4CCM_PRINT_DEBUG_CORBA_EXCEPTION (
+                                      DDS4CCM_LOG_LEVEL_ACTION,
+                                      ex,
+                                      "SubscriberListener::on_sample_rejected");
             }
           catch (const ::CORBA::Exception& ex)
             {
