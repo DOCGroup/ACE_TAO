@@ -57,6 +57,13 @@ namespace CIAO
                   this->error_listener_->on_unexpected_status (entity, status_kind);
                 }
             }
+          catch (const ::CORBA::BAD_INV_ORDER& ex)
+            {
+              DDS4CCM_PRINT_DEBUG_CORBA_EXCEPTION (
+                                      DDS4CCM_LOG_LEVEL_ACTION,
+                                      ex,
+                                      "PublisherListener::on_unexpected_status");
+            }
           catch (const ::CORBA::Exception& ex)
             {
               DDS4CCM_PRINT_CORBA_EXCEPTION (
@@ -118,6 +125,13 @@ namespace CIAO
                 {
                   this->error_listener_->on_offered_deadline_missed (the_Writer, status);
                 }
+            }
+          catch (const ::CORBA::BAD_INV_ORDER& ex)
+            {
+              DDS4CCM_PRINT_DEBUG_CORBA_EXCEPTION (
+                                      DDS4CCM_LOG_LEVEL_ACTION,
+                                      ex,
+                                      "PublisherListener::on_offered_deadline_missed");
             }
           catch (const ::CORBA::Exception& ex)
             {
@@ -184,6 +198,13 @@ namespace CIAO
                 {
                   this->error_listener_->on_offered_incompatible_qos (the_Writer, status);
                 }
+            }
+          catch (const ::CORBA::BAD_INV_ORDER& ex)
+            {
+              DDS4CCM_PRINT_DEBUG_CORBA_EXCEPTION (
+                                      DDS4CCM_LOG_LEVEL_ACTION,
+                                      ex,
+                                      "PublisherListener::on_offered_incompatible_qos");
             }
           catch (const ::CORBA::Exception& ex)
             {

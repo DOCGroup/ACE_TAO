@@ -1,3 +1,15 @@
+Mon Oct  1 18:26:08 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/DataReaderListener_T.cpp:
+        * connectors/dds4ccm/impl/DataReaderStateListener_T.cpp:
+        * connectors/dds4ccm/impl/PortStatusListener.cpp:
+        * connectors/dds4ccm/impl/PublisherListener.cpp:
+        * connectors/dds4ccm/impl/SubscriberListener.cpp:
+        * connectors/dds4ccm/impl/TopicListener.cpp:
+          Catch everywhere C++ exceptions and log a CORBA::BAD_INV_ORDER
+          at a lower priority, because that is a signal that the system
+          is shutting down
+
 Fri Sep 28 09:39:27 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Hello/Sender/Hello_Sender_exec.h:
