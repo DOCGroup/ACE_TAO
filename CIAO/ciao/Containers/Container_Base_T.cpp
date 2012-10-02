@@ -156,8 +156,8 @@ namespace CIAO
                 (LM_DEBUG,
                   CLINFO
                   "Container_i::prepare_installation <%C> - "
-                  "Loading %C [%C] from shared libraries\n",
-                  entity, entity, name));
+                  "Loading [%C] from shared libraries\n",
+                  entity, name));
 
     CIAO_DEBUG (6,
                 (LM_DEBUG,
