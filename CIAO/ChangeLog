@@ -1,3 +1,8 @@
+Tue Oct  2 08:27:28 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Containers/Container_Base_T.cpp:
+          Simplified logging statement
+
 Tue Oct  2 06:48:39 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Hello_Event/descriptors/run_test.pl:
