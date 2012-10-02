@@ -25,7 +25,7 @@ $nr_daemon = 2;
 $status = 0;
 $cdp_file = "DeploymentPlan.cdp";
 
-$controller_exec = "$CIAO_ROOT/examples/Hello/Sender/starter";
+$controller_exec = "$CIAO_ROOT/examples/Hello_Event/Sender/starter";
 
 # ior files other than daemon
 $ior_nsbase = "ns.ior";
