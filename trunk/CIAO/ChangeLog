@@ -1,3 +1,12 @@
+Tue Oct  2 06:48:39 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Hello_Event/descriptors/run_test.pl:
+        * examples/Hello_Event/descriptors/run_test_PlanLocality_DifferentProcesses.pl:
+        * examples/Hello_Event/descriptors/run_test_PlanLocality_SameProcess.pl:
+        * examples/Hello_Event/descriptors/run_test_shs.pl:
+        * examples/Hello_Event/descriptors/run_test_without_ns.pl:
+          Updated location of the starter
+
 Mon Oct  1 18:26:08 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/DataReaderListener_T.cpp:

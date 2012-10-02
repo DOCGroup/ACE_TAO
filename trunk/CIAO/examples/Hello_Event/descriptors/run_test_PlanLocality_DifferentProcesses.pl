@@ -24,7 +24,7 @@ $status = 0;
 $dat_file = "NodeMap.cdd";
 $cdp_file = "PlanLocality_DifferentProcesses.cdp";
 
-$controller_exec = "$CIAO_ROOT/examples/Hello/Sender/starter";
+$controller_exec = "$CIAO_ROOT/examples/Hello_Event/Sender/starter";
 
 # ior files other than daemon
 $ior_embase = "EM.ior";
