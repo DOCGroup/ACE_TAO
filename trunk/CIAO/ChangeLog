@@ -1,3 +1,9 @@
+Tue Oct  2 17:29:33 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DataReader_T.cpp:
+          Only call the RTI narrow with a valid pointer, calling it with
+          null causes RTI to log an error
+
 Tue Oct  2 08:27:28 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Containers/Container_Base_T.cpp:

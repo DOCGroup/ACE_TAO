@@ -982,9 +982,16 @@ namespace CIAO
     DataReader_T <TYPED_DDS_READER, TYPED_READER_TYPE, VALUE_TYPE, SEQ_TYPE, RTI_SEQ_TYPE>::set_rti_entity (
       ::DDSDataReader* dr, ::DDS::DomainParticipant_ptr dp)
     {
-      DDS4CCM_TRACE ("CIAO::NDDS::DataReader_T::set_impl");
+      DDS4CCM_TRACE ("CIAO::NDDS::DataReader_T::set_rti_entity");
 
-      this->rti_entity_ = TYPED_DDS_READER::narrow (dr);
+      if (dr)
+        {
+          this->rti_entity_ = TYPED_DDS_READER::narrow (dr);
+        }
+      else
+        {
+          this->rti_entity_ = 0;
+        }
       this->dp_ = ::DDS::DomainParticipant::_duplicate (dp);
     }
 
