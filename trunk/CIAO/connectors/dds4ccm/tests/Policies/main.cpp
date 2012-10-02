@@ -10,6 +10,7 @@
 #include "tp_qos_test.h"
 #include "dp_qos_test.h"
 #include "states_test.h"
+#include "string_seq.h"
 
 int handle_result (const int & result,
                    const char * test)
@@ -36,6 +37,20 @@ int handle_result (const int & result,
                              test));
     }
   return ret;
+}
+
+bool
+test_string_seq ()
+{
+  DDS::StringSeq foo (2);
+  foo.length (2);
+  foo[0] = CORBA::string_dup ("bar");
+  foo[1] = CORBA::string_dup ("foo");
+  DDS_StringSeq rti_foo;
+  rti_foo <<= foo;
+  DDS::StringSeq tao_foo;
+  tao_foo <<= rti_foo;
+  return StringSequence::check (rti_foo, tao_foo, "StringSeq");
 }
 
 int
@@ -67,6 +82,7 @@ ACE_TMAIN (int , ACE_TCHAR **)
       ret += handle_result (test, "DomainParticipant");
       test = states.run ();
       ret += handle_result (test, "States");
+      ret += test_string_seq ();
     }
   catch (...)
     {

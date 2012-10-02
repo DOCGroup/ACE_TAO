@@ -30,6 +30,7 @@ operator<<= (::DDS_StringSeq & dds_string_seq, const ::DDS::StringSeq & string_s
       {
         parameterlist[i] = string_seq[i].in ();
       }
+    dds_string_seq.maximum(string_seq.length ());
     dds_string_seq.length (string_seq.length ());
     dds_string_seq.from_array (parameterlist, string_seq.length ());
     delete [] parameterlist;
