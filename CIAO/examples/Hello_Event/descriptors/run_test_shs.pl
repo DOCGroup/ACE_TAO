@@ -26,7 +26,7 @@ $status = 0;
 $dat_file = "NodeManagerMap.cdd";
 $cdp_file = "DeploymentPlan.cdp";
 
-$controller_exec = "$CIAO_ROOT/examples/Hello/Hello_Event/starter";
+$controller_exec = "$CIAO_ROOT/examples/Hello_Event/starter";
 
 # ior files other than daemon
 $ior_nsbase = "ns.ior";

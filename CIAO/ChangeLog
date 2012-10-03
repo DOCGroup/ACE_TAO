@@ -1,3 +1,19 @@
+Wed Oct  3 06:19:55 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Containers/Session/Session_Container.cpp:
+          Fixed typo in error message
+
+        * connectors/dds4ccm/impl/ndds/Topic.cpp:
+          layout changes
+
+        * connectors/dds4ccm/tests/Policies/run_test.pl:
+        * connectors/dds4ccm/tests/TimeConversion/run_test.pl:
+        * connectors/dds4ccm/tests/TypeSupport/run_test.pl:
+          Check all return values, directly exit when the test has ended
+
+        * examples/Hello_Event/descriptors/run_test_shs.pl:
+          Corrected path of sender
+
 Tue Oct  2 17:50:55 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/convertors/StringSeq.h:
