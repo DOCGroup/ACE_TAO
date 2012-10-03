@@ -190,7 +190,6 @@ namespace CIAO
       this->rti_entity_ = topic;
     }
 
-
     DDSTopic *
     DDS_Topic_i::rti_entity (void)
     {

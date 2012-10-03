@@ -306,7 +306,7 @@ namespace CIAO
                      "Component servant factory failed.\n"));
 
         throw CIAO::Installation_Failure (name,
-                                          "Componet servant factory failed");
+                                          "Component servant factory failed");
       }
 
     PortableServer::ServantBase_var safe (component_servant);
