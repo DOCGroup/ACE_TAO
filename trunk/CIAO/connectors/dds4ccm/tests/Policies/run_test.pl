@@ -11,15 +11,18 @@ use PerlACE::TestTarget;
 my $program = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 
 $PROG = $program->CreateProcess ("policies_test", "");
-$program_status = $PROG->Spawn ();
+$program_status = $PROG->SpawnWaitKill ($program->ProcessStartWaitInterval());
 
 if ($program_status != 0) {
-    print STDERR "ERROR: GroupDataPolicy returned $program_status\n";
+    print STDERR "ERROR: policies_test returned $program_status\n";
     exit 1;
 }
 
-sleep ($program->ProcessStartWaitInterval());
+$exit_status = $PROG->WaitKill ($program->ProcessStopWaitInterval());
 
-$program_status = $PROG->Kill ();
+if ($exit_status != 0) {
+    print STDERR "ERROR: policies_test returned $server_status\n";
+    $status = 1;
+}
 
-exit 0;
+exit $status;
