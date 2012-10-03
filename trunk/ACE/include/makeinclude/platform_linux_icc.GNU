@@ -87,6 +87,10 @@ OCFLAGS += -O3
 # when testing min/max
 CPPFLAGS += -fp-model double
 
+ifeq ($(coverage),1)
+  FLAGS_C_CC += -prof-gen
+endif
+
 ifeq ($(optimize),0)
   # Disable all optimizing in code
   CPPFLAGS += -O0

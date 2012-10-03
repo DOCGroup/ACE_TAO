@@ -1,3 +1,9 @@
+Wed Oct  3 09:59:08 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_linux_icc.GNU:
+          Added support for coverage which enabled code coverage with
+          Intel C++
+
 Thu Sep 27 06:30:22 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-g++-common.h:
