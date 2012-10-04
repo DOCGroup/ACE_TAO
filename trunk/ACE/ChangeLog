@@ -1,3 +1,8 @@
+Thu Oct  4 10:24:52 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_linux_icc.GNU:
+          Added support for c++11 as feature
+
 Wed Oct  3 09:59:08 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_linux_icc.GNU:

@@ -63,6 +63,12 @@ ifeq ($(c++0x),1)
   CCFLAGS += -Wno-deprecated
 endif
 
+ifeq ($(c++11),1)
+  CCFLAGS += -std=c++11
+  # This is needed due to the use of the deprecated auto_ptr class
+  CCFLAGS += -Wno-deprecated
+endif
+
 CFLAGS  += -w1
 ifeq ($(threads),1)
     CPPFLAGS  += -D_REENTRANT
