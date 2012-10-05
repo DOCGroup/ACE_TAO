@@ -1313,19 +1313,9 @@ ACE_WFMO_Reactor::close (void)
   // This will unregister all handles
   this->handler_rep_.close ();
 
-  return 0;
-}
-
-ACE_WFMO_Reactor::~ACE_WFMO_Reactor (void)
-{
-  // Assumption: No threads are left in the Reactor when this method
-  // is called (i.e., active_threads_ == 0)
-
-  // Close down
-  this->close ();
-
   // Make necessary changes to the handler repository that we caused
-  // by <close>.
+  // by the above actions. Someone who called close() is expecting that
+  // things will be tidied up upon return.
   this->handler_rep_.make_changes ();
 
   if (this->delete_timer_queue_)
@@ -1353,6 +1343,17 @@ ACE_WFMO_Reactor::~ACE_WFMO_Reactor (void)
       this->notify_handler_ = 0;
       this->delete_notify_handler_ = false;
     }
+
+  return 0;
+}
+
+ACE_WFMO_Reactor::~ACE_WFMO_Reactor (void)
+{
+  // Assumption: No threads are left in the Reactor when this method
+  // is called (i.e., active_threads_ == 0)
+
+  // Close down
+  this->close ();
 }
 
 int
