@@ -78,42 +78,37 @@ run_main (int, ACE_TCHAR *[])
   if (ACE_Reactor::instance ()->register_handler
       (SIGINT,
        &my_handlerA) == -1)
-    ACE_ERROR_RETURN ((LM_DEBUG,
-                       "%p\n",
-                       "register_handlerA"),
-                      -1);
+    ACE_ERROR ((LM_DEBUG,
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("register_handlerA")));
 
   if (ACE_Reactor::instance ()->register_handler
-      (SIGCHLD,
+      (SIGTERM,
        &my_handlerB) == -1)
-    ACE_ERROR_RETURN ((LM_DEBUG,
-                       "%p\n",
-                       "register_handlerB"),
-                      -1);
+    ACE_ERROR ((LM_DEBUG,
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("register_handlerB")));
 
   ACE_Sig_Action *new_disp = 0;
   if (ACE_Reactor::instance ()->remove_handler
       (SIGINT,
        new_disp) == -1)
-    ACE_ERROR_RETURN ((LM_DEBUG,
-                       "%p\n",
-                       "remove_handlerB"),
-                      -1);
+    ACE_ERROR ((LM_DEBUG,
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("remove_handlerB")));
 
   if (ACE_Reactor::instance ()->close () == -1)
     ACE_ERROR ((LM_ERROR,
-                "%p\n",
-                "close"));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("close")));
 
   if (!handleA_close_called)
     ACE_ERROR ((LM_ERROR,
-                "Handle close hasn't been called for A. "
-                "This test failure caused by the unresolved bug is EXPECTED!\n"));
+                ACE_TEXT ("Handle close hasn't been called for A.\n")));
 
   if (!handleB_close_called)
     ACE_ERROR ((LM_ERROR,
-                "Handle close hasn't been called for B. "
-                "This test failure caused by the unresolved bug is EXPECTED!\n"));
+                ACE_TEXT ("Handle close hasn't been called for B.\n")));
 
   ACE_END_TEST;
 
