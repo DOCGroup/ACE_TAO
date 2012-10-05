@@ -1,3 +1,14 @@
+Fri Oct  5 23:09:40 UTC 2012  Steve Huston  <shuston@riverace.com>
+
+        * ace/Sig_Handler.{cpp, inl}: Initialize signal_handlers_ array.
+
+        * ace/WFMO_Reactor.cpp: Shut things down in close() and make all the
+          info changes to avoid referencing unregistered handlers later, when
+          they may be invalid. The lifetime can't be controlled via close() as
+          it can via remove_handler() so be sure no references bleed out.
+
+        * tests/Bug_2368_Regression_Test.cpp: Clean up text literals.
+
 Thu Oct  4 10:24:52 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_linux_icc.GNU:
