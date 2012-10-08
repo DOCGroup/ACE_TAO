@@ -1,3 +1,10 @@
+Mon Oct  8 13:27:58 UTC 2012  Steve Huston  <shuston@riverace.com>
+
+        * ace/Sig_Handler.{cpp, inl}: Reverted change from:
+          Fri Oct  5 23:09:40 UTC 2012  Steve Huston  <shuston@riverace.com>
+          to initialize signal_handlers_ array. It's static so can't be
+          changed all the time. Thanks to Johnny Willemsen for finding this.
+
 Fri Oct  5 23:09:40 UTC 2012  Steve Huston  <shuston@riverace.com>
 
         * ace/Sig_Handler.{cpp, inl}: Initialize signal_handlers_ array.
