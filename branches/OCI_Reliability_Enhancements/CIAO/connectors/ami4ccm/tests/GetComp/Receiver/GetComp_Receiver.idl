@@ -1,0 +1,18 @@
+// $Id$
+
+#ifndef GETCOMP_T_RECEIVER_IDL
+#define GETCOMP_T_RECEIVER_IDL
+
+#include <Components.idl>
+
+#include "Base/GetComp.idl"
+
+module GetComp
+{
+  component Receiver
+  {
+    /// Provides
+    provides MyFoo do_my_foo;
+  };
+};
+#endif

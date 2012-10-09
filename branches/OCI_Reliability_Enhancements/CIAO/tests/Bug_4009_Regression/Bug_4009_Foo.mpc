@@ -1,0 +1,106 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl Bug_4009_Foo"
+
+project(Bug_4009_Foo_idl_gen) : componentidldefaults {
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=IC_FOO_STUB_Export \
+              -Wb,stub_export_include=Bug_4009_Foo_stub_export.h \
+              -Wb,skel_export_macro=IC_FOO_SVNT_Export \
+              -Wb,skel_export_include=Bug_4009_Foo_svnt_export.h \
+              -Wb,exec_export_macro=IC_FOO_EXEC_Export \
+              -Wb,exec_export_include=Bug_4009_Foo_exec_export.h \
+              -Gex
+
+  IDL_Files {
+    Bug_4009_Foo.idl
+  }
+}
+
+project(Bug_4009_Foo_lem_gen) : ciaoidldefaults {
+  after += Bug_4009_Foo_idl_gen Bug_4009_Bar_idl_gen
+  custom_only = 1
+  idlflags += -Wb,export_macro=IC_FOO_EXEC_Export \
+              -Wb,export_include=Bug_4009_Foo_exec_export.h \
+              -SS
+
+  IDL_Files {
+    Bug_4009_FooE.idl
+  }
+}
+
+project(Bug_4009_Foo_stub) : ccm_stub {
+  after += Bug_4009_Foo_idl_gen
+  libs  +=
+
+  sharedname = Bug_4009_Foo_stub
+  dynamicflags += IC_FOO_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Bug_4009_FooC.cpp
+  }
+
+  Header_Files {
+    Bug_4009_FooC.h
+    Bug_4009_Foo_stub_export.h
+  }
+
+  Inline_Files {
+    Bug_4009_FooC.inl
+  }
+}
+
+project(Bug_4009_Foo_exec) : ciao_executor {
+  sharedname = Bug_4009_Foo_exec
+  after     += Bug_4009_Foo_lem_gen Bug_4009_Foo_stub
+  libs      += Bug_4009_Foo_stub
+
+  dynamicflags += IC_FOO_EXEC_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Bug_4009_FooEC.cpp
+    Bug_4009_Foo_exec.cpp
+  }
+
+  Header_Files {
+    Bug_4009_FooEC.h
+    Bug_4009_Foo_exec.h
+    Bug_4009_Foo_exec_export.h
+  }
+
+  Inline_Files {
+    Bug_4009_FooEC.inl
+  }
+}
+
+project(Bug_4009_Foo_svnt) : ciao_servant {
+  sharedname  = Bug_4009_Foo_svnt
+  after      += Bug_4009_Foo_exec
+  libs       += Bug_4009_Foo_stub Bug_4009_Foo_exec
+
+  dynamicflags += IC_FOO_SVNT_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Bug_4009_FooS.cpp
+    Bug_4009_Foo_svnt.cpp
+  }
+
+  Header_Files {
+    Bug_4009_FooS.h
+    Bug_4009_Foo_svnt.h
+    Bug_4009_Foo_svnt_export.h
+  }
+
+  Inline_Files {
+  }
+}
+
+

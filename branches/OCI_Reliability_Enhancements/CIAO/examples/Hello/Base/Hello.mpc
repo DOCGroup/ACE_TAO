@@ -1,0 +1,111 @@
+// $Id$
+
+project(Hello_Example_idl_gen) : componentidldefaults {
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=HELLO_STUB_Export \
+              -Wb,stub_export_include=Hello_stub_export.h \
+              -Wb,skel_export_macro=HELLO_SKEL_Export \
+              -Wb,skel_export_include=Hello_skel_export.h \
+              -Wb,conn_export_macro=HELLO_CONN_Export \
+              -Wb,conn_export_include=Hello_conn_export.h \
+              -Wb,exec_export_macro=HELLO_EXEC_Export \
+              -Wb,exec_export_include=Hello_exec_export.h \
+              -I..
+
+  IDL_Files {
+    Hello.idl
+  }
+}
+
+project(Hello_Example_lem_gen) : ciaoidldefaults {
+  after += Hello_Example_idl_gen Hello_Example_lema_gen
+  custom_only = 1
+  idlflags += -Wb,export_macro=HELLO_LEM_STUB_Export \
+              -Wb,export_include=Hello_lem_stub_export.h \
+              -I.. -SS -Gxhst
+
+  IDL_Files {
+    HelloE.idl
+  }
+}
+
+project(Hello_Example_stub) : ccm_stub {
+  after += Hello_Example_lem_gen
+  libs  +=
+  libout = ../lib
+  libpaths += ../lib
+  includes +=   ..
+
+  sharedname = Hello_stub
+  dynamicflags += HELLO_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    HelloC.cpp
+  }
+
+  Header_Files {
+    HelloC.h
+    Hello_stub_export.h
+}
+
+  Inline_Files {
+    HelloC.inl
+  }
+}
+
+project(Hello_Example_lem_stub) : ccm_executor {
+  after += Hello_Example_lem_gen Hello_Example_stub Hello_Example_lemae_gen Hello_Example_skel
+  libs += Hello_stub Hello_skel
+  libout = ../lib
+  libpaths += ../lib
+  includes +=   ..
+
+  sharedname = Hello_lem_stub
+  dynamicflags += HELLO_LEM_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    HelloEC.cpp
+  }
+
+  Header_Files {
+    HelloEC.h
+    Hello_lem_stub_export.h
+}
+
+  Inline_Files {
+    HelloEC.inl
+  }
+}
+
+project(Hello_Example_skel) : ciao_executor {
+  after      += Hello_Example_stub
+  sharedname  = Hello_skel
+  libs       += Hello_stub
+  libout = ../lib
+  libpaths += ../lib
+  includes +=   ..
+
+  dynamicflags += HELLO_SKEL_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    HelloS.cpp
+  }
+
+  Header_Files {
+    HelloS.h
+    Hello_skel_export.h
+  }
+
+  Inline_Files {
+  }
+}
+

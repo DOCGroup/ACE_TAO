@@ -1,0 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
+project : taoexe, install {
+  exename = tao_service
+}
