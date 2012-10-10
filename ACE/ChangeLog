@@ -1,3 +1,8 @@
+Wed Oct 10 18:47:12 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/bczar/bczar.html:
+          Package updates
+
 Mon Oct  8 13:27:58 UTC 2012  Steve Huston  <shuston@riverace.com>
 
         * ace/Sig_Handler.{cpp, inl}: Reverted change from:
