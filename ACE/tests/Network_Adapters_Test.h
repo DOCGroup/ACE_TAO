@@ -214,6 +214,8 @@ private:
 
   // Table to place here pointers to all tasks in the process.
   ACE_Event_Handler * handlers_to_stop_[HANDLERS_TO_STOP_TABLE_SIZE];
+
+  ACE_Sig_Set registered_signals_;
 };
 
 

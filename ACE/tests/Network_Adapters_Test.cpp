@@ -563,6 +563,7 @@ Stop_Handler::open (void)
                        ACE_TEXT ("(%P|%t) Stop_Handler::open: %p <%d>\n"),
                        ACE_TEXT ("register_handler for SIGINT"), SIGINT),
                       -1);
+  this->registered_signals_.sig_add (SIGINT);
 #endif /* SIGINT != 0 */
 
 #if (SIGTERM != 0)
@@ -571,6 +572,7 @@ Stop_Handler::open (void)
                        ACE_TEXT ("(%P|%t) Stop_Handler::open: %p <%d>\n"),
                        ACE_TEXT ("register_handler for SIGTERM"), SIGTERM),
                       -1);
+  this->registered_signals_.sig_add (SIGTERM);
 #endif /* SIGTERM != 0 */
 
 #if (SIGQUIT != 0)
@@ -579,6 +581,7 @@ Stop_Handler::open (void)
                        ACE_TEXT ("(%P|%t) Stop_Handler::open: %p <%d>\n"),
                        ACE_TEXT ("register_handler for SIGQUIT"), SIGQUIT),
                       -1);
+  this->registered_signals_.sig_add (SIGQUIT);
 #endif /* SIGQUIT != 0 */
   return 0;
 }
@@ -641,9 +644,7 @@ Stop_Handler::handle_input (ACE_HANDLE handle)
         }
     }
 
-  this->reactor ()->remove_handler (this,
-                                    ACE_Event_Handler::SIGNAL_MASK |
-                                    ACE_Event_Handler::DONT_CALL);
+  this->reactor ()->remove_handler (this->registered_signals_);
 
   if (reactor ()->end_reactor_event_loop () == -1)
     {
@@ -659,10 +660,12 @@ Stop_Handler::handle_input (ACE_HANDLE handle)
 }
 
 int
-Stop_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
+Stop_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask m)
 {
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("(%P|%t) Stop_Handler::handle_close - entered.\n")));
+  if (m == ACE_Event_Handler::SIGNAL_MASK)
+    return 0;
   this->reactor ()->remove_handler (this,
                                     ACE_Event_Handler::SIGNAL_MASK |
                                     ACE_Event_Handler::DONT_CALL);
