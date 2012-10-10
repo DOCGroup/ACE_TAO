@@ -1,3 +1,12 @@
+Wed Oct 10 22:45:23 UTC 2012  Steve Huston  <shuston@riverace.com>
+
+        * ace/Reactor.h: Corrected the comments concerning removal of
+          signal handler registrations - they DO call handle_close() now.
+
+        * tests/Network_Adapters_Test.{cpp, h}: Corrected the call to remove
+          signal handlers and added a check in Stop_Handler::handle_close()
+          to ignore calls as a result of removing a signal handler.
+
 Wed Oct 10 18:47:12 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/bczar/bczar.html:
