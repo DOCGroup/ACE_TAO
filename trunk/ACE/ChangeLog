@@ -1,3 +1,7 @@
+Fri Oct 12 11:20:25 CEST 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE version 6.1.5 released.
+
 Wed Oct 10 22:45:23 UTC 2012  Steve Huston  <shuston@riverace.com>
 
         * ace/Reactor.h: Corrected the comments concerning removal of
