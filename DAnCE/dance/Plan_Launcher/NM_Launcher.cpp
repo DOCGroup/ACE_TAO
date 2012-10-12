@@ -10,10 +10,7 @@ namespace DAnCE
   {
   }
 
-
-
   NM_Launcher::~NM_Launcher (void)
   {
-
   }
 }

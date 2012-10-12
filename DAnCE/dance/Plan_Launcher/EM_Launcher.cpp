@@ -10,11 +10,8 @@ namespace DAnCE
   {
   }
 
-
-
   EM_Launcher::~EM_Launcher (void)
   {
-
   }
 
   bool
@@ -67,5 +64,4 @@ namespace DAnCE
 
     return false;
   }
-
 }
