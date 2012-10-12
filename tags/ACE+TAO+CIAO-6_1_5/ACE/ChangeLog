@@ -1,0 +1,205 @@
+Fri Oct 12 11:20:25 CEST 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE version 6.1.5 released.
+
+Wed Oct 10 22:45:23 UTC 2012  Steve Huston  <shuston@riverace.com>
+
+        * ace/Reactor.h: Corrected the comments concerning removal of
+          signal handler registrations - they DO call handle_close() now.
+
+        * tests/Network_Adapters_Test.{cpp, h}: Corrected the call to remove
+          signal handlers and added a check in Stop_Handler::handle_close()
+          to ignore calls as a result of removing a signal handler.
+
+Wed Oct 10 18:47:12 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/bczar/bczar.html:
+          Package updates
+
+Mon Oct  8 13:27:58 UTC 2012  Steve Huston  <shuston@riverace.com>
+
+        * ace/Sig_Handler.{cpp, inl}: Reverted change from:
+          Fri Oct  5 23:09:40 UTC 2012  Steve Huston  <shuston@riverace.com>
+          to initialize signal_handlers_ array. It's static so can't be
+          changed all the time. Thanks to Johnny Willemsen for finding this.
+
+Fri Oct  5 23:09:40 UTC 2012  Steve Huston  <shuston@riverace.com>
+
+        * ace/Sig_Handler.{cpp, inl}: Initialize signal_handlers_ array.
+
+        * ace/WFMO_Reactor.cpp: Shut things down in close() and make all the
+          info changes to avoid referencing unregistered handlers later, when
+          they may be invalid. The lifetime can't be controlled via close() as
+          it can via remove_handler() so be sure no references bleed out.
+
+        * tests/Bug_2368_Regression_Test.cpp: Clean up text literals.
+
+Thu Oct  4 10:24:52 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_linux_icc.GNU:
+          Added support for c++11 as feature
+
+Wed Oct  3 09:59:08 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_linux_icc.GNU:
+          Added support for coverage which enabled code coverage with
+          Intel C++
+
+Thu Sep 27 06:30:22 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-g++-common.h:
+          Introduced a new ACE_HAS_CPP11 which is set with GCC 4.7 at
+          the moment the C++11 features are enabled
+
+        * tests/Compiler_Features_15_Test.cpp:
+        * tests/Compiler_Features_16_Test.cpp:
+        * tests/Compiler_Features_17_Test.cpp:
+        * tests/Compiler_Features_18_Test.cpp:
+        * tests/run_test.lst:
+        * tests/tests.mpc:
+          Added some new compiler tests to validate the compiler C++11
+          support
+
+Mon Sep 24 12:56:50 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/valgrind.supp:
+          Extended this file to work on OpenSuSE 12.2
+
+Fri Sep 21 08:06:31 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_linux_icc.GNU:
+          Use -Wno-deprecated with C++11 due to the heavy usage of auto_ptr
+
+Thu Sep 20 07:09:41 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Network_Adapters_Test.cpp:
+          Removed arg_unused macros.
+
+Sat Sep 15 01:11:15 UTC 2012  Steve Huston  <shuston@riverace.com>
+
+        * ace/Atomic_Op.h:
+        * ace/Atomic_Op.inl: PPC doesn't have the requisite support for
+          the long long specializations below.
+
+Thu Sep 13 16:46:03 UTC 2012  Steve Huston  <shuston@riverace.com>
+
+        * ace/Atomic_Op.h:
+        * ace/Atomic_Op.inl: Added specializations for "long long" and
+          "unsigned long long" for GCC to get the better performance
+          for 64-bit integers.
+
+Tue Sep 11 18:59:35 UTC 2012  Steve Huston  <shuston@riverace.com>
+
+        * ace/TSS_T.cpp (ACE_TSS_Guard::init_key): Fix compile error.
+
+Mon Sep 10 13:57:27 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/DLL.h:
+        * ace/DLL.cpp:
+        * ace/DLL_Manager.h:
+        * ace/DLL_Manager.cpp:
+          Use bool for become_owner
+
+Mon Sep 10 00:16:29 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/diff-builds-and-group-fixed-tests-only.sh:
+        * bin/mail_test_stats.sh:
+          Make sure we compare with the latest micro
+
+Fri Sep  7 20:00:51 UTC 2012  Steve Huston  <shuston@riverace.com>
+
+        * ace/SSL/SSL_SOCK_Stream.inl (recv_i): Remove the incorrect comment
+          form the syscall case about falling through to the default. That's
+          not right. Thanks to Simon Massey for pointing this out.
+
+Fri Sep  7 19:43:12 UTC 2012  Steve Huston  <shuston@riverace.com>
+
+        * ace/Sig_Handler.cpp (remove_handler_i): Check if the event handler
+          pointer is 0 before calling through it. Thanks to Adam Mitz
+          for catching this one.
+
+Thu Sep  6 18:51:47 UTC 2012  Steve Huston  <shuston@riverace.com>
+
+        * ace/Sig_Handler.h:
+        * ace/Sig_Handler.cpp: Call back to ACE_Event_Handler::handle_close()
+          when a signal handler is removed by any means. The callback was
+          previously made only when dispatched handle_signal() returned -1.
+          This adds the callback when the signal handler is unregistered
+          either explicitly or by a containing reactor closing. Resolves
+          Bugzilla #2368.
+
+        * ace/Process_Manager.h:
+        * ace/Process_Manager.cpp: Added a handle_close() method to be notified
+          when a reactor with which SIGCHLD is registered closes, so no
+          attempt is later made to remove the SIGCHLD registration.
+
+        * NEWS: Describe the above enhancement.
+
+        * tests/Bug_2368_Regression_Test.cpp: Register the two handlers for
+          different signals so they're both tracked and removed properly.
+
+        * tests/run_test.lst: Enable Bug_2368_Regression_Test.
+
+Thu Sep  6 15:06:15 UTC 2012  Steve Huston  <shuston@riverace.com>
+
+        * ace/Log_Msg.cpp (close): Don't try to lock/unlock the
+          ACE_LOG_MSG_INSTANCE lock if it's already been freed.
+
+Wed Sep  5 20:09:09 UTC 2012  Steve Huston  <shuston@riverace.com>
+
+        * ace/SSL/SSL_SOCK_Stream.inl (recv_i): Added back in logic to wait
+          for data available to receive when called with a timeout. Thanks
+          to Ossama Othman for helping to sort this out. For reference, the
+          issues involved here are well-explained in "SSL and TLS" by
+          Eric Rescorla, section 8.9.
+
+        * ace/SSL/SSL_SOCK_Stream.cpp (recv_n): Removed the hack-y retry on
+          EWOULDBLOCK - the proper handling of timeouts is now in its proper
+          place in recv_i() - see above.
+
+Thu Aug 30 19:25:33 UTC 2012  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * THANKS:
+
+          Added Andrés Senac González <andres at senac dot es>
+
+Thu Aug 30 06:26:46 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-macosx-leopard.h:
+          Added missing defines to get ACE to compile on MacOSX, thanks to
+          Thomas Lockhart <Thomas dot Lockhart at jpl dot nasa dot gov>
+          for reporting this
+
+Wed Aug 29 09:41:28 UTC 2012  johnny  <jwillemsen@remedy.nl>
+
+        * Kokyu/Dispatch_Deferrer.h:
+        * Kokyu/Dispatch_Deferrer.inl:
+        * Kokyu/Dispatch_Deferrer.cpp:
+          These files have been removed. They appear to be completly unreferenced by any
+          other files in the whole ACE/TAO/CIAO/DAnCE distribution and are not even currently
+          built within the Kokyu library itself. They appear to be incomplete relics of the
+          original 2003 development of this library, and include references to an incomplete
+          class Dispatch_Deferrer_Attributes which has no declaration or definition anywhere
+          in the current distribution. These files would not compile even if they where listed
+          in the kokyu MPC file.
+
+Wed Aug 29 07:31:28 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ChangeLog:
+        * ChangeLogs/ChangeLog-2012a:
+        * NEWS:
+        * bin/diff-builds-and-group-fixed-tests-only.sh:
+        * docs/Download.html:
+        * docs/bczar/bczar.html:
+        * etc/index.html:
+          Prepared for the next release
+
+Wed Aug 29 08:16:04 CEST 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE version 6.1.4 released.
+
+Local Variables:
+mode: change-log
+add-log-time-format: (lambda () (progn (setq tz (getenv "TZ")) (set-time-zone-rule "UTC") (setq time (format-time-string "%a %b %e %H:%M:%S %Z %Y" (current-time))) (set-time-zone-rule tz) time))
+indent-tabs-mode: nil
+End:

@@ -1,0 +1,21 @@
+// $Id$
+
+#ifndef C_IDL
+#define C_IDL
+
+#include "a.idl"
+
+module M
+{
+
+    interface c1: M::a
+    {
+    };
+
+    component c2 supports M::a
+    {
+    };
+
+};
+
+#endif // C_IDL

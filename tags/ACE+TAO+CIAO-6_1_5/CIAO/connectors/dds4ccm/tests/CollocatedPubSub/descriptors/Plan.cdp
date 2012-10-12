@@ -1,0 +1,654 @@
+<!-- $Id$ -->
+<Deployment:DeploymentPlan
+   xmlns:Deployment="http://www.omg.org/Deployment"
+   xmlns:xmi="http://www.omg.org/XMI"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+  <label>CollocatedDepl_1</label>
+  <UUID>CollocatedDepl_1</UUID>
+
+  <implementation xmi:id="SubComponentImplementation">
+    <name>SubComponentImplementation</name>
+    <source/>
+    <artifact xmi:idref="Sub_Component_ExecArtifact" />
+    <artifact xmi:idref="Sub_Component_SvntArtifact" />
+    <execParameter>
+      <!-- entrypoint as exec parameter (see 10.6.1) -->
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_CoPubSub_Sub_comp_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_CoPubSub_Sub_comp_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Sub_Component_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Sub_Component_exec</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+  <implementation xmi:id="PubSubComponentImplementation">
+    <name>PubSubComponentImplementation</name>
+    <source/>
+    <artifact xmi:idref="PubSub_Component_ExecArtifact" />
+    <artifact xmi:idref="PubSub_Component_SvntArtifact" />
+    <execParameter>
+      <!-- entrypoint as exec parameter (see 10.6.1) -->
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_CoPubSub_PubSub_comp_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_CoPubSub_PubSub_comp_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>PubSub_Component_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>PubSub_Component_exec</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+  <implementation xmi:id="CollocatedConnectorComponentImplementation">
+    <name>CollocatedConnectorComponentImplementation</name>
+    <source/>
+    <artifact xmi:idref="Collocated_Connector_ExecArtifact" />
+    <artifact xmi:idref="Collocated_Connector_SvntArtifact" />
+    <execParameter>
+      <!-- entrypoint as exec parameter (see 10.6.1) -->
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_CoPubSub_Test_conn_DDS_Event_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_CoPubSub_Test_conn_DDS_Event_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Collocated_Connector_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Collocated_Connector_exec</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+  <!-- SubComponent1 and its connector -->
+  <instance xmi:id="SubComponentInstance1">
+    <name>SubComponent1</name>
+    <node>Node</node>
+    <source/>
+    <implementation xmi:idref="SubComponentImplementation" />
+  </instance>
+
+  <instance xmi:id="SubComponent1Connector">
+    <name>SubComponent1Connector</name>
+    <node>Node</node>
+    <source/>
+    <implementation xmi:idref="CollocatedConnectorComponentImplementation" />
+    <configProperty>
+      <name>topic_name</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>CollocatedTopic</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>push_consumer_filter</name>
+      <value>
+        <type>
+          <kind>tk_struct</kind>
+          <struct>
+            <name>QueryFilter</name>
+            <typeId>IDL:CCM_DDS/QueryFilter:1.0</typeId>
+            <member>
+              <name>expression</name>
+              <type>
+                <kind>tk_string</kind>
+              </type>
+            </member>
+            <member>
+              <name>parameters</name>
+              <type>
+                <kind>tk_sequence</kind>
+                <sequence>
+                  <elementType>
+                    <kind>tk_string</kind>
+                  </elementType>
+                </sequence>
+              </type>
+            </member>
+          </struct>
+        </type>
+        <value>
+          <member>
+            <name>expression</name>
+            <value>
+              <string>msgId &lt; %0</string>
+            </value>
+          </member>
+          <member>
+            <name>parameters</name>
+            <value>
+              <element>
+                <string>1</string>
+              </element>
+            </value>
+          </member>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <!-- SubComponent2 and its connector -->
+  <instance xmi:id="SubComponentInstance2">
+    <name>SubComponent2</name>
+    <node>Node</node>
+    <source/>
+    <implementation xmi:idref="SubComponentImplementation" />
+  </instance>
+
+  <instance xmi:id="SubComponent2Connector">
+    <name>SubComponent2Connector</name>
+    <node>Node</node>
+    <source/>
+    <implementation xmi:idref="CollocatedConnectorComponentImplementation" />
+    <configProperty>
+      <name>topic_name</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>CollocatedTopic</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>push_consumer_filter</name>
+      <value>
+        <type>
+          <kind>tk_struct</kind>
+          <struct>
+            <name>QueryFilter</name>
+            <typeId>IDL:CCM_DDS/QueryFilter:1.0</typeId>
+            <member>
+              <name>expression</name>
+              <type>
+                <kind>tk_string</kind>
+              </type>
+            </member>
+            <member>
+              <name>parameters</name>
+              <type>
+                <kind>tk_sequence</kind>
+                <sequence>
+                  <elementType>
+                    <kind>tk_string</kind>
+                  </elementType>
+                </sequence>
+              </type>
+            </member>
+          </struct>
+        </type>
+        <value>
+          <member>
+            <name>expression</name>
+            <value>
+              <string>msgId &lt; %0</string>
+            </value>
+          </member>
+          <member>
+            <name>parameters</name>
+            <value>
+              <element>
+                <string>1</string>
+              </element>
+            </value>
+          </member>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <!-- PubSubComponent and its connector -->
+  <instance xmi:id="PubSubComponentInstance">
+    <name>PubSubComponent</name>
+    <node>Node</node>
+    <source/>
+    <implementation xmi:idref="PubSubComponentImplementation" />
+  </instance>
+
+  <instance xmi:id="PubSubComponentConnector">
+    <name>PubSubComponentConnector</name>
+    <node>Node</node>
+    <source/>
+    <implementation xmi:idref="CollocatedConnectorComponentImplementation" />
+    <configProperty>
+      <name>topic_name</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>CollocatedTopic</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>push_consumer_filter</name>
+      <value>
+        <type>
+          <kind>tk_struct</kind>
+          <struct>
+            <name>QueryFilter</name>
+            <typeId>IDL:CCM_DDS/QueryFilter:1.0</typeId>
+            <member>
+              <name>expression</name>
+              <type>
+                <kind>tk_string</kind>
+              </type>
+            </member>
+            <member>
+              <name>parameters</name>
+              <type>
+                <kind>tk_sequence</kind>
+                <sequence>
+                  <elementType>
+                    <kind>tk_string</kind>
+                  </elementType>
+                </sequence>
+              </type>
+            </member>
+          </struct>
+        </type>
+        <value>
+          <member>
+            <name>expression</name>
+            <value>
+              <string>msgId &lt; %0</string>
+            </value>
+          </member>
+          <member>
+            <name>parameters</name>
+            <value>
+              <element>
+                <string>1</string>
+              </element>
+            </value>
+          </member>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <!-- pubsub writer connection -->
+  <connection>
+    <name>writer_connection</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>TestPub_data</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="PubSubComponentInstance"/>
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>supplier_data</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="PubSubComponentConnector"/>
+    </internalEndpoint>
+  </connection>
+
+  <!-- pub sub listener connections -->
+  <connection>
+    <name>pubsub_listener_filter</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>TestSub_filter_config</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="PubSubComponentInstance"/>
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>push_consumer_filter_config</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="PubSubComponentConnector"/>
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>pubsub_data_listener</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>TestSub_data_listener</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="PubSubComponentInstance"/>
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>push_consumer_data_listener</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="PubSubComponentConnector"/>
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>pubsub_listener_control</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>TestSub_data_control</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="PubSubComponentInstance"/>
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>push_consumer_data_control</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="PubSubComponentConnector"/>
+    </internalEndpoint>
+  </connection>
+
+  <!-- sub1 listener connections -->
+  <connection>
+    <name>sub1_listener_filter</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>TestSub_filter_config</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="SubComponentInstance1"/>
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>push_consumer_filter_config</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="SubComponent1Connector"/>
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>sub1_data_listener</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>TestSub_data_listener</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="SubComponentInstance1"/>
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>push_consumer_data_listener</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="SubComponent1Connector"/>
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>sub1_listener_control</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>TestSub_data_control</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="SubComponentInstance1"/>
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>push_consumer_data_control</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="SubComponent1Connector"/>
+    </internalEndpoint>
+  </connection>
+
+  <!-- sub2 listener connections -->
+  <connection>
+    <name>sub2_listener_filter</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>TestSub_filter_config</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="SubComponentInstance2"/>
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>push_consumer_filter_config</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="SubComponent2Connector"/>
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>sub2_data_listener</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>TestSub_data_listener</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="SubComponentInstance2"/>
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>push_consumer_data_listener</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="SubComponent2Connector"/>
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>sub2_listener_control</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>TestSub_data_control</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="SubComponentInstance2"/>
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>push_consumer_data_control</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="SubComponent2Connector"/>
+    </internalEndpoint>
+  </connection>
+
+  <artifact xmi:id="Collocated_Connector_ExecArtifact">
+    <name>Collocated_Connector_exec</name>
+    <source/>
+    <node/>
+    <location>Collocated_Connector_exec</location>
+  </artifact>
+  <artifact xmi:id="Collocated_Connector_SvntArtifact">
+    <name>Collocated_Connector_svnt</name>
+    <source/>
+    <node/>
+    <location>Collocated_Connector_svnt</location>
+  </artifact>
+  <artifact xmi:id="Collocated_Connector_StubArtifact">
+    <name>Collocated_Connector_stub</name>
+    <source/>
+    <node/>
+    <location>Collocated_Connector_stub</location>
+  </artifact>
+
+  <artifact xmi:id="Sub_Component_ExecArtifact">
+    <name>Sub_Component_exec</name>
+    <source/>
+    <node/>
+    <location>Sub_Component_exec</location>
+  </artifact>
+  <artifact xmi:id="Sub_Component_SvntArtifact">
+    <name>Sub_Component_svnt</name>
+    <source/>
+    <node/>
+    <location>Sub_Component_svnt</location>
+  </artifact>
+  <artifact xmi:id="Sub_Component_StubArtifact">
+    <name>Sub_Component_stub</name>
+    <source/>
+    <node/>
+    <location>Sub_Component_stub</location>
+  </artifact>
+
+  <artifact xmi:id="PubSub_Component_ExecArtifact">
+    <name>PubSub_Component_exec</name>
+    <source/>
+    <node/>
+    <location>PubSub_Component_exec</location>
+  </artifact>
+  <artifact xmi:id="PubSub_Component_SvntArtifact">
+    <name>PubSub_Component_svnt</name>
+    <source/>
+    <node/>
+    <location>PubSub_Component_svnt</location>
+  </artifact>
+  <artifact xmi:id="PubSub_Component_StubArtifact">
+    <name>PubSub_Component_stub</name>
+    <source/>
+    <node/>
+    <location>PubSub_Component_stub</location>
+  </artifact>
+
+  <localityConstraint>
+    <constraint>SameProcess</constraint>
+    <constrainedInstance xmi:idref="PubSubComponentInstance"/>
+    <constrainedInstance xmi:idref="PubSubComponentConnector"/>
+  </localityConstraint>
+
+  <localityConstraint>
+    <constraint>SameProcess</constraint>
+    <constrainedInstance xmi:idref="SubComponentInstance1"/>
+    <constrainedInstance xmi:idref="SubComponent1Connector"/>
+    <constrainedInstance xmi:idref="SubComponentInstance2"/>
+    <constrainedInstance xmi:idref="SubComponent2Connector"/>
+  </localityConstraint>
+
+</Deployment:DeploymentPlan>

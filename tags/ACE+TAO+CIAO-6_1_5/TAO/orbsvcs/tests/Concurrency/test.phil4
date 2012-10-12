@@ -1,0 +1,6 @@
+repeat 100;
+lock fork4 write;
+lock fork5 write;
+print "Phil 4 eating";
+unlock fork4 write;
+unlock fork5 write;
