@@ -231,7 +231,7 @@
         export DOC_ROOT=$PWD/DOC_ROOT<br>
         export SIGNATURE="Johnny Willemsen"<br>
         export MAILID=jwillemsen@remedy.nl<br>
-		wget https://svn.dre.vanderbilt.edu/viewvc/Middleware/trunk/ACE/docs/svn/config?view=co -O $HOME/.subversion/config<br>
+        wget https://svn.dre.vanderbilt.edu/viewvc/Middleware/trunk/ACE/docs/svn/config?view=co -O $HOME/.subversion/config<br>
         svn co --username johnnyw https://svn.dre.vanderbilt.edu/DOC/Middleware/trunk DOC_ROOT<br>
         svn co --username johnnyw https://svn.dre.vanderbilt.edu/DOC/MPC/trunk DOC_ROOT/ACE/MPC<br>
         cd DOC_ROOT/<br>
@@ -315,11 +315,11 @@
         rm -rf doxygen<br>
         mkdir doxygen<br>
         cd doxygen<br>
-		wget https://svn.dre.vanderbilt.edu/viewvc/Middleware/trunk/ACE/docs/svn/config?view=co -O $HOME/.subversion/config<br>
-        svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-6_1_4/ACE ACE_wrappers<br>
-        svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-6_1_4/TAO ACE_wrappers/TAO<br>
-        svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-6_1_4/CIAO ACE_wrappers/TAO/CIAO<br>
-        svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-6_1_4/DAnCE ACE_wrappers/TAO/DAnCE<br>
+        wget https://svn.dre.vanderbilt.edu/viewvc/Middleware/trunk/ACE/docs/svn/config?view=co -O $HOME/.subversion/config<br>
+        svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-6_1_5/ACE ACE_wrappers<br>
+        svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-6_1_5/TAO ACE_wrappers/TAO<br>
+        svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-6_1_5/CIAO ACE_wrappers/TAO/CIAO<br>
+        svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-6_1_5/DAnCE ACE_wrappers/TAO/DAnCE<br>
         cd ACE_wrappers<br>
         export ACE_ROOT=$PWD<br>
         export TAO_ROOT=$ACE_ROOT/TAO<br>
