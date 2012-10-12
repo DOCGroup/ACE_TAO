@@ -1,3 +1,13 @@
+Fri Oct 12 11:18:36 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * dance/LocalityManager/Handler/Inst_Handler_Impl.cpp:
+          Fixed incorrect else
+
+        * dance/Plan_Launcher/EM_Launcher.cpp:
+        * dance/Plan_Launcher/LM_Launcher.cpp:
+        * dance/Plan_Launcher/NM_Launcher.cpp:
+          Layout changes
+
 Fri Oct 12 10:52:52 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * NEWS:
