@@ -404,7 +404,7 @@ public:
         TAO::Portable_Server::POA_Current_Impl &poa_current_impl);
 
   /**
-   * Find the the servant with ObjectId <system_id>, and retrieve
+   * Find the the servant with ObjectId @a system_id, and retrieve
    * its priority. Usually used in RT CORBA with SERVER_DECLARED
    * priority model.
    *
