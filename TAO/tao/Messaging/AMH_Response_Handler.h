@@ -64,14 +64,7 @@ typedef ACE_Allocator TAO_AMH_BUFFER_ALLOCATOR;
  * application.
  */
 class TAO_Messaging_Export TAO_AMH_Response_Handler
-// @@ Mayur, this is not the correct way to use
-//    TAO_LocalRefCounted_Object.  Application code is supposed to use
-//    it when necessary.  You're forcing applications to use a
-//    reference counted version of their AMH_Response_Handler.  This
-//    isn't consistent with the specified semantics detailed in the
-//    CCM spec.  Please remove this and place it where appropriate in
-//    your AMH tests and examples.
-  : public ::CORBA::LocalObject
+  : public virtual ::CORBA::LocalObject
 {
 public:
 
