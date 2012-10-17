@@ -1313,8 +1313,7 @@ TAO_Root_POA::invoke_key_to_object_helper_i (const char * repository_id,
   if (this->ORT_adapter_i ())
     {
       // Ask the ORT to create the object.
-      return this->ort_adapter_->make_object (repository_id,
-                                              user_oid);
+      return this->ort_adapter_->make_object (repository_id, user_oid);
     }
   else
     {

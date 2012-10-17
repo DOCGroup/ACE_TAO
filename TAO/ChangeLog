@@ -1,3 +1,11 @@
+Wed Oct 17 12:31:27 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ObjRefTemplate/ORT_Adapter_Factory_Impl.h:
+          Doxygen change
+
+        * tao/PortableServer/Root_POA.cpp:
+          Layout change
+
 Mon Oct 15 13:26:27 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Messaging/AMH_Response_Handler.h:
