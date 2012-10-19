@@ -54,6 +54,7 @@ public:
 
   // TAO extension.
   T * ptr (void) const;
+  operator T *& ();
 
 protected:
   T * ptr_;
@@ -112,9 +113,6 @@ public:
 
   TAO_Var_Var_T & operator= (T *);
   TAO_Var_Var_T & operator= (const TAO_Var_Var_T<T> &);
-
-  // Variable size types only.
-  operator T *& ();
 
   operator const T & () const;
   operator T & ();

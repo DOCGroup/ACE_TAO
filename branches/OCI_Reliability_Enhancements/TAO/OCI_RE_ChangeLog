@@ -1,3 +1,22 @@
+Fri Oct 19 17:24:49 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/Seq_Var_T.h:
+        * tao/Seq_Var_T.inl:
+        * tao/VarOut_T.h:
+        * tao/VarOut_T.inl:
+
+          Move explicit point dereference operation from variable length
+          vars to base so it can be applied to vars for fixed length types
+          as well. This is intended to improve portability away from ORBs
+          that provided this operation. Caution should be exercised when
+          using the returned pointer as the var still owns the reference and
+          will clean it up when it goes out of scope.
+
+        * tests/Var_Deref:
+
+          Added a test for the above. The test will not compile unless
+          the explicit cast operation is available for fixed types.
+
 Mon Oct 15 18:26:57 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * OCI_RE_ChangeLog:
