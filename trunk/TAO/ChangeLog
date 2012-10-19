@@ -1,3 +1,12 @@
+Fri Oct 19 07:56:56 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/AnyTypeCode/Alias_TypeCode.cpp:
+        * tao/AnyTypeCode/Alias_TypeCode_Static.cpp:
+        * tao/AnyTypeCode/Objref_TypeCode.cpp:
+        * tao/AnyTypeCode/Objref_TypeCode_Static.cpp:
+        * tao/Any_Insert_Policy_T.h:
+          Layout changes
+
 Wed Oct 17 12:31:27 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ObjRefTemplate/ORT_Adapter_Factory_Impl.h:
