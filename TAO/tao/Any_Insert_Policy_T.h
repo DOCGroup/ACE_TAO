@@ -54,8 +54,7 @@ namespace TAO
       {
         TAO_AnyTypeCode_Adapter *adapter =
           ACE_Dynamic_Service<TAO_AnyTypeCode_Adapter>::instance (
-              "AnyTypeCode_Adapter"
-          );
+              "AnyTypeCode_Adapter");
 
         if (adapter)
           {
@@ -79,8 +78,7 @@ namespace TAO
       {
         TAO_IFR_Client_Adapter *adapter =
           ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance (
-              "Concrete_IFR_Client_Adapter"
-            );
+              "Concrete_IFR_Client_Adapter");
 
         adapter->interfacedef_any_insert (p, x);
       }
