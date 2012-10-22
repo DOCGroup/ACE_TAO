@@ -13,11 +13,13 @@
  */
 //=============================================================================
 
-#ifndef TAO_DYNAMICTP_ORB_LOADER_H
-#define TAO_DYNAMICTP_ORB_LOADER_H
+#ifndef TAO_DYNAMIC_TP_ORB_LOADER_H
+#define TAO_DYNAMIC_TP_ORB_LOADER_H
 #include /**/ "ace/pre.h"
 
 #include "tao/orbconf.h"
+
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
 #include "tao/Dynamic_TP/dynamic_tp_export.h"
 #include "ace/Service_Object.h"
@@ -50,10 +52,12 @@ private:
 };
 
 
-ACE_STATIC_SVC_DECLARE_EXPORT (TAO_Dynamic_TP_ORB, TAO_Dynamic_TP_ORB_Loader)
-ACE_FACTORY_DECLARE (TAO_Dynamic_TP_ORB, TAO_Dynamic_TP_ORB_Loader)
+ACE_STATIC_SVC_DECLARE_EXPORT (TAO_Dynamic_TP, TAO_Dynamic_TP_ORB_Loader)
+ACE_FACTORY_DECLARE (TAO_Dynamic_TP, TAO_Dynamic_TP_ORB_Loader)
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
+#endif /* (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0 */
+
 #include /**/ "ace/post.h"
-#endif /* TAO_DYNAMIC_TP_LOADER_H */
+#endif /* TAO_DYNAMIC_TP_ORB_LOADER_H */

@@ -1,3 +1,11 @@
+Mon Oct 22 21:12:11 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/Dynamic_TP/Dynamic_TP_ORB_Loader.h:
+        * tao/Dynamic_TP/Dynamic_TP_ORB_Loader.cpp:
+        * tao/Dynamic_TP/Dynamic_TP_ORB_ORBInitializer.h:
+
+          Updates to actually compile the ORB portion.
+
 Mon Oct 22 14:40:47 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/Dynamic_TP:
