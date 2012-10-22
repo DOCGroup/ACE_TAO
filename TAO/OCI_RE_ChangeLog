@@ -1,3 +1,16 @@
+Mon Oct 22 14:40:47 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/Dynamic_TP:
+
+        * tao/Dynamic_TP/Dynamic_TP.mpc:
+        * tao/Dynamic_TP/Dynamic_TP_ORB_Loader.h:
+        * tao/Dynamic_TP/Dynamic_TP_ORB_Loader.cpp:
+        * tao/Dynamic_TP/Dynamic_TP_POA_Loader.h:
+        * tao/Dynamic_TP/Dynamic_TP_POA_Loader.cpp:
+        * tao/Dynamic_TP/dynamic_tp_export.h:
+
+          New container library for Dynamic Thread Pools applied to either ORB or POA.
+
 Fri Oct 19 17:24:49 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/Seq_Var_T.h:
