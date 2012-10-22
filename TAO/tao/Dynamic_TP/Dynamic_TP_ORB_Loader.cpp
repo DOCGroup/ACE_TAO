@@ -1,10 +1,10 @@
 // $Id$
 
-#include "tao/DynamicTP/Dynamic_TP_ORB_Loader.h"
+#include "tao/Dynamic_TP/Dynamic_TP_ORB_Loader.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
-#include "tao/DynamicTP/RT_ORBInitializer.h"
+//#include "tao/DynamicTP/RT_ORBInitializer.h"
 
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"

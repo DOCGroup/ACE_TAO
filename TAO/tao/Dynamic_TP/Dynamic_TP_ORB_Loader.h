@@ -19,7 +19,7 @@
 
 #include "tao/orbconf.h"
 
-#include "tao/DynamicTP/dynamictp_export.h"
+#include "tao/Dynamic_TP/dynamic_tp_export.h"
 #include "ace/Service_Object.h"
 #include "ace/Service_Config.h"
 
@@ -31,7 +31,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_ORB_Core;
 
-class TAO_DynamicTP_Export TAO_Dynamic_TP_ORB_Loader : public ACE_Service_Object
+class TAO_Dynamic_TP_Export TAO_Dynamic_TP_ORB_Loader : public ACE_Service_Object
 {
 public:
 
