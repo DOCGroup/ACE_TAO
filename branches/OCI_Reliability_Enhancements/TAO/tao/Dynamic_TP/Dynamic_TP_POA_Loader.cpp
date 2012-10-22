@@ -1,12 +1,22 @@
 // $Id$
 
-#include "tao/DynamicTP/Dynamic_TP_POA_Loader.h"
+#include "tao/Dynamic_TP/Dynamic_TP_POA_Loader.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
-#include "tao/DynamicTP/RT_POAInitializer.h"
+
 
 #include "tao/debug.h"
+//Review these
+#include "tao/CSD_ThreadPool/CSD_TP_Strategy_Factory.h"
+#include "tao/CSD_ThreadPool/CSD_TP_Strategy.h"
+#include "tao/CSD_ThreadPool/CSD_ThreadPool.h"
+#include "tao/CSD_Framework/CSD_Strategy_Repository.h"
+
+#include "ace/Dynamic_Service.h"
+
+//Review these
+
 #include "tao/ORB_Constants.h"
 #include "tao/ORBInitializer_Registry.h"
 #include "tao/SystemException.h"
@@ -35,7 +45,7 @@ TAO_Dynamic_TP_POA_Loader::init (int argc, ACE_TCHAR* argv[])
 
   this->initialized_ = true;
 
-  ACE_Service_Gestalt *gestalt = ACE_Service_Config::current ();
+  /* ACE_Service_Gestalt *gestalt = ACE_Service_Config::current ();
 
   ACE_Service_Object * const rt_loader =
     ACE_Dynamic_Service<ACE_Service_Object>::instance (
@@ -49,7 +59,7 @@ TAO_Dynamic_TP_POA_Loader::init (int argc, ACE_TCHAR* argv[])
     }
 
   // Set defaults.
-  int priority_mapping_type =
+ /* int priority_mapping_type =
     TAO_RT_POAInitializer::TAO_PRIORITY_MAPPING_DIRECT;
   int network_priority_mapping_type =
     TAO_RT_POAInitializer::TAO_NETWORK_PRIORITY_MAPPING_LINEAR;
@@ -61,7 +71,7 @@ TAO_Dynamic_TP_POA_Loader::init (int argc, ACE_TCHAR* argv[])
   TAO_RT_POAInitializer::TAO_DynamicTP_DT_LifeSpan lifespan = TAO_RT_POAInitializer::TAO_DynamicTP_DT_INFINITIVE;
 
   ACE_Arg_Shifter arg_shifter (argc, argv);
-
+  
   // Parse any service configurator parameters.
   while (arg_shifter.is_anything_left ())
     {
@@ -209,6 +219,108 @@ TAO_Dynamic_TP_POA_Loader::init (int argc, ACE_TCHAR* argv[])
         "initializing the RTORB");
       return 1;
     }
+
+  return 0; */
+
+   TAO_CSD_Strategy_Repository *repo =
+    ACE_Dynamic_Service<TAO_CSD_Strategy_Repository>::instance ("TAO_CSD_Strategy_Repository");
+
+  if (repo != 0)
+    repo->init(0,0);
+
+  // Parse any service configurator parameters.
+  for (int curarg = 0; curarg < argc; curarg++)
+    if (ACE_OS::strcasecmp (argv[curarg],
+                            ACE_TEXT("-CSDtp")) == 0)
+      {
+        ACE_CString poa_name;
+        unsigned long num_threads = 1;
+        bool serialize_servants = true;
+
+        curarg++;
+        if (curarg < argc)
+          {
+            // Parse the parameter
+            ACE_CString arg ((const char *)argv[curarg]);
+            ACE_CString::size_type pos = arg.find (':');
+
+            if (pos == ACE_CString::npos)
+              {
+                poa_name = arg;
+              }
+            else
+              {
+                poa_name = arg.substr (0, pos);
+
+                ACE_CString arg_remainder =
+                                   arg.substr (pos + 1, arg.length () - pos);
+
+                ACE_CString num_thread_str;
+
+                pos = arg_remainder.find (':');
+
+                if (pos == ACE_CString::npos)
+                  {
+                    num_thread_str = arg_remainder;
+                  }
+                else
+                  {
+                    num_thread_str = arg_remainder.substr (0, pos);
+
+                    ACE_CString off_str =
+                                     arg_remainder.substr (pos + 1, arg.length () - pos);
+
+                    // Case-insensitive string comparison.
+                    if (ACE_OS::strcasecmp (off_str.c_str(), "OFF") == 0)
+                      {
+                        serialize_servants = false;
+                      }
+                  }
+
+                num_threads = ACE_OS::strtoul (num_thread_str.c_str (), 0, 10);
+
+                if (num_threads == 0)
+                  {
+                    // Minimum of 1 thread required.
+                    num_threads = 1;
+                  }
+              }
+
+            // Create the ThreadPool strategy for each named poa.
+			
+            TAO::CSD::TP_Strategy* strategy = 0;   // Need a new dynamic thread pool strategy here
+            ACE_NEW_RETURN (strategy,
+                            TP_Strategy (num_threads, serialize_servants),
+                            -1);
+            CSD_Framework::Strategy_var objref = strategy;
+
+            TAO_CSD_Strategy_Repository *repo =
+              ACE_Dynamic_Service<TAO_CSD_Strategy_Repository>::instance
+              ("TAO_CSD_Strategy_Repository");
+
+            if (repo == 0)
+              {
+                 TAO_CSD_ThreadPool::init ();
+                 repo = ACE_Dynamic_Service<TAO_CSD_Strategy_Repository>::instance (
+                            "TAO_CSD_Strategy_Repository"
+                          );
+              }
+
+
+            repo->add_strategy (poa_name, strategy);
+          }
+      }
+    else
+      {
+        if (TAO_debug_level > 0)
+          {
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT("CSD_ORB_Loader: Unknown option ")
+                        ACE_TEXT("<%s>.\n"),
+                        argv[curarg]));
+          }
+      }
+
 
   return 0;
 }
