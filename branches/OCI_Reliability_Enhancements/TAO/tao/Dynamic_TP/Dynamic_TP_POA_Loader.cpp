@@ -13,12 +13,11 @@
 #include "tao/CSD_ThreadPool/CSD_ThreadPool.h"
 #include "tao/CSD_Framework/CSD_Strategy_Repository.h"
 
-#include "ace/Dynamic_Service.h"
 
 //Review these
 
 #include "tao/ORB_Constants.h"
-#include "tao/ORBInitializer_Registry.h"
+//#include "tao/ORBInitializer_Registry.h"
 #include "tao/SystemException.h"
 #include "ace/OS_NS_strings.h"
 #include "ace/Arg_Shifter.h"
@@ -45,17 +44,17 @@ TAO_Dynamic_TP_POA_Loader::init (int argc, ACE_TCHAR* argv[])
 
   this->initialized_ = true;
 
-  /* ACE_Service_Gestalt *gestalt = ACE_Service_Config::current ();
+  ACE_Service_Gestalt *gestalt = ACE_Service_Config::current ();
 
-  ACE_Service_Object * const rt_loader =
+  ACE_Service_Object * const dynamic_tp_poa_loader =
     ACE_Dynamic_Service<ACE_Service_Object>::instance (
       gestalt,
       "Dynamic_TP_POA_Loader",
       true);
 
-  if (rt_loader != 0 && rt_loader != this)
+  if (dynamic_tp_poa_loader != 0 && dynamic_tp_poa_loader != this)
     {
-      return rt_loader->init (argc, argv);
+      return dynamic_tp_poa_loader->init (argc, argv);
     }
 
   // Set defaults.
@@ -290,13 +289,13 @@ TAO_Dynamic_TP_POA_Loader::init (int argc, ACE_TCHAR* argv[])
 			
             TAO::CSD::TP_Strategy* strategy = 0;   // Need a new dynamic thread pool strategy here
             ACE_NEW_RETURN (strategy,
-                            TP_Strategy (num_threads, serialize_servants),
+                            TAO::CSD::TP_Strategy (num_threads, serialize_servants),
                             -1);
-            CSD_Framework::Strategy_var objref = strategy;
 
-            TAO_CSD_Strategy_Repository *repo =
-              ACE_Dynamic_Service<TAO_CSD_Strategy_Repository>::instance
-              ("TAO_CSD_Strategy_Repository");
+
+            //TAO_CSD_Strategy_Repository *repo =
+            //  ACE_Dynamic_Service<TAO_CSD_Strategy_Repository>::instance
+            //  ("TAO_CSD_Strategy_Repository");
 
             if (repo == 0)
               {
@@ -328,7 +327,7 @@ TAO_Dynamic_TP_POA_Loader::init (int argc, ACE_TCHAR* argv[])
 
 /////////////////////////////////////////////////////////////////////
 
-ACE_FACTORY_DEFINE (TAO_DynamicTP_POA, TAO_Dynamic_TP_POA_Loader)
+ACE_FACTORY_DEFINE (TAO_Dynamic_TP, TAO_Dynamic_TP_POA_Loader)
 ACE_STATIC_SVC_DEFINE (TAO_Dynamic_TP_POA_Loader,
                        ACE_TEXT ("Dynamic_TP_POA_Loader"),
                        ACE_SVC_OBJ_T,
@@ -336,6 +335,9 @@ ACE_STATIC_SVC_DEFINE (TAO_Dynamic_TP_POA_Loader,
                        ACE_Service_Type::DELETE_THIS
                        | ACE_Service_Type::DELETE_OBJ,
                        0)
+
+
+
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
