@@ -1,3 +1,10 @@
+Tue Oct 23 20:09:07 UTC 2012  Abdullah Sowayan  <sowayan@gmail.com>
+
+        * ace/config-macosx-mountain-lion.h:
+        * include/makeinclude/platform_macosx_mountain_lion.GNU:
+
+          Adding Mountain Lion support
+
 Fri Oct 12 10:50:28 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * NEWS:
