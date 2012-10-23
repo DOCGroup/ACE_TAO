@@ -1,6 +1,6 @@
 //$Id$
 
-project(Dynamic_TP) : taolib, tao_output, install, pi, csd_framework, rtcorba {
+project(Dynamic_TP) : taolib, tao_output, install, pi, csd_framework, csd_threadpool, rtcorba {
   sharedname   = TAO_Dynamic_TP
   dynamicflags += TAO_DYNAMIC_TP_BUILD_DLL
 

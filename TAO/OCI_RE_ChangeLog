@@ -1,10 +1,12 @@
-Mon Oct 22 21:12:11 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
+Tue Oct 23 13:07:15 UTC 2012  Marc Neeley  <neeleym@ociweb.com>
 
-        * tao/Dynamic_TP/Dynamic_TP_ORB_Loader.h:
-        * tao/Dynamic_TP/Dynamic_TP_ORB_Loader.cpp:
-        * tao/Dynamic_TP/Dynamic_TP_ORB_ORBInitializer.h:
+        * tao/Dynamic_TP:
 
-          Updates to actually compile the ORB portion.
+        * tao/Dynamic_TP/Dynamic_TP.mpc:
+        * tao/Dynamic_TP/Dynamic_TP_POA_Loader.h:
+        * tao/Dynamic_TP/Dynamic_TP_POA_Loader.cpp:
+
+		Added csd_threadpool to the mpc file. Began initialization of POA threadpool service.
 
 Mon Oct 22 14:40:47 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
 
