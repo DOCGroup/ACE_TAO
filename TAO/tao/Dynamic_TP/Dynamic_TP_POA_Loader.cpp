@@ -9,6 +9,7 @@
 #include "tao/debug.h"
 //Review these
 #include "tao/CSD_ThreadPool/CSD_TP_Strategy_Factory.h"
+#include "tao/Dynamic_TP/Dynamic_TP_POA_Strategy.h"
 #include "tao/CSD_ThreadPool/CSD_TP_Strategy.h"
 #include "tao/CSD_ThreadPool/CSD_ThreadPool.h"
 #include "tao/CSD_Framework/CSD_Strategy_Repository.h"
@@ -56,6 +57,8 @@ TAO_Dynamic_TP_POA_Loader::init (int argc, ACE_TCHAR* argv[])
     {
       return dynamic_tp_poa_loader->init (argc, argv);
     }
+
+  int curarg = 0;
 
   // Set defaults.
  /* int priority_mapping_type =
@@ -230,7 +233,7 @@ TAO_Dynamic_TP_POA_Loader::init (int argc, ACE_TCHAR* argv[])
   // Parse any service configurator parameters.
   for (int curarg = 0; curarg < argc; curarg++)
     if (ACE_OS::strcasecmp (argv[curarg],
-                            ACE_TEXT("-CSDtp")) == 0)
+                            ACE_TEXT("-POADynamicTPMap")) == 0)
       {
         ACE_CString poa_name;
         unsigned long num_threads = 1;
@@ -287,9 +290,9 @@ TAO_Dynamic_TP_POA_Loader::init (int argc, ACE_TCHAR* argv[])
 
             // Create the ThreadPool strategy for each named poa.
 			
-            TAO::CSD::TP_Strategy* strategy = 0;   // Need a new dynamic thread pool strategy here
+            TAO_Dynamic_TP_POA_Strategy* strategy = 0;   // Need a new dynamic thread pool strategy here
             ACE_NEW_RETURN (strategy,
-                            TAO::CSD::TP_Strategy (num_threads, serialize_servants),
+                            TAO_Dynamic_TP_POA_Strategy (num_threads, serialize_servants),
                             -1);
 
 
@@ -299,7 +302,7 @@ TAO_Dynamic_TP_POA_Loader::init (int argc, ACE_TCHAR* argv[])
 
             if (repo == 0)
               {
-                 TAO_CSD_ThreadPool::init ();
+                 TAO_CSD_ThreadPool::init (); // TODO: understand how this applies to Dynamic version.
                  repo = ACE_Dynamic_Service<TAO_CSD_Strategy_Repository>::instance (
                             "TAO_CSD_Strategy_Repository"
                           );

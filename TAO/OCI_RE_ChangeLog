@@ -1,3 +1,14 @@
+Wed Oct 24 22:37:11 UTC 2012  Marc Neeley  <neeleym@ociweb.com>
+
+        * tao/Dynamic_TP/Dynamic_TP_Config.h:
+        * tao/Dynamic_TP/Dynamic_TP_Config.cpp:
+        * tao/Dynamic_TP/Dynamic_TP_POA_Loader.cpp:
+        * tao/Dynamic_TP/Dynamic_TP_POA_Strategy.h:
+        * tao/Dynamic_TP/Dynamic_TP_POA_Strategy.inl:
+        * tao/Dynamic_TP/Dynamic_TP_POA_Strategy.cpp:
+		
+		Added new class for managing Threadpool Configurations. Continued expanding new Dynamic Threadpool Strategy implementation.
+
 Tue Oct 23 13:07:15 UTC 2012  Marc Neeley  <neeleym@ociweb.com>
 
         * tao/Dynamic_TP:
@@ -6,7 +17,7 @@ Tue Oct 23 13:07:15 UTC 2012  Marc Neeley  <neeleym@ociweb.com>
         * tao/Dynamic_TP/Dynamic_TP_POA_Loader.h:
         * tao/Dynamic_TP/Dynamic_TP_POA_Loader.cpp:
 
-		Added csd_threadpool to the mpc file. Began initialization of POA threadpool service.
+                Added csd_threadpool to the mpc file. Began initialization of POA threadpool service.
 
 Mon Oct 22 14:40:47 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
 
