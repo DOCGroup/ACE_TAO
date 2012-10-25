@@ -4,7 +4,7 @@
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
-#include "tao/Dynamic_TP/Dynamic_TP_ORB_ORBInitializer.h"
+#include "tao/Dynamic_TP/Dynamic_TP_ORBInitializer.h"
 
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"
@@ -44,15 +44,6 @@ TAO_Dynamic_TP_ORB_Loader::init (int argc, ACE_TCHAR* argv[])
       "Dynamic_TP_ORB_Loader",
       true);
 
-  // TODO: Stuff goes in here
-
-  size_t num_static = 1;
-  size_t num_dynamic = 0;
-  size_t stack = 0;
-  ACE_Time_Value dynamic_thread_time = ACE_Time_Value (0,0);
-  TAO_Dynamic_TP_ORB_ORBInitializer::TAO_Dynamic_TP_DT_LifeSpan lifespan =
-    TAO_Dynamic_TP_ORB_ORBInitializer::TAO_Dynamic_TP_DT_INFINITIVE;
-
   // Register the ORB initializer.
   try
     {
@@ -61,11 +52,7 @@ TAO_Dynamic_TP_ORB_Loader::init (int argc, ACE_TCHAR* argv[])
 
       /// Register the DynamicTP ORBInitializer.
       ACE_NEW_THROW_EX (temp_orb_initializer,
-                        TAO_Dynamic_TP_ORB_ORBInitializer (num_static,
-                                                           num_dynamic,
-                                                           stack,
-                                                           lifespan,
-                                                           dynamic_thread_time),
+                        TAO_Dynamic_TP_ORBInitializer (),
                         CORBA::NO_MEMORY (
                           CORBA::SystemException::_tao_minor_code (
                             TAO::VMCID,

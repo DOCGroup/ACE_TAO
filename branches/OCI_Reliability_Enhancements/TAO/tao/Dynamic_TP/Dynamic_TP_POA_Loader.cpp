@@ -4,8 +4,6 @@
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
-
-
 #include "tao/debug.h"
 //Review these
 #include "tao/CSD_ThreadPool/CSD_TP_Strategy_Factory.h"
@@ -73,7 +71,7 @@ TAO_Dynamic_TP_POA_Loader::init (int argc, ACE_TCHAR* argv[])
   TAO_RT_POAInitializer::TAO_DynamicTP_DT_LifeSpan lifespan = TAO_RT_POAInitializer::TAO_DynamicTP_DT_INFINITIVE;
 
   ACE_Arg_Shifter arg_shifter (argc, argv);
-  
+
   // Parse any service configurator parameters.
   while (arg_shifter.is_anything_left ())
     {
@@ -194,7 +192,7 @@ TAO_Dynamic_TP_POA_Loader::init (int argc, ACE_TCHAR* argv[])
       PortableInterceptor::ORBInitializer_ptr temp_orb_initializer =
         PortableInterceptor::ORBInitializer::_nil ();
 
-      /// Register the DynamicTP ORBInitializer.
+      /// Register the Dynamic_TP_POA ORBInitializer.
       ACE_NEW_THROW_EX (temp_orb_initializer,
                         TAO_RT_POAInitializer (priority_mapping_type,
                                                network_priority_mapping_type,
@@ -289,7 +287,7 @@ TAO_Dynamic_TP_POA_Loader::init (int argc, ACE_TCHAR* argv[])
               }
 
             // Create the ThreadPool strategy for each named poa.
-			
+
             TAO_Dynamic_TP_POA_Strategy* strategy = 0;   // Need a new dynamic thread pool strategy here
             ACE_NEW_RETURN (strategy,
                             TAO_Dynamic_TP_POA_Strategy (num_threads, serialize_servants),

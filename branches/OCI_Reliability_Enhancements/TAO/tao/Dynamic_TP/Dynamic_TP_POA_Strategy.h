@@ -169,7 +169,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
       /// queue, and the worker threads service the queued requests
       /// by performing the actual servant request dispatching logic.
       TAO::CSD::TP_Task task_;
-	  
+
       /// The number of worker threads to use for the task.
       TAO::CSD::Thread_Counter num_threads_;
 
@@ -185,7 +185,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "tao/CSD_ThreadPool/CSD_TP_Strategy.inl"
+# include "tao/Dynamic_TP/Dynamic_TP_POA_Strategy.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
