@@ -1,3 +1,23 @@
+Fri Oct 26 21:53:26 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * MPC/Config/dynamic_tp.mpb:
+
+          A new base project used to simplify integration of the dynamic threadpool
+          library into application code.
+
+        * tao/Dynamic_TP/Dynamic_TP_Config.h:
+        * tao/Dynamic_TP/Dynamic_TP_Config.cpp:
+
+          Completed the implementation to comply with written definition.
+
+        * tests/Dynamic_TP:
+        * tests/Dynamic_TP/Config_Loader:
+        * tests/Dynamic_TP/Config_Loader/Config_Loader.mpc:
+        * tests/Dynamic_TP/Config_Loader/Test.cpp:
+        * tests/Dynamic_TP/Config_Loader/svc.conf:
+
+          A test to validate the config loader.
+
 Thu Oct 25 22:31:31 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/Dynamic_TP/Dynamic_TP_Config.h:
