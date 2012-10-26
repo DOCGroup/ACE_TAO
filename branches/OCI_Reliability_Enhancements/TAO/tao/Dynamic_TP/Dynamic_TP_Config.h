@@ -33,27 +33,44 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+struct TAO_Dynamic_TP_Export TAO_DTP_Definition
+{
+  int min_threads_;  // a default of -1 implies Lifespan of INFINITE, > 0 implies IDLE
+  int init_threads_; // default to 5
+  int max_threads_;  // a default of -1 implies no limit.
+  size_t stack_size_;
+  time_t timeout_;   // default to 60 seconds
+  size_t queue_depth_;
+};
+
+class TAO_Dynamic_TP_Export TAO_Dynamic_TP_Config_Registry_Installer
+{
+ public:
+  TAO_Dynamic_TP_Config_Registry_Installer (void);
+};
+
+class TAO_Dynamic_TP_Export TAO_Dynamic_TP_Config_Registry : public ACE_Service_Object
+{
+public:
+  TAO_Dynamic_TP_Config_Registry (void);
+  virtual ~TAO_Dynamic_TP_Config_Registry (void);
+
+  virtual int init (int argc, ACE_TCHAR* []);
+
+  /// initializes the supplied set value with the configuration associated with the name, or returns false.
+  bool find (const ACE_CString& name, TAO_DTP_Definition &entry);
+
+  int bind (const ACE_CString& name, TAO_DTP_Definition &entry);
+  int rebind (const ACE_CString& name, TAO_DTP_Definition &entry);
+
+ private:
+  typedef ACE_RB_Tree<ACE_CString, TAO_DTP_Definition, ACE_Less_Than<ACE_CString>, ACE_Null_Mutex> Registry;
+  Registry registry_;
+};
+
 class TAO_Dynamic_TP_Export TAO_Dynamic_TP_Config : public ACE_Service_Object
 {
 public:
-  enum TP_Lifespan {
-    TP_INFINITE,
-    TP_IDLE,
-    TP_FIXED
-  };
-
-  struct TP_Definition {
-    int min_threads_;
-    int init_threads_;
-    int max_threads_;
-    size_t stack_size_;
-    TP_Lifespan lifespan_;
-    time_t timeout_;
-    size_t queue_depth_;
- };
-
-  typedef ACE_RB_Tree<ACE_CString, TP_Definition, ACE_Less_Than<ACE_CString>, ACE_Null_Mutex> TP_Definitions;
-
   /// Constructor.
   TAO_Dynamic_TP_Config (void);
 
@@ -71,9 +88,6 @@ public:
   /// Init can be called multiple times,
   virtual int init (int argc, ACE_TCHAR* []);
 
-  /// initializes the supplied set value with the configuration associated with the name, or returns false.
-  bool find (const ACE_CString& name, TP_Definition &entry) const;
-
 private:
   int parse_long (int &curarg, int argc, ACE_TCHAR* argv[], const ACE_TCHAR *match, long &value);
   int parse_bool (int &curarg, int argc, ACE_TCHAR* argv[], const ACE_TCHAR *match, bool &value);
@@ -81,10 +95,13 @@ private:
   void report_option_value_error (const ACE_TCHAR* option_name,
                                   const ACE_TCHAR* option_value);
 
-  TP_Definitions definitions_;
-
 };
 
+static TAO_Dynamic_TP_Config_Registry_Installer config_installer;
+
+
+ACE_STATIC_SVC_DECLARE_EXPORT (TAO_Dynamic_TP, TAO_Dynamic_TP_Config_Registry)
+ACE_FACTORY_DECLARE (TAO_Dynamic_TP, TAO_Dynamic_TP_Config_Registry)
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_Dynamic_TP, TAO_Dynamic_TP_Config)
 ACE_FACTORY_DECLARE (TAO_Dynamic_TP, TAO_Dynamic_TP_Config)

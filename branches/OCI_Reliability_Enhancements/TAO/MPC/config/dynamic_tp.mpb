@@ -1,0 +1,7 @@
+// -*- MPC -*-
+// $Id$
+
+project : taolib, pi {
+  after   += Dynamic_TP
+  libs    += TAO_Dynamic_TP
+}
