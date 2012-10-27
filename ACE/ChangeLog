@@ -1,3 +1,8 @@
+Sat Oct 27 18:59:36 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/TSS_T.inl:
+          Use the word error in the ACE_ERROR messages in this file
+
 Tue Oct 23 20:09:07 UTC 2012  Abdullah Sowayan  <sowayan@gmail.com>
 
         * ace/config-macosx-mountain-lion.h:
