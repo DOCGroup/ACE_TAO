@@ -76,7 +76,7 @@ ACE_TSS<TYPE>::ts_value (ACE_TSS_Adapter *new_tss_adapter) const
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("%p\n"),
-                  ACE_TEXT ("ACE_Thread::setspecific() failed!")));
+                  ACE_TEXT ("Error: ACE_Thread::setspecific() failed!")));
       return -1;
     }
 
@@ -90,7 +90,7 @@ ACE_TSS<TYPE>::ts_value (TYPE *new_ts_obj) const
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("%p\n"),
-                  ACE_TEXT ("ACE_Thread::setspecific() failed!")));
+                  ACE_TEXT ("Error: ACE_Thread::setspecific() failed!")));
       return -1;
     }
 
