@@ -703,10 +703,10 @@ protected:
 
   /// Pointer to the object reference template adapter.
   TAO::ORT_Adapter *ort_adapter_;
-  
+
   /// Pointer to the object reference template adapter factory.
   TAO::ORT_Adapter_Factory *ort_adapter_factory_;
-  
+
   /// Adapter can be accepting, rejecting etc.
   PortableInterceptor::AdapterState adapter_state_;
 
