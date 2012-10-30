@@ -199,6 +199,7 @@ TAO_Root_POA::TAO_Root_POA (const TAO_Root_POA::String &name,
     profile_id_array_ (0),
     policies_ (policies),
     ort_adapter_ (0),
+    ort_adapter_factory_ (0),
     adapter_state_ (PortableInterceptor::HOLDING),
     network_priority_hook_ (0),
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
@@ -244,6 +245,11 @@ TAO_Root_POA::TAO_Root_POA (const TAO_Root_POA::String &name,
       this->network_priority_hook_->update_network_priority (
         *this, this->policies_);
     }
+
+  // Cache ort adapter factory
+  this->ort_adapter_factory_
+   = ACE_Dynamic_Service<TAO::ORT_Adapter_Factory>::instance
+      (orb_core_.configuration (), TAO_Root_POA::ort_adapter_factory_name ());
 
 #if (TAO_HAS_MINIMUM_POA == 1)
   // If this is the RootPOA, set the value of the ImplicitActivationPolicy
@@ -402,10 +408,10 @@ TAO_Root_POA::complete_destruction_i (void)
         {
           ort_adapter->release (my_array_obj_ref_template[0]);
 
-          TAO::ORT_Adapter_Factory *ort_factory =
-            this->ORT_adapter_factory ();
-
-          ort_factory->destroy (ort_adapter);
+          if (this->ort_adapter_factory_)
+            {
+              this->ort_adapter_factory_->destroy (ort_adapter);
+            }
 
           this->ort_adapter_ = 0;
         }
@@ -939,10 +945,10 @@ TAO_Root_POA::destroy_i (CORBA::Boolean etherealize_objects,
         {
           ort_adapter->release (my_array_obj_ref_template[0]);
 
-          TAO::ORT_Adapter_Factory *ort_factory =
-            this->ORT_adapter_factory ();
-
-          ort_factory->destroy (ort_adapter);
+          if (this->ort_adapter_factory_)
+            {
+              this->ort_adapter_factory_->destroy (ort_adapter);
+            }
 
           this->ort_adapter_ = 0;
         }
@@ -2285,51 +2291,38 @@ TAO_Root_POA::find_servant_priority (
           find_servant_priority (system_id, priority);
 }
 
-TAO::ORT_Adapter_Factory *
-TAO_Root_POA::ORT_adapter_factory (void)
-{
-  return ACE_Dynamic_Service<TAO::ORT_Adapter_Factory>::instance
-    (orb_core_.configuration (),
-           TAO_Root_POA::ort_adapter_factory_name ());
-}
-
 TAO::ORT_Adapter *
 TAO_Root_POA::ORT_adapter_i (void)
 {
-  if (this->ort_adapter_ != 0)
-    return this->ort_adapter_;
-
-  try
+  if ((this->ort_adapter_ == 0) && (this->ort_adapter_factory_))
     {
-      TAO::ORT_Adapter_Factory * ort_ap_factory = this->ORT_adapter_factory ();
+      try
+        {
+          // Get the full adapter name of this POA, do this before we
+          // create the adapter so that in case this fails, we just
+          // return 0 and not a not activated adapter
+          PortableInterceptor::AdapterName *adapter_name = this->adapter_name_i ();
 
-      if (!ort_ap_factory)
-        return 0;
+          this->ort_adapter_ = this->ort_adapter_factory_->create ();
 
-      // Get the full adapter name of this POA, do this before we
-      // create the adapter so that in case this fails, we just
-      // return 0 and not a not activated adapter
-      PortableInterceptor::AdapterName *adapter_name = this->adapter_name_i ();
-
-      this->ort_adapter_ = ort_ap_factory->create ();
-
-      if (!this->ort_adapter_)
-        return 0;
-
-      // @todo We have to look at this, we activate it but hold the POA lock,
-      // in case we are called by ORT_adapter, we shouldn't keep the lock
-      // here, but then the ort_adapter should be guarded against multiple
-      // activations.
-      this->ort_adapter_->activate (this->orb_core_.server_id (),
-                                    this->orb_core_.orbid (),
-                                    adapter_name,
-                                    this);
-    }
-  catch (const ::CORBA::Exception& ex)
-    {
-      ex._tao_print_exception (
-        "(%P|%t) Cannot initialize the "
-        "object_reference_template_adapter\n");
+          if (this->ort_adapter_)
+            {
+              // @todo We have to look at this, we activate it but hold the POA lock,
+              // in case we are called by ORT_adapter, we shouldn't keep the lock
+              // here, but then the ort_adapter should be guarded against multiple
+              // activations.
+              this->ort_adapter_->activate (this->orb_core_.server_id (),
+                                            this->orb_core_.orbid (),
+                                            adapter_name,
+                                            this);
+            }
+        }
+      catch (const ::CORBA::Exception& ex)
+        {
+          ex._tao_print_exception (
+            "(%P|%t) Cannot initialize the "
+            "object_reference_template_adapter\n");
+        }
     }
 
   return this->ort_adapter_;
