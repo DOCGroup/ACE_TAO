@@ -1,3 +1,12 @@
+Tue Oct 30 10:50:49 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Root_POA.h:
+        * tao/PortableServer/Root_POA.cpp:
+          Cache ORT_Adapter_Factory in the POA at creation, prevents
+          a lookup when (un)registering a servant which could trigger
+          a possible deadlock when the registering of the servant is
+          coming from the init of an ACE service
+
 Fri Oct 19 07:56:56 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/AnyTypeCode/Alias_TypeCode.cpp:
