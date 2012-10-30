@@ -1,3 +1,8 @@
+Tue Oct 30 07:48:18 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rpmbuild/ace-tao.spec:
+          Fixes for OpenSuSE 12.2
+
 Sat Oct 27 18:59:36 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/TSS_T.inl:
