@@ -146,7 +146,7 @@ for ($i = 0; $i < $num_remote_clients; $i++) {
 }
 
 for ($i = 0; $i < $num_remote_clients; $i++) {
-    $client_status = $CLS[$i]->WaitKill($client->ProcessStopWaitInterval ());
+    $client_status = $CLS[$i]->WaitKill(2 * $client->ProcessStopWaitInterval ());
 
     if ($client_status != 0) {
         print STDERR "ERROR: client $i returned $client_status\n";
