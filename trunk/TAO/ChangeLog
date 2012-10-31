@@ -1,3 +1,11 @@
+Wed Oct 31 09:09:25 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Root_POA.cpp:
+          Updated if comparison
+
+        * tests/CSD_Strategy_Tests/TP_Test_2/run_test.pl:
+          Increased wait time for slower targets
+
 Tue Oct 30 10:50:49 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Root_POA.h:
