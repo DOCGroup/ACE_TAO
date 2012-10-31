@@ -2294,7 +2294,7 @@ TAO_Root_POA::find_servant_priority (
 TAO::ORT_Adapter *
 TAO_Root_POA::ORT_adapter_i (void)
 {
-  if ((this->ort_adapter_ == 0) && (this->ort_adapter_factory_))
+  if ((this->ort_adapter_factory_) && (this->ort_adapter_ == 0))
     {
       try
         {
