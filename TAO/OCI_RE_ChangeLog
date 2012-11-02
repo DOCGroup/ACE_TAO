@@ -1,3 +1,13 @@
+Fri Nov  2 21:10:42 UTC 2012  Marc Neeley  <neeleym@ociweb.com>
+
+        * tests/Dynamic_TP:
+        * tests/Dynamic_TP/POA_Loader:
+        * tests/Dynamic_TP/POA_Loader/POA_Loader.mpc:
+        * tests/Dynamic_TP/POA_Loader/Test.cpp:
+        * tests/Dynamic_TP/POA_Loader/svc.conf:
+		
+		Added first set of tests for POA loader.
+
 Fri Nov  2 20:27:56 UTC 2012  Marc Neeley  <neeleym@ociweb.com>
 
         * tao/Dynamic_TP/Dynamic_TP_POA_Loader.h:
