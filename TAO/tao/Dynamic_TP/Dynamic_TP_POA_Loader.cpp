@@ -7,10 +7,11 @@
 #include "tao/debug.h"
 //Review these
 #include "tao/CSD_ThreadPool/CSD_TP_Strategy_Factory.h"
-#include "tao/Dynamic_TP/Dynamic_TP_POA_Strategy.h"
-#include "tao/CSD_ThreadPool/CSD_TP_Strategy.h"
-#include "tao/CSD_ThreadPool/CSD_ThreadPool.h"
-#include "tao/CSD_Framework/CSD_Strategy_Repository.h"
+#include "tao/Dynamic_TP/Dynamic_TP_Config.h"
+// #include "tao/Dynamic_TP/Dynamic_TP_POA_Strategy.h"
+//#include "tao/CSD_ThreadPool/CSD_TP_Strategy.h"
+//#include "tao/CSD_ThreadPool/CSD_ThreadPool.h"
+//#include "tao/CSD_Framework/CSD_Strategy_Repository.h"
 
 
 //Review these
@@ -19,9 +20,53 @@
 //#include "tao/ORBInitializer_Registry.h"
 #include "tao/SystemException.h"
 #include "ace/OS_NS_strings.h"
-#include "ace/Arg_Shifter.h"
+#include "ace/Tokenizer_T.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+TAO_Dynamic_TP_POA_Config_Map_Registry_Installer::TAO_Dynamic_TP_POA_Config_Map_Registry_Installer (void)
+{
+  ACE_Service_Config::process_directive (ace_svc_desc_TAO_Dynamic_TP_POA_Config_Map_Registry);
+}
+
+
+TAO_Dynamic_TP_POA_Config_Map_Registry::TAO_Dynamic_TP_POA_Config_Map_Registry (void)
+{
+}
+
+TAO_Dynamic_TP_POA_Config_Map_Registry::~TAO_Dynamic_TP_POA_Config_Map_Registry (void)
+{
+}
+
+int
+TAO_Dynamic_TP_POA_Config_Map_Registry::init (int , ACE_TCHAR* [] )
+{
+  return 0;
+}
+
+bool
+TAO_Dynamic_TP_POA_Config_Map_Registry::find (const ACE_CString& name, TAO_DTP_POA_Config_Map &entry)
+{
+  return registry_.find (name, entry) == 0;
+}
+
+int
+TAO_Dynamic_TP_POA_Config_Map_Registry::bind (const ACE_CString& name, TAO_DTP_POA_Config_Map &entry)
+{
+  return registry_.bind (name, entry);
+}
+
+int
+TAO_Dynamic_TP_POA_Config_Map_Registry::rebind (const ACE_CString& name, TAO_DTP_POA_Config_Map &entry)
+{
+  return registry_.rebind (name, entry);
+}
+
+int
+TAO_Dynamic_TP_POA_Config_Map_Registry::get_count ()
+{
+  return registry_.current_size();
+}
 
 TAO_Dynamic_TP_POA_Loader::TAO_Dynamic_TP_POA_Loader (void)
   : initialized_ (false)
@@ -35,13 +80,14 @@ TAO_Dynamic_TP_POA_Loader::~TAO_Dynamic_TP_POA_Loader (void)
 int
 TAO_Dynamic_TP_POA_Loader::init (int argc, ACE_TCHAR* argv[])
 {
-  ACE_TRACE ("TAO_Dynamic_TP_POA_Loader::init");
+  TAO_debug_level = 5;
+	ACE_TRACE ("TAO_Dynamic_TP_POA_Loader::init");
 
-  // Only allow initialization once.
-  if (this->initialized_)
-    return 0;
+  // Only allow initialization once.  TODO:  Are we going to allow only once?
+  //if (this->initialized_)
+  //  return 0;
 
-  this->initialized_ = true;
+  //this->initialized_ = true;
 
   ACE_Service_Gestalt *gestalt = ACE_Service_Config::current ();
 
@@ -51,244 +97,211 @@ TAO_Dynamic_TP_POA_Loader::init (int argc, ACE_TCHAR* argv[])
       "Dynamic_TP_POA_Loader",
       true);
 
-  if (dynamic_tp_poa_loader != 0 && dynamic_tp_poa_loader != this)
-    {
-      return dynamic_tp_poa_loader->init (argc, argv);
-    }
+  //if (dynamic_tp_poa_loader != 0 && dynamic_tp_poa_loader != this)
+  //  {
+  //    return dynamic_tp_poa_loader->init (argc, argv);
+  //  }
 
-  int curarg = 0;
+  /* First we need a handle to the local Dynamic_TP_Config list that has been loaded prior to executing this functionality.
+     The registry associated with the object will contain a registry with instances of thread pool configurations mapped to
+	 names of the configuration (key). We will use that as a lookup to associate POA names with a configuration.
+  */
+  
+  TAO_Dynamic_TP_Config_Registry* tp_config_registry =
+    ACE_Dynamic_Service<TAO_Dynamic_TP_Config_Registry>::instance
+    (gestalt, "Dynamic_TP_Config_Registry", true);
 
-  // Set defaults.
- /* int priority_mapping_type =
-    TAO_RT_POAInitializer::TAO_PRIORITY_MAPPING_DIRECT;
-  int network_priority_mapping_type =
-    TAO_RT_POAInitializer::TAO_NETWORK_PRIORITY_MAPPING_LINEAR;
-  int ace_sched_policy = ACE_SCHED_OTHER;
-  long sched_policy = THR_SCHED_DEFAULT;
-  long scope_policy = THR_SCOPE_PROCESS;
-  int curarg = 0;
-  ACE_Time_Value dynamic_thread_time;
-  TAO_RT_POAInitializer::TAO_DynamicTP_DT_LifeSpan lifespan = TAO_RT_POAInitializer::TAO_DynamicTP_DT_INFINITIVE;
+  if (tp_config_registry == 0)
+  {
+	  /* A configuration registry is apparently not loaded, so we cannot proceed */
 
-  ACE_Arg_Shifter arg_shifter (argc, argv);
-
-  // Parse any service configurator parameters.
-  while (arg_shifter.is_anything_left ())
-    {
-      const ACE_TCHAR *current_arg = 0;
-      if (0 != (current_arg = arg_shifter.get_the_parameter
-                  (ACE_TEXT("-ORBPriorityMapping"))))
-        {
-          const ACE_TCHAR *name = current_arg;
-          if (ACE_OS::strcasecmp (name,
-                                  ACE_TEXT("continuous")) == 0)
-            priority_mapping_type =
-              TAO_RT_POAInitializer::TAO_PRIORITY_MAPPING_CONTINUOUS;
-          else if (ACE_OS::strcasecmp (name,
-                                       ACE_TEXT("linear")) == 0)
-            priority_mapping_type =
-              TAO_RT_POAInitializer::TAO_PRIORITY_MAPPING_LINEAR;
-          else if (ACE_OS::strcasecmp (name,
-                                       ACE_TEXT("direct")) == 0)
-            priority_mapping_type =
-              TAO_RT_POAInitializer::TAO_PRIORITY_MAPPING_DIRECT;
-          else
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT("Dynamic_TP_POA_Loader - unknown argument")
-                        ACE_TEXT(" <%s> for -ORBPriorityMapping\n"),
-                        name));
-          arg_shifter.consume_arg ();
-        }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter
-                                 (ACE_TEXT("-ORBSchedPolicy"))))
-        {
-          const ACE_TCHAR *name = current_arg;
-          if (ACE_OS::strcasecmp (name,
-                                  ACE_TEXT("SCHED_OTHER")) == 0)
-            {
-              ace_sched_policy = ACE_SCHED_OTHER;
-              sched_policy = THR_SCHED_DEFAULT;
-            }
-          else if (ACE_OS::strcasecmp (name,
-                                       ACE_TEXT("SCHED_FIFO")) == 0)
-            {
-              ace_sched_policy = ACE_SCHED_FIFO;
-              sched_policy = THR_SCHED_FIFO;
-            }
-          else if (ACE_OS::strcasecmp (name,
-                                       ACE_TEXT("SCHED_RR")) == 0)
-            {
-              ace_sched_policy = ACE_SCHED_RR;
-              sched_policy = THR_SCHED_RR;
-            }
-          else
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT("Dynamic_TP_POA_Loader - unknown argument")
-                        ACE_TEXT(" <%s> for -ORBSchedPolicy\n"),
-                        name));
-          arg_shifter.consume_arg ();
-        }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter
-                                 (ACE_TEXT("-ORBScopePolicy"))))
-        {
-          const ACE_TCHAR *name = current_arg;
-          if (ACE_OS::strcasecmp (name,
-                                  ACE_TEXT("SYSTEM")) == 0)
-            scope_policy = THR_SCOPE_SYSTEM;
-          else if (ACE_OS::strcasecmp (name,
-                                       ACE_TEXT("PROCESS")) == 0)
-            scope_policy = THR_SCOPE_PROCESS;
-          else
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT("Dynamic_TP_POA_Loader - unknown argument")
-                        ACE_TEXT(" <%s> for -ORBScopePolicy\n"),
-                        name));
-          arg_shifter.consume_arg ();
-        }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter
-                                 (ACE_TEXT("-RTORBNetworkPriorityMapping"))))
-        {
-          const ACE_TCHAR *name = current_arg;
-          if (ACE_OS::strcasecmp (name,
-                                  ACE_TEXT("linear")) == 0)
-              network_priority_mapping_type =
-                TAO_RT_POAInitializer::TAO_NETWORK_PRIORITY_MAPPING_LINEAR;
-          arg_shifter.consume_arg ();
-        }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter
-                                   (ACE_TEXT("-RTORBDynamicThreadIdleTimeout"))))
-        {
-          const ACE_TCHAR *name = current_arg;
-          int timeout = ACE_OS::atoi (name);
-          dynamic_thread_time = ACE_Time_Value (0, timeout);
-          lifespan = TAO_RT_POAInitializer::TAO_DynamicTP_DT_IDLE;
-          arg_shifter.consume_arg ();
-        }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter
-                                   (ACE_TEXT("-RTORBDynamicThreadRunTime"))))
-        {
-          const ACE_TCHAR *name = current_arg;
-          int timeout = ACE_OS::atoi (name);
-          dynamic_thread_time = ACE_Time_Value (0, timeout);
-          lifespan = TAO_RT_POAInitializer::TAO_DynamicTP_DT_FIXED;
-          arg_shifter.consume_arg ();
-        }
-    else
-      {
-        arg_shifter.ignore_arg ();
         if (TAO_debug_level > 0)
         {
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT("Dynamic_TP_POA_Loader: Unknown option ")
-                      ACE_TEXT("<%s>.\n"),
-                      argv[curarg]));
+            ACE_DEBUG((LM_DEBUG,
+                        ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_POA_Loader - no thread pool configurations available - cannot initialize registry\n")));
         }
-      }
-    }
+        return -1;
 
-  // Register the ORB initializer.
-  try
+  }
+
+
+  /* Now create a POA Configuration Map Registry to look up what thread pool settings
+     are associated with each POA
+  */
+
+  TAO_Dynamic_TP_POA_Config_Map_Registry* poa_map_registry =
+    ACE_Dynamic_Service<TAO_Dynamic_TP_POA_Config_Map_Registry>::instance
+    (gestalt, "Dynamic_TP_POA_Config_Map_Registry", true);
+
+  if (poa_map_registry == 0)
     {
-      PortableInterceptor::ORBInitializer_ptr temp_orb_initializer =
-        PortableInterceptor::ORBInitializer::_nil ();
-
-      /// Register the Dynamic_TP_POA ORBInitializer.
-      ACE_NEW_THROW_EX (temp_orb_initializer,
-                        TAO_RT_POAInitializer (priority_mapping_type,
-                                               network_priority_mapping_type,
-                                               ace_sched_policy,
-                                               sched_policy,
-                                               scope_policy,
-                                               lifespan,
-                                               dynamic_thread_time),
-                        CORBA::NO_MEMORY (
-                          CORBA::SystemException::_tao_minor_code (
-                            TAO::VMCID,
-                            ENOMEM),
-                          CORBA::COMPLETED_NO));
-
-      PortableInterceptor::ORBInitializer_var orb_initializer;
-      orb_initializer = temp_orb_initializer;
-
-      PortableInterceptor::register_orb_initializer (orb_initializer.in ());
-    }
-  catch (const ::CORBA::Exception& ex)
-    {
-      ex._tao_print_exception (
-        "Unexpected exception caught while "
-        "initializing the RTORB");
-      return 1;
+      gestalt->process_directive (ace_svc_desc_TAO_Dynamic_TP_POA_Config_Map_Registry);
+      poa_map_registry = ACE_Dynamic_Service<TAO_Dynamic_TP_POA_Config_Map_Registry>::instance
+        (gestalt, "Dynamic_TP_POA_Config_Map_Registry", true);
+      if (poa_map_registry == 0)
+        {
+          if (TAO_debug_level > 0)
+            {
+              ACE_DEBUG((LM_DEBUG,
+                         ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_POA_Loader - cannot initialize registry\n")));
+            }
+          return -1;
+        }
+	  else
+	  {
+		   if (TAO_debug_level > 0)
+            {
+              ACE_DEBUG((LM_DEBUG,
+                         ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_POA_Loader - registry initialized\n")));
+            }
+	  }
     }
 
-  return 0; */
-
-   TAO_CSD_Strategy_Repository *repo =
-    ACE_Dynamic_Service<TAO_CSD_Strategy_Repository>::instance ("TAO_CSD_Strategy_Repository");
-
-  if (repo != 0)
-    repo->init(0,0);
 
   // Parse any service configurator parameters.
+  /*
+	
+  */
+
+  ACE_TCHAR *poa_config_map = 0;
+  int curarg = 0;
+  int r = 0;
+
   for (int curarg = 0; curarg < argc; curarg++)
-    if (ACE_OS::strcasecmp (argv[curarg],
-                            ACE_TEXT("-POADynamicTPMap")) == 0)
+  {
+
+		if (TAO_debug_level > 0)
+            {
+              ACE_DEBUG((LM_DEBUG,
+                         ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_POA_Loader - parsing args\n")));
+            }
+
+	if ((r = this->parse_string (curarg, argc, argv, ACE_TEXT("-DTPPOAConfigMap"), poa_config_map)) != 0)
+        {
+			/* If something comes back in poa_config_map then there is at least on set of maps, otherwise
+			   we are missing parameters
+			*/
+          if (r < 0)
+            {
+				ACE_ERROR((LM_ERROR,ACE_TEXT("Dynamic_TP_POA_Loader: POA Config Map not present\n")));
+              return -1;
+            }
+		  else
+		  {
+		     
+			  ACE_DEBUG((LM_INFO,ACE_TEXT("Dynamic_TP_POA_Loader: POA Config Map = %C\n"),poa_config_map));
+			  /* Now parse and load a map to the registry. */
+			 if((r = this->load_poa_map (curarg,argv,tp_config_registry,poa_map_registry)) != 0)
+			 {
+				 if (r < 0)
+				 {
+					 return -1;
+				 }
+			 }
+
+
+		  }
+        }
+	else
       {
-        ACE_CString poa_name;
-        unsigned long num_threads = 1;
-        bool serialize_servants = true;
 
-        curarg++;
-        if (curarg < argc)
+		  /*
+		     If we get here then we have another map set to process and add to the map registry.
+		  */
+        if (TAO_debug_level > 0)
           {
-            // Parse the parameter
-            ACE_CString arg ((const char *)argv[curarg]);
-            ACE_CString::size_type pos = arg.find (':');
+				ACE_ERROR ((LM_ERROR,
+                ACE_TEXT("Dynamic_TP_POA_Loader: Missing option\n")
+				ACE_TEXT("Usage: -DTPPOAConfigMap <comma-separated list of POAs>:<POA Config Name>\n")
+                ACE_TEXT("<%s>.\n"),
+                        argv[curarg]));
+          }
+      }
 
-            if (pos == ACE_CString::npos)
-              {
-                poa_name = arg;
-              }
-            else
-              {
-                poa_name = arg.substr (0, pos);
+  }
 
-                ACE_CString arg_remainder =
-                                   arg.substr (pos + 1, arg.length () - pos);
+  /*
+     Now we need to create an ACE_RB_Tree map to store the relationship of a POA thread pool configuration set
+	 to each POA name that got passed in on the configuration line.
+	 So we need to parse through the comma separated list of POA's and add them to the map along with the
+	 configuration set name.
 
-                ACE_CString num_thread_str;
+  */
 
-                pos = arg_remainder.find (':');
 
-                if (pos == ACE_CString::npos)
-                  {
-                    num_thread_str = arg_remainder;
-                  }
-                else
-                  {
-                    num_thread_str = arg_remainder.substr (0, pos);
+  return 0;
+}
+  
+      
+int
+TAO_Dynamic_TP_POA_Loader::load_poa_map (int &curarg,
+                                         ACE_TCHAR *argv[],
+										 TAO_Dynamic_TP_Config_Registry* config_reg,
+                                         TAO_Dynamic_TP_POA_Config_Map_Registry* poa_reg)
+{
 
-                    ACE_CString off_str =
-                                     arg_remainder.substr (pos + 1, arg.length () - pos);
+        ACE_CString poa_group;
+		ACE_CString poa_name;
+		ACE_CString config_name;
 
-                    // Case-insensitive string comparison.
-                    if (ACE_OS::strcasecmp (off_str.c_str(), "OFF") == 0)
-                      {
-                        serialize_servants = false;
-                      }
-                  }
+        // Parse the parameter
+        ACE_CString arg ((const char *)argv[curarg]);
+        ACE_CString::size_type pos = arg.find (':');
 
-                num_threads = ACE_OS::strtoul (num_thread_str.c_str (), 0, 10);
+        if (pos == ACE_CString::npos)
+            {
+				ACE_ERROR ((LM_ERROR,
+				ACE_TEXT("Dynamic_TP_POA_Loader: Missing option\n")
+				ACE_TEXT("Usage: -DTPPOAConfigMap <comma-separated list of POAs>:<POA Config Name>\n")
+				ACE_TEXT("<%s>.\n"),
+                    argv[curarg]));
+				return -1;
+            }
+        else
+            {
 
-                if (num_threads == 0)
-                  {
-                    // Minimum of 1 thread required.
-                    num_threads = 1;
-                  }
-              }
+			TAO_DTP_POA_Config_Map new_map_entry;
+			TAO_Dynamic_TP_POA_Strategy * empty_strategy = 0;
+			
+
+            poa_group = arg.substr (0, pos); // comma separated list of POAs
+			ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Dynamic_TP_POA_Loader: POA Group that needs to be parsed: [%C]\n"), poa_group.c_str()));
+			ACE_CString::size_type begin = 0;
+
+			new_map_entry.tp_config_name = arg.substr (pos + 1, arg.length () - pos);  // Add the new config name into the configuration map
+
+			/* Find first delimiter */
+			while(begin < poa_group.length())
+			{
+				ACE_CString::size_type const poa_delim_pos = poa_group.find(",",begin);
+
+				if (poa_delim_pos == ACE_CString::npos) {
+				/* We only have one parameter or this is the last element*/
+					poa_name = poa_group.substr(begin,poa_group.length());
+					break;
+
+				}
+				else
+				{
+					poa_name = poa_group.substr(begin,poa_delim_pos - begin);
+
+					/* Insert a new entry into the Dynamic_TP_POA_Config_Map */
+					ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Dynamic_TP_POA_Loader: Mapping POA [%C] to Config [%C].\n"), poa_name.c_str(),new_map_entry.tp_config_name.c_str()));
+					poa_reg->bind(poa_name, new_map_entry);
+					
+				}				
+
+				begin=poa_delim_pos + 1;
+			}
+
+				/* Insert the final entry into the Dynamic_TP_POA_Config_Map */
+			    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Dynamic_TP_POA_Loader: Mapping POA [%C] to Config [%C].\n"), poa_name.c_str(),new_map_entry.tp_config_name.c_str()));
+				poa_reg->bind(poa_name, new_map_entry);
+
 
             // Create the ThreadPool strategy for each named poa.
 
-            TAO_Dynamic_TP_POA_Strategy* strategy = 0;   // Need a new dynamic thread pool strategy here
+           /* TAO_Dynamic_TP_POA_Strategy* strategy = 0;   // Need a new dynamic thread pool strategy here
             ACE_NEW_RETURN (strategy,
                             TAO_Dynamic_TP_POA_Strategy (num_threads, serialize_servants),
                             -1);
@@ -304,31 +317,57 @@ TAO_Dynamic_TP_POA_Loader::init (int argc, ACE_TCHAR* argv[])
                  repo = ACE_Dynamic_Service<TAO_CSD_Strategy_Repository>::instance (
                             "TAO_CSD_Strategy_Repository"
                           );
-              }
+              } */
 
 
-            repo->add_strategy (poa_name, strategy);
+            //repo->add_strategy (poa_name, strategy);
           }
-      }
-    else
-      {
-        if (TAO_debug_level > 0)
-          {
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT("CSD_ORB_Loader: Unknown option ")
-                        ACE_TEXT("<%s>.\n"),
-                        argv[curarg]));
-          }
-      }
 
-
-  return 0;
+		return 0;
 }
 
+int
+TAO_Dynamic_TP_POA_Loader::parse_string (int &curarg,
+                                     int argc, ACE_TCHAR *argv[],
+                                     const ACE_TCHAR *match, ACE_TCHAR *&value)
+{
+  if (ACE_OS::strcasecmp (argv[curarg], match) != 0)
+    return 0;
+
+  ++curarg;
+  if (curarg >= argc)
+    {
+      this->report_option_value_error (match, ACE_TEXT("<missing>"));
+      return -1;
+    }
+
+  value = argv[curarg];
+  return 1;
+}
+
+void
+TAO_Dynamic_TP_POA_Loader::report_option_value_error (const ACE_TCHAR* option_name,
+                                                  const ACE_TCHAR* option_value)
+{
+  if (TAO_debug_level > 0)
+    {
+      ACE_DEBUG((LM_DEBUG,
+                 ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_POA_Loader - unknown ")
+                 ACE_TEXT ("argument <%s> for <%s>\n"),
+                 option_value, option_name));
+    }
+}
 
 /////////////////////////////////////////////////////////////////////
 
-ACE_FACTORY_DEFINE (TAO_Dynamic_TP, TAO_Dynamic_TP_POA_Loader)
+ACE_FACTORY_DEFINE (TAO_Dynamic_TP, TAO_Dynamic_TP_POA_Config_Map_Registry)
+ACE_STATIC_SVC_DEFINE (TAO_Dynamic_TP_POA_Config_Map_Registry,
+                       ACE_TEXT ("Dynamic_TP_POA_Config_Map_Registry"),
+                       ACE_SVC_OBJ_T,
+                       &ACE_SVC_NAME (TAO_Dynamic_TP_POA_Config_Map_Registry),
+                       ACE_Service_Type::DELETE_THIS
+                       | ACE_Service_Type::DELETE_OBJ,
+                       0)ACE_FACTORY_DEFINE (TAO_Dynamic_TP, TAO_Dynamic_TP_POA_Loader)
 ACE_STATIC_SVC_DEFINE (TAO_Dynamic_TP_POA_Loader,
                        ACE_TEXT ("Dynamic_TP_POA_Loader"),
                        ACE_SVC_OBJ_T,
@@ -340,5 +379,6 @@ ACE_STATIC_SVC_DEFINE (TAO_Dynamic_TP_POA_Loader,
 
 
 TAO_END_VERSIONED_NAMESPACE_DECL
+
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */

@@ -1,3 +1,10 @@
+Fri Nov  2 20:27:56 UTC 2012  Marc Neeley  <neeleym@ociweb.com>
+
+        * tao/Dynamic_TP/Dynamic_TP_POA_Loader.h:
+        * tao/Dynamic_TP/Dynamic_TP_POA_Loader.cpp:
+
+          Implemented parsing of svc.conf files for mapping POA instances to Thread Pool configs.
+
 Mon Oct 29 16:14:14 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/Dynamic_TP/Config_Loader/Config_Loader.mpc:
