@@ -1,3 +1,19 @@
+Mon Nov  5 22:58:02 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/PortableServer/ServantRetentionStrategyNonRetain.h:
+        * tao/PortableServer/ServantRetentionStrategyNonRetain.cpp:
+
+          Force the POA to generate a unique object ID in the case where the ID
+          assignment policy is SYSTEM_ID, and the servant retention policy is
+          NONRETAIN. Historically this situation was ignored since the ID was only
+          considered useful in resolving servants from the AOM or when UISER_ID
+          assignment was set. However it is a valid usecase for a servant manager
+          or default servant to be used with system generated IDs.
+
+        * tests/POA/Non_Retain_System_Id:
+
+          New test to verify the correctness of the above change.
+
 Fri Nov  2 21:10:42 UTC 2012  Marc Neeley  <neeleym@ociweb.com>
 
         * tests/Dynamic_TP:
@@ -5,15 +21,16 @@ Fri Nov  2 21:10:42 UTC 2012  Marc Neeley  <neeleym@ociweb.com>
         * tests/Dynamic_TP/POA_Loader/POA_Loader.mpc:
         * tests/Dynamic_TP/POA_Loader/Test.cpp:
         * tests/Dynamic_TP/POA_Loader/svc.conf:
-		
-		Added first set of tests for POA loader.
+
+          Added first set of tests for POA loader.
 
 Fri Nov  2 20:27:56 UTC 2012  Marc Neeley  <neeleym@ociweb.com>
 
         * tao/Dynamic_TP/Dynamic_TP_POA_Loader.h:
         * tao/Dynamic_TP/Dynamic_TP_POA_Loader.cpp:
 
-          Implemented parsing of svc.conf files for mapping POA instances to Thread Pool configs.
+          Implemented parsing of svc.conf files for mapping POA instances
+          to Thread Pool configs.
 
 Mon Oct 29 16:14:14 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
 
