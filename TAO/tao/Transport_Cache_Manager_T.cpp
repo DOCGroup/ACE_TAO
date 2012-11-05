@@ -236,8 +236,7 @@ namespace TAO
         return CACHE_FOUND_NONE;
       }
 
-    Find_Result find_result = this->find (
-      prop, transport, busy_count);
+    Find_Result const find_result = this->find (prop, transport, busy_count);
     if (find_result != CACHE_FOUND_NONE)
       {
         if (find_result == CACHE_FOUND_AVAILABLE)
@@ -300,7 +299,6 @@ namespace TAO
             if (this->is_entry_available_i (*entry))
               {
                 // Successfully found a transport_type.
-
                 found = CACHE_FOUND_AVAILABLE;
                 found_entry = entry;
                 entry->item ().recycle_state (ENTRY_BUSY);
