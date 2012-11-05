@@ -312,7 +312,7 @@ TAO_Connector::parallel_connect (TAO::Profile_Transport_Resolver *r,
       TAO_Base_Transport_Property desc2(ep,0);
       size_t busy_count = 0;
       if (tcm.find_transport (&desc2, base_transport, busy_count) ==
-          TAO::Transport_Cache_Manager::CACHE_FOUND_AVAILABLE )
+          TAO::Transport_Cache_Manager::CACHE_FOUND_AVAILABLE)
         {
           if (TAO_debug_level)
             {
@@ -561,7 +561,6 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
               // invocation is done with it. In that case it is up to
               // a subsequent invocation to handle the connection
               // completion.
-
               TransportCleanupGuard tg(base_transport);
               if (!this->wait_for_connection_completion (r, *desc,
                                                          base_transport,
@@ -651,7 +650,7 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
           // @todo: This is not the right place for this! (bugzilla 3023)
           // Purge connections (if necessary)
           tcm.purge ();
-          bool make_new_connection =
+          bool const make_new_connection =
             (found == TAO::Transport_Cache_Manager::CACHE_FOUND_NONE) ||
             (found == TAO::Transport_Cache_Manager::CACHE_FOUND_BUSY
                 && this->new_connection_is_ok (busy_count));
