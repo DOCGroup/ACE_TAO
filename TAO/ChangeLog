@@ -1,3 +1,14 @@
+Mon Nov  5 08:25:48 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Cache_Entries_T.h:
+          Use bool instead of CORBA::Boolean
+
+        * tao/LocateRequest_Invocation.cpp:
+        * tao/Transport.h:
+        * tao/Transport_Cache_Manager_T.cpp:
+        * tao/Transport_Connector.cpp:
+          Const, layout, and doxygen changes
+
 Wed Oct 31 09:09:25 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Root_POA.cpp:
