@@ -184,6 +184,39 @@ ACE_OS::condattr_init (ACE_condattr_t &attributes, int type)
 }
 
 ACE_INLINE int
+ACE_OS::condattr_synctype (ACE_condattr_t &attributes, int& type)
+{
+# if defined (ACE_HAS_THREADS)
+#   if defined (ACE_HAS_PTHREADS)
+  int result = -1;
+
+#   if !defined (ACE_LACKS_CONDATTR) && defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_CONDATTR_PSHARED)
+  if (
+      ACE_ADAPT_RETVAL (pthread_condattr_getpshared (&attributes, &type),
+                           result) == 0
+     )
+    {
+      result = 0;
+    }
+#   else
+  type = USYNC_THREAD;
+  result = 0;
+#   endif /* !ACE_LACKS_CONDATTR && _POSIX_THREAD_PROCESS_SHARED && ! ACE_LACKS_CONDATTR_PSHARED */
+
+  return result;
+#   else
+  type = attributes.type;
+  return 0;
+#   endif /* ACE_HAS_PTHREADS */
+
+# else
+  ACE_UNUSED_ARG (attributes);
+  ACE_UNUSED_ARG (type);
+  ACE_NOTSUP_RETURN (-1);
+# endif /* ACE_HAS_THREADS */
+}
+
+ACE_INLINE int
 ACE_OS::condattr_setclock (ACE_condattr_t &attributes, clockid_t clock_id)
 {
 # if defined (ACE_HAS_THREADS)
@@ -453,6 +486,19 @@ ACE_OS::mutex_lock (ACE_mutex_t *m,
   return timeout == 0 ? ACE_OS::mutex_lock (m) : ACE_OS::mutex_lock (m, *timeout);
 }
 
+ACE_INLINE int
+ACE_OS::event_init (ACE_event_t *event,
+                    int manual_reset,
+                    int initial_state,
+                    int type,
+                    const char *name,
+                    void *arg,
+                    LPSECURITY_ATTRIBUTES sa)
+{
+  ACE_condattr_t *pattr = 0;
+  return ACE_OS::event_init (event, type, pattr, manual_reset, initial_state, name, arg, sa);
+}
+
 #if defined (ACE_HAS_WCHAR)
 ACE_INLINE int
 ACE_OS::event_init (ACE_event_t *event,
@@ -484,6 +530,45 @@ ACE_OS::event_init (ACE_event_t *event,
                              manual_reset,
                              initial_state,
                              type,
+                             ACE_Wide_To_Ascii (name).char_rep (),
+                             arg,
+                             sa);
+#endif /* ACE_WIN32 */
+}
+
+ACE_INLINE int
+ACE_OS::event_init (ACE_event_t *event,
+                    int type,
+                    ACE_condattr_t *attributes,
+                    int manual_reset,
+                    int initial_state,
+                    const wchar_t *name,
+                    void *arg,
+                    LPSECURITY_ATTRIBUTES sa)
+{
+#if defined (ACE_WIN32)
+  ACE_UNUSED_ARG (type);
+  ACE_UNUSED_ARG (attributes);
+  ACE_UNUSED_ARG (arg);
+  SECURITY_ATTRIBUTES sa_buffer;
+  SECURITY_DESCRIPTOR sd_buffer;
+  *event = ::CreateEventW (ACE_OS::default_win32_security_attributes_r
+      (sa, &sa_buffer, &sd_buffer),
+  manual_reset,
+  initial_state,
+  name);
+  if (*event == 0)
+    ACE_FAIL_RETURN (-1);
+
+  // Make sure to set errno to ERROR_ALREADY_EXISTS if necessary.
+  ACE_OS::set_errno_to_last_error ();
+  return 0;
+#else  /* ACE_WIN32 */
+  return ACE_OS::event_init (event,
+                             type,
+                             attributes,
+                             manual_reset,
+                             initial_state,
                              ACE_Wide_To_Ascii (name).char_rep (),
                              arg,
                              sa);
@@ -1427,6 +1512,20 @@ ACE_OS::sema_init (ACE_sema_t *s,
                    int max,
                    LPSECURITY_ATTRIBUTES sa)
 {
+  ACE_condattr_t *pattr = 0;
+  return ACE_OS::sema_init (s, count, type, pattr, name, arg, max, sa);
+}
+
+ACE_INLINE int
+ACE_OS::sema_init (ACE_sema_t *s,
+                   u_int count,
+                   int type,
+                   ACE_condattr_t *attributes,
+                   const char *name,
+                   void *arg,
+                   int max,
+                   LPSECURITY_ATTRIBUTES sa)
+{
   ACE_OS_TRACE ("ACE_OS::sema_init");
 #if defined (ACE_HAS_POSIX_SEM)
   ACE_UNUSED_ARG (max);
@@ -1435,12 +1534,15 @@ ACE_OS::sema_init (ACE_sema_t *s,
   s->name_ = 0;
 #  if defined (ACE_HAS_POSIX_SEM_TIMEOUT) || defined (ACE_DISABLE_POSIX_SEM_TIMEOUT_EMULATION)
   ACE_UNUSED_ARG (arg);
+  ACE_UNUSED_ARG (attributes);
 #  else
   int result = -1;
 
   if (ACE_OS::mutex_init (&s->lock_, type, name,
                           (ACE_mutexattr_t *) arg) == 0
-      && ACE_OS::cond_init (&s->count_nonzero_, (short)type, name, arg) == 0
+      && (attributes == 0 ?
+            ACE_OS::cond_init (&s->count_nonzero_, type, name, arg) :
+            ACE_OS::cond_init (&s->count_nonzero_, *attributes, name, arg)) == 0
       && ACE_OS::mutex_lock (&s->lock_) == 0)
     {
       if (ACE_OS::mutex_unlock (&s->lock_) == 0)
@@ -1644,6 +1746,7 @@ ACE_OS::sema_init (ACE_sema_t *s,
   ACE_UNUSED_ARG (name);
   ACE_UNUSED_ARG (max);
   ACE_UNUSED_ARG (sa);
+  ACE_UNUSED_ARG (attributes);
   int result;
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sema_init (s, count, type, arg), result),
                      int, -1);
@@ -1654,7 +1757,9 @@ ACE_OS::sema_init (ACE_sema_t *s,
 
   if (ACE_OS::mutex_init (&s->lock_, type, name,
                           (ACE_mutexattr_t *) arg) == 0
-      && ACE_OS::cond_init (&s->count_nonzero_, type, name, arg) == 0
+      && (attributes == 0 ?
+            ACE_OS::cond_init (&s->count_nonzero_, type, name, arg) :
+            ACE_OS::cond_init (&s->count_nonzero_, *attributes, name, arg)) == 0
       && ACE_OS::mutex_lock (&s->lock_) == 0)
     {
       s->count_ = count;
@@ -1671,6 +1776,7 @@ ACE_OS::sema_init (ACE_sema_t *s,
     }
   return result;
 #  elif defined (ACE_HAS_WTHREADS)
+  ACE_UNUSED_ARG (attributes);
 #    if ! defined (ACE_USES_WINCE_SEMA_SIMULATION)
   ACE_UNUSED_ARG (type);
   ACE_UNUSED_ARG (arg);
@@ -1740,6 +1846,7 @@ ACE_OS::sema_init (ACE_sema_t *s,
   ACE_UNUSED_ARG (s);
   ACE_UNUSED_ARG (count);
   ACE_UNUSED_ARG (type);
+  ACE_UNUSED_ARG (attributes);
   ACE_UNUSED_ARG (name);
   ACE_UNUSED_ARG (arg);
   ACE_UNUSED_ARG (max);
@@ -1758,7 +1865,22 @@ ACE_OS::sema_init (ACE_sema_t *s,
                    int max,
                    LPSECURITY_ATTRIBUTES sa)
 {
+  ACE_condattr_t *pattr = 0;
+  return ACE_OS::sema_init (s, count, type, pattr, name, arg, max, sa);
+}
+
+ACE_INLINE int
+ACE_OS::sema_init (ACE_sema_t *s,
+                   u_int count,
+                   int type,
+                   ACE_condattr_t *attributes,
+                   const wchar_t *name,
+                   void *arg,
+                   int max,
+                   LPSECURITY_ATTRIBUTES sa)
+{
 # if defined (ACE_HAS_WTHREADS)
+  ACE_UNUSED_ARG (attributes);
 #   if ! defined (ACE_USES_WINCE_SEMA_SIMULATION)
   ACE_UNUSED_ARG (type);
   ACE_UNUSED_ARG (arg);
@@ -1817,7 +1939,7 @@ ACE_OS::sema_init (ACE_sema_t *s,
 #   endif /* ACE_USES_WINCE_SEMA_SIMULATION */
 # else /* ACE_HAS_WTHREADS */
   // Just call the normal char version.
-  return ACE_OS::sema_init (s, count, type, ACE_Wide_To_Ascii (name).char_rep (), arg, max, sa);
+  return ACE_OS::sema_init (s, count, type, attributes, ACE_Wide_To_Ascii (name).char_rep (), arg, max, sa);
 # endif /* ACE_HAS_WTHREADS */
 }
 #endif /* ACE_HAS_WCHAR */
