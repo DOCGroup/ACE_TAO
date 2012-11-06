@@ -11,14 +11,10 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/OS_NS_string.h"
 #include "ace/Obstack.h"
 #include "ace/Log_Msg.h"
-
-
-
 
 int run_main (int, ACE_TCHAR *[])
 {
