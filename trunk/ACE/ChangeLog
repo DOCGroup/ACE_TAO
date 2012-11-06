@@ -1,3 +1,8 @@
+Tue Nov  6 11:42:26 UTC 2012  Martin Corino  <mcorino@remedy.nl>
+
+        * tests/Monotonic_Manual_Event_Test.cpp:
+          Fixed file comment.
+
 Tue Nov  6 10:55:47 UTC 2012  Martin Corino  <mcorino@remedy.nl>
 
         * ace/OS_NS_Thread.h:
