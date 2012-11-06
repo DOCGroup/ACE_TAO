@@ -1,3 +1,9 @@
+Tue Nov  6 11:46:45 UTC 2012  Martin Corino  <mcorino@remedy.nl>
+
+        * bin/fuzz.pl:
+          Fixed missing 'next;' in check_for_ACE_Thread_Mutex()
+          fuzzer.
+
 Tue Nov  6 11:42:26 UTC 2012  Martin Corino  <mcorino@remedy.nl>
 
         * tests/Monotonic_Manual_Event_Test.cpp:
