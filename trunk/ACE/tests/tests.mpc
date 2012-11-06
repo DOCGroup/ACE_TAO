@@ -986,6 +986,13 @@ project(Message Queue Test) : acetest {
   }
 }
 
+project(Monotonic_Manual_Event Test) : acetest {
+  exename = Monotonic_Manual_Event_Test
+  Source_Files {
+    Monotonic_Manual_Event_Test.cpp
+  }
+}
+
 project(Monotonic_Task Test) : acetest {
   avoids += ace_for_tao
   exename = Monotonic_Task_Test

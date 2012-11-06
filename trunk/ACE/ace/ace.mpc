@@ -27,7 +27,6 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     ATM_Stream.cpp
     Atomic_Op.cpp
     Atomic_Op_Sparc.c
-    Auto_Event.cpp
     Barrier.cpp
     Base_Thread_Adapter.cpp
     Based_Pointer_Repository.cpp
@@ -61,7 +60,7 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     Dump.cpp
     Dynamic.cpp
     Dynamic_Message_Strategy.cpp
-    Event.cpp
+    Event_Base.cpp
     Event_Handler.cpp
     Event_Handler_Handle_Timeout_Upcall.cpp
     FIFO.cpp
@@ -109,7 +108,6 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     LSOCK_Stream.cpp
     Malloc.cpp
     Malloc_Allocator.cpp
-    Manual_Event.cpp
     MEM_Acceptor.cpp
     MEM_Addr.cpp
     MEM_Connector.cpp
@@ -295,6 +293,7 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     Asynch_Connector.cpp
     Atomic_Op_T.cpp
     Atomic_Op_GCC_T.cpp
+    Auto_Event.cpp
     Auto_Functor.cpp
     Auto_IncDec_T.cpp
     Auto_Ptr.cpp
@@ -311,6 +310,7 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     Dump_T.cpp
     Dynamic_Service.cpp
     Env_Value_T.cpp
+    Event.cpp
     Event_Handler_T.cpp
     Framework_Component_T.cpp
     Free_List.cpp
@@ -331,6 +331,7 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     Lock_Adapter_T.cpp
     Malloc_T.cpp
     Managed_Object.cpp
+    Manual_Event.cpp
     Map_Manager.cpp
     Map_T.cpp
     Message_Block_T.cpp
@@ -403,6 +404,7 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     Condition_T.h
     Countdown_Time.h
     Default_Constants.h
+    Event_Base.h
     Global_Macros.h
     Guard_T.h
     Hash_Map_Manager.h

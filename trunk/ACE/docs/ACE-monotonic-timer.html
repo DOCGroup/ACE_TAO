@@ -34,22 +34,22 @@
 	<P STYLE="margin-bottom: 0in">Author: M.J.N. Corino		Copyright <FONT FACE="Liberation Serif, serif">©</FONT><FONT FACE="Liberation Serif, serif">
 	2012, Remedy IT</FONT></P>
 	<P STYLE="margin-bottom: 0.2in"><FONT FACE="Liberation Serif, serif">Date:
-	August 20, 2012		The Netherlands</FONT></P>
+	November 06, 2012		The Netherlands</FONT></P>
 </DIV>
-<H1 CLASS="western">Monotonic timer support for ACE condition
-variables</H1>
+<H1 CLASS="western">Monotonic timer support for ACE conditions and events</H1>
 <H2 CLASS="western">Introduction</H2>
 <P>This document describes how to use the changes to the ACE API
-which provide support to use monotonic timers for condition variables
-to solve the problem of system timeshift vulnerability of the ACE
-Condition variable timeout functionality.</P>
+which provide support to use monotonic timers for condition and event
+variables to solve the problem of system timeshift vulnerability of
+the ACE Condition and Event variable timeout functionality.</P>
 <H3 CLASS="western">Background</H3>
-<P>ACE Condition variables implement an API to wait for a condition
-to be signalled with a maximum wait timeout value. This timeout value
-must be specified as <B>absolute time</B><SPAN STYLE="font-weight: normal">
+<P>ACE Condition and Event variables implement an API to wait for the
+condition or event to be signalled with a maximum wait timeout value.
+This timeout value must be specified as <B>absolute time</B><SPAN STYLE="font-weight: normal">
 (this API spec has been derived from the POSIX threading API,
 pthread, the most widely available, standardized, threading API
-available).</SPAN></P>
+available) or, in the case of events, optionally as relative time
+(converted to absolute time by ACE on certain platforms).</SPAN></P>
 <P><SPAN STYLE="font-weight: normal">Currently ACE expects the
 timeout value to be based on the system time clock through the ACE
 API support for that clock (</SPAN><I><SPAN STYLE="font-weight: normal">ACE_OS::gettimeofday
@@ -57,8 +57,8 @@ API support for that clock (</SPAN><I><SPAN STYLE="font-weight: normal">ACE_OS::
 default for the POSIX API (originally POSIX did not support anything
 else).</SPAN></P>
 <P STYLE="font-weight: normal">This dependency on the system time
-clock however makes ACE Condition variables vulnerable to system
-clock time shifts since a change in the system clock time setting
+clock however makes ACE Condition and Event variables vulnerable to
+system clock time shifts since a change in the system clock time setting
 after an absolute time value has been determined (based on the
 unchanged system clock) will influence the outstanding wait
 operations based on these time values.</P>
@@ -71,7 +71,7 @@ expects). Since this conversion is based on the system time clock
 here also a vulnerability exists.</P>
 <P STYLE="font-weight: normal">To resolve this vulnerability the
 notion of MONOTONIC timer sources should be integrated into the ACE
-Condition support. MONOTONIC timers are timer sources which are
+Condition and Event support. MONOTONIC timers are timer sources which are
 independent of the system time clock and will always return time
 values which are correct relative to previously returned time values
 (at least within the lifetime of a single running process).</P>
@@ -79,7 +79,8 @@ values which are correct relative to previously returned time values
 while making use of the ACE_Message_Queue classes in the
 implementation of their application. The enqueu/dequeue functionality
 of the message queues makes heavy use of the ACE Condition variable
-timed wait support.</P>
+timed wait support. The customer also used ACE_Event derived classes
+which suffer from the same vulnerability.</P>
 <H3 CLASS="western">Requirements</H3>
 <P STYLE="font-weight: normal">Prerequisites for the solution are:</P>
 <UL>
@@ -98,9 +99,9 @@ timed wait support.</P>
 <H2 CLASS="western"><B>Solution</B></H2>
 <P STYLE="font-weight: normal">The implemented solution involves
 adding support for the ACE Time_Policy traits in the ACE Condition
-API and those classes directly related to the ACE Condition timed
-wait functionality that are used by the customer (like
-ACE_Message_Queue and ACE_Task). Also some classes tightly linked to
+and Event APIs and those classes directly related to the ACE Condition
+and Event timed wait functionality that are used by the customer (like
+ACE_Event, ACE_Message_Queue and ACE_Task). Also some classes tightly linked to
 those classes have been updated.</P>
 <P STYLE="font-weight: normal">The newly added monotonic time policy,
 ACE_Monotonic_Time_Policy, provides support for monotonic time values
@@ -186,6 +187,31 @@ msg_queue_.enqueue (msg_block, &amp;timeout_);
 …</PRE><P STYLE="font-weight: normal">
 <BR><BR>
 </P>
+<P STYLE="font-weight: normal">Similar changes apply to the refactored ACE_Event classes. In
+addition to the added support for time policies also a new base class is introduced to allow
+for generic use of an Event variable after instantiation of a specific time policy based type.</P>
+<PRE CLASS="western" STYLE="font-weight: normal">
+…
+// declare an Event variable
+ACE_Event_Base &amp;evt;
+…
+// initialize Event variable
+ACE_Manual_Event_T&lt;ACE_Monotonic_Time_Policy&gt; mono_evt;
+evt = mono_evt;
+…
+// wait 5 sec for event to be signalled
+ACE_Time_Value_T&lt;ACE_Monotonic_Time_Policy&gt; timeout_;
+timeout_ = timeout_.now ();
+timeout_ += ACE_Time_Value (5,0);
+evt.wait (&amp;timeout_);
+…
+// OR (using relative timeout)
+…
+ACE_Time_Value_T&lt;ACE_Monotonic_Time_Policy&gt; timeout_ (5,0);
+evt.wait (&amp;timeout_, 0);
+</PRE><P STYLE="font-weight: normal">
+<BR><BR>
+</P>
 <P><B>NOTE:</B><SPAN STYLE="font-weight: normal"> To function
 properly the ACE_Time_Value pointer passed to the timed wait methods
 </SPAN><B>MUST</B><SPAN STYLE="font-weight: normal"> be the address
@@ -195,7 +221,7 @@ layers now rely on the new time policy aware virtual methods of the
 ACE_Time_Value classes to perform time calculations (to_relative_time
 (), to_absolute_time (), now ()).<BR>Unfortunately due to backward
 compatibility issues it was not possible to change the signatures of
-the timed wait methods to type safe versions excepting only correct
+the timed wait methods to type safe versions accepting only correct
 time value instances.</SPAN></P>
 <P><B>NOTE2:</B><SPAN STYLE="font-weight: normal"> Please be aware of
 the differences in behaviour of the time calculation operations.</SPAN></P>
@@ -230,6 +256,7 @@ can be found in the following regression tests</P>
 	<LI><P STYLE="font-style: normal; font-weight: normal">$ACE_ROOT/tests/Bug_4055_Regression</P>
 	<LI><P STYLE="font-style: normal; font-weight: normal">$ACE_ROOT/tests/Monotonic_Task_Test</P>
 	<LI><P STYLE="font-style: normal; font-weight: normal">$ACE_ROOT/tests/Monotonic_Message_Queue_Test</P>
+  <LI><P STYLE="font-style: normal; font-weight: normal">$ACE_ROOT/tests/Monotonic_Manual_Event_Test</P>
 </UL>
 <DIV TYPE=FOOTER>
 	<P STYLE="margin-top: 0.2in; margin-bottom: 0in"><BR>
