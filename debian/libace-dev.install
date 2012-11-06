@@ -1,0 +1,19 @@
+../../bin/generate_export_file.pl       usr/lib/ace/bin
+../../bin/split-cpp.pl                  usr/lib/ace/bin
+../../bin/g++dep                        usr/lib/ace/bin
+../../bin/add_rel_link.sh               usr/lib/ace/bin
+../../bin/depgen.pl                     usr/lib/ace/bin
+../../bin/DependencyGenerator           usr/lib/ace/bin
+../../include                           usr/lib/ace
+../../include/makeinclude/platform_macros.GNU usr/lib/ace/include/makeinclude
+usr/include/ace/*.{h,inl,cpp}
+usr/include/ace/os_include
+usr/lib/libACE.so
+usr/include/ace/ETCL/*.{h,inl,cpp}
+usr/include/ace/Monitor_Control/*.{h,inl,cpp}
+usr/lib/libACE_ETCL_Parser.so
+usr/lib/libACE_Monitor_Control.so
+usr/lib/libACE_ETCL.so
+usr/lib/pkgconfig/ACE.pc
+usr/lib/pkgconfig/ACE_ETCL.pc
+usr/lib/pkgconfig/ACE_ETCL_Parser.pc

@@ -1,8 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project(CosEC_RtEC_Based_lib) : orbsvcslib, event_skel, rtevent_serv {
-  sharedname = CosEC_RtEC_Based
-  dynamicflags += TAO_RTEC_COSEC_BUILD_DLL
-}
-

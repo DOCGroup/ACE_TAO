@@ -1,5 +1,0 @@
--t 1.5
--a phil.ociweb.com=10.201.200.173
-HelloServer=helloServer.log
-HelloClient=helloClient.log
-

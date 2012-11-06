@@ -1,6 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : ccm_direct_collocation{
-  includes += $(CIAO_ROOT)/ccm
-}
