@@ -1,12 +1,12 @@
 
 //=============================================================================
 /**
- *  @file    Manual_Event_Test.cpp
+ *  @file    Monotonic_Manual_Event_Test.cpp
  *
  *  $Id$
  *
- *  This test verifies the functionality of the <ACE_Manual_Event>
- *  implementation.
+ *  This test verifies the functionality of the time policy support
+ *  for the <ACE_Manual_Event> implementation.
  *
  *
  *  @author Martin Corino <mcorino@remedy.nl>
