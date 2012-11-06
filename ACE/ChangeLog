@@ -1,3 +1,11 @@
+Tue Nov  6 14:44:38 UTC 2012  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS_NS_Thread.cpp (ACE_TSS_Cleanup::thread_detach_key): If
+          given a key which was never set, ignore it. Only throw an assertion
+          if the key's table slot is used but does not match the key asked
+          to free. The never-set case happens if a ACE_TSS object fails
+          when setting its value; the later cleanup would cause an assert.
+
 Tue Nov  6 13:34:20 UTC 2012  Martin Corino  <mcorino@remedy.nl>
 
         * NEWS:
