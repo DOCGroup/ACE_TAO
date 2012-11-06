@@ -1,3 +1,9 @@
+Tue Nov  6 18:59:48 UTC 2012  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/ace_for_tao.mpc:
+          Reflect fact that Event classes are now templates.
+          Added new Event base class.
+
 Tue Nov  6 14:44:38 UTC 2012  Steve Huston  <shuston@riverace.com>
 
         * ace/OS_NS_Thread.cpp (ACE_TSS_Cleanup::thread_detach_key): If
