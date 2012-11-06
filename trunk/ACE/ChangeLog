@@ -1,3 +1,10 @@
+Sat Oct 20 14:13:07 UTC 2012  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Timer_Hash_T.h: Added a forward declaration of
+          ACE_Event_Handler to ensure ACE compiles properly on certain
+          platforms.  Thanks to Peng Xu <pengxu7 at gmail dot com> for
+          reporting this.
+
 Tue Nov  6 18:59:48 UTC 2012  Martin Corino  <mcorino@remedy.nl>
 
         * ace/ace_for_tao.mpc:

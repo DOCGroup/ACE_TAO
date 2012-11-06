@@ -29,6 +29,7 @@ template <class TYPE, class FUNCTOR, class ACE_LOCK, class BUCKET, typename TIME
 class ACE_Timer_Hash_T;
 template <typename TYPE>
 class Hash_Token;
+class ACE_Event_Handler;
 
 /**
  * @class ACE_Timer_Hash_Upcall
