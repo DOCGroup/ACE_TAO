@@ -1,3 +1,7 @@
+Tue Nov 06 10:09:16 EST 2012  Steve Huston  <shuston@riverace.com>
+
+        * ACE version 6.1b released.
+
 Tue Nov  6 14:44:38 UTC 2012  Steve Huston  <shuston@riverace.com>
 
         * ace/OS_NS_Thread.cpp (ACE_TSS_Cleanup::thread_detach_key): If
