@@ -2496,15 +2496,17 @@ ACE_OS::event_destroy (ACE_event_t *event)
 
 int
 ACE_OS::event_init (ACE_event_t *event,
+                    int type,
+                    ACE_condattr_t *attributes,
                     int manual_reset,
                     int initial_state,
-                    int type,
                     const char *name,
                     void *arg,
                     LPSECURITY_ATTRIBUTES sa)
 {
 #if defined (ACE_WIN32)
   ACE_UNUSED_ARG (type);
+  ACE_UNUSED_ARG (attributes);
   ACE_UNUSED_ARG (arg);
   SECURITY_ATTRIBUTES sa_buffer;
   SECURITY_DESCRIPTOR sd_buffer;
@@ -2612,10 +2614,15 @@ ACE_OS::event_init (ACE_event_t *event,
 # if (defined (ACE_HAS_PTHREADS) && defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_CONDATTR_PSHARED)) || \
     (!defined (ACE_USES_FIFO_SEM) && \
       (!defined (ACE_HAS_POSIX_SEM) || !defined (ACE_HAS_POSIX_SEM_TIMEOUT) || defined (ACE_LACKS_NAMED_POSIX_SEM)))
-          int result = ACE_OS::cond_init (&event->eventdata_->condition_,
-                                          static_cast<short> (type),
-                                          name,
-                                          arg);
+          int result = attributes == 0 ?
+                          ACE_OS::cond_init (&event->eventdata_->condition_,
+                                             type,
+                                             name,
+                                             arg) :
+                          ACE_OS::cond_init (&event->eventdata_->condition_,
+                                             *attributes,
+                                             name,
+                                             arg);
 # else
           char   sem_name[128];
           ACE_OS::strncpy (sem_name,
@@ -2625,6 +2632,7 @@ ACE_OS::event_init (ACE_event_t *event,
           int result = ACE_OS::sema_init (&event->semaphore_,
                                           0,
                                           type,
+                                          attributes,
                                           sem_name,
                                           arg);
 # endif
@@ -2648,6 +2656,7 @@ ACE_OS::event_init (ACE_event_t *event,
             result = ACE_OS::sema_init (&event->lock_,
                                         0,
                                         type,
+                                        attributes,
                                         lck_name,
                                         arg);
             if (result == 0)
@@ -2662,9 +2671,9 @@ ACE_OS::event_init (ACE_event_t *event,
 
           event->name_ = 0;
           event->eventdata_ = evtdata;
-#if (!defined (ACE_HAS_PTHREADS) || !defined (_POSIX_THREAD_PROCESS_SHARED) || defined (ACE_LACKS_CONDATTR_PSHARED)) && \
-  (defined (ACE_USES_FIFO_SEM) || \
-    (defined (ACE_HAS_POSIX_SEM) && defined (ACE_HAS_POSIX_SEM_TIMEOUT) && !defined (ACE_LACKS_NAMED_POSIX_SEM)))
+# if (!defined (ACE_HAS_PTHREADS) || !defined (_POSIX_THREAD_PROCESS_SHARED) || defined (ACE_LACKS_CONDATTR_PSHARED)) && \
+      (defined (ACE_USES_FIFO_SEM) || \
+      (defined (ACE_HAS_POSIX_SEM) && defined (ACE_HAS_POSIX_SEM_TIMEOUT) && !defined (ACE_LACKS_NAMED_POSIX_SEM)))
           char   sem_name[128];
           ACE_OS::strncpy (sem_name,
                            name,
@@ -2673,6 +2682,7 @@ ACE_OS::event_init (ACE_event_t *event,
           result = ACE_OS::sema_init(&event->semaphore_,
                                      0,
                                      type,
+                                     attributes,
                                      sem_name,
                                      arg);
 # endif
@@ -2692,6 +2702,7 @@ ACE_OS::event_init (ACE_event_t *event,
               result = ACE_OS::sema_init (&event->lock_,
                                           0,
                                           type,
+                                          attributes,
                                           lck_name,
                                           arg);
             }
@@ -2714,14 +2725,20 @@ ACE_OS::event_init (ACE_event_t *event,
 # if (defined (ACE_HAS_PTHREADS) && defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_CONDATTR_PSHARED)) || \
     (!defined (ACE_USES_FIFO_SEM) && \
       (!defined (ACE_HAS_POSIX_SEM) || !defined (ACE_HAS_POSIX_SEM_TIMEOUT) || defined (ACE_LACKS_NAMED_POSIX_SEM)))
-      int result = ACE_OS::cond_init (&event->eventdata_->condition_,
-                                      static_cast<short> (type),
-                                      name,
-                                      arg);
+      int result = attributes == 0 ?
+                      ACE_OS::cond_init (&event->eventdata_->condition_,
+                                         type,
+                                         name,
+                                         arg) :
+                      ACE_OS::cond_init (&event->eventdata_->condition_,
+                                         *attributes,
+                                         name,
+                                         arg);
 # else
       int result = ACE_OS::sema_init (&event->semaphore_,
                                       0,
                                       type,
+                                      attributes,
                                       name,
                                       arg);
 # endif
@@ -2738,6 +2755,7 @@ ACE_OS::event_init (ACE_event_t *event,
       result = ACE_OS::sema_init (&event->lock_,
                                   0,
                                   type,
+                                  attributes,
                                   name,
                                   arg);
       if (result == 0)
@@ -2751,6 +2769,7 @@ ACE_OS::event_init (ACE_event_t *event,
   ACE_UNUSED_ARG (manual_reset);
   ACE_UNUSED_ARG (initial_state);
   ACE_UNUSED_ARG (type);
+  ACE_UNUSED_ARG (attributes);
   ACE_UNUSED_ARG (name);
   ACE_UNUSED_ARG (arg);
   ACE_UNUSED_ARG (sa);

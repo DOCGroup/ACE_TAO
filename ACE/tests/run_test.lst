@@ -142,6 +142,7 @@ Message_Block_Test: !ACE_FOR_TAO
 Message_Queue_Notifications_Test
 Message_Queue_Test: !ACE_FOR_TAO
 Message_Queue_Test_Ex: !ACE_FOR_TAO
+Monotonic_Manual_Event_Test
 Monotonic_Message_Queue_Test: !ACE_FOR_TAO
 Monotonic_Task_Test: !ACE_FOR_TAO
 Multicast_Test: !ST !NO_MCAST !nsk !LynxOS !LabVIEW_RT

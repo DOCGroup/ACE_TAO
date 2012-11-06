@@ -1,3 +1,45 @@
+Tue Nov  6 10:55:47 UTC 2012  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/OS_NS_Thread.h:
+        * ace/OS_NS_Thread.inl:
+        * ace/OS_NS_Thread.cpp:
+          Extended OS wrappers for event and sema with
+          variants excepting condition attributes.
+
+        * ace/Event_Base.h:
+        * ace/Event_Base.inl:
+        * ace/Event_Base.cpp:
+          Added non-template base class for events.
+
+        * ace/Auto_Event.h:
+        * ace/Auto_Event.inl:
+        * ace/Auto_Event.cpp:
+        * ace/Event.h:
+        * ace/Event.inl:
+        * ace/Event.cpp:
+        * ace/Manual_Event.h:
+        * ace/Manual_Event.inl:
+        * ace/Manual_Event.cpp:
+          Refactored into TIME_POLICY based templates.
+          Added inlined derived classes of default
+          template instantiations to satisfy old code.
+
+        * ace/ace.mpc:
+          Reflect fact that Event classes are now templates.
+          Added new Event base class.
+
+        * docs/ACE-monotonic-timer.html:
+          Added documentation concerning Event changes.
+
+        * tests/Manual_Event_Test.cpp:
+          Removed dead code.
+
+        * tests/Monotonic_Manual_Event_Test.cpp:
+        * tests/run_test.lst:
+        * tests/tests.mpc:
+          Added new regression test for time policy
+          support of events.
+
 Tue Oct 30 07:48:18 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * rpmbuild/ace-tao.spec:
