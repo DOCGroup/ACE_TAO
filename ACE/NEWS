@@ -1,6 +1,16 @@
 USER VISIBLE CHANGES BETWEEN ACE-6.1.5 and ACE-6.1.6
 ====================================================
 
+. Added new event and sema initialization methods to OS_NS_Thread
+  to allow passing pre-initialized condition attributes providing
+  basic support for using time policies in ACE Event classes.
+
+. Added TIME_POLICY support to ACE_Event classes to allow for
+  monotonic timer support for ACE Events.
+
+. Added new regression test:
+  Monotonic_Manual_Event_Test
+
 USER VISIBLE CHANGES BETWEEN ACE-6.1.4 and ACE-6.1.5
 ====================================================
 
