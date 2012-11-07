@@ -188,9 +188,9 @@ ACE_OS::condattr_synctype (ACE_condattr_t &attributes, int& type)
 {
 # if defined (ACE_HAS_THREADS)
 #   if defined (ACE_HAS_PTHREADS)
+#   if !defined (ACE_LACKS_CONDATTR) && defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_CONDATTR_PSHARED)
   int result = -1;
 
-#   if !defined (ACE_LACKS_CONDATTR) && defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_CONDATTR_PSHARED)
   if (
       ACE_ADAPT_RETVAL (pthread_condattr_getpshared (&attributes, &type),
                            result) == 0
@@ -199,6 +199,7 @@ ACE_OS::condattr_synctype (ACE_condattr_t &attributes, int& type)
       result = 0;
     }
 #   else
+  ACE_UNUSED_ARG (attributes);
   type = USYNC_THREAD;
   result = 0;
 #   endif /* !ACE_LACKS_CONDATTR && _POSIX_THREAD_PROCESS_SHARED && ! ACE_LACKS_CONDATTR_PSHARED */
