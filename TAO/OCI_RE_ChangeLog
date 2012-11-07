@@ -1,3 +1,9 @@
+Wed Nov  7 18:04:55 UTC 2012  Brian Johnson  <johnsonb@ociweb.com>
+
+        * tests/POA/Non_Retain_System_Id/Non_Retain_System_Id.mpc:
+
+          Changed project name to avoid collision (and to make sense).
+
 Mon Nov  5 22:58:02 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/PortableServer/ServantRetentionStrategyNonRetain.h:
