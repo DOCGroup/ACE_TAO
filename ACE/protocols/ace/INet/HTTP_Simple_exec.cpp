@@ -35,7 +35,11 @@ usage (void)
   std::cout << "\t-p <port>       \t\tproxy port to connect to\n";
   std::cout << "\t-o <filename>   \t\tfile to write output to\n";
 #if defined (ACE_HAS_SSL) && ACE_HAS_SSL == 1
-  std::cout << "\t-v <ssl version>\t\tSSL version to use: 2, 23, 3\n";
+  std::cout << "\t-v <ssl version>\t\tSSL version to use: ";
+#if !defined (OPENSSL_NO_SSL2)
+  std::cout << "2, ";
+#endif /* OPENSSL_NO_SSL2 */
+  std::cout << "23, 3\n";
   std::cout << "\t-n              \t\tno peer certificate verification\n";
   std::cout << "\t-i              \t\tignore peer certificate verification failures\n";
   std::cout << "\t-c <filename>   \t\tcertificate file (PEM format)\n";
@@ -78,10 +82,12 @@ parse_args (int argc, ACE_TCHAR *argv [])
         case 'v':
           {
             ACE_CString ver = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ());
-            if (ver == "2")
-              ssl_mode = ACE_SSL_Context::SSLv2;
-            else if (ver == "23")
+            if (ver == "23")
               ssl_mode = ACE_SSL_Context::SSLv23;
+#if !defined (OPENSSL_NO_SSL2)
+            else if (ver == "2")
+              ssl_mode = ACE_SSL_Context::SSLv2;
+#endif /* ! OPENSSL_NO_SSL2*/
             else if (ver != "3") // default mode
               {
                 std::cerr << "ERROR: Invalid SSL mode [" << ver << "] specfied!" << std::endl;
