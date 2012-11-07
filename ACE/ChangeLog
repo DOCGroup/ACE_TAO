@@ -1,3 +1,15 @@
+Wed Nov  7 13:51:14 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/SSL/SSL_Context.h:
+        * ace/SSL/SSL_Context.cpp:
+        * protocols/ace/INet/HTTP_Simple_exec.cpp:
+          Resolve compile problems with OpenSSL on recent debian/ubuntu
+          versions which don't ship SSLv2 anymore
+
+        * debian/patches/series:
+        * debian/patches/35_disable_sslv2.diff:
+          Patch is not needed anymore
+
 Sat Oct 20 14:13:07 UTC 2012  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/Timer_Hash_T.h: Added a forward declaration of
