@@ -82,7 +82,7 @@ PeerProcess::is_server (void) const
   return this->server_;
 }
 
-bool
+void
 PeerProcess::ssl (bool is_ssl)
 {
   this->ssl_ = is_ssl;

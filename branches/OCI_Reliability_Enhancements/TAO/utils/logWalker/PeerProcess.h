@@ -55,7 +55,7 @@ public:
   const ACE_CString &last_client_addr (void) const;
 
   bool is_server (void) const;
-  bool ssl (bool is_ssl);
+  void ssl (bool is_ssl);
   void add_transport (Transport *t);
   Transport *last_transport (void);
   Transport *find_transport (long handle);
