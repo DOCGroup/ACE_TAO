@@ -1,3 +1,10 @@
+Thu Nov  8 21:57:49 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * utils/logWalker/GIOP_Buffer.h:
+        * utils/logWalker/GIOP_Buffer.cpp:
+
+          Adding new files missed by the previous commit.
+
 Thu Nov  8 21:51:42 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * utils/logWalker/HostProcess.h:
