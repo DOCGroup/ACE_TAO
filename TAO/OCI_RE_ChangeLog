@@ -1,3 +1,10 @@
+Thu Nov  8 22:03:59 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * utils/logWalker/PeerProcess.h:
+        * utils/logWalker/PeerProcess.cpp:
+
+          Fix a warning not caught in the TAO 2.0a build.
+
 Thu Nov  8 21:57:49 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * utils/logWalker/GIOP_Buffer.h:
