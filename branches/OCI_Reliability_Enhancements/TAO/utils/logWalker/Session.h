@@ -33,9 +33,6 @@ public:
 
   static bool set_tao_version (ACE_TCHAR *str);
   static long tao_version (void);
-  static int date_format (void);
-  static bool set_date_format (ACE_TCHAR *ser);
-
   void alternate_address (const char *string);
   void default_service (const char *string);
 
@@ -56,7 +53,6 @@ private:
   ACE_CString base_dir_;
   ACE_CString outfile_;
   static long tao_version_;
-  static int date_format_;
 };
 
 #endif // LOG_WALKER_SESSION_H

@@ -8,10 +8,14 @@
 
 #include "ace/SString.h"
 #include "ace/CDR_Stream.h"
+#include "ace/Unbounded_Queue.h"
 
 class PeerProcess;
 class PeerObject;
 class Thread;
+class GIOP_Buffer;
+
+typedef ACE_Unbounded_Queue<ACE_CString> NotifyIncidents;
 
 // Invocation holds the buffer contents for a request/response pair.
 // This could be originating in this process, or in the peer process.
@@ -33,68 +37,6 @@ class Thread;
 class Invocation
 {
 public:
-  class GIOP_Buffer
-  {
-  public:
-    GIOP_Buffer (const char *text, size_t offset, Thread *thread, Invocation *owner = 0);
-    ~GIOP_Buffer (void);
-    void owner (Invocation *);
-    Invocation *owner (void);
-    void init_buf (const char *text);
-    int add_octets(const char *text);
-    char type (void) const;
-    char expected_type (void) const;
-    bool sending (void) const;
-    char minor_version (void) const;
-    char reply_status (void) const;
-    size_t num_contexts (void) const;
-    bool is_oneway (void);
-    bool is_full (void) const;
-    size_t log_posn (void) const;
-    Thread *thread (void);
-    time_t time (void) const;
-
-    const ACE_CString &preamble(void) const;
-    size_t expected_req_id(void) const;
-    size_t actual_req_id(void);
-    size_t expected_size (void) const;
-    size_t size (void) const;
-    size_t cur_size(void) const;
-    const char * target_oid (size_t &len);
-    const char * operation (void);
-    bool validate (void);
-    bool matches (GIOP_Buffer *other) const;
-    void reset (void);
-    void transfer_from (GIOP_Buffer *other);
-
-  private:
-    bool parse_svc_contexts (ACE_InputCDR& cdr);
-    bool parse_header (void);
-
-    ACE_CString preamble_;
-    size_t log_offset_;
-    Thread *thr_;
-    time_t time_;
-    size_t expected_req_id_;
-    size_t expected_size_;
-    char   expected_type_;
-    size_t size_;
-    char * wr_pos_;
-    char * octets_;
-    Invocation *owner_;
-    bool buffer_lost_;
-    bool sending_;
-    char * oid_;
-    size_t oid_len_;
-    char * opname_;
-    size_t req_id_;
-    char   resp_exp_;
-    size_t reply_status_;
-    char   ver_minor_;
-    size_t  num_contexts_;
-    bool header_parsed_;
-  };
-
   enum Dump_Mode {
     Dump_Proc,
     Dump_Thread,
@@ -102,14 +44,12 @@ public:
   };
 
   // initialize a new instance, with the initial request text line and offeset
-  Invocation (PeerProcess *peer, long handle, size_t req_id = 0);
+  Invocation (PeerProcess *peer, Thread *thr, size_t req_id = 0);
   bool init ( const char * text, size_t offset, Thread *thr);
   ~Invocation (void);
 
   // return true if the invocation was a oneway
   bool is_oneway(void) const;
-
-  void set_target (const char *oid, size_t oid_len);
 
   // return true if the request is a oneway and has all its octets, or
   // if it also has all its reply octets. The side-effect of this call
@@ -119,9 +59,16 @@ public:
 
   size_t request_id (void) const;
 
+  // returns true if this request was sent by the host process.
+  bool sent_request (void) const;
+
   // returns the size parsed from either the request or reply preamble
   // which can be used to match a HEXDUMP b
   size_t expected_size (void) const;
+
+  size_t request_bytes (void) const;
+
+  void set_target (const char *oid, size_t oid_len);
 
   void set_octets (bool request, GIOP_Buffer *octets);
   GIOP_Buffer *octets (bool request);
@@ -130,14 +77,19 @@ public:
   bool contains (size_t line);
   size_t req_line (void);
 
+  void add_notify_incident (const ACE_CString &text, size_t offset);
+  Thread *waiter (void) const;
   long handle (void) const;
 
   void dump_detail (ostream &strm, int indent, Dump_Mode mode, bool show_handle);
+  void dump_special_details (ostream &strm, const char *opname);
 
 private:
   GIOP_Buffer *req_octets_;
   GIOP_Buffer *repl_octets_;
 
+  Thread *waiter_;
+  NotifyIncidents notify_incidents_;
   PeerProcess *peer_;
   size_t req_id_;
   PeerObject *target_;

@@ -20,11 +20,11 @@ Transport::Transport (const char *addr, bool is_client, size_t offset)
 }
 
 char *
-PeerProcess::nextIdent(void)
+PeerProcess::nextIdent(bool is_server)
 {
   static int count = 0;
   char *ident = new char[15];
-  ACE_OS::sprintf (ident,"proc_%d", count++);
+  ACE_OS::sprintf (ident,"%s_%d", (is_server ? "server" : "client"), count++);
   return ident;
 }
 
@@ -33,10 +33,12 @@ PeerProcess::PeerProcess (size_t offset, bool is_server)
     remote_ (0),
     server_addr_(),
     server_(is_server),
+    ssl_(false),
     origin_offset_ (offset),
-    objects_ ()
+    objects_ (),
+    object_by_index_ ()
 {
-  this->ident_ = PeerProcess::nextIdent();
+  this->ident_ = PeerProcess::nextIdent(is_server);
 }
 
 PeerProcess::~PeerProcess (void)
@@ -54,18 +56,10 @@ PeerProcess::~PeerProcess (void)
         break;
       delete entry->item();
     }
-  for (TransportList::ITERATOR i(this->transports_); !i.done(); i++)
-    {
-      ACE_DLList_Node *entry;
-      if (i.next(entry) == 0)
-        break;
-      //i.remove ();
-      delete reinterpret_cast<Transport*>(entry->item_);
-    }
 }
 
 void
-PeerProcess::set_server_addr (const char *addr)
+PeerProcess::set_server_addr (const ACE_CString &addr)
 {
   this->server_addr_ = addr;
 }
@@ -86,6 +80,12 @@ bool
 PeerProcess::is_server (void) const
 {
   return this->server_;
+}
+
+bool
+PeerProcess::ssl (bool is_ssl)
+{
+  this->ssl_ = is_ssl;
 }
 
 void
@@ -161,8 +161,9 @@ PeerProcess::object_for (const char *oid, size_t len)
       long index = static_cast<long>(objects_.current_size());
       char alias[20];
       ACE_OS::sprintf (alias, "obj_%ld", index);
-      po = new PeerObject(index,alias, this);
+      po = new PeerObject(index, alias, this);
       objects_.bind(key, po);
+      object_by_index_.bind (index, po);
     }
   return po;
 }
@@ -172,7 +173,7 @@ PeerProcess::new_invocation (size_t req_id, Thread *thr)
 {
   if (this->find_invocation (req_id, thr->active_handle()) != 0)
     return 0;
-  Invocation *inv = new Invocation (this, thr->active_handle(), req_id);
+  Invocation *inv = new Invocation (this, thr, req_id);
   this->invocations_.insert_tail(inv);
   thr->add_invocation (inv);
   return inv;
@@ -236,6 +237,8 @@ PeerProcess::dump_summary (ostream &strm)
   else
     strm << "  peer process " << this->ident_;
   strm << " is a ";
+  if (this->ssl_)
+    strm << "secure ";
   if (this->server_)
     strm << "server at ";
   else
@@ -252,7 +255,7 @@ PeerProcess::dump_summary (ostream &strm)
       Transport *tran = 0;
       i.next(tran);
       strm << "    connection[" << tran->handle_ << "] ";
-      strm << (tran->local_is_client_ ? "from " : "to ");
+      strm << (tran->local_is_client_ ? "to " : "from ");
       strm << tran->client_endpoint_;
       strm << " created line " << tran->open_offset_;
       if (tran->close_offset_)
@@ -265,18 +268,22 @@ void
 PeerProcess::dump_object_detail (ostream &strm)
 {
   strm << this->objects_.current_size()
-       << " Objects referenced in ";
+       << " Objects referenced";
+  if (this->server_)
+    strm << " in ";
+  else
+    strm << " by ";
   if (this->remote_)
     strm << remote_->proc_name();
   else
-    strm << " peer process " << this->ident_;
+    strm << "peer process " << this->ident_;
   strm << ":" << endl;
   size_t count_inv = 0;
-  for (PeerObjectTable::ITERATOR i = this->objects_.begin();
-       i != this->objects_.end();
-       i++)
+  for (ObjectByIndex::ITERATOR i = this->object_by_index_.begin();
+       !i.done();
+       i.advance())
     {
-      PeerObjectTable::ENTRY *entry = 0;
+      ObjectByIndex::ENTRY *entry = 0;
       i.next (entry);
       PeerObject *obj = entry->item();
       obj->dump_detail (strm);
@@ -288,7 +295,8 @@ PeerProcess::dump_object_detail (ostream &strm)
 void
 PeerProcess::dump_invocation_detail (ostream &strm)
 {
-  strm << "\n " << this->invocations_.size() << " Invocations with ";
+  strm << "\n " << this->invocations_.size() << " Invocations ";
+  strm << (this->server_ ? "to " : "from ");
   if (this->remote_)
     strm << remote_->proc_name();
   else
