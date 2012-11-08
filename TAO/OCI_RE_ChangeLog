@@ -1,3 +1,24 @@
+Thu Nov  8 21:51:42 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * utils/logWalker/HostProcess.h:
+        * utils/logWalker/HostProcess.cpp:
+        * utils/logWalker/Invocation.h:
+        * utils/logWalker/Invocation.cpp:
+        * utils/logWalker/Log.h:
+        * utils/logWalker/Log.cpp:
+        * utils/logWalker/PeerObject.cpp:
+        * utils/logWalker/PeerProcess.h:
+        * utils/logWalker/PeerProcess.cpp:
+        * utils/logWalker/Session.h:
+        * utils/logWalker/Session.cpp:
+        * utils/logWalker/Thread.h:
+        * utils/logWalker/Thread.cpp:
+        * utils/logWalker/logWalker.cpp:
+
+          Bringing over changes from OCI TAO 2.0a aimed at improving the
+          ability to handle logs from heavily threaded processes and for
+          inspecting some request contents for common service operations.
+
 Wed Nov  7 18:04:55 UTC 2012  Brian Johnson  <johnsonb@ociweb.com>
 
         * tests/POA/Non_Retain_System_Id/Non_Retain_System_Id.mpc:
