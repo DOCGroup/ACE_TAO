@@ -1,3 +1,21 @@
+Fri Nov  9 21:20:45 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
+
+        * orbsvcs/Naming_Service/FT_Naming_Main.cpp:
+        * orbsvcs/Naming_Service/FT_Naming_Service.h:
+        * orbsvcs/Naming_Service/FT_Naming_Service.cpp:
+
+          Add main and server files to implement the FT_Naming_Service and provide
+          refined implementation of the factory method in the FT_Naming_Service.
+          
+        * orbsvcs/orbsvcs/Naming/Naming_Context_Factory.h:
+        * orbsvcs/orbsvcs/Naming/Naming_Context_Factory.cpp:
+        * orbsvcs/orbsvcs/Naming/Persistent_Naming_Context_Factory.h:
+        * orbsvcs/orbsvcs/Naming/Persistent_Naming_Context_Factory.cpp:
+
+          Add new files to support the abstract factory pattern in the naming service.
+          Persistent_Naming_Context_Factory is the default used in the existing naming
+          service.
+
 Fri Nov  9 19:35:51 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
 
         * MPC/config/ftnaming.mpb:
@@ -7,29 +25,29 @@ Fri Nov  9 19:35:51 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
         * orbsvcs/Naming_Service/Naming_Service.h:
         * orbsvcs/Naming_Service/Naming_Service.cpp:
 
-          Refactored to support the use of derived TAO_Naming_Service objects.  
-          Added factory method operation to allow the derived object to be 
+          Refactored to support the use of derived TAO_Naming_Service objects.
+          Added factory method operation to allow the derived object to be
           constructed and used.
 
         * orbsvcs/Naming_Service/Naming_Service.mpc:
 
           Added FT_Naming_Service project.
-          
+
         * orbsvcs/orbsvcs/FT_NamingManager.idl:
-        
-          Define IDL to be used in FT_Naming_Service to define an aggregated 
-          interface for PropertyManager, ObjectGroupManager, GenericFactory to 
-          support the management of ObjectGroups used in the naming service to 
+
+          Define IDL to be used in FT_Naming_Service to define an aggregated
+          interface for PropertyManager, ObjectGroupManager, GenericFactory to
+          support the management of ObjectGroups used in the naming service to
           provide a load balancing resolve operation
-          
+
         * orbsvcs/orbsvcs/FtNaming.mpc:
-        
-          Provide a base library for the fault tolerant and load balancing 
+
+          Provide a base library for the fault tolerant and load balancing
           features in the FT_Naming_Service.
 
         * orbsvcs/orbsvcs/Naming/FaultTolerant:
-        
-          Directory to hold the new FT_Naming_Service base component implementation 
+
+          Directory to hold the new FT_Naming_Service base component implementation
           source.
 
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.h:
@@ -42,11 +60,11 @@ Fri Nov  9 19:35:51 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Persistent_Naming_Context_Factory.cpp:
         * orbsvcs/orbsvcs/Naming/FaultTolerant/ftnaming_export.h:
 
-          Implements the FT_Naming_Service base classes. Specializes the 
-          Persistent_Naming_Context to implement the load balancing feature.  
-          The FT_Naming_Manager provides functionality to create and otherwise 
+          Implements the FT_Naming_Service base classes. Specializes the
+          Persistent_Naming_Context to implement the load balancing feature.
+          The FT_Naming_Manager provides functionality to create and otherwise
           manage object groups.
-          
+
         * orbsvcs/orbsvcs/Naming/Naming_Loader.h:
         * orbsvcs/orbsvcs/Naming/Naming_Loader.cpp:
         * orbsvcs/orbsvcs/Naming/Naming_Server.h:
@@ -56,15 +74,15 @@ Fri Nov  9 19:35:51 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
         * orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.h:
         * orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.cpp:
 
-          Refactoring of the Naming service base components to allow specialization 
+          Refactoring of the Naming service base components to allow specialization
           as required by the FT_Naming_Service.
-          
+
         * orbsvcs/orbsvcs/cosnaming_serv_persistence.mpb:
 
-          Added the Naming_Context_Factory as an abstract factory base class and 
-          the Persistent_Naming_Context_Factory as a concrete implementation of 
+          Added the Naming_Context_Factory as an abstract factory base class and
+          the Persistent_Naming_Context_Factory as a concrete implementation of
           the abstract factory class.
-          
+
 Thu Nov  8 22:03:59 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * utils/logWalker/PeerProcess.h:
