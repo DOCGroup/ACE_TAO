@@ -1,3 +1,13 @@
+Fri Nov  9 22:03:39 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/Naming_Loader.cpp:
+
+          Fix incorrect capitalization for included file.
+          
+        * tao/PortableServer/ServantRetentionStrategyNonRetain.cpp:
+
+          Fixed missing include and deal with mismatch in size expectations for time_t.
+          
 Fri Nov  9 21:20:45 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
 
         * orbsvcs/Naming_Service/FT_Naming_Main.cpp:
@@ -6,7 +16,7 @@ Fri Nov  9 21:20:45 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
 
           Add main and server files to implement the FT_Naming_Service and provide
           refined implementation of the factory method in the FT_Naming_Service.
-          
+
         * orbsvcs/orbsvcs/Naming/Naming_Context_Factory.h:
         * orbsvcs/orbsvcs/Naming/Naming_Context_Factory.cpp:
         * orbsvcs/orbsvcs/Naming/Persistent_Naming_Context_Factory.h:

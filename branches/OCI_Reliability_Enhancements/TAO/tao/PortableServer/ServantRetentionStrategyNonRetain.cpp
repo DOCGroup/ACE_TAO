@@ -18,6 +18,7 @@
 #include "tao/debug.h"
 
 #include "ace/Time_Value.h"
+#include "ace/OS_NS_sys_time.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -212,7 +213,7 @@ namespace TAO
         count;
 
       *reinterpret_cast<ACE_UINT32 *>(sys_id->get_buffer() + 4) =
-        now.sec();
+        static_cast<ACE_UINT32>(now.sec());
 
       system_id = sys_id;
 
