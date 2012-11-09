@@ -18,7 +18,7 @@
 #include "ace/Argv_Type_Converter.h"
 
 #include "orbsvcs/Naming/Naming_Server.h"
-#include "orbsvcs/Naming/Naming_Context_factory.h"
+#include "orbsvcs/Naming/Naming_Context_Factory.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
