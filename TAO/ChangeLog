@@ -1,3 +1,15 @@
+Fri Nov  9 12:06:03 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Simple/time/Time_Client_i.cpp:
+          Don't shutdown the orb, the client template already does
+          that
+
+        * examples/Simple/time/server.cpp:
+          Layout changes
+
+        * examples/Simple/Simple_util.cpp:
+          Fixed memory leak
+
 Tue Nov  6 14:06:48 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * NEWS:

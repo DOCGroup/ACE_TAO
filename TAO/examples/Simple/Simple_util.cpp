@@ -273,7 +273,7 @@ Client<ServerInterface>::read_ior (ACE_TCHAR *filename)
                        ACE_TEXT ("open")),
                       -1);
 
-  ACE_Read_Buffer ior_buffer (f_handle);
+  ACE_Read_Buffer ior_buffer (f_handle, true);
   char *data = ior_buffer.read ();
 
   if (data == 0)
