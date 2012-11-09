@@ -17,19 +17,21 @@
 #include "ace/Dynamic_Service.h"
 #include "ace/Argv_Type_Converter.h"
 
-
-
+#include "orbsvcs/Naming/Naming_Server.h"
+#include "orbsvcs/Naming/Naming_Context_factory.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Naming_Loader::TAO_Naming_Loader (void)
+: naming_server_(0)
 {
   // Constructor
 }
 
 TAO_Naming_Loader::~TAO_Naming_Loader (void)
 {
-  // Destructor
+  // Destroy the naming server that was created
+  delete naming_server_;
 }
 
 int
@@ -63,7 +65,7 @@ int
 TAO_Naming_Loader::fini (void)
 {
   // Remove the Naming Service.
-  return this->naming_server_.fini ();
+  return this->naming_server_->fini ();
 }
 
 CORBA::Object_ptr
@@ -73,7 +75,7 @@ TAO_Naming_Loader::create_object (CORBA::ORB_ptr orb,
 {
   // Initializes the Naming Service. Returns -1
   // on an error.
-  if (this->naming_server_.init_with_orb (argc, argv, orb) == -1)
+  if (this->naming_server_->init_with_orb (argc, argv, orb) == -1)
     return CORBA::Object::_nil ();
 
   return CORBA::Object::_nil ();
