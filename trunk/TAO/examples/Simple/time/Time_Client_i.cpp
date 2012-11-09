@@ -56,9 +56,6 @@ Time_Client_i::run (const char *name,
 
       if (client_.do_shutdown () == 1)
         client_->shutdown ();
-
-      CORBA::ORB_var orb = client_.orb ();
-      orb->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {
