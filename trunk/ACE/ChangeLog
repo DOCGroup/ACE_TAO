@@ -1,3 +1,10 @@
+Fri Nov  9 10:29:37 UTC 2012  Martin Corino  <mcorino@remedy.nl>
+
+        * tests/Monotonic_Manual_Event_Test.cpp:
+        * tests/Monotonic_Message_Queue_Test.cpp:
+        * tests/Monotonic_Task_Test.cpp:
+          Narrowing down the selection test for supported platforms.
+
 Fri Nov  9 08:28:23 UTC 2012  Martin Corino  <mcorino@remedy.nl>
 
         * ace/OS_NS_Thread.inl:
