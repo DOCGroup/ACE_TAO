@@ -1,0 +1,11 @@
+
+project(nsgroup): orbsvcsexe, portablegroup, ftnaming, naming, install, svc_utils {
+  install = $(ACE_ROOT)/bin
+  exename = tao_nsgroup
+  Source_Files {
+    nsgroup.cpp
+    nsgroup_svc.cpp
+  }
+}
+
+

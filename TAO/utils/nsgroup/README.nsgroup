@@ -1,0 +1,10 @@
+tao_nsgroup group_create  -group <group> -policy <round | rand | least> -type_id <type_id>
+tao_nsgroup group_bind    -group <group> -namepath <path>
+tao_nsgroup group_modify  -group <group> -policy <round | rand | least>
+tao_nsgroup group_list    -location <location>
+tao_nsgroup group_remove  -group <group>
+tao_nsgroup member_list   -group <group>
+tao_nsgroup member_add    -group <group> -member <member> -location <location> -ior <IOR>
+tao_nsgroup member_remove -group <group> -member <member> -location <location>
+tao_nsgroup member_show   -group <group> -member <member> -location <location>
+tao_nsgroup -help
