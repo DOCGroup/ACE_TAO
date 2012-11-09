@@ -200,8 +200,8 @@ ACE_OS::condattr_synctype (ACE_condattr_t &attributes, int& type)
     }
 #   else
   ACE_UNUSED_ARG (attributes);
+  int result = 0;
   type = USYNC_THREAD;
-  result = 0;
 #   endif /* !ACE_LACKS_CONDATTR && _POSIX_THREAD_PROCESS_SHARED && ! ACE_LACKS_CONDATTR_PSHARED */
 
   return result;
