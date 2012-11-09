@@ -2,6 +2,7 @@
 
 #include "Naming_Service.h"
 
+#include "orbsvcs/Naming/Naming_Server.h"
 #include "orbsvcs/Daemon_Utilities.h"
 #include "ace/Get_Opt.h"
 #include "ace/Argv_Type_Converter.h"
@@ -10,14 +11,16 @@
 // Default Constructor.
 TAO_Naming_Service::TAO_Naming_Service (void)
   : time_ (0),
-    num_threads_ (1)
+    num_threads_ (1),
+    my_naming_server_(0)
 {
 }
 
 // Constructor taking command-line arguments.
 TAO_Naming_Service::TAO_Naming_Service (int argc, ACE_TCHAR* argv[])
   : time_ (0),
-    num_threads_ (1)
+    num_threads_ (1),
+    my_naming_server_(0)
 {
   this->init (argc, argv);
 }
@@ -41,14 +44,19 @@ TAO_Naming_Service::init (int argc, ACE_TCHAR* argv[])
       // arguments.
       this->parse_args (argc, argv);
 
+      // Factory method used to construct a naming server to be used in 
+      // creation and initialization of the naming service components 
+      this->my_naming_server_ = this->create_naming_server ();
+
       // This function call initializes the naming service and returns
       // '-1' in case of an exception.
-      int const result = this->my_naming_server_.init_with_orb (argc,
+      int const result = this->my_naming_server_->init_with_orb (argc,
                                                                 argv,
                                                                 this->orb_.in ());
 
       if (result == -1)
         return result;
+
     }
   catch (const CORBA::Exception& ex)
     {
@@ -172,7 +180,7 @@ TAO_Naming_Service::shutdown (void)
 int
 TAO_Naming_Service::fini (void)
 {
-  this->my_naming_server_.fini();
+  this->my_naming_server_->fini();
 
   try
   {
@@ -190,8 +198,18 @@ TAO_Naming_Service::fini (void)
   return 0;
 }
 
+/// Factory method used to create a server object for the naming service
+TAO_Naming_Server* 
+TAO_Naming_Service::create_naming_server ()
+{
+  // Default behavior is to use the Naming_Server located in orbsvcs\orbsvcs\Naming
+  return new (ACE_nothrow) TAO_Naming_Server;
+}
+
+
 // Destructor.
 TAO_Naming_Service::~TAO_Naming_Service (void)
 {
-  // Destructor
+  // Invoke destructor of naming server which was created using the factory method
+  delete this->my_naming_server_;    
 }

@@ -2,6 +2,7 @@
 
 #include "orbsvcs/Naming/Naming_Server.h"
 #include "orbsvcs/Naming/Transient_Naming_Context.h"
+#include "orbsvcs/Naming/Persistent_Naming_Context_Factory.h"
 
 #if !defined (CORBA_E_MICRO)
 #include "orbsvcs/Naming/Persistent_Context_Index.h"
@@ -527,9 +528,15 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
         // Initialize Persistent Naming Service.
         //
         {
+
+          // Create Naming Context Implementation Factory to be used for the creation of
+          // naming contexts by the TAO_Persistent_Context_Index
+          TAO_Naming_Context_Factory *naming_context_factory = 0;
+          ACE_NEW_RETURN (naming_context_factory, TAO_Persistent_Naming_Context_Factory, -1);
+          
           // Allocate and initialize Persistent Context Index.
           ACE_NEW_RETURN (this->context_index_,
-                          TAO_Persistent_Context_Index (orb, poa),
+                          TAO_Persistent_Context_Index (orb, poa, naming_context_factory),
                           -1);
 
           if (this->context_index_->open (persistence_location,

@@ -1,0 +1,33 @@
+/* -*- IDL -*- */
+//=============================================================================
+/**
+ *  @file    FT_NamingManager.idl
+ *
+ *  $Id$
+ *
+ *  This file is part of Fault Tolerant Naming Service.
+ *
+ *  @author Kevin Stanley <stanleyk@ociweb.com>
+ */
+//=============================================================================
+
+#ifndef _FT_NAMING_MANAGER_IDL_
+#define _FT_NAMING_MANAGER_IDL_
+
+#include "orbsvcs/PortableGroup.idl"
+
+#pragma prefix "omg.org"
+
+module FT
+{
+  // Specification of NamingManager Interface
+  interface NamingManager : ::PortableGroup::PropertyManager,
+                            ::PortableGroup::ObjectGroupManager,
+                            ::PortableGroup::GenericFactory
+  {
+
+  };
+};
+
+
+#endif // _FT_NAMING_MANAGER_IDL_
