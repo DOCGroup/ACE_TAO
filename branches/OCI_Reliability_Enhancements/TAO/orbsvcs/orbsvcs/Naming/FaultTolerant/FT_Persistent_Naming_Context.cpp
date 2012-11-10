@@ -46,51 +46,6 @@ TAO_FT_Persistent_Naming_Context::is_object_group (CORBA::Object_ptr obj) const
 }
 
 
-void 
-TAO_FT_Persistent_Naming_Context::bind (const CosNaming::Name &n,
-                                        CORBA::Object_ptr obj)
-{
-  if ( this->naming_manager_impl_ == 0)
-  {
-    ACE_ERROR ((LM_ERROR, 
-      "TAO_FT_Persistent_Naming_Context::resolve - Nil Naming Manager\n"));
-
-    return;
-  }
-        
-  /// factory id for the object group.
-  PortableGroup::GenericFactory::FactoryCreationId_var fcid_;
-  const char *repository_id = "IDL:Test_Object:1.0";
-
-  PortableGroup::Criteria criteria (1);
-  criteria.length (1);
-
-  PortableGroup::Property &property = criteria[0];
-  property.nam.length (1);
-
-  property.nam[0].id =
-    CORBA::string_dup ("org.omg.PortableGroup.MembershipStyle");
-
-  PortableGroup::MembershipStyleValue msv =
-    PortableGroup::MEMB_APP_CTRL;
-  property.val <<= msv;
-
-  // Create an object group for the object.
-  // add the object to the group
-  PortableGroup::ObjectGroup_var group =
-    this->naming_manager_impl_->create_object (repository_id, criteria, fcid_.out ());
- 
-  // Add the object to the group
-  PortableGroup::Location location;
-  location.length (1);
-  location[0].id = CORBA::string_dup ("Location 1");
-
-  this->naming_manager_impl_->add_member (group, location, obj);
-
-  TAO_Persistent_Naming_Context::bind (n, group.in ());
-
-}
-
 
 CORBA::Object_ptr
 TAO_FT_Persistent_Naming_Context::resolve (const CosNaming::Name& n)

@@ -127,6 +127,12 @@ namespace TAO
     int find_group (PortableGroup::ObjectGroup_ptr object_group, ::TAO::PG_Object_Group *& group) const;
 
     /**
+     * find group with the property with the designated value
+     * @return bool true if found
+     */
+    int find_group (const PortableGroup::Property&, ::TAO::PG_Object_Group *& group);
+
+    /**
      * remove group from map and delete it.
      * @return bool true if found
      */

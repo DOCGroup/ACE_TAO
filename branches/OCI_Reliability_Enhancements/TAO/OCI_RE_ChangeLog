@@ -1,13 +1,44 @@
+Sat Nov 10 20:45:07 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
+
+        * orbsvcs/orbsvcs/FT_NamingManager.idl:
+        
+          Add operations to create and destroy object groups as well
+          as find object groups by name.
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Persistent_Naming_Context.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Persistent_Naming_Context.cpp:
+
+          Provide implementations for the new operations defined in the FT_NamingManager.idl
+          for object group creation, deletion and retrieval by name.
+          
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_Factory.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_Factory.cpp:
+
+          Add an operation to find an object group with a matching property. 
+          Primarily used to lookup an object group with a TAO_FT_OBJECT_GROUP_NAME
+          property set to the object group name.
+          
+        * utils/nsgroup/nsgroup_svc.cpp:
+        
+          Update to use the new create, delete and find operations by name.
+          
+        * utils/nsgroup/run_test.pl:
+
+          Modifications to tests use naming manager instead of load manager.
+          
 Fri Nov  9 22:03:39 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/Naming_Loader.cpp:
 
           Fix incorrect capitalization for included file.
-          
+
         * tao/PortableServer/ServantRetentionStrategyNonRetain.cpp:
 
           Fixed missing include and deal with mismatch in size expectations for time_t.
-          
+
 Fri Nov  9 21:20:45 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
 
         * orbsvcs/Naming_Service/FT_Naming_Main.cpp:

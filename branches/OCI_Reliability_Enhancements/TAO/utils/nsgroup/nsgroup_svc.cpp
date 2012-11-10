@@ -388,7 +388,7 @@ NS_group_svc::lookup_object_group (const char *group_id)
     return 0;
   }
 
-  return this->naming_manager_->get_object_group_ref_from_id (id);
+  return this->naming_manager_->get_object_group_ref_from_name (group_id);
 }
 
 int
@@ -420,17 +420,17 @@ NS_group_svc::show_usage( void )
 
 int
 NS_group_svc::group_create (
-  const char* group,
+  const char* group_name,
   const char* type_id,
   const char* policy )
 {
 
-  if ( group == 0 || type_id == 0 || policy == 0 )
+  if ( group_name == 0 || type_id == 0 || policy == 0 )
   {
     return -1;
   }
 
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) nsgroup - group_create(%s,%s,%s)\n", group, type_id, policy));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) nsgroup - group_create(%s,%s,%s)\n", group_name, type_id, policy));
 
   try
     {
@@ -447,9 +447,9 @@ NS_group_svc::group_create (
       PortableGroup::MembershipStyleValue msv = PortableGroup::MEMB_APP_CTRL;
       property.val <<= msv;
 
-      CORBA::Object_var obj = this->naming_manager_->create_object ( type_id,
-                                                      criteria,
-                                                      this->fcid_.out ());
+      CORBA::Object_var obj = this->naming_manager_->create_object_group (group_name,
+                                                                          type_id,
+                                                                          criteria);
 
       if (CORBA::is_nil (obj.in ()))
       {
@@ -616,29 +616,23 @@ NS_group_svc::group_modify (
  * Removes the specified object group from the naming service.
  */
 int
-NS_group_svc::group_remove (const char* group)
+NS_group_svc::group_remove (const char* group_name)
 {
-  if (group == 0)
+  if (group_name == 0)
   {
     return -1;
   }
 
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) nsgroup - group_remove(%s)\n", group));
-
-  PortableGroup::ObjectGroup_ptr group_ptr = lookup_object_group (group);
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) nsgroup - group_remove(%s)\n", group_name));
 
   try
   {
-    // TAO_PG_PropertyManager::set_properties_dynamically throws CORBA::NO_IMPLEMENT ()
-    //this->naming_manager_->set_properties_dynamically (group_ptr, props);
+    this->naming_manager_->delete_object_group (group_name);
   }
   catch (const CORBA::Exception& ex)
   {
     ex._tao_print_exception ("NS_group_svc group_remove exception");
   }
-
-  // TODO validate release always occurs regardless of exceptions
-  CORBA::release (group_ptr);
 
   return 0;
 }

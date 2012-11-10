@@ -11,7 +11,7 @@
 //=============================================================================
 
 #include "orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.h"
-
+#include "orbsvcs/FT_NamingManagerC.h"
 #include "orbsvcs/PortableGroup/PG_Property_Utils.h"
 #include "orbsvcs/PortableGroup/PG_Property_Set.h"
 #include "orbsvcs/PortableGroup/PG_Object_Group.h"
@@ -73,6 +73,70 @@ TAO_FT_Naming_Manager::~TAO_FT_Naming_Manager (void)
 {
 }
 
+
+CORBA::Object_ptr 
+TAO_FT_Naming_Manager::create_object_group (
+    const char * group_name,
+    const char * type_id,
+    const ::PortableGroup::Criteria & the_criteria)
+{
+  // Add the group name to the criteria and create the object
+  TAO::PG_Property_Set property_set (the_criteria);
+  PortableGroup::Value group_name_value;
+  group_name_value <<= group_name;
+  property_set.set_property (FT::TAO_FT_OBJECT_GROUP_NAME, group_name_value);
+ 
+  PortableGroup::Criteria new_criteria;
+  property_set.export_properties (new_criteria);
+  PortableGroup::GenericFactory::FactoryCreationId_var fcid;
+  return this->create_object (type_id, new_criteria, fcid.out());
+}
+
+void 
+TAO_FT_Naming_Manager::delete_object_group (const char * group_name)
+{
+  // Find the object group with the specified name and delete the object
+  PortableGroup::ObjectGroup_var group =
+    this->get_object_group_ref_from_name (group_name);
+
+  if (!CORBA::is_nil (group.in()))
+  {
+    PortableGroup::ObjectGroupId group_id =
+      this->get_object_group_id (group);
+
+    // Delete the object group from the factory
+    this->group_factory_.delete_group (group_id);
+  }
+  else 
+  {
+    throw PortableGroup::ObjectGroupNotFound ();
+  }
+
+}
+
+PortableGroup::ObjectGroup_ptr 
+TAO_FT_Naming_Manager::get_object_group_ref_from_name (const char * group_name)
+{
+
+  CORBA::String_var group_name_str (group_name);
+
+  // Search for an object group that has a FT::TAO_FT_OBJECT_GROUP_NAME equal 
+  // to the provided group_name
+  PortableGroup::Property group_name_property;
+  group_name_property.nam.length (1);
+  group_name_property.nam[0].id = CORBA::string_dup (FT::TAO_FT_OBJECT_GROUP_NAME);
+  group_name_property.val <<= group_name;
+
+  TAO::PG_Object_Group* group;
+  if (this->group_factory_.find_group (group_name_property, group))
+  {
+    return group->reference ();
+  }
+  else
+  {
+    throw PortableGroup::ObjectGroupNotFound ();
+  }
+}
 
 void
 TAO_FT_Naming_Manager::set_default_properties (

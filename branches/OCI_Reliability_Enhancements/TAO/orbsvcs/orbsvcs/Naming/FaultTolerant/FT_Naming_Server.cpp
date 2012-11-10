@@ -175,7 +175,7 @@ TAO_FT_Naming_Server::parse_args (int argc,
                                   ACE_TCHAR *argv[])
 {
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT)
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("b:do:p:s:f:m:u:r:z:g:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("b:do:p:s:f:m:z:g:"));
 #else
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("b:do:p:s:f:m:z:"));
 #endif /* TAO_HAS_MINIMUM_POA */
@@ -197,8 +197,7 @@ TAO_FT_Naming_Server::parse_args (int argc,
 
   // Make sure only one persistence option is specified
   int f_opt_used = 0;
-  int u_opt_used = 0;
-  int r_opt_used = 0;
+
   // TODO: remove unsupported options with FT Naming Server
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -211,6 +210,7 @@ TAO_FT_Naming_Server::parse_args (int argc,
         break;
       case 'g': // outputs the object group manager ior to a file
         this->naming_manager_ior_file_name_ = get_opts.opt_arg ();
+        break;
       case 'p':
         this->pid_file_name_ = get_opts.opt_arg ();
         break;
@@ -241,19 +241,6 @@ TAO_FT_Naming_Server::parse_args (int argc,
         this->persistence_file_name_ = get_opts.opt_arg ();
         f_opt_used = 1;
         break;
-#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT)
-      case 'r':
-        this->use_redundancy_ = 1;
-        this->use_storable_context_ = 1;
-        this->persistence_file_name_ = get_opts.opt_arg ();
-        r_opt_used = 1;
-        break;
-      case 'u':
-        this->use_storable_context_ = 1;
-        this->persistence_file_name_ = get_opts.opt_arg ();
-        u_opt_used = 1;
-        break;
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
 #endif /* !CORBA_E_MICRO */
       case 'z':
         this->use_round_trip_timeout_ = 1;
@@ -279,7 +266,8 @@ TAO_FT_Naming_Server::parse_args (int argc,
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("usage:  %s ")
                            ACE_TEXT ("-d ")
-                           ACE_TEXT ("-o <ior_output_file> ")
+                           ACE_TEXT ("-o <name_svc_ior_output_file> ")
+                           ACE_TEXT ("-g <naming_mgr_ior_output_file> ")
                            ACE_TEXT ("-p <pid_file_name> ")
                            ACE_TEXT ("-s <context_size> ")
                            ACE_TEXT ("-b <base_address> ")
@@ -291,9 +279,9 @@ TAO_FT_Naming_Server::parse_args (int argc,
                           -1);
       }
 
-  if (f_opt_used + u_opt_used + r_opt_used > 1)
+  if (f_opt_used != 1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Only one persistence option can be passed")
+                       ACE_TEXT ("Must provide persistence file with -f option")
                        ACE_TEXT ("\n")),
                       -1);
 
