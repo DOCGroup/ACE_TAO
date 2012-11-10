@@ -27,8 +27,8 @@
 #if defined (ACE_WIN32) || \
     (!defined (ACE_LACKS_MONOTONIC_TIME) && \
      !defined (ACE_LACKS_CONDATTR) && \
-     (defined (_POSIX_MONOTONIC_CLOCK) || defined (ACE_HAS_CLOCK_GETTIME_MONOTONIC))&& \
-      defined (_POSIX_CLOCK_SELECTION))
+     (defined (_POSIX_MONOTONIC_CLOCK) || defined (ACE_HAS_CLOCK_GETTIME_MONOTONIC)) && \
+     defined (_POSIX_CLOCK_SELECTION) && !defined (ACE_LACKS_CONDATTR_SETCLOCK))
 
 # include "ace/Monotonic_Time_Policy.h"
 # if defined (ACE_WIN32)
@@ -127,9 +127,13 @@ worker (void *)
   if (evt->wait (initial_timeout) == -1)
     {
       if (ACE_OS::last_error () == ETIME)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT (" (%P|%t) Timed out waiting for start pulse\n")),
-                          0);
+        {
+          ACE_Time_Value tm_now = initial_timeout->now ();
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT (" (%P|%t) Timed out waiting for start pulse at %#T\n"),
+                             &tm_now),
+                            0);
+        }
       else
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT (" (%P|%t) %p\n"),
@@ -137,8 +141,9 @@ worker (void *)
                           0);
     }
 
+  ACE_Time_Value tm_now = initial_timeout->now ();
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT (" (%P|%t) awake\n")));
+              ACE_TEXT (" (%P|%t) awake at %#T\n"), &tm_now));
 
   if (++n_awoken < n_workers)
     {
@@ -254,7 +259,7 @@ int run_main (int argc, ACE_TCHAR *argv[])
   set_system_time (ACE_OS::gettimeofday () + tv_shift);
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("spawning workers - initial timeout till%#T\n"), initial_timeout));
+              ACE_TEXT ("spawning workers - initial timeout till %#T\n"), initial_timeout));
 
   if (ACE_Thread_Manager::instance ()->spawn_n
       (static_cast<size_t> (n_workers),
