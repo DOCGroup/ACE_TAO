@@ -53,17 +53,6 @@ public:
   /// Destructor.
   virtual ~TAO_FT_Persistent_Naming_Context (void);
 
-  /**
-   * Create a binding for name <n> and object <obj> in the naming
-   * context.  Compound names are treated as follows: ctx->bind (<c1;
-   * c2; c3; cn>, obj) = (ctx->resolve (<c1; c2; cn-1>))->bind (<cn>,
-   * obj) if the there already exists a binding for the specified
-   * name, <AlreadyBound> exception is thrown.  Naming contexts should
-   * be bound using <bind_context> and <rebind_context> in order to
-   * participate in name resolution later.
-   */
-  virtual void bind (const CosNaming::Name &n,
-                     CORBA::Object_ptr obj);
 
   /**
    * Override the resolve operation to support load balancing using

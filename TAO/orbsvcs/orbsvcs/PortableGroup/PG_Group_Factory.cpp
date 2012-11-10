@@ -155,6 +155,51 @@ int TAO::PG_Group_Factory::find_group (PortableGroup::ObjectGroup_ptr object_gro
   return result;
 }
 
+int TAO::PG_Group_Factory::find_group (const PortableGroup::Property& property_target, 
+                                       TAO::PG_Object_Group *& group_target) 
+{
+  int result = 0;
+
+  size_t upper_limit = this->group_map_.current_size ();
+  PortableGroup::Value value;
+  PortableGroup::Properties_var properties = new PortableGroup::Properties;
+
+  size_t group_count = 0;
+
+  // Search through the group map for the group with that property
+  for (Group_Map_Iterator it = this->group_map_.begin ();
+    it != this->group_map_.end ();
+    ++it)
+  {
+    TAO::PG_Object_Group * a_group = (*it).int_id_;
+    // If the group has the group name in the property
+    // 
+    a_group->get_properties (properties);
+    CORBA::Boolean found = TAO_PG::get_property_value (property_target.nam, 
+      properties,
+      value);
+
+    // If the group has the property identified by the caller, check the value
+    if (found) 
+    {
+      std::string value_str;
+      std::string target_str;
+      // Check the value 
+      value >>= value_str;
+      property_target.val >>= target_str;
+
+      if (value_str.compare (target_str) == 0)
+      {
+        group_target = a_group;
+        result = 1;
+        break;
+      }
+    }
+  }
+  
+  return result;  
+}
+
 int TAO::PG_Group_Factory::destroy_group (PortableGroup::ObjectGroupId group_id)
 {
   ::TAO::PG_Object_Group * group = 0;

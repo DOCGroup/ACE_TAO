@@ -48,6 +48,16 @@ public:
    * 
    */
 
+  virtual ::CORBA::Object_ptr create_object_group (
+    const char * group_name,
+    const char * type_id,
+    const ::PortableGroup::Criteria & the_criteria);
+
+  virtual void delete_object_group (
+    const char * group_name);
+
+  virtual ::PortableGroup::ObjectGroup_ptr get_object_group_ref_from_name (
+    const char * group_name);
 
   /**
    * @name PortableGroup::PropertyManager Methods
