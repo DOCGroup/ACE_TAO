@@ -63,7 +63,7 @@ public:
 
   /// The naming service shall provide a command line utility to display all
   /// defined object groups within the naming service.
-  int group_list (const char* location);
+  int group_list (void);
 
   /// The naming service shall provide a command line utility to modify the load
   /// balancing strategy for a specified object group.

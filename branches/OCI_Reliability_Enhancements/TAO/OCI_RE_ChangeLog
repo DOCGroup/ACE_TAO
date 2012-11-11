@@ -1,7 +1,30 @@
-Sat Nov 10 20:45:07 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
+Sun Nov 11 21:34:42 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
 
         * orbsvcs/orbsvcs/FT_NamingManager.idl:
         
+          Add operation for querying for all registered object groups.
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.cpp:
+        
+          Implement operation for querying for all registered object groups.
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_Factory.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_Factory.cpp:
+
+          Add utility to implement query for all registered object groups.
+          
+        * utils/nsgroup/nsgroup_svc.h:
+        * utils/nsgroup/nsgroup_svc.cpp:
+        * utils/nsgroup/run_test.pl:
+        
+          Change signature for group_list to not use Location.  Update implementation
+          to use the new operation defined in the NamingManager idl.
+
+Sat Nov 10 20:45:07 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
+
+        * orbsvcs/orbsvcs/FT_NamingManager.idl:
+
           Add operations to create and destroy object groups as well
           as find object groups by name.
 
@@ -13,22 +36,22 @@ Sat Nov 10 20:45:07 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
 
           Provide implementations for the new operations defined in the FT_NamingManager.idl
           for object group creation, deletion and retrieval by name.
-          
+
         * orbsvcs/orbsvcs/PortableGroup/PG_Group_Factory.h:
         * orbsvcs/orbsvcs/PortableGroup/PG_Group_Factory.cpp:
 
-          Add an operation to find an object group with a matching property. 
+          Add an operation to find an object group with a matching property.
           Primarily used to lookup an object group with a TAO_FT_OBJECT_GROUP_NAME
           property set to the object group name.
-          
+
         * utils/nsgroup/nsgroup_svc.cpp:
-        
+
           Update to use the new create, delete and find operations by name.
-          
+
         * utils/nsgroup/run_test.pl:
 
           Modifications to tests use naming manager instead of load manager.
-          
+
 Fri Nov  9 22:03:39 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/Naming_Loader.cpp:

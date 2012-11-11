@@ -98,6 +98,11 @@ namespace TAO
     groups_at_location (
         const PortableGroup::Location & the_location);
 
+    /**
+     * return all groups in the factory
+     */
+    PortableGroup::ObjectGroups *
+    all_groups (void);
 
 
     /**

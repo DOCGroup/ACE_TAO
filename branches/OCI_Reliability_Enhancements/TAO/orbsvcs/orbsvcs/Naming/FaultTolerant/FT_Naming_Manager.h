@@ -59,6 +59,7 @@ public:
   virtual ::PortableGroup::ObjectGroup_ptr get_object_group_ref_from_name (
     const char * group_name);
 
+  virtual ::FT::GroupNames * groups (void);
   /**
    * @name PortableGroup::PropertyManager Methods
    *
@@ -231,6 +232,9 @@ private:
    * are not nil.
    */
   void preprocess_properties (PortableGroup::Properties & props);
+
+  // Utility for accessing the object group name
+  bool group_name (PortableGroup::ObjectGroup_ptr group, std::string *name);
 
   /// Mutex that provides synchronization for the TAO_FT_Naming_Manager's
   /// state.
