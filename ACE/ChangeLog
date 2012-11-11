@@ -1,3 +1,11 @@
+Sun Nov 11 14:26:17 UTC 2012  Martin Corino  <mcorino@remedy.nl>
+
+        * tests/Monotonic_Manual_Event_Test.cpp:
+        * tests/Monotonic_Message_Queue_Test.cpp:
+        * tests/Monotonic_Task_Test.cpp:
+          Further narrowing of preprocessor test to prevent running
+          test on unsupported platforms.
+
 Sat Nov 10 11:35:57 UTC 2012  Martin Corino  <mcorino@remedy.nl>
 
         * tests/Monotonic_Manual_Event_Test.cpp:
