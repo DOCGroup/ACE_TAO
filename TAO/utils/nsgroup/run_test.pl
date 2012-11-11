@@ -79,7 +79,7 @@ $CL5 = $client->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_nsgroup",
 ##  group_list -location <location>
 $CL6 = $client->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_nsgroup",
         "$LOAD_ARG " .
-        "group_list -location dhcp34.ociweb.com");
+        "group_list");
 
 ##  member_show -group <group> -member <member> -location <location>
 $CL7 = $client->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_nsgroup",

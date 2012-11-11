@@ -21,6 +21,8 @@
 module FT
 {
   const string TAO_FT_OBJECT_GROUP_NAME = "TAO_FT_GroupName";
+  
+  typedef sequence<string> GroupNames;
 
   // Specification of NamingManager Interface
   interface NamingManager : PortableGroup::PropertyManager,
@@ -41,6 +43,9 @@ module FT
     PortableGroup::ObjectGroup get_object_group_ref_from_name (
       in string group_name)
       raises (PortableGroup::ObjectGroupNotFound);
+
+    // Return names of all groups defined in the NamingManager
+    GroupNames groups ();
 
   };
 };

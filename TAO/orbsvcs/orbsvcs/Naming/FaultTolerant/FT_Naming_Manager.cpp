@@ -138,6 +138,69 @@ TAO_FT_Naming_Manager::get_object_group_ref_from_name (const char * group_name)
   }
 }
 
+::FT::GroupNames * 
+TAO_FT_Naming_Manager::groups (void)
+{
+  PortableGroup::ObjectGroups *all_groups = this->group_factory_.all_groups ();
+  int num_groups = all_groups->length ();
+
+  FT::GroupNames* group_names;
+  ACE_NEW_THROW_EX (
+    group_names,
+    FT::GroupNames,
+    CORBA::NO_MEMORY());
+
+  group_names->length (num_groups);
+  std::string name;
+  for (int i = 0; i < num_groups; ++i)
+  {
+    PortableGroup::ObjectGroup_var obj_group = (*all_groups)[i];
+    if (this->group_name (obj_group, &name))
+    {
+      (*group_names)[i] = CORBA::string_dup (name.c_str());
+
+    }
+    else 
+    {
+      (*group_names)[i] = CORBA::string_dup ("unnamed group");
+      ACE_ERROR ((LM_ERROR,
+        ACE_TEXT ("%T %n (%P|%t) - FT_Naming_Manager::groups: no name property set on group.\n")
+        ));
+    }
+  }
+  return group_names;
+}
+
+bool 
+TAO_FT_Naming_Manager::group_name (PortableGroup::ObjectGroup_ptr group, std::string *name)
+{
+  if (CORBA::is_nil (group))
+  {
+    ACE_ERROR ((LM_ERROR,
+      ACE_TEXT ("%T %n (%P|%t) - FT_Naming_Manager::group_name: cannot get name for a null object.\n")
+      ));
+    return false;
+  }
+
+  // The name for an object group is stored in the FT::TAO_FT_OBJECT_GROUP_NAME
+  PortableGroup::Name group_name (1);
+  group_name.length (1);
+  group_name[0].id = CORBA::string_dup (FT::TAO_FT_OBJECT_GROUP_NAME);
+
+  PortableGroup::Properties* props = this->get_properties (group);
+  PortableGroup::Value value;
+  CORBA::Boolean found = TAO_PG::get_property_value (group_name, 
+                                                     *props,
+                                                     value);
+  if (found)
+  { // Found the name property 
+    value >>= *name;
+    return true;
+  }
+  else
+    return false;
+}
+
 void
 TAO_FT_Naming_Manager::set_default_properties (
     const PortableGroup::Properties & props)

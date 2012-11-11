@@ -16,7 +16,7 @@ NS_group_svc::NS_group_svc (int argc, ACE_TCHAR **argv)
 NS_group_svc::NSGROUP_COMMAND
 NS_group_svc::parse_command_line (void)
 {
-  #if 0
+  #if 1
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("parse_command_line::argc(%u)\n"), this->argc_));
   for( int i = 0; i < this->argc_; ++i){
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("parse_command_line::argv(%u:%s)\n"), i, this->argv_[i]));
@@ -215,7 +215,7 @@ NS_group_svc::run_cmd(void)
     break;
 
     case NSGROUP_GROUP_LIST:
-      return group_list ( location_arg() );
+      return group_list ();
     break;
 
     case NSGROUP_GROUP_REMOVE:
@@ -536,27 +536,25 @@ NS_group_svc::group_bind (
 /**
  * The naming service shall provide a command line utility to display all
  * defined object groups within the naming service.
- * Displays all object groups that currently exits in the naming service.
+ * Displays all object groups that currently exist in the naming service.
  */
 int
-NS_group_svc::group_list (const char* location)
+NS_group_svc::group_list (void)
 {
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) nsgroup - group_list()\n"));
 
-  if (location == 0)
+  FT::GroupNames_var group_names =  this->naming_manager_->groups ();
+
+  // KCS: The group list is independent of locations. I created a new operation in the 
+  // naming manager IDL to support requesting the group list - which is a list of names
+  //  PortableGroup::ObjectGroups_var groups = this->naming_manager_->groups_at_location( the_location );
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) nsgroup - groups at location:(%u)\n", group_names->length()));
+  
+  std::cout << "Groups registered:" << std::endl;
+  for (unsigned int i = 0; i < group_names->length (); ++i)
   {
-    return -1;
+    std::cout << (*group_names)[i] << std::endl;
   }
-
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) nsgroup - group_list(%s)\n", location));
-  //virtual PortableGroup::ObjectGroups * groups_at_location ( const PortableGroup::Location & the_location);
-  // Note: This only works with groups that have members added
-
-  PortableGroup::Location the_location(1);
-  the_location.length(1);
-  the_location[0].id = CORBA::string_dup(location);
-
-  PortableGroup::ObjectGroups_var groups = this->naming_manager_->groups_at_location( the_location );
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) nsgroup - groups at location:(%u)\n", groups->length()));
 
   return 0;
 }

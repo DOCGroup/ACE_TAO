@@ -162,6 +162,13 @@ int TAO::PG_Group_Factory::find_group (const PortableGroup::Property& property_t
 
   size_t upper_limit = this->group_map_.current_size ();
   PortableGroup::Value value;
+  PortableGroup::Properties* props;
+
+  ACE_NEW_THROW_EX (
+    props,
+    PortableGroup::Properties,
+    CORBA::NO_MEMORY());
+
   PortableGroup::Properties_var properties = new PortableGroup::Properties;
 
   size_t group_count = 0;
@@ -244,6 +251,32 @@ TAO::PG_Group_Factory::groups_at_location (
       (*result)[group_count] = group->reference ();
       ++group_count;
     }
+  }
+  result->length (group_count);
+  return result;
+}
+
+PortableGroup::ObjectGroups *
+TAO::PG_Group_Factory::all_groups (void)
+{
+
+  size_t upper_limit = this->group_map_.current_size ();
+  PortableGroup::ObjectGroups * result = 0;
+  ACE_NEW_THROW_EX (
+    result,
+    PortableGroup::ObjectGroups (upper_limit),
+    CORBA::NO_MEMORY());
+
+  result->length(upper_limit);
+
+  size_t group_count = 0;
+  for (Group_Map_Iterator it = this->group_map_.begin ();
+    it != this->group_map_.end ();
+    ++it)
+  {
+    TAO::PG_Object_Group * group = (*it).int_id_;
+    (*result)[group_count] = group->reference ();
+    ++group_count;
   }
   result->length (group_count);
   return result;
