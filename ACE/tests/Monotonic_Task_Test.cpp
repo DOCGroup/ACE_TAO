@@ -38,7 +38,8 @@
 #include "ace/OS_NS_unistd.h"
 
 #if defined (ACE_WIN32) || \
-    (!defined (ACE_LACKS_MONOTONIC_TIME) && \
+    (defined (ACE_HAS_CLOCK_GETTIME) && \
+     !defined (ACE_LACKS_MONOTONIC_TIME) && \
      !defined (ACE_LACKS_CONDATTR) && \
      (defined (_POSIX_MONOTONIC_CLOCK) || defined (ACE_HAS_CLOCK_GETTIME_MONOTONIC)) && \
      defined (_POSIX_CLOCK_SELECTION) && !defined (ACE_LACKS_CONDATTR_SETCLOCK))
