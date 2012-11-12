@@ -526,6 +526,7 @@ NS_group_svc::group_bind (
 
   if (group == 0 || path == 0)
   {
+    ACE_DEBUG ((LM_DEBUG, "(%P|%t) nsgroup - group_bind args not provided.\n", group, path));
     return -1;
   }
 
@@ -548,12 +549,12 @@ NS_group_svc::group_list (void)
   // KCS: The group list is independent of locations. I created a new operation in the 
   // naming manager IDL to support requesting the group list - which is a list of names
   //  PortableGroup::ObjectGroups_var groups = this->naming_manager_->groups_at_location( the_location );
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) nsgroup - groups at location:(%u)\n", group_names->length()));
+  //  ACE_DEBUG ((LM_DEBUG, "(%P|%t) nsgroup - groups at location:(%u)\n", group_names->length()));
   
   std::cout << "Groups registered:" << std::endl;
   for (unsigned int i = 0; i < group_names->length (); ++i)
   {
-    std::cout << (*group_names)[i] << std::endl;
+    std::cout << "  " << (*group_names)[i] << std::endl;
   }
 
   return 0;
