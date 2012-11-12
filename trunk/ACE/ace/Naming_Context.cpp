@@ -140,7 +140,8 @@ ACE_Naming_Context::close (void)
 
 ACE_Naming_Context::ACE_Naming_Context (void)
   : name_options_ (0),
-    name_space_ (0)
+    name_space_ (0),
+    netnameserver_host_ (0)
 {
   ACE_TRACE ("ACE_Naming_Context::ACE_Naming_Context");
 

@@ -211,7 +211,8 @@ ACE_SV_Semaphore_Simple::~ACE_SV_Semaphore_Simple (void)
   this->close ();
 }
 
-ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple (void)
+ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple (void) :
+  sem_number_ (0)
 {
   ACE_TRACE ("ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple");
   this->init ();
