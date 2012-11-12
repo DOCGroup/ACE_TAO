@@ -45,6 +45,7 @@ namespace TAO
   class ObjectKey;
   class Object_Proxy_Broker;
   class Transport_Queueing_Strategy;
+  class Invocation_Retry_State;
 }
 
 namespace IOP
@@ -165,6 +166,11 @@ public:
    */
   void reset_profiles (void);
 
+  /// Returns true if the profile in use is
+  /// the same as the profile in use after
+  /// reset_profiles() is called.
+  CORBA::Boolean at_starting_profile (void) const;
+
   /// Returns true if a forward profile has successfully been used.
   /// profile_success_ && forward_profiles_
   CORBA::Boolean valid_forward_profile (void);
@@ -264,6 +270,9 @@ public:
 
   void forwarded_on_exception (bool forwarded);
   bool forwarded_on_exception () const;
+
+  void invocation_retry_state (TAO::Invocation_Retry_State *state);
+  TAO::Invocation_Retry_State *invocation_retry_state () const;
 
 protected:
 
@@ -406,6 +415,8 @@ protected:
   /// True if forwarding request upon some specific exceptions
   /// (e.g. OBJECT_NOT_EXIST) already happened.
   ACE_Atomic_Op<TAO_SYNCH_MUTEX, bool> forwarded_on_exception_;
+
+  TAO::Invocation_Retry_State *invocation_retry_state_;
 };
 
 // Define a TAO_Stub auto_ptr class.

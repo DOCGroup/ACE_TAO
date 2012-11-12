@@ -56,15 +56,21 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       return 1;
     }
 
-    // Force server to shutdown to verify it will be brought
-    // back up when send_message() is called.
-    messenger->shutdown();
-    ACE_OS::sleep(1);
-
     CORBA::String_var message = CORBA::string_dup( "Hello!" );
-    messenger->send_message( "TAO User", "TAO Test", message.inout() );
 
-    std::cout << "message was sent" << std::endl;
+    messenger->send_message( "TAO User", "Test 1", message.inout() );
+
+    // Force server to abort to verify it will be brought
+    // back up when send_message() is called.
+    messenger->abort(2);
+    ACE_OS::sleep(4);
+
+    ACE_DEBUG ((LM_INFO,
+                "(%P|%t) - Sending another message after abort of server\n"));
+
+    messenger->send_message( "TAO User", "Test 2", message.inout() );
+
+    std::cout << "messages were sent" << std::endl;
   }
   catch(const CORBA::Exception& ex) {
     std::cerr << "Client main() Caught CORBA::Exception: " << ex << std::endl;

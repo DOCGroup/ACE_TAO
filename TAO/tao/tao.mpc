@@ -173,6 +173,7 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, taoid
     Incoming_Message_Stack.cpp
     Invocation_Adapter.cpp
     Invocation_Base.cpp
+    Invocation_Retry_State.cpp
     Invocation_Endpoint_Selectors.cpp
     IOPC.cpp
     IOR_Parser.cpp

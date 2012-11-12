@@ -13,6 +13,7 @@ project(*Server): taoserver, iortable, avoids_minimum_corba, avoids_corba_e_micr
   Source_Files {
     Messenger_i.cpp
     MessengerServer.cpp
+    Terminator.cpp
   }
   Source_Files {
     MessengerC.cpp

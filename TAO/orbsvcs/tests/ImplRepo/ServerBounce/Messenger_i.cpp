@@ -8,10 +8,14 @@
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #include "Messenger_i.h"
+#include "Terminator.h"
+
 #include <iostream>
+
 // Implementation skeleton constructor
-Messenger_i::Messenger_i (CORBA::ORB_ptr orb)
+Messenger_i::Messenger_i (CORBA::ORB_ptr orb, Terminator &terminator)
   : orb_ (CORBA::ORB::_duplicate (orb))
+  , terminator_(terminator)
 {
 }
 
@@ -29,6 +33,15 @@ CORBA::Boolean Messenger_i::send_message (
        << "Subject:      " << subject << std::endl
        << "Message:      " << message << std::endl;
   return 1;
+}
+
+void
+Messenger_i::abort (CORBA::Short delay_secs)
+{
+  ACE_Message_Block *mb = 0;
+  ACE_NEW(mb, ACE_Message_Block(2));
+  ACE_OS::sprintf(mb->wr_ptr (), "%d", delay_secs);
+  terminator_.putq(mb);
 }
 
 void

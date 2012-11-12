@@ -15,6 +15,7 @@
 #include "tao/TAOC.h"
 #include "tao/SystemException.h"
 #include "tao/Collocation_Resolver.h"
+#include "tao/Invocation_Retry_State.h"
 #include "ace/Service_Config.h"
 
 #if !defined (__ACE_INLINE__)
@@ -68,6 +69,11 @@ namespace TAO
       {
         max_wait_time= &tmp_wait_time;
       }
+
+    // Although not used explicitly here, constructs
+    // the retry state that will stub that be used
+    // when restarting invocation.
+    TAO::Invocation_Retry_State retry_state(*stub);
 
     while (status == TAO_INVOKE_START || status == TAO_INVOKE_RESTART)
       {

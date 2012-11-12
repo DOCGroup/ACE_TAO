@@ -4,8 +4,11 @@
 // This version uses the Implementation Repository.
 
 #include "Messenger_i.h"
+#include "Terminator.h"
+
 #include "tao/IORTable/IORTable.h"
 #include "tao/PortableServer/Root_POA.h"
+
 #include <iostream>
 
 PortableServer::POA_ptr
@@ -47,7 +50,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     PortableServer::POA_var messenger_poa = createPOA(root_poa.in(), poa_name);
 
-    PortableServer::Servant_var<Messenger_i> messenger_servant = new Messenger_i(orb.in());
+    Terminator terminator;
+    if (terminator.open (0) == -1)
+      ACE_ERROR_RETURN((LM_ERROR,
+                        ACE_TEXT ("main Error opening terminator\n")),-1);
+
+    PortableServer::Servant_var<Messenger_i> messenger_servant =
+      new Messenger_i(orb.in(), terminator);
 
     PortableServer::ObjectId_var object_id =
       PortableServer::string_to_ObjectId("messenger_object");
@@ -93,6 +102,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     root_poa->destroy(1,1);
     orb->destroy();
+
+    ACE_Message_Block *mb;
+    ACE_NEW_RETURN(mb, ACE_Message_Block(0, ACE_Message_Block::MB_HANGUP), -1);
+    terminator.putq(mb);
+    terminator.wait();
   }
   catch(const CORBA::Exception& ex) {
     std::cerr << "Server main() Caught CORBA::Exception" << ex << std::endl;
