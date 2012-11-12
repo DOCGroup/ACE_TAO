@@ -3,6 +3,7 @@
 // $Id$
 
 #include "tao/Invocation_Retry_State.h"
+#include "tao/ORB_Core.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

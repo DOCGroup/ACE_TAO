@@ -1,3 +1,14 @@
+Mon Nov 12 23:05:55 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.cpp:
+          
+          Catch exception when an invalid IOR is passed in for adding a member
+          to an object group.
+
+        * tao/Invocation_Retry_State.cpp:
+        
+          Add missing include file.
+
 Mon Nov 12 21:35:01 UTC 2012  Byron Harris  <harrisb@ociweb.com>
 
         * bin/tao_orb_tests.lst:
