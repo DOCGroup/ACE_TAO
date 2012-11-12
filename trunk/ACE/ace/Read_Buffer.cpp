@@ -13,9 +13,6 @@
 #include "ace/Service_Config.h"
 #include "ace/OS_NS_stdio.h"
 
-
-
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void

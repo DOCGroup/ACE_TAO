@@ -1,3 +1,13 @@
+Mon Nov 12 10:45:51 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_Thread.h:
+        * ace/OS_NS_Thread.inl:
+          Added constructor for ACE_event_t to initialize pointers
+          explicitly to 0, fixes coverity #743165
+
+        * tests/Bug_4055_Regression_Test.cpp:
+          Check return value of clock_settime, fixes coverity #743164
+
 Mon Nov 12 10:06:57 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * NEWS:
