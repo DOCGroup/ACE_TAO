@@ -1,0 +1,50 @@
+Description: make $ACE_ROOT/bin/m{w,p}c.pl relocatable
+ $ACE_ROOT/bin/m{w,p}c.pl look up for MPC modules under its base path, in
+ $ACE_ROOT/bin/MakeProjectCreator. But we package those scripts under /usr/bin,
+ while MakeProjectCreator folder is put under $ACE_ROOT/bin (in other words,
+ /usr/lib/ace/bin)
+ .
+ This patch sets MPC path dir to use $ACE_ROOT if defined (used when building
+ ACE+TAO packages), or /usr/lib/ace if not.
+Forwarded: not-needed
+Author: Thomas Girard <thomas.g.girard@free.fr>
+Last-Update: 2011-07-24
+
+--- a/bin/mpc.pl
++++ b/bin/mpc.pl
+@@ -20,13 +20,9 @@
+ use File::Spec;
+ use File::Basename;
+ 
+-my($basePath) = (defined $FindBin::RealBin ? $FindBin::RealBin :
+-                                             File::Spec->rel2abs(dirname($0)));
+-if ($^O eq 'VMS') {
+-  $basePath = File::Spec->rel2abs(dirname($0)) if ($basePath eq '');
+-  $basePath = VMS::Filespec::unixify($basePath);
+-}
+-$basePath .= '/MakeProjectCreator';
++my($aceroot) = $ENV{ACE_ROOT};
++my($basePath) = (defined $aceroot ?
++		 $aceroot : '/usr/lib/ace') . '/bin/MakeProjectCreator';
+ 
+ my($mpcroot) = $ENV{MPC_ROOT};
+ my($mpcpath) = (defined $mpcroot ? $mpcroot :
+--- a/bin/mwc.pl
++++ b/bin/mwc.pl
+@@ -20,13 +20,9 @@
+ use File::Spec;
+ use File::Basename;
+ 
+-my($basePath) = (defined $FindBin::RealBin ? $FindBin::RealBin :
+-                                             File::Spec->rel2abs(dirname($0)));
+-if ($^O eq 'VMS') {
+-  $basePath = File::Spec->rel2abs(dirname($0)) if ($basePath eq '');
+-  $basePath = VMS::Filespec::unixify($basePath);
+-}
+-$basePath .= '/MakeProjectCreator';
++my($aceroot) = $ENV{ACE_ROOT};
++my($basePath) = (defined $aceroot ?
++		 $aceroot : '/usr/lib/ace') . '/bin/MakeProjectCreator';
+ 
+ my($mpcroot) = $ENV{MPC_ROOT};
+ my($mpcpath) = (defined $mpcroot ? $mpcroot :

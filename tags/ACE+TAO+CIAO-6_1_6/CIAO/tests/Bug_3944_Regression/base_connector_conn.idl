@@ -1,0 +1,40 @@
+// $Id$
+
+#ifndef BASE_CONNECTOR_CONN_IDL
+#define BASE_CONNECTOR_CONN_IDL
+
+#include <Components.idl>
+
+#pragma ciao lem "base_connector_connE.idl"
+#pragma dds4ccm impl "base_connector_event_t.h"
+
+module One
+{
+  module Foo <typename T, sequence<T> TSeq>
+  {
+    local interface Bar
+    {
+      void ope ();
+    };
+
+    porttype Write
+    {
+      provides Bar mybar;
+    };
+
+    porttype Listen
+    {
+      uses Bar mybar;
+    };
+
+    connector MyBaseEvent
+    {
+      mirrorport Write supplier;
+      mirrorport Listen consumer;
+    };
+  };
+};
+
+#endif
+
+

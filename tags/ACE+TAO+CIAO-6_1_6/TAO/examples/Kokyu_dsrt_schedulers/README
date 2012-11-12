@@ -1,0 +1,172 @@
+$Id$
+
+Design approaches for the Kokyu based DSRT scheduler/dispatcher
+--------------------------------------------------------
+
+The DSRT schedulers in this directory use the Kokyu DSRT
+dispatching classes present in $ACE_ROOT/Kokyu. These
+act as wrappers/adapters around the Kokyu DSRT dispatcher.
+The Kokyu DSRT dispatcher is responsible for scheduling
+threads which ask the dispatcher to schedule themselves.
+Currently there are two implementations for the Kokyu
+DSRT dispatcher. One uses a condition-variable based
+approach for scheduling threads and the other manipulates
+priorities of threads and relies on the OS scheduler for
+dispatching the threads appropriately.
+
+CV-based approach
+-----------------
+In this approach, it is assumed that the threads "yield"
+on a regular basis to the scheduler by calling
+update_scheduling_segment. Only one thread is running at
+any point in time. All the other threads are blocked
+on a condition variable. When the currently running
+thread yields, it will cause the condition variable
+to be signalled. All the eligible threads are stored
+in a scheduler queue (rbtree), the most eligible thread
+determined by the scheduling discipline. This approach
+has the drawback that it requires a cooperative
+threading model, where threads yield voluntarily
+on a regular basis. The application threads are
+responsible for doing this voluntary yielding.
+
+OS-based approach
+-----------------
+This approach relies on the OS scheduler to do the
+actual thread dispatching. The Kokyu DSRT dispatcher manipulates
+the priorities of the threads. The scheduler maintains
+a queue (rbtree) of threads. The scheduler also has
+an executive thread, which runs at the maximum available
+priority. This thread runs in a continuous loop until
+the dispatcher is shut down. The executive thread is
+responsible for selecting the most eligible thread from
+the scheduler queue and bump up its priority if necessary
+while bumping down the priority of the currently running
+thread, if it is not the most eligible. There are four
+priority levels required for this mechanism to work,
+listed in descending order of priorities. For example,
+a thread running at Active priority will preempt a
+thread running at Inactive priority level.
+
+1. Executive priority - priority at which the scheduler
+   executive thread runs.
+2. Blocked priority - this is the priority to which
+   threads about to block on remote calls will be bumped
+   up to.
+3. Active priority - this is the priority to which
+   the most eligible thread is set to.
+4. Inactive priority - this is the priority to which
+   all threads except the most eligible thread is set
+   to.
+
+As soon as a thread asks to be scheduled, a
+wrapper object is created and inserted into the queue.
+This object carries the qos (sched params) associated
+with that thread. A condition variable is signalled
+to inform the executive thread that the queue is
+"dirty". The scheduler thread picks up the most
+eligble one and sets its priority to "active" and
+sets the currently running thread priority to
+"inactive".
+
+The drawback to this approach is that it relies on
+the OS scheduler to dispatch the threads. Also,
+with the current implementation, there is only
+one thread running at active priority and others
+are all at "inactive" level. This will create
+undesirable effects with multi-processor systems,
+which could select any one of the "inactive" level
+threads and this could cause priority inversions.
+
+How to write a new DSRT scheduler using Kokyu
+---------------------------------------------
+One can use one of the schedulers as a starting
+point. The variation points are
+
+1. The scheduler parameters that need to be propagated
+   along with the service context.
+2. The QoS comparison function, that determines which
+   thread is more eligible.
+
+To aid (1), we have created a Svc_Ctxt_DSRT_QoS idl
+interface (see ./Kokyu_qos.pidl). This interface
+currently has the necessary things to be propagated
+for FP, MIF and MUF schedulers. This can be altered
+if necessary to accomodate new sched params. The
+idea here is to let the IDL compiler generate the
+marshalling code (including Any operators) so that
+these parameters can be shipped across in the
+service context in an encapsulated CDR.
+
+To create customized QoS comparator functions, we
+used the idea of C++ traits to let the user define
+customized comparator functions. For example, the
+MIF scheduler uses the following traits class.
+
+  struct MIF_Scheduler_Traits
+  {
+    typedef RTScheduling::Current::IdType Guid_t;
+
+    struct _QoSDescriptor_t
+    {
+      typedef long Importance_t;
+      Importance_t importance_;
+    };
+
+    typedef _QoSDescriptor_t QoSDescriptor_t;
+
+    typedef Kokyu::MIF_Comparator<QoSDescriptor_t> QoSComparator_t;
+
+    class _Guid_Hash
+    {
+    public:
+      u_long operator () (const Guid_t& id)
+      {
+        return ACE::hash_pjw ((const char *) id.get_buffer (),
+                              id.length ());
+      }
+    };
+
+    typedef _Guid_Hash Guid_Hash;
+  };
+
+The idea of traits makes the Kokyu dispatcher more flexible
+in terms of creating new schedulers. For example, the
+Kokyu classes do not care about what concrete type
+Guid is. It could be an OctetSequence for some applications,
+whereas it could be an int for some others. The exact type
+is defined by the application (in this case, the MIF scheduler)
+using the traits class. In the above traits class the
+Guid's type is defined to be an octet sequence (indirectly).
+The Kokyu dispatcher expects the following typedef's to
+be present in the traits class:
+
+Guid_t - Type of GUID.
+QoSDescriptor_t - aggregate for scheduler parameters
+QoSComparator_t - used by the scheduler queue to determine most eligible item
+Guid_Hash - used by the internal hash map in the scheduler to hash the guid.
+
+It is also expected that the following operator be defined
+for comparing QoS parameters. This comparator function
+will be used by the scheduler queue to determine
+the most eligible item in the queue.
+
+QoSComparator_t::operator ()(const QoSDescriptor_t& qos1,
+            const QoSDescriptor_t& qos2)
+
+Future work
+-----------
+1. It looks like there is a general structure to the
+   different schedulers. May be this can be abstracted
+   using templates or some similar mechanism.
+
+2. Thread sched policy and sched scope are currently
+   being passed explicitly from the application to
+   the scheduler. This can be changed later to get
+   this information from the ORB. This requires the
+   usage of RTORB and the actual values can be set
+   using svc.conf parameters for RT_ORB_Loader.
+
+3. See whether the approaches could be extended
+   to multiprocessor systems.
+

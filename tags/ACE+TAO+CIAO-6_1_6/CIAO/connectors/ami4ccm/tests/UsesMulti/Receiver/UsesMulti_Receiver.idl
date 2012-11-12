@@ -1,0 +1,18 @@
+// $Id$
+
+#ifndef USESMULTI_RECEIVER_IDL
+#define USESMULTI_RECEIVER_IDL
+
+#include <Components.idl>
+
+#include "Base/UsesMulti.idl"
+
+module UsesMulti
+{
+  component Receiver
+  {
+    /// Provides
+    provides One do_my_one;
+  };
+};
+#endif

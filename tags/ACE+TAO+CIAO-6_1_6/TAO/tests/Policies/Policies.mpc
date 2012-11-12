@@ -1,0 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
+project(Policies Manipulation): taoserver, messaging {
+  exename   = Manipulation
+}
