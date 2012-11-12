@@ -1,23 +1,31 @@
+Mon Nov 12 01:20:54 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
+
+        * utils/nsgroup/nsgroup_svc.cpp:
+        * utils/nsgroup/run_test.pl:
+          
+          Modify bind_group command to use the -n option and format output
+          of group_list command to be more readable.  
+
 Sun Nov 11 21:34:42 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
 
         * orbsvcs/orbsvcs/FT_NamingManager.idl:
-        
+
           Add operation for querying for all registered object groups.
 
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.h:
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.cpp:
-        
+
           Implement operation for querying for all registered object groups.
 
         * orbsvcs/orbsvcs/PortableGroup/PG_Group_Factory.h:
         * orbsvcs/orbsvcs/PortableGroup/PG_Group_Factory.cpp:
 
           Add utility to implement query for all registered object groups.
-          
+
         * utils/nsgroup/nsgroup_svc.h:
         * utils/nsgroup/nsgroup_svc.cpp:
         * utils/nsgroup/run_test.pl:
-        
+
           Change signature for group_list to not use Location.  Update implementation
           to use the new operation defined in the NamingManager idl.
 

@@ -59,7 +59,7 @@ $CL1 = $client->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_nsgroup",
 ##  group_bind -group <group> -namepath <path>
 $CL2 = $client->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_nsgroup",
         "$LOAD_ARG " .
-        "group_bind -group group1 -location dhcp34.ociweb.com");
+        "group_bind -group group1 -n group_name");
 
 ##  group_modify -group <group> -policy <round | rand | least>
 $CL3 = $client->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_nsgroup",
