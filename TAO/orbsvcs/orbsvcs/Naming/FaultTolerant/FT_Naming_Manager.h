@@ -27,6 +27,8 @@
 #include "orbsvcs/PortableGroup/PG_Group_Factory.h"
 #include "orbsvcs/PortableGroup/PG_FactoryRegistry.h"
 #include <orbsvcs/PortableGroup/PG_Properties_Support.h>
+#include <orbsvcs/Naming/FaultTolerant/FT_Round_Robin.h>
+
 #include "ace/Task.h"
 #include "tao/Condition.h"
 
@@ -217,11 +219,14 @@ public:
   void initialize (CORBA::ORB_ptr orb,
                    PortableServer::POA_ptr root_poa);
 
+  /// Utilizing the load balancing strategy identified by the object
+  /// group property, return the next location which should be used
+  /// to service the next CORBA request
+  bool  
+  next_location (PortableGroup::ObjectGroup_ptr object_group,
+                 PortableGroup::Location& loc);
+
   /// Destructor.
-  /**
-   * Destructor is protected to enforce correct memory management
-   * through reference counting.
-   */
   ~TAO_FT_Naming_Manager (void);
 
 private:
@@ -233,27 +238,12 @@ private:
    */
   void preprocess_properties (PortableGroup::Properties & props);
 
-  // Utility for accessing the object group name
+  /// Utility for accessing the object group name
   bool group_name (PortableGroup::ObjectGroup_ptr group, std::string *name);
 
   /// Mutex that provides synchronization for the TAO_FT_Naming_Manager's
   /// state.
   TAO_SYNCH_MUTEX lock_;
-
-  // Attempt to use group factory instead
-#if 0 
-  /// The ObjectGroupManager that implements the functionality
-  /// necessary for application-controlled object group membership.
-  TAO_PG_ObjectGroupManager object_group_manager_;
-
-  /// The PropertyManager that is responsible for parsing all criteria,
-  /// and keeping track of property-type_id associations.
-  TAO_PG_PropertyManager property_manager_;
-
-  /// The GenericFactory responsible for creating all object groups.
-  TAO_PG_GenericFactory generic_factory_;
-
-#endif
 
   /// an object that manages default and type_id related properties
   TAO::PG_Properties_Support properties_support_;
@@ -261,20 +251,26 @@ private:
   /// Registry used by the PG_Group_Factory
   TAO::PG_FactoryRegistry factory_registry_;
 
-  // The group factory responsible for creating object groups 
+  /// The group factory responsible for creating object groups 
   TAO::PG_Group_Factory group_factory_;
 
-  /// Cached instance of the Property name
-  /// "org.omg.CosLoadBalancing.StrategyInfo".
-  PortableGroup::Name built_in_balancing_strategy_info_name_;
+  /**
+   * @name Built-in load balancing strategy implementations
+   *
+   * "Built-in" load balancing strategies. Currently only RoundRobin
+   * is supported.
+   */
+  //@{
+
+  /// The "RoundRobin" load balancing strategy. 
+  TAO_FT_Round_Robin round_robin_;
+  //@}
 
   /// Cached instance of the Property name
   /// "org.omg.CosLoadBalancing.Strategy".
   PortableGroup::Name built_in_balancing_strategy_name_;
 
-  /// Cached instance of the Property name
-  /// "org.omg.CosLoadBalancing.CustomStrategy".
-  PortableGroup::Name custom_balancing_strategy_name_;
+  PortableGroup::Name object_group_property_name_;
 
   TAO_SYNCH_MUTEX validate_lock_;
   TAO_Condition<TAO_SYNCH_MUTEX> validate_condition_;
