@@ -17,6 +17,7 @@
 #include "ace/Unbounded_Queue.h"
 #include "ace/Array_Map.h"
 #include "ace/Synch.h"
+#include "ace/Time_Value.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -41,6 +42,26 @@ typedef ACE_Unbounded_Queue<ACE_CString> TAO_EndpointSet;
 typedef ACE_Unbounded_Queue_Const_Iterator<ACE_CString> TAO_EndpointSetIterator;
 
 // -------------------------------------------------------------------
+
+namespace TAO
+{
+  struct Invocation_Retry_Params
+  {
+    Invocation_Retry_Params();
+
+    typedef ACE_Array_Map<int, int> exception_limit_map_type;
+
+    /**
+     * The maximum number of retry attempts per exception type
+     * when exceptions are encountered.
+     */
+
+    exception_limit_map_type forward_on_exception_limit_;
+
+    ACE_Time_Value init_retry_delay_;
+  };
+}
+
 
 /**
  * @class TAO_ORB_Parameters
@@ -255,8 +276,20 @@ public:
   void forward_invocation_on_object_not_exist (bool opt);
   bool forward_invocation_on_object_not_exist (void) const;
 
-  void forward_once_exception (const int);
+  void forward_on_exception_limit (const int ef, const int limit);
+  void forward_on_exception_delay (const ACE_Time_Value &delay);
+  const TAO::Invocation_Retry_Params &invocation_retry_params (void) const;
+
+  /// Although forward_invocation_on_transient_limit()
+  /// is a generation of the forward-once parameters,
+  /// these functions are retained
+  /// to aid in backward compatibility of behavior
+  /// if a -ORBForwardOnceOn* options is passed.
+  void forward_once_exception (const int ef);
   int forward_once_exception () const;
+
+  void forward_once_exception_used (bool opt);
+  bool forward_once_exception_used () const;
 
   void allow_ziop_no_server_policies (bool opt);
   bool allow_ziop_no_server_policies (void) const;
@@ -478,13 +511,23 @@ private:
    */
   bool forward_invocation_on_object_not_exist_;
 
+  TAO::Invocation_Retry_Params invocation_retry_params_;
 
   /**
    * The exceptions upon which the requests will be forwarded once.
+   * This is retained for backward compatibility of behavior.
    */
   int forward_once_exception_;
 
   /**
+   * A flag indicating that a forward once parameter is being used.
+   * If this flag is true then the usage of forward_on_exception_limit_
+   * is avoided so that backward compatbility with previous behavior
+   * is done.
+   */
+  bool forward_once_exception_used_;
+
+/**
    * Name of the collocation resolver that needs to be instantiated.
    * The default value is "Default_Collocation_Resolver". If
    * TAO_RTCORBA is linked, the set_collocation_resolver will be

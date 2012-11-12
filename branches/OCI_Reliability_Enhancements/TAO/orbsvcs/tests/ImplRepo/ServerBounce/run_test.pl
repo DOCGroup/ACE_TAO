@@ -16,6 +16,8 @@ foreach $i (@ARGV) {
     }
 }
 
+my $extra_timeout = 45;
+
 my $c1 = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 my $imr = PerlACE::TestTarget::create_target (3) || die "Create target 3 failed\n";
 my $act = PerlACE::TestTarget::create_target (4) || die "Create target 4 failed\n";
@@ -80,7 +82,7 @@ $SI = $si->CreateProcess ($tao_imr, "-ORBInitRef ImplRepoService=file://$si_imri
                                                "ior MessengerService ".
                                                "-f $si_srviorfile ");
 
-$C1 = $c1->CreateProcess ("MessengerClient", "-k file://$c1_srviorfile ");
+$C1 = $c1->CreateProcess ("MessengerClient", "-k file://$c1_srviorfile -ORBForwardOnTransientLimit 20 -ORBForwardOnCommFailureLimit 20 -ORBForwardDelay 500 -ORBdebuglevel $debug_level");
 
 $SDN = $sdn->CreateProcess ("$tao_imr", "-ORBInitRef ImplRepoService=file://$sdn_imriorfile ".
                                         "shutdown MessengerService");
@@ -93,7 +95,7 @@ if ($IR_status != 0) {
     exit 1;
 }
 
-if ($imr->WaitForFileTimed ($implrepo_ior,$imr->ProcessStartWaitInterval()) == -1) {
+if ($imr->WaitForFileTimed ($implrepo_ior,$imr->ProcessStartWaitInterval() + $extra_timeout) == -1) {
     print STDERR "ERROR: cannot find file <$imr_imriorfile>\n";
     $IR->Kill (); $IR->TimedWait (1);
     exit 1;
@@ -133,7 +135,7 @@ if ($ACT_status != 0) {
     exit 1;
 }
 
-if ($act->WaitForFileTimed ($activator_ior,$act->ProcessStartWaitInterval()) == -1) {
+if ($act->WaitForFileTimed ($activator_ior,$act->ProcessStartWaitInterval() + $extra_timeout) == -1) {
     print STDERR "ERROR: cannot find file <$act_actiorfile>\n";
     $IR->Kill (); $IR->TimedWait (1);
     $ACT->Kill (); $ACT->TimedWait (1);
@@ -147,13 +149,7 @@ print ">>> " . $TI->CommandLine() . "\n";
 
 $TI->IgnoreExeSubDir (1);
 
-## Note : Instead of using tao_imr to generate the ior, it's easy enough
-## to just create one by hand. The ior is just a normal corbaloc ior with
-## the poa_name of the server and ip address of the imr.
-## (ie corbaloc::localhost:8888/Messengerservice)
-## Of course, to do this, you'd have to start the imr on port 8888.
-## We use the "tao_imr ior" command, because we don't know which port was used.
-$TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
+$TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval() + $extra_timeout);
 
 if ($TI_status != 0) {
     print STDERR "ERROR: tao_imr returned $TI_status\n";
@@ -166,7 +162,7 @@ print ">>> " . $SI->CommandLine() . "\n";
 $SI->IgnoreExeSubDir (1);
 
 
-$SI_status = $SI->SpawnWaitKill ($si->ProcessStartWaitInterval());
+$SI_status = $SI->SpawnWaitKill ($si->ProcessStartWaitInterval() + $extra_timeout);
 
 if ($SI_status != 0) {
     print STDERR "ERROR: tao_imr returned $SI_status\n";
@@ -175,7 +171,7 @@ if ($SI_status != 0) {
     exit 1;
 }
 
-if ($si->WaitForFileTimed ($messenger_ior,$si->ProcessStartWaitInterval()) == -1) {
+if ($si->WaitForFileTimed ($messenger_ior,$si->ProcessStartWaitInterval() + $extra_timeout) == -1) {
     print STDERR "ERROR: cannot find file <$si_srviorfile>\n";
     $IR->Kill (); $IR->TimedWait (1);
     $ACT->Kill (); $ACT->TimedWait (1);
@@ -197,7 +193,7 @@ if ($c1->PutFile ($messenger_ior) == -1) {
 
 
 print ">>> " . $C1->CommandLine() . "\n";
-$C1_status = $C1->SpawnWaitKill ($c1->ProcessStartWaitInterval());
+$C1_status = $C1->SpawnWaitKill ($c1->ProcessStartWaitInterval() + $extra_timeout);
 
 if ($C1_status != 0) {
     print STDERR "ERROR: Client1 returned $C1_status\n";
@@ -207,7 +203,7 @@ if ($C1_status != 0) {
 }
 
 $SDN->IgnoreExeSubDir (1);
-$SDN_status = $SDN->SpawnWaitKill ($sdn->ProcessStartWaitInterval());
+$SDN_status = $SDN->SpawnWaitKill ($sdn->ProcessStartWaitInterval() + $extra_timeout);
 
 if ($SDN_status != 0) {
     print STDERR "ERROR: Shutdown returned $SDN_status\n";
@@ -217,14 +213,14 @@ if ($SDN_status != 0) {
 }
 
 
-$IR_status = $IR->TerminateWaitKill ($imr->ProcessStopWaitInterval());
+$IR_status = $IR->TerminateWaitKill ($imr->ProcessStopWaitInterval() + $extra_timeout);
 
 if ($IR_status != 0) {
     print STDERR "ERROR: ImplRepo Server returned $IR_status\n";
     $status = 1;
 }
 
-$ACT_status = $ACT->TerminateWaitKill ($act->ProcessStopWaitInterval());
+$ACT_status = $ACT->TerminateWaitKill ($act->ProcessStopWaitInterval() + $extra_timeout);
 
 if ($ACT_status != 0) {
     print STDERR "ERROR: ImR_Activator returned $ACT_status\n";

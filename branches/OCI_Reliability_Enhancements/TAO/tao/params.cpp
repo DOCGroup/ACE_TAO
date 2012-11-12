@@ -17,6 +17,16 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+TAO::Invocation_Retry_Params::Invocation_Retry_Params (void)
+  // Set default delay to 0.1 seconds
+  : init_retry_delay_ (0, 100000)
+{
+      this->forward_on_exception_limit_[FOE_OBJECT_NOT_EXIST] = 0;
+      this->forward_on_exception_limit_[FOE_COMM_FAILURE] = 0;
+      this->forward_on_exception_limit_[FOE_TRANSIENT] = 0;
+      this->forward_on_exception_limit_[FOE_INV_OBJREF] = 0;
+}
+
 TAO_ORB_Parameters::TAO_ORB_Parameters (void)
   : endpoints_map_ (10)
   , mcast_discovery_endpoint_ ()
@@ -63,7 +73,8 @@ TAO_ORB_Parameters::TAO_ORB_Parameters (void)
                                      "_make_TAO_Object_Adapter_Factory",
                                      ""))
   , forward_invocation_on_object_not_exist_ (false)
-  , forward_once_exception_ (TAO::FOE_NON)
+  , forward_once_exception_ (0)
+  , forward_once_exception_used_ (false)
   , collocation_resolver_name_ ("Default_Collocation_Resolver")
   , allow_ziop_no_server_policies_ (!!TAO_ALLOW_ZIOP_NO_SERVER_POLICIES_DEFAULT)
 {
@@ -408,6 +419,30 @@ const char *
 TAO_ORB_Parameters::endpoint_selector_factory_name (void) const
 {
   return this->endpoint_selector_factory_name_.c_str ();
+}
+
+bool
+TAO_ORB_Parameters::forward_once_exception_used () const
+{
+  return this->forward_once_exception_used_;
+}
+
+const TAO::Invocation_Retry_Params &
+TAO_ORB_Parameters::invocation_retry_params (void) const
+{
+  return this->invocation_retry_params_;
+}
+
+void
+TAO_ORB_Parameters::forward_on_exception_limit (const int ef, const int limit)
+{
+  this->invocation_retry_params_.forward_on_exception_limit_[ef] = limit;
+}
+
+void
+TAO_ORB_Parameters::forward_on_exception_delay (const ACE_Time_Value &delay)
+{
+  this->invocation_retry_params_.init_retry_delay_ = delay;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

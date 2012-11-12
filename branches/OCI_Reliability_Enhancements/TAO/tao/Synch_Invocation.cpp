@@ -1,6 +1,7 @@
 // $Id$
 
 #include "tao/Synch_Invocation.h"
+#include "tao/Invocation_Retry_State.h"
 #include "tao/Profile_Transport_Resolver.h"
 #include "tao/Profile.h"
 #include "tao/Synch_Reply_Dispatcher.h"
@@ -79,10 +80,20 @@ namespace TAO
 
         if (!transport)
           {
-            // Way back, we failed to find a profile we could connect to.
-            // We've come this far only so we reach the interception points
-            // in case they can fix things. Time to bail....
-            throw CORBA::TRANSIENT (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
+            TAO::Invocation_Retry_State *retry_state = this->stub ()->invocation_retry_state ();
+            if (retry_state->forward_on_exception_increment(FOE_TRANSIENT))
+                  {
+                    retry_state->sleep_before_retry ();
+                    return TAO_INVOKE_RESTART;
+                  }
+            else
+              {
+                // Way back, we failed to find a profile we could connect to.
+                // We've come this far only so we reach the interception points
+                // in case they can fix things. Time to bail....
+                throw CORBA::TRANSIENT (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
+              }
+
           }
 
         ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon,
@@ -312,6 +323,20 @@ namespace TAO
             (void) bd.unbind_dispatcher ();
             this->resolver_.transport ()->close_connection ();
 
+            TAO::Invocation_Retry_State *retry_state =
+              this->stub ()->invocation_retry_state ();
+            if (this->resolver_.transport ()->connection_closed_on_read() &&
+                retry_state->forward_on_exception_increment (TAO::FOE_COMM_FAILURE) &&
+                this->resolver_.stub ()->next_profile_retry ())
+              {
+                if (TAO_debug_level > 4)
+                  ACE_DEBUG ((LM_DEBUG,
+                              "TAO (%P|%t) - Synch_Twoway_Invocation::"
+                              "wait_for_reply, profile forwarding on exception\n"));
+                retry_state->sleep_before_retry ();
+                return TAO_INVOKE_RESTART;
+              }
+
             try
               {
                 return
@@ -322,7 +347,10 @@ namespace TAO
               }
             catch (const ::CORBA::Exception&)
               {
-                this->resolver_.stub ()->reset_profiles ();
+                if (!this->stub ()->invocation_retry_state ()->forward_on_exception_limit_used ())
+                  {
+                    this->resolver_.stub ()->reset_profiles ();
+                  }
                 throw;
               }
           }
@@ -533,39 +561,70 @@ namespace TAO
         throw ::CORBA::MARSHAL (0, CORBA::COMPLETED_MAYBE);
       }
 
+    bool retry_on_exception = false;
     bool do_forward = false;
-    int foe_kind = this->stub ()->orb_core ()->orb_params ()->forward_once_exception();
 
-    if ((CORBA::CompletionStatus) completion != CORBA::COMPLETED_YES
-        && (((foe_kind & TAO::FOE_TRANSIENT) == 0
-              && ACE_OS_String::strcmp (type_id.in (),
-                                "IDL:omg.org/CORBA/TRANSIENT:1.0") == 0) ||
-            ACE_OS_String::strcmp (type_id.in (),
-                              "IDL:omg.org/CORBA/OBJ_ADAPTER:1.0") == 0 ||
-            ACE_OS_String::strcmp (type_id.in (),
-                              "IDL:omg.org/CORBA/NO_RESPONSE:1.0") == 0 ||
-            ((foe_kind & TAO::FOE_COMM_FAILURE) == 0
-              && ACE_OS_String::strcmp (type_id.in (),
-                              "IDL:omg.org/CORBA/COMM_FAILURE:1.0") == 0) ||
-            (this->stub ()->orb_core ()->orb_params ()->forward_invocation_on_object_not_exist ()
-             && ACE_OS_String::strcmp (type_id.in (),
-                              "IDL:omg.org/CORBA/OBJECT_NOT_EXIST:1.0") == 0) ||
-            (do_forward = ! this->stub ()->forwarded_on_exception ()
-             && ((((foe_kind & TAO::FOE_OBJECT_NOT_EXIST) == TAO::FOE_OBJECT_NOT_EXIST)
-                        && (ACE_OS_String::strcmp (type_id.in (),
-                                "IDL:omg.org/CORBA/OBJECT_NOT_EXIST:1.0") == 0)) ||
-                 (((foe_kind & TAO::FOE_COMM_FAILURE) == TAO::FOE_COMM_FAILURE)
-                        && (ACE_OS_String::strcmp (type_id.in (),
-                                "IDL:omg.org/CORBA/COMM_FAILURE:1.0") == 0)) ||
-                 (((foe_kind & TAO::FOE_TRANSIENT) == TAO::FOE_TRANSIENT)
-                        && (ACE_OS_String::strcmp (type_id.in (),
-                                "IDL:omg.org/CORBA/TRANSIENT:1.0") == 0)) ||
-                 (((foe_kind & TAO::FOE_INV_OBJREF) == TAO::FOE_INV_OBJREF)
-                        && (ACE_OS_String::strcmp (type_id.in (),
-                                "IDL:omg.org/CORBA/INV_OBJREF:1.0") == 0))))))
+    const TAO_ORB_Parameters *orb_params = this->stub ()->orb_core ()->orb_params ();
+    TAO::Invocation_Retry_State *retry_state = this->stub ()->invocation_retry_state ();
+
+    if (retry_state->forward_on_exception_limit_used () &&
+        (CORBA::CompletionStatus) completion == CORBA::COMPLETED_NO)
+      {
+        if ((ACE_OS_String::strcmp (type_id.in (),
+                                   "IDL:omg.org/CORBA/TRANSIENT:1.0") == 0 &&
+             retry_state->forward_on_exception_increment (TAO::FOE_TRANSIENT)) ||
+            (ACE_OS_String::strcmp (type_id.in (),
+                                   "IDL:omg.org/CORBA/COMM_FAILURE:1.0") == 0 &&
+             retry_state->forward_on_exception_increment (TAO::FOE_COMM_FAILURE)))
+          {
+            retry_on_exception = true;
+            retry_state->sleep_before_retry ();
+          }
+      }
+    else if (orb_params->forward_once_exception_used ())
+      {
+        int foe_kind = orb_params->forward_once_exception();
+
+        retry_on_exception =
+          (CORBA::CompletionStatus) completion != CORBA::COMPLETED_YES
+          && (((foe_kind & TAO::FOE_TRANSIENT) == 0
+               && ACE_OS_String::strcmp (type_id.in (),
+                                         "IDL:omg.org/CORBA/TRANSIENT:1.0") == 0) ||
+              ACE_OS_String::strcmp (type_id.in (),
+                                     "IDL:omg.org/CORBA/OBJ_ADAPTER:1.0") == 0 ||
+              ACE_OS_String::strcmp (type_id.in (),
+                                     "IDL:omg.org/CORBA/NO_RESPONSE:1.0") == 0 ||
+              ((foe_kind & TAO::FOE_COMM_FAILURE) == 0
+               && ACE_OS_String::strcmp (type_id.in (),
+                                         "IDL:omg.org/CORBA/COMM_FAILURE:1.0") == 0) ||
+              (orb_params->forward_invocation_on_object_not_exist ()
+               && ACE_OS_String::strcmp (type_id.in (),
+                                         "IDL:omg.org/CORBA/OBJECT_NOT_EXIST:1.0") == 0) ||
+              (do_forward = ! this->stub ()->forwarded_on_exception ()
+               && ((((foe_kind & TAO::FOE_OBJECT_NOT_EXIST) == TAO::FOE_OBJECT_NOT_EXIST)
+                    && (ACE_OS_String::strcmp (type_id.in (),
+                                               "IDL:omg.org/CORBA/OBJECT_NOT_EXIST:1.0") == 0)) ||
+                   (((foe_kind & TAO::FOE_COMM_FAILURE) == TAO::FOE_COMM_FAILURE)
+                    && (ACE_OS_String::strcmp (type_id.in (),
+                                               "IDL:omg.org/CORBA/COMM_FAILURE:1.0") == 0)) ||
+                   (((foe_kind & TAO::FOE_TRANSIENT) == TAO::FOE_TRANSIENT)
+                    && (ACE_OS_String::strcmp (type_id.in (),
+                                               "IDL:omg.org/CORBA/TRANSIENT:1.0") == 0)) ||
+                   (((foe_kind & TAO::FOE_INV_OBJREF) == TAO::FOE_INV_OBJREF)
+                    && (ACE_OS_String::strcmp (type_id.in (),
+                                               "IDL:omg.org/CORBA/INV_OBJREF:1.0") == 0)))));
+      }
+
+    if (retry_on_exception)
       {
         // If we are here then possibly we'll need a restart.
         mon.set_status (TAO_INVOKE_RESTART);
+
+        if (TAO_debug_level > 4)
+          ACE_DEBUG ((LM_DEBUG,
+                      "TAO (%P|%t) - Synch_Twoway_Invocation::"
+                      "handle_system_exception, profile forwarding on exception ",
+                      type_id.in (), "\n"));
 
         if (do_forward)
           this->stub ()->forwarded_on_exception (true);
@@ -676,10 +735,23 @@ namespace TAO
 
         if (!transport)
           {
-            // Way back, we failed to find a profile we could connect to.
-            // We've come this far only so we reach the interception points
-            // in case they can fix things. Time to bail....
-            throw CORBA::TRANSIENT (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
+            TAO::Invocation_Retry_State *retry_state = this->stub ()->invocation_retry_state ();
+            if (retry_state->forward_on_exception_limit_used ())
+              {
+                if (retry_state->forward_on_exception_increment(FOE_TRANSIENT))
+                  {
+                    retry_state->sleep_before_retry ();
+                    return TAO_INVOKE_RESTART;
+                  }
+              }
+            else
+              {
+                // Way back, we failed to find a profile we could connect to.
+                // We've come this far only so we reach the interception points
+                // in case they can fix things. Time to bail....
+                throw CORBA::TRANSIENT (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
+              }
+
           }
 
   {

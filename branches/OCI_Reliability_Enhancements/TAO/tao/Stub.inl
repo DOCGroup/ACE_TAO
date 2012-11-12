@@ -362,6 +362,13 @@ TAO_Stub::_decr_refcnt (void)
     delete this;
 }
 
+ACE_INLINE
+CORBA::Boolean
+TAO_Stub::at_starting_profile (void) const
+{
+  return profile_in_use_ == base_profiles_.get_profile(0);
+}
+
 // ---------------------------------------------------------------
 
 // Creator methods for TAO_Stub_Auto_Ptr (TAO_Stub Auto Pointer)
