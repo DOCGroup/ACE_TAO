@@ -60,12 +60,19 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_FT_Naming_Manager::TAO_FT_Naming_Manager (void)
   : group_factory_ (),
-    built_in_balancing_strategy_info_name_ (1),
     built_in_balancing_strategy_name_ (1),
-    custom_balancing_strategy_name_ (1),
+    object_group_property_name_ (1),
     factory_registry_ ("NamingManager::FactoryRegistry")
 
 {
+  // The name for the property which contains the load balancing strategy value
+  this->built_in_balancing_strategy_name_.length (1);
+  this->built_in_balancing_strategy_name_[0].id =
+    CORBA::string_dup (FT::TAO_FT_LOAD_BALANCING_STRATEGY);
+
+  // The name for the property which contains the object group name 
+  this->object_group_property_name_.length (1);
+  this->object_group_property_name_[0].id = CORBA::string_dup (FT::TAO_FT_OBJECT_GROUP_NAME);
 
 }
 
@@ -182,14 +189,9 @@ TAO_FT_Naming_Manager::group_name (PortableGroup::ObjectGroup_ptr group, std::st
     return false;
   }
 
-  // The name for an object group is stored in the FT::TAO_FT_OBJECT_GROUP_NAME
-  PortableGroup::Name group_name (1);
-  group_name.length (1);
-  group_name[0].id = CORBA::string_dup (FT::TAO_FT_OBJECT_GROUP_NAME);
-
   PortableGroup::Properties* props = this->get_properties (group);
   PortableGroup::Value value;
-  CORBA::Boolean found = TAO_PG::get_property_value (group_name, 
+  CORBA::Boolean found = TAO_PG::get_property_value (object_group_property_name_, 
                                                      *props,
                                                      value);
   if (found)
@@ -577,6 +579,48 @@ TAO_FT_Naming_Manager::initialize (CORBA::ORB_ptr orb,
   this->group_factory_.init (orb, naming_mgr_poa, factory_registry_.reference());
 }
 
+bool  
+TAO_FT_Naming_Manager::next_location (PortableGroup::ObjectGroup_ptr object_group,
+                                      PortableGroup::Location& loc)
+{
+  bool result = false;
+
+  PortableGroup::Properties* props = this->get_properties (object_group);
+  PortableGroup::Value value;
+  CORBA::Boolean found = TAO_PG::get_property_value (built_in_balancing_strategy_name_, 
+                                                     *props,
+                                                     value);
+
+  // If there is no TAO_FT_LOAD_BALANCING_STRATEGY property in the object group
+  // return failure
+  if (!found) 
+  {
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("%T %n (%P|%t) - TAO_FT_Naming_Manager::next_location: object group has no TAO_FT_LOAD_BALANCING_STRATEGY property.\n")
+               ));
+    return false;
+  }
+
+  // Extract the load balancing strategy value
+  FT::LoadBalancingStrategyValue load_bal_strategy;
+  value >>= load_bal_strategy;
+
+  switch (load_bal_strategy)
+  {
+  case FT::ROUND_ROBIN:
+    result = this->round_robin_.next_location (object_group, this, loc);
+    break;
+  default:
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("%T %n (%P|%t) - TAO_FT_Naming_Manager::next_location: unsupported load balancing strategy requested.\n")
+               ));
+
+    result = false;
+    break;
+  }
+
+  return result;
+}
 
 void
 TAO_FT_Naming_Manager::preprocess_properties (PortableGroup::Properties & props)

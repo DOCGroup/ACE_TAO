@@ -60,8 +60,6 @@ public:
    */
   virtual CORBA::Object_ptr resolve (const CosNaming::Name &n);
 
-  PortableGroup::Location get_next_location (const PortableGroup::Locations* current_locations);
-
   static void set_naming_manager_impl (TAO_FT_Naming_Manager *mgr_impl);
 
   bool is_object_group (const CORBA::Object_ptr obj) const;

@@ -1,3 +1,26 @@
+Mon Nov 12 20:43:25 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
+
+        * orbsvcs/orbsvcs/FT_NamingManager.idl:
+        
+          Add constants to support the creation of strategies.
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Location_Index_Map.h:
+        
+          Add new type to maintain the strategy state data.
+          
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Persistent_Naming_Context.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Persistent_Naming_Context.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Round_Robin.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Round_Robin.cpp:
+        
+          Implement functionality in support of load balancing strategies.
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_Factory.cpp:
+        
+          Fixed functionality for looking up object groups with matching property value.
+          
 Mon Nov 12 18:19:10 UTC 2012  Byron Harris  <harrisb@ociweb.com>
 
         * orbsvcs/tests/ImplRepo/RestartServer:

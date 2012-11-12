@@ -162,14 +162,12 @@ int TAO::PG_Group_Factory::find_group (const PortableGroup::Property& property_t
 
   size_t upper_limit = this->group_map_.current_size ();
   PortableGroup::Value value;
-  PortableGroup::Properties* props;
+  PortableGroup::Properties_var properties;
 
   ACE_NEW_THROW_EX (
-    props,
+    properties,
     PortableGroup::Properties,
     CORBA::NO_MEMORY());
-
-  PortableGroup::Properties_var properties = new PortableGroup::Properties;
 
   size_t group_count = 0;
 
@@ -182,29 +180,31 @@ int TAO::PG_Group_Factory::find_group (const PortableGroup::Property& property_t
     // If the group has the group name in the property
     // 
     a_group->get_properties (properties);
-    CORBA::Boolean found = TAO_PG::get_property_value (property_target.nam, 
-      properties,
-      value);
 
-    // If the group has the property identified by the caller, check the value
-    if (found) 
+    // If the group has the property identified by the caller, check the value, by
+    // extracting it into a string, extracting the target value and comparing the
+    // two values to make sure they are equal
+    if (TAO_PG::get_property_value (property_target.nam, 
+                                    properties,
+                                    value))
     {
       std::string value_str;
       std::string target_str;
-      // Check the value 
-      value >>= value_str;
-      property_target.val >>= target_str;
 
-      if (value_str.compare (target_str) == 0)
-      {
+      // Check the value in the property against the target
+      if ((value >>= value_str) &&
+        (property_target.val >>= target_str) &&
+        (value_str.compare (target_str) == 0) )
+      { // This is the group we were looking for
         group_target = a_group;
         result = 1;
         break;
       }
     }
   }
-  
+
   return result;  
+
 }
 
 int TAO::PG_Group_Factory::destroy_group (PortableGroup::ObjectGroupId group_id)

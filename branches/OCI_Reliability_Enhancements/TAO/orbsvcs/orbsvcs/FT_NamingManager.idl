@@ -21,7 +21,13 @@
 module FT
 {
   const string TAO_FT_OBJECT_GROUP_NAME = "TAO_FT_GroupName";
+  const string TAO_FT_LOAD_BALANCING_STRATEGY = "TAO_FT_LB_Strategy";
   
+  typedef long LoadBalancingStrategyValue;
+  const LoadBalancingStrategyValue ROUND_ROBIN = 0;
+  const LoadBalancingStrategyValue RANDOM = 1;
+  const LoadBalancingStrategyValue ACTIVE = 2;
+
   typedef sequence<string> GroupNames;
 
   // Specification of NamingManager Interface

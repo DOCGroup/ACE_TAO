@@ -2,7 +2,9 @@
 
 #include "orbsvcs/Naming/FaultTolerant/FT_Persistent_Naming_Context.h"
 #include "orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.h"
+#include "orbsvcs/FT_NamingManagerC.h"
 #include "orbsvcs/PortableGroup/PG_Utils.h"
+#include "orbsvcs/PortableGroup/PG_Property_Utils.h"
 
 #include "orbsvcs/Naming/Persistent_Context_Index.h"
 #include "ace/OS_NS_stdio.h"
@@ -58,16 +60,6 @@ TAO_FT_Persistent_Naming_Context::resolve (const CosNaming::Name& n)
   ACE_GUARD_THROW_EX (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon, this->lock_,
     CORBA::INTERNAL ());
 
-  // If there is no naming manager, we should return the object reference,
-  // but print out an error.
-  if ( this->naming_manager_impl_ == 0)
-  {
-    ACE_ERROR ((LM_ERROR, 
-      "TAO_FT_Persistent_Naming_Context::resolve - Nil Naming Manager\n"));
-
-    return resolved_ref._retn ();
-  }
-
   // Get the locations of the object group members and we will use them to 
   // do the load balancing
   try {
@@ -77,27 +69,29 @@ TAO_FT_Persistent_Naming_Context::resolve (const CosNaming::Name& n)
     if (!this->is_object_group (resolved_ref.in ()))
       return resolved_ref._retn ();
 
-    // Get the locations from the object group
-    PortableGroup::Locations_var locations = 
-      this->naming_manager_impl_->locations_of_members (resolved_ref.in ());
-
-    // If there are no locations, then no objects are in the object group.
-    // Return a null object
-    if (locations->length () == 0)
+    // If there is no naming manager, we will fail and report an error.
+    if ( this->naming_manager_impl_ == 0)
     {
       ACE_ERROR ((LM_ERROR, 
-        "TAO_FT_Persistent_Naming_Context::resolve - Object group has no members\n"));
+        "TAO_FT_Persistent_Naming_Context::resolve - No NamingManager defined.\n"));
 
+      throw CORBA::INTERNAL ();
+    }
+    
+    // Get the next location selected by the associated strategy 
+    PortableGroup::Location next_location;
+    if (this->naming_manager_impl_->next_location (resolved_ref.in(), next_location))
+    { // Found the location
+      // Access the object from the naming service manager by passing in 
+      // the next_location value and assign it to the resolved_ref
+      resolved_ref = 
+        this->naming_manager_impl_->get_member_ref (resolved_ref.in (), next_location);
+    }
+    else
+    { // No locations defined for the object group, so we will return a null object reference
       return CORBA::Object::_nil ();
     }
 
-    // Get the next location selected by the associated strategy 
-    PortableGroup::Location next_location = this->get_next_location (locations);
-
-    // Access the object from the naming service manager by passing in 
-    // the next_location value and assign it to the resolved_ref
-    resolved_ref = 
-      this->naming_manager_impl_->get_member_ref (resolved_ref.in (), next_location);
   }
   catch (const PortableGroup::ObjectGroupNotFound&)
   {
@@ -107,9 +101,8 @@ TAO_FT_Persistent_Naming_Context::resolve (const CosNaming::Name& n)
   }
   catch (CORBA::Exception& ex)
   {
-    ACE_ERROR ((LM_ERROR, 
-        "TAO_FT_Persistent_Naming_Context::resolve - Some error occurred\n"));
-
+     ex._tao_print_exception (
+        "TAO_FT_Persistent_Naming_Context::resolve - Some unhandled error occurred\n");
       return CORBA::Object::_nil ();
   }
 
@@ -122,22 +115,5 @@ TAO_FT_Persistent_Naming_Context::set_naming_manager_impl (TAO_FT_Naming_Manager
   naming_manager_impl_ = (mgr_impl);
 }
 
-PortableGroup::Location
-TAO_FT_Persistent_Naming_Context::get_next_location (const PortableGroup::Locations* current_locations)
-{
-  CORBA::ULong next_index = 0;
-
-  // Check if the previous index is uninitialized
-  if (this->previous_index_ == ULONG_MAX)
-    next_index = 0;   // Start at first element
-  else
-    this->previous_index_++;  // Get the next element
-
-  // If we are past the end of the locations, wrap arround
-  if (next_index > current_locations->length ())
-    next_index = 0;  // Restart at first element
- 
-  return (*current_locations)[next_index];
-}
 
 TAO_END_VERSIONED_NAMESPACE_DECL
