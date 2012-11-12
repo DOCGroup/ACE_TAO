@@ -3843,6 +3843,7 @@ ACE_Thread_ID::operator!= (const ACE_Thread_ID &rhs) const
   return !(*this == rhs);
 }
 
+ACE_INLINE
 ACE_event_t::ACE_event_t (void) :
   name_ (0),
   eventdata_ (0)
