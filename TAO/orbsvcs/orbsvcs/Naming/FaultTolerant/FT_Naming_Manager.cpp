@@ -328,9 +328,16 @@ TAO_FT_Naming_Manager::add_member (
   TAO::PG_Object_Group * group = 0;
   if (this->group_factory_.find_group (object_group, group))
   {
-    group->add_member (
-      the_location,
-      member);
+    try {
+      group->add_member (the_location,
+                         member);
+    }
+    catch (...)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                 "TAO_FT_Naming_Manager::add_member - Issue with IOR of group or member"));
+      throw PortableGroup::ObjectNotAdded ();
+    }
 
     result = group->reference ();
 
