@@ -1,3 +1,12 @@
+Mon Nov 12 10:06:57 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+        * bin/diff-builds-and-group-fixed-tests-only.sh:
+        * docs/Download.html:
+        * docs/bczar/bczar.html:
+        * etc/index.html:
+          Updated for next release
+
 Mon Nov 12 09:34:14 CET 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ACE version 6.1.6 released.
