@@ -1883,6 +1883,11 @@ class ACE_Export ACE_event_t
   friend int ACE_OS::event_signal(ACE_event_t*);
   friend int ACE_OS::event_pulse(ACE_event_t*);
   friend int ACE_OS::event_reset(ACE_event_t*);
+
+public:
+  /// Constructor initializing all pointer fields to null
+  ACE_event_t (void);
+
 protected:
 
   /// Event name if process shared.
