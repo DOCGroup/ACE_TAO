@@ -98,6 +98,10 @@ ACE_Control_Block::dump (void) const
 }
 
 ACE_Control_Block::ACE_Name_Node::ACE_Name_Node (void)
+  : name_ (0),
+    pointer_ (0),
+    next_ (0),
+    prev_ (0)
 {
   ACE_TRACE ("ACE_Control_Block::ACE_Name_Node::ACE_Name_Node");
 }
