@@ -1,3 +1,22 @@
+Mon Nov 12 18:19:10 UTC 2012  Byron Harris  <harrisb@ociweb.com>
+
+        * orbsvcs/tests/ImplRepo/RestartServer:
+
+          Renamed test ServerBounce to RestartServer to
+          be better compare with ReconnectServer test.
+
+        * orbsvcs/tests/ImplRepo/ServerBounce:
+        * orbsvcs/tests/ImplRepo/ServerBounce/Messenger.idl:
+        * orbsvcs/tests/ImplRepo/ServerBounce/MessengerClient.cpp:
+        * orbsvcs/tests/ImplRepo/ServerBounce/MessengerServer.cpp:
+        * orbsvcs/tests/ImplRepo/ServerBounce/Messenger_i.h:
+        * orbsvcs/tests/ImplRepo/ServerBounce/Messenger_i.cpp:
+        * orbsvcs/tests/ImplRepo/ServerBounce/README:
+        * orbsvcs/tests/ImplRepo/ServerBounce/ServerBounce.mpc:
+        * orbsvcs/tests/ImplRepo/ServerBounce/run_test.pl:
+
+          Removed these files.
+
 Mon Nov 12 15:25:06 UTC 2012  Byron Harris  <harrisb@ociweb.com>
 
         * orbsvcs/tests/ImplRepo/ReconnectServer/client.cpp:
