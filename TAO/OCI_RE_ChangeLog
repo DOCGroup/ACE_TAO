@@ -1,26 +1,48 @@
+Mon Nov 12 21:35:01 UTC 2012  Byron Harris  <harrisb@ociweb.com>
+
+        * bin/tao_orb_tests.lst:
+        * bin/tao_other_tests.lst:
+
+          Added new invocation retry tests.
+
+        * orbsvcs/tests/ImplRepo/RestartServer/RestartServer.mpc:
+        * orbsvcs/tests/ImplRepo/RestartServer/Terminator.h:
+        * orbsvcs/tests/ImplRepo/RestartServer/Terminator.cpp:
+
+          Added missing files from test.
+
+        * tao/Synch_Invocation.cpp:
+
+          Added support for invocation reply if server sends
+          OBJECT_NOT_EXIST or INV_OBJREF exceptions.
+
+        * tests/Multiple_Retry_Tests/Retry_On_Reply_Failure/run_test.pl:
+
+          Added configs for OBJECT_NOT_EXIST and INV_OBJREF exceptions.
+
 Mon Nov 12 20:43:25 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
 
         * orbsvcs/orbsvcs/FT_NamingManager.idl:
-        
+
           Add constants to support the creation of strategies.
 
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Location_Index_Map.h:
-        
+
           Add new type to maintain the strategy state data.
-          
+
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.h:
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.cpp:
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Persistent_Naming_Context.h:
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Persistent_Naming_Context.cpp:
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Round_Robin.h:
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Round_Robin.cpp:
-        
+
           Implement functionality in support of load balancing strategies.
 
         * orbsvcs/orbsvcs/PortableGroup/PG_Group_Factory.cpp:
-        
+
           Fixed functionality for looking up object groups with matching property value.
-          
+
 Mon Nov 12 18:19:10 UTC 2012  Byron Harris  <harrisb@ociweb.com>
 
         * orbsvcs/tests/ImplRepo/RestartServer:

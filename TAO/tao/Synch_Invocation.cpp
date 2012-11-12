@@ -326,8 +326,7 @@ namespace TAO
             TAO::Invocation_Retry_State *retry_state =
               this->stub ()->invocation_retry_state ();
             if (this->resolver_.transport ()->connection_closed_on_read() &&
-                retry_state->forward_on_exception_increment (TAO::FOE_COMM_FAILURE) &&
-                this->resolver_.stub ()->next_profile_retry ())
+                retry_state->forward_on_exception_increment (TAO::FOE_COMM_FAILURE))
               {
                 if (TAO_debug_level > 4)
                   ACE_DEBUG ((LM_DEBUG,
@@ -575,7 +574,14 @@ namespace TAO
              retry_state->forward_on_exception_increment (TAO::FOE_TRANSIENT)) ||
             (ACE_OS_String::strcmp (type_id.in (),
                                    "IDL:omg.org/CORBA/COMM_FAILURE:1.0") == 0 &&
-             retry_state->forward_on_exception_increment (TAO::FOE_COMM_FAILURE)))
+             retry_state->forward_on_exception_increment (TAO::FOE_COMM_FAILURE)) ||
+            (ACE_OS_String::strcmp (type_id.in (),
+                                   "IDL:omg.org/CORBA/OBJECT_NOT_EXIST:1.0") == 0 &&
+             retry_state->forward_on_exception_increment (TAO::FOE_OBJECT_NOT_EXIST)) ||
+            (ACE_OS_String::strcmp (type_id.in (),
+                                   "IDL:omg.org/CORBA/INV_OBJREF:1.0") == 0 &&
+             retry_state->forward_on_exception_increment (TAO::FOE_INV_OBJREF))
+            )
           {
             retry_on_exception = true;
             retry_state->sleep_before_retry ();

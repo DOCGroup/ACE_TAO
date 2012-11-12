@@ -23,18 +23,56 @@ foreach $i (@ARGV) {
 #      EF_TRANSIENT        = 0x4,
 #      EF_INV_OBJREF       = 0x8,
 @configurations = ({
-         description => "case 1: retry on COMM_FAILURE exceptions until no failure",
+         description => "case 1: retry on OBJECT_NOT_EXIST exceptions until no failure",
+         orb_invocation_retry_opts => "-ORBForwardOnObjectNotExistLimit 10 -ORBForwardDelay 50",
+         client_expect_ex_kind => "0",
+	 server_raise_ex_kind => "1",
+	 num_exceptions_to_throw => 2,
+     },{
+         description => "case 2: retry on OBJECT_NOT_EXIST exceptions and give up",
+         orb_invocation_retry_opts => "-ORBForwardOnObjectNotExistLimit 1 -ORBForwardDelay 50",
+         client_expect_ex_kind => "1",
+	 server_raise_ex_kind => "1",
+	 num_exceptions_to_throw => 2,
+     },{
+         description => "case 3: retry on COMM_FAILURE exceptions until no failure",
          orb_invocation_retry_opts => "-ORBForwardOnCommFailureLimit 10 -ORBForwardDelay 50",
          client_expect_ex_kind => "0",
 	 server_raise_ex_kind => "2",
 	 num_exceptions_to_throw => 2,
      },{
-         description => "case 2: retry on COMM_FAILURE exceptions and give up",
-         orb_invocation_retry_opts => "-ORBForwardOnCommFailureLimit 10 -ORBForwardDelay 50",
+         description => "case 4: retry on COMM_FAILURE exceptions and give up",
+         orb_invocation_retry_opts => "-ORBForwardOnCommFailureLimit 1 -ORBForwardDelay 50",
          client_expect_ex_kind => "2",
 	 server_raise_ex_kind => "2",
-	 num_exceptions_to_throw => 1000,
+	 num_exceptions_to_throw => 2,
+     },{
+         description => "case 5: retry on TRANSIENT exceptions until no failure",
+         orb_invocation_retry_opts => "-ORBForwardOnTransientLimit 10 -ORBForwardDelay 50",
+         client_expect_ex_kind => "0",
+	 server_raise_ex_kind => "4",
+	 num_exceptions_to_throw => 2,
+     },{
+         description => "case 6: retry on TRANSIENT exceptions and give up",
+         orb_invocation_retry_opts => "-ORBForwardOnTransientLimit 1 -ORBForwardDelay 50",
+         client_expect_ex_kind => "4",
+	 server_raise_ex_kind => "4",
+	 num_exceptions_to_throw => 2,
+     },{
+         description => "case 7: retry on INV_OBJREF exceptions until no failure",
+         orb_invocation_retry_opts => "-ORBForwardOnInvObjrefLimit 10 -ORBForwardDelay 50",
+         client_expect_ex_kind => "0",
+	 server_raise_ex_kind => "8",
+	 num_exceptions_to_throw => 2,
+     },{
+         description => "case 8: retry on INV_OBJREF exceptions and give up",
+         orb_invocation_retry_opts => "-ORBForwardOnInvObjrefLimit 1 -ORBForwardDelay 50",
+         client_expect_ex_kind => "8",
+	 server_raise_ex_kind => "8",
+	 num_exceptions_to_throw => 2,
      },
+
+
 
     );
 
