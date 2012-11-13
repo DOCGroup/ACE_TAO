@@ -53,7 +53,7 @@ public:
       PortableGroup::Location& location);
 
   /// Destructor
-  ~TAO_FT_Round_Robin (void);
+  virtual ~TAO_FT_Round_Robin (void);
 
 private:
 

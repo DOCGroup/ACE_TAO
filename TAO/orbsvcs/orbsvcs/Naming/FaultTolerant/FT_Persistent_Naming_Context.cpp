@@ -47,8 +47,6 @@ TAO_FT_Persistent_Naming_Context::is_object_group (CORBA::Object_ptr obj) const
   return TAO::PG_Utils::get_tagged_component (obj, tagged_component);
 }
 
-
-
 CORBA::Object_ptr
 TAO_FT_Persistent_Naming_Context::resolve (const CosNaming::Name& n)
 {

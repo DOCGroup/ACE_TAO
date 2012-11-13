@@ -59,10 +59,10 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_FT_Naming_Manager::TAO_FT_Naming_Manager (void)
-  : group_factory_ (),
+  : factory_registry_ ("NamingManager::FactoryRegistry"),
+    group_factory_ (),
     built_in_balancing_strategy_name_ (1),
-    object_group_property_name_ (1),
-    factory_registry_ ("NamingManager::FactoryRegistry")
+    object_group_property_name_ (1)
 
 {
   // The name for the property which contains the load balancing strategy value
@@ -87,6 +87,7 @@ TAO_FT_Naming_Manager::create_object_group (
     const char * type_id,
     const ::PortableGroup::Criteria & the_criteria)
 {
+  // TODO: If no load balancing strategy was provided, set the default to FT::ROUND_ROBIN
   // Add the group name to the criteria and create the object
   TAO::PG_Property_Set property_set (the_criteria);
   PortableGroup::Value group_name_value;
