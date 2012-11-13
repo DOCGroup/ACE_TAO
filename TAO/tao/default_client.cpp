@@ -1,5 +1,5 @@
 // -*- C++ -*-
-// $Id: default_client.cpp 93686 2011-03-31 12:12:12Z johnnyw $
+// $Id$
 
 #include "tao/default_client.h"
 #include "tao/Wait_On_Read.h"
@@ -12,6 +12,7 @@
 #include "tao/Reactive_Connect_Strategy.h"
 #include "tao/LF_Connect_Strategy.h"
 #include "tao/orbconf.h"
+#include "tao/Invocation_Utils.h"
 
 #include "ace/Lock_Adapter_T.h"
 #include "ace/Recursive_Thread_Mutex.h"
@@ -184,6 +185,82 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
                  this->use_cleanup_options_ = true;
                else
                  this->report_option_value_error (ACE_TEXT("-ORBConnectionHandlerCleanup"), name);
+             }
+         }
+      else if (ACE_OS::strcmp (argv[curarg],
+                               ACE_TEXT("-ORBForwardOnCommFailureLimit")) == 0)
+         {
+           curarg++;
+           if (curarg < argc)
+             {
+               ACE_TCHAR* name = argv[curarg];
+
+               ACE_TCHAR *err = 0;
+               long limit = ACE_OS::strtol (name, &err, 10);
+               if (err && *err != 0)
+                 {
+                   this->report_option_value_error (ACE_TEXT("-ORBForwardOnCommFailureLimit"), name);
+                 }
+               else
+                 this->invocation_retry_params_.forward_on_exception_limit_[TAO::FOE_COMM_FAILURE] =
+                   limit;
+             }
+         }
+      else if (ACE_OS::strcmp (argv[curarg],
+                               ACE_TEXT("-ORBForwardOnTransientLimit")) == 0)
+         {
+           curarg++;
+           if (curarg < argc)
+             {
+               ACE_TCHAR* name = argv[curarg];
+
+               ACE_TCHAR *err = 0;
+               long limit = ACE_OS::strtol (name, &err, 10);
+               if (err && *err != 0)
+                 {
+                   this->report_option_value_error (ACE_TEXT("-ORBForwardOnTransientLimit"), name);
+                 }
+               else
+                 this->invocation_retry_params_.forward_on_exception_limit_[TAO::FOE_TRANSIENT] =
+                   limit;
+             }
+         }
+      else if (ACE_OS::strcmp (argv[curarg],
+                               ACE_TEXT("-ORBForwardOnObjectNotExistLimit")) == 0)
+         {
+           curarg++;
+           if (curarg < argc)
+             {
+               ACE_TCHAR* name = argv[curarg];
+
+               ACE_TCHAR *err = 0;
+               long limit = ACE_OS::strtol (name, &err, 10);
+               if (err && *err != 0)
+                 {
+                   this->report_option_value_error (ACE_TEXT("-ORBForwardOnObjectNotExistLimit"), name);
+                 }
+               else
+                 this->invocation_retry_params_.forward_on_exception_limit_[TAO::FOE_OBJECT_NOT_EXIST] =
+                   limit;
+             }
+         }
+      else if (ACE_OS::strcmp (argv[curarg],
+                               ACE_TEXT("-ORBForwardOnInvObjrefLimit")) == 0)
+         {
+           curarg++;
+           if (curarg < argc)
+             {
+               ACE_TCHAR* name = argv[curarg];
+
+               ACE_TCHAR *err = 0;
+               long limit = ACE_OS::strtol (name, &err, 10);
+               if (err && *err != 0)
+                 {
+                   this->report_option_value_error (ACE_TEXT("-ORBForwardOnInvObjrefLimit"), name);
+                 }
+               else
+                 this->invocation_retry_params_.forward_on_exception_limit_[TAO::FOE_INV_OBJREF] =
+                   limit;
              }
          }
       else if (ACE_OS::strncmp (argv[curarg], ACE_TEXT("-ORB"), 4) == 0)
@@ -372,6 +449,12 @@ bool
 TAO_Default_Client_Strategy_Factory::use_cleanup_options (void) const
 {
   return this->use_cleanup_options_;
+}
+
+const TAO::Invocation_Retry_Params &
+TAO_Default_Client_Strategy_Factory::invocation_retry_params (void) const
+{
+  return this->invocation_retry_params_;
 }
 
 // ****************************************************************
