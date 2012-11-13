@@ -1,3 +1,8 @@
+Tue Nov 13 18:17:24 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/run_test.lst:
+          Bug_4055_Regression_Test needs threads
+
 Tue Nov 13 13:29:28 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Condition_Attributes.h:
