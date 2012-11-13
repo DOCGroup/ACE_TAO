@@ -29,10 +29,12 @@ my $implrepo_server = "$ENV{TAO_ROOT}/orbsvcs/ImplRepo_Service/tao_imr_locator";
 my $imr_activator = "$ENV{TAO_ROOT}/orbsvcs/ImplRepo_Service/tao_imr_activator";
 my $tao_imr = "$ENV{ACE_ROOT}/bin/tao_imr";
 
-# The Tests
 $implrepo_ior = "implrepo.ior";
 $activator_ior = "activator.ior";
 $messenger_ior = "Messenger.ior";
+
+# Use client strategy factory for one of retry parameters.
+$c1_conf = "client.conf";
 
 my $imr_imriorfile = $imr->LocalFile ($implrepo_ior);
 my $act_imriorfile = $act->LocalFile ($implrepo_ior);
@@ -42,6 +44,7 @@ my $sdn_imriorfile = $sdn->LocalFile ($implrepo_ior);
 my $act_actiorfile = $act->LocalFile ($activator_ior);
 my $imr_srviorfile = $imr->LocalFile ($messenger_ior);
 my $c1_srviorfile = $c1->LocalFile ($messenger_ior);
+my $c1_conffile = $c1->LocalFile ($c1_conf);
 my $si_srviorfile = $si->LocalFile ($messenger_ior);
 
 # Make sure the files are gone, so we can wait on them.
@@ -82,7 +85,9 @@ $SI = $si->CreateProcess ($tao_imr, "-ORBInitRef ImplRepoService=file://$si_imri
                                                "ior MessengerService ".
                                                "-f $si_srviorfile ");
 
-$C1 = $c1->CreateProcess ("MessengerClient", "-k file://$c1_srviorfile -ORBForwardOnTransientLimit 20 -ORBForwardOnCommFailureLimit 20 -ORBForwardDelay 500 -ORBdebuglevel $debug_level");
+$C1 = $c1->CreateProcess ("MessengerClient", "-k file://$c1_srviorfile ".
+			  "-ORBForwardOnCommFailureLimit 20 -ORBForwardDelay 500 ".
+			  "-ORBSvcConf $c1_conffile -ORBdebuglevel $debug_level");
 
 $SDN = $sdn->CreateProcess ("$tao_imr", "-ORBInitRef ImplRepoService=file://$sdn_imriorfile ".
                                         "shutdown MessengerService");
