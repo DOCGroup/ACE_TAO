@@ -34,7 +34,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-  class Invocation_Retry_Params;
+  struct Invocation_Retry_Params;
 }
 
 class TAO_Transport_Mux_Strategy;
