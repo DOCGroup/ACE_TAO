@@ -1,3 +1,10 @@
+Tue Nov 13 13:29:28 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Condition_Attributes.h:
+        * ace/Condition_Attributes.inl:
+        * ace/Condition_Attributes.cpp:
+          Now also needed in single threaded builds
+
 Mon Nov 12 19:26:41 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Malloc.cpp:
