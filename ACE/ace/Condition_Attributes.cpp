@@ -12,10 +12,6 @@
 #include "ace/Condition_Thread_Mutex.h"
 #include "ace/Condition_Attributes.h"
 
-#if defined (ACE_HAS_THREADS)
-
 #if !defined (__ACE_INLINE__)
 #include "ace/Condition_Attributes.inl"
 #endif /* __ACE_INLINE__ */
-
-#endif /* ACE_HAS_THREADS */
