@@ -1,12 +1,36 @@
+Tue Nov 13 20:56:30 UTC 2012  Byron Harris  <harrisb@ociweb.com>
+
+        * tao/Client_Strategy_Factory.h:
+        * tao/Invocation_Retry_Params.h:
+        * tao/Invocation_Retry_Params.cpp:
+        * tao/Invocation_Retry_State.h:
+        * tao/Invocation_Retry_State.cpp:
+        * tao/default_client.h:
+        * tao/default_client.cpp:
+        * tao/params.h:
+        * tao/params.cpp:
+        * tao/tao.mpc:
+
+          Allow invocation retry params to be specified
+          using Client_Strategy_Factory definition in
+          service config file in addition to -ORB
+          command line parameters.
+
+        * orbsvcs/tests/ImplRepo/RestartServer/client.conf:
+        * orbsvcs/tests/ImplRepo/RestartServer/run_test.pl:
+
+          Update test to read a retry parameter from a
+          service config file.
+
 Mon Nov 12 23:05:55 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.cpp:
-          
+
           Catch exception when an invalid IOR is passed in for adding a member
           to an object group.
 
         * tao/Invocation_Retry_State.cpp:
-        
+
           Add missing include file.
 
 Mon Nov 12 21:35:01 UTC 2012  Byron Harris  <harrisb@ociweb.com>

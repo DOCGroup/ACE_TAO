@@ -14,6 +14,7 @@
 #define TAO_PARAMS_H
 
 #include /**/ "ace/pre.h"
+#include "tao/Invocation_Retry_Params.h"
 #include "ace/Unbounded_Queue.h"
 #include "ace/Array_Map.h"
 #include "ace/Synch.h"
@@ -43,24 +44,6 @@ typedef ACE_Unbounded_Queue_Const_Iterator<ACE_CString> TAO_EndpointSetIterator;
 
 // -------------------------------------------------------------------
 
-namespace TAO
-{
-  struct Invocation_Retry_Params
-  {
-    Invocation_Retry_Params();
-
-    typedef ACE_Array_Map<int, int> exception_limit_map_type;
-
-    /**
-     * The maximum number of retry attempts per exception type
-     * when exceptions are encountered.
-     */
-
-    exception_limit_map_type forward_on_exception_limit_;
-
-    ACE_Time_Value init_retry_delay_;
-  };
-}
 
 
 /**

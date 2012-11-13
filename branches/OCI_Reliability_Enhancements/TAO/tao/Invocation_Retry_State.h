@@ -14,7 +14,7 @@
 #define TAO_INVOCATION_RETRY_STATE_H
 
 #include "tao/Stub.h"
-#include "tao/params.h"
+#include "tao/Invocation_Retry_Params.h"
 
 #include "ace/Array_Map.h"
 
@@ -39,10 +39,11 @@ namespace TAO
     void sleep_before_retry ();
 
   private:
+
     typedef ACE_Array_Map<int, int> Ex_Count_Map;
     Ex_Count_Map ex_count_map_;
     TAO_Stub &stub_;
-    const Invocation_Retry_Params &retry_params_;
+    Invocation_Retry_Params retry_params_;
     bool forward_on_exception_limit_used_;
   };
 
