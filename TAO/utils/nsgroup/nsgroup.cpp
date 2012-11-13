@@ -2,11 +2,12 @@
 /**
  *  @file    nsgroup.cpp
  *
- *  $Id:
+ *  $Id$Id$
  *
  *  @author Phillip LaBanca <labancap@ociweb.com>
  */
 //==========================================================================
+
 
 #include "ace/Get_Opt.h"
 #include "nsgroup_svc.h"
@@ -65,8 +66,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       NS_group_svc ns_group (argc, argv);
 
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) nsgroup - started ns_group\n"));
-
       if ( show_help(argc,argv) )
       {
         return ns_group.show_usage();
@@ -80,7 +79,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       if ( ns_group.run_cmd() == -1 )
       {
-        ACE_DEBUG ((LM_DEBUG, "(%P|%t) nsgroup - command error\n"));
         return 1;
       }
 

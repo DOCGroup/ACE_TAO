@@ -9,6 +9,13 @@ use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
 
 $status = 0;
+$debug_level = 0;
+
+foreach $i (@ARGV) {
+    if ($i eq '-debug') {
+        $debug_level = '10';
+    }
+}
 
 my $name_manager = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 my $client      = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
@@ -35,7 +42,8 @@ $client->DeleteFile($name_iorbase);
 
 $NM = $name_manager->CreateProcess ("../../orbsvcs/Naming_Service/tao_ft_naming",
         "-f persist.dat -g $name_manager_iorfile -o $name_server_iorfile " .
-        "-ORBDebugLevel 0 " .
+        "-ORBDebugLevel $debug_level " .
+        "-ORBDottedDecimalAddresses 1" .
         ($^O eq 'MSWin32' ? " -ORBSvcConf $NM_conf" : ''));
 
 
@@ -45,68 +53,58 @@ $NM = $name_manager->CreateProcess ("../../orbsvcs/Naming_Service/tao_ft_naming"
 
 $NM_REF       = "-ORBInitRef NameService=file://$name_client_iorfile";
 $RM_REF       = "-ORBInitRef NamingManager=file://$naming_mgr_client_iorfile";
-$DEBUG_LEVEL  = "-ORBDebugLevel 0";
+$DEBUG_LEVEL  = "-ORBDebugLevel $debug_level";
 $LOAD_ARG     = "$NM_REF $RM_REF $DEBUG_LEVEL";
 
-##  group_create  -group <group> -policy <round | rand | least> -type_id <type_id>
-$CL1 = $client->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_nsgroup",
-        "$LOAD_ARG " .
-        "group_create " .
-        "-group group1 " .
-        "-policy round " .
-        "-type_id IDL:omg.org/CORBA/Object:1.0");
+$CL   = $client->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_nsgroup");
 
-##  group_bind -group <group> -namepath <path>
-$CL2 = $client->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_nsgroup",
-        "$LOAD_ARG " .
-        "group_bind -group group1 -n group_name");
+sub run_client ($)
+{
+    my $args = shift;
 
-##  group_modify -group <group> -policy <round | rand | least>
-$CL3 = $client->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_nsgroup",
-        "$LOAD_ARG " .
-        "group_modify -group group1 -policy rand");
-##  member_add -group <group> -member <member> -location <location> -ior <IOR>
-$CL4 = $client->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_nsgroup",
-        "$LOAD_ARG " .
-        "member_add -group group1 -member member1 -location dhcp34.ociweb.com " .
-        "-ior IOR:010000002300000049444c3a4741562f4f626a6563745265666572656e6365466163746f72793a312e3000000100000000000000b2000000010102000e00000031302e33352e3232352e313530005046530000003a3e0232311c756e636c6173735f757374696c2e6363692d612e6c6f636174696f6e0d476961734761746577617931002249444c3a4741562f4f626a6563745265666572656e6365466163746f72793a312e300003000000000000000800000001000000415f544901000000180000000100000001000100000000000401010001000000090101000600000006000000010000002f00"
-        );
-##  member_list -group <group>
-$CL5 = $client->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_nsgroup",
-        "$LOAD_ARG " .
-        "member_list -group group1");
+    my $arglist = "$LOAD_ARG $args";
 
-##  group_list -location <location>
-$CL6 = $client->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_nsgroup",
-        "$LOAD_ARG " .
-        "group_list");
+    print STDERR "\n\n======== Running Test================\n";
+    print STDERR "$args\n";
 
-##  member_show -group <group> -member <member> -location <location>
-$CL7 = $client->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_nsgroup",
-        "$LOAD_ARG " .
-        "member_show -group group1 -member member1 -location dhcp34.ociweb.com");
+    $CL->Arguments ($arglist);
 
-$CL8 = $client->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_nsgroup",
-        "$LOAD_ARG " .
-        "member_show -group group2 -member member2 -location nowhere junk_command");
+    my $client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval());
 
-##  member_remove -group <group> -member <member> -location <location>
-$CL9 = $client->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_nsgroup",
-        "$LOAD_ARG " .
-        "member_remove -group group1 -member member1 -location dhcp34.ociweb.com");
+    if ($client_status != 0) {
+        my $time = localtime;
+        print STDERR "ERROR: client returned $client_status at $time\n";
+        $status = 1;
+    }
+}
 
-##  group_remove -group <group>
-$CL10 = $client->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_nsgroup",
-        "$LOAD_ARG " .
-        "group_remove -group group1");
+sub run_clients ()
+{
+    #create -type rr GiasGateway
+    #bind -og_name GiasGateway GiasGateway
+    #add_member -og_name GiasGateway -member_name mcknerney2-lnx5-dev/GiasGateway1 IOR:010000002300000049444c3a4741562f4f626a6563745265666572656e6365466163746f72793a312e3000000100000000000000b2000000010102000e00000031302e33352e3232352e313530005046530000003a3e0232311c756e636c6173735f757374696c2e6363692d612e6c6f636174696f6e0d476961734761746577617931002249444c3a4741562f4f626a6563745265666572656e6365466163746f72793a312e300003000000000000000800000001000000415f544901000000180000000100000001000100000000000401010001000000090101000600000006000000010000002f00
+    #add_member -og_name GiasGateway -member_name mcknerney2-lnx5-dev/GiasGateway2 IOR:010000002300000049444c3a4741562f4f626a6563745265666572656e6365466163746f72793a312e3000000100000000000000b2000000010102000e00000031302e33352e3232352e313530005046530000003a3e0232311c756e636c6173735f757374696c2e6363692d612e6c6f636174696f6e0d476961734761746577617932002249444c3a4741562f4f626a6563745265666572656e6365466163746f72793a312e300003000000000000000800000001000000415f544901000000180000000100000001000100000000000401010001000000090101000600000006000000010000002f00
+    my $IOR = "IOR:010000002100000049444c3a6f6d672e6f72672f46542f4e616d696e674d616e616765723a312e300000000001000000000000006c000000010102000e00000031302e3230312e3230302e36340005e71b00000014010f00525354caaaa250c6ba0e000000000001000000010000004e02000000000000000800000001000000004f41540100000018000000010000000100010001000000010001050901010000000000";
 
-##  group_list -location <location>
-$CL11 = $client->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_nsgroup",
-        "$LOAD_ARG " .
-        "group_list -location dhcp34.ociweb.com");
-
-##  --help
-$CL12 = $client->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_nsgroup","--help");
+    run_client ("group_create -group GiasGateway -policy round -type_id IDL:omg.org/FT/NamingManager:1.0");
+    run_client ("group_create -group group2 -policy round -type_id IDL:omg.org/FT/NamingManager:1.0");
+    run_client ("group_list");
+    run_client ("group_bind -group GiasGateway -n GiasGateway");
+    run_client ("group_modify -group group1 -policy rand");
+    run_client ("member_add -group GiasGateway -location 10.201.200.64 -ior $IOR");
+    run_client ("member_add -group GiasGateway -location dhcp34.ociweb.com -ior $IOR");
+    run_client ("member_list -group group1");
+    run_client ("member_show -group group1 -location dhcp34.ociweb.com");
+    run_client ("member_show -group group2 -location nowhere junk_command");
+    run_client ("member_remove -group group1 -location dhcp34.ociweb.com");
+    run_client ("group_remove -group GiasGateway");
+    run_client ("group_list");
+    run_client ("group_remove -group group2");
+    run_client ("group_list");
+    run_client ("group_remove -group groupN");
+    run_client ("group_list");
+    run_client ("--help");
+}
 
 print STDERR "\n\n======== Running tao_nsgroup Test================\n";
 print STDERR "\n";
@@ -141,82 +139,11 @@ if ($client->PutFile ($name_mgr_iorbase) == -1) {
     exit 1;
 }
 
+run_clients();
 
-################################################################################
-## Run Commandline Interface Program
-################################################################################
-$client_status = $CL1->SpawnWaitKill ($client->ProcessStartWaitInterval());
-if ($client_status != 0) {
-    print STDERR "ERROR: client returned $client_status\n";
-    $status = 1;
-}
 
-$client_status = $CL2->SpawnWaitKill ($client->ProcessStartWaitInterval());
-if ($client_status != 0) {
-    print STDERR "ERROR: client returned $client_status\n";
-    $status = 1;
-}
-
-$client_status = $CL3->SpawnWaitKill ($client->ProcessStartWaitInterval());
-if ($client_status != 0) {
-    print STDERR "ERROR: client returned $client_status\n";
-    $status = 1;
-}
-
-$client_status = $CL4->SpawnWaitKill ($client->ProcessStartWaitInterval());
-if ($client_status != 0) {
-    print STDERR "ERROR: client returned $client_status\n";
-    $status = 1;
-}
-
-$client_status = $CL5->SpawnWaitKill ($client->ProcessStartWaitInterval());
-if ($client_status != 0) {
-    print STDERR "ERROR: client returned $client_status\n";
-    $status = 1;
-}
-
-$client_status = $CL6->SpawnWaitKill ($client->ProcessStartWaitInterval());
-if ($client_status != 0) {
-    print STDERR "ERROR: client returned $client_status\n";
-    $status = 1;
-}
-
-$client_status = $CL7->SpawnWaitKill ($client->ProcessStartWaitInterval());
-if ($client_status != 0) {
-    print STDERR "ERROR: client returned $client_status\n";
-    $status = 1;
-}
-
-$client_status = $CL8->SpawnWaitKill ($client->ProcessStartWaitInterval());
-if ($client_status != 0) {
-    print STDERR "ERROR: client returned $client_status\n";
-    $status = 1;
-}
-
-$client_status = $CL9->SpawnWaitKill ($client->ProcessStartWaitInterval());
-if ($client_status != 0) {
-    print STDERR "ERROR: client returned $client_status\n";
-    $status = 1;
-}
-
-$client_status = $CL10->SpawnWaitKill ($client->ProcessStartWaitInterval());
-if ($client_status != 0) {
-    print STDERR "ERROR: client returned $client_status\n";
-    $status = 1;
-}
-
-$client_status = $CL11->SpawnWaitKill ($client->ProcessStartWaitInterval());
-if ($client_status != 0) {
-    print STDERR "ERROR: client returned $client_status\n";
-    $status = 1;
-}
-
-$client_status = $CL12->SpawnWaitKill ($client->ProcessStartWaitInterval());
-if ($client_status != 0) {
-    print STDERR "ERROR: client returned $client_status\n";
-    $status = 1;
-}
-
+print STDERR "\n\n====================================================\n";
+print STDERR "\n";
 $name_manager_status = $NM->TerminateWaitKill ($name_manager->ProcessStopWaitInterval());
 
 if ($name_manager_status != 0) {

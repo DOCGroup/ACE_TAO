@@ -1,3 +1,22 @@
+Tue Nov 13 22:11:17 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
+
+        * utils/nsgroup/README.nsgroup:
+
+          Updated to reflect changes
+
+        * utils/nsgroup/nsgroup.cpp:
+        * utils/nsgroup/nsgroup_svc.h:
+        * utils/nsgroup/nsgroup_svc.cpp:
+
+          Change signature for member_add, member_remove, and member_show to not use member string argument.
+
+        * utils/nsgroup/run_test.pl:
+
+          Updated tests
+
+        * utils/utils.mwc:
+          Added nsgroup
+
 Tue Nov 13 20:56:30 UTC 2012  Byron Harris  <harrisb@ociweb.com>
 
         * tao/Client_Strategy_Factory.h:

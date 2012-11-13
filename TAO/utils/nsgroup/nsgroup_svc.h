@@ -1,8 +1,8 @@
 //==========================================================================
 /**
- *  @file    nsgroup_svc.h
+ *  @file nsgroup_svc.h
  *
- *  $Id:
+ *  $Id$Id$
  *
  *  @author Phillip LaBanca <labancap@ociweb.com>
  */
@@ -44,7 +44,7 @@ public:
   /// destroys LoadManager, ORB and POA.
   int destroy (void);
 
-  /// start the ORB and POA.
+  /// start the ORB.
   int start_orb (void);
 
   /// parse command line, validate arguments and run the command
@@ -76,7 +76,6 @@ public:
   /// The naming service shall provide a command line utility for adding object
   /// references to an object group.
   int member_add (const char* group,
-                  const char* member,
                   const char* location,
                   const char* ior);
 
@@ -86,11 +85,11 @@ public:
 
   /// The naming service shall provide a command line utility for removing
   /// object references from an object group.
-  int member_remove (const char* group, const char* member, const char* location);
+  int member_remove (const char* group, const char* location);
 
   /// The naming service shall provide a command line utility to display an
   /// object reference from a specified object group.
-  int member_show (const char* group, const char* member, const char* location);
+  int member_show (const char* group, const char* location);
 
   const char * group_arg(void) const { return group_arg_; }
   const char * policy_arg(void) const { return policy_arg_; }
@@ -98,14 +97,11 @@ public:
   const char * location_arg(void) const { return location_arg_; }
   const char * ior_arg(void) const { return ior_arg_; }
   const char * namepath_arg(void) const { return namepath_arg_; }
-  const char * member_arg(void) const { return member_arg_; }
 
 private:
 
   /// parse command line arguments
   NSGROUP_COMMAND parse_command_line (void);
-
-  PortableGroup::ObjectGroup_ptr lookup_object_group (const char *group_id);
 
   //void determine_policy_string ( const char *policy, CosLoadBalancing::StrategyInfo& si);
 
@@ -121,9 +117,6 @@ private:
 
   CORBA::ORB_var orb_;
 
-  /// root poa pointer
-  PortableServer::POA_var root_poa_;
-
   int argc_;
   ACE_TCHAR **argv_;
 
@@ -137,7 +130,6 @@ private:
   const char *location_arg_;
   const char *ior_arg_;
   const char *namepath_arg_;
-  const char *member_arg_;
 };
 
 #endif
