@@ -32,8 +32,7 @@ module FT
 
   // Specification of NamingManager Interface
   interface NamingManager : PortableGroup::PropertyManager,
-                            PortableGroup::ObjectGroupManager,
-                            PortableGroup::GenericFactory
+                            PortableGroup::ObjectGroupManager
   {
     Object create_object_group (in string group_name,
                                 in PortableGroup::_TypeId type_id,

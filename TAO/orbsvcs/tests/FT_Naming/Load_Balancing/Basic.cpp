@@ -2,6 +2,7 @@
 
 #include "Basic.h"
 #include "LB_server.h"
+#include "orbsvcs/PortableGroup/PG_Property_Set.h"
 
 Basic::Basic (CORBA::Object_ptr object_group,
               FT::NamingManager_ptr lm,
@@ -48,6 +49,27 @@ Basic::remove_member (void)
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("Exception caught while destroying member\n");
+    }
+
+}
+
+void 
+Basic::set_load_balance_strategy (::Test::LoadBalancingStrategyValue strategy)
+{
+  TAO::PG_Property_Set property_set;
+  PortableGroup::Value strat_val;
+  strat_val <<= strategy;
+
+  property_set.set_property (FT::TAO_FT_LOAD_BALANCING_STRATEGY, strat_val);
+  PortableGroup::Properties properties;
+  property_set.export_properties (properties);
+
+  try {
+    this->nm_->set_properties_dynamically (this->object_group_, properties);
+  }
+  catch (const CORBA::Exception& ex)
+    {
+      ex._tao_print_exception ("Exception caught while changing properties\n");
     }
 
 }
