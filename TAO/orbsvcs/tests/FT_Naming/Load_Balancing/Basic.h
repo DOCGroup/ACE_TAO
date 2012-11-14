@@ -40,7 +40,7 @@ private:
 
   /// Load Manager Reference used to delete the servant reference from the
   /// object group.
-  FT::NamingManager_var lm_;
+  FT::NamingManager_var nm_;
 
   /// location of the servant
   CORBA::String_var location_;

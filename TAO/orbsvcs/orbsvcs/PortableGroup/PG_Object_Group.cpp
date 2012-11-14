@@ -509,6 +509,7 @@ TAO::PG_Object_Group::locations_of_members (void)
     const PortableGroup::Location & location = (*it).ext_id_;
     PortableGroup::Location & out = (*result)[pos];
     out = location;
+    ++pos; 
   }
   return result;
 }
