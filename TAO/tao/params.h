@@ -271,9 +271,6 @@ public:
   void forward_once_exception (const int ef);
   int forward_once_exception () const;
 
-  void forward_once_exception_used (bool opt);
-  bool forward_once_exception_used () const;
-
   void allow_ziop_no_server_policies (bool opt);
   bool allow_ziop_no_server_policies (void) const;
 
@@ -501,14 +498,6 @@ private:
    * This is retained for backward compatibility of behavior.
    */
   int forward_once_exception_;
-
-  /**
-   * A flag indicating that a forward once parameter is being used.
-   * If this flag is true then the usage of forward_on_exception_limit_
-   * is avoided so that backward compatbility with previous behavior
-   * is done.
-   */
-  bool forward_once_exception_used_;
 
 /**
    * Name of the collocation resolver that needs to be instantiated.

@@ -587,7 +587,7 @@ namespace TAO
             retry_state->sleep_before_retry ();
           }
       }
-    else if (orb_params->forward_once_exception_used ())
+    else
       {
         int foe_kind = orb_params->forward_once_exception();
 
