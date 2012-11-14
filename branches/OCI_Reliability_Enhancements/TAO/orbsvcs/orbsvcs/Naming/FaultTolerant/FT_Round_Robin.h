@@ -57,10 +57,6 @@ public:
 
 private:
 
-  /// Keep a copy of location list for verify if the list is changed
-  /// in next next_member() call.
-  void copy_locations (PortableGroup::Locations_var& locations);
-
   /// Lock used to ensure atomic access to state retained by this
   /// class.
   TAO_SYNCH_MUTEX lock_;
@@ -76,9 +72,6 @@ private:
    * to be returned from the Strategy::next_member() method.
    */
   TAO_FT_Location_Index_Map location_index_map_;
-
-  /// Locations list retrieved in last next_member() call.
-  ACE_Vector <PortableGroup::Location> last_locations_;
 
 };
 

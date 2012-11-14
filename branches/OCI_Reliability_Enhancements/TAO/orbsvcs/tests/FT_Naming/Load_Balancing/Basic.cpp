@@ -10,7 +10,7 @@ Basic::Basic (CORBA::Object_ptr object_group,
   : orb_ (CORBA::ORB::_duplicate (orb))
 {
   this->object_group_ = CORBA::Object::_duplicate (object_group);
-  this->lm_ = FT::NamingManager::_duplicate (lm);
+  this->nm_ = FT::NamingManager::_duplicate (lm);
   this->location_ = CORBA::string_dup (loc);
 }
 
@@ -28,7 +28,7 @@ Basic::remove_member (void)
       PortableGroup::Location location (1);
       location.length (1);
       location[0].id = CORBA::string_dup (this->location_.in ());
-      this->lm_->remove_member (this->object_group_.in (),
+      this->nm_->remove_member (this->object_group_.in (),
                                 location);
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Removed Member at Location <%s>\n",

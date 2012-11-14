@@ -8,7 +8,7 @@ project(*idl): taoidldefaults {
   custom_only = 1
 }
 
-project(*server): orbsvcsexe, portablegroup, FtNaming, naming, svc_utils {
+project(*server): orbsvcsexe, portablegroup, ftnaming, naming, svc_utils {
   after += *idl
   exename = server
   Source_Files {
@@ -22,7 +22,7 @@ project(*server): orbsvcsexe, portablegroup, FtNaming, naming, svc_utils {
   }
 }
   
-project(*client): orbsvcsexe, portablegroup, FtNaming, naming, svc_utils {
+project(*client): orbsvcsexe, portablegroup, ftnaming, naming, svc_utils {
   after += *idl
   exename = client
   Source_Files {

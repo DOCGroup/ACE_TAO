@@ -18,7 +18,7 @@ LB_server::destroy (void)
 {
   try
     {
-      this->naming_manager_->delete_object (this->fcid_.in ());
+      this->naming_manager_->delete_object_group ("Basic Group");
 
       //TODO: Does the FT_NamingManager need a destroy method?
 //      this->naming_manager_->destroy (1, 1);
@@ -152,14 +152,6 @@ LB_server::create_object_group (void)
 {
   try
     {
-      PortableGroup::Name n1 (1);
-      PortableGroup::Name n2;
-      n1.length (1);
-      n1[0].id = CORBA::string_dup ("some str");
-
-      n2 = n1;
-      std::cout << n2[0].id << std::endl;
-      
       const char *repository_id = "IDL:Test/Basic:1.0";
       const char *object_group_name = "Basic Group";
 

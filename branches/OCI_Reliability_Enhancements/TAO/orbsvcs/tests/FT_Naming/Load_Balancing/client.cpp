@@ -68,10 +68,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::Object_var tmp;
       Test::Basic_var basic;
 
-      for (int i = 0; i < 5; i++)
+      // Iterate enough so we get a few wraparrounds
+      for (int i = 0; i < 15; i++)
       {     
           ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Resolving service\n"));
           try {
+
+            // Each time we invoke resolve, we get a different member
             tmp =
               name_svc->resolve (name);
 
@@ -107,19 +110,39 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
             return 1;
           }
 
+          // Remove one member after we wrapped around to make sure naming manager can
+          // handle it successufully
+          if (i == 7)
+          {
+            try {
+              // Try removing a member
+              basic->remove_member ();
+            }
+            catch (CORBA::Exception& ex)
+            {
+              ex._tao_print_exception ("Error invoking get_string on Basic object.\n");
+              return 1;
+            }
+          }
       }
 
-      basic->remove_member ();
+      try {
+        basic->shutdown ();
 
-      basic->shutdown ();
-
+        ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Shutting down server\n"));
+      }
+      catch (CORBA::Exception& ex)
+      {
+        ex._tao_print_exception ("Error invoking get_string on Basic object.\n");
+        return 1;
+      }
       orb->destroy ();
-    }
+  }
   catch (const CORBA::Exception& ex)
-    {
-      ex._tao_print_exception ("Exception caught in client.cpp:");
-      return 1;
-    }
+  {
+    ex._tao_print_exception ("Exception caught in client.cpp:");
+    return 1;
+  }
 
   return 0;
 }
