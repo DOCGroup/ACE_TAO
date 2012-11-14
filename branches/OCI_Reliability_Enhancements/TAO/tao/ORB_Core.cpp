@@ -1140,7 +1140,6 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
       else if (0 != (current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBForwardOnceOnObjectNotExist"))))
         {
-          this->orb_params_.forward_once_exception_used (true);
           int forward = ACE_OS::atoi (current_arg);
           if (forward)
             this->orb_params_.forward_once_exception (TAO::FOE_OBJECT_NOT_EXIST);
@@ -1150,7 +1149,6 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
       else if (0 != (current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBForwardOnceOnCommFailure"))))
         {
-          this->orb_params_.forward_once_exception_used (true);
           int forward = ACE_OS::atoi (current_arg);
           if (forward)
             this->orb_params_.forward_once_exception (TAO::FOE_COMM_FAILURE);
@@ -1160,7 +1158,6 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
       else if (0 != (current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBForwardOnceOnTransient"))))
         {
-          this->orb_params_.forward_once_exception_used (true);
           int forward = ACE_OS::atoi (current_arg);
           if (forward)
             this->orb_params_.forward_once_exception (TAO::FOE_TRANSIENT);
@@ -1170,7 +1167,6 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
       else if (0 != (current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBForwardOnceOnInvObjref"))))
         {
-          this->orb_params_.forward_once_exception_used (true);
           int forward = ACE_OS::atoi (current_arg);
           if (forward)
             this->orb_params_.forward_once_exception (TAO::FOE_INV_OBJREF);

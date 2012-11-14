@@ -374,13 +374,6 @@ ACE_INLINE void
 TAO_ORB_Parameters::forward_once_exception (const int ef)
 {
   this->forward_once_exception_ |= ef;
-  this->forward_once_exception_used_ = true;
-}
-
-ACE_INLINE void
-TAO_ORB_Parameters::forward_once_exception_used (bool opt)
-{
-  this->forward_once_exception_used_ = opt;
 }
 
 ACE_INLINE bool

@@ -64,7 +64,6 @@ TAO_ORB_Parameters::TAO_ORB_Parameters (void)
                                      ""))
   , forward_invocation_on_object_not_exist_ (false)
   , forward_once_exception_ (0)
-  , forward_once_exception_used_ (false)
   , collocation_resolver_name_ ("Default_Collocation_Resolver")
   , allow_ziop_no_server_policies_ (!!TAO_ALLOW_ZIOP_NO_SERVER_POLICIES_DEFAULT)
 {
@@ -409,12 +408,6 @@ const char *
 TAO_ORB_Parameters::endpoint_selector_factory_name (void) const
 {
   return this->endpoint_selector_factory_name_.c_str ();
-}
-
-bool
-TAO_ORB_Parameters::forward_once_exception_used () const
-{
-  return this->forward_once_exception_used_;
 }
 
 const TAO::Invocation_Retry_Params &

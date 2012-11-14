@@ -1,3 +1,16 @@
+Wed Nov 14 14:43:17 UTC 2012  Byron Harris  <harrisb@ociweb.com>
+
+        * tao/ORB_Core.cpp:
+        * tao/Synch_Invocation.cpp:
+        * tao/params.h:
+        * tao/params.inl:
+        * tao/params.cpp:
+
+          Removed flag I added indicating a forward-once-on-exception
+          parameter was set. It was used to short circuit a
+          large conditional but it always set and the conditional
+          is in error handling code so optimization isn't critical.
+
 Wed Nov 14 03:21:03 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
 
         * utils/nsgroup/nsgroup_svc.cpp:
