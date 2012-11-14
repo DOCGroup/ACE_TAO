@@ -261,6 +261,8 @@ public:
 
   void forward_on_exception_limit (const int ef, const int limit);
   void forward_on_exception_delay (const ACE_Time_Value &delay);
+
+  TAO::Invocation_Retry_Params &invocation_retry_params (void);
   const TAO::Invocation_Retry_Params &invocation_retry_params (void) const;
 
   /// Although forward_invocation_on_transient_limit()

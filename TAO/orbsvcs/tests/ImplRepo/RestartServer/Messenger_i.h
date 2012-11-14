@@ -34,6 +34,8 @@ private:
   /// Use an ORB reference to shutdown the application.
   CORBA::ORB_var orb_;
 
+  int message_count_;
+
   Terminator& terminator_;
 };
 

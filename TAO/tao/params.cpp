@@ -416,6 +416,12 @@ TAO_ORB_Parameters::invocation_retry_params (void) const
   return this->invocation_retry_params_;
 }
 
+TAO::Invocation_Retry_Params &
+TAO_ORB_Parameters::invocation_retry_params (void)
+{
+  return this->invocation_retry_params_;
+}
+
 void
 TAO_ORB_Parameters::forward_on_exception_limit (const int ef, const int limit)
 {

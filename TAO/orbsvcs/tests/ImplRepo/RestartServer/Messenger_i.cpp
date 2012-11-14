@@ -15,7 +15,8 @@
 // Implementation skeleton constructor
 Messenger_i::Messenger_i (CORBA::ORB_ptr orb, Terminator &terminator)
   : orb_ (CORBA::ORB::_duplicate (orb))
-  , terminator_(terminator)
+  , message_count_ (0)
+  , terminator_ (terminator)
 {
 }
 
@@ -29,6 +30,7 @@ CORBA::Boolean Messenger_i::send_message (
   const char * subject,
   char *& message)
 {
+  std::cout << "Message count: " << message_count_++ << std::endl;
   std::cout << "Message from: " << user_name << std::endl
        << "Subject:      " << subject << std::endl
        << "Message:      " << message << std::endl;

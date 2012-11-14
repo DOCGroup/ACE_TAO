@@ -1,15 +1,42 @@
+Wed Nov 14 20:24:41 UTC 2012  Byron Harris  <harrisb@ociweb.com>
+
+        * tao/Invocation_Retry_Params.h:
+        * tao/Invocation_Retry_Params.cpp:
+        * tao/Invocation_Retry_State.h:
+        * tao/Invocation_Retry_State.cpp:
+        * tao/ORB_Core.cpp:
+        * tao/Synch_Invocation.cpp:
+        * tao/default_client.cpp:
+        * tao/params.h:
+        * tao/params.cpp:
+
+          Added new invocation parameter to indicate max
+          retries on reply connection closed and not base
+          max retries on comm failure limit. This is done
+          to treat retries on reply connection close
+          special since it could violate "at most once"
+          rule.
+
+        * orbsvcs/tests/ImplRepo/RestartServer/Messenger_i.h:
+        * orbsvcs/tests/ImplRepo/RestartServer/Messenger_i.cpp:
+        * orbsvcs/tests/ImplRepo/RestartServer/README:
+        * orbsvcs/tests/ImplRepo/RestartServer/run_test.pl:
+
+          Update test to account for using max retries on reply
+          connection closed.
+
 Wed Nov 14 16:08:57 UTC 2012  .  <stanleyk@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Round_Robin.h:
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Round_Robin.cpp:
-          
-          Simplified algorithm for Round Robin assuming mostly static 
+
+          Simplified algorithm for Round Robin assuming mostly static
           group members.
 
         * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:
 
           Fixed bug in locations_of_members.
-          
+
         * orbsvcs/tests/FT_Naming/Load_Balancing/Basic.h:
         * orbsvcs/tests/FT_Naming/Load_Balancing/Basic.cpp:
         * orbsvcs/tests/FT_Naming/Load_Balancing/LB_server.cpp:
@@ -20,7 +47,7 @@ Wed Nov 14 16:08:57 UTC 2012  .  <stanleyk@ociweb.com>
         * orbsvcs/tests/FT_Naming/Load_Balancing/Load_Balancing_Name_Service.mpc:
 
             Fix case of base project.
-            
+
 Wed Nov 14 14:43:17 UTC 2012  Byron Harris  <harrisb@ociweb.com>
 
         * tao/ORB_Core.cpp:
