@@ -20,6 +20,8 @@
 
 module FT
 {
+  typedef PortableGroup::ObjectGroup ObjectGroup;
+
   const string TAO_FT_OBJECT_GROUP_NAME = "TAO_FT_GroupName";
   const string TAO_FT_LOAD_BALANCING_STRATEGY = "TAO_FT_LB_Strategy";
   
@@ -34,9 +36,10 @@ module FT
   interface NamingManager : PortableGroup::PropertyManager,
                             PortableGroup::ObjectGroupManager
   {
-    Object create_object_group (in string group_name,
-                                in PortableGroup::_TypeId type_id,
-                                in PortableGroup::Criteria the_criteria)
+    ObjectGroup create_object_group (in string group_name,
+                                     in LoadBalancingStrategyValue lb_strategy,
+                                     in PortableGroup::_TypeId type_id,
+                                     in PortableGroup::Criteria the_criteria)
       raises (PortableGroup::ObjectNotCreated,
               PortableGroup::InvalidCriteria,
               PortableGroup::InvalidProperty,
@@ -48,6 +51,9 @@ module FT
     PortableGroup::ObjectGroup get_object_group_ref_from_name (
       in string group_name)
       raises (PortableGroup::ObjectGroupNotFound);
+
+    void set_load_balancing_strategy (in string group_name,
+                                      in LoadBalancingStrategyValue lb_strategy);
 
     // Return names of all groups defined in the NamingManager
     GroupNames groups ();

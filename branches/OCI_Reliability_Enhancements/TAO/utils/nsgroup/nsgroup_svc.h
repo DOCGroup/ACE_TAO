@@ -112,9 +112,6 @@ private:
   /// Name Service
   CosNaming::NamingContext_var name_service_;
 
-  /// factory id for the object group.
-  PortableGroup::GenericFactory::FactoryCreationId_var fcid_;
-
   CORBA::ORB_var orb_;
 
   int argc_;

@@ -8,7 +8,7 @@ Basic::Basic (CORBA::Object_ptr object_group,
               FT::NamingManager_ptr lm,
               CORBA::ORB_ptr orb,
               const char *loc)
-  : orb_ (CORBA::ORB::_duplicate (orb))
+  : object_group_name_ ("Basic Group"), orb_ (CORBA::ORB::_duplicate (orb))
 {
   this->object_group_ = CORBA::Object::_duplicate (object_group);
   this->nm_ = FT::NamingManager::_duplicate (lm);
@@ -56,20 +56,12 @@ Basic::remove_member (void)
 void 
 Basic::set_load_balance_strategy (::Test::LoadBalancingStrategyValue strategy)
 {
-  TAO::PG_Property_Set property_set;
-  PortableGroup::Value strat_val;
-  strat_val <<= strategy;
-
-  property_set.set_property (FT::TAO_FT_LOAD_BALANCING_STRATEGY, strat_val);
-  PortableGroup::Properties properties;
-  property_set.export_properties (properties);
-
   try {
-    this->nm_->set_properties_dynamically (this->object_group_, properties);
+    this->nm_->set_load_balancing_strategy (this->object_group_name_, strategy);
   }
   catch (const CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("Exception caught while changing properties\n");
+      ex._tao_print_exception ("Exception caught while changing the load balancing strategy.\n");
     }
 
 }

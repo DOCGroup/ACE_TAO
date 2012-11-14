@@ -36,10 +36,11 @@ public:
   /// change the load balancing strategy for the object gropu
   virtual void set_load_balance_strategy (
       ::Test::LoadBalancingStrategyValue strategy);
-
-
-
+  
 private:
+
+  const char* object_group_name_;
+
   /// Use an ORB reference to convert strings to objects and shutdown
   /// the application.
   CORBA::ORB_var orb_;

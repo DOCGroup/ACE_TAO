@@ -252,8 +252,6 @@ NS_group_svc::destroy (void)
 {
   try
     {
-      this->naming_manager_->delete_object (this->fcid_.in ());
-
       this->orb_->destroy ();
     }
   catch (const CORBA::Exception& ex)
@@ -400,6 +398,7 @@ NS_group_svc::group_create (
       property.val <<= msv;
 
       CORBA::Object_var obj = this->naming_manager_->create_object_group (group_name,
+                                                                          FT::ROUND_ROBIN,
                                                                           type_id,
                                                                           criteria);
 
@@ -644,12 +643,12 @@ NS_group_svc::member_list (const char* group)
     PortableGroup::ObjectGroup_var group_var = this->naming_manager_->get_object_group_ref_from_name (group);
     PortableGroup::Locations_var locations = this->naming_manager_->locations_of_members (group_var.in());
 
-    for (unsigned int i = 0; i < locations->length(); ++i)
+    CORBA::ULong len = locations->length();
+    for (CORBA::ULong i = 0; i < len; ++i)
     {
       const PortableGroup::Location & loc = locations[i];
-      if (loc.length() > 0) {
-        std::cout << loc[0].id.in() << std::endl;
-      }
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) member_list(%u:%s)\n", i,
+        (loc.length() > 0) ? loc[0].id.in() : "<empty>" ));
     }
   }
   catch (const PortableGroup::ObjectGroupNotFound& ex )
@@ -744,9 +743,7 @@ NS_group_svc::member_show (
     CORBA::Object_var ior_var = this->naming_manager_->get_member_ref (group_var.in(), location_name);
     CORBA::String_var ior_string  = this->orb_->object_to_string( ior_var.in() );
 
-    std::cout << ior_string.in() << std::endl;
-
-    //ACE_DEBUG ((LM_DEBUG, "(%P|%t) member_show(%s,%s,%s)\n", group, location, ior_string.in() ));
+    ACE_DEBUG ((LM_DEBUG, "(%P|%t) member_show(%s,%s,%s)\n", group, location, ior_string.in() ));
 
   }
   catch (const PortableGroup::ObjectGroupNotFound& ex )

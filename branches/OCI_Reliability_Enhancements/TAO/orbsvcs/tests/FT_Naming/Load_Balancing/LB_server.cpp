@@ -153,13 +153,12 @@ LB_server::create_object_group (void)
   try
     {
       const char *repository_id = "IDL:Test/Basic:1.0";
-      const char *object_group_name = "Basic Group";
-
+      
       if (this->parse_args (argc_, argv_) != 0)
                     return -1;
 
       PortableGroup::Criteria criteria (2);
-      criteria.length (2);
+      criteria.length (1);
 
       PortableGroup::Property &mem_style = criteria[0];
       mem_style.nam.length (1);
@@ -171,19 +170,11 @@ LB_server::create_object_group (void)
         PortableGroup::MEMB_APP_CTRL;
       mem_style.val <<= msv;
 
-      // Set the load balancing strategy - if one is not set, the default is 
-      // Round Robin
-      PortableGroup::Property &lb_strategy = criteria[1];
-      lb_strategy.nam.length (1);
-      lb_strategy.nam[0].id =
-        CORBA::string_dup (FT::TAO_FT_LOAD_BALANCING_STRATEGY);
-      FT::LoadBalancingStrategyValue lsv =
-        FT::ROUND_ROBIN;
-      lb_strategy.val <<= lsv;
-
-      this->object_group_ = this->naming_manager_->create_object_group (object_group_name,
-                                                                        repository_id,
-                                                                        criteria);
+      this->object_group_ = this->naming_manager_->create_object_group (
+        object_group_name,
+        FT::ROUND_ROBIN,
+        repository_id,
+        criteria);
 
       CORBA::String_var ior =
         this->orb_->object_to_string (this->object_group_.in ());
