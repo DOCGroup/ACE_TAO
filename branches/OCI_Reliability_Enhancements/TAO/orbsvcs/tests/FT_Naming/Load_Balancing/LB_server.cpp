@@ -171,7 +171,8 @@ LB_server::create_object_group (void)
         PortableGroup::MEMB_APP_CTRL;
       mem_style.val <<= msv;
 
-      // Set the load balancing strategy
+      // Set the load balancing strategy - if one is not set, the default is 
+      // Round Robin
       PortableGroup::Property &lb_strategy = criteria[1];
       lb_strategy.nam.length (1);
       lb_strategy.nam[0].id =

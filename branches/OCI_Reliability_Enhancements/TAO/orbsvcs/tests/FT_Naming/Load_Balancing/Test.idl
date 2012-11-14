@@ -1,14 +1,23 @@
 //
 // $Id$
 
+#include "orbsvcs/FT_NamingManager.idl"
+
 /// Put the interfaces in a module, to avoid global namespace pollution
 module Test
 {
+  typedef FT::LoadBalancingStrategyValue LoadBalancingStrategyValue;
+
   /// A very simple interface
   interface Basic
   {
     /// Return a simple string
     string get_string ();
+
+    void set_load_balance_strategy (in LoadBalancingStrategyValue strategy)
+       raises (PortableGroup::ObjectGroupNotFound,
+               PortableGroup::InvalidProperty,
+               PortableGroup::UnsupportedProperty);
 
     /// A method to shutdown the ORB
     /**

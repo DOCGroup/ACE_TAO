@@ -87,13 +87,22 @@ TAO_FT_Naming_Manager::create_object_group (
     const char * type_id,
     const ::PortableGroup::Criteria & the_criteria)
 {
-  // TODO: If no load balancing strategy was provided, set the default to FT::ROUND_ROBIN
   // Add the group name to the criteria and create the object
   TAO::PG_Property_Set property_set (the_criteria);
-  PortableGroup::Value group_name_value;
-  group_name_value <<= group_name;
-  property_set.set_property (FT::TAO_FT_OBJECT_GROUP_NAME, group_name_value);
- 
+  PortableGroup::Value value;
+  value <<= group_name;
+  property_set.set_property (FT::TAO_FT_OBJECT_GROUP_NAME, value);
+
+  // If no load balancing strategy was provided, set the default to FT::ROUND_ROBIN
+  const PortableGroup::Value* lb_strat_value;
+  int found = property_set.find (FT::TAO_FT_LOAD_BALANCING_STRATEGY, lb_strat_value);
+  if (!found)
+    {
+      // Add the default load balancing strategy
+      value <<= FT::ROUND_ROBIN;
+      property_set.set_property (FT::TAO_FT_LOAD_BALANCING_STRATEGY, value);
+    }
+
   PortableGroup::Criteria new_criteria;
   property_set.export_properties (new_criteria);
   PortableGroup::GenericFactory::FactoryCreationId_var fcid;
@@ -163,14 +172,13 @@ TAO_FT_Naming_Manager::groups (void)
   for (int i = 0; i < num_groups; ++i)
   {
     PortableGroup::ObjectGroup_var obj_group = (*all_groups)[i];
-    if (this->group_name (obj_group, &name))
+    if (this->group_name (obj_group.in (), &name))
     {
       (*group_names)[i] = CORBA::string_dup (name.c_str());
-
     }
     else 
     {
-      (*group_names)[i] = CORBA::string_dup ("unnamed group");
+      (*group_names)[i] = CORBA::string_dup ("<unnamed group>");
       ACE_ERROR ((LM_ERROR,
         ACE_TEXT ("%T %n (%P|%t) - FT_Naming_Manager::groups: no name property set on group.\n")
         ));
@@ -189,17 +197,17 @@ TAO_FT_Naming_Manager::group_name (PortableGroup::ObjectGroup_ptr group, std::st
       ));
     return false;
   }
-
+  
   PortableGroup::Properties* props = this->get_properties (group);
   PortableGroup::Value value;
   CORBA::Boolean found = TAO_PG::get_property_value (object_group_property_name_, 
                                                      *props,
                                                      value);
   if (found)
-  { // Found the name property 
-    value >>= *name;
-    return true;
-  }
+    { // Found the name property 
+      value >>= *name;
+      return true;
+    }
   else
     return false;
 }
@@ -537,6 +545,9 @@ TAO_FT_Naming_Manager::create_object (
       type_id,
       the_criteria,
       typeid_properties);
+
+  // Dont distributed the object group for its usage in the FT_Naming_Manager
+  group->distribute (0);
 
   group->initial_populate ();
     //@@ on error we should remove the group from the Group_Factory

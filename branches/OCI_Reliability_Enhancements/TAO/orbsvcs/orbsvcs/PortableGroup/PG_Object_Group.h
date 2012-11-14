@@ -251,6 +251,14 @@ namespace TAO
      */
     int has_member_at (const PortableGroup::Location & location );
 
+
+    /**
+     * Tell the object group that it should distribute updates to the object
+     * group state.
+     */
+    void distribute (int value);
+
+
     /////////////////////////
     // Implementation methods
   private:
@@ -301,6 +309,9 @@ namespace TAO
 
     /// boolean true if empty group
     int empty_;
+
+    /// boolean true if updates should be distributed
+    int distribute_;
 
     ACE_CString role_;
     PortableGroup::TypeId_var type_id_;

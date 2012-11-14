@@ -62,6 +62,7 @@ TAO::PG_Object_Group::PG_Object_Group (
   , factory_registry_ (PortableGroup::FactoryRegistry::_duplicate (factory_registry))
   , manipulator_ (manipulator)
   , empty_ (1)
+  , distribute_ (1)
   , role_ (type_id)
   , type_id_ (CORBA::string_dup (type_id))
   , tagged_component_ (tagged_component)
@@ -216,20 +217,21 @@ TAO::PG_Object_Group::add_member (const PortableGroup::Location & the_location,
 
   this->reference_ = new_reference; // note var-to-var assignment does
                                     // a duplicate
+
   if (this->increment_version ())
     {
       this->distribute_iogr ();
     }
   else
-    {
+    { // Issue with incrementing the version
       throw PortableGroup::ObjectNotAdded ();
     }
 
   if (TAO_debug_level > 6)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT("PG (%P|%t) exit Object_Group add_member\n")));
-    }
+  {
+    ACE_DEBUG ((LM_DEBUG,
+      ACE_TEXT("PG (%P|%t) exit Object_Group add_member\n")));
+  }
 }
 
 int
@@ -425,6 +427,10 @@ TAO::PG_Object_Group::increment_version (void)
 void
 TAO::PG_Object_Group::distribute_iogr (void)
 {
+  // Check if the object group is configured to distribute
+  if (!this->distribute_)
+    return;
+
   // assume internals is locked
   CORBA::String_var iogr =
     this->orb_->object_to_string (this->reference_.in());
@@ -794,6 +800,12 @@ int
 TAO::PG_Object_Group::has_member_at (const PortableGroup::Location & location)
 {
   return (0 == this->members_.find (location));
+}
+
+void 
+TAO::PG_Object_Group::distribute (int value)
+{
+  this->distribute_ = value;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

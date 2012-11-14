@@ -1,3 +1,37 @@
+Wed Nov 14 21:47:28 UTC 2012  .  <stanleyk@ociweb.com>
+
+        * orbsvcs/orbsvcs/FT_NamingManager.idl:
+        
+          NamingManager no longer inherits from the GenericFactory
+          interface, to ensure that names are provided for object
+          groups.
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.cpp:
+        
+          If no load balancing strategy is provided, then default to
+          using ROUND_ROBIN.  Prevent warning for group state 
+          distribution.
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:
+        
+          Prevent warning for group state distribution.
+          
+        * orbsvcs/orbsvcs/PortableGroup/PG_Property_Set.cpp:
+        
+          Fixed bug in PG_Property_Set::set_property that 
+          disallowed it from binding a new value when an existing
+          one was not present.
+
+        * orbsvcs/tests/FT_Naming/Load_Balancing/Basic.h:
+        * orbsvcs/tests/FT_Naming/Load_Balancing/Basic.cpp:
+        * orbsvcs/tests/FT_Naming/Load_Balancing/LB_server.cpp:
+        * orbsvcs/tests/FT_Naming/Load_Balancing/Test.idl:
+        * orbsvcs/tests/FT_Naming/Load_Balancing/client.cpp:
+        
+          Updated tests to set new strategy value, and remove a group
+          member while running.
+
 Wed Nov 14 20:24:41 UTC 2012  Byron Harris  <harrisb@ociweb.com>
 
         * tao/Invocation_Retry_Params.h:
