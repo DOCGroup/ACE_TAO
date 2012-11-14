@@ -326,7 +326,7 @@ namespace TAO
             TAO::Invocation_Retry_State *retry_state =
               this->stub ()->invocation_retry_state ();
             if (this->resolver_.transport ()->connection_closed_on_read() &&
-                retry_state->forward_on_exception_increment (TAO::FOE_COMM_FAILURE))
+                retry_state->retry_on_reply_closed_increment ())
               {
                 if (TAO_debug_level > 4)
                   ACE_DEBUG ((LM_DEBUG,

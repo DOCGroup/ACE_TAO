@@ -199,7 +199,8 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
                long limit = ACE_OS::strtol (name, &err, 10);
                if (err && *err != 0)
                  {
-                   this->report_option_value_error (ACE_TEXT("-ORBForwardOnCommFailureLimit"), name);
+                   this->report_option_value_error (ACE_TEXT("-ORBForwardOnCommFailureLimit"),
+                                                    name);
                  }
                else
                  this->invocation_retry_params_.forward_on_exception_limit_[TAO::FOE_COMM_FAILURE] =
@@ -218,7 +219,8 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
                long limit = ACE_OS::strtol (name, &err, 10);
                if (err && *err != 0)
                  {
-                   this->report_option_value_error (ACE_TEXT("-ORBForwardOnTransientLimit"), name);
+                   this->report_option_value_error (ACE_TEXT("-ORBForwardOnTransientLimit"),
+                                                    name);
                  }
                else
                  this->invocation_retry_params_.forward_on_exception_limit_[TAO::FOE_TRANSIENT] =
@@ -237,7 +239,8 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
                long limit = ACE_OS::strtol (name, &err, 10);
                if (err && *err != 0)
                  {
-                   this->report_option_value_error (ACE_TEXT("-ORBForwardOnObjectNotExistLimit"), name);
+                   this->report_option_value_error (ACE_TEXT("-ORBForwardOnObjectNotExistLimit"),
+                                                    name);
                  }
                else
                  this->invocation_retry_params_.forward_on_exception_limit_[TAO::FOE_OBJECT_NOT_EXIST] =
@@ -261,6 +264,24 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
                else
                  this->invocation_retry_params_.forward_on_exception_limit_[TAO::FOE_INV_OBJREF] =
                    limit;
+             }
+         }
+      else if (ACE_OS::strcmp (argv[curarg],
+                               ACE_TEXT("-ORBRetryOnReplyClosedLimit")) == 0)
+         {
+           curarg++;
+           if (curarg < argc)
+             {
+               ACE_TCHAR* name = argv[curarg];
+
+               ACE_TCHAR *err = 0;
+               long limit = ACE_OS::strtol (name, &err, 10);
+               if (err && *err != 0)
+                 {
+                   this->report_option_value_error (ACE_TEXT("-ORBRetryOnReplyClosedLimit"), name);
+                 }
+               else
+                 this->invocation_retry_params_.retry_on_reply_closed_limit_ = limit;
              }
          }
       else if (ACE_OS::strncmp (argv[curarg], ACE_TEXT("-ORB"), 4) == 0)

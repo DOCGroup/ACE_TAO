@@ -39,6 +39,16 @@ namespace
       result.init_retry_delay_)
     result.init_retry_delay_ = client_factory_params.init_retry_delay_;
 
+  // Retry on reply closed limit
+  if (command_line_params.retry_on_reply_closed_limit_ !=
+      result.retry_on_reply_closed_limit_)
+    result.retry_on_reply_closed_limit_ = command_line_params.retry_on_reply_closed_limit_;
+  else if (client_factory_params.retry_on_reply_closed_limit_ !=
+      result.retry_on_reply_closed_limit_)
+    result.retry_on_reply_closed_limit_ = client_factory_params.retry_on_reply_closed_limit_;
+
+  // Forward on exception limits
+
   retry_limit_calc (TAO::FOE_OBJECT_NOT_EXIST,
                     command_line_params,
                     client_factory_params,
@@ -64,8 +74,9 @@ namespace
 }
 
 TAO::Invocation_Retry_State::Invocation_Retry_State (TAO_Stub &stub)
-  : stub_(stub)
-  , forward_on_exception_limit_used_(false)
+  : retry_on_reply_closed_count_ (0)
+  , stub_ (stub)
+  , forward_on_exception_limit_used_ (false)
 {
   this->stub_.invocation_retry_state (this);
   this->ex_count_map_[FOE_OBJECT_NOT_EXIST] = 0;
@@ -114,6 +125,19 @@ TAO::Invocation_Retry_State::forward_on_exception_increment (const int ef)
   if (count < limit)
     {
       this->ex_count_map_[ef] = count + 1;
+      return true;
+    }
+
+  return false;
+}
+
+bool
+TAO::Invocation_Retry_State::retry_on_reply_closed_increment ()
+{
+  if (this->retry_on_reply_closed_count_ <
+      this->retry_params_.retry_on_reply_closed_limit_)
+    {
+      ++this->retry_on_reply_closed_count_;
       return true;
     }
 

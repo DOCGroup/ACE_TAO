@@ -8,8 +8,8 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::Invocation_Retry_Params::Invocation_Retry_Params (void)
-  // Set default delay to 0.1 seconds
-  : init_retry_delay_ (0, 100000)
+  : retry_on_reply_closed_limit_ (0)
+  , init_retry_delay_ (0, 100000) // Set default to 0.1 seconds
 {
       this->forward_on_exception_limit_[FOE_OBJECT_NOT_EXIST] = 0;
       this->forward_on_exception_limit_[FOE_COMM_FAILURE] = 0;

@@ -1,4 +1,8 @@
 This test verifies that if a server launched by the ImR activator is terminated,
 then it will be relaunched transparently by the ORB if the client makes another
-request if -ORBForwardOnTransientLimit and -ORBForwardCommFailureLimit options
+request if -ORBForwardOnTransientLimit and -ORBRetryOnReplyClosedLimit options
 are used.
+
+Note that TAO does not have a way of knowing if server actually processed the
+request, so that the CORBA "at most once" guarantee may be violated if
+-ORBRetryOnReplyClosedLimit is used.

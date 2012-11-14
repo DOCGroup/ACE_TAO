@@ -1130,6 +1130,14 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
           arg_shifter.consume_arg ();
         }
       else if (0 != (current_arg = arg_shifter.get_the_parameter
+                (ACE_TEXT("-ORBRetryOnReplyClosedLimit"))))
+        {
+          int limit = ACE_OS::atoi (current_arg);
+          this->orb_params_.invocation_retry_params ().retry_on_reply_closed_limit_ =
+            limit;
+          arg_shifter.consume_arg ();
+        }
+      else if (0 != (current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBForwardDelay"))))
         {
           int msecs = ACE_OS::atoi (current_arg);

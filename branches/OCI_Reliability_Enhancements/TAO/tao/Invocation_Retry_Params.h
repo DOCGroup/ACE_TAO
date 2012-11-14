@@ -5,12 +5,7 @@
  *
  *  $Id$
  *
- * Contains the invocation retry parameters used when encountering exceptions.
- * The parameters can be specified using either the Client_Strategy_Factory
- * service given in the service configuration file or through the command line.
- * Any command line parameter overrides the corresponding option in the service
- * configurator file.
- *
+ *  @author Byron Harris (harrisb@ociweb.com)
  */
 //=============================================================================
 
@@ -24,6 +19,16 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
+  /**
+   * @struct Invocation_Retry_Params
+   *
+   * @brief Contains the invocation retry parameters used when encountering
+   * CORBA exceptions.
+   * The parameters can be specified using either the Client_Strategy_Factory
+   * service given in the service configuration file or through the command line.
+   * Any command line parameter overrides the corresponding option in the service
+   * configurator file.
+   */
   struct Invocation_Retry_Params
   {
     Invocation_Retry_Params();
@@ -32,10 +37,17 @@ namespace TAO
 
     /**
      * The maximum number of retry attempts per exception type
-     * when exceptions are encountered.
+     * when exceptions are encountered. The profiles are
+     * cycled through during each attempt.
      */
-
     exception_limit_map_type forward_on_exception_limit_;
+
+    /**
+     * The maximum number of times to retry a an invocation
+     * if the the connection to the server is closed when
+     * trying to get a reply.
+     */
+    int retry_on_reply_closed_limit_;
 
     /**
      * The delay to use between cycles of base and forward profiles.
