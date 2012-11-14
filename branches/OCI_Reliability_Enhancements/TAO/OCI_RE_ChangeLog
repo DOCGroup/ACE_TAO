@@ -1,17 +1,25 @@
+Wed Nov 14 03:21:03 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
+
+        * utils/nsgroup/nsgroup_svc.cpp:
+        Changed output for member_show and member_list methods
+
+        * utils/nsgroup/run_test.pl:
+        Cleaned up tests
+
 Tue Nov 13 22:28:27 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.cpp:
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Persistent_Naming_Context.cpp:
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Round_Robin.h:
-        
-          Fix initialization order to avoid warning. Make Round Robin strategy 
+
+          Fix initialization order to avoid warning. Make Round Robin strategy
           destructor virtual.
-        
+
         * orbsvcs/tests/FT_Naming:
         * orbsvcs/tests/FT_Naming/Load_Balancing:
-        
+
           Add new directories to hold tests for FT_NamingService
-        
+
         * orbsvcs/tests/FT_Naming/Load_Balancing/Basic.h:
         * orbsvcs/tests/FT_Naming/Load_Balancing/Basic.cpp:
         * orbsvcs/tests/FT_Naming/Load_Balancing/LB_server.h:
