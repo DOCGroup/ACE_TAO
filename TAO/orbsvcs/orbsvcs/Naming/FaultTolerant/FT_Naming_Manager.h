@@ -50,8 +50,9 @@ public:
    * 
    */
 
-  virtual ::CORBA::Object_ptr create_object_group (
+  virtual ::FT::ObjectGroup_ptr create_object_group (
     const char * group_name,
+    FT::LoadBalancingStrategyValue lb_strategy,
     const char * type_id,
     const ::PortableGroup::Criteria & the_criteria);
 
@@ -60,6 +61,11 @@ public:
 
   virtual ::PortableGroup::ObjectGroup_ptr get_object_group_ref_from_name (
     const char * group_name);
+
+  virtual void set_load_balancing_strategy (
+      const char * group_name,
+      ::FT::LoadBalancingStrategyValue lb_strategy);
+
 
   virtual ::FT::GroupNames * groups (void);
   /**

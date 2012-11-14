@@ -84,6 +84,7 @@ TAO_FT_Naming_Manager::~TAO_FT_Naming_Manager (void)
 CORBA::Object_ptr 
 TAO_FT_Naming_Manager::create_object_group (
     const char * group_name,
+    FT::LoadBalancingStrategyValue lb_strategy,
     const char * type_id,
     const ::PortableGroup::Criteria & the_criteria)
 {
@@ -93,16 +94,10 @@ TAO_FT_Naming_Manager::create_object_group (
   value <<= group_name;
   property_set.set_property (FT::TAO_FT_OBJECT_GROUP_NAME, value);
 
-  // If no load balancing strategy was provided, set the default to FT::ROUND_ROBIN
-  const PortableGroup::Value* lb_strat_value;
-  int found = property_set.find (FT::TAO_FT_LOAD_BALANCING_STRATEGY, lb_strat_value);
-  if (!found)
-    {
-      // Add the default load balancing strategy
-      value <<= FT::ROUND_ROBIN;
-      property_set.set_property (FT::TAO_FT_LOAD_BALANCING_STRATEGY, value);
-    }
-
+  // Add the load balancing strategy to the properties
+  value <<= lb_strategy;
+  property_set.set_property (FT::TAO_FT_LOAD_BALANCING_STRATEGY, value);
+  
   PortableGroup::Criteria new_criteria;
   property_set.export_properties (new_criteria);
   PortableGroup::GenericFactory::FactoryCreationId_var fcid;
@@ -186,6 +181,24 @@ TAO_FT_Naming_Manager::groups (void)
   }
   return group_names;
 }
+
+void 
+TAO_FT_Naming_Manager::set_load_balancing_strategy (
+  const char * group_name,
+  ::FT::LoadBalancingStrategyValue lb_strategy)
+{
+  CORBA::Object_var group = this->get_object_group_ref_from_name (group_name);
+ 
+  TAO::PG_Property_Set property_set;
+  PortableGroup::Value value;
+  // Add the load balancing strategy to the properties
+  value <<= lb_strategy;
+  property_set.set_property (FT::TAO_FT_LOAD_BALANCING_STRATEGY, value);
+  PortableGroup::Properties properties;
+  property_set.export_properties (properties);
+  this->set_properties_dynamically (group, properties);
+}
+
 
 bool 
 TAO_FT_Naming_Manager::group_name (PortableGroup::ObjectGroup_ptr group, std::string *name)
