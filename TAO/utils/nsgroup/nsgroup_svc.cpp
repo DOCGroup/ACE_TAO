@@ -644,12 +644,12 @@ NS_group_svc::member_list (const char* group)
     PortableGroup::ObjectGroup_var group_var = this->naming_manager_->get_object_group_ref_from_name (group);
     PortableGroup::Locations_var locations = this->naming_manager_->locations_of_members (group_var.in());
 
-    CORBA::ULong len = locations->length();
-    for (CORBA::ULong i = 0; i < len; ++i)
+    for (unsigned int i = 0; i < locations->length(); ++i)
     {
       const PortableGroup::Location & loc = locations[i];
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) member_list(%u:%s)\n", i,
-        (loc.length() > 0) ? loc[0].id.in() : "<empty>" ));
+      if (loc.length() > 0) {
+        std::cout << loc[0].id.in() << std::endl;
+      }
     }
   }
   catch (const PortableGroup::ObjectGroupNotFound& ex )
@@ -744,7 +744,9 @@ NS_group_svc::member_show (
     CORBA::Object_var ior_var = this->naming_manager_->get_member_ref (group_var.in(), location_name);
     CORBA::String_var ior_string  = this->orb_->object_to_string( ior_var.in() );
 
-    ACE_DEBUG ((LM_DEBUG, "(%P|%t) member_show(%s,%s,%s)\n", group, location, ior_string.in() ));
+    std::cout << ior_string.in() << std::endl;
+
+    //ACE_DEBUG ((LM_DEBUG, "(%P|%t) member_show(%s,%s,%s)\n", group, location, ior_string.in() ));
 
   }
   catch (const PortableGroup::ObjectGroupNotFound& ex )
