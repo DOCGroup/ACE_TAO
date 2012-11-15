@@ -95,6 +95,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       poa_manager->activate ();
 
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop starting\n"));
+
       orb->run ();
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));

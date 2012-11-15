@@ -59,10 +59,26 @@ namespace TAO
     bool retry_on_reply_closed_increment ();
 
     /**
-     * Sleep before retry if at starting
+     * Increment to next profile in preparation
+     * to retry using that profile.
+     * If the next profile is the starting
+     * base profile then also call
+     * sleep ().
+     * @see TAO_Stub::next_profile_retry()
+     */
+    void next_profile_retry (void) const;
+
+    /**
+     * Sleep if profile is the starting
      * base profile.
      */
-    void sleep_before_retry ();
+    void sleep_at_starting_profile () const;
+
+    /**
+     * Sleep according to the delay value
+     * in Invocation_Retry_Params.
+     */
+    void sleep () const;
 
   private:
 

@@ -1,3 +1,29 @@
+Thu Nov 15 18:02:04 UTC 2012  Byron Harris  <harrisb@ociweb.com>
+
+        * tao/Invocation_Retry_State.h:
+        * tao/Invocation_Retry_State.cpp:
+
+          Added operations for getting next profile and
+          sleeping if at starting base profile.
+
+        * tao/Synch_Invocation.cpp:
+
+          Uses new Invocation_Retry_State operations. Beefed up
+          debug messages.
+
+        * tests/Multiple_Retry_Tests/Retry_On_Connection_Failure/Hello.h:
+        * tests/Multiple_Retry_Tests/Retry_On_Connection_Failure/Hello.cpp:
+        * tests/Multiple_Retry_Tests/Retry_On_Connection_Failure/Test.idl:
+        * tests/Multiple_Retry_Tests/Retry_On_Connection_Failure/client.cpp:
+        * tests/Multiple_Retry_Tests/Retry_On_Connection_Failure/run_test.pl:
+        * tests/Multiple_Retry_Tests/Retry_On_Connection_Failure/server.cpp:
+
+          Extend test to include oneway invocation.
+
+        * bin/tao_orb_tests.lst:
+
+          Added test for retry on connection failure for oneway call.
+
 Thu Nov 15 17:16:12 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
 
         * utils/nsgroup/nsgroup_svc.cpp:

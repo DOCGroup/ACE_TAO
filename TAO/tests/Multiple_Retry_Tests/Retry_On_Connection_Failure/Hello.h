@@ -19,6 +19,8 @@ public:
   // = The skeleton methods
   virtual char * get_string (void);
 
+  virtual void set_string (const char * s);
+
   virtual void shutdown (void);
 
 private:

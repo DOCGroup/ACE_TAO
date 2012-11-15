@@ -145,11 +145,23 @@ TAO::Invocation_Retry_State::retry_on_reply_closed_increment ()
 }
 
 void
-TAO::Invocation_Retry_State::sleep_before_retry ()
+TAO::Invocation_Retry_State::next_profile_retry (void) const
 {
-  // Avoid delay while iterating through a cycle of profiles.
+  this->stub_.next_profile_retry ();
+  this->sleep_at_starting_profile ();
+}
+
+void
+TAO::Invocation_Retry_State::sleep_at_starting_profile () const
+{
   if (stub_.at_starting_profile ())
-    ACE_OS::sleep (this->retry_params_.init_retry_delay_);
+    this->sleep();
+}
+
+void
+TAO::Invocation_Retry_State::sleep () const
+{
+  ACE_OS::sleep (this->retry_params_.init_retry_delay_);
 }
 
 
