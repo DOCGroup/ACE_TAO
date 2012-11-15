@@ -83,7 +83,11 @@ namespace TAO
             TAO::Invocation_Retry_State *retry_state = this->stub ()->invocation_retry_state ();
             if (retry_state->forward_on_exception_increment(FOE_TRANSIENT))
                   {
-                    retry_state->sleep_before_retry ();
+                    if (TAO_debug_level > 0)
+                      ACE_DEBUG ((LM_INFO,
+                                  "TAO (%P|%t) - Synch_Twoway_Invocation::"
+                                  "remote_twoway retrying on TRANSIENT exception\n"));
+                    retry_state->next_profile_retry ();
                     return TAO_INVOKE_RESTART;
                   }
             else
@@ -331,8 +335,8 @@ namespace TAO
                 if (TAO_debug_level > 4)
                   ACE_DEBUG ((LM_DEBUG,
                               "TAO (%P|%t) - Synch_Twoway_Invocation::"
-                              "wait_for_reply, profile forwarding on exception\n"));
-                retry_state->sleep_before_retry ();
+                              "wait_for_reply, retry invocation on connection closed\n"));
+                retry_state->sleep ();
                 return TAO_INVOKE_RESTART;
               }
 
@@ -584,7 +588,7 @@ namespace TAO
             )
           {
             retry_on_exception = true;
-            retry_state->sleep_before_retry ();
+            retry_state->sleep_at_starting_profile ();
           }
       }
     else
@@ -746,7 +750,11 @@ namespace TAO
               {
                 if (retry_state->forward_on_exception_increment(FOE_TRANSIENT))
                   {
-                    retry_state->sleep_before_retry ();
+                    if (TAO_debug_level > 0)
+                      ACE_DEBUG ((LM_INFO,
+                                  "TAO (%P|%t) - Synch_Oneway_Invocation::"
+                                  "remote_oneway retrying on TRANSIENT exception\n"));
+                    retry_state->next_profile_retry ();
                     return TAO_INVOKE_RESTART;
                   }
               }

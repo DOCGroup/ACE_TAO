@@ -11,7 +11,11 @@ use PerlACE::TestTarget;
 $status = 0;
 $debug_level = '0';
 $cdebug_level = '0';
+$oneway_call = 0;
 foreach $i (@ARGV) {
+    if ($i eq '-oneway') {
+        $oneway_call = 1;
+    }
     if ($i eq '-debug') {
         $debug_level = '10';
     }
@@ -37,6 +41,7 @@ $SV = $server->CreateProcess ("server", "-ORBdebuglevel $debug_level " .
 			      "-ORBEndpoint iiop://$endpoint");
 
 $CL = $client->CreateProcess ("client", "-ORBdebuglevel $debug_level " .
+			      "-o $oneway_call " .
 			      "-ORBForwardOnTransientLimit 20 " .
 			      "-ORBForwardDelay 500 " .
 			      "-k corbaloc::$endpoint/Simple_Server");
