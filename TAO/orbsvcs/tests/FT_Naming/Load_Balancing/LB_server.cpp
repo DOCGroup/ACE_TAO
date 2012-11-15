@@ -171,7 +171,7 @@ LB_server::create_object_group (void)
       mem_style.val <<= msv;
 
       this->object_group_ = this->naming_manager_->create_object_group (
-        object_group_name,
+        "Basic Group",
         FT::ROUND_ROBIN,
         repository_id,
         criteria);

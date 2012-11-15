@@ -53,18 +53,6 @@ Basic::remove_member (void)
 
 }
 
-void 
-Basic::set_load_balance_strategy (::Test::LoadBalancingStrategyValue strategy)
-{
-  try {
-    this->nm_->set_load_balancing_strategy (this->object_group_name_, strategy);
-  }
-  catch (const CORBA::Exception& ex)
-    {
-      ex._tao_print_exception ("Exception caught while changing the load balancing strategy.\n");
-    }
-
-}
 
 void
 Basic::shutdown (void)

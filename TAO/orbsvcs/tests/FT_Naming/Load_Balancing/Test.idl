@@ -14,11 +14,6 @@ module Test
     /// Return a simple string
     string get_string ();
 
-    void set_load_balance_strategy (in LoadBalancingStrategyValue strategy)
-       raises (PortableGroup::ObjectGroupNotFound,
-               PortableGroup::InvalidProperty,
-               PortableGroup::UnsupportedProperty);
-
     /// A method to shutdown the ORB
     /**
      * This method is used to simplify the test shutdown process
