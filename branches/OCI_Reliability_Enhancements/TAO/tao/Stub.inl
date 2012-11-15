@@ -3,6 +3,7 @@
 // $Id$
 
 #include "tao/ORB_Core.h"
+#include "ace/Reverse_Lock_T.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -56,6 +57,12 @@ TAO_Stub::reset_profiles (void)
   ACE_MT (ACE_GUARD (TAO_SYNCH_MUTEX,
                      guard,
                      this->profile_lock_));
+  if (TAO_debug_level > 5)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("TAO (%P|%t) - Stub::reset_profiles, acquired profile lock this = 0x%x\n"), this));
+    }
+
   this->reset_profiles_i ();
 }
 
@@ -137,9 +144,24 @@ TAO_Stub::next_profile_i (void)
               pfile_next = this->base_profiles_.get_next ();
             }
 
-          // We may have been forwarded to / from a collocated situation
-          // Check for this and apply / remove optimisation if required.
-          this->orb_core_->reinitialize_object (this);
+          {
+            typedef ACE_Reverse_Lock<ACE_MT_SYNCH::MUTEX> TAO_REVERSE_LOCK;
+            TAO_REVERSE_LOCK reverse (this->profile_lock_);
+            ACE_MT (ACE_GUARD_RETURN (TAO_REVERSE_LOCK, ace_mon, reverse, 0));
+            if (TAO_debug_level > 5)
+              {
+                ACE_DEBUG ((LM_DEBUG,
+                            ACE_TEXT ("TAO (%P|%t) - Stub::next_profile_i, released profile lock to reinitialize this = 0x%x\n"), this));
+              }
+            // We may have been forwarded to / from a collocated situation
+            // Check for this and apply / remove optimisation if required.
+            this->orb_core_->reinitialize_object (this);
+          }
+          if (TAO_debug_level > 5)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("TAO (%P|%t) - Stub::next_profile_i, reacquired profile lock on object this = 0x%x\n"), this));
+              }
         }
       else
         pfile_next = this->base_profiles_.get_next ();
@@ -160,6 +182,11 @@ TAO_Stub::next_profile (void)
                             guard,
                             this->profile_lock_,
                             0));
+  if (TAO_debug_level > 5)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("TAO (%P|%t) - Stub::next_profile, acquired profile lock this = 0x%x\n"), this));
+    }
   return this->next_profile_i ();
 }
 
@@ -188,6 +215,12 @@ TAO_Stub::base_profiles (const TAO_MProfile &mprofiles)
                             guard,
                             this->profile_lock_,
                             0));
+  if (TAO_debug_level > 5)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("TAO (%P|%t) - Stub::base_profiles, acquired profile lock this = 0x%x\n"), this));
+    }
+
 
   // first reset things so we start from scratch!
 
@@ -208,6 +241,11 @@ TAO_Stub::next_profile_retry (void)
                             guard,
                             this->profile_lock_,
                             0));
+  if (TAO_debug_level > 5)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("TAO (%P|%t) - Stub::next_profile_retry, acquired profile lock this = 0x%x\n"), this));
+    }
 
   if (this->profile_success_ && this->forward_profiles_)
     {
