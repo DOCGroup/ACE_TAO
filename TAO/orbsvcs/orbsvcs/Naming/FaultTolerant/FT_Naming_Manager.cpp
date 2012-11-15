@@ -70,7 +70,7 @@ TAO_FT_Naming_Manager::TAO_FT_Naming_Manager (void)
   this->built_in_balancing_strategy_name_[0].id =
     CORBA::string_dup (FT::TAO_FT_LOAD_BALANCING_STRATEGY);
 
-  // The name for the property which contains the object group name 
+  // The name for the property which contains the object group name
   this->object_group_property_name_.length (1);
   this->object_group_property_name_[0].id = CORBA::string_dup (FT::TAO_FT_OBJECT_GROUP_NAME);
 
@@ -81,7 +81,7 @@ TAO_FT_Naming_Manager::~TAO_FT_Naming_Manager (void)
 }
 
 
-CORBA::Object_ptr 
+CORBA::Object_ptr
 TAO_FT_Naming_Manager::create_object_group (
     const char * group_name,
     FT::LoadBalancingStrategyValue lb_strategy,
@@ -97,14 +97,14 @@ TAO_FT_Naming_Manager::create_object_group (
   // Add the load balancing strategy to the properties
   value <<= lb_strategy;
   property_set.set_property (FT::TAO_FT_LOAD_BALANCING_STRATEGY, value);
-  
+
   PortableGroup::Criteria new_criteria;
   property_set.export_properties (new_criteria);
   PortableGroup::GenericFactory::FactoryCreationId_var fcid;
   return this->create_object (type_id, new_criteria, fcid.out());
 }
 
-void 
+void
 TAO_FT_Naming_Manager::delete_object_group (const char * group_name)
 {
   // Find the object group with the specified name and delete the object
@@ -119,20 +119,20 @@ TAO_FT_Naming_Manager::delete_object_group (const char * group_name)
     // Delete the object group from the factory
     this->group_factory_.delete_group (group_id);
   }
-  else 
+  else
   {
     throw PortableGroup::ObjectGroupNotFound ();
   }
 
 }
 
-PortableGroup::ObjectGroup_ptr 
+PortableGroup::ObjectGroup_ptr
 TAO_FT_Naming_Manager::get_object_group_ref_from_name (const char * group_name)
 {
 
   CORBA::String_var group_name_str (group_name);
 
-  // Search for an object group that has a FT::TAO_FT_OBJECT_GROUP_NAME equal 
+  // Search for an object group that has a FT::TAO_FT_OBJECT_GROUP_NAME equal
   // to the provided group_name
   PortableGroup::Property group_name_property;
   group_name_property.nam.length (1);
@@ -150,7 +150,7 @@ TAO_FT_Naming_Manager::get_object_group_ref_from_name (const char * group_name)
   }
 }
 
-::FT::GroupNames * 
+::FT::GroupNames *
 TAO_FT_Naming_Manager::groups (void)
 {
   PortableGroup::ObjectGroups *all_groups = this->group_factory_.all_groups ();
@@ -166,12 +166,12 @@ TAO_FT_Naming_Manager::groups (void)
   std::string name;
   for (int i = 0; i < num_groups; ++i)
   {
-    PortableGroup::ObjectGroup_var obj_group = (*all_groups)[i];
+    PortableGroup::ObjectGroup_var obj_group = (*all_groups)[i].in ();
     if (this->group_name (obj_group.in (), &name))
     {
       (*group_names)[i] = CORBA::string_dup (name.c_str());
     }
-    else 
+    else
     {
       (*group_names)[i] = CORBA::string_dup ("<unnamed group>");
       ACE_ERROR ((LM_ERROR,
@@ -182,13 +182,13 @@ TAO_FT_Naming_Manager::groups (void)
   return group_names;
 }
 
-void 
+void
 TAO_FT_Naming_Manager::set_load_balancing_strategy (
   const char * group_name,
   ::FT::LoadBalancingStrategyValue lb_strategy)
 {
   CORBA::Object_var group = this->get_object_group_ref_from_name (group_name);
- 
+
   TAO::PG_Property_Set property_set;
   PortableGroup::Value value;
   // Add the load balancing strategy to the properties
@@ -200,7 +200,7 @@ TAO_FT_Naming_Manager::set_load_balancing_strategy (
 }
 
 
-bool 
+bool
 TAO_FT_Naming_Manager::group_name (PortableGroup::ObjectGroup_ptr group, std::string *name)
 {
   if (CORBA::is_nil (group))
@@ -210,14 +210,14 @@ TAO_FT_Naming_Manager::group_name (PortableGroup::ObjectGroup_ptr group, std::st
       ));
     return false;
   }
-  
+
   PortableGroup::Properties* props = this->get_properties (group);
   PortableGroup::Value value;
-  CORBA::Boolean found = TAO_PG::get_property_value (object_group_property_name_, 
+  CORBA::Boolean found = TAO_PG::get_property_value (object_group_property_name_,
                                                      *props,
                                                      value);
   if (found)
-    { // Found the name property 
+    { // Found the name property
       value >>= *name;
       return true;
     }
@@ -611,7 +611,7 @@ TAO_FT_Naming_Manager::initialize (CORBA::ORB_ptr orb,
   this->group_factory_.init (orb, naming_mgr_poa, factory_registry_.reference());
 }
 
-bool  
+bool
 TAO_FT_Naming_Manager::next_location (PortableGroup::ObjectGroup_ptr object_group,
                                       PortableGroup::Location& loc)
 {
@@ -619,13 +619,13 @@ TAO_FT_Naming_Manager::next_location (PortableGroup::ObjectGroup_ptr object_grou
 
   PortableGroup::Properties* props = this->get_properties (object_group);
   PortableGroup::Value value;
-  CORBA::Boolean found = TAO_PG::get_property_value (built_in_balancing_strategy_name_, 
+  CORBA::Boolean found = TAO_PG::get_property_value (built_in_balancing_strategy_name_,
                                                      *props,
                                                      value);
 
   // If there is no TAO_FT_LOAD_BALANCING_STRATEGY property in the object group
   // return failure
-  if (!found) 
+  if (!found)
   {
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("%T %n (%P|%t) - TAO_FT_Naming_Manager::next_location: object group has no TAO_FT_LOAD_BALANCING_STRATEGY property.\n")
