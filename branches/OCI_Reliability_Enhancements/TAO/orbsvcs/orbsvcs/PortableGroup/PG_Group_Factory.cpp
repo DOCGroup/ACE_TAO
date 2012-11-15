@@ -162,12 +162,6 @@ int TAO::PG_Group_Factory::find_group (const PortableGroup::Property& property_t
 
   size_t upper_limit = this->group_map_.current_size ();
   PortableGroup::Value value;
-  PortableGroup::Properties_var properties;
-
-  ACE_NEW_THROW_EX (
-    properties,
-    PortableGroup::Properties,
-    CORBA::NO_MEMORY());
 
   size_t group_count = 0;
 
@@ -179,6 +173,14 @@ int TAO::PG_Group_Factory::find_group (const PortableGroup::Property& property_t
     TAO::PG_Object_Group * a_group = (*it).int_id_;
     // If the group has the group name in the property
     // 
+    
+    PortableGroup::Properties_var properties;
+
+    ACE_NEW_THROW_EX (
+      properties,
+      PortableGroup::Properties,
+      CORBA::NO_MEMORY());
+
     a_group->get_properties (properties);
 
     // If the group has the property identified by the caller, check the value, by
@@ -275,7 +277,7 @@ TAO::PG_Group_Factory::all_groups (void)
     ++it)
   {
     TAO::PG_Object_Group * group = (*it).int_id_;
-    (*result)[group_count] = group->reference ();
+    (*result)[group_count] = CORBA::Object::_duplicate(group->reference ());
     ++group_count;
   }
   result->length (group_count);

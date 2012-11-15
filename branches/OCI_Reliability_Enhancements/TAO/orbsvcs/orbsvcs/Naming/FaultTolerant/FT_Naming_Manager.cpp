@@ -151,34 +151,57 @@ TAO_FT_Naming_Manager::get_object_group_ref_from_name (const char * group_name)
 }
 
 ::FT::GroupNames *
-TAO_FT_Naming_Manager::groups (void)
+TAO_FT_Naming_Manager::groups (::FT::LoadBalancingStrategyValue target_strategy)
 {
-  PortableGroup::ObjectGroups *all_groups = this->group_factory_.all_groups ();
+  PortableGroup::ObjectGroups_var all_groups = this->group_factory_.all_groups ();
   int num_groups = all_groups->length ();
 
   FT::GroupNames* group_names;
   ACE_NEW_THROW_EX (
     group_names,
-    FT::GroupNames,
+    FT::GroupNames (num_groups),
     CORBA::NO_MEMORY());
 
-  group_names->length (num_groups);
-  std::string name;
+  int matching_groups = 0;
   for (int i = 0; i < num_groups; ++i)
   {
-    PortableGroup::ObjectGroup_var obj_group = (*all_groups)[i].in ();
-    if (this->group_name (obj_group.in (), &name))
-    {
-      (*group_names)[i] = CORBA::string_dup (name.c_str());
-    }
-    else
-    {
-      (*group_names)[i] = CORBA::string_dup ("<unnamed group>");
-      ACE_ERROR ((LM_ERROR,
-        ACE_TEXT ("%T %n (%P|%t) - FT_Naming_Manager::groups: no name property set on group.\n")
-        ));
+    PortableGroup::ObjectGroup_var obj_group = (all_groups.in ())[i].in ();
+
+    // Extract the group's Load Balancing property
+    PortableGroup::Name lb_strat_property_name (1);
+    lb_strat_property_name.length (1);
+    lb_strat_property_name[0].id = CORBA::string_dup (::FT::TAO_FT_LOAD_BALANCING_STRATEGY);
+    PortableGroup::Properties_var props = this->get_properties (obj_group);
+    PortableGroup::Value value;
+    TAO_PG::get_property_value (lb_strat_property_name, props.in (), value);
+    ::FT::LoadBalancingStrategyValue lb_strategy_val;
+    value >>= lb_strategy_val;
+
+    if (lb_strategy_val == target_strategy)
+    { // Groups load balancing strategy matches the target
+      // Increment the count of matching groups
+      ++matching_groups;
+      std::string name;
+
+      // Get the group name and add it to the list to return.
+      if (this->group_name (obj_group.in (), name))
+      { // Group does have a name
+        group_names->length (matching_groups);
+        (*group_names)[i] = CORBA::string_dup (name.c_str());
+      }
+      else
+      {
+        { // Group has no name
+          (*group_names)[i] = CORBA::string_dup ("<unnamed group>");
+          ACE_ERROR ((LM_ERROR,
+            ACE_TEXT ("%T %n (%P|%t) - FT_Naming_Manager::groups: no name property set on group.\n")
+            ));
+        }
+      }
     }
   }
+  // Set the length to the actual num added
+  group_names->length (matching_groups);
   return group_names;
 }
 
@@ -201,7 +224,7 @@ TAO_FT_Naming_Manager::set_load_balancing_strategy (
 
 
 bool
-TAO_FT_Naming_Manager::group_name (PortableGroup::ObjectGroup_ptr group, std::string *name)
+TAO_FT_Naming_Manager::group_name (PortableGroup::ObjectGroup_ptr group, std::string &name)
 {
   if (CORBA::is_nil (group))
   {
@@ -210,15 +233,15 @@ TAO_FT_Naming_Manager::group_name (PortableGroup::ObjectGroup_ptr group, std::st
       ));
     return false;
   }
-
-  PortableGroup::Properties* props = this->get_properties (group);
+  
+  PortableGroup::Properties_var props = this->get_properties (group);
   PortableGroup::Value value;
-  CORBA::Boolean found = TAO_PG::get_property_value (object_group_property_name_,
+  CORBA::Boolean found = TAO_PG::get_property_value (object_group_property_name_, 
                                                      *props,
                                                      value);
   if (found)
-    { // Found the name property
-      value >>= *name;
+    { // Found the name property 
+      value >>= name;
       return true;
     }
   else
@@ -410,7 +433,7 @@ PortableGroup::Locations *
 TAO_FT_Naming_Manager::locations_of_members (
     PortableGroup::ObjectGroup_ptr object_group)
 {
-  PortableGroup::Locations * result = 0;
+  PortableGroup::Locations_var result = 0;
 
   // Find the object group corresponding to this IOGR
   TAO::PG_Object_Group * group = 0;
@@ -428,7 +451,7 @@ TAO_FT_Naming_Manager::locations_of_members (
     }
     throw PortableGroup::ObjectGroupNotFound ();
   }
-  return result;
+  return result._retn ();
 }
 
 PortableGroup::ObjectGroups *
@@ -559,7 +582,7 @@ TAO_FT_Naming_Manager::create_object (
       the_criteria,
       typeid_properties);
 
-  // Dont distributed the object group for its usage in the FT_Naming_Manager
+  // Dont distribute the object group for its usage in the FT_Naming_Manager
   group->distribute (0);
 
   group->initial_populate ();

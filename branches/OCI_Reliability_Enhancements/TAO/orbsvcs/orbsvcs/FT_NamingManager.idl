@@ -30,13 +30,14 @@ module FT
   const LoadBalancingStrategyValue RANDOM = 1;
   const LoadBalancingStrategyValue ACTIVE = 2;
 
+  typedef string GroupName;
   typedef sequence<string> GroupNames;
 
   // Specification of NamingManager Interface
   interface NamingManager : PortableGroup::PropertyManager,
                             PortableGroup::ObjectGroupManager
   {
-    ObjectGroup create_object_group (in string group_name,
+    ObjectGroup create_object_group (in GroupName group_name,
                                      in LoadBalancingStrategyValue lb_strategy,
                                      in PortableGroup::_TypeId type_id,
                                      in PortableGroup::Criteria the_criteria)
@@ -56,7 +57,7 @@ module FT
                                       in LoadBalancingStrategyValue lb_strategy);
 
     // Return names of all groups defined in the NamingManager
-    GroupNames groups ();
+    GroupNames groups (in LoadBalancingStrategyValue target_stategy);
 
   };
 };

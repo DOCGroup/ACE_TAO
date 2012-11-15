@@ -127,8 +127,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       }
 
       try {
-        // Set the load balance strategy
-        basic->set_load_balance_strategy (FT::RANDOM);
 
         basic->shutdown ();
 

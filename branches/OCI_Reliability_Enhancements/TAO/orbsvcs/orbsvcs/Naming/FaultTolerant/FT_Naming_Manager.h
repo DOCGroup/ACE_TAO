@@ -67,7 +67,7 @@ public:
       ::FT::LoadBalancingStrategyValue lb_strategy);
 
 
-  virtual ::FT::GroupNames * groups (void);
+  virtual ::FT::GroupNames * groups (::FT::LoadBalancingStrategyValue target_strategy);
   /**
    * @name PortableGroup::PropertyManager Methods
    *
@@ -245,7 +245,7 @@ private:
   void preprocess_properties (PortableGroup::Properties & props);
 
   /// Utility for accessing the object group name
-  bool group_name (PortableGroup::ObjectGroup_ptr group, std::string *name);
+  bool group_name (PortableGroup::ObjectGroup_ptr group, std::string &name);
 
   /// Mutex that provides synchronization for the TAO_FT_Naming_Manager's
   /// state.

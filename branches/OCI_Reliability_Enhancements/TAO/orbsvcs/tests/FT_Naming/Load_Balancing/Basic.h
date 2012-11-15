@@ -32,10 +32,6 @@ public:
   virtual void shutdown (void);
 
   virtual void remove_member (void);
-
-  /// change the load balancing strategy for the object gropu
-  virtual void set_load_balance_strategy (
-      ::Test::LoadBalancingStrategyValue strategy);
   
 private:
 
