@@ -1,9 +1,22 @@
+Thu Nov 15 21:37:29 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
+
+        * orbsvcs/orbsvcs/FT_NamingManager.idl:
+
+        Changed LoadBalancingStrategyValue ACTIVE to LEAST
+
+        * utils/nsgroup/README.nsgroup:
+        * utils/nsgroup/nsgroup_svc.h:
+        * utils/nsgroup/nsgroup_svc.cpp:
+        * utils/nsgroup/run_test.pl:
+
+        Modified group_list to display groups by load strategy
+
 Thu Nov 15 19:16:32 UTC 2012  .  <stanleyk@ociweb.com>
 
         * orbsvcs/tests/FT_Naming/Load_Balancing/run_test.pl:
 
           Added test for the load balancing function of the FT_Naming_Service.
-          
+
 Thu Nov 15 18:58:01 UTC 2012  .  <stanleyk@ociweb.com>
 
         * orbsvcs/orbsvcs/FT_NamingManager.idl:

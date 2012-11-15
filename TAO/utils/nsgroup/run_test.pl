@@ -92,6 +92,12 @@ sub run_clients ()
         "-type_id IDL:omg.org/FT/NamingManager:1.0",
         $POSITIVE_TEST_RESULT);
     run_client (
+        "group_create ".
+        "-group ieed " .
+        "-policy rand " .
+        "-type_id IDL:omg.org/FT/NamingManager:1.0",
+        $POSITIVE_TEST_RESULT);
+    run_client (
         "group_create " .
         "-group ieee " .
         "-policy round " .

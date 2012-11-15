@@ -109,6 +109,7 @@ private:
   /// determine stategy based on policy string value default to ROUND_ROBIN
   FT::LoadBalancingStrategyValue determine_policy_string (const char *policy);
 
+  int display_load_policy_group( FT::LoadBalancingStrategyValue strategy, const char *display_label);
 
 private:
 
