@@ -1,7 +1,13 @@
+Thu Nov 15 19:16:32 UTC 2012  .  <stanleyk@ociweb.com>
+
+        * orbsvcs/tests/FT_Naming/Load_Balancing/run_test.pl:
+
+          Added test for the load balancing function of the FT_Naming_Service.
+          
 Thu Nov 15 18:58:01 UTC 2012  .  <stanleyk@ociweb.com>
 
         * orbsvcs/orbsvcs/FT_NamingManager.idl:
-        
+
           Updates to groups operation to allow it to request groups
           with matching strategies.
 
@@ -10,12 +16,12 @@ Thu Nov 15 18:58:01 UTC 2012  .  <stanleyk@ociweb.com>
 
           Implements the new groups operation. Fixes to object reference
           duplication and leaks.
-          
+
         * orbsvcs/orbsvcs/PortableGroup/PG_Group_Factory.cpp:
 
           Fixed bug in all_groups which did not duplicate the stored object
           reference.
-          
+
         * orbsvcs/tests/FT_Naming/Load_Balancing/Basic.h:
         * orbsvcs/tests/FT_Naming/Load_Balancing/Basic.cpp:
         * orbsvcs/tests/FT_Naming/Load_Balancing/LB_server.cpp:
@@ -24,7 +30,7 @@ Thu Nov 15 18:58:01 UTC 2012  .  <stanleyk@ociweb.com>
 
           Modifications to support new signature for load balancing strategy
           updates.
-          
+
 Thu Nov 15 18:02:04 UTC 2012  Byron Harris  <harrisb@ociweb.com>
 
         * tao/Invocation_Retry_State.h:
