@@ -187,7 +187,7 @@ TAO_FT_Naming_Manager::groups (::FT::LoadBalancingStrategyValue target_strategy)
       if (this->group_name (obj_group.in (), name))
       { // Group does have a name
         group_names->length (matching_groups);
-        (*group_names)[i] = CORBA::string_dup (name.c_str());
+        (*group_names)[matching_groups-1] = CORBA::string_dup (name.c_str());
       }
       else
       {

@@ -1,3 +1,9 @@
+Thu Nov 15 23:15:33 UTC 2012  .  <stanleyk@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.cpp:
+
+          Fixed bug in groups operation.
+          
 Thu Nov 15 22:30:52 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
 
         * bin/tao_other_tests.lst:
