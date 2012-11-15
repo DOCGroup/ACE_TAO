@@ -1,9 +1,29 @@
-Thu Nov 15 23:15:33 UTC 2012  .  <stanleyk@ociweb.com>
+Thu Nov 15 20:58:23 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/Stub.inl:
+        * tao/Stub.cpp:
+
+          There is a potential for a deadlock when a stub contains profiles
+          that are forwarded and also self-referencial. The use case which
+          exposed this involves the name service and the ImR. In this case,
+          the root context of a name service is registered with the ImR. This
+          is then added to a name service as a new context with a name and the
+          reference pointing to the ImR-ified context. When this new context
+          happens to be the local root context, a deadlock occurs.
+
+          The deadlock ie related to the Stub's profile_lock_, which is a simple
+          thread mutex. This patch addresses the deadlock by momentarily releasing
+          the lock before leaving the Stub code, then reaquiring upon return. This
+          works for my specific use case, but I have added temporary debugging in
+          case issues arise in nightly tests. I intend to remove the debugging
+          prior to formal integration with the main trunk.
+
+Thu Nov 15 23:15:33 UTC 2012  Kevin Stanley  <stanleyk@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.cpp:
 
           Fixed bug in groups operation.
-          
+
 Thu Nov 15 22:30:52 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
 
         * bin/tao_other_tests.lst:
@@ -24,13 +44,13 @@ Thu Nov 15 21:37:29 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
 
         Modified group_list to display groups by load strategy
 
-Thu Nov 15 19:16:32 UTC 2012  .  <stanleyk@ociweb.com>
+Thu Nov 15 19:16:32 UTC 2012  Kevin Stanley  <stanleyk@ociweb.com>
 
         * orbsvcs/tests/FT_Naming/Load_Balancing/run_test.pl:
 
           Added test for the load balancing function of the FT_Naming_Service.
 
-Thu Nov 15 18:58:01 UTC 2012  .  <stanleyk@ociweb.com>
+Thu Nov 15 18:58:01 UTC 2012  Kevin Stanley  <stanleyk@ociweb.com>
 
         * orbsvcs/orbsvcs/FT_NamingManager.idl:
 
@@ -119,7 +139,7 @@ Thu Nov 15 13:25:54 UTC 2012  Byron Harris  <harrisb@ociweb.com>
           Correct indentation for
           Synch_Oneway_Invocation::remote_oneway().
 
-Wed Nov 14 22:46:39 UTC 2012  .  <stanleyk@ociweb.com>
+Wed Nov 14 22:46:39 UTC 2012  Kevin Stanley  <stanleyk@ociweb.com>
 
         * orbsvcs/orbsvcs/FT_NamingManager.idl:
 
@@ -142,7 +162,7 @@ Wed Nov 14 22:46:39 UTC 2012  .  <stanleyk@ociweb.com>
         * utils/nsgroup/nsgroup_svc.h:
         * utils/nsgroup/nsgroup_svc.cpp:
 
-Wed Nov 14 21:47:28 UTC 2012  .  <stanleyk@ociweb.com>
+Wed Nov 14 21:47:28 UTC 2012  Kevin Stanley  <stanleyk@ociweb.com>
 
         * orbsvcs/orbsvcs/FT_NamingManager.idl:
 
@@ -203,7 +223,7 @@ Wed Nov 14 20:24:41 UTC 2012  Byron Harris  <harrisb@ociweb.com>
           Update test to account for using max retries on reply
           connection closed.
 
-Wed Nov 14 16:08:57 UTC 2012  .  <stanleyk@ociweb.com>
+Wed Nov 14 16:08:57 UTC 2012  Kevin Stanley  <stanleyk@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Round_Robin.h:
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Round_Robin.cpp:
