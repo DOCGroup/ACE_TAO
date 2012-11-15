@@ -760,74 +760,74 @@ namespace TAO
 
           }
 
-  {
-    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, transport->output_cdr_lock (),
-                      TAO_INVOKE_FAILURE);
+        {
+          ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, transport->output_cdr_lock (),
+                            TAO_INVOKE_FAILURE);
 
-    TAO_OutputCDR &cdr = transport->out_stream ();
+          TAO_OutputCDR &cdr = transport->out_stream ();
 
-    cdr.message_attributes (this->details_.request_id (),
-          this->resolver_.stub (),
-          TAO_Message_Semantics (TAO_Message_Semantics::TAO_ONEWAY_REQUEST),
-          max_wait_time);
+          cdr.message_attributes (this->details_.request_id (),
+                                  this->resolver_.stub (),
+                                  TAO_Message_Semantics (TAO_Message_Semantics::TAO_ONEWAY_REQUEST),
+                                  max_wait_time);
 
-    this->write_header (cdr);
+          this->write_header (cdr);
 
-    this->marshal_data (cdr);
+          this->marshal_data (cdr);
 
-    countdown.update ();
+          countdown.update ();
 
-    if (transport->is_connected ())
-      {
-        // We have a connected transport so we can send the message
-        s = this->send_message (cdr,
-            TAO_Message_Semantics (TAO_Message_Semantics::TAO_ONEWAY_REQUEST),
-              max_wait_time);
+          if (transport->is_connected ())
+            {
+              // We have a connected transport so we can send the message
+              s = this->send_message (cdr,
+                                      TAO_Message_Semantics (TAO_Message_Semantics::TAO_ONEWAY_REQUEST),
+                                      max_wait_time);
 
-        if (transport->wait_strategy ()->non_blocking () == 0 &&
-            transport->orb_core ()->client_factory ()->use_cleanup_options ())
-          {
-            if (!transport->wait_strategy ()->is_registered())
-              {
-                ACE_Event_Handler * const eh =
-                  transport->event_handler_i ();
+              if (transport->wait_strategy ()->non_blocking () == 0 &&
+                  transport->orb_core ()->client_factory ()->use_cleanup_options ())
+                {
+                  if (!transport->wait_strategy ()->is_registered())
+                    {
+                      ACE_Event_Handler * const eh =
+                        transport->event_handler_i ();
 
-                ACE_Reactor * const r =
-                  transport->orb_core ()->reactor ();
+                      ACE_Reactor * const r =
+                        transport->orb_core ()->reactor ();
 
-                if (r->register_handler (eh, ACE_Event_Handler::READ_MASK) == -1)
-                  {
-                    if (TAO_debug_level > 0)
-                      ACE_ERROR ((LM_ERROR,
-                                  "TAO (%P|%t) - Synch_Oneway_Invocation::"
-                                  "remote_oneway transport[%d] registration with"
-                                  "reactor returned an error\n",
-                      transport->id ()));
-                  }
-                else
-                  {
-                    // Only set this flag when registration succeeds
-                    transport->wait_strategy ()->is_registered(true);
-                  }
-              }
-          }
+                      if (r->register_handler (eh, ACE_Event_Handler::READ_MASK) == -1)
+                        {
+                          if (TAO_debug_level > 0)
+                            ACE_ERROR ((LM_ERROR,
+                                        "TAO (%P|%t) - Synch_Oneway_Invocation::"
+                                        "remote_oneway transport[%d] registration with"
+                                        "reactor returned an error\n",
+                                        transport->id ()));
+                        }
+                      else
+                        {
+                          // Only set this flag when registration succeeds
+                          transport->wait_strategy ()->is_registered(true);
+                        }
+                    }
+                }
 
-      }
-    else
-      {
-        if (TAO_debug_level > 4)
-          ACE_DEBUG ((LM_DEBUG,
-                      "TAO (%P|%t) - Synch_Oneway_Invocation::"
-                      "remote_oneway, queueing message\n"));
+            }
+          else
+            {
+              if (TAO_debug_level > 4)
+                ACE_DEBUG ((LM_DEBUG,
+                            "TAO (%P|%t) - Synch_Oneway_Invocation::"
+                            "remote_oneway, queueing message\n"));
 
-        if (transport->format_queue_message (cdr,
-                                             max_wait_time,
-                                             this->resolver_.stub()) != 0)
-          {
-            s = TAO_INVOKE_FAILURE;
-          }
-      }
-  }
+              if (transport->format_queue_message (cdr,
+                                                   max_wait_time,
+                                                   this->resolver_.stub()) != 0)
+                {
+                  s = TAO_INVOKE_FAILURE;
+                }
+            }
+        }
 
 #if TAO_HAS_INTERCEPTORS == 1
         s = this->receive_other_interception ();
@@ -841,7 +841,7 @@ namespace TAO
             status == PortableInterceptor::TRANSPORT_RETRY)
           s = TAO_INVOKE_RESTART;
         else if (status == PortableInterceptor::SYSTEM_EXCEPTION
-            || status == PortableInterceptor::USER_EXCEPTION)
+                 || status == PortableInterceptor::USER_EXCEPTION)
           throw;
       }
     catch (...)
@@ -849,14 +849,14 @@ namespace TAO
         // Notify interceptors of non-CORBA exception, and propagate
         // that exception to the caller.
 
-         PortableInterceptor::ReplyStatus const st =
-           this->handle_all_exception ();
+        PortableInterceptor::ReplyStatus const st =
+          this->handle_all_exception ();
 
-         if (st == PortableInterceptor::LOCATION_FORWARD ||
-             st == PortableInterceptor::TRANSPORT_RETRY)
-           s = TAO_INVOKE_RESTART;
-         else
-           throw;
+        if (st == PortableInterceptor::LOCATION_FORWARD ||
+            st == PortableInterceptor::TRANSPORT_RETRY)
+          s = TAO_INVOKE_RESTART;
+        else
+          throw;
       }
 #endif /* TAO_HAS_INTERCEPTORS */
 
