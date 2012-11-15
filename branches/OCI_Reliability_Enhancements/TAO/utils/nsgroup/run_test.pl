@@ -58,20 +58,28 @@ $LOAD_ARG     = "$NM_REF $RM_REF $DEBUG_LEVEL";
 
 $CL   = $client->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_nsgroup");
 
-sub run_client ($)
+$POSITIVE_TEST_RESULT = 0;
+$NEGATIVE_TEST_RESULT = 1;
+
+sub run_client ($$)
 {
     my $args = shift;
+    my $expected_test_result = shift;
 
     my $arglist = "$LOAD_ARG $args";
 
-    print STDERR "\n\n======== Running Test================\n";
+    if ($expected_test_result != $POSITIVE_TEST_RESULT ) {
+        print STDERR "\n\n======== Running Negative Test================\n";
+    } else {
+        print STDERR "\n\n======== Running Positive Test================\n";
+    }
     print STDERR "$args\n";
 
     $CL->Arguments ($arglist);
 
     my $client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval());
 
-    if ($client_status != 0) {
+    if ($client_status != $expected_test_result) {
         my $time = localtime;
         print STDERR "ERROR: client returned $client_status at $time\n";
         $status = 1;
@@ -80,20 +88,72 @@ sub run_client ($)
 
 sub run_clients ()
 {
-    run_client ("group_list");
-    run_client ("group_create -group GiasGateway -policy round -type_id IDL:omg.org/FT/NamingManager:1.0");
-    run_client ("group_list");
-    run_client ("group_bind -group GiasGateway -n GiasGateway");
-    run_client ("group_modify -group GiasGateway -policy rand");
-    run_client ("member_list -group GiasGateway");
-    run_client ("member_add -group GiasGateway -location 10.201.200.64 -ior file://$naming_mgr_client_iorfile");
-    run_client ("member_list -group GiasGateway");
-    run_client ("member_show -group GiasGateway -location 10.201.200.64");
-    run_client ("member_remove -group GiasGateway -location 10.201.200.64");
-    run_client ("member_list -group GiasGateway");
-    run_client ("group_remove -group GiasGateway");
-    run_client ("group_list");
-    run_client ("--help");
+    run_client (
+        "group_list",
+        $POSITIVE_TEST_RESULT);
+    run_client (
+        "group_create ".
+        "-group ieee " .
+        "-policy round " .
+        "-type_id IDL:omg.org/FT/NamingManager:1.0",
+        $POSITIVE_TEST_RESULT);
+    run_client (
+        "group_create " .
+        "-group ieee " .
+        "-policy round " .
+        "-type_id IDL:omg.org/FT/NamingManager:1.0",
+        $NEGATIVE_TEST_RESULT);
+    run_client (
+        "group_list",
+        $POSITIVE_TEST_RESULT);
+    run_client (
+        "group_bind " .
+        "-group ieee " .
+        "-n iso/ieee",
+        $POSITIVE_TEST_RESULT);
+    run_client (
+        "group_modify " .
+        "-group ieee " .
+        "-policy rand",
+        $POSITIVE_TEST_RESULT);
+    run_client (
+        "member_list " .
+        "-group ieee",
+        $POSITIVE_TEST_RESULT);
+    run_client (
+        "member_add " .
+        "-group ieee " .
+        "-location 127.0.0.1 " .
+        "-ior file://$naming_mgr_client_iorfile",
+        $POSITIVE_TEST_RESULT);
+    run_client (
+        "member_list " .
+        "-group ieee",
+        $POSITIVE_TEST_RESULT);
+    run_client (
+        "member_show " .
+        "-group ieee " .
+        "-location 127.0.0.1",
+        $POSITIVE_TEST_RESULT);
+    run_client (
+        "member_remove " .
+        "-group ieee " .
+        "-location 127.0.0.1",
+        $POSITIVE_TEST_RESULT);
+    run_client (
+        "member_list " .
+        "-group ieee",
+        $POSITIVE_TEST_RESULT);
+    run_client (
+        "group_remove " .
+        "-group ieee",
+        $POSITIVE_TEST_RESULT);
+    run_client (
+        "group_list",
+        $POSITIVE_TEST_RESULT);
+    run_client (
+        "--help",
+        $POSITIVE_TEST_RESULT);
 }
 
 print STDERR "\n\n======== Running tao_nsgroup Test================\n";

@@ -2,7 +2,7 @@
 /**
  *  @file    nsgroup.cpp
  *
- *  $Id$Id$
+ *  $Id$
  *
  *  @author Phillip LaBanca <labancap@ociweb.com>
  */
@@ -66,18 +66,19 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       NS_group_svc ns_group (argc, argv);
 
-      if ( show_help(argc,argv) )
+      if ( show_help (argc, argv) )
       {
         return ns_group.show_usage();
       }
 
       if ( ns_group.start_orb () == -1)
       {
-        ACE_DEBUG ((LM_DEBUG, "(%P|%t) nsgroup - start_orb error\n"));
-        return 1;
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("Unable to start orb\n")),
+                           1);
       }
 
-      if ( ns_group.run_cmd() == -1 )
+      if ( ns_group.run_cmd () == -1 )
       {
         return 1;
       }
@@ -85,8 +86,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
   catch (const CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("ns_group exception");
-      return 1;
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Unable to run %C\n"),
+                         argv[0]),
+                         1);
+
     }
 
   return 0;

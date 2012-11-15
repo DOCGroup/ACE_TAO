@@ -2,7 +2,7 @@
 /**
  *  @file nsgroup_svc.h
  *
- *  $Id$Id$
+ *  $Id$
  *
  *  @author Phillip LaBanca <labancap@ociweb.com>
  */
@@ -91,6 +91,9 @@ public:
   /// object reference from a specified object group.
   int member_show (const char* group, const char* location);
 
+  /// returns true if the specified object group name is found
+  bool group_exist (const char* group_name);
+
   const char * group_arg(void) const { return group_arg_; }
   const char * policy_arg(void) const { return policy_arg_; }
   const char * typeid_arg(void) const { return typeid_arg_; }
@@ -103,7 +106,9 @@ private:
   /// parse command line arguments
   NSGROUP_COMMAND parse_command_line (void);
 
-  //void determine_policy_string ( const char *policy, CosLoadBalancing::StrategyInfo& si);
+  /// determine stategy based on policy string value default to ROUND_ROBIN
+  FT::LoadBalancingStrategyValue determine_policy_string (const char *policy);
+
 
 private:
 
