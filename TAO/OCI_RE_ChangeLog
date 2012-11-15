@@ -1,3 +1,16 @@
+Thu Nov 15 16:06:29 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
+
+        * utils/nsgroup/README.nsgroup:
+        * utils/nsgroup/nsgroup.cpp:
+        * utils/nsgroup/nsgroup_svc.h:
+        * utils/nsgroup/nsgroup_svc.cpp:
+
+        Implement group_modify and group_bind operations
+
+        * utils/nsgroup/run_test.pl:
+
+        Add support to positive and negative tests
+
 Thu Nov 15 13:39:11 UTC 2012  Byron Harris  <harrisb@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.cpp:

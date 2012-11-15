@@ -1,6 +1,6 @@
-tao_nsgroup group_create  -group <group> -policy <round | rand | least> -type_id <type_id>
+tao_nsgroup group_create  -group <group> -policy <round | rand | active> -type_id <type_id>
 tao_nsgroup group_bind    -group <group> -namepath <path>
-tao_nsgroup group_modify  -group <group> -policy <round | rand | least>
+tao_nsgroup group_modify  -group <group> -policy <round | rand | active>
 tao_nsgroup group_list
 tao_nsgroup group_remove  -group <group>
 tao_nsgroup member_list   -group <group>
