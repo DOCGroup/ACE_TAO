@@ -1,7 +1,14 @@
+Thu Nov 15 13:25:54 UTC 2012  Byron Harris  <harrisb@ociweb.com>
+
+        * tao/Synch_Invocation.cpp:
+
+          Correct indentation for
+          Synch_Oneway_Invocation::remote_oneway().
+
 Wed Nov 14 22:46:39 UTC 2012  .  <stanleyk@ociweb.com>
 
         * orbsvcs/orbsvcs/FT_NamingManager.idl:
-        
+
           Added argument to create_object_group for the load balancing
           strategy. Also added operation to change it dynamically without
           having to use the property interface
@@ -9,15 +16,15 @@ Wed Nov 14 22:46:39 UTC 2012  .  <stanleyk@ociweb.com>
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.h:
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.cpp:
 
-          Support new constructor and manipulator for load balancing 
+          Support new constructor and manipulator for load balancing
           strategy.
-          
+
         * orbsvcs/tests/FT_Naming/Load_Balancing/LB_server.cpp:
         * orbsvcs/tests/FT_Naming/Load_Balancing/Basic.h:
         * orbsvcs/tests/FT_Naming/Load_Balancing/Basic.cpp:
-        
+
           Use new operations for load balancing strategy.
-          
+
         * utils/nsgroup/nsgroup_svc.h:
         * utils/nsgroup/nsgroup_svc.cpp:
 
