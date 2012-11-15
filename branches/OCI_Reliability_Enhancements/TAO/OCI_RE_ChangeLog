@@ -1,3 +1,13 @@
+Thu Nov 15 17:16:12 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
+
+        * utils/nsgroup/nsgroup_svc.cpp:
+
+        Cleaned up error messages
+
+        * utils/nsgroup/run_test.pl:
+
+        Added negative test for member_add
+
 Thu Nov 15 16:06:29 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
 
         * utils/nsgroup/README.nsgroup:

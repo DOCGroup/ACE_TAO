@@ -39,17 +39,11 @@ $name_manager->DeleteFile($name_iorbase);
 $client->DeleteFile($name_mgr_iorbase);
 $client->DeleteFile($name_iorbase);
 
-
 $NM = $name_manager->CreateProcess ("../../orbsvcs/Naming_Service/tao_ft_naming",
         "-f persist.dat -g $name_manager_iorfile -o $name_server_iorfile " .
         "-ORBDebugLevel $debug_level " .
         "-ORBDottedDecimalAddresses 1" .
         ($^O eq 'MSWin32' ? " -ORBSvcConf $NM_conf" : ''));
-
-
-#$NS = $name_server->CreateProcess ("../../orbsvcs/Naming_Service/tao_cosnaming",
-#        "-o $name_server_iorfile " .
-#        ($^O eq 'MSWin32' ? " -ORBSvcConf $NS_conf" : ''));
 
 $NM_REF       = "-ORBInitRef NameService=file://$name_client_iorfile";
 $RM_REF       = "-ORBInitRef NamingManager=file://$naming_mgr_client_iorfile";
@@ -126,6 +120,12 @@ sub run_clients ()
         "-location 127.0.0.1 " .
         "-ior file://$naming_mgr_client_iorfile",
         $POSITIVE_TEST_RESULT);
+    run_client (
+        "member_add " .
+        "-group ieee " .
+        "-location 127.0.0.1 " .
+        "-ior file://$naming_mgr_client_iorfile",
+        $NEGATIVE_TEST_RESULT);
     run_client (
         "member_list " .
         "-group ieee",
