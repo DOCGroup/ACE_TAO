@@ -269,8 +269,8 @@ NS_group_svc::determine_policy_string (const char *policy)
 {
   if (ACE_OS::strcasecmp (policy, ACE_TEXT("rand")) == 0) {
     return FT::RANDOM;
-  } else if (ACE_OS::strcasecmp (policy, ACE_TEXT("active")) == 0){
-    return FT::ACTIVE;
+  } else if (ACE_OS::strcasecmp (policy, ACE_TEXT("least")) == 0){
+    return FT::LEAST;
   } else {
     return FT::ROUND_ROBIN; // Default case
   }
@@ -343,9 +343,9 @@ NS_group_svc::show_usage( void )
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("Usage:\n")
               ACE_TEXT ("  %s\n")
-              ACE_TEXT ("    group_create  -group <group> -policy <round | rand | active> -type_id <type_id> \n")
+              ACE_TEXT ("    group_create  -group <group> -policy <round | rand | least> -type_id <type_id> \n")
               ACE_TEXT ("    group_bind    -group <group> -namepath <path>\n")
-              ACE_TEXT ("    group_modify  -group <group> -policy <round | rand | active> \n")
+              ACE_TEXT ("    group_modify  -group <group> -policy <round | rand | least> \n")
               ACE_TEXT ("    group_list\n")
               ACE_TEXT ("    group_remove  -group <group>\n")
               ACE_TEXT ("    member_list   -group <group>\n")
@@ -508,6 +508,7 @@ NS_group_svc::group_bind (
   return 0;
 }
 
+
 /**
  * The naming service shall provide a command line utility to display all
  * defined object groups within the naming service.
@@ -516,28 +517,63 @@ NS_group_svc::group_bind (
 int
 NS_group_svc::group_list (void)
 {
-  FT::GroupNames_var group_names =  this->naming_manager_->groups ();
 
   // KCS: The group list is independent of locations. I created a new operation in the
   // naming manager IDL to support requesting the group list - which is a list of names
-  //  PortableGroup::ObjectGroups_var groups = this->naming_manager_->groups_at_location( the_location );
-  //  ACE_DEBUG ((LM_DEBUG, "(%P|%t) nsgroup - groups at location:(%u)\n", group_names->length()));
 
-  if ( group_names->length ()  >  0 )
-  {
+  /// Display object group list for each load balancing strategy
+  int rc = 0;
+  if( display_load_policy_group (FT::ROUND_ROBIN, "Round Robin") < 0 ) {
+    rc = -1;
+  }
+  if( display_load_policy_group (FT::RANDOM, "Random") < 0 ) {
+    rc = -1;
+  }
+  if( display_load_policy_group (FT::LEAST, "Least") < 0 ) {
+    rc = -1;
+  }
+  return rc;
+}
 
-    std::cout << "Round Robin Groups:" << std::endl;
-    for (unsigned int i = 0; i < group_names->length (); ++i)
-    {
-      std::cout << "  " << (*group_names)[i] << std::endl;
-    }
+int
+NS_group_svc::display_load_policy_group(
+  FT::LoadBalancingStrategyValue strategy,
+  const char *display_label) {
 
-  } else {
-
-    std::cout << "No object groups registered" << std::endl;
-
+  if( display_label == 0 ) {
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("display_load_policy_group args not provided\n")),
+                      -1);
   }
 
+  try
+  {
+
+    FT::GroupNames_var list = this->naming_manager_->groups (strategy);
+
+    std::cout << "\n" << display_label << " Groups:" << std::endl;
+
+    if ( list->length () > 0 ) {
+
+      for (unsigned int i = 0; i < list->length (); ++i)
+      {
+        std::cout << "  " << (*list)[i] << std::endl;
+      }
+
+    } else {
+
+      std::cout << "No " << display_label << " groups registered" << std::endl;
+
+    }
+
+  }
+  catch (const CORBA::Exception& ex)
+  {
+      ex._tao_print_exception ("Exception in group_list");
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Unable to get %C group list\n"),
+                         display_label),-1);
+  }
   return 0;
 }
 
