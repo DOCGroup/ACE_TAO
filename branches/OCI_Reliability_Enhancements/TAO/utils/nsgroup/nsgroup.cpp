@@ -23,7 +23,7 @@ show_help(int argc, ACE_TCHAR *argv[])
   static const int long_only     = 0;
 
   // Not enough arguments indicates help is required
-  if( argc < 3 )
+  if( argc < 2 )
   {
     return true;
   }
@@ -41,7 +41,7 @@ show_help(int argc, ACE_TCHAR *argv[])
 
   if (get_opts.long_option (ACE_TEXT ("help"),'h') != 0)
   {
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("  Unable to add long option 'h'\n")), true);
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("  Unable to add long option 'H'\n")), true);
   }
 
   int c;
@@ -50,6 +50,7 @@ show_help(int argc, ACE_TCHAR *argv[])
     switch (c)
       {
         case 'h':  // help
+
           return true;
         break;
       }

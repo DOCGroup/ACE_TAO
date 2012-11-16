@@ -86,79 +86,58 @@ sub run_clients ()
         "group_list",
         $POSITIVE_TEST_RESULT);
     run_client (
-        "group_create ".
-        "-group ieee " .
-        "-policy round " .
-        "-type_id IDL:omg.org/FT/NamingManager:1.0",
+        "group_create -group ieee -policy round -type_id IDL:omg.org/FT/NamingManager:1.0",
         $POSITIVE_TEST_RESULT);
     run_client (
-        "group_create ".
-        "-group ieed " .
-        "-policy rand " .
-        "-type_id IDL:omg.org/FT/NamingManager:1.0",
+        "group_create -group ieed -policy rand -type_id IDL:omg.org/FT/NamingManager:1.0",
         $POSITIVE_TEST_RESULT);
     run_client (
-        "group_create " .
-        "-group ieee " .
-        "-policy round " .
-        "-type_id IDL:omg.org/FT/NamingManager:1.0",
+        "group_create -group ieee -policy round -type_id IDL:omg.org/FT/NamingManager:1.0",
         $NEGATIVE_TEST_RESULT);
     run_client (
         "group_list",
         $POSITIVE_TEST_RESULT);
     run_client (
-        "group_bind " .
-        "-group ieee " .
-        "-n iso/ieee",
+        "group_unbind -name iso/ieee",
         $POSITIVE_TEST_RESULT);
     run_client (
-        "group_modify " .
-        "-group ieee " .
-        "-policy rand",
+        "group_bind -group ieee -name iso/ieee",
         $POSITIVE_TEST_RESULT);
     run_client (
-        "member_list " .
-        "-group ieee",
+        "group_unbind -name iso/ieee",
         $POSITIVE_TEST_RESULT);
     run_client (
-        "member_add " .
-        "-group ieee " .
-        "-location 127.0.0.1 " .
-        "-ior file://$naming_mgr_client_iorfile",
+        "group_modify -group ieee -policy rand",
         $POSITIVE_TEST_RESULT);
     run_client (
-        "member_add " .
-        "-group ieee " .
-        "-location 127.0.0.1 " .
-        "-ior file://$naming_mgr_client_iorfile",
+        "member_list -group ieee",
+        $POSITIVE_TEST_RESULT);
+    run_client (
+        "member_add -group ieee -location 127.0.0.1 -ior file://$naming_mgr_client_iorfile",
+        $POSITIVE_TEST_RESULT);
+    run_client (
+        "member_add -group ieee -location 127.0.0.1 -ior file://$naming_mgr_client_iorfile",
         $NEGATIVE_TEST_RESULT);
     run_client (
-        "member_list " .
-        "-group ieee",
+        "member_list -group ieee",
         $POSITIVE_TEST_RESULT);
     run_client (
-        "member_show " .
-        "-group ieee " .
-        "-location 127.0.0.1",
+        "member_show -group ieee -location 127.0.0.1",
         $POSITIVE_TEST_RESULT);
     run_client (
-        "member_remove " .
-        "-group ieee " .
-        "-location 127.0.0.1",
+        "member_remove -group ieee -location 127.0.0.1",
         $POSITIVE_TEST_RESULT);
     run_client (
-        "member_list " .
-        "-group ieee",
+        "member_list -group ieee",
         $POSITIVE_TEST_RESULT);
     run_client (
-        "group_remove " .
-        "-group ieee",
+        "group_remove -group ieee",
         $POSITIVE_TEST_RESULT);
     run_client (
         "group_list",
         $POSITIVE_TEST_RESULT);
     run_client (
-        "--help",
+        "-help",
         $POSITIVE_TEST_RESULT);
 }
 
