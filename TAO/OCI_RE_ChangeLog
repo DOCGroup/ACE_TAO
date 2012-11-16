@@ -1,3 +1,31 @@
+Fri Nov 16 16:28:08 UTC 2012  "Marc Neeley"  <neeleym@ociweb.com>
+
+        * tao/Dynamic_TP/Dynamic_TP_ORB_Loader.cpp:
+        * tao/Dynamic_TP/Dynamic_TP_POA_Loader.h:
+        * tao/Dynamic_TP/Dynamic_TP_POA_Loader.cpp:
+        * tao/Dynamic_TP/Dynamic_TP_POA_Strategy.h:
+        * tao/Dynamic_TP/Dynamic_TP_POA_Strategy.inl:
+        * tao/Dynamic_TP/Dynamic_TP_POA_Strategy.cpp:
+        * tao/Dynamic_TP/Dynamic_TP_POA_StrategyImpl.h:
+        * tao/Dynamic_TP/Dynamic_TP_POA_StrategyImpl.inl:
+        * tao/Dynamic_TP/Dynamic_TP_POA_StrategyImpl.cpp:
+        * tao/Dynamic_TP/Dynamic_TP_Task.h:
+        * tao/Dynamic_TP/Dynamic_TP_Task.inl:
+        * tao/Dynamic_TP/Dynamic_TP_Task.cpp:
+
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Dynamic:
+
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Dynamic/Dynamic_TP_POA_Test_Dynamic.mpc:
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Dynamic/Hello.h:
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Dynamic/Hello.cpp:
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Dynamic/Test.idl:
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Dynamic/client.cpp:
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Dynamic/server.cpp:
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Dynamic/svc.conf:
+
+        Inclusion of Dynamic Threadpool strategy to leverage CSD Framework. Associated tests included.
+        WARNING: this is an interim check-in and the tests are not working.
+
 Fri Nov 16 02:48:45 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
 
         * utils/nsgroup/nsgroup_svc.cpp:
