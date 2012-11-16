@@ -1,3 +1,10 @@
+Fri Nov 16 02:48:45 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
+
+        * utils/nsgroup/nsgroup_svc.cpp:
+
+        Fixed a spelling error in group_create error message.
+        Extended group_list description labels.
+
 Thu Nov 15 20:58:23 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/Stub.inl:
