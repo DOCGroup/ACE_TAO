@@ -412,7 +412,7 @@ NS_group_svc::group_create (
     if ( true == group_exist (group_name))
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("Group %C alreay exists\n"),
+                         ACE_TEXT ("Group %C already exists\n"),
                          group_name),
                         -1);
     }
@@ -551,7 +551,7 @@ NS_group_svc::display_load_policy_group(
 
     FT::GroupNames_var list = this->naming_manager_->groups (strategy);
 
-    std::cout << "\n" << display_label << " Groups:" << std::endl;
+    std::cout << "\n" << display_label << " Load Balancing Groups:" << std::endl;
 
     if ( list->length () > 0 ) {
 
@@ -562,7 +562,7 @@ NS_group_svc::display_load_policy_group(
 
     } else {
 
-      std::cout << "No " << display_label << " groups registered" << std::endl;
+      std::cout << "No " << display_label << " Load Balancing Groups Registered" << std::endl;
 
     }
 
