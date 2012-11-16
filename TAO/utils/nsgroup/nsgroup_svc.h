@@ -29,6 +29,7 @@ public:
     NSGROUP_HELP,
     NSGROUP_GROUP_CREATE,
     NSGROUP_GROUP_BIND,
+    NSGROUP_GROUP_UNBIND,
     NSGROUP_GROUP_MODIFY,
     NSGROUP_GROUP_LIST,
     NSGROUP_GROUP_REMOVE,
@@ -60,6 +61,7 @@ public:
   /// The naming service shall provide a command line utility for binding an
   /// object group to a path in the naming service.
   int group_bind (const char* group, const char* path);
+  int group_unbind (const char* path);
 
   /// The naming service shall provide a command line utility to display all
   /// defined object groups within the naming service.

@@ -86,7 +86,7 @@ NS_group_svc::parse_command_line (void)
                        ACE_TEXT ("Unable to add long option 'i'\n")), NSGROUP_NONE);
 
   this->namepath_arg_ = 0;
-  if (get_opts.long_option (ACE_TEXT ("namepath"),
+  if (get_opts.long_option (ACE_TEXT ("name"),
                            'n',
                            ACE_Get_Opt::ARG_REQUIRED) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -115,7 +115,7 @@ NS_group_svc::parse_command_line (void)
       case 'i': // ior
         this->ior_arg_ = get_opts.opt_arg ();
         break;
-      case 'n': // namepath
+      case 'n': // name
         this->namepath_arg_ = get_opts.opt_arg ();
         break;
       case 'h':
@@ -141,6 +141,11 @@ NS_group_svc::parse_command_line (void)
                                ACE_OS::strlen ("group_bind")) == 0 ){
 
       nsgroup_cmd_ =  NSGROUP_GROUP_BIND;
+
+    } else if(ACE_OS::strncmp (this->argv_[i], "group_unbind",
+                               ACE_OS::strlen ("group_unbind")) == 0 ){
+
+      nsgroup_cmd_ =  NSGROUP_GROUP_UNBIND;
 
     } else if(ACE_OS::strncmp (this->argv_[i], "group_modify",
                                ACE_OS::strlen ("group_modify")) == 0 ){
@@ -209,6 +214,10 @@ NS_group_svc::run_cmd(void)
 
     case NSGROUP_GROUP_BIND:
       return group_bind ( group_arg(), namepath_arg() );
+    break;
+
+    case NSGROUP_GROUP_UNBIND:
+      return group_unbind ( namepath_arg() );
     break;
 
     case NSGROUP_GROUP_MODIFY:
@@ -344,7 +353,8 @@ NS_group_svc::show_usage( void )
               ACE_TEXT ("Usage:\n")
               ACE_TEXT ("  %s\n")
               ACE_TEXT ("    group_create  -group <group> -policy <round | rand | least> -type_id <type_id> \n")
-              ACE_TEXT ("    group_bind    -group <group> -namepath <path>\n")
+              ACE_TEXT ("    group_bind    -group <group> -name <name>\n")
+              ACE_TEXT ("    group_unbind  -name <name>\n")
               ACE_TEXT ("    group_modify  -group <group> -policy <round | rand | least> \n")
               ACE_TEXT ("    group_list\n")
               ACE_TEXT ("    group_remove  -group <group>\n")
@@ -508,6 +518,45 @@ NS_group_svc::group_bind (
   return 0;
 }
 
+int
+NS_group_svc::group_unbind (const char* path){
+  if ( path == 0)
+  {
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("group_unbind args not provided\n")),
+                      -1);
+  }
+
+  try
+  {
+
+    CosNaming::Name bindName (1);
+    bindName.length (1);
+    bindName[0].id = CORBA::string_dup (path);
+
+    this->name_service_->unbind ( bindName );
+
+  }
+  catch (const CosNaming::NamingContext::AlreadyBound& ex){
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("\nUnable to unbind %C\n"),
+                         path),
+                        -1);
+  }
+  catch (const CORBA::SystemException& ex){
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("\nUnable to unbind %C\n"),
+                         path),
+                        -1);
+  }
+  catch (const CORBA::Exception& ex){
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("\nUnable to unbind %C\n"),
+                         path),
+                        -1);
+  }
+  return 0;
+}
 
 /**
  * The naming service shall provide a command line utility to display all

@@ -1,3 +1,17 @@
+Fri Nov 16 23:42:51 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
+
+        * utils/nsgroup/README.nsgroup:
+
+        Documents the nsgroup command line options
+
+        * utils/nsgroup/nsgroup.cpp:
+        * utils/nsgroup/nsgroup_svc.h:
+        * utils/nsgroup/nsgroup_svc.cpp:
+        * utils/nsgroup/run_test.pl:
+
+        Changed some option names to avoid potential conflict.
+        Added group_unbind to complement the group_bind command option.
+
 Fri Nov 16 17:19:32 UTC 2012  Byron Harris  <harrisb@ociweb.com>
 
         * tao/Invocation_Retry_Params.h:
