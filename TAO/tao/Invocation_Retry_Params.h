@@ -47,7 +47,7 @@ namespace TAO
      * if the the connection to the server is closed when
      * trying to get a reply.
      */
-    int retry_on_reply_closed_limit_;
+    int forward_on_reply_closed_limit_;
 
     /**
      * The delay to use between cycles of base and forward profiles.

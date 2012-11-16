@@ -267,7 +267,7 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
              }
          }
       else if (ACE_OS::strcmp (argv[curarg],
-                               ACE_TEXT("-ORBRetryOnReplyClosedLimit")) == 0)
+                               ACE_TEXT("-ORBForwardOnReplyClosedLimit")) == 0)
          {
            curarg++;
            if (curarg < argc)
@@ -278,10 +278,10 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
                long limit = ACE_OS::strtol (name, &err, 10);
                if (err && *err != 0)
                  {
-                   this->report_option_value_error (ACE_TEXT("-ORBRetryOnReplyClosedLimit"), name);
+                   this->report_option_value_error (ACE_TEXT("-ORBForwardOnReplyClosedLimit"), name);
                  }
                else
-                 this->invocation_retry_params_.retry_on_reply_closed_limit_ = limit;
+                 this->invocation_retry_params_.forward_on_reply_closed_limit_ = limit;
              }
          }
       else if (ACE_OS::strncmp (argv[curarg], ACE_TEXT("-ORB"), 4) == 0)

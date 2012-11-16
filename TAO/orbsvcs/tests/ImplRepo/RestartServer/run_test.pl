@@ -86,7 +86,7 @@ $SI = $si->CreateProcess ($tao_imr, "-ORBInitRef ImplRepoService=file://$si_imri
                                                "-f $si_srviorfile ");
 
 $C1 = $c1->CreateProcess ("MessengerClient", "-k file://$c1_srviorfile ".
-			  "-ORBRetryOnReplyClosedLimit 20 -ORBForwardDelay 500 ".
+			  "-ORBForwardOnReplyClosedLimit 20 -ORBForwardDelay 500 ".
 			  "-ORBSvcConf $c1_conffile -ORBdebuglevel $debug_level");
 
 $SDN = $sdn->CreateProcess ("$tao_imr", "-ORBInitRef ImplRepoService=file://$sdn_imriorfile ".

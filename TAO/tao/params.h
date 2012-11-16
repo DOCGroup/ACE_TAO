@@ -265,11 +265,6 @@ public:
   TAO::Invocation_Retry_Params &invocation_retry_params (void);
   const TAO::Invocation_Retry_Params &invocation_retry_params (void) const;
 
-  /// Although forward_invocation_on_transient_limit()
-  /// is a generation of the forward-once parameters,
-  /// these functions are retained
-  /// to aid in backward compatibility of behavior
-  /// if a -ORBForwardOnceOn* options is passed.
   void forward_once_exception (const int ef);
   int forward_once_exception () const;
 

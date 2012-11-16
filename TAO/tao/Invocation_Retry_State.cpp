@@ -40,12 +40,12 @@ namespace
     result.init_retry_delay_ = client_factory_params.init_retry_delay_;
 
   // Retry on reply closed limit
-  if (command_line_params.retry_on_reply_closed_limit_ !=
-      result.retry_on_reply_closed_limit_)
-    result.retry_on_reply_closed_limit_ = command_line_params.retry_on_reply_closed_limit_;
-  else if (client_factory_params.retry_on_reply_closed_limit_ !=
-      result.retry_on_reply_closed_limit_)
-    result.retry_on_reply_closed_limit_ = client_factory_params.retry_on_reply_closed_limit_;
+  if (command_line_params.forward_on_reply_closed_limit_ !=
+      result.forward_on_reply_closed_limit_)
+    result.forward_on_reply_closed_limit_ = command_line_params.forward_on_reply_closed_limit_;
+  else if (client_factory_params.forward_on_reply_closed_limit_ !=
+      result.forward_on_reply_closed_limit_)
+    result.forward_on_reply_closed_limit_ = client_factory_params.forward_on_reply_closed_limit_;
 
   // Forward on exception limits
 
@@ -74,7 +74,7 @@ namespace
 }
 
 TAO::Invocation_Retry_State::Invocation_Retry_State (TAO_Stub &stub)
-  : retry_on_reply_closed_count_ (0)
+  : forward_on_reply_closed_count_ (0)
   , stub_ (stub)
   , forward_on_exception_limit_used_ (false)
 {
@@ -106,6 +106,11 @@ TAO::Invocation_Retry_State::Invocation_Retry_State (TAO_Stub &stub)
     }
 }
 
+TAO::Invocation_Retry_State::~Invocation_Retry_State ()
+{
+  this->stub_.invocation_retry_state (0);
+}
+
 bool
 TAO::Invocation_Retry_State::forward_on_exception_limit_used () const
 {
@@ -132,12 +137,12 @@ TAO::Invocation_Retry_State::forward_on_exception_increment (const int ef)
 }
 
 bool
-TAO::Invocation_Retry_State::retry_on_reply_closed_increment ()
+TAO::Invocation_Retry_State::forward_on_reply_closed_increment ()
 {
-  if (this->retry_on_reply_closed_count_ <
-      this->retry_params_.retry_on_reply_closed_limit_)
+  if (this->forward_on_reply_closed_count_ <
+      this->retry_params_.forward_on_reply_closed_limit_)
     {
-      ++this->retry_on_reply_closed_count_;
+      ++this->forward_on_reply_closed_count_;
       return true;
     }
 
