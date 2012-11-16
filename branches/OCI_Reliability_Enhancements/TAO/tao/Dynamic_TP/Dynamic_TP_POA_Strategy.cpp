@@ -1,16 +1,15 @@
 // $Id$
 
-//#include "tao/CSD_Threadpool/CSD_TP_Strategy.h"
 #include "tao/Dynamic_TP/Dynamic_TP_POA_Strategy.h"
 #include "tao/CSD_ThreadPool/CSD_TP_Remote_Request.h"
 #include "tao/CSD_ThreadPool/CSD_TP_Collocated_Synch_Request.h"
 #include "tao/CSD_ThreadPool/CSD_TP_Collocated_Asynch_Request.h"
-
 #include "tao/CSD_ThreadPool/CSD_TP_Custom_Synch_Request.h"
 #include "tao/CSD_ThreadPool/CSD_TP_Custom_Asynch_Request.h"
 #include "tao/CSD_ThreadPool/CSD_TP_Collocated_Synch_With_Server_Request.h"
-#include "ace/Trace.h"
-#include "tao/ORB_Core.h"
+#include <iostream>
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+
 
 #if !defined (__ACE_INLINE__)
 #include "tao/Dynamic_TP/Dynamic_TP_POA_Strategy.inl"
@@ -18,15 +17,16 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+
 TAO_Dynamic_TP_POA_Strategy::~TAO_Dynamic_TP_POA_Strategy()
 {
 }
 
 
-
 TAO_Dynamic_TP_POA_Strategy::CustomRequestOutcome
 TAO_Dynamic_TP_POA_Strategy::custom_synch_request(TAO::CSD::TP_Custom_Request_Operation* op)
 {
+
   TAO::CSD::TP_Servant_State::HandleType servant_state =
                         this->get_servant_state(op->servant());
 
@@ -47,6 +47,7 @@ TAO_Dynamic_TP_POA_Strategy::custom_synch_request(TAO::CSD::TP_Custom_Request_Op
 TAO_Dynamic_TP_POA_Strategy::CustomRequestOutcome
 TAO_Dynamic_TP_POA_Strategy::custom_asynch_request(TAO::CSD::TP_Custom_Request_Operation* op)
 {
+
   TAO::CSD::TP_Servant_State::HandleType servant_state =
                         this->get_servant_state(op->servant());
 
@@ -61,9 +62,21 @@ TAO_Dynamic_TP_POA_Strategy::custom_asynch_request(TAO::CSD::TP_Custom_Request_O
 bool
 TAO_Dynamic_TP_POA_Strategy::poa_activated_event_i(TAO_ORB_Core& orb_core)
 {
-  this->task_.thr_mgr(orb_core.thr_mgr());
-  // Activates the worker threads, and waits until all have been started.
-  return (this->task_.open(&(this->num_threads_)) == 0);
+	//if (this->strategy_impl_ == 0)
+	//{
+
+		//ACE_DEBUG ((LM_DEBUG,
+		//			 ACE_TEXT("Dynamic_TP_POA_Strategy:: POA activated\n")));
+		//	
+		//ACE_NEW_RETURN (this->dtp_strategy_impl_,
+		//	TAO_Dynamic_TP_POA_StrategyImpl(this->threadpool_config_,false),
+  //                    1);
+	/*}*/
+  //this->task_.thr_mgr(orb_core.thr_mgr());
+  //// Activates the worker threads, and waits until all have been started.
+  //return (this->task_.open(&(this->num_threads_)) == 0);
+		std::cout<<"in poa activated event i...\n";
+		return true;
 }
 
 
@@ -87,6 +100,7 @@ TAO_Dynamic_TP_POA_Strategy::dispatch_remote_request_i
                               const char*                     operation,
                               PortableServer::Servant         servant)
 {
+
   TAO::CSD::TP_Servant_State::HandleType servant_state =
                         this->get_servant_state(servant);
 
@@ -125,6 +139,8 @@ TAO_Dynamic_TP_POA_Strategy::dispatch_collocated_request_i
                               const char*                     operation,
                               PortableServer::Servant         servant)
 {
+
+
   TAO::CSD::TP_Servant_State::HandleType servant_state =
                         this->get_servant_state(servant);
 
@@ -246,7 +262,6 @@ TAO_Dynamic_TP_POA_Strategy::cancel_requests(PortableServer::Servant servant)
   this->task_.cancel_servant(servant);
 }
 
-
 TAO::CSD::TP_Servant_State::HandleType
 TAO_Dynamic_TP_POA_Strategy::get_servant_state(PortableServer::Servant servant)
 {
@@ -259,4 +274,8 @@ TAO_Dynamic_TP_POA_Strategy::get_servant_state(PortableServer::Servant servant)
 
   return servant_state;
 }
+
 TAO_END_VERSIONED_NAMESPACE_DECL
+
+
+#endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */

@@ -2,6 +2,8 @@
 
 #include "tao/Dynamic_TP/Dynamic_TP_Config.h"
 #include "tao/Dynamic_TP/Dynamic_TP_POA_Loader.h"
+#include "tao/Dynamic_TP/Dynamic_TP_POA_Strategy.h"
+#include "tao/CSD_Framework/CSD_Strategy_Repository.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/Service_Config.h"
 #include "ace/Dynamic_Service.h"
@@ -22,9 +24,9 @@ show_tp_config (const ACE_CString &name, const TAO_DTP_Definition &entry)
 }
 
 void
-show_poa_config (const ACE_CString &name, const TAO_DTP_POA_Config_Map &entry)
+show_poa_config (const ACE_CString &name, TAO_Dynamic_TP_POA_Strategy * strat)
 {
-  ACE_DEBUG ((LM_INFO, ACE_TEXT ("Config set for [%C]\n"), name.c_str()));
+	ACE_DEBUG ((LM_INFO, ACE_TEXT ("POA [%C] has the configuration key [%C]\n"), name.c_str(),strat->get_tp_config().c_str()));
   //ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("  Initial threads: %d:\n"), entry.init_threads_));
   //ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("  Min threads: %d:\n"), entry.min_threads_));
   //ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("  Max threads: %d:\n"), entry.max_threads_));
@@ -38,17 +40,17 @@ int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   TAO_debug_level = 1;
-	
+
 	ACE_Service_Config::open (argc, argv);
 
 
 
   ACE_Service_Gestalt *current = ACE_Service_Config::current();
-  TAO_Dynamic_TP_Config_Registry* registry =
+  TAO_Dynamic_TP_Config_Registry* config_registry =
     ACE_Dynamic_Service<TAO_Dynamic_TP_Config_Registry>::instance
     (current, "Dynamic_TP_Config_Registry", true);
 
-  if (registry == 0)
+  if (config_registry == 0)
     {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Unable to load configuration\n")));
       return -1;
@@ -98,44 +100,47 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     }*/
 
 
-  
-  TAO_Dynamic_TP_POA_Config_Map_Registry* dtp_poa_map_registry =
-    ACE_Dynamic_Service<TAO_Dynamic_TP_POA_Config_Map_Registry>::instance
-    (current, "Dynamic_TP_POA_Config_Map_Registry", true);
+  // Dump the POA to Strategy map
+  TAO_CSD_Strategy_Repository* dtp_poa_strat_repo =
+    ACE_Dynamic_Service<TAO_CSD_Strategy_Repository>::instance
+    (current, "TAO_CSD_Strategy_Repository", true);
 
-  if (dtp_poa_map_registry == 0)
+  if (dtp_poa_strat_repo == 0)
     {
 	  ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Unable to load configuration\n")));
       return -1;
     }
   else
   {
-	  ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Dynamic_TP_POA_Config_Map_Registry found\n")));
-	  ACE_DEBUG ((LM_DEBUG, ACE_TEXT("There are %i elements in the registry.\n"),dtp_poa_map_registry->get_count()));
+	  ACE_DEBUG ((LM_DEBUG, ACE_TEXT("TAO_CSD_Strategy_Repository found\n")));
   }
 
-  TAO_DTP_POA_Config_Map empty_TP;
 
+  // Now iterate through the repository and attempt to find sample POA configurations
 
   const ACE_TCHAR *poa_list [] =
-    { ACE_TEXT ("POA1"),
-      ACE_TEXT ("POA2"),
-      ACE_TEXT ("POA3"),
-      ACE_TEXT ("MyPOA"),
+    { ACE_TEXT ("MyPOA"),  // shouldn't find this one
+      ACE_TEXT ("POA2"),  // shouldn't find this one
+      ACE_TEXT ("POA3"),  // shouldn't find this one
+      ACE_TEXT ("MyPOA1"), // should find this one
       0
     };
 
+    TAO_Dynamic_TP_POA_Strategy * mapped_strategy;
+
     for (int i = 0; poa_list[i] != 0; i++)
     {
+      mapped_strategy = 0;
 	  ACE_DEBUG ((LM_INFO, ACE_TEXT("Config definition for %C\n"), poa_list[i]));
-      bool found = dtp_poa_map_registry->find (poa_list[i], empty_TP);
-      if (!found && (i != 1))
+      mapped_strategy = dynamic_cast <TAO_Dynamic_TP_POA_Strategy*> (dtp_poa_strat_repo->find (poa_list[i]));
+      if ((mapped_strategy == 0) && (i != 1))
         {
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Cannot find TP Config definition for %C\n"), poa_list[i]));
+		  continue;
         }
       if (i == 1)
         {
-          if (found)
+          if (mapped_strategy)
             {
               ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Found TP Config definition for %C which should have failed\n"), poa_list[i]));
             }
@@ -146,7 +151,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
       else
         {
-          show_poa_config (poa_list[i], empty_TP);
+          show_poa_config (poa_list[i], mapped_strategy);
         }
     }
 

@@ -2,30 +2,35 @@
 
 //=============================================================================
 /**
- *  @file
+ *  @file    Dynamic_TP_POA_Strategy.h
  *
- *  $Id
+ *  $Id$
  *
- *  @author
+ *  @author  Marc Neeley <neeleym@ociweb.com>
  */
 //=============================================================================
+
+
 
 #ifndef TAO_DYNAMIC_TP_POA_STRATEGY_H
 #define TAO_DYNAMIC_TP_POA_STRATEGY_H
 
 #include /**/ "ace/pre.h"
 #include "tao/Dynamic_TP/dynamic_tp_export.h"
+#include "tao/Dynamic_TP/Dynamic_TP_Config.h"
 #include "tao/CSD_ThreadPool/CSD_TP_Task.h"
-#include "tao/CSD_ThreadPool/CSD_TP_Custom_Request_Operation.h"
 #include "tao/CSD_ThreadPool/CSD_TP_Servant_State_Map.h"
-#include "tao/CSD_Framework/CSD_Strategy_Base.h"
+#include "tao/Dynamic_TP/Dynamic_TP_Config.h"
+#include "tao/Dynamic_TP/Dynamic_TP_POA_StrategyImpl.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
+#include "tao/CSD_Framework/CSD_Strategy_Base.h"
 #include "tao/Intrusive_Ref_Count_Handle_T.h"
+#include "ace/OS_NS_strings.h"
+
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -33,20 +38,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     class TAO_Dynamic_TP_POA_Strategy;
     typedef TAO_Intrusive_Ref_Count_Handle<TAO_Dynamic_TP_POA_Strategy> TAO_Dynamic_TP_POA_Strategy_Handle;
 
-  //  class TP_Custom_Request_Operation;
+    class TAO::CSD::TP_Custom_Request_Operation;
 
     /**
      * @class TAO_Dynamic_TP_POA_Strategy
      *
-     * @brief A custom Dynamc Thread-Pool servant dispatching strategy class.
-     *
-     * This class represents a concrete implementation of a "Custom
-     * Servant Dispatching Strategy".  This implementation is being called
-     * the "Dyanmic Thread Pool Strategy" reference implementation.
-     *
-     * A custom servant dispatching strategy object can be applied to a
-     * POA object in order to carry out the servant dispatching duties
-     * for that POA.
+     * @brief 
      *
      */
     class TAO_Dynamic_TP_Export TAO_Dynamic_TP_POA_Strategy: public TAO::CSD::Strategy_Base
@@ -54,14 +51,15 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     public:
 
       /// Constructor.
-      TAO_Dynamic_TP_POA_Strategy(TAO::CSD::Thread_Counter  num_threads = 1,
-                  bool     serialize_servants = true);
+      TAO_Dynamic_TP_POA_Strategy(ACE_CString tp_config_name,
+								  TAO_Dynamic_TP_POA_StrategyImpl * dynamic_strategy,
+								  bool     serialize_servants = true);
+
+      TAO_Dynamic_TP_POA_Strategy(TAO_DTP_Definition * tp_config_name,
+								  bool     serialize_servants = true);
 
       /// Virtual Destructor.
       virtual ~TAO_Dynamic_TP_POA_Strategy();
-
-      /// Set the number of threads in the pool (must be > 0).
-      void set_num_threads(TAO::CSD::Thread_Counter num_threads);
 
       /// Turn on/off serialization of servants.
       void set_servant_serialization(bool serialize_servants);
@@ -97,6 +95,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
       /// This is requested on the user application level.
       void cancel_requests(PortableServer::Servant servant);
 
+	  ACE_CString get_tp_config();
+
     protected:
 
       /// Handle the dispatching of a remote request.
@@ -104,7 +104,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
       /// This will cause a new "request" object to be created and pushed
       /// on to a "request queue".  The worker threads are responsible for
       /// servicing the queue, and performing the actual dispatch logic.
-      virtual TAO::CSD::Strategy_Base::DispatchResult dispatch_remote_request_i
+      virtual Strategy_Base::DispatchResult dispatch_remote_request_i
                              (TAO_ServerRequest&              server_request,
                               const PortableServer::ObjectId& object_id,
                               PortableServer::POA_ptr         poa,
@@ -116,7 +116,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
       /// This will cause a new "request" object to be created and pushed
       /// on to a "request queue".  The worker threads are responsible for
       /// servicing the queue, and performing the actual dispatch logic.
-      virtual TAO::CSD::Strategy_Base::DispatchResult dispatch_collocated_request_i
+      virtual Strategy_Base::DispatchResult dispatch_collocated_request_i
                              (TAO_ServerRequest&              server_request,
                               const PortableServer::ObjectId& object_id,
                               PortableServer::POA_ptr         poa,
@@ -145,6 +145,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
     private:
 
+
       /**
       * Helper method that is responsible for looking up the servant
       * state object in the servant state map *if* the "serialize
@@ -160,18 +161,14 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
       *        state cannot be determined.
       */
       TAO::CSD::TP_Servant_State::HandleType get_servant_state
-                                      (PortableServer::Servant servant);
-
-
-      /// This is the active object used by the worker threads.
+                                      (PortableServer::Servant servant);		
+		
+	  /// This is the active object used by the worker threads.
       /// The request queue is owned/managed by the task object.
       /// The strategy object puts requests into the task's request
       /// queue, and the worker threads service the queued requests
       /// by performing the actual servant request dispatching logic.
       TAO::CSD::TP_Task task_;
-
-      /// The number of worker threads to use for the task.
-      TAO::CSD::Thread_Counter num_threads_;
 
       /// The "serialize servants" flag.
       bool serialize_servants_;
@@ -179,13 +176,33 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
       /// The map of servant state objects - only used when the
       /// "serialize servants" flag is set to true.
       TAO::CSD::TP_Servant_State_Map servant_state_map_;
+
+	  /// This holds the name of a configuration that have been loaded into a Dynamic_TP_Config_Registry.
+	  /// This is the key to the RB Tree entry.
+
+	  ACE_CString dynamic_tp_config_name_;
+
+
+	  /// This adopted structure holds the elements needed to set the thread boundaries as well as the POA queue depth.
+	  /// This can get initiated from a dynamic loading or from a user application.
+	  /// The struct needs to follow the TAO_DTP_Definition struct definition.
+	  TAO_DTP_Definition * threadpool_config_;
+
+
+	  /// Pointer to the delagated implementation of the strategy
+	  /// This will be initialized to null with the expectation that this will
+	  /// allow for lazy loading of a strategy instance when an apply_to method is called
+	  /// or dynamically when the POA is activated.
+
+	  TAO_Dynamic_TP_POA_StrategyImpl * dtp_strategy_impl_;
     };
+
 
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "tao/Dynamic_TP/Dynamic_TP_POA_Strategy.inl"
+#include "tao/Dynamic_TP/Dynamic_TP_POA_Strategy.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
