@@ -330,13 +330,13 @@ namespace TAO
             TAO::Invocation_Retry_State *retry_state =
               this->stub ()->invocation_retry_state ();
             if (this->resolver_.transport ()->connection_closed_on_read() &&
-                retry_state->retry_on_reply_closed_increment ())
+                retry_state->forward_on_reply_closed_increment ())
               {
                 if (TAO_debug_level > 4)
                   ACE_DEBUG ((LM_DEBUG,
                               "TAO (%P|%t) - Synch_Twoway_Invocation::"
-                              "wait_for_reply, retry invocation on connection closed\n"));
-                retry_state->sleep ();
+                              "wait_for_reply, forward profile on connection closed\n"));
+                retry_state->next_profile_retry ();
                 return TAO_INVOKE_RESTART;
               }
 

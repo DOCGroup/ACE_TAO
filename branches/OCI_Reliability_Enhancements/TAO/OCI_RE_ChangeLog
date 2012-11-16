@@ -1,3 +1,29 @@
+Fri Nov 16 17:19:32 UTC 2012  Byron Harris  <harrisb@ociweb.com>
+
+        * tao/Invocation_Retry_Params.h:
+        * tao/Invocation_Retry_Params.cpp:
+        * tao/Invocation_Retry_State.h:
+        * tao/Invocation_Retry_State.cpp:
+        * tao/ORB_Core.cpp:
+        * tao/Synch_Invocation.cpp:
+        * tao/default_client.cpp:
+        * tao/params.h:
+
+          Fixed an incorrect assumption I had about not
+          forwarding profiles when connection closed during
+          reading of server reply.
+
+        * orbsvcs/tests/ImplRepo/RestartServer/README:
+        * orbsvcs/tests/ImplRepo/RestartServer/run_test.pl:
+
+          Updated test to reflect changed name of option
+          based on fix above.
+
+        * docs/Options.html:
+
+          Describes the invocation retry command-line and
+          Client_Strategy_Factory service options.
+
 Fri Nov 16 16:28:08 UTC 2012  "Marc Neeley"  <neeleym@ociweb.com>
 
         * tao/Dynamic_TP/Dynamic_TP_ORB_Loader.cpp:

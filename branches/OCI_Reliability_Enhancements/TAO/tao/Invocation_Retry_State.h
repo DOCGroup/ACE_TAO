@@ -35,7 +35,9 @@ namespace TAO
   class Invocation_Retry_State
   {
   public:
-    Invocation_Retry_State(TAO_Stub &stub);
+    Invocation_Retry_State (TAO_Stub &stub);
+
+    ~Invocation_Retry_State ();
 
     /**
      * Answer if any profile forward on exception limit
@@ -56,7 +58,7 @@ namespace TAO
      * when a server connection is seen as closed
      * during reply.
      */
-    bool retry_on_reply_closed_increment ();
+    bool forward_on_reply_closed_increment ();
 
     /**
      * Increment to next profile in preparation
@@ -84,7 +86,7 @@ namespace TAO
 
     typedef ACE_Array_Map<int, int> Ex_Count_Map;
     Ex_Count_Map ex_count_map_;
-    int retry_on_reply_closed_count_;
+    int forward_on_reply_closed_count_;
     TAO_Stub &stub_;
     Invocation_Retry_Params retry_params_;
     bool forward_on_exception_limit_used_;
