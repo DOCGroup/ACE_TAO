@@ -16,6 +16,7 @@
 #include "orbsvcs/PortableGroup/PG_Property_Set.h"
 #include "orbsvcs/PortableGroup/PG_Object_Group.h"
 #include "orbsvcs/PortableGroup/PG_conf.h"
+#include <orbsvcs/PortableGroup/PG_Utils.h>
 
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"
@@ -101,7 +102,7 @@ TAO_FT_Naming_Manager::create_object_group (
   PortableGroup::Criteria new_criteria;
   property_set.export_properties (new_criteria);
   PortableGroup::GenericFactory::FactoryCreationId_var fcid;
-  return this->create_object (type_id, new_criteria, fcid.out());
+  return this->create_object (group_name, type_id, new_criteria, fcid.out());
 }
 
 void
@@ -129,18 +130,8 @@ TAO_FT_Naming_Manager::delete_object_group (const char * group_name)
 PortableGroup::ObjectGroup_ptr
 TAO_FT_Naming_Manager::get_object_group_ref_from_name (const char * group_name)
 {
-
-  CORBA::String_var group_name_str (group_name);
-
-  // Search for an object group that has a FT::TAO_FT_OBJECT_GROUP_NAME equal
-  // to the provided group_name
-  PortableGroup::Property group_name_property;
-  group_name_property.nam.length (1);
-  group_name_property.nam[0].id = CORBA::string_dup (FT::TAO_FT_OBJECT_GROUP_NAME);
-  group_name_property.val <<= group_name;
-
   TAO::PG_Object_Group* group;
-  if (this->group_factory_.find_group (group_name_property, group))
+  if (this->group_factory_.find_group_with_name (group_name, group))
   {
     return group->reference ();
   }
@@ -181,13 +172,13 @@ TAO_FT_Naming_Manager::groups (::FT::LoadBalancingStrategyValue target_strategy)
     { // Groups load balancing strategy matches the target
       // Increment the count of matching groups
       ++matching_groups;
-      std::string name;
+      char* name;
 
       // Get the group name and add it to the list to return.
       if (this->group_name (obj_group.in (), name))
       { // Group does have a name
         group_names->length (matching_groups);
-        (*group_names)[matching_groups-1] = CORBA::string_dup (name.c_str());
+        (*group_names)[matching_groups-1] = name;
       }
       else
       {
@@ -224,7 +215,7 @@ TAO_FT_Naming_Manager::set_load_balancing_strategy (
 
 
 bool
-TAO_FT_Naming_Manager::group_name (PortableGroup::ObjectGroup_ptr group, std::string &name)
+TAO_FT_Naming_Manager::group_name (PortableGroup::ObjectGroup_ptr group, char*& name)
 {
   if (CORBA::is_nil (group))
   {
@@ -233,19 +224,27 @@ TAO_FT_Naming_Manager::group_name (PortableGroup::ObjectGroup_ptr group, std::st
       ));
     return false;
   }
-  
-  PortableGroup::Properties_var props = this->get_properties (group);
-  PortableGroup::Value value;
-  CORBA::Boolean found = TAO_PG::get_property_value (object_group_property_name_, 
-                                                     *props,
-                                                     value);
-  if (found)
-    { // Found the name property 
-      value >>= name;
+
+  TAO::PG_Object_Group* pg_group;
+  if (this->group_factory_.find_group (group, pg_group))
+  { // Found the object group in the factory
+    const char* grp_name = pg_group->get_name ();
+    if (grp_name != 0)
+    { // Valid group name defined
+      name = CORBA::string_dup (grp_name);
       return true;
     }
+    else
+    { // The group has no name
+      ACE_ERROR_RETURN ((LM_ERROR,
+                        "TAO_FT_Naming_Manager::group_name - object group does not have a name"),
+                        false);
+    }
+  }
   else
+  { // The factory does not know about the group
     return false;
+  }
 }
 
 void
@@ -562,6 +561,7 @@ TAO_FT_Naming_Manager::get_member_ref (
 
 CORBA::Object_ptr
 TAO_FT_Naming_Manager::create_object (
+    const char * object_name,
     const char * type_id,
     const PortableGroup::Criteria & the_criteria,
     PortableGroup::GenericFactory::FactoryCreationId_out
@@ -581,6 +581,8 @@ TAO_FT_Naming_Manager::create_object (
       type_id,
       the_criteria,
       typeid_properties);
+
+  group->set_name (object_name);
 
   // Dont distribute the object group for its usage in the FT_Naming_Manager
   group->distribute (0);
@@ -678,7 +680,7 @@ TAO_FT_Naming_Manager::next_location (PortableGroup::ObjectGroup_ptr object_grou
 }
 
 void
-TAO_FT_Naming_Manager::preprocess_properties (PortableGroup::Properties & props)
+TAO_FT_Naming_Manager::preprocess_properties (PortableGroup::Properties &)
 {
 
 }

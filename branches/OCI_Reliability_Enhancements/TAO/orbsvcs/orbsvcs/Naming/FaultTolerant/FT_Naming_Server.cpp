@@ -1,11 +1,19 @@
+// $Id$
 
 #include "orbsvcs/Naming/FaultTolerant/FT_Naming_Server.h"
 #include "orbsvcs/Naming/Naming_Server.h"
 
+#include "orbsvcs/Naming/Flat_File_Persistence.h"
 #include "orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.h"
+#include "orbsvcs/Naming/Storable.h"
+#include "orbsvcs/Naming/Storable_Naming_Context.h"
+#include "orbsvcs/Naming/Storable_Naming_Context_Activator.h"
+
+#include "orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context.h"
 #include "orbsvcs/Naming/FaultTolerant/FT_Persistent_Naming_Context_Factory.h"
 #include "orbsvcs/Naming/FaultTolerant/FT_Persistent_Naming_Context.h"
 #include "orbsvcs/Naming/Persistent_Context_Index.h"
+
 
 #include "ace/Arg_Shifter.h"
 #include "ace/Auto_Ptr.h"
@@ -18,11 +26,31 @@
 #include "tao/debug.h"
 #include "tao/default_ports.h"
 
+#include "orbsvcs/CosNamingC.h"
+
+#include "tao/debug.h"
+#include "tao/default_ports.h"
+#include "tao/ORB_Core.h"
+
+#include "tao/IORTable/IORTable.h"
+
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+#include "tao/Messaging/Messaging.h"
+#endif
+
+#include "tao/AnyTypeCode/Any.h"
+
+#include "ace/Arg_Shifter.h"
+#include "ace/Auto_Ptr.h"
+#include "ace/Get_Opt.h"
+#include "ace/OS_NS_unistd.h"
+
+
 /// Default Constructor.
 TAO_FT_Naming_Server::TAO_FT_Naming_Server (void)
-  : naming_manager_ior_file_name_(0),
-    naming_manager_persistence_file_name_(0),
-    naming_manager_ ()
+  : naming_manager_ (),
+    naming_manager_ior_file_name_(0),
+    naming_manager_persistence_file_name_(0)
 { 
 
 }
@@ -175,7 +203,7 @@ TAO_FT_Naming_Server::parse_args (int argc,
                                   ACE_TCHAR *argv[])
 {
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT)
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("b:do:p:s:f:m:z:g:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("b:do:p:s:f:m:z:u:g:"));
 #else
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("b:do:p:s:f:m:z:"));
 #endif /* TAO_HAS_MINIMUM_POA */
@@ -197,6 +225,7 @@ TAO_FT_Naming_Server::parse_args (int argc,
 
   // Make sure only one persistence option is specified
   int f_opt_used = 0;
+  int u_opt_used = 0;
 
   // TODO: remove unsupported options with FT Naming Server
   while ((c = get_opts ()) != -1)
@@ -241,6 +270,12 @@ TAO_FT_Naming_Server::parse_args (int argc,
         this->persistence_file_name_ = get_opts.opt_arg ();
         f_opt_used = 1;
         break;
+      case 'u':
+        this->use_storable_context_ = 1;
+        this->persistence_file_name_ = get_opts.opt_arg ();
+        u_opt_used = 1;
+        break;
+
 #endif /* !CORBA_E_MICRO */
       case 'z':
         this->use_round_trip_timeout_ = 1;
@@ -279,9 +314,10 @@ TAO_FT_Naming_Server::parse_args (int argc,
                           -1);
       }
 
-  if (f_opt_used != 1)
+
+  if (f_opt_used + u_opt_used > 1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Must provide persistence file with -f option")
+                       ACE_TEXT ("Only one of -u or -f option can be used")
                        ACE_TEXT ("\n")),
                       -1);
 
@@ -310,11 +346,54 @@ TAO_FT_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
 #else
       if (use_storable_context)
         {
-          // This option is not supported by the FT_Naming_Server at this time. 
-          // Should return an error.
-          ACE_ERROR ((LM_ERROR, "-r & -u options not supported with FT_Naming Service.\n"));
-          return -1;
+          // In lieu of a fully implemented service configurator version
+          // of this Reader and Writer, let's just take something off the
+          // command line for now.
+          TAO_Naming_Service_Persistence_Factory* pf = 0;
+          ACE_NEW_RETURN(pf, TAO_NS_FlatFileFactory, -1);
+          auto_ptr<TAO_Naming_Service_Persistence_Factory> persFactory(pf);
+          // This instance will either get deleted after recreate all or,
+          // in the case of a servant activator's use, on destruction of the
+          // activator.
 
+          // Was a location specified?
+          if (persistence_location == 0)
+            {
+              // No, assign the default location "NameService"
+              persistence_location = ACE_TEXT("NameService");
+            }
+
+          // Now make sure this directory exists
+          if (ACE_OS::access (persistence_location, W_OK|X_OK))
+            {
+              ACE_ERROR_RETURN ((LM_ERROR, "Invalid persistence directory\n"), -1);
+            }
+
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT)
+          if (this->use_servant_activator_)
+            {
+              ACE_NEW_THROW_EX (this->servant_activator_,
+                                TAO_Storable_Naming_Context_Activator (orb,
+                                                                       persFactory.get(),
+                                                                       persistence_location,
+                                                                       context_size),
+                                CORBA::NO_MEMORY ());
+              this->ns_poa_->set_servant_manager(this->servant_activator_);
+            }
+#endif /* TAO_HAS_MINIMUM_POA */
+
+          this->naming_context_ =
+            TAO_FT_Storable_Naming_Context::recreate_all (orb,
+                                                       poa,
+                                                       TAO_ROOT_NAMING_CONTEXT,
+                                                       context_size,
+                                                       0,
+                                                       persFactory.get(),
+                                                       persistence_location,
+                                                       use_redundancy_);
+
+          if (this->use_servant_activator_)
+            persFactory.release();
         }
       else if (persistence_location != 0)
         //

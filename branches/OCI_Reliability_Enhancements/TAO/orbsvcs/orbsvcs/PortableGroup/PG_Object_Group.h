@@ -73,7 +73,6 @@ namespace TAO
       /// Location where this member exists
       PortableGroup::Location location_;
 
-
       /// TRUE if this is primary member
       CORBA::Boolean is_primary_;
 
@@ -258,6 +257,9 @@ namespace TAO
      */
     void distribute (int value);
 
+    void set_name (const char* group_name);
+
+    const char* get_name (void);
 
     /////////////////////////
     // Implementation methods
@@ -335,6 +337,12 @@ namespace TAO
      * The CORBA object id assigned to this object group
      */
     PortableServer::ObjectId_var object_id_;
+
+    /**
+     * an optional attribute of the object group which is a string
+     * name that is assigned to the object group by the creator.
+     */
+    char* group_name_;
 
     // group members
     MemberMap members_;

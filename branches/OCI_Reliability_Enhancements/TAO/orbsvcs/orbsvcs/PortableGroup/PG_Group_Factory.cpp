@@ -16,6 +16,7 @@
 #include "orbsvcs/PortableGroupC.h"
 #include "orbsvcs/PortableGroup/PG_Object_Group.h"
 #include <orbsvcs/PortableGroup/PG_Utils.h>
+#include <ace/SString.h>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -155,15 +156,10 @@ int TAO::PG_Group_Factory::find_group (PortableGroup::ObjectGroup_ptr object_gro
   return result;
 }
 
-int TAO::PG_Group_Factory::find_group (const PortableGroup::Property& property_target, 
-                                       TAO::PG_Object_Group *& group_target) 
+int TAO::PG_Group_Factory::find_group_with_name (const char* target_group_name, 
+                                                 TAO::PG_Object_Group *& group_target) 
 {
   int result = 0;
-
-  size_t upper_limit = this->group_map_.current_size ();
-  PortableGroup::Value value;
-
-  size_t group_count = 0;
 
   // Search through the group map for the group with that property
   for (Group_Map_Iterator it = this->group_map_.begin ();
@@ -173,40 +169,17 @@ int TAO::PG_Group_Factory::find_group (const PortableGroup::Property& property_t
     TAO::PG_Object_Group * a_group = (*it).int_id_;
     // If the group has the group name in the property
     // 
-    
-    PortableGroup::Properties_var properties;
-
-    ACE_NEW_THROW_EX (
-      properties,
-      PortableGroup::Properties,
-      CORBA::NO_MEMORY());
-
-    a_group->get_properties (properties);
-
-    // If the group has the property identified by the caller, check the value, by
-    // extracting it into a string, extracting the target value and comparing the
-    // two values to make sure they are equal
-    if (TAO_PG::get_property_value (property_target.nam, 
-                                    properties,
-                                    value))
-    {
-      std::string value_str;
-      std::string target_str;
-
-      // Check the value in the property against the target
-      if ((value >>= value_str) &&
-        (property_target.val >>= target_str) &&
-        (value_str.compare (target_str) == 0) )
+    const char* a_group_name = a_group->get_name ();
+    if (a_group_name != 0 &&
+        ACE_OS::strcmp (target_group_name, 
+                        a_group_name) == 0)
       { // This is the group we were looking for
         group_target = a_group;
         result = 1;
         break;
       }
-    }
   }
-
-  return result;  
-
+  return result;
 }
 
 int TAO::PG_Group_Factory::destroy_group (PortableGroup::ObjectGroupId group_id)

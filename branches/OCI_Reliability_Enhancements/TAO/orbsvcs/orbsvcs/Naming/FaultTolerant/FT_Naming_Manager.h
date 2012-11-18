@@ -199,9 +199,12 @@ public:
    * Create an object of the specified type that adheres to the
    * restrictions defined by the provided Criteria.  The out
    * FactoryCreationId parameter may be passed to the delete_object()
-   * method to delete the object.
+   * method to delete the object.  This signature is modified from
+   * the generic factory operation to support the use of an object
+   * name in addition to the factory_creation_id.
    */
   virtual CORBA::Object_ptr create_object (
+      const char * object_name,
       const char * type_id,
       const PortableGroup::Criteria & the_criteria,
       PortableGroup::GenericFactory::FactoryCreationId_out
@@ -244,8 +247,10 @@ private:
    */
   void preprocess_properties (PortableGroup::Properties & props);
 
-  /// Utility for accessing the object group name
-  bool group_name (PortableGroup::ObjectGroup_ptr group, std::string &name);
+  /// Utility for accessing the object group name.  Returns true if a
+  /// name is found and allocates a string with the name assigned to
+  /// the name parameter.
+  bool group_name (PortableGroup::ObjectGroup_ptr group, char*& name);
 
   /// Mutex that provides synchronization for the TAO_FT_Naming_Manager's
   /// state.

@@ -67,6 +67,7 @@ TAO::PG_Object_Group::PG_Object_Group (
   , type_id_ (CORBA::string_dup (type_id))
   , tagged_component_ (tagged_component)
   , reference_ (CORBA::Object::_duplicate(empty_group))
+  , group_name_ (0)
   , members_ ()
   , primary_location_(0)
   , properties_ (the_criteria, type_properties)
@@ -78,6 +79,8 @@ TAO::PG_Object_Group::PG_Object_Group (
 
 TAO::PG_Object_Group::~PG_Object_Group (void)
 {
+  delete group_name_;
+
   for (MemberMap_Iterator it = this->members_.begin();
       it != this->members_.end();
       ++it)
@@ -806,6 +809,21 @@ void
 TAO::PG_Object_Group::distribute (int value)
 {
   this->distribute_ = value;
+}
+
+void 
+TAO::PG_Object_Group::set_name (const char* group_name)
+{
+  if (group_name_ != 0)
+    CORBA::string_free (group_name_);
+
+  group_name_ = CORBA::string_dup (group_name);
+}
+
+const char* 
+TAO::PG_Object_Group::get_name (void)
+{
+  return group_name_;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
