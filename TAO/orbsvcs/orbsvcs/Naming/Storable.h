@@ -23,6 +23,7 @@
 
 #include "tao/Versioned_Namespace.h"
 #include "ace/SString.h"
+#include "orbsvcs/Naming/naming_serv_export.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -68,7 +69,7 @@ class TAO_NS_Persistence_Record
   ACE_CString ref_;
 };
 
-class TAO_NS_Persistence_Global
+class TAO_Naming_Serv_Export TAO_NS_Persistence_Global
 {
  public:
   void counter (unsigned int counter);
@@ -78,7 +79,7 @@ class TAO_NS_Persistence_Global
   unsigned int counter_;
 };
 
-class TAO_Storable_Base
+class TAO_Naming_Serv_Export TAO_Storable_Base
 {
 public:
   TAO_Storable_Base();

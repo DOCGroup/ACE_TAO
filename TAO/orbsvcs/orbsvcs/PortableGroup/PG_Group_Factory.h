@@ -135,7 +135,7 @@ namespace TAO
      * find group with the property with the designated value
      * @return bool true if found
      */
-    int find_group (const PortableGroup::Property&, ::TAO::PG_Object_Group *& group);
+    int find_group_with_name (const char* group_name, ::TAO::PG_Object_Group *& group);
 
     /**
      * remove group from map and delete it.

@@ -410,7 +410,7 @@ protected:
  *   File_Open_Lock_and_Check flck(this, name_len > 1 ? "r" : "rw");
  * </pre>
  */
-class File_Open_Lock_and_Check
+class TAO_Naming_Serv_Export File_Open_Lock_and_Check
 {
 public:
 

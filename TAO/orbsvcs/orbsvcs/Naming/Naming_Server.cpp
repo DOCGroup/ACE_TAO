@@ -270,6 +270,7 @@ TAO_Naming_Server::parse_args (int argc,
                            ACE_TEXT ("-p <pid_file_name> ")
                            ACE_TEXT ("-s <context_size> ")
                            ACE_TEXT ("-b <base_address> ")
+                           ACE_TEXT ("-u <persistence dir name> ")
                            ACE_TEXT ("-m <1=enable multicast, 0=disable multicast(default) ")
                            ACE_TEXT ("%s")
                            ACE_TEXT ("-z <relative round trip timeout> ")

@@ -25,8 +25,7 @@ TAO_FT_Persistent_Naming_Context::TAO_FT_Persistent_Naming_Context (PortableServ
                                    poa_id,
                                    context_index,
                                    map,
-                                   counter),
-    previous_index_ (ULONG_MAX)
+                                   counter)
 {
 
 }

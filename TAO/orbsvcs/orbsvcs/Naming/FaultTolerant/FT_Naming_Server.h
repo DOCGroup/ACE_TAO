@@ -1,5 +1,4 @@
-
-
+// $Id$
 
 #ifndef TAO_FT_NAMING_SERVER_H
 #define TAO_FT_NAMING_SERVER_H
