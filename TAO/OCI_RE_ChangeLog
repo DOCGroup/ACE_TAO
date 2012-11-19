@@ -1,3 +1,17 @@
+Mon Nov 19 22:27:44 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/Naming_Service/README:
+
+          Add documentation of the -n command line argument used for thread
+          pooling. Also, sort out the parmaters description so they are ordered
+          alphabetically.
+
+        * orbsvcs/orbsvcs/Naming/Hash_Naming_Context.cpp:
+
+          Refactored the thread acquisition so that the context is locked
+          only when the  local store is going to be modified, not if another
+          repository is to be upated.
+
 Mon Nov 19 18:00:27 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
 
         * orbsvcs/orbsvcs/CosNaming_Serv.mpc:
@@ -17,7 +31,7 @@ Mon Nov 19 18:00:27 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
           Added support for Abstract factory to create Storable Naming Contexts.
           This enables the overriding of the resolve operation in support of
           load balancing.
-          
+
 
         * orbsvcs/tests/FT_Naming/Load_Balancing/LB_server.cpp:
         * orbsvcs/tests/FT_Naming/Load_Balancing/server.cpp:
@@ -27,9 +41,9 @@ Mon Nov 19 18:00:27 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
         * orbsvcs/tests/FT_Naming/Load_Balancing/README:
           Updated README to more correctly describe the test being performed.
 
-        * orbsvcs/tests/FT_Naming/Load_Balancing/NameService:        
+        * orbsvcs/tests/FT_Naming/Load_Balancing/NameService:
         * orbsvcs/tests/FT_Naming/Load_Balancing/NameService/README:
-          Created directory to store the NameService state when using the 
+          Created directory to store the NameService state when using the
           -u option.
 
 Mon Nov 19 16:46:05 UTC 2012  Brian Johnson  <johnsonb@ociweb.com>
