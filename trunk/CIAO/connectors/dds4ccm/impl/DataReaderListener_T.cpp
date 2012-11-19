@@ -113,18 +113,18 @@ namespace CIAO
             {
               ::DDS::ReadCondition_var rd = ::DDS::ReadCondition::_narrow (qc.in ());
               result = reader->take_w_condition (data,
-                                                sample_info,
-                                                max_samples,
-                                                rd.in ());
+                                                 sample_info,
+                                                 max_samples,
+                                                 rd.in ());
             }
           else
             {
               result = reader->take (data,
-                                    sample_info,
-                                    max_samples,
-                                    ::DDS::NOT_READ_SAMPLE_STATE,
-                                    ::DDS::NEW_VIEW_STATE | ::DDS::NOT_NEW_VIEW_STATE,
-                                    ::DDS::ANY_INSTANCE_STATE);
+                                     sample_info,
+                                     max_samples,
+                                     ::DDS::NOT_READ_SAMPLE_STATE,
+                                     ::DDS::NEW_VIEW_STATE | ::DDS::NOT_NEW_VIEW_STATE,
+                                     ::DDS::ANY_INSTANCE_STATE);
             }
 
           DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_INFO, DDS4CCM_INFO
