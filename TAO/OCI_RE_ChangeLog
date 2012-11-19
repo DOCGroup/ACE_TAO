@@ -1,8 +1,75 @@
+Mon Nov 19 16:46:05 UTC 2012  Brian Johnson  <johnsonb@ociweb.com>
+
+        * bin/tao_other_tests.lst:
+        
+          Added ImR persistance tests for hash and shared backing stores.
+
+        * orbsvcs/ImplRepo_Service/Locator_Repository.h:
+        * orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
+
+          Refactored xml, heap, and registry backing store code into a virtual
+          interface.
+
+        * orbsvcs/ImplRepo_Service/Config_Backing_Store.h:
+        * orbsvcs/ImplRepo_Service/Config_Backing_Store.cpp:
+
+          Refactored out Locator_Repository REPO_HEAP and REPO_REGISTRY code.
+
+        * orbsvcs/ImplRepo_Service/XML_Backing_Store.h:
+        * orbsvcs/ImplRepo_Service/XML_Backing_Store.cpp:
+
+          Refactored out Locator_Repository REPO_XML_FILE code.
+
+        * orbsvcs/ImplRepo_Service/Shared_Backing_Store.h:
+        * orbsvcs/ImplRepo_Service/Shared_Backing_Store.cpp:
+
+          Added handling for a shared xml files backing store.
+          (this will eventually have file locking)
+
+        * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
+
+          Added new xxx_Backin_Store.cpp files.
+
+        * orbsvcs/ImplRepo_Service/Locator_Options.h:
+        * orbsvcs/ImplRepo_Service/Locator_Options.cpp:
+        
+          Added "-y" flag to select shared xml files backing store.
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+
+        * orbsvcs/ImplRepo_Service/Locator_XMLHandler.h:
+        * orbsvcs/ImplRepo_Service/Locator_XMLHandler.cpp:
+
+          Refactored Locator_Repository Server_Repo_XML_Callback into Locator_XMLHandler.
+
+        * orbsvcs/ImplRepo_Service/Server_Info.h:
+        * orbsvcs/ImplRepo_Service/Server_Info.cpp:
+
+          Made const correct.
+
+        * orbsvcs/tests/ImplRepo/airplane_server_i.h:
+        * orbsvcs/tests/ImplRepo/airplane_server_i.cpp:
+
+          Added flag to provide the name the server should be registered under.
+
+        * orbsvcs/tests/ImplRepo/run_test.pl:
+
+          Added testing for heap and shared backing store persistence tests and added testing with multiple servers.
+
+        * tao/PortableServer/ServantRetentionStrategyNonRetain.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/Utils/FTEC_Gateway.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LeastLoaded.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LoadAverage.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LoadMinimum.cpp:
+
+          Fixed vc9 (express?) compiler errors.
+
 Mon Nov 19 13:54:58 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context.h:
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context.cpp:
-        
+
           Add support for -u option to support fault tolerance using separate
           files per context.
 

@@ -51,9 +51,6 @@ public:
 
   Locator_Repository();
 
-  /// Initializes the Server Repository
-  int init (const Options& opts);
-
   int unregister_if_address_reused (const ACE_CString& server_id,
                                     const ACE_CString& name,
                                     const char* partial_ior);
@@ -79,9 +76,9 @@ public:
     );
 
   /// Update the associated information.
-  int update_server (const Server_Info& info);
+  int update_server (const Server_Info_Ptr& info);
   /// Update the associated information.
-  int update_activator (const Activator_Info& info);
+  int update_activator (const Activator_Info_Ptr& info);
 
   /// Returns information related to startup.
   Server_Info_Ptr get_server (const ACE_CString& name);
@@ -100,21 +97,48 @@ public:
   /// Returns the internal hash map containing the activator information.
   AIMap& activators(void);
 
-  const char* repo_mode();
+  virtual const char* repo_mode() const = 0;
+
+  void debug(int debug);
+
+  static ACE_CString lcase (const ACE_CString& s);
+
+  virtual int persistent_load();
+
+protected:
+  enum SyncOp { SYNC_ADD, SYNC_REMOVE };
+  virtual int sync_load(const ACE_CString& name, SyncOp sync_op, bool activator);
+
+  virtual int persistent_update(const Server_Info_Ptr& info);
+
+  virtual int persistent_update(const Activator_Info_Ptr& info);
+
+  virtual int persistent_remove(const ACE_CString& name, bool activator);
+
+  unsigned int debug_;
 
 private:
-  /// Type mechanism to use for persistence.
-  Options::RepoMode rmode_;
   /// The in-memory list of the server information.
   SIMap server_infos_;
   /// The in-memory list of the activator information.
   AIMap activator_infos_;
-  /// Several rmode_ values require this.
-  ACE_Auto_Ptr<ACE_Configuration> config_;
-  /// XML requires the file name
-  ACE_CString fname_;
+};
 
-  unsigned int debug_;
+/**
+* @class XML_Backing_Store
+*
+* @brief XML backing store interface containing all ImR persistent information
+* in a single file
+*
+*/
+class No_Backing_Store : public Locator_Repository
+{
+public:
+  virtual ~No_Backing_Store();
+
+  virtual const char* repo_mode() const;  
+
+private:
 };
 
 

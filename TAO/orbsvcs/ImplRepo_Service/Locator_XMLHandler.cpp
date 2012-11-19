@@ -1,6 +1,8 @@
 // $Id$
 
 #include "Locator_XMLHandler.h"
+#include "Locator_Repository.h"
+#include "utils.h"
 #include "ace/OS_NS_strings.h"
 
 const ACE_TCHAR* Locator_XMLHandler::ROOT_TAG = ACE_TEXT("ImplementationRepository");
@@ -8,8 +10,8 @@ const ACE_TCHAR* Locator_XMLHandler::SERVER_INFO_TAG = ACE_TEXT("Servers");
 const ACE_TCHAR* Locator_XMLHandler::ACTIVATOR_INFO_TAG = ACE_TEXT("Activators");
 const ACE_TCHAR* Locator_XMLHandler::ENVIRONMENT_TAG = ACE_TEXT("EnvironmentVariables");
 
-Locator_XMLHandler::Locator_XMLHandler (Callback& cb)
-: callback_ (cb)
+Locator_XMLHandler::Locator_XMLHandler (Locator_Repository& repo)
+: repo_(repo)
 {
 }
 
@@ -49,7 +51,7 @@ Locator_XMLHandler::startElement (const ACEXML_Char*,
         ACE_TString token_str = attrs->getValue ((size_t)1);
         long token = ACE_OS::atoi (token_str.c_str ());
         ACE_CString ior = ACE_TEXT_ALWAYS_CHAR(attrs->getValue ((size_t)2));
-        this->callback_.next_activator (aname, token, ior);
+        this->next_activator (aname, token, ior);
       }
   }
   else if (ACE_OS::strcasecmp (qName, ENVIRONMENT_TAG) == 0)
@@ -73,7 +75,7 @@ Locator_XMLHandler::endElement (const ACEXML_Char*,
   if (ACE_OS::strcasecmp (qName, SERVER_INFO_TAG) == 0
     && this->server_name_.length () > 0)
   {
-    this->callback_.next_server (
+    this->next_server (
       this->server_id_, this->server_name_,
       this->activator_name_, this->command_line_,
       this->env_vars_, this->working_dir_, this->activation_,
@@ -81,6 +83,46 @@ Locator_XMLHandler::endElement (const ACEXML_Char*,
   }
   // activator info is handled in the startElement
 }
+
+static void convertEnvList (const Locator_XMLHandler::EnvList& in, ImplementationRepository::EnvironmentList& out)
+{
+  CORBA::ULong sz = in.size ();
+  out.length (sz);
+  for (CORBA::ULong i = 0; i < sz; ++i)
+    {
+      out[i].name = in[i].name.c_str ();
+      out[i].value = in[i].value.c_str ();
+    }
+}
+
+void
+Locator_XMLHandler::next_server (const ACE_CString& server_id,
+  const ACE_CString& name, const ACE_CString& aname,
+  const ACE_CString& cmdline, const Locator_XMLHandler::EnvList& envlst,
+  const ACE_CString& dir, const ACE_CString& amodestr, int start_limit,
+  const ACE_CString& partial_ior, const ACE_CString& ior)
+{
+  ImplementationRepository::ActivationMode amode =
+    ImR_Utils::parseActivationMode (amodestr);
+
+  ImplementationRepository::EnvironmentList env_vars;
+  convertEnvList (envlst, env_vars);
+
+  int limit = start_limit < 1 ? 1 : start_limit;
+
+  Server_Info_Ptr si (new Server_Info (server_id, name, aname, cmdline,
+    env_vars, dir, amode, limit, partial_ior, ior));
+
+  this->repo_.servers ().bind (name, si);
+}
+void
+Locator_XMLHandler::next_activator (const ACE_CString& aname,
+  long token, const ACE_CString& ior)
+{
+  Activator_Info_Ptr si (new Activator_Info (aname, token, ior));
+  this->repo_.activators ().bind (Locator_Repository::lcase (aname), si);
+}
+
 
 bool
 Locator_XMLHandler::EnvVar::operator== (const EnvVar& rhs) const

@@ -20,6 +20,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+class Locator_Repository;
 /**
  * Callback SAX XML Handler for parsing XML.
  */
@@ -42,22 +43,7 @@ public:
 
   typedef ACE_Vector<EnvVar> EnvList;
 
-  struct Callback {
-    virtual ~Callback() {}
-
-    virtual void next_server (const ACE_CString& server_id,
-      const ACE_CString& server_name, const ACE_CString& aname,
-      const ACE_CString& startup_cmd, const EnvList& env_vars,
-      const ACE_CString& working_dir, const ACE_CString& actmode,
-      int start_limit, const ACE_CString& partial_ior,
-      const ACE_CString& ior) = 0;
-
-    virtual void next_activator (const ACE_CString& activator_name,
-                                 long token,
-                                 const ACE_CString& ior) = 0;
-  };
-
-  Locator_XMLHandler (Callback& cb);
+  Locator_XMLHandler (Locator_Repository& repo);
 
   virtual void startElement (const ACEXML_Char* namespaceURI,
                              const ACEXML_Char* localName,
@@ -69,9 +55,18 @@ public:
                            const ACEXML_Char* qName);
 
  private:
+  virtual void next_server (const ACE_CString& server_id,
+    const ACE_CString& server_name, const ACE_CString& aname,
+    const ACE_CString& startup_cmd, const EnvList& env_vars,
+    const ACE_CString& working_dir, const ACE_CString& actmode,
+    int start_limit, const ACE_CString& partial_ior,
+    const ACE_CString& ior);
 
-  // callback on completion of an element
-  Callback& callback_;
+  virtual void next_activator (const ACE_CString& activator_name,
+                               long token,
+                               const ACE_CString& ior);
+
+  Locator_Repository& repo_;
 
   ACE_CString server_id_;
   ACE_TString server_name_;

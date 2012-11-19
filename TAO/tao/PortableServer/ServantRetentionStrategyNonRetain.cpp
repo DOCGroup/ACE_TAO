@@ -17,6 +17,7 @@
 #include "tao/PortableServer/Servant_Base.h"
 #include "tao/debug.h"
 
+#include "ace/OS_NS_sys_time.h"
 #include "ace/Time_Value.h"
 #include "ace/OS_NS_sys_time.h"
 
