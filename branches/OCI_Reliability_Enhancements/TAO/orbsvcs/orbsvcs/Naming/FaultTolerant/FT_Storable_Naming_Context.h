@@ -51,6 +51,12 @@ public:
   /// Destructor.
   virtual ~TAO_FT_Storable_Naming_Context (void);
 
+  /**
+   * Override the resolve operation to support load balancing using
+   * the object group manager and associated strategy.
+   */
+  virtual CORBA::Object_ptr resolve (const CosNaming::Name &n);
+
   // = Utility methods.
   /**
    * This utility method factors out the code needed to create a new
@@ -79,12 +85,6 @@ public:
                               TAO_Naming_Service_Persistence_Factory *factory,
                               const ACE_TCHAR *persistence_directory,
                               int use_redundancy);
-
-  /**
-   * Override the resolve operation to support load balancing using
-   * the object group manager and associated strategy.
-   */
-  virtual CORBA::Object_ptr resolve (const CosNaming::Name &n);
 
   static void set_naming_manager_impl (TAO_FT_Naming_Manager *mgr_impl);
 

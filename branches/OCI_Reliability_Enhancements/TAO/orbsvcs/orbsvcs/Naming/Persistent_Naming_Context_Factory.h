@@ -16,6 +16,7 @@
 #include /**/ "ace/pre.h"
 
 #include "orbsvcs/Naming/Naming_Context_Factory.h"
+#include "orbsvcs/Naming/naming_serv_export.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

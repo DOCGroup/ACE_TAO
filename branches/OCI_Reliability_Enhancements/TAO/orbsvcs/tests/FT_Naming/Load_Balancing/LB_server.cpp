@@ -31,7 +31,7 @@ LB_server::destroy (void)
         "Exception caught while destroying LB_server\n");
       return -1;
     }
-  return 1;
+  return 0;
 
 }
 
@@ -110,7 +110,7 @@ LB_server::start_orb_and_poa (void)
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize the POA.\n"),
-                          1);
+                          -1);
 
       this->root_poa_ = PortableServer::POA::_narrow (poa_object.in ());
 
@@ -123,7 +123,7 @@ LB_server::start_orb_and_poa (void)
       if (name_svc_.init (this->orb_, &timeout) != 0)
         ACE_ERROR_RETURN ((LM_DEBUG,
                            "LB_server: Could not connect to naming service.\n"),
-                           1);
+                           -1);
       
       CORBA::Object_var obj =
         this->orb_->resolve_initial_references ("NamingManager");
@@ -134,7 +134,7 @@ LB_server::start_orb_and_poa (void)
       if (CORBA::is_nil (this->naming_manager_.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to get Naming Manager Reference\n"),
-                          1);
+                          -1);
 
     }
   catch (const CORBA::Exception& ex)
@@ -143,7 +143,7 @@ LB_server::start_orb_and_poa (void)
       return -1;
     }
 
-  return 1;
+  return 0;
 
 }
 
@@ -188,7 +188,7 @@ LB_server::create_object_group (void)
       return -1;
     }
 
-  return 1;
+  return 0;
 
 }
 
@@ -215,7 +215,7 @@ LB_server::register_servant (Basic *servant, const char *loc)
       return -1;
     }
 
-  return 1;
+  return 0;
 }
 
 TAO_Naming_Client& 

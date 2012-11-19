@@ -10,6 +10,7 @@
 #include "orbsvcs/Naming/Storable_Naming_Context_Activator.h"
 
 #include "orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context.h"
+#include "orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context_Factory.h"
 #include "orbsvcs/Naming/FaultTolerant/FT_Persistent_Naming_Context_Factory.h"
 #include "orbsvcs/Naming/FaultTolerant/FT_Persistent_Naming_Context.h"
 #include "orbsvcs/Naming/Persistent_Context_Index.h"
@@ -174,10 +175,6 @@ TAO_FT_Naming_Server::init_with_orb (int argc,
       ACE_OS::fprintf (iorf, "%s\n", str.in ());
       ACE_OS::fclose (iorf);
     }
-
-  // Provide the naming manager reference for use in TAO_FT_Persistent_Naming_Contexts
-  // for load balancing functionality
-  TAO_FT_Persistent_Naming_Context::set_naming_manager_impl (&naming_manager_);
 
   // Make the Object Group Manager easily accessible using Interoperable Naming Service IORs
   CORBA::Object_var table_object =
@@ -352,6 +349,15 @@ TAO_FT_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
           TAO_Naming_Service_Persistence_Factory* pf = 0;
           ACE_NEW_RETURN(pf, TAO_NS_FlatFileFactory, -1);
           auto_ptr<TAO_Naming_Service_Persistence_Factory> persFactory(pf);
+
+          TAO_FT_Storable_Naming_Context_Factory* cf = 0;
+          ACE_NEW_RETURN (cf, TAO_FT_Storable_Naming_Context_Factory (context_size), -1);
+          auto_ptr<TAO_FT_Storable_Naming_Context_Factory> contextFactory (cf);
+
+          // Provide the naming manager reference for use in 
+          // TAO_FT_Persistent_Naming_Contexts for load balancing functionality
+          TAO_FT_Storable_Naming_Context::set_naming_manager_impl (&naming_manager_);
+
           // This instance will either get deleted after recreate all or,
           // in the case of a servant activator's use, on destruction of the
           // activator.
@@ -374,9 +380,9 @@ TAO_FT_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
             {
               ACE_NEW_THROW_EX (this->servant_activator_,
                                 TAO_Storable_Naming_Context_Activator (orb,
-                                                                       persFactory.get(),
-                                                                       persistence_location,
-                                                                       context_size),
+                                                                       persFactory.get (),
+                                                                       contextFactory.get (),
+                                                                       persistence_location),
                                 CORBA::NO_MEMORY ());
               this->ns_poa_->set_servant_manager(this->servant_activator_);
             }
@@ -403,6 +409,10 @@ TAO_FT_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
           // Create a factory for Fault Tolerant / Persistent Naming Contexts and use it
           TAO_Naming_Context_Factory *naming_context_factory = 0;
           ACE_NEW_RETURN (naming_context_factory, TAO_FT_Persistent_Naming_Context_Factory, -1);
+          
+          // Provide the naming manager reference for use in 
+          // TAO_FT_Persistent_Naming_Contexts for load balancing functionality
+          TAO_FT_Persistent_Naming_Context::set_naming_manager_impl (&naming_manager_);
           
           // Allocate and initialize Persistent Context Index.
           ACE_NEW_RETURN (this->context_index_,
