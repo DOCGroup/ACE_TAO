@@ -1,3 +1,12 @@
+Mon Nov 19 18:15:16 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/DataReaderListener_T.cpp:
+          Layout changes
+
+        * connectors/dds4ccm/impl/DomainParticipantManager.cpp:
+          Check for (un)registration of nil domain participants, log
+          profile during unregistration
+
 Mon Nov 12 10:07:05 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * NEWS:
