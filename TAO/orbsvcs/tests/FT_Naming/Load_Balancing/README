@@ -1,13 +1,8 @@
 $Id$
 
 This program tests the application controlled membership support
-of the Cygnus load balancer. The aim is to allow the application
-to create the replicas and then forcefully add them as the members
-of the object group maintained by the Cygnus load balancer. When
-the clients make a request on the IOR exported by the load
-balancer, the load balancer makes use of the round robin algorithm
-to make a call on any of the object group members registered with
-the load balancer.
-
-Please see $TAO_ROOT/orbsvcs/orbsvcs/Loadbalancing for the implementations
-of the Cygnus load balancer.
+of the FT_Naming_Service. The aim is to allow the application
+to create object groups and add them to the naming service. When
+the client resolves an object group from the naming service, the
+load balancing strategy is applied.  Currently the test only supports
+the RoundRobin load balancing strategy.

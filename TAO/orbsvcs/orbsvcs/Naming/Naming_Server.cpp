@@ -3,6 +3,8 @@
 #include "orbsvcs/Naming/Naming_Server.h"
 #include "orbsvcs/Naming/Transient_Naming_Context.h"
 #include "orbsvcs/Naming/Persistent_Naming_Context_Factory.h"
+#include "orbsvcs/Naming/Storable_Naming_Context_Factory.h"
+
 
 #if !defined (CORBA_E_MICRO)
 #include "orbsvcs/Naming/Persistent_Context_Index.h"
@@ -479,8 +481,13 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
           // of this Reader and Writer, let's just take something off the
           // command line for now.
           TAO_Naming_Service_Persistence_Factory* pf = 0;
-          ACE_NEW_RETURN(pf, TAO_NS_FlatFileFactory, -1);
+          ACE_NEW_RETURN (pf, TAO_NS_FlatFileFactory, -1);
           auto_ptr<TAO_Naming_Service_Persistence_Factory> persFactory(pf);
+
+          TAO_Storable_Naming_Context_Factory* cf = 0;
+          ACE_NEW_RETURN (cf, TAO_Storable_Naming_Context_Factory (context_size), -1);
+          auto_ptr<TAO_Storable_Naming_Context_Factory> contextFactory (cf);
+
           // This instance will either get deleted after recreate all or,
           // in the case of a servant activator's use, on destruction of the
           // activator.
@@ -504,8 +511,8 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
               ACE_NEW_THROW_EX (this->servant_activator_,
                                 TAO_Storable_Naming_Context_Activator (orb,
                                                                        persFactory.get(),
-                                                                       persistence_location,
-                                                                       context_size),
+                                                                       contextFactory.get (),
+                                                                       persistence_location),
                                 CORBA::NO_MEMORY ());
               this->ns_poa_->set_servant_manager(this->servant_activator_);
             }

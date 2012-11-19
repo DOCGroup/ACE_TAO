@@ -17,10 +17,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       LB_server lb_server (argc, argv);
 
-      if (lb_server.start_orb_and_poa () == -1)
+      if (lb_server.start_orb_and_poa () != 0)
         return 1;
 
-      if (lb_server.create_object_group () == -1)
+      if (lb_server.create_object_group () != 0)
         return 1;
         
       CosNaming::Name name (1);
