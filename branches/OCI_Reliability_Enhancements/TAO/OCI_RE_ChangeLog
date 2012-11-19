@@ -1,3 +1,37 @@
+Mon Nov 19 22:33:49 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/CSD_Framework/CSD_Framework_Loader.cpp:
+
+          The loader was incorrectly introducing a dependency on the
+          TAO_CSD_ThreadPool library. This is wrong because the latter
+          is but one possible implementation for the framework.
+
+        * tao/CSD_ThreadPool/CSD_TP_Strategy_Factory.cpp:
+        * tao/CSD_ThreadPool/CSD_ThreadPool.h:
+        * tao/CSD_ThreadPool/CSD_ThreadPool.cpp:
+
+          Have the CSD_Threadpool properly initialize the framework,
+          rather than vice versa. Also, cleaned up the parameter parsing to
+          be a little more efficient.
+
+        * tao/Dynamic_TP/Dynamic_TP.mpc:
+        * tao/Dynamic_TP/Dynamic_TP_ORBInitializer.cpp:
+        * tao/Dynamic_TP/Dynamic_TP_ORB_Loader.cpp:
+        * tao/Dynamic_TP/Dynamic_TP_POA_Loader.h:
+        * tao/Dynamic_TP/Dynamic_TP_POA_Loader.cpp:
+
+          Sorted out the initialization of POAs with threadpools declared
+          via service configuration. The key was to actually initialize the
+          CSD_Strategy_Repository prior to inserting any strategy instances.
+
+          Also removed a dependency on RTCORBA. This dependency was causing
+          the RT POA factory name to be loaded after the CSD POA factory name
+          which in turn disabled the creation of CSD POAs.
+
+        * tests/Dynamic_TP/POA_Loader/Test.cpp:
+
+          The test seemed to have a typo.
+
 Mon Nov 19 22:27:44 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/Naming_Service/README:
