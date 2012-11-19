@@ -4,6 +4,10 @@
 #include "utils.h"
 #include "Iterator.h"
 #include "INS_Locator.h"
+#include "Locator_Repository.h"
+#include "Config_Backing_Store.h"
+#include "Shared_Backing_Store.h"
+#include "XML_Backing_Store.h"
 
 #include "orbsvcs/Time_Utilities.h"
 
@@ -138,16 +142,48 @@ ImR_Locator_i::init_with_orb (CORBA::ORB_ptr orb, Options& opts)
         return -1;
     }
 
-  // Initialize the persistent storage. This will load any values that
-  // may have been persisted before.
-  // The init can return 1 if there is no persistent file yet. In
-  // that case, we need not do anything for now.
-  int init_result =
-    this->repository_.init (opts);
-  if (init_result == -1)
+  // create the selected Locator_Repository with backing store
+  switch (opts.repository_mode())
     {
-      ACE_ERROR_RETURN ((LM_ERROR, "Repository failed to initialize\n"), -1);
+    case Options::REPO_REGISTRY:
+      {
+        repository_.reset(new Registry_Backing_Store(opts.persist_file_name(), opts.repository_erase()));
+        break;
+      }
+    case Options::REPO_HEAP_FILE:
+      {
+        repository_.reset(new Heap_Backing_Store(opts.persist_file_name(), opts.repository_erase()));
+        break;
+      }
+    case Options::REPO_XML_FILE:
+      {
+        repository_.reset(new XML_Backing_Store(opts.persist_file_name(), opts.repository_erase()));
+        break;
+      }
+    case Options::REPO_SHARED_FILES:
+      {
+        repository_.reset(new Shared_Backing_Store(opts.persist_file_name(), opts.repository_erase()));
+        break;
+      }
+    case Options::REPO_NONE:
+      {
+        repository_.reset(new No_Backing_Store);
+        break;
+      }
+    default:
+      {
+        bool invalid_rmode_specified = false;
+        ACE_ASSERT (invalid_rmode_specified);
+        ACE_UNUSED_ARG (invalid_rmode_specified);
+        ACE_ERROR_RETURN ((LM_ERROR, "Repository failed to initialize\n"), -1);
+      }
     }
+
+  this->repository_->debug (opts.debug());
+
+  // Load from persistent storage. This will load any values that
+  // may have been persisted before.
+  this->repository_->persistent_load();
 
   // Activate the two poa managers
   PortableServer::POAManager_var poaman =
@@ -204,7 +240,7 @@ ImR_Locator_i::run (void)
                   "\tMulticast : %C\n",
                   ping_interval_.msec (),
                   startup_timeout_.sec (),
-                  repository_.repo_mode (),
+                  repository_->repo_mode (),
                   ior_multicast_.reactor () != 0 ? "Enabled" : "Disabled"));
       ACE_DEBUG ((LM_DEBUG,
                   "\tDebug : %d\n"
@@ -221,16 +257,16 @@ ImR_Locator_i::run (void)
 void
 ImR_Locator_i::shutdown (CORBA::Boolean activators, CORBA::Boolean servers)
 {
-  if (servers != 0 && this->repository_.servers ().current_size () > 0)
+  if (servers != 0 && this->repository_->servers ().current_size () > 0)
     {
       // Note : shutdown is oneway, so we can't throw
       ACE_ERROR ((LM_ERROR, "ImR: Shutdown of all servers not implemented.\n"));
     }
-  if (activators != 0 && this->repository_.activators ().current_size () > 0)
+  if (activators != 0 && this->repository_->activators ().current_size () > 0)
     {
       ACE_Vector<ImplementationRepository::Activator_var> acts;
       Locator_Repository::AIMap::ENTRY* entry = 0;
-      Locator_Repository::AIMap::ITERATOR it (this->repository_.activators ());
+      Locator_Repository::AIMap::ITERATOR it (this->repository_->activators ());
       for (;it.next (entry) != 0; it.advance ())
         {
           Activator_Info_Ptr info = entry->int_id_;
@@ -383,7 +419,7 @@ ImR_Locator_i::register_activator (const char* aname,
 
   CORBA::Long token = ACE_OS::gettimeofday ().msec ();
 
-  int err = this->repository_.add_activator (aname, token, ior.in (), activator);
+  int err = this->repository_->add_activator (aname, token, ior.in (), activator);
   ACE_ASSERT (err == 0);
   ACE_UNUSED_ARG (err);
 
@@ -424,7 +460,7 @@ void
 ImR_Locator_i::unregister_activator_i (const char* aname)
 {
   ACE_ASSERT (aname != 0);
-  int err = this->repository_.remove_activator (aname);
+  int err = this->repository_->remove_activator (aname);
   ACE_UNUSED_ARG (err);
 }
 
@@ -436,13 +472,13 @@ ImR_Locator_i::notify_child_death (const char* name)
   if (this->debug_ > 1)
     ACE_DEBUG ((LM_DEBUG, "ImR: Server has died <%C>.\n", name));
 
-  Server_Info_Ptr info = this->repository_.get_server (name);
+  Server_Info_Ptr info = this->repository_->get_server (name);
   if (! info.null ())
     {
       info->ior = "";
       info->partial_ior = "";
 
-      int err = this->repository_.update_server (*info);
+      int err = this->repository_->update_server (info);
       ACE_ASSERT (err == 0);
       ACE_UNUSED_ARG (err);
     }
@@ -475,7 +511,7 @@ ImR_Locator_i::activate_server_by_name (const char* name, bool manual_start)
   // servers unless manual_start=true
   ACE_ASSERT (name != 0);
 
-  Server_Info_Ptr info = this->repository_.get_server (name);
+  Server_Info_Ptr info = this->repository_->get_server (name);
   if (info.null ())
     {
       ACE_ERROR ((LM_ERROR, "ImR: Cannot find info for server <%C>\n", name));
@@ -550,7 +586,7 @@ ImR_Locator_i::activate_server_i (Server_Info& info, bool manual_start)
 char*
 ImR_Locator_i::activate_perclient_server_i (Server_Info info, bool manual_start)
 {
-  Server_Info_Ptr shared_info = this->repository_.get_server (info.name);
+  Server_Info_Ptr shared_info = this->repository_->get_server (info.name);
   do
     {
       ImplementationRepository::StartupInfo* psi =
@@ -791,13 +827,13 @@ ImR_Locator_i::add_or_update_server (
       limit = 1;
     }
 
-  Server_Info_Ptr info = this->repository_.get_server (server);
+  Server_Info_Ptr info = this->repository_->get_server (server);
   if (info.null ())
     {
       if (this->debug_ > 1)
         ACE_DEBUG ((LM_DEBUG, "ImR: Adding server <%C>.\n", server));
 
-      this->repository_.add_server ("",
+      this->repository_->add_server ("",
                                     server,
                                     options.activator.in (),
                                     options.command_line.in (),
@@ -818,7 +854,7 @@ ImR_Locator_i::add_or_update_server (
       info->activation_mode = options.activation;
       info->start_limit = limit;
       info->start_count = 0;
-      int err = this->repository_.update_server (*info);
+      int err = this->repository_->update_server (info);
       ACE_ASSERT (err == 0);
       ACE_UNUSED_ARG (err);
     }
@@ -867,10 +903,10 @@ ImR_Locator_i::remove_server (const char* name)
   // be valid, and the actual Server_Info will be destroyed when the last
   // one goes out of scope.
 
-  Server_Info_Ptr info = this->repository_.get_server (name);
+  Server_Info_Ptr info = this->repository_->get_server (name);
   if (! info.null ())
     {
-      if (this->repository_.remove_server (name) == 0)
+      if (this->repository_->remove_server (name) == 0)
         {
           if (this->debug_ > 1)
             ACE_DEBUG ((LM_DEBUG, "ImR: Removing Server <%C>...\n", name));
@@ -916,7 +952,7 @@ ImR_Locator_i::shutdown_server (const char* server)
   if (this->debug_ > 0)
     ACE_DEBUG ((LM_DEBUG, "ImR: Shutting down server <%C>.\n", server));
 
-  Server_Info_Ptr info = this->repository_.get_server (server);
+  Server_Info_Ptr info = this->repository_->get_server (server);
   if (info.null ())
     {
       ACE_ERROR ((LM_ERROR,
@@ -943,7 +979,7 @@ ImR_Locator_i::shutdown_server (const char* server)
   catch (const CORBA::TIMEOUT&)
     {
       info->reset ();
-      int err = this->repository_.update_server (*info);
+      int err = this->repository_->update_server (info);
       ACE_ASSERT (err == 0);
       ACE_UNUSED_ARG (err);
       // Note : This is a good thing. It means we didn't waste our time waiting for
@@ -966,7 +1002,7 @@ ImR_Locator_i::shutdown_server (const char* server)
   // operation, but it doesn't hurt to update it again.
   info->reset ();
 
-  int err = this->repository_.update_server (*info);
+  int err = this->repository_->update_server (info);
   ACE_ASSERT (err == 0);
   ACE_UNUSED_ARG (err);
 }
@@ -1007,16 +1043,16 @@ ImR_Locator_i::server_is_running (const char* id,
       name.c_str (), ior.in ()));
 
   if (this->unregister_if_address_reused_)
-    this->repository_.unregister_if_address_reused (server_id, name, partial_ior);
+    this->repository_->unregister_if_address_reused (server_id, name, partial_ior);
 
-  Server_Info_Ptr info = this->repository_.get_server (name);
+  Server_Info_Ptr info = this->repository_->get_server (name);
   if (info.null ())
     {
       if (this->debug_ > 0)
         ACE_DEBUG ((LM_DEBUG, "ImR: Auto adding NORMAL server <%C>.\n", name.c_str ()));
 
       ImplementationRepository::EnvironmentList env (0);
-      this->repository_.add_server (server_id,
+      this->repository_->add_server (server_id,
                                     name,
                                     "", // no activator
                                     "", // no cmdline
@@ -1046,7 +1082,7 @@ ImR_Locator_i::server_is_running (const char* id,
         info->partial_ior = partial_ior;
         info->server = ImplementationRepository::ServerObject::_nil (); // Will connect at first access
 
-        int err = this->repository_.update_server (*info);
+        int err = this->repository_->update_server (info);
         ACE_ASSERT (err == 0);
         ACE_UNUSED_ARG (err);
 
@@ -1072,7 +1108,7 @@ void
 ImR_Locator_i::server_is_shutting_down (const char* server)
 {
   ACE_ASSERT (server != 0);
-  Server_Info_Ptr info = this->repository_.get_server (server);
+  Server_Info_Ptr info = this->repository_->get_server (server);
   if (info.null ())
     {
       if (this->debug_ > 1)
@@ -1088,7 +1124,7 @@ ImR_Locator_i::server_is_shutting_down (const char* server)
 
   info->reset ();
 
-  int const err = this->repository_.update_server (*info);
+  int const err = this->repository_->update_server (info);
   ACE_ASSERT (err == 0);
   ACE_UNUSED_ARG (err);
 }
@@ -1099,7 +1135,7 @@ ImR_Locator_i::find (const char* server,
 {
   ACE_ASSERT (server != 0);
 
-  Server_Info_Ptr info = this->repository_.get_server (server);
+  Server_Info_Ptr info = this->repository_->get_server (server);
   if (! info.null ())
     {
       imr_info = info->createImRServerInfo ();
@@ -1131,10 +1167,10 @@ ImR_Locator_i::list (CORBA::ULong how_many,
                     ImplementationRepository::ServerInformationList (0), CORBA::NO_MEMORY ());
 
   Locator_Repository::SIMap::ENTRY* entry = 0;
-  Locator_Repository::SIMap::ITERATOR it (this->repository_.servers ());
+  Locator_Repository::SIMap::ITERATOR it (this->repository_->servers ());
 
   // Number of servers that will go into the server_list.
-  CORBA::ULong n = this->repository_.servers ().current_size ();
+  CORBA::ULong n = this->repository_->servers ().current_size ();
   if (how_many > 0 && n > how_many)
     {
       n = how_many;
@@ -1157,7 +1193,7 @@ ImR_Locator_i::list (CORBA::ULong how_many,
       server_list[i] = *imr_info;
     }
 
-  if (this->repository_.servers ().current_size () > n)
+  if (this->repository_->servers ().current_size () > n)
     {
       if (this->debug_ > 1)
         ACE_DEBUG ((LM_DEBUG, "ImR_Locator_i::list: Creating ServerInformation Iterator\n"));
@@ -1165,7 +1201,7 @@ ImR_Locator_i::list (CORBA::ULong how_many,
       ImR_Iterator* imr_iter = 0;
 
       ACE_NEW_THROW_EX (imr_iter,
-                        ImR_Iterator (n, this->repository_, this->imr_poa_.in ()),
+                        ImR_Iterator (n, *this->repository_, this->imr_poa_.in ()),
                         CORBA::NO_MEMORY ());
 
       PortableServer::ServantBase_var tmp (imr_iter);
@@ -1188,7 +1224,7 @@ ImR_Locator_i::list (CORBA::ULong how_many,
 Activator_Info_Ptr
 ImR_Locator_i::get_activator (const ACE_CString& aname)
 {
-  Activator_Info_Ptr info = this->repository_.get_activator (aname);
+  Activator_Info_Ptr info = this->repository_->get_activator (aname);
   if (! info.null ())
     {
       this->connect_activator (*info);
@@ -1239,11 +1275,11 @@ ImR_Locator_i::connect_activator (Activator_Info& info)
 void
 ImR_Locator_i::auto_start_servers (void)
 {
-  if (this->repository_.servers ().current_size () == 0)
+  if (this->repository_->servers ().current_size () == 0)
     return;
 
   Locator_Repository::SIMap::ENTRY* server_entry;
-  Locator_Repository::SIMap::ITERATOR server_iter (this->repository_.servers ());
+  Locator_Repository::SIMap::ITERATOR server_iter (this->repository_->servers ());
 
   // For each of the entries in the Locator_Repository, get the startup
   // information and activate the servers, if they are not already
@@ -1405,7 +1441,7 @@ ImR_Locator_i::is_alive_i (Server_Info& info)
   // If we don't have enough information to start the server if it isn't already
   // then we might as well assume it is running. That way the client can get the
   // status directly from the server.
-  if (info.cmdline.length () == 0 || ! repository_.has_activator (info.activator))
+  if (info.cmdline.length () == 0 || ! repository_->has_activator (info.activator))
     {
       if (debug_ > 1)
         {

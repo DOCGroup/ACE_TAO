@@ -82,6 +82,9 @@ project(ImR_Locator) : orbsvcslib, orbsvcs_output, conv_lib, avoids_minimum_corb
     Iterator.cpp
     Server_Info.cpp
     Locator_Repository.cpp
+    Config_Backing_Store.cpp
+    XML_Backing_Store.cpp
+    Shared_Backing_Store.cpp
   }
   header_files {
     utils.h
