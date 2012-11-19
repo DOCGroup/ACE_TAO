@@ -48,13 +48,12 @@ public:
 
 private:
   /// Set to true after init is called.
-  bool initialized_;
-  int load_poa_map (int &curarg, ACE_TCHAR *argv[], TAO_Dynamic_TP_Config_Registry* config_reg,TAO_CSD_Strategy_Repository * reg);
-  int parse_string (int &curarg, int argc, ACE_TCHAR* argv[], const ACE_TCHAR *match, ACE_TCHAR *&value);
+  int load_poa_map (ACE_TCHAR *map_str,
+                    TAO_CSD_Strategy_Repository * reg);
+
   void report_option_value_error (const ACE_TCHAR* option_name,
                                   const ACE_TCHAR* option_value);
 };
-
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_Dynamic_TP, TAO_Dynamic_TP_POA_Loader)
 ACE_FACTORY_DECLARE (TAO_Dynamic_TP, TAO_Dynamic_TP_POA_Loader)

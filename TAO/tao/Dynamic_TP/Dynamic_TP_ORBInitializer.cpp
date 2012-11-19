@@ -37,6 +37,7 @@
 #include "ace/Svc_Conf.h"
 #include "ace/Sched_Params.h"
 
+#if 0
 static const char rt_poa_factory_name[] = "TAO_Dynamic_TP_Object_Adapter_Factory";
 static const ACE_TCHAR rt_poa_factory_directive[] =
   ACE_DYNAMIC_SERVICE_DIRECTIVE(
@@ -44,11 +45,13 @@ static const ACE_TCHAR rt_poa_factory_directive[] =
     "TAO_RTPortableServer",
     "_make_TAO_Dynamic_TP_Object_Adapter_Factory",
     "");
+#endif
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Dynamic_TP_ORBInitializer::TAO_Dynamic_TP_ORBInitializer (void)
+TAO_Dynamic_TP_ORBInitializer::TAO_Dynamic_TP_ORBInitializer (/*const ACE_CString &tplist*/)
 {
+
 }
 
 void
