@@ -86,13 +86,14 @@ public:
                               const ACE_TCHAR *persistence_directory,
                               int use_redundancy);
 
-  static void set_naming_manager_impl (TAO_FT_Naming_Manager *mgr_impl);
+  // Set the Naming Manager as a static so that it is available for all 
+  // naming context implementations.
+  static void set_naming_manager (TAO_FT_Naming_Manager *mgr_impl);
 
   bool is_object_group (const CORBA::Object_ptr obj) const;
 
 protected:
-  static TAO_FT_Naming_Manager *naming_manager_impl_;
-
+  static TAO_FT_Naming_Manager *naming_manager_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

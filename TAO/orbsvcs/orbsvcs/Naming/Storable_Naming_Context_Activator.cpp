@@ -27,8 +27,8 @@ TAO_Storable_Naming_Context_Activator::TAO_Storable_Naming_Context_Activator (
   const ACE_TCHAR *persistence_directory)
   : orb_(orb),
     persistence_factory_(persistence_factory),
-    persistence_directory_(persistence_directory),
-    context_impl_factory_(context_impl_factory)
+    context_impl_factory_(context_impl_factory),
+    persistence_directory_(persistence_directory)
 {
 }
 

@@ -13,11 +13,14 @@ project (FtNaming) : orbsvcslib, orbsvcs_output, install, naming_serv, naming, p
   }
 
   Source_Files (ORBSVCS_COMPONENTS) {
-    Naming/FaultTolerant
+    FT_NamingManagerC.cpp
+    FT_NamingManagerS.cpp
     }
 
   Header_Files {
-    Naming/FaultTolerant
+    FT_NamingManagerC.h
+    FT_NamingManagerS.h
+
   }
 
 }

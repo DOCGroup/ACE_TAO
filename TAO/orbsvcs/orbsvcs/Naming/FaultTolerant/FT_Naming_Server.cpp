@@ -49,10 +49,13 @@
 
 /// Default Constructor.
 TAO_FT_Naming_Server::TAO_FT_Naming_Server (void)
-  : naming_manager_ (),
+  : replica_id_(0),
+    naming_manager_ (),
+    replication_manager_ (this),
     naming_manager_ior_file_name_(0),
+    replication_manager_ior_file_name_(0),
     naming_manager_persistence_file_name_(0)
-{ 
+{  
 
 }
 
@@ -68,92 +71,116 @@ TAO_FT_Naming_Server::init_with_orb (int argc,
   int result = TAO_Naming_Server::init_with_orb (argc, argv, orb);
 
   // Check the result to make sure it executed Ok.
-  if (result == -1)
+  if (result != 0)
     return result;
 
-  try
+  result = this->init_naming_manager_with_orb (argc, argv, orb);
+  if (result != 0)
+    return result;
+ 
+
+  try {
+
+    // Initialize the replication manager
+    result = init_replication_manager_with_orb(argc, argv, orb);
+    if (result != 0)
+      return result;
+  }
+  catch (CORBA::Exception& ex)
+  {
+    ex._tao_print_exception (
+      "TAO_FT_Naming_Server::init_with_orb");
+    return -1;
+  }
+
+  return 0;
+}
+
+
+int 
+TAO_FT_Naming_Server::init_naming_manager_with_orb (int argc, ACE_TCHAR *argv [], CORBA::ORB_ptr orb)
+{
+  int result = 0;
+
+  try {
+
+    // Get the POA from the ORB.
+    CORBA::Object_var poa_object =
+      orb->resolve_initial_references ("RootPOA");
+
+    if (CORBA::is_nil (poa_object.in ()))
     {
-      // Duplicate the ORB
-      this->orb_ = CORBA::ORB::_duplicate (orb);
-
-      // Get the POA from the ORB.
-      CORBA::Object_var poa_object =
-        orb->resolve_initial_references ("RootPOA");
-
-      if (CORBA::is_nil (poa_object.in ()))
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT(" (%P|%t) Unable to initialize the POA.\n")),
-                            -1);
-        }
-
-      if (result < 0)
-        return result;
-
-      // Get the POA object.
-      this->root_poa_ = PortableServer::POA::_narrow (poa_object.in ());
-
-      // Get the POA_Manager.
-      PortableServer::POAManager_var poa_manager =
-        this->root_poa_->the_POAManager ();
-
-      int numPolicies = 2;
-
-      CORBA::PolicyList policies (numPolicies);
-      policies.length (numPolicies);
-
-      // Id Assignment policy
-      policies[0] =
-        this->root_poa_->create_id_assignment_policy (PortableServer::USER_ID);
-
-      // Lifespan policy
-      policies[1] =
-        this->root_poa_->create_lifespan_policy (PortableServer::PERSISTENT);
-
-      /* Register the naming manager with a POA 
-       * TODO: 1) Error checking
-       *       2) Write IOR to file
-       *       3) Persistence for Object Group Manager
-       */
-
-      // We use a different POA, otherwise the user would have to change
-      // the object key each time it invokes the server.
-      this->naming_manager_poa_ = this->root_poa_->create_POA ("NamingManager",
-                                                               poa_manager.in (),
-                                                               policies);
-      // Warning!  If create_POA fails, then the policies won't be
-      // destroyed and there will be hell to pay in memory leaks!
-
-      // Creation of the new POAs over, so destroy the Policy_ptr's.
-      for (CORBA::ULong i = 0;
-           i < policies.length ();
-           ++i)
-        {
-          CORBA::Policy_ptr policy = policies[i];
-          policy->destroy ();
-        }
-
-      poa_manager->activate ();
-
-      // Register with the POA.
-      PortableServer::ObjectId_var id =
-        PortableServer::string_to_ObjectId ("NamingManager");
-
-      this->naming_manager_poa_->activate_object_with_id (id.in (),
-                                                          &this->naming_manager_);
-
-      this->naming_manager_ior_ = 
-        orb->object_to_string (naming_manager_._this());
-
-      this->naming_manager_.initialize (this->orb_,
-                                        this->naming_manager_poa_);
-
-
+      ACE_ERROR_RETURN ((LM_ERROR,
+        ACE_TEXT(" (%P|%t) Unable to initialize the POA.\n")),
+        -1);
     }
+
+    if (result != 0)
+      return result;
+
+    // Get the POA object.
+    this->root_poa_ = PortableServer::POA::_narrow (poa_object.in ());
+
+    // Get the POA_Manager.
+    PortableServer::POAManager_var poa_manager =
+      this->root_poa_->the_POAManager ();
+
+    int numPolicies = 2;
+
+    CORBA::PolicyList policies (numPolicies);
+    policies.length (numPolicies);
+
+    // Id Assignment policy
+    policies[0] =
+      this->root_poa_->create_id_assignment_policy (PortableServer::USER_ID);
+
+    // Lifespan policy
+    policies[1] =
+      this->root_poa_->create_lifespan_policy (PortableServer::PERSISTENT);
+
+    /* Register the naming manager with a POA 
+    * TODO: 1) Error checking
+    *       2) Write IOR to file
+    *       3) Persistence for Object Group Manager
+    */
+
+    // We use a different POA, otherwise the user would have to change
+    // the object key each time it invokes the server.
+    this->naming_manager_poa_ = this->root_poa_->create_POA ("NamingManager",
+      poa_manager.in (),
+      policies);
+    // Warning!  If create_POA fails, then the policies won't be
+    // destroyed and there will be hell to pay in memory leaks!
+
+    // Creation of the new POAs over, so destroy the Policy_ptr's.
+    for (CORBA::ULong i = 0;
+      i < policies.length ();
+      ++i)
+    {
+      CORBA::Policy_ptr policy = policies[i];
+      policy->destroy ();
+    }
+
+    poa_manager->activate ();
+
+    // Register with the POA.
+    PortableServer::ObjectId_var id =
+      PortableServer::string_to_ObjectId ("NamingManager");
+
+    this->naming_manager_poa_->activate_object_with_id (id.in (),
+      &this->naming_manager_);
+
+    this->naming_manager_ior_ = 
+      orb->object_to_string (naming_manager_._this());
+
+    this->naming_manager_.initialize (this->orb_,
+      this->naming_manager_poa_);
+
+  }
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception (
-        "TAO_FT_Naming_Server::init_with_orb");
+        "TAO_FT_Naming_Server::init_naming_manager_with_orb");
       return -1;
     }
 
@@ -166,7 +193,7 @@ TAO_FT_Naming_Server::init_with_orb (int argc,
                              ACE_TEXT("Unable to open %s for writing:(%u) %p\n"),
                              this->naming_manager_ior_file_name_,
                              ACE_ERRNO_GET,
-                             ACE_TEXT("TAO_FT_Naming_Server::init_with_orb")),
+                             ACE_TEXT("TAO_FT_Naming_Server::init_naming_manager_with_orb")),
                             -1);
         }
 
@@ -184,7 +211,7 @@ TAO_FT_Naming_Server::init_with_orb (int argc,
     IORTable::Table::_narrow (table_object.in ());
   if (CORBA::is_nil (adapter.in ()))
   {
-    ACE_ERROR ((LM_ERROR, "TAO_FT_Naming_Server::init_with_orb - Nil IORTable\n"));
+    ACE_ERROR ((LM_ERROR, "TAO_FT_Naming_Server::init_naming_manager_with_orb - Nil IORTable\n"));
   }
   else
   {
@@ -195,12 +222,128 @@ TAO_FT_Naming_Server::init_with_orb (int argc,
   return 0;
 }
 
+int 
+TAO_FT_Naming_Server::init_replication_manager_with_orb (int argc, ACE_TCHAR *argv [], CORBA::ORB_ptr orb)
+{
+  int result = 0;
+
+  try {
+
+    // Get the POA from the ORB.
+    CORBA::Object_var poa_object =
+      orb->resolve_initial_references ("RootPOA");
+
+    if (CORBA::is_nil (poa_object.in ()))
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+        ACE_TEXT(" (%P|%t) Unable to initialize the POA.\n")),
+        -1);
+    }
+
+    if (result != 0)
+      return result;
+
+    // Get the POA object.
+    this->root_poa_ = PortableServer::POA::_narrow (poa_object.in ());
+
+    // Get the POA_Manager.
+    PortableServer::POAManager_var poa_manager =
+      this->root_poa_->the_POAManager ();
+
+    int numPolicies = 2;
+
+    CORBA::PolicyList policies (numPolicies);
+    policies.length (numPolicies);
+
+    // Id Assignment policy
+    policies[0] =
+      this->root_poa_->create_id_assignment_policy (PortableServer::USER_ID);
+
+    // Lifespan policy
+    policies[1] =
+      this->root_poa_->create_lifespan_policy (PortableServer::PERSISTENT);
+
+    /* Register the naming manager with a POA 
+    * TODO: 1) Error checking
+    *       2) Write IOR to file
+    *       3) Persistence for Object Group Manager
+    */
+
+    // We use a different POA, otherwise the user would have to change
+    // the object key each time it invokes the server.
+    this->replication_manager_poa_ = this->root_poa_->create_POA ("NamingReplication",
+      poa_manager.in (),
+      policies);
+    // Warning!  If create_POA fails, then the policies won't be
+    // destroyed and there will be hell to pay in memory leaks!
+
+    // Creation of the new POAs over, so destroy the Policy_ptr's.
+    for (CORBA::ULong i = 0;
+      i < policies.length ();
+      ++i)
+    {
+      CORBA::Policy_ptr policy = policies[i];
+      policy->destroy ();
+    }
+
+    poa_manager->activate ();
+
+    if (this->replica_id_ == 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+        ACE_TEXT("No replica id provided. Not supporting replication..\n")),
+        0);
+    }
+    // Register with the POA.
+    PortableServer::ObjectId_var id =
+      PortableServer::string_to_ObjectId (this->replica_id_);
+
+    this->replication_manager_poa_->activate_object_with_id (id.in (),
+      &this->replication_manager_);
+
+    this->naming_manager_ior_ = 
+      orb->object_to_string (replication_manager_._this());
+
+    this->replication_manager_.initialize (this->orb_,
+      this->replication_manager_poa_);
+
+  }
+  catch (const CORBA::Exception& ex)
+    {
+      ex._tao_print_exception (
+        "TAO_FT_Naming_Server::init_replication_manager_with_orb.\n");
+      return -1;
+    }
+
+  if (this->replication_manager_ior_ != 0)
+    {
+      FILE *iorf = ACE_OS::fopen (this->replication_manager_ior_file_name_, ACE_TEXT("w"));
+      if (iorf == 0)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT("Unable to open %s for writing:(%u) %p\n"),
+                             this->replication_manager_ior_file_name_,
+                             ACE_ERRNO_GET,
+                             ACE_TEXT("TAO_FT_Naming_Server::init_replication_manager_with_orb")),
+                            -1);
+        }
+
+      CORBA::String_var str = this->naming_manager_ior ();
+
+      ACE_OS::fprintf (iorf, "%s\n", str.in ());
+      ACE_OS::fclose (iorf);
+    }
+
+  return 0;
+}
+
+
 int
 TAO_FT_Naming_Server::parse_args (int argc,
                                   ACE_TCHAR *argv[])
 {
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT)
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("b:do:p:s:f:m:z:u:g:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("b:do:p:s:f:m:z:u:g:i:"));
 #else
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("b:do:p:s:f:m:z:"));
 #endif /* TAO_HAS_MINIMUM_POA */
@@ -239,6 +382,9 @@ TAO_FT_Naming_Server::parse_args (int argc,
         break;
       case 'p':
         this->pid_file_name_ = get_opts.opt_arg ();
+        break;
+      case 'i':
+        this->replica_id_ = get_opts.opt_arg ();
         break;
       case 's':
         size = ACE_OS::atoi (get_opts.opt_arg ());
@@ -300,6 +446,7 @@ TAO_FT_Naming_Server::parse_args (int argc,
                            ACE_TEXT ("-d ")
                            ACE_TEXT ("-o <name_svc_ior_output_file> ")
                            ACE_TEXT ("-g <naming_mgr_ior_output_file> ")
+                           ACE_TEXT ("-i <replica_id> ")
                            ACE_TEXT ("-p <pid_file_name> ")
                            ACE_TEXT ("-s <context_size> ")
                            ACE_TEXT ("-b <base_address> ")
@@ -356,7 +503,7 @@ TAO_FT_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
 
           // Provide the naming manager reference for use in 
           // TAO_FT_Persistent_Naming_Contexts for load balancing functionality
-          TAO_FT_Storable_Naming_Context::set_naming_manager_impl (&naming_manager_);
+          TAO_FT_Storable_Naming_Context::set_naming_manager (&naming_manager_);
 
           // This instance will either get deleted after recreate all or,
           // in the case of a servant activator's use, on destruction of the
@@ -601,6 +748,20 @@ char*
 TAO_FT_Naming_Server::naming_manager_ior (void)
 {
   return CORBA::string_dup (this->naming_manager_ior_.in ());
+}
+
+int 
+TAO_FT_Naming_Server::update_object_group (
+    const FT_Naming::ObjectGroupUpdate & group_info)
+{
+  return -1;
+}
+
+int 
+TAO_FT_Naming_Server::update_naming_context (
+    const FT_Naming::NamingContextUpdate & context_info)
+{
+  return -1;
 }
 
 

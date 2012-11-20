@@ -4,9 +4,10 @@
 #define TAO_FT_NAMING_SERVER_H
 
 #include "orbsvcs/Naming/Naming_Server.h"
-#include "orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.h"
+#include "FT_Naming_Manager.h"
+#include "FT_Naming_Replication_Manager.h"
 #include "orbsvcs/Naming/FaultTolerant/ftnaming_export.h"
-
+#include "FT_NamingReplicationC.h"
 
 /**
  * @class TAO_FT_Naming_Server
@@ -50,6 +51,12 @@ public:
   /// arguments and the ORB. Overrridden from TAO_Naming_Server
   virtual int init_with_orb (int argc, ACE_TCHAR *argv [], CORBA::ORB_ptr orb);
 
+  /// Initialize the naming manager with the ORB.
+  int init_naming_manager_with_orb (int argc, ACE_TCHAR *argv [], CORBA::ORB_ptr orb);
+
+  /// Initialize the replication manager with the ORB.
+  int init_replication_manager_with_orb (int argc, ACE_TCHAR *argv [], CORBA::ORB_ptr orb);
+
   /// Overridden parse operation. Only allows options supported by the FT_Naming_Server
   /// and adds options for the object group manager 
   virtual int parse_args (int argc,
@@ -61,16 +68,31 @@ public:
   /// Returns the IOR of the naming manager.
   char * naming_manager_ior (void);
 
+  virtual int update_object_group (
+    const FT_Naming::ObjectGroupUpdate & group_info);
+
+  virtual int update_naming_context (
+    const FT_Naming::NamingContextUpdate & naming_context);
+
   /// Destructor.
   virtual ~TAO_FT_Naming_Server (void);
 
 protected:
+  const ACE_TCHAR * replica_id_;
+
   /// The object that implements the ObjectGroupManager, PropertyManager,
   /// and GenericFactory interfaces.
   TAO_FT_Naming_Manager naming_manager_;
 
+  /// The object that implements the FT_Naming::Replication_Manager 
+  /// interface
+  TAO_FT_Naming_Replication_Manager replication_manager_;
+
   /// File to output the Object Group Manager IOR.
   const ACE_TCHAR *naming_manager_ior_file_name_;
+
+  /// File to output the Object Group Manager IOR.
+  const ACE_TCHAR *replication_manager_ior_file_name_;
 
   /// Path to the file to be used to store/read in Object Group Manager
   /// persistent state.
@@ -79,8 +101,13 @@ protected:
   /// The IOR string of the object group manager.
   CORBA::String_var naming_manager_ior_;
 
+  /// The IOR string of the object group manager.
+  CORBA::String_var replication_manager_ior_;
+
   /// The Object Group Manager POA.
   PortableServer::POA_var naming_manager_poa_;
+
+  PortableServer::POA_var replication_manager_poa_;
 
 };
 
