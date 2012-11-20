@@ -231,10 +231,9 @@
 
 // HP-UX 11 has reentrant netdb functions.  The catch is that the old
 // functions (gethostbyname, etc.) are thread-safe and the _r versions are
-// not used and will be removed at some point.  So, define things so
-// the _r versions are not used.  This will slow things down a bit due to
-// the extra mutex lock in the ACE_NETDBCALL_RETURN macro, and will be fixed
-// in the future (problem ID P64).
+// obsolescent.  So, define things so the _r versions are not used.
+// OS_NS_netdb.inl ensures no funny lock games are played in the
+// ACE_NETDBCALL_RETURN macro.
 #define ACE_LACKS_NETDB_REENTRANT_FUNCTIONS
 
 /* Platform lacks pri_t (e.g., Tandem NonStop UNIX). */
