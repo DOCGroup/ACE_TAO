@@ -1,3 +1,9 @@
+Tue Nov 20 19:10:38 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/XML_Utils/ACE_XML_Utils.pc.in:
+        * ace/XML_Utils/XML.mpc:
+          Added missing pc.in file for ACE_XML_Utils
+
 Tue Nov 13 18:17:24 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/run_test.lst:
