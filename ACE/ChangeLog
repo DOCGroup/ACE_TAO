@@ -1,3 +1,10 @@
+Tue Nov 20 23:55:57 UTC 2012  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-hpux-11.00.h:
+        * ace/OS_NS_netdb.inl: Although HP-UX 11 doesn't have the _r
+          netdb calls, the regular ones are reentrant for multiple threads.
+          Therefore, do not use the mutex-acquiring wrapper for HP-UX 11.
+
 Tue Nov 20 19:10:38 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/XML_Utils/ACE_XML_Utils.pc.in:
