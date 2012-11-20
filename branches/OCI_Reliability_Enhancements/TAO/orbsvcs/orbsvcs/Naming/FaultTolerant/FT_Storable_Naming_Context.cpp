@@ -14,7 +14,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Initialize the static naming manager
-TAO_FT_Naming_Manager *TAO_FT_Storable_Naming_Context::naming_manager_impl_ = 0;
+TAO_FT_Naming_Manager *TAO_FT_Storable_Naming_Context::naming_manager_ = 0;
 
 TAO_FT_Storable_Naming_Context::TAO_FT_Storable_Naming_Context (CORBA::ORB_ptr orb,
                                PortableServer::POA_ptr poa,
@@ -69,7 +69,7 @@ TAO_FT_Storable_Naming_Context::resolve (const CosNaming::Name& n)
       return resolved_ref._retn ();
 
     // If there is no naming manager, we will fail and report an error.
-    if ( this->naming_manager_impl_ == 0)
+    if ( this->naming_manager_ == 0)
     {
       ACE_ERROR ((LM_ERROR, 
         "TAO_FT_Persistent_Naming_Context::resolve - No NamingManager defined.\n"));
@@ -79,12 +79,12 @@ TAO_FT_Storable_Naming_Context::resolve (const CosNaming::Name& n)
     
     // Get the next location selected by the associated strategy 
     PortableGroup::Location next_location;
-    if (this->naming_manager_impl_->next_location (resolved_ref.in(), next_location))
+    if (this->naming_manager_->next_location (resolved_ref.in(), next_location))
     { // Found the location
       // Access the object from the naming service manager by passing in 
       // the next_location value and assign it to the resolved_ref
       resolved_ref = 
-        this->naming_manager_impl_->get_member_ref (resolved_ref.in (), next_location);
+        this->naming_manager_->get_member_ref (resolved_ref.in (), next_location);
     }
     else
     { // No locations defined for the object group, so we will return a null object reference
@@ -109,9 +109,9 @@ TAO_FT_Storable_Naming_Context::resolve (const CosNaming::Name& n)
 }
 
 void 
-TAO_FT_Storable_Naming_Context::set_naming_manager_impl (TAO_FT_Naming_Manager *mgr_impl)
+TAO_FT_Storable_Naming_Context::set_naming_manager (TAO_FT_Naming_Manager *mgr_impl)
 {
-  naming_manager_impl_ = (mgr_impl);
+  naming_manager_ = mgr_impl;
 }
 
 
@@ -226,7 +226,7 @@ TAO_FT_Storable_Naming_Context::recreate_all(
   if (fl->exists())
   {
     // Load the map from disk
-    File_Open_Lock_and_Check flck(new_context, "r");
+    File_Open_Lock_and_Check flck (new_context, "r");
   }
   else
   {
@@ -235,19 +235,19 @@ TAO_FT_Storable_Naming_Context::recreate_all(
                       TAO_Storable_Bindings_Map (context_size,orb),
                       CORBA::NO_MEMORY ());
     new_context->context_ = new_context->storable_context_;
-    File_Open_Lock_and_Check flck(new_context, "wc");
-    new_context->Write(flck.peer());
+    File_Open_Lock_and_Check flck (new_context, "wc");
+    new_context->Write (flck.peer ());
   }
 
   // build the global file name
-  file_name += ACE_TEXT("_global");
+  file_name += ACE_TEXT ("_global");
 
   // Create the stream for the counter used to uniquely creat context names
-  gfl_.reset(factory->create_stream(ACE_TEXT_ALWAYS_CHAR(file_name.c_str()), ACE_TEXT("crw")));
-  if (gfl_->open() != 0)
+  gfl_.reset(factory->create_stream (ACE_TEXT_ALWAYS_CHAR(file_name.c_str ()), ACE_TEXT ("crw")));
+  if (gfl_->open () != 0)
     {
-      delete gfl_.release();
-      throw CORBA::PERSIST_STORE();
+      delete gfl_.release ();
+      throw CORBA::PERSIST_STORE ();
     }
 
   // get the counter from disk
@@ -259,8 +259,8 @@ TAO_FT_Storable_Naming_Context::recreate_all(
       gfl_.get ()->clear ();
       throw CORBA::INTERNAL ();
     }
-  gcounter_ = global.counter();
-  if(redundant_) gfl_->close();
+  gcounter_ = global.counter ();
+  if(redundant_) gfl_->close ();
 
   return result._retn ();
 }

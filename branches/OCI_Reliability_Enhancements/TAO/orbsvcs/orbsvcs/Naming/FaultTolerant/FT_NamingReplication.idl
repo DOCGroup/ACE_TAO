@@ -55,17 +55,7 @@ module FT_Naming
 
   };
   
-  // Specification of NamingManager Interface
-  interface UpdatePushNotifier
-  {
-    void notify_updated_object_group(in ObjectGroupUpdate group_info)
-      raises (NotAvailable);
-
-    void notify_updated_context(in NamingContextUpdate group_info)
-      raises (NotAvailable); 
-  };
-  
-  interface ReplicaRegistration 
+  interface ReplicationManager 
   {
    /*
     * Register with a peer replica with an object reference for 
@@ -74,9 +64,16 @@ module FT_Naming
     * in a shared repository and the update notification indicates the 
     * element that was changed.
     */
-    UpdatePushNotifier register_replica (in UpdatePushNotifier notifier) 
+    void register_replica (in ReplicationManager replica) 
       raises (NotAvailable);  // If replica at this time
+
+    void notify_updated_object_group(in ObjectGroupUpdate group_info)
+      raises (NotAvailable);
+
+    void notify_updated_context(in NamingContextUpdate context_info)
+      raises (NotAvailable); 
   };
+  
   
 };
 
