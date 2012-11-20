@@ -27,6 +27,7 @@
 
 #include "orbsvcs/CosLoadBalancingS.h"
 #include "ace/Vector_T.h"
+#include "orbsvcs/Naming/FaultTolerant/ftnaming_export.h"
 
 class TAO_FT_Naming_Manager;
 
@@ -40,7 +41,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * This load balancing strategy is designed to select an object group
  * member residing at the next location.
  */
-class TAO_FT_Round_Robin
+class TAO_FtNaming_Export TAO_FT_Round_Robin
 {
 public:
 
