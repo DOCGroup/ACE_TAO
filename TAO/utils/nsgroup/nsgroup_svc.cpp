@@ -14,7 +14,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/Service_Config.h"
 #include "ace/OS_NS_strings.h"
-#include <sstream>
 
 
 NS_group_svc::NS_group_svc (int argc, ACE_TCHAR **argv)
@@ -326,7 +325,7 @@ NS_group_svc::start_orb (void)
       this->orb_->resolve_initial_references("NameService");
 
     this->name_service_ =
-      CosNaming::NamingContext::_narrow (naming_object.in ());
+      CosNaming::NamingContextExt::_narrow (naming_object.in ());
 
     if (CORBA::is_nil (this->name_service_.in ()))
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -487,29 +486,48 @@ NS_group_svc::group_bind (
   try
   {
 
-    CosNaming::Name bindName (1);
-    bindName.length (1);
-    bindName[0].id = CORBA::string_dup (path);
-
     PortableGroup::ObjectGroup_var group_var =
       this->naming_manager_->get_object_group_ref_from_name (group_name);
 
-    this->name_service_->rebind ( bindName, group_var.in() );
+    if (CORBA::is_nil (group_var.in()))
+      ACE_ERROR_RETURN ((LM_ERROR,
+                          "Unable to get reference.\n"),
+                          -1);
+
+    CORBA::String_var str = CORBA::string_dup(path);
+    CosNaming::Name_var name = this->name_service_->to_name ( str.in() );
+
+    this->name_service_->rebind ( name.in(), group_var.in() );
 
   }
-  catch (const CosNaming::NamingContext::AlreadyBound& ex){
+  catch (const CosNaming::NamingContextExt::InvalidName& ex){
+      ex._tao_print_exception ("InvalidName Exception in group_bind");
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("\nUnable to bind %C\n"),
+                         ACE_TEXT ("\n%C is invalid\n"),
+                         path),
+                        -1);
+  }
+  catch (const CosNaming::NamingContext::CannotProceed& ex){
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("\nCannot proceed with %C\n"),
+                         path),
+                        -1);
+  }
+  catch (const CosNaming::NamingContext::NotFound& ex){
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("\nUnable to find %C\n"),
                          path),
                         -1);
   }
   catch (const CORBA::SystemException& ex){
+      ex._tao_print_exception ("SystemException Exception in group_bind");
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("\nUnable to bind %C\n"),
                          path),
                         -1);
   }
   catch (const CORBA::Exception& ex){
+      ex._tao_print_exception ("Exception in group_bind");
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("\nUnable to bind %C\n"),
                          path),
@@ -530,26 +548,38 @@ NS_group_svc::group_unbind (const char* path){
   try
   {
 
-    CosNaming::Name bindName (1);
-    bindName.length (1);
-    bindName[0].id = CORBA::string_dup (path);
-
-    this->name_service_->unbind ( bindName );
+    CORBA::String_var str = CORBA::string_dup(path);
+    CosNaming::Name_var name = this->name_service_->to_name ( str.in() );
+    this->name_service_->unbind ( name.in() );
 
   }
-  catch (const CosNaming::NamingContext::AlreadyBound& ex){
+  catch (const CosNaming::NamingContext::NotFound& ex){
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("\nUnable to unbind %C\n"),
+                         ACE_TEXT ("\nUnable to find %C\n"),
+                         path),
+                        -1);
+  }
+  catch (const CosNaming::NamingContext::CannotProceed& ex){
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("\nCannot proceed with %C\n"),
+                         path),
+                        -1);
+  }
+  catch (const CosNaming::NamingContext::InvalidName& ex){
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("\n%C is invalid\n"),
                          path),
                         -1);
   }
   catch (const CORBA::SystemException& ex){
+      ex._tao_print_exception ("Exception in group_unbind");
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("\nUnable to unbind %C\n"),
                          path),
                         -1);
   }
   catch (const CORBA::Exception& ex){
+      ex._tao_print_exception ("Exception in group_unbind");
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("\nUnable to unbind %C\n"),
                          path),

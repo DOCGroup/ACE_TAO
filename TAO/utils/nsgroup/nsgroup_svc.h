@@ -118,7 +118,7 @@ private:
   FT::NamingManager_var naming_manager_;
 
   /// Name Service
-  CosNaming::NamingContext_var name_service_;
+  CosNaming::NamingContextExt_var name_service_;
 
   CORBA::ORB_var orb_;
 
