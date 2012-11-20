@@ -1,3 +1,10 @@
+Tue Nov 20 13:39:00 UTC 2012  Simon Massey  <Simon dot massey at prismtech dot com>
+
+        * TAO_IDL/be/be_util.cpp:
+          Remove Help message concerning -si parameter that is no longer
+          accepted. (As of Sun Nov 27 18:19:18 UTC 2011  Johnny Willemsen
+          the S.inl files are not generated anymore.)
+
 Mon Nov 12 10:07:02 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * NEWS:
