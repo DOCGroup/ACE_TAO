@@ -1,3 +1,4 @@
+// $Id$
 
 project(nsgroup): orbsvcsexe, portablegroup, ftnaming, naming, install, svc_utils {
   install = $(ACE_ROOT)/bin

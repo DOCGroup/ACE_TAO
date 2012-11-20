@@ -1,3 +1,20 @@
+Tue Nov 20 19:32:12 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
+
+        * utils/nsgroup/nsgroup.mpc:
+
+        Added $ID
+
+        * utils/nsgroup/nsgroup_svc.h:
+        * utils/nsgroup/nsgroup_svc.cpp:
+
+        Changed group_bind and group_unbind to use the NamingContextExt
+        interface to properly convert stringified names to compound names.
+
+        * utils/nsgroup/run_test.pl:
+
+        Add calls to tao_nslist, tao_nsadd and tao_nsdel to augment name
+        service verification.
+
 Tue Nov 20 15:05:32 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/Hash_Naming_Context.cpp:

@@ -18,7 +18,10 @@ foreach $i (@ARGV) {
 }
 
 my $name_manager = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-my $client      = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
+my $client       = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
+my $nslist       = PerlACE::TestTarget::create_target (3) || die "Create target 3 failed\n";
+my $nsadd        = PerlACE::TestTarget::create_target (4) || die "Create target 4 failed\n";
+my $nsdel        = PerlACE::TestTarget::create_target (5) || die "Create target 5 failed\n";
 
 ## The LoadManager needs to register signals with the ORB's reactor (on
 ## Windows only) and thus can not use the TP Reactor since it doesn't
@@ -51,6 +54,11 @@ $DEBUG_LEVEL  = "-ORBDebugLevel $debug_level";
 $LOAD_ARG     = "$NM_REF $RM_REF $DEBUG_LEVEL";
 
 $CL   = $client->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_nsgroup");
+$NSLIST = $nslist->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_nslist","$NM_REF");
+$NSADD  = $nsadd->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_nsadd","$NM_REF");
+$NSDEL  = $nsdel->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_nsdel","$NM_REF");
+
+
 
 $POSITIVE_TEST_RESULT = 0;
 $NEGATIVE_TEST_RESULT = 1;
@@ -80,6 +88,51 @@ sub run_client ($$)
     }
 }
 
+sub run_nsadd($)
+{
+    print STDERR "\n\n======== Running tao_nsadd================\n";
+    my $args = shift;
+    $NSADD->Arguments ($args);
+
+    #tao_nsadd --name iso --ctx
+    my $nsadd_status = $NSADD->SpawnWaitKill ($nsadd->ProcessStartWaitInterval());
+
+    if ($nsadd_status != $0) {
+        my $time = localtime;
+        print STDERR "ERROR: nsadd returned $nsadd_status at $time\n";
+        $status = 1;
+    }
+}
+
+sub run_nsdel($)
+{
+    print STDERR "\n\n======== Running tao_nsdel================\n";
+    my $args = shift;
+    $NSDEL->Arguments ($args);
+
+    #tao_nsdel --name iso --destroy
+    my $nsdel_status = $NSDEL->SpawnWaitKill ($nsdel->ProcessStartWaitInterval());
+
+    if ($nsdel_status != $0) {
+        my $time = localtime;
+        print STDERR "ERROR: nsdel returned $nsdel_status at $time\n";
+        $status = 1;
+    }
+}
+
+sub run_nslist()
+{
+    print STDERR "\n\n======== Running tao_nslist================\n";
+
+    my $nslist_status = $NSLIST->SpawnWaitKill ($nslist->ProcessStartWaitInterval());
+
+    if ($nslist_status != $0) {
+        my $time = localtime;
+        print STDERR "ERROR: nslist returned $nslist_status at $time\n";
+        $status = 1;
+    }
+}
+
 sub run_clients ()
 {
     run_client (
@@ -97,24 +150,39 @@ sub run_clients ()
     run_client (
         "group_list",
         $POSITIVE_TEST_RESULT);
-    run_client (
-        "group_unbind -name iso/ieee",
-        $POSITIVE_TEST_RESULT);
-    run_client (
-        "group_bind -group ieee -name iso/ieee",
-        $POSITIVE_TEST_RESULT);
-    run_client (
-        "group_unbind -name iso/ieee",
-        $POSITIVE_TEST_RESULT);
-    run_client (
-        "group_modify -group ieee -policy rand",
-        $POSITIVE_TEST_RESULT);
+
+
+
+
     run_client (
         "member_list -group ieee",
         $POSITIVE_TEST_RESULT);
+
     run_client (
         "member_add -group ieee -location 127.0.0.1 -ior file://$naming_mgr_client_iorfile",
         $POSITIVE_TEST_RESULT);
+
+    run_nslist();
+
+    run_nsdel("$NM_REF"." --name iso --destroy");
+    run_nsadd("$NM_REF"." --name iso --ctx");
+    #run_nsadd("$NM_REF"." --name iso/test --ior file://$naming_mgr_client_iorfile");
+
+    run_client (
+        "group_unbind -name iso/ieee",
+        $NEGATIVE_TEST_RESULT);
+    run_nslist();
+
+    run_client (
+        "group_bind -group ieee -name iso/ieee",
+        $POSITIVE_TEST_RESULT);
+    run_nslist();
+
+    run_client (
+        "group_modify -group ieee -policy rand",
+        $POSITIVE_TEST_RESULT);
+    run_nslist();
+
     run_client (
         "member_add -group ieee -location 127.0.0.1 -ior file://$naming_mgr_client_iorfile",
         $NEGATIVE_TEST_RESULT);
@@ -133,6 +201,12 @@ sub run_clients ()
     run_client (
         "group_remove -group ieee",
         $POSITIVE_TEST_RESULT);
+
+    run_client (
+        "group_unbind -name iso/ieee",
+        $POSITIVE_TEST_RESULT);
+    run_nslist();
+
     run_client (
         "group_list",
         $POSITIVE_TEST_RESULT);
