@@ -1,3 +1,9 @@
+Tue Nov 20 19:32:42 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Utils/PolicyList_Destroyer.cpp:
+          Call index also in the try/catch scope because it can also
+          throw an exception
+
 Tue Nov 20 13:39:00 UTC 2012  Simon Massey  <Simon dot massey at prismtech dot com>
 
         * TAO_IDL/be/be_util.cpp:
