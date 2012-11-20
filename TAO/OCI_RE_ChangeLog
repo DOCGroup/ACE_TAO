@@ -1,3 +1,11 @@
+Tue Nov 20 15:05:32 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/Hash_Naming_Context.cpp:
+
+          While refactoring the lock utilization, I inadvertently removed
+          a critical section from the resolve() implementation. That's been
+          restored.
+
 Mon Nov 19 22:33:49 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/CSD_Framework/CSD_Framework_Loader.cpp:

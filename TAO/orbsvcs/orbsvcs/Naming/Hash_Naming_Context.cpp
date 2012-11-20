@@ -352,6 +352,16 @@ TAO_Hash_Naming_Context::resolve (const CosNaming::Name& n)
   // Stores the object reference bound to the first name component.
   CORBA::Object_var result;
 
+  {
+    ACE_GUARD_THROW_EX (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon, this->lock_,
+                        CORBA::INTERNAL ());
+    if (this->context_->find (n[0].id,
+                              n[0].kind,
+                              result.out (),
+                              type) == -1)
+      throw CosNaming::NamingContext::NotFound
+        (CosNaming::NamingContext::missing_node, n);
+  }
   // If the name we have to resolve is a compound name, we need to
   // resolve it recursively.
   if (name_len > 1)
