@@ -1,3 +1,9 @@
+Tue Nov 20 22:44:07 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
+
+        * utils/nsgroup/run_test.pl:
+
+        Corrected type_id string passed in test
+
 Tue Nov 20 22:42:06 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
 
         * ChangeLog:
@@ -7,7 +13,7 @@ Tue Nov 20 22:42:06 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
         * orbsvcs/orbsvcs/FtNaming.mpc:
 
           Support building FT Naming Service with replication.
-          
+
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_NamingReplication.idl:
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Serv.mpc:
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.h:
@@ -20,7 +26,7 @@ Tue Nov 20 22:42:06 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
 
           Functionality to support Replication interface between naming
           service instances.
-          
+
 Tue Nov 20 19:32:12 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
 
         * utils/nsgroup/nsgroup.mpc:

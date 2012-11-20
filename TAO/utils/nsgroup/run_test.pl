@@ -138,21 +138,22 @@ sub run_clients ()
     run_client (
         "group_list",
         $POSITIVE_TEST_RESULT);
+
     run_client (
-        "group_create -group ieee -policy round -type_id IDL:omg.org/FT/NamingManager:1.0",
+        "group_create -group ieee -policy round -type_id IDL:FT/NamingManager:1.0",
         $POSITIVE_TEST_RESULT);
+
     run_client (
-        "group_create -group ieed -policy rand -type_id IDL:omg.org/FT/NamingManager:1.0",
+        "group_create -group ieed -policy rand -type_id IDL:/FT/NamingManager:1.0",
         $POSITIVE_TEST_RESULT);
+
     run_client (
-        "group_create -group ieee -policy round -type_id IDL:omg.org/FT/NamingManager:1.0",
+        "group_create -group ieee -policy round -type_id IDL:/FT/NamingManager:1.0",
         $NEGATIVE_TEST_RESULT);
+
     run_client (
         "group_list",
         $POSITIVE_TEST_RESULT);
-
-
-
 
     run_client (
         "member_list -group ieee",
@@ -162,42 +163,48 @@ sub run_clients ()
         "member_add -group ieee -location 127.0.0.1 -ior file://$naming_mgr_client_iorfile",
         $POSITIVE_TEST_RESULT);
 
-    run_nslist();
-
-    run_nsdel("$NM_REF"." --name iso --destroy");
     run_nsadd("$NM_REF"." --name iso --ctx");
-    #run_nsadd("$NM_REF"." --name iso/test --ior file://$naming_mgr_client_iorfile");
+
+    run_nslist();
 
     run_client (
         "group_unbind -name iso/ieee",
         $NEGATIVE_TEST_RESULT);
+
     run_nslist();
 
     run_client (
         "group_bind -group ieee -name iso/ieee",
         $POSITIVE_TEST_RESULT);
+
     run_nslist();
 
     run_client (
         "group_modify -group ieee -policy rand",
         $POSITIVE_TEST_RESULT);
+
     run_nslist();
 
     run_client (
         "member_add -group ieee -location 127.0.0.1 -ior file://$naming_mgr_client_iorfile",
         $NEGATIVE_TEST_RESULT);
+
     run_client (
         "member_list -group ieee",
         $POSITIVE_TEST_RESULT);
+
     run_client (
         "member_show -group ieee -location 127.0.0.1",
         $POSITIVE_TEST_RESULT);
+
     run_client (
         "member_remove -group ieee -location 127.0.0.1",
         $POSITIVE_TEST_RESULT);
+
     run_client (
         "member_list -group ieee",
         $POSITIVE_TEST_RESULT);
+
     run_client (
         "group_remove -group ieee",
         $POSITIVE_TEST_RESULT);
@@ -205,11 +212,15 @@ sub run_clients ()
     run_client (
         "group_unbind -name iso/ieee",
         $POSITIVE_TEST_RESULT);
+
     run_nslist();
 
     run_client (
         "group_list",
         $POSITIVE_TEST_RESULT);
+
+    run_nsdel("$NM_REF"." --name iso --destroy");
+
     run_client (
         "-help",
         $POSITIVE_TEST_RESULT);
@@ -260,9 +271,9 @@ if ($name_manager_status != 0) {
     $status = 1;
 }
 
-$name_manager->DeleteFile($name_mgr_iorbase);
-$name_manager->DeleteFile($name_iorbase);
-$client->DeleteFile($name_mgr_iorbase);
-$client->DeleteFile($name_iorbase);
+#$name_manager->DeleteFile($name_mgr_iorbase);
+#$name_manager->DeleteFile($name_iorbase);
+#$client->DeleteFile($name_mgr_iorbase);
+#$client->DeleteFile($name_iorbase);
 
 exit $status;
