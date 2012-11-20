@@ -148,13 +148,6 @@ TAO_Dynamic_TP_POA_Loader::load_poa_map (ACE_TCHAR *map,
   config_name = ACE_TEXT_ALWAYS_CHAR (sep + 1);
   *sep = 0;
 
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_POA_Loader: POA Group ")
-              ACE_TEXT ("that needs to be parsed: [%C]\n"),
-              map));
-
-  ACE_CString::size_type begin = 0;
-
   // Now that we have a config name and a null strategy
   // implementation class we can allocate a new instance of a
   // strategy configuration container.
@@ -180,15 +173,15 @@ TAO_Dynamic_TP_POA_Loader::load_poa_map (ACE_TCHAR *map,
 }
 
 void
-TAO_Dynamic_TP_POA_Loader::report_option_value_error (const ACE_TCHAR* option_name,
-                                                      const ACE_TCHAR* option_value)
+TAO_Dynamic_TP_POA_Loader::report_option_value_error (const ACE_TCHAR* name,
+                                                      const ACE_TCHAR* value)
 {
   if (TAO_debug_level > 0)
     {
       ACE_DEBUG((LM_DEBUG,
                  ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_POA_Loader - unknown ")
                  ACE_TEXT ("argument <%s> for <%s>\n"),
-                 option_value, option_name));
+                 value, name));
     }
 }
 

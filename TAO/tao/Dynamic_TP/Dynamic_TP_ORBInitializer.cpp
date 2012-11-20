@@ -100,7 +100,7 @@ TAO_Dynamic_TP_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr in
 }
 
 void
-TAO_Dynamic_TP_ORBInitializer::post_init (PortableInterceptor::ORBInitInfo_ptr info)
+TAO_Dynamic_TP_ORBInitializer::post_init (PortableInterceptor::ORBInitInfo_ptr )
 {
   //  this->register_policy_factories (info);
 }

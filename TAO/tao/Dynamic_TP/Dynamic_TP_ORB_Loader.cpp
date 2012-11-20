@@ -33,13 +33,9 @@ TAO_Dynamic_TP_ORB_Loader::init (int argc, ACE_TCHAR* argv[])
   // Only allow initialization once.
   if (this->initialized_)
     return 0;
-
   this->initialized_ = true;
 
-  ACE_TCHAR *name = 0;
-
   int curarg = 0;
-
   for (curarg = 0; curarg < argc; ++curarg)
     {
       if (ACE_OS::strcasecmp (argv[curarg], ACE_TEXT ("-DTPORB")) == 0)
@@ -55,17 +51,15 @@ TAO_Dynamic_TP_ORB_Loader::init (int argc, ACE_TCHAR* argv[])
                 }
               return -1;
             }
-
-          ACE_TCHAR *pos = 0;
-
         }
       else
         {
           if (TAO_debug_level > 0)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_ORB_Loader - Unrecognized argv[%d], %C\n"),
-                         curarg, argv[curarg]));
+                          ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_ORB_Loader -")
+                          ACE_TEXT (" Unrecognized argv[%d], %C\n"),
+                          curarg, argv[curarg]));
             }
           return -1;
         }

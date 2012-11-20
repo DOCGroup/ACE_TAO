@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file Dynamic_TP_ORB_ORBInitializer.h
+ *  @file Dynamic_TP_ORBInitializer.h
  *
  *  $Id$
  *

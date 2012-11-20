@@ -1,3 +1,16 @@
+Tue Nov 20 23:42:31 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/CSD_Framework/CSD_ORBInitializer.h:
+
+          added class visibility token.
+
+        * tao/Dynamic_TP/Dynamic_TP_ORBInitializer.h:
+        * tao/Dynamic_TP/Dynamic_TP_ORBInitializer.cpp:
+        * tao/Dynamic_TP/Dynamic_TP_ORB_Loader.cpp:
+        * tao/Dynamic_TP/Dynamic_TP_POA_Loader.cpp:
+
+          Fuzz and other clean up.
+
 Tue Nov 20 22:44:07 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
 
         * utils/nsgroup/run_test.pl:
