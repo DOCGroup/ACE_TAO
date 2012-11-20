@@ -16,6 +16,8 @@
 
 #include /**/ "ace/pre.h"
 
+#include "orbsvcs/Naming/FaultTolerant/ftnaming_export.h"
+
 #include "orbsvcs/FT_NamingManagerS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

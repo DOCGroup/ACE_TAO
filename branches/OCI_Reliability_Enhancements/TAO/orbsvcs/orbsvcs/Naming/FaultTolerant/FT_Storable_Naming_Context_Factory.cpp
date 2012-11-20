@@ -27,7 +27,7 @@ TAO_FT_Storable_Naming_Context_Factory::create_naming_context_impl (CORBA::ORB_p
                                                                     const ACE_TCHAR *persistence_directory
                                                                     )
 {
-    // Construct the naming context, forwarding the map and counter even if they
+  // Construct the naming context, forwarding the map and counter even if they
   // are defaulted
   TAO_FT_Storable_Naming_Context *context_impl;
   ACE_NEW_THROW_EX (context_impl,

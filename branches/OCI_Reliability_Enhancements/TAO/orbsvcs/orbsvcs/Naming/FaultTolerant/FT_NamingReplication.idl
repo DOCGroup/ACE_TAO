@@ -1,0 +1,84 @@
+/* -*- IDL -*- */
+//=============================================================================
+/**
+ *  @file    FT_NamingReplication.idl
+ *
+ *  $Id$
+ *
+ *  This file is part of Fault Tolerant Naming Service in support of
+ *  replication between redundant servers.
+ *
+ *  @author Kevin Stanley <stanleyk@ociweb.com>
+ */
+//=============================================================================
+
+#ifndef _FT_NAMING_REPLICATION_IDL_
+#define _FT_NAMING_REPLICATION_IDL_
+
+#include <orbsvcs/CosNaming.idl>
+
+module FT_Naming
+{
+
+  typedef string GroupName;
+  enum ChangeType { NEW, UPDATED, DELETED };
+
+  exception NotAvailable
+  {
+  };
+  
+  /*
+   * A structure that describes the updated element in a Naming Service
+   */
+  struct NamingContextUpdate
+  {
+    /// The type of change that is being reported
+    ChangeType change_type;
+    
+    /// This is the compound name that is used to identify 
+    /// object references.
+    CosNaming::Name name;
+  };
+
+  /*
+   * A structure that describes the updated element withn 
+   * an Object Group Manager
+   */
+  struct ObjectGroupUpdate
+  {
+
+    /// The type of change that is being reported
+    ChangeType change_type;
+
+    /// This is the name that is used to identify object group references.
+    GroupName name;
+
+  };
+  
+  // Specification of NamingManager Interface
+  interface UpdatePushNotifier
+  {
+    void notify_updated_object_group(in ObjectGroupUpdate group_info)
+      raises (NotAvailable);
+
+    void notify_updated_context(in NamingContextUpdate group_info)
+      raises (NotAvailable); 
+  };
+  
+  interface ReplicaRegistration 
+  {
+   /*
+    * Register with a peer replica with an object reference for 
+    * notification of updates.  Recipient returns their notification 
+    * interface in response.  Each replica will maintain their state 
+    * in a shared repository and the update notification indicates the 
+    * element that was changed.
+    */
+    UpdatePushNotifier register_replica (in UpdatePushNotifier notifier) 
+      raises (NotAvailable);  // If replica at this time
+  };
+  
+};
+
+
+#endif // _FT_NAMING_REPLICATION_IDL_

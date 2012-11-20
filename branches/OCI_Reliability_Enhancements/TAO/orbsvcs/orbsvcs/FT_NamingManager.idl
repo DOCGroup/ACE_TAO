@@ -16,8 +16,8 @@
 
 #include "orbsvcs/PortableGroup.idl"
 
-#pragma prefix "omg.org"
-
+// TODO:  Rename the module to be FT_Naming. Should not be FT since it is
+// not an OMG standard
 module FT
 {
   typedef PortableGroup::ObjectGroup ObjectGroup;
