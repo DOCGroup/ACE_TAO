@@ -1,7 +1,18 @@
+Wed Nov 21 23:20:54 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
+
+        * utils/nsgroup/nsgroup.cpp:
+        * utils/nsgroup/nsgroup_svc.cpp:
+
+        Updated header paths
+
+        * utils/nsgroup/run_test.pl:
+
+        Added support for showing output files upon error detection.
+
 Wed Nov 21 22:24:28 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
 
         * orbsvcs/tests/Simple_Naming/run_test_ffp.pl:
-        
+
           Added tests for tao_ft_naming to the test suite.
 
 Wed Nov 21 20:46:58 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
