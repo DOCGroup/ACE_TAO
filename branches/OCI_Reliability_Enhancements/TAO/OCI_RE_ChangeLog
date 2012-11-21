@@ -1,8 +1,14 @@
+Wed Nov 21 02:40:16 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/Storable.h:
+        
+          Added TAO_Naming_Serv_Export to TAO_Naming_Service_Persistence_Factory.
+
 Wed Nov 21 02:30:08 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Replication_Manager.h:
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Replication_Manager.cpp:
-        
+
           Added files to implement the replication interface.
 
 Wed Nov 21 01:32:17 UTC 2012  "Marc Neeley"  <neeleym@ociweb.com>
