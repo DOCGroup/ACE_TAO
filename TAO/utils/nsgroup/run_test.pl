@@ -32,17 +32,23 @@ $NM_conf = $name_manager->LocalFile ("windows" . $PerlACE::svcconf_ext);
 
 my $name_mgr_iorbase = "nm.ior";
 my $name_srv_iorbase = "ns.ior";
+my $stdout_file = "test.out";
+my $stderr_file = "test.err";
 
 my $name_manager_iorfile = $name_manager->LocalFile ($name_mgr_iorbase);
 my $name_server_iorfile = $name_manager->LocalFile ($name_srv_iorbase);
 
 my $naming_mgr_client_iorfile = $client->LocalFile ($name_mgr_iorbase);
 my $name_srv_client_iorfile = $client->LocalFile ($name_srv_iorbase);
+my $client_stdout_file = $client->LocalFile ($stdout_file);
+my $client_stderr_file = $client->LocalFile ($stderr_file);
 
 $name_manager->DeleteFile($name_mgr_iorbase);
 $name_manager->DeleteFile($name_srv_iorbase);
 $client->DeleteFile($name_mgr_iorbase);
 $client->DeleteFile($name_srv_iorbase);
+$client->DeleteFile($stdout_file);
+$client->DeleteFile($stderr_file);
 
 $NM = $name_manager->CreateProcess ("../../orbsvcs/Naming_Service/tao_ft_naming",
         "-f persist.dat -g $name_manager_iorfile -o $name_server_iorfile " .
@@ -64,6 +70,18 @@ $NSDEL  = $nsdel->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_nsdel");
 $POSITIVE_TEST_RESULT = 0;
 $NEGATIVE_TEST_RESULT = 1;
 
+sub cat_file($)
+{
+    my $file_name = shift;
+    if (-s $file_name ) # size of file is greater than zero
+    {
+        open TESTFILE, $file_name or die "Couldn't open file: $!";
+        my @teststring = <TESTFILE>; # read in all of the file
+        print STDERR "\n@teststring\n";
+        close TESTFILE;
+    }
+}
+
 sub run_client ($$)
 {
     my $args = shift;
@@ -72,9 +90,9 @@ sub run_client ($$)
     my $arglist = "$LOAD_ARG $args";
 
     if ($expected_test_result != $POSITIVE_TEST_RESULT ) {
-        print STDERR "\n\n======== Running Negative Test================\n";
+        print STDERR "\n\n======== Running Negative Test ================\n";
     } else {
-        print STDERR "\n\n======== Running Positive Test================\n";
+        print STDERR "\n\n======== Running Positive Test ================\n";
     }
     print STDERR "$args\n";
 
@@ -82,27 +100,30 @@ sub run_client ($$)
 
     open(OLDOUT, ">&", \*STDOUT) or die "Can't dup STDOUT: $!";
     open(OLDERR, ">&", \*STDERR) or die "Can't dup STDERR: $!";
-    open STDERR, '>', "test.err";
-    open STDOUT, '>', "test.out";
+    open STDERR, '>', $client_stderr_file;
+    open STDOUT, '>', $client_stdout_file;
     my $client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval());
     open(STDERR, ">&OLDERR")    or die "Can't dup OLDERR: $!";
     open(STDOUT, ">&OLDOUT")    or die "Can't dup OLDOUT: $!";
 
+
     if ($client_status != $expected_test_result) {
         my $time = localtime;
         print STDERR "ERROR: client returned $client_status at $time\n";
+        cat_file($client_stderr_file);
+        cat_file($client_stdout_file);
         $status = 1;
     }
 }
 
 sub run_nsadd($)
 {
-    print STDERR "\n\n======== Running tao_nsadd================\n";
+    print STDERR "\n\n======== Running tao_nsadd ================\n";
     my $args = shift;
     $NSADD->Arguments ($args);
 
     open(OLDERR, ">&", \*STDERR) or die "Can't dup STDERR: $!";
-    open STDERR, '>', "test.err";
+    open STDERR, '>', $client_stderr_file;
 
     #tao_nsadd --ns file://ns.ior --name iso --ctx
     my $nsadd_status = $NSADD->SpawnWaitKill ($nsadd->ProcessStartWaitInterval());
@@ -111,18 +132,19 @@ sub run_nsadd($)
     if ($nsadd_status != $0) {
         my $time = localtime;
         print STDERR "ERROR: nsadd returned $nsadd_status at $time\n";
+        cat_file($client_stderr_file);
         $status = 1;
     }
 }
 
 sub run_nsdel($)
 {
-    print STDERR "\n\n======== Running tao_nsdel================\n";
+    print STDERR "\n\n======== Running tao_nsdel ================\n";
     my $args = shift;
     $NSDEL->Arguments ($args);
 
     open(OLDERR, ">&", \*STDERR) or die "Can't dup STDERR: $!";
-    open STDERR, '>', "test.err";
+    open STDERR, '>', $client_stderr_file;
 
     #tao_nsdel --ns file://ns.ior --name iso --destroy
     my $nsdel_status = $NSDEL->SpawnWaitKill ($nsdel->ProcessStartWaitInterval());
@@ -131,18 +153,19 @@ sub run_nsdel($)
     if ($nsdel_status != $0) {
         my $time = localtime;
         print STDERR "ERROR: nsdel returned $nsdel_status at $time\n";
+        cat_file($client_stderr_file);
         $status = 1;
     }
 }
 
 sub run_nslist($)
 {
-    print STDERR "\n\n======== Running tao_nslist================\n";
+    print STDERR "\n\n======== Running tao_nslist ================\n";
     my $args = shift;
     $NSLIST->Arguments ($args);
 
     open(OLDERR, ">&", \*STDERR) or die "Can't dup STDERR: $!";
-    open STDERR, '>', "test.err";
+    open STDERR, '>', $client_stderr_file;
 
     #tao_nslist --ns file://ns.ior
     my $nslist_status = $NSLIST->SpawnWaitKill ($nslist->ProcessStartWaitInterval());
@@ -152,6 +175,7 @@ sub run_nslist($)
     if ($nslist_status != $0) {
         my $time = localtime;
         print STDERR "ERROR: nslist returned $nslist_status at $time\n";
+        cat_file($client_stderr_file);
         $status = 1;
     }
 }
@@ -298,5 +322,7 @@ $name_manager->DeleteFile($name_mgr_iorbase);
 $name_manager->DeleteFile($name_srv_iorbase);
 $client->DeleteFile($name_mgr_iorbase);
 $client->DeleteFile($name_srv_iorbase);
+$client->DeleteFile($stdout_file);
+$client->DeleteFile($stderr_file);
 
 exit $status;
