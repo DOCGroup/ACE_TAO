@@ -1,3 +1,30 @@
+Wed Nov 21 20:10:01 UTC 2012  Byron Harris  <harrisb@ociweb.com>
+
+        * orbsvcs/orbsvcs/CosNaming_Serv.mpc:
+        * orbsvcs/orbsvcs/Naming/Naming_Service_File_Guard.h:
+        * orbsvcs/orbsvcs/Naming/Naming_Service_File_Guard.cpp:
+
+          Added new class that's a more general version of
+          original File_Open_Lock_and_Check class so that
+          it can be used for other persistent data besides
+          contexts.
+
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.h:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp:
+
+          Changed File_Open_Lock_and_Check to derive from
+          Naming_Service_File_Guard and override pure virtual
+          functions as needed.
+
+        * orbsvcs/orbsvcs/Naming/Flat_File_Persistence.h:
+        * orbsvcs/orbsvcs/Naming/Flat_File_Persistence.cpp:
+        * orbsvcs/orbsvcs/Naming/Storable.h:
+
+          Added stream operator on strings in anticipation
+          of using these operators on some of the object
+          group elements. Udating existing stream operators
+          to use string operators.
+
 Wed Nov 21 20:03:03 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
 
         * utils/nsgroup/run_test.pl:

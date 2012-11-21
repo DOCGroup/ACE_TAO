@@ -74,6 +74,12 @@ public:
   virtual TAO_Storable_Base& operator >> (
               TAO_NS_Persistence_Global& global);
 
+  virtual TAO_Storable_Base& operator << (
+		      	  const ACE_CString& str);
+
+  virtual TAO_Storable_Base& operator >> (
+              ACE_CString& str);
+
 private:
   ACE_OS::ace_flock_t filelock_;
   FILE* fl_;
