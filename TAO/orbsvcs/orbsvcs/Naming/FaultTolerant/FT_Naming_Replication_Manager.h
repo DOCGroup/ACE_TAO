@@ -18,7 +18,7 @@
 
 #include "orbsvcs/Naming/FaultTolerant/ftnaming_export.h"
 
-#include "FT_NamingReplicationS.h"
+#include "orbsvcs/Naming/FaultTolerant/FT_NamingReplicationS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once

@@ -174,7 +174,7 @@ sub airplane_test
         }
     }
 
-    for ($index = 0; $index < $num_srvr; ++$index) {    
+    for ($index = 0; $index < $num_srvr; ++$index) {
         $A_SRV_status = $A_SRV[$index]->TerminateWaitKill ($a_srv[$index]->ProcessStopWaitInterval());
         if ($A_SRV_status != 0) {
             print STDERR "ERROR: Airplane Server returned $A_SRV_status\n";
@@ -1096,7 +1096,7 @@ sub persistent_ir_test
     } elsif ($backing_store_flag eq "-x") {
         $backing_store = "imr_backing_store.xml";
     }
-    
+
     my $imr_imriorfile = $imr->LocalFile ($imriorfile);
     my $imr_storefile = $imr->LocalFile ($backing_store);
     my $act_imriorfile = $act->LocalFile ($imriorfile);

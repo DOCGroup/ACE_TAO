@@ -78,4 +78,6 @@ protected:
   int num_threads_;
 };
 
+#include /**/ "ace/post.h"
+
 #endif /* TAO_NAMING_SERVICE_H */

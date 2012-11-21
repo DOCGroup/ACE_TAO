@@ -298,7 +298,7 @@ TAO_Persistent_Naming_Context::make_new_context (PortableServer::POA_ptr poa,
                                                                                 poa_id);
 
   // Verify that a context implementation was created. If not, throw an exception
-  if (NULL == context_impl)
+  if (context_impl == 0)
     throw CORBA::NO_MEMORY ();
 
   // Put <context_impl> into the auto pointer temporarily, in case next

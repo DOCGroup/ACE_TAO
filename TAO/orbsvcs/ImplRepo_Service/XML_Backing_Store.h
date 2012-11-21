@@ -39,7 +39,7 @@ public:
 
   virtual ~XML_Backing_Store();
 
-  virtual const char* repo_mode() const;  
+  virtual const char* repo_mode() const;
 
   virtual int persistent_load();
 

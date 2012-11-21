@@ -61,8 +61,8 @@ TAO_Storable_Naming_Context_Activator::incarnate (
   ACE_TString file_name(persistence_directory_);
   file_name += ACE_TEXT("/");
   file_name += ACE_TEXT_CHAR_TO_TCHAR(poa_id.in());
-  TAO_Storable_Base * fl = 
-    persistence_factory_->create_stream (ACE_TEXT_ALWAYS_CHAR(file_name.c_str()), 
+  TAO_Storable_Base * fl =
+    persistence_factory_->create_stream (ACE_TEXT_ALWAYS_CHAR(file_name.c_str()),
                                          ACE_TEXT("rw"));
   if (!fl->exists()) {
     throw CORBA::OBJECT_NOT_EXIST ();
@@ -73,11 +73,11 @@ TAO_Storable_Naming_Context_Activator::incarnate (
 
   // Put together a servant for the new Naming Context.
   // Will throw NO_MEMORY exception if unable to construct one
-  TAO_Storable_Naming_Context *context_impl = 
-    this->context_impl_factory_->create_naming_context_impl (orb_, 
-                                                             poa, 
-                                                             poa_id.in (), 
-                                                             persistence_factory_, 
+  TAO_Storable_Naming_Context *context_impl =
+    this->context_impl_factory_->create_naming_context_impl (orb_,
+                                                             poa,
+                                                             poa_id.in (),
+                                                             persistence_factory_,
                                                              persistence_directory_);
 
   // Put <context_impl> into the auto pointer temporarily, in case next

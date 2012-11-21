@@ -187,7 +187,7 @@ TAO_Persistent_Context_Index::recreate_all (void)
 
       // Put together a servant for the new Naming Context
       // Using the naming context factory to create a naming context of the appropriate type
-      TAO_Persistent_Naming_Context *context_impl = 
+      TAO_Persistent_Naming_Context *context_impl =
         this->context_impl_factory_->create_naming_context_impl (poa_.in (),
                                                                  entry->ext_id_.poa_id_,
                                                                  this,
@@ -237,7 +237,7 @@ TAO_Persistent_Context_Index::recreate_all (void)
   return 0;
 }
 
-TAO_Persistent_Naming_Context* 
+TAO_Persistent_Naming_Context*
 TAO_Persistent_Context_Index::create_naming_context_impl (PortableServer::POA_ptr poa,
                                                           const char *poa_id)
 {

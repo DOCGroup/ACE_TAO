@@ -124,7 +124,7 @@ LB_server::start_orb_and_poa (void)
         ACE_ERROR_RETURN ((LM_DEBUG,
                            "LB_server: Could not connect to naming service.\n"),
                            -1);
-      
+
       CORBA::Object_var obj =
         this->orb_->resolve_initial_references ("NamingManager");
 
@@ -153,7 +153,7 @@ LB_server::create_object_group (void)
   try
     {
       const char *repository_id = "IDL:Test/Basic:1.0";
-      
+
       if (this->parse_args (argc_, argv_) != 0)
                     return -1;
 
@@ -218,7 +218,7 @@ LB_server::register_servant (Basic *servant, const char *loc)
   return 0;
 }
 
-TAO_Naming_Client& 
+TAO_Naming_Client&
 LB_server::name_svc ()
 {
   return name_svc_;
