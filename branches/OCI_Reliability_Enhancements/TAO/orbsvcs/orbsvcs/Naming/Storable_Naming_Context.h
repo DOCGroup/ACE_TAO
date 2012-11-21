@@ -15,6 +15,7 @@
 #include /**/ "ace/pre.h"
 
 #include "orbsvcs/Naming/Hash_Naming_Context.h"
+#include "orbsvcs/Naming/Naming_Service_File_Guard.h"
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Auto_Ptr.h"
 
@@ -397,59 +398,41 @@ protected:
 /**
  * @class File_Open_Lock_and_Check
  *
- * @brief Helper class for the TAO_Storable_Naming_Context.
+ * @brief File guard specific for storable naming contexts.
  *
- * Guard class for the TAO_Storable_Naming_Context.  It opens
- * a file for read/write and sets a lock on it.  It then checks
- * if the file has changed and re-reads it if it has.
- *
- * The destructor insures that the lock gets released.
- *
- * <pre>
- * How to use this class:
- *   File_Open_Lock_and_Check flck(this, name_len > 1 ? "r" : "rw");
- * </pre>
  */
-class TAO_Naming_Serv_Export File_Open_Lock_and_Check
+class TAO_Naming_Serv_Export File_Open_Lock_and_Check :
+  public Naming_Service_File_Guard
 {
 public:
 
   /// Constructor - we always need the object which we guard.
   File_Open_Lock_and_Check(TAO_Storable_Naming_Context * context,
-                                const char * mode);
+                           const char * mode);
 
-  /// Destructor
-  ~File_Open_Lock_and_Check(void);
+protected:
 
-  /// Releases the lock, closes the file, and deletes the I/O stream.
-  void release(void);
+  virtual void set_parent_last_changed (const time_t & time);
 
-  /// Returns the stream to read/write on
-  TAO_Storable_Base & peer(void);
+  virtual time_t get_parent_last_changed ();
+
+  virtual void create_child ();
+
+  virtual bool is_child_created ();
+
+  virtual TAO_Storable_Base * create_stream (const char * mode);
 
 private:
   /// Default constructor
   File_Open_Lock_and_Check(void);
 
-  /// A flag to keep us from trying to close things more than once.
-  int closed_;
-
-  /// We need to save the pointer to our parent for cleaning up
   TAO_Storable_Naming_Context * context_;
 
-  /// The pointer to the actual file I/O (bridge pattern)
-  TAO_Storable_Base *fl_;
-
-  /// The flags that we were opened with
-  int rwflags_;
-
-  /// Symbolic values for the flags in the above
-  enum{ mode_write = 1, mode_read = 2, mode_create = 4 };
 }; // end of embedded class File_Open_Lock_and_Check
 
   friend class File_Open_Lock_and_Check;
 
-  int load_map(File_Open_Lock_and_Check *flck);
+  int load_map(TAO_Storable_Base& storable);
 
   void Write(TAO_Storable_Base& wrtr);
 

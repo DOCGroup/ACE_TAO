@@ -334,7 +334,7 @@ void TAO_Storable_Naming_Context::Write(TAO_Storable_Base& wrtr)
 
 // Helper function to load a new context into the binding_map
 int
-TAO_Storable_Naming_Context::load_map(File_Open_Lock_and_Check *flck)
+TAO_Storable_Naming_Context::load_map(TAO_Storable_Base& storable)
 {
   ACE_TRACE("load_map");
   // assume file already open for reading
@@ -351,10 +351,10 @@ TAO_Storable_Naming_Context::load_map(File_Open_Lock_and_Check *flck)
   TAO_NS_Persistence_Record record;
 
   // we are only using the size from this header
-  flck->peer() >> header;
-  if (!flck->peer ().good ())
+  storable >> header;
+  if (!storable.good ())
     {
-      flck->peer ().clear ();
+      storable.clear ();
       throw CORBA::INTERNAL ();
     }
 
@@ -364,10 +364,10 @@ TAO_Storable_Naming_Context::load_map(File_Open_Lock_and_Check *flck)
   // read in the data for the map
   for (unsigned int i= 0u; i<header.size(); ++i)
     {
-      flck->peer() >> record;
-      if (!flck->peer ().good ())
+      storable >> record;
+      if (!storable.good ())
         {
-          flck->peer ().clear ();
+          storable.clear ();
           throw CORBA::INTERNAL ();
         }
 
@@ -405,130 +405,56 @@ TAO_Storable_Naming_Context::
 File_Open_Lock_and_Check::File_Open_Lock_and_Check(
                                  TAO_Storable_Naming_Context * context,
                                  const char * mode)
-:closed_(1),
+: Naming_Service_File_Guard(TAO_Storable_Naming_Context::redundant_),
  context_(context)
 {
-  ACE_TRACE("File_Open_Lock_and_Check");
-  // We only accept a subset of mode argument, check it
-  rwflags_ = 0;
-  for( unsigned int i = 0; i<ACE_OS::strlen(mode); i++ )
-  {
-    switch (mode[i])
-    {
-      case 'r': rwflags_ |= mode_read;
-                break;
-      case 'w': rwflags_ |= mode_write;
-                break;
-      case 'c': rwflags_ |= mode_create;
-                break;
-      default: rwflags_ = -1;
-    }
-  }
-  if( rwflags_ <= 0 )
-  {
-    errno = EINVAL;
-    throw CORBA::PERSIST_STORE();
-  }
-
-  // build the file name
-  ACE_CString file_name(context->persistence_directory_);
-  file_name += "/";
-  file_name += context->name_;
-
-  // Create the stream
-  fl_ = context->factory_->create_stream(file_name, ACE_TEXT_CHAR_TO_TCHAR(mode));
-  if (TAO_Storable_Naming_Context::redundant_)
-  {
-    if (fl_->open() != 0)
-      {
-        delete fl_;
-        throw CORBA::PERSIST_STORE();
-      }
-
-    // acquire a lock on it
-    if (fl_ -> flock(0, 0, 0) != 0)
-      {
-         fl_->close();
-         delete fl_;
-         throw CORBA::INTERNAL();
-      }
-
-    // now that the file is successfully opened and locked it must be
-    // unlocked/closed before we leave this class
-    closed_ = 0;
-
-    if ( ! (rwflags_ & mode_create) )
-    {
-      // Check if our copy is up to date
-      time_t new_last_changed = fl_->last_changed();
-      if( new_last_changed > context->last_changed_ )
-      {
-         context->last_changed_ = new_last_changed;
-         // Throw our map away
-         delete context->storable_context_;
-         // and build a new one from disk
-         context->load_map(this);
-       }
-    }
-  }
-  else if ( ! context->storable_context_ || (rwflags_ & mode_write) )
-  {
-    if (fl_->open() != 0)
-      {
-        delete fl_;
-        throw CORBA::PERSIST_STORE();
-      }
-
-    // now that the file is successfully opened
-    // unlocked/closed before we leave this class
-    closed_ = 0;
-
-    if(!context->storable_context_)
-    {
-      // Load the map from disk
-      context->load_map(this);
-    }
-  }
-  else
-    {
-      // Need to insure that fl_ gets deleted
-      delete fl_;
-    }
+  init(mode);
 }
 
 void
 TAO_Storable_Naming_Context::
-File_Open_Lock_and_Check::release(void)
+File_Open_Lock_and_Check::set_parent_last_changed (const time_t & time)
 {
-  ACE_TRACE("release");
-  if ( ! closed_ )
-  {
-    // If we updated the disk, save the time stamp
-    if(TAO_Storable_Naming_Context::redundant_)
-    {
-      if( rwflags_ & mode_write )
-        context_->last_changed_ = fl_->last_changed();
-      fl_->funlock(0, 0, 0);
-    }
-    fl_->close();
-    delete fl_;
-    closed_ = 1;
-  }
+  context_->last_changed_ = time;
 }
 
+time_t
 TAO_Storable_Naming_Context::
-File_Open_Lock_and_Check::~File_Open_Lock_and_Check(void)
+File_Open_Lock_and_Check::get_parent_last_changed ()
 {
-  ACE_TRACE("~File_Open_Lock_and_Check");
-  this->release();
+  return context_->last_changed_;
 }
 
-TAO_Storable_Base &
-TAO_Storable_Naming_Context::File_Open_Lock_and_Check::peer(void)
+void
+TAO_Storable_Naming_Context::
+File_Open_Lock_and_Check::create_child ()
 {
-  ACE_TRACE("peer");
-  return *fl_;
+  // Throw our map away
+  delete context_->storable_context_;
+  // and build a new one from disk
+  context_->load_map (this->peer());
 }
+
+bool
+TAO_Storable_Naming_Context::
+File_Open_Lock_and_Check::is_child_created ()
+{
+  return context_->storable_context_ != 0;
+}
+
+TAO_Storable_Base *
+TAO_Storable_Naming_Context::
+File_Open_Lock_and_Check::create_stream (const char * mode)
+{
+  // Build the file name
+  ACE_CString file_name(context_->persistence_directory_);
+  file_name += "/";
+  file_name += context_->name_;
+
+  // Create the stream
+  return context_->factory_->create_stream(file_name, ACE_TEXT_CHAR_TO_TCHAR(mode));
+}
+
 
 TAO_Storable_Naming_Context::TAO_Storable_Naming_Context (
                                CORBA::ORB_ptr orb,

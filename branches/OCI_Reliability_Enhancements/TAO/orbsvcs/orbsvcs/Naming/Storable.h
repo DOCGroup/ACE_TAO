@@ -140,11 +140,17 @@ public:
   virtual TAO_Storable_Base& operator >> (
               TAO_NS_Persistence_Global& global)  = 0;
 
+  virtual TAO_Storable_Base& operator << (
+		  	      const ACE_CString& str) = 0;
+
+  virtual TAO_Storable_Base& operator >> (
+              ACE_CString& str) = 0;
+
 private:
   Storable_State state_;
 };
 
-class TAO_Naming_Serv_Export TAO_Naming_Service_Persistence_Factory
+class TAO_Naming_Service_Persistence_Factory
 {
 public:
   TAO_Naming_Service_Persistence_Factory();
