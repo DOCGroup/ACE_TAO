@@ -59,7 +59,7 @@ TAO_Dynamic_TP_POA_StrategyImpl::get_servant_state(PortableServer::Servant serva
   return servant_state;
 }
 
-TAO_Dynamic_TP_Task 
+TAO_Dynamic_TP_Task &
   TAO_Dynamic_TP_POA_StrategyImpl::get_Task()
 {
   return this->task_;

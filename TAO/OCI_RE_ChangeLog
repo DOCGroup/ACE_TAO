@@ -1,3 +1,17 @@
+Wed Nov 21 06:16:58 UTC 2012  Phil Mesnier  <mesnier_p@local>
+
+        * tao/Dynamic_TP/Dynamic_TP_Config.h:
+        * tao/Dynamic_TP/Dynamic_TP_POA_Strategy.h:
+        * tao/Dynamic_TP/Dynamic_TP_POA_Strategy.inl:
+        * tao/Dynamic_TP/Dynamic_TP_POA_StrategyImpl.h:
+        * tao/Dynamic_TP/Dynamic_TP_POA_StrategyImpl.inl:
+        * tao/Dynamic_TP/Dynamic_TP_POA_StrategyImpl.cpp:
+        * tao/Dynamic_TP/Dynamic_TP_Task.h:
+        * tao/Dynamic_TP/Dynamic_TP_Task.inl:
+        * tao/Dynamic_TP/Dynamic_TP_Task.cpp:
+
+          Fuzz fixes.
+
 Wed Nov 21 04:42:24 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_NamingReplication.idl:
@@ -16,12 +30,12 @@ Wed Nov 21 04:42:24 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context.cpp:
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context_Factory.h:
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context_Factory.cpp:
-        
+
           Fixed to resolve fuzz issues.
 
         * utils/nsgroup/run_test.pl:
-        
-          Modified argument to tao_nslist, tao_nsadd passing in the IOR for 
+
+          Modified argument to tao_nslist, tao_nsadd passing in the IOR for
           the naming service.
 
 Wed Nov 21 02:40:16 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
@@ -40,13 +54,16 @@ Wed Nov 21 02:30:08 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
 Wed Nov 21 01:32:17 UTC 2012  "Marc Neeley"  <neeleym@ociweb.com>
 
         * tao/Dynamic_TP/Dynamic_TP_Config.h:
-                  created constructor in TAO_DTP_Definition struct
+
+          created constructor in TAO_DTP_Definition struct
 
         * tao/Dynamic_TP/Dynamic_TP_Config.cpp:
-                  removed conflicting constructor
+
+          removed conflicting constructor
 
         * tao/Dynamic_TP/Dynamic_TP_POA_Loader.cpp:
-                  removed unnecessary include
+
+          removed unnecessary include
 
         * tao/Dynamic_TP/Dynamic_TP_POA_Strategy.h:
         * tao/Dynamic_TP/Dynamic_TP_POA_Strategy.inl:
@@ -58,8 +75,8 @@ Wed Nov 21 01:32:17 UTC 2012  "Marc Neeley"  <neeleym@ociweb.com>
         * tao/Dynamic_TP/Dynamic_TP_Task.inl:
         * tao/Dynamic_TP/Dynamic_TP_Task.cpp:
 
-                  completed StrategyImpl initialization
-                  started the delegation functions; this needs a lot of dependency removal from CSD_Task.
+          completed StrategyImpl initialization started the delegation
+          functions; this needs a lot of dependency removal from CSD_Task.
 
 Tue Nov 20 23:42:31 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
 
