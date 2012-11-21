@@ -28,20 +28,20 @@
 
 class TAO_FT_Naming_Server;
 
-class TAO_FtNaming_Export TAO_FT_Naming_Replication_Manager 
+class TAO_FtNaming_Export TAO_FT_Naming_Replication_Manager
   : public virtual POA_FT_Naming::ReplicationManager
 {
 public:
 
- /* 
+ /*
   * Create a Replication Manager and provide it with the naming server
   * to be updated whenever notified by the peer replica
   */
   TAO_FT_Naming_Replication_Manager(TAO_FT_Naming_Server *naming_svr);
   virtual ~TAO_FT_Naming_Replication_Manager(void);
 
-  /// Initialize the naming manager. This will provide the poa to 
-  /// the naming manager and underlying components for use in 
+  /// Initialize the naming manager. This will provide the poa to
+  /// the naming manager and underlying components for use in
   /// managing the object groups.
   void initialize (CORBA::ORB_ptr orb,
                    PortableServer::POA_ptr root_poa);
@@ -67,5 +67,6 @@ protected:
   static FT_Naming::ReplicationManager_var peer_replica_;
 
 };
+#include /**/ "ace/post.h"
 
 #endif /* TAO_FT_NAMING_REPLICATION_MANAGER_H */

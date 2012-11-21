@@ -22,7 +22,7 @@ TAO_FT_Round_Robin::~TAO_FT_Round_Robin (void)
 }
 
 
-bool 
+bool
 TAO_FT_Round_Robin::next_location (
       PortableGroup::ObjectGroup_ptr object_group,
       TAO_FT_Naming_Manager *naming_manager,
@@ -40,8 +40,8 @@ TAO_FT_Round_Robin::next_location (
                     0);
 
   // If entry is already in the map for this id
-  //   Get the index 
-  //   increment the index 
+  //   Get the index
+  //   increment the index
   //   if the index is past the length set it to the first element
   // Else
   //   Set the index to 0
@@ -64,7 +64,7 @@ TAO_FT_Round_Robin::next_location (
 
       // Increment index to point to next location.
       i++;
-      
+
       if (len <= i)
         i = 0;  // Reset, i.e. wrap around
 
@@ -81,7 +81,6 @@ TAO_FT_Round_Robin::next_location (
   { // The location was already bound or some failure occured. Should not happen.
     throw CORBA::INTERNAL ();
   }
-  
   return true;
 }
 

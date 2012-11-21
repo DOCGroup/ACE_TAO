@@ -26,7 +26,7 @@ module FT_Naming
   exception NotAvailable
   {
   };
-  
+
   /*
    * A structure that describes the updated element in a Naming Service
    */
@@ -34,14 +34,13 @@ module FT_Naming
   {
     /// The type of change that is being reported
     ChangeType change_type;
-    
-    /// This is the compound name that is used to identify 
+    /// This is the compound name that is used to identify
     /// object references.
     CosNaming::Name name;
   };
 
   /*
-   * A structure that describes the updated element withn 
+   * A structure that describes the updated element within
    * an Object Group Manager
    */
   struct ObjectGroupUpdate
@@ -54,27 +53,25 @@ module FT_Naming
     GroupName name;
 
   };
-  
-  interface ReplicationManager 
+
+  interface ReplicationManager
   {
    /*
-    * Register with a peer replica with an object reference for 
-    * notification of updates.  Recipient returns their notification 
-    * interface in response.  Each replica will maintain their state 
-    * in a shared repository and the update notification indicates the 
+    * Register with a peer replica with an object reference for
+    * notification of updates.  Recipient returns their notification
+    * interface in response.  Each replica will maintain their state
+    * in a shared repository and the update notification indicates the
     * element that was changed.
     */
-    void register_replica (in ReplicationManager replica) 
+    void register_replica (in ReplicationManager replica)
       raises (NotAvailable);  // If replica at this time
 
     void notify_updated_object_group(in ObjectGroupUpdate group_info)
       raises (NotAvailable);
 
     void notify_updated_context(in NamingContextUpdate context_info)
-      raises (NotAvailable); 
+      raises (NotAvailable);
   };
-  
-  
 };
 
 

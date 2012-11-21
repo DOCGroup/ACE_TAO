@@ -50,13 +50,14 @@ $NM = $name_manager->CreateProcess ("../../orbsvcs/Naming_Service/tao_ft_naming"
 
 $NM_REF       = "-ORBInitRef NameService=file://$name_client_iorfile";
 $RM_REF       = "-ORBInitRef NamingManager=file://$naming_mgr_client_iorfile";
+$NS_REF       = "--ns file://$name_client_iorfile";
 $DEBUG_LEVEL  = "-ORBDebugLevel $debug_level";
 $LOAD_ARG     = "$NM_REF $RM_REF $DEBUG_LEVEL";
 
 $CL   = $client->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_nsgroup");
-$NSLIST = $nslist->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_nslist","$NM_REF");
-$NSADD  = $nsadd->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_nsadd","$NM_REF");
-$NSDEL  = $nsdel->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_nsdel","$NM_REF");
+$NSLIST = $nslist->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_nslist","$NS_REF");
+$NSADD  = $nsadd->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_nsadd","$NS_REF");
+$NSDEL  = $nsdel->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_nsdel","$NS_REF");
 
 
 
@@ -163,7 +164,7 @@ sub run_clients ()
         "member_add -group ieee -location 127.0.0.1 -ior file://$naming_mgr_client_iorfile",
         $POSITIVE_TEST_RESULT);
 
-    run_nsadd("$NM_REF"." --name iso --ctx");
+    run_nsadd("$NS_REF"." --name iso --ctx");
 
     run_nslist();
 

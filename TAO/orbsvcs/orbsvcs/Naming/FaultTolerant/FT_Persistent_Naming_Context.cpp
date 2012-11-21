@@ -37,7 +37,7 @@ TAO_FT_Persistent_Naming_Context::~TAO_FT_Persistent_Naming_Context (void)
 }
 
 
-CORBA::Boolean 
+CORBA::Boolean
 TAO_FT_Persistent_Naming_Context::is_object_group (CORBA::Object_ptr obj) const
 {
   // If there is a tagged component with tag = IOP::TAG_FT_GROUP in the object reference
@@ -57,11 +57,11 @@ TAO_FT_Persistent_Naming_Context::resolve (const CosNaming::Name& n)
   ACE_GUARD_THROW_EX (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon, this->lock_,
     CORBA::INTERNAL ());
 
-  // Get the locations of the object group members and we will use them to 
+  // Get the locations of the object group members and we will use them to
   // do the load balancing
   try {
 
-    // Make sure object is an object group.  
+    // Make sure object is an object group.
     // We will return the object reference all the way back out to the client if not
     if (!this->is_object_group (resolved_ref.in ()))
       return resolved_ref._retn ();
@@ -69,19 +69,19 @@ TAO_FT_Persistent_Naming_Context::resolve (const CosNaming::Name& n)
     // If there is no naming manager, we will fail and report an error.
     if ( this->naming_manager_impl_ == 0)
     {
-      ACE_ERROR ((LM_ERROR, 
+      ACE_ERROR ((LM_ERROR,
         "TAO_FT_Persistent_Naming_Context::resolve - No NamingManager defined.\n"));
 
       throw CORBA::INTERNAL ();
     }
-    
-    // Get the next location selected by the associated strategy 
+
+    // Get the next location selected by the associated strategy
     PortableGroup::Location next_location;
     if (this->naming_manager_impl_->next_location (resolved_ref.in(), next_location))
     { // Found the location
-      // Access the object from the naming service manager by passing in 
+      // Access the object from the naming service manager by passing in
       // the next_location value and assign it to the resolved_ref
-      resolved_ref = 
+      resolved_ref =
         this->naming_manager_impl_->get_member_ref (resolved_ref.in (), next_location);
     }
     else
@@ -92,7 +92,7 @@ TAO_FT_Persistent_Naming_Context::resolve (const CosNaming::Name& n)
   }
   catch (const PortableGroup::ObjectGroupNotFound&)
   {
-    // This is apparently not an object group, so we should return the 
+    // This is apparently not an object group, so we should return the
     // object reference itself
     // No action required
   }
@@ -106,7 +106,7 @@ TAO_FT_Persistent_Naming_Context::resolve (const CosNaming::Name& n)
   return resolved_ref._retn ();
 }
 
-void 
+void
 TAO_FT_Persistent_Naming_Context::set_naming_manager_impl (TAO_FT_Naming_Manager *mgr_impl)
 {
   naming_manager_impl_ = (mgr_impl);

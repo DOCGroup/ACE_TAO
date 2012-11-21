@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- * @file   FT_NamingManager.h
+ * @file   FT_Naming_Manager.h
  *
  * $Id$
  *
@@ -49,7 +49,7 @@ public:
   /**
    * @name FT::NamingManager Methods
    *
-   * 
+   *
    */
 
   virtual ::FT::ObjectGroup_ptr create_object_group (
@@ -224,8 +224,8 @@ public:
 
   //@}
 
-  /// Initialize the naming manager. This will provide the poa to 
-  /// the naming manager and underlying components for use in 
+  /// Initialize the naming manager. This will provide the poa to
+  /// the naming manager and underlying components for use in
   /// managing the object groups.
   void initialize (CORBA::ORB_ptr orb,
                    PortableServer::POA_ptr root_poa);
@@ -233,7 +233,7 @@ public:
   /// Utilizing the load balancing strategy identified by the object
   /// group property, return the next location which should be used
   /// to service the next CORBA request
-  bool  
+  bool
   next_location (PortableGroup::ObjectGroup_ptr object_group,
                  PortableGroup::Location& loc);
 
@@ -264,7 +264,7 @@ private:
   /// Registry used by the PG_Group_Factory
   TAO::PG_FactoryRegistry factory_registry_;
 
-  /// The group factory responsible for creating object groups 
+  /// The group factory responsible for creating object groups
   TAO::PG_Group_Factory group_factory_;
 
   /**
@@ -275,7 +275,7 @@ private:
    */
   //@{
 
-  /// The "RoundRobin" load balancing strategy. 
+  /// The "RoundRobin" load balancing strategy.
   TAO_FT_Round_Robin round_robin_;
   //@}
 

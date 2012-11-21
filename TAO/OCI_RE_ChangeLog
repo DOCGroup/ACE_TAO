@@ -1,7 +1,33 @@
+Wed Nov 21 04:42:24 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_NamingReplication.idl:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Replication_Manager.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Replication_Manager.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Persistent_Naming_Context.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Persistent_Naming_Context.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Persistent_Naming_Context_Factory.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Persistent_Naming_Context_Factory.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Round_Robin.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context_Factory.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context_Factory.cpp:
+        
+          Fixed to resolve fuzz issues.
+
+        * utils/nsgroup/run_test.pl:
+        
+          Modified argument to tao_nslist, tao_nsadd passing in the IOR for 
+          the naming service.
+
 Wed Nov 21 02:40:16 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/Storable.h:
-        
+
           Added TAO_Naming_Serv_Export to TAO_Naming_Service_Persistence_Factory.
 
 Wed Nov 21 02:30:08 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>

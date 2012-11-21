@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- * @file   TAO_FT_Naming_Manager.cpp
+ * @file   FT_Naming_Manager.cpp
  *
  * $Id$
  *
