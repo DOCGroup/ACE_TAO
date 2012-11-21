@@ -495,10 +495,6 @@ TAO_FT_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
           ACE_NEW_RETURN(pf, TAO_NS_FlatFileFactory, -1);
           auto_ptr<TAO_Naming_Service_Persistence_Factory> persFactory(pf);
 
-          TAO_FT_Storable_Naming_Context_Factory* cf = 0;
-          ACE_NEW_RETURN (cf, TAO_FT_Storable_Naming_Context_Factory (context_size), -1);
-          auto_ptr<TAO_FT_Storable_Naming_Context_Factory> contextFactory (cf);
-
           // Provide the naming manager reference for use in
           // TAO_FT_Persistent_Naming_Contexts for load balancing functionality
           TAO_FT_Storable_Naming_Context::set_naming_manager (&naming_manager_);
@@ -523,6 +519,12 @@ TAO_FT_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT)
           if (this->use_servant_activator_)
             {
+              // Use an auto_ptr to ensure that we clean up the factory in the case
+              // of a failure in creating and registering the Activator
+              TAO_FT_Storable_Naming_Context_Factory* cf = 0;
+              ACE_NEW_RETURN (cf, TAO_FT_Storable_Naming_Context_Factory (context_size), -1);
+              auto_ptr<TAO_FT_Storable_Naming_Context_Factory> contextFactory (cf);
+
               ACE_NEW_THROW_EX (this->servant_activator_,
                                 TAO_Storable_Naming_Context_Activator (orb,
                                                                        persFactory.get (),
@@ -530,6 +532,9 @@ TAO_FT_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
                                                                        persistence_location),
                                 CORBA::NO_MEMORY ());
               this->ns_poa_->set_servant_manager(this->servant_activator_);
+              // We have successfull turned over the context factory to the activator so
+              // we can now release it.
+              contextFactory.release ();
             }
 #endif /* TAO_HAS_MINIMUM_POA */
 
