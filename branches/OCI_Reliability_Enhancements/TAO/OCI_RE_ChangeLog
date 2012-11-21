@@ -1,14 +1,21 @@
+Wed Nov 21 02:30:08 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Replication_Manager.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Replication_Manager.cpp:
+        
+          Added files to implement the replication interface.
+
 Wed Nov 21 01:32:17 UTC 2012  "Marc Neeley"  <neeleym@ociweb.com>
 
         * tao/Dynamic_TP/Dynamic_TP_Config.h:
-		  created constructor in TAO_DTP_Definition struct
-		  
+                  created constructor in TAO_DTP_Definition struct
+
         * tao/Dynamic_TP/Dynamic_TP_Config.cpp:
-		  removed conflicting constructor
-		  
+                  removed conflicting constructor
+
         * tao/Dynamic_TP/Dynamic_TP_POA_Loader.cpp:
-		  removed unnecessary include
-		  
+                  removed unnecessary include
+
         * tao/Dynamic_TP/Dynamic_TP_POA_Strategy.h:
         * tao/Dynamic_TP/Dynamic_TP_POA_Strategy.inl:
         * tao/Dynamic_TP/Dynamic_TP_POA_Strategy.cpp:
@@ -18,9 +25,9 @@ Wed Nov 21 01:32:17 UTC 2012  "Marc Neeley"  <neeleym@ociweb.com>
         * tao/Dynamic_TP/Dynamic_TP_Task.h:
         * tao/Dynamic_TP/Dynamic_TP_Task.inl:
         * tao/Dynamic_TP/Dynamic_TP_Task.cpp:
-		
-		  completed StrategyImpl initialization
-		  started the delegation functions; this needs a lot of dependency removal from CSD_Task.
+
+                  completed StrategyImpl initialization
+                  started the delegation functions; this needs a lot of dependency removal from CSD_Task.
 
 Tue Nov 20 23:42:31 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
 
