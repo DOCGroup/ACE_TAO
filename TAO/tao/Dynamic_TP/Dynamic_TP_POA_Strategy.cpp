@@ -64,11 +64,13 @@ bool
 TAO_Dynamic_TP_POA_Strategy::poa_activated_event_i(TAO_ORB_Core& orb_core)
 {
 
-  int init_thread_count = this->dtp_strategy_impl_->get_initial_pool_threads();
+  TAO_Dynamic_TP_Task::Open_Args args;
+  args.num_threads = this->dtp_strategy_impl_->get_initial_pool_threads();
   this->dtp_strategy_impl_->get_Task().thr_mgr(orb_core.thr_mgr());
 
   // Activates the worker threads, and waits until all have been started.
-  return (this->dtp_strategy_impl_->get_Task().open(&init_thread_count) == 0);
+
+  return (this->dtp_strategy_impl_->get_Task().open(&args) == 0);
 
 }
 

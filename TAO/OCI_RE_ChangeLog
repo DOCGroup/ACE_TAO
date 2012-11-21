@@ -1,13 +1,41 @@
+Wed Nov 21 23:07:07 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/CSD_ThreadPool/CSD_TP_Task.h:
+        * tao/CSD_ThreadPool/CSD_TP_Task.cpp:
+
+          Rename the argument to open to reinforce the generic nature
+          of the single void * argument.
+
+        * tao/Dynamic_TP/Dynamic_TP_Config.cpp:
+        * tao/Dynamic_TP/Dynamic_TP_POA_Strategy.inl:
+
+          Minor scoreboard cleanup.
+
+        * tao/Dynamic_TP/Dynamic_TP_Task.h:
+        * tao/Dynamic_TP/Dynamic_TP_Task.cpp:
+        * tao/Dynamic_TP/Dynamic_TP_POA_Strategy.cpp:
+
+          Refactored the task open() signature to take a single void *
+          argument.  This is important to avoid generating a new
+          signature. Since the argument is a void*, a struct is used to
+          pass multiple discrete values. This should probably just use the
+          TP_Definition struct, rather than define something new.
+
+        * tests/Dynamic_TP/Config_Loader/Test.cpp:
+        * tests/Dynamic_TP/POA_Loader/Test.cpp:
+
+          Minor scoreboard cleanup.
+
 Wed Nov 21 23:20:54 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
 
         * utils/nsgroup/nsgroup.cpp:
         * utils/nsgroup/nsgroup_svc.cpp:
 
-        Updated header paths
+          Updated header paths
 
         * utils/nsgroup/run_test.pl:
 
-        Added support for showing output files upon error detection.
+          Added support for showing output files upon error detection.
 
 Wed Nov 21 22:24:28 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
 

@@ -8,7 +8,7 @@ ACE_INLINE
 /// Constructor.
 TAO_Dynamic_TP_POA_Strategy::TAO_Dynamic_TP_POA_Strategy(ACE_CString tp_config_name,
                                                          TAO_Dynamic_TP_POA_StrategyImpl * dynamic_strategy,
-                                                         bool     serialize_servants)
+                                                         bool     /*serialize_servants */)
 {
   this->dynamic_tp_config_name_ = tp_config_name;
   this->dtp_strategy_impl_ = dynamic_strategy;

@@ -82,9 +82,17 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
       /// Virtual Destructor.
       virtual ~TAO_Dynamic_TP_Task();
 
+      struct Open_Args {
+        Open_Args (void)
+          : num_threads(1),
+            stack_size (0)
+        {}
+        Thread_Counter num_threads;
+        size_t stack_size;
+      };
+
       /// Activate the worker threads
-      virtual int open(void* num_threads_ptr = 0,
-                       void* thread_stack_size = 0);
+      virtual int open(void* args = 0);
 
     private:
 
