@@ -13,11 +13,11 @@ TAO_Dynamic_TP_Task::~TAO_Dynamic_TP_Task()
 }
 
 int
-TAO_Dynamic_TP_Task::open(void* num_threads_ptr, void* thread_stack_size_ptr)
+TAO_Dynamic_TP_Task::open(void* args)
 {
   Thread_Counter num = 1;
 
-  Thread_Counter* tmp = static_cast<Thread_Counter*> (num_threads_ptr);
+  Open_Args* tmp = static_cast<Open_Args *> (args);
 
   if (tmp == 0)
     {
@@ -29,7 +29,7 @@ TAO_Dynamic_TP_Task::open(void* num_threads_ptr, void* thread_stack_size_ptr)
       //FUZZ: enable check_for_lack_ACE_OS
     }
 
-  num = *tmp;
+  num = tmp->num_threads;
 
   // We can't activate 0 threads.  Make sure this isn't the case.
   if (num < 1)

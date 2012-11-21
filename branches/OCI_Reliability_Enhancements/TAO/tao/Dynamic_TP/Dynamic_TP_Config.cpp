@@ -83,7 +83,6 @@ TAO_Dynamic_TP_Config::init (int argc, ACE_TCHAR* argv[])
   for (curarg = 0; curarg < argc; ++curarg)
     {
       long val = 0;
-      ACE_TCHAR *sval = 0;
       if ((r = this->parse_string (curarg, argc, argv, ACE_TEXT("-DTPName"),name )) != 0)
         {
           if (r < 0)
