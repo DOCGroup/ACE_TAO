@@ -517,7 +517,7 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
                                                                        persistence_location),
                                 CORBA::NO_MEMORY ());
               this->ns_poa_->set_servant_manager(this->servant_activator_);
-              // We have successfull turned over the context factory to the activator so 
+              // We have successfull turned over the context factory to the activator so
               // we can now release it.
               contextFactory.release ();
             }
@@ -535,7 +535,8 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
 
           if (this->use_servant_activator_)
             {
-              // Ensure we dont throw away the 
+              // If using a servant activator, the activator now owns the
+              // factory, so we should release it
               persFactory.release ();
             }
         }

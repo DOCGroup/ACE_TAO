@@ -15,6 +15,7 @@
 #define TAO_NAMING_SERVICE_FILE_GUARD_H
 
 #include "tao/orbconf.h"
+#include "orbsvcs/Naming/naming_serv_export.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -30,7 +31,7 @@ class TAO_Storable_Base;
  *
  * The destructor releases the lock.
  */
-class Naming_Service_File_Guard
+class TAO_Naming_Serv_Export Naming_Service_File_Guard
 {
 public:
 
