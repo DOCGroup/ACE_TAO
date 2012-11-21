@@ -484,10 +484,6 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
           ACE_NEW_RETURN (pf, TAO_NS_FlatFileFactory, -1);
           auto_ptr<TAO_Naming_Service_Persistence_Factory> persFactory(pf);
 
-          TAO_Storable_Naming_Context_Factory* cf = 0;
-          ACE_NEW_RETURN (cf, TAO_Storable_Naming_Context_Factory (context_size), -1);
-          auto_ptr<TAO_Storable_Naming_Context_Factory> contextFactory (cf);
-
           // This instance will either get deleted after recreate all or,
           // in the case of a servant activator's use, on destruction of the
           // activator.
@@ -496,7 +492,7 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
           if (persistence_location == 0)
             {
               // No, assign the default location "NameService"
-              persistence_location = ACE_TEXT("NameService");
+              persistence_location = ACE_TEXT  ("NameService");
             }
 
           // Now make sure this directory exists
@@ -508,6 +504,12 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT)
           if (this->use_servant_activator_)
             {
+              // Use an auto_ptr to ensure that we clean up the factory in the case
+              // of a failure in creating and registering the Activator
+              TAO_Storable_Naming_Context_Factory* cf = 0;
+              ACE_NEW_RETURN (cf, TAO_Storable_Naming_Context_Factory (context_size), -1);
+              auto_ptr<TAO_Storable_Naming_Context_Factory> contextFactory (cf);
+
               ACE_NEW_THROW_EX (this->servant_activator_,
                                 TAO_Storable_Naming_Context_Activator (orb,
                                                                        persFactory.get(),
@@ -515,6 +517,9 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
                                                                        persistence_location),
                                 CORBA::NO_MEMORY ());
               this->ns_poa_->set_servant_manager(this->servant_activator_);
+              // We have successfull turned over the context factory to the activator so 
+              // we can now release it.
+              contextFactory.release ();
             }
 #endif /* TAO_HAS_MINIMUM_POA */
 
@@ -529,7 +534,10 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
                                                        use_redundancy_);
 
           if (this->use_servant_activator_)
-            persFactory.release();
+            {
+              // Ensure we dont throw away the 
+              persFactory.release ();
+            }
         }
       else if (persistence_location != 0)
         //
