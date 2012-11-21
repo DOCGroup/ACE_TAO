@@ -96,6 +96,9 @@ TAO_FT_Naming_Server::init_with_orb (int argc,
 int
 TAO_FT_Naming_Server::init_naming_manager_with_orb (int argc, ACE_TCHAR *argv [], CORBA::ORB_ptr orb)
 {
+  ACE_UNUSED_ARG (argc);
+  ACE_UNUSED_ARG (argv);
+
   int result = 0;
 
   try {
@@ -218,6 +221,9 @@ TAO_FT_Naming_Server::init_naming_manager_with_orb (int argc, ACE_TCHAR *argv []
 int
 TAO_FT_Naming_Server::init_replication_manager_with_orb (int argc, ACE_TCHAR *argv [], CORBA::ORB_ptr orb)
 {
+  ACE_UNUSED_ARG (argc);
+  ACE_UNUSED_ARG (argv);
+
   int result = 0;
 
   try {

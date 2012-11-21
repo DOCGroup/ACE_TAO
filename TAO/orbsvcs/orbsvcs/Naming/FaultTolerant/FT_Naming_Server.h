@@ -4,10 +4,9 @@
 #define TAO_FT_NAMING_SERVER_H
 
 #include "orbsvcs/Naming/Naming_Server.h"
-#include "FT_Naming_Manager.h"
-#include "FT_Naming_Replication_Manager.h"
+#include "orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.h"
+#include "orbsvcs/Naming/FaultTolerant/FT_Naming_Replication_Manager.h"
 #include "orbsvcs/Naming/FaultTolerant/ftnaming_export.h"
-#include "FT_NamingReplicationC.h"
 
 /**
  * @class TAO_FT_Naming_Server
