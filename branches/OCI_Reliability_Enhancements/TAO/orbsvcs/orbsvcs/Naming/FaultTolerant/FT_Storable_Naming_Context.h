@@ -26,7 +26,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * @class FT_TAO_Storable_Naming_Context
  *
  * @brief This class specializes the TAO_Storable_Naming_Context
- * 'ConcreteImplementor' in the Bridge pattern architecture of the 
+ * 'ConcreteImplementor' in the Bridge pattern architecture of the
  * CosNaming::NamingContext implementation.
  *
  */
@@ -38,7 +38,7 @@ public:
   /**
    * Constructor that takes in preallocated data structure and takes
    * ownership of it.  Derived class from TAO_Persistent_Naming_Context
-   * provides specialization of the resolve operation to support 
+   * provides specialization of the resolve operation to support
    * load balancing.
    */
   TAO_FT_Storable_Naming_Context (CORBA::ORB_ptr orb,
@@ -86,7 +86,7 @@ public:
                               const ACE_TCHAR *persistence_directory,
                               int use_redundancy);
 
-  // Set the Naming Manager as a static so that it is available for all 
+  // Set the Naming Manager as a static so that it is available for all
   // naming context implementations.
   static void set_naming_manager (TAO_FT_Naming_Manager *mgr_impl);
 

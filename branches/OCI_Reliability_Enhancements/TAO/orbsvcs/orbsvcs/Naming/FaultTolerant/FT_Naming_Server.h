@@ -17,7 +17,7 @@
    load balancing capability for objects that are bound within an object
    group within the naming service. The Naming Service will extend the
    resolve and resolve_str operations to perform load balancing on the
-   objects within the object group using a specified load balancing 
+   objects within the object group using a specified load balancing
    strategy.
  */
 class TAO_FtNaming_Export TAO_FT_Naming_Server : public TAO_Naming_Server
@@ -27,8 +27,8 @@ public:
   TAO_FT_Naming_Server (void);
 
   /**
-   * Helper method: Derived from TAO_Naming Server to 
-   * Should create & initialize Naming Service components 
+   * Helper method: Derived from TAO_Naming Server to
+   * Should create & initialize Naming Service components
    * Make the root context of size
    * <context_size>, register it under the <root_poa>, and make the Naming
    * Service persistent if <persistence_location> is not 0.
@@ -47,7 +47,7 @@ public:
                                int round_trip_timeout = 0,
                                int use_round_trip_timeout = 0);
 
-  /// Initialize the Naming Service and Object Group Manager with the command line 
+  /// Initialize the Naming Service and Object Group Manager with the command line
   /// arguments and the ORB. Overrridden from TAO_Naming_Server
   virtual int init_with_orb (int argc, ACE_TCHAR *argv [], CORBA::ORB_ptr orb);
 
@@ -58,7 +58,7 @@ public:
   int init_replication_manager_with_orb (int argc, ACE_TCHAR *argv [], CORBA::ORB_ptr orb);
 
   /// Overridden parse operation. Only allows options supported by the FT_Naming_Server
-  /// and adds options for the object group manager 
+  /// and adds options for the object group manager
   virtual int parse_args (int argc,
                           ACE_TCHAR *argv[]);
 
@@ -84,7 +84,7 @@ protected:
   /// and GenericFactory interfaces.
   TAO_FT_Naming_Manager naming_manager_;
 
-  /// The object that implements the FT_Naming::Replication_Manager 
+  /// The object that implements the FT_Naming::Replication_Manager
   /// interface
   TAO_FT_Naming_Replication_Manager replication_manager_;
 

@@ -55,8 +55,7 @@ TAO_FT_Naming_Server::TAO_FT_Naming_Server (void)
     naming_manager_ior_file_name_(0),
     replication_manager_ior_file_name_(0),
     naming_manager_persistence_file_name_(0)
-{  
-
+{
 }
 
 int
@@ -64,8 +63,7 @@ TAO_FT_Naming_Server::init_with_orb (int argc,
                                      ACE_TCHAR *argv [],
                                      CORBA::ORB_ptr orb)
 {
-
-  // Invoke the base class initialization to setup the naming service 
+  // Invoke the base class initialization to setup the naming service
   // What follows after that are the initialization steps to support
   // fault tolerance and load balancing with the FT_Naming_Manager
   int result = TAO_Naming_Server::init_with_orb (argc, argv, orb);
@@ -77,7 +75,6 @@ TAO_FT_Naming_Server::init_with_orb (int argc,
   result = this->init_naming_manager_with_orb (argc, argv, orb);
   if (result != 0)
     return result;
- 
 
   try {
 
@@ -92,12 +89,11 @@ TAO_FT_Naming_Server::init_with_orb (int argc,
       "TAO_FT_Naming_Server::init_with_orb");
     return -1;
   }
-
   return 0;
 }
 
 
-int 
+int
 TAO_FT_Naming_Server::init_naming_manager_with_orb (int argc, ACE_TCHAR *argv [], CORBA::ORB_ptr orb)
 {
   int result = 0;
@@ -138,7 +134,7 @@ TAO_FT_Naming_Server::init_naming_manager_with_orb (int argc, ACE_TCHAR *argv []
     policies[1] =
       this->root_poa_->create_lifespan_policy (PortableServer::PERSISTENT);
 
-    /* Register the naming manager with a POA 
+    /* Register the naming manager with a POA
     * TODO: 1) Error checking
     *       2) Write IOR to file
     *       3) Persistence for Object Group Manager
@@ -170,7 +166,7 @@ TAO_FT_Naming_Server::init_naming_manager_with_orb (int argc, ACE_TCHAR *argv []
     this->naming_manager_poa_->activate_object_with_id (id.in (),
       &this->naming_manager_);
 
-    this->naming_manager_ior_ = 
+    this->naming_manager_ior_ =
       orb->object_to_string (naming_manager_._this());
 
     this->naming_manager_.initialize (this->orb_,
@@ -196,9 +192,7 @@ TAO_FT_Naming_Server::init_naming_manager_with_orb (int argc, ACE_TCHAR *argv []
                              ACE_TEXT("TAO_FT_Naming_Server::init_naming_manager_with_orb")),
                             -1);
         }
-
       CORBA::String_var str = this->naming_manager_ior ();
-
       ACE_OS::fprintf (iorf, "%s\n", str.in ());
       ACE_OS::fclose (iorf);
     }
@@ -218,11 +212,10 @@ TAO_FT_Naming_Server::init_naming_manager_with_orb (int argc, ACE_TCHAR *argv []
     CORBA::String_var ior = this->naming_manager_ior ();
     adapter->bind ("ObjectGroupManager", ior.in ());
   }
-
   return 0;
 }
 
-int 
+int
 TAO_FT_Naming_Server::init_replication_manager_with_orb (int argc, ACE_TCHAR *argv [], CORBA::ORB_ptr orb)
 {
   int result = 0;
@@ -263,7 +256,7 @@ TAO_FT_Naming_Server::init_replication_manager_with_orb (int argc, ACE_TCHAR *ar
     policies[1] =
       this->root_poa_->create_lifespan_policy (PortableServer::PERSISTENT);
 
-    /* Register the naming manager with a POA 
+    /* Register the naming manager with a POA
     * TODO: 1) Error checking
     *       2) Write IOR to file
     *       3) Persistence for Object Group Manager
@@ -301,12 +294,11 @@ TAO_FT_Naming_Server::init_replication_manager_with_orb (int argc, ACE_TCHAR *ar
     this->replication_manager_poa_->activate_object_with_id (id.in (),
       &this->replication_manager_);
 
-    this->naming_manager_ior_ = 
+    this->naming_manager_ior_ =
       orb->object_to_string (replication_manager_._this());
 
     this->replication_manager_.initialize (this->orb_,
       this->replication_manager_poa_);
-
   }
   catch (const CORBA::Exception& ex)
     {
@@ -501,7 +493,7 @@ TAO_FT_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
           ACE_NEW_RETURN (cf, TAO_FT_Storable_Naming_Context_Factory (context_size), -1);
           auto_ptr<TAO_FT_Storable_Naming_Context_Factory> contextFactory (cf);
 
-          // Provide the naming manager reference for use in 
+          // Provide the naming manager reference for use in
           // TAO_FT_Persistent_Naming_Contexts for load balancing functionality
           TAO_FT_Storable_Naming_Context::set_naming_manager (&naming_manager_);
 
@@ -556,11 +548,11 @@ TAO_FT_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
           // Create a factory for Fault Tolerant / Persistent Naming Contexts and use it
           TAO_Naming_Context_Factory *naming_context_factory = 0;
           ACE_NEW_RETURN (naming_context_factory, TAO_FT_Persistent_Naming_Context_Factory, -1);
-          
-          // Provide the naming manager reference for use in 
+
+          // Provide the naming manager reference for use in
           // TAO_FT_Persistent_Naming_Contexts for load balancing functionality
           TAO_FT_Persistent_Naming_Context::set_naming_manager_impl (&naming_manager_);
-          
+
           // Allocate and initialize Persistent Context Index.
           ACE_NEW_RETURN (this->context_index_,
             TAO_Persistent_Context_Index (orb, poa, naming_context_factory),
@@ -583,7 +575,7 @@ TAO_FT_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
       else
 #endif /* CORBA_E_MICRO */
         {
-          // This option is not supported by the FT_Naming_Server at this time. 
+          // This option is not supported by the FT_Naming_Server at this time.
           // Should return an error.
           ACE_ERROR ((LM_ERROR, "Options not supported with FT_Naming Service.\n"));
           return -1;
@@ -737,7 +729,7 @@ TAO_FT_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
 }
 
 /// Shut down the TAO_FT_Naming_Service; you must still call fini().
-void 
+void
 TAO_FT_Naming_Server::shutdown (void)
 {
 
@@ -750,14 +742,14 @@ TAO_FT_Naming_Server::naming_manager_ior (void)
   return CORBA::string_dup (this->naming_manager_ior_.in ());
 }
 
-int 
+int
 TAO_FT_Naming_Server::update_object_group (
     const FT_Naming::ObjectGroupUpdate & group_info)
 {
   return -1;
 }
 
-int 
+int
 TAO_FT_Naming_Server::update_naming_context (
     const FT_Naming::NamingContextUpdate & context_info)
 {

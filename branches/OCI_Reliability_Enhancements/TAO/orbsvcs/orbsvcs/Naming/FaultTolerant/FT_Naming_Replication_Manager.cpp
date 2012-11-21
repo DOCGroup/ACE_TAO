@@ -1,3 +1,4 @@
+/* $Id$ */
 #include "FT_Naming_Replication_Manager.h"
 #include "FT_NamingReplicationC.h"
 #include "FT_Naming_Server.h"
@@ -16,7 +17,7 @@ TAO_FT_Naming_Replication_Manager::~TAO_FT_Naming_Replication_Manager(void)
 {
 }
 
-void 
+void
 TAO_FT_Naming_Replication_Manager::initialize (CORBA::ORB_ptr orb,
                    PortableServer::POA_ptr root_poa)
 {
@@ -26,7 +27,7 @@ TAO_FT_Naming_Replication_Manager::initialize (CORBA::ORB_ptr orb,
 }
 
 
-void 
+void
 TAO_FT_Naming_Replication_Manager::register_replica (
     ::FT_Naming::ReplicationManager_ptr replica)
 {
@@ -34,7 +35,7 @@ TAO_FT_Naming_Replication_Manager::register_replica (
   peer_replica_ = replica;
 }
 
-void 
+void
 TAO_FT_Naming_Replication_Manager::notify_updated_object_group (
     const FT_Naming::ObjectGroupUpdate & group_info)
 {
@@ -44,7 +45,7 @@ TAO_FT_Naming_Replication_Manager::notify_updated_object_group (
 
 }
 
-void 
+void
 TAO_FT_Naming_Replication_Manager::notify_updated_context (
     const FT_Naming::NamingContextUpdate & context_info)
 {
@@ -52,7 +53,7 @@ TAO_FT_Naming_Replication_Manager::notify_updated_context (
   int result = this->naming_svr_->update_naming_context (context_info);
 }
 
-FT_Naming::ReplicationManager_ptr 
+FT_Naming::ReplicationManager_ptr
 TAO_FT_Naming_Replication_Manager::peer_replica (void)
 {
   return peer_replica_._retn ();

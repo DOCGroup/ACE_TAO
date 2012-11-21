@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file   Persistent_Naming_Context.h
+ *  @file   FT_Persistent_Naming_Context.h
  *
  *  $Id$
  *
@@ -26,7 +26,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * @class TAO_FT_Persistent_Naming_Context
  *
  * @brief This class specializes the TAO_Persistent_Naming_Context
- * 'ConcreteImplementor' in the Bridge pattern architecture of the 
+ * 'ConcreteImplementor' in the Bridge pattern architecture of the
  * CosNaming::NamingContext implementation.
  *
  */
@@ -41,7 +41,7 @@ public:
   /**
    * Constructor that takes in preallocated data structure and takes
    * ownership of it.  Derived class from TAO_Persistent_Naming_Context
-   * provides specialization of the resolve operation to support 
+   * provides specialization of the resolve operation to support
    * load balancing.
    */
   TAO_FT_Persistent_Naming_Context (PortableServer::POA_ptr poa,
