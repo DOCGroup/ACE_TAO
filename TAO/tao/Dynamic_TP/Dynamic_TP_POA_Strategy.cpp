@@ -7,7 +7,8 @@
 #include "tao/CSD_ThreadPool/CSD_TP_Custom_Synch_Request.h"
 #include "tao/CSD_ThreadPool/CSD_TP_Custom_Asynch_Request.h"
 #include "tao/CSD_ThreadPool/CSD_TP_Collocated_Synch_With_Server_Request.h"
-#include <iostream>
+#include "tao/ORB_Core.h"
+
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
 
@@ -22,7 +23,7 @@ TAO_Dynamic_TP_POA_Strategy::~TAO_Dynamic_TP_POA_Strategy()
 {
 }
 
-
+//TODO: This needs to be delegated to Dynamic_TP_POA_StrategyImpl.cpp
 TAO_Dynamic_TP_POA_Strategy::CustomRequestOutcome
 TAO_Dynamic_TP_POA_Strategy::custom_synch_request(TAO::CSD::TP_Custom_Request_Operation* op)
 {
@@ -33,7 +34,7 @@ TAO_Dynamic_TP_POA_Strategy::custom_synch_request(TAO::CSD::TP_Custom_Request_Op
   TAO::CSD::TP_Custom_Synch_Request_Handle request = new
                           TAO::CSD::TP_Custom_Synch_Request(op, servant_state.in());
 
-  if (!this->task_.add_request(request.in()))
+  if (!this->dtp_strategy_impl_->get_Task().add_request(request.in()))
     {
       // The request was rejected by the task.
       return REQUEST_REJECTED;
@@ -43,7 +44,7 @@ TAO_Dynamic_TP_POA_Strategy::custom_synch_request(TAO::CSD::TP_Custom_Request_Op
   return (request->wait()) ? REQUEST_EXECUTED : REQUEST_CANCELLED;
 }
 
-
+//TODO: This needs to be delegated to Dynamic_TP_POA_StrategyImpl.cpp
 TAO_Dynamic_TP_POA_Strategy::CustomRequestOutcome
 TAO_Dynamic_TP_POA_Strategy::custom_asynch_request(TAO::CSD::TP_Custom_Request_Operation* op)
 {
@@ -54,32 +55,24 @@ TAO_Dynamic_TP_POA_Strategy::custom_asynch_request(TAO::CSD::TP_Custom_Request_O
   TAO::CSD::TP_Custom_Asynch_Request_Handle request = new
                           TAO::CSD::TP_Custom_Asynch_Request(op, servant_state.in());
 
-  return (this->task_.add_request(request.in()))
+  return (this->dtp_strategy_impl_->get_Task().add_request(request.in()))
          ? REQUEST_DISPATCHED : REQUEST_REJECTED;
 }
 
-
+//TODO: This needs to be delegated to Dynamic_TP_POA_StrategyImpl.cpp
 bool
 TAO_Dynamic_TP_POA_Strategy::poa_activated_event_i(TAO_ORB_Core& orb_core)
 {
-	//if (this->strategy_impl_ == 0)
-	//{
 
-		//ACE_DEBUG ((LM_DEBUG,
-		//			 ACE_TEXT("Dynamic_TP_POA_Strategy:: POA activated\n")));
-		//	
-		//ACE_NEW_RETURN (this->dtp_strategy_impl_,
-		//	TAO_Dynamic_TP_POA_StrategyImpl(this->threadpool_config_,false),
-  //                    1);
-	/*}*/
-  //this->task_.thr_mgr(orb_core.thr_mgr());
-  //// Activates the worker threads, and waits until all have been started.
-  //return (this->task_.open(&(this->num_threads_)) == 0);
-		std::cout<<"in poa activated event i...\n";
-		return true;
+  int init_thread_count = this->dtp_strategy_impl_->get_initial_pool_threads();
+  this->dtp_strategy_impl_->get_Task().thr_mgr(orb_core.thr_mgr());
+
+  // Activates the worker threads, and waits until all have been started.
+  return (this->dtp_strategy_impl_->get_Task().open(&init_thread_count) == 0);
+
 }
 
-
+//TODO: This needs to be delegated to Dynamic_TP_POA_StrategyImpl.cpp
 void
 TAO_Dynamic_TP_POA_Strategy::poa_deactivated_event_i()
 {
@@ -88,10 +81,10 @@ TAO_Dynamic_TP_POA_Strategy::poa_deactivated_event_i()
   // themselves will also invoke the close() method, but the passed-in value
   // will be 0.  So, a 1 means "shutdown", and a 0 means "a single worker
   // thread is going away".
-  this->task_.close(1);
+  this->dtp_strategy_impl_->get_Task().close(1);
 }
 
-
+//TODO: This needs to be delegated to Dynamic_TP_POA_StrategyImpl.cpp
 TAO::CSD::Strategy_Base::DispatchResult
 TAO_Dynamic_TP_POA_Strategy::dispatch_remote_request_i
                              (TAO_ServerRequest&              server_request,
@@ -119,7 +112,7 @@ TAO_Dynamic_TP_POA_Strategy::dispatch_remote_request_i
 
   // Hand the request object to our task so that it can add the request
   // to its "request queue".
-  if (!this->task_.add_request(request.in()))
+  if (!this->dtp_strategy_impl_->get_Task().add_request(request.in()))
     {
       // Return the DISPATCH_REJECTED return code so that the caller (our
       // base class' dispatch_request() method) knows that we did
@@ -130,7 +123,7 @@ TAO_Dynamic_TP_POA_Strategy::dispatch_remote_request_i
     return TAO::CSD::Strategy_Base::DISPATCH_HANDLED;
 }
 
-
+//TODO: This needs to be delegated to Dynamic_TP_POA_StrategyImpl.cpp
 TAO::CSD::Strategy_Base::DispatchResult
 TAO_Dynamic_TP_POA_Strategy::dispatch_collocated_request_i
                              (TAO_ServerRequest&              server_request,
@@ -193,7 +186,7 @@ TAO_Dynamic_TP_POA_Strategy::dispatch_collocated_request_i
 
   // Hand the request object to our task so that it can add the request
   // to its "request queue".
-  if (!this->task_.add_request(request.in()))
+  if (!this->dtp_strategy_impl_->get_Task().add_request(request.in()))
     {
       // Return the DISPATCH_REJECTED return code so that the caller (our
       // base class' dispatch_request() method) knows that we did
@@ -225,7 +218,7 @@ TAO_Dynamic_TP_POA_Strategy::dispatch_collocated_request_i
   return DISPATCH_HANDLED;
 }
 
-
+//TODO: This needs to be delegated to Dynamic_TP_POA_StrategyImpl.cpp
 void
 TAO_Dynamic_TP_POA_Strategy::servant_activated_event_i
                                 (PortableServer::Servant servant,
@@ -238,14 +231,14 @@ TAO_Dynamic_TP_POA_Strategy::servant_activated_event_i
     }
 }
 
-
+//TODO: This needs to be delegated to Dynamic_TP_POA_StrategyImpl.cpp
 void
 TAO_Dynamic_TP_POA_Strategy::servant_deactivated_event_i
                                 (PortableServer::Servant servant,
                                  const PortableServer::ObjectId&)
 {
   // Cancel all requests stuck in the queue for the specified servant.
-  this->task_.cancel_servant(servant);
+  this->dtp_strategy_impl_->get_Task().cancel_servant(servant);
 
   if (this->serialize_servants_)
     {
@@ -254,14 +247,16 @@ TAO_Dynamic_TP_POA_Strategy::servant_deactivated_event_i
     }
 }
 
-
+//TODO: This needs to be delegated to Dynamic_TP_POA_StrategyImpl.cpp
 void
 TAO_Dynamic_TP_POA_Strategy::cancel_requests(PortableServer::Servant servant)
 {
   // Cancel all requests stuck in the queue for the specified servant.
-  this->task_.cancel_servant(servant);
+  this->dtp_strategy_impl_->get_Task().cancel_servant(servant);
 }
 
+
+//TODO: This needs to be delegated to Dynamic_TP_POA_StrategyImpl.cpp
 TAO::CSD::TP_Servant_State::HandleType
 TAO_Dynamic_TP_POA_Strategy::get_servant_state(PortableServer::Servant servant)
 {

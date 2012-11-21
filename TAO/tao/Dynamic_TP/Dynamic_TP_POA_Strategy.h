@@ -18,10 +18,10 @@
 #include /**/ "ace/pre.h"
 #include "tao/Dynamic_TP/dynamic_tp_export.h"
 #include "tao/Dynamic_TP/Dynamic_TP_Config.h"
-#include "tao/CSD_ThreadPool/CSD_TP_Task.h"
+#include "tao/Dynamic_TP/Dynamic_TP_Task.h"
 #include "tao/CSD_ThreadPool/CSD_TP_Servant_State_Map.h"
-#include "tao/Dynamic_TP/Dynamic_TP_Config.h"
 #include "tao/Dynamic_TP/Dynamic_TP_POA_StrategyImpl.h"
+#include "tao/CSD_ThreadPool/CSD_TP_Custom_Request_Operation.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -60,6 +60,9 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
       /// Virtual Destructor.
       virtual ~TAO_Dynamic_TP_POA_Strategy();
+
+	  /// Set the number of threads in the pool (must be > 0).
+      void set_num_threads(Thread_Counter num_threads);
 
       /// Turn on/off serialization of servants.
       void set_servant_serialization(bool serialize_servants);
@@ -168,7 +171,10 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
       /// The strategy object puts requests into the task's request
       /// queue, and the worker threads service the queued requests
       /// by performing the actual servant request dispatching logic.
-      TAO::CSD::TP_Task task_;
+      //TAO_Dynamic_TP_Task task_;
+
+	  /// The number of worker threads to use for the task.
+      TAO::CSD::Thread_Counter num_threads_;
 
       /// The "serialize servants" flag.
       bool serialize_servants_;
@@ -181,13 +187,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 	  /// This is the key to the RB Tree entry.
 
 	  ACE_CString dynamic_tp_config_name_;
-
-
-	  /// This adopted structure holds the elements needed to set the thread boundaries as well as the POA queue depth.
-	  /// This can get initiated from a dynamic loading or from a user application.
-	  /// The struct needs to follow the TAO_DTP_Definition struct definition.
-	  TAO_DTP_Definition * threadpool_config_;
-
 
 	  /// Pointer to the delagated implementation of the strategy
 	  /// This will be initialized to null with the expectation that this will
