@@ -67,7 +67,8 @@ TAO_Dynamic_TP_Config::~TAO_Dynamic_TP_Config (void)
 int
 TAO_Dynamic_TP_Config::init (int argc, ACE_TCHAR* argv[])
 {
-  TAO_DTP_Definition entry =  {-1,5,-1,0,60,0};
+//  TAO_DTP_Definition entry =  {-1,5,-1,0,60,0};
+  TAO_DTP_Definition entry;
   bool min_threads_set = false;
   bool init_threads_set = false;
   bool max_threads_set = false;

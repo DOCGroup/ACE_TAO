@@ -39,8 +39,18 @@ struct TAO_Dynamic_TP_Export TAO_DTP_Definition
   int init_threads_; // default to 5
   int max_threads_;  // a default of -1 implies no limit.
   size_t stack_size_;
-  time_t timeout_;   // default to 60 seconds
+  ACE_Time_Value timeout_;   // default to 60 seconds
   size_t queue_depth_;
+
+  // Create explicit constructor to eliminate issues with non-initialized struct values.
+  TAO_DTP_Definition() : 
+    min_threads_(-1),
+    init_threads_(5),
+    max_threads_(-1),
+    stack_size_(ACE_DEFAULT_THREAD_STACKSIZE),
+    timeout_(60,0),
+    queue_depth_(-1){}
+
 };
 
 class TAO_Dynamic_TP_Export TAO_Dynamic_TP_Config_Registry_Installer

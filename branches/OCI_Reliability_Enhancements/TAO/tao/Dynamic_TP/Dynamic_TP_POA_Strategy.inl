@@ -18,10 +18,17 @@ ACE_INLINE
 TAO_Dynamic_TP_POA_Strategy::TAO_Dynamic_TP_POA_Strategy(TAO_DTP_Definition * tp_config_name,
 							bool     serialize_servants)
 {
-	
-	this->threadpool_config_ = tp_config_name;
+	ACE_NEW(this->dtp_strategy_impl_,
+					TAO_Dynamic_TP_POA_StrategyImpl(tp_config_name,serialize_servants));
 }
 
+ACE_INLINE
+void
+TAO_Dynamic_TP_POA_Strategy::set_num_threads(Thread_Counter num_threads)
+{
+  // Simple Mutator.  Assumes that num_threads > 0.
+  this->num_threads_ = num_threads;
+}
 
 ACE_INLINE
 ACE_CString

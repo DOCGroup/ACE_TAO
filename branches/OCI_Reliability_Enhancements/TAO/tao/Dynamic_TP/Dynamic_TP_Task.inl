@@ -13,7 +13,7 @@ TAO_Dynamic_TP_Task::TAO_Dynamic_TP_Task()
     deferred_shutdown_initiated_(false),
     opened_(false),
     num_threads_(0),
-    activated_threads_ ((size_t)MAX_THREADPOOL_TASK_WORKER_THREADS)
+    activated_threads_ ((size_t)0)
 {
 }
 

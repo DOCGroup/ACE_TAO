@@ -82,25 +82,9 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
       /// Virtual Destructor.
       virtual ~TAO_Dynamic_TP_Task();
 
-      /// Put a request object on to the request queue.
-      /// Returns true if successful, false otherwise (it has been "rejected").
-      bool add_request(TAO::CSD::TP_Request* request);
-
       /// Activate the worker threads
-      virtual int open(void* num_threads_ptr = 0);
-
-      /// The "mainline" executed by each worker thread.
-      virtual int svc();
-
-      /// Multi-purpose: argument value is used to differentiate purpose.
-      ///
-      /// 0) Invoked by each worker thread after its invocation of the
-      ///    svc() method has completed (ie, returned).
-      /// 1) Invoked by the strategy object to shutdown all worker threads.
-      virtual int close(u_long flag = 0);
-
-      /// Cancel all requests that are targeted for the provided servant.
-      void cancel_servant (PortableServer::Servant servant);
+      virtual int open(void* num_threads_ptr = 0,
+                       void* thread_stack_size = 0);
 
     private:
 
