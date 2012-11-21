@@ -1,12 +1,18 @@
+Wed Nov 21 22:24:28 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
+
+        * orbsvcs/tests/Simple_Naming/run_test_ffp.pl:
+        
+          Added tests for tao_ft_naming to the test suite.
+
 Wed Nov 21 20:46:58 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/Naming_Server.cpp:
-        
+
           Added documentation to describe why release is required.
-          
+
         * orbsvcs/orbsvcs/Naming/Naming_Service_File_Guard.h:
-        
-          Added TAO_Naming_Serv_Export to support dll.          
+
+          Added TAO_Naming_Serv_Export to support dll.
 
 Wed Nov 21 20:10:01 UTC 2012  Byron Harris  <harrisb@ociweb.com>
 
