@@ -17,6 +17,8 @@ foreach $i (@ARGV) {
     }
 }
 
+#$ENV{ACE_TEST_VERBOSE} = "1";
+
 my $name_manager = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 my $client       = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
 my $nslist       = PerlACE::TestTarget::create_target (3) || die "Create target 3 failed\n";
@@ -28,19 +30,19 @@ my $nsdel        = PerlACE::TestTarget::create_target (5) || die "Create target 
 ## support that kind of thing.  So, we swith to the Select MT Reactor.
 $NM_conf = $name_manager->LocalFile ("windows" . $PerlACE::svcconf_ext);
 
-my $name_mgr_iorbase = "lm.ior";
-my $name_iorbase = "nm.ior";
+my $name_mgr_iorbase = "nm.ior";
+my $name_srv_iorbase = "ns.ior";
 
 my $name_manager_iorfile = $name_manager->LocalFile ($name_mgr_iorbase);
-my $name_server_iorfile = $name_manager->LocalFile ($name_iorbase);
+my $name_server_iorfile = $name_manager->LocalFile ($name_srv_iorbase);
 
 my $naming_mgr_client_iorfile = $client->LocalFile ($name_mgr_iorbase);
-my $name_client_iorfile = $client->LocalFile ($name_iorbase);
+my $name_srv_client_iorfile = $client->LocalFile ($name_srv_iorbase);
 
 $name_manager->DeleteFile($name_mgr_iorbase);
-$name_manager->DeleteFile($name_iorbase);
+$name_manager->DeleteFile($name_srv_iorbase);
 $client->DeleteFile($name_mgr_iorbase);
-$client->DeleteFile($name_iorbase);
+$client->DeleteFile($name_srv_iorbase);
 
 $NM = $name_manager->CreateProcess ("../../orbsvcs/Naming_Service/tao_ft_naming",
         "-f persist.dat -g $name_manager_iorfile -o $name_server_iorfile " .
@@ -48,18 +50,16 @@ $NM = $name_manager->CreateProcess ("../../orbsvcs/Naming_Service/tao_ft_naming"
         "-ORBDottedDecimalAddresses 1" .
         ($^O eq 'MSWin32' ? " -ORBSvcConf $NM_conf" : ''));
 
-$NM_REF       = "-ORBInitRef NameService=file://$name_client_iorfile";
+$NM_REF       = "-ORBInitRef NameService=file://$name_srv_client_iorfile";
 $RM_REF       = "-ORBInitRef NamingManager=file://$naming_mgr_client_iorfile";
-$NS_REF       = "--ns file://$name_client_iorfile";
+$NS_REF       = "--ns file://$name_srv_client_iorfile";
 $DEBUG_LEVEL  = "-ORBDebugLevel $debug_level";
 $LOAD_ARG     = "$NM_REF $RM_REF $DEBUG_LEVEL";
 
 $CL   = $client->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_nsgroup");
-$NSLIST = $nslist->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_nslist","$NS_REF");
-$NSADD  = $nsadd->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_nsadd","$NS_REF");
-$NSDEL  = $nsdel->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_nsdel","$NS_REF");
-
-
+$NSLIST = $nslist->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_nslist");
+$NSADD  = $nsadd->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_nsadd");
+$NSDEL  = $nsdel->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_nsdel");
 
 $POSITIVE_TEST_RESULT = 0;
 $NEGATIVE_TEST_RESULT = 1;
@@ -80,7 +80,13 @@ sub run_client ($$)
 
     $CL->Arguments ($arglist);
 
+    open(OLDOUT, ">&", \*STDOUT) or die "Can't dup STDOUT: $!";
+    open(OLDERR, ">&", \*STDERR) or die "Can't dup STDERR: $!";
+    open STDERR, '>', "test.err";
+    open STDOUT, '>', "test.out";
     my $client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval());
+    open(STDERR, ">&OLDERR")    or die "Can't dup OLDERR: $!";
+    open(STDOUT, ">&OLDOUT")    or die "Can't dup OLDOUT: $!";
 
     if ($client_status != $expected_test_result) {
         my $time = localtime;
@@ -95,8 +101,12 @@ sub run_nsadd($)
     my $args = shift;
     $NSADD->Arguments ($args);
 
-    #tao_nsadd --name iso --ctx
+    open(OLDERR, ">&", \*STDERR) or die "Can't dup STDERR: $!";
+    open STDERR, '>', "test.err";
+
+    #tao_nsadd --ns file://ns.ior --name iso --ctx
     my $nsadd_status = $NSADD->SpawnWaitKill ($nsadd->ProcessStartWaitInterval());
+    open(STDERR, ">&OLDERR")    or die "Can't dup OLDERR: $!";
 
     if ($nsadd_status != $0) {
         my $time = localtime;
@@ -111,8 +121,12 @@ sub run_nsdel($)
     my $args = shift;
     $NSDEL->Arguments ($args);
 
-    #tao_nsdel --name iso --destroy
+    open(OLDERR, ">&", \*STDERR) or die "Can't dup STDERR: $!";
+    open STDERR, '>', "test.err";
+
+    #tao_nsdel --ns file://ns.ior --name iso --destroy
     my $nsdel_status = $NSDEL->SpawnWaitKill ($nsdel->ProcessStartWaitInterval());
+    open(STDERR, ">&OLDERR")    or die "Can't dup OLDERR: $!";
 
     if ($nsdel_status != $0) {
         my $time = localtime;
@@ -121,11 +135,19 @@ sub run_nsdel($)
     }
 }
 
-sub run_nslist()
+sub run_nslist($)
 {
     print STDERR "\n\n======== Running tao_nslist================\n";
+    my $args = shift;
+    $NSLIST->Arguments ($args);
 
+    open(OLDERR, ">&", \*STDERR) or die "Can't dup STDERR: $!";
+    open STDERR, '>', "test.err";
+
+    #tao_nslist --ns file://ns.ior
     my $nslist_status = $NSLIST->SpawnWaitKill ($nslist->ProcessStartWaitInterval());
+
+    open(STDERR, ">&OLDERR")    or die "Can't dup OLDERR: $!";
 
     if ($nslist_status != $0) {
         my $time = localtime;
@@ -166,25 +188,25 @@ sub run_clients ()
 
     run_nsadd("$NS_REF"." --name iso --ctx");
 
-    run_nslist();
+    run_nslist("$NS_REF");
 
     run_client (
         "group_unbind -name iso/ieee",
         $NEGATIVE_TEST_RESULT);
 
-    run_nslist();
+    run_nslist("$NS_REF");
 
     run_client (
         "group_bind -group ieee -name iso/ieee",
         $POSITIVE_TEST_RESULT);
 
-    run_nslist();
+    run_nslist("$NS_REF");
 
     run_client (
         "group_modify -group ieee -policy rand",
         $POSITIVE_TEST_RESULT);
 
-    run_nslist();
+    run_nslist("$NS_REF");
 
     run_client (
         "member_add -group ieee -location 127.0.0.1 -ior file://$naming_mgr_client_iorfile",
@@ -214,13 +236,13 @@ sub run_clients ()
         "group_unbind -name iso/ieee",
         $POSITIVE_TEST_RESULT);
 
-    run_nslist();
+    run_nslist("$NS_REF");
 
     run_client (
         "group_list",
         $POSITIVE_TEST_RESULT);
 
-    run_nsdel("$NM_REF"." --name iso --destroy");
+    run_nsdel("$NS_REF"." --name iso --destroy");
 
     run_client (
         "-help",
@@ -234,7 +256,7 @@ print STDERR "This test will check the methods of the tao_nsgroup\n";
 print STDERR "\n";
 
 ################################################################################
-## Start LoadBalancer Service
+## Start tao_ft_naming Service
 ################################################################################
 $name_manager_status = $NM->Spawn ();
 
@@ -272,9 +294,9 @@ if ($name_manager_status != 0) {
     $status = 1;
 }
 
-#$name_manager->DeleteFile($name_mgr_iorbase);
-#$name_manager->DeleteFile($name_iorbase);
-#$client->DeleteFile($name_mgr_iorbase);
-#$client->DeleteFile($name_iorbase);
+$name_manager->DeleteFile($name_mgr_iorbase);
+$name_manager->DeleteFile($name_srv_iorbase);
+$client->DeleteFile($name_mgr_iorbase);
+$client->DeleteFile($name_srv_iorbase);
 
 exit $status;

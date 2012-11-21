@@ -1,10 +1,16 @@
+Wed Nov 21 20:03:03 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
+
+        * utils/nsgroup/run_test.pl:
+
+        Redirected output to files and more cleanup
+
 Wed Nov 21 18:19:17 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:
         * orbsvcs/orbsvcs/Naming/Naming_Server.cpp:
-          
+
           Fixed bug in release of Activator.
-          
+
 Wed Nov 21 16:35:28 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/Config_Backing_Store.h:
