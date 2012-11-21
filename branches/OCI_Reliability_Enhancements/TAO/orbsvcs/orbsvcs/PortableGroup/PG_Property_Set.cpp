@@ -155,7 +155,7 @@ void TAO::PG_Property_Set::set_property (
     delete replaced_value;
   }
   else if (-1 == rebind_result)
-  { // An 
+  { // An
     if (TAO_debug_level > 3)
     {
       ACE_ERROR ( (LM_ERROR,

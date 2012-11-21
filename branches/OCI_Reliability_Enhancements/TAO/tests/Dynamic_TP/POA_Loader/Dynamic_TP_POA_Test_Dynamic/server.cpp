@@ -60,22 +60,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-	 //   // Create the thread pool servant dispatching strategy object, and
-  //// hold it in a (local) smart pointer variable.
-	 // ACE_CString tp_config_name="POA1";
-	 // TAO_Dynamic_TP_POA_StrategyImpl * dynamic_strategy = 0;
-  //TAO_Intrusive_Ref_Count_Handle<TAO_Dynamic_TP_POA_Strategy> csd_strategy =
-  //                                               new TAO_Dynamic_TP_POA_Strategy(tp_config_name,
-		//										                                 dynamic_strategy, true);
-
-  //// Tell the strategy to apply itself to the child poa.
-  //if (csd_strategy->apply_to(root_poa.in()) == false)
-  //  {
-  //    ACE_ERROR((LM_ERROR,
-  //               "Failed to apply CSD strategy to root poa.\n"));
-  //    return -1;
-  //  }
-
       Hello *hello_impl;
       ACE_NEW_RETURN (hello_impl,
                       Hello (orb.in ()),
@@ -100,13 +84,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                            "Cannot open output file %s for writing IOR: %C",
                            ior_output_file,
                            ior.in ()),
-                              1);
+                          1);
       ACE_OS::fprintf (output_file, "%s", ior.in ());
       ACE_OS::fclose (output_file);
 
       poa_manager->activate ();
 
       orb->run ();
+
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
 

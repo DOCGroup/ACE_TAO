@@ -44,8 +44,8 @@ TAO_Naming_Service::init (int argc, ACE_TCHAR* argv[])
       // arguments.
       this->parse_args (argc, argv);
 
-      // Factory method used to construct a naming server to be used in 
-      // creation and initialization of the naming service components 
+      // Factory method used to construct a naming server to be used in
+      // creation and initialization of the naming service components
       this->my_naming_server_ = this->create_naming_server ();
 
       // This function call initializes the naming service and returns
@@ -199,7 +199,7 @@ TAO_Naming_Service::fini (void)
 }
 
 /// Factory method used to create a server object for the naming service
-TAO_Naming_Server* 
+TAO_Naming_Server*
 TAO_Naming_Service::create_naming_server ()
 {
   // Default behavior is to use the Naming_Server located in orbsvcs\orbsvcs\Naming
@@ -211,5 +211,5 @@ TAO_Naming_Service::create_naming_server ()
 TAO_Naming_Service::~TAO_Naming_Service (void)
 {
   // Invoke destructor of naming server which was created using the factory method
-  delete this->my_naming_server_;    
+  delete this->my_naming_server_;
 }

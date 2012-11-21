@@ -1,9 +1,5 @@
 // $Id$
 
-#if 0
-#include "tao/Dynamic_TP/Dynamic_TP_Config.h"
-#include "tao/Dynamic_TP/Dynamic_TP_POA_Loader.h"
-#endif
 #include "tao/Dynamic_TP/Dynamic_TP_POA_Strategy.h"
 #include "tao/CSD_Framework/CSD_Strategy_Repository.h"
 
@@ -45,18 +41,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   TAO_debug_level = 1;
 
   ACE_Service_Config::open (argc, argv);
-#if 0
-  //  ACE_Service_Gestalt *current = ACE_Service_Config::current();
-  TAO_Dynamic_TP_Config_Registry* config_registry =
-    ACE_Dynamic_Service<TAO_Dynamic_TP_Config_Registry>::instance
-    ("Dynamic_TP_Config_Registry";
-
-  if (config_registry == 0)
-    {
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Unable to load configuration\n")));
-      return -1;
-    }
-#endif
 
   // Dump the POA to Strategy map
   TAO_CSD_Strategy_Repository* dtp_poa_strat_repo =
@@ -65,13 +49,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   if (dtp_poa_strat_repo == 0)
     {
-	  ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Unable to load configuration\n")));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Unable to load configuration\n")));
       return -1;
     }
   else
-  {
-	  ACE_DEBUG ((LM_DEBUG, ACE_TEXT("TAO_CSD_Strategy_Repository found\n")));
-  }
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT("TAO_CSD_Strategy_Repository found\n")));
+    }
 
 
   // Now iterate through the repository and attempt to find sample POA configurations
@@ -84,17 +68,17 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       0
     };
 
-    TAO_Dynamic_TP_POA_Strategy * mapped_strategy;
+  TAO_Dynamic_TP_POA_Strategy * mapped_strategy;
 
-    for (int i = 0; poa_list[i] != 0; i++)
+  for (int i = 0; poa_list[i] != 0; i++)
     {
       mapped_strategy = 0;
-	  ACE_DEBUG ((LM_INFO, ACE_TEXT("Config definition for %C\n"), poa_list[i]));
+      ACE_DEBUG ((LM_INFO, ACE_TEXT("Config definition for %C\n"), poa_list[i]));
       mapped_strategy = dynamic_cast <TAO_Dynamic_TP_POA_Strategy*> (dtp_poa_strat_repo->find (poa_list[i]));
       if ((mapped_strategy == 0) && (i != 1))
         {
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Cannot find TP Config definition for %C\n"), poa_list[i]));
-		  continue;
+          continue;
         }
       if (i == 1)
         {

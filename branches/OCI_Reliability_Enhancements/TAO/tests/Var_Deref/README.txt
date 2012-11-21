@@ -1,3 +1,5 @@
+$Id$
+
 This test is intended to demonstrate that Var types can be
 dereferenced to the pointer type using a casting operation.
 

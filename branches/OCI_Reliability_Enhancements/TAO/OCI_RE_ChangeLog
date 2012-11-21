@@ -1,9 +1,60 @@
+Wed Nov 21 16:35:28 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Config_Backing_Store.h:
+        * orbsvcs/ImplRepo_Service/Locator_Repository.h:
+        * orbsvcs/ImplRepo_Service/XML_Backing_Store.h:
+
+        * orbsvcs/Naming_Service/FT_Naming_Service.h:
+        * orbsvcs/Naming_Service/FT_Naming_Service.cpp:
+        * orbsvcs/Naming_Service/Naming_Service.h:
+        * orbsvcs/Naming_Service/Naming_Service.cpp:
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Replication_Manager.h:
+
+        * orbsvcs/orbsvcs/Naming/Naming_Context_Factory.h:
+        * orbsvcs/orbsvcs/Naming/Naming_Server.h:
+        * orbsvcs/orbsvcs/Naming/Naming_Server.cpp:
+        * orbsvcs/orbsvcs/Naming/Persistent_Context_Index.cpp:
+        * orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.h:
+        * orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.cpp:
+        * orbsvcs/orbsvcs/Naming/Persistent_Naming_Context_Factory.h:
+        * orbsvcs/orbsvcs/Naming/Persistent_Naming_Context_Factory.cpp:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context_Activator.cpp:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context_Factory.h:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context_Factory.cpp:
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_Factory.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Property_Set.cpp:
+
+        * orbsvcs/tests/FT_Naming/Load_Balancing/Basic.h:
+        * orbsvcs/tests/FT_Naming/Load_Balancing/LB_server.cpp:
+
+        * orbsvcs/tests/FT_Naming/Load_Balancing/NameService/README:
+
+        * orbsvcs/tests/FT_Naming/Load_Balancing/client.cpp:
+        * orbsvcs/tests/FT_Naming/Load_Balancing/run_test.pl:
+        * orbsvcs/tests/FT_Naming/Load_Balancing/server.cpp:
+
+        * orbsvcs/tests/ImplRepo/RestartServer/README:
+        * orbsvcs/tests/ImplRepo/RestartServer/Terminator.cpp:
+
+        * orbsvcs/tests/ImplRepo/run_test.pl:
+
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Dynamic/server.cpp:
+
+        * tests/Dynamic_TP/POA_Loader/Test.cpp:
+
+        * tests/Var_Deref/README.txt:
+
+          More unfuzzing.
+
 Wed Nov 21 13:35:40 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Replication_Manager.cpp:
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.h:
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:
-        
+
           Fixed compilation errors.
 
 Wed Nov 21 06:16:58 UTC 2012  Phil Mesnier  <mesnier_p@local>

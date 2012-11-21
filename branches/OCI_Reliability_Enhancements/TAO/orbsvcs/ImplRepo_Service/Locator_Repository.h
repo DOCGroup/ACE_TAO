@@ -136,7 +136,7 @@ class No_Backing_Store : public Locator_Repository
 public:
   virtual ~No_Backing_Store();
 
-  virtual const char* repo_mode() const;  
+  virtual const char* repo_mode() const;
 
 private:
 };

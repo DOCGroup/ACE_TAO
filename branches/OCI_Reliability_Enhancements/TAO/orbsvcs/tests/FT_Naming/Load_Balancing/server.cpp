@@ -22,7 +22,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       if (lb_server.create_object_group () != 0)
         return 1;
-        
+
       CosNaming::Name name (1);
       name.length (1);
       name[0].id = CORBA::string_dup ("basic_name");
@@ -34,7 +34,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         ex._tao_print_exception ("Unable to bind object group in name service.\n");
         return 1;
       }
-      
+
       Basic *basic_servant1;
       Basic *basic_servant2;
       Basic *basic_servant3;

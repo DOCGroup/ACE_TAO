@@ -30,7 +30,7 @@ class TAO_Naming_Server;
  * COS Naming Service.
  *
  * This class overrides the create_naming_server factory method inherited
- * from <TAO_Naming_Service> 
+ * from <TAO_Naming_Service>
  */
 class TAO_FT_Naming_Service : public TAO_Naming_Service
 {

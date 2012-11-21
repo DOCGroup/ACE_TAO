@@ -32,7 +32,7 @@ public:
   virtual void shutdown (void);
 
   virtual void remove_member (void);
-  
+
 private:
 
   const char* object_group_name_;

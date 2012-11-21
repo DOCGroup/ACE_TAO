@@ -69,7 +69,7 @@ public:
 
   virtual ~Heap_Backing_Store();
 
-  virtual const char* repo_mode() const;  
+  virtual const char* repo_mode() const;
 
 private:
   const ACE_CString filename_;
@@ -89,7 +89,7 @@ public:
 
   virtual ~Registry_Backing_Store();
 
-  virtual const char* repo_mode() const;  
+  virtual const char* repo_mode() const;
 
 private:
 #if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_REGISTRY)

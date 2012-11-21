@@ -518,7 +518,7 @@ TAO::PG_Object_Group::locations_of_members (void)
     const PortableGroup::Location & location = (*it).ext_id_;
     PortableGroup::Location & out = (*result)[pos];
     out = location;
-    ++pos; 
+    ++pos;
   }
   return result;
 }
@@ -805,13 +805,13 @@ TAO::PG_Object_Group::has_member_at (const PortableGroup::Location & location)
   return (0 == this->members_.find (location));
 }
 
-void 
+void
 TAO::PG_Object_Group::distribute (int value)
 {
   this->distribute_ = value;
 }
 
-void 
+void
 TAO::PG_Object_Group::set_name (const char* group_name)
 {
   if (group_name_ != 0)
@@ -820,7 +820,7 @@ TAO::PG_Object_Group::set_name (const char* group_name)
   group_name_ = CORBA::string_dup (group_name);
 }
 
-const char* 
+const char*
 TAO::PG_Object_Group::get_name (void)
 {
   return group_name_;

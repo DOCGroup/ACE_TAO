@@ -176,8 +176,8 @@ public:
   /**
    * Constructor that takes in preallocated data structure and takes
    * ownership of it.  This constructor is for 'recreating' servants
-   * from persistent state. If no map is provided, it MUST be followed 
-   * up by <init> to allocate the underlying data structure from 
+   * from persistent state. If no map is provided, it MUST be followed
+   * up by <init> to allocate the underlying data structure from
    * persistent storage!
    */
   TAO_Persistent_Naming_Context (PortableServer::POA_ptr poa,

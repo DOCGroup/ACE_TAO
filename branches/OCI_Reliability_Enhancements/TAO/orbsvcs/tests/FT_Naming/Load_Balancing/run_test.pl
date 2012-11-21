@@ -76,7 +76,7 @@ print STDERR "6 servers are created and added into a Object Group\n";
 print STDERR "When the client accesses an object group through the naming service, the";
 print STDERR "FT_Naming_Service will apply the RoundRobin load balancing strategy\n";
 print STDERR "selects one of the servers and then the client makes an invocations on\n";
-print STDERR "the server. This is done 15 times to ensure we support the wraparround\n"; 
+print STDERR "the server. This is done 15 times to ensure we support the wraparround\n";
 print STDERR "condition.  When done, the application has to delete the object from the\n";
 print STDERR "object group. This is called the application controlled membership of\n";
 print STDERR "object group.\n";

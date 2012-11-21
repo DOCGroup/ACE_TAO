@@ -156,8 +156,8 @@ int TAO::PG_Group_Factory::find_group (PortableGroup::ObjectGroup_ptr object_gro
   return result;
 }
 
-int TAO::PG_Group_Factory::find_group_with_name (const char* target_group_name, 
-                                                 TAO::PG_Object_Group *& group_target) 
+int TAO::PG_Group_Factory::find_group_with_name (const char* target_group_name,
+                                                 TAO::PG_Object_Group *& group_target)
 {
   int result = 0;
 
@@ -168,10 +168,10 @@ int TAO::PG_Group_Factory::find_group_with_name (const char* target_group_name,
   {
     TAO::PG_Object_Group * a_group = (*it).int_id_;
     // If the group has the group name in the property
-    // 
+    //
     const char* a_group_name = a_group->get_name ();
     if (a_group_name != 0 &&
-        ACE_OS::strcmp (target_group_name, 
+        ACE_OS::strcmp (target_group_name,
                         a_group_name) == 0)
       { // This is the group we were looking for
         group_target = a_group;

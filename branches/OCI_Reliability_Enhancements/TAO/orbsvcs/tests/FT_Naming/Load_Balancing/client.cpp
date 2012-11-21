@@ -70,7 +70,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // Iterate enough so we get a few wraparrounds
       for (int i = 0; i < 15; i++)
-      {     
+      {
           ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Resolving service\n"));
           try {
 
@@ -99,7 +99,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           try {
             CORBA::String_var the_string =
               basic->get_string ();
-  
+
             ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Client request handled by object at <%s>\n",
                        the_string.in ()));
 

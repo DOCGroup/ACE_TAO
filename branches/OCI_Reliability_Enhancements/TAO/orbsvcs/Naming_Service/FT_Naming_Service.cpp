@@ -18,7 +18,7 @@ TAO_FT_Naming_Service::TAO_FT_Naming_Service (int argc, ACE_TCHAR* argv[])
 
 
 /// Create a server object for the naming service
-TAO_Naming_Server* 
+TAO_Naming_Server*
 TAO_FT_Naming_Service::create_naming_server ()
 {
   return new (ACE_nothrow) TAO_FT_Naming_Server ();

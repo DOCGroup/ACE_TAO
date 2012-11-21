@@ -139,7 +139,7 @@ public:
 
 protected:
   /**
-   * Helper method: create Naming Service locally. Can be specialized to 
+   * Helper method: create Naming Service locally. Can be specialized to
    * refine how Naming Service components are created and initialized
    * Make the root context of size
    * <context_size>, register it under the <root_poa>, and make the Naming

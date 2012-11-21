@@ -1,9 +1,7 @@
 /* -*- C++ -*- $Id$ */
 
 #include "Terminator.h"
-
 #include "ace/Log_Msg.h"
-#include "ace/OS.h"
 
 int
 Terminator::open(void*)

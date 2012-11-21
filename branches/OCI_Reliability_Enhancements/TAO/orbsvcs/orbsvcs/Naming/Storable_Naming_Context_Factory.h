@@ -29,7 +29,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 /**
  * @class TAO_Naming_Context_Factory
  *
- * @brief 
+ * @brief
  */
 class TAO_Naming_Serv_Export TAO_Storable_Naming_Context_Factory
 {

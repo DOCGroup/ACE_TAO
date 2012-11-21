@@ -541,7 +541,7 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
           // naming contexts by the TAO_Persistent_Context_Index
           TAO_Naming_Context_Factory *naming_context_factory = 0;
           ACE_NEW_RETURN (naming_context_factory, TAO_Persistent_Naming_Context_Factory, -1);
-          
+
           // Allocate and initialize Persistent Context Index.
           ACE_NEW_RETURN (this->context_index_,
                           TAO_Persistent_Context_Index (orb, poa, naming_context_factory),

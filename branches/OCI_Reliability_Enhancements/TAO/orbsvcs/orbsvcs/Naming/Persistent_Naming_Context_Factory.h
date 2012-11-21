@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file   Naming_Context_Factory.h
+ *  @file   Persistent_Naming_Context_Factory.h
  *
  *  $Id$
  *
@@ -23,11 +23,11 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 /**
  * @class TAO_Persistent_Naming_Context_Factory
  *
- * @brief An implementation of the TAO_Naming_Context_Factory that creates 
- * TAO_Persistent_Naming_Context to implement the COS Naming Service 
+ * @brief An implementation of the TAO_Naming_Context_Factory that creates
+ * TAO_Persistent_Naming_Context to implement the COS Naming Service
  * NamingContext interface.
  */
-class TAO_Naming_Serv_Export TAO_Persistent_Naming_Context_Factory 
+class TAO_Naming_Serv_Export TAO_Persistent_Naming_Context_Factory
   : public TAO_Naming_Context_Factory
 {
 public:

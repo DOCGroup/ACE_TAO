@@ -31,7 +31,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 /**
  * @class TAO_Naming_Context_Factory
  *
- * @brief 
+ * @brief
  */
 class TAO_Naming_Serv_Export TAO_Naming_Context_Factory
 {
@@ -57,7 +57,7 @@ public:
                                                                      TAO_Persistent_Context_Index *context_index,
                                                                      HASH_MAP * map = 0,
                                                                      ACE_UINT32 *counter = 0) = 0;
-  
+
 protected:
   /// The size for persisted naming context objects in hash map
   size_t context_size_;
