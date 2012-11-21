@@ -1,3 +1,11 @@
+Wed Nov 21 13:35:40 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Replication_Manager.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:
+        
+          Fixed compilation errors.
+
 Wed Nov 21 06:16:58 UTC 2012  Phil Mesnier  <mesnier_p@local>
 
         * tao/Dynamic_TP/Dynamic_TP_Config.h:

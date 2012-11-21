@@ -1,7 +1,7 @@
 /* $Id$ */
-#include "FT_Naming_Replication_Manager.h"
-#include "FT_NamingReplicationC.h"
-#include "FT_Naming_Server.h"
+#include "orbsvcs/Naming/FaultTolerant/FT_Naming_Replication_Manager.h"
+#include "orbsvcs/Naming/FaultTolerant/FT_NamingReplicationC.h"
+#include "orbsvcs/Naming/FaultTolerant/FT_Naming_Server.h"
 #include "tao/corba.h"
 
 
