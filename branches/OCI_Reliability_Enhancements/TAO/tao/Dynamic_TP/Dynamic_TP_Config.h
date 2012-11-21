@@ -43,7 +43,7 @@ struct TAO_Dynamic_TP_Export TAO_DTP_Definition
   size_t queue_depth_;
 
   // Create explicit constructor to eliminate issues with non-initialized struct values.
-  TAO_DTP_Definition() : 
+  TAO_DTP_Definition() :
     min_threads_(-1),
     init_threads_(5),
     max_threads_(-1),
