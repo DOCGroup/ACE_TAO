@@ -1,3 +1,8 @@
+Thu Nov 22 13:31:20 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * debian/tao-log.install:
+          Fixed executable name
+
 Thu Nov 22 12:56:20 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * debian/ACE-DPKG.mwc:
