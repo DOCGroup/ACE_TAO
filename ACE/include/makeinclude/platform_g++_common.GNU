@@ -105,7 +105,7 @@ templates ?= automatic
 # If the platform file didn't already set versioned_so, default to 1.
 versioned_so ?= 1
 with_ld ?=
-ifeq ($(versioned_so),1)
+ifneq ($(versioned_so),0)
   ifeq ($(with_ld),hpux)
     SOFLAGS += -Wl,+h -Wl,$(SONAME)
   else
