@@ -32,7 +32,6 @@ usr/lib/libTAO_ImR_Client-*.so
 usr/lib/libTAO_DiffServPolicy-*.so
 usr/lib/libTAO_ZlibCompressor-*.so
 usr/lib/libTAO_Bzip2Compressor-*.so
-usr/lib/libTAO_LzoCompressor-*.so
 usr/lib/libTAO_IFR_BE-*.so
 usr/lib/libTAO_IDL_FE-*.so
 usr/lib/libTAO_IDL_BE-*.so
