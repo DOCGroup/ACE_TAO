@@ -1,3 +1,21 @@
+Thu Nov 22 12:38:34 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Service_Config.h:
+          Added new ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE which accepts
+          an explicit version to be loaded. Needed for debian for example
+
+        * debian/patches/series:
+        * debian/patches/15-fix-lzo-flags.diff:
+        * debian/patches/34-bts386713.diff:
+          Cleanup
+
+        * debian/platform_macros.GNU:
+          Set versioned_so=2
+
+        * include/makeinclude/platform_g++_common.GNU:
+          When versioned_so=2 add ACE_VERSIONED_SO=2 as
+          define
+
 Thu Nov 22 09:20:46 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_g++_common.GNU:

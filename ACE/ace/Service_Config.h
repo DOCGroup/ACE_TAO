@@ -57,6 +57,31 @@ class ACE_DLL;
   ACE_TEXT ("() \"") \
   ACE_TEXT (parameters) \
   ACE_TEXT ("\"")
+#if defined (ACE_VERSIONED_SO) and (ACE_VERSIONED_SO == 2)
+#define ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE(ident, libpathname, version, objectclass, parameters) \
+  ACE_TEXT ("dynamic ") \
+  ACE_TEXT (ident) \
+  ACE_TEXT (" Service_Object * ") \
+  ACE_TEXT (libpathname) \
+  ACE_TEXT ("-") \
+  ACE_TEXT (version) \
+  ACE_TEXT (":") \
+  ACE_TEXT (objectclass) \
+  ACE_TEXT ("() \"") \
+  ACE_TEXT (parameters) \
+  ACE_TEXT ("\"")
+#else
+#define ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE(ident, libpathname, version, objectclass, parameters) \
+  ACE_TEXT ("dynamic ") \
+  ACE_TEXT (ident) \
+  ACE_TEXT (" Service_Object * ") \
+  ACE_TEXT (libpathname) \
+  ACE_TEXT (":") \
+  ACE_TEXT (objectclass) \
+  ACE_TEXT ("() \"") \
+  ACE_TEXT (parameters) \
+  ACE_TEXT ("\"")
+#endif /* ACE_VERSIONED_SO */
 #define ACE_REMOVE_SERVICE_DIRECTIVE(ident) \
   ACE_TEXT ("remove ") \
   ACE_TEXT (ident)

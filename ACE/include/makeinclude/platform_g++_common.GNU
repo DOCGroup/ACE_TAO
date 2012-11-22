@@ -117,6 +117,10 @@ ifneq ($(versioned_so),0)
   endif
 endif
 
+ifeq ($(versioned_so),2)
+  FLAGS_C_CC += -DACE_VERSIONED_SO=2
+endif
+
 static_libs_only ?=
 
 CXX_FULL_VERSION := $(shell $(CXX_FOR_VERSION_TEST) --version)

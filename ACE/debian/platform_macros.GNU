@@ -17,6 +17,8 @@ bzip2          = 1
 lzo1           = 1
 zlib           = 1
 
+versioned_so   = 2
+
 # Work-around #593225
 ARMEL_TARGET := $(shell echo '__ARMEL__' | $(CC) -E - | tail -n 1)
 ifeq ($(ARMEL_TARGET),1)
