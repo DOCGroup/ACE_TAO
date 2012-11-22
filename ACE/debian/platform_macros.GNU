@@ -14,7 +14,6 @@ qt4            = 1
 ace_qt4reactor = 1
 
 bzip2          = 1
-lzo1           = 1
 zlib           = 1
 
 versioned_so   = 2

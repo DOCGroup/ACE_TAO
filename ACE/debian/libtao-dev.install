@@ -68,7 +68,6 @@ usr/include/tao/ZIOP
 usr/lib/libTAO_ZIOP.so
 usr/lib/libTAO_ZlibCompressor.so
 usr/lib/libTAO_Bzip2Compressor.so
-usr/lib/libTAO_LzoCompressor.so
 usr/include/tao/ETCL
 usr/lib/libTAO_ETCL.so
 usr/include/tao/Monitor
@@ -83,7 +82,6 @@ usr/lib/pkgconfig/TAO_DynamicInterface.pc
 usr/lib/pkgconfig/TAO_ZlibCompressor.pc
 usr/lib/pkgconfig/TAO_AnyTypeCode.pc
 usr/lib/pkgconfig/TAO_Bzip2Compressor.pc
-usr/lib/pkgconfig/TAO_LzoCompressor.pc
 usr/lib/pkgconfig/TAO_Valuetype.pc
 usr/lib/pkgconfig/TAO_BiDirGIOP.pc
 usr/lib/pkgconfig/TAO_IORInterceptor.pc
