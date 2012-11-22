@@ -1,3 +1,15 @@
+Thu Nov 22 09:20:46 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_g++_common.GNU:
+        * include/makeinclude/rules.lib.GNU:
+        * include/makeinclude/rules.local.GNU:
+        * include/makeinclude/wrapper_macros.GNU:
+          Added support for versioned_so=2, that will create
+          for example libACE-6.1.6.so instead of libACE.so.6.1.6
+
+        * debian/patches/20-versioned_libs.diff:
+          Removed this file.
+
 Wed Nov 21 10:18:22 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * debian/libace-xml-utils-6.1.6.install:
