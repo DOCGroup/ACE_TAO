@@ -7,6 +7,10 @@ project(Time_Service_Server) : orbsvcsexe, install, time_serv, naming, utils, av
     Server_i.cpp
     Time_Service_Server.cpp
   }
+  InstallData_Files {
+    gendir = .
+    README
+  }
 }
 
 project(Time_Service_Clerk) : orbsvcsexe, install, time_serv, naming, utils, avoids_corba_e_micro {
@@ -14,5 +18,9 @@ project(Time_Service_Clerk) : orbsvcsexe, install, time_serv, naming, utils, avo
   Source_Files {
     Clerk_i.cpp
     Time_Service_Clerk.cpp
+  }
+  InstallData_Files {
+    gendir = .
+    README
   }
 }
