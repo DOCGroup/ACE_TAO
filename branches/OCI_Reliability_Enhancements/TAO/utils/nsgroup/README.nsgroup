@@ -1,3 +1,10 @@
+$Id$
+
+This utility provides a command line interface for the tao_ft_naming service.
+tao_ft_naming service supports the NameService and NamingManager interfaces.
+
+Here is a summary of the commands and options:
+
 tao_nsgroup group_create  -group <group> -policy <round | rand | least> -type_id <type_id>
 tao_nsgroup group_remove  -group <group>
 tao_nsgroup group_bind    -group <group> -name <name>
@@ -24,7 +31,8 @@ tao_nsgroup group_create -group <group> -policy <round | rand | least> -type_id 
 
 tao_nsgroup group_remove -group <group>
 
-	Removes the specified object group from the load balancing naming manager service.
+	Removes the specified object group from the load balancing naming manager
+	service. Call group_unbind If the group was bound with the group_bind op
 
 	Returns Success(0), Error(1)
 
@@ -32,11 +40,15 @@ tao_nsgroup group_remove -group <group>
 	$ACE_ROOT/bin/tao_nsgroup group_remove -group ieee \
 		-ORBInitRef NameService=file://ns.ior -ORBInitRef NamingManager=file://nm.ior
 
+	Note: If the object group is bound with group_bind, you must also unbind it
+	with group_unbind.
+
 tao_nsgroup group_bind -group <group> -name <name>
 
-	Binds the specified object group to the specified name in the naming service.
-	When clients resolve that name, they tranparently obtain a member of the
-	specified object group from the load balancing naming manager service.
+	Binds the specified object group to the specified stringified name in the
+	naming service. When clients resolve that name, they tranparently obtain a
+	member of the specified object group from the load balancing naming manager
+	service.
 
 	Returns Success(0), Error(1)
 
@@ -45,9 +57,13 @@ tao_nsgroup group_bind -group <group> -name <name>
 	$ACE_ROOT/bin/tao_nsgroup group_bind -group ieee -name iso/ieee \
 		-ORBInitRef NameService=file://ns.ior -ORBInitRef NamingManager=file://nm.ior
 
+	Note: The iso context used in this example must be created before calling
+	group_bind.
+
 tao_nsgroup group_unbind -name <name>
 
-	Unbinds the specified name from the naming service, but does not remove the object group.
+	Unbinds the specified stringified name from the naming service, but does not
+	remove the object group.
 
 	Returns Success(0), Error(1)
 

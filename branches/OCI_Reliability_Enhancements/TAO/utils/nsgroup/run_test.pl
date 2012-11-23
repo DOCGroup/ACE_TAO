@@ -82,6 +82,20 @@ sub cat_file($)
     }
 }
 
+sub redirect_output()
+{
+    open(OLDOUT, ">&", \*STDOUT) or die "Can't dup STDOUT: $!";
+    open(OLDERR, ">&", \*STDERR) or die "Can't dup STDERR: $!";
+    open STDERR, '>', $client_stderr_file;
+    open STDOUT, '>', $client_stdout_file;
+}
+
+sub restore_output()
+{
+    open(STDERR, ">&OLDERR")    or die "Can't dup OLDERR: $!";
+    open(STDOUT, ">&OLDOUT")    or die "Can't dup OLDOUT: $!";
+}
+
 sub run_client ($$)
 {
     my $args = shift;
@@ -98,20 +112,24 @@ sub run_client ($$)
 
     $CL->Arguments ($arglist);
 
-    open(OLDOUT, ">&", \*STDOUT) or die "Can't dup STDOUT: $!";
-    open(OLDERR, ">&", \*STDERR) or die "Can't dup STDERR: $!";
-    open STDERR, '>', $client_stderr_file;
-    open STDOUT, '>', $client_stdout_file;
+    if ($debug_level == 0) {
+        redirect_output();
+    }
+
     my $client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval());
-    open(STDERR, ">&OLDERR")    or die "Can't dup OLDERR: $!";
-    open(STDOUT, ">&OLDOUT")    or die "Can't dup OLDOUT: $!";
+
+    if ($debug_level == 0) {
+        restore_output();
+    }
 
 
     if ($client_status != $expected_test_result) {
         my $time = localtime;
         print STDERR "ERROR: client returned $client_status at $time\n";
-        cat_file($client_stderr_file);
-        cat_file($client_stdout_file);
+        if ($debug_level == 0) {
+            cat_file($client_stderr_file);
+            cat_file($client_stdout_file);
+        }
         $status = 1;
     }
 }
@@ -122,17 +140,23 @@ sub run_nsadd($)
     my $args = shift;
     $NSADD->Arguments ($args);
 
-    open(OLDERR, ">&", \*STDERR) or die "Can't dup STDERR: $!";
-    open STDERR, '>', $client_stderr_file;
+    if ($debug_level == 0) {
+        redirect_output();
+    }
 
     #tao_nsadd --ns file://ns.ior --name iso --ctx
     my $nsadd_status = $NSADD->SpawnWaitKill ($nsadd->ProcessStartWaitInterval());
-    open(STDERR, ">&OLDERR")    or die "Can't dup OLDERR: $!";
+
+    if ($debug_level == 0) {
+        restore_output();
+    }
 
     if ($nsadd_status != $0) {
         my $time = localtime;
         print STDERR "ERROR: nsadd returned $nsadd_status at $time\n";
-        cat_file($client_stderr_file);
+        if ($debug_level == 0) {
+            cat_file($client_stderr_file);
+        }
         $status = 1;
     }
 }
@@ -143,17 +167,23 @@ sub run_nsdel($)
     my $args = shift;
     $NSDEL->Arguments ($args);
 
-    open(OLDERR, ">&", \*STDERR) or die "Can't dup STDERR: $!";
-    open STDERR, '>', $client_stderr_file;
+    if ($debug_level == 0) {
+        redirect_output();
+    }
 
     #tao_nsdel --ns file://ns.ior --name iso --destroy
     my $nsdel_status = $NSDEL->SpawnWaitKill ($nsdel->ProcessStartWaitInterval());
-    open(STDERR, ">&OLDERR")    or die "Can't dup OLDERR: $!";
+
+    if ($debug_level == 0) {
+        restore_output();
+    }
 
     if ($nsdel_status != $0) {
         my $time = localtime;
         print STDERR "ERROR: nsdel returned $nsdel_status at $time\n";
-        cat_file($client_stderr_file);
+        if ($debug_level == 0) {
+            cat_file($client_stderr_file);
+        }
         $status = 1;
     }
 }
@@ -164,18 +194,23 @@ sub run_nslist($)
     my $args = shift;
     $NSLIST->Arguments ($args);
 
-    open(OLDERR, ">&", \*STDERR) or die "Can't dup STDERR: $!";
-    open STDERR, '>', $client_stderr_file;
+    if ($debug_level == 0) {
+        redirect_output();
+    }
 
     #tao_nslist --ns file://ns.ior
     my $nslist_status = $NSLIST->SpawnWaitKill ($nslist->ProcessStartWaitInterval());
 
-    open(STDERR, ">&OLDERR")    or die "Can't dup OLDERR: $!";
+    if ($debug_level == 0) {
+        restore_output();
+    }
 
     if ($nslist_status != $0) {
         my $time = localtime;
         print STDERR "ERROR: nslist returned $nslist_status at $time\n";
-        cat_file($client_stderr_file);
+        if ($debug_level == 0) {
+            cat_file($client_stderr_file);
+        }
         $status = 1;
     }
 }
