@@ -116,8 +116,9 @@ TAO_ORBInitInfo::codec_factory (void)
       if (loader == 0)
         {
           ACE_Service_Config::process_directive (
-            ACE_DYNAMIC_SERVICE_DIRECTIVE("CodecFactory",
+            ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE("CodecFactory",
                                           "TAO_CodecFactory",
+                                          TAO_VERSION,
                                           "_make_TAO_CodecFactory_Loader",
                                           ""));
           loader =

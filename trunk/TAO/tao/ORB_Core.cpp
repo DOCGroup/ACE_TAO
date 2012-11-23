@@ -1666,8 +1666,9 @@ TAO_ORB_Core::policy_factory_registry_i (void)
   if (loader == 0)
     {
       this->configuration ()->process_directive (
-        ACE_DYNAMIC_SERVICE_DIRECTIVE("PolicyFactory_Loader",
+        ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE("PolicyFactory_Loader",
                                       "TAO_PI",
+                                      TAO_VERSION,
                                       "_make_TAO_PolicyFactory_Loader",
                                       ""));
       loader =
@@ -1718,8 +1719,9 @@ TAO_ORB_Core::orbinitializer_registry_i (void)
   if (this->orbinitializer_registry_ == 0)
     {
       this->configuration ()->process_directive (
-        ACE_DYNAMIC_SERVICE_DIRECTIVE ("ORBInitializer_Registry",
+        ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE ("ORBInitializer_Registry",
                                        "TAO_PI",
+                                       TAO_VERSION,
                                        "_make_ORBInitializer_Registry",
                                        ""));
       this->orbinitializer_registry_ =
@@ -2473,8 +2475,9 @@ TAO_ORB_Core::resolve_typecodefactory_i (void)
   if (loader == 0)
     {
       this->configuration ()->process_directive
-        (ACE_DYNAMIC_SERVICE_DIRECTIVE("TypeCodeFactory",
+        (ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE("TypeCodeFactory",
                                        "TAO_TypeCodeFactory",
+                                       TAO_VERSION,
                                        "_make_TAO_TypeCodeFactory_Loader",
                                        ""));
       loader =
@@ -2506,8 +2509,9 @@ TAO_ORB_Core::resolve_codecfactory_i (void)
   if (loader == 0)
     {
       this->configuration()->process_directive
-        (ACE_DYNAMIC_SERVICE_DIRECTIVE("CodecFactory",
+        (ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE("CodecFactory",
                                        "TAO_CodecFactory",
+                                       TAO_VERSION,
                                        "_make_TAO_CodecFactory_Loader",
                                        ""));
       loader =
@@ -2533,8 +2537,9 @@ TAO_ORB_Core::resolve_compression_manager_i (void)
   if (loader == 0)
     {
       this->configuration()->process_directive
-        (ACE_DYNAMIC_SERVICE_DIRECTIVE("Compression",
+        (ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE("Compression",
                                        "TAO_Compression",
+                                       TAO_VERSION,
                                        "_make_TAO_Compression_Loader",
                                        ""));
       loader =
@@ -2559,8 +2564,9 @@ TAO_ORB_Core::resolve_poa_current_i (void)
   if (loader == 0)
     {
       this->configuration()->process_directive
-        (ACE_DYNAMIC_SERVICE_DIRECTIVE("TAO_POA_Current_Factory",
+        (ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE("TAO_POA_Current_Factory",
                                        "TAO_PortableServer",
+                                       TAO_VERSION,
                                        "_make_TAO_POA_Current_Factory",
                                        ""));
       loader =
@@ -2588,8 +2594,9 @@ TAO_ORB_Core::resolve_picurrent_i (void)
   if (loader == 0)
     {
       this->configuration ()->process_directive
-        (ACE_DYNAMIC_SERVICE_DIRECTIVE("PICurrent_Loader",
+        (ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE("PICurrent_Loader",
                                        "TAO_PI",
+                                       TAO_VERSION,
                                        "_make_TAO_PICurrent_Loader",
                                        ""));
       loader =
@@ -2619,8 +2626,9 @@ TAO_ORB_Core::resolve_dynanyfactory_i (void)
   if (loader == 0)
     {
       this->configuration ()->process_directive
-        (ACE_DYNAMIC_SERVICE_DIRECTIVE("DynamicAny_Loader",
+        (ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE("DynamicAny_Loader",
                                        "TAO_DynamicAny",
+                                       TAO_VERSION,
                                        "_make_TAO_DynamicAny_Loader",
                                        ""));
       loader =
@@ -2646,8 +2654,9 @@ TAO_ORB_Core::resolve_iormanipulation_i (void)
   if (loader == 0)
     {
       this->configuration()->process_directive
-        (ACE_DYNAMIC_SERVICE_DIRECTIVE("IORManip_Loader",
+        (ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE("IORManip_Loader",
                                        "TAO_IORManip",
+                                       TAO_VERSION,
                                        "_make_TAO_IORManip_Loader",
                                        ""));
       loader =
@@ -2672,8 +2681,9 @@ TAO_ORB_Core::resolve_ior_table_i (void)
   if (factory == 0)
     {
       this->configuration ()->process_directive
-        (ACE_DYNAMIC_SERVICE_DIRECTIVE("TAO_IORTable",
+        (ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE("TAO_IORTable",
                                        "TAO_IORTable",
+                                       TAO_VERSION,
                                        "_make_TAO_Table_Adapter_Factory",
                                        ""));
       factory =
@@ -2707,8 +2717,9 @@ TAO_ORB_Core::resolve_monitor_i (void)
   if (loader == 0)
     {
       this->configuration ()->process_directive
-        (ACE_DYNAMIC_SERVICE_DIRECTIVE("Monitor_Init",
+        (ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE("Monitor_Init",
                                        "TAO_Monitor",
+                                       TAO_VERSION,
                                        "_make_TAO_Monitor_Init",
                                        ""));
       loader =
