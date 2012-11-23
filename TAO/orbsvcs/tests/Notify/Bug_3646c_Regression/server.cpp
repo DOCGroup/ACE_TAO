@@ -12,18 +12,20 @@ char const * const scpc_orbId = "testDllOrb";
 
 const int max_length = 1000;
 
-ACE_TCHAR scpc_loadOrb[max_length] = ACE_DYNAMIC_SERVICE_DIRECTIVE(
+ACE_TCHAR scpc_loadOrb[max_length] = ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE(
   "testDllOrb",
   "bug3646c",
+  TAO_VERSION,
   "_make_DllORB",
   "testDllOrb -ORBDebugLevel 0 -ORBId testDllOrb -ORBDottedDecimalAddresses 1 -ORBInitRef NameService=iioploc://%s:%s/NameService"
 );
 
 ACE_TCHAR const * const scpc_unloadOrb = ACE_REMOVE_SERVICE_DIRECTIVE("testDllOrb");
 
-ACE_TCHAR scpc_loadNotifyService[max_length] = ACE_DYNAMIC_SERVICE_DIRECTIVE(
+ACE_TCHAR scpc_loadNotifyService[max_length] = ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE(
   "testNotifyService",
   "TAO_Notify_Service",
+  TAO_VERSION,
   "_make_TAO_Notify_Service_Driver",
   "-Channel -ChannelName Channel1 -ChannelName Channel2 -RunThreads 0 -ORBInitRef NameService=iioploc://%s:%s/NameService -IORoutput %s"
 );

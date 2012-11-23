@@ -1,3 +1,35 @@
+Fri Nov 23 08:08:57 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/PortableGroup/PortableGroup_ORBInitializer.cpp:
+        * orbsvcs/tests/Bug_3486_Regression/server.cpp:
+        * orbsvcs/tests/Notify/Bug_2926_Regression/server.cpp:
+        * orbsvcs/tests/Notify/Bug_3252_Regression/server.cpp:
+        * orbsvcs/tests/Notify/Bug_3646b_Regression/server.cpp:
+        * orbsvcs/tests/Notify/Bug_3646c_Regression/server.cpp:
+        * orbsvcs/tests/Notify/Bug_3646d_Regression/server.cpp:
+        * orbsvcs/tests/Notify/Bug_3663_Regression/server.cpp:
+        * orbsvcs/tests/Notify/Bug_3688b_Regression/server.cpp:
+        * tao/CSD_Framework/CSD_ORBInitializer.cpp:
+        * tao/Codeset/Codeset_Manager_i.cpp:
+        * tao/ORBInitializer_Registry.cpp:
+        * tao/ORB_Core.cpp:
+        * tao/PI/ORBInitInfo.cpp:
+        * tao/PortableServer/LifespanStrategyPersistent.cpp:
+        * tao/RTCORBA/RT_ORBInitializer.cpp:
+        * tao/TAO_Internal.cpp:
+        * tao/params.cpp:
+        * tests/Bug_2677_Regression/server.cpp:
+        * tests/Bug_2936_Regression/bug2936.cpp:
+        * tests/Bug_3542_Regression/server.cpp:
+        * tests/DLL_ORB/client.cpp:
+        * tests/DLL_ORB/server.cpp:
+        * tests/ORB_Local_Config/Bug_2612/Test.cpp:
+        * tests/ORB_Local_Config/Service_Dependency/Test.cpp:
+        * tests/TransportCurrent/Framework/simple.cpp:
+          Use ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE with the TAO_VERSION
+          so that with Debian/Ubuntu packaged distro's we try to load
+          the correct library which for example are named libTAO-6.1.1.so
+
 Tue Nov 20 19:32:42 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Utils/PolicyList_Destroyer.cpp:

@@ -28,8 +28,8 @@ ACE_TMAIN(int, ACE_TCHAR *[])
   // In the process of doing this, the Test CORBA object will be
   // activated, and the ORB will be run.
   if (ACE_Service_Config::process_directive (
-        ACE_DYNAMIC_SERVICE_DIRECTIVE("Server_Module",
-          "Test_Server_Module", "_make_Test_Server_Module", "")) != 0)
+        ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE("Server_Module",
+          "Test_Server_Module", TAO_VERSION, "_make_Test_Server_Module", "")) != 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "%p\n",
