@@ -1,8 +1,18 @@
+Fri Nov 23 23:47:50 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
+
+        * utils/nsgroup/README.nsgroup:
+
+        Updated documentation for group_bind and group_unbind options
+
+        * utils/nsgroup/run_test.pl:
+
+        Tied output redirection to debug command line option
+
 Fri Nov 23 14:57:58 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
 
         * orbsvcs/tests/Simple_Naming/client.cpp:
         * orbsvcs/tests/Simple_Naming/run_test_ft.pl:
-        
+
           Fixed test to clean out state on each run.  Cleaned up fuzz errors.
 
 Fri Nov 23 14:06:26 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
