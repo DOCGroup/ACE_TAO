@@ -27,6 +27,7 @@ TAO/CIAO/tests/Bug_3834_Regression/descriptors/run_test.pl:
 TAO/CIAO/tests/Bug_3834_Regression/descriptors/run_test_without_ns.pl:
 TAO/CIAO/tests/IDL3/Events/Any/run_test.pl: !CCM_NOEVENT
 TAO/CIAO/tests/Bug_3769_Regression/descriptors/run_test.pl:
+TAO/CIAO/tests/Bug_3769_Regression/descriptors/run_test_cdr.pl:
 TAO/CIAO/tests/Thread/descriptors/run_test.pl: !CCM_NOEVENT
 TAO/CIAO/tests/Thread/descriptors/run_test_cdd.pl: !CCM_NOEVENT
 TAO/CIAO/tests/CIF/descriptors/run_test.pl: ATIC
