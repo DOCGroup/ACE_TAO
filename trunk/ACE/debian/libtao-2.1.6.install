@@ -10,6 +10,7 @@ usr/lib/libTAO_DynamicAny-*.so
 usr/lib/libTAO_DynamicInterface-*.so
 usr/lib/libTAO_EndpointPolicy-*.so
 usr/lib/libTAO_IFR_Client-*.so
+usr/lib/libTAO_IFR_Client_skel-*.so
 usr/lib/libTAO_IORInterceptor-*.so
 usr/lib/libTAO_IORManip-*.so
 usr/lib/libTAO_IORTable-*.so
