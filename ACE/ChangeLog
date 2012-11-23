@@ -1,3 +1,15 @@
+Fri Nov 23 08:07:23 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ETCL/ETCL_Constraint.inl:
+          Fixed coverity error by initializing pointer value
+
+        * ace/Message_Queue.h:
+        * ace/Timer_Queue_Iterator.h:
+          Doxygen improvements
+
+        * ace/Timer_Queue_Iterator.cpp:
+          Initialize all members in default constructor
+
 Thu Nov 22 13:31:20 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * debian/tao-log.install:
