@@ -1,3 +1,11 @@
+Fri Nov 23 16:49:35 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * debian/tao-imr.docs:
+        * debian/tao-log.docs:
+        * debian/tao-notify.docs:
+        * debian/tao-trading.docs:
+          Updated README locations
+
 Fri Nov 23 15:26:38 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * debian/tao-concurrency.docs:
