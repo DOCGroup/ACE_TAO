@@ -57,7 +57,7 @@ class ACE_DLL;
   ACE_TEXT ("() \"") \
   ACE_TEXT (parameters) \
   ACE_TEXT ("\"")
-#if defined (ACE_VERSIONED_SO) and (ACE_VERSIONED_SO == 2)
+#if defined (ACE_VERSIONED_SO) && (ACE_VERSIONED_SO == 2)
 #define ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE(ident, libpathname, version, objectclass, parameters) \
   ACE_TEXT ("dynamic ") \
   ACE_TEXT (ident) \
