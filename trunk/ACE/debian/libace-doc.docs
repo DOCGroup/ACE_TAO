@@ -1,2 +1,2 @@
-docs
-html/libace-doc/*
+usr/share/ace/docs
+usr/share/ace/html/libace-doc/*

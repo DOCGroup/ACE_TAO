@@ -20,3 +20,4 @@ usr/lib/libACE_ETCL.so
 usr/lib/pkgconfig/ACE.pc
 usr/lib/pkgconfig/ACE_ETCL.pc
 usr/lib/pkgconfig/ACE_ETCL_Parser.pc
+usr/lib/ace/include/makeinclude
