@@ -1,3 +1,15 @@
+Fri Nov 23 12:19:09 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * debian/libace-dev.docs:
+        * debian/libace-doc.docs:
+        * debian/libnetsvcs-6.1.6.docs:
+        * debian/libnetsvcs-6.1.6.install:
+        * debian/libtao-2.1.6.docs:
+        * debian/libtao-dev.docs:
+        * debian/libnetsvcs-6.1.2.docs:
+        * debian/libnetsvcs-6.1.2.install:
+          Doc install fixes
+
 Fri Nov 23 09:51:01 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * debian/README.source:
