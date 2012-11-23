@@ -80,6 +80,7 @@ TAO/orbsvcs/tests/HTIOP/AMI/run_test.pl: !NO_UUID !ST !STATIC !MINIMUM !CORBA_E_
 TAO/orbsvcs/tests/HTIOP/BiDirectional/run_test.pl: !NO_UUID !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !LynxOS
 TAO/orbsvcs/tests/Simple_Naming/run_test.pl: !ST !NO_MESSAGING !ACE_FOR_TAO !LynxOS !CORBA_E_MICRO !DISTRIBUTED
 TAO/orbsvcs/tests/Simple_Naming/run_test_ffp.pl: !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NO_MESSAGING !ACE_FOR_TAO !DISTRIBUTED
+TAO/orbsvcs/tests/Simple_Naming/run_test_ft.pl: !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NO_MESSAGING !ACE_FOR_TAO !DISTRIBUTED
 TAO/orbsvcs/tests/Redundant_Naming/run_test.pl: !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !DISTRIBUTED
 TAO/orbsvcs/tests/Trading/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/orbsvcs/tests/unit/Trading/Interpreter/run_test.pl: !CORBA_E_MICRO

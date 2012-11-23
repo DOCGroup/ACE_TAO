@@ -290,7 +290,7 @@ TAO_FT_Naming_Server::init_replication_manager_with_orb (int argc, ACE_TCHAR *ar
     if (this->replica_id_ == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-        ACE_TEXT("No replica id provided. Not supporting replication..\n")),
+        ACE_TEXT("")),  // TODO: Add an error message and return failure
         0);
     }
     // Register with the POA.
