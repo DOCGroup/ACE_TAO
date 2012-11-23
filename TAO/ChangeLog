@@ -1,3 +1,9 @@
+Fri Nov 23 16:48:56 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/ImplRepo_Service/README:
+        * orbsvcs/ImplRepo_Service/README.txt:
+          Renamed to README to be consistent with other orbsvcs
+
 Fri Nov 23 15:35:46 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
