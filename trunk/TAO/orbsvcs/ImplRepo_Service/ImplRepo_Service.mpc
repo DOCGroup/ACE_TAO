@@ -141,6 +141,6 @@ project(tao_imr) : orbsvcsexe, install, avoids_minimum_corba, avoids_corba_e_com
   }
   InstallData_Files {
     gendir = .
-    README.txt
+    README
   }
 }
