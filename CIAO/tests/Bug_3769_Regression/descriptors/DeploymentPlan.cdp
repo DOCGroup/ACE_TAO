@@ -542,6 +542,84 @@
         </value>
       </value>
     </configProperty>
+
+    <configProperty>
+      <name>my_struct_struct</name>
+      <value>
+        <type>
+          <kind>tk_struct</kind>
+          <struct>
+            <name>StructStruct</name>
+            <typeId>IDL:StructModule/StructStruct:1.0</typeId>
+            <member>
+              <name>struct_time</name>
+              <type>
+                <kind>tk_struct</kind>
+                <struct>
+                  <name>Time</name>
+                  <typeId>IDL:StructModule/Time:1.0</typeId>
+                  <member>
+                    <name>sec</name>
+                    <type>
+                      <kind>tk_ulonglong</kind>
+                    </type>
+                  </member>
+                  <member>
+                    <name>nanosec</name>
+                    <type>
+                      <kind>tk_ulong</kind>
+                    </type>
+                  </member>
+                </struct>
+              </type>
+            </member>
+
+            <member>
+              <name>type</name>
+              <type>
+                <kind>tk_enum</kind>
+                <enum>
+                  <name>EndTime</name>
+                  <typeId>IDL:StructModule/EndTime:1.0</typeId>
+                  <member>DLT_NONE</member>
+                  <member>DLT_SOFT</member>
+                  <member>DLT_HARD</member>
+                </enum>
+              </type>
+            </member>
+
+          </struct>
+        </type>
+        <value>
+          <member>
+            <name>struct_time</name>
+            <value>
+              <member>
+                <name>sec</name>
+                <value>
+                  <ulonglong>15</ulonglong>
+                </value>
+              </member>
+              <member>
+                <name>nanosec</name>
+                <value>
+                  <ulong>20</ulong>
+                </value>
+              </member>
+            </value>
+          </member>
+
+          <member>
+            <name>type</name>
+            <value>
+              <enum>DLT_HARD</enum>
+            </value>
+          </member>
+        </value>
+
+      </value>
+    </configProperty>
+    
   </instance>
 
   <artifact xmi:id="_669DBD2E-E130-11DE-B472-00242C889DAA">
