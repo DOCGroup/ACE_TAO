@@ -84,6 +84,13 @@ project(*IDL): taoserver, messaging, gen_ostream {
     typedef.idl
     typecode.idl
   }
+
+  IDL_Files {
+    // Workaround to get tao_idl to process multiple files in one pass,
+    // since MPC doesn't support it.
+    idlflags += loader_const.idl
+    PEMNaming.idl
+  }
 }
 
 project(*DLL): taoidldefaults, taolib, messaging {
@@ -158,6 +165,7 @@ project(*DLL): taoidldefaults, taolib, messaging {
     keywordsA.cpp
     keywordsC.cpp
     keywordsS.cpp
+    loader_constC.cpp
     moduleA.cpp
     moduleC.cpp
     moduleS.cpp
@@ -177,6 +185,8 @@ project(*DLL): taoidldefaults, taolib, messaging {
     old_unionS.cpp
     paramsC.cpp
     paramsS.cpp
+    PEMNamingC.cpp
+    PEMNamingS.cpp
     pragmaA.cpp
     pragmaC.cpp
     pragmaS.cpp

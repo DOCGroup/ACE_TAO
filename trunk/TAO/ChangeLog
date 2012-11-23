@@ -1,3 +1,36 @@
+Fri Nov 23 19:15:15 UTC 2012  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_module.cpp:
+        * TAO_IDL/include/ast_module.h:
+        * TAO_IDL/util/utl_global.cpp:
+
+          Fixed bug caused by (1) processing multiple IDL files in one pass
+          and (2) any IDL file except the last containing an include of
+          orb.idl. This include causes reopenings of the CORBA module,
+          in addition to the one created internally by tao_idl to contain
+          the basic types. This last is a special module, but like other
+          AST nodes, contains a reference to the most recent reopening
+          in its parent scope. Since the reopened CORBA modules are
+          destroyed after the included file is processed, this special
+          module contained a garbage reference, since it is not destroyed
+          until all IDL files are processed. Code was added to reset
+          this reference to the module itself after each file is processed.
+          Thanks to Sergey Onuchin <sonuchin at parallels dot com> for
+          reporting the bug and for supplying example IDL files.
+
+        * TAO_IDL/util/utl_scope.cpp:
+
+          Cosmetic changes.
+
+        * tests/IDL_Test/loader_const.idl:
+        * tests/IDL_Test/PEMNaming.idl:
+
+          New files that formerly reproduced the bug described above.
+
+        * tests/IDL_Test/IDL_Test.mpc:
+
+          Updated the MPC file to use the new IDL files above.
+
 Fri Nov 23 17:55:33 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:

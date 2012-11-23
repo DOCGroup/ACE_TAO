@@ -637,3 +637,9 @@ AST_Module::fe_add_porttype (AST_PortType *t)
     AST_PortType::narrow_from_decl (
       this->fe_add_decl (t));
 }
+
+void
+AST_Module::reset_last_in_same_parent_scope (void)
+{
+  this->last_in_same_parent_scope_ = this;
+}
