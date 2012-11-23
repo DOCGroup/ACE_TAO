@@ -538,15 +538,13 @@ namespace CIAO_Foo_Impl
                   my_struct_struct.type));
         error_found = true;
       }
-      
     if (my_struct_struct.struct_time.sec != 15)
       {
         ACE_ERROR ((LM_ERROR, "ERROR: my_struct_struct.struct_time.sec != 15, it is %d\n",
                   my_struct_struct.struct_time.sec));
         error_found = true;
       }
-      
-    if (my_struct_struct.struct_time.sec != 15)
+    if (my_struct_struct.struct_time.nanosec != 20)
       {
         ACE_ERROR ((LM_ERROR, "ERROR: my_struct_struct.struct_time.nanosec != 20, it is %d\n",
                   my_struct_struct.struct_time.nanosec));
