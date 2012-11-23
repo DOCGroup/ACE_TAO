@@ -1,3 +1,12 @@
+Fri Nov 23 10:28:23 UTC 2012  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/Bug_3769_Regression/Foo.idl:
+        * tests/Bug_3769_Regression/Foo_exec.h:
+        * tests/Bug_3769_Regression/Foo_exec.cpp:
+          Expanded test. Added a struct within a struct which
+          is placed in a separate module. checking whether the
+          correct values are set.
+
 Mon Nov 19 18:15:16 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/DataReaderListener_T.cpp:
