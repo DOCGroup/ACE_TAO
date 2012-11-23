@@ -2,6 +2,7 @@
 
 #include "tao/params.h"
 #include "tao/orbconf.h"
+#include "tao/Version.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/params.inl"
@@ -58,8 +59,9 @@ TAO_ORB_Parameters::TAO_ORB_Parameters (void)
   , thread_lane_resources_manager_factory_name_ ("Default_Thread_Lane_Resources_Manager_Factory")
   , poa_factory_name_ ("TAO_Object_Adapter_Factory")
   , poa_factory_directive_
-      (ACE_DYNAMIC_SERVICE_DIRECTIVE("TAO_Object_Adapter_Factory",
+      (ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE("TAO_Object_Adapter_Factory",
                                      "TAO_PortableServer",
+                                     TAO_VERSION,
                                      "_make_TAO_Object_Adapter_Factory",
                                      ""))
   , forward_invocation_on_object_not_exist_ (false)

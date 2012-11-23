@@ -47,8 +47,9 @@ namespace PortableInterceptor
     if (orbinitializer_registry_ == 0)
       {
         ACE_Service_Config::process_directive (
-          ACE_DYNAMIC_SERVICE_DIRECTIVE("ORBInitializer_Registry",
+          ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE("ORBInitializer_Registry",
                                         "TAO_PI",
+                                        TAO_VERSION,
                                         "_make_ORBInitializer_Registry",
                                         ""));
         orbinitializer_registry_ =

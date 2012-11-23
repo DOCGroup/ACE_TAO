@@ -607,9 +607,10 @@ namespace
               ACE_REMOVE_SERVICE_DIRECTIVE ("TAO_Codeset"));
 
             ACE_Service_Config::process_directive (
-              ACE_DYNAMIC_SERVICE_DIRECTIVE (
+              ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE (
                 "TAO_Codeset",
                 "TAO_Codeset",
+                TAO_VERSION,
                 "_make_TAO_Codeset_Manager_Factory",
                 ""));
 
