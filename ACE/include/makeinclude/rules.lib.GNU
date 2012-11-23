@@ -22,10 +22,12 @@ ifneq ($(versioned_so),0)
   ifeq ($(SOVERSION),)
     ifeq ($(versioned_so),1)
       SOVERSION = .$(GNUACE_PROJECT_VERSION)
-    else ifeq ($(versioned_so),2)
-      SOVERSION = -$(GNUACE_PROJECT_VERSION)
     else
-      $(error unknown value for versioned_so: $(versioned_so))
+      ifeq ($(versioned_so),2)
+        SOVERSION = -$(GNUACE_PROJECT_VERSION)
+      else
+        $(error unknown value for versioned_so: $(versioned_so))
+      endif
     endif
   endif # SOVERSION
 
@@ -34,8 +36,10 @@ ifneq ($(versioned_so),0)
   ifeq ($(SONAME),)
     ifeq ($(versioned_so),1)
       SONAME = $(SHLIB)$(SOVERSION)
-    else ifeq ($(versioned_so),2)
-      SONAME = $(patsubst %.$(SOEXT),%,$(SHLIB))$(SOVERSION).$(SOEXT)
+    else 
+      ifeq ($(versioned_so),2)
+        SONAME = $(patsubst %.$(SOEXT),%,$(SHLIB))$(SOVERSION).$(SOEXT)
+      endif
     endif
   endif # SONAME
 endif # versioned_so
