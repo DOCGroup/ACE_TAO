@@ -1,3 +1,12 @@
+Fri Nov 23 09:51:01 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * debian/README.source:
+          Removed comment of patch that got integrated
+
+        * debian/libtao-2.1.6.install:
+        * debian/libtao-dev.install:
+          Added missing libraries
+
 Fri Nov 23 09:39:17 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * debian/TAO_ACE.mwc:
