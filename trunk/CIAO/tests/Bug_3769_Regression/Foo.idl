@@ -61,6 +61,31 @@ interface FooSupport
     attribute short supported_short;
 };
 
+module StructModule
+{
+  typedef unsigned long long Seconds;
+  typedef unsigned long NanoSecs;
+
+  struct Time
+  {
+    Seconds   sec;
+    NanoSecs  nanosec;
+  };
+
+  enum EndTime
+  {
+    DLT_NONE,
+    DLT_SOFT,
+    DLT_HARD
+  };
+
+  struct StructStruct
+  {
+    Time    struct_time;
+    EndTime type;
+  };
+};
+
 component Foo supports FooSupport
 {
   attribute short  my_short;
@@ -86,6 +111,7 @@ component Foo supports FooSupport
   attribute Baz my_baz_struct;
   attribute Data my_data_union;
   attribute Data2 my_var_data_union;
+  attribute StructModule::StructStruct my_struct_struct;
 };
 
 #endif /* FOO_IDL_ */

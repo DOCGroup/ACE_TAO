@@ -24,7 +24,8 @@ namespace CIAO_Foo_Impl
       my_string_sequence_ (false),
       my_fixed_string_ (false),
       my_variable_string_ (false),
-      supported_short_ (false)
+      supported_short_ (false),
+      my_struct_struct_ (false)
   {
   }
 
@@ -522,6 +523,40 @@ namespace CIAO_Foo_Impl
   {
   }
 
+  StructModule::StructStruct Foo_exec_i::my_struct_struct (void)
+  {
+    return StructModule::StructStruct ();
+  }
+
+  void Foo_exec_i::my_struct_struct (const StructModule::StructStruct & my_struct_struct)
+  {
+    bool error_found = false;
+    
+    if (my_struct_struct.type != StructModule::DLT_HARD)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: my_struct_struct.deadline_type != 2, it is %d\n",
+                  my_struct_struct.type));
+        error_found = true;
+      }
+      
+    if (my_struct_struct.struct_time.sec != 15)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: my_struct_struct.struct_time.sec != 15, it is %d\n",
+                  my_struct_struct.struct_time.sec));
+        error_found = true;
+      }
+      
+    if (my_struct_struct.struct_time.sec != 15)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: my_struct_struct.struct_time.nanosec != 20, it is %d\n",
+                  my_struct_struct.struct_time.nanosec));
+        error_found = true;
+      }
+
+    my_struct_struct_ = !error_found;
+  }
+
+  
   // Operations from Components::SessionComponent.
 
   void
@@ -559,7 +594,8 @@ namespace CIAO_Foo_Impl
           my_string_sequence_ &&
           my_fixed_string_ &&
           my_variable_string_ &&
-          supported_short_))
+          supported_short_ &&
+          my_struct_struct_))
       {
         ACE_ERROR ((LM_ERROR, "ERROR: Not all expected attributes were initialized\n"));
       }
