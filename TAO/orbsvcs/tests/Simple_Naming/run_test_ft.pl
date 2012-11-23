@@ -31,7 +31,6 @@ my $test = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed
 # Variables for command-line arguments to client and server
 # executables.
 $ns_multicast_port = 10001 + $test->RandomPort(); # Can not be 10000 on Chorus 4.0
-$ns_orb_port = 12000 + $test->RandomPort();
 
 $iorfile = "ns.ior";
 $persistent_ior_file = "pns.ior";
@@ -67,7 +66,7 @@ $test->DeleteFile($persistent_log_file);
 
 sub name_server
 {
-    my $args = "-ORBDebugLevel 10 -u NameService -ORBMulticastDiscoveryEndpoint $multicast:$ns_multicast_port -o $test_iorfile -m 1 @_";
+    my $args = "-u NameService -ORBMulticastDiscoveryEndpoint $multicast:$ns_multicast_port -o $test_iorfile -m 1 @_";
     my $prog = "$startdir/../../Naming_Service/tao_ft_naming";
 
     $SV = $test->CreateProcess ("$prog", "$args");
@@ -102,40 +101,9 @@ sub client
 
 }
 
-## The options below have been reordered due to a
-## initialization problem (within the Naming_Service)
-## that has only been seen on Windows XP.
-
-# Options for all simple tests recognized by the 'client' program.
-@opts = ("-s -ORBInitRef NameService=file://$test_iorfile",
-         "-s -ORBInitRef NameService=mcast://$multicast:$ns_multicast_port\::/NameService",
-         "-t -ORBInitRef NameService=file://$test_iorfile",
-         "-i -ORBInitRef NameService=file://$test_iorfile",
-         "-e -ORBInitRef NameService=file://$test_iorfile",
-         "-y -ORBInitRef NameService=file://$test_iorfile"
-         );
-
-$hostname = $test->HostName ();
-
-@server_opts = ("-t 30",
-                "", 
-                "", 
-                "", 
-                "", 
-                ""
-                );
-
-@comments = ("Simple Test: \n",
-             "Simple Test (using multicast to locate the server): \n",
-             "Tree Test: \n",
-             "Iterator Test: \n",
-             "Exceptions Test: \n",
-             "Destroy Test: \n"
-             );
-
-$test_number = 0;
-
-# Create a directory to hold the persistent state
+sub make_or_clean_state
+{
+    # Create a directory to hold the persistent state
     if ( ! -d "NameService" ) {
         mkdir (NameService, 0777);
     }
@@ -149,13 +117,49 @@ $test_number = 0;
         }
         chdir "..";
     }
+}
 
+## The options below have been reordered due to a
+## initialization problem (within the Naming_Service)
+## that has only been seen on Windows XP.
+
+# Options for all simple tests recognized by the 'client' program.
+@opts = ("-s -ORBInitRef NameService=file://$test_iorfile",
+         "-s -ORBInitRef NameService=mcast://$multicast:$ns_multicast_port\::/NameService",
+         "-t -ORBInitRef NameService=file://$test_iorfile",
+         "-i -ORBInitRef NameService=file://$test_iorfile",
+         "-e -ORBInitRef NameService=file://$test_iorfile",
+         "-y -ORBInitRef NameService=file://$test_iorfile"
+         );
+
+@server_opts = ("-t 30",
+                "",
+                "",
+                "",
+                "",
+                ""
+                );
+
+@comments = ("Simple Test: \n",
+             "Simple Test (using multicast to locate the server): \n",
+             "Tree Test: \n",
+             "Iterator Test: \n",
+             "Exceptions Test: \n",
+             "Destroy Test: \n"
+             );
+
+$test_number = 0;
 
 print "INFO: Running the test in ", getcwd(), "\n";
 
 # Run server and client for each of the tests.  Client uses ior in a
 # file to bootstrap to the server.
 foreach $o (@opts) {
+
+    # Ensure that the name service is starting clean each time
+    make_or_clean_state;
+
+    print STDERR "Running Test: $comments[$test_number]\n";
 
     name_server ($server_opts[$test_number]);
 

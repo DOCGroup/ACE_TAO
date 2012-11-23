@@ -1,18 +1,25 @@
+Fri Nov 23 14:57:58 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
+
+        * orbsvcs/tests/Simple_Naming/client.cpp:
+        * orbsvcs/tests/Simple_Naming/run_test_ft.pl:
+        
+          Fixed test to clean out state on each run.  Cleaned up fuzz errors.
+
 Fri Nov 23 14:06:26 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
 
         * bin/tao_other_tests.lst:
         * orbsvcs/tests/Simple_Naming/run_test_ft.pl:
-        
+
           Added simple naming tests for FT_Naming.
 
         * orbsvcs/orbsvcs/FtNaming.mpc:
-        
+
           Removed unnecessary elements.
 
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:
 
           Removed printout to clean up error messages.
-        
+
 Wed Nov 21 23:07:07 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/CSD_ThreadPool/CSD_TP_Task.h:
