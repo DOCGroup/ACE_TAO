@@ -1,3 +1,8 @@
+Fri Nov 23 17:55:33 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
+          Updated for rename of readme
+
 Fri Nov 23 16:48:56 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/ImplRepo_Service/README:
