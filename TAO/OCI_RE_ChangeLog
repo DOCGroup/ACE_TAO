@@ -1,3 +1,13 @@
+Sat Nov 24 21:48:11 UTC 2012  unknown  <unknown@>
+
+        * MPC/config/ft_naming_serv.mpb:
+        
+          Add additional component.
+
+        * orbsvcs/Naming_Service/Naming_Service.cpp:
+        
+          Fixed initialization order of data members.
+
 Fri Nov 23 23:47:50 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
 
         * utils/nsgroup/README.nsgroup:
