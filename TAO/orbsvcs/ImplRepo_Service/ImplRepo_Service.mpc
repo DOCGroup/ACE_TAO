@@ -132,7 +132,6 @@ project(ImR_Activator_Service) : orbsvcsexe, install, acexml, avoids_minimum_cor
 
 project(tao_imr) : orbsvcsexe, install, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, portableserver, imr_client {
   exename  = tao_imr
-  install  = $(ACE_ROOT)/bin
   Source_Files {
     tao_imr.cpp
     tao_imr_i.cpp
