@@ -531,7 +531,7 @@ namespace CIAO_Foo_Impl
   void Foo_exec_i::my_struct_struct (const StructModule::StructStruct & my_struct_struct)
   {
     bool error_found = false;
-   
+
     if (my_struct_struct.type != StructModule::DLT_HARD)
       {
         ACE_ERROR ((LM_ERROR, "ERROR: my_struct_struct.deadline_type != 2, it is %d\n",
@@ -554,7 +554,6 @@ namespace CIAO_Foo_Impl
     my_struct_struct_ = !error_found;
   }
 
-  
   // Operations from Components::SessionComponent.
 
   void

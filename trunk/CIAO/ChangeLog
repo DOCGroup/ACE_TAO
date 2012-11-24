@@ -1,3 +1,8 @@
+Sat Nov 24 14:18:41 UTC 2012  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/Bug_3769_Regression/Foo_exec.cpp:
+	  Fuzz : Trailing whitespaces
+
 Fri Nov 23 12:53:17 UTC 2012  Marcel Smit  <msmit@remedy.nl>
 
         * tests/Bug_3769_Regression/Foo_exec.cpp:
