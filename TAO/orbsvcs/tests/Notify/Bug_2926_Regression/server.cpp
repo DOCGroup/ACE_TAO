@@ -12,7 +12,7 @@ char const * const scpc_orbId = "testDllOrb";
 ACE_TCHAR const * const scpc_loadOrb = ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE(
   "testDllOrb",
   "bug2926",
-  TAO_VERSION
+  TAO_VERSION,
   "_make_DllORB",
   "testDllOrb -ORBDebugLevel 0 -ORBId testDllOrb -ORBDottedDecimalAddresses 1"
 );
