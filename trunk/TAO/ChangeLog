@@ -1,3 +1,8 @@
+Sat Nov 24 09:17:21 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Notify/Bug_2926_Regression/server.cpp:
+          Fixed compile error
+
 Fri Nov 23 19:15:15 UTC 2012  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_module.cpp:
