@@ -150,7 +150,7 @@ private:
   Storable_State state_;
 };
 
-class TAO_Naming_Service_Persistence_Factory
+class TAO_Naming_Serv_Export TAO_Naming_Service_Persistence_Factory
 {
 public:
   TAO_Naming_Service_Persistence_Factory();

@@ -1,11 +1,21 @@
-Sat Nov 24 21:48:11 UTC 2012  unknown  <unknown@>
-
-        * MPC/config/ft_naming_serv.mpb:
-        
-          Add additional component.
+Sun Nov 25 15:27:16 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
 
         * orbsvcs/Naming_Service/Naming_Service.cpp:
         
+          Fixed initialization order of data members.
+
+        * orbsvcs/orbsvcs/Naming/Storable.h:
+        
+          Added dll export for class.
+
+Sat Nov 24 21:48:11 UTC 2012  unknown  <unknown@>
+
+        * MPC/config/ft_naming_serv.mpb:
+
+          Add additional component.
+
+        * orbsvcs/Naming_Service/Naming_Service.cpp:
+
           Fixed initialization order of data members.
 
 Fri Nov 23 23:47:50 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
