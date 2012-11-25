@@ -361,8 +361,10 @@ ifneq ($(SHLIB_UNCHECKED),)
 	-$(RM) $(SHLIB_UNCHECKED)
 ifeq ($(versioned_so),1)
 	-$(RM) $(SHLIB_UNCHECKED)$(SOVERSION)
-else ifeq ($(versioned_so),2)
-	-$(RM) $(SHLIB_UNCHECKED:.$(SOEXT)=$(SOVERSION).$(SOEXT))
+else 
+	ifeq ($(versioned_so),2)
+		-$(RM) $(SHLIB_UNCHECKED:.$(SOEXT)=$(SOVERSION).$(SOEXT))
+	endif
 endif
 endif
 

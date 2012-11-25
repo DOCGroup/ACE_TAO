@@ -1,3 +1,8 @@
+Sun Nov 25 20:08:55 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/rules.local.GNU:
+          Fixex AIX errors
+
 Sun Nov 25 20:05:25 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * debian/mwc_workspace.txt:
