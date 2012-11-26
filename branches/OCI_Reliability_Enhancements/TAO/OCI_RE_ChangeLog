@@ -1,3 +1,9 @@
+Mon Nov 26 22:39:55 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:
+
+          Fixed compilation errors in print statements.
+
 Mon Nov 26 22:19:23 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
 
         * orbsvcs/Naming_Service/Naming_Service.cpp:
