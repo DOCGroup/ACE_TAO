@@ -1,11 +1,17 @@
+Mon Nov 26 17:14:21 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/orbsvcs/FtNaming.mpc:
+
+          Fix the project dependencies.
+
 Sun Nov 25 15:27:16 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
 
         * orbsvcs/Naming_Service/Naming_Service.cpp:
-        
+
           Fixed initialization order of data members.
 
         * orbsvcs/orbsvcs/Naming/Storable.h:
-        
+
           Added dll export for class.
 
 Sat Nov 24 21:48:11 UTC 2012  unknown  <unknown@>
