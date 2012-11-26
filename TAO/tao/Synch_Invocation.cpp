@@ -1,6 +1,7 @@
 // $Id$
 
 #include "tao/Synch_Invocation.h"
+#include "tao/Invocation_Retry_State.h"
 #include "tao/Profile_Transport_Resolver.h"
 #include "tao/Profile.h"
 #include "tao/Synch_Reply_Dispatcher.h"
@@ -79,10 +80,24 @@ namespace TAO
 
         if (!transport)
           {
-            // Way back, we failed to find a profile we could connect to.
-            // We've come this far only so we reach the interception points
-            // in case they can fix things. Time to bail....
-            throw CORBA::TRANSIENT (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
+            TAO::Invocation_Retry_State *retry_state = this->stub ()->invocation_retry_state ();
+            if (retry_state->forward_on_exception_increment(FOE_TRANSIENT))
+                  {
+                    if (TAO_debug_level > 0)
+                      ACE_DEBUG ((LM_INFO,
+                                  "TAO (%P|%t) - Synch_Twoway_Invocation::"
+                                  "remote_twoway retrying on TRANSIENT exception\n"));
+                    retry_state->next_profile_retry ();
+                    return TAO_INVOKE_RESTART;
+                  }
+            else
+              {
+                // Way back, we failed to find a profile we could connect to.
+                // We've come this far only so we reach the interception points
+                // in case they can fix things. Time to bail....
+                throw CORBA::TRANSIENT (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
+              }
+
           }
 
         ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon,
@@ -312,6 +327,19 @@ namespace TAO
             (void) bd.unbind_dispatcher ();
             this->resolver_.transport ()->close_connection ();
 
+            TAO::Invocation_Retry_State *retry_state =
+              this->stub ()->invocation_retry_state ();
+            if (this->resolver_.transport ()->connection_closed_on_read() &&
+                retry_state->forward_on_reply_closed_increment ())
+              {
+                if (TAO_debug_level > 4)
+                  ACE_DEBUG ((LM_DEBUG,
+                              "TAO (%P|%t) - Synch_Twoway_Invocation::"
+                              "wait_for_reply, forward profile on connection closed\n"));
+                retry_state->next_profile_retry ();
+                return TAO_INVOKE_RESTART;
+              }
+
             try
               {
                 return
@@ -322,7 +350,10 @@ namespace TAO
               }
             catch (const ::CORBA::Exception&)
               {
-                this->resolver_.stub ()->reset_profiles ();
+                if (!this->stub ()->invocation_retry_state ()->forward_on_exception_limit_used ())
+                  {
+                    this->resolver_.stub ()->reset_profiles ();
+                  }
                 throw;
               }
           }
@@ -533,39 +564,77 @@ namespace TAO
         throw ::CORBA::MARSHAL (0, CORBA::COMPLETED_MAYBE);
       }
 
+    bool retry_on_exception = false;
     bool do_forward = false;
-    int foe_kind = this->stub ()->orb_core ()->orb_params ()->forward_once_exception();
 
-    if ((CORBA::CompletionStatus) completion != CORBA::COMPLETED_YES
-        && (((foe_kind & TAO::FOE_TRANSIENT) == 0
-              && ACE_OS_String::strcmp (type_id.in (),
-                                "IDL:omg.org/CORBA/TRANSIENT:1.0") == 0) ||
-            ACE_OS_String::strcmp (type_id.in (),
-                              "IDL:omg.org/CORBA/OBJ_ADAPTER:1.0") == 0 ||
-            ACE_OS_String::strcmp (type_id.in (),
-                              "IDL:omg.org/CORBA/NO_RESPONSE:1.0") == 0 ||
-            ((foe_kind & TAO::FOE_COMM_FAILURE) == 0
-              && ACE_OS_String::strcmp (type_id.in (),
-                              "IDL:omg.org/CORBA/COMM_FAILURE:1.0") == 0) ||
-            (this->stub ()->orb_core ()->orb_params ()->forward_invocation_on_object_not_exist ()
-             && ACE_OS_String::strcmp (type_id.in (),
-                              "IDL:omg.org/CORBA/OBJECT_NOT_EXIST:1.0") == 0) ||
-            (do_forward = ! this->stub ()->forwarded_on_exception ()
-             && ((((foe_kind & TAO::FOE_OBJECT_NOT_EXIST) == TAO::FOE_OBJECT_NOT_EXIST)
-                        && (ACE_OS_String::strcmp (type_id.in (),
-                                "IDL:omg.org/CORBA/OBJECT_NOT_EXIST:1.0") == 0)) ||
-                 (((foe_kind & TAO::FOE_COMM_FAILURE) == TAO::FOE_COMM_FAILURE)
-                        && (ACE_OS_String::strcmp (type_id.in (),
-                                "IDL:omg.org/CORBA/COMM_FAILURE:1.0") == 0)) ||
-                 (((foe_kind & TAO::FOE_TRANSIENT) == TAO::FOE_TRANSIENT)
-                        && (ACE_OS_String::strcmp (type_id.in (),
-                                "IDL:omg.org/CORBA/TRANSIENT:1.0") == 0)) ||
-                 (((foe_kind & TAO::FOE_INV_OBJREF) == TAO::FOE_INV_OBJREF)
-                        && (ACE_OS_String::strcmp (type_id.in (),
-                                "IDL:omg.org/CORBA/INV_OBJREF:1.0") == 0))))))
+    const TAO_ORB_Parameters *orb_params = this->stub ()->orb_core ()->orb_params ();
+    TAO::Invocation_Retry_State *retry_state = this->stub ()->invocation_retry_state ();
+
+    if (retry_state->forward_on_exception_limit_used () &&
+        (CORBA::CompletionStatus) completion == CORBA::COMPLETED_NO)
+      {
+        if ((ACE_OS_String::strcmp (type_id.in (),
+                                   "IDL:omg.org/CORBA/TRANSIENT:1.0") == 0 &&
+             retry_state->forward_on_exception_increment (TAO::FOE_TRANSIENT)) ||
+            (ACE_OS_String::strcmp (type_id.in (),
+                                   "IDL:omg.org/CORBA/COMM_FAILURE:1.0") == 0 &&
+             retry_state->forward_on_exception_increment (TAO::FOE_COMM_FAILURE)) ||
+            (ACE_OS_String::strcmp (type_id.in (),
+                                   "IDL:omg.org/CORBA/OBJECT_NOT_EXIST:1.0") == 0 &&
+             retry_state->forward_on_exception_increment (TAO::FOE_OBJECT_NOT_EXIST)) ||
+            (ACE_OS_String::strcmp (type_id.in (),
+                                   "IDL:omg.org/CORBA/INV_OBJREF:1.0") == 0 &&
+             retry_state->forward_on_exception_increment (TAO::FOE_INV_OBJREF))
+            )
+          {
+            retry_on_exception = true;
+            retry_state->sleep_at_starting_profile ();
+          }
+      }
+    else
+      {
+        int foe_kind = orb_params->forward_once_exception();
+
+        retry_on_exception =
+          (CORBA::CompletionStatus) completion != CORBA::COMPLETED_YES
+          && (((foe_kind & TAO::FOE_TRANSIENT) == 0
+               && ACE_OS_String::strcmp (type_id.in (),
+                                         "IDL:omg.org/CORBA/TRANSIENT:1.0") == 0) ||
+              ACE_OS_String::strcmp (type_id.in (),
+                                     "IDL:omg.org/CORBA/OBJ_ADAPTER:1.0") == 0 ||
+              ACE_OS_String::strcmp (type_id.in (),
+                                     "IDL:omg.org/CORBA/NO_RESPONSE:1.0") == 0 ||
+              ((foe_kind & TAO::FOE_COMM_FAILURE) == 0
+               && ACE_OS_String::strcmp (type_id.in (),
+                                         "IDL:omg.org/CORBA/COMM_FAILURE:1.0") == 0) ||
+              (orb_params->forward_invocation_on_object_not_exist ()
+               && ACE_OS_String::strcmp (type_id.in (),
+                                         "IDL:omg.org/CORBA/OBJECT_NOT_EXIST:1.0") == 0) ||
+              (do_forward = ! this->stub ()->forwarded_on_exception ()
+               && ((((foe_kind & TAO::FOE_OBJECT_NOT_EXIST) == TAO::FOE_OBJECT_NOT_EXIST)
+                    && (ACE_OS_String::strcmp (type_id.in (),
+                                               "IDL:omg.org/CORBA/OBJECT_NOT_EXIST:1.0") == 0)) ||
+                   (((foe_kind & TAO::FOE_COMM_FAILURE) == TAO::FOE_COMM_FAILURE)
+                    && (ACE_OS_String::strcmp (type_id.in (),
+                                               "IDL:omg.org/CORBA/COMM_FAILURE:1.0") == 0)) ||
+                   (((foe_kind & TAO::FOE_TRANSIENT) == TAO::FOE_TRANSIENT)
+                    && (ACE_OS_String::strcmp (type_id.in (),
+                                               "IDL:omg.org/CORBA/TRANSIENT:1.0") == 0)) ||
+                   (((foe_kind & TAO::FOE_INV_OBJREF) == TAO::FOE_INV_OBJREF)
+                    && (ACE_OS_String::strcmp (type_id.in (),
+                                               "IDL:omg.org/CORBA/INV_OBJREF:1.0") == 0)))));
+      }
+
+    if (retry_on_exception)
       {
         // If we are here then possibly we'll need a restart.
         mon.set_status (TAO_INVOKE_RESTART);
+
+        if (TAO_debug_level > 4)
+          ACE_DEBUG ((LM_DEBUG,
+                      "TAO (%P|%t) - Synch_Twoway_Invocation::"
+                      "handle_system_exception, profile forwarding on exception ",
+                      type_id.in (), "\n"));
 
         if (do_forward)
           this->stub ()->forwarded_on_exception (true);
@@ -676,80 +745,97 @@ namespace TAO
 
         if (!transport)
           {
-            // Way back, we failed to find a profile we could connect to.
-            // We've come this far only so we reach the interception points
-            // in case they can fix things. Time to bail....
-            throw CORBA::TRANSIENT (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
-          }
-
-  {
-    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, transport->output_cdr_lock (),
-                      TAO_INVOKE_FAILURE);
-
-    TAO_OutputCDR &cdr = transport->out_stream ();
-
-    cdr.message_attributes (this->details_.request_id (),
-          this->resolver_.stub (),
-          TAO_Message_Semantics (TAO_Message_Semantics::TAO_ONEWAY_REQUEST),
-          max_wait_time);
-
-    this->write_header (cdr);
-
-    this->marshal_data (cdr);
-
-    countdown.update ();
-
-    if (transport->is_connected ())
-      {
-        // We have a connected transport so we can send the message
-        s = this->send_message (cdr,
-            TAO_Message_Semantics (TAO_Message_Semantics::TAO_ONEWAY_REQUEST),
-              max_wait_time);
-
-        if (transport->wait_strategy ()->non_blocking () == 0 &&
-            transport->orb_core ()->client_factory ()->use_cleanup_options ())
-          {
-            if (!transport->wait_strategy ()->is_registered())
+            TAO::Invocation_Retry_State *retry_state = this->stub ()->invocation_retry_state ();
+            if (retry_state->forward_on_exception_limit_used ())
               {
-                ACE_Event_Handler * const eh =
-                  transport->event_handler_i ();
-
-                ACE_Reactor * const r =
-                  transport->orb_core ()->reactor ();
-
-                if (r->register_handler (eh, ACE_Event_Handler::READ_MASK) == -1)
+                if (retry_state->forward_on_exception_increment(FOE_TRANSIENT))
                   {
                     if (TAO_debug_level > 0)
-                      ACE_ERROR ((LM_ERROR,
+                      ACE_DEBUG ((LM_INFO,
                                   "TAO (%P|%t) - Synch_Oneway_Invocation::"
-                                  "remote_oneway transport[%d] registration with"
-                                  "reactor returned an error\n",
-                      transport->id ()));
-                  }
-                else
-                  {
-                    // Only set this flag when registration succeeds
-                    transport->wait_strategy ()->is_registered(true);
+                                  "remote_oneway retrying on TRANSIENT exception\n"));
+                    retry_state->next_profile_retry ();
+                    return TAO_INVOKE_RESTART;
                   }
               }
+            else
+              {
+                // Way back, we failed to find a profile we could connect to.
+                // We've come this far only so we reach the interception points
+                // in case they can fix things. Time to bail....
+                throw CORBA::TRANSIENT (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
+              }
+
           }
 
-      }
-    else
-      {
-        if (TAO_debug_level > 4)
-          ACE_DEBUG ((LM_DEBUG,
-                      "TAO (%P|%t) - Synch_Oneway_Invocation::"
-                      "remote_oneway, queueing message\n"));
+        {
+          ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, transport->output_cdr_lock (),
+                            TAO_INVOKE_FAILURE);
 
-        if (transport->format_queue_message (cdr,
-                                             max_wait_time,
-                                             this->resolver_.stub()) != 0)
-          {
-            s = TAO_INVOKE_FAILURE;
-          }
-      }
-  }
+          TAO_OutputCDR &cdr = transport->out_stream ();
+
+          cdr.message_attributes (this->details_.request_id (),
+                                  this->resolver_.stub (),
+                                  TAO_Message_Semantics (TAO_Message_Semantics::TAO_ONEWAY_REQUEST),
+                                  max_wait_time);
+
+          this->write_header (cdr);
+
+          this->marshal_data (cdr);
+
+          countdown.update ();
+
+          if (transport->is_connected ())
+            {
+              // We have a connected transport so we can send the message
+              s = this->send_message (cdr,
+                                      TAO_Message_Semantics (TAO_Message_Semantics::TAO_ONEWAY_REQUEST),
+                                      max_wait_time);
+
+              if (transport->wait_strategy ()->non_blocking () == 0 &&
+                  transport->orb_core ()->client_factory ()->use_cleanup_options ())
+                {
+                  if (!transport->wait_strategy ()->is_registered())
+                    {
+                      ACE_Event_Handler * const eh =
+                        transport->event_handler_i ();
+
+                      ACE_Reactor * const r =
+                        transport->orb_core ()->reactor ();
+
+                      if (r->register_handler (eh, ACE_Event_Handler::READ_MASK) == -1)
+                        {
+                          if (TAO_debug_level > 0)
+                            ACE_ERROR ((LM_ERROR,
+                                        "TAO (%P|%t) - Synch_Oneway_Invocation::"
+                                        "remote_oneway transport[%d] registration with"
+                                        "reactor returned an error\n",
+                                        transport->id ()));
+                        }
+                      else
+                        {
+                          // Only set this flag when registration succeeds
+                          transport->wait_strategy ()->is_registered(true);
+                        }
+                    }
+                }
+
+            }
+          else
+            {
+              if (TAO_debug_level > 4)
+                ACE_DEBUG ((LM_DEBUG,
+                            "TAO (%P|%t) - Synch_Oneway_Invocation::"
+                            "remote_oneway, queueing message\n"));
+
+              if (transport->format_queue_message (cdr,
+                                                   max_wait_time,
+                                                   this->resolver_.stub()) != 0)
+                {
+                  s = TAO_INVOKE_FAILURE;
+                }
+            }
+        }
 
 #if TAO_HAS_INTERCEPTORS == 1
         s = this->receive_other_interception ();
@@ -763,7 +849,7 @@ namespace TAO
             status == PortableInterceptor::TRANSPORT_RETRY)
           s = TAO_INVOKE_RESTART;
         else if (status == PortableInterceptor::SYSTEM_EXCEPTION
-            || status == PortableInterceptor::USER_EXCEPTION)
+                 || status == PortableInterceptor::USER_EXCEPTION)
           throw;
       }
     catch (...)
@@ -771,14 +857,14 @@ namespace TAO
         // Notify interceptors of non-CORBA exception, and propagate
         // that exception to the caller.
 
-         PortableInterceptor::ReplyStatus const st =
-           this->handle_all_exception ();
+        PortableInterceptor::ReplyStatus const st =
+          this->handle_all_exception ();
 
-         if (st == PortableInterceptor::LOCATION_FORWARD ||
-             st == PortableInterceptor::TRANSPORT_RETRY)
-           s = TAO_INVOKE_RESTART;
-         else
-           throw;
+        if (st == PortableInterceptor::LOCATION_FORWARD ||
+            st == PortableInterceptor::TRANSPORT_RETRY)
+          s = TAO_INVOKE_RESTART;
+        else
+          throw;
       }
 #endif /* TAO_HAS_INTERCEPTORS */
 

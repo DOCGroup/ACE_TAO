@@ -105,7 +105,7 @@ templates ?= automatic
 # If the platform file didn't already set versioned_so, default to 1.
 versioned_so ?= 1
 with_ld ?=
-ifneq ($(versioned_so),0)
+ifeq ($(versioned_so),1)
   ifeq ($(with_ld),hpux)
     SOFLAGS += -Wl,+h -Wl,$(SONAME)
   else
@@ -115,10 +115,6 @@ ifneq ($(versioned_so),0)
       SOFLAGS += -Wl,-h -Wl,$(SONAME)
     endif
   endif
-endif
-
-ifeq ($(versioned_so),2)
-  FLAGS_C_CC += -DACE_VERSIONED_SO=2
 endif
 
 static_libs_only ?=

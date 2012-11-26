@@ -10,6 +10,7 @@ module Components
 {
   typeprefix Components "omg.org";
 
+  // @@ Components::Transaction is still there.
   module Transaction
   {
 

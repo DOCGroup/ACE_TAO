@@ -91,7 +91,9 @@ namespace TAO
 
     /// The ORT Factory.
     PortableInterceptor::ObjectReferenceFactory_var ort_factory_;
+
   };
+
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

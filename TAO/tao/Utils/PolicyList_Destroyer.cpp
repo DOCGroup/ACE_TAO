@@ -10,20 +10,24 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::Utils::PolicyList_Destroyer::~PolicyList_Destroyer() throw ()
 {
+
   for (CORBA::ULong i = 0; i != length(); ++i)
     {
       CORBA::Policy_ptr policy = (*this)[i];
-      if (!CORBA::is_nil (policy))
+      if (CORBA::is_nil (policy))
         {
-          try
-            {
-              policy->destroy ();
-              (*this)[i] = CORBA::Policy::_nil();
-            }
-          catch (...)
-            {
-            }
+          continue;
         }
+
+      try
+        {
+          policy->destroy ();
+        }
+      catch (...)
+        {
+        }
+
+      (*this)[i] = CORBA::Policy::_nil();
     }
 }
 

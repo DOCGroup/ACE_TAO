@@ -24,9 +24,4 @@ project: namingexe, rtcorba, install, messaging, ziop {
 
   Header_Files {
   }
-
-  InstallData_Files {
-    gendir = .
-    README.catior
-  }
 }

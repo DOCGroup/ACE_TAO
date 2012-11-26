@@ -14,9 +14,11 @@
 #define TAO_PARAMS_H
 
 #include /**/ "ace/pre.h"
+#include "tao/Invocation_Retry_Params.h"
 #include "ace/Unbounded_Queue.h"
 #include "ace/Array_Map.h"
 #include "ace/Synch.h"
+#include "ace/Time_Value.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -41,6 +43,8 @@ typedef ACE_Unbounded_Queue<ACE_CString> TAO_EndpointSet;
 typedef ACE_Unbounded_Queue_Const_Iterator<ACE_CString> TAO_EndpointSetIterator;
 
 // -------------------------------------------------------------------
+
+
 
 /**
  * @class TAO_ORB_Parameters
@@ -255,7 +259,13 @@ public:
   void forward_invocation_on_object_not_exist (bool opt);
   bool forward_invocation_on_object_not_exist (void) const;
 
-  void forward_once_exception (const int);
+  void forward_on_exception_limit (const int ef, const int limit);
+  void forward_on_exception_delay (const ACE_Time_Value &delay);
+
+  TAO::Invocation_Retry_Params &invocation_retry_params (void);
+  const TAO::Invocation_Retry_Params &invocation_retry_params (void) const;
+
+  void forward_once_exception (const int ef);
   int forward_once_exception () const;
 
   void allow_ziop_no_server_policies (bool opt);
@@ -478,13 +488,15 @@ private:
    */
   bool forward_invocation_on_object_not_exist_;
 
+  TAO::Invocation_Retry_Params invocation_retry_params_;
 
   /**
    * The exceptions upon which the requests will be forwarded once.
+   * This is retained for backward compatibility of behavior.
    */
   int forward_once_exception_;
 
-  /**
+/**
    * Name of the collocation resolver that needs to be instantiated.
    * The default value is "Default_Collocation_Resolver". If
    * TAO_RTCORBA is linked, the set_collocation_resolver will be

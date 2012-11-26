@@ -1,0 +1,5 @@
+// $Id$
+
+project(*test) : dynamic_tp {
+  exename = test
+}

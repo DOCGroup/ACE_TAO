@@ -544,8 +544,8 @@ public:
    * thread can execute it on the same instance concurrently.
    *
    * @param buffer ORB allocated buffer where the data should be
-   * @param timeout The ACE_Time_Value *s is just a place holder for now. It is
-   * not clear this this is the best place to specify this. The actual
+   * @@ The ACE_Time_Value *s is just a place holder for now.  It is
+   * not clear this this is the best place to specify this.  The actual
    * timeout values will be kept in the Policies.
    */
   virtual ssize_t recv (char *buffer,
@@ -647,6 +647,9 @@ public:
 
   /// Is this transport really connected
   bool is_connected (void) const;
+
+  /// Was a connection seen as closed during a read
+  bool connection_closed_on_read (void) const;
 
   /// Perform all the actions when this transport get opened
   bool post_open (size_t id);
@@ -1174,6 +1177,12 @@ protected:
   /// SYNC_NONE Policy we don't wait until the connection is ready and we
   /// buffer the requests in this transport until the connection is ready
   bool is_connected_;
+
+  /// Track if connection was seen as closed during a read so that
+  /// invocation can optionally be retried using a different profile.
+  /// Note that this could result in violate the "at most once" CORBA
+  /// semantics.
+  bool connection_closed_on_read_;
 
 private:
 

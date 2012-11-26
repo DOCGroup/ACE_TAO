@@ -165,6 +165,27 @@ Options::parse_args (int &argc, ACE_TCHAR *argv[])
           this->repo_mode_ = REPO_XML_FILE;
         }
       else if (ACE_OS::strcasecmp (shifter.get_current (),
+                                   ACE_TEXT ("-y")) == 0)
+        {
+          shifter.consume_arg ();
+
+          if (!shifter.is_anything_left () || shifter.get_current ()[0] == '-')
+            {
+              ACE_ERROR ((LM_ERROR, "Error: -x option needs a filename\n"));
+              this->print_usage ();
+              return -1;
+            }
+
+          this->persist_file_name_ = shifter.get_current ();
+          this->repo_mode_ = REPO_SHARED_FILES;
+
+          if (this->persist_file_name_.length() &&
+              this->persist_file_name_[this->persist_file_name_.length() - 1] != '/')
+            {
+              this->persist_file_name_ += '/';
+            }
+        }
+      else if (ACE_OS::strcasecmp (shifter.get_current (),
                                    ACE_TEXT ("-e")) == 0)
         {
           this->erase_repo_ = true;
@@ -241,18 +262,22 @@ Options::print_usage (void) const
   ACE_ERROR ((LM_ERROR,
               "Usage:\n"
               "\n"
-              "ImplRepo_Service [-c cmd] [-d 0|1|2] [-m] [-o file]\n"
-              " [-r|-p file|-x file] [-s] [-t secs] [-v secs]\n"
+              "ImplRepo_Service [-c cmd] [-d 0|1|2] [-e] [-m] [-o file]\n"
+              " [-r|-p file|-x file|-y dir] [-s] [-t secs] [-v secs]\n"
               "  -c command  Runs nt service commands ('install' or 'remove')\n"
               "  -d level    Sets the debug level (default 1)\n"
+              "  -e          Erase the persisted repository at startup\n"
               "  -l          Lock the database\n"
               "  -m          Turn on multicast\n"
               "  -o file     Outputs the ImR's IOR to a file\n"
               "  -p file     Use file for storing/loading settings\n"
-              "  -x file     Use XML file for storing/loading setting\n"
+              "  -x file     Use XML file for storing/loading settings\n"
+              "  -y dir      Use shared XML files for storing/loading settings\n"
+              "              in the provided directory\n"
               "  -r          Use the registry for storing/loading settings\n"
+              "  -s          Run as a service\n"
               "  -t secs     Server startup timeout.(Default=60s)\n"
-              "  -v msecs     Server verification interval.(Default=10s)\n"
+              "  -v msecs    Server verification interval.(Default=10s)\n"
               ));
 }
 

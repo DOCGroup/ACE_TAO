@@ -2,6 +2,9 @@
 
 #include "orbsvcs/Naming/Naming_Server.h"
 #include "orbsvcs/Naming/Transient_Naming_Context.h"
+#include "orbsvcs/Naming/Persistent_Naming_Context_Factory.h"
+#include "orbsvcs/Naming/Storable_Naming_Context_Factory.h"
+
 
 #if !defined (CORBA_E_MICRO)
 #include "orbsvcs/Naming/Persistent_Context_Index.h"
@@ -269,6 +272,7 @@ TAO_Naming_Server::parse_args (int argc,
                            ACE_TEXT ("-p <pid_file_name> ")
                            ACE_TEXT ("-s <context_size> ")
                            ACE_TEXT ("-b <base_address> ")
+                           ACE_TEXT ("-u <persistence dir name> ")
                            ACE_TEXT ("-m <1=enable multicast, 0=disable multicast(default) ")
                            ACE_TEXT ("%s")
                            ACE_TEXT ("-z <relative round trip timeout> ")
@@ -477,8 +481,9 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
           // of this Reader and Writer, let's just take something off the
           // command line for now.
           TAO_Naming_Service_Persistence_Factory* pf = 0;
-          ACE_NEW_RETURN(pf, TAO_NS_FlatFileFactory, -1);
+          ACE_NEW_RETURN (pf, TAO_NS_FlatFileFactory, -1);
           auto_ptr<TAO_Naming_Service_Persistence_Factory> persFactory(pf);
+
           // This instance will either get deleted after recreate all or,
           // in the case of a servant activator's use, on destruction of the
           // activator.
@@ -487,7 +492,7 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
           if (persistence_location == 0)
             {
               // No, assign the default location "NameService"
-              persistence_location = ACE_TEXT("NameService");
+              persistence_location = ACE_TEXT  ("NameService");
             }
 
           // Now make sure this directory exists
@@ -499,13 +504,22 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT)
           if (this->use_servant_activator_)
             {
+              // Use an auto_ptr to ensure that we clean up the factory in the case
+              // of a failure in creating and registering the Activator
+              TAO_Storable_Naming_Context_Factory* cf = 0;
+              ACE_NEW_RETURN (cf, TAO_Storable_Naming_Context_Factory (context_size), -1);
+              auto_ptr<TAO_Storable_Naming_Context_Factory> contextFactory (cf);
+
               ACE_NEW_THROW_EX (this->servant_activator_,
                                 TAO_Storable_Naming_Context_Activator (orb,
                                                                        persFactory.get(),
-                                                                       persistence_location,
-                                                                       context_size),
+                                                                       contextFactory.get (),
+                                                                       persistence_location),
                                 CORBA::NO_MEMORY ());
               this->ns_poa_->set_servant_manager(this->servant_activator_);
+              // We have successfull turned over the context factory to the activator so
+              // we can now release it.
+              contextFactory.release ();
             }
 #endif /* TAO_HAS_MINIMUM_POA */
 
@@ -520,16 +534,26 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
                                                        use_redundancy_);
 
           if (this->use_servant_activator_)
-            persFactory.release();
+            {
+              // If using a servant activator, the activator now owns the
+              // factory, so we should release it
+              persFactory.release ();
+            }
         }
       else if (persistence_location != 0)
         //
         // Initialize Persistent Naming Service.
         //
         {
+
+          // Create Naming Context Implementation Factory to be used for the creation of
+          // naming contexts by the TAO_Persistent_Context_Index
+          TAO_Naming_Context_Factory *naming_context_factory = 0;
+          ACE_NEW_RETURN (naming_context_factory, TAO_Persistent_Naming_Context_Factory, -1);
+
           // Allocate and initialize Persistent Context Index.
           ACE_NEW_RETURN (this->context_index_,
-                          TAO_Persistent_Context_Index (orb, poa),
+                          TAO_Persistent_Context_Index (orb, poa, naming_context_factory),
                           -1);
 
           if (this->context_index_->open (persistence_location,

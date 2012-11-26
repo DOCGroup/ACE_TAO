@@ -19,6 +19,7 @@
 #include "tao/Policy_Set.h"
 #include "tao/SystemException.h"
 #include "tao/CDR.h"
+#include "tao/Invocation_Retry_State.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Stub.inl"
@@ -52,6 +53,7 @@ TAO_Stub::TAO_Stub (const char *repository_id,
   , forwarded_ior_info_ (0)
   , collocation_opt_ (orb_core->optimize_collocation_objects ())
   , forwarded_on_exception_ (false)
+  , invocation_retry_state_ (0)
 {
   if (this->orb_core_.get() == 0)
     {
@@ -116,6 +118,11 @@ TAO_Stub::add_forward_profiles (const TAO_MProfile &mprofiles,
   ACE_MT (ACE_GUARD (TAO_SYNCH_MUTEX,
                      guard,
                      this->profile_lock_));
+  if (TAO_debug_level > 5)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("TAO (%P|%t) - Stub::add_forward_profiles, acquired profile lock this = 0x%x\n"), this));
+    }
 
   if (permanent_forward)
     {
@@ -133,8 +140,10 @@ TAO_Stub::add_forward_profiles (const TAO_MProfile &mprofiles,
            TAO_MProfile (mprofiles));
 
   if (permanent_forward)
-    // bookmark the new element at bottom of stack
-    this->forward_profiles_perm_ = this->forward_profiles_;
+    {
+      // bookmark the new element at bottom of stack
+      this->forward_profiles_perm_ = this->forward_profiles_;
+    }
 
   // forwarded profile points to the new IOR (profiles)
   this->profile_in_use_->forward_to (this->forward_profiles_);
@@ -159,6 +168,12 @@ TAO_Stub::create_ior_info (IOP::IOR *&ior_info, CORBA::ULong &index)
                             guard,
                             this->profile_lock_,
                             -1));
+  if (TAO_debug_level > 5)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("TAO (%P|%t) - Stub::create_ior_info, acquired profile lock this = 0x%x\n"), this));
+    }
+
 
   IOP::IOR *tmp_info = 0;
 
@@ -520,6 +535,12 @@ TAO_Stub::marshal (TAO_OutputCDR &cdr)
                                 guard,
                                 this->profile_lock_,
                                 0));
+  if (TAO_debug_level > 5)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("TAO (%P|%t) - Stub::marshal, acquired profile lock this = 0x%x\n"), this));
+    }
+
 
       ACE_ASSERT(this->forward_profiles_ !=0);
 
@@ -547,6 +568,18 @@ TAO_Stub::marshal (TAO_OutputCDR &cdr)
     }
 
   return (CORBA::Boolean) cdr.good_bit ();
+}
+
+void
+TAO_Stub::invocation_retry_state (TAO::Invocation_Retry_State *state)
+{
+  this->invocation_retry_state_ = state;
+}
+
+TAO::Invocation_Retry_State *
+TAO_Stub::invocation_retry_state () const
+{
+  return this->invocation_retry_state_;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

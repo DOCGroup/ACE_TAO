@@ -19,9 +19,9 @@ namespace CIAO
     if (CORBA::is_nil (this->orb_))
       {
         CIAO_ERROR (1, (LM_ERROR, CLINFO
-                        "CIAO_StoreReferences_i::CIAO_StoreReferences_i -"
+                        "Container_Handler_i::configure -"
                         "Unable to locate ORB.\n"));
-        throw ::Deployment::StartError ("CIAO_StoreReferences_i",
+        throw ::Deployment::StartError ("CIAO Container Handler",
                                         "Unable to locate ORB");
       }
   }
@@ -135,7 +135,7 @@ namespace CIAO
         CIAO_ERROR (1, (LM_ERROR, CLINFO
                         "CIAO_ReferenceLookup_i::CIAO_ReferenceLookup_i -"
                         "Unable to locate ORB.\n"));
-        throw ::Deployment::StartError ("CIAO_ReferenceLookup_i",
+        throw ::Deployment::StartError ("CIAO Container Handler",
                                         "Unable to locate ORB");
       }
   }

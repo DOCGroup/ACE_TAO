@@ -24,6 +24,7 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     Argv_Type_Converter.cpp
     Assert.cpp
     Atomic_Op.cpp
+    Auto_Event.cpp
     Barrier.cpp             // Required by orbsvcs/tests/Notify/lib
     Base_Thread_Adapter.cpp
     Based_Pointer_Repository.cpp
@@ -47,7 +48,7 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     Dump.cpp
     Dynamic.cpp
     Dynamic_Message_Strategy.cpp
-    Event_Base.cpp
+    Event.cpp
     Event_Handler.cpp
     Event_Handler_Handle_Timeout_Upcall.cpp
     FILE.cpp
@@ -80,6 +81,7 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     Logging_Strategy.cpp
     Malloc.cpp
     Malloc_Allocator.cpp
+    Manual_Event.cpp
     Mem_Map.cpp
     Message_Block.cpp
     Message_Queue.cpp
@@ -215,7 +217,6 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     Arg_Shifter.cpp
     ARGV.cpp
     Atomic_Op_T.cpp
-    Auto_Event.cpp
     Auto_Functor.cpp
     Auto_IncDec_T.cpp
     Auto_Ptr.cpp
@@ -232,7 +233,6 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     Dump_T.cpp
     Dynamic_Service.cpp
     Env_Value_T.cpp
-    Event.cpp
     Event_Handler_T.cpp
     Framework_Component_T.cpp
     Free_List.cpp
@@ -247,7 +247,6 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     Lock_Adapter_T.cpp
     Malloc_T.cpp
     Managed_Object.cpp
-    Manual_Event.cpp
     Map_Manager.cpp
     Map_T.cpp
     Message_Block_T.cpp
@@ -313,7 +312,6 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     Condition_T.h
     Countdown_Time.h
     Default_Constants.h
-    Event_Base.h
     Exception_Macros.h
     Global_Macros.h
     Guard_T.h

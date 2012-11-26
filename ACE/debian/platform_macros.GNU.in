@@ -1,0 +1,127 @@
+# -*- Makefile -*-
+ifeq (@BUILD_EXCEPTIONS_TRUE@,)
+  exceptions ?= 1
+else
+  exceptions ?= 0
+endif
+
+ifneq ($(findstring -g,@CXXFLAGS@),)
+  debug ?= 1
+else
+  debug ?= 0
+endif
+
+ifneq ($(filter -O2 -O3,@CXXFLAGS@),)
+  optimize ?= 1
+else
+  optimize ?= 0
+endif
+
+ifneq ($(findstring -pthread,@CXXFLAGS@),)
+  threads ?= 1
+else
+  threads ?= 0
+endif
+
+insure ?= 0
+
+PLATFORM_XT_CPPFLAGS = @ACE_XT_CPPFLAGS@
+PLATFORM_XT_LIBS = @ACE_XT_LIBS@
+PLATFORM_XT_LDFLAGS = @ACE_XT_LDFLAGS@
+
+PLATFORM_FL_CPPFLAGS = @ACE_FLTK_CPPFLAGS@
+PLATFORM_FL_LIBS = @ACE_FLTK_LIBS@
+
+PLATFORM_X11_CPPFLAGS = @ACE_X11_CPPFLAGS@
+PLATFORM_X11_LIBS = @ACE_X11_LIBS@
+PLATFORM_X11_LDFLAGS = @ACE_X11_LDFLAGS@
+
+PLATFORM_FOX_CPPFLAGS = @ACE_FOX_CPPFLAGS@
+PLATFORM_FOX_LIBS = @ACE_FOX_LIBS@
+
+PLATFORM_TCL_CPPFLAGS = @ACE_TCL_CPPFLAGS@
+PLATFORM_TCL_LIBS = @ACE_TCL_LIBS@
+
+PLATFORM_TK_CPPFLAGS = @ACE_TK_CPPFLAGS@
+PLATFORM_TK_LIBS = @ACE_TK_LIBS@
+
+PLATFORM_QT_CPPFLAGS = @ACE_QT_CPPFLAGS@
+PLATFORM_QT_LIBS = @ACE_QT_LIBS@
+
+ifeq (@BUILD_SSL_TRUE@,)
+  ssl ?= 1
+else
+  ssl ?= 0
+endif
+
+ifeq ($(insure),1)
+  CC  = insure
+  CXX = insure
+endif
+
+PIC      = -fPIC
+AR      ?= @AR@
+ARFLAGS  = rsuv
+RANLIB   = @RANLIB@
+
+ifeq ($(insure),0)
+  CC  ?= @CC@
+  CXX ?= @CXX@
+  CXX_FOR_VERSION_TEST ?= $(CXX)
+else
+  CXX_FOR_VERSION_TEST ?= @CXX@
+endif
+
+ifneq ($(findstring -pipe,@CXXFLAGS@),)
+  pipes ?= 1
+else
+  pipes ?= 0
+endif
+
+CXX_FULL_VERSION := $(shell $(CXX_FOR_VERSION_TEST) --version)
+
+FLAGS_C_CC += $(filter-out -g -O2 -O3 -pipe,@CXXFLAGS@)
+
+ifeq ($(buildbits),32)
+  FLAGS_C_CC += -m32
+  LDFLAGS    += -m32
+endif
+ifeq ($(buildbits),64)
+  FLAGS_C_CC += -m64
+endif
+
+DCFLAGS  += -g
+DCCFLAGS += -g
+DLD      = $(CXX)
+LD       = $(CXX)
+LIBS     += @LIBS@
+
+ifeq ($(optimize),1)
+  SOFLAGS += -Wl,-O2
+endif
+
+SOFLAGS += $(CPPFLAGS) -shared
+SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<; \
+          $(SOLINK.cc) -o $@ $(LDFLAGS) $(VSHDIR)$*.o
+PRELIB  = @true
+
+# Test for template instantiation, add to SOFLAGS if SONAME set,
+# add -E to LDFLAGS if using GNU ld
+#
+include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
+
+OCFLAGS  ?= -O2
+OCCFLAGS ?= -O2
+
+CFLAGS  += $(FLAGS_C_CC)
+CCFLAGS += $(FLAGS_C_CC) $(TEMPLATES_FLAG)
+
+# Added line below to support "Executable Shared Object" files (as
+# needed by the service configurator).
+# Marius Kjeldahl <mariusk@sn.no, marius@funcom.com>
+ifeq ($(threads),1)
+    ESOBUILD = $(COMPILEESO.cc) $(PIC) -shared -o $(VSHDIR)$*.so $<
+    ifndef PRELIB
+       PRELIB = @true
+    endif # ! PRELIB
+endif

@@ -8,9 +8,11 @@
 #include "locator_export.h"
 
 #include "Adapter_Activator.h"
+#include "Activator_Info.h"
 #include "Forwarder.h"
 #include "Locator_Options.h"
-#include "Locator_Repository.h"
+#include "Server_Info.h"
+#include "ace/Auto_Ptr.h"
 #include "AsyncStartupWaiter_i.h"
 #include "tao/IORTable/IORTable.h"
 
@@ -28,6 +30,7 @@ class ACE_Reactor;
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 class INS_Locator;
+class Locator_Repository;
 
 /// Gets a request from a client and depending on the POA name,
 /// requests an activator to take care of activating the
@@ -142,7 +145,7 @@ private:
 
   TAO_IOR_Multicast ior_multicast_;
 
-  Locator_Repository repository_;
+  auto_ptr<Locator_Repository> repository_;
 
   AsyncStartupWaiter_i waiter_svt_;
   ImplementationRepository::AsyncStartupWaiter_var waiter_;

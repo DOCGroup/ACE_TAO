@@ -242,7 +242,7 @@ void FTEC_Gateway::remove_observer (RtecEventChannelAdmin::Observer_Handle handl
 void FTEC_Gateway::push(RtecEventChannelAdmin::ProxyPushConsumer_ptr proxy_consumer,
                         const RtecEventComm::EventSet & data)
 {
-  PortableServer::ObjectId_var object_id =
+  const PortableServer::ObjectId_var object_id =
     impl_->poa->reference_to_id(proxy_consumer);
   FtRtecEventComm::ObjectId** result;
   ACE_OS::memcpy(&result, &object_id[0], sizeof(FtRtecEventComm::ObjectId**));
@@ -317,7 +317,7 @@ get_remote_oid_ptr(CORBA::ORB_ptr orb)
     resolve_init<PortableServer::Current>(orb,
     "POACurrent");
 
-  PortableServer::ObjectId_var object_id =
+  const PortableServer::ObjectId_var object_id =
     current->get_object_id();
 
   FtRtecEventComm::ObjectId** result;

@@ -1102,6 +1102,50 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
           arg_shifter.consume_arg ();
         }
       else if (0 != (current_arg = arg_shifter.get_the_parameter
+                (ACE_TEXT("-ORBForwardOnTransientLimit"))))
+        {
+          int limit = ACE_OS::atoi (current_arg);
+          this->orb_params_.forward_on_exception_limit (TAO::FOE_TRANSIENT, limit);
+          arg_shifter.consume_arg ();
+        }
+      else if (0 != (current_arg = arg_shifter.get_the_parameter
+                (ACE_TEXT("-ORBForwardOnCommFailureLimit"))))
+        {
+          int limit = ACE_OS::atoi (current_arg);
+          this->orb_params_.forward_on_exception_limit (TAO::FOE_COMM_FAILURE, limit);
+          arg_shifter.consume_arg ();
+        }
+      else if (0 != (current_arg = arg_shifter.get_the_parameter
+                (ACE_TEXT("-ORBForwardOnObjectNotExistLimit"))))
+        {
+          int limit = ACE_OS::atoi (current_arg);
+          this->orb_params_.forward_on_exception_limit (TAO::FOE_OBJECT_NOT_EXIST, limit);
+          arg_shifter.consume_arg ();
+        }
+      else if (0 != (current_arg = arg_shifter.get_the_parameter
+                (ACE_TEXT("-ORBForwardOnInvObjrefLimit"))))
+        {
+          int limit = ACE_OS::atoi (current_arg);
+          this->orb_params_.forward_on_exception_limit (TAO::FOE_INV_OBJREF, limit);
+          arg_shifter.consume_arg ();
+        }
+      else if (0 != (current_arg = arg_shifter.get_the_parameter
+                (ACE_TEXT("-ORBForwardOnReplyClosedLimit"))))
+        {
+          int limit = ACE_OS::atoi (current_arg);
+          this->orb_params_.invocation_retry_params ().forward_on_reply_closed_limit_ =
+            limit;
+          arg_shifter.consume_arg ();
+        }
+      else if (0 != (current_arg = arg_shifter.get_the_parameter
+                (ACE_TEXT("-ORBForwardDelay"))))
+        {
+          int msecs = ACE_OS::atoi (current_arg);
+          ACE_Time_Value delay(0, 1000*msecs);
+          this->orb_params_.forward_on_exception_delay (delay);
+          arg_shifter.consume_arg ();
+        }
+      else if (0 != (current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBForwardOnceOnObjectNotExist"))))
         {
           int forward = ACE_OS::atoi (current_arg);
@@ -1666,9 +1710,8 @@ TAO_ORB_Core::policy_factory_registry_i (void)
   if (loader == 0)
     {
       this->configuration ()->process_directive (
-        ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE("PolicyFactory_Loader",
+        ACE_DYNAMIC_SERVICE_DIRECTIVE("PolicyFactory_Loader",
                                       "TAO_PI",
-                                      TAO_VERSION,
                                       "_make_TAO_PolicyFactory_Loader",
                                       ""));
       loader =
@@ -1719,9 +1762,8 @@ TAO_ORB_Core::orbinitializer_registry_i (void)
   if (this->orbinitializer_registry_ == 0)
     {
       this->configuration ()->process_directive (
-        ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE ("ORBInitializer_Registry",
+        ACE_DYNAMIC_SERVICE_DIRECTIVE ("ORBInitializer_Registry",
                                        "TAO_PI",
-                                       TAO_VERSION,
                                        "_make_ORBInitializer_Registry",
                                        ""));
       this->orbinitializer_registry_ =
@@ -2475,9 +2517,8 @@ TAO_ORB_Core::resolve_typecodefactory_i (void)
   if (loader == 0)
     {
       this->configuration ()->process_directive
-        (ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE("TypeCodeFactory",
+        (ACE_DYNAMIC_SERVICE_DIRECTIVE("TypeCodeFactory",
                                        "TAO_TypeCodeFactory",
-                                       TAO_VERSION,
                                        "_make_TAO_TypeCodeFactory_Loader",
                                        ""));
       loader =
@@ -2509,9 +2550,8 @@ TAO_ORB_Core::resolve_codecfactory_i (void)
   if (loader == 0)
     {
       this->configuration()->process_directive
-        (ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE("CodecFactory",
+        (ACE_DYNAMIC_SERVICE_DIRECTIVE("CodecFactory",
                                        "TAO_CodecFactory",
-                                       TAO_VERSION,
                                        "_make_TAO_CodecFactory_Loader",
                                        ""));
       loader =
@@ -2537,9 +2577,8 @@ TAO_ORB_Core::resolve_compression_manager_i (void)
   if (loader == 0)
     {
       this->configuration()->process_directive
-        (ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE("Compression",
+        (ACE_DYNAMIC_SERVICE_DIRECTIVE("Compression",
                                        "TAO_Compression",
-                                       TAO_VERSION,
                                        "_make_TAO_Compression_Loader",
                                        ""));
       loader =
@@ -2564,9 +2603,8 @@ TAO_ORB_Core::resolve_poa_current_i (void)
   if (loader == 0)
     {
       this->configuration()->process_directive
-        (ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE("TAO_POA_Current_Factory",
+        (ACE_DYNAMIC_SERVICE_DIRECTIVE("TAO_POA_Current_Factory",
                                        "TAO_PortableServer",
-                                       TAO_VERSION,
                                        "_make_TAO_POA_Current_Factory",
                                        ""));
       loader =
@@ -2594,9 +2632,8 @@ TAO_ORB_Core::resolve_picurrent_i (void)
   if (loader == 0)
     {
       this->configuration ()->process_directive
-        (ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE("PICurrent_Loader",
+        (ACE_DYNAMIC_SERVICE_DIRECTIVE("PICurrent_Loader",
                                        "TAO_PI",
-                                       TAO_VERSION,
                                        "_make_TAO_PICurrent_Loader",
                                        ""));
       loader =
@@ -2626,9 +2663,8 @@ TAO_ORB_Core::resolve_dynanyfactory_i (void)
   if (loader == 0)
     {
       this->configuration ()->process_directive
-        (ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE("DynamicAny_Loader",
+        (ACE_DYNAMIC_SERVICE_DIRECTIVE("DynamicAny_Loader",
                                        "TAO_DynamicAny",
-                                       TAO_VERSION,
                                        "_make_TAO_DynamicAny_Loader",
                                        ""));
       loader =
@@ -2654,9 +2690,8 @@ TAO_ORB_Core::resolve_iormanipulation_i (void)
   if (loader == 0)
     {
       this->configuration()->process_directive
-        (ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE("IORManip_Loader",
+        (ACE_DYNAMIC_SERVICE_DIRECTIVE("IORManip_Loader",
                                        "TAO_IORManip",
-                                       TAO_VERSION,
                                        "_make_TAO_IORManip_Loader",
                                        ""));
       loader =
@@ -2681,9 +2716,8 @@ TAO_ORB_Core::resolve_ior_table_i (void)
   if (factory == 0)
     {
       this->configuration ()->process_directive
-        (ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE("TAO_IORTable",
+        (ACE_DYNAMIC_SERVICE_DIRECTIVE("TAO_IORTable",
                                        "TAO_IORTable",
-                                       TAO_VERSION,
                                        "_make_TAO_Table_Adapter_Factory",
                                        ""));
       factory =
@@ -2717,9 +2751,8 @@ TAO_ORB_Core::resolve_monitor_i (void)
   if (loader == 0)
     {
       this->configuration ()->process_directive
-        (ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE("Monitor_Init",
+        (ACE_DYNAMIC_SERVICE_DIRECTIVE("Monitor_Init",
                                        "TAO_Monitor",
-                                       TAO_VERSION,
                                        "_make_TAO_Monitor_Init",
                                        ""));
       loader =

@@ -312,23 +312,13 @@ else #not vxworks_ntbuild
 	fi
     else #firstword of LN_S is not cp, so we're using real symlinks
       ifneq ($(SOVERSION),)
-       ifneq ($(versioned_so),2)
-	    @if test $(ARCH_SOURCE_DIR) != $(@D) ; then \
+	@if test $(ARCH_SOURCE_DIR) != $(@D) ; then \
 		if test ! -s $@ ; then \
 			$(RM) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)); \
 			echo $(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)); \
 			$(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)); \
 		fi ; \
-	    fi
-       else
-	    @if test $(ARCH_SOURCE_DIR) != $(@D) ; then \
-		if test ! -s $@ ; then \
-			$(RM) $(@:%$(SOVERSION).$(SOEXT)=%.$(SOEXT)); \
-			echo $(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $(@:%$(SOVERSION).$(SOEXT)=%.$(SOEXT)); \
-			$(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $(@:%$(SOVERSION).$(SOEXT)=%.$(SOEXT)); \
-		fi ; \
-	    fi
-        endif #versioned_so
+	fi
       endif #SOVERSION
 	@if test $(ARCH_SOURCE_DIR) != $(@D) ; then \
 		if test ! -s $@ ; then \
@@ -361,10 +351,6 @@ ifneq ($(SHLIB_UNCHECKED),)
 	-$(RM) $(SHLIB_UNCHECKED)
 ifeq ($(versioned_so),1)
 	-$(RM) $(SHLIB_UNCHECKED)$(SOVERSION)
-else 
-	ifeq ($(versioned_so),2)
-		-$(RM) $(SHLIB_UNCHECKED:.$(SOEXT)=$(SOVERSION).$(SOEXT))
-	endif
 endif
 endif
 

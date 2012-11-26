@@ -1,7 +1,7 @@
 # Set the version number here.
-%define ACEVER  6.1.6
-%define TAOVER  2.1.6
-%define CIAOVER 1.1.6
+%define ACEVER  6.1.4
+%define TAOVER  2.1.4
+%define CIAOVER 1.1.4
 
 # Conditional build
 # Default values are
@@ -1916,7 +1916,6 @@ fi
 %exclude %{_includedir}/ace/XtReactor/XtReactor.h
 %exclude %{_includedir}/ace/XtReactor/ACE_XtReactor_export.h
 %endif
-%exclude %{_libdir}/libACEXML*.so
 
 %doc AUTHORS
 %doc COPYING
@@ -2166,8 +2165,6 @@ fi
 %defattr(-,root,root,-)
 %{_datadir}/tao
 %exclude %{_datadir}/tao/MPC
-%exclude %{_datadir}/tao/tao
-%exclude %{_datadir}/tao/orbsvcs
 
 %{_libdir}/libTAO*.so.%{TAOVERSO}
 

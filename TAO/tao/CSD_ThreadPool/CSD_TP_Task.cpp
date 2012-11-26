@@ -45,11 +45,11 @@ TAO::CSD::TP_Task::add_request(TP_Request* request)
 
 
 int
-TAO::CSD::TP_Task::open(void* num_threads_ptr)
+TAO::CSD::TP_Task::open(void* args)
 {
   Thread_Counter num = 1;
 
-  Thread_Counter* tmp = static_cast<Thread_Counter*> (num_threads_ptr);
+  Thread_Counter* tmp = static_cast<Thread_Counter*> (args);
 
   if (tmp == 0)
     {

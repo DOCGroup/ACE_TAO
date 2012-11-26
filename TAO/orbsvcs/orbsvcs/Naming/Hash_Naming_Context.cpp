@@ -97,10 +97,6 @@ TAO_Hash_Naming_Context::get_context (const CosNaming::Name &name)
 void
 TAO_Hash_Naming_Context::bind (const CosNaming::Name& n, CORBA::Object_ptr obj)
 {
-  ACE_GUARD_THROW_EX (TAO_SYNCH_RECURSIVE_MUTEX,
-                      ace_mon, this->lock_,
-                      CORBA::INTERNAL ());
-
   // Check to make sure this object didn't have <destroy> method
   // invoked on it.
   if (this->destroyed_)
@@ -136,6 +132,10 @@ TAO_Hash_Naming_Context::bind (const CosNaming::Name& n, CORBA::Object_ptr obj)
   // If we received a simple name, we need to bind it in this context.
   else
     {
+      ACE_GUARD_THROW_EX (TAO_SYNCH_RECURSIVE_MUTEX,
+                          ace_mon, this->lock_,
+                          CORBA::INTERNAL ());
+
       // Try binding the name.
       int result = this->context_->bind (n[0].id,
                                         n[0].kind,
@@ -154,10 +154,6 @@ void
 TAO_Hash_Naming_Context::rebind (const CosNaming::Name& n,
                                  CORBA::Object_ptr obj)
 {
-  ACE_GUARD_THROW_EX (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon,
-                      this->lock_,
-                      CORBA::INTERNAL ());
-
   // Check to make sure this object didn't have <destroy> method
   // invoked on it.
   if (this->destroyed_)
@@ -194,6 +190,10 @@ TAO_Hash_Naming_Context::rebind (const CosNaming::Name& n,
     // If we received a simple name, we need to rebind it in this
     // context.
     {
+      ACE_GUARD_THROW_EX (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon,
+                          this->lock_,
+                          CORBA::INTERNAL ());
+
       int result = this->context_->rebind (n[0].id,
                                            n[0].kind,
                                            obj,
@@ -212,10 +212,6 @@ void
 TAO_Hash_Naming_Context::bind_context (const CosNaming::Name &n,
                                        CosNaming::NamingContext_ptr nc)
 {
-  ACE_GUARD_THROW_EX (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon,
-                      this->lock_,
-                      CORBA::INTERNAL ());
-
   // Check to make sure this object didn't have <destroy> method
   // invoked on it.
   if (this->destroyed_)
@@ -255,6 +251,10 @@ TAO_Hash_Naming_Context::bind_context (const CosNaming::Name &n,
   // If we received a simple name, we need to bind it in this context.
   else
     {
+      ACE_GUARD_THROW_EX (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon,
+                          this->lock_,
+                          CORBA::INTERNAL ());
+
       // Try binding the name.
       int result = this->context_->bind (n[0].id,
                                         n[0].kind,
@@ -273,10 +273,6 @@ void
 TAO_Hash_Naming_Context::rebind_context (const CosNaming::Name &n,
                                          CosNaming::NamingContext_ptr nc)
 {
-  ACE_GUARD_THROW_EX (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon,
-                      this->lock_,
-                      CORBA::INTERNAL ());
-
   // Check to make sure this object didn't have <destroy> method
   // invoked on it.
   if (this->destroyed_)
@@ -314,6 +310,10 @@ TAO_Hash_Naming_Context::rebind_context (const CosNaming::Name &n,
     // If we received a simple name, we need to rebind it in this
     // context.
     {
+      ACE_GUARD_THROW_EX (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon,
+                          this->lock_,
+                          CORBA::INTERNAL ());
+
       int result = this->context_->rebind (n[0].id,
                                            n[0].kind,
                                            nc,
@@ -332,9 +332,6 @@ TAO_Hash_Naming_Context::rebind_context (const CosNaming::Name &n,
 CORBA::Object_ptr
 TAO_Hash_Naming_Context::resolve (const CosNaming::Name& n)
 {
-  ACE_GUARD_THROW_EX (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon, this->lock_,
-                      CORBA::INTERNAL ());
-
   // Check to make sure this object didn't have <destroy> method
   // invoked on it.
   if (this->destroyed_)
@@ -355,14 +352,16 @@ TAO_Hash_Naming_Context::resolve (const CosNaming::Name& n)
   // Stores the object reference bound to the first name component.
   CORBA::Object_var result;
 
-  if (this->context_->find (n[0].id,
-                            n[0].kind,
-                            result.out (),
-                            type) == -1)
-    throw CosNaming::NamingContext::NotFound(
-      CosNaming::NamingContext::missing_node,
-      n);
-
+  {
+    ACE_GUARD_THROW_EX (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon, this->lock_,
+                        CORBA::INTERNAL ());
+    if (this->context_->find (n[0].id,
+                              n[0].kind,
+                              result.out (),
+                              type) == -1)
+      throw CosNaming::NamingContext::NotFound
+        (CosNaming::NamingContext::missing_node, n);
+  }
   // If the name we have to resolve is a compound name, we need to
   // resolve it recursively.
   if (name_len > 1)
@@ -410,11 +409,25 @@ TAO_Hash_Naming_Context::resolve (const CosNaming::Name& n)
             }
           catch (const CORBA::SystemException&)
             {
-              throw CosNaming::NamingContext::CannotProceed(
-                context.in (), rest_of_name);
+              throw CosNaming::NamingContext::CannotProceed
+                (context.in (), rest_of_name);
             }
         }
     }
+  else
+    {
+      ACE_GUARD_THROW_EX (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon,
+                          this->lock_,
+                          CORBA::INTERNAL ());
+
+      if (this->context_->find (n[0].id,
+                                n[0].kind,
+                                result.out (),
+                                type) == -1)
+        throw CosNaming::NamingContext::NotFound
+          (CosNaming::NamingContext::missing_node, n);
+    }
+
   // If the name we had to resolve was simple, we just need to return
   // the result.
   return result._retn ();
@@ -423,10 +436,6 @@ TAO_Hash_Naming_Context::resolve (const CosNaming::Name& n)
 void
 TAO_Hash_Naming_Context::unbind (const CosNaming::Name& n)
 {
-  ACE_GUARD_THROW_EX (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon,
-                      this->lock_,
-                      CORBA::INTERNAL ());
-
   // Check to make sure this object didn't have <destroy> method
   // invoked on it.
   if (this->destroyed_)
@@ -463,20 +472,21 @@ TAO_Hash_Naming_Context::unbind (const CosNaming::Name& n)
   // If we received a simple name, we need to unbind it in this
   // context.
   else
-    if (this->context_->unbind (n[0].id,
-                                n[0].kind) == -1)
-      throw CosNaming::NamingContext::NotFound(
-        CosNaming::NamingContext::missing_node, n);
+    {
+      ACE_GUARD_THROW_EX (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon,
+                          this->lock_,
+                          CORBA::INTERNAL ());
+
+      if (this->context_->unbind (n[0].id,
+                                  n[0].kind) == -1)
+        throw CosNaming::NamingContext::NotFound
+          (CosNaming::NamingContext::missing_node, n);
+    }
 }
 
 CosNaming::NamingContext_ptr
 TAO_Hash_Naming_Context::bind_new_context (const CosNaming::Name& n)
 {
-  ACE_GUARD_THROW_EX (TAO_SYNCH_RECURSIVE_MUTEX,
-                      ace_mon,
-                      this->lock_,
-                      CORBA::INTERNAL ());
-
   // Check to make sure this object didn't have <destroy> method
   // invoked on it.
   if (this->destroyed_)
@@ -506,16 +516,15 @@ TAO_Hash_Naming_Context::bind_new_context (const CosNaming::Name& n)
   // If we received a simple name, we need to bind it in this context.
 
   // Stores our new Naming Context.
-  CosNaming::NamingContext_var result =
-    CosNaming::NamingContext::_nil ();
+  CosNaming::NamingContext_var result = CosNaming::NamingContext::_nil ();
 
   // Create new context.
-  result = new_context ();
+  result = this->new_context ();
 
   // Bind the new context to the name.
   try
     {
-      bind_context (n, result.in ());
+      this->bind_context (n, result.in ());
     }
   catch (const CORBA::Exception&)
     {
@@ -540,11 +549,6 @@ TAO_Hash_Naming_Context::bind_new_context (const CosNaming::Name& n)
 void
 TAO_Hash_Naming_Context::destroy (void)
 {
-  ACE_GUARD_THROW_EX (TAO_SYNCH_RECURSIVE_MUTEX,
-                      ace_mon,
-                      this->lock_,
-                      CORBA::INTERNAL ());
-
   // Check to make sure this object didn't have <destroy> method
   // invoked on it.
   if (this->destroyed_)

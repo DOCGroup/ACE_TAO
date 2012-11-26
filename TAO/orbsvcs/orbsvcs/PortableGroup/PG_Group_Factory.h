@@ -98,6 +98,11 @@ namespace TAO
     groups_at_location (
         const PortableGroup::Location & the_location);
 
+    /**
+     * return all groups in the factory
+     */
+    PortableGroup::ObjectGroups *
+    all_groups (void);
 
 
     /**
@@ -125,6 +130,12 @@ namespace TAO
      * @return bool true if found
      */
     int find_group (PortableGroup::ObjectGroup_ptr object_group, ::TAO::PG_Object_Group *& group) const;
+
+    /**
+     * find group with the property with the designated value
+     * @return bool true if found
+     */
+    int find_group_with_name (const char* group_name, ::TAO::PG_Object_Group *& group);
 
     /**
      * remove group from map and delete it.

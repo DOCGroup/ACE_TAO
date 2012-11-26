@@ -82,7 +82,8 @@ TAO::TypeCode::Objref<StringType,
 {
   TAO_TypeCodeFactory_Adapter * const adapter =
     ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
-        TAO_ORB_Core::typecodefactory_adapter_name ());
+        TAO_ORB_Core::typecodefactory_adapter_name ()
+      );
 
   if (adapter == 0)
     {

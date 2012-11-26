@@ -16,6 +16,7 @@
 #include "orbsvcs/PortableGroupC.h"
 #include "orbsvcs/PortableGroup/PG_Object_Group.h"
 #include <orbsvcs/PortableGroup/PG_Utils.h>
+#include <ace/SString.h>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -155,6 +156,32 @@ int TAO::PG_Group_Factory::find_group (PortableGroup::ObjectGroup_ptr object_gro
   return result;
 }
 
+int TAO::PG_Group_Factory::find_group_with_name (const char* target_group_name,
+                                                 TAO::PG_Object_Group *& group_target)
+{
+  int result = 0;
+
+  // Search through the group map for the group with that property
+  for (Group_Map_Iterator it = this->group_map_.begin ();
+    it != this->group_map_.end ();
+    ++it)
+  {
+    TAO::PG_Object_Group * a_group = (*it).int_id_;
+    // If the group has the group name in the property
+    //
+    const char* a_group_name = a_group->get_name ();
+    if (a_group_name != 0 &&
+        ACE_OS::strcmp (target_group_name,
+                        a_group_name) == 0)
+      { // This is the group we were looking for
+        group_target = a_group;
+        result = 1;
+        break;
+      }
+  }
+  return result;
+}
+
 int TAO::PG_Group_Factory::destroy_group (PortableGroup::ObjectGroupId group_id)
 {
   ::TAO::PG_Object_Group * group = 0;
@@ -199,6 +226,32 @@ TAO::PG_Group_Factory::groups_at_location (
       (*result)[group_count] = group->reference ();
       ++group_count;
     }
+  }
+  result->length (group_count);
+  return result;
+}
+
+PortableGroup::ObjectGroups *
+TAO::PG_Group_Factory::all_groups (void)
+{
+
+  size_t upper_limit = this->group_map_.current_size ();
+  PortableGroup::ObjectGroups * result = 0;
+  ACE_NEW_THROW_EX (
+    result,
+    PortableGroup::ObjectGroups (upper_limit),
+    CORBA::NO_MEMORY());
+
+  result->length(upper_limit);
+
+  size_t group_count = 0;
+  for (Group_Map_Iterator it = this->group_map_.begin ();
+    it != this->group_map_.end ();
+    ++it)
+  {
+    TAO::PG_Object_Group * group = (*it).int_id_;
+    (*result)[group_count] = CORBA::Object::_duplicate(group->reference ());
+    ++group_count;
   }
   result->length (group_count);
   return result;

@@ -11,7 +11,7 @@
 #       Library versioning
 #---------------------------------------------------------------------------
 
-ifneq ($(versioned_so),0)
+ifeq ($(versioned_so),1)
   # Turn on symbol versioning. The scheme that we follow is to allow
   # applications dependent on libraries, with same version numbers (major,
   # minor and beta) to run, but applications with dependencies on libraries
@@ -20,27 +20,13 @@ ifneq ($(versioned_so),0)
   # Version number of the libraries
   #
   ifeq ($(SOVERSION),)
-    ifeq ($(versioned_so),1)
-      SOVERSION = .$(GNUACE_PROJECT_VERSION)
-    else
-      ifeq ($(versioned_so),2)
-        SOVERSION = -$(GNUACE_PROJECT_VERSION)
-      else
-        $(error unknown value for versioned_so: $(versioned_so))
-      endif
-    endif
+    SOVERSION = .$(GNUACE_PROJECT_VERSION)
   endif # SOVERSION
 
   # Name that will be written into the dynamic library
   #
   ifeq ($(SONAME),)
-    ifeq ($(versioned_so),1)
-      SONAME = $(SHLIB)$(SOVERSION)
-    else 
-      ifeq ($(versioned_so),2)
-        SONAME = $(patsubst %.$(SOEXT),%,$(SHLIB))$(SOVERSION).$(SOEXT)
-      endif
-    endif
+    SONAME = $(SHLIB)$(SOVERSION)
   endif # SONAME
 endif # versioned_so
 
@@ -61,15 +47,9 @@ SHLIB ?=
 # Setup shared library variables, including versions.
 VSHLIB_NO_VER = $(ARCH_SHLIB:%.$(SOEXT)=%$(VAR).$(SOEXT))
 CLEANUP_VSHLIB_NO_VER = $(CLEANUP_SHLIB:%.$(SOEXT)=%$(VAR).$(SOEXT))
-ifneq ($(versioned_so),2)
-  VSHLIB = $(VSHLIB_NO_VER:%=%$(SOVERSION))
-  CLEANUP_VSHLIB = $(CLEANUP_VSHLIB_NO_VER:%=%$(SOVERSION))
-  SHLIB_WITH_VER = $(SHLIB:%=%$(SOVERSION))
-else
-  VSHLIB = $(patsubst %.$(SOEXT),%,$(VSHLIB_NO_VER))$(SOVERSION).$(SOEXT)
-  CLEANUP_VSHLIB = $(patsubst %.$(SOEXT),%,$(CLEANUP_VSHLIB_NO_VER))$(SOVERSION).$(SOEXT)
-  SHLIB_WITH_VER = $(patsubst %.$(SOEXT),%,$(SHLIB))$(SOVERSION).$(SOEXT)
-endif
+VSHLIB = $(VSHLIB_NO_VER:%=%$(SOVERSION))
+CLEANUP_VSHLIB = $(CLEANUP_VSHLIB_NO_VER:%=%$(SOVERSION))
+SHLIB_WITH_VER = $(SHLIB:%=%$(SOVERSION))
 
 SHLIBA ?=
 VSHLIBA = $(ARCH_SHLIBA:%.$(LIBEXT)=%$(VAR).$(LIBEXT))

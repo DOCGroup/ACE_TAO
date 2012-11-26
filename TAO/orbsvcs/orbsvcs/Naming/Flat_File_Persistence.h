@@ -15,13 +15,14 @@
 
 #include "orbsvcs/Naming/Storable.h"
 #include "ace/OS_NS_stdio.h"
+#include "orbsvcs/Naming/naming_serv_export.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 //------------------------------------------------------------------------
 // The Flat File concrete classes
 //------------------------------------------------------------------------
-class TAO_NS_FlatFileStream : public TAO_Storable_Base
+class TAO_Naming_Serv_Export TAO_NS_FlatFileStream : public TAO_Storable_Base
 {
 public:
 
@@ -73,6 +74,12 @@ public:
   virtual TAO_Storable_Base& operator >> (
               TAO_NS_Persistence_Global& global);
 
+  virtual TAO_Storable_Base& operator << (
+		      	  const ACE_CString& str);
+
+  virtual TAO_Storable_Base& operator >> (
+              ACE_CString& str);
+
 private:
   ACE_OS::ace_flock_t filelock_;
   FILE* fl_;
@@ -80,7 +87,7 @@ private:
   ACE_CString mode_;
 };
 
-class TAO_NS_FlatFileFactory : public TAO_Naming_Service_Persistence_Factory
+class TAO_Naming_Serv_Export TAO_NS_FlatFileFactory : public TAO_Naming_Service_Persistence_Factory
 {
 public:
   // Factory Methods

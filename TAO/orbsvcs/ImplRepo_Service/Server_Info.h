@@ -42,7 +42,7 @@ struct Server_Info
     );
 
   /// Convert to the corba type
-  ImplementationRepository::ServerInformation* createImRServerInfo(void);
+  ImplementationRepository::ServerInformation* createImRServerInfo(void) const;
 
   void reset();
 

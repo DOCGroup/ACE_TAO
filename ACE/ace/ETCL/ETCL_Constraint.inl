@@ -309,7 +309,6 @@ ETCL_Binary_Expr::lhs (void) const
 
 ACE_INLINE
 ETCL_Preference::ETCL_Preference (void)
-  : subexpr_ (0)
 {}
 
 ACE_INLINE

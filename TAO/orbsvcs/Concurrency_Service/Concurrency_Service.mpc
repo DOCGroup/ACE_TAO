@@ -3,8 +3,4 @@
 
 project : orbsvcsexe, install, concurrency_serv, naming, utils, svc_utils {
   exename  = tao_cosconcurrency
-  InstallData_Files {
-    gendir = .
-    README
-  }
 }

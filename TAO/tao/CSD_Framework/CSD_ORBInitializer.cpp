@@ -8,10 +8,9 @@
 #include "tao/debug.h"
 
 static const ACE_TCHAR csd_poa_factory_directive[] =
-  ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE(
+  ACE_DYNAMIC_SERVICE_DIRECTIVE(
     "TAO_CSD_Object_Adapter_Factory",
     "TAO_CSD_Framework",
-    TAO_VERSION,
     "_make_TAO_CSD_Object_Adapter_Factory",
     "");
 

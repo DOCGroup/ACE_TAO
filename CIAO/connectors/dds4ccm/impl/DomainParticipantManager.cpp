@@ -151,11 +151,6 @@ namespace CIAO
       ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, _guard,
                       this->dps_mutex_, CORBA::INTERNAL ());
 
-      if (::CORBA::is_nil (dp))
-        {
-          return false;
-        }
-
       std::string profile;
       if (qos_profile)
         {
@@ -185,7 +180,7 @@ namespace CIAO
           DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
                         "DomainParticipantManager::register_participant - "
                         "Added a new DomainParticipant "
-                        "for domain <%d> with profile <%C> handle "
+                        "for domain <%d> with profile<%C> handle "
                         DDS_ENTITY_FORMAT_SPECIFIER ".\n",
                         domain_id, qos_profile,
                         DDS_ENTITY_LOG (dp)));
@@ -214,11 +209,6 @@ namespace CIAO
       ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, _guard,
                       this->dps_mutex_, CORBA::INTERNAL ());
 
-      if (::CORBA::is_nil (dp))
-        {
-          return false;
-        }
-
       std::string profile;
       if (qos_profile)
         {
@@ -235,10 +225,9 @@ namespace CIAO
                             "DomainParticipantManager::unregister_participant - "
                             "Delete participant "
                             DDS_ENTITY_FORMAT_SPECIFIER
-                            " for domain <%d> with profile <%C> since ref_count is one.\n",
+                            " for domain <%d> since ref_count is one.\n",
                             DDS_ENTITY_LOG (dp),
-                            domain_id,
-                            qos_profile));
+                            domain_id));
               delete iter->second;
 
               // Save to remove from list
@@ -250,11 +239,10 @@ namespace CIAO
                             "DomainParticipantManager::unregister_participant - "
                             "Don't delete participant "
                             DDS_ENTITY_FORMAT_SPECIFIER
-                            " for domain <%d> with profile <%C> since "
+                            " for domain <%d> since "
                             "it's still used - ref_count is <%d>\n",
                             DDS_ENTITY_LOG (dp),
                             domain_id,
-                            qos_profile,
                             iter->second->_ref_count ()));
               iter->second->_dec_ref ();
               return false;

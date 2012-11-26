@@ -1,0 +1,1440 @@
+Sun Nov 25 15:27:16 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
+
+        * orbsvcs/Naming_Service/Naming_Service.cpp:
+        
+          Fixed initialization order of data members.
+
+        * orbsvcs/orbsvcs/Naming/Storable.h:
+        
+          Added dll export for class.
+
+Sat Nov 24 21:48:11 UTC 2012  unknown  <unknown@>
+
+        * MPC/config/ft_naming_serv.mpb:
+
+          Add additional component.
+
+        * orbsvcs/Naming_Service/Naming_Service.cpp:
+
+          Fixed initialization order of data members.
+
+Fri Nov 23 23:47:50 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
+
+        * utils/nsgroup/README.nsgroup:
+
+        Updated documentation for group_bind and group_unbind options
+
+        * utils/nsgroup/run_test.pl:
+
+        Tied output redirection to debug command line option
+
+Fri Nov 23 14:57:58 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
+
+        * orbsvcs/tests/Simple_Naming/client.cpp:
+        * orbsvcs/tests/Simple_Naming/run_test_ft.pl:
+
+          Fixed test to clean out state on each run.  Cleaned up fuzz errors.
+
+Fri Nov 23 14:06:26 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
+
+        * bin/tao_other_tests.lst:
+        * orbsvcs/tests/Simple_Naming/run_test_ft.pl:
+
+          Added simple naming tests for FT_Naming.
+
+        * orbsvcs/orbsvcs/FtNaming.mpc:
+
+          Removed unnecessary elements.
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:
+
+          Removed printout to clean up error messages.
+
+Wed Nov 21 23:07:07 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/CSD_ThreadPool/CSD_TP_Task.h:
+        * tao/CSD_ThreadPool/CSD_TP_Task.cpp:
+
+          Rename the argument to open to reinforce the generic nature
+          of the single void * argument.
+
+        * tao/Dynamic_TP/Dynamic_TP_Config.cpp:
+        * tao/Dynamic_TP/Dynamic_TP_POA_Strategy.inl:
+
+          Minor scoreboard cleanup.
+
+        * tao/Dynamic_TP/Dynamic_TP_Task.h:
+        * tao/Dynamic_TP/Dynamic_TP_Task.cpp:
+        * tao/Dynamic_TP/Dynamic_TP_POA_Strategy.cpp:
+
+          Refactored the task open() signature to take a single void *
+          argument.  This is important to avoid generating a new
+          signature. Since the argument is a void*, a struct is used to
+          pass multiple discrete values. This should probably just use the
+          TP_Definition struct, rather than define something new.
+
+        * tests/Dynamic_TP/Config_Loader/Test.cpp:
+        * tests/Dynamic_TP/POA_Loader/Test.cpp:
+
+          Minor scoreboard cleanup.
+
+Wed Nov 21 23:20:54 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
+
+        * utils/nsgroup/nsgroup.cpp:
+        * utils/nsgroup/nsgroup_svc.cpp:
+
+          Updated header paths
+
+        * utils/nsgroup/run_test.pl:
+
+          Added support for showing output files upon error detection.
+
+Wed Nov 21 22:24:28 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
+
+        * orbsvcs/tests/Simple_Naming/run_test_ffp.pl:
+
+          Added tests for tao_ft_naming to the test suite.
+
+Wed Nov 21 20:46:58 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/Naming_Server.cpp:
+
+          Added documentation to describe why release is required.
+
+        * orbsvcs/orbsvcs/Naming/Naming_Service_File_Guard.h:
+
+          Added TAO_Naming_Serv_Export to support dll.
+
+Wed Nov 21 20:10:01 UTC 2012  Byron Harris  <harrisb@ociweb.com>
+
+        * orbsvcs/orbsvcs/CosNaming_Serv.mpc:
+        * orbsvcs/orbsvcs/Naming/Naming_Service_File_Guard.h:
+        * orbsvcs/orbsvcs/Naming/Naming_Service_File_Guard.cpp:
+
+          Added new class that's a more general version of
+          original File_Open_Lock_and_Check class so that
+          it can be used for other persistent data besides
+          contexts.
+
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.h:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp:
+
+          Changed File_Open_Lock_and_Check to derive from
+          Naming_Service_File_Guard and override pure virtual
+          functions as needed.
+
+        * orbsvcs/orbsvcs/Naming/Flat_File_Persistence.h:
+        * orbsvcs/orbsvcs/Naming/Flat_File_Persistence.cpp:
+        * orbsvcs/orbsvcs/Naming/Storable.h:
+
+          Added stream operator on strings in anticipation
+          of using these operators on some of the object
+          group elements. Udating existing stream operators
+          to use string operators.
+
+Wed Nov 21 20:03:03 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
+
+        * utils/nsgroup/run_test.pl:
+
+        Redirected output to files and more cleanup
+
+Wed Nov 21 18:19:17 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:
+        * orbsvcs/orbsvcs/Naming/Naming_Server.cpp:
+
+          Fixed bug in release of Activator.
+
+Wed Nov 21 16:35:28 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Config_Backing_Store.h:
+        * orbsvcs/ImplRepo_Service/Locator_Repository.h:
+        * orbsvcs/ImplRepo_Service/XML_Backing_Store.h:
+
+        * orbsvcs/Naming_Service/FT_Naming_Service.h:
+        * orbsvcs/Naming_Service/FT_Naming_Service.cpp:
+        * orbsvcs/Naming_Service/Naming_Service.h:
+        * orbsvcs/Naming_Service/Naming_Service.cpp:
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Replication_Manager.h:
+
+        * orbsvcs/orbsvcs/Naming/Naming_Context_Factory.h:
+        * orbsvcs/orbsvcs/Naming/Naming_Server.h:
+        * orbsvcs/orbsvcs/Naming/Naming_Server.cpp:
+        * orbsvcs/orbsvcs/Naming/Persistent_Context_Index.cpp:
+        * orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.h:
+        * orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.cpp:
+        * orbsvcs/orbsvcs/Naming/Persistent_Naming_Context_Factory.h:
+        * orbsvcs/orbsvcs/Naming/Persistent_Naming_Context_Factory.cpp:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context_Activator.cpp:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context_Factory.h:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context_Factory.cpp:
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_Factory.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Property_Set.cpp:
+
+        * orbsvcs/tests/FT_Naming/Load_Balancing/Basic.h:
+        * orbsvcs/tests/FT_Naming/Load_Balancing/LB_server.cpp:
+
+        * orbsvcs/tests/FT_Naming/Load_Balancing/NameService/README:
+
+        * orbsvcs/tests/FT_Naming/Load_Balancing/client.cpp:
+        * orbsvcs/tests/FT_Naming/Load_Balancing/run_test.pl:
+        * orbsvcs/tests/FT_Naming/Load_Balancing/server.cpp:
+
+        * orbsvcs/tests/ImplRepo/RestartServer/README:
+        * orbsvcs/tests/ImplRepo/RestartServer/Terminator.cpp:
+
+        * orbsvcs/tests/ImplRepo/run_test.pl:
+
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Dynamic/server.cpp:
+
+        * tests/Dynamic_TP/POA_Loader/Test.cpp:
+
+        * tests/Var_Deref/README.txt:
+
+          More unfuzzing.
+
+Wed Nov 21 13:35:40 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Replication_Manager.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:
+
+          Fixed compilation errors.
+
+Wed Nov 21 06:16:58 UTC 2012  Phil Mesnier  <mesnier_p@local>
+
+        * tao/Dynamic_TP/Dynamic_TP_Config.h:
+        * tao/Dynamic_TP/Dynamic_TP_POA_Strategy.h:
+        * tao/Dynamic_TP/Dynamic_TP_POA_Strategy.inl:
+        * tao/Dynamic_TP/Dynamic_TP_POA_StrategyImpl.h:
+        * tao/Dynamic_TP/Dynamic_TP_POA_StrategyImpl.inl:
+        * tao/Dynamic_TP/Dynamic_TP_POA_StrategyImpl.cpp:
+        * tao/Dynamic_TP/Dynamic_TP_Task.h:
+        * tao/Dynamic_TP/Dynamic_TP_Task.inl:
+        * tao/Dynamic_TP/Dynamic_TP_Task.cpp:
+
+          Fuzz fixes.
+
+Wed Nov 21 04:42:24 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_NamingReplication.idl:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Replication_Manager.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Replication_Manager.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Persistent_Naming_Context.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Persistent_Naming_Context.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Persistent_Naming_Context_Factory.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Persistent_Naming_Context_Factory.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Round_Robin.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context_Factory.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context_Factory.cpp:
+
+          Fixed to resolve fuzz issues.
+
+        * utils/nsgroup/run_test.pl:
+
+          Modified argument to tao_nslist, tao_nsadd passing in the IOR for
+          the naming service.
+
+Wed Nov 21 02:40:16 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/Storable.h:
+
+          Added TAO_Naming_Serv_Export to TAO_Naming_Service_Persistence_Factory.
+
+Wed Nov 21 02:30:08 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Replication_Manager.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Replication_Manager.cpp:
+
+          Added files to implement the replication interface.
+
+Wed Nov 21 01:32:17 UTC 2012  "Marc Neeley"  <neeleym@ociweb.com>
+
+        * tao/Dynamic_TP/Dynamic_TP_Config.h:
+
+          created constructor in TAO_DTP_Definition struct
+
+        * tao/Dynamic_TP/Dynamic_TP_Config.cpp:
+
+          removed conflicting constructor
+
+        * tao/Dynamic_TP/Dynamic_TP_POA_Loader.cpp:
+
+          removed unnecessary include
+
+        * tao/Dynamic_TP/Dynamic_TP_POA_Strategy.h:
+        * tao/Dynamic_TP/Dynamic_TP_POA_Strategy.inl:
+        * tao/Dynamic_TP/Dynamic_TP_POA_Strategy.cpp:
+        * tao/Dynamic_TP/Dynamic_TP_POA_StrategyImpl.h:
+        * tao/Dynamic_TP/Dynamic_TP_POA_StrategyImpl.inl:
+        * tao/Dynamic_TP/Dynamic_TP_POA_StrategyImpl.cpp:
+        * tao/Dynamic_TP/Dynamic_TP_Task.h:
+        * tao/Dynamic_TP/Dynamic_TP_Task.inl:
+        * tao/Dynamic_TP/Dynamic_TP_Task.cpp:
+
+          completed StrategyImpl initialization started the delegation
+          functions; this needs a lot of dependency removal from CSD_Task.
+
+Tue Nov 20 23:42:31 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/CSD_Framework/CSD_ORBInitializer.h:
+
+          added class visibility token.
+
+        * tao/Dynamic_TP/Dynamic_TP_ORBInitializer.h:
+        * tao/Dynamic_TP/Dynamic_TP_ORBInitializer.cpp:
+        * tao/Dynamic_TP/Dynamic_TP_ORB_Loader.cpp:
+        * tao/Dynamic_TP/Dynamic_TP_POA_Loader.cpp:
+
+          Fuzz and other clean up.
+
+Tue Nov 20 22:44:07 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
+
+        * utils/nsgroup/run_test.pl:
+
+        Corrected type_id string passed in test
+
+Tue Nov 20 22:42:06 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
+
+        * ChangeLog:
+
+        * MPC/config/ft_naming_serv.mpb:
+        * orbsvcs/Naming_Service/Naming_Service.mpc:
+        * orbsvcs/orbsvcs/FtNaming.mpc:
+
+          Support building FT Naming Service with replication.
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_NamingReplication.idl:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Serv.mpc:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context_Factory.cpp:
+        * orbsvcs/orbsvcs/Naming/Persistent_Naming_Context_Factory.cpp:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context_Activator.cpp:
+
+          Functionality to support Replication interface between naming
+          service instances.
+
+Tue Nov 20 19:32:12 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
+
+        * utils/nsgroup/nsgroup.mpc:
+
+        Added $ID
+
+        * utils/nsgroup/nsgroup_svc.h:
+        * utils/nsgroup/nsgroup_svc.cpp:
+
+        Changed group_bind and group_unbind to use the NamingContextExt
+        interface to properly convert stringified names to compound names.
+
+        * utils/nsgroup/run_test.pl:
+
+        Add calls to tao_nslist, tao_nsadd and tao_nsdel to augment name
+        service verification.
+
+Tue Nov 20 15:05:32 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/Hash_Naming_Context.cpp:
+
+          While refactoring the lock utilization, I inadvertently removed
+          a critical section from the resolve() implementation. That's been
+          restored.
+
+Mon Nov 19 22:33:49 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/CSD_Framework/CSD_Framework_Loader.cpp:
+
+          The loader was incorrectly introducing a dependency on the
+          TAO_CSD_ThreadPool library. This is wrong because the latter
+          is but one possible implementation for the framework.
+
+        * tao/CSD_ThreadPool/CSD_TP_Strategy_Factory.cpp:
+        * tao/CSD_ThreadPool/CSD_ThreadPool.h:
+        * tao/CSD_ThreadPool/CSD_ThreadPool.cpp:
+
+          Have the CSD_Threadpool properly initialize the framework,
+          rather than vice versa. Also, cleaned up the parameter parsing to
+          be a little more efficient.
+
+        * tao/Dynamic_TP/Dynamic_TP.mpc:
+        * tao/Dynamic_TP/Dynamic_TP_ORBInitializer.cpp:
+        * tao/Dynamic_TP/Dynamic_TP_ORB_Loader.cpp:
+        * tao/Dynamic_TP/Dynamic_TP_POA_Loader.h:
+        * tao/Dynamic_TP/Dynamic_TP_POA_Loader.cpp:
+
+          Sorted out the initialization of POAs with threadpools declared
+          via service configuration. The key was to actually initialize the
+          CSD_Strategy_Repository prior to inserting any strategy instances.
+
+          Also removed a dependency on RTCORBA. This dependency was causing
+          the RT POA factory name to be loaded after the CSD POA factory name
+          which in turn disabled the creation of CSD POAs.
+
+        * tests/Dynamic_TP/POA_Loader/Test.cpp:
+
+          The test seemed to have a typo.
+
+Mon Nov 19 22:27:44 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/Naming_Service/README:
+
+          Add documentation of the -n command line argument used for thread
+          pooling. Also, sort out the parmaters description so they are ordered
+          alphabetically.
+
+        * orbsvcs/orbsvcs/Naming/Hash_Naming_Context.cpp:
+
+          Refactored the thread acquisition so that the context is locked
+          only when the  local store is going to be modified, not if another
+          repository is to be upated.
+
+Mon Nov 19 18:00:27 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
+
+        * orbsvcs/orbsvcs/CosNaming_Serv.mpc:
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context_Factory.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context_Factory.cpp:
+        * orbsvcs/orbsvcs/Naming/Naming_Server.cpp:
+        * orbsvcs/orbsvcs/Naming/Persistent_Naming_Context_Factory.h:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context_Activator.h:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context_Activator.cpp:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context_Factory.h:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context_Factory.cpp:
+        * orbsvcs/orbsvcs/cosnaming_serv_persistence.mpb:
+
+          Added support for Abstract factory to create Storable Naming Contexts.
+          This enables the overriding of the resolve operation in support of
+          load balancing.
+
+
+        * orbsvcs/tests/FT_Naming/Load_Balancing/LB_server.cpp:
+        * orbsvcs/tests/FT_Naming/Load_Balancing/server.cpp:
+
+          Updated test internals to return 0 on success.
+
+        * orbsvcs/tests/FT_Naming/Load_Balancing/README:
+          Updated README to more correctly describe the test being performed.
+
+        * orbsvcs/tests/FT_Naming/Load_Balancing/NameService:
+        * orbsvcs/tests/FT_Naming/Load_Balancing/NameService/README:
+          Created directory to store the NameService state when using the
+          -u option.
+
+Mon Nov 19 16:46:05 UTC 2012  Brian Johnson  <johnsonb@ociweb.com>
+
+        * bin/tao_other_tests.lst:
+
+          Added ImR persistance tests for hash and shared backing stores.
+
+        * orbsvcs/ImplRepo_Service/Locator_Repository.h:
+        * orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
+
+          Refactored xml, heap, and registry backing store code into a virtual
+          interface.
+
+        * orbsvcs/ImplRepo_Service/Config_Backing_Store.h:
+        * orbsvcs/ImplRepo_Service/Config_Backing_Store.cpp:
+
+          Refactored out Locator_Repository REPO_HEAP and REPO_REGISTRY code.
+
+        * orbsvcs/ImplRepo_Service/XML_Backing_Store.h:
+        * orbsvcs/ImplRepo_Service/XML_Backing_Store.cpp:
+
+          Refactored out Locator_Repository REPO_XML_FILE code.
+
+        * orbsvcs/ImplRepo_Service/Shared_Backing_Store.h:
+        * orbsvcs/ImplRepo_Service/Shared_Backing_Store.cpp:
+
+          Added handling for a shared xml files backing store.
+          (this will eventually have file locking)
+
+        * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
+
+          Added new xxx_Backin_Store.cpp files.
+
+        * orbsvcs/ImplRepo_Service/Locator_Options.h:
+        * orbsvcs/ImplRepo_Service/Locator_Options.cpp:
+
+          Added "-y" flag to select shared xml files backing store.
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+
+        * orbsvcs/ImplRepo_Service/Locator_XMLHandler.h:
+        * orbsvcs/ImplRepo_Service/Locator_XMLHandler.cpp:
+
+          Refactored Locator_Repository Server_Repo_XML_Callback into Locator_XMLHandler.
+
+        * orbsvcs/ImplRepo_Service/Server_Info.h:
+        * orbsvcs/ImplRepo_Service/Server_Info.cpp:
+
+          Made const correct.
+
+        * orbsvcs/tests/ImplRepo/airplane_server_i.h:
+        * orbsvcs/tests/ImplRepo/airplane_server_i.cpp:
+
+          Added flag to provide the name the server should be registered under.
+
+        * orbsvcs/tests/ImplRepo/run_test.pl:
+
+          Added testing for heap and shared backing store persistence tests and added testing with multiple servers.
+
+        * tao/PortableServer/ServantRetentionStrategyNonRetain.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/Utils/FTEC_Gateway.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LeastLoaded.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LoadAverage.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LoadMinimum.cpp:
+
+          Fixed vc9 (express?) compiler errors.
+
+Mon Nov 19 13:54:58 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context.cpp:
+
+          Add support for -u option to support fault tolerance using separate
+          files per context.
+
+Sun Nov 18 16:03:28 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:
+
+          Add support for -u option to support fault tolerance using separate
+          files per context.  Simplified interface for object group creation.
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Persistent_Naming_Context.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Persistent_Naming_Context.cpp:
+
+          Removed unnecessary data member.
+
+        * orbsvcs/orbsvcs/Naming/Flat_File_Persistence.h:
+        * orbsvcs/orbsvcs/Naming/Naming_Server.cpp:
+        * orbsvcs/orbsvcs/Naming/Storable.h:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.h:
+
+          Suppport use from FT_Naming service.
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_Factory.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_Factory.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:
+
+          Simplify searching for object groups by name.
+
+
+Fri Nov 16 23:42:51 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
+
+        * utils/nsgroup/README.nsgroup:
+
+        Documents the nsgroup command line options
+
+        * utils/nsgroup/nsgroup.cpp:
+        * utils/nsgroup/nsgroup_svc.h:
+        * utils/nsgroup/nsgroup_svc.cpp:
+        * utils/nsgroup/run_test.pl:
+
+        Changed some option names to avoid potential conflict.
+        Added group_unbind to complement the group_bind command option.
+
+Fri Nov 16 17:19:32 UTC 2012  Byron Harris  <harrisb@ociweb.com>
+
+        * tao/Invocation_Retry_Params.h:
+        * tao/Invocation_Retry_Params.cpp:
+        * tao/Invocation_Retry_State.h:
+        * tao/Invocation_Retry_State.cpp:
+        * tao/ORB_Core.cpp:
+        * tao/Synch_Invocation.cpp:
+        * tao/default_client.cpp:
+        * tao/params.h:
+
+          Fixed an incorrect assumption I had about not
+          forwarding profiles when connection closed during
+          reading of server reply.
+
+        * orbsvcs/tests/ImplRepo/RestartServer/README:
+        * orbsvcs/tests/ImplRepo/RestartServer/run_test.pl:
+
+          Updated test to reflect changed name of option
+          based on fix above.
+
+        * docs/Options.html:
+
+          Describes the invocation retry command-line and
+          Client_Strategy_Factory service options.
+
+Fri Nov 16 16:28:08 UTC 2012  "Marc Neeley"  <neeleym@ociweb.com>
+
+        * tao/Dynamic_TP/Dynamic_TP_ORB_Loader.cpp:
+        * tao/Dynamic_TP/Dynamic_TP_POA_Loader.h:
+        * tao/Dynamic_TP/Dynamic_TP_POA_Loader.cpp:
+        * tao/Dynamic_TP/Dynamic_TP_POA_Strategy.h:
+        * tao/Dynamic_TP/Dynamic_TP_POA_Strategy.inl:
+        * tao/Dynamic_TP/Dynamic_TP_POA_Strategy.cpp:
+        * tao/Dynamic_TP/Dynamic_TP_POA_StrategyImpl.h:
+        * tao/Dynamic_TP/Dynamic_TP_POA_StrategyImpl.inl:
+        * tao/Dynamic_TP/Dynamic_TP_POA_StrategyImpl.cpp:
+        * tao/Dynamic_TP/Dynamic_TP_Task.h:
+        * tao/Dynamic_TP/Dynamic_TP_Task.inl:
+        * tao/Dynamic_TP/Dynamic_TP_Task.cpp:
+
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Dynamic:
+
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Dynamic/Dynamic_TP_POA_Test_Dynamic.mpc:
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Dynamic/Hello.h:
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Dynamic/Hello.cpp:
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Dynamic/Test.idl:
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Dynamic/client.cpp:
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Dynamic/server.cpp:
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Dynamic/svc.conf:
+
+        Inclusion of Dynamic Threadpool strategy to leverage CSD Framework. Associated tests included.
+        WARNING: this is an interim check-in and the tests are not working.
+
+Fri Nov 16 02:48:45 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
+
+        * utils/nsgroup/nsgroup_svc.cpp:
+
+        Fixed a spelling error in group_create error message.
+        Extended group_list description labels.
+
+Thu Nov 15 20:58:23 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/Stub.inl:
+        * tao/Stub.cpp:
+
+          There is a potential for a deadlock when a stub contains profiles
+          that are forwarded and also self-referencial. The use case which
+          exposed this involves the name service and the ImR. In this case,
+          the root context of a name service is registered with the ImR. This
+          is then added to a name service as a new context with a name and the
+          reference pointing to the ImR-ified context. When this new context
+          happens to be the local root context, a deadlock occurs.
+
+          The deadlock ie related to the Stub's profile_lock_, which is a simple
+          thread mutex. This patch addresses the deadlock by momentarily releasing
+          the lock before leaving the Stub code, then reaquiring upon return. This
+          works for my specific use case, but I have added temporary debugging in
+          case issues arise in nightly tests. I intend to remove the debugging
+          prior to formal integration with the main trunk.
+
+Thu Nov 15 23:15:33 UTC 2012  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.cpp:
+
+          Fixed bug in groups operation.
+
+Thu Nov 15 22:30:52 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
+
+        * bin/tao_other_tests.lst:
+
+        Added orbsvcs/tests/FT_Naming/Load_Balancing test
+        Added utils/nsgroup test
+
+Thu Nov 15 21:37:29 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
+
+        * orbsvcs/orbsvcs/FT_NamingManager.idl:
+
+        Changed LoadBalancingStrategyValue ACTIVE to LEAST
+
+        * utils/nsgroup/README.nsgroup:
+        * utils/nsgroup/nsgroup_svc.h:
+        * utils/nsgroup/nsgroup_svc.cpp:
+        * utils/nsgroup/run_test.pl:
+
+        Modified group_list to display groups by load strategy
+
+Thu Nov 15 19:16:32 UTC 2012  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * orbsvcs/tests/FT_Naming/Load_Balancing/run_test.pl:
+
+          Added test for the load balancing function of the FT_Naming_Service.
+
+Thu Nov 15 18:58:01 UTC 2012  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * orbsvcs/orbsvcs/FT_NamingManager.idl:
+
+          Updates to groups operation to allow it to request groups
+          with matching strategies.
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.cpp:
+
+          Implements the new groups operation. Fixes to object reference
+          duplication and leaks.
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_Factory.cpp:
+
+          Fixed bug in all_groups which did not duplicate the stored object
+          reference.
+
+        * orbsvcs/tests/FT_Naming/Load_Balancing/Basic.h:
+        * orbsvcs/tests/FT_Naming/Load_Balancing/Basic.cpp:
+        * orbsvcs/tests/FT_Naming/Load_Balancing/LB_server.cpp:
+        * orbsvcs/tests/FT_Naming/Load_Balancing/Test.idl:
+        * orbsvcs/tests/FT_Naming/Load_Balancing/client.cpp:
+
+          Modifications to support new signature for load balancing strategy
+          updates.
+
+Thu Nov 15 18:02:04 UTC 2012  Byron Harris  <harrisb@ociweb.com>
+
+        * tao/Invocation_Retry_State.h:
+        * tao/Invocation_Retry_State.cpp:
+
+          Added operations for getting next profile and
+          sleeping if at starting base profile.
+
+        * tao/Synch_Invocation.cpp:
+
+          Uses new Invocation_Retry_State operations. Beefed up
+          debug messages.
+
+        * tests/Multiple_Retry_Tests/Retry_On_Connection_Failure/Hello.h:
+        * tests/Multiple_Retry_Tests/Retry_On_Connection_Failure/Hello.cpp:
+        * tests/Multiple_Retry_Tests/Retry_On_Connection_Failure/Test.idl:
+        * tests/Multiple_Retry_Tests/Retry_On_Connection_Failure/client.cpp:
+        * tests/Multiple_Retry_Tests/Retry_On_Connection_Failure/run_test.pl:
+        * tests/Multiple_Retry_Tests/Retry_On_Connection_Failure/server.cpp:
+
+          Extend test to include oneway invocation.
+
+        * bin/tao_orb_tests.lst:
+
+          Added test for retry on connection failure for oneway call.
+
+Thu Nov 15 17:16:12 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
+
+        * utils/nsgroup/nsgroup_svc.cpp:
+
+        Cleaned up error messages
+
+        * utils/nsgroup/run_test.pl:
+
+        Added negative test for member_add
+
+Thu Nov 15 16:06:29 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
+
+        * utils/nsgroup/README.nsgroup:
+        * utils/nsgroup/nsgroup.cpp:
+        * utils/nsgroup/nsgroup_svc.h:
+        * utils/nsgroup/nsgroup_svc.cpp:
+
+        Implement group_modify and group_bind operations
+
+        * utils/nsgroup/run_test.pl:
+
+        Add support to positive and negative tests
+
+Thu Nov 15 13:39:11 UTC 2012  Byron Harris  <harrisb@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.cpp:
+
+          Fix GNU C++ compile error.
+
+Thu Nov 15 13:25:54 UTC 2012  Byron Harris  <harrisb@ociweb.com>
+
+        * tao/Synch_Invocation.cpp:
+
+          Correct indentation for
+          Synch_Oneway_Invocation::remote_oneway().
+
+Wed Nov 14 22:46:39 UTC 2012  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * orbsvcs/orbsvcs/FT_NamingManager.idl:
+
+          Added argument to create_object_group for the load balancing
+          strategy. Also added operation to change it dynamically without
+          having to use the property interface
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.cpp:
+
+          Support new constructor and manipulator for load balancing
+          strategy.
+
+        * orbsvcs/tests/FT_Naming/Load_Balancing/LB_server.cpp:
+        * orbsvcs/tests/FT_Naming/Load_Balancing/Basic.h:
+        * orbsvcs/tests/FT_Naming/Load_Balancing/Basic.cpp:
+
+          Use new operations for load balancing strategy.
+
+        * utils/nsgroup/nsgroup_svc.h:
+        * utils/nsgroup/nsgroup_svc.cpp:
+
+Wed Nov 14 21:47:28 UTC 2012  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * orbsvcs/orbsvcs/FT_NamingManager.idl:
+
+          NamingManager no longer inherits from the GenericFactory
+          interface, to ensure that names are provided for object
+          groups.
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.cpp:
+
+          If no load balancing strategy is provided, then default to
+          using ROUND_ROBIN.  Prevent warning for group state
+          distribution.
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:
+
+          Prevent warning for group state distribution.
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Property_Set.cpp:
+
+          Fixed bug in PG_Property_Set::set_property that
+          disallowed it from binding a new value when an existing
+          one was not present.
+
+        * orbsvcs/tests/FT_Naming/Load_Balancing/Basic.h:
+        * orbsvcs/tests/FT_Naming/Load_Balancing/Basic.cpp:
+        * orbsvcs/tests/FT_Naming/Load_Balancing/LB_server.cpp:
+        * orbsvcs/tests/FT_Naming/Load_Balancing/Test.idl:
+        * orbsvcs/tests/FT_Naming/Load_Balancing/client.cpp:
+
+          Updated tests to set new strategy value, and remove a group
+          member while running.
+
+Wed Nov 14 20:24:41 UTC 2012  Byron Harris  <harrisb@ociweb.com>
+
+        * tao/Invocation_Retry_Params.h:
+        * tao/Invocation_Retry_Params.cpp:
+        * tao/Invocation_Retry_State.h:
+        * tao/Invocation_Retry_State.cpp:
+        * tao/ORB_Core.cpp:
+        * tao/Synch_Invocation.cpp:
+        * tao/default_client.cpp:
+        * tao/params.h:
+        * tao/params.cpp:
+
+          Added new invocation parameter to indicate max
+          retries on reply connection closed and not base
+          max retries on comm failure limit. This is done
+          to treat retries on reply connection close
+          special since it could violate "at most once"
+          rule.
+
+        * orbsvcs/tests/ImplRepo/RestartServer/Messenger_i.h:
+        * orbsvcs/tests/ImplRepo/RestartServer/Messenger_i.cpp:
+        * orbsvcs/tests/ImplRepo/RestartServer/README:
+        * orbsvcs/tests/ImplRepo/RestartServer/run_test.pl:
+
+          Update test to account for using max retries on reply
+          connection closed.
+
+Wed Nov 14 16:08:57 UTC 2012  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Round_Robin.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Round_Robin.cpp:
+
+          Simplified algorithm for Round Robin assuming mostly static
+          group members.
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:
+
+          Fixed bug in locations_of_members.
+
+        * orbsvcs/tests/FT_Naming/Load_Balancing/Basic.h:
+        * orbsvcs/tests/FT_Naming/Load_Balancing/Basic.cpp:
+        * orbsvcs/tests/FT_Naming/Load_Balancing/LB_server.cpp:
+        * orbsvcs/tests/FT_Naming/Load_Balancing/client.cpp:
+
+          Updates to tests to better match the load balancing approach.
+
+        * orbsvcs/tests/FT_Naming/Load_Balancing/Load_Balancing_Name_Service.mpc:
+
+            Fix case of base project.
+
+Wed Nov 14 14:43:17 UTC 2012  Byron Harris  <harrisb@ociweb.com>
+
+        * tao/ORB_Core.cpp:
+        * tao/Synch_Invocation.cpp:
+        * tao/params.h:
+        * tao/params.inl:
+        * tao/params.cpp:
+
+          Removed flag I added indicating a forward-once-on-exception
+          parameter was set. It was used to short circuit a
+          large conditional but it always set and the conditional
+          is in error handling code so optimization isn't critical.
+
+Wed Nov 14 03:21:03 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
+
+        * utils/nsgroup/nsgroup_svc.cpp:
+        Changed output for member_show and member_list methods
+
+        * utils/nsgroup/run_test.pl:
+        Cleaned up tests
+
+Tue Nov 13 22:28:27 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Persistent_Naming_Context.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Round_Robin.h:
+
+          Fix initialization order to avoid warning. Make Round Robin strategy
+          destructor virtual.
+
+        * orbsvcs/tests/FT_Naming:
+        * orbsvcs/tests/FT_Naming/Load_Balancing:
+
+          Add new directories to hold tests for FT_NamingService
+
+        * orbsvcs/tests/FT_Naming/Load_Balancing/Basic.h:
+        * orbsvcs/tests/FT_Naming/Load_Balancing/Basic.cpp:
+        * orbsvcs/tests/FT_Naming/Load_Balancing/LB_server.h:
+        * orbsvcs/tests/FT_Naming/Load_Balancing/LB_server.cpp:
+        * orbsvcs/tests/FT_Naming/Load_Balancing/Load_Balancing_Name_Service.mpc:
+        * orbsvcs/tests/FT_Naming/Load_Balancing/README:
+        * orbsvcs/tests/FT_Naming/Load_Balancing/Test.idl:
+        * orbsvcs/tests/FT_Naming/Load_Balancing/client.cpp:
+        * orbsvcs/tests/FT_Naming/Load_Balancing/server.cpp:
+        * orbsvcs/tests/FT_Naming/Load_Balancing/svc.conf:
+        * orbsvcs/tests/FT_Naming/Load_Balancing/windows.conf:
+        * orbsvcs/tests/FT_Naming/Load_Balancing/windows.conf.xml:
+
+          Add tests for Load Balancing functionality of FT_Naming Service
+        * tao/Client_Strategy_Factory.h:
+
+          Change forward declaration type from class to struct to agree with definition.
+
+Tue Nov 13 22:11:17 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
+
+        * utils/nsgroup/README.nsgroup:
+
+          Updated to reflect changes
+
+        * utils/nsgroup/nsgroup.cpp:
+        * utils/nsgroup/nsgroup_svc.h:
+        * utils/nsgroup/nsgroup_svc.cpp:
+
+          Change signature for member_add, member_remove, and member_show to not use member string argument.
+
+        * utils/nsgroup/run_test.pl:
+
+          Updated tests
+
+        * utils/utils.mwc:
+          Added nsgroup
+
+Tue Nov 13 20:56:30 UTC 2012  Byron Harris  <harrisb@ociweb.com>
+
+        * tao/Client_Strategy_Factory.h:
+        * tao/Invocation_Retry_Params.h:
+        * tao/Invocation_Retry_Params.cpp:
+        * tao/Invocation_Retry_State.h:
+        * tao/Invocation_Retry_State.cpp:
+        * tao/default_client.h:
+        * tao/default_client.cpp:
+        * tao/params.h:
+        * tao/params.cpp:
+        * tao/tao.mpc:
+
+          Allow invocation retry params to be specified
+          using Client_Strategy_Factory definition in
+          service config file in addition to -ORB
+          command line parameters.
+
+        * orbsvcs/tests/ImplRepo/RestartServer/client.conf:
+        * orbsvcs/tests/ImplRepo/RestartServer/run_test.pl:
+
+          Update test to read a retry parameter from a
+          service config file.
+
+Mon Nov 12 23:05:55 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.cpp:
+
+          Catch exception when an invalid IOR is passed in for adding a member
+          to an object group.
+
+        * tao/Invocation_Retry_State.cpp:
+
+          Add missing include file.
+
+Mon Nov 12 21:35:01 UTC 2012  Byron Harris  <harrisb@ociweb.com>
+
+        * bin/tao_orb_tests.lst:
+        * bin/tao_other_tests.lst:
+
+          Added new invocation retry tests.
+
+        * orbsvcs/tests/ImplRepo/RestartServer/RestartServer.mpc:
+        * orbsvcs/tests/ImplRepo/RestartServer/Terminator.h:
+        * orbsvcs/tests/ImplRepo/RestartServer/Terminator.cpp:
+
+          Added missing files from test.
+
+        * tao/Synch_Invocation.cpp:
+
+          Added support for invocation reply if server sends
+          OBJECT_NOT_EXIST or INV_OBJREF exceptions.
+
+        * tests/Multiple_Retry_Tests/Retry_On_Reply_Failure/run_test.pl:
+
+          Added configs for OBJECT_NOT_EXIST and INV_OBJREF exceptions.
+
+Mon Nov 12 20:43:25 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
+
+        * orbsvcs/orbsvcs/FT_NamingManager.idl:
+
+          Add constants to support the creation of strategies.
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Location_Index_Map.h:
+
+          Add new type to maintain the strategy state data.
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Persistent_Naming_Context.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Persistent_Naming_Context.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Round_Robin.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Round_Robin.cpp:
+
+          Implement functionality in support of load balancing strategies.
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_Factory.cpp:
+
+          Fixed functionality for looking up object groups with matching property value.
+
+Mon Nov 12 18:19:10 UTC 2012  Byron Harris  <harrisb@ociweb.com>
+
+        * orbsvcs/tests/ImplRepo/RestartServer:
+
+          Renamed test ServerBounce to RestartServer to
+          be better compare with ReconnectServer test.
+
+        * orbsvcs/tests/ImplRepo/ServerBounce:
+        * orbsvcs/tests/ImplRepo/ServerBounce/Messenger.idl:
+        * orbsvcs/tests/ImplRepo/ServerBounce/MessengerClient.cpp:
+        * orbsvcs/tests/ImplRepo/ServerBounce/MessengerServer.cpp:
+        * orbsvcs/tests/ImplRepo/ServerBounce/Messenger_i.h:
+        * orbsvcs/tests/ImplRepo/ServerBounce/Messenger_i.cpp:
+        * orbsvcs/tests/ImplRepo/ServerBounce/README:
+        * orbsvcs/tests/ImplRepo/ServerBounce/ServerBounce.mpc:
+        * orbsvcs/tests/ImplRepo/ServerBounce/run_test.pl:
+
+          Removed these files.
+
+Mon Nov 12 15:25:06 UTC 2012  Byron Harris  <harrisb@ociweb.com>
+
+        * orbsvcs/tests/ImplRepo/ReconnectServer/client.cpp:
+
+          Removed unused POA variable.
+
+        * orbsvcs/tests/ImplRepo/ServerBounce/Messenger.idl:
+        * orbsvcs/tests/ImplRepo/ServerBounce/MessengerClient.cpp:
+        * orbsvcs/tests/ImplRepo/ServerBounce/MessengerServer.cpp:
+        * orbsvcs/tests/ImplRepo/ServerBounce/Messenger_i.h:
+        * orbsvcs/tests/ImplRepo/ServerBounce/Messenger_i.cpp:
+        * orbsvcs/tests/ImplRepo/ServerBounce/README:
+        * orbsvcs/tests/ImplRepo/ServerBounce/ServerBounce.mpc:
+        * orbsvcs/tests/ImplRepo/ServerBounce/run_test.pl:
+
+          Test that shows client waiting for the ImR activator
+          to re-launch the server using new options
+          -ORBForwardOnCommFailureLimit and
+          -ORBForwardOnTransientLimit.
+
+        * tao/IIOP_Transport.cpp:
+        * tao/Invocation_Adapter.cpp:
+        * tao/Invocation_Retry_State.h:
+        * tao/Invocation_Retry_State.cpp:
+        * tao/Invocation_Utils.h:
+        * tao/ORB_Core.cpp:
+        * tao/Stub.h:
+        * tao/Stub.inl:
+        * tao/Stub.cpp:
+        * tao/Synch_Invocation.cpp:
+        * tao/Transport.h:
+        * tao/Transport.cpp:
+        * tao/params.h:
+        * tao/params.inl:
+        * tao/params.cpp:
+        * tao/tao.mpc:
+
+          Enhancements to TAO to support invocation retry during
+          initial connection to server, during reply from server,
+          and when the server reply contains exceptions.
+
+
+        * tests/Multiple_Retry_Tests/Retry_On_Connection_Failure:
+        * tests/Multiple_Retry_Tests/Retry_On_Connection_Failure/Hello.h:
+        * tests/Multiple_Retry_Tests/Retry_On_Connection_Failure/Hello.cpp:
+        * tests/Multiple_Retry_Tests/Retry_On_Connection_Failure/README:
+        * tests/Multiple_Retry_Tests/Retry_On_Connection_Failure/Retry_On_Connection_Failure.mpc:
+        * tests/Multiple_Retry_Tests/Retry_On_Connection_Failure/Test.idl:
+        * tests/Multiple_Retry_Tests/Retry_On_Connection_Failure/client.cpp:
+        * tests/Multiple_Retry_Tests/Retry_On_Connection_Failure/run_test.pl:
+        * tests/Multiple_Retry_Tests/Retry_On_Connection_Failure/server.cpp:
+
+          Test that shows client trying to connect to server
+          rather than throw a TRANSIENT exception when -ORBForwardOnTransientLimit
+          is used.
+
+        * tests/Multiple_Retry_Tests/Retry_On_Reply_Failure/README:
+        * tests/Multiple_Retry_Tests/Retry_On_Reply_Failure/Retry_On_Reply_Failure.mpc:
+        * tests/Multiple_Retry_Tests/Retry_On_Reply_Failure/client.cpp:
+        * tests/Multiple_Retry_Tests/Retry_On_Reply_Failure/run_test.pl:
+        * tests/Multiple_Retry_Tests/Retry_On_Reply_Failure/server.cpp:
+        * tests/Multiple_Retry_Tests/Retry_On_Reply_Failure/test.idl:
+        * tests/Multiple_Retry_Tests/Retry_On_Reply_Failure/test_i.h:
+        * tests/Multiple_Retry_Tests/Retry_On_Reply_Failure/test_i.cpp:
+
+          Test that shows client trying invocation to server if
+          server replies with exception.
+
+Mon Nov 12 01:20:54 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
+
+        * utils/nsgroup/nsgroup_svc.cpp:
+        * utils/nsgroup/run_test.pl:
+
+          Modify bind_group command to use the -n option and format output
+          of group_list command to be more readable.
+
+Sun Nov 11 21:34:42 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
+
+        * orbsvcs/orbsvcs/FT_NamingManager.idl:
+
+          Add operation for querying for all registered object groups.
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.cpp:
+
+          Implement operation for querying for all registered object groups.
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_Factory.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_Factory.cpp:
+
+          Add utility to implement query for all registered object groups.
+
+        * utils/nsgroup/nsgroup_svc.h:
+        * utils/nsgroup/nsgroup_svc.cpp:
+        * utils/nsgroup/run_test.pl:
+
+          Change signature for group_list to not use Location.  Update implementation
+          to use the new operation defined in the NamingManager idl.
+
+Sat Nov 10 20:45:07 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
+
+        * orbsvcs/orbsvcs/FT_NamingManager.idl:
+
+          Add operations to create and destroy object groups as well
+          as find object groups by name.
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Persistent_Naming_Context.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Persistent_Naming_Context.cpp:
+
+          Provide implementations for the new operations defined in the FT_NamingManager.idl
+          for object group creation, deletion and retrieval by name.
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_Factory.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_Factory.cpp:
+
+          Add an operation to find an object group with a matching property.
+          Primarily used to lookup an object group with a TAO_FT_OBJECT_GROUP_NAME
+          property set to the object group name.
+
+        * utils/nsgroup/nsgroup_svc.cpp:
+
+          Update to use the new create, delete and find operations by name.
+
+        * utils/nsgroup/run_test.pl:
+
+          Modifications to tests use naming manager instead of load manager.
+
+Fri Nov  9 22:03:39 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/Naming_Loader.cpp:
+
+          Fix incorrect capitalization for included file.
+
+        * tao/PortableServer/ServantRetentionStrategyNonRetain.cpp:
+
+          Fixed missing include and deal with mismatch in size expectations for time_t.
+
+Fri Nov  9 21:20:45 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
+
+        * orbsvcs/Naming_Service/FT_Naming_Main.cpp:
+        * orbsvcs/Naming_Service/FT_Naming_Service.h:
+        * orbsvcs/Naming_Service/FT_Naming_Service.cpp:
+
+          Add main and server files to implement the FT_Naming_Service and provide
+          refined implementation of the factory method in the FT_Naming_Service.
+
+        * orbsvcs/orbsvcs/Naming/Naming_Context_Factory.h:
+        * orbsvcs/orbsvcs/Naming/Naming_Context_Factory.cpp:
+        * orbsvcs/orbsvcs/Naming/Persistent_Naming_Context_Factory.h:
+        * orbsvcs/orbsvcs/Naming/Persistent_Naming_Context_Factory.cpp:
+
+          Add new files to support the abstract factory pattern in the naming service.
+          Persistent_Naming_Context_Factory is the default used in the existing naming
+          service.
+
+Fri Nov  9 19:35:51 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
+
+        * MPC/config/ftnaming.mpb:
+
+          Add new base project to support use of the FtNaming library components.
+
+        * orbsvcs/Naming_Service/Naming_Service.h:
+        * orbsvcs/Naming_Service/Naming_Service.cpp:
+
+          Refactored to support the use of derived TAO_Naming_Service objects.
+          Added factory method operation to allow the derived object to be
+          constructed and used.
+
+        * orbsvcs/Naming_Service/Naming_Service.mpc:
+
+          Added FT_Naming_Service project.
+
+        * orbsvcs/orbsvcs/FT_NamingManager.idl:
+
+          Define IDL to be used in FT_Naming_Service to define an aggregated
+          interface for PropertyManager, ObjectGroupManager, GenericFactory to
+          support the management of ObjectGroups used in the naming service to
+          provide a load balancing resolve operation
+
+        * orbsvcs/orbsvcs/FtNaming.mpc:
+
+          Provide a base library for the fault tolerant and load balancing
+          features in the FT_Naming_Service.
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant:
+
+          Directory to hold the new FT_Naming_Service base component implementation
+          source.
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Persistent_Naming_Context.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Persistent_Naming_Context.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Persistent_Naming_Context_Factory.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Persistent_Naming_Context_Factory.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/ftnaming_export.h:
+
+          Implements the FT_Naming_Service base classes. Specializes the
+          Persistent_Naming_Context to implement the load balancing feature.
+          The FT_Naming_Manager provides functionality to create and otherwise
+          manage object groups.
+
+        * orbsvcs/orbsvcs/Naming/Naming_Loader.h:
+        * orbsvcs/orbsvcs/Naming/Naming_Loader.cpp:
+        * orbsvcs/orbsvcs/Naming/Naming_Server.h:
+        * orbsvcs/orbsvcs/Naming/Naming_Server.cpp:
+        * orbsvcs/orbsvcs/Naming/Persistent_Context_Index.h:
+        * orbsvcs/orbsvcs/Naming/Persistent_Context_Index.cpp:
+        * orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.h:
+        * orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.cpp:
+
+          Refactoring of the Naming service base components to allow specialization
+          as required by the FT_Naming_Service.
+
+        * orbsvcs/orbsvcs/cosnaming_serv_persistence.mpb:
+
+          Added the Naming_Context_Factory as an abstract factory base class and
+          the Persistent_Naming_Context_Factory as a concrete implementation of
+          the abstract factory class.
+
+Thu Nov  8 22:03:59 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * utils/logWalker/PeerProcess.h:
+        * utils/logWalker/PeerProcess.cpp:
+
+          Fix a warning not caught in the TAO 2.0a build.
+
+Thu Nov  8 21:57:49 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * utils/logWalker/GIOP_Buffer.h:
+        * utils/logWalker/GIOP_Buffer.cpp:
+
+          Adding new files missed by the previous commit.
+
+Thu Nov  8 21:51:42 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * utils/logWalker/HostProcess.h:
+        * utils/logWalker/HostProcess.cpp:
+        * utils/logWalker/Invocation.h:
+        * utils/logWalker/Invocation.cpp:
+        * utils/logWalker/Log.h:
+        * utils/logWalker/Log.cpp:
+        * utils/logWalker/PeerObject.cpp:
+        * utils/logWalker/PeerProcess.h:
+        * utils/logWalker/PeerProcess.cpp:
+        * utils/logWalker/Session.h:
+        * utils/logWalker/Session.cpp:
+        * utils/logWalker/Thread.h:
+        * utils/logWalker/Thread.cpp:
+        * utils/logWalker/logWalker.cpp:
+
+          Bringing over changes from OCI TAO 2.0a aimed at improving the
+          ability to handle logs from heavily threaded processes and for
+          inspecting some request contents for common service operations.
+
+Wed Nov  7 18:04:55 UTC 2012  Brian Johnson  <johnsonb@ociweb.com>
+
+        * tests/POA/Non_Retain_System_Id/Non_Retain_System_Id.mpc:
+
+          Changed project name to avoid collision (and to make sense).
+
+Mon Nov  5 22:58:02 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/PortableServer/ServantRetentionStrategyNonRetain.h:
+        * tao/PortableServer/ServantRetentionStrategyNonRetain.cpp:
+
+          Force the POA to generate a unique object ID in the case where the ID
+          assignment policy is SYSTEM_ID, and the servant retention policy is
+          NONRETAIN. Historically this situation was ignored since the ID was only
+          considered useful in resolving servants from the AOM or when UISER_ID
+          assignment was set. However it is a valid usecase for a servant manager
+          or default servant to be used with system generated IDs.
+
+        * tests/POA/Non_Retain_System_Id:
+
+          New test to verify the correctness of the above change.
+
+Fri Nov  2 21:10:42 UTC 2012  Marc Neeley  <neeleym@ociweb.com>
+
+        * tests/Dynamic_TP:
+        * tests/Dynamic_TP/POA_Loader:
+        * tests/Dynamic_TP/POA_Loader/POA_Loader.mpc:
+        * tests/Dynamic_TP/POA_Loader/Test.cpp:
+        * tests/Dynamic_TP/POA_Loader/svc.conf:
+
+          Added first set of tests for POA loader.
+
+Fri Nov  2 20:27:56 UTC 2012  Marc Neeley  <neeleym@ociweb.com>
+
+        * tao/Dynamic_TP/Dynamic_TP_POA_Loader.h:
+        * tao/Dynamic_TP/Dynamic_TP_POA_Loader.cpp:
+
+          Implemented parsing of svc.conf files for mapping POA instances
+          to Thread Pool configs.
+
+Mon Oct 29 16:14:14 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/Dynamic_TP/Config_Loader/Config_Loader.mpc:
+
+          Fix the project name so it plays nice with other test projects.
+
+Fri Oct 26 21:53:26 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * MPC/Config/dynamic_tp.mpb:
+
+          A new base project used to simplify integration of the dynamic threadpool
+          library into application code.
+
+        * tao/Dynamic_TP/Dynamic_TP_Config.h:
+        * tao/Dynamic_TP/Dynamic_TP_Config.cpp:
+
+          Completed the implementation to comply with written definition.
+
+        * tests/Dynamic_TP:
+        * tests/Dynamic_TP/Config_Loader:
+        * tests/Dynamic_TP/Config_Loader/Config_Loader.mpc:
+        * tests/Dynamic_TP/Config_Loader/Test.cpp:
+        * tests/Dynamic_TP/Config_Loader/svc.conf:
+
+          A test to validate the config loader.
+
+Thu Oct 25 22:31:31 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/Dynamic_TP/Dynamic_TP_Config.h:
+        * tao/Dynamic_TP/Dynamic_TP_Config.cpp:
+        * tao/Dynamic_TP/Dynamic_TP_ORBInitializer.h:
+        * tao/Dynamic_TP/Dynamic_TP_ORBInitializer.cpp:
+        * tao/Dynamic_TP/Dynamic_TP_ORB_Loader.cpp:
+        * tao/Dynamic_TP/Dynamic_TP_POA_Loader.cpp:
+        * tao/Dynamic_TP/Dynamic_TP_POA_Strategy.h:
+
+          Fixed build dependencies, added parsing of configuration parameters.
+          not complete, this is an intermediate commit.
+
+        * tao/Dynamic_TP/Dynamic_TP_ORB_ORBInitializer.h:
+
+          Removed this file.
+
+Wed Oct 24 22:37:11 UTC 2012  Marc Neeley  <neeleym@ociweb.com>
+
+        * tao/Dynamic_TP/Dynamic_TP_Config.h:
+        * tao/Dynamic_TP/Dynamic_TP_Config.cpp:
+        * tao/Dynamic_TP/Dynamic_TP_POA_Loader.cpp:
+        * tao/Dynamic_TP/Dynamic_TP_POA_Strategy.h:
+        * tao/Dynamic_TP/Dynamic_TP_POA_Strategy.inl:
+        * tao/Dynamic_TP/Dynamic_TP_POA_Strategy.cpp:
+
+                Added new class for managing Threadpool Configurations. Continued expanding new Dynamic Threadpool Strategy implementation.
+
+Tue Oct 23 13:07:15 UTC 2012  Marc Neeley  <neeleym@ociweb.com>
+
+        * tao/Dynamic_TP:
+
+        * tao/Dynamic_TP/Dynamic_TP.mpc:
+        * tao/Dynamic_TP/Dynamic_TP_POA_Loader.h:
+        * tao/Dynamic_TP/Dynamic_TP_POA_Loader.cpp:
+
+                Added csd_threadpool to the mpc file. Began initialization of POA threadpool service.
+
+Mon Oct 22 14:40:47 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/Dynamic_TP:
+
+        * tao/Dynamic_TP/Dynamic_TP.mpc:
+        * tao/Dynamic_TP/Dynamic_TP_ORB_Loader.h:
+        * tao/Dynamic_TP/Dynamic_TP_ORB_Loader.cpp:
+        * tao/Dynamic_TP/Dynamic_TP_POA_Loader.h:
+        * tao/Dynamic_TP/Dynamic_TP_POA_Loader.cpp:
+        * tao/Dynamic_TP/dynamic_tp_export.h:
+
+          New container library for Dynamic Thread Pools applied to either ORB or POA.
+
+Fri Oct 19 17:24:49 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/Seq_Var_T.h:
+        * tao/Seq_Var_T.inl:
+        * tao/VarOut_T.h:
+        * tao/VarOut_T.inl:
+
+          Move explicit point dereference operation from variable length
+          vars to base so it can be applied to vars for fixed length types
+          as well. This is intended to improve portability away from ORBs
+          that provided this operation. Caution should be exercised when
+          using the returned pointer as the var still owns the reference and
+          will clean it up when it goes out of scope.
+
+        * tests/Var_Deref:
+
+          Added a test for the above. The test will not compile unless
+          the explicit cast operation is available for fixed types.
+
+Mon Oct 15 18:26:57 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * OCI_RE_ChangeLog:
+          Created change log for the OCI Reliability Enhancements branch
+
+Local Variables:
+mode: change-log
+add-log-time-format: (lambda () (progn (setq tz (getenv "TZ")) (set-time-zone-rule "UTC") (setq time (format-time-string "%a %b %e %H:%M:%S %Z %Y" (current-time))) (set-time-zone-rule tz) time))
+indent-tabs-mode: nil
+End:

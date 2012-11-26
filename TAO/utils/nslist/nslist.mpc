@@ -23,9 +23,5 @@ project(nslist): namingexe, install, svc_utils, messaging, strategies {
   Source_Files {
     nslist.cpp
   }
-  InstallData_Files {
-    gendir = .
-    README.nslist
-  }
 }
 

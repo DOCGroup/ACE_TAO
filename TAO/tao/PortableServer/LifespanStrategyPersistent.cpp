@@ -78,8 +78,8 @@ namespace TAO
           if (adapter == 0)
             {
               ACE_Service_Config::process_directive (
-                ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE(
-                  "ImR_Client_Adapter", "TAO_ImR_Client", TAO_VERSION,
+                ACE_DYNAMIC_SERVICE_DIRECTIVE(
+                  "ImR_Client_Adapter", "TAO_ImR_Client",
                   "_make_ImR_Client_Adapter_Impl", ""));
 
               adapter =

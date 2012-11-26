@@ -3,8 +3,4 @@
 
 project : orbsvcsexe, install, naming, event_serv, svc_utils, iortable, messaging_optional, portableserver {
   exename  = tao_cosevent
-  InstallData_Files {
-    gendir = .
-    README
-  }
 }

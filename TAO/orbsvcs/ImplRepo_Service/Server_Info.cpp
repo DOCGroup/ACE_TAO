@@ -32,7 +32,7 @@ Server_Info::Server_Info
 }
 
 ImplementationRepository::ServerInformation*
-Server_Info::createImRServerInfo (void)
+Server_Info::createImRServerInfo (void) const
 {
   ImplementationRepository::ServerInformation* info;
   ACE_NEW_THROW_EX (info, ImplementationRepository::ServerInformation, CORBA::NO_MEMORY ());

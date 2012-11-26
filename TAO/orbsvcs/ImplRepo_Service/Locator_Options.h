@@ -44,6 +44,7 @@ public:
   enum RepoMode {
     REPO_NONE,
     REPO_XML_FILE,
+    REPO_SHARED_FILES,
     REPO_HEAP_FILE,
     REPO_REGISTRY
   };

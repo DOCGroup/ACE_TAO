@@ -3,18 +3,16 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-template <class TIME_POLICY>
-ACE_Time_Value_T<TIME_POLICY>
-ACE_Event_T<TIME_POLICY>::gettimeofday (void) const
+ACE_INLINE ACE_event_t
+ACE_Event::handle (void) const
 {
-  return this->time_policy_ ();
+  return this->handle_;
 }
 
-template <class TIME_POLICY>
-void
-ACE_Event_T<TIME_POLICY>::set_time_policy (TIME_POLICY const & rhs)
+ACE_INLINE void
+ACE_Event::handle (ACE_event_t new_handle)
 {
-  this->time_policy_ = rhs;
+  this->handle_ = new_handle;
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
