@@ -10,6 +10,7 @@ workspace {
   $(ACE_ROOT)/Kokyu/Kokyu.mpc
   $(ACE_ROOT)/protocols
   $(ACE_ROOT)/netsvcs/lib
+  $(ACE_ROOT)/netsvcs/servers
   tao
   TAO_IDL
   utils
