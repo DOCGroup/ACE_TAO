@@ -1,0 +1,33 @@
+// -*- MPC -*-
+// $Id$
+
+project : orbsvcsexe, install, naming_serv, imr_client, svc_utils {
+  exename  = tao_cosnaming
+  Source_Files {
+    Naming_Server.cpp
+    Naming_Service.cpp
+  }
+}
+
+project (FT_Naming_Service) : orbsvcsexe, install, ft_naming_serv, naming_serv, portablegroup, imr_client, svc_utils {
+  exename  = tao_ft_naming
+  Header_Files {
+ FT_Naming_Service.h
+  }
+  Source_Files {
+    FT_Naming_Main.cpp
+    FT_Naming_Service.cpp
+    Naming_Service.cpp
+  }
+}
+
+project(NT_Naming_Service) : orbsvcsexe, install, naming_serv, svc_utils {
+  requires += winnt
+  exename  = tao_nt_cosnaming
+  Source_Files {
+    Naming_Service.cpp
+    NT_Naming_Server.cpp
+    NT_Naming_Service.cpp
+  }
+}
+

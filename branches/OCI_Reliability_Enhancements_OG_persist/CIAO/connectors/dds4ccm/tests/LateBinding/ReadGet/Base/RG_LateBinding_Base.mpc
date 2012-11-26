@@ -1,0 +1,26 @@
+// $Id$
+
+project (RG_LateBindingBase_stub) : taoidldefaults, dds4ccm_ts_default {
+  sharedname = RG_LateBindingBase_stub
+  dynamicflags += RG_LATEBINDING_BASE_STUB_BUILD_DLL
+  libout = ../lib
+
+  idlflags += -SS -Sci \
+              -Wb,stub_export_macro=RG_LATEBINDING_BASE_STUB_Export \
+              -Wb,stub_export_include=LateBinding_Base_stub_export.h
+
+  IDL_Files {
+    idlflags += -Gxhst
+    RG_LateBinding_Base.idl
+  }
+
+  opendds_ts_flags += --export=RG_LATEBINDING_BASE_STUB_Export
+
+  DDSGenerator_Files {
+    RG_LateBinding_Base.idl
+  }
+
+  Source_Files {
+  }
+}
+

@@ -1,0 +1,4 @@
+// $Id$
+
+feature(dds4ccm_opendds) : dcps {
+}

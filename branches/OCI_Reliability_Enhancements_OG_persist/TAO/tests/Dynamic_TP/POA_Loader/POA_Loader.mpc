@@ -1,0 +1,5 @@
+// $Id$
+
+project(*test) : dynamic_tp,csd_framework {
+  exename = test
+}
