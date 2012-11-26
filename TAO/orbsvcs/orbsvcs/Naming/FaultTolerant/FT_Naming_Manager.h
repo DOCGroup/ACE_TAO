@@ -37,6 +37,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+class TAO_Naming_Service_Persistence_Factory;
+
 class TAO_FtNaming_Export TAO_FT_Naming_Manager
   : public virtual POA_FT::NamingManager,
     public ACE_Task_Base
@@ -236,6 +238,10 @@ public:
   bool
   next_location (PortableGroup::ObjectGroup_ptr object_group,
                  PortableGroup::Location& loc);
+
+  /// Set the factory to use for persisting object groups.
+  void set_persistence_factory(TAO_Naming_Service_Persistence_Factory *
+                               persistence_factory);
 
   /// Destructor.
   ~TAO_FT_Naming_Manager (void);

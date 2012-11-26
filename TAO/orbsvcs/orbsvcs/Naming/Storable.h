@@ -21,7 +21,7 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Versioned_Namespace.h"
+#include "tao/Storable_Base.h"
 #include "ace/SString.h"
 #include "orbsvcs/Naming/naming_serv_export.h"
 
@@ -79,7 +79,7 @@ class TAO_Naming_Serv_Export TAO_NS_Persistence_Global
   unsigned int counter_;
 };
 
-class TAO_Naming_Serv_Export TAO_Storable_Base
+class TAO_Naming_Serv_Export TAO_Storable_Base : public TAO::Storable_Base
 {
 public:
   TAO_Storable_Base();
@@ -100,28 +100,6 @@ public:
 
   virtual time_t last_changed(void) = 0;
 
-  // Mimic a portion of the std::ios interface.  We need to be able
-  // to indicate error states from the extraction operators below.
-  enum Storable_State { goodbit = 0,
-                        badbit  = 1,
-                        eofbit  = 2,
-                        failbit = 4
-                      };
-
-  void clear (Storable_State state = goodbit);
-
-  void setstate (Storable_State state);
-
-  Storable_State rdstate (void) const;
-
-  bool good (void) const;
-
-  bool bad (void) const;
-
-  bool eof (void) const;
-
-  bool fail (void) const;
-
   virtual TAO_Storable_Base& operator << (
               const TAO_NS_Persistence_Header& header) = 0;
 
@@ -140,14 +118,10 @@ public:
   virtual TAO_Storable_Base& operator >> (
               TAO_NS_Persistence_Global& global)  = 0;
 
-  virtual TAO_Storable_Base& operator << (
-		  	      const ACE_CString& str) = 0;
+  virtual TAO_Storable_Base& operator << (const ACE_CString& str) = 0;
 
-  virtual TAO_Storable_Base& operator >> (
-              ACE_CString& str) = 0;
+  virtual TAO_Storable_Base& operator >> (ACE_CString& str) = 0;
 
-private:
-  Storable_State state_;
 };
 
 class TAO_Naming_Serv_Export TAO_Naming_Service_Persistence_Factory
