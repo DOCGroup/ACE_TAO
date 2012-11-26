@@ -1,3 +1,14 @@
+Mon Nov 26 20:50:18 UTC 2012  Byron Harris  <harrisb@ociweb.com>
+
+        * orbsvcs/orbsvcs/CosNaming_Serv.mpc:
+        * orbsvcs/orbsvcs/Naming/Naming_Service_File_Guard.h:
+        * orbsvcs/orbsvcs/Naming/Naming_Service_File_Guard.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_Factory.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_Factory.cpp:
+
+          Prematurely deleted Naming_Service_File_Guard in
+          previous commit. Resurrecting.
+
 Mon Nov 26 18:16:39 UTC 2012  Byron Harris  <harrisb@ociweb.com>
 
         * tao/Storable_Base.h:
