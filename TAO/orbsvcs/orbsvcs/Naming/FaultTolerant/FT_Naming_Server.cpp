@@ -51,7 +51,7 @@
 TAO_FT_Naming_Server::TAO_FT_Naming_Server (void)
   : replica_id_(0),
     naming_manager_ (),
-    replication_manager_ (this),
+    replication_manager_ (0),
     naming_manager_ior_file_name_(0),
     replication_manager_ior_file_name_(0),
     naming_manager_persistence_file_name_(0)
@@ -170,7 +170,7 @@ TAO_FT_Naming_Server::init_naming_manager_with_orb (int argc, ACE_TCHAR *argv []
       &this->naming_manager_);
 
     this->naming_manager_ior_ =
-      orb->object_to_string (naming_manager_._this());
+      orb->object_to_string (this->naming_manager_poa_->id_to_reference (id.in ()));
 
     this->naming_manager_.initialize (this->orb_,
       this->naming_manager_poa_);
@@ -268,11 +268,23 @@ TAO_FT_Naming_Server::init_replication_manager_with_orb (int argc, ACE_TCHAR *ar
     *       3) Persistence for Object Group Manager
     */
 
+    if (this->replica_id_ == 0)
+    {
+      // Create the default replica name
+      this->replica_id_ = ACE_OS::strdup ("Replica_P");
+#if 0
+    ACE_ERROR_RETURN ((LM_ERROR,
+                      "No replica id provided.\n"),
+                      -1);
+#endif
+    }
+
     // We use a different POA, otherwise the user would have to change
     // the object key each time it invokes the server.
-    this->replication_manager_poa_ = this->root_poa_->create_POA ("NamingReplication",
+    this->replication_manager_poa_ = this->root_poa_->create_POA (this->replica_id_,
       poa_manager.in (),
       policies);
+
     // Warning!  If create_POA fails, then the policies won't be
     // destroyed and there will be hell to pay in memory leaks!
 
@@ -287,24 +299,68 @@ TAO_FT_Naming_Server::init_replication_manager_with_orb (int argc, ACE_TCHAR *ar
 
     poa_manager->activate ();
 
-    if (this->replica_id_ == 0)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-        ACE_TEXT("")),  // TODO: Add an error message and return failure
-        0);
-    }
+    // Construct the replication manager providing it with its ID
+    ACE_NEW_RETURN (this->replication_manager_,
+                    TAO_FT_Naming_Replication_Manager (this,
+                                                       this->replica_id_),
+                    -1);
+
     // Register with the POA.
     PortableServer::ObjectId_var id =
       PortableServer::string_to_ObjectId (this->replica_id_);
 
     this->replication_manager_poa_->activate_object_with_id (id.in (),
-      &this->replication_manager_);
+      this->replication_manager_);
 
     this->naming_manager_ior_ =
-      orb->object_to_string (replication_manager_._this());
+      orb->object_to_string (
+        this->replication_manager_poa_->id_to_reference (id.in ()));
 
-    this->replication_manager_.initialize (this->orb_,
-      this->replication_manager_poa_);
+    // Provide the replication manager its ORB and POA
+    this->replication_manager_->initialize (this->orb_,
+                                            this->replication_manager_poa_);
+
+    CORBA::Object_var table_object =
+      orb->resolve_initial_references ("IORTable");
+
+    IORTable::Table_var adapter =
+      IORTable::Table::_narrow (table_object.in ());
+    if (CORBA::is_nil (adapter.in ()))
+    {
+      ACE_ERROR ((LM_ERROR, "Replication Manager init - Nil IORTable\n"));
+    }
+    else
+    {
+      adapter->bind (this->replica_id_, this->naming_manager_ior_.in ());
+    }
+
+    if (this->replica_peer_ior_ != 0)
+    { // A peer replica was provided. Provide the reference to the
+      // ReplicationManager
+      CORBA::Object_var peer_obj =
+        orb->string_to_object (this->replica_peer_ior_.in ());
+      if (CORBA::is_nil (peer_obj.in ()))
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("invalid ior <%s>\n"),
+                                 this->replica_peer_ior_),
+                                -1);
+      FT_Naming::ReplicationManager_var peer_ref =
+        FT_Naming::ReplicationManager::_narrow (peer_obj.in ());
+
+      if (CORBA::is_nil (peer_ref.in ()))
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("IOR is not a FT_Naming::ReplicationManager <%s>\n"),
+                                 this->replica_peer_ior_),
+                                -1);
+
+      int registration_result = this->replication_manager_->register_with_peer_replica (peer_ref.in ());
+      if (registration_result != 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                          ACE_TEXT ("Unable to register with peer <%s>\n"),
+                          this->replica_peer_ior_),
+                          -1);
+    }
+
   }
   catch (const CORBA::Exception& ex)
     {
@@ -341,7 +397,7 @@ TAO_FT_Naming_Server::parse_args (int argc,
                                   ACE_TCHAR *argv[])
 {
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT)
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("b:do:p:s:f:m:z:u:g:i:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("b:do:p:s:f:m:z:u:g:i:j:"));
 #else
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("b:do:p:s:f:m:z:"));
 #endif /* TAO_HAS_MINIMUM_POA */
@@ -383,6 +439,9 @@ TAO_FT_Naming_Server::parse_args (int argc,
         break;
       case 'i':
         this->replica_id_ = get_opts.opt_arg ();
+        break;
+      case 'j':
+        this->replica_peer_ior_ = get_opts.opt_arg ();
         break;
       case 's':
         size = ACE_OS::atoi (get_opts.opt_arg ());
@@ -757,14 +816,14 @@ int
 TAO_FT_Naming_Server::update_object_group (
     const FT_Naming::ObjectGroupUpdate & group_info)
 {
-  return -1;
+  return 0;
 }
 
 int
 TAO_FT_Naming_Server::update_naming_context (
     const FT_Naming::NamingContextUpdate & context_info)
 {
-  return -1;
+  return 0;
 }
 
 

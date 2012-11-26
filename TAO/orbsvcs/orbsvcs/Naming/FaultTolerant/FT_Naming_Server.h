@@ -85,7 +85,7 @@ protected:
 
   /// The object that implements the FT_Naming::Replication_Manager
   /// interface
-  TAO_FT_Naming_Replication_Manager replication_manager_;
+  TAO_FT_Naming_Replication_Manager* replication_manager_;
 
   /// File to output the Object Group Manager IOR.
   const ACE_TCHAR *naming_manager_ior_file_name_;
@@ -102,6 +102,9 @@ protected:
 
   /// The IOR string of the object group manager.
   CORBA::String_var replication_manager_ior_;
+
+  /// The IOR string of the peer replica.
+  CORBA::String_var replica_peer_ior_;
 
   /// The Object Group Manager POA.
   PortableServer::POA_var naming_manager_poa_;

@@ -1,3 +1,25 @@
+Mon Nov 26 22:19:23 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
+
+        * orbsvcs/Naming_Service/Naming_Service.cpp:
+
+          Fixed initialization order in constructor.
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Replication_Manager.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Replication_Manager.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:
+
+          Added initialization code for ReplicationManager interface.
+
+        * orbsvcs/tests/FT_Naming/Replication:
+        * orbsvcs/tests/FT_Naming/Replication/README:
+        * orbsvcs/tests/FT_Naming/Replication/Replication.mpc:
+        * orbsvcs/tests/FT_Naming/Replication/client.cpp:
+        * orbsvcs/tests/FT_Naming/Replication/run_test.pl:
+        * orbsvcs/tests/FT_Naming/Replication/test_object.idl:
+
+          Added tests for replication functionality in FT_Naming_Service.
+
 Mon Nov 26 20:50:18 UTC 2012  Byron Harris  <harrisb@ociweb.com>
 
         * orbsvcs/orbsvcs/CosNaming_Serv.mpc:
