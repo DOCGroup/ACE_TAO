@@ -11,6 +11,7 @@
 //=============================================================================
 
 #include "orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.h"
+#include "orbsvcs/Naming/Persistent_Naming_Context_Factory.h"
 #include "orbsvcs/FT_NamingManagerC.h"
 #include "orbsvcs/PortableGroup/PG_Property_Utils.h"
 #include "orbsvcs/PortableGroup/PG_Property_Set.h"
@@ -685,5 +686,12 @@ TAO_FT_Naming_Manager::preprocess_properties (PortableGroup::Properties &)
 
 }
 
+void
+TAO_FT_Naming_Manager::
+set_persistence_factory(TAO_Naming_Service_Persistence_Factory *
+                        persistence_factory)
+{
+  //  group_factory_.set_persistence_factory(persistence_factory);
+}
 
 TAO_END_VERSIONED_NAMESPACE_DECL
