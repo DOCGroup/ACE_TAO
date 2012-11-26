@@ -112,7 +112,6 @@ TAO_Naming_Service_Persistence_Factory::~TAO_Naming_Service_Persistence_Factory(
 
 ACE_INLINE
 TAO_Storable_Base::TAO_Storable_Base()
- : state_ (goodbit)
 {
 }
 
@@ -121,47 +120,5 @@ TAO_Storable_Base::~TAO_Storable_Base()
 {
 }
 
-ACE_INLINE void
-TAO_Storable_Base::clear (TAO_Storable_Base::Storable_State state)
-{
-  this->state_ = state;
-}
-
-ACE_INLINE void
-TAO_Storable_Base::setstate (TAO_Storable_Base::Storable_State state)
-{
-  this->clear (static_cast <TAO_Storable_Base::Storable_State> (
-               this->rdstate () | state));
-}
-
-ACE_INLINE TAO_Storable_Base::Storable_State
-TAO_Storable_Base::rdstate (void) const
-{
-  return this->state_;
-}
-
-ACE_INLINE bool
-TAO_Storable_Base::good (void) const
-{
-  return (this->state_ == goodbit);
-}
-
-ACE_INLINE bool
-TAO_Storable_Base::bad (void) const
-{
-  return (this->state_ & badbit);
-}
-
-ACE_INLINE bool
-TAO_Storable_Base::eof (void) const
-{
-  return (this->state_ & eofbit);
-}
-
-ACE_INLINE bool
-TAO_Storable_Base::fail (void) const
-{
-  return (this->state_ & failbit);
-}
 
 TAO_END_VERSIONED_NAMESPACE_DECL
