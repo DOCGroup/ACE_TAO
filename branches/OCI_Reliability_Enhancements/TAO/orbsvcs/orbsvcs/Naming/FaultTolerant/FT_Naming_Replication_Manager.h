@@ -37,7 +37,9 @@ public:
   * Create a Replication Manager and provide it with the naming server
   * to be updated whenever notified by the peer replica
   */
-  TAO_FT_Naming_Replication_Manager(TAO_FT_Naming_Server *naming_svr);
+  TAO_FT_Naming_Replication_Manager(TAO_FT_Naming_Server *naming_svr,
+                                    const char* repl_mgr_name);
+
   virtual ~TAO_FT_Naming_Replication_Manager(void);
 
   /// Initialize the naming manager. This will provide the poa to
@@ -46,6 +48,9 @@ public:
   void initialize (CORBA::ORB_ptr orb,
                    PortableServer::POA_ptr root_poa);
 
+ /*
+  * Implementation of the FT_Naming::ReplicationManager interface
+  */
   virtual void register_replica (
     FT_Naming::ReplicationManager_ptr replica);
 
@@ -57,6 +62,19 @@ public:
 
   FT_Naming::ReplicationManager_ptr peer_replica (void);
 
+ /*
+  * Utilities for implementing the FT_Naming::ReplicationManager
+  */
+
+  /// Stores the peer in the peer_replica_ data member and invokes the
+  /// register_replica interface method with the peer. Returns 0 if
+  /// successful and -1 if unable to contact the peer.
+  int register_with_peer_replica (
+    FT_Naming::ReplicationManager_ptr replica);
+
+  /// The object reference for this servant instance
+  FT_Naming::ReplicationManager_ptr reference (void);
+
 protected:
 
   // The object which implements the naming service and the object manager
@@ -65,6 +83,12 @@ protected:
   // Store the reference to the replica object reference
   // For now only a single replica is supported.
   static FT_Naming::ReplicationManager_var peer_replica_;
+
+  PortableServer::POA_var repl_mgr_poa_;
+
+  CORBA::String_var repl_mgr_name_;
+
+  FT_Naming::ReplicationManager_var reference_;
 
 };
 #include /**/ "ace/post.h"

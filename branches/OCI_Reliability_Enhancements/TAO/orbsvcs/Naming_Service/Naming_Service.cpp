@@ -18,9 +18,9 @@ TAO_Naming_Service::TAO_Naming_Service (void)
 
 // Constructor taking command-line arguments.
 TAO_Naming_Service::TAO_Naming_Service (int argc, ACE_TCHAR* argv[])
-  : time_ (0),
-    num_threads_ (1),
-    my_naming_server_(0)
+  : my_naming_server_(0),
+    time_ (0),
+    num_threads_ (1)
 {
   this->init (argc, argv);
 }
