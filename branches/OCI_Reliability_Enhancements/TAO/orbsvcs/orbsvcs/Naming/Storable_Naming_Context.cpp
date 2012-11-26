@@ -411,6 +411,12 @@ File_Open_Lock_and_Check::File_Open_Lock_and_Check(
   init(mode);
 }
 
+TAO_Storable_Naming_Context::
+File_Open_Lock_and_Check::~File_Open_Lock_and_Check()
+{
+  this->release ();
+}
+
 void
 TAO_Storable_Naming_Context::
 File_Open_Lock_and_Check::set_parent_last_changed (const time_t & time)

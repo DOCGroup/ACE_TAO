@@ -1,6 +1,6 @@
 //=============================================================================
 /**
- *  @file   Naming_Service_File_Guard.cpp
+ *  @file   Storable_File_Guard.cpp
  *
  *  $Id$
  *
@@ -9,23 +9,23 @@
  */
 //=============================================================================
 
-#include "orbsvcs/Naming/Naming_Service_File_Guard.h"
-#include "orbsvcs/Naming/Storable.h"
+#include "tao/Storable_File_Guard.h"
+#include "tao/Storable_Base.h"
 
 #include "tao/SystemException.h"
 
-Naming_Service_File_Guard::
-Naming_Service_File_Guard (bool redundant)
+TAO::Storable_File_Guard::
+Storable_File_Guard (bool redundant)
   : redundant_(redundant)
   , closed_(1)
 {
-  ACE_TRACE("Naming_Service_File_Guard::Naming_Service_File_Guard");
+  ACE_TRACE("TAO::Storable_File_Guard::Storable_File_Guard");
 }
 
 void
-Naming_Service_File_Guard::init(const char * mode)
+TAO::Storable_File_Guard::init(const char * mode)
 {
-  ACE_TRACE("Naming_Service_File_Guard::init");
+  ACE_TRACE("TAO::Storable_File_Guard::init");
 
   // We only accept a subset of mode argument, check it
   rwflags_ = 0;
@@ -106,9 +106,9 @@ Naming_Service_File_Guard::init(const char * mode)
 }
 
 void
-Naming_Service_File_Guard::release (void)
+TAO::Storable_File_Guard::release (void)
 {
-  ACE_TRACE("Naming_Service_File_Guard::release");
+  ACE_TRACE("TAO::Storable_File_Guard::release");
   if ( ! closed_ )
     {
       // If we updated the disk, save the time stamp
@@ -124,16 +124,15 @@ Naming_Service_File_Guard::release (void)
     }
 }
 
-Naming_Service_File_Guard::
-~Naming_Service_File_Guard ()
+TAO::Storable_File_Guard::
+~Storable_File_Guard ()
 {
-  ACE_TRACE("Naming_Service_File_Guard::~Naming_Service_File_Guard");
-  this->release ();
+  ACE_TRACE("TAO::Storable_File_Guard::~Storable_File_Guard");
 }
 
-TAO_Storable_Base &
-Naming_Service_File_Guard::peer ()
+TAO::Storable_Base &
+TAO::Storable_File_Guard::peer ()
 {
-  ACE_TRACE("Naming_Service_File_Guard::peer");
+  ACE_TRACE("TAO::Storable_File_Guard::peer");
   return *fl_;
 }

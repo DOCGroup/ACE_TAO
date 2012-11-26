@@ -1,3 +1,29 @@
+Mon Nov 26 18:16:39 UTC 2012  Byron Harris  <harrisb@ociweb.com>
+
+        * tao/Storable_Base.h:
+        * tao/Storable_Base.inl:
+        * tao/Storable_Base.cpp:
+        * tao/Storable_File_Guard.h:
+        * tao/Storable_File_Guard.cpp:
+        * tao/tao.mpc:
+
+          Extracted storable base and file guard classes
+          from naming server so they can be used in
+          other contexts such as object group persistence.
+
+        * orbsvcs/orbsvcs/CosNaming_Serv.mpc:
+        * orbsvcs/orbsvcs/Naming/Storable.h:
+        * orbsvcs/orbsvcs/Naming/Storable.inl:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.h:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp:
+
+          Updatd to use base classes given above.
+
+        * orbsvcs/orbsvcs/Naming/Naming_Service_File_Guard.h:
+        * orbsvcs/orbsvcs/Naming/Naming_Service_File_Guard.cpp:
+
+          Removed these files.
+
 Mon Nov 26 17:14:21 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/orbsvcs/FtNaming.mpc:

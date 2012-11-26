@@ -410,6 +410,8 @@ public:
   File_Open_Lock_and_Check(TAO_Storable_Naming_Context * context,
                            const char * mode);
 
+  ~File_Open_Lock_and_Check();
+
 protected:
 
   virtual void set_parent_last_changed (const time_t & time);
