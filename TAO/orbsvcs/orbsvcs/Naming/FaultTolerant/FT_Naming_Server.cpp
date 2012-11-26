@@ -342,7 +342,7 @@ TAO_FT_Naming_Server::init_replication_manager_with_orb (int argc, ACE_TCHAR *ar
       if (CORBA::is_nil (peer_obj.in ()))
               ACE_ERROR_RETURN ((LM_ERROR,
                                  ACE_TEXT ("invalid ior <%s>\n"),
-                                 this->replica_peer_ior_),
+                                 this->replica_peer_ior_.in ()),
                                 -1);
       FT_Naming::ReplicationManager_var peer_ref =
         FT_Naming::ReplicationManager::_narrow (peer_obj.in ());
@@ -350,14 +350,14 @@ TAO_FT_Naming_Server::init_replication_manager_with_orb (int argc, ACE_TCHAR *ar
       if (CORBA::is_nil (peer_ref.in ()))
               ACE_ERROR_RETURN ((LM_ERROR,
                                  ACE_TEXT ("IOR is not a FT_Naming::ReplicationManager <%s>\n"),
-                                 this->replica_peer_ior_),
+                                 this->replica_peer_ior_.in ()),
                                 -1);
 
       int registration_result = this->replication_manager_->register_with_peer_replica (peer_ref.in ());
       if (registration_result != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                           ACE_TEXT ("Unable to register with peer <%s>\n"),
-                          this->replica_peer_ior_),
+                          this->replica_peer_ior_.in ()),
                           -1);
     }
 
@@ -816,6 +816,7 @@ int
 TAO_FT_Naming_Server::update_object_group (
     const FT_Naming::ObjectGroupUpdate & group_info)
 {
+  ACE_UNUSED_ARG (group_info);
   return 0;
 }
 
@@ -823,6 +824,7 @@ int
 TAO_FT_Naming_Server::update_naming_context (
     const FT_Naming::NamingContextUpdate & context_info)
 {
+  ACE_UNUSED_ARG (context_info);
   return 0;
 }
 
