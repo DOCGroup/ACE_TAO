@@ -1,3 +1,8 @@
+Tue Nov 27 14:10:46 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * debian/mpc-ace.manpages:
+          No manpage for the moment
+
 Tue Nov 27 12:43:06 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * debian/tao-log.docs:
