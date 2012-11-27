@@ -24,7 +24,7 @@ project(nslist): namingexe, install, svc_utils, messaging, strategies {
     nslist.cpp
   }
   InstallData_Files {
-    gendir = .
+    gendir = tao-utils
     README.nslist
   }
 }

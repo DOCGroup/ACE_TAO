@@ -26,7 +26,7 @@ project: namingexe, rtcorba, install, messaging, ziop {
   }
 
   InstallData_Files {
-    gendir = .
+    gendir = tao-utils
     README.catior
   }
 }
