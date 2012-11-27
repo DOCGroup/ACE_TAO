@@ -47,7 +47,8 @@ Locator_Repository::unregister_if_address_reused (
 
     if (this->debug_)
     {
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t)ImR: iterating - registered server")
+      ACE_DEBUG ((LM_DEBUG,
+        ACE_TEXT ("(%P|%t)ImR: iterating - registered server")
         ACE_TEXT ("\"%C %C\" ior \"%C\"\n"), info->server_id.c_str(),
         info->name.c_str (), info->partial_ior.c_str ()));
     }
@@ -58,8 +59,9 @@ Locator_Repository::unregister_if_address_reused (
     {
       if (this->debug_)
       {
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t)ImR: reuse address %C so remove")
-          ACE_TEXT ("server %C \n"), info->partial_ior.c_str (), info->name.c_str ()));
+        ACE_DEBUG ((LM_DEBUG,
+          ACE_TEXT ("(%P|%t)ImR: reuse address %C so remove server %C \n"),
+          info->partial_ior.c_str (), info->name.c_str ()));
       }
       if (! info->name.empty ())
       {
@@ -82,17 +84,18 @@ Locator_Repository::unregister_if_address_reused (
 }
 
 int
-Locator_Repository::add_server (const ACE_CString& server_id,
-                        const ACE_CString& name,
-                        const ACE_CString& aname,
-                        const ACE_CString& startup_command,
-                        const ImplementationRepository::EnvironmentList& env_vars,
-                        const ACE_CString& working_dir,
-                        ImplementationRepository::ActivationMode activation,
-                        int start_limit,
-                        const ACE_CString& partial_ior,
-                        const ACE_CString& ior,
-                        ImplementationRepository::ServerObject_ptr svrobj)
+Locator_Repository::add_server (
+  const ACE_CString& server_id,
+  const ACE_CString& name,
+  const ACE_CString& aname,
+  const ACE_CString& startup_command,
+  const ImplementationRepository::EnvironmentList& env_vars,
+  const ACE_CString& working_dir,
+  ImplementationRepository::ActivationMode activation,
+  int start_limit,
+  const ACE_CString& partial_ior,
+  const ACE_CString& ior,
+  ImplementationRepository::ServerObject_ptr svrobj)
 {
   int err = sync_load (name, SYNC_ADD, false);
   if (err != 0)
@@ -101,15 +104,16 @@ Locator_Repository::add_server (const ACE_CString& server_id,
     }
 
   int limit = start_limit < 1 ? 1 : start_limit;
-  Server_Info_Ptr info(new Server_Info (server_id, name, aname, startup_command,
-    env_vars, working_dir, activation, limit, partial_ior, ior, svrobj));
+  Server_Info_Ptr info(new Server_Info (server_id, name, aname,
+    startup_command, env_vars, working_dir, activation, limit, partial_ior,
+    ior, svrobj));
 
   err = servers ().bind (name, info);
   if (err != 0)
     {
       return err;
     }
-  this->persistent_update(info);
+  this->persistent_update(info, true);
   return 0;
 }
 
@@ -132,20 +136,20 @@ Locator_Repository::add_activator (const ACE_CString& name,
     {
       return err;
     }
-  this->persistent_update(info);
+  this->persistent_update(info, true);
   return 0;
 }
 
 int
 Locator_Repository::update_server (const Server_Info_Ptr& info)
 {
-  return this->persistent_update(info);
+  return this->persistent_update(info, false);
 }
 
 int
 Locator_Repository::update_activator (const Activator_Info_Ptr& info)
 {
-  return this->persistent_update(info);
+  return this->persistent_update(info, false);
 }
 
 Server_Info_Ptr
@@ -213,8 +217,20 @@ Locator_Repository::servers (void)
   return server_infos_;
 }
 
+const Locator_Repository::SIMap&
+Locator_Repository::servers (void) const
+{
+  return server_infos_;
+}
+
 Locator_Repository::AIMap&
 Locator_Repository::activators (void)
+{
+  return activator_infos_;
+}
+
+const Locator_Repository::AIMap&
+Locator_Repository::activators (void) const
 {
   return activator_infos_;
 }
@@ -240,14 +256,14 @@ Locator_Repository::sync_load (const ACE_CString& , SyncOp , bool )
 }
 
 int
-Locator_Repository::persistent_update (const Server_Info_Ptr& )
+Locator_Repository::persistent_update (const Server_Info_Ptr& , bool )
 {
   // nothing more to do for default update
   return 0;
 }
 
 int
-Locator_Repository::persistent_update(const Activator_Info_Ptr& )
+Locator_Repository::persistent_update(const Activator_Info_Ptr& , bool )
 {
   // nothing more to do for default update
   return 0;
@@ -258,6 +274,31 @@ Locator_Repository::persistent_remove(const ACE_CString& , bool )
 {
   // nothing more to do for default update
   return 0;
+}
+
+void
+Locator_Repository::notify_updated_server(
+  const ImplementationRepository::ServerUpdate& )
+{
+  // default is Backing store doesn't support replicated updates
+}
+
+void
+Locator_Repository::notify_updated_activator(
+  const ImplementationRepository::ActivatorUpdate& )
+{
+  // default is Backing store doesn't support replicated updates
+}
+
+void
+Locator_Repository::register_replica(
+  ImplementationRepository::UpdatePushNotification_ptr ,
+  ImplementationRepository::SequenceNum_out ,
+  ImplementationRepository::SequenceNum )
+{
+  ACE_ERROR((LM_INFO,
+             ACE_TEXT ("ERROR: ImR Locator not configured for replication ")
+             ACE_TEXT ("(repo mode=%s)\n"), repo_mode()));
 }
 
 No_Backing_Store::~No_Backing_Store()

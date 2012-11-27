@@ -13,7 +13,8 @@
 #include "ACEXML/common/FileCharStream.h"
 #include "ACEXML/common/XML_Util.h"
 
-XML_Backing_Store::XML_Backing_Store(const ACE_CString& filename, bool start_clean)
+XML_Backing_Store::XML_Backing_Store(const ACE_CString& filename,
+                                     bool start_clean)
 : filename_(filename)
 {
   if (start_clean)
@@ -34,14 +35,14 @@ XML_Backing_Store::persistent_remove (const ACE_CString& name, bool )
 }
 
 int
-XML_Backing_Store::persistent_update(const Server_Info_Ptr& )
+XML_Backing_Store::persistent_update(const Server_Info_Ptr& , bool )
 {
   // one big XML file, need to persist everything
   return persist();
 }
 
 int
-XML_Backing_Store::persistent_update(const Activator_Info_Ptr& )
+XML_Backing_Store::persistent_update(const Activator_Info_Ptr& , bool )
 {
   // one big XML file, need to persist everything
   return persist();
@@ -53,7 +54,8 @@ XML_Backing_Store::persist ()
   FILE* fp = ACE_OS::fopen (this->filename_.c_str (), "w");
   if (fp == 0)
     {
-      ACE_ERROR ((LM_ERROR, "Couldn't write to file %C\n", this->filename_.c_str()));
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Couldn't write to file %C\n"),
+        this->filename_.c_str()));
       return -1;
     }
   ACE_OS::fprintf (fp,"<?xml version=\"1.0\"?>\n");
@@ -84,7 +86,8 @@ XML_Backing_Store::persist ()
 }
 
 void
-XML_Backing_Store::persist (FILE* fp, const Server_Info& info, const char* tag_prepend)
+XML_Backing_Store::persist (FILE* fp, const Server_Info& info,
+                            const char* tag_prepend)
 {
   ACE_CString server_id = ACEXML_escape_string (info.server_id);
   ACE_CString name = ACEXML_escape_string (info.name);
@@ -94,13 +97,15 @@ XML_Backing_Store::persist (FILE* fp, const Server_Info& info, const char* tag_p
   ACE_CString partial_ior = ACEXML_escape_string (info.partial_ior);
   ACE_CString ior = ACEXML_escape_string (info.ior);
 
-  ACE_OS::fprintf (fp,"%s<%s", tag_prepend, Locator_XMLHandler::SERVER_INFO_TAG);
+  ACE_OS::fprintf (fp,"%s<%s", tag_prepend,
+    Locator_XMLHandler::SERVER_INFO_TAG);
   ACE_OS::fprintf (fp," server_id=\"%s\"", server_id.c_str ());
   ACE_OS::fprintf (fp," name=\"%s\"", name.c_str ());
   ACE_OS::fprintf (fp," activator=\"%s\"", activator.c_str ());
   ACE_OS::fprintf (fp," command_line=\"%s\"", cmdline.c_str ());
   ACE_OS::fprintf (fp," working_dir=\"%s\"", wdir.c_str ());
-  ACE_CString amodestr = ImR_Utils::activationModeToString (info.activation_mode);
+  ACE_CString amodestr =
+    ImR_Utils::activationModeToString (info.activation_mode);
   ACE_OS::fprintf (fp," activation_mode=\"%s\"", amodestr.c_str ());
   ACE_OS::fprintf (fp," start_limit=\"%d\"", info.start_limit);
   ACE_OS::fprintf (fp," partial_ior=\"%s\"", partial_ior.c_str ());
@@ -112,14 +117,16 @@ XML_Backing_Store::persist (FILE* fp, const Server_Info& info, const char* tag_p
       ACE_OS::fprintf (fp,">\n");
       for (CORBA::ULong i = 0; i < info.env_vars.length (); ++i)
         {
-          ACE_OS::fprintf (fp,"%s\t<%s", tag_prepend, Locator_XMLHandler::ENVIRONMENT_TAG);
+          ACE_OS::fprintf (fp,"%s\t<%s", tag_prepend,
+            Locator_XMLHandler::ENVIRONMENT_TAG);
           ACE_OS::fprintf (fp," name=\"%s\"", info.env_vars[i].name.in ());
-          ACE_CString val = ACEXML_escape_string (info.env_vars[i].value.in ());
-          ACE_OS::fprintf (fp," value=\"%s\"", val.c_str ());
+          ACE_CString val = ACEXML_escape_string(info.env_vars[i].value.in());
+          ACE_OS::fprintf (fp," value=\"%s\"", val.c_str());
           ACE_OS::fprintf (fp,"/>\n");
         }
 
-      ACE_OS::fprintf (fp,"%s</%s>\n", tag_prepend, Locator_XMLHandler::SERVER_INFO_TAG);
+      ACE_OS::fprintf (fp,"%s</%s>\n", tag_prepend,
+        Locator_XMLHandler::SERVER_INFO_TAG);
     }
   else
     {
@@ -128,9 +135,11 @@ XML_Backing_Store::persist (FILE* fp, const Server_Info& info, const char* tag_p
 }
 
 void
-XML_Backing_Store::persist (FILE* fp, const Activator_Info& info, const char* tag_prepend)
+XML_Backing_Store::persist (FILE* fp, const Activator_Info& info,
+                            const char* tag_prepend)
 {
-  ACE_OS::fprintf (fp,"%s<%s", tag_prepend, Locator_XMLHandler::ACTIVATOR_INFO_TAG);
+  ACE_OS::fprintf (fp,"%s<%s", tag_prepend,
+    Locator_XMLHandler::ACTIVATOR_INFO_TAG);
   ACE_OS::fprintf( fp," name=\"%s\"", info.name.c_str ());
   ACE_OS::fprintf (fp," token=\"%d\"", info.token);
   ACE_OS::fprintf (fp," ior=\"%s\"", info.ior.c_str ());
@@ -140,31 +149,46 @@ XML_Backing_Store::persist (FILE* fp, const Activator_Info& info, const char* ta
 int
 XML_Backing_Store::persistent_load ()
 {
-  ACEXML_FileCharStream* fstm = new ACEXML_FileCharStream; // xml input source will take ownership
-
-  if (fstm->open (this->filename_.c_str()) != 0)
-    {
-      // This is not a real error. The xml file may not exist yet.
-      delete fstm;
-      return 0;
-    }
-  return load(fstm, this->filename_);
+  return load(this->filename_);
 }
 
 int
-XML_Backing_Store::load (ACEXML_FileCharStream* fstm, const ACE_CString& filename)
+XML_Backing_Store::load (const ACE_CString& filename)
 {
-  Locator_XMLHandler handler (*this);
+  Locator_XMLHandler xml_handler (*this);
+  return load(filename, xml_handler, this->debug_);
+}
+
+int
+XML_Backing_Store::load (const ACE_CString& filename,
+                         ACEXML_DefaultHandler& xml_handler,
+                         unsigned int debug)
+{
+  // xml input source will take ownership
+  ACEXML_FileCharStream* fstm = new ACEXML_FileCharStream;
+
+  const int err = fstm->open (filename.c_str());
+  if (debug > 9)
+    {
+      ACE_DEBUG((LM_INFO, ACE_TEXT ("load %s%s\n"), filename.c_str(),
+        ((err == 0) ? "" : " (file doesn't exist)")));
+    }
+
+  if (err != 0)
+    {
+      delete fstm;
+      return err;
+    }
 
   ACEXML_Parser parser;
 
   // InputSource takes ownership
   ACEXML_InputSource input (fstm);
 
-  parser.setContentHandler (&handler);
-  parser.setDTDHandler (&handler);
-  parser.setErrorHandler (&handler);
-  parser.setEntityResolver (&handler);
+  parser.setContentHandler (&xml_handler);
+  parser.setDTDHandler (&xml_handler);
+  parser.setErrorHandler (&xml_handler);
+  parser.setEntityResolver (&xml_handler);
 
   try
     {
@@ -172,7 +196,9 @@ XML_Backing_Store::load (ACEXML_FileCharStream* fstm, const ACE_CString& filenam
     }
   catch (const ACEXML_Exception& ex)
     {
-      ACE_ERROR ((LM_ERROR, "Error during load of ImR persistence xml file (%s).", filename.c_str()));
+      ACE_ERROR ((LM_ERROR,
+        ACE_TEXT ("Error during load of ImR persistence xml file (%s)."),
+        filename.c_str()));
       ex.print ();
       return -1;
     }

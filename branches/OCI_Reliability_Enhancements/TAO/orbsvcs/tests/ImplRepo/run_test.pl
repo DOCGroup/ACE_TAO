@@ -14,6 +14,7 @@ use File::Copy;
 
 $debug_level = '0';
 my $num_srvr = 1;
+my $replica = 0;
 my $all_tests = 0;
 
 foreach $i (@ARGV) {
@@ -22,6 +23,10 @@ foreach $i (@ARGV) {
     }
     elsif ($i eq '-servers') {
       $num_srvr = 3;
+    }
+    elsif ($i eq '-replica') {
+      $num_srvr = 2;
+      $replica = 1;
     }
     elsif ($i eq '-all') {
       $all_tests = 1;
@@ -46,10 +51,22 @@ for ($index = 0; $index < $num_srvr; ++$index) {
   push(@p_srv, PerlACE::TestTarget::create_target (++$tgt_num)) || die "Create p_srv target $tgt_num failed\n";
 }
 
+my $replica_imr;
+my $replica_act;
+my $replica_ti;
+if ($replica) {
+    $replica_imr = PerlACE::TestTarget::create_target (++$tgt_num) || die "Create replica_imr target $tgt_num failed\n";
+    $replica_act = PerlACE::TestTarget::create_target (++$tgt_num) || die "Create replica_act target $tgt_num failed\n";
+    $replica_ti = PerlACE::TestTarget::create_target (++$tgt_num) || die "Create replica_ti target $tgt_num failed\n";
+    $replica_imr->AddLibPath ("$ENV{ACE_ROOT}/lib");
+}
+
 $imr->AddLibPath ("$ENV{ACE_ROOT}/lib");
 
 my $imriorfile = "imr_locator.ior";
 my $actiorfile = "imr_activator.ior";
+my $replica_imriorfile = "replica_imr_locator.ior";
+my $replica_actiorfile = "replica_imr_activator.ior";
 my $nesteaiorfile = "nestea.ior";
 my $nestea_dat = "nestea.dat";
 
@@ -70,6 +87,13 @@ $TI = $ti->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_imr");
 # So, we tell its Process object to ignore the setting of -ExeSubDir.
 
 $TI->IgnoreExeSubDir (1);
+
+if ($replica) {
+    $replica_IMR = $replica_imr->CreateProcess ("../../ImplRepo_Service/tao_imr_locator");
+    $replica_ACT = $replica_act->CreateProcess ("../../ImplRepo_Service/tao_imr_activator");
+    $replica_TI = $replica_ti->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_imr");
+    $replica_TI->IgnoreExeSubDir (1);
+}
 
 my @airplaneiorfile;
 my @a_cli_airplaneiorfile;
@@ -115,6 +139,87 @@ my $N_CLI = create_ncli();
 
 my $N_SRV_cmd = $N_SRV->Executable();
 my $imr_N_SRV_cmd = $imr->LocalFile ($N_SRV_cmd);
+
+sub setup_repo {
+    my $repo_ref = shift;
+    my $the_imr = shift;
+    my $the_IMR = shift;
+    my $the_imriorfile = shift;
+    my $the_imr_imriorfile = shift;
+    my $the_act = shift;
+    my $the_ACT = shift;
+    my $the_actiorfile = shift;
+    my $the_act_imriorfile = shift;
+    my $the_act_actiorfile = shift;
+    my $the_ti = shift;
+    my $the_TI = shift;
+    my $the_ti_imriorfile = shift;
+    
+    $repo_ref->{imr} = $the_imr;
+    $repo_ref->{IMR} = $the_IMR;
+    $repo_ref->{imriorfile} = $the_imriorfile;
+    $repo_ref->{imr_imriorfile} = $the_imr_imriorfile;
+
+    $repo_ref->{act} = $the_act;
+    $repo_ref->{ACT} = $the_ACT;
+    $repo_ref->{actiorfile} = $the_actiorfile;
+    $repo_ref->{act_imriorfile} = $the_act_imriorfile;
+    $repo_ref->{act_actiorfile} = $the_act_actiorfile;
+
+    $repo_ref->{ti} = $the_ti;
+    $repo_ref->{TI} = $the_TI;
+    $repo_ref->{ti_imriorfile} = $the_ti_imriorfile;
+}
+
+# Helper subroutines
+
+sub kill_imr {
+    $IMR->Kill (); $IMR->TimedWait (1);
+    if ($replica) {
+      $replica_IMR->Kill (); $replica_IMR->TimedWait (1);
+    }
+}
+
+sub kill_act {
+    $ACT->Kill (); $ACT->TimedWait (1);
+    if ($replica) {
+      $replica_ACT->Kill (); $replica_ACT->TimedWait (1);
+    }
+}
+
+###############################################################################
+
+sub wait_for_imr {
+    my $repo_ref = shift;
+
+    if ($repo_ref->{imr}->WaitForFileTimed (
+                $repo_ref->{imriorfile},
+                $repo_ref->{imr}->ProcessStartWaitInterval()) == -1) {
+        print STDERR "ERROR: cannot find file <" .
+          $repo_ref->{imr_imriorfile} . ">\n";
+        kill_imr();
+        return 1;
+    }
+    if ($repo_ref->{imr}->GetFile ($repo_ref->{imriorfile}) == -1) {
+        print STDERR "ERROR: cannot retrieve file <" .
+          $repo_ref->{imr_imriorfile} . ">\n";
+        kill_imr();
+        return 1;
+    }
+    if ($repo_ref->{act}->PutFile ($repo_ref->{imriorfile}) == -1) {
+        print STDERR "ERROR: cannot set file <" . 
+          $repo_ref->{imr_imriorfile} . ">\n";
+        kill_imr();
+        return 1;
+    }
+    if ($repo_ref->{ti}->PutFile ($repo_ref->{imriorfile}) == -1) {
+        print STDERR "ERROR: cannot set file <" . 
+          $repo_ref->{imr_imriorfile} . ">\n";
+        kill_imr();
+        return 1;
+    }
+    return 0;
+}
 
 # The Tests
 
@@ -403,81 +508,148 @@ sub airplane_ir_test
     my $act_imriorfile = $act->LocalFile ($imriorfile);
     my $ti_imriorfile = $ti->LocalFile ($imriorfile);
     my $act_actiorfile = $act->LocalFile ($actiorfile);
+    my %repo;
+    setup_repo(\%repo, $imr, $IMR, $imriorfile, $imr_imriorfile, $act, $ACT,
+      $actiorfile, $act_imriorfile, $act_actiorfile, $ti, $TI, $ti_imriorfile);
 
-    my @a_srv_imriorfile;
-    my @imr_airplaneiorfile;
-    my @a_srv_airplaneiorfile;
+    my $replica_imr_imriorfile;
+    my $replica_act_imriorfile;
+    my $replica_ti_imriorfile;
+    my $replica_act_actiorfile;
+    my %replica_repo;
+    my $replica_imr_flag;
+    if ($replica) {
+        $replica_imr_imriorfile = $replica_imr->LocalFile ($replica_imriorfile);
+        $replica_act_imriorfile = $replica_act->LocalFile ($replica_imriorfile);
+        $replica_ti_imriorfile = $replica_ti->LocalFile ($replica_imriorfile);
+        $replica_act_actiorfile = $replica_act->LocalFile ($replica_actiorfile);
+        setup_repo(\%replica_repo, $replica_imr, $replica_IMR,
+          $replica_imriorfile, $replica_imr_imriorfile, $replica_act,
+          $replica_ACT, $replica_actiorfile, $replica_act_imriorfile,
+          $replica_act_actiorfile, $replica_ti, $replica_TI,
+          $replica_ti_imriorfile);
+        my $replica_imr_replica_imriorfile = $imr->LocalFile ($imriorfile);
+        $replica_imr_flag = "-i file://$replica_imr_replica_imriorfile ";
+    }
+
+    my @repo_for_srvr;
     for ($index = 0; $index < $num_srvr; ++$index) {
-        push(@a_srv_imriorfile, $a_srv[$index]->LocalFile ($imriorfile));
-        push(@imr_airplaneiorfile, $imr->LocalFile ($airplaneiorfile[$index]));
+        if ($index == ($num_srvr - 1) && $replica) {
+            push(@repo_for_srvr, \%replica_repo);
+        }
+        else {
+            push(@repo_for_srvr, \%repo);
+        }
+
+        push(@a_srv_imriorfile, $a_srv[$index]->LocalFile ($repo_for_srvr[$index]->{imriorfile}));
+        push(@imr_airplaneiorfile, $repo_for_srvr[$index]->{imr}->LocalFile ($airplaneiorfile[$index]));
         push(@a_srv_airplaneiorfile, $a_srv[$index]->LocalFile ($airplaneiorfile[$index]));
-        $a_srv[$index]->DeleteFile ($imriorfile);
+        $a_srv[$index]->DeleteFile ($repo_for_srvr[$index]->{imriorfile});
         $a_srv[$index]->DeleteFile ($airplaneiorfile[$index]);
         $a_cli[$index]->DeleteFile ($airplaneiorfile[$index]);
-        $imr->DeleteFile ($airplaneiorfile[$index]);
+        $repo_for_srvr[$index]->{imr}->DeleteFile ($airplaneiorfile[$index]);
     }
     $imr->DeleteFile ($imriorfile);
     $act->DeleteFile ($imriorfile);
     $ti->DeleteFile ($imriorfile);
     $act->DeleteFile ($actiorfile);
+    if ($replica) {
+        $replica_imr->DeleteFile ($replica_imriorfile);
+        $replica_act->DeleteFile ($replica_imriorfile);
+        $replica_ti->DeleteFile ($replica_imriorfile);
+        $replica_act->DeleteFile ($replica_actiorfile);
+    }
 
-    $IMR->Arguments ("-d 2 -o $imr_imriorfile $refstyle");
-    $IMR_status = $IMR->Spawn ();
+    # if replicating, then need shared backing store and
+    # passing "-e" flag to clear persistent storage on startup
+    my $bs_flag = ($replica ? "-y . -e " : "");
+    $repo{IMR}->Arguments (
+      "-d 10 -o $repo{imr_imriorfile} $refstyle $bs_flag");
+    $IMR_status = $repo{IMR}->Spawn ();
     if ($IMR_status != 0) {
         print STDERR "ERROR: ImR Service returned $IMR_status\n";
         return 1;
     }
-    if ($imr->WaitForFileTimed ($imriorfile,$imr->ProcessStartWaitInterval()) == -1) {
-        print STDERR "ERROR: cannot find file <$imr_imriorfile>\n";
-        $IMR->Kill (); $IMR->TimedWait (1);
-        return 1;
+    wait_for_imr(\%repo);
+    if ($replica) {
+        print "starting replica_repo IMR\n";
+        $replica_repo{IMR}->Arguments (
+          "-d 10 -o $replica_repo{imr_imriorfile} $refstyle $bs_flag $replica_imr_flag");
+        $replica_IMR_status = $replica_repo{IMR}->Spawn ();
+        if ($replica_IMR_status != 0) {
+            print STDERR "ERROR: ImR Service replica returned $replica_IMR_status\n";
+            return 1;
+        }
     }
-    if ($imr->GetFile ($imriorfile) == -1) {
-        print STDERR "ERROR: cannot retrieve file <$imr_imriorfile>\n";
-        $IMR->Kill (); $IMR->TimedWait (1);
-        return 1;
-    }
-    if ($act->PutFile ($imriorfile) == -1) {
-        print STDERR "ERROR: cannot set file <$act_imriorfile>\n";
-        $IMR->Kill (); $IMR->TimedWait (1);
-        return 1;
-    }
-    if ($ti->PutFile ($imriorfile) == -1) {
-        print STDERR "ERROR: cannot set file <$ti_imriorfile>\n";
-        $IMR->Kill (); $IMR->TimedWait (1);
-        return 1;
+    if ($replica) {
+        wait_for_imr(\%replica_repo);
     }
     for ($index = 0; $index < $num_srvr; ++$index) {
-        if ($a_srv[$index]->PutFile ($imriorfile) == -1) {
+        if ($a_srv[$index]->PutFile ($repo_for_srvr[$index]->{imriorfile}) == -1) {
             print STDERR "ERROR: cannot set file <$a_srv_imriorfile[$index]>\n";
-            $IMR->Kill (); $IMR->TimedWait (1);
+            kill_imr();
             return 1;
         }
     }
 
-    $ACT->Arguments ("-d 2 -o $act_actiorfile -ORBInitRef ImplRepoService=file://$act_imriorfile");
-    $ACT_status = $ACT->Spawn ();
+    print "\n\nstarting repo ACT\n";
+    $repo{ACT}->Arguments ("-d 2 -o $repo{act_actiorfile} " .
+      "-ORBInitRef ImplRepoService=file://$repo{act_imriorfile}");
+    $ACT_status = $repo{ACT}->Spawn ();
     if ($ACT_status != 0) {
         print STDERR "ERROR: ImR Activator returned $ACT_status\n";
         return 1;
     }
-    if ($act->WaitForFileTimed ($actiorfile,$act->ProcessStartWaitInterval()) == -1) {
-        print STDERR "ERROR: cannot find file <$act_actiorfile>\n";
-        $ACT->Kill (); $ACT->TimedWait (1);
-        $IMR->Kill (); $IMR->TimedWait (1);
+
+    if ($repo{act}->WaitForFileTimed (
+                  $repo{actiorfile},
+                  $repo{act}->ProcessStartWaitInterval()) == -1) {
+        print STDERR "ERROR: cannot find file <" .
+          $repo{act_actiorfile} . ">\n";
+        kill_act();
+        kill_imr();
         return 1;
+    }
+
+    if ($replica) {
+#        print "\n\nwait on IMR\n";
+#        $IMR->TimedWait (60);
+        print "\n\nstarting replica_repo ACT\n";
+        $replica_repo{ACT}->Arguments ("-d 2 -o $replica_repo{act_actiorfile} " .
+          "-ORBInitRef ImplRepoService=file://$replica_repo{act_imriorfile} " .
+          "-n replica_act");
+        $ACT_status = $replica_repo{ACT}->Spawn ();
+        if ($ACT_status != 0) {
+            print STDERR "ERROR: ImR Activator replica returned $ACT_status\n";
+            return 1;
+        }
+    }
+
+    if ($replica) {
+      if ($replica_repo{act}->WaitForFileTimed (
+                $replica_repo{actiorfile},
+                $replica_repo{act}->ProcessStartWaitInterval()) == -1) {
+          print STDERR "ERROR: cannot find file <" .
+            $replica_repo{act_actiorfile} . ">\n";
+          kill_act();
+          kill_imr();
+          return 1;
+      }
     }
 
     # No need to specify imr_initref or -orbuseimr 1 for servers spawned by activator
     # Can use update to add servers.
     for ($index = 0; $index < $num_srvr; ++$index) {
-        $TI->Arguments ("-ORBInitRef ImplRepoService=file://$ti_imriorfile ".
-                        "update $a_srv_name[$index] -c \"$imr_A_SRV_cmd[$index] -o $imr_airplaneiorfile[$index] -s $a_srv_name[$index]\"");
-        $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
+        $repo_for_srvr[$index]->{TI}->Arguments ("-ORBInitRef ImplRepoService" .
+          "=file://$repo_for_srvr[$index]->{ti_imriorfile} update " . 
+          "$a_srv_name[$index] -c \"$imr_A_SRV_cmd[$index] " . 
+          "-o $imr_airplaneiorfile[$index] -s $a_srv_name[$index]\"");
+        $TI_status = $repo_for_srvr[$index]->{TI}->SpawnWaitKill (
+          $repo_for_srvr[$index]->{ti}->ProcessStartWaitInterval());
         if ($TI_status != 0) {
-            print STDERR "ERROR: tao_imr returned $TI_status\n";
-            $ACT->Kill (); $ACT->TimedWait (1);
-            $IMR->Kill (); $IMR->TimedWait (1);
+            print STDERR "ERROR: tao_imr ($index) returned $TI_status\n";
+            kill_act();
+            kill_imr();
             return 1;
         }
 
@@ -495,22 +667,22 @@ sub airplane_ir_test
         if ($a_srv[$index]->WaitForFileTimed ($airplaneiorfile[$index],$a_srv[$index]->ProcessStartWaitInterval()) == -1) {
             print STDERR "ERROR: cannot find file <$a_srv_airplaneiorfile[$index]>\n";
             kill_then_timed_wait(\@A_SRV, 1);
-            $ACT->Kill (); $ACT->TimedWait (1);
-            $IMR->Kill (); $IMR->TimedWait (1);
+            kill_act();
+            kill_imr();
             return 1;
         }
         if ($a_srv[$index]->GetFile ($airplaneiorfile[$index]) == -1) {
             print STDERR "ERROR: cannot retrieve file <$a_srv_airplaneiorfile[$index]>\n";
             kill_then_timed_wait(\@A_SRV, 1);
-            $ACT->Kill (); $ACT->TimedWait (1);
-            $IMR->Kill (); $IMR->TimedWait (1);
+            kill_act();
+            kill_imr();
             return 1;
         }
         if ($a_cli[$index]->PutFile ($airplaneiorfile[$index]) == -1) {
             print STDERR "ERROR: cannot set file <$a_cli_airplaneiorfile[$index]>\n";
             kill_then_timed_wait(\@A_SRV, 1);
-            $ACT->Kill (); $ACT->TimedWait (1);
-            $IMR->Kill (); $IMR->TimedWait (1);
+            kill_act();
+            kill_imr();
             return 1;
         }
     }
@@ -532,34 +704,34 @@ sub airplane_ir_test
     }
 
     for ($index = 0; $index < $num_srvr; ++$index) {
-        $TI->Arguments ("-ORBInitRef ImplRepoService=file://$ti_imriorfile shutdown $a_srv_name[$index]");
+        $repo_for_srvr[$index]->{TI}->Arguments ("-ORBInitRef " .
+          "ImplRepoService=file://$repo_for_srvr[$index]->{ti_imriorfile} " .
+          "shutdown $a_srv_name[$index]");
 
-        $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
+        $TI_status = $repo_for_srvr[$index]->{TI}->SpawnWaitKill (
+          $repo_for_srvr[$index]->{ti}->ProcessStartWaitInterval());
         if ($TI_status != 0) {
             print STDERR "ERROR: tao_imr 1 ($index) returned $TI_status\n";
             $status = 1;
         }
     }
 
-    $TI->Arguments ("-ORBInitRef ImplRepoService=file://$ti_imriorfile list");
-
-    $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
-    if ($TI_status != 0) {
-        print STDERR "ERROR: tao_imr list returned $TI_status\n";
-        $status = 1;
-    }
-
     for ($index = 0; $index < $num_srvr; ++$index) {
         # This client should force a new airplane_server to be started
-        $A_CLI_status = $A_CLI[$index]->SpawnWaitKill ($a_cli[$index]->ProcessStartWaitInterval());
+        $A_CLI_status = $A_CLI[$index]->SpawnWaitKill (
+          $a_cli[$index]->ProcessStartWaitInterval());
         if ($A_CLI_status != 0) {
-            print STDERR "ERROR: restarted Airplane Client $index returned $A_CLI_status\n";
+            print STDERR "ERROR: restarted Airplane Client $index returned " .
+              "$A_CLI_status\n";
             $status = 1;
         }
 
-        $TI->Arguments ("-ORBInitRef ImplRepoService=file://$ti_imriorfile shutdown $a_srv_name[$index]");
+        $repo_for_srvr[$index]->{TI}->Arguments ("-ORBInitRef " .
+          "ImplRepoService=file://$repo_for_srvr[$index]->{ti_imriorfile} " .
+          "shutdown $a_srv_name[$index]");
 
-        $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
+        $TI_status = $repo_for_srvr[$index]->{TI}->SpawnWaitKill (
+          $repo_for_srvr[$index]->{ti}->ProcessStartWaitInterval());
         if ($TI_status != 0) {
             print STDERR "ERROR: tao_imr 2 ($index) returned $TI_status\n";
             $status = 1;
@@ -574,25 +746,59 @@ sub airplane_ir_test
         }
     }
 
-    $ACT_status = $ACT->TerminateWaitKill ($act->ProcessStopWaitInterval());
+    $ACT_status = $repo{ACT}->TerminateWaitKill (
+      $repo{act}->ProcessStopWaitInterval());
     if ($ACT_status != 0) {
         print STDERR "ERROR: Activator returned $ACT_status\n";
         $status = 1;
     }
+    
+    if ($replica) {
+        $ACT_status = $replica_repo{ACT}->TerminateWaitKill (
+          $replica_repo{act}->ProcessStopWaitInterval());
+        if ($ACT_status != 0) {
+            print STDERR "ERROR: replica Activator returned $ACT_status\n";
+            $status = 1;
+        }
+    }
 
-    $IMR_status = $IMR->TerminateWaitKill ($imr->ProcessStopWaitInterval());
+    $IMR_status = $repo{IMR}->TerminateWaitKill (
+      $repo{imr}->ProcessStopWaitInterval());
     if ($IMR_status != 0) {
         print STDERR "ERROR: ImR returned $IMR_status\n";
         $status = 1;
     }
+    
+    if ($replica) {
+        $IMR_status = $replica_repo{IMR}->TerminateWaitKill (
+          $replica_repo{imr}->ProcessStopWaitInterval());
+        if ($IMR_status != 0) {
+            print STDERR "ERROR: replica ImR returned $IMR_status\n";
+            $status = 1;
+        }
+    }
 
-    $imr->DeleteFile ($imriorfile);
-    $act->DeleteFile ($imriorfile);
-    $ti->DeleteFile ($imriorfile);
-    $act->DeleteFile ($actiorfile);
+    $repo{imr}->DeleteFile ($repo{imriorfile});
+    $repo{act}->DeleteFile ($repo{imriorfile});
+    $repo{ti}->DeleteFile ($repo{imriorfile});
+    $repo{act}->DeleteFile ($repo{actiorfile});
+
+    if ($replica) {
+        $replica_repo{imr}->DeleteFile (
+          $replica_repo{imriorfile});
+        $replica_repo{act}->DeleteFile (
+          $replica_repo{imriorfile});
+        $replica_repo{ti}->DeleteFile (
+          $replica_repo{imriorfile});
+        $replica_repo{act}->DeleteFile (
+          $replica_repo{actiorfile});
+    }
+
     for ($index = 0; $index < $num_srvr; ++$index) {
-        $imr->DeleteFile ($airplaneiorfile[$index]);
-        $a_srv[$index]->DeleteFile ($imriorfile);
+        $repo_for_srvr[$index]->{imr}->DeleteFile (
+          $airplaneiorfile[$index]);
+        $a_srv[$index]->DeleteFile (
+          $repo_for_srvr[$index]->{imriorfile});
         $a_srv[$index]->DeleteFile ($airplaneiorfile[$index]);
         $a_cli[$index]->DeleteFile ($airplaneiorfile[$index]);
     }
@@ -1098,7 +1304,10 @@ sub persistent_ir_test
     }
 
     my $imr_imriorfile = $imr->LocalFile ($imriorfile);
-    my $imr_storefile = $imr->LocalFile ($backing_store);
+    my $imr_storefile;
+    if (defined($backing_store)) {
+        $imr_storefile = $imr->LocalFile ($backing_store);
+    }
     my $act_imriorfile = $act->LocalFile ($imriorfile);
     my $ti_imriorfile = $ti->LocalFile ($imriorfile);
     my $act_actiorfile = $act->LocalFile ($actiorfile);
@@ -1425,7 +1634,24 @@ sub persistent_ir_test
         $status = 1;
     }
 
-    if ($backing_store =~ /\.xml$/) {
+    if (!defined($backing_store)) {
+        # startup ImR with "-e" flag to ensure cleanup of registry entries
+        $IMR->Arguments ("$imr_arguments -e");
+        $IMR_status = $IMR->Spawn ();
+        if ($IMR_status != 0) {
+            print STDERR "ERROR: ImR Service returned $IMR_status\n";
+            return 1;
+        }
+
+        $IMR->TimedWait ($imr->ProcessStartWaitInterval());
+
+        $IMR_status = $IMR->TerminateWaitKill ($imr->ProcessStopWaitInterval());
+        if ($IMR_status != 0) {
+            print STDERR "ERROR: ImR returned $IMR_status\n";
+            $status = 1;
+        }
+    }
+    elsif ($backing_store =~ /\.xml$/) {
         $imr->DeleteFile ($backing_store);
     }
     else {
@@ -1728,8 +1954,10 @@ sub both_ir_test
 my $ret = 0;
 my $test_num = 0;
 
-my @tests = ("airplane", "airplane_ir", "nt_service_ir", "nestea", "nestea_ir",
-             "both_ir", "persistent_ir", "persistent_ir_hash", "persistent_ir_shared");
+my @tests = ("airplane", "airplane_ir", "nestea", "nestea_ir",
+             "both_ir", "persistent_ir", "persistent_ir_hash",
+             "persistent_ir_shared");
+my @nt_tests = ("nt_service_ir", "persistent_ir_registry");
 
 my $i;
 if ($all_tests) {
@@ -1737,26 +1965,33 @@ if ($all_tests) {
 }
 
 if ($#ARGV >= 0) {
+my $append = "";
 for ($i = 0; $i <= $#ARGV; $i++) {
     if ($ARGV[$i] eq "-h" || $ARGV[$i] eq "-?") {
         print "run_test [options] test\n";
         print "\n";
         print "options            \n";
         print "    -debug         -- set debug_level to 10\n";
-        print "    -all           -- causes all tests to run\n";
+        print "    -all           -- causes all tests to run (except nt_service_ir and\n";
+        print "                      persistent_ir_registry)\n";
         print "    -servers       -- run tests with more than 1 server and client\n";
+        print "    -replica       -- run tests with more than 1 server and client interacting\n";
+        print "                      with replicated ImR Locators\n";
         print "test               -- Runs a specific test:\n";
         my $indent = "                         ";
         print "$indent";
         my $count = 0;
-        foreach my $test (@tests) {
+        my @all_tests = @tests;
+        push(@all_tests, @nt_tests);
+        foreach my $test (@all_tests) {
           if (++$count > 1) {
-              print ",";
+              print ",$append";
           }
-          if ($count % 4 == 0) {
-              print "\n$indent";
+          print "$test";
+          $append = "";
+          if ($count % 3 == 0) {
+              $append = "\n$indent";
           }
-          print "$test"
         }
         print "\n";
         exit 1;
@@ -1784,6 +2019,9 @@ for ($i = 0; $i <= $#ARGV; $i++) {
     }
     elsif ($ARGV[$i] eq "persistent_ir_hash") {
         $ret = persistent_ir_test ("-p");
+    }
+    elsif ($ARGV[$i] eq "persistent_ir_registry") {
+        $ret = persistent_ir_test ("-r");
     }
     elsif ($ARGV[$i] eq "persistent_ir_shared") {
         $ret = persistent_ir_test ("-y");

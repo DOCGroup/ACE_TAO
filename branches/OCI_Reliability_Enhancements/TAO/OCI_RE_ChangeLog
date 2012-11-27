@@ -1,3 +1,45 @@
+Tue Nov 27 16:27:39 UTC 2012  Brian Johnson  <johnsonb@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Locator_Repository.h:
+        * orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
+
+          Added interface for forwarding UpdatePushNotification calls.
+          Added add bool param to persistent_update calls and cleaned
+          up.
+
+        * orbsvcs/ImplRepo_Service/Config_Backing_Store.h:
+        * orbsvcs/ImplRepo_Service/Config_Backing_Store.cpp:
+        * orbsvcs/ImplRepo_Service/XML_Backing_Store.h:
+        * orbsvcs/ImplRepo_Service/XML_Backing_Store.cpp:
+
+          Changes from persistent_update interface changes.
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator.idl:
+
+          Added UpdatePushNotification interface.
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+
+          Added UpdatePushNotification implemenation, forwarding
+          to the repository_, replication handling, and cleanup.
+
+        * orbsvcs/ImplRepo_Service/Locator_Options.h:
+        * orbsvcs/ImplRepo_Service/Locator_Options.cpp:
+
+          Added replica object key option.
+
+        * orbsvcs/ImplRepo_Service/Shared_Backing_Store.h:
+        * orbsvcs/ImplRepo_Service/Shared_Backing_Store.cpp:
+
+          Added implementatioln for forwarded UpdatePushNotification calls.
+          Added notifying of updates and identifying what needs to be
+          updated.
+
+        * orbsvcs/tests/ImplRepo/run_test.pl:
+
+          Added replication testing.
+
 Mon Nov 26 22:39:55 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:

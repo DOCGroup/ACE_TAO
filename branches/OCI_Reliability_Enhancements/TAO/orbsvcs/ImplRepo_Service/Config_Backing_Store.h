@@ -27,7 +27,8 @@ class ACE_Configuration;
 /**
 * @class Config_Backing_Store
 *
-* @brief ACE_Configuration backing store interface containing all ImR persistent information.
+* @brief ACE_Configuration backing store interface containing all ImR persistent
+* information.
 *
 */
 class Config_Backing_Store : public Locator_Repository
@@ -40,9 +41,9 @@ public:
   virtual int persistent_load();
 
 protected:
-  virtual int persistent_update(const Server_Info_Ptr& info);
+  virtual int persistent_update(const Server_Info_Ptr& info, bool add);
 
-  virtual int persistent_update(const Activator_Info_Ptr& info);
+  virtual int persistent_update(const Activator_Info_Ptr& info, bool add);
 
   virtual int persistent_remove(const ACE_CString& name, bool activator);
 
@@ -79,7 +80,8 @@ private:
 /**
 * @class Registry_Backing_Store
 *
-* @brief Win32 registry backing store containing all ImR persistent information.
+* @brief Win32 registry backing store containing all ImR persistent
+* information.
 *
 */
 class Registry_Backing_Store : public Config_Backing_Store

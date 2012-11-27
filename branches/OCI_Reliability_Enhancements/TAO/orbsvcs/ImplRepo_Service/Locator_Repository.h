@@ -19,6 +19,7 @@
 #include "Server_Info.h"
 #include "Activator_Info.h"
 #include "Locator_Options.h"
+#include "ImR_LocatorC.h"
 
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Configuration.h"
@@ -66,13 +67,15 @@ public:
     int start_limit,
     const ACE_CString& partial_ior = ACE_CString(""),
     const ACE_CString& ior = ACE_CString(""),
-    ImplementationRepository::ServerObject_ptr svrobj = ImplementationRepository::ServerObject::_nil()
+    ImplementationRepository::ServerObject_ptr svrobj =
+      ImplementationRepository::ServerObject::_nil()
     );
   /// Add a new activator to the Repository
   int add_activator (const ACE_CString& name,
     const CORBA::Long token,
     const ACE_CString& ior = ACE_CString(""),
-    ImplementationRepository::Activator_ptr act = ImplementationRepository::Activator::_nil()
+    ImplementationRepository::Activator_ptr act =
+      ImplementationRepository::Activator::_nil()
     );
 
   /// Update the associated information.
@@ -94,8 +97,10 @@ public:
 
   /// Returns the internal hash map containing the server information.
   SIMap& servers(void);
+  const SIMap& servers(void) const;
   /// Returns the internal hash map containing the activator information.
   AIMap& activators(void);
+  const AIMap& activators(void) const;
 
   virtual const char* repo_mode() const = 0;
 
@@ -105,13 +110,23 @@ public:
 
   virtual int persistent_load();
 
+  virtual void notify_updated_server(
+    const ImplementationRepository::ServerUpdate& server);
+  virtual void notify_updated_activator(
+    const ImplementationRepository::ActivatorUpdate& activator);
+  virtual void register_replica(
+    ImplementationRepository::UpdatePushNotification_ptr replica,
+    ImplementationRepository::SequenceNum_out seq_num,
+    ImplementationRepository::SequenceNum replica_seq_num);
+
 protected:
   enum SyncOp { SYNC_ADD, SYNC_REMOVE };
-  virtual int sync_load(const ACE_CString& name, SyncOp sync_op, bool activator);
+  virtual int sync_load(const ACE_CString& name, SyncOp sync_op,
+                        bool activator);
 
-  virtual int persistent_update(const Server_Info_Ptr& info);
+  virtual int persistent_update(const Server_Info_Ptr& info, bool add);
 
-  virtual int persistent_update(const Activator_Info_Ptr& info);
+  virtual int persistent_update(const Activator_Info_Ptr& info, bool add);
 
   virtual int persistent_remove(const ACE_CString& name, bool activator);
 
