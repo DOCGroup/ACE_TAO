@@ -1,3 +1,23 @@
+Tue Nov 27 19:14:37 UTC 2012  f6  <f6@>
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Replication_Manager.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Replication_Manager.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:
+
+          Implemented Replication Manager registration functionality.
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context.cpp:
+
+          Implemented notification of changed contexts.
+
+        * orbsvcs/tests/FT_Naming/Load_Balancing/run_test.pl:
+
+        * orbsvcs/tests/FT_Naming/Replication/client.cpp:
+        * orbsvcs/tests/FT_Naming/Replication/run_test.pl:
+
+          Updated tests to use replication arguments.
+
 Tue Nov 27 16:27:39 UTC 2012  Brian Johnson  <johnsonb@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/Locator_Repository.h:

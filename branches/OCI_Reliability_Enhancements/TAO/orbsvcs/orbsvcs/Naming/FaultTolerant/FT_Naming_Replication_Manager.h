@@ -60,7 +60,7 @@ public:
   virtual void notify_updated_context (
     const FT_Naming::NamingContextUpdate & group_info);
 
-  FT_Naming::ReplicationManager_ptr peer_replica (void);
+  static FT_Naming::ReplicationManager_ptr peer_replica (void);
 
  /*
   * Utilities for implementing the FT_Naming::ReplicationManager

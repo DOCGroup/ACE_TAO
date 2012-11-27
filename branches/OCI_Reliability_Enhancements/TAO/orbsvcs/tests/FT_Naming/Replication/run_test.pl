@@ -23,13 +23,20 @@ if ($ARGV[0] eq '-q') {
 
 my $test = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 
-$hostname = $test->HostName ();
 # Variables for command-line arguments to client and server
 # executables.
+$hostname = $test->HostName ();
+
 $ns_orb_port1 = 10001 + $test->RandomPort ();
 $ns_orb_port2 = 10002 + $test->RandomPort ();
 $ns_endpoint1 = "iiop://$hostname:$ns_orb_port1";
 $ns_endpoint2 = "iiop://$hostname:$ns_orb_port2";
+
+
+$primary_name = "Replica_Primary";
+$primary_ior = "corbaloc::$hostname:$ns_orb_port1/$primary_name";
+$backup_name = "Replica_Backup";
+$backup_ior = "corbaloc::$hostname:$ns_orb_port1/$backup_name";
 
 
 $iorfile1 = "ns1.ior";
@@ -74,10 +81,10 @@ else {
     chdir "..";
 }
 
-# Run two Naming Servers in redundant mode and one client.  Client uses iors
+# Run two Naming Servers and one client.  Client uses iors
 # in files to find the individual copies of the Naming Servers.
 
-my $args = "-ORBEndPoint $ns_endpoint1 -o $test_iorfile1 -m 0 -u NameService -i Replica_P";
+my $args = "-ORBEndPoint $ns_endpoint1 -o $test_iorfile1 -m 0 -u NameService -i $primary_name";
 my $prog = "$startdir/../../../Naming_Service/tao_ft_naming";
 
 $NS1 = $test->CreateProcess ("$prog", "$args");
@@ -93,7 +100,8 @@ if ($test->WaitForFileTimed ($iorfile1,
     exit 1;
 }
 
-$args = "-ORBEndPoint $ns_endpoint2 -o $test_iorfile2 -m 0 -u NameService -i Replica_P";
+$args = "-ORBEndPoint $ns_endpoint2 -o $test_iorfile2 -m 0 -u NameService -i $backup_name -j $primary_ior";
+
 $prog = "$startdir/../../../Naming_Service/tao_ft_naming";
 
 $NS2 = $test->CreateProcess ("$prog", "$args");

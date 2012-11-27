@@ -51,7 +51,7 @@ $client->DeleteFile($client_ns_iorfile);
 
 $SV1 = $naming_manager->CreateProcess ("../../../../orbsvcs/Naming_Service/tao_ft_naming",
                               "-ORBdebuglevel $debug_level " .
-                              "-f FT_Naming.dat " .
+                              "-u NameService " .
                               "-o $ns_iorfile " .
                               "-g $nm_iorfile " .
                               ($^O eq 'MSWin32' ?
