@@ -643,3 +643,4 @@ AST_Module::reset_last_in_same_parent_scope (void)
 {
   this->last_in_same_parent_scope_ = this;
 }
+
