@@ -124,45 +124,43 @@ ImR_Locator_i::init_with_orb (CORBA::ORB_ptr orb, Options& opts)
   this->imr_poa_->activate_object_with_id (id.in (), this);
 
   obj = this->imr_poa_->id_to_reference (id.in ());
+  ImplementationRepository::ReplicatedLocator_var replicated_locator =
+    ImplementationRepository::ReplicatedLocator::_narrow (obj.in ());
+  ACE_ASSERT(! CORBA::is_nil (replicated_locator.in ()));
   CORBA::String_var ior = this->orb_->object_to_string (obj.in ());
 
-  // Register the ImR for use with INS
-  obj = orb->resolve_initial_references ("IORTable");
-  IORTable::Table_var ior_table = IORTable::Table::_narrow (obj.in ());
-  ACE_ASSERT (! CORBA::is_nil (ior_table.in ()));
-  ior_table->bind ("ImplRepoService", ior.in ());
-  ior_table->bind ("ImR", ior.in ());
-  ior_table->set_locator (this->ins_locator_.in ());
-
-  // Set up multicast support (if enabled)
-  if (opts.multicast ())
-    {
-      ACE_Reactor* reactor = orb->orb_core ()->reactor ();
-      if (this->setup_multicast (reactor, ior.in ()) != 0)
-        return -1;
-    }
+  const bool replicate = (!opts.replica_obj_key().is_empty() &&
+    opts.repository_mode() == Options::REPO_SHARED_FILES);
 
   // create the selected Locator_Repository with backing store
   switch (opts.repository_mode())
     {
     case Options::REPO_REGISTRY:
       {
-        repository_.reset(new Registry_Backing_Store(opts.persist_file_name(), opts.repository_erase()));
+        repository_.reset(
+          new Registry_Backing_Store(opts.persist_file_name(),
+                                     opts.repository_erase() && !replicate));
         break;
       }
     case Options::REPO_HEAP_FILE:
       {
-        repository_.reset(new Heap_Backing_Store(opts.persist_file_name(), opts.repository_erase()));
+        repository_.reset(
+          new Heap_Backing_Store(opts.persist_file_name(),
+                                 opts.repository_erase() && !replicate));
         break;
       }
     case Options::REPO_XML_FILE:
       {
-        repository_.reset(new XML_Backing_Store(opts.persist_file_name(), opts.repository_erase()));
+        repository_.reset(
+          new XML_Backing_Store(opts.persist_file_name(),
+                                opts.repository_erase() && !replicate));
         break;
       }
     case Options::REPO_SHARED_FILES:
       {
-        repository_.reset(new Shared_Backing_Store(opts.persist_file_name(), opts.repository_erase()));
+        repository_.reset(
+          new Shared_Backing_Store(opts.persist_file_name(),
+                                   opts.repository_erase() && !replicate));
         break;
       }
     case Options::REPO_NONE:
@@ -184,6 +182,65 @@ ImR_Locator_i::init_with_orb (CORBA::ORB_ptr orb, Options& opts)
   // Load from persistent storage. This will load any values that
   // may have been persisted before.
   this->repository_->persistent_load();
+
+  if (replicate)
+    {
+      if (debug_ > 1)
+        {
+          ACE_DEBUG((LM_INFO,
+            "Resolving ImR replica %s\n", opts.replica_obj_key().c_str()));
+        }
+
+      obj = orb->string_to_object (opts.replica_obj_key().c_str());
+
+      if (CORBA::is_nil (obj.in ()))
+        ACE_ERROR_RETURN ((LM_ERROR,
+          "Error: invalid obj key <%s> for ImR replica\n",
+          opts.replica_obj_key().c_str()), -1);
+
+      ImplementationRepository::UpdatePushNotification_var replica =
+        ImplementationRepository::UpdatePushNotification::_narrow (obj.in());
+
+      if (CORBA::is_nil (replica.in ()))
+        ACE_ERROR_RETURN ((LM_ERROR,
+          "Error: obj key <%s> not an ImR replica\n",
+          opts.replica_obj_key().c_str()), -1);
+
+      if (debug_ > 1)
+        {
+          ACE_DEBUG((LM_INFO,
+            "Registering with previously running ImR replica\n"));
+        }
+
+      ImplementationRepository::SequenceNum replica_seq_num = 0;
+      replica->register_replica(replicated_locator.in(), replica_seq_num);
+
+      if (debug_ > 9)
+        {
+          ACE_DEBUG((LM_INFO, "Initializing repository with seq number %d\n",
+            replica_seq_num));
+        }
+
+      ImplementationRepository::SequenceNum unused = 0;
+      this->repository_->register_replica(replica.in(), unused, replica_seq_num);
+    }
+
+  // Register the ImR for use with INS
+  obj = orb->resolve_initial_references ("IORTable");
+  IORTable::Table_var ior_table = IORTable::Table::_narrow (obj.in ());
+  ACE_ASSERT (! CORBA::is_nil (ior_table.in ()));
+
+  ior_table->bind ("ImplRepoService", ior.in ());
+  ior_table->bind ("ImR", ior.in ());
+  ior_table->set_locator (this->ins_locator_.in ());
+
+  // Set up multicast support (if enabled)
+  if (opts.multicast ())
+    {
+      ACE_Reactor* reactor = orb->orb_core ()->reactor ();
+      if (this->setup_multicast (reactor, ior.in ()) != 0)
+        return -1;
+    }
 
   // Activate the two poa managers
   PortableServer::POAManager_var poaman =
@@ -1552,6 +1609,35 @@ ImR_Locator_i::is_alive_i (Server_Info& info)
       return 0;
     }
   return 1;
+}
+
+void
+ImR_Locator_i::notify_updated_server(const ImplementationRepository::ServerUpdate& server)
+{
+  this->repository_->notify_updated_server(server);
+  ACE_DEBUG((LM_INFO, "(%P|%t) notify_updated_server done\n"));
+}
+
+void
+ImR_Locator_i::notify_updated_activator(const ImplementationRepository::ActivatorUpdate& activator)
+{
+  this->repository_->notify_updated_activator(activator);
+  ACE_DEBUG((LM_INFO, "(%P|%t) notify_updated_activator done\n"));
+}
+
+void
+ImR_Locator_i::register_replica(ImplementationRepository::UpdatePushNotification_ptr replica,
+                                ImplementationRepository::SequenceNum_out seq_num)
+{
+  if (debug_ > 1)
+    {
+      ACE_DEBUG((LM_INFO,
+        "Registering new ImR replica\n"));
+    }
+
+  // newly registered replica starts at sequence number 0
+  this->repository_->register_replica(replica, seq_num, 0);
+  ACE_DEBUG((LM_INFO, "Registering new ImR replica done\n"));
 }
 
 int

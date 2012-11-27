@@ -97,6 +97,9 @@ public:
 
   bool unregister_if_address_reused (void) const;
 
+  /// The obj key for the replica
+  const ACE_TString& replica_obj_key(void) const;
+
 private:
   /// Parses and pulls out arguments for the ImR
   int parse_args (int &argc, ACE_TCHAR *argv[]);
@@ -149,6 +152,9 @@ private:
   /// Should check the server address and remove previous server if
   /// the address is reused.
   bool unregister_if_address_reused_;
+
+  /// The obj key for the replica
+  ACE_TString replica_obj_key_;
 };
 
 #endif

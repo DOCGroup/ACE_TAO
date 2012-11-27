@@ -37,7 +37,7 @@ class Locator_Repository;
 /// corresponding server and raises a forward exception to the
 /// client pointing to the correct server.
 class Locator_Export ImR_Locator_i
-  : public virtual POA_ImplementationRepository::Locator
+  : public virtual POA_ImplementationRepository::ReplicatedLocator
 {
 public:
   ImR_Locator_i();
@@ -91,6 +91,13 @@ public:
     const char* partial_ior,
     ImplementationRepository::ServerObject_ptr server_object);
   virtual void server_is_shutting_down (const char * name);
+
+  // Locator->Locator
+
+  void notify_updated_server(const ImplementationRepository::ServerUpdate& server);
+  void notify_updated_activator(const ImplementationRepository::ActivatorUpdate& activator);
+  void register_replica(ImplementationRepository::UpdatePushNotification_ptr replica,
+                        ImplementationRepository::SequenceNum_out seq_num);
 
   // Used by the INS_Locator to start a sever given an object name
   char* activate_server_by_object (const char* object_name);

@@ -36,7 +36,8 @@ Config_Backing_Store::~Config_Backing_Store()
 void Config_Backing_Store::loadActivators ()
 {
   ACE_Configuration_Section_Key root;
-  int err = config_.open_section (config_.root_section (), ACTIVATORS_ROOT_KEY, 0, root);
+  int err =
+    config_.open_section(config_.root_section(), ACTIVATORS_ROOT_KEY, 0, root);
   if (err == 0)
     {
       int index = 0;
@@ -65,7 +66,8 @@ void
 Config_Backing_Store::loadServers ()
 {
   ACE_Configuration_Section_Key root;
-  int err = config_.open_section (config_.root_section (), SERVERS_ROOT_KEY, 0, root);
+  int err =
+    config_.open_section(config_.root_section(), SERVERS_ROOT_KEY, 0, root);
   if (err == 0)
     {
       int index = 0;
@@ -79,7 +81,7 @@ Config_Backing_Store::loadServers ()
           ACE_Configuration_Section_Key key;
 
           // Can't fail, because we're enumerating
-          config_.open_section (root, name.c_str (), 0, key);
+          config_.open_section (root, name.c_str(), 0, key);
 
           // Ignore any missing values. Server name is enough on its own.
           config_.get_string_value (key, SERVER_ID, server_id);
@@ -98,8 +100,8 @@ Config_Backing_Store::loadServers ()
           ImplementationRepository::EnvironmentList env_vars =
             ImR_Utils::parseEnvList (envstr);
 
-          Server_Info_Ptr info (new Server_Info(server_id, name, aname, cmdline,
-            env_vars, dir, amode, start_limit, partial_ior, ior));
+          Server_Info_Ptr info (new Server_Info(server_id, name, aname,
+            cmdline, env_vars, dir, amode, start_limit, partial_ior, ior));
           servers().bind (name, info);
           index++;
         }
@@ -107,15 +109,11 @@ Config_Backing_Store::loadServers ()
 }
 
 int
-Config_Backing_Store::persistent_remove (const ACE_CString& name, bool activator)
+Config_Backing_Store::persistent_remove (const ACE_CString& name,
+                                         bool activator)
 {
-  const ACE_TCHAR* const key = (activator ? ACTIVATORS_ROOT_KEY : SERVERS_ROOT_KEY);
-  if (activator)
-    {
-    }
-  else
-    {
-    }
+  const ACE_TCHAR* const key =
+    (activator ? ACTIVATORS_ROOT_KEY : SERVERS_ROOT_KEY);
   return remove (name, key);
 }
 
@@ -126,66 +124,88 @@ Config_Backing_Store::remove (const ACE_CString& name, const ACE_TCHAR* key)
   int err = config_.open_section (config_.root_section (), key, 0, root);
   if (err != 0)
     {
+      if (this->debug_ > 9)
+        {
+          ACE_DEBUG((LM_INFO, ACE_TEXT ("could not remove %s, already gone!\n"),
+            name.c_str()));
+        }
       return 0; // Already gone.
     }
-  return config_.remove_section (root, name.c_str (), 1);
+  return config_.remove_section (root, name.c_str(), 1);
 }
 
 static int get_key (ACE_Configuration& cfg, const ACE_CString& name,
-                    const ACE_TCHAR* const sub_section, ACE_Configuration_Section_Key& key)
+                    const ACE_TCHAR* const sub_section,
+                    ACE_Configuration_Section_Key& key)
 {
   ACE_Configuration_Section_Key root;
   int err = cfg.open_section (cfg.root_section(), sub_section, 1, root);
   if (err != 0)
     {
-      ACE_ERROR ((LM_ERROR, "Unable to open config section:%s\n", sub_section));
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to open config section:%s\n"),
+        sub_section));
       return err;
     }
-  err = cfg.open_section (root, name.c_str (), 1, key);
+  err = cfg.open_section (root, name.c_str(), 1, key);
   if (err != 0)
     {
-      ACE_ERROR((LM_ERROR, "Unable to open config section:%s\n", name.c_str()));
+      ACE_ERROR((LM_ERROR, ACE_TEXT ("Unable to open config section:%s\n"),
+        name.c_str()));
     }
   return err;
 }
 
 int
-Config_Backing_Store::persistent_update(const Server_Info_Ptr& info)
+Config_Backing_Store::persistent_update(const Server_Info_Ptr& info, bool )
 {
   ACE_Configuration_Section_Key key;
   int err = get_key(this->config_, info->name, SERVERS_ROOT_KEY, key);
   if (err != 0)
     {
+      ACE_ERROR((LM_ERROR, ACE_TEXT ("ERROR: could not get key for %s\n"),
+        info->name.c_str()));
       return err;
     }
 
+  if (this->debug_ > 9)
+    {
+      ACE_DEBUG((LM_INFO, ACE_TEXT ("updating %s\n"), info->name.c_str()));
+    }
   ACE_CString envstr = ImR_Utils::envListToString(info->env_vars);
 
-  this->config_.set_string_value (key, SERVER_ID, info->server_id.c_str ());
-  this->config_.set_string_value (key, ACTIVATOR, info->activator.c_str ());
-  this->config_.set_string_value (key, STARTUP_COMMAND, info->cmdline.c_str ());
-  this->config_.set_string_value (key, WORKING_DIR, info->dir.c_str ());
+  this->config_.set_string_value (key, SERVER_ID, info->server_id.c_str());
+  this->config_.set_string_value (key, ACTIVATOR, info->activator.c_str());
+  this->config_.set_string_value (key, STARTUP_COMMAND, info->cmdline.c_str());
+  this->config_.set_string_value (key, WORKING_DIR, info->dir.c_str());
   this->config_.set_string_value (key, ENVIRONMENT, envstr);
   this->config_.set_integer_value (key, ACTIVATION, info->activation_mode);
   this->config_.set_integer_value (key, START_LIMIT, info->start_limit);
-  this->config_.set_string_value (key, PARTIAL_IOR, info->partial_ior.c_str ());
+  this->config_.set_string_value (key, PARTIAL_IOR, info->partial_ior.c_str());
   this->config_.set_string_value (key, IOR, info->ior.c_str());
 
   return 0;
 }
 
 int
-Config_Backing_Store::persistent_update(const Activator_Info_Ptr& info)
+Config_Backing_Store::persistent_update(const Activator_Info_Ptr& info, bool )
 {
   ACE_Configuration_Section_Key key;
   int err = get_key(this->config_, info->name, ACTIVATORS_ROOT_KEY, key);
   if (err != 0)
     {
+      ACE_DEBUG((LM_INFO,
+        ACE_TEXT ("ERROR: could not get key for activator %s\n"),
+        info->name.c_str()));
       return err;
     }
 
-  this->config_.set_integer_value (key, TOKEN, info->token);
-  this->config_.set_string_value (key, IOR, info->ior.c_str ());
+  if (this->debug_ > 9)
+    {
+      ACE_DEBUG((LM_INFO, ACE_TEXT ("updating activator %s\n"),
+        info->name.c_str()));
+    }
+  this->config_.set_integer_value(key, TOKEN, info->token);
+  this->config_.set_string_value(key, IOR, info->ior.c_str());
 
   return 0;
 }
@@ -195,6 +215,10 @@ Config_Backing_Store::persistent_load ()
 {
   if (status_ != 0)
     {
+      if (this->debug_ > 9)
+        {
+          ACE_DEBUG((LM_INFO, ACE_TEXT ("not loading\n")));
+        }
       return status_;
     }
 
@@ -204,7 +228,8 @@ Config_Backing_Store::persistent_load ()
   return 0;
 }
 
-Heap_Backing_Store::Heap_Backing_Store(const ACE_CString& filename, bool start_clean)
+Heap_Backing_Store::Heap_Backing_Store(const ACE_CString& filename,
+                                       bool start_clean)
 : Config_Backing_Store(heap_),
   filename_(filename)
 {
@@ -212,12 +237,12 @@ Heap_Backing_Store::Heap_Backing_Store(const ACE_CString& filename, bool start_c
     {
       if (this->debug_ > 9)
         {
-          ACE_DEBUG((LM_INFO, "Heap start clean\n"));
+          ACE_DEBUG((LM_INFO, ACE_TEXT ("Heap start clean\n")));
         }
-      ACE_OS::unlink ( this->filename_.c_str () );
+      ACE_OS::unlink ( this->filename_.c_str() );
     }
 
-  status_ = heap_.open (this->filename_.c_str ());
+  status_ = heap_.open (this->filename_.c_str());
 }
 
 Heap_Backing_Store::~Heap_Backing_Store()
@@ -246,7 +271,8 @@ static HKEY setup_registry(const bool start_clean)
 }
 #endif
 
-Registry_Backing_Store::Registry_Backing_Store(const ACE_CString& filename, bool start_clean)
+Registry_Backing_Store::Registry_Backing_Store(const ACE_CString& filename,
+                                               bool start_clean)
 #if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_REGISTRY)
 : Config_Backing_Store(win32registry_),
   win32registry_(setup_registry(start_clean))
@@ -254,9 +280,11 @@ Registry_Backing_Store::Registry_Backing_Store(const ACE_CString& filename, bool
 : Config_Backing_Store(invalid_config_)
 #endif
 {
-#if !defined (ACE_WIN32) || defined (ACE_LACKS_WIN32_REGISTRY)
-  ACE_ERROR ((LM_ERROR, "Registry persistence is only "
-                        "supported on Windows\n"));
+#if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_REGISTRY)
+  status_ = 0;
+#else
+  ACE_ERROR ((LM_ERROR, ACE_TEXT ("Registry persistence is only ")
+                        ACE_TEXT ("supported on Windows\n")));
   status_ = -1;
 #endif
 }

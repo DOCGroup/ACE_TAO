@@ -24,6 +24,7 @@
 
 class ACE_Configuration;
 class ACEXML_FileCharStream;
+class ACEXML_DefaultHandler;
 
 /**
 * @class XML_Backing_Store
@@ -44,13 +45,15 @@ public:
   virtual int persistent_load();
 
 protected:
-  virtual int persistent_update(const Server_Info_Ptr& info);
+  virtual int persistent_update(const Server_Info_Ptr& info, bool add);
 
-  virtual int persistent_update(const Activator_Info_Ptr& info);
+  virtual int persistent_update(const Activator_Info_Ptr& info, bool add);
 
   virtual int persistent_remove(const ACE_CString& name, bool activator);
 
-  int load(ACEXML_FileCharStream* fstm, const ACE_CString& filename);
+  int load(const ACE_CString& filename);
+  static int load(const ACE_CString& filename,
+                  ACEXML_DefaultHandler& xml_handler, unsigned int debug);
 
   void persist(FILE* fp, const Server_Info& info, const char* tag_prepend);
 
