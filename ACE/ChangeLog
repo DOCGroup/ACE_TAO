@@ -1,3 +1,12 @@
+Tue Nov 27 14:41:19 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * debian/ace-netsvcs.manpages:
+        * debian/tao-idl.manpages:
+        * debian/tao-log.manpages:
+        * debian/tao-tls.manpages:
+        * debian/tao-utils.manpages:
+          No manpage for the moment
+
 Tue Nov 27 14:10:46 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * debian/mpc-ace.manpages:
