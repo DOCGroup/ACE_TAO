@@ -1,3 +1,8 @@
+Tue Nov 27 10:26:32 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * debian/tao-utils.docs:
+          Don't install test
+
 Mon Nov 26 12:37:04 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * debian/mwc_workspace.txt:
