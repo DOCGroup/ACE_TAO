@@ -2,6 +2,7 @@
 
 #include "orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context.h"
 #include "orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.h"
+#include "orbsvcs/Naming/FaultTolerant/FT_Naming_Replication_Manager.h"
 #include "orbsvcs/FT_NamingManagerC.h"
 #include "orbsvcs/PortableGroup/PG_Utils.h"
 #include "orbsvcs/PortableGroup/PG_Property_Utils.h"
@@ -106,6 +107,89 @@ TAO_FT_Storable_Naming_Context::resolve (const CosNaming::Name& n)
   }
 
   return resolved_ref._retn ();
+}
+
+void
+TAO_FT_Storable_Naming_Context::bind (const CosNaming::Name& n,
+				      CORBA::Object_ptr obj)
+{
+  // Invoke the parent class bind operation. This will bind
+  // the object to the name and store the naming context.
+  TAO_Storable_Naming_Context::bind (n, obj);
+
+  try {
+    FT_Naming::ReplicationManager_var peer =
+      TAO_FT_Naming_Replication_Manager::peer_replica ();
+
+    if (CORBA::is_nil (peer.in ()))
+      {
+	// Replication is not supported without a peer replica.
+	return;
+      }
+
+    FT_Naming::NamingContextUpdate context_info;
+    context_info.name = n;
+    context_info.change_type = FT_Naming::NEW;
+
+    ACE_DEBUG ((LM_DEBUG,
+		ACE_TEXT ("Forwarding notification of bind update")));
+
+    // Notify the naming_manager of the updated context
+    peer->notify_updated_context (context_info);
+  }
+  catch (FT_Naming::NotAvailable&)
+    {
+      ACE_ERROR ((LM_ERROR,
+		  "ERROR: Unable to notify replica of new context binding.\n"));
+    }
+  catch (CORBA::Exception& ex)
+    {
+      ex._tao_print_exception (ACE_TEXT ("Unable to communicate with peer.\n"));
+    }
+}
+
+CosNaming::NamingContext_ptr
+TAO_FT_Storable_Naming_Context::bind_new_context (const CosNaming::Name& n)
+{
+  ACE_TRACE("FT>bind_new_context");
+  CosNaming::NamingContext_ptr nc =
+    TAO_Storable_Naming_Context::bind_new_context (n);
+
+  ACE_DEBUG ((LM_DEBUG,
+	      "Binding new context (name =%s) [%i].\n", n[0].id.in (), n.length ()));
+  try {
+    FT_Naming::ReplicationManager_var peer =
+      TAO_FT_Naming_Replication_Manager::peer_replica ();
+
+    if (CORBA::is_nil (peer.in ()))
+      {
+	// Replication is not supported without a peer replica.
+	return nc;
+      }
+
+    FT_Naming::NamingContextUpdate context_info;
+    context_info.name = n;
+    context_info.change_type = FT_Naming::NEW;
+
+    ACE_DEBUG ((LM_DEBUG,
+		ACE_TEXT ("Forwarding notification of bind_new_context update\n")));
+
+    // Notify the naming_manager of the updated context
+    peer->notify_updated_context (context_info);
+  }
+  catch (FT_Naming::NotAvailable&)
+    {
+      ACE_ERROR ((LM_ERROR,
+		  ACE_TEXT ("ERROR: Unable to notify replica of new context binding.\n")));
+    }
+  catch (CORBA::Exception& ex)
+    {
+      ex._tao_print_exception (ACE_TEXT ("Unable to communicate with peer.\n"));
+    }
+
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("bind_new_context - Returning nc.\n")));
+  return nc;
 }
 
 void

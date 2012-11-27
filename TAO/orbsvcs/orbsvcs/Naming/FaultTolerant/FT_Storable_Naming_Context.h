@@ -57,6 +57,20 @@ public:
    */
   virtual CORBA::Object_ptr resolve (const CosNaming::Name &n);
 
+  /**
+   * Override the bind operation to support replication through the
+   * FT_Naming_Replication_Manager.
+   */
+  virtual void bind (const CosNaming::Name &n,
+                     CORBA::Object_ptr obj);
+
+  /**
+   * Override the bind_new_context operation to support replication through the
+   * FT_Naming_Replication_Manager.
+   */
+  virtual CosNaming::NamingContext_ptr bind_new_context (
+                                const CosNaming::Name &n);
+
   // = Utility methods.
   /**
    * This utility method factors out the code needed to create a new

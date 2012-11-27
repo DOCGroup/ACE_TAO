@@ -219,7 +219,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_OS::sprintf(deep_name, "deep_%d", i);
       deep[0].id = CORBA::string_dup (deep_name);
       CosNaming::NamingContext_var deep_context;
+      ACE_DEBUG ((LM_DEBUG,
+		  "Preparing to bind a new context: %s\n", deep[0].id.in ()));
       deep_context = next_context->bind_new_context (deep);
+      ACE_DEBUG ((LM_DEBUG,
+		  "Succeeded in binding\n"));
       next_context = deep_context;
     }
   }

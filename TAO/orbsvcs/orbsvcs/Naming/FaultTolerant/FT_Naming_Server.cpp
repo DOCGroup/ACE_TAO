@@ -504,6 +504,7 @@ TAO_FT_Naming_Server::parse_args (int argc,
                            ACE_TEXT ("-o <name_svc_ior_output_file> ")
                            ACE_TEXT ("-g <naming_mgr_ior_output_file> ")
                            ACE_TEXT ("-i <replica_id> ")
+                           ACE_TEXT ("-j <peer_replica_ior> ")
                            ACE_TEXT ("-p <pid_file_name> ")
                            ACE_TEXT ("-s <context_size> ")
                            ACE_TEXT ("-b <base_address> ")
@@ -824,6 +825,8 @@ int
 TAO_FT_Naming_Server::update_naming_context (
     const FT_Naming::NamingContextUpdate & context_info)
 {
+  ACE_DEBUG ((LM_DEBUG, "Updating the naming context.\n"));
+
   ACE_UNUSED_ARG (context_info);
   return 0;
 }
