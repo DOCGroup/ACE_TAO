@@ -140,7 +140,7 @@ project(tao_imr) : orbsvcsexe, install, avoids_minimum_corba, avoids_corba_e_com
   idl_files {
   }
   InstallData_Files {
-    gendir = .
+    gendir = tao-imr
     README
   }
 }
