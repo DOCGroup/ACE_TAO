@@ -1,3 +1,11 @@
+Tue Nov 27 21:50:14 UTC 2012  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/IDL_Test/loader_const.idl:
+        * tests/IDL_Test/PEMNaming.idl:
+        * TAO_IDL/ast/ast_module.cpp:
+
+          Fixed fuzz errors.
+
 Tue Nov 27 12:43:30 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.mpc:
