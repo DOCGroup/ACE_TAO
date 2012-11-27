@@ -1,3 +1,9 @@
+Tue Nov 27 21:26:34 UTC 2012  Brian Johnson  <johnsonb@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Shared_Backing_Store.cpp:
+
+          Fixed error of using private hash map copy constructor.
+
 Tue Nov 27 19:14:37 UTC 2012  f6  <f6@>
 
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Replication_Manager.h:

@@ -429,10 +429,21 @@ Shared_Backing_Store::LocatorListings_XMLHandler::LocatorListings_XMLHandler(
   const Locator_Repository::SIMap& servers,
   const Locator_Repository::AIMap& activators)
 : dir_(dir),
-  unmatched_servers_(servers),
-  unmatched_activators_(activators),
   only_changes_(true)
 {
+  Locator_Repository::SIMap::ENTRY* sientry = 0;
+  Locator_Repository::SIMap::CONST_ITERATOR siit (servers);
+  for (; siit.next (sientry); siit.advance() )
+    {
+      unmatched_servers_.bind (sientry->ext_id_, sientry->int_id_);
+    }
+
+  Locator_Repository::AIMap::ENTRY* aientry = 0;
+  Locator_Repository::AIMap::CONST_ITERATOR aiit (activators);
+  for (; aiit.next (aientry); aiit.advance() )
+    {
+      unmatched_activators_.bind (aientry->ext_id_, aientry->int_id_);
+    }
 }
 
 void
