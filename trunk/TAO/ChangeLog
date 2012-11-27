@@ -1,3 +1,8 @@
+Tue Nov 27 09:54:12 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
+          Set gendir tao-imr for docu files
+
 Mon Nov 26 11:50:40 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
