@@ -1,3 +1,5 @@
+// $Id$
+
 #ifndef _LOADER_CONST_IDL_
 #define _LOADER_CONST_IDL_
 
@@ -10,8 +12,9 @@
 
 #pragma prefix ""
 
-module Plesk {
-	const unsigned long PLESK_VENDOR_ID = 40000;
+module Plesk
+{
+  const unsigned long PLESK_VENDOR_ID = 40000;
 }; /* module Plesk */
 
 #endif /* _LOADER_CONST_IDL_ */
