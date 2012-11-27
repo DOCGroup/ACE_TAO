@@ -1,3 +1,8 @@
+Tue Nov 27 12:43:06 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * debian/tao-log.docs:
+          Debian package improvements
+
 Tue Nov 27 11:53:18 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * debian/tao-trading.docs:
