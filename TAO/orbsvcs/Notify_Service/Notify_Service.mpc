@@ -22,7 +22,7 @@ project(Notify_Service) : orbsvcsexe, install, tao_notify_service, notify_monito
     Notify_Server.cpp
   }
   InstallData_Files {
-    gendir = .
+    gendir = tao-notify
     README
   }
 }
@@ -39,7 +39,7 @@ project(NT_Notify_Service) : orbsvcsexe, install, tao_notify_service, notify_mon
     NT_Notify_Service.h
   }
   InstallData_Files {
-    gendir = .
+    gendir = tao-notify
     README
   }
 }
