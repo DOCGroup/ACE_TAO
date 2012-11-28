@@ -69,6 +69,7 @@ usr/include/tao/ZIOP
 usr/lib/libTAO_ZIOP.so
 usr/lib/libTAO_ZlibCompressor.so
 usr/lib/libTAO_Bzip2Compressor.so
+usr/lib/libTAO_RLECompressor.so
 usr/include/tao/ETCL
 usr/lib/libTAO_ETCL.so
 usr/include/tao/Monitor
