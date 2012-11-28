@@ -774,38 +774,3 @@ Description: TAO time service (transitional package)
  This package is a transitional package to tao-costime.
  .
  It can be safely removed after installation.
-
-Package: ace-netsvcs
-Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: ACE network service implementations
- ACE network services provide reusable components for common
- distributed system tasks such as logging, naming, locking, and time
- synchronization.
- .
- This package contains driver programs and example configuration
- files to link the various ACE network services together, either
- statically or dynamically, and form complete server programs.
-
-Package: libnetsvcs-6.1.2
-Architecture: any
-Section: libs
-Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: ACE network service implementations - libraries
- ACE network services provide reusable components for common
- distributed system tasks such as logging, naming, locking, and time
- synchronization.
- .
- This package contains runtime libraries for ACE network services.
-
-Package: libnetsvcs-dev
-Architecture: any
-Section: libdevel
-Depends: libnetsvcs-6.1.2 (= ${binary:Version}), libace-dev (= ${binary:Version}), ${misc:Depends}
-Description: ACE network service implementations - development files
- ACE network services provide reusable components for common
- distributed system tasks such as logging, naming, locking, and time
- synchronization.
- .
- This package contains header files and static library for the ACE
- network services library.
