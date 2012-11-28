@@ -127,9 +127,15 @@ TAO_FT_Storable_Naming_Context::bind (const CosNaming::Name& n,
         return;
       }
 
+    // We are are updating the context one element before
+    // the specified name
+    CosNaming::Name relative_name = n;
+    relative_name[n.length () - 1];
+
     FT_Naming::NamingContextUpdate context_info;
-    context_info.name = n;
-    context_info.change_type = FT_Naming::NEW;
+    context_info.root_context = this->interface ()->_this ();
+    context_info.changed_context = n;
+    context_info.change_type = FT_Naming::UPDATED;
 
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("Forwarding notification of bind update")));
@@ -167,9 +173,15 @@ TAO_FT_Storable_Naming_Context::bind_new_context (const CosNaming::Name& n)
         return nc;
       }
 
+    // We are are updating the context one element before
+    // the specified name
+    CosNaming::Name relative_name = n;
+    relative_name[n.length () - 1];
+
     FT_Naming::NamingContextUpdate context_info;
-    context_info.name = n;
-    context_info.change_type = FT_Naming::NEW;
+    context_info.root_context = this->interface ()->_this ();
+    context_info.changed_context = n;
+    context_info.change_type = FT_Naming::UPDATED;
 
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("Forwarding notification of bind_new_context update\n")));

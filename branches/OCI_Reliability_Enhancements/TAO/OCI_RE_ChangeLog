@@ -1,3 +1,11 @@
+Wed Nov 28 23:17:07 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_NamingReplication.idl:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context.cpp:
+
+        * orbsvcs/tests/FT_Naming/Replication/run_test.pl:
+
 Wed Nov 28 17:37:37 UTC 2012  f6  <f6@>
 
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:

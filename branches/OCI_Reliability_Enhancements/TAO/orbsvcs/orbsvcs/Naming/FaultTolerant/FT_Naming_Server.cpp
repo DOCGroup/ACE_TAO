@@ -25,6 +25,7 @@
 #include "orbsvcs/Naming/FaultTolerant/FT_Persistent_Naming_Context_Factory.h"
 #include "orbsvcs/Naming/FaultTolerant/FT_Persistent_Naming_Context.h"
 #include "orbsvcs/Naming/Persistent_Context_Index.h"
+#include "orbsvcs/Naming/Naming_Context_Interface.h"
 
 
 #include "ace/Arg_Shifter.h"
@@ -546,6 +547,8 @@ TAO_FT_Naming_Server::parse_args (int argc,
 }
 
 
+// TODO: Refactor to allow the implementation from TAO_Naming_Server to be used.
+// Need to split into separate inits for different naming service persistence modes
 int
 TAO_FT_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
                                        PortableServer::POA_ptr poa,
@@ -840,6 +843,8 @@ TAO_FT_Naming_Server::update_object_group (
     const FT_Naming::ObjectGroupUpdate & group_info)
 {
   ACE_UNUSED_ARG (group_info);
+
+  // TODO: Update or mark the affected object group that is specified
   return 0;
 }
 
@@ -849,7 +854,39 @@ TAO_FT_Naming_Server::update_naming_context (
 {
   ACE_DEBUG ((LM_DEBUG, "Updating the naming context.\n"));
 
-  ACE_UNUSED_ARG (context_info);
+  // Get the root naming context servant
+  PortableServer::Servant servant = this->ns_poa_->reference_to_servant (context_info.root_context);
+
+  // We know it is a TAO_Naming_Context servant that was registered to handle the calls
+  // TODO: What if the servant was created in the remote server, but is not here yet?
+  //       Need to be able to handle that.
+  try {
+    TAO_Naming_Context* root_context_servant = dynamic_cast<TAO_Naming_Context*> (servant);
+
+    if (root_context_servant == 0)
+    { // Another type of class was used as the servant
+      return -1;
+    }
+
+    // Print out a helpful message
+    CORBA::String_var changed_context = root_context_servant->to_string (context_info.changed_context);
+
+    ACE_DEBUG ((LM_DEBUG,
+               "Context: %s type = %i\n", changed_context, context_info.change_type));
+
+    // TODO: Mark the affected naming context dirty so that it will be updated on the
+    // next access of the context.
+    // e.g., root_context_servant->mark_dirty ();
+
+    // Must remove the reference. Reference counting may not be supported.
+    servant->_remove_ref ();
+  }
+  catch (PortableServer::POA::ObjectNotActive& ex)
+  {
+    // If we are here then the replica naming service has a naming context that is being updated that we
+    // are not aware of.  We need to reload the entire name tree.
+    ex._tao_print_exception ("TAO_FT_Naming_Server::update_naming_context - No registered servant for context.\n");
+  }
   return 0;
 }
 
