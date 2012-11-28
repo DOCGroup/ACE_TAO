@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Debian ACE+TAO maintainers <pkg-ace-devel@lists.alioth.debian.org>
 Uploaders: Thomas Girard <thomas.g.girard@free.fr>, Pau Garcia i Quiles <pgquiles@elpauer.org>, Marek Brudka <mbrudka@aster.pl>
 DM-Upload-Allowed: yes
-Build-Depends: debhelper (>= 8.9.7), dpkg-dev (>= 1.16.2), libssl-dev (>= 0.9.7d), libxt-dev (>= 4.3.0), libfltk1.1-dev (>= 1.1.4), libqt4-dev (>= 4.4~rc1-4), tk-dev (>= 8.5), libfox-1.6-dev, zlib1g-dev, libzzip-dev, liblzo2-dev, docbook-to-man, bzip2, libbz2-dev
+Build-Depends: debhelper (>= 5), dpkg-dev, libssl-dev (>= 0.9.7d), libxt-dev (>= 4.3.0), libfltk1.1-dev (>= 1.1.4), libqt4-dev (>= 4.4~rc1-4), tk-dev, libfox-1.6-dev, zlib1g-dev, libzzip-dev, docbook-to-man, bzip2, libbz2-dev
 Build-Depends-Indep: doxygen, graphviz
 Standards-Version: 3.9.2
 Vcs-Git: git://anonscm.debian.org/pkg-ace/pkg-ace.git
@@ -74,7 +74,7 @@ Description: ACE secure socket layer library
 Package: libace-ssl-dev
 Architecture: any
 Section: libdevel
-Depends: libace-ssl-6.1.2 (= ${binary:Version}), libace-dev (= ${binary:Version}), libssl-dev (>= 6.1.6d), ${misc:Depends}
+Depends: libace-ssl-6.1.6 (= ${binary:Version}), libace-dev (= ${binary:Version}), libssl-dev (>= 6.1.6d), ${misc:Depends}
 Description: ACE secure socket layer library - development files
  This package contains the header files and static library for the ACE
  SSL library.
@@ -155,7 +155,7 @@ Description: ACE Inet protocol library - development files
 Package: libace-inet-ssl-6.1.6
 Architecture: any
 Section: libs
-Depends: libace-inet-6.1.2, libace-ssl-6.1.6, ${shlibs:Depends}, ${misc:Depends}
+Depends: libace-inet-6.1.6, libace-ssl-6.1.6, ${shlibs:Depends}, ${misc:Depends}
 Description: ACE SSL-enabled Inet protocol library
  This package provides an ACE addon library for clients (and possibly
  servers at some point) using Inet protocols which support SSL, such as
@@ -274,7 +274,7 @@ Description: ACE-GUI reactor integration for Xt
 Package: libace-xtreactor-dev
 Architecture: any
 Section: libdevel
-Depends: libace-xtreactor-6.1.2 (= ${binary:Version}), libace-dev (= ${binary:Version}), libxt-dev (>= 6.1.6), ${misc:Depends}
+Depends: libace-xtreactor-6.1.6 (= ${binary:Version}), libace-dev (= ${binary:Version}), libxt-dev (>= 6.1.6), ${misc:Depends}
 Description: ACE-GUI reactor integration for Xt - development files
  This package contains header files and static library for the ACE-Xt
  reactor integration.
@@ -321,7 +321,7 @@ Description: ACE-GUI reactor integration for Fl
 Package: libace-flreactor-dev
 Architecture: any
 Section: libdevel
-Depends: libace-flreactor-6.1.2 (= ${binary:Version}), libace-dev (= ${binary:Version}), libfltk1.1-dev (>= 6.1.6), ${misc:Depends}
+Depends: libace-flreactor-6.1.6 (= ${binary:Version}), libace-dev (= ${binary:Version}), libfltk1.1-dev (>= 6.1.6), ${misc:Depends}
 Description: ACE-GUI reactor integration for Fl - development files
  This package contains header files and static library for the ACE-Fl
  reactor integration.
