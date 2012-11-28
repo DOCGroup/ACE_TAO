@@ -464,8 +464,7 @@ operator<<= (CORBA::Any &any, CORBA::TypeCode_ptr * tc)
       any,
       CORBA::TypeCode::_tao_any_destructor,
       CORBA::_tc_TypeCode,
-      *tc
-    );
+      *tc);
 }
 
 // Insertion of CORBA object - copying.
@@ -744,8 +743,7 @@ operator>>= (const CORBA::Any &any, CORBA::TypeCode_ptr &tc)
       any,
       CORBA::TypeCode::_tao_any_destructor,
       CORBA::_tc_TypeCode,
-      tc
-    );
+      tc);
 }
 
 CORBA::Boolean
