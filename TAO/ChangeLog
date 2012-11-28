@@ -1,9 +1,20 @@
+Wed Nov 28 07:33:16 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/AnyTypeCode/Any.cpp:
+        * tao/AnyTypeCode/Any_Basic_Impl.cpp:
+        * tao/AnyTypeCode/Any_Impl_T.cpp:
+        * tao/AnyTypeCode/Any_Special_Impl_T.cpp:
+        * tao/AnyTypeCode/Objref_TypeCode.h:
+          Layout changes
+
+        * tests/Bug_2936_Regression/bug2936.cpp:
+          Fixed compile problems
+
 Tue Nov 27 21:50:14 UTC 2012  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/IDL_Test/loader_const.idl:
         * tests/IDL_Test/PEMNaming.idl:
         * TAO_IDL/ast/ast_module.cpp:
-
           Fixed fuzz errors.
 
 Tue Nov 27 12:43:30 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>

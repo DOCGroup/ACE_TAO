@@ -65,7 +65,7 @@ TAO::Any_Impl_T<T>::extract (const CORBA::Any & any,
       CORBA::TypeCode_ptr any_tc = any._tao_get_typecode ();
       CORBA::Boolean const _tao_equiv = any_tc->equivalent (tc);
 
-      if (_tao_equiv == 0)
+      if (_tao_equiv == false)
         {
           return false;
         }
