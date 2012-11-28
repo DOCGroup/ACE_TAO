@@ -1,3 +1,16 @@
+Wed Nov 28 08:55:49 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * debian/ace.dsc:
+        * debian/debian.changelog:
+        * debian/debian.compat:
+        * debian/debian.control:
+        * debian/debian.rules:
+        * debian/libace-6.1.6.install:
+        * debian/libace-dev.install:
+        * debian/libtao-dev.install:
+          Added rle compressor and added files as currently work
+          on OBS
+
 Wed Nov 28 07:35:14 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * debian/debian.control:
