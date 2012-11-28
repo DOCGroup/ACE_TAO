@@ -84,8 +84,10 @@ else {
 # Run two Naming Servers and one client.  Client uses iors
 # in files to find the individual copies of the Naming Servers.
 
-my $args = "-ORBEndPoint $ns_endpoint1 -o $test_iorfile1 -m 0 -u NameService -i $primary_name";
+my $args = "-ORBEndPoint $ns_endpoint1 -o $test_iorfile1 -m 0 -r NameService -i $primary_name";
 my $prog = "$startdir/../../../Naming_Service/tao_ft_naming";
+
+print STDERR "Starting: $prog $args\n";
 
 $NS1 = $test->CreateProcess ("$prog", "$args");
 
@@ -100,7 +102,7 @@ if ($test->WaitForFileTimed ($iorfile1,
     exit 1;
 }
 
-$args = "-ORBEndPoint $ns_endpoint2 -o $test_iorfile2 -m 0 -u NameService -i $backup_name -j $primary_ior";
+$args = "-ORBEndPoint $ns_endpoint2 -o $test_iorfile2 -m 0 -r NameService -i $backup_name -j $primary_ior";
 
 $prog = "$startdir/../../../Naming_Service/tao_ft_naming";
 

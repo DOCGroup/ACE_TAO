@@ -1,4 +1,15 @@
-// $Id$
+// -*- C++ -*-
+
+//=============================================================================
+/**
+ * @file   FT_Naming_Server.cpp
+ *
+ * $Id$
+ *
+ * @author Kevin Stanley <stanleyk@ociweb.com>
+ */
+//=============================================================================
+
 
 #include "orbsvcs/Naming/FaultTolerant/FT_Naming_Server.h"
 #include "orbsvcs/Naming/Naming_Server.h"
@@ -397,7 +408,7 @@ TAO_FT_Naming_Server::parse_args (int argc,
                                   ACE_TCHAR *argv[])
 {
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT)
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("b:do:p:s:f:m:z:u:g:i:j:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("b:do:p:s:f:m:z:r:u:g:i:j:"));
 #else
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("b:do:p:s:f:m:z:"));
 #endif /* TAO_HAS_MINIMUM_POA */
@@ -420,6 +431,7 @@ TAO_FT_Naming_Server::parse_args (int argc,
   // Make sure only one persistence option is specified
   int f_opt_used = 0;
   int u_opt_used = 0;
+  int r_opt_used = 0;
 
   // TODO: remove unsupported options with FT Naming Server
   while ((c = get_opts ()) != -1)
@@ -470,12 +482,19 @@ TAO_FT_Naming_Server::parse_args (int argc,
         this->persistence_file_name_ = get_opts.opt_arg ();
         f_opt_used = 1;
         break;
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT)
+      case 'r':
+        this->use_redundancy_ = 1;
+        this->use_storable_context_ = 1;
+        this->persistence_file_name_ = get_opts.opt_arg ();
+        r_opt_used = 1;
+        break;
       case 'u':
         this->use_storable_context_ = 1;
         this->persistence_file_name_ = get_opts.opt_arg ();
         u_opt_used = 1;
         break;
-
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 #endif /* !CORBA_E_MICRO */
       case 'z':
         this->use_round_trip_timeout_ = 1;
@@ -517,9 +536,9 @@ TAO_FT_Naming_Server::parse_args (int argc,
       }
 
 
-  if (f_opt_used + u_opt_used > 1)
+  if (f_opt_used + u_opt_used + r_opt_used > 1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Only one of -u or -f option can be used")
+                       ACE_TEXT ("Only one persistence option can be passed")
                        ACE_TEXT ("\n")),
                       -1);
 
