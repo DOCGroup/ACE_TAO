@@ -931,7 +931,10 @@ IDL_GlobalData::destroy (void)
   // Reset the member of the CORBA module containing the basic types
   // to point to itself, since all the other CORBA modules (if any)
   // will be destroyed.
-  this->corba_module_->reset_last_in_same_parent_scope ();
+  if (this->corba_module_ != 0)
+    {
+      this->corba_module_->reset_last_in_same_parent_scope ();
+    }
 
   if (0 != this->pd_root)
     {

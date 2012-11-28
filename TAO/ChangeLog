@@ -1,3 +1,13 @@
+Wed Nov 28 14:14:51 UTC 2012  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/util/utl_global.cpp (destroy):
+
+          Added check for null before calling
+          reset_last_in_same_parent_scope() on the internal CORBA
+          module AST node. Thanks to Simon Massey
+          <simon dot massey at primstech dot com> for pointing
+          out this problem.
+
 Wed Nov 28 07:33:16 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/AnyTypeCode/Any.cpp:
