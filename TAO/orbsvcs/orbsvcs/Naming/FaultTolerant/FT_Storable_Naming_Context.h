@@ -44,9 +44,9 @@ public:
   TAO_FT_Storable_Naming_Context (CORBA::ORB_ptr orb,
                                   PortableServer::POA_ptr poa,
                                   const char *poa_id,
+                                  TAO_Storable_Naming_Context_Factory *cxt_factory,
                                   TAO_Naming_Service_Persistence_Factory *factory,
-                                  const ACE_TCHAR *persistence_directory,
-                                  size_t hash_table_size = ACE_DEFAULT_MAP_SIZE);
+                                  const ACE_TCHAR *persistence_directory);
 
   /// Destructor.
   virtual ~TAO_FT_Storable_Naming_Context (void);
@@ -70,35 +70,6 @@ public:
    */
   virtual CosNaming::NamingContext_ptr bind_new_context (
                                 const CosNaming::Name &n);
-
-  // = Utility methods.
-  /**
-   * This utility method factors out the code needed to create a new
-   * Storable Naming Context servant and activate it under the
-   * specified POA with the specified id.  This function is static so
-   * that the code can be used, both from inside the class (e.g.,
-   * <new_context>), and from outside (e.g., Naming_Utils.cpp).
-   */
-  static CosNaming::NamingContext_ptr make_new_context (
-                               CORBA::ORB_ptr orb,
-                               PortableServer::POA_ptr poa,
-                               const char *poa_id,
-                               size_t context_size,
-                               TAO_Naming_Service_Persistence_Factory *factory,
-                               const ACE_TCHAR *persistence_directory,
-                               TAO_FT_Storable_Naming_Context **new_context);
-
-  // = Methods not implemented in TAO_Hash_Naming_Context.
-
-  static CosNaming::NamingContext_ptr recreate_all(
-                              CORBA::ORB_ptr orb,
-                              PortableServer::POA_ptr poa,
-                              const char *poa_id,
-                              size_t context_size,
-                              int reentering,
-                              TAO_Naming_Service_Persistence_Factory *factory,
-                              const ACE_TCHAR *persistence_directory,
-                              int use_redundancy);
 
   // Set the Naming Manager as a static so that it is available for all
   // naming context implementations.

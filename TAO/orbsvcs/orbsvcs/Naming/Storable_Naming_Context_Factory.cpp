@@ -35,6 +35,7 @@ TAO_Storable_Naming_Context_Factory::create_naming_context_impl (CORBA::ORB_ptr 
                     TAO_Storable_Naming_Context (orb,
                                                  poa,
                                                  poa_id,
+                                                 this,
                                                  persistence_factory,
                                                  persistence_directory,
                                                  this->context_size_),

@@ -1,6 +1,7 @@
 // $Id$
 
 #include "orbsvcs/Naming/Storable_Naming_Context.h"
+#include "orbsvcs/Naming/Storable_Naming_Context_Factory.h"
 #include "orbsvcs/Naming/Bindings_Iterator_T.h"
 
 #include "tao/debug.h"
@@ -466,6 +467,7 @@ TAO_Storable_Naming_Context::TAO_Storable_Naming_Context (
                                CORBA::ORB_ptr orb,
                                PortableServer::POA_ptr poa,
                                const char *poa_id,
+                               TAO_Storable_Naming_Context_Factory *cxt_factory,
                                TAO_Naming_Service_Persistence_Factory *factory,
                                const ACE_TCHAR *persistence_directory,
                                size_t hash_table_size)
@@ -476,9 +478,10 @@ TAO_Storable_Naming_Context::TAO_Storable_Naming_Context (
     orb_(CORBA::ORB::_duplicate (orb)),
     name_ (poa_id),
     poa_ (PortableServer::POA::_duplicate (poa)),
-    factory_(factory),
+    factory_ (factory),
+    context_factory_ (cxt_factory),
     persistence_directory_ (ACE_TEXT_ALWAYS_CHAR(persistence_directory)),
-    hash_table_size_(hash_table_size),
+    hash_table_size_ (hash_table_size),
     last_changed_(0)
 {
   ACE_TRACE("TAO_Storable_Naming_Context");
@@ -519,8 +522,8 @@ TAO_Storable_Naming_Context::make_new_context (
                               CORBA::ORB_ptr orb,
                               PortableServer::POA_ptr poa,
                               const char *poa_id,
-                              size_t context_size,
-                              TAO_Naming_Service_Persistence_Factory *factory,
+                              TAO_Storable_Naming_Context_Factory *cxt_factory,
+                              TAO_Naming_Service_Persistence_Factory *pers_factory,
                               const ACE_TCHAR *persistence_directory,
                               TAO_Storable_Naming_Context **new_context)
 {
@@ -530,15 +533,15 @@ TAO_Storable_Naming_Context::make_new_context (
 
   // Put together a servant for the new Naming Context.
 
-  TAO_Storable_Naming_Context *context_impl = 0;
-  ACE_NEW_THROW_EX (context_impl,
-                    TAO_Storable_Naming_Context (orb,
-                                                 poa,
-                                                 poa_id,
-                                                 factory,
-                                                 persistence_directory,
-                                                 context_size),
-                                                 CORBA::NO_MEMORY ());
+  TAO_Storable_Naming_Context *context_impl =
+    cxt_factory->create_naming_context_impl (orb,
+                                             poa,
+                                             poa_id,
+                                             pers_factory,
+                                             persistence_directory);
+
+  if (context_impl == 0)
+    throw CORBA::NO_MEMORY ();
 
   // Put <context_impl> into the auto pointer temporarily, in case next
   // allocation fails.
@@ -649,7 +652,7 @@ TAO_Storable_Naming_Context::new_context (void)
     make_new_context (this->orb_.in (),
                       this->poa_.in (),
                       poa_id,
-                      this->storable_context_->total_size (),
+                      this->context_factory_,
                       this->factory_,
                       ACE_TEXT_CHAR_TO_TCHAR (this->persistence_directory_.c_str ()),
                       &new_context);
@@ -1314,13 +1317,14 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-CosNaming::NamingContext_ptr TAO_Storable_Naming_Context::recreate_all(
+CosNaming::NamingContext_ptr TAO_Storable_Naming_Context::recreate_all (
                                CORBA::ORB_ptr orb,
                                PortableServer::POA_ptr poa,
                                const char *poa_id,
                                size_t context_size,
                                int reentering,
-                               TAO_Naming_Service_Persistence_Factory *factory,
+                               TAO_Storable_Naming_Context_Factory *cxt_factory,
+                               TAO_Naming_Service_Persistence_Factory *pers_factory,
                                const ACE_TCHAR *persistence_directory,
                                int use_redundancy)
 {
@@ -1340,8 +1344,8 @@ CosNaming::NamingContext_ptr TAO_Storable_Naming_Context::recreate_all(
     make_new_context (orb,
                       poa,
                       poa_id,
-                      context_size,
-                      factory,
+                      cxt_factory,
+                      pers_factory,
                       persistence_directory,
                       &new_context);
 
@@ -1349,11 +1353,12 @@ CosNaming::NamingContext_ptr TAO_Storable_Naming_Context::recreate_all(
   ACE_TString file_name(persistence_directory);
   file_name += ACE_TEXT("/");
   file_name += ACE_TEXT_CHAR_TO_TCHAR(poa_id);
-  ACE_Auto_Ptr<TAO_Storable_Base> fl (factory->create_stream(ACE_TEXT_ALWAYS_CHAR(file_name.c_str()), ACE_TEXT("r")));
-  if (fl->exists())
+  ACE_Auto_Ptr<TAO_Storable_Base> fl (
+    pers_factory->create_stream (ACE_TEXT_ALWAYS_CHAR (file_name.c_str ()), ACE_TEXT ("r")));
+  if (fl->exists ())
   {
     // Load the map from disk
-    File_Open_Lock_and_Check flck(new_context, "r");
+    File_Open_Lock_and_Check flck (new_context, "r");
   }
   else
   {
@@ -1363,14 +1368,14 @@ CosNaming::NamingContext_ptr TAO_Storable_Naming_Context::recreate_all(
                       CORBA::NO_MEMORY ());
     new_context->context_ = new_context->storable_context_;
     File_Open_Lock_and_Check flck(new_context, "wc");
-    new_context->Write(flck.peer());
+    new_context->Write(flck.peer ());
   }
 
   // build the global file name
   file_name += ACE_TEXT("_global");
 
   // Create the stream for the counter used to uniquely creat context names
-  gfl_.reset(factory->create_stream(ACE_TEXT_ALWAYS_CHAR(file_name.c_str()), ACE_TEXT("crw")));
+  gfl_.reset(pers_factory->create_stream (ACE_TEXT_ALWAYS_CHAR(file_name.c_str()), ACE_TEXT("crw")));
   if (gfl_->open() != 0)
     {
       delete gfl_.release();

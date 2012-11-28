@@ -84,7 +84,7 @@ The following describes how to run the TAO Naming Service.
                 client requests before terminating.
 
         -r directory
-               Use redundant flat-file persistnece; same as the -u option,
+               Use redundant flat-file persistence; same as the -u option,
                except more than one instance of the TAO Naming Service server
                can run, each using the same set of disk files, to achieve a
                degree of fault tolerence (as long as directory is accessible

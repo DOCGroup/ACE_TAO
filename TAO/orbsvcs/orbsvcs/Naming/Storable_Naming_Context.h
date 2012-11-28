@@ -27,6 +27,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+class TAO_Storable_Naming_Context_Factory;
+
 class TAO_Naming_Serv_Export TAO_Storable_IntId
 {
 public:
@@ -230,6 +232,7 @@ public:
   TAO_Storable_Naming_Context (CORBA::ORB_ptr orb,
                                PortableServer::POA_ptr poa,
                                const char *poa_id,
+                               TAO_Storable_Naming_Context_Factory *cxt_factory,
                                TAO_Naming_Service_Persistence_Factory *factory,
                                const ACE_TCHAR *persistence_directory,
                                size_t hash_table_size = ACE_DEFAULT_MAP_SIZE);
@@ -249,20 +252,21 @@ public:
                                CORBA::ORB_ptr orb,
                                PortableServer::POA_ptr poa,
                                const char *poa_id,
-                               size_t context_size,
-                               TAO_Naming_Service_Persistence_Factory *factory,
+                               TAO_Storable_Naming_Context_Factory *cxt_factory,
+                               TAO_Naming_Service_Persistence_Factory *pers_factory,
                                const ACE_TCHAR *persistence_directory,
                                TAO_Storable_Naming_Context **new_context);
 
   // = Methods not implemented in TAO_Hash_Naming_Context.
 
-  static CosNaming::NamingContext_ptr recreate_all(
+  static CosNaming::NamingContext_ptr recreate_all (
                               CORBA::ORB_ptr orb,
                               PortableServer::POA_ptr poa,
                               const char *poa_id,
                               size_t context_size,
                               int reentering,
-                              TAO_Naming_Service_Persistence_Factory *factory,
+                              TAO_Storable_Naming_Context_Factory *cxt_factory,
+                              TAO_Naming_Service_Persistence_Factory *pers_factory,
                               const ACE_TCHAR *persistence_directory,
                               int use_redundancy);
 
@@ -375,6 +379,8 @@ protected:
   ACE_CString name_;
 
   PortableServer::POA_var poa_;
+
+  TAO_Storable_Naming_Context_Factory *context_factory_;
 
   TAO_Naming_Service_Persistence_Factory *factory_;
 
