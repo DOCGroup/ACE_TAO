@@ -478,8 +478,8 @@ TAO_Storable_Naming_Context::TAO_Storable_Naming_Context (
     orb_(CORBA::ORB::_duplicate (orb)),
     name_ (poa_id),
     poa_ (PortableServer::POA::_duplicate (poa)),
-    factory_ (factory),
     context_factory_ (cxt_factory),
+    factory_ (factory),
     persistence_directory_ (ACE_TEXT_ALWAYS_CHAR(persistence_directory)),
     hash_table_size_ (hash_table_size),
     last_changed_(0)

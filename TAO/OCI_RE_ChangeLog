@@ -1,3 +1,10 @@
+
+Wed Nov 28 02:34:36 UTC 2012  f6  <f6@>
+
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp:
+
+          Fixed initialization order in constructor.
+
 Wed Nov 28 02:14:42 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
 
         * orbsvcs/Naming_Service/README:
