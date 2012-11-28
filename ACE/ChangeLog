@@ -1,3 +1,8 @@
+Wed Nov 28 09:34:00 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * debian/libace-dev.install:
+          rle has no install files
+
 Wed Nov 28 08:55:49 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * debian/ace.dsc:
