@@ -20,15 +20,15 @@ TAO_FT_Naming_Manager *TAO_FT_Storable_Naming_Context::naming_manager_ = 0;
 TAO_FT_Storable_Naming_Context::TAO_FT_Storable_Naming_Context (CORBA::ORB_ptr orb,
                                PortableServer::POA_ptr poa,
                                const char *poa_id,
-                               TAO_Naming_Service_Persistence_Factory *factory,
-                               const ACE_TCHAR *persistence_directory,
-                               size_t hash_table_size)
+                               TAO_Storable_Naming_Context_Factory *cxt_factory,
+                               TAO_Naming_Service_Persistence_Factory *pers_factory,
+                               const ACE_TCHAR *persistence_directory)
   : TAO_Storable_Naming_Context (orb,
                                  poa,
                                  poa_id,
-                                 factory,
-                                 persistence_directory,
-                                 hash_table_size)
+                                 cxt_factory,
+                                 pers_factory,
+                                 persistence_directory)
 {
 
 }
@@ -111,7 +111,7 @@ TAO_FT_Storable_Naming_Context::resolve (const CosNaming::Name& n)
 
 void
 TAO_FT_Storable_Naming_Context::bind (const CosNaming::Name& n,
-				      CORBA::Object_ptr obj)
+                                      CORBA::Object_ptr obj)
 {
   // Invoke the parent class bind operation. This will bind
   // the object to the name and store the naming context.
@@ -123,8 +123,8 @@ TAO_FT_Storable_Naming_Context::bind (const CosNaming::Name& n,
 
     if (CORBA::is_nil (peer.in ()))
       {
-	// Replication is not supported without a peer replica.
-	return;
+        // Replication is not supported without a peer replica.
+        return;
       }
 
     FT_Naming::NamingContextUpdate context_info;
@@ -132,7 +132,7 @@ TAO_FT_Storable_Naming_Context::bind (const CosNaming::Name& n,
     context_info.change_type = FT_Naming::NEW;
 
     ACE_DEBUG ((LM_DEBUG,
-		ACE_TEXT ("Forwarding notification of bind update")));
+                ACE_TEXT ("Forwarding notification of bind update")));
 
     // Notify the naming_manager of the updated context
     peer->notify_updated_context (context_info);
@@ -140,7 +140,7 @@ TAO_FT_Storable_Naming_Context::bind (const CosNaming::Name& n,
   catch (FT_Naming::NotAvailable&)
     {
       ACE_ERROR ((LM_ERROR,
-		  "ERROR: Unable to notify replica of new context binding.\n"));
+                  "ERROR: Unable to notify replica of new context binding.\n"));
     }
   catch (CORBA::Exception& ex)
     {
@@ -156,15 +156,15 @@ TAO_FT_Storable_Naming_Context::bind_new_context (const CosNaming::Name& n)
     TAO_Storable_Naming_Context::bind_new_context (n);
 
   ACE_DEBUG ((LM_DEBUG,
-	      "Binding new context (name =%s) [%i].\n", n[0].id.in (), n.length ()));
+              "Binding new context (name =%s) [%i].\n", n[0].id.in (), n.length ()));
   try {
     FT_Naming::ReplicationManager_var peer =
       TAO_FT_Naming_Replication_Manager::peer_replica ();
 
     if (CORBA::is_nil (peer.in ()))
       {
-	// Replication is not supported without a peer replica.
-	return nc;
+        // Replication is not supported without a peer replica.
+        return nc;
       }
 
     FT_Naming::NamingContextUpdate context_info;
@@ -172,7 +172,7 @@ TAO_FT_Storable_Naming_Context::bind_new_context (const CosNaming::Name& n)
     context_info.change_type = FT_Naming::NEW;
 
     ACE_DEBUG ((LM_DEBUG,
-		ACE_TEXT ("Forwarding notification of bind_new_context update\n")));
+                ACE_TEXT ("Forwarding notification of bind_new_context update\n")));
 
     // Notify the naming_manager of the updated context
     peer->notify_updated_context (context_info);
@@ -180,7 +180,7 @@ TAO_FT_Storable_Naming_Context::bind_new_context (const CosNaming::Name& n)
   catch (FT_Naming::NotAvailable&)
     {
       ACE_ERROR ((LM_ERROR,
-		  ACE_TEXT ("ERROR: Unable to notify replica of new context binding.\n")));
+                  ACE_TEXT ("ERROR: Unable to notify replica of new context binding.\n")));
     }
   catch (CORBA::Exception& ex)
     {
@@ -196,157 +196,6 @@ void
 TAO_FT_Storable_Naming_Context::set_naming_manager (TAO_FT_Naming_Manager *mgr_impl)
 {
   naming_manager_ = mgr_impl;
-}
-
-
-CosNaming::NamingContext_ptr
-TAO_FT_Storable_Naming_Context::make_new_context (
-                              CORBA::ORB_ptr orb,
-                              PortableServer::POA_ptr poa,
-                              const char *poa_id,
-                              size_t context_size,
-                              TAO_Naming_Service_Persistence_Factory *factory,
-                              const ACE_TCHAR *persistence_directory,
-                              TAO_FT_Storable_Naming_Context **new_context)
-{
-  ACE_TRACE("make_new_context");
-  // Store the stub we will return here.
-  CosNaming::NamingContext_var result;
-
-  // Put together a servant for the new Naming Context.
-
-  TAO_FT_Storable_Naming_Context *context_impl = 0;
-  ACE_NEW_THROW_EX (context_impl,
-                    TAO_FT_Storable_Naming_Context (orb,
-                                                 poa,
-                                                 poa_id,
-                                                 factory,
-                                                 persistence_directory,
-                                                 context_size),
-                                                 CORBA::NO_MEMORY ());
-
-  // Put <context_impl> into the auto pointer temporarily, in case next
-  // allocation fails.
-  ACE_Auto_Basic_Ptr<TAO_FT_Storable_Naming_Context> temp (context_impl);
-
-  TAO_Naming_Context *context = 0;
-  ACE_NEW_THROW_EX (context,
-                    TAO_Naming_Context (context_impl),
-                    CORBA::NO_MEMORY ());
-
-  // Let <implementation> know about it's <interface>.
-  context_impl->interface (context);
-
-  // Release auto pointer, and start using reference counting to
-  // control our servant.
-  temp.release ();
-  PortableServer::ServantBase_var s = context;
-
-  // Register the new context with the POA.
-  PortableServer::ObjectId_var id =
-    PortableServer::string_to_ObjectId (poa_id);
-
-  // If we try to register a naming context that is already registered,
-  // the following activation causes a POA::ObjectAlreadyActive exception be
-  // thrown which is transmitted as a CORBA::UNKNOWN on the wire. To rectify
-  // this problem, we explicitly throw the correct INS exception in
-  // this situation.
-  try
-    {
-      poa->activate_object_with_id (id.in (), context);
-    }
-  catch (const PortableServer::POA::ObjectAlreadyActive&)
-    {
-      throw CosNaming::NamingContext::AlreadyBound();
-    }
-
-
-  result = context->_this ();
-
-  // return the address of the new context object so that caller can finish
-  *new_context = context_impl;
-
-  return result._retn ();
-}
-
-
-CosNaming::NamingContext_ptr
-TAO_FT_Storable_Naming_Context::recreate_all(
-                               CORBA::ORB_ptr orb,
-                               PortableServer::POA_ptr poa,
-                               const char *poa_id,
-                               size_t context_size,
-                               int reentering,
-                               TAO_Naming_Service_Persistence_Factory *factory,
-                               const ACE_TCHAR *persistence_directory,
-                               int use_redundancy)
-{
-  ACE_TRACE("recreate_all");
-
-  ACE_UNUSED_ARG (reentering);
-
-  // Whether we are redundant is global
-  redundant_ = use_redundancy;
-
-  // Save the root name for later use
-  root_name_ = poa_id;
-
-  // Create a new context.
-  TAO_FT_Storable_Naming_Context *new_context = 0;
-  CosNaming::NamingContext_var result =
-    make_new_context (orb,
-                      poa,
-                      poa_id,
-                      context_size,
-                      factory,
-                      persistence_directory,
-                      &new_context);
-
-  // Now does this already exist on disk?
-  ACE_TString file_name(persistence_directory);
-  file_name += ACE_TEXT("/");
-  file_name += ACE_TEXT_CHAR_TO_TCHAR(poa_id);
-  ACE_Auto_Ptr<TAO_Storable_Base> fl (factory->create_stream(ACE_TEXT_ALWAYS_CHAR(file_name.c_str()), ACE_TEXT("r")));
-  if (fl->exists())
-  {
-    // Load the map from disk
-    File_Open_Lock_and_Check flck (new_context, "r");
-  }
-  else
-  {
-    // Since this is a new context, make and empty map in it
-    ACE_NEW_THROW_EX (new_context->storable_context_,
-                      TAO_Storable_Bindings_Map (context_size,orb),
-                      CORBA::NO_MEMORY ());
-    new_context->context_ = new_context->storable_context_;
-    File_Open_Lock_and_Check flck (new_context, "wc");
-    new_context->Write (flck.peer ());
-  }
-
-  // build the global file name
-  file_name += ACE_TEXT ("_global");
-
-  // Create the stream for the counter used to uniquely creat context names
-  gfl_.reset(factory->create_stream (ACE_TEXT_ALWAYS_CHAR(file_name.c_str ()), ACE_TEXT ("crw")));
-  if (gfl_->open () != 0)
-    {
-      delete gfl_.release ();
-      throw CORBA::PERSIST_STORE ();
-    }
-
-  // get the counter from disk
-  TAO_NS_Persistence_Global global;
-  *gfl_.get() >> global;
-  if (!gfl_.get ()->good () &&
-      gfl_.get ()->rdstate () != TAO_Storable_Base::eofbit)
-    {
-      gfl_.get ()->clear ();
-      throw CORBA::INTERNAL ();
-    }
-  gcounter_ = global.counter ();
-  if(redundant_) gfl_->close ();
-
-  return result._retn ();
 }
 
 

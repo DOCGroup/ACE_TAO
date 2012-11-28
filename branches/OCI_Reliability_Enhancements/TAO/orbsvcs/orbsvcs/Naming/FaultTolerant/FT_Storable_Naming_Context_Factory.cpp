@@ -33,11 +33,11 @@ TAO_FT_Storable_Naming_Context_Factory::create_naming_context_impl (CORBA::ORB_p
   TAO_FT_Storable_Naming_Context *context_impl;
   ACE_NEW_THROW_EX (context_impl,
                     TAO_FT_Storable_Naming_Context (orb,
-                                                 poa,
-                                                 poa_id,
-                                                 persistence_factory,
-                                                 persistence_directory,
-                                                 this->context_size_),
+                                                    poa,
+                                                    poa_id,
+                                                    this,
+                                                    persistence_factory,
+                                                    persistence_directory),
                     CORBA::NO_MEMORY ());
 
   return context_impl;

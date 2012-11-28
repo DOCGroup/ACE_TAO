@@ -1,3 +1,21 @@
+Wed Nov 28 02:14:42 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
+
+        * orbsvcs/Naming_Service/README:
+
+          Fixed typo.
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context_Factory.cpp:
+        * orbsvcs/orbsvcs/Naming/Naming_Server.cpp:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.h:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context_Factory.cpp:
+
+          Refactored to minimize duplication in creation of Storable
+          Naming Context.
+
 Tue Nov 27 21:26:34 UTC 2012  Brian Johnson  <johnsonb@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/Shared_Backing_Store.cpp:
