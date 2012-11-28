@@ -32,11 +32,14 @@ module FT_Naming
    */
   struct NamingContextUpdate
   {
+    /// The target of the upate
+    CosNaming::NamingContext root_context;
     /// The type of change that is being reported
     ChangeType change_type;
     /// This is the compound name that is used to identify
     /// object references.
-    CosNaming::Name name;
+    CosNaming::Name changed_context;
+
   };
 
   /*
