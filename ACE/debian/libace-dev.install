@@ -13,9 +13,6 @@ usr/include/ace/os_include
 usr/lib/libACE.so
 usr/include/ace/ETCL/*.h
 usr/include/ace/ETCL/*.inl
-usr/include/ace/Compression/*.h
-usr/include/ace/Compression/*.inl
-usr/include/ace/Compression/rle/*.h
 usr/include/ace/Monitor_Control/*.h
 usr/lib/libACE_ETCL_Parser.so
 usr/lib/libACE_Monitor_Control.so
