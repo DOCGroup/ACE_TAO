@@ -28,10 +28,9 @@ ACE_TMAIN(int, ACE_TCHAR *[])
   // In the process of doing this, the Test method provided by target
   // CORBA object will be invoked.
   if (ACE_Service_Config::process_directive (
-        ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE(
+        ACE_DYNAMIC_SERVICE_DIRECTIVE(
           "Client_Module",
           "Test_Client_Module",
-          TAO_VERSION,
           "_make_Test_Client_Module",
           "-k file://test.ior")) != 0)
     {
