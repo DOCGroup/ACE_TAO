@@ -32,7 +32,7 @@ tao_nsgroup group_create -group <group> -policy <round | rand | least> -type_id 
 tao_nsgroup group_remove -group <group>
 
 	Removes the specified object group from the load balancing naming manager
-	service. Call group_unbind If the group was bound with the group_bind op
+	service.
 
 	Returns Success(0), Error(1)
 
