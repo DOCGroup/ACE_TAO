@@ -1,0 +1,26 @@
+This directory contains several examples that illustrate how to use
+various concurrency mechanisms to schedule and handle timer-based
+events.  All programs are interactive and utilize a common timer queue
+test framework.  You can schedule or cancel time events and list all
+the timers that are waiting to be triggered.
+
+The tests include:
+
+Reactor_Timer_Queue_Test:
+-------------------------
+
+This example shows how to use ACE_Reactor as the timer queue
+management mechanism.
+
+Thread_Timer_Queue_Test:
+------------------------
+
+This example shows how to use threads as the mechanism to generate
+timer queue events.
+
+Async_Timer_Queue_Test:
+-----------------------
+
+This example shows how to use singals as the mechanism to generate
+timer queue events.  It doesn't work on NT because of NT's limited
+signal mechanism, i.e., no support for SIGALRM.

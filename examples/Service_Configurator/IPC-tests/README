@@ -1,0 +1,125 @@
+This file describes how to invoke the tests in the
+$ACE_ROOT/examples/Service_Configurator/IPC-test/{client,server}
+directories.  These tests exercise all of the ACE IPC SAP
+communication mechanisms, the Reactor event demultiplexor, and the
+Service Configurator dynamic service configuration framework.  To gain
+a deeper understanding of what is going on, you should read the the
+Wrapper Facade, Reactor, and Component Configurator patterns in POSA2
+<http://www.cs.wustl.edu/~schmidt/POSA/> and check out the following
+papers on the ACE framework components:
+
+http://www.cs.wustl.edu/~schmidt/PDF/IPC_SAP-92.pdf
+http://www.cs.wustl.edu/~schmidt/PDF/Reactor1-93.pdf
+http://www.cs.wustl.edu/~schmidt/PDF/Reactor2-93.pdf
+http://www.cs.wustl.edu/~schmidt/PDF/reactor-rules.pdf
+http://www.cs.wustl.edu/~schmidt/PDF/Svc-Conf.pdf
+
+The key to running these client/server tests is to understand the
+purpose of the svc.conf file located in the
+$ACE_ROOT/examples/Service_Configurator/IPC-test/server/ directory.
+This file contains a list of services that may be dynamically
+configured into a the address space of a network daemon process.  If
+you look at the example svc.conf file included in the tests you'll see
+that some entries are commented out (the comment symbol is the '#',
+which is an "ignore until end-of-line comment" with the same semantics
+as the UNIX C and Bourne shells).  Before reading any further, take a
+look at this svc.conf file with your favorite editor or file browser.
+
+There are several types of entries in this file.  The two most
+important are the lines beginning with the keywords "static" and
+"dynamic".  For example, the first non-commented line says:
+
+static ACE_Service_Manager "-d -p 3911"
+
+When this line is parsed at startup time by the Service Configurator
+object in the ./server_test executable, it causes the pre-configured
+Svc_Manager object to be initialized with an "argv" argument of "-d -p
+3911."  This results in TCP port 3911 being created to listen
+connection requests from clients.  To see how this works do the
+following:
+
+1. Comment out all the other lines except 
+
+   static Svc_Manager "-d -p 3911"
+
+   in the svc.conf file
+
+2. Start up the ./server_test executable in one window, as follows:
+
+   % ./server_test -d
+
+3. Make another window on the *same* host and cd to the ./client/
+   directory 
+
+4. Run the ./remote_service_directory_test program as follows:
+
+	% ./remote_service_directory_test -p 3911 -h localhost
+
+If everything has been compiled and initialized correctly, you should
+get the following message:
+
+	Svc_Manager 3911/tcp # lists all services in the daemon
+
+This message is telling you that the Svc_Manager is currently the only
+service that is active within the ./server_test program.  To configure
+and activate another service dynamically, perform the following steps:
+
+1. *Without* shutting down the ./server_test program, edit the svc.conf
+   file.  Comment out the Svc_Manager line by adding a '#' at the
+   front, i.e.: 
+
+   # static Svc_Manager "-d -p 3911"
+
+   and then uncomment the second line:
+
+   dynamic Remote_Brdcast Service_Object * ./IPC_Tests_Server:remote_broadcast "-p 10001"
+
+2. If you're running on an OS platform that supports SIGHUP, send the
+   SIGHUP signal to the process running the ./server_test program.
+   This will cause the ./server_test program to reconfigure itself
+   based on the new contents of the svc.conf file.  Not every platform
+   supports SIGHUP. However, the remote_service_directory_test in
+   ./client/ can be used to reconfigure services, e.g., by passing it
+   parameters as follows:
+
+   % ./remote_service_directory_test -p 3911 -h localhost -r
+   
+   The '-r' flag instructs the server to reconfigure itself.
+   
+   After reconfiguration, you'll now have a second active service in
+   the address space of the ./server_test daemon.  To see this, rerun
+   the remote_service_directory_test command, e.g.:
+
+   % ./remote_service_directory_test -p 3911 -h localhost
+
+   You should now see the following output:
+   
+   Svc_Manager 3911/tcp # lists all services in the daemon
+   Remote_Brdcast 10001/udp # tests broadcasting
+   
+   which indicates that the remote broadcast service is now active.
+
+3. To test the remote broadcast service, run the following program
+   in the ./client/ directory:
+
+   % ./broadcast_client_test -p 10001
+
+   This should cause the window running the ./server_test to 
+   display the following output:
+
+   received broadcast datagram from host spare.ics.uci.edu
+   ----------------------------------------
+   testing socket broadcast service
+   ----------------------------------------
+
+If you want to run other tests, using other configurations, simply
+uncomment the appropriate lines in the svc.conf file and experiment
+with the corresponding test drivers in the ./client/ directory.  All
+the source code is available so once you get the hang of what is
+happening, you might want to take a look at how it is all implemented.
+You may be surprised at how much of the ACE framework code is
+reused for each different service.  Moreover, writing a new service is
+often simply a matter of copying an existing file and filling in the
+behavior of some of the methods (e.g., the handle_input() method and
+the init() method).
+
