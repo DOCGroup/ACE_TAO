@@ -1,3 +1,9 @@
+Thu Nov 29 15:08:26 UTC 2012  Steve Huston  <shuston@riverace.com>
+
+        * ace/ACE.cpp (handle_timed_complete): Adapt to an occasionally seen
+          scenario where only the POLLERR bit is set on a failed connect.
+          This is for the poll() case, not select().
+
 Thu Nov 29 10:31:05 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/CDR_Stream.cpp:
