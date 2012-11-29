@@ -1,3 +1,8 @@
+Thu Nov 29 10:10:56 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Service_Config.h:
+          Fixed compile errors in xml builds
+
 Thu Nov 29 08:49:39 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/CDR_Stream.cpp:
