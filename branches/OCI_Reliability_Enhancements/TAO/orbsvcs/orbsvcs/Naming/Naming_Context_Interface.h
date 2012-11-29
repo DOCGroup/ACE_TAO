@@ -177,6 +177,11 @@ public:
    */
   virtual CORBA::Object_ptr resolve_str (const char * n);
 
+  /**
+   * Mark the implementation as dirty for replicated persistence support.
+   */
+  void mark_dirty (void);
+
   /// Returns the Default POA of this Servant object
   virtual PortableServer::POA_ptr _default_POA (void);
 
@@ -339,6 +344,12 @@ public:
 
   /// Returns the Default POA of this Servant object
   virtual PortableServer::POA_ptr _default_POA (void) = 0;
+
+  /**
+   * Mark the implementation as dirty for replicated persistence support.
+   */
+  virtual void mark_dirty (void);
+
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

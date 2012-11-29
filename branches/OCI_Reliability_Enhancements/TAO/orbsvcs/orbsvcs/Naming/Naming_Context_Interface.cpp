@@ -461,8 +461,20 @@ TAO_Naming_Context::resolve_str (const char * n)
   return this->resolve (name.in ());
 }
 
+void
+TAO_Naming_Context::mark_dirty (void)
+{
+  this->impl_->mark_dirty ();
+}
+
 TAO_Naming_Context_Impl::~TAO_Naming_Context_Impl (void)
 {
+}
+
+void
+TAO_Naming_Context_Impl::mark_dirty (void)
+{
+  // Default implementation is no-op
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

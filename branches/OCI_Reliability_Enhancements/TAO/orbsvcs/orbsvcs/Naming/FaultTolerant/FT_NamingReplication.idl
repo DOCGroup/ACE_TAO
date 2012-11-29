@@ -32,8 +32,8 @@ module FT_Naming
    */
   struct NamingContextUpdate
   {
-    /// The target of the upate
-    CosNaming::NamingContext root_context;
+    /// The name of context being updated
+    string context_name;
     /// The type of change that is being reported
     ChangeType change_type;
     /// This is the compound name that is used to identify
@@ -48,32 +48,26 @@ module FT_Naming
    */
   struct ObjectGroupUpdate
   {
-
     /// The type of change that is being reported
     ChangeType change_type;
-
     /// This is the name that is used to identify object group references.
     GroupName name;
-
   };
 
   interface ReplicationManager
   {
    /*
     * Register with a peer replica with an object reference for
-    * notification of updates.  Recipient returns their notification
-    * interface in response.  Each replica will maintain their state
+    * notification of updates.  Each replica will maintain their state
     * in a shared repository and the update notification indicates the
     * element that was changed.
     */
     void register_replica (in ReplicationManager replica)
-      raises (NotAvailable);  // If replica at this time
-
-    void notify_updated_object_group(in ObjectGroupUpdate group_info)
       raises (NotAvailable);
 
-    void notify_updated_context(in NamingContextUpdate context_info)
-      raises (NotAvailable);
+    void notify_updated_object_group(in ObjectGroupUpdate group_info);
+
+    void notify_updated_context(in NamingContextUpdate context_info);
   };
 };
 

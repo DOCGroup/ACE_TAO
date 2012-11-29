@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- * @file   FT_Naming_Replication_Manager.
+ * @file   FT_Naming_Replication_Manager.cpp
  *
  * $Id$
  *
@@ -16,7 +16,7 @@
 #include "tao/corba.h"
 
 
-FT_Naming::ReplicationManager_var 
+FT_Naming::ReplicationManager_var
 TAO_FT_Naming_Replication_Manager::peer_replica_ (0);
 
 TAO_FT_Naming_Replication_Manager::TAO_FT_Naming_Replication_Manager (
@@ -38,7 +38,7 @@ TAO_FT_Naming_Replication_Manager::initialize (CORBA::ORB_ptr orb,
 {
   ACE_UNUSED_ARG (orb);
   repl_mgr_poa_ = PortableServer::POA::_duplicate (repl_mgr_poa);
-  PortableServer::ObjectId_var id = 
+  PortableServer::ObjectId_var id =
     PortableServer::string_to_ObjectId (this->repl_mgr_name_.in ());
   CORBA::Object_var obj = repl_mgr_poa_->id_to_reference (id.in ());
   this->reference_ = FT_Naming::ReplicationManager::_narrow (obj);
@@ -80,7 +80,6 @@ TAO_FT_Naming_Replication_Manager::notify_updated_context (
   if (result != 0)
   {
     ACE_ERROR ((LM_ERROR, "Error while updating naming context.\n"));
-    throw FT_Naming::NotAvailable ();
   }
 }
 
@@ -102,7 +101,7 @@ TAO_FT_Naming_Replication_Manager::register_with_peer_replica (
   int result = 0;
   try {
     // Store a copy of the peer reference for future access
-    this->peer_replica_ = 
+    this->peer_replica_ =
       FT_Naming::ReplicationManager::_duplicate (replica);
 
     // Register with the peer replica

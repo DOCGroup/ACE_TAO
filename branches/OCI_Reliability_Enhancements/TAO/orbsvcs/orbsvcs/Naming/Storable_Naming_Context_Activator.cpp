@@ -68,9 +68,6 @@ TAO_Storable_Naming_Context_Activator::incarnate (
     throw CORBA::OBJECT_NOT_EXIST ();
   }
 
-  // Store the stub we will return here.
-  CosNaming::NamingContext_var result (CosNaming::NamingContext::_nil());
-
   // Put together a servant for the new Naming Context.
   // Will throw NO_MEMORY exception if unable to construct one
   TAO_Storable_Naming_Context *context_impl =
