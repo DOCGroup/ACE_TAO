@@ -2553,7 +2553,7 @@ ACE::handle_timed_complete (ACE_HANDLE h,
       // is often set and there are occasional cases seen with some kernels
       // where only POLLERR is set on a failed connect.
       need_to_check = (fds.revents & POLLIN) || (fds.revents & POLLERR);
-      known_failure = (fds.revents & POLLERR)
+      known_failure = (fds.revents & POLLERR);
     }
 # else
     need_to_check = true;
