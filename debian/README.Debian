@@ -1,0 +1,37 @@
+ACE for Debian
+--------------
+
+
+== Environment variables ==
+
+If the software you are compiling requires $ACE_ROOT to be set (for
+example, the tutorials), you may set it to /usr/lib/ace. For bash,
+the command to do this is
+ 
+ export ACE_ROOT=/usr/lib/ace
+
+
+Likewise, for TAO:
+
+ export TAO_ROOT=${ACE_ROOT}/TAO
+
+
+== Compiling examples ==
+
+To compile ACE or TAO examples (in libace-doc and libtao-orbsvcs-doc), you'll
+need:
+ 1. to define ACE_ROOT and TAO_ROOT as explained above.
+ 2. to install mpc-ace package if needed.
+ 3. to copy and uncompress the example you want to test, e.g.:
+
+   cp /usr/share/doc/libtao-orbsvcs-doc/examples/CosEC $HOME/ex1
+   find $HOME/ex1 -type f -name '*.gz' | xargs gunzip
+
+ 4. to regenerate the GNUmakefiles for this new location:
+
+   cd $HOME/ex1
+   mwc-ace -recurse -value_project install=. -value_project libout=.
+
+ 5. now you can compile your example.
+
+ -- Thomas Girard <thomas.g.girard@free.fr>, Sun, 23 May 2010 11:04:27 +0200

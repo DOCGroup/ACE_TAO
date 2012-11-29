@@ -1,8 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project: interceptors, security, portableserver, ssl, pi_server {
-    after     += SSLIOP
-    libs      += TAO_SSLIOP
-    tagchecks += SSLIOP
-}
