@@ -531,22 +531,10 @@ ACE_OutputCDR::write_8 (const ACE_CDR::ULongLong *x)
 
   if (this->adjust (ACE_CDR::LONGLONG_SIZE, buf) == 0)
     {
-#if defined (__arm__) && !defined (ACE_HAS_IPHONE)
-      // Convert to Intel format (12345678 => 56781234)
-      const char *orig = reinterpret_cast<const char *> (x);
-      char *target = buf;
-      register ACE_UINT32 x =
-        *reinterpret_cast<const ACE_UINT32 *> (orig);
-      register ACE_UINT32 y =
-        *reinterpret_cast<const ACE_UINT32 *> (orig + 4);
-      *reinterpret_cast<ACE_UINT32 *> (target) = y;
-      *reinterpret_cast<ACE_UINT32 *> (target + 4) = x;
-      return true;
-#else
-#  if !defined (ACE_ENABLE_SWAP_ON_WRITE)
+#if !defined (ACE_ENABLE_SWAP_ON_WRITE)
       *reinterpret_cast<ACE_CDR::ULongLong *> (buf) = *x;
       return true;
-#  else
+#else
       if (!this->do_byte_swap_)
         {
           *reinterpret_cast<ACE_CDR::ULongLong *> (buf) = *x;
@@ -557,8 +545,7 @@ ACE_OutputCDR::write_8 (const ACE_CDR::ULongLong *x)
           ACE_CDR::swap_8 (reinterpret_cast<const char*> (x), buf);
           return true;
         }
-#  endif /* ACE_ENABLE_SWAP_ON_WRITE */
-#endif /* !__arm__ */
+#endif /* ACE_ENABLE_SWAP_ON_WRITE */
      }
 
   return false;
