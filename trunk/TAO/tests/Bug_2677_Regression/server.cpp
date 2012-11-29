@@ -7,9 +7,8 @@ int
 ACE_TMAIN(int, ACE_TCHAR *[])
 {
   ACE_TCHAR const * const scpc_loadOrb =
-    ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE ("testDllORB",
+    ACE_DYNAMIC_SERVICE_DIRECTIVE ("testDllORB",
                                    "Bug_2677_Regression",
-                                   TAO_VERSION,
                                    "_make_DllORB",
                                    "testDllORB -ORBId testORB");
 
