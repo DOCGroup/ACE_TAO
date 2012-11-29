@@ -1,0 +1,7 @@
+// -*- MPC -*-
+// $Id$
+
+feature(!ace_for_tao) {
+  after    += ACE
+  libs     += ACE
+}
