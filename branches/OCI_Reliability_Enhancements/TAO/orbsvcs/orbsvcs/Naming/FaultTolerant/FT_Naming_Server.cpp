@@ -872,7 +872,7 @@ TAO_FT_Naming_Server::update_naming_context (
     CORBA::String_var changed_context = root_context_servant->to_string (context_info.changed_context);
 
     ACE_DEBUG ((LM_DEBUG,
-               "Context: %s type = %i\n", changed_context, context_info.change_type));
+               "Context: %s type = %i\n", changed_context.in(), context_info.change_type));
 
     // TODO: Mark the affected naming context dirty so that it will be updated on the
     // next access of the context.
