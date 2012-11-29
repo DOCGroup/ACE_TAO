@@ -1,3 +1,9 @@
+Thu Nov 29 15:08:26 UTC 2012  Steve Huston  <shuston@riverace.com>
+
+        * ace/ACE.cpp (handle_timed_complete): Adapt to an occasionally seen
+          scenario where only the POLLERR bit is set on a failed connect.
+          This is for the poll() case, not select().
+
 Tue Nov 20 23:55:57 UTC 2012  Steve Huston  <shuston@riverace.com>
 
         * ace/config-hpux-11.00.h:
