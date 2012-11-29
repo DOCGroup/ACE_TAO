@@ -6,10 +6,9 @@
 #include "ace/Service_Config.h"
 #include "ace/Log_Msg.h"
 
-ACE_TCHAR const * const scpc_loadOrb = ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE(
+ACE_TCHAR const * const scpc_loadOrb = ACE_DYNAMIC_SERVICE_DIRECTIVE(
   "testDllOrb",
   "Bug_3542",
-  TAO_VERSION,
   "_make_DllOrb",
   "testDllOrb -ORBDebugLevel 0 -ORBId testDllOrb -NumThreads 2 -ORBDottedDecimalAddresses 1 -ORBCollocationStrategy thru_poa"
 );
