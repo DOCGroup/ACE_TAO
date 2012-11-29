@@ -19,6 +19,7 @@
 #include "orbsvcs/Naming/FaultTolerant/ftnaming_export.h"
 #include "orbsvcs/orbsvcs/PortableGroupC.h"
 #include "orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.h"
+#include "orbsvcs/Naming/FaultTolerant/FT_NamingReplicationC.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -77,8 +78,29 @@ public:
 
   bool is_object_group (const CORBA::Object_ptr obj) const;
 
+ /**
+  * Tell the peer replica that this context has been updated.
+  * Returns 0 if successfully reported.  Returns 1 if no peer
+  * has been registered. Returns -1 on failure to communicate
+  * with the peer.
+  */
+  int propagate_update_notification (FT_Naming::ChangeType change_type);
+
+ /**
+  * Find the indicated context below this context.  Returns 0
+  * if it cannot be found.
+  */
+  TAO_FT_Storable_Naming_Context* find_relative_context (
+                              const CosNaming::Name &n);
+
+  /**
+   * Mark the implementation as dirty for replicated persistence support.
+   */
+  virtual void mark_dirty (CORBA::Boolean is_dirty = 0);
+  virtual CORBA::Boolean is_dirty (void);
 protected:
   static TAO_FT_Naming_Manager *naming_manager_;
+  CORBA::Boolean is_dirty_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

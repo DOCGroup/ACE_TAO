@@ -87,7 +87,7 @@ else {
 my $args = "-ORBEndPoint $ns_endpoint1 -o $test_iorfile1 -m 0 -r NameService -i $primary_name";
 my $prog = "$startdir/../../../Naming_Service/tao_ft_naming";
 
-print STDERR "Starting: $prog $args\n";
+print STDERR "Starting Primary: $prog $args\n";
 
 $NS1 = $test->CreateProcess ("$prog", "$args");
 
@@ -105,6 +105,8 @@ if ($test->WaitForFileTimed ($iorfile1,
 $args = "-ORBEndPoint $ns_endpoint2 -o $test_iorfile2 -m 0 -r NameService -i $backup_name -j $primary_ior";
 
 $prog = "$startdir/../../../Naming_Service/tao_ft_naming";
+
+print STDERR "Starting Backup: $prog $args\n";
 
 $NS2 = $test->CreateProcess ("$prog", "$args");
 

@@ -852,41 +852,48 @@ int
 TAO_FT_Naming_Server::update_naming_context (
     const FT_Naming::NamingContextUpdate & context_info)
 {
-  ACE_DEBUG ((LM_DEBUG, "Updating the naming context.\n"));
+  PortableServer::Servant servant = 0;
 
-  // Get the root naming context servant
-  PortableServer::Servant servant = this->ns_poa_->reference_to_servant (context_info.root_context);
-
-  // We know it is a TAO_Naming_Context servant that was registered to handle the calls
-  // TODO: What if the servant was created in the remote server, but is not here yet?
-  //       Need to be able to handle that.
+  // Lookup the servant for the identified context and see if it is
+  // active here locally.
   try {
-    TAO_Naming_Context* root_context_servant = dynamic_cast<TAO_Naming_Context*> (servant);
-
-    if (root_context_servant == 0)
-    { // Another type of class was used as the servant
-      return -1;
-    }
-
-    // Print out a helpful message
-    CORBA::String_var changed_context = root_context_servant->to_string (context_info.changed_context);
-
+    // Get the servant if it exists in this process
+    PortableServer::ObjectId_var context_id =
+      PortableServer::string_to_ObjectId (context_info.context_name);
+    servant = this->ns_poa_->id_to_servant (context_id);
+  }
+  catch (PortableServer::POA::ObjectNotActive&)
+  { // No servant registered for this object reference so no need to create it.
+    // It will be created on first access in incarnate function
     ACE_DEBUG ((LM_DEBUG,
-               "Context: %s type = %i\n", changed_context.in(), context_info.change_type));
-
-    // TODO: Mark the affected naming context dirty so that it will be updated on the
-    // next access of the context.
-    // e.g., root_context_servant->mark_dirty ();
-
-    // Must remove the reference. Reference counting may not be supported.
-    servant->_remove_ref ();
+               "Context with unknown servant. name = %s, Change type = %i\n",
+               context_info.context_name.in (), context_info.change_type));
+    // Nothing to be done, so return success
+    return 0;
   }
-  catch (PortableServer::POA::ObjectNotActive& ex)
-  {
-    // If we are here then the replica naming service has a naming context that is being updated that we
-    // are not aware of.  We need to reload the entire name tree.
-    ex._tao_print_exception ("TAO_FT_Naming_Server::update_naming_context - No registered servant for context.\n");
+
+  TAO_Naming_Context* changed_context_servant = dynamic_cast<TAO_Naming_Context*> (servant);
+
+  if (changed_context_servant == 0)
+  { // Another type of class was used as the servant. Should not happen.
+    ACE_ERROR ((LM_ERROR,
+               "Invalid servant type registered with oid: %s", context_info.context_name.in ()));
+    return -1;
   }
+
+  // Print out a helpful message
+  CORBA::String_var changed_context = changed_context_servant->to_string (context_info.changed_context);
+
+  ACE_DEBUG ((LM_DEBUG,
+              "Updated Context: name = %s, path = %s, type = %i\n",
+               context_info.context_name.in (), changed_context.in (), context_info.change_type));
+
+  // Find the updated context and mark it so that it will be updated on the
+  // next access of the context.
+  changed_context_servant->mark_dirty ();
+
+  // Must remove the reference to this servant.
+  servant->_remove_ref ();
   return 0;
 }
 
