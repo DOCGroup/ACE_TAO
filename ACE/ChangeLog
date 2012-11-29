@@ -1,3 +1,9 @@
+Thu Nov 29 08:49:39 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/CDR_Stream.cpp:
+          Removed arm handling here, gets handled at a lower layer
+          already
+
 Wed Nov 28 09:34:00 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * debian/libace-dev.install:
