@@ -1,0 +1,29 @@
+Description: fix path to DependencyGenerator
+ $ACE_ROOT/bin/depgen.pl look up for modules under its base path, in
+ $ACE_ROOT/bin/DependencyGenerator.
+ .
+ This patch sets base path dir to use $ACE_ROOT if defined (used when building
+ ACE+TAO packages), or /usr/lib/ace if not.
+ .
+ TODO: do we still need this one?
+Forwarded: not-needed
+Author: Thomas Girard <thomas.g.girard@free.fr>
+Last-Update: 2011-07-24
+
+--- a/bin/depgen.pl
++++ b/bin/depgen.pl
+@@ -19,11 +19,9 @@
+ use File::Spec;
+ use File::Basename;
+ 
+-my($basePath) = $FindBin::RealBin;
+-if ($^O eq 'VMS') {
+-  $basePath = File::Spec->rel2abs(dirname($0)) if ($basePath eq '');
+-  $basePath = VMS::Filespec::unixify($basePath);
+-}
++my($aceroot) = $ENV{ACE_ROOT};
++my($basePath) = (defined $aceroot ?
++		 $aceroot : '/usr/lib/ace') . '/bin';
+ unshift(@INC, $basePath . '/DependencyGenerator');
+ 
+ my($mpcroot) = $ENV{MPC_ROOT};
