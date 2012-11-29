@@ -1,3 +1,9 @@
+Thu Nov 29 10:31:05 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/CDR_Stream.cpp:
+          Removed another occurance of arm handling here, gets handled
+          at a lower layer already
+
 Thu Nov 29 10:10:56 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Service_Config.h:

@@ -1826,39 +1826,10 @@ ACE_InputCDR::read_8 (ACE_CDR::ULongLong *x)
   if (this->adjust (ACE_CDR::LONGLONG_SIZE, buf) == 0)
     {
 #if !defined (ACE_DISABLE_SWAP_ON_READ)
-#  if defined (__arm__) && !defined (ACE_HAS_IPHONE)
-      if (!this->do_byte_swap_)
-        {
-          // Convert from Intel format (12345678 => 56781234)
-          const char *orig = buf;
-          char *target = reinterpret_cast<char *> (x);
-          register ACE_UINT32 x =
-            *reinterpret_cast<const ACE_UINT32 *> (orig);
-          register ACE_UINT32 y =
-            *reinterpret_cast<const ACE_UINT32 *> (orig + 4);
-          *reinterpret_cast<ACE_UINT32 *> (target) = y;
-          *reinterpret_cast<ACE_UINT32 *> (target + 4) = x;
-        }
-      else
-        {
-          // Convert from Sparc format (12345678 => 43218765)
-          const char *orig = buf;
-          char *target = reinterpret_cast<char *> (x);
-          register ACE_UINT32 x =
-            *reinterpret_cast<const ACE_UINT32 *> (orig);
-          register ACE_UINT32 y =
-            *reinterpret_cast<const ACE_UINT32 *> (orig + 4);
-          x = (x << 24) | ((x & 0xff00) << 8) | ((x & 0xff0000) >> 8) | (x >> 24);
-          y = (y << 24) | ((y & 0xff00) << 8) | ((y & 0xff0000) >> 8) | (y >> 24);
-          *reinterpret_cast<ACE_UINT32 *> (target) = x;
-          *reinterpret_cast<ACE_UINT32 *> (target + 4) = y;
-        }
-#  else
       if (!this->do_byte_swap_)
         *x = *reinterpret_cast<ACE_CDR::ULongLong *> (buf);
       else
         ACE_CDR::swap_8 (buf, reinterpret_cast<char *> (x));
-#  endif /* !__arm__ */
 #else
       *x = *reinterpret_cast<ACE_CDR::ULongLong *> (buf);
 #endif /* ACE_DISABLE_SWAP_ON_READ */
