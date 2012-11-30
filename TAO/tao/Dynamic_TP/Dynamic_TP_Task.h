@@ -5,8 +5,6 @@
  *  @file    Dynamic_TP_Task.h
  *
  *  $Id$
- *
- *  @author
  */
 //=============================================================================
 
@@ -16,9 +14,8 @@
 #include /**/ "ace/pre.h"
 
 #include "tao/Dynamic_TP/dynamic_tp_export.h"
-
+#include "tao/Dynamic_TP/Dynamic_TP_Config.h"
 #include "tao/CSD_ThreadPool/CSD_TP_Queue.h"
-#include "tao/CSD_ThreadPool/CSD_TP_Task.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/Condition.h"
 
@@ -35,7 +32,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 
     /// Typedef for the number of threads.
-    typedef unsigned long Thread_Counter;
+    typedef long TAO_Dynamic_TP_Thread_Counter;
 
     /**
      * @class TP_Task
@@ -60,19 +57,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
      * invoke this task's svc() method, and when the svc() returns, the
      * worker thread will invoke this task's close() method (with the
      * flag argument equal to 0).
-     *
-     * @note I just wanted to document an idea...  When the pool consists
-     *       of only one worker thread, we could care less about checking
-     *       if target servant objects are busy or not.  The simple fact
-     *       that only one thread will be dispatching all requests means
-     *       that servant objects will never be busy when the thread
-     *       tests to see if a request is "ready_for_dispatch()".  I'm
-     *       just wondering if this knowledge can be applied to the
-     *       implementation such that the "pool with one worker thread" case
-     *       performs more efficiently.  This is STP vs SSTP.
-     *
      */
-    class TAO_Dynamic_TP_Export TAO_Dynamic_TP_Task : public TAO::CSD::TP_Task
+    class TAO_Dynamic_TP_Export TAO_Dynamic_TP_Task : public ACE_Task_Base
     {
     public:
 
@@ -83,16 +69,24 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
       virtual ~TAO_Dynamic_TP_Task();
 
       struct Open_Args {
-        Open_Args (void)
-          : num_threads(1),
-            stack_size (0)
-        {}
-        Thread_Counter num_threads;
-        size_t stack_size;
+        TAO_DTP_Definition task_thread_config;
+        //TAO_Dynamic_TP_Thread_Counter num_threads;
+        //size_t stack_size;
       };
+
+
+      /// Put a request object on to the request queue.
+      /// Returns true if successful, false otherwise (it has been "rejected").
+      bool add_request(TAO::CSD::TP_Request* request);
 
       /// Activate the worker threads
       virtual int open(void* args = 0);
+
+      /// The "mainline" executed by each worker thread.
+      virtual int svc();
+
+      /// Cancel all requests that are targeted for the provided servant.
+      void cancel_servant (PortableServer::Servant servant);
 
     private:
 
@@ -129,11 +123,35 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
       /// Flag used to avoid multiple open() calls.
       bool opened_;
 
+      /// The number of requests in the local queue.
+      unsigned long num_queue_requests_;
+
       /// The number of currently active worker threads.
-      Thread_Counter num_threads_;
+      TAO_Dynamic_TP_Thread_Counter num_threads_;
 
       /// The queue of pending servant requests (a.k.a. the "request queue").
       TAO::CSD::TP_Queue queue_;
+
+
+      /// The number of static pool threads to create up front.
+      int initial_pool_threads_;
+
+      /// The low water mark for dynamic threads to settle to.
+      int min_pool_threads_;
+
+      /// The high water mark for dynamic threads to be limited to.
+      int max_pool_threads_;
+
+      /// If the max_pool_threads_ value has been met, then ORB requests coming in can be queued.
+      /// This is the maximum number that will be allowed.
+      size_t max_request_queue_depth_;
+
+      /// This is the memory stack size allowable for each thread.
+      size_t thread_stack_size_;
+
+      /// This is the maximum amount of time in seconds that an idle thread can
+      /// stay alive before being taken out of the pool.
+      ACE_Time_Value thread_idle_time_;
 
       typedef ACE_Vector <ACE_thread_t> Thread_Ids;
 

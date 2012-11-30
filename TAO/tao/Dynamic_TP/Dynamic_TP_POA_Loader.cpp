@@ -128,7 +128,6 @@ TAO_Dynamic_TP_POA_Loader::load_poa_map (ACE_TCHAR *map,
   ACE_CString poa_name;
   ACE_CString config_name;
   TAO_Dynamic_TP_POA_Strategy * strategy_container = 0;
-  TAO_Dynamic_TP_POA_StrategyImpl * empty_strategy_impl = 0;
 
   ACE_TCHAR *sep = ACE_OS::strchr (map, ':');
 
@@ -154,7 +153,6 @@ TAO_Dynamic_TP_POA_Loader::load_poa_map (ACE_TCHAR *map,
 
   ACE_NEW_RETURN(strategy_container,
                  TAO_Dynamic_TP_POA_Strategy(config_name,
-                                             empty_strategy_impl,
                                              true), -1);
 
   sep = ACE_OS::strchr (map, ',');
