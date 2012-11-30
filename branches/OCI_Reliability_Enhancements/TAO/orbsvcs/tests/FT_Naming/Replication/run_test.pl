@@ -129,6 +129,8 @@ sleep(1);
 $args = "-p file://$test_iorfile1 -q file://$test_iorfile2";
 $prog = "$startdir/client";
 
+print STDERR "Starting Client: $prog $args";
+
 $CL = $test->CreateProcess ("$prog", "$args");
 
 $client = $CL->SpawnWaitKill ($test->ProcessStartWaitInterval());

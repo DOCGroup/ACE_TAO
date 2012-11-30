@@ -331,9 +331,11 @@ void TAO_Storable_Naming_Context::Write(TAO_Storable_Base& wrtr)
     wrtr << record;
     it.advance();
   }
+
+  this->write_occurred_ = 1;
 }
 
-// Helper function to load a new context into the binding_map
+// Helpers function to load a new context into the binding_map
 int
 TAO_Storable_Naming_Context::load_map(TAO_Storable_Base& storable)
 {
@@ -407,7 +409,8 @@ File_Open_Lock_and_Check::File_Open_Lock_and_Check(
                                  TAO_Storable_Naming_Context * context,
                                  const char * mode)
 : TAO::Storable_File_Guard(TAO_Storable_Naming_Context::redundant_),
- context_(context)
+  context_(context),
+  write_occurred_ (0)
 {
   init(mode);
 }
@@ -416,6 +419,11 @@ TAO_Storable_Naming_Context::
 File_Open_Lock_and_Check::~File_Open_Lock_and_Check()
 {
   this->release ();
+
+  // Check if a write occurred for this context and
+  // notify the context if it did.
+  if (write_occurred_ == 1)
+    context_->context_written ();
 }
 
 TAO_Storable_Base &
@@ -1132,6 +1140,12 @@ TAO_Storable_Naming_Context::destroy (void)
     }
 }
 
+void
+TAO_Storable_Naming_Context::context_written (void)
+{
+  // No-op.  Derived classes may handle this callback
+  // from the File_Open_Lock_and_Check
+}
 
 void
 TAO_Storable_Naming_Context::bind (const CosNaming::Name& n,

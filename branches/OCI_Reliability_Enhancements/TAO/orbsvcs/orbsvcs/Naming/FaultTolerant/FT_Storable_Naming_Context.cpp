@@ -120,12 +120,6 @@ TAO_FT_Storable_Naming_Context::bind (const CosNaming::Name& n,
 
   ACE_DEBUG ((LM_DEBUG,
               "Binding object (name =%s) [%i].\n", n[0].id.in (), n.length ()));
-  int result = this->propagate_update_notification (n, FT_Naming::UPDATED);
-  if (result == -1)
-  {
-    ACE_ERROR ((LM_ERROR,
-                "Error propagating replication notification to peer.\n"));
-  }
 }
 
 CosNaming::NamingContext_ptr
@@ -137,19 +131,11 @@ TAO_FT_Storable_Naming_Context::bind_new_context (const CosNaming::Name& n)
 
   ACE_DEBUG ((LM_DEBUG,
               "Binding new context (name =%s) [%i].\n", n[0].id.in (), n.length ()));
-  int result = this->propagate_update_notification (n, FT_Naming::UPDATED);
-  if (result == -1)
-  {
-    ACE_ERROR ((LM_ERROR,
-                "Error propagating replication notification to peer.\n"));
-  }
-
   return nc;
 }
 
 int
 TAO_FT_Storable_Naming_Context::propagate_update_notification (
-                   const CosNaming::Name& n,
                    FT_Naming::ChangeType change_type)
 {
   // Notify the peer of the changed context
@@ -163,19 +149,14 @@ TAO_FT_Storable_Naming_Context::propagate_update_notification (
         return 1;
       }
 
-    CosNaming::NamingContext_var target_context = this->get_context (n);
-    PortableServer::ObjectId_var context_id =
-      this->poa_->reference_to_id (target_context.in ());
-    CORBA::String_var context_name = PortableServer::ObjectId_to_string (context_id);
     FT_Naming::NamingContextUpdate context_info;
-    context_info.context_name = context_name.in ();
+    context_info.context_name = this->name_.c_str ();
     // We are are updating the context one element before the specified name
-    context_info.changed_context = n;
     context_info.change_type = change_type;
 
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("Forwarding notification of bind update for name: %s.\n"),
-                this->interface ()->to_string (n)));
+                ACE_TEXT ("Forwarding notification of bind update for context: %s.\n"),
+                this->name_.c_str ()));
 
     // Notify the naming_manager of the updated context
     peer->notify_updated_context (context_info);
@@ -208,5 +189,18 @@ TAO_FT_Storable_Naming_Context::is_dirty (void)
   return is_dirty_;
 }
 
+
+void
+TAO_FT_Storable_Naming_Context::context_written (void)
+{
+  FT_Naming::ChangeType change_type;
+
+  if (this->destroyed_)
+    change_type = FT_Naming::DELETED;
+  else
+    change_type = FT_Naming::UPDATED;
+
+  propagate_update_notification (change_type);
+}
 
 TAO_END_VERSIONED_NAMESPACE_DECL
