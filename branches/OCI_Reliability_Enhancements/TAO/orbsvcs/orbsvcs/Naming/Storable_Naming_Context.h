@@ -15,7 +15,7 @@
 #include /**/ "ace/pre.h"
 
 #include "orbsvcs/Naming/Hash_Naming_Context.h"
-#include "orbsvcs/Naming/Naming_Service_File_Guard.h"
+#include "tao/Storable_File_Guard.h"
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Auto_Ptr.h"
 
@@ -408,13 +408,16 @@ protected:
  *
  */
 class TAO_Naming_Serv_Export File_Open_Lock_and_Check :
-  public Naming_Service_File_Guard
+public TAO::Storable_File_Guard
 {
 public:
 
   /// Constructor - we always need the object which we guard.
   File_Open_Lock_and_Check(TAO_Storable_Naming_Context * context,
                            const char * mode);
+
+  /// Returns the stream to read/write on
+  TAO_Storable_Base & peer (void);
 
   ~File_Open_Lock_and_Check();
 

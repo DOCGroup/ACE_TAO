@@ -127,7 +127,7 @@ namespace TAO
 
 
     /// Destructor
-    ~PG_Object_Group ();
+    virtual ~PG_Object_Group ();
 
     /////////////////
     // public methods
@@ -145,7 +145,7 @@ namespace TAO
     /**
      * get location of primary member
      */
-    const PortableGroup::Location & get_primary_location() const;
+    virtual const PortableGroup::Location & get_primary_location() const;
 
     /**
      * returns a duplicate
@@ -192,7 +192,7 @@ namespace TAO
      * @param the_location the location for the new member
      * @param member the member to be added
      */
-    void add_member (
+    virtual void add_member (
         const PortableGroup::Location & the_location,
         CORBA::Object_ptr member);
 
@@ -203,21 +203,21 @@ namespace TAO
      * it returns a boolean result.  A false return means caller should
      * throw FT::PrimaryNot_Set.
      */
-    int set_primary_member (
+    virtual int set_primary_member (
       TAO_IOP::TAO_IOR_Property * prop,
       const PortableGroup::Location & the_location);
 
     /**
      * @@TODO DOC
      */
-    void remove_member (
+    virtual void remove_member (
         const PortableGroup::Location & the_location);
 
 
     /**
      * @@TODO DOC
      */
-    void create_member (
+    virtual void create_member (
         const PortableGroup::Location & the_location,
         const char * type_id,
         const PortableGroup::Criteria & the_criteria);
@@ -225,7 +225,7 @@ namespace TAO
     /**
      * @@TODO DOC
      */
-    PortableGroup::Locations * locations_of_members (void);
+    virtual PortableGroup::Locations * locations_of_members (void);
 
     /**
      * @@TODO DOC
@@ -237,29 +237,29 @@ namespace TAO
     /**
      * @@TODO DOC
      */
-    void initial_populate (void);
+    virtual void initial_populate (void);
 
     /**
      * @@TODO DOC
      */
-    void minimum_populate (void);
+    virtual void minimum_populate (void);
 
 
     /**
      * @@TODO DOC
      */
-    int has_member_at (const PortableGroup::Location & location );
+    virtual int has_member_at (const PortableGroup::Location & location );
 
 
     /**
      * Tell the object group that it should distribute updates to the object
      * group state.
      */
-    void distribute (int value);
+    virtual void distribute (int value);
 
     void set_name (const char* group_name);
 
-    const char* get_name (void);
+    virtual const char* get_name (void);
 
     /////////////////////////
     // Implementation methods

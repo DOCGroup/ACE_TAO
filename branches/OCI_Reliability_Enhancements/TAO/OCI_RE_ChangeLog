@@ -1,3 +1,54 @@
+Fri Nov 30 15:47:46 UTC 2012  Byron Harris  <harrisb@ociweb.com>
+
+        * orbsvcs/orbsvcs/CosNaming_Serv.mpc:
+
+          Removed source file.
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:
+
+          Added object group persistence option.
+
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.h:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp:
+
+          Use Storable_File_Guard instead of Naming_Service_File_Guard.
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_Factory.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_Factory.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group_Storable.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group_Storable.cpp:
+
+          Start of storable object group capability (no writing/reading
+          done yet).
+
+        * tao/Storable_Factory.h:
+        * tao/Storable_Factory.cpp:
+        * tao/Storable_File_Guard.h:
+        * tao/Storable_File_Guard.cpp:
+        * tao/Storable_FlatFileStream.h:
+        * tao/Storable_FlatFileStream.cpp:
+        * tao/tao.mpc:
+
+          Updates to accommodate object group persistence.
+
+        * tests/Storable:
+        * tests/Storable/Savable.h:
+        * tests/Storable/Savable.cpp:
+        * tests/Storable/Storable.mpc:
+        * tests/Storable/run_test.pl:
+        * tests/Storable/test.cpp:
+
+          Beginning of test for Storable code.
+
+        * orbsvcs/orbsvcs/Naming/Naming_Service_File_Guard.h:
+        * orbsvcs/orbsvcs/Naming/Naming_Service_File_Guard.cpp:
+
+          Removed these files.
+
 Thu Nov 29 22:22:42 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_NamingReplication.idl:

@@ -111,6 +111,9 @@ protected:
 
   PortableServer::POA_var replication_manager_poa_;
 
-};
+  int use_object_group_persistence_;
+  ACE_CString object_group_dir_;
+
+ };
 
 #endif /* TAO_FT_NAMING_SERVER_H */

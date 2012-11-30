@@ -34,11 +34,12 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 //////////////////
-// Forward reference
+// Forward references
 namespace TAO
 {
   class PG_Property_Set;
-} // namespace TAO_PG
+  class Storable_Factory;
+}
 
 namespace TAO
 {
@@ -150,6 +151,11 @@ namespace TAO
      */
     int destroy_group (PortableGroup::ObjectGroup_ptr object_group);
 
+    /**
+     * persist internal state to file for fault tolerant purposes.
+     */
+    void set_object_group_storable_factory (TAO::Storable_Factory * factory);
+
   private:
 
   private:
@@ -168,6 +174,8 @@ namespace TAO
 
     Group_Map group_map_;
 
+    bool use_persistence_;
+    Storable_Factory * storable_factory_;
 
   };
 } // namespace TAO

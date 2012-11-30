@@ -685,5 +685,10 @@ TAO_FT_Naming_Manager::preprocess_properties (PortableGroup::Properties &)
 
 }
 
+void
+TAO_FT_Naming_Manager::set_object_group_storable_factory (TAO::Storable_Factory * factory)
+{
+  this->group_factory_.set_object_group_storable_factory (factory);
+}
 
 TAO_END_VERSIONED_NAMESPACE_DECL
