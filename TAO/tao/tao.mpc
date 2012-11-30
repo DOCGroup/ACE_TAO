@@ -277,6 +277,9 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, taoid
     String_Alloc.cpp
     StringSeqC.cpp
     Storable_Base.cpp
+    Storable_FlatFileStream.cpp
+    Storable_Factory.cpp
+    Storable_File_Guard.cpp
     Stub.cpp
     Stub_Factory.cpp
     Synch_Invocation.cpp

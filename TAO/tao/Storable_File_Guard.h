@@ -45,9 +45,6 @@ namespace TAO
     /// Releases the lock, closes the file, and deletes the I/O stream.
     void release (void);
 
-    /// Returns the stream to read/write on
-    Storable_Base & peer (void);
-
   protected:
 
     /// Should be called by constructors of derived classes
@@ -71,9 +68,6 @@ namespace TAO
   private:
 
     bool redundant_;
-
-    /// Default constructor
-    Storable_File_Guard ();
 
     /// A flag to keep us from trying to close things more than once.
     int closed_;

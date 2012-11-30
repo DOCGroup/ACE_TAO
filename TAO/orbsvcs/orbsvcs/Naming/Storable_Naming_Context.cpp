@@ -406,7 +406,7 @@ TAO_Storable_Naming_Context::
 File_Open_Lock_and_Check::File_Open_Lock_and_Check(
                                  TAO_Storable_Naming_Context * context,
                                  const char * mode)
-: Naming_Service_File_Guard(TAO_Storable_Naming_Context::redundant_),
+: TAO::Storable_File_Guard(TAO_Storable_Naming_Context::redundant_),
  context_(context)
 {
   init(mode);
@@ -416,6 +416,13 @@ TAO_Storable_Naming_Context::
 File_Open_Lock_and_Check::~File_Open_Lock_and_Check()
 {
   this->release ();
+}
+
+TAO_Storable_Base &
+TAO_Storable_Naming_Context::
+File_Open_Lock_and_Check::peer ()
+{
+  return dynamic_cast<TAO_Storable_Base &>(*fl_);
 }
 
 void

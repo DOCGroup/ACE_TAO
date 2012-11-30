@@ -15,7 +15,11 @@
 #include "orbsvcs/PortableGroup/PG_conf.h"
 #include "orbsvcs/PortableGroupC.h"
 #include "orbsvcs/PortableGroup/PG_Object_Group.h"
+#include "orbsvcs/PortableGroup/PG_Object_Group_Storable.h"
 #include <orbsvcs/PortableGroup/PG_Utils.h>
+
+#include "tao/Storable_Factory.h"
+
 #include <ace/SString.h>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -25,7 +29,8 @@ TAO::PG_Group_Factory::PG_Group_Factory ()
   , poa_ (PortableServer::POA::_nil())
   , manipulator_ ()
   , domain_id_ ("default-domain")
-
+  , use_persistence_(false)
+  , storable_factory_(0)
 {
 }
 
@@ -39,6 +44,7 @@ TAO::PG_Group_Factory::~PG_Group_Factory (void)
     delete group;
   }
   this->group_map_.unbind_all ();
+  delete this->storable_factory_;
 }
 
 
@@ -90,19 +96,38 @@ TAO::PG_Object_Group * TAO::PG_Group_Factory::create_group (
 
   TAO::PG_Object_Group * objectGroup = 0;
 
-  ACE_NEW_THROW_EX (
-    objectGroup,
-    TAO::PG_Object_Group (
-      this->orb_.in (),
-      this->factory_registry_.in (),
-      this->manipulator_,
-      empty_group.in (),
-      tagged_component,
-      type_id,
-      the_criteria,
-      typeid_properties
-      ),
-    CORBA::NO_MEMORY());
+  if (use_persistence_)
+    {
+      ACE_NEW_THROW_EX (
+        objectGroup,
+        TAO::PG_Object_Group_Storable (
+          this->orb_.in (),
+          this->factory_registry_.in (),
+          this->manipulator_,
+          empty_group.in (),
+          tagged_component,
+          type_id,
+          the_criteria,
+          typeid_properties
+          ),
+        CORBA::NO_MEMORY());
+    }
+  else
+    {
+      ACE_NEW_THROW_EX (
+        objectGroup,
+        TAO::PG_Object_Group (
+          this->orb_.in (),
+          this->factory_registry_.in (),
+          this->manipulator_,
+          empty_group.in (),
+          tagged_component,
+          type_id,
+          the_criteria,
+          typeid_properties
+          ),
+        CORBA::NO_MEMORY());
+    }
 
   if (this->group_map_.bind (group_id, objectGroup) != 0)
   {
@@ -256,5 +281,13 @@ TAO::PG_Group_Factory::all_groups (void)
   result->length (group_count);
   return result;
 }
+
+void
+TAO::PG_Group_Factory::set_object_group_storable_factory (TAO::Storable_Factory * factory)
+{
+  this->use_persistence_ = true;
+  this->storable_factory_  = factory;
+}
+
 
 TAO_END_VERSIONED_NAMESPACE_DECL

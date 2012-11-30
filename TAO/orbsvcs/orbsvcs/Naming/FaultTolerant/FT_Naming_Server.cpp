@@ -38,12 +38,12 @@
 
 #include "tao/debug.h"
 #include "tao/default_ports.h"
+#include "tao/Storable_FlatFileStream.h"
 
 #include "orbsvcs/CosNamingC.h"
 
 #include "tao/debug.h"
 #include "tao/default_ports.h"
-#include "tao/ORB_Core.h"
 
 #include "tao/IORTable/IORTable.h"
 
@@ -66,7 +66,8 @@ TAO_FT_Naming_Server::TAO_FT_Naming_Server (void)
     replication_manager_ (0),
     naming_manager_ior_file_name_(0),
     replication_manager_ior_file_name_(0),
-    naming_manager_persistence_file_name_(0)
+    naming_manager_persistence_file_name_(0),
+    use_object_group_persistence_(0)
 {
 }
 
@@ -409,7 +410,7 @@ TAO_FT_Naming_Server::parse_args (int argc,
                                   ACE_TCHAR *argv[])
 {
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT)
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("b:do:p:s:f:m:z:r:u:g:i:j:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("b:do:p:s:f:m:z:r:u:v:g:i:j:"));
 #else
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("b:do:p:s:f:m:z:"));
 #endif /* TAO_HAS_MINIMUM_POA */
@@ -429,7 +430,7 @@ TAO_FT_Naming_Server::parse_args (int argc,
 #endif /* ACE_SIZEOF_VOID_P */
 #endif /* CORBA_E_MICRO */
 
-  // Make sure only one persistence option is specified
+  // Make sure only one naming context persistence option is specified
   int f_opt_used = 0;
   int u_opt_used = 0;
   int r_opt_used = 0;
@@ -495,6 +496,11 @@ TAO_FT_Naming_Server::parse_args (int argc,
         this->persistence_file_name_ = get_opts.opt_arg ();
         u_opt_used = 1;
         break;
+      case 'v':
+        this->use_object_group_persistence_ = 1;
+        this->object_group_dir_ = get_opts.opt_arg ();
+        break;
+
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 #endif /* !CORBA_E_MICRO */
       case 'z':
@@ -513,6 +519,7 @@ TAO_FT_Naming_Server::parse_args (int argc,
 #endif /* CORBA_E_MICRO */
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_MICRO)
           ACE_TEXT ("-u <storable_persistence_directory (not used with -f)> ")
+          ACE_TEXT ("-v <storable_object_group_persistence_directory> ")
           ACE_TEXT ("-r <redundant_persistence_directory> ");
 #else
           ACE_TEXT ("");
@@ -568,6 +575,21 @@ TAO_FT_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
       ACE_UNUSED_ARG (base_addr);
       ACE_UNUSED_ARG (use_storable_context);
 #else
+      if (this->use_object_group_persistence_)
+        {
+          // Make sure the object group directory is accessible
+          if (ACE_OS::access (this->object_group_dir_.c_str (), W_OK|X_OK))
+            {
+              ACE_ERROR_RETURN ((LM_ERROR, "Invalid object group persistence directory\n"), -1);
+            }
+
+          TAO::Storable_Factory * object_group_storable_factory;
+          ACE_NEW_RETURN (object_group_storable_factory,
+                          TAO::Storable_FlatFileFactory (this->object_group_dir_), -1);
+
+          naming_manager_.set_object_group_storable_factory(object_group_storable_factory);
+        }
+
       if (use_storable_context)
         {
           // In lieu of a fully implemented service configurator version

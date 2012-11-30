@@ -129,10 +129,3 @@ TAO::Storable_File_Guard::
 {
   ACE_TRACE("TAO::Storable_File_Guard::~Storable_File_Guard");
 }
-
-TAO::Storable_Base &
-TAO::Storable_File_Guard::peer ()
-{
-  ACE_TRACE("TAO::Storable_File_Guard::peer");
-  return *fl_;
-}

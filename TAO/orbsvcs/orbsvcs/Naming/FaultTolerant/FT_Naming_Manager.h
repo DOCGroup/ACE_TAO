@@ -37,6 +37,11 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+namespace TAO
+{
+  class Storable_Factory;
+}
+
 class TAO_FtNaming_Export TAO_FT_Naming_Manager
   : public virtual POA_FT::NamingManager,
     public ACE_Task_Base
@@ -236,6 +241,12 @@ public:
   bool
   next_location (PortableGroup::ObjectGroup_ptr object_group,
                  PortableGroup::Location& loc);
+
+  /// Load/save state of object groups from/to file for fault
+  /// tolerant purposes.
+  void
+  set_object_group_storable_factory (TAO::Storable_Factory *
+    factory);
 
   /// Destructor.
   ~TAO_FT_Naming_Manager (void);
