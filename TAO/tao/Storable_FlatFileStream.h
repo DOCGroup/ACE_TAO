@@ -22,6 +22,7 @@
 
 #include "tao/Storable_Base.h"
 #include "tao/Storable_Factory.h"
+#include "ace/OS_NS_stdio.h"
 
 namespace TAO
 {
@@ -97,6 +98,5 @@ namespace TAO
 
 }
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #endif /* STORABLE_FLATFILESTREAM_H */

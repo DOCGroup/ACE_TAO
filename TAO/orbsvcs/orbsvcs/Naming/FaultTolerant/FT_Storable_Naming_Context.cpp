@@ -118,34 +118,14 @@ TAO_FT_Storable_Naming_Context::bind (const CosNaming::Name& n,
   // the object to the name and store the naming context.
   TAO_Storable_Naming_Context::bind (n, obj);
 
-  try {
-    FT_Naming::ReplicationManager_var peer =
-      TAO_FT_Naming_Replication_Manager::peer_replica ();
-
-    if (CORBA::is_nil (peer.in ()))
-      {
-        // Replication is not supported without a peer replica.
-        return;
-      }
-
-    FT_Naming::NamingContextUpdate context_info;
-    context_info.context_name = this->name_.c_str ();
-    // We are are updating the context one element before the specified name
-    context_info.changed_context = n;
-    context_info.changed_context.length (n.length () - 1);
-    context_info.change_type = FT_Naming::UPDATED;
-
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("Forwarding notification of bind update for name: %s.\n"),
-                this->interface ()->to_string (n)));
-
-    // Notify the naming_manager of the updated context
-    peer->notify_updated_context (context_info);
+  ACE_DEBUG ((LM_DEBUG,
+              "Binding object (name =%s) [%i].\n", n[0].id.in (), n.length ()));
+  int result = this->propagate_update_notification (n, FT_Naming::UPDATED);
+  if (result == -1)
+  {
+    ACE_ERROR ((LM_ERROR,
+                "Error propagating replication notification to peer.\n"));
   }
-  catch (CORBA::Exception& ex)
-    {
-      ex._tao_print_exception (ACE_TEXT ("Unable to communicate with peer.\n"));
-    }
 }
 
 CosNaming::NamingContext_ptr
@@ -157,6 +137,22 @@ TAO_FT_Storable_Naming_Context::bind_new_context (const CosNaming::Name& n)
 
   ACE_DEBUG ((LM_DEBUG,
               "Binding new context (name =%s) [%i].\n", n[0].id.in (), n.length ()));
+  int result = this->propagate_update_notification (n, FT_Naming::UPDATED);
+  if (result == -1)
+  {
+    ACE_ERROR ((LM_ERROR,
+                "Error propagating replication notification to peer.\n"));
+  }
+
+  return nc;
+}
+
+int
+TAO_FT_Storable_Naming_Context::propagate_update_notification (
+                   const CosNaming::Name& n,
+                   FT_Naming::ChangeType change_type)
+{
+  // Notify the peer of the changed context
   try {
     FT_Naming::ReplicationManager_var peer =
       TAO_FT_Naming_Replication_Manager::peer_replica ();
@@ -164,37 +160,32 @@ TAO_FT_Storable_Naming_Context::bind_new_context (const CosNaming::Name& n)
     if (CORBA::is_nil (peer.in ()))
       {
         // Replication is not supported without a peer replica.
-        return nc;
+        return 1;
       }
 
-    TAO_FT_Storable_Naming_Context *updated_context = this->find_relative_context (n);
+    CosNaming::NamingContext_var target_context = this->get_context (n);
+    PortableServer::ObjectId_var context_id =
+      this->poa_->reference_to_id (target_context.in ());
+    CORBA::String_var context_name = PortableServer::ObjectId_to_string (context_id);
+    FT_Naming::NamingContextUpdate context_info;
+    context_info.context_name = context_name.in ();
+    // We are are updating the context one element before the specified name
+    context_info.changed_context = n;
+    context_info.change_type = change_type;
 
-    if (updated_context != 0)
-    {
-      // Try to propagate the update to the impacted context. Return of 0 means success
-      // return of 1 means no replica.  Return of -1 means exception in propagation
-      int result = updated_context->propagate_update_notification (FT_Naming::UPDATED);
-      if (result == -1)
-        ACE_ERROR ((LM_ERROR,
-                   "TAO_FT_Storable_Naming_Context::bind_new_context - unable to propagate updates.\n"));
-    }
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("Forwarding notification of bind update for name: %s.\n"),
+                this->interface ()->to_string (n)));
+
+    // Notify the naming_manager of the updated context
+    peer->notify_updated_context (context_info);
   }
   catch (CORBA::Exception& ex)
-  {
-    ex._tao_print_exception ("TAO_FT_Storable_Naming_Context::bind_new_context - Unexpected exception.\n");
-  }
+    {
+      ex._tao_print_exception (ACE_TEXT ("Unable to communicate with peer.\n"));
+      return -1;
+    }
 
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("bind_new_context - Returning nc.\n")));
-  return nc;
-}
-
-TAO_FT_Storable_Naming_Context*
-TAO_FT_Storable_Naming_Context::find_relative_context (
-                              const CosNaming::Name &n)
-{
-  // TODO: We have to resolve to the identified name and then
-  // Get the servant for that context and access its impl.
   return 0;
 }
 
@@ -210,36 +201,6 @@ TAO_FT_Storable_Naming_Context::mark_dirty (CORBA::Boolean is_dirty)
   this->is_dirty_ = is_dirty;
 }
 
-int
-TAO_FT_Storable_Naming_Context::propagate_update_notification (FT_Naming::ChangeType change_type)
-{
-  try {
-    FT_Naming::ReplicationManager_var peer =
-      TAO_FT_Naming_Replication_Manager::peer_replica ();
-
-    if (CORBA::is_nil (peer.in ()))
-      {// Replication is not supported without a peer replica.
-        return 1;
-      }
-
-    // Build up the context information about the update
-    FT_Naming::NamingContextUpdate context_info;
-    context_info.context_name = this->name_.c_str ();
-    context_info.change_type = change_type;
-
-    // Notify the naming_manager of the updated context
-    peer->notify_updated_context (context_info);
-  }
-  catch (CORBA::Exception& ex)
-  {
-    ex._tao_print_exception (
-      ACE_TEXT ("TAO_FT_Storable_Naming_Context::report_updated - Unexpected exception.\n"));
-    return -1;
-  }
-
-  // Success
-  return 0;
-}
 
 CORBA::Boolean
 TAO_FT_Storable_Naming_Context::is_dirty (void)

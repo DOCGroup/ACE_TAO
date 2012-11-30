@@ -1,4 +1,17 @@
-Fri Nov 30 17:23:23 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
+Fri Nov 30 17:26:09 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context.cpp:
+
+          Updates to support replication notifications.
+
+        * tao/Storable_FlatFileStream.h:
+        * tao/Storable_FlatFileStream.cpp:
+
+          Added missing includes.
+
+          Fri Nov 30 17:23:23 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * utils/logWalker/HostProcess.h:
         * utils/logWalker/HostProcess.cpp:
