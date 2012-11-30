@@ -411,7 +411,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       ACE_DEBUG ((LM_DEBUG, "\nError:\n"));
       ex._tao_print_exception ("Exception in nsadd");
-      orb->destroy ();
       ++err;
     }
 
