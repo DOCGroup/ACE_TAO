@@ -874,7 +874,7 @@ int
 TAO_FT_Naming_Server::update_naming_context (
     const FT_Naming::NamingContextUpdate & context_info)
 {
-  PortableServer::Servant servant = 0;
+  PortableServer::ServantBase_var servant;
 
   // Lookup the servant for the identified context and see if it is
   // active here locally.
@@ -894,7 +894,7 @@ TAO_FT_Naming_Server::update_naming_context (
     return 0;
   }
 
-  TAO_Naming_Context* changed_context_servant = dynamic_cast<TAO_Naming_Context*> (servant);
+  TAO_Naming_Context* changed_context_servant = dynamic_cast<TAO_Naming_Context*> (servant.in ());
 
   if (changed_context_servant == 0)
   { // Another type of class was used as the servant. Should not happen.
@@ -905,17 +905,14 @@ TAO_FT_Naming_Server::update_naming_context (
 
   // Print out a helpful message
   CORBA::String_var changed_context = changed_context_servant->to_string (context_info.changed_context);
-
   ACE_DEBUG ((LM_DEBUG,
               "Updated Context: name = %s, path = %s, type = %i\n",
                context_info.context_name.in (), changed_context.in (), context_info.change_type));
 
-  // Find the updated context and mark it so that it will be updated on the
-  // next access of the context.
   changed_context_servant->mark_dirty ();
 
   // Must remove the reference to this servant.
-  servant->_remove_ref ();
+  //servant->_remove_ref ();
   return 0;
 }
 

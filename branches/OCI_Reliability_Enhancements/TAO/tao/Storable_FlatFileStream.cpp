@@ -11,6 +11,10 @@
 //=============================================================================
 
 #include "tao/Storable_FlatFileStream.h"
+#include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_fcntl.h"
+#include "ace/OS_NS_sys_stat.h"
+#include "ace/Numeric_Limits.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -25,7 +29,7 @@ TAO::Storable_FlatFileStream::Storable_FlatFileStream (const ACE_CString & file,
 
 TAO::Storable_FlatFileStream::~Storable_FlatFileStream ()
 {
-  ACE_TRACE("~TAO::Storable_FlatFileStream");
+  ACE_TRACE("~Storable_FlatFileStream");
   if ( fl_ != 0 )
     this->close();
 }

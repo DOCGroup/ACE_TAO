@@ -84,7 +84,8 @@ public:
   * has been registered. Returns -1 on failure to communicate
   * with the peer.
   */
-  int propagate_update_notification (FT_Naming::ChangeType change_type);
+  int propagate_update_notification (const CosNaming::Name& n,
+                                     FT_Naming::ChangeType change_type);
 
  /**
   * Find the indicated context below this context.  Returns 0
