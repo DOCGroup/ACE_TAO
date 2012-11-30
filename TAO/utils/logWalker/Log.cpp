@@ -94,6 +94,18 @@ Log::get_preamble ()
   if (p == 0)
     return;
 
+  if (p != this->line_)
+    {
+      char * x = ACE_OS::strstr (this->line_, "TAO (");
+      if (x+4 != p)
+        {
+          x = ACE_OS::strstr (this->line_, "@(");
+          if (x + 1 != p)
+            return;
+        }
+    }
+
+
   long pid = ACE_OS::strtol(p + 1, &t, 10);
   if (pid == 0)
     return;
@@ -256,6 +268,12 @@ Log::parse_dump_giop_msg_i (void)
       inv->init (this->line_, this->offset_, this->thr_);
       this->thr_->push_invocation (inv);
       target = inv->octets(true);
+      if (target == 0)
+        {
+          ACE_DEBUG ((LM_DEBUG, "%d: no target octets for new recv reqeust, id = %d\n",
+                      this->offset_, rid));
+          return;
+        }
       break;
     }
     case 0: // sending request
@@ -302,10 +320,14 @@ Log::parse_dump_giop_msg_i (void)
         {
           t_iter.next(other_thr);
           GIOP_Buffer *tgt = other_thr->giop_target();
+          if (target == 0)
+            {
+              ACE_DEBUG ((LM_DEBUG, "%d: parse_dump_giop_msg_i, target is null, mode = %d, reqid = %d\n",
+                          this->offset_, mode, rid));
+              return;
+            }
           if (tgt != 0 && this->thr_ != other_thr && target->matches (tgt))
             {
-              // ACE_ERROR ((LM_ERROR, "%d, found duplicate for req_id %d, size %d, sending = %d, type = %d, thread %d and %d\n",
-              //             this->offset_, rid, target->expected_size(), target->sending(), target->expected_type(), this->thr_->id(), other_thr->id()));
               this->thr_->set_dup (other_thr, true);
             }
         }
@@ -537,7 +559,7 @@ Log::parse_handler_open_i (bool is_ssl)
         {
           PeerProcess *waiter = 0;
           c_iter.next(waiter);
-          if (waiter != 0 && waiter->server_addr () == addr)
+          if (waiter != 0 && waiter->match_server_addr (addr, session_))
             {
               pp = waiter;
               c_iter.remove();
@@ -653,9 +675,82 @@ Log::parse_open_as_server_i (void)
 }
 
 void
+Log::parse_iiop_connection_handler_ctor_i (void)
+{
+  PeerProcess *pp = this->thr_->pending_peer();
+  if (pp == 0)
+    {
+      ACE_ERROR ((LM_ERROR, "%d: parse_iiop_connection_handler_ctor_i: no pending peer on thread\n", this->offset_));
+      return;
+    }
+  char *pos = ACE_OS::strchr (this->info_,'[') + 1;
+  long tmp_handle = ACE_OS::strtol (pos, 0, 10);
+  //  pp->set_handle (tmp_handle);
+
+}
+
+void
 Log::parse_wait_for_connection_i (void)
 {
-  //  ACE_ERROR ((LM_ERROR,"%d: parse_wait_for_connection, line = %s\n", this->offset_, this->line_));
+  ACE_ERROR ((LM_ERROR,"%d: parse_wait_for_connection, line = %s\n", this->offset_, this->line_));
+  if (ACE_OS::strstr (this->info_,"Connection not complete") == 0)
+    {
+      return;
+    }
+  else if (ACE_OS::strstr (this->info_,"wait done result =") == 0)
+    {
+      char *pos = ACE_OS::strchr (this->info_, '=') + 2;
+      int result = ACE_OS::strtol (pos, 0, 10);
+      if (result == 1)
+        return;
+      pos = ACE_OS::strchr (this->info_, '[') + 1;
+      long handle = ACE_OS::strtol (pos, 0, 10);
+      PeerProcess *pp = 0;
+
+      ACE_DEBUG ((LM_DEBUG, "%d: parse_wait_for_connection: wait done, result = %d, purging handle = %d\n", this->offset_, result, handle));
+
+      if (this->conn_waiters_.size() > 0)
+        {
+          for (ACE_DLList_Iterator<PeerProcess> c_iter (this->conn_waiters_);
+               !c_iter.done();
+               c_iter.advance())
+            {
+              PeerProcess *waiter = 0;
+              c_iter.next(waiter);
+              if (waiter != 0)
+                {
+                  Transport *t = waiter->find_transport (handle);
+                  if (t != 0)
+                    {
+                      pp = waiter;
+                      c_iter.remove();
+                      break;
+                    }
+                }
+            }
+        }
+      else
+        {
+          pp = this->thr_->pending_peer();
+          Transport *t = pp->find_transport (handle);
+          if (t == 0)
+            {
+              pp = 0;
+            }
+          else
+            {
+              this->thr_->pending_peer (0);
+            }
+        }
+      if (pp == 0)
+        {
+          ACE_ERROR ((LM_ERROR,"%d: no pending peer for handle %s\n",
+                      this->offset_, handle));
+          return;
+        }
+      delete pp;
+
+    }
 }
 
 void

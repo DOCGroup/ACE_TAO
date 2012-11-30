@@ -58,7 +58,7 @@ public:
   Thread * find_thread (long tid, size_t offset);
 
   // Returns a thread that has a pending peer with the supplied address
-  Thread * find_thread_for_peer (const ACE_CString& addr);
+  Thread * find_thread_for_peer (const ACE_CString& addr, Session &session);
 
   // Returns a thread that had previously worked with handle h. May return
   // a null pointer.
