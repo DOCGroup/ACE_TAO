@@ -1,3 +1,8 @@
+Fri Nov 30 15:23:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Mcast_Transport.cpp:
+          Fixed memory leak and alignment in MIOP server listerner.
+
 Fri Nov 30 12:29:48 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * utils/nslist/nsadd.cpp:

@@ -418,12 +418,12 @@ TAO_UIPMC_Mcast_Transport::handle_input (
       ACE_Auto_Ptr<TAO_PG::UIPMC_Recv_Packet> owner (complete);
 
       // Create a data block.
-      ACE_Data_Block db (complete->data_length (),
+      ACE_Data_Block db (complete->data_length () + ACE_CDR::MAX_ALIGNMENT,
                          ACE_Message_Block::MB_DATA,
                          0,
                          this->orb_core_->input_cdr_buffer_allocator (),
                          this->orb_core_->locking_strategy (),
-                         ACE_Message_Block::DONT_DELETE,
+                         0,
                          this->orb_core_->input_cdr_dblock_allocator ());
 
       // Create a message block
