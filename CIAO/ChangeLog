@@ -1,7 +1,14 @@
+Fri Nov 30 10:11:11 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/idl/ndds/ndds_dcps.idl:
+        * connectors/dds4ccm/impl/Utils.h:
+          Extended SampleRejectedStatusKind with the RTI defined extensions,
+          detected by Coverity
+
 Sat Nov 24 14:18:41 UTC 2012  Marcel Smit  <msmit@remedy.nl>
 
         * tests/Bug_3769_Regression/Foo_exec.cpp:
-	  Fuzz : Trailing whitespaces
+          Fuzz : Trailing whitespaces
 
 Fri Nov 23 12:53:17 UTC 2012  Marcel Smit  <msmit@remedy.nl>
 
