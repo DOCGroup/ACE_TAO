@@ -1,3 +1,11 @@
+Fri Nov 30 23:05:32 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
+
+        * orbsvcs/tests/FT_Naming/FaultTolerance:
+        * orbsvcs/tests/FT_Naming/FaultTolerance/README:
+        * orbsvcs/tests/FT_Naming/FaultTolerance/run_test.pl:
+
+        Added FT_Naming Fault Tolerance Test
+
 Fri Nov 30 22:55:31 UTC 2012  f6  <f6@>
 
         * bin/tao_other_tests.lst:
