@@ -3,6 +3,7 @@
 #include "PeerProcess.h"
 #include "PeerObject.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_string.h"
 #include "ace/ACE.h"
 #include "Invocation.h"
 #include "HostProcess.h"
@@ -31,9 +32,11 @@ PeerProcess::nextIdent(bool is_server)
 PeerProcess::PeerProcess (size_t offset, bool is_server)
   : owner_ (0),
     remote_ (0),
-    server_addr_(),
+    server_host_(),
+    server_port_(),
     server_(is_server),
     ssl_(false),
+    localhost_(false),
     origin_offset_ (offset),
     objects_ (),
     object_by_index_ ()
@@ -61,13 +64,38 @@ PeerProcess::~PeerProcess (void)
 void
 PeerProcess::set_server_addr (const ACE_CString &addr)
 {
-  this->server_addr_ = addr;
+  size_t p = addr.rfind (':');
+  this->server_port_ = addr.substring(p);
+  this->server_host_ = addr.substring(0,p);
+
+  this->localhost_ = this->server_host_ == "localhost" ||
+    this->server_host_ == "127.0.0.1" || this->server_host_ == "[::1]";
 }
 
-const ACE_CString&
+bool
+PeerProcess::match_server_addr (const ACE_CString &addr, Session &session) const
+{
+  size_t p = addr.rfind (':');
+  ACE_CString port = addr.substring (p);
+  ACE_CString host = addr.substring (0,p);
+  if (port != this->server_port_)
+    return false;
+
+  if (this->localhost_)
+    {
+      return host == "localhost" || host == "127.0.0.1" || host == "[::1]";
+    }
+
+  if (this->server_host_ == host)
+    return true;
+
+  return session.is_equivalent (this->server_host_, host);
+}
+
+ACE_CString
 PeerProcess::server_addr (void) const
 {
-  return this->server_addr_;
+  return this->server_host_ + this->server_port_;
 }
 
 const ACE_CString&
@@ -118,7 +146,6 @@ PeerProcess::find_transport (long handle)
   return 0;
 }
 
-
 void
 PeerProcess::match_hosts (Session *session)
 {
@@ -127,7 +154,7 @@ PeerProcess::match_hosts (Session *session)
   // then this wants to find the remote based on the Transport
   // instance
   if (this->server_)
-    this->remote_ = session->find_host(this->server_addr_, true);
+    this->remote_ = session->find_host(this->server_host_, true);
   else
     {
       Transport *t = 0;
@@ -243,7 +270,7 @@ PeerProcess::dump_summary (ostream &strm)
     strm << "server at ";
   else
     strm << "client to ";
-  strm << this->server_addr_;
+  strm << this->server_host_ << this->server_port_;
   strm << " with " << num_transports << " connections, ";
   strm << " referenced " << this->objects_.current_size()
        << " objects in " << this->invocations_.size() << " invocations";

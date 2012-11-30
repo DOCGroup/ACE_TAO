@@ -75,6 +75,19 @@ Session::alternate_address (const char *addrspec)
   this->alt_addrs_.bind(name,value);
 }
 
+bool
+Session::is_equivalent (const ACE_CString &primary,
+                        const ACE_CString &alternate)
+{
+  ACE_CString test(primary);
+  ACE_CString alt;
+  if (this->alt_addrs_.find(test,alt) == 0)
+    {
+      return alt == alternate;
+    }
+  return false;
+}
+
 void
 Session::default_service (const char *addrspec)
 {

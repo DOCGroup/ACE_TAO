@@ -1,3 +1,17 @@
+Fri Nov 30 17:23:23 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * utils/logWalker/HostProcess.h:
+        * utils/logWalker/HostProcess.cpp:
+        * utils/logWalker/Log.h:
+        * utils/logWalker/Log.cpp:
+        * utils/logWalker/PeerProcess.h:
+        * utils/logWalker/PeerProcess.cpp:
+        * utils/logWalker/Session.h:
+        * utils/logWalker/Session.cpp:
+        * utils/logWalker/Thread.cpp:
+
+          Synchronize with improvements added to TAO 2.0a.
+
 Fri Nov 30 15:47:46 UTC 2012  Byron Harris  <harrisb@ociweb.com>
 
         * orbsvcs/orbsvcs/CosNaming_Serv.mpc:

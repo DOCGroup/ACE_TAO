@@ -77,7 +77,7 @@ HostProcess::find_thread (long tid, size_t offset)
 }
 
 Thread *
-HostProcess::find_thread_for_peer (const ACE_CString &addr)
+HostProcess::find_thread_for_peer (const ACE_CString &addr, Session &session)
 {
   Thread *thr = 0;
   for (ACE_DLList_Iterator<Thread> i(threads_);
@@ -89,7 +89,7 @@ HostProcess::find_thread_for_peer (const ACE_CString &addr)
       if (pp == 0)
         continue;
 
-      if (pp->server_addr() == addr)
+      if (pp->match_server_addr(addr, session))
         return thr;
     }
   return 0;

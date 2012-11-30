@@ -67,6 +67,7 @@ protected:
   void parse_local_addr_i (void);
   void parse_connection_not_complete_i (void);
   void parse_open_as_server_i (void);
+  void parse_iiop_connection_handler_ctor_i (void);
   void parse_wait_for_connection_i (void);
   void parse_post_open_i (void);
   void parse_notify_poa_helper_i (void);

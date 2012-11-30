@@ -215,8 +215,8 @@ Thread::current_invocation (void) const
 void
 Thread::dump_detail (ostream &strm) const
 {
-  strm << "   " << this->alias_ << " tid = " << this->id_
-       << "\tfirst line " << this->first_line_ << "\t"
+  strm << "   " << this->alias_ << " tid = 0x" << hex << this->id_
+       << "\tfirst line " << dec << this->first_line_ << "\t"
        << this->server_encounters_ << " requests sent "
        << this->client_encounters_ << " requests received";
   if (nested_ > 0)

@@ -51,7 +51,7 @@ public:
 
   void match_hosts (Session *session);
   void set_server_addr (const ACE_CString &addr);
-  const ACE_CString &server_addr (void) const;
+  ACE_CString server_addr (void) const;
   const ACE_CString &last_client_addr (void) const;
 
   bool is_server (void) const;
@@ -61,6 +61,7 @@ public:
   Transport *find_transport (long handle);
 
   bool match_local (const char *addr) const;
+  bool match_server_addr (const ACE_CString &addr, Session &session) const;
 
   Invocation *new_invocation (size_t req_id, Thread *thr);
   Invocation *find_invocation (size_t req_id, long handle);
@@ -77,11 +78,13 @@ private:
   char *origin_;
   HostProcess *owner_;
   HostProcess *remote_;
-  ACE_CString server_addr_;
+  ACE_CString server_port_;
+  ACE_CString server_host_;
   TransportList transports_;
   Transport *last_transport_;
   bool server_;
   bool ssl_;
+  bool localhost_;
   size_t origin_offset_;
   PeerObjectTable objects_;
   InvocationList invocations_;
