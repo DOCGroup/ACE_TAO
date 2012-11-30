@@ -1,0 +1,49 @@
+$Id$
+
+Use Cases
+
+Failover Test
+[UC-1] tests for Requirement FT-7,FT-12 and FT-13.
+1. Run two instances of tao_ft_naming service on the same host but different ports.
+2. Verify that tao_nslist and tao_nsgroup with a corbaloc reference list can access the tao_ft_naming service
+3. Kill the primary tao_ft_naming server
+4. Verify that tao_nslist and tao_nsgroup with a corbaloc reference list can still access the tao_ft_naming service
+5. Restart the first tao_ft_naming server instance and verify it is now the redundant service
+
+Persistance Test
+[UC-2] tests for Requirement FT-8 and FT-9
+1. Run one instance of tao_ft_naming service
+2. Create a new context with tao_nsadd
+3. Create a new object group and add a member with tao_nsgroup and bind the object group to a name
+4. Verify the new name, object group and member are in the tao_ft_naming repository.
+5. Kill the tao_ft_naming server
+6. Start a new instance of the tao_ft_naming server
+7. Verify the new name, object group and member are in the tao_ft_naming repository.
+
+Redundant Equivalancy Test
+[UC-3] tests for Requirement FT-14 and FT-15
+1. Run two instances of tao_ft_naming service on the same host but different ports.
+2. Verify that tao_nslist and tao_nsgroup with a corbaloc primary reference can access the primary tao_ft_naming service
+3. Create a new context with tao_nsadd on the primary tao_ft_naming service
+4. Create a new object group and add a member with tao_nsgroup and bind the object group to a name on the secondary tao_ft_naming service
+5. Verify the new name, object group and member are in the tao_ft_naming repository
+
+This program tests the basic FT IOGR implementation. The aim is to set
+a primary server and see whether the client gives preference to
+contact a primary for its first invocation. When the primary is killed
+it contacts the secondary for next invocation.
+
+Two copies of the server are started. A manager is then to merge these
+two iors and designate the  second as primary. The merged IOR is then
+written to another file. This merged IOR is then used to make
+invocations on the server.
+
+Run the application as follows:
+
+$./server -o <file1.ior>
+$./server -o <file2.ior>
+$./Manager -a file://<file1.ior> -b file://<file2.ior> -c <output.ior>
+
+Due to the transparent reinvocation functionality for FT CORBA, the
+application would switch to the new profile without throwing an
+exception to the application.
