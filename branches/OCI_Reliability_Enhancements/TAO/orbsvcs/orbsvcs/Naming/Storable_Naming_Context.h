@@ -453,6 +453,7 @@ private:
 
   void Write(TAO_Storable_Base& wrtr);
 
+  /// Is set by the Write operation.  Used to determine
   int write_occurred_;
 };
 

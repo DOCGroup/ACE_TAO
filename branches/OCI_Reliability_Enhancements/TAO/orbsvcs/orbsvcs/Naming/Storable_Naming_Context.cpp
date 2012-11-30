@@ -409,8 +409,7 @@ File_Open_Lock_and_Check::File_Open_Lock_and_Check(
                                  TAO_Storable_Naming_Context * context,
                                  const char * mode)
 : TAO::Storable_File_Guard(TAO_Storable_Naming_Context::redundant_),
-  context_(context),
-  write_occurred_ (0)
+  context_(context)
 {
   init(mode);
 }
@@ -422,7 +421,7 @@ File_Open_Lock_and_Check::~File_Open_Lock_and_Check()
 
   // Check if a write occurred for this context and
   // notify the context if it did.
-  if (write_occurred_ == 1)
+  if (context_->write_occurred_ == 1)
     context_->context_written ();
 }
 
@@ -497,7 +496,8 @@ TAO_Storable_Naming_Context::TAO_Storable_Naming_Context (
     factory_ (factory),
     persistence_directory_ (ACE_TEXT_ALWAYS_CHAR(persistence_directory)),
     hash_table_size_ (hash_table_size),
-    last_changed_(0)
+    last_changed_ (0),
+    write_occurred_ (0)
 {
   ACE_TRACE("TAO_Storable_Naming_Context");
 }
