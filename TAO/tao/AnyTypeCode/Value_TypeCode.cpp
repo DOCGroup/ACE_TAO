@@ -112,6 +112,32 @@ template <typename StringType,
           typename TypeCodeType,
           class FieldArrayType,
           class RefCountPolicy>
+const TypeCodeType&
+TAO::TypeCode::Value<StringType,
+                     TypeCodeType,
+                     FieldArrayType,
+                     RefCountPolicy>::concrete_base (void) const
+{
+  return concrete_base_;
+}
+
+template <typename StringType,
+          typename TypeCodeType,
+          class FieldArrayType,
+          class RefCountPolicy>
+const FieldArrayType&
+TAO::TypeCode::Value<StringType,
+                     TypeCodeType,
+                     FieldArrayType,
+                     RefCountPolicy>::fields (void) const
+{
+  return fields_;
+}
+
+template <typename StringType,
+          typename TypeCodeType,
+          class FieldArrayType,
+          class RefCountPolicy>
 CORBA::Boolean
 TAO::TypeCode::Value<StringType,
                      TypeCodeType,

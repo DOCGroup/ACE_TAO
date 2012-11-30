@@ -104,6 +104,19 @@ template <typename StringType,
           typename TypeCodeType,
           class CaseArrayType,
           class RefCountPolicy>
+const CaseArrayType &
+TAO::TypeCode::Union<StringType,
+                     TypeCodeType,
+                     CaseArrayType,
+                     RefCountPolicy>::cases (void) const
+{
+  return cases_;
+}
+
+template <typename StringType,
+          typename TypeCodeType,
+          class CaseArrayType,
+          class RefCountPolicy>
 CORBA::Boolean
 TAO::TypeCode::Union<StringType,
                      TypeCodeType,

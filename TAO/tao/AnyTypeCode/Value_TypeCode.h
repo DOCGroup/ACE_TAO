@@ -83,6 +83,12 @@ namespace TAO
       virtual void tao_release (void);
       //@}
 
+      /// Accessor for concrete_base_
+      const TypeCodeType& concrete_base(void) const;
+
+      /// Accessor for fields_
+      const FieldArrayType& fields() const;
+
     protected:
 
       /**
