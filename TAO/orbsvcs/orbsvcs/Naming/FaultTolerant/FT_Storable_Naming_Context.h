@@ -84,8 +84,7 @@ public:
   * has been registered. Returns -1 on failure to communicate
   * with the peer.
   */
-  int propagate_update_notification (const CosNaming::Name& n,
-                                     FT_Naming::ChangeType change_type);
+  int propagate_update_notification (FT_Naming::ChangeType change_type);
 
  /**
   * Find the indicated context below this context.  Returns 0
@@ -98,6 +97,13 @@ public:
    * Mark the implementation as dirty for replicated persistence support.
    */
   virtual void mark_dirty (CORBA::Boolean is_dirty = 0);
+
+  /**
+   * An internal utility used to signal that this context was updated.
+   * Check the last_changed_ attribute for the time of the write.
+   */
+  void context_written (void);
+
   virtual CORBA::Boolean is_dirty (void);
 protected:
   static TAO_FT_Naming_Manager *naming_manager_;

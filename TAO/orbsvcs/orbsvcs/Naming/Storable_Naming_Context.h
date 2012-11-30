@@ -358,6 +358,12 @@ public:
 
 protected:
 
+  /**
+   * An internal utility used to signal that this context was updated.
+   * Check the last_changed_ attribute for the time of the write.
+   */
+  void context_written (void);
+
   /// Global counter used for generation of POA ids for children Naming
   /// Contexts.
   static ACE_UINT32 gcounter_;
@@ -393,7 +399,7 @@ protected:
   /// Disk time that match current memory state
   time_t last_changed_;
 
-  /// Flag to tell use whether we are redundant or not
+  /// Flag to tell us whether we are redundant or not
   static int redundant_;
 
   static const char * root_name_;
@@ -447,6 +453,7 @@ private:
 
   void Write(TAO_Storable_Base& wrtr);
 
+  int write_occurred_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,3 +1,21 @@
+Fri Nov 30 22:55:31 UTC 2012  f6  <f6@>
+
+        * bin/tao_other_tests.lst:
+
+          Added Fault Tolerance Test.
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context.cpp:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.h:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp:
+
+          Added functionality to respond to callback when file
+          is written.
+
+        * orbsvcs/tests/FT_Naming/Replication/run_test.pl:
+
+          Print command line output as an aid for testing.
+
 Fri Nov 30 17:50:08 UTC 2012  Weiqi Gao  <gao_w@ociweb.com>
 
         * tao/AnyTypeCode/Struct_TypeCode.h:
