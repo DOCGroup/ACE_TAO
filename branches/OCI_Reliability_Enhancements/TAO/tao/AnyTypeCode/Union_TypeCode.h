@@ -82,6 +82,9 @@ namespace TAO
       virtual void tao_release (void);
       //@}
 
+      /// Accessor for cases_
+      const CaseArrayType& cases(void) const;
+
     protected:
 
       /**
