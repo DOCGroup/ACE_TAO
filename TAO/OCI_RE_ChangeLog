@@ -1,20 +1,34 @@
+Sat Dec  1 13:28:00 UTC 2012  "Marc Neeley"  <neeleym@ociweb.com>
+
+        * tests/Dynamic_TP/POA_Loader/Test.cpp:
+          Fixed error found in nightly build.
+          Removed reference to removed method.
+
+Sat Dec  1 13:07:48 UTC 2012  "Marc Neeley"  <neeleym@ociweb.com>
+
+        * tao/Dynamic_TP/Dynamic_TP_POA_StrategyImpl.h:
+        * tao/Dynamic_TP/Dynamic_TP_POA_StrategyImpl.inl:
+        * tao/Dynamic_TP/Dynamic_TP_POA_StrategyImpl.cpp:
+
+          Removed these files.
+
 Fri Nov 30 23:20:59 UTC 2012  "Marc Neeley"  <neeleym@ociweb.com>
 
         * tao/Dynamic_TP/Dynamic_TP_Config.h:
-		  - changed constructor of TAO_DTP_Definition
-		  
+                  - changed constructor of TAO_DTP_Definition
+
         * tao/Dynamic_TP/Dynamic_TP_POA_Loader.cpp:
         * tao/Dynamic_TP/Dynamic_TP_POA_Strategy.h:
         * tao/Dynamic_TP/Dynamic_TP_POA_Strategy.inl:
         * tao/Dynamic_TP/Dynamic_TP_POA_Strategy.cpp:
-		  - Removed the TAO_Dynamic_TP_POA_StrategyImpl class dependency
-		  
+                  - Removed the TAO_Dynamic_TP_POA_StrategyImpl class dependency
+
         * tao/Dynamic_TP/Dynamic_TP_Task.h:
         * tao/Dynamic_TP/Dynamic_TP_Task.cpp:
-		  - Extensive implementation of init_pool_threads, min_pool_threads, max_pool_threads
-		    thread_stack_size, and thread timeout.
-		
-		
+                  - Extensive implementation of init_pool_threads, min_pool_threads, max_pool_threads
+                    thread_stack_size, and thread timeout.
+
+
 
 Fri Nov 30 23:09:18 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
 
