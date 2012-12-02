@@ -1,3 +1,10 @@
+Sun Dec  2 20:32:25 UTC 2012  Byron Harris  <harrisb@ociweb.com>
+
+        * tests/Storable/test.cpp:
+
+          Explicitly include header file that defines ACE_OS::sleep()
+          used in the source.
+
 Sat Dec  1 13:28:00 UTC 2012  "Marc Neeley"  <neeleym@ociweb.com>
 
         * tests/Dynamic_TP/POA_Loader/Test.cpp:
