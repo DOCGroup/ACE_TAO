@@ -10,6 +10,7 @@
 #include "tao/Storable_FlatFileStream.h"
 
 #include "ace/Get_Opt.h"
+#include "ace/OS.h"
 
 #include <iostream>
 
