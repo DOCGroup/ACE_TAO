@@ -37,7 +37,14 @@ class TAO_Dynamic_TP_POA_Strategy;
 typedef TAO_Intrusive_Ref_Count_Handle<TAO_Dynamic_TP_POA_Strategy>
         TAO_Dynamic_TP_POA_Strategy_Handle;
 
-class TAO::CSD::TP_Custom_Request_Operation;
+namespace TAO
+{
+  namespace CSD
+  {
+    class TP_Custom_Request_Operation;
+  }
+}
+
 
 /**
  * @class TAO_Dynamic_TP_POA_Strategy
@@ -45,7 +52,7 @@ class TAO::CSD::TP_Custom_Request_Operation;
  * @brief
  *
  */
-class TAO_Dynamic_TP_Export TAO_Dynamic_TP_POA_Strategy: 
+class TAO_Dynamic_TP_Export TAO_Dynamic_TP_POA_Strategy:
   public TAO::CSD::Strategy_Base
 {
  public:
