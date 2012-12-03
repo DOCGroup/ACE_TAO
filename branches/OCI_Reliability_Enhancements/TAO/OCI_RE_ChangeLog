@@ -1,3 +1,9 @@
+Mon Dec  3 16:15:40 UTC 2012  Byron Harris  <harrisb@ociweb.com>
+
+        * tao/Dynamic_TP/Dynamic_TP_POA_Strategy.h:
+
+          Fix invalid forward declaration.
+
 Mon Dec  3 15:21:14 UTC 2012  Byron Harris  <harrisb@ociweb.com>
 
         * tao/Storable_File_Guard.h:
