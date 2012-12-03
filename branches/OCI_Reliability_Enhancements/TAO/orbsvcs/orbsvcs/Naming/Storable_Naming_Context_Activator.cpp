@@ -16,13 +16,14 @@
 #include "orbsvcs/Naming/Storable_Naming_Context.h"
 #include "orbsvcs/Naming/Storable_Naming_Context_Factory.h"
 #include "orbsvcs/Naming/Storable.h"
+#include "tao/Storable_Factory.h"
 #include "ace/Auto_Ptr.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Storable_Naming_Context_Activator::TAO_Storable_Naming_Context_Activator (
   CORBA::ORB_ptr orb,
-  TAO_Naming_Service_Persistence_Factory *persistence_factory,
+  TAO::Storable_Factory *persistence_factory,
   TAO_Storable_Naming_Context_Factory *context_impl_factory,
   const ACE_TCHAR *persistence_directory)
   : orb_(orb),
@@ -61,7 +62,7 @@ TAO_Storable_Naming_Context_Activator::incarnate (
   ACE_TString file_name(persistence_directory_);
   file_name += ACE_TEXT("/");
   file_name += ACE_TEXT_CHAR_TO_TCHAR(poa_id.in());
-  TAO_Storable_Base * fl =
+  TAO::Storable_Base * fl =
     persistence_factory_->create_stream (ACE_TEXT_ALWAYS_CHAR(file_name.c_str()),
                                          ACE_TEXT("rw"));
   if (!fl->exists()) {

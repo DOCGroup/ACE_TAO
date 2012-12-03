@@ -76,6 +76,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   for (int j = 0; j < num_loops; ++j)
     {
       savable.string_set(string_index, str_write);
+      savable.int_set(j);
       ACE_OS::sleep (sleep_time);
       str_read = savable.string_get (string_index);
       ACE_ASSERT (str_write == str_read);

@@ -99,26 +99,4 @@ TAO_NS_Persistence_Global::counter () const
   return this->counter_;
 }
 
-
-ACE_INLINE
-TAO_Naming_Service_Persistence_Factory::TAO_Naming_Service_Persistence_Factory()
-{
-}
-
-ACE_INLINE
-TAO_Naming_Service_Persistence_Factory::~TAO_Naming_Service_Persistence_Factory()
-{
-}
-
-ACE_INLINE
-TAO_Storable_Base::TAO_Storable_Base()
-{
-}
-
-ACE_INLINE
-TAO_Storable_Base::~TAO_Storable_Base()
-{
-}
-
-
 TAO_END_VERSIONED_NAMESPACE_DECL

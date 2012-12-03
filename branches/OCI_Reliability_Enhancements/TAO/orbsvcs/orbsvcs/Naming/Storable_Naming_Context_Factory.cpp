@@ -3,6 +3,8 @@
 #include "orbsvcs/Naming/Storable_Naming_Context_Factory.h"
 #include "orbsvcs/Naming/Storable_Naming_Context.h"
 
+#include "tao/Storable_Factory.h"
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
   /// Constructor.
@@ -24,7 +26,7 @@ TAO_Storable_Naming_Context*
 TAO_Storable_Naming_Context_Factory::create_naming_context_impl (CORBA::ORB_ptr orb,
                                                                  PortableServer::POA_ptr poa,
                                                                  const char *poa_id,
-                                                                 TAO_Naming_Service_Persistence_Factory *persistence_factory,
+                                                                 TAO::Storable_Factory *persistence_factory,
                                                                  const ACE_TCHAR *persistence_directory
                                                                  )
 {

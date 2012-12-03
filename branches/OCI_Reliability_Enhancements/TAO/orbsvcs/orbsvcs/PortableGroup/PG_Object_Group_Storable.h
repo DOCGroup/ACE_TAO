@@ -31,6 +31,11 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /////////////////////
 // Forward references
+namespace TAO
+{
+  class Storable_Factory;
+  class Storable_Base;
+}
 
 ////////////////
 // Class declarations
@@ -56,8 +61,8 @@ namespace TAO
       const PortableGroup::TagGroupTaggedComponent & tagged_component,
       const char * type_id,
       const PortableGroup::Criteria & the_criteria,
-      TAO::PG_Property_Set * type_properties);
-
+      TAO::PG_Property_Set * type_properties,
+      TAO::Storable_Factory & storable_factory);
 
     /// Destructor
     ~PG_Object_Group_Storable ();
@@ -101,6 +106,25 @@ namespace TAO
     virtual void set_name (const char* group_name);
 
     virtual const char* get_name (void);
+
+  private:
+
+    /////////////////////////
+    // Forbidden methods
+    PG_Object_Group_Storable ();
+    PG_Object_Group_Storable (const PG_Object_Group_Storable & rhs);
+    PG_Object_Group_Storable & operator = (const PG_Object_Group_Storable & rhs);
+
+    TAO::Storable_Base * create_stream (const char * mode);
+
+    void load (TAO::Storable_Base & stream);
+
+    void write (TAO::Storable_Base & stream);
+
+    TAO::Storable_Factory & storable_factory_;
+    time_t last_changed_;
+
+    friend class Group_Object_Synch;
 
   };
 } // namespace TAO

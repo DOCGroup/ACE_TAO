@@ -14,7 +14,6 @@
 #include "orbsvcs/Naming/FaultTolerant/FT_Naming_Server.h"
 #include "orbsvcs/Naming/Naming_Server.h"
 
-#include "orbsvcs/Naming/Flat_File_Persistence.h"
 #include "orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.h"
 #include "orbsvcs/Naming/Storable.h"
 #include "orbsvcs/Naming/Storable_Naming_Context.h"
@@ -595,9 +594,9 @@ TAO_FT_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
           // In lieu of a fully implemented service configurator version
           // of this Reader and Writer, let's just take something off the
           // command line for now.
-          TAO_Naming_Service_Persistence_Factory* pf = 0;
-          ACE_NEW_RETURN(pf, TAO_NS_FlatFileFactory, -1);
-          auto_ptr<TAO_Naming_Service_Persistence_Factory> persFactory(pf);
+          TAO::Storable_Factory* pf = 0;
+          ACE_NEW_RETURN(pf, TAO::Storable_FlatFileFactory("./"), -1);
+          auto_ptr<TAO::Storable_Factory> persFactory(pf);
 
           // Use an auto_ptr to ensure that we clean up the factory in the case
           // of a failure in creating and registering the Activator

@@ -312,10 +312,15 @@ namespace TAO
     /// boolean true if empty group
     int empty_;
 
+  protected:
+
     /// boolean true if updates should be distributed
     int distribute_;
 
     ACE_CString role_;
+
+  private:
+
     PortableGroup::TypeId_var type_id_;
 
     /**

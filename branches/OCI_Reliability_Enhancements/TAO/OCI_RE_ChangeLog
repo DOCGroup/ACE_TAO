@@ -1,3 +1,60 @@
+Mon Dec  3 14:44:43 UTC 2012  Byron Harris  <harrisb@ociweb.com>
+
+        * tao/Storable_Base.h:
+        * tao/Storable_File_Guard.h:
+        * tao/Storable_File_Guard.cpp:
+        * tao/Storable_FlatFileStream.h:
+        * tao/Storable_FlatFileStream.cpp:
+
+          Extended to accommodate storable naming context to use
+          without needing its own specialized flat file stream. This
+          will avoid code duplication between storable object groups
+          and storable naming contexts.
+
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context_ReaderWriter.h:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context_ReaderWriter.cpp:
+
+          Moved functionality from naming context flat file persistent
+          to new class that uses Storable_FlatFileStream.
+
+        * orbsvcs/orbsvcs/cosnaming_serv_persistence.mpb:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context_Factory.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context_Factory.cpp:
+        * orbsvcs/orbsvcs/Naming/Naming_Server.cpp:
+        * orbsvcs/orbsvcs/Naming/Storable.h:
+        * orbsvcs/orbsvcs/Naming/Storable.inl:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.h:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context_Activator.h:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context_Activator.cpp:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context_Factory.h:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context_Factory.cpp:
+
+          Updated to use new reader-writer class and non-naming service
+          specific Storable_* classes.
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_Factory.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group_Storable.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group_Storable.cpp:
+
+          Further changes for persistent support of object groups.
+
+        * tests/Storable/Savable.h:
+        * tests/Storable/Savable.cpp:
+        * tests/Storable/test.cpp:
+
+          Account for renaming of some Storable_File_Guard member
+          functions.
+
+        * orbsvcs/orbsvcs/Naming/Flat_File_Persistence.h:
+        * orbsvcs/orbsvcs/Naming/Flat_File_Persistence.cpp:
+
+          Removed these files.
+
 Mon Dec  3 04:13:48 UTC 2012  f6  <f6@>
 
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:

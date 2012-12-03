@@ -21,7 +21,7 @@ TAO_FT_Storable_Naming_Context::TAO_FT_Storable_Naming_Context (CORBA::ORB_ptr o
                                PortableServer::POA_ptr poa,
                                const char *poa_id,
                                TAO_Storable_Naming_Context_Factory *cxt_factory,
-                               TAO_Naming_Service_Persistence_Factory *pers_factory,
+                               TAO::Storable_Factory *pers_factory,
                                const ACE_TCHAR *persistence_directory)
   : TAO_Storable_Naming_Context (orb,
                                  poa,
