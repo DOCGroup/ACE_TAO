@@ -1,3 +1,11 @@
+Mon Dec  3 15:21:14 UTC 2012  Byron Harris  <harrisb@ociweb.com>
+
+        * tao/Storable_File_Guard.h:
+        * tao/Storable_File_Guard.cpp:
+
+          Renamed new obsolete/current member functions to account
+          for change in terms from previous commit.
+
 Mon Dec  3 14:44:43 UTC 2012  Byron Harris  <harrisb@ociweb.com>
 
         * tao/Storable_Base.h:

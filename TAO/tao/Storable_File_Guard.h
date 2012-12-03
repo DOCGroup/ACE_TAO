@@ -54,11 +54,11 @@ namespace TAO
     /// of this class.
     void init (const char * mode);
 
-    /// Check if the parent is current with the last update.
-    virtual bool parent_obsolete (void);
+    /// Check if the object is current with the last update.
+    virtual bool object_obsolete (void);
 
-    /// Mark the parent as up to date
-    virtual void mark_parent_current (void);
+    /// Mark the object as up to date
+    virtual void mark_object_current (void);
 
     /// Indicate when the object in memory has last changed
     virtual void set_object_last_changed (const time_t & time) = 0;
