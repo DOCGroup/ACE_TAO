@@ -36,23 +36,25 @@ class ACEXML_DefaultHandler;
 class XML_Backing_Store : public Locator_Repository
 {
 public:
-  XML_Backing_Store(const ACE_CString& filename, bool start_clean);
+  XML_Backing_Store(const Options& opts,
+                    const CORBA::ORB_var& orb,
+                    bool suppress_erase = false);
 
   virtual ~XML_Backing_Store();
 
   virtual const char* repo_mode() const;
 
-  virtual int persistent_load();
-
 protected:
+  virtual int init_repo(const PortableServer::POA_var& imr_poa);
+
   virtual int persistent_update(const Server_Info_Ptr& info, bool add);
 
   virtual int persistent_update(const Activator_Info_Ptr& info, bool add);
 
   virtual int persistent_remove(const ACE_CString& name, bool activator);
 
-  int load(const ACE_CString& filename);
-  static int load(const ACE_CString& filename,
+  int load(const ACE_TString& filename);
+  static int load(const ACE_TString& filename,
                   ACEXML_DefaultHandler& xml_handler, unsigned int debug);
 
   void persist(FILE* fp, const Server_Info& info, const char* tag_prepend);
@@ -60,7 +62,7 @@ protected:
   void persist(FILE* fp, const Activator_Info& info, const char* tag_prepend);
 
 protected:
-  const ACE_CString filename_;
+  const ACE_TString filename_;
 
 private:
   int persist();

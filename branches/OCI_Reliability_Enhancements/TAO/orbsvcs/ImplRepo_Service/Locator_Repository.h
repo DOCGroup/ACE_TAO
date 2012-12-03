@@ -19,7 +19,10 @@
 #include "Server_Info.h"
 #include "Activator_Info.h"
 #include "Locator_Options.h"
-#include "ImR_LocatorC.h"
+
+#include "tao/IORTable/IORTable.h"
+#include "tao/PortableServer/PortableServer.h"
+#include "orbsvcs/IOR_Multicast.h"
 
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Configuration.h"
@@ -28,6 +31,8 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+class ACE_Reactor;
 
 /**
 * @class Locator_Repository
@@ -50,7 +55,9 @@ public:
     ACE_Equal_To<ACE_CString>,
     ACE_Null_Mutex> AIMap;
 
-  Locator_Repository();
+  Locator_Repository(const Options& opts, const CORBA::ORB_var& orb);
+
+  virtual ~Locator_Repository();
 
   int unregister_if_address_reused (const ACE_CString& server_id,
                                     const ACE_CString& name,
@@ -104,22 +111,17 @@ public:
 
   virtual const char* repo_mode() const = 0;
 
-  void debug(int debug);
-
   static ACE_CString lcase (const ACE_CString& s);
 
-  virtual int persistent_load();
+  int init(const PortableServer::POA_var& root_poa,
+           const PortableServer::POA_var& imr_poa,
+           const CORBA::String_var& this_ior);
 
-  virtual void notify_updated_server(
-    const ImplementationRepository::ServerUpdate& server);
-  virtual void notify_updated_activator(
-    const ImplementationRepository::ActivatorUpdate& activator);
-  virtual void register_replica(
-    ImplementationRepository::UpdatePushNotification_ptr replica,
-    ImplementationRepository::SequenceNum_out seq_num,
-    ImplementationRepository::SequenceNum replica_seq_num);
+  bool multicast() const;
 
 protected:
+  virtual int init_repo(const PortableServer::POA_var& imr_poa);
+
   enum SyncOp { SYNC_ADD, SYNC_REMOVE };
   virtual int sync_load(const ACE_CString& name, SyncOp sync_op,
                         bool activator);
@@ -130,7 +132,21 @@ protected:
 
   virtual int persistent_remove(const ACE_CString& name, bool activator);
 
-  unsigned int debug_;
+  virtual int report_ior(const PortableServer::POA_var& root_poa,
+                         const PortableServer::POA_var& imr_poa);
+
+  void report(const IORTable::Table_var& ior_table,
+              const char* name,
+              const CORBA::String_var& imr_ior);
+
+  int setup_multicast (ACE_Reactor* reactor, const CORBA::String_var& imr_ior);
+  void teardown_multicast();
+
+  const Options& opts_;
+  TAO_IOR_Multicast ior_multicast_;
+  bool registered_;
+  CORBA::ORB_var orb_;
+  CORBA::String_var imr_ior_;
 
 private:
   /// The in-memory list of the server information.
@@ -149,6 +165,9 @@ private:
 class No_Backing_Store : public Locator_Repository
 {
 public:
+  No_Backing_Store(const Options& opts,
+                   const CORBA::ORB_var& orb);
+
   virtual ~No_Backing_Store();
 
   virtual const char* repo_mode() const;

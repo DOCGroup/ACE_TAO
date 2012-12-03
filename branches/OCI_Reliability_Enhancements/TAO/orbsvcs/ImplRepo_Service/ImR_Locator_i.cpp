@@ -11,10 +11,6 @@
 
 #include "orbsvcs/Time_Utilities.h"
 
-#include "tao/IORTable/IORTable.h"
-#include "tao/PortableServer/PortableServer.h"
-#include "tao/ORB_Core.h"
-#include "tao/default_ports.h"
 #include "tao/Messaging/Messaging.h"
 #include "tao/AnyTypeCode/Any.h"
 
@@ -124,48 +120,37 @@ ImR_Locator_i::init_with_orb (CORBA::ORB_ptr orb, Options& opts)
   this->imr_poa_->activate_object_with_id (id.in (), this);
 
   obj = this->imr_poa_->id_to_reference (id.in ());
-  ImplementationRepository::ReplicatedLocator_var replicated_locator =
-    ImplementationRepository::ReplicatedLocator::_narrow (obj.in ());
-  ACE_ASSERT(! CORBA::is_nil (replicated_locator.in ()));
-  CORBA::String_var ior = this->orb_->object_to_string (obj.in ());
-
-  const bool replicate = (!opts.replica_obj_key().is_empty() &&
-    opts.repository_mode() == Options::REPO_SHARED_FILES);
+  ImplementationRepository::Locator_var locator =
+    ImplementationRepository::Locator::_narrow (obj.in ());
+  ACE_ASSERT(! CORBA::is_nil (locator.in ()));
+  const CORBA::String_var ior = this->orb_->object_to_string (obj.in ());
 
   // create the selected Locator_Repository with backing store
   switch (opts.repository_mode())
     {
     case Options::REPO_REGISTRY:
       {
-        repository_.reset(
-          new Registry_Backing_Store(opts.persist_file_name(),
-                                     opts.repository_erase() && !replicate));
+        repository_.reset(new Registry_Backing_Store(opts, orb));
         break;
       }
     case Options::REPO_HEAP_FILE:
       {
-        repository_.reset(
-          new Heap_Backing_Store(opts.persist_file_name(),
-                                 opts.repository_erase() && !replicate));
+        repository_.reset(new Heap_Backing_Store(opts, orb));
         break;
       }
     case Options::REPO_XML_FILE:
       {
-        repository_.reset(
-          new XML_Backing_Store(opts.persist_file_name(),
-                                opts.repository_erase() && !replicate));
+        repository_.reset(new XML_Backing_Store(opts, orb));
         break;
       }
     case Options::REPO_SHARED_FILES:
       {
-        repository_.reset(
-          new Shared_Backing_Store(opts.persist_file_name(),
-                                   opts.repository_erase() && !replicate));
+        repository_.reset(new Shared_Backing_Store(opts, orb));
         break;
       }
     case Options::REPO_NONE:
       {
-        repository_.reset(new No_Backing_Store);
+        repository_.reset(new No_Backing_Store(opts, orb));
         break;
       }
     default:
@@ -177,92 +162,15 @@ ImR_Locator_i::init_with_orb (CORBA::ORB_ptr orb, Options& opts)
       }
     }
 
-  this->repository_->debug (opts.debug());
-
-  // Load from persistent storage. This will load any values that
-  // may have been persisted before.
-  this->repository_->persistent_load();
-
-  if (replicate)
-    {
-      if (debug_ > 1)
-        {
-          ACE_DEBUG((LM_INFO,
-            "Resolving ImR replica %s\n", opts.replica_obj_key().c_str()));
-        }
-
-      obj = orb->string_to_object (opts.replica_obj_key().c_str());
-
-      if (CORBA::is_nil (obj.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-          "Error: invalid obj key <%s> for ImR replica\n",
-          opts.replica_obj_key().c_str()), -1);
-
-      ImplementationRepository::UpdatePushNotification_var replica =
-        ImplementationRepository::UpdatePushNotification::_narrow (obj.in());
-
-      if (CORBA::is_nil (replica.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-          "Error: obj key <%s> not an ImR replica\n",
-          opts.replica_obj_key().c_str()), -1);
-
-      if (debug_ > 1)
-        {
-          ACE_DEBUG((LM_INFO,
-            "Registering with previously running ImR replica\n"));
-        }
-
-      ImplementationRepository::SequenceNum replica_seq_num = 0;
-      replica->register_replica(replicated_locator.in(), replica_seq_num);
-
-      if (debug_ > 9)
-        {
-          ACE_DEBUG((LM_INFO, "Initializing repository with seq number %d\n",
-            replica_seq_num));
-        }
-
-      ImplementationRepository::SequenceNum unused = 0;
-      this->repository_->register_replica(replica.in(), unused, replica_seq_num);
-    }
-
   // Register the ImR for use with INS
   obj = orb->resolve_initial_references ("IORTable");
   IORTable::Table_var ior_table = IORTable::Table::_narrow (obj.in ());
   ACE_ASSERT (! CORBA::is_nil (ior_table.in ()));
-
-  ior_table->bind ("ImplRepoService", ior.in ());
-  ior_table->bind ("ImR", ior.in ());
   ior_table->set_locator (this->ins_locator_.in ());
 
-  // Set up multicast support (if enabled)
-  if (opts.multicast ())
-    {
-      ACE_Reactor* reactor = orb->orb_core ()->reactor ();
-      if (this->setup_multicast (reactor, ior.in ()) != 0)
-        return -1;
-    }
-
-  // Activate the two poa managers
-  PortableServer::POAManager_var poaman =
-    this->root_poa_->the_POAManager ();
-  poaman->activate ();
-  poaman = this->imr_poa_->the_POAManager ();
-  poaman->activate ();
-
-  // We write the ior file last so that the tests can know we are ready.
-  if (opts.ior_filename ().length () > 0)
-    {
-      FILE* fp = ACE_OS::fopen (opts.ior_filename ().c_str (), "w");
-      if (fp == 0)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "ImR: Could not open file: %s\n", opts.ior_filename ().c_str ()), -1);
-        }
-      ACE_OS::fprintf (fp, "%s", ior.in ());
-      ACE_OS::fclose (fp);
-    }
-
-  return 0;
+  // initialize the repository. This will load any values that
+  // may have been persisted before.
+  return this->repository_->init(this->root_poa_, this->imr_poa_, ior);
 }
 
 int
@@ -297,8 +205,9 @@ ImR_Locator_i::run (void)
                   "\tMulticast : %C\n",
                   ping_interval_.msec (),
                   startup_timeout_.sec (),
-                  repository_->repo_mode (),
-                  ior_multicast_.reactor () != 0 ? "Enabled" : "Disabled"));
+                  this->repository_->repo_mode (),
+                  (this->repository_->multicast () != 0 ?
+                    "Enabled" : "Disabled")));
       ACE_DEBUG ((LM_DEBUG,
                   "\tDebug : %d\n"
                   "\tLocked : %C\n\n",
@@ -376,7 +285,7 @@ ImR_Locator_i::fini (void)
       if (debug_ > 1)
         ACE_DEBUG ((LM_DEBUG, "ImR: Shutting down...\n"));
 
-      teardown_multicast ();
+      this->repository_.release();
 
       this->root_poa_->destroy (1, 1);
 
@@ -390,73 +299,6 @@ ImR_Locator_i::fini (void)
       ex._tao_print_exception ("ImR_Locator_i::fini");
       throw;
     }
-  return 0;
-}
-
-void
-ImR_Locator_i::teardown_multicast ()
-{
-  ACE_Reactor* r = ior_multicast_.reactor ();
-  if (r != 0) {
-    r->remove_handler (&ior_multicast_, ACE_Event_Handler::READ_MASK);
-    ior_multicast_.reactor (0);
-  }
-}
-
-int
-ImR_Locator_i::setup_multicast (ACE_Reactor* reactor, const char* ior)
-{
-  ACE_ASSERT (reactor != 0);
-  ACE_ASSERT (ior != 0);
-#if defined (ACE_HAS_IP_MULTICAST)
-
-  TAO_ORB_Core* core = TAO_ORB_Core_instance ();
-  // See if the -ORBMulticastDiscoveryEndpoint option was specified.
-  ACE_CString mde (core->orb_params ()->mcast_discovery_endpoint ());
-
-  if (mde.length () != 0)
-    {
-      if (this->ior_multicast_.init (ior,
-                                     mde.c_str (), TAO_SERVICEID_IMPLREPOSERVICE) == -1)
-        {
-          return -1;
-        }
-    }
-  else
-    {
-      // Port can be specified as param, env var, or default
-      CORBA::UShort port =
-        core->orb_params ()->service_port (TAO::MCAST_IMPLREPOSERVICE);
-      if (port == 0)
-        {
-          // Check environment var. for multicast port.
-          const char* port_number = ACE_OS::getenv ("ImplRepoServicePort");
-
-          if (port_number != 0)
-            port = static_cast<CORBA::UShort> (ACE_OS::atoi (port_number));
-        }
-      if (port == 0)
-        port = TAO_DEFAULT_IMPLREPO_SERVER_REQUEST_PORT;
-
-      if (this->ior_multicast_.init (ior, port,
-                                     ACE_DEFAULT_MULTICAST_ADDR, TAO_SERVICEID_IMPLREPOSERVICE) == -1)
-        {
-          return -1;
-        }
-    }
-
-  // Register event handler for the ior multicast.
-  if (reactor->register_handler (&this->ior_multicast_,
-                                 ACE_Event_Handler::READ_MASK) == -1)
-    {
-      if (debug_ >= 1)
-        ACE_DEBUG ((LM_DEBUG, "ImR: cannot register Event handler\n"));
-      return -1;
-    }
-#else /* ACE_HAS_IP_MULTICAST*/
-  ACE_UNUSED_ARG (reactor);
-  ACE_UNUSED_ARG (ior);
-#endif /* ACE_HAS_IP_MULTICAST*/
   return 0;
 }
 
@@ -1609,35 +1451,6 @@ ImR_Locator_i::is_alive_i (Server_Info& info)
       return 0;
     }
   return 1;
-}
-
-void
-ImR_Locator_i::notify_updated_server(const ImplementationRepository::ServerUpdate& server)
-{
-  this->repository_->notify_updated_server(server);
-  ACE_DEBUG((LM_INFO, "(%P|%t) notify_updated_server done\n"));
-}
-
-void
-ImR_Locator_i::notify_updated_activator(const ImplementationRepository::ActivatorUpdate& activator)
-{
-  this->repository_->notify_updated_activator(activator);
-  ACE_DEBUG((LM_INFO, "(%P|%t) notify_updated_activator done\n"));
-}
-
-void
-ImR_Locator_i::register_replica(ImplementationRepository::UpdatePushNotification_ptr replica,
-                                ImplementationRepository::SequenceNum_out seq_num)
-{
-  if (debug_ > 1)
-    {
-      ACE_DEBUG((LM_INFO,
-        "Registering new ImR replica\n"));
-    }
-
-  // newly registered replica starts at sequence number 0
-  this->repository_->register_replica(replica, seq_num, 0);
-  ACE_DEBUG((LM_INFO, "Registering new ImR replica done\n"));
 }
 
 int

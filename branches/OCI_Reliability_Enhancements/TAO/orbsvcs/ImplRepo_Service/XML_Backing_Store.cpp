@@ -13,11 +13,13 @@
 #include "ACEXML/common/FileCharStream.h"
 #include "ACEXML/common/XML_Util.h"
 
-XML_Backing_Store::XML_Backing_Store(const ACE_CString& filename,
-                                     bool start_clean)
-: filename_(filename)
+XML_Backing_Store::XML_Backing_Store(const Options& opts,
+                                     const CORBA::ORB_var& orb,
+                                     bool suppress_erase)
+: Locator_Repository(opts, orb),
+  filename_(opts.persist_file_name())
 {
-  if (start_clean)
+  if (opts.repository_erase() && !suppress_erase)
     {
       ACE_OS::unlink ( this->filename_.c_str () );
     }
@@ -147,20 +149,22 @@ XML_Backing_Store::persist (FILE* fp, const Activator_Info& info,
 }
 
 int
-XML_Backing_Store::persistent_load ()
+XML_Backing_Store::init_repo(const PortableServer::POA_var& )
 {
-  return load(this->filename_);
+  // ignore load return since files don't have to exist
+  load(this->filename_);
+  return 0;
 }
 
 int
-XML_Backing_Store::load (const ACE_CString& filename)
+XML_Backing_Store::load (const ACE_TString& filename)
 {
   Locator_XMLHandler xml_handler (*this);
-  return load(filename, xml_handler, this->debug_);
+  return load(filename, xml_handler, this->opts_.debug());
 }
 
 int
-XML_Backing_Store::load (const ACE_CString& filename,
+XML_Backing_Store::load (const ACE_TString& filename,
                          ACEXML_DefaultHandler& xml_handler,
                          unsigned int debug)
 {
