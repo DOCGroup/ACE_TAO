@@ -2,15 +2,176 @@
 
 #include "Locator_Repository.h"
 #include "utils.h"
+#include "tao/ORB_Core.h"
+#include "tao/default_ports.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_ctype.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Vector_T.h"
 
-Locator_Repository::Locator_Repository ()
-: debug_ (0)
+Locator_Repository::Locator_Repository (const Options& opts,
+                                        const CORBA::ORB_var& orb)
+: opts_ (opts),
+  registered_(false),
+  orb_(orb)
 {
+}
+
+Locator_Repository::~Locator_Repository()
+{
+  teardown_multicast();
+}
+
+int
+Locator_Repository::init(const PortableServer::POA_var& root_poa,
+                         const PortableServer::POA_var& imr_poa,
+                         const CORBA::String_var& this_ior)
+{
+  this->imr_ior_ = this_ior;
+  int err = init_repo(imr_poa);
+  if (err != 0)
+    {
+      return err;
+    }
+  err = report_ior(root_poa, imr_poa);
+  registered_ = true;
+  return err;
+}
+
+int
+Locator_Repository::report_ior(const PortableServer::POA_var& root_poa,
+                               const PortableServer::POA_var& imr_poa)
+{
+  // Register the ImR for use with INS
+  CORBA::Object_var obj = this->orb_->resolve_initial_references ("IORTable");
+  IORTable::Table_var ior_table = IORTable::Table::_narrow (obj.in ());
+  ACE_ASSERT (! CORBA::is_nil (ior_table.in ()));
+
+  report(ior_table, "ImplRepoService", this->imr_ior_);
+  report(ior_table, "ImR", this->imr_ior_);
+
+  // Set up multicast support (if enabled)
+  if (this->opts_.multicast ())
+    {
+      ACE_Reactor* reactor = this->orb_->orb_core ()->reactor ();
+      if (this->setup_multicast (reactor, this->imr_ior_.in ()) != 0)
+        return -1;
+    }
+
+  if (!CORBA::is_nil(imr_poa.in()))
+    {
+      // Activate the two poa managers
+      PortableServer::POAManager_var poaman =
+        root_poa->the_POAManager ();
+      poaman->activate ();
+      poaman = imr_poa->the_POAManager ();
+      poaman->activate ();
+    }
+
+  // We write the ior file last so that the tests can know we are ready.
+  if (this->opts_.ior_filename ().length () > 0)
+    {
+      FILE* fp = ACE_OS::fopen (this->opts_.ior_filename ().c_str (), "w");
+      if (fp == 0)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+            ACE_TEXT("ImR: Could not open file: %s\n"),
+            this->opts_.ior_filename ().c_str ()), -1);
+        }
+      ACE_OS::fprintf (fp, "%s", this->imr_ior_.in ());
+      ACE_OS::fclose (fp);
+    }
+
+  return 0;
+}
+
+void
+Locator_Repository::report(const IORTable::Table_var& ior_table,
+                           const char* name,
+                           const CORBA::String_var& ior)
+{
+  if (!this->registered_)
+    {
+      ior_table->bind(name, ior.in());
+    }
+  else
+    {
+      ior_table->rebind(name, ior.in());
+    }
+}
+
+int
+Locator_Repository::setup_multicast (ACE_Reactor* reactor, const CORBA::String_var& imr_ior)
+{
+  ACE_ASSERT (reactor != 0);
+#if defined (ACE_HAS_IP_MULTICAST)
+
+  const char* ior = imr_ior.in();
+  TAO_ORB_Core* core = TAO_ORB_Core_instance ();
+  // See if the -ORBMulticastDiscoveryEndpoint option was specified.
+  ACE_CString mde (core->orb_params ()->mcast_discovery_endpoint ());
+
+  if (mde.length () != 0)
+    {
+      if (this->ior_multicast_.init (ior,
+                                     mde.c_str (), TAO_SERVICEID_IMPLREPOSERVICE) == -1)
+        {
+          return -1;
+        }
+    }
+  else
+    {
+      // Port can be specified as param, env var, or default
+      CORBA::UShort port =
+        core->orb_params ()->service_port (TAO::MCAST_IMPLREPOSERVICE);
+      if (port == 0)
+        {
+          // Check environment var. for multicast port.
+          const char* port_number = ACE_OS::getenv ("ImplRepoServicePort");
+
+          if (port_number != 0)
+            port = static_cast<CORBA::UShort> (ACE_OS::atoi (port_number));
+        }
+      if (port == 0)
+        port = TAO_DEFAULT_IMPLREPO_SERVER_REQUEST_PORT;
+
+      if (this->ior_multicast_.init (ior, port,
+                                     ACE_DEFAULT_MULTICAST_ADDR, TAO_SERVICEID_IMPLREPOSERVICE) == -1)
+        {
+          return -1;
+        }
+    }
+
+  // Register event handler for the ior multicast.
+  if (reactor->register_handler (&this->ior_multicast_,
+                                 ACE_Event_Handler::READ_MASK) == -1)
+    {
+      if (this->opts_.debug() >= 1)
+        ACE_DEBUG ((LM_DEBUG, "ImR: cannot register Event handler\n"));
+      return -1;
+    }
+#else /* ACE_HAS_IP_MULTICAST*/
+  ACE_UNUSED_ARG (reactor);
+  ACE_UNUSED_ARG (imr_ior);
+#endif /* ACE_HAS_IP_MULTICAST*/
+  return 0;
+}
+
+void
+Locator_Repository::teardown_multicast ()
+{
+  ACE_Reactor* r = ior_multicast_.reactor ();
+  if (r != 0) {
+    r->remove_handler (&ior_multicast_, ACE_Event_Handler::READ_MASK);
+    ior_multicast_.reactor (0);
+  }
+}
+
+bool
+Locator_Repository::multicast() const
+{
+  return this->ior_multicast_.reactor () != 0;
 }
 
 ACE_CString
@@ -30,7 +191,7 @@ Locator_Repository::unregister_if_address_reused (
   const ACE_CString& name,
   const char* partial_ior)
 {
-  if (this->debug_ > 0)
+  if (this->opts_.debug() > 0)
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t)ImR: checking reuse address ")
       ACE_TEXT ("for server \"%C %C\" ior \"%C\"\n"),
@@ -45,7 +206,7 @@ Locator_Repository::unregister_if_address_reused (
   {
     Server_Info_Ptr& info = sientry->int_id_;
 
-    if (this->debug_)
+    if (this->opts_.debug())
     {
       ACE_DEBUG ((LM_DEBUG,
         ACE_TEXT ("(%P|%t)ImR: iterating - registered server")
@@ -57,7 +218,7 @@ Locator_Repository::unregister_if_address_reused (
       && name != info->name
       && info->server_id != server_id)
     {
-      if (this->debug_)
+      if (this->opts_.debug())
       {
         ACE_DEBUG ((LM_DEBUG,
           ACE_TEXT ("(%P|%t)ImR: reuse address %C so remove server %C \n"),
@@ -235,14 +396,8 @@ Locator_Repository::activators (void) const
   return activator_infos_;
 }
 
-void
-Locator_Repository::debug(int debug)
-{
-  this->debug_ = debug;
-}
-
 int
-Locator_Repository::persistent_load ()
+Locator_Repository::init_repo(const PortableServer::POA_var& )
 {
   // nothing more to do for default load
   return 0;
@@ -276,29 +431,10 @@ Locator_Repository::persistent_remove(const ACE_CString& , bool )
   return 0;
 }
 
-void
-Locator_Repository::notify_updated_server(
-  const ImplementationRepository::ServerUpdate& )
+No_Backing_Store::No_Backing_Store(const Options& opts,
+                                   const CORBA::ORB_var& orb)
+: Locator_Repository(opts, orb)
 {
-  // default is Backing store doesn't support replicated updates
-}
-
-void
-Locator_Repository::notify_updated_activator(
-  const ImplementationRepository::ActivatorUpdate& )
-{
-  // default is Backing store doesn't support replicated updates
-}
-
-void
-Locator_Repository::register_replica(
-  ImplementationRepository::UpdatePushNotification_ptr ,
-  ImplementationRepository::SequenceNum_out ,
-  ImplementationRepository::SequenceNum )
-{
-  ACE_ERROR((LM_INFO,
-             ACE_TEXT ("ERROR: ImR Locator not configured for replication ")
-             ACE_TEXT ("(repo mode=%s)\n"), repo_mode()));
 }
 
 No_Backing_Store::~No_Backing_Store()

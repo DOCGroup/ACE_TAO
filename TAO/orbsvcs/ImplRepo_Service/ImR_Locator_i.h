@@ -16,8 +16,6 @@
 #include "AsyncStartupWaiter_i.h"
 #include "tao/IORTable/IORTable.h"
 
-#include "orbsvcs/IOR_Multicast.h"
-
 #include "ImR_LocatorS.h"
 #include "AsyncStartupWaiterS.h"
 
@@ -37,7 +35,7 @@ class Locator_Repository;
 /// corresponding server and raises a forward exception to the
 /// client pointing to the correct server.
 class Locator_Export ImR_Locator_i
-  : public virtual POA_ImplementationRepository::ReplicatedLocator
+  : public virtual POA_ImplementationRepository::Locator
 {
 public:
   ImR_Locator_i();
@@ -92,13 +90,6 @@ public:
     ImplementationRepository::ServerObject_ptr server_object);
   virtual void server_is_shutting_down (const char * name);
 
-  // Locator->Locator
-
-  void notify_updated_server(const ImplementationRepository::ServerUpdate& server);
-  void notify_updated_activator(const ImplementationRepository::ActivatorUpdate& activator);
-  void register_replica(ImplementationRepository::UpdatePushNotification_ptr replica,
-                        ImplementationRepository::SequenceNum_out seq_num);
-
   // Used by the INS_Locator to start a sever given an object name
   char* activate_server_by_object (const char* object_name);
 
@@ -115,11 +106,6 @@ private:
 
   bool is_alive(Server_Info& info);
   int is_alive_i(Server_Info& info);
-
-  // Set up the multicast related if 'm' is passed on the command
-  // line.
-  int setup_multicast (ACE_Reactor *reactor, const char *ior);
-  void teardown_multicast();
 
   void unregister_activator_i(const char* activator);
 
@@ -149,8 +135,6 @@ private:
   PortableServer::POA_var imr_poa_;
 
   int debug_;
-
-  TAO_IOR_Multicast ior_multicast_;
 
   auto_ptr<Locator_Repository> repository_;
 

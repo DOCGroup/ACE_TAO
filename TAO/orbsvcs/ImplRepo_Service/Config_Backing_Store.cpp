@@ -23,8 +23,11 @@ static const ACE_TCHAR* SERVER_ID = ACE_TEXT("ServerId");
 static const char* WIN32_REG_KEY = "Software\\TAO\\ImplementationRepository";
 #endif
 
-Config_Backing_Store::Config_Backing_Store(ACE_Configuration& config)
-: config_(config),
+Config_Backing_Store::Config_Backing_Store(const Options& opts,
+                                           const CORBA::ORB_var& orb,
+                                           ACE_Configuration& config)
+: Locator_Repository(opts, orb),
+  config_(config),
   status_(-1)
 {
 }
@@ -124,7 +127,7 @@ Config_Backing_Store::remove (const ACE_CString& name, const ACE_TCHAR* key)
   int err = config_.open_section (config_.root_section (), key, 0, root);
   if (err != 0)
     {
-      if (this->debug_ > 9)
+      if (this->opts_.debug() > 9)
         {
           ACE_DEBUG((LM_INFO, ACE_TEXT ("could not remove %s, already gone!\n"),
             name.c_str()));
@@ -167,7 +170,7 @@ Config_Backing_Store::persistent_update(const Server_Info_Ptr& info, bool )
       return err;
     }
 
-  if (this->debug_ > 9)
+  if (this->opts_.debug() > 9)
     {
       ACE_DEBUG((LM_INFO, ACE_TEXT ("updating %s\n"), info->name.c_str()));
     }
@@ -199,7 +202,7 @@ Config_Backing_Store::persistent_update(const Activator_Info_Ptr& info, bool )
       return err;
     }
 
-  if (this->debug_ > 9)
+  if (this->opts_.debug() > 9)
     {
       ACE_DEBUG((LM_INFO, ACE_TEXT ("updating activator %s\n"),
         info->name.c_str()));
@@ -211,11 +214,11 @@ Config_Backing_Store::persistent_update(const Activator_Info_Ptr& info, bool )
 }
 
 int
-Config_Backing_Store::persistent_load ()
+Config_Backing_Store::init_repo(const PortableServer::POA_var& )
 {
   if (status_ != 0)
     {
-      if (this->debug_ > 9)
+      if (this->opts_.debug() > 9)
         {
           ACE_DEBUG((LM_INFO, ACE_TEXT ("not loading\n")));
         }
@@ -228,14 +231,14 @@ Config_Backing_Store::persistent_load ()
   return 0;
 }
 
-Heap_Backing_Store::Heap_Backing_Store(const ACE_CString& filename,
-                                       bool start_clean)
-: Config_Backing_Store(heap_),
-  filename_(filename)
+Heap_Backing_Store::Heap_Backing_Store(const Options& opts,
+                                       const CORBA::ORB_var& orb)
+: Config_Backing_Store(opts, orb, heap_),
+  filename_(opts.persist_file_name())
 {
-  if (start_clean)
+  if (opts.repository_erase())
     {
-      if (this->debug_ > 9)
+      if (this->opts_.debug() > 9)
         {
           ACE_DEBUG((LM_INFO, ACE_TEXT ("Heap start clean\n")));
         }
@@ -271,11 +274,11 @@ static HKEY setup_registry(const bool start_clean)
 }
 #endif
 
-Registry_Backing_Store::Registry_Backing_Store(const ACE_CString& filename,
-                                               bool start_clean)
+Registry_Backing_Store::Registry_Backing_Store(const Options& opts,
+                                               const CORBA::ORB_var& orb)
 #if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_REGISTRY)
-: Config_Backing_Store(win32registry_),
-  win32registry_(setup_registry(start_clean))
+: Config_Backing_Store(opts, orb, win32registry_),
+  win32registry_(setup_registry(opts.repository_erase()))
 #else
 : Config_Backing_Store(invalid_config_)
 #endif

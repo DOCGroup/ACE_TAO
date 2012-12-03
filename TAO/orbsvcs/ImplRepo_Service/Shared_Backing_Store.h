@@ -23,7 +23,7 @@
 
 #include "XML_Backing_Store.h"
 
-#include "ImR_LocatorC.h"
+#include "ImR_LocatorS.h"
 #include "ace/Bound_Ptr.h"
 #include "ace/Vector_T.h"
 #include "ACEXML/common/DefaultHandler.h"
@@ -39,16 +39,18 @@ class LocatorListings_XMLHandler;
 * multiple files shared between multiple Locators
 *
 */
-class Shared_Backing_Store : public XML_Backing_Store
+class Shared_Backing_Store
+  : public XML_Backing_Store,
+    public virtual POA_ImplementationRepository::UpdatePushNotification
 {
 public:
-  Shared_Backing_Store(const ACE_CString& directory, bool start_clean);
+  typedef ImplementationRepository::UpdatePushNotification_var Replica_var;
+  Shared_Backing_Store(const Options& opts,
+                       const CORBA::ORB_var& orb);
 
   virtual ~Shared_Backing_Store();
 
   virtual const char* repo_mode() const;
-
-  virtual int persistent_load();
 
   virtual void notify_updated_server(
     const ImplementationRepository::ServerUpdate& server);
@@ -56,10 +58,13 @@ public:
     const ImplementationRepository::ActivatorUpdate& activator);
   virtual void register_replica(
     ImplementationRepository::UpdatePushNotification_ptr replica,
+    char*& ft_imr_ior,
     ImplementationRepository::SequenceNum_out seq_num,
-    ImplementationRepository::SequenceNum replica_seq_num);
+    CORBA::Boolean_out peer_primary);
 
 protected:
+  virtual int init_repo(const PortableServer::POA_var& imr_poa);
+
   virtual int persistent_update(const Server_Info_Ptr& info, bool add);
 
   virtual int persistent_update(const Activator_Info_Ptr& info, bool add);
@@ -68,6 +73,11 @@ protected:
 
   virtual int sync_load (const ACE_CString& name, SyncOp sync_op,
                          bool activator);
+
+  virtual int report_ior(const PortableServer::POA_var& root_poa,
+                         const PortableServer::POA_var& imr_poa);
+
+  char* locator_service_ior(const char* peer_ior) const;
 
 private:
   class LocatorListings_XMLHandler : public ACEXML_DefaultHandler
@@ -107,17 +117,21 @@ private:
   XMLHandler_Ptr get_listings(bool only_changes) const;
   int persistent_load(bool only_changes);
   int persist_listings() const;
+  int connect_replicas(const Replica_var& this_replica);
 
   /// sync up this repository with the replica_, returns true if the
   /// caller needs to perform an incremental sync
   bool sync_repo(ImplementationRepository::SequenceNum new_seq_num,
                  const ImplementationRepository::UpdateType& update_type);
 
-  const ACE_CString listing_file_;
-  ImplementationRepository::UpdatePushNotification_var replica_;
+  const ACE_TString listing_file_;
+  Replica_var replica_;
 
   ImplementationRepository::SequenceNum seq_num_;
   ImplementationRepository::SequenceNum replica_seq_num_;
+  bool primary_;
+  CORBA::String_var non_ft_imr_ior_;
+  static const char* IMR_REPLICA[2];
 };
 
 #endif /* SHARED_BACKING_STORE_H */
