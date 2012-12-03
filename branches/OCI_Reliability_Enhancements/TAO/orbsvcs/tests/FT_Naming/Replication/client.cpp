@@ -71,9 +71,9 @@ My_Test_Object::id (CORBA::Short id)
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  int c_breath = 4;
+  int c_breadth = 4;
   int c_depth = 4;
-  int o_breath = 4;
+  int o_breadth = 4;
   ACE_TCHAR *ns1ref = 0;
   ACE_TCHAR *ns2ref = 0;
 
@@ -89,10 +89,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         if (i<2)
         {
           ACE_ERROR((LM_ERROR,
-                     ACE_TEXT ("Invalid breath, must be 2 or more\n")));
+                     ACE_TEXT ("Invalid breadth, must be 2 or more\n")));
           ACE_OS::exit(1);
         }
-        c_breath = i;
+        c_breadth = i;
         break;
       case 'd':
         i = ACE_OS::atoi(get_opts.opt_arg ());
@@ -109,10 +109,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         if (i<2)
         {
           ACE_ERROR((LM_ERROR,
-                     ACE_TEXT ("Invalid breath, must be 2 or more\n")));
+                     ACE_TEXT ("Invalid breadth, must be 2 or more\n")));
           ACE_OS::exit(1);
         }
-        o_breath = i;
+        o_breadth = i;
         break;
       case 'p':
         ns1ref = get_opts.opt_arg ();
@@ -123,9 +123,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("Argument %c \n usage:  %s")
-                           ACE_TEXT (" [-b <breath of context tree>]")
+                           ACE_TEXT (" [-b <breadth of context tree>]")
                            ACE_TEXT (" [-d <depth of context tree>]")
-                           ACE_TEXT (" [-o <breath of object tree>]")
+                           ACE_TEXT (" [-o <breadth of object tree>]")
                            ACE_TEXT (" -p <ior of first name server>")
                            ACE_TEXT (" -q <ior of second name server>")
                            ACE_TEXT ("\n")),
@@ -184,7 +184,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     level1[0].id = CORBA::string_dup ("level1_context");
     CosNaming::NamingContext_var level1_context;
     level1_context = root_context_1->bind_new_context (level1);
-    for (i=0; i<o_breath; i++)
+
+    for (i=0; i<o_breadth; i++)
     {
       // Instantiate a dummy object and bind it under the new context.
       My_Test_Object *impl1 = new My_Test_Object (i+1);
@@ -197,8 +198,19 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_OS::sprintf(wide_name, "obj_%d", i);
       obj_name[0].id = CORBA::string_dup (wide_name);
       level1_context->bind (obj_name, obj1.in ());
-    }
 
+      // See if the newly bound object is available in the
+      // replica
+      ACE_DEBUG ((LM_DEBUG, "resolving on replica2\n"));
+      CORBA::Object_var obj1_on_replica =
+        root_context_2->resolve (obj_name);
+      if (CORBA::is_nil (obj1_on_replica.in ()))
+        {
+          ACE_ERROR ((LM_ERROR,
+                     "Unable to resolve object from replica.\n"));
+          return -1;
+        }
+    }
   }
   catch (const CORBA::Exception& ex)
   {
@@ -220,10 +232,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       deep[0].id = CORBA::string_dup (deep_name);
       CosNaming::NamingContext_var deep_context;
       ACE_DEBUG ((LM_DEBUG,
-		  "Preparing to bind a new context: %s\n", deep[0].id.in ()));
+                 "Preparing to bind a new context: %s\n", deep[0].id.in ()));
       deep_context = next_context->bind_new_context (deep);
       ACE_DEBUG ((LM_DEBUG,
-		  "Succeeded in binding\n"));
+                 "Succeeded in binding\n"));
       next_context = deep_context;
     }
   }
@@ -236,7 +248,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   // Create a wide context tree
   try
   {
-    for (i=0; i<c_breath; i++)
+    for (i=0; i<c_breadth; i++)
     {
       // Bind all level of context under root.
       CosNaming::Name wide;
@@ -262,14 +274,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     wide1.length (2);
     wide1[0].id = CORBA::string_dup ("level1_context");
     char wide_name[16];
-    ACE_OS::sprintf(wide_name, "obj_%d", o_breath-2);
+    ACE_OS::sprintf(wide_name, "obj_%d", o_breadth-2);
     wide1[1].id = CORBA::string_dup (wide_name);
     root_context_1->unbind (wide1);
 
     // Remove the second to last context from the wide root Naming Context
     CosNaming::Name wide2;
     wide2.length (1);
-    ACE_OS::sprintf(wide_name, "wide_%d", c_breath-2);
+    ACE_OS::sprintf(wide_name, "wide_%d", c_breadth-2);
     wide2[0].id = CORBA::string_dup (wide_name);
     CORBA::Object_var result_obj_ref = root_context_1->resolve (wide2);
     CosNaming::NamingContext_var result_object =
@@ -318,7 +330,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     wide.length (2);
     wide[0].id = CORBA::string_dup ("level1_context");
     char wide_name[16];
-    ACE_OS::sprintf(wide_name, "obj_%d", o_breath-1);
+    ACE_OS::sprintf(wide_name, "obj_%d", o_breadth-1);
     wide[1].id = CORBA::string_dup (wide_name);
     CORBA::Object_var result_obj_ref = root_context_2->resolve (wide);
     Test_Object_var result_object = Test_Object::_narrow (result_obj_ref.in ());
@@ -343,7 +355,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     wide.length (2);
     wide[0].id = CORBA::string_dup ("level1_context");
     char wide_name[16];
-    ACE_OS::sprintf(wide_name, "obj_%d", o_breath-2);
+    ACE_OS::sprintf(wide_name, "obj_%d", o_breadth-2);
     wide[1].id = CORBA::string_dup (wide_name);
     CORBA::Object_var result_obj_ref = root_context_2->resolve (wide);
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -362,7 +374,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     CosNaming::Name wide;
     wide.length (1);
     char wide_name[16];
-    ACE_OS::sprintf(wide_name, "wide_%d", c_breath-1);
+    ACE_OS::sprintf(wide_name, "wide_%d", c_breadth-1);
     wide[0].id = CORBA::string_dup (wide_name);
     CORBA::Object_var result_obj_ref = root_context_2->resolve (wide);
     CosNaming::NamingContext_var result_object =
@@ -387,7 +399,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     CosNaming::Name wide;
     wide.length (2);
     char wide_name[16];
-    ACE_OS::sprintf(wide_name, "wide_%d", c_breath-2);
+    ACE_OS::sprintf(wide_name, "wide_%d", c_breadth-2);
     wide[0].id = CORBA::string_dup (wide_name);
     CORBA::Object_var result_obj_ref = root_context_2->resolve (wide);
     ACE_ERROR_RETURN ((LM_ERROR,

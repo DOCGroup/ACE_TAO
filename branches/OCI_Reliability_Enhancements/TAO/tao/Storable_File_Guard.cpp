@@ -73,10 +73,9 @@ TAO::Storable_File_Guard::init(const char * mode)
       if ( ! (rwflags_ & mode_create) )
         {
           // Check if our copy is up to date
-          time_t new_last_changed = fl_->last_changed();
-          if ( new_last_changed > this->get_parent_last_changed ())
+          if (this->parent_obsolete ())
             {
-              this->set_parent_last_changed (new_last_changed);
+              this->mark_parent_current ();
               this->create_child ();
             }
         }
@@ -105,6 +104,20 @@ TAO::Storable_File_Guard::init(const char * mode)
     }
 }
 
+bool
+TAO::Storable_File_Guard::parent_obsolete (void)
+{ // Default implementation uses time to determine
+  // if obsolete.
+  return (fl_->last_changed () > this->get_parent_last_changed ());
+}
+
+void
+TAO::Storable_File_Guard::mark_parent_current (void)
+{ // Default implementation is to set the last changed
+  // time to that of the file lock.
+  this->set_parent_last_changed (fl_->last_changed ());
+}
+
 void
 TAO::Storable_File_Guard::release (void)
 {
@@ -115,7 +128,7 @@ TAO::Storable_File_Guard::release (void)
       if(redundant_)
         {
           if( rwflags_ & mode_write )
-            this->set_parent_last_changed (fl_->last_changed());
+            this->mark_parent_current ();
           fl_->funlock(0, 0, 0);
         }
       fl_->close();

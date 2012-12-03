@@ -1,3 +1,23 @@
+Mon Dec  3 04:13:48 UTC 2012  f6  <f6@>
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context.cpp:
+        * orbsvcs/orbsvcs/Naming/Naming_Context_Interface.h:
+        * orbsvcs/orbsvcs/Naming/Naming_Context_Interface.cpp:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.h:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp:
+        * tao/Storable_File_Guard.h:
+        * tao/Storable_File_Guard.cpp:
+
+          Refactored to allow for use of marking for out of date context
+          and file.
+
+        * orbsvcs/tests/FT_Naming/Replication/client.cpp:
+
+          Added printouts for testing.
+
+
 Sun Dec  2 20:32:25 UTC 2012  Byron Harris  <harrisb@ociweb.com>
 
         * tests/Storable/test.cpp:

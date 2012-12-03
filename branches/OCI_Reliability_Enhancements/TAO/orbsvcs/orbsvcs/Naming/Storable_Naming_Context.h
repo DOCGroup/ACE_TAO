@@ -359,10 +359,12 @@ public:
 protected:
 
   /**
-   * An internal utility used to signal that this context was updated.
-   * Check the last_changed_ attribute for the time of the write.
+   * An internal callback invoked by the File_Open_Lock_and_Check object to
+   * signal that this context was updated and written to disk.
+   * This will have been done after the file is closed. Check the
+   * last_changed_ attribute for the time of the write.
    */
-  void context_written (void);
+  virtual void context_written (void);
 
   /// Global counter used for generation of POA ids for children Naming
   /// Contexts.
@@ -428,6 +430,11 @@ public:
   ~File_Open_Lock_and_Check();
 
 protected:
+  /// Check if the parent is current with the last update.
+  virtual bool parent_obsolete (void);
+
+  /// Mark the parent as up to date
+  virtual void mark_parent_current (void);
 
   virtual void set_parent_last_changed (const time_t & time);
 

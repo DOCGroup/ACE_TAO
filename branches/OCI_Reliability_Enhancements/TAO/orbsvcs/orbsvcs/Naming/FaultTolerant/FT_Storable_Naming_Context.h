@@ -58,20 +58,6 @@ public:
    */
   virtual CORBA::Object_ptr resolve (const CosNaming::Name &n);
 
-  /**
-   * Override the bind operation to support replication through the
-   * FT_Naming_Replication_Manager.
-   */
-  virtual void bind (const CosNaming::Name &n,
-                     CORBA::Object_ptr obj);
-
-  /**
-   * Override the bind_new_context operation to support replication through the
-   * FT_Naming_Replication_Manager.
-   */
-  virtual CosNaming::NamingContext_ptr bind_new_context (
-                                const CosNaming::Name &n);
-
   // Set the Naming Manager as a static so that it is available for all
   // naming context implementations.
   static void set_naming_manager (TAO_FT_Naming_Manager *mgr_impl);
@@ -96,7 +82,7 @@ public:
   /**
    * Mark the implementation as dirty for replicated persistence support.
    */
-  virtual void mark_dirty (CORBA::Boolean is_dirty = 0);
+  virtual void mark_dirty (bool is_dirty = 0);
 
   /**
    * An internal utility used to signal that this context was updated.
@@ -108,6 +94,7 @@ public:
 protected:
   static TAO_FT_Naming_Manager *naming_manager_;
   CORBA::Boolean is_dirty_;
+
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

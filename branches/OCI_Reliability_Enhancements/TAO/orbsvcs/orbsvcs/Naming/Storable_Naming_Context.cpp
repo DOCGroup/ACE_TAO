@@ -239,7 +239,7 @@ TAO_Storable_Bindings_Map::shared_bind (const char * id,
     }
 }
 
-void TAO_Storable_Naming_Context::Write(TAO_Storable_Base& wrtr)
+void TAO_Storable_Naming_Context::Write (TAO_Storable_Base& wrtr)
 {
   ACE_TRACE("Write");
   TAO_NS_Persistence_Header header;
@@ -331,7 +331,6 @@ void TAO_Storable_Naming_Context::Write(TAO_Storable_Base& wrtr)
     wrtr << record;
     it.advance();
   }
-
   this->write_occurred_ = 1;
 }
 
@@ -422,7 +421,9 @@ File_Open_Lock_and_Check::~File_Open_Lock_and_Check()
   // Check if a write occurred for this context and
   // notify the context if it did.
   if (context_->write_occurred_ == 1)
-    context_->context_written ();
+    {
+      context_->context_written ();
+    }
 }
 
 TAO_Storable_Base &
@@ -430,6 +431,26 @@ TAO_Storable_Naming_Context::
 File_Open_Lock_and_Check::peer ()
 {
   return dynamic_cast<TAO_Storable_Base &>(*fl_);
+}
+
+bool
+TAO_Storable_Naming_Context::
+File_Open_Lock_and_Check::parent_obsolete (void)
+{
+  // If the dirty flag is set, context is obsolete.
+  // Otherwise check the last changed flag against
+  // file.
+  return (context_->is_dirty () ||
+          (fl_->last_changed () > this->get_parent_last_changed ()));
+}
+
+void
+TAO_Storable_Naming_Context::
+File_Open_Lock_and_Check::mark_parent_current (void)
+{
+  // Reset the dirty flag
+  context_->mark_dirty (false);
+  this->set_parent_last_changed (fl_->last_changed ());
 }
 
 void
@@ -1203,7 +1224,7 @@ TAO_Storable_Naming_Context::bind (const CosNaming::Name& n,
       else if (result == -1)
         throw CORBA::INTERNAL ();
 
-      this->Write(flck.peer());
+      this->Write (flck.peer());
     }
 }
 
@@ -1389,7 +1410,7 @@ CosNaming::NamingContext_ptr TAO_Storable_Naming_Context::recreate_all (
                       CORBA::NO_MEMORY ());
     new_context->context_ = new_context->storable_context_;
     File_Open_Lock_and_Check flck(new_context, "wc");
-    new_context->Write(flck.peer ());
+    new_context->Write (flck.peer ());
   }
 
   // build the global file name
