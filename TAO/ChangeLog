@@ -1,3 +1,12 @@
+Mon Dec  3 15:28:17 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/AnyTypeCode/Sequence_TypeCode_Static.h:
+        * tao/AnyTypeCode/String_TypeCode.h:
+        * tao/AnyTypeCode/String_TypeCode_Static.h:
+        * tao/AnyTypeCode/Struct_TypeCode_Static.h:
+        * tao/AnyTypeCode/Union_TypeCode.h:
+          Layout changes
+
 Mon Dec 03 09:253:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
 
         * orbsvcs/orbsvcs/PortableGroup/UIPMC_Mcast_Transport.cpp:
