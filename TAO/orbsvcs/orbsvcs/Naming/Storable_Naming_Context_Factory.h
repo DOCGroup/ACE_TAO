@@ -21,6 +21,10 @@
 #include "orbsvcs/Naming/Hash_Naming_Context.h"
 #include "orbsvcs/Naming/Storable_Naming_Context.h"
 
+namespace TAO
+{
+  class Storable_Factory;
+}
 
 class TAO_Persistent_Naming_Context;
 
@@ -53,7 +57,7 @@ public:
   virtual TAO_Storable_Naming_Context* create_naming_context_impl (CORBA::ORB_ptr orb,
                                                                    PortableServer::POA_ptr poa,
                                                                    const char *poa_id,
-                                                                   TAO_Naming_Service_Persistence_Factory *factory,
+                                                                   TAO::Storable_Factory *factory,
                                                                    const ACE_TCHAR *persistence_directory);
 
 protected:

@@ -13,13 +13,13 @@ public:
 
   ~Savable_File_Guard ();
 
-  virtual void set_parent_last_changed (const time_t & time);
+  virtual void set_object_last_changed (const time_t & time);
 
-  virtual time_t get_parent_last_changed ();
+  virtual time_t get_object_last_changed ();
 
-  virtual void create_child ();
+  virtual void load_from_stream ();
 
-  virtual bool is_child_created ();
+  virtual bool is_loaded_from_stream ();
 
   virtual TAO::Storable_Base * create_stream (const char * mode);
 
@@ -50,26 +50,26 @@ Savable_File_Guard::peer ()
 }
 
 void
-Savable_File_Guard::set_parent_last_changed (const time_t & time)
+Savable_File_Guard::set_object_last_changed (const time_t & time)
 {
   savable_.last_changed_ = time;
 }
 
 time_t
-Savable_File_Guard::get_parent_last_changed ()
+Savable_File_Guard::get_object_last_changed ()
 {
   return savable_.last_changed_;
 }
 
 void
-Savable_File_Guard::create_child ()
+Savable_File_Guard::load_from_stream ()
 {
   savable_.load (this->peer ());
   child_created_ = true;
 }
 
 bool
-Savable_File_Guard::is_child_created ()
+Savable_File_Guard::is_loaded_from_stream ()
 {
   return child_created_;
 }
@@ -82,6 +82,7 @@ Savable_File_Guard::create_stream (const char * mode)
 
 Savable::Savable (TAO::Storable_Factory & storable_factory)
   : storable_factory_(storable_factory)
+  , i_(0)
 {
   ACE_Auto_Ptr<TAO::Storable_Base> stream (storable_factory_.create_stream("test.dat", "r"));
   if (stream->exists ())
@@ -105,6 +106,7 @@ Savable::load (TAO::Storable_Base & stream)
     {
       stream >> string_[i];
     }
+  stream >> i_;
 }
 
 void
@@ -114,6 +116,7 @@ Savable::write (TAO::Storable_Base & stream)
     {
       stream << string_[i];
     }
+  stream << i_;
 }
 
 void
@@ -129,4 +132,19 @@ Savable::string_get (int index)
 {
   Savable_File_Guard fg(*this, "r");
   return this->string_[index];
+}
+
+void
+Savable::int_set (int i)
+{
+  Savable_File_Guard fg(*this, "w");
+  this->i_ = i;
+  this->write (fg.peer ());
+}
+
+int
+Savable::int_get ()
+{
+  Savable_File_Guard fg(*this, "r");
+  return this->i_;
 }

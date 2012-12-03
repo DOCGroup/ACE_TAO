@@ -27,6 +27,12 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+namespace TAO
+{
+  class Storable_Base;
+  class Storable_Factory;
+}
+
 class TAO_Storable_Naming_Context_Factory;
 
 class TAO_Naming_Serv_Export TAO_Storable_IntId
@@ -233,7 +239,7 @@ public:
                                PortableServer::POA_ptr poa,
                                const char *poa_id,
                                TAO_Storable_Naming_Context_Factory *cxt_factory,
-                               TAO_Naming_Service_Persistence_Factory *factory,
+                               TAO::Storable_Factory *factory,
                                const ACE_TCHAR *persistence_directory,
                                size_t hash_table_size = ACE_DEFAULT_MAP_SIZE);
 
@@ -253,7 +259,7 @@ public:
                                PortableServer::POA_ptr poa,
                                const char *poa_id,
                                TAO_Storable_Naming_Context_Factory *cxt_factory,
-                               TAO_Naming_Service_Persistence_Factory *pers_factory,
+                               TAO::Storable_Factory *pers_factory,
                                const ACE_TCHAR *persistence_directory,
                                TAO_Storable_Naming_Context **new_context);
 
@@ -266,7 +272,7 @@ public:
                               size_t context_size,
                               int reentering,
                               TAO_Storable_Naming_Context_Factory *cxt_factory,
-                              TAO_Naming_Service_Persistence_Factory *pers_factory,
+                              TAO::Storable_Factory *pers_factory,
                               const ACE_TCHAR *persistence_directory,
                               int use_redundancy);
 
@@ -390,7 +396,7 @@ protected:
 
   TAO_Storable_Naming_Context_Factory *context_factory_;
 
-  TAO_Naming_Service_Persistence_Factory *factory_;
+  TAO::Storable_Factory *factory_;
 
   /// The directory in which to store the files
   ACE_CString persistence_directory_;
@@ -407,7 +413,7 @@ protected:
   static const char * root_name_;
 
   /// The pointer to the global file used to allocate new contexts
-  static ACE_Auto_Ptr<TAO_Storable_Base> gfl_;
+  static ACE_Auto_Ptr<TAO::Storable_Base> gfl_;
 
 /**
  * @class File_Open_Lock_and_Check
@@ -425,7 +431,7 @@ public:
                            const char * mode);
 
   /// Returns the stream to read/write on
-  TAO_Storable_Base & peer (void);
+  TAO::Storable_Base & peer (void);
 
   ~File_Open_Lock_and_Check();
 
@@ -433,18 +439,18 @@ protected:
   /// Check if the parent is current with the last update.
   virtual bool parent_obsolete (void);
 
+  virtual void set_object_last_changed (const time_t & time);
   /// Mark the parent as up to date
   virtual void mark_parent_current (void);
 
-  virtual void set_parent_last_changed (const time_t & time);
 
-  virtual time_t get_parent_last_changed ();
+  virtual time_t get_object_last_changed ();
 
-  virtual void create_child ();
+  virtual void load_from_stream ();
 
-  virtual bool is_child_created ();
+  virtual bool is_loaded_from_stream ();
 
-  virtual TAO_Storable_Base * create_stream (const char * mode);
+  virtual TAO::Storable_Base * create_stream (const char * mode);
 
 private:
   /// Default constructor
@@ -455,10 +461,11 @@ private:
 }; // end of embedded class File_Open_Lock_and_Check
 
   friend class File_Open_Lock_and_Check;
+  friend class TAO_Storable_Naming_Context_ReaderWriter;
 
-  int load_map(TAO_Storable_Base& storable);
+  int load_map(TAO::Storable_Base& storable);
 
-  void Write(TAO_Storable_Base& wrtr);
+  void Write(TAO::Storable_Base& wrtr);
 
   /// Is set by the Write operation.  Used to determine
   int write_occurred_;

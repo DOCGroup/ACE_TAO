@@ -26,13 +26,13 @@ namespace TAO
 
   /**
    * @class Storable_File_Guard
-   * @brief Bridge abstract class for TAO_Storable_Base that performs locking.
+   * @brief Base class to use with TAO_Storable_Base to synch object state
+   * with a storable base.
    *
    * A guard for Storable_Base that opens a file
    * for read/write and sets a lock on it. It then checks if the file has
    * changed and re-reads it if it has.
    *
-   * The destructor releases the lock.
    */
   class TAO_Export Storable_File_Guard
   {
@@ -43,6 +43,8 @@ namespace TAO
     virtual ~Storable_File_Guard ();
 
     /// Releases the lock, closes the file, and deletes the I/O stream.
+    /// Destructors of derived classes should call this this will
+    /// virtual functions are available.
     void release (void);
 
   protected:
@@ -58,16 +60,17 @@ namespace TAO
     /// Mark the parent as up to date
     virtual void mark_parent_current (void);
 
-    /// Set the time the parent was last updated.
-    virtual void set_parent_last_changed (const time_t & time) = 0;
+    /// Indicate when the object in memory has last changed
+    virtual void set_object_last_changed (const time_t & time) = 0;
 
-    /// Get the time the parent was last changed.
-    virtual time_t get_parent_last_changed () = 0;
+    /// Return when the object in memory has last changed
+    virtual time_t get_object_last_changed () = 0;
 
-    /// Load the data and update.
-    virtual void create_child () = 0;
+    /// Load object from file to memory
+    virtual void load_from_stream () = 0;
 
-    virtual bool is_child_created () = 0;
+    /// Answer if object has been loaded from file
+    virtual bool is_loaded_from_stream () = 0;
 
     virtual Storable_Base * create_stream (const char * mode) = 0;
 

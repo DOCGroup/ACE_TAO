@@ -2,9 +2,12 @@
 
 #include "orbsvcs/Naming/Storable_Naming_Context.h"
 #include "orbsvcs/Naming/Storable_Naming_Context_Factory.h"
+#include "orbsvcs/Naming/Storable_Naming_Context_ReaderWriter.h"
 #include "orbsvcs/Naming/Bindings_Iterator_T.h"
 
 #include "tao/debug.h"
+#include "tao/Storable_Base.h"
+#include "tao/Storable_Factory.h"
 
 #include "ace/Auto_Ptr.h"
 #include "ace/OS_NS_stdio.h"
@@ -13,7 +16,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 const char * TAO_Storable_Naming_Context::root_name_;
 ACE_UINT32 TAO_Storable_Naming_Context::gcounter_;
-ACE_Auto_Ptr<TAO_Storable_Base> TAO_Storable_Naming_Context::gfl_;
+ACE_Auto_Ptr<TAO::Storable_Base> TAO_Storable_Naming_Context::gfl_;
 int TAO_Storable_Naming_Context::redundant_;
 
 TAO_Storable_IntId::TAO_Storable_IntId (void)
@@ -239,168 +242,20 @@ TAO_Storable_Bindings_Map::shared_bind (const char * id,
     }
 }
 
-void TAO_Storable_Naming_Context::Write (TAO_Storable_Base& wrtr)
+void TAO_Storable_Naming_Context::Write (TAO::Storable_Base& wrtr)
 {
   ACE_TRACE("Write");
-  TAO_NS_Persistence_Header header;
-
-  header.size (static_cast<unsigned int> (storable_context_->current_size()));
-  header.destroyed (destroyed_);
-
-  wrtr << header;
-
-  if (0u == header.size ())
-    return;
-
-  ACE_Hash_Map_Iterator<TAO_Storable_ExtId,TAO_Storable_IntId,
-                        ACE_Null_Mutex> it = storable_context_->map().begin();
-  ACE_Hash_Map_Iterator<TAO_Storable_ExtId,TAO_Storable_IntId,
-                        ACE_Null_Mutex> itend = storable_context_->map().end();
-
-  ACE_Hash_Map_Entry<TAO_Storable_ExtId,TAO_Storable_IntId> ent = *it;
-
-  while (!(it == itend))
-  {
-    TAO_NS_Persistence_Record record;
-
-    ACE_CString name;
-    CosNaming::BindingType bt = (*it).int_id_.type_;
-    if (bt ==  CosNaming::ncontext)
-      {
-        CORBA::Object_var
-          obj = orb_->string_to_object ((*it).int_id_.ref_.in ());
-        if (obj->_is_collocated ())
-          {
-            // This is a local (i.e. non federated context) we therefore
-            // store only the ObjectID (persistence filename) for the object.
-
-            // The driving force behind storing ObjectIDs rather than IORs for
-            // local contexts is to provide for a redundant naming service.
-            // That is, a naming service that runs simultaneously on multiple
-            // machines sharing a file system. It allows multiple redundant
-            // copies to be started and stopped independently.
-            // The original target platform was Tru64 Clusters where there was
-            // a cluster address. In that scenario, clients may get different
-            // servers on each request, hence the requirement to keep
-            // synchronized to the disk. It also works on non-cluster system
-            // where the client picks one of the redundant servers and uses it,
-            // while other systems can pick different servers. (However in this
-            // scenario, if a server fails and a client must pick a new server,
-            // that client may not use any saved context IORs, instead starting
-            // from the root to resolve names. So this latter mode is not quite
-            // transparent to clients.) [Rich Seibel (seibel_r) of ociweb.com]
-
-            PortableServer::ObjectId_var
-              oid = poa_->reference_to_id (obj.in ());
-            CORBA::String_var
-              nm = PortableServer::ObjectId_to_string (oid.in ());
-            const char
-              *newname = nm.in ();
-            name.set (newname); // The local ObjectID (persistance filename)
-            record.type (TAO_NS_Persistence_Record::LOCAL_NCONTEXT);
-          }
-        else
-          {
-            // Since this is a foreign (federated) context, we can not store
-            // the objectID (because it isn't in our storage), if we did, when
-            // we restore, we would end up either not finding a permanent
-            // record (and thus ending up incorrectly assuming the context was
-            // destroyed) or loading another context altogether (just because
-            // the contexts shares its objectID filename which is very likely).
-            // [Simon Massey  (sma) of prismtech.com]
-
-            name.set ((*it).int_id_.ref_.in ()); // The federated context IOR
-            record.type (TAO_NS_Persistence_Record::REMOTE_NCONTEXT);
-          }
-      }
-    else // if (bt == CosNaming::nobject) // shouldn't be any other, can there?
-      {
-        name.set ((*it).int_id_.ref_.in ()); // The non-context object IOR
-        record.type (TAO_NS_Persistence_Record::OBJREF);
-      }
-    record.ref(name);
-
-    const char *myid = (*it).ext_id_.id();
-    ACE_CString id(myid);
-    record.id(id);
-
-    const char *mykind = (*it).ext_id_.kind();
-    ACE_CString kind(mykind);
-    record.kind(kind);
-
-    wrtr << record;
-    it.advance();
-  }
-  this->write_occurred_ = 1;
+  TAO_Storable_Naming_Context_ReaderWriter rw(wrtr);
+  rw.write(*this);
 }
 
 // Helpers function to load a new context into the binding_map
 int
-TAO_Storable_Naming_Context::load_map(TAO_Storable_Base& storable)
+TAO_Storable_Naming_Context::load_map(TAO::Storable_Base& storable)
 {
   ACE_TRACE("load_map");
-  // assume file already open for reading
-  TAO_Storable_Bindings_Map *bindings_map;
-
-  // create the new bindings map
-  ACE_NEW_THROW_EX (bindings_map,
-                    TAO_Storable_Bindings_Map (hash_table_size_,orb_.in()),
-                    CORBA::NO_MEMORY ());
-
-  // get the data for this bindings map from the file
-
-  TAO_NS_Persistence_Header header;
-  TAO_NS_Persistence_Record record;
-
-  // we are only using the size from this header
-  storable >> header;
-  if (!storable.good ())
-    {
-      storable.clear ();
-      throw CORBA::INTERNAL ();
-    }
-
-  // reset the destroyed flag
-  this->destroyed_ = header.destroyed();
-
-  // read in the data for the map
-  for (unsigned int i= 0u; i<header.size(); ++i)
-    {
-      storable >> record;
-      if (!storable.good ())
-        {
-          storable.clear ();
-          throw CORBA::INTERNAL ();
-        }
-
-      if (TAO_NS_Persistence_Record::LOCAL_NCONTEXT == record.type ())
-        {
-          PortableServer::ObjectId_var
-            id = PortableServer::string_to_ObjectId (record.ref ().c_str ());
-          const char
-            *intf = interface_->_interface_repository_id ();
-          CORBA::Object_var
-            objref = poa_->create_reference_with_id (id.in (), intf);
-          bindings_map->bind ( record.id ().c_str (),
-                               record.kind ().c_str (),
-                               objref.in (),
-                               CosNaming::ncontext );
-        }
-      else
-        {
-          CORBA::Object_var
-            objref = orb_->string_to_object (record.ref ().c_str ());
-          bindings_map->bind ( record.id ().c_str (),
-                               record.kind ().c_str (),
-                               objref.in (),
-                               ((TAO_NS_Persistence_Record::REMOTE_NCONTEXT == record.type ())
-                                ? CosNaming::ncontext    // REMOTE_NCONTEXT
-                                : CosNaming::nobject )); // OBJREF
-        }
-    }
-  storable_context_ = bindings_map;
-  context_ = storable_context_;
-  return 0;
+  TAO_Storable_Naming_Context_ReaderWriter rw(storable);
+  return rw.read(*this);
 }
 
 TAO_Storable_Naming_Context::
@@ -426,11 +281,11 @@ File_Open_Lock_and_Check::~File_Open_Lock_and_Check()
     }
 }
 
-TAO_Storable_Base &
+TAO::Storable_Base &
 TAO_Storable_Naming_Context::
 File_Open_Lock_and_Check::peer ()
 {
-  return dynamic_cast<TAO_Storable_Base &>(*fl_);
+  return dynamic_cast<TAO::Storable_Base &>(*fl_);
 }
 
 bool
@@ -441,7 +296,7 @@ File_Open_Lock_and_Check::parent_obsolete (void)
   // Otherwise check the last changed flag against
   // file.
   return (context_->is_dirty () ||
-          (fl_->last_changed () > this->get_parent_last_changed ()));
+          (fl_->last_changed () > this->get_object_last_changed ()));
 }
 
 void
@@ -450,26 +305,26 @@ File_Open_Lock_and_Check::mark_parent_current (void)
 {
   // Reset the dirty flag
   context_->mark_dirty (false);
-  this->set_parent_last_changed (fl_->last_changed ());
+  this->set_object_last_changed (fl_->last_changed ());
 }
 
 void
 TAO_Storable_Naming_Context::
-File_Open_Lock_and_Check::set_parent_last_changed (const time_t & time)
+File_Open_Lock_and_Check::set_object_last_changed (const time_t & time)
 {
   context_->last_changed_ = time;
 }
 
 time_t
 TAO_Storable_Naming_Context::
-File_Open_Lock_and_Check::get_parent_last_changed ()
+File_Open_Lock_and_Check::get_object_last_changed ()
 {
   return context_->last_changed_;
 }
 
 void
 TAO_Storable_Naming_Context::
-File_Open_Lock_and_Check::create_child ()
+File_Open_Lock_and_Check::load_from_stream ()
 {
   // Throw our map away
   delete context_->storable_context_;
@@ -479,12 +334,12 @@ File_Open_Lock_and_Check::create_child ()
 
 bool
 TAO_Storable_Naming_Context::
-File_Open_Lock_and_Check::is_child_created ()
+File_Open_Lock_and_Check::is_loaded_from_stream ()
 {
   return context_->storable_context_ != 0;
 }
 
-TAO_Storable_Base *
+TAO::Storable_Base *
 TAO_Storable_Naming_Context::
 File_Open_Lock_and_Check::create_stream (const char * mode)
 {
@@ -503,7 +358,7 @@ TAO_Storable_Naming_Context::TAO_Storable_Naming_Context (
                                PortableServer::POA_ptr poa,
                                const char *poa_id,
                                TAO_Storable_Naming_Context_Factory *cxt_factory,
-                               TAO_Naming_Service_Persistence_Factory *factory,
+                               TAO::Storable_Factory *factory,
                                const ACE_TCHAR *persistence_directory,
                                size_t hash_table_size)
   : TAO_Hash_Naming_Context (poa,
@@ -538,7 +393,7 @@ TAO_Storable_Naming_Context::~TAO_Storable_Naming_Context (void)
       file_name += this->name_;
 
       // Now delete the file
-      ACE_Auto_Ptr<TAO_Storable_Base>
+      ACE_Auto_Ptr<TAO::Storable_Base>
         fl (
           this->factory_->create_stream(file_name.c_str(),
                                         ACE_TEXT("r"))
@@ -559,7 +414,7 @@ TAO_Storable_Naming_Context::make_new_context (
                               PortableServer::POA_ptr poa,
                               const char *poa_id,
                               TAO_Storable_Naming_Context_Factory *cxt_factory,
-                              TAO_Naming_Service_Persistence_Factory *pers_factory,
+                              TAO::Storable_Factory *pers_factory,
                               const ACE_TCHAR *persistence_directory,
                               TAO_Storable_Naming_Context **new_context)
 {
@@ -643,6 +498,7 @@ TAO_Storable_Naming_Context::new_context (void)
   }
 
   TAO_NS_Persistence_Global global;
+  TAO_Storable_Naming_Context_ReaderWriter rw(*gfl_.get());
 
   // Generate a POA id for the new context.
   if(redundant_)
@@ -656,9 +512,9 @@ TAO_Storable_Naming_Context::new_context (void)
     if (gfl_ -> flock(0, 0, 0) != 0)
          throw CORBA::INTERNAL();
     // get the counter from disk
-    *gfl_.get() >> global;
+    rw.read_global(global);
     if (!gfl_.get ()->good () &&
-        gfl_.get ()->rdstate () != TAO_Storable_Base::eofbit)
+        gfl_.get ()->rdstate () != TAO::Storable_Base::eofbit)
       {
         gfl_.get ()->clear ();
         throw CORBA::INTERNAL ();
@@ -673,7 +529,7 @@ TAO_Storable_Naming_Context::new_context (void)
                    gcounter_++);
   // then save it back on disk
   global.counter(gcounter_);
-  *gfl_.get() << global;
+  rw.write_global(global);
   if(redundant_)
   {
     // and release our lock
@@ -1366,7 +1222,7 @@ CosNaming::NamingContext_ptr TAO_Storable_Naming_Context::recreate_all (
                                size_t context_size,
                                int reentering,
                                TAO_Storable_Naming_Context_Factory *cxt_factory,
-                               TAO_Naming_Service_Persistence_Factory *pers_factory,
+                               TAO::Storable_Factory *pers_factory,
                                const ACE_TCHAR *persistence_directory,
                                int use_redundancy)
 {
@@ -1395,7 +1251,7 @@ CosNaming::NamingContext_ptr TAO_Storable_Naming_Context::recreate_all (
   ACE_TString file_name(persistence_directory);
   file_name += ACE_TEXT("/");
   file_name += ACE_TEXT_CHAR_TO_TCHAR(poa_id);
-  ACE_Auto_Ptr<TAO_Storable_Base> fl (
+  ACE_Auto_Ptr<TAO::Storable_Base> fl (
     pers_factory->create_stream (ACE_TEXT_ALWAYS_CHAR (file_name.c_str ()), ACE_TEXT ("r")));
   if (fl->exists ())
   {
@@ -1426,9 +1282,10 @@ CosNaming::NamingContext_ptr TAO_Storable_Naming_Context::recreate_all (
 
   // get the counter from disk
   TAO_NS_Persistence_Global global;
-  *gfl_.get() >> global;
+  TAO_Storable_Naming_Context_ReaderWriter rw(*gfl_.get());
+  rw.read_global(global);
   if (!gfl_.get ()->good () &&
-      gfl_.get ()->rdstate () != TAO_Storable_Base::eofbit)
+      gfl_.get ()->rdstate () != TAO::Storable_Base::eofbit)
     {
       gfl_.get ()->clear ();
       throw CORBA::INTERNAL ();

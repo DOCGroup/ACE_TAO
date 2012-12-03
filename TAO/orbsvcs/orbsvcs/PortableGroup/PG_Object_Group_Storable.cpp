@@ -2,8 +2,86 @@
 
 #include "orbsvcs/PortableGroup/PG_Object_Group_Storable.h"
 
+#include "tao/Storable_File_Guard.h"
+#include "tao/Storable_Factory.h"
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+namespace TAO
+{
+
+class Group_Object_Synch : public TAO::Storable_File_Guard
+{
+public:
+
+  Group_Object_Synch ( TAO::PG_Object_Group_Storable & object_group,
+                       const char *mode);
+
+  ~Group_Object_Synch ();
+
+  virtual void set_object_last_changed (const time_t & time);
+
+  virtual time_t get_object_last_changed ();
+
+  virtual void load_from_stream ();
+
+  virtual bool is_loaded_from_stream ();
+
+  virtual TAO::Storable_Base * create_stream (const char * mode);
+
+  TAO::Storable_Base & peer ();
+
+private:
+
+  TAO::PG_Object_Group_Storable & object_group_;
+  bool loaded_from_stream_;
+};
+
+Group_Object_Synch::Group_Object_Synch ( TAO::PG_Object_Group_Storable & object_group,
+                                         const char *mode)
+  : TAO::Storable_File_Guard(false)
+  , object_group_(object_group)
+  , loaded_from_stream_(false)
+{
+  this->init (mode);
+}
+
+Group_Object_Synch::~Group_Object_Synch ()
+{
+  this->release ();
+}
+
+void
+Group_Object_Synch::set_object_last_changed (const time_t & time)
+{
+  object_group_.last_changed_ = time;
+}
+
+time_t
+Group_Object_Synch::get_object_last_changed ()
+{
+  return object_group_.last_changed_;
+}
+
+void
+Group_Object_Synch::load_from_stream ()
+{
+  loaded_from_stream_ = true;
+}
+
+bool
+Group_Object_Synch::is_loaded_from_stream ()
+{
+  return loaded_from_stream_;
+}
+
+TAO::Storable_Base *
+Group_Object_Synch::create_stream (const char * mode)
+{
+  return object_group_.create_stream (mode);
+}
+
+}
 
 TAO::PG_Object_Group_Storable::PG_Object_Group_Storable (
   CORBA::ORB_ptr orb,
@@ -13,7 +91,8 @@ TAO::PG_Object_Group_Storable::PG_Object_Group_Storable (
   const PortableGroup::TagGroupTaggedComponent & tagged_component,
   const char * type_id,
   const PortableGroup::Criteria & the_criteria,
-  TAO::PG_Property_Set * type_properties)
+  TAO::PG_Property_Set * type_properties,
+  TAO::Storable_Factory & storable_factory)
   : PG_Object_Group(orb,
                     factory_registry,
                     manipulator,
@@ -22,7 +101,18 @@ TAO::PG_Object_Group_Storable::PG_Object_Group_Storable (
                     type_id,
                     the_criteria,
                     type_properties)
+  , storable_factory_ (storable_factory)
+  , last_changed_ (0)
 {
+  ACE_Auto_Ptr<TAO::Storable_Base> stream (this->create_stream ("r"));
+  if (stream->exists ())
+    {
+      Group_Object_Synch gos (*this, "r");
+    }
+  else
+    {
+      Group_Object_Synch gos (*this, "wc");
+    }
 }
 
 TAO::PG_Object_Group_Storable::~PG_Object_Group_Storable (void)
@@ -117,6 +207,26 @@ TAO::PG_Object_Group_Storable::get_member_reference (
   const PortableGroup::Location & the_location)
 {
   return PG_Object_Group::get_member_reference (the_location);
+}
+
+TAO::Storable_Base *
+TAO::PG_Object_Group_Storable::create_stream (const char * mode)
+{
+  const char * file_name = this->get_type_id ();
+  return this->storable_factory_.create_stream (file_name, mode);
+}
+
+void
+TAO::PG_Object_Group_Storable::load (TAO::Storable_Base & stream)
+{
+}
+
+void
+TAO::PG_Object_Group_Storable::write (TAO::Storable_Base & stream)
+{
+  stream << this->get_name ();
+  stream << this->distribute_;
+  stream << this->role_;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

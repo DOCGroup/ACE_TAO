@@ -71,9 +71,21 @@ namespace TAO
 
     bool fail (void) const;
 
+    virtual void rewind (void) = 0;
+
+    virtual bool flush (void) = 0;
+
     virtual Storable_Base& operator << (const ACE_CString& str) = 0;
 
     virtual Storable_Base& operator >> (ACE_CString& str) = 0;
+
+    virtual Storable_Base& operator << (int i) = 0;
+
+    virtual Storable_Base& operator >> (int &i) = 0;
+
+    virtual Storable_Base& operator << (unsigned int i) = 0;
+
+    virtual Storable_Base& operator >> (unsigned int &i) = 0;
 
   private:
     Storable_State state_;

@@ -76,11 +76,11 @@ TAO::Storable_File_Guard::init(const char * mode)
           if (this->parent_obsolete ())
             {
               this->mark_parent_current ();
-              this->create_child ();
+              this->load_from_stream ();
             }
         }
     }
-  else if ( ! this->is_child_created () || (rwflags_ & mode_write) )
+  else if ( ! this->is_loaded_from_stream () || (rwflags_ & mode_write) )
     {
       if (fl_->open() != 0)
         {
@@ -92,9 +92,9 @@ TAO::Storable_File_Guard::init(const char * mode)
       // unlocked/closed before we leave this class
       closed_ = 0;
 
-      if(! this->is_child_created ())
+      if(! this->is_loaded_from_stream ())
         {
-          this->create_child ();
+          this->load_from_stream ();
         }
     }
   else
@@ -108,14 +108,14 @@ bool
 TAO::Storable_File_Guard::parent_obsolete (void)
 { // Default implementation uses time to determine
   // if obsolete.
-  return (fl_->last_changed () > this->get_parent_last_changed ());
+  return (fl_->last_changed () > this->get_object_last_changed ());
 }
 
 void
 TAO::Storable_File_Guard::mark_parent_current (void)
 { // Default implementation is to set the last changed
   // time to that of the file lock.
-  this->set_parent_last_changed (fl_->last_changed ());
+  this->set_object_last_changed (fl_->last_changed ());
 }
 
 void

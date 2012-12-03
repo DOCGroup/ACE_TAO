@@ -108,7 +108,8 @@ TAO::PG_Object_Group * TAO::PG_Group_Factory::create_group (
           tagged_component,
           type_id,
           the_criteria,
-          typeid_properties
+          typeid_properties,
+          *storable_factory_
           ),
         CORBA::NO_MEMORY());
     }

@@ -145,6 +145,18 @@ TAO::Storable_FlatFileStream::last_changed(void)
   return st.st_mtime;
 }
 
+void
+TAO::Storable_FlatFileStream::rewind (void)
+{
+  return ACE_OS::rewind(this->fl_);
+}
+
+bool
+TAO::Storable_FlatFileStream::flush (void)
+{
+  return ACE_OS::fflush(this->fl_);
+}
+
 TAO::Storable_Base &
 TAO::Storable_FlatFileStream::operator <<(
                                           const ACE_CString& str)
@@ -157,8 +169,7 @@ TAO::Storable_FlatFileStream::operator <<(
 }
 
 TAO::Storable_Base &
-TAO::Storable_FlatFileStream::operator >>(
-                                          ACE_CString& str)
+TAO::Storable_FlatFileStream::operator >>(ACE_CString& str)
 {
   ACE_TRACE("TAO::Storable_FlatFileStream::operator >>");
   int bufSize = 0;
@@ -194,6 +205,54 @@ TAO::Storable_FlatFileStream::operator >>(
     str = ACE_CString (str_array.get (), 0, false);
   }
 
+  return *this;
+}
+
+TAO::Storable_Base &
+TAO::Storable_FlatFileStream::operator << (int i)
+{
+  ACE_TRACE("TAO::Storable_FlatFileStream::operator <<");
+  ACE_OS::fprintf (this->fl_, "%d\n", i);
+  return *this;
+}
+
+TAO::Storable_Base &
+TAO::Storable_FlatFileStream::operator >> (int &i)
+{
+  ACE_TRACE("TAO::Storable_FlatFileStream::operator >>");
+  switch (fscanf (fl_, "%d\n", &i))
+    {
+    case 0:
+      this->setstate (badbit);
+      return *this;
+    case EOF:
+      this->setstate (eofbit);
+      return *this;
+    }
+  return *this;
+}
+
+TAO::Storable_Base &
+TAO::Storable_FlatFileStream::operator << (unsigned int i)
+{
+  ACE_TRACE("TAO::Storable_FlatFileStream::operator <<");
+  ACE_OS::fprintf (this->fl_, "%u\n", i);
+  return *this;
+}
+
+TAO::Storable_Base &
+TAO::Storable_FlatFileStream::operator >> (unsigned int &i)
+{
+  ACE_TRACE("TAO::Storable_FlatFileStream::operator >>");
+  switch (fscanf (fl_, "%u\n", &i))
+    {
+    case 0:
+      this->setstate (badbit);
+      return *this;
+    case EOF:
+      this->setstate (eofbit);
+      return *this;
+    }
   return *this;
 }
 

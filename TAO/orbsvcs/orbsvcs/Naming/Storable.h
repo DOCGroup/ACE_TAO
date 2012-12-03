@@ -79,64 +79,6 @@ class TAO_Naming_Serv_Export TAO_NS_Persistence_Global
   unsigned int counter_;
 };
 
-class TAO_Naming_Serv_Export TAO_Storable_Base : public TAO::Storable_Base
-{
-public:
-  TAO_Storable_Base();
-
-  virtual ~TAO_Storable_Base();
-
-  virtual void remove() = 0;
-
-  virtual int exists() = 0;
-
-  virtual int open () = 0;
-
-  virtual int close () = 0;
-
-  virtual int flock (int whence, int start, int len) = 0;
-
-  virtual int funlock (int whence, int start, int len) = 0;
-
-  virtual time_t last_changed(void) = 0;
-
-  virtual TAO_Storable_Base& operator << (
-              const TAO_NS_Persistence_Header& header) = 0;
-
-  virtual TAO_Storable_Base& operator << (
-              const TAO_NS_Persistence_Record& record) = 0;
-
-  virtual TAO_Storable_Base& operator >> (
-              TAO_NS_Persistence_Header& header)  = 0;
-
-  virtual TAO_Storable_Base& operator >> (
-              TAO_NS_Persistence_Record& record) = 0;
-
-  virtual TAO_Storable_Base& operator << (
-              const TAO_NS_Persistence_Global& global) = 0;
-
-  virtual TAO_Storable_Base& operator >> (
-              TAO_NS_Persistence_Global& global)  = 0;
-
-  virtual TAO_Storable_Base& operator << (const ACE_CString& str) = 0;
-
-  virtual TAO_Storable_Base& operator >> (ACE_CString& str) = 0;
-
-};
-
-class TAO_Naming_Serv_Export TAO_Naming_Service_Persistence_Factory
-{
-public:
-  TAO_Naming_Service_Persistence_Factory();
-
-  virtual ~TAO_Naming_Service_Persistence_Factory();
-
-  // Factory Methods
-
-  virtual TAO_Storable_Base *create_stream(const ACE_CString & file,
-                                           const ACE_TCHAR * mode) = 0;
-};
-
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)

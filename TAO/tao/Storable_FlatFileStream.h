@@ -62,9 +62,21 @@ namespace TAO
     /// Returns the last time an open file was changed
     virtual time_t last_changed(void);
 
+    virtual void rewind (void);
+
+    virtual bool flush (void);
+
     virtual Storable_Base& operator << (const ACE_CString& str);
 
     virtual Storable_Base& operator >> (ACE_CString& str);
+
+    virtual Storable_Base& operator << (int i);
+
+    virtual Storable_Base& operator >> (int &i);
+
+    virtual Storable_Base& operator << (unsigned int i);
+
+    virtual Storable_Base& operator >> (unsigned int &i);
 
   private:
     ACE_OS::ace_flock_t filelock_;
