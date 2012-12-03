@@ -52,10 +52,19 @@ namespace TAO
     /// of this class.
     void init (const char * mode);
 
+    /// Check if the parent is current with the last update.
+    virtual bool parent_obsolete (void);
+
+    /// Mark the parent as up to date
+    virtual void mark_parent_current (void);
+
+    /// Set the time the parent was last updated.
     virtual void set_parent_last_changed (const time_t & time) = 0;
 
+    /// Get the time the parent was last changed.
     virtual time_t get_parent_last_changed () = 0;
 
+    /// Load the data and update.
     virtual void create_child () = 0;
 
     virtual bool is_child_created () = 0;

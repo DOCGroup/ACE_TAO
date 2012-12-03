@@ -890,26 +890,27 @@ TAO_FT_Naming_Server::update_naming_context (
     ACE_DEBUG ((LM_DEBUG,
                "Context with unknown servant. name = %s, Change type = %i\n",
                context_info.context_name.in (), context_info.change_type));
-    // Nothing to be done, so return success
+    // This context is not currently active in this server so
+    // there is nothing to be done, so return success.
     return 0;
   }
 
-  TAO_Naming_Context* changed_context_servant = dynamic_cast<TAO_Naming_Context*> (servant.in ());
+  TAO_Naming_Context* changed_context_servant =
+    dynamic_cast<TAO_Naming_Context*> (servant.in ());
 
   if (changed_context_servant == 0)
   { // Another type of class was used as the servant. Should not happen.
     ACE_ERROR ((LM_ERROR,
-               "Invalid servant type registered with oid: %s", context_info.context_name.in ()));
+               "Invalid servant type registered with oid: %s",
+               context_info.context_name.in ()));
     return -1;
   }
 
-  // Print out a helpful message
-  CORBA::String_var changed_context = changed_context_servant->to_string (context_info.changed_context);
-  ACE_DEBUG ((LM_DEBUG,
-              "Updated Context: name = %s, path = %s, type = %i\n",
-               context_info.context_name.in (), changed_context.in (), context_info.change_type));
-
-  changed_context_servant->mark_dirty ();
+  ACE_DEBUG ((LM_DEBUG, "Marking the context dirty: %s\n",
+             context_info.context_name.in ()));
+  // Mark the local context dirty, so we will reload it next
+  // time it is modified or accessed.
+  changed_context_servant->mark_dirty (true);
 
   // Must remove the reference to this servant.
   //servant->_remove_ref ();
@@ -920,6 +921,7 @@ TAO_FT_Naming_Server::update_naming_context (
 /// Destructor.
 TAO_FT_Naming_Server::~TAO_FT_Naming_Server (void)
 {
+  // TODO: Clean up the naming manager
   // Clear out the static naming manager from the persistent naming context
   TAO_FT_Persistent_Naming_Context::set_naming_manager_impl (0);
 }

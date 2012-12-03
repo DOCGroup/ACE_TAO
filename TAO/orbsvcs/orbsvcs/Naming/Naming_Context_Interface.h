@@ -180,7 +180,7 @@ public:
   /**
    * Mark the implementation as dirty for replicated persistence support.
    */
-  void mark_dirty (void);
+  void mark_dirty (bool value);
 
   /// Returns the Default POA of this Servant object
   virtual PortableServer::POA_ptr _default_POA (void);
@@ -346,9 +346,15 @@ public:
   virtual PortableServer::POA_ptr _default_POA (void) = 0;
 
   /**
-   * Mark the implementation as dirty for replicated persistence support.
+   * Set the dirty flag for replicated persistence support.
    */
-  virtual void mark_dirty (void);
+  virtual void mark_dirty (bool value);
+
+  /**
+   * Query if the the implementation is dirty for replicated
+   * persistence support.
+   */
+  virtual bool is_dirty (void);
 
 };
 

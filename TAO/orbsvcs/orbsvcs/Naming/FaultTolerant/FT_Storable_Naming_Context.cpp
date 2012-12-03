@@ -58,15 +58,17 @@ TAO_FT_Storable_Naming_Context::resolve (const CosNaming::Name& n)
   CORBA::Object_var resolved_ref =
     TAO_Storable_Naming_Context::resolve(n);
 
+  ACE_DEBUG ((LM_DEBUG, "Resolving from context %s\n",
+              this->name_.c_str ()));
+
   ACE_GUARD_THROW_EX (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon, this->lock_,
     CORBA::INTERNAL ());
 
-  // Get the locations of the object group members and we will use them to
-  // do the load balancing
   try {
 
     // Make sure object is an object group.
-    // We will return the object reference all the way back out to the client if not
+    // We will return the object reference as is all the way back
+    // out to the client if not
     if (!this->is_object_group (resolved_ref.in ()))
       return resolved_ref._retn ();
 
@@ -110,30 +112,6 @@ TAO_FT_Storable_Naming_Context::resolve (const CosNaming::Name& n)
   return resolved_ref._retn ();
 }
 
-void
-TAO_FT_Storable_Naming_Context::bind (const CosNaming::Name& n,
-                                      CORBA::Object_ptr obj)
-{
-  // Invoke the parent class bind operation. This will bind
-  // the object to the name and store the naming context.
-  TAO_Storable_Naming_Context::bind (n, obj);
-
-  ACE_DEBUG ((LM_DEBUG,
-              "Binding object (name =%s) [%i].\n", n[0].id.in (), n.length ()));
-}
-
-CosNaming::NamingContext_ptr
-TAO_FT_Storable_Naming_Context::bind_new_context (const CosNaming::Name& n)
-{
-  ACE_TRACE("FT>bind_new_context");
-  CosNaming::NamingContext_ptr nc =
-    TAO_Storable_Naming_Context::bind_new_context (n);
-
-  ACE_DEBUG ((LM_DEBUG,
-              "Binding new context (name =%s) [%i].\n", n[0].id.in (), n.length ()));
-  return nc;
-}
-
 int
 TAO_FT_Storable_Naming_Context::propagate_update_notification (
                    FT_Naming::ChangeType change_type)
@@ -155,7 +133,7 @@ TAO_FT_Storable_Naming_Context::propagate_update_notification (
     context_info.change_type = change_type;
 
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("Forwarding notification of bind update for context: %s.\n"),
+                ACE_TEXT ("Invoking notify_updated_context: %s.\n"),
                 this->name_.c_str ()));
 
     // Notify the naming_manager of the updated context
