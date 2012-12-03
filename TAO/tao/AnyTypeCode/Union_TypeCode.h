@@ -93,21 +93,15 @@ namespace TAO
        */
       //@{
       virtual CORBA::Boolean equal_i (CORBA::TypeCode_ptr tc) const;
-      virtual CORBA::Boolean equivalent_i (CORBA::TypeCode_ptr tc
-                                           ) const;
-      virtual CORBA::TypeCode_ptr get_compact_typecode_i (
-        void) const;
+      virtual CORBA::Boolean equivalent_i (CORBA::TypeCode_ptr tc) const;
+      virtual CORBA::TypeCode_ptr get_compact_typecode_i (void) const;
       virtual char const * id_i (void) const;
       virtual char const * name_i (void) const;
       virtual CORBA::ULong member_count_i (void) const;
-      virtual char const * member_name_i (CORBA::ULong index
-                                          ) const;
-      virtual CORBA::TypeCode_ptr member_type_i (CORBA::ULong index
-                                                 ) const;
-      virtual CORBA::Any * member_label_i (CORBA::ULong index
-                                           ) const;
-      virtual CORBA::TypeCode_ptr discriminator_type_i (
-        void) const;
+      virtual char const * member_name_i (CORBA::ULong index) const;
+      virtual CORBA::TypeCode_ptr member_type_i (CORBA::ULong index) const;
+      virtual CORBA::Any * member_label_i (CORBA::ULong index) const;
+      virtual CORBA::TypeCode_ptr discriminator_type_i (void) const;
       virtual CORBA::Long default_index_i (void) const;
       //@}
 
