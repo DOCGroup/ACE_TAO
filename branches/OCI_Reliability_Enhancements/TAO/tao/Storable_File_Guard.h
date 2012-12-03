@@ -47,6 +47,9 @@ namespace TAO
     /// virtual functions are available.
     void release (void);
 
+    /// Get the underlying stream being used.
+    TAO::Storable_Base & peer ();
+
   protected:
 
     /// Should be called by constructors of derived classes

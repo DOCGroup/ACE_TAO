@@ -281,13 +281,6 @@ File_Open_Lock_and_Check::~File_Open_Lock_and_Check()
     }
 }
 
-TAO::Storable_Base &
-TAO_Storable_Naming_Context::
-File_Open_Lock_and_Check::peer ()
-{
-  return dynamic_cast<TAO::Storable_Base &>(*fl_);
-}
-
 bool
 TAO_Storable_Naming_Context::
 File_Open_Lock_and_Check::parent_obsolete (void)
