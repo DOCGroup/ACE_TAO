@@ -23,8 +23,6 @@ public:
 
   virtual TAO::Storable_Base * create_stream (const char * mode);
 
-  TAO::Storable_Base & peer ();
-
 private:
   Savable & savable_;
   bool child_created_;
@@ -41,12 +39,6 @@ Savable_File_Guard::Savable_File_Guard (Savable & savable, const char * mode)
 Savable_File_Guard::~Savable_File_Guard ()
 {
   this->release ();
-}
-
-TAO::Storable_Base &
-Savable_File_Guard::peer ()
-{
-  return *fl_;
 }
 
 void

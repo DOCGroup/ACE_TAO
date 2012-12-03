@@ -430,9 +430,6 @@ public:
   File_Open_Lock_and_Check(TAO_Storable_Naming_Context * context,
                            const char * mode);
 
-  /// Returns the stream to read/write on
-  TAO::Storable_Base & peer (void);
-
   ~File_Open_Lock_and_Check();
 
 protected:

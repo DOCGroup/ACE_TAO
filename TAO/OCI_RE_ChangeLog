@@ -1,3 +1,15 @@
+Mon Dec  3 16:46:58 UTC 2012  Byron Harris  <harrisb@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.h:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp:
+        * tao/Storable_File_Guard.h:
+        * tao/Storable_File_Guard.cpp:
+        * tests/Storable/Savable.cpp:
+
+          With simplified Storable_Base class hierarchy now in
+          place, move derived file guards peer() to base class since
+          dynamic casting is no longer needed.
+
 Mon Dec  3 16:15:40 UTC 2012  Byron Harris  <harrisb@ociweb.com>
 
         * tao/Dynamic_TP/Dynamic_TP_POA_Strategy.h:
