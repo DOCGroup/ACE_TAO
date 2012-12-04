@@ -1,3 +1,14 @@
+Tue Dec  4 19:19:34 UTC 2012  Byron Harris  <harrisb@ociweb.com>
+
+        * tao/Storable_File_Guard.cpp:
+
+          Don't try to load data from file that has just been
+          created.
+
+        * tests/Storable/Savable.cpp:
+
+          Changed to use term 'object' instead of 'child'.
+
 Tue Dec  4 14:40:34 UTC 2012  Brian Johnson  <johnsonb@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/Config_Backing_Store.cpp:

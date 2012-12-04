@@ -82,6 +82,8 @@ TAO::Storable_File_Guard::init(const char * mode)
     }
   else if ( ! this->is_loaded_from_stream () || (rwflags_ & mode_write) )
     {
+      bool file_has_data = fl_->exists();
+
       if (fl_->open() != 0)
         {
           delete fl_;
@@ -92,7 +94,7 @@ TAO::Storable_File_Guard::init(const char * mode)
       // unlocked/closed before we leave this class
       closed_ = 0;
 
-      if(! this->is_loaded_from_stream ())
+      if (file_has_data && ! this->is_loaded_from_stream ())
         {
           this->load_from_stream ();
         }
