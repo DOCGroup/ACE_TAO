@@ -280,7 +280,7 @@ Registry_Backing_Store::Registry_Backing_Store(const Options& opts,
 : Config_Backing_Store(opts, orb, win32registry_),
   win32registry_(setup_registry(opts.repository_erase()))
 #else
-: Config_Backing_Store(invalid_config_)
+: Config_Backing_Store(opts, orb, invalid_config_)
 #endif
 {
 #if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_REGISTRY)

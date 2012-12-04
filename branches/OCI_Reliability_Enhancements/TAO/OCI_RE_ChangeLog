@@ -1,3 +1,9 @@
+Tue Dec  4 14:40:34 UTC 2012  Brian Johnson  <johnsonb@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Config_Backing_Store.cpp:
+
+          Fixed compile error.
+
 Tue Dec  4 01:20:34 UTC 2012  f6  <f6@>
 
         * orbsvcs/Naming_Service/FT_Naming_Main.cpp:
