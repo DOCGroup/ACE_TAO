@@ -184,6 +184,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     level1[0].id = CORBA::string_dup ("level1_context");
     CosNaming::NamingContext_var level1_context;
     level1_context = root_context_1->bind_new_context (level1);
+
     for (i=0; i<o_breath; i++)
     {
       // Instantiate a dummy object and bind it under the new context.
@@ -191,12 +192,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       Test_Object_var obj1 = impl1->_this ();
       impl1->_remove_ref ();
 
-      CosNaming::Name obj_name;
-      obj_name.length (1);
+      level1.length (2);
       char wide_name[16];
       ACE_OS::sprintf(wide_name, "obj_%d", i);
-      obj_name[0].id = CORBA::string_dup (wide_name);
-      level1_context->bind (obj_name, obj1.in ());
+      level1[1].id = CORBA::string_dup (wide_name);
+      root_context_1->bind (level1, obj1.in ());
     }
 
   }

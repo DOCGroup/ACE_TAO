@@ -38,7 +38,6 @@ Naming_Svc_Shutdown::operator() (int which_signal)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  // -m 1  and -f <pers_file_name> are two that are required
   TAO_Naming_Service* naming_service = new TAO_FT_Naming_Service;
 
   // Stuff to insure that we're gracefully shut down...

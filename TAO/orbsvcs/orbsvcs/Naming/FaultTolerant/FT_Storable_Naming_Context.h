@@ -80,9 +80,11 @@ public:
                               const CosNaming::Name &n);
 
   /**
-   * Mark the implementation as dirty for replicated persistence support.
+   * Mark the implementation as stale for replicated persistence support.
    */
-  virtual void mark_dirty (bool is_dirty = 0);
+  virtual void stale (bool is_stale);
+
+  virtual bool stale (void);
 
   /**
    * An internal utility used to signal that this context was updated.
@@ -90,10 +92,9 @@ public:
    */
   void context_written (void);
 
-  virtual CORBA::Boolean is_dirty (void);
 protected:
   static TAO_FT_Naming_Manager *naming_manager_;
-  CORBA::Boolean is_dirty_;
+  bool stale_;
 
 };
 

@@ -178,9 +178,10 @@ public:
   virtual CORBA::Object_ptr resolve_str (const char * n);
 
   /**
-   * Mark the implementation as dirty for replicated persistence support.
+   * Mark the implementation stale state for replicated
+   * persistence support.
    */
-  void mark_dirty (bool value);
+  void stale (bool value);
 
   /// Returns the Default POA of this Servant object
   virtual PortableServer::POA_ptr _default_POA (void);
@@ -346,15 +347,15 @@ public:
   virtual PortableServer::POA_ptr _default_POA (void) = 0;
 
   /**
-   * Set the dirty flag for replicated persistence support.
+   * Set the stale flag for replicated persistence support.
    */
-  virtual void mark_dirty (bool value);
+  virtual void stale (bool value);
 
   /**
-   * Query if the the implementation is dirty for replicated
+   * Query if the the implementation is stale for replicated
    * persistence support.
    */
-  virtual bool is_dirty (void);
+  virtual bool stale (void);
 
 };
 
