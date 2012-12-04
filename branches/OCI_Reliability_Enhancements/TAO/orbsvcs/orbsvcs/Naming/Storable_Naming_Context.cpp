@@ -285,10 +285,10 @@ bool
 TAO_Storable_Naming_Context::
 File_Open_Lock_and_Check::parent_obsolete (void)
 {
-  // If the dirty flag is set, context is obsolete.
+  // If the stale flag is set, context is obsolete.
   // Otherwise check the last changed flag against
   // file.
-  return (context_->is_dirty () ||
+  return (context_->stale () ||
           (fl_->last_changed () > this->get_object_last_changed ()));
 }
 
@@ -296,8 +296,9 @@ void
 TAO_Storable_Naming_Context::
 File_Open_Lock_and_Check::mark_parent_current (void)
 {
-  // Reset the dirty flag
-  context_->mark_dirty (false);
+  // Reset the stale flag
+  context_->stale (false);
+  // Set the last update time to the file last update time
   this->set_object_last_changed (fl_->last_changed ());
 }
 

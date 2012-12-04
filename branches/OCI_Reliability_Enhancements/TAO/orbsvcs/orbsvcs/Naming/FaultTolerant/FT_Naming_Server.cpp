@@ -60,13 +60,13 @@
 
 /// Default Constructor.
 TAO_FT_Naming_Server::TAO_FT_Naming_Server (void)
-  : replica_id_(0),
+  : replica_id_ (0),
     naming_manager_ (),
     replication_manager_ (0),
-    naming_manager_ior_file_name_(0),
-    replication_manager_ior_file_name_(0),
-    naming_manager_persistence_file_name_(0),
-    use_object_group_persistence_(0)
+    naming_manager_ior_file_name_ (0),
+    naming_manager_persistence_file_name_ (0),
+    use_object_group_persistence_ (0),
+    is_primary_ (false)
 {
 }
 
@@ -236,6 +236,11 @@ TAO_FT_Naming_Server::init_replication_manager_with_orb (int argc, ACE_TCHAR *ar
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);
 
+  // If redundancy is not requested, then do not initialize the
+  // replication manager
+  if (!this->use_redundancy_)
+    return 0;
+
   int result = 0;
 
   try {
@@ -282,13 +287,9 @@ TAO_FT_Naming_Server::init_replication_manager_with_orb (int argc, ACE_TCHAR *ar
 
     if (this->replica_id_ == 0)
     {
-      // Create the default replica name
-      this->replica_id_ = ACE_OS::strdup ("Replica_P");
-#if 0
-    ACE_ERROR_RETURN ((LM_ERROR,
-                      "No replica id provided.\n"),
-                      -1);
-#endif
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "No replica id provided for FT_Naming.\n"),
+                        -1);
     }
 
     // We use a different POA, otherwise the user would have to change
@@ -324,7 +325,7 @@ TAO_FT_Naming_Server::init_replication_manager_with_orb (int argc, ACE_TCHAR *ar
     this->replication_manager_poa_->activate_object_with_id (id.in (),
       this->replication_manager_);
 
-    this->naming_manager_ior_ =
+    this->replication_manager_ior_ =
       orb->object_to_string (
         this->replication_manager_poa_->id_to_reference (id.in ()));
 
@@ -343,36 +344,114 @@ TAO_FT_Naming_Server::init_replication_manager_with_orb (int argc, ACE_TCHAR *ar
     }
     else
     {
-      adapter->bind (this->replica_id_, this->naming_manager_ior_.in ());
+      adapter->bind (this->replica_id_, this->replication_manager_ior_.in ());
     }
 
-    if (this->replica_peer_ior_ != 0)
-    { // A peer replica was provided. Provide the reference to the
-      // ReplicationManager
-      CORBA::Object_var peer_obj =
-        orb->string_to_object (this->replica_peer_ior_.in ());
-      if (CORBA::is_nil (peer_obj.in ()))
+    ACE_CString primary_file_name (this->persistence_file_name_);
+    primary_file_name += "/ns_primary.ior";
+
+    ACE_CString backup_file_name (this->persistence_file_name_);
+    backup_file_name += "/ns_backup.ior";
+
+    if (this->is_primary_)
+      { // We are the primary
+        ACE_DEBUG ((LM_DEBUG, "Is a primary\n"));
+        // TODO: Write out the ior in the persistence directory
+        // and look for the backup IOR file. If one is
+        // there, use it. If not, the backup will eventually register.
+        CORBA::String_var replication_ior = naming_service_ior ();
+        this->write_replica_ior_file (primary_file_name.c_str (),
+                                      this->replication_manager_ior_.in ());
+
+#if 0
+        // Read the backup IOR file
+        CORBA::Object_var backup_ior;
+        ACE_DEBUG ((LM_DEBUG, "Reading backup ior file\n"));
+        if ((ACE_OS::access (primary_file_name.c_str (),
+                             R_OK) == 0) &&
+            this->read_replica_ior_file (backup_file_name.c_str (),
+                                         backup_ior.out ()) == 0)
+          {// Success in reading backup IOR file
+            // Store the backup reference as our peer
+            FT_Naming::ReplicationManager_var peer_ref =
+              FT_Naming::ReplicationManager::_narrow (backup_ior.in ());
+
+            ACE_DEBUG ((LM_DEBUG, "Narrowing IOR\n"));
+            if (CORBA::is_nil (peer_ref.in ()))
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 ACE_TEXT ("invalid ior <%s>\n"),
-                                 this->replica_peer_ior_.in ()),
+                                 ACE_TEXT ("IOR in file %s is not a FT_Naming::ReplicationManager\n"),
+                                 primary_file_name.c_str ()),
                                 -1);
-      FT_Naming::ReplicationManager_var peer_ref =
-        FT_Naming::ReplicationManager::_narrow (peer_obj.in ());
 
-      if (CORBA::is_nil (peer_ref.in ()))
+            ACE_DEBUG ((LM_DEBUG, "Registering with backup.\n"));
+            // Register with the backup
+            int registration_result =
+              this->replication_manager_->register_with_peer_replica (peer_ref.in ());
+
+            if (registration_result != 0)
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 ACE_TEXT ("IOR is not a FT_Naming::ReplicationManager <%s>\n"),
-                                 this->replica_peer_ior_.in ()),
+                                 ACE_TEXT ("Unable to register as primary with backup\n")),
+                                -1);
+          }
+        else
+          {
+            // Could not get the replica from the IOR file, which is
+            // OK. The backup will register with us in the future.
+            ACE_DEBUG ((LM_DEBUG,
+                        "No Replica IOR file. Waiting for registration.\n"));
+          }
+#endif
+      }
+    else
+      { // We are the backup
+        // Get the ior file for the primary from the
+        // persistence directory. If not there, fail.
+        // Open the ns_primary.ior file in the persistence directory
+        // Read it in and set as the replica_peer_ior_
+        // Register with the primary
+        CORBA::String_var replication_ior =
+          CORBA::string_dup (replication_manager_ior_);
+        CORBA::Object_var primary_ref;
+
+        ACE_DEBUG ((LM_DEBUG, "Writing replica ior\n"));
+        this->write_replica_ior_file (backup_file_name.c_str (),
+                                      replication_manager_ior ());
+
+        ACE_DEBUG ((LM_DEBUG, "Reading primary ior file\n"));
+
+        // If the file exists and it contains an IOR for a replica
+        if ((ACE_OS::access (primary_file_name.c_str (),
+                             R_OK) == 0) &&
+            (this->read_replica_ior_file (primary_file_name.c_str (),
+                                          primary_ref.out ()) != -1))
+          {
+            ACE_DEBUG ((LM_DEBUG, "Storing the primary reference ior\n"));
+            // Store the primary reference as our peer
+            FT_Naming::ReplicationManager_var peer_ref =
+              FT_Naming::ReplicationManager::_narrow (primary_ref.in ());
+
+            if (CORBA::is_nil (peer_ref.in ()))
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("IOR in file %s is not a FT_Naming::ReplicationManager\n"),
+                                 primary_file_name.c_str ()),
                                 -1);
 
-      int registration_result = this->replication_manager_->register_with_peer_replica (peer_ref.in ());
-      if (registration_result != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                          ACE_TEXT ("Unable to register with peer <%s>\n"),
-                          this->replica_peer_ior_.in ()),
-                          -1);
-    }
-
+            ACE_DEBUG ((LM_DEBUG, "Registering with primary.\n"));
+            // Register with the backup
+            int registration_result =
+              this->replication_manager_->register_with_peer_replica (peer_ref.in ());
+            if (registration_result == -1)
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "Unable to register with the primary"),
+                                -1);
+          }
+        else
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("No primary IOR available.  Exiting.")),
+                              -1);
+          }
+      }
   }
   catch (const CORBA::Exception& ex)
     {
@@ -381,25 +460,7 @@ TAO_FT_Naming_Server::init_replication_manager_with_orb (int argc, ACE_TCHAR *ar
       return -1;
     }
 
-  if (this->replication_manager_ior_ != 0)
-    {
-      FILE *iorf = ACE_OS::fopen (this->replication_manager_ior_file_name_, ACE_TEXT("w"));
-      if (iorf == 0)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT("Unable to open %s for writing:(%u) %p\n"),
-                             this->replication_manager_ior_file_name_,
-                             ACE_ERRNO_GET,
-                             ACE_TEXT("TAO_FT_Naming_Server::init_replication_manager_with_orb")),
-                            -1);
-        }
-
-      CORBA::String_var str = this->naming_manager_ior ();
-
-      ACE_OS::fprintf (iorf, "%s\n", str.in ());
-      ACE_OS::fclose (iorf);
-    }
-
+  // Success
   return 0;
 }
 
@@ -408,11 +469,12 @@ int
 TAO_FT_Naming_Server::parse_args (int argc,
                                   ACE_TCHAR *argv[])
 {
-#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT)
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("b:do:p:s:f:m:z:r:u:v:g:i:j:"));
-#else
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("b:do:p:s:f:m:z:"));
-#endif /* TAO_HAS_MINIMUM_POA */
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("b:do:p:s:f:m:z:r:u:v:g:"));
+
+  // Define the arguments for primary and backup
+  get_opts.long_option ("primary", ACE_Get_Opt::NO_ARG);
+  get_opts.long_option ("backup", ACE_Get_Opt::NO_ARG);
+  bool primary_or_backup_defined = false;
 
   int c;
   int size;
@@ -449,12 +511,6 @@ TAO_FT_Naming_Server::parse_args (int argc,
         break;
       case 'p':
         this->pid_file_name_ = get_opts.opt_arg ();
-        break;
-      case 'i':
-        this->replica_id_ = get_opts.opt_arg ();
-        break;
-      case 'j':
-        this->replica_peer_ior_ = get_opts.opt_arg ();
         break;
       case 's':
         size = ACE_OS::atoi (get_opts.opt_arg ());
@@ -509,6 +565,22 @@ TAO_FT_Naming_Server::parse_args (int argc,
       case 'n':  // the file name to same the object group persistence info
         this->pid_file_name_ = get_opts.opt_arg ();
         break;
+      case 0:   // A long option was found
+        {
+          const char* long_option = get_opts.long_option ();
+          if (ACE_OS::strcmp (long_option, "backup") == 0)
+            {
+              this->replica_id_ = "Backup";
+              primary_or_backup_defined = true;
+            }
+          else if (ACE_OS::strcmp (long_option, "primary") == 0)
+            {
+              this->replica_id_ = "Primary";
+              this->is_primary_= true;
+              primary_or_backup_defined = true;
+            }
+        }
+        break;
       case '?':
       default:
 #if !defined (ACE_NLOGGING)
@@ -526,11 +598,11 @@ TAO_FT_Naming_Server::parse_args (int argc,
 #endif /* !ACE_NLOGGING */
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("usage:  %s ")
+                           ACE_TEXT ("--primary")
+                           ACE_TEXT ("--backup")
                            ACE_TEXT ("-d ")
                            ACE_TEXT ("-o <name_svc_ior_output_file> ")
                            ACE_TEXT ("-g <naming_mgr_ior_output_file> ")
-                           ACE_TEXT ("-i <replica_id> ")
-                           ACE_TEXT ("-j <peer_replica_ior> ")
                            ACE_TEXT ("-p <pid_file_name> ")
                            ACE_TEXT ("-s <context_size> ")
                            ACE_TEXT ("-b <base_address> ")
@@ -545,10 +617,16 @@ TAO_FT_Naming_Server::parse_args (int argc,
 
   if (f_opt_used + u_opt_used + r_opt_used > 1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Only one persistence option can be passed")
+                       ACE_TEXT ("Only one persistence option can be passed.\n")
                        ACE_TEXT ("\n")),
                       -1);
-
+  if (!primary_or_backup_defined)
+    { // Neither primary nor back was defined so we will
+      // become a primary
+      this->replica_id_ = "Primary";
+      this->is_primary_= true;
+      primary_or_backup_defined = true;
+    }
   return 0;
 }
 
@@ -852,6 +930,62 @@ TAO_FT_Naming_Server::shutdown (void)
 
 }
 
+int
+TAO_FT_Naming_Server::write_replica_ior_file (const char* replica_file_name,
+                                              const char* replica_ior_string)
+{
+  FILE *iorf = ACE_OS::fopen (replica_file_name,
+                              ACE_TEXT("w"));
+  if (iorf == 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT("Unable to open %s for writing:(%u) %p\n"),
+                         replica_file_name,
+                         ACE_ERRNO_GET,
+                         ACE_TEXT("TAO_FT_Naming_Server::write_replica_ior_file")),
+                        -1);
+    }
+
+  int result =
+    ACE_OS::fprintf (iorf, "%s\n", replica_ior_string);
+  ACE_OS::fclose (iorf);
+
+  return result;
+}
+
+int
+TAO_FT_Naming_Server::read_replica_ior_file (const char* replica_file_name,
+                                             CORBA::Object_out obj_ref)
+{
+
+  ACE_CString replica_ior_string ("file://");
+  replica_ior_string += replica_file_name;
+  ACE_DEBUG ((LM_DEBUG, "IOR = %s\n", replica_ior_string.c_str()));
+
+  CORBA::Object_ptr object =
+    this->orb_->string_to_object (replica_ior_string.c_str ());
+
+  ACE_DEBUG ((LM_DEBUG, "IOR = %s\n", replica_ior_string.c_str()));
+
+  if (CORBA::is_nil (object))
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("invalid ior in file <%s>\n"),
+                       replica_file_name),
+                      -1);
+
+  obj_ref = object;
+  return 0;
+}
+
+
+/// Return the IOR for the registered replication manager
+char*
+TAO_FT_Naming_Server::replication_manager_ior (void)
+{
+  return CORBA::string_dup (this->replication_manager_ior_.in ());
+}
+
+
 /// Return the IOR for the registered object group manager
 char*
 TAO_FT_Naming_Server::naming_manager_ior (void)
@@ -909,13 +1043,12 @@ TAO_FT_Naming_Server::update_naming_context (
              context_info.context_name.in ()));
   // Mark the local context dirty, so we will reload it next
   // time it is modified or accessed.
-  changed_context_servant->mark_dirty (true);
+  changed_context_servant->stale (true);
 
   // Must remove the reference to this servant.
   //servant->_remove_ref ();
   return 0;
 }
-
 
 /// Destructor.
 TAO_FT_Naming_Server::~TAO_FT_Naming_Server (void)

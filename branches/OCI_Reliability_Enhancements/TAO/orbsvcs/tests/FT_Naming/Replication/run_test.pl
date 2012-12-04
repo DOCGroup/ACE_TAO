@@ -32,15 +32,10 @@ $ns_orb_port2 = 10002 + $test->RandomPort ();
 $ns_endpoint1 = "iiop://$hostname:$ns_orb_port1";
 $ns_endpoint2 = "iiop://$hostname:$ns_orb_port2";
 
-
-$primary_name = "Replica_Primary";
-$primary_ior = "corbaloc::$hostname:$ns_orb_port1/$primary_name";
-$backup_name = "Replica_Backup";
-$backup_ior = "corbaloc::$hostname:$ns_orb_port1/$backup_name";
-
-
 $iorfile1 = "ns1.ior";
 $iorfile2 = "ns2.ior";
+$primary_iorfile = "ns_primary.ior";
+$naming_persistence_dir = "NameService";
 
 ## Allow the user to determine where the persistent file will be located
 ## just in case the current directory is not suitable for locking.
@@ -67,11 +62,11 @@ print "INFO: Running the test in ", getcwd(), "\n";
 
 # Make sure that the directory to use to hold the naming contexts exists
 # and is cleaned out
-if ( ! -d "NameService" ) {
-    mkdir (NameService, 0777);
+if ( ! -d "$naming_persistence_dir" ) {
+    mkdir ($naming_persistence_dir, 0777);
     }
 else {
-    chdir "NameService";
+    chdir $naming_persistence_dir;
     opendir(THISDIR, ".");
     @allfiles = grep(!/^\.\.?$/, readdir(THISDIR));
     closedir(THISDIR);
@@ -84,25 +79,25 @@ else {
 # Run two Naming Servers and one client.  Client uses iors
 # in files to find the individual copies of the Naming Servers.
 
-my $args = "-ORBEndPoint $ns_endpoint1 -o $test_iorfile1 -m 0 -r NameService -i $primary_name";
+my $args = "-ORBEndPoint $ns_endpoint1 -o $test_iorfile1 -m 0 -r $naming_persistence_dir --primary";
 my $prog = "$startdir/../../../Naming_Service/tao_ft_naming";
 
 print STDERR "Starting Primary: $prog $args\n";
 
 $NS1 = $test->CreateProcess ("$prog", "$args");
 
-$test->DeleteFile ("iorfile1");
+$test->DeleteFile ("$iorfile1");
 
 $NS1->Spawn ();
 
-if ($test->WaitForFileTimed ($iorfile1,
-                               $test->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$test_iorfile1>\n";
+if ($test->WaitForFileTimed ($naming_persistence_dir,
+                             $test->ProcessStartWaitInterval()) == -1) {
+    print STDERR "ERROR: cannot find file <$naming_persistence_dir>\n";
     $NS1->Kill (); $NS1->TimedWait (1);
     exit 1;
 }
 
-$args = "-ORBEndPoint $ns_endpoint2 -o $test_iorfile2 -m 0 -r NameService -i $backup_name -j $primary_ior";
+$args = "-ORBEndPoint $ns_endpoint2 -o $test_iorfile2 -m 0 -r $naming_persistence_dir --backup";
 
 $prog = "$startdir/../../../Naming_Service/tao_ft_naming";
 
@@ -110,26 +105,21 @@ print STDERR "Starting Backup: $prog $args\n";
 
 $NS2 = $test->CreateProcess ("$prog", "$args");
 
-$test->DeleteFile ("iorfile2");
+$test->DeleteFile ("$iorfile2");
 
 $NS2->Spawn ();
 
 if ($test->WaitForFileTimed ($iorfile2,
-                               $test->ProcessStartWaitInterval()) == -1) {
+                             $test->ProcessStartWaitInterval()) == -1) {
     print STDERR "ERROR: cannot find file <$test_iorfile2>\n";
     $NS2->Kill (); $NS2->TimedWait (1);
     exit 1;
 }
 
-## Even though the ior file is present, the redundant naming service
-## isn't really ready to go (most of the time).  Sleeping 1 second
-## allows the redundant naming service to get to a usable state.
-sleep(1);
-
 $args = "-p file://$test_iorfile1 -q file://$test_iorfile2";
 $prog = "$startdir/client";
 
-print STDERR "Starting Client: $prog $args";
+print STDERR "Starting Client: $prog $args\n";
 
 $CL = $test->CreateProcess ("$prog", "$args");
 

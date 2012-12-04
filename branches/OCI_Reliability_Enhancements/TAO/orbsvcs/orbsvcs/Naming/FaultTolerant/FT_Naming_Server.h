@@ -64,6 +64,17 @@ public:
   /// Shut down the TAO_Naming_Service; you must still call fini().
   void shutdown (void);
 
+  /// Write the replica IOR string to the specified file
+  int write_replica_ior_file (const char* replica_file_name,
+                              const char* replica_ior_string);
+
+  /// Read the replica from the specified file
+  int read_replica_ior_file (const char* replica_file_name,
+                             CORBA::Object_out obj_ref);
+
+  /// Returns the IOR of the naming manager.
+  char* replication_manager_ior (void);
+
   /// Returns the IOR of the naming manager.
   char * naming_manager_ior (void);
 
@@ -90,9 +101,6 @@ protected:
   /// File to output the Object Group Manager IOR.
   const ACE_TCHAR *naming_manager_ior_file_name_;
 
-  /// File to output the Object Group Manager IOR.
-  const ACE_TCHAR *replication_manager_ior_file_name_;
-
   /// Path to the file to be used to store/read in Object Group Manager
   /// persistent state.
   const ACE_TCHAR *naming_manager_persistence_file_name_;
@@ -114,6 +122,7 @@ protected:
   int use_object_group_persistence_;
   ACE_CString object_group_dir_;
 
+  bool is_primary_;
  };
 
 #endif /* TAO_FT_NAMING_SERVER_H */

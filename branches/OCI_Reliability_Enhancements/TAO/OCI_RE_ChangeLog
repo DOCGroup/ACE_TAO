@@ -1,3 +1,29 @@
+Tue Dec  4 01:20:34 UTC 2012  f6  <f6@>
+
+        * orbsvcs/Naming_Service/FT_Naming_Main.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:
+
+          Reworked startup with primary and backup arguments.
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context.cpp:
+        * orbsvcs/orbsvcs/Naming/Naming_Context_Interface.h:
+        * orbsvcs/orbsvcs/Naming/Naming_Context_Interface.cpp:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp:
+
+          Changed to use 'stale' terminology instead of 'dirty'
+
+        * orbsvcs/tests/FT_Naming/Replication/client.cpp:
+        * orbsvcs/tests/FT_Naming/Replication/run_test.pl:
+
+          Changed arguments to use primary and backup
+
+        * orbsvcs/tests/Redundant_Naming/client.cpp:
+
+          Modified to use compound name for bind for more
+          robust test.
+
 Mon Dec  3 19:13:51 UTC 2012  Brian Johnson  <johnsonb@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
@@ -12,9 +38,9 @@ Mon Dec  3 19:13:51 UTC 2012  Brian Johnson  <johnsonb@ociweb.com>
         * orbsvcs/ImplRepo_Service/Config_Backing_Store.cpp:
         * orbsvcs/ImplRepo_Service/XML_Backing_Store.h:
         * orbsvcs/ImplRepo_Service/XML_Backing_Store.cpp:
-        
+
           Changes from Locator_Repository refactoring.
-        
+
         * orbsvcs/ImplRepo_Service/ImR_Locator.idl:
 
           Added to the update interface and removed the replica locator

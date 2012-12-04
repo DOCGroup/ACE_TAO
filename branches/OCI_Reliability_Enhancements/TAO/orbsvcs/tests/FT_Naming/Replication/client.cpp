@@ -192,18 +192,17 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       Test_Object_var obj1 = impl1->_this ();
       impl1->_remove_ref ();
 
-      CosNaming::Name obj_name;
-      obj_name.length (1);
+      level1.length (2);
       char wide_name[16];
       ACE_OS::sprintf(wide_name, "obj_%d", i);
-      obj_name[0].id = CORBA::string_dup (wide_name);
-      level1_context->bind (obj_name, obj1.in ());
+      level1[1].id = CORBA::string_dup (wide_name);
+      root_context_1->bind (level1, obj1.in ());
 
       // See if the newly bound object is available in the
       // replica
       ACE_DEBUG ((LM_DEBUG, "resolving on replica2\n"));
       CORBA::Object_var obj1_on_replica =
-        root_context_2->resolve (obj_name);
+        root_context_2->resolve (level1);
       if (CORBA::is_nil (obj1_on_replica.in ()))
         {
           ACE_ERROR ((LM_ERROR,

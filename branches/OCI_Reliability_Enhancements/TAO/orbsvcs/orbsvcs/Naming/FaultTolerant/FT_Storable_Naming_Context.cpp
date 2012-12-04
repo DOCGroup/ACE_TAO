@@ -29,7 +29,7 @@ TAO_FT_Storable_Naming_Context::TAO_FT_Storable_Naming_Context (CORBA::ORB_ptr o
                                  cxt_factory,
                                  pers_factory,
                                  persistence_directory),
-    is_dirty_ (0)
+    stale_ (false)
 {
 
 }
@@ -155,16 +155,16 @@ TAO_FT_Storable_Naming_Context::set_naming_manager (TAO_FT_Naming_Manager *mgr_i
 }
 
 void
-TAO_FT_Storable_Naming_Context::mark_dirty (CORBA::Boolean is_dirty)
+TAO_FT_Storable_Naming_Context::stale (bool is_stale)
 {
-  this->is_dirty_ = is_dirty;
+  this->stale_ = is_stale;
 }
 
 
-CORBA::Boolean
-TAO_FT_Storable_Naming_Context::is_dirty (void)
+bool
+TAO_FT_Storable_Naming_Context::stale (void)
 {
-  return is_dirty_;
+  return stale_;
 }
 
 

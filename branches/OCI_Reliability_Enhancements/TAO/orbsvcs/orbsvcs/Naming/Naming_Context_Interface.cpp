@@ -462,9 +462,9 @@ TAO_Naming_Context::resolve_str (const char * n)
 }
 
 void
-TAO_Naming_Context::mark_dirty (bool value)
+TAO_Naming_Context::stale (bool value)
 {
-  this->impl_->mark_dirty (value);
+  this->impl_->stale (value);
 }
 
 TAO_Naming_Context_Impl::~TAO_Naming_Context_Impl (void)
@@ -472,14 +472,14 @@ TAO_Naming_Context_Impl::~TAO_Naming_Context_Impl (void)
 }
 
 void
-TAO_Naming_Context_Impl::mark_dirty (bool value)
+TAO_Naming_Context_Impl::stale (bool value)
 {
   ACE_UNUSED_ARG (value);
   // Default implementation is no-op
 }
 
 bool
-TAO_Naming_Context_Impl::is_dirty (void)
+TAO_Naming_Context_Impl::stale (void)
 {
   // Default implementation is to reply false
   return false;
