@@ -1,9 +1,33 @@
 $Id$
 
-Use Cases
+This program tests the following fault tolerant naming service implementation
+use cases:
+
+1) Validate that a client can seamlessly connect to the alternate server of a
+	 server naming server pair after the other server has been terminated.
+
+2) Validate that a client can seamlessly invoke naming operations on either
+	 server instanance.
+
+3) Validate that repository data written by the name service is available upon
+   startup.
+
+Run the application as follows:
+
+$$TAO_ROOT/orbsvcs/Naming_Service/tao_ft_naming -o <file1.ior> -ORBListenEndPoints iiop://<hostname>:<port1> -r <directory>
+$$TAO_ROOT/orbsvcs/Naming_Service/tao_ft_naming -o <file2.ior> -ORBListenEndPoints iiop://<hostname>:<port2> -r <directory>
+
+Example client with failover list
+$$ACE_ROOT/bin/tao_nsgroup -ORBDefaultInitRef corbaloc:iiop:<hostname>:<port1>,iiop:<hostname>:<port2> group_list
+
+Example client for first instance only
+$$ACE_ROOT/bin/tao_nsgroup -ORBDefaultInitRef corbaloc:iiop:<hostname>:<port1> group_list
+
+Example client for second instance only
+$$ACE_ROOT/bin/tao_nsgroup -ORBDefaultInitRef corbaloc:iiop:<hostname>:<port2> group_list
+
 
 Failover Test
-[UC-1] tests for Requirement FT-7,FT-12 and FT-13.
 1. Run two instances of tao_ft_naming service on the same host but different ports.
 2. Verify that tao_nslist and tao_nsgroup with a corbaloc reference list can access the tao_ft_naming service
 3. Kill the primary tao_ft_naming server
@@ -11,7 +35,6 @@ Failover Test
 5. Restart the first tao_ft_naming server instance and verify it is now the redundant service
 
 Persistance Test
-[UC-2] tests for Requirement FT-8 and FT-9
 1. Run one instance of tao_ft_naming service
 2. Create a new context with tao_nsadd
 3. Create a new object group and add a member with tao_nsgroup and bind the object group to a name
@@ -21,29 +44,9 @@ Persistance Test
 7. Verify the new name, object group and member are in the tao_ft_naming repository.
 
 Redundant Equivalancy Test
-[UC-3] tests for Requirement FT-14 and FT-15
 1. Run two instances of tao_ft_naming service on the same host but different ports.
 2. Verify that tao_nslist and tao_nsgroup with a corbaloc primary reference can access the primary tao_ft_naming service
 3. Create a new context with tao_nsadd on the primary tao_ft_naming service
 4. Create a new object group and add a member with tao_nsgroup and bind the object group to a name on the secondary tao_ft_naming service
 5. Verify the new name, object group and member are in the tao_ft_naming repository
 
-This program tests the basic FT IOGR implementation. The aim is to set
-a primary server and see whether the client gives preference to
-contact a primary for its first invocation. When the primary is killed
-it contacts the secondary for next invocation.
-
-Two copies of the server are started. A manager is then to merge these
-two iors and designate the  second as primary. The merged IOR is then
-written to another file. This merged IOR is then used to make
-invocations on the server.
-
-Run the application as follows:
-
-$./server -o <file1.ior>
-$./server -o <file2.ior>
-$./Manager -a file://<file1.ior> -b file://<file2.ior> -c <output.ior>
-
-Due to the transparent reinvocation functionality for FT CORBA, the
-application would switch to the new profile without throwing an
-exception to the application.
