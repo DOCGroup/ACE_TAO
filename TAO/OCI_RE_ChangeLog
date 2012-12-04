@@ -1,3 +1,11 @@
+Tue Dec  4 23:04:01 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
+
+        * orbsvcs/tests/FT_Naming/FaultTolerance/run_test.pl:
+        * utils/nsgroup/run_test.pl:
+
+        Updated tests with tao_ft_naming command line arguments --primary
+        and --backup
+
 Tue Dec  4 19:49:56 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:

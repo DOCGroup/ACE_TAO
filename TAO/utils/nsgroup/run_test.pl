@@ -28,13 +28,14 @@ my $nsdel        = PerlACE::TestTarget::create_target (5) || die "Create target 
 ## The LoadManager needs to register signals with the ORB's reactor (on
 ## Windows only) and thus can not use the TP Reactor since it doesn't
 ## support that kind of thing.  So, we swith to the Select MT Reactor.
-$NM_conf = $name_manager->LocalFile ("windows" . $PerlACE::svcconf_ext);
+my $NM_conf = $name_manager->LocalFile ("windows" . $PerlACE::svcconf_ext);
 
 my $name_mgr_iorbase = "nm.ior";
 my $name_srv_iorbase = "ns.ior";
 my $stdout_file = "test.out";
 my $stderr_file = "test.err";
 
+my $name_manager_hostname = $name_manager->HostName ();
 my $name_manager_iorfile = $name_manager->LocalFile ($name_mgr_iorbase);
 my $name_server_iorfile = $name_manager->LocalFile ($name_srv_iorbase);
 
@@ -50,25 +51,56 @@ $client->DeleteFile($name_srv_iorbase);
 $client->DeleteFile($stdout_file);
 $client->DeleteFile($stderr_file);
 
+my $NAME_CONTEXT_DIRECTORY = "NameService";
+
+=cut
 $NM = $name_manager->CreateProcess ("../../orbsvcs/Naming_Service/tao_ft_naming",
         "-f persist.dat -g $name_manager_iorfile -o $name_server_iorfile " .
         "-ORBDebugLevel $debug_level " .
         "-ORBDottedDecimalAddresses 1" .
         ($^O eq 'MSWin32' ? " -ORBSvcConf $NM_conf" : ''));
+=cut
 
-$NM_REF       = "-ORBInitRef NameService=file://$name_srv_client_iorfile";
-$RM_REF       = "-ORBInitRef NamingManager=file://$naming_mgr_client_iorfile";
-$NS_REF       = "--ns file://$name_srv_client_iorfile";
-$DEBUG_LEVEL  = "-ORBDebugLevel $debug_level";
-$LOAD_ARG     = "$NM_REF $RM_REF $DEBUG_LEVEL";
+my $NM = $name_manager->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_ft_naming",
+        "--primary -r NameService -g $name_manager_iorfile -o $name_server_iorfile " .
+        "-ORBDebugLevel $debug_level " .
+        "-ORBDottedDecimalAddresses 1" .
+        ($^O eq 'MSWin32' ? " -ORBSvcConf $NM_conf" : ''));
 
-$CL   = $client->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_nsgroup");
-$NSLIST = $nslist->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_nslist");
-$NSADD  = $nsadd->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_nsadd");
-$NSDEL  = $nsdel->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_nsdel");
+my $NM_REF       = "-ORBInitRef NameService=file://$name_srv_client_iorfile";
+my $RM_REF       = "-ORBInitRef NamingManager=file://$naming_mgr_client_iorfile";
+my $NS_REF       = "--ns file://$name_srv_client_iorfile";
+my $DEBUG_LEVEL  = "-ORBDebugLevel $debug_level";
+my $LOAD_ARG     = "$NM_REF $RM_REF $DEBUG_LEVEL";
 
-$POSITIVE_TEST_RESULT = 0;
-$NEGATIVE_TEST_RESULT = 1;
+my $CL   = $client->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_nsgroup");
+my $NSLIST = $nslist->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_nslist");
+my $NSADD  = $nsadd->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_nsadd");
+my $NSDEL  = $nsdel->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_nsdel");
+
+my $POSITIVE_TEST_RESULT = 0;
+my $NEGATIVE_TEST_RESULT = 1;
+
+# Make sure that the directory to use to hold the naming contexts exists
+# and is cleaned out
+sub init_naming_context_directory($$)
+{
+    my $target = shift;
+    my $directory_name = shift;
+
+    if ( ! -d $directory_name ) {
+        mkdir (NameService, 0777);
+    } else {
+        chdir $directory_name;
+        opendir(THISDIR, ".");
+        @allfiles = grep(!/^\.\.?$/, readdir(THISDIR));
+        closedir(THISDIR);
+        foreach $tmp (@allfiles){
+            $target->DeleteFile ($tmp);
+        }
+        chdir "..";
+    }
+}
 
 sub cat_file($)
 {
@@ -242,7 +274,7 @@ sub run_clients ()
         $POSITIVE_TEST_RESULT);
 
     run_client (
-        "member_add -group ieee -location 127.0.0.1 -ior file://$naming_mgr_client_iorfile",
+        "member_add -group ieee -location $name_manager_hostname -ior file://$naming_mgr_client_iorfile",
         $POSITIVE_TEST_RESULT);
 
     run_nsadd("$NS_REF"." --name iso --ctx");
@@ -268,7 +300,7 @@ sub run_clients ()
     run_nslist("$NS_REF");
 
     run_client (
-        "member_add -group ieee -location 127.0.0.1 -ior file://$naming_mgr_client_iorfile",
+        "member_add -group ieee -location $name_manager_hostname -ior file://$naming_mgr_client_iorfile",
         $NEGATIVE_TEST_RESULT);
 
     run_client (
@@ -276,11 +308,11 @@ sub run_clients ()
         $POSITIVE_TEST_RESULT);
 
     run_client (
-        "member_show -group ieee -location 127.0.0.1",
+        "member_show -group ieee -location $name_manager_hostname",
         $POSITIVE_TEST_RESULT);
 
     run_client (
-        "member_remove -group ieee -location 127.0.0.1",
+        "member_remove -group ieee -location $name_manager_hostname",
         $POSITIVE_TEST_RESULT);
 
     run_client (
@@ -313,6 +345,8 @@ print STDERR "\n";
 
 print STDERR "This test will check the methods of the tao_nsgroup\n";
 print STDERR "\n";
+
+init_naming_context_directory ($name_manager, $NAME_CONTEXT_DIRECTORY );
 
 ################################################################################
 ## Start tao_ft_naming Service
