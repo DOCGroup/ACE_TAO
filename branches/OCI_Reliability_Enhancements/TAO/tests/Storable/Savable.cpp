@@ -25,13 +25,13 @@ public:
 
 private:
   Savable & savable_;
-  bool child_created_;
+  bool object_created_;
 };
 
 Savable_File_Guard::Savable_File_Guard (Savable & savable, const char * mode)
   : TAO::Storable_File_Guard(false)
   , savable_(savable)
-  , child_created_(false)
+  , object_created_(false)
 {
   this->init(mode);
 }
@@ -57,13 +57,13 @@ void
 Savable_File_Guard::load_from_stream ()
 {
   savable_.load (this->peer ());
-  child_created_ = true;
+  object_created_ = true;
 }
 
 bool
 Savable_File_Guard::is_loaded_from_stream ()
 {
-  return child_created_;
+  return object_created_;
 }
 
 TAO::Storable_Base *
@@ -84,6 +84,7 @@ Savable::Savable (TAO::Storable_Factory & storable_factory)
   else
     {
       Savable_File_Guard fg(*this, "wc");
+      this->write (fg.peer ());
     }
 }
 
