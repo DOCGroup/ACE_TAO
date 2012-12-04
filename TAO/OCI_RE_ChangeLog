@@ -1,3 +1,14 @@
+Tue Dec  4 19:49:56 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:
+
+        Changed IOR name from ObjectGroupManager to NamingManager
+
+        * orbsvcs/tests/FT_Naming/FaultTolerance/README:
+        * orbsvcs/tests/FT_Naming/FaultTolerance/run_test.pl:
+
+        Updated to conform to use case test document
+
 Tue Dec  4 19:19:34 UTC 2012  Byron Harris  <harrisb@ociweb.com>
 
         * tao/Storable_File_Guard.cpp:

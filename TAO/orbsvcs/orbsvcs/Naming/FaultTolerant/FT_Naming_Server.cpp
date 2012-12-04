@@ -225,7 +225,7 @@ TAO_FT_Naming_Server::init_naming_manager_with_orb (int argc, ACE_TCHAR *argv []
   else
   {
     CORBA::String_var ior = this->naming_manager_ior ();
-    adapter->bind ("ObjectGroupManager", ior.in ());
+    adapter->bind ("NamingManager", ior.in ());
   }
   return 0;
 }
