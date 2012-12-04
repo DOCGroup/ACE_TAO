@@ -256,9 +256,15 @@ sub FailoverTest()
     print STDERR "\n\n==== Failover Test =======================================\n";
     init_naming_context_directory ($server, $NAME_CONTEXT_DIRECTORY );
 
+    # // Start the primary. It will write the replication ior to a file in the persistence dir.
+    # tao_ft_naming --primary -ORBEndpoint <primary_hostname:port> -r <nameService_persistence_dir>
+
+    # // Start the backup. Reads the primary ior from the persistence dir. Writes the multi-profile ior to naming_ior_filename.
+    # tao_ft_naming --backup -ORBEndpoint <primary_hostname:port> -r <nameService_persistence_dir> -o <naming_ior_filename>
+
     # Run two Naming Servers
-    my $ns1_args = "-ORBDebugLevel $debug_level -ORBListenEndPoints $ns_endpoint1 -o $server_iorfile1 -m 0 -r $NAME_CONTEXT_DIRECTORY";
-    my $ns2_args = "-ORBDebugLevel $debug_level -ORBListenEndPoints $ns_endpoint2 -o $server_iorfile2 -m 0 -r $NAME_CONTEXT_DIRECTORY";
+    my $ns1_args = "--primary -ORBDebugLevel $debug_level -ORBListenEndPoints $ns_endpoint1 -o $server_iorfile1 -m 0 -r $NAME_CONTEXT_DIRECTORY";
+    my $ns2_args = "--backup -ORBDebugLevel $debug_level -ORBListenEndPoints $ns_endpoint2 -o $server_iorfile2 -m 0 -r $NAME_CONTEXT_DIRECTORY";
 
     $NS1 = $server->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_ft_naming", "$ns1_args");
     $NS2 = $server->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_ft_naming", "$ns2_args");
@@ -362,7 +368,7 @@ sub PersistanceTest ()
     init_naming_context_directory ($server, $NAME_CONTEXT_DIRECTORY );
 
     # Run two Naming Servers
-    my $ns_args = "-ORBDebugLevel $debug_level -ORBListenEndPoints $ns_endpoint1 -o $server_iorfile1 -g $server_nm_iorfile -m 0 -r $NAME_CONTEXT_DIRECTORY";
+    my $ns_args = "--primary -ORBDebugLevel $debug_level -ORBListenEndPoints $ns_endpoint1 -o $server_iorfile1 -g $server_nm_iorfile -m 0 -r $NAME_CONTEXT_DIRECTORY";
 
     ##1. Run one instance of tao_ft_naming service
     $NS1 = $server->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_ft_naming", "$ns_args");
@@ -448,8 +454,8 @@ sub RedundantEquivalancyTest()
     init_naming_context_directory ($server, $NAME_CONTEXT_DIRECTORY);
 
     # Run two Naming Servers
-    my $ns1_args = "-ORBDebugLevel $debug_level -ORBListenEndPoints $ns_endpoint1 -o $server_iorfile1 -m 0 -r $NAME_CONTEXT_DIRECTORY";
-    my $ns2_args = "-ORBDebugLevel $debug_level -ORBListenEndPoints $ns_endpoint2 -o $server_iorfile2 -m 0 -r $NAME_CONTEXT_DIRECTORY";
+    my $ns1_args = "--primary -ORBDebugLevel $debug_level -ORBListenEndPoints $ns_endpoint1 -o $server_iorfile1 -m 0 -r $NAME_CONTEXT_DIRECTORY";
+    my $ns2_args = "--backup -ORBDebugLevel $debug_level -ORBListenEndPoints $ns_endpoint2 -o $server_iorfile2 -m 0 -r $NAME_CONTEXT_DIRECTORY";
 
     $NS1 = $server->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_ft_naming", "$ns1_args");
     $NS2 = $server->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_ft_naming", "$ns2_args");
