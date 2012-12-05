@@ -1,3 +1,20 @@
+Wed Dec  5 23:01:07 UTC 2012  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Replication_Manager.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:
+
+          Updates to combine object references and write out combined object
+          reference to a file.
+
+        * orbsvcs/orbsvcs/Naming/Naming_Server.cpp:
+
+          Revised error message for writing ior to file.
+
+        * orbsvcs/tests/FT_Naming/Replication/run_test.pl:
+
+          Modified test script to use new arguments for iors.
+
 Wed Dec  5 18:00:43 UTC 2012  Brian Johnson  <johnsonb@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/ImR_Locator.idl:
@@ -10,7 +27,7 @@ Wed Dec  5 18:00:43 UTC 2012  Brian Johnson  <johnsonb@ociweb.com>
 
           Changed "-y" option to "-primary" and "-backup" and removed
           "-i".
-        
+
         * orbsvcs/ImplRepo_Service/Shared_Backing_Store.h:
         * orbsvcs/ImplRepo_Service/Shared_Backing_Store.cpp:
 
@@ -41,7 +58,7 @@ Wed Dec  5 16:29:17 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
 
         Simplified targets and additional cleanup
 
-Wed Dec  5 01:42:34 UTC 2012  f6  <f6@>
+Wed Dec  5 01:42:34 UTC 2012  Kevin Stanley  <stanleyk@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_NamingReplication.idl:
 
@@ -107,7 +124,7 @@ Tue Dec  4 14:40:34 UTC 2012  Brian Johnson  <johnsonb@ociweb.com>
 
           Fixed compile error.
 
-Tue Dec  4 01:20:34 UTC 2012  f6  <f6@>
+Tue Dec  4 01:20:34 UTC 2012  Kevin Stanley  <stanleyk@ociweb.com>
 
         * orbsvcs/Naming_Service/FT_Naming_Main.cpp:
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.h:
@@ -251,7 +268,7 @@ Mon Dec  3 14:44:43 UTC 2012  Byron Harris  <harrisb@ociweb.com>
 
           Removed these files.
 
-Mon Dec  3 04:13:48 UTC 2012  f6  <f6@>
+Mon Dec  3 04:13:48 UTC 2012  Kevin Stanley  <stanleyk@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context.h:
@@ -326,7 +343,7 @@ Fri Nov 30 23:05:32 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
 
         Added FT_Naming Fault Tolerance Test
 
-Fri Nov 30 22:55:31 UTC 2012  f6  <f6@>
+Fri Nov 30 22:55:31 UTC 2012  Kevin Stanley  <stanleyk@ociweb.com>
 
         * bin/tao_other_tests.lst:
 
@@ -473,7 +490,7 @@ Wed Nov 28 23:17:07 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
 
           Updated interface to pass more information for context replication.
 
-Wed Nov 28 17:37:37 UTC 2012  f6  <f6@>
+Wed Nov 28 17:37:37 UTC 2012  Kevin Stanley  <stanleyk@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:
 
@@ -481,7 +498,7 @@ Wed Nov 28 17:37:37 UTC 2012  f6  <f6@>
 
           Added support for -r option.
 
-Wed Nov 28 02:34:36 UTC 2012  f6  <f6@>
+Wed Nov 28 02:34:36 UTC 2012  Kevin Stanley  <stanleyk@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp:
 
@@ -511,7 +528,7 @@ Tue Nov 27 21:26:34 UTC 2012  Brian Johnson  <johnsonb@ociweb.com>
 
           Fixed error of using private hash map copy constructor.
 
-Tue Nov 27 19:14:37 UTC 2012  f6  <f6@>
+Tue Nov 27 19:14:37 UTC 2012  Kevin Stanley  <stanleyk@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Replication_Manager.h:
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Replication_Manager.cpp:
