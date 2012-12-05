@@ -55,7 +55,7 @@ public:
     ACE_Equal_To<ACE_CString>,
     ACE_Null_Mutex> AIMap;
 
-  Locator_Repository(const Options& opts, const CORBA::ORB_var& orb);
+  Locator_Repository(const Options& opts, CORBA::ORB_ptr orb);
 
   virtual ~Locator_Repository();
 
@@ -113,14 +113,14 @@ public:
 
   static ACE_CString lcase (const ACE_CString& s);
 
-  int init(const PortableServer::POA_var& root_poa,
-           const PortableServer::POA_var& imr_poa,
-           const CORBA::String_var& this_ior);
+  int init(PortableServer::POA_ptr root_poa,
+           PortableServer::POA_ptr imr_poa,
+           const char* this_ior);
 
   bool multicast() const;
 
 protected:
-  virtual int init_repo(const PortableServer::POA_var& imr_poa);
+  virtual int init_repo(PortableServer::POA_ptr imr_poa);
 
   enum SyncOp { SYNC_ADD, SYNC_REMOVE };
   virtual int sync_load(const ACE_CString& name, SyncOp sync_op,
@@ -132,14 +132,14 @@ protected:
 
   virtual int persistent_remove(const ACE_CString& name, bool activator);
 
-  virtual int report_ior(const PortableServer::POA_var& root_poa,
-                         const PortableServer::POA_var& imr_poa);
+  virtual int report_ior(PortableServer::POA_ptr root_poa,
+                         PortableServer::POA_ptr imr_poa);
 
-  void report(const IORTable::Table_var& ior_table,
+  void report(IORTable::Table_ptr ior_table,
               const char* name,
-              const CORBA::String_var& imr_ior);
+              const char* imr_ior);
 
-  int setup_multicast (ACE_Reactor* reactor, const CORBA::String_var& imr_ior);
+  int setup_multicast (ACE_Reactor* reactor, const char* imr_ior);
   void teardown_multicast();
 
   const Options& opts_;
@@ -166,7 +166,7 @@ class No_Backing_Store : public Locator_Repository
 {
 public:
   No_Backing_Store(const Options& opts,
-                   const CORBA::ORB_var& orb);
+                   CORBA::ORB_ptr orb);
 
   virtual ~No_Backing_Store();
 

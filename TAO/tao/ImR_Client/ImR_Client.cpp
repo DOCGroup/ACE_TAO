@@ -38,7 +38,16 @@ namespace TAO
         }
 
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "Notifying ImR of startup\n"));
+        {
+          ACE_CString imr_info;
+          if (TAO_debug_level > 1)
+            {
+              CORBA::ORB_ptr orb = poa->orb_core().orb();
+              CORBA::String_var ior = orb->object_to_string (imr.in ());
+              imr_info = ACE_CString(" IMR IOR=") + ior.in();
+            }
+          ACE_DEBUG ((LM_DEBUG, "Notifying ImR of startup%s\n", imr_info.c_str()));
+        }
 
       ImplementationRepository::Administration_var imr_locator;
 

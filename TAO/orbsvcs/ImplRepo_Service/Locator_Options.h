@@ -97,8 +97,9 @@ public:
 
   bool unregister_if_address_reused (void) const;
 
-  /// The obj key for the replica
-  const ACE_TString& replica_obj_key(void) const;
+  /// If the repository is replicated, this ImR_Locator is
+  /// the primary profile in the fault tolerant ImR.
+  bool primary_replica(void) const;
 
 private:
   /// Parses and pulls out arguments for the ImR
@@ -154,7 +155,7 @@ private:
   bool unregister_if_address_reused_;
 
   /// The obj key for the replica
-  ACE_TString replica_obj_key_;
+  bool primary_replica_;
 };
 
 #endif

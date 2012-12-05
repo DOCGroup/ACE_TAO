@@ -37,7 +37,7 @@ class XML_Backing_Store : public Locator_Repository
 {
 public:
   XML_Backing_Store(const Options& opts,
-                    const CORBA::ORB_var& orb,
+                    CORBA::ORB_ptr orb,
                     bool suppress_erase = false);
 
   virtual ~XML_Backing_Store();
@@ -45,7 +45,7 @@ public:
   virtual const char* repo_mode() const;
 
 protected:
-  virtual int init_repo(const PortableServer::POA_var& imr_poa);
+  virtual int init_repo(PortableServer::POA_ptr imr_poa);
 
   virtual int persistent_update(const Server_Info_Ptr& info, bool add);
 

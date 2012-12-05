@@ -45,8 +45,9 @@ class Shared_Backing_Store
 {
 public:
   typedef ImplementationRepository::UpdatePushNotification_var Replica_var;
+  typedef ImplementationRepository::UpdatePushNotification_ptr Replica_ptr;
   Shared_Backing_Store(const Options& opts,
-                       const CORBA::ORB_var& orb);
+                       CORBA::ORB_ptr orb);
 
   virtual ~Shared_Backing_Store();
 
@@ -59,11 +60,10 @@ public:
   virtual void register_replica(
     ImplementationRepository::UpdatePushNotification_ptr replica,
     char*& ft_imr_ior,
-    ImplementationRepository::SequenceNum_out seq_num,
-    CORBA::Boolean_out peer_primary);
+    ImplementationRepository::SequenceNum_out seq_num);
 
 protected:
-  virtual int init_repo(const PortableServer::POA_var& imr_poa);
+  virtual int init_repo(PortableServer::POA_ptr imr_poa);
 
   virtual int persistent_update(const Server_Info_Ptr& info, bool add);
 
@@ -74,8 +74,8 @@ protected:
   virtual int sync_load (const ACE_CString& name, SyncOp sync_op,
                          bool activator);
 
-  virtual int report_ior(const PortableServer::POA_var& root_poa,
-                         const PortableServer::POA_var& imr_poa);
+  virtual int report_ior(PortableServer::POA_ptr root_poa,
+                         PortableServer::POA_ptr imr_poa);
 
   char* locator_service_ior(const char* peer_ior) const;
 
@@ -113,11 +113,13 @@ private:
     <LocatorListings_XMLHandler, ACE_Null_Mutex> XMLHandler_Ptr;
 
   ACE_CString make_filename(const ACE_CString& name,
-                            const bool activator) const;
+                            bool activator,
+                            bool relative = false) const;
+  ACE_CString replica_ior_filename(bool peer_ior_file) const;
   XMLHandler_Ptr get_listings(bool only_changes) const;
   int persistent_load(bool only_changes);
   int persist_listings() const;
-  int connect_replicas(const Replica_var& this_replica);
+  int connect_replicas(Replica_ptr this_replica);
 
   /// sync up this repository with the replica_, returns true if the
   /// caller needs to perform an incremental sync
@@ -129,7 +131,7 @@ private:
 
   ImplementationRepository::SequenceNum seq_num_;
   ImplementationRepository::SequenceNum replica_seq_num_;
-  bool primary_;
+  const bool primary_;
   CORBA::String_var non_ft_imr_ior_;
   static const char* IMR_REPLICA[2];
 };

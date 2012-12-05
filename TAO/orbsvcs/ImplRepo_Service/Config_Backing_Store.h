@@ -35,13 +35,13 @@ class Config_Backing_Store : public Locator_Repository
 {
 public:
   Config_Backing_Store(const Options& opts,
-                       const CORBA::ORB_var& orb,
+                       CORBA::ORB_ptr orb,
                        ACE_Configuration& config);
 
   virtual ~Config_Backing_Store();
 
 protected:
-  virtual int init_repo(const PortableServer::POA_var& imr_poa);
+  virtual int init_repo(PortableServer::POA_ptr imr_poa);
 
   virtual int persistent_update(const Server_Info_Ptr& info, bool add);
 
@@ -69,7 +69,7 @@ class Heap_Backing_Store : public Config_Backing_Store
 {
 public:
   Heap_Backing_Store(const Options& opts,
-                     const CORBA::ORB_var& orb);
+                     CORBA::ORB_ptr orb);
 
   virtual ~Heap_Backing_Store();
 
@@ -91,7 +91,7 @@ class Registry_Backing_Store : public Config_Backing_Store
 {
 public:
   Registry_Backing_Store(const Options& opts,
-                         const CORBA::ORB_var& orb);
+                         CORBA::ORB_ptr orb);
 
   virtual ~Registry_Backing_Store();
 

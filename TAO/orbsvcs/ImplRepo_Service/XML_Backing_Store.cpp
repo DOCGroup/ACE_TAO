@@ -14,7 +14,7 @@
 #include "ACEXML/common/XML_Util.h"
 
 XML_Backing_Store::XML_Backing_Store(const Options& opts,
-                                     const CORBA::ORB_var& orb,
+                                     CORBA::ORB_ptr orb,
                                      bool suppress_erase)
 : Locator_Repository(opts, orb),
   filename_(opts.persist_file_name())
@@ -149,7 +149,7 @@ XML_Backing_Store::persist (FILE* fp, const Activator_Info& info,
 }
 
 int
-XML_Backing_Store::init_repo(const PortableServer::POA_var& )
+XML_Backing_Store::init_repo(PortableServer::POA_ptr )
 {
   // ignore load return since files don't have to exist
   load(this->filename_);

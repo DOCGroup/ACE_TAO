@@ -1,3 +1,40 @@
+Wed Dec  5 18:00:43 UTC 2012  Brian Johnson  <johnsonb@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator.idl:
+
+          Changed to pass back the fault tolerant imr when registering
+          replicas.
+
+        * orbsvcs/ImplRepo_Service/Locator_Options.h:
+        * orbsvcs/ImplRepo_Service/Locator_Options.cpp:
+
+          Changed "-y" option to "-primary" and "-backup" and removed
+          "-i".
+        
+        * orbsvcs/ImplRepo_Service/Shared_Backing_Store.h:
+        * orbsvcs/ImplRepo_Service/Shared_Backing_Store.cpp:
+
+          Changed to expect the other replica to write an ior file to the
+          shared directory for discovering the other replica.
+
+        * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+        * tao/ImR_Client/ImR_Client.cpp:
+
+          Adding logging.
+
+        * orbsvcs/tests/ImplRepo/run_test.pl:
+
+          Adding to fault tolerance tests.
+
+        * orbsvcs/tests/Notify/Bug_1884_Regression/common.h:
+        * orbsvcs/tests/Notify/Bug_1884_Regression/filter.cpp:
+        * orbsvcs/tests/Notify/Bug_3688_Regression/common.h:
+        * orbsvcs/tests/Notify/Persistent_Filter/Filter.cpp:
+        * orbsvcs/tests/ImplRepo/RestartServer/MessengerClient.cpp:
+        * orbsvcs/tests/ImplRepo/RestartServer/Terminator.cpp:
+
+          Cleaning up compiler errors for vcexpress.
+
 Wed Dec  5 16:29:17 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
 
         * utils/nsgroup/run_test.pl:

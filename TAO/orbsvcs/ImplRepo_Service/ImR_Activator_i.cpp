@@ -76,6 +76,13 @@ ImR_Activator_i::register_with_imr (ImplementationRepository::Activator_ptr acti
 
       if (!CORBA::is_nil (locator_.in ()))
         {
+          if (this->debug_ > 9)
+            {
+              CORBA::String_var ior = orb_->object_to_string (obj.in ());
+              ACE_DEBUG((LM_DEBUG, "ImR Activator: ImplRepoService ior=<%s>\n",
+                ior.in()));
+            }
+
           this->registration_token_ =
             locator_->register_activator (name_.c_str (), activator);
 
@@ -84,6 +91,8 @@ ImR_Activator_i::register_with_imr (ImplementationRepository::Activator_ptr acti
 
           return;
         }
+      else if (this->debug_ > 1)
+        ACE_DEBUG((LM_DEBUG, "ImR Activator: ImplRepoService not found\n"));
     }
   catch (const CORBA::Exception& ex)
     {

@@ -287,7 +287,7 @@ FilterClient::get_EC ()
   const int TIMEOUT = 20;
   while (i < TIMEOUT)
   {
-    CosNotifyChannelAdmin::ChannelIDSeq_var ids
+    const CosNotifyChannelAdmin::ChannelIDSeq_var ids
       = notify_factory_->get_all_channels ();
 
     if (ids->length () > 0)
@@ -350,7 +350,7 @@ FilterClient::create_supplieradmin ()
 void
 FilterClient::get_supplieradmin ()
 {
-  CosNotifyChannelAdmin::AdminIDSeq_var ids
+  const CosNotifyChannelAdmin::AdminIDSeq_var ids
     = ec_->get_all_supplieradmins();
 
   ACE_ASSERT (ids->length () == 1);
@@ -429,7 +429,7 @@ FilterClient::create_consumeradmin ()
 void
 FilterClient::get_consumeradmin ()
 {
-  CosNotifyChannelAdmin::AdminIDSeq_var ids
+  const CosNotifyChannelAdmin::AdminIDSeq_var ids
     = ec_->get_all_consumeradmins();
 
   ACE_ASSERT (ids->length () == 2);
@@ -460,7 +460,7 @@ FilterClient::verify_filter (CosNotifyFilter::FilterAdmin_var& admin,
   ACE_UNUSED_ARG (constraint_expr);
   // only used to validate assert, which is
   // compiled out for nondebug builds.
-  CosNotifyFilter::FilterIDSeq_var ids
+  const CosNotifyFilter::FilterIDSeq_var ids
     = admin->get_all_filters ();
 
   ACE_ASSERT (ids->length () == 1);

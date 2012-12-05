@@ -24,7 +24,7 @@ static const char* WIN32_REG_KEY = "Software\\TAO\\ImplementationRepository";
 #endif
 
 Config_Backing_Store::Config_Backing_Store(const Options& opts,
-                                           const CORBA::ORB_var& orb,
+                                           CORBA::ORB_ptr orb,
                                            ACE_Configuration& config)
 : Locator_Repository(opts, orb),
   config_(config),
@@ -214,7 +214,7 @@ Config_Backing_Store::persistent_update(const Activator_Info_Ptr& info, bool )
 }
 
 int
-Config_Backing_Store::init_repo(const PortableServer::POA_var& )
+Config_Backing_Store::init_repo(PortableServer::POA_ptr )
 {
   if (status_ != 0)
     {
@@ -232,7 +232,7 @@ Config_Backing_Store::init_repo(const PortableServer::POA_var& )
 }
 
 Heap_Backing_Store::Heap_Backing_Store(const Options& opts,
-                                       const CORBA::ORB_var& orb)
+                                       CORBA::ORB_ptr orb)
 : Config_Backing_Store(opts, orb, heap_),
   filename_(opts.persist_file_name())
 {
@@ -275,7 +275,7 @@ static HKEY setup_registry(const bool start_clean)
 #endif
 
 Registry_Backing_Store::Registry_Backing_Store(const Options& opts,
-                                               const CORBA::ORB_var& orb)
+                                               CORBA::ORB_ptr orb)
 #if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_REGISTRY)
 : Config_Backing_Store(opts, orb, win32registry_),
   win32registry_(setup_registry(opts.repository_erase()))

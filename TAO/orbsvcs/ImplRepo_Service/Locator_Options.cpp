@@ -164,9 +164,15 @@ Options::parse_args (int &argc, ACE_TCHAR *argv[])
           this->persist_file_name_ = shifter.get_current ();
           this->repo_mode_ = REPO_XML_FILE;
         }
-      else if (ACE_OS::strcasecmp (shifter.get_current (),
-                                   ACE_TEXT ("-y")) == 0)
+      else if ((ACE_OS::strcasecmp (shifter.get_current (),
+                                    ACE_TEXT ("-primary")) == 0) ||
+               (ACE_OS::strcasecmp (shifter.get_current (),
+                                    ACE_TEXT ("-backup")) == 0))
         {
+          this->primary_replica_ =
+            (ACE_OS::strcasecmp (shifter.get_current (),
+                                 ACE_TEXT ("-primary")) == 0);
+
           shifter.consume_arg ();
 
           if (!shifter.is_anything_left () || shifter.get_current ()[0] == '-')
@@ -218,19 +224,6 @@ Options::parse_args (int &argc, ACE_TCHAR *argv[])
           this->ping_interval_ =
             ACE_Time_Value (0, 1000 * ACE_OS::atoi (shifter.get_current ()));
         }
-      else if (ACE_OS::strcasecmp (shifter.get_current (),
-                                   ACE_TEXT ("-i")) == 0)
-        {
-          shifter.consume_arg ();
-
-          if (!shifter.is_anything_left () || shifter.get_current ()[0] == '-')
-            {
-              ACE_ERROR ((LM_ERROR, "Error: -i option needs a replica-obj-key\n"));
-              this->print_usage ();
-              return -1;
-            }
-          this->replica_obj_key_ = shifter.get_current();
-        }
       else
         {
           shifter.ignore_arg ();
@@ -273,27 +266,32 @@ void
 Options::print_usage (void) const
 {
   ACE_ERROR ((LM_ERROR,
-              "Usage:\n"
-              "\n"
-              "ImplRepo_Service [-c cmd] [-d 0|1|2] [-e] [-m] [-o file]\n"
-              " [-r|-p file|-x file|-y dir [-i obj-key]] [-s] [-t secs] [-v secs]\n"
-              "  -c command  Runs nt service commands ('install' or 'remove')\n"
-              "  -d level    Sets the debug level (default 1)\n"
-              "  -e          Erase the persisted repository at startup\n"
-              "  -l          Lock the database\n"
-              "  -m          Turn on multicast\n"
-              "  -o file     Outputs the ImR's IOR to a file\n"
-              "  -p file     Use file for storing/loading settings\n"
-              "  -x file     Use XML file for storing/loading settings\n"
-              "  -y dir      Use shared XML files for storing/loading settings\n"
-              "              in the provided directory\n"
-              "  -i obj-key  Replicate the ImplRepo (must be accompanied by\n"
-              "              \"-y\" flag)\n"
-              "  -r          Use the registry for storing/loading settings\n"
-              "  -s          Run as a service\n"
-              "  -t secs     Server startup timeout.(Default=60s)\n"
-              "  -v msecs    Server verification interval.(Default=10s)\n"
-              ));
+    "Usage:\n"
+    "\n"
+    "ImplRepo_Service [-c cmd] [-d 0|1|2] [-e] [-m] [-o file]\n"
+    " [-r|-p file|-x file|-primary dir|-backup dir] [-s] [-t secs]\n"
+    " [-v secs]\n"
+    "  -c command     Runs nt service commands ('install' or 'remove')\n"
+    "  -d level       Sets the debug level (default 1)\n"
+    "  -e             Erase the persisted repository at startup\n"
+    "  -l             Lock the database\n"
+    "  -m             Turn on multicast\n"
+    "  -o file        Outputs the ImR's IOR to a file\n"
+    "  -p file        Use file for storing/loading settings\n"
+    "  -x file        Use XML file for storing/loading settings\n"
+    "  -primary dir   Replicate the ImplRepo as the primary and use\n"
+    "                 shared XML files for storing/loading settings\n"
+    "                 in the provided directory (backup can already\n"
+    "                 have been started)\n"
+    "  -backup dir    Replicate the ImplRepo as the backup and use\n"
+    "                 shared XML files for storing/loading settings\n"
+    "                 in the provided directory (primary must already\n"
+    "                 have been started)\n"
+    "  -r             Use the registry for storing/loading settings\n"
+    "  -s             Run as a service\n"
+    "  -t secs        Server startup timeout.(Default=60s)\n"
+    "  -v msecs       Server verification interval.(Default=10s)\n"
+    ));
 }
 
 int
@@ -352,14 +350,14 @@ Options::save_registry_options ()
     (LPBYTE) &tmp, sizeof (DWORD));
   ACE_ASSERT (err == ERROR_SUCCESS);
 
-  tmp = multicast_ ? 1 : 0;
+  tmp = this->multicast_ ? 1 : 0;
   err = ACE_TEXT_RegSetValueEx (key, ACE_TEXT("Multicast"), 0, REG_DWORD,
     (LPBYTE) &tmp, sizeof (DWORD));
   ACE_ASSERT (err == ERROR_SUCCESS);
 
-  err = ACE_TEXT_RegSetValueEx (key, ACE_TEXT("ReplicaObjKey"), 0, REG_SZ,
-    (LPBYTE) this->replica_obj_key_.c_str (),
-    this->replica_obj_key_.length () + 1);
+  tmp = this->primary_replica_ ? 1 : 0;
+  err = ACE_TEXT_RegSetValueEx (key, ACE_TEXT("ReplicaPrimary"), 0, REG_DWORD,
+    (LPBYTE) tmp, sizeof (DWORD));
   ACE_ASSERT (err == ERROR_SUCCESS);
 
   err = ::RegCloseKey (key);
@@ -473,14 +471,14 @@ Options::load_registry_options ()
       this->persist_file_name_ = tmpstr;
     }
 
-  sz = sizeof(tmpstr);
-  err = ACE_TEXT_RegQueryValueEx (key, ACE_TEXT("ReplicaObjKey"), 0, &type,
-    (LPBYTE) tmpstr, &sz);
+  tmp = 0;
+  sz = sizeof(tmp);
+  err = ACE_TEXT_RegQueryValueEx (key, ACE_TEXT("ReplicaPrimary"), 0, &type,
+    (LPBYTE) &tmp, &sz);
   if (err == ERROR_SUCCESS)
     {
-      ACE_ASSERT (type == REG_SZ);
-      tmpstr[sz - 1] = '\0';
-      this->replica_obj_key_ = tmpstr;
+      ACE_ASSERT (type == REG_DWORD);
+      this->primary_replica_ = tmp != 0;
     }
 
   err = ::RegCloseKey (key);
@@ -565,7 +563,7 @@ Options::unregister_if_address_reused (void) const
   return this->unregister_if_address_reused_;
 }
 
-const ACE_TString&
-Options::replica_obj_key(void) const {
-  return this->replica_obj_key_;
+bool
+Options::primary_replica(void) const {
+  return this->primary_replica_;
 }

@@ -68,12 +68,12 @@ get_event_channel(CORBA::ORB_ptr orb)
   else {
     try
     {
-      ec = factory->get_event_channel(channelIdSeq[0]);
+      ec = factory->get_event_channel(channelIdSeq.in()[0]);
     }
     catch (CosNotifyChannelAdmin::ChannelNotFound&)
     {
       std::cerr << "ChannelNotFound: "
-        << channelIdSeq[0] << std::endl;
+        << channelIdSeq.in()[0] << std::endl;
       exit(1);
     }
 
