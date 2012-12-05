@@ -44,15 +44,25 @@ TAO_FT_Naming_Replication_Manager::initialize (CORBA::ORB_ptr orb,
   this->reference_ = FT_Naming::ReplicationManager::_narrow (obj);
 }
 
-
-void
-TAO_FT_Naming_Replication_Manager::register_replica (
-    ::FT_Naming::ReplicationManager_ptr replica)
+FT_Naming::ReplicaInfo*
+TAO_FT_Naming_Replication_Manager::register_replica (::FT_Naming::ReplicationManager_ptr replica,
+                                                     const ::FT_Naming::ReplicaInfo & replica_info)
 {
   ACE_TRACE ("TAO_FT_Naming_Replication_Manager::register_replica");
 
-  // Store a copy of the provided reference
+  // Store a copy of the provided reference and other ReplicaInfo
   peer_replica_ = FT_Naming::ReplicationManager::_duplicate (replica);
+
+  // Store the provided peer references
+  this->naming_svr_->peer_root_context (replica_info.root_context);
+  this->naming_svr_->peer_naming_manager (replica_info.naming_manager);
+
+  // Return my references to the peer
+  FT_Naming::ReplicaInfo* my_info = new FT_Naming::ReplicaInfo;
+  my_info->root_context = CosNaming::NamingContext::_duplicate (this->naming_svr_->my_root_context ());
+  my_info->naming_manager = FT::NamingManager::_duplicate (this->naming_svr_->my_naming_manager ());
+
+  return my_info;
 }
 
 void
@@ -94,7 +104,9 @@ TAO_FT_Naming_Replication_Manager::peer_replica (void)
 
 int
 TAO_FT_Naming_Replication_Manager::register_with_peer_replica (
-    FT_Naming::ReplicationManager_ptr replica)
+      FT_Naming::ReplicationManager_ptr replica,
+      CosNaming::NamingContext_ptr nc,
+      FT::NamingManager_ptr nm)
 {
   ACE_TRACE ("TAO_FT_Naming_Replication_Manager::register_with_peer_replica");
 
@@ -104,8 +116,18 @@ TAO_FT_Naming_Replication_Manager::register_with_peer_replica (
     this->peer_replica_ =
       FT_Naming::ReplicationManager::_duplicate (replica);
 
+    FT_Naming::ReplicaInfo my_info;
+    my_info.root_context = CosNaming::NamingContext::_duplicate (nc);
+    my_info.naming_manager = FT::NamingManager::_duplicate (nm);
+
     // Register with the peer replica
-    this->peer_replica_->register_replica (this->reference ());
+    FT_Naming::ReplicaInfo_var peer_info =
+      this->peer_replica_->register_replica (this->reference (),
+                                             my_info);
+
+    // Store the returned references locally
+    this->naming_svr_->peer_root_context (peer_info->root_context);
+    this->naming_svr_->peer_naming_manager (peer_info->naming_manager);
   }
   catch (CORBA::Exception& ex) {
     ex._tao_print_exception ("Exception while attempting to register with peer replica.\n");

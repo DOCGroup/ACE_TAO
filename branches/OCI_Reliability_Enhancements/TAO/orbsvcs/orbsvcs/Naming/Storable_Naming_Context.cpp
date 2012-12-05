@@ -283,7 +283,7 @@ File_Open_Lock_and_Check::~File_Open_Lock_and_Check()
 
 bool
 TAO_Storable_Naming_Context::
-File_Open_Lock_and_Check::parent_obsolete (void)
+File_Open_Lock_and_Check::object_obsolete (void)
 {
   // If the stale flag is set, context is obsolete.
   // Otherwise check the last changed flag against
@@ -294,7 +294,7 @@ File_Open_Lock_and_Check::parent_obsolete (void)
 
 void
 TAO_Storable_Naming_Context::
-File_Open_Lock_and_Check::mark_parent_current (void)
+File_Open_Lock_and_Check::mark_object_current (void)
 {
   // Reset the stale flag
   context_->stale (false);

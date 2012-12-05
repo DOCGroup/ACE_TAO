@@ -425,10 +425,12 @@ TAO_Naming_Server::init_with_orb (int argc,
       return -1;
     }
 
+  // If an ior file name was provided on command line
   if (this->ior_file_name_ != 0)
     {
-      FILE *iorf = ACE_OS::fopen (this->ior_file_name_, ACE_TEXT("w"));
-      if (iorf == 0)
+      CORBA::String_var ns_ior = this->naming_service_ior ();
+      if (this->write_ior_to_file (ns_ior.in (),
+                                   this->ior_file_name_) != 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT("Unable to open %s for writing:(%u) %p\n"),
@@ -437,11 +439,6 @@ TAO_Naming_Server::init_with_orb (int argc,
                              ACE_TEXT("TAO_Naming_Server::init_with_orb")),
                             -1);
         }
-
-      CORBA::String_var str = this->naming_service_ior ();
-
-      ACE_OS::fprintf (iorf, "%s\n", str.in ());
-      ACE_OS::fclose (iorf);
     }
 
   if (this->pid_file_name_ != 0)
@@ -735,6 +732,31 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
 }
 
 int
+TAO_Naming_Server::write_ior_to_file (const char* ior_string,
+                                      const char* file_name)
+{
+  if ((file_name != 0) &&
+      (ior_string != 0))
+    {
+      FILE *iorf = ACE_OS::fopen (file_name, ACE_TEXT("w"));
+      if (iorf == 0)
+        {
+          return -1;
+        }
+
+      ACE_OS::fprintf (iorf, "%s\n", ior_string);
+      ACE_OS::fclose (iorf);
+    }
+  else
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "Invalid file name or IOR string provided to TAO_Naming_Server::write_ior_to_file\n"), -1);
+
+    }
+
+  return 0;
+}
+
+int
 TAO_Naming_Server::fini (void)
 {
   // First get rid of the multi cast handler
@@ -801,6 +823,7 @@ TAO_Naming_Server::operator-> (void) const
 {
   return this->naming_context_.ptr ();
 }
+
 
 TAO_Naming_Server::~TAO_Naming_Server (void)
 {

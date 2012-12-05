@@ -50,6 +50,20 @@ public:
   /// arguments and the ORB. Overrridden from TAO_Naming_Server
   virtual int init_with_orb (int argc, ACE_TCHAR *argv [], CORBA::ORB_ptr orb);
 
+  /**
+   * Accessors and mutators for object references.
+   */
+  void peer_root_context (CosNaming::NamingContext_ptr peer_cxt);
+  CosNaming::NamingContext_ptr peer_root_context (void);
+
+  void peer_naming_manager (FT::NamingManager_ptr peer_nm);
+  FT::NamingManager_ptr peer_naming_manager (void);
+
+  /// Returns a <NamingContext_ptr> for the root Naming Context.
+  CosNaming::NamingContext_ptr my_root_context (void) const;
+
+  FT::NamingManager_ptr my_naming_manager (void) const;
+
   /// Initialize the naming manager with the ORB.
   int init_naming_manager_with_orb (int argc, ACE_TCHAR *argv [], CORBA::ORB_ptr orb);
 
@@ -63,14 +77,6 @@ public:
 
   /// Shut down the TAO_Naming_Service; you must still call fini().
   void shutdown (void);
-
-  /// Write the replica IOR string to the specified file
-  int write_replica_ior_file (const char* replica_file_name,
-                              const char* replica_ior_string);
-
-  /// Read the replica from the specified file
-  int read_replica_ior_file (const char* replica_file_name,
-                             CORBA::Object_out obj_ref);
 
   /// Returns the IOR of the naming manager.
   char* replication_manager_ior (void);
@@ -88,11 +94,24 @@ public:
   virtual ~TAO_FT_Naming_Server (void);
 
 protected:
+
+  /// Read the replica from the specified file
+  int read_reference_from_file (const char* replica_file_name,
+                                CORBA::Object_out obj_ref);
+
+  /// Prepare references according to the role of this server. Primary
+  /// will write out reference, and Backup will construct combined IOR
+  int prepare_ft_naming_references (void);
+
   const ACE_TCHAR * replica_id_;
 
   /// The object that implements the ObjectGroupManager, PropertyManager,
   /// and GenericFactory interfaces.
   TAO_FT_Naming_Manager naming_manager_;
+
+  FT::NamingManager_var my_naming_manager_;
+  FT::NamingManager_var peer_naming_manager_;
+  CosNaming::NamingContext_var peer_root_context_;
 
   /// The object that implements the FT_Naming::Replication_Manager
   /// interface
@@ -123,6 +142,12 @@ protected:
   ACE_CString object_group_dir_;
 
   bool is_primary_;
+
+private:
+  // Constants identifying where IOR files should be located
+  static const char* primary_ior_filename;
+  static const char* ft_ior_filename;
+
  };
 
 #endif /* TAO_FT_NAMING_SERVER_H */

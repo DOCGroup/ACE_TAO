@@ -16,6 +16,7 @@
 #define _FT_NAMING_REPLICATION_IDL_
 
 #include <orbsvcs/CosNaming.idl>
+#include <orbsvcs/FT_NamingManager.idl>
 
 module FT_Naming
 {
@@ -36,10 +37,12 @@ module FT_Naming
     string context_name;
     /// The type of change that is being reported
     ChangeType change_type;
-    /// This is the compound name that is used to identify
-    /// object references.
-    CosNaming::Name changed_context;
+  };
 
+  struct ReplicaInfo
+  {
+    CosNaming::NamingContext root_context;
+    FT::NamingManager naming_manager;
   };
 
   /*
@@ -57,12 +60,13 @@ module FT_Naming
   interface ReplicationManager
   {
    /*
-    * Register with a peer replica with an object reference for
+    * Register with a peer replica providing an object reference for
     * notification of updates.  Each replica will maintain their state
     * in a shared repository and the update notification indicates the
     * element that was changed.
     */
-    void register_replica (in ReplicationManager replica)
+    ReplicaInfo register_replica (in ReplicationManager replica,
+                                  in ReplicaInfo replica_info)
       raises (NotAvailable);
 
     void notify_updated_object_group(in ObjectGroupUpdate group_info);

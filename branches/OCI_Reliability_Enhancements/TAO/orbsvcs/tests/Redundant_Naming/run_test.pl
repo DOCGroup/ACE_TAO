@@ -77,12 +77,12 @@ else {
 # Run two Naming Servers in redundant mode and one client.  Client uses iors
 # in files to find the individual copies of the Naming Servers.
 
-my $args = "-ORBEndPoint $ns_endpoint1 -o $test_iorfile1 -m 0 -r NameService";
+my $args = "-ORBEndPoint $ns_endpoint1 -o $iorfile1 -m 0 -r NameService";
 my $prog = "$startdir/../../Naming_Service/tao_cosnaming";
 
 $NS1 = $test->CreateProcess ("$prog", "$args");
 
-$test->DeleteFile ("iorfile1");
+$test->DeleteFile ($iorfile1);
 
 $NS1->Spawn ();
 
@@ -98,7 +98,7 @@ $prog = "$startdir/../../Naming_Service/tao_cosnaming";
 
 $NS2 = $test->CreateProcess ("$prog", "$args");
 
-$test->DeleteFile ("iorfile2");
+$test->DeleteFile ($iorfile2);
 
 $NS2->Spawn ();
 
@@ -129,7 +129,7 @@ if ($client != 0) {
 $NS1->Kill ();
 $NS2->Kill ();
 
-$test->DeleteFile ("iorfile1");
-$test->DeleteFile ("iorfile2");
+$test->DeleteFile ($iorfile1);
+$test->DeleteFile ($iorfile2);
 
 exit $status;

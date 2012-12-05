@@ -58,9 +58,6 @@ TAO_FT_Storable_Naming_Context::resolve (const CosNaming::Name& n)
   CORBA::Object_var resolved_ref =
     TAO_Storable_Naming_Context::resolve(n);
 
-  ACE_DEBUG ((LM_DEBUG, "Resolving from context %s\n",
-              this->name_.c_str ()));
-
   ACE_GUARD_THROW_EX (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon, this->lock_,
     CORBA::INTERNAL ());
 
@@ -131,10 +128,6 @@ TAO_FT_Storable_Naming_Context::propagate_update_notification (
     context_info.context_name = this->name_.c_str ();
     // We are are updating the context one element before the specified name
     context_info.change_type = change_type;
-
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("Invoking notify_updated_context: %s.\n"),
-                this->name_.c_str ()));
 
     // Notify the naming_manager of the updated context
     peer->notify_updated_context (context_info);
