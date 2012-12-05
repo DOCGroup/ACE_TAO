@@ -423,7 +423,7 @@ TAO_UIPMC_Mcast_Transport::handle_input (
                          0,
                          this->orb_core_->input_cdr_buffer_allocator (),
                          this->orb_core_->locking_strategy (),
-                         ACE_Message_Block::DONT_DELETE,
+                         0,
                          this->orb_core_->input_cdr_dblock_allocator ());
 
       // Create a message block
