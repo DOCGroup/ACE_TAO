@@ -130,7 +130,7 @@ TAO_FT_Naming_Replication_Manager::register_with_peer_replica (
     this->naming_svr_->peer_naming_manager (peer_info->naming_manager);
   }
   catch (CORBA::Exception& ex) {
-    ex._tao_print_exception ("Exception while attempting to register with peer replica.\n");
+    // Unable to contact the peer replica.
     result = -1;
   }
 

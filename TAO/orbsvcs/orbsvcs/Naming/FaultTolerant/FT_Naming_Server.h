@@ -7,6 +7,7 @@
 #include "orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.h"
 #include "orbsvcs/Naming/FaultTolerant/FT_Naming_Replication_Manager.h"
 #include "orbsvcs/Naming/FaultTolerant/ftnaming_export.h"
+#include "tao/IORManipulation/IORManip_Loader.h"
 
 /**
  * @class TAO_FT_Naming_Server
@@ -99,9 +100,9 @@ protected:
   int read_reference_from_file (const char* replica_file_name,
                                 CORBA::Object_out obj_ref);
 
-  /// Prepare references according to the role of this server. Primary
-  /// will write out reference, and Backup will construct combined IOR
-  int prepare_ft_naming_references (void);
+  /// Export the NameService and NameManager combined object references
+  /// to the file names provided
+  int export_ft_naming_references (void);
 
   const ACE_TCHAR * replica_id_;
 
@@ -144,9 +145,8 @@ protected:
   bool is_primary_;
 
 private:
-  // Constants identifying where IOR files should be located
-  static const char* primary_ior_filename;
-  static const char* ft_ior_filename;
+  static const ACE_TCHAR* primary_replica_ior_filename;
+  static const ACE_TCHAR* backup_replica_ior_filename;
 
  };
 

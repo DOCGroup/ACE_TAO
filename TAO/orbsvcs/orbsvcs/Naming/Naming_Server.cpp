@@ -741,7 +741,12 @@ TAO_Naming_Server::write_ior_to_file (const char* ior_string,
       FILE *iorf = ACE_OS::fopen (file_name, ACE_TEXT("w"));
       if (iorf == 0)
         {
-          return -1;
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT("Unable to open %s for writing:(%u) %p\n"),
+                             file_name,
+                             ACE_ERRNO_GET,
+                             ACE_TEXT("Naming_Server::write_ior_to_file")),
+                            -1);
         }
 
       ACE_OS::fprintf (iorf, "%s\n", ior_string);
@@ -749,7 +754,10 @@ TAO_Naming_Server::write_ior_to_file (const char* ior_string,
     }
   else
     {
-      ACE_ERROR_RETURN ((LM_ERROR, "Invalid file name or IOR string provided to TAO_Naming_Server::write_ior_to_file\n"), -1);
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Invalid file name or IOR string provided")
+                         ACE_TEXT ("to TAO_Naming_Server::write_ior_to_file\n")),
+                        -1);
 
     }
 
