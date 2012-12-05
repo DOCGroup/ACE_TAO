@@ -658,21 +658,16 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
   // we pass it on to the higher layers of the ORB. So we dont to any
   // copies at all here. The same is also done in the higher layers.
 
-  ACE_Data_Block *db = 0;
+  ACE_Data_Block *db = qd->msg_block ()->data_block ();
 
-  // Get the flag in the message block
-  ACE_Message_Block::Message_Flags flg = qd->msg_block ()->self_flags ();
+  // Get the flag in the message's data block
+  ACE_Message_Block::Message_Flags flg = db->flags ();
 
-  if (ACE_BIT_ENABLED (flg, ACE_Message_Block::DONT_DELETE))
-    {
-      // Use the same datablock
-      db = qd->msg_block ()->data_block ();
-    }
-  else
+  if (ACE_BIT_DISABLED (flg, ACE_Message_Block::DONT_DELETE))
     {
       // Use a duplicated datablock as the datablock has come off the
       // heap.
-      db = qd->msg_block ()->data_block ()->duplicate ();
+      db = db->duplicate ();
     }
   db->size (qd->msg_block ()->length ());
 
@@ -695,7 +690,7 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
     }
 
   TAO_InputCDR input_cdr (db,
-                          db->flags (),
+                          flg,
                           rd_pos,
                           wr_pos,
                           qd->byte_order (),
@@ -773,21 +768,16 @@ TAO_GIOP_Message_Base::process_reply_message (
   size_t wr_pos = qd->msg_block ()->wr_ptr () - qd->msg_block ()->base ();
   rd_pos += TAO_GIOP_MESSAGE_HEADER_LEN;
 
-  ACE_Data_Block *db = 0;
+  ACE_Data_Block *db = qd->msg_block ()->data_block ();
 
-  // Get the flag in the message block
-  ACE_Message_Block::Message_Flags flg = qd->msg_block ()->self_flags ();
+  // Get the flag in the message's data block
+  ACE_Message_Block::Message_Flags flg = db->flags ();
 
-  if (ACE_BIT_ENABLED (flg, ACE_Message_Block::DONT_DELETE))
-    {
-      // Use the same datablock
-      db = qd->msg_block ()->data_block ();
-    }
-  else
+  if (ACE_BIT_DISABLED (flg, ACE_Message_Block::DONT_DELETE))
     {
       // Use a duplicated datablock as the datablock has come off the
       // heap.
-      db = qd->msg_block ()->data_block ()->duplicate ();
+      db = db->duplicate ();
     }
   db->size (qd->msg_block ()->length ());
 
@@ -813,7 +803,7 @@ TAO_GIOP_Message_Base::process_reply_message (
   // we pass it on to the higher layers of the ORB. So we dont to any
   // copies at all here.
   TAO_InputCDR input_cdr (db,
-                          db->flags (),
+                          flg,
                           rd_pos,
                           wr_pos,
                           qd->byte_order (),
@@ -1707,22 +1697,16 @@ TAO_GIOP_Message_Base::parse_request_id (const TAO_Queued_Data *qd,
   // we pass it on to the higher layers of the ORB. So we dont to any
   // copies at all here. The same is also done in the higher layers.
 
-  ACE_Message_Block::Message_Flags flg = 0;
-  ACE_Data_Block *db = 0;
+  ACE_Data_Block *db = qd->msg_block ()->data_block ();
 
-  // Get the flag in the message block
-  flg = qd->msg_block ()->self_flags ();
+  // Get the flag in the message's data block
+  ACE_Message_Block::Message_Flags flg = db->flags ();
 
-  if (ACE_BIT_ENABLED (flg, ACE_Message_Block::DONT_DELETE))
-    {
-      // Use the same datablock
-      db = qd->msg_block ()->data_block ();
-    }
-  else
+  if (ACE_BIT_DISABLED (flg, ACE_Message_Block::DONT_DELETE))
     {
       // Use a duplicated datablock as the datablock has come off the
       // heap.
-      db = qd->msg_block ()->data_block ()->duplicate ();
+      db = db->duplicate ();
     }
 
   TAO_InputCDR input_cdr (db,
