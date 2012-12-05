@@ -1,3 +1,9 @@
+Wed Dec  5 16:29:17 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
+
+        * utils/nsgroup/run_test.pl:
+
+        Simplified targets and additional cleanup
+
 Wed Dec  5 01:42:34 UTC 2012  f6  <f6@>
 
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_NamingReplication.idl:
