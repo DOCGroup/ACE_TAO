@@ -1,3 +1,33 @@
+Wed Dec  5 01:42:34 UTC 2012  f6  <f6@>
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_NamingReplication.idl:
+
+          Modified registration to pass references for replicated services
+          in support of creation of mulit-profile IOR.
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Replication_Manager.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Replication_Manager.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context.cpp:
+
+          Updated to support coordination of replication IORs transparently
+          and to create a multi-profile IOR.
+
+        * orbsvcs/orbsvcs/Naming/Naming_Server.h:
+        * orbsvcs/orbsvcs/Naming/Naming_Server.cpp:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.h:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp:
+
+          Factored out writing IOR files.
+
+        * orbsvcs/tests/FT_Naming/Replication/client.cpp:
+        * orbsvcs/tests/FT_Naming/Replication/run_test.pl:
+        * orbsvcs/tests/Redundant_Naming/run_test.pl:
+
+          Removed some extraneous prints. Revised perl to manage IOR
+          files better.
+
 Tue Dec  4 23:04:01 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
 
         * orbsvcs/tests/FT_Naming/FaultTolerance/run_test.pl:

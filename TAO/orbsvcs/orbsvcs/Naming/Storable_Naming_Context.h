@@ -434,12 +434,11 @@ public:
 
 protected:
   /// Check if the parent is current with the last update.
-  virtual bool parent_obsolete (void);
+  virtual bool object_obsolete (void);
 
   virtual void set_object_last_changed (const time_t & time);
-  /// Mark the parent as up to date
-  virtual void mark_parent_current (void);
 
+  virtual void mark_object_current (void);
 
   virtual time_t get_object_last_changed ();
 

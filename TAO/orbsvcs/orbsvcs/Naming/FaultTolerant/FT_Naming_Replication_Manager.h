@@ -51,8 +51,8 @@ public:
  /*
   * Implementation of the FT_Naming::ReplicationManager interface
   */
-  virtual void register_replica (
-    FT_Naming::ReplicationManager_ptr replica);
+  virtual ::FT_Naming::ReplicaInfo * register_replica (::FT_Naming::ReplicationManager_ptr replica,
+                                                       const ::FT_Naming::ReplicaInfo & replica_info);
 
   virtual void notify_updated_object_group (
     const FT_Naming::ObjectGroupUpdate & group_info);
@@ -69,8 +69,9 @@ public:
   /// Stores the peer in the peer_replica_ data member and invokes the
   /// register_replica interface method with the peer. Returns 0 if
   /// successful and -1 if unable to contact the peer.
-  int register_with_peer_replica (
-    FT_Naming::ReplicationManager_ptr replica);
+  int register_with_peer_replica (FT_Naming::ReplicationManager_ptr replica,
+                                  CosNaming::NamingContext_ptr nc,
+                                  FT::NamingManager_ptr rm);
 
   /// The object reference for this servant instance
   FT_Naming::ReplicationManager_ptr reference (void);

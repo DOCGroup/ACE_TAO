@@ -53,6 +53,7 @@ foreach my $possible ($ENV{TMPDIR}, $ENV{TEMP}, $ENV{TMP}) {
 
 my $test_iorfile1 = $test->LocalFile ($iorfile1);
 my $test_iorfile2 = $test->LocalFile ($iorfile2);
+my $test_primary_iorfile = $test->LocalFile ($primary_iorfile);
 
 $status = 0;
 
@@ -79,25 +80,25 @@ else {
 # Run two Naming Servers and one client.  Client uses iors
 # in files to find the individual copies of the Naming Servers.
 
-my $args = "-ORBEndPoint $ns_endpoint1 -o $test_iorfile1 -m 0 -r $naming_persistence_dir --primary";
+my $args = "-ORBEndPoint $ns_endpoint1 -o $iorfile1 -m 0 -r $naming_persistence_dir --primary";
 my $prog = "$startdir/../../../Naming_Service/tao_ft_naming";
 
 print STDERR "Starting Primary: $prog $args\n";
 
 $NS1 = $test->CreateProcess ("$prog", "$args");
 
-$test->DeleteFile ("$iorfile1");
+$test->DeleteFile ($iorfile1);
 
 $NS1->Spawn ();
 
-if ($test->WaitForFileTimed ($naming_persistence_dir,
+if ($test->WaitForFileTimed ($iorfile1,
                              $test->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$naming_persistence_dir>\n";
+    print STDERR "ERROR: cannot find file <$test_iorfile1>\n";
     $NS1->Kill (); $NS1->TimedWait (1);
     exit 1;
 }
 
-$args = "-ORBEndPoint $ns_endpoint2 -o $test_iorfile2 -m 0 -r $naming_persistence_dir --backup";
+$args = "-ORBEndPoint $ns_endpoint2 -o $iorfile2 -m 0 -r $naming_persistence_dir --backup";
 
 $prog = "$startdir/../../../Naming_Service/tao_ft_naming";
 
@@ -105,7 +106,7 @@ print STDERR "Starting Backup: $prog $args\n";
 
 $NS2 = $test->CreateProcess ("$prog", "$args");
 
-$test->DeleteFile ("$iorfile2");
+$test->DeleteFile ($iorfile2);
 
 $NS2->Spawn ();
 
@@ -116,7 +117,7 @@ if ($test->WaitForFileTimed ($iorfile2,
     exit 1;
 }
 
-$args = "-p file://$test_iorfile1 -q file://$test_iorfile2";
+$args = "-p file://$iorfile1 -q file://$iorfile2";
 $prog = "$startdir/client";
 
 print STDERR "Starting Client: $prog $args\n";
@@ -133,7 +134,7 @@ if ($client != 0) {
 $NS1->Kill ();
 $NS2->Kill ();
 
-$test->DeleteFile ("iorfile1");
-$test->DeleteFile ("iorfile2");
+$test->DeleteFile ($iorfile1);
+$test->DeleteFile ($iorfile2);
 
 exit $status;

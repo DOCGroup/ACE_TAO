@@ -162,6 +162,10 @@ protected:
   /// parses the arguments.
   virtual int parse_args (int argc, ACE_TCHAR *argv[]);
 
+  /// Write the provided ior_string to the file. Return 0 if success.
+  int write_ior_to_file (const char* ior_string,
+                         const char* file_name);
+
   /// Root NamingContext_ptr.
   CosNaming::NamingContext_var naming_context_;
 
@@ -236,6 +240,7 @@ protected:
   /// If not zero use round trip timeout policy set to value specified
   int round_trip_timeout_;
   int use_round_trip_timeout_;
+
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
