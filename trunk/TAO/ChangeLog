@@ -1,3 +1,29 @@
+Wed Dec 05 09:41:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Mcast_Transport.cpp:
+          Re-fixed the memory leak in MIOP server listener (as previous).
+          Since this data block's buffer is malloced internally (heap),
+          it definatly does need to be deleted by the data block as required.
+          (Obviously when the don't delete flags was set on the data block
+          incorrectly, previous to the fix, no deletion occured at all,
+          so the allocated memory buffer leaked.) The data block itself however
+          is stack based, and so the message block doesn't need to allocate or
+          delete the data block that holds this memory buffer itself. This is
+          apparently different to most other listeners where both the message
+          and data blocks are on the stack and thus the two block's flags agree.
+
+        * tao/GIOP_Message_Base.cpp:
+        * tao/ZIOP/ZIOP.cpp:
+          Corrected the mix-up of the Message block self_flags() being used where the
+          internal data block flags() should have been. ACE_InputCDR's were being
+          initialised with copies of these malloced datablock's buffers and they were
+          being deleted premiturely since the duplication hadn't been performed correctly.
+          The check for this duplication was incorrectly using the message block self_flags()
+          instead of the data block flags() and was therefore seeing the memory buffers
+          as stack based and not requiring duplication, but the ACE_InputCDR was then being
+          passed the actual data block flags which changed this requirement so the
+          ~ACE_InputCDR duly deleted the memory block eairly.
+
 Mon Dec  3 15:28:17 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/AnyTypeCode/Sequence_TypeCode_Static.h:
@@ -10,14 +36,14 @@ Mon Dec  3 15:28:17 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 Mon Dec 03 09:253:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
 
         * orbsvcs/orbsvcs/PortableGroup/UIPMC_Mcast_Transport.cpp:
-          Re-introduced memory leak in MIOP server listerner. Something
+          Re-introduced memory leak in MIOP server listener. Something
           more complex and unknown is interacting with the memory block
           requiring it's extended life.
 
 Fri Nov 30 15:23:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
 
         * orbsvcs/orbsvcs/PortableGroup/UIPMC_Mcast_Transport.cpp:
-          Fixed memory leak and alignment in MIOP server listerner.
+          Fixed memory leak and alignment in MIOP server listener.
 
 Fri Nov 30 12:29:48 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
