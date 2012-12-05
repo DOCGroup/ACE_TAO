@@ -32,10 +32,13 @@ $ns_orb_port2 = 10002 + $test->RandomPort ();
 $ns_endpoint1 = "iiop://$hostname:$ns_orb_port1";
 $ns_endpoint2 = "iiop://$hostname:$ns_orb_port2";
 
-$iorfile1 = "ns1.ior";
-$iorfile2 = "ns2.ior";
-$primary_iorfile = "ns_primary.ior";
 $naming_persistence_dir = "NameService";
+
+$primary_iorfile = "$naming_persistence_dir/ns_replica_primary.ior";
+$iorfile2 = "ns2.ior";
+$nm_iorfile = "nm.ior";
+
+print STDERR "$primary_iorfile\n";
 
 ## Allow the user to determine where the persistent file will be located
 ## just in case the current directory is not suitable for locking.
@@ -51,8 +54,8 @@ foreach my $possible ($ENV{TMPDIR}, $ENV{TEMP}, $ENV{TMP}) {
     }
 }
 
-my $test_iorfile1 = $test->LocalFile ($iorfile1);
 my $test_iorfile2 = $test->LocalFile ($iorfile2);
+my $test_nm_iorfile = $test->LocalFile ($nm_iorfile);
 my $test_primary_iorfile = $test->LocalFile ($primary_iorfile);
 
 $status = 0;
@@ -80,25 +83,25 @@ else {
 # Run two Naming Servers and one client.  Client uses iors
 # in files to find the individual copies of the Naming Servers.
 
-my $args = "-ORBEndPoint $ns_endpoint1 -o $iorfile1 -m 0 -r $naming_persistence_dir --primary";
+my $args = "-ORBEndPoint $ns_endpoint1 -m 0 -r $naming_persistence_dir --primary";
 my $prog = "$startdir/../../../Naming_Service/tao_ft_naming";
 
 print STDERR "Starting Primary: $prog $args\n";
 
 $NS1 = $test->CreateProcess ("$prog", "$args");
 
-$test->DeleteFile ($iorfile1);
+$test->DeleteFile ($primary_iorfile);
 
 $NS1->Spawn ();
 
-if ($test->WaitForFileTimed ($iorfile1,
+if ($test->WaitForFileTimed ($primary_iorfile,
                              $test->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$test_iorfile1>\n";
+    print STDERR "ERROR: cannot find file <$test_primary_iorfile>\n";
     $NS1->Kill (); $NS1->TimedWait (1);
     exit 1;
 }
 
-$args = "-ORBEndPoint $ns_endpoint2 -o $iorfile2 -m 0 -r $naming_persistence_dir --backup";
+$args = "-ORBEndPoint $ns_endpoint2 -g $nm_iorfile -o $iorfile2 -m 0 -r $naming_persistence_dir --backup";
 
 $prog = "$startdir/../../../Naming_Service/tao_ft_naming";
 
@@ -107,6 +110,7 @@ print STDERR "Starting Backup: $prog $args\n";
 $NS2 = $test->CreateProcess ("$prog", "$args");
 
 $test->DeleteFile ($iorfile2);
+$test->DeleteFile ($nm_iorfile);
 
 $NS2->Spawn ();
 
@@ -117,7 +121,10 @@ if ($test->WaitForFileTimed ($iorfile2,
     exit 1;
 }
 
-$args = "-p file://$iorfile1 -q file://$iorfile2";
+# Use corbaloc to access each individual name service without
+# using the combined IOR.
+$args = "-p corbaloc:iiop:$hostname:$ns_orb_port1/NameService " .
+        "-q corbaloc:iiop:$hostname:$ns_orb_port2/NameService";
 $prog = "$startdir/client";
 
 print STDERR "Starting Client: $prog $args\n";
@@ -134,7 +141,7 @@ if ($client != 0) {
 $NS1->Kill ();
 $NS2->Kill ();
 
-$test->DeleteFile ($iorfile1);
+$test->DeleteFile ($primary_iorfile);
 $test->DeleteFile ($iorfile2);
 
 exit $status;
