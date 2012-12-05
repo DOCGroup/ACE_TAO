@@ -15,49 +15,16 @@
 #include "ACEXML/common/XML_Util.h"
 #include "tao/IORManipulation/IORManip_Loader.h"
 
-const char* Shared_Backing_Store::IMR_REPLICA[2] = {"ImR_Replica2", "ImR_Replica1"};
+const char* Shared_Backing_Store::IMR_REPLICA[2] = {"ImR_ReplicaBackup", "ImR_ReplicaPrimary"};
 
 Shared_Backing_Store::Shared_Backing_Store(const Options& opts,
-                                           const CORBA::ORB_var& orb)
+                                           CORBA::ORB_ptr orb)
 : XML_Backing_Store(opts, orb, true),
   listing_file_(opts.persist_file_name() + ACE_TEXT("imr_listing.xml")),
   seq_num_(0),
   replica_seq_num_(0),
-  // guaranteed to be primary if no replica passed
-  primary_(opts.replica_obj_key().is_empty())
+  primary_(opts.primary_replica())
 {
-  // only start the repo clean if no replica is running
-  if (opts.repository_erase() && this->primary_)
-    {
-      const XMLHandler_Ptr listings = get_listings(false);
-      if (listings.null())
-        {
-          if (this->opts_.debug() > 9)
-            {
-              ACE_DEBUG((LM_INFO,
-                ACE_TEXT ("Persisted Repository already empty\n")));
-            }
-          return;
-        }
-      const ACE_Vector<ACE_CString>& filenames = listings->filenames();
-      CORBA::ULong sz = filenames.size ();
-      for (CORBA::ULong i = 0; i < sz; ++i)
-        {
-          if (this->opts_.debug() > 9)
-            {
-              ACE_DEBUG((LM_INFO, ACE_TEXT ("Removing %s\n"),
-                filenames[i].c_str()));
-            }
-          ACE_OS::unlink ( filenames[i].c_str () );
-        }
-
-      if (this->opts_.debug() > 9)
-        {
-          ACE_DEBUG((LM_INFO, ACE_TEXT ("Removing %s\n"),
-            this->listing_file_.c_str()));
-        }
-      ACE_OS::unlink ( this->listing_file_.c_str () );
-    }
 }
 
 Shared_Backing_Store::~Shared_Backing_Store()
@@ -66,7 +33,7 @@ Shared_Backing_Store::~Shared_Backing_Store()
 
 
 static void replicate(
-  Shared_Backing_Store::Replica_var& replica,
+  Shared_Backing_Store::Replica_ptr replica,
   const ImplementationRepository::ServerUpdate& update)
 {
   // replicate the ServerUpdate to our replicated locator
@@ -74,7 +41,7 @@ static void replicate(
 }
 
 static void replicate(
-  Shared_Backing_Store::Replica_var& replica,
+  Shared_Backing_Store::Replica_ptr replica,
   const ImplementationRepository::ActivatorUpdate& update)
 {
   // replicate the ActivatorUpdate to our replicated locator
@@ -83,7 +50,7 @@ static void replicate(
 
 template< typename Update>
 static void replicate(
-  Shared_Backing_Store::Replica_var& replica,
+  Shared_Backing_Store::Replica_ptr replica,
   const ACE_CString& name,
   const ImplementationRepository::UpdateType type,
   const ImplementationRepository::SequenceNum seq_num)
@@ -149,10 +116,16 @@ Shared_Backing_Store::persistent_remove (const ACE_CString& name,
 
 ACE_CString
 Shared_Backing_Store::make_filename(const ACE_CString& name,
-                                    bool activator) const
+                                    bool activator,
+                                    bool relative) const
 {
   const char* const prefix = (activator ? "a_" : "s_");
-  return this->filename_ + prefix + name + ".xml";
+  ACE_CString file = prefix + name + ".xml";
+  if (!relative)
+    {
+      file = this->filename_ + file;
+    }
+  return file;
 }
 
 int
@@ -242,22 +215,30 @@ Shared_Backing_Store::repo_mode() const
 }
 
 int
-Shared_Backing_Store::connect_replicas (const Replica_var& this_replica)
+Shared_Backing_Store::connect_replicas (Replica_ptr this_replica)
 {
-  const ACE_TString& replica_obj_key = this->opts_.replica_obj_key();
+  const ACE_TString& replica_ior = replica_ior_filename(true);
   if (this->opts_.debug() > 1)
     {
       ACE_DEBUG((LM_INFO,
-        "Resolving ImR replica (%d) %s\n", this->orb_.in(), replica_obj_key.c_str()));
+        "Resolving ImR replica (%d) %s\n", this->orb_.in(), replica_ior.c_str()));
     }
 
   CORBA::Object_var obj =
-    this->orb_->string_to_object (replica_obj_key.c_str());
+    this->orb_->string_to_object (replica_ior.c_str());
 
   if (CORBA::is_nil (obj.in ()))
-    ACE_ERROR_RETURN ((LM_ERROR,
-      "Error: invalid obj key <%s> for ImR replica\n",
-      replica_obj_key.c_str()), -1);
+    {
+      if (!this->primary_)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+            "Error: invalid obj key <%s> for ImR replica\n",
+            replica_ior.c_str()), -1);
+        }
+
+      // no connection currently, just wait for backup
+      return 0;
+    }
 
   ACE_DEBUG((LM_INFO, "narrowing replica\n"));
   this->replica_ =
@@ -266,7 +247,7 @@ Shared_Backing_Store::connect_replicas (const Replica_var& this_replica)
   if (CORBA::is_nil (this->replica_.in ()))
     ACE_ERROR_RETURN ((LM_ERROR,
       "Error: obj key <%s> not an ImR replica\n",
-      replica_obj_key.c_str()), -1);
+      replica_ior.c_str()), -1);
 
   if (opts_.debug() > 1)
     {
@@ -274,21 +255,9 @@ Shared_Backing_Store::connect_replicas (const Replica_var& this_replica)
         "Registering with previously running ImR replica\n"));
     }
 
-  CORBA::Boolean peer_primary;
-  this->replica_->register_replica(this_replica.in(),
+  this->replica_->register_replica(this_replica,
                                    this->imr_ior_.inout(),
-                                   this->replica_seq_num_,
-                                   peer_primary);
-
-  // the pre-existing replica maintains which is the primary
-  // example:
-  //   loc1 created w/o -i (primary=true)
-  //   loc2 created w -i loc1 (primary=false at construction, and still false
-  //        after register_replica)
-  //   loc1 crashes (loc2 still has primary=false)
-  //   loc1 created w -i loc2 (primary=false at construction, then set true
-  //        after register_replica)
-  this->primary_ = (peer_primary == 0);
+                                   this->replica_seq_num_);
 
   if (opts_.debug() > 9)
     {
@@ -300,29 +269,67 @@ Shared_Backing_Store::connect_replicas (const Replica_var& this_replica)
 }
 
 int
-Shared_Backing_Store::init_repo(const PortableServer::POA_var& imr_poa)
+Shared_Backing_Store::init_repo(PortableServer::POA_ptr imr_poa)
 {
   this->non_ft_imr_ior_ = this->imr_ior_;
   PortableServer::ObjectId_var id =
     PortableServer::string_to_ObjectId ("ImR_Replica");
   imr_poa->activate_object_with_id (id.in (), this);
 
-  int err = 0;
-  if (!this->primary_)
-    {
-      CORBA::Object_var obj = imr_poa->id_to_reference (id.in ());
+  CORBA::Object_var obj = imr_poa->id_to_reference (id.in ());
 
-      Replica_var this_replica =
-        ImplementationRepository::UpdatePushNotification::_narrow (obj.in());
-      const int err = connect_replicas(this_replica);
-      if (err != 0)
+  Replica_var this_replica =
+    ImplementationRepository::UpdatePushNotification::_narrow (obj.in());
+  const int err = connect_replicas(this_replica.in());
+  if (err != 0)
+    {
+      return err;
+    }
+
+  // only start the repo clean if no replica is running
+  if (this->opts_.repository_erase() && CORBA::is_nil (this->replica_.in ()))
+    {
+      const XMLHandler_Ptr listings = get_listings(false);
+      if (listings.null())
         {
-          return err;
+          if (this->opts_.debug() > 9)
+            {
+              ACE_DEBUG((LM_INFO,
+                ACE_TEXT ("Persisted Repository already empty\n")));
+            }
+        }
+      else
+        {
+          const ACE_Vector<ACE_CString>& filenames = listings->filenames();
+          CORBA::ULong sz = filenames.size ();
+          for (CORBA::ULong i = 0; i < sz; ++i)
+            {
+              if (this->opts_.debug() > 9)
+                {
+                  ACE_DEBUG((LM_INFO, ACE_TEXT ("Removing %s\n"),
+                    filenames[i].c_str()));
+                }
+              ACE_OS::unlink ( filenames[i].c_str () );
+            }
+
+          if (this->opts_.debug() > 9)
+            {
+              ACE_DEBUG((LM_INFO, ACE_TEXT ("Removing %s\n"),
+                this->listing_file_.c_str()));
+            }
+          ACE_OS::unlink ( this->listing_file_.c_str () );
         }
     }
 
   // ignore persistent_load return since files don't have to exist
   persistent_load(false);
+
+  if (this->opts_.debug() > 9)
+    {
+      ACE_DEBUG((LM_INFO,
+        ACE_TEXT ("ImR Repository initialized\n")));
+    }
+
   return 0;
 }
 
@@ -371,7 +378,9 @@ Shared_Backing_Store::get_listings(bool only_changes) const
 
   if (load(this->listing_file_, *listings_handler, this->opts_.debug()) != 0)
     {
+      ACE_DEBUG((LM_INFO, "load failed\n"));
       listings_handler.reset();
+      ACE_DEBUG((LM_INFO, "reset handler\n"));
     }
 
   return listings_handler;
@@ -412,7 +421,7 @@ Shared_Backing_Store::persist_listings (void) const
     {
       Server_Info_Ptr& info = sientry->int_id_;
 
-      const ACE_CString fname = make_filename(info->name, false);
+      const ACE_CString fname = make_filename(info->name, false, true);
       ACE_CString listing_name = ACEXML_escape_string (info->name);
       write_listing(list, fname, listing_name,
         Locator_XMLHandler::SERVER_INFO_TAG);
@@ -426,7 +435,7 @@ Shared_Backing_Store::persist_listings (void) const
       Activator_Info_Ptr& info = aientry->int_id_;
 
       const ACE_CString& aname = aientry->ext_id_;
-      const ACE_CString fname = make_filename(aname, true);
+      const ACE_CString fname = make_filename(aname, true, true);
       write_listing(list, fname, aname,
         Locator_XMLHandler::ACTIVATOR_INFO_TAG);
     }
@@ -437,15 +446,15 @@ Shared_Backing_Store::persist_listings (void) const
 }
 
 int
-Shared_Backing_Store::report_ior(const PortableServer::POA_var& root_poa,
-                                 const PortableServer::POA_var& imr_poa)
+Shared_Backing_Store::report_ior(PortableServer::POA_ptr root_poa,
+                                 PortableServer::POA_ptr imr_poa)
 {
   CORBA::Object_var obj = this->orb_->resolve_initial_references ("IORTable");
   IORTable::Table_var ior_table = IORTable::Table::_narrow (obj.in ());
   ACE_ASSERT (! CORBA::is_nil (ior_table.in ()));
 
   const char* const replica_name(IMR_REPLICA[this->primary_]);
-  ACE_TString replica_filename = this->filename_ + replica_name + ACE_TEXT(".ior");
+  ACE_TString replica_filename = replica_ior_filename(false);
   FILE* fp = ACE_OS::fopen (replica_filename.c_str (), "w");
   if (fp == 0)
     {
@@ -455,7 +464,7 @@ Shared_Backing_Store::report_ior(const PortableServer::POA_var& root_poa,
     }
   obj = imr_poa->servant_to_reference (this);
   const CORBA::String_var replica_ior = this->orb_->object_to_string (obj.in ());
-  report(ior_table, replica_name, replica_ior);
+  report(ior_table.in(), replica_name, replica_ior.in());
   ACE_OS::fprintf (fp, "%s", replica_ior.in ());
   ACE_OS::fclose (fp);
 
@@ -545,8 +554,7 @@ void
 Shared_Backing_Store::register_replica(
   ImplementationRepository::UpdatePushNotification_ptr replica,
   char*& ft_imr_ior,
-  ImplementationRepository::SequenceNum_out seq_num,
-  CORBA::Boolean_out peer_primary)
+  ImplementationRepository::SequenceNum_out seq_num)
 {
   ACE_ASSERT (! CORBA::is_nil (replica));
   this->replica_ =
@@ -555,8 +563,6 @@ Shared_Backing_Store::register_replica(
   seq_num = this->seq_num_;
 
   this->replica_seq_num_ = 0;
-
-  peer_primary = this->primary_;
 
   char* const combined_ior = locator_service_ior(ft_imr_ior);
   if (combined_ior != 0)
@@ -568,6 +574,21 @@ Shared_Backing_Store::register_replica(
     }
   PortableServer::POA_var null_poa;
   Locator_Repository::report_ior(null_poa, null_poa);
+}
+
+ACE_CString
+Shared_Backing_Store::replica_ior_filename(bool peer_ior_file) const
+{
+  const unsigned int replica_index = (this->primary_ == peer_ior_file ? 0 : 1);
+  ACE_CString ior =
+    this->filename_ + IMR_REPLICA[replica_index] + ACE_TEXT(".ior");
+  if (peer_ior_file)
+    {
+      // the peer ior file needs the file prefix
+      ior = "file://" + ior;
+    }
+
+  return ior;
 }
 
 Shared_Backing_Store::LocatorListings_XMLHandler::LocatorListings_XMLHandler(

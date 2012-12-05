@@ -11,10 +11,10 @@
 #include "ace/Vector_T.h"
 
 Locator_Repository::Locator_Repository (const Options& opts,
-                                        const CORBA::ORB_var& orb)
+                                        CORBA::ORB_ptr orb)
 : opts_ (opts),
   registered_(false),
-  orb_(orb)
+  orb_(CORBA::ORB::_duplicate(orb))
 {
 }
 
@@ -24,9 +24,9 @@ Locator_Repository::~Locator_Repository()
 }
 
 int
-Locator_Repository::init(const PortableServer::POA_var& root_poa,
-                         const PortableServer::POA_var& imr_poa,
-                         const CORBA::String_var& this_ior)
+Locator_Repository::init(PortableServer::POA_ptr root_poa,
+                         PortableServer::POA_ptr imr_poa,
+                         const char* this_ior)
 {
   this->imr_ior_ = this_ior;
   int err = init_repo(imr_poa);
@@ -40,16 +40,16 @@ Locator_Repository::init(const PortableServer::POA_var& root_poa,
 }
 
 int
-Locator_Repository::report_ior(const PortableServer::POA_var& root_poa,
-                               const PortableServer::POA_var& imr_poa)
+Locator_Repository::report_ior(PortableServer::POA_ptr root_poa,
+                               PortableServer::POA_ptr imr_poa)
 {
   // Register the ImR for use with INS
   CORBA::Object_var obj = this->orb_->resolve_initial_references ("IORTable");
   IORTable::Table_var ior_table = IORTable::Table::_narrow (obj.in ());
   ACE_ASSERT (! CORBA::is_nil (ior_table.in ()));
 
-  report(ior_table, "ImplRepoService", this->imr_ior_);
-  report(ior_table, "ImR", this->imr_ior_);
+  report(ior_table.in(), "ImplRepoService", this->imr_ior_.in());
+  report(ior_table.in(), "ImR", this->imr_ior_.in());
 
   // Set up multicast support (if enabled)
   if (this->opts_.multicast ())
@@ -59,7 +59,7 @@ Locator_Repository::report_ior(const PortableServer::POA_var& root_poa,
         return -1;
     }
 
-  if (!CORBA::is_nil(imr_poa.in()))
+  if (!CORBA::is_nil(imr_poa))
     {
       // Activate the two poa managers
       PortableServer::POAManager_var poaman =
@@ -87,27 +87,26 @@ Locator_Repository::report_ior(const PortableServer::POA_var& root_poa,
 }
 
 void
-Locator_Repository::report(const IORTable::Table_var& ior_table,
+Locator_Repository::report(IORTable::Table_ptr ior_table,
                            const char* name,
-                           const CORBA::String_var& ior)
+                           const char* ior)
 {
   if (!this->registered_)
     {
-      ior_table->bind(name, ior.in());
+      ior_table->bind(name, ior);
     }
   else
     {
-      ior_table->rebind(name, ior.in());
+      ior_table->rebind(name, ior);
     }
 }
 
 int
-Locator_Repository::setup_multicast (ACE_Reactor* reactor, const CORBA::String_var& imr_ior)
+Locator_Repository::setup_multicast (ACE_Reactor* reactor, const char* ior)
 {
   ACE_ASSERT (reactor != 0);
 #if defined (ACE_HAS_IP_MULTICAST)
 
-  const char* ior = imr_ior.in();
   TAO_ORB_Core* core = TAO_ORB_Core_instance ();
   // See if the -ORBMulticastDiscoveryEndpoint option was specified.
   ACE_CString mde (core->orb_params ()->mcast_discovery_endpoint ());
@@ -153,7 +152,7 @@ Locator_Repository::setup_multicast (ACE_Reactor* reactor, const CORBA::String_v
     }
 #else /* ACE_HAS_IP_MULTICAST*/
   ACE_UNUSED_ARG (reactor);
-  ACE_UNUSED_ARG (imr_ior);
+  ACE_UNUSED_ARG (ior);
 #endif /* ACE_HAS_IP_MULTICAST*/
   return 0;
 }
@@ -397,7 +396,7 @@ Locator_Repository::activators (void) const
 }
 
 int
-Locator_Repository::init_repo(const PortableServer::POA_var& )
+Locator_Repository::init_repo(PortableServer::POA_ptr )
 {
   // nothing more to do for default load
   return 0;
@@ -432,7 +431,7 @@ Locator_Repository::persistent_remove(const ACE_CString& , bool )
 }
 
 No_Backing_Store::No_Backing_Store(const Options& opts,
-                                   const CORBA::ORB_var& orb)
+                                   CORBA::ORB_ptr orb)
 : Locator_Repository(opts, orb)
 {
 }
