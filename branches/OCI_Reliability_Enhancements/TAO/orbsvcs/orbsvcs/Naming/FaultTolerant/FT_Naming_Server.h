@@ -73,13 +73,13 @@ public:
   void peer_root_context (CosNaming::NamingContext_ptr peer_cxt);
   CosNaming::NamingContext_ptr peer_root_context (void);
 
-  void peer_naming_manager (FT::NamingManager_ptr peer_nm);
-  FT::NamingManager_ptr peer_naming_manager (void);
+  void peer_naming_manager (FT_Naming::NamingManager_ptr peer_nm);
+  FT_Naming::NamingManager_ptr peer_naming_manager (void);
 
   /// Returns a <NamingContext_ptr> for the root Naming Context.
   CosNaming::NamingContext_ptr my_root_context (void) const;
 
-  FT::NamingManager_ptr my_naming_manager (void) const;
+  FT_Naming::NamingManager_ptr my_naming_manager (void) const;
 
   /// Initialize the naming manager with the ORB.
   int init_naming_manager_with_orb (int argc, ACE_TCHAR *argv [], CORBA::ORB_ptr orb);
@@ -126,8 +126,8 @@ protected:
   /// and GenericFactory interfaces.
   TAO_FT_Naming_Manager naming_manager_;
 
-  FT::NamingManager_var my_naming_manager_;
-  FT::NamingManager_var peer_naming_manager_;
+  FT_Naming::NamingManager_var my_naming_manager_;
+  FT_Naming::NamingManager_var peer_naming_manager_;
   CosNaming::NamingContext_var peer_root_context_;
 
   /// The object that implements the FT_Naming::Replication_Manager

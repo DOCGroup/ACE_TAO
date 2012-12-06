@@ -109,13 +109,13 @@ private:
   NSGROUP_COMMAND parse_command_line (void);
 
   /// determine stategy based on policy string value default to ROUND_ROBIN
-  FT::LoadBalancingStrategyValue determine_policy_string (const char *policy);
+  FT_Naming::LoadBalancingStrategyValue determine_policy_string (const char *policy);
 
-  int display_load_policy_group( FT::LoadBalancingStrategyValue strategy, const char *display_label);
+  int display_load_policy_group( FT_Naming::LoadBalancingStrategyValue strategy, const char *display_label);
 
 private:
 
-  FT::NamingManager_var naming_manager_;
+  FT_Naming::NamingManager_var naming_manager_;
 
   /// Name Service
   CosNaming::NamingContextExt_var name_service_;

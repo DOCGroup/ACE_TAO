@@ -21,7 +21,6 @@
 module FT_Naming
 {
 
-  typedef string GroupName;
   enum ChangeType { NEW, UPDATED, DELETED };
 
   exception NotAvailable
@@ -42,7 +41,7 @@ module FT_Naming
   struct ReplicaInfo
   {
     CosNaming::NamingContext root_context;
-    FT::NamingManager naming_manager;
+    FT_Naming::NamingManager naming_manager;
   };
 
   /*

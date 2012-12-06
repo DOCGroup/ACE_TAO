@@ -43,7 +43,7 @@ namespace TAO
 }
 
 class TAO_FtNaming_Export TAO_FT_Naming_Manager
-  : public virtual POA_FT::NamingManager,
+  : public virtual POA_FT_Naming::NamingManager,
     public ACE_Task_Base
 {
 public:
@@ -57,24 +57,24 @@ public:
    *
    */
 
-  virtual ::FT::ObjectGroup_ptr create_object_group (
+  virtual PortableGroup::ObjectGroup_ptr create_object_group (
     const char * group_name,
-    FT::LoadBalancingStrategyValue lb_strategy,
+    FT_Naming::LoadBalancingStrategyValue lb_strategy,
     const char * type_id,
     const ::PortableGroup::Criteria & the_criteria);
 
   virtual void delete_object_group (
     const char * group_name);
 
-  virtual ::PortableGroup::ObjectGroup_ptr get_object_group_ref_from_name (
+  virtual PortableGroup::ObjectGroup_ptr get_object_group_ref_from_name (
     const char * group_name);
 
   virtual void set_load_balancing_strategy (
       const char * group_name,
-      ::FT::LoadBalancingStrategyValue lb_strategy);
+      FT_Naming::LoadBalancingStrategyValue lb_strategy);
 
 
-  virtual ::FT::GroupNames * groups (::FT::LoadBalancingStrategyValue target_strategy);
+  virtual FT_Naming::GroupNames * groups (::FT_Naming::LoadBalancingStrategyValue target_strategy);
   /**
    * @name PortableGroup::PropertyManager Methods
    *
