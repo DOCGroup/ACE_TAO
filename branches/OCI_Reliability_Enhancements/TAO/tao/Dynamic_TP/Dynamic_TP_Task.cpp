@@ -22,15 +22,24 @@ TAO_Dynamic_TP_Task::add_request(TAO::CSD::TP_Request* request)
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->lock_, false);
 
   ++this->num_queue_requests_;
-  if (this->num_queue_requests_ == this->max_pool_threads_)
+  if ((this->num_queue_requests_ > this->max_request_queue_depth_) &&
+      (this->max_request_queue_depth_ != 0))
   {
     this->accepting_requests_ = false;
   }
 
   if (!this->accepting_requests_)
     {
-      ACE_DEBUG((LM_DEBUG,"(%P|%t) TP_Task::add_request() - "
-                 "not accepting requests\n"));
+      if (TAO_debug_level > 4)
+      {
+          ACE_DEBUG((LM_DEBUG,
+        ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_Task::add_request() not accepting requests.\n")
+            ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_Task::add_request() num_queue_requests_ : [%d]\n")
+            ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_Task::add_request() max_request_queue_depth_ : [%d]\n"),
+            this->num_queue_requests_,
+           this->max_request_queue_depth_));
+        }
+      --this->num_queue_requests_;
       return false;
     }
 
@@ -45,8 +54,11 @@ TAO_Dynamic_TP_Task::add_request(TAO::CSD::TP_Request* request)
   this->queue_.put(request);
 
   this->work_available_.signal();
-  ACE_DEBUG((LM_DEBUG,"(%P|%t) TP_Task::add_request() - "
+  if (TAO_debug_level > 4 )
+  {
+    ACE_DEBUG((LM_DEBUG,"TAO (%P|%t) - Dynamic_TP_Task::add_request() - "
             "work available\n"));
+  }
 
   return true;
 }
@@ -64,7 +76,7 @@ TAO_Dynamic_TP_Task::open(void* args)
     {
       //FUZZ: disable check_for_lack_ACE_OS
       ACE_ERROR_RETURN((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) Dynamic_TP_Task failed to open.  ")
+                        ACE_TEXT ("(%P|%t) Dynamic_TP_Task::open() failed to open.  ")
                         ACE_TEXT ("Invalid argument type passed to open().\n")),
                         -1);
       //FUZZ: enable check_for_lack_ACE_OS
@@ -77,11 +89,30 @@ TAO_Dynamic_TP_Task::open(void* args)
   this->thread_stack_size_ = tmp->task_thread_config.stack_size_;
   this->thread_idle_time_ = tmp->task_thread_config.timeout_;
 
+  if (TAO_debug_level > 4)
+  {
+    ACE_DEBUG((LM_DEBUG,
+        ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_Task::open() initialized with:\n")
+        ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_Task::open() init_threads_ \t\t: [%d]\n")
+        ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_Task::open() min_pool_threads_ \t\t: [%d]\n")
+        ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_Task::open() max_pool_threads_ \t\t: [%d]\n")
+        ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_Task::open() max_request_queue_depth_ \t: [%d]\n")
+        ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_Task::open() thread_stack_size_ \t\t: [%d]\n")
+        ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_Task::open() thread_idle_time_ \t\t: [%d]\n"),
+        num,
+        this->min_pool_threads_,
+        this->max_pool_threads_,
+        this->max_request_queue_depth_,
+        this->thread_stack_size_,
+        this->thread_idle_time_.sec())
+        );
+  }
+
   // We can't activate 0 threads.  Make sure this isn't the case.
   if (num < 1)
     {
       ACE_ERROR_RETURN((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) Dynamic_TP_Task failed to open.  ")
+                        ACE_TEXT ("TAO (%P|%t) Dynamic_TP_Task::open() failed to open.  ")
                         ACE_TEXT ("num_threads (%u) is less-than 1.\n"),
                         num),
                        -1);
@@ -96,7 +127,7 @@ TAO_Dynamic_TP_Task::open(void* args)
     {
       //FUZZ: disable check_for_lack_ACE_OS
       ACE_ERROR_RETURN((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) Dynamic_TP_Task failed to open.  ")
+                        ACE_TEXT ("TAO (%P|%t) Dynamic_TP_Task::open() failed to open.  ")
                         ACE_TEXT ("Task has previously been open()'ed.\n")),
                        -1);
       //FUZZ: enable check_for_lack_ACE_OS
@@ -114,7 +145,7 @@ TAO_Dynamic_TP_Task::open(void* args)
         // Assumes that when activate returns non-zero return code that
         // no threads were activated.
         ACE_ERROR_RETURN((LM_ERROR,
-                          ACE_TEXT ("(%P|%t) Dynamic_TP_Task failed to activate ")
+                          ACE_TEXT ("(%P|%t) Dynamic_TP_Task::open() failed to activate ")
                           ACE_TEXT ("(%d) worker threads.\n"),
                           num),
                          -1);
@@ -140,7 +171,7 @@ TAO_Dynamic_TP_Task::open(void* args)
         // Assumes that when activate returns non-zero return code that
         // no threads were activated.
         ACE_ERROR_RETURN((LM_ERROR,
-                          ACE_TEXT ("(%P|%t) Dynamic_TP_Task failed to activate ")
+                          ACE_TEXT ("(%P|%t) Dynamic_TP_Task::open() failed to activate ")
                           ACE_TEXT ("(%d) worker threads.\n"),
                           num),
                          -1);
@@ -173,7 +204,7 @@ TAO_Dynamic_TP_Task::svc()
   int wait_state = 0;
 
   // Account for this current worker thread having started the
-  // execution of this svc() method.    
+  // execution of this svc() method.
   if ((this->num_threads_ < this->max_pool_threads_) || (this->max_pool_threads_ == -1))
     {
       {
@@ -185,20 +216,26 @@ TAO_Dynamic_TP_Task::svc()
         ++this->num_threads_;
         this->active_workers_.signal();
 
-        ACE_DEBUG ((LM_DEBUG,
-            ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_Task: ")
+        if (TAO_debug_level > 4)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+            ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_Task::svc() ")
             ACE_TEXT ("New thread created.")
             ACE_TEXT ("Current thread count:%d\n"),
             this->num_threads_));
+        }
       }
   } else
   {
+      if (TAO_debug_level > 4)
+      {
       // The maximum thread count has been exceeded, so we warn and then exit.
       ACE_DEBUG ((LM_WARNING,
-                  ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_Task: ")
+                  ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_Task::svc() ")
                   ACE_TEXT ("Maximum thread pool threads of %d met.")
                   ACE_TEXT ("New thread not created.\n"),
                   this->max_pool_threads_));
+      }
       return 0;
   }
 
@@ -260,16 +297,19 @@ TAO_Dynamic_TP_Task::svc()
               wait_state = this->work_available_.wait(&tmp_sec);
 
                // Check for timeout
-              if ((wait_state == -1) && 
-                  (this->num_threads_ > this->min_pool_threads_) && 
+              if ((wait_state == -1) &&
+                  (this->num_threads_ > this->min_pool_threads_) &&
                   (this->num_threads_ > 1))
               {
                 --this->num_threads_;
-                ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_Task: ")
-                          ACE_TEXT ("Existing thread expiring.")
-                          ACE_TEXT ("New thread count:%d\n"),
-                          this->num_threads_));
+                if (TAO_debug_level > 4)
+                        {
+                          ACE_DEBUG ((LM_DEBUG,
+                            ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_Task::svc() ")
+                            ACE_TEXT ("Existing thread expiring. ")
+                            ACE_TEXT ("New thread count:%d\n"),
+                            this->num_threads_));
+                        }
                 return 0;
               }
             }
@@ -297,11 +337,14 @@ TAO_Dynamic_TP_Task::svc()
           this->accepting_requests_ = true;
         }
 
-        ACE_DEBUG ((LM_DEBUG,
-          ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_Task: ")
-          ACE_TEXT ("Decrementing num_queue_requests.")
-          ACE_TEXT ("New queue depth:%u\n"),
-          this->num_queue_requests_));
+            if (TAO_debug_level > 4 )
+            {
+            ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_Task::svc() ")
+                  ACE_TEXT ("Decrementing num_queue_requests.")
+                  ACE_TEXT ("New queue depth:%d\n"),
+                  this->num_queue_requests_));
+            }
 
         request->mark_as_ready();
         this->work_available_.signal();

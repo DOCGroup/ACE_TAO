@@ -5,16 +5,10 @@
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
 #include "tao/debug.h"
-
 #include "tao/CSD_Framework/CSD_Framework_Loader.h"
 #include "tao/Dynamic_TP/Dynamic_TP_Config.h"
 #include "tao/Dynamic_TP/Dynamic_TP_POA_Strategy.h"
-//#include "tao/ORB_Constants.h"
-//#include "tao/SystemException.h"
-
 #include "ace/OS_NS_strings.h"
-
-
 #include "tao/CSD_Framework/CSD_ORBInitializer.h"
 #include "tao/PI/DLL_Resident_ORB_Initializer.h"
 #include "tao/ORBInitializer_Registry.h"
@@ -34,7 +28,7 @@ TAO_Dynamic_TP_POA_Loader::~TAO_Dynamic_TP_POA_Loader (void)
 int
 TAO_Dynamic_TP_POA_Loader::init (int argc, ACE_TCHAR* argv[])
 {
-  TAO_debug_level = 5;
+  //TAO_debug_level = 5;
 
   ACE_TRACE ("TAO_Dynamic_TP_POA_Loader::init");
 

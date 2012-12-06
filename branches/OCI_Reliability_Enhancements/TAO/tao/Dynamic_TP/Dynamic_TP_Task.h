@@ -124,7 +124,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
       bool opened_;
 
       /// The number of requests in the local queue.
-      unsigned long num_queue_requests_;
+      size_t num_queue_requests_;
 
       /// The number of currently active worker threads.
       TAO_Dynamic_TP_Thread_Counter num_threads_;

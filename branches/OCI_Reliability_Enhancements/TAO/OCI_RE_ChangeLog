@@ -1,3 +1,40 @@
+Thu Dec  6 14:44:27 UTC 2012  "Marc Neeley"  <neeleym@ociweb.com>
+
+        * tao/CSD_ThreadPool/CSD_TP_Queue.h:
+        * tao/CSD_ThreadPool/CSD_TP_Queue.inl:
+        * tao/CSD_ThreadPool/CSD_TP_Queue.cpp:
+
+          Implemented capture of queue depth as items are being added/removed.
+
+Thu Dec  6 14:36:33 UTC 2012  "Marc Neeley"  <neeleym@ociweb.com>
+
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Static:
+
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Static/Dynamic_TP_POA_Test_Static.mpc:
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Static/Hello.cpp:
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Static/Test.idl:
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Static/client.cpp:
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Static/run_test.pl:
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Static/server.cpp:
+
+          Creation of tests for:
+            - min_pool_threads
+            - init_pool_threads
+            - thread_idle_time (timeout)
+            - max_request_queue_depth
+
+Thu Dec  6 14:36:21 UTC 2012  "Marc Neeley"  <neeleym@ociweb.com>
+
+        * tao/Dynamic_TP/Dynamic_TP_POA_Loader.cpp:
+        * tao/Dynamic_TP/Dynamic_TP_POA_Strategy.inl:
+        * tao/Dynamic_TP/Dynamic_TP_POA_Strategy.cpp:
+        * tao/Dynamic_TP/Dynamic_TP_Task.h:
+        * tao/Dynamic_TP/Dynamic_TP_Task.inl:
+        * tao/Dynamic_TP/Dynamic_TP_Task.cpp:
+
+          Implementation of max_request_queue_depth.
+          Fuzz clean up.
+
 Thu Dec  6 20:13:55 UTC 2012  Kevin Stanley  <stanleyk@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_NamingReplication.idl:

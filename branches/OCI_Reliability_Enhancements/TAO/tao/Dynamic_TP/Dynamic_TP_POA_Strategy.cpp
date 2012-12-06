@@ -79,7 +79,6 @@ TAO_Dynamic_TP_POA_Strategy::poa_activated_event_i(TAO_ORB_Core& orb_core)
 void
 TAO_Dynamic_TP_POA_Strategy::poa_deactivated_event_i()
 {
-  
   // Passing in a value of 1 means that we want to shutdown the task, which
   // equates to causing all worker threads to shutdown.  The worker threads
   // themselves will also invoke the close() method, but the passed-in value
