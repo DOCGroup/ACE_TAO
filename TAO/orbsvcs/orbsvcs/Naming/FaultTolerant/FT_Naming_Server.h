@@ -1,4 +1,19 @@
-// $Id$
+// -*- C++ -*-
+
+//=============================================================================
+/**
+ *  @file    FT_Naming_Server.h
+ *
+ * $Id$
+ *
+ *    Implement functionality necessary for fault tolerant naming service.
+ *    Adds support for Object Group Manager interfaces as well.  This class
+ *    extends the TAO_Naming_Server.
+ *
+ *  @author Kevin Stanley
+ */
+//=============================================================================
+//
 
 #ifndef TAO_FT_NAMING_SERVER_H
 #define TAO_FT_NAMING_SERVER_H
@@ -8,6 +23,7 @@
 #include "orbsvcs/Naming/FaultTolerant/FT_Naming_Replication_Manager.h"
 #include "orbsvcs/Naming/FaultTolerant/ftnaming_export.h"
 #include "tao/IORManipulation/IORManip_Loader.h"
+#include "ace/Recursive_Thread_Mutex.h"
 
 /**
  * @class TAO_FT_Naming_Server
@@ -143,6 +159,10 @@ protected:
   ACE_CString object_group_dir_;
 
   bool is_primary_;
+
+  /// Lock used to serialize access to fault tolerant extensions
+  /// to Naming Service.
+  TAO_SYNCH_RECURSIVE_MUTEX lock_;
 
 private:
   static const ACE_TCHAR* primary_replica_ior_filename;

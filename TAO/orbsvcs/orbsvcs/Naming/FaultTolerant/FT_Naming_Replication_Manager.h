@@ -17,8 +17,8 @@
 #include /**/ "ace/pre.h"
 
 #include "orbsvcs/Naming/FaultTolerant/ftnaming_export.h"
-
 #include "orbsvcs/Naming/FaultTolerant/FT_NamingReplicationS.h"
+#include "ace/Recursive_Thread_Mutex.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -90,6 +90,10 @@ protected:
   CORBA::String_var repl_mgr_name_;
 
   FT_Naming::ReplicationManager_var reference_;
+
+  /// Lock used to serialize access to fault tolerant extensions
+  /// to Naming Service.
+  TAO_SYNCH_MUTEX lock_;
 
 };
 #include /**/ "ace/post.h"

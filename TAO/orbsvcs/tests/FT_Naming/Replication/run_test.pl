@@ -35,7 +35,7 @@ $ns_endpoint2 = "iiop://$hostname:$ns_orb_port2";
 $naming_persistence_dir = "NameService";
 
 $primary_iorfile = "$naming_persistence_dir/ns_replica_primary.ior";
-$iorfile2 = "ns2.ior";
+$combined_ns_iorfile = "combined_ns.ior";
 $nm_iorfile = "nm.ior";
 
 print STDERR "$primary_iorfile\n";
@@ -54,7 +54,7 @@ foreach my $possible ($ENV{TMPDIR}, $ENV{TEMP}, $ENV{TMP}) {
     }
 }
 
-my $test_iorfile2 = $test->LocalFile ($iorfile2);
+my $test_combined_ns_iorfile = $test->LocalFile ($combined_ns_iorfile);
 my $test_nm_iorfile = $test->LocalFile ($nm_iorfile);
 my $test_primary_iorfile = $test->LocalFile ($primary_iorfile);
 
@@ -101,7 +101,12 @@ if ($test->WaitForFileTimed ($primary_iorfile,
     exit 1;
 }
 
-$args = "-ORBEndPoint $ns_endpoint2 -g $nm_iorfile -o $iorfile2 -m 0 -r $naming_persistence_dir --backup";
+$args = "-ORBEndPoint $ns_endpoint2 " .
+        "-g $nm_iorfile " .
+        "-o $combined_ns_iorfile " .
+        "-m 0 " .
+        "-r $naming_persistence_dir " .
+        "--backup";
 
 $prog = "$startdir/../../../Naming_Service/tao_ft_naming";
 
@@ -109,14 +114,14 @@ print STDERR "Starting Backup: $prog $args\n";
 
 $NS2 = $test->CreateProcess ("$prog", "$args");
 
-$test->DeleteFile ($iorfile2);
+$test->DeleteFile ($combined_ns_iorfile);
 $test->DeleteFile ($nm_iorfile);
 
 $NS2->Spawn ();
 
-if ($test->WaitForFileTimed ($iorfile2,
+if ($test->WaitForFileTimed ($combined_ns_iorfile,
                              $test->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$test_iorfile2>\n";
+    print STDERR "ERROR: cannot find file <$test_combined_ns_iorfile>\n";
     $NS2->Kill (); $NS2->TimedWait (1);
     exit 1;
 }
@@ -142,6 +147,6 @@ $NS1->Kill ();
 $NS2->Kill ();
 
 $test->DeleteFile ($primary_iorfile);
-$test->DeleteFile ($iorfile2);
+$test->DeleteFile ($combined_ns_iorfile);
 
 exit $status;
