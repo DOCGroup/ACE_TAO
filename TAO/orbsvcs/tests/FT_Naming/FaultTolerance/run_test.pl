@@ -12,7 +12,6 @@ use Cwd;
 my $debug_level = '0';
 my $redirection_enabled = 1;
 
-
 foreach $i (@ARGV) {
     if ($i eq '-debug') {
         $debug_level = '10';
@@ -51,6 +50,7 @@ my $primary_default_init_ref = "-ORBDefaultInitRef corbaloc:iiop:$hostname:$ns_o
 # References to backup naming service only
 my $backup_default_init_ref = "-ORBDefaultInitRef corbaloc:iiop:$hostname:$ns_orb_port2";
 
+=cut
 ## Allow the user to determine where the persistent file will be located
 ## just in case the current directory is not suitable for locking.
 ## We can't change the name of the persistent file because that is not
@@ -64,6 +64,7 @@ foreach my $possible ($ENV{TMPDIR}, $ENV{TEMP}, $ENV{TMP}) {
       }
     }
 }
+=cut
 
 my $server_iorfile1 = $server->LocalFile ($iorfile1);
 my $server_iorfile2 = $server->LocalFile ($iorfile2);
@@ -76,7 +77,6 @@ my $NSGROUP = $client->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_nsgroup");
 my $NSLIST  = $client->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_nslist");
 my $NSADD   = $client->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_nsadd");
 my $NSDEL   = $client->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_nsdel");
-
 
 sub cat_file($)
 {
@@ -229,7 +229,7 @@ sub init_naming_context_directory($$)
     my $directory_name = shift;
 
     if ( ! -d $directory_name ) {
-        mkdir (NameService, 0777);
+        mkdir ($directory_name, 0777);
     } else {
         chdir $directory_name;
         opendir(THISDIR, ".");
@@ -246,7 +246,7 @@ sub init_naming_context_directory($$)
 # Validate that a client can seamlessly connect to the alternate server of a
 # server naming server pair after the other server has been terminated.
 ################################################################################
-sub FailoverTest()
+sub failover_test()
 {
     my $previous_status = $status;
     $status = 0;
@@ -337,22 +337,17 @@ sub FailoverTest()
     $server->DeleteFile($iorfile1);
     $server->DeleteFile($iorfile2);
 
-    print STDERR "\n\n==== Failover Test Result=================================\n";
     if ( $status == 0 ) {
         $status = $previous_status;
-        print STDERR "SUCCESS\n";
-    } else {
-        print STDERR "ERROR\n";
     }
-    print STDERR "==========================================================\n";
-
+    return $status;
 }
 
 ################################################################################
 # Validate that repository data written by the name service is available upon
 # startup.
 ################################################################################
-sub PersistanceTest ()
+sub persistance_test ()
 {
 
     my $previous_status = $status;
@@ -427,23 +422,17 @@ sub PersistanceTest ()
 
     $server->DeleteFile($iorfile1);
 
-    print STDERR "\n\n==== Persistance Test Result==============================\n";
     if ( $status == 0 ) {
         $status = $previous_status;
-        print STDERR "SUCCESS\n";
-    } else {
-        print STDERR "ERROR\n";
     }
-    print STDERR "==========================================================\n";
-
-
+    return $status;
 }
 
 ################################################################################
 # Validate that a client can seamlessly invoke naming operations on either
 # server instance.
 ################################################################################
-sub RedundantEquivalancyTest()
+sub redundant_equivalancy_test()
 {
     my $previous_status = $status;
     $status = 0;
@@ -479,14 +468,11 @@ sub RedundantEquivalancyTest()
         exit 1;
     }
 
-    #print STDERR "\n\n==== Tests with primary and secondary servers running ====\n";
     run_nsadd ("$primary_default_init_ref --name iso --ctx", $POSITIVE_TEST_RESULT);
     run_nsgroup ("$backup_default_init_ref group_create -group ieee -policy round -type_id IDL:FT/NamingManager:1.0", $POSITIVE_TEST_RESULT);
     run_nsgroup ("$primary_default_init_ref group_bind -group ieee -name iso/ieee", $POSITIVE_TEST_RESULT);
     run_nsgroup ("$backup_default_init_ref group_list", $POSITIVE_TEST_RESULT);
     run_nslist ("$primary_default_init_ref", $POSITIVE_TEST_RESULT);
-
-    #print STDERR "\n\n==== Test complete =======================================\n";
 
     $server_status = $NS2->TerminateWaitKill ($server->ProcessStopWaitInterval());
     if ($server_status != 0) {
@@ -503,24 +489,59 @@ sub RedundantEquivalancyTest()
     $server->DeleteFile($iorfile1);
     $server->DeleteFile($iorfile2);
 
-    print STDERR "\n\n==== Redundant Equivalancy Test Result====================\n";
     if ( $status == 0 ) {
         $status = $previous_status;
-        print STDERR "SUCCESS\n";
-    } else {
-        print STDERR "ERROR\n";
     }
-    print STDERR "==========================================================\n";
+
+    return $status;
 }
 
-FailoverTest ();
-PersistanceTest ();
-RedundantEquivalancyTest ();
+sub show_result($$)
+{
+    my $test_result = shift;
+    my $test_name = shift;
 
-if ($status != 0) {
-    print STDERR "ERROR: One or more tests Failed\n";
+    print STDERR "===========================================================\n";
+    if ( 0 == $test_result ) {
+        print STDERR "$test_name: SUCCESS\n";
+    } else {
+        print STDERR "$test_name: ERROR\n";
+    }
+    print STDERR "===========================================================\n";
+}
+
+## Run all of the tests
+sub run_tests()
+{
+    my $test_failure = 0;
+
+    my $test_result = failover_test ();
+    show_result($test_result, "Failover Test");
+    if ($test_result != 0) {
+        $test_failure = 1;
+    }
+
+    $test_result = persistance_test ();
+    show_result($test_result, "Persistance Test");
+    if ($test_result != 0) {
+        $test_failure = 1;
+    }
+
+    $test_result = redundant_equivalancy_test ();
+    show_result($test_result, "Redundant Equivalancy Test");
+    if ( $test_result != 0) {
+        $test_failure = 1;
+    }
+
+    return $test_failure;
+}
+
+my $result = run_tests ();
+
+if ($result != 0) {
+    print STDERR "ERROR: One or more tests failed\n";
 } else {
-    print STDERR "SUCCESS: All Tests Passed\n";
+    print STDERR "SUCCESS: All tests passed\n";
 }
 
-exit $status;
+exit $result;
