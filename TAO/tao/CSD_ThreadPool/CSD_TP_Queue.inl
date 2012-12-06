@@ -8,7 +8,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_INLINE
 TAO::CSD::TP_Queue::TP_Queue()
   : head_(0),
-    tail_(0)
+    tail_(0),
+    cur_queue_depth_(0UL)
 {
 }
 

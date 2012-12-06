@@ -88,40 +88,47 @@ TAO_Dynamic_TP_POA_Strategy::TAO_Dynamic_TP_POA_Strategy
       // thread_idle_time_
       this->thread_idle_time_ = tp_config->timeout_;
 
-      ACE_DEBUG ((LM_DEBUG,
+      if (TAO_debug_level > 4)
+      {
+            ACE_DEBUG ((LM_DEBUG,
             ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_POA_Strategy: ")
             ACE_TEXT ("Initialized with:\n")
-            ACE_TEXT ("    initial_pool_threads_=[%d]\n")
-            ACE_TEXT ("    min_pool_threads_=[%d]\n")
-            ACE_TEXT ("    max_pool_threads_=[%d]\n")
-            ACE_TEXT ("    max_request_queue_depth_=[%d]\n")
-            ACE_TEXT ("    thread_stack_size_=[%d]\n")
-            ACE_TEXT ("    thread_idle_time_=[%d]\n"),
+            ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_POA_Strategy initial_pool_threads_=[%d]\n")
+            ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_POA_Strategy min_pool_threads_=[%d]\n")
+            ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_POA_Strategy max_pool_threads_=[%d]\n")
+            ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_POA_Strategy max_request_queue_depth_=[%d]\n")
+            ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_POA_Strategy thread_stack_size_=[%d]\n")
+            ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_POA_Strategy thread_idle_time_=[%d]\n"),
             this->initial_pool_threads_,
             this->min_pool_threads_,
             this->max_pool_threads_,
             this->max_request_queue_depth_,
             this->thread_stack_size_,
             this->thread_idle_time_.sec()));
+      }
     }
   else
     {
       // Configuration was sent in null, so leave constructor defaults in place
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_POA_Strategy: ")
-                  ACE_TEXT ("Null configuration provided, setting to defaults:\n")
-                  ACE_TEXT ("     initial_pool_threads_=[%d]\n")
-                  ACE_TEXT ("     min_pool_threads_=[%d]\n")
-                  ACE_TEXT ("     max_pool_threads_=[%d]\n")
-                  ACE_TEXT ("     max_request_queue_depth_=[%d]\n")
-                  ACE_TEXT ("     thread_stack_size_=[%d]\n")
-                  ACE_TEXT ("     thread_idle_time_=[%d]\n"),
-                  this->initial_pool_threads_,
-                  this->min_pool_threads_,
-                  this->max_pool_threads_,
-                  this->max_request_queue_depth_,
-                  this->thread_stack_size_,
-                  this->thread_idle_time_.sec ()));
+      if (TAO_debug_level > 4)
+      {
+
+        ACE_DEBUG ((LM_DEBUG,
+            ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_POA_Strategy: ")
+            ACE_TEXT ("Null configuration provided, setting to defaults:\n")
+            ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_POA_Strategy initial_pool_threads_=[%d]\n")
+            ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_POA_Strategy min_pool_threads_=[%d]\n")
+            ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_POA_Strategy max_pool_threads_=[%d]\n")
+            ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_POA_Strategy max_request_queue_depth_=[%d]\n")
+            ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_POA_Strategy thread_stack_size_=[%d]\n")
+            ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_POA_Strategy thread_idle_time_=[%d]\n"),
+            this->initial_pool_threads_,
+            this->min_pool_threads_,
+            this->max_pool_threads_,
+            this->max_request_queue_depth_,
+            this->thread_stack_size_,
+            this->thread_idle_time_.sec ()));
+      }
     }
 }
 
