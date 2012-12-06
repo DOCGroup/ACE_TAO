@@ -93,6 +93,7 @@ public:
   void context_written (void);
 
 protected:
+
   static TAO_FT_Naming_Manager *naming_manager_;
   bool stale_;
 

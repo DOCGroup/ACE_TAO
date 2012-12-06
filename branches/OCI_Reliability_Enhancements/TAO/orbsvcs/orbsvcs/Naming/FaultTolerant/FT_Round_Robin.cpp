@@ -39,15 +39,6 @@ TAO_FT_Round_Robin::next_location (
                     this->lock_,
                     0);
 
-  // If entry is already in the map for this id
-  //   Get the index
-  //   increment the index
-  //   if the index is past the length set it to the first element
-  // Else
-  //   Set the index to 0
-  //   Add the entry in the map
-
-  //
   PortableGroup::Locations_var locations =
     naming_manager->locations_of_members (object_group);
 
@@ -62,21 +53,21 @@ TAO_FT_Round_Robin::next_location (
     {
       CORBA::ULong & i = entry->int_id_;
 
-      // Increment index to point to next location.
-      i++;
-
       if (len <= i)
         i = 0;  // Reset, i.e. wrap around
 
       location = locations[i];
+
+      // Increment index to point to next location.
+      i++;
 
       return true;
     }
 
   // Could not find an entry
   // Create an entry at location 0
-  const CORBA::ULong start = 0;
-  location = locations[start];
+  CORBA::ULong start = 0;
+  location = locations[start++];
   if (this->location_index_map_.bind (id, start) != 0)
   { // The location was already bound or some failure occured. Should not happen.
     throw CORBA::INTERNAL ();

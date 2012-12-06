@@ -114,21 +114,21 @@ TAO_FT_Storable_Naming_Context::propagate_update_notification (
                    FT_Naming::ChangeType change_type)
 {
   // Notify the peer of the changed context
+  FT_Naming::ReplicationManager_var peer =
+    TAO_FT_Naming_Replication_Manager::peer_replica ();
+
+  if (CORBA::is_nil (peer.in ()))
+    {
+      // Replication is not supported without a peer replica.
+      return 1;
+    }
+
+  FT_Naming::NamingContextUpdate context_info;
+  context_info.context_name = this->name_.c_str ();
+  // We are are updating the context one element before the specified name
+  context_info.change_type = change_type;
+
   try {
-    FT_Naming::ReplicationManager_var peer =
-      TAO_FT_Naming_Replication_Manager::peer_replica ();
-
-    if (CORBA::is_nil (peer.in ()))
-      {
-        // Replication is not supported without a peer replica.
-        return 1;
-      }
-
-    FT_Naming::NamingContextUpdate context_info;
-    context_info.context_name = this->name_.c_str ();
-    // We are are updating the context one element before the specified name
-    context_info.change_type = change_type;
-
     // Notify the naming_manager of the updated context
     peer->notify_updated_context (context_info);
   }

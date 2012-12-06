@@ -251,25 +251,25 @@ void TAO_Storable_Naming_Context::Write (TAO::Storable_Base& wrtr)
 
 // Helpers function to load a new context into the binding_map
 int
-TAO_Storable_Naming_Context::load_map(TAO::Storable_Base& storable)
+TAO_Storable_Naming_Context::load_map (TAO::Storable_Base& storable)
 {
   ACE_TRACE("load_map");
-  TAO_Storable_Naming_Context_ReaderWriter rw(storable);
-  return rw.read(*this);
+  TAO_Storable_Naming_Context_ReaderWriter rw (storable);
+  return rw.read (*this);
 }
 
 TAO_Storable_Naming_Context::
-File_Open_Lock_and_Check::File_Open_Lock_and_Check(
+File_Open_Lock_and_Check::File_Open_Lock_and_Check (
                                  TAO_Storable_Naming_Context * context,
                                  const char * mode)
-: TAO::Storable_File_Guard(TAO_Storable_Naming_Context::redundant_),
+: TAO::Storable_File_Guard (TAO_Storable_Naming_Context::redundant_),
   context_(context)
 {
   init(mode);
 }
 
 TAO_Storable_Naming_Context::
-File_Open_Lock_and_Check::~File_Open_Lock_and_Check()
+File_Open_Lock_and_Check::~File_Open_Lock_and_Check ()
 {
   this->release ();
 

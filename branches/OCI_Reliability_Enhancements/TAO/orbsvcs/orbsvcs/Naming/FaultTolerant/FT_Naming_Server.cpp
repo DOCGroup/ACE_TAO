@@ -125,6 +125,12 @@ TAO_FT_Naming_Server::init_naming_manager_with_orb (int argc, ACE_TCHAR *argv []
 
   int result = 0;
 
+  // Need to lock during startup to prevent access of partially initialized variables
+  ACE_GUARD_THROW_EX (ACE_SYNCH_RECURSIVE_MUTEX,
+                      ace_mon,
+                      this->lock_,
+                      CORBA::INTERNAL ());
+
   try {
 
     // Get the POA from the ORB.
@@ -233,6 +239,12 @@ TAO_FT_Naming_Server::init_replication_manager_with_orb (int argc, ACE_TCHAR *ar
 {
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);
+
+  // Need to lock during startup to prevent access of partially initialized variables
+  ACE_GUARD_THROW_EX (ACE_SYNCH_RECURSIVE_MUTEX,
+                      ace_mon,
+                      this->lock_,
+                      CORBA::INTERNAL ());
 
   // If redundancy is not requested, then do not initialize the
   // replication manager
@@ -634,6 +646,12 @@ TAO_FT_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
                                        int use_round_trip_timeout)
 {
 
+  // Need to lock during startup to prevent access of partially initialized variables
+  ACE_GUARD_THROW_EX (ACE_SYNCH_RECURSIVE_MUTEX,
+                      ace_mon,
+                      this->lock_,
+                      CORBA::INTERNAL ());
+
   try
     {
 #if defined (CORBA_E_MICRO)
@@ -943,7 +961,6 @@ TAO_FT_Naming_Server::read_reference_from_file (const char* replica_file_name,
 int
 TAO_FT_Naming_Server::export_ft_naming_references (void)
 {
-
   // If we are not redundant, then nothing to be done
   if (! this->use_redundancy_)
     return 0;
@@ -1040,6 +1057,11 @@ TAO_FT_Naming_Server::update_object_group (
 {
   ACE_UNUSED_ARG (group_info);
 
+  ACE_GUARD_THROW_EX (ACE_SYNCH_RECURSIVE_MUTEX,
+                      ace_mon,
+                      this->lock_,
+                      CORBA::INTERNAL ());
+
   // TODO: Update or mark the affected object group that is specified
   return 0;
 }
@@ -1048,6 +1070,11 @@ int
 TAO_FT_Naming_Server::update_naming_context (
     const FT_Naming::NamingContextUpdate & context_info)
 {
+  ACE_GUARD_THROW_EX (ACE_SYNCH_RECURSIVE_MUTEX,
+                      ace_mon,
+                      this->lock_,
+                      CORBA::INTERNAL ());
+
   PortableServer::ServantBase_var servant;
 
   // Lookup the servant for the identified context and see if it is
