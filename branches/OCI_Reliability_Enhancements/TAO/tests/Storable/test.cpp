@@ -73,13 +73,22 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   ACE_CString str_write = ACE_CString("string") + ACE_CString(index_str);
   ACE_CString str_read;
 
-  for (int j = 0; j < num_loops; ++j)
+  try
     {
-      savable.string_set(string_index, str_write);
-      savable.int_set(j);
-      ACE_OS::sleep (sleep_time);
-      str_read = savable.string_get (string_index);
-      ACE_ASSERT (str_write == str_read);
+      for (int j = 0; j < num_loops; ++j)
+        {
+          savable.string_set(string_index, str_write);
+          savable.int_set(j);
+          ACE_OS::sleep (sleep_time);
+          str_read = savable.string_get (string_index);
+          ACE_ASSERT (str_write == str_read);
+        }
+    }
+
+  catch (Storable_Exception &ex)
+    {
+      std::cout << "Storable_Exception thrown with state " <<
+        ex.get_state () << std::endl;
     }
 
   return 0;
