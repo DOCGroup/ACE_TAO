@@ -272,15 +272,15 @@ NS_group_svc::destroy (void)
   return 1;
 }
 
-FT::LoadBalancingStrategyValue
+FT_Naming::LoadBalancingStrategyValue
 NS_group_svc::determine_policy_string (const char *policy)
 {
   if (ACE_OS::strcasecmp (policy, ACE_TEXT("rand")) == 0) {
-    return FT::RANDOM;
+    return FT_Naming::RANDOM;
   } else if (ACE_OS::strcasecmp (policy, ACE_TEXT("least")) == 0){
-    return FT::LEAST;
+    return FT_Naming::LEAST;
   } else {
-    return FT::ROUND_ROBIN; // Default case
+    return FT_Naming::ROUND_ROBIN; // Default case
   }
 }
 
@@ -312,7 +312,7 @@ NS_group_svc::start_orb (void)
       this->orb_->resolve_initial_references ("NamingManager");
 
     this->naming_manager_ =
-      FT::NamingManager::_narrow (naming_manager_object.in ());
+      FT_Naming::NamingManager::_narrow (naming_manager_object.in ());
 
     if (CORBA::is_nil (this->naming_manager_.in ()))
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -602,13 +602,13 @@ NS_group_svc::group_list (void)
 
   /// Display object group list for each load balancing strategy
   int rc = 0;
-  if( display_load_policy_group (FT::ROUND_ROBIN, "Round Robin") < 0 ) {
+  if( display_load_policy_group (FT_Naming::ROUND_ROBIN, "Round Robin") < 0 ) {
     rc = -1;
   }
-  if( display_load_policy_group (FT::RANDOM, "Random") < 0 ) {
+  if( display_load_policy_group (FT_Naming::RANDOM, "Random") < 0 ) {
     rc = -1;
   }
-  if( display_load_policy_group (FT::LEAST, "Least") < 0 ) {
+  if( display_load_policy_group (FT_Naming::LEAST, "Least") < 0 ) {
     rc = -1;
   }
   return rc;
@@ -616,7 +616,7 @@ NS_group_svc::group_list (void)
 
 int
 NS_group_svc::display_load_policy_group(
-  FT::LoadBalancingStrategyValue strategy,
+  FT_Naming::LoadBalancingStrategyValue strategy,
   const char *display_label) {
 
   if( display_label == 0 ) {
@@ -628,7 +628,7 @@ NS_group_svc::display_load_policy_group(
   try
   {
 
-    FT::GroupNames_var list = this->naming_manager_->groups (strategy);
+    FT_Naming::GroupNames_var list = this->naming_manager_->groups (strategy);
 
     std::cout << "\n" << display_label << " Load Balancing Groups:" << std::endl;
 

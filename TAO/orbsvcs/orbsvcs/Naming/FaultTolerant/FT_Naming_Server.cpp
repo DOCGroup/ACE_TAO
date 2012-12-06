@@ -200,7 +200,7 @@ TAO_FT_Naming_Server::init_naming_manager_with_orb (int argc, ACE_TCHAR *argv []
       &this->naming_manager_);
 
     CORBA::Object_ptr nm_obj = this->naming_manager_poa_->id_to_reference (id.in ());
-    this->my_naming_manager_ = FT::NamingManager::_narrow (nm_obj);
+    this->my_naming_manager_ = FT_Naming::NamingManager::_narrow (nm_obj);
 
     this->naming_manager_ior_ =
       orb->object_to_string (this->my_naming_manager_);
@@ -371,7 +371,7 @@ TAO_FT_Naming_Server::init_replication_manager_with_orb (int argc, ACE_TCHAR *ar
               ACE_DEBUG ((LM_DEBUG, "Registering with backup.\n"));
               // Register with the backup
               CosNaming::NamingContext_var root = this->my_root_context ();
-              FT::NamingManager_var nm = this->my_naming_manager ();
+              FT_Naming::NamingManager_var nm = this->my_naming_manager ();
 
               int registration_result =
                 this->replication_manager_->register_with_peer_replica (peer_ref.in (),
@@ -437,7 +437,7 @@ TAO_FT_Naming_Server::init_replication_manager_with_orb (int argc, ACE_TCHAR *ar
             ACE_DEBUG ((LM_DEBUG, "Backup registering with primary.\n"));
             // Register with the primary
             CosNaming::NamingContext_var root = this->my_root_context ();
-            FT::NamingManager_var nm = this->my_naming_manager ();
+            FT_Naming::NamingManager_var nm = this->my_naming_manager ();
             int registration_result =
               this->replication_manager_->register_with_peer_replica (peer_ref.in (),
                                                                       root.in (),
@@ -1181,19 +1181,19 @@ TAO_FT_Naming_Server::my_root_context (void) const
 }
 
 void
-TAO_FT_Naming_Server::peer_naming_manager (FT::NamingManager_ptr peer_cxt)
+TAO_FT_Naming_Server::peer_naming_manager (FT_Naming::NamingManager_ptr peer_cxt)
 {
-  peer_naming_manager_ = FT::NamingManager::_duplicate (peer_cxt);
+  peer_naming_manager_ = FT_Naming::NamingManager::_duplicate (peer_cxt);
 }
 
-FT::NamingManager_ptr
+FT_Naming::NamingManager_ptr
 TAO_FT_Naming_Server::peer_naming_manager (void)
 {
-  return  FT::NamingManager::_duplicate (peer_naming_manager_);
+  return  FT_Naming::NamingManager::_duplicate (peer_naming_manager_);
 }
 
-FT::NamingManager_ptr
+FT_Naming::NamingManager_ptr
 TAO_FT_Naming_Server::my_naming_manager (void) const
 {
-  return  FT::NamingManager::_duplicate (this->my_naming_manager_);
+  return  FT_Naming::NamingManager::_duplicate (this->my_naming_manager_);
 }

@@ -16,9 +16,7 @@
 
 #include "orbsvcs/PortableGroup.idl"
 
-// TODO:  Rename the module to be FT_Naming. Should not be FT since it is
-// not an OMG standard
-module FT
+module FT_Naming
 {
   typedef PortableGroup::ObjectGroup ObjectGroup;
 
@@ -49,7 +47,7 @@ module FT
     void delete_object_group (in string group_name)
       raises (PortableGroup::ObjectGroupNotFound);
 
-    PortableGroup::ObjectGroup get_object_group_ref_from_name (
+    ObjectGroup get_object_group_ref_from_name (
       in string group_name)
       raises (PortableGroup::ObjectGroupNotFound);
 

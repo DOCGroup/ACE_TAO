@@ -71,7 +71,7 @@ public:
   /// successful and -1 if unable to contact the peer.
   int register_with_peer_replica (FT_Naming::ReplicationManager_ptr replica,
                                   CosNaming::NamingContext_ptr nc,
-                                  FT::NamingManager_ptr rm);
+                                  FT_Naming::NamingManager_ptr rm);
 
   /// The object reference for this servant instance
   FT_Naming::ReplicationManager_ptr reference (void);
