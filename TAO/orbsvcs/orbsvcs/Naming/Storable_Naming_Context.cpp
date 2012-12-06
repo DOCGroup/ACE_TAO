@@ -285,11 +285,10 @@ bool
 TAO_Storable_Naming_Context::
 File_Open_Lock_and_Check::object_obsolete (void)
 {
-  // If the stale flag is set, context is obsolete.
-  // Otherwise check the last changed flag against
-  // file.
-  return (context_->stale () ||
-          (fl_->last_changed () > this->get_object_last_changed ()));
+
+  // Query the underlying context if it is obsolete with respect
+  // to the provided file last-changed time
+  return (context_->is_obsolete (this->get_object_last_changed ()));
 }
 
 void
@@ -1016,6 +1015,14 @@ TAO_Storable_Naming_Context::context_written (void)
 {
   // No-op.  Derived classes may handle this callback
   // from the File_Open_Lock_and_Check
+}
+
+bool
+TAO_Storable_Naming_Context::is_obsolete (time_t stored_time)
+{
+  // If the time in the persistent store is greater than this
+  // object last change time, the context is obsolete
+  return (stored_time > this->last_changed_);
 }
 
 void

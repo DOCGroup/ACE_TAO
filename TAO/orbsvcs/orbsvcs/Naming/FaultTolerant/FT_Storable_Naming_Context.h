@@ -92,6 +92,13 @@ public:
    */
   void context_written (void);
 
+  /**
+   * An internal callback invoked by the File_Open_Lock_and_Check
+   * object to determine if this context is obsolete with respect to the
+   * file object .
+   */
+  virtual bool is_obsolete (time_t stored_time);
+
 protected:
 
   static TAO_FT_Naming_Manager *naming_manager_;

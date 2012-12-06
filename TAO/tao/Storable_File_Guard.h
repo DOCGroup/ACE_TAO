@@ -47,6 +47,9 @@ namespace TAO
     /// virtual functions are available.
     void release (void);
 
+    /// Return when the object in memory has last changed
+    virtual time_t get_object_last_changed () = 0;
+
     /// Get the underlying stream being used.
     TAO::Storable_Base & peer ();
 
@@ -65,9 +68,6 @@ namespace TAO
 
     /// Indicate when the object in memory has last changed
     virtual void set_object_last_changed (const time_t & time) = 0;
-
-    /// Return when the object in memory has last changed
-    virtual time_t get_object_last_changed () = 0;
 
     /// Load object from file to memory
     virtual void load_from_stream () = 0;

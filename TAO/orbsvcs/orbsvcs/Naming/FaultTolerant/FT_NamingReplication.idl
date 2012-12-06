@@ -69,9 +69,9 @@ module FT_Naming
                                   in ReplicaInfo replica_info)
       raises (NotAvailable);
 
-    void notify_updated_object_group(in ObjectGroupUpdate group_info);
+    oneway void notify_updated_object_group(in ObjectGroupUpdate group_info);
 
-    void notify_updated_context(in NamingContextUpdate context_info);
+    oneway void notify_updated_context(in NamingContextUpdate context_info);
   };
 };
 

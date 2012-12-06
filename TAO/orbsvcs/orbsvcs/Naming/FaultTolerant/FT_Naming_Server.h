@@ -158,7 +158,12 @@ protected:
   int use_object_group_persistence_;
   ACE_CString object_group_dir_;
 
-  bool is_primary_;
+  enum ServerRole { PRIMARY, BACKUP, STANDALONE };
+
+  /// The role this server is to take on. Controlled by the
+  /// --primary or --backup command line arguments.  Defaults
+  /// to STANDALONE if no role is provided in command line.
+  ServerRole server_role_;
 
   /// Lock used to serialize access to fault tolerant extensions
   /// to Naming Service.

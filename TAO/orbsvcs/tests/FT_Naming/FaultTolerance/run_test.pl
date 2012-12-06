@@ -27,13 +27,16 @@ my $client  = PerlACE::TestTarget::create_target (2) || die "Create target 2 fai
 # executables.
 my $hostname = $server->HostName ();
 
+my $NAME_CONTEXT_DIRECTORY = "NameService";
+# The file that is written by the primary when ready to start backup
+my $primary_iorfile = "$NAME_CONTEXT_DIRECTORY/ns_replica_primary.ior";
+
 my $ns_orb_port1 = 10001 + $server->RandomPort ();
 my $ns_orb_port2 = 10002 + $server->RandomPort ();
 
 my $ns_endpoint1 = "iiop://$hostname:$ns_orb_port1";
 my $ns_endpoint2 = "iiop://$hostname:$ns_orb_port2";
 
-my $iorfile1     = "ns1.ior";
 my $iorfile2     = "ns2.ior";
 my $stdout_file = "test.out";
 my $stderr_file = "test.err";
@@ -66,7 +69,7 @@ foreach my $possible ($ENV{TMPDIR}, $ENV{TEMP}, $ENV{TMP}) {
 }
 =cut
 
-my $server_iorfile1 = $server->LocalFile ($iorfile1);
+my $server_primary_iorfile = $server->LocalFile ($primary_iorfile);
 my $server_iorfile2 = $server->LocalFile ($iorfile2);
 
 my $status = 0;
@@ -250,8 +253,9 @@ sub failover_test()
 {
     my $previous_status = $status;
     $status = 0;
-    my $NAME_CONTEXT_DIRECTORY = "NameService";
 
+    my $nm_iorfile = "nm.ior";
+    my $server_nm_iorfile = $server->LocalFile ($nm_iorfile);
 
     print STDERR "\n\n==== Failover Test =======================================\n";
     init_naming_context_directory ($server, $NAME_CONTEXT_DIRECTORY );
@@ -259,26 +263,30 @@ sub failover_test()
     # // Start the primary. It will write the replication ior to a file in the persistence dir.
     # tao_ft_naming --primary -ORBEndpoint <primary_hostname:port> -r <nameService_persistence_dir>
 
-    # // Start the backup. Reads the primary ior from the persistence dir. Writes the multi-profile ior to naming_ior_filename.
+    # // Start the backup. Reads the primary ior from the persistence dir.
+    # Writes the multi-profile ior to naming_ior_filename.
     # tao_ft_naming --backup -ORBEndpoint <primary_hostname:port> -r <nameService_persistence_dir> -o <naming_ior_filename>
 
     # Run two Naming Servers
-    my $ns1_args = "--primary -ORBDebugLevel $debug_level -ORBListenEndPoints $ns_endpoint1 -o $server_iorfile1 -m 0 -r $NAME_CONTEXT_DIRECTORY";
-    my $ns2_args = "--backup -ORBDebugLevel $debug_level -ORBListenEndPoints $ns_endpoint2 -o $server_iorfile2 -m 0 -r $NAME_CONTEXT_DIRECTORY";
+    my $ns1_args = "--primary -ORBDebugLevel $debug_level -ORBListenEndPoints $ns_endpoint1 -m 0 -r $NAME_CONTEXT_DIRECTORY";
+    my $ns2_args = "--backup -ORBDebugLevel $debug_level -ORBListenEndPoints $ns_endpoint2 -o $server_iorfile2 -g $server_nm_iorfile -m 0 -r $NAME_CONTEXT_DIRECTORY";
 
     $NS1 = $server->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_ft_naming", "$ns1_args");
     $NS2 = $server->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_ft_naming", "$ns2_args");
 
-    $server->DeleteFile ("$iorfile1");
+    $server->DeleteFile ($primary_iorfile);
+    print STDERR "*****Starting the primary\n";
     $NS1->Spawn ();
-    if ($server->WaitForFileTimed ($iorfile1,
+    if ($server->WaitForFileTimed ($primary_iorfile,
                                    $server->ProcessStartWaitInterval()) == -1) {
-        print STDERR "ERROR: cannot find file <$server_iorfile1>\n";
+        print STDERR "ERROR: cannot find file <$server_primary_iorfile>\n";
         $NS1->Kill (); $NS1->TimedWait (1);
         exit 1;
     }
 
-    $server->DeleteFile ("$iorfile2");
+    $server->DeleteFile ($iorfile2);
+    $server->DeleteFile ($nm_iorfile);
+    print STDERR "*****Starting the backup\n";
     $NS2->Spawn ();
     if ($server->WaitForFileTimed ($iorfile2,
                                    $server->ProcessStartWaitInterval()) == -1) {
@@ -309,11 +317,11 @@ sub failover_test()
     run_nslist ("$default_init_ref", $POSITIVE_TEST_RESULT);
 
     #restart primary server
-    $server->DeleteFile ("$iorfile1");
+    $server->DeleteFile ($primary_iorfile);
     $NS1->Spawn ();
-    if ($server->WaitForFileTimed ($iorfile1,
+    if ($server->WaitForFileTimed ($primary_iorfile,
                                    $server->ProcessStartWaitInterval()) == -1) {
-        print STDERR "ERROR: cannot find file <$server_iorfile1>\n";
+        print STDERR "ERROR: cannot find file <$server_primary_iorfile>\n";
         $NS1->Kill (); $NS1->TimedWait (1);
         exit 1;
     }
@@ -334,8 +342,9 @@ sub failover_test()
         $status = 1;
     }
 
-    $server->DeleteFile($iorfile1);
+    $server->DeleteFile($primary_iorfile);
     $server->DeleteFile($iorfile2);
+    $server->DeleteFile($nm_iorfile);
 
     if ( $status == 0 ) {
         $status = $previous_status;
@@ -352,7 +361,6 @@ sub persistance_test ()
 
     my $previous_status = $status;
     $status = 0;
-    my $NAME_CONTEXT_DIRECTORY = "NameService";
 
     my $nm_iorfile  = "nm.ior";
     my $server_nm_iorfile = $server->LocalFile ($nm_iorfile);
@@ -363,16 +371,21 @@ sub persistance_test ()
     init_naming_context_directory ($server, $NAME_CONTEXT_DIRECTORY );
 
     # Run two Naming Servers
-    my $ns_args = "--primary -ORBDebugLevel $debug_level -ORBListenEndPoints $ns_endpoint1 -o $server_iorfile1 -g $server_nm_iorfile -m 0 -r $NAME_CONTEXT_DIRECTORY";
+    my $ns_args = "--primary -ORBDebugLevel $debug_level -ORBListenEndPoints $ns_endpoint1 -m 0 -r $NAME_CONTEXT_DIRECTORY";
+    my $ns2_args = "--backup -ORBDebugLevel $debug_level -ORBListenEndPoints $ns_endpoint2 -o $server_iorfile2 -m 0 -r $NAME_CONTEXT_DIRECTORY";
+
+    $NS1 = $server->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_ft_naming", "$ns1_args");
+    $NS2 = $server->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_ft_naming", "$ns2_args");
+
 
     ##1. Run one instance of tao_ft_naming service
     $NS1 = $server->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_ft_naming", "$ns_args");
 
-    $server->DeleteFile ("$iorfile1");
+    $server->DeleteFile ($primary_iorfile);
     $NS1->Spawn ();
-    if ($server->WaitForFileTimed ($iorfile1,
+    if ($server->WaitForFileTimed ($primary_iorfile,
                                    $server->ProcessStartWaitInterval()) == -1) {
-        print STDERR "ERROR: cannot find file <$server_iorfile1>\n";
+        print STDERR "ERROR: cannot find file <$server_primary_iorfile>\n";
         $NS1->Kill (); $NS1->TimedWait (1);
         exit 1;
     }
@@ -397,11 +410,11 @@ sub persistance_test ()
     }
 
     ##6. Start a new instance of the tao_ft_naming server
-    $server->DeleteFile ("$iorfile1");
+    $server->DeleteFile ($primary_iorfile);
     $NS1->Spawn ();
-    if ($server->WaitForFileTimed ($iorfile1,
+    if ($server->WaitForFileTimed ($primary_iorfile,
                                    $server->ProcessStartWaitInterval()) == -1) {
-        print STDERR "ERROR: cannot find file <$server_iorfile1>\n";
+        print STDERR "ERROR: cannot find file <$server_primary_iorfile>\n";
         $NS1->Kill (); $NS1->TimedWait (1);
         exit 1;
     }
@@ -420,7 +433,7 @@ sub persistance_test ()
         $status = 1;
     }
 
-    $server->DeleteFile($iorfile1);
+    $server->DeleteFile($primary_iorfile);
 
     if ( $status == 0 ) {
         $status = $previous_status;
@@ -436,24 +449,23 @@ sub redundant_equivalancy_test()
 {
     my $previous_status = $status;
     $status = 0;
-    my $NAME_CONTEXT_DIRECTORY = "NameService";
 
     print STDERR "\n\n==== Redundant Equivalancy Test ==========================\n";
 
     init_naming_context_directory ($server, $NAME_CONTEXT_DIRECTORY);
 
     # Run two Naming Servers
-    my $ns1_args = "--primary -ORBDebugLevel $debug_level -ORBListenEndPoints $ns_endpoint1 -o $server_iorfile1 -m 0 -r $NAME_CONTEXT_DIRECTORY";
+    my $ns1_args = "--primary -ORBDebugLevel $debug_level -ORBListenEndPoints $ns_endpoint1 -m 0 -r $NAME_CONTEXT_DIRECTORY";
     my $ns2_args = "--backup -ORBDebugLevel $debug_level -ORBListenEndPoints $ns_endpoint2 -o $server_iorfile2 -m 0 -r $NAME_CONTEXT_DIRECTORY";
 
     $NS1 = $server->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_ft_naming", "$ns1_args");
     $NS2 = $server->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_ft_naming", "$ns2_args");
 
-    $server->DeleteFile ("$iorfile1");
+    $server->DeleteFile ($primary_iorfile);
     $NS1->Spawn ();
-    if ($server->WaitForFileTimed ($iorfile1,
+    if ($server->WaitForFileTimed ($primary_iorfile,
                                    $server->ProcessStartWaitInterval()) == -1) {
-        print STDERR "ERROR: cannot find file <$server_iorfile1>\n";
+        print STDERR "ERROR: cannot find file <$server_primary_iorfile>\n";
         $NS1->Kill (); $NS1->TimedWait (1);
         exit 1;
     }
@@ -486,7 +498,7 @@ sub redundant_equivalancy_test()
         $status = 1;
     }
 
-    $server->DeleteFile($iorfile1);
+    $server->DeleteFile($primary_iorfile);
     $server->DeleteFile($iorfile2);
 
     if ( $status == 0 ) {

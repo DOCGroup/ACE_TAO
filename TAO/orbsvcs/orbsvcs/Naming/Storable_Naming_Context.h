@@ -372,6 +372,13 @@ protected:
    */
   virtual void context_written (void);
 
+  /**
+   * An internal callback invoked by the File_Open_Lock_and_Check
+   * object to determine if this context is obsolete with respect to the
+   * file object .
+   */
+  virtual bool is_obsolete (time_t stored_time);
+
   /// Global counter used for generation of POA ids for children Naming
   /// Contexts.
   static ACE_UINT32 gcounter_;

@@ -71,7 +71,7 @@ TAO_FT_Naming_Server::TAO_FT_Naming_Server (void)
     naming_manager_ior_file_name_ (0),
     naming_manager_persistence_file_name_ (0),
     use_object_group_persistence_ (0),
-    is_primary_ (false)
+    server_role_ (STANDALONE)
 {
 }
 
@@ -338,7 +338,7 @@ TAO_FT_Naming_Server::init_replication_manager_with_orb (int argc, ACE_TCHAR *ar
     backup_file_name += "/";
     backup_file_name += TAO_FT_Naming_Server::backup_replica_ior_filename;
 
-    if (this->is_primary_)
+    if (this->server_role_ == PRIMARY)
       { // We are the primary
         ACE_DEBUG ((LM_DEBUG, "Is a primary\n"));
 
@@ -403,8 +403,9 @@ TAO_FT_Naming_Server::init_replication_manager_with_orb (int argc, ACE_TCHAR *ar
                         "No Replica IOR file. Waiting for registration.\n"));
           }
       }
-    else
+    else if (this->server_role_ == TAO_FT_Naming_Server::BACKUP)
       { // We are the backup
+        ACE_DEBUG ((LM_DEBUG, "Is a Backup\n"));
 
         ACE_DEBUG ((LM_DEBUG, "Writing replica ior\n"));
         // Write out the backup ior for use by the primary if it must be restarted.
@@ -453,6 +454,11 @@ TAO_FT_Naming_Server::init_replication_manager_with_orb (int argc, ACE_TCHAR *ar
                               -1);
           }
       }
+    else
+      {// We are standalone
+        ACE_DEBUG ((LM_DEBUG, "Is Standalone\n"));
+
+      }
   }
   catch (const CORBA::Exception& ex)
     {
@@ -475,7 +481,7 @@ TAO_FT_Naming_Server::parse_args (int argc,
   // Define the arguments for primary and backup
   get_opts.long_option ("primary", ACE_Get_Opt::NO_ARG);
   get_opts.long_option ("backup", ACE_Get_Opt::NO_ARG);
-  bool primary_or_backup_defined = false;
+  bool role_defined = false;
 
   int c;
   int size;
@@ -572,13 +578,14 @@ TAO_FT_Naming_Server::parse_args (int argc,
           if (ACE_OS::strcmp (long_option, "backup") == 0)
             {
               this->replica_id_ = "Backup";
-              primary_or_backup_defined = true;
+              this->server_role_ = TAO_FT_Naming_Server::BACKUP;
+              role_defined = true;
             }
           else if (ACE_OS::strcmp (long_option, "primary") == 0)
             {
               this->replica_id_ = "Primary";
-              this->is_primary_= true;
-              primary_or_backup_defined = true;
+              this->server_role_ = TAO_FT_Naming_Server::PRIMARY;
+              role_defined = true;
             }
         }
         break;
@@ -621,12 +628,18 @@ TAO_FT_Naming_Server::parse_args (int argc,
                        ACE_TEXT ("Only one persistence option can be passed.\n")
                        ACE_TEXT ("\n")),
                       -1);
-  if (!primary_or_backup_defined)
-    { // Neither primary nor back was defined so we will
-      // become a primary
-      this->replica_id_ = "Primary";
-      this->is_primary_= true;
-      primary_or_backup_defined = true;
+  if (!role_defined)
+    { // No role specified, so we will become a STANDALONE server
+      this->replica_id_ = "Standalone";
+      this->server_role_ = TAO_FT_Naming_Server::STANDALONE;
+      // User has not provided a role, so we will not use redundancy option
+      if (this->use_redundancy_ == 1)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Cannot run standalone with -r option. Using -u instead.\n")));
+          this->use_redundancy_ = 0;
+        }
+
     }
   return 0;
 }
@@ -961,77 +974,103 @@ TAO_FT_Naming_Server::read_reference_from_file (const char* replica_file_name,
 int
 TAO_FT_Naming_Server::export_ft_naming_references (void)
 {
-  // If we are not redundant, then nothing to be done
-  if (! this->use_redundancy_)
-    return 0;
+  int result = 0;
 
-  // The backup should only write out the references
-  if (this->is_primary_)
-    return 0;
-
-  // Make sure the user provided an ior_file_name for the comb
-  if (this->ior_file_name_ == 0)
-    {
-      ACE_DEBUG ((LM_DEBUG, "Unable to write combined NameService IOR file. No file name provided.\n"));
+  switch (this->server_role_) {
+  case TAO_FT_Naming_Server::PRIMARY:
+    {  // Nothing to do for the primary
       return 0;
+      break;
     }
-
-  CORBA::Object_ptr IORM =
-    this->orb_->resolve_initial_references (TAO_OBJID_IORMANIPULATION, 0);
-
-  TAO_IOP::TAO_IOR_Manipulation_ptr iorm =
-    TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM);
-
-  // Combine the primary and backup (my) object references for the naming service
-  CORBA::Object_var combined_obj_ref =
-    iorm->add_profiles (this->peer_root_context (),
-                        this->my_root_context ());
-
-  if (CORBA::is_nil (combined_obj_ref.in()))
+  case TAO_FT_Naming_Server::STANDALONE:
     {
-      ACE_ERROR((LM_ERROR,
-                 ACE_TEXT("(%P|%t) ERROR: could not combine")
-                 ACE_TEXT(" primary and backup IORs for")
-                 ACE_TEXT(" fault tolerant Naming Service.\n")));
-      return -1;
+      ACE_CString ior_str;
+      if (this->ior_file_name_)
+        {// -o option used
+          ior_str =
+            this->orb_->object_to_string (this->my_root_context ());
+
+          this->write_ior_to_file (ior_str.c_str (),
+                                   this->ior_file_name_);
+        }
+      if (this->naming_manager_ior_file_name_)
+        {// -g option used
+          ior_str =
+            this->orb_->object_to_string (this->my_naming_manager ());
+          this->write_ior_to_file (ior_str.c_str (),
+                                   this->naming_manager_ior_file_name_);
+        }
     }
-
-  ACE_CString combined_nameservice_ior_string = this->orb_->object_to_string (combined_obj_ref.in ());
-
-  // Write out the combined IOR for the NameService
-  this->write_ior_to_file (combined_nameservice_ior_string.c_str (),
-                           this->ior_file_name_);
-
-  // Verify that a naming manager ior file name was provided by user
-  if (this->naming_manager_ior_file_name_ == 0)
+    break;
+  case TAO_FT_Naming_Server::BACKUP:
     {
-      ACE_DEBUG ((LM_DEBUG, "No NamingManager IOR file name provided with -g option. Not writing IOR.\n"));
-    }
-  else
-    {// A file name was provided to store tha naming manager IOR
-      // Combine the primary and backup (my) object references for the naming manager
-      combined_obj_ref =
-        iorm->add_profiles (this->peer_naming_manager (),
-                            this->my_naming_manager ());
+      // Make sure the user provided an ior_file_name for the comb
+      if (this->ior_file_name_ == 0)
+        {
+          ACE_DEBUG ((LM_DEBUG, "Unable to write combined NameService IOR file. No file name provided.\n"));
+          return 0;
+        }
+
+      CORBA::Object_ptr IORM =
+        this->orb_->resolve_initial_references (TAO_OBJID_IORMANIPULATION, 0);
+
+      TAO_IOP::TAO_IOR_Manipulation_ptr iorm =
+        TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM);
+
+      // Combine the primary and backup (my) object references for the naming service
+      CORBA::Object_var combined_obj_ref =
+        iorm->add_profiles (this->peer_root_context (),
+                            this->my_root_context ());
 
       if (CORBA::is_nil (combined_obj_ref.in()))
         {
           ACE_ERROR((LM_ERROR,
                      ACE_TEXT("(%P|%t) ERROR: could not combine")
                      ACE_TEXT(" primary and backup IORs for")
-                     ACE_TEXT(" fault tolerant Naming Manager.\n")));
+                     ACE_TEXT(" fault tolerant Naming Service.\n")));
           return -1;
         }
 
-      ACE_CString combined_naming_manager_ior_string =
-        this->orb_->object_to_string (combined_obj_ref.in ());
+      ACE_CString combined_nameservice_ior_string = this->orb_->object_to_string (combined_obj_ref.in ());
 
       // Write out the combined IOR for the NameService
-      this->write_ior_to_file (combined_naming_manager_ior_string.c_str (),
-                               this->naming_manager_ior_file_name_);
-    }
+      this->write_ior_to_file (combined_nameservice_ior_string.c_str (),
+                               this->ior_file_name_);
 
-  return 0;
+      // Verify that a naming manager ior file name was provided by user
+      if (this->naming_manager_ior_file_name_ == 0)
+        {
+          ACE_DEBUG ((LM_DEBUG, "No NamingManager IOR file name provided with -g option. Not writing IOR.\n"));
+        }
+      else
+        {// A file name was provided to store tha naming manager IOR
+          // Combine the primary and backup (my) object references for the naming manager
+          combined_obj_ref =
+            iorm->add_profiles (this->peer_naming_manager (),
+                                this->my_naming_manager ());
+
+          if (CORBA::is_nil (combined_obj_ref.in()))
+            {
+              ACE_ERROR((LM_ERROR,
+                         ACE_TEXT("(%P|%t) ERROR: could not combine")
+                         ACE_TEXT(" primary and backup IORs for")
+                         ACE_TEXT(" fault tolerant Naming Manager.\n")));
+          return -1;
+            }
+
+          ACE_CString combined_naming_manager_ior_string =
+            this->orb_->object_to_string (combined_obj_ref.in ());
+
+          // Write out the combined IOR for the NameService
+          this->write_ior_to_file (combined_naming_manager_ior_string.c_str (),
+                                   this->naming_manager_ior_file_name_);
+        }
+
+      return 0;
+    }
+    break;
+  };
+  return result;
 }
 
 
