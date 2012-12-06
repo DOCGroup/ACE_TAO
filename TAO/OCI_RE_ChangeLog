@@ -1,3 +1,12 @@
+Thu Dec  6 22:20:22 UTC 2012  Byron Harris  <harrisb@ociweb.com>
+
+        * tests/Storable/Savable.h:
+        * tests/Storable/Savable.cpp:
+        * tests/Storable/test.cpp:
+
+          Made test more robust in error handling. Corrected
+          file access modes in operations that modify state.
+
 Thu Dec  6 21:19:48 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
 
         * utils/nsgroup/run_test.pl:

@@ -25,13 +25,11 @@ public:
 
 private:
   Savable & savable_;
-  bool object_created_;
 };
 
 Savable_File_Guard::Savable_File_Guard (Savable & savable, const char * mode)
   : TAO::Storable_File_Guard(false)
   , savable_(savable)
-  , object_created_(false)
 {
   this->init(mode);
 }
@@ -57,13 +55,14 @@ void
 Savable_File_Guard::load_from_stream ()
 {
   savable_.load (this->peer ());
-  object_created_ = true;
+  savable_.loaded_from_stream_ = true;
+  this->peer ().rewind ();
 }
 
 bool
 Savable_File_Guard::is_loaded_from_stream ()
 {
-  return object_created_;
+  return savable_.loaded_from_stream_;
 }
 
 TAO::Storable_Base *
@@ -74,6 +73,7 @@ Savable_File_Guard::create_stream (const char * mode)
 
 Savable::Savable (TAO::Storable_Factory & storable_factory)
   : storable_factory_(storable_factory)
+  , loaded_from_stream_ (false)
   , i_(0)
 {
   ACE_Auto_Ptr<TAO::Storable_Base> stream (storable_factory_.create_stream("test.dat", "r"));
@@ -95,27 +95,45 @@ Savable::~Savable ()
 void
 Savable::load (TAO::Storable_Base & stream)
 {
+  stream.rewind ();
+  if (!stream.good ())
+    throw Storable_Exception (stream.rdstate ());
+
   for (int i = 0; i < 2; ++i)
     {
       stream >> string_[i];
+      if (!stream.good ())
+        throw Storable_Exception (stream.rdstate ());
     }
   stream >> i_;
+  if (!stream.good ())
+    throw Storable_Exception (stream.rdstate ());
 }
 
 void
 Savable::write (TAO::Storable_Base & stream)
 {
+  stream.rewind ();
+  if (!stream.good ())
+    throw Storable_Exception (stream.rdstate ());
+
   for (int i = 0; i < 2; ++i)
     {
       stream << string_[i];
+      if (!stream.good ())
+        throw Storable_Exception (stream.rdstate ());
     }
   stream << i_;
+  if (!stream.good ())
+    throw Storable_Exception (stream.rdstate ());
+
+  stream.flush ();
 }
 
 void
 Savable::string_set (int index, const ACE_CString &s)
 {
-  Savable_File_Guard fg(*this, "w");
+  Savable_File_Guard fg(*this, "rw");
   this->string_[index] = s;
   this->write (fg.peer ());
 }
@@ -130,7 +148,7 @@ Savable::string_get (int index)
 void
 Savable::int_set (int i)
 {
-  Savable_File_Guard fg(*this, "w");
+  Savable_File_Guard fg(*this, "rw");
   this->i_ = i;
   this->write (fg.peer ());
 }
