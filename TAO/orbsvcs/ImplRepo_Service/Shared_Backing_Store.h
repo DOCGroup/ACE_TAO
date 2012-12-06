@@ -131,9 +131,9 @@ private:
 
   ImplementationRepository::SequenceNum seq_num_;
   ImplementationRepository::SequenceNum replica_seq_num_;
-  const bool primary_;
+  const Options::ImrType imr_type_;
   CORBA::String_var non_ft_imr_ior_;
-  static const char* IMR_REPLICA[2];
+  const char* IMR_REPLICA[3];
 };
 
 #endif /* SHARED_BACKING_STORE_H */

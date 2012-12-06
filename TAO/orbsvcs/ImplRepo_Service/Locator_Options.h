@@ -99,7 +99,8 @@ public:
 
   /// If the repository is replicated, this ImR_Locator is
   /// the primary profile in the fault tolerant ImR.
-  bool primary_replica(void) const;
+  enum ImrType { BACKUP_IMR, PRIMARY_IMR, STANDALONE_IMR };
+  ImrType imr_type(void) const;
 
 private:
   /// Parses and pulls out arguments for the ImR
@@ -112,6 +113,8 @@ private:
   int run_service_command (const ACE_TString& cmdline);
 
   int load_registry_options();
+
+  bool set_imr_type(const char* arg);
 private:
 
   /// xml, heap, or registry
@@ -155,7 +158,7 @@ private:
   bool unregister_if_address_reused_;
 
   /// The obj key for the replica
-  bool primary_replica_;
+  ImrType imr_type_;
 };
 
 #endif

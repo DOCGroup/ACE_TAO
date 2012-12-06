@@ -4,6 +4,7 @@
 #include "utils.h"
 #include "tao/ORB_Core.h"
 #include "tao/default_ports.h"
+#include "ace/Read_Buffer.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_ctype.h"
@@ -34,8 +35,15 @@ Locator_Repository::init(PortableServer::POA_ptr root_poa,
     {
       return err;
     }
+
+  // Activate the two poa managers
+  PortableServer::POAManager_var poaman =
+    root_poa->the_POAManager ();
+  poaman->activate ();
+  poaman = imr_poa->the_POAManager ();
+  poaman->activate ();
+
   err = report_ior(root_poa, imr_poa);
-  registered_ = true;
   return err;
 }
 
@@ -43,6 +51,15 @@ int
 Locator_Repository::report_ior(PortableServer::POA_ptr root_poa,
                                PortableServer::POA_ptr imr_poa)
 {
+  if (this->registered_)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+        "ERROR: Repository already reported IOR\n"), -1);
+    }
+
+  ACE_DEBUG((LM_INFO, "report_ior %s\n",
+    this->imr_ior_.in()));
+
   // Register the ImR for use with INS
   CORBA::Object_var obj = this->orb_->resolve_initial_references ("IORTable");
   IORTable::Table_var ior_table = IORTable::Table::_narrow (obj.in ());
@@ -59,29 +76,53 @@ Locator_Repository::report_ior(PortableServer::POA_ptr root_poa,
         return -1;
     }
 
-  if (!CORBA::is_nil(imr_poa))
-    {
-      // Activate the two poa managers
-      PortableServer::POAManager_var poaman =
-        root_poa->the_POAManager ();
-      poaman->activate ();
-      poaman = imr_poa->the_POAManager ();
-      poaman->activate ();
-    }
-
   // We write the ior file last so that the tests can know we are ready.
   if (this->opts_.ior_filename ().length () > 0)
     {
-      FILE* fp = ACE_OS::fopen (this->opts_.ior_filename ().c_str (), "w");
-      if (fp == 0)
+      ACE_DEBUG((LM_INFO, "Opening %s\n",
+        this->opts_.ior_filename ().c_str()));
+      FILE* orig_fp = ACE_OS::fopen(this->opts_.ior_filename ().c_str(),
+                                    ACE_TEXT("r"));
+
+      bool write_data = true;
+      if (orig_fp != 0)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-            ACE_TEXT("ImR: Could not open file: %s\n"),
-            this->opts_.ior_filename ().c_str ()), -1);
+          ACE_DEBUG((LM_INFO, "Opened %s\n",
+            this->opts_.ior_filename ().c_str()));
+
+          ACE_Read_Buffer reader (orig_fp, true);
+
+          char* string = reader.read ();
+
+          if (string != 0)
+            {
+              ACE_DEBUG((LM_INFO, "comparing:\n%s\n%s\n",
+                string, this->imr_ior_.in ()));
+              write_data =
+                (ACE_OS::strcasecmp (string, this->imr_ior_.in ()) != 0);
+              reader.alloc ()->free (string);
+            }
+          ACE_OS::fclose (orig_fp);
         }
-      ACE_OS::fprintf (fp, "%s", this->imr_ior_.in ());
-      ACE_OS::fclose (fp);
+
+      if (write_data)
+        {
+          ACE_DEBUG((LM_INFO, "Writing to %s\n",
+            this->opts_.ior_filename ().c_str()));
+          FILE* fp = ACE_OS::fopen (this->opts_.ior_filename ().c_str (),
+                                    ACE_TEXT("w"));
+          if (fp == 0)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                ACE_TEXT("ImR: Could not open file: %s\n"),
+                this->opts_.ior_filename ().c_str ()), -1);
+            }
+          ACE_OS::fprintf (fp, "%s", this->imr_ior_.in ());
+          ACE_OS::fclose (fp);
+        }
     }
+
+  registered_ = true;
 
   return 0;
 }
@@ -91,14 +132,7 @@ Locator_Repository::report(IORTable::Table_ptr ior_table,
                            const char* name,
                            const char* ior)
 {
-  if (!this->registered_)
-    {
-      ior_table->bind(name, ior);
-    }
-  else
-    {
-      ior_table->rebind(name, ior);
-    }
+  ior_table->bind(name, ior);
 }
 
 int

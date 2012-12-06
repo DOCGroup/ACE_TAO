@@ -15,16 +15,17 @@
 #include "ACEXML/common/XML_Util.h"
 #include "tao/IORManipulation/IORManip_Loader.h"
 
-const char* Shared_Backing_Store::IMR_REPLICA[2] = {"ImR_ReplicaBackup", "ImR_ReplicaPrimary"};
-
 Shared_Backing_Store::Shared_Backing_Store(const Options& opts,
                                            CORBA::ORB_ptr orb)
 : XML_Backing_Store(opts, orb, true),
   listing_file_(opts.persist_file_name() + ACE_TEXT("imr_listing.xml")),
   seq_num_(0),
   replica_seq_num_(0),
-  primary_(opts.primary_replica())
+  imr_type_(opts.imr_type())
 {
+  IMR_REPLICA[Options::PRIMARY_IMR] = "ImR_ReplicaPrimary";
+  IMR_REPLICA[Options::BACKUP_IMR] = "ImR_ReplicaBackup";
+  IMR_REPLICA[Options::STANDALONE_IMR] = "ImR_NoReplica";
 }
 
 Shared_Backing_Store::~Shared_Backing_Store()
@@ -65,7 +66,7 @@ static void replicate(
     {
       Update update;
       update.name = name.c_str();
-      update.type = ImplementationRepository::repo_remove;
+      update.type = type;
       update.seq_num = seq_num;
       replicate(replica, update);
     }
@@ -229,10 +230,10 @@ Shared_Backing_Store::connect_replicas (Replica_ptr this_replica)
 
   if (CORBA::is_nil (obj.in ()))
     {
-      if (!this->primary_)
+      if (this->imr_type_ == Options::BACKUP_IMR)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-            "Error: invalid obj key <%s> for ImR replica\n",
+            "Error: No primary ImR replica file found <%s>\n",
             replica_ior.c_str()), -1);
         }
 
@@ -244,6 +245,7 @@ Shared_Backing_Store::connect_replicas (Replica_ptr this_replica)
   this->replica_ =
     ImplementationRepository::UpdatePushNotification::_narrow (obj.in());
 
+  ACE_DEBUG((LM_INFO, "check replica\n"));
   if (CORBA::is_nil (this->replica_.in ()))
     ACE_ERROR_RETURN ((LM_ERROR,
       "Error: obj key <%s> not an ImR replica\n",
@@ -387,8 +389,8 @@ Shared_Backing_Store::get_listings(bool only_changes) const
 }
 
 int
-Shared_Backing_Store::sync_load (const ACE_CString& name, SyncOp sync_op,
-                                 bool activator)
+Shared_Backing_Store::sync_load (const ACE_CString& /*name*/, SyncOp /*sync_op*/,
+                                 bool /*activator*/)
 {
   return 0;
 }
@@ -432,8 +434,6 @@ Shared_Backing_Store::persist_listings (void) const
   Locator_Repository::AIMap::CONST_ITERATOR aiit (this->activators ());
   for (; aiit.next (aientry); aiit.advance ())
     {
-      Activator_Info_Ptr& info = aientry->int_id_;
-
       const ACE_CString& aname = aientry->ext_id_;
       const ACE_CString fname = make_filename(aname, true, true);
       write_listing(list, fname, aname,
@@ -449,11 +449,16 @@ int
 Shared_Backing_Store::report_ior(PortableServer::POA_ptr root_poa,
                                  PortableServer::POA_ptr imr_poa)
 {
+  if (this->imr_type_ == Options::STANDALONE_IMR)
+    {
+      return Locator_Repository::report_ior(root_poa, imr_poa);
+    }
+
   CORBA::Object_var obj = this->orb_->resolve_initial_references ("IORTable");
   IORTable::Table_var ior_table = IORTable::Table::_narrow (obj.in ());
   ACE_ASSERT (! CORBA::is_nil (ior_table.in ()));
 
-  const char* const replica_name(IMR_REPLICA[this->primary_]);
+  const char* const replica_name(IMR_REPLICA[this->imr_type_]);
   ACE_TString replica_filename = replica_ior_filename(false);
   FILE* fp = ACE_OS::fopen (replica_filename.c_str (), "w");
   if (fp == 0)
@@ -468,7 +473,14 @@ Shared_Backing_Store::report_ior(PortableServer::POA_ptr root_poa,
   ACE_OS::fprintf (fp, "%s", replica_ior.in ());
   ACE_OS::fclose (fp);
 
-  return Locator_Repository::report_ior(root_poa, imr_poa);
+  int err = 0;
+  // only report the imr ior if the fault tolerant ImR is complete
+  if (!CORBA::is_nil (this->replica_.in()))
+    {
+      err = Locator_Repository::report_ior(root_poa, imr_poa);
+    }
+
+  return err;
 }
 
 char*
@@ -478,8 +490,10 @@ Shared_Backing_Store::locator_service_ior(const char* peer_ior) const
     this->orb_->string_to_object(this->non_ft_imr_ior_.in());
   const CORBA::Object_ptr peer_obj =
     this->orb_->string_to_object(peer_ior);
-  const CORBA::Object_ptr& obj1 = (this->primary_) ? this_obj : peer_obj;
-  const CORBA::Object_ptr& obj2 = (!this->primary_) ? this_obj : peer_obj;
+  const CORBA::Object_ptr& obj1 =
+    (this->imr_type_ == Options::PRIMARY_IMR) ? this_obj : peer_obj;
+  const CORBA::Object_ptr& obj2 =
+    (this->imr_type_ != Options::PRIMARY_IMR) ? this_obj : peer_obj;
 
   CORBA::Object_ptr IORM =
     this->orb_->resolve_initial_references (TAO_OBJID_IORMANIPULATION, 0);
@@ -561,6 +575,13 @@ Shared_Backing_Store::register_replica(
     ImplementationRepository::UpdatePushNotification::_duplicate (replica);
 
   seq_num = this->seq_num_;
+  if (this->imr_type_ == Options::STANDALONE_IMR)
+    {
+      ACE_ERROR((LM_ERROR,
+        "Error: Non-replicated ImR receiving replica registration <%s>\n",
+        ft_imr_ior));
+      return;
+    }
 
   this->replica_seq_num_ = 0;
 
@@ -579,9 +600,15 @@ Shared_Backing_Store::register_replica(
 ACE_CString
 Shared_Backing_Store::replica_ior_filename(bool peer_ior_file) const
 {
-  const unsigned int replica_index = (this->primary_ == peer_ior_file ? 0 : 1);
+  Options::ImrType desired_type = this->imr_type_;
+  if (peer_ior_file)
+    {
+      desired_type = (desired_type == Options::PRIMARY_IMR) ?
+        Options::BACKUP_IMR :
+        Options::PRIMARY_IMR;
+    }
   ACE_CString ior =
-    this->filename_ + IMR_REPLICA[replica_index] + ACE_TEXT(".ior");
+    this->filename_ + IMR_REPLICA[desired_type] + ACE_TEXT(".ior");
   if (peer_ior_file)
     {
       // the peer ior file needs the file prefix
@@ -622,8 +649,8 @@ Shared_Backing_Store::LocatorListings_XMLHandler::LocatorListings_XMLHandler(
 
 void
 Shared_Backing_Store::LocatorListings_XMLHandler::startElement (
-  const ACEXML_Char* namespaceURI,
-  const ACEXML_Char* localName,
+  const ACEXML_Char* ,
+  const ACEXML_Char* ,
   const ACEXML_Char* qName,
   ACEXML_Attributes* attrs)
 {

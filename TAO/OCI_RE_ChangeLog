@@ -1,3 +1,29 @@
+Thu Dec  6 13:40:38 UTC 2012  Brian Johnson  <johnsonb@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Locator_Options.h:
+        * orbsvcs/ImplRepo_Service/Locator_Options.cpp:
+
+          Added back "-y" option, which will allow Locator to use the
+          multi-file backing store, but without having replication.
+
+        * orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
+        
+          Moved poa activation to init.
+
+        * orbsvcs/ImplRepo_Service/Shared_Backing_Store.h:
+        * orbsvcs/ImplRepo_Service/Shared_Backing_Store.cpp:
+
+          Only reporting the ior when the fault tolerant imr is available,
+          and added handling for standalone IMR.
+
+        * orbsvcs/ImplRepo_Service/XML_Backing_Store.cpp:
+
+          Cleanup of warnings.
+
+        * orbsvcs/tests/ImplRepo/run_test.pl:
+
+          Changes from locator options and making tests work.
+
 Thu Dec  6 03:57:39 UTC 2012  Kevin Stanley  <stanleyk@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Replication_Manager.h:
