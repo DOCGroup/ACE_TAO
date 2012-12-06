@@ -29,11 +29,11 @@ my $NM_conf = $server->LocalFile ("windows" . $PerlACE::svcconf_ext);
 
 my $name_mgr_iorbase = "nm.ior";
 my $name_srv_iorbase = "ns.ior";
-my $stdout_file = "test.out";
-my $stderr_file = "test.err";
+my $stdout_file      = "test.out";
+my $stderr_file      = "test.err";
 
 my $server_hostname = $server->HostName ();
-my $server_iorfile = $server->LocalFile ($name_mgr_iorbase);
+my $name_mgr_iorfile = $server->LocalFile ($name_mgr_iorbase);
 my $name_server_iorfile = $server->LocalFile ($name_srv_iorbase);
 
 my $naming_mgr_client_iorfile = $client->LocalFile ($name_mgr_iorbase);
@@ -48,20 +48,26 @@ $client->DeleteFile($name_srv_iorbase);
 $client->DeleteFile($stdout_file);
 $client->DeleteFile($stderr_file);
 
-my $NAME_CONTEXT_DIRECTORY = "NameService";
+my $DEBUG_LEVEL   = "-ORBDebugLevel $debug_level";
+my $hostname = $server->HostName ();
+my $ns_orb_port1  = 10001 + $server->RandomPort ();
+my $ns_endpoint1  = "iiop://$hostname:$ns_orb_port1";
 
-my $NM = $server->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_ft_naming",
-        "--primary -r $NAME_CONTEXT_DIRECTORY -g $server_iorfile -o $name_server_iorfile " .
-        "-ORBDebugLevel $debug_level " .
-        "-ORBDottedDecimalAddresses 1" .
-        ($^O eq 'MSWin32' ? " -ORBSvcConf $NM_conf" : ''));
+my $DEF_REF  = "-ORBDefaultInitRef corbaloc:iiop:$hostname:$ns_orb_port1";
+#my $NM_REF   = "-ORBInitRef NameService=file://$name_srv_client_iorfile";
+#my $RM_REF   = "-ORBInitRef NamingManager=file://$naming_mgr_client_iorfile";
+my $NS_REF   = "--ns file://$name_srv_client_iorfile";
+my $LOAD_ARG = "$DEF_REF $DEBUG_LEVEL";
 
-my $NM_REF       = "-ORBInitRef NameService=file://$name_srv_client_iorfile";
-my $RM_REF       = "-ORBInitRef NamingManager=file://$naming_mgr_client_iorfile";
-my $NS_REF       = "--ns file://$name_srv_client_iorfile";
-my $DEBUG_LEVEL  = "-ORBDebugLevel $debug_level";
-my $LOAD_ARG     = "$NM_REF $RM_REF $DEBUG_LEVEL";
+my $tao_ft_naming = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_ft_naming";
+my $name_dir      = "NameService";
+my $ns_args       = "$DEBUG_LEVEL " .
+                    "-ORBListenEndPoints $ns_endpoint1 " .
+                    "-g $name_mgr_iorfile -o $name_server_iorfile " .
+                    "-u $name_dir " .
+                    ($^O eq 'MSWin32' ? "-ORBSvcConf $NM_conf" : '');
 
+my $NM      = $server->CreateProcess ($tao_ft_naming, $ns_args);
 my $NSGROUP = $client->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_nsgroup");
 my $NSLIST  = $client->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_nslist");
 my $NSADD   = $client->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_nsadd");
@@ -266,7 +272,7 @@ sub run_clients ()
         "member_add -group ieee -location $server_hostname -ior file://$naming_mgr_client_iorfile",
         $POSITIVE_TEST_RESULT);
 
-    run_nsadd("$NS_REF"." --name iso --ctx");
+    run_nsadd("$DEF_REF"." --name iso --ctx");
 
     run_nslist("$NS_REF");
 
@@ -322,7 +328,7 @@ sub run_clients ()
         "group_list",
         $POSITIVE_TEST_RESULT);
 
-    run_nsdel("$NS_REF"." --name iso --destroy");
+    run_nsdel("$DEF_REF"." --name iso --destroy");
 
     run_client (
         "-help",
@@ -335,7 +341,7 @@ print STDERR "\n";
 print STDERR "This test will check the methods of the tao_nsgroup\n";
 print STDERR "\n";
 
-init_naming_context_directory ($server, $NAME_CONTEXT_DIRECTORY );
+init_naming_context_directory ($server, $name_dir );
 
 ################################################################################
 ## Start tao_ft_naming Service
@@ -358,6 +364,7 @@ if ($server->GetFile ($name_mgr_iorbase) == -1) {
     $NM->Kill (); $NM->TimedWait (1);
     exit 1;
 }
+
 if ($client->PutFile ($name_mgr_iorbase) == -1) {
     print STDERR "ERROR: cannot set file <$naming_mgr_client_iorfile>\n";
     $NM->Kill (); $NM->TimedWait (1);
@@ -365,7 +372,6 @@ if ($client->PutFile ($name_mgr_iorbase) == -1) {
 }
 
 run_clients();
-
 
 print STDERR "\n\n====================================================\n";
 print STDERR "\n";
