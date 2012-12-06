@@ -78,7 +78,7 @@ sub init_naming_context_directory($$)
     my $directory_name = shift;
 
     if ( ! -d $directory_name ) {
-        mkdir (NameService, 0777);
+        mkdir ($directory_name, 0777);
     } else {
         chdir $directory_name;
         opendir(THISDIR, ".");
