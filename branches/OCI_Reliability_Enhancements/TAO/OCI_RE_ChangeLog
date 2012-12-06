@@ -1,3 +1,33 @@
+Thu Dec  6 20:13:55 UTC 2012  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_NamingReplication.idl:
+
+          Made notification calls oneway.
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:
+
+          Added support for running in standalone mode to write out IORs.
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context.cpp:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.h:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp:
+
+          Refactored to use is_obsolete. Allows Storable_Naming_Context to use
+          file time, while FT_Storable_Naming_Context uses the stale flag.
+
+        * orbsvcs/tests/FT_Naming/FaultTolerance/run_test.pl:
+
+          Updated test to use -o and -g to access the combined IORs more
+          consistently.
+
+        * tao/Storable_File_Guard.h:
+
+          Made accessor for get_object_last_changed to be public to allow
+          users of the abstraction to determine when the underlying store
+          changed.
+
 Thu Dec  6 17:19:19 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
 
         * orbsvcs/tests/FT_Naming/FaultTolerance/run_test.pl:

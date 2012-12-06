@@ -174,4 +174,15 @@ TAO_FT_Storable_Naming_Context::context_written (void)
   propagate_update_notification (change_type);
 }
 
+bool
+TAO_FT_Storable_Naming_Context::is_obsolete (time_t stored_time)
+{
+  ACE_UNUSED_ARG (stored_time);
+  // Check if we either have never loaded this context, or if we
+  // have been notified that it is stale by our peer.
+  // If it has never been loaded, then the context_ object will
+  // be a null pointer.
+  return (this->context_ == 0) || this->stale ();
+}
+
 TAO_END_VERSIONED_NAMESPACE_DECL
