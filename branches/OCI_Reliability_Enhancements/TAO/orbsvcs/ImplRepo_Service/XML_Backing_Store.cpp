@@ -30,7 +30,7 @@ XML_Backing_Store::~XML_Backing_Store()
 }
 
 int
-XML_Backing_Store::persistent_remove (const ACE_CString& name, bool )
+XML_Backing_Store::persistent_remove (const ACE_CString& , bool )
 {
   // one big XML file, need to persist everything
   return persist();
@@ -77,7 +77,6 @@ XML_Backing_Store::persist ()
   for (; aiit.next (aientry); aiit.advance ())
     {
       ACE_CString aname = aientry->ext_id_;
-      Activator_Info_Ptr& info = aientry->int_id_;
       persist(fp, *aientry->int_id_, "\t");
     }
 

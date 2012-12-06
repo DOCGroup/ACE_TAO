@@ -34,6 +34,7 @@ Options::Options ()
 , readonly_ (false)
 , service_command_(SC_NONE)
 , unregister_if_address_reused_ (false)
+, imr_type_(STANDALONE_IMR)
 {
 }
 
@@ -164,20 +165,15 @@ Options::parse_args (int &argc, ACE_TCHAR *argv[])
           this->persist_file_name_ = shifter.get_current ();
           this->repo_mode_ = REPO_XML_FILE;
         }
-      else if ((ACE_OS::strcasecmp (shifter.get_current (),
-                                    ACE_TEXT ("-primary")) == 0) ||
-               (ACE_OS::strcasecmp (shifter.get_current (),
-                                    ACE_TEXT ("-backup")) == 0))
+      else if (set_imr_type(shifter.get_current ()))
         {
-          this->primary_replica_ =
-            (ACE_OS::strcasecmp (shifter.get_current (),
-                                 ACE_TEXT ("-primary")) == 0);
-
+          const ACE_TCHAR* const flag = shifter.get_current();
           shifter.consume_arg ();
 
           if (!shifter.is_anything_left () || shifter.get_current ()[0] == '-')
             {
-              ACE_ERROR ((LM_ERROR, "Error: -x option needs a filename\n"));
+              ACE_ERROR ((LM_ERROR, "Error: %s option needs a filename\n",
+                flag));
               this->print_usage ();
               return -1;
             }
@@ -279,6 +275,8 @@ Options::print_usage (void) const
     "  -o file        Outputs the ImR's IOR to a file\n"
     "  -p file        Use file for storing/loading settings\n"
     "  -x file        Use XML file for storing/loading settings\n"
+    "  -y dir         Use individual XML files for storing/loading\n"
+    "                 settings in the provided directory\n"
     "  -primary dir   Replicate the ImplRepo as the primary and use\n"
     "                 shared XML files for storing/loading settings\n"
     "                 in the provided directory (backup can already\n"
@@ -355,9 +353,8 @@ Options::save_registry_options ()
     (LPBYTE) &tmp, sizeof (DWORD));
   ACE_ASSERT (err == ERROR_SUCCESS);
 
-  tmp = this->primary_replica_ ? 1 : 0;
-  err = ACE_TEXT_RegSetValueEx (key, ACE_TEXT("ReplicaPrimary"), 0, REG_DWORD,
-    (LPBYTE) tmp, sizeof (DWORD));
+  err = ACE_TEXT_RegSetValueEx (key, ACE_TEXT("ImrType"), 0, REG_DWORD,
+    (LPBYTE) &this->imr_type_ , sizeof (this->imr_type_));
   ACE_ASSERT (err == ERROR_SUCCESS);
 
   err = ::RegCloseKey (key);
@@ -471,20 +468,41 @@ Options::load_registry_options ()
       this->persist_file_name_ = tmpstr;
     }
 
-  tmp = 0;
-  sz = sizeof(tmp);
-  err = ACE_TEXT_RegQueryValueEx (key, ACE_TEXT("ReplicaPrimary"), 0, &type,
-    (LPBYTE) &tmp, &sz);
+  sz = sizeof(imr_type_);
+  err = ACE_TEXT_RegQueryValueEx (key, ACE_TEXT("ImrType"), 0, &type,
+    (LPBYTE) &this->imr_type_ , &sz);
   if (err == ERROR_SUCCESS)
     {
       ACE_ASSERT (type == REG_DWORD);
-      this->primary_replica_ = tmp != 0;
     }
 
   err = ::RegCloseKey (key);
   ACE_ASSERT (err == ERROR_SUCCESS);
 #endif
   return 0;
+}
+
+bool
+Options::set_imr_type(const char* arg)
+{
+  if (ACE_OS::strcasecmp (arg, ACE_TEXT ("-primary")) == 0)
+    {
+      this->imr_type_ = PRIMARY_IMR;
+    }
+  else if (ACE_OS::strcasecmp (arg, ACE_TEXT ("-backup")) == 0)
+    {
+      this->imr_type_ = BACKUP_IMR;
+    }
+  else if (ACE_OS::strcasecmp (arg, ACE_TEXT ("-y")) == 0)
+    {
+      this->imr_type_ = STANDALONE_IMR;
+    }
+  else
+    {
+      return false;
+    }
+
+  return true;
 }
 
 bool
@@ -563,7 +581,7 @@ Options::unregister_if_address_reused (void) const
   return this->unregister_if_address_reused_;
 }
 
-bool
-Options::primary_replica(void) const {
-  return this->primary_replica_;
+Options::ImrType
+Options::imr_type(void) const {
+  return this->imr_type_;
 }
