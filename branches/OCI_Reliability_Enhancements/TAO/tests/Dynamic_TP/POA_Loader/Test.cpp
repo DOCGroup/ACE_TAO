@@ -22,9 +22,9 @@ show_tp_config (const ACE_CString &name, const TAO_DTP_Definition &entry)
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("  Request queue max depth: %d\n"), entry.queue_depth_));
 }
 
-void
-show_poa_config (const ACE_CString &name, TAO_Dynamic_TP_POA_Strategy * strat)
-{
+//void
+//show_poa_config (const ACE_CString &name, TAO_Dynamic_TP_POA_Strategy * strat)
+//{
   //ACE_DEBUG ((LM_INFO, ACE_TEXT ("POA [%C] has the configuration key [%C]\n"), name.c_str(),strat->get_tp_config().c_str()));
   //ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("  Initial threads: %d:\n"), entry.init_threads_));
   //ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("  Min threads: %d:\n"), entry.min_threads_));
@@ -33,7 +33,7 @@ show_poa_config (const ACE_CString &name, TAO_Dynamic_TP_POA_Strategy * strat)
   //  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("  Idle Timeout: %d (sec)\n"), entry.timeout_));
   //ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("  Stack Size: %d:\n"), entry.stack_size_));
   //ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("  Request queue max depth: %d\n"), entry.queue_depth_));
-}
+//}
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
@@ -93,7 +93,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
       else
         {
-          show_poa_config (poa_list[i], mapped_strategy);
+          //show_poa_config (poa_list[i], mapped_strategy);
         }
     }
 

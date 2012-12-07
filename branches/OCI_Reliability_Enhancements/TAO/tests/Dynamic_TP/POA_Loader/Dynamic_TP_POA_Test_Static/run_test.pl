@@ -41,7 +41,7 @@ $status = 0;
 #   will log their existance as they start up. The count of
 #   logged messages are tested.
 
-print "Running Test 1....\n";
+print "\nRunning Test 1....\n";
 $test_num=1;
 my $server_logfile = $server->LocalFile ("server_test" . $test_num . ".log");
 
@@ -88,7 +88,7 @@ if ($found_cnt != 5) {
 #   will log their existance as they start up. The count of
 #   logged messages are tested.
 
-print "Running Test 2....\n";
+print "\nRunning Test 2....\n";
 $test_num=2;
 $server_logfile = $server->LocalFile ("server_test" . $test_num . ".log");
 
@@ -134,7 +134,7 @@ if ($found_cnt != 5) {
 # in the log after the run.
 #
 
-print "Running Test 3....\n";
+print "\nRunning Test 3....\n";
 $test_num=3;
 $num_clients=15;
 $server_logfile = $server->LocalFile ("server_test" . $test_num . ".log");
@@ -179,6 +179,72 @@ if ($server->WaitForFileTimed ($iorbase,
 if ($num_exceptions != $valid_num_exceptions)
 {
   print STDERR "ERROR: max_request_queue_depth test failed w/$num_exceptions instead of 5\n";
+  $status = 1;
+} else {
+  $server->DeleteFile($server_logfile);
+}
+
+ $server_status = $SV->TerminateWaitKill ($server->ProcessStopWaitInterval());
+
+ if ($server_status != 0) {
+     print STDERR "ERROR: server returned $server_status\n";
+     $status = 1;
+ }
+
+
+# Test 4:
+# This is a test for showing a process maintaining a max_request_queue_depth after
+# more clients request service than the queue allows for.
+# The test will start up a server with a max_request_queue_depth of 10 and
+# will issue calls from 15 clients. There should be 5 CORBA exceptions found
+# in the log after the run.
+#
+
+print "\nRunning Test 4....\n";
+$test_num=4;
+$num_clients=10;
+$server_logfile = $server->LocalFile ("server_test" . $test_num . ".log");
+
+$SV = $server->CreateProcess ("server", " -ORBDebugLevel 5 -ORBLogFile $server_logfile -s 1 -p {-1,1,4,0,10,10}");
+
+$server_status = $SV->Spawn ();
+
+if ($server_status != 0) {
+    print STDERR "ERROR: server returned $server_status\n";
+    exit 1;
+}
+
+if ($server->WaitForFileTimed ($iorbase,
+                               $server->ProcessStartWaitInterval()) == -1) {
+    print STDERR "ERROR: cannot find file <$server_iorfile>\n";
+    $SV->Kill (); $SV->TimedWait (1);
+    exit 1;
+}
+
+
+ for ($i = 0; $i < $num_clients; $i++) {
+
+     $CLS[$i] = $client->CreateProcess ("client", "-c $i");
+
+     $CLS[$i]->Spawn ();
+ }
+
+ $valid_num_exceptions=6;
+ $num_execeptions=0;
+
+ for ($i = 0; $i < $num_clients; $i++) {
+
+     $client_status = $CLS[$i]->WaitKill ($client->ProcessStopWaitInterval());
+
+     if ($client_status != 0) {
+         $num_exceptions++;
+         print STDERR "ERROR: client $i returned $client_status\n";
+     }
+ }
+
+if ($num_exceptions != $valid_num_exceptions)
+{
+  print STDERR "ERROR: max_pool_threads test failed w/$num_exceptions instead of 6\n";
   $status = 1;
 } else {
   $server->DeleteFile($server_logfile);
