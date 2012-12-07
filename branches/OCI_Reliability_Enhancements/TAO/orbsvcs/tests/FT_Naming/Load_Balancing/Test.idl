@@ -6,7 +6,7 @@
 /// Put the interfaces in a module, to avoid global namespace pollution
 module Test
 {
-  typedef FT::LoadBalancingStrategyValue LoadBalancingStrategyValue;
+  typedef FT_Naming::LoadBalancingStrategyValue LoadBalancingStrategyValue;
 
   /// A very simple interface
   interface Basic

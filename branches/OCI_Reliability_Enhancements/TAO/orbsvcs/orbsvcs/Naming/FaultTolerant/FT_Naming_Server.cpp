@@ -762,7 +762,9 @@ TAO_FT_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
         {
           // Create a factory for Fault Tolerant / Persistent Naming Contexts and use it
           TAO_Naming_Context_Factory *naming_context_factory = 0;
-          ACE_NEW_RETURN (naming_context_factory, TAO_FT_Persistent_Naming_Context_Factory, -1);
+          ACE_NEW_RETURN (naming_context_factory,
+                          TAO_FT_Persistent_Naming_Context_Factory,
+                          -1);
 
           // Provide the naming manager reference for use in
           // TAO_FT_Persistent_Naming_Contexts for load balancing functionality
@@ -770,7 +772,9 @@ TAO_FT_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
 
           // Allocate and initialize Persistent Context Index.
           ACE_NEW_RETURN (this->context_index_,
-            TAO_Persistent_Context_Index (orb, poa, naming_context_factory),
+            TAO_Persistent_Context_Index (orb,
+                                          poa,
+                                          naming_context_factory),
                           -1);
 
           if (this->context_index_->open (persistence_location,
@@ -1156,7 +1160,6 @@ TAO_FT_Naming_Server::update_naming_context (
 /// Destructor.
 TAO_FT_Naming_Server::~TAO_FT_Naming_Server (void)
 {
-  // TODO: Clean up the naming manager
   // Clear out the static naming manager from the persistent naming context
   TAO_FT_Persistent_Naming_Context::set_naming_manager_impl (0);
 }

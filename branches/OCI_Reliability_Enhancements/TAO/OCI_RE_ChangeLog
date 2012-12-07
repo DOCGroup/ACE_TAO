@@ -1,3 +1,24 @@
+Fri Dec  7 02:56:49 UTC 2012  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context_Activator.cpp:
+
+          Delete the Context Impl Factor to avoid leak.
+
+        * orbsvcs/tests/FT_Naming/Load_Balancing/Basic.h:
+        * orbsvcs/tests/FT_Naming/Load_Balancing/Basic.cpp:
+        * orbsvcs/tests/FT_Naming/Load_Balancing/LB_server.h:
+        * orbsvcs/tests/FT_Naming/Load_Balancing/LB_server.cpp:
+        * orbsvcs/tests/FT_Naming/Load_Balancing/Test.idl:
+        * orbsvcs/tests/FT_Naming/Load_Balancing/client.cpp:
+
+          Naming Manager interface is now in the FT_Naming module.
+
+        * orbsvcs/tests/FT_Naming/Replication/client.cpp:
+
+          Refined test for specific exceptions in case other CORBA
+          Exceptions are thrown which should not indicate success.
+
 Thu Dec  6 22:49:38 UTC 2012  Kevin Stanley  <stanleyk@ociweb.com>
 
         * orbsvcs/orbsvcs/FT_NamingManager.idl:

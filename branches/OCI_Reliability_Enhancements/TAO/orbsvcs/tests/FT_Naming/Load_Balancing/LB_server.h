@@ -66,7 +66,7 @@ public:
   CORBA::Object_ptr object_group (void);
 
   /// for servants to get the reference for object_group.
-  FT::NamingManager_ptr naming_manager (void);
+  FT_Naming::NamingManager_ptr naming_manager (void);
 
 private:
 
@@ -75,7 +75,7 @@ private:
 private:
 
   /// Load Manager
-  FT::NamingManager_var naming_manager_;
+  FT_Naming::NamingManager_var naming_manager_;
 
   /// Object Group.
   CORBA::Object_var object_group_;

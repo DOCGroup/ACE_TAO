@@ -23,7 +23,7 @@ class Basic
 public:
   /// Constructor
   Basic (CORBA::Object_ptr object_group,
-         FT::NamingManager_ptr lm,
+         FT_Naming::NamingManager_ptr lm,
          CORBA::ORB_ptr orb,
          const char *loc);
 
@@ -43,7 +43,7 @@ private:
 
   /// Load Manager Reference used to delete the servant reference from the
   /// object group.
-  FT::NamingManager_var nm_;
+  FT_Naming::NamingManager_var nm_;
 
   /// location of the servant
   CORBA::String_var location_;

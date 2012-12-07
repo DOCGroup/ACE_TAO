@@ -47,7 +47,7 @@ LB_server::object_group (void)
   return this->object_group_.in ();
 }
 
-FT::NamingManager_ptr
+FT_Naming::NamingManager_ptr
 LB_server::naming_manager (void)
 {
   return this->naming_manager_.in ();
@@ -129,7 +129,7 @@ LB_server::start_orb_and_poa (void)
         this->orb_->resolve_initial_references ("NamingManager");
 
       this->naming_manager_ =
-        FT::NamingManager::_narrow (obj.in ());
+        FT_Naming::NamingManager::_narrow (obj.in ());
 
       if (CORBA::is_nil (this->naming_manager_.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -172,7 +172,7 @@ LB_server::create_object_group (void)
 
       this->object_group_ = this->naming_manager_->create_object_group (
         "Basic Group",
-        FT::ROUND_ROBIN,
+        FT_Naming::ROUND_ROBIN,
         repository_id,
         criteria);
 
