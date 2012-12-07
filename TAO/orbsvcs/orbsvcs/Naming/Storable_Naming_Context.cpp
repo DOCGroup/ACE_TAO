@@ -288,7 +288,7 @@ File_Open_Lock_and_Check::object_obsolete (void)
 
   // Query the underlying context if it is obsolete with respect
   // to the provided file last-changed time
-  return (context_->is_obsolete (this->get_object_last_changed ()));
+  return (context_->is_obsolete (fl_->last_changed ()));
 }
 
 void
@@ -1020,9 +1020,11 @@ TAO_Storable_Naming_Context::context_written (void)
 bool
 TAO_Storable_Naming_Context::is_obsolete (time_t stored_time)
 {
-  // If the time in the persistent store is greater than this
+  // If the context_ has not been populated or
+  // the time in the persistent store is greater than this
   // object last change time, the context is obsolete
-  return (stored_time > this->last_changed_);
+  return (this->context_ == 0) ||
+         (stored_time > this->last_changed_);
 }
 
 void
