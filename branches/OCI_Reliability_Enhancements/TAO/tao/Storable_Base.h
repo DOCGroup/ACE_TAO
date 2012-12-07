@@ -17,6 +17,7 @@
 
 #include "tao/TAO_Export.h"
 #include "tao/orbconf.h"
+#include "tao/CDR.h"
 
 #include "ace/SString.h"
 
@@ -86,6 +87,12 @@ namespace TAO
     virtual Storable_Base& operator << (unsigned int i) = 0;
 
     virtual Storable_Base& operator >> (unsigned int &i) = 0;
+
+    virtual Storable_Base& operator << (const TAO_OutputCDR & cdr) = 0;
+
+    virtual size_t write (size_t size, const char * bytes) = 0;
+
+    virtual size_t read (size_t size, char *& bytes) = 0;
 
   private:
     Storable_State state_;

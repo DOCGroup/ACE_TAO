@@ -57,6 +57,9 @@ namespace TAO
    */
   class TAO_PortableGroup_Export PG_Object_Group
   {
+
+  protected:
+
     // Information about an object group member
     struct MemberInfo
     {
@@ -134,7 +137,7 @@ namespace TAO
 
   public:
     /// return a duplicated reference to this group (IOGR)
-    PortableGroup::ObjectGroup_ptr reference()const;
+    PortableGroup::ObjectGroup_ptr reference() const;
 
     /**
      * Note the caller receives a copy of the factoryinfos in the result argument.
@@ -145,7 +148,7 @@ namespace TAO
     /**
      * get location of primary member
      */
-    virtual const PortableGroup::Location & get_primary_location() const;
+    virtual const PortableGroup::Location & get_primary_location();
 
     /**
      * returns a duplicate
@@ -230,7 +233,7 @@ namespace TAO
     /**
      * @@TODO DOC
      */
-    CORBA::Object_ptr get_member_reference (
+    virtual CORBA::Object_ptr get_member_reference (
         const PortableGroup::Location & the_location);
 
 
@@ -257,7 +260,7 @@ namespace TAO
      */
     virtual void distribute (int value);
 
-    void set_name (const char* group_name);
+    virtual void set_name (const char* group_name);
 
     virtual const char* get_name (void);
 
@@ -271,9 +274,11 @@ namespace TAO
 
     PortableGroup::ObjectGroup_ptr add_member_to_iogr(CORBA::Object_ptr member);
 
-
     void create_members (size_t count);
 
+  protected:
+
+    void clear_members_map (void);
 
     /////////////////////////
     // Forbidden methods
@@ -300,7 +305,10 @@ namespace TAO
      */
     mutable TAO_SYNCH_MUTEX internals_;
 
+  protected:
     CORBA::ORB_var orb_;
+
+  private:
 
     /// Where to find the factories for replicas.
     PortableGroup::FactoryRegistry_var factory_registry_;
@@ -348,6 +356,8 @@ namespace TAO
      * name that is assigned to the object group by the creator.
      */
     char* group_name_;
+
+  protected:
 
     // group members
     MemberMap members_;
