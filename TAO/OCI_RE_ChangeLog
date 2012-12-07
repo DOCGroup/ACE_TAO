@@ -1,8 +1,27 @@
+Fri Dec  7 21:29:30 UTC 2012  "Marc Neeley"  <neeleym@ociweb.com>
+
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Dynamic/server.cpp:
+
+          Removed reference to deleted include.
+
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Static/Dynamic_TP_POA_Test_Static.mpc:
+          Repaired generation of IDL to fix build looking for generated files.
+
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Static/TestS.cpp:
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Static/run_test.pl:
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Static/server.cpp:
+
+          Inclusion of test for max_pool_threads.
+
+        * tests/Dynamic_TP/POA_Loader/Test.cpp:
+
+          Fixed warnings in nightly build.
+
 Fri Dec  7 21:24:47 UTC 2012  "Marc Neeley"  <neeleym@ociweb.com>
 
         * tao/Dynamic_TP/Dynamic_TP_Task.h:
         * tao/Dynamic_TP/Dynamic_TP_Task.cpp:
-          
+
           Continued implementation of max_pool_threads.
 
 Fri Dec  7 21:04:34 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>

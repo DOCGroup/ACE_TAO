@@ -2,7 +2,6 @@
 
 #include "Hello.h"
 #include "tao/Dynamic_TP/Dynamic_TP_POA_Strategy.h"
-#include "tao/Dynamic_TP/Dynamic_TP_POA_StrategyImpl.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/Thread_Manager.h"
