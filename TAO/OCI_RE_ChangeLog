@@ -1,3 +1,19 @@
+Fri Dec  7 12:44:53 UTC 2012  Byron Harris  <harrisb@ociweb.com>
+
+        * tao/Storable_Base.h:
+        * tao/Storable_FlatFileStream.h:
+        * tao/Storable_FlatFileStream.cpp:
+
+          Add operator << for TAO_OutputCDR and write
+          member function to use with TAO_InputCDRs.
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group_Storable.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group_Storable.cpp:
+
+          Fleshed out read/write of object group state to file.
+
 Fri Dec  7 02:56:49 UTC 2012  Kevin Stanley  <stanleyk@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:

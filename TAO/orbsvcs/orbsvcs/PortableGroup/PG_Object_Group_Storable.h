@@ -72,7 +72,7 @@ namespace TAO
 
   public:
 
-    virtual const PortableGroup::Location & get_primary_location () const;
+    virtual const PortableGroup::Location & get_primary_location ();
 
     virtual void add_member (
         const PortableGroup::Location & the_location,
@@ -117,14 +117,15 @@ namespace TAO
 
     TAO::Storable_Base * create_stream (const char * mode);
 
-    void load (TAO::Storable_Base & stream);
+    void read (TAO::Storable_Base & stream);
 
     void write (TAO::Storable_Base & stream);
 
     TAO::Storable_Factory & storable_factory_;
+    bool loaded_from_stream_;
     time_t last_changed_;
 
-    friend class Group_Object_Synch;
+    friend class Object_Group_File_Guard;
 
   };
 } // namespace TAO

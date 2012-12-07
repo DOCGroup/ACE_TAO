@@ -6,11 +6,13 @@
  *
  * $Id$
  *
+ * @author Marina Spivak <marina@cs.wustl.edu>
  * @author Byron Harris <harrisb@ociweb.com>
  */
 //=============================================================================
 
 #include "tao/Storable_FlatFileStream.h"
+
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_fcntl.h"
 #include "ace/OS_NS_sys_stat.h"
@@ -158,8 +160,7 @@ TAO::Storable_FlatFileStream::flush (void)
 }
 
 TAO::Storable_Base &
-TAO::Storable_FlatFileStream::operator <<(
-                                          const ACE_CString& str)
+TAO::Storable_FlatFileStream::operator << (const ACE_CString& str)
 {
   ACE_TRACE("TAO::Storable_FlatFileStream::operator <<");
   ACE_OS::fprintf(this->fl_, ACE_SIZE_T_FORMAT_SPECIFIER ACE_TEXT("\n%s\n"),
@@ -169,7 +170,7 @@ TAO::Storable_FlatFileStream::operator <<(
 }
 
 TAO::Storable_Base &
-TAO::Storable_FlatFileStream::operator >>(ACE_CString& str)
+TAO::Storable_FlatFileStream::operator >> (ACE_CString& str)
 {
   ACE_TRACE("TAO::Storable_FlatFileStream::operator >>");
   int bufSize = 0;
@@ -254,6 +255,48 @@ TAO::Storable_FlatFileStream::operator >> (unsigned int &i)
       return *this;
     }
   return *this;
+}
+
+TAO::Storable_Base &
+TAO::Storable_FlatFileStream::operator << (const TAO_OutputCDR & cdr)
+{
+  ACE_TRACE("TAO::Storable_FlatFileStream::operator <<");
+
+  int length = cdr.total_length ();
+  *this << length;
+  for (const ACE_Message_Block *i = cdr.begin (); i != 0; i = i->cont ())
+    {
+      const char *bytes = i->rd_ptr ();
+      size_t len = i->length ();
+      this->write (len, bytes);
+    }
+  return *this;
+}
+
+/*
+TAO_InputCDR *
+TAO::Storable_FlatFileStream::create_input_CDR (const char *& buf)
+{
+  ACE_TRACE("TAO::Storable_FlatFileStream::operator >>");
+
+  int length;
+  *this >> length;
+  buf = ACE_NEW_RETURN (buf, char [length], 0);
+
+  ACE_NEW_RETURN (
+}
+*/
+
+size_t
+TAO::Storable_FlatFileStream::write (size_t size, const char * bytes)
+{
+  return ACE_OS::fwrite (bytes, size, 1, fl_);
+}
+
+size_t
+TAO::Storable_FlatFileStream::read (size_t size, char *& bytes)
+{
+  return ACE_OS::fread (bytes, size, 1, fl_);
 }
 
 TAO::Storable_FlatFileFactory::Storable_FlatFileFactory(const ACE_CString & directory)

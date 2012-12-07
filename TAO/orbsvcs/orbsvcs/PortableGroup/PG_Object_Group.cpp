@@ -81,14 +81,7 @@ TAO::PG_Object_Group::~PG_Object_Group (void)
 {
   delete group_name_;
 
-  for (MemberMap_Iterator it = this->members_.begin();
-      it != this->members_.end();
-      ++it)
-    {
-      MemberInfo * member = (*it).int_id_;
-      delete member;
-    }
-  this->members_.unbind_all ();
+  this->clear_members_map ();
 }
 
 #if 0   // may want this again someday
@@ -131,7 +124,7 @@ TAO::PG_Object_Group::get_group_specific_factories (
 }
 
 const PortableGroup::Location &
-TAO::PG_Object_Group::get_primary_location (void) const
+TAO::PG_Object_Group::get_primary_location (void)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     guard,
@@ -824,6 +817,19 @@ const char*
 TAO::PG_Object_Group::get_name (void)
 {
   return group_name_;
+}
+
+void
+TAO::PG_Object_Group::clear_members_map (void)
+{
+  for (MemberMap_Iterator it = this->members_.begin();
+      it != this->members_.end();
+      ++it)
+    {
+      MemberInfo * member = (*it).int_id_;
+      delete member;
+    }
+  this->members_.unbind_all ();
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
