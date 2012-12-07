@@ -129,9 +129,11 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
       /// The number of currently active worker threads.
       TAO_Dynamic_TP_Thread_Counter num_threads_;
 
+      /// The number of currently active worker threads.
+      ACE_Atomic_Op <TAO_SYNCH_MUTEX, unsigned long> busy_threads_;
+
       /// The queue of pending servant requests (a.k.a. the "request queue").
       TAO::CSD::TP_Queue queue_;
-
 
       /// The number of static pool threads to create up front.
       int initial_pool_threads_;

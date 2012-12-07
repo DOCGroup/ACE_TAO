@@ -83,6 +83,12 @@ TAO_Dynamic_TP_Task::open(void* args)
     }
 
   num = tmp->task_thread_config.init_threads_;
+
+  // Set the busy_threads_ to the number of init_threads
+  // now. When they startup they will decrement themselves
+  // as they go into a wait state.
+
+  this->busy_threads_ = tmp->task_thread_config.init_threads_; // 
   this->min_pool_threads_ = tmp->task_thread_config.min_threads_;
   this->max_pool_threads_ = tmp->task_thread_config.max_threads_;
   this->max_request_queue_depth_ = tmp->task_thread_config.queue_depth_;
@@ -205,8 +211,7 @@ TAO_Dynamic_TP_Task::svc()
 
   // Account for this current worker thread having started the
   // execution of this svc() method.
-  if ((this->num_threads_ < this->max_pool_threads_) || (this->max_pool_threads_ == -1))
-    {
+
       {
         ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->lock_, false);
         // Put the thread id into a collection which is used to check whether
@@ -220,24 +225,11 @@ TAO_Dynamic_TP_Task::svc()
         {
           ACE_DEBUG ((LM_DEBUG,
             ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_Task::svc() ")
-            ACE_TEXT ("New thread created.")
+            ACE_TEXT ("New thread created. ")
             ACE_TEXT ("Current thread count:%d\n"),
             this->num_threads_));
         }
       }
-  } else
-  {
-      if (TAO_debug_level > 4)
-      {
-      // The maximum thread count has been exceeded, so we warn and then exit.
-      ACE_DEBUG ((LM_WARNING,
-                  ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_Task::svc() ")
-                  ACE_TEXT ("Maximum thread pool threads of %d met.")
-                  ACE_TEXT ("New thread not created.\n"),
-                  this->max_pool_threads_));
-      }
-      return 0;
-  }
 
   // This visitor object will be re-used over and over again as part of
   // the "GetWork" logic below.
@@ -285,12 +277,28 @@ TAO_Dynamic_TP_Task::svc()
               request = dispatchable_visitor.request();
             }
 
+
           // Either the queue is empty or we couldn't find any dispatchable
           // requests in the queue at this time.
           if (request.is_nil())
             {
               // Let's wait until we hear about the possibility of
               // work before we go look again.
+
+              // When the task is initialized the busy_threads_ is set to the
+              // number of threads intialized and then each thread is decremented
+              // here when they go into a wait state.
+
+              --this->busy_threads_;
+
+              if (TAO_debug_level > 4)
+              {
+                ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_Task::svc() ")
+                  ACE_TEXT ("Decrementing busy_threads_. ")
+                  ACE_TEXT ("Busy thread count:%d\n"),
+                  this->busy_threads_));
+              }
 
               ACE_Time_Value tmp_sec = this->thread_idle_time_.to_absolute_time();
 
@@ -303,16 +311,28 @@ TAO_Dynamic_TP_Task::svc()
               {
                 --this->num_threads_;
                 if (TAO_debug_level > 4)
-                        {
-                          ACE_DEBUG ((LM_DEBUG,
-                            ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_Task::svc() ")
-                            ACE_TEXT ("Existing thread expiring. ")
-                            ACE_TEXT ("New thread count:%d\n"),
-                            this->num_threads_));
-                        }
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_Task::svc() ")
+                    ACE_TEXT ("Existing thread expiring. ")
+                    ACE_TEXT ("New thread count:%d\n"),
+                    this->num_threads_));
+                }
                 return 0;
               }
             }
+
+          // The thread has dropped out of the wait state and has not
+          // returned based on a timeout, so it has now become busy.
+          ++this->busy_threads_;
+          if (TAO_debug_level > 4)
+          {
+            ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_Task::svc() ")
+              ACE_TEXT ("Incrementing busy_threads_. ")
+              ACE_TEXT ("Busy thread count:%d\n"),
+              this->busy_threads_));
+          }
         }
 
         // We have dropped out of the "while (request.is_nil())" loop.
@@ -320,6 +340,73 @@ TAO_Dynamic_TP_Task::svc()
         // from the queue.  Note that the visitor will have already
         // marked the target servant as now being busy (because of us).
         // We can now safely release the lock.
+      }
+
+      // Grow the pool if the configuration allows it.
+
+      if (((this->max_pool_threads_ != -1) && (this->busy_threads_ == this->num_threads_) && (this->num_threads_ < this->max_pool_threads_))
+        || ((this->max_pool_threads_ == -1) && (this->num_threads_ == this->busy_threads_.value())))
+      {
+        // Increment the busy_threads_ count until the new thread can hit a wait state
+        // and decrement itself.
+
+        ++this->busy_threads_;
+
+        if (this->thread_stack_size_ == 0)
+        {
+
+          if (this->activate(THR_NEW_LWP | THR_DETACHED,
+                             1,
+                             1) != 0)
+            {
+              // Assumes that when activate returns non-zero return code that
+              // no threads were activated.
+              ACE_DEBUG((LM_ERROR,
+              ACE_TEXT ("(%P|%t) Dynamic_TP_Task::svc() failed to activate ")
+              ACE_TEXT ("(%d) worker threads.\n"),
+              this-num_threads_));
+
+              // Decrement the busy threads since we are not getting a new one.
+              --this->busy_threads_;
+            }
+        } else
+        {
+          size_t * stack_sz_arr = new size_t[1];
+          stack_sz_arr[0] = this->thread_stack_size_;
+
+          if (this->activate(THR_NEW_LWP | THR_DETACHED,
+                             1,
+                             1,
+                             ACE_DEFAULT_THREAD_PRIORITY,
+                             -1,
+                             0,
+                             0,
+                             0,
+                             stack_sz_arr) != 0)
+            {
+              // Assumes that when activate returns non-zero return code that
+              // no threads were activated.
+              ACE_DEBUG((LM_ERROR,
+              ACE_TEXT ("(%P|%t) Dynamic_TP_Task::svc() failed to activate ")
+              ACE_TEXT ("(%d) worker threads.\n"),
+              this-num_threads_));
+
+              // Decrement the busy threads since we are not getting a new one.
+              --this->busy_threads_;
+
+            }
+
+          // After the threads get allocated we need to clean up the allocated array.
+          delete[] stack_sz_arr;
+        }
+
+        if (TAO_debug_level > 4)
+        {
+          ACE_DEBUG((LM_DEBUG,
+          ACE_TEXT ("(%P|%t) Dynamic_TP_Task::svc() Growing the thread pool.  ")
+          ACE_TEXT ("(%d) number of threads in pool (%d) busy threads. (%d) max_pool_threads.\n"),
+          this->num_threads_, this->busy_threads_, this->max_pool_threads_));
+        }
       }
 
       // Do the "PerformWork" step.  We don't need the lock_ to do this.
@@ -337,14 +424,14 @@ TAO_Dynamic_TP_Task::svc()
           this->accepting_requests_ = true;
         }
 
-            if (TAO_debug_level > 4 )
-            {
-            ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_Task::svc() ")
-                  ACE_TEXT ("Decrementing num_queue_requests.")
-                  ACE_TEXT ("New queue depth:%d\n"),
-                  this->num_queue_requests_));
-            }
+        if (TAO_debug_level > 4 )
+        {
+        ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_Task::svc() ")
+              ACE_TEXT ("Decrementing num_queue_requests.")
+              ACE_TEXT ("New queue depth:%d\n"),
+              this->num_queue_requests_));
+        }
 
         request->mark_as_ready();
         this->work_available_.signal();
