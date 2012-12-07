@@ -1,3 +1,9 @@
+Fri Dec  7 13:06:07 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Strategies_T.cpp:
+          Check return value of enable (ACE_NONBLOCK), fixes Coverity
+          reported errors
+
 Thu Nov 29 15:08:26 UTC 2012  Steve Huston  <shuston@riverace.com>
 
         * ace/ACE.cpp (handle_timed_complete): Adapt to an occasionally seen
