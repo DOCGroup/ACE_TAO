@@ -67,7 +67,8 @@ ifeq ($(c++0x),1)
 endif
 
 ifeq ($(gcov),1)
-  FLAGS_C_CC += -fprofile-arcs -ftest-coverage
+  CCFLAGS += --coverage
+  LDFLAGS += --coverage
 endif
 
 ifeq ($(CXX),insure)
