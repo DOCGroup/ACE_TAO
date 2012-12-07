@@ -359,11 +359,20 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                     ACE_TEXT ("redundant server - deleted object found.\n")),
                     -1);
   }
-  catch (const CORBA::Exception&)
+  catch (const CosNaming::NamingContext::NotFound& ex)
   {
-    //expect exception since the context was deleted
+    // expect exception since the context was deleted.
+    // Make sure the right exception reason is provided.
+    if (ex.why != CosNaming::NamingContext::missing_node)
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Wrong exception returned during resolve.\n")),
+                         -1);
   }
-
+  catch (const CORBA::Exception& ex)
+    {
+      ex._tao_print_exception (ACE_TEXT ("Wrong exception type returned from resolve.\n"));
+      return -1;
+    }
   try
   {
     // Access the last context from the wide Naming Context
@@ -381,11 +390,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                       ACE_TEXT ("redundant server - nil object ref.\n")),
                       -1);
   }
+  catch (const CosNaming::NamingContext::NotFound&)
+    {
+      // Expected exception
+    }
   catch (const CORBA::Exception& ex)
   {
     ex._tao_print_exception (
-      ACE_TEXT (
-        "Unable to resolve wide context from redundant server"));
+              ACE_TEXT ("Unexpected Exception received.\n"));
     return -1;
   }
 
@@ -403,9 +415,15 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                     ACE_TEXT ("redundant server - deleted object found.\n")),
                     -1);
   }
-  catch (const CORBA::Exception&)
+  catch (const CosNaming::NamingContext::NotFound&)
+    {
+      // Expected exception
+    }
+  catch (const CORBA::Exception& ex)
   {
-    //expect exception since the context was deleted
+    ex._tao_print_exception (
+              ACE_TEXT ("Unexpected Exception received.\n"));
+    return -1;
   }
 
   try
@@ -425,9 +443,15 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                     ACE_TEXT ("redundant server - deleted object found.\n")),
                     -1);
   }
-  catch (const CORBA::Exception&)
+  catch (const CosNaming::NamingContext::NotFound&)
+    {
+      // Expected exception
+    }
+  catch (const CORBA::Exception& ex)
   {
-    //expect exception since the context was deleted
+    ex._tao_print_exception (
+                             ACE_TEXT ("Unexpected Exception received resolving deep cxt from redundant server.\n"));
+    return -1;
   }
 
   try

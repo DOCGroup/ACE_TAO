@@ -71,58 +71,57 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Iterate enough so we get a few wraparrounds
       for (int i = 0; i < 15; i++)
       {
-          ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Resolving service\n"));
-          try {
+        try {
 
-            // Each time we invoke resolve, we get a different member
-            tmp =
-              name_svc->resolve (name);
+          // Each time we invoke resolve, we get a different member
+          tmp =
+            name_svc->resolve (name);
 
-            // Narrow it to a Basic object
-            basic =
-              Test::Basic::_narrow (tmp.in ());
+          // Narrow it to a Basic object
+          basic =
+            Test::Basic::_narrow (tmp.in ());
 
-          }
-          catch (CORBA::Exception& ex)
+        }
+        catch (CORBA::Exception& ex)
           {
             ex._tao_print_exception ("Error resolving name.\n");
           }
 
-          if (CORBA::is_nil (basic.in ()))
+        if (CORBA::is_nil (basic.in ()))
           {
             ACE_ERROR_RETURN ((LM_DEBUG,
-              "Server obj ref not obtained from Load Balancing Name Service\n",
-              ior),
-              1);
+                               "Server obj ref not obtained from Load Balancing Name Service\n",
+                               ior),
+                              1);
           }
 
-          try {
-            CORBA::String_var the_string =
-              basic->get_string ();
+        try {
+          CORBA::String_var the_string =
+            basic->get_string ();
 
-            ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Client request handled by object at <%s>\n",
-                       the_string.in ()));
+          ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Client request handled by object at <%s>\n",
+                      the_string.in ()));
 
-          }
-          catch (CORBA::Exception& ex)
+        }
+        catch (CORBA::Exception& ex)
           {
             ex._tao_print_exception ("Error invoking get_string on Basic object.\n");
             return 1;
           }
 
-          // Remove one member after we wrapped around to make sure naming manager can
-          // handle it successufully
-          if (i == 7)
+        // Remove one member after we wrapped around to make sure naming manager can
+        // handle it successufully
+        if (i == 7)
           {
             try {
               // Try removing a member
               basic->remove_member ();
             }
             catch (CORBA::Exception& ex)
-            {
-              ex._tao_print_exception ("Error invoking get_string on Basic object.\n");
-              return 1;
-            }
+              {
+                ex._tao_print_exception ("Error invoking get_string on Basic object.\n");
+                return 1;
+              }
           }
       }
 

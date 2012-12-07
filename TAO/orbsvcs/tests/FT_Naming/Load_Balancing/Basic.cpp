@@ -5,13 +5,13 @@
 #include "orbsvcs/PortableGroup/PG_Property_Set.h"
 
 Basic::Basic (CORBA::Object_ptr object_group,
-              FT::NamingManager_ptr lm,
+              FT_Naming::NamingManager_ptr lm,
               CORBA::ORB_ptr orb,
               const char *loc)
   : object_group_name_ ("Basic Group"), orb_ (CORBA::ORB::_duplicate (orb))
 {
   this->object_group_ = CORBA::Object::_duplicate (object_group);
-  this->nm_ = FT::NamingManager::_duplicate (lm);
+  this->nm_ = FT_Naming::NamingManager::_duplicate (lm);
   this->location_ = CORBA::string_dup (loc);
 }
 
