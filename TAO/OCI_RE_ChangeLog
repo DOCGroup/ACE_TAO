@@ -1,3 +1,18 @@
+Fri Dec  7 21:04:34 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
+
+        * orbsvcs/tests/FT_Naming/Federation:
+        * orbsvcs/tests/FT_Naming/Federation/Federation.mpc:
+        * orbsvcs/tests/FT_Naming/Federation/Hello.h:
+        * orbsvcs/tests/FT_Naming/Federation/Hello.cpp:
+        * orbsvcs/tests/FT_Naming/Federation/NamingTask.h:
+        * orbsvcs/tests/FT_Naming/Federation/NamingTask.cpp:
+        * orbsvcs/tests/FT_Naming/Federation/Test.idl:
+        * orbsvcs/tests/FT_Naming/Federation/client.cpp:
+        * orbsvcs/tests/FT_Naming/Federation/run_test.pl:
+        * orbsvcs/tests/FT_Naming/Federation/server.cpp:
+
+          Added Fault Tolerant Name Service Federation test
+
 Fri Dec  7 16:20:37 UTC 2012  Kevin Stanley  <stanleyk@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp:
