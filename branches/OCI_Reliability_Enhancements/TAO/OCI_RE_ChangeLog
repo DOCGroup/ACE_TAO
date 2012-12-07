@@ -1,3 +1,10 @@
+Fri Dec  7 16:20:37 UTC 2012  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp:
+
+          Was passing the wrong time to the context to determine
+          if it was obsolete.  Use the file time instead.
+
 Fri Dec  7 12:44:53 UTC 2012  Byron Harris  <harrisb@ociweb.com>
 
         * tao/Storable_Base.h:
