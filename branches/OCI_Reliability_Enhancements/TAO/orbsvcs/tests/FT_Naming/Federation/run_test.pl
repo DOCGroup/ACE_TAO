@@ -96,14 +96,14 @@ my $ns1_primary_args = "--primary -ORBListenEndPoints $ns_primary_endpoint1 ".
                        "-r $name_dir1";
 
 my $ns1_backup_args = "--backup -ORBListenEndPoints $ns_backup_endpoint1 ".
-                      "-o $ns1_iorfile -g $nm1_iorfile ".
+                      "-c $ns1_iorfile -g $nm1_iorfile ".
                       "-r $name_dir1";
 
 my $ns2_primary_args = "--primary -ORBListenEndPoints $ns_primary_endpoint2 ".
                        "-r $name_dir2";
 
 my $ns2_backup_args = "--backup -ORBListenEndPoints $ns_backup_endpoint2 ".
-                      "-o $ns2_iorfile -g $nm2_iorfile ".
+                      "-c $ns2_iorfile -g $nm2_iorfile ".
                       "-r $name_dir2";
 
 $NS1_PRIMARY = $ns1->CreateProcess($tao_ft_naming, $ns1_primary_args );

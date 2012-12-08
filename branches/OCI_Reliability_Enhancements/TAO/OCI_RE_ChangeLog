@@ -1,3 +1,10 @@
+Sat Dec  8 15:26:02 UTC 2012  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * orbsvcs/tests/FT_Naming/Federation/run_test.pl:
+
+          Changed to use the -c option instead of -o for multi-profile
+          IOR of redundant naming sevices.
+
 Sat Dec  8 15:12:36 UTC 2012  Kevin Stanley  <stanleyk@ociweb.com>
 
         * orbsvcs/Naming_Service/FT_Naming_Main.cpp:
