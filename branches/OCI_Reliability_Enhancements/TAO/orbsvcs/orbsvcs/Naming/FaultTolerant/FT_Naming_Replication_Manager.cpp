@@ -14,7 +14,7 @@
 #include "orbsvcs/Naming/FaultTolerant/FT_NamingReplicationC.h"
 #include "orbsvcs/Naming/FaultTolerant/FT_Naming_Server.h"
 #include "tao/corba.h"
-
+#include "ace/SStringfwd.h"
 
 FT_Naming::ReplicationManager_var
 TAO_FT_Naming_Replication_Manager::peer_replica_ (0);
@@ -23,7 +23,7 @@ TAO_FT_Naming_Replication_Manager::TAO_FT_Naming_Replication_Manager (
      TAO_FT_Naming_Server *naming_svr,
      const char* repl_mgr_name)
   : naming_svr_ (naming_svr),
-    repl_mgr_name_ (ACE_OS::strdup (repl_mgr_name))
+    repl_mgr_name_ (repl_mgr_name)
 {
 }
 
@@ -39,7 +39,7 @@ TAO_FT_Naming_Replication_Manager::initialize (CORBA::ORB_ptr orb,
   ACE_UNUSED_ARG (orb);
   repl_mgr_poa_ = PortableServer::POA::_duplicate (repl_mgr_poa);
   PortableServer::ObjectId_var id =
-    PortableServer::string_to_ObjectId (this->repl_mgr_name_.in ());
+    PortableServer::string_to_ObjectId (this->repl_mgr_name_.c_str ());
   CORBA::Object_var obj = repl_mgr_poa_->id_to_reference (id.in ());
   this->reference_ = FT_Naming::ReplicationManager::_narrow (obj);
 }
