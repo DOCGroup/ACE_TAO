@@ -94,7 +94,7 @@ if ($test->WaitForFileTimed ($primary_iorfile,
 
 $args = "-ORBEndPoint $ns_endpoint2 " .
         "-g $combined_nm_iorfile " .
-        "-o $combined_ns_iorfile " .
+        "-c $combined_ns_iorfile " .
         "-m 0 " .
         "-r $naming_persistence_dir " .
         "--backup";

@@ -60,16 +60,8 @@ my $test_primary_iorfile = $test->LocalFile ($primary_iorfile);
 
 $status = 0;
 
-
-
-print "INFO: Running the test in ", getcwd(), "\n";
-
-# Make sure that the directory to use to hold the naming contexts exists
-# and is cleaned out
-if ( ! -d "$naming_persistence_dir" ) {
-    mkdir ($naming_persistence_dir, 0777);
-    }
-else {
+sub clean_persistence_dir
+{
     chdir $naming_persistence_dir;
     opendir(THISDIR, ".");
     @allfiles = grep(!/^\.\.?$/, readdir(THISDIR));
@@ -80,10 +72,27 @@ else {
     chdir "..";
 }
 
+print "INFO: Running the test in ", getcwd(), "\n";
+
+
+# Make sure that the directory to use to hold the naming contexts exists
+# and is cleaned out
+if ( ! -d "$naming_persistence_dir" ) {
+    mkdir ($naming_persistence_dir, 0777);
+    }
+else {
+    clean_persistence_dir;
+}
+
+
 # Run two Naming Servers and one client.  Client uses iors
 # in files to find the individual copies of the Naming Servers.
 
-my $args = "-ORBEndPoint $ns_endpoint1 -m 0 -r $naming_persistence_dir --primary";
+my $args = "-ORBEndPoint $ns_endpoint1 " .
+           "-m 0 " .
+           "-r $naming_persistence_dir " .
+           "-n 100 " .
+           "--primary";
 my $prog = "$startdir/../../../Naming_Service/tao_ft_naming";
 
 print STDERR "Starting Primary: $prog $args\n";
@@ -103,8 +112,9 @@ if ($test->WaitForFileTimed ($primary_iorfile,
 
 $args = "-ORBEndPoint $ns_endpoint2 " .
         "-g $nm_iorfile " .
-        "-o $combined_ns_iorfile " .
+        "-c $combined_ns_iorfile " .
         "-m 0 " .
+        "-n 100 " .
         "-r $naming_persistence_dir " .
         "--backup";
 
@@ -129,7 +139,9 @@ if ($test->WaitForFileTimed ($combined_ns_iorfile,
 # Use corbaloc to access each individual name service without
 # using the combined IOR.
 $args = "-p corbaloc:iiop:$hostname:$ns_orb_port1/NameService " .
-        "-q corbaloc:iiop:$hostname:$ns_orb_port2/NameService";
+        "-q corbaloc:iiop:$hostname:$ns_orb_port2/NameService " .
+        "-b 4 " .
+        "-d 4 ";
 $prog = "$startdir/client";
 
 print STDERR "Starting Client: $prog $args\n";
@@ -143,10 +155,24 @@ if ($client != 0) {
     $status = 1;
 }
 
+print STDERR "Printing Naming Tree from combined Name Service pair.\n";
+
+$prog = "$startdir/../../../../utils/nslist/tao_nslist";
+#use corbaloc
+#$args = "--ns corbaloc:iiop:$hostname:$ns_orb_port1/NameService";
+$args = "--ns file://$combined_ns_iorfile";
+
+$NSL = $test->CreateProcess("$prog", "$args");
+$out = $NSL->SpawnWaitKill (60);
+
+
 $NS1->Kill ();
 $NS2->Kill ();
 
 $test->DeleteFile ($primary_iorfile);
 $test->DeleteFile ($combined_ns_iorfile);
+
+# Clean out the persistence dir after the test completes
+#clean_persistence_dir;
 
 exit $status;

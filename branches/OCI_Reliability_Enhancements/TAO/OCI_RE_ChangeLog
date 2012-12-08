@@ -1,3 +1,27 @@
+Sat Dec  8 15:12:36 UTC 2012  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * orbsvcs/Naming_Service/FT_Naming_Main.cpp:
+
+          Fixed leak of Server object.
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:
+
+          Added new option for combined naming service ior file name
+          to allow users to access the ior of the single server and to
+          obtain the combined/multi-profile IOR.
+
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context_Activator.cpp:
+
+          Removed delete of context impl factory from destructor. Still
+          need to work out ownership of the factory.
+
+        * orbsvcs/tests/FT_Naming/FaultTolerance/run_test.pl:
+        * orbsvcs/tests/FT_Naming/Load_Balancing/run_test.pl:
+        * orbsvcs/tests/FT_Naming/Replication/run_test.pl:
+
+          Updated tests to use -c option for multi-profile ior.
+
 Fri Dec  7 21:29:30 UTC 2012  "Marc Neeley"  <neeleym@ociweb.com>
 
         * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Dynamic/server.cpp:
