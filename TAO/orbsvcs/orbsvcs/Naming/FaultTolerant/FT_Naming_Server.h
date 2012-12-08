@@ -107,6 +107,9 @@ public:
   virtual int update_naming_context (
     const FT_Naming::NamingContextUpdate & naming_context);
 
+  /// Destroy the child POA created in @c init_with_orb
+  virtual int fini (void);
+
   /// Destructor.
   virtual ~TAO_FT_Naming_Server (void);
 

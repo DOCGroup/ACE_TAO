@@ -69,16 +69,18 @@ TAO_FT_Naming_Manager::TAO_FT_Naming_Manager (void)
   // The name for the property which contains the load balancing strategy value
   this->built_in_balancing_strategy_name_.length (1);
   this->built_in_balancing_strategy_name_[0].id =
-    CORBA::string_dup (FT_Naming::TAO_FT_LOAD_BALANCING_STRATEGY);
+    FT_Naming::TAO_FT_LOAD_BALANCING_STRATEGY;
 
   // The name for the property which contains the object group name
   this->object_group_property_name_.length (1);
-  this->object_group_property_name_[0].id = CORBA::string_dup (FT_Naming::TAO_FT_OBJECT_GROUP_NAME);
-
+  this->object_group_property_name_[0].id =
+    FT_Naming::TAO_FT_OBJECT_GROUP_NAME;
 }
 
 TAO_FT_Naming_Manager::~TAO_FT_Naming_Manager (void)
 {
+  this->object_group_property_name_.length (0);
+  this->built_in_balancing_strategy_name_.length (0);
 }
 
 
@@ -633,7 +635,11 @@ TAO_FT_Naming_Manager::initialize (CORBA::ORB_ptr orb,
 {
   // Initialize the components used to implement the PortableGroup interfaces
   this->factory_registry_.init (orb);
-  this->group_factory_.init (orb, naming_mgr_poa, factory_registry_.reference());
+  PortableGroup::FactoryRegistry_var factory_ref =
+    factory_registry_.reference();
+  this->group_factory_.init (orb,
+                             naming_mgr_poa,
+                             factory_ref.in ());
 }
 
 bool

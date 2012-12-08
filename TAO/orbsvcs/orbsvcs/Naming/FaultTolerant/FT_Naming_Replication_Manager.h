@@ -87,7 +87,7 @@ protected:
 
   PortableServer::POA_var repl_mgr_poa_;
 
-  CORBA::String_var repl_mgr_name_;
+  ACE_CString repl_mgr_name_;
 
   FT_Naming::ReplicationManager_var reference_;
 

@@ -200,8 +200,8 @@ TAO_FT_Naming_Server::init_naming_manager_with_orb (int argc, ACE_TCHAR *argv []
     this->naming_manager_poa_->activate_object_with_id (id.in (),
       &this->naming_manager_);
 
-    CORBA::Object_ptr nm_obj = this->naming_manager_poa_->id_to_reference (id.in ());
-    this->my_naming_manager_ = FT_Naming::NamingManager::_narrow (nm_obj);
+    CORBA::Object_var nm_obj = this->naming_manager_poa_->id_to_reference (id.in ());
+    this->my_naming_manager_ = FT_Naming::NamingManager::_narrow (nm_obj.in ());
 
     this->naming_manager_ior_ =
       orb->object_to_string (this->my_naming_manager_);
@@ -829,9 +829,8 @@ TAO_FT_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
         }
       else
         {
-          CORBA::String_var ior =
-            orb->object_to_string (this->naming_context_.in ());
-          adapter->bind ("NameService", ior.in ());
+          adapter->bind ("NameService",
+                         this->naming_service_ior_.in ());
         }
 
 #if defined (ACE_HAS_IP_MULTICAST)
@@ -948,6 +947,81 @@ TAO_FT_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
         "TAO_Naming_Server::init_new_naming");
       return -1;
     }
+
+  return 0;
+}
+
+int
+TAO_FT_Naming_Server::fini (void)
+{
+
+  // First get rid of the multi cast handler
+  if (this->ior_multicast_)
+    {
+      orb_->orb_core()->reactor ()->remove_handler (this->ior_multicast_,
+         ACE_Event_Handler::READ_MASK | ACE_Event_Handler::DONT_CALL);
+      delete this->ior_multicast_;
+      this->ior_multicast_ = 0;
+    }
+
+
+  // Destroy the child POAs created when initializing
+  // the FT Naming Service
+  try
+    {
+      if (!CORBA::is_nil (this->ns_poa_.in ()))
+        this->ns_poa_->destroy (1, 1);
+
+      if (!CORBA::is_nil (this->naming_manager_poa_.in ()))
+        this->naming_manager_poa_->destroy (1, 1);
+
+      if (!CORBA::is_nil (this->replication_manager_poa_.in ()))
+        this->replication_manager_poa_->destroy (1, 1);
+
+      CORBA::Object_var table_object =
+        this->orb_->resolve_initial_references ("IORTable");
+
+      IORTable::Table_var adapter =
+        IORTable::Table::_narrow (table_object.in ());
+      if (CORBA::is_nil (adapter.in ()))
+        {
+          ACE_ERROR ((LM_ERROR, "Nil IORTable\n"));
+        }
+      else
+        {
+          adapter->unbind ("NameService");
+          adapter->unbind ("NamingManager");
+        }
+
+#if !defined (CORBA_E_MICRO)
+      CORBA::Object_var svc =
+        this->orb_->unregister_initial_reference ("NameService");
+        this->orb_->unregister_initial_reference ("NamingManager");
+#endif /* CORBA_E_MICRO */
+
+    }
+  catch (const CORBA::Exception&)
+    {
+      // Ignore
+    }
+
+  naming_context_ = CosNaming::NamingContext::_nil ();
+  ns_poa_ = PortableServer::POA::_nil ();
+
+  root_poa_ = PortableServer::POA::_nil ();
+  orb_ = CORBA::ORB::_nil ();
+
+  // Specific FT_Naming cleanup
+  naming_manager_poa_ = PortableServer::POA::_nil ();
+  replication_manager_poa_ = PortableServer::POA::_nil ();
+  my_naming_manager_ = FT_Naming::NamingManager::_nil ();
+  peer_naming_manager_ = FT_Naming::NamingManager::_nil ();
+  peer_root_context_ = CosNaming::NamingContext::_nil ();
+
+#if !defined (CORBA_E_MICRO)
+  delete this->context_index_;
+  delete replication_manager_;
+#endif /* CORBA_E_MICRO */
 
   return 0;
 }
