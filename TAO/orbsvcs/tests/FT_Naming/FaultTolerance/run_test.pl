@@ -265,11 +265,11 @@ sub failover_test()
 
     # // Start the backup. Reads the primary ior from the persistence dir.
     # Writes the multi-profile ior to naming_ior_filename.
-    # tao_ft_naming --backup -ORBEndpoint <primary_hostname:port> -r <nameService_persistence_dir> -o <naming_ior_filename>
+    # tao_ft_naming --backup -ORBEndpoint <primary_hostname:port> -r <nameService_persistence_dir> -c <naming_ior_filename>
 
     # Run two Naming Servers
     my $ns1_args = "--primary -ORBDebugLevel $debug_level -ORBListenEndPoints $ns_endpoint1 -m 0 -r $NAME_CONTEXT_DIRECTORY";
-    my $ns2_args = "--backup -ORBDebugLevel $debug_level -ORBListenEndPoints $ns_endpoint2 -o $server_iorfile2 -g $server_nm_iorfile -m 0 -r $NAME_CONTEXT_DIRECTORY";
+    my $ns2_args = "--backup -ORBDebugLevel $debug_level -ORBListenEndPoints $ns_endpoint2 -c $server_iorfile2 -g $server_nm_iorfile -m 0 -r $NAME_CONTEXT_DIRECTORY";
 
     $NS1 = $server->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_ft_naming", "$ns1_args");
     $NS2 = $server->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_ft_naming", "$ns2_args");
@@ -372,7 +372,7 @@ sub persistance_test ()
 
     # Run two Naming Servers
     my $ns_args = "--primary -ORBDebugLevel $debug_level -ORBListenEndPoints $ns_endpoint1 -m 0 -r $NAME_CONTEXT_DIRECTORY";
-    my $ns2_args = "--backup -ORBDebugLevel $debug_level -ORBListenEndPoints $ns_endpoint2 -o $server_iorfile2 -m 0 -r $NAME_CONTEXT_DIRECTORY";
+    my $ns2_args = "--backup -ORBDebugLevel $debug_level -ORBListenEndPoints $ns_endpoint2 -c $server_iorfile2 -m 0 -r $NAME_CONTEXT_DIRECTORY";
 
     $NS1 = $server->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_ft_naming", "$ns1_args");
     $NS2 = $server->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_ft_naming", "$ns2_args");
@@ -456,7 +456,7 @@ sub redundant_equivalancy_test()
 
     # Run two Naming Servers
     my $ns1_args = "--primary -ORBDebugLevel $debug_level -ORBListenEndPoints $ns_endpoint1 -m 0 -r $NAME_CONTEXT_DIRECTORY";
-    my $ns2_args = "--backup -ORBDebugLevel $debug_level -ORBListenEndPoints $ns_endpoint2 -o $server_iorfile2 -m 0 -r $NAME_CONTEXT_DIRECTORY";
+    my $ns2_args = "--backup -ORBDebugLevel $debug_level -ORBListenEndPoints $ns_endpoint2 -c $server_iorfile2 -m 0 -r $NAME_CONTEXT_DIRECTORY";
 
     $NS1 = $server->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_ft_naming", "$ns1_args");
     $NS2 = $server->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_ft_naming", "$ns2_args");

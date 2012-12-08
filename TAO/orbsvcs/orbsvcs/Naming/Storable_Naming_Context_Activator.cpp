@@ -36,7 +36,6 @@ TAO_Storable_Naming_Context_Activator::TAO_Storable_Naming_Context_Activator (
 TAO_Storable_Naming_Context_Activator::~TAO_Storable_Naming_Context_Activator ()
 {
   delete persistence_factory_;
-  delete context_impl_factory_;
 }
 
 PortableServer::Servant

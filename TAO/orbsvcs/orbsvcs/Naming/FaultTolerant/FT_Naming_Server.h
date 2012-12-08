@@ -134,6 +134,9 @@ protected:
   /// interface
   TAO_FT_Naming_Replication_Manager* replication_manager_;
 
+  /// File to output for the multi-profile root naming context IOR.
+  const ACE_TCHAR *combined_naming_service_ior_file_name_;
+
   /// File to output the Object Group Manager IOR.
   const ACE_TCHAR *naming_manager_ior_file_name_;
 
