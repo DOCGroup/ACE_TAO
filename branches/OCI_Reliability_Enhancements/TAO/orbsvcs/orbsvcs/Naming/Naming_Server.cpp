@@ -518,30 +518,49 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
               this->ns_poa_->set_servant_manager(this->servant_activator_);
             }
 #endif /* TAO_HAS_MINIMUM_POA */
-
-          this->naming_context_ =
-            TAO_Storable_Naming_Context::recreate_all (orb,
-                                                       poa,
-                                                       TAO_ROOT_NAMING_CONTEXT,
-                                                       context_size,
-                                                       0,
-                                                       contextFactory.get (),
-                                                       persFactory.get (),
-                                                       persistence_location,
-                                                       use_redundancy_);
-
-          // The context factory is now owned by the activator
-          // so we should release it
-          contextFactory.release ();
-
-          if (this->use_servant_activator_)
+          try {  // The following might throw an exception.
+            this->naming_context_ =
+              TAO_Storable_Naming_Context::recreate_all (orb,
+              poa,
+              TAO_ROOT_NAMING_CONTEXT,
+              context_size,
+              0,
+              contextFactory.get (),
+              persFactory.get (),
+              persistence_location,
+              use_redundancy_);
+          }
+          catch (const CORBA::Exception& ex)
+          {
+            // The activator already took over the factories so we need to release the auto_ptr
+            if (this->use_servant_activator_)
             {
+              // The context factory is now owned by the activator
+              // so we should release it
+              contextFactory.release ();
+              // If using a servant activator, the activator now owns the
+              // factory, so we should release it
+              persFactory.release ();
+            }
+            // Print out the exception and return failure
+            ex._tao_print_exception (
+              "TAO_Naming_Server::init_new_naming");
+            return -1;
+          }
+
+        // Kind of a duplicate of the above here, but we must also release the
+        // factory autoptrs in the good case as well.
+        if (this->use_servant_activator_)
+            {
+              // The context factory is now owned by the activator
+              // so we should release it
+              contextFactory.release ();
               // If using a servant activator, the activator now owns the
               // factory, so we should release it
               persFactory.release ();
             }
 
-        }
+      }
       else if (persistence_location != 0)
         //
         // Initialize Persistent Naming Service.
@@ -838,7 +857,10 @@ TAO_Naming_Server::~TAO_Naming_Server (void)
 #if (TAO_HAS_MINIMUM_POA == 0) && \
     !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
   if (this->use_servant_activator_)
-    delete this->servant_activator_;
+    {
+      // Activator is reference counted. Don't delete it directly.
+      this->servant_activator_->_remove_ref ();
+    }
 #endif /* TAO_HAS_MINIMUM_POA */
 }
 

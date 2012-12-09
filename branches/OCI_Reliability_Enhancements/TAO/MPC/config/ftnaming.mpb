@@ -1,8 +1,9 @@
 // -*- MPC -*-
 // $Id$
 
-project : ftorbutils, naming, portablegroup, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+project : ftorbutils, naming, orbsvcslib, portablegroup, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
   after     += FtNaming
   libs      += TAO_FtNaming
   tagchecks += FtNaming
+
 }
