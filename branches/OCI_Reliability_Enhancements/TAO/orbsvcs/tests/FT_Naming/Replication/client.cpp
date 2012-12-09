@@ -200,16 +200,29 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // See if the newly bound object is available in the
       // replica
-
-      CORBA::Object_var obj1_on_replica =
-        root_context_2->resolve (level1);
-      if (CORBA::is_nil (obj1_on_replica.in ()))
+      try {
+        CORBA::Object_var obj1_on_replica =
+          root_context_2->resolve (level1);
+      }
+      catch (const CosNaming::NamingContext::NotFound& ex)
         {
-          ACE_ERROR ((LM_ERROR,
-                     "Unable to resolve object from replica.\n"));
-          return -1;
-        }
+          ex._tao_print_exception ("Unable to resolve object from replica.\n");
 
+          // Try again...
+          try {
+            CORBA::Object_var obj1_on_replica =
+              root_context_2->resolve (level1);
+            // We did find the object on the replica, but only after a wait.
+            // This would be caused by a race condition to access the variable.
+            ACE_ERROR ((LM_ERROR,
+                        "Object appeared after a short wait.\n"));
+          }
+          catch (const CosNaming::NamingContext::NotFound& second_ex)
+            {
+              ex._tao_print_exception ("It really is not there. Failing...\n");
+              return -1;
+            }
+        }
     }
   }
   catch (const CORBA::Exception& ex)
@@ -254,6 +267,34 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       wide[0].id = CORBA::string_dup (wide_name);
       CosNaming::NamingContext_var wide_context;
       wide_context = root_context_1->bind_new_context (wide);
+
+      try {
+        // Check if the new context is available in the replica
+        CORBA::Object_var obj1_on_replica =
+          root_context_2->resolve (wide);
+        // Make sure it is a context
+        CosNaming::NamingContext_var nc =
+          CosNaming::NamingContext::_narrow (obj1_on_replica);
+      }
+      catch (const CosNaming::NamingContext::NotFound& ex)
+        {
+          ex._tao_print_exception ("Unable to resolve wide context object from replica.\n");
+
+          // Try again to see if it just was a race condition
+          try {
+            CORBA::Object_var obj1_on_replica =
+              root_context_2->resolve (wide);
+            // We did find the object on the replica, but only after a wait.
+            // This would be caused by a race condition to access the variable.
+            ACE_ERROR ((LM_ERROR,
+                        "Object appeared after a short wait.\n"));
+          }
+          catch (const CosNaming::NamingContext::NotFound& second_ex)
+            {
+              ex._tao_print_exception ("It really is not there. Failing...\n");
+              return -1;
+            }
+        }
     }
   }
   catch (const CORBA::Exception& ex)
@@ -263,8 +304,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   }
 
   // Delete three selected things, one from each tree
-  try
-  {
+  try {
     // Remove the second to last object from the Naming Context
     CosNaming::Name wide1;
     wide1.length (2);
@@ -273,6 +313,32 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     ACE_OS::sprintf(wide_name, "obj_%d", o_breadth-2);
     wide1[1].id = CORBA::string_dup (wide_name);
     root_context_1->unbind (wide1);
+
+    bool retried = false;
+    // Make sure it is gone from the replica
+    try {
+      CORBA::Object_var obj1_on_replica =
+        root_context_2->resolve (wide1);
+
+      // An exception should be thrown by the above or
+      // there is an error. This means the replica did
+      // not register the loss of the context.
+      ACE_ERROR ((LM_ERROR,
+                  "Unbound deep context not removed from replica. Trying again...\n"));
+      retried = true;  // Mark this so it can be reported in catch block.
+      obj1_on_replica =
+        root_context_2->resolve (wide1);
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Unbound context not removed from on retry\n"),
+                        -1);
+    }
+    catch (const CosNaming::NamingContext::NotFound& ex)
+      {
+        // Not on replica --- as it should be.
+        if (retried)  // Was found on the retry
+          ACE_ERROR ((LM_ERROR,
+                      "Was removed after short wait.\n"));
+      }
 
     // Remove the second to last context from the wide root Naming Context
     CosNaming::Name wide2;
@@ -310,6 +376,31 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     result_object->destroy();
     root_context_1->unbind (deep);
 
+    retried = false;
+    // Make sure it is gone from the replica
+    try {
+      CORBA::Object_var obj1_on_replica =
+        root_context_2->resolve (deep);
+
+      // An exception should be thrown by the above or
+      // there is an error. This means the replica did
+      // not register the loss of the context.
+      ACE_ERROR ((LM_ERROR,
+                  "Unbound deep context not removed from replica. Trying again...\n"));
+      retried = true;  // Mark this so it can be reported in catch block.
+      obj1_on_replica =
+        root_context_2->resolve (deep);
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Unbound context not removed from on retry\n"),
+                        -1);
+    }
+    catch (const CosNaming::NamingContext::NotFound& ex)
+      {
+        // Not on replica --- as it should be.
+        if (retried)  // Was found on the retry
+          ACE_ERROR ((LM_ERROR,
+                      "Was removed after short wait.\n"));
+      }
   }
   catch (const CORBA::Exception& ex)
   {
@@ -450,7 +541,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   catch (const CORBA::Exception& ex)
   {
     ex._tao_print_exception (
-                             ACE_TEXT ("Unexpected Exception received resolving deep cxt from redundant server.\n"));
+             ACE_TEXT ("Unexpected Exception received resolving ")
+             ACE_TEXT ("deep cxt from redundant server.\n"));
     return -1;
   }
 
@@ -473,8 +565,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                       ACE_TEXT ("Problems with resolving deep context from ")
                       ACE_TEXT ("redundant server - nil object ref.\n")),
                       -1);
-
-
   }
   catch (const CORBA::Exception& ex)
   {
@@ -483,6 +573,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         "Unable to resolve deep context from redundant server"));
     return -1;
   }
+
+  // TODO: Cleanup namespace
+
+
+  // TODO: Create object groups and bind them. Check the replica.
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Redundancy test OK\n")));
   return 0;
