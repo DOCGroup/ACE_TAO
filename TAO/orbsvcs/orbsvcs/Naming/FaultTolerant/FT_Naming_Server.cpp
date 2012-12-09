@@ -740,25 +740,38 @@ TAO_FT_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
               this->ns_poa_->set_servant_manager(this->servant_activator_);
             }
 #endif /* TAO_HAS_MINIMUM_POA */
+          try {
+            this->naming_context_ =
+              TAO_Storable_Naming_Context::recreate_all (orb,
+                                                         poa,
+                                                         TAO_ROOT_NAMING_CONTEXT,
+                                                         context_size,
+                                                         0,
+                                                         contextFactory.get (),
+                                                         persFactory.get (),
+                                                         persistence_location,
+                                                         use_redundancy_);
+          }
+          catch (const CORBA::Exception& ex)
+          {
+            // The activator already took over the factories so we need to release the auto_ptr
+            if (this->use_servant_activator_)
+            {
+              contextFactory.release ();
+              persFactory.release ();
+            }
+            // Print out the exception and return failure
+            ex._tao_print_exception (
+              "TAO_Naming_Server::init_new_naming");
+            return -1;
+          }
 
-          this->naming_context_ =
-            TAO_Storable_Naming_Context::recreate_all (orb,
-                                                       poa,
-                                                       TAO_ROOT_NAMING_CONTEXT,
-                                                       context_size,
-                                                       0,
-                                                       contextFactory.get (),
-                                                       persFactory.get (),
-                                                       persistence_location,
-                                                       use_redundancy_);
-
-          // We have successfull turned over the context factory to the activator so
-          // we can now release it.
-          contextFactory.release ();
-
+          // We were successful in recreating the namespace from persistent
+          // store, so we have successfully passed control to the activator.
+          // and should not allow the auto_ptr to clean up.
           if (this->use_servant_activator_)
             persFactory.release();
-
+            contextFactory.release ();
         }
       else if (persistence_location != 0)
         //
