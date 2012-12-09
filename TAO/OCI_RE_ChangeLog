@@ -1,3 +1,10 @@
+Sun Dec  9 23:02:53 UTC 2012  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * orbsvcs/tests/FT_Naming/Replication/client.cpp:
+
+          Added code to deal with potential race conditions when modifying on
+          primary and checking the replica immediately.
+
 Sun Dec  9 21:25:24 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
 
         * MPC/config/ftnaming.mpb:
@@ -7,14 +14,14 @@ Sun Dec  9 21:25:24 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Replication_Manager.cpp:
 
           Added error message when exception occurs in registration.
-          
+
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:
         * orbsvcs/orbsvcs/Naming/Naming_Server.cpp:
         * orbsvcs/orbsvcs/Naming/Storable_Naming_Context_Activator.cpp:
- 
+
           Resolved ownership of contextFactory and persistenceFactory.
           Fixed issue with exit on failed access to persistent store.
-                      
+
 Sat Dec  8 21:37:27 UTC 2012  Kevin Stanley  <stanleyk@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.cpp:
