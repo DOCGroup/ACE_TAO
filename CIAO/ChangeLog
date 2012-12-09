@@ -1,3 +1,8 @@
+Sun Dec  9 19:36:14 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DomainParticipantFactory.cpp:
+          Fixed coverity error
+
 Fri Nov 30 10:11:11 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/idl/ndds/ndds_dcps.idl:

@@ -182,7 +182,10 @@ namespace CIAO
         dynamic_cast < DDS_DomainParticipant_i *>
         (retval.in ());
 
-      typed_dp->set_rti_entity (dds_dp);
+      if (typed_dp)
+        {
+          typed_dp->set_rti_entity (dds_dp);
+        }
 
       return retval._retn ();
     }
