@@ -38,7 +38,7 @@ ACE_INLINE int
 ACE_SV_Message_Queue::remove (void)
 {
   ACE_TRACE ("ACE_SV_Message_Queue::remove");
-  int result = this->control (IPC_RMID);
+  int const result = this->control (IPC_RMID);
   this->internal_id_ = -1;
   return result;
 }
