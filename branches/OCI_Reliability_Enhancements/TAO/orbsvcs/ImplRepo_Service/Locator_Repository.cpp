@@ -14,8 +14,8 @@
 Locator_Repository::Locator_Repository (const Options& opts,
                                         CORBA::ORB_ptr orb)
 : opts_ (opts),
-  registered_(false),
-  orb_(CORBA::ORB::_duplicate(orb))
+  orb_(CORBA::ORB::_duplicate(orb)),
+  registered_(false)
 {
 }
 
@@ -462,6 +462,12 @@ Locator_Repository::persistent_remove(const ACE_CString& , bool )
 {
   // nothing more to do for default update
   return 0;
+}
+
+bool
+Locator_Repository::registered() const
+{
+  return this->registered_;
 }
 
 No_Backing_Store::No_Backing_Store(const Options& opts,

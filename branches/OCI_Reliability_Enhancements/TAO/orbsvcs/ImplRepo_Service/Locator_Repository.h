@@ -142,13 +142,15 @@ protected:
   int setup_multicast (ACE_Reactor* reactor, const char* imr_ior);
   void teardown_multicast();
 
+  bool registered() const;
+
   const Options& opts_;
   TAO_IOR_Multicast ior_multicast_;
-  bool registered_;
-  CORBA::ORB_var orb_;
+  const CORBA::ORB_var orb_;
   CORBA::String_var imr_ior_;
 
 private:
+  bool registered_;
   /// The in-memory list of the server information.
   SIMap server_infos_;
   /// The in-memory list of the activator information.

@@ -76,6 +76,10 @@ namespace TAO
 
       virtual bool use_imr () const = 0;
 
+      virtual CORBA::Object_ptr imr_key_to_object(
+        const TAO::ObjectKey &key,
+        const char *type_id) const = 0;
+
     protected:
       TAO_Root_POA *poa_;
     };

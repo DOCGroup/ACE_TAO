@@ -104,6 +104,13 @@ namespace TAO
       return false;
     }
 
+    CORBA::Object_ptr
+    LifespanStrategyTransient::imr_key_to_object(const TAO::ObjectKey &key,
+                                                 const char *type_id) const
+    {
+      return CORBA::Object::_nil();
+    }
+
     ::PortableServer::LifespanPolicyValue
     LifespanStrategyTransient::type () const
     {

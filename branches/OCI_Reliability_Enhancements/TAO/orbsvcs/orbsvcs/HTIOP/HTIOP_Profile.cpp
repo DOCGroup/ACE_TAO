@@ -279,7 +279,7 @@ TAO::HTIOP::Profile::add_endpoint (TAO::HTIOP::Endpoint *endp)
 }
 
 char *
-TAO::HTIOP::Profile::to_string (void)
+TAO::HTIOP::Profile::to_string (void) const
 {
   CORBA::String_var key;
   TAO::ObjectKey::encode_sequence_to_string (key.inout(),

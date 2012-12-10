@@ -257,14 +257,25 @@ Shared_Backing_Store::connect_replicas (Replica_ptr this_replica)
         "Registering with previously running ImR replica\n"));
     }
 
-  this->replica_->register_replica(this_replica,
-                                   this->imr_ior_.inout(),
-                                   this->replica_seq_num_);
+  try
+    {
+      this->replica_->register_replica(this_replica,
+                                       this->imr_ior_.inout(),
+                                       this->replica_seq_num_);
+      ACE_DEBUG((LM_INFO, "(%P|%t) ???????? Registered with replica <%C>\n", this->imr_ior_.in()));
+    }
+  catch (const ImplementationRepository::InvalidPeer& ip)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+        "Error: obj key <%s> is an invalid ImR replica because %s\n",
+        replica_ior.c_str(), ip.reason.in()), -1);
+    }
 
   if (opts_.debug() > 9)
     {
-      ACE_DEBUG((LM_INFO, "Initializing repository with seq number %d\n",
-        replica_seq_num_));
+      ACE_DEBUG((LM_INFO,
+        "Initializing repository with ft ior=<%s> and replica seq number %d\n",
+        this->imr_ior_.in(), replica_seq_num_));
     }
 
   return 0;
@@ -477,8 +488,12 @@ Shared_Backing_Store::report_ior(PortableServer::POA_ptr root_poa,
   // only report the imr ior if the fault tolerant ImR is complete
   if (!CORBA::is_nil (this->replica_.in()))
     {
+      ACE_DEBUG((LM_INFO, "(%P|%t) ???????? Registered <%C>\n", this->imr_ior_.in()));
       err = Locator_Repository::report_ior(root_poa, imr_poa);
     }
+  else
+    ACE_DEBUG((LM_INFO, "(%P|%t) ???????? Not Registered yet \n"));
+
 
   return err;
 }
@@ -495,22 +510,20 @@ Shared_Backing_Store::locator_service_ior(const char* peer_ior) const
   const CORBA::Object_ptr& obj2 =
     (this->imr_type_ != Options::PRIMARY_IMR) ? this_obj : peer_obj;
 
-  CORBA::Object_ptr IORM =
+  CORBA::Object_var IORM =
     this->orb_->resolve_initial_references (TAO_OBJID_IORMANIPULATION, 0);
 
-  TAO_IOP::TAO_IOR_Manipulation_ptr iorm =
-    TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM);
+  TAO_IOP::TAO_IOR_Manipulation_var iorm =
+    TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM.in());
 
   CORBA::Object_var locator_service = iorm->add_profiles(obj1, obj2);
 
-  if (CORBA::is_nil (locator_service.in()))
-    {
-      ACE_ERROR((LM_ERROR, ACE_TEXT("(%P|%t) ERROR: could not create fault")
-        ACE_TEXT(" tolerant ImR.\n")));
-      return 0;
-    }
+  char* const combined_ior =
+    this->orb_->object_to_string(locator_service.in());
+  ACE_DEBUG((LM_INFO, "(%P|%t) ????? Combined: %d and %d to make %d\n", obj1, obj2, locator_service.in()));
+  ACE_DEBUG((LM_INFO, "(%P|%t) ????? Combined: <%C>\nand <%C>\nto make <%C>\n", non_ft_imr_ior_.in(), peer_ior, combined_ior));
+  return combined_ior;
 
-  return this->orb_->object_to_string(locator_service.in());
 }
 
 bool
@@ -585,14 +598,57 @@ Shared_Backing_Store::register_replica(
 
   this->replica_seq_num_ = 0;
 
-  char* const combined_ior = locator_service_ior(ft_imr_ior);
-  if (combined_ior != 0)
+  // store off original char* to ensure memory cleanup
+  CORBA::String_var ior = ft_imr_ior;
+
+  // if we already have the fault tolerant ImR ior
+  // then just copy it
+  if (registered())
     {
-      delete ft_imr_ior;
-      ft_imr_ior = combined_ior;
-      // pass as const char* to make sure string is copied
-      this->imr_ior_ = (const char*)ft_imr_ior;
+      ACE_DEBUG((LM_INFO, "(%P|%t) ???????? Already registered <%C>\n", this->imr_ior_.in()));
+      // make a copy
+      ior = this->imr_ior_.in();
+      // handoff memory
+      ft_imr_ior = ior._retn();
+      return;
     }
+
+  // otherwise we need to combine the primary and backup ior to make
+  // the fault tolerant ImR ior
+  char* combined_ior = 0;
+  CORBA::String_var reason;
+  try
+    {
+      combined_ior = locator_service_ior(ft_imr_ior);
+    }
+  catch (const TAO_IOP::Invalid_IOR& )
+    {
+      reason = "invalid ior";
+    }
+  catch (const TAO_IOP::EmptyProfileList& )
+    {
+      reason = "no profiles";
+    }
+  catch (const TAO_IOP::Duplicate& )
+    {
+      reason = "duplicate profile";
+    }
+
+  if (combined_ior == 0)
+    {
+      // give back the original pointer and don't clean it up
+      ft_imr_ior = ior._retn();
+      ACE_ERROR((LM_ERROR,
+        "ERROR: Failed to create Fault Tolerant ImR, reason=%s\n",
+        reason.in()));
+      throw ImplementationRepository::InvalidPeer(reason.in());
+    }
+
+  ft_imr_ior = combined_ior;
+  // pass as const char* to make sure string is copied
+  this->imr_ior_ = (const char*)ft_imr_ior;
+  ACE_DEBUG((LM_INFO, "(%P|%t) ???????? Registering <%C>\n", this->imr_ior_.in()));
+
   PortableServer::POA_var null_poa;
   Locator_Repository::report_ior(null_poa, null_poa);
 }

@@ -42,6 +42,11 @@ module ImplementationRepository
     SequenceNum seq_num;
   };
 
+  exception InvalidPeer
+  {
+    string reason;
+  };
+
   interface UpdatePushNotification
   {
     /// indicate existing server with name was updated
@@ -54,7 +59,8 @@ module ImplementationRepository
     /// register peer as replica and indicate sequence number
     void register_replica(in UpdatePushNotification peer,
                           inout string ft_imr_ior,
-                          out SequenceNum seq_num);
+                          out SequenceNum seq_num)
+      raises (InvalidPeer);
   };
 };
 

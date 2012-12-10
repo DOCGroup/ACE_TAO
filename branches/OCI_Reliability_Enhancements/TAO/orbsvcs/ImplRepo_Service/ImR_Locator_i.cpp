@@ -472,8 +472,7 @@ ImR_Locator_i::activate_server_i (Server_Info& info, bool manual_start)
           waiter_svt_.unblock_all (info.name.c_str ());
 
           throw ImplementationRepository::CannotActivate(
-            CORBA::string_dup (
-              "Cannot start server."));
+              "Cannot start server.");
         }
 
       // Note: We already updated info with StartupInfo in server_is_running ()
@@ -516,9 +515,7 @@ ImR_Locator_i::activate_perclient_server_i (Server_Info info, bool manual_start)
       ACE_DEBUG ((LM_DEBUG,
                   "ImR: Cannot Activate <%C>.\n", info.name.c_str ()));
     }
-  throw ImplementationRepository::CannotActivate(
-    CORBA::string_dup (
-      "Cannot start server."));
+  throw ImplementationRepository::CannotActivate("Cannot start server.");
 }
 
 ImplementationRepository::StartupInfo*
@@ -530,8 +527,7 @@ ImR_Locator_i::start_server (Server_Info& info, bool manual_start,
       if (debug_ > 0)
         ACE_DEBUG ((LM_DEBUG, "ImR: Cannot start server <%C>. ActivationMode=MANUAL\n", info.name.c_str ()));
       throw ImplementationRepository::CannotActivate(
-        CORBA::string_dup (
-          "Cannot implicitly activate MANUAL server."));
+        "Cannot implicitly activate MANUAL server.");
     }
   if (info.cmdline.length () == 0)
     {
@@ -539,8 +535,7 @@ ImR_Locator_i::start_server (Server_Info& info, bool manual_start,
         ACE_DEBUG ((LM_DEBUG, "ImR: Cannot start server <%C>."
                     " No command line.\n", info.name.c_str ()));
       throw ImplementationRepository::CannotActivate(
-        CORBA::string_dup (
-          "No command line registered for server."));
+        "No command line registered for server.");
     }
 
   Activator_Info_Ptr ainfo = get_activator (info.activator);
@@ -551,8 +546,7 @@ ImR_Locator_i::start_server (Server_Info& info, bool manual_start,
         ACE_DEBUG ((LM_DEBUG, "ImR: Cannot start server <%C>. "
                     "Activator <%C> not found.\n", info.name.c_str (), info.activator.c_str ()));
       throw ImplementationRepository::CannotActivate(
-        CORBA::string_dup (
-          "No activator registered for server."));
+        "No activator registered for server.");
     }
 
   try
