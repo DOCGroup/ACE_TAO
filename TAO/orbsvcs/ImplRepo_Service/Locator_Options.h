@@ -113,8 +113,6 @@ private:
   int run_service_command (const ACE_TString& cmdline);
 
   int load_registry_options();
-
-  bool set_imr_type(const char* arg);
 private:
 
   /// xml, heap, or registry

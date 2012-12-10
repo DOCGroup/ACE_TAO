@@ -1,3 +1,94 @@
+Mon Dec 10 15:39:23 UTC 2012  Brian Johnson  <johnsonb@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator.idl:
+
+          Added exception for register_replica.
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+
+          Fixed memory leak (double char* duplication).
+
+        * orbsvcs/ImplRepo_Service/Locator_Options.h:
+        * orbsvcs/ImplRepo_Service/Locator_Options.cpp:
+
+          Made ImR Locator options similar to the NamingService.
+          Now pass "--directory some_dir" to use multiple files
+          for persistance and either "--primary" or "--backup"
+          for fault tolerant ImR Locator.
+
+        * orbsvcs/ImplRepo_Service/Locator_Repository.h:
+        * orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
+
+          Made registered_ private with protected accessor.
+
+        * orbsvcs/ImplRepo_Service/Shared_Backing_Store.cpp:
+
+          Added error handling and temporary logging.
+
+        * orbsvcs/tests/ImplRepo/run_test.pl:
+
+          Changes from Locator_Options.
+
+        * tao/PortableServer/Root_POA.cpp:
+
+          Refactored ImR-ification of key into LifespanStrategy
+          and Imr_Client.
+
+        * tao/PortableServer/LifespanStrategy.h:
+
+          Added interface for imr-ifying the key.
+
+        * tao/PortableServer/LifespanStrategyTransient.h:
+        * tao/PortableServer/LifespanStrategyTransient.cpp:
+
+          Added transient null implementation for imr-ifying the key.
+
+        * tao/PortableServer/LifespanStrategyPersistent.h:
+        * tao/PortableServer/LifespanStrategyPersistent.cpp:
+
+          Added persistent implementation for forwarding the call
+          to the ImR_Client if use_imr.
+
+        * tao/PortableServer/ImR_Client_Adapter.h:
+
+          Added interface for imr-ifying the key.
+
+        * tao/ImR_Client/ImR_Client.h:
+        * tao/ImR_Client/ImR_Client.cpp:
+
+          Added implementation for imr-ifying the key for each
+          profile in the IMR ior and then combining the profiles
+          into a single ior.
+
+        * tao/ImR_Client/ImR_Client.mpc:
+        * MPC/config/imr_client.mpb:
+
+          Added dependency on iormanip.
+
+        * tao/Profile.h:
+        * tao/Profile.cpp:
+
+          Made to_string const.
+
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Profile.h:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Profile.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.h:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.cpp:
+        * tao/IIOP_Profile.h:
+        * tao/IIOP_Profile.cpp:
+        * tao/Strategies/COIOP_Profile.h:
+        * tao/Strategies/COIOP_Profile.cpp:
+        * tao/Strategies/DIOP_Profile.h:
+        * tao/Strategies/DIOP_Profile.cpp:
+        * tao/Strategies/SCIOP_Profile.h:
+        * tao/Strategies/SCIOP_Profile.cpp:
+        * tao/Strategies/SHMIOP_Profile.h:
+        * tao/Strategies/SHMIOP_Profile.cpp:
+        * tao/Strategies/UIOP_Profile.h:
+        * tao/Strategies/UIOP_Profile.cpp:
+
+          Same changes for to_string const from Profile.h.
+
 Mon Dec 10 14:41:47 UTC 2012  Kevin Stanley  <stanleyk@ociweb.com>
 
         * orbsvcs/Naming_Service/Naming_Service.cpp:

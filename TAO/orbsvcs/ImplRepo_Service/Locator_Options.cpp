@@ -165,15 +165,27 @@ Options::parse_args (int &argc, ACE_TCHAR *argv[])
           this->persist_file_name_ = shifter.get_current ();
           this->repo_mode_ = REPO_XML_FILE;
         }
-      else if (set_imr_type(shifter.get_current ()))
+      else if (ACE_OS::strcasecmp (shifter.get_current (),
+                                   ACE_TEXT ("--primary")) == 0)
         {
-          const ACE_TCHAR* const flag = shifter.get_current();
+          this->imr_type_ = PRIMARY_IMR;
+          shifter.consume_arg ();
+        }
+      else if (ACE_OS::strcasecmp (shifter.get_current (),
+                                   ACE_TEXT ("--backup")) == 0)
+        {
+          this->imr_type_ = BACKUP_IMR;
+          shifter.consume_arg ();
+        }
+      else if (ACE_OS::strcasecmp (shifter.get_current (),
+                                   ACE_TEXT ("--directory")) == 0)
+        {
           shifter.consume_arg ();
 
           if (!shifter.is_anything_left () || shifter.get_current ()[0] == '-')
             {
-              ACE_ERROR ((LM_ERROR, "Error: %s option needs a filename\n",
-                flag));
+              ACE_ERROR ((LM_ERROR,
+                "Error: --directory option needs a filename\n"));
               this->print_usage ();
               return -1;
             }
@@ -265,30 +277,24 @@ Options::print_usage (void) const
     "Usage:\n"
     "\n"
     "ImplRepo_Service [-c cmd] [-d 0|1|2] [-e] [-m] [-o file]\n"
-    " [-r|-p file|-x file|-primary dir|-backup dir] [-s] [-t secs]\n"
-    " [-v secs]\n"
-    "  -c command     Runs nt service commands ('install' or 'remove')\n"
-    "  -d level       Sets the debug level (default 1)\n"
-    "  -e             Erase the persisted repository at startup\n"
-    "  -l             Lock the database\n"
-    "  -m             Turn on multicast\n"
-    "  -o file        Outputs the ImR's IOR to a file\n"
-    "  -p file        Use file for storing/loading settings\n"
-    "  -x file        Use XML file for storing/loading settings\n"
-    "  -y dir         Use individual XML files for storing/loading\n"
-    "                 settings in the provided directory\n"
-    "  -primary dir   Replicate the ImplRepo as the primary and use\n"
-    "                 shared XML files for storing/loading settings\n"
-    "                 in the provided directory (backup can already\n"
-    "                 have been started)\n"
-    "  -backup dir    Replicate the ImplRepo as the backup and use\n"
-    "                 shared XML files for storing/loading settings\n"
-    "                 in the provided directory (primary must already\n"
-    "                 have been started)\n"
-    "  -r             Use the registry for storing/loading settings\n"
-    "  -s             Run as a service\n"
-    "  -t secs        Server startup timeout.(Default=60s)\n"
-    "  -v msecs       Server verification interval.(Default=10s)\n"
+    " [-r|-p file|-x file|--directory dir [--primary|--backup] ]\n"
+    " [-s] [-t secs] [-v secs]\n"
+    "  -c command      Runs nt service commands ('install' or 'remove')\n"
+    "  -d level        Sets the debug level (default 1)\n"
+    "  -e              Erase the persisted repository at startup\n"
+    "  -l              Lock the database\n"
+    "  -m              Turn on multicast\n"
+    "  -o file         Outputs the ImR's IOR to a file\n"
+    "  -p file         Use file for storing/loading settings\n"
+    "  -x file         Use XML file for storing/loading settings\n"
+    "  --directory dir Use individual XML files for storing/loading\n"
+    "                  settings in the provided directory\n"
+    "  --primary       Replicate the ImplRepo as the primary ImR\n"
+    "  --backup        Replicate the ImplRepo as the backup ImR\n"
+    "  -r              Use the registry for storing/loading settings\n"
+    "  -s              Run as a service\n"
+    "  -t secs         Server startup timeout.(Default=60s)\n"
+    "  -v msecs        Server verification interval.(Default=10s)\n"
     ));
 }
 
@@ -480,29 +486,6 @@ Options::load_registry_options ()
   ACE_ASSERT (err == ERROR_SUCCESS);
 #endif
   return 0;
-}
-
-bool
-Options::set_imr_type(const char* arg)
-{
-  if (ACE_OS::strcasecmp (arg, ACE_TEXT ("-primary")) == 0)
-    {
-      this->imr_type_ = PRIMARY_IMR;
-    }
-  else if (ACE_OS::strcasecmp (arg, ACE_TEXT ("-backup")) == 0)
-    {
-      this->imr_type_ = BACKUP_IMR;
-    }
-  else if (ACE_OS::strcasecmp (arg, ACE_TEXT ("-y")) == 0)
-    {
-      this->imr_type_ = STANDALONE_IMR;
-    }
-  else
-    {
-      return false;
-    }
-
-  return true;
 }
 
 bool

@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : taolib, portableserver {
+project : taolib, portableserver, iormanip {
   libs    += TAO_ImR_Client
   after   += ImR_Client
 }

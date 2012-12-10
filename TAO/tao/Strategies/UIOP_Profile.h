@@ -75,7 +75,7 @@ public:
   ~TAO_UIOP_Profile (void);
 
   /// Template methods. Please see Profile.h for documentation.
-  virtual char *to_string (void);
+  virtual char *to_string (void) const;
   virtual int encode_endpoints (void);
   virtual TAO_Endpoint *endpoint (void);
   virtual CORBA::ULong endpoint_count (void) const;

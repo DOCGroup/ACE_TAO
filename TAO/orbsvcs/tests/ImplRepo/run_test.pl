@@ -84,6 +84,7 @@ my $nestea_dat = "nestea.dat";
 my $n_cli_nesteaiorfile = $n_cli->LocalFile ($nesteaiorfile);
 
 my $refstyle = " -ORBObjRefStyle URL";
+my $imr_refstyle = "";# = " -ORBObjRefStyle URL";
 my $protocol = "iiop";
 my $imr_host = $imr->HostName ();
 my $port = 12345;
@@ -162,7 +163,7 @@ sub setup_repo {
     my $the_ti = shift;
     my $the_TI = shift;
     my $port = shift;
-    my $backingstore_flag = shift;
+    my $replication_role = shift;
     my $the_replicaiorfile = shift;
     my $explicit_act = shift;
 
@@ -177,9 +178,12 @@ sub setup_repo {
     $repo_ref->{imriorfile} = $the_imriorfile;
     $repo_ref->{imr_imriorfile} = $the_imr_imriorfile;
     $repo_ref->{imr_endpoint_flag} = "-ORBEndpoint iiop://:$port ";
+#    $repo_ref->{imr_endpoint_flag} = "-ORBEndpoint shmiop://:$port ";
+#    $repo_ref->{imr_endpoint_flag} = "-ORBEndpoint iiop://:$port -ORBEndpoint shmiop://:" . ($port + 10) . " ";
     if ($replica) {
+        $repo_ref->{imr_backing_store} = $the_imr->LocalFile (".");
         $repo_ref->{imr_backing_store_flag} =
-          $backingstore_flag . " " . $the_imr->LocalFile (".") . " ";
+          "--directory $repo_ref->{imr_backing_store} $replication_role ";
     }
     $repo_ref->{replicaiorfile} = $the_replicaiorfile;
     $repo_ref->{imr_replicaiorfile} = $the_imr_replicaiorfile;
@@ -576,20 +580,20 @@ sub airplane_ir_test
     my $status = 0;
 
     if ($srv_debug_level < 2 && $replica) {
-        $srv_debug_level = 2;
+        $srv_debug_level = 2;#"2 -ORBLogFile server.log";
     }
 
     my $imr_port = 10001 + $imr->RandomPort ();
     print "\n\nimr_port=$imr_port\n";
     my %repo;
     setup_repo(\%repo, $imr, $IMR, $imriorfile, $act, $ACT, $actiorfile, $ti,
-      $TI, $imr_port, "-primary", $backupiorfile);
+      $TI, $imr_port, "--primary", $backupiorfile);
 
     my %backup_repo;
     if ($replica) {
         setup_repo(\%backup_repo, $replica_imr, $replica_IMR,
           $replica_imriorfile, $replica_act, $replica_ACT, $replica_actiorfile,
-          $replica_ti, $replica_TI, $imr_port + 1, "-backup",
+          $replica_ti, $replica_TI, $imr_port + 1, "--backup",
           $primaryiorfile, "non_default_act");
     }
 
@@ -619,11 +623,12 @@ sub airplane_ir_test
         $replica_act->DeleteFile ($replica_imriorfile);
         $replica_ti->DeleteFile ($replica_imriorfile);
         $replica_act->DeleteFile ($replica_actiorfile);
+        cleanup_replication($repo_ref->{imr_backing_store});
     }
 
     print "\n\nstarting IMR\n";
     $repo{IMR}->Arguments ("-d $test_debug_level -o $repo{imr_imriorfile} " .
-      "$refstyle $repo{imr_backing_store_flag} $repo{imr_endpoint_flag}");
+      "$imr_refstyle $repo{imr_backing_store_flag} $repo{imr_endpoint_flag}");
     $IMR_status = $repo{IMR}->Spawn ();
     if ($IMR_status != 0) {
         print STDERR "ERROR: ImR Service returned $IMR_status\n";
@@ -635,7 +640,7 @@ sub airplane_ir_test
         }
         print "\n\nstarting backup IMR\n";
         $backup_repo{IMR}->Arguments ("-d $test_debug_level -o " .
-          "$backup_repo{imr_imriorfile} $refstyle " .
+          "$backup_repo{imr_imriorfile} $imr_refstyle " .
           "$backup_repo{imr_backing_store_flag} " .
           "$backup_repo{imr_endpoint_flag}");
         $replica_IMR_status = $backup_repo{IMR}->Spawn ();
@@ -923,7 +928,7 @@ sub nestea_ir_test
     $n_srv->DeleteFile ($nesteaiorfile);
     $n_cli->DeleteFile ($nesteaiorfile);
 
-    $IMR->Arguments ("-d $test_debug_level -o $imr_imriorfile $refstyle");
+    $IMR->Arguments ("-d $test_debug_level -o $imr_imriorfile $imr_refstyle");
     $IMR_status = $IMR->Spawn ();
     if ($IMR_status != 0) {
         print STDERR "ERROR: ImR Service returned $IMR_status\n";
@@ -1140,7 +1145,7 @@ sub perclient
     # specify an endpoint so that we can use corbaloc url for the client.
     $IMR->Arguments (
       "-d $test_debug_level -orbendpoint iiop://:8888 ".
-      "-o $imr_imriorfile $refstyle -ORBDebugLevel $debug_level");
+      "-o $imr_imriorfile $imr_refstyle -ORBDebugLevel $debug_level");
     $IMR_status = $IMR->Spawn ();
     if ($IMR_status != 0) {
         print STDERR "ERROR: ImR Service returned $IMR_status\n";
@@ -1277,7 +1282,7 @@ sub shutdown_repo
 
     # Specify an endpoint so that we can restart on the same port.
     # Specify persistence so that we can test that shutdown-repo -a works after reconnect
-    $IMR->Arguments ("-p $imr_testrepo -d 1 -orbendpoint iiop://:8888 -o $imr_imriorfile $refstyle ".
+    $IMR->Arguments ("-p $imr_testrepo -d 1 -orbendpoint iiop://:8888 -o $imr_imriorfile $imr_refstyle ".
                      "-ORBDebugLevel $debug_level");
     $IMR_status = $IMR->Spawn ();
     if ($IMR_status != 0) {
@@ -1406,7 +1411,7 @@ sub persistent_ir_test
     my $backing_store;
     if ($backing_store_flag eq "-p") {
         $backing_store = "test.repo";
-    } elsif ($backing_store_flag eq "-y") {
+    } elsif ($backing_store_flag eq "--directory") {
         $backing_store = ".";
     } elsif ($backing_store_flag eq "-x") {
         $backing_store = "imr_backing_store.xml";
@@ -1434,14 +1439,16 @@ sub persistent_ir_test
         $imr->DeleteFile ($airplaneiorfile[$index]);
     }
     $imr->DeleteFile ($imriorfile);
-    # passing "-e" flag to clear persistent storage on startup
+    if ($backing_store_flag eq "--directory") {
+        cleanup_replication($imr_storefile);
+    }
     $act->DeleteFile ($imriorfile);
     $ti->DeleteFile ($imriorfile);
     $act->DeleteFile ($actiorfile);
 
     ## Be sure to start the ImR on a consistent endpoint, so that any created IORs
     ## remain valid even if the ImR restarts.
-    my $imr_arguments = "-orbendpoint iiop://:8888 $backing_store_flag $imr_storefile -d $test_debug_level -o $imr_imriorfile $refstyle ";
+    my $imr_arguments = "-orbendpoint iiop://:8888 $backing_store_flag $imr_storefile -d $test_debug_level -o $imr_imriorfile $imr_refstyle ";
     $IMR->Arguments ("$imr_arguments -e ");
     test_info("starting IMR=" . $IMR->CommandLine() . "\n");
     $IMR_status = $IMR->Spawn ();
@@ -1790,11 +1797,11 @@ sub persistent_ir_test
             $status = 1;
         }
     }
-    elsif ($backing_store_flag eq "-y") {
-        cleanup_replication($backing_store);
+    elsif ($backing_store_flag eq "--directory") {
+        cleanup_replication($imr_storefile);
     }
     else {
-        $imr->DeleteFile ($backing_store);
+        $imr->DeleteFile ($imr_storefile);
     }
     $imr->DeleteFile ($imriorfile);
     $act->DeleteFile ($imriorfile);
@@ -1837,7 +1844,7 @@ sub both_ir_test
     $n_srv->DeleteFile ($nesteaiorfile);
     $n_cli->DeleteFile ($nesteaiorfile);
 
-    $IMR->Arguments ("-d $test_debug_level -t 10 -o $imr_imriorfile $refstyle");
+    $IMR->Arguments ("-d $test_debug_level -t 10 -o $imr_imriorfile $imr_refstyle");
     $IMR_status = $IMR->Spawn ();
     if ($IMR_status != 0) {
         print STDERR "ERROR: ImR Service returned $IMR_status\n";
@@ -2160,7 +2167,7 @@ for ($i = 0; $i <= $#ARGV; $i++) {
         $ret = persistent_ir_test ("-r");
     }
     elsif ($ARGV[$i] eq "persistent_ir_shared") {
-        $ret = persistent_ir_test ("-y");
+        $ret = persistent_ir_test ("--directory");
     }
     elsif ($ARGV[$i] eq "perclient") {
         $ret = perclient();

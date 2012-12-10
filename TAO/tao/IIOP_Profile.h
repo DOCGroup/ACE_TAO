@@ -95,7 +95,7 @@ public:
   virtual char object_key_delimiter (void) const;
 
   /// Template methods. Please see Profile.h for documentation.
-  virtual char * to_string (void);
+  virtual char * to_string (void) const;
 
   /// Encode endpoints for RT profiles, using a single TAO_TAG_ENDPOINT
   /// component.
