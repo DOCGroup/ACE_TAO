@@ -1,3 +1,23 @@
+Mon Dec 10 17:13:47 UTC 2012  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Persistent_Naming_Context_Factory.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Persistent_Naming_Context_Factory.cpp:
+
+          Removed context_size argument from factory constructor since it is not used
+          by the factory.
+
+        * orbsvcs/orbsvcs/Naming/Naming_Loader.cpp:
+
+          Removed include of removed Naming_Context_Factory.h
+
+        * orbsvcs/orbsvcs/cosnaming_serv_persistence.mpb:
+
+          Removed reference to removed Naming_Context_Factory.h/cpp files.
+        * orbsvcs/orbsvcs/Naming/Naming_Context_Factory.h:
+        * orbsvcs/orbsvcs/Naming/Naming_Context_Factory.cpp:
+
+          Removed these files since they are no longer used.
+
 Mon Dec 10 16:44:11 UTC 2012  tests\Dynamic_TP  <neeleym@ociweb.com>
 
 

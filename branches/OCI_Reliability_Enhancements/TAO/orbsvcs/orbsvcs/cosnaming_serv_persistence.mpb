@@ -12,7 +12,6 @@ feature(!corba_e_micro) {
       Naming/Storable_Naming_Context.cpp
       Naming/Storable_Naming_Context_Activator.cpp
       Naming/Storable_Naming_Context_ReaderWriter.cpp
-      Naming/Naming_Context_Factory.cpp
       Naming/Persistent_Naming_Context_Factory.cpp
       Naming/Storable_Naming_Context_Factory.cpp
     }

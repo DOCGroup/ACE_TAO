@@ -35,7 +35,7 @@ public:
   // = Initialization and termination methods.
 
   /// Constructor.
-  TAO_FT_Persistent_Naming_Context_Factory (size_t context_size = ACE_DEFAULT_MAP_SIZE);
+  TAO_FT_Persistent_Naming_Context_Factory (void);
 
   /// Destructor.  Does not deallocate the hash map: if an instance of
   /// this class goes out of scope, its hash_map remains in persistent storage.
