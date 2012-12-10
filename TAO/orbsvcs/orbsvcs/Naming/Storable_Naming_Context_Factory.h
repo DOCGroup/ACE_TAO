@@ -26,12 +26,10 @@ namespace TAO
   class Storable_Factory;
 }
 
-class TAO_Persistent_Naming_Context;
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
- * @class TAO_Naming_Context_Factory
+ * @class TAO_Storable_Naming_Context_Factory
  *
  * @brief
  */

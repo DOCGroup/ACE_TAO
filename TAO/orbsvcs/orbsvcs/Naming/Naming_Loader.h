@@ -26,8 +26,6 @@
 
 #include "orbsvcs/Naming/Naming_Server.h"
 
-class TAO_Naming_Context_Factory;
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Naming_Serv_Export TAO_Naming_Loader : public TAO_Object_Loader

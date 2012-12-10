@@ -6,8 +6,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
   /// Constructor.
-TAO_Persistent_Naming_Context_Factory::TAO_Persistent_Naming_Context_Factory (size_t context_size)
-: TAO_Naming_Context_Factory(context_size)
+TAO_Persistent_Naming_Context_Factory::TAO_Persistent_Naming_Context_Factory (void)
 {
 
 }
@@ -21,11 +20,12 @@ TAO_Persistent_Naming_Context_Factory::~TAO_Persistent_Naming_Context_Factory (v
 
 /// Factory method for creating an implementation object for naming contexts
 TAO_Persistent_Naming_Context*
-TAO_Persistent_Naming_Context_Factory::create_naming_context_impl (PortableServer::POA_ptr poa,
-                                                                   const char *poa_id,
-                                                                   TAO_Persistent_Context_Index *context_index,
-                                                                   HASH_MAP * map,
-                                                                   ACE_UINT32 *counter)
+TAO_Persistent_Naming_Context_Factory::create_naming_context_impl (
+       PortableServer::POA_ptr poa,
+       const char *poa_id,
+       TAO_Persistent_Context_Index *context_index,
+       HASH_MAP * map,
+       ACE_UINT32 *counter)
 {
   // Construct the naming context, forwarding the map and counter even if they
   // are defaulted

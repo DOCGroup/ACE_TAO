@@ -45,8 +45,15 @@ TAO_Naming_Service::init (int argc, ACE_TCHAR* argv[])
       this->parse_args (argc, argv);
 
       // Factory method used to construct a naming server to be used in
-      // creation and initialization of the naming service components
+      // creation and initialization of the naming service components.
       this->my_naming_server_ = this->create_naming_server ();
+
+      // For some reason we are unable to create a naming server.
+      if (this->my_naming_server_ == 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                          ACE_TEXT ("TAO_Naming_Service::init -- ")
+                          ACE_TEXT ("Unable to create a Naming_Server. Exiting.\n")),
+                          -1);
 
       // This function call initializes the naming service and returns
       // '-1' in case of an exception.

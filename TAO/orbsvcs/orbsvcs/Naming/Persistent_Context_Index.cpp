@@ -2,7 +2,7 @@
 
 #include "orbsvcs/Naming/Persistent_Context_Index.h"
 #include "orbsvcs/Naming/Persistent_Naming_Context.h"
-#include "orbsvcs/Naming/Naming_Context_Factory.h"
+#include "orbsvcs/Naming/Persistent_Naming_Context_Factory.h"
 
 #include "tao/debug.h"
 
@@ -82,7 +82,7 @@ TAO_Persistent_Context_Index::bind (const char *poa_id,
 TAO_Persistent_Context_Index::TAO_Persistent_Context_Index
   (CORBA::ORB_ptr orb,
    PortableServer::POA_ptr poa,
-   TAO_Naming_Context_Factory * context_impl_factory)
+   TAO_Persistent_Naming_Context_Factory * context_impl_factory)
   : allocator_ (0),
     index_ (0),
     index_file_ (0),
