@@ -1,3 +1,13 @@
+Mon Dec 10 16:44:11 UTC 2012  tests\Dynamic_TP  <neeleym@ociweb.com>
+
+
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Static/Hello.h:
+          Added this file to correct build problem in nightly build.
+
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Static/TestS.cpp:
+
+          Removed this file.
+
 Mon Dec 10 15:39:23 UTC 2012  Brian Johnson  <johnsonb@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/ImR_Locator.idl:
