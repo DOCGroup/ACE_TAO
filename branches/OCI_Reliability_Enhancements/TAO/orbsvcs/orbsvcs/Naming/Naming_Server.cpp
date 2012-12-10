@@ -484,9 +484,11 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
           auto_ptr<TAO::Storable_Factory> persFactory(pf);
 
           // Use an auto_ptr to ensure that we clean up the factory in the case
-          // of a failure in creating and registering the Activator
-          TAO_Storable_Naming_Context_Factory* cf = 0;
-          ACE_NEW_RETURN (cf, TAO_Storable_Naming_Context_Factory (context_size), -1);
+          // of a failure in creating and registering the Activator.
+          TAO_Storable_Naming_Context_Factory* cf =
+            this->storable_naming_context_factory (context_size);
+          // Make sure we got a factory
+          if (cf == 0) return -1;
           auto_ptr<TAO_Storable_Naming_Context_Factory> contextFactory (cf);
 
           // This instance will either get deleted after recreate all or,
@@ -569,8 +571,10 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
 
           // Create Naming Context Implementation Factory to be used for the creation of
           // naming contexts by the TAO_Persistent_Context_Index
-          TAO_Naming_Context_Factory *naming_context_factory = 0;
-          ACE_NEW_RETURN (naming_context_factory, TAO_Persistent_Naming_Context_Factory, -1);
+          TAO_Persistent_Naming_Context_Factory *naming_context_factory =
+            this->persistent_naming_context_factory ();
+          // Make sure we got a factory.
+          if (naming_context_factory == 0) return -1;
 
           // Allocate and initialize Persistent Context Index.
           ACE_NEW_RETURN (this->context_index_,
@@ -783,6 +787,18 @@ TAO_Naming_Server::write_ior_to_file (const char* ior_string,
   return 0;
 }
 
+TAO_Storable_Naming_Context_Factory *
+TAO_Naming_Server::storable_naming_context_factory (size_t context_size)
+{
+  return new (ACE_nothrow) TAO_Storable_Naming_Context_Factory (context_size);
+}
+
+TAO_Persistent_Naming_Context_Factory *
+TAO_Naming_Server::persistent_naming_context_factory (void)
+{
+  return new (ACE_nothrow) TAO_Persistent_Naming_Context_Factory;
+}
+
 int
 TAO_Naming_Server::fini (void)
 {
@@ -856,7 +872,8 @@ TAO_Naming_Server::~TAO_Naming_Server (void)
 {
 #if (TAO_HAS_MINIMUM_POA == 0) && \
     !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
-  if (this->use_servant_activator_)
+  if (this->use_servant_activator_ &&
+      this->servant_activator_)
     {
       // Activator is reference counted. Don't delete it directly.
       this->servant_activator_->_remove_ref ();

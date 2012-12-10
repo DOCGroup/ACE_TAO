@@ -41,7 +41,7 @@ TAO_FT_Naming_Replication_Manager::initialize (CORBA::ORB_ptr orb,
   PortableServer::ObjectId_var id =
     PortableServer::string_to_ObjectId (this->repl_mgr_name_.c_str ());
   CORBA::Object_var obj = repl_mgr_poa_->id_to_reference (id.in ());
-  this->reference_ = FT_Naming::ReplicationManager::_narrow (obj);
+  this->reference_ = FT_Naming::ReplicationManager::_narrow (obj.in ());
 }
 
 FT_Naming::ReplicaInfo*

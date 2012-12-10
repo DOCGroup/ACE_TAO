@@ -42,27 +42,6 @@ public:
   /// Default Constructor.
   TAO_FT_Naming_Server (void);
 
-  /**
-   * Helper method: Derived from TAO_Naming Server to
-   * Should create & initialize Naming Service components
-   * Make the root context of size
-   * <context_size>, register it under the <root_poa>, and make the Naming
-   * Service persistent if <persistence_location> is not 0.
-   * (<persistence_location> specifies name of the file to use for
-   * persistent storage).
-   * If <enable_multicast> is not zero then the service will respond
-   * to multicast location queries.
-   */
-  virtual int init_new_naming (CORBA::ORB_ptr orb,
-                               PortableServer::POA_ptr root_poa,
-                               const ACE_TCHAR *persistence_location,
-                               void *base_addr,
-                               size_t context_size,
-                               int enable_multicast,
-                               int use_storable_context,
-                               int round_trip_timeout = 0,
-                               int use_round_trip_timeout = 0);
-
   /// Initialize the Naming Service and Object Group Manager with the command line
   /// arguments and the ORB. Overrridden from TAO_Naming_Server
   virtual int init_with_orb (int argc, ACE_TCHAR *argv [], CORBA::ORB_ptr orb);
@@ -92,8 +71,17 @@ public:
   virtual int parse_args (int argc,
                           ACE_TCHAR *argv[]);
 
-  /// Shut down the TAO_Naming_Service; you must still call fini().
-  void shutdown (void);
+  /* Factory method to create a naming context factory for use with
+   * the -u and -r options.
+   */
+  virtual TAO_Storable_Naming_Context_Factory *
+    storable_naming_context_factory (size_t context_size);
+
+  /* Factory method to create a naming context factory for use with
+   * the -f option.
+   */
+  virtual TAO_Persistent_Naming_Context_Factory *
+    persistent_naming_context_factory (void);
 
   /// Returns the IOR of the naming manager.
   char* replication_manager_ior (void);

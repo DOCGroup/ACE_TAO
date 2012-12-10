@@ -15,7 +15,7 @@
 #define TAO_FT_PERSISTENT_NAMING_CONTEXT_FACTORY_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Naming/Naming_Context_Factory.h"
+#include "orbsvcs/Naming/Persistent_Naming_Context_Factory.h"
 #include "orbsvcs/Naming/FaultTolerant/ftnaming_export.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -28,7 +28,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * NamingContext interface.
  */
 class TAO_FtNaming_Export TAO_FT_Persistent_Naming_Context_Factory
-  : public TAO_Naming_Context_Factory
+  : public TAO_Persistent_Naming_Context_Factory
 {
 public:
 

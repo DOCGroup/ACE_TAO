@@ -7,7 +7,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
   /// Constructor.
 TAO_FT_Persistent_Naming_Context_Factory::TAO_FT_Persistent_Naming_Context_Factory (size_t context_size)
-: TAO_Naming_Context_Factory(context_size)
+: TAO_Persistent_Naming_Context_Factory (context_size)
 {
 
 }

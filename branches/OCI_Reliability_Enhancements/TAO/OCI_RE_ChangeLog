@@ -1,3 +1,44 @@
+Mon Dec 10 14:41:47 UTC 2012  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * orbsvcs/Naming_Service/Naming_Service.cpp:
+
+          Added error check on creation of the naming server.
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Replication_Manager.cpp:
+
+          Use in() operation for var type.
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:
+
+          Refactored to avoid duplication of the init_new_naming functionality
+          with the base Naming_Server.
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Persistent_Naming_Context_Factory.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Persistent_Naming_Context_Factory.cpp:
+
+          Removed unnecessary context_size argument from constructor.
+
+        * orbsvcs/orbsvcs/Naming/Naming_Loader.h:
+
+          Removed forward declaration of TAO_Naming_Context_Factory since it is no
+          longer needed.
+
+        * orbsvcs/orbsvcs/Naming/Naming_Server.h:
+        * orbsvcs/orbsvcs/Naming/Naming_Server.cpp:
+
+          Refactored to allow for derived class to define which Naming Context impl
+          factory should be used.
+
+        * orbsvcs/orbsvcs/Naming/Persistent_Context_Index.h:
+        * orbsvcs/orbsvcs/Naming/Persistent_Context_Index.cpp:
+        * orbsvcs/orbsvcs/Naming/Persistent_Naming_Context_Factory.h:
+        * orbsvcs/orbsvcs/Naming/Persistent_Naming_Context_Factory.cpp:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context_Factory.h:
+
+          Removed TAO_Naming_Context_Factory generic base class since it
+          really does not provide a common abstraction.
+
 Sun Dec  9 23:02:53 UTC 2012  Kevin Stanley  <stanleyk@ociweb.com>
 
         * orbsvcs/tests/FT_Naming/Replication/client.cpp:

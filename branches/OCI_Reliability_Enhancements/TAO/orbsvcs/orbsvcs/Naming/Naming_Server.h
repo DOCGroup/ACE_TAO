@@ -34,7 +34,8 @@ class TAO_Persistent_Context_Index;
 class TAO_Storable_Naming_Context_Activator;
 #endif /* !CORBA_E_MICRO */
 
-class TAO_Naming_Context_Factory;
+class TAO_Storable_Naming_Context_Factory;
+class TAO_Persistent_Naming_Context_Factory;
 
 /**
  * @class TAO_Naming_Server
@@ -165,6 +166,18 @@ protected:
   /// Write the provided ior_string to the file. Return 0 if success.
   int write_ior_to_file (const char* ior_string,
                          const char* file_name);
+
+  /* Factory method to create a naming context factory for use with
+   * the -u and -r options.
+   */
+  virtual TAO_Storable_Naming_Context_Factory *
+    storable_naming_context_factory (size_t context_size);
+
+  /* Factory method to create a naming context factory for use with
+   * the -f option.
+   */
+  virtual TAO_Persistent_Naming_Context_Factory *
+    persistent_naming_context_factory (void);
 
   /// Root NamingContext_ptr.
   CosNaming::NamingContext_var naming_context_;
