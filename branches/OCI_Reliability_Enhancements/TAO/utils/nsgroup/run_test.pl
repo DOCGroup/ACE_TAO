@@ -63,7 +63,7 @@ my $tao_ft_naming = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_ft_naming";
 my $name_dir      = "NameService";
 my $ns_args       = "$DEBUG_LEVEL " .
                     "-ORBListenEndPoints $ns_endpoint1 " .
-                    "-g $name_mgr_iorfile -o $name_server_iorfile " .
+                    "-g $name_mgr_iorbase -o $name_srv_iorbase " .
                     "-u $name_dir " .
                     ($^O eq 'MSWin32' ? "-ORBSvcConf $NM_conf" : '');
 
@@ -76,6 +76,21 @@ my $NSDEL   = $client->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_nsdel");
 my $POSITIVE_TEST_RESULT = 0;
 my $NEGATIVE_TEST_RESULT = 1;
 
+sub clean_persistence_dir($$)
+{
+    my $target = shift;
+    my $directory_name = shift;
+
+    chdir $directory_name;
+    opendir(THISDIR, ".");
+    @allfiles = grep(!/^\.\.?$/, readdir(THISDIR));
+    closedir(THISDIR);
+    foreach $tmp (@allfiles){
+        $target->DeleteFile ($tmp);
+    }
+    chdir "..";
+}
+
 # Make sure that the directory to use to hold the naming contexts exists
 # and is cleaned out
 sub init_naming_context_directory($$)
@@ -86,14 +101,7 @@ sub init_naming_context_directory($$)
     if ( ! -d $directory_name ) {
         mkdir ($directory_name, 0777);
     } else {
-        chdir $directory_name;
-        opendir(THISDIR, ".");
-        @allfiles = grep(!/^\.\.?$/, readdir(THISDIR));
-        closedir(THISDIR);
-        foreach $tmp (@allfiles){
-            $target->DeleteFile ($tmp);
-        }
-        chdir "..";
+        clean_persistence_dir ($target, $directory_name);
     }
 }
 
@@ -249,15 +257,15 @@ sub run_clients ()
         $POSITIVE_TEST_RESULT);
 
     run_client (
-        "group_create -group ieee -policy round -type_id IDL:FT/NamingManager:1.0",
+        "group_create -group ieee -policy round -type_id IDL:FT_Naming/NamingManager:1.0",
         $POSITIVE_TEST_RESULT);
 
     run_client (
-        "group_create -group ieed -policy rand -type_id IDL:/FT/NamingManager:1.0",
+        "group_create -group ieed -policy rand -type_id IDL:/FT_Naming/NamingManager:1.0",
         $POSITIVE_TEST_RESULT);
 
     run_client (
-        "group_create -group ieee -policy round -type_id IDL:/FT/NamingManager:1.0",
+        "group_create -group ieee -policy round -type_id IDL:/FT_Naming/NamingManager:1.0",
         $NEGATIVE_TEST_RESULT);
 
     run_client (
@@ -346,21 +354,24 @@ init_naming_context_directory ($server, $name_dir );
 ################################################################################
 ## Start tao_ft_naming Service
 ################################################################################
+
 $server_status = $NM->Spawn ();
 
 if ($server_status != 0) {
     print STDERR "ERROR: server returned $server_status\n";
     exit 1;
 }
+
 if ($server->WaitForFileTimed ($name_mgr_iorbase,
         $server->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$server_iorfile>\n";
+    print STDERR "ERROR: cannot find file <$name_mgr_iorbase>\n";
     $NM->Kill (); $NM->TimedWait (1);
     exit 1;
 }
 
+print STDERR "Waiting for $name_mgr_iorbase\n";
 if ($server->GetFile ($name_mgr_iorbase) == -1) {
-    print STDERR "ERROR: cannot retrieve file <$server_iorfile>\n";
+    print STDERR "ERROR: cannot retrieve file <$name_mgr_iorbase>\n";
     $NM->Kill (); $NM->TimedWait (1);
     exit 1;
 }
@@ -388,5 +399,8 @@ $client->DeleteFile($name_mgr_iorbase);
 $client->DeleteFile($name_srv_iorbase);
 $client->DeleteFile($stdout_file);
 $client->DeleteFile($stderr_file);
+
+clean_persistence_dir ($server, $name_dir);
+rmdir ($name_dir);
 
 exit $status;

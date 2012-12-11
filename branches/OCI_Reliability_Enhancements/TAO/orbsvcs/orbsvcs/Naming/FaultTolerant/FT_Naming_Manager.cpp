@@ -381,7 +381,7 @@ TAO_FT_Naming_Manager::add_member (
     catch (...)
     {
       ACE_DEBUG ((LM_DEBUG,
-                 "TAO_FT_Naming_Manager::add_member - Issue with IOR of group or member"));
+                 "TAO_FT_Naming_Manager::add_member - Issue with IOR of group or member.\n"));
       throw PortableGroup::ObjectNotAdded ();
     }
 

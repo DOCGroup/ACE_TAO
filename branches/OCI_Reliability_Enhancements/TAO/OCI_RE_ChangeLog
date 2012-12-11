@@ -1,3 +1,29 @@
+Tue Dec 11 15:58:05 UTC 2012  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * orbsvcs/Naming_Service/FT_Naming_Main.cpp:
+
+          Modified to avoid leak of TAO_FT_Naming_Service object.
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.cpp:
+
+          Modified to write out the single Naming Manager IOR
+          file when running standalone.
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:
+
+          Fixed issue with fini. Base class fini called after derived
+          class to allow use of the orb while destroying POAs and
+          cleaning up the IORTable.
+
+        * orbsvcs/tests/FT_Naming/Replication/run_test.pl:
+
+          Remove the persistence directory at conclusion of the test.
+
+        * utils/nsgroup/run_test.pl:
+
+          Fixed issues with test to run with standalone naming service.
+          Clean up the persistence directory at conclusion of the test.
+
 Tue Dec 11 15:09:57 UTC 2012  Brian Johnson  <johnsonb@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/Locator_Options.cpp:
