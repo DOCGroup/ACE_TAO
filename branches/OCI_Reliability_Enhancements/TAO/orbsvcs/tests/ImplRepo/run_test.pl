@@ -178,8 +178,6 @@ sub setup_repo {
     $repo_ref->{imriorfile} = $the_imriorfile;
     $repo_ref->{imr_imriorfile} = $the_imr_imriorfile;
     $repo_ref->{imr_endpoint_flag} = "-ORBEndpoint iiop://:$port ";
-#    $repo_ref->{imr_endpoint_flag} = "-ORBEndpoint shmiop://:$port ";
-#    $repo_ref->{imr_endpoint_flag} = "-ORBEndpoint iiop://:$port -ORBEndpoint shmiop://:" . ($port + 10) . " ";
     if ($replica) {
         $repo_ref->{imr_backing_store} = $the_imr->LocalFile (".");
         $repo_ref->{imr_backing_store_flag} =
@@ -250,6 +248,58 @@ sub kill_act {
       $replica_ACT->Kill (); $replica_ACT->TimedWait (1);
     }
 }
+
+###############################################################################
+
+sub start_clients {
+    for ($index = 0; $index < $num_srvr; ++$index) {
+        test_info("starting client for $a_srv_name[$index]=" .
+          $A_CLI[$index]->CommandLine() . "\n");
+        $A_CLI_status = $A_CLI[$index]->Spawn ();
+        if ($A_CLI_status != 0) {
+            print STDERR
+              "ERROR: Airplane Client ($index) failed to spawn returning $A_CLI_status\n";
+            kill_then_timed_wait(\@A_SRV, 1);
+            $ACT->Kill (); $ACT->TimedWait (1);
+            $IMR->Kill (); $IMR->TimedWait (1);
+            return 1;
+        }
+    }
+    return 0;
+}
+
+sub stop_clients {
+    for ($index = 0; $index < $num_srvr; ++$index) {
+        $A_CLI_status = $A_CLI[$index]->WaitKill ($a_cli[$index]->ProcessStartWaitInterval());
+        if ($A_CLI_status != 0) {
+            print STDERR "ERROR: Airplane Client $index returned $A_CLI_status\n";
+            $status = 1;
+        }
+        print "\n\nstopped client $index\n\n\n";
+    }
+    return 0;
+}
+
+sub shutdown_servers_using_tao_imr {
+    my $repo_ref = shift;
+    for ($index = 0; $index < $num_srvr; ++$index) {
+        print "\n\nshutting down server $index using tao_imr\n";
+        $repo_ref->[$index]->{TI}->Arguments ("-ORBInitRef ImplRepoService" .
+            "=file://$repo_ref->[$index]->{ti_imriorfile} $refstyle " .
+            "shutdown $a_srv_name[$index]");
+        $TI_status = $repo_ref->[$index]->{TI}->SpawnWaitKill (
+            $repo_ref->[$index]->{ti}->ProcessStartWaitInterval());
+        if ($TI_status != 0) {
+            print STDERR "ERROR: tao_imr ($index) returned $TI_status\n";
+            kill_act();
+            kill_imr();
+            return 1;
+        }
+        print "\n\nshut down server $index using tao_imr\n";
+    }
+    return 0;
+}
+
 
 ###############################################################################
 
@@ -1820,6 +1870,564 @@ sub persistent_ir_test
 
 ###############################################################################
 
+sub failover_test
+{
+    if (!$replica) {
+      # The failover test needs the -replica flag
+      return 1;
+    }
+
+    my $status = 0;
+
+    my $imr_port = 10001 + $imr->RandomPort ();
+    my $replica_imr_port = $imr_port + 10;
+
+    my %repo;
+    setup_repo(\%repo, $imr, $IMR, $imriorfile, $act, $ACT, $actiorfile, $ti,
+      $TI, $imr_port, "--primary", $backupiorfile);
+
+    my %backup_repo;
+    setup_repo(\%backup_repo, $replica_imr, $replica_IMR, $replica_imriorfile,
+      $replica_act, $replica_ACT, $replica_actiorfile, $replica_ti, $replica_TI,
+      $replica_imr_port, "--backup", $primaryiorfile);
+
+    my @repo_for_srvr;
+    for ($index = 0; $index < $num_srvr; ++$index) {
+        if ($index == ($num_srvr - 1)) {
+            push(@repo_for_srvr, \%backup_repo);
+        } else {
+            push(@repo_for_srvr, \%repo);
+        }
+
+        push(@a_srv_imriorfile, $a_srv[$index]->LocalFile ($repo_for_srvr[$index]->{imriorfile}));
+        push(@imr_airplaneiorfile, $repo_for_srvr[$index]->{imr}->LocalFile ($airplaneiorfile[$index]));
+        push(@a_srv_airplaneiorfile, $a_srv[$index]->LocalFile ($airplaneiorfile[$index]));
+        $a_srv[$index]->DeleteFile ($repo_for_srvr[$index]->{imriorfile});
+        $a_srv[$index]->DeleteFile ($airplaneiorfile[$index]);
+        $a_cli[$index]->DeleteFile ($airplaneiorfile[$index]);
+        $repo_for_srvr[$index]->{imr}->DeleteFile ($airplaneiorfile[$index]);
+    }
+    $imr->DeleteFile ($imriorfile);
+    $imr->DeleteFile ($primaryiorfile);
+    $act->DeleteFile ($imriorfile);
+    $ti->DeleteFile ($imriorfile);
+    $act->DeleteFile ($actiorfile);
+    $replica_imr->DeleteFile ($replica_imriorfile);
+    $replica_imr->DeleteFile ($backupiorfile);
+    $replica_act->DeleteFile ($replica_imriorfile);
+    $replica_ti->DeleteFile ($replica_imriorfile);
+    $replica_act->DeleteFile ($replica_actiorfile);
+
+    print "\n\nstarting primary tao_imr_locator\n";
+    $repo{IMR}->Arguments ("-d $test_debug_level -o $repo{imr_imriorfile} " .
+        "$repo{imr_endpoint_flag} $imr_refstyle $repo{imr_backing_store_flag} ");
+    $IMR_status = $repo{IMR}->Spawn ();
+    if ($IMR_status != 0) {
+        print STDERR "ERROR: ImR Service returned $IMR_status\n";
+        return 1;
+    }
+
+    if (wait_for_imr(\%backup_repo, "replicaiorfile")) {
+        return 1;
+    }
+
+    print "\n\nstarting backup tao_imr_locator\n";
+    $backup_repo{IMR}->Arguments ("-d $test_debug_level -o " .
+        "$backup_repo{imriorfile} $imr_refstyle " .
+        "$backup_repo{imr_endpoint_flag} " .
+        "$backup_repo{imr_backing_store_flag}");
+    $replica_IMR_status = $backup_repo{IMR}->Spawn ();
+    if ($replica_IMR_status != 0) {
+        print STDERR "ERROR: ImR Service replica returned $replica_IMT_status\n";
+        return 1;
+    }
+    if (wait_for_imr(\%repo, "replicaiorfile")) {
+        return 1;
+    }
+    print "started backup tao_imr_locator\n";
+
+    if (wait_for_imr(\%repo)) {
+        return 1;
+    }
+    print "started primary tao_imr_locator\n";
+
+    for ($index = 0; $index < $num_srvr; ++$index) {
+        if ($a_srv[$index]->PutFile ($repo_for_srvr[$index]->{imriorfile}) == -1) {
+            print STDERR "ERROR: cannot set file <$a_srv_imriorfile[$index]>\n";
+            kill_imr();
+            return 1;
+        }
+    }
+
+    print "\n\nstarting tao_imr_activator\n";
+    $repo{ACT}->Arguments ("-d $test_debug_level -o $repo{act_actiorfile} " .
+        "-ORBInitRef ImplRepoService=file://$repo{act_imriorfile} $refstyle " .
+        $repo{act_explicit_flag});
+    $ACT_status = $repo{ACT}->Spawn ();
+    if ($ACE_status != 0) {
+        print STDERR "ERROR: ImR Activator returned $ACE_status\n";
+        return 1;
+    }
+
+    if ($repo{act}->WaitForFileTimed (
+                  $repo{actiorfile},
+                  $repo{act}->ProcessStartWaitInterval()) == -1) {
+        print STDERR "ERROR: cannot find file <" .
+            $repo{act_actiorfile} . ">\n";
+        kill_act();
+        kill_imr();
+        return 1;
+    }
+    print "started tao_imr_activator\n";
+
+    for ($index = 0; $index < $num_srvr; ++$index) {
+        print "\n\nupdating server $index using tao_imr\n";
+        $repo_for_srvr[$index]->{TI}->Arguments ("-ORBInitRef ImplRepoService" .
+            "=file://$repo_for_srvr[$index]->{ti_imriorfile} $refstyle " .
+            "update $a_srv_name[$index] -c \"$imr_A_SRV_cmd[$index] " .
+            "-o $imr_airplaneiorfile[$index] -s $a_srv_name[$index]\" " .
+            "$repo_for_srvr[$index]->{server_act_flag} ");
+        $TI_status = $repo_for_srvr[$index]->{TI}->SpawnWaitKill (
+            $repo_for_srvr[$index]->{ti}->ProcessStartWaitInterval());
+        if ($TI_status != 0) {
+            print STDERR "ERROR: tao_imr ($index) returned $TI_status\n";
+            kill_act();
+            kill_imr();
+            return 1;
+        }
+        print "updated server $index with the locator using tao_imr\n";
+    }
+
+    for ($index = 0; $index < $num_srvr; ++$index) {
+        print "\n\nstarting server $index using tao_imr\n";
+        $repo_for_srvr[$index]->{TI}->Arguments ("-ORBInitRef ImplRepoService" .
+            "=file://$repo_for_srvr[$index]->{ti_imriorfile} $refstyle " .
+            "start $a_srv_name[$index]");
+        $TI_status = $repo_for_srvr[$index]->{TI}->SpawnWaitKill (
+            $repo_for_srvr[$index]->{ti}->ProcessStartWaitInterval());
+        if ($TI_status != 0) {
+            print STDERR "ERROR: tao_imr ($index) returned $TI_status\n";
+            kill_act();
+            kill_imr();
+            return 1;
+        }
+        print "started server $index using tao_imr\n";
+    }
+
+    for ($index = 0; $index < $num_srvr; ++$index) {
+        if ($a_srv[$index]->WaitForFileTimed (
+                  $airplaneiorfile[$index],
+                  $a_srv[$index]->ProcessStartWaitInterval()) == -1) {
+            print STDERR
+              "ERROR: cannot find file <$a_srv_airplaneiorfile[$index]>\n";
+            kill_then_timed_wait(\@A_SRV, 1);
+            $ACT->Kill (); $ACT->TimedWait (1);
+            $IMR->Kill (); $IMR->TimedWait (1);
+            return 1;
+        }
+        if ($a_srv[$index]->GetFile ($airplaneiorfile[$index]) == -1) {
+            print STDERR
+              "ERROR: cannot retrieve file <$a_srv_airplaneiorfile[$index]>\n";
+            kill_then_timed_wait(\@A_SRV, 1);
+            $ACT->Kill (); $ACT->TimedWait (1);
+            $IMR->Kill (); $IMR->TimedWait (1);
+            return 1;
+        }
+        if ($a_cli[$index]->PutFile ($airplaneiorfile[$index]) == -1) {
+            print STDERR "ERROR: cannot set file <$a_cli_airplaneiorfile[$index]>\n";
+            kill_then_timed_wait(\@A_SRV, 1);
+            $ACT->Kill (); $ACT->TimedWait (1);
+            $IMR->Kill (); $IMR->TimedWait (1);
+            return 1;
+        }
+    }
+
+    if (start_clients() != 0) {
+        return 1;
+    }
+
+    if (stop_clients() != 0) {
+        return 1;
+    }
+
+    if (shutdown_servers_using_tao_imr(\@repo_for_srvr) != 0) {
+        return 1;
+    }
+
+    if (start_clients() != 0) {
+        return 1;
+    }
+
+    if (stop_clients() != 0) {
+        return 1;
+    }
+
+    print "\n\nkilling the primary tao_imr_locator\n";
+    $IMR->Kill(); $IMR->TimedWait();
+    print "killed the primary tao_imr_locator\n";
+
+    if (start_clients() != 0) {
+        return 1;
+    }
+
+    if (stop_clients() != 0) {
+        return 1;
+    }
+
+    if (shutdown_servers_using_tao_imr(\@repo_for_srvr) != 0) {
+        return 1;
+    }
+
+    
+    print "\n\nstarting primary tao_imr_locator again\n";
+    $imr->DeleteFile ($imriorfile);
+    $repo{IMR}->Arguments ("-d $test_debug_level -o $repo{imr_imriorfile} " .
+        "$imr_refstyle $repo{imr_endpoint_flag} $repo{imr_backing_store_flag}");
+    $IMR_status = $repo{IMR}->Spawn ();
+    if ($IMR_status != 0) {
+        print STDERR "ERROR: ImR Service returned $IMR_status\n";
+        return 1;
+    }
+    if (wait_for_imr(\%repo)) {
+        return 1;
+    }
+    print "started primary tao_imr_locator again\n";
+
+    if (start_clients() != 0) {
+        return 1;
+    }
+
+    if (stop_clients() != 0) {
+        return 1;
+    }
+
+    if (shutdown_servers_using_tao_imr(\@repo_for_srvr) != 0) {
+        return 1;
+    }
+
+    print "\n\nkilling the backup tao_imr_locator\n";
+    $replica_IMR->Kill(); $replica_IMR->TimedWait();
+    $replica_imr->DeleteFile ($replica_imriorfile);
+    print "killed the backup tao_imr_locator\n";
+
+    print "\n\nstarting backup tao_imr_locator\n";
+    $backup_repo{IMR}->Arguments ("-d $test_debug_level -o " .
+        "$backup_repo{imriorfile} $imr_refstyle " .
+        "$backup_repo{imr_endpoint_flag} " .
+        "$backup_repo{imr_backing_store_flag}");
+    $replica_IMR_status = $backup_repo{IMR}->Spawn ();
+    if ($replica_IMR_status != 0) {
+        print STDERR "ERROR: ImR Service replica returned $replica_IMT_status\n";
+        return 1;
+    }
+    if (wait_for_imr(\%repo, "replicaiorfile")) {
+        return 1;
+    }
+    print "started backup tao_imr_locator again\n";
+
+    if (start_clients() != 0) {
+        return 1;
+    }
+
+    if (stop_clients() != 0) {
+        return 1;
+    }
+
+    if (shutdown_servers_using_tao_imr(\@repo_for_srvr) != 0) {
+        return 1;
+    }
+
+    $IMR->Kill(); $IMR->TimedWait();
+    $replica_IMR->Kill(); $replica_IMR->TimedWait();
+    $ACT->Kill(); $ACT->TimedWait();
+
+    cleanup_replication ();
+
+    # clean up IOR files
+    for ($index = 0; $index < $num_srvr; ++$index) {
+        $a_srv[$index]->DeleteFile ($repo_for_srvr[$index]->{imriorfile});
+        $a_srv[$index]->DeleteFile ($airplaneiorfile[$index]);
+        $a_cli[$index]->DeleteFile ($airplaneiorfile[$index]);
+        $repo_for_srvr[$index]->{imr}->DeleteFile ($airplaneiorfile[$index]);
+    }
+    $imr->DeleteFile ($imriorfile);
+    $imr->DeleteFile ($primaryiorfile);
+    $act->DeleteFile ($imriorfile);
+    $ti->DeleteFile ($imriorfile);
+    $act->DeleteFile ($actiorfile);
+    $replica_imr->DeleteFile ($replica_imriorfile);
+    $replica_imr->DeleteFile ($backupiorfile);
+
+    return $status;
+}
+
+###############################################################################
+
+sub persistent_ft_test
+{
+    if (!$replica) {
+      # The persistent_ft test needs the -replica flag
+      return 1;
+    }
+
+    my $status = 0;
+
+    my $imr_port = 10001 + $imr->RandomPort ();
+    my $replica_imr_port = $imr_port + 1;
+
+    my %repo;
+    setup_repo(\%repo, $imr, $IMR, $imriorfile, $act, $ACT, $actiorfile, $ti,
+      $TI, $imr_port, "--primary", $backupiorfile);
+
+    my %backup_repo;
+    setup_repo(\%backup_repo, $replica_imr, $replica_IMR, $replica_imriorfile,
+      $replica_act, $replica_ACT, $replica_actiorfile, $replica_ti, $replica_TI,
+      $replica_imr_port, "--backup", $primaryiorfile);
+
+    my @repo_for_srvr;
+    for ($index = 0; $index < $num_srvr; ++$index) {
+        if ($index == ($num_srvr - 1)) {
+            push(@repo_for_srvr, \%backup_repo);
+        } else {
+            push(@repo_for_srvr, \%repo);
+        }
+
+        push(@a_srv_imriorfile, $a_srv[$index]->LocalFile ($repo_for_srvr[$index]->{imriorfile}));
+        push(@imr_airplaneiorfile, $repo_for_srvr[$index]->{imr}->LocalFile ($airplaneiorfile[$index]));
+        push(@a_srv_airplaneiorfile, $a_srv[$index]->LocalFile ($airplaneiorfile[$index]));
+        $a_srv[$index]->DeleteFile ($repo_for_srvr[$index]->{imriorfile});
+        $a_srv[$index]->DeleteFile ($airplaneiorfile[$index]);
+        $a_cli[$index]->DeleteFile ($airplaneiorfile[$index]);
+        $repo_for_srvr[$index]->{imr}->DeleteFile ($airplaneiorfile[$index]);
+    }
+    $imr->DeleteFile ($imriorfile);
+    $imr->DeleteFile ($primaryiorfile);
+    $act->DeleteFile ($imriorfile);
+    $ti->DeleteFile ($imriorfile);
+    $act->DeleteFile ($actiorfile);
+    $replica_imr->DeleteFile ($replica_imriorfile);
+    $replica_imr->DeleteFile ($backupiorfile);
+    $replica_act->DeleteFile ($replica_imriorfile);
+    $replica_ti->DeleteFile ($replica_imriorfile);
+    $replica_act->DeleteFile ($replica_actiorfile);
+
+    print "\n\nstarting primary tao_imr_locator\n";
+    $repo{IMR}->Arguments ("-d $test_debug_level -o $repo{imr_imriorfile} " .
+        "$imr_refstyle $repo{imr_endpoint_flag} $repo{imr_backing_store_flag}");
+print "Comment line arguments: -d $test_debug_level -o $repo{imr_imriorfile} " .  "$imr_refstyle $repo{imr_endpoint_flag} $repo{imr_backing_store_flag}\n";
+    $IMR_status = $repo{IMR}->Spawn ();
+    if ($IMR_status != 0) {
+        print STDERR "ERROR: ImR Service returned $IMR_status\n";
+        return 1;
+    }
+
+    if (wait_for_imr(\%backup_repo, "replicaiorfile")) {
+        return 1;
+    }
+
+    print "\n\nstarting backup tao_imr_locator\n";
+    $backup_repo{IMR}->Arguments ("-d $test_debug_level -o " .
+        "$backup_repo{imriorfile} $imr_refstyle " .
+        "$backup_repo{imr_endpoint_flag} " .
+        "$backup_repo{imr_backing_store_flag}");
+    $replica_IMR_status = $backup_repo{IMR}->Spawn ();
+    if ($replica_IMR_status != 0) {
+        print STDERR "ERROR: ImR Service replica returned $replica_IMT_status\n";
+        return 1;
+    }
+    if (wait_for_imr(\%repo, "replicaiorfile")) {
+        return 1;
+    }
+    print "started backup tao_imr_locator\n";
+
+    if (wait_for_imr(\%repo)) {
+        return 1;
+    }
+    print "started primary tao_imr_locator\n";
+
+    for ($index = 0; $index < $num_srvr; ++$index) {
+        if ($a_srv[$index]->PutFile ($repo_for_srvr[$index]->{imriorfile}) == -1) {
+            print STDERR "ERROR: cannot set file <$a_srv_imriorfile[$index]>\n";
+            kill_imr();
+            return 1;
+        }
+    }
+
+    print "\n\nstarting tao_imr_activator\n";
+    $repo{ACT}->Arguments ("-d $test_debug_level -o $repo{act_actiorfile} " .
+        "-ORBInitRef ImplRepoService=file://$repo{act_imriorfile} $refstyle " .
+        $repo{act_explicit_flag});
+    $ACT_status = $repo{ACT}->Spawn ();
+    if ($ACE_status != 0) {
+        print STDERR "ERROR: ImR Activator returned $ACE_status\n";
+        return 1;
+    }
+
+    if ($repo{act}->WaitForFileTimed (
+                  $repo{actiorfile},
+                  $repo{act}->ProcessStartWaitInterval()) == -1) {
+        print STDERR "ERROR: cannot find file <" .
+            $repo{act_actiorfile} . ">\n";
+        kill_act();
+        kill_imr();
+        return 1;
+    }
+    print "started tao_imr_activator\n";
+
+    for ($index = 0; $index < $num_srvr; ++$index) {
+        print "\n\nupdating server $index using tao_imr\n";
+        $repo_for_srvr[$index]->{TI}->Arguments ("-ORBInitRef ImplRepoService" .
+            "=file://$repo_for_srvr[$index]->{ti_imriorfile} $refstyle " .
+            "update $a_srv_name[$index] -c \"$imr_A_SRV_cmd[$index] " .
+            "-o $imr_airplaneiorfile[$index] -s $a_srv_name[$index]\" " .
+            "$repo_for_srvr[$index]->{server_act_flag} ");
+        $TI_status = $repo_for_srvr[$index]->{TI}->SpawnWaitKill (
+            $repo_for_srvr[$index]->{ti}->ProcessStartWaitInterval());
+        if ($TI_status != 0) {
+            print STDERR "ERROR: tao_imr ($index) returned $TI_status\n";
+            kill_act();
+            kill_imr();
+            return 1;
+        }
+        print "updated server $index with the locator using tao_imr\n";
+    }
+
+    for ($index = 0; $index < $num_srvr; ++$index) {
+        print "\n\nstarting server $index using tao_imr\n";
+        $repo_for_srvr[$index]->{TI}->Arguments ("-ORBInitRef ImplRepoService" .
+            "=file://$repo_for_srvr[$index]->{ti_imriorfile} $refstyle " .
+            "start $a_srv_name[$index]");
+        $TI_status = $repo_for_srvr[$index]->{TI}->SpawnWaitKill (
+            $repo_for_srvr[$index]->{ti}->ProcessStartWaitInterval());
+        if ($TI_status != 0) {
+            print STDERR "ERROR: tao_imr ($index) returned $TI_status\n";
+            kill_act();
+            kill_imr();
+            return 1;
+        }
+        print "started server $index using tao_imr\n";
+    }
+
+    for ($index = 0; $index < $num_srvr; ++$index) {
+        if ($a_srv[$index]->WaitForFileTimed (
+                  $airplaneiorfile[$index],
+                  $a_srv[$index]->ProcessStartWaitInterval()) == -1) {
+            print STDERR
+              "ERROR: cannot find file <$a_srv_airplaneiorfile[$index]>\n";
+            kill_then_timed_wait(\@A_SRV, 1);
+            $ACT->Kill (); $ACT->TimedWait (1);
+            $IMR->Kill (); $IMR->TimedWait (1);
+            return 1;
+        }
+        if ($a_srv[$index]->GetFile ($airplaneiorfile[$index]) == -1) {
+            print STDERR
+              "ERROR: cannot retrieve file <$a_srv_airplaneiorfile[$index]>\n";
+            kill_then_timed_wait(\@A_SRV, 1);
+            $ACT->Kill (); $ACT->TimedWait (1);
+            $IMR->Kill (); $IMR->TimedWait (1);
+            return 1;
+        }
+        if ($a_cli[$index]->PutFile ($airplaneiorfile[$index]) == -1) {
+            print STDERR "ERROR: cannot set file <$a_cli_airplaneiorfile[$index]>\n";
+            kill_then_timed_wait(\@A_SRV, 1);
+            $ACT->Kill (); $ACT->TimedWait (1);
+            $IMR->Kill (); $IMR->TimedWait (1);
+            return 1;
+        }
+    }
+
+    if (start_clients() != 0) {
+        return 1;
+    }
+
+    if (stop_clients() != 0) {
+        return 1;
+    }
+
+    if (shutdown_servers_using_tao_imr(\@repo_for_srvr) != 0) {
+        return 1;
+    }
+
+    print "\n\nkilling the primary tao_imr_locator\n";
+    $IMR->Kill(); $IMR->TimedWait();
+    $imr->DeleteFile ($imriorfile);
+    $imr->DeleteFile ($primaryiorfile);
+    print "killed the primary tao_imr_locator\n";
+
+    print "\n\nkilling the backup tao_imr_locator\n";
+    $replica_IMR->Kill(); $replica_IMR->TimedWait();
+    $replica_imr->DeleteFile ($replica_imriorfile);
+    $replica_imr->DeleteFile ($backupiorfile);
+    print "killed the backup tao_imr_locator\n";
+
+    print "\n\nstarting primary tao_imr_locator again\n";
+    $repo{IMR}->Arguments ("-d $test_debug_level -o $repo{imr_imriorfile} " .
+        "$imr_refstyle $repo{imr_endpoint_flag} $repo{imr_backing_store_flag}");
+    $IMR_status = $repo{IMR}->Spawn ();
+    if ($IMR_status != 0) {
+        print STDERR "ERROR: ImR Service returned $IMR_status\n";
+        return 1;
+    }
+
+    if ($repo{imr}->WaitForFileTimed($primaryiorfile,
+            $repo{imr}->ProcessStartWaitInterval()) == -1) {
+        return 1;
+    }
+
+    print "\n\nstarting backup tao_imr_locator again\n";
+    $backup_repo{IMR}->Arguments ("-d $test_debug_level -o " .
+        "$backup_repo{imriorfile} $imr_refstyle " .
+        "$backup_repo{imr_endpoint_flag} " .
+        "$backup_repo{imr_backing_store_flag}");
+    $replica_IMR_status = $backup_repo{IMR}->Spawn ();
+    if ($replica_IMR_status != 0) {
+        print STDERR "ERROR: ImR Service replica returned $replica_IMT_status\n";
+        return 1;
+    }
+    if ($backup_repo{imr}->WaitForFileTimed($backupiorfile,
+            $backup_repo{imr}->ProcessStartWaitInterval()) == -1) {
+        return 1;
+    }
+    print "started backup tao_imr_locator again\n";
+
+    if (start_clients() != 0) {
+        return 1;
+    }
+
+    if (stop_clients() != 0) {
+        return 1;
+    }
+
+    if (shutdown_servers_using_tao_imr(\@repo_for_srvr) != 0) {
+        return 1;
+    }
+
+    $IMR->Kill(); $IMR->TimedWait();
+    $replica_IMR->Kill(); $replica_IMR->TimedWait();
+    $ACT->Kill(); $ACT->TimedWait();
+
+    cleanup_replication ();
+
+    # clean up IOR files
+    for ($index = 0; $index < $num_srvr; ++$index) {
+        $a_srv[$index]->DeleteFile ($repo_for_srvr[$index]->{imriorfile});
+        $a_srv[$index]->DeleteFile ($airplaneiorfile[$index]);
+        $a_cli[$index]->DeleteFile ($airplaneiorfile[$index]);
+        $repo_for_srvr[$index]->{imr}->DeleteFile ($airplaneiorfile[$index]);
+    }
+    $imr->DeleteFile ($imriorfile);
+    $imr->DeleteFile ($primaryiorfile);
+    $act->DeleteFile ($imriorfile);
+    $ti->DeleteFile ($imriorfile);
+    $act->DeleteFile ($actiorfile);
+    $replica_imr->DeleteFile ($replica_imriorfile);
+    $replica_imr->DeleteFile ($backupiorfile);
+
+    return $status;
+}
+
+###############################################################################
+
 sub both_ir_test
 {
     my $status = 0;
@@ -2095,7 +2703,7 @@ my $test_num = 0;
 
 my @tests = ("airplane", "airplane_ir", "nestea", "nestea_ir",
              "both_ir", "persistent_ir", "persistent_ir_hash",
-             "persistent_ir_shared");
+             "persistent_ir_shared", "persistent_ir_ft", "failover");
 my @nt_tests = ("nt_service_ir", "persistent_ir_registry");
 
 my $i;
@@ -2168,6 +2776,12 @@ for ($i = 0; $i <= $#ARGV; $i++) {
     }
     elsif ($ARGV[$i] eq "persistent_ir_shared") {
         $ret = persistent_ir_test ("--directory");
+    }
+    elsif ($ARGV[$i] eq "persistent_ft") {
+        $ret = persistent_ft_test ();
+    }
+    elsif ($ARGV[$i] eq "failover") {
+        $ret = failover_test ();
     }
     elsif ($ARGV[$i] eq "perclient") {
         $ret = perclient();
