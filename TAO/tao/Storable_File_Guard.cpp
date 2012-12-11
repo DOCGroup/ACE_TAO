@@ -131,12 +131,19 @@ TAO::Storable_File_Guard::release (void)
         {
           if( rwflags_ & mode_write )
             this->mark_object_current ();
+
+          // Ensure that we write out any cached data to the
+          // persistent store.
+          fl_->sync ();
+
+          // Release the lock
           fl_->funlock(0, 0, 0);
         }
       fl_->close();
       delete fl_;
       closed_ = 1;
     }
+
 }
 
 TAO::Storable_Base &

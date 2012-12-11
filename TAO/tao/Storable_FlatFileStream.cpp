@@ -159,6 +159,12 @@ TAO::Storable_FlatFileStream::flush (void)
   return ACE_OS::fflush(this->fl_);
 }
 
+int
+TAO::Storable_FlatFileStream::sync (void)
+{
+  return ACE_OS::fsync (this->filelock_.handle_);
+}
+
 TAO::Storable_Base &
 TAO::Storable_FlatFileStream::operator << (const ACE_CString& str)
 {
@@ -277,7 +283,7 @@ TAO::Storable_FlatFileStream::operator << (const TAO_OutputCDR & cdr)
 TAO_InputCDR *
 TAO::Storable_FlatFileStream::create_input_CDR (const char *& buf)
 {
-  ACE_TRACE("TAO::Storable_FlatFileStream::operator >>");
+  ACE_TRACE("TAO::Storable_FlatFileStream::create_input_CDR");
 
   int length;
   *this >> length;

@@ -76,6 +76,10 @@ namespace TAO
 
     virtual bool flush (void) = 0;
 
+    /// Force write of storable data to storage.
+    /// Returns 0 on success, otherwise EOF
+    virtual int sync (void) = 0;
+
     virtual Storable_Base& operator << (const ACE_CString& str) = 0;
 
     virtual Storable_Base& operator >> (ACE_CString& str) = 0;
@@ -101,8 +105,11 @@ namespace TAO
 
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
 #include "tao/Storable_Base.inl"
 #endif
+
 
 #endif
