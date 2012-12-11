@@ -1,3 +1,12 @@
+Tue Dec 11 22:05:18 UTC 2012  Weiqi Gao  <gao_w@ociweb.com>
+
+        * orbsvcs/tests/ImplRepo/airplane_client_i.h:
+        * orbsvcs/tests/ImplRepo/airplane_client_i.cpp:
+        * orbsvcs/tests/ImplRepo/run_test.pl:
+
+          Added failover_test and persistent_ft_test.
+          Made airplane_client return an error code when an exception occurs.
+
 Tue Dec 11 15:58:05 UTC 2012  Kevin Stanley  <stanleyk@ociweb.com>
 
         * orbsvcs/Naming_Service/FT_Naming_Main.cpp:
