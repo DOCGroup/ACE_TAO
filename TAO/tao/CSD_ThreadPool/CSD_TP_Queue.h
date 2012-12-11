@@ -78,23 +78,13 @@ namespace TAO
       /// visiting every request).
       void accept_visitor(TP_Queue_Visitor& visitor);
 
-      /// Getter for the cur_queue_depth_ . TP_Queue will control increment/decrement
-      size_t get_cur_queue_depth();
-
     private:
-
-      typedef TAO_SYNCH_MUTEX LockType;
-      LockType lock_;
 
       /// The request at the front of the queue.
       TP_Request* head_;
 
       /// The request at the end of the queue.
       TP_Request* tail_;
-
-      ///Queue depth
-      size_t cur_queue_depth_;
-
     };
 
   }
