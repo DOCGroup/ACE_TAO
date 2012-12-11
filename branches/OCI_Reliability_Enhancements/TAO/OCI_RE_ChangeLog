@@ -1,3 +1,14 @@
+Tue Dec 11 22:12:52 UTC 2012  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * tao/Storable_Base.h:
+        * tao/Storable_File_Guard.cpp:
+        * tao/Storable_FlatFileStream.h:
+        * tao/Storable_FlatFileStream.cpp:
+
+          Added abstraction for sync for use in ensuring written
+          data persistent store. Implemented using fsync in
+          Storable_FlatFileStream.
+
 Tue Dec 11 22:05:18 UTC 2012  Weiqi Gao  <gao_w@ociweb.com>
 
         * orbsvcs/tests/ImplRepo/airplane_client_i.h:

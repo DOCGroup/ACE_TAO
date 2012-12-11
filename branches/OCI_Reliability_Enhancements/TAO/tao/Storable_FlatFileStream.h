@@ -42,16 +42,16 @@ namespace TAO
     virtual ~Storable_FlatFileStream();
 
     /// Remove a file by name (file is not open)
-    virtual void remove();
+    virtual void remove ();
 
     /// Check if a file exists on disk (file is not open)
-    virtual int exists();
+    virtual int exists ();
 
     /// Open a file (the remaining methods below all require an open file)
-    virtual int open();
+    virtual int open ();
 
     /// Close an open file
-    virtual int close();
+    virtual int close ();
 
     /// Acquire a file lock
     virtual int flock (int whence, int start, int len);
@@ -60,11 +60,15 @@ namespace TAO
     virtual int funlock (int whence, int start, int len);
 
     /// Returns the last time an open file was changed
-    virtual time_t last_changed(void);
+    virtual time_t last_changed (void);
 
     virtual void rewind (void);
 
     virtual bool flush (void);
+
+    /// Force write of storable data to storage.
+    /// Returns 0 on success, otherwise EOF
+    virtual int sync (void);
 
     virtual Storable_Base& operator << (const ACE_CString& str);
 
@@ -95,25 +99,25 @@ namespace TAO
   {
   public:
 
-	/// @param directory Directory to contain file passed in
-	/// create_stream(). The directory is assumed to already exist.
+    /// @param directory Directory to contain file passed in
+    /// create_stream (). The directory is assumed to already exist.
     Storable_FlatFileFactory(const ACE_CString & directory);
 
     const ACE_CString & get_directory () const;
 
-    ~Storable_FlatFileFactory();
+    ~Storable_FlatFileFactory ();
 
   // Factory Methods
 
   /// Create the stream that can operate on a disk file
-    virtual Storable_Base *create_stream(const ACE_CString & file,
-                                         const ACE_TCHAR * mode);
+    virtual Storable_Base *create_stream (const ACE_CString & file,
+                                          const ACE_TCHAR * mode);
   private:
-  	ACE_CString directory_;
+    ACE_CString directory_;
 
   };
-
-
 }
+
+#include /**/ "ace/post.h"
 
 #endif /* STORABLE_FLATFILESTREAM_H */
