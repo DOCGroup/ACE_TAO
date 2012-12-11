@@ -131,9 +131,15 @@ TAO_FT_Naming_Server::init_with_orb (int argc,
     return -1;
   }
 
-  // The backup should write out the combined IOR for the primary and backup
-  // naming service and naming manager
-  result = export_ft_naming_references ();
+  // If we successfully initialized the replication manager and we are
+  // a backup server, then we should export the multi-profile
+  // references to files.
+  if (this->server_role_ == TAO_FT_Naming_Server::BACKUP)
+    {
+      // The backup should write out the combined IOR for the primary and backup
+      // naming service and naming manager.
+      result = export_ft_naming_references ();
+    }
 
   return result;
 }
@@ -227,6 +233,24 @@ TAO_FT_Naming_Server::init_naming_manager_with_orb (int argc, ACE_TCHAR *argv []
     this->naming_manager_ior_ =
       orb->object_to_string (this->my_naming_manager_);
 
+  // If we are running in standalone mode, then write out our
+  // object reference to the file defined in the -g option
+  if ((this->server_role_ == TAO_FT_Naming_Server::STANDALONE) &&
+      (this->naming_manager_ior_file_name_ != 0))
+    {
+      if (this->write_ior_to_file (this->naming_manager_ior_.in (),
+                                   this->naming_manager_ior_file_name_)
+          != 0)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT("Unable to open %s for writing:(%u) %p\n"),
+                             this->naming_manager_ior_file_name_,
+                             ACE_ERRNO_GET,
+                             ACE_TEXT("TAO_Naming_Server::init_naming_manager_with_orb")),
+                            -1);
+        }
+    }
+
     this->naming_manager_.initialize (this->orb_,
       this->naming_manager_poa_);
 
@@ -253,6 +277,7 @@ TAO_FT_Naming_Server::init_naming_manager_with_orb (int argc, ACE_TCHAR *argv []
     CORBA::String_var ior = this->naming_manager_ior ();
     adapter->bind ("NamingManager", ior.in ());
   }
+
   return 0;
 }
 
@@ -674,9 +699,6 @@ TAO_FT_Naming_Server::parse_args (int argc,
 int
 TAO_FT_Naming_Server::fini (void)
 {
-  // Invoke the base class fini
-  TAO_Naming_Server::fini ();
-
   // Destroy the child POAs created when initializing
   // the FT Naming Service
   try
@@ -716,12 +738,6 @@ TAO_FT_Naming_Server::fini (void)
       // Ignore
     }
 
-  naming_context_ = CosNaming::NamingContext::_nil ();
-  ns_poa_ = PortableServer::POA::_nil ();
-
-  root_poa_ = PortableServer::POA::_nil ();
-  orb_ = CORBA::ORB::_nil ();
-
   // Specific FT_Naming cleanup
   naming_manager_poa_ = PortableServer::POA::_nil ();
   replication_manager_poa_ = PortableServer::POA::_nil ();
@@ -734,7 +750,8 @@ TAO_FT_Naming_Server::fini (void)
   delete replication_manager_;
 #endif /* CORBA_E_MICRO */
 
-  return 0;
+  // Invoke the base class fini
+  return TAO_Naming_Server::fini ();
 }
 
 TAO_Storable_Naming_Context_Factory *
@@ -807,7 +824,7 @@ TAO_FT_Naming_Server::export_ft_naming_references (void)
 
   case TAO_FT_Naming_Server::BACKUP:
     {
-      // Make sure the user provided an ior_file_name for the comb
+      // Make sure the user provided an ior_file_name for the multi-profile ior file
       if (this->combined_naming_service_ior_file_name_ == 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,

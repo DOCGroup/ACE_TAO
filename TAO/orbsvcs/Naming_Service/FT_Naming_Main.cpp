@@ -11,22 +11,16 @@
 class Naming_Svc_Shutdown : public Shutdown_Functor
 {
 public:
-  Naming_Svc_Shutdown (TAO_Naming_Service* ns);
-  ~Naming_Svc_Shutdown ();
+  Naming_Svc_Shutdown (TAO_Naming_Service& ns);
 
   void operator() (int which_signal);
 private:
-  TAO_Naming_Service* ns_;
+  TAO_Naming_Service& ns_;
 };
 
-Naming_Svc_Shutdown::Naming_Svc_Shutdown (TAO_Naming_Service* ns)
+Naming_Svc_Shutdown::Naming_Svc_Shutdown (TAO_Naming_Service& ns)
   : ns_(ns)
 {
-}
-
-Naming_Svc_Shutdown::~Naming_Svc_Shutdown ()
-{
-  delete ns_;
 }
 
 void
@@ -36,7 +30,7 @@ Naming_Svc_Shutdown::operator() (int which_signal)
     ACE_DEBUG ((LM_DEBUG,
                 "FT Name Service: shutting down on signal %d\n",
                 which_signal));
-  (void) this->ns_->shutdown ();
+  (void) this->ns_.shutdown ();
 }
 
 // Driver function for the TAO FT Naming Service.
@@ -44,20 +38,19 @@ Naming_Svc_Shutdown::operator() (int which_signal)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  TAO_Naming_Service* naming_service = 0;
-  ACE_NEW_RETURN (naming_service, TAO_FT_Naming_Service, -1);
+  TAO_FT_Naming_Service naming_service;
 
   // Stuff to insure that we're gracefully shut down...
   Naming_Svc_Shutdown killer (naming_service);
   Service_Shutdown kill_contractor(killer);
 
-  if (naming_service->init (argc, argv) == -1)
+  if (naming_service.init (argc, argv) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT("Failed to start the Naming Service.\n")),
                       1);
   try
     {
-      naming_service->run ();
+      naming_service.run ();
     }
   catch (const CORBA::Exception& ex)
     {
@@ -65,7 +58,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       return 1;
     }
 
-  naming_service->fini ();
+  naming_service.fini ();
 
   return 0;
 }

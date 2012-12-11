@@ -158,8 +158,6 @@ if ($client != 0) {
 print STDERR "Printing Naming Tree from combined Name Service pair.\n";
 
 $prog = "$startdir/../../../../utils/nslist/tao_nslist";
-#use corbaloc
-#$args = "--ns corbaloc:iiop:$hostname:$ns_orb_port1/NameService";
 $args = "--ns file://$combined_ns_iorfile";
 
 $NSL = $test->CreateProcess("$prog", "$args");
@@ -173,6 +171,6 @@ $test->DeleteFile ($primary_iorfile);
 $test->DeleteFile ($combined_ns_iorfile);
 
 # Clean out the persistence dir after the test completes
-#clean_persistence_dir;
-
+clean_persistence_dir;
+rmdir ($naming_persistence_dir);
 exit $status;
