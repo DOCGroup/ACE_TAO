@@ -1,13 +1,20 @@
+Tue Dec 11 15:09:57 UTC 2012  Brian Johnson  <johnsonb@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Locator_Options.cpp:
+
+          Fixed "--primary" and "--backup" flags to not consume
+          the following argument.
+
 Mon Dec 10 20:00:37 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
 
         * orbsvcs/orbsvcs/FtNaming.mpc:
 
           Fixed issue with dynamicflags.
-          
+
         * orbsvcs/orbsvcs/Naming/FaultTolerant/ftnaming_intf_export.h:
 
           Adding new file.
-          
+
 Mon Dec 10 17:13:47 UTC 2012  Kevin Stanley  <stanleyk@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Persistent_Naming_Context_Factory.h:

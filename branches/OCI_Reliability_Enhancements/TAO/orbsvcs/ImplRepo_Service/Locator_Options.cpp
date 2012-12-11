@@ -169,13 +169,11 @@ Options::parse_args (int &argc, ACE_TCHAR *argv[])
                                    ACE_TEXT ("--primary")) == 0)
         {
           this->imr_type_ = PRIMARY_IMR;
-          shifter.consume_arg ();
         }
       else if (ACE_OS::strcasecmp (shifter.get_current (),
                                    ACE_TEXT ("--backup")) == 0)
         {
           this->imr_type_ = BACKUP_IMR;
-          shifter.consume_arg ();
         }
       else if (ACE_OS::strcasecmp (shifter.get_current (),
                                    ACE_TEXT ("--directory")) == 0)
