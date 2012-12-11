@@ -1,3 +1,18 @@
+Tue Dec 11 22:36:37 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/CSD_ThreadPool/CSD_TP_Queue.h:
+        * tao/CSD_ThreadPool/CSD_TP_Queue.inl:
+        * tao/CSD_ThreadPool/CSD_TP_Queue.cpp:
+
+          Cleaned out redundant queue depth tracking. This is handled in the TP
+          strategy class.
+
+        * tao/Dynamic_TP/Dynamic_TP_Task.cpp:
+
+          An attempt at lock optimization. Using the lock_ member to guard access
+          to the queue directly so that multiple threads can participate in the
+          wait.
+
 Tue Dec 11 22:12:52 UTC 2012  Kevin Stanley  <stanleyk@ociweb.com>
 
         * tao/Storable_Base.h:

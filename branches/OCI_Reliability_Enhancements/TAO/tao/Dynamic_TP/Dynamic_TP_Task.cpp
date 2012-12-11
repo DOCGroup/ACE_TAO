@@ -88,7 +88,7 @@ TAO_Dynamic_TP_Task::open(void* args)
   // now. When they startup they will decrement themselves
   // as they go into a wait state.
 
-  this->busy_threads_ = tmp->task_thread_config.init_threads_; // 
+  this->busy_threads_ = 0; //tmp->task_thread_config.init_threads_; //
   this->min_pool_threads_ = tmp->task_thread_config.min_threads_;
   this->max_pool_threads_ = tmp->task_thread_config.max_threads_;
   this->max_request_queue_depth_ = tmp->task_thread_config.queue_depth_;
@@ -219,15 +219,16 @@ TAO_Dynamic_TP_Task::svc()
         ACE_thread_t thr_id = ACE_OS::thr_self ();
         this->activated_threads_.push_back(thr_id);
         ++this->num_threads_;
+        ++this->busy_threads_;
         this->active_workers_.signal();
 
         if (TAO_debug_level > 4)
         {
           ACE_DEBUG ((LM_DEBUG,
-            ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_Task::svc() ")
-            ACE_TEXT ("New thread created. ")
-            ACE_TEXT ("Current thread count:%d\n"),
-            this->num_threads_));
+                      ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_Task::svc() ")
+                      ACE_TEXT ("New thread created. ")
+                      ACE_TEXT ("Current thread count:%d, busy_threads:%d\n"),
+                      this->num_threads_, this->busy_threads_.value()));
         }
       }
 
@@ -240,13 +241,8 @@ TAO_Dynamic_TP_Task::svc()
     {
       TAO::CSD::TP_Request_Handle request;
 
-      // Do the "GetWork" step.
-      {
-        // Acquire the lock until just before we decide to "PerformWork".
-        ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->lock_, 0);
-
-        // Start the "GetWork" loop.
-        while (request.is_nil())
+      // Start the "GetWork" loop.
+      while (request.is_nil())
         {
           if (this->shutdown_initiated_)
             {
@@ -260,22 +256,29 @@ TAO_Dynamic_TP_Task::svc()
               return 0;
             }
 
-          // There is no need to visit the queue if it is empty.
-          if (!this->queue_.is_empty())
-            {
-              // Visit the requests in the queue in hopes of
-              // locating the first "dispatchable" (ie, not busy) request.
-              // If a dispatchable request is located, it is extracted
-              // from the queue and saved in a handle data member in the
-              // visitor object.
-              this->queue_.accept_visitor(dispatchable_visitor);
 
-              // If a dispatchable request is located, it is extracted
-              // from the queue and saved in a handle data member in the
-              // visitor object.  Let's get a "copy" (or a NULL pointer
-              // if the visitor didn't locate/extract one).
-              request = dispatchable_visitor.request();
-            }
+          {
+            // Acquire the lock until just before we decide to "PerformWork".
+            ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->lock_, 0);
+
+            // There is no need to visit the queue if it is empty.
+            if (!this->queue_.is_empty())
+              {
+                // Visit the requests in the queue in hopes of
+                // locating the first "dispatchable" (ie, not busy) request.
+                // If a dispatchable request is located, it is extracted
+                // from the queue and saved in a handle data member in the
+                // visitor object.
+                this->queue_.accept_visitor(dispatchable_visitor);
+
+                // If a dispatchable request is located, it is extracted
+                // from the queue and saved in a handle data member in the
+                // visitor object.  Let's get a "copy" (or a NULL pointer
+                // if the visitor didn't locate/extract one).
+                request = dispatchable_visitor.request();
+              }
+
+          }
 
 
           // Either the queue is empty or we couldn't find any dispatchable
@@ -292,19 +295,19 @@ TAO_Dynamic_TP_Task::svc()
               --this->busy_threads_;
 
               if (TAO_debug_level > 4)
-              {
-                ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_Task::svc() ")
-                  ACE_TEXT ("Decrementing busy_threads_. ")
-                  ACE_TEXT ("Busy thread count:%d\n"),
-                  this->busy_threads_));
-              }
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_Task::svc() ")
+                              ACE_TEXT ("Decrementing busy_threads_. ")
+                              ACE_TEXT ("Busy thread count:%d\n"),
+                              this->busy_threads_.value()));
+                }
 
               ACE_Time_Value tmp_sec = this->thread_idle_time_.to_absolute_time();
 
               wait_state = this->work_available_.wait(&tmp_sec);
 
-               // Check for timeout
+              // Check for timeout
               if ((wait_state == -1) &&
                   (this->num_threads_ > this->min_pool_threads_) &&
                   (this->num_threads_ > 1))
@@ -328,29 +331,23 @@ TAO_Dynamic_TP_Task::svc()
           if (TAO_debug_level > 4)
           {
             ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_Task::svc() ")
-              ACE_TEXT ("Incrementing busy_threads_. ")
-              ACE_TEXT ("Busy thread count:%d\n"),
-              this->busy_threads_));
+                        ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_Task::svc() ")
+                        ACE_TEXT ("Incrementing busy_threads_. ")
+                        ACE_TEXT ("Busy thread count:%d\n"),
+                        this->busy_threads_.value()));
           }
         }
 
-        // We have dropped out of the "while (request.is_nil())" loop.
-        // We only get here is we located/extracted a dispatchable request
-        // from the queue.  Note that the visitor will have already
-        // marked the target servant as now being busy (because of us).
-        // We can now safely release the lock.
-      }
-
       // Grow the pool if the configuration allows it.
 
-      if (((this->max_pool_threads_ != -1) && (this->busy_threads_ == this->num_threads_) && (this->num_threads_ < this->max_pool_threads_))
-        || ((this->max_pool_threads_ == -1) && (this->num_threads_ == this->busy_threads_.value())))
+      if ((this->busy_threads_ == this->num_threads_) &&
+          ((this->max_pool_threads_ == -1) ||
+           (this->num_threads_ < this->max_pool_threads_)))
       {
         // Increment the busy_threads_ count until the new thread can hit a wait state
         // and decrement itself.
 
-        ++this->busy_threads_;
+        //        ++this->busy_threads_;
 
         if (this->thread_stack_size_ == 0)
         {
@@ -365,15 +362,9 @@ TAO_Dynamic_TP_Task::svc()
               ACE_TEXT ("(%P|%t) Dynamic_TP_Task::svc() failed to activate ")
               ACE_TEXT ("(%d) worker threads.\n"),
               this-num_threads_));
-
-              // Decrement the busy threads since we are not getting a new one.
-              --this->busy_threads_;
             }
         } else
         {
-          size_t * stack_sz_arr = new size_t[1];
-          stack_sz_arr[0] = this->thread_stack_size_;
-
           if (this->activate(THR_NEW_LWP | THR_DETACHED,
                              1,
                              1,
@@ -382,7 +373,7 @@ TAO_Dynamic_TP_Task::svc()
                              0,
                              0,
                              0,
-                             stack_sz_arr) != 0)
+                             &this->thread_stack_size_) != 0)
             {
               // Assumes that when activate returns non-zero return code that
               // no threads were activated.
@@ -390,22 +381,7 @@ TAO_Dynamic_TP_Task::svc()
               ACE_TEXT ("(%P|%t) Dynamic_TP_Task::svc() failed to activate ")
               ACE_TEXT ("(%d) worker threads.\n"),
               this-num_threads_));
-
-              // Decrement the busy threads since we are not getting a new one.
-              --this->busy_threads_;
-
             }
-
-          // After the threads get allocated we need to clean up the allocated array.
-          delete[] stack_sz_arr;
-        }
-
-        if (TAO_debug_level > 4)
-        {
-          ACE_DEBUG((LM_DEBUG,
-          ACE_TEXT ("(%P|%t) Dynamic_TP_Task::svc() Growing the thread pool.  ")
-          ACE_TEXT ("(%d) number of threads in pool (%d) busy threads. (%d) max_pool_threads.\n"),
-          this->num_threads_, this->busy_threads_, this->max_pool_threads_));
         }
       }
 

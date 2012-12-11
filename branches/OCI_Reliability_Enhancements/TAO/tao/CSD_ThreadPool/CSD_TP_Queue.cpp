@@ -37,18 +37,6 @@ TAO::CSD::TP_Queue::put(TP_Request* request)
       this->tail_ = request;
     }
 
-  // Increment the current queue depth.
-    {
-      ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->lock_);
-       ++cur_queue_depth_;
-		if (TAO_debug_level > 4)
-		{
-		ACE_DEBUG((LM_DEBUG,
-				ACE_TEXT ("TAO (%P|%t) - CSD_TP_Queue ")
-				ACE_TEXT ("Incrementing cur_queue_depth to: %d \n"),
-						this->cur_queue_depth_));
-		}
-    }
 }
 
 
@@ -119,20 +107,6 @@ TAO::CSD::TP_Queue::accept_visitor(TP_Queue_Visitor& visitor)
               prev->next_ = next;
               next->prev_ = prev;
             }
-
-          // Decrement the current queue depth.
-                {
-                  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->lock_);
-                  --this->cur_queue_depth_;
-				  if (TAO_debug_level > 4)
-				  {
-					ACE_DEBUG((LM_DEBUG,
-							ACE_TEXT ("TAO (%P|%t) - CSD_TP_Queue ")
-							ACE_TEXT ("Decrementing cur_queue_depth to: %d \n"),
-									this->cur_queue_depth_));
-				  }
-                }
-
         }
 
       if (!continue_visitation)
@@ -145,12 +119,6 @@ TAO::CSD::TP_Queue::accept_visitor(TP_Queue_Visitor& visitor)
       // Move on to the next request in the queue.
       cur = next;
     }
-}
-
-size_t
-TAO::CSD::TP_Queue::get_cur_queue_depth()
-{
-  return ( this->cur_queue_depth_ );
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
