@@ -1,3 +1,10 @@
+Wed Dec 12 23:38:39 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
+
+        * orbsvcs/tests/FT_Naming/Federation/run_test.pl:
+        * utils/nsgroup/run_test.pl:
+
+        Updated FT_Naming and nsgroup tests to cleanup after themselves
+
 Tue Dec 11 22:36:37 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/CSD_ThreadPool/CSD_TP_Queue.h:
