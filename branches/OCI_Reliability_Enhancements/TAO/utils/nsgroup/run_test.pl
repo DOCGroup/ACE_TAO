@@ -8,8 +8,10 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
 
-$status = 0;
-$debug_level = 0;
+my $status = 0;
+my $debug_level = 0;
+my $redirection_enabled = 0;
+
 
 foreach $i (@ARGV) {
     if ($i eq '-debug') {
@@ -147,13 +149,13 @@ sub run_client ($$)
 
     $NSGROUP->Arguments ($arglist);
 
-    if ($debug_level == 0) {
+    if ($redirection_enabled) {
         redirect_output();
     }
 
     my $client_status = $NSGROUP->SpawnWaitKill ($client->ProcessStartWaitInterval());
 
-    if ($debug_level == 0) {
+    if ($redirection_enabled) {
         restore_output();
     }
 
@@ -175,21 +177,21 @@ sub run_nsadd($)
     my $args = shift;
     $NSADD->Arguments ($args);
 
-    if ($debug_level == 0) {
+    if ($redirection_enabled) {
         redirect_output();
     }
 
     #tao_nsadd --ns file://ns.ior --name iso --ctx
     my $client_status = $NSADD->SpawnWaitKill ($client->ProcessStartWaitInterval());
 
-    if ($debug_level == 0) {
+    if ($redirection_enabled) {
         restore_output();
     }
 
     if ($client_status != $0) {
         my $time = localtime;
         print STDERR "ERROR: nsadd returned $client_status at $time\n";
-        if ($debug_level == 0) {
+        if ($redirection_enabled) {
             cat_file($client_stderr_file);
         }
         $status = 1;
@@ -202,21 +204,21 @@ sub run_nsdel($)
     my $args = shift;
     $NSDEL->Arguments ($args);
 
-    if ($debug_level == 0) {
+    if ($redirection_enabled) {
         redirect_output();
     }
 
     #tao_nsdel --ns file://ns.ior --name iso --destroy
     my $client_status = $NSDEL->SpawnWaitKill ($client->ProcessStartWaitInterval());
 
-    if ($debug_level == 0) {
+    if ($redirection_enabled) {
         restore_output();
     }
 
     if ($client_status != $0) {
         my $time = localtime;
         print STDERR "ERROR: nsdel returned $client_status at $time\n";
-        if ($debug_level == 0) {
+        if ($redirection_enabled) {
             cat_file($client_stderr_file);
         }
         $status = 1;
@@ -229,21 +231,21 @@ sub run_nslist($)
     my $args = shift;
     $NSLIST->Arguments ($args);
 
-    if ($debug_level == 0) {
+    if ($redirection_enabled) {
         redirect_output();
     }
 
     #tao_nslist --ns file://ns.ior
     my $client_status = $NSLIST->SpawnWaitKill ($client->ProcessStartWaitInterval());
 
-    if ($debug_level == 0) {
+    if ($redirection_enabled) {
         restore_output();
     }
 
     if ($client_status != $0) {
         my $time = localtime;
         print STDERR "ERROR: nslist returned $client_status at $time\n";
-        if ($debug_level == 0) {
+        if ($redirection_enabled) {
             cat_file($client_stderr_file);
         }
         $status = 1;
@@ -261,11 +263,11 @@ sub run_clients ()
         $POSITIVE_TEST_RESULT);
 
     run_client (
-        "group_create -group ieed -policy rand -type_id IDL:/FT_Naming/NamingManager:1.0",
+        "group_create -group ieed -policy rand -type_id IDL:FT_Naming/NamingManager:1.0",
         $POSITIVE_TEST_RESULT);
 
     run_client (
-        "group_create -group ieee -policy round -type_id IDL:/FT_Naming/NamingManager:1.0",
+        "group_create -group ieee -policy round -type_id IDL:FT_Naming/NamingManager:1.0",
         $NEGATIVE_TEST_RESULT);
 
     run_client (
@@ -352,6 +354,21 @@ print STDERR "\n";
 init_naming_context_directory ($server, $name_dir );
 
 ################################################################################
+# setup END block to cleanup after exit call
+################################################################################
+END
+{
+    $server->DeleteFile($name_mgr_iorbase);
+    $server->DeleteFile($name_srv_iorbase);
+    $client->DeleteFile($name_mgr_iorbase);
+    $client->DeleteFile($name_srv_iorbase);
+    $client->DeleteFile($stdout_file);
+    $client->DeleteFile($stderr_file);
+    clean_persistence_dir ($server, $name_dir);
+    rmdir ($name_dir);
+}
+
+################################################################################
 ## Start tao_ft_naming Service
 ################################################################################
 
@@ -393,14 +410,5 @@ if ($server_status != 0) {
     $status = 1;
 }
 
-$server->DeleteFile($name_mgr_iorbase);
-$server->DeleteFile($name_srv_iorbase);
-$client->DeleteFile($name_mgr_iorbase);
-$client->DeleteFile($name_srv_iorbase);
-$client->DeleteFile($stdout_file);
-$client->DeleteFile($stderr_file);
-
-clean_persistence_dir ($server, $name_dir);
-rmdir ($name_dir);
 
 exit $status;

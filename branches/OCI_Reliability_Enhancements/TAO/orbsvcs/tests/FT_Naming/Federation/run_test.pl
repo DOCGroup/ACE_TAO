@@ -27,6 +27,22 @@ foreach $i (@ARGV) {
     }
 }
 
+sub clean_persistence_dir($$)
+{
+    my $target = shift;
+    my $directory_name = shift;
+
+    print STDERR "INFO: cleaning $directory_name\n";
+    chdir $directory_name;
+    opendir(THISDIR, ".");
+    @allfiles = grep(!/^\.\.?$/, readdir(THISDIR));
+    closedir(THISDIR);
+    foreach $tmp (@allfiles){
+        $target->DeleteFile ($tmp);
+    }
+    chdir "..";
+}
+
 # Make sure that the directory to use to hold the naming contexts exists
 # and is cleaned out
 sub init_naming_context_directory($$)
@@ -37,16 +53,10 @@ sub init_naming_context_directory($$)
     if ( ! -d $directory_name ) {
         mkdir ($directory_name, 0777);
     } else {
-        chdir $directory_name;
-        opendir(THISDIR, ".");
-        @allfiles = grep(!/^\.\.?$/, readdir(THISDIR));
-        closedir(THISDIR);
-        foreach $tmp (@allfiles){
-            $target->DeleteFile ($tmp);
-        }
-        chdir "..";
+        clean_persistence_dir ($target, $directory_name);
     }
 }
+
 
 # Variables for command-line arguments to client and server
 # executables.
@@ -112,9 +122,25 @@ $NS1_BACKUP  = $ns1->CreateProcess($tao_ft_naming, $ns1_backup_args );
 $NS2_PRIMARY = $ns2->CreateProcess($tao_ft_naming, $ns2_primary_args );
 $NS2_BACKUP  = $ns2->CreateProcess($tao_ft_naming, $ns2_backup_args );
 
-my $replica_primary_ior = "ns_replica_primary.ior";
+my $replica_primary_ior     = "ns_replica_primary.ior";
 my $ns1_replica_primary_ior = "$name_dir1/$replica_primary_ior";
 my $ns2_replica_primary_ior = "$name_dir2/$replica_primary_ior";
+
+################################################################################
+# setup END block to cleanup after exit call
+################################################################################
+END
+{
+    $server->DeleteFile ($iorbase);
+    $ns1->DeleteFile ($ns1_ior);
+    $ns2->DeleteFile ($ns2_ior);
+    $ns1->DeleteFile ($nm1_ior);
+    $ns2->DeleteFile ($nm2_ior);
+    clean_persistence_dir ($ns1, $name_dir1);
+    clean_persistence_dir ($ns2, $name_dir2);
+    rmdir $name_dir1;
+    rmdir $name_dir2;
+}
 
 # Run two Naming Servers
 $process_status = $NS1_PRIMARY->Spawn ();
@@ -124,7 +150,6 @@ if ($process_status != 0) {
     exit 1;
 }
 
-#sleep(1);
 if ($ns1->WaitForFileTimed ($ns1_replica_primary_ior,
                             $ns1->ProcessStartWaitInterval()) == -1) {
     print STDERR "ERROR: cannot find file <$name_dir1/ns_replica_primary.ior>\n";
@@ -230,11 +255,5 @@ $NS2_BACKUP->Kill ();  $NS2_BACKUP->TimedWait (1);
 $NS2_PRIMARY->Kill (); $NS2_PRIMARY->TimedWait (1);
 $NS1_BACKUP->Kill ();  $NS1_BACKUP->TimedWait (1);
 $NS1_PRIMARY->Kill (); $NS1_PRIMARY->TimedWait (1);
-
-$server->DeleteFile ($iorbase);
-$ns1->DeleteFile ($ns1_ior);
-$ns2->DeleteFile ($ns2_ior);
-$ns1->DeleteFile ($nm1_ior);
-$ns2->DeleteFile ($nm2_ior);
 
 exit $status;
