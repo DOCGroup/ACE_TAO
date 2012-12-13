@@ -147,6 +147,8 @@ protected:
   /// The Object Group Manager POA.
   PortableServer::POA_var naming_manager_poa_;
 
+  /// The POA used for replication coordination between
+  /// primary and backup.
   PortableServer::POA_var replication_manager_poa_;
 
   int use_object_group_persistence_;

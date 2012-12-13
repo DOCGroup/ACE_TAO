@@ -30,6 +30,7 @@ TAO_FT_Naming_Replication_Manager::TAO_FT_Naming_Replication_Manager (
 
 TAO_FT_Naming_Replication_Manager::~TAO_FT_Naming_Replication_Manager(void)
 {
+  this->reference_ = FT_Naming::ReplicationManager::_nil ();
 }
 
 void
@@ -131,9 +132,12 @@ TAO_FT_Naming_Replication_Manager::register_with_peer_replica (
   }
 
   try {
+    FT_Naming::ReplicationManager_var my_ref =
+      this->reference ();
+
     // Register with the peer replica
     FT_Naming::ReplicaInfo_var peer_info =
-      this->peer_replica_->register_replica (this->reference (),
+      this->peer_replica_->register_replica (my_ref.in (),
                                              my_info);
 
     ACE_GUARD_THROW_EX (ACE_SYNCH_MUTEX,
@@ -147,7 +151,8 @@ TAO_FT_Naming_Replication_Manager::register_with_peer_replica (
   }
   catch (const CORBA::Exception& ex) {
     // Unable to contact the peer replica.
-    ex._tao_print_exception ("TAO_FT_Naming_Replication_Manager::register_with_peer_replica\n");
+    if (TAO_debug_level > 1)
+      ex._tao_print_exception ("TAO_FT_Naming_Replication_Manager::register_with_peer_replica\n");
     result = -1;
   }
 

@@ -636,7 +636,7 @@ TAO_FT_Naming_Manager::initialize (CORBA::ORB_ptr orb,
   // Initialize the components used to implement the PortableGroup interfaces
   this->factory_registry_.init (orb);
   PortableGroup::FactoryRegistry_var factory_ref =
-    factory_registry_.reference();
+    factory_registry_.reference ();
   this->group_factory_.init (orb,
                              naming_mgr_poa,
                              factory_ref.in ());
