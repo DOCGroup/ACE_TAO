@@ -20,48 +20,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-namespace
-{
-  /// Avoids using fscanf to read an integer as any
-  /// whitespace following the newline will be
-  /// consumed. This could create problems if
-  /// the data the follows the newline is binary.
-  template<typename T>
-  void read_integer(const char * format, T & i,
-                    TAO::Storable_Base::Storable_State & state,
-                    FILE * fl)
-  {
-
-    char buf[BUFSIZ];
-    char * result = fgets (buf, BUFSIZ, fl);
-
-    if (feof (fl))
-      {
-        state = TAO::Storable_Base::eofbit;
-        return;
-      }
-
-    if (result == NULL)
-      {
-        state = TAO::Storable_Base::badbit;
-        return;
-      }
-
-    switch (sscanf (buf, format, &i))
-      {
-      case 0:
-        state = TAO::Storable_Base::badbit;
-        return;
-      case EOF:
-        state = TAO::Storable_Base::eofbit;
-        return;
-      }
-
-    state = TAO::Storable_Base::goodbit;
-  }
-
-}
-
 TAO::Storable_FlatFileStream::Storable_FlatFileStream (const ACE_CString & file,
                                                             const char * mode)
   : fl_ (0)
@@ -269,10 +227,15 @@ TAO::Storable_Base &
 TAO::Storable_FlatFileStream::operator >> (int &i)
 {
   ACE_TRACE("TAO::Storable_FlatFileStream::operator >>");
-
-  Storable_State state;
-  read_integer ("%d\n", i, state, fl_);
-  this->setstate (state);
+  switch (fscanf (fl_, "%d\n", &i))
+    {
+    case 0:
+      this->setstate (badbit);
+      return *this;
+    case EOF:
+      this->setstate (eofbit);
+      return *this;
+    }
   return *this;
 }
 
@@ -280,7 +243,6 @@ TAO::Storable_Base &
 TAO::Storable_FlatFileStream::operator << (unsigned int i)
 {
   ACE_TRACE("TAO::Storable_FlatFileStream::operator <<");
-
   ACE_OS::fprintf (this->fl_, "%u\n", i);
   return *this;
 }
@@ -289,10 +251,15 @@ TAO::Storable_Base &
 TAO::Storable_FlatFileStream::operator >> (unsigned int &i)
 {
   ACE_TRACE("TAO::Storable_FlatFileStream::operator >>");
-
-  Storable_State state;
-  read_integer ("%u\n", i, state, fl_);
-  this->setstate (state);
+  switch (fscanf (fl_, "%u\n", &i))
+    {
+    case 0:
+      this->setstate (badbit);
+      return *this;
+    case EOF:
+      this->setstate (eofbit);
+      return *this;
+    }
   return *this;
 }
 
