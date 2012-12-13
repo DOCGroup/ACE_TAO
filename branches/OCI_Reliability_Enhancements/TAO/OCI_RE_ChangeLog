@@ -1,3 +1,9 @@
+Thu Dec 13 15:49:06 UTC 2012  Weiqi Gao  <gao_w@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
+
+          Fixed tao_imr_locator crash when -o points to existing file
+
 Wed Dec 12 23:38:39 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
 
         * orbsvcs/tests/FT_Naming/Federation/run_test.pl:
