@@ -14,6 +14,7 @@
 #include "ownership_qos_test.h"
 #include "tbf_qos_test.h"
 #include "rd_lifecycle_qos_test.h"
+#include "typeconsistencyenforcement_qos_test.h"
 
 DatareaderPolicyTest::DatareaderPolicyTest ()
 {
@@ -125,6 +126,14 @@ DatareaderPolicyTest::run ()
         {
           ACE_ERROR ((LM_ERROR, "ERROR DATAREADER : "
                                 "Error in ReaderDataLifecycleQosPolicy.\n"));
+          ++ret;
+        }
+
+      if (!TypeConsistencyEnforcementPolicyPolicyTest::check (dds_policy.type_consistency,
+                                                 policy.type_consistency))
+        {
+          ACE_ERROR ((LM_ERROR, "ERROR DATAREADER : "
+                                "Error in TypeConsistencyEnforcementQosPolicy.\n"));
           ++ret;
         }
     }
