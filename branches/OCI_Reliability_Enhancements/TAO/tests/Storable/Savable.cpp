@@ -5,6 +5,8 @@
 #include "tao/Storable_Factory.h"
 #include "tao/Storable_File_Guard.h"
 
+const int Savable::bytes_size_max = 128;
+
 class Savable_File_Guard: public TAO::Storable_File_Guard
 {
 public:
@@ -74,8 +76,16 @@ Savable_File_Guard::create_stream (const char * mode)
 Savable::Savable (TAO::Storable_Factory & storable_factory)
   : storable_factory_(storable_factory)
   , loaded_from_stream_ (false)
-  , i_(0)
+  , i_(42)
+  , bytes_size_(0)
 {
+
+  this->bytes_ = new char [this->bytes_size_max];
+  for (int i = 0; i < this->bytes_size_max; ++i)
+    {
+      this->bytes_[i] = 255;
+    }
+
   ACE_Auto_Ptr<TAO::Storable_Base> stream (storable_factory_.create_stream("test.dat", "r"));
   if (stream->exists ())
     {
@@ -90,6 +100,12 @@ Savable::Savable (TAO::Storable_Factory & storable_factory)
 
 Savable::~Savable ()
 {
+}
+
+bool
+Savable::is_loaded_from_stream ()
+{
+  return this->loaded_from_stream_;
 }
 
 void
@@ -108,6 +124,11 @@ Savable::load (TAO::Storable_Base & stream)
   stream >> i_;
   if (!stream.good ())
     throw Storable_Exception (stream.rdstate ());
+
+  stream >> this->bytes_size_;
+  stream.read (this->bytes_size_, this->bytes_);
+  if (!stream.good ())
+    throw Storable_Exception (stream.rdstate ());
 }
 
 void
@@ -124,6 +145,13 @@ Savable::write (TAO::Storable_Base & stream)
         throw Storable_Exception (stream.rdstate ());
     }
   stream << i_;
+  if (!stream.good ())
+    throw Storable_Exception (stream.rdstate ());
+
+  stream << this->bytes_size_;
+  if (!stream.good ())
+    throw Storable_Exception (stream.rdstate ());
+  stream.write (this->bytes_size_, this->bytes_);
   if (!stream.good ())
     throw Storable_Exception (stream.rdstate ());
 
@@ -158,4 +186,27 @@ Savable::int_get ()
 {
   Savable_File_Guard fg(*this, "r");
   return this->i_;
+}
+
+void
+Savable::bytes_set (int size, char * bytes)
+{
+  Savable_File_Guard fg(*this, "rw");
+  bytes_size_ = size;
+  for (int i = 0; i < this->bytes_size_; ++i)
+    {
+      this->bytes_[i] = bytes[i];
+    }
+  this->write (fg.peer ());
+}
+
+int
+Savable::bytes_get (char *& bytes)
+{
+  Savable_File_Guard fg(*this, "r");
+  for (int i = 0; i < this->bytes_size_; ++i)
+    {
+      bytes[i] = this->bytes_[i];
+    }
+  return this->bytes_size_;
 }
