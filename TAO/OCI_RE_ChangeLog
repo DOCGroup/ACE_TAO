@@ -1,3 +1,12 @@
+Thu Dec 13 19:13:38 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
+
+        * orbsvcs/tests/FT_Naming/FaultTolerance/run_equivalance_test.pl:
+        * orbsvcs/tests/FT_Naming/FaultTolerance/run_failover_test.pl:
+        * orbsvcs/tests/FT_Naming/FaultTolerance/run_persistance_test.pl:
+        * orbsvcs/tests/FT_Naming/FaultTolerance/run_test.pl:
+
+        Split the fault tolerant tests into seperate test scripts
+
 Thu Dec 13 19:11:42 UTC 2012  Weiqi Gao  <gao_w@ociweb.com>
 
         * orbsvcs/tests/ImplRepo/run_test.pl:
