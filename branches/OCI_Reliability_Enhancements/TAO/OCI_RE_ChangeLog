@@ -1,3 +1,9 @@
+Thu Dec 13 19:11:42 UTC 2012  Weiqi Gao  <gao_w@ociweb.com>
+
+        * orbsvcs/tests/ImplRepo/run_test.pl:
+
+          Turned on strict mode, fixed detected errors.
+
 Thu Dec 13 15:49:06 UTC 2012  Weiqi Gao  <gao_w@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
