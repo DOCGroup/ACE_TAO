@@ -59,15 +59,18 @@ TAO_Storable_Naming_Context_Activator::incarnate (
   // context is accessed it will be determined that the contents of
   // the persistence elment needs to be read in.
 
-  // Does this already exist on disk?
-  ACE_TString file_name(persistence_directory_);
-  file_name += ACE_TEXT("/");
-  file_name += ACE_TEXT_CHAR_TO_TCHAR(poa_id.in());
-  TAO::Storable_Base * fl =
-    persistence_factory_->create_stream (ACE_TEXT_ALWAYS_CHAR(file_name.c_str()),
-                                         ACE_TEXT("rw"));
-  if (!fl->exists()) {
-    throw CORBA::OBJECT_NOT_EXIST ();
+  { // Does this already exist on disk?
+
+    ACE_TString file_name (persistence_directory_);
+    file_name += ACE_TEXT ("/");
+    file_name += ACE_TEXT_CHAR_TO_TCHAR(poa_id.in ());
+    ACE_Auto_Ptr<TAO::Storable_Base> fl (
+       persistence_factory_->create_stream (ACE_TEXT_ALWAYS_CHAR (file_name.c_str ()),
+                                            ACE_TEXT ("rw")));
+
+    if (!fl->exists()) {
+      throw CORBA::OBJECT_NOT_EXIST ();
+    }
   }
 
   // Put together a servant for the new Naming Context.

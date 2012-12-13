@@ -1,3 +1,24 @@
+Thu Dec 13 22:51:06 UTC 2012  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.cpp:
+
+          Fixed leak of Factory_Registry when initializing the group factory.
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Replication_Manager.cpp:
+
+          Fixed leak of ReplicationManager when registering the replica.
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:
+
+          Made tracing debug statements only execute when debug level is
+          set.
+
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context_Activator.cpp:
+
+          Fixed leak of TAO_Storable_Base when testing for existence
+          of a directory.
+
 Thu Dec 13 22:38:33 UTC 2012  Byron Harris  <harrisb@ociweb.com>
 
         * tao/Storable_FlatFileStream.cpp:
