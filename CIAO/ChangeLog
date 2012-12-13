@@ -1,3 +1,20 @@
+Thu Dec 13 08:40:18 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/idl/ndds/ndds_dcps.idl:
+        * connectors/dds4ccm/impl/ndds/convertors/DataReaderQos.h:
+        * connectors/dds4ccm/impl/ndds/convertors/TypeConsistencyEnforcementQosPolicy.h:
+        * connectors/dds4ccm/tests/Policies/dr_qos_test.cpp:
+        * connectors/dds4ccm/tests/Policies/policies.mpc:
+        * connectors/dds4ccm/tests/Policies/typeconsistencyenforcement_qos_test.h:
+        * connectors/dds4ccm/tests/Policies/typeconsistencyenforcement_qos_test.cpp:
+          Added support for the new DDS TypeConsistencyEnforcementQosPolicy
+          which is coming from the DDS X-Types specification.
+
+        * connectors/dds4ccm/tests/On_Inconsistent_Topic/Base/OIT_Test_Base.idl:
+          Made both topics completely inconsistent, the topics
+          we had where seen as concistent by the DDS X-Types
+          specification
+
 Sun Dec  9 19:36:14 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DomainParticipantFactory.cpp:

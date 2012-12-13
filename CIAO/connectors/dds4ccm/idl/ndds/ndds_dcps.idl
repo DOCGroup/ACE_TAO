@@ -212,6 +212,15 @@ module DDS {
         long                                unacknowledged_sample_count_peak;
     };
 
+    enum TypeConsistencyKind {
+      DISALLOW_TYPE_COERCION,
+      ALLOW_TYPE_COERCION
+    };
+
+    struct TypeConsistencyEnforcementQosPolicy {
+      TypeConsistencyKind kind;
+    };
+
     // ----------------------------------------------------------------------
     // Listeners
     // ----------------------------------------------------------------------
@@ -329,35 +338,34 @@ module DDS {
         Entity get_entity();
     };
 
-    // Sample states to support reads
+    /// Sample states to support reads
     typedef unsigned long SampleStateKind;
     const SampleStateKind READ_SAMPLE_STATE                     = 0x0001 << 0;
     const SampleStateKind NOT_READ_SAMPLE_STATE                 = 0x0001 << 1;
 
-    // This is a bit-mask SampleStateKind
+    /// This is a bit-mask SampleStateKind
     typedef unsigned long SampleStateMask;
     const SampleStateMask ANY_SAMPLE_STATE                      = 0xffff;
 
-    // View states to support reads
+    /// View states to support reads
     typedef unsigned long ViewStateKind;
     const ViewStateKind NEW_VIEW_STATE                          = 0x0001 << 0;
     const ViewStateKind NOT_NEW_VIEW_STATE                      = 0x0001 << 1;
 
-    // This is a bit-mask ViewStateKind
+    /// This is a bit-mask ViewStateKind
     typedef unsigned long ViewStateMask;
     const ViewStateMask ANY_VIEW_STATE                          = 0xffff;
 
-    // Instance states to support reads
+    /// Instance states to support reads
     typedef unsigned long InstanceStateKind;
     const InstanceStateKind ALIVE_INSTANCE_STATE                = 0x0001 << 0;
     const InstanceStateKind NOT_ALIVE_DISPOSED_INSTANCE_STATE   = 0x0001 << 1;
     const InstanceStateKind NOT_ALIVE_NO_WRITERS_INSTANCE_STATE = 0x0001 << 2;
 
-    // This is a bit-mask InstanceStateKind
+    /// This is a bit-mask InstanceStateKind
     typedef unsigned long InstanceStateMask;
     const InstanceStateMask ANY_INSTANCE_STATE                  = 0xffff;
     const InstanceStateMask NOT_ALIVE_INSTANCE_STATE            = 0x006;
-
 
     local interface ReadCondition : Condition {
         SampleStateMask     get_sample_state_mask();
@@ -422,8 +430,8 @@ module DDS {
     const QosPolicyId_t TRANSPORTPRIORITY_QOS_POLICY_ID    = 20;
     const QosPolicyId_t LIFESPAN_QOS_POLICY_ID             = 21;
     const QosPolicyId_t DURABILITYSERVICE_QOS_POLICY_ID    = 22;
+    const QosPolicyId_t TYPE_CONSISTENCY_ENFORCEMENT_QOS_POLICY_ID = 24;
 
-#if (CIAO_DDS4CCM_NDDS==1)
     /* --- Extension QoS policies: --- */
     const QosPolicyId_t WIREPROTOCOL_QOS_POLICY_ID      = 1000;
     const QosPolicyId_t DISCOVERY_QOS_POLICY_ID      = 1001;
@@ -458,7 +466,9 @@ module DDS {
     const QosPolicyId_t SUBSCRIBERPROTOCOL_QOS_POLICY_ID = 1032;
     const QosPolicyId_t TOPICPROTOCOL_QOS_POLICY_ID = 1033;
     const QosPolicyId_t DOMAINPARTICIPANTPROTOCOL_QOS_POLICY_ID = 1034;
-#endif
+    const QosPolicyId_t AVAILABILITY_QOS_POLICY_ID = 1035;
+    const QosPolicyId_t TRANSPORTMULTICASTMAPPING_QOS_POLICY_ID = 1036;
+    const QosPolicyId_t LOGGING_QOS_POLICY_ID = 1037;
 
     typedef sequence<octet> OctetSeq;
     struct UserDataQosPolicy {
@@ -556,14 +566,11 @@ module DDS {
         BY_SOURCE_TIMESTAMP_DESTINATIONORDER_QOS
     };
 
-#if (CIAO_DDS4CCM_NDDS==1)
     enum DestinationOrderQosPolicyScopeKind {
         INSTANCE_SCOPE_DESTINATIONORDER_QOS,
         TOPIC_SCOPE_DESTINATIONORDER_QOS
     };
-#endif
 
-#if (CIAO_DDS4CCM_NDDS==1)
     enum DataWriterResourceLimitsInstanceReplacementKind {
       UNREGISTERED_INSTANCE_REPLACEMENT,
       ALIVE_INSTANCE_REPLACEMENT,
@@ -572,14 +579,11 @@ module DDS {
       DISPOSED_THEN_ALIVE_INSTANCE_REPLACEMENT,
       ALIVE_OR_DISPOSED_INSTANCE_REPLACEMENT
     };
-#endif
 
     struct DestinationOrderQosPolicy {
         DestinationOrderQosPolicyKind kind;
-#if (CIAO_DDS4CCM_NDDS==1)
         DestinationOrderQosPolicyScopeKind scope;
         Duration_t source_timestamp_tolerance;
-#endif
     };
 
     enum HistoryQosPolicyKind {
@@ -587,31 +591,25 @@ module DDS {
         KEEP_ALL_HISTORY_QOS
     };
 
-#if (CIAO_DDS4CCM_NDDS==1)
     enum RefilterQosPolicyKind {
         NONE_REFILTER_QOS,
         ALL_REFILTER_QOS,
         ON_DEMAND_REFILTER_QOS
     };
-#endif
 
     struct HistoryQosPolicy {
         HistoryQosPolicyKind kind;
         long depth;
-#if (CIAO_DDS4CCM_NDDS==1)
         RefilterQosPolicyKind refilter;
-#endif
     };
 
     struct ResourceLimitsQosPolicy {
         long max_samples;
         long max_instances;
         long max_samples_per_instance;
-#if (CIAO_DDS4CCM_NDDS==1)
         long initial_samples;
         long initial_instances;
         long instance_hash_buckets;
-#endif
     };
 
     struct EntityFactoryQosPolicy {
@@ -622,7 +620,6 @@ module DDS {
         boolean autodispose_unregistered_instances;
     };
 
-#if (CIAO_DDS4CCM_NDDS==1)
     struct DataReaderResourceLimitsQosPolicy {
       long max_remote_writers;
       long max_remote_writers_per_instance;
@@ -645,9 +642,7 @@ module DDS {
       long initial_remote_virtual_writers_per_instance;
       long max_query_condition_filters;
     };
-#endif
 
-#if (CIAO_DDS4CCM_NDDS==1)
     struct DataWriterResourceLimitsQosPolicy {
       long initial_concurrent_blocking_threads;
       long max_concurrent_blocking_threads;
@@ -659,7 +654,6 @@ module DDS {
       boolean replace_empty_instances;
       boolean autoregister_instances;
     };
-#endif
 
     struct ReaderDataLifecycleQosPolicy {
         Duration_t autopurge_nowriter_samples_delay;
@@ -719,9 +713,7 @@ module DDS {
         OwnershipStrengthQosPolicy           ownership_strength;
         WriterDataLifecycleQosPolicy         writer_data_lifecycle;
 
-#if (CIAO_DDS4CCM_NDDS==1)
         DataWriterResourceLimitsQosPolicy    writer_resource_limits;
-#endif
     };
 
     struct PublisherQos {
@@ -746,9 +738,9 @@ module DDS {
         TimeBasedFilterQosPolicy             time_based_filter;
         ReaderDataLifecycleQosPolicy         reader_data_lifecycle;
 
-#if (CIAO_DDS4CCM_NDDS==1)
         DataReaderResourceLimitsQosPolicy    reader_resource_limits;
-#endif
+
+        TypeConsistencyEnforcementQosPolicy  type_consistency;
     };
 
     struct SubscriberQos {
