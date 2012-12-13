@@ -1,3 +1,10 @@
+Thu Dec 13 22:38:33 UTC 2012  Byron Harris  <harrisb@ociweb.com>
+
+        * tao/Storable_FlatFileStream.cpp:
+
+          Revert for now after discovering Redundant_Naming test is
+          failing.
+
 Thu Dec 13 20:40:08 UTC 2012  Byron Harris  <harrisb@ociweb.com>
 
         * tao/Storable_FlatFileStream.cpp:
