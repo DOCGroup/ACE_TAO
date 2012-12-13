@@ -1,3 +1,21 @@
+Thu Dec 13 20:40:08 UTC 2012  Byron Harris  <harrisb@ociweb.com>
+
+        * tao/Storable_FlatFileStream.cpp:
+
+          Don't use fscanf when reading integers as it will
+          consume whitespace _after_ the newline. This may cause
+          problems when binary data is included in the file,
+          as is the case for persistent object group data,
+          since binary data may look like whitespace.
+
+        * tests/Storable/Savable.h:
+        * tests/Storable/Savable.cpp:
+        * tests/Storable/test.cpp:
+
+          Updated to write/read binary data after an integer that
+          starts with what looks like whitespace and verify the
+          expected binary data is read.
+
 Thu Dec 13 19:13:38 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
 
         * orbsvcs/tests/FT_Naming/FaultTolerance/run_equivalance_test.pl:

@@ -41,6 +41,11 @@ class Savable
   void int_set (int i);
   int int_get ();
 
+  void bytes_set (int size, char * bytes);
+  int bytes_get (char *& bytes);
+
+  bool is_loaded_from_stream ();
+
  private:
   TAO::Storable_Factory & storable_factory_;
   bool loaded_from_stream_;
@@ -50,6 +55,10 @@ class Savable
 
   ACE_CString string_[2];
   int i_;
+
+  static const int bytes_size_max;
+  int bytes_size_;
+  char * bytes_;
 
   friend class Savable_File_Guard;
 };
