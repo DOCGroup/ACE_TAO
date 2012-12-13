@@ -90,7 +90,7 @@ Locator_Repository::report_ior(PortableServer::POA_ptr root_poa,
           ACE_DEBUG((LM_INFO, "Opened %s\n",
             this->opts_.ior_filename ().c_str()));
 
-          ACE_Read_Buffer reader (orig_fp, true);
+          ACE_Read_Buffer reader (orig_fp, false);
 
           char* string = reader.read ();
 
