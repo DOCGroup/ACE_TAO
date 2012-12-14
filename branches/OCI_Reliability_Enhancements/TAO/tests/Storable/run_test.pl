@@ -12,9 +12,7 @@ my $test1 = PerlACE::TestTarget::create_target (1) || die "Create target 1 faile
 
 my $persistent_file = "test.dat";
 
-if ( -f $persistent_file ) {
-    $test1->DeleteFile ($persistent_file);
-}
+$test1->DeleteFile ($persistent_file);
 
 $T1 = $test1->CreateProcess ("test", "-i 0");
 
@@ -26,6 +24,4 @@ $T1->Spawn ();
 $T2->SpawnWaitKill ($test2->ProcessStartWaitInterval());
 $T1->WaitKill ($test1->ProcessStopWaitInterval());
 
-if ( -f $persistent_file ) {
-    $test1->DeleteFile ($persistent_file);
-}
+$test1->DeleteFile ($persistent_file);
