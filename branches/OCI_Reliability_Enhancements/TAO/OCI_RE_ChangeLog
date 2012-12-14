@@ -1,3 +1,37 @@
+Fri Dec 14 21:53:37 UTC 2012  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:
+
+          Removed case 'n' from parse args. It is handled elsewhere.
+
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.h:
+
+          Updated comments to better describe operations.
+
+        * orbsvcs/tests/FT_Naming/Replication/client.cpp:
+        * orbsvcs/tests/FT_Naming/Replication/run_test.pl:
+
+          Added performance tests.  Added a kill of the
+          primary at the end to ensure that the replica
+          is invoked in nslist.
+
+        * orbsvcs/tests/Redundant_Naming/client.cpp:
+
+          Added performance tests.
+
+        * tao/Storable_File_Guard.cpp:
+
+          Moved sync call to only be invoked when rwflags_
+          indicate we are in write mode.
+
+        * tao/Storable_FlatFileStream.h:
+
+          Removed outdated todo comment.
+
+        * tao/Storable_FlatFileStream.cpp:
+
+          Replace int with size_t to avoid warning.
+
 Fri Dec 14 17:33:50 UTC 2012  Brian Johnson  <johnsonb@ociweb.com>
 
         * tao/PortableServer/LifespanStrategyTransient.cpp:

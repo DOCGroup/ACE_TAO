@@ -626,9 +626,6 @@ TAO_FT_Naming_Server::parse_args (int argc,
         this->use_round_trip_timeout_ = 1;
         this->round_trip_timeout_ = (int)1.0e7 * ACE_OS::atoi (get_opts.opt_arg ());
         break;
-      case 'n':  // the file name to same the object group persistence info
-        this->pid_file_name_ = get_opts.opt_arg ();
-        break;
       case 0:   // A long option was found
         {
           const char* long_option = get_opts.long_option ();
