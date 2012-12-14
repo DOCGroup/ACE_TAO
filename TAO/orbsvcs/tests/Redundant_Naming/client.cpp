@@ -449,6 +449,94 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Redundancy test OK\n")));
+
+  // Test performance of binding a bunch of objects in one context
+  try
+  {
+    // Bind one context level under root.
+    CosNaming::Name level1;
+    level1.length (1);
+    level1[0].id = CORBA::string_dup ("perf_context");
+    CosNaming::NamingContext_var perf_context;
+    perf_context = root_context_1->bind_new_context (level1);
+
+    // Instantiate a dummy object and bind it under the new context.
+    My_Test_Object *impl1 = new My_Test_Object (i+1);
+    Test_Object_var obj1 = impl1->_this ();
+    impl1->_remove_ref ();
+
+    int test_runs = 100;
+    ACE_High_Res_Timer::global_scale_factor_type gsf =
+      ACE_High_Res_Timer::global_scale_factor ();
+
+    ACE_hrtime_t start = ACE_OS::gethrtime ();
+
+    // Test how long it takes to bind
+    for (i=0; i<test_runs; i++)
+    {
+      level1.length (1);
+      char wide_name[16];
+      ACE_OS::sprintf(wide_name, "obj_%d", i);
+      level1[0].id = CORBA::string_dup (wide_name);
+      perf_context->bind (level1, obj1.in ());
+    }
+
+    ACE_hrtime_t elapsed_time = ACE_OS::gethrtime () - start;
+    // convert to microseconds
+    ACE_UINT32 usecs = ACE_UINT32(elapsed_time / gsf);
+    double secs = usecs / 1000000.0;
+
+    ACE_DEBUG ((LM_DEBUG,
+                "Bound %i objects in %.2f secs\n",
+                test_runs, secs));
+
+    // Test how long it takes to resolve
+    start = ACE_OS::gethrtime ();
+    for (i=0; i<test_runs; i++)
+    {
+      level1.length (1);
+      char wide_name[16];
+      ACE_OS::sprintf(wide_name, "obj_%d", i);
+      level1[0].id = CORBA::string_dup (wide_name);
+      CORBA::Object_var result_obj_ref = perf_context->resolve (level1);
+    }
+
+    elapsed_time = ACE_OS::gethrtime () - start;
+    // convert to microseconds
+    usecs = ACE_UINT32(elapsed_time / gsf);
+    secs = ((ACE_INT32) usecs) / 1000000.0;
+
+    ACE_DEBUG ((LM_DEBUG,
+                "Resolved %i objects in %.2f secs\n",
+                test_runs, secs));
+
+    // Test how long it takes to unbind
+    start = ACE_OS::gethrtime ();
+    for (i=0; i<test_runs; i++)
+    {
+      level1.length (1);
+      char wide_name[16];
+      ACE_OS::sprintf(wide_name, "obj_%d", i);
+      level1[0].id = CORBA::string_dup (wide_name);
+      perf_context->unbind (level1);
+    }
+
+    elapsed_time = ACE_OS::gethrtime () - start;
+    // convert to microseconds
+    usecs = ACE_UINT32(elapsed_time / gsf);
+    secs = ((ACE_INT32) usecs) / 1000000.0;
+
+    ACE_DEBUG ((LM_DEBUG,
+                "Unbound %i objects in %.2f secs\n",
+                test_runs, secs));
+  }
+  catch (const CORBA::Exception& ex)
+  {
+    ex._tao_print_exception (ACE_TEXT ("ERROR: Exception during performance test.\n"));
+    return -1;
+  }
+
+  // All tests have passed up to this point
   return 0;
 
 }

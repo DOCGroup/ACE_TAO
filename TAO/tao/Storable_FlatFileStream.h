@@ -30,9 +30,6 @@ namespace TAO
   /**
    * @brief A Storable_Base derived class that works with a file stream.
    *
-   * Based on Naming Server TAO_NS_FlatFileStream class.
-   * @todo: Look into Having Naming Server code use this instead of
-   * TAO_NS_FlatFileStream.
    */
   class TAO_Export Storable_FlatFileStream : public Storable_Base
   {

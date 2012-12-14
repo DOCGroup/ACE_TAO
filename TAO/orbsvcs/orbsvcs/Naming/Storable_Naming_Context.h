@@ -434,19 +434,27 @@ public TAO::Storable_File_Guard
 public:
 
   /// Constructor - we always need the object which we guard.
-  File_Open_Lock_and_Check(TAO_Storable_Naming_Context * context,
+  File_Open_Lock_and_Check (TAO_Storable_Naming_Context * context,
                            const char * mode);
 
-  ~File_Open_Lock_and_Check();
+  ~File_Open_Lock_and_Check ();
 
 protected:
-  /// Check if the parent is current with the last update.
+
+  /// Check if the guarded object is current with the last
+  /// update which could have been performed independently of
+  /// the owner of this object.
   virtual bool object_obsolete (void);
 
-  virtual void set_object_last_changed (const time_t & time);
-
+  /// Mark the object as current with respect to the
+  /// file to which it was persisted.
   virtual void mark_object_current (void);
 
+  /// Mark the time at which the object was modified and
+  virtual void set_object_last_changed (const time_t & time);
+
+  /// Get the time which the object was last written to the
+  /// file.
   virtual time_t get_object_last_changed ();
 
   virtual void load_from_stream ();

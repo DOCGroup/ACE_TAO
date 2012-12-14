@@ -130,11 +130,14 @@ TAO::Storable_File_Guard::release (void)
       if(redundant_)
         {
           if( rwflags_ & mode_write )
-            this->mark_object_current ();
+            {
+              // This is a costly call, but necessary if
+              // we are running redundant. It ensures that
+              // the data is written to disk.
+              fl_->sync ();
 
-          // Ensure that we write out any cached data to the
-          // persistent store.
-          fl_->sync ();
+              this->mark_object_current ();
+            }
 
           // Release the lock
           fl_->funlock(0, 0, 0);

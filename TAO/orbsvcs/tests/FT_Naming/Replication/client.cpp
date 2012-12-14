@@ -16,6 +16,7 @@
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/High_Res_Timer.h"
 
 #if defined (_MSC_VER)
 # pragma warning (disable : 4250)
@@ -76,8 +77,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   int o_breadth = 4;
   ACE_TCHAR *ns1ref = 0;
   ACE_TCHAR *ns2ref = 0;
+  int test_runs = 100;
 
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("b:d:o:p:q:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("b:d:o:p:q:t:"));
   int c;
   int i;
 
@@ -98,9 +100,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         i = ACE_OS::atoi(get_opts.opt_arg ());
         if (i<2)
         {
-          ACE_ERROR((LM_ERROR,
+          ACE_ERROR ((LM_ERROR,
                      ACE_TEXT ("Invalid depth, must be 2 or more\n")));
-          ACE_OS::exit(1);
+          ACE_OS::exit (1);
         }
         c_depth = i;
         break;
@@ -108,14 +110,25 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         i = ACE_OS::atoi(get_opts.opt_arg ());
         if (i<2)
         {
-          ACE_ERROR((LM_ERROR,
-                     ACE_TEXT ("Invalid breadth, must be 2 or more\n")));
-          ACE_OS::exit(1);
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Invalid breadth, must be 2 or more\n")));
+          ACE_OS::exit (1);
         }
         o_breadth = i;
         break;
       case 'p':
         ns1ref = get_opts.opt_arg ();
+        break;
+      case 't':
+        i = ACE_OS::atoi (get_opts.opt_arg ());
+        if (i<1)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Invalid number of test runs. ")
+                      ACE_TEXT ("Must be 1 or more\n")));
+          ACE_OS::exit (1);
+        }
+        test_runs = i;
         break;
       case 'q':
         ns2ref = get_opts.opt_arg ();
@@ -126,6 +139,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                            ACE_TEXT (" [-b <breadth of context tree>]")
                            ACE_TEXT (" [-d <depth of context tree>]")
                            ACE_TEXT (" [-o <breadth of object tree>]")
+                           ACE_TEXT (" [-t <number of performance test runs>]")
                            ACE_TEXT (" -p <ior of first name server>")
                            ACE_TEXT (" -q <ior of second name server>")
                            ACE_TEXT ("\n")),
@@ -579,7 +593,97 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   // TODO: Create object groups and bind them. Check the replica.
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Redundancy test OK\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Redundancy test OK.\n")
+              ACE_TEXT ("Starting performance tests.\n")));
+
+  // Test performance of binding a bunch of objects in one context
+  try
+  {
+    // Bind one context level under root.
+    CosNaming::Name level1;
+    level1.length (1);
+    level1[0].id = CORBA::string_dup ("perf_context");
+    CosNaming::NamingContext_var perf_context;
+    perf_context = root_context_1->bind_new_context (level1);
+
+    // Instantiate a dummy object and bind it under the new context.
+    My_Test_Object *impl1 = new My_Test_Object (i+1);
+    Test_Object_var obj1 = impl1->_this ();
+    impl1->_remove_ref ();
+
+    ACE_High_Res_Timer::global_scale_factor_type gsf =
+      ACE_High_Res_Timer::global_scale_factor ();
+
+    ACE_hrtime_t start = ACE_OS::gethrtime ();
+
+    // Test how long it takes to bind
+    for (i=0; i<test_runs; i++)
+    {
+      level1.length (1);
+      char wide_name[16];
+      ACE_OS::sprintf(wide_name, "obj_%d", i);
+      level1[0].id = CORBA::string_dup (wide_name);
+      perf_context->bind (level1, obj1.in ());
+    }
+
+    ACE_hrtime_t elapsed_time = ACE_OS::gethrtime () - start;
+    // convert to microseconds
+    ACE_UINT32 usecs = ACE_UINT32(elapsed_time / gsf);
+    double secs = usecs / 1000000.0;
+
+    ACE_DEBUG ((LM_DEBUG,
+                "Bound %i objects in %.2f secs\n",
+                test_runs, secs));
+
+    // Test how long it takes to resolve
+    start = ACE_OS::gethrtime ();
+    for (i=0; i<test_runs; i++)
+    {
+      level1.length (1);
+      char wide_name[16];
+      ACE_OS::sprintf(wide_name, "obj_%d", i);
+      level1[0].id = CORBA::string_dup (wide_name);
+      CORBA::Object_var result_obj_ref = perf_context->resolve (level1);
+    }
+
+    elapsed_time = ACE_OS::gethrtime () - start;
+    // convert to microseconds
+    usecs = ACE_UINT32(elapsed_time / gsf);
+    secs = ((ACE_INT32) usecs) / 1000000.0;
+
+    ACE_DEBUG ((LM_DEBUG,
+                "Resolved %i objects in %.2f secs\n",
+                test_runs, secs));
+
+    // Test how long it takes to unbind
+    start = ACE_OS::gethrtime ();
+    for (i=0; i<test_runs; i++)
+    {
+      level1.length (1);
+      char wide_name[16];
+      ACE_OS::sprintf(wide_name, "obj_%d", i);
+      level1[0].id = CORBA::string_dup (wide_name);
+      perf_context->unbind (level1);
+    }
+
+    elapsed_time = ACE_OS::gethrtime () - start;
+    // convert to microseconds
+    usecs = ACE_UINT32(elapsed_time / gsf);
+    secs = ((ACE_INT32) usecs) / 1000000.0;
+
+    ACE_DEBUG ((LM_DEBUG,
+                "Unbound %i objects in %.2f secs\n",
+                test_runs, secs));
+
+
+  }
+  catch (const CORBA::Exception& ex)
+  {
+    ex._tao_print_exception (ACE_TEXT ("ERROR: Exception during performance test.\n"));
+    return -1;
+  }
+
+
   return 0;
 
 }

@@ -141,7 +141,8 @@ if ($test->WaitForFileTimed ($combined_ns_iorfile,
 $args = "-p corbaloc:iiop:$hostname:$ns_orb_port1/NameService " .
         "-q corbaloc:iiop:$hostname:$ns_orb_port2/NameService " .
         "-b 4 " .
-        "-d 4 ";
+        "-d 4 " .
+        "-t 100";
 $prog = "$startdir/client";
 
 print STDERR "Starting Client: $prog $args\n";
@@ -155,16 +156,22 @@ if ($client != 0) {
     $status = 1;
 }
 
+# Kill the first server and make sure the tree can be accessed
+# by the nslist
+print STDERR "Killing the primary naming service\n";
+$NS1->Kill ();
+
 print STDERR "Printing Naming Tree from combined Name Service pair.\n";
 
 $prog = "$startdir/../../../../utils/nslist/tao_nslist";
 $args = "--ns file://$combined_ns_iorfile";
 
 $NSL = $test->CreateProcess("$prog", "$args");
+
+
 $out = $NSL->SpawnWaitKill (60);
 
-
-$NS1->Kill ();
+# Now kill off the backup
 $NS2->Kill ();
 
 $test->DeleteFile ($primary_iorfile);
