@@ -1,3 +1,8 @@
+Fri Dec 14 19:36:20 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/bczar/bczar.html:
+          Added patch
+
 Sun Dec  9 14:38:27 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/POSIX_Proactor.cpp:
