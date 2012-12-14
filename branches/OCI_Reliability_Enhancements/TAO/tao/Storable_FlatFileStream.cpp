@@ -20,6 +20,52 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+namespace
+{
+  /// Avoids using fscanf to read an integer as any
+  /// whitespace following the newline will be
+  /// consumed. This could create problems if
+  /// the data the follows the newline is binary.
+  template<typename T>
+  void read_integer(const char * format, T & i,
+                    TAO::Storable_Base::Storable_State & state,
+                    FILE * fl)
+  {
+    char buf[BUFSIZ];
+    char * result = fgets (buf, BUFSIZ, fl);
+
+    /// Consume any starting newline, as fscanf would
+    /// do.
+    if (buf[0] == '\n')
+      {
+        result = fgets (buf, BUFSIZ, fl);
+      }
+
+    if (feof (fl))
+      {
+        state = TAO::Storable_Base::eofbit;
+        return;
+      }
+
+    if (result == NULL)
+      {
+        state = TAO::Storable_Base::badbit;
+        return;
+      }
+
+    switch (sscanf (buf, format, &i))
+      {
+      case 0:
+        state = TAO::Storable_Base::badbit;
+        return;
+      case EOF:
+        state = TAO::Storable_Base::eofbit;
+        return;
+      }
+  }
+
+}
+
 TAO::Storable_FlatFileStream::Storable_FlatFileStream (const ACE_CString & file,
                                                             const char * mode)
   : fl_ (0)
@@ -227,15 +273,11 @@ TAO::Storable_Base &
 TAO::Storable_FlatFileStream::operator >> (int &i)
 {
   ACE_TRACE("TAO::Storable_FlatFileStream::operator >>");
-  switch (fscanf (fl_, "%d\n", &i))
-    {
-    case 0:
-      this->setstate (badbit);
-      return *this;
-    case EOF:
-      this->setstate (eofbit);
-      return *this;
-    }
+
+  Storable_State state = this->rdstate ();
+  read_integer ("%d\n", i, state, fl_);
+  this->setstate (state);
+
   return *this;
 }
 
@@ -251,15 +293,11 @@ TAO::Storable_Base &
 TAO::Storable_FlatFileStream::operator >> (unsigned int &i)
 {
   ACE_TRACE("TAO::Storable_FlatFileStream::operator >>");
-  switch (fscanf (fl_, "%u\n", &i))
-    {
-    case 0:
-      this->setstate (badbit);
-      return *this;
-    case EOF:
-      this->setstate (eofbit);
-      return *this;
-    }
+
+  Storable_State state = this->rdstate ();
+  read_integer ("%u\n", i, state, fl_);
+  this->setstate (state);
+
   return *this;
 }
 
@@ -278,20 +316,6 @@ TAO::Storable_FlatFileStream::operator << (const TAO_OutputCDR & cdr)
     }
   return *this;
 }
-
-/*
-TAO_InputCDR *
-TAO::Storable_FlatFileStream::create_input_CDR (const char *& buf)
-{
-  ACE_TRACE("TAO::Storable_FlatFileStream::create_input_CDR");
-
-  int length;
-  *this >> length;
-  buf = ACE_NEW_RETURN (buf, char [length], 0);
-
-  ACE_NEW_RETURN (
-}
-*/
 
 size_t
 TAO::Storable_FlatFileStream::write (size_t size, const char * bytes)

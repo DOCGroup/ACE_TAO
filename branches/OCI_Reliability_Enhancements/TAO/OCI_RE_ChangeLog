@@ -1,3 +1,11 @@
+Fri Dec 14 15:19:40 UTC 2012  Byron Harris  <harrisb@ociweb.com>
+
+        * tao/Storable_FlatFileStream.cpp:
+
+          For some reason, under Linux at least, newlines following
+          strings are not always consumed. So when reading an
+          integer account for first character possibly being a newline.
+
 Fri Dec 14 00:19:06 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/Dynamic_TP/Dynamic_TP_POA_Strategy.h:
