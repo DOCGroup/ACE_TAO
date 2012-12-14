@@ -8,10 +8,28 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
 
+
+sub count_strings
+{
+   my $log_file = shift;
+   my $find_str = shift;
+   open my $fh, '<', $log_file or die $!;
+   my $cnt=0;
+   while (<$fh>)
+   {
+#      print STDERR "$_";
+      $f = quotemeta($find_str);
+      $cnt += $_ =~ /$f/;
+   }
+    print STDERR "INFO: Count - [$cnt]\n";
+    close $fh;
+    return($cnt);
+}
+
 my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
 my $iorbase = "server.ior";
-my $serverlog = "server.log";
+
 my $server_iorfile = $server->LocalFile ($iorbase);
 
 my $client_iorfile = $client->LocalFile ($iorbase);
@@ -42,6 +60,7 @@ $status = 0;
 
 print "\nRunning Test 1....\n";
 $test_num=1;
+
 my $lfname = "server_test" . $test_num . ".log";
 my $server_logfile = $server->LocalFile ($lfname);
 $server->DeleteFile($lfname);
@@ -89,7 +108,7 @@ if ($found_cnt != 5) {
    $status = 1;
 } else {
 
-  $server->DeleteFile($server_logfile);
+  $server->DeleteFile($lfname);
 }
 
 # Test 2:
@@ -156,7 +175,7 @@ if ($found_cnt != 5) {
    $status = 1;
 } else {
 
-  $server->DeleteFile($server_logfile);
+  $server->DeleteFile($lfname);
 }
 
 # Test 3:
@@ -175,7 +194,7 @@ $server_logfile = $server->LocalFile ($lfname);
 
 $server->DeleteFile($lfname);
 
-$SV = $server->CreateProcess ("server", " -ORBDebugLevel 5 -ORBLogFile $server_logfile -s 1 -p {-1,15,-1,0,10,10}");
+$SV = $server->CreateProcess ("server", " -ORBDebugLevel 5 -ORBLogFile $server_logfile -s 3 -p {-1,15,-1,0,10,10}");
 
 $server_status = $SV->Spawn ();
 
@@ -196,9 +215,8 @@ for ($i = 0; $i < $num_clients; $i++) {
     $CLS[$i]->Spawn ();
 }
 
-$SC = $client->CreateProcess ("client", "-s");
 $valid_num_exceptions=5;
-$num_execeptions=0;
+$num_exceptions=0;
 
 for ($i = 0; $i < $num_clients; $i++) {
 
@@ -206,22 +224,22 @@ for ($i = 0; $i < $num_clients; $i++) {
 
     if ($client_status != 0) {
         $num_exceptions++;
-        print STDERR "ERROR: client $i returned $client_status\n";
+        print STDERR "STATUS: client $i returned $client_status\n";
     }
-}
-
-$client_status = $SC->SpawnWaitKill ($client->ProcessStopWaitInterval());
-if ($client_status != 0) {
-    $num_exceptions++;
-    print STDERR "ERROR: client $i returned $client_status\n";
 }
 
 if ($num_exceptions != $valid_num_exceptions)
 {
-  print STDERR "ERROR: max_request_queue_depth test failed w/$num_exceptions instead of 5\n";
+  print STDERR "ERROR: max_request_queue_depth test failed w/$num_exceptions instead of $valid_num_exceptions\n";
   $status = 1;
 } else {
-  $server->DeleteFile($server_logfile);
+  $server->DeleteFile($lfname);
+}
+
+$SC = $client->CreateProcess ("client", "-s");
+$client_status = $SC->SpawnWaitKill ($client->ProcessStopWaitInterval());
+if ($client_status != 0) {
+    print STDERR "ERROR: client $i returned $client_status\n";
 }
 
 $server_status = $SV->WaitKill ($server->ProcessStopWaitInterval());
@@ -234,7 +252,7 @@ if ($server_status != 0) {
 $server->DeleteFile ($iorbase);
 
 # Test 4:
-# This is a test for showing a process maintaining a max_request_queue_depth after
+# This is a test for showing a process maintaining a max_pool_threads after
 # more clients request service than the queue allows for.
 # The test will start up a server with a max_request_queue_depth of 10 and
 # will issue calls from 15 clients. There should be 5 CORBA exceptions found
@@ -248,7 +266,7 @@ $lfname = "server_test" . $test_num . ".log";
 $server_logfile = $server->LocalFile ($lfname);
 $server->DeleteFile($lfname);
 
-$SV = $server->CreateProcess ("server", " -ORBDebugLevel 5 -ORBLogFile $server_logfile -s 1 -p {-1,1,4,0,10,10}");
+$SV = $server->CreateProcess ("server", " -ORBDebugLevel 5 -ORBLogFile $server_logfile -s 5 -p {-1,1,5,0,60,10}");
 $SC = $client->CreateProcess ("client", "-s");
 
 $server_status = $SV->Spawn ();
@@ -271,31 +289,32 @@ for ($i = 0; $i < $num_clients; $i++) {
     $CLS[$i]->Spawn ();
 }
 
-$valid_num_exceptions=6;
-$num_execeptions=0;
 
 for ($i = 0; $i < $num_clients; $i++) {
 
     $client_status = $CLS[$i]->WaitKill ($client->ProcessStopWaitInterval());
 
     if ($client_status != 0) {
-        $num_exceptions++;
         print STDERR "ERROR: client $i returned $client_status\n";
     }
 }
 
 $client_status = $SC->SpawnWaitKill ($client->ProcessStopWaitInterval());
-if ($client_status != 0) {
-    $num_exceptions++;
-    print STDERR "ERROR: client $i returned $client_status\n";
-}
 
-if ($num_exceptions != $valid_num_exceptions)
-{
-  print STDERR "ERROR: max_pool_threads test failed w/$num_exceptions instead of 6\n";
-  $status = 1;
+ # Now find the spawned threads in the log file.
+
+$find_this="Growing threadcount.";
+$found_cnt=0;
+$valid_cnt=4;
+
+my($found_cnt) = count_strings($server_logfile,$find_this);
+
+if ($found_cnt != $valid_cnt) {
+   print STDERR "ERROR: max_pool_thread test failed w/$found_cnt instead of $valid_cnt\n";
+   $status = 1;
 } else {
-  $server->DeleteFile($server_logfile);
+
+  $server->DeleteFile($lfname);
 }
 
 $server_status = $SV->WaitKill ($server->ProcessStopWaitInterval());
@@ -309,18 +328,3 @@ $server->DeleteFile($iorbase);
 $client->DeleteFile($iorbase);
 
 exit $status;
-
-sub count_strings
-{
-   open my $fh, '<', $server_logfile or die $!;
-   my $cnt=0;
-   while (<$fh>)
-   {
-#      print STDERR "$_";
-      $f = quotemeta($find_this);
-      $cnt += $_ =~ /$f/;
-   }
-    print STDERR "INFO: Count - [$cnt]\n";
-    close $fh;
-    return($cnt);
-}

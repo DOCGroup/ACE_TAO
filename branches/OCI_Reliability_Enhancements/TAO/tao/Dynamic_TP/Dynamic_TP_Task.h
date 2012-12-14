@@ -76,12 +76,40 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
       bool add_request(TAO::CSD::TP_Request* request);
 
       /// Activate the worker threads
-      virtual int open(void* args = 0);
+      virtual int open();//void* args = 0);
 
       /// The "mainline" executed by each worker thread.
       virtual int svc();
 
       virtual int close (u_long flag = 0);
+
+      /// Set the thread and queue config.
+
+      void set_init_pool_threads(size_t thr_count);
+
+      void set_min_pool_threads(size_t thr_count);
+
+      void set_max_pool_threads(size_t thr_count);
+
+      void set_thread_stack_size(size_t stack_sz);
+
+      void set_thread_idle_time(ACE_Time_Value thr_timeout);
+
+      void set_max_request_queue_depth(size_t queue_depth);
+
+      /// Get the thread and queue config.
+
+      size_t get_init_pool_threads();
+
+      size_t get_min_pool_threads();
+
+      size_t get_max_pool_threads();
+
+      size_t get_max_request_queue_depth();
+
+      size_t get_thread_stack_size();
+
+      time_t get_thread_idle_time();
 
       /// Cancel all requests that are targeted for the provided servant.
       void cancel_servant (PortableServer::Servant servant);
@@ -139,10 +167,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
       TAO::CSD::TP_Queue queue_;
 
       /// The low water mark for dynamic threads to settle to.
-      int min_pool_threads_;
+      size_t init_pool_threads_;
+
+      /// The low water mark for dynamic threads to settle to.
+      size_t min_pool_threads_;
 
       /// The high water mark for dynamic threads to be limited to.
-      int max_pool_threads_;
+      size_t max_pool_threads_;
 
       /// If the max_pool_threads_ value has been met, then ORB requests coming in can be queued.
       /// This is the maximum number that will be allowed.
