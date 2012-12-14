@@ -42,7 +42,9 @@ operator<<= (::DDS::DataReaderQos &ddsqos, const ::DDS_DataReaderQos & qos)
   ddsqos.time_based_filter <<= qos.time_based_filter;
   ddsqos.reader_data_lifecycle <<= qos.reader_data_lifecycle;
   ddsqos.reader_resource_limits <<= qos.reader_resource_limits;
+#if defined (RTI_DDS_VERSION_MAJOR) && (RTI_DDS_VERSION_MAJOR >= 5)
   ddsqos.type_consistency <<= qos.type_consistency;
+#endif
 }
 
 inline void
@@ -61,7 +63,9 @@ operator<<= (::DDS_DataReaderQos &ddsqos, const ::DDS::DataReaderQos & qos)
   ddsqos.time_based_filter <<= qos.time_based_filter;
   ddsqos.reader_data_lifecycle <<= qos.reader_data_lifecycle;
   ddsqos.reader_resource_limits <<= qos.reader_resource_limits;
+#if defined (RTI_DDS_VERSION_MAJOR) && (RTI_DDS_VERSION_MAJOR >= 5)
   ddsqos.type_consistency <<= qos.type_consistency;
+#endif
 }
 
 #endif /* DDS4CCM_DATAREADERQOS_H */

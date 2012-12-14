@@ -1,3 +1,8 @@
+Fri Dec 14 18:38:56 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/convertors/DataReaderQos.h:
+          Fixed compile error with RTI DDS < 5
+
 Thu Dec 13 08:40:18 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/idl/ndds/ndds_dcps.idl:
