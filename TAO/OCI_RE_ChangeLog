@@ -1,3 +1,22 @@
+Fri Dec 14 00:19:06 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/Dynamic_TP/Dynamic_TP_POA_Strategy.h:
+        * tao/Dynamic_TP/Dynamic_TP_POA_Strategy.inl:
+        * tao/Dynamic_TP/Dynamic_TP_Task.h:
+        * tao/Dynamic_TP/Dynamic_TP_Task.inl:
+        * tao/Dynamic_TP/Dynamic_TP_Task.cpp:
+
+          Refactored the task to make better use of services provided by
+          the base class. Also added separate locks to avoid the potential
+          of unnecessary blocking for different roles.
+
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Static/Hello.cpp:
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Static/run_test.pl:
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Static/server.cpp:
+
+          Added some comments to the test server and fixed up the script to
+          use a client to trigger a shutdown from within the server.
+
 Thu Dec 13 22:51:06 UTC 2012  Kevin Stanley  <stanleyk@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.cpp:

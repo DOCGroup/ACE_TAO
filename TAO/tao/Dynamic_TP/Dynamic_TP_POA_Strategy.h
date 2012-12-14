@@ -74,9 +74,6 @@ class TAO_Dynamic_TP_Export TAO_Dynamic_TP_POA_Strategy:
   /// Virtual Destructor.
   virtual ~TAO_Dynamic_TP_POA_Strategy();
 
-  /// Set the number of threads in the pool (must be > 0).
-  void set_num_threads(TAO_Dynamic_TP_Thread_Counter num_threads);
-
   /// Turn on/off serialization of servants.
   void set_servant_serialization(bool serialize_servants);
 
@@ -204,9 +201,6 @@ class TAO_Dynamic_TP_Export TAO_Dynamic_TP_POA_Strategy:
   // This is the maximum amount of time in seconds that an idle thread can
   // stay alive before being taken out of the pool.
   ACE_Time_Value thread_idle_time_;
-
-  /// The number of worker threads to use for the task.
-  TAO_Dynamic_TP_Thread_Counter num_threads_;
 
   /// The "serialize servants" flag.
   bool serialize_servants_;

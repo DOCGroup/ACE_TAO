@@ -10,7 +10,6 @@ use PerlACE::TestTarget;
 
 my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
-
 my $iorbase = "server.ior";
 my $serverlog = "server.log";
 my $server_iorfile = $server->LocalFile ($iorbase);
@@ -43,9 +42,12 @@ $status = 0;
 
 print "\nRunning Test 1....\n";
 $test_num=1;
-my $server_logfile = $server->LocalFile ("server_test" . $test_num . ".log");
+my $lfname = "server_test" . $test_num . ".log";
+my $server_logfile = $server->LocalFile ($lfname);
+$server->DeleteFile($lfname);
 
 $SV = $server->CreateProcess ("server", " -ORBDebugLevel 5 -ORBLogFile $server_logfile -s 3 -p {-1,5,-1,0,60,0}");
+$SC = $client->CreateProcess ("client", "-s");
 
 $server_status = $SV->Spawn ();
 
@@ -54,10 +56,21 @@ if ($server_status != 0) {
     exit 1;
 }
 
-# sleep to let the server bring up threads and log
-sleep(10);
+if ($server->WaitForFileTimed ($iorbase,
+                               $server->ProcessStartWaitInterval()) == -1) {
+    print STDERR "ERROR: cannot find file <$server_iorfile>\n";
+    $SV->Kill (); $SV->TimedWait (1);
+    exit 1;
+}
 
-$server_status = $SV->TerminateWaitKill ($server->ProcessStopWaitInterval());
+$client_status = $SC->SpawnWaitKill ($client->ProcessStopWaitInterval());
+if ($client_status != 0) {
+    $num_exceptions++;
+    print STDERR "ERROR: client $i returned $client_status\n";
+}
+
+$server_status = $SV->WaitKill ($server->ProcessStopWaitInterval());
+$server->DeleteFile($iorbase);
 
 if ($server_status != 0) {
    print STDERR "ERROR: server returned $server_status\n";
@@ -90,9 +103,12 @@ if ($found_cnt != 5) {
 
 print "\nRunning Test 2....\n";
 $test_num=2;
-$server_logfile = $server->LocalFile ("server_test" . $test_num . ".log");
+$lfname = "server_test" . $test_num . ".log";
+$server_logfile = $server->LocalFile ($lfname);
+$server->DeleteFile($lfname);
 
 $SV = $server->CreateProcess ("server", " -ORBDebugLevel 5 -ORBLogFile $server_logfile -s 3 -p {5,10,-1,0,10,0}");
+$SC = $client->CreateProcess ("client", "-s");
 
 $server_status = $SV->Spawn ();
 
@@ -101,8 +117,25 @@ if ($server_status != 0) {
     exit 1;
 }
 
+if ($server->WaitForFileTimed ($iorbase,
+                               $server->ProcessStartWaitInterval()) == -1) {
+    print STDERR "ERROR: cannot find file <$server_iorfile>\n";
+    $SV->Kill (); $SV->TimedWait (1);
+    exit 1;
+}
+
 # Sleep here for more than the timeout to let the threads die off and log.
+print STDERR "INFO: sleeping 15 seconds\n";
 sleep(15);
+
+$client_status = $SC->SpawnWaitKill ($client->ProcessStopWaitInterval());
+if ($client_status != 0) {
+    $num_exceptions++;
+    print STDERR "ERROR: client $i returned $client_status\n";
+}
+
+$server_status = $SV->WaitKill ($server->ProcessStopWaitInterval());
+$server->DeleteFile($iorbase);
 
 $server_status = $SV->TerminateWaitKill ($server->ProcessStopWaitInterval());
 
@@ -137,7 +170,10 @@ if ($found_cnt != 5) {
 print "\nRunning Test 3....\n";
 $test_num=3;
 $num_clients=15;
-$server_logfile = $server->LocalFile ("server_test" . $test_num . ".log");
+$lfname = "server_test" . $test_num . ".log";
+$server_logfile = $server->LocalFile ($lfname);
+
+$server->DeleteFile($lfname);
 
 $SV = $server->CreateProcess ("server", " -ORBDebugLevel 5 -ORBLogFile $server_logfile -s 1 -p {-1,15,-1,0,10,10}");
 
@@ -155,26 +191,30 @@ if ($server->WaitForFileTimed ($iorbase,
     exit 1;
 }
 
+for ($i = 0; $i < $num_clients; $i++) {
+    $CLS[$i] = $client->CreateProcess ("client", "-c $i");
+    $CLS[$i]->Spawn ();
+}
 
- for ($i = 0; $i < $num_clients; $i++) {
+$SC = $client->CreateProcess ("client", "-s");
+$valid_num_exceptions=5;
+$num_execeptions=0;
 
-     $CLS[$i] = $client->CreateProcess ("client", "-c $i");
+for ($i = 0; $i < $num_clients; $i++) {
 
-     $CLS[$i]->Spawn ();
- }
+    $client_status = $CLS[$i]->WaitKill ($client->ProcessStopWaitInterval());
 
- $valid_num_exceptions=5;
- $num_execeptions=0;
+    if ($client_status != 0) {
+        $num_exceptions++;
+        print STDERR "ERROR: client $i returned $client_status\n";
+    }
+}
 
- for ($i = 0; $i < $num_clients; $i++) {
-
-     $client_status = $CLS[$i]->WaitKill ($client->ProcessStopWaitInterval());
-
-     if ($client_status != 0) {
-         $num_exceptions++;
-         print STDERR "ERROR: client $i returned $client_status\n";
-     }
- }
+$client_status = $SC->SpawnWaitKill ($client->ProcessStopWaitInterval());
+if ($client_status != 0) {
+    $num_exceptions++;
+    print STDERR "ERROR: client $i returned $client_status\n";
+}
 
 if ($num_exceptions != $valid_num_exceptions)
 {
@@ -184,13 +224,14 @@ if ($num_exceptions != $valid_num_exceptions)
   $server->DeleteFile($server_logfile);
 }
 
- $server_status = $SV->TerminateWaitKill ($server->ProcessStopWaitInterval());
+$server_status = $SV->WaitKill ($server->ProcessStopWaitInterval());
 
- if ($server_status != 0) {
-     print STDERR "ERROR: server returned $server_status\n";
-     $status = 1;
- }
+if ($server_status != 0) {
+    print STDERR "ERROR: server returned $server_status\n";
+    $status = 1;
+}
 
+$server->DeleteFile ($iorbase);
 
 # Test 4:
 # This is a test for showing a process maintaining a max_request_queue_depth after
@@ -203,9 +244,12 @@ if ($num_exceptions != $valid_num_exceptions)
 print "\nRunning Test 4....\n";
 $test_num=4;
 $num_clients=10;
-$server_logfile = $server->LocalFile ("server_test" . $test_num . ".log");
+$lfname = "server_test" . $test_num . ".log";
+$server_logfile = $server->LocalFile ($lfname);
+$server->DeleteFile($lfname);
 
 $SV = $server->CreateProcess ("server", " -ORBDebugLevel 5 -ORBLogFile $server_logfile -s 1 -p {-1,1,4,0,10,10}");
+$SC = $client->CreateProcess ("client", "-s");
 
 $server_status = $SV->Spawn ();
 
@@ -222,25 +266,29 @@ if ($server->WaitForFileTimed ($iorbase,
 }
 
 
- for ($i = 0; $i < $num_clients; $i++) {
+for ($i = 0; $i < $num_clients; $i++) {
+    $CLS[$i] = $client->CreateProcess ("client", "-c $i");
+    $CLS[$i]->Spawn ();
+}
 
-     $CLS[$i] = $client->CreateProcess ("client", "-c $i");
+$valid_num_exceptions=6;
+$num_execeptions=0;
 
-     $CLS[$i]->Spawn ();
- }
+for ($i = 0; $i < $num_clients; $i++) {
 
- $valid_num_exceptions=6;
- $num_execeptions=0;
+    $client_status = $CLS[$i]->WaitKill ($client->ProcessStopWaitInterval());
 
- for ($i = 0; $i < $num_clients; $i++) {
+    if ($client_status != 0) {
+        $num_exceptions++;
+        print STDERR "ERROR: client $i returned $client_status\n";
+    }
+}
 
-     $client_status = $CLS[$i]->WaitKill ($client->ProcessStopWaitInterval());
-
-     if ($client_status != 0) {
-         $num_exceptions++;
-         print STDERR "ERROR: client $i returned $client_status\n";
-     }
- }
+$client_status = $SC->SpawnWaitKill ($client->ProcessStopWaitInterval());
+if ($client_status != 0) {
+    $num_exceptions++;
+    print STDERR "ERROR: client $i returned $client_status\n";
+}
 
 if ($num_exceptions != $valid_num_exceptions)
 {
@@ -250,12 +298,12 @@ if ($num_exceptions != $valid_num_exceptions)
   $server->DeleteFile($server_logfile);
 }
 
- $server_status = $SV->TerminateWaitKill ($server->ProcessStopWaitInterval());
+$server_status = $SV->WaitKill ($server->ProcessStopWaitInterval());
 
- if ($server_status != 0) {
-     print STDERR "ERROR: server returned $server_status\n";
-     $status = 1;
- }
+if ($server_status != 0) {
+    print STDERR "ERROR: server returned $server_status\n";
+    $status = 1;
+}
 
 $server->DeleteFile($iorbase);
 $client->DeleteFile($iorbase);

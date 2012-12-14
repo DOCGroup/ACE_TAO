@@ -16,6 +16,8 @@
 #include "tao/Dynamic_TP/dynamic_tp_export.h"
 #include "tao/Dynamic_TP/Dynamic_TP_Config.h"
 #include "tao/CSD_ThreadPool/CSD_TP_Queue.h"
+#include "tao/CSD_ThreadPool/CSD_TP_Request.h"
+#include "tao/CSD_ThreadPool/CSD_TP_Dispatchable_Visitor.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/Condition.h"
 
@@ -29,10 +31,6 @@
 #include "ace/Vector_T.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-
-    /// Typedef for the number of threads.
-    typedef long TAO_Dynamic_TP_Thread_Counter;
 
     /**
      * @class TP_Task
@@ -70,8 +68,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
       struct Open_Args {
         TAO_DTP_Definition task_thread_config;
-        //TAO_Dynamic_TP_Thread_Counter num_threads;
-        //size_t stack_size;
       };
 
 
@@ -85,16 +81,30 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
       /// The "mainline" executed by each worker thread.
       virtual int svc();
 
+      virtual int close (u_long flag = 0);
+
       /// Cancel all requests that are targeted for the provided servant.
       void cancel_servant (PortableServer::Servant servant);
 
     private:
+      /// get the next available request. Return true if one available, nonblocking
+      bool request_ready (TAO::CSD::TP_Dispatchable_Visitor &v,
+                          TAO::CSD::TP_Request_Handle &r);
+
+      /// release the request, reset the accepting flag if necessary
+      void clear_request (TAO::CSD::TP_Request_Handle &r);
+
+
 
       typedef TAO_SYNCH_MUTEX         LockType;
       typedef TAO_Condition<LockType> ConditionType;
 
-      /// Lock to protect the "state" (all of the data members) of this object.
-      LockType lock_;
+      /// Lock used to synchronize the "active_workers_" condition
+      LockType aw_lock_;
+      /// Lock used to synchronize manipulation of the queue
+      LockType queue_lock_;
+      /// Lock used to synchronize the "work_available_" condition
+      LockType work_lock_;
 
       /// Condition used to signal worker threads that they may be able to
       /// find a request in the queue_ that needs to be dispatched to a
@@ -114,11 +124,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
       bool accepting_requests_;
 
       /// Flag used to initiate a shutdown request to all worker threads.
-      bool shutdown_initiated_;
-
-      /// Complete shutdown needed to be deferred because the thread calling
-      /// close(1) was also one of the ThreadPool threads
-      bool deferred_shutdown_initiated_;
+      bool shutdown_;
 
       /// Flag used to avoid multiple open() calls.
       bool opened_;
@@ -127,16 +133,10 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
       size_t num_queue_requests_;
 
       /// The number of currently active worker threads.
-      TAO_Dynamic_TP_Thread_Counter num_threads_;
-
-      /// The number of currently active worker threads.
       ACE_Atomic_Op <TAO_SYNCH_MUTEX, unsigned long> busy_threads_;
 
       /// The queue of pending servant requests (a.k.a. the "request queue").
       TAO::CSD::TP_Queue queue_;
-
-      /// The number of static pool threads to create up front.
-      int initial_pool_threads_;
 
       /// The low water mark for dynamic threads to settle to.
       int min_pool_threads_;
@@ -154,13 +154,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
       /// This is the maximum amount of time in seconds that an idle thread can
       /// stay alive before being taken out of the pool.
       ACE_Time_Value thread_idle_time_;
-
-      typedef ACE_Vector <ACE_thread_t> Thread_Ids;
-
-      /// The list of ids for the threads launched by this task.
-      Thread_Ids activated_threads_;
-
-      enum { MAX_THREADPOOL_TASK_WORKER_THREADS = 50 };
     };
 
 

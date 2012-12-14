@@ -19,6 +19,7 @@ void
   Hello::sleep_sec(CORBA::Short sl_sec)
 {
   this->sleep_sec_ = sl_sec;
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Hello::sleep_sec returning\n"));
 }
 
 char *
