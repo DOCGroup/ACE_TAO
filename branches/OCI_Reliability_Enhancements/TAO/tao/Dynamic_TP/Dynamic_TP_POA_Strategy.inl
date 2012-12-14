@@ -7,16 +7,18 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_INLINE
 /// Constructor.
 TAO_Dynamic_TP_POA_Strategy::TAO_Dynamic_TP_POA_Strategy
-                             (ACE_CString tp_config_name,
-                              bool serialize_servants)
+(ACE_CString tp_config_name,
+ bool ss)
+  : serialize_servants_ (ss)
 {
   this->dynamic_tp_config_name_ = tp_config_name;
 }
 
 ACE_INLINE
 TAO_Dynamic_TP_POA_Strategy::TAO_Dynamic_TP_POA_Strategy
-                             (TAO_DTP_Definition * tp_config,
-                              bool     serialize_servants)
+(TAO_DTP_Definition * tp_config,
+ bool ss)
+  : serialize_servants_ (ss)
 {
   //Need to govern the rules of the parameters coming in and set the
   //appropriate values.
@@ -130,14 +132,6 @@ TAO_Dynamic_TP_POA_Strategy::TAO_Dynamic_TP_POA_Strategy
             this->thread_idle_time_.sec ()));
       }
     }
-}
-
-ACE_INLINE
-void
-TAO_Dynamic_TP_POA_Strategy::set_num_threads(TAO_Dynamic_TP_Thread_Counter num_threads)
-{
-  // Simple Mutator.  Assumes that num_threads > 0.
-  this->num_threads_ = num_threads;
 }
 
 ACE_INLINE

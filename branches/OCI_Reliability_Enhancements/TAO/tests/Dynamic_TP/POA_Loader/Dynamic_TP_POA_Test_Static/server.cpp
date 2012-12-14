@@ -165,12 +165,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_OS::fprintf (output_file, "%s", ior.in ());
       ACE_OS::fclose (output_file);
 
+      ACE_DEBUG ((LM_DEBUG,"Server calling poa_manager::activate()\n"));
       poa_manager->activate ();
 
 
+      ACE_DEBUG ((LM_DEBUG,"Server calling hello->sleep_sec()\n"));
       // Set the sleep time for the Hello object
       hello->sleep_sec(sleep_sec);
 
+      ACE_DEBUG ((LM_DEBUG,"Server calling orb::run()\n"));
       orb->run ();
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
