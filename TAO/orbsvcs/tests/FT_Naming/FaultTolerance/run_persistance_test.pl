@@ -247,8 +247,12 @@ END
     $client->DeleteFile ($nm_iorfile);
     $client->DeleteFile ($stdout_file);
     $client->DeleteFile ($stderr_file);
-    clean_persistence_dir ($server, $name_dir);
-    rmdir ($name_dir);
+
+    if ( -d $name_dir ) {
+        clean_persistence_dir ($server, $name_dir);
+        rmdir ($name_dir);
+    }
+
 }
 
 ################################################################################

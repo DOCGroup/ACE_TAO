@@ -1,3 +1,22 @@
+Fri Dec 14 22:52:03 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
+
+        * orbsvcs/tests/FT_Naming/FaultTolerance/Faulttolerance.mpc:
+        * orbsvcs/tests/FT_Naming/FaultTolerance/client.cpp:
+        * orbsvcs/tests/FT_Naming/FaultTolerance/test_object.idl:
+
+        Added a client process to provide a more robust test of the name service
+
+        * orbsvcs/tests/FT_Naming/FaultTolerance/run_failover_test.pl:
+
+        Updated to use the client process
+
+        * orbsvcs/tests/FT_Naming/FaultTolerance/run_equivalance_test.pl:
+        * orbsvcs/tests/FT_Naming/FaultTolerance/run_persistance_test.pl:
+        * orbsvcs/tests/FT_Naming/Replication/run_test.pl:
+
+        Added guard to keep from deleting files when the repository directory
+        was not created.
+
 Fri Dec 14 22:15:22 UTC 2012  "Marc Neeley"  <neeleym@ociweb.com>
 
         * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Static/run_test.pl:

@@ -251,8 +251,11 @@ END
     $server->DeleteFile ($nm_multi_iorfile);
     $client->DeleteFile ($stdout_file);
     $client->DeleteFile ($stderr_file);
-    clean_persistence_dir ($server, $name_dir);
-    rmdir ($name_dir);
+
+    if ( -d $name_dir ) {
+        clean_persistence_dir ($server, $name_dir);
+        rmdir ($name_dir);
+    }
 }
 
 ################################################################################
@@ -271,7 +274,7 @@ sub redundant_equivalancy_test()
     # The file that is written by the primary when ready to start backup
     my $server_primary_iorfile  = $server->LocalFile ($ns_primary_iorfile);
     my $server_ns_multi_iorfile = $server->LocalFile ($ns_multi_iorfile);
-    my $server_nm_multi_iorfile       = $server->LocalFile ($nm_multi_iorfile);
+    my $server_nm_multi_iorfile = $server->LocalFile ($nm_multi_iorfile);
     my $client_stdout_file      = $client->LocalFile ($stdout_file);
     my $client_stderr_file      = $client->LocalFile ($stderr_file);
 

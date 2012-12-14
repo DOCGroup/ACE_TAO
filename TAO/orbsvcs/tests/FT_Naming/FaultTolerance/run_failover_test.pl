@@ -9,13 +9,16 @@ use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
 use Cwd;
 
+my $startdir = getcwd();
 my $debug_level = '0';
 my $redirection_enabled = 0;
 
 foreach $i (@ARGV) {
     if ($i eq '-debug') {
         $debug_level = '10';
-        $redirection_enabled = 0;
+    }
+    if ($i eq '-verbose') {
+        $redirection_enabled = 1;
     }
 }
 
@@ -218,7 +221,6 @@ sub clean_persistence_dir($$)
 {
     my $target = shift;
     my $directory_name = shift;
-
     chdir $directory_name;
     opendir(THISDIR, ".");
     @allfiles = grep(!/^\.\.?$/, readdir(THISDIR));
@@ -260,8 +262,11 @@ END
     $server->DeleteFile($iorfile2);
     $client->DeleteFile ($stdout_file);
     $client->DeleteFile ($stderr_file);
-    clean_persistence_dir ($server, $name_dir);
-    rmdir ($name_dir);
+
+    if ( -d $name_dir ) {
+        clean_persistence_dir ($server, $name_dir);
+        rmdir ($name_dir);
+    }
 }
 
 ################################################################################
@@ -283,23 +288,29 @@ sub failover_test()
     print_msg("Failover Test");
     init_naming_context_directory ($server, $name_dir );
 
-    # // Start the primary. It will write the replication ior to a file in the persistence dir.
-    # tao_ft_naming --primary -ORBEndpoint <primary_hostname:port> -r <nameService_persistence_dir>
-
-    # // Start the backup. Reads the primary ior from the persistence dir.
-    # Writes the multi-profile ior to naming_ior_filename.
-    # tao_ft_naming --backup -ORBEndpoint <primary_hostname:port> -r <nameService_persistence_dir> -c <naming_ior_filename>
-
     # Run two Naming Servers
     my $ns1_args = "--primary -ORBDebugLevel $debug_level -ORBListenEndPoints $ns_endpoint1 -m 0 -r $name_dir";
     my $ns2_args = "--backup -ORBDebugLevel $debug_level -ORBListenEndPoints $ns_endpoint2 -c $server_iorfile2 -g $server_nm_iorfile -m 0 -r $name_dir";
     my $tao_ft_naming = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_ft_naming";
 
+    # Use corbaloc to access each individual name service without
+    # using the combined IOR.
+    my $client_args = "-p file://$server_iorfile2 " .
+                      "-q file://$server_iorfile2 " .
+                      "-b 4 " .
+                      "-d 4 ";
+
+    my $client_prog = "$startdir/client";
+
     $NS1 = $server->CreateProcess ($tao_ft_naming, $ns1_args);
     $NS2 = $server->CreateProcess ($tao_ft_naming, $ns2_args);
+    $CL  = $client->CreateProcess ($client_prog, $client_args);
 
     $server->DeleteFile ($primary_iorfile);
-    print_msg("*****Starting the primary");
+    $server->DeleteFile ($iorfile2);
+    $server->DeleteFile ($nm_iorfile);
+
+    print_msg("INFO: Starting the primary");
     $NS1->Spawn ();
     if ($server->WaitForFileTimed ($primary_iorfile,
                                    $server->ProcessStartWaitInterval()) == -1) {
@@ -308,9 +319,7 @@ sub failover_test()
         exit 1;
     }
 
-    $server->DeleteFile ($iorfile2);
-    $server->DeleteFile ($nm_iorfile);
-    print_msg("*****Starting the backup");
+    print_msg("INFO: Starting the backup");
     $NS2->Spawn ();
     if ($server->WaitForFileTimed ($iorfile2,
                                    $server->ProcessStartWaitInterval()) == -1) {
@@ -320,11 +329,8 @@ sub failover_test()
         exit 1;
     }
 
-    run_nsadd ("$default_init_ref --name iso --ctx", $POSITIVE_TEST_RESULT);
-    run_nsgroup ("$default_init_ref group_create -group ieee -policy round -type_id IDL:FT_Naming/NamingManager:1.0", $POSITIVE_TEST_RESULT);
-    run_nsgroup ("$default_init_ref group_bind -group ieee -name iso/ieee", $POSITIVE_TEST_RESULT);
-    run_nsgroup ("$default_init_ref group_list", $POSITIVE_TEST_RESULT);
-    run_nslist ("$default_init_ref", $POSITIVE_TEST_RESULT);
+    print_msg("INFO: Starting the client");
+    $CL->Spawn ();
 
     $server_status = $NS1->TerminateWaitKill ($server->ProcessStopWaitInterval());
     if ($server_status != 0) {
@@ -332,31 +338,20 @@ sub failover_test()
         $status = 1;
     }
 
-    #Verify primary server is not available
-    print_msg("INFO: verifying primary is not available");
-    run_nsgroup ("$primary_default_init_ref group_list", $NEGATIVE_TEST_RESULT);
-    run_nslist ("$primary_default_init_ref", $NEGATIVE_TEST_RESULT);
-
-    #Test failover with only secondary server running
-    print_msg("INFO: Test failover with only secondary server running");
-    run_nsgroup ("$default_init_ref group_list", $POSITIVE_TEST_RESULT);
-    run_nslist ("$default_init_ref", $POSITIVE_TEST_RESULT);
-
-    #restart primary server
     print_msg("INFO: restart primary server");
-    $server->DeleteFile ($primary_iorfile);
     $NS1->Spawn ();
-    if ($server->WaitForFileTimed ($primary_iorfile,
-                                   $server->ProcessStartWaitInterval()) == -1) {
-        print STDERR "ERROR: cannot find file <$server_primary_iorfile>\n";
-        $NS1->Kill (); $NS1->TimedWait (1);
-        exit 1;
-    }
 
-    #Verify restarted primary server is available
+    sleep(5);
+
     print_msg("INFO: Verify restarted primary server is available");
     run_nsgroup ("$primary_default_init_ref group_list", $POSITIVE_TEST_RESULT);
     run_nslist ("$primary_default_init_ref", $POSITIVE_TEST_RESULT);
+
+    $client_status = $CL->TerminateWaitKill ($client->ProcessStopWaitInterval());
+    if ($client_status != 0) {
+        print STDERR "ERROR: client returned $$client_status\n";
+        $status = 1;
+    }
 
     $server_status = $NS2->TerminateWaitKill ($server->ProcessStopWaitInterval());
     if ($server_status != 0) {
@@ -369,6 +364,7 @@ sub failover_test()
         print STDERR "ERROR: server 1 returned $server_status\n";
         $status = 1;
     }
+
     if ( $status == 0 ) {
         $status = $previous_status;
     }
