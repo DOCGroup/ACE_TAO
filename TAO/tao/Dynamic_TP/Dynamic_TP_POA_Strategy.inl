@@ -31,64 +31,64 @@ TAO_Dynamic_TP_POA_Strategy::TAO_Dynamic_TP_POA_Strategy
 
       if ( tp_config->min_threads_ <= 0)
         {
-          this->min_pool_threads_ = 1;
+          this->dtp_task_.set_min_pool_threads(1);
         }
       else
         {
-          this->min_pool_threads_ = tp_config->min_threads_;
+          this->dtp_task_.set_min_pool_threads(tp_config->min_threads_);
         }
 
       // max_pool_threads_
 
-      if ( tp_config->max_threads_ < this->min_pool_threads_)
+      if (tp_config->max_threads_ <= 0)
         {
-          this->max_pool_threads_ =  -1;   // Set to -1 so that max is unbounded.
+          this->dtp_task_.set_max_pool_threads(0);   // Set to 0 so that max is unbounded.
         }
       else
-        {
-          this->max_pool_threads_ = tp_config->max_threads_;
-        }
+        if (tp_config->max_threads_ < tp_config->min_threads_)
+          {
+            this->dtp_task_.set_max_pool_threads(this->dtp_task_.get_min_pool_threads());
+          }
+        else
+          {
+            this->dtp_task_.set_max_pool_threads(tp_config->max_threads_);
+          }
 
 
       // initial_pool_threads_
-      if (tp_config->init_threads_ <= this->min_pool_threads_)
+      if (tp_config->init_threads_ <= 0)
         {
-          this->initial_pool_threads_ = this->min_pool_threads_;
-        }
-      else if ((tp_config->init_threads_ > this->max_pool_threads_) &&
-               (this->max_pool_threads_ > 0))
-        {
-          this->initial_pool_threads_ = this->max_pool_threads_;
+          this->dtp_task_.set_init_pool_threads(this->dtp_task_.get_min_pool_threads());
         }
       else
         {
-          this->initial_pool_threads_ = tp_config->init_threads_; // set to default
+          this->dtp_task_.set_init_pool_threads(tp_config->init_threads_);
         }
 
       // thread_stack_size_
 
-      if ( tp_config->stack_size_ <= 0 )
+      if (tp_config->stack_size_ <= 0)
         {
-          this->thread_stack_size_ = ACE_DEFAULT_THREAD_STACKSIZE;
+          this->dtp_task_.set_thread_stack_size(ACE_DEFAULT_THREAD_STACKSIZE);
         }
       else
         {
-          this->thread_stack_size_ = tp_config->stack_size_;
+          this->dtp_task_.set_thread_stack_size(tp_config->stack_size_);
         }
 
       // max_request_queue_depth_
 
-      if ( tp_config->queue_depth_ <= 0 )
+      if (tp_config->queue_depth_ < 0)
         {
-          this->max_request_queue_depth_ = -1;
+          this->dtp_task_.set_max_request_queue_depth(0);
         }
       else
         {
-          this->max_request_queue_depth_ = tp_config->queue_depth_;
+          this->dtp_task_.set_max_request_queue_depth(tp_config->queue_depth_);
         }
 
       // thread_idle_time_
-      this->thread_idle_time_ = tp_config->timeout_;
+      this->dtp_task_.set_thread_idle_time(tp_config->timeout_);
 
       if (TAO_debug_level > 4)
       {
@@ -101,12 +101,12 @@ TAO_Dynamic_TP_POA_Strategy::TAO_Dynamic_TP_POA_Strategy
             ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_POA_Strategy max_request_queue_depth_=[%d]\n")
             ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_POA_Strategy thread_stack_size_=[%d]\n")
             ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_POA_Strategy thread_idle_time_=[%d]\n"),
-            this->initial_pool_threads_,
-            this->min_pool_threads_,
-            this->max_pool_threads_,
-            this->max_request_queue_depth_,
-            this->thread_stack_size_,
-            this->thread_idle_time_.sec()));
+            this->dtp_task_.get_init_pool_threads(),
+            this->dtp_task_.get_min_pool_threads(),
+            this->dtp_task_.get_max_pool_threads(),
+            this->dtp_task_.get_max_request_queue_depth(),
+            this->dtp_task_.get_thread_stack_size(),
+            this->dtp_task_.get_thread_idle_time()));
       }
     }
   else
@@ -124,12 +124,12 @@ TAO_Dynamic_TP_POA_Strategy::TAO_Dynamic_TP_POA_Strategy
             ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_POA_Strategy max_request_queue_depth_=[%d]\n")
             ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_POA_Strategy thread_stack_size_=[%d]\n")
             ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_POA_Strategy thread_idle_time_=[%d]\n"),
-            this->initial_pool_threads_,
-            this->min_pool_threads_,
-            this->max_pool_threads_,
-            this->max_request_queue_depth_,
-            this->thread_stack_size_,
-            this->thread_idle_time_.sec ()));
+            this->dtp_task_.get_init_pool_threads(),
+            this->dtp_task_.get_min_pool_threads(),
+            this->dtp_task_.get_max_pool_threads(),
+            this->dtp_task_.get_max_request_queue_depth(),
+            this->dtp_task_.get_thread_stack_size(),
+            this->dtp_task_.get_thread_idle_time()));
       }
     }
 }

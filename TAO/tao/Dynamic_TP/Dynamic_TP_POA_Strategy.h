@@ -175,33 +175,6 @@ class TAO_Dynamic_TP_Export TAO_Dynamic_TP_POA_Strategy:
   TAO::CSD::TP_Servant_State::HandleType get_servant_state
     (PortableServer::Servant servant);
 
-  /// This is the active object used by the worker threads.
-  /// The request queue is owned/managed by the task object.
-  /// The strategy object puts requests into the task's request
-  /// queue, and the worker threads service the queued requests
-  /// by performing the actual servant request dispatching logic.
-  //TAO_Dynamic_TP_Task task_;
-
-  // The number of static pool threads to create up front.
-  int initial_pool_threads_;
-
-  // The low water mark for dynamic threads to settle to.
-  int min_pool_threads_;
-
-  // The high water mark for dynamic threads to be limited to.
-  int max_pool_threads_;
-
-  // If the max_pool_threads_ value has been met, then ORB requests coming in can be queued.
-  // This is the maximum number that will be allowed.
-  size_t max_request_queue_depth_;
-
-  // This is the memory stack size allowable for each thread.
-  size_t thread_stack_size_;
-
-  // This is the maximum amount of time in seconds that an idle thread can
-  // stay alive before being taken out of the pool.
-  ACE_Time_Value thread_idle_time_;
-
   /// The "serialize servants" flag.
   bool serialize_servants_;
 
@@ -220,7 +193,7 @@ class TAO_Dynamic_TP_Export TAO_Dynamic_TP_POA_Strategy:
   // The strategy object puts requests into the task's request
   // queue, and the worker threads service the queued requests
   // by performing the actual servant request dispatching logic.
-  TAO_Dynamic_TP_Task task_;
+  TAO_Dynamic_TP_Task dtp_task_;
 
 };
 

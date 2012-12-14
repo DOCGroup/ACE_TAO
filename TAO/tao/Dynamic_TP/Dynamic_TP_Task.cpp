@@ -79,35 +79,65 @@ TAO_Dynamic_TP_Task::add_request(TAO::CSD::TP_Request* request)
   return true;
 }
 
+size_t 
+TAO_Dynamic_TP_Task::get_init_pool_threads()
+{
+  return(this->init_pool_threads_);
+}
+
+size_t 
+TAO_Dynamic_TP_Task::get_min_pool_threads()
+{
+  return(this->min_pool_threads_);
+}
+
+size_t TAO_Dynamic_TP_Task::get_max_pool_threads()
+{
+  return(this->max_pool_threads_);
+}
+
+size_t 
+TAO_Dynamic_TP_Task::get_max_request_queue_depth()
+{
+  return(this->max_request_queue_depth_);
+}
+
+size_t 
+TAO_Dynamic_TP_Task::get_thread_stack_size()
+{
+  return(this->thread_stack_size_);
+}
+
+time_t 
+TAO_Dynamic_TP_Task::get_thread_idle_time()
+{
+  return(this->thread_idle_time_.sec());
+}
+
 int
-TAO_Dynamic_TP_Task::open(void* args)
+TAO_Dynamic_TP_Task::open()//void* args)
 {
   size_t num = 1;
 
-  Open_Args* tmp = static_cast<Open_Args *> (args);
+  // Open_Args* tmp = static_cast<Open_Args *> (args);
 
-  if (tmp == 0)
-    {
-      //FUZZ: disable check_for_lack_ACE_OS
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("(%P|%t) Dynamic_TP_Task::open() failed to open.  ")
-                         ACE_TEXT ("Invalid argument type passed to open().\n")),
-                        -1);
-      //FUZZ: enable check_for_lack_ACE_OS
-    }
+  //if (tmp == 0)
+  //  {
+  //    //FUZZ: disable check_for_lack_ACE_OS
+  //    ACE_ERROR_RETURN ((LM_ERROR,
+  //                       ACE_TEXT ("(%P|%t) Dynamic_TP_Task::open() failed to open.  ")
+  //                       ACE_TEXT ("Invalid argument type passed to open().\n")),
+  //                      -1);
+  //    //FUZZ: enable check_for_lack_ACE_OS
+  //  }
 
-  num = tmp->task_thread_config.init_threads_;
+  num = this->init_pool_threads_;
 
   // Set the busy_threads_ to the number of init_threads
   // now. When they startup they will decrement themselves
   // as they go into a wait state.
 
-  this->busy_threads_ = 0; //tmp->task_thread_config.init_threads_; //
-  this->min_pool_threads_ = tmp->task_thread_config.min_threads_;
-  this->max_pool_threads_ = tmp->task_thread_config.max_threads_;
-  this->max_request_queue_depth_ = tmp->task_thread_config.queue_depth_;
-  this->thread_stack_size_ = tmp->task_thread_config.stack_size_;
-  this->thread_idle_time_ = tmp->task_thread_config.timeout_;
+  this->busy_threads_ = 0; 
 
   if (TAO_debug_level > 4)
   {
@@ -119,7 +149,7 @@ TAO_Dynamic_TP_Task::open(void* args)
         ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_Task::open() max_request_queue_depth_ \t: [%d]\n")
         ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_Task::open() thread_stack_size_ \t\t: [%d]\n")
         ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_Task::open() thread_idle_time_ \t\t: [%d]\n"),
-        num,
+        this->init_pool_threads_,
         this->min_pool_threads_,
         this->max_pool_threads_,
         this->max_request_queue_depth_,
@@ -169,7 +199,7 @@ TAO_Dynamic_TP_Task::open(void* args)
   else
     {
       size_t * stack_sz_arr = new size_t[num];
-      for (int z = 0; z < num; z++)
+      for (size_t z = 0; z < num; z++)
         {
           stack_sz_arr[z] = this->thread_stack_size_;
         }
@@ -279,7 +309,7 @@ TAO_Dynamic_TP_Task::svc()
                   {
                     if (errno != ETIME ||
                         (this->thr_count() > this->min_pool_threads_ &&
-                         this->min_pool_threads_ > -1))
+                         this->min_pool_threads_ > 0))
                       {
                         if (TAO_debug_level > 4)
                           {
@@ -306,7 +336,7 @@ TAO_Dynamic_TP_Task::svc()
 
       size_t count = this->thr_count();
       if ((this->busy_threads_ == count) &&
-           ((this->max_pool_threads_ == -1) ||
+           ((this->max_pool_threads_ == 0) ||
             (count < this->max_pool_threads_)))
         {
           if (this->activate(THR_NEW_LWP | THR_DETACHED,
@@ -324,6 +354,14 @@ TAO_Dynamic_TP_Task::svc()
                           ACE_TEXT ("(%P|%t) Dynamic_TP_Task::svc() failed to grow ")
                           ACE_TEXT ("to %d worker threads.\n"), count));
             }
+          else
+          {
+              ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_Task::svc() ")
+              ACE_TEXT ("Growing threadcount. ")
+              ACE_TEXT ("New thread count:%d\n"),
+              this->thr_count()));
+          }
         }
 
       request->dispatch();
@@ -382,6 +420,42 @@ TAO_Dynamic_TP_Task::close(u_long flag)
   return 0;
 }
 
+
+void 
+TAO_Dynamic_TP_Task::set_init_pool_threads(size_t thr_count)
+{
+  this->init_pool_threads_ = thr_count;
+}
+
+void 
+TAO_Dynamic_TP_Task::set_min_pool_threads(size_t thr_count)
+{
+  this->min_pool_threads_ = thr_count;
+}
+
+void
+TAO_Dynamic_TP_Task::set_max_pool_threads(size_t thr_count)
+{
+  this->max_pool_threads_ = thr_count;
+}
+
+void
+TAO_Dynamic_TP_Task::set_thread_stack_size(size_t stack_sz)
+{
+  this->thread_stack_size_ = stack_sz;
+}
+
+void
+TAO_Dynamic_TP_Task::set_thread_idle_time(ACE_Time_Value thr_timeout)
+{
+  this->thread_idle_time_ = thr_timeout;
+}
+
+void
+TAO_Dynamic_TP_Task::set_max_request_queue_depth(size_t queue_depth)
+{
+  this->max_request_queue_depth_ = queue_depth;
+}
 
 void
 TAO_Dynamic_TP_Task::cancel_servant (PortableServer::Servant servant)
