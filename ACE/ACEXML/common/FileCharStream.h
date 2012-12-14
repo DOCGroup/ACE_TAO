@@ -41,6 +41,12 @@ public:
   int open (const ACEXML_Char *name);
 
   /**
+   * Accept an already opened file. The stream does not
+   * assume ownership of open_file.
+   */
+  int use_stream (FILE* open_file, const ACEXML_Char *name);
+
+  /**
    * Returns the available ACEXML_Char in the buffer.  -1
    * if the object is not initialized properly.
    */
@@ -113,10 +119,14 @@ private:
 
 #endif /* ACE_USES_WCHAR */
 
+  /// internal accept an already opened file.
+  int use_stream_i (FILE* open_file, const ACEXML_Char *name);
+
   ACEXML_Char*  filename_;
   ACEXML_Char*  encoding_;
   ACE_OFF_T     size_;
   FILE*         infile_;
+  bool          close_infile_;
   // This is needed to ensure that we can implement a peek operation on a
   // UTF-16 encoded file. It is a bit hackish, but there is no other way of
   // implementing a peek() as the standard I/O FILE* guarantees only one

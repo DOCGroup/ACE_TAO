@@ -1,3 +1,10 @@
+Fri Dec 14 17:31:22 UTC 2012  Brian Johnson  <johnsonb@ociweb.com>
+
+        * ACEXML/common/FileCharStream.h:
+        * ACEXML/common/FileCharStream.cpp:
+        
+          Added interface to accept an already open FILE stream.
+
 Mon Oct 15 18:26:57 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * OCI_RE_ChangeLog:
