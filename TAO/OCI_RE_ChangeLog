@@ -1,3 +1,19 @@
+Sat Dec 15 17:49:30 UTC 2012  "Marc Neeley"  <neeleym@ociweb.com>
+
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Static/run_test.pl:
+
+        Cleaned up condition where test 3 was failing.
+
+Sat Dec 15 17:49:17 UTC 2012  "Marc Neeley"  <neeleym@ociweb.com>
+
+        * tao/Dynamic_TP/Dynamic_TP_Config.h:
+        * tao/Dynamic_TP/Dynamic_TP_ORB_Loader.cpp:
+        * tao/Dynamic_TP/Dynamic_TP_POA_Strategy.inl:
+
+        Fixed comparison condition where size_t was being compared to < 0
+        which is not valid.
+        Also set default of max_request_queue_depth to 0 rather than -1.
+
 Fri Dec 14 22:52:03 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
 
         * orbsvcs/tests/FT_Naming/FaultTolerance/Faulttolerance.mpc:

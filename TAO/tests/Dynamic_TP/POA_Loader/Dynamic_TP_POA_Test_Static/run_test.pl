@@ -228,6 +228,12 @@ for ($i = 0; $i < $num_clients; $i++) {
     }
 }
 
+$SC = $client->CreateProcess ("client", "-s");
+$client_status = $SC->SpawnWaitKill ($client->ProcessStopWaitInterval());
+if ($client_status != 0) {
+    print STDERR "ERROR: client $i returned $client_status\n";
+}
+
 if ($num_exceptions != $valid_num_exceptions)
 {
   print STDERR "ERROR: max_request_queue_depth test failed w/$num_exceptions instead of $valid_num_exceptions\n";
@@ -236,11 +242,6 @@ if ($num_exceptions != $valid_num_exceptions)
   $server->DeleteFile($lfname);
 }
 
-$SC = $client->CreateProcess ("client", "-s");
-$client_status = $SC->SpawnWaitKill ($client->ProcessStopWaitInterval());
-if ($client_status != 0) {
-    print STDERR "ERROR: client $i returned $client_status\n";
-}
 
 $server_status = $SV->WaitKill ($server->ProcessStopWaitInterval());
 

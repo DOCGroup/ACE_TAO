@@ -49,7 +49,7 @@ struct TAO_Dynamic_TP_Export TAO_DTP_Definition
     max_threads_(-1),
     stack_size_(ACE_DEFAULT_THREAD_STACKSIZE),
     timeout_(60,0),
-    queue_depth_(-1){}
+    queue_depth_(0){}
 
 };
 
