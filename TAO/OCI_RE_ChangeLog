@@ -1,3 +1,34 @@
+Sat Dec 15 22:06:02 UTC 2012  "Marc Neeley"  <neeleym@ociweb.com>
+
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Dynamic/Hello.h:
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Dynamic/Hello.cpp:
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Dynamic/Test.idl:
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Dynamic/client.cpp:
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Dynamic/run_test.pl:
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Dynamic/server.cpp:
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Dynamic/svc1.conf:
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Dynamic/svc2.conf:
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Dynamic/svc3.conf:
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Dynamic/svc4.conf:
+          New set of files to test loading of thread configuration from
+          svc.conf files rather from an apply_to() call from an application.
+
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Static/client.cpp:
+          Modified this file to help with test logging and pass/fail detection.
+
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Dynamic/svc.conf:
+
+          Removed this file.
+
+Sat Dec 15 22:05:47 UTC 2012  "Marc Neeley"  <neeleym@ociweb.com>
+
+        * tao/Dynamic_TP/Dynamic_TP_POA_Strategy.h:
+        * tao/Dynamic_TP/Dynamic_TP_POA_Strategy.inl:
+        * tao/Dynamic_TP/Dynamic_TP_POA_Strategy.cpp:
+
+          These files were modified to accommodate lazy configuration
+          when loading configuration from svc.conf files.
+
 Sat Dec 15 17:49:30 UTC 2012  "Marc Neeley"  <neeleym@ociweb.com>
 
         * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Static/run_test.pl:

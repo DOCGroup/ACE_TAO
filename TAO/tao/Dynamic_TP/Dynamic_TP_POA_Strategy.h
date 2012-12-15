@@ -195,6 +195,14 @@ class TAO_Dynamic_TP_Export TAO_Dynamic_TP_POA_Strategy:
   // by performing the actual servant request dispatching logic.
   TAO_Dynamic_TP_Task dtp_task_;
 
+
+  // This boolean is used to determine if the configuration has
+  // been sent in from an application or, if false, needs to be
+  // looked up from a Dynamic TP Config repo. It works in conjunction with
+  // dynamic_tp_config_name_ above.
+
+  bool config_initialized_;
+
 };
 
 
