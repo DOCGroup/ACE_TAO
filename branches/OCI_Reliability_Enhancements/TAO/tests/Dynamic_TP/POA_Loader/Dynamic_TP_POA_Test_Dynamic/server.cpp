@@ -6,12 +6,13 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/Thread_Manager.h"
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT ("test.ior");
+const ACE_TCHAR *ior_output_file = ACE_TEXT ("server.ior");
+int sleep_sec = 1;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:s:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -20,12 +21,15 @@ parse_args (int argc, ACE_TCHAR *argv[])
       case 'o':
         ior_output_file = get_opts.opt_arg ();
         break;
-
+      case 's':
+        sleep_sec = ACE_OS::strtol(get_opts.opt_arg (),NULL,0);
+        break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
                            "-o <iorfile>"
+                           "-s (# sec to sleep)"
                            "\n",
                            argv [0]),
                           -1);
@@ -83,23 +87,30 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                            "Cannot open output file %s for writing IOR: %C",
                            ior_output_file,
                            ior.in ()),
-                          1);
+                              1);
       ACE_OS::fprintf (output_file, "%s", ior.in ());
       ACE_OS::fclose (output_file);
 
+      ACE_DEBUG ((LM_DEBUG,"Server calling poa_manager::activate()\n"));
       poa_manager->activate ();
 
+
+      ACE_DEBUG ((LM_DEBUG,"Server calling hello->sleep_sec()\n"));
+      // Set the sleep time for the Hello object
+      hello->sleep_sec(sleep_sec);
+
+      ACE_DEBUG ((LM_DEBUG,"Server calling orb::run()\n"));
       orb->run ();
 
-
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
+      // Wait for all CSD task threads exit.
+      ACE_Thread_Manager::instance ()->wait ();
 
       root_poa->destroy (1, 1);
 
       orb->destroy ();
 
-      // Wait for all CSD task threads exit.
-      ACE_Thread_Manager::instance ()->wait ();
+
     }
   catch (const CORBA::Exception& ex)
     {

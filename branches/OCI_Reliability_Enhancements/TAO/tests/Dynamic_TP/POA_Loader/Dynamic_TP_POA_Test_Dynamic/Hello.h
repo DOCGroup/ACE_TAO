@@ -17,7 +17,9 @@ public:
   Hello (CORBA::ORB_ptr orb);
 
   // = The skeleton methods
-  virtual char * get_string (void);
+  virtual CORBA::Short sleep_sec ();
+  virtual void sleep_sec (CORBA::Short sleep_sec);
+  virtual char * get_string (CORBA::Long);
 
   virtual void shutdown (void);
 
@@ -25,6 +27,7 @@ private:
   /// Use an ORB reference to convert strings to objects and shutdown
   /// the application.
   CORBA::ORB_var orb_;
+  CORBA::Short sleep_sec_;
 };
 
 #include /**/ "ace/post.h"

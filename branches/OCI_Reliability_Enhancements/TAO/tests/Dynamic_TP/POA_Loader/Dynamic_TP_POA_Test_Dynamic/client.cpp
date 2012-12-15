@@ -3,26 +3,35 @@
 #include "TestC.h"
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+const ACE_TCHAR *ior = ACE_TEXT("file://server.ior");
+int client_num = 1;
+bool is_shutdown = false;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("c:k:s"));
   int c;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
+      case 'c':
+        client_num = ACE_OS::atoi(get_opts.opt_arg ());
+        break;
       case 'k':
         ior = get_opts.opt_arg ();
         break;
-
+      case 's':
+        is_shutdown = true;
+        break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
+                           "-c <client #>"
                            "-k <ior> "
+                           "-s (shutdown) "
                            "\n",
                            argv [0]),
                           -1);
@@ -34,6 +43,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
+
   try
     {
       CORBA::ORB_var orb =
@@ -56,19 +66,25 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                             1);
         }
 
-      CORBA::String_var the_string =
-        hello->get_string ();
-
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%C>\n",
-                  the_string.in ()));
-
-      hello->shutdown ();
-
+      if (is_shutdown)
+      {
+        hello->shutdown();
+      }
+      else
+      {
+        CORBA::String_var the_string =
+          hello->get_string (client_num);
+        ACE_DEBUG((LM_DEBUG,
+                   "Client %d received return text of: [%C %d].\n",
+                   client_num,
+                   the_string.in(),
+                   client_num));
+      }
       orb->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("Exception caught:");
+     // ex._tao_print_exception ("Exception caught:");
       return 1;
     }
 

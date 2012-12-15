@@ -61,18 +61,47 @@ bool
 TAO_Dynamic_TP_POA_Strategy::poa_activated_event_i(TAO_ORB_Core& orb_core)
 {
 
-  //TAO_Dynamic_TP_Task::Open_Args args;
-  //args.task_thread_config.init_threads_ = this->initial_pool_threads_;
-  //args.task_thread_config.max_threads_ = this->max_pool_threads_;
-  //args.task_thread_config.min_threads_ = this->min_pool_threads_;
-  //args.task_thread_config.queue_depth_ = this->max_request_queue_depth_;
-  //args.task_thread_config.stack_size_ = this->thread_stack_size_;
-  //args.task_thread_config.timeout_ = this->thread_idle_time_;
   this->dtp_task_.thr_mgr(orb_core.thr_mgr());
 
   // Activates the worker threads, and waits until all have been started.
 
-  // return (this->task_.open(&args) == 0);
+  if (!this->config_initialized_)
+    {
+      TAO_Dynamic_TP_Config_Registry * config_repo =
+      ACE_Dynamic_Service<TAO_Dynamic_TP_Config_Registry>::instance
+      ("Dynamic_TP_Config_Registry");
+
+      if (config_repo == 0)
+        {
+          if (TAO_debug_level > 0)
+            {
+              ACE_DEBUG((LM_DEBUG,
+              ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_POA_Strategy - ")
+              ACE_TEXT ("cannot retrieve configuration repo\n")));
+            }
+          return false;
+        }
+      else
+        {
+          TAO_DTP_Definition config_entry;
+          if (!config_repo->find(this->dynamic_tp_config_name_, config_entry))
+            {
+                  ACE_DEBUG((LM_DEBUG,
+                  ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_POA_Strategy - ")
+                  ACE_TEXT ("warning: config not found...using defaults!\n")));
+
+            }
+          this->dtp_task_.set_init_pool_threads(config_entry.init_threads_);
+          this->dtp_task_.set_min_pool_threads(config_entry.min_threads_);
+          this->dtp_task_.set_max_pool_threads(config_entry.max_threads_);
+          this->dtp_task_.set_thread_idle_time(config_entry.timeout_);
+          this->dtp_task_.set_thread_stack_size(config_entry.stack_size_);
+          this->dtp_task_.set_max_request_queue_depth(config_entry.queue_depth_);
+        }
+
+
+
+    }
   return (this->dtp_task_.open() == 0);
 
 }

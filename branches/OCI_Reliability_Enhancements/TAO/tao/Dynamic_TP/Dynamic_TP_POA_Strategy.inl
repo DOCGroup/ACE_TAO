@@ -9,7 +9,8 @@ ACE_INLINE
 TAO_Dynamic_TP_POA_Strategy::TAO_Dynamic_TP_POA_Strategy
 (ACE_CString tp_config_name,
  bool ss)
-  : serialize_servants_ (ss)
+  : serialize_servants_ (ss),
+    config_initialized_ (false)
 {
   this->dynamic_tp_config_name_ = tp_config_name;
 }
@@ -18,7 +19,8 @@ ACE_INLINE
 TAO_Dynamic_TP_POA_Strategy::TAO_Dynamic_TP_POA_Strategy
 (TAO_DTP_Definition * tp_config,
  bool ss)
-  : serialize_servants_ (ss)
+  : serialize_servants_ (ss),
+    config_initialized_ (true)
 {
   //Need to govern the rules of the parameters coming in and set the
   //appropriate values.
