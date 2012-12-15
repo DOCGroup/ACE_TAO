@@ -77,15 +77,8 @@ TAO_Dynamic_TP_POA_Strategy::TAO_Dynamic_TP_POA_Strategy
         }
 
       // max_request_queue_depth_
+      this->dtp_task_.set_max_request_queue_depth(tp_config->queue_depth_);
 
-      if (tp_config->queue_depth_ < 0)
-        {
-          this->dtp_task_.set_max_request_queue_depth(0);
-        }
-      else
-        {
-          this->dtp_task_.set_max_request_queue_depth(tp_config->queue_depth_);
-        }
 
       // thread_idle_time_
       this->dtp_task_.set_thread_idle_time(tp_config->timeout_);
