@@ -7,6 +7,8 @@
 #include "ndds/ndds_cpp.h"
 #include "dds4ccm/impl/ndds/convertors/TypeConsistencyEnforcementQosPolicy.h"
 
+#if defined (RTI_DDS_VERSION_MAJOR) && (RTI_DDS_VERSION_MAJOR >= 5)
+
 class TypeConsistencyEnforcementPolicyPolicyTest
 {
 public:
@@ -15,5 +17,7 @@ public:
   static bool check (const ::DDS_TypeConsistencyEnforcementQosPolicy & dds_qos,
                      const ::DDS::TypeConsistencyEnforcementQosPolicy & qos);
 };
+
+#endif
 
 #endif /* TYPECONSISTENCYENFORCEMENT_QOS_TEST_H_ */
