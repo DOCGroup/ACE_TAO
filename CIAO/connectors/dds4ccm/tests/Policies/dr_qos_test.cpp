@@ -129,6 +129,7 @@ DatareaderPolicyTest::run ()
           ++ret;
         }
 
+#if defined (RTI_DDS_VERSION_MAJOR) && (RTI_DDS_VERSION_MAJOR >= 5)
       if (!TypeConsistencyEnforcementPolicyPolicyTest::check (dds_policy.type_consistency,
                                                  policy.type_consistency))
         {
@@ -136,6 +137,7 @@ DatareaderPolicyTest::run ()
                                 "Error in TypeConsistencyEnforcementQosPolicy.\n"));
           ++ret;
         }
+#endif
     }
   catch (...)
     {
