@@ -1,3 +1,14 @@
+Mon Dec 17 09:31:49 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Acceptor.cpp:
+          Fixed one-shot acceptor, could call null ptr
+
+        * ace/Throughput_Stats.cpp:
+          Simplified code
+
+        * protocols/tests/RMCast/Receiver.cpp:
+          Fixed incorrect argument to memcpy
+
 Fri Dec 14 19:36:20 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/bczar/bczar.html:
