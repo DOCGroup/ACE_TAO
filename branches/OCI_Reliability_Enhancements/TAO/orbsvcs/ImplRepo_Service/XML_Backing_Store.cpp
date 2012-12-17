@@ -156,21 +156,29 @@ XML_Backing_Store::init_repo(PortableServer::POA_ptr )
 }
 
 int
-XML_Backing_Store::load (const ACE_TString& filename)
+XML_Backing_Store::load (const ACE_TString& filename, FILE* open_file)
 {
   Locator_XMLHandler xml_handler (*this);
-  return load(filename, xml_handler, this->opts_.debug());
+  return load(filename, xml_handler, this->opts_.debug(), open_file);
 }
 
 int
 XML_Backing_Store::load (const ACE_TString& filename,
                          ACEXML_DefaultHandler& xml_handler,
-                         unsigned int debug)
+                         unsigned int debug,
+                         FILE* open_file)
 {
   // xml input source will take ownership
   ACEXML_FileCharStream* fstm = new ACEXML_FileCharStream;
 
-  const int err = fstm->open (filename.c_str());
+  int err;
+  // use the open_file stream if it is provided
+  if (open_file != 0)
+    err = fstm->use_stream(open_file,
+                           filename.c_str());
+  else
+    err = fstm->open (filename.c_str());
+
   if (debug > 9)
     {
       ACE_DEBUG((LM_INFO, ACE_TEXT ("load %s%s\n"), filename.c_str(),

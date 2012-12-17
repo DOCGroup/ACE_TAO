@@ -53,9 +53,11 @@ protected:
 
   virtual int persistent_remove(const ACE_CString& name, bool activator);
 
-  int load(const ACE_TString& filename);
+  int load(const ACE_TString& filename, FILE* open_file = 0);
   static int load(const ACE_TString& filename,
-                  ACEXML_DefaultHandler& xml_handler, unsigned int debug);
+                  ACEXML_DefaultHandler& xml_handler,
+                  unsigned int debug,
+                  FILE* open_file = 0);
 
   void persist(FILE* fp, const Server_Info& info, const char* tag_prepend);
 

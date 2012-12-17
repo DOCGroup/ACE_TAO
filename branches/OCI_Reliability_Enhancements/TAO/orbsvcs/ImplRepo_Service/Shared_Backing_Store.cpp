@@ -6,6 +6,7 @@
 #include "utils.h"
 #include "Locator_XMLHandler.h"
 #include "ImR_LocatorC.h"
+#include "ace/File_Lock.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_ctype.h"
@@ -14,6 +15,142 @@
 #include "ACEXML/common/FileCharStream.h"
 #include "ACEXML/common/XML_Util.h"
 #include "tao/IORManipulation/IORManip_Loader.h"
+
+namespace {
+  class Lockable_File
+  {
+  public:
+    Lockable_File()
+    : file_(0),
+      flags_(0),
+      locked_(false),
+      unlink_in_destructor_(false)
+    {
+      ACE_DEBUG((LM_INFO, "(%P|%t) %d: Lockable_file\n", this));
+    }
+
+    Lockable_File(const ACE_TString& file,
+                  const int flags,
+                  bool unlink_in_destructor = false)
+    : file_(0),
+      flags_(0),
+      locked_(false),
+      unlink_in_destructor_(false)
+    {
+      ACE_DEBUG((LM_INFO, "(%P|%t) %d: Lockable_file(%s,%d,%d)\n", this, file.c_str(), flags, unlink_in_destructor));
+      init_fl(file, flags, unlink_in_destructor);
+//      ACE_DEBUG((LM_INFO, "(%P|%t) %d: Lockable_file done\n", this));
+    }
+
+    ~Lockable_File()
+    {
+      release();
+    }
+
+    void release()
+    {
+      if (this->file_ == 0)
+        return;
+
+//      ACE_DEBUG((LM_INFO, "(%P|%t) %d: release\n", this));
+      close_file();
+      ACE_DEBUG((LM_INFO, "(%P|%t) %d: release lock\n", this));
+      this->file_lock_.reset();
+      this->locked_ = false;
+      ACE_DEBUG((LM_INFO, "(%P|%t) %d: release done\n", this));
+    }
+
+    FILE* get_file()
+    {
+      lock();
+
+//      ACE_DEBUG((LM_INFO, "(%P|%t) %d: get_file %d\n", this, release_stream));
+      return this->file_;
+    }
+
+    FILE* get_file(const ACE_TString& file,
+                   const int flags,
+                   bool unlink_in_destructor = false)
+    {
+      if (!locked_) ACE_DEBUG((LM_INFO, "(%P|%t) %d: get_file(%s,%d,%d)\n", this, file.c_str(), flags, unlink_in_destructor));
+      init_fl(file, flags, unlink_in_destructor);
+//      ACE_DEBUG((LM_INFO, "(%P|%t) %d: return get_file\n", this));
+      return get_file();
+    }
+
+  private:
+    void init_fl(const ACE_TString& file,
+                 const int flags,
+                 bool unlink_in_destructor = false)
+    {
+      release();
+
+      flags_ = flags | O_CREAT;
+      unlink_in_destructor_ = unlink_in_destructor;
+
+      const ACE_TCHAR* const flags_str =
+        ((flags_ & O_RDWR) != 0) ? ACE_TEXT("r+") :
+        (((flags_ & O_WRONLY) != 0) ? ACE_TEXT("w") : ACE_TEXT("r"));
+#ifdef ACE_WIN32
+      this->filename_ = file;
+      this->file_ = ACE_OS::fopen(file.c_str(), flags_str);
+#else
+      this->file_lock_.reset(
+        new ACE_File_Lock(ACE_TEXT_CHAR_TO_TCHAR(file.c_str ()),
+                          flags_,
+                          0666,
+                          unlink_in_destructor));
+      this->file_ = ACE_OS::fdopen(this->file_lock_->get_handle(), flags_str);
+#endif
+      ACE_DEBUG((LM_INFO, ACE_TEXT("(%P|%t) %d: created file_lock_ file_=%d, mode=%C\n"), this, file_, flags_str));
+    }
+
+    void close_file()
+    {
+      if (this->file_ == 0)
+        return;
+
+//      ACE_DEBUG((LM_INFO, "(%P|%t) %d: close file\n", this));
+      ACE_OS::fclose(this->file_);
+      this->file_ = 0;
+#ifdef ACE_WIN32
+      if (this->unlink_in_destructor_)
+        {
+          ACE_OS::unlink(this->filename_.c_str());
+          this->unlink_in_destructor_ = false;
+        }
+#endif
+//      ACE_DEBUG((LM_INFO, "(%P|%t) %d: close file done\n", this));
+    }
+
+    void lock()
+    {
+#ifndef ACE_WIN32
+      if (this->locked_)
+        return;
+
+      ACE_DEBUG((LM_INFO, "(%P|%t) %d: acquire %d\n", this, flags_));
+      int ret = -1;
+      if ((this->flags_ & O_RDWR) != 0)
+        ret = file_lock_->acquire();
+      if ((this->flags_ & O_WRONLY) != 0)
+        ret = file_lock_->acquire_write();
+      else
+        ret = file_lock_->acquire_read();
+
+      ACE_DEBUG((LM_INFO, "(%P|%t) %d: acquired %d\n", this, flags_));
+      this->locked_ = true;
+#endif
+    }
+
+    auto_ptr<ACE_File_Lock> file_lock_;
+    FILE* file_;
+    int flags_;
+    bool locked_;
+    bool unlink_in_destructor_;
+    ACE_TString filename_;
+  };
+}
 
 Shared_Backing_Store::Shared_Backing_Store(const Options& opts,
                                            CORBA::ORB_ptr orb)
@@ -98,8 +235,20 @@ int
 Shared_Backing_Store::persistent_remove (const ACE_CString& name,
                                          bool activator)
 {
-  const ACE_CString fname = make_filename(name, activator);
-  ACE_OS::unlink ( fname.c_str () );
+  Lockable_File listing_lf;
+  const int err = persist_listings(listing_lf);
+  if (err != 0)
+    {
+      return err;
+    }
+
+  const ACE_TString fname = make_filename(name, activator);
+
+  {
+    // take the lock, then remove the file
+    Lockable_File file(fname, O_WRONLY, true);
+  }
+  listing_lf.release();
 
   ++seq_num_;
   if (activator)
@@ -115,7 +264,7 @@ Shared_Backing_Store::persistent_remove (const ACE_CString& name,
   return 0;
 }
 
-ACE_CString
+ACE_TString
 Shared_Backing_Store::make_filename(const ACE_CString& name,
                                     bool activator,
                                     bool relative) const
@@ -126,15 +275,16 @@ Shared_Backing_Store::make_filename(const ACE_CString& name,
     {
       file = this->filename_ + file;
     }
-  return file;
+  return ACE_TEXT_CHAR_TO_TCHAR(file);
 }
 
 int
 Shared_Backing_Store::persistent_update(const Server_Info_Ptr& info, bool add)
 {
+  Lockable_File listing_lf;
   if (add)
     {
-      const int err = persist_listings();
+      const int err = persist_listings(listing_lf);
       if (err != 0)
         {
           return err;
@@ -143,22 +293,25 @@ Shared_Backing_Store::persistent_update(const Server_Info_Ptr& info, bool add)
 
   ACE_CString name = ACEXML_escape_string (info->name);
 
-  const ACE_CString fname = make_filename(name, false);
+  const ACE_TString fname = make_filename(name, false);
   if (this->opts_.debug() > 9)
     {
-      ACE_DEBUG((LM_INFO, ACE_TEXT ("Persisting to %s(%s)\n"),
+      ACE_DEBUG((LM_INFO, ACE_TEXT ("Persisting to %s(%C)\n"),
         fname.c_str(), info->name.c_str()));
     }
-  FILE* fp = ACE_OS::fopen (fname.c_str (), "w");
+  Lockable_File server_file(fname, O_WRONLY);
+  FILE* fp = server_file.get_file();
   if (fp == 0)
     {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Couldn't write to file %C\n"),
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Couldn't write to file %s\n"),
         fname.c_str()));
       return -1;
     }
+  // successfully added file (if adding), so release the listing file lock
+  listing_lf.release();
   ACE_OS::fprintf (fp,"<?xml version=\"1.0\"?>\n");
   persist(fp, *info, "");
-  ACE_OS::fclose (fp);
+  server_file.release();
 
   const ImplementationRepository::UpdateType type = add ?
     ImplementationRepository::repo_add :
@@ -173,9 +326,10 @@ int
 Shared_Backing_Store::persistent_update(const Activator_Info_Ptr& info,
                                         bool add)
 {
+  Lockable_File listing_lf;
   if (add)
     {
-      const int err = persist_listings();
+      const int err = persist_listings(listing_lf);
       if (err != 0)
         {
           return err;
@@ -184,22 +338,25 @@ Shared_Backing_Store::persistent_update(const Activator_Info_Ptr& info,
 
   ACE_CString name = lcase (info->name);
 
-  const ACE_CString fname = make_filename(name, true);
+  const ACE_TString fname = make_filename(name, true);
   if (this->opts_.debug() > 9)
     {
       ACE_DEBUG((LM_INFO, ACE_TEXT ("Persisting to %s(%s)\n"),
         fname.c_str(), info->name.c_str()));
     }
-  FILE* fp = ACE_OS::fopen (fname.c_str (), "w");
+  Lockable_File activator_file(fname, O_WRONLY);
+  FILE* fp = activator_file.get_file();
   if (fp == 0)
     {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Couldn't write to file %C\n"),
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Couldn't write to file %s\n"),
                   fname.c_str()));
       return -1;
     }
+  // successfully added file (if adding), so release the listing file lock
+  listing_lf.release();
   ACE_OS::fprintf (fp,"<?xml version=\"1.0\"?>\n");
   persist(fp, *info, "");
-  ACE_OS::fclose (fp);
+  activator_file.release();
 
   const ImplementationRepository::UpdateType type = add ?
     ImplementationRepository::repo_add :
@@ -267,14 +424,14 @@ Shared_Backing_Store::connect_replicas (Replica_ptr this_replica)
   catch (const ImplementationRepository::InvalidPeer& ip)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-        "Error: obj key <%s> is an invalid ImR replica because %s\n",
+        ACE_TEXT("Error: obj key <%s> is an invalid ImR replica because %s\n"),
         replica_ior.c_str(), ip.reason.in()), -1);
     }
 
   if (opts_.debug() > 9)
     {
       ACE_DEBUG((LM_INFO,
-        "Initializing repository with ft ior=<%s> and replica seq number %d\n",
+        ACE_TEXT("Initializing repository with ft ior=<%s> and replica seq number %d\n"),
         this->imr_ior_.in(), replica_seq_num_));
     }
 
@@ -289,20 +446,24 @@ Shared_Backing_Store::init_repo(PortableServer::POA_ptr imr_poa)
     PortableServer::string_to_ObjectId ("ImR_Replica");
   imr_poa->activate_object_with_id (id.in (), this);
 
-  CORBA::Object_var obj = imr_poa->id_to_reference (id.in ());
-
-  Replica_var this_replica =
-    ImplementationRepository::UpdatePushNotification::_narrow (obj.in());
-  const int err = connect_replicas(this_replica.in());
-  if (err != 0)
+  if (this->imr_type_ != Options::STANDALONE_IMR)
     {
-      return err;
+      CORBA::Object_var obj = imr_poa->id_to_reference (id.in ());
+
+      Replica_var this_replica =
+        ImplementationRepository::UpdatePushNotification::_narrow (obj.in());
+      const int err = connect_replicas(this_replica.in());
+      if (err != 0)
+        {
+          return err;
+        }
     }
 
   // only start the repo clean if no replica is running
   if (this->opts_.repository_erase() && CORBA::is_nil (this->replica_.in ()))
     {
-      const XMLHandler_Ptr listings = get_listings(false);
+      Lockable_File listing_lf;
+      const XMLHandler_Ptr listings = get_listings(listing_lf, false);
       if (listings.null())
         {
           if (this->opts_.debug() > 9)
@@ -313,7 +474,7 @@ Shared_Backing_Store::init_repo(PortableServer::POA_ptr imr_poa)
         }
       else
         {
-          const ACE_Vector<ACE_CString>& filenames = listings->filenames();
+          const ACE_Vector<ACE_TString>& filenames = listings->filenames();
           CORBA::ULong sz = filenames.size ();
           for (CORBA::ULong i = 0; i < sz; ++i)
             {
@@ -349,7 +510,8 @@ Shared_Backing_Store::init_repo(PortableServer::POA_ptr imr_poa)
 int
 Shared_Backing_Store::persistent_load (bool only_changes)
 {
-  const XMLHandler_Ptr listings = get_listings(only_changes);
+  Lockable_File listing_lf;
+  const XMLHandler_Ptr listings = get_listings(listing_lf, only_changes);
   if (listings.null())
     {
       // failed to retrieve listings
@@ -361,7 +523,7 @@ Shared_Backing_Store::persistent_load (bool only_changes)
       listings->remove_unmatched(this->servers(), this->activators());
     }
 
-  const ACE_Vector<ACE_CString>& filenames = listings->filenames();
+  const ACE_Vector<ACE_TString>& filenames = listings->filenames();
   CORBA::ULong sz = filenames.size ();
   if (this->opts_.debug() > 9)
     {
@@ -369,14 +531,17 @@ Shared_Backing_Store::persistent_load (bool only_changes)
     }
   for (CORBA::ULong i = 0; i < sz; ++i)
     {
-      load(filenames[i]);
+      const ACE_TString& fname = filenames[i];
+      Lockable_File listing_lf(fname, O_RDONLY);
+      load(fname, listing_lf.get_file());
     }
 
   return 0;
 }
 
 Shared_Backing_Store::XMLHandler_Ptr
-Shared_Backing_Store::get_listings(bool only_changes) const
+Shared_Backing_Store::get_listings(Lockable_File& listing_lf,
+                                   bool only_changes) const
 {
   XMLHandler_Ptr listings_handler;
   if (only_changes)
@@ -389,7 +554,10 @@ Shared_Backing_Store::get_listings(bool only_changes) const
       listings_handler.reset(new LocatorListings_XMLHandler(this->filename_));
     }
 
-  if (load(this->listing_file_, *listings_handler, this->opts_.debug()) != 0)
+  if (load(this->listing_file_,
+           *listings_handler,
+           this->opts_.debug(),
+           listing_lf.get_file(this->listing_file_, O_RDONLY)) != 0)
     {
       ACE_DEBUG((LM_INFO, "load failed\n"));
       listings_handler.reset();
@@ -400,27 +568,28 @@ Shared_Backing_Store::get_listings(bool only_changes) const
 }
 
 int
-Shared_Backing_Store::sync_load (const ACE_CString& /*name*/, SyncOp /*sync_op*/,
+Shared_Backing_Store::sync_load (const ACE_CString& /*name*/,
+                                 SyncOp /*sync_op*/,
                                  bool /*activator*/)
 {
   return 0;
 }
 
-static void write_listing(FILE* list, const ACE_CString& fname,
+static void write_listing(FILE* list, const ACE_TString& fname,
                           const ACE_CString& name, const ACE_TCHAR* tag)
 {
-  ACE_OS::fprintf (list,"\t<%s", tag);
-  ACE_OS::fprintf (list," fname=\"%s\"", fname.c_str ());
-  ACE_OS::fprintf (list," name=\"%s\"/>\n", name.c_str ());
+  ACE_OS::fprintf (list, "\t<%s", tag);
+  ACE_OS::fprintf (list, " fname=\"%s\"", fname.c_str ());
+  ACE_OS::fprintf (list, " name=\"%s\" />\n", name.c_str ());
 }
 
 int
-Shared_Backing_Store::persist_listings (void) const
+Shared_Backing_Store::persist_listings (Lockable_File& listing_lf) const
 {
-  FILE* list = ACE_OS::fopen (this->listing_file_.c_str (), "w");
+  FILE* list = listing_lf.get_file(this->listing_file_, O_WRONLY);
   if (list == 0)
     {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Couldn't write to file %C\n"),
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Couldn't write to file %s\n"),
                   this->listing_file_.c_str()));
       return -1;
     }
@@ -434,7 +603,7 @@ Shared_Backing_Store::persist_listings (void) const
     {
       Server_Info_Ptr& info = sientry->int_id_;
 
-      const ACE_CString fname = make_filename(info->name, false, true);
+      const ACE_TString fname = make_filename(info->name, false, true);
       ACE_CString listing_name = ACEXML_escape_string (info->name);
       write_listing(list, fname, listing_name,
         Locator_XMLHandler::SERVER_INFO_TAG);
@@ -446,13 +615,12 @@ Shared_Backing_Store::persist_listings (void) const
   for (; aiit.next (aientry); aiit.advance ())
     {
       const ACE_CString& aname = aientry->ext_id_;
-      const ACE_CString fname = make_filename(aname, true, true);
+      const ACE_TString fname = make_filename(aname, true, true);
       write_listing(list, fname, aname,
         Locator_XMLHandler::ACTIVATOR_INFO_TAG);
     }
 
   ACE_OS::fprintf (list,"</ImRListing>\n");
-  ACE_OS::fclose (list);
   return 0;
 }
 
@@ -560,8 +728,9 @@ Shared_Backing_Store::notify_updated_server(
   ACE_DEBUG((LM_INFO, "(%P|%t) notify_updated_server=%s\n", server.name.in()));
   if (sync_repo(server.seq_num, server.type))
     {
-      const ACE_CString fname = make_filename(server.name.in(), false);
-      load(fname);
+      const ACE_TString fname = make_filename(server.name.in(), false);
+      Lockable_File listing_lf(fname, O_RDONLY);
+      load(fname, listing_lf.get_file());
     }
 }
 
@@ -572,8 +741,9 @@ Shared_Backing_Store::notify_updated_activator(
   ACE_DEBUG((LM_INFO, "(%P|%t) notify_updated_activator=%s\n", activator.name.in()));
   if (sync_repo(activator.seq_num, activator.type))
     {
-      const ACE_CString fname = make_filename(activator.name.in(), false);
-      load(fname);
+      const ACE_TString fname = make_filename(activator.name.in(), false);
+      Lockable_File listing_lf(fname, O_RDONLY);
+      load(fname, listing_lf.get_file());
     }
 }
 
@@ -675,14 +845,14 @@ Shared_Backing_Store::replica_ior_filename(bool peer_ior_file) const
 }
 
 Shared_Backing_Store::LocatorListings_XMLHandler::LocatorListings_XMLHandler(
-  const ACE_CString& dir)
+  const ACE_TString& dir)
 : dir_(dir),
   only_changes_(false)
 {
 }
 
 Shared_Backing_Store::LocatorListings_XMLHandler::LocatorListings_XMLHandler(
-  const ACE_CString& dir,
+  const ACE_TString& dir,
   const Locator_Repository::SIMap& servers,
   const Locator_Repository::AIMap& activators)
 : dir_(dir),
@@ -720,7 +890,7 @@ Shared_Backing_Store::LocatorListings_XMLHandler::startElement (
 
   if (attrs != 0 && attrs->getLength () == 2)
     {
-      ACE_CString fname = ACE_TEXT_ALWAYS_CHAR(attrs->getValue ((size_t)0));
+      ACE_TString fname = attrs->getValue ((size_t)0);
       bool store_fname = !only_changes_;
       if (only_changes_)
         {
@@ -781,7 +951,7 @@ Shared_Backing_Store::LocatorListings_XMLHandler::remove_unmatched(
     }
 }
 
-const ACE_Vector<ACE_CString>&
+const ACE_Vector<ACE_TString>&
 Shared_Backing_Store::LocatorListings_XMLHandler::filenames() const
 {
   return this->filenames_;

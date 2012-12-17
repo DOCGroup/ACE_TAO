@@ -1,3 +1,20 @@
+Mon Dec 17 14:54:17 UTC 2012  Brian Johnson  <johnsonb@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
+
+          Fixed warning.
+
+        * orbsvcs/ImplRepo_Service/Shared_Backing_Store.h:
+        * orbsvcs/ImplRepo_Service/Shared_Backing_Store.cpp:
+
+          Added file locking for non-windows.
+
+        * orbsvcs/ImplRepo_Service/XML_Backing_Store.h:
+        * orbsvcs/ImplRepo_Service/XML_Backing_Store.cpp:
+
+          Changed to have load be able to accept an already open
+          file stream.
+
 Mon Dec 17 14:53:41 UTC 2012  Byron Harris  <harrisb@ociweb.com>
 
         * orbsvcs/orbsvcs/PortableGroup/PG_Group_List_Store.h:
