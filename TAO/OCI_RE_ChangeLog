@@ -1,3 +1,9 @@
+Mon Dec 17 15:26:15 UTC 2012  Weiqi Gao  <gao_w@ociweb.com>
+
+        * orbsvcs/tests/ImplRepo/run_test.pl:
+
+          Expanded failover_test to cover more usage scenarios.
+
 Mon Dec 17 14:54:17 UTC 2012  Brian Johnson  <johnsonb@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
