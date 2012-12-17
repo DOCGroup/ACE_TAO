@@ -99,7 +99,7 @@ namespace CIAO_Foo_Impl
   Foo_exec_i::my_float (
     ::CORBA::Float my_float)
   {
-    if(my_float != 45.67F)
+    if(ACE::is_inequal (my_float, 45.67F))
       ACE_ERROR ((LM_ERROR, "ERROR: my_float != 45.67, it is %f\n", my_float));
     else my_float_ = true;
 
@@ -116,7 +116,7 @@ namespace CIAO_Foo_Impl
   Foo_exec_i::my_double (
     ::CORBA::Double my_double)
   {
-    if(my_double != 56.78)
+    if(ACE::is_inequal (my_double, 56.78))
       ACE_ERROR ((LM_ERROR, "ERROR: my_double != 56.78, it is %f\n", my_double));
     else my_double_ = true;
   }
@@ -236,19 +236,19 @@ namespace CIAO_Foo_Impl
 
     my_float_sequence_ = true;
 
-    if(my_float_sequence[0] != 21.12F)
+    if(ACE::is_inequal (my_float_sequence[0], 21.12F))
       {
         ACE_ERROR ((LM_ERROR, "ERROR: my_float_sequence[0] != 21.12, it is %f\n", my_float_sequence[0]));
         my_float_sequence_ = false;
       }
 
-    if(my_float_sequence[1] != 22.22F)
+    if(ACE::is_inequal (my_float_sequence[1], 22.22F))
       {
         ACE_ERROR ((LM_ERROR, "ERROR: my_float_sequence[1] != 22.22, it is %f\n", my_float_sequence[1]));
         my_float_sequence_ = false;
       }
 
-    if(my_float_sequence[2] != 23.32F)
+    if(ACE::is_inequal (my_float_sequence[2], 23.32F))
       {
         ACE_ERROR ((LM_ERROR, "ERROR: my_float_sequence[2] != 23.32, it is %f\n", my_float_sequence[2]));
         my_float_sequence_ = false;
@@ -274,20 +274,20 @@ namespace CIAO_Foo_Impl
 
     this->my_double_sequence_ = true;
 
-    if(my_double_sequence[0] != 621.12)
+    if(ACE::is_inequal (my_double_sequence[0], 621.12))
       {
         ACE_ERROR ((LM_ERROR, "ERROR: my_double_sequence[0] != 621.12, it is %f\n", my_double_sequence[0]));
         this->my_double_sequence_ = false;
       }
 
 
-    if(my_double_sequence[1] != 622.22)
+    if(ACE::is_inequal (my_double_sequence[1], 622.22))
       {
         ACE_ERROR ((LM_ERROR, "ERROR: my_double_sequence[1] != 622.22, it is %f\n", my_double_sequence[1]));
         this->my_double_sequence_ = false;
       }
 
-    if(my_double_sequence[2] != 623.32)
+    if(ACE::is_inequal (my_double_sequence[2], 623.32))
       {
         ACE_ERROR ((LM_ERROR, "ERROR: my_double_sequence[2] != 623.32, it is %f\n", my_double_sequence[2]));
         this->my_double_sequence_ = false;
@@ -319,13 +319,13 @@ namespace CIAO_Foo_Impl
         ACE_ERROR ((LM_ERROR, "ERROR: long value != 4, it is %d\n", my_bar_struct.l));
       }
 
-    if(my_bar_struct.f != 5.6F)
+    if(ACE::is_inequal (my_bar_struct.f, 5.6F))
       {
         my_bar_struct_ = false;
         ACE_ERROR ((LM_ERROR, "ERROR: float value != 5.6, it is %f\n", my_bar_struct.f));
       }
 
-    if(my_bar_struct.d != 7.8)
+    if(ACE::is_inequal (my_bar_struct.d, 7.8))
       {
         ACE_ERROR ((LM_ERROR, "ERROR: double value != 7.8, it is %f\n", my_bar_struct.d));
         my_bar_struct_ = false;
@@ -386,7 +386,7 @@ namespace CIAO_Foo_Impl
           }
 
         inc_l += 10;
-        if(my_baz_struct.my_bar_sequence[i].f != 5.6F + inc_f)
+        if(ACE::is_inequal (my_baz_struct.my_bar_sequence[i].f, 5.6F + inc_f))
           {
             my_baz_struct_ = false;
             ACE_ERROR ((LM_ERROR, "ERROR: float value != %f, it is %f\n",
@@ -396,7 +396,7 @@ namespace CIAO_Foo_Impl
 
         inc_f += 10.0F;
 
-        if(my_baz_struct.my_bar_sequence[i].d != 7.8 + inc_d)
+        if(ACE::is_inequal (my_baz_struct.my_bar_sequence[i].d, 7.8 + inc_d))
           {
             my_baz_struct_ = false;
             ACE_ERROR ((LM_ERROR, "ERROR: double value != %f, it is %f\n",
@@ -595,6 +595,10 @@ namespace CIAO_Foo_Impl
           my_struct_struct_))
       {
         ACE_ERROR ((LM_ERROR, "ERROR: Not all expected attributes were initialized\n"));
+      }
+    else
+      {
+        ACE_DEBUG ((LM_DEBUG, "OK: All attributes were correctly initialized\n"));
       }
   }
 
