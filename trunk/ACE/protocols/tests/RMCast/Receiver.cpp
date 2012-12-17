@@ -101,7 +101,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 
         if (ACE_OS::memcmp (expected_msg.payload,
                             msg.payload,
-                            payload_size) != 0)
+                            payload_size * sizeof(short)) != 0)
         {
           damaged[msg.sn] = 1;
         }
