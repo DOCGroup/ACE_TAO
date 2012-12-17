@@ -128,6 +128,14 @@ namespace TAO
       const PortableGroup::Criteria & the_criteria,
       TAO::PG_Property_Set * type_properties);
 
+    /**
+     * This constructor is to be used for initialization when
+     * reading the object group from a stream.
+     */
+    PG_Object_Group (
+      CORBA::ORB_ptr orb,
+      PortableGroup::FactoryRegistry_ptr factory_registry,
+      TAO::PG_Object_Group_Manipulator & manipulator);
 
     /// Destructor
     virtual ~PG_Object_Group ();
@@ -188,7 +196,7 @@ namespace TAO
     /**
      * @@TODO DOC
      */
-    PortableGroup::ObjectGroupId  get_object_group_id () const;
+    virtual PortableGroup::ObjectGroupId  get_object_group_id () const;
 
     /**
      * Add a new member to the group.
@@ -327,7 +335,6 @@ namespace TAO
 
     ACE_CString role_;
 
-  private:
 
     PortableGroup::TypeId_var type_id_;
 
@@ -356,8 +363,6 @@ namespace TAO
      * name that is assigned to the object group by the creator.
      */
     char* group_name_;
-
-  protected:
 
     // group members
     MemberMap members_;

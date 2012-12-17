@@ -8,6 +8,37 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+namespace
+{
+  template <typename T>
+  void read_cdr (TAO::Storable_Base & stream, T & corba_data)
+  {
+  int size;
+  stream >> size;
+  if (!stream.good ())
+    {
+      stream.clear ();
+      throw CORBA::INTERNAL ();
+    }
+
+  ACE_Auto_Basic_Ptr<char> buf(new char [size]);
+  stream.read (size, buf.get ());
+  if (!stream.good ())
+    {
+      stream.clear ();
+      throw CORBA::INTERNAL ();
+    }
+
+  TAO_InputCDR cdr (buf.get (), size);
+  cdr >> corba_data;
+  if (!cdr.good_bit ())
+    {
+      stream.clear ();
+      throw CORBA::INTERNAL ();
+    }
+  }
+}
+
 namespace TAO
 {
 
@@ -82,15 +113,15 @@ TAO::Object_Group_File_Guard::create_stream (const char * mode)
 }
 
 TAO::PG_Object_Group_Storable::PG_Object_Group_Storable (
-                                                         CORBA::ORB_ptr orb,
-                                                         PortableGroup::FactoryRegistry_ptr factory_registry,
-                                                         TAO::PG_Object_Group_Manipulator & manipulator,
-                                                         CORBA::Object_ptr empty_group,
-                                                         const PortableGroup::TagGroupTaggedComponent & tagged_component,
-                                                         const char * type_id,
-                                                         const PortableGroup::Criteria & the_criteria,
-                                                         TAO::PG_Property_Set * type_properties,
-                                                         TAO::Storable_Factory & storable_factory)
+  CORBA::ORB_ptr orb,
+  PortableGroup::FactoryRegistry_ptr factory_registry,
+  TAO::PG_Object_Group_Manipulator & manipulator,
+  CORBA::Object_ptr empty_group,
+  const PortableGroup::TagGroupTaggedComponent & tagged_component,
+  const char * type_id,
+  const PortableGroup::Criteria & the_criteria,
+  TAO::PG_Property_Set * type_properties,
+  TAO::Storable_Factory & storable_factory)
   : PG_Object_Group(orb,
                     factory_registry,
                     manipulator,
@@ -99,9 +130,12 @@ TAO::PG_Object_Group_Storable::PG_Object_Group_Storable (
                     type_id,
                     the_criteria,
                     type_properties)
+  , group_previously_stored_(false)
+  , group_id_previously_stored_(0)
   , storable_factory_ (storable_factory)
   , loaded_from_stream_ (false)
   , last_changed_ (0)
+  , destroyed_ (false)
 {
   // Create a temporary stream simply to check if a readable
   // version already exists.
@@ -123,8 +157,58 @@ TAO::PG_Object_Group_Storable::PG_Object_Group_Storable (
     }
 }
 
+TAO::PG_Object_Group_Storable::PG_Object_Group_Storable (
+  PortableGroup::ObjectGroupId group_id,
+  CORBA::ORB_ptr orb,
+  PortableGroup::FactoryRegistry_ptr factory_registry,
+  TAO::PG_Object_Group_Manipulator & manipulator,
+  TAO::Storable_Factory & storable_factory)
+  : PG_Object_Group(orb,
+                    factory_registry,
+                    manipulator)
+  , group_previously_stored_(true)
+  , group_id_previously_stored_(group_id)
+  , storable_factory_ (storable_factory)
+  , loaded_from_stream_ (false)
+  , last_changed_ (0)
+{
+  // Create a temporary stream to simply to check if a readable
+  // version already exists.
+  bool stream_exists = false;
+  {
+    ACE_Auto_Ptr<TAO::Storable_Base> stream (this->create_stream ("r"));
+    if (stream->exists ())
+      stream_exists = true;
+  }
+
+  if (stream_exists)
+    {
+      Object_Group_File_Guard fg (*this, "r");
+    }
+  else
+    {
+      throw CORBA::INTERNAL ();
+    }
+}
+
 TAO::PG_Object_Group_Storable::~PG_Object_Group_Storable (void)
 {
+  if (destroyed_)
+    {
+      ACE_Auto_Ptr<TAO::Storable_Base> stream (this->create_stream ("r"));
+      if (stream->exists ())
+        {
+          stream->remove ();
+        }
+
+    }
+
+}
+
+void
+TAO::PG_Object_Group_Storable::set_destroyed (bool destroyed)
+{
+  this->destroyed_ = destroyed;
 }
 
 const PortableGroup::Location &
@@ -233,10 +317,19 @@ TAO::PG_Object_Group_Storable::distribute (int value)
 
 CORBA::Object_ptr
 TAO::PG_Object_Group_Storable::get_member_reference (
-                                                     const PortableGroup::Location & the_location)
+  const PortableGroup::Location & the_location)
 {
   Object_Group_File_Guard fg (*this, "r");
   return PG_Object_Group::get_member_reference (the_location);
+}
+
+PortableGroup::ObjectGroupId
+TAO::PG_Object_Group_Storable::get_object_group_id () const
+{
+  if (this->group_previously_stored_)
+    return this->group_id_previously_stored_;
+
+  return PG_Object_Group::get_object_group_id ();
 }
 
 TAO::Storable_Base *
@@ -246,16 +339,14 @@ TAO::PG_Object_Group_Storable::create_stream (const char * mode)
   // Although PortableGroup::ObjectGroupId is a typedef
   // to long long int, make ID type explicit to avoid
   // GNU C++ warning on sprintf statement.
-  long long int group_id = this->get_object_group_id ();
-  ACE_OS::sprintf (file_name, "%lld", group_id);
-
+  long long int id =  this->get_object_group_id ();
+  ACE_OS::sprintf (file_name, "ObjectGroup_%lld", id);
   return this->storable_factory_.create_stream (file_name, mode);
 }
 
 void
 TAO::PG_Object_Group_Storable::read (TAO::Storable_Base & stream)
 {
-  ACE_DEBUG ((LM_DEBUG, "%N:%l (%P|%t|%T) @@ TAO::PG_Object_Group_Storable::read (TAO::Storable_Base & stream)\n"));
   stream.rewind ();
 
   ACE_CString group_name;
@@ -282,27 +373,29 @@ TAO::PG_Object_Group_Storable::read (TAO::Storable_Base & stream)
       throw CORBA::INTERNAL ();
     }
 
-  int size;
-  char * buf;
-
   ///// primary_location_ /////
-  stream >> size;
-  if (!stream.good ())
-    {
-      stream.clear ();
-      throw CORBA::INTERNAL ();
-    }
-  buf = new char [size];
-  stream.read (size, buf);
-  if (!stream.good ())
-    {
-      stream.clear ();
-      throw CORBA::INTERNAL ();
-    }
-  TAO_InputCDR primary_location_cdr (buf, size);
-  primary_location_cdr >> this->primary_location_;
-  delete [] buf;
+  read_cdr (stream, this->primary_location_);
 
+  ///// reference_ /////
+  ACE_CString reference_ior;
+  stream >> reference_ior;
+  if (!stream.good ())
+    {
+      stream.clear ();
+      throw CORBA::INTERNAL ();
+    }
+  this->reference_ = this->orb_->string_to_object (reference_ior.c_str ());
+
+  ///// tagged_component_ /////
+  read_cdr (stream, this->tagged_component_);
+
+  ///// type_id_ /////
+  read_cdr(stream, this->type_id_);
+
+  ///// properties_ /////
+  PortableGroup::Criteria properties;
+  read_cdr (stream, properties);
+  PG_Object_Group::set_properties_dynamically (properties);
 
   ///// members_ /////
   int num_members;
@@ -318,24 +411,8 @@ TAO::PG_Object_Group_Storable::read (TAO::Storable_Base & stream)
   for (int i = 0; i < num_members; ++i)
     {
       ///// location used as members_ key /////
-      stream >> size;
-      if (!stream.good ())
-        {
-          stream.clear ();
-          throw CORBA::INTERNAL ();
-        }
-      buf = new char [size];
-      stream.read (size, buf);
-      if (!stream.good ())
-        {
-          stream.clear ();
-          throw CORBA::INTERNAL ();
-        }
-      TAO_InputCDR the_location_cdr (buf, size);
       PortableGroup::Location the_location;
-      the_location_cdr >> the_location;
-      if (!the_location_cdr.good_bit ())
-        throw CORBA::INV_OBJREF ();
+      read_cdr (stream, the_location);
 
       ///// member /////
       ACE_CString member_ior;
@@ -350,56 +427,24 @@ TAO::PG_Object_Group_Storable::read (TAO::Storable_Base & stream)
         throw CORBA::INV_OBJREF ();
 
       ///// location /////
-      stream >> size;
-      if (!stream.good ())
-        {
-          stream.clear ();
-          throw CORBA::INTERNAL ();
-        }
-      buf = new char [size];
-      stream.read (size, buf);
-      if (!stream.good ())
-        {
-          stream.clear ();
-          throw CORBA::INTERNAL ();
-        }
-      TAO_InputCDR location_cdr (buf, size);
       PortableGroup::Location location;
-      location_cdr >> location;
-      if (!location_cdr.good_bit ())
-        {
-          stream.clear ();
-          throw CORBA::INTERNAL ();
-        }
+      read_cdr (stream, location);
 
       ///// factory /////
       ACE_CString factory_ior;
+      stream >> factory_ior;
+      if (!stream.good ())
+        {
+          stream.clear ();
+          throw CORBA::INTERNAL ();
+        }
       CORBA::Object_var obj = this->orb_->string_to_object (factory_ior.c_str ());
       PortableGroup::GenericFactory_var factory =
         PortableGroup::GenericFactory::_narrow (obj.in());
 
       ///// factory_id (typedef of CORBA::Any) /////
-      stream >> size;
-      if (!stream.good ())
-        {
-          stream.clear ();
-          throw CORBA::INTERNAL ();
-        }
-      buf = new char [size];
-      stream.read (size, buf);
-      if (!stream.good ())
-        {
-          stream.clear ();
-          throw CORBA::INTERNAL ();
-        }
-      TAO_InputCDR factory_id_cdr (buf, size);
       PortableGroup::GenericFactory::FactoryCreationId factory_id;
-      factory_id_cdr >> factory_id;
-      if (!factory_id_cdr.good_bit ())
-        {
-          stream.clear ();
-          throw CORBA::INTERNAL ();
-        }
+      read_cdr (stream, factory_id);
 
       ///// is_primary /////
       int is_primary;
@@ -439,6 +484,24 @@ TAO::PG_Object_Group_Storable::write (TAO::Storable_Base & stream)
   TAO_OutputCDR primary_location_cdr;
   primary_location_cdr << PG_Object_Group::get_primary_location();
   stream << primary_location_cdr;
+
+  ACE_CString reference_ior = this->orb_->object_to_string (this->reference_.in ());
+  stream << reference_ior;
+
+  TAO_OutputCDR tagged_component_cdr;
+  tagged_component_cdr << this->tagged_component_;
+  stream << tagged_component_cdr;
+
+  TAO_OutputCDR type_id_cdr;
+  PortableGroup::TypeId_var type_id = PG_Object_Group::get_type_id ();
+  type_id_cdr << type_id;
+  stream << type_id_cdr;
+
+  TAO_OutputCDR properties_cdr;
+  PortableGroup::Criteria properties;
+  this->properties_.export_properties(properties);
+  properties_cdr << properties;
+  stream << properties_cdr;
 
   ///// members_ /////
   int num_members = this->members_.current_size  ();

@@ -83,7 +83,7 @@ namespace TAO
 
     virtual size_t write (size_t size, const char * bytes);
 
-    virtual size_t read (size_t size, char *& bytes);
+    virtual size_t read (size_t size, char * bytes);
 
   private:
     ACE_OS::ace_flock_t filelock_;

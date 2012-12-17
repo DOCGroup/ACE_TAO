@@ -61,7 +61,16 @@ TAO::PG_Object_Group_Manipulator::create_object_group (
   PortableGroup::ObjectGroupId & group_id)
 {
    allocate_ogid(group_id);
-   PortableServer::ObjectId_var oid = convert_ogid_to_oid (group_id);
+   return this->create_object_group_using_id(type_id, domain_id, group_id);
+}
+
+PortableGroup::ObjectGroup_ptr
+TAO::PG_Object_Group_Manipulator::create_object_group_using_id(
+  const char * type_id,
+  const char * domain_id,
+  const PortableGroup::ObjectGroupId & group_id)
+{
+  PortableServer::ObjectId_var oid = convert_ogid_to_oid (group_id);
 
   // Create a reference for the ObjectGroup
   CORBA::Object_var object_group =

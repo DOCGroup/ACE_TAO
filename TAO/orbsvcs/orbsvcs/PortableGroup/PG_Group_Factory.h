@@ -7,6 +7,7 @@
  * $Id$
  *
  * @author Dale Wilson <wilson_d@ociweb.com>
+ * @author Byron Harris <harrisb@ociweb.com>
  */
 //=============================================================================
 
@@ -38,6 +39,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
   class PG_Property_Set;
+  class PG_Group_List_Store;
   class Storable_Factory;
 }
 
@@ -123,14 +125,14 @@ namespace TAO
      * find group
      * @return bool true if found
      */
-    int find_group (PortableGroup::ObjectGroupId group_id, ::TAO::PG_Object_Group *& group) const;
+    int find_group (PortableGroup::ObjectGroupId group_id, ::TAO::PG_Object_Group *& group);
 
     /**
      * find group
      * note: uses group id extracted from object_group
      * @return bool true if found
      */
-    int find_group (PortableGroup::ObjectGroup_ptr object_group, ::TAO::PG_Object_Group *& group) const;
+    int find_group (PortableGroup::ObjectGroup_ptr object_group, ::TAO::PG_Object_Group *& group);
 
     /**
      * find group with the property with the designated value
@@ -158,8 +160,6 @@ namespace TAO
 
   private:
 
-  private:
-
     CORBA::ORB_var orb_;
 
     /// Reference to the POA used to create object group references.
@@ -172,10 +172,19 @@ namespace TAO
 
     const char * domain_id_;
 
+    /**
+     * If persistence is being used, update the map as
+     * necessary based on what's in the group list store.
+     */
+    Group_Map & get_group_map ();
+
     Group_Map group_map_;
+
+    // Support for object group persistent
 
     bool use_persistence_;
     Storable_Factory * storable_factory_;
+    PG_Group_List_Store * list_store_;
 
   };
 } // namespace TAO

@@ -77,6 +77,30 @@ TAO::PG_Object_Group::PG_Object_Group (
 {
 }
 
+TAO::PG_Object_Group::PG_Object_Group (
+  CORBA::ORB_ptr orb,
+  PortableGroup::FactoryRegistry_ptr factory_registry,
+  TAO::PG_Object_Group_Manipulator & manipulator)
+  : internals_()
+  , orb_ (CORBA::ORB::_duplicate (orb))
+  , factory_registry_ (PortableGroup::FactoryRegistry::_duplicate (factory_registry))
+  , manipulator_ (manipulator)
+  , empty_ (1)
+  , distribute_ (1)
+  , role_ ("")
+  , type_id_ ()
+  , tagged_component_ ()
+  , reference_ (CORBA::Object::_nil ())
+  , group_name_ (0)
+  , members_ ()
+  , primary_location_(0)
+  , properties_ ()
+  , initial_number_members_ (0)
+  , minimum_number_members_ (0)
+  , group_specific_factories_ ()
+{
+}
+
 TAO::PG_Object_Group::~PG_Object_Group (void)
 {
   delete group_name_;
