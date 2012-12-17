@@ -1145,7 +1145,7 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_input (ACE_HANDLE
   // inherit the properties of the listen handle, including its event
   // associations.
   ACE_Reactor *reactor = this->reactor ();
-  bool reset_new_handle;
+  bool reset_new_handle = false;
 
   // There is a use-case whereby this object will be gone upon return
   // from shared_accept - if the Svc_Handler deletes this Oneshot_Acceptor
