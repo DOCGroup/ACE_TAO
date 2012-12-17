@@ -91,6 +91,8 @@ namespace TAO
   };
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #include /**/ "ace/post.h"
 
 #endif /* PG_GROUP_LIST_STORE_H */

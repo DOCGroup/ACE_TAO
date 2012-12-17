@@ -1,3 +1,9 @@
+Mon Dec 17 14:53:41 UTC 2012  Byron Harris  <harrisb@ociweb.com>
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_List_Store.h:
+
+          Added missing TAO namespace end declaration.
+
 Mon Dec 17 14:42:10 UTC 2012  Byron Harris  <harrisb@ociweb.com>
 
         * orbsvcs/tests/ImplRepo/run_test.pl:
