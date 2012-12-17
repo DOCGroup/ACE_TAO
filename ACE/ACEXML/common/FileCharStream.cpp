@@ -35,7 +35,6 @@ ACEXML_FileCharStream::use_stream_i (FILE* open_file, const ACEXML_Char *name)
   if (this->infile_ == 0)
     return -1;
 
-  this->close_infile_ = true;
   ACE_stat statbuf;
   if (ACE_OS::stat (name, &statbuf) < 0)
     return -1;
@@ -58,6 +57,7 @@ ACEXML_FileCharStream::use_stream (FILE* open_file, const ACEXML_Char *name)
 int
 ACEXML_FileCharStream::open (const ACEXML_Char *name)
 {
+  this->close_infile_ = true;
   return use_stream_i(ACE_OS::fopen (name, ACE_TEXT ("r")), name);
 }
 
