@@ -278,6 +278,9 @@ File_Open_Lock_and_Check::~File_Open_Lock_and_Check ()
   if (context_->write_occurred_ == 1)
     {
       context_->context_written ();
+      // We have to make sure we clear the flag
+      // for subsequent times through.
+      context_->write_occurred_ = 0;
     }
 }
 
@@ -1013,8 +1016,7 @@ TAO_Storable_Naming_Context::destroy (void)
 void
 TAO_Storable_Naming_Context::context_written (void)
 {
-  // No-op.  Derived classes may handle this callback
-  // from the File_Open_Lock_and_Check
+  // No-op. Overridden by derived class.
 }
 
 bool

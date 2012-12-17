@@ -1002,8 +1002,6 @@ TAO_FT_Naming_Server::update_naming_context (
   // time it is modified or accessed.
   changed_context_servant->stale (true);
 
-  // Must remove the reference to this servant.
-  //servant->_remove_ref ();
   return 0;
 }
 
@@ -1024,13 +1022,13 @@ TAO_FT_Naming_Server::peer_root_context (CosNaming::NamingContext_ptr peer_cxt)
 CosNaming::NamingContext_ptr
 TAO_FT_Naming_Server::peer_root_context (void)
 {
-  return CosNaming::NamingContext::_duplicate (peer_root_context_);
+  return CosNaming::NamingContext::_duplicate (peer_root_context_.in ());
 }
 
 CosNaming::NamingContext_ptr
 TAO_FT_Naming_Server::my_root_context (void) const
 {
-  return CosNaming::NamingContext::_duplicate (this->naming_context_);
+  return CosNaming::NamingContext::_duplicate (this->naming_context_.in ());
 }
 
 void
@@ -1042,11 +1040,11 @@ TAO_FT_Naming_Server::peer_naming_manager (FT_Naming::NamingManager_ptr peer_cxt
 FT_Naming::NamingManager_ptr
 TAO_FT_Naming_Server::peer_naming_manager (void)
 {
-  return  FT_Naming::NamingManager::_duplicate (peer_naming_manager_);
+  return  FT_Naming::NamingManager::_duplicate (peer_naming_manager_.in ());
 }
 
 FT_Naming::NamingManager_ptr
 TAO_FT_Naming_Server::my_naming_manager (void) const
 {
-  return  FT_Naming::NamingManager::_duplicate (this->my_naming_manager_);
+  return  FT_Naming::NamingManager::_duplicate (this->my_naming_manager_.in ());
 }

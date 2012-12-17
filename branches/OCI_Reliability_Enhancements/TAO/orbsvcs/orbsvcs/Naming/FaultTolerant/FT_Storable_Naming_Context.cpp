@@ -78,20 +78,9 @@ TAO_FT_Storable_Naming_Context::resolve (const CosNaming::Name& n)
       throw CORBA::INTERNAL ();
     }
 
-    // Get the next location selected by the associated strategy
-    PortableGroup::Location next_location;
-    if (this->naming_manager_->next_location (resolved_ref.in(), next_location))
-    { // Found the location
-      // Access the object from the naming service manager by passing in
-      // the next_location value and assign it to the resolved_ref
-      resolved_ref =
-        this->naming_manager_->get_member_ref (resolved_ref.in (), next_location);
-    }
-    else
-    { // No locations defined for the object group, so we will return a null object reference
-      return CORBA::Object::_nil ();
-    }
-
+    // The Naming Manager will apply the appropriate strategy to get the
+    // next object reference from the object group.
+    resolved_ref = this->naming_manager_->next_member (resolved_ref.in ());
   }
   catch (const PortableGroup::ObjectGroupNotFound&)
   {

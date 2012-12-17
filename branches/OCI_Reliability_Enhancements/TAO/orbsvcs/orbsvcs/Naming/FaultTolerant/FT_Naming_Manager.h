@@ -235,12 +235,11 @@ public:
   void initialize (CORBA::ORB_ptr orb,
                    PortableServer::POA_ptr root_poa);
 
+
   /// Utilizing the load balancing strategy identified by the object
-  /// group property, return the next location which should be used
-  /// to service the next CORBA request
-  bool
-  next_location (PortableGroup::ObjectGroup_ptr object_group,
-                 PortableGroup::Location& loc);
+  /// group property, return the next object reference from the object
+  /// group which should be used to service the next CORBA request
+  CORBA::Object_ptr next_member (PortableGroup::ObjectGroup_ptr object_group);
 
   /// Load/save state of object groups from/to file for fault
   /// tolerant purposes.
