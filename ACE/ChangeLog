@@ -1,3 +1,12 @@
+Mon Dec 17 09:59:45 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_Thread.inl:
+        * ace/OS_NS_sys_shm.cpp:
+        * ace/OS_NS_sys_socket.cpp:
+        * ace/OS_NS_sys_stat.cpp:
+        * ace/OS_NS_sys_uio.cpp:
+          Zapped empty lines
+
 Mon Dec 17 09:31:49 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Acceptor.cpp:
