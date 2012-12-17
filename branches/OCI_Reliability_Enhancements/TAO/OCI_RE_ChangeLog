@@ -1,3 +1,45 @@
+Mon Dec 17 12:57:04 UTC 2012  Byron Harris  <harrisb@ociweb.com>
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_List_Store.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_List_Store.cpp:
+
+          Added class to keep track of the list of persistent object
+          groups. The list itself is persistent.
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_Factory.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_Factory.cpp:
+
+          Updated to use PG_Group_List_Store when adding/destroying
+          object groups or working with the map of object groups.
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group_Storable.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group_Storable.cpp:
+
+          Added a few items that weren't originally being persisted.
+          Added constructor suitable for initializing object from
+          persistent store.
+          Refactored usage of TAO_InputCDR so that common code
+          is handled in anonymous function.
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:
+
+          Updates to accommodate enhancements to derived class
+          PG_Object_Group_Storable.
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group_Manipulator.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group_Manipulator.cpp:
+
+          Allow group ID to also be predetermined instead of
+          only generating ID.
+
+        * tao/Storable_Base.h:
+        * tao/Storable_FlatFileStream.h:
+        * tao/Storable_FlatFileStream.cpp:
+
+          For read member function  pass pointer by value, not by
+          reference.
+
 Sat Dec 15 22:06:02 UTC 2012  "Marc Neeley"  <neeleym@ociweb.com>
 
         * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Dynamic/Hello.h:

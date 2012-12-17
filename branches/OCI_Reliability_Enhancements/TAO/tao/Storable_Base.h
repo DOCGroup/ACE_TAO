@@ -96,7 +96,7 @@ namespace TAO
 
     virtual size_t write (size_t size, const char * bytes) = 0;
 
-    virtual size_t read (size_t size, char *& bytes) = 0;
+    virtual size_t read (size_t size, char * bytes) = 0;
 
   private:
     Storable_State state_;

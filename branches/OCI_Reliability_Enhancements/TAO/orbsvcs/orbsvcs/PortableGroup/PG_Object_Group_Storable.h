@@ -53,6 +53,10 @@ namespace TAO
     // Construct/Destruct
   public:
 
+    /**
+     * This constructor is suitable for creating an object group from
+     * scratch.
+     */
     PG_Object_Group_Storable (
       CORBA::ORB_ptr orb,
       PortableGroup::FactoryRegistry_ptr factory_registry,
@@ -64,6 +68,17 @@ namespace TAO
       TAO::PG_Property_Set * type_properties,
       TAO::Storable_Factory & storable_factory);
 
+    /**
+     * This constructor is suitable for creating an object group from
+     * persistent store.
+     */
+    PG_Object_Group_Storable (
+      PortableGroup::ObjectGroupId group_id,
+      CORBA::ORB_ptr orb,
+      PortableGroup::FactoryRegistry_ptr factory_registry,
+      TAO::PG_Object_Group_Manipulator & manipulator,
+      TAO::Storable_Factory & storable_factory);
+
     /// Destructor
     ~PG_Object_Group_Storable ();
 
@@ -71,6 +86,15 @@ namespace TAO
     // public methods
 
   public:
+
+    /**
+     * Indicate that this object group is to be permanently
+     * destroyed. During destruction the persistent store
+     * for this will then be removed.
+     * This is to distinguish between deletion from a process
+     * shutdown verses deletion from a destroy request.
+     */
+    void set_destroyed (bool destroyed);
 
     virtual const PortableGroup::Location & get_primary_location ();
 
@@ -107,6 +131,8 @@ namespace TAO
 
     virtual const char* get_name (void);
 
+    virtual PortableGroup::ObjectGroupId  get_object_group_id () const;
+
   private:
 
     /////////////////////////
@@ -114,6 +140,10 @@ namespace TAO
     PG_Object_Group_Storable ();
     PG_Object_Group_Storable (const PG_Object_Group_Storable & rhs);
     PG_Object_Group_Storable & operator = (const PG_Object_Group_Storable & rhs);
+
+    /// Indicate if instance of object group has been restored from store
+    bool group_previously_stored_;
+    PortableGroup::ObjectGroupId group_id_previously_stored_;
 
     TAO::Storable_Base * create_stream (const char * mode);
 
@@ -124,6 +154,7 @@ namespace TAO
     TAO::Storable_Factory & storable_factory_;
     bool loaded_from_stream_;
     time_t last_changed_;
+    bool destroyed_;
 
     friend class Object_Group_File_Guard;
 

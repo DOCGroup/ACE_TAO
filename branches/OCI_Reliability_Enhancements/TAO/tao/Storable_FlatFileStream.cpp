@@ -306,7 +306,7 @@ TAO::Storable_FlatFileStream::operator << (const TAO_OutputCDR & cdr)
 {
   ACE_TRACE("TAO::Storable_FlatFileStream::operator <<");
 
-  size_t length = cdr.total_length ();
+  unsigned int length = cdr.total_length ();
   *this << length;
   for (const ACE_Message_Block *i = cdr.begin (); i != 0; i = i->cont ())
     {
@@ -324,7 +324,7 @@ TAO::Storable_FlatFileStream::write (size_t size, const char * bytes)
 }
 
 size_t
-TAO::Storable_FlatFileStream::read (size_t size, char *& bytes)
+TAO::Storable_FlatFileStream::read (size_t size, char * bytes)
 {
   return ACE_OS::fread (bytes, size, 1, fl_);
 }
