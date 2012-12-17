@@ -147,7 +147,7 @@ TAO_Dynamic_TP_Config::init (int argc, ACE_TCHAR* argv[])
             {
               return -1;
             }
-          entry.queue_depth_ = val;
+             entry.queue_depth_ = val;
         }
       else
         {
@@ -162,53 +162,6 @@ TAO_Dynamic_TP_Config::init (int argc, ACE_TCHAR* argv[])
     }
 
   ACE_CString name_str = name;
-
-  bool valid = true;
-  if (min_threads_set)
-    {
-      timeout_set = true;
-      valid = (entry.min_threads_ > 0);
-      if (valid)
-        {
-          if (init_threads_set)
-            {
-              valid = entry.init_threads_ >= entry.min_threads_;
-            }
-          else
-            {
-              entry.init_threads_ = entry.min_threads_;
-            }
-        }
-    }
-  else if (timeout_set)
-    {
-      entry.min_threads_ = 1;
-    }
-
-  if (valid)
-    {
-      if (max_threads_set)
-        {
-          valid = (entry.max_threads_ == -1) || (entry.max_threads_ > entry.init_threads_);
-        }
-      else
-        {
-          entry.max_threads_ = timeout_set ? -1 : entry.init_threads_;
-        }
-    }
-
-  if (!valid)
-    {
-      if (TAO_debug_level > 0)
-        {
-          ACE_DEBUG((LM_DEBUG,
-                     ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_Config - bad thread limits min = %d ")
-                     ACE_TEXT ("initial = %d max = %d\n"),
-                     entry.min_threads_, entry.init_threads_, entry.max_threads_));
-        }
-      return -1;
-    }
-
   ACE_Service_Gestalt *current = ACE_Service_Config::current();
   TAO_Dynamic_TP_Config_Registry* registry =
     ACE_Dynamic_Service<TAO_Dynamic_TP_Config_Registry>::instance

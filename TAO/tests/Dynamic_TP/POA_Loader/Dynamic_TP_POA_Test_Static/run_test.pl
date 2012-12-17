@@ -108,7 +108,7 @@ if ($found_cnt != 5) {
    $status = 1;
 } else {
 
-  $server->DeleteFile($lfname);
+#  $server->DeleteFile($lfname);
 }
 
 # Test 2:
@@ -117,8 +117,8 @@ if ($found_cnt != 5) {
 # exercise the thread_idle_time (timeout).
 # The test will start up a server with 10 init_pool_threads and 5 min_pool_threads.
 # After 10 seconds, 5 threads should expire leaving the minimum 5 threads.
-#   will log their existance as they start up. The count of
-#   logged messages are tested.
+# will log their existance as they start up. The count of
+# logged messages are tested.
 
 print "\nRunning Test 2....\n";
 $test_num=2;
@@ -175,7 +175,7 @@ if ($found_cnt != 5) {
    $status = 1;
 } else {
 
-  $server->DeleteFile($lfname);
+# $server->DeleteFile($lfname);
 }
 
 # Test 3:
@@ -239,7 +239,7 @@ if ($num_exceptions != $valid_num_exceptions)
   print STDERR "ERROR: max_request_queue_depth test failed w/$num_exceptions instead of $valid_num_exceptions\n";
   $status = 1;
 } else {
-  $server->DeleteFile($lfname);
+#  $server->DeleteFile($lfname);
 }
 
 
@@ -315,7 +315,7 @@ if ($found_cnt != $valid_cnt) {
    $status = 1;
 } else {
 
-  $server->DeleteFile($lfname);
+#  $server->DeleteFile($lfname);
 }
 
 $server_status = $SV->WaitKill ($server->ProcessStopWaitInterval());
