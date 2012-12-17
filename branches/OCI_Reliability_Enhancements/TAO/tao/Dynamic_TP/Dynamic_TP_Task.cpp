@@ -300,7 +300,9 @@ TAO_Dynamic_TP_Task::svc()
 
               {
                 ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->work_lock_, false);
-                int wait_state = this->work_available_.wait(&tmp_sec);
+                int wait_state = this->thread_idle_time_.sec() == 0 
+                                 ? this->work_available_.wait()
+                                 : this->work_available_.wait(&tmp_sec);
 
                 // Check for timeout
                 if (this->shutdown_)

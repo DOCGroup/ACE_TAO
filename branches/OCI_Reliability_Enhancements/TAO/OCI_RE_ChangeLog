@@ -1,3 +1,32 @@
+Mon Dec 17 23:14:57 UTC 2012  "Marc Neeley"  <neeleym@ociweb.com>
+
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Dynamic/run_test.pl:
+
+          Reworked the perl test scripts for more flexibility and better detection
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Dynamic/svc1.conf:
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Dynamic/svc3.conf:
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Dynamic/svc4.conf:
+
+          Adjusted the conf files to better reflect timing and success detection
+
+Mon Dec 17 23:14:40 UTC 2012  "Marc Neeley"  <neeleym@ociweb.com>
+
+        * tao/Dynamic_TP/Dynamic_TP_Config.h:
+        * tao/Dynamic_TP/Dynamic_TP_Config.cpp:
+        * tao/Dynamic_TP/Dynamic_TP_POA_Loader.cpp:
+        * tao/Dynamic_TP/Dynamic_TP_POA_Strategy.h:
+        * tao/Dynamic_TP/Dynamic_TP_POA_Strategy.inl:
+        * tao/Dynamic_TP/Dynamic_TP_POA_Strategy.cpp:
+        * tao/Dynamic_TP/Dynamic_TP_Task.cpp:
+
+          Did considerable work to refactor the rules to evaluate
+          parameters coming in for both apply_to( ) style and conf
+          file style parameter loading.
+
+          Also fixed the serialize servants boolean to be false as a
+          default so that multi-threaded apps are able to perform better
+          by default.
+
 Mon Dec 17 22:45:37 UTC 2012  Kevin Stanley  <stanleyk@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.h:

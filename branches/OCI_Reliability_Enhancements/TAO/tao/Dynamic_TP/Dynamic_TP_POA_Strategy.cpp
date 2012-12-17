@@ -91,12 +91,13 @@ TAO_Dynamic_TP_POA_Strategy::poa_activated_event_i(TAO_ORB_Core& orb_core)
                   ACE_TEXT ("warning: config not found...using defaults!\n")));
 
             }
-          this->dtp_task_.set_init_pool_threads(config_entry.init_threads_);
-          this->dtp_task_.set_min_pool_threads(config_entry.min_threads_);
-          this->dtp_task_.set_max_pool_threads(config_entry.max_threads_);
-          this->dtp_task_.set_thread_idle_time(config_entry.timeout_);
-          this->dtp_task_.set_thread_stack_size(config_entry.stack_size_);
-          this->dtp_task_.set_max_request_queue_depth(config_entry.queue_depth_);
+          this->set_dtp_config(config_entry);
+          //this->dtp_task_.set_init_pool_threads(config_entry.init_threads_);
+          //this->dtp_task_.set_min_pool_threads(config_entry.min_threads_);
+          //this->dtp_task_.set_max_pool_threads(config_entry.max_threads_);
+          //this->dtp_task_.set_thread_idle_time(config_entry.timeout_);
+          //this->dtp_task_.set_thread_stack_size(config_entry.stack_size_);
+          //this->dtp_task_.set_max_request_queue_depth(config_entry.queue_depth_);
         }
 
 
@@ -295,6 +296,89 @@ TAO_Dynamic_TP_POA_Strategy::get_servant_state(PortableServer::Servant servant)
   return servant_state;
 }
 
+void
+TAO_Dynamic_TP_POA_Strategy::set_dtp_config(TAO_DTP_Definition &tp_config)
+{
+
+  if (tp_config.min_threads_ <= 0)
+    {
+      this->dtp_task_.set_min_pool_threads(1);
+      this->dtp_task_.set_thread_idle_time(ACE_Time_Value(0,0));
+    }
+  else
+    {
+      this->dtp_task_.set_min_pool_threads(tp_config.min_threads_);
+      this->dtp_task_.set_thread_idle_time(tp_config.timeout_);
+    }
+
+  // initial_pool_threads_
+  if ((tp_config.init_threads_ <= 0) || 
+      (tp_config.init_threads_ < tp_config.min_threads_))
+    {
+     this->dtp_task_.set_init_pool_threads(this->dtp_task_.get_min_pool_threads());
+    }
+  else 
+    {
+      this->dtp_task_.set_init_pool_threads(tp_config.init_threads_);
+    }
+
+  // max_pool_threads_
+
+  if (tp_config.max_threads_ <= 0)
+    {
+      this->dtp_task_.set_max_pool_threads(0);   // Set to 0 so that max is unbounded.
+    }
+  else
+    if (tp_config.max_threads_ < tp_config.init_threads_)
+      {
+        this->dtp_task_.set_max_pool_threads(this->dtp_task_.get_init_pool_threads());
+      }
+    else
+      {
+        this->dtp_task_.set_max_pool_threads(tp_config.max_threads_);
+      }
+
+      // thread_stack_size_
+
+    if (tp_config.stack_size_ <= 0)
+      {
+        this->dtp_task_.set_thread_stack_size(ACE_DEFAULT_THREAD_STACKSIZE);
+      }
+    else
+      {
+        this->dtp_task_.set_thread_stack_size(tp_config.stack_size_);
+      }
+
+    // max_request_queue_depth_
+    if (tp_config.queue_depth_ < 0)
+      {
+        this->dtp_task_.set_max_request_queue_depth(0);
+      }
+    else
+      {
+        this->dtp_task_.set_max_request_queue_depth(tp_config.queue_depth_);
+      }
+
+
+    if (TAO_debug_level > 4)
+    {
+          ACE_DEBUG ((LM_DEBUG,
+          ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_POA_Strategy: ")
+          ACE_TEXT ("Initialized with:\n")
+          ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_POA_Strategy initial_pool_threads_=[%d]\n")
+          ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_POA_Strategy min_pool_threads_=[%d]\n")
+          ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_POA_Strategy max_pool_threads_=[%d]\n")
+          ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_POA_Strategy max_request_queue_depth_=[%d]\n")
+          ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_POA_Strategy thread_stack_size_=[%d]\n")
+          ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_POA_Strategy thread_idle_time_=[%d]\n"),
+          this->dtp_task_.get_init_pool_threads(),
+          this->dtp_task_.get_min_pool_threads(),
+          this->dtp_task_.get_max_pool_threads(),
+          this->dtp_task_.get_max_request_queue_depth(),
+          this->dtp_task_.get_thread_stack_size(),
+          this->dtp_task_.get_thread_idle_time()));
+    }
+}
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 

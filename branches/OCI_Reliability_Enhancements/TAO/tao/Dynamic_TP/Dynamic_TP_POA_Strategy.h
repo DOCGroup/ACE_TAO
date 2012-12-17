@@ -188,21 +188,23 @@ class TAO_Dynamic_TP_Export TAO_Dynamic_TP_POA_Strategy:
 
   ACE_CString dynamic_tp_config_name_;
 
-  // This is the active object used by the worker threads.
-  // The request queue is owned/managed by the task object.
-  // The strategy object puts requests into the task's request
-  // queue, and the worker threads service the queued requests
-  // by performing the actual servant request dispatching logic.
+  /// This is the active object used by the worker threads.
+  /// The request queue is owned/managed by the task object.
+  /// The strategy object puts requests into the task's request
+  /// queue, and the worker threads service the queued requests
+  /// by performing the actual servant request dispatching logic.
   TAO_Dynamic_TP_Task dtp_task_;
 
 
-  // This boolean is used to determine if the configuration has
-  // been sent in from an application or, if false, needs to be
-  // looked up from a Dynamic TP Config repo. It works in conjunction with
-  // dynamic_tp_config_name_ above.
+  /// This boolean is used to determine if the configuration has
+  /// been sent in from an application or, if false, needs to be
+  /// looked up from a Dynamic TP Config repo. It works in conjunction with
+  /// dynamic_tp_config_name_ above.
 
   bool config_initialized_;
 
+
+  void set_dtp_config(TAO_DTP_Definition &tp_config);
 };
 
 

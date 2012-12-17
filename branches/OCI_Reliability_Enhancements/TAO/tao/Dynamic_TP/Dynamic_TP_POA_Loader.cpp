@@ -147,7 +147,7 @@ TAO_Dynamic_TP_POA_Loader::load_poa_map (ACE_TCHAR *map,
 
   ACE_NEW_RETURN(strategy_container,
                  TAO_Dynamic_TP_POA_Strategy(config_name,
-                                             true), -1);
+                                             false), -1);
 
   sep = ACE_OS::strchr (map, ',');
   while (sep != 0)
