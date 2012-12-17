@@ -1,4 +1,9 @@
-Wed Dec 05 09:41:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
+Mon Dec 17 13:40:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * orbsvcs/tests/Miop/McastHello/svc.conf:
+          Updated to enable -ORBListenOnAll 1.
+
+ Wed Dec 05 09:41:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
 
         * orbsvcs/orbsvcs/PortableGroup/UIPMC_Mcast_Transport.cpp:
           Re-fixed the memory leak in MIOP server listener (as previous).
