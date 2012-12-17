@@ -1,6 +1,8 @@
 USER VISIBLE CHANGES BETWEEN CIAO-1.1.6 and CIAO-1.1.7
 =======================================================
 
+. Added support for RTI DDS 5.0.0 rev00
+
 USER VISIBLE CHANGES BETWEEN CIAO-1.1.5 and CIAO-1.1.6
 =======================================================
 
