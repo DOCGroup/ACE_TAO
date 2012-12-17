@@ -1,3 +1,14 @@
+Mon Dec 17 18:49:30 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/Condition.cpp:
+        * connectors/dds4ccm/impl/ndds/ContentFilteredTopic.cpp:
+        * connectors/dds4ccm/impl/ndds/DataWriter.cpp:
+        * connectors/dds4ccm/impl/ndds/DomainParticipantListener.h:
+        * connectors/dds4ccm/impl/ndds/QueryCondition.cpp:
+        * connectors/dds4ccm/impl/ndds/WaitSet.cpp:
+          Don't include ndds_cpp.h as first include, fixes problems
+          with msvc release mode compilation
+
 Mon Dec 17 10:14:59 UTC 2012  Marcel Smit  <msmit@remedy.nl>
 
         * tests/Bug_3769_Regression/Foo_exec.cpp:
