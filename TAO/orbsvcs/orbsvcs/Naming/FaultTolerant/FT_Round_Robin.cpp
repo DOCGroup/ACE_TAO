@@ -28,9 +28,6 @@ TAO_FT_Round_Robin::next_location (
       TAO_FT_Naming_Manager *naming_manager,
       PortableGroup::Location& location)
 {
-  // TODO:  Simplify the algorithm to store a map of object
-  // group id to last location index.  We will round robin
-  // over this list assuming the list will not change that often.
   const PortableGroup::ObjectGroupId id =
     naming_manager->get_object_group_id (object_group);
 
@@ -59,7 +56,7 @@ TAO_FT_Round_Robin::next_location (
       location = locations[i];
 
       // Increment index to point to next location.
-      i++;
+      ++i;
 
       return true;
     }

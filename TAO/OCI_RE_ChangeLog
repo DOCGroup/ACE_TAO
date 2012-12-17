@@ -1,3 +1,28 @@
+Mon Dec 17 22:45:37 UTC 2012  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Persistent_Naming_Context.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Round_Robin.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Round_Robin.cpp:
+
+          Reworked to return next_member instead of next_location to
+          hide implementation details from Naming Context.
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:
+
+          Use .in() operation instead of implicit conversion.
+
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp:
+
+          Reset the write_occurred_ flag after notification to remote
+          process.
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:
+
+          Use string_free instead of delete to match creation style.
+
 Mon Dec 17 15:26:15 UTC 2012  Weiqi Gao  <gao_w@ociweb.com>
 
         * orbsvcs/tests/ImplRepo/run_test.pl:

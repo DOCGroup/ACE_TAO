@@ -103,7 +103,7 @@ TAO::PG_Object_Group::PG_Object_Group (
 
 TAO::PG_Object_Group::~PG_Object_Group (void)
 {
-  delete group_name_;
+  CORBA::string_free (this->group_name_);
 
   this->clear_members_map ();
 }
