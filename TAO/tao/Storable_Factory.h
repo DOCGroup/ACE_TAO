@@ -43,4 +43,8 @@ namespace TAO
 
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+#include /**/ "ace/post.h"
+
 #endif /* TAO_STORABLE_FACTORY_H */

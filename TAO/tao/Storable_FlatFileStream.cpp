@@ -47,7 +47,7 @@ namespace
         return;
       }
 
-    if (result == NULL)
+    if (result == 0)
       {
         state = TAO::Storable_Base::badbit;
         return;

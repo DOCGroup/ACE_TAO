@@ -1,3 +1,14 @@
+Mon Dec 17 14:42:10 UTC 2012  Byron Harris  <harrisb@ociweb.com>
+
+        * orbsvcs/tests/ImplRepo/run_test.pl:
+        * tao/Storable_Base.inl:
+        * tao/Storable_Factory.h:
+        * tao/Storable_FlatFileStream.cpp:
+        * tests/Storable/Storable.mpc:
+        * tests/Storable/test.cpp:
+
+          Fix fuzz errors.
+
 Mon Dec 17 12:57:04 UTC 2012  Byron Harris  <harrisb@ociweb.com>
 
         * orbsvcs/orbsvcs/PortableGroup/PG_Group_List_Store.h:
