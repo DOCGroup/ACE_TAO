@@ -2088,7 +2088,7 @@ sub failover_test
         return 1;
     }
 
-    
+
     print "\n\nstarting primary tao_imr_locator again\n";
     $imr->DeleteFile ($imriorfile);
     $repo{IMR}->Arguments ("-d $test_debug_level -o $repo{imr_imriorfile} " .

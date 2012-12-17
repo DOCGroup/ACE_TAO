@@ -69,3 +69,5 @@ TAO::Storable_Base::fail (void) const
 {
   return (this->state_ & failbit);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
