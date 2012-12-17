@@ -1,3 +1,15 @@
+Mon Dec 17 13:40:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * ace/SOCK_Dgram.cpp: ACE_SOCK_Dgram::make_multicast_ifaddr ()
+          Uncovered due to TAO UIPMC option -ORBListenOnAll 1 being
+          enabled. The SOCK_Dgram_Mcast.cpp ACE_SOCK_Dgram_Mcast::subscribe_ifs()
+          call iterates through the list of IP addresses for all interfaces
+          NOT the list of Interface Names. This works only for windows and newer
+          linuxes (where they are automatically converted into interface names).
+          Older linuxes do not and expect the actual interface names (eg. "Eth0")
+          to be given. This fix allows both forms to be given on older linuxes as well.
+          (Test TAO/orbscvc/tests/Miop/McastHello updated to enable -ORBListenOnAll 1.)
+
 Mon Dec 17 09:59:45 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_Thread.inl:
