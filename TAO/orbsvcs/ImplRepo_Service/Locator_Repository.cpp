@@ -48,8 +48,8 @@ Locator_Repository::init(PortableServer::POA_ptr root_poa,
 }
 
 int
-Locator_Repository::report_ior(PortableServer::POA_ptr root_poa,
-                               PortableServer::POA_ptr imr_poa)
+Locator_Repository::report_ior(PortableServer::POA_ptr ,
+                               PortableServer::POA_ptr )
 {
   if (this->registered_)
     {

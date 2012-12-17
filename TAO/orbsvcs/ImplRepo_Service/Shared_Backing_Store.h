@@ -32,6 +32,10 @@ class ACE_Configuration;
 class ACEXML_FileCharStream;
 class LocatorListings_XMLHandler;
 
+namespace {
+  class Lockable_File;
+}
+
 /**
 * @class Shared_Backing_Store
 *
@@ -83,8 +87,8 @@ private:
   class LocatorListings_XMLHandler : public ACEXML_DefaultHandler
   {
   public:
-    LocatorListings_XMLHandler(const ACE_CString& dir);
-    LocatorListings_XMLHandler(const ACE_CString& dir,
+    LocatorListings_XMLHandler(const ACE_TString& dir);
+    LocatorListings_XMLHandler(const ACE_TString& dir,
                                const Locator_Repository::SIMap& servers,
                                const Locator_Repository::AIMap& activators);
 
@@ -100,11 +104,11 @@ private:
     void remove_unmatched(Locator_Repository::SIMap& servers,
                           Locator_Repository::AIMap& activators);
 
-    const ACE_Vector<ACE_CString>& filenames() const;
+    const ACE_Vector<ACE_TString>& filenames() const;
 
   private:
-    const ACE_CString& dir_;
-    ACE_Vector<ACE_CString> filenames_;
+    const ACE_TString& dir_;
+    ACE_Vector<ACE_TString> filenames_;
     Locator_Repository::SIMap unmatched_servers_;
     Locator_Repository::AIMap unmatched_activators_;
     const bool only_changes_;
@@ -112,13 +116,14 @@ private:
   typedef ACE_Strong_Bound_Ptr
     <LocatorListings_XMLHandler, ACE_Null_Mutex> XMLHandler_Ptr;
 
-  ACE_CString make_filename(const ACE_CString& name,
+  ACE_TString make_filename(const ACE_CString& name,
                             bool activator,
                             bool relative = false) const;
   ACE_CString replica_ior_filename(bool peer_ior_file) const;
-  XMLHandler_Ptr get_listings(bool only_changes) const;
+  XMLHandler_Ptr get_listings(Lockable_File& listing_lf,
+                              bool only_changes) const;
   int persistent_load(bool only_changes);
-  int persist_listings() const;
+  int persist_listings(Lockable_File& listing_lf) const;
   int connect_replicas(Replica_ptr this_replica);
 
   /// sync up this repository with the replica_, returns true if the
