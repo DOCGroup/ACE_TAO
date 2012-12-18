@@ -68,7 +68,7 @@ project(Deployment_TargetManager_IDL) : install, dancelib_with_idl, dance_output
                   -Wb,stub_export_include=Deployment_TargetManager_stub_export.h \
                   -Wb,skel_export_macro=DEPLOYMENT_TARGETMANAGER_SKEL_Export \
                   -Wb,skel_export_include=Deployment_TargetManager_skel_export.h \
-                  -Gxhst -Gxhsk -Ssi
+                  -Gxhst -Gxhsk
 
   IDL_Files {
     Deployment_TargetManager.idl
