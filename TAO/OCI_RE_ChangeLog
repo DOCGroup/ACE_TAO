@@ -1,3 +1,13 @@
+Tue Dec 18 16:22:04 UTC 2012  "Marc Neeley"  <neeleym@ociweb.com>
+
+        * bin/tao_orb_tests.lst:
+          Added run_test scripts into the nightly build for Dynamic Threadpooling
+
+Tue Dec 18 16:20:38 UTC 2012  "Marc Neeley"  <neeleym@ociweb.com>
+
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Static/run_test.pl:
+          Refactored static threadpool configuration run_test script to follow tthe same calling pattern as the dynamic script.
+
 Tue Dec 18 00:44:12 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
 
         * orbsvcs/tests/FT_Naming/FaultTolerance/client.cpp:
