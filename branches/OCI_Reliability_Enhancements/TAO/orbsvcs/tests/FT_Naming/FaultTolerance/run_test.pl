@@ -10,8 +10,8 @@ use PerlACE::TestTarget;
 use Cwd;
 
 my @list=("run_failover_test.pl",
-          "run_persistance_test.pl",
-          "run_equivalance_test.pl");
+          "run_persistence_test.pl",
+          "run_equivalence_test.pl");
 
 my $status = 0;
 

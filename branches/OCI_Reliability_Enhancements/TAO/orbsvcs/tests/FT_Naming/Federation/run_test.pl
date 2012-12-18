@@ -32,7 +32,6 @@ sub clean_persistence_dir($$)
     my $target = shift;
     my $directory_name = shift;
 
-    print STDERR "INFO: cleaning $directory_name\n";
     chdir $directory_name;
     opendir(THISDIR, ".");
     @allfiles = grep(!/^\.\.?$/, readdir(THISDIR));
@@ -132,14 +131,24 @@ my $ns2_replica_primary_ior = "$name_dir2/$replica_primary_ior";
 END
 {
     $server->DeleteFile ($iorbase);
+
     $ns1->DeleteFile ($ns1_ior);
-    $ns2->DeleteFile ($ns2_ior);
     $ns1->DeleteFile ($nm1_ior);
+
+    $ns2->DeleteFile ($ns2_ior);
     $ns2->DeleteFile ($nm2_ior);
-    clean_persistence_dir ($ns1, $name_dir1);
-    clean_persistence_dir ($ns2, $name_dir2);
-    rmdir $name_dir1;
-    rmdir $name_dir2;
+
+    if ( -d $name_dir1 ) {
+        print STDERR "INFO: removing <$name_dir1>\n";
+        clean_persistence_dir ($ns1, $name_dir1);
+        rmdir $name_dir1;
+    }
+
+    if ( -d $name_dir2 ) {
+        print STDERR "INFO: removing <$name_dir2>\n";
+        clean_persistence_dir ($ns2, $name_dir2);
+        rmdir $name_dir2;
+    }
 }
 
 # Run two Naming Servers

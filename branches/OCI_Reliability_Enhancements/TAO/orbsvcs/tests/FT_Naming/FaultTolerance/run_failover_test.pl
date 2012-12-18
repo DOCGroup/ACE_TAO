@@ -18,7 +18,7 @@ foreach $i (@ARGV) {
         $debug_level = '10';
     }
     if ($i eq '-verbose') {
-        $redirection_enabled = 1;
+        $redirection_enabled = 0;
     }
 }
 
@@ -245,12 +245,13 @@ sub init_naming_context_directory($$)
     }
 }
 
-my $name_dir        = "NameService";
-my $primary_iorfile = "$name_dir/ns_replica_primary.ior";
-my $nm_iorfile      = "nm.ior";
-my $iorfile2        = "ns2.ior";
-my $stderr_file     = "test.err";
-my $stdout_file     = "test.out";
+my $name_dir         = "NameService";
+my $object_group_dir = "ObjectGroupService";
+my $primary_iorfile  = "$name_dir/ns_replica_primary.ior";
+my $nm_iorfile       = "nm.ior";
+my $iorfile2         = "ns2.ior";
+my $stderr_file      = "test.err";
+my $stdout_file      = "test.out";
 
 ################################################################################
 # setup END block to cleanup after exit call
@@ -264,9 +265,17 @@ END
     $client->DeleteFile ($stderr_file);
 
     if ( -d $name_dir ) {
+        print STDERR "INFO: removing <$name_dir>\n";
         clean_persistence_dir ($server, $name_dir);
         rmdir ($name_dir);
     }
+
+    if ( -d $object_group_dir ) {
+        print STDERR "INFO: removing <$object_group_dir>\n";
+        clean_persistence_dir ($server, $object_group_dir);
+        rmdir ($object_group_dir);
+    }
+
 }
 
 ################################################################################
@@ -287,18 +296,32 @@ sub failover_test()
 
     print_msg("Failover Test");
     init_naming_context_directory ($server, $name_dir );
+    init_naming_context_directory ($server, $object_group_dir );
 
     # Run two Naming Servers
-    my $ns1_args = "--primary -ORBDebugLevel $debug_level -ORBListenEndPoints $ns_endpoint1 -m 0 -r $name_dir";
-    my $ns2_args = "--backup -ORBDebugLevel $debug_level -ORBListenEndPoints $ns_endpoint2 -c $server_iorfile2 -g $server_nm_iorfile -m 0 -r $name_dir";
+    my $ns1_args = "--primary ".
+                   "-ORBDebugLevel $debug_level ".
+                   "-ORBListenEndPoints $ns_endpoint1 ".
+                   "-m 0 ".
+                   "-r $name_dir ".
+                   "-v $object_group_dir";
+
+    my $ns2_args = "--backup ".
+                   "-ORBDebugLevel $debug_level ".
+                   "-ORBListenEndPoints $ns_endpoint2 ".
+                   "-c $server_iorfile2 ".
+                   "-g $server_nm_iorfile ".
+                   "-m 0 ".
+                   "-r $name_dir ".
+                   "-v $object_group_dir";
+
     my $tao_ft_naming = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_ft_naming";
 
-    # Use corbaloc to access each individual name service without
-    # using the combined IOR.
-    my $client_args = "-p file://$server_iorfile2 " .
+    my $client_args = "--failover " .
+                      "-p file://$server_iorfile2 " .
                       "-q file://$server_iorfile2 " .
                       "-b 4 " .
-                      "-d 4 ";
+                      "-d 4 " ;
 
     my $client_prog = "$startdir/client";
 

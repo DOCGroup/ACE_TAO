@@ -11,14 +11,18 @@ use Cwd;
 
 #$ENV{ACE_TEST_VERBOSE} = "1";
 
+my $startdir = getcwd();
 my $debug_level = '0';
 my $redirection_enabled = 0;
 
 foreach $i (@ARGV) {
     if ($i eq '-debug') {
         $debug_level = '10';
+    }
+    if ($i eq '-verbose') {
         $redirection_enabled = 0;
     }
+
 }
 
 my $server  = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
@@ -231,10 +235,11 @@ sub init_naming_context_directory($$)
     }
 }
 
-my $name_dir   = "NameService";
-my $nm_iorfile = "nm.ior";
-my $ns_iorfile = "ns.ior";
-my $ns_ref     = "--ns file://$ns_iorfile";
+my $name_dir         = "NameService";
+my $object_group_dir = "ObjectGroupService";
+my $nm_iorfile       = "nm.ior";
+my $ns_iorfile       = "ns.ior";
+my $ns_ref           = "--ns file://$ns_iorfile";
 
 
 ################################################################################
@@ -249,8 +254,15 @@ END
     $client->DeleteFile ($stderr_file);
 
     if ( -d $name_dir ) {
+        print STDERR "INFO: removing <$name_dir>\n";
         clean_persistence_dir ($server, $name_dir);
         rmdir ($name_dir);
+    }
+
+    if ( -d $object_group_dir ) {
+        print STDERR "INFO: removing <$object_group_dir>\n";
+        clean_persistence_dir ($server, $object_group_dir);
+        rmdir ($object_group_dir);
     }
 
 }
@@ -259,7 +271,7 @@ END
 # Validate that repository data written by the name service is available upon
 # startup.
 ################################################################################
-sub persistance_test ()
+sub persistence_test ()
 {
     my $previous_status = $status;
     $status = 0;
@@ -270,14 +282,30 @@ sub persistance_test ()
     my $default_init_ref  = "-ORBDefaultInitRef corbaloc:iiop:$hostname:$ns_orb_port1";
     my $client_nm_iorfile = $client->LocalFile ($nm_iorfile);
 
-    print_msg("Persistance Test");
+    print_msg("Persistence Test");
     init_naming_context_directory ($server, $name_dir );
+    init_naming_context_directory ($server, $object_group_dir );
 
-    my $ns_args       = "--primary -ORBListenEndPoints $ns_endpoint1 -u $name_dir -o $ns_iorfile -g $nm_iorfile";
+    my $ns_args       = "--primary ".
+                        "-ORBListenEndPoints $ns_endpoint1 ".
+                        "-u $name_dir ".
+                        "-v $object_group_dir ".
+                        "-o $ns_iorfile ".
+                        "-g $nm_iorfile";
+
     my $tao_ft_naming = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_ft_naming";
+
+    my $client_args = "--persistence " .
+                      "-p corbaloc:iiop:$hostname:$ns_orb_port1 " .
+                      "-q corbaloc:iiop:$hostname:$ns_orb_port1 " .
+                      "-b 4 " .
+                      "-d 4 ";
+
+    my $client_prog = "$startdir/client";
 
     ##1. Run one instance of tao_ft_naming service
     $NS1 = $server->CreateProcess ($tao_ft_naming, $ns_args);
+    $CL  = $client->CreateProcess ($client_prog, $client_args);
 
     $server->DeleteFile ($ns_iorfile);
     $NS1->Spawn ();
@@ -289,12 +317,17 @@ sub persistance_test ()
     }
 
     ##2. Create a new context with tao_nsadd
-    print_msg("Create a new context with tao_nsadd");
-    run_nsadd ("$default_init_ref --name iso --ctx", $POSITIVE_TEST_RESULT);
+    #print_msg("Create a new context with tao_nsadd");
+    print_msg("INFO: Starting the client");
+    $CL->SpawnWaitKill ($client->ProcessStartWaitInterval());
+
+    #run_nsadd ("$default_init_ref --name iso --ctx", $POSITIVE_TEST_RESULT);
 
     ##3. Create a new object group and add a member with tao_nsgroup and bind the object group to a name
     print_msg("Create a new object group and add a member with tao_nsgroup and bind the object group to a name");
     run_nsgroup ("$default_init_ref group_create -group ieee -policy round -type_id IDL:FT_Naming/NamingManager:1.0", $POSITIVE_TEST_RESULT);
+    run_nslist ($ns_ref, $POSITIVE_TEST_RESULT);
+    run_nsgroup ("$default_init_ref group_list", $POSITIVE_TEST_RESULT);
     #run_nsgroup ("$default_init_ref member_add -group ieee -location $hostname -ior file://./nm.ior", $POSITIVE_TEST_RESULT);
     #run_nsgroup ("$default_init_ref group_bind -group ieee -name iso/ieee", $POSITIVE_TEST_RESULT);
 
@@ -364,8 +397,8 @@ sub show_result($$)
     }
 }
 
-my $result = persistance_test ();
+my $result = persistence_test ();
 
-show_result($result, "Persistance Test");
+show_result($result, "Persistence Test");
 
 exit $result;
