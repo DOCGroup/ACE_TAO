@@ -143,7 +143,6 @@ module PortableServer
 
 #       if ! defined (CORBA_E_COMPACT) && ! defined (CORBA_E_MICRO) && !defined (TAO_HAS_MINIMUM_POA)
     // Servant Manager registration:
-
     ServantManager get_servant_manager ()
       raises (WrongPolicy);
 
@@ -151,7 +150,6 @@ module PortableServer
       raises (WrongPolicy);
 
     // Operations for the USE_DEFAULT_SERVANT policy.
-
     Servant get_servant ()
       raises (NoServant,
               WrongPolicy);
@@ -161,7 +159,6 @@ module PortableServer
 #       endif
 
     // Object activation and deactivation.
-
     ObjectId  activate_object (in Servant p_servant)
       raises (ServantAlreadyActive,
               WrongPolicy);
@@ -176,7 +173,6 @@ module PortableServer
       raises (ObjectNotActive, WrongPolicy);
 
     // Reference creation operations.
-
     Object create_reference (in CORBA::RepositoryId intf)
       raises (WrongPolicy);
 
