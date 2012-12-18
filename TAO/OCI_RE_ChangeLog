@@ -1,3 +1,25 @@
+Tue Dec 18 22:50:34 UTC 2012  "Marc Neeley"  <neeleym@ociweb.com>
+
+        * DevGuideExamples/Multithreading/DynamicThreadPool:
+
+        * DevGuideExamples/Multithreading/DynamicThreadPool/DynamicThreadPool.mpc:
+        * DevGuideExamples/Multithreading/DynamicThreadPool/Messenger.idl:
+        * DevGuideExamples/Multithreading/DynamicThreadPool/MessengerClient.cpp:
+        * DevGuideExamples/Multithreading/DynamicThreadPool/MessengerServer.cpp:
+        * DevGuideExamples/Multithreading/DynamicThreadPool/Messenger_i.h:
+        * DevGuideExamples/Multithreading/DynamicThreadPool/Messenger_i.cpp:
+        * DevGuideExamples/Multithreading/DynamicThreadPool/started_pch.h:
+        * DevGuideExamples/Multithreading/DynamicThreadPool/started_pch.cpp:
+
+          Created new dev guide example code to be used later for static
+          thread pool creation using apply_to() in a user application.
+
+Tue Dec 18 22:47:55 UTC 2012  "Marc Neeley"  <neeleym@ociweb.com>
+
+        * tao/Dynamic_TP/Dynamic_TP_Task.cpp:
+
+          Corrected a debug logging level issue for Growing new thread counts.
+
 Tue Dec 18 16:22:04 UTC 2012  "Marc Neeley"  <neeleym@ociweb.com>
 
         * bin/tao_orb_tests.lst:
