@@ -1,3 +1,24 @@
+Tue Dec 18 00:44:12 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
+
+        * orbsvcs/tests/FT_Naming/FaultTolerance/client.cpp:
+        * orbsvcs/tests/FT_Naming/FaultTolerance/run_equivalence_test.pl:
+        * orbsvcs/tests/FT_Naming/FaultTolerance/run_failover_test.pl:
+        * orbsvcs/tests/FT_Naming/FaultTolerance/run_persistence_test.pl:
+        * orbsvcs/tests/FT_Naming/FaultTolerance/run_test.pl:
+
+          Added support for object group repository directory and invoking
+          test client to eventually replace cmdline utility calls.
+          Also corrected script name spelling errors.
+
+        * orbsvcs/tests/FT_Naming/Federation/run_test.pl:
+
+          Added support for object group repository directory
+
+        * orbsvcs/tests/FT_Naming/FaultTolerance/run_equivalance_test.pl:
+        * orbsvcs/tests/FT_Naming/FaultTolerance/run_persistance_test.pl:
+
+          Removed these files.
+
 Mon Dec 17 23:14:57 UTC 2012  "Marc Neeley"  <neeleym@ociweb.com>
 
         * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Dynamic/run_test.pl:

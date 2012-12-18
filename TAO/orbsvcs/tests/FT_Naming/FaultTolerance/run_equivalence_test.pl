@@ -9,6 +9,7 @@ use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
 use Cwd;
 
+my $startdir = getcwd();
 my $debug_level = '0';
 my $redirection_enabled = 0;
 
@@ -235,6 +236,7 @@ sub init_naming_context_directory($$)
 }
 
 my $name_dir           = "NameService";
+my $object_group_dir   = "ObjectGroupService";
 my $ns_primary_iorfile = "$name_dir/ns_replica_primary.ior";
 my $ns_multi_iorfile   = "ns_multi.ior";
 my $nm_multi_iorfile   = "nm_multi.ior";
@@ -253,8 +255,15 @@ END
     $client->DeleteFile ($stderr_file);
 
     if ( -d $name_dir ) {
+        print STDERR "INFO: removing <$name_dir>\n";
         clean_persistence_dir ($server, $name_dir);
         rmdir ($name_dir);
+    }
+
+    if ( -d $object_group_dir ) {
+        print STDERR "INFO: removing <$object_group_dir>\n";
+        clean_persistence_dir ($server, $object_group_dir);
+        rmdir ($object_group_dir);
     }
 }
 
@@ -262,14 +271,15 @@ END
 # Validate that a client can seamlessly invoke naming operations on either
 # server instance.
 ################################################################################
-sub redundant_equivalancy_test()
+sub redundant_equivalency_test()
 {
     my $previous_status = $status;
     $status = 0;
 
-    print_msg("Redundant Equivalancy Test");
+    print_msg("Redundant Equivalency Test");
 
     init_naming_context_directory ($server, $name_dir);
+    init_naming_context_directory ($server, $object_group_dir);
 
     # The file that is written by the primary when ready to start backup
     my $server_primary_iorfile  = $server->LocalFile ($ns_primary_iorfile);
@@ -281,11 +291,30 @@ sub redundant_equivalancy_test()
     my $tao_ft_naming = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_ft_naming";
 
     # Run two Naming Servers
-    my $ns1_args = "--primary -ORBListenEndPoints $ns_endpoint1 -r $name_dir";
-    my $ns2_args = "--backup -ORBListenEndPoints $ns_endpoint2 -c $server_ns_multi_iorfile -g $server_nm_multi_iorfile -r $name_dir";
+    my $ns1_args = "--primary ".
+                   "-ORBListenEndPoints $ns_endpoint1 ".
+                   "-r $name_dir ".
+                   "-v $object_group_dir";
+
+    my $ns2_args = "--backup ".
+                   "-ORBListenEndPoints $ns_endpoint2 ".
+                   "-c $server_ns_multi_iorfile ".
+                   "-g $server_nm_multi_iorfile ".
+                   "-r $name_dir ".
+                   "-v $object_group_dir";
+
+    my $client_args = "--equivalence " .
+                      "-p corbaloc:iiop:$hostname:$ns_orb_port1 " .
+                      "-q corbaloc:iiop:$hostname:$ns_orb_port2 " .
+                      "-b 4 " .
+                      "-d 4 ";
+
+    my $client_prog = "$startdir/client";
+
 
     $NS1 = $server->CreateProcess ($tao_ft_naming, $ns1_args);
     $NS2 = $server->CreateProcess ($tao_ft_naming, $ns2_args);
+    $CL  = $client->CreateProcess ($client_prog, $client_args);
 
     $server->DeleteFile ($ns_primary_iorfile);
     $NS1->Spawn ();
@@ -306,11 +335,35 @@ sub redundant_equivalancy_test()
         exit 1;
     }
 
+    print_msg("INFO: Starting the client");
+    $CL->SpawnWaitKill ($client->ProcessStartWaitInterval());
+
+=cut
+    print_msg("INFO: primary create context iso");
     run_nsadd ("$primary_default_init_ref --name iso --ctx", $POSITIVE_TEST_RESULT);
-    run_nsgroup ("$backup_default_init_ref group_create -group ieee -policy round -type_id IDL:FT_Naming/NamingManager:1.0", $POSITIVE_TEST_RESULT);
-    run_nsgroup ("$primary_default_init_ref group_bind -group ieee -name iso/ieee", $POSITIVE_TEST_RESULT);
-    run_nsgroup ("$backup_default_init_ref group_list", $POSITIVE_TEST_RESULT);
+    print_msg("INFO: primary nslist");
+    run_nslist ("$primary_default_init_ref", $POSITIVE_TEST_RESULT);
+    print_msg("INFO: backup nslist");
     run_nslist ("$backup_default_init_ref", $POSITIVE_TEST_RESULT);
+
+    print_msg("INFO: backup create object group");
+    run_nsgroup ("$backup_default_init_ref group_create -group ieee -policy round -type_id IDL:FT_Naming/NamingManager:1.0", $POSITIVE_TEST_RESULT);
+    print_msg("INFO: backup group list");
+    run_nsgroup ("$backup_default_init_ref group_list", $POSITIVE_TEST_RESULT);
+    print_msg("INFO: primary group list");
+    run_nsgroup ("$primary_default_init_ref group_list", $POSITIVE_TEST_RESULT);
+
+    #print_msg("INFO: primary bind group");
+    #run_nsgroup ("$primary_default_init_ref group_bind -group ieee -name iso/ieee", $POSITIVE_TEST_RESULT);
+
+    print_msg("INFO: backup group list");
+    run_nsgroup ("$backup_default_init_ref group_list", $POSITIVE_TEST_RESULT);
+    print_msg("INFO: primary group list");
+    run_nsgroup ("$primary_default_init_ref group_list", $POSITIVE_TEST_RESULT);
+
+    print_msg("INFO: backup nslist");
+    run_nslist ("$backup_default_init_ref", $POSITIVE_TEST_RESULT);
+=cut
 
     $server_status = $NS2->TerminateWaitKill ($server->ProcessStopWaitInterval());
     if ($server_status != 0) {
@@ -350,7 +403,7 @@ sub show_result($$)
     }
 }
 
-my $result = redundant_equivalancy_test ();
-show_result($result, "Redundant Equivalancy Test");
+my $result = redundant_equivalency_test ();
+show_result($result, "Redundant Equivalency Test");
 
 exit $result;

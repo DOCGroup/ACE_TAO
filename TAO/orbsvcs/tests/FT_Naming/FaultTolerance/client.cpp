@@ -66,6 +66,8 @@ My_Test_Object::id (CORBA::Short id)
 }
 
 
+
+
 // This function runs the test.
 
 int
@@ -77,9 +79,36 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   ACE_TCHAR *ns1ref = 0;
   ACE_TCHAR *ns2ref = 0;
 
+  typedef enum {
+    TT_FAILOVER,
+    TT_PERSISTENCE,
+    TT_EQUIVALENCE
+  } fault_tolerent_test;
+
+  fault_tolerent_test test_type = TT_FAILOVER;
+
+  //////////////////////////////////////////////////////////////////////////////
+  // optional
+  //////////////////////////////////////////////////////////////////////////////
+  // -b <breadth of context tree>
+  // -d <depth of context tree>
+  // -o <breadth of object tree>
+  //////////////////////////////////////////////////////////////////////////////
+  // required
+  //////////////////////////////////////////////////////////////////////////////
+  // -p <ior of first name server>
+  // -q <ior of second name server>
+  // --failover run fault tolerant failover test
+  // --persistence run fault tolerant persistence test
+  // --equivalence run fault tolerant equivalence test
+
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("b:d:o:p:q:"));
   int c;
   int i;
+  get_opts.long_option ("failover", ACE_Get_Opt::NO_ARG);
+  get_opts.long_option ("persistence", ACE_Get_Opt::NO_ARG);
+  get_opts.long_option ("equivalence", ACE_Get_Opt::NO_ARG);
+
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -120,6 +149,27 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       case 'q':
         ns2ref = get_opts.opt_arg ();
         break;
+      case 0:   // A long option was found
+        {
+          const char* long_option = get_opts.long_option ();
+          if (ACE_OS::strcmp (long_option, "failover") == 0)
+            {
+              ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Failover test Selected\n")));
+              test_type = TT_FAILOVER;
+            }
+          else if (ACE_OS::strcmp (long_option, "persistence") == 0)
+            {
+              ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Persistence test Selected\n")));
+              test_type = TT_PERSISTENCE;
+            }
+          else if (ACE_OS::strcmp (long_option, "equivalence") == 0)
+            {
+              ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Equivalence test Selected\n")));
+              test_type = TT_EQUIVALENCE;
+            }
+        }
+        break;
+
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("Argument %c \n usage:  %s")
@@ -464,6 +514,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ex._tao_print_exception (ACE_TEXT ("Wrong exception type returned from resolve.\n"));
       return -1;
     }
+
   try
   {
     // Access the last context from the wide Naming Context
@@ -579,7 +630,18 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   // TODO: Create object groups and bind them. Check the replica.
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Redundancy test OK\n")));
+  switch(test_type) {
+    case TT_FAILOVER:
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Failover test OK\n")));
+    break;
+    case TT_PERSISTENCE:
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Persistence test OK\n")));
+    break;
+    case TT_EQUIVALENCE:
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Equivalence test OK\n")));
+    break;
+  }
+
   return 0;
 
 }
