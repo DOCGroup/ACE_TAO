@@ -358,11 +358,14 @@ TAO_Dynamic_TP_Task::svc()
             }
           else
           {
-              ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_Task::svc() ")
-              ACE_TEXT ("Growing threadcount. ")
-              ACE_TEXT ("New thread count:%d\n"),
-              this->thr_count()));
+             if (TAO_debug_level > 4)
+               {  
+                 ACE_DEBUG ((LM_DEBUG,
+                 ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_Task::svc() ")
+                 ACE_TEXT ("Growing threadcount. ")
+                 ACE_TEXT ("New thread count:%d\n"),
+                 this->thr_count()));
+               }
           }
         }
 
