@@ -1,3 +1,12 @@
+Wed Dec 19 23:48:25 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
+
+        * orbsvcs/tests/FT_Naming/FaultTolerance/client.cpp:
+        * orbsvcs/tests/FT_Naming/FaultTolerance/run_persistence_test.pl:
+
+        Refactored run_persistence_test to use a client application instead of
+        discrete command line utilities for both name service and object group
+        tests.
+
 Wed Dec 19 23:19:15 UTC 2012  "Marc Neeley"  <neeleym@ociweb.com>
 
         * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Dynamic/client.cpp:
@@ -8,7 +17,8 @@ Wed Dec 19 23:19:15 UTC 2012  "Marc Neeley"  <neeleym@ociweb.com>
         * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Static/server.cpp:
 
           Corrected perl scripts to handle ior files appropriately (create/delete)
-          Modified exception handling logic in test client/server to take flags for reporting exceptions only when it is appropriate for that test.
+          Modified exception handling logic in test client/server to take flags
+          for reporting exceptions only when it is appropriate for that test.
 
 Wed Dec 19 22:43:23 UTC 2012  Kevin Stanley  <stanleyk@ociweb.com>
 
