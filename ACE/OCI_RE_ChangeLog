@@ -1,3 +1,13 @@
+Wed Dec 19 17:52:25 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/Mem_Map.inl:
+
+          Fix a warning about signed/unsigned mix.
+
+        * include/makeinclude/platform_clang_common.GNU:
+
+          Increase the warning level used by the CLang++ compiler to show all warnings
+
 Mon Dec 17 14:39:07 UTC 2012  Brian Johnson  <johnsonb@ociweb.com>
 
         * ACEXML/common/FileCharStream.cpp:
