@@ -1,3 +1,57 @@
+Wed Dec 19 22:43:23 UTC 2012  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * MPC/config/ft_portablegroup.mpb:
+        * MPC/config/ftnaming_replication.mpb:
+        * orbsvcs/orbsvcs/FT_NamingManager.idl:
+        * orbsvcs/orbsvcs/FT_NamingReplication.idl:
+        * orbsvcs/orbsvcs/FtNamingReplication.mpc:
+
+          Modified to use a new base project for the
+          naming replication idl compilation step.
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_NamingReplication.idl:
+
+          Moved to the orbsvcs/orbsvcs directory.
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.h:
+
+          Removed type_id from interface for creation of object groups.
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Replication_Manager.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Replication_Manager.cpp:
+
+          Moved FT_NamingReplication idl to orbsvcs/orbsvcs.
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Serv.mpc:
+
+          Moved FT_NamingReplication.idl compilation to a separate project.
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group_Storable.h:
+
+          Include path changed for FT_NamingReplicationC.h"
+
+        * orbsvcs/orbsvcs/PortableGroup/FaultTolerant/FT_PortableGroup.mpc:
+
+          Removed circular dependency on FT_Naming.
+
+        * orbsvcs/tests/FT_Naming/Load_Balancing/LB_server.cpp:
+
+          Removed argument for type_id in create_object_group.
+
+        * tao/IORManipulation/IORManipulation.cpp:
+
+          Fixed a few typos in documentation.
+
+        * utils/nsgroup/nsgroup_svc.h:
+        * utils/nsgroup/nsgroup_svc.cpp:
+        * utils/nsgroup/run_test.pl:
+
+          Changed tests to use new interface.  Implementation does not work
+          yet, but they will compile now.
+
 Wed Dec 19 19:16:10 UTC 2012  Byron Harris  <harrisb@ociweb.com>
 
         * orbsvcs/orbsvcs/PortableGroup/FaultTolerant/FT_PG_Group_Factory.h:

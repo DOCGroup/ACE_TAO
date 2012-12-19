@@ -166,12 +166,11 @@ TAO_FT_Storable_Naming_Context::context_written (void)
 bool
 TAO_FT_Storable_Naming_Context::is_obsolete (time_t stored_time)
 {
-  ACE_UNUSED_ARG (stored_time);
-  // Check if we either have never loaded this context, or if we
-  // have been notified that it is stale by our peer.
-  // If it has never been loaded, then the context_ object will
+  // If data has never been loaded, then the context_ object will
   // be a null pointer.
-  return (this->context_ == 0) || this->stale ();
+  return ((this->context_ == 0) ||              // Has not been loaded
+          this->stale () ||                     // Explicitly marked stale by peer
+          (stored_time > this->last_changed_)); // File has been updated
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -17,14 +17,14 @@
 #include /**/ "ace/pre.h"
 
 #include "orbsvcs/Naming/FaultTolerant/ftnaming_export.h"
-#include "orbsvcs/Naming/FaultTolerant/FT_NamingReplicationS.h"
+#include "orbsvcs/FT_NamingReplicationS.h"
 #include "ace/Recursive_Thread_Mutex.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "FT_NamingReplicationC.h"
+#include "orbsvcs/FT_NamingReplicationC.h"
 
 class TAO_FT_Naming_Server;
 

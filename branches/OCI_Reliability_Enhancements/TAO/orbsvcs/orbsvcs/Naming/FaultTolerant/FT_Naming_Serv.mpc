@@ -1,16 +1,11 @@
 // -*- MPC -*-
 // $Id$
 
-project (FT_Naming_Serv) : orbsvcslib, orbsvcs_output, ftnaming, install, naming_serv, naming, ft_portablegroup, portablegroup, avoids_minimum_corba  {
+project (FT_Naming_Serv) : orbsvcslib, orbsvcs_output, ftnaming, ftnaming_replication, install, naming_serv, naming, ft_portablegroup, portablegroup, avoids_minimum_corba  {
   sharedname   = TAO_FT_Naming_Serv
   idlflags    += -Wb,export_macro=TAO_FtNaming_Export -Wb,export_include=orbsvcs/Naming/FaultTolerant/ftnaming_export.h
   dynamicflags += TAO_FTNAMING_BUILD_DLL
   tagchecks   += FaultTolerantNaming
-
-  IDL_Files {
-    idlflags += -GC
-    FT_NamingReplication.idl
-  }
 
   Source_Files (ORBSVCS_COMPONENTS) {
     FT_Naming_Manager.cpp
@@ -19,8 +14,6 @@ project (FT_Naming_Serv) : orbsvcslib, orbsvcs_output, ftnaming, install, naming
     FT_Persistent_Naming_Context.cpp
     FT_Persistent_Naming_Context_Factory.cpp
     FT_Round_Robin.cpp
-    FT_NamingReplicationC.cpp
-    FT_NamingReplicationS.cpp
     FT_Storable_Naming_Context.cpp
     FT_Storable_Naming_Context_Factory.cpp
     }
@@ -32,8 +25,6 @@ project (FT_Naming_Serv) : orbsvcslib, orbsvcs_output, ftnaming, install, naming
     FT_Persistent_Naming_Context.h
     FT_Persistent_Naming_Context_Factory.h
     FT_Round_Robin.h
-    FT_NamingReplicationC.h
-    FT_NamingReplicationS.h
     FT_Storable_Naming_Context.h
     FT_Storable_Naming_Context_Factory.h
   }

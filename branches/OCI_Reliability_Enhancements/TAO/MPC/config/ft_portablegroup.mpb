@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : portablegroup, ft_naming_serv, naming, messaging, iormanip, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+project : portablegroup, ftnaming_replication, naming, messaging, iormanip, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
   libs      += TAO_FT_PortableGroup
   after     += FT_PortableGroup
   tagchecks += FT_PortableGroup

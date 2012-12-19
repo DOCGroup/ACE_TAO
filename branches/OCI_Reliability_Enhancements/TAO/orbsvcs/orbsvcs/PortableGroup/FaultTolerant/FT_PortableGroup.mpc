@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(FT_PortableGroup) : orbsvcslib, orbsvcs_output, install, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+project(FT_PortableGroup) : orbsvcslib, orbsvcs_output, ftnaming_replication, install, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
   sharedname   = TAO_FT_PortableGroup
   dynamicflags += TAO_FT_PORTABLEGROUP_BUILD_DLL
   tagchecks   += FT_PortableGroup

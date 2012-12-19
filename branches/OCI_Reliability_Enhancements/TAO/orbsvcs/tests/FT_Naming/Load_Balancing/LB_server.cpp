@@ -152,10 +152,8 @@ LB_server::create_object_group (void)
 {
   try
     {
-      const char *repository_id = "IDL:Test/Basic:1.0";
-
       if (this->parse_args (argc_, argv_) != 0)
-                    return -1;
+        return -1;
 
       PortableGroup::Criteria criteria (2);
       criteria.length (1);
@@ -173,7 +171,6 @@ LB_server::create_object_group (void)
       this->object_group_ = this->naming_manager_->create_object_group (
         "Basic Group",
         FT_Naming::ROUND_ROBIN,
-        repository_id,
         criteria);
 
       CORBA::String_var ior =
