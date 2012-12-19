@@ -1,3 +1,14 @@
+Wed Dec 19 14:46:24 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_cegcc.GNU:
+        * include/makeinclude/platform_g++_common.GNU:
+        * include/makeinclude/platform_rtems.x_g++.GNU:
+        * include/makeinclude/platform_vxworks6.2.GNU:
+        * include/makeinclude/platform_vxworks6.3.GNU:
+          Install tao_idl3_to_idl2 and tao_idl3_to_xmi into ACE_ROOT/bin
+          to handle cross compilation in a flat layout more easily, this
+          way we can use the same approach as tao_idl does
+
 Mon Dec 17 20:53:22 UTC 2012  Adam Mitz  <mitza@ociweb.com>
 
         * ace/Message_Queue_Vx.inl:
