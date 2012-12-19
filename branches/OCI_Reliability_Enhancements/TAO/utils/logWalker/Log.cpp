@@ -215,11 +215,8 @@ Log::handle_msg_octets ()
 void
 Log::parse_HEXDUMP_i (void)
 {
-  Thread *thr = 0;
-
   char *pos = ACE_OS::strstr (this->line_,"HEXDUMP");
   pos += 8;
-  size_t len = ACE_OS::strtol (pos, 0, 10);
 
   if (this->dump_target_ != 0)
     {
@@ -683,10 +680,12 @@ Log::parse_iiop_connection_handler_ctor_i (void)
       ACE_ERROR ((LM_ERROR, "%d: parse_iiop_connection_handler_ctor_i: no pending peer on thread\n", this->offset_));
       return;
     }
+
+#if 0
   char *pos = ACE_OS::strchr (this->info_,'[') + 1;
   long tmp_handle = ACE_OS::strtol (pos, 0, 10);
   //  pp->set_handle (tmp_handle);
-
+#endif
 }
 
 void
