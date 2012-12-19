@@ -5,12 +5,13 @@
 
 const ACE_TCHAR *ior = ACE_TEXT("file://server.ior");
 int client_num = 1;
+int report_exception = 1;
 bool is_shutdown = false;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("c:k:s"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("c:e:k:s"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -18,6 +19,9 @@ parse_args (int argc, ACE_TCHAR *argv[])
       {
       case 'c':
         client_num = ACE_OS::atoi(get_opts.opt_arg ());
+        break;
+      case 'e':
+        report_exception = ACE_OS::atoi(get_opts.opt_arg ());
         break;
       case 'k':
         ior = get_opts.opt_arg ();
@@ -29,7 +33,8 @@ parse_args (int argc, ACE_TCHAR *argv[])
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
-                           "-c <client #>"
+                           "-c <client #> "
+                           "-e <0|1> "
                            "-k <ior> "
                            "-s (shutdown) "
                            "\n",
@@ -84,7 +89,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     }
   catch (const CORBA::Exception& ex)
     {
-     // ex._tao_print_exception ("Exception caught:");
+      if (report_exception)
+        ex._tao_print_exception ("Exception caught:");
       return 1;
     }
 
