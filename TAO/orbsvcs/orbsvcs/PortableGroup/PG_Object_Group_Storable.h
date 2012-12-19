@@ -27,6 +27,8 @@
 // Includes needed by this header
 #include "orbsvcs/PortableGroup/PG_Object_Group.h"
 
+#include "orbsvcs/Naming/FaultTolerant/FT_NamingReplicationC.h"
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /////////////////////
@@ -96,6 +98,13 @@ namespace TAO
      */
     void set_destroyed (bool destroyed);
 
+    /**
+     * Allow for replication persistence support by
+     * derived classes.
+     */
+    virtual void stale (bool is_stale);
+    virtual bool stale ();
+
     virtual const PortableGroup::Location & get_primary_location ();
 
     virtual void add_member (
@@ -152,9 +161,28 @@ namespace TAO
     void write (TAO::Storable_Base & stream);
 
     TAO::Storable_Factory & storable_factory_;
-    bool loaded_from_stream_;
     time_t last_changed_;
+
+  protected:
+
+    bool loaded_from_stream_;
+
     bool destroyed_;
+
+    /// To set when state written out.
+    bool write_occurred_;
+
+    /**
+     * Signals that this context was updated.
+     */
+    virtual void state_written (void);
+
+    /**
+     * A callback invoked by the object group file guard
+     * to determine if this context is obsolete with respect to
+     * the peristent store.
+     */
+    virtual bool is_obsolete (time_t stored_time);
 
     friend class Object_Group_File_Guard;
 

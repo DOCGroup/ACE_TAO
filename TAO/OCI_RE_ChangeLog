@@ -1,3 +1,45 @@
+Wed Dec 19 19:16:10 UTC 2012  Byron Harris  <harrisb@ociweb.com>
+
+        * orbsvcs/orbsvcs/PortableGroup/FaultTolerant/FT_PG_Group_Factory.h:
+        * orbsvcs/orbsvcs/PortableGroup/FaultTolerant/FT_PG_Group_Factory.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/FaultTolerant/FT_PG_Object_Group_Storable.h:
+        * orbsvcs/orbsvcs/PortableGroup/FaultTolerant/FT_PG_Object_Group_Storable.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/FaultTolerant/FT_PortableGroup.mpc:
+        * orbsvcs/orbsvcs/PortableGroup/FaultTolerant/ft_portablegroup_export.h:
+        * MPC/config/ft_portablegroup.mpb:
+
+          Added library with derived versions of group factory and object group
+          storable that support replica naming servers that inform each other via CORBA
+          of state changes. This gets around the 1 second resolution provided when
+          using file time stamps. Modeled after FT storable naming
+          context implementation.
+
+        * MPC/config/ftnaming.mpb:
+        * orbsvcs/Naming_Service/Naming_Service.mpc:
+        * utils/nsgroup/nsgroup.mpc:
+
+          Uses ft_portablegroup base instead of portablegroup.
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_NamingReplication.idl:
+
+          Changed so that ObjectGroupUpdate uses ID instead of name since
+          the ID is guaranteed to be unique.
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Serv.mpc:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:
+
+          Uses the FT group factory now.
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_Factory.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_Factory.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group_Storable.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group_Storable.cpp:
+
+          Updates to accommodate replication code in derived classes.
+
+
 Wed Dec 19 18:15:23 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * utils/logWalker/Invocation.cpp:

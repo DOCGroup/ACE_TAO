@@ -26,7 +26,7 @@
 
 #include "orbsvcs/FT_NamingManagerC.h"
 
-#include "orbsvcs/PortableGroup/PG_Group_Factory.h"
+#include "orbsvcs/PortableGroup/FaultTolerant/FT_PG_Group_Factory.h"
 #include "orbsvcs/PortableGroup/PG_FactoryRegistry.h"
 #include <orbsvcs/PortableGroup/PG_Properties_Support.h>
 #include <orbsvcs/Naming/FaultTolerant/FT_Round_Robin.h>
@@ -247,6 +247,10 @@ public:
   set_object_group_storable_factory (TAO::Storable_Factory *
     factory);
 
+  /// Indicate the object group state is stale.
+  /// Only valid when object group persistence is enabled.
+  void set_object_group_stale (PortableGroup::ObjectGroupId group_id);
+
   /// Destructor.
   ~TAO_FT_Naming_Manager (void);
 
@@ -275,7 +279,7 @@ private:
   TAO::PG_FactoryRegistry factory_registry_;
 
   /// The group factory responsible for creating object groups
-  TAO::PG_Group_Factory group_factory_;
+  TAO::FT_PG_Group_Factory group_factory_;
 
   /**
    * @name Built-in load balancing strategy implementations
