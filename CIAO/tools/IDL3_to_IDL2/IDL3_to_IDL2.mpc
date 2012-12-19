@@ -41,7 +41,7 @@ project(TAO_IDL3_TO_IDL2_EXE) : aceexe, install, ciao_output, tao_idl_fe {
   exename         = tao_idl3_to_idl2
   libs           += TAO_IDL3_TO_IDL2_BE
   includes       += $(TAO_ROOT)
-  exeout          = $(CIAO_ROOT)/bin
+  exeout          = $(ACE_ROOT)/bin
 
   // Adding a strict ordering dependency with TAO_IDL_EXE.  It appears on some systems, there
   // can be a race between these two projects for tao_idl.cpp, causing some erroors.
