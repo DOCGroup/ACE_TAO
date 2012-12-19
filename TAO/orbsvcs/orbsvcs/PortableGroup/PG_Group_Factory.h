@@ -40,6 +40,7 @@ namespace TAO
 {
   class PG_Property_Set;
   class PG_Group_List_Store;
+  class PG_Object_Group_Storable;
   class Storable_Factory;
 }
 
@@ -157,6 +158,34 @@ namespace TAO
      * persist internal state to file for fault tolerant purposes.
      */
     void set_object_group_storable_factory (TAO::Storable_Factory * factory);
+
+  protected:
+
+    /**
+     * Factory function to create a storable object object from
+     * scratch.
+     */
+    virtual PG_Object_Group_Storable * create_persistent_group (
+      CORBA::ORB_ptr orb,
+      PortableGroup::FactoryRegistry_ptr factory_registry,
+      TAO::PG_Object_Group_Manipulator & manipulator,
+      CORBA::Object_ptr empty_group,
+      const PortableGroup::TagGroupTaggedComponent & tagged_component,
+      const char * type_id,
+      const PortableGroup::Criteria & the_criteria,
+      TAO::PG_Property_Set * type_properties,
+      TAO::Storable_Factory & storable_factory);
+
+    /**
+     * Factory function to restore an object group from
+     * persistent store.
+     */
+    virtual PG_Object_Group_Storable * restore_persistent_group (
+      PortableGroup::ObjectGroupId group_id,
+      CORBA::ORB_ptr orb,
+      PortableGroup::FactoryRegistry_ptr factory_registry,
+      TAO::PG_Object_Group_Manipulator & manipulator,
+      TAO::Storable_Factory & storable_factory);
 
   private:
 

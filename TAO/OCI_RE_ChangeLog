@@ -1,3 +1,12 @@
+Wed Dec 19 13:36:22 UTC 2012  Byron Harris  <harrisb@ociweb.com>
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_Factory.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_Factory.cpp:
+
+          Refactoring to accommodate derived classes that work
+          with classes derived from PG_Object_Group_Storable,
+          as will be the case for OG FT support.
+
 Wed Dec 19 05:57:23 UTC 2012  Brian Johnson  <johnsonb@ociweb.com>
 
         * TAO_IDL/tao_idl.mpc:

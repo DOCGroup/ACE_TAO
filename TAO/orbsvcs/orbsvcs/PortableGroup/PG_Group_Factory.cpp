@@ -7,6 +7,7 @@
  * $Id$
  *
  * @author Dale Wilson <wilson_d@ociweb.com>
+ * @author Byron Harris <harrisb@ociweb.com>
  */
 //=============================================================================
 
@@ -137,9 +138,7 @@ TAO::PG_Object_Group * TAO::PG_Group_Factory::create_group (
 
   if (this->use_persistence_)
     {
-      ACE_NEW_THROW_EX (
-        objectGroup,
-        TAO::PG_Object_Group_Storable (
+      objectGroup = this->create_persistent_group (
           this->orb_.in (),
           this->factory_registry_.in (),
           this->manipulator_,
@@ -148,9 +147,8 @@ TAO::PG_Object_Group * TAO::PG_Group_Factory::create_group (
           type_id,
           the_criteria,
           typeid_properties,
-          *storable_factory_
-          ),
-        CORBA::NO_MEMORY());
+          *storable_factory_);
+
       this->list_store_->add(group_id);
     }
   else
@@ -380,16 +378,12 @@ TAO::PG_Group_Factory::get_group_map ()
             {
               PortableGroup::ObjectGroupId group_id = *it;
               TAO::PG_Object_Group * objectGroup = 0;
-              ACE_NEW_THROW_EX (
-              objectGroup,
-              TAO::PG_Object_Group_Storable (
+              objectGroup = this->restore_persistent_group (
                 group_id,
                 this->orb_.in (),
                 this->factory_registry_.in (),
                 this->manipulator_,
-                *storable_factory_
-                ),
-              CORBA::NO_MEMORY());
+                *storable_factory_);
 
               if (this->group_map_.bind (group_id, objectGroup) != 0)
                 {
@@ -419,5 +413,58 @@ TAO::PG_Group_Factory::get_group_map ()
 
   return group_map_;
 }
+
+TAO::PG_Object_Group_Storable *
+TAO::PG_Group_Factory::create_persistent_group (
+      CORBA::ORB_ptr orb,
+      PortableGroup::FactoryRegistry_ptr factory_registry,
+      TAO::PG_Object_Group_Manipulator & manipulator,
+      CORBA::Object_ptr empty_group,
+      const PortableGroup::TagGroupTaggedComponent & tagged_component,
+      const char * type_id,
+      const PortableGroup::Criteria & the_criteria,
+      TAO::PG_Property_Set * type_properties,
+      TAO::Storable_Factory & storable_factory)
+{
+  TAO::PG_Object_Group_Storable * objectGroup = 0;
+  ACE_NEW_THROW_EX (
+  objectGroup,
+  TAO::PG_Object_Group_Storable (
+    orb,
+    factory_registry,
+    manipulator,
+    empty_group,
+    tagged_component,
+    type_id,
+    the_criteria,
+    type_properties,
+    storable_factory
+    ),
+  CORBA::NO_MEMORY());
+  return objectGroup;
+}
+
+TAO::PG_Object_Group_Storable *
+TAO::PG_Group_Factory::restore_persistent_group (
+      PortableGroup::ObjectGroupId group_id,
+      CORBA::ORB_ptr orb,
+      PortableGroup::FactoryRegistry_ptr factory_registry,
+      TAO::PG_Object_Group_Manipulator & manipulator,
+      TAO::Storable_Factory & storable_factory)
+{
+  TAO::PG_Object_Group_Storable * objectGroup = 0;
+  ACE_NEW_THROW_EX (
+    objectGroup,
+    TAO::PG_Object_Group_Storable (
+      group_id,
+      orb,
+      factory_registry,
+      manipulator,
+      storable_factory
+      ),
+    CORBA::NO_MEMORY());
+  return objectGroup;
+}
+
 
 TAO_END_VERSIONED_NAMESPACE_DECL
