@@ -249,7 +249,7 @@ my $name_dir         = "NameService";
 my $object_group_dir = "ObjectGroupService";
 my $primary_iorfile  = "$name_dir/ns_replica_primary.ior";
 my $nm_iorfile       = "nm.ior";
-my $iorfile2         = "ns2.ior";
+my $ns_iorfile       = "ns.ior";
 my $stderr_file      = "test.err";
 my $stdout_file      = "test.out";
 
@@ -260,7 +260,7 @@ END
 {
     $server->DeleteFile($primary_iorfile);
     $server->DeleteFile($nm_iorfile);
-    $server->DeleteFile($iorfile2);
+    $server->DeleteFile($ns_iorfile);
     $client->DeleteFile ($stdout_file);
     $client->DeleteFile ($stderr_file);
 
@@ -290,7 +290,7 @@ sub failover_test()
     # The file that is written by the primary when ready to start backup
     my $server_primary_iorfile = $server->LocalFile ($primary_iorfile);
     my $server_nm_iorfile      = $server->LocalFile ($nm_iorfile);
-    my $server_iorfile2        = $server->LocalFile ($iorfile2);
+    my $server_ns_iorfile      = $server->LocalFile ($ns_iorfile);
     my $client_stdout_file     = $client->LocalFile ($stdout_file);
     my $client_stderr_file     = $client->LocalFile ($stderr_file);
 
@@ -309,7 +309,7 @@ sub failover_test()
     my $ns2_args = "--backup ".
                    "-ORBDebugLevel $debug_level ".
                    "-ORBListenEndPoints $ns_endpoint2 ".
-                   "-c $server_iorfile2 ".
+                   "-c $server_ns_iorfile ".
                    "-g $server_nm_iorfile ".
                    "-m 0 ".
                    "-r $name_dir ".
@@ -318,10 +318,20 @@ sub failover_test()
     my $tao_ft_naming = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_ft_naming";
 
     my $client_args = "--failover " .
-                      "-p file://$server_iorfile2 " .
-                      "-q file://$server_iorfile2 " .
+                      "-p file://$server_ns_iorfile " .
+                      "-q file://$server_ns_iorfile " .
+                      "-r file://$server_nm_iorfile " .
                       "-b 4 " .
                       "-d 4 " ;
+=cut
+    my $client_args = "--failover " .
+                      "-p file://$server_ns_iorfile " .
+                      "-q file://$server_ns_iorfile " .
+                      "-r file://$server_nm_iorfile " .
+                      "-s file://$server_nm_iorfile " .
+                      "-b 4 " .
+                      "-d 4 " ;
+=cut
 
     my $client_prog = "$startdir/client";
 
@@ -330,7 +340,7 @@ sub failover_test()
     $CL  = $client->CreateProcess ($client_prog, $client_args);
 
     $server->DeleteFile ($primary_iorfile);
-    $server->DeleteFile ($iorfile2);
+    $server->DeleteFile ($ns_iorfile);
     $server->DeleteFile ($nm_iorfile);
 
     print_msg("INFO: Starting the primary");
@@ -344,9 +354,9 @@ sub failover_test()
 
     print_msg("INFO: Starting the backup");
     $NS2->Spawn ();
-    if ($server->WaitForFileTimed ($iorfile2,
+    if ($server->WaitForFileTimed ($ns_iorfile,
                                    $server->ProcessStartWaitInterval()) == -1) {
-        print STDERR "ERROR: cannot find file <$server_iorfile2>\n";
+        print STDERR "ERROR: cannot find file <$server_ns_iorfile>\n";
         $NS2->Kill (); $NS2->TimedWait (1);
         $NS1->Kill (); $NS1->TimedWait (1);
         exit 1;

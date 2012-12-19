@@ -12,10 +12,12 @@
 
 #include "test_objectS.h"
 #include "orbsvcs/CosNamingC.h"
+#include "orbsvcs/FT_NamingManagerC.h"
 #include "orbsvcs/Naming/Naming_Server.h"
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
+#include "utils/nsgroup/nsgroup_svc.h"
 
 #if defined (_MSC_VER)
 # pragma warning (disable : 4250)
@@ -65,19 +67,38 @@ My_Test_Object::id (CORBA::Short id)
   id_ = id;
 }
 
-
-
+// This function runs the test.
+int do_name_test (CORBA::ORB_ptr theOrb, 
+             ACE_TCHAR *ns1ref, 
+             ACE_TCHAR *ns2ref,
+             int c_breadth,
+             int c_depth,
+             int o_breadth);
 
 // This function runs the test.
+int do_object_group_test ( CORBA::ORB_ptr theOrb, 
+                           ACE_TCHAR *nm1ref, 
+                           ACE_TCHAR *nm2ref);
+
+#if 0
+int
+group_create (FT_Naming::NamingManager_ptr theManager, const char* group_name, const char* type_id );
+#endif
+
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
+  int rc = 0;
   int c_breadth = 4;
   int c_depth = 4;
   int o_breadth = 4;
+
   ACE_TCHAR *ns1ref = 0;
   ACE_TCHAR *ns2ref = 0;
+  
+  ACE_TCHAR *nm1ref = 0;
+  ACE_TCHAR *nm2ref = 0;
 
   typedef enum {
     TT_FAILOVER,
@@ -98,11 +119,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   //////////////////////////////////////////////////////////////////////////////
   // -p <ior of first name server>
   // -q <ior of second name server>
+  // -r <ior of first naming service>
+  // -s <ior of second naming service>
   // --failover run fault tolerant failover test
   // --persistence run fault tolerant persistence test
   // --equivalence run fault tolerant equivalence test
 
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("b:d:o:p:q:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("b:d:o:p:q:r:s:"));
   int c;
   int i;
   get_opts.long_option ("failover", ACE_Get_Opt::NO_ARG);
@@ -149,6 +172,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       case 'q':
         ns2ref = get_opts.opt_arg ();
         break;
+      case 'r':
+        nm1ref = get_opts.opt_arg ();
+        break;
+      case 's':
+        nm2ref = get_opts.opt_arg ();
+        break;
       case 0:   // A long option was found
         {
           const char* long_option = get_opts.long_option ();
@@ -178,45 +207,123 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                            ACE_TEXT (" [-o <breadth of object tree>]")
                            ACE_TEXT (" -p <ior of first name server>")
                            ACE_TEXT (" -q <ior of second name server>")
+                           ACE_TEXT (" -r <ior of first naming server>")
+                           ACE_TEXT (" -s <ior of second naming server>")
                            ACE_TEXT ("\n")),
                           -1);
       }
 
-  CosNaming::NamingContext_var root_context_1;
-  CosNaming::NamingContext_var root_context_2;
 
   try
   {
     // Initialize orb
     CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
 
-    // ior's are specified for the name servers through a commandline
-    // option or a file.
+    switch(test_type) {
+      case TT_FAILOVER:
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Failover test OK\n")));
+        rc = do_name_test(
+          orb.in (),
+          ns1ref,
+          ns2ref,
+          c_breadth,
+          c_depth,
+          o_breadth
+        );
+        do_object_group_test(
+          orb.in (),
+          nm1ref,
+          nm2ref
+        );
+      break;
+      case TT_PERSISTENCE:
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Persistence test OK\n")));
+        rc = do_name_test(
+          orb.in (),
+          ns1ref,
+          ns2ref,
+          c_breadth,
+          c_depth,
+          o_breadth
+        );
+        do_object_group_test(
+          orb.in (),
+          nm1ref,
+          nm2ref
+        );
+      break;
+      case TT_EQUIVALENCE:
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Equivalence test OK\n")));
+        rc = do_name_test(
+          orb.in (),
+          ns1ref,
+          ns2ref,
+          c_breadth,
+          c_depth,
+          o_breadth
+        );
+        do_object_group_test(
+          orb.in (),
+          nm1ref,
+          nm2ref
+        );
+      break;
+    }
+  }
+  catch (const CORBA::Exception& ex)
+  {
+    ex._tao_print_exception (ACE_TEXT ("Unable to resolve name servers"));
+    return -1;
+  }
 
-    // Resolve the first name server
 
-    CORBA::Object_var ns1obj = orb->string_to_object (
-                            ACE_TEXT_ALWAYS_CHAR (ns1ref));
+  return rc;
 
-    if (CORBA::is_nil (ns1obj.in ()))
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("invalid ior <%s>\n"),
-                               ns1ref),
-                              -1);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//
+////////////////////////////////////////////////////////////////////////////////
+int do_name_test (
+             CORBA::ORB_ptr theOrb, 
+             ACE_TCHAR *ns1ref, 
+             ACE_TCHAR *ns2ref,
+             int c_breadth,
+             int c_depth,
+             int o_breadth)
+{
+
+  CosNaming::NamingContext_var root_context_1;
+  CosNaming::NamingContext_var root_context_2;
+  int i;
+
+  try {
+    
+    if (CORBA::is_nil (theOrb)) 
+      ACE_ERROR_RETURN ((LM_ERROR,ACE_TEXT ("invalid orb\n")),-1);
+    
+    if (CORBA::is_nil (ns1ref)) 
+      ACE_ERROR_RETURN ((LM_ERROR,ACE_TEXT ("invalid ns1\n")),-1);
+
+    if (CORBA::is_nil (ns2ref)) 
+      ACE_ERROR_RETURN ((LM_ERROR,ACE_TEXT ("invalid ns2\n")),-1);
+
+    CORBA::ORB_var orb = theOrb;
+    CORBA::Object_var ns1obj = orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (ns1ref));
+    CORBA::Object_var ns2obj = orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (ns2ref));
+
+    if (CORBA::is_nil (ns1obj.in ())) 
+      ACE_ERROR_RETURN ((LM_ERROR,ACE_TEXT ("invalid ior <%s>\n"),ns1ref),-1);
+    if (CORBA::is_nil (ns2obj.in ())) 
+      ACE_ERROR_RETURN ((LM_ERROR,ACE_TEXT ("invalid ior <%s>\n"),ns2ref),-1);
+
     root_context_1 = CosNaming::NamingContext::_narrow (ns1obj.in ());
-
-    // Resolve the second name server
-
-    CORBA::Object_var ns2obj = orb->string_to_object (
-                            ACE_TEXT_ALWAYS_CHAR (ns2ref));
-
-    if (CORBA::is_nil (ns2obj.in ()))
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("invalid ior <%s>\n"),
-                               ns2ref),
-                              -1);
     root_context_2 = CosNaming::NamingContext::_narrow (ns2obj.in ());
 
+    if (CORBA::is_nil (root_context_1.in ())) 
+      ACE_ERROR_RETURN ((LM_ERROR,ACE_TEXT ("invalid ior <%s>\n"),ns1ref),-1);
+    if (CORBA::is_nil (root_context_2.in ())) 
+      ACE_ERROR_RETURN ((LM_ERROR,ACE_TEXT ("invalid ior <%s>\n"),ns2ref),-1);
   }
   catch (const CORBA::Exception& ex)
   {
@@ -251,8 +358,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // See if the newly bound object is available in the
       // replica
       try {
-        CORBA::Object_var obj1_on_replica =
-          root_context_2->resolve (level1);
+        CORBA::Object_var obj1_on_replica = root_context_2->resolve (level1);
       }
       catch (const CosNaming::NamingContext::NotFound& ex)
         {
@@ -260,12 +366,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
           // Try again...
           try {
-            CORBA::Object_var obj1_on_replica =
-              root_context_2->resolve (level1);
+            CORBA::Object_var obj1_on_replica = root_context_2->resolve (level1);
             // We did find the object on the replica, but only after a wait.
             // This would be caused by a race condition to access the variable.
-            ACE_ERROR ((LM_ERROR,
-                        "Object appeared after a short wait.\n"));
+            ACE_ERROR ((LM_ERROR, "Object appeared after a short wait.\n"));
           }
           catch (const CosNaming::NamingContext::NotFound& second_ex)
             {
@@ -320,11 +424,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       try {
         // Check if the new context is available in the replica
-        CORBA::Object_var obj1_on_replica =
-          root_context_2->resolve (wide);
+        CORBA::Object_var obj1_on_replica = root_context_2->resolve (wide);
         // Make sure it is a context
-        CosNaming::NamingContext_var nc =
-          CosNaming::NamingContext::_narrow (obj1_on_replica);
+        CosNaming::NamingContext_var nc = CosNaming::NamingContext::_narrow (obj1_on_replica);
       }
       catch (const CosNaming::NamingContext::NotFound& ex)
         {
@@ -332,12 +434,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
           // Try again to see if it just was a race condition
           try {
-            CORBA::Object_var obj1_on_replica =
-              root_context_2->resolve (wide);
+            CORBA::Object_var obj1_on_replica = root_context_2->resolve (wide);
             // We did find the object on the replica, but only after a wait.
             // This would be caused by a race condition to access the variable.
-            ACE_ERROR ((LM_ERROR,
-                        "Object appeared after a short wait.\n"));
+            ACE_ERROR ((LM_ERROR, "Object appeared after a short wait.\n"));
           }
           catch (const CosNaming::NamingContext::NotFound& second_ex)
             {
@@ -367,27 +467,21 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     bool retried = false;
     // Make sure it is gone from the replica
     try {
-      CORBA::Object_var obj1_on_replica =
-        root_context_2->resolve (wide1);
+      CORBA::Object_var obj1_on_replica = root_context_2->resolve (wide1);
 
       // An exception should be thrown by the above or
       // there is an error. This means the replica did
       // not register the loss of the context.
-      ACE_ERROR ((LM_ERROR,
-                  "Unbound deep context not removed from replica. Trying again...\n"));
+      ACE_ERROR ((LM_ERROR, "Unbound deep context not removed from replica. Trying again...\n"));
       retried = true;  // Mark this so it can be reported in catch block.
-      obj1_on_replica =
-        root_context_2->resolve (wide1);
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "Unbound context not removed from on retry\n"),
-                        -1);
+      obj1_on_replica = root_context_2->resolve (wide1);
+      ACE_ERROR_RETURN ((LM_ERROR, "Unbound context not removed from on retry\n"), -1);
     }
     catch (const CosNaming::NamingContext::NotFound& ex)
       {
         // Not on replica --- as it should be.
         if (retried)  // Was found on the retry
-          ACE_ERROR ((LM_ERROR,
-                      "Was removed after short wait.\n"));
+          ACE_ERROR ((LM_ERROR, "Was removed after short wait.\n"));
       }
 
     // Remove the second to last context from the wide root Naming Context
@@ -396,13 +490,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     ACE_OS::sprintf(wide_name, "wide_%d", c_breadth-2);
     wide2[0].id = CORBA::string_dup (wide_name);
     CORBA::Object_var result_obj_ref = root_context_1->resolve (wide2);
-    CosNaming::NamingContext_var result_object =
-      CosNaming::NamingContext::_narrow (result_obj_ref.in ());
+    CosNaming::NamingContext_var result_object = CosNaming::NamingContext::_narrow (result_obj_ref.in ());
     if (CORBA::is_nil (result_object.in ()))
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("Problems with resolving wide context ")
-                         ACE_TEXT ("- nil object ref.\n")),
-                         -1);
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Problems with resolving wide context ") ACE_TEXT ("- nil object ref.\n")), -1);
     result_object->destroy();
     root_context_1->unbind (wide2);
 
@@ -416,40 +506,30 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       deep[i].id = CORBA::string_dup (deep_name);
     }
     result_obj_ref = root_context_1->resolve (deep);
-    result_object =
-      CosNaming::NamingContext::_narrow (result_obj_ref.in ());
+    result_object = CosNaming::NamingContext::_narrow (result_obj_ref.in ());
     if (CORBA::is_nil (result_object.in ()))
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("Problems with resolving deep context ")
-                         ACE_TEXT ("- nil object ref.\n")),
-                         -1);
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Problems with resolving deep context ") ACE_TEXT ("- nil object ref.\n")), -1);
     result_object->destroy();
     root_context_1->unbind (deep);
 
     retried = false;
     // Make sure it is gone from the replica
     try {
-      CORBA::Object_var obj1_on_replica =
-        root_context_2->resolve (deep);
+      CORBA::Object_var obj1_on_replica = root_context_2->resolve (deep);
 
       // An exception should be thrown by the above or
       // there is an error. This means the replica did
       // not register the loss of the context.
-      ACE_ERROR ((LM_ERROR,
-                  "Unbound deep context not removed from replica. Trying again...\n"));
+      ACE_ERROR ((LM_ERROR, "Unbound deep context not removed from replica. Trying again...\n"));
       retried = true;  // Mark this so it can be reported in catch block.
-      obj1_on_replica =
-        root_context_2->resolve (deep);
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "Unbound context not removed from on retry\n"),
-                        -1);
+      obj1_on_replica = root_context_2->resolve (deep);
+      ACE_ERROR_RETURN ((LM_ERROR, "Unbound context not removed from on retry\n"), -1);
     }
     catch (const CosNaming::NamingContext::NotFound& ex)
       {
         // Not on replica --- as it should be.
         if (retried)  // Was found on the retry
-          ACE_ERROR ((LM_ERROR,
-                      "Was removed after short wait.\n"));
+          ACE_ERROR ((LM_ERROR, "Was removed after short wait.\n"));
       }
   }
   catch (const CORBA::Exception& ex)
@@ -479,9 +559,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   }
   catch (const CORBA::Exception& ex)
   {
-    ex._tao_print_exception (
-      ACE_TEXT (
-        "Unable to resolve object from redundant server"));
+    ex._tao_print_exception ( ACE_TEXT ( "Unable to resolve object from redundant server"));
     return -1;
   }
 
@@ -505,9 +583,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     // expect exception since the context was deleted.
     // Make sure the right exception reason is provided.
     if (ex.why != CosNaming::NamingContext::missing_node)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("Wrong exception returned during resolve.\n")),
-                         -1);
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Wrong exception returned during resolve.\n")), -1);
   }
   catch (const CORBA::Exception& ex)
     {
@@ -524,8 +600,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     ACE_OS::sprintf(wide_name, "wide_%d", c_breadth-1);
     wide[0].id = CORBA::string_dup (wide_name);
     CORBA::Object_var result_obj_ref = root_context_2->resolve (wide);
-    CosNaming::NamingContext_var result_object =
-      CosNaming::NamingContext::_narrow (result_obj_ref.in ());
+    CosNaming::NamingContext_var result_object = CosNaming::NamingContext::_narrow (result_obj_ref.in ());
     if (CORBA::is_nil (result_object.in ()))
       ACE_ERROR_RETURN ((LM_ERROR,
                       ACE_TEXT ("Problems with resolving wide context from ")
@@ -538,8 +613,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     }
   catch (const CORBA::Exception& ex)
   {
-    ex._tao_print_exception (
-              ACE_TEXT ("Unexpected Exception received.\n"));
+    ex._tao_print_exception ( ACE_TEXT ("Unexpected Exception received.\n"));
     return -1;
   }
 
@@ -563,8 +637,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     }
   catch (const CORBA::Exception& ex)
   {
-    ex._tao_print_exception (
-              ACE_TEXT ("Unexpected Exception received.\n"));
+    ex._tao_print_exception ( ACE_TEXT ("Unexpected Exception received.\n"));
     return -1;
   }
 
@@ -609,8 +682,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       deep[i].id = CORBA::string_dup (deep_name);
     }
     CORBA::Object_var result_obj_ref = root_context_1->resolve (deep);
-    CosNaming::NamingContext_var result_object =
-      CosNaming::NamingContext::_narrow (result_obj_ref.in ());
+    CosNaming::NamingContext_var result_object = CosNaming::NamingContext::_narrow (result_obj_ref.in ());
     if (CORBA::is_nil (result_object.in ()))
       ACE_ERROR_RETURN ((LM_ERROR,
                       ACE_TEXT ("Problems with resolving deep context from ")
@@ -619,29 +691,77 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   }
   catch (const CORBA::Exception& ex)
   {
-    ex._tao_print_exception (
-      ACE_TEXT (
-        "Unable to resolve deep context from redundant server"));
+    ex._tao_print_exception ( ACE_TEXT ( "Unable to resolve deep context from redundant server"));
     return -1;
-  }
-
-  // TODO: Cleanup namespace
-
-
-  // TODO: Create object groups and bind them. Check the replica.
-
-  switch(test_type) {
-    case TT_FAILOVER:
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Failover test OK\n")));
-    break;
-    case TT_PERSISTENCE:
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Persistence test OK\n")));
-    break;
-    case TT_EQUIVALENCE:
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Equivalence test OK\n")));
-    break;
   }
 
   return 0;
 
 }
+
+int do_object_group_test ( CORBA::ORB_ptr theOrb, 
+                           ACE_TCHAR *nm1ref, 
+                           ACE_TCHAR *nm2ref)
+{
+  int rc = 0;
+
+  FT_Naming::NamingManager_var naming_manager_1;
+  FT_Naming::NamingManager_var naming_manager_2;
+
+  try {
+    
+    if (CORBA::is_nil (theOrb)) 
+      ACE_ERROR_RETURN ((LM_ERROR,ACE_TEXT ("invalid orb\n")),-1);
+    CORBA::ORB_var orb = theOrb;
+    
+    if (CORBA::is_nil (nm1ref)) 
+      ACE_ERROR_RETURN ((LM_ERROR,ACE_TEXT ("invalid nm1\n")),-1);
+    
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("nm1ref: %s\n"), nm1ref));
+    
+    CORBA::Object_var nm1obj = orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (nm1ref));
+    if (CORBA::is_nil (nm1obj.in ())) 
+      ACE_ERROR_RETURN ((LM_ERROR,ACE_TEXT ("invalid ior <%s>\n"),nm1ref),-1);
+    
+    naming_manager_1 = FT_Naming::NamingManager::_narrow (nm1obj.in ());
+    if (CORBA::is_nil (naming_manager_1.in ())) 
+      ACE_ERROR_RETURN ((LM_ERROR,ACE_TEXT ("invalid ior <%s>\n"),nm1ref),-1);
+    
+
+    if (!CORBA::is_nil (nm2ref)) {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("nm2ref: %s\n"), nm2ref));
+      CORBA::Object_var nm2obj = orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (nm2ref));
+      if (CORBA::is_nil (nm2obj.in ())) 
+        ACE_ERROR_RETURN ((LM_ERROR,ACE_TEXT ("invalid ior <%s>\n"),nm2ref),-1);
+      naming_manager_2 = FT_Naming::NamingManager::_narrow (nm2obj.in ());
+    if (CORBA::is_nil (naming_manager_2.in ())) 
+        ACE_ERROR_RETURN ((LM_ERROR,ACE_TEXT ("invalid ior <%s>\n"),nm2ref),-1);
+    }
+
+    NS_group_svc group_svc;
+    
+    int rc = group_svc.set_orb (theOrb);    
+    if( 0 != rc ) 
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,ACE_TEXT ("invalid orb\n")),-1);       
+    }
+
+    rc = group_svc.set_naming_manager (naming_manager_1);
+    if( 0 != rc ) 
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,ACE_TEXT ("invalid ior <%s>\n"),nm2ref),-1);       
+    }
+
+    //group_create (const char* group, const char* type_id, const char* policy);
+    rc = group_svc.group_create("test_group","IDL:FT_Naming/NamingManager:1.0", "round");
+
+  }
+  catch (const CORBA::Exception& ex)
+  {
+    ex._tao_print_exception (ACE_TEXT ("Unable to resolve name manager servers"));
+    return -1;
+  }
+
+  return rc;
+}
+

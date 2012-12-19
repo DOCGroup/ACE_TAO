@@ -1,3 +1,15 @@
+Wed Dec 19 16:34:54 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
+
+        * orbsvcs/tests/FT_Naming/FaultTolerance/Faulttolerance.mpc:
+        * orbsvcs/tests/FT_Naming/FaultTolerance/client.cpp:
+        * orbsvcs/tests/FT_Naming/FaultTolerance/run_equivalence_test.pl:
+        * orbsvcs/tests/FT_Naming/FaultTolerance/run_failover_test.pl:
+        * orbsvcs/tests/FT_Naming/FaultTolerance/run_persistence_test.pl:
+        * utils/nsgroup/nsgroup_svc.h:
+        * utils/nsgroup/nsgroup_svc.cpp:
+
+         Refactored client to use nsgroup_svc for FT_Naming FaultTolerance tests
+
 Wed Dec 19 14:03:08 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
 
         * orbsvcs/tests/FT_Naming/Replication/client.cpp:

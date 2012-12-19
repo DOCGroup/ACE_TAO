@@ -1,7 +1,13 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Client) : namingexe, portableserver {
+project(*Client) : namingexe, ftnaming, portableserver {
   exename  = client
+
+  Source_Files {
+    client.cpp
+    $(TAO_ROOT)/utils/nsgroup/nsgroup_svc.cpp
+  }
+  
 }
 

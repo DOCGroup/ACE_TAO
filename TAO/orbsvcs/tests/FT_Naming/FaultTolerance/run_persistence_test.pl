@@ -298,6 +298,7 @@ sub persistence_test ()
     my $client_args = "--persistence " .
                       "-p corbaloc:iiop:$hostname:$ns_orb_port1 " .
                       "-q corbaloc:iiop:$hostname:$ns_orb_port1 " .
+                      "-r corbaloc:iiop:$hostname:$ns_orb_port1/NamingManager " .
                       "-b 4 " .
                       "-d 4 ";
 
