@@ -154,6 +154,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::String_var ior =
         orb->object_to_string (hello.in ());
 
+      ACE_DEBUG ((LM_DEBUG,"Server calling poa_manager::activate()\n"));
+      poa_manager->activate ();
+
       // Output the IOR to the <ior_output_file>
       FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
       if (output_file == 0)
@@ -164,9 +167,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                               1);
       ACE_OS::fprintf (output_file, "%s", ior.in ());
       ACE_OS::fclose (output_file);
-
-      ACE_DEBUG ((LM_DEBUG,"Server calling poa_manager::activate()\n"));
-      poa_manager->activate ();
 
 
       ACE_DEBUG ((LM_DEBUG,"Server calling hello->sleep_sec()\n"));

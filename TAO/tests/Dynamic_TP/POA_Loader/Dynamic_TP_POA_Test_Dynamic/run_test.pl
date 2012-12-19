@@ -17,7 +17,6 @@ sub count_strings
    my $cnt=0;
    while (<$fh>)
    {
-#      print STDERR "$_";
       $f = quotemeta($find_str);
       $cnt += $_ =~ /$f/;
    }
@@ -44,13 +43,15 @@ sub test_1
 
     my $lfname = "server_test" . $test_num . ".log";
     my $scname = "svc" . $test_num . ".conf";
+    my $server_iorfile = $server->LocalFile ($iorbase);
+    my $client_iorfile = $client->LocalFile ($iorbase);
     my $server_logfile = $server->LocalFile ($lfname);
     my $svc_conf = $server->LocalFile($scname);
 
     $server->DeleteFile($lfname);
 
-    $SV = $server->CreateProcess ("server", " -ORBDebugLevel 5 -ORBSvcConf $svc_conf -ORBLogFile $server_logfile -s 3");
-    $SC = $client->CreateProcess ("client", "-s");
+    $SV = $server->CreateProcess ("server", " -ORBDebugLevel 5 -ORBSvcConf $svc_conf -ORBLogFile $server_logfile -s 3 -o $server_iorfile");
+    $SC = $client->CreateProcess ("client", "-k file://$client_iorfile -s");
 
     $server_status = $SV->Spawn ();
 
@@ -68,16 +69,7 @@ sub test_1
 
     $client_status = $SC->SpawnWaitKill ($client->ProcessStopWaitInterval());
     if ($client_status != 0) {
-        $num_exceptions++;
         print STDERR "ERROR: client $i returned $client_status\n";
-    }
-
-    $server_status = $SV->WaitKill ($server->ProcessStopWaitInterval());
-    $server->DeleteFile($iorbase);
-
-    if ($server_status != 0) {
-       print STDERR "ERROR: server returned $server_status\n";
-       $status = 1;
     }
 
      # Now find the spawned threads in the log file.
@@ -94,6 +86,17 @@ sub test_1
     elsif ($deletelogs) {
         $server->DeleteFile($lfname);
       }
+
+    $server_status = $SV->WaitKill ($server->ProcessStopWaitInterval());
+
+    if ($server_status != 0) {
+        print STDERR "ERROR: server returned $server_status\n";
+        $status = 1;
+    }
+
+    $server->DeleteFile($iorbase);
+    $client->DeleteFile($iorbase);
+
     return($status);
 }
 
@@ -118,13 +121,15 @@ sub test_2
     $test_num=2;
     my $lfname = "server_test" . $test_num . ".log";
     my $scname = "svc" . $test_num . ".conf";
+    my $server_iorfile = $server->LocalFile ($iorbase);
+    my $client_iorfile = $client->LocalFile ($iorbase);
     my $server_logfile = $server->LocalFile ($lfname);
     my $svc_conf = $server->LocalFile($scname);
 
     $server->DeleteFile($lfname);
 
-    $SV = $server->CreateProcess ("server", " -ORBDebugLevel 5 -ORBSvcConf $svc_conf -ORBLogFile $server_logfile -s 3");
-    $SC = $client->CreateProcess ("client", "-s");
+    $SV = $server->CreateProcess ("server", " -ORBDebugLevel 5 -ORBSvcConf $svc_conf -ORBLogFile $server_logfile -s 3 -o $server_iorfile");
+    $SC = $client->CreateProcess ("client", "-k file://$client_iorfile -s");
 
     $server_status = $SV->Spawn ();
 
@@ -146,20 +151,8 @@ sub test_2
 
     $client_status = $SC->SpawnWaitKill ($client->ProcessStopWaitInterval());
     if ($client_status != 0) {
-        $num_exceptions++;
         print STDERR "ERROR: client $i returned $client_status\n";
     }
-
-    $server_status = $SV->WaitKill ($server->ProcessStopWaitInterval());
-    $server->DeleteFile($iorbase);
-
-    $server_status = $SV->TerminateWaitKill ($server->ProcessStopWaitInterval());
-
-    if ($server_status != 0) {
-       print STDERR "ERROR: server returned $server_status\n";
-       $status = 1;
-    }
-
      # Now find the spawned threads in the log file.
 
     $find_this="Dynamic_TP_Task::svc() Existing thread expiring.";
@@ -173,7 +166,18 @@ sub test_2
     }
     elsif ($deletelogs) {
         $server->DeleteFile($lfname);
-    }   
+    }
+
+    $server_status = $SV->WaitKill ($server->ProcessStopWaitInterval());
+
+    if ($server_status != 0) {
+        print STDERR "ERROR: server returned $server_status\n";
+        $status = 1;
+    }
+    
+    $server->DeleteFile($iorbase);
+    $client->DeleteFile($iorbase);
+       
     return($status);
 }
 
@@ -197,12 +201,14 @@ sub test_3
     $num_clients=15;
     my $lfname = "server_test" . $test_num . ".log";
     my $scname = "svc" . $test_num . ".conf";
+    my $server_iorfile = $server->LocalFile ($iorbase);
+    my $client_iorfile = $client->LocalFile ($iorbase);
     my $server_logfile = $server->LocalFile ($lfname);
     my $svc_conf = $server->LocalFile($scname);
 
     $server->DeleteFile($lfname);
 
-    $SV = $server->CreateProcess ("server", " -ORBDebugLevel 5 -ORBSvcConf $svc_conf -ORBLogFile $server_logfile -s 3");
+    $SV = $server->CreateProcess ("server", " -ORBDebugLevel 5 -ORBSvcConf $svc_conf -ORBLogFile $server_logfile -s 3 -o $server_iorfile");
 
     $server_status = $SV->Spawn ();
 
@@ -219,7 +225,7 @@ sub test_3
     }
 
     for ($i = 0; $i < $num_clients; $i++) {
-        $CLS[$i] = $client->CreateProcess ("client", "-c $i");
+        $CLS[$i] = $client->CreateProcess ("client", "-c $i -k file://$client_iorfile -e 0");
         $CLS[$i]->Spawn ();
     }
 
@@ -236,7 +242,7 @@ sub test_3
         }
     }
 
-    $SC = $client->CreateProcess ("client", "-s");
+    $SC = $client->CreateProcess ("client", "-k file://$client_iorfile -s");
     $client_status = $SC->SpawnWaitKill ($client->ProcessStopWaitInterval());
     if ($client_status != 0) {
         print STDERR "ERROR: client $i returned $client_status\n";
@@ -258,6 +264,9 @@ sub test_3
         print STDERR "ERROR: server returned $server_status\n";
         $status = 1;
     }
+
+    $server->DeleteFile($iorbase);
+    $client->DeleteFile($iorbase);
     
     return($status);
 }
@@ -269,7 +278,7 @@ sub test_4
     # This is a test for showing a process maintaining a max_pool_threads after
     # more clients request service than the queue allows for.
     # The test will start up a server with a max_request_queue_depth of 10 and
-    # will issue calls from 15 clients. There should be 5 CORBA exceptions found
+    # will issue calls from 10 clients. There should be 5 CORBA exceptions found
     # in the log after the run.
     #
     
@@ -284,13 +293,15 @@ sub test_4
     $num_clients=10;
     my $lfname = "server_test" . $test_num . ".log";
     my $scname = "svc" . $test_num . ".conf";
+    my $server_iorfile = $server->LocalFile ($iorbase);
+    my $client_iorfile = $client->LocalFile ($iorbase);
     my $server_logfile = $server->LocalFile ($lfname);
     my $svc_conf = $server->LocalFile($scname);
 
     $server->DeleteFile($lfname);
 
-    $SV = $server->CreateProcess ("server", " -ORBDebugLevel 5 -ORBSvcConf $svc_conf -ORBLogFile $server_logfile -s 5");
-    $SC = $client->CreateProcess ("client", "-s");
+    $SV = $server->CreateProcess ("server", " -ORBDebugLevel 5 -ORBSvcConf $svc_conf -ORBLogFile $server_logfile -s 5 -o $server_iorfile");
+    $SC = $client->CreateProcess ("client", "-k file://$client_iorfile -s");
 
     $server_status = $SV->Spawn ();
 
@@ -306,9 +317,8 @@ sub test_4
         exit 1;
     }
 
-
     for ($i = 0; $i < $num_clients; $i++) {
-        $CLS[$i] = $client->CreateProcess ("client", "-c $i");
+        $CLS[$i] = $client->CreateProcess ("client", "-c $i -k file://$client_iorfile");
         $CLS[$i]->Spawn ();
     }
 
@@ -347,16 +357,18 @@ sub test_4
         $status = 1;
     }
 
+  $server->DeleteFile($iorbase);
+  $client->DeleteFile($iorbase);
+  return($status);
 }
 
 my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
 my $iorbase = "server.ior";
+my $server_iorfile = $server->LocalFile ($iorbase);
+my $client_iorfile = $client->LocalFile ($iorbase);
 my $deletelogs = 1;
 
-my $server_iorfile = $server->LocalFile ($iorbase);
-
-my $client_iorfile = $client->LocalFile ($iorbase);
 $server->DeleteFile($iorbase);
 $client->DeleteFile($iorbase);
 
@@ -389,3 +401,4 @@ $server->DeleteFile($iorbase);
 $client->DeleteFile($iorbase);
 
 exit $status;
+
