@@ -29,6 +29,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 class INS_Locator;
 class Locator_Repository;
+class UpdateableServerInfo;
 
 /// Gets a request from a client and depending on the POA name,
 /// requests an activator to take care of activating the
@@ -97,15 +98,19 @@ public:
 
 private:
 
-  char* activate_server_i (Server_Info& info, bool manual_start);
+  char* activate_server_i (UpdateableServerInfo& info,
+                           bool manual_start);
 
-  char* activate_perclient_server_i (Server_Info info, bool manual_start);
+  char* activate_perclient_server_i (UpdateableServerInfo& info,
+                                     bool manual_start);
 
   ImplementationRepository::StartupInfo*
-    start_server(Server_Info& info, bool manual_start, int& waiting_clients);
+    start_server(UpdateableServerInfo& info,
+                 bool manual_start,
+                 int& waiting_clients);
 
-  bool is_alive(Server_Info& info);
-  int is_alive_i(Server_Info& info);
+  bool is_alive(UpdateableServerInfo& info);
+  int is_alive_i(UpdateableServerInfo& info);
 
   void unregister_activator_i(const char* activator);
 
@@ -114,9 +119,10 @@ private:
 
   void auto_start_servers(void);
 
-  CORBA::Object_ptr set_timeout_policy(CORBA::Object_ptr obj, const ACE_Time_Value& to);
+  CORBA::Object_ptr set_timeout_policy(CORBA::Object_ptr obj,
+                                       const ACE_Time_Value& to);
 
-  void connect_server(Server_Info& info);
+  void connect_server(UpdateableServerInfo& info);
 
   PortableServer::POA_ptr findPOA(const char* name);
 private:

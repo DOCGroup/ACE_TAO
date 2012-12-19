@@ -178,4 +178,40 @@ private:
 };
 
 
+/**
+* @class UpdateableServerInfo
+*
+* @brief Class for managing changes to ServerInfo memory to ensure
+* it is persisted
+*
+*/
+class UpdateableServerInfo
+{
+public:
+  UpdateableServerInfo(Locator_Repository* repo, const ACE_CString& name);
+  UpdateableServerInfo(Locator_Repository* repo, const Server_Info_Ptr& si);
+  UpdateableServerInfo(const Server_Info& si);
+
+  ~UpdateableServerInfo();
+
+  void update_repo();
+
+  const Server_Info* operator->() const;
+
+  const Server_Info& operator*() const;
+
+  const Server_Info_Ptr& edit();
+
+  void needs_update();
+
+  bool null() const;
+private:
+  UpdateableServerInfo(const UpdateableServerInfo& );
+  const UpdateableServerInfo& operator=(const UpdateableServerInfo& );
+
+  Locator_Repository* const repo_;
+  const Server_Info_Ptr si_;
+  bool needs_update_;
+};
+
 #endif /* REPOSITORY_H */
