@@ -117,3 +117,4 @@ else
   CPPFLAGS += -DACE_HAS_CUSTOM_EXPORT_MACROS=0
 endif # shared_libs
 
+FLAGS_C_CC += -W -Wall
