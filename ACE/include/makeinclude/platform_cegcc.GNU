@@ -50,7 +50,7 @@ endif
 ifneq (,$(HOST_ROOT))
 TAO_IDLFLAGS += -g $(HOST_ROOT)/bin/ace_gperf
 TAO_IDL = $(HOST_ROOT)/bin/tao_idl$(HOST_EXE_EXT)
-TAO_IDL3_TO_IDL2 = $(HOST_ROOT)/TAO/CIAO/bin/tao_idl3_to_idl2$(HOST_EXE_EXT)
+TAO_IDL3_TO_IDL2 = $(HOST_ROOT)/bin/tao_idl3_to_idl2$(HOST_EXE_EXT)
 TAO_IDL_DEP = $(TAO_IDL)
 TAO_IDL3_TO_IDL2_DEP = $(TAO_IDL3_TO_IDL2)
 else
