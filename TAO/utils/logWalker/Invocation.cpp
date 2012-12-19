@@ -54,7 +54,7 @@ Invocation::init (const char * text, size_t offset, Thread *thread)
 }
 
 void
-Invocation::add_notify_incident (const ACE_CString &text, size_t offset)
+Invocation::add_notify_incident (const ACE_CString &text, size_t /* offset */)
 {
   this->notify_incidents_.enqueue_tail (text);
 }

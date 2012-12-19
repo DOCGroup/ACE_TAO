@@ -1,3 +1,11 @@
+Wed Dec 19 18:15:23 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * utils/logWalker/Invocation.cpp:
+        * utils/logWalker/Log.cpp:
+        * utils/logWalker/PeerProcess.cpp:
+
+          Fixing up a few minor scoreboard warnings.
+
 Wed Dec 19 16:34:54 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
 
         * orbsvcs/tests/FT_Naming/FaultTolerance/Faulttolerance.mpc:

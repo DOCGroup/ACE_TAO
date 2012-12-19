@@ -32,8 +32,8 @@ PeerProcess::nextIdent(bool is_server)
 PeerProcess::PeerProcess (size_t offset, bool is_server)
   : owner_ (0),
     remote_ (0),
-    server_host_(),
     server_port_(),
+    server_host_(),
     server_(is_server),
     ssl_(false),
     localhost_(false),
