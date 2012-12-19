@@ -1,3 +1,11 @@
+Wed Dec 19 08:30:15 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/idl/ndds/ndds_dcps.idl:
+        * connectors/dds4ccm/impl/Utils.h:
+          Extended PresentationQosPolicyAccessScopeKind and
+          SampleRejectedStatusKind. Both enums are extended by
+          RTI DDS 5.0.0 with some new enum values.
+
 Mon Dec 17 18:49:30 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/Condition.cpp:
