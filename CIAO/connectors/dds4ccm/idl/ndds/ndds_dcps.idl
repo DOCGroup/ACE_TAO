@@ -118,7 +118,10 @@ module DDS {
         REJECTED_BY_SAMPLES_PER_INSTANCE_LIMIT,
         REJECTED_BY_REMOTE_WRITERS_LIMIT, /* RTI Extension */
         REJECTED_BY_REMOTE_WRITERS_PER_INSTANCE_LIMIT, /* RTI Extension */
-        REJECTED_BY_SAMPLES_PER_REMOTE_WRITER_LIMIT /* RTI Extension */
+        REJECTED_BY_SAMPLES_PER_REMOTE_WRITER_LIMIT, /* RTI Extension */
+        REJECTED_BY_VIRTUAL_WRITERS_LIMIT, /* RTI DDS 5.0.0 Extension */
+        REJECTED_BY_REMOTE_WRITERS_PER_SAMPLE_LIMIT, /* RTI DDS 5.0.0 Extension */
+        REJECTED_BY_REMOTE_WRITER_SAMPLES_PER_VIRTUAL_QUEUE_LIMIT /* RTI DDS 5.0.0 Extension */
     };
 
     struct SampleRejectedStatus {
@@ -504,7 +507,8 @@ module DDS {
     enum PresentationQosPolicyAccessScopeKind {
         INSTANCE_PRESENTATION_QOS,
         TOPIC_PRESENTATION_QOS,
-        GROUP_PRESENTATION_QOS
+        GROUP_PRESENTATION_QOS,
+        HIGHEST_OFFERED_PRESENTATION_QOS /* RTI DDS 5.0.0 Extension */
     };
     struct PresentationQosPolicy {
         PresentationQosPolicyAccessScopeKind access_scope;
