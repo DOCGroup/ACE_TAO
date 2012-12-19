@@ -80,16 +80,27 @@ int do_object_group_test ( CORBA::ORB_ptr theOrb,
                            ACE_TCHAR *nm1ref, 
                            ACE_TCHAR *nm2ref);
 
-#if 0
-int
-group_create (FT_Naming::NamingManager_ptr theManager, const char* group_name, const char* type_id );
-#endif
+int 
+do_persistance_test ( 
+              CORBA::ORB_ptr theOrb, 
+              ACE_TCHAR *nm1ref,
+              bool validate_only);
 
+int 
+do_persistant_name_test (
+             CORBA::ORB_ptr theOrb, 
+             ACE_TCHAR *ns1ref, 
+             int c_breadth,
+             int c_depth,
+             int o_breadth,
+             bool validate_only);
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   int rc = 0;
+  int test_rc = 0;
+
   int c_breadth = 4;
   int c_depth = 4;
   int o_breadth = 4;
@@ -104,9 +115,15 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     TT_FAILOVER,
     TT_PERSISTENCE,
     TT_EQUIVALENCE
-  } fault_tolerent_test;
+  } fault_tolerant_test;
+  fault_tolerant_test test_type = TT_FAILOVER;
 
-  fault_tolerent_test test_type = TT_FAILOVER;
+  typedef enum {
+    TT_INIT,
+    TT_CREATE,
+    TT_VALIDATE
+  } fault_tolerant_test_phase;
+  fault_tolerant_test_phase test_phase = TT_INIT; 
 
   //////////////////////////////////////////////////////////////////////////////
   // optional
@@ -124,14 +141,20 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   // --failover run fault tolerant failover test
   // --persistence run fault tolerant persistence test
   // --equivalence run fault tolerant equivalence test
+  //////////////////////////////////////////////////////////////////////////////
+  // required with persistance
+  //////////////////////////////////////////////////////////////////////////////
+  // --create run creation test phase
+  // --validate run validation test phase
 
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("b:d:o:p:q:r:s:"));
   int c;
   int i;
-  get_opts.long_option ("failover", ACE_Get_Opt::NO_ARG);
+  get_opts.long_option ("failover",    ACE_Get_Opt::NO_ARG);
   get_opts.long_option ("persistence", ACE_Get_Opt::NO_ARG);
   get_opts.long_option ("equivalence", ACE_Get_Opt::NO_ARG);
-
+  get_opts.long_option ("create",      ACE_Get_Opt::NO_ARG);
+  get_opts.long_option ("validate",    ACE_Get_Opt::NO_ARG);
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -183,18 +206,28 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           const char* long_option = get_opts.long_option ();
           if (ACE_OS::strcmp (long_option, "failover") == 0)
             {
-              ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Failover test Selected\n")));
+              //ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Failover test Selected\n")));
               test_type = TT_FAILOVER;
             }
           else if (ACE_OS::strcmp (long_option, "persistence") == 0)
             {
-              ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Persistence test Selected\n")));
+              //ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Persistence Test Selected\n")));
               test_type = TT_PERSISTENCE;
             }
           else if (ACE_OS::strcmp (long_option, "equivalence") == 0)
             {
-              ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Equivalence test Selected\n")));
+              //ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Equivalence test Selected\n")));
               test_type = TT_EQUIVALENCE;
+            }
+          else if (ACE_OS::strcmp (long_option, "create") == 0)
+            {
+              //ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Create Test Phase Selected\n")));
+              test_phase = TT_CREATE;
+            }
+          else if (ACE_OS::strcmp (long_option, "validate") == 0)
+            {
+              //ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Validation Test Phase Selected\n")));
+              test_phase = TT_VALIDATE;
             }
         }
         break;
@@ -220,6 +253,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
 
     switch(test_type) {
+      
       case TT_FAILOVER:
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Failover test OK\n")));
         rc = do_name_test(
@@ -230,28 +264,87 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           c_depth,
           o_breadth
         );
-        do_object_group_test(
+        if( rc != 0) {
+          test_rc = 1;
+        }
+        rc = do_object_group_test(
           orb.in (),
           nm1ref,
           nm2ref
         );
+        if( rc != 0) {
+          test_rc = 1;
+        }
       break;
+
       case TT_PERSISTENCE:
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Persistence test OK\n")));
-        rc = do_name_test(
-          orb.in (),
-          ns1ref,
-          ns2ref,
-          c_breadth,
-          c_depth,
-          o_breadth
-        );
-        do_object_group_test(
-          orb.in (),
-          nm1ref,
-          nm2ref
-        );
+        switch(test_phase){
+
+          case TT_CREATE:
+            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("INFO: Persistence Creation Test\n")));
+            rc = do_persistant_name_test(
+              orb.in (),
+              ns1ref,
+              c_breadth,
+              c_depth,
+              o_breadth,
+              false // validate only
+            );
+            if( rc != 0){
+              ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ERROR: Persistence Creation Name Test Failed\n")));
+              test_rc = 1;
+            } else {
+              ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("INFO: Persistence Creation Name Test OK\n")));
+            }
+            rc = do_persistance_test(
+              orb.in (),
+              nm1ref,
+              false // validate only
+            );
+            if( rc != 0){
+              ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ERROR: Persistence Creation ObjectGroup Test Failed\n")));
+              test_rc = 1;
+            } else {
+              ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("INFO: Persistence Creation ObjectGroup Test OK\n")));
+            }
+          break;
+
+          case TT_VALIDATE:
+            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("INFO: Persistence Validation Test\n")));
+            rc = do_persistant_name_test(
+              orb.in (),
+              ns1ref,
+              c_breadth,
+              c_depth,
+              o_breadth,
+              true // validate only
+            );
+            if (rc == 0){
+              ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("INFO: Persistence Validation Name Test OK\n")));
+            } else {
+              ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ERROR: Persistence Validation Name Test Failed\n")));
+              test_rc = 1;
+            }
+
+            rc = do_persistance_test(
+              orb.in (),
+              nm1ref,
+              true // validate only
+            );
+            if (rc == 0){
+              ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("INFO: Persistence Validation ObjectGroup Test OK\n")));
+            } else {
+              ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ERROR: Persistence Validation ObjectGroup Test Failed\n")));
+              test_rc = 1;
+            }
+          break;
+
+          case TT_INIT:
+          default:
+          break;
+        }
       break;
+
       case TT_EQUIVALENCE:
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Equivalence test OK\n")));
         rc = do_name_test(
@@ -262,11 +355,17 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           c_depth,
           o_breadth
         );
-        do_object_group_test(
+        if( rc != 0) {
+          test_rc = 1;
+        }
+        rc = do_object_group_test(
           orb.in (),
           nm1ref,
           nm2ref
         );
+        if( rc != 0) {
+          test_rc = 1;
+        }
       break;
     }
   }
@@ -277,7 +376,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   }
 
 
-  return rc;
+  return test_rc;
 
 }
 
@@ -699,9 +798,270 @@ int do_name_test (
 
 }
 
-int do_object_group_test ( CORBA::ORB_ptr theOrb, 
-                           ACE_TCHAR *nm1ref, 
-                           ACE_TCHAR *nm2ref)
+//==========================================================================
+int 
+do_persistance_test ( 
+  CORBA::ORB_ptr theOrb, 
+  ACE_TCHAR *nm1ref, 
+  bool validate_only)
+{
+  int rc = 0;
+
+  FT_Naming::NamingManager_var naming_manager_1;
+
+  try {
+    
+    CORBA::ORB_var orb = CORBA::ORB::_duplicate(theOrb);
+
+    if (CORBA::is_nil (orb.in ())) 
+      ACE_ERROR_RETURN ((LM_ERROR,ACE_TEXT ("invalid orb\n")),-1);
+    
+    if (CORBA::is_nil (nm1ref)) 
+      ACE_ERROR_RETURN ((LM_ERROR,ACE_TEXT ("invalid nm1\n")),-1);
+    
+    //ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("nm1ref: %s\n"), nm1ref));
+    
+    CORBA::Object_var nm1obj = orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (nm1ref));
+    if (CORBA::is_nil (nm1obj.in ())) 
+      ACE_ERROR_RETURN ((LM_ERROR,ACE_TEXT ("invalid ior <%s>\n"),nm1ref),-1);
+    
+    naming_manager_1 = FT_Naming::NamingManager::_narrow (nm1obj.in ());
+    if (CORBA::is_nil (naming_manager_1.in ())) 
+      ACE_ERROR_RETURN ((LM_ERROR,ACE_TEXT ("invalid ior <%s>\n"),nm1ref),-1);
+    
+
+    NS_group_svc group_svc;
+    
+    rc = group_svc.set_orb (theOrb);    
+    if( 0 != rc ) 
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,ACE_TEXT ("invalid orb\n")),-1);       
+    }
+
+    rc = group_svc.set_naming_manager (naming_manager_1);
+    if( 0 != rc ) 
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,ACE_TEXT ("invalid ior <%s>\n"),nm1ref),-1);       
+    }
+
+    const char* test_group = "test_group";
+    const char* type_id = "IDL:FT_Naming/NamingManager:1.0";
+    const char* policy = "round";
+
+    if( false == validate_only ) {
+      rc = group_svc.group_create (test_group, type_id, policy);
+      if( 0 != rc) {
+        ACE_ERROR_RETURN ((LM_ERROR,ACE_TEXT ("ERROR: unable to create %s\n"),test_group),-1);       
+      }
+    }
+
+    if( true == group_svc.group_exist (test_group)) {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("INFO: Object Group Found In Repository\n")));
+      rc = 0;
+    } else {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ERROR: Object Group Not Found In Repository\n")));
+      rc = -1;
+    }
+
+  }
+  catch (const CORBA::Exception& ex)
+  {
+    ex._tao_print_exception (ACE_TEXT ("Unable To Resolve Name Manager Servers"));
+    return -1;
+  }
+
+  return rc;
+}
+
+//==============================================================================
+
+////////////////////////////////////////////////////////////////////////////////
+//
+////////////////////////////////////////////////////////////////////////////////
+int 
+do_persistant_name_test (
+    CORBA::ORB_ptr theOrb, 
+    ACE_TCHAR *ns1ref, 
+    int c_breadth,
+    int c_depth,
+    int o_breadth,
+    bool validate_only)
+{
+
+  CosNaming::NamingContext_var root_context_1;
+  int i;
+
+  try {
+    
+    CORBA::ORB_var orb = CORBA::ORB::_duplicate(theOrb);
+
+    if (CORBA::is_nil (orb.in () )) 
+      ACE_ERROR_RETURN ((LM_ERROR,ACE_TEXT ("invalid orb\n")),-1);
+    
+    if (CORBA::is_nil (ns1ref)) 
+      ACE_ERROR_RETURN ((LM_ERROR,ACE_TEXT ("invalid ns1\n")),-1);
+
+    CORBA::Object_var ns1obj = orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (ns1ref));
+
+    if (CORBA::is_nil (ns1obj.in ())) 
+      ACE_ERROR_RETURN ((LM_ERROR,ACE_TEXT ("invalid ior <%s>\n"),ns1ref),-1);
+
+    root_context_1 = CosNaming::NamingContext::_narrow (ns1obj.in ());
+
+    if (CORBA::is_nil (root_context_1.in ())) 
+      ACE_ERROR_RETURN ((LM_ERROR,ACE_TEXT ("invalid ior <%s>\n"),ns1ref),-1);
+  }
+  catch (const CORBA::Exception& ex)
+  {
+    ex._tao_print_exception (ACE_TEXT ("Unable to resolve name servers"));
+    return -1;
+  }
+
+  // Create a bunch of objects in one context
+  // Note: strings to the naming service must be char, not wchar
+  try
+  {
+    // Bind one context level under root.
+    CosNaming::Name level1;
+    level1.length (1);
+    level1[0].id = CORBA::string_dup ("level1_context");
+
+    if( false == validate_only ) {
+      CosNaming::NamingContext_var level1_context;
+      level1_context = root_context_1->bind_new_context (level1);
+    }
+
+    for (i=0; i<o_breadth; i++)
+    {
+      // Instantiate a dummy object and bind it under the new context.
+      My_Test_Object *impl1 = new My_Test_Object (i+1);
+      Test_Object_var obj1 = impl1->_this ();
+      impl1->_remove_ref ();
+
+      level1.length (2);
+      char wide_name[16];
+      ACE_OS::sprintf(wide_name, "obj_%d", i);
+      level1[1].id = CORBA::string_dup (wide_name);
+    
+      if( false == validate_only ) {
+        root_context_1->bind (level1, obj1.in ());
+      }
+
+      // See if the newly bound object is available in the repository
+      try {
+        CORBA::Object_var obj1_on_replica = root_context_1->resolve (level1);
+      }
+      catch (const CosNaming::NamingContext::NotFound& ex)
+        {
+          ex._tao_print_exception ("Unable to resolve object from repository.\n");
+
+          // Try again...
+          try {
+            CORBA::Object_var obj1_on_replica = root_context_1->resolve (level1);
+            // We did find the object on the repository, but only after a wait.
+            // This would be caused by a race condition to access the variable.
+            ACE_ERROR ((LM_ERROR, "Object appeared after a short wait.\n"));
+          }
+          catch (const CosNaming::NamingContext::NotFound& second_ex)
+            {
+              ex._tao_print_exception ("It really is not there. Failing...\n");
+              return -1;
+            }
+        }
+    }
+  }
+  catch (const CORBA::Exception& ex)
+  {
+    ex._tao_print_exception (ACE_TEXT ("Unable to create or validate a lot of objects"));
+    return -1;
+  }
+
+  if( false == validate_only ) {
+    // Create a deep context tree
+    try
+    {
+      CosNaming::NamingContext_var next_context = root_context_1;
+      for (i=0; i<c_depth; i++)
+      {
+        // Bind level1 context under root.
+        CosNaming::Name deep;
+        deep.length (1);
+        char deep_name[16];
+        ACE_OS::sprintf(deep_name, "deep_%d", i);
+        deep[0].id = CORBA::string_dup (deep_name);
+        
+        CosNaming::NamingContext_var deep_context;
+        deep_context = next_context->bind_new_context (deep);
+        next_context = deep_context;
+      }
+    }
+    catch (const CORBA::Exception& ex)
+    {
+      ex._tao_print_exception (ACE_TEXT ("Unable to create deep context"));
+      return -1;
+    }
+  }
+
+  // Create a wide context tree
+  try
+  {
+    for (i=0; i<c_breadth; i++)
+    {
+      // Bind all level of context under root.
+      CosNaming::Name wide;
+      wide.length (1);
+      char wide_name[16];
+      ACE_OS::sprintf(wide_name, "wide_%d", i);
+      wide[0].id = CORBA::string_dup (wide_name);
+
+      if( false == validate_only ) {
+        CosNaming::NamingContext_var wide_context;
+        wide_context = root_context_1->bind_new_context (wide);
+      }
+
+      try {
+        // Check if the new context is available in the repository
+        CORBA::Object_var obj1_on_replica = root_context_1->resolve (wide);
+        // Make sure it is a context
+        CosNaming::NamingContext_var nc = CosNaming::NamingContext::_narrow (obj1_on_replica);
+      }
+      catch (const CosNaming::NamingContext::NotFound& ex)
+        {
+          ex._tao_print_exception ("Unable to resolve wide context object from repository.\n");
+
+          // Try again to see if it just was a race condition
+          try {
+            CORBA::Object_var obj1_on_replica = root_context_1->resolve (wide);
+            // We did find the object on the replica, but only after a wait.
+            // This would be caused by a race condition to access the variable.
+            ACE_ERROR ((LM_ERROR, "Object appeared after a short wait.\n"));
+          }
+          catch (const CosNaming::NamingContext::NotFound& second_ex)
+            {
+              ex._tao_print_exception ("It really is not there. Failing...\n");
+              return -1;
+            }
+        }
+    }
+  }
+  catch (const CORBA::Exception& ex)
+  {
+    ex._tao_print_exception (ACE_TEXT ("Unable to create or validate wide context"));
+    return -1;
+  }
+
+  return 0;
+
+}
+
+
+
+//==========================================================================
+int 
+do_object_group_test ( 
+  CORBA::ORB_ptr theOrb, 
+  ACE_TCHAR *nm1ref, 
+  ACE_TCHAR *nm2ref )
 {
   int rc = 0;
 
@@ -752,8 +1112,15 @@ int do_object_group_test ( CORBA::ORB_ptr theOrb,
       ACE_ERROR_RETURN ((LM_ERROR,ACE_TEXT ("invalid ior <%s>\n"),nm2ref),-1);       
     }
 
-    //group_create (const char* group, const char* type_id, const char* policy);
     rc = group_svc.group_create("test_group","IDL:FT_Naming/NamingManager:1.0", "round");
+
+    if( true == group_svc.group_exist("test_group")) {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("INFO: Object Group Found In Repository\n")));
+      rc = 0;
+    } else {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ERROR: Object Group Not Found In Repository\n")));
+      rc = -1;
+    }
 
   }
   catch (const CORBA::Exception& ex)
