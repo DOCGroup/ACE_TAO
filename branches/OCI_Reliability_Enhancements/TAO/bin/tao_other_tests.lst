@@ -117,7 +117,8 @@ TAO/orbsvcs/tests/ImplRepo/run_test.pl nt_service_ir: !MINIMUM !CORBA_E_COMPACT 
 TAO/orbsvcs/tests/ImplRepo/run_test.pl shutdown: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !LynxOS !ACE_FOR_TAO
 TAO/orbsvcs/tests/ImplRepo/run_test.pl perclient: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !ACE_FOR_TAO
 TAO/orbsvcs/tests/ImplRepo/run_test.pl persistent_ir_hash: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !ACE_FOR_TAO
-TAO/orbsvcs/tests/ImplRepo/run_test.pl persistent_ir_files: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !ACE_FOR_TAO
+TAO/orbsvcs/tests/ImplRepo/run_test.pl persistent_ir_shared: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !ACE_FOR_TAO !Win32
+TAO/orbsvcs/tests/ImplRepo/run_test.pl failover -replica: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !ACE_FOR_TAO !Win32
 TAO/orbsvcs/tests/ImplRepo/NameService/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !ACE_FOR_TAO
 TAO/orbsvcs/tests/ImplRepo/locked/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !LynxOS !ACE_FOR_TAO
 TAO/orbsvcs/tests/ImplRepo/scale/run_test.pl -servers 5 -objects 5: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !ACE_FOR_TAO !LynxOS

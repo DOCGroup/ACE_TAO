@@ -35,8 +35,8 @@ project(TAO_IDL_EXE) : aceexe, install, tao_output, tao_idl_fe {
   verbatim(gnuace, postinstall) {
 "	@$(MKDIR) $(DESTDIR)$(INSTALL_PREFIX)/share/ace/bin"
 "	ln -sf $(INSTALL_PREFIX)/bin/tao_idl $(DESTDIR)$(INSTALL_PREFIX)/share/ace/bin"
-"	@$(MKDIR) $(DESTDIR)$(INSTALL_PREFIX)/share/ace/$(INSTALL_LIB)"
-"	ln -sf $(INSTALL_PREFIX)/$(INSTALL_LIB)/$(LIB_PREFIX)TAO_IDL_[FB]E.$(SOEXT) $(DESTDIR)$(INSTALL_PREFIX)/share/ace/$(INSTALL_LIB)"
+"	@$(MKDIR) $(DESTDIR)$(INSTALL_PREFIX)/share/ace/lib"
+"	ln -sf $(INSTALL_PREFIX)/$(INSTALL_LIB)/$(LIB_PREFIX)TAO_IDL_[FB]E.$(SOEXT) $(DESTDIR)$(INSTALL_PREFIX)/share/ace/lib"
   }
 
   Source_Files {

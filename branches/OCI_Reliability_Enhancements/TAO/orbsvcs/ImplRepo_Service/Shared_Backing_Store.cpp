@@ -379,7 +379,7 @@ Shared_Backing_Store::connect_replicas (Replica_ptr this_replica)
   if (this->opts_.debug() > 1)
     {
       ACE_DEBUG((LM_INFO,
-        "Resolving ImR replica (%d) %s\n", this->orb_.in(), replica_ior.c_str()));
+        "Resolving ImR replica %s\n", replica_ior.c_str()));
     }
 
   CORBA::Object_var obj =
@@ -400,7 +400,11 @@ Shared_Backing_Store::connect_replicas (Replica_ptr this_replica)
 
   ACE_DEBUG((LM_INFO, "narrowing replica\n"));
   this->replica_ =
-    ImplementationRepository::UpdatePushNotification::_narrow (obj.in());
+    ImplementationRepository::UpdatePushNotification::_unchecked_narrow (obj.in());
+  if (this->replica_->_non_existent() == 1)
+    {
+      this->replica_ = ImplementationRepository::UpdatePushNotification::_nil();
+    }
 
   ACE_DEBUG((LM_INFO, "check replica\n"));
   if (CORBA::is_nil (this->replica_.in ()))
