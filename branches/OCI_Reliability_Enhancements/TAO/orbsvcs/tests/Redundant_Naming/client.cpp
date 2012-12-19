@@ -16,6 +16,7 @@
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/High_Res_Timer.h"
 
 #if defined (_MSC_VER)
 # pragma warning (disable : 4250)

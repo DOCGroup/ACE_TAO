@@ -1,3 +1,12 @@
+Wed Dec 19 14:03:08 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
+
+        * orbsvcs/tests/FT_Naming/Replication/client.cpp:
+          Fixed issue with exception.
+
+        * orbsvcs/tests/Redundant_Naming/client.cpp:
+
+        Added missing include file.
+
 Wed Dec 19 13:36:22 UTC 2012  Byron Harris  <harrisb@ociweb.com>
 
         * orbsvcs/orbsvcs/PortableGroup/PG_Group_Factory.h:

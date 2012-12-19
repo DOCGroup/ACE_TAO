@@ -233,7 +233,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           }
           catch (const CosNaming::NamingContext::NotFound& second_ex)
             {
-              ex._tao_print_exception ("It really is not there. Failing...\n");
+              second_ex._tao_print_exception ("It really is not there. Failing...\n");
               return -1;
             }
         }
@@ -305,7 +305,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           }
           catch (const CosNaming::NamingContext::NotFound& second_ex)
             {
-              ex._tao_print_exception ("It really is not there. Failing...\n");
+              second_ex._tao_print_exception ("It really is not there. Failing...\n");
               return -1;
             }
         }
@@ -346,7 +346,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                          "Unbound context not removed from on retry\n"),
                         -1);
     }
-    catch (const CosNaming::NamingContext::NotFound& ex)
+    catch (const CosNaming::NamingContext::NotFound&)
       {
         // Not on replica --- as it should be.
         if (retried)  // Was found on the retry
@@ -408,7 +408,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                          "Unbound context not removed from on retry\n"),
                         -1);
     }
-    catch (const CosNaming::NamingContext::NotFound& ex)
+    catch (const CosNaming::NamingContext::NotFound&)
       {
         // Not on replica --- as it should be.
         if (retried)  // Was found on the retry
