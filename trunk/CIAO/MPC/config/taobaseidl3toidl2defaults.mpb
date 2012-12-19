@@ -4,8 +4,8 @@
 project {
   // Set the idl3_to_idl2 compiler and flags as template values
   specific {
-    tao_idl3_to_idl2       = $(CIAO_ROOT)/bin/tao_idl3_to_idl2
-    tao_idl3_to_idl2_dep   = $(CIAO_ROOT)/bin/tao_idl3_to_idl2
+    tao_idl3_to_idl2       = $(ACE_ROOT)/bin/tao_idl3_to_idl2
+    tao_idl3_to_idl2_dep   = $(ACE_ROOT)/bin/tao_idl3_to_idl2
   }
 
   Define_Custom(IDL3TOIDL2) {

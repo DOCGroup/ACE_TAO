@@ -1,3 +1,20 @@
+Wed Dec 19 14:44:43 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/taobaseidl3toidl2defaults.mpb:
+        * docs/fm/CIAO.htm:
+        * tests/IDL3_to_XMI/Bug_3607_Regression/run_test.pl:
+        * tests/IDL3_to_XMI/IDL2XMI_Test/run_test.pl:
+        * tests/IDL3_to_XMI/XMI_For_Array/run_test.pl:
+        * tests/IDL3_to_XMI/XMI_For_Included_File/run_test.pl:
+        * tests/IDL3_to_XMI/XMI_For_Module_Reopen/run_test.pl:
+        * tests/IDL3_to_XMI/XMI_For_Native/run_test.pl:
+        * tests/IDL3_to_XMI/XMI_For_Sequence/run_test.pl:
+        * tools/IDL3_to_IDL2/IDL3_to_IDL2.mpc:
+        * tools/IDL3_to_XMI/IDL3_TO_XMI.mpc:
+          Install tao_idl3_to_idl2 and tao_idl3_to_xmi into ACE_ROOT/bin
+          to handle cross compilation in a flat layout more easily, this
+          way we can use the same approach as tao_idl does
+
 Wed Dec 19 08:30:15 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/idl/ndds/ndds_dcps.idl:

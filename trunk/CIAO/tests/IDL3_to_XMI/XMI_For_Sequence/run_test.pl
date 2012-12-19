@@ -20,7 +20,7 @@ my $target_dtd = $target->LocalFile ($dtd);
 my $target_xmi = $target->LocalFile ($xmi);
 $target->DeleteFile($xmi);
 
-$I2X = $target->CreateProcess ("$ENV{'CIAO_ROOT'}/bin/tao_idl3_to_xmi",
+$I2X = $target->CreateProcess ("$ENV{'ACE_ROOT'}/bin/tao_idl3_to_xmi",
                                "-f -xd $target_dtd -of $target_xmi $target_idl");
 
 $target_status = $I2X->SpawnWaitKill ($target->ProcessStartWaitInterval());
