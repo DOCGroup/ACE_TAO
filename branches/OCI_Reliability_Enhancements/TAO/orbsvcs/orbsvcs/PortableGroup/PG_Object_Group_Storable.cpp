@@ -2,6 +2,8 @@
 
 #include "orbsvcs/PortableGroup/PG_Object_Group_Storable.h"
 
+#include "orbsvcs/Naming/FaultTolerant/FT_Naming_Replication_Manager.h"
+
 #include "tao/Storable_File_Guard.h"
 #include "tao/Storable_Factory.h"
 #include "tao/CDR.h"
@@ -55,6 +57,15 @@ namespace TAO
 
     virtual time_t get_object_last_changed ();
 
+    /// Check if the guarded object is current with the last
+    /// update which could have been performed independently of
+    /// the owner of this object.
+    virtual bool object_obsolete ();
+
+    /// Mark the object as current with respect to the
+    /// file to which it was persisted.
+    virtual void mark_object_current ();
+
     virtual void load_from_stream ();
 
     virtual bool is_loaded_from_stream ();
@@ -79,6 +90,10 @@ TAO::Object_Group_File_Guard::Object_Group_File_Guard ( TAO::PG_Object_Group_Sto
 TAO::Object_Group_File_Guard::~Object_Group_File_Guard ()
 {
   this->release ();
+
+  // Notify if persistent store was updated.
+  if (object_group_.write_occurred_)
+    object_group_.state_written ();
 }
 
 void
@@ -91,6 +106,19 @@ time_t
 TAO::Object_Group_File_Guard::get_object_last_changed ()
 {
   return object_group_.last_changed_;
+}
+
+bool
+TAO::Object_Group_File_Guard::object_obsolete ()
+{
+  return object_group_.is_obsolete (fl_->last_changed ());
+}
+
+void
+TAO::Object_Group_File_Guard::mark_object_current ()
+{
+  object_group_.stale (false);
+  TAO::Storable_File_Guard::mark_object_current ();
 }
 
 void
@@ -133,9 +161,10 @@ TAO::PG_Object_Group_Storable::PG_Object_Group_Storable (
   , group_previously_stored_(false)
   , group_id_previously_stored_(0)
   , storable_factory_ (storable_factory)
-  , loaded_from_stream_ (false)
   , last_changed_ (0)
+  , loaded_from_stream_ (false)
   , destroyed_ (false)
+  , write_occurred_ (false)
 {
   // Create a temporary stream simply to check if a readable
   // version already exists.
@@ -169,8 +198,10 @@ TAO::PG_Object_Group_Storable::PG_Object_Group_Storable (
   , group_previously_stored_(true)
   , group_id_previously_stored_(group_id)
   , storable_factory_ (storable_factory)
-  , loaded_from_stream_ (false)
   , last_changed_ (0)
+  , loaded_from_stream_ (false)
+  , destroyed_ (false)
+  , write_occurred_ (false)
 {
   // Create a temporary stream to simply to check if a readable
   // version already exists.
@@ -533,7 +564,34 @@ TAO::PG_Object_Group_Storable::write (TAO::Storable_Base & stream)
       stream << member->is_primary_;
     }
   stream.flush ();
+  this->write_occurred_ = true;
+}
+
+void
+TAO::PG_Object_Group_Storable::stale (bool is_stale)
+{
+  ACE_UNUSED_ARG (is_stale);
+  // Default implementation is no-op
+}
+
+bool
+TAO::PG_Object_Group_Storable::stale ()
+{
+  // Default is to return false
+  return false;
+}
+
+void
+TAO::PG_Object_Group_Storable::state_written (void)
+{
+  // No-op. Overridden by derived class.
+}
+
+bool
+TAO::PG_Object_Group_Storable::is_obsolete (time_t stored_time)
+{
+  return (!this->loaded_from_stream_) ||
+    stored_time > this->last_changed_;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-

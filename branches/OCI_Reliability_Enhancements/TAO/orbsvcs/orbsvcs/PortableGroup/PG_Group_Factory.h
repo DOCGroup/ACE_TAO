@@ -187,6 +187,8 @@ namespace TAO
       TAO::PG_Object_Group_Manipulator & manipulator,
       TAO::Storable_Factory & storable_factory);
 
+    bool use_persistence_;
+
   private:
 
     CORBA::ORB_var orb_;
@@ -211,7 +213,6 @@ namespace TAO
 
     // Support for object group persistent
 
-    bool use_persistence_;
     Storable_Factory * storable_factory_;
     PG_Group_List_Store * list_store_;
 

@@ -17,6 +17,7 @@
 
 #include <orbsvcs/CosNaming.idl>
 #include <orbsvcs/FT_NamingManager.idl>
+#include <orbsvcs/FT_CORBA_ORB.idl>
 
 module FT_Naming
 {
@@ -50,10 +51,10 @@ module FT_Naming
    */
   struct ObjectGroupUpdate
   {
+    /// This is used to identify object group references.
+    PortableGroup::ObjectGroupId id;
     /// The type of change that is being reported
     ChangeType change_type;
-    /// This is the name that is used to identify object group references.
-    GroupName name;
   };
 
   interface ReplicationManager

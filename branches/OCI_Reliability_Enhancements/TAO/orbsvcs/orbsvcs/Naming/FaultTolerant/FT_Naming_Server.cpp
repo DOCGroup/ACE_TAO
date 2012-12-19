@@ -136,7 +136,6 @@ TAO_FT_Naming_Server::init_with_orb (int argc,
   return result;
 }
 
-
 int
 TAO_FT_Naming_Server::init_naming_manager_with_orb (int argc, ACE_TCHAR *argv [], CORBA::ORB_ptr orb)
 {
@@ -948,14 +947,24 @@ int
 TAO_FT_Naming_Server::update_object_group (
     const FT_Naming::ObjectGroupUpdate & group_info)
 {
-  ACE_UNUSED_ARG (group_info);
-
   ACE_GUARD_THROW_EX (ACE_SYNCH_RECURSIVE_MUTEX,
                       ace_mon,
                       this->lock_,
                       CORBA::INTERNAL ());
 
-  // TODO: Update or mark the affected object group that is specified
+  if (this->use_object_group_persistence_)
+    {
+      this->naming_manager_.set_object_group_stale (group_info.id);
+    }
+  else
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "ERROR: Attempting to update object group "
+                  "as stale with obect group persistence not "
+                  "enabled."));
+      return -1;
+    }
+
   return 0;
 }
 
