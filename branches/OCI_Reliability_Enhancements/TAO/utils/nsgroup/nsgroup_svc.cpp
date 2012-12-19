@@ -16,6 +16,10 @@
 #include "ace/OS_NS_strings.h"
 
 
+NS_group_svc::NS_group_svc (void)
+{
+}
+
 NS_group_svc::NS_group_svc (int argc, ACE_TCHAR **argv)
   : argc_ (argc),
     argv_ (argv),
@@ -344,6 +348,46 @@ NS_group_svc::start_orb (void)
   return 1;
 
 }
+
+int 
+NS_group_svc::set_orb( CORBA::ORB_ptr orb)
+{
+    
+    this->orb_ = CORBA::ORB::_duplicate (orb);
+    
+    if (CORBA::is_nil (this->orb_))
+      ACE_ERROR_RETURN ((LM_ERROR,
+                          " (%P|%t) Unable to initialize the ORB.\n"),
+                          -1);
+    return 0;
+}
+
+int 
+NS_group_svc::set_naming_manager( FT_Naming::NamingManager_ptr nm)
+{
+
+    this->naming_manager_ = FT_Naming::NamingManager::_duplicate (nm);
+
+    if (CORBA::is_nil (this->naming_manager_))
+      ACE_ERROR_RETURN ((LM_ERROR,
+                          " (%P|%t) Invalid Naming Manager.\n"),
+                          -1);
+    return 0;
+}
+
+int 
+NS_group_svc::set_name_context( CosNaming::NamingContextExt_ptr nc)
+{
+
+    this->name_service_ = CosNaming::NamingContextExt::_duplicate (nc);
+
+    if (CORBA::is_nil (this->name_service_))
+      ACE_ERROR_RETURN ((LM_ERROR,
+                          " (%P|%t) Invalid Name Context.\n"),
+                          -1);
+    return 0;
+}
+
 
 int
 NS_group_svc::show_usage( void )

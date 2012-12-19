@@ -345,6 +345,7 @@ sub redundant_equivalency_test()
     run_nslist ("$primary_default_init_ref", $POSITIVE_TEST_RESULT);
     print_msg("INFO: backup nslist");
     run_nslist ("$backup_default_init_ref", $POSITIVE_TEST_RESULT);
+=cut
 
     print_msg("INFO: backup create object group");
     run_nsgroup ("$backup_default_init_ref group_create -group ieee -policy round -type_id IDL:FT_Naming/NamingManager:1.0", $POSITIVE_TEST_RESULT);
@@ -355,7 +356,7 @@ sub redundant_equivalency_test()
 
     #print_msg("INFO: primary bind group");
     #run_nsgroup ("$primary_default_init_ref group_bind -group ieee -name iso/ieee", $POSITIVE_TEST_RESULT);
-
+=cut
     print_msg("INFO: backup group list");
     run_nsgroup ("$backup_default_init_ref group_list", $POSITIVE_TEST_RESULT);
     print_msg("INFO: primary group list");

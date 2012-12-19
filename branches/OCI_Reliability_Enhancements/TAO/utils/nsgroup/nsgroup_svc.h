@@ -40,6 +40,9 @@ public:
   };
 
   /// Constructor
+  NS_group_svc (void);
+
+  /// Constructor
   NS_group_svc (int argc, ACE_TCHAR **argv);
 
   /// destroys LoadManager, ORB and POA.
@@ -102,6 +105,10 @@ public:
   const char * location_arg(void) const { return location_arg_; }
   const char * ior_arg(void) const { return ior_arg_; }
   const char * namepath_arg(void) const { return namepath_arg_; }
+
+  int set_orb( CORBA::ORB_ptr value);
+  int set_naming_manager( FT_Naming::NamingManager_ptr value);
+  int set_name_context( CosNaming::NamingContextExt_ptr value);
 
 private:
 
