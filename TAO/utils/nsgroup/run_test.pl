@@ -259,15 +259,15 @@ sub run_clients ()
         $POSITIVE_TEST_RESULT);
 
     run_client (
-        "group_create -group ieee -policy round -type_id IDL:FT_Naming/NamingManager:1.0",
+        "group_create -group ieee -policy round",
         $POSITIVE_TEST_RESULT);
 
     run_client (
-        "group_create -group ieed -policy rand -type_id IDL:FT_Naming/NamingManager:1.0",
+        "group_create -group ieed -policy rand",
         $POSITIVE_TEST_RESULT);
 
     run_client (
-        "group_create -group ieee -policy round -type_id IDL:FT_Naming/NamingManager:1.0",
+        "group_create -group ieee -policy round",
         $NEGATIVE_TEST_RESULT);
 
     run_client (

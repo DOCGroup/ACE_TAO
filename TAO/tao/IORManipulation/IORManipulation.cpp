@@ -27,9 +27,9 @@ TAO_IOR_Manipulation_impl::merge_iors (
 {
   // we need to create a new CORBA::Object which has the union of the
   // two profile lists.  However, if any profiles are duplicates (i.e. in
-  // bott lisis) then an exception is raised.
+  // both lists) then an exception is raised.
 
-  // Deterinine how many profiles we have
+  // Determine how many profiles we have
   // Get an estimate of the size - pfile count could change since we
   // neither lock nor get a copy in this loop.
   CORBA::ULong i, count=0;
@@ -56,12 +56,12 @@ TAO_IOR_Manipulation_impl::merge_iors (
 
   for (i = 1; i < iors.length () ; i++)
     {
-      // this gets a copy of the MProfile, hense the auto_ptr;
+      // this gets a copy of the MProfile, hence the auto_ptr;
 
       ACE_auto_ptr_reset (tmp_pfiles,
                           iors[i]->_stubobj ()->make_profiles ());
 
-      // check to see if any of the profile in tmp_pfiles are already
+      // check to see if any of the profiles in tmp_pfiles are already
       // in Merged_Profiles.  If so raise exception.
       if (Merged_Profiles.is_equivalent (tmp_pfiles.get ()))
         throw TAO_IOP::Duplicate ();

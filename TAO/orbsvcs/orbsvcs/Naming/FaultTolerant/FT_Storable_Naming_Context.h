@@ -19,7 +19,7 @@
 #include "orbsvcs/Naming/FaultTolerant/ftnaming_export.h"
 #include "orbsvcs/orbsvcs/PortableGroupC.h"
 #include "orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.h"
-#include "orbsvcs/Naming/FaultTolerant/FT_NamingReplicationC.h"
+#include "orbsvcs/FT_NamingReplicationC.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

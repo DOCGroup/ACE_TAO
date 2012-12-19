@@ -67,13 +67,6 @@ NS_group_svc::parse_command_line (void)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("Unable to add long option 'p'\n")), NSGROUP_NONE);
 
-  this->typeid_arg_ = 0;
-  if (get_opts.long_option (ACE_TEXT ("type_id"),
-                           't',
-                           ACE_Get_Opt::ARG_REQUIRED) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Unable to add long option 't'\n")), NSGROUP_NONE);
-
   this->location_arg_ = 0;
   if (get_opts.long_option (ACE_TEXT ("location"),
                            'l',
@@ -108,9 +101,6 @@ NS_group_svc::parse_command_line (void)
         break;
       case 'p':  // policy
         this->policy_arg_ = get_opts.opt_arg ();
-        break;
-      case 't':  // type_id
-        this->typeid_arg_ = get_opts.opt_arg ();
         break;
       case 'l':  // location
         this->location_arg_ = get_opts.opt_arg ();
@@ -212,7 +202,7 @@ NS_group_svc::run_cmd(void)
     break;
 
     case NSGROUP_GROUP_CREATE:
-      return group_create ( group_arg(), typeid_arg(), policy_arg() );
+      return group_create ( group_arg(), policy_arg() );
     break;
 
     case NSGROUP_GROUP_BIND:
@@ -395,7 +385,7 @@ NS_group_svc::show_usage( void )
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("Usage:\n")
               ACE_TEXT ("  %s\n")
-              ACE_TEXT ("    group_create  -group <group> -policy <round | rand | least> -type_id <type_id> \n")
+              ACE_TEXT ("    group_create  -group <group> -policy <round | rand | least> \n")
               ACE_TEXT ("    group_bind    -group <group> -name <name>\n")
               ACE_TEXT ("    group_unbind  -name <name>\n")
               ACE_TEXT ("    group_modify  -group <group> -policy <round | rand | least> \n")
@@ -445,11 +435,10 @@ NS_group_svc::group_exist (
 int
 NS_group_svc::group_create (
   const char* group_name,
-  const char* type_id,
   const char* policy )
 {
 
-  if (group_name == 0 || type_id == 0 || policy == 0 )
+  if (group_name == 0 || policy == 0 )
   {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("group_create args not provided\n")),
@@ -485,7 +474,6 @@ NS_group_svc::group_create (
     CORBA::Object_var obj =
       this->naming_manager_->create_object_group (group_name,
                                                   determine_policy_string(policy),
-                                                  type_id,
                                                   criteria);
 
     if (CORBA::is_nil (obj.in ()))

@@ -88,9 +88,15 @@ CORBA::Object_ptr
 TAO_FT_Naming_Manager::create_object_group (
     const char * group_name,
     FT_Naming::LoadBalancingStrategyValue lb_strategy,
-    const char * type_id,
     const ::PortableGroup::Criteria & the_criteria)
 {
+  // The when creating the object group, it starts as a generic
+  // CORBA Object. It will become the type of the first added
+  // member.
+                                 // For testing purposes can use this.
+                                 //"IDL:Test/Basic:1.0");
+  const char * type_id = ACE_TEXT ("IDL:omg.org:CORBA/Object:1.0");
+
   // Add the group name to the criteria and create the object
   TAO::PG_Property_Set property_set (the_criteria);
   PortableGroup::Value value;
@@ -377,6 +383,7 @@ TAO_FT_Naming_Manager::add_member (
   if (this->group_factory_.find_group (object_group, group))
   {
     try {
+
       group->add_member (the_location,
                          member);
     }
@@ -586,7 +593,6 @@ TAO_FT_Naming_Manager::create_object (
       typeid_properties);
 
   group->set_name (object_name);
-
 
   // Dont distribute the object group for its usage in the FT_Naming_Manager
   group->distribute (0);

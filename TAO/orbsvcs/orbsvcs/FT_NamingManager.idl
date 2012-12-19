@@ -37,7 +37,6 @@ module FT_Naming
   {
     ObjectGroup create_object_group (in GroupName group_name,
                                      in LoadBalancingStrategyValue lb_strategy,
-                                     in PortableGroup::_TypeId type_id,
                                      in PortableGroup::Criteria the_criteria)
       raises (PortableGroup::ObjectNotCreated,
               PortableGroup::InvalidCriteria,

@@ -59,7 +59,7 @@ public:
 
   /// The naming service shall provide a command line utility for creating
   /// object groups.
-  int group_create (const char* group, const char* type_id, const char* policy);
+  int group_create (const char* group, const char* policy);
 
   /// The naming service shall provide a command line utility for binding an
   /// object group to a path in the naming service.
@@ -101,7 +101,6 @@ public:
 
   const char * group_arg(void) const { return group_arg_; }
   const char * policy_arg(void) const { return policy_arg_; }
-  const char * typeid_arg(void) const { return typeid_arg_; }
   const char * location_arg(void) const { return location_arg_; }
   const char * ior_arg(void) const { return ior_arg_; }
   const char * namepath_arg(void) const { return namepath_arg_; }
