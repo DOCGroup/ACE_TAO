@@ -413,6 +413,9 @@ ImR_Locator_i::activate_server_by_name (const char* name, bool manual_start)
       throw ImplementationRepository::NotFound ();
     }
 
+  //MDM
+  info.edit()->start_count = 0;
+
   return activate_server_i (info, manual_start);
 }
 
