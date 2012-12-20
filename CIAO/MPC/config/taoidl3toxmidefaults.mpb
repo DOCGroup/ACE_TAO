@@ -4,8 +4,8 @@
 project : xerces {
   // Set the idl3_to_xmi compiler and flags as template values
   specific {
-    tao_idl3_to_xmi       = <%quote%>$(CIAO_ROOT)/bin/tao_idl3_to_xmi<%quote%>
-    tao_idl3_to_xmi_dep   = <%quote%>$(CIAO_ROOT)/bin/tao_idl3_to_xmi<%quote%>
+    tao_idl3_to_xmi       = <%quote%>$(ACE_ROOT)/bin/tao_idl3_to_xmi<%quote%>
+    tao_idl3_to_xmi_dep   = <%quote%>$(ACE_ROOT)/bin/tao_idl3_to_xmi<%quote%>
   }
 
   Define_Custom(IDL3TOXMI) {
