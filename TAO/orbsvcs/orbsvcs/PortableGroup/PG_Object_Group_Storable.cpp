@@ -21,7 +21,9 @@ namespace
       throw CORBA::INTERNAL ();
     }
 
-  ACE_Auto_Basic_Ptr<char> buf(new char [size]);
+  char *tmp = 0;
+  ACE_NEW_THROW_EX (tmp, char [size], CORBA::NO_MEMORY ());
+  ACE_Auto_Basic_Array_Ptr<char> buf(tmp);
   stream.read (size, buf.get ());
   if (!stream.good ())
     {
