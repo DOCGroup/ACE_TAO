@@ -280,11 +280,11 @@ namespace TAO
 
     void distribute_iogr (void);
 
-    PortableGroup::ObjectGroup_ptr add_member_to_iogr(CORBA::Object_ptr member);
-
     void create_members (size_t count);
 
   protected:
+
+    virtual PortableGroup::ObjectGroup_ptr add_member_to_iogr(CORBA::Object_ptr member);
 
     void clear_members_map (void);
 
@@ -321,17 +321,16 @@ namespace TAO
     /// Where to find the factories for replicas.
     PortableGroup::FactoryRegistry_var factory_registry_;
 
+  protected:
 
     // The object group manipulator
     TAO::PG_Object_Group_Manipulator & manipulator_;
 
-    /// boolean true if empty group
-    int empty_;
-
-  protected:
-
     /// boolean true if updates should be distributed
     int distribute_;
+
+    /// boolean true if empty group
+    int empty_;
 
     ACE_CString role_;
 

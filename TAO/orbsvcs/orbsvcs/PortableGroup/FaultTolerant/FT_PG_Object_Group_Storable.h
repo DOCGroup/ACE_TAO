@@ -89,6 +89,10 @@ namespace TAO
 
     virtual bool is_obsolete (time_t stored_time);
 
+    /// Provide support for modifying the object group type_id when first member is
+    /// added to the group.
+    virtual PortableGroup::ObjectGroup_ptr add_member_to_iogr(CORBA::Object_ptr member);
+
   private:
 
     /////////////////////////
