@@ -1,3 +1,8 @@
+Thu Dec 20 13:55:46 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tools/IDL3_to_IDL2/IDL3_to_IDL2.mpc:
+          Fixed post install
+
 Thu Dec 20 07:13:50 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/taoidl3toxmidefaults.mpb:
