@@ -1,6 +1,6 @@
 // $Id$
 
-project(nsgroup): orbsvcsexe, ftnaming, naming, ft_portablegroup, install, svc_utils {
+project(nsgroup): orbsvcsexe, ft_naming_serv, ftnaming, naming, ft_portablegroup, install, svc_utils {
   install = $(ACE_ROOT)/bin
   exename = tao_nsgroup
   Source_Files {
@@ -8,5 +8,3 @@ project(nsgroup): orbsvcsexe, ftnaming, naming, ft_portablegroup, install, svc_u
     nsgroup_svc.cpp
   }
 }
-
-
