@@ -1,3 +1,18 @@
+Thu Dec 20 20:57:26 UTC 2012  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * orbsvcs/orbsvcs/PortableGroup/FaultTolerant/FT_PG_Object_Group_Storable.cpp:
+
+          Updated implementation to replace the object reference
+          for the object group when the first member is added.
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:
+
+          Modified order of empty_ and distribute_ to avoid warning.
+
+        * tests/Storable/test.cpp:
+
+          Added missing include file.
+
 Thu Dec 20 20:46:40 UTC 2012  Byron Harris  <harrisb@ociweb.com>
 
         * orbsvcs/orbsvcs/PortableGroup/PG_Group_List_Store.cpp:

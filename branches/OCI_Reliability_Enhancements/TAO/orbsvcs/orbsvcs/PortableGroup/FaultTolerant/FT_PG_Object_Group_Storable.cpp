@@ -4,6 +4,7 @@
 #include "orbsvcs/PortableGroup/PG_Object_Group_Storable.h"
 
 #include "orbsvcs/Naming/FaultTolerant/FT_Naming_Replication_Manager.h"
+#include "tao/Stub.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -127,14 +128,23 @@ TAO::FT_PG_Object_Group_Storable::is_obsolete (time_t stored_time)
 }
 
 PortableGroup::ObjectGroup_ptr
-TAO::FT_PG_Object_Group_Storable::add_member_to_iogr(CORBA::Object_ptr member)
+TAO::FT_PG_Object_Group_Storable::add_member_to_iogr (CORBA::Object_ptr member)
 {
   // assume internals is locked
 
   PortableGroup::ObjectGroup_var result;
 
-  // If this is the first member, then we should create a new object of the
-  // type of the member and add them together.
+  // If this is the first member, then we should create a new
+  // object of the type of the member and add them together.
+  if (this->members_.current_size () == 0)
+    {
+      this->type_id_ = member->_stubobj ()->type_id.in ();
+      this->reference_ = manipulator_.create_object_group_using_id (
+          this->type_id_,
+          this->tagged_component_.group_domain_id,
+          this->tagged_component_.object_group_id);
+    }
+
 
  ////////////////////////////
   // @@ HACK ALERT

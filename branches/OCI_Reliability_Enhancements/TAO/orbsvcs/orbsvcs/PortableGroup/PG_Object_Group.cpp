@@ -61,8 +61,8 @@ TAO::PG_Object_Group::PG_Object_Group (
   , orb_ (CORBA::ORB::_duplicate (orb))
   , factory_registry_ (PortableGroup::FactoryRegistry::_duplicate (factory_registry))
   , manipulator_ (manipulator)
-  , empty_ (1)
   , distribute_ (1)
+  , empty_ (1)
   , role_ (type_id)
   , type_id_ (CORBA::string_dup (type_id))
   , tagged_component_ (tagged_component)
@@ -85,8 +85,8 @@ TAO::PG_Object_Group::PG_Object_Group (
   , orb_ (CORBA::ORB::_duplicate (orb))
   , factory_registry_ (PortableGroup::FactoryRegistry::_duplicate (factory_registry))
   , manipulator_ (manipulator)
-  , empty_ (1)
   , distribute_ (1)
+  , empty_ (1)
   , role_ ("")
   , type_id_ ()
   , tagged_component_ ()
@@ -217,7 +217,7 @@ TAO::PG_Object_Group::add_member (const PortableGroup::Location & the_location,
     orb_->object_to_string (member);
 
   PortableGroup::ObjectGroup_var new_reference =
-    add_member_to_iogr (member);
+    this->add_member_to_iogr (member);
 
   // Convert new member back to a (non group) ior.
   CORBA::Object_var member_ior =
