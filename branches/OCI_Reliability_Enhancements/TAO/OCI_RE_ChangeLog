@@ -1,3 +1,20 @@
+Thu Dec 20 16:21:56 UTC 2012  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * orbsvcs/orbsvcs/PortableGroup/FaultTolerant/FT_PG_Object_Group_Storable.h:
+        * orbsvcs/orbsvcs/PortableGroup/FaultTolerant/FT_PG_Object_Group_Storable.cpp:
+
+          Added add_member_to_iogr member function to support specialization.
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.h:
+
+          Made members protected to allow use in derived classes.
+          Made member function virtual to support overriding.
+
+        * orbsvcs/tests/Simple_Naming/client.cpp:
+
+          Added missing return for failure case.  Added error message to describe
+          failure in another case.
+
 Thu Dec 20 14:56:42 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:

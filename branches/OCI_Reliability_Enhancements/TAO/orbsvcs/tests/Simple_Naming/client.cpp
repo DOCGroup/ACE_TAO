@@ -276,7 +276,11 @@ MT_Test::svc (void)
     }
 
   if (name_service.in () == 0)
-    return -1;
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "ERROR: Unable to narrow naming IOR to a NamingContext.\n"));
+      return -1;
+    }
 
   // Bind the object.
   try
@@ -344,6 +348,7 @@ MT_Test::svc (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Unable to unbind in thread %t\n"));
+      return -1;
     }
   catch (const CORBA::Exception& ex)
     {
