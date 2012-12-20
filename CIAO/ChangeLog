@@ -1,3 +1,8 @@
+Thu Dec 20 07:13:50 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/taoidl3toxmidefaults.mpb:
+          Updated location of tao_idl3_to_xmi
+
 Wed Dec 19 14:44:43 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/taobaseidl3toidl2defaults.mpb:
