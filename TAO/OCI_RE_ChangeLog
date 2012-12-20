@@ -1,3 +1,9 @@
+Thu Dec 20 17:29:49 UTC 2012  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * orbsvcs/orbsvcs/CosEvent.mpc:
+
+          Added missing dependency on IFR_Client.
+
 Thu Dec 20 16:40:36 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
 
         * orbsvcs/tests/FT_Naming/FaultTolerance/client.cpp:

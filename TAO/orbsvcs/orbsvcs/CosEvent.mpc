@@ -84,7 +84,7 @@ project (CosEvent_Skel) : orbsvcslib, orbsvcs_output, install, avoids_minimum_co
 }
 
 
-project (CosEvent_Serv) : orbsvcslib, orbsvcs_output, install, avoids_minimum_corba, event_skel, ec_typed_events_serv, messaging_optional, naming, svc_utils {
+project (CosEvent_Serv) : orbsvcslib, orbsvcs_output, install, avoids_minimum_corba, event_skel, ec_typed_events_serv, messaging_optional, ifr_client, naming, svc_utils {
   sharedname   = TAO_CosEvent_Serv
   dynamicflags += TAO_EVENT_SERV_BUILD_DLL
   tagchecks   += CosEvent
