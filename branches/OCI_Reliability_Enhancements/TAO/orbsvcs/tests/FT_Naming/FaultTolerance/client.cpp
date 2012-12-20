@@ -68,28 +68,28 @@ My_Test_Object::id (CORBA::Short id)
 }
 
 // This function runs the test.
-int do_name_test (CORBA::ORB_ptr theOrb, 
-             ACE_TCHAR *ns1ref, 
+int do_name_test (CORBA::ORB_ptr theOrb,
+             ACE_TCHAR *ns1ref,
              ACE_TCHAR *ns2ref,
              int c_breadth,
              int c_depth,
              int o_breadth);
 
 // This function runs the test.
-int do_object_group_test ( CORBA::ORB_ptr theOrb, 
-                           ACE_TCHAR *nm1ref, 
+int do_object_group_test ( CORBA::ORB_ptr theOrb,
+                           ACE_TCHAR *nm1ref,
                            ACE_TCHAR *nm2ref);
 
-int 
-do_persistance_test ( 
-              CORBA::ORB_ptr theOrb, 
+int
+do_persistance_test (
+              CORBA::ORB_ptr theOrb,
               ACE_TCHAR *nm1ref,
               bool validate_only);
 
-int 
+int
 do_persistant_name_test (
-             CORBA::ORB_ptr theOrb, 
-             ACE_TCHAR *ns1ref, 
+             CORBA::ORB_ptr theOrb,
+             ACE_TCHAR *ns1ref,
              int c_breadth,
              int c_depth,
              int o_breadth,
@@ -107,7 +107,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   ACE_TCHAR *ns1ref = 0;
   ACE_TCHAR *ns2ref = 0;
-  
+
   ACE_TCHAR *nm1ref = 0;
   ACE_TCHAR *nm2ref = 0;
 
@@ -123,7 +123,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     TT_CREATE,
     TT_VALIDATE
   } fault_tolerant_test_phase;
-  fault_tolerant_test_phase test_phase = TT_INIT; 
+  fault_tolerant_test_phase test_phase = TT_INIT;
 
   //////////////////////////////////////////////////////////////////////////////
   // optional
@@ -253,7 +253,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
 
     switch(test_type) {
-      
+
       case TT_FAILOVER:
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Failover test OK\n")));
         rc = do_name_test(
@@ -384,8 +384,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 //
 ////////////////////////////////////////////////////////////////////////////////
 int do_name_test (
-             CORBA::ORB_ptr theOrb, 
-             ACE_TCHAR *ns1ref, 
+             CORBA::ORB_ptr theOrb,
+             ACE_TCHAR *ns1ref,
              ACE_TCHAR *ns2ref,
              int c_breadth,
              int c_depth,
@@ -397,31 +397,31 @@ int do_name_test (
   int i;
 
   try {
-    
-    if (CORBA::is_nil (theOrb)) 
+
+    if (CORBA::is_nil (theOrb))
       ACE_ERROR_RETURN ((LM_ERROR,ACE_TEXT ("invalid orb\n")),-1);
-    
-    if (CORBA::is_nil (ns1ref)) 
+
+    if (CORBA::is_nil (ns1ref))
       ACE_ERROR_RETURN ((LM_ERROR,ACE_TEXT ("invalid ns1\n")),-1);
 
-    if (CORBA::is_nil (ns2ref)) 
+    if (CORBA::is_nil (ns2ref))
       ACE_ERROR_RETURN ((LM_ERROR,ACE_TEXT ("invalid ns2\n")),-1);
 
     CORBA::ORB_var orb = theOrb;
     CORBA::Object_var ns1obj = orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (ns1ref));
     CORBA::Object_var ns2obj = orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (ns2ref));
 
-    if (CORBA::is_nil (ns1obj.in ())) 
+    if (CORBA::is_nil (ns1obj.in ()))
       ACE_ERROR_RETURN ((LM_ERROR,ACE_TEXT ("invalid ior <%s>\n"),ns1ref),-1);
-    if (CORBA::is_nil (ns2obj.in ())) 
+    if (CORBA::is_nil (ns2obj.in ()))
       ACE_ERROR_RETURN ((LM_ERROR,ACE_TEXT ("invalid ior <%s>\n"),ns2ref),-1);
 
     root_context_1 = CosNaming::NamingContext::_narrow (ns1obj.in ());
     root_context_2 = CosNaming::NamingContext::_narrow (ns2obj.in ());
 
-    if (CORBA::is_nil (root_context_1.in ())) 
+    if (CORBA::is_nil (root_context_1.in ()))
       ACE_ERROR_RETURN ((LM_ERROR,ACE_TEXT ("invalid ior <%s>\n"),ns1ref),-1);
-    if (CORBA::is_nil (root_context_2.in ())) 
+    if (CORBA::is_nil (root_context_2.in ()))
       ACE_ERROR_RETURN ((LM_ERROR,ACE_TEXT ("invalid ior <%s>\n"),ns2ref),-1);
   }
   catch (const CORBA::Exception& ex)
@@ -799,10 +799,10 @@ int do_name_test (
 }
 
 //==========================================================================
-int 
-do_persistance_test ( 
-  CORBA::ORB_ptr theOrb, 
-  ACE_TCHAR *nm1ref, 
+int
+do_persistance_test (
+  CORBA::ORB_ptr theOrb,
+  ACE_TCHAR *nm1ref,
   bool validate_only)
 {
   int rc = 0;
@@ -810,48 +810,47 @@ do_persistance_test (
   FT_Naming::NamingManager_var naming_manager_1;
 
   try {
-    
+
     CORBA::ORB_var orb = CORBA::ORB::_duplicate(theOrb);
 
-    if (CORBA::is_nil (orb.in ())) 
+    if (CORBA::is_nil (orb.in ()))
       ACE_ERROR_RETURN ((LM_ERROR,ACE_TEXT ("invalid orb\n")),-1);
-    
-    if (CORBA::is_nil (nm1ref)) 
+
+    if (CORBA::is_nil (nm1ref))
       ACE_ERROR_RETURN ((LM_ERROR,ACE_TEXT ("invalid nm1\n")),-1);
-    
+
     //ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("nm1ref: %s\n"), nm1ref));
-    
+
     CORBA::Object_var nm1obj = orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (nm1ref));
-    if (CORBA::is_nil (nm1obj.in ())) 
+    if (CORBA::is_nil (nm1obj.in ()))
       ACE_ERROR_RETURN ((LM_ERROR,ACE_TEXT ("invalid ior <%s>\n"),nm1ref),-1);
-    
+
     naming_manager_1 = FT_Naming::NamingManager::_narrow (nm1obj.in ());
-    if (CORBA::is_nil (naming_manager_1.in ())) 
+    if (CORBA::is_nil (naming_manager_1.in ()))
       ACE_ERROR_RETURN ((LM_ERROR,ACE_TEXT ("invalid ior <%s>\n"),nm1ref),-1);
-    
+
 
     NS_group_svc group_svc;
-    
-    rc = group_svc.set_orb (theOrb);    
-    if( 0 != rc ) 
+
+    rc = group_svc.set_orb (theOrb);
+    if( 0 != rc )
     {
-      ACE_ERROR_RETURN ((LM_ERROR,ACE_TEXT ("invalid orb\n")),-1);       
+      ACE_ERROR_RETURN ((LM_ERROR,ACE_TEXT ("invalid orb\n")),-1);
     }
 
     rc = group_svc.set_naming_manager (naming_manager_1);
-    if( 0 != rc ) 
+    if( 0 != rc )
     {
-      ACE_ERROR_RETURN ((LM_ERROR,ACE_TEXT ("invalid ior <%s>\n"),nm1ref),-1);       
+      ACE_ERROR_RETURN ((LM_ERROR,ACE_TEXT ("invalid ior <%s>\n"),nm1ref),-1);
     }
 
     const char* test_group = "test_group";
-    const char* type_id = "IDL:FT_Naming/NamingManager:1.0";
-    const char* policy = "round";
+    const char* policy     = "round";
 
     if( false == validate_only ) {
-      rc = group_svc.group_create (test_group, type_id, policy);
+      rc = group_svc.group_create (test_group, policy);
       if( 0 != rc) {
-        ACE_ERROR_RETURN ((LM_ERROR,ACE_TEXT ("ERROR: unable to create %s\n"),test_group),-1);       
+        ACE_ERROR_RETURN ((LM_ERROR,ACE_TEXT ("ERROR: unable to create %s\n"),test_group),-1);
       }
     }
 
@@ -878,10 +877,10 @@ do_persistance_test (
 ////////////////////////////////////////////////////////////////////////////////
 //
 ////////////////////////////////////////////////////////////////////////////////
-int 
+int
 do_persistant_name_test (
-    CORBA::ORB_ptr theOrb, 
-    ACE_TCHAR *ns1ref, 
+    CORBA::ORB_ptr theOrb,
+    ACE_TCHAR *ns1ref,
     int c_breadth,
     int c_depth,
     int o_breadth,
@@ -892,23 +891,23 @@ do_persistant_name_test (
   int i;
 
   try {
-    
+
     CORBA::ORB_var orb = CORBA::ORB::_duplicate(theOrb);
 
-    if (CORBA::is_nil (orb.in () )) 
+    if (CORBA::is_nil (orb.in () ))
       ACE_ERROR_RETURN ((LM_ERROR,ACE_TEXT ("invalid orb\n")),-1);
-    
-    if (CORBA::is_nil (ns1ref)) 
+
+    if (CORBA::is_nil (ns1ref))
       ACE_ERROR_RETURN ((LM_ERROR,ACE_TEXT ("invalid ns1\n")),-1);
 
     CORBA::Object_var ns1obj = orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (ns1ref));
 
-    if (CORBA::is_nil (ns1obj.in ())) 
+    if (CORBA::is_nil (ns1obj.in ()))
       ACE_ERROR_RETURN ((LM_ERROR,ACE_TEXT ("invalid ior <%s>\n"),ns1ref),-1);
 
     root_context_1 = CosNaming::NamingContext::_narrow (ns1obj.in ());
 
-    if (CORBA::is_nil (root_context_1.in ())) 
+    if (CORBA::is_nil (root_context_1.in ()))
       ACE_ERROR_RETURN ((LM_ERROR,ACE_TEXT ("invalid ior <%s>\n"),ns1ref),-1);
   }
   catch (const CORBA::Exception& ex)
@@ -942,7 +941,7 @@ do_persistant_name_test (
       char wide_name[16];
       ACE_OS::sprintf(wide_name, "obj_%d", i);
       level1[1].id = CORBA::string_dup (wide_name);
-    
+
       if( false == validate_only ) {
         root_context_1->bind (level1, obj1.in ());
       }
@@ -989,7 +988,7 @@ do_persistant_name_test (
         char deep_name[16];
         ACE_OS::sprintf(deep_name, "deep_%d", i);
         deep[0].id = CORBA::string_dup (deep_name);
-        
+
         CosNaming::NamingContext_var deep_context;
         deep_context = next_context->bind_new_context (deep);
         next_context = deep_context;
@@ -1057,10 +1056,10 @@ do_persistant_name_test (
 
 
 //==========================================================================
-int 
-do_object_group_test ( 
-  CORBA::ORB_ptr theOrb, 
-  ACE_TCHAR *nm1ref, 
+int
+do_object_group_test (
+  CORBA::ORB_ptr theOrb,
+  ACE_TCHAR *nm1ref,
   ACE_TCHAR *nm2ref )
 {
   int rc = 0;
@@ -1069,50 +1068,53 @@ do_object_group_test (
   FT_Naming::NamingManager_var naming_manager_2;
 
   try {
-    
-    if (CORBA::is_nil (theOrb)) 
+
+    if (CORBA::is_nil (theOrb))
       ACE_ERROR_RETURN ((LM_ERROR,ACE_TEXT ("invalid orb\n")),-1);
     CORBA::ORB_var orb = theOrb;
-    
-    if (CORBA::is_nil (nm1ref)) 
+
+    if (CORBA::is_nil (nm1ref))
       ACE_ERROR_RETURN ((LM_ERROR,ACE_TEXT ("invalid nm1\n")),-1);
-    
+
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("nm1ref: %s\n"), nm1ref));
-    
+
     CORBA::Object_var nm1obj = orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (nm1ref));
-    if (CORBA::is_nil (nm1obj.in ())) 
+    if (CORBA::is_nil (nm1obj.in ()))
       ACE_ERROR_RETURN ((LM_ERROR,ACE_TEXT ("invalid ior <%s>\n"),nm1ref),-1);
-    
+
     naming_manager_1 = FT_Naming::NamingManager::_narrow (nm1obj.in ());
-    if (CORBA::is_nil (naming_manager_1.in ())) 
+    if (CORBA::is_nil (naming_manager_1.in ()))
       ACE_ERROR_RETURN ((LM_ERROR,ACE_TEXT ("invalid ior <%s>\n"),nm1ref),-1);
-    
+
 
     if (!CORBA::is_nil (nm2ref)) {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("nm2ref: %s\n"), nm2ref));
       CORBA::Object_var nm2obj = orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (nm2ref));
-      if (CORBA::is_nil (nm2obj.in ())) 
+      if (CORBA::is_nil (nm2obj.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,ACE_TEXT ("invalid ior <%s>\n"),nm2ref),-1);
       naming_manager_2 = FT_Naming::NamingManager::_narrow (nm2obj.in ());
-    if (CORBA::is_nil (naming_manager_2.in ())) 
+    if (CORBA::is_nil (naming_manager_2.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,ACE_TEXT ("invalid ior <%s>\n"),nm2ref),-1);
     }
 
     NS_group_svc group_svc;
-    
-    int rc = group_svc.set_orb (theOrb);    
-    if( 0 != rc ) 
+
+    int rc = group_svc.set_orb (theOrb);
+    if( 0 != rc )
     {
-      ACE_ERROR_RETURN ((LM_ERROR,ACE_TEXT ("invalid orb\n")),-1);       
+      ACE_ERROR_RETURN ((LM_ERROR,ACE_TEXT ("invalid orb\n")),-1);
     }
 
     rc = group_svc.set_naming_manager (naming_manager_1);
-    if( 0 != rc ) 
+    if( 0 != rc )
     {
-      ACE_ERROR_RETURN ((LM_ERROR,ACE_TEXT ("invalid ior <%s>\n"),nm2ref),-1);       
+      ACE_ERROR_RETURN ((LM_ERROR,ACE_TEXT ("invalid ior <%s>\n"),nm2ref),-1);
     }
 
-    rc = group_svc.group_create("test_group","IDL:FT_Naming/NamingManager:1.0", "round");
+    const char* test_group = "test_group";
+    const char* policy     = "round";
+
+    rc = group_svc.group_create (test_group, policy);
 
     if( true == group_svc.group_exist("test_group")) {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("INFO: Object Group Found In Repository\n")));
