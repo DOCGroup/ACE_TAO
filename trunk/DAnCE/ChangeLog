@@ -1,3 +1,9 @@
+Thu Dec 20 07:39:24 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tools/Logger_Backend/ndds/Log_Backend.h:
+          Reordered includes to fix compile errors with msvc release
+          compilation
+
 Tue Dec 18 10:17:27 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * dance/Deployment/Deployment_Core.mpc:
