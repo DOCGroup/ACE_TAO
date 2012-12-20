@@ -27,8 +27,6 @@
 // Includes needed by this header
 #include "orbsvcs/PortableGroup/PG_Object_Group.h"
 
-#include "orbsvcs/FT_NamingReplicationC.h"
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /////////////////////

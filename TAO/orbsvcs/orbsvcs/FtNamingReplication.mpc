@@ -1,11 +1,10 @@
 // -*- MPC -*-
 // $Id$
 
-project (FtNamingReplication) : orbsvcslib, orbsvcs_output, install, naming_serv, portablegroup, avoids_minimum_corba  {
-  sharedname   = TAO_FtNamingReplIntf
+project (FtNamingReplication) : ftnaming, orbsvcslib, orbsvcs_output, install, naming_serv, portablegroup, avoids_minimum_corba  {
+  sharedname   = TAO_FtNamingReplication
   idlflags    += -Wb,export_macro=TAO_FtNaming_Export -Wb,export_include=orbsvcs/Naming/FaultTolerant/ftnaming_export.h
   dynamicflags += TAO_FTNAMING_BUILD_DLL
-  tagchecks   += FaultTolerantNaming
 
   IDL_Files {
     idlflags += -GC

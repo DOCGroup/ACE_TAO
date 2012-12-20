@@ -2,8 +2,6 @@
 
 #include "orbsvcs/PortableGroup/PG_Object_Group_Storable.h"
 
-#include "orbsvcs/Naming/FaultTolerant/FT_Naming_Replication_Manager.h"
-
 #include "tao/Storable_File_Guard.h"
 #include "tao/Storable_Factory.h"
 #include "tao/CDR.h"
