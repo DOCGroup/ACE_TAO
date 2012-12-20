@@ -1,3 +1,9 @@
+Thu Dec 20 20:46:40 UTC 2012  Byron Harris  <harrisb@ociweb.com>
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_List_Store.cpp:
+
+          Fix computation of next group ID.
+
 Thu Dec 20 17:29:49 UTC 2012  Kevin Stanley  <stanleyk@ociweb.com>
 
         * orbsvcs/orbsvcs/CosEvent.mpc:
