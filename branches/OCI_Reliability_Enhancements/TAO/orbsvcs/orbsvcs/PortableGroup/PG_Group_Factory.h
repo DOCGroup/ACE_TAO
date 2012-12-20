@@ -79,7 +79,7 @@ namespace TAO
     PG_Group_Factory ();
 
     /// Destructor.
-    ~PG_Group_Factory ();
+    virtual ~PG_Group_Factory ();
 
     void init (
       CORBA::ORB_ptr orb,
