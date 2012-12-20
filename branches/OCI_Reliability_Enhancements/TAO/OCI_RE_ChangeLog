@@ -1,3 +1,18 @@
+Thu Dec 20 04:20:20 UTC 2012  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * MPC/config/ftnaming.mpb:
+        * MPC/config/ftnaming_replication.mpb:
+        * orbsvcs/orbsvcs/FtNamingReplication.mpc:
+
+          Resolved dependencies and library name issues.
+
+        * orbsvcs/orbsvcs/PortableGroup/FaultTolerant/FT_PG_Object_Group_Storable.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group_Storable.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group_Storable.cpp:
+
+          Moved include files to FT_Naming components from PortableGroup classes
+          to PortableGroup/FaultTolerant.
+
 Wed Dec 19 23:48:25 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
 
         * orbsvcs/tests/FT_Naming/FaultTolerance/client.cpp:
