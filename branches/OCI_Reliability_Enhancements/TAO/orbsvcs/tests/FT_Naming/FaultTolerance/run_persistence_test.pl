@@ -47,7 +47,6 @@ my $NSADD   = $client->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_nsadd");
 my $NSDEL   = $client->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_nsdel");
 
 
-=cut
 ## Allow the user to determine where the persistent file will be located
 ## just in case the current directory is not suitable for locking.
 ## We can't change the name of the persistent file because that is not
@@ -61,7 +60,6 @@ foreach my $possible ($ENV{TMPDIR}, $ENV{TEMP}, $ENV{TMP}) {
       }
     }
 }
-=cut
 
 sub cat_file($)
 {
@@ -264,7 +262,6 @@ END
         clean_persistence_dir ($server, $object_group_dir);
         rmdir ($object_group_dir);
     }
-
 }
 
 ################################################################################
@@ -297,16 +294,14 @@ sub persistence_test ()
 
     my $client1_args = "--persistence " .
                        "--create " .
-                       "-p corbaloc:iiop:$hostname:$ns_orb_port1 " .
-                       "-q corbaloc:iiop:$hostname:$ns_orb_port1 " .
+                       "-p corbaloc:iiop:$hostname:$ns_orb_port1/NameService " .
                        "-r corbaloc:iiop:$hostname:$ns_orb_port1/NamingManager " .
                        "-b 4 " .
                        "-d 4 ";
 
     my $client2_args = "--persistence " .
                        "--validate " .
-                       "-p corbaloc:iiop:$hostname:$ns_orb_port1 " .
-                       "-q corbaloc:iiop:$hostname:$ns_orb_port1 " .
+                       "-p corbaloc:iiop:$hostname:$ns_orb_port1/NameService " .
                        "-r corbaloc:iiop:$hostname:$ns_orb_port1/NamingManager " .
                        "-b 4 " .
                        "-d 4 ";
@@ -327,22 +322,15 @@ sub persistence_test ()
         exit 1;
     }
 
-    ##2. Create a new context with tao_nsadd
-    ##3. Create a new object group and add a member with tao_nsgroup and bind the object group to a name
-    ##4. Verify the new name, object group and member are in the tao_ft_naming repository.
+    ##2. Create new contexts
+    ##3. Create a new object group
+    ##4. Verify the new context and object group
     print_msg("INFO: Starting client1");
     $client_status = $CL1->SpawnWaitKill ($client->ProcessStartWaitInterval());
     if ($client_status != 0) {
         print STDERR "ERROR: client1 returned $client_status\n";
         $status = 1;
     }
-
-    #run_nsadd ("$default_init_ref --name iso --ctx", $POSITIVE_TEST_RESULT);
-    #run_nsgroup ("$default_init_ref group_create -group ieee -policy round -type_id IDL:FT_Naming/NamingManager:1.0", $POSITIVE_TEST_RESULT);
-    #run_nslist ($ns_ref, $POSITIVE_TEST_RESULT);
-    #run_nsgroup ("$default_init_ref group_list", $POSITIVE_TEST_RESULT);
-    #run_nsgroup ("$default_init_ref member_add -group ieee -location $hostname -ior file://./nm.ior", $POSITIVE_TEST_RESULT);
-    #run_nsgroup ("$default_init_ref group_bind -group ieee -name iso/ieee", $POSITIVE_TEST_RESULT);
 
 
     ##5. Kill the tao_ft_naming server
@@ -372,8 +360,6 @@ sub persistence_test ()
         print STDERR "ERROR: client2 returned $client_status\n";
         $status = 1;
     }
-    #run_nslist ($ns_ref, $POSITIVE_TEST_RESULT);
-    #run_nsgroup ("$default_init_ref group_list", $POSITIVE_TEST_RESULT);
 
     $server_status = $NS1->TerminateWaitKill ($server->ProcessStopWaitInterval());
     if ($server_status != 0) {

@@ -304,8 +304,10 @@ sub redundant_equivalency_test()
                    "-v $object_group_dir";
 
     my $client_args = "--equivalence " .
-                      "-p corbaloc:iiop:$hostname:$ns_orb_port1 " .
-                      "-q corbaloc:iiop:$hostname:$ns_orb_port2 " .
+                      "-p corbaloc:iiop:$hostname:$ns_orb_port1/NameService " .
+                      "-q corbaloc:iiop:$hostname:$ns_orb_port2/NameService " .
+                      "-r corbaloc:iiop:$hostname:$ns_orb_port1/NamingManager " .
+                      "-s corbaloc:iiop:$hostname:$ns_orb_port2/NamingManager " .
                       "-b 4 " .
                       "-d 4 ";
 
@@ -337,34 +339,6 @@ sub redundant_equivalency_test()
 
     print_msg("INFO: Starting the client");
     $CL->SpawnWaitKill ($client->ProcessStartWaitInterval());
-
-=cut
-    print_msg("INFO: primary create context iso");
-    run_nsadd ("$primary_default_init_ref --name iso --ctx", $POSITIVE_TEST_RESULT);
-    print_msg("INFO: primary nslist");
-    run_nslist ("$primary_default_init_ref", $POSITIVE_TEST_RESULT);
-    print_msg("INFO: backup nslist");
-    run_nslist ("$backup_default_init_ref", $POSITIVE_TEST_RESULT);
-=cut
-
-    print_msg("INFO: backup create object group");
-    run_nsgroup ("$backup_default_init_ref group_create -group ieee -policy round -type_id IDL:FT_Naming/NamingManager:1.0", $POSITIVE_TEST_RESULT);
-    print_msg("INFO: backup group list");
-    run_nsgroup ("$backup_default_init_ref group_list", $POSITIVE_TEST_RESULT);
-    print_msg("INFO: primary group list");
-    run_nsgroup ("$primary_default_init_ref group_list", $POSITIVE_TEST_RESULT);
-
-    #print_msg("INFO: primary bind group");
-    #run_nsgroup ("$primary_default_init_ref group_bind -group ieee -name iso/ieee", $POSITIVE_TEST_RESULT);
-=cut
-    print_msg("INFO: backup group list");
-    run_nsgroup ("$backup_default_init_ref group_list", $POSITIVE_TEST_RESULT);
-    print_msg("INFO: primary group list");
-    run_nsgroup ("$primary_default_init_ref group_list", $POSITIVE_TEST_RESULT);
-
-    print_msg("INFO: backup nslist");
-    run_nslist ("$backup_default_init_ref", $POSITIVE_TEST_RESULT);
-=cut
 
     $server_status = $NS2->TerminateWaitKill ($server->ProcessStopWaitInterval());
     if ($server_status != 0) {
