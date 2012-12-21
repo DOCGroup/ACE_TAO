@@ -48,7 +48,6 @@ my $primary_default_init_ref = "-ORBDefaultInitRef corbaloc:iiop:$hostname:$ns_o
 # References to backup naming service only
 my $backup_default_init_ref = "-ORBDefaultInitRef corbaloc:iiop:$hostname:$ns_orb_port2";
 
-=cut
 ## Allow the user to determine where the persistent file will be located
 ## just in case the current directory is not suitable for locking.
 ## We can't change the name of the persistent file because that is not
@@ -62,8 +61,6 @@ foreach my $possible ($ENV{TMPDIR}, $ENV{TEMP}, $ENV{TMP}) {
       }
     }
 }
-=cut
-
 
 my $status = 0;
 my $POSITIVE_TEST_RESULT = 0;
@@ -319,19 +316,9 @@ sub failover_test()
 
     my $client_args = "--failover " .
                       "-p file://$server_ns_iorfile " .
-                      "-q file://$server_ns_iorfile " .
                       "-r file://$server_nm_iorfile " .
                       "-b 4 " .
                       "-d 4 " ;
-=cut
-    my $client_args = "--failover " .
-                      "-p file://$server_ns_iorfile " .
-                      "-q file://$server_ns_iorfile " .
-                      "-r file://$server_nm_iorfile " .
-                      "-s file://$server_nm_iorfile " .
-                      "-b 4 " .
-                      "-d 4 " ;
-=cut
 
     my $client_prog = "$startdir/client";
 
@@ -375,10 +362,6 @@ sub failover_test()
     $NS1->Spawn ();
 
     sleep(5);
-
-    print_msg("INFO: Verify restarted primary server is available");
-    run_nsgroup ("$primary_default_init_ref group_list", $POSITIVE_TEST_RESULT);
-    run_nslist ("$primary_default_init_ref", $POSITIVE_TEST_RESULT);
 
     $client_status = $CL->TerminateWaitKill ($client->ProcessStopWaitInterval());
     if ($client_status != 0) {

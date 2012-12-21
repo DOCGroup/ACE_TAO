@@ -138,6 +138,7 @@ do_equivalence_objectgroup_test (
   int c_depth,
   int o_breadth);
 
+
 //==============================================================================
 //
 //==============================================================================
@@ -422,11 +423,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
             o_breadth ))
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("ERROR Equivalence Name Test OK\n")));
+                      ACE_TEXT ("ERROR: Equivalence Name Test\n")));
           rc = RC_ERROR;
         } else {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("Equivalence Name Test OK\n")));
+                      ACE_TEXT ("INFO: Equivalence Name Test OK\n")));
         }
 
         if (RC_SUCCESS != do_equivalence_objectgroup_test(
@@ -437,23 +438,42 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
             c_depth,
             o_breadth ))
         {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("ERROR: Equivalence ObjectGroup Test\n")));
           rc = RC_ERROR;
         } else {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("Equivalence ObjectGroup Test OK\n")));
+                      ACE_TEXT ("INFO: Equivalence ObjectGroup Test OK\n")));
         }
       break;
     }
   }
   catch (const CORBA::Exception& ex)
   {
-    ex._tao_print_exception (ACE_TEXT ("Unable to resolve name servers"));
+    ex._tao_print_exception (ACE_TEXT ("ERROR: Unable to resolve name servers"));
     return RC_ERROR;
   }
 
 
   return rc;
 
+}
+
+//==============================================================================
+//
+//==============================================================================
+ACE_CString get_group_name (int i)
+{
+  char name[128];
+  ACE_OS::sprintf (name, "test_group_%i", i);
+  return ACE_CString (name);
+}
+
+ACE_CString get_member_location (int i, int j)
+{
+  char name[128];
+  ACE_OS::sprintf (name, "test_location_%i_%i", i, j);
+  return ACE_CString (name);
 }
 
 
@@ -959,6 +979,9 @@ do_failover_objectgroup_test (
   const int RC_SUCCESS =  0;
   const int RC_ERROR   = -1;
 
+  int num_group_members = 1;
+
+
   FT_Naming::NamingManager_var naming_manager_1;
 
   try {
@@ -967,14 +990,14 @@ do_failover_objectgroup_test (
     if (CORBA::is_nil (orb.in ()))
     {
       ACE_ERROR_RETURN (( LM_ERROR,
-                          ACE_TEXT ("invalid orb\n")),
+                          ACE_TEXT ("ERROR: invalid orb\n")),
                           RC_ERROR);
     }
 
     if (CORBA::is_nil (nm1ref))
     {
       ACE_ERROR_RETURN (( LM_ERROR,
-                          ACE_TEXT ("invalid nm1\n")),
+                          ACE_TEXT ("ERROR: invalid nm1\n")),
                           RC_ERROR);
     }
 
@@ -986,7 +1009,7 @@ do_failover_objectgroup_test (
     if (CORBA::is_nil (nm1obj.in ()))
     {
       ACE_ERROR_RETURN (( LM_ERROR,
-                          ACE_TEXT ("invalid ior <%s>\n"),nm1ref),
+                          ACE_TEXT ("ERROR: invalid ior <%s>\n"),nm1ref),
                           RC_ERROR);
     }
 
@@ -994,37 +1017,37 @@ do_failover_objectgroup_test (
     if (CORBA::is_nil (naming_manager_1.in ()))
     {
       ACE_ERROR_RETURN (( LM_ERROR,
-                          ACE_TEXT ("invalid ior <%s>\n"),nm1ref),
+                          ACE_TEXT ("ERROR: invalid ior <%s>\n"),nm1ref),
                           RC_ERROR);
     }
 
-    NS_group_svc group_svc;
+    NS_group_svc svc;
 
-    if (RC_SUCCESS != group_svc.set_orb (theOrb))
+    if (RC_SUCCESS != svc.set_orb (theOrb))
     {
       ACE_ERROR_RETURN (( LM_ERROR,
-                          ACE_TEXT ("invalid orb\n")),
+                          ACE_TEXT ("ERROR: invalid orb\n")),
                           RC_ERROR);
     }
 
-    if (RC_SUCCESS != group_svc.set_naming_manager (naming_manager_1))
+    if (RC_SUCCESS != svc.set_naming_manager (naming_manager_1))
     {
       ACE_ERROR_RETURN (( LM_ERROR,
-                          ACE_TEXT ("invalid ior <%s>\n"),nm1ref),
+                          ACE_TEXT ("ERROR: invalid ior <%s>\n"),nm1ref),
                           RC_ERROR);
     }
 
     const char* test_group = "test_group";
     const char* policy     = "round";
 
-    if (RC_SUCCESS != group_svc.group_create (test_group, policy))
+    if (RC_SUCCESS != svc.group_create (test_group, policy))
     {
       ACE_ERROR_RETURN (( LM_ERROR,
                           ACE_TEXT ("ERROR: unable to create %s\n"),test_group),
                           RC_ERROR);
     }
 
-    if (false == group_svc.group_exist(test_group))
+    if (false == svc.group_exist(test_group))
     {
       ACE_ERROR_RETURN (( LM_ERROR,
                           ACE_TEXT ("ERROR: Object Group Not Found In Repository\n")),
@@ -1033,6 +1056,51 @@ do_failover_objectgroup_test (
       ACE_DEBUG (( LM_DEBUG,
                    ACE_TEXT ("INFO: Object Group Found In Repository\n")));
     }
+
+    for (int i = 0; i < o_breadth; ++i)
+    {
+      ACE_CString group_name = get_group_name (i);
+
+      if (RC_SUCCESS != svc.group_create (group_name.c_str (), policy))
+      {
+        ACE_ERROR_RETURN (( LM_ERROR,
+                            ACE_TEXT ("ERROR: unable to create %s during validation\n"),
+                            group_name.c_str()),
+                            RC_ERROR);
+      }
+
+      for (int j = 0; j < num_group_members; ++j)
+      {
+        ACE_CString location = get_member_location (i, j);
+
+        if (RC_SUCCESS != svc.member_add ( group_name.c_str (),
+                                           location.c_str (),
+                                           nm1ref))
+        {
+          ACE_ERROR_RETURN (( LM_ERROR,
+                              ACE_TEXT ("ERROR: unable to create member with location %s during validation\n"),
+                              location.c_str()),
+                              RC_ERROR);
+        }
+      }
+    }
+
+    for (int i = 0; i < o_breadth; ++i)
+      {
+        ACE_CString group_name = get_group_name (i);
+        if (false == svc.group_exist (group_name.c_str()))
+        {
+          ACE_ERROR_RETURN (( LM_ERROR,
+                              ACE_TEXT ("ERROR: unable to find %s\n"),
+                              group_name.c_str()),
+                              RC_ERROR);
+        } else {
+          ACE_DEBUG (( LM_DEBUG,
+                       ACE_TEXT ("INFO: Object Group %s Found In Repository\n"),
+                       group_name.c_str ()));
+        }
+      }
+
 
   }
   catch (const CORBA::Exception& ex)
@@ -1252,19 +1320,6 @@ do_persistant_name_test (
 
 }
 
-ACE_CString get_group_name (int i)
-{
-  char name[128];
-  ACE_OS::sprintf (name, "test_group_%i", i);
-  return ACE_CString (name);
-}
-
-ACE_CString get_member_location (int i, int j)
-{
-  char name[128];
-  ACE_OS::sprintf (name, "test_location_%i_%i", i, j);
-  return ACE_CString (name);
-}
 
 /// Persistence ObjectGroup Test
 int
@@ -1925,14 +1980,14 @@ do_equivalence_objectgroup_test (
     if (CORBA::is_nil (orb.in ()))
     {
       ACE_ERROR_RETURN (( LM_ERROR,
-                          ACE_TEXT ("invalid orb\n")),
+                          ACE_TEXT ("ERROR: invalid orb\n")),
                           RC_ERROR);
     }
 
     if (CORBA::is_nil (nm1ref))
     {
       ACE_ERROR_RETURN (( LM_ERROR,
-                          ACE_TEXT ("invalid nm1\n")),
+                          ACE_TEXT ("ERROR: invalid nm1\n")),
                           RC_ERROR);
     }
 
@@ -1944,7 +1999,7 @@ do_equivalence_objectgroup_test (
     if (CORBA::is_nil (nm1obj.in ()))
     {
       ACE_ERROR_RETURN (( LM_ERROR,
-                          ACE_TEXT ("invalid ior <%s>\n"),nm1ref),
+                          ACE_TEXT ("ERROR: invalid ior <%s>\n"),nm1ref),
                           RC_ERROR);
     }
 
@@ -1952,7 +2007,7 @@ do_equivalence_objectgroup_test (
     if (CORBA::is_nil (naming_manager_1.in ()))
     {
       ACE_ERROR_RETURN (( LM_ERROR,
-                          ACE_TEXT ("invalid ior <%s>\n"),nm1ref),
+                          ACE_TEXT ("ERROR: invalid ior <%s>\n"),nm1ref),
                           RC_ERROR);
     }
 
@@ -1960,7 +2015,7 @@ do_equivalence_objectgroup_test (
     if (CORBA::is_nil (nm2ref))
     {
       ACE_ERROR_RETURN (( LM_ERROR,
-                          ACE_TEXT ("invalid nm2\n")),
+                          ACE_TEXT ("ERROR: invalid nm2\n")),
                           RC_ERROR);
     }
 
@@ -1985,41 +2040,123 @@ do_equivalence_objectgroup_test (
                           RC_ERROR);
     }
 
-    NS_group_svc group_svc;
-
-    if (RC_SUCCESS != group_svc.set_orb (theOrb))
+    /// Setup 1st NS_group_svc with 1st Naming Manager
+    NS_group_svc svc1;
+    if (RC_SUCCESS != svc1.set_orb (theOrb))
     {
       ACE_ERROR_RETURN (( LM_ERROR,
-                          ACE_TEXT ("invalid orb\n")),
+                          ACE_TEXT ("ERROR: invalid orb\n")),
                           RC_ERROR);
     }
 
-    if (RC_SUCCESS != group_svc.set_naming_manager (naming_manager_1))
+    if (RC_SUCCESS != svc1.set_naming_manager (naming_manager_1))
     {
       ACE_ERROR_RETURN (( LM_ERROR,
-                          ACE_TEXT ("invalid ior <%s>\n"),nm2ref),
+                          ACE_TEXT ("ERROR: invalid ior <%s>\n"),nm1ref),
                           RC_ERROR);
     }
 
+    /// Setup 2nd NS_group_svc with 2nd Naming Manager
+    NS_group_svc svc2;
+    if (RC_SUCCESS != svc2.set_orb (theOrb))
+    {
+      ACE_ERROR_RETURN (( LM_ERROR,
+                          ACE_TEXT ("ERROR: invalid orb\n")),
+                          RC_ERROR);
+    }
+
+    if (RC_SUCCESS != svc2.set_naming_manager (naming_manager_2))
+    {
+      ACE_ERROR_RETURN (( LM_ERROR,
+                          ACE_TEXT ("ERROR: invalid ior <%s>\n"),nm2ref),
+                          RC_ERROR);
+    }
+
+    /// Now validate seamless operations between the two instances of NS_group
     const char* test_group = "test_group";
     const char* policy     = "round";
-
-    if (RC_SUCCESS != group_svc.group_create (test_group, policy))
+    if (RC_SUCCESS != svc1.group_create (test_group, policy))
     {
       ACE_ERROR_RETURN (( LM_ERROR,
-                          ACE_TEXT ("ERROR: unable to create %s\n"),test_group),
+                          ACE_TEXT ("ERROR: Unable to create %s\n"),test_group),
                           RC_ERROR);
     }
 
-    if (false == group_svc.group_exist(test_group))
+    if (false == svc1.group_exist(test_group))
     {
       ACE_ERROR_RETURN (( LM_ERROR,
-                          ACE_TEXT ("ERROR: Object Group Not Found In Repository\n")),
+                          ACE_TEXT ("ERROR: Primary Not Able To Find Object Group In Repository\n")),
                           RC_ERROR);
     } else {
       ACE_DEBUG (( LM_DEBUG,
-                   ACE_TEXT ("INFO: Object Group Found In Repository\n")));
+                   ACE_TEXT ("INFO: Primary Found Object Group In Repository\n")));
     }
+
+    if (false == svc2.group_exist(test_group))
+    {
+      ACE_ERROR_RETURN (( LM_ERROR,
+                          ACE_TEXT ("ERROR: Backup Not Able To Find Object Group In Repository\n")),
+                          RC_ERROR);
+    } else {
+      ACE_DEBUG (( LM_DEBUG,
+                   ACE_TEXT ("INFO: Backup Found Object Group In Repository\n")));
+    }
+
+#if 0
+    ////////////////////////////////////////////////////////////////////////////
+    // Create a bunch of object groups
+    try
+    {
+      const char * svc1name = "Primary";
+      const char * svc2name = "Backup";
+      NS_group_svc* p_svc1;
+      NS_group_svc* p_svc2;
+      char *p_svc1name;
+      char *p_svc2name;
+      for (i=0; i<o_breadth; i++)
+      {
+        char wide_name[20];
+        ACE_OS::sprintf(wide_name, "group_%d", i);
+        if ((i%2) == 0)
+        {
+          p_svc1 = &svc1;
+          p_svc2 = &svc2;
+          p_svc1name = svc1name;
+          p_svc2name = svc2name;
+        } else {
+          p_svc1 = &svc2;
+          p_svc2 = &svc1;
+          p_svc1name = svc2name;
+          p_svc2name = svc1name;
+        }
+
+        if (RC_SUCCESS != p_svc1->group_create (wide_name, policy))
+        {
+          ACE_ERROR_RETURN (( LM_ERROR,
+                              ACE_TEXT ("ERROR: Primary unable to create %s\n"),wide_name),
+                              RC_ERROR);
+        }
+
+        /// The new group should be accessable from the other naming manager
+        if (false == p_svc2->group_exist(test_group))
+        {
+          ACE_ERROR_RETURN (( LM_ERROR,
+                              ACE_TEXT ("ERROR: Object Group Not Found for Backup\n")),
+                              RC_ERROR);
+        } else {
+          ACE_DEBUG (( LM_DEBUG,
+                       ACE_TEXT ("INFO: Object Group Found for Backup\n")));
+        }
+
+      }
+    }
+    catch (const CORBA::Exception& ex)
+    {
+      ex._tao_print_exception (ACE_TEXT ("Unable to create a lot of object groups"));
+      return RC_ERROR;
+    }
+    ////////////////////////////////////////////////////////////////////////////
+#endif
 
   }
   catch (const CORBA::Exception& ex)

@@ -46,7 +46,6 @@ my $NSLIST  = $client->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_nslist");
 my $NSADD   = $client->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_nsadd");
 my $NSDEL   = $client->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_nsdel");
 
-
 ## Allow the user to determine where the persistent file will be located
 ## just in case the current directory is not suitable for locking.
 ## We can't change the name of the persistent file because that is not

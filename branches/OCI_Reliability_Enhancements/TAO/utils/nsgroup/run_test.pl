@@ -367,10 +367,16 @@ END
     $client->DeleteFile($name_srv_iorbase);
     $client->DeleteFile($stdout_file);
     $client->DeleteFile($stderr_file);
-    clean_persistence_dir ($server, $name_dir);
-    clean_persistence_dir ($server, $group_dir);
-    rmdir ($name_dir);
-    rmdir ($group_dir);
+
+    if ( -d $name_dir ) {
+        clean_persistence_dir ($server, $name_dir);
+        rmdir ($name_dir);
+    }
+
+    if ( -d $group_dir ) {
+        clean_persistence_dir ($server, $group_dir);
+        rmdir ($group_dir);
+    }
 }
 
 ################################################################################

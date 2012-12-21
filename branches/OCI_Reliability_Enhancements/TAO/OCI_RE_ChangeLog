@@ -1,3 +1,18 @@
+Fri Dec 21 22:43:47 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
+
+        * orbsvcs/tests/FT_Naming/FaultTolerance/client.cpp:
+
+          Updated Failover and Equivalance tests
+
+        * orbsvcs/tests/FT_Naming/FaultTolerance/run_failover_test.pl:
+        * orbsvcs/tests/FT_Naming/FaultTolerance/run_persistence_test.pl:
+
+          Additional cleanup of Failover and Persistance script files
+
+        * utils/nsgroup/run_test.pl:
+
+          Added directory exist test before directory cleanup
+
 Fri Dec 21 20:46:55 UTC 2012  Byron Harris  <harrisb@ociweb.com>
 
         * orbsvcs/orbsvcs/PortableGroup/PG_Group_List_Store.cpp:
