@@ -1,3 +1,12 @@
+Fri Dec 21 09:22:41 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * protocols/tests/HTBP/Reactor_Tests/run_test.pl:
+        * protocols/tests/HTBP/Send_Large_Msg/run_test.pl:
+        * protocols/tests/HTBP/Send_Recv_Tests/run_test.pl:
+        * protocols/tests/HTBP/ping/run_test.pl:
+          Check return value of spawn, if it fails directly exit the
+          test run
+
 Wed Dec 19 14:46:24 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_cegcc.GNU:
