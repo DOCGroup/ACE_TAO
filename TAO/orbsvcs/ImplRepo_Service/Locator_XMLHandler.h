@@ -14,6 +14,8 @@
 
 #include "ACEXML/common/DefaultHandler.h"
 
+#include "tao/ORB.h"
+
 #include "ace/Vector_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -43,7 +45,7 @@ public:
 
   typedef ACE_Vector<EnvVar> EnvList;
 
-  Locator_XMLHandler (Locator_Repository& repo);
+  Locator_XMLHandler (Locator_Repository& repo, CORBA::ORB_ptr orb);
 
   virtual void startElement (const ACEXML_Char* namespaceURI,
                              const ACEXML_Char* localName,
@@ -60,7 +62,7 @@ public:
     const ACE_CString& startup_cmd, const EnvList& env_vars,
     const ACE_CString& working_dir, const ACE_CString& actmode,
     int start_limit, const ACE_CString& partial_ior,
-    const ACE_CString& ior);
+    const ACE_CString& ior, bool server_started);
 
   virtual void next_activator (const ACE_CString& activator_name,
                                long token,
@@ -77,7 +79,9 @@ public:
   ACE_TString server_object_ior_;
   ACE_TString partial_ior_;
   int start_limit_;
+  bool server_started_;
   EnvList env_vars_;
+  CORBA::ORB_var orb_;
 };
 
 #endif /* Locator_XMLHandler_H */
