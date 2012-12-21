@@ -10,8 +10,12 @@ const ACE_TCHAR* Locator_XMLHandler::SERVER_INFO_TAG = ACE_TEXT("Servers");
 const ACE_TCHAR* Locator_XMLHandler::ACTIVATOR_INFO_TAG = ACE_TEXT("Activators");
 const ACE_TCHAR* Locator_XMLHandler::ENVIRONMENT_TAG = ACE_TEXT("EnvironmentVariables");
 
-Locator_XMLHandler::Locator_XMLHandler (Locator_Repository& repo)
-: repo_(repo)
+Locator_XMLHandler::Locator_XMLHandler (Locator_Repository& repo,
+                                        CORBA::ORB_ptr orb)
+: repo_(repo),
+  start_limit_(0),
+  server_started_(false),
+  orb_(CORBA::ORB::_duplicate(orb))
 {
 }
 
@@ -28,7 +32,7 @@ Locator_XMLHandler::startElement (const ACEXML_Char*,
       this->server_name_ = ACE_TEXT("");
       this->env_vars_.clear();
 
-      if (attrs != 0 && attrs->getLength () == 9)
+      if (attrs != 0 && attrs->getLength () == 10)
         {
           this->server_id_ = attrs->getValue ((size_t)0);
           this->server_name_ = attrs->getValue ((size_t)1);
@@ -41,6 +45,8 @@ Locator_XMLHandler::startElement (const ACEXML_Char*,
           this->start_limit_ = limit;
           this->partial_ior_ = attrs->getValue ((size_t)7);
           this->server_object_ior_ = attrs->getValue ((size_t)8);
+          this->server_started_ =
+            (ACE_OS::atoi (attrs->getValue ((size_t)9)) != 0);
         }
     }
   else if (ACE_OS::strcasecmp (qName, ACTIVATOR_INFO_TAG) == 0)
@@ -79,7 +85,8 @@ Locator_XMLHandler::endElement (const ACEXML_Char*,
       this->server_id_, this->server_name_,
       this->activator_name_, this->command_line_,
       this->env_vars_, this->working_dir_, this->activation_,
-      this->start_limit_, this->partial_ior_, this->server_object_ior_);
+      this->start_limit_, this->partial_ior_, this->server_object_ior_,
+      this->server_started_);
   }
   // activator info is handled in the startElement
 }
@@ -100,7 +107,8 @@ Locator_XMLHandler::next_server (const ACE_CString& server_id,
   const ACE_CString& name, const ACE_CString& aname,
   const ACE_CString& cmdline, const Locator_XMLHandler::EnvList& envlst,
   const ACE_CString& dir, const ACE_CString& amodestr, int start_limit,
-  const ACE_CString& partial_ior, const ACE_CString& ior)
+  const ACE_CString& partial_ior, const ACE_CString& ior,
+  bool server_started)
 {
   ImplementationRepository::ActivationMode amode =
     ImR_Utils::parseActivationMode (amodestr);
@@ -110,17 +118,74 @@ Locator_XMLHandler::next_server (const ACE_CString& server_id,
 
   int limit = start_limit < 1 ? 1 : start_limit;
 
-  Server_Info_Ptr si (new Server_Info (server_id, name, aname, cmdline,
-    env_vars, dir, amode, limit, partial_ior, ior));
+  Server_Info_Ptr si;
+  const bool new_server = (this->repo_.servers ().find (name, si) != 0);
 
-  this->repo_.servers ().bind (name, si);
+  if (!new_server)
+    {
+      // is the server object new
+      const bool new_ior = si->ior != ior; 
+      if (new_ior)
+        {
+          si->ior = ior;
+        }
+      si->server_id = server_id;
+      si->activator = aname;
+      si->cmdline = cmdline;
+      si->env_vars = env_vars;
+      si->dir = dir;
+      si->activation_mode = amode;
+      si->start_limit = limit;
+      si->partial_ior = partial_ior;
+
+      if (!server_started)
+        {
+          si->server = ImplementationRepository::ServerObject::_nil();
+        }
+      else
+        // will create a new server below if no previous server
+        // or the ior has changed
+        server_started = CORBA::is_nil(si->server) || new_ior;
+    }
+  else
+    {
+      si.reset(new Server_Info (server_id, name, aname, cmdline,
+        env_vars, dir, amode, limit, partial_ior, ior));
+      this->repo_.servers ().bind (name, si);
+    }
+
+  ACE_DEBUG((LM_INFO, "(%P|%t) Added server (%d, %d, %d)\n", server_started, ior.is_empty(), new_server));
+  if (!server_started || ior.is_empty())
+    return;
+
+  ACE_DEBUG((LM_INFO, "(%P|%t) check ServerObject\n"));
+  CORBA::Object_var obj = this->orb_->string_to_object(ior.c_str());
+  if (!CORBA::is_nil(obj.in()))
+    {
+      ACE_DEBUG((LM_INFO, "(%P|%t) narrow ServerObject\n"));
+      si->server =
+        ImplementationRepository::ServerObject::_unchecked_narrow (obj.in());
+      ACE_DEBUG((LM_INFO, "(%P|%t) added ServerObject %C (%d)\n", name.c_str(), si->server.in()));
+      try
+        {
+          si->server->ping ();
+          si->last_ping = ACE_OS::gettimeofday ();
+        }
+      catch (const CORBA::Exception& )
+        {
+          si->server = ImplementationRepository::ServerObject::_nil();
+          si->last_ping = ACE_Time_Value::zero;
+        }
+
+      ACE_DEBUG((LM_INFO, "(%P|%t) added ServerObject %C (%d)\n", name.c_str(), si->server.in()));
+    }
 }
 void
 Locator_XMLHandler::next_activator (const ACE_CString& aname,
   long token, const ACE_CString& ior)
 {
   Activator_Info_Ptr si (new Activator_Info (aname, token, ior));
-  this->repo_.activators ().bind (Locator_Repository::lcase (aname), si);
+  this->repo_.activators ().rebind (Locator_Repository::lcase (aname), si);
 }
 
 

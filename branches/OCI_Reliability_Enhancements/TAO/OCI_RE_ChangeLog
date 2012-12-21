@@ -1,3 +1,22 @@
+Fri Dec 21 16:17:25 UTC 2012  Brian Johnson  <johnsonb@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Locator_XMLHandler.h:
+        * orbsvcs/ImplRepo_Service/Locator_XMLHandler.cpp:
+        
+          Added code to check started to determine if ior should
+          be used to retrieve the server object from the orb.  Also
+          changed to use rebind for the activator.
+
+        * orbsvcs/ImplRepo_Service/Shared_Backing_Store.cpp:
+
+          Fixed to truncate handle prior to calling fdopen.
+
+        * orbsvcs/ImplRepo_Service/XML_Backing_Store.cpp:
+        
+          Added writing started to the server xml to indicate if
+          the server object should be created or removed in the
+          replica.
+
 Fri Dec 21 03:41:20 UTC 2012  Kevin Stanley  <stanleyk@ociweb.com>
 
         * orbsvcs/tests/FT_Naming/Load_Balancing/run_test.pl:

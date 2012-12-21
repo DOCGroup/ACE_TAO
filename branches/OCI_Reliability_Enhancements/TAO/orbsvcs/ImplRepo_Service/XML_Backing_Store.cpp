@@ -111,6 +111,7 @@ XML_Backing_Store::persist (FILE* fp, const Server_Info& info,
   ACE_OS::fprintf (fp," start_limit=\"%d\"", info.start_limit);
   ACE_OS::fprintf (fp," partial_ior=\"%s\"", partial_ior.c_str ());
   ACE_OS::fprintf (fp," ior=\"%s\"", ior.c_str ());
+  ACE_OS::fprintf (fp," started=\"%d\"", !CORBA::is_nil(info.server.in()));
 
   const CORBA::ULong length = info.env_vars.length ();
   if (length > 0)
@@ -158,7 +159,7 @@ XML_Backing_Store::init_repo(PortableServer::POA_ptr )
 int
 XML_Backing_Store::load (const ACE_TString& filename, FILE* open_file)
 {
-  Locator_XMLHandler xml_handler (*this);
+  Locator_XMLHandler xml_handler (*this, this->orb_.in());
   return load(filename, xml_handler, this->opts_.debug(), open_file);
 }
 

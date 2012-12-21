@@ -100,6 +100,10 @@ namespace {
                           flags_,
                           0666,
                           unlink_in_destructor));
+      if ((flags & O_RDWR) == 0)
+        {
+          ACE_OS::ftruncate(this->file_lock_->get_handle(), 0);
+        }
       this->file_ = ACE_OS::fdopen(this->file_lock_->get_handle(), flags_str);
 #endif
       ACE_DEBUG((LM_INFO, ACE_TEXT("(%P|%t) %d: created file_lock_ file_=%d, mode=%C\n"), this, file_, flags_str));
@@ -111,6 +115,7 @@ namespace {
         return;
 
 //      ACE_DEBUG((LM_INFO, "(%P|%t) %d: close file\n", this));
+      ACE_OS::fflush(this->file_);
       ACE_OS::fclose(this->file_);
       this->file_ = 0;
 #ifdef ACE_WIN32
