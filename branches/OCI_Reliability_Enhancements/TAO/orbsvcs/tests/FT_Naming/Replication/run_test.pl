@@ -33,6 +33,7 @@ $ns_endpoint1 = "iiop://$hostname:$ns_orb_port1";
 $ns_endpoint2 = "iiop://$hostname:$ns_orb_port2";
 
 $naming_persistence_dir = "NameService";
+$groups_persistence_dir = "Groups";
 
 $primary_iorfile = "$naming_persistence_dir/ns_replica_primary.ior";
 $combined_ns_iorfile = "combined_ns.ior";
@@ -74,14 +75,33 @@ sub clean_persistence_dir
 
 print "INFO: Running the test in ", getcwd(), "\n";
 
+sub clean_persistence_dir($$)
+{
+    my $target = shift;
+    my $directory_name = shift;
 
-# Make sure that the directory to use to hold the naming contexts exists
-# and is cleaned out
-if ( ! -d "$naming_persistence_dir" ) {
-    mkdir ($naming_persistence_dir, 0777);
+    chdir $directory_name;
+    opendir(THISDIR, ".");
+    @allfiles = grep(!/^\.\.?$/, readdir(THISDIR));
+    closedir(THISDIR);
+    foreach $tmp (@allfiles){
+        $target->DeleteFile ($tmp);
     }
-else {
-    clean_persistence_dir;
+    chdir "..";
+}
+
+# Make sure that the directory to use to hold the persistence data
+# exists and is cleaned out.
+sub init_persistence_directory($$)
+{
+    my $target = shift;
+    my $directory_name = shift;
+
+    if ( ! -d $directory_name ) {
+        mkdir ($directory_name, 0777);
+    } else {
+        clean_persistence_dir ($target, $directory_name);
+    }
 }
 
 
@@ -91,6 +111,7 @@ else {
 my $args = "-ORBEndPoint $ns_endpoint1 " .
            "-m 0 " .
            "-r $naming_persistence_dir " .
+           "-v $groups_persistence_dir " .
            "-n 100 " .
            "--primary";
 my $prog = "$startdir/../../../Naming_Service/tao_ft_naming";
@@ -100,6 +121,9 @@ print STDERR "Starting Primary: $prog $args\n";
 $NS1 = $test->CreateProcess ("$prog", "$args");
 
 $test->DeleteFile ($primary_iorfile);
+
+init_persistence_directory ($test, $naming_persistence_dir);
+init_persistence_directory ($test, $groups_persistence_dir);
 
 $NS1->Spawn ();
 
@@ -116,6 +140,7 @@ $args = "-ORBEndPoint $ns_endpoint2 " .
         "-m 0 " .
         "-n 100 " .
         "-r $naming_persistence_dir " .
+        "-v $groups_persistence_dir " .
         "--backup";
 
 $prog = "$startdir/../../../Naming_Service/tao_ft_naming";
@@ -178,6 +203,10 @@ $test->DeleteFile ($primary_iorfile);
 $test->DeleteFile ($combined_ns_iorfile);
 
 # Clean out the persistence dir after the test completes
-clean_persistence_dir;
+clean_persistence_dir ($test, $naming_persistence_dir);
+clean_persistence_dir ($test, $groups_persistence_dir);
+
 rmdir ($naming_persistence_dir);
+rmdir ($groups_persistence_dir);
+
 exit $status;

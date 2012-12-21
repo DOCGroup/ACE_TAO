@@ -1,3 +1,16 @@
+Fri Dec 21 03:41:20 UTC 2012  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * orbsvcs/tests/FT_Naming/Load_Balancing/run_test.pl:
+        * orbsvcs/tests/FT_Naming/Replication/run_test.pl:
+
+          Updated to use -v argument and clean up the object
+          group persistence directory.
+
+        * orbsvcs/tests/FT_Naming/Load_Balancing/NameService:
+        * orbsvcs/tests/FT_Naming/Load_Balancing/NameService/README:
+
+          Removed these files.
+
 Fri Dec 21 03:14:14 UTC 2012  Kevin Stanley  <stanleyk@ociweb.com>
 
         * orbsvcs/orbsvcs/PortableGroup/PG_Group_List_Store.h:
