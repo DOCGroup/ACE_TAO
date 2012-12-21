@@ -1,3 +1,11 @@
+Fri Dec 21 20:46:55 UTC 2012  Byron Harris  <harrisb@ociweb.com>
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_List_Store.cpp:
+
+          Fix so that when determining if state is obsolete
+          with respect to the persistent store that the stream
+          is opened before trying to determine time stamp.
+
 Fri Dec 21 16:46:52 UTC 2012  Byron Harris  <harrisb@ociweb.com>
 
         * orbsvcs/orbsvcs/PortableGroup/PG_Group_List_Store.h:
