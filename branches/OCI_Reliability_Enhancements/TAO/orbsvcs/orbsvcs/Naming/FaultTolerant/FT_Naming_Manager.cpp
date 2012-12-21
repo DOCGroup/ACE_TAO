@@ -93,8 +93,6 @@ TAO_FT_Naming_Manager::create_object_group (
   // The when creating the object group, it starts as a generic
   // CORBA Object. It will become the type of the first added
   // member.
-                                 // For testing purposes can use this.
-                                 //"IDL:Test/Basic:1.0");
   const char * type_id = ACE_TEXT ("IDL:omg.org:CORBA/Object:1.0");
 
   // Add the group name to the criteria and create the object
@@ -583,14 +581,17 @@ TAO_FT_Naming_Manager::create_object (
   ////////////////////////////////
   // find the properties for this
   // type of object group
-  TAO::PG_Property_Set * typeid_properties =
-    this->properties_support_.find_typeid_properties (type_id);
+  ACE_Auto_Ptr<TAO::PG_Property_Set> typeid_properties
+    (this->properties_support_.find_typeid_properties (type_id));
 
   TAO::PG_Object_Group * group
     = this->group_factory_.create_group (
       type_id,
       the_criteria,
-      typeid_properties);
+      typeid_properties.get ());
+
+  // The group now owns the properties.
+  typeid_properties.release ();
 
   group->set_name (object_name);
 

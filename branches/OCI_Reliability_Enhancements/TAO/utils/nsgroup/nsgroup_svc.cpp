@@ -339,12 +339,12 @@ NS_group_svc::start_orb (void)
 
 }
 
-int 
+int
 NS_group_svc::set_orb( CORBA::ORB_ptr orb)
 {
-    
+
     this->orb_ = CORBA::ORB::_duplicate (orb);
-    
+
     if (CORBA::is_nil (this->orb_))
       ACE_ERROR_RETURN ((LM_ERROR,
                           " (%P|%t) Unable to initialize the ORB.\n"),
@@ -352,7 +352,7 @@ NS_group_svc::set_orb( CORBA::ORB_ptr orb)
     return 0;
 }
 
-int 
+int
 NS_group_svc::set_naming_manager( FT_Naming::NamingManager_ptr nm)
 {
 
@@ -365,7 +365,7 @@ NS_group_svc::set_naming_manager( FT_Naming::NamingManager_ptr nm)
     return 0;
 }
 
-int 
+int
 NS_group_svc::set_name_context( CosNaming::NamingContextExt_ptr nc)
 {
 
@@ -408,6 +408,7 @@ NS_group_svc::group_exist (
 {
   if (group_name == 0 )
   {
+    this->show_usage ();
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("group_exist args not provided\n")),
                       -1);
@@ -440,6 +441,7 @@ NS_group_svc::group_create (
 
   if (group_name == 0 || policy == 0 )
   {
+    this->show_usage ();
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("group_create args not provided\n")),
                       -1);
@@ -510,6 +512,7 @@ NS_group_svc::group_bind (
 
   if (group_name == 0 || path == 0)
   {
+    this->show_usage ();
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("group_bind args not provided\n")),
                       -1);
@@ -572,6 +575,7 @@ int
 NS_group_svc::group_unbind (const char* path){
   if ( path == 0)
   {
+    this->show_usage ();
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("group_unbind args not provided\n")),
                       -1);
@@ -652,6 +656,7 @@ NS_group_svc::display_load_policy_group(
   const char *display_label) {
 
   if( display_label == 0 ) {
+    this->show_usage ();
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("display_load_policy_group args not provided\n")),
                       -1);
@@ -702,6 +707,7 @@ NS_group_svc::group_modify (
 {
   if (group_name == 0 || policy == 0)
   {
+    this->show_usage ();
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("group_modify args not provided\n")),
                       -1);
@@ -741,6 +747,7 @@ NS_group_svc::group_remove (const char* group_name)
 {
   if (group_name == 0)
   {
+    this->show_usage ();
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("group_remove args not provided\n")),
                       -1);
@@ -782,6 +789,7 @@ NS_group_svc::member_add (
 {
   if (group_name == 0 || location == 0 || ior == 0 )
   {
+    this->show_usage ();
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("member_add args not provided\n")),
                        -1);
@@ -840,6 +848,7 @@ NS_group_svc::member_list (const char* group_name)
 {
   if (group_name == 0)
   {
+    this->show_usage ();
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("member_list args not provided\n")),
                       -1);
@@ -892,6 +901,7 @@ NS_group_svc::member_remove (
 {
   if (group_name == 0 || location == 0)
   {
+    this->show_usage ();
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("member_remove args not provided\n")),
                       -1);
@@ -956,6 +966,7 @@ NS_group_svc::member_show (
 {
   if (group_name == 0 || location == 0)
   {
+    this->show_usage ();
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("member_show args not provided\n")),
                       -1);
