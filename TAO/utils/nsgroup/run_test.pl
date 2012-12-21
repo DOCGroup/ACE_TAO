@@ -63,9 +63,11 @@ my $LOAD_ARG = "$DEF_REF $DEBUG_LEVEL";
 
 my $tao_ft_naming = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_ft_naming";
 my $name_dir      = "NameService";
+my $group_dir     = "Groups";
 my $ns_args       = "$DEBUG_LEVEL " .
                     "-ORBListenEndPoints $ns_endpoint1 " .
                     "-g $name_mgr_iorbase -o $name_srv_iorbase " .
+                    "-v $group_dir " .
                     "-u $name_dir " .
                     ($^O eq 'MSWin32' ? "-ORBSvcConf $NM_conf" : '');
 
@@ -93,9 +95,9 @@ sub clean_persistence_dir($$)
     chdir "..";
 }
 
-# Make sure that the directory to use to hold the naming contexts exists
-# and is cleaned out
-sub init_naming_context_directory($$)
+# Make sure that the directory to use to hold the persistence data
+# exists and is cleaned out.
+sub init_persistence_directory($$)
 {
     my $target = shift;
     my $directory_name = shift;
@@ -351,7 +353,8 @@ print STDERR "\n";
 print STDERR "This test will check the methods of the tao_nsgroup\n";
 print STDERR "\n";
 
-init_naming_context_directory ($server, $name_dir );
+init_persistence_directory ($server, $name_dir );
+init_persistence_directory ($server, $group_dir );
 
 ################################################################################
 # setup END block to cleanup after exit call
@@ -365,7 +368,9 @@ END
     $client->DeleteFile($stdout_file);
     $client->DeleteFile($stderr_file);
     clean_persistence_dir ($server, $name_dir);
+    clean_persistence_dir ($server, $group_dir);
     rmdir ($name_dir);
+    rmdir ($group_dir);
 }
 
 ################################################################################

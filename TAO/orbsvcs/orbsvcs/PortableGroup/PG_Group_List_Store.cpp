@@ -128,7 +128,12 @@ PortableGroup::ObjectGroupId
 TAO::PG_Group_List_Store::get_next_group_id ()
 {
   File_Guard fg(*this, "r");
-  return *this->group_ids_.rbegin () + 1;
+  Group_Id_Revers_Iterator rit =
+    this->group_ids_.rbegin ();
+  if (rit != this->group_ids_.rend ())
+    return *rit + 1;
+  else
+    return 0;
 }
 
 int
