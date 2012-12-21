@@ -976,6 +976,10 @@ do_failover_objectgroup_test (
   int c_depth,
   int o_breadth )
 {
+  ACE_UNUSED_ARG (c_breadth);
+  ACE_UNUSED_ARG (c_depth);
+  ACE_UNUSED_ARG (o_breadth);
+
   const int RC_SUCCESS =  0;
   const int RC_ERROR   = -1;
 
@@ -1331,6 +1335,10 @@ do_persistant_objectgroup_test (
   int o_breadth,
   bool validate_only)
 {
+  ACE_UNUSED_ARG (c_breadth);
+  ACE_UNUSED_ARG (c_depth);
+  ACE_UNUSED_ARG (o_breadth);
+
   const int RC_ERROR   = -1;
   const int RC_SUCCESS =  0;
 
@@ -1968,6 +1976,10 @@ do_equivalence_objectgroup_test (
   int c_depth,
   int o_breadth )
 {
+  ACE_UNUSED_ARG (c_breadth);
+  ACE_UNUSED_ARG (c_depth);
+  ACE_UNUSED_ARG (o_breadth);
+
   const int RC_SUCCESS =  0;
   const int RC_ERROR   = -1;
 

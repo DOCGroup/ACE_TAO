@@ -130,54 +130,24 @@ TAO::FT_PG_Object_Group_Storable::is_obsolete (time_t stored_time)
 PortableGroup::ObjectGroup_ptr
 TAO::FT_PG_Object_Group_Storable::add_member_to_iogr (CORBA::Object_ptr member)
 {
-  // assume internals is locked
+  // If this is the first member added to the group and it's type_id does
+  // not match the member, then the object group should assume the same
+  // type id as the first member.  We will need to replace the object
+  // reference with an empty reference of the specified type id.
 
-  PortableGroup::ObjectGroup_var result;
+  const char* member_type_id = member->_stubobj ()->type_id.in ();
 
-  // If this is the first member, then we should create a new
-  // object of the type of the member and add them together.
-  if (this->members_.current_size () == 0)
+  if ((this->members_.current_size () == 0) &&
+      (ACE_OS::strcmp (this->type_id_, member_type_id) != 0) )
     {
-      this->type_id_ = member->_stubobj ()->type_id.in ();
+      this->type_id_ = member_type_id;
       this->reference_ = manipulator_.create_object_group_using_id (
           this->type_id_,
           this->tagged_component_.group_domain_id,
           this->tagged_component_.object_group_id);
     }
 
-
- ////////////////////////////
-  // @@ HACK ALERT
-  // The PortableGroup::ObjectGroupManager creates an object reference
-  // containing a dummy entry so it will have a place to store the
-  // tagged group component. If this is the first entry, we need to
-  // remove that entry once we have a *real* member. This can be
-  // avoided when we get support for TAG_MULTIPLE_COMPONENTS.   For
-  // now, we already have a copy of the tagGroupTagged component and
-  // we're going to use it below wen we increment the group version so
-  // we can clean out the dummy entry.
-  PortableGroup::ObjectGroup_var cleaned =
-    PortableGroup::ObjectGroup::_duplicate (this->reference_.in ());
-  if (this->empty_)
-    {
-      // remove the original profile.  It's a dummy entry supplied by
-      // create_object.
-      cleaned =
-        this->manipulator_.remove_profiles (cleaned.in (),
-                                            this->reference_.in ());
-      this->empty_ = 0;
-    }
-
-  // create a list of references to be merged
-  TAO_IOP::TAO_IOR_Manipulation::IORList iors (2);
-  iors.length (2);
-  iors [0] = CORBA::Object::_duplicate (cleaned.in());
-  iors [1] = CORBA::Object::_duplicate (member);
-
-  // Now merge the list into one new IOGR
-  result =
-    this->manipulator_.merge_iors (iors);
-  return result._retn ();
+  return PG_Object_Group::add_member_to_iogr (member);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

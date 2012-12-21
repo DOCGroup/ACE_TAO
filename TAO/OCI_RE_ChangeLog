@@ -1,3 +1,22 @@
+Fri Dec 21 22:58:59 UTC 2012  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.cpp:
+
+          Removed extraneous comment.  Added protection for leak against
+          thrown exception in creation.
+
+        * orbsvcs/orbsvcs/PortableGroup/FaultTolerant/FT_PG_Object_Group_Storable.cpp:
+
+          Removed duplicate code.
+
+        * orbsvcs/tests/FT_Naming/FaultTolerance/client.cpp:
+
+          Removed unused arg warnings for now.
+
+        * utils/nsgroup/nsgroup_svc.cpp:
+
+          Added printout of usage on failure of commands.
+
 Fri Dec 21 22:43:47 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
 
         * orbsvcs/tests/FT_Naming/FaultTolerance/client.cpp:
