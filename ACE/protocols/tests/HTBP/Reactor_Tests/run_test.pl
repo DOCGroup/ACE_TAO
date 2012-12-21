@@ -22,7 +22,12 @@ my $SV = $target1->CreateProcess("server", "-p $port -o $synchfile");
 $target1->DeleteFile ($synchbase);
 $target2->DeleteFile ($synchbase);
 
-$SV->Spawn ();
+$server_status = $SV->Spawn ();
+
+if ($server_status != 0) {
+    print STDERR "ERROR: server returned $server_status\n";
+    exit 1;
+}
 
 if ($target1->WaitForFileTimed ($synchbase,
                                 $target1->ProcessStartWaitInterval()) == -1) {
