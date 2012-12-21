@@ -78,6 +78,10 @@ namespace TAO
 
     Group_Ids group_ids_;
 
+    /// Ensure ID is monotonically increasing even when groups gets
+    /// removed.
+    PortableGroup::ObjectGroupId next_group_id_;
+
     TAO::Storable_Base * create_stream (const char * mode);
 
     Storable_Factory & storable_factory_;
