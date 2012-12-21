@@ -96,7 +96,8 @@ typedef TAO::PG_Group_List_Store_File_Guard File_Guard;
 ACE_CString TAO::PG_Group_List_Store::file_name_ = "ObjectGroup_global";
 
 TAO::PG_Group_List_Store::PG_Group_List_Store (Storable_Factory & storable_factory)
-  : storable_factory_ (storable_factory)
+  : next_group_id_ (0)
+  , storable_factory_ (storable_factory)
   , loaded_from_stream_ (false)
   , last_changed_ (0)
 {
@@ -127,13 +128,11 @@ TAO::PG_Group_List_Store::~PG_Group_List_Store ()
 PortableGroup::ObjectGroupId
 TAO::PG_Group_List_Store::get_next_group_id ()
 {
-  File_Guard fg(*this, "r");
-  Group_Id_Revers_Iterator rit =
-    this->group_ids_.rbegin ();
-  if (rit != this->group_ids_.rend ())
-    return *rit + 1;
-  else
-    return 0;
+  File_Guard fg(*this, "rw");
+  PortableGroup::ObjectGroupId next_id = this->next_group_id_;
+  ++this->next_group_id_;
+  this->write (fg.peer ());
+  return next_id;
 }
 
 int
@@ -180,6 +179,12 @@ TAO::PG_Group_List_Store::read (TAO::Storable_Base & stream)
   if (!stream.good ())
     throw CORBA::INTERNAL ();
 
+  unsigned int next_group_id;
+  stream >> next_group_id;
+  this->next_group_id_ = next_group_id;
+  if (!stream.good ())
+    throw CORBA::INTERNAL ();
+
   int size;
   stream >> size;
   if (!stream.good ())
@@ -201,6 +206,9 @@ void
 TAO::PG_Group_List_Store::write (TAO::Storable_Base & stream)
 {
   stream.rewind ();
+
+  unsigned int next_group_id = this->next_group_id_;
+  stream << next_group_id;
 
   int size = group_ids_.size ();
   stream << size;
