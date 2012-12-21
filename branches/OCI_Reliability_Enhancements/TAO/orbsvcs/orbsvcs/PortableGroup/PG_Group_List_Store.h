@@ -62,6 +62,7 @@ namespace TAO
 
     typedef std::set<PortableGroup::ObjectGroupId> Group_Ids;
     typedef std::set<PortableGroup::ObjectGroupId>::iterator Group_Id_Iterator;
+    typedef std::set<PortableGroup::ObjectGroupId>::reverse_iterator Group_Id_Revers_Iterator;
     typedef std::set<PortableGroup::ObjectGroupId>::const_iterator Group_Id_Const_Iterator;
 
     Group_Ids & get_group_ids ();
