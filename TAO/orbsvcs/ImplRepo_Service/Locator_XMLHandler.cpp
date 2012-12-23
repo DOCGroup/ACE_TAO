@@ -4,6 +4,7 @@
 #include "Locator_Repository.h"
 #include "utils.h"
 #include "ace/OS_NS_strings.h"
+#include "ace/OS_NS_sys_time.h"
 
 const ACE_TCHAR* Locator_XMLHandler::ROOT_TAG = ACE_TEXT("ImplementationRepository");
 const ACE_TCHAR* Locator_XMLHandler::SERVER_INFO_TAG = ACE_TEXT("Servers");
@@ -124,7 +125,7 @@ Locator_XMLHandler::next_server (const ACE_CString& server_id,
   if (!new_server)
     {
       // is the server object new
-      const bool new_ior = si->ior != ior; 
+      const bool new_ior = si->ior != ior;
       if (new_ior)
         {
           si->ior = ior;
