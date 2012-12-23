@@ -64,7 +64,7 @@ project(CIAO_IDL3_TO_XMI_EXE) : aceexe, install, ciao_output, ace_xml_utils, tao
   }
 
   verbatim(gnuace, postinstall) {
-"	@$(MKDIR) $(INSTALL_PREFIX)/share/ciao/bin"
-"	ln -sf $(INSTALL_PREFIX)/bin/tao_idl3_to_xmi $(INSTALL_PREFIX)/share/ciao/bin"
+"	@$(MKDIR) $(INSTALL_PREFIX)/share/ace/bin"
+"	ln -sf $(INSTALL_PREFIX)/bin/tao_idl3_to_xmi $(INSTALL_PREFIX)/share/ace/bin"
   }
 }
