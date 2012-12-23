@@ -1,3 +1,9 @@
+Sun Dec 23 20:18:26 UTC 2012  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Locator_XMLHandler.cpp:
+
+          Added missing include needed for for gettimeofday.
+
 Fri Dec 21 22:58:59 UTC 2012  Kevin Stanley  <stanleyk@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.cpp:
