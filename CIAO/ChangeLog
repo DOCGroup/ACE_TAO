@@ -1,3 +1,8 @@
+Sun Dec 23 11:44:31 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tools/IDL3_to_XMI/IDL3_TO_XMI.mpc:
+          Fixed post install
+
 Sat Dec 22 15:22:31 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Base/CIAO_Base.mpc:
