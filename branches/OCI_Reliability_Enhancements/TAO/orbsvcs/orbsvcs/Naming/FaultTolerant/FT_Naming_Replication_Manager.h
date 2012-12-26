@@ -28,15 +28,18 @@
 
 class TAO_FT_Naming_Server;
 
+/**
+ * @class TAO_FT_Naming_Replication_Manager
+ * @brief The class that implements the FT_Naming::ReplicationManager
+ * interface.
+ */
 class TAO_FtNaming_Export TAO_FT_Naming_Replication_Manager
   : public virtual POA_FT_Naming::ReplicationManager
 {
 public:
 
- /*
-  * Create a Replication Manager and provide it with the naming server
-  * to be updated whenever notified by the peer replica
-  */
+  /// Create a Replication Manager and provide it with the naming server
+  /// to be updated whenever notified by the peer replica
   TAO_FT_Naming_Replication_Manager(TAO_FT_Naming_Server *naming_svr,
                                     const char* repl_mgr_name);
 
@@ -48,18 +51,23 @@ public:
   void initialize (CORBA::ORB_ptr orb,
                    PortableServer::POA_ptr root_poa);
 
- /*
-  * Implementation of the FT_Naming::ReplicationManager interface
-  */
+
+  /// Implementation of the FT_Naming::ReplicationManager interface
   virtual ::FT_Naming::ReplicaInfo * register_replica (::FT_Naming::ReplicationManager_ptr replica,
                                                        const ::FT_Naming::ReplicaInfo & replica_info);
 
+  /// This method implements the operation invoked by the peer replica when an
+  /// object group is updated on the remote process.
   virtual void notify_updated_object_group (
     const FT_Naming::ObjectGroupUpdate & group_info);
 
+  /// This method implements the operation invoked by the peer replica when an
+  /// naming context is updated on the remote process.
   virtual void notify_updated_context (
     const FT_Naming::NamingContextUpdate & group_info);
 
+  /// Retrieve the object reference for the peer naming service
+  /// ReplicationManager.
   static FT_Naming::ReplicationManager_ptr peer_replica (void);
 
  /*

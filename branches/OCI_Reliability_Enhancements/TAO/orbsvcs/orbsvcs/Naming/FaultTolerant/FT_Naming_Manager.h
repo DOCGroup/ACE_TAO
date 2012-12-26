@@ -42,6 +42,17 @@ namespace TAO
   class Storable_Factory;
 }
 
+/**
+ * @class TAO_FT_Naming_Manager
+ * @brief Implements the NamingManager interface for the Fault
+ * tolerant naming service.
+ *
+ * This class implements the NamingManager interface in support
+ * of the load balancing features of the FaultTolerant Naming
+ * Service. Uses can create and manage object groups which can be
+ * bound in the Naming Service, which will provide the load balancing
+ * functionality.
+ */
 class TAO_FtNaming_Export TAO_FT_Naming_Manager
   : public virtual POA_FT_Naming::NamingManager,
     public ACE_Task_Base
@@ -57,23 +68,37 @@ public:
    *
    */
 
+  /// Creates an object group with the specified name and load
+  /// balancing strategy.
+  /// @param[in] group_name The symbolic name of the group that can
+  /// be used to refer to the group in other operations.
+  /// @param[in] lb_strategy The strategy to be used by the Naming
+  /// Service when this object group is resolved.
+  ///@param[in] the_criteria Properties to be used by the object group.
   virtual PortableGroup::ObjectGroup_ptr create_object_group (
     const char * group_name,
     FT_Naming::LoadBalancingStrategyValue lb_strategy,
     const ::PortableGroup::Criteria & the_criteria);
 
+  /// Deletes the object group with the provided group_name.
   virtual void delete_object_group (
     const char * group_name);
 
+  /// Retreives a reference to a group with the specified name
   virtual PortableGroup::ObjectGroup_ptr get_object_group_ref_from_name (
     const char * group_name);
 
+  /// Provide a new load balancing strategy for the group with the provided
+  /// name.
   virtual void set_load_balancing_strategy (
       const char * group_name,
       FT_Naming::LoadBalancingStrategyValue lb_strategy);
 
+  /// Retreive the names of the groups with the specified load balanacing
+  /// strategy that have been created in this Naming Manager.
+  virtual FT_Naming::GroupNames * groups (
+     ::FT_Naming::LoadBalancingStrategyValue target_strategy);
 
-  virtual FT_Naming::GroupNames * groups (::FT_Naming::LoadBalancingStrategyValue target_strategy);
   /**
    * @name PortableGroup::PropertyManager Methods
    *
@@ -150,6 +175,13 @@ public:
       const PortableGroup::Criteria & the_criteria);
 
   /// Add an existing object to the ObjectGroup.
+  /// @param[in] object_group A reference for the group to which the
+  /// specified member is to be added.
+  /// @param[in] the_location The symbolic value that specifies this
+  /// specific member. The location can be any string value.
+  /// @param[in] member The object reference for the member. The first
+  /// member's type is used to defined the object group type. All subsequence
+  /// members must have the same type.
   virtual PortableGroup::ObjectGroup_ptr add_member (
       PortableGroup::ObjectGroup_ptr object_group,
       const PortableGroup::Location & the_location,
@@ -176,10 +208,6 @@ public:
 
   /// Return the ObjectGroupId for the given ObjectGroup.
   virtual PortableGroup::ObjectGroupId get_object_group_id (
-      PortableGroup::ObjectGroup_ptr object_group);
-
-  /// @note Does this method make sense for load balanced objects?
-  virtual PortableGroup::ObjectGroup_ptr get_object_group_ref (
       PortableGroup::ObjectGroup_ptr object_group);
 
   /// TAO specific method
@@ -254,7 +282,12 @@ public:
   ~TAO_FT_Naming_Manager (void);
 
 private:
-  /// Preprocess Strategy or CustomStrategy properties.
+  /// A utility to ensure we can access the latest object reference for
+  /// the object group when referenced externally.
+  virtual PortableGroup::ObjectGroup_ptr get_object_group_ref (
+      PortableGroup::ObjectGroup_ptr object_group);
+
+  /// TAO specific method  /// Preprocess Strategy or CustomStrategy properties.
   /**
    * This method takes care of converting StrategyInfo properties to
    * Strategy properties, and verifying that CustomStrategy references

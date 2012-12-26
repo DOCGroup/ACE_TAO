@@ -342,7 +342,7 @@ File_Open_Lock_and_Check::create_stream (const char * mode)
   // Build the file name
   ACE_CString file_name(context_->persistence_directory_);
   file_name += "/";
-  file_name += context_->name_;
+  file_name += context_->context_name_;
 
   // Create the stream
   return context_->factory_->create_stream(file_name, ACE_TEXT_CHAR_TO_TCHAR(mode));
@@ -352,17 +352,17 @@ File_Open_Lock_and_Check::create_stream (const char * mode)
 TAO_Storable_Naming_Context::TAO_Storable_Naming_Context (
                                CORBA::ORB_ptr orb,
                                PortableServer::POA_ptr poa,
-                               const char *poa_id,
+                               const char *context_name,
                                TAO_Storable_Naming_Context_Factory *cxt_factory,
                                TAO::Storable_Factory *factory,
                                const ACE_TCHAR *persistence_directory,
                                size_t hash_table_size)
   : TAO_Hash_Naming_Context (poa,
-                             poa_id),
+                             context_name),
     counter_ (0),
     storable_context_ (0),
     orb_(CORBA::ORB::_duplicate (orb)),
-    name_ (poa_id),
+    context_name_ (context_name),
     poa_ (PortableServer::POA::_duplicate (poa)),
     context_factory_ (cxt_factory),
     factory_ (factory),
@@ -386,7 +386,7 @@ TAO_Storable_Naming_Context::~TAO_Storable_Naming_Context (void)
       // Make sure we delete the associated stream
       ACE_CString file_name (this->persistence_directory_);
       file_name += "/";
-      file_name += this->name_;
+      file_name += this->context_name_;
 
       // Now delete the file
       ACE_Auto_Ptr<TAO::Storable_Base>
@@ -408,7 +408,7 @@ CosNaming::NamingContext_ptr
 TAO_Storable_Naming_Context::make_new_context (
                               CORBA::ORB_ptr orb,
                               PortableServer::POA_ptr poa,
-                              const char *poa_id,
+                              const char *context_name,
                               TAO_Storable_Naming_Context_Factory *cxt_factory,
                               TAO::Storable_Factory *pers_factory,
                               const ACE_TCHAR *persistence_directory,
@@ -423,7 +423,7 @@ TAO_Storable_Naming_Context::make_new_context (
   TAO_Storable_Naming_Context *context_impl =
     cxt_factory->create_naming_context_impl (orb,
                                              poa,
-                                             poa_id,
+                                             context_name,
                                              pers_factory,
                                              persistence_directory);
 
@@ -449,7 +449,7 @@ TAO_Storable_Naming_Context::make_new_context (
 
   // Register the new context with the POA.
   PortableServer::ObjectId_var id =
-    PortableServer::string_to_ObjectId (poa_id);
+    PortableServer::string_to_ObjectId (context_name);
 
   // If we try to register a naming context that is already registered,
   // the following activation causes a POA::ObjectAlreadyActive exception be
@@ -496,7 +496,6 @@ TAO_Storable_Naming_Context::new_context (void)
   TAO_NS_Persistence_Global global;
   TAO_Storable_Naming_Context_ReaderWriter rw(*gfl_.get());
 
-  // Generate a POA id for the new context.
   if(redundant_)
   {
     // acquire a lock on the file that holds our counter
@@ -518,15 +517,17 @@ TAO_Storable_Naming_Context::new_context (void)
     gcounter_ = global.counter();
     // use it to generate a new name
   }
-  char poa_id[BUFSIZ];
-  ACE_OS::sprintf (poa_id,
+
+  // Generate an Object id for the new context.
+  char object_id[BUFSIZ];
+  ACE_OS::sprintf (object_id,
                    "%s_%d",
                    root_name_,
                    gcounter_++);
   // then save it back on disk
-  global.counter(gcounter_);
-  rw.write_global(global);
-  if(redundant_)
+  global.counter (gcounter_);
+  rw.write_global (global);
+  if (redundant_)
   {
     // and release our lock
     if (gfl_ -> flock(0, 0, 0) != 0)
@@ -539,7 +540,7 @@ TAO_Storable_Naming_Context::new_context (void)
   CosNaming::NamingContext_var result =
     make_new_context (this->orb_.in (),
                       this->poa_.in (),
-                      poa_id,
+                      object_id,
                       this->context_factory_,
                       this->factory_,
                       ACE_TEXT_CHAR_TO_TCHAR (this->persistence_directory_.c_str ()),
@@ -1270,7 +1271,7 @@ CosNaming::NamingContext_ptr TAO_Storable_Naming_Context::recreate_all (
                       TAO_Storable_Bindings_Map (context_size,orb),
                       CORBA::NO_MEMORY ());
     new_context->context_ = new_context->storable_context_;
-    File_Open_Lock_and_Check flck(new_context, "wc");
+    File_Open_Lock_and_Check flck (new_context, "wc");
     new_context->Write (flck.peer ());
   }
 

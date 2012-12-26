@@ -20,7 +20,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/FT_NamingManagerC.h"
 #include "orbsvcs/PortableGroupC.h"
 
 #include "ace/Functor.h"

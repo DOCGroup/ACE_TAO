@@ -113,7 +113,8 @@ TAO_FT_Storable_Naming_Context::propagate_update_notification (
     }
 
   FT_Naming::NamingContextUpdate context_info;
-  context_info.context_name = this->name_.c_str ();
+  context_info.context_name = this->context_name_.c_str ();
+
   // We are are updating the context one element before the specified name
   context_info.change_type = change_type;
 
@@ -123,7 +124,8 @@ TAO_FT_Storable_Naming_Context::propagate_update_notification (
   }
   catch (CORBA::Exception& ex)
     {
-      ex._tao_print_exception (ACE_TEXT ("Unable to communicate with peer.\n"));
+      if (TAO_debug_level > 3)
+        ex._tao_print_exception (ACE_TEXT ("Unable to communicate with peer.\n"));
       return -1;
     }
 
