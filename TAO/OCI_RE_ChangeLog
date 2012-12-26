@@ -1,3 +1,18 @@
+Wed Dec 26 21:40:39 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
+
+        * orbsvcs/tests/FT_Naming/FaultTolerance/client.cpp:
+
+          Changed main error return code
+
+        * orbsvcs/tests/FT_Naming/FaultTolerance/run_equivalence_test.pl:
+
+          Fixed error checking of client process
+
+        * orbsvcs/tests/FT_Naming/FaultTolerance/run_failover_test.pl:
+
+          Fixed error message
+
+
 Wed Dec 26 19:09:59 UTC 2012  Kevin Stanley  <stanleyk@ociweb.com>
 
         * bin/tao_other_tests.lst:

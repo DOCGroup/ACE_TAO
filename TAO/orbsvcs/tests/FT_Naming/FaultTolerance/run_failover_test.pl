@@ -365,7 +365,7 @@ sub failover_test()
 
     $client_status = $CL->TerminateWaitKill ($client->ProcessStopWaitInterval());
     if ($client_status != 0) {
-        print STDERR "ERROR: client returned $$client_status\n";
+        print STDERR "ERROR: client returned $client_status\n";
         $status = 1;
     }
 
