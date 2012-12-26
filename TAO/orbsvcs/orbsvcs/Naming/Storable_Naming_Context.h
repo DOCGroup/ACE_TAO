@@ -257,7 +257,7 @@ public:
   static CosNaming::NamingContext_ptr make_new_context (
                                CORBA::ORB_ptr orb,
                                PortableServer::POA_ptr poa,
-                               const char *poa_id,
+                               const char *context_id,
                                TAO_Storable_Naming_Context_Factory *cxt_factory,
                                TAO::Storable_Factory *pers_factory,
                                const ACE_TCHAR *persistence_directory,
@@ -268,7 +268,7 @@ public:
   static CosNaming::NamingContext_ptr recreate_all (
                               CORBA::ORB_ptr orb,
                               PortableServer::POA_ptr poa,
-                              const char *poa_id,
+                              const char *context_id,
                               size_t context_size,
                               int reentering,
                               TAO_Storable_Naming_Context_Factory *cxt_factory,
@@ -397,8 +397,11 @@ protected:
 
   CORBA::ORB_var orb_;
 
-  ACE_CString name_;
+  /// The name of the context used as its object id when registered
+  /// with the POA.
+  ACE_CString context_name_;
 
+  /// The POA that this context was registered with.
   PortableServer::POA_var poa_;
 
   TAO_Storable_Naming_Context_Factory *context_factory_;

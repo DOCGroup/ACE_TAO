@@ -49,16 +49,17 @@ public:
   /**
    * Accessors and mutators for object references.
    */
+  /// Returns a <NamingContext_ptr> for the root Naming Context.
+  CosNaming::NamingContext_ptr my_root_context (void) const;
+
+  /// Returns the reference for this servers local naming manager servant.
+  FT_Naming::NamingManager_ptr my_naming_manager (void) const;
+
   void peer_root_context (CosNaming::NamingContext_ptr peer_cxt);
   CosNaming::NamingContext_ptr peer_root_context (void);
 
   void peer_naming_manager (FT_Naming::NamingManager_ptr peer_nm);
   FT_Naming::NamingManager_ptr peer_naming_manager (void);
-
-  /// Returns a <NamingContext_ptr> for the root Naming Context.
-  CosNaming::NamingContext_ptr my_root_context (void) const;
-
-  FT_Naming::NamingManager_ptr my_naming_manager (void) const;
 
   /// Initialize the naming manager with the ORB.
   int init_naming_manager_with_orb (int argc, ACE_TCHAR *argv [], CORBA::ORB_ptr orb);
@@ -95,7 +96,9 @@ public:
   virtual int update_naming_context (
     const FT_Naming::NamingContextUpdate & naming_context);
 
-  /// Destroy the child POA created in @c init_with_orb
+  /// Destroy the child POAs created in @c init_with_orb,
+  /// @c init_naming_manager_with_orb, and
+  /// @c init_replication_manager_with_orb
   virtual int fini (void);
 
   /// Destructor.
@@ -117,12 +120,17 @@ protected:
   /// and GenericFactory interfaces.
   TAO_FT_Naming_Manager naming_manager_;
 
+  /// Object reference for the local naming manager servant.
   FT_Naming::NamingManager_var my_naming_manager_;
+
+  /// Object reference for the peer naming service's naming manager.
   FT_Naming::NamingManager_var peer_naming_manager_;
+
+  /// Object reference for the peer naming service's naming manager.
   CosNaming::NamingContext_var peer_root_context_;
 
   /// The object that implements the FT_Naming::Replication_Manager
-  /// interface
+  /// interface.
   TAO_FT_Naming_Replication_Manager* replication_manager_;
 
   /// File to output for the multi-profile root naming context IOR.
@@ -154,6 +162,8 @@ protected:
   int use_object_group_persistence_;
   ACE_CString object_group_dir_;
 
+  /// The role this server is supporting in the dual redundant
+  /// replication scheme.
   enum ServerRole { PRIMARY, BACKUP, STANDALONE };
 
   /// The role this server is to take on. Controlled by the

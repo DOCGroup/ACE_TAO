@@ -1,3 +1,30 @@
+Wed Dec 26 23:01:04 UTC 2012  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * orbsvcs/Naming_Service/FT_Naming_README:
+
+          Created README for the FT_Naming Service separate from the
+          TAO Naming Service.
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Location_Index_Map.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Replication_Manager.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Persistent_Naming_Context.h:
+
+          Updated documentation formatted for doxygen.
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:
+
+          Made error messages clearer for invalid arguments and combinations of
+          arguments.
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context.cpp:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.h:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp:
+
+          Replaced argument name with a more appropriate name. Was previoulsy POA
+          ID, but it is actually the id of the object as registered with the POA.
+
 Wed Dec 26 21:40:39 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
 
         * orbsvcs/tests/FT_Naming/FaultTolerance/client.cpp:

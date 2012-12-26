@@ -53,7 +53,6 @@ public:
   /// Destructor.
   virtual ~TAO_FT_Persistent_Naming_Context (void);
 
-
   /**
    * Override the resolve operation to support load balancing using
    * the object group manager and associated strategy.

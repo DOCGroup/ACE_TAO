@@ -645,43 +645,33 @@ TAO_FT_Naming_Server::parse_args (int argc,
         break;
       case '?':
       default:
-#if !defined (ACE_NLOGGING)
-        const ACE_TCHAR *reqNonMinCorba=
-#if !defined (CORBA_E_MICRO)
-          ACE_TEXT ("-f <persistence_file_name> ")
-#endif /* CORBA_E_MICRO */
-#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_MICRO)
-          ACE_TEXT ("-u <storable_persistence_directory (not used with -f)> ")
-          ACE_TEXT ("-v <storable_object_group_persistence_directory> ")
-          ACE_TEXT ("-r <redundant_persistence_directory> ");
-#else
-          ACE_TEXT ("");
-#endif /* TAO_HAS_MINIMUM_POA && !CORBA_E_MICRO */
-#endif /* !ACE_NLOGGING */
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("usage:  %s ")
-                           ACE_TEXT ("--primary")
-                           ACE_TEXT ("--backup")
-                           ACE_TEXT ("-d ")
-                           ACE_TEXT ("-c <multi-profile_name_service_ior_file> ")
-                           ACE_TEXT ("-o <name_svc_ior_output_file> ")
-                           ACE_TEXT ("-g <naming_mgr_ior_output_file> ")
-                           ACE_TEXT ("-p <pid_file_name> ")
-                           ACE_TEXT ("-s <context_size> ")
-                           ACE_TEXT ("-b <base_address> ")
-                           ACE_TEXT ("-m <1=enable multicast, 0=disable multicast(default) ")
-                           ACE_TEXT ("%s")
-                           ACE_TEXT ("-z <relative round trip timeout> ")
+                           ACE_TEXT ("usage:  %s \n")
+                           ACE_TEXT ("--primary  (not used with --backup)\n")
+                           ACE_TEXT ("--backup  (not used with --primary)\n")
+                           ACE_TEXT ("-d \n")
+                           ACE_TEXT ("-c <multi-profile_name_service_ior_file> \n")
+                           ACE_TEXT ("-o <name_svc_ior_output_file> \n")
+                           ACE_TEXT ("-g <naming_mgr_ior_output_file> \n")
+                           ACE_TEXT ("-p <pid_file_name> \n")
+                           ACE_TEXT ("-s <context_size> \n")
+                           ACE_TEXT ("-b <base_address> \n")
+                           ACE_TEXT ("-m <1=enable multicast, 0=disable multicast(default)> \n")
+                           ACE_TEXT ("-f <persistence_file_name> \n")
+                           ACE_TEXT ("-u <storable_persistence_directory (not used with -f)> \n")
+                           ACE_TEXT ("-v <storable_object_group_persistence_directory> \n")
+                           ACE_TEXT ("-r <redundant_persistence_directory> \n")
+                           ACE_TEXT ("-z <relative round trip timeout> \n")
                            ACE_TEXT ("\n"),
-                           argv [0], reqNonMinCorba),
+                           argv [0]),
                           -1);
       }
 
 
-  if (f_opt_used + u_opt_used + r_opt_used > 3)
+  if (f_opt_used + u_opt_used + r_opt_used > 1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) ERROR: Only one persistence option can be passed.\n")
-                       ACE_TEXT ("\n")),
+                       ACE_TEXT ("ERROR: Only one persistence option ")
+                       ACE_TEXT ("can be provided.\n\n")),
                       -1);
   if (!role_defined)
     { // No role specified, so we will become a STANDALONE server
@@ -691,9 +681,32 @@ TAO_FT_Naming_Server::parse_args (int argc,
       if (this->use_redundancy_ == 1)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("(%P|%t) ERROR: Cannot run standalone with -r option. Using -u instead.\n")));
+                      ACE_TEXT ("INFO: Cannot run standalone with ")
+                      ACE_TEXT ("-r option. Using -u instead.\n")
+                      ACE_TEXT ("Must start a '--primary' and a '--backup' ")
+                      ACE_TEXT ("server to run as a Fault \n")
+                      ACE_TEXT ("Tolerant Naming Service. \n")));
           this->use_redundancy_ = 0;
         }
+
+    }
+  else
+    {
+      // Only the backup should be requested to write the multi-profile IOR
+      if ((this->server_role_ != TAO_FT_Naming_Server::BACKUP) &&
+          (this->combined_naming_service_ior_file_name_ != 0))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("ERROR: Must export the multi-profile ")
+                           ACE_TEXT ("IOR (using '-c' option) from the backup server.\n\n")),
+                          -1);
+
+      // Only the backup should be requested to write the multi-profile IOR
+      if ((this->server_role_ == TAO_FT_Naming_Server::BACKUP) &&
+          (this->combined_naming_service_ior_file_name_ == 0))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("ERROR: Must export the multi-profile ")
+                           ACE_TEXT ("IOR (using '-c' option) from the backup server.\n\n")),
+                          -1);
 
     }
   return 0;
