@@ -9,6 +9,8 @@ use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
 use Cwd;
 
+#$ENV{ACE_TEST_VERBOSE} = "1";
+
 my $startdir = getcwd();
 my $debug_level = '0';
 my $redirection_enabled = 0;
@@ -236,7 +238,7 @@ sub init_naming_context_directory($$)
 }
 
 my $name_dir           = "NameService";
-my $object_group_dir   = "ObjectGroupService";
+my $group_dir          = "ObjectGroupService";
 my $ns_primary_iorfile = "$name_dir/ns_replica_primary.ior";
 my $ns_multi_iorfile   = "ns_multi.ior";
 my $nm_multi_iorfile   = "nm_multi.ior";
@@ -260,10 +262,10 @@ END
         rmdir ($name_dir);
     }
 
-    if ( -d $object_group_dir ) {
-        print STDERR "INFO: removing <$object_group_dir>\n";
-        clean_persistence_dir ($server, $object_group_dir);
-        rmdir ($object_group_dir);
+    if ( -d $group_dir ) {
+        print STDERR "INFO: removing <$group_dir>\n";
+        clean_persistence_dir ($server, $group_dir);
+        rmdir ($group_dir);
     }
 }
 
@@ -279,7 +281,7 @@ sub redundant_equivalency_test()
     print_msg("Redundant Equivalency Test");
 
     init_naming_context_directory ($server, $name_dir);
-    init_naming_context_directory ($server, $object_group_dir);
+    init_naming_context_directory ($server, $group_dir);
 
     # The file that is written by the primary when ready to start backup
     my $server_primary_iorfile  = $server->LocalFile ($ns_primary_iorfile);
@@ -294,14 +296,14 @@ sub redundant_equivalency_test()
     my $ns1_args = "--primary ".
                    "-ORBListenEndPoints $ns_endpoint1 ".
                    "-r $name_dir ".
-                   "-v $object_group_dir";
+                   "-v $group_dir";
 
     my $ns2_args = "--backup ".
                    "-ORBListenEndPoints $ns_endpoint2 ".
                    "-c $server_ns_multi_iorfile ".
                    "-g $server_nm_multi_iorfile ".
                    "-r $name_dir ".
-                   "-v $object_group_dir";
+                   "-v $group_dir";
 
     my $client_args = "--equivalence " .
                       "-p corbaloc:iiop:$hostname:$ns_orb_port1/NameService " .
@@ -338,7 +340,12 @@ sub redundant_equivalency_test()
     }
 
     print_msg("INFO: Starting the client");
-    $CL->SpawnWaitKill ($client->ProcessStartWaitInterval());
+    $client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval()+5);
+    if ($client_status != 0) {
+        print STDERR "ERROR: client returned $client_status\n";
+        $status = 1;
+    }
+
 
     $server_status = $NS2->TerminateWaitKill ($server->ProcessStopWaitInterval());
     if ($server_status != 0) {

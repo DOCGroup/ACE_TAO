@@ -146,7 +146,7 @@ int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   const int RC_SUCCESS =  0;
-  const int RC_ERROR   = -1;
+  const int RC_ERROR   =  1;
 
   int rc = RC_SUCCESS;
 
@@ -501,14 +501,14 @@ do_failover_name_test (
     if (CORBA::is_nil (orb.in ()))
     {
       ACE_ERROR_RETURN (( LM_ERROR,
-                          ACE_TEXT ("invalid orb\n")),
+                          ACE_TEXT ("ERROR: invalid orb\n")),
                           RC_ERROR);
     }
 
     if (CORBA::is_nil (ns1ref))
     {
       ACE_ERROR_RETURN (( LM_ERROR,
-                          ACE_TEXT ("invalid ns1\n")),
+                          ACE_TEXT ("ERROR: invalid ns1\n")),
                           RC_ERROR);
     }
 
@@ -518,7 +518,7 @@ do_failover_name_test (
     if (CORBA::is_nil (ns1obj.in ()))
     {
       ACE_ERROR_RETURN (( LM_ERROR,
-                          ACE_TEXT ("invalid ior <%s>\n"),ns1ref),
+                          ACE_TEXT ("ERROR: invalid ior <%s>\n"),ns1ref),
                           RC_ERROR);
     }
 
@@ -527,14 +527,14 @@ do_failover_name_test (
     if (CORBA::is_nil (root_context_1.in ()))
     {
       ACE_ERROR_RETURN (( LM_ERROR,
-                          ACE_TEXT ("invalid ior <%s>\n"),ns1ref),
+                          ACE_TEXT ("ERROR: invalid ior <%s>\n"),ns1ref),
                           RC_ERROR);
     }
 
   }
   catch (const CORBA::Exception& ex)
   {
-    ex._tao_print_exception (ACE_TEXT ("Unable to resolve name servers"));
+    ex._tao_print_exception (ACE_TEXT ("ERROR: Unable to resolve name servers"));
     return RC_ERROR;
   }
 
@@ -572,18 +572,18 @@ do_failover_name_test (
       }
       catch (const CosNaming::NamingContext::NotFound& ex)
         {
-          ex._tao_print_exception ("Unable to resolve object from replica.\n");
+          ex._tao_print_exception ("INFO: Unable to resolve object from replica.\n");
 
           // Try again...
           try {
             CORBA::Object_var obj1_on_replica = root_context_1->resolve (level1);
             // We did find the object on the replica, but only after a wait.
             // This would be caused by a race condition to access the variable.
-            ACE_ERROR ((LM_ERROR, "Object appeared after a short wait.\n"));
+            ACE_ERROR ((LM_ERROR, "INFO: Object appeared after a short wait.\n"));
           }
           catch (const CosNaming::NamingContext::NotFound& second_ex)
             {
-              ex._tao_print_exception ("It really is not there. Failing...\n");
+              ex._tao_print_exception ("ERROR: It really is not there. Failing...\n");
               return RC_ERROR;
             }
         }
@@ -591,7 +591,7 @@ do_failover_name_test (
   }
   catch (const CORBA::Exception& ex)
   {
-    ex._tao_print_exception (ACE_TEXT ("Unable to create a lot of objects"));
+    ex._tao_print_exception (ACE_TEXT ("ERROR: Unable to create a lot of objects"));
     return RC_ERROR;
   }
 
@@ -614,7 +614,7 @@ do_failover_name_test (
   }
   catch (const CORBA::Exception& ex)
   {
-    ex._tao_print_exception (ACE_TEXT ("Unable to create deep context"));
+    ex._tao_print_exception (ACE_TEXT ("ERROR: Unable to create deep context"));
     return RC_ERROR;
   }
 
@@ -642,18 +642,18 @@ do_failover_name_test (
       catch (const CosNaming::NamingContext::NotFound& ex)
         {
           ex._tao_print_exception (
-              "Unable to resolve wide context object from replica.\n");
+              "INFO: Unable to resolve wide context object from replica.\n");
 
           // Try again to see if it just was a race condition
           try {
             CORBA::Object_var obj1_on_replica = root_context_1->resolve (wide);
             // We did find the object on the replica, but only after a wait.
             // This would be caused by a race condition to access the variable.
-            ACE_ERROR ((LM_ERROR, "Object appeared after a short wait.\n"));
+            ACE_ERROR ((LM_ERROR, "INFO: Object appeared after a short wait.\n"));
           }
           catch (const CosNaming::NamingContext::NotFound& second_ex)
             {
-              ex._tao_print_exception ("It really is not there. Failing...\n");
+              ex._tao_print_exception ("ERROR: It really is not there. Failing...\n");
               return RC_ERROR;
             }
         }
@@ -661,7 +661,7 @@ do_failover_name_test (
   }
   catch (const CORBA::Exception& ex)
   {
-    ex._tao_print_exception (ACE_TEXT ("Unable to create wide context"));
+    ex._tao_print_exception (ACE_TEXT ("ERROR: Unable to create wide context"));
     return RC_ERROR;
   }
 
@@ -685,20 +685,20 @@ do_failover_name_test (
       // there is an error. This means the replica did
       // not register the loss of the context.
       ACE_ERROR ((LM_ERROR,
-                  "Unbound deep context not removed from replica. Trying again...\n"));
+                  "INFO: Unbound deep context not removed from replica. Trying again...\n"));
       retried = true;  // Mark this so it can be reported in catch block.
 
       obj1_on_replica = root_context_1->resolve (wide1);
 
       ACE_ERROR_RETURN (( LM_ERROR,
-                          "Unbound context not removed from on retry\n"),
+                          "ERROR: Unbound context not removed from on retry\n"),
                           RC_ERROR);
     }
     catch (const CosNaming::NamingContext::NotFound& ex)
       {
         // Not on replica --- as it should be.
         if (retried)  // Was found on the retry
-          ACE_ERROR ((LM_ERROR, "Was removed after short wait.\n"));
+          ACE_ERROR ((LM_ERROR, "INFO: Was removed after short wait.\n"));
       }
 
     // Remove the second to last context from the wide root Naming Context
@@ -715,7 +715,7 @@ do_failover_name_test (
     if (CORBA::is_nil (result_object.in ()))
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("Problems with resolving wide context ")
+                         ACE_TEXT ("ERROR: Problems with resolving wide context ")
                          ACE_TEXT ("- nil object ref.\n")),
                          RC_ERROR);
     }
@@ -740,7 +740,7 @@ do_failover_name_test (
     if (CORBA::is_nil (result_object.in ()))
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("Problems with resolving deep context ")
+                         ACE_TEXT ("ERROR: Problems with resolving deep context ")
                          ACE_TEXT ("- nil object ref.\n")),
                          RC_ERROR);
     }
@@ -757,25 +757,25 @@ do_failover_name_test (
       // there is an error. This means the replica did
       // not register the loss of the context.
       ACE_ERROR (( LM_ERROR,
-                   "Unbound deep context not removed from replica. Trying again...\n"));
+                   "INFO: Unbound deep context not removed from replica. Trying again...\n"));
 
       retried = true;  // Mark this so it can be reported in catch block.
       obj1_on_replica = root_context_1->resolve (deep);
 
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "Unbound context not removed from on retry\n"),
+                         "ERROR: Unbound context not removed from on retry\n"),
                          RC_ERROR);
     }
     catch (const CosNaming::NamingContext::NotFound& ex)
       {
         // Not on replica --- as it should be.
         if (retried)  // Was found on the retry
-          ACE_ERROR ((LM_ERROR, "Was removed after short wait.\n"));
+          ACE_ERROR ((LM_ERROR, "INFO: Was removed after short wait.\n"));
       }
   }
   catch (const CORBA::Exception& ex)
   {
-    ex._tao_print_exception (ACE_TEXT ("Unable to delete objects"));
+    ex._tao_print_exception (ACE_TEXT ("ERROR: Unable to delete objects"));
     return RC_ERROR;
   }
 
@@ -795,7 +795,7 @@ do_failover_name_test (
     if (CORBA::is_nil (result_object.in ()))
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("Problems with resolving object from ")
+                         ACE_TEXT ("ERROR: Problems with resolving object from ")
                          ACE_TEXT ("redundant server - nil object ref.\n")),
                          RC_ERROR);
     }
@@ -803,8 +803,8 @@ do_failover_name_test (
   catch (const CORBA::Exception& ex)
   {
     ex._tao_print_exception (
-        ACE_TEXT ( "Unable to resolve object from redundant server"));
-    return -1;
+        ACE_TEXT ( "ERROR: Unable to resolve object from redundant server"));
+    return RC_ERROR;
   }
 
   try
@@ -820,7 +820,7 @@ do_failover_name_test (
     CORBA::Object_var result_obj_ref = root_context_1->resolve (wide);
 
     ACE_ERROR_RETURN ((LM_ERROR,
-                    ACE_TEXT ("Problems with resolving object from ")
+                    ACE_TEXT ("ERROR: Problems with resolving object from ")
                     ACE_TEXT ("redundant server - deleted object found.\n")),
                     RC_ERROR);
   }
@@ -831,14 +831,14 @@ do_failover_name_test (
     if (ex.why != CosNaming::NamingContext::missing_node)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("Wrong exception returned during resolve.\n")),
+                         ACE_TEXT ("ERROR: Wrong exception returned during resolve.\n")),
                          RC_ERROR);
     }
   }
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception (
-          ACE_TEXT ("Wrong exception type returned from resolve.\n"));
+          ACE_TEXT ("ERROR: Wrong exception type returned from resolve.\n"));
       return RC_ERROR;
     }
 
@@ -859,7 +859,7 @@ do_failover_name_test (
     if (CORBA::is_nil (result_object.in ()))
     {
       ACE_ERROR_RETURN (( LM_ERROR,
-                          ACE_TEXT ("Problems with resolving wide context from ")
+                          ACE_TEXT ("ERROR: Problems with resolving wide context from ")
                           ACE_TEXT ("redundant server - nil object ref.\n")),
                           RC_ERROR);
     }
@@ -870,8 +870,8 @@ do_failover_name_test (
     }
   catch (const CORBA::Exception& ex)
   {
-    ex._tao_print_exception ( ACE_TEXT ("Unexpected Exception received.\n"));
-    return -1;
+    ex._tao_print_exception ( ACE_TEXT ("ERROR: Unexpected Exception received.\n"));
+    return RC_ERROR;
   }
 
   try
@@ -886,7 +886,7 @@ do_failover_name_test (
     CORBA::Object_var result_obj_ref = root_context_1->resolve (wide);
 
     ACE_ERROR_RETURN ((LM_ERROR,
-                    ACE_TEXT ("Problems with resolving wide context from ")
+                    ACE_TEXT ("ERROR: Problems with resolving wide context from ")
                     ACE_TEXT ("redundant server - deleted object found.\n")),
                     RC_ERROR);
   }
@@ -896,7 +896,7 @@ do_failover_name_test (
     }
   catch (const CORBA::Exception& ex)
   {
-    ex._tao_print_exception ( ACE_TEXT ("Unexpected Exception received.\n"));
+    ex._tao_print_exception ( ACE_TEXT ("ERROR: Unexpected Exception received.\n"));
     return RC_ERROR;
   }
 
@@ -915,7 +915,7 @@ do_failover_name_test (
     CORBA::Object_var result_obj_ref = root_context_1->resolve (deep);
 
     ACE_ERROR_RETURN ((LM_ERROR,
-                    ACE_TEXT ("Problems with resolving deep context from ")
+                    ACE_TEXT ("ERROR: Problems with resolving deep context from ")
                     ACE_TEXT ("redundant server - deleted object found.\n")),
                     RC_ERROR);
   }
@@ -926,7 +926,7 @@ do_failover_name_test (
   catch (const CORBA::Exception& ex)
   {
     ex._tao_print_exception (
-             ACE_TEXT ("Unexpected Exception received resolving ")
+             ACE_TEXT ("ERROR: Unexpected Exception received resolving ")
              ACE_TEXT ("deep cxt from redundant server.\n"));
     return RC_ERROR;
   }
@@ -952,7 +952,7 @@ do_failover_name_test (
     if (CORBA::is_nil (result_object.in ()))
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                      ACE_TEXT ("Problems with resolving deep context from ")
+                      ACE_TEXT ("ERROR: Problems with resolving deep context from ")
                       ACE_TEXT ("redundant server - nil object ref.\n")),
                       RC_ERROR);
     }
@@ -960,7 +960,7 @@ do_failover_name_test (
   catch (const CORBA::Exception& ex)
   {
     ex._tao_print_exception (
-      ACE_TEXT ( "Unable to resolve deep context from redundant server"));
+      ACE_TEXT ( "ERROR: Unable to resolve deep context from redundant server"));
     return RC_ERROR;
   }
 
@@ -1143,14 +1143,14 @@ do_persistant_name_test (
     if (CORBA::is_nil (orb.in () ))
     {
       ACE_ERROR_RETURN (( LM_ERROR,
-                          ACE_TEXT ("invalid orb\n")),
+                          ACE_TEXT ("ERROR: invalid orb\n")),
                           RC_ERROR);
     }
 
     if (CORBA::is_nil (ns1ref))
     {
       ACE_ERROR_RETURN (( LM_ERROR,
-                          ACE_TEXT ("invalid ns1\n")),
+                          ACE_TEXT ("ERROR: invalid ns1\n")),
                           RC_ERROR);
     }
 
@@ -1160,7 +1160,7 @@ do_persistant_name_test (
     if (CORBA::is_nil (ns1obj.in ()))
     {
       ACE_ERROR_RETURN (( LM_ERROR,
-                          ACE_TEXT ("invalid ior <%s>\n"),ns1ref),
+                          ACE_TEXT ("ERROR: invalid ior <%s>\n"),ns1ref),
                           RC_ERROR);
     }
 
@@ -1169,13 +1169,13 @@ do_persistant_name_test (
     if (CORBA::is_nil (root_context_1.in ()))
     {
       ACE_ERROR_RETURN (( LM_ERROR,
-                          ACE_TEXT ("invalid ior <%s>\n"),ns1ref),
+                          ACE_TEXT ("ERROR: invalid ior <%s>\n"),ns1ref),
                           RC_ERROR);
     }
   }
   catch (const CORBA::Exception& ex)
   {
-    ex._tao_print_exception (ACE_TEXT ("Unable to resolve name servers"));
+    ex._tao_print_exception (ACE_TEXT ("ERROR: Unable to resolve name servers"));
     return RC_ERROR;
   }
 
@@ -1215,18 +1215,18 @@ do_persistant_name_test (
       }
       catch (const CosNaming::NamingContext::NotFound& ex)
         {
-          ex._tao_print_exception ("Unable to resolve object from repository.\n");
+          ex._tao_print_exception ("ERROR: Unable to resolve object from repository.\n");
 
           // Try again...
           try {
             CORBA::Object_var obj1_on_replica = root_context_1->resolve (level1);
             // We did find the object on the repository, but only after a wait.
             // This would be caused by a race condition to access the variable.
-            ACE_ERROR ((LM_ERROR, "Object appeared after a short wait.\n"));
+            ACE_ERROR ((LM_ERROR, "INFO: Object appeared after a short wait.\n"));
           }
           catch (const CosNaming::NamingContext::NotFound& second_ex)
             {
-              ex._tao_print_exception ("It really is not there. Failing...\n");
+              ex._tao_print_exception ("ERROR: It really is not there. Failing...\n");
               return RC_ERROR;
             }
         }
@@ -1235,7 +1235,7 @@ do_persistant_name_test (
   catch (const CORBA::Exception& ex)
   {
     ex._tao_print_exception (
-      ACE_TEXT ("Unable to create or validate a lot of objects"));
+      ACE_TEXT ("ERROR: Unable to create or validate a lot of objects"));
 
     return RC_ERROR;
   }
@@ -1261,7 +1261,7 @@ do_persistant_name_test (
     }
     catch (const CORBA::Exception& ex)
     {
-      ex._tao_print_exception (ACE_TEXT ("Unable to create deep context"));
+      ex._tao_print_exception (ACE_TEXT ("ERROR: Unable to create deep context"));
       return RC_ERROR;
     }
   }
@@ -1296,18 +1296,18 @@ do_persistant_name_test (
       catch (const CosNaming::NamingContext::NotFound& ex)
         {
           ex._tao_print_exception (
-              "Unable to resolve wide context object from repository.\n");
+              "INFO: Unable to resolve wide context object from repository.\n");
 
           // Try again to see if it just was a race condition
           try {
             CORBA::Object_var obj1_on_replica = root_context_1->resolve (wide);
             // We did find the object on the replica, but only after a wait.
             // This would be caused by a race condition to access the variable.
-            ACE_ERROR ((LM_ERROR, "Object appeared after a short wait.\n"));
+            ACE_ERROR ((LM_ERROR, "INFO: Object appeared after a short wait.\n"));
           }
           catch (const CosNaming::NamingContext::NotFound& second_ex)
             {
-              ex._tao_print_exception ("It really is not there. Failing...\n");
+              ex._tao_print_exception ("ERROR: It really is not there. Failing...\n");
               return RC_ERROR;
             }
         }
@@ -1316,7 +1316,7 @@ do_persistant_name_test (
   catch (const CORBA::Exception& ex)
   {
     ex._tao_print_exception (ACE_TEXT (
-        "Unable to create or validate wide context"));
+        "ERROR: Unable to create or validate wide context"));
     return RC_ERROR;
   }
 
@@ -1353,14 +1353,14 @@ do_persistant_objectgroup_test (
     if (CORBA::is_nil (orb.in ()))
     {
       ACE_ERROR_RETURN (( LM_ERROR,
-                          ACE_TEXT ("invalid orb\n")),
+                          ACE_TEXT ("ERROR: invalid orb\n")),
                           RC_ERROR);
     }
 
     if (CORBA::is_nil (nm1ref))
     {
       ACE_ERROR_RETURN (( LM_ERROR,
-                          ACE_TEXT ("invalid nm1\n")),
+                          ACE_TEXT ("ERROR: invalid nm1\n")),
                           RC_ERROR);
     }
 
@@ -1372,7 +1372,7 @@ do_persistant_objectgroup_test (
     if (CORBA::is_nil (nm1obj.in ()))
     {
       ACE_ERROR_RETURN (( LM_ERROR,
-                          ACE_TEXT ("invalid ior <%s>\n"),nm1ref),
+                          ACE_TEXT ("ERROR: invalid ior <%s>\n"),nm1ref),
                           RC_ERROR);
     }
 
@@ -1380,7 +1380,7 @@ do_persistant_objectgroup_test (
     if (CORBA::is_nil (naming_manager_1.in ()))
     {
       ACE_ERROR_RETURN (( LM_ERROR,
-                          ACE_TEXT ("invalid ior <%s>\n"),nm1ref),
+                          ACE_TEXT ("ERROR: invalid ior <%s>\n"),nm1ref),
                           RC_ERROR);
     }
 
@@ -1390,18 +1390,18 @@ do_persistant_objectgroup_test (
     if( RC_SUCCESS != group_svc.set_orb (theOrb) )
     {
       ACE_ERROR_RETURN (( LM_ERROR,
-                          ACE_TEXT ("invalid orb\n")),
+                          ACE_TEXT ("ERROR: invalid orb\n")),
                           RC_ERROR);
     }
 
     if( RC_SUCCESS != group_svc.set_naming_manager (naming_manager_1) )
     {
       ACE_ERROR_RETURN (( LM_ERROR,
-                          ACE_TEXT ("invalid ior <%s>\n"),nm1ref),
+                          ACE_TEXT ("ERROR: invalid ior <%s>\n"),nm1ref),
                           RC_ERROR);
     }
 
-    const char* policy     = "round";
+    const char* policy = "round";
 
     if (false == validate_only )
       {
@@ -1449,7 +1449,7 @@ do_persistant_objectgroup_test (
   catch (const CORBA::Exception& ex)
   {
     ex._tao_print_exception (
-       ACE_TEXT ("Unable To Resolve Name Manager Servers"));
+       ACE_TEXT ("ERROR: Unable To Resolve Name Manager Servers"));
     return RC_ERROR;
   }
 
@@ -1483,21 +1483,21 @@ do_equivalence_name_test (
     if (CORBA::is_nil (orb.in ()))
     {
       ACE_ERROR_RETURN (( LM_ERROR,
-                          ACE_TEXT ("invalid orb\n")),
+                          ACE_TEXT ("ERROR: invalid orb\n")),
                           RC_ERROR);
     }
 
     if (CORBA::is_nil (ns1ref))
     {
       ACE_ERROR_RETURN (( LM_ERROR,
-                          ACE_TEXT ("invalid ns1\n")),
+                          ACE_TEXT ("ERROR: invalid ns1\n")),
                           RC_ERROR);
     }
 
     if (CORBA::is_nil (ns2ref))
     {
       ACE_ERROR_RETURN (( LM_ERROR,
-                          ACE_TEXT ("invalid ns2\n")),
+                          ACE_TEXT ("ERROR: invalid ns2\n")),
                           RC_ERROR);
     }
 
@@ -1510,14 +1510,14 @@ do_equivalence_name_test (
     if (CORBA::is_nil (ns1obj.in ()))
     {
       ACE_ERROR_RETURN (( LM_ERROR,
-                          ACE_TEXT ("invalid ior <%s>\n"),ns1ref),
+                          ACE_TEXT ("ERROR: invalid ior <%s>\n"),ns1ref),
                           RC_ERROR);
     }
 
     if (CORBA::is_nil (ns2obj.in ()))
     {
       ACE_ERROR_RETURN (( LM_ERROR,
-                          ACE_TEXT ("invalid ior <%s>\n"),ns2ref),
+                          ACE_TEXT ("ERROR: invalid ior <%s>\n"),ns2ref),
                           RC_ERROR);
     }
 
@@ -1527,20 +1527,20 @@ do_equivalence_name_test (
     if (CORBA::is_nil (root_context_1.in ()))
     {
       ACE_ERROR_RETURN (( LM_ERROR,
-                          ACE_TEXT ("invalid ior <%s>\n"),ns1ref),
+                          ACE_TEXT ("ERROR: invalid ior <%s>\n"),ns1ref),
                           RC_ERROR);
     }
 
     if (CORBA::is_nil (root_context_2.in ()))
     {
       ACE_ERROR_RETURN (( LM_ERROR,
-                          ACE_TEXT ("invalid ior <%s>\n"),ns2ref),
+                          ACE_TEXT ("ERROR: invalid ior <%s>\n"),ns2ref),
                           RC_ERROR);
     }
   }
   catch (const CORBA::Exception& ex)
   {
-    ex._tao_print_exception (ACE_TEXT ("Unable to resolve name servers"));
+    ex._tao_print_exception (ACE_TEXT ("ERROR: Unable to resolve name servers"));
     return RC_ERROR;
   }
 
@@ -1575,18 +1575,18 @@ do_equivalence_name_test (
       }
       catch (const CosNaming::NamingContext::NotFound& ex)
         {
-          ex._tao_print_exception ("Unable to resolve object from replica.\n");
+          ex._tao_print_exception ("INFO: Unable to resolve object from replica.\n");
 
           // Try again...
           try {
             CORBA::Object_var obj1_on_replica = root_context_2->resolve (level1);
             // We did find the object on the replica, but only after a wait.
             // This would be caused by a race condition to access the variable.
-            ACE_ERROR ((LM_ERROR, "Object appeared after a short wait.\n"));
+            ACE_ERROR ((LM_ERROR, "INFO: Object appeared after a short wait.\n"));
           }
           catch (const CosNaming::NamingContext::NotFound& second_ex)
             {
-              ex._tao_print_exception ("It really is not there. Failing...\n");
+              ex._tao_print_exception ("ERROR: It really is not there. Failing...\n");
               return RC_ERROR;
             }
         }
@@ -1594,7 +1594,7 @@ do_equivalence_name_test (
   }
   catch (const CORBA::Exception& ex)
   {
-    ex._tao_print_exception (ACE_TEXT ("Unable to create a lot of objects"));
+    ex._tao_print_exception (ACE_TEXT ("ERROR: Unable to create a lot of objects"));
     return RC_ERROR;
   }
 
@@ -1617,7 +1617,7 @@ do_equivalence_name_test (
   }
   catch (const CORBA::Exception& ex)
   {
-    ex._tao_print_exception (ACE_TEXT ("Unable to create deep context"));
+    ex._tao_print_exception (ACE_TEXT ("ERROR: Unable to create deep context"));
     return RC_ERROR;
   }
 
@@ -1647,7 +1647,7 @@ do_equivalence_name_test (
       catch (const CosNaming::NamingContext::NotFound& ex)
         {
           ex._tao_print_exception (
-              "Unable to resolve wide context object from replica.\n");
+              "INFO: Unable to resolve wide context object from replica.\n");
 
           // Try again to see if it just was a race condition
           try {
@@ -1657,11 +1657,11 @@ do_equivalence_name_test (
 
             // We did find the object on the replica, but only after a wait.
             // This would be caused by a race condition to access the variable.
-            ACE_ERROR ((LM_ERROR, "Object appeared after a short wait.\n"));
+            ACE_ERROR ((LM_ERROR, "INFO: Object appeared after a short wait.\n"));
           }
           catch (const CosNaming::NamingContext::NotFound& second_ex)
             {
-              ex._tao_print_exception ("It really is not there. Failing...\n");
+              ex._tao_print_exception ("ERROR: It really is not there. Failing...\n");
               return RC_ERROR;
             }
         }
@@ -1669,7 +1669,7 @@ do_equivalence_name_test (
   }
   catch (const CORBA::Exception& ex)
   {
-    ex._tao_print_exception (ACE_TEXT ("Unable to create wide context"));
+    ex._tao_print_exception (ACE_TEXT ("ERROR: Unable to create wide context"));
     return RC_ERROR;
   }
 
@@ -1693,20 +1693,20 @@ do_equivalence_name_test (
       // there is an error. This means the replica did
       // not register the loss of the context.
       ACE_ERROR (( LM_ERROR,
-                   "Unbound deep context not removed from replica. Trying again...\n"));
+                   "INFO: Unbound deep context not removed from replica. Trying again...\n"));
 
       retried = true;  // Mark this so it can be reported in catch block.
       obj1_on_replica = root_context_2->resolve (wide1);
 
       ACE_ERROR_RETURN (( LM_ERROR,
-                          "Unbound context not removed from on retry\n"),
+                          "ERROR: Unbound context not removed from on retry\n"),
                           RC_ERROR);
     }
     catch (const CosNaming::NamingContext::NotFound& ex)
       {
         // Not on replica --- as it should be.
         if (retried)  // Was found on the retry
-          ACE_ERROR ((LM_ERROR, "Was removed after short wait.\n"));
+          ACE_ERROR ((LM_ERROR, "INFO: Was removed after short wait.\n"));
       }
 
     // Remove the second to last context from the wide root Naming Context
@@ -1723,7 +1723,7 @@ do_equivalence_name_test (
     if (CORBA::is_nil (result_object.in ()))
     {
       ACE_ERROR_RETURN (( LM_ERROR,
-                          ACE_TEXT ("Problems with resolving wide context ")
+                          ACE_TEXT ("ERROR: Problems with resolving wide context ")
                           ACE_TEXT ("- nil object ref.\n")),
                           RC_ERROR);
     }
@@ -1745,7 +1745,7 @@ do_equivalence_name_test (
     if (CORBA::is_nil (result_object.in ()))
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("Problems with resolving deep context ")
+                         ACE_TEXT ("ERROR: Problems with resolving deep context ")
                          ACE_TEXT ("- nil object ref.\n")),
                          RC_ERROR);
     }
@@ -1761,12 +1761,12 @@ do_equivalence_name_test (
       // there is an error. This means the replica did
       // not register the loss of the context.
       ACE_ERROR (( LM_ERROR,
-                   "Unbound deep context not removed from replica. Trying again...\n"));
+                   "INFO: Unbound deep context not removed from replica. Trying again...\n"));
       retried = true;  // Mark this so it can be reported in catch block.
       obj1_on_replica = root_context_2->resolve (deep);
 
       ACE_ERROR_RETURN (( LM_ERROR,
-                          "Unbound context not removed from on retry\n"),
+                          "ERROR: Unbound context not removed from on retry\n"),
                           RC_ERROR);
     }
     catch (const CosNaming::NamingContext::NotFound& ex)
@@ -1774,12 +1774,12 @@ do_equivalence_name_test (
         // Not on replica --- as it should be.
         if (retried)  // Was found on the retry
           ACE_ERROR (( LM_ERROR,
-                       "Was removed after short wait.\n"));
+                       "INFO: Was removed after short wait.\n"));
       }
   }
   catch (const CORBA::Exception& ex)
   {
-    ex._tao_print_exception (ACE_TEXT ("Unable to delete objects"));
+    ex._tao_print_exception (ACE_TEXT ("ERROR: Unable to delete objects"));
     return RC_ERROR;
   }
 
@@ -1800,7 +1800,7 @@ do_equivalence_name_test (
     if (CORBA::is_nil (result_object.in ()))
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("Problems with resolving object from ")
+                         ACE_TEXT ("ERROR: Problems with resolving object from ")
                          ACE_TEXT ("redundant server - nil object ref.\n")),
                          RC_ERROR);
     }
@@ -1808,8 +1808,8 @@ do_equivalence_name_test (
   catch (const CORBA::Exception& ex)
   {
     ex._tao_print_exception (
-        ACE_TEXT ( "Unable to resolve object from redundant server"));
-    return -1;
+        ACE_TEXT ( "ERROR: Unable to resolve object from redundant server"));
+    return RC_ERROR;
   }
 
   try
@@ -1825,7 +1825,7 @@ do_equivalence_name_test (
     CORBA::Object_var result_obj_ref = root_context_2->resolve (wide);
 
     ACE_ERROR_RETURN ((LM_ERROR,
-                    ACE_TEXT ("Problems with resolving object from ")
+                    ACE_TEXT ("ERROR: Problems with resolving object from ")
                     ACE_TEXT ("redundant server - deleted object found.\n")),
                     RC_ERROR);
   }
@@ -1835,13 +1835,13 @@ do_equivalence_name_test (
     // Make sure the right exception reason is provided.
     if (ex.why != CosNaming::NamingContext::missing_node)
       ACE_ERROR_RETURN (( LM_ERROR,
-                          ACE_TEXT ("Wrong exception returned during resolve.\n")),
+                          ACE_TEXT ("ERROR: Wrong exception returned during resolve.\n")),
                           RC_ERROR);
   }
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception (
-          ACE_TEXT ("Wrong exception type returned from resolve.\n"));
+          ACE_TEXT ("ERROR: Wrong exception type returned from resolve.\n"));
       return RC_ERROR;
     }
 
@@ -1861,7 +1861,7 @@ do_equivalence_name_test (
     if (CORBA::is_nil (result_object.in ()))
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("Problems with resolving wide context from ")
+                         ACE_TEXT ("ERROR: Problems with resolving wide context from ")
                          ACE_TEXT ("redundant server - nil object ref.\n")),
                          RC_ERROR);
     }
@@ -1872,8 +1872,8 @@ do_equivalence_name_test (
     }
   catch (const CORBA::Exception& ex)
   {
-    ex._tao_print_exception ( ACE_TEXT ("Unexpected Exception received.\n"));
-    return -1;
+    ex._tao_print_exception ( ACE_TEXT ("ERROR: Unexpected Exception received.\n"));
+    return RC_ERROR;
   }
 
   try
@@ -1887,7 +1887,7 @@ do_equivalence_name_test (
     CORBA::Object_var result_obj_ref = root_context_2->resolve (wide);
 
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Problems with resolving wide context from ")
+                       ACE_TEXT ("ERROR: Problems with resolving wide context from ")
                        ACE_TEXT ("redundant server - deleted object found.\n")),
                        RC_ERROR);
   }
@@ -1897,7 +1897,7 @@ do_equivalence_name_test (
     }
   catch (const CORBA::Exception& ex)
   {
-    ex._tao_print_exception ( ACE_TEXT ("Unexpected Exception received.\n"));
+    ex._tao_print_exception ( ACE_TEXT ("ERROR: Unexpected Exception received.\n"));
     return RC_ERROR;
   }
 
@@ -1915,7 +1915,7 @@ do_equivalence_name_test (
     CORBA::Object_var result_obj_ref = root_context_1->resolve (deep);
 
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Problems with resolving deep context from ")
+                       ACE_TEXT ("ERROR: Problems with resolving deep context from ")
                        ACE_TEXT ("redundant server - deleted object found.\n")),
                        RC_ERROR);
   }
@@ -1926,7 +1926,7 @@ do_equivalence_name_test (
   catch (const CORBA::Exception& ex)
   {
     ex._tao_print_exception (
-             ACE_TEXT ("Unexpected Exception received resolving ")
+             ACE_TEXT ("ERROR: Unexpected Exception received resolving ")
              ACE_TEXT ("deep cxt from redundant server.\n"));
     return RC_ERROR;
   }
@@ -1950,7 +1950,7 @@ do_equivalence_name_test (
     if (CORBA::is_nil (result_object.in ()))
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                      ACE_TEXT ("Problems with resolving deep context from ")
+                      ACE_TEXT ("ERROR: Problems with resolving deep context from ")
                       ACE_TEXT ("redundant server - nil object ref.\n")),
                       RC_ERROR);
     }
@@ -1958,7 +1958,7 @@ do_equivalence_name_test (
   catch (const CORBA::Exception& ex)
   {
     ex._tao_print_exception (
-      ACE_TEXT ( "Unable to resolve deep context from redundant server"));
+      ACE_TEXT ( "ERROR: Unable to resolve deep context from redundant server"));
     return RC_ERROR;
   }
 
@@ -2103,6 +2103,9 @@ do_equivalence_objectgroup_test (
       ACE_DEBUG (( LM_DEBUG,
                    ACE_TEXT ("INFO: Primary Found Object Group In Repository\n")));
     }
+
+    /// hack to allow time for replication to occur
+    ACE_OS::sleep (1);
 
     if (false == svc2.group_exist(test_group))
     {
