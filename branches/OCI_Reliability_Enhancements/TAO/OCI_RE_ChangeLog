@@ -1,3 +1,29 @@
+Wed Dec 26 19:09:59 UTC 2012  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * bin/tao_other_tests.lst:
+
+          Added FaultTolerance and Federation tests.
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:
+
+          Added process and thread printout to error messages. Changed debug level
+          fro printing out debug messages.
+
+        * orbsvcs/orbsvcs/PortableGroup/FaultTolerant/FT_PG_Object_Group_Storable.cpp:
+
+          Added catch for exceptions that might be created while creating a new
+          object group.
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:
+
+          Throw mor meaningful exceptions when utilities encounter difficulties.
+
+        * orbsvcs/tests/FT_Naming/Federation/client.cpp:
+        * orbsvcs/tests/FT_Naming/Federation/server.cpp:
+
+          Extended test to bind the root context in another naming service to more
+          fully test a federated naming service.
+
 Sun Dec 23 20:18:26 UTC 2012  Kevin Stanley  <stanleyk@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/Locator_XMLHandler.cpp:

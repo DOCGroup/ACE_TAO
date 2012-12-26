@@ -140,11 +140,22 @@ TAO::FT_PG_Object_Group_Storable::add_member_to_iogr (CORBA::Object_ptr member)
   if ((this->members_.current_size () == 0) &&
       (ACE_OS::strcmp (this->type_id_, member_type_id) != 0) )
     {
-      this->type_id_ = member_type_id;
-      this->reference_ = manipulator_.create_object_group_using_id (
-          this->type_id_,
-          this->tagged_component_.group_domain_id,
-          this->tagged_component_.object_group_id);
+      try {
+        this->type_id_ = member_type_id;
+        this->reference_ = manipulator_.create_object_group_using_id (
+           this->type_id_,
+           this->tagged_component_.group_domain_id,
+           this->tagged_component_.object_group_id);
+      }
+      catch (const CORBA::Exception&)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%P|%t) ERROR: Unable to create object group ")
+                      ACE_TEXT ("with id: %s for object of type: %s\n"),
+                      this->tagged_component_.object_group_id,
+                      member_type_id));
+          return CORBA::Object::_nil ();
+        }
     }
 
   return PG_Object_Group::add_member_to_iogr (member);

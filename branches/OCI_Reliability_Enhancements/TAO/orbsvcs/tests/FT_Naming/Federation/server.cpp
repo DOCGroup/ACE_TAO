@@ -68,10 +68,10 @@ int TestTask::svc()
 
     // Find the Naming Service
     obj = orb_->string_to_object ("corbaloc:iiop:1.2@localhost:9932/NameService");
-    CosNaming::NamingContext_var root =
+    CosNaming::NamingContext_var rootB =
       CosNaming::NamingContext::_narrow(obj.in());
 
-    if (CORBA::is_nil(root.in())) {
+    if (CORBA::is_nil(rootB.in())) {
       ACE_ERROR ((LM_ERROR, "Error, Nil Naming Context reference\n"));
       return 1;
     }
@@ -82,13 +82,13 @@ int TestTask::svc()
     name[0].id = CORBA::string_dup("example");
     try
     {
-      obj = root->resolve(name);
+      obj = rootB->resolve(name);
       example_nc =
         CosNaming::NamingContext::_narrow(obj.in());
     }
     catch (const CosNaming::NamingContext::NotFound&)
     {
-      example_nc = root->bind_new_context(name);
+      example_nc = rootB->bind_new_context(name);
     }
 
     // Bind the Test object
@@ -99,16 +99,20 @@ int TestTask::svc()
     Hello servant(orb_.in ());
     PortableServer::ObjectId_var oid = poa->activate_object(&servant);
     obj = poa->id_to_reference(oid.in());
-    root->rebind(name, obj.in());
+    rootB->rebind(name, obj.in());
 
     ACE_DEBUG ((LM_INFO, "Hello object bound in Naming Service B\n"));
 
     name.length(1);
-    obj = orb_->string_to_object ("corbaloc:iiop:1.2@localhost:9931/NameService");
-    root = CosNaming::NamingContext::_narrow(obj.in());
-    root->bind_context (name, example_nc.in ());
+    name[0].id = CORBA::string_dup ("nsB");
 
-    ACE_DEBUG ((LM_INFO, "'example' context of NS B bound in Naming Service A\n"));
+    obj = orb_->string_to_object ("corbaloc:iiop:1.2@localhost:9931/NameService");
+    CosNaming::NamingContext_var rootA =
+      CosNaming::NamingContext::_narrow(obj.in());
+
+    rootA->bind_context (name, rootB.in ());
+
+    ACE_DEBUG ((LM_INFO, "Root context of NS B bound in Naming Service A under name 'nsB'\n"));
 
     CORBA::String_var ior =
       orb_->object_to_string (obj.in ());

@@ -216,8 +216,26 @@ TAO::PG_Object_Group::add_member (const PortableGroup::Location & the_location,
   CORBA::String_var member_ior_string =
     orb_->object_to_string (member);
 
-  PortableGroup::ObjectGroup_var new_reference =
-    this->add_member_to_iogr (member);
+  PortableGroup::ObjectGroup_var new_reference;
+  try {
+    new_reference =
+      this->add_member_to_iogr (member);
+  }
+  catch (const TAO_IOP::Duplicate&)
+    {
+      throw PortableGroup::MemberAlreadyPresent ();
+    }
+  catch (const TAO_IOP::Invalid_IOR&)
+    {
+      throw PortableGroup::ObjectNotAdded ();
+    }
+  catch (...)
+    {
+      throw;
+    }
+
+  if (CORBA::is_nil (new_reference.in ()))
+    throw PortableGroup::ObjectNotAdded ();
 
   // Convert new member back to a (non group) ior.
   CORBA::Object_var member_ior =
