@@ -28,14 +28,16 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_INFO, "**** Narrowed root NamingContext\n"));
 
       CosNaming::Name name;
-      name.length(2);
-      name[0].id = CORBA::string_dup("example");
-      name[1].id = CORBA::string_dup("Hello");
+      name.length(3);
+      name[0].id = CORBA::string_dup("nsB");
+      name[1].id = CORBA::string_dup("example");
+      name[2].id = CORBA::string_dup("Hello");
+
 
       try
         {
           tmp = root->resolve (name);
-          ACE_DEBUG ((LM_INFO, "**** Resolved #example/Hello\n"));
+          ACE_DEBUG ((LM_INFO, "**** Resolved #nsB/example/Hello\n"));
 
           Test::Hello_var hello =
             Test::Hello::_narrow(tmp.in ());
