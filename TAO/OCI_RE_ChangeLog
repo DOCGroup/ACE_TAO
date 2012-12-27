@@ -1,7 +1,13 @@
-Thu Dec 27 20:42:31 UTC 2012  Brian Johnson  <johnsonb@ociweb.com>
+Thu Dec 27 21:49:00 UTC 2012  Brian Johnson  <johnsonb@ociweb.com>
 
         * orbsvcs/orbsvcs/FT_Naming_Serv.mpc:
         
+          Fixed to not pickup undesired idl files.
+
+Thu Dec 27 20:42:31 UTC 2012  Brian Johnson  <johnsonb@ociweb.com>
+
+        * orbsvcs/orbsvcs/FT_Naming_Serv.mpc:
+
           Moved mpc file to orbsvcs directory to be standard.
 
         * orbsvcs/orbsvcs/FtNaming.mpc:
