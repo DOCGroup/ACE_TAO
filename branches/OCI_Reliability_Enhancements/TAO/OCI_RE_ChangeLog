@@ -1,3 +1,9 @@
+Thu Dec 27 18:01:25 UTC 2012  Brian Johnson  <johnsonb@ociweb.com>
+
+        * orbsvcs/tests/FT_Naming/FaultTolerance/client.cpp:
+
+          Fixing include error.
+
 Thu Dec 27 13:05:53 UTC 2012  Brian Johnson  <johnsonb@ociweb.com>
 
         * orbsvcs/orbsvcs/FtNaming.mpc:
