@@ -21,7 +21,6 @@ project (FtNaming) : orbsvcslib, orbsvcs_output, install, naming_serv, portableg
   Header_Files {
     FT_NamingManagerC.h
     FT_NamingManagerS.h
-    ftnaming_intf_export.h
   }
 
 }

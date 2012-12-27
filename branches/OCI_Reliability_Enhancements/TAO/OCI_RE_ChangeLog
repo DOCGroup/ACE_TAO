@@ -1,3 +1,17 @@
+Thu Dec 27 20:42:31 UTC 2012  Brian Johnson  <johnsonb@ociweb.com>
+
+        * orbsvcs/orbsvcs/FT_Naming_Serv.mpc:
+        
+          Moved mpc file to orbsvcs directory to be standard.
+
+        * orbsvcs/orbsvcs/FtNaming.mpc:
+
+          Moved export file to FT_Naming_Serv.mpc.
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Serv.mpc:
+
+          Removed this file.
+
 Thu Dec 27 20:31:10 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
 
         * orbsvcs/tests/FT_Naming/FaultTolerance/client.cpp:
