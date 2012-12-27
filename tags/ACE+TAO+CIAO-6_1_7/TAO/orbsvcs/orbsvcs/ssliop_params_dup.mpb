@@ -1,0 +1,17 @@
+//$Id$
+
+feature(mfc) {
+  Source_Files(ORBSVCS_COMPONENTS) {
+    SSLIOP {
+      ./SSLIOP/params_dup.cpp
+    }
+  }
+}
+
+feature(!mfc) {
+  Source_Files(ORBSVCS_COMPONENTS) {
+    SSLIOP {
+      ./SSLIOP/params_dup.c
+    }
+  }
+}

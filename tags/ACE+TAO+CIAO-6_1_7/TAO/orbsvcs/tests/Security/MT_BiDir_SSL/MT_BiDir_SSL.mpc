@@ -1,0 +1,43 @@
+// -*- MPC -*-
+// $Id$
+
+project(*idl): taoidldefaults {
+  IDL_Files {
+    Receiver.idl
+    Sender.idl
+  }
+  custom_only = 1
+}
+
+project(*Server): taoserver, avoids_minimum_corba, bidir_giop, avoids_corba_e_micro {
+  after += *idl
+  Source_Files {
+    Sender_i.cpp
+    Server_Task.cpp
+    server.cpp
+  }
+  Source_Files {
+    ReceiverC.cpp
+    SenderC.cpp
+    SenderS.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*Client): taoserver, avoids_minimum_corba, bidir_giop, avoids_corba_e_micro {
+  exename = client
+  after += *idl
+  Source_Files {
+    Client_Task.cpp
+    Receiver_i.cpp
+    client.cpp
+  }
+  Source_Files {
+    ReceiverC.cpp
+    ReceiverS.cpp
+    SenderC.cpp
+  }
+  IDL_Files {
+  }
+}

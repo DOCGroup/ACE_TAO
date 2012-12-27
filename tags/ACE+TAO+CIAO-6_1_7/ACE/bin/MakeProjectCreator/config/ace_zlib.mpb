@@ -1,0 +1,4 @@
+// $Id$
+
+feature(zlib): zlib {
+}
