@@ -232,11 +232,11 @@ sub init_naming_context_directory($$)
     }
 }
 
-my $name_dir         = "NameService";
-my $object_group_dir = "ObjectGroupService";
-my $nm_iorfile       = "nm.ior";
-my $ns_iorfile       = "ns.ior";
-my $ns_ref           = "--ns file://$ns_iorfile";
+my $name_dir   = "NameService";
+my $group_dir  = "GroupService";
+my $nm_iorfile = "nm.ior";
+my $ns_iorfile = "ns.ior";
+my $ns_ref     = "--ns file://$ns_iorfile";
 
 
 ################################################################################
@@ -256,10 +256,10 @@ END
         rmdir ($name_dir);
     }
 
-    if ( -d $object_group_dir ) {
-        print STDERR "INFO: removing <$object_group_dir>\n";
-        clean_persistence_dir ($server, $object_group_dir);
-        rmdir ($object_group_dir);
+    if ( -d $group_dir ) {
+        print STDERR "INFO: removing <$group_dir>\n";
+        clean_persistence_dir ($server, $group_dir);
+        rmdir ($group_dir);
     }
 }
 
@@ -280,12 +280,12 @@ sub persistence_test ()
 
     print_msg("Persistence Test");
     init_naming_context_directory ($server, $name_dir );
-    init_naming_context_directory ($server, $object_group_dir );
+    init_naming_context_directory ($server, $group_dir );
 
     my $ns_args       = "--primary ".
                         "-ORBListenEndPoints $ns_endpoint1 ".
                         "-u $name_dir ".
-                        "-v $object_group_dir ".
+                        "-v $group_dir ".
                         "-o $ns_iorfile ".
                         "-g $nm_iorfile";
 

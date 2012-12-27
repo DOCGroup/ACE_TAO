@@ -1983,6 +1983,8 @@ do_equivalence_objectgroup_test (
 
   const int RC_SUCCESS =  0;
   const int RC_ERROR   = -1;
+  int error_count = 0;
+
 
   FT_Naming::NamingManager_var naming_manager_1;
   FT_Naming::NamingManager_var naming_manager_2;
@@ -2086,101 +2088,75 @@ do_equivalence_objectgroup_test (
     }
 
     /// Now validate seamless operations between the two instances of NS_group
-    const char* test_group = "test_group";
-    const char* policy     = "round";
-    if (RC_SUCCESS != svc1.group_create (test_group, policy))
+    const char* policy       = "round";
+    const char* test_group_1 = "test_group_1";
+    const char* test_group_2 = "test_group_2";
+
+    if (RC_SUCCESS != svc1.group_create (test_group_1, policy))
     {
       ACE_ERROR_RETURN (( LM_ERROR,
-                          ACE_TEXT ("ERROR: Unable to create %s\n"),test_group),
+                          ACE_TEXT ("ERROR: Unable to create %s\n"),test_group_1),
                           RC_ERROR);
     }
 
-    if (false == svc1.group_exist(test_group))
+    if (RC_SUCCESS != svc2.group_create (test_group_2, policy))
     {
       ACE_ERROR_RETURN (( LM_ERROR,
-                          ACE_TEXT ("ERROR: Primary Not Able To Find Object Group In Repository\n")),
+                          ACE_TEXT ("ERROR: Unable to create %s\n"),test_group_2),
                           RC_ERROR);
-    } else {
-      ACE_DEBUG (( LM_DEBUG,
-                   ACE_TEXT ("INFO: Primary Found Object Group In Repository\n")));
     }
 
     /// hack to allow time for replication to occur
     ACE_OS::sleep (1);
 
-    if (false == svc2.group_exist(test_group))
+
+    if (false == svc1.group_exist(test_group_1))
     {
-      ACE_ERROR_RETURN (( LM_ERROR,
-                          ACE_TEXT ("ERROR: Backup Not Able To Find Object Group In Repository\n")),
-                          RC_ERROR);
+      ++error_count;
+      ACE_DEBUG (( LM_DEBUG,
+                   ACE_TEXT ("ERROR: Primary Not Able To Find Object Group %s Created By Primary In Repository\n"), test_group_1));
     } else {
       ACE_DEBUG (( LM_DEBUG,
-                   ACE_TEXT ("INFO: Backup Found Object Group In Repository\n")));
+                   ACE_TEXT ("INFO: Primary Found Object Group %s Created By Primary In Repository\n"), test_group_1));
     }
 
-#if 0
-    ////////////////////////////////////////////////////////////////////////////
-    // Create a bunch of object groups
-    try
+    if (false == svc2.group_exist(test_group_2))
     {
-      const char * svc1name = "Primary";
-      const char * svc2name = "Backup";
-      NS_group_svc* p_svc1;
-      NS_group_svc* p_svc2;
-      char *p_svc1name;
-      char *p_svc2name;
-      for (i=0; i<o_breadth; i++)
-      {
-        char wide_name[20];
-        ACE_OS::sprintf(wide_name, "group_%d", i);
-        if ((i%2) == 0)
-        {
-          p_svc1 = &svc1;
-          p_svc2 = &svc2;
-          p_svc1name = svc1name;
-          p_svc2name = svc2name;
-        } else {
-          p_svc1 = &svc2;
-          p_svc2 = &svc1;
-          p_svc1name = svc2name;
-          p_svc2name = svc1name;
-        }
-
-        if (RC_SUCCESS != p_svc1->group_create (wide_name, policy))
-        {
-          ACE_ERROR_RETURN (( LM_ERROR,
-                              ACE_TEXT ("ERROR: Primary unable to create %s\n"),wide_name),
-                              RC_ERROR);
-        }
-
-        /// The new group should be accessable from the other naming manager
-        if (false == p_svc2->group_exist(test_group))
-        {
-          ACE_ERROR_RETURN (( LM_ERROR,
-                              ACE_TEXT ("ERROR: Object Group Not Found for Backup\n")),
-                              RC_ERROR);
-        } else {
-          ACE_DEBUG (( LM_DEBUG,
-                       ACE_TEXT ("INFO: Object Group Found for Backup\n")));
-        }
-
-      }
+      ++error_count;
+      ACE_DEBUG (( LM_DEBUG,
+                   ACE_TEXT ("ERROR: Backup Not Able To Find Object Group %s Created By Backup In Repository\n"), test_group_2));
+    } else {
+      ACE_DEBUG (( LM_DEBUG,
+                   ACE_TEXT ("INFO: Backup Found Object Group %s Created By Backup In Repository\n"), test_group_2));
     }
-    catch (const CORBA::Exception& ex)
+
+    if (false == svc1.group_exist(test_group_2))
     {
-      ex._tao_print_exception (ACE_TEXT ("Unable to create a lot of object groups"));
-      return RC_ERROR;
+      ++error_count;
+      ACE_DEBUG (( LM_DEBUG,
+                   ACE_TEXT ("ERROR: Primary Not Able To Find Object Group %s Created By Backup In Repository\n"), test_group_2));
+    } else {
+      ACE_DEBUG (( LM_DEBUG,
+                   ACE_TEXT ("INFO: Primary Found Object Group %s Created By Backup In Repository\n"), test_group_2));
     }
-    ////////////////////////////////////////////////////////////////////////////
-#endif
+
+    if (false == svc2.group_exist(test_group_1))
+    {
+      ++error_count;
+      ACE_DEBUG (( LM_DEBUG,
+                   ACE_TEXT ("ERROR: Backup Not Able To Find Object Group %s Created By Primary In Repository\n"), test_group_1));
+    } else {
+      ACE_DEBUG (( LM_DEBUG,
+                   ACE_TEXT ("INFO: Backup Found Object Group %s Created By Primary In Repository\n"), test_group_1));
+    }
 
   }
   catch (const CORBA::Exception& ex)
   {
+    ++error_count;
     ex._tao_print_exception (
         ACE_TEXT ("ERROR: Unable to resolve name manager servers"));
-    return RC_ERROR;
   }
 
-  return RC_SUCCESS;
+  return (error_count > 0) ? RC_ERROR : RC_SUCCESS;
 }

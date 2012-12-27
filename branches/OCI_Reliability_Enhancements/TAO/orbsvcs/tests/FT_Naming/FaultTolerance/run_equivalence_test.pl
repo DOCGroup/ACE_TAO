@@ -238,7 +238,7 @@ sub init_naming_context_directory($$)
 }
 
 my $name_dir           = "NameService";
-my $group_dir          = "ObjectGroupService";
+my $group_dir          = "GroupService";
 my $ns_primary_iorfile = "$name_dir/ns_replica_primary.ior";
 my $ns_multi_iorfile   = "ns_multi.ior";
 my $nm_multi_iorfile   = "nm_multi.ior";
