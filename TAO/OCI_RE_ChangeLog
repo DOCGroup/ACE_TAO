@@ -1,3 +1,17 @@
+Thu Dec 27 20:31:10 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
+
+        * orbsvcs/tests/FT_Naming/FaultTolerance/client.cpp:
+        * orbsvcs/tests/FT_Naming/FaultTolerance/run_equivalence_test.pl:
+
+          Updated equivalence objectgroup test
+
+        * orbsvcs/tests/FT_Naming/FaultTolerance/run_failover_test.pl:
+        * orbsvcs/tests/FT_Naming/FaultTolerance/run_persistence_test.pl:
+
+          Made object group directory name consistent with name service directory
+          name
+
+
 Thu Dec 27 18:01:25 UTC 2012  Brian Johnson  <johnsonb@ociweb.com>
 
         * orbsvcs/tests/FT_Naming/FaultTolerance/client.cpp:
