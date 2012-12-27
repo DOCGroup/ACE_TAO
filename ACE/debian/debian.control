@@ -74,7 +74,7 @@ Description: ACE secure socket layer library
 Package: libace-ssl-dev
 Architecture: any
 Section: libdevel
-Depends: libace-ssl-6.1.6 (= ${binary:Version}), libace-dev (= ${binary:Version}), libssl-dev (>= 6.1.7d), ${misc:Depends}
+Depends: libace-ssl-6.1.7 (= ${binary:Version}), libace-dev (= ${binary:Version}), libssl-dev (>= 6.1.7d), ${misc:Depends}
 Description: ACE secure socket layer library - development files
  This package contains the header files and static library for the ACE
  SSL library.
@@ -155,7 +155,7 @@ Description: ACE Inet protocol library - development files
 Package: libace-inet-ssl-6.1.7
 Architecture: any
 Section: libs
-Depends: libace-inet-6.1.6, libace-ssl-6.1.7, ${shlibs:Depends}, ${misc:Depends}
+Depends: libace-inet-6.1.7, libace-ssl-6.1.7, ${shlibs:Depends}, ${misc:Depends}
 Description: ACE SSL-enabled Inet protocol library
  This package provides an ACE addon library for clients (and possibly
  servers at some point) using Inet protocols which support SSL, such as
@@ -274,7 +274,7 @@ Description: ACE-GUI reactor integration for Xt
 Package: libace-xtreactor-dev
 Architecture: any
 Section: libdevel
-Depends: libace-xtreactor-6.1.6 (= ${binary:Version}), libace-dev (= ${binary:Version}), libxt-dev (>= 6.1.7), ${misc:Depends}
+Depends: libace-xtreactor-6.1.7 (= ${binary:Version}), libace-dev (= ${binary:Version}), libxt-dev (>= 6.1.7), ${misc:Depends}
 Description: ACE-GUI reactor integration for Xt - development files
  This package contains header files and static library for the ACE-Xt
  reactor integration.
@@ -321,7 +321,7 @@ Description: ACE-GUI reactor integration for Fl
 Package: libace-flreactor-dev
 Architecture: any
 Section: libdevel
-Depends: libace-flreactor-6.1.6 (= ${binary:Version}), libace-dev (= ${binary:Version}), libfltk1.1-dev (>= 6.1.7), ${misc:Depends}
+Depends: libace-flreactor-6.1.7 (= ${binary:Version}), libace-dev (= ${binary:Version}), libfltk1.1-dev (>= 6.1.7), ${misc:Depends}
 Description: ACE-GUI reactor integration for Fl - development files
  This package contains header files and static library for the ACE-Fl
  reactor integration.
