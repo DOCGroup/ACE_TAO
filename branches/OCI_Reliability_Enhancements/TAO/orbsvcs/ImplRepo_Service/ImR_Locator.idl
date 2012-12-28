@@ -54,7 +54,7 @@ module ImplementationRepository
 
     /// indicate existing activator with name was updated
     //oneway void notify_updated_activator(in ActivatorUpdate activator);
-    void notify_updated_activator(in ActivatorUpdate activator);
+    oneway void notify_updated_activator(in ActivatorUpdate activator);
 
     /// register peer as replica and indicate sequence number
     void register_replica(in UpdatePushNotification peer,

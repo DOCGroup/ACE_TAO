@@ -122,9 +122,7 @@ public:
 protected:
   virtual int init_repo(PortableServer::POA_ptr imr_poa);
 
-  enum SyncOp { SYNC_ADD, SYNC_REMOVE };
-  virtual int sync_load(const ACE_CString& name, SyncOp sync_op,
-                        bool activator);
+  virtual int sync_load();
 
   virtual int persistent_update(const Server_Info_Ptr& info, bool add);
 

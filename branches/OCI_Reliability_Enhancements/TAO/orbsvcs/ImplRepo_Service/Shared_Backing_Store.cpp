@@ -163,7 +163,8 @@ Shared_Backing_Store::Shared_Backing_Store(const Options& opts,
   listing_file_(opts.persist_file_name() + ACE_TEXT("imr_listing.xml")),
   seq_num_(0),
   replica_seq_num_(0),
-  imr_type_(opts.imr_type())
+  imr_type_(opts.imr_type()),
+  sync_needed_(NO_SYNC)
 {
   IMR_REPLICA[Options::PRIMARY_IMR] = "ImR_ReplicaPrimary";
   IMR_REPLICA[Options::BACKUP_IMR] = "ImR_ReplicaBackup";
@@ -541,8 +542,8 @@ Shared_Backing_Store::persistent_load (bool only_changes)
   for (CORBA::ULong i = 0; i < sz; ++i)
     {
       const ACE_TString& fname = filenames[i];
-      Lockable_File listing_lf(fname, O_RDONLY);
-      load(fname, listing_lf.get_file());
+      Lockable_File file(fname, O_RDONLY);
+      load(fname, file.get_file());
     }
 
   return 0;
@@ -577,11 +578,32 @@ Shared_Backing_Store::get_listings(Lockable_File& listing_lf,
 }
 
 int
-Shared_Backing_Store::sync_load (const ACE_CString& /*name*/,
-                                 SyncOp /*sync_op*/,
-                                 bool /*activator*/)
+Shared_Backing_Store::sync_load ()
 {
-  return 0;
+  int err = 0;
+  ACE_DEBUG((LM_INFO, "(%P|%t) sync_load %d, %d\n", this->sync_needed_, this->sync_files_.size()));
+  if (this->sync_needed_ == FULL_SYNC)
+    {
+      err = persistent_load(false);
+    }
+  else if (this->sync_needed_ == INC_SYNC)
+    {
+      std::set<ACE_TString>::const_iterator fname = this->sync_files_.begin();
+      for ( ; fname != this->sync_files_.end(); ++fname)
+        {
+          ACE_DEBUG((LM_INFO, "(%P|%t) sync_load %s\n", fname->c_str()));
+          Lockable_File file(*fname, O_RDONLY);
+          int ind_err = load(*fname, file.get_file());
+          if (ind_err != 0)
+            {
+              err = ind_err;
+            }
+        }
+      this->sync_files_.clear();
+    }
+
+  this->sync_needed_ = NO_SYNC;
+  return err;
 }
 
 static void write_listing(FILE* list, const ACE_TString& fname,
@@ -703,44 +725,31 @@ Shared_Backing_Store::locator_service_ior(const char* peer_ior) const
 
 }
 
-bool
-Shared_Backing_Store::sync_repo(
-  ImplementationRepository::SequenceNum new_seq_num,
-  const ImplementationRepository::UpdateType& update_type)
-{
-  // if the sequence number is the next expected sequence number and it is an
-  // update, then only need to update the indicated changes, otherwise the
-  // whole repo needs to be reloaded
-  if (++replica_seq_num_ != new_seq_num)
-    {
-      replica_seq_num_ = new_seq_num;
-      persistent_load(false);
-      // repository is now up to date, no incremental sync needed
-      return false;
-    }
-
-  if (update_type != ImplementationRepository::repo_update)
-    {
-      persistent_load(true);
-      // repository is now up to date, no incremental sync needed
-      return false;
-    }
-
-  // the update can be performed by the caller
-  return true;
-}
-
 void
 Shared_Backing_Store::notify_updated_server(
   const ImplementationRepository::ServerUpdate& server)
 {
-  ACE_DEBUG((LM_INFO, "(%P|%t) notify_updated_server=%s\n", server.name.in()));
-  if (sync_repo(server.seq_num, server.type))
+  if ((this->sync_needed_ == FULL_SYNC) ||
+      (++this->replica_seq_num_ != server.seq_num))
     {
-      const ACE_TString fname = make_filename(server.name.in(), false);
-      Lockable_File listing_lf(fname, O_RDONLY);
-      load(fname, listing_lf.get_file());
+      this->replica_seq_num_ = server.seq_num;
+      this->sync_needed_ = FULL_SYNC;
+      this->sync_files_.clear();
+      return;
     }
+
+  const ACE_CString name = server.name.in();
+  if (server.type == ImplementationRepository::repo_remove)
+    {
+      // sync_needed_ doesn't change, since we handle the change
+      // immediately
+      this->servers().unbind (name);
+      return;
+    }
+
+  this->sync_needed_ = INC_SYNC;
+  const ACE_TString fname = make_filename(name, false);
+  this->sync_files_.insert(fname);
 }
 
 void
@@ -748,12 +757,27 @@ Shared_Backing_Store::notify_updated_activator(
   const ImplementationRepository::ActivatorUpdate& activator)
 {
   ACE_DEBUG((LM_INFO, "(%P|%t) notify_updated_activator=%s\n", activator.name.in()));
-  if (sync_repo(activator.seq_num, activator.type))
+  if ((this->sync_needed_ == FULL_SYNC) ||
+      (++this->replica_seq_num_ != activator.seq_num))
     {
-      const ACE_TString fname = make_filename(activator.name.in(), false);
-      Lockable_File listing_lf(fname, O_RDONLY);
-      load(fname, listing_lf.get_file());
+      this->replica_seq_num_ = activator.seq_num;
+      this->sync_needed_ = FULL_SYNC;
+      this->sync_files_.clear();
+      return;
     }
+
+  const ACE_CString name = lcase(activator.name.in());
+  if (activator.type == ImplementationRepository::repo_remove)
+    {
+      // sync_needed_ doesn't change, since we handle the change
+      // immediately
+      this->activators().unbind (name);
+      return;
+    }
+
+  this->sync_needed_ = INC_SYNC;
+  const ACE_TString fname = make_filename(name, true);
+  this->sync_files_.insert(fname);
 }
 
 void

@@ -1,7 +1,29 @@
+Fri Dec 28 14:01:24 UTC 2012  Brian Johnson  <johnsonb@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator.idl:
+
+          Made activator update oneway.
+
+        * orbsvcs/ImplRepo_Service/Locator_Repository.h:
+        * orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
+
+          Changed sync_load to pass no parameters and calling
+          sync_load in get_server and get_activator.
+
+        * orbsvcs/ImplRepo_Service/Locator_XMLHandler.cpp:
+
+          Changed to force ping call when server is requested.
+
+        * orbsvcs/ImplRepo_Service/Shared_Backing_Store.h:
+        * orbsvcs/ImplRepo_Service/Shared_Backing_Store.cpp:
+
+          Changed to store off needed updates and not update the repo
+          until sync_load is called.
+
 Thu Dec 27 21:49:00 UTC 2012  Brian Johnson  <johnsonb@ociweb.com>
 
         * orbsvcs/orbsvcs/FT_Naming_Serv.mpc:
-        
+
           Fixed to not pickup undesired idl files.
 
 Thu Dec 27 20:42:31 UTC 2012  Brian Johnson  <johnsonb@ociweb.com>
