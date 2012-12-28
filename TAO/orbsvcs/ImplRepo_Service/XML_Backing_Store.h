@@ -42,7 +42,7 @@ public:
 
   virtual ~XML_Backing_Store();
 
-  virtual const char* repo_mode() const;
+  virtual const ACE_TCHAR* repo_mode() const;
 
 protected:
   virtual int init_repo(PortableServer::POA_ptr imr_poa);

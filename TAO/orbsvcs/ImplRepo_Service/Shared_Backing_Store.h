@@ -57,7 +57,7 @@ public:
 
   virtual ~Shared_Backing_Store();
 
-  virtual const char* repo_mode() const;
+  virtual const ACE_TCHAR* repo_mode() const;
 
   virtual void notify_updated_server(
     const ImplementationRepository::ServerUpdate& server);

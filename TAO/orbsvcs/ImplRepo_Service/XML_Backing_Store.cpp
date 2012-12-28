@@ -218,7 +218,7 @@ XML_Backing_Store::load (const ACE_TString& filename,
   return 0;
 }
 
-const char*
+const ACE_TCHAR*
 XML_Backing_Store::repo_mode() const
 {
   return this->filename_.c_str();
