@@ -304,6 +304,12 @@ sub run_clients ()
         "group_modify -group ieee -policy rand",
         $POSITIVE_TEST_RESULT);
 
+    # Change the policy back to a supported one before
+    # doing the nslist to avoid the error message.
+    run_client (
+        "group_modify -group ieee -policy round",
+        $POSITIVE_TEST_RESULT);
+
     run_nslist("$NS_REF");
 
     run_client (

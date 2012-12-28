@@ -6,8 +6,7 @@ project(*Client) : namingexe, ftnaming, portableserver {
 
   Source_Files {
     client.cpp
-    $(TAO_ROOT)/utils/nsgroup/nsgroup_svc.cpp
   }
-  
+
 }
 

@@ -9,7 +9,7 @@
 //==========================================================================
 
 
-#include "utils/nsgroup/nsgroup_svc.h"
+#include "orbsvcs/Naming/FaultTolerant/nsgroup_svc.h"
 #include "ace/Get_Opt.h"
 
 //============================================================================

@@ -19,7 +19,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
-#include "utils/nsgroup/nsgroup_svc.h"
+#include "orbsvcs/Naming/FaultTolerant/nsgroup_svc.h"
 
 #if defined (_MSC_VER)
 # pragma warning (disable : 4250)
