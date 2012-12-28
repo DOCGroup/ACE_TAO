@@ -26,7 +26,6 @@ namespace {
       locked_(false),
       unlink_in_destructor_(false)
     {
-      ACE_DEBUG((LM_INFO, "(%P|%t) %d: Lockable_file\n", this));
     }
 
     Lockable_File(const ACE_TString& file,
@@ -37,9 +36,7 @@ namespace {
       locked_(false),
       unlink_in_destructor_(false)
     {
-      ACE_DEBUG((LM_INFO, "(%P|%t) %d: Lockable_file(%s,%d,%d)\n", this, file.c_str(), flags, unlink_in_destructor));
       init_fl(file, flags, unlink_in_destructor);
-//      ACE_DEBUG((LM_INFO, "(%P|%t) %d: Lockable_file done\n", this));
     }
 
     ~Lockable_File()
@@ -52,19 +49,15 @@ namespace {
       if (this->file_ == 0)
         return;
 
-//      ACE_DEBUG((LM_INFO, "(%P|%t) %d: release\n", this));
       close_file();
-      ACE_DEBUG((LM_INFO, "(%P|%t) %d: release lock\n", this));
       this->file_lock_.reset();
       this->locked_ = false;
-      ACE_DEBUG((LM_INFO, "(%P|%t) %d: release done\n", this));
     }
 
     FILE* get_file()
     {
       lock();
 
-//      ACE_DEBUG((LM_INFO, "(%P|%t) %d: get_file %d\n", this, release_stream));
       return this->file_;
     }
 
@@ -72,9 +65,7 @@ namespace {
                    const int flags,
                    bool unlink_in_destructor = false)
     {
-      if (!locked_) ACE_DEBUG((LM_INFO, "(%P|%t) %d: get_file(%s,%d,%d)\n", this, file.c_str(), flags, unlink_in_destructor));
       init_fl(file, flags, unlink_in_destructor);
-//      ACE_DEBUG((LM_INFO, "(%P|%t) %d: return get_file\n", this));
       return get_file();
     }
 
@@ -106,7 +97,6 @@ namespace {
         }
       this->file_ = ACE_OS::fdopen(this->file_lock_->get_handle(), flags_str);
 #endif
-      ACE_DEBUG((LM_INFO, ACE_TEXT("(%P|%t) %d: created file_lock_ file_=%d, mode=%C\n"), this, file_, flags_str));
     }
 
     void close_file()
@@ -114,7 +104,6 @@ namespace {
       if (this->file_ == 0)
         return;
 
-//      ACE_DEBUG((LM_INFO, "(%P|%t) %d: close file\n", this));
       ACE_OS::fflush(this->file_);
       ACE_OS::fclose(this->file_);
       this->file_ = 0;
@@ -125,7 +114,6 @@ namespace {
           this->unlink_in_destructor_ = false;
         }
 #endif
-//      ACE_DEBUG((LM_INFO, "(%P|%t) %d: close file done\n", this));
     }
 
     void lock()
@@ -134,7 +122,6 @@ namespace {
       if (this->locked_)
         return;
 
-      ACE_DEBUG((LM_INFO, "(%P|%t) %d: acquire %d\n", this, flags_));
       int ret = -1;
       if ((this->flags_ & O_RDWR) != 0)
         ret = file_lock_->acquire();
@@ -143,7 +130,6 @@ namespace {
       else
         ret = file_lock_->acquire_read();
 
-      ACE_DEBUG((LM_INFO, "(%P|%t) %d: acquired %d\n", this, flags_));
       this->locked_ = true;
 #endif
     }
@@ -204,7 +190,6 @@ static void replicate(
       return;
     }
 
-  ACE_DEBUG((LM_INFO, "(%P|%t) REPLICATE!!!!!!!!!!!!!!!!!!\n"));
   try
     {
       Update update;
@@ -216,16 +201,20 @@ static void replicate(
   catch (const CORBA::COMM_FAILURE&)
     {
       ACE_DEBUG ((LM_DEBUG,
-        "(%P|%t) Replicated ImR: COMM_FAILURE Exception\n"));
+        ACE_TEXT("(%P|%t) Replicated ImR: COMM_FAILURE Exception\n")));
     }
   catch (const CORBA::TRANSIENT&)
     {
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) Replicated ImR: TRANSIENT Exception\n"));
+      ACE_DEBUG ((
+        LM_DEBUG,
+        ACE_TEXT("(%P|%t) Replicated ImR: TRANSIENT Exception\n")));
     }
   catch (const CORBA::OBJECT_NOT_EXIST&)
     {
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) Replicated ImR: OBJECT_NOT_EXIST "
-        "Exception, dropping replica\n"));
+      ACE_DEBUG ((
+        LM_DEBUG,
+        ACE_TEXT("(%P|%t) Replicated ImR: OBJECT_NOT_EXIST ")
+        ACE_TEXT("Exception, dropping replica\n")));
       replica = TAO::Objref_Traits
         <ImplementationRepository::UpdatePushNotification>::nil ();
     }
@@ -234,7 +223,6 @@ static void replicate(
       ex._tao_print_exception (ACE_TEXT("Replicated ImR: notify update"));
       replica = 0;
     }
-  ACE_DEBUG((LM_INFO, "(%P|%t) REPLICATED!!!!!!!!!!!!!!!!!!\n"));
 }
 
 int
@@ -347,7 +335,7 @@ Shared_Backing_Store::persistent_update(const Activator_Info_Ptr& info,
   const ACE_TString fname = make_filename(name, true);
   if (this->opts_.debug() > 9)
     {
-      ACE_DEBUG((LM_INFO, ACE_TEXT ("Persisting to %s(%s)\n"),
+      ACE_DEBUG((LM_INFO, ACE_TEXT ("Persisting to %s(%C)\n"),
         fname.c_str(), info->name.c_str()));
     }
   Lockable_File activator_file(fname, O_WRONLY);
@@ -385,7 +373,7 @@ Shared_Backing_Store::connect_replicas (Replica_ptr this_replica)
   if (this->opts_.debug() > 1)
     {
       ACE_DEBUG((LM_INFO,
-        "Resolving ImR replica %s\n", replica_ior.c_str()));
+        ACE_TEXT("Resolving ImR replica %s\n"), replica_ior.c_str()));
     }
 
   CORBA::Object_var obj =
@@ -396,7 +384,7 @@ Shared_Backing_Store::connect_replicas (Replica_ptr this_replica)
       if (this->imr_type_ == Options::BACKUP_IMR)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-            "Error: No primary ImR replica file found <%s>\n",
+            ACE_TEXT("Error: No primary ImR replica file found <%s>\n"),
             replica_ior.c_str()), -1);
         }
 
@@ -404,7 +392,6 @@ Shared_Backing_Store::connect_replicas (Replica_ptr this_replica)
       return 0;
     }
 
-  ACE_DEBUG((LM_INFO, "narrowing replica\n"));
   this->replica_ =
     ImplementationRepository::UpdatePushNotification::_unchecked_narrow (obj.in());
   if (this->replica_->_non_existent() == 1)
@@ -412,16 +399,15 @@ Shared_Backing_Store::connect_replicas (Replica_ptr this_replica)
       this->replica_ = ImplementationRepository::UpdatePushNotification::_nil();
     }
 
-  ACE_DEBUG((LM_INFO, "check replica\n"));
   if (CORBA::is_nil (this->replica_.in ()))
     ACE_ERROR_RETURN ((LM_ERROR,
-      "Error: obj key <%s> not an ImR replica\n",
+      ACE_TEXT("Error: obj key <%s> not an ImR replica\n"),
       replica_ior.c_str()), -1);
 
   if (opts_.debug() > 1)
     {
       ACE_DEBUG((LM_INFO,
-        "Registering with previously running ImR replica\n"));
+        ACE_TEXT("Registering with previously running ImR replica\n")));
     }
 
   try
@@ -429,7 +415,6 @@ Shared_Backing_Store::connect_replicas (Replica_ptr this_replica)
       this->replica_->register_replica(this_replica,
                                        this->imr_ior_.inout(),
                                        this->replica_seq_num_);
-      ACE_DEBUG((LM_INFO, "(%P|%t) ???????? Registered with replica <%C>\n", this->imr_ior_.in()));
     }
   catch (const ImplementationRepository::InvalidPeer& ip)
     {
@@ -441,7 +426,8 @@ Shared_Backing_Store::connect_replicas (Replica_ptr this_replica)
   if (opts_.debug() > 9)
     {
       ACE_DEBUG((LM_INFO,
-        ACE_TEXT("Initializing repository with ft ior=<%s> and replica seq number %d\n"),
+        ACE_TEXT("Initializing repository with ft ior=<%C> ")
+        ACE_TEXT("and replica seq number %d\n"),
         this->imr_ior_.in(), replica_seq_num_));
     }
 
@@ -569,9 +555,7 @@ Shared_Backing_Store::get_listings(Lockable_File& listing_lf,
            this->opts_.debug(),
            listing_lf.get_file(this->listing_file_, O_RDONLY)) != 0)
     {
-      ACE_DEBUG((LM_INFO, "load failed\n"));
       listings_handler.reset();
-      ACE_DEBUG((LM_INFO, "reset handler\n"));
     }
 
   return listings_handler;
@@ -581,7 +565,13 @@ int
 Shared_Backing_Store::sync_load ()
 {
   int err = 0;
-  ACE_DEBUG((LM_INFO, "(%P|%t) sync_load %d, %d\n", this->sync_needed_, this->sync_files_.size()));
+  if (this->opts_.debug() > 5)
+    {
+      ACE_DEBUG((
+        LM_INFO,
+        ACE_TEXT("(%P|%t) sync_load %d, %d\n"),
+        this->sync_needed_, this->sync_files_.size()));
+    }
   if (this->sync_needed_ == FULL_SYNC)
     {
       err = persistent_load(false);
@@ -591,7 +581,12 @@ Shared_Backing_Store::sync_load ()
       std::set<ACE_TString>::const_iterator fname = this->sync_files_.begin();
       for ( ; fname != this->sync_files_.end(); ++fname)
         {
-          ACE_DEBUG((LM_INFO, "(%P|%t) sync_load %s\n", fname->c_str()));
+          if (this->opts_.debug() > 6)
+            {
+              ACE_DEBUG((LM_INFO,
+                         ACE_TEXT("(%P|%t) sync_load %s\n"),
+                         fname->c_str()));
+            }
           Lockable_File file(*fname, O_RDONLY);
           int ind_err = load(*fname, file.get_file());
           if (ind_err != 0)
@@ -687,12 +682,8 @@ Shared_Backing_Store::report_ior(PortableServer::POA_ptr root_poa,
   // only report the imr ior if the fault tolerant ImR is complete
   if (!CORBA::is_nil (this->replica_.in()))
     {
-      ACE_DEBUG((LM_INFO, "(%P|%t) ???????? Registered <%C>\n", this->imr_ior_.in()));
       err = Locator_Repository::report_ior(root_poa, imr_poa);
     }
-  else
-    ACE_DEBUG((LM_INFO, "(%P|%t) ???????? Not Registered yet \n"));
-
 
   return err;
 }
@@ -719,8 +710,6 @@ Shared_Backing_Store::locator_service_ior(const char* peer_ior) const
 
   char* const combined_ior =
     this->orb_->object_to_string(locator_service.in());
-  ACE_DEBUG((LM_INFO, "(%P|%t) ????? Combined: %d and %d to make %d\n", obj1, obj2, locator_service.in()));
-  ACE_DEBUG((LM_INFO, "(%P|%t) ????? Combined: <%C>\nand <%C>\nto make <%C>\n", non_ft_imr_ior_.in(), peer_ior, combined_ior));
   return combined_ior;
 
 }
@@ -729,6 +718,13 @@ void
 Shared_Backing_Store::notify_updated_server(
   const ImplementationRepository::ServerUpdate& server)
 {
+  if (this->opts_.debug() > 5)
+    {
+      ACE_DEBUG((
+        LM_INFO,
+        ACE_TEXT("(%P|%t) notify_updated_server=%C\n"),
+        server.name.in()));
+    }
   if ((this->sync_needed_ == FULL_SYNC) ||
       (++this->replica_seq_num_ != server.seq_num))
     {
@@ -756,7 +752,13 @@ void
 Shared_Backing_Store::notify_updated_activator(
   const ImplementationRepository::ActivatorUpdate& activator)
 {
-  ACE_DEBUG((LM_INFO, "(%P|%t) notify_updated_activator=%s\n", activator.name.in()));
+  if (this->opts_.debug() > 5)
+    {
+      ACE_DEBUG((
+        LM_INFO,
+        ACE_TEXT("(%P|%t) notify_updated_activator=%C\n"),
+        activator.name.in()));
+    }
   if ((this->sync_needed_ == FULL_SYNC) ||
       (++this->replica_seq_num_ != activator.seq_num))
     {
@@ -794,7 +796,8 @@ Shared_Backing_Store::register_replica(
   if (this->imr_type_ == Options::STANDALONE_IMR)
     {
       ACE_ERROR((LM_ERROR,
-        "Error: Non-replicated ImR receiving replica registration <%s>\n",
+        ACE_TEXT("Error: Non-replicated ImR receiving replica ")
+        ACE_TEXT("registration <%s>\n"),
         ft_imr_ior));
       return;
     }
@@ -808,7 +811,13 @@ Shared_Backing_Store::register_replica(
   // then just copy it
   if (registered())
     {
-      ACE_DEBUG((LM_INFO, "(%P|%t) ???????? Already registered <%C>\n", this->imr_ior_.in()));
+      if (this->opts_.debug() > 2)
+        {
+          ACE_DEBUG((
+            LM_INFO,
+            ACE_TEXT("(%P|%t) Already registered <%C>\n"),
+            this->imr_ior_.in()));
+        }
       // make a copy
       ior = this->imr_ior_.in();
       // handoff memory
@@ -850,7 +859,6 @@ Shared_Backing_Store::register_replica(
   ft_imr_ior = combined_ior;
   // pass as const char* to make sure string is copied
   this->imr_ior_ = (const char*)ft_imr_ior;
-  ACE_DEBUG((LM_INFO, "(%P|%t) ???????? Registering <%C>\n", this->imr_ior_.in()));
 
   PortableServer::POA_var null_poa;
   Locator_Repository::report_ior(null_poa, null_poa);
@@ -940,7 +948,11 @@ Shared_Backing_Store::LocatorListings_XMLHandler::startElement (
         }
     }
   else
-    ACE_DEBUG((LM_INFO, ACE_TEXT ("startElement ERROR too few attrs\n")));
+    ACE_DEBUG((
+      LM_INFO,
+      ACE_TEXT ("LocatorListings_XMLHandler::startElement ")
+      ACE_TEXT ("incorrect number of attrs (%d)\n"),
+      attrs->getLength ()));
 
 }
 

@@ -69,7 +69,10 @@ Options::parse_args (int &argc, ACE_TCHAR *argv[])
             }
           else
             {
-              ACE_ERROR((LM_ERROR, "Error: Unknown service command : %s\n", shifter.get_current()));
+              ACE_ERROR((
+                LM_ERROR,
+                ACE_TEXT("Error: Unknown service command : %s\n"),
+                shifter.get_current()));
               this->print_usage ();
               return -1;
             }

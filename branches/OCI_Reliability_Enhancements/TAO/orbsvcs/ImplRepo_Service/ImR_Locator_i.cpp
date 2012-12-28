@@ -810,11 +810,11 @@ ImR_Locator_i::add_or_update_server (
   if (this->debug_ > 1)
     {
       // Note : The info var may be null, so we use options.
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT("ImR: Server: %s\n")
-                  ACE_TEXT("\tActivator: %s\n")
-                  ACE_TEXT("\tCommand Line: %s\n")
-                  ACE_TEXT("\tWorking Directory: %s\n")
-                  ACE_TEXT("\tActivation: %s\n")
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT("ImR: Server: %C\n")
+                  ACE_TEXT("\tActivator: %C\n")
+                  ACE_TEXT("\tCommand Line: %C\n")
+                  ACE_TEXT("\tWorking Directory: %C\n")
+                  ACE_TEXT("\tActivation: %C\n")
                   ACE_TEXT("\tStart Limit: %d\n")
                   ACE_TEXT("\n"),
                   server,
@@ -826,7 +826,7 @@ ImR_Locator_i::add_or_update_server (
                   ));
 
       for (CORBA::ULong i = 0; i < options.environment.length (); ++i)
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Environment variable %s=%s\n"),
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Environment variable %C=%C\n"),
                     options.environment[i].name.in (),
                     options.environment[i].value.in ()));
     }
@@ -877,7 +877,7 @@ ImR_Locator_i::remove_server (const char* name)
   else
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT("ImR: Can't remove unknown server <%s>.\n"), name));
+                  ACE_TEXT("ImR: Can't remove unknown server <%C>.\n"), name));
       throw ImplementationRepository::NotFound ();
     }
 }
