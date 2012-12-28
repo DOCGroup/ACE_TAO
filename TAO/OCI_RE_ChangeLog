@@ -1,3 +1,27 @@
+Fri Dec 28 15:33:23 UTC 2012  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * orbsvcs/orbsvcs/FtNaming.mpc:
+
+          Added nsgroup_svc to project.
+
+        * utils/nsgroup/nsgroup_svc.h:
+        * utils/nsgroup/nsgroup_svc.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/nsgroup_svc.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/nsgroup_svc.cpp:
+
+          Moved nsgroup_svc.h & cpp FaultTolerant Naming Service
+          directory.
+
+        * orbsvcs/tests/FT_Naming/FaultTolerance/FaultTolerance.mpc:
+        * orbsvcs/tests/FT_Naming/FaultTolerance/client.cpp:
+        * utils/nsgroup/nsgroup.mpc:
+        * utils/nsgroup/nsgroup.cpp:
+        * utils/nsgroup/run_test.pl:
+        * orbsvcs/tests/FT_Naming/FaultTolerance/Faulttolerance.mpc:
+
+          Modified to account for change in placement of the
+          nsgroup_svc class into the FtNaming library.
+
 Fri Dec 28 14:01:24 UTC 2012  Brian Johnson  <johnsonb@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/ImR_Locator.idl:

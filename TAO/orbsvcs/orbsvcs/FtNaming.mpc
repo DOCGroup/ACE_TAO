@@ -16,12 +16,13 @@ project (FtNaming) : orbsvcslib, orbsvcs_output, install, naming_serv, portableg
   Source_Files (ORBSVCS_COMPONENTS) {
     FT_NamingManagerC.cpp
     FT_NamingManagerS.cpp
+    Naming/FaultTolerant/nsgroup_svc.cpp
     }
 
   Header_Files {
     FT_NamingManagerC.h
     FT_NamingManagerS.h
+    Naming/FaultTolerant/nsgroup_svc.h
   }
-
 }
 

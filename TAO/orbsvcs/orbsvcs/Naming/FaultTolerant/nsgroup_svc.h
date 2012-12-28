@@ -12,6 +12,7 @@
 #define i_nsgroup_svc_h
 
 #include "orbsvcs/FT_NamingManagerC.h"
+#include /**/ "orbsvcs/Naming/FaultTolerant/ftnaming_intf_export.h"
 
 /**
  * @class NS_group_svc
@@ -20,7 +21,7 @@
  *
  *
  */
-class NS_group_svc
+class  TAO_FtNaming_Intf_Export NS_group_svc
 {
 public:
 

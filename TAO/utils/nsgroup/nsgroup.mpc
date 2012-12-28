@@ -5,6 +5,5 @@ project(nsgroup): orbsvcsexe, ftnaming, naming, install, svc_utils {
   exename = tao_nsgroup
   Source_Files {
     nsgroup.cpp
-    nsgroup_svc.cpp
   }
 }
