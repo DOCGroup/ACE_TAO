@@ -1,3 +1,14 @@
+Fri Dec 28 16:13:55 UTC 2012  Brian Johnson  <johnsonb@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        
+          Added back in unintentionally deleted code and cleaned up.
+
+        * orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_XMLHandler.cpp:
+
+          Cleaned up logging.
+
 Fri Dec 28 15:33:23 UTC 2012  Kevin Stanley  <stanleyk@ociweb.com>
 
         * orbsvcs/orbsvcs/FtNaming.mpc:

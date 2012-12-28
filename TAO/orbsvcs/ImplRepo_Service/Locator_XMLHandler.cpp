@@ -155,19 +155,15 @@ Locator_XMLHandler::next_server (const ACE_CString& server_id,
       this->repo_.servers ().bind (name, si);
     }
 
-  ACE_DEBUG((LM_INFO, "(%P|%t) Added server (%d, %d, %d)\n", server_started, ior.is_empty(), new_server));
   if (!server_started || ior.is_empty())
     return;
 
-  ACE_DEBUG((LM_INFO, "(%P|%t) check ServerObject\n"));
   CORBA::Object_var obj = this->orb_->string_to_object(ior.c_str());
   if (!CORBA::is_nil(obj.in()))
     {
-      ACE_DEBUG((LM_INFO, "(%P|%t) narrow ServerObject\n"));
       si->server =
         ImplementationRepository::ServerObject::_unchecked_narrow (obj.in());
       si->last_ping = ACE_Time_Value::zero;
-      ACE_DEBUG((LM_INFO, "(%P|%t) added ServerObject %C (%d)\n", name.c_str(), si->server.in()));
     }
 }
 void

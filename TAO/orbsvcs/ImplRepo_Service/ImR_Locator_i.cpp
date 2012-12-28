@@ -592,6 +592,8 @@ ImR_Locator_i::start_server (UpdateableServerInfo& info, bool manual_start,
 
           --waiting_clients;
           info.edit()->starting = false;
+
+          return si._retn ();
         }
       else // The server_is_running () came in before the wait_for_startup ()
         {

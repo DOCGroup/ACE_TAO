@@ -57,8 +57,11 @@ Locator_Repository::report_ior(PortableServer::POA_ptr ,
         "ERROR: Repository already reported IOR\n"), -1);
     }
 
-  ACE_DEBUG((LM_INFO, "report_ior %s\n",
-    this->imr_ior_.in()));
+  if (this->opts_.debug() > 0)
+    {
+      ACE_DEBUG((LM_INFO, "report_ior %s\n",
+        this->imr_ior_.in()));
+    }
 
   // Register the ImR for use with INS
   CORBA::Object_var obj = this->orb_->resolve_initial_references ("IORTable");
@@ -79,25 +82,18 @@ Locator_Repository::report_ior(PortableServer::POA_ptr ,
   // We write the ior file last so that the tests can know we are ready.
   if (this->opts_.ior_filename ().length () > 0)
     {
-      ACE_DEBUG((LM_INFO, "Opening %s\n",
-        this->opts_.ior_filename ().c_str()));
       FILE* orig_fp = ACE_OS::fopen(this->opts_.ior_filename ().c_str(),
                                     ACE_TEXT("r"));
 
       bool write_data = true;
       if (orig_fp != 0)
         {
-          ACE_DEBUG((LM_INFO, "Opened %s\n",
-            this->opts_.ior_filename ().c_str()));
-
           ACE_Read_Buffer reader (orig_fp, false);
 
           char* string = reader.read ();
 
           if (string != 0)
             {
-              ACE_DEBUG((LM_INFO, "comparing:\n%s\n%s\n",
-                string, this->imr_ior_.in ()));
               write_data =
                 (ACE_OS::strcasecmp (string, this->imr_ior_.in ()) != 0);
               reader.alloc ()->free (string);
@@ -107,8 +103,6 @@ Locator_Repository::report_ior(PortableServer::POA_ptr ,
 
       if (write_data)
         {
-          ACE_DEBUG((LM_INFO, "Writing to %s\n",
-            this->opts_.ior_filename ().c_str()));
           FILE* fp = ACE_OS::fopen (this->opts_.ior_filename ().c_str (),
                                     ACE_TEXT("w"));
           if (fp == 0)
@@ -180,7 +174,7 @@ Locator_Repository::setup_multicast (ACE_Reactor* reactor, const char* ior)
   if (reactor->register_handler (&this->ior_multicast_,
                                  ACE_Event_Handler::READ_MASK) == -1)
     {
-      if (this->opts_.debug() >= 1)
+      if (this->opts_.debug() > 0)
         ACE_DEBUG ((LM_DEBUG, "ImR: cannot register Event handler\n"));
       return -1;
     }
@@ -239,7 +233,7 @@ Locator_Repository::unregister_if_address_reused (
   {
     Server_Info_Ptr& info = sientry->int_id_;
 
-    if (this->opts_.debug())
+    if (this->opts_.debug() > 0)
     {
       ACE_DEBUG ((LM_DEBUG,
         ACE_TEXT ("(%P|%t)ImR: iterating - registered server")
@@ -251,7 +245,7 @@ Locator_Repository::unregister_if_address_reused (
       && name != info->name
       && info->server_id != server_id)
     {
-      if (this->opts_.debug())
+      if (this->opts_.debug() > 0)
       {
         ACE_DEBUG ((LM_DEBUG,
           ACE_TEXT ("(%P|%t)ImR: reuse address %C so remove server %C \n"),
