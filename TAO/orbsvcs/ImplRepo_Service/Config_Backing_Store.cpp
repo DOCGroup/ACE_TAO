@@ -129,7 +129,7 @@ Config_Backing_Store::remove (const ACE_CString& name, const ACE_TCHAR* key)
     {
       if (this->opts_.debug() > 9)
         {
-          ACE_DEBUG((LM_INFO, ACE_TEXT ("could not remove %s, already gone!\n"),
+          ACE_DEBUG((LM_INFO, ACE_TEXT ("could not remove %C, already gone!\n"),
             name.c_str()));
         }
       return 0; // Already gone.
@@ -152,7 +152,7 @@ static int get_key (ACE_Configuration& cfg, const ACE_CString& name,
   err = cfg.open_section (root, name.c_str(), 1, key);
   if (err != 0)
     {
-      ACE_ERROR((LM_ERROR, ACE_TEXT ("Unable to open config section:%s\n"),
+      ACE_ERROR((LM_ERROR, ACE_TEXT ("Unable to open config section:%C\n"),
         name.c_str()));
     }
   return err;
@@ -165,14 +165,14 @@ Config_Backing_Store::persistent_update(const Server_Info_Ptr& info, bool )
   int err = get_key(this->config_, info->name, SERVERS_ROOT_KEY, key);
   if (err != 0)
     {
-      ACE_ERROR((LM_ERROR, ACE_TEXT ("ERROR: could not get key for %s\n"),
+      ACE_ERROR((LM_ERROR, ACE_TEXT ("ERROR: could not get key for %C\n"),
         info->name.c_str()));
       return err;
     }
 
   if (this->opts_.debug() > 9)
     {
-      ACE_DEBUG((LM_INFO, ACE_TEXT ("updating %s\n"), info->name.c_str()));
+      ACE_DEBUG((LM_INFO, ACE_TEXT ("updating %C\n"), info->name.c_str()));
     }
   ACE_CString envstr = ImR_Utils::envListToString(info->env_vars);
 
@@ -197,14 +197,14 @@ Config_Backing_Store::persistent_update(const Activator_Info_Ptr& info, bool )
   if (err != 0)
     {
       ACE_DEBUG((LM_INFO,
-        ACE_TEXT ("ERROR: could not get key for activator %s\n"),
+        ACE_TEXT ("ERROR: could not get key for activator %C\n"),
         info->name.c_str()));
       return err;
     }
 
   if (this->opts_.debug() > 9)
     {
-      ACE_DEBUG((LM_INFO, ACE_TEXT ("updating activator %s\n"),
+      ACE_DEBUG((LM_INFO, ACE_TEXT ("updating activator %C\n"),
         info->name.c_str()));
     }
   this->config_.set_integer_value(key, TOKEN, info->token);

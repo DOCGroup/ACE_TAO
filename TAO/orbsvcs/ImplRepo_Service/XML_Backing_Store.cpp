@@ -182,7 +182,7 @@ XML_Backing_Store::load (const ACE_TString& filename,
 
   if (debug > 9)
     {
-      ACE_DEBUG((LM_INFO, ACE_TEXT ("load %s%s\n"), filename.c_str(),
+      ACE_DEBUG((LM_INFO, ACE_TEXT ("load %s%C\n"), filename.c_str(),
         ((err == 0) ? "" : " (file doesn't exist)")));
     }
 

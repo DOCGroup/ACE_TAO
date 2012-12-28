@@ -1,3 +1,13 @@
+Fri Dec 28 21:40:45 UTC 2012  Brian Johnson  <johnsonb@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Config_Backing_Store.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_Options.cpp:
+        * orbsvcs/ImplRepo_Service/Shared_Backing_Store.cpp:
+        * orbsvcs/ImplRepo_Service/XML_Backing_Store.cpp:
+
+          Cleanup logging and wide character support.
+
 Fri Dec 28 18:44:07 UTC 2012  Brian Johnson  <johnsonb@ociweb.com>
 
         * bin/tao_other_tests.lst:
