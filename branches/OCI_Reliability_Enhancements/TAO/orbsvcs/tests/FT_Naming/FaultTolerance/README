@@ -3,22 +3,83 @@ $Id$
 This program tests the following fault tolerant naming service implementation
 use cases:
 
-1) Validate that a client can seamlessly connect to the alternate server of a
+1) Failover: Validate that a client can seamlessly connect to the alternate server of a
 	 server naming server pair after the other server has been terminated.
 
-2) Validate that a client can seamlessly invoke naming operations on either
-	 server instanance.
-
-3) Validate that repository data written by the name service is available upon
+2) Persistence: Validate that repository data written by the naming service is available upon
    startup.
 
-Run the application as follows:
+3) Equivalence: Validate that a client can seamlessly invoke naming operations on either
+	 server instanance.
 
-$$TAO_ROOT/orbsvcs/Naming_Service/tao_ft_naming -o <file1.ior> -ORBListenEndPoints iiop://<hostname>:<port1> -r <directory>
-$$TAO_ROOT/orbsvcs/Naming_Service/tao_ft_naming -o <file2.ior> -ORBListenEndPoints iiop://<hostname>:<port2> -r <directory>
 
-Example client with failover list
-$$ACE_ROOT/bin/tao_nsgroup -ORBDefaultInitRef corbaloc:iiop:<hostname>:<port1>,iiop:<hostname>:<port2> group_list
+For the Failover test run as follows:
+
+<hostname> = <local_host>
+<port1>    = <unused port>
+<port2>    = <unused port>
+
+1) Start primary tao_ft_naming process
+	$TAO_ROOT/orbsvcs/Naming_Service/tao_ft_naming --primary -ORBListenEndPoints iiop://<hostname>:<port1> -m 0 -r NameService -v GroupService
+
+2) Start backup tao_ft_naming process
+	$TAO_ROOT/orbsvcs/Naming_Service/tao_ft_naming --backup \
+		-ORBListenEndPoints iiop://<hostname>:<port2> \
+		-c $TAO_ROOT/orbsvcs/tests/FT_Naming/FaultTolerance/ns.ior \
+		-g $TAO_ROOT/orbsvcs/tests/FT_Naming/FaultTolerance/nm.ior \
+		-r NameService -v GroupService
+
+3) Terminate primary tao_ft_naming process
+
+4) Run client with failover argument
+	cd <testpath>
+	client --failover -p file:///<testpath>/ns.ior -r file://<testpath>/nm.ior -b 4 -d 4
+
+
+For the Persistence test run as follows:
+
+<hostname> = <local_host>
+<port1>    = <first unused port>
+<port2>    = <second unused port>
+
+1) Create empty NameService and GroupService directories
+	cd $TAO_ROOT/orbsvcs/tests/FT_Naming/FaultTolerance
+	mkdir NameService
+	mkdir GroupService
+
+2) Start primary tao_ft_naming process
+	cd $TAO_ROOT/orbsvcs/tests/FT_Naming/FaultTolerance
+	$TAO_ROOT/orbsvcs/Naming_Service/tao_ft_naming --primary -ORBListenEndPoints iiop://<hostname>:<port1> -r NameService -v GroupService &
+
+3) Run the test client with the persistence and create arguments
+	cd $TAO_ROOT/orbsvcs/tests/FT_Naming/FaultTolerance
+	client --persistence --create -p corbaloc:iiop:<hostname>:<port1>/NameService -r corbaloc:iiop:<hostname>:<port1>/NamingManager -b 4 -d 4
+
+4) Terminate primary tao_ft_naming process and then restart it with the original arguments
+
+	cd $TAO_ROOT/orbsvcs/tests/FT_Naming/FaultTolerance
+
+	kill `pidof $TAO_ROOT/orbsvcs/Naming_Service/tao_ft_naming`
+
+	$TAO_ROOT/orbsvcs/Naming_Service/tao_ft_naming --primary \
+		-ORBListenEndPoints iiop://<hostname>:<port1> \
+		-r $TAO_ROOT/orbsvcs/tests/FT_Naming/FaultTolerance/NameService \
+		-v $TAO_ROOT/orbsvcs/tests/FT_Naming/FaultTolerance/GroupService
+
+5) Now run the test client with the persistence and valdiate arguments
+
+	cd $TAO_ROOT/orbsvcs/tests/FT_Naming/FaultTolerance
+
+	client --persistence --validate \
+		-p corbaloc:iiop:<hostname>:<port1>/NameService \
+		-r corbaloc:iiop:<hostname>:<port1>/NamingManager \
+		-b 4 -d 4
+
+6) Cleanup
+	cd $TAO_ROOT/orbsvcs/tests/FT_Naming/FaultTolerance
+	rm -rf NameService
+	rm -rf GroupService
+
 
 Example client for first instance only
 $$ACE_ROOT/bin/tao_nsgroup -ORBDefaultInitRef corbaloc:iiop:<hostname>:<port1> group_list

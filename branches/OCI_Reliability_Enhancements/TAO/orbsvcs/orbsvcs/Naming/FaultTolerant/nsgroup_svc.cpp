@@ -20,235 +20,7 @@ NS_group_svc::NS_group_svc (void)
 {
 }
 
-NS_group_svc::NS_group_svc (int argc, ACE_TCHAR **argv)
-  : argc_ (argc),
-    argv_ (argv),
-    nsgroup_cmd_(NS_group_svc::NSGROUP_NONE)
-{
-}
-
-NS_group_svc::NSGROUP_COMMAND
-NS_group_svc::parse_command_line (void)
-{
-  #if 0
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("parse_command_line::argc(%u)\n"), this->argc_));
-  for( int i = 0; i < this->argc_; ++i){
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("parse_command_line::argv(%u:%s)\n"), i, this->argv_[i]));
-  }
-  #endif
-
-  static const ACE_TCHAR options[] = ACE_TEXT("g:p:t:l:i:n:h");
-  static const int skip_args     = 1;
-  static const int report_errors = 0;
-  static const int ordering      = ACE_Get_Opt::PERMUTE_ARGS;
-  static const int long_only     = 1;
-
-  ACE_Get_Opt get_opts (
-    this->argc_,
-    this->argv_,
-    options,
-    skip_args,
-    report_errors,
-    ordering,
-    long_only
-  );
-
-  this->group_arg_ = 0;
-  if (get_opts.long_option (ACE_TEXT ("group"),
-                           'g',
-                           ACE_Get_Opt::ARG_REQUIRED) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Unable to add long option 'g'\n")), NSGROUP_NONE);
-
-  this->policy_arg_ = 0;
-  if (get_opts.long_option (ACE_TEXT ("policy"),
-                           'p',
-                           ACE_Get_Opt::ARG_REQUIRED) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Unable to add long option 'p'\n")), NSGROUP_NONE);
-
-  this->location_arg_ = 0;
-  if (get_opts.long_option (ACE_TEXT ("location"),
-                           'l',
-                           ACE_Get_Opt::ARG_REQUIRED) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Unable to add long option 'l'\n")), NSGROUP_NONE);
-
-  this->ior_arg_ = 0;
-  if (get_opts.long_option (ACE_TEXT ("ior"),
-                           'i',
-                           ACE_Get_Opt::ARG_REQUIRED) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Unable to add long option 'i'\n")), NSGROUP_NONE);
-
-  this->namepath_arg_ = 0;
-  if (get_opts.long_option (ACE_TEXT ("name"),
-                           'n',
-                           ACE_Get_Opt::ARG_REQUIRED) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Unable to add long option 'n'\n")), NSGROUP_NONE);
-
-  if (get_opts.long_option (ACE_TEXT ("help"), 'h') != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Unable to add long option 'h'\n")), NSGROUP_NONE);
-
-  int c;
-  while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'g':  // group
-        this->group_arg_ = get_opts.opt_arg ();
-        break;
-      case 'p':  // policy
-        this->policy_arg_ = get_opts.opt_arg ();
-        break;
-      case 'l':  // location
-        this->location_arg_ = get_opts.opt_arg ();
-        break;
-      case 'i': // ior
-        this->ior_arg_ = get_opts.opt_arg ();
-        break;
-      case 'n': // name
-        this->namepath_arg_ = get_opts.opt_arg ();
-        break;
-      case 'h':
-        return NSGROUP_HELP;
-      }
-
-  // handle non-option arguments
-  int non_option_arg_count = 0;
-  for( int i = get_opts.opt_ind (); i < this->argc_; ++i)
-  {
-
-    non_option_arg_count++;
-
-    //ACE_DEBUG ((LM_INFO, "Found non-option argument \"%s\"\n", this->argv_[i]));
-
-
-    if( ACE_OS::strncmp (this->argv_[i],"group_create",
-                        ACE_OS::strlen ("group_create")) == 0 ) {
-
-      nsgroup_cmd_ =  NSGROUP_GROUP_CREATE;
-
-    } else if(ACE_OS::strncmp (this->argv_[i], "group_bind",
-                               ACE_OS::strlen ("group_bind")) == 0 ){
-
-      nsgroup_cmd_ =  NSGROUP_GROUP_BIND;
-
-    } else if(ACE_OS::strncmp (this->argv_[i], "group_unbind",
-                               ACE_OS::strlen ("group_unbind")) == 0 ){
-
-      nsgroup_cmd_ =  NSGROUP_GROUP_UNBIND;
-
-    } else if(ACE_OS::strncmp (this->argv_[i], "group_modify",
-                               ACE_OS::strlen ("group_modify")) == 0 ){
-
-      nsgroup_cmd_ =  NSGROUP_GROUP_MODIFY;
-
-    } else if(ACE_OS::strncmp (this->argv_[i], "group_list",
-                               ACE_OS::strlen ("group_list")) == 0 ){
-
-      nsgroup_cmd_ =  NSGROUP_GROUP_LIST;
-
-    } else if(ACE_OS::strncmp (this->argv_[i], "group_remove",
-                               ACE_OS::strlen ("group_remove")) == 0 ){
-
-      nsgroup_cmd_ =  NSGROUP_GROUP_REMOVE;
-
-    } else if(ACE_OS::strncmp (this->argv_[i], "member_list",
-                               ACE_OS::strlen ("member_list")) == 0 ){
-
-      nsgroup_cmd_ =  NSGROUP_MEMBER_LIST;
-
-    } else if(ACE_OS::strncmp (this->argv_[i], "member_add",
-                               ACE_OS::strlen ("member_add")) == 0 ){
-
-      nsgroup_cmd_ =  NSGROUP_MEMBER_ADD;
-
-    } else if(ACE_OS::strncmp (this->argv_[i], "member_remove",
-                               ACE_OS::strlen ("member_remove")) == 0 ){
-
-      nsgroup_cmd_ =  NSGROUP_MEMBER_REMOVE;
-
-    } else if(ACE_OS::strncmp (this->argv_[i], "member_show",
-                               ACE_OS::strlen ("member_show")) == 0 ){
-
-      nsgroup_cmd_ =  NSGROUP_MEMBER_SHOW;
-
-    } else {
-
-      nsgroup_cmd_ =  NSGROUP_NONE;
-
-    }
-  }
-
-  // The command should be the only non option argument
-  if ( non_option_arg_count > 1 ) {
-      nsgroup_cmd_ =  NSGROUP_NONE;
-  }
-
-  return nsgroup_cmd_;
-}
-
-int
-NS_group_svc::run_cmd(void)
-{
-  int rc = -1;
-  switch( parse_command_line() )
-  {
-
-    case NSGROUP_HELP:
-      return show_usage();
-    break;
-
-    case NSGROUP_GROUP_CREATE:
-      return group_create ( group_arg(), policy_arg() );
-    break;
-
-    case NSGROUP_GROUP_BIND:
-      return group_bind ( group_arg(), namepath_arg() );
-    break;
-
-    case NSGROUP_GROUP_UNBIND:
-      return group_unbind ( namepath_arg() );
-    break;
-
-    case NSGROUP_GROUP_MODIFY:
-      return group_modify ( group_arg(), policy_arg() );
-    break;
-
-    case NSGROUP_GROUP_LIST:
-      return group_list ();
-    break;
-
-    case NSGROUP_GROUP_REMOVE:
-      return group_remove ( group_arg() );
-    break;
-
-    case NSGROUP_MEMBER_LIST:
-      return member_list ( group_arg() );
-    break;
-
-    case NSGROUP_MEMBER_ADD:
-      return member_add ( group_arg(), location_arg(), ior_arg() );
-    break;
-
-    case NSGROUP_MEMBER_REMOVE:
-      return member_remove ( group_arg(), location_arg() );
-    break;
-
-    case NSGROUP_MEMBER_SHOW:
-      return member_show ( group_arg(), location_arg() );
-    break;
-
-    default:
-      return rc;
-    break;
-  }
-
-  return rc;
-}
-
+#if 0
 int
 NS_group_svc::destroy (void)
 {
@@ -265,6 +37,7 @@ NS_group_svc::destroy (void)
 
   return 1;
 }
+#endif // 0
 
 FT_Naming::LoadBalancingStrategyValue
 NS_group_svc::determine_policy_string (const char *policy)
@@ -276,67 +49,6 @@ NS_group_svc::determine_policy_string (const char *policy)
   } else {
     return FT_Naming::ROUND_ROBIN; // Default case
   }
-}
-
-
-int
-NS_group_svc::start_orb (void)
-{
-  try
-  {
-
-#if 0
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("start_orb::argc(%u)\n"), this->argc_));
-    for( int i = 0; i < this->argc_; ++i){
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("start_orb::argv(%u:%s)\n"), i, this->argv_[i]));
-    }
-#endif //
-
-    // Initialise the ORB.
-    this->orb_ = CORBA::ORB_init (this->argc_, this->argv_);
-    if (CORBA::is_nil (this->orb_.in ()))
-      ACE_ERROR_RETURN ((LM_ERROR,
-                          " (%P|%t) Unable to initialize the ORB.\n"),
-                          -1);
-
-    //////////////////////////////////////////////////////////////////////////
-    //
-    //////////////////////////////////////////////////////////////////////////
-    CORBA::Object_var naming_manager_object =
-      this->orb_->resolve_initial_references ("NamingManager");
-
-    this->naming_manager_ =
-      FT_Naming::NamingManager::_narrow (naming_manager_object.in ());
-
-    if (CORBA::is_nil (this->naming_manager_.in ()))
-      ACE_ERROR_RETURN ((LM_ERROR,
-                          " (%P|%t) Unable to get Naming Manager Reference\n"),
-                          -1);
-    //////////////////////////////////////////////////////////////////////////
-    //
-    //////////////////////////////////////////////////////////////////////////
-    CORBA::Object_var naming_object =
-      this->orb_->resolve_initial_references("NameService");
-
-    this->name_service_ =
-      CosNaming::NamingContextExt::_narrow (naming_object.in ());
-
-    if (CORBA::is_nil (this->name_service_.in ()))
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "\nUnable to get Name Service Reference\n"),
-                        -1);
-    //////////////////////////////////////////////////////////////////////////
-    //
-    //////////////////////////////////////////////////////////////////////////
-  }
-  catch (const CORBA::Exception& ex)
-  {
-    ex._tao_print_exception ("\nException raised initialising ORB\n");
-    return -1;
-  }
-
-  return 1;
-
 }
 
 int
@@ -378,29 +90,6 @@ NS_group_svc::set_name_context( CosNaming::NamingContextExt_ptr nc)
     return 0;
 }
 
-
-int
-NS_group_svc::show_usage( void )
-{
-  ACE_DEBUG ((LM_INFO,
-              ACE_TEXT ("Usage:\n")
-              ACE_TEXT ("  %s\n")
-              ACE_TEXT ("    group_create  -group <group> -policy <round | rand | least> \n")
-              ACE_TEXT ("    group_bind    -group <group> -name <name>\n")
-              ACE_TEXT ("    group_unbind  -name <name>\n")
-              ACE_TEXT ("    group_modify  -group <group> -policy <round | rand | least> \n")
-              ACE_TEXT ("    group_list\n")
-              ACE_TEXT ("    group_remove  -group <group>\n")
-              ACE_TEXT ("    member_list   -group <group>\n")
-              ACE_TEXT ("    member_add    -group <group> -location <location> -ior <IOR>\n")
-              ACE_TEXT ("    member_remove -group <group> -location <location>\n")
-              ACE_TEXT ("    member_show   -group <group> -location <location>\n")
-              ACE_TEXT ("    -help\n")
-              ACE_TEXT ("\n"),
-              this->argv_[0]));
-    return 0;
-}
-
 bool
 NS_group_svc::group_exist (
   const char* group_name
@@ -408,10 +97,9 @@ NS_group_svc::group_exist (
 {
   if (group_name == 0 )
   {
-    this->show_usage ();
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("group_exist args not provided\n")),
-                      -1);
+                      -2);
   }
 
   try
@@ -441,10 +129,9 @@ NS_group_svc::group_create (
 
   if (group_name == 0 || policy == 0 )
   {
-    this->show_usage ();
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("group_create args not provided\n")),
-                      -1);
+                      -2);
 
   }
 
@@ -512,10 +199,9 @@ NS_group_svc::group_bind (
 
   if (group_name == 0 || path == 0)
   {
-    this->show_usage ();
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("group_bind args not provided\n")),
-                      -1);
+                      -2);
   }
 
   try
@@ -575,10 +261,9 @@ int
 NS_group_svc::group_unbind (const char* path){
   if ( path == 0)
   {
-    this->show_usage ();
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("group_unbind args not provided\n")),
-                      -1);
+                      -2);
   }
 
   try
@@ -656,10 +341,9 @@ NS_group_svc::display_load_policy_group(
   const char *display_label) {
 
   if( display_label == 0 ) {
-    this->show_usage ();
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("display_load_policy_group args not provided\n")),
-                      -1);
+                      -2);
   }
 
   try
@@ -707,10 +391,9 @@ NS_group_svc::group_modify (
 {
   if (group_name == 0 || policy == 0)
   {
-    this->show_usage ();
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("group_modify args not provided\n")),
-                      -1);
+                      -2);
   }
 
   try
@@ -747,10 +430,9 @@ NS_group_svc::group_remove (const char* group_name)
 {
   if (group_name == 0)
   {
-    this->show_usage ();
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("group_remove args not provided\n")),
-                      -1);
+                      -2);
   }
 
   try
@@ -789,10 +471,9 @@ NS_group_svc::member_add (
 {
   if (group_name == 0 || location == 0 || ior == 0 )
   {
-    this->show_usage ();
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("member_add args not provided\n")),
-                       -1);
+                       -2);
   }
 
   try
@@ -848,10 +529,9 @@ NS_group_svc::member_list (const char* group_name)
 {
   if (group_name == 0)
   {
-    this->show_usage ();
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("member_list args not provided\n")),
-                      -1);
+                      -2);
   }
 
   try
@@ -901,10 +581,9 @@ NS_group_svc::member_remove (
 {
   if (group_name == 0 || location == 0)
   {
-    this->show_usage ();
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("member_remove args not provided\n")),
-                      -1);
+                      -2);
   }
 
   /**
@@ -966,10 +645,9 @@ NS_group_svc::member_show (
 {
   if (group_name == 0 || location == 0)
   {
-    this->show_usage ();
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("member_show args not provided\n")),
-                      -1);
+                      -2);
   }
 
   //Get and display IOR for the member location
