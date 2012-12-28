@@ -1,3 +1,21 @@
+Fri Dec 28 21:53:11 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/nsgroup_svc.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/nsgroup_svc.cpp:
+
+          Removed command line processing support
+          Added doxygen fields
+
+        * orbsvcs/tests/FT_Naming/FaultTolerance/README:
+        * orbsvcs/tests/FT_Naming/FaultTolerance/run_failover_test.pl:
+
+          Updated test documentation
+
+        * utils/nsgroup/nsgroup.cpp:
+
+          Refactored to add command line processing support that was previously
+          provided by nsgroup_svc
+
 Fri Dec 28 21:40:45 UTC 2012  Brian Johnson  <johnsonb@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/Config_Backing_Store.cpp:
