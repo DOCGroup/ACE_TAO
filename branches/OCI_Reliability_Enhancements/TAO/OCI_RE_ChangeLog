@@ -1,7 +1,28 @@
+Fri Dec 28 18:44:07 UTC 2012  Brian Johnson  <johnsonb@ociweb.com>
+
+        * bin/tao_other_tests.lst:
+
+          Added fault tolerant ImplRepo test.
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+
+          Cleanup of log statements.
+
+        * orbsvcs/ImplRepo_Service/Config_Backing_Store.h:
+        * orbsvcs/ImplRepo_Service/Config_Backing_Store.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_Repository.h:
+        * orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
+        * orbsvcs/ImplRepo_Service/Shared_Backing_Store.h:
+        * orbsvcs/ImplRepo_Service/Shared_Backing_Store.cpp:
+        * orbsvcs/ImplRepo_Service/XML_Backing_Store.h:
+        * orbsvcs/ImplRepo_Service/XML_Backing_Store.cpp:
+
+          Fixed return type for repo_mode.
+
 Fri Dec 28 16:13:55 UTC 2012  Brian Johnson  <johnsonb@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
-        
+
           Added back in unintentionally deleted code and cleaned up.
 
         * orbsvcs/ImplRepo_Service/Locator_Repository.cpp:

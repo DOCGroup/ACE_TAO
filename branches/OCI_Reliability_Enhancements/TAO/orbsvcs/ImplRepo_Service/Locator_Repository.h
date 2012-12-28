@@ -109,7 +109,7 @@ public:
   AIMap& activators(void);
   const AIMap& activators(void) const;
 
-  virtual const char* repo_mode() const = 0;
+  virtual const ACE_TCHAR* repo_mode() const = 0;
 
   static ACE_CString lcase (const ACE_CString& s);
 
@@ -170,7 +170,7 @@ public:
 
   virtual ~No_Backing_Store();
 
-  virtual const char* repo_mode() const;
+  virtual const ACE_TCHAR* repo_mode() const;
 
 private:
 };

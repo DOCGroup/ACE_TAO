@@ -252,7 +252,7 @@ Heap_Backing_Store::~Heap_Backing_Store()
 {
 }
 
-const char*
+const ACE_TCHAR*
 Heap_Backing_Store::repo_mode() const
 {
   return this->filename_.c_str();
@@ -296,8 +296,8 @@ Registry_Backing_Store::~Registry_Backing_Store()
 {
 }
 
-const char*
+const ACE_TCHAR*
 Registry_Backing_Store::repo_mode() const
 {
-  return "Registry";
+  return ACE_TEXT("Registry");
 }

@@ -59,7 +59,7 @@ Locator_Repository::report_ior(PortableServer::POA_ptr ,
 
   if (this->opts_.debug() > 0)
     {
-      ACE_DEBUG((LM_INFO, "report_ior %s\n",
+      ACE_DEBUG((LM_INFO, ACE_TEXT("report_ior %C\n"),
         this->imr_ior_.in()));
     }
 
@@ -550,8 +550,8 @@ No_Backing_Store::~No_Backing_Store()
 {
 }
 
-const char*
+const ACE_TCHAR*
 No_Backing_Store::repo_mode() const
 {
-  return "Disabled";
+  return ACE_TEXT("Disabled");
 }

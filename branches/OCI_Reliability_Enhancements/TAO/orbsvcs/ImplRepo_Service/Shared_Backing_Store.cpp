@@ -372,7 +372,7 @@ Shared_Backing_Store::persistent_update(const Activator_Info_Ptr& info,
   return 0;
 }
 
-const char*
+const ACE_TCHAR*
 Shared_Backing_Store::repo_mode() const
 {
   return this->listing_file_.c_str();
