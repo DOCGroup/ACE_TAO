@@ -28,6 +28,8 @@
 #include "ace/Vector_T.h"
 #include "ACEXML/common/DefaultHandler.h"
 
+#include <set>
+
 class ACE_Configuration;
 class ACEXML_FileCharStream;
 class LocatorListings_XMLHandler;
@@ -66,6 +68,8 @@ public:
     char*& ft_imr_ior,
     ImplementationRepository::SequenceNum_out seq_num);
 
+  enum SyncType { NO_SYNC, INC_SYNC, FULL_SYNC };
+
 protected:
   virtual int init_repo(PortableServer::POA_ptr imr_poa);
 
@@ -75,8 +79,7 @@ protected:
 
   virtual int persistent_remove(const ACE_CString& name, bool activator);
 
-  virtual int sync_load (const ACE_CString& name, SyncOp sync_op,
-                         bool activator);
+  virtual int sync_load ();
 
   virtual int report_ior(PortableServer::POA_ptr root_poa,
                          PortableServer::POA_ptr imr_poa);
@@ -126,17 +129,14 @@ private:
   int persist_listings(Lockable_File& listing_lf) const;
   int connect_replicas(Replica_ptr this_replica);
 
-  /// sync up this repository with the replica_, returns true if the
-  /// caller needs to perform an incremental sync
-  bool sync_repo(ImplementationRepository::SequenceNum new_seq_num,
-                 const ImplementationRepository::UpdateType& update_type);
-
   const ACE_TString listing_file_;
   Replica_var replica_;
 
   ImplementationRepository::SequenceNum seq_num_;
   ImplementationRepository::SequenceNum replica_seq_num_;
   const Options::ImrType imr_type_;
+  SyncType sync_needed_;
+  std::set<ACE_TString> sync_files_;
   CORBA::String_var non_ft_imr_ior_;
   const char* IMR_REPLICA[3];
 };

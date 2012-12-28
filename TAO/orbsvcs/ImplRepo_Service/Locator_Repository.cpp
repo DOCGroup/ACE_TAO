@@ -291,7 +291,7 @@ Locator_Repository::add_server (
   const ACE_CString& ior,
   ImplementationRepository::ServerObject_ptr svrobj)
 {
-  int err = sync_load (name, SYNC_ADD, false);
+  int err = sync_load ();
   if (err != 0)
     {
       return err;
@@ -317,7 +317,7 @@ Locator_Repository::add_activator (const ACE_CString& name,
                         const ACE_CString& ior,
                         ImplementationRepository::Activator_ptr act)
 {
-  int err = sync_load (name, SYNC_ADD, true);
+  int err = sync_load ();
   if (err != 0)
     {
       return err;
@@ -349,6 +349,8 @@ Locator_Repository::update_activator (const Activator_Info_Ptr& info)
 Server_Info_Ptr
 Locator_Repository::get_server (const ACE_CString& name)
 {
+  sync_load ();
+
   Server_Info_Ptr server (0);
   servers ().find (name, server);
   return server;
@@ -357,6 +359,8 @@ Locator_Repository::get_server (const ACE_CString& name)
 Activator_Info_Ptr
 Locator_Repository::get_activator (const ACE_CString& name)
 {
+  sync_load ();
+
   Activator_Info_Ptr activator (0);
   activators ().find (lcase (name), activator);
   return activator;
@@ -372,7 +376,7 @@ Locator_Repository::has_activator (const ACE_CString& name)
 int
 Locator_Repository::remove_server (const ACE_CString& name)
 {
-  int err = sync_load (name, SYNC_REMOVE, false);
+  int err = sync_load ();
   if (err != 0)
     {
       return err;
@@ -390,7 +394,7 @@ Locator_Repository::remove_server (const ACE_CString& name)
 int
 Locator_Repository::remove_activator (const ACE_CString& name)
 {
-  int err = sync_load (name, SYNC_REMOVE, true);
+  int err = sync_load ();
   if (err != 0)
     {
       return err;
@@ -437,7 +441,7 @@ Locator_Repository::init_repo(PortableServer::POA_ptr )
 }
 
 int
-Locator_Repository::sync_load (const ACE_CString& , SyncOp , bool )
+Locator_Repository::sync_load ()
 {
   // nothing more to do for default server/activator load
   return 0;

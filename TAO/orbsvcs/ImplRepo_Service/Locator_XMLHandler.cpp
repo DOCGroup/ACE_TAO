@@ -166,18 +166,7 @@ Locator_XMLHandler::next_server (const ACE_CString& server_id,
       ACE_DEBUG((LM_INFO, "(%P|%t) narrow ServerObject\n"));
       si->server =
         ImplementationRepository::ServerObject::_unchecked_narrow (obj.in());
-      ACE_DEBUG((LM_INFO, "(%P|%t) added ServerObject %C (%d)\n", name.c_str(), si->server.in()));
-      try
-        {
-          si->server->ping ();
-          si->last_ping = ACE_OS::gettimeofday ();
-        }
-      catch (const CORBA::Exception& )
-        {
-          si->server = ImplementationRepository::ServerObject::_nil();
-          si->last_ping = ACE_Time_Value::zero;
-        }
-
+      si->last_ping = ACE_Time_Value::zero;
       ACE_DEBUG((LM_INFO, "(%P|%t) added ServerObject %C (%d)\n", name.c_str(), si->server.in()));
     }
 }
