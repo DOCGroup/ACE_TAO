@@ -674,7 +674,7 @@ Shared_Backing_Store::report_ior(PortableServer::POA_ptr root_poa,
     }
   obj = imr_poa->servant_to_reference (this);
   const CORBA::String_var replica_ior = this->orb_->object_to_string (obj.in ());
-  report(ior_table.in(), replica_name, replica_ior.in());
+  ior_table->bind(replica_name, replica_ior.in());
   ACE_OS::fprintf (fp, "%s", replica_ior.in ());
   ACE_OS::fclose (fp);
 

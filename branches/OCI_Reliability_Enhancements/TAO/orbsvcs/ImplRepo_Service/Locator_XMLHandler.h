@@ -24,7 +24,7 @@
 
 class Locator_Repository;
 /**
- * Callback SAX XML Handler for parsing XML.
+ * Callback SAX XML Handler for parsing Locator XML.
  */
 class Locator_XMLHandler : public ACEXML_DefaultHandler
 {
@@ -45,18 +45,24 @@ public:
 
   typedef ACE_Vector<EnvVar> EnvList;
 
+  /// constructor
+  /// @param repo the repo to update based on XML
+  /// @param orb the orb (used to create server object)
   Locator_XMLHandler (Locator_Repository& repo, CORBA::ORB_ptr orb);
 
+  /// provide implementation for handling a new XML element
   virtual void startElement (const ACEXML_Char* namespaceURI,
                              const ACEXML_Char* localName,
                              const ACEXML_Char* qName,
                              ACEXML_Attributes* atts);
 
+  /// provide implementation for handling terminating an XML element
   virtual void endElement (const ACEXML_Char* namespaceURI,
                            const ACEXML_Char* localName,
                            const ACEXML_Char* qName);
 
  private:
+  /// create or update a server based on a server XML element
   virtual void next_server (const ACE_CString& server_id,
     const ACE_CString& server_name, const ACE_CString& aname,
     const ACE_CString& startup_cmd, const EnvList& env_vars,
@@ -64,12 +70,15 @@ public:
     int start_limit, const ACE_CString& partial_ior,
     const ACE_CString& ior, bool server_started);
 
+  /// create or update an activator based on a activator XML element
   virtual void next_activator (const ACE_CString& activator_name,
                                long token,
                                const ACE_CString& ior);
 
+  /// the repository
   Locator_Repository& repo_;
 
+  /// the server related parameters
   ACE_CString server_id_;
   ACE_TString server_name_;
   ACE_TString activator_name_;
@@ -81,6 +90,8 @@ public:
   int start_limit_;
   bool server_started_;
   EnvList env_vars_;
+
+  /// the orb
   CORBA::ORB_var orb_;
 };
 

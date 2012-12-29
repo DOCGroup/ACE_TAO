@@ -109,33 +109,41 @@ public:
   AIMap& activators(void);
   const AIMap& activators(void) const;
 
+  /// indicate the persistence mode for the repository
   virtual const ACE_TCHAR* repo_mode() const = 0;
 
+  /// convert to lower case
   static ACE_CString lcase (const ACE_CString& s);
 
+  /// Initialize the repo
   int init(PortableServer::POA_ptr root_poa,
            PortableServer::POA_ptr imr_poa,
            const char* this_ior);
 
+  /// Indicate if multicast should be used
   bool multicast() const;
 
 protected:
-  virtual int init_repo(PortableServer::POA_ptr imr_poa);
+  /// perform repo mode specific initialization
+  virtual int init_repo(PortableServer::POA_ptr imr_poa) = 0;
 
+  /// perform sync of repo with backing store
+  /// defaults to no-op, only shared backing stores
+  /// need to sync
   virtual int sync_load();
 
-  virtual int persistent_update(const Server_Info_Ptr& info, bool add);
+  /// perform server persistent update
+  virtual int persistent_update(const Server_Info_Ptr& info, bool add) = 0;
 
-  virtual int persistent_update(const Activator_Info_Ptr& info, bool add);
+  /// perform activator persistent update
+  virtual int persistent_update(const Activator_Info_Ptr& info, bool add) = 0;
 
-  virtual int persistent_remove(const ACE_CString& name, bool activator);
+  /// perform persistent remove
+  virtual int persistent_remove(const ACE_CString& name, bool activator) = 0;
 
+  /// report the ImR Locator's IOR
   virtual int report_ior(PortableServer::POA_ptr root_poa,
                          PortableServer::POA_ptr imr_poa);
-
-  void report(IORTable::Table_ptr ior_table,
-              const char* name,
-              const char* imr_ior);
 
   int setup_multicast (ACE_Reactor* reactor, const char* imr_ior);
   void teardown_multicast();
@@ -170,9 +178,21 @@ public:
 
   virtual ~No_Backing_Store();
 
+  /// indicate the persistence mode for the repository
   virtual const ACE_TCHAR* repo_mode() const;
 
 private:
+  /// perform repo mode specific initialization (no-op)
+  virtual int init_repo(PortableServer::POA_ptr imr_poa);
+
+  /// perform server persistent update (no-op)
+  virtual int persistent_update(const Server_Info_Ptr& info, bool add);
+
+  /// perform activator persistent update (no-op)
+  virtual int persistent_update(const Activator_Info_Ptr& info, bool add);
+
+  /// perform persistent remove (no-op)
+  virtual int persistent_remove(const ACE_CString& name, bool activator);
 };
 
 
@@ -186,29 +206,52 @@ private:
 class UpdateableServerInfo
 {
 public:
+  /// constructor
+  /// @param repo the repo to report updates to
+  /// @param name the name of the server to retrieve
   UpdateableServerInfo(Locator_Repository* repo, const ACE_CString& name);
+
+  /// constructor
+  /// @param repo the repo to report updates to
+  /// @param si an already retrieved Server_Info_Ptr
   UpdateableServerInfo(Locator_Repository* repo, const Server_Info_Ptr& si);
+
+  /// constructor (no repo updates will be performed)
+  /// @param si a Server_Info to create a non-stored Server_Info_Ptr from
   UpdateableServerInfo(const Server_Info& si);
 
+  /// destructor (updates repo if needed)
   ~UpdateableServerInfo();
 
+  /// explicitly update repo if needed
   void update_repo();
 
+  /// const Server_Info access
   const Server_Info* operator->() const;
 
+  /// const Server_Info& access
   const Server_Info& operator*() const;
 
+  /// retrieve smart pointer to non-const Server_Info
+  /// and indicate repo update required
   const Server_Info_Ptr& edit();
 
+  /// force indication of update needed
   void needs_update();
 
+  /// indicate it Server_Info_Ptr is null
   bool null() const;
 private:
   UpdateableServerInfo(const UpdateableServerInfo& );
   const UpdateableServerInfo& operator=(const UpdateableServerInfo& );
 
+  /// the repo
   Locator_Repository* const repo_;
+
+  /// the retrieved, passed, or non-stored server info
   const Server_Info_Ptr si_;
+
+  /// the server info has changes and needs to be updated to the repo
   bool needs_update_;
 };
 

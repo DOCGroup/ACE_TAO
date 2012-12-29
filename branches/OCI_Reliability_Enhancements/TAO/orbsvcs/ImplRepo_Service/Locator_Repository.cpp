@@ -68,8 +68,8 @@ Locator_Repository::report_ior(PortableServer::POA_ptr ,
   IORTable::Table_var ior_table = IORTable::Table::_narrow (obj.in ());
   ACE_ASSERT (! CORBA::is_nil (ior_table.in ()));
 
-  report(ior_table.in(), "ImplRepoService", this->imr_ior_.in());
-  report(ior_table.in(), "ImR", this->imr_ior_.in());
+  ior_table->bind("ImplRepoService", this->imr_ior_.in());
+  ior_table->bind("ImR", this->imr_ior_.in());
 
   // Set up multicast support (if enabled)
   if (this->opts_.multicast ())
@@ -119,14 +119,6 @@ Locator_Repository::report_ior(PortableServer::POA_ptr ,
   registered_ = true;
 
   return 0;
-}
-
-void
-Locator_Repository::report(IORTable::Table_ptr ior_table,
-                           const char* name,
-                           const char* ior)
-{
-  ior_table->bind(name, ior);
 }
 
 int
@@ -428,37 +420,9 @@ Locator_Repository::activators (void) const
 }
 
 int
-Locator_Repository::init_repo(PortableServer::POA_ptr )
-{
-  // nothing more to do for default load
-  return 0;
-}
-
-int
 Locator_Repository::sync_load ()
 {
   // nothing more to do for default server/activator load
-  return 0;
-}
-
-int
-Locator_Repository::persistent_update (const Server_Info_Ptr& , bool )
-{
-  // nothing more to do for default update
-  return 0;
-}
-
-int
-Locator_Repository::persistent_update(const Activator_Info_Ptr& , bool )
-{
-  // nothing more to do for default update
-  return 0;
-}
-
-int
-Locator_Repository::persistent_remove(const ACE_CString& , bool )
-{
-  // nothing more to do for default update
   return 0;
 }
 
@@ -555,3 +519,32 @@ No_Backing_Store::repo_mode() const
 {
   return ACE_TEXT("Disabled");
 }
+
+int
+No_Backing_Store::init_repo(PortableServer::POA_ptr )
+{
+  // nothing more to do for no backing store init
+  return 0;
+}
+
+int
+No_Backing_Store::persistent_update (const Server_Info_Ptr& , bool )
+{
+  // nothing more to do for no backing store update
+  return 0;
+}
+
+int
+No_Backing_Store::persistent_update(const Activator_Info_Ptr& , bool )
+{
+  // nothing more to do for no backing store update
+  return 0;
+}
+
+int
+No_Backing_Store::persistent_remove(const ACE_CString& , bool )
+{
+  // nothing more to do for no backing store remove
+  return 0;
+}
+

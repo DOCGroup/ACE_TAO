@@ -1,3 +1,14 @@
+Sat Dec 29 05:27:51 UTC 2012  Brian Johnson  <johnsonb@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Locator_Options.h:
+        * orbsvcs/ImplRepo_Service/Locator_Repository.h:
+        * orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_XMLHandler.h:
+        * orbsvcs/ImplRepo_Service/Shared_Backing_Store.h:
+        * orbsvcs/ImplRepo_Service/Shared_Backing_Store.cpp:
+
+          Added doxygen comments and cleaned up virtual functions.
+
 Sat Dec 29 00:27:11 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/FaultTolerant/nsgroup_svc.h:
