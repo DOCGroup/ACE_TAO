@@ -57,12 +57,25 @@ public:
 
   virtual ~Shared_Backing_Store();
 
+  /// indicate the persistence mode for the repository
   virtual const ACE_TCHAR* repo_mode() const;
 
+  /// provide the implementation for being notified of a
+  /// server update
   virtual void notify_updated_server(
     const ImplementationRepository::ServerUpdate& server);
+
+  /// provide the implementation for being notified of a
+  /// activator update
   virtual void notify_updated_activator(
     const ImplementationRepository::ActivatorUpdate& activator);
+
+  /// provide the implementation for registering a peer replica
+  /// @param replica the peer replica
+  /// @param ft_imr_ior the fault tolerant ImR IOR (passed in
+  ///        as the replica's ImR IOR, passed back as fault
+  ///        tolerant ImR IOR)
+  /// @param seq_num current sequence number to return to replica
   virtual void register_replica(
     ImplementationRepository::UpdatePushNotification_ptr replica,
     char*& ft_imr_ior,
