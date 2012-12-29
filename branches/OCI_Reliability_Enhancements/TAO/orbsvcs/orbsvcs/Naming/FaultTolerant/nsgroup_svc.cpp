@@ -4,40 +4,19 @@
  *
  *  $Id$
  *
- *  This file implements nsgroup command line utility operations
+ *  This file implements nsgroup utility operations
  *
  *  @author Phillip LaBanca <labancap@ociweb.com>
  */
 //=============================================================================
 
 #include "orbsvcs/Naming/FaultTolerant/nsgroup_svc.h"
-#include "ace/Get_Opt.h"
-#include "ace/Service_Config.h"
 #include "ace/OS_NS_strings.h"
 
 
 NS_group_svc::NS_group_svc (void)
 {
 }
-
-#if 0
-int
-NS_group_svc::destroy (void)
-{
-  try
-  {
-    this->orb_->destroy ();
-  }
-  catch (const CORBA::Exception& ex)
-  {
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "\nException caught while destroying NS_group_svc.\n"),
-                       -1);
-  }
-
-  return 1;
-}
-#endif // 0
 
 FT_Naming::LoadBalancingStrategyValue
 NS_group_svc::determine_policy_string (const char *policy)
