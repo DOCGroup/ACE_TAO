@@ -1,3 +1,11 @@
+Sat Dec 29 00:27:11 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/nsgroup_svc.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/nsgroup_svc.cpp:
+
+          Removed unnecessary include statements and updated doxygen
+          comments.
+
 Fri Dec 28 21:53:11 UTC 2012  Phillip LaBanca  <labancap@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/FaultTolerant/nsgroup_svc.h:
