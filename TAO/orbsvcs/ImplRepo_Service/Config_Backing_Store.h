@@ -41,21 +41,31 @@ public:
   virtual ~Config_Backing_Store();
 
 protected:
+  /// perform config backing store specific initialization
+  /// (loads servers and activators from the backing store)
   virtual int init_repo(PortableServer::POA_ptr imr_poa);
 
+  /// perform server persistent update
   virtual int persistent_update(const Server_Info_Ptr& info, bool add);
 
+  /// perform activator persistent update
   virtual int persistent_update(const Activator_Info_Ptr& info, bool add);
 
+  /// perform persistent remove
   virtual int persistent_remove(const ACE_CString& name, bool activator);
 
+  /// remove the section with the given name from the key section
   int remove(const ACE_CString& name, const ACE_TCHAR* key);
 
+  /// the ACE_Configuration backing store
   ACE_Configuration& config_;
+  /// the status of the config_
   int status_;
 
 private:
+  /// load all servers
   void loadServers();
+  /// load all activators
   void loadActivators();
 };
 
@@ -73,10 +83,13 @@ public:
 
   virtual ~Heap_Backing_Store();
 
+  /// indicate the Heap filename as the persistence mode for the repository
   virtual const ACE_TCHAR* repo_mode() const;
 
 private:
+  /// the Heap filename
   const ACE_TString filename_;
+  /// the Heap used for the actual backing store
   ACE_Configuration_Heap heap_;
 };
 
@@ -95,13 +108,15 @@ public:
 
   virtual ~Registry_Backing_Store();
 
+  /// indicate Registry as the persistence mode for the repository
   virtual const ACE_TCHAR* repo_mode() const;
 
 private:
 #if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_REGISTRY)
+  /// the Win32 registry used for the actual backing store
   ACE_Configuration_Win32Registry win32registry_;
 #else
-  // invalid config to simplify #defines
+  // invalid config (used to simplify #defines)
   ACE_Configuration_Heap invalid_config_;
 #endif
 };

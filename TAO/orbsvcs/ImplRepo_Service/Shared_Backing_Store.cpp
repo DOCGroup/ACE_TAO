@@ -248,12 +248,12 @@ Shared_Backing_Store::persistent_remove (const ACE_CString& name,
   if (activator)
     {
       replicate<ImplementationRepository::ActivatorUpdate>
-        (replica_, name, ImplementationRepository::repo_remove, seq_num_);
+        (peer_replica_, name, ImplementationRepository::repo_remove, seq_num_);
     }
   else
     {
       replicate<ImplementationRepository::ServerUpdate>
-        (replica_, name, ImplementationRepository::repo_remove, seq_num_);
+        (peer_replica_, name, ImplementationRepository::repo_remove, seq_num_);
     }
   return 0;
 }
@@ -311,7 +311,7 @@ Shared_Backing_Store::persistent_update(const Server_Info_Ptr& info, bool add)
     ImplementationRepository::repo_add :
     ImplementationRepository::repo_update;
   replicate<ImplementationRepository::ServerUpdate>
-    (replica_, name, type, ++seq_num_);
+    (peer_replica_, name, type, ++seq_num_);
   return 0;
 }
 
@@ -356,7 +356,7 @@ Shared_Backing_Store::persistent_update(const Activator_Info_Ptr& info,
     ImplementationRepository::repo_add :
     ImplementationRepository::repo_update;
   replicate<ImplementationRepository::ActivatorUpdate>
-    (replica_, name, type, ++seq_num_);
+    (peer_replica_, name, type, ++seq_num_);
   return 0;
 }
 
@@ -392,14 +392,15 @@ Shared_Backing_Store::connect_replicas (Replica_ptr this_replica)
       return 0;
     }
 
-  this->replica_ =
-    ImplementationRepository::UpdatePushNotification::_unchecked_narrow (obj.in());
-  if (this->replica_->_non_existent() == 1)
+  this->peer_replica_ = ImplementationRepository::UpdatePushNotification::
+    _unchecked_narrow (obj.in());
+  if (this->peer_replica_->_non_existent() == 1)
     {
-      this->replica_ = ImplementationRepository::UpdatePushNotification::_nil();
+      this->peer_replica_ =
+        ImplementationRepository::UpdatePushNotification::_nil();
     }
 
-  if (CORBA::is_nil (this->replica_.in ()))
+  if (CORBA::is_nil (this->peer_replica_.in ()))
     ACE_ERROR_RETURN ((LM_ERROR,
       ACE_TEXT("Error: obj key <%s> not an ImR replica\n"),
       replica_ior.c_str()), -1);
@@ -412,9 +413,9 @@ Shared_Backing_Store::connect_replicas (Replica_ptr this_replica)
 
   try
     {
-      this->replica_->register_replica(this_replica,
-                                       this->imr_ior_.inout(),
-                                       this->replica_seq_num_);
+      this->peer_replica_->register_replica(this_replica,
+                                            this->imr_ior_.inout(),
+                                            this->replica_seq_num_);
     }
   catch (const ImplementationRepository::InvalidPeer& ip)
     {
@@ -456,7 +457,8 @@ Shared_Backing_Store::init_repo(PortableServer::POA_ptr imr_poa)
     }
 
   // only start the repo clean if no replica is running
-  if (this->opts_.repository_erase() && CORBA::is_nil (this->replica_.in ()))
+  if (this->opts_.repository_erase() &&
+      CORBA::is_nil (this->peer_replica_.in ()))
     {
       Lockable_File listing_lf;
       const XMLHandler_Ptr listings = get_listings(listing_lf, false);
@@ -680,7 +682,7 @@ Shared_Backing_Store::report_ior(PortableServer::POA_ptr root_poa,
 
   int err = 0;
   // only report the imr ior if the fault tolerant ImR is complete
-  if (!CORBA::is_nil (this->replica_.in()))
+  if (!CORBA::is_nil (this->peer_replica_.in()))
     {
       err = Locator_Repository::report_ior(root_poa, imr_poa);
     }
@@ -789,7 +791,7 @@ Shared_Backing_Store::register_replica(
   ImplementationRepository::SequenceNum_out seq_num)
 {
   ACE_ASSERT (! CORBA::is_nil (replica));
-  this->replica_ =
+  this->peer_replica_ =
     ImplementationRepository::UpdatePushNotification::_duplicate (replica);
 
   seq_num = this->seq_num_;
