@@ -42,31 +42,61 @@ public:
 
   virtual ~XML_Backing_Store();
 
+  /// indicate the XML filename as the persistence mode for the repository
   virtual const ACE_TCHAR* repo_mode() const;
 
 protected:
+  /// perform XML backing store specific initialization
+  /// (loads servers and activators from the backing store)
   virtual int init_repo(PortableServer::POA_ptr imr_poa);
 
+  /// perform server persistent update
   virtual int persistent_update(const Server_Info_Ptr& info, bool add);
 
+  /// perform activator persistent update
   virtual int persistent_update(const Activator_Info_Ptr& info, bool add);
 
+  /// perform persistent remove
   virtual int persistent_remove(const ACE_CString& name, bool activator);
 
+  /// load the contents of a file into the repo using a Locator_XMLHandler
+  /// @param filename the filename to read the contents from
+  /// @param open_file the already open FILE stream for the
+  ///        filename
   int load(const ACE_TString& filename, FILE* open_file = 0);
+
+  /// load the contents of a file into the repo using the provided
+  /// ACEXML_DefaultHandler
+  /// @param filename the filename to read the contents from
+  /// @param xml_handler the ACEXML_DefaultHandler to use to parse
+  ///        the file
+  /// @param open_file the already open FILE stream for the
+  ///        filename
   static int load(const ACE_TString& filename,
                   ACEXML_DefaultHandler& xml_handler,
                   unsigned int debug,
                   FILE* open_file = 0);
 
+  /// persist the server
+  /// @param fp the FILE stream to persist the server contents to
+  /// @param info the Server_Info to persist
+  /// @param tag_prepend a character string to prepend at the start
+  ///        of every xml line to maintain proper indentation
   void persist(FILE* fp, const Server_Info& info, const char* tag_prepend);
 
+  /// persist the activator
+  /// @param fp the FILE stream to persist the activator contents to
+  /// @param info the Server_Info to persist
+  /// @param tag_prepend a character string to prepend at the start
+  ///        of every xml line to maintain proper indentation
   void persist(FILE* fp, const Activator_Info& info, const char* tag_prepend);
 
 protected:
+  /// the filename indicated in the Options for the backing store
   const ACE_TString filename_;
 
 private:
+  /// persist all servers and activators
   int persist();
 };
 
