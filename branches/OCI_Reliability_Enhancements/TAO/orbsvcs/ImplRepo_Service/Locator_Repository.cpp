@@ -43,13 +43,12 @@ Locator_Repository::init(PortableServer::POA_ptr root_poa,
   poaman = imr_poa->the_POAManager ();
   poaman->activate ();
 
-  err = report_ior(root_poa, imr_poa);
+  err = report_ior(imr_poa);
   return err;
 }
 
 int
-Locator_Repository::report_ior(PortableServer::POA_ptr ,
-                               PortableServer::POA_ptr )
+Locator_Repository::report_ior(PortableServer::POA_ptr )
 {
   if (this->registered_)
     {
@@ -59,7 +58,7 @@ Locator_Repository::report_ior(PortableServer::POA_ptr ,
 
   if (this->opts_.debug() > 0)
     {
-      ACE_DEBUG((LM_INFO, ACE_TEXT("report_ior %C\n"),
+      ACE_DEBUG((LM_INFO, ACE_TEXT("report_ior <%C>\n"),
         this->imr_ior_.in()));
     }
 

@@ -653,12 +653,11 @@ Shared_Backing_Store::persist_listings (Lockable_File& listing_lf) const
 }
 
 int
-Shared_Backing_Store::report_ior(PortableServer::POA_ptr root_poa,
-                                 PortableServer::POA_ptr imr_poa)
+Shared_Backing_Store::report_ior(PortableServer::POA_ptr imr_poa)
 {
   if (this->imr_type_ == Options::STANDALONE_IMR)
     {
-      return Locator_Repository::report_ior(root_poa, imr_poa);
+      return Locator_Repository::report_ior(imr_poa);
     }
 
   CORBA::Object_var obj = this->orb_->resolve_initial_references ("IORTable");
@@ -684,7 +683,7 @@ Shared_Backing_Store::report_ior(PortableServer::POA_ptr root_poa,
   // only report the imr ior if the fault tolerant ImR is complete
   if (!CORBA::is_nil (this->peer_replica_.in()))
     {
-      err = Locator_Repository::report_ior(root_poa, imr_poa);
+      err = Locator_Repository::report_ior(imr_poa);
     }
 
   return err;
@@ -863,7 +862,7 @@ Shared_Backing_Store::register_replica(
   this->imr_ior_ = (const char*)ft_imr_ior;
 
   PortableServer::POA_var null_poa;
-  Locator_Repository::report_ior(null_poa, null_poa);
+  Locator_Repository::report_ior(null_poa);
 }
 
 ACE_CString
