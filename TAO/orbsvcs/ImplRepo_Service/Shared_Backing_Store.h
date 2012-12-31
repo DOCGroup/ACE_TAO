@@ -110,8 +110,7 @@ protected:
   /// calls Locator_Repository::report_ior with the Fault Tolerant ImR
   /// Locator's IOR if available, otherwise reporting the ior is delayed
   /// until the peer replica registers with this replica
-  virtual int report_ior(PortableServer::POA_ptr root_poa,
-                         PortableServer::POA_ptr imr_poa);
+  virtual int report_ior(PortableServer::POA_ptr imr_poa);
 
   /// create the Fault Tolerant ImR Locator IOR, using the peer_ior and
   /// this ImR Locator's IOR
