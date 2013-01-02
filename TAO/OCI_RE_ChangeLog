@@ -1,3 +1,36 @@
+Wed Jan  2 21:09:23 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * orbsvcs/Naming_Service/Naming_Service.mpc:
+
+          Removed reference to removed ft_portablegroup.mpb base project.
+
+        * orbsvcs/orbsvcs/FT_Naming_Serv.mpc:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_PG_Group_Factory.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_PG_Group_Factory.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_PG_Object_Group_Storable.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_PG_Object_Group_Storable.cpp:
+
+          Moved FT_PG_* files into Naming/FaultTolerant directory. They are
+          tightly coupled with the FT_Naming Service and should not be an
+          independent library in PortableGroup.
+
+        * MPC/config/ft_portablegroup.mpb:
+
+          Removed unnecessary base file.
+
+        * orbsvcs/orbsvcs/PortableGroup/FaultTolerant/FT_PG_Group_Factory.h:
+        * orbsvcs/orbsvcs/PortableGroup/FaultTolerant/FT_PG_Group_Factory.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/FaultTolerant/FT_PG_Object_Group_Storable.h:
+        * orbsvcs/orbsvcs/PortableGroup/FaultTolerant/FT_PG_Object_Group_Storable.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/FaultTolerant/FT_PortableGroup.mpc:
+        * orbsvcs/orbsvcs/PortableGroup/FaultTolerant/ft_portablegroup_export.h:
+
+          Removed these files.
+          Moved FT_PG_* files into Naming/FaultTolerant directory. They are
+          tightly coupled with the FT_Naming Service and should not be an
+          independent library in PortableGroup.
+
 Mon Dec 31 20:48:24 UTC 2012  Brian Johnson  <johnsonb@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/Locator_Repository.h:

@@ -15,7 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/PortableGroup/FaultTolerant/ft_portablegroup_export.h"
+#include "orbsvcs/Naming/FaultTolerant/ftnaming_export.h"
 
 #include "orbsvcs/PortableGroup/PG_Group_Factory.h"
 
@@ -31,7 +31,7 @@ namespace TAO
   /**
    * class FT_PG_Group_Factory
    */
-  class TAO_FT_PortableGroup_Export FT_PG_Group_Factory : public PG_Group_Factory
+  class TAO_FtNaming_Export FT_PG_Group_Factory : public PG_Group_Factory
   {
   public:
 
