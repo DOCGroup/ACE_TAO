@@ -1,3 +1,10 @@
+Wed Jan  2 22:13:53 UTC 2013  Byron Harris  <harrisb@ociweb.com>
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_List_Store.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group_Storable.cpp:
+
+          Construct file guards with redundant flag set.
+
 Wed Jan  2 21:44:01 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
 
 

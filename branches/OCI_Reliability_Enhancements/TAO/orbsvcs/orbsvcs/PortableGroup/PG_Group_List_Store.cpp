@@ -47,7 +47,7 @@ private:
 }
 
 TAO::PG_Group_List_Store_File_Guard::PG_Group_List_Store_File_Guard (PG_Group_List_Store & list_store, const char * mode)
-  : TAO::Storable_File_Guard(false)
+  : TAO::Storable_File_Guard(true)
   , list_store_(list_store)
 {
   this->init(mode);
