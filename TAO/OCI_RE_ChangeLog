@@ -1,3 +1,10 @@
+Wed Jan  2 21:44:01 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
+
+
+        * orbsvcs/orbsvcs/PortableGroup/FaultTolerant:
+
+          Removed this empty directory.
+
 Wed Jan  2 21:09:23 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
 
         * orbsvcs/Naming_Service/Naming_Service.mpc:
