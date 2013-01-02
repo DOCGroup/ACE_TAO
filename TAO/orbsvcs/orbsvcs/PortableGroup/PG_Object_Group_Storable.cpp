@@ -81,7 +81,7 @@ namespace TAO
 
 TAO::Object_Group_File_Guard::Object_Group_File_Guard ( TAO::PG_Object_Group_Storable & object_group,
                                               const char *mode)
-  : TAO::Storable_File_Guard(false)
+  : TAO::Storable_File_Guard(true)
   , object_group_(object_group)
 {
   this->init (mode);
