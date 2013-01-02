@@ -62,9 +62,11 @@ class ACE_DLL;
   ACE_TEXT ("dynamic ") \
   ACE_TEXT (ident) \
   ACE_TEXT (" Service_Object * ") \
+  ACE_DLL_PREFIX \
   ACE_TEXT (libpathname) \
   ACE_TEXT ("-") \
   ACE_TEXT (version) \
+  ACE_DLL_SUFFIX \
   ACE_TEXT (":") \
   ACE_TEXT (objectclass) \
   ACE_TEXT ("() \"") \
@@ -111,9 +113,11 @@ class ACE_Svc_Conf_Param;
   ACE_TEXT (ident) \
   ACE_TEXT ("\" type=\"Service_Object\">") \
   ACE_TEXT ("<initializer path=\"") \
+  ACE_DLL_PREFIX \
   ACE_TEXT (libpathname) \
   ACE_TEXT ("-") \
   ACE_TEXT (version) \
+  ACE_DLL_SUFFIX \
   ACE_TEXT ("\" init=\"") \
   ACE_TEXT (objectclass) \
   ACE_TEXT ("\"") \
