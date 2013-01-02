@@ -1,3 +1,11 @@
+Wed Jan  2 19:19:58 UTC 2013  Thomas Girard  <thomas.g.girard@free.fr>
+
+        * ace/Service_Config.h: ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE
+          fix when ACE_VERSIONED_SO=2. Because of '.' in the version,
+          addition of prefix ACE_DLL_PREDIX and suffix ACE_DLL_SUFFIX
+          is skipped, preventing ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE
+          from working when ACE+TAO is built with versioned_so=2.
+
 Thu Dec 27 09:18:39 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * NEWS:
