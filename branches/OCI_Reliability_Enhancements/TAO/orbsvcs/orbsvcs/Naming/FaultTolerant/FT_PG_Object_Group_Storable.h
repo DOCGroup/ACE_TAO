@@ -16,7 +16,7 @@
 #define FT_TAO_PG_OBJECT_GROUP_STORABLE_H_
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/PortableGroup/FaultTolerant/ft_portablegroup_export.h"
+#include "orbsvcs/Naming/FaultTolerant/ftnaming_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -38,7 +38,7 @@ namespace TAO
    * An object group whose state persists to a stream so that its state
    * can be saved/retrieved between processes that use the group.
    */
-  class TAO_FT_PortableGroup_Export FT_PG_Object_Group_Storable
+  class TAO_FtNaming_Export FT_PG_Object_Group_Storable
     : public PG_Object_Group_Storable
   {
 

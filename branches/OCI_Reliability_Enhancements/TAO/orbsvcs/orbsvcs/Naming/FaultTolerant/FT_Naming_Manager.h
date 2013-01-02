@@ -26,9 +26,9 @@
 
 #include "orbsvcs/FT_NamingManagerC.h"
 
-#include "orbsvcs/PortableGroup/FaultTolerant/FT_PG_Group_Factory.h"
-#include "orbsvcs/PortableGroup/PG_FactoryRegistry.h"
+#include <orbsvcs/PortableGroup/PG_FactoryRegistry.h>
 #include <orbsvcs/PortableGroup/PG_Properties_Support.h>
+#include <orbsvcs/Naming/FaultTolerant/FT_PG_Group_Factory.h>
 #include <orbsvcs/Naming/FaultTolerant/FT_Round_Robin.h>
 
 #include "ace/Task.h"

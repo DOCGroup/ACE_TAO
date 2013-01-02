@@ -10,8 +10,8 @@
  */
 //=============================================================================
 
-#include "orbsvcs/PortableGroup/FaultTolerant/FT_PG_Group_Factory.h"
-#include "orbsvcs/PortableGroup/FaultTolerant/FT_PG_Object_Group_Storable.h"
+#include "orbsvcs/Naming/FaultTolerant/FT_PG_Group_Factory.h"
+#include "orbsvcs/Naming/FaultTolerant/FT_PG_Object_Group_Storable.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
