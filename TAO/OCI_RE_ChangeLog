@@ -1,3 +1,12 @@
+Thu Jan  3 23:02:01 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * MPC/config/ftnaming.mpb:
+        * orbsvcs/tests/FT_Naming/FaultTolerance/FaultTolerance.mpc:
+        * orbsvcs/tests/FT_Naming/Load_Balancing/Load_Balancing_Name_Service.mpc:
+        * orbsvcs/tests/FT_Naming/Replication/Replication.mpc:
+
+          Removed extraneous dependencies.
+
 Thu Jan  3 17:09:27 UTC 2013  Byron Harris  <harrisb@ociweb.com>
 
         * orbsvcs/orbsvcs/PortableGroup/PG_Group_Factory.h:

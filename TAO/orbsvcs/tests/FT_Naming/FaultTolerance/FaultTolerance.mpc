@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Client) : namingexe, ftnaming, portableserver {
+project(*Client) : ftnaming {
   exename  = client
 
   Source_Files {
