@@ -54,6 +54,7 @@ TAO::PG_Group_Factory::PG_Group_Factory ()
   , poa_ (PortableServer::POA::_nil())
   , manipulator_ ()
   , domain_id_ ("default-domain")
+  , groups_read_ (false)
   , storable_factory_ (0)
   , list_store_ (0)
 {
@@ -351,7 +352,7 @@ TAO::PG_Group_Factory::get_group_map ()
       // have changed since group_map_ was last
       // updated.
 
-      if (list_store_->list_obsolete ())
+      if (!this->groups_read_ || this->list_store_->list_obsolete ())
         {
           // Extract IDs from group_map_ to set for comparison with IDs in persistent store
           // This is to avoid having to repopulate the map from scratch.
@@ -406,6 +407,8 @@ TAO::PG_Group_Factory::get_group_map ()
               else
                 throw PortableGroup::ObjectGroupNotFound ();
             }
+
+          this->groups_read_ = true;
 
         }
 

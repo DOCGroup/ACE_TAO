@@ -211,8 +211,10 @@ namespace TAO
 
     Group_Map group_map_;
 
-    // Support for object group persistent
+    ///// Support for object group persistent /////
 
+    // Lazily read groups from store
+    bool groups_read_;
     Storable_Factory * storable_factory_;
     PG_Group_List_Store * list_store_;
 

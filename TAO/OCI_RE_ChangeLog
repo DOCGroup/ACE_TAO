@@ -1,3 +1,11 @@
+Thu Jan  3 17:09:27 UTC 2013  Byron Harris  <harrisb@ociweb.com>
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_Factory.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_Factory.cpp:
+
+          Fix lazy loading of group map so get_group_map() will
+          always read from persistent store in the first invocation.
+
 Wed Jan  2 22:13:53 UTC 2013  Byron Harris  <harrisb@ociweb.com>
 
         * orbsvcs/orbsvcs/PortableGroup/PG_Group_List_Store.cpp:
