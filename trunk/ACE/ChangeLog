@@ -1,3 +1,11 @@
+Thu Jan  3 22:53:44 UTC 2013  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS_NS_netdb.cpp (ACE_OS::getmacaddress): On Linux, search for
+          an interface to get the MAC address for; don't assume eth0 is
+          present and usable.
+
+        * tests/Bug_3744_Regression_Test.cpp: Fix ACE_LOG_MSG output.
+
 Wed Jan  2 19:19:58 UTC 2013  Thomas Girard  <thomas.g.girard@free.fr>
 
         * ace/Service_Config.h: ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE

@@ -15,6 +15,10 @@
 #include "ace/OS_NS_stropts.h"
 #include "ace/OS_NS_sys_socket.h"
 
+#if defined (ACE_LINUX) && !defined (ACE_LACKS_NETWORKING)
+#  include "ace/os_include/os_ifaddrs.h"
+#endif /* ACE_LINUX && !ACE_LACKS_NETWORKING */
+
 // Include if_arp so that getmacaddr can use the
 // arp structure.
 #if defined (sun)
@@ -166,15 +170,40 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
 
 #elif defined (ACE_LINUX) && !defined (ACE_LACKS_NETWORKING)
 
+  // It's easiest to know the first MAC-using interface. Use the BSD
+  // getifaddrs function that simplifies access to connected interfaces.
+  struct ifaddrs *ifap = 0;
+  struct ifaddrs *p_if = 0;
+
+  if (::getifaddrs (&ifap) != 0)
+    return -1;
+
+  for (p_if = ifap; p_if != 0; p_if = p_if->ifa_next)
+    {
+      if (p_if->ifa_addr == 0)
+        continue;
+
+      // Check to see if it's up and is not either PPP or loopback
+      if ((p_if->ifa_flags & IFF_UP) == IFF_UP &&
+          (p_if->ifa_flags & (IFF_LOOPBACK | IFF_POINTOPOINT)) == 0)
+        break;
+    }
+  if (p_if == 0)
+    {
+      errno = ENODEV;
+      ::freeifaddrs (ifap);
+      return -1;
+    }
+
   struct ifreq ifr;
+  ACE_OS::strcpy (ifr.ifr_name, p_if->ifa_name);
+  ::freeifaddrs (ifap);
 
   ACE_HANDLE handle =
     ACE_OS::socket (PF_INET, SOCK_DGRAM, 0);
 
   if (handle == ACE_INVALID_HANDLE)
     return -1;
-
-  ACE_OS::strcpy (ifr.ifr_name, "eth0");
 
   if (ACE_OS::ioctl (handle/*s*/, SIOCGIFHWADDR, &ifr) < 0)
     {

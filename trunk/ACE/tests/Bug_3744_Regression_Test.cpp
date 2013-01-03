@@ -35,8 +35,8 @@ getmacaddress_test (void)
   else
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("ACE_OS::getmacaddress() returned %d, should be 0\n"),
-                  retval));
+                  ACE_TEXT ("ACE_OS::getmacaddress() returned %d, should be 0. %p\n"),
+                  retval, ACE_TEXT ("error:")));
     }
   return retval;
 #endif /* ACE_LACKS_NETWORKING */
