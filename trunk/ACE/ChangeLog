@@ -1,3 +1,9 @@
+Fri Jan  4 21:52:14 UTC 2013  Adam Mitz  <mitza@ociweb.com>
+
+        * include/makeinclude/platform_linux_clang.GNU:
+
+          Added clang command-line option required to build TAO.
+
 Fri Jan  4 12:11:12 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * rpmbuild/ace-tao-init-suse/init.d/tao-cosconcurrency:
