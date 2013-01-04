@@ -1,3 +1,8 @@
+Fri Jan  4 15:48:20 UTC 2013  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Mcast_Transport.cpp:
+          Correction to the placement of the notify.
+
 Fri Jan  4 15:28:20 UTC 2013  Simon Massey  <simon dot massey at prismtech dot com>
 
         * bin/tao_other_tests.lst:
