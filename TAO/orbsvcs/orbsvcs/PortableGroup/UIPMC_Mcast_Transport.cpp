@@ -423,15 +423,6 @@ TAO_UIPMC_Mcast_Transport::handle_input (
       }
       ACE_Auto_Ptr<TAO_PG::UIPMC_Recv_Packet> owner (complete);
 
-      // Create a data block.
-      ACE_Data_Block db (complete->data_length () + ACE_CDR::MAX_ALIGNMENT,
-                         ACE_Message_Block::MB_DATA,
-                         0,
-                         this->orb_core_->input_cdr_buffer_allocator (),
-                         this->orb_core_->locking_strategy (),
-                         0,
-                         this->orb_core_->input_cdr_dblock_allocator ());
-
       // If there is another message waiting to be processed (in addition
       // to the one we have just taken off to be processed), notify another
       // thread (if available) so this can also be processed in parrellel.
@@ -455,6 +446,15 @@ TAO_UIPMC_Mcast_Transport::handle_input (
         }
 
       // Create a data block from our dequeued completed message.
+      ACE_Data_Block db (complete->data_length () + ACE_CDR::MAX_ALIGNMENT,
+                         ACE_Message_Block::MB_DATA,
+                         0,
+                         this->orb_core_->input_cdr_buffer_allocator (),
+                         this->orb_core_->locking_strategy (),
+                         0,
+                         this->orb_core_->input_cdr_dblock_allocator ());
+
+      // Create a message block
       ACE_Message_Block message_block (
         &db,
         ACE_Message_Block::DONT_DELETE,
