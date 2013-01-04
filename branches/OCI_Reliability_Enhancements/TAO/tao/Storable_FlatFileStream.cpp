@@ -34,6 +34,17 @@ namespace
     char buf[BUFSIZ];
     char * result = fgets (buf, BUFSIZ, fl);
 
+    if (result == 0)
+      {
+        if (feof (fl))
+          {
+            state = TAO::Storable_Base::eofbit;
+            return;
+          }
+        state = TAO::Storable_Base::badbit;
+        return;
+      }
+
     /// Consume any starting newline, as fscanf would
     /// do.
     if (buf[0] == '\n')
@@ -41,14 +52,13 @@ namespace
         result = fgets (buf, BUFSIZ, fl);
       }
 
-    if (feof (fl))
-      {
-        state = TAO::Storable_Base::eofbit;
-        return;
-      }
-
     if (result == 0)
       {
+        if (feof (fl))
+          {
+            state = TAO::Storable_Base::eofbit;
+            return;
+          }
         state = TAO::Storable_Base::badbit;
         return;
       }
