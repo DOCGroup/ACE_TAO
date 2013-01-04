@@ -1,3 +1,22 @@
+Fri Jan  4 22:19:52 UTC 2013  Phillip LaBanca  <labancap@ociweb.com>
+
+        * orbsvcs/tests/FT_Naming/FaultTolerance/Basic.h:
+        * orbsvcs/tests/FT_Naming/FaultTolerance/Basic.cpp:
+        * orbsvcs/tests/FT_Naming/FaultTolerance/LB_server.h:
+        * orbsvcs/tests/FT_Naming/FaultTolerance/LB_server.cpp:
+        * orbsvcs/tests/FT_Naming/FaultTolerance/Test.idl:
+        * orbsvcs/tests/FT_Naming/FaultTolerance/server.cpp:
+
+          Added to create object group member server objects for fault tolerance
+          persistence tests.
+
+        * orbsvcs/tests/FT_Naming/FaultTolerance/client.cpp:
+        * orbsvcs/tests/FT_Naming/FaultTolerance/FaultTolerance.mpc:
+        * orbsvcs/tests/FT_Naming/FaultTolerance/run_persistence_test.pl:
+
+          Modified to incorporate the object group member server for
+          fault tolerance persistence tests.
+
 Fri Jan  4 19:51:21 UTC 2013  Byron Harris  <harrisb@ociweb.com>
 
         * orbsvcs/tests/FT_Naming/FaultTolerance/client.cpp:

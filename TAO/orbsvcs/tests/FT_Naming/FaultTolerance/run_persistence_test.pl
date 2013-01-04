@@ -27,6 +27,8 @@ foreach $i (@ARGV) {
 
 my $server  = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 my $client  = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
+my $server2 = PerlACE::TestTarget::create_target (3) || die "Create target 3 failed\n";
+
 
 
 # Variables for command-line arguments to client and server
@@ -232,11 +234,15 @@ sub init_naming_context_directory($$)
     }
 }
 
-my $name_dir   = "NameService";
-my $group_dir  = "GroupService";
-my $nm_iorfile = "nm.ior";
-my $ns_iorfile = "ns.ior";
-my $ns_ref     = "--ns file://$ns_iorfile";
+my $name_dir    = "NameService";
+my $group_dir   = "GroupService";
+my $nm_iorfile  = "nm.ior";
+my $ns_iorfile  = "ns.ior";
+my $sv_iorfile  = "obj.ior";
+my $ns_ref      = "--ns file://$ns_iorfile";
+my $sv2_iorfile = $server2->LocalFile ($sv_iorfile);
+
+
 
 
 ################################################################################
@@ -249,6 +255,7 @@ END
     $client->DeleteFile ($nm_iorfile);
     $client->DeleteFile ($stdout_file);
     $client->DeleteFile ($stderr_file);
+    $server2->DeleteFile($sv_iorfile);
 
     if ( -d $name_dir ) {
         print STDERR "INFO: removing <$name_dir>\n";
@@ -282,12 +289,12 @@ sub persistence_test ()
     init_naming_context_directory ($server, $name_dir );
     init_naming_context_directory ($server, $group_dir );
 
-    my $ns_args       = "--primary ".
-                        "-ORBListenEndPoints $ns_endpoint1 ".
-                        "-u $name_dir ".
-                        "-v $group_dir ".
+    my $ns_args       = "-ORBListenEndPoints $ns_endpoint1 ".
+                        "-g $nm_iorfile ".
                         "-o $ns_iorfile ".
-                        "-g $nm_iorfile";
+                        "-v $group_dir ".
+                        "-u $name_dir ".
+                        "-o $ns_iorfile ";
 
     my $tao_ft_naming = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_ft_naming";
 
@@ -307,10 +314,18 @@ sub persistence_test ()
 
     my $client_prog = "$startdir/client";
 
+
     ##1. Run one instance of tao_ft_naming service
     $NS1 = $server->CreateProcess ($tao_ft_naming, $ns_args);
     $CL1 = $client->CreateProcess ($client_prog, $client1_args);
     $CL2 = $client->CreateProcess ($client_prog, $client2_args);
+
+
+    my $server2_args = "-ORBdebuglevel $debug_level " .
+                       "$default_init_ref ".
+                       "-o $sv2_iorfile ";
+
+    $SV2 = $server2->CreateProcess ("server", $server2_args);
 
     $server->DeleteFile ($ns_iorfile);
     $NS1->Spawn ();
@@ -323,6 +338,19 @@ sub persistence_test ()
 
     ##2. Create new contexts
     ##3. Create a new object group
+    print_msg("INFO: starting test server");
+    $server_status = $SV2->Spawn ();
+    if ($server_status != 0) {
+        print STDERR "ERROR: server returned $server_status\n";
+        exit 1;
+    }
+    if ($server2->WaitForFileTimed ($sv_iorfile,
+                                   $server2->ProcessStartWaitInterval()) == -1) {
+        print STDERR "ERROR: cannot find file <$sv_iorfile>\n";
+        $SV2->Kill (); $SV2->TimedWait (1);
+        exit 1;
+    }
+
     ##4. Verify the new context and object group
     print_msg("INFO: Starting client1");
     $client_status = $CL1->SpawnWaitKill ($client->ProcessStartWaitInterval());
@@ -330,7 +358,6 @@ sub persistence_test ()
         print STDERR "ERROR: client1 returned $client_status\n";
         $status = 1;
     }
-
 
     ##5. Kill the tao_ft_naming server
     print_msg("Kill the tao_ft_naming server");
@@ -357,6 +384,13 @@ sub persistence_test ()
     $client_status = $CL2->SpawnWaitKill ($client->ProcessStartWaitInterval());
     if ($client_status != 0) {
         print STDERR "ERROR: client2 returned $client_status\n";
+        $status = 1;
+    }
+
+    print_msg("INFO: terminating test server");
+    $server_status = $SV2->TerminateWaitKill ($server2->ProcessStopWaitInterval());
+    if ($server_status != 0) {
+        print STDERR "ERROR: server returned $server_status\n";
         $status = 1;
     }
 
