@@ -1,3 +1,10 @@
+Fri Jan  4 23:03:10 UTC 2013  Phillip LaBanca  <labancap@ociweb.com>
+
+        * orbsvcs/tests/FT_Naming/FaultTolerance/run_persistence_test.pl:
+
+          Fix problem starting the group member object server when the
+          directory has been changed.
+
 Fri Jan  4 22:19:52 UTC 2013  Phillip LaBanca  <labancap@ociweb.com>
 
         * orbsvcs/tests/FT_Naming/FaultTolerance/Basic.h:
