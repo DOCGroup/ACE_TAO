@@ -325,7 +325,7 @@ sub persistence_test ()
                        "$default_init_ref ".
                        "-o $sv2_iorfile ";
 
-    $SV2 = $server2->CreateProcess ("server", $server2_args);
+    $SV2 = $server2->CreateProcess ("$startdir/server", $server2_args);
 
     $server->DeleteFile ($ns_iorfile);
     $NS1->Spawn ();
@@ -375,7 +375,7 @@ sub persistence_test ()
                                    $server->ProcessStartWaitInterval()) == -1) {
         print STDERR "ERROR: cannot find file <$ns_iorfile>\n";
         $NS1->Kill (); $NS1->TimedWait (1);
-        exit 1;
+        $status = 1;
     }
 
     ##7. Verify the new name, object group and member are in the tao_ft_naming repository.
