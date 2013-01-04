@@ -11,6 +11,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
 #include "tao/GIOP_Message_Base.h"
+#include "tao/Resume_Handle.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -407,14 +408,19 @@ TAO_UIPMC_Mcast_Transport::handle_input (
 
   while (this->recv_all ())
     {
+      // Unqueue the first available completed message for us to process.
       TAO_PG::UIPMC_Recv_Packet *complete = 0;
-
       {
         ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->complete_lock_, 0);
         if (this->complete_.dequeue_head (complete) == -1)
-          return 0;
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("TAO (%P|%t) - TAO_UIPMC_Mcast_Transport[%d]::handle_input, ")
+                        ACE_TEXT ("unable to dequeue completed message\n"),
+                        this->id ()));
+            return 0;
+          }
       }
-
       ACE_Auto_Ptr<TAO_PG::UIPMC_Recv_Packet> owner (complete);
 
       // Create a data block.
@@ -426,7 +432,29 @@ TAO_UIPMC_Mcast_Transport::handle_input (
                          0,
                          this->orb_core_->input_cdr_dblock_allocator ());
 
-      // Create a message block
+      // If there is another message waiting to be processed (in addition
+      // to the one we have just taken off to be processed), notify another
+      // thread (if available) so this can also be processed in parrellel.
+      if (!this->complete_.is_empty ())
+        {
+          int const retval = this->notify_reactor_now ();
+          if (retval == 1)
+            {
+              // Now we have handed off to another thread, let the class
+              // know that it doesn't need to resume with OUR handle
+              // after we have processed our message.
+              rh.set_flag (TAO_Resume_Handle::TAO_HANDLE_LEAVE_SUSPENDED);
+            }
+          else if (retval < 0 && TAO_debug_level > 2)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("TAO (%P|%t) - TAO_UIPMC_Mcast_Transport[%d]::handle_input, ")
+                          ACE_TEXT ("notify to the reactor failed.\n"),
+                          this->id ()));
+            }
+        }
+
+      // Create a data block from our dequeued completed message.
       ACE_Message_Block message_block (
         &db,
         ACE_Message_Block::DONT_DELETE,

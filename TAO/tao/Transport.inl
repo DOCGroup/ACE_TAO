@@ -278,6 +278,18 @@ TAO::Transport::Stats::opened_since (void) const
 {
   return this->opened_since_;
 }
+
+ACE_INLINE int
+TAO_Transport::notify_reactor (void)
+{
+  if (!this->ws_->is_registered ())
+    {
+      return 0;
+    }
+
+  return this->notify_reactor_now ();
+}
+
 #endif /* TAO_HAS_TRANSPORT_CURRENT == 1 */
 
 
