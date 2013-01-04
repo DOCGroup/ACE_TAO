@@ -21,7 +21,6 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/PortableGroup/PG_Group_Factory.h"
 #include "orbsvcs/PortableGroupC.h"
 
 #include <set>
@@ -31,6 +30,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
   class Storable_Base;
+  class Storable_Factory;
 }
 
 namespace TAO
