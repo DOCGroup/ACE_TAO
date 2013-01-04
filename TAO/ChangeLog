@@ -1,3 +1,8 @@
+Fri Jan  4 12:07:03 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Monitor/Monitor.cpp:
+          Fixed versioned namespace problem
+
 Thu Dec 27 09:19:04 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * NEWS:
