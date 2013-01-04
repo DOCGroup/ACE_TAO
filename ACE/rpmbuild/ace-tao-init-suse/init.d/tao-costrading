@@ -10,7 +10,7 @@
 #
 ### BEGIN INIT INFO
 # Provides:          tao-costrading
-# Required-Start:    $syslog $remote_fs tao-cosnaming
+# Required-Start:    $syslog $remote_fs $network tao-cosnaming
 # Should-Start:      $time ypbind smtp
 # Required-Stop:     $syslog $remote_fs tao-cosnaming
 # Should-Stop:       $time ypbind smtp

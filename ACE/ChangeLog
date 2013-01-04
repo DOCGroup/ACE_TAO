@@ -1,3 +1,15 @@
+Fri Jan  4 12:11:12 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rpmbuild/ace-tao-init-suse/init.d/tao-cosconcurrency:
+        * rpmbuild/ace-tao-init-suse/init.d/tao-cosevent:
+        * rpmbuild/ace-tao-init-suse/init.d/tao-cosnaming:
+        * rpmbuild/ace-tao-init-suse/init.d/tao-cosnotification:
+        * rpmbuild/ace-tao-init-suse/init.d/tao-costrading:
+        * rpmbuild/ace-tao-init-suse/init.d/tao-rtevent:
+          Add $network to Required-Start line, thanks to John Fletcher
+          <john dot fletcher at rd dot bbc dot co dot uk> for reporting
+          this.
+
 Thu Jan  3 22:53:44 UTC 2013  Steve Huston  <shuston@riverace.com>
 
         * ace/OS_NS_netdb.cpp (ACE_OS::getmacaddress): On Linux, search for
