@@ -2631,13 +2631,8 @@ TAO_Transport::process_queue_head (TAO_Resume_Handle &rh)
 }
 
 int
-TAO_Transport::notify_reactor (void)
+TAO_Transport::notify_reactor_now (void)
 {
-  if (!this->ws_->is_registered ())
-    {
-      return 0;
-    }
-
   ACE_Event_Handler *eh = this->event_handler_i ();
 
   // Get the reactor associated with the event handler

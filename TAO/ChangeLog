@@ -1,3 +1,27 @@
+Fri Jan  4 15:28:20 UTC 2013  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * bin/tao_other_tests.lst:
+        * orbsvcs/tests/Bug_4080_Regression/Bug_4080_Regression.mpc:
+        * orbsvcs/tests/Bug_4080_Regression/client.cpp:
+        * orbsvcs/tests/Bug_4080_Regression/README:
+        * orbsvcs/tests/Bug_4080_Regression/run_test.pl:
+        * orbsvcs/tests/Bug_4080_Regression/server.cpp:
+        * orbsvcs/tests/Bug_4080_Regression/svc.conf:
+        * orbsvcs/tests/Bug_4080_Regression/test.idl:
+        * orbsvcs/tests/Bug_4080_Regression/test_impl.cpp:
+        * orbsvcs/tests/Bug_4080_Regression/test_impl.h:
+
+          Bugzilla 4080 test.
+
+        * orbsvcs/orbsvcs/PortableGroup/Portable_Group_Map.h:
+        * orbsvcs/orbsvcs/PortableGroup/Portable_Group_Map.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Mcast_Transport.cpp:
+        * tao/Transport.h:
+        * tao/Transport.inl:
+        * tao/Transport.cpp:
+
+          Bugzilla 4080 Fix.
+
 Fri Jan  4 12:07:03 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Monitor/Monitor.cpp:

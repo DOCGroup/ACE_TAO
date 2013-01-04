@@ -1049,6 +1049,14 @@ private:
    */
   int notify_reactor (void);
 
+protected:
+  /*
+   * Same as notify_reactor above but does NOT first check for a
+   * registered TAO_Wait_Strategy.
+   */
+  int notify_reactor_now (void);
+
+private:
   /// Assume the lock is held
   void send_connection_closed_notifications_i (void);
 
