@@ -1,3 +1,12 @@
+Fri Jan  4 18:21:03 UTC 2013  Byron Harris  <harrisb@ociweb.com>
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_Factory.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_Factory.cpp:
+
+          Reordered the list store and storable factory members
+          so that the list store is deleted first since it has
+          a reference to the storable factory.
+
 Thu Jan  3 23:02:01 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
 
         * MPC/config/ftnaming.mpb:

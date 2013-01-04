@@ -55,8 +55,8 @@ TAO::PG_Group_Factory::PG_Group_Factory ()
   , manipulator_ ()
   , domain_id_ ("default-domain")
   , groups_read_ (false)
-  , storable_factory_ (0)
   , list_store_ (0)
+  , storable_factory_ (0)
 {
 }
 
@@ -70,8 +70,8 @@ TAO::PG_Group_Factory::~PG_Group_Factory (void)
     delete group;
   }
   this->group_map_.unbind_all ();
-  delete this->storable_factory_;
   delete this->list_store_;
+  delete this->storable_factory_;
 }
 
 
