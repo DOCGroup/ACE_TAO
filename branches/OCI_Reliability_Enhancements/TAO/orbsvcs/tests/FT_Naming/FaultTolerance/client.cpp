@@ -11,6 +11,7 @@
  */
 //=============================================================================
 
+#include "TestC.h"
 #include "test_objectS.h"
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/FT_NamingManagerC.h"
@@ -1042,6 +1043,7 @@ do_failover_objectgroup_test (
                           RC_ERROR);
     }
 
+
     const char* test_group = "test_group";
     const char* policy     = "round";
 
@@ -1402,6 +1404,109 @@ do_persistant_objectgroup_test (
                           RC_ERROR);
     }
 
+    /// get BasicGroup member object and verify that it reports the same location
+    const char* basic_group = "BasicGroup";
+
+    if (false == group_svc.group_exist(basic_group))
+    {
+      ACE_ERROR_RETURN (( LM_ERROR,
+                          ACE_TEXT ("ERROR: Object Group %s Not Found In Repository\n"),
+                          basic_group),
+                          RC_ERROR);
+    } else {
+      ACE_DEBUG (( LM_DEBUG,
+                   ACE_TEXT ("INFO: Object Group %s Found In Repository\n"),
+                   basic_group));
+    }
+
+    try
+    {
+      PortableGroup::ObjectGroup_var group_var =
+        naming_manager_1->get_object_group_ref_from_name (basic_group);
+
+      PortableGroup::Locations_var locations =
+        naming_manager_1->locations_of_members (group_var.in());
+
+      for (unsigned int i = 0; i < locations->length(); ++i)
+      {
+        const PortableGroup::Location & loc = locations[i];
+        if (loc.length() > 0) {
+
+          ACE_DEBUG (( LM_DEBUG,
+                       "INFO: validating group member %C\n",
+                       loc[0].id.in()));
+
+          try
+          {
+
+            PortableGroup::Location location_name (1);
+            location_name.length (1);
+            location_name[0].id = CORBA::string_dup(loc[0].id.in());
+
+            CORBA::Object_var ior_var =
+              naming_manager_1->get_member_ref (group_var.in(), location_name);
+
+              // Narrow it to a Basic object
+            Test::Basic_var basic = Test::Basic::_narrow (ior_var.in ());
+            if (CORBA::is_nil (basic.in ()))
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("ERROR: Unable to narrow from member ior from %C\n"),
+                                 loc[0].id.in()),
+                                 RC_ERROR);
+            }
+
+            try
+            {
+              CORBA::String_var the_string = basic->get_string ();
+
+              ACE_DEBUG (( LM_DEBUG,
+                           "INFO: object group member at %C reports %C\n",
+                           loc[0].id.in(),
+                           the_string.in ()));
+
+              if ( ACE_OS::strcmp (the_string.in (), loc[0].id.in()) != 0 ) {
+
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   ACE_TEXT ("ERROR: object group member at %C reports %C\n\n"),
+                                   loc[0].id.in(),
+                                   the_string.in ()),
+                                   RC_ERROR);
+              }
+            }
+            catch (CORBA::Exception& ex)
+            {
+              ex._tao_print_exception ("ERROR: invoking get_string on Basic object.\n");
+              return RC_ERROR;
+            }
+          }
+          catch (const PortableGroup::MemberNotFound& ex )
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("ERROR: Unable to find member location %C\n"),
+                               loc[0].id.in()),
+                               RC_ERROR);
+          }
+        }
+      }
+
+    }
+    catch (const PortableGroup::ObjectGroupNotFound& ex )
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("ERROR: Unable to find group %C\n"),
+                         basic_group),
+                         RC_ERROR);
+    }
+    catch (const CORBA::Exception& ex)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("ERROR: Unable to list members for group %C\n"),
+                         basic_group),
+                         RC_ERROR);
+    }
+
+
     const char* policy = "round";
 
     if (false == validate_only )
@@ -1414,7 +1519,7 @@ do_persistant_objectgroup_test (
                 ACE_ERROR_RETURN (( LM_ERROR,
                                     ACE_TEXT ("ERROR: unable to create %s during validation\n"),
                                     group_name.c_str()),
-                                  RC_ERROR);
+                                    RC_ERROR);
               }
             for (int j = 0; j < num_group_members; ++j)
               {
@@ -1426,7 +1531,7 @@ do_persistant_objectgroup_test (
                     ACE_ERROR_RETURN (( LM_ERROR,
                                         ACE_TEXT ("ERROR: unable to create member with location %s during validation\n"),
                                         location.c_str()),
-                                      RC_ERROR);
+                                        RC_ERROR);
                   }
               }
           }
@@ -1439,7 +1544,7 @@ do_persistant_objectgroup_test (
           {
             ACE_ERROR_RETURN (( LM_ERROR,
                                 ACE_TEXT ("ERROR: unable to find %s\n"), group_name.c_str()),
-                              RC_ERROR);
+                                RC_ERROR);
           } else {
           ACE_DEBUG (( LM_DEBUG,
                        ACE_TEXT ("INFO: Object Group %s Found In Repository\n"), group_name.c_str ()));
