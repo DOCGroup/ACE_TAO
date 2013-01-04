@@ -10,7 +10,7 @@
 #
 ### BEGIN INIT INFO
 # Provides:          tao-cosconcurrency
-# Required-Start:    $syslog $remote_fs tao-cosnaming
+# Required-Start:    $syslog $remote_fs $network tao-cosnaming
 # Should-Start:      $time ypbind smtp
 # Required-Stop:     $syslog $remote_fs
 # Should-Stop:       $time ypbind smtp tao-cosnaming
