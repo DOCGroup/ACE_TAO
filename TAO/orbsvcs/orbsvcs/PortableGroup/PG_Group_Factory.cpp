@@ -55,8 +55,8 @@ TAO::PG_Group_Factory::PG_Group_Factory ()
   , manipulator_ ()
   , domain_id_ ("default-domain")
   , groups_read_ (false)
-  , list_store_ (0)
   , storable_factory_ (0)
+  , list_store_ (0)
 {
 }
 
