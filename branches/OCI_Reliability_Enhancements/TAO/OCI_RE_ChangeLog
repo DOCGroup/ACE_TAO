@@ -1,3 +1,18 @@
+Mon Jan  7 19:19:05 UTC 2013  Byron Harris  <harrisb@ociweb.com>
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_Factory.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_Factory.cpp:
+
+          Re-ordered pointer members to match reverse order
+          of deletes in destructor. (Should really matter
+          but seeing if it gets rid of or moves a seg fault
+          seen on a test server.)
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_List_Store.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_List_Store.cpp:
+
+          Remove static string as it's not needed.
+
 Mon Jan  7 15:24:34 UTC 2013  Brian Johnson  <johnsonb@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/ImR_Locator.idl:

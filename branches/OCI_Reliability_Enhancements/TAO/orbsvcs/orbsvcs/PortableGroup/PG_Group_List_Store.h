@@ -85,7 +85,6 @@ namespace TAO
     TAO::Storable_Base * create_stream (const char * mode);
 
     Storable_Factory & storable_factory_;
-    static ACE_CString file_name_;
     bool loaded_from_stream_;
     time_t last_changed_;
     void read (TAO::Storable_Base & stream);

@@ -87,13 +87,10 @@ TAO::PG_Group_List_Store_File_Guard::is_loaded_from_stream ()
 TAO::Storable_Base *
 TAO::PG_Group_List_Store_File_Guard::create_stream (const char * mode)
 {
-  return list_store_.storable_factory_.create_stream (list_store_.file_name_, mode);
+  return list_store_.create_stream (mode);
 }
 
 typedef TAO::PG_Group_List_Store_File_Guard File_Guard;
-
-/* static */
-ACE_CString TAO::PG_Group_List_Store::file_name_ = "ObjectGroup_global";
 
 TAO::PG_Group_List_Store::PG_Group_List_Store (Storable_Factory & storable_factory)
   : next_group_id_ (0)
@@ -224,7 +221,7 @@ TAO::PG_Group_List_Store::write (TAO::Storable_Base & stream)
 TAO::Storable_Base *
 TAO::PG_Group_List_Store::create_stream (const char * mode)
 {
-  return this->storable_factory_.create_stream (this->file_name_, mode);
+  return this->storable_factory_.create_stream ("ObjectGroup_global", mode);
 }
 
 bool
