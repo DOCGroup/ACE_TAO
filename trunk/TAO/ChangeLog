@@ -1,3 +1,9 @@
+Mon Jan  7 14:00:00 UTC 2013  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * tao/Transport.inl:
+          The new inline function has been moved outside of the #if #endif section
+          it shouldn't have been conditional.
+
 Fri Jan  4 15:48:20 UTC 2013  Simon Massey  <simon dot massey at prismtech dot com>
 
         * orbsvcs/orbsvcs/PortableGroup/UIPMC_Mcast_Transport.cpp:
