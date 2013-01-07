@@ -22,6 +22,8 @@
 
 #include "Locator_Repository.h"
 
+#include <vector>
+
 class ACE_Configuration;
 class ACEXML_FileCharStream;
 class ACEXML_DefaultHandler;
@@ -36,6 +38,8 @@ class ACEXML_DefaultHandler;
 class XML_Backing_Store : public Locator_Repository
 {
 public:
+  typedef std::pair<ACE_CString, ACE_CString> NameValue;
+  typedef std::vector<NameValue> NameValues;
   XML_Backing_Store(const Options& opts,
                     CORBA::ORB_ptr orb,
                     bool suppress_erase = false);
@@ -45,6 +49,45 @@ public:
   /// indicate the XML filename as the persistence mode for the repository
   virtual const ACE_TCHAR* repo_mode() const;
 
+  /// create the Server_Info server object
+  /// @param server_id the Server_Info server_id
+  /// @param server_name the Server_Info server_name
+  /// @param activator_name the Server_Info activator
+  /// @param cmdline the Server_Info cmdline
+  /// @param env_vars the Server_Info env_vars
+  /// @param workin_dir the Server_Info dir
+  /// @param actmode the Server_Info activation_mode
+  /// @param start_limit the Server_Info start_limit
+  /// @param partial_ior the Server_Info partial_ior
+  /// @param ior the Server_Info ior
+  /// @param server_started indicates if the server object
+  ///        existed when data was persisted
+  /// @param extra_params extra name value pairs that
+  ///        were reported for the server
+  virtual void load_server (
+    const ACE_CString& server_id,
+    const ACE_CString& server_name,
+    const ACE_CString& activator_name,
+    const ACE_CString& cmdline,
+    const ImplementationRepository::EnvironmentList& env_vars,
+    const ACE_CString& working_dir,
+    ImplementationRepository::ActivationMode actmode,
+    int start_limit,
+    const ACE_CString& partial_ior,
+    const ACE_CString& ior,
+    bool server_started,
+    const NameValues& extra_params);
+
+  /// create the Activator_Info activator object
+  /// @param activator_name the Activator_Info name
+  /// @param token the Activator_Info token
+  /// @param ior the Activator_Info ior
+  /// @param extra_params extra name value pairs that
+  ///        were reported for the activator
+  virtual void load_activator (const ACE_CString& activator_name,
+                               long token,
+                               const ACE_CString& ior,
+                               const NameValues& extra_params);
 protected:
   /// perform XML backing store specific initialization
   /// (loads servers and activators from the backing store)
@@ -82,14 +125,28 @@ protected:
   /// @param info the Server_Info to persist
   /// @param tag_prepend a character string to prepend at the start
   ///        of every xml line to maintain proper indentation
-  void persist(FILE* fp, const Server_Info& info, const char* tag_prepend);
+  /// @param name_values extra name value pairs to write as attributes
+  void persist(FILE* fp,
+               const Server_Info& info,
+               const char* tag_prepend,
+               const NameValues& name_values = NameValues());
 
   /// persist the activator
   /// @param fp the FILE stream to persist the activator contents to
   /// @param info the Server_Info to persist
   /// @param tag_prepend a character string to prepend at the start
   ///        of every xml line to maintain proper indentation
-  void persist(FILE* fp, const Activator_Info& info, const char* tag_prepend);
+  /// @param name_values extra name value pairs to write as attributes
+  void persist(FILE* fp,
+               const Activator_Info& info,
+               const char* tag_prepend,
+               const NameValues& name_values = NameValues());
+
+  /// create the Server_Info server object
+  /// @param server_started indication from persistence indicating if the
+  ///        server object was present
+  /// @param si the server info in question
+  void create_server(bool server_started, const Server_Info_Ptr& si);
 
 protected:
   /// the filename indicated in the Options for the backing store

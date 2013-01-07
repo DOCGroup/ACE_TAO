@@ -150,11 +150,18 @@ Shared_Backing_Store::Shared_Backing_Store(const Options& opts,
   seq_num_(0),
   replica_seq_num_(0),
   imr_type_(opts.imr_type()),
-  sync_needed_(NO_SYNC)
+  sync_needed_(NO_SYNC),
+  repo_id_(1),
+  repo_values_(2)
 {
   IMR_REPLICA[Options::PRIMARY_IMR] = "ImR_ReplicaPrimary";
   IMR_REPLICA[Options::BACKUP_IMR] = "ImR_ReplicaBackup";
   IMR_REPLICA[Options::STANDALONE_IMR] = "ImR_NoReplica";
+
+  this->repo_values_[REPO_TYPE] =
+    std::make_pair(ACE_CString("repo_type"), ACE_CString());
+  this->repo_values_[REPO_ID] =
+    std::make_pair(ACE_CString("repo_id"), ACE_CString());
 }
 
 Shared_Backing_Store::~Shared_Backing_Store()
@@ -178,10 +185,22 @@ static void replicate(
   replica->notify_updated_activator(update);
 }
 
-template< typename Update>
+static void set_key(ImplementationRepository::ServerUpdate& update,
+                    const Locator_Repository::SIMap::KEY& key)
+{
+  update.name = key.c_str();
+}
+
+static void set_key(ImplementationRepository::ActivatorUpdate& update,
+                    const Locator_Repository::AIMap::KEY& key)
+{
+  update.name = key.c_str();
+}
+
+template< typename Update, typename Map>
 static void replicate(
   Shared_Backing_Store::Replica_ptr replica,
-  const ACE_CString& name,
+  const typename Map::ENTRY& entry,
   const ImplementationRepository::UpdateType type,
   const ImplementationRepository::SequenceNum seq_num)
 {
@@ -193,9 +212,11 @@ static void replicate(
   try
     {
       Update update;
-      update.name = name.c_str();
+      set_key(update, entry.ext_id_);
       update.type = type;
       update.seq_num = seq_num;
+      update.repo_id = entry.int_id_.repo_id;
+      update.repo_type = entry.int_id_.repo_type;
       replicate(replica, update);
     }
   catch (const CORBA::COMM_FAILURE&)
@@ -225,18 +246,146 @@ static void replicate(
     }
 }
 
-int
-Shared_Backing_Store::persistent_remove (const ACE_CString& name,
-                                         bool activator)
+template<typename Map>
+static typename Map::ENTRY& unique_id(
+  const typename Map::KEY& key,
+  Map& unique_ids,
+  const Shared_Backing_Store::UniqueId& id)
 {
-  Lockable_File listing_lf;
-  const int err = persist_listings(listing_lf);
+  typename Map::ENTRY* entry = 0;
+  unique_ids.bind(key, id, entry);
+
+  return *entry;
+}
+
+static Shared_Backing_Store::UniqueId create_uid(
+  const Options::ImrType repo_type,
+  const unsigned int repo_id)
+{
+  Shared_Backing_Store::UniqueId id;
+  id.repo_id = repo_id;
+  id.repo_type = repo_type;
+  ACE_TCHAR id_str[50];
+  ACE_OS::itoa((unsigned int)repo_type, id_str, 10);
+
+  id.repo_type_str = id_str;
+
+  size_t current = ACE_OS::strlen(id_str);
+  id_str[current++] = ACE_TEXT('_');
+  ACE_OS::itoa(repo_id, &(id_str[current]), 10);
+
+  id.repo_id_str = &(id_str[current]);
+
+  current = ACE_OS::strlen(id_str);
+  id_str[current++] = ACE_TEXT('.');
+  id_str[current++] = ACE_TEXT('x');
+  id_str[current++] = ACE_TEXT('m');
+  id_str[current++] = ACE_TEXT('l');
+  id.unique_filename = id_str;
+
+  return id;
+}
+
+template<typename Map>
+static const typename Map::ENTRY& unique_id(
+  const typename Map::KEY& key,
+  Map& unique_ids,
+  const Options::ImrType type,
+  unsigned int& next_repo_id)
+{
+  typename Map::ENTRY* entry;
+  if (unique_ids.find(key, entry) == 0)
+    return *entry;
+  const unsigned int repo_id = next_repo_id++;
+  Shared_Backing_Store::UniqueId id = create_uid(type, repo_id);
+  return unique_id(key, unique_ids, id);
+}
+
+static ACE_CString identify_key(const ACE_CString& name)
+{
+  ACE_CString id("name=");
+  id += name;
+  return id;
+}
+
+/* TODO: bdj - will need this when server container changed to name and id
+static ACE_CString identify_key(const Shared_Backing_Store::ServerKey& name)
+{
+  ACE_CString id("name=");
+  id += info.name;
+  return id;
+}
+*/
+template<typename Map>
+static const typename Map::ENTRY& unique_id(
+  const typename Map::KEY& key,
+  Map& unique_ids,
+  const Options::ImrType this_repo_type,
+  unsigned int& this_repo_id,
+  Options::ImrType& entry_repo_type,
+  unsigned int& entry_repo_id)
+{
+  typename Map::ENTRY* temp_entry;
+  const bool found = (unique_ids.find(key, temp_entry) == 0);
+
+  Shared_Backing_Store::UniqueId temp_id =
+    create_uid(entry_repo_type, entry_repo_id);
+  typename Map::ENTRY& entry = unique_id(key, unique_ids, temp_id);
+
+  if (entry_repo_id == 0)
+    {
+      // if no repo id provided, treat it like it came from this repo
+      entry_repo_id = this_repo_id++;
+      entry_repo_type = this_repo_type;
+    }
+  else if (found)
+    {
+      Shared_Backing_Store::UniqueId& id = entry.int_id_;
+      if (entry_repo_id != id.repo_id &&
+          entry_repo_type != id.repo_type)
+        {
+          // if already existed, replace the contents
+          ACE_ERROR((
+            LM_ERROR,
+            ACE_TEXT("(%P|%t) ERROR: replacing %C with existing repo_id=%d ")
+            ACE_TEXT("and imr_type=%d, with repo_id=%d and imr_type=%d\n"),
+            identify_key(key).c_str(), id.repo_id, id.repo_type,
+            entry_repo_id, entry_repo_type));
+          id = temp_id;
+        }
+    }
+
+  if (entry_repo_type == this_repo_type && entry_repo_id >= this_repo_id)
+    {
+      // persisting existing entries for this repo, so move the repo_id past
+      // the entries id
+      this_repo_id = entry_repo_id + 1;
+    }
+
+  return entry;
+}
+
+template< typename Update, typename Map>
+static int remove(
+  const typename Map::KEY& key,
+  const Map& unique_ids,
+  const ACE_TString& path,
+  Lockable_File& listing_lf,
+  Shared_Backing_Store::Replica_ptr peer_replica,
+  ImplementationRepository::SequenceNum& seq_num)
+{
+  typename Map::ENTRY* entry;
+  const int err = unique_ids.find(key, entry);
   if (err != 0)
     {
+      ACE_ERROR((
+        LM_ERROR,
+        ACE_TEXT("(%P|%t) Couldn't find unique repo id for %C\n"),
+        identify_key(key).c_str()));
       return err;
     }
 
-  const ACE_TString fname = make_filename(name, activator);
+  const ACE_TString fname = path + entry->int_id_.unique_filename;
 
   {
     // take the lock, then remove the file
@@ -244,32 +393,36 @@ Shared_Backing_Store::persistent_remove (const ACE_CString& name,
   }
   listing_lf.release();
 
-  ++seq_num_;
-  if (activator)
-    {
-      replicate<ImplementationRepository::ActivatorUpdate>
-        (peer_replica_, name, ImplementationRepository::repo_remove, seq_num_);
-    }
-  else
-    {
-      replicate<ImplementationRepository::ServerUpdate>
-        (peer_replica_, name, ImplementationRepository::repo_remove, seq_num_);
-    }
+  replicate<Update, Map>
+    (peer_replica, *entry, ImplementationRepository::repo_remove, ++seq_num);
+
   return 0;
 }
 
-ACE_TString
-Shared_Backing_Store::make_filename(const ACE_CString& name,
-                                    bool activator,
-                                    bool relative) const
+int
+Shared_Backing_Store::persistent_remove (const ACE_CString& name,
+                                         bool activator)
 {
-  const char* const prefix = (activator ? "a_" : "s_");
-  ACE_CString file = prefix + name + ".xml";
-  if (!relative)
+  Lockable_File listing_lf;
+  int err = persist_listings(listing_lf);
+  if (err != 0)
     {
-      file = this->filename_ + file;
+      return err;
     }
-  return ACE_TEXT_CHAR_TO_TCHAR(file);
+
+  if (activator)
+    {
+      err = remove<ImplementationRepository::ActivatorUpdate>
+        (name, this->activator_uids_, this->filename_, listing_lf,
+         this->peer_replica_, this->seq_num_);
+    }
+  else
+    {
+      err = remove<ImplementationRepository::ServerUpdate>
+        (name, this->server_uids_, this->filename_, listing_lf,
+         this->peer_replica_, this->seq_num_);
+    }
+  return err;
 }
 
 int
@@ -287,7 +440,9 @@ Shared_Backing_Store::persistent_update(const Server_Info_Ptr& info, bool add)
 
   ACE_CString name = ACEXML_escape_string (info->name);
 
-  const ACE_TString fname = make_filename(name, false);
+  const ServerUIMap::ENTRY& entry =
+    unique_id(info->name, this->server_uids_, this->imr_type_, this->repo_id_);
+  const ACE_TString fname = this->filename_ + entry.int_id_.unique_filename;
   if (this->opts_.debug() > 9)
     {
       ACE_DEBUG((LM_INFO, ACE_TEXT ("Persisting to %s(%C)\n"),
@@ -304,14 +459,18 @@ Shared_Backing_Store::persistent_update(const Server_Info_Ptr& info, bool add)
   // successfully added file (if adding), so release the listing file lock
   listing_lf.release();
   ACE_OS::fprintf (fp,"<?xml version=\"1.0\"?>\n");
-  persist(fp, *info, "");
+
+  this->repo_values_[REPO_TYPE].second = entry.int_id_.repo_type_str;
+  this->repo_values_[REPO_ID].second = entry.int_id_.repo_id_str;
+
+  persist(fp, *info, "", this->repo_values_);
   server_file.release();
 
   const ImplementationRepository::UpdateType type = add ?
     ImplementationRepository::repo_add :
     ImplementationRepository::repo_update;
-  replicate<ImplementationRepository::ServerUpdate>
-    (peer_replica_, name, type, ++seq_num_);
+  replicate<ImplementationRepository::ServerUpdate, ServerUIMap>
+    (peer_replica_, entry, type, ++seq_num_);
   return 0;
 }
 
@@ -332,7 +491,9 @@ Shared_Backing_Store::persistent_update(const Activator_Info_Ptr& info,
 
   ACE_CString name = lcase (info->name);
 
-  const ACE_TString fname = make_filename(name, true);
+  const ActivatorUIMap::ENTRY& entry =
+    unique_id(name, this->activator_uids_, this->imr_type_, this->repo_id_);
+  const ACE_TString fname = this->filename_ + entry.int_id_.unique_filename;
   if (this->opts_.debug() > 9)
     {
       ACE_DEBUG((LM_INFO, ACE_TEXT ("Persisting to %s(%C)\n"),
@@ -349,14 +510,18 @@ Shared_Backing_Store::persistent_update(const Activator_Info_Ptr& info,
   // successfully added file (if adding), so release the listing file lock
   listing_lf.release();
   ACE_OS::fprintf (fp,"<?xml version=\"1.0\"?>\n");
-  persist(fp, *info, "");
+
+  this->repo_values_[REPO_TYPE].second = entry.int_id_.repo_type_str;
+  this->repo_values_[REPO_ID].second = entry.int_id_.repo_id_str;
+
+  persist(fp, *info, "", this->repo_values_);
   activator_file.release();
 
   const ImplementationRepository::UpdateType type = add ?
     ImplementationRepository::repo_add :
     ImplementationRepository::repo_update;
-  replicate<ImplementationRepository::ActivatorUpdate>
-    (peer_replica_, name, type, ++seq_num_);
+  replicate<ImplementationRepository::ActivatorUpdate, ActivatorUIMap>
+    (peer_replica_, entry, type, ++seq_num_);
   return 0;
 }
 
@@ -518,7 +683,7 @@ Shared_Backing_Store::persistent_load (bool only_changes)
 
   if (only_changes)
     {
-      listings->remove_unmatched(this->servers(), this->activators());
+      listings->remove_unmatched(*this);
     }
 
   const ACE_Vector<ACE_TString>& filenames = listings->filenames();
@@ -612,7 +777,7 @@ static void write_listing(FILE* list, const ACE_TString& fname,
 }
 
 int
-Shared_Backing_Store::persist_listings (Lockable_File& listing_lf) const
+Shared_Backing_Store::persist_listings (Lockable_File& listing_lf)
 {
   FILE* list = listing_lf.get_file(this->listing_file_, O_WRONLY);
   if (list == 0)
@@ -629,11 +794,13 @@ Shared_Backing_Store::persist_listings (Lockable_File& listing_lf) const
   Locator_Repository::SIMap::CONST_ITERATOR siit (this->servers ());
   for (; siit.next (sientry); siit.advance() )
     {
-      Server_Info_Ptr& info = sientry->int_id_;
+      const Server_Info_Ptr& info = sientry->int_id_;
 
-      const ACE_TString fname = make_filename(info->name, false, true);
+      const ServerUIMap::ENTRY& entry =
+        unique_id(sientry->ext_id_, this->server_uids_,
+                  this->imr_type_, this->repo_id_);
       ACE_CString listing_name = ACEXML_escape_string (info->name);
-      write_listing(list, fname, listing_name,
+      write_listing(list, entry.int_id_.unique_filename, listing_name,
         Locator_XMLHandler::SERVER_INFO_TAG);
     }
 
@@ -643,8 +810,10 @@ Shared_Backing_Store::persist_listings (Lockable_File& listing_lf) const
   for (; aiit.next (aientry); aiit.advance ())
     {
       const ACE_CString& aname = aientry->ext_id_;
-      const ACE_TString fname = make_filename(aname, true, true);
-      write_listing(list, fname, aname,
+      const ActivatorUIMap::ENTRY& entry =
+        unique_id(aname, this->activator_uids_,
+                  this->imr_type_, this->repo_id_);
+      write_listing(list, entry.int_id_.unique_filename, aname,
         Locator_XMLHandler::ACTIVATOR_INFO_TAG);
     }
 
@@ -715,6 +884,139 @@ Shared_Backing_Store::locator_service_ior(const char* peer_ior) const
 
 }
 
+template<typename Map>
+static const typename Map::ENTRY& unique_id(
+  const typename Map::KEY& key,
+  const XML_Backing_Store::NameValues& repo_values,
+  const XML_Backing_Store::NameValues& extra_params,
+  Map& unique_ids,
+  const Options::ImrType this_repo_type,
+  unsigned int& this_repo_id,
+  const unsigned int debug)
+{
+  const unsigned int size = extra_params.size();
+  if ((size != 2) && (debug > 4))
+    {
+      ACE_ERROR((
+        LM_ERROR,
+        ACE_TEXT("(%P|%t) Persisted server id=%C name=%C doesn't have all ")
+        ACE_TEXT("unique id params. (%d of 2)\n"),
+        size));
+    };
+
+  XML_Backing_Store::NameValues::const_iterator name_value = extra_params.begin();
+  unsigned int repo_id = 0;
+  // default to this repo
+  Options::ImrType repo_type = this_repo_type;
+  for (unsigned int i = 0; i < size; ++i)
+    {
+      ACE_DEBUG((LM_INFO, "name values %C=%C (%C)\n", extra_params[i].first.c_str(), extra_params[i].second.c_str(), repo_values[i].first.c_str()));
+    }
+  if ((size > Shared_Backing_Store::REPO_TYPE) &&
+      (extra_params[Shared_Backing_Store::REPO_TYPE].first ==
+       repo_values[Shared_Backing_Store::REPO_TYPE].first))
+    repo_type = (Options::ImrType)ACE_OS::atoi(
+      extra_params[Shared_Backing_Store::REPO_TYPE].second.c_str());
+
+  if ((size > Shared_Backing_Store::REPO_ID) &&
+      (extra_params[Shared_Backing_Store::REPO_ID].first ==
+       repo_values[Shared_Backing_Store::REPO_ID].first))
+    repo_id =
+      ACE_OS::atoi(extra_params[Shared_Backing_Store::REPO_ID].second.c_str());
+  else
+    {
+      ACE_ERROR((LM_ERROR,
+                 ACE_TEXT("(%P|%t) Persisted %C did not supply a repo_id\n"),
+                 identify_key(key).c_str()));
+    }
+
+  return
+    unique_id(key, unique_ids, this_repo_type,
+              this_repo_id, repo_type, repo_id);
+}
+
+void
+Shared_Backing_Store::load_server (
+  const ACE_CString& server_id,
+  const ACE_CString& server_name,
+  const ACE_CString& activator_name,
+  const ACE_CString& startup_cmd,
+  const ImplementationRepository::EnvironmentList& env_vars,
+  const ACE_CString& working_dir,
+  const ImplementationRepository::ActivationMode actmode,
+  int start_limit,
+  const ACE_CString& partial_ior,
+  const ACE_CString& ior,
+  bool server_started,
+  const NameValues& extra_params)
+{
+  const ServerUIMap::ENTRY& entry =
+    unique_id(server_name, this->repo_values_, extra_params,
+              this->server_uids_, this->imr_type_, this->repo_id_,
+              this->opts_.debug());
+  Server_Info_Ptr si;
+  const bool new_server = (this->servers ().find (server_name, si) != 0);
+
+  if (!new_server)
+    {
+      // is the server object new
+      const bool new_ior = si->ior != ior;
+      if (new_ior)
+        {
+          si->ior = ior;
+        }
+      si->server_id = server_id;
+      si->activator = activator_name;
+      si->cmdline = startup_cmd;
+      si->env_vars = env_vars;
+      si->dir = working_dir;
+      si->activation_mode = actmode;
+      si->start_limit = start_limit;
+      si->partial_ior = partial_ior;
+
+      if (!server_started)
+        {
+          si->server = ImplementationRepository::ServerObject::_nil();
+        }
+      else
+        // will create a new server below if no previous server
+        // or the ior has changed
+        server_started = CORBA::is_nil(si->server) || new_ior;
+    }
+  else
+    {
+      if (!new_server)
+      {
+        ACE_DEBUG((
+          LM_INFO,
+          ACE_TEXT("(%P|%t) Warning: Server id=%C, name=%C, repo_id=%d, ")
+          ACE_TEXT("repo_type=%d, being replaced by persisted data with ")
+          ACE_TEXT("repo_id=%d, repo_type=%d\n"),
+          server_id.c_str(), server_name.c_str(),
+          entry.int_id_.repo_id, entry.int_id_.repo_type));
+      }
+      // create new or replace the existing entry
+      XML_Backing_Store::load_server(
+        server_id, server_name, activator_name, startup_cmd, env_vars, working_dir,
+        actmode, start_limit, partial_ior, ior, server_started, extra_params);
+    }
+
+  create_server(server_started, si);
+}
+
+void
+Shared_Backing_Store::load_activator (const ACE_CString& activator_name,
+                                      long token,
+                                      const ACE_CString& ior,
+                                      const NameValues& extra_params)
+{
+  // use this to make sure an unique id entry is created
+  unique_id(activator_name, this->repo_values_, extra_params,
+            this->activator_uids_, this->imr_type_, this->repo_id_,
+            this->opts_.debug());
+  XML_Backing_Store::load_activator(activator_name, token, ior, extra_params);
+}
+
 void
 Shared_Backing_Store::notify_updated_server(
   const ImplementationRepository::ServerUpdate& server)
@@ -739,13 +1041,18 @@ Shared_Backing_Store::notify_updated_server(
   if (server.type == ImplementationRepository::repo_remove)
     {
       // sync_needed_ doesn't change, since we handle the change
-      // immediately
+      // imme;diately
       this->servers().unbind (name);
       return;
     }
 
   this->sync_needed_ = INC_SYNC;
-  const ACE_TString fname = make_filename(name, false);
+  Options::ImrType repo_type = (Options::ImrType)server.repo_type;
+  unsigned int repo_id = server.repo_id;
+  const ServerUIMap::ENTRY& entry =
+    unique_id(name, this->server_uids_, this->imr_type_, this->repo_id_,
+              repo_type, repo_id);
+  const ACE_TString fname = this->filename_ + entry.int_id_.unique_filename;
   this->sync_files_.insert(fname);
 }
 
@@ -779,7 +1086,12 @@ Shared_Backing_Store::notify_updated_activator(
     }
 
   this->sync_needed_ = INC_SYNC;
-  const ACE_TString fname = make_filename(name, true);
+  Options::ImrType repo_type = (Options::ImrType)activator.repo_type;
+  unsigned int repo_id = activator.repo_id;
+  const ActivatorUIMap::ENTRY& entry =
+    unique_id(name, this->activator_uids_, this->imr_type_, this->repo_id_,
+              repo_type, repo_id);
+  const ACE_TString fname = this->filename_ + entry.int_id_.unique_filename;
   this->sync_files_.insert(fname);
 }
 
@@ -967,14 +1279,13 @@ Shared_Backing_Store::LocatorListings_XMLHandler::endElement (
 
 void
 Shared_Backing_Store::LocatorListings_XMLHandler::remove_unmatched(
-  Locator_Repository::SIMap& servers,
-  Locator_Repository::AIMap& activators)
+  Locator_Repository& repo)
 {
   Locator_Repository::SIMap::ENTRY* sientry = 0;
   Locator_Repository::SIMap::CONST_ITERATOR siit (this->unmatched_servers_);
   for (; siit.next (sientry); siit.advance() )
     {
-      int ret = servers.unbind (sientry->ext_id_);
+      int ret = repo.servers().unbind (sientry->ext_id_);
       if (ret != 0)
         {
           ACE_ERROR((LM_ERROR,
@@ -987,7 +1298,7 @@ Shared_Backing_Store::LocatorListings_XMLHandler::remove_unmatched(
   Locator_Repository::AIMap::CONST_ITERATOR aiit (this->unmatched_activators_);
   for (; aiit.next (aientry); aiit.advance ())
     {
-      int ret = activators.unbind (aientry->ext_id_);
+      int ret = repo.activators().unbind (aientry->ext_id_);
       if (ret != 0)
         {
           ACE_ERROR((LM_ERROR,
