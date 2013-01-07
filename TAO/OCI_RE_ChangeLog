@@ -1,3 +1,35 @@
+Mon Jan  7 15:24:34 UTC 2013  Brian Johnson  <johnsonb@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator.idl:
+
+          Added unique repo id for valid file names.
+
+        * orbsvcs/ImplRepo_Service/Locator_Repository.h:
+
+          Made Server and Activator hash map keys a typedef.
+
+        * orbsvcs/ImplRepo_Service/Locator_XMLHandler.h:
+        * orbsvcs/ImplRepo_Service/Locator_XMLHandler.cpp:
+
+          Added reading in repo unique id parameters and refactored
+          creating servers and activators into XML_Backing_Store and
+          Shared_Backing_Store.
+
+        * orbsvcs/ImplRepo_Service/Shared_Backing_Store.h:
+        * orbsvcs/ImplRepo_Service/Shared_Backing_Store.cpp:
+
+          Added hash map for server and activator repo unique ids
+          to use to create valid filenames and refactored identifying
+          existing servers from Locator_XMLHandler and added tracking
+          repo unique ids.
+
+        * orbsvcs/ImplRepo_Service/XML_Backing_Store.h:
+        * orbsvcs/ImplRepo_Service/XML_Backing_Store.cpp:
+
+          Added support to write extra name value pairs to XML and
+          refactored server and activator loading from
+          Locator_XMLHandler.
+
 Fri Jan  4 23:03:10 UTC 2013  Phillip LaBanca  <labancap@ociweb.com>
 
         * orbsvcs/tests/FT_Naming/FaultTolerance/run_persistence_test.pl:

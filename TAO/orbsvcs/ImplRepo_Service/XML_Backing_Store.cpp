@@ -87,8 +87,10 @@ XML_Backing_Store::persist ()
 }
 
 void
-XML_Backing_Store::persist (FILE* fp, const Server_Info& info,
-                            const char* tag_prepend)
+XML_Backing_Store::persist (FILE* fp,
+                            const Server_Info& info,
+                            const char* tag_prepend,
+                            const NameValues& name_values)
 {
   ACE_CString server_id = ACEXML_escape_string (info.server_id);
   ACE_CString name = ACEXML_escape_string (info.name);
@@ -112,6 +114,13 @@ XML_Backing_Store::persist (FILE* fp, const Server_Info& info,
   ACE_OS::fprintf (fp," partial_ior=\"%s\"", partial_ior.c_str ());
   ACE_OS::fprintf (fp," ior=\"%s\"", ior.c_str ());
   ACE_OS::fprintf (fp," started=\"%d\"", !CORBA::is_nil(info.server.in()));
+
+  NameValues::const_iterator name_value;
+  for (name_value = name_values.begin(); name_value != name_values.end(); ++name_value)
+    {
+      ACE_OS::fprintf (fp," %s=\"%s\"",
+                       name_value->first.c_str(), name_value->second.c_str());
+    }
 
   const CORBA::ULong length = info.env_vars.length ();
   if (length > 0)
@@ -137,14 +146,24 @@ XML_Backing_Store::persist (FILE* fp, const Server_Info& info,
 }
 
 void
-XML_Backing_Store::persist (FILE* fp, const Activator_Info& info,
-                            const char* tag_prepend)
+XML_Backing_Store::persist (FILE* fp,
+                            const Activator_Info& info,
+                            const char* tag_prepend,
+                            const NameValues& name_values)
 {
   ACE_OS::fprintf (fp,"%s<%s", tag_prepend,
     Locator_XMLHandler::ACTIVATOR_INFO_TAG);
   ACE_OS::fprintf( fp," name=\"%s\"", info.name.c_str ());
   ACE_OS::fprintf (fp," token=\"%d\"", info.token);
   ACE_OS::fprintf (fp," ior=\"%s\"", info.ior.c_str ());
+
+  NameValues::const_iterator name_value;
+  for (name_value = name_values.begin(); name_value != name_values.end(); ++name_value)
+    {
+      ACE_OS::fprintf (fp," %s=\"%s\"",
+                       name_value->first.c_str(), name_value->second.c_str());
+    }
+
   ACE_OS::fprintf (fp,"/>\n");
 }
 
@@ -222,4 +241,54 @@ const ACE_TCHAR*
 XML_Backing_Store::repo_mode() const
 {
   return this->filename_.c_str();
+}
+
+void
+XML_Backing_Store::load_server (
+  const ACE_CString& server_id,
+  const ACE_CString& server_name,
+  const ACE_CString& activator_name,
+  const ACE_CString& startup_cmd,
+  const ImplementationRepository::EnvironmentList& env_vars,
+  const ACE_CString& working_dir,
+  ImplementationRepository::ActivationMode actmode,
+  int start_limit,
+  const ACE_CString& partial_ior,
+  const ACE_CString& ior,
+  bool server_started,
+  const NameValues& extra_params)
+{
+  const int limit = start_limit < 1 ? 1 : start_limit;
+
+  Server_Info_Ptr si(
+    new Server_Info (server_id, server_name, activator_name, startup_cmd,
+                     env_vars, working_dir, actmode, limit, partial_ior, ior));
+  this->servers().rebind(server_name, si);
+
+  create_server(server_started, si);
+}
+
+void
+XML_Backing_Store::create_server(bool server_started, const Server_Info_Ptr& si)
+{
+  if (!server_started || si->ior.is_empty())
+    return;
+
+  CORBA::Object_var obj = this->orb_->string_to_object(si->ior.c_str());
+  if (!CORBA::is_nil(obj.in()))
+    {
+      si->server =
+        ImplementationRepository::ServerObject::_unchecked_narrow (obj.in());
+      si->last_ping = ACE_Time_Value::zero;
+    }
+}
+
+void
+XML_Backing_Store::load_activator (const ACE_CString& activator_name,
+                                   long token,
+                                   const ACE_CString& ior,
+                                   const NameValues& extra_params)
+{
+  Activator_Info_Ptr info (new Activator_Info (activator_name, token, ior));
+  this->activators().rebind(activator_name, info);
 }

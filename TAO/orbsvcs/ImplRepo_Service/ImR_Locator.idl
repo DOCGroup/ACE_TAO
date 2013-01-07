@@ -31,7 +31,10 @@ module ImplementationRepository
   struct ServerUpdate
   {
     string      name;
+    string      server_id;
     UpdateType  type;
+    long        repo_id;
+    long        repo_type;
     SequenceNum seq_num;
   };
 
@@ -39,6 +42,8 @@ module ImplementationRepository
   {
     string      name;
     UpdateType  type;
+    long        repo_id;
+    long        repo_type;
     SequenceNum seq_num;
   };
 

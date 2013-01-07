@@ -16,20 +16,21 @@
 
 #include "tao/ORB.h"
 
-#include "ace/Vector_T.h"
+#include <vector>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class Locator_Repository;
+class XML_Backing_Store;
 /**
  * Callback SAX XML Handler for parsing Locator XML.
  */
 class Locator_XMLHandler : public ACEXML_DefaultHandler
 {
 public:
-
+  typedef std::pair<ACE_CString, ACE_CString> NameValue;
+  typedef std::vector<NameValue> NameValues;
   // XML ELEMENT names
   static const ACE_TCHAR* ROOT_TAG;
   static const ACE_TCHAR* SERVER_INFO_TAG;
@@ -43,12 +44,12 @@ public:
     bool operator!=(const EnvVar&) const; // To allow Vector explicit instantiation
   };
 
-  typedef ACE_Vector<EnvVar> EnvList;
+  typedef std::vector<EnvVar> EnvList;
 
   /// constructor
   /// @param repo the repo to update based on XML
   /// @param orb the orb (used to create server object)
-  Locator_XMLHandler (Locator_Repository& repo, CORBA::ORB_ptr orb);
+  Locator_XMLHandler (XML_Backing_Store& repo, CORBA::ORB_ptr orb);
 
   /// provide implementation for handling a new XML element
   virtual void startElement (const ACEXML_Char* namespaceURI,
@@ -62,21 +63,8 @@ public:
                            const ACEXML_Char* qName);
 
  private:
-  /// create or update a server based on a server XML element
-  virtual void next_server (const ACE_CString& server_id,
-    const ACE_CString& server_name, const ACE_CString& aname,
-    const ACE_CString& startup_cmd, const EnvList& env_vars,
-    const ACE_CString& working_dir, const ACE_CString& actmode,
-    int start_limit, const ACE_CString& partial_ior,
-    const ACE_CString& ior, bool server_started);
-
-  /// create or update an activator based on a activator XML element
-  virtual void next_activator (const ACE_CString& activator_name,
-                               long token,
-                               const ACE_CString& ior);
-
   /// the repository
-  Locator_Repository& repo_;
+  XML_Backing_Store& repo_;
 
   /// the server related parameters
   ACE_CString server_id_;
@@ -89,6 +77,9 @@ public:
   ACE_TString partial_ior_;
   int start_limit_;
   bool server_started_;
+  NameValues extra_params_;
+  unsigned int repo_id_;
+  unsigned int repo_type_;
   EnvList env_vars_;
 
   /// the orb

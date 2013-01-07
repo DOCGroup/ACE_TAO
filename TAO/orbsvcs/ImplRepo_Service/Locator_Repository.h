@@ -43,16 +43,18 @@ class ACE_Reactor;
 class Locator_Repository
 {
 public:
-  typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
+  typedef ACE_CString ServerKey;
+  typedef ACE_Hash_Map_Manager_Ex<ServerKey,
     Server_Info_Ptr,
-    ACE_Hash<ACE_CString>,
-    ACE_Equal_To<ACE_CString>,
+    ACE_Hash<ServerKey>,
+    ACE_Equal_To<ServerKey>,
     ACE_Null_Mutex> SIMap;
 
-  typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
+  typedef ACE_CString ActivatorKey;
+  typedef ACE_Hash_Map_Manager_Ex<ActivatorKey,
     Activator_Info_Ptr,
-    ACE_Hash<ACE_CString>,
-    ACE_Equal_To<ACE_CString>,
+    ACE_Hash<ActivatorKey>,
+    ACE_Equal_To<ActivatorKey>,
     ACE_Null_Mutex> AIMap;
 
   Locator_Repository(const Options& opts, CORBA::ORB_ptr orb);
