@@ -247,6 +247,7 @@ void
 XML_Backing_Store::load_server (
   const ACE_CString& server_id,
   const ACE_CString& server_name,
+  bool jacorb_server,
   const ACE_CString& activator_name,
   const ACE_CString& startup_cmd,
   const ImplementationRepository::EnvironmentList& env_vars,
@@ -261,7 +262,7 @@ XML_Backing_Store::load_server (
   const int limit = start_limit < 1 ? 1 : start_limit;
 
   Server_Info_Ptr si(
-    new Server_Info (server_id, server_name, activator_name, startup_cmd,
+    new Server_Info (server_id, server_name, jacorb_server, activator_name, startup_cmd,
                      env_vars, working_dir, actmode, limit, partial_ior, ior));
   this->servers().rebind(server_name, si);
 

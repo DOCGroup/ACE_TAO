@@ -18,6 +18,7 @@ static const ACE_TCHAR* SERVERS_ROOT_KEY = ACE_TEXT("Servers");
 static const ACE_TCHAR* ACTIVATORS_ROOT_KEY = ACE_TEXT("Activators");
 static const ACE_TCHAR* TOKEN = ACE_TEXT("Token");
 static const ACE_TCHAR* SERVER_ID = ACE_TEXT("ServerId");
+static const ACE_TCHAR* JACORB_SERVER = ACE_TEXT("JacORBServer");
 
 #if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_REGISTRY)
 static const char* WIN32_REG_KEY = "Software\\TAO\\ImplementationRepository";
@@ -77,7 +78,7 @@ Config_Backing_Store::loadServers ()
       ACE_TString name;
       while (config_.enumerate_sections (root, index, name) == 0)
         {
-          ACE_CString server_id, cmdline, dir, envstr, partial_ior, ior, aname;
+          ACE_CString server_id, cmdline, dir, envstr, partial_ior, ior, aname, jacorbstr;
           u_int amodeint = ImplementationRepository::MANUAL;
           u_int start_limit;
 
@@ -88,6 +89,7 @@ Config_Backing_Store::loadServers ()
 
           // Ignore any missing values. Server name is enough on its own.
           config_.get_string_value (key, SERVER_ID, server_id);
+          config_.get_string_value (key, JACORB_SERVER, jacorbstr);
           config_.get_string_value (key, ACTIVATOR, aname);
           config_.get_string_value (key, STARTUP_COMMAND, cmdline);
           config_.get_string_value (key, WORKING_DIR, dir);
@@ -103,7 +105,8 @@ Config_Backing_Store::loadServers ()
           ImplementationRepository::EnvironmentList env_vars =
             ImR_Utils::parseEnvList (envstr);
 
-          Server_Info_Ptr info (new Server_Info(server_id, name, aname,
+          bool jacorb_server = jacorbstr == "1" ? true : false;
+          Server_Info_Ptr info (new Server_Info(server_id, name,  jacorb_server, aname,
             cmdline, env_vars, dir, amode, start_limit, partial_ior, ior));
           servers().bind (name, info);
           index++;
@@ -177,6 +180,7 @@ Config_Backing_Store::persistent_update(const Server_Info_Ptr& info, bool )
   ACE_CString envstr = ImR_Utils::envListToString(info->env_vars);
 
   this->config_.set_string_value (key, SERVER_ID, info->server_id.c_str());
+  this->config_.set_string_value (key, JACORB_SERVER, info->jacorb_server ? "1" : "0");
   this->config_.set_string_value (key, ACTIVATOR, info->activator.c_str());
   this->config_.set_string_value (key, STARTUP_COMMAND, info->cmdline.c_str());
   this->config_.set_string_value (key, WORKING_DIR, info->dir.c_str());

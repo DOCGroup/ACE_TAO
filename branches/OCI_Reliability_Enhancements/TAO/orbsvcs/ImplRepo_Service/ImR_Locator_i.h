@@ -125,6 +125,8 @@ private:
   void connect_server(UpdateableServerInfo& info);
 
   PortableServer::POA_ptr findPOA(const char* name);
+
+  void parse_id(const char* id, ACE_CString& server_id, ACE_CString& name, bool& jacorb_server);
 private:
 
   // The class that handles the forwarding.

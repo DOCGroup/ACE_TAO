@@ -5,6 +5,7 @@ Server_Info::Server_Info
 (
  const ACE_CString& serverId,
  const ACE_CString& server_name,
+ bool jacorbs,
  const ACE_CString& aname,
  const ACE_CString& cmdline,
  const ImplementationRepository::EnvironmentList& env,
@@ -16,6 +17,7 @@ Server_Info::Server_Info
  ImplementationRepository::ServerObject_ptr svrobj)
  : server_id (serverId)
  , name (server_name)
+ , jacorb_server( jacorbs)
  , activator (aname)
  , cmdline( cmdline)
  , env_vars (env)
@@ -37,7 +39,8 @@ Server_Info::createImRServerInfo (void) const
   ImplementationRepository::ServerInformation* info;
   ACE_NEW_THROW_EX (info, ImplementationRepository::ServerInformation, CORBA::NO_MEMORY ());
 
-  info->server = name.c_str ();
+  ACE_CString jacorb_name ("JACORB:" + name);
+  info->server = jacorb_server ? jacorb_name.c_str () : name.c_str ();  info->startup.command_line = cmdline.c_str ();
   info->startup.command_line = cmdline.c_str ();
   info->startup.environment = env_vars;
   info->startup.working_directory = dir.c_str ();

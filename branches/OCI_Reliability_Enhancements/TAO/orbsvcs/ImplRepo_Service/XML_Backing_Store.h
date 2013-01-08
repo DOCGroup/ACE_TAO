@@ -67,6 +67,7 @@ public:
   virtual void load_server (
     const ACE_CString& server_id,
     const ACE_CString& server_name,
+    bool jacorb_server,
     const ACE_CString& activator_name,
     const ACE_CString& cmdline,
     const ImplementationRepository::EnvironmentList& env_vars,

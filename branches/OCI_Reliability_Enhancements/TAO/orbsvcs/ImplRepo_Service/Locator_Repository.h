@@ -68,6 +68,7 @@ public:
   /// Add a new server to the Repository
   int add_server (const ACE_CString& server_id,
     const ACE_CString& name,
+    bool jacorbs,
     const ACE_CString& aname,
     const ACE_CString& startup_command,
     const ImplementationRepository::EnvironmentList& environment_vars,

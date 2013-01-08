@@ -30,6 +30,7 @@ struct Server_Info
 {
   Server_Info (const ACE_CString& serverId,
     const ACE_CString& name,
+    bool jacorbs,
     const ACE_CString& aname,
     const ACE_CString& cmdline,
     const ImplementationRepository::EnvironmentList& env,
@@ -49,6 +50,7 @@ struct Server_Info
   /// The name of the server.
   ACE_CString server_id;
   ACE_CString name;
+  bool jacorb_server;
 
   /// The name of the activator in which this server runs
   ACE_CString activator;
