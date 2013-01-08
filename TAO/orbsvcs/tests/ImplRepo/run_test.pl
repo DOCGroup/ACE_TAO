@@ -150,7 +150,7 @@ my $imr_N_SRV_cmd = $imr->LocalFile ($N_SRV_cmd);
 ###############################################################################
 # Helper subroutines
 ###############################################################################
- 
+
 sub setup_repo
 {
     my $repo_ref = shift;
@@ -2157,7 +2157,7 @@ sub failover_test
     if (add_servers(\@repo_for_srvr, \@imr_airplaneiorfile) != 0) {
         return 1;
     }
-    
+
     print "\n\nstarting primary tao_imr_locator again\n";
     $imr->DeleteFile ($imriorfile);
     $repo{IMR}->Arguments ("-d $test_debug_level -o $repo{imr_imriorfile} " .
