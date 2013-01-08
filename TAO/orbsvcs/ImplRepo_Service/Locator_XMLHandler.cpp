@@ -71,7 +71,8 @@ Locator_XMLHandler::startElement (const ACEXML_Char*,
             }
           if (attrs->getLength () >= index)
             {
-              this->jacorb_server_ = attrs->getValue (index++);
+              this->jacorb_server_ =
+                (ACE_OS::atoi (attrs->getValue (index++)) != 0);
             }
           for ( ; index < attrs->getLength(); ++index)
             {
