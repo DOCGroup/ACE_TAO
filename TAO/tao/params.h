@@ -241,6 +241,9 @@ public:
   void thread_lane_resources_manager_factory_name (const char *s);
   const char *thread_lane_resources_manager_factory_name (void) const;
 
+  void dynamic_thread_pool_config_name (const char *s);
+  const char *dynamic_thread_pool_config_name (void) const;
+
   void stub_factory_name (const char *s);
   const char *stub_factory_name (void) const;
 
@@ -466,6 +469,13 @@ private:
    * "RT_Thread_Lane_Resources_Manager_Factory".
    */
   ACE_CString thread_lane_resources_manager_factory_name_;
+
+  /**
+   * Name of the non-RT dynamic thread pool configuration set to load.
+   * This is only used if the Dynamic_TP library is linked. Default
+   * is an empty string.
+   */
+  ACE_CString dynamic_thread_pool_config_name_;
 
   /**
    * Name of the service object used to create the RootPOA.  The
