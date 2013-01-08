@@ -863,7 +863,7 @@ ImR_Locator_i::parse_id(const char* id, ACE_CString& server_id, ACE_CString& nam
       server_id = idstr.substr (0, pos - id);
       name = idstr.substr (pos - id + 1);
       if (server_id == "JACORB")
-	    {
+        {
           jacorb_server = true;
           ssize_t idx = name.find("/");
           server_id = name.substr(0, idx);
