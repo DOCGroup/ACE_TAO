@@ -45,6 +45,7 @@ Locator_XMLHandler::startElement (const ACEXML_Char*,
       // We'll use this as a key to determine if we've got a valid record
       this->server_name_ = ACE_TEXT("");
       this->env_vars_.clear();
+      this->jacorb_server_ = false;
 
       // if attrs exists and if the previously required 9 fields
       const size_t previous_size = 9;
@@ -67,6 +68,10 @@ Locator_XMLHandler::startElement (const ACEXML_Char*,
             {
               this->server_started_ =
                 (ACE_OS::atoi (attrs->getValue (index++)) != 0);
+            }
+          if (attrs->getLength () >= index)
+            {
+              this->jacorb_server_ = attrs->getValue (index++);
             }
           for ( ; index < attrs->getLength(); ++index)
             {
@@ -121,7 +126,7 @@ Locator_XMLHandler::endElement (const ACEXML_Char*,
     ImplementationRepository::EnvironmentList env_vars;
     convertEnvList (this->env_vars_, env_vars);
     this->repo_.load_server(
-      this->server_id_, this->server_name_,
+		this->server_id_, this->server_name_, this->jacorb_server_,
       this->activator_name_, this->command_line_,
       env_vars, this->working_dir_, amode,
       limit, this->partial_ior_, this->server_object_ior_,

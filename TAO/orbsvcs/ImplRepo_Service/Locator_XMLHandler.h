@@ -69,6 +69,7 @@ public:
   /// the server related parameters
   ACE_CString server_id_;
   ACE_TString server_name_;
+  bool jacorb_server_;
   ACE_TString activator_name_;
   ACE_TString command_line_;
   ACE_TString activation_;

@@ -421,7 +421,11 @@ ImR_Locator_i::activate_server_by_name (const char* name, bool manual_start)
   // servers unless manual_start=true
   ACE_ASSERT (name != 0);
 
-  UpdateableServerInfo info(this->repository_.get(), name);
+  ACE_CString serverKey;
+  ACE_CString server_id;
+  bool jacorb_server = false;
+  parse_id(name, server_id, serverKey, jacorb_server);
+  UpdateableServerInfo info(this->repository_.get(), serverKey);
   if (info.null ())
     {
       ACE_ERROR ((
@@ -447,9 +451,21 @@ ImR_Locator_i::activate_server_by_object (const char* object_name)
   ACE_CString server_name (object_name);
   ACE_CString::size_type pos = server_name.find ('/');
   if (pos != ACE_CString::npos)
-    server_name = server_name.substr (pos + 1);
-
-  return activate_server_by_name (server_name.c_str (), false);
+    {
+      try
+        {
+          return activate_server_by_name (object_name, false);
+        }
+      catch (const ImplementationRepository::NotFound&)
+        {
+          server_name = server_name.substr (pos + 1);
+          return activate_server_by_name (server_name.c_str (), false);
+        }
+    }
+  else
+    {
+      return activate_server_by_name (server_name.c_str (), false);
+    }
 }
 
 char*
@@ -775,14 +791,19 @@ ImR_Locator_i::add_or_update_server (
       limit = 1;
     }
 
-  UpdateableServerInfo info(this->repository_.get(), server);
+  ACE_CString serverKey;
+  ACE_CString server_id;
+  bool jacorb_server = false;
+  parse_id(server, server_id, serverKey, jacorb_server);
+  UpdateableServerInfo info(this->repository_.get(), serverKey);
   if (info.null ())
     {
       if (this->debug_ > 1)
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT("ImR: Adding server <%C>.\n"), server));
 
       this->repository_->add_server ("",
-                                    server,
+                                    serverKey,
+                                    jacorb_server,
                                     options.activator.in (),
                                     options.command_line.in (),
                                     options.environment,
@@ -833,6 +854,28 @@ ImR_Locator_i::add_or_update_server (
 }
 
 void
+ImR_Locator_i::parse_id(const char* id, ACE_CString& server_id, ACE_CString& name, bool& jacorb_server)
+{
+  const char *pos = ACE_OS::strchr (id, ':');
+  if (pos)
+    {
+      ACE_CString idstr (id);
+      server_id = idstr.substr (0, pos - id);
+      name = idstr.substr (pos - id + 1);
+      if (server_id == "JACORB")
+	    {
+          jacorb_server = true;
+          ssize_t idx = name.find("/");
+          server_id = name.substr(0, idx);
+        }
+    }
+  else
+    {
+      name = id;
+    }
+}
+
+void
 ImR_Locator_i::remove_server (const char* name)
 {
   ACE_ASSERT (name != 0);
@@ -853,16 +896,19 @@ ImR_Locator_i::remove_server (const char* name)
   // be valid, and the actual Server_Info will be destroyed when the last
   // one goes out of scope.
 
-  Server_Info_Ptr info = this->repository_->get_server (name);
+  ACE_CString serverKey;
+  ACE_CString server_id;
+  bool jacorb_server = false;
+  parse_id(name, server_id, serverKey, jacorb_server);
+  Server_Info_Ptr info = this->repository_->get_server (serverKey);
   if (! info.null ())
     {
-      if (this->repository_->remove_server (name) == 0)
+      if (this->repository_->remove_server (serverKey) == 0)
         {
           if (this->debug_ > 1)
-            ACE_DEBUG ((LM_DEBUG, ACE_TEXT("ImR: Removing Server <%C>...\n"),
-                        name));
+            ACE_DEBUG ((LM_DEBUG, ACE_TEXT("ImR: Removing Server <%C>...\n"), name));
 
-          PortableServer::POA_var poa = findPOA (name);
+          PortableServer::POA_var poa = findPOA (serverKey.c_str());
           if (! CORBA::is_nil (poa.in ()))
             {
               bool etherealize = true;
@@ -905,7 +951,12 @@ ImR_Locator_i::shutdown_server (const char* server)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT("ImR: Shutting down server <%C>.\n"),
                 server));
 
-  UpdateableServerInfo info(this->repository_.get(), server);
+  ACE_CString name;
+  ACE_CString server_id;
+  bool jacorb_server = false;
+  parse_id(server, server_id, name, jacorb_server);
+
+  UpdateableServerInfo info(this->repository_.get(), name);
   if (info.null ())
     {
       ACE_ERROR ((
@@ -974,18 +1025,8 @@ ImR_Locator_i::server_is_running (const char* id,
 
   ACE_CString server_id;
   ACE_CString name;
-
-  const char *pos = ACE_OS::strchr (id, ':');
-  if (pos)
-  {
-    ACE_CString idstr (id);
-    server_id = idstr.substr (0, pos - id);
-    name = idstr.substr (pos - id + 1);
-  }
-  else
-  {
-    name = id;
-  }
+  bool jacorb_server = false;
+  parse_id(id, server_id, name, jacorb_server);
 
   if (this->debug_ > 0)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT("ImR: Server %C is running at %C.\n"),
@@ -1013,6 +1054,7 @@ ImR_Locator_i::server_is_running (const char* id,
       ImplementationRepository::EnvironmentList env (0);
       this->repository_->add_server (server_id,
                                     name,
+                                    jacorb_server,
                                     "", // no activator
                                     "", // no cmdline
                                     ImplementationRepository::EnvironmentList (),
@@ -1092,7 +1134,11 @@ ImR_Locator_i::find (const char* server,
 {
   ACE_ASSERT (server != 0);
 
-  UpdateableServerInfo info(this->repository_.get(), server);
+  ACE_CString serverKey;
+  ACE_CString server_id;
+  bool jacorb_server = false;
+  parse_id(server, server_id, serverKey, jacorb_server);
+  UpdateableServerInfo info(this->repository_.get(), serverKey);
   if (! info.null ())
     {
       imr_info = info->createImRServerInfo ();

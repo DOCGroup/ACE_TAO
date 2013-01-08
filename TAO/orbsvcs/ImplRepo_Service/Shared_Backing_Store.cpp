@@ -939,6 +939,7 @@ void
 Shared_Backing_Store::load_server (
   const ACE_CString& server_id,
   const ACE_CString& server_name,
+  bool jacorb_server,
   const ACE_CString& activator_name,
   const ACE_CString& startup_cmd,
   const ImplementationRepository::EnvironmentList& env_vars,
@@ -966,6 +967,7 @@ Shared_Backing_Store::load_server (
           si->ior = ior;
         }
       si->server_id = server_id;
+      si->jacorb_server = jacorb_server;
       si->activator = activator_name;
       si->cmdline = startup_cmd;
       si->env_vars = env_vars;
@@ -997,7 +999,7 @@ Shared_Backing_Store::load_server (
       }
       // create new or replace the existing entry
       XML_Backing_Store::load_server(
-        server_id, server_name, activator_name, startup_cmd, env_vars, working_dir,
+        server_id, server_name, jacorb_server, activator_name, startup_cmd, env_vars, working_dir,
         actmode, start_limit, partial_ior, ior, server_started, extra_params);
     }
 

@@ -266,6 +266,7 @@ int
 Locator_Repository::add_server (
   const ACE_CString& server_id,
   const ACE_CString& name,
+  bool jacorbs,
   const ACE_CString& aname,
   const ACE_CString& startup_command,
   const ImplementationRepository::EnvironmentList& env_vars,
@@ -283,7 +284,7 @@ Locator_Repository::add_server (
     }
 
   int limit = start_limit < 1 ? 1 : start_limit;
-  Server_Info_Ptr info(new Server_Info (server_id, name, aname,
+  Server_Info_Ptr info(new Server_Info (server_id, name, jacorbs, aname,
     startup_command, env_vars, working_dir, activation, limit, partial_ior,
     ior, svrobj));
 
