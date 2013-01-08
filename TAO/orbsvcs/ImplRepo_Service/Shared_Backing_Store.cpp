@@ -958,40 +958,36 @@ Shared_Backing_Store::load_server (
   Server_Info_Ptr si;
   const bool new_server = (this->servers ().find (server_name, si) != 0);
 
-  if (!new_server)
-    {
-      // is the server object new
-      const bool new_ior = si->ior != ior;
-      if (new_ior)
-        {
-          si->ior = ior;
-        }
-      si->server_id = server_id;
-      si->jacorb_server = jacorb_server;
-      si->activator = activator_name;
-      si->cmdline = startup_cmd;
-      si->env_vars = env_vars;
-      si->dir = working_dir;
-      si->activation_mode = actmode;
-      si->start_limit = start_limit;
-      si->partial_ior = partial_ior;
-
-      if (!server_started)
-        {
-          si->server = ImplementationRepository::ServerObject::_nil();
-        }
-      else
-        // will create a new server below if no previous server
-        // or the ior has changed
-        server_started = CORBA::is_nil(si->server) || new_ior;
-    }
-  else
+  if (new_server)
     {
       // create new or replace the existing entry
       XML_Backing_Store::load_server(
         server_id, server_name, jacorb_server, activator_name, startup_cmd, env_vars, working_dir,
         actmode, start_limit, partial_ior, ior, server_started, extra_params);
+      return;
     }
+
+  // is the server object new
+  const bool new_ior = si->ior != ior;
+  if (new_ior)
+    si->ior = ior;
+
+  si->server_id = server_id;
+  si->jacorb_server = jacorb_server;
+  si->activator = activator_name;
+  si->cmdline = startup_cmd;
+  si->env_vars = env_vars;
+  si->dir = working_dir;
+  si->activation_mode = actmode;
+  si->start_limit = start_limit;
+  si->partial_ior = partial_ior;
+
+  if (!server_started)
+    si->server = ImplementationRepository::ServerObject::_nil();
+  else
+    // will create a new server below if no previous server
+    // or the ior has changed
+    server_started = CORBA::is_nil(si->server) || new_ior;
 
   create_server(server_started, si);
 }

@@ -283,6 +283,8 @@ XML_Backing_Store::create_server(bool server_started, const Server_Info_Ptr& si)
         ImplementationRepository::ServerObject::_unchecked_narrow (obj.in());
       si->last_ping = ACE_Time_Value::zero;
     }
+  else
+    si->server = ImplementationRepository::ServerObject::_nil();
 }
 
 void
