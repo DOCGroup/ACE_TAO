@@ -39,8 +39,14 @@ Server_Info::createImRServerInfo (void) const
   ImplementationRepository::ServerInformation* info;
   ACE_NEW_THROW_EX (info, ImplementationRepository::ServerInformation, CORBA::NO_MEMORY ());
 
-  ACE_CString jacorb_name ("JACORB:" + name);
-  info->server = jacorb_server ? jacorb_name.c_str () : name.c_str ();  info->startup.command_line = cmdline.c_str ();
+  info->startup.command_line = cmdline.c_str ();
+  if (jacorb_server)
+    {
+      ACE_CString jacorb_name ("JACORB:" + name);
+      info->server = jacorb_name.c_str();
+    }
+  else
+    info->server = name.c_str();
   info->startup.command_line = cmdline.c_str ();
   info->startup.environment = env_vars;
   info->startup.working_directory = dir.c_str ();
