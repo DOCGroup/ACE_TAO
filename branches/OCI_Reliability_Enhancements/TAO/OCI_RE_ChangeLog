@@ -1,3 +1,9 @@
+Tue Jan  8 20:44:08 UTC 2013  Brian Johnson  <johnsonb@ociweb.com>
+
+        * orbsvcs/tests/ImplRepo/run_test.pl:
+
+          Cleanup fuzz error.
+
 Tue Jan  8 20:15:02 UTC 2013  Brian Johnson  <johnsonb@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/Locator_XMLHandler.cpp:
@@ -36,6 +42,23 @@ Tue Jan  8 18:15:28 UTC 2013  Brian Johnson  <johnsonb@ociweb.com>
         * orbsvcs/tests/ImplRepo/README:
 
           Added fault tolerant ImplRepo_Service documentation.
+
+Tue Jan  8 17:55:22 UTC 2013  Carey Morris  <morrisc@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Config_Backing_Store.cpp
+        * orbsvcs/ImplRepo_Service/Shared_Backing_Store.h
+        * orbsvcs/ImplRepo_Service/Shared_Backing_Store.cpp
+        * orbsvcs/ImplRepo_Service/Locator_Repository.h
+        * orbsvcs/ImplRepo_Service/Locator_Repository.cpp
+        * orbsvcs/ImplRepo_Service/INS_Locator.cpp
+        * orbsvcs/ImplRepo_Service/Server_Info.h
+        * orbsvcs/ImplRepo_Service/Server_Info.cpp
+        * orbsvcs/ImplRepo_Service/Locator_XMLHandler.h
+        * orbsvcs/ImplRepo_Service/Locator_XMLHandler.cpp
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.h
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp
+        * orbsvcs/ImplRepo_Service/XML_Backing_Store.h
+        * orbsvcs/ImplRepo_Service/XML_Backing_Store.cpp
 
 Tue Jan  8 07:50:31 UTC 2013  Phil Mesnier  <mesnier_p@office.socket.net>
 
