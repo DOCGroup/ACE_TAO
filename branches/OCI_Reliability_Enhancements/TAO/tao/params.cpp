@@ -56,6 +56,7 @@ TAO_ORB_Parameters::TAO_ORB_Parameters (void)
   , stub_factory_name_ ("Default_Stub_Factory")
   , endpoint_selector_factory_name_ ("Default_Endpoint_Selector_Factory")
   , thread_lane_resources_manager_factory_name_ ("Default_Thread_Lane_Resources_Manager_Factory")
+  , dynamic_thread_pool_config_name_ ()
   , poa_factory_name_ ("TAO_Object_Adapter_Factory")
   , poa_factory_directive_
       (ACE_DYNAMIC_SERVICE_DIRECTIVE("TAO_Object_Adapter_Factory",
@@ -360,6 +361,18 @@ const char *
 TAO_ORB_Parameters::thread_lane_resources_manager_factory_name (void) const
 {
   return this->thread_lane_resources_manager_factory_name_.c_str ();
+}
+
+void
+TAO_ORB_Parameters::dynamic_thread_pool_config_name (const char *s)
+{
+  this->dynamic_thread_pool_config_name_ = s;
+}
+
+const char *
+TAO_ORB_Parameters::dynamic_thread_pool_config_name (void) const
+{
+  return this->dynamic_thread_pool_config_name_.c_str ();
 }
 
 void

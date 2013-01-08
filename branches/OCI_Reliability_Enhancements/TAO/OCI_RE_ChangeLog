@@ -1,3 +1,22 @@
+Tue Jan  8 07:50:31 UTC 2013  Phil Mesnier  <mesnier_p@office.socket.net>
+
+        * tao/Dynamic_TP/DTP_Thread_Lane_Resources_Manager.h:
+        * tao/Dynamic_TP/DTP_Thread_Lane_Resources_Manager.cpp:
+        * tao/Dynamic_TP/DTP_Thread_Pool.h:
+        * tao/Dynamic_TP/DTP_Thread_Pool.inl:
+        * tao/Dynamic_TP/DTP_Thread_Pool.cpp:
+        * tao/Dynamic_TP/Dynamic_TP_Config.cpp:
+        * tao/Dynamic_TP/Dynamic_TP_ORBInitializer.cpp:
+
+        * tao/ORB_Core.cpp:
+        * tao/params.h:
+        * tao/params.cpp:
+
+          Intermediate commit of ORB dynamic thread pool implementation. This borrows from
+          the RTCORBA ThreadPool policy but with an aim towards simplifying. The config
+          uses the same thread pool definition struct as the POA thread pool. To configure
+          an ORB, pass -ORBDynamicThreadPoolName to ORB_init().
+
 Mon Jan  7 19:19:05 UTC 2013  Byron Harris  <harrisb@ociweb.com>
 
         * orbsvcs/orbsvcs/PortableGroup/PG_Group_Factory.h:
