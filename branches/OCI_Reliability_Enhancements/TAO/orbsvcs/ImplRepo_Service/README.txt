@@ -188,11 +188,43 @@ Commandline Arguments that can be passed to ImplRepo_Service
 -o  generate the ior.
 -x  support persistence to the ImplRepo_Service. We use XML to support
     persistence. Names of the activators registered with the locator,
-	their IORs, and the servers registered with each of the activators are
-	saved to the xml file. Use this option to pass the name of the file
-	where the data has to be saved.
+    their IORs, and the servers registered with each of the activators are
+    saved to the xml file. Use this option to pass the name of the file
+    where the data has to be saved.
+-p  similar to "-x" but using an ACE_Configuration_Heap file to persist
+    the data.
+-r  similar to "-p" but using an ACE_Configuration_Win32Registry to persist
+    the data. (only available on Win32 platforms)
+--directory  similar to "-x" option, but the repository will be written out
+    to multiple files in the indicated directory: "imr_listings.xml" which
+    indicates all servers and activators in the repository indicating the
+    filename containing that server's or activator's persistence data.
+    This option is used along with the "--primary" or "--backup" option
+    to create a Fault Tolerant ImplRepo_Service.
+--primary  pass along with "--directory <dir>" to startup the primary
+    ImR_Locator. See ft_imr_locator subsection.
+--backup  pass along with "--directory <dir>" to startup the backup
+    ImR_Locator. See ft_imr_locator subsection.
 
 	And, ofcourse, the ORB Options.
+
+@subsection ft_imr_locator FaultTolerant_ImR_Locator
+
+	If an ImR_Locator is started passing in "--directory <dir>" and
+  "--primary", the "ImplRepo_Service" ior will not be available until
+  a second ImR_Locator is started passing in "--directory <dir>"
+  (indicating the same file system location) and "--backup". Once the
+  primary and backup have been started the (fault tolerant)
+  "ImplRepo_Service" ior will be available (written to the
+  "-o <filename>" if passed to the ImR_Locator). As long as both the
+  primary and backup ImR_Locators are not shutdown at the same time
+  the Fault Tolerant ImplRepo_Service will always be available. At
+  startup the primary must be started first, then the backup. When
+  a single ImR_Locator goes down, it can be restarted at anytime
+  (using the same ORBEndPoint). Since the fault tolerant
+  "ImplRepo_Service" ior has the merged profiles of the primary and
+  backup ImR_Locators, the "-o <ior file>" option should be used to
+  provide a reference to the "ImplRepo_Service" to all applications.
 
 
 @subsection activator ImR_Activator

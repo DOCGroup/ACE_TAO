@@ -9,10 +9,27 @@ nt_service_ir             same as above but runs ImplRepo as an NT service.
 nestea                    runs nestea client and server without ImplRepo.
 nestea_ir                 same as above but uses ImplRepo.
 both_ir                   combines airplane_ir and nestea_ir.
-persistent_ir             same as airplane_ir, but using persistent ImplRepo.
+persistent_ir             same as airplane_ir, but using persistent
+                          "-x <file>" flag for the ImplRepo.
+persistent_ir_hash        same as persistent_ir, but using "-p <file>" flag.
+persistent_ir_registry    same as persistent_ir, but using "-r" flag
+                          (windows registry flag).
+persistent_ir_shared      same as persistent_ir, but using
+                          "--directory <dir>" flag.
+persistent_ft             runs a primary and backup ImR Locator, verifying
+                          persistence works in different scenarios of
+                          the primary or backup being shutdown. Must also
+                          pass the "-replica" command to run_test.pl for
+                          this test to run.
+failover                  runs a primary and backup ImR Locator, verifying
+                          different scenarios of the primary or backup being
+                          shutdown and clients, servers, activators, and
+                          tao_imr activities being unaffected. Must also
+                          pass the "-replica" command to run_test.pl for
+                          this test to run.
 
-The nt_service_ir test will work only on Win32 platforms. For the test to
-run successfully, these conditions must be met:
+The nt_service_ir and persistent_ir_registry tests will work only on Win32
+platforms. For the test to run successfully, these conditions must be met:
 
 --  The user must be logged in as administrator, or have administrative
     priveleges (in order to register an NT service).

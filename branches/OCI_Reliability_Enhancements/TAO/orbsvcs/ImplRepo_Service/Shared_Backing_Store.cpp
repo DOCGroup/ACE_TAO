@@ -987,16 +987,6 @@ Shared_Backing_Store::load_server (
     }
   else
     {
-      if (!new_server)
-      {
-        ACE_DEBUG((
-          LM_INFO,
-          ACE_TEXT("(%P|%t) Warning: Server id=%C, name=%C, repo_id=%d, ")
-          ACE_TEXT("repo_type=%d, being replaced by persisted data with ")
-          ACE_TEXT("repo_id=%d, repo_type=%d\n"),
-          server_id.c_str(), server_name.c_str(),
-          entry.int_id_.repo_id, entry.int_id_.repo_type));
-      }
       // create new or replace the existing entry
       XML_Backing_Store::load_server(
         server_id, server_name, jacorb_server, activator_name, startup_cmd, env_vars, working_dir,
