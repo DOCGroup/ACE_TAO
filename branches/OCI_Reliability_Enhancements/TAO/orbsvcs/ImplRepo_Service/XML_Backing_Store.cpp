@@ -114,6 +114,7 @@ XML_Backing_Store::persist (FILE* fp,
   ACE_OS::fprintf (fp," partial_ior=\"%s\"", partial_ior.c_str ());
   ACE_OS::fprintf (fp," ior=\"%s\"", ior.c_str ());
   ACE_OS::fprintf (fp," started=\"%d\"", !CORBA::is_nil(info.server.in()));
+  ACE_OS::fprintf (fp," jacorb_server=\"%d\"", info.jacorb_server);
 
   NameValues::const_iterator name_value;
   for (name_value = name_values.begin(); name_value != name_values.end(); ++name_value)
