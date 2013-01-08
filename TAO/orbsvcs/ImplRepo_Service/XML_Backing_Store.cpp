@@ -257,7 +257,7 @@ XML_Backing_Store::load_server (
   const ACE_CString& partial_ior,
   const ACE_CString& ior,
   bool server_started,
-  const NameValues& extra_params)
+  const NameValues& )
 {
   const int limit = start_limit < 1 ? 1 : start_limit;
 
