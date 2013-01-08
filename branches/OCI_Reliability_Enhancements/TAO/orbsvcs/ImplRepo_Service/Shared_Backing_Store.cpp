@@ -951,10 +951,10 @@ Shared_Backing_Store::load_server (
   bool server_started,
   const NameValues& extra_params)
 {
-  const ServerUIMap::ENTRY& entry =
-    unique_id(server_name, this->repo_values_, extra_params,
-              this->server_uids_, this->imr_type_, this->repo_id_,
-              this->opts_.debug());
+  // ensure there is an entry for this server
+  unique_id(server_name, this->repo_values_, extra_params,
+            this->server_uids_, this->imr_type_, this->repo_id_,
+            this->opts_.debug());
   Server_Info_Ptr si;
   const bool new_server = (this->servers ().find (server_name, si) != 0);
 

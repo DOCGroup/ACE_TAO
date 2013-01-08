@@ -291,7 +291,7 @@ void
 XML_Backing_Store::load_activator (const ACE_CString& activator_name,
                                    long token,
                                    const ACE_CString& ior,
-                                   const NameValues& extra_params)
+                                   const NameValues& )
 {
   Activator_Info_Ptr info (new Activator_Info (activator_name, token, ior));
   this->activators().rebind(activator_name, info);
