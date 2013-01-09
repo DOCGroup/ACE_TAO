@@ -1,3 +1,9 @@
+Wed Jan  9 15:40:43 UTC 2013  Byron Harris  <harrisb@ociweb.com>
+
+        * orbsvcs/tests/FT_Naming/FaultTolerance/client.cpp:
+
+          Fix previous commit that had incorrect variable setting.
+
 Wed Jan  9 15:29:44 UTC 2013  Byron Harris  <harrisb@ociweb.com>
 
         * orbsvcs/tests/FT_Naming/FaultTolerance/Basic.h:
