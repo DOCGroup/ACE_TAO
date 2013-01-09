@@ -1,3 +1,12 @@
+Wed Jan  9 16:46:56 UTC 2013  Byron Harris  <harrisb@ociweb.com>
+
+        * orbsvcs/tests/FT_Naming/FaultTolerant/client.cpp:
+
+          Removed original object group and member creation
+          and validation code as it's been supplanted by
+          testing of groups and members created using server.cpp,
+          LB_server, and Basic code.
+
 Wed Jan  9 16:15:12 UTC 2013  Byron Harris  <harrisb@ociweb.com>
 
         * orbsvcs/tests/FT_Naming/FaultTolerant:
