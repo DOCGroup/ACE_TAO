@@ -5,7 +5,7 @@ tao_ft_naming service supports the NameService and NamingManager interfaces.
 
 Here is a summary of the commands and options:
 
-tao_nsgroup group_create  -group <group> -policy <round | rand | least> -type_id <type_id>
+tao_nsgroup group_create  -group <group> -policy <round | rand | least>
 tao_nsgroup group_remove  -group <group>
 tao_nsgroup group_bind    -group <group> -name <name>
 tao_nsgroup group_unbind  -name <name>
@@ -17,16 +17,16 @@ tao_nsgroup member_show   -group <group> -location <location>
 tao_nsgroup member_list   -group <group>
 tao_nsgroup -help
 
-tao_nsgroup group_create -group <group> -policy <round | rand | least> -type_id <type_id>
+tao_nsgroup group_create -group <group> -policy <round | rand | least>
 
 	Adds the object group to to the load balancing naming manager service with the
-	specified selection policy and specified type id. On Creation, an object group
-	contains no member objects. Returns error if <group> is not unique.
+	specified selection policy. On Creation, an object group contains no member
+	objects. Returns error if <group> is not unique.
 
 	Returns Success(0), Error(1)
 
 	Example:
-	$ACE_ROOT/bin/tao_nsgroup group_create -group ieee -policy round -type_id IDL:omg.org/FT/NamingManager:1.0 \
+	$ACE_ROOT/bin/tao_nsgroup group_create -group ieee -policy round \
 		-ORBInitRef NameService=file://ns.ior -ORBInitRef NamingManager=file://nm.ior
 
 tao_nsgroup group_remove -group <group>
@@ -86,8 +86,8 @@ tao_nsgroup group_modify -group <group> -policy <round | rand | least>
 
 tao_nsgroup group_list
 
-	Displays all object groups that currently exist in the load balancing naming manager service by
-	selection policy.
+	Displays all object groups that currently exist in the load balancing naming
+	manager service by selection policy.
 
 	Returns Success(0), Error(1)
 
@@ -114,8 +114,9 @@ tao_nsgroup member_add -group <group> -location <location> -ior <ior>
 	Returns Success(0), Error(1)
 
 	Example:
-	$ACE_ROOT/bin/tao_nsgroup member_add -group ieee -location 127.0.0.1 -ior file://mo.ior \
-		-ORBInitRef NameService=file://ns.ior -ORBInitRef NamingManager=file://nm.ior
+	$ACE_ROOT/bin/tao_nsgroup member_add -group ieee -location 127.0.0.1 \
+		-ior file://mo.ior -ORBInitRef NameService=file://ns.ior \
+		-ORBInitRef NamingManager=file://nm.ior
 
 tao_nsgroup member_remove -group <group> -location <location>
 

@@ -657,18 +657,22 @@ do_failover_name_test (
       catch (const CosNaming::NamingContext::NotFound& ex)
         {
           ex._tao_print_exception (
-              "INFO: Unable to resolve wide context object from replica.\n");
+              ACE_TEXT ("INFO: Unable to resolve wide context object from ")
+              ACE_TEXT ("replica.\n"));
 
           // Try again to see if it just was a race condition
           try {
             CORBA::Object_var obj1_on_replica = root_context_1->resolve (wide);
             // We did find the object on the replica, but only after a wait.
             // This would be caused by a race condition to access the variable.
-            ACE_ERROR ((LM_ERROR, "INFO: Object appeared after a short wait.\n"));
+            ACE_ERROR (( LM_ERROR,
+                         ACE_TEXT ("INFO: Object appeared after a short ")
+                         ACE_TEXT ("wait.\n")));
           }
           catch (const CosNaming::NamingContext::NotFound& second_ex)
             {
-              ex._tao_print_exception ("ERROR: It really is not there. Failing...\n");
+              ex._tao_print_exception (
+                ACE_TEXT ("ERROR: It really is not there. Failing...\n"));
               return RC_ERROR;
             }
         }
@@ -676,7 +680,8 @@ do_failover_name_test (
   }
   catch (const CORBA::Exception& ex)
   {
-    ex._tao_print_exception (ACE_TEXT ("ERROR: Unable to create wide context"));
+    ex._tao_print_exception (
+      ACE_TEXT ("ERROR: Unable to create wide context"));
     return RC_ERROR;
   }
 
@@ -700,20 +705,23 @@ do_failover_name_test (
       // there is an error. This means the replica did
       // not register the loss of the context.
       ACE_ERROR ((LM_ERROR,
-                  "INFO: Unbound deep context not removed from replica. Trying again...\n"));
+                  ACE_TEXT ("INFO: Unbound deep context not removed from ")
+                  ACE_TEXT ("replica. Trying again...\n")));
       retried = true;  // Mark this so it can be reported in catch block.
 
       obj1_on_replica = root_context_1->resolve (wide1);
 
       ACE_ERROR_RETURN (( LM_ERROR,
-                          "ERROR: Unbound context not removed from on retry\n"),
+                          ACE_TEXT ("ERROR: Unbound context not removed from ")
+                          ACE_TEXT ("on retry\n")),
                           RC_ERROR);
     }
     catch (const CosNaming::NamingContext::NotFound& ex)
       {
         // Not on replica --- as it should be.
         if (retried)  // Was found on the retry
-          ACE_ERROR ((LM_ERROR, "INFO: Was removed after short wait.\n"));
+          ACE_ERROR (( LM_ERROR,
+                       ACE_TEXT ("INFO: Was removed after short wait.\n")));
       }
 
     // Remove the second to last context from the wide root Naming Context
@@ -772,25 +780,29 @@ do_failover_name_test (
       // there is an error. This means the replica did
       // not register the loss of the context.
       ACE_ERROR (( LM_ERROR,
-                   "INFO: Unbound deep context not removed from replica. Trying again...\n"));
+                   ACE_TEXT ("INFO: Unbound deep context not removed from ")
+                   ACE_TEXT ("replica. Trying again...\n")));
 
       retried = true;  // Mark this so it can be reported in catch block.
       obj1_on_replica = root_context_1->resolve (deep);
 
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "ERROR: Unbound context not removed from on retry\n"),
+                         ACE_TEXT ("ERROR: Unbound context not removed from ")
+                         ACE_TEXT ("on retry\n")),
                          RC_ERROR);
     }
     catch (const CosNaming::NamingContext::NotFound& ex)
       {
         // Not on replica --- as it should be.
         if (retried)  // Was found on the retry
-          ACE_ERROR ((LM_ERROR, "INFO: Was removed after short wait.\n"));
+          ACE_ERROR (( LM_ERROR,
+                       ACE_TEXT ("INFO: Was removed after short wait.\n")));
       }
   }
   catch (const CORBA::Exception& ex)
   {
-    ex._tao_print_exception (ACE_TEXT ("ERROR: Unable to delete objects"));
+    ex._tao_print_exception (
+      ACE_TEXT ("ERROR: Unable to delete objects"));
     return RC_ERROR;
   }
 
@@ -818,7 +830,7 @@ do_failover_name_test (
   catch (const CORBA::Exception& ex)
   {
     ex._tao_print_exception (
-        ACE_TEXT ( "ERROR: Unable to resolve object from redundant server"));
+        ACE_TEXT ("ERROR: Unable to resolve object from redundant server"));
     return RC_ERROR;
   }
 
@@ -975,7 +987,7 @@ do_failover_name_test (
   catch (const CORBA::Exception& ex)
   {
     ex._tao_print_exception (
-      ACE_TEXT ( "ERROR: Unable to resolve deep context from redundant server"));
+      ACE_TEXT ("ERROR: Unable to resolve deep context from redundant server"));
     return RC_ERROR;
   }
 
@@ -1184,18 +1196,21 @@ do_persistent_name_test (
       }
       catch (const CosNaming::NamingContext::NotFound& ex)
         {
-          ex._tao_print_exception ("ERROR: Unable to resolve object from repository.\n");
+          ex._tao_print_exception (
+            ACE_TEXT ("ERROR: Unable to resolve object from repository.\n"));
 
           // Try again...
           try {
             CORBA::Object_var obj1_on_replica = root_context_1->resolve (level1);
             // We did find the object on the repository, but only after a wait.
             // This would be caused by a race condition to access the variable.
-            ACE_ERROR ((LM_ERROR, "INFO: Object appeared after a short wait.\n"));
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("INFO: Object appeared after a short wait.\n")));
           }
           catch (const CosNaming::NamingContext::NotFound& second_ex)
             {
-              ex._tao_print_exception ("ERROR: It really is not there. Failing...\n");
+              ex._tao_print_exception (
+                ACE_TEXT ("ERROR: It really is not there. Failing...\n"));
               return RC_ERROR;
             }
         }
@@ -1265,18 +1280,22 @@ do_persistent_name_test (
       catch (const CosNaming::NamingContext::NotFound& ex)
         {
           ex._tao_print_exception (
-              "INFO: Unable to resolve wide context object from repository.\n");
+              ACE_TEXT ("INFO: Unable to resolve wide context object from ")
+              ACE_TEXT ("repository.\n"));
 
           // Try again to see if it just was a race condition
           try {
             CORBA::Object_var obj1_on_replica = root_context_1->resolve (wide);
             // We did find the object on the replica, but only after a wait.
             // This would be caused by a race condition to access the variable.
-            ACE_ERROR ((LM_ERROR, "INFO: Object appeared after a short wait.\n"));
+            ACE_ERROR (( LM_ERROR,
+                         ACE_TEXT ("INFO: Object appeared after a short ")
+                         ACE_TEXT ("wait.\n")));
           }
           catch (const CosNaming::NamingContext::NotFound& second_ex)
             {
-              ex._tao_print_exception ("ERROR: It really is not there. Failing...\n");
+              ex._tao_print_exception (
+                  ACE_TEXT ("ERROR: It really is not there. Failing...\n"));
               return RC_ERROR;
             }
         }
@@ -1284,8 +1303,8 @@ do_persistent_name_test (
   }
   catch (const CORBA::Exception& ex)
   {
-    ex._tao_print_exception (ACE_TEXT (
-        "ERROR: Unable to create or validate wide context"));
+    ex._tao_print_exception (
+      ACE_TEXT ("ERROR: Unable to create or validate wide context"));
     return RC_ERROR;
   }
 
@@ -1397,7 +1416,7 @@ do_persistent_objectgroup_test (
         if (loc.length() > 0) {
 
           ACE_DEBUG (( LM_DEBUG,
-                       "INFO: validating group member %C\n",
+                       ACE_TEXT ("INFO: validating group member %C\n"),
                        loc[0].id.in()));
 
           try
@@ -1425,7 +1444,8 @@ do_persistent_objectgroup_test (
               CORBA::String_var the_string = basic->get_string ();
 
               ACE_DEBUG (( LM_DEBUG,
-                           "INFO: object group member at %C reports %C\n",
+                           ACE_TEXT ("INFO: object group member at %C reports ")
+                           ACE_TEXT ("%C\n"),
                            loc[0].id.in(),
                            the_string.in ()));
 
@@ -1607,11 +1627,14 @@ do_equivalence_name_test (
             CORBA::Object_var obj1_on_replica = root_context_2->resolve (level1);
             // We did find the object on the replica, but only after a wait.
             // This would be caused by a race condition to access the variable.
-            ACE_ERROR ((LM_ERROR, "INFO: Object appeared after a short wait.\n"));
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("INFO: Object appeared after a short ")
+                        ACE_TEXT ("wait.\n")));
           }
           catch (const CosNaming::NamingContext::NotFound& second_ex)
             {
-              ex._tao_print_exception ("ERROR: It really is not there. Failing...\n");
+              ex._tao_print_exception (
+                ACE_TEXT ("ERROR: It really is not there. Failing...\n"));
               return RC_ERROR;
             }
         }
@@ -1619,7 +1642,8 @@ do_equivalence_name_test (
   }
   catch (const CORBA::Exception& ex)
   {
-    ex._tao_print_exception (ACE_TEXT ("ERROR: Unable to create a lot of objects"));
+    ex._tao_print_exception (
+      ACE_TEXT ("ERROR: Unable to create a lot of objects"));
     return RC_ERROR;
   }
 
@@ -1642,7 +1666,8 @@ do_equivalence_name_test (
   }
   catch (const CORBA::Exception& ex)
   {
-    ex._tao_print_exception (ACE_TEXT ("ERROR: Unable to create deep context"));
+    ex._tao_print_exception (
+      ACE_TEXT ("ERROR: Unable to create deep context"));
     return RC_ERROR;
   }
 
@@ -1672,7 +1697,8 @@ do_equivalence_name_test (
       catch (const CosNaming::NamingContext::NotFound& ex)
         {
           ex._tao_print_exception (
-              "INFO: Unable to resolve wide context object from replica.\n");
+              ACE_TEXT ("INFO: Unable to resolve wide context object from ")
+              ACE_TEXT ("replica.\n"));
 
           // Try again to see if it just was a race condition
           try {
@@ -1682,11 +1708,14 @@ do_equivalence_name_test (
 
             // We did find the object on the replica, but only after a wait.
             // This would be caused by a race condition to access the variable.
-            ACE_ERROR ((LM_ERROR, "INFO: Object appeared after a short wait.\n"));
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("INFO: Object appeared after a ")
+                        ACE_TEXT ("short wait.\n")));
           }
           catch (const CosNaming::NamingContext::NotFound& second_ex)
             {
-              ex._tao_print_exception ("ERROR: It really is not there. Failing...\n");
+              ex._tao_print_exception (
+                ACE_TEXT ("ERROR: It really is not there. Failing...\n"));
               return RC_ERROR;
             }
         }
@@ -1808,12 +1837,13 @@ do_equivalence_name_test (
         // Not on replica --- as it should be.
         if (retried)  // Was found on the retry
           ACE_ERROR (( LM_ERROR,
-                       "INFO: Was removed after short wait.\n"));
+                       ACE_TEXT ("INFO: Was removed after short wait.\n")));
       }
   }
   catch (const CORBA::Exception& ex)
   {
-    ex._tao_print_exception (ACE_TEXT ("ERROR: Unable to delete objects"));
+    ex._tao_print_exception (
+      ACE_TEXT ("ERROR: Unable to delete objects"));
     return RC_ERROR;
   }
 
