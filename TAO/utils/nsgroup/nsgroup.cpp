@@ -167,7 +167,7 @@ NSGROUP::start_orb (void)
     //
     //////////////////////////////////////////////////////////////////////////
     CORBA::Object_var naming_manager_object =
-      orb_->resolve_initial_references ("NamingManager");
+      orb_->resolve_initial_references ( ACE_TEXT_ALWAYS_CHAR("NamingManager") );
 
     FT_Naming::NamingManager_var naming_manager_ =
       FT_Naming::NamingManager::_narrow (naming_manager_object.in ());
@@ -182,7 +182,7 @@ NSGROUP::start_orb (void)
     //
     //////////////////////////////////////////////////////////////////////////
     CORBA::Object_var naming_object =
-      orb_->resolve_initial_references("NameService");
+      orb_->resolve_initial_references( ACE_TEXT_ALWAYS_CHAR("NameService") );
 
     CosNaming::NamingContextExt_var name_service_ =
       CosNaming::NamingContextExt::_narrow (naming_object.in ());
@@ -200,7 +200,7 @@ NSGROUP::start_orb (void)
   }
   catch (const CORBA::Exception& ex)
   {
-    ex._tao_print_exception ("\nException raised initialising ORB\n");
+    ex._tao_print_exception (ACE_TEXT("\nException raised initialising ORB\n"));
     return RC_ERROR;
   }
 
@@ -372,56 +372,54 @@ NSGROUP::parse_command_line (void)
 
     non_option_arg_count++;
 
-    //ACE_DEBUG ((LM_INFO, "Found non-option argument \"%s\"\n", this->argv_[i]));
 
-
-    if( ACE_OS::strncmp (this->argv_[i],"group_create",
-                        ACE_OS::strlen ("group_create")) == 0 ) {
+    if( ACE_OS::strncmp (this->argv_[i],ACE_TEXT("group_create"),
+                        ACE_OS::strlen (ACE_TEXT("group_create"))) == 0 ) {
 
       nsgroup_cmd_ =  NSGROUP_GROUP_CREATE;
 
-    } else if(ACE_OS::strncmp (this->argv_[i], "group_bind",
-                               ACE_OS::strlen ("group_bind")) == 0 ){
+    } else if(ACE_OS::strncmp (this->argv_[i], ACE_TEXT("group_bind"),
+                               ACE_OS::strlen (ACE_TEXT("group_bind"))) == 0 ){
 
       nsgroup_cmd_ =  NSGROUP_GROUP_BIND;
 
-    } else if(ACE_OS::strncmp (this->argv_[i], "group_unbind",
-                               ACE_OS::strlen ("group_unbind")) == 0 ){
+    } else if(ACE_OS::strncmp (this->argv_[i], ACE_TEXT("group_unbind"),
+                               ACE_OS::strlen (ACE_TEXT("group_unbind"))) == 0 ){
 
       nsgroup_cmd_ =  NSGROUP_GROUP_UNBIND;
 
-    } else if(ACE_OS::strncmp (this->argv_[i], "group_modify",
-                               ACE_OS::strlen ("group_modify")) == 0 ){
+    } else if(ACE_OS::strncmp (this->argv_[i], ACE_TEXT("group_modify"),
+                               ACE_OS::strlen (ACE_TEXT("group_modify"))) == 0 ){
 
       nsgroup_cmd_ =  NSGROUP_GROUP_MODIFY;
 
-    } else if(ACE_OS::strncmp (this->argv_[i], "group_list",
-                               ACE_OS::strlen ("group_list")) == 0 ){
+    } else if(ACE_OS::strncmp (this->argv_[i], ACE_TEXT("group_list"),
+                               ACE_OS::strlen (ACE_TEXT("group_list"))) == 0 ){
 
       nsgroup_cmd_ =  NSGROUP_GROUP_LIST;
 
-    } else if(ACE_OS::strncmp (this->argv_[i], "group_remove",
-                               ACE_OS::strlen ("group_remove")) == 0 ){
+    } else if(ACE_OS::strncmp (this->argv_[i], ACE_TEXT("group_remove"),
+                               ACE_OS::strlen (ACE_TEXT("group_remove"))) == 0 ){
 
       nsgroup_cmd_ =  NSGROUP_GROUP_REMOVE;
 
-    } else if(ACE_OS::strncmp (this->argv_[i], "member_list",
-                               ACE_OS::strlen ("member_list")) == 0 ){
+    } else if(ACE_OS::strncmp (this->argv_[i], ACE_TEXT("member_list"),
+                               ACE_OS::strlen (ACE_TEXT("member_list"))) == 0 ){
 
       nsgroup_cmd_ =  NSGROUP_MEMBER_LIST;
 
-    } else if(ACE_OS::strncmp (this->argv_[i], "member_add",
-                               ACE_OS::strlen ("member_add")) == 0 ){
+    } else if(ACE_OS::strncmp (this->argv_[i], ACE_TEXT("member_add"),
+                               ACE_OS::strlen (ACE_TEXT("member_add"))) == 0 ){
 
       nsgroup_cmd_ =  NSGROUP_MEMBER_ADD;
 
-    } else if(ACE_OS::strncmp (this->argv_[i], "member_remove",
-                               ACE_OS::strlen ("member_remove")) == 0 ){
+    } else if(ACE_OS::strncmp (this->argv_[i], ACE_TEXT("member_remove"),
+                               ACE_OS::strlen (ACE_TEXT("member_remove"))) == 0 ){
 
       nsgroup_cmd_ =  NSGROUP_MEMBER_REMOVE;
 
-    } else if(ACE_OS::strncmp (this->argv_[i], "member_show",
-                               ACE_OS::strlen ("member_show")) == 0 ){
+    } else if(ACE_OS::strncmp (this->argv_[i], ACE_TEXT("member_show"),
+                               ACE_OS::strlen (ACE_TEXT("member_show"))) == 0 ){
 
       nsgroup_cmd_ =  NSGROUP_MEMBER_SHOW;
 
