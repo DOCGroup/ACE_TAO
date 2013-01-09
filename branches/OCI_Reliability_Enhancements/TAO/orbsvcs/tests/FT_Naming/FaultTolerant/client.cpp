@@ -485,24 +485,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 //==============================================================================
 //
 //==============================================================================
-ACE_CString get_group_name (int i)
-{
-  char name[128];
-  ACE_OS::sprintf (name, ACE_TEXT_ALWAYS_CHAR ("test_group_%i"), i);
-  return ACE_CString (name);
-}
-
-ACE_CString get_member_location (int i, int j)
-{
-  char name[128];
-  ACE_OS::sprintf (name, ACE_TEXT_ALWAYS_CHAR ("test_location_%i_%i"), i, j);
-  return ACE_CString (name);
-}
-
-
-//==============================================================================
-//
-//==============================================================================
 /// Failover Name Test
 int
 do_failover_name_test (
@@ -1016,9 +998,6 @@ do_failover_objectgroup_test (
   const int RC_SUCCESS =  0;
   const int RC_ERROR   = -1;
 
-  int num_group_members = 1;
-
-
   FT_Naming::NamingManager_var naming_manager_1;
 
   try {
@@ -1094,50 +1073,6 @@ do_failover_objectgroup_test (
       ACE_DEBUG (( LM_DEBUG,
                    ACE_TEXT ("INFO: Object Group Found In Repository\n")));
     }
-
-    for (int i = 0; i < o_breadth; ++i)
-    {
-      ACE_CString group_name = get_group_name (i);
-
-      if (RC_SUCCESS != svc.group_create (group_name.c_str (), policy))
-      {
-        ACE_ERROR_RETURN (( LM_ERROR,
-                            ACE_TEXT ("ERROR: unable to create %s during validation\n"),
-                            group_name.c_str()),
-                            RC_ERROR);
-      }
-
-      for (int j = 0; j < num_group_members; ++j)
-      {
-        ACE_CString location = get_member_location (i, j);
-
-        if (RC_SUCCESS != svc.member_add ( group_name.c_str (),
-                                           location.c_str (),
-                                           nm1ref))
-        {
-          ACE_ERROR_RETURN (( LM_ERROR,
-                              ACE_TEXT ("ERROR: unable to create member with location %s during validation\n"),
-                              location.c_str()),
-                              RC_ERROR);
-        }
-      }
-    }
-
-    for (int i = 0; i < o_breadth; ++i)
-      {
-        ACE_CString group_name = get_group_name (i);
-        if (false == svc.group_exist (group_name.c_str()))
-        {
-          ACE_ERROR_RETURN (( LM_ERROR,
-                              ACE_TEXT ("ERROR: unable to find %s\n"),
-                              group_name.c_str()),
-                              RC_ERROR);
-        } else {
-          ACE_DEBUG (( LM_DEBUG,
-                       ACE_TEXT ("INFO: Object Group %s Found In Repository\n"),
-                       group_name.c_str ()));
-        }
-      }
 
 
   }
@@ -1372,11 +1307,10 @@ do_persistent_objectgroup_test (
   ACE_UNUSED_ARG (c_breadth);
   ACE_UNUSED_ARG (c_depth);
   ACE_UNUSED_ARG (o_breadth);
+  ACE_UNUSED_ARG (validate_only);
 
   const int RC_ERROR   = -1;
   const int RC_SUCCESS =  0;
-
-  int num_group_members = 1;
 
   FT_Naming::NamingManager_var naming_manager_1;
 
@@ -1417,7 +1351,6 @@ do_persistent_objectgroup_test (
                           ACE_TEXT ("ERROR: invalid ior <%s>\n"),nm1ref),
                           RC_ERROR);
     }
-
 
     NS_group_svc group_svc;
 
@@ -1536,51 +1469,6 @@ do_persistent_objectgroup_test (
                          basic_group_name),
                          RC_ERROR);
     }
-
-
-    const char* policy = "round";
-
-    if (false == validate_only )
-      {
-        for (int i = 0; i < o_breadth; ++i)
-          {
-            ACE_CString group_name = get_group_name (i);
-            if (RC_SUCCESS != group_svc.group_create (group_name.c_str (), policy))
-              {
-                ACE_ERROR_RETURN (( LM_ERROR,
-                                    ACE_TEXT ("ERROR: unable to create %s during validation\n"),
-                                    group_name.c_str()),
-                                    RC_ERROR);
-              }
-            for (int j = 0; j < num_group_members; ++j)
-              {
-                ACE_CString location = get_member_location (i, j);
-                if (RC_SUCCESS != group_svc.member_add (group_name.c_str (),
-                                                        location.c_str (),
-                                                        nm1ref))
-                  {
-                    ACE_ERROR_RETURN (( LM_ERROR,
-                                        ACE_TEXT ("ERROR: unable to create member with location %s during validation\n"),
-                                        location.c_str()),
-                                        RC_ERROR);
-                  }
-              }
-          }
-      }
-
-    for (int i = 0; i < o_breadth; ++i)
-      {
-        ACE_CString group_name = get_group_name (i);
-        if (false == group_svc.group_exist (group_name.c_str()))
-          {
-            ACE_ERROR_RETURN (( LM_ERROR,
-                                ACE_TEXT ("ERROR: unable to find %s\n"), group_name.c_str()),
-                                RC_ERROR);
-          } else {
-          ACE_DEBUG (( LM_DEBUG,
-                       ACE_TEXT ("INFO: Object Group %s Found In Repository\n"), group_name.c_str ()));
-        }
-      }
 
   }
   catch (const CORBA::Exception& ex)
