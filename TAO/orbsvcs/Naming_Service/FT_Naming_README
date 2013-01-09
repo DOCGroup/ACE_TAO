@@ -75,10 +75,10 @@ How to Run the TAO FT Naming Service
 
         -c ns_ior_output_file
                 The name of the file, in which to store the IOR containing
-                the profiles for both this naming servers root naming 
-                context and the peer naming service root naming context. 
+                the profiles for both this naming servers root naming
+                context and the peer naming service root naming context.
                 This option should only be used for the --backup naming
-                service. 
+                service.
 
         -g nm_ior_output_file
                 The name of the file, in which to store the IOR containing
@@ -87,9 +87,9 @@ How to Run the TAO FT Naming Service
 
         -o ior_output_file
                 The name of the file, in which to store the IOR of the
-                root Naming Service context for just this server.  This 
-                option is useful if you want to run the naming service 
-                standalone, without the backup and need to obtain the 
+                root Naming Service context for just this server.  This
+                option is useful if you want to run the naming service
+                standalone, without the backup and need to obtain the
                 IOR of the root context implemented by this process.
 
         -p pid_file_name

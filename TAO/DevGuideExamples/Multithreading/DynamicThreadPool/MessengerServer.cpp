@@ -3,7 +3,7 @@
 #include "started_pch.h"
 
 #include "Messenger_i.h"
-#include "tao/Dynamic_TP/Dynamic_TP_POA_Strategy.h"
+#include "tao/Dynamic_TP/DTP_POA_Strategy.h"
 #include <iostream>
 #include <fstream>
 #include "ace/Get_Opt.h"
@@ -55,14 +55,14 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     tp_config.min_threads_ = 1;                   // Set low water mark to 1 thread.
     tp_config.init_threads_ = 3;                  // Start 3 threads to start.
     tp_config.max_threads_ = -1;                  // Create threads as needed (no limit).
-    tp_config.queue_depth_ = -1;                  // Allow infinite queue depth. 
+    tp_config.queue_depth_ = -1;                  // Allow infinite queue depth.
     tp_config.stack_size_ = (64 * 1024);          // Each thread with 64K stacksize.
     tp_config.timeout_ = ACE_Time_Value(30,0);    // Expire thread that is idle for 30 sec.
 
     // Create the dynamic thread pool servant dispatching strategy object, and
     // hold it in a (local) smart pointer variable.
-    TAO_Intrusive_Ref_Count_Handle<TAO_Dynamic_TP_POA_Strategy> dtp_strategy =
-                            new TAO_Dynamic_TP_POA_Strategy(&tp_config, false);
+    TAO_Intrusive_Ref_Count_Handle<TAO_DTP_POA_Strategy> dtp_strategy =
+                            new TAO_DTP_POA_Strategy(&tp_config, false);
 
   // Tell the strategy to apply itself to the child poa.
     if (dtp_strategy->apply_to(poa.in()) == false)

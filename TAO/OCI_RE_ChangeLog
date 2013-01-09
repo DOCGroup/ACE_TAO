@@ -1,3 +1,16 @@
+Wed Jan  9 22:54:44 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * DevGuideExamples/Multithreading/DynamicThreadPool/MessengerServer.cpp:
+
+          Update to use the new DTP_* class names.
+
+        * orbsvcs/ImplRepo_Service/Locator_XMLHandler.cpp:
+        * orbsvcs/Naming_Service/FT_Naming_README:
+        * tao/Dynamic_TP/DTP_POA_Strategy.inl:
+        * tao/Dynamic_TP/DTP_POA_Strategy.cpp:
+
+          Fuzz fixes.
+
 Wed Jan  9 20:23:33 UTC 2013  Phillip LaBanca  <labancap@ociweb.com>
 
         * orbsvcs/tests/FT_Naming/FaultTolerant/FaultTolerant.mpc:

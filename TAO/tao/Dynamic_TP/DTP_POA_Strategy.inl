@@ -22,7 +22,7 @@ TAO_DTP_POA_Strategy::TAO_DTP_POA_Strategy
   : serialize_servants_ (ss),
     config_initialized_ (true)
 {
- 
+
   this->set_dtp_config(*tp_config);
 
 }

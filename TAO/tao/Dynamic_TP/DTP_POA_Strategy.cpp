@@ -312,12 +312,12 @@ TAO_DTP_POA_Strategy::set_dtp_config(TAO_DTP_Definition &tp_config)
     }
 
   // initial_pool_threads_
-  if ((tp_config.init_threads_ <= 0) || 
+  if ((tp_config.init_threads_ <= 0) ||
       (tp_config.init_threads_ < tp_config.min_threads_))
     {
      this->dtp_task_.set_init_pool_threads(this->dtp_task_.get_min_pool_threads());
     }
-  else 
+  else
     {
       this->dtp_task_.set_init_pool_threads(tp_config.init_threads_);
     }
