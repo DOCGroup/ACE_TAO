@@ -465,7 +465,7 @@ NS_group_svc::member_add (
       this->naming_manager_->get_object_group_ref_from_name (group_name);
 
     CORBA::Object_var ior_var =
-      this->orb_->string_to_object( CORBA::string_dup(ior) );
+      this->orb_->string_to_object(ior);
 
     this->naming_manager_->add_member (
         group_var.in(),

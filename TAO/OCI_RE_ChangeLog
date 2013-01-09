@@ -1,3 +1,9 @@
+Wed Jan  9 19:38:32 UTC 2013  Byron Harris  <harrisb@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/nsgroup_svc.cpp:
+
+          Fixed memory leak.
+
 Wed Jan  9 19:09:43 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/Dynamic_TP/DTP_Config.h:
