@@ -297,7 +297,7 @@ sub redundant_equivalency_test()
                    "-ORBListenEndPoints $ns_endpoint1 ".
                    "-r $name_dir ".
                    "-v $group_dir ".
-		   "-ORBDebugLevel $debug_level ";
+		           "-ORBDebugLevel $debug_level ";
 
     my $ns2_args = "--backup ".
                    "-ORBListenEndPoints $ns_endpoint2 ".
@@ -305,7 +305,7 @@ sub redundant_equivalency_test()
                    "-g $server_nm_multi_iorfile ".
                    "-r $name_dir ".
                    "-v $group_dir ".
-		   "-ORBDebugLevel $debug_level ";
+		           "-ORBDebugLevel $debug_level ";
 
     my $client_args = "--equivalence " .
                       "-p corbaloc:iiop:$hostname:$ns_orb_port1/NameService " .
@@ -314,7 +314,7 @@ sub redundant_equivalency_test()
                       "-s corbaloc:iiop:$hostname:$ns_orb_port2/NamingManager " .
                       "-b 4 " .
                       "-d 4";
-#		      "-ORBDebugLevel $debug_level";
+#		              "-ORBDebugLevel $debug_level";
 
     my $client_prog = "$startdir/client";
 

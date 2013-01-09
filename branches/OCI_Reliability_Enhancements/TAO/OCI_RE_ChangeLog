@@ -1,3 +1,33 @@
+Wed Jan  9 20:23:33 UTC 2013  Phillip LaBanca  <labancap@ociweb.com>
+
+        * orbsvcs/tests/FT_Naming/FaultTolerant/FaultTolerant.mpc:
+
+          Renamed FaultTolerance.mpc to correspond with directory name change.
+
+        * orbsvcs/tests/FT_Naming/FaultTolerant/README:
+
+          Updated test documentation.
+
+        * orbsvcs/tests/FT_Naming/FaultTolerant/client.cpp:
+
+          Added more missing ACE_TEXT macros
+
+        * orbsvcs/tests/FT_Naming/FaultTolerant/run_equivalence_test.pl:
+
+          Minor cleanup
+
+        * orbsvcs/tests/FT_Naming/FaultTolerant/run_persistence_test.pl:
+
+          Removed duplicate argument.
+
+        * utils/nsgroup/README.nsgroup:
+
+          Updated by removing references to type_id argument
+
+        * orbsvcs/tests/FT_Naming/FaultTolerant/FaultTolerance.mpc:
+
+          Removed this file.
+
 Wed Jan  9 19:51:27 UTC 2013  Byron Harris  <harrisb@ociweb.com>
 
         * orbsvcs/Naming_Service/Naming_Service.mpc:

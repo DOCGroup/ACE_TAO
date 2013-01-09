@@ -293,8 +293,7 @@ sub persistence_test ()
                         "-g $nm_iorfile ".
                         "-o $ns_iorfile ".
                         "-v $group_dir ".
-                        "-u $name_dir ".
-                        "-o $ns_iorfile ";
+                        "-u $name_dir ";
 
     my $tao_ft_naming = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_ft_naming";
 
