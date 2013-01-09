@@ -1376,7 +1376,7 @@ do_persistent_objectgroup_test (
   const int RC_ERROR   = -1;
   const int RC_SUCCESS =  0;
 
-  int num_group_members = 3;
+  int num_group_members = 1;
 
   FT_Naming::NamingManager_var naming_manager_1;
 
