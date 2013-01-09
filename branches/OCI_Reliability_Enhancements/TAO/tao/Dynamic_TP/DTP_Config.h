@@ -53,17 +53,17 @@ struct TAO_Dynamic_TP_Export TAO_DTP_Definition
 
 };
 
-class TAO_Dynamic_TP_Export TAO_Dynamic_TP_Config_Registry_Installer
+class TAO_Dynamic_TP_Export TAO_DTP_Config_Registry_Installer
 {
  public:
-  TAO_Dynamic_TP_Config_Registry_Installer (void);
+  TAO_DTP_Config_Registry_Installer (void);
 };
 
-class TAO_Dynamic_TP_Export TAO_Dynamic_TP_Config_Registry : public ACE_Service_Object
+class TAO_Dynamic_TP_Export TAO_DTP_Config_Registry : public ACE_Service_Object
 {
 public:
-  TAO_Dynamic_TP_Config_Registry (void);
-  virtual ~TAO_Dynamic_TP_Config_Registry (void);
+  TAO_DTP_Config_Registry (void);
+  virtual ~TAO_DTP_Config_Registry (void);
 
   virtual int init (int argc, ACE_TCHAR* []);
 
@@ -78,14 +78,14 @@ public:
   Registry registry_;
 };
 
-class TAO_Dynamic_TP_Export TAO_Dynamic_TP_Config : public ACE_Service_Object
+class TAO_Dynamic_TP_Export TAO_DTP_Config : public ACE_Service_Object
 {
 public:
   /// Constructor.
-  TAO_Dynamic_TP_Config (void);
+  TAO_DTP_Config (void);
 
   /// Destructor.
-  virtual ~TAO_Dynamic_TP_Config (void);
+  virtual ~TAO_DTP_Config (void);
 
   /// Read a definition parameter set from the supplied args.
   /// There must be a -TPName argument, which, if replicated will cause the set to be ignored, unless -TPOverwrite is also set
@@ -107,14 +107,14 @@ private:
 
 };
 
-static TAO_Dynamic_TP_Config_Registry_Installer config_installer;
+static TAO_DTP_Config_Registry_Installer config_installer;
 
 
-ACE_STATIC_SVC_DECLARE_EXPORT (TAO_Dynamic_TP, TAO_Dynamic_TP_Config_Registry)
-ACE_FACTORY_DECLARE (TAO_Dynamic_TP, TAO_Dynamic_TP_Config_Registry)
+ACE_STATIC_SVC_DECLARE_EXPORT (TAO_Dynamic_TP, TAO_DTP_Config_Registry)
+ACE_FACTORY_DECLARE (TAO_Dynamic_TP, TAO_DTP_Config_Registry)
 
-ACE_STATIC_SVC_DECLARE_EXPORT (TAO_Dynamic_TP, TAO_Dynamic_TP_Config)
-ACE_FACTORY_DECLARE (TAO_Dynamic_TP, TAO_Dynamic_TP_Config)
+ACE_STATIC_SVC_DECLARE_EXPORT (TAO_Dynamic_TP, TAO_DTP_Config)
+ACE_FACTORY_DECLARE (TAO_Dynamic_TP, TAO_DTP_Config)
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

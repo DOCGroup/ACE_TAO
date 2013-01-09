@@ -1,6 +1,6 @@
 // $Id$
 
-#include "tao/Dynamic_TP/Dynamic_TP_Config.h"
+#include "tao/Dynamic_TP/DTP_Config.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/Service_Config.h"
 #include "ace/Dynamic_Service.h"
@@ -24,9 +24,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   ACE_Service_Config::open (argc, argv);
 
   ACE_Service_Gestalt *current = ACE_Service_Config::current();
-  TAO_Dynamic_TP_Config_Registry* registry =
-    ACE_Dynamic_Service<TAO_Dynamic_TP_Config_Registry>::instance
-    (current, "Dynamic_TP_Config_Registry", true);
+  TAO_DTP_Config_Registry* registry =
+    ACE_Dynamic_Service<TAO_DTP_Config_Registry>::instance
+    (current, "DTP_Config_Registry", true);
 
   if (registry == 0)
     {

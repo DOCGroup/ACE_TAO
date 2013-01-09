@@ -1,10 +1,10 @@
 // $Id$
 
-#include "tao/Dynamic_TP/Dynamic_TP_Config.h"
+#include "tao/Dynamic_TP/DTP_Config.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
-#include "tao/Dynamic_TP/Dynamic_TP_ORBInitializer.h"
+#include "tao/Dynamic_TP/DTP_ORBInitializer.h"
 
 #include "tao/debug.h"
 #include "ace/Dynamic_Service.h"
@@ -12,56 +12,56 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Dynamic_TP_Config_Registry_Installer::TAO_Dynamic_TP_Config_Registry_Installer (void)
+TAO_DTP_Config_Registry_Installer::TAO_DTP_Config_Registry_Installer (void)
 {
-  ACE_Service_Config::process_directive (ace_svc_desc_TAO_Dynamic_TP_Config_Registry);
+  ACE_Service_Config::process_directive (ace_svc_desc_TAO_DTP_Config_Registry);
 }
 
 
-TAO_Dynamic_TP_Config_Registry::TAO_Dynamic_TP_Config_Registry (void)
+TAO_DTP_Config_Registry::TAO_DTP_Config_Registry (void)
 {
 }
 
-TAO_Dynamic_TP_Config_Registry::~TAO_Dynamic_TP_Config_Registry (void)
+TAO_DTP_Config_Registry::~TAO_DTP_Config_Registry (void)
 {
 }
 
 int
-TAO_Dynamic_TP_Config_Registry::init (int , ACE_TCHAR* [] )
+TAO_DTP_Config_Registry::init (int , ACE_TCHAR* [] )
 {
   return 0;
 }
 
 bool
-TAO_Dynamic_TP_Config_Registry::find (const ACE_CString& name, TAO_DTP_Definition &entry)
+TAO_DTP_Config_Registry::find (const ACE_CString& name, TAO_DTP_Definition &entry)
 {
   return registry_.find (name, entry) == 0;
 }
 
 int
-TAO_Dynamic_TP_Config_Registry::bind (const ACE_CString& name, TAO_DTP_Definition &entry)
+TAO_DTP_Config_Registry::bind (const ACE_CString& name, TAO_DTP_Definition &entry)
 {
   return registry_.bind (name, entry);
 }
 
 int
-TAO_Dynamic_TP_Config_Registry::rebind (const ACE_CString& name, TAO_DTP_Definition &entry)
+TAO_DTP_Config_Registry::rebind (const ACE_CString& name, TAO_DTP_Definition &entry)
 {
   return registry_.rebind (name, entry);
 }
 
 //--------------------------------------------------------------------------------------
 
-TAO_Dynamic_TP_Config::TAO_Dynamic_TP_Config (void)
+TAO_DTP_Config::TAO_DTP_Config (void)
 {
 }
 
-TAO_Dynamic_TP_Config::~TAO_Dynamic_TP_Config (void)
+TAO_DTP_Config::~TAO_DTP_Config (void)
 {
 }
 
 int
-TAO_Dynamic_TP_Config::init (int argc, ACE_TCHAR* argv[])
+TAO_DTP_Config::init (int argc, ACE_TCHAR* argv[])
 {
 //  TAO_DTP_Definition entry =  {-1,5,-1,0,60,0};
   TAO_DTP_Definition entry;
@@ -150,30 +150,43 @@ TAO_Dynamic_TP_Config::init (int argc, ACE_TCHAR* argv[])
           if (TAO_debug_level > 0)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_Config - Unrecognized argv[%d], %C\n"),
+                          ACE_TEXT ("TAO (%P|%t) - DTP_Config - Unrecognized argv[%d], %C\n"),
                          curarg, argv[curarg]));
             }
           return -1;
         }
     }
 
+  if ((entry.max_threads_ != -1 && entry.max_threads_ < entry.init_threads_) ||
+      (entry.min_threads_ > entry.init_threads_))
+    {
+      if (TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("TAO (%P|%t) - DTP_Config - thread count constraint ")
+                      ACE_TEXT ("violated, min: %d <= init: %d <= max: %d or max = -1\n"),
+                      entry.min_threads_, entry.init_threads_, entry.max_threads_));
+        }
+      return 0;
+    }
+
   ACE_CString name_str = name;
   ACE_Service_Gestalt *current = ACE_Service_Config::current();
-  TAO_Dynamic_TP_Config_Registry* registry =
-    ACE_Dynamic_Service<TAO_Dynamic_TP_Config_Registry>::instance
-    (current, "Dynamic_TP_Config_Registry", true);
+  TAO_DTP_Config_Registry* registry =
+    ACE_Dynamic_Service<TAO_DTP_Config_Registry>::instance
+    (current, "DTP_Config_Registry", true);
 
   if (registry == 0)
     {
-      current->process_directive (ace_svc_desc_TAO_Dynamic_TP_Config_Registry);
-      registry = ACE_Dynamic_Service<TAO_Dynamic_TP_Config_Registry>::instance
-        (current, "Dynamic_TP_Config_Registry", true);
+      current->process_directive (ace_svc_desc_TAO_DTP_Config_Registry);
+      registry = ACE_Dynamic_Service<TAO_DTP_Config_Registry>::instance
+        (current, "DTP_Config_Registry", true);
       if (registry == 0)
         {
           if (TAO_debug_level > 0)
             {
               ACE_DEBUG((LM_DEBUG,
-                         ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_Config - cannot initialize registry\n")));
+                         ACE_TEXT ("TAO (%P|%t) - DTP_Config - cannot initialize registry\n")));
             }
           return -1;
         }
@@ -191,7 +204,7 @@ TAO_Dynamic_TP_Config::init (int argc, ACE_TCHAR* argv[])
 }
 
 int
-TAO_Dynamic_TP_Config::parse_long (int &curarg,
+TAO_DTP_Config::parse_long (int &curarg,
                                    int argc, ACE_TCHAR *argv[],
                                    const ACE_TCHAR *match, long &value)
 {
@@ -211,7 +224,7 @@ TAO_Dynamic_TP_Config::parse_long (int &curarg,
 }
 
 int
-TAO_Dynamic_TP_Config::parse_bool (int &curarg,
+TAO_DTP_Config::parse_bool (int &curarg,
                                    int argc, ACE_TCHAR *argv[],
                                    const ACE_TCHAR *match, bool &value)
 {
@@ -226,7 +239,7 @@ TAO_Dynamic_TP_Config::parse_bool (int &curarg,
 }
 
 int
-TAO_Dynamic_TP_Config::parse_string (int &curarg,
+TAO_DTP_Config::parse_string (int &curarg,
                                      int argc, ACE_TCHAR *argv[],
                                      const ACE_TCHAR *match, ACE_TCHAR *&value)
 {
@@ -246,13 +259,13 @@ TAO_Dynamic_TP_Config::parse_string (int &curarg,
 
 
 void
-TAO_Dynamic_TP_Config::report_option_value_error (const ACE_TCHAR* option_name,
+TAO_DTP_Config::report_option_value_error (const ACE_TCHAR* option_name,
                                                   const ACE_TCHAR* option_value)
 {
   if (TAO_debug_level > 0)
     {
       ACE_DEBUG((LM_DEBUG,
-                 ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_Config - unknown ")
+                 ACE_TEXT ("TAO (%P|%t) - DTP_Config - unknown ")
                  ACE_TEXT ("argument <%s> for <%s>\n"),
                  option_value, option_name));
     }
@@ -261,19 +274,19 @@ TAO_Dynamic_TP_Config::report_option_value_error (const ACE_TCHAR* option_name,
 
 /////////////////////////////////////////////////////////////////////
 
-ACE_FACTORY_DEFINE (TAO_Dynamic_TP, TAO_Dynamic_TP_Config_Registry)
-ACE_STATIC_SVC_DEFINE (TAO_Dynamic_TP_Config_Registry,
-                       ACE_TEXT ("Dynamic_TP_Config_Registry"),
+ACE_FACTORY_DEFINE (TAO_Dynamic_TP, TAO_DTP_Config_Registry)
+ACE_STATIC_SVC_DEFINE (TAO_DTP_Config_Registry,
+                       ACE_TEXT ("DTP_Config_Registry"),
                        ACE_SVC_OBJ_T,
-                       &ACE_SVC_NAME (TAO_Dynamic_TP_Config_Registry),
+                       &ACE_SVC_NAME (TAO_DTP_Config_Registry),
                        ACE_Service_Type::DELETE_THIS
                        | ACE_Service_Type::DELETE_OBJ,
                        0)
-ACE_FACTORY_DEFINE (TAO_Dynamic_TP, TAO_Dynamic_TP_Config)
-ACE_STATIC_SVC_DEFINE (TAO_Dynamic_TP_Config,
-                       ACE_TEXT ("Dynamic_TP_Config"),
+ACE_FACTORY_DEFINE (TAO_Dynamic_TP, TAO_DTP_Config)
+ACE_STATIC_SVC_DEFINE (TAO_DTP_Config,
+                       ACE_TEXT ("DTP_Config"),
                        ACE_SVC_OBJ_T,
-                       &ACE_SVC_NAME (TAO_Dynamic_TP_Config),
+                       &ACE_SVC_NAME (TAO_DTP_Config),
                        ACE_Service_Type::DELETE_THIS
                        | ACE_Service_Type::DELETE_OBJ,
                        0)

@@ -1,3 +1,61 @@
+Wed Jan  9 19:09:43 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/Dynamic_TP/DTP_Config.h:
+        * tao/Dynamic_TP/DTP_Config.cpp:
+        * tao/Dynamic_TP/DTP_ORBInitializer.h:
+        * tao/Dynamic_TP/DTP_ORBInitializer.cpp:
+        * tao/Dynamic_TP/DTP_ORB_Loader.h:
+        * tao/Dynamic_TP/DTP_ORB_Loader.cpp:
+        * tao/Dynamic_TP/DTP_POA_Loader.h:
+        * tao/Dynamic_TP/DTP_POA_Loader.cpp:
+        * tao/Dynamic_TP/DTP_POA_Strategy.h:
+        * tao/Dynamic_TP/DTP_POA_Strategy.inl:
+        * tao/Dynamic_TP/DTP_POA_Strategy.cpp:
+        * tao/Dynamic_TP/DTP_Task.h:
+        * tao/Dynamic_TP/DTP_Task.inl:
+        * tao/Dynamic_TP/DTP_Task.cpp:
+        * tao/Dynamic_TP/DTP_Thread_Pool.h:
+
+          Added these files.
+
+        * tests/Dynamic_TP/Config_Loader/Test.cpp:
+        * tests/Dynamic_TP/Config_Loader/svc.conf:
+
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Dynamic/run_test.pl:
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Dynamic/server.cpp:
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Dynamic/svc1.conf:
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Dynamic/svc2.conf:
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Dynamic/svc3.conf:
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Dynamic/svc4.conf:
+
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Static/run_test.pl:
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Static/server.cpp:
+
+        * tests/Dynamic_TP/POA_Loader/Test.cpp:
+        * tests/Dynamic_TP/POA_Loader/svc.conf:
+
+          Modified these files.
+
+        * tao/Dynamic_TP/Dynamic_TP_Config.h:
+        * tao/Dynamic_TP/Dynamic_TP_Config.cpp:
+        * tao/Dynamic_TP/Dynamic_TP_ORBInitializer.h:
+        * tao/Dynamic_TP/Dynamic_TP_ORBInitializer.cpp:
+        * tao/Dynamic_TP/Dynamic_TP_ORB_Loader.h:
+        * tao/Dynamic_TP/Dynamic_TP_ORB_Loader.cpp:
+        * tao/Dynamic_TP/Dynamic_TP_POA_Loader.h:
+        * tao/Dynamic_TP/Dynamic_TP_POA_Loader.cpp:
+        * tao/Dynamic_TP/Dynamic_TP_POA_Strategy.h:
+        * tao/Dynamic_TP/Dynamic_TP_POA_Strategy.inl:
+        * tao/Dynamic_TP/Dynamic_TP_POA_Strategy.cpp:
+        * tao/Dynamic_TP/Dynamic_TP_Task.h:
+        * tao/Dynamic_TP/Dynamic_TP_Task.inl:
+        * tao/Dynamic_TP/Dynamic_TP_Task.cpp:
+
+          Removed these files.
+
+          Unified the naming convension for the Dynamic_TP library. All class names and
+          svc.conf objects are prefixed with DTP_ or TAO_DTP_ as appropriate.
+
 Wed Jan  9 16:46:56 UTC 2013  Byron Harris  <harrisb@ociweb.com>
 
         * orbsvcs/tests/FT_Naming/FaultTolerant/client.cpp:

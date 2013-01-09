@@ -1,6 +1,6 @@
 // $Id$
 
-#include "tao/Dynamic_TP/Dynamic_TP_POA_Strategy.h"
+#include "tao/Dynamic_TP/DTP_POA_Strategy.h"
 #include "tao/CSD_Framework/CSD_Strategy_Repository.h"
 
 #include "ace/OS_NS_stdio.h"
@@ -23,7 +23,7 @@ show_tp_config (const ACE_CString &name, const TAO_DTP_Definition &entry)
 }
 
 //void
-//show_poa_config (const ACE_CString &name, TAO_Dynamic_TP_POA_Strategy * strat)
+//show_poa_config (const ACE_CString &name, TAO_DTP_POA_Strategy * strat)
 //{
   //ACE_DEBUG ((LM_INFO, ACE_TEXT ("POA [%C] has the configuration key [%C]\n"), name.c_str(),strat->get_tp_config().c_str()));
   //ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("  Initial threads: %d:\n"), entry.init_threads_));
@@ -68,19 +68,19 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       0
     };
 
-  TAO_Dynamic_TP_POA_Strategy * mapped_strategy;
+  TAO_DTP_POA_Strategy * mapped_strategy;
 
   for (int i = 0; poa_list[i] != 0; i++)
     {
       mapped_strategy = 0;
       ACE_DEBUG ((LM_INFO, ACE_TEXT("Config definition for %C\n"), poa_list[i]));
-      mapped_strategy = dynamic_cast <TAO_Dynamic_TP_POA_Strategy*> (dtp_poa_strat_repo->find (poa_list[i]));
-      if ((mapped_strategy == 0) && (i != 1))
+      mapped_strategy = dynamic_cast <TAO_DTP_POA_Strategy*> (dtp_poa_strat_repo->find (poa_list[i]));
+      if ((mapped_strategy == 0) && (i != 1) && (i != 3))
         {
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Cannot find TP Config definition for %C\n"), poa_list[i]));
           continue;
         }
-      if (i == 1)
+      if (i == 1 || i == 3)
         {
           if (mapped_strategy)
             {

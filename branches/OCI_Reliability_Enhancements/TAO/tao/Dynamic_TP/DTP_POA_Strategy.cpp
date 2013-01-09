@@ -1,6 +1,6 @@
 // $Id$
 
-#include "tao/Dynamic_TP/Dynamic_TP_POA_Strategy.h"
+#include "tao/Dynamic_TP/DTP_POA_Strategy.h"
 #include "tao/CSD_ThreadPool/CSD_TP_Remote_Request.h"
 #include "tao/CSD_ThreadPool/CSD_TP_Collocated_Synch_Request.h"
 #include "tao/CSD_ThreadPool/CSD_TP_Collocated_Asynch_Request.h"
@@ -13,18 +13,18 @@
 
 
 #if !defined (__ACE_INLINE__)
-#include "tao/Dynamic_TP/Dynamic_TP_POA_Strategy.inl"
+#include "tao/Dynamic_TP/DTP_POA_Strategy.inl"
 #endif /* ! __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 
-TAO_Dynamic_TP_POA_Strategy::~TAO_Dynamic_TP_POA_Strategy()
+TAO_DTP_POA_Strategy::~TAO_DTP_POA_Strategy()
 {
 }
 
-TAO_Dynamic_TP_POA_Strategy::CustomRequestOutcome
-TAO_Dynamic_TP_POA_Strategy::custom_synch_request(TAO::CSD::TP_Custom_Request_Operation* op)
+TAO_DTP_POA_Strategy::CustomRequestOutcome
+TAO_DTP_POA_Strategy::custom_synch_request(TAO::CSD::TP_Custom_Request_Operation* op)
 {
 
   TAO::CSD::TP_Servant_State::HandleType servant_state =
@@ -43,8 +43,8 @@ TAO_Dynamic_TP_POA_Strategy::custom_synch_request(TAO::CSD::TP_Custom_Request_Op
   return (request->wait()) ? REQUEST_EXECUTED : REQUEST_CANCELLED;
 }
 
-TAO_Dynamic_TP_POA_Strategy::CustomRequestOutcome
-TAO_Dynamic_TP_POA_Strategy::custom_asynch_request(TAO::CSD::TP_Custom_Request_Operation* op)
+TAO_DTP_POA_Strategy::CustomRequestOutcome
+TAO_DTP_POA_Strategy::custom_asynch_request(TAO::CSD::TP_Custom_Request_Operation* op)
 {
 
   TAO::CSD::TP_Servant_State::HandleType servant_state =
@@ -58,7 +58,7 @@ TAO_Dynamic_TP_POA_Strategy::custom_asynch_request(TAO::CSD::TP_Custom_Request_O
 }
 
 bool
-TAO_Dynamic_TP_POA_Strategy::poa_activated_event_i(TAO_ORB_Core& orb_core)
+TAO_DTP_POA_Strategy::poa_activated_event_i(TAO_ORB_Core& orb_core)
 {
 
   this->dtp_task_.thr_mgr(orb_core.thr_mgr());
@@ -67,16 +67,16 @@ TAO_Dynamic_TP_POA_Strategy::poa_activated_event_i(TAO_ORB_Core& orb_core)
 
   if (!this->config_initialized_)
     {
-      TAO_Dynamic_TP_Config_Registry * config_repo =
-      ACE_Dynamic_Service<TAO_Dynamic_TP_Config_Registry>::instance
-      ("Dynamic_TP_Config_Registry");
+      TAO_DTP_Config_Registry * config_repo =
+      ACE_Dynamic_Service<TAO_DTP_Config_Registry>::instance
+      ("DTP_Config_Registry");
 
       if (config_repo == 0)
         {
           if (TAO_debug_level > 0)
             {
               ACE_DEBUG((LM_DEBUG,
-              ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_POA_Strategy - ")
+              ACE_TEXT ("TAO (%P|%t) - DTP_POA_Strategy - ")
               ACE_TEXT ("cannot retrieve configuration repo\n")));
             }
           return false;
@@ -87,7 +87,7 @@ TAO_Dynamic_TP_POA_Strategy::poa_activated_event_i(TAO_ORB_Core& orb_core)
           if (!config_repo->find(this->dynamic_tp_config_name_, config_entry))
             {
                   ACE_DEBUG((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_POA_Strategy - ")
+                  ACE_TEXT ("TAO (%P|%t) - DTP_POA_Strategy - ")
                   ACE_TEXT ("warning: config not found...using defaults!\n")));
 
             }
@@ -108,7 +108,7 @@ TAO_Dynamic_TP_POA_Strategy::poa_activated_event_i(TAO_ORB_Core& orb_core)
 }
 
 void
-TAO_Dynamic_TP_POA_Strategy::poa_deactivated_event_i()
+TAO_DTP_POA_Strategy::poa_deactivated_event_i()
 {
   // Passing in a value of 1 means that we want to shutdown the task, which
   // equates to causing all worker threads to shutdown.  The worker threads
@@ -119,7 +119,7 @@ TAO_Dynamic_TP_POA_Strategy::poa_deactivated_event_i()
 }
 
 TAO::CSD::Strategy_Base::DispatchResult
-TAO_Dynamic_TP_POA_Strategy::dispatch_remote_request_i
+TAO_DTP_POA_Strategy::dispatch_remote_request_i
                              (TAO_ServerRequest&              server_request,
                               const PortableServer::ObjectId& object_id,
                               PortableServer::POA_ptr         poa,
@@ -156,7 +156,7 @@ TAO_Dynamic_TP_POA_Strategy::dispatch_remote_request_i
 }
 
 TAO::CSD::Strategy_Base::DispatchResult
-TAO_Dynamic_TP_POA_Strategy::dispatch_collocated_request_i
+TAO_DTP_POA_Strategy::dispatch_collocated_request_i
                              (TAO_ServerRequest&              server_request,
                               const PortableServer::ObjectId& object_id,
                               PortableServer::POA_ptr         poa,
@@ -250,7 +250,7 @@ TAO_Dynamic_TP_POA_Strategy::dispatch_collocated_request_i
 }
 
 void
-TAO_Dynamic_TP_POA_Strategy::servant_activated_event_i
+TAO_DTP_POA_Strategy::servant_activated_event_i
                                 (PortableServer::Servant servant,
                                  const PortableServer::ObjectId&)
 {
@@ -262,7 +262,7 @@ TAO_Dynamic_TP_POA_Strategy::servant_activated_event_i
 }
 
 void
-TAO_Dynamic_TP_POA_Strategy::servant_deactivated_event_i
+TAO_DTP_POA_Strategy::servant_deactivated_event_i
                                 (PortableServer::Servant servant,
                                  const PortableServer::ObjectId&)
 {
@@ -277,14 +277,14 @@ TAO_Dynamic_TP_POA_Strategy::servant_deactivated_event_i
 }
 
 void
-TAO_Dynamic_TP_POA_Strategy::cancel_requests(PortableServer::Servant servant)
+TAO_DTP_POA_Strategy::cancel_requests(PortableServer::Servant servant)
 {
   // Cancel all requests stuck in the queue for the specified servant.
   this->dtp_task_.cancel_servant(servant);
 }
 
 TAO::CSD::TP_Servant_State::HandleType
-TAO_Dynamic_TP_POA_Strategy::get_servant_state(PortableServer::Servant servant)
+TAO_DTP_POA_Strategy::get_servant_state(PortableServer::Servant servant)
 {
   TAO::CSD::TP_Servant_State::HandleType servant_state;
 
@@ -297,7 +297,7 @@ TAO_Dynamic_TP_POA_Strategy::get_servant_state(PortableServer::Servant servant)
 }
 
 void
-TAO_Dynamic_TP_POA_Strategy::set_dtp_config(TAO_DTP_Definition &tp_config)
+TAO_DTP_POA_Strategy::set_dtp_config(TAO_DTP_Definition &tp_config)
 {
 
   if (tp_config.min_threads_ <= 0)
@@ -363,14 +363,14 @@ TAO_Dynamic_TP_POA_Strategy::set_dtp_config(TAO_DTP_Definition &tp_config)
     if (TAO_debug_level > 4)
     {
           ACE_DEBUG ((LM_DEBUG,
-          ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_POA_Strategy: ")
+          ACE_TEXT ("TAO (%P|%t) - DTP_POA_Strategy: ")
           ACE_TEXT ("Initialized with:\n")
-          ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_POA_Strategy initial_pool_threads_=[%d]\n")
-          ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_POA_Strategy min_pool_threads_=[%d]\n")
-          ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_POA_Strategy max_pool_threads_=[%d]\n")
-          ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_POA_Strategy max_request_queue_depth_=[%d]\n")
-          ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_POA_Strategy thread_stack_size_=[%d]\n")
-          ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_POA_Strategy thread_idle_time_=[%d]\n"),
+          ACE_TEXT ("TAO (%P|%t) - DTP_POA_Strategy initial_pool_threads_=[%d]\n")
+          ACE_TEXT ("TAO (%P|%t) - DTP_POA_Strategy min_pool_threads_=[%d]\n")
+          ACE_TEXT ("TAO (%P|%t) - DTP_POA_Strategy max_pool_threads_=[%d]\n")
+          ACE_TEXT ("TAO (%P|%t) - DTP_POA_Strategy max_request_queue_depth_=[%d]\n")
+          ACE_TEXT ("TAO (%P|%t) - DTP_POA_Strategy thread_stack_size_=[%d]\n")
+          ACE_TEXT ("TAO (%P|%t) - DTP_POA_Strategy thread_idle_time_=[%d]\n"),
           this->dtp_task_.get_init_pool_threads(),
           this->dtp_task_.get_min_pool_threads(),
           this->dtp_task_.get_max_pool_threads(),
