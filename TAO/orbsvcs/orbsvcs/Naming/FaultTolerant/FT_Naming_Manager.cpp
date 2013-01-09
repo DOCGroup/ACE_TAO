@@ -727,9 +727,9 @@ TAO_FT_Naming_Manager::set_object_group_storable_factory (TAO::Storable_Factory 
 }
 
 void
-TAO_FT_Naming_Manager::set_object_group_stale (PortableGroup::ObjectGroupId group_id)
+TAO_FT_Naming_Manager::set_object_group_stale (const FT_Naming::ObjectGroupUpdate & group_info)
 {
-  this->group_factory_.set_object_group_stale (group_id);
+  this->group_factory_.set_object_group_stale (group_info);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

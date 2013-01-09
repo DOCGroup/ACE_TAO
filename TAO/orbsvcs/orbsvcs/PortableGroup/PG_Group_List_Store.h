@@ -68,6 +68,14 @@ namespace TAO
     Group_Ids & get_group_ids ();
 
     /**
+     * Make explicit that state is stale instead of relying only
+     * on persistent file time stamp.
+     */
+    void stale (bool is_stale);
+
+    bool stale ();
+
+    /**
      * Answer if the list is obsolete because the persistent store has been updated.
      * Used by PG_Group_Factory to avoid having to compare IDs in group_map_ with
      * the list contained here.
@@ -87,8 +95,11 @@ namespace TAO
     Storable_Factory & storable_factory_;
     bool loaded_from_stream_;
     time_t last_changed_;
+    bool stale_;
     void read (TAO::Storable_Base & stream);
     void write (TAO::Storable_Base & stream);
+
+    bool is_obsolete (time_t stored_time);
 
     friend class PG_Group_List_Store_File_Guard;
 

@@ -969,7 +969,16 @@ TAO_FT_Naming_Server::update_object_group (
 
   if (this->use_object_group_persistence_)
     {
-      this->naming_manager_.set_object_group_stale (group_info.id);
+      if (TAO_debug_level > 3)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("%T %n (%P|%t) - ")
+                      ACE_TEXT ("An update of object group with ID %lld ")
+                      ACE_TEXT ("has been made by the peer"),
+                      group_info.id
+                      ));
+        }
+      this->naming_manager_.set_object_group_stale (group_info);
     }
   else
     {
@@ -1021,6 +1030,16 @@ TAO_FT_Naming_Server::update_naming_context (
                context_info.context_name.in ()));
     return -1;
   }
+
+  if (TAO_debug_level > 3)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("%T %n (%P|%t) - ")
+                  ACE_TEXT ("An update of naming context with name %s ")
+                  ACE_TEXT ("has been made by the peer"),
+                  context_info.context_name.in ()
+                  ));
+    }
 
   // Mark the local context stale, so we will reload it next
   // time it is modified or accessed.

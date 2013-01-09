@@ -25,6 +25,11 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+namespace FT_Naming
+{
+  struct ObjectGroupUpdate;
+}
+
 namespace TAO
 {
 
@@ -45,7 +50,7 @@ namespace TAO
      * indicate the object group state is stale.
      * only valid when object group persistence is enabled.
      */
-    void set_object_group_stale (PortableGroup::ObjectGroupId group_id);
+    void set_object_group_stale (const FT_Naming::ObjectGroupUpdate & group_info);
 
   protected:
 

@@ -42,6 +42,11 @@ namespace TAO
   class Storable_Factory;
 }
 
+namespace FT_Naming
+{
+  struct ObjectGroupUpdate;
+}
+
 /**
  * @class TAO_FT_Naming_Manager
  * @brief Implements the NamingManager interface for the Fault
@@ -276,7 +281,7 @@ public:
 
   /// Indicate the object group state is stale.
   /// Only valid when object group persistence is enabled.
-  void set_object_group_stale (PortableGroup::ObjectGroupId group_id);
+  void set_object_group_stale (const FT_Naming::ObjectGroupUpdate & group_info);
 
   /// Destructor.
   ~TAO_FT_Naming_Manager (void);

@@ -105,6 +105,10 @@ namespace TAO
 
     bool stale_;
 
+    /// Track if the persistent file used for storage has been created yet
+    /// so can know if we should propagate a change type of NEW.
+    bool file_created_;
+
     /**
      * Although it is assumed for replication that services
      * using object groups share the persistent store, a
