@@ -1,3 +1,9 @@
+Wed Jan  9 04:13:41 UTC 2013  "Kevin Stanley"  <stanleyk@ociweb.com>
+
+        * orbsvcs/Naming_Service/FT_Naming_README:
+        
+          Updated documentation to clarify use of the -o option.
+
 Wed Jan  9 00:36:30 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/Dynamic_TP/DTP_Thread_Lane_Resources_Manager.cpp:

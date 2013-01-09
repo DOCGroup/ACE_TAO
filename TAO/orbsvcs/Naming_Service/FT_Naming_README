@@ -14,7 +14,7 @@ How to Run the TAO FT Naming Service
         % tao_ft_naming  [-ORBNameServicePort nsport]
                          [-b base_address]
                          [-d debug_flag]
-			 [-m (1=enable multicast responses,0=disable(default)]
+                         [-m (1=enable multicast responses,0=disable(default)]
                          [-n number_of_threads]
                          [-c ft_naming_service_ior_file]
                          [-g ft_naming_manager_ior_file]
@@ -22,9 +22,7 @@ How to Run the TAO FT Naming Service
                          [-r directory_for_naming_context_replication]
                          [-v directory_for_object_group_replication]
                          [-s context_size]
-                         [-t time]
-			 [-z time]
-
+                         [-z time]
 
 2. Optional Command-line Arguments
 
@@ -58,15 +56,15 @@ How to Run the TAO FT Naming Service
                Provides Naming Service specific debug information. By default
                no diagnostics are given.
 
-	-m <0|1>
+        -m <0|1>
                 TAO offers a simple, very non-standard method for
                 clients to discover the initial reference for the
                 Naming Service.  However, since it can be inadequate and cause
-		unexpected results if, for example, there are multiple
-		naming services running on the network, the DEFAULT
-		behavior is for the Naming Service to NOT RESPOND to
-		such multicast queries (use the Interoperable Naming
-		Service bootstrap options instead).  The multicast option
+                unexpected results if, for example, there are multiple
+                naming services running on the network, the DEFAULT
+                behavior is for the Naming Service to NOT RESPOND to
+                such multicast queries (use the Interoperable Naming
+                Service bootstrap options instead).  The multicast option
                 only works with for standalone servers and fault tolerance
                 will not be supported by the server when started with this
                 option.
@@ -77,8 +75,10 @@ How to Run the TAO FT Naming Service
 
         -c ns_ior_output_file
                 The name of the file, in which to store the IOR containing
-                the profiles for both this naming servers naming context
-                and the peer naming service naming context.
+                the profiles for both this naming servers root naming 
+                context and the peer naming service root naming context. 
+                This option should only be used for the --backup naming
+                service. 
 
         -g nm_ior_output_file
                 The name of the file, in which to store the IOR containing
@@ -87,7 +87,10 @@ How to Run the TAO FT Naming Service
 
         -o ior_output_file
                 The name of the file, in which to store the IOR of the
-                root Naming Service context for just this server.
+                root Naming Service context for just this server.  This 
+                option is useful if you want to run the naming service 
+                standalone, without the backup and need to obtain the 
+                IOR of the root context implemented by this process.
 
         -p pid_file_name
                 The name of the file, in which to store the process id
@@ -126,7 +129,6 @@ How to Run the TAO FT Naming Service
                are created within this server. Users can add object to the
                object group and bind the object group to a name within the
                naming service to obtain a load balancing capability.
-
 
         -z time
                 A relative round trip timeout value (in seconds) that
