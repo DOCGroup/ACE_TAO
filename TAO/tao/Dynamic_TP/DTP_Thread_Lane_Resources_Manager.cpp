@@ -103,13 +103,14 @@ TAO_DTP_Thread_Lane_Resources_Manager::lane_resources (void)
   TAO_ORB_Core_TSS_Resources &tss =
     *this->orb_core_->get_tss_resources ();
 
-  // Get the lane for this thread.
-  TAO_DTP_Thread_Lane *lane =
-    static_cast <TAO_DTP_Thread_Lane *> (tss.lane_);
+  // Get the pool for this thread. The API calls it a lane but DTP Thread Pools
+  // are always a single lane.
+  TAO_DTP_Thread_Pool *pool =
+    static_cast <TAO_DTP_Thread_Pool *> (tss.lane_);
 
   // If we have a valid lane, use that lane's resources.
-  if (lane)
-    return lane->resources ();
+  if (pool)
+    return pool->resources ();
   else
     // Otherwise, return the default resources.
     return *this->default_lane_resources_;

@@ -1,3 +1,13 @@
+Wed Jan  9 00:36:30 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/Dynamic_TP/DTP_Thread_Lane_Resources_Manager.cpp:
+        * tao/Dynamic_TP/DTP_Thread_Pool.h:
+        * tao/Dynamic_TP/DTP_Thread_Pool.inl:
+        * tao/Dynamic_TP/DTP_Thread_Pool.cpp:
+
+          Cleaned up unused indirection code. There are no separately configurable
+          lanes with this thread pool implementation.
+
 Wed Jan  9 00:23:50 UTC 2013  Phillip LaBanca  <labancap@ociweb.com>
 
         * orbsvcs/tests/FT_Naming/FaultTolerance/Basic.cpp:
