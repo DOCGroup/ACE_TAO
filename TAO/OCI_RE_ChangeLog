@@ -1,3 +1,20 @@
+Wed Jan  9 16:15:12 UTC 2013  Byron Harris  <harrisb@ociweb.com>
+
+        * orbsvcs/tests/FT_Naming/FaultTolerant:
+
+          Renamed FaultTolerance directory to
+          FaultTolerant to be consistent with
+          FT naming directories elsewhere.
+
+        * orbsvcs/tests/FT_Naming/FaultTolerance:
+
+          Removed.
+
+        * bin/tao_other_tests.lst:
+
+          Update to account for test directory
+          nam change.
+
 Wed Jan  9 15:40:43 UTC 2013  Byron Harris  <harrisb@ociweb.com>
 
         * orbsvcs/tests/FT_Naming/FaultTolerance/client.cpp:
