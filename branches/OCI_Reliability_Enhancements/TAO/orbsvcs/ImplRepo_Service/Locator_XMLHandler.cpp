@@ -126,12 +126,19 @@ Locator_XMLHandler::endElement (const ACEXML_Char*,
 
     ImplementationRepository::EnvironmentList env_vars;
     convertEnvList (this->env_vars_, env_vars);
-    this->repo_.load_server(
-		this->server_id_, this->server_name_, this->jacorb_server_,
-      this->activator_name_, this->command_line_,
-      env_vars, this->working_dir_, amode,
-      limit, this->partial_ior_, this->server_object_ior_,
-      this->server_started_, this->extra_params_);
+    this->repo_.load_server(this->server_id_,
+                            this->server_name_,
+                            this->jacorb_server_,
+                            this->activator_name_,
+                            this->command_line_,
+                            env_vars,
+                            this->working_dir_,
+                            amode,
+                            limit,
+                            this->partial_ior_,
+                            this->server_object_ior_,
+                            this->server_started_,
+                            this->extra_params_);
   }
   // activator info is handled in the startElement
 }
