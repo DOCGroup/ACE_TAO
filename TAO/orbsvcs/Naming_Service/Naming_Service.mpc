@@ -2,6 +2,7 @@
 // $Id$
 
 project : orbsvcsexe, install, naming_serv, imr_client, svc_utils {
+  install = $(ACE_ROOT)/bin
   exename  = tao_cosnaming
   Source_Files {
     Naming_Server.cpp
@@ -10,6 +11,7 @@ project : orbsvcsexe, install, naming_serv, imr_client, svc_utils {
 }
 
 project (FT_Naming_Service) : orbsvcsexe, install, ft_naming_serv, naming_serv, imr_client, svc_utils {
+  install = $(ACE_ROOT)/bin
   exename  = tao_ft_naming
   Header_Files {
  FT_Naming_Service.h
@@ -23,6 +25,7 @@ project (FT_Naming_Service) : orbsvcsexe, install, ft_naming_serv, naming_serv, 
 
 project(NT_Naming_Service) : orbsvcsexe, install, naming_serv, svc_utils {
   requires += winnt
+  install = $(ACE_ROOT)/bin
   exename  = tao_nt_cosnaming
   Source_Files {
     Naming_Service.cpp
