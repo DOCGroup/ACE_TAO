@@ -1,3 +1,13 @@
+Wed Jan  9 00:23:50 UTC 2013  Phillip LaBanca  <labancap@ociweb.com>
+
+        * orbsvcs/tests/FT_Naming/FaultTolerance/Basic.cpp:
+        * orbsvcs/tests/FT_Naming/FaultTolerance/LB_server.cpp:
+        * orbsvcs/tests/FT_Naming/FaultTolerance/client.cpp:
+        * orbsvcs/tests/FT_Naming/FaultTolerance/server.cpp:
+        * utils/nsgroup/nsgroup.cpp:
+
+          Added missing ACE_TEXT macros
+
 Tue Jan  8 20:52:42 UTC 2013  Brian Johnson  <johnsonb@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/Shared_Backing_Store.cpp:

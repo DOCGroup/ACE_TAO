@@ -9,7 +9,7 @@
 LB_server::LB_server (int argc, ACE_TCHAR **argv)
   : argc_ (argc)
   , argv_ (argv)
-  , ior_output_file_(ACE_TEXT("obj.ior"))
+  , ior_output_file_ (ACE_TEXT ("obj.ior"))
 {
 }
 
@@ -18,7 +18,8 @@ LB_server::destroy (void)
 {
   try
     {
-      this->naming_manager_->delete_object_group ("BasicGroup");
+      this->naming_manager_->delete_object_group (
+        ACE_TEXT_ALWAYS_CHAR ("BasicGroup"));
 
       //TODO: Does the FT_NamingManager need a destroy method?
 //      this->naming_manager_->destroy (1, 1);
@@ -28,7 +29,7 @@ LB_server::destroy (void)
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception (
-        "Exception caught while destroying LB_server\n");
+        ACE_TEXT ("Exception caught while destroying LB_server\n"));
       return -1;
     }
   return 0;
@@ -57,16 +58,16 @@ int
 LB_server::write_ior_to_file (const char *ior)
 {
   FILE *output_file =
-    ACE_OS::fopen (this->ior_output_file_, "w");
+    ACE_OS::fopen (this->ior_output_file_, ACE_TEXT_ALWAYS_CHAR("w"));
 
   if (output_file == 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  "Cannot open output file for writing IOR:"));
+                  ACE_TEXT ("Cannot open output file for writing IOR:")));
       return -1;
     }
 
-  ACE_OS::fprintf (output_file, "%s", ior);
+  ACE_OS::fprintf (output_file, ACE_TEXT_ALWAYS_CHAR ("%s"), ior);
   ACE_OS::fclose (output_file);
   return 0;
 }
@@ -86,9 +87,9 @@ LB_server::parse_args (int argc, ACE_TCHAR *argv[])
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-o <iorfile>"
-                           "\n",
+                           ACE_TEXT ("usage:  %s ")
+                           ACE_TEXT ("-o <iorfile>")
+                           ACE_TEXT ("\n"),
                            argv [0]),
                           -1);
       }
@@ -105,11 +106,12 @@ LB_server::start_orb_and_poa (void)
       this->orb_ = CORBA::ORB_init (this->argc_, this->argv_);
 
       CORBA::Object_var poa_object =
-        this->orb_->resolve_initial_references("RootPOA");
+        this->orb_->resolve_initial_references( ACE_TEXT_ALWAYS_CHAR ("RootPOA"));
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the POA.\n"),
+                           ACE_TEXT (" (%P|%t) Unable to initialize ")
+                           ACE_TEXT ("the POA.\n")),
                           -1);
 
       this->root_poa_ = PortableServer::POA::_narrow (poa_object.in ());
@@ -122,24 +124,27 @@ LB_server::start_orb_and_poa (void)
       ACE_Time_Value timeout (10); // Wait up to 10 seconds for the naming service
       if (name_svc_.init (this->orb_, &timeout) != 0)
         ACE_ERROR_RETURN ((LM_DEBUG,
-                           "LB_server: Could not connect to naming service.\n"),
+                           ACE_TEXT (" (%P|%t) LB_server: Could not connect ")
+                           ACE_TEXT ("to naming service.\n")),
                            -1);
 
-      CORBA::Object_var obj =
-        this->orb_->resolve_initial_references ("NamingManager");
+      CORBA::Object_var obj = this->orb_->resolve_initial_references (
+        ACE_TEXT_ALWAYS_CHAR ("NamingManager"));
 
       this->naming_manager_ =
         FT_Naming::NamingManager::_narrow (obj.in ());
 
       if (CORBA::is_nil (this->naming_manager_.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to get Naming Manager Reference\n"),
+                           ACE_TEXT (" (%P|%t) Unable to get Naming Manager ")
+                           ACE_TEXT ("Reference.\n")),
                           -1);
 
     }
   catch (const CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("Exception raised initialising ORB or POA");
+      ex._tao_print_exception (
+        ACE_TEXT ("Exception raised initialising ORB or POA"));
       return -1;
     }
 
@@ -162,14 +167,15 @@ LB_server::create_object_group (void)
       mem_style.nam.length (1);
 
       // Set the membership style property
-      mem_style.nam[0].id =
-        CORBA::string_dup ("org.omg.PortableGroup.MembershipStyle");
+      mem_style.nam[0].id = CORBA::string_dup (
+        ACE_TEXT_ALWAYS_CHAR ("org.omg.PortableGroup.MembershipStyle"));
+
       PortableGroup::MembershipStyleValue msv =
         PortableGroup::MEMB_APP_CTRL;
       mem_style.val <<= msv;
 
       this->object_group_ = this->naming_manager_->create_object_group (
-        "BasicGroup",
+        ACE_TEXT_ALWAYS_CHAR ("BasicGroup"),
         FT_Naming::ROUND_ROBIN,
         criteria);
 
@@ -181,7 +187,7 @@ LB_server::create_object_group (void)
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception (
-        "Exception raised while creating object group");
+        ACE_TEXT ("Exception raised while creating object group"));
       return -1;
     }
 
@@ -208,7 +214,8 @@ LB_server::register_servant (Basic *servant, const char *loc)
     }
   catch (const CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("Exception raised while registering servant");
+      ex._tao_print_exception (
+        ACE_TEXT ("Exception raised while registering servant"));
       return -1;
     }
 
