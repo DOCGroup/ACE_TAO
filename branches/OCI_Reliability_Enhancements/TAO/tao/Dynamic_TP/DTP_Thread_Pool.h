@@ -34,7 +34,9 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-class TAO_DTP_Thread_Lane;
+class TAO_ORB_Core;
+class TAO_DTP_Thread_Pool;
+class TAO_DTP_Thread_Pool_Manager;
 
 /**
  * @class TAO_DTP_New_Leader_Generator
@@ -50,7 +52,7 @@ class TAO_Dynamic_TP_Export TAO_DTP_New_Leader_Generator
 public:
 
   /// Constructor.
-  TAO_DTP_New_Leader_Generator (TAO_DTP_Thread_Lane &lane);
+  TAO_DTP_New_Leader_Generator (TAO_DTP_Thread_Pool &lane);
 
   /// Leader/Follower class uses this method to notify the system that
   /// we are out of leaders.
@@ -58,8 +60,8 @@ public:
 
 private:
 
-  /// Lane associated with this leader generator.
-  TAO_DTP_Thread_Lane &lane_;
+  /// Pool associated with this leader generator.
+  TAO_DTP_Thread_Pool &pool_;
 };
 
 /**
@@ -75,138 +77,22 @@ class TAO_DTP_Thread_Pool_Threads : public ACE_Task_Base
 public:
 
   /// Constructor.
-  TAO_DTP_Thread_Pool_Threads (TAO_DTP_Thread_Lane &lane);
+  TAO_DTP_Thread_Pool_Threads (TAO_DTP_Thread_Pool &pool);
 
   /// Method executed when a thread is spawned.
   int svc (void);
 
-  /// Accessor to the lane to which this thread belongs to.
-  TAO_DTP_Thread_Lane &lane (void) const;
+  /// Accessor to the pool to which this thread belongs to.
+  TAO_DTP_Thread_Pool &pool (void) const;
 
 protected:
   /// Do the real work
   virtual int run (TAO_ORB_Core &orb_core);
 
-  /// Lane to which this thread belongs to.
-  TAO_DTP_Thread_Lane &lane_;
-};
-
-class TAO_DTP_Thread_Pool;
-
-/**
- * @class TAO_DTP_Thread_Lane
- *
- * @brief Class representing the thread lane inside a thread pool.
- *
- * \nosubgrouping
- *
- **/
-class TAO_Dynamic_TP_Export TAO_DTP_Thread_Lane
-{
-public:
-  /// Constructor.
-  TAO_DTP_Thread_Lane (TAO_DTP_Thread_Pool &pool,
-                       CORBA::ULong id,
-                       CORBA::ULong minimum_threads,
-                       CORBA::ULong initial_threads,
-                       CORBA::ULong maximum_threads,
-                       ACE_Time_Value const &dynamic_thread_time);
-
-  /// Destructor.
-  ~TAO_DTP_Thread_Lane (void);
-
-  /// Open the lane.
-  void open (void);
-
-  /// Finalize the resources.
-  void finalize (void);
-
-  /// Shutdown the reactor.
-  void shutdown_reactor (void);
-
-  /// Wait for threads to exit.
-  void wait (void);
-
-  /// Does @a mprofile belong to us?
-  int is_collocated (const TAO_MProfile &mprofile);
-
-  /// Create the initial threads - only called once.
-  int create_initial_threads (void);
-
-  /// Mark that this lane is shutting down, we then don't create any
-  /// dynamic threads anymore. When the pool is shutting down the leader
-  /// follower loop is called which can cause a request to create a
-  /// new dynamic thread but we shouldn't create a new one.
-  void shutting_down (void);
-
-  /// Called by the TAO_RT_New_Leader_Generator to request a new dynamic
-  /// thread.
-  /**
-   * It can be that no thread can be created because the number of
-   * threads is equal to the maximum we can have or the Thread Lane
-   * is shutting down.
-   * @retval true A new thread is created
-   * @retval false No thread could be created
-   */
-  bool new_dynamic_thread (void);
-
-  /// @name Accessors
-  // @{
-  TAO_DTP_Thread_Pool &pool (void) const;
-  CORBA::ULong id (void) const;
-
-  CORBA::ULong minimum_threads (void) const;
-  CORBA::ULong maximum_threads (void) const;
-
-  CORBA::ULong current_threads (void) const;
-
-  TAO_Thread_Lane_Resources &resources (void);
-
-  ACE_Time_Value const &dynamic_thread_time (void) const;
-  // @}
-
-private:
-  int create_threads_i (TAO_DTP_Thread_Pool_Threads &thread_pool,
-                        CORBA::ULong number_of_threads,
-                        long thread_flags);
-
-  /// Create @a number_of_threads of dynamic threads.  Can be called
-  /// multiple times.
-  int create_dynamic_threads (CORBA::ULong number_of_threads);
-
-  /// The Thread Pool to which this lane belongs.
+  /// Pool to which this thread belongs to.
   TAO_DTP_Thread_Pool &pool_;
-
-  /// The id of this lane
-  CORBA::ULong const id_;
-
-  /// This boolean is set when we are shutting down, then we will not create
-  /// any new dynamic threads
-  bool shutdown_;
-
-  /// Minimum number of threads
-  CORBA::ULong const minimum_threads_number_;
-
-  /// Initial number of threads to create. May be anywhere between minimum and maximum
-  CORBA::ULong const initial_threads_number_;
-
-  /// Maximum number of threads we are allowed to create
-  CORBA::ULong const maximum_threads_number_;
-
-  /// Array with all threads
-  TAO_DTP_Thread_Pool_Threads threads_;
-
-  TAO_DTP_New_Leader_Generator new_thread_generator_;
-
-  TAO_Thread_Lane_Resources resources_;
-
-  ACE_Time_Value const dynamic_thread_time_;
-
-  /// Lock to guard all members of the lane
-  mutable TAO_SYNCH_MUTEX lock_;
 };
 
-class TAO_DTP_Thread_Pool_Manager;
 
 /**
  * @class TAO_DTP_Thread_Pool
@@ -248,26 +134,58 @@ public:
   /// Create the initial threads - only called once.
   int create_initial_threads (void);
 
+  /// Called by the TAO_DTP_New_Leader_Generator to request a new dynamic
+  /// thread.
+  /**
+   * It can be that no thread can be created because the number of
+   * threads is equal to the maximum we can have or the Thread Lane
+   * is shutting down.
+   * @retval true A new thread is created
+   * @retval false No thread could be created
+   */
+  bool new_dynamic_thread (void);
+
   /// @name Accessors
   // @{
 
+  bool use_timeouts (void) const;
+  const ACE_Time_Value& dynamic_thread_time (void) const;
+
   TAO_DTP_Thread_Pool_Manager &manager (void) const;
   CORBA::ULong id (void) const;
+  TAO_Thread_Lane_Resources &resources (void);
+  CORBA::ULong current_threads (void) const;
 
-  CORBA::ULong stack_size (void) const;
   // @}
 
 private:
 
+  int create_threads_i (size_t count, long thread_flags);
+
+  /// Create @a number_of_threads of dynamic threads.  Can be called
+  /// multiple times.
+  int create_dynamic_threads (size_t count);
+
   TAO_DTP_Thread_Pool_Manager &manager_;
+
   CORBA::ULong id_;
+
+  /// This boolean is set when we are shutting down, then we will not create
+  /// any new dynamic threads
+  bool shutdown_;
 
   TAO_DTP_Definition definition_;
 
-  TAO_DTP_Thread_Lane *lane_;
-};
+  /// Array with all threads
+  TAO_DTP_Thread_Pool_Threads threads_;
 
-class TAO_ORB_Core;
+  TAO_DTP_New_Leader_Generator new_thread_generator_;
+
+  TAO_Thread_Lane_Resources resources_;
+
+  /// Lock to guard all members of the pool
+  mutable TAO_SYNCH_MUTEX lock_;
+};
 
 /**
  * @class TAO_DTP_Thread_Pool_Manager
@@ -304,8 +222,6 @@ public:
 
   /// Destroy a threadpool.
   void destroy_threadpool (CORBA::ULong threadpool);
-
-  TAO_DTP_Thread_Pool *get_threadpool (CORBA::ULong thread_pool_id);
 
   /// Collection of thread pools.
   typedef ACE_Hash_Map_Manager<CORBA::ULong, TAO_DTP_Thread_Pool *, ACE_Null_Mutex> THREAD_POOLS;
