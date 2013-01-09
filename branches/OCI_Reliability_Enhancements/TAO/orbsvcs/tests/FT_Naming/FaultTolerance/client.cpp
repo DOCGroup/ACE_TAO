@@ -2262,9 +2262,6 @@ do_equivalence_objectgroup_test (
                           RC_ERROR);
     }
 
-    /// hack to allow time for replication to occur
-    ACE_OS::sleep (1);
-
     if (RC_SUCCESS != svc2.group_create (test_group_2, policy))
     {
       ACE_ERROR_RETURN (( LM_ERROR,

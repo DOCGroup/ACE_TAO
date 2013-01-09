@@ -28,6 +28,7 @@ TAO::FT_PG_Object_Group_Storable::FT_PG_Object_Group_Storable (
                              type_properties,
                              storable_factory)
   , stale_ (false)
+  , file_created_ (false)
 {
 }
 
@@ -43,6 +44,7 @@ TAO::FT_PG_Object_Group_Storable::FT_PG_Object_Group_Storable (
                              manipulator,
                              storable_factory)
   , stale_ (false)
+  , file_created_ (true)
 {
 }
 
@@ -84,14 +86,13 @@ TAO::FT_PG_Object_Group_Storable::propagate_update_notification
     // Notify the naming_manager of the updated context
     if (TAO_debug_level > 3)
       {
-
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%T %n (%P|%t) - ")
                     ACE_TEXT ("Notifying peer that object group with ID %lld ")
                     ACE_TEXT ("has been updated"), object_group_info.id
                     ));
-        peer->notify_updated_object_group (object_group_info);
       }
+    peer->notify_updated_object_group (object_group_info);
   }
   catch (CORBA::Exception& ex)
     {
@@ -107,7 +108,12 @@ TAO::FT_PG_Object_Group_Storable::state_written (void)
 {
   FT_Naming::ChangeType change_type;
 
-  if (this->destroyed_)
+  if (!this->file_created_)
+    {
+      change_type = FT_Naming::NEW;
+      this->file_created_ = true;
+    }
+  else if (this->destroyed_)
     change_type = FT_Naming::DELETED;
   else
     change_type = FT_Naming::UPDATED;

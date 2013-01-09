@@ -1,7 +1,60 @@
+Wed Jan  9 13:17:17 UTC 2013  Byron Harris  <harrisb@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.cpp:
+
+          Pass ObjectGroupUpdate object instead of just object ID
+          to group factory when informing that object group is stale.
+          This is so that if the change type is NEW or DELETED the
+          object group list can be marked as stale.
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:
+
+          Pass ObjectGroupUpdate object instead of just object ID
+          to naming manager when informing that object group is stale.
+          Add debug statements to verify update object group and
+          naming context calls have been made.
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_PG_Group_Factory.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_PG_Group_Factory.cpp:
+
+          In handling a stale object group, if the change type is
+          NEW or DELELETED, mark the list store as stale.
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_PG_Object_Group_Storable.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_PG_Object_Group_Storable.cpp:
+
+          Track if the persistent file has been created yet and if so
+          propagate the change type as NEW to peer.
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_Factory.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_Factory.cpp:
+
+          Make list_store_ protected so that FT_PG_Group_Factory
+          can access.
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_List_Store.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_List_Store.cpp:
+
+          Add stale attribute and use that to help decide if
+          state is obsolete.
+
+        * orbsvcs/tests/FT_Naming/FaultTolerance/client.cpp:
+
+          Remove 1 second delay between name server calls in
+          object group equivalence test since we're no longer
+          bound by 1 second resolution of file time stamp
+          to determine if staleness.
+
+        * orbsvcs/tests/FT_Naming/FaultTolerance/run_equivalence_test.pl:
+
+          Pass the debug_level variable to the naming service so
+          that debug statements can be seen.
+
 Wed Jan  9 04:13:41 UTC 2013  "Kevin Stanley"  <stanleyk@ociweb.com>
 
         * orbsvcs/Naming_Service/FT_Naming_README:
-        
+
           Updated documentation to clarify use of the -o option.
 
 Wed Jan  9 00:36:30 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>

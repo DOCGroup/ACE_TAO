@@ -50,13 +50,13 @@ namespace
 
 TAO::PG_Group_Factory::PG_Group_Factory ()
   : use_persistence_ (false)
+  , list_store_ (0)
   , orb_ (CORBA::ORB::_nil())
   , poa_ (PortableServer::POA::_nil())
   , manipulator_ ()
   , domain_id_ ("default-domain")
   , groups_read_ (false)
   , storable_factory_ (0)
-  , list_store_ (0)
 {
 }
 

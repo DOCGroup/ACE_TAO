@@ -189,6 +189,8 @@ namespace TAO
 
     bool use_persistence_;
 
+    PG_Group_List_Store * list_store_;
+
   private:
 
     CORBA::ORB_var orb_;
@@ -216,7 +218,6 @@ namespace TAO
     // Lazily read groups from store
     bool groups_read_;
     Storable_Factory * storable_factory_;
-    PG_Group_List_Store * list_store_;
 
   };
 } // namespace TAO

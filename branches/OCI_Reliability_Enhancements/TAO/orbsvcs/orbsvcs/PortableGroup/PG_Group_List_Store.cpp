@@ -30,15 +30,19 @@ namespace TAO
 
     ~PG_Group_List_Store_File_Guard ();
 
-  virtual void set_object_last_changed (const time_t & time);
+    virtual void set_object_last_changed (const time_t & time);
 
-  virtual time_t get_object_last_changed ();
+    virtual time_t get_object_last_changed ();
 
-  virtual void load_from_stream ();
+    virtual bool object_obsolete ();
 
-  virtual bool is_loaded_from_stream ();
+    virtual void mark_object_current ();
 
-  virtual TAO::Storable_Base * create_stream (const char * mode);
+    virtual void load_from_stream ();
+
+    virtual bool is_loaded_from_stream ();
+
+    virtual TAO::Storable_Base * create_stream (const char * mode);
 
 private:
 
@@ -70,6 +74,21 @@ TAO::PG_Group_List_Store_File_Guard::get_object_last_changed ()
   return list_store_.last_changed_;
 }
 
+bool
+TAO::PG_Group_List_Store_File_Guard::object_obsolete ()
+{
+  return list_store_.is_obsolete (fl_->last_changed ());
+}
+
+void
+TAO::PG_Group_List_Store_File_Guard::mark_object_current ()
+{
+  // Reset the stale flag
+  list_store_.stale(false);
+  // Set the last update time to the file last update time
+  this->set_object_last_changed (fl_->last_changed ());
+}
+
 void
 TAO::PG_Group_List_Store_File_Guard::load_from_stream ()
 {
@@ -97,6 +116,7 @@ TAO::PG_Group_List_Store::PG_Group_List_Store (Storable_Factory & storable_facto
   , storable_factory_ (storable_factory)
   , loaded_from_stream_ (false)
   , last_changed_ (0)
+  , stale_ (false)
 {
   // Create a temporary stream simply to check if a readable
   // version already exists.
@@ -232,7 +252,28 @@ TAO::PG_Group_List_Store::list_obsolete ()
   if (!stream->exists ())
     throw CORBA::INTERNAL ();
   stream->open ();
-  return stream->last_changed () > this->last_changed_;
+  return this->is_obsolete (stream->last_changed ());
+}
+
+bool
+TAO::PG_Group_List_Store::is_obsolete (time_t stored_time)
+{
+  return
+    (!this->loaded_from_stream_) ||
+    this->stale () ||
+    (stored_time > this->last_changed_);
+}
+
+void
+TAO::PG_Group_List_Store::stale (bool is_stale)
+{
+  this->stale_ = is_stale;
+}
+
+bool
+TAO::PG_Group_List_Store::stale ()
+{
+  return this->stale_;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
