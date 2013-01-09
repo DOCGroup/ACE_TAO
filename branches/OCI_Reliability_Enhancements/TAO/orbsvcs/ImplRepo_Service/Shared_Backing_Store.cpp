@@ -281,6 +281,7 @@ static Shared_Backing_Store::UniqueId create_uid(
   id_str[current++] = ACE_TEXT('x');
   id_str[current++] = ACE_TEXT('m');
   id_str[current++] = ACE_TEXT('l');
+  id_str[current++] = ACE_TEXT('\0');
   id.unique_filename = id_str;
 
   return id;
