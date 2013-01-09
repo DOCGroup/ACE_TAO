@@ -1,3 +1,9 @@
+Wed Jan  9 14:17:02 UTC 2013  Brian Johnson  <johnsonb@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Shared_Backing_Store.cpp:
+
+          Fixed termination of filename string.
+
 Wed Jan  9 13:17:17 UTC 2013  Byron Harris  <harrisb@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.h:
