@@ -41,11 +41,11 @@ private:
   /// the application.
   CORBA::ORB_var orb_;
 
-  /// Load Manager Reference used to delete the servant reference from the
+  /// Naming Manager Reference used to delete the member from the
   /// object group.
   FT_Naming::NamingManager_var nm_;
 
-  /// location of the servant
+  /// location of the member
   CORBA::String_var location_;
 
   /// Object Group reference.

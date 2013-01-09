@@ -99,7 +99,7 @@ do_failover_objectgroup_test (
 //==============================================================================
 /// Persistence Name Test
 int
-do_persistant_name_test (
+do_persistent_name_test (
   CORBA::ORB_ptr theOrb,
   ACE_TCHAR *ns1ref,
   int c_breadth,
@@ -109,7 +109,7 @@ do_persistant_name_test (
 
 /// Persistence ObjectGroup Test
 int
-do_persistant_objectgroup_test (
+do_persistent_objectgroup_test (
   CORBA::ORB_ptr theOrb,
   ACE_TCHAR *nm1ref,
   int c_breadth,
@@ -350,7 +350,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         switch(test_phase){
 
           case TT_CREATE:
-            if (RC_SUCCESS != do_persistant_name_test (
+            if (RC_SUCCESS != do_persistent_name_test (
                 orb.in (),
                 ns1ref,
                 c_breadth,
@@ -367,7 +367,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                           ACE_TEXT ("INFO: Persistence Creation Name ")
                           ACE_TEXT ("Test OK\n")));
             }
-            if (RC_SUCCESS != do_persistant_objectgroup_test(
+            if (RC_SUCCESS != do_persistent_objectgroup_test(
               orb.in (),
               nm1ref,
               c_breadth,
@@ -387,7 +387,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           break;
 
           case TT_VALIDATE:
-            if (RC_SUCCESS != do_persistant_name_test (
+            if (RC_SUCCESS != do_persistent_name_test (
                 orb.in (),
                 ns1ref,
                 c_breadth,
@@ -405,7 +405,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                           ACE_TEXT ("Name Test OK\n")));
             }
 
-            if (RC_SUCCESS != do_persistant_objectgroup_test (
+            if (RC_SUCCESS != do_persistent_objectgroup_test (
                 orb.in (),
                 nm1ref,
                 c_breadth,
@@ -1157,7 +1157,7 @@ do_failover_objectgroup_test (
 //==============================================================================
 /// Persistence Name Test
 int
-do_persistant_name_test (
+do_persistent_name_test (
     CORBA::ORB_ptr theOrb,
     ACE_TCHAR *ns1ref,
     int c_breadth,
@@ -1361,7 +1361,7 @@ do_persistant_name_test (
 
 /// Persistence ObjectGroup Test
 int
-do_persistant_objectgroup_test (
+do_persistent_objectgroup_test (
   CORBA::ORB_ptr theOrb,
   ACE_TCHAR *nm1ref,
   int c_breadth,
@@ -1376,7 +1376,7 @@ do_persistant_objectgroup_test (
   const int RC_ERROR   = -1;
   const int RC_SUCCESS =  0;
 
-  int num_group_members = 1;
+  int num_group_members = 3;
 
   FT_Naming::NamingManager_var naming_manager_1;
 
@@ -1436,24 +1436,24 @@ do_persistant_objectgroup_test (
     }
 
     /// get BasicGroup member object and verify that it reports the same location
-    const char* basic_group = "BasicGroup";
+    const char* basic_group_name = "BasicGroup";
 
-    if (false == group_svc.group_exist(basic_group))
+    if (false == group_svc.group_exist(basic_group_name))
     {
       ACE_ERROR_RETURN (( LM_ERROR,
                           ACE_TEXT ("ERROR: Object Group %s Not Found In Repository\n"),
-                          basic_group),
+                          basic_group_name),
                           RC_ERROR);
     } else {
       ACE_DEBUG (( LM_DEBUG,
                    ACE_TEXT ("INFO: Object Group %s Found In Repository\n"),
-                   basic_group));
+                   basic_group_name));
     }
 
     try
     {
       PortableGroup::ObjectGroup_var group_var =
-        naming_manager_1->get_object_group_ref_from_name (basic_group);
+        naming_manager_1->get_object_group_ref_from_name (basic_group_name);
 
       PortableGroup::Locations_var locations =
         naming_manager_1->locations_of_members (group_var.in());
@@ -1526,14 +1526,14 @@ do_persistant_objectgroup_test (
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("ERROR: Unable to find group %C\n"),
-                         basic_group),
+                         basic_group_name),
                          RC_ERROR);
     }
     catch (const CORBA::Exception& ex)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("ERROR: Unable to list members for group %C\n"),
-                         basic_group),
+                         basic_group_name),
                          RC_ERROR);
     }
 

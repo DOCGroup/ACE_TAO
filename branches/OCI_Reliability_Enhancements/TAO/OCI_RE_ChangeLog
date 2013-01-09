@@ -1,3 +1,16 @@
+Wed Jan  9 15:29:44 UTC 2013  Byron Harris  <harrisb@ociweb.com>
+
+        * orbsvcs/tests/FT_Naming/FaultTolerance/Basic.h:
+        * orbsvcs/tests/FT_Naming/FaultTolerance/Basic.cpp:
+
+          Removed unneeded #include. Made comments more
+          descriptive.
+
+        * orbsvcs/tests/FT_Naming/FaultTolerance/client.cpp:
+
+          Fixed spelling error. Made variable name more
+          descriptive.
+
 Wed Jan  9 14:17:02 UTC 2013  Brian Johnson  <johnsonb@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/Shared_Backing_Store.cpp:
