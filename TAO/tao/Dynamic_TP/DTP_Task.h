@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file    Dynamic_TP_Task.h
+ *  @file    DTP_Task.h
  *
  *  $Id$
  */
@@ -14,7 +14,7 @@
 #include /**/ "ace/pre.h"
 
 #include "tao/Dynamic_TP/dynamic_tp_export.h"
-#include "tao/Dynamic_TP/Dynamic_TP_Config.h"
+#include "tao/Dynamic_TP/DTP_Config.h"
 #include "tao/CSD_ThreadPool/CSD_TP_Queue.h"
 #include "tao/CSD_ThreadPool/CSD_TP_Request.h"
 #include "tao/CSD_ThreadPool/CSD_TP_Dispatchable_Visitor.h"
@@ -56,15 +56,15 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
      * worker thread will invoke this task's close() method (with the
      * flag argument equal to 0).
      */
-    class TAO_Dynamic_TP_Export TAO_Dynamic_TP_Task : public ACE_Task_Base
+    class TAO_Dynamic_TP_Export TAO_DTP_Task : public ACE_Task_Base
     {
     public:
 
       /// Default Constructor.
-      TAO_Dynamic_TP_Task();
+      TAO_DTP_Task();
 
       /// Virtual Destructor.
-      virtual ~TAO_Dynamic_TP_Task();
+      virtual ~TAO_DTP_Task();
 
       struct Open_Args {
         TAO_DTP_Definition task_thread_config;
@@ -76,7 +76,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
       bool add_request(TAO::CSD::TP_Request* request);
 
       /// Activate the worker threads
-      virtual int open();//void* args = 0);
+      virtual int open(void* args = 0);
 
       /// The "mainline" executed by each worker thread.
       virtual int svc();
@@ -191,7 +191,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "tao/Dynamic_TP/Dynamic_TP_Task.inl"
+# include "tao/Dynamic_TP/DTP_Task.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

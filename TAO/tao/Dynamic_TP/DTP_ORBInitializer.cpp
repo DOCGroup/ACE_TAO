@@ -1,6 +1,6 @@
 // $Id$
 
-#include "tao/Dynamic_TP/Dynamic_TP_ORBInitializer.h"
+#include "tao/Dynamic_TP/DTP_ORBInitializer.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
@@ -27,7 +27,7 @@
 #include "tao/RTCORBA/RT_Service_Context_Handler.h"
 #endif
 
-#include "tao/Dynamic_TP/Dynamic_TP_Config.h"
+#include "tao/Dynamic_TP/DTP_Config.h"
 #include "tao/Dynamic_TP/DTP_Thread_Lane_Resources_Manager.h"
 #include "tao/Dynamic_TP/DTP_Thread_Pool.h"
 #include "tao/Exception.h"
@@ -40,24 +40,24 @@
 #include "ace/Sched_Params.h"
 
 #if 0
-static const char rt_poa_factory_name[] = "TAO_Dynamic_TP_Object_Adapter_Factory";
+static const char rt_poa_factory_name[] = "TAO_DTP_Object_Adapter_Factory";
 static const ACE_TCHAR rt_poa_factory_directive[] =
   ACE_DYNAMIC_SERVICE_DIRECTIVE(
-    "TAO_Dynamic_TP_Object_Adapter_Factory",
+    "TAO_DTP_Object_Adapter_Factory",
     "TAO_RTPortableServer",
-    "_make_TAO_Dynamic_TP_Object_Adapter_Factory",
+    "_make_TAO_DTP_Object_Adapter_Factory",
     "");
 #endif
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Dynamic_TP_ORBInitializer::TAO_Dynamic_TP_ORBInitializer (/*const ACE_CString &tplist*/)
+TAO_DTP_ORBInitializer::TAO_DTP_ORBInitializer (/*const ACE_CString &tplist*/)
 {
 
 }
 
 void
-TAO_Dynamic_TP_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr info)
+TAO_DTP_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr info)
 {
   TAO_ORBInitInfo_var tao_info = TAO_ORBInitInfo::_narrow (info);
 
@@ -65,7 +65,7 @@ TAO_Dynamic_TP_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr in
     {
       if (TAO_debug_level > 0)
         ACE_ERROR ((LM_ERROR,
-                    "(%P|%t) TAO_Dynamic_TP_ORBInitializer::pre_init:\n"
+                    "(%P|%t) TAO_DTP_ORBInitializer::pre_init:\n"
                     "(%P|%t)    Unable to narrow "
                     "\"PortableInterceptor::ORBInitInfo_ptr\" to\n"
                     "(%P|%t)   \"TAO_ORBInitInfo *.\"\n"));
@@ -79,7 +79,7 @@ TAO_Dynamic_TP_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr in
   ACE_Service_Object * const config_obj =
     ACE_Dynamic_Service<ACE_Service_Object>::instance (
       gestalt,
-      "Dynamic_TP_Config",
+      "DTP_Config",
       true);
   if (config_obj == 0)
     {
@@ -87,13 +87,13 @@ TAO_Dynamic_TP_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr in
       return;
     }
 
-  TAO_Dynamic_TP_Config *config_mgr = dynamic_cast<TAO_Dynamic_TP_Config *>(config_obj);
+  TAO_DTP_Config *config_mgr = dynamic_cast<TAO_DTP_Config *>(config_obj);
   if (config_mgr == 0)
     {
       if (TAO_debug_level > 0)
         ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) TAO_Dynamic_TP_ORBInitializer::pre_init:\n")
-                    ACE_TEXT ("(%P|%t)   Unable to resolve Dynamic_TP_Config object\n")));
+                    ACE_TEXT ("(%P|%t) TAO_DTP_ORBInitializer::pre_init:\n")
+                    ACE_TEXT ("(%P|%t)   Unable to resolve DTP_Config object\n")));
 
       throw ::CORBA::INTERNAL ();
     }
@@ -105,7 +105,7 @@ TAO_Dynamic_TP_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr in
 }
 
 void
-TAO_Dynamic_TP_ORBInitializer::post_init (PortableInterceptor::ORBInitInfo_ptr info)
+TAO_DTP_ORBInitializer::post_init (PortableInterceptor::ORBInitInfo_ptr info)
 {
   TAO_ORBInitInfo_var tao_info = TAO_ORBInitInfo::_narrow (info);
 
@@ -119,10 +119,10 @@ TAO_Dynamic_TP_ORBInitializer::post_init (PortableInterceptor::ORBInitInfo_ptr i
 
   if (dtp_name != 0 && dtp_name[0] != 0)
     {
-      TAO_Dynamic_TP_Config_Registry *config_registry =
-        dynamic_cast<TAO_Dynamic_TP_Config_Registry *>
+      TAO_DTP_Config_Registry *config_registry =
+        dynamic_cast<TAO_DTP_Config_Registry *>
         (ACE_Dynamic_Service<ACE_Service_Object>::instance
-         (gestalt, "Dynamic_TP_Config_Registry", true));
+         (gestalt, "DTP_Config_Registry", true));
 
       TAO_DTP_Definition def;
 
@@ -130,8 +130,8 @@ TAO_Dynamic_TP_ORBInitializer::post_init (PortableInterceptor::ORBInitInfo_ptr i
         {
           if (TAO_debug_level > 0)
             ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) TAO_Dynamic_TP_ORBInitializer::pre_init:\n")
-                        ACE_TEXT ("(%P|%t)   Unable to resolve Dynamic_TP_Config object\n")));
+                        ACE_TEXT ("(%P|%t) TAO_DTP_ORBInitializer::pre_init:\n")
+                        ACE_TEXT ("(%P|%t)   Unable to resolve DTP_Config object\n")));
 
           throw ::CORBA::INTERNAL ();
         }

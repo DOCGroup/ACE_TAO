@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file    Dynamic_TP_POA_Strategy.h
+ *  @file    DTP_POA_Strategy.h
  *
  *  $Id$
  *
@@ -15,8 +15,8 @@
 
 #include /**/ "ace/pre.h"
 #include "tao/Dynamic_TP/dynamic_tp_export.h"
-#include "tao/Dynamic_TP/Dynamic_TP_Config.h"
-#include "tao/Dynamic_TP/Dynamic_TP_Task.h"
+#include "tao/Dynamic_TP/DTP_Config.h"
+#include "tao/Dynamic_TP/DTP_Task.h"
 #include "tao/CSD_ThreadPool/CSD_TP_Servant_State_Map.h"
 #include "tao/CSD_ThreadPool/CSD_TP_Custom_Request_Operation.h"
 #include "tao/CSD_ThreadPool/CSD_TP_Strategy.h"
@@ -33,9 +33,9 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 
-class TAO_Dynamic_TP_POA_Strategy;
-typedef TAO_Intrusive_Ref_Count_Handle<TAO_Dynamic_TP_POA_Strategy>
-        TAO_Dynamic_TP_POA_Strategy_Handle;
+class TAO_DTP_POA_Strategy;
+typedef TAO_Intrusive_Ref_Count_Handle<TAO_DTP_POA_Strategy>
+        TAO_DTP_POA_Strategy_Handle;
 
 namespace TAO
 {
@@ -47,12 +47,12 @@ namespace TAO
 
 
 /**
- * @class TAO_Dynamic_TP_POA_Strategy
+ * @class TAO_DTP_POA_Strategy
  *
  * @brief
  *
  */
-class TAO_Dynamic_TP_Export TAO_Dynamic_TP_POA_Strategy:
+class TAO_Dynamic_TP_Export TAO_DTP_POA_Strategy:
   public TAO::CSD::Strategy_Base
 {
  public:
@@ -62,17 +62,17 @@ class TAO_Dynamic_TP_Export TAO_Dynamic_TP_POA_Strategy:
   /// of a thread pool for POAs is initiated from a svc.conf file.
   /// A configuration name is passed in such that the object can
   /// lookup a configuration in a pre-populated repository.
-  TAO_Dynamic_TP_POA_Strategy(ACE_CString tp_config_name,
+  TAO_DTP_POA_Strategy(ACE_CString tp_config_name,
                               bool     serialize_servants = true);
 
   /// This constructor supports situations where explicit instantiation
   /// of a thread pool for POAs is initiated from an application, such as
   /// the use of the apply_to() method.
-  TAO_Dynamic_TP_POA_Strategy(TAO_DTP_Definition * tp_config,
+  TAO_DTP_POA_Strategy(TAO_DTP_Definition * tp_config,
                               bool     serialize_servants = true);
 
   /// Virtual Destructor.
-  virtual ~TAO_Dynamic_TP_POA_Strategy();
+  virtual ~TAO_DTP_POA_Strategy();
 
   /// Turn on/off serialization of servants.
   void set_servant_serialization(bool serialize_servants);
@@ -183,7 +183,7 @@ class TAO_Dynamic_TP_Export TAO_Dynamic_TP_POA_Strategy:
   TAO::CSD::TP_Servant_State_Map servant_state_map_;
 
   /// This holds the name of a configuration that have been loaded
-  /// into a Dynamic_TP_Config_Registry.  This is the key to the RB
+  /// into a DTP_Config_Registry.  This is the key to the RB
   /// Tree entry.
 
   ACE_CString dynamic_tp_config_name_;
@@ -193,7 +193,7 @@ class TAO_Dynamic_TP_Export TAO_Dynamic_TP_POA_Strategy:
   /// The strategy object puts requests into the task's request
   /// queue, and the worker threads service the queued requests
   /// by performing the actual servant request dispatching logic.
-  TAO_Dynamic_TP_Task dtp_task_;
+  TAO_DTP_Task dtp_task_;
 
 
   /// This boolean is used to determine if the configuration has
@@ -212,7 +212,7 @@ class TAO_Dynamic_TP_Export TAO_Dynamic_TP_POA_Strategy:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "tao/Dynamic_TP/Dynamic_TP_POA_Strategy.inl"
+#include "tao/Dynamic_TP/DTP_POA_Strategy.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

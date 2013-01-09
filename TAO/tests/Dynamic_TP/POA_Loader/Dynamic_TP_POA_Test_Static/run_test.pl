@@ -37,7 +37,7 @@ sub test_1
     my $iorbase = shift;
     my $deletelogs = shift;
     my $status = 0;
-    
+
     print "\nRunning Test 1....\n";
     $test_num=1;
 
@@ -74,7 +74,7 @@ sub test_1
 
      # Now find the spawned threads in the log file.
 
-    $find_this="Dynamic_TP_Task::svc() New thread created.";
+    $find_this="DTP_Task::svc() New thread created.";
     $found_cnt=0;
 
     my($found_cnt) = count_strings($server_logfile,$find_this);
@@ -115,8 +115,8 @@ sub test_2
     my $iorbase = shift;
     my $deletelogs = shift;
     my $status = 0;
-    
-    
+
+
     print "\nRunning Test 2....\n";
     $test_num=2;
     my $lfname = "server_test" . $test_num . ".log";
@@ -155,7 +155,7 @@ sub test_2
     }
      # Now find the spawned threads in the log file.
 
-    $find_this="Dynamic_TP_Task::svc() Existing thread expiring.";
+    $find_this="DTP_Task::svc() Existing thread expiring.";
     $found_cnt=0;
 
     my($found_cnt) = count_strings($server_logfile,$find_this);
@@ -174,10 +174,10 @@ sub test_2
         print STDERR "ERROR: server returned $server_status\n";
         $status = 1;
     }
-    
+
     $server->DeleteFile($iorbase);
     $client->DeleteFile($iorbase);
-       
+
     return($status);
 }
 
@@ -195,7 +195,7 @@ sub test_3
     my $iorbase = shift;
     my $deletelogs = shift;
     my $status = 0;
-    
+
     print "\nRunning Test 3....\n";
     $test_num=3;
     $num_clients=15;
@@ -267,7 +267,7 @@ sub test_3
 
     $server->DeleteFile($iorbase);
     $client->DeleteFile($iorbase);
-    
+
     return($status);
 }
 
@@ -281,7 +281,7 @@ sub test_4
     # will issue calls from 10 clients. There should be 5 CORBA exceptions found
     # in the log after the run.
     #
-    
+
     my $server = shift;
     my $client = shift;
     my $iorbase = shift;

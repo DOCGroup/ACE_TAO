@@ -1,7 +1,7 @@
 // $Id$
 
 #include "Hello.h"
-#include "tao/Dynamic_TP/Dynamic_TP_POA_Strategy.h"
+#include "tao/Dynamic_TP/DTP_POA_Strategy.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/Thread_Manager.h"
@@ -126,8 +126,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   // Create the thread pool servant dispatching strategy object, and
   // hold it in a (local) smart pointer variable.
-  TAO_Intrusive_Ref_Count_Handle<TAO_Dynamic_TP_POA_Strategy> csd_strategy =
-                                                 new TAO_Dynamic_TP_POA_Strategy(&dtp_config, false);
+  TAO_Intrusive_Ref_Count_Handle<TAO_DTP_POA_Strategy> csd_strategy =
+    new TAO_DTP_POA_Strategy(&dtp_config, false);
 
   // Tell the strategy to apply itself to the child poa.
     if (csd_strategy->apply_to(root_poa.in()) == false)

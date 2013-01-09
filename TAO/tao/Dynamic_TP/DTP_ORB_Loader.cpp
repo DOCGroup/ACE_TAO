@@ -1,10 +1,10 @@
 // $Id$
 
-#include "tao/Dynamic_TP/Dynamic_TP_ORB_Loader.h"
+#include "tao/Dynamic_TP/DTP_ORB_Loader.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
-#include "tao/Dynamic_TP/Dynamic_TP_ORBInitializer.h"
+#include "tao/Dynamic_TP/DTP_ORBInitializer.h"
 
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"
@@ -16,19 +16,19 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Dynamic_TP_ORB_Loader::TAO_Dynamic_TP_ORB_Loader (void)
+TAO_DTP_ORB_Loader::TAO_DTP_ORB_Loader (void)
   : initialized_ (false)
 {
 }
 
-TAO_Dynamic_TP_ORB_Loader::~TAO_Dynamic_TP_ORB_Loader (void)
+TAO_DTP_ORB_Loader::~TAO_DTP_ORB_Loader (void)
 {
 }
 
 int
-TAO_Dynamic_TP_ORB_Loader::init (int argc, ACE_TCHAR* argv[])
+TAO_DTP_ORB_Loader::init (int argc, ACE_TCHAR* argv[])
 {
-  ACE_TRACE ("TAO_Dynamic_TP_ORB_Loader::init");
+  ACE_TRACE ("TAO_DTP_ORB_Loader::init");
 
   // Only allow initialization once.
   if (this->initialized_)
@@ -46,7 +46,7 @@ TAO_Dynamic_TP_ORB_Loader::init (int argc, ACE_TCHAR* argv[])
               if (TAO_debug_level > 0)
                 {
                   ACE_DEBUG ((LM_DEBUG,
-                              ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_ORB_Loader - ")
+                              ACE_TEXT ("TAO (%P|%t) - DTP_ORB_Loader - ")
                               ACE_TEXT ("DTPORB arbument missing value\n")));
                 }
               return -1;
@@ -57,7 +57,7 @@ TAO_Dynamic_TP_ORB_Loader::init (int argc, ACE_TCHAR* argv[])
           if (TAO_debug_level > 0)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("TAO (%P|%t) - Dynamic_TP_ORB_Loader -")
+                          ACE_TEXT ("TAO (%P|%t) - DTP_ORB_Loader -")
                           ACE_TEXT (" Unrecognized argv[%d], %C\n"),
                           curarg, argv[curarg]));
             }
@@ -73,7 +73,7 @@ TAO_Dynamic_TP_ORB_Loader::init (int argc, ACE_TCHAR* argv[])
 
       /// Register the DynamicTP ORBInitializer.
       ACE_NEW_THROW_EX (temp_orb_initializer,
-                        TAO_Dynamic_TP_ORBInitializer (),
+                        TAO_DTP_ORBInitializer (),
                         CORBA::NO_MEMORY (
                           CORBA::SystemException::_tao_minor_code (
                             TAO::VMCID,
@@ -99,11 +99,11 @@ TAO_Dynamic_TP_ORB_Loader::init (int argc, ACE_TCHAR* argv[])
 
 /////////////////////////////////////////////////////////////////////
 
-ACE_FACTORY_DEFINE (TAO_Dynamic_TP, TAO_Dynamic_TP_ORB_Loader)
-ACE_STATIC_SVC_DEFINE (TAO_Dynamic_TP_ORB_Loader,
-                       ACE_TEXT ("Dynamic_TP_ORB_Loader"),
+ACE_FACTORY_DEFINE (TAO_Dynamic_TP, TAO_DTP_ORB_Loader)
+ACE_STATIC_SVC_DEFINE (TAO_DTP_ORB_Loader,
+                       ACE_TEXT ("DTP_ORB_Loader"),
                        ACE_SVC_OBJ_T,
-                       &ACE_SVC_NAME (TAO_Dynamic_TP_ORB_Loader),
+                       &ACE_SVC_NAME (TAO_DTP_ORB_Loader),
                        ACE_Service_Type::DELETE_THIS
                        | ACE_Service_Type::DELETE_OBJ,
                        0)

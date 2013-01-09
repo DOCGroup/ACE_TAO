@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file Dynamic_TP_ORBInitializer.h
+ *  @file DTP_ORBInitializer.h
  *
  *  $Id$
  *
@@ -39,13 +39,13 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Dynamic_TP ORB initializer.
-class TAO_Dynamic_TP_ORBInitializer
+class TAO_DTP_ORBInitializer
   : public virtual PortableInterceptor::ORBInitializer
   , public virtual ::CORBA::LocalObject
 {
 public:
 
-  TAO_Dynamic_TP_ORBInitializer (void);
+  TAO_DTP_ORBInitializer (void);
 
   virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info);
 

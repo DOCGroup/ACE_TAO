@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file    Dynamic_TP_ORB_Loader.h
+ *  @file    DTP_POA_Loader.h
  *
  *  $Id$
  *
@@ -13,17 +13,17 @@
  */
 //=============================================================================
 
-#ifndef TAO_DYNAMIC_TP_ORB_LOADER_H
-#define TAO_DYNAMIC_TP_ORB_LOADER_H
+#ifndef TAO_DYNAMIC_TP_POA_LOADER_H
+#define TAO_DYNAMIC_TP_POA_LOADER_H
 #include /**/ "ace/pre.h"
-
 #include "tao/orbconf.h"
-
-#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
-
 #include "tao/Dynamic_TP/dynamic_tp_export.h"
+#include "tao/Dynamic_TP/DTP_Config.h"
+#include "tao/CSD_Framework/CSD_Strategy_Repository.h"
+#include "ace/Synch.h"
 #include "ace/Service_Object.h"
 #include "ace/Service_Config.h"
+#include "ace/RB_Tree.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -31,33 +31,34 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-class TAO_ORB_Core;
+class TAO_POA_Core; //TODO: Do we still need this?
 
-class TAO_Dynamic_TP_Export TAO_Dynamic_TP_ORB_Loader : public ACE_Service_Object
+class TAO_Dynamic_TP_Export TAO_DTP_POA_Loader : public ACE_Service_Object
 {
 public:
 
   /// Constructor.
-  TAO_Dynamic_TP_ORB_Loader (void);
+  TAO_DTP_POA_Loader (void);
 
   /// Destructor.
-  virtual ~TAO_Dynamic_TP_ORB_Loader (void);
+  virtual ~TAO_DTP_POA_Loader (void);
 
   /// Initialize the DynamicTP loader hooks.
   virtual int init (int argc, ACE_TCHAR* []);
 
 private:
   /// Set to true after init is called.
-  bool initialized_;
+  int load_poa_map (ACE_TCHAR *map_str,
+                    TAO_CSD_Strategy_Repository * reg);
+
+  void report_option_value_error (const ACE_TCHAR* option_name,
+                                  const ACE_TCHAR* option_value);
 };
 
-
-ACE_STATIC_SVC_DECLARE_EXPORT (TAO_Dynamic_TP, TAO_Dynamic_TP_ORB_Loader)
-ACE_FACTORY_DECLARE (TAO_Dynamic_TP, TAO_Dynamic_TP_ORB_Loader)
+ACE_STATIC_SVC_DECLARE_EXPORT (TAO_Dynamic_TP, TAO_DTP_POA_Loader)
+ACE_FACTORY_DECLARE (TAO_Dynamic_TP, TAO_DTP_POA_Loader)
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0 */
-
 #include /**/ "ace/post.h"
-#endif /* TAO_DYNAMIC_TP_ORB_LOADER_H */
+#endif /* TAO_DYNAMIC_TP_POA_LOADER_H */

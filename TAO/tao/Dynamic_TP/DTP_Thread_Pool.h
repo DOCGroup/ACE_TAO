@@ -27,7 +27,7 @@
 #include "ace/Hash_Map_Manager.h"
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Dynamic_TP/dynamic_tp_export.h"
-#include "tao/Dynamic_TP/Dynamic_TP_Config.h"
+#include "tao/Dynamic_TP/DTP_Config.h"
 #include "tao/New_Leader_Generator.h"
 #include "ace/Task.h"
 #include "ace/Null_Mutex.h"
