@@ -136,7 +136,10 @@ protected:
   /// File to output for the multi-profile root naming context IOR.
   const ACE_TCHAR *combined_naming_service_ior_file_name_;
 
-  /// File to output the Object Group Manager IOR.
+  /// File to output the multi-profile object group manager IOR.
+  const ACE_TCHAR *combined_naming_manager_ior_file_name_;
+
+  /// File to output the object group manager IOR.
   const ACE_TCHAR *naming_manager_ior_file_name_;
 
   /// Path to the file to be used to store/read in Object Group Manager

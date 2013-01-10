@@ -1,3 +1,12 @@
+Thu Jan 10 21:25:44 UTC 2013  Byron Harris  <harrisb@ociweb.com>
+
+        * orbsvcs/Naming_Service/FT_Naming_README:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:
+
+          Added option, -h, to output naming manager IOR
+          of service being launched.
+
 Thu Jan 10 16:34:22 UTC 2013  Byron Harris  <harrisb@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context.h:
