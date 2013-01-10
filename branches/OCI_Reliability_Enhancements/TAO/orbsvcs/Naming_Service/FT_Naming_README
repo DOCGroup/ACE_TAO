@@ -115,7 +115,9 @@ How to Run the TAO FT Naming Service
                except more than one instance of the TAO Naming Service server
                can run, each using the same set of disk files, to achieve a
                degree of fault tolerence (as long as directory is accessible
-               to both servers).
+               to both servers). Make sure you start the --primary and --backup
+               with the same directory so they will share the persistence
+               directory.
 
         -u directory
                Use a flat-file persistence implementation that stores object
@@ -129,6 +131,9 @@ How to Run the TAO FT Naming Service
                are created within this server. Users can add object to the
                object group and bind the object group to a name within the
                naming service to obtain a load balancing capability.
+               Make sure you start the --primary and --backup
+               with the same directory so they will share the persistence
+               directory.
 
         -z time
                 A relative round trip timeout value (in seconds) that

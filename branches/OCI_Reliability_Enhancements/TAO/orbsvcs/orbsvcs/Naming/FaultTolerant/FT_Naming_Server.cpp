@@ -657,6 +657,7 @@ TAO_FT_Naming_Server::parse_args (int argc,
                            ACE_TEXT ("-s <context_size> \n")
                            ACE_TEXT ("-b <base_address> \n")
                            ACE_TEXT ("-m <1=enable multicast, 0=disable multicast(default)> \n")
+                           ACE_TEXT ("-n <num_threads> \n")
                            ACE_TEXT ("-f <persistence_file_name> \n")
                            ACE_TEXT ("-u <storable_persistence_directory (not used with -f)> \n")
                            ACE_TEXT ("-v <storable_object_group_persistence_directory> \n")
