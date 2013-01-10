@@ -61,7 +61,7 @@ TAO_FT_Naming_Server::TAO_FT_Naming_Server (void)
     naming_manager_ (),
     replication_manager_ (0),
     combined_naming_service_ior_file_name_ (0),
-    naming_manager_ior_file_name_ (0),
+    combined_naming_manager_ior_file_name_ (0),
     naming_manager_persistence_file_name_ (0),
     use_object_group_persistence_ (0),
     server_role_ (STANDALONE)
@@ -227,15 +227,15 @@ TAO_FT_Naming_Server::init_naming_manager_with_orb (int argc, ACE_TCHAR *argv []
   // If we are running in standalone mode, then write out our
   // object reference to the file defined in the -g option
   if ((this->server_role_ == TAO_FT_Naming_Server::STANDALONE) &&
-      (this->naming_manager_ior_file_name_ != 0))
+      (this->combined_naming_manager_ior_file_name_ != 0))
     {
       if (this->write_ior_to_file (this->naming_manager_ior_.in (),
-                                   this->naming_manager_ior_file_name_)
+                                   this->combined_naming_manager_ior_file_name_)
           != 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT("(%P|%t) ERROR: Unable to open %s for writing:(%u) %p\n"),
-                             this->naming_manager_ior_file_name_,
+                             this->combined_naming_manager_ior_file_name_,
                              ACE_ERRNO_GET,
                              ACE_TEXT("TAO_Naming_Server::init_naming_manager_with_orb")),
                             -1);
@@ -530,7 +530,7 @@ int
 TAO_FT_Naming_Server::parse_args (int argc,
                                   ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("b:c:do:p:s:f:m:z:r:u:v:g:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("b:c:do:p:s:f:m:z:r:u:v:g:h:"));
 
   // Define the arguments for primary and backup
   get_opts.long_option ("primary", ACE_Get_Opt::NO_ARG);
@@ -570,7 +570,10 @@ TAO_FT_Naming_Server::parse_args (int argc,
       case 'c': // outputs the multi-profile naming service ior file
         this->combined_naming_service_ior_file_name_ = get_opts.opt_arg ();
         break;
-      case 'g': // outputs the object group manager ior to a file
+      case 'g': // outputs the mutli-profile object group manager ior file
+        this->combined_naming_manager_ior_file_name_ = get_opts.opt_arg ();
+        break;
+      case 'h': // outputs the object group manager ior to a file
         this->naming_manager_ior_file_name_ = get_opts.opt_arg ();
         break;
       case 'p':
@@ -828,6 +831,17 @@ TAO_FT_Naming_Server::export_ft_naming_references (void)
     // a multi-profile IOR for the redundant server pair.
   case TAO_FT_Naming_Server::STANDALONE:
   case TAO_FT_Naming_Server::PRIMARY:
+
+    if (this->naming_manager_ior_file_name_ != 0)
+      {
+          FT_Naming::NamingManager_var my_nm =
+            this->my_naming_manager ();
+          CORBA::String_var naming_manager_ior_string =
+            this->orb_->object_to_string (my_nm.in ());
+          this->write_ior_to_file (naming_manager_ior_string.in (),
+                                   this->naming_manager_ior_file_name_);
+      }
+
     // Make sure the user provided an ior_file_name for the comb
     if (this->combined_naming_service_ior_file_name_ != 0)
       {
@@ -836,7 +850,6 @@ TAO_FT_Naming_Server::export_ft_naming_references (void)
                            ACE_TEXT ("Only supported by the backup naming service.\n")
                            ACE_TEXT ("Provide the -c option to the --backup role.\n")),
                           -1);
-        return 0;  // Just a warning.
       }
     return 0;
     break;
@@ -897,7 +910,7 @@ TAO_FT_Naming_Server::export_ft_naming_references (void)
                                this->combined_naming_service_ior_file_name_);
 
       // Verify that a naming manager ior file name was provided by user
-      if (this->naming_manager_ior_file_name_ == 0)
+      if (this->combined_naming_manager_ior_file_name_ == 0)
         {
           if (TAO_debug_level > 3)
             ACE_DEBUG ((LM_DEBUG,
@@ -932,7 +945,7 @@ TAO_FT_Naming_Server::export_ft_naming_references (void)
 
           // Write out the combined IOR for the NameService
           this->write_ior_to_file (combined_naming_manager_ior_string.in (),
-                                   this->naming_manager_ior_file_name_);
+                                   this->combined_naming_manager_ior_file_name_);
         }
 
       return 0;

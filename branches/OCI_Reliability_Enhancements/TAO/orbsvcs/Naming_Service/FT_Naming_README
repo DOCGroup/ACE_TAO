@@ -83,7 +83,13 @@ How to Run the TAO FT Naming Service
         -g nm_ior_output_file
                 The name of the file, in which to store the IOR containing
                 the profiles for both this naming manager and the peer naming
-                manager.
+                manager. This option should only be used for the --backup
+                naming service.
+
+        -h nm_ior_output_file
+                The name of the file, in wich to store the IOR of the
+                naming manager for just this service. This option can
+                be useful for testing.
 
         -o ior_output_file
                 The name of the file, in which to store the IOR of the
