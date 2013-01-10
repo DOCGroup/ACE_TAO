@@ -50,9 +50,9 @@ my $primary_default_init_ref = "-ORBDefaultInitRef corbaloc:iiop:$hostname:$ns_o
 # References to backup naming service only
 my $backup_default_init_ref = "-ORBDefaultInitRef corbaloc:iiop:$hostname:$ns_orb_port2";
 
-## Allow the user to determine where the persistent file will be located
+## Allow the user to determine where the persistence file will be located
 ## just in case the current directory is not suitable for locking.
-## We can't change the name of the persistent file because that is not
+## We can't change the name of the persistence file because that is not
 ## sufficient to work around locking problems for Tru64 when the current
 ## directory is NFS mounted from a system that does not properly support
 ## locking.
@@ -317,6 +317,7 @@ sub failover_test()
     my $tao_ft_naming = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_ft_naming";
 
     my $client_args = "--failover " .
+                      "-ORBDebugLevel $debug_level " .
                       "-p file://$server_ns_iorfile " .
                       "-r file://$server_nm_iorfile " .
                       "-b 4 " .

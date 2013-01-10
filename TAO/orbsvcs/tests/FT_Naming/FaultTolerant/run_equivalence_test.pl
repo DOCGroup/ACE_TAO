@@ -42,9 +42,9 @@ my $primary_default_init_ref = "-ORBDefaultInitRef corbaloc:iiop:$hostname:$ns_o
 # References to backup naming service only
 my $backup_default_init_ref = "-ORBDefaultInitRef corbaloc:iiop:$hostname:$ns_orb_port2";
 
-## Allow the user to determine where the persistent file will be located
+## Allow the user to determine where the persistence file will be located
 ## just in case the current directory is not suitable for locking.
-## We can't change the name of the persistent file because that is not
+## We can't change the name of the persistence file because that is not
 ## sufficient to work around locking problems for Tru64 when the current
 ## directory is NFS mounted from a system that does not properly support
 ## locking.
@@ -294,27 +294,27 @@ sub redundant_equivalency_test()
 
     # Run two Naming Servers
     my $ns1_args = "--primary ".
+                   "-ORBDebugLevel $debug_level " .
                    "-ORBListenEndPoints $ns_endpoint1 ".
                    "-r $name_dir ".
-                   "-v $group_dir ".
-		           "-ORBDebugLevel $debug_level ";
+                   "-v $group_dir ";
 
     my $ns2_args = "--backup ".
+                   "-ORBDebugLevel $debug_level " .
                    "-ORBListenEndPoints $ns_endpoint2 ".
                    "-c $server_ns_multi_iorfile ".
                    "-g $server_nm_multi_iorfile ".
                    "-r $name_dir ".
-                   "-v $group_dir ".
-		           "-ORBDebugLevel $debug_level ";
+                   "-v $group_dir ";
 
     my $client_args = "--equivalence " .
+                      "-ORBDebugLevel $debug_level " .
                       "-p corbaloc:iiop:$hostname:$ns_orb_port1/NameService " .
                       "-q corbaloc:iiop:$hostname:$ns_orb_port2/NameService " .
                       "-r corbaloc:iiop:$hostname:$ns_orb_port1/NamingManager " .
                       "-s corbaloc:iiop:$hostname:$ns_orb_port2/NamingManager " .
                       "-b 4 " .
-                      "-d 4";
-#		              "-ORBDebugLevel $debug_level";
+                      "-d 4 ";
 
     my $client_prog = "$startdir/client";
 

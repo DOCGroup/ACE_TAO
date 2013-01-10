@@ -9,15 +9,24 @@ use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
 use Cwd;
 
+
 my @list=("run_failover_test.pl",
           "run_persistence_test.pl",
           "run_equivalence_test.pl");
 
 my $status = 0;
 
+my $debug_option = '';
+
+foreach $i (@ARGV) {
+    if ($i eq '-debug') {
+        $debug_option = '-debug';
+    }
+}
+
 for $cmd (@list) {
     if (-f $cmd) {
-        if (system ("perl $cmd") != 0) {
+        if (system ("perl $cmd $debug_option") != 0) {
             $status = 1;
         }
     } else {

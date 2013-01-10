@@ -1,3 +1,17 @@
+Thu Jan 10 00:59:01 UTC 2013  Phillip LaBanca  <labancap@ociweb.com>
+
+        * orbsvcs/tests/FT_Naming/FaultTolerant/client.cpp:
+
+          Fixed main so that ORB_init() processes arguments before parsing
+          other arguments.
+
+        * orbsvcs/tests/FT_Naming/FaultTolerant/run_equivalence_test.pl:
+        * orbsvcs/tests/FT_Naming/FaultTolerant/run_failover_test.pl:
+        * orbsvcs/tests/FT_Naming/FaultTolerant/run_persistence_test.pl:
+        * orbsvcs/tests/FT_Naming/FaultTolerant/run_test.pl:
+
+         Fixed ORBDebugLevel processing in all of the scripts
+
 Wed Jan  9 22:54:44 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * DevGuideExamples/Multithreading/DynamicThreadPool/MessengerServer.cpp:

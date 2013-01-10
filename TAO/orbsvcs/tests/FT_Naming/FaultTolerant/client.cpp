@@ -99,7 +99,7 @@ do_failover_objectgroup_test (
 //==============================================================================
 /// Persistence Name Test
 int
-do_persistent_name_test (
+do_persistence_name_test (
   CORBA::ORB_ptr theOrb,
   ACE_TCHAR *ns1ref,
   int c_breadth,
@@ -109,7 +109,7 @@ do_persistent_name_test (
 
 /// Persistence ObjectGroup Test
 int
-do_persistent_objectgroup_test (
+do_persistence_objectgroup_test (
   CORBA::ORB_ptr theOrb,
   ACE_TCHAR *nm1ref,
   int c_breadth,
@@ -198,115 +198,109 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   // --create run creation test phase
   // --validate run validation test phase
 
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("b:d:o:p:q:r:s:"));
-  int c;
-  int i;
-  get_opts.long_option (ACE_TEXT ("failover"),
-                        ACE_Get_Opt::NO_ARG);
-  get_opts.long_option (ACE_TEXT ("persistence"),
-                        ACE_Get_Opt::NO_ARG);
-  get_opts.long_option (ACE_TEXT ("equivalence"),
-                        ACE_Get_Opt::NO_ARG);
-  get_opts.long_option (ACE_TEXT ("create"),
-                        ACE_Get_Opt::NO_ARG);
-  get_opts.long_option (ACE_TEXT ("validate"),
-                        ACE_Get_Opt::NO_ARG);
-
-  while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'b':
-        i = ACE_OS::atoi(get_opts.opt_arg ());
-        if (i<2)
-        {
-          ACE_ERROR((LM_ERROR,
-                     ACE_TEXT ("Invalid breadth, must be 2 or more\n")));
-          ACE_OS::exit(RC_ERROR);
-        }
-        c_breadth = i;
-        break;
-      case 'd':
-        i = ACE_OS::atoi(get_opts.opt_arg ());
-        if (i<2)
-        {
-          ACE_ERROR((LM_ERROR,
-                     ACE_TEXT ("Invalid depth, must be 2 or more\n")));
-          ACE_OS::exit(RC_ERROR);
-        }
-        c_depth = i;
-        break;
-      case 'o':
-        i = ACE_OS::atoi(get_opts.opt_arg ());
-        if (i<2)
-        {
-          ACE_ERROR((LM_ERROR,
-                     ACE_TEXT ("Invalid breadth, must be 2 or more\n")));
-          ACE_OS::exit(RC_ERROR);
-        }
-        o_breadth = i;
-        break;
-      case 'p':
-        ns1ref = get_opts.opt_arg ();
-        break;
-      case 'q':
-        ns2ref = get_opts.opt_arg ();
-        break;
-      case 'r':
-        nm1ref = get_opts.opt_arg ();
-        break;
-      case 's':
-        nm2ref = get_opts.opt_arg ();
-        break;
-      case 0:   // A long option was found
-        {
-          const char* long_option = get_opts.long_option ();
-          if (ACE_OS::strcmp (long_option,
-                              ACE_TEXT ("failover")) == 0)
-            {
-              test_type = TT_FAILOVER;
-            }
-          else if (ACE_OS::strcmp (long_option,
-                                   ACE_TEXT ("persistence")) == 0)
-            {
-              test_type = TT_PERSISTENCE;
-            }
-          else if (ACE_OS::strcmp (long_option,
-                                   ACE_TEXT ("equivalence")) == 0)
-            {
-              test_type = TT_EQUIVALENCE;
-            }
-          else if (ACE_OS::strcmp (long_option,
-                                   ACE_TEXT ("create")) == 0)
-            {
-              test_phase = TT_CREATE;
-            }
-          else if (ACE_OS::strcmp (long_option,
-                                   ACE_TEXT ("validate")) == 0)
-            {
-              test_phase = TT_VALIDATE;
-            }
-        }
-        break;
-
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Argument %c \n usage:  %s")
-                           ACE_TEXT (" [-b <breadth of context tree>]")
-                           ACE_TEXT (" [-d <depth of context tree>]")
-                           ACE_TEXT (" [-o <breadth of object tree>]")
-                           ACE_TEXT (" -p <ior of first name server>")
-                           ACE_TEXT (" -q <ior of second name server>")
-                           ACE_TEXT (" -r <ior of first naming server>")
-                           ACE_TEXT (" -s <ior of second naming server>")
-                           ACE_TEXT ("\n")),
-                           RC_ERROR);
-      }
-
-
   try
   {
     // Initialize orb
     CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
+
+    ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("b:d:o:p:q:r:s:"));
+    int c;
+    int i;
+    get_opts.long_option (ACE_TEXT ("failover"), ACE_Get_Opt::NO_ARG);
+    get_opts.long_option (ACE_TEXT ("persistence"), ACE_Get_Opt::NO_ARG);
+    get_opts.long_option (ACE_TEXT ("equivalence"), ACE_Get_Opt::NO_ARG);
+    get_opts.long_option (ACE_TEXT ("create"), ACE_Get_Opt::NO_ARG);
+    get_opts.long_option (ACE_TEXT ("validate"), ACE_Get_Opt::NO_ARG);
+
+    while ((c = get_opts ()) != -1)
+      switch (c)
+        {
+        case 'b':
+          i = ACE_OS::atoi(get_opts.opt_arg ());
+          if (i<2)
+          {
+            ACE_ERROR((LM_ERROR,
+                       ACE_TEXT ("Invalid breadth, must be 2 or more\n")));
+            ACE_OS::exit(RC_ERROR);
+          }
+          c_breadth = i;
+          break;
+        case 'd':
+          i = ACE_OS::atoi(get_opts.opt_arg ());
+          if (i<2)
+          {
+            ACE_ERROR((LM_ERROR,
+                       ACE_TEXT ("Invalid depth, must be 2 or more\n")));
+            ACE_OS::exit(RC_ERROR);
+          }
+          c_depth = i;
+          break;
+        case 'o':
+          i = ACE_OS::atoi(get_opts.opt_arg ());
+          if (i<2)
+          {
+            ACE_ERROR((LM_ERROR,
+                       ACE_TEXT ("Invalid breadth, must be 2 or more\n")));
+            ACE_OS::exit(RC_ERROR);
+          }
+          o_breadth = i;
+          break;
+        case 'p':
+          ns1ref = get_opts.opt_arg ();
+          break;
+        case 'q':
+          ns2ref = get_opts.opt_arg ();
+          break;
+        case 'r':
+          nm1ref = get_opts.opt_arg ();
+          break;
+        case 's':
+          nm2ref = get_opts.opt_arg ();
+          break;
+        case 0:   // A long option was found
+          {
+            const char* long_option = get_opts.long_option ();
+            if (ACE_OS::strcmp (long_option,
+                                ACE_TEXT ("failover")) == 0)
+              {
+                test_type = TT_FAILOVER;
+              }
+            else if (ACE_OS::strcmp (long_option,
+                                     ACE_TEXT ("persistence")) == 0)
+              {
+                test_type = TT_PERSISTENCE;
+              }
+            else if (ACE_OS::strcmp (long_option,
+                                     ACE_TEXT ("equivalence")) == 0)
+              {
+                test_type = TT_EQUIVALENCE;
+              }
+            else if (ACE_OS::strcmp (long_option,
+                                     ACE_TEXT ("create")) == 0)
+              {
+                test_phase = TT_CREATE;
+              }
+            else if (ACE_OS::strcmp (long_option,
+                                     ACE_TEXT ("validate")) == 0)
+              {
+                test_phase = TT_VALIDATE;
+              }
+          }
+          break;
+
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Argument %c \n usage:  %s")
+                             ACE_TEXT (" [-b <breadth of context tree>]")
+                             ACE_TEXT (" [-d <depth of context tree>]")
+                             ACE_TEXT (" [-o <breadth of object tree>]")
+                             ACE_TEXT (" -p <ior of first name server>")
+                             ACE_TEXT (" -q <ior of second name server>")
+                             ACE_TEXT (" -r <ior of first naming server>")
+                             ACE_TEXT (" -s <ior of second naming server>")
+                             ACE_TEXT ("\n")),
+                             RC_ERROR);
+        }
 
     switch(test_type) {
 
@@ -350,7 +344,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         switch(test_phase){
 
           case TT_CREATE:
-            if (RC_SUCCESS != do_persistent_name_test (
+            if (RC_SUCCESS != do_persistence_name_test (
                 orb.in (),
                 ns1ref,
                 c_breadth,
@@ -367,7 +361,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                           ACE_TEXT ("INFO: Persistence Creation Name ")
                           ACE_TEXT ("Test OK\n")));
             }
-            if (RC_SUCCESS != do_persistent_objectgroup_test(
+            if (RC_SUCCESS != do_persistence_objectgroup_test(
               orb.in (),
               nm1ref,
               c_breadth,
@@ -387,7 +381,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           break;
 
           case TT_VALIDATE:
-            if (RC_SUCCESS != do_persistent_name_test (
+            if (RC_SUCCESS != do_persistence_name_test (
                 orb.in (),
                 ns1ref,
                 c_breadth,
@@ -405,7 +399,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                           ACE_TEXT ("Name Test OK\n")));
             }
 
-            if (RC_SUCCESS != do_persistent_objectgroup_test (
+            if (RC_SUCCESS != do_persistence_objectgroup_test (
                 orb.in (),
                 nm1ref,
                 c_breadth,
@@ -1104,7 +1098,7 @@ do_failover_objectgroup_test (
 //==============================================================================
 /// Persistence Name Test
 int
-do_persistent_name_test (
+do_persistence_name_test (
     CORBA::ORB_ptr theOrb,
     ACE_TCHAR *ns1ref,
     int c_breadth,
@@ -1315,7 +1309,7 @@ do_persistent_name_test (
 
 /// Persistence ObjectGroup Test
 int
-do_persistent_objectgroup_test (
+do_persistence_objectgroup_test (
   CORBA::ORB_ptr theOrb,
   ACE_TCHAR *nm1ref,
   int c_breadth,

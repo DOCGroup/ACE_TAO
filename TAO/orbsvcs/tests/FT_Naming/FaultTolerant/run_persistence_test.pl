@@ -48,9 +48,9 @@ my $NSLIST  = $client->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_nslist");
 my $NSADD   = $client->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_nsadd");
 my $NSDEL   = $client->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_nsdel");
 
-## Allow the user to determine where the persistent file will be located
+## Allow the user to determine where the persistence file will be located
 ## just in case the current directory is not suitable for locking.
-## We can't change the name of the persistent file because that is not
+## We can't change the name of the persistence file because that is not
 ## sufficient to work around locking problems for Tru64 when the current
 ## directory is NFS mounted from a system that does not properly support
 ## locking.
@@ -290,6 +290,7 @@ sub persistence_test ()
     init_naming_context_directory ($server, $group_dir );
 
     my $ns_args       = "-ORBListenEndPoints $ns_endpoint1 ".
+                        "-ORBDebugLevel $debug_level " .
                         "-g $nm_iorfile ".
                         "-o $ns_iorfile ".
                         "-v $group_dir ".
@@ -299,6 +300,7 @@ sub persistence_test ()
 
     my $client1_args = "--persistence " .
                        "--create " .
+                       "-ORBDebugLevel $debug_level " .
                        "-p corbaloc:iiop:$hostname:$ns_orb_port1/NameService " .
                        "-r corbaloc:iiop:$hostname:$ns_orb_port1/NamingManager " .
                        "-b 4 " .
@@ -306,6 +308,7 @@ sub persistence_test ()
 
     my $client2_args = "--persistence " .
                        "--validate " .
+                       "-ORBDebugLevel $debug_level " .
                        "-p corbaloc:iiop:$hostname:$ns_orb_port1/NameService " .
                        "-r corbaloc:iiop:$hostname:$ns_orb_port1/NamingManager " .
                        "-b 4 " .
