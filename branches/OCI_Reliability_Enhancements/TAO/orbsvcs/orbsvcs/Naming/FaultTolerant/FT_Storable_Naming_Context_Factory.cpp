@@ -24,8 +24,7 @@ TAO_Storable_Naming_Context*
 TAO_FT_Storable_Naming_Context_Factory::create_naming_context_impl (CORBA::ORB_ptr orb,
                                                                     PortableServer::POA_ptr poa,
                                                                     const char *poa_id,
-                                                                    TAO::Storable_Factory *persistence_factory,
-                                                                    const ACE_TCHAR *persistence_directory
+                                                                    TAO::Storable_Factory *persistence_factory
                                                                     )
 {
   // Construct the naming context, forwarding the map and counter even if they
@@ -36,8 +35,7 @@ TAO_FT_Storable_Naming_Context_Factory::create_naming_context_impl (CORBA::ORB_p
                                                     poa,
                                                     poa_id,
                                                     this,
-                                                    persistence_factory,
-                                                    persistence_directory),
+                                                    persistence_factory),
                     CORBA::NO_MEMORY ());
 
   return context_impl;

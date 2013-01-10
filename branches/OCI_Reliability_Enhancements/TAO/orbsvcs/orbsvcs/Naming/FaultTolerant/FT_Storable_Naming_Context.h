@@ -46,8 +46,7 @@ public:
                                   PortableServer::POA_ptr poa,
                                   const char *poa_id,
                                   TAO_Storable_Naming_Context_Factory *cxt_factory,
-                                  TAO::Storable_Factory *factory,
-                                  const ACE_TCHAR *persistence_directory);
+                                  TAO::Storable_Factory *factory);
 
   /// Destructor.
   virtual ~TAO_FT_Storable_Naming_Context (void);

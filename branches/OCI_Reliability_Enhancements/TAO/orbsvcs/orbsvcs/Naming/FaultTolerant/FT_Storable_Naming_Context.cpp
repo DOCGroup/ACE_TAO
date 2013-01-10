@@ -21,14 +21,12 @@ TAO_FT_Storable_Naming_Context::TAO_FT_Storable_Naming_Context (CORBA::ORB_ptr o
                                PortableServer::POA_ptr poa,
                                const char *poa_id,
                                TAO_Storable_Naming_Context_Factory *cxt_factory,
-                               TAO::Storable_Factory *pers_factory,
-                               const ACE_TCHAR *persistence_directory)
+                               TAO::Storable_Factory *pers_factory)
   : TAO_Storable_Naming_Context (orb,
                                  poa,
                                  poa_id,
                                  cxt_factory,
-                                 pers_factory,
-                                 persistence_directory),
+                                 pers_factory),
     stale_ (false)
 {
 

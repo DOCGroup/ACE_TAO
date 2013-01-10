@@ -240,7 +240,6 @@ public:
                                const char *poa_id,
                                TAO_Storable_Naming_Context_Factory *cxt_factory,
                                TAO::Storable_Factory *factory,
-                               const ACE_TCHAR *persistence_directory,
                                size_t hash_table_size = ACE_DEFAULT_MAP_SIZE);
 
   /// Destructor.
@@ -260,7 +259,6 @@ public:
                                const char *context_id,
                                TAO_Storable_Naming_Context_Factory *cxt_factory,
                                TAO::Storable_Factory *pers_factory,
-                               const ACE_TCHAR *persistence_directory,
                                TAO_Storable_Naming_Context **new_context);
 
   // = Methods not implemented in TAO_Hash_Naming_Context.
@@ -273,7 +271,6 @@ public:
                               int reentering,
                               TAO_Storable_Naming_Context_Factory *cxt_factory,
                               TAO::Storable_Factory *pers_factory,
-                              const ACE_TCHAR *persistence_directory,
                               int use_redundancy);
 
 
