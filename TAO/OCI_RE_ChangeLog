@@ -1,3 +1,13 @@
+Thu Jan 10 15:24:09 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * orbsvcs/Naming_Service/FT_Naming_README:
+
+          Clarified usage of options.
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:
+
+          Updated usage to print info on -n option for tao_ft_naming.
+
 Thu Jan 10 00:59:01 UTC 2013  Phillip LaBanca  <labancap@ociweb.com>
 
         * orbsvcs/tests/FT_Naming/FaultTolerant/client.cpp:
