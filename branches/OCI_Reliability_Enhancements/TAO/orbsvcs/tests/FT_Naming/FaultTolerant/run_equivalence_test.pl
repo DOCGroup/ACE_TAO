@@ -237,22 +237,30 @@ sub init_naming_context_directory($$)
     }
 }
 
-my $name_dir           = "NameService";
-my $group_dir          = "GroupService";
-my $ns_primary_iorfile = "$name_dir/ns_replica_primary.ior";
-my $ns_multi_iorfile   = "ns_multi.ior";
-my $nm_multi_iorfile   = "nm_multi.ior";
-my $stderr_file        = "test.err";
-my $stdout_file        = "test.out";
+my $name_dir                   = "NameService";
+my $group_dir                  = "GroupService";
+my $ns_replica_primary_iorfile = "$name_dir/ns_replica_primary.ior";
+my $ns_multi_iorfile           = "ns_multi.ior";
+my $nm_multi_iorfile           = "nm_multi.ior";
+my $ns_primary_iorfile         = "ns_primary.ior";
+my $nm_primary_iorfile         = "nm_primary.ior";
+my $ns_backup_iorfile          = "ns_backup.ior";
+my $nm_backup_iorfile          = "nm_backup.ior";
+my $stderr_file                = "test.err";
+my $stdout_file                = "test.out";
 
 ################################################################################
 # setup END block to cleanup after exit call
 ################################################################################
 END
 {
-    $server->DeleteFile ($ns_primary_iorfile);
+    $server->DeleteFile ($ns_replica_primary_iorfile);
     $server->DeleteFile ($ns_multi_iorfile);
     $server->DeleteFile ($nm_multi_iorfile);
+    $server->DeleteFile ($ns_primary_iorfile);
+    $server->DeleteFile ($nm_primary_iorfile);
+    $server->DeleteFile ($ns_backup_iorfile);
+    $server->DeleteFile ($nm_backup_iorfile);
     $client->DeleteFile ($stdout_file);
     $client->DeleteFile ($stderr_file);
 
@@ -284,11 +292,15 @@ sub redundant_equivalency_test()
     init_naming_context_directory ($server, $group_dir);
 
     # The file that is written by the primary when ready to start backup
-    my $server_primary_iorfile  = $server->LocalFile ($ns_primary_iorfile);
-    my $server_ns_multi_iorfile = $server->LocalFile ($ns_multi_iorfile);
-    my $server_nm_multi_iorfile = $server->LocalFile ($nm_multi_iorfile);
-    my $client_stdout_file      = $client->LocalFile ($stdout_file);
-    my $client_stderr_file      = $client->LocalFile ($stderr_file);
+    my $server_primary_iorfile    = $server->LocalFile ($ns_replica_primary_iorfile);
+    my $server_ns_multi_iorfile   = $server->LocalFile ($ns_multi_iorfile);
+    my $server_nm_multi_iorfile   = $server->LocalFile ($nm_multi_iorfile);
+    my $server_ns_primary_iorfile = $server->LocalFile ($ns_primary_iorfile);
+    my $server_nm_primary_iorfile = $server->LocalFile ($nm_primary_iorfile);
+    my $server_ns_backup_iorfile  = $server->LocalFile ($ns_backup_iorfile);
+    my $server_nm_backup_iorfile  = $server->LocalFile ($nm_backup_iorfile);
+    my $client_stdout_file        = $client->LocalFile ($stdout_file);
+    my $client_stderr_file        = $client->LocalFile ($stderr_file);
 
     my $tao_ft_naming = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_ft_naming";
 
@@ -296,12 +308,16 @@ sub redundant_equivalency_test()
     my $ns1_args = "--primary ".
                    "-ORBDebugLevel $debug_level " .
                    "-ORBListenEndPoints $ns_endpoint1 ".
+                   "-o $server_ns_primary_iorfile ".
+                   "-h $server_nm_primary_iorfile ".
                    "-r $name_dir ".
                    "-v $group_dir ";
 
     my $ns2_args = "--backup ".
                    "-ORBDebugLevel $debug_level " .
                    "-ORBListenEndPoints $ns_endpoint2 ".
+                   "-o $server_ns_backup_iorfile ".
+                   "-h $server_nm_backup_iorfile ".
                    "-c $server_ns_multi_iorfile ".
                    "-g $server_nm_multi_iorfile ".
                    "-r $name_dir ".

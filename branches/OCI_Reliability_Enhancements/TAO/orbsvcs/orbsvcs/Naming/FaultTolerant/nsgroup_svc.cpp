@@ -19,11 +19,11 @@ NS_group_svc::NS_group_svc (void)
 }
 
 FT_Naming::LoadBalancingStrategyValue
-NS_group_svc::determine_policy_string (const char *policy)
+NS_group_svc::determine_policy_string (const ACE_TCHAR *policy)
 {
-  if (ACE_OS::strcasecmp (policy, ACE_TEXT("rand")) == 0) {
+  if (ACE_OS::strcasecmp (policy, ACE_TEXT ("rand")) == 0) {
     return FT_Naming::RANDOM;
-  } else if (ACE_OS::strcasecmp (policy, ACE_TEXT("least")) == 0){
+  } else if (ACE_OS::strcasecmp (policy, ACE_TEXT ("least")) == 0){
     return FT_Naming::LEAST;
   } else {
     return FT_Naming::ROUND_ROBIN; // Default case
@@ -38,7 +38,8 @@ NS_group_svc::set_orb( CORBA::ORB_ptr orb)
 
     if (CORBA::is_nil (this->orb_))
       ACE_ERROR_RETURN ((LM_ERROR,
-                          " (%P|%t) Unable to initialize the ORB.\n"),
+                          ACE_TEXT (" (%P|%t) Unable to initialize the ")
+                          ACE_TEXT ("ORB.\n")),
                           -1);
     return 0;
 }
@@ -51,7 +52,7 @@ NS_group_svc::set_naming_manager( FT_Naming::NamingManager_ptr nm)
 
     if (CORBA::is_nil (this->naming_manager_))
       ACE_ERROR_RETURN ((LM_ERROR,
-                          " (%P|%t) Invalid Naming Manager.\n"),
+                         ACE_TEXT (" (%P|%t) Invalid Naming Manager.\n")),
                           -1);
     return 0;
 }
@@ -64,14 +65,14 @@ NS_group_svc::set_name_context( CosNaming::NamingContextExt_ptr nc)
 
     if (CORBA::is_nil (this->name_service_))
       ACE_ERROR_RETURN ((LM_ERROR,
-                          " (%P|%t) Invalid Name Context.\n"),
+                         ACE_TEXT (" (%P|%t) Invalid Name Context.\n")),
                           -1);
     return 0;
 }
 
 bool
 NS_group_svc::group_exist (
-  const char* group_name
+  const ACE_TCHAR* group_name
 )
 {
   if (group_name == 0 )
@@ -102,8 +103,8 @@ NS_group_svc::group_exist (
 
 int
 NS_group_svc::group_create (
-  const char* group_name,
-  const char* policy )
+  const ACE_TCHAR* group_name,
+  const ACE_TCHAR* policy )
 {
 
   if (group_name == 0 || policy == 0 )
@@ -133,8 +134,8 @@ NS_group_svc::group_create (
     PortableGroup::Property &property = criteria[0];
     property.nam.length (1);
 
-    property.nam[0].id =
-      CORBA::string_dup ("org.omg.PortableGroup.MembershipStyle");
+    property.nam[0].id = CORBA::string_dup (
+        ACE_TEXT ("org.omg.PortableGroup.MembershipStyle"));
 
     PortableGroup::MembershipStyleValue msv = PortableGroup::MEMB_APP_CTRL;
     property.val <<= msv;
@@ -147,8 +148,9 @@ NS_group_svc::group_create (
     if (CORBA::is_nil (obj.in ()))
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                          "\nUnable to create group %C.\n", group_name),
-                          -1);
+                         ACE_TEXT ("\nUnable to create group %C.\n"),
+                         group_name),
+                         -1);
     }
 
   }
@@ -172,83 +174,92 @@ NS_group_svc::group_create (
  */
 int
 NS_group_svc::group_bind (
-  const char* group_name,
-  const char* path)
+  const ACE_TCHAR* group_name,
+  const ACE_TCHAR* path)
 {
 
   if (group_name == 0 || path == 0)
   {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("group_bind args not provided\n")),
-                      -2);
+                       -2);
   }
 
   try
   {
 
     PortableGroup::ObjectGroup_var group_var =
-      this->naming_manager_->get_object_group_ref_from_name (group_name);
+      this->naming_manager_->get_object_group_ref_from_name (
+        ACE_TEXT_ALWAYS_CHAR( group_name));
 
     if (CORBA::is_nil (group_var.in()))
       ACE_ERROR_RETURN ((LM_ERROR,
-                          "Unable to get reference.\n"),
-                          -1);
+                         ACE_TEXT ("Unable to get reference.\n")),
+                         -1);
 
-    CORBA::String_var str = CORBA::string_dup(path);
+    CORBA::String_var str = CORBA::string_dup( ACE_TEXT_ALWAYS_CHAR (path) );
     CosNaming::Name_var name = this->name_service_->to_name ( str.in() );
 
     this->name_service_->rebind ( name.in(), group_var.in() );
 
   }
   catch (const CosNaming::NamingContextExt::InvalidName& ex){
-      ex._tao_print_exception ("InvalidName Exception in group_bind");
+      ex._tao_print_exception (
+        ACE_TEXT ("InvalidName Exception in group_bind"));
+
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("\n%C is invalid\n"),
                          path),
-                        -1);
+                         -1);
   }
   catch (const CosNaming::NamingContext::CannotProceed& ex){
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("\nCannot proceed with %C\n"),
                          path),
-                        -1);
+                         -1);
   }
   catch (const CosNaming::NamingContext::NotFound& ex){
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("\nUnable to find %C\n"),
                          path),
-                        -1);
+                         -1);
   }
   catch (const CORBA::SystemException& ex){
-      ex._tao_print_exception ("SystemException Exception in group_bind");
+
+      ex._tao_print_exception (
+        ACE_TEXT ("SystemException Exception in group_bind"));
+
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("\nUnable to bind %C\n"),
                          path),
-                        -1);
+                         -1);
   }
   catch (const CORBA::Exception& ex){
-      ex._tao_print_exception ("Exception in group_bind");
+
+      ex._tao_print_exception (
+        ACE_TEXT ("Exception in group_bind"));
+
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("\nUnable to bind %C\n"),
                          path),
-                        -1);
+                         -1);
   }
   return 0;
 }
 
 int
-NS_group_svc::group_unbind (const char* path){
+NS_group_svc::group_unbind (const ACE_TCHAR* path){
   if ( path == 0)
   {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("group_unbind args not provided\n")),
-                      -2);
+                       -2);
   }
 
   try
   {
 
-    CORBA::String_var str = CORBA::string_dup(path);
+    CORBA::String_var str = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (path));
     CosNaming::Name_var name = this->name_service_->to_name ( str.in() );
     this->name_service_->unbind ( name.in() );
 
@@ -257,33 +268,39 @@ NS_group_svc::group_unbind (const char* path){
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("\nUnable to find %C\n"),
                          path),
-                        -1);
+                         -1);
   }
   catch (const CosNaming::NamingContext::CannotProceed& ex){
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("\nCannot proceed with %C\n"),
                          path),
-                        -1);
+                         -1);
   }
   catch (const CosNaming::NamingContext::InvalidName& ex){
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("\n%C is invalid\n"),
                          path),
-                        -1);
+                         -1);
   }
   catch (const CORBA::SystemException& ex){
-      ex._tao_print_exception ("Exception in group_unbind");
+
+      ex._tao_print_exception (
+        ACE_TEXT ("Exception in group_unbind"));
+
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("\nUnable to unbind %C\n"),
                          path),
-                        -1);
+                         -1);
   }
   catch (const CORBA::Exception& ex){
-      ex._tao_print_exception ("Exception in group_unbind");
+
+      ex._tao_print_exception (
+        ACE_TEXT ("Exception in group_unbind"));
+
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("\nUnable to unbind %C\n"),
                          path),
-                        -1);
+                         -1);
   }
   return 0;
 }
@@ -302,13 +319,19 @@ NS_group_svc::group_list (void)
 
   /// Display object group list for each load balancing strategy
   int rc = 0;
-  if( display_load_policy_group (FT_Naming::ROUND_ROBIN, "Round Robin") < 0 ) {
+  if( display_load_policy_group (FT_Naming::ROUND_ROBIN,
+                                 ACE_TEXT ("Round Robin")) < 0 )
+  {
     rc = -1;
   }
-  if( display_load_policy_group (FT_Naming::RANDOM, "Random") < 0 ) {
+  if( display_load_policy_group (FT_Naming::RANDOM,
+                                 ACE_TEXT ("Random")) < 0 )
+  {
     rc = -1;
   }
-  if( display_load_policy_group (FT_Naming::LEAST, "Least") < 0 ) {
+  if( display_load_policy_group (FT_Naming::LEAST,
+                                 ACE_TEXT ("Least")) < 0 )
+  {
     rc = -1;
   }
   return rc;
@@ -317,12 +340,13 @@ NS_group_svc::group_list (void)
 int
 NS_group_svc::display_load_policy_group(
   FT_Naming::LoadBalancingStrategyValue strategy,
-  const char *display_label) {
+  const ACE_TCHAR *display_label) {
 
   if( display_label == 0 ) {
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("display_load_policy_group args not provided\n")),
-                      -2);
+                       ACE_TEXT ("display_load_policy_group args ")
+                       ACE_TEXT ("not provided\n")),
+                       -2);
   }
 
   try
@@ -330,28 +354,39 @@ NS_group_svc::display_load_policy_group(
 
     FT_Naming::GroupNames_var list = this->naming_manager_->groups (strategy);
 
-    std::cout << "\n" << display_label << " Load Balancing Groups:" << std::endl;
+    std::cout << ACE_TEXT ("\n")
+              << display_label
+              << ACE_TEXT (" Load Balancing Groups:")
+              << std::endl;
 
     if ( list->length () > 0 ) {
 
       for (unsigned int i = 0; i < list->length (); ++i)
       {
-        std::cout << "  " << (*list)[i] << std::endl;
+        std::cout << ACE_TEXT ("  ")
+                  << (*list)[i]
+                  << std::endl;
       }
 
     } else {
 
-      std::cout << "No " << display_label << " Load Balancing Groups Registered" << std::endl;
+      std::cout << ACE_TEXT ("No ")
+                << display_label
+                << ACE_TEXT (" Load Balancing Groups Registered")
+                << std::endl;
 
     }
 
   }
   catch (const CORBA::Exception& ex)
   {
-      ex._tao_print_exception ("Exception in group_list");
+      ex._tao_print_exception (
+        ACE_TEXT ("Exception in group_list"));
+
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("Unable to get %C group list\n"),
-                         display_label),-1);
+                         display_label),
+                         -1);
   }
   return 0;
 }
@@ -365,8 +400,8 @@ NS_group_svc::display_load_policy_group(
  */
 int
 NS_group_svc::group_modify (
-  const char* group_name,
-  const char* policy)
+  const ACE_TCHAR* group_name,
+  const ACE_TCHAR* policy)
 {
   if (group_name == 0 || policy == 0)
   {
@@ -378,7 +413,7 @@ NS_group_svc::group_modify (
   try
   {
     this->naming_manager_->set_load_balancing_strategy (
-                            group_name,
+                            ACE_TEXT_ALWAYS_CHAR (group_name),
                             determine_policy_string(policy) );
   }
   catch (const PortableGroup::ObjectGroupNotFound& ex)
@@ -386,14 +421,14 @@ NS_group_svc::group_modify (
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("\nUnable to find group %C\n"),
                        group_name),
-                      -1);
+                       -1);
   }
   catch (const CORBA::Exception& ex)
   {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("\nUnable to modify group %C\n"),
                        group_name),
-                      -1);
+                       -1);
   }
 
   return 0;
@@ -405,32 +440,33 @@ NS_group_svc::group_modify (
  * Removes the specified object group from the naming service.
  */
 int
-NS_group_svc::group_remove (const char* group_name)
+NS_group_svc::group_remove (const ACE_TCHAR* group_name)
 {
   if (group_name == 0)
   {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("group_remove args not provided\n")),
-                      -2);
+                       -2);
   }
 
   try
   {
-    this->naming_manager_->delete_object_group (group_name);
+    this->naming_manager_->delete_object_group (
+      ACE_TEXT_ALWAYS_CHAR (group_name));
   }
   catch (const PortableGroup::ObjectGroupNotFound& ex)
   {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("\nUnable to find group %C\n"),
                        group_name),
-                      -1);
+                       -1);
   }
   catch (const CORBA::Exception& ex)
   {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("\nUnable to remove group %C\n"),
                        group_name),
-                      -1);
+                       -1);
   }
 
   return 0;
@@ -444,9 +480,9 @@ NS_group_svc::group_remove (const char* group_name)
  */
 int
 NS_group_svc::member_add (
-  const char* group_name,
-  const char* location,
-  const char* ior)
+  const ACE_TCHAR* group_name,
+  const ACE_TCHAR* location,
+  const ACE_TCHAR* ior)
 {
   if (group_name == 0 || location == 0 || ior == 0 )
   {
@@ -459,13 +495,14 @@ NS_group_svc::member_add (
   {
     PortableGroup::Location location_name;
     location_name.length (1);
-    location_name[0].id = CORBA::string_dup(location);
+    location_name[0].id = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (location));
 
     PortableGroup::ObjectGroup_var group_var =
-      this->naming_manager_->get_object_group_ref_from_name (group_name);
+      this->naming_manager_->get_object_group_ref_from_name (
+        ACE_TEXT_ALWAYS_CHAR (group_name));
 
     CORBA::Object_var ior_var =
-      this->orb_->string_to_object(ior);
+      this->orb_->string_to_object(ACE_TEXT_ALWAYS_CHAR (ior));
 
     this->naming_manager_->add_member (
         group_var.in(),
@@ -504,7 +541,7 @@ NS_group_svc::member_add (
  * Lists the members of the specified object group.
  */
 int
-NS_group_svc::member_list (const char* group_name)
+NS_group_svc::member_list (const ACE_TCHAR* group_name)
 {
   if (group_name == 0)
   {
@@ -516,7 +553,8 @@ NS_group_svc::member_list (const char* group_name)
   try
   {
     PortableGroup::ObjectGroup_var group_var =
-      this->naming_manager_->get_object_group_ref_from_name (group_name);
+      this->naming_manager_->get_object_group_ref_from_name (
+        ACE_TEXT_ALWAYS_CHAR (group_name));
 
     PortableGroup::Locations_var locations =
       this->naming_manager_->locations_of_members (group_var.in());
@@ -555,8 +593,8 @@ NS_group_svc::member_list (const char* group_name)
  */
 int
 NS_group_svc::member_remove (
-  const char* group_name,
-  const char* location)
+  const ACE_TCHAR* group_name,
+  const ACE_TCHAR* location)
 {
   if (group_name == 0 || location == 0)
   {
@@ -577,10 +615,11 @@ NS_group_svc::member_remove (
   {
     PortableGroup::Location location_name;
     location_name.length (1);
-    location_name[0].id = CORBA::string_dup(location);
+    location_name[0].id = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (location));
 
     PortableGroup::ObjectGroup_var group_var =
-      this->naming_manager_->get_object_group_ref_from_name (group_name);
+      this->naming_manager_->get_object_group_ref_from_name (
+        ACE_TEXT_ALWAYS_CHAR (group_name));
 
     this->naming_manager_->remove_member (
       group_var.in(),
@@ -619,8 +658,8 @@ NS_group_svc::member_remove (
  */
 int
 NS_group_svc::member_show (
-  const char* group_name,
-  const char* location)
+  const ACE_TCHAR* group_name,
+  const ACE_TCHAR* location)
 {
   if (group_name == 0 || location == 0)
   {
@@ -634,10 +673,11 @@ NS_group_svc::member_show (
   {
     PortableGroup::Location location_name (1);
     location_name.length (1);
-    location_name[0].id = CORBA::string_dup(location);
+    location_name[0].id = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (location));
 
     PortableGroup::ObjectGroup_var group_var =
-      this->naming_manager_->get_object_group_ref_from_name (group_name);
+      this->naming_manager_->get_object_group_ref_from_name (
+        ACE_TEXT_ALWAYS_CHAR (group_name));
 
     CORBA::Object_var ior_var =
       this->naming_manager_->get_member_ref (group_var.in(), location_name);
