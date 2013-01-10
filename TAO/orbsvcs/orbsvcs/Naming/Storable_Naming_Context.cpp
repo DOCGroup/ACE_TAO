@@ -339,10 +339,7 @@ TAO::Storable_Base *
 TAO_Storable_Naming_Context::
 File_Open_Lock_and_Check::create_stream (const char * mode)
 {
-  // Build the file name
-  ACE_CString file_name(context_->persistence_directory_);
-  file_name += "/";
-  file_name += context_->context_name_;
+  ACE_CString file_name = context_->context_name_;
 
   // Create the stream
   return context_->factory_->create_stream(file_name, ACE_TEXT_CHAR_TO_TCHAR(mode));
@@ -355,7 +352,6 @@ TAO_Storable_Naming_Context::TAO_Storable_Naming_Context (
                                const char *context_name,
                                TAO_Storable_Naming_Context_Factory *cxt_factory,
                                TAO::Storable_Factory *factory,
-                               const ACE_TCHAR *persistence_directory,
                                size_t hash_table_size)
   : TAO_Hash_Naming_Context (poa,
                              context_name),
@@ -366,7 +362,6 @@ TAO_Storable_Naming_Context::TAO_Storable_Naming_Context (
     poa_ (PortableServer::POA::_duplicate (poa)),
     context_factory_ (cxt_factory),
     factory_ (factory),
-    persistence_directory_ (ACE_TEXT_ALWAYS_CHAR(persistence_directory)),
     hash_table_size_ (hash_table_size),
     last_changed_ (0),
     write_occurred_ (0)
@@ -384,9 +379,7 @@ TAO_Storable_Naming_Context::~TAO_Storable_Naming_Context (void)
   if (this->destroyed_)
     {
       // Make sure we delete the associated stream
-      ACE_CString file_name (this->persistence_directory_);
-      file_name += "/";
-      file_name += this->context_name_;
+      ACE_CString file_name = this->context_name_;
 
       // Now delete the file
       ACE_Auto_Ptr<TAO::Storable_Base>
@@ -411,7 +404,6 @@ TAO_Storable_Naming_Context::make_new_context (
                               const char *context_name,
                               TAO_Storable_Naming_Context_Factory *cxt_factory,
                               TAO::Storable_Factory *pers_factory,
-                              const ACE_TCHAR *persistence_directory,
                               TAO_Storable_Naming_Context **new_context)
 {
   ACE_TRACE("make_new_context");
@@ -424,8 +416,7 @@ TAO_Storable_Naming_Context::make_new_context (
     cxt_factory->create_naming_context_impl (orb,
                                              poa,
                                              context_name,
-                                             pers_factory,
-                                             persistence_directory);
+                                             pers_factory);
 
   if (context_impl == 0)
     throw CORBA::NO_MEMORY ();
@@ -543,7 +534,6 @@ TAO_Storable_Naming_Context::new_context (void)
                       object_id,
                       this->context_factory_,
                       this->factory_,
-                      ACE_TEXT_CHAR_TO_TCHAR (this->persistence_directory_.c_str ()),
                       &new_context);
 
   // Since this is a new context, make an empty map in it
@@ -1229,7 +1219,6 @@ CosNaming::NamingContext_ptr TAO_Storable_Naming_Context::recreate_all (
                                int reentering,
                                TAO_Storable_Naming_Context_Factory *cxt_factory,
                                TAO::Storable_Factory *pers_factory,
-                               const ACE_TCHAR *persistence_directory,
                                int use_redundancy)
 {
   ACE_TRACE("recreate_all");
@@ -1250,13 +1239,10 @@ CosNaming::NamingContext_ptr TAO_Storable_Naming_Context::recreate_all (
                       poa_id,
                       cxt_factory,
                       pers_factory,
-                      persistence_directory,
                       &new_context);
 
   // Now does this already exist on disk?
-  ACE_TString file_name(persistence_directory);
-  file_name += ACE_TEXT("/");
-  file_name += ACE_TEXT_CHAR_TO_TCHAR(poa_id);
+  ACE_TString file_name = ACE_TEXT_CHAR_TO_TCHAR(poa_id);
   ACE_Auto_Ptr<TAO::Storable_Base> fl (
     pers_factory->create_stream (ACE_TEXT_ALWAYS_CHAR (file_name.c_str ()), ACE_TEXT ("r")));
   if (fl->exists ())

@@ -1,3 +1,23 @@
+Thu Jan 10 16:34:22 UTC 2013  Byron Harris  <harrisb@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context_Factory.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context_Factory.cpp:
+        * orbsvcs/orbsvcs/Naming/Naming_Server.cpp:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.h:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context_Activator.cpp:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context_Factory.h:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context_Factory.cpp:
+
+          Fix so the actual persistent directory is passed to the
+          Storable_FlatFileFactory constructor and that is then
+          used by the factory to construct the full path of the
+          persistent file using the directory name and file name.
+          This simplies the code and allows absolute directory
+          paths to work properly.
+
 Thu Jan 10 15:24:09 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
 
         * orbsvcs/Naming_Service/FT_Naming_README:
