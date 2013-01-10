@@ -1,3 +1,16 @@
+Thu Jan 10 23:21:36 UTC 2013  Phillip LaBanca  <labancap@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/nsgroup_svc.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/nsgroup_svc.cpp:
+
+         Added missing ACE_TEXT macros and changed char to ACE_TCHAR
+
+        * orbsvcs/tests/FT_Naming/FaultTolerant/run_equivalence_test.pl:
+
+         Added test support for tao_ft_naming single profile ior and
+         multiple profile ior file option arguments.
+
+
 Thu Jan 10 21:25:44 UTC 2013  Byron Harris  <harrisb@ociweb.com>
 
         * orbsvcs/Naming_Service/FT_Naming_README:

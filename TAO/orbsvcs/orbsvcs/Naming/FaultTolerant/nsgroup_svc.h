@@ -39,7 +39,7 @@ public:
    *
    * @return 0 on success, -1 on failure, -2 on bad argument.
    */
- int group_create (const char* group, const char* policy);
+ int group_create (const ACE_TCHAR* group, const ACE_TCHAR* policy);
 
   /**
    *  The naming service shall provide a command line utility for binding an
@@ -50,7 +50,7 @@ public:
    *
    *  @return 0 on success, -1 on failure, -2 on bad argument.
    */
-  int group_bind (const char* group, const char* path);
+  int group_bind (const ACE_TCHAR* group, const ACE_TCHAR* path);
 
   /**
    *  @param group    group name
@@ -58,7 +58,7 @@ public:
    *
    *  @return 0 on success, -1 on failure, -2 on bad argument.
    */
-  int group_unbind (const char* path);
+  int group_unbind (const ACE_TCHAR* path);
 
   /**
    *  The naming service shall provide a command line utility to display all
@@ -77,7 +77,7 @@ public:
    *
    *  @return 0 on success, -1 on failure, -2 on bad argument.
    */
-  int group_modify (const char* group, const char* policy);
+  int group_modify (const ACE_TCHAR* group, const ACE_TCHAR* policy);
 
   /**
    *  The naming service shall provide a command line utility to remove a
@@ -87,7 +87,7 @@ public:
    *
    *  @return 0 on success, -1 on failure, -2 on bad argument.
    */
-  int group_remove (const char* group);
+  int group_remove (const ACE_TCHAR* group);
 
   /**
    *  The naming service shall provide a command line utility for adding object
@@ -99,9 +99,9 @@ public:
    *
    *  @return 0 on success, -1 on failure, -2 on bad argument.
    */
-  int member_add (const char* group,
-                  const char* location,
-                  const char* ior);
+  int member_add (const ACE_TCHAR* group,
+                  const ACE_TCHAR* location,
+                  const ACE_TCHAR* ior);
 
   /**
    *  The naming service shall provide a command line utility for displaying all
@@ -111,7 +111,7 @@ public:
    *
    *  @return 0 on success, -1 on failure, -2 on bad argument.
    */
-  int member_list (const char* group);
+  int member_list (const ACE_TCHAR* group);
 
   /**
    *  The naming service shall provide a command line utility for removing
@@ -122,7 +122,7 @@ public:
    *
    *  @return 0 on success, -1 on failure, -2 on bad argument.
    */
-  int member_remove (const char* group, const char* location);
+  int member_remove (const ACE_TCHAR* group, const ACE_TCHAR* location);
 
   /**
    *  The naming service shall provide a command line utility to display an
@@ -133,14 +133,14 @@ public:
    *
    *  @return zero for success; nonzero for failure.
    */
-  int member_show (const char* group, const char* location);
+  int member_show (const ACE_TCHAR* group, const ACE_TCHAR* location);
 
   /**
    *  @param group    group name
    *
    *  @return true if the specified object group name is found
    */
-  bool group_exist (const char* group_name);
+  bool group_exist (const ACE_TCHAR* group_name);
 
   /**
    *  @return 0 on success, -1 on failure.
@@ -164,12 +164,12 @@ private:
    *
    *  @param policy   round | rand | least
    */
-  FT_Naming::LoadBalancingStrategyValue determine_policy_string (const char *policy);
+  FT_Naming::LoadBalancingStrategyValue determine_policy_string (const ACE_TCHAR *policy);
 
   /**
    *  @return 0 on success, -1 on failure.
    */
-  int display_load_policy_group( FT_Naming::LoadBalancingStrategyValue strategy, const char *display_label);
+  int display_load_policy_group( FT_Naming::LoadBalancingStrategyValue strategy, const ACE_TCHAR *display_label);
 
 private:
 
