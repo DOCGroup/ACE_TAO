@@ -545,7 +545,28 @@ Shared_Backing_Store::connect_replicas (Replica_ptr this_replica)
   CORBA::Object_var obj =
     this->orb_->string_to_object (replica_ior.c_str());
 
-  if (CORBA::is_nil (obj.in ()))
+  if (!CORBA::is_nil (obj.in ()))
+    {
+      bool non_exist = true;
+      try
+        {
+          this->peer_replica_ = ImplementationRepository::
+            UpdatePushNotification::_narrow (obj.in());
+          non_exist = (this->peer_replica_->_non_existent() == 1);
+        }
+      catch (const CORBA::Exception& )
+        {
+          // let error be handled below
+        }
+
+      if (non_exist)
+        {
+          this->peer_replica_ =
+            ImplementationRepository::UpdatePushNotification::_nil();
+        }
+    }
+
+  if (CORBA::is_nil (this->peer_replica_.in()))
     {
       if (this->imr_type_ == Options::BACKUP_IMR)
         {
@@ -557,19 +578,6 @@ Shared_Backing_Store::connect_replicas (Replica_ptr this_replica)
       // no connection currently, just wait for backup
       return 0;
     }
-
-  this->peer_replica_ = ImplementationRepository::UpdatePushNotification::
-    _unchecked_narrow (obj.in());
-  if (this->peer_replica_->_non_existent() == 1)
-    {
-      this->peer_replica_ =
-        ImplementationRepository::UpdatePushNotification::_nil();
-    }
-
-  if (CORBA::is_nil (this->peer_replica_.in ()))
-    ACE_ERROR_RETURN ((LM_ERROR,
-      ACE_TEXT("Error: obj key <%s> not an ImR replica\n"),
-      replica_ior.c_str()), -1);
 
   if (opts_.debug() > 1)
     {
