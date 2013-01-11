@@ -22,54 +22,59 @@ MT_Requestor::MT_Requestor (Test::Sleeper_ptr s)
 int
 MT_Requestor::svc ()
 {
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Client thread %t calling delay\n")));
-  try
+  int retries = 5;
+  while (retries-- > 0)
     {
-      this->sleeper_->delay();
-    }
-  catch (CORBA::Exception &ex)
-    {
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Client thread %d caught %s\n"),
-                  ex._name()));
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("Client thread %t calling delay with %d retries\n"),
+                  retries));
+      try
+        {
+          this->sleeper_->delay();
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("Client thread %t delay succeeded\n")));
+          break;
+        }
+      catch (CORBA::Exception &ex)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("Client thread %t caught %s\n"),
+                      ex._name()));
+        }
     }
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Client thread %t done\n")));
   return 0;
 }
 
 const ACE_TCHAR *ior = ACE_TEXT("file://server.ior");
-int report_exception = 1;
-bool is_shutdown = false;
+bool do_shutdown = false;
 int num_threads = 1;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("e:k:n:s"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:n:x"));
   int c;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
-      case 'e':
-        report_exception = ACE_OS::atoi (get_opts.opt_arg ());
-        break;
       case 'k':
         ior = get_opts.opt_arg ();
         break;
       case 'n':
         num_threads = ACE_OS::atoi (get_opts.opt_arg ());
         break;
-      case 's':
-        is_shutdown = true;
+      case 'x':
+        do_shutdown = true;
         break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
-                           "-e <0|1> "
                            "-k <ior> "
                            "-n <threads> "
-                           "-s (shutdown) "
+                           "-x "
                            "\n",
                            argv [0]),
                           -1);
@@ -104,22 +109,20 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                             1);
         }
 
-      if (is_shutdown)
+      MT_Requestor requestor (sleeper.in());
+      requestor.activate (THR_NEW_LWP | THR_JOINABLE, num_threads);
+      requestor.wait ();
+
+      if (do_shutdown)
       {
         sleeper->shutdown();
       }
-      else
-      {
-        MT_Requestor requestor (sleeper.in());
-        requestor.activate (THR_NEW_LWP | THR_JOINABLE, num_threads);
-        requestor.wait ();
-      }
+
       orb->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {
-      if (report_exception)
-        ex._tao_print_exception ("Exception caught:");
+      ex._tao_print_exception ("Client main exception caught:");
       return 1;
     }
 

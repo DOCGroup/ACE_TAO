@@ -60,9 +60,6 @@ TAO_DTP_Thread_Lane_Resources_Manager::open_default_resources (void)
 void
 TAO_DTP_Thread_Lane_Resources_Manager::finalize (void)
 {
-  // Finalize resources managed by the thread-pool manager.
-  this->tp_manager_->finalize ();
-
   // Finalize default resources.
   this->default_lane_resources_->finalize ();
 }
@@ -85,32 +82,12 @@ TAO_DTP_Thread_Lane_Resources_Manager::close_all_transports (void)
 int
 TAO_DTP_Thread_Lane_Resources_Manager::is_collocated (const TAO_MProfile &mprofile)
 {
-  int result =
-    this->default_lane_resources_->is_collocated (mprofile);
-
-  if (result)
-    return result;
-
-  return this->tp_manager_->is_collocated (mprofile);
+  return this->default_lane_resources_->is_collocated (mprofile);
 }
 
 TAO_Thread_Lane_Resources &
 TAO_DTP_Thread_Lane_Resources_Manager::lane_resources (void)
 {
-  // Get the ORB_Core's TSS resources.
-  TAO_ORB_Core_TSS_Resources &tss =
-    *this->orb_core_->get_tss_resources ();
-
-  // Get the pool for this thread. The API calls it a lane but DTP Thread Pools
-  // are always a single lane.
-  TAO_DTP_Thread_Pool *pool =
-    static_cast <TAO_DTP_Thread_Pool *> (tss.lane_);
-
-  // If we have a valid lane, use that lane's resources.
-  if (pool)
-    return pool->resources ();
-  else
-    // Otherwise, return the default resources.
     return *this->default_lane_resources_;
 }
 
