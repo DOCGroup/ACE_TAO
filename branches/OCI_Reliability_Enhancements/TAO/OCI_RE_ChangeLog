@@ -1,3 +1,9 @@
+Fri Jan 11 03:55:40 UTC 2013  Carey Morris  <morrisc@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/tao_imr_i.cpp
+        
+        Fix ior to strip JACORB: from server name if present.
+
 Fri Jan 11 19:11:55 UTC 2013  Phillip LaBanca  <labancap@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:
