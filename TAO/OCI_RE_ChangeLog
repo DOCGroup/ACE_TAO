@@ -1,3 +1,23 @@
+Fri Jan 11 17:17:51 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * bin/tao_orb_tests.lst:
+
+          Add ORB_ThreadPool test to suite.
+
+        * tao/Dynamic_TP/DTP_Thread_Lane_Resources_Manager.cpp:
+        * tao/Dynamic_TP/DTP_Thread_Pool.h:
+        * tao/Dynamic_TP/DTP_Thread_Pool.inl:
+        * tao/Dynamic_TP/DTP_Thread_Pool.cpp:
+
+          Clean up intermediate changes and debug output.
+
+        * tests/Dynamic_TP/ORB_ThreadPool/Client.cpp:
+        * tests/Dynamic_TP/ORB_ThreadPool/Server.cpp:
+        * tests/Dynamic_TP/ORB_ThreadPool/run_test.pl:
+        * tests/Dynamic_TP/ORB_ThreadPool/server.conf:
+
+          Fix the run_test.pl and clean up client/server sources.
+
 Fri Jan 11 03:55:40 UTC 2013  Phil Mesnier  <mesnier_p@office.socket.net>
 
         * tao/Dynamic_TP/DTP_ORBInitializer.cpp:

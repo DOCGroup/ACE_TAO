@@ -71,14 +71,10 @@ TAO_DTP_Thread_Pool_Threads::run (TAO_ORB_Core &orb_core)
   // don't handle any operations for the given timeout we just
   // exit the loop and this thread ends itself.
   ACE_Time_Value tv (this->pool_.dynamic_thread_time ());
-  ACE_DEBUG (( LM_DEBUG, "(%P|%t) DTP_Threads::run, tv = %d sec %d usec\n",
-               tv.sec(), tv.usec()));
 
   while (!orb_core.has_shutdown ())
     {
       bool has_work = orb->work_pending (tv);
-      ACE_DEBUG (( LM_DEBUG, "(%P|%t) DTP_Threads::run, has_work = %d, tv = %d sec %d usec\n",
-                   has_work, tv.sec(), tv.usec()));
       if (!has_work && this->pool_.above_minimum ())
         {
           // we've timed out, but the pool is not yet at the minimum
@@ -131,7 +127,7 @@ TAO_DTP_Thread_Pool::new_dynamic_thread (void)
       (this->definition_.max_threads_ == -1 ||
        (int)this->threads_.thr_count () < this->definition_.max_threads_))
     {
-      if (TAO_debug_level > 0)
+      if (TAO_debug_level > 7)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO Process %P Pool %d Thread %t\n")
                     ACE_TEXT ("Current number of threads = %d; ")
@@ -189,7 +185,7 @@ TAO_DTP_Thread_Pool::create_initial_threads (void)
       count = (size_t) this->definition_.min_threads_;
     }
 
-  if (TAO_debug_level > 0)
+  if (TAO_debug_level > 7)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) DTP_Thread_Pool::create_initial_threads ")
@@ -273,9 +269,7 @@ TAO_DTP_Thread_Pool::TAO_DTP_Thread_Pool (TAO_DTP_Thread_Pool_Manager &manager,
     shutdown_ (false),
     definition_ (def),
     threads_ (*this),
-    new_thread_generator_ (*this),
-    resources_ (manager.orb_core (),
-                &new_thread_generator_)
+    new_thread_generator_ (*this)
 {
   manager_.orb_core ().leader_follower ().set_new_leader_generator (&new_thread_generator_);
 }
@@ -288,18 +282,6 @@ TAO_DTP_Thread_Pool::open (void)
 
 TAO_DTP_Thread_Pool::~TAO_DTP_Thread_Pool (void)
 {
-}
-
-void
-TAO_DTP_Thread_Pool::finalize (void)
-{
-  this->resources_.finalize ();
-}
-
-void
-TAO_DTP_Thread_Pool::shutdown_reactor (void)
-{
-  this->resources_.shutdown_reactor ();
 }
 
 void
@@ -319,14 +301,6 @@ void
 TAO_DTP_Thread_Pool::wait (void)
 {
   this->threads_.wait ();
-}
-
-int
-TAO_DTP_Thread_Pool::is_collocated (const TAO_MProfile &mprofile)
-{
-  // since we don't have lane specific endpoints for this thread pool, this
-  // is probably always going to return false.
-  return this->resources_.is_collocated (mprofile);
 }
 
 #define TAO_THREAD_POOL_MANAGER_GUARD \
@@ -357,24 +331,6 @@ TAO_DTP_Thread_Pool_Manager::~TAO_DTP_Thread_Pool_Manager (void)
     delete (*iterator).int_id_;
 }
 
-void
-TAO_DTP_Thread_Pool_Manager::finalize (void)
-{
-  // Finalize all the pools.
-  for (THREAD_POOLS::ITERATOR iterator = this->thread_pools_.begin ();
-       iterator != this->thread_pools_.end ();
-       ++iterator)
-    (*iterator).int_id_->finalize ();
-}
-
-void
-TAO_DTP_Thread_Pool_Manager::shutdown_reactor (void)
-{
-  for (THREAD_POOLS::ITERATOR iterator = this->thread_pools_.begin ();
-       iterator != this->thread_pools_.end ();
-       ++iterator)
-    (*iterator).int_id_->shutdown_reactor ();
-}
 
 void
 TAO_DTP_Thread_Pool_Manager::wait (void)
@@ -383,22 +339,6 @@ TAO_DTP_Thread_Pool_Manager::wait (void)
        iterator != this->thread_pools_.end ();
        ++iterator)
     (*iterator).int_id_->wait ();
-}
-
-int
-TAO_DTP_Thread_Pool_Manager::is_collocated (const TAO_MProfile &mprofile)
-{
-  for (THREAD_POOLS::ITERATOR iterator = this->thread_pools_.begin ();
-       iterator != this->thread_pools_.end ();
-       ++iterator)
-    {
-      int const result = (*iterator).int_id_->is_collocated (mprofile);
-
-      if (result)
-        return result;
-    }
-
-  return 0;
 }
 
 CORBA::ULong
@@ -432,14 +372,8 @@ TAO_DTP_Thread_Pool_Manager::destroy_threadpool (CORBA::ULong threadpool)
   // Mark the thread pool that we are shutting down.
   tao_thread_pool->shutting_down ();
 
-  // Shutdown reactor.
-  tao_thread_pool->shutdown_reactor ();
-
   // Wait for the threads.
   tao_thread_pool->wait ();
-
-  // Finalize resources.
-  tao_thread_pool->finalize ();
 
   // Delete the thread pool.
   delete tao_thread_pool;
@@ -477,9 +411,6 @@ TAO_DTP_Thread_Pool_Manager::create_threadpool_helper (TAO_DTP_Thread_Pool *thre
   // Throw exception in case of errors.
   if (result != 0)
     {
-      // Finalize thread pool related resources.
-      thread_pool->finalize ();
-
       throw ::CORBA::INTERNAL
         (
          CORBA::SystemException::_tao_minor_code
@@ -492,7 +423,13 @@ TAO_DTP_Thread_Pool_Manager::create_threadpool_helper (TAO_DTP_Thread_Pool *thre
   // Bind thread to internal table.
   result = this->thread_pools_.bind (this->thread_pool_id_counter_, thread_pool);
 
-  // Throw exceptin in case of errors.
+  TAO_ORB_Core_TSS_Resources &tss =
+    *this->orb_core_.get_tss_resources ();
+  // Associate the thread pool with the ORB for later retrieval
+  tss.lane_ = thread_pool;
+
+  //
+  // Throw exception in case of errors.
   if (result != 0)
     throw ::CORBA::INTERNAL ();
 
@@ -506,21 +443,6 @@ TAO_DTP_Thread_Pool_Manager::create_threadpool_helper (TAO_DTP_Thread_Pool *thre
   // Return current counter and perform post-increment.
   return this->thread_pool_id_counter_++;
 }
-
-#if 0
-TAO_DTP_Thread_Pool *
-TAO_DTP_Thread_Pool_Manager::get_threadpool (CORBA::ULong thread_pool_id )
-{
-  TAO_THREAD_POOL_MANAGER_GUARD;
-
-  TAO_DTP_Thread_Pool *thread_pool = 0;
-  int const result = thread_pools_.find (thread_pool_id, thread_pool);
-
-  ACE_UNUSED_ARG (result);
-
-  return thread_pool;
-}
-#endif
 
 TAO_ORB_Core &
 TAO_DTP_Thread_Pool_Manager::orb_core (void) const

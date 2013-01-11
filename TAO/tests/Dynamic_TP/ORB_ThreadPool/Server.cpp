@@ -5,6 +5,10 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/Thread_Manager.h"
 
+#include "tao/ORB_Core_TSS_Resources.h"
+#include "tao/ORB_Core.h"
+#include "tao/Dynamic_TP/DTP_Thread_Pool.h"
+
 const ACE_TCHAR *ior_output_file = ACE_TEXT ("server.ior");
 
 int
@@ -79,8 +83,20 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_OS::fprintf (output_file, "%s", ior.in ());
       ACE_OS::fclose (output_file);
 
+      TAO_ORB_Core_TSS_Resources &tss =
+        *orb->orb_core ()->get_tss_resources ();
+
+      // The API calls it a lane but DTP Thread Pools
+      // are always a single lane.
+      TAO_DTP_Thread_Pool *pool =
+        static_cast <TAO_DTP_Thread_Pool *> (tss.lane_);
+
+#if 0
       ACE_DEBUG ((LM_DEBUG,"Server calling orb::run()\n"));
       orb->run ();
+#else
+      pool->wait();
+#endif
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
       orb->destroy ();

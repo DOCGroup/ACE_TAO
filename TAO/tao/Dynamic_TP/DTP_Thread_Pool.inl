@@ -26,13 +26,6 @@ TAO_DTP_Thread_Pool::id (void) const
 }
 
 ACE_INLINE
-TAO_Thread_Lane_Resources &
-TAO_DTP_Thread_Pool::resources (void)
-{
-  return this->resources_;
-}
-
-ACE_INLINE
 bool
 TAO_DTP_Thread_Pool::use_timeouts (void) const
 {

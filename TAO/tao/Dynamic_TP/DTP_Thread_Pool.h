@@ -116,20 +116,11 @@ public:
   /// Open the pool.
   void open (void);
 
-  /// Finalize the resources.
-  void finalize (void);
-
-  /// Shutdown the reactor.
-  void shutdown_reactor (void);
-
   /// Wait for threads to exit.
   void wait (void);
 
   /// Mark this thread pool that we are shutting down.
   void shutting_down (void);
-
-  /// Does @a mprofile belong to us?
-  int is_collocated (const TAO_MProfile &mprofile);
 
   /// Create the initial threads - only called once.
   int create_initial_threads (void);
@@ -157,7 +148,6 @@ public:
 
   TAO_DTP_Thread_Pool_Manager &manager (void) const;
   CORBA::ULong id (void) const;
-  TAO_Thread_Lane_Resources &resources (void);
   CORBA::ULong current_threads (void) const;
 
   // @}
@@ -185,8 +175,6 @@ private:
 
   TAO_DTP_New_Leader_Generator new_thread_generator_;
 
-  TAO_Thread_Lane_Resources resources_;
-
   /// Lock to guard all members of the pool
   mutable TAO_SYNCH_MUTEX lock_;
 };
@@ -209,17 +197,8 @@ public:
   /// Destructor.
   ~TAO_DTP_Thread_Pool_Manager (void);
 
-  /// Finalize the resources.
-  void finalize (void);
-
-  /// Shutdown the reactor.
-  void shutdown_reactor (void);
-
   /// Wait for threads to exit.
   void wait (void);
-
-  /// Does @a mprofile belong to us?
-  int is_collocated (const TAO_MProfile &mprofile);
 
   /// Create a threadpool without lanes.
   CORBA::ULong create_threadpool (TAO_DTP_Definition &def);
