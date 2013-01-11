@@ -1,3 +1,11 @@
+Fri Jan 11 16:53:58 UTC 2013  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_typedef/typedef_ch.cpp:
+
+          Fixed a bug in the logic of typecode declaration generation. Some
+          sequence typecodes were getting generated twice. Thanks to Sergey
+          Onuchin <sonuchin at parallels dot com> for reporting the bug.
+
 Thu Jan 10 20:45:55 UTC 2013  Adam Mitz  <mitza@ociweb.com>
 
         * bin/tao_orb_tests.lst:
