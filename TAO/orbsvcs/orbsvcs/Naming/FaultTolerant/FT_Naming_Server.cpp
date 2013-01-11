@@ -224,18 +224,16 @@ TAO_FT_Naming_Server::init_naming_manager_with_orb (int argc, ACE_TCHAR *argv []
     this->naming_manager_ior_ =
       orb->object_to_string (this->my_naming_manager_.in ());
 
-  // If we are running in standalone mode, then write out our
-  // object reference to the file defined in the -g option
-  if ((this->server_role_ == TAO_FT_Naming_Server::STANDALONE) &&
-      (this->combined_naming_manager_ior_file_name_ != 0))
+  // write out our object reference to the file defined in the -h option
+  if (this->naming_manager_ior_file_name_ != 0)
     {
       if (this->write_ior_to_file (this->naming_manager_ior_.in (),
-                                   this->combined_naming_manager_ior_file_name_)
+                                   this->naming_manager_ior_file_name_)
           != 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT("(%P|%t) ERROR: Unable to open %s for writing:(%u) %p\n"),
-                             this->combined_naming_manager_ior_file_name_,
+                             this->naming_manager_ior_file_name_,
                              ACE_ERRNO_GET,
                              ACE_TEXT("TAO_Naming_Server::init_naming_manager_with_orb")),
                             -1);
@@ -655,7 +653,8 @@ TAO_FT_Naming_Server::parse_args (int argc,
                            ACE_TEXT ("-d \n")
                            ACE_TEXT ("-c <multi-profile_name_service_ior_file> \n")
                            ACE_TEXT ("-o <name_svc_ior_output_file> \n")
-                           ACE_TEXT ("-g <naming_mgr_ior_output_file> \n")
+                           ACE_TEXT ("-g <multi-profile_naming_mgr_ior_file> \n")
+                           ACE_TEXT ("-h <naming_mgr_ior_output_file> \n")
                            ACE_TEXT ("-p <pid_file_name> \n")
                            ACE_TEXT ("-s <context_size> \n")
                            ACE_TEXT ("-b <base_address> \n")

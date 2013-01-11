@@ -66,7 +66,8 @@ my $name_dir      = "NameService";
 my $group_dir     = "Groups";
 my $ns_args       = "$DEBUG_LEVEL " .
                     "-ORBListenEndPoints $ns_endpoint1 " .
-                    "-g $name_mgr_iorbase -o $name_srv_iorbase " .
+                    "-h $name_mgr_iorbase " .
+                    "-o $name_srv_iorbase " .
                     "-v $group_dir " .
                     "-u $name_dir " .
                     ($^O eq 'MSWin32' ? "-ORBSvcConf $NM_conf" : '');
