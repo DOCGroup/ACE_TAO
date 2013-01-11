@@ -255,12 +255,18 @@ my $stdout_file                = "test.out";
 END
 {
     $server->DeleteFile ($ns_replica_primary_iorfile);
+
     $server->DeleteFile ($ns_multi_iorfile);
     $server->DeleteFile ($nm_multi_iorfile);
     $server->DeleteFile ($ns_primary_iorfile);
     $server->DeleteFile ($nm_primary_iorfile);
     $server->DeleteFile ($ns_backup_iorfile);
     $server->DeleteFile ($nm_backup_iorfile);
+
+    $client->DeleteFile ($ns_primary_iorfile);
+    $client->DeleteFile ($nm_primary_iorfile);
+    $client->DeleteFile ($ns_backup_iorfile);
+    $client->DeleteFile ($nm_backup_iorfile);
     $client->DeleteFile ($stdout_file);
     $client->DeleteFile ($stderr_file);
 
@@ -295,10 +301,17 @@ sub redundant_equivalency_test()
     my $server_primary_iorfile    = $server->LocalFile ($ns_replica_primary_iorfile);
     my $server_ns_multi_iorfile   = $server->LocalFile ($ns_multi_iorfile);
     my $server_nm_multi_iorfile   = $server->LocalFile ($nm_multi_iorfile);
+
     my $server_ns_primary_iorfile = $server->LocalFile ($ns_primary_iorfile);
     my $server_nm_primary_iorfile = $server->LocalFile ($nm_primary_iorfile);
     my $server_ns_backup_iorfile  = $server->LocalFile ($ns_backup_iorfile);
     my $server_nm_backup_iorfile  = $server->LocalFile ($nm_backup_iorfile);
+
+    my $client_ns_primary_iorfile = $client->LocalFile ($ns_primary_iorfile);
+    my $client_nm_primary_iorfile = $client->LocalFile ($nm_primary_iorfile);
+    my $client_ns_backup_iorfile  = $client->LocalFile ($ns_backup_iorfile);
+    my $client_nm_backup_iorfile  = $client->LocalFile ($nm_backup_iorfile);
+
     my $client_stdout_file        = $client->LocalFile ($stdout_file);
     my $client_stderr_file        = $client->LocalFile ($stderr_file);
 
@@ -325,10 +338,10 @@ sub redundant_equivalency_test()
 
     my $client_args = "--equivalence " .
                       "-ORBDebugLevel $debug_level " .
-                      "-p corbaloc:iiop:$hostname:$ns_orb_port1/NameService " .
-                      "-q corbaloc:iiop:$hostname:$ns_orb_port2/NameService " .
-                      "-r corbaloc:iiop:$hostname:$ns_orb_port1/NamingManager " .
-                      "-s corbaloc:iiop:$hostname:$ns_orb_port2/NamingManager " .
+                      "-p file://$client_ns_primary_iorfile " .
+                      "-q file://$client_ns_backup_iorfile " .
+                      "-r file://$client_nm_primary_iorfile " .
+                      "-s file://$client_nm_backup_iorfile " .
                       "-b 4 " .
                       "-d 4 ";
 

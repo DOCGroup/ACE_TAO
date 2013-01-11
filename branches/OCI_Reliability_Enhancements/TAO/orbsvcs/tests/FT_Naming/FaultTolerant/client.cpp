@@ -17,6 +17,7 @@
 #include "orbsvcs/FT_NamingManagerC.h"
 #include "orbsvcs/Naming/Naming_Server.h"
 #include "tao/debug.h"
+#include "tao/Stub.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
@@ -1576,6 +1577,34 @@ do_equivalence_name_test (
                           ACE_TEXT ("ERROR: invalid ior <%s>\n"),ns2ref),
                           RC_ERROR);
     }
+
+    /// Make sure the two naming manager references point to different objects
+    if ( true == root_context_1->_stubobj ()->is_equivalent (
+      root_context_2.in ()))
+    {
+      ACE_ERROR_RETURN (( LM_ERROR,
+                          ACE_TEXT ("ERROR: ns1ref is equivalent to ns2ref\n")),
+                          RC_ERROR);
+    }
+
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("INFO: ns1ref is not equivalent to ns2ref\n")));
+
+    int ns1_count =
+      root_context_1->_stubobj ()->base_profiles ().profile_count ();
+
+    int ns2_count =
+      root_context_2->_stubobj ()->base_profiles ().profile_count ();
+
+
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("INFO: ns1ref profile count: %d\n"),
+                ns1_count));
+
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("INFO: ns2ref profile count: %d\n"),
+                ns2_count));
+
   }
   catch (const CORBA::Exception& ex)
   {
@@ -2095,7 +2124,6 @@ do_equivalence_objectgroup_test (
                           RC_ERROR);
     }
 
-
     if (CORBA::is_nil (nm2ref))
     {
       ACE_ERROR_RETURN (( LM_ERROR,
@@ -2127,6 +2155,33 @@ do_equivalence_objectgroup_test (
                           nm2ref),
                           RC_ERROR);
     }
+
+    /// Make sure the two naming manager references point to different objects
+    if ( true == naming_manager_1->_stubobj ()->is_equivalent (
+      naming_manager_2.in ()))
+    {
+      ACE_ERROR_RETURN (( LM_ERROR,
+                          ACE_TEXT ("ERROR: nm1ref is equivalent to nm2ref\n")),
+                          RC_ERROR);
+    }
+
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("INFO: nm1ref is not equivalent to nm2ref\n")));
+    int nm1_count =
+      naming_manager_1->_stubobj ()->base_profiles ().profile_count ();
+
+    int nm2_count =
+      naming_manager_2->_stubobj ()->base_profiles ().profile_count ();
+
+
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("INFO: nm1ref profile count: %d\n"),
+                nm1_count));
+
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("INFO: nm2ref profile count: %d\n"),
+                nm2_count));
+
 
     /// Setup 1st NS_group_svc with 1st Naming Manager
     NS_group_svc svc1;

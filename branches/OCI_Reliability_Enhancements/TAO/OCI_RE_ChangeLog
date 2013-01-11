@@ -1,3 +1,24 @@
+Fri Jan 11 19:11:55 UTC 2013  Phillip LaBanca  <labancap@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:
+
+          Fixed -h option to work in standalone, primary and backup roles.
+          Fixed -g option to only work in the backup role.
+          Added -h option to usage description.
+
+        * orbsvcs/tests/FT_Naming/FaultTolerant/client.cpp:
+        * orbsvcs/tests/FT_Naming/FaultTolerant/run_equivalence_test.pl:
+
+          Refactored equivalence test to use the single profile ior files
+          instead of corbaloc object references. Added object reference
+          validation checks to verify that the primary and backup references
+          point to different objects.
+
+        * utils/nsgroup/run_test.pl:
+
+          Change the tests tao_ft_naming -g option to -h since -g is now only
+          valid when the tao_ft_naming is running in the backup role.
+
 Fri Jan 11 17:17:51 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * bin/tao_orb_tests.lst:
