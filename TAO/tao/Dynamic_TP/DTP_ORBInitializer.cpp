@@ -4,29 +4,6 @@
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
-#if 0
-#define TAO_RTCORBA_SAFE_INCLUDE
-#include "tao/RTCORBA/RTCORBAC.h"
-#undef TAO_RTCORBA_SAFE_INCLUDE
-
-#include "tao/RTCORBA/RT_Policy_i.h"
-#include "tao/RTCORBA/RT_PolicyFactory.h"
-#include "tao/RTCORBA/RT_Protocols_Hooks.h"
-#include "tao/RTCORBA/Priority_Mapping_Manager.h"
-#include "tao/RTCORBA/Network_Priority_Mapping_Manager.h"
-#include "tao/RTCORBA/RT_ORB_Loader.h"
-#include "tao/RTCORBA/RT_Stub_Factory.h"
-#include "tao/RTCORBA/RT_Endpoint_Selector_Factory.h"
-#include "tao/RTCORBA/Continuous_Priority_Mapping.h"
-#include "tao/RTCORBA/Linear_Priority_Mapping.h"
-#include "tao/RTCORBA/Direct_Priority_Mapping.h"
-#include "tao/RTCORBA/Linear_Network_Priority_Mapping.h"
-#include "tao/RTCORBA/RT_ORB.h"
-#include "tao/RTCORBA/RT_Current.h"
-#include "tao/RTCORBA/RT_Thread_Lane_Resources_Manager.h"
-#include "tao/RTCORBA/RT_Service_Context_Handler.h"
-#endif
-
 #include "tao/Dynamic_TP/DTP_Config.h"
 #include "tao/Dynamic_TP/DTP_Thread_Lane_Resources_Manager.h"
 #include "tao/Dynamic_TP/DTP_Thread_Pool.h"
@@ -38,16 +15,6 @@
 #include "ace/Service_Repository.h"
 #include "ace/Svc_Conf.h"
 #include "ace/Sched_Params.h"
-
-#if 0
-static const char rt_poa_factory_name[] = "TAO_DTP_Object_Adapter_Factory";
-static const ACE_TCHAR rt_poa_factory_directive[] =
-  ACE_DYNAMIC_SERVICE_DIRECTIVE(
-    "TAO_DTP_Object_Adapter_Factory",
-    "TAO_RTPortableServer",
-    "_make_TAO_DTP_Object_Adapter_Factory",
-    "");
-#endif
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -65,10 +32,10 @@ TAO_DTP_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr info)
     {
       if (TAO_debug_level > 0)
         ACE_ERROR ((LM_ERROR,
-                    "(%P|%t) TAO_DTP_ORBInitializer::pre_init:\n"
-                    "(%P|%t)    Unable to narrow "
-                    "\"PortableInterceptor::ORBInitInfo_ptr\" to\n"
-                    "(%P|%t)   \"TAO_ORBInitInfo *.\"\n"));
+                    ACE_TEXT ("(%P|%t) TAO_DTP_ORBInitializer::pre_init:\n")
+                    ACE_TEXT ("(%P|%t)    Unable to narrow ")
+                    ACE_TEXT ("\"PortableInterceptor::ORBInitInfo_ptr\" to\n")
+                    ACE_TEXT ("(%P|%t)   \"TAO_ORBInitInfo *.\"\n")));
 
       throw ::CORBA::INTERNAL ();
     }
@@ -119,6 +86,13 @@ TAO_DTP_ORBInitializer::post_init (PortableInterceptor::ORBInitInfo_ptr info)
 
   if (dtp_name != 0 && dtp_name[0] != 0)
     {
+      if (TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) TAO_DTP_ORBInitializer::post_init ")
+                      ACE_TEXT ("using thread pool name %s\n"), dtp_name));
+        }
+
       TAO_DTP_Config_Registry *config_registry =
         dynamic_cast<TAO_DTP_Config_Registry *>
         (ACE_Dynamic_Service<ACE_Service_Object>::instance
@@ -130,11 +104,12 @@ TAO_DTP_ORBInitializer::post_init (PortableInterceptor::ORBInitInfo_ptr info)
         {
           if (TAO_debug_level > 0)
             ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) TAO_DTP_ORBInitializer::pre_init:\n")
+                        ACE_TEXT ("(%P|%t) TAO_DTP_ORBInitializer::post_init:\n")
                         ACE_TEXT ("(%P|%t)   Unable to resolve DTP_Config object\n")));
 
           throw ::CORBA::INTERNAL ();
         }
+
       TAO_DTP_Thread_Lane_Resources_Manager &dtp_tlrm =
         dynamic_cast<TAO_DTP_Thread_Lane_Resources_Manager &>(tlrm);
 

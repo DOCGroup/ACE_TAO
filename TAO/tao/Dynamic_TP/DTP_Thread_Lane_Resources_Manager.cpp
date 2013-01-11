@@ -72,9 +72,7 @@ TAO_DTP_Thread_Lane_Resources_Manager::shutdown_reactor (void)
 {
   // Shutdown default reactors.
   this->default_lane_resources_->shutdown_reactor ();
-
-  // Shutdown reactors managed by the thread-pool manager.
-  this->tp_manager_->shutdown_reactor ();
+  // This is the only reactor in use with this thread pool
 }
 
 void
