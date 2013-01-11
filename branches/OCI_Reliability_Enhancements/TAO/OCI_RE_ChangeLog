@@ -1,7 +1,14 @@
+Fri Jan 11 20:17:59 UTC 2013  Phillip LaBanca  <labancap@ociweb.com>
+
+        * orbsvcs/tests/FT_Naming/FaultTolerant/README:
+
+          Updated README to incorporate tao_ft_naming ior option changes made
+          to the equivalence test.
+
 Fri Jan 11 03:55:40 UTC 2013  Carey Morris  <morrisc@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/tao_imr_i.cpp
-        
+
         Fix ior to strip JACORB: from server name if present.
 
 Fri Jan 11 19:11:55 UTC 2013  Phillip LaBanca  <labancap@ociweb.com>

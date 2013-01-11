@@ -183,6 +183,8 @@ Redundant Equivalancy Test
 	$TAO_ROOT/orbsvcs/Naming_Service/tao_ft_naming \
 	  --primary \
 		-ORBListenEndPoints iiop://<hostname>:<port1> \
+		-o /tmp/ns_primary.ior \
+		-h /tmp/nm_primary.ior \
 		-r NameService \
 		-v GroupService &
 
@@ -191,26 +193,34 @@ Redundant Equivalancy Test
 	$TAO_ROOT/orbsvcs/Naming_Service/tao_ft_naming \
 	  --backup \
 		-ORBListenEndPoints iiop://<hostname>:<port2> \
-		-c $TAO_ROOT/orbsvcs/tests/FT_Naming/FaultTolerant/ns.ior \
-		-g $TAO_ROOT/orbsvcs/tests/FT_Naming/FaultTolerant/nm.ior \
+		-o /tmp/ns_backup.ior \
+		-h /tmp/nm_backup.ior \
+		-c /tmp/ns_multi_profile.ior \
+		-g /tmp/nm_multi_profile.ior \
 		-r NameService \
 		-v GroupService &
 
 4) Now run the test client with the equivalence argument
 
 	client --equivalence \
-		-p corbaloc:iiop:<hostname>:<port1>/NameService \
-		-q corbaloc:iiop:<hostname>:<port2>/NameService \
-		-r corbaloc:iiop:<hostname>:<port1>/NamingManager \
-		-s corbaloc:iiop:<hostname>:<port2>/NamingManager \
+		-p file:///tmp/ns_primary.ior \
+		-q file:///tmp/ns_backup.ior \
+		-r file:///tmp/nm_primary.ior \
+		-s file:///tmp/nm_backup.ior \
 		-b 4 -d 4
 
 	==============================================================================
 	Example Output:
 	==============================================================================
+	INFO: ns1ref is not equivalent to ns2ref
+	INFO: ns1ref profile count: 1
+	INFO: ns2ref profile count: 1
 	INFO: Equivalence Name Test OK
-	INFO: nm1ref: corbaloc:iiop:labancap-VirtualBox:21592/NamingManager
-	INFO: nm2ref: corbaloc:iiop:labancap-VirtualBox:20834/NamingManager
+	INFO: nm1ref: file:///tmp/nm_primary.ior
+	INFO: nm2ref: file:///tmp/nm_backup.ior
+	INFO: nm1ref is not equivalent to nm2ref
+	INFO: nm1ref profile count: 1
+	INFO: nm2ref profile count: 1
 	INFO: Primary Found Object Group test_group_1 Created By Primary In Repository
 	INFO: Backup Found Object Group test_group_2 Created By Backup In Repository
 	INFO: Primary Found Object Group test_group_2 Created By Backup In Repository
