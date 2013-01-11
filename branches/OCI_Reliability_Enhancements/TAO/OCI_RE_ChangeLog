@@ -1,3 +1,27 @@
+Fri Jan 11 03:55:40 UTC 2013  Phil Mesnier  <mesnier_p@office.socket.net>
+
+        * tao/Dynamic_TP/DTP_ORBInitializer.cpp:
+        * tao/Dynamic_TP/DTP_Thread_Lane_Resources_Manager.cpp:
+        * tao/Dynamic_TP/DTP_Thread_Pool.h:
+        * tao/Dynamic_TP/DTP_Thread_Pool.cpp:
+
+          Fix assorted bugs exposed by new test.
+
+        * tests/Dynamic_TP/ORB_ThreadPool:
+
+        * tests/Dynamic_TP/ORB_ThreadPool/Client.cpp:
+        * tests/Dynamic_TP/ORB_ThreadPool/ORB_ThreadPool.mpc:
+        * tests/Dynamic_TP/ORB_ThreadPool/Server.cpp:
+        * tests/Dynamic_TP/ORB_ThreadPool/Test.idl:
+        * tests/Dynamic_TP/ORB_ThreadPool/Test_i.h:
+        * tests/Dynamic_TP/ORB_ThreadPool/Test_i.cpp:
+        * tests/Dynamic_TP/ORB_ThreadPool/client.conf:
+        * tests/Dynamic_TP/ORB_ThreadPool/run_test.pl:
+        * tests/Dynamic_TP/ORB_ThreadPool/server.conf:
+
+          New test for the dynamic ORB thread pool. The run_test.pl script
+          is not ready yet.
+
 Thu Jan 10 23:21:36 UTC 2013  Phillip LaBanca  <labancap@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/FaultTolerant/nsgroup_svc.h:

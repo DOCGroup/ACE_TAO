@@ -145,6 +145,10 @@ public:
    */
   bool new_dynamic_thread (void);
 
+  /// Called by the run loop to determine if to expire a thread or not
+  /// when the dynamic timeout is reached.
+  bool above_minimum (void);
+
   /// @name Accessors
   // @{
 

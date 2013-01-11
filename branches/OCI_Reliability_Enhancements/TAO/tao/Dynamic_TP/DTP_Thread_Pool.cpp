@@ -71,8 +71,20 @@ TAO_DTP_Thread_Pool_Threads::run (TAO_ORB_Core &orb_core)
   // don't handle any operations for the given timeout we just
   // exit the loop and this thread ends itself.
   ACE_Time_Value tv (this->pool_.dynamic_thread_time ());
-  while (!orb_core.has_shutdown () && orb->work_pending (tv))
+  ACE_DEBUG (( LM_DEBUG, "(%P|%t) DTP_Threads::run, tv = %d sec %d usec\n",
+               tv.sec(), tv.usec()));
+
+  while (!orb_core.has_shutdown ())
     {
+      bool has_work = orb->work_pending (tv);
+      ACE_DEBUG (( LM_DEBUG, "(%P|%t) DTP_Threads::run, has_work = %d, tv = %d sec %d usec\n",
+                   has_work, tv.sec(), tv.usec()));
+      if (!has_work && this->pool_.above_minimum ())
+        {
+          // we've timed out, but the pool is not yet at the minimum
+          break;
+        }
+
       // Run the ORB for the specified timeout, this prevents looping
       // between work_pending/handle_events
       tv = this->pool_.dynamic_thread_time ();
@@ -86,12 +98,19 @@ TAO_DTP_Thread_Pool_Threads::run (TAO_ORB_Core &orb_core)
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO Process %P Pool %d Thread %t\n")
                   ACE_TEXT ("Current number of dynamic threads left = %d; ")
-                  ACE_TEXT ("RTCorba worker thread is ending!\n"),
+                  ACE_TEXT ("DTP worker thread is ending!\n"),
                   this->pool_.id (),
                   this->thr_count () - 1));
     }
 
   return 0;
+}
+
+bool
+TAO_DTP_Thread_Pool::above_minimum (void)
+{
+  return this->definition_.min_threads_ > 0 &&
+    (int)this->threads_.thr_count () > this->definition_.min_threads_;
 }
 
 bool
@@ -117,7 +136,7 @@ TAO_DTP_Thread_Pool::new_dynamic_thread (void)
                     ACE_TEXT ("TAO Process %P Pool %d Thread %t\n")
                     ACE_TEXT ("Current number of threads = %d; ")
                     ACE_TEXT ("min threads = %d; max threads = %d\n")
-                    ACE_TEXT ("No leaders available; creating new leader!\n"),
+                    ACE_TEXT ("No leaders available; DTP creating new leader!\n"),
                     this->id_,
                     this->threads_.thr_count (),
                     this->definition_.min_threads_,
@@ -169,6 +188,15 @@ TAO_DTP_Thread_Pool::create_initial_threads (void)
       extra = count - (size_t) this->definition_.min_threads_;
       count = (size_t) this->definition_.min_threads_;
     }
+
+  if (TAO_debug_level > 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%P|%t) DTP_Thread_Pool::create_initial_threads ")
+                  ACE_TEXT ("Creating %d static and %d dynamic threads\n"),
+                  count, extra));
+    }
+
   int result = this->create_threads_i (count, THR_NEW_LWP | THR_JOINABLE);
   if (result != -1 && extra > 0)
     {
@@ -249,6 +277,7 @@ TAO_DTP_Thread_Pool::TAO_DTP_Thread_Pool (TAO_DTP_Thread_Pool_Manager &manager,
     resources_ (manager.orb_core (),
                 &new_thread_generator_)
 {
+  manager_.orb_core ().leader_follower ().set_new_leader_generator (&new_thread_generator_);
 }
 
 void
