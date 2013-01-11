@@ -96,7 +96,9 @@ TAO::FT_PG_Object_Group_Storable::propagate_update_notification
   }
   catch (CORBA::Exception& ex)
     {
-      ex._tao_print_exception (ACE_TEXT ("Unable to communicate with peer.\n"));
+      if (TAO_debug_level > 3)
+        ex._tao_print_exception (
+          ACE_TEXT ("Unable to communicate with peer.\n"));
       return -1;
     }
 
