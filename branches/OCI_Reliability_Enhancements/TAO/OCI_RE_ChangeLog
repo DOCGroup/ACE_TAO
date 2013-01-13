@@ -1,3 +1,13 @@
+Sun Jan 13 01:53:16 UTC 2013  "Kevin Stanley"  <stanleyk@ociweb.com>
+
+        * orbsvcs/Naming_Service/README.FT_Naming:
+
+          Renamed file.
+
+        * orbsvcs/Naming_Service/FT_Naming_README:
+
+          Removed this file.
+
 Fri Jan 11 22:42:28 UTC 2013  Phillip LaBanca  <labancap@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_PG_Object_Group_Storable.cpp:
