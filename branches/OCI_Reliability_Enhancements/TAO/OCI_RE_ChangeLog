@@ -1,3 +1,22 @@
+Mon Jan 14 19:51:29 UTC 2013  Byron Harris  <harrisb@ociweb.com>
+
+        * tests/Storable/README:
+        * tests/Storable/Savable.h:
+        * tests/Storable/Savable.cpp:
+        * tests/Storable/run_test.pl:
+        * tests/Storable/test.cpp:
+
+          Clean up of the test.
+
+        * bin/tao_orb_tests.lst:
+
+          Added Storable test to the list.
+
+        * bin/tao_other_tests.lst:
+
+          Removed restriction that FT_Naming tests
+          are not to run for static builds.
+
 Sun Jan 13 01:53:16 UTC 2013  "Kevin Stanley"  <stanleyk@ociweb.com>
 
         * orbsvcs/Naming_Service/README.FT_Naming:

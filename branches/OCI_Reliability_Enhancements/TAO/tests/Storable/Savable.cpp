@@ -56,7 +56,7 @@ Savable_File_Guard::get_object_last_changed ()
 void
 Savable_File_Guard::load_from_stream ()
 {
-  savable_.load (this->peer ());
+  savable_.read (this->peer ());
   savable_.loaded_from_stream_ = true;
   this->peer ().rewind ();
 }
@@ -76,14 +76,18 @@ Savable_File_Guard::create_stream (const char * mode)
 Savable::Savable (TAO::Storable_Factory & storable_factory)
   : storable_factory_(storable_factory)
   , loaded_from_stream_ (false)
-  , i_(42)
-  , bytes_size_(0)
 {
 
-  this->bytes_ = new char [this->bytes_size_max];
-  for (int i = 0; i < this->bytes_size_max; ++i)
+  for (int index = 0; index < 2; ++index)
     {
-      this->bytes_[i] = 255;
+      this->i_[index] = 0;
+      this->ui_[index] = 0;
+      this->bytes_size_[index] = 0;
+      this->bytes_[index] = new char [this->bytes_size_max];
+      for (int i = 0; i < this->bytes_size_max; ++i)
+        {
+          this->bytes_[index][i] = 255;
+        }
     }
 
   ACE_Auto_Ptr<TAO::Storable_Base> stream (storable_factory_.create_stream("test.dat", "r"));
@@ -100,6 +104,10 @@ Savable::Savable (TAO::Storable_Factory & storable_factory)
 
 Savable::~Savable ()
 {
+  for (int index = 0; index < 2; ++index)
+    {
+      delete []this->bytes_[index];
+    }
 }
 
 bool
@@ -109,26 +117,31 @@ Savable::is_loaded_from_stream ()
 }
 
 void
-Savable::load (TAO::Storable_Base & stream)
+Savable::read (TAO::Storable_Base & stream)
 {
   stream.rewind ();
   if (!stream.good ())
     throw Storable_Exception (stream.rdstate ());
 
-  for (int i = 0; i < 2; ++i)
+  for (int index = 0; index < 2; ++index)
     {
-      stream >> string_[i];
+      stream >> this->string_[index];
+      if (!stream.good ())
+        throw Storable_Exception (stream.rdstate ());
+
+      stream >> this->i_[index];
+      if (!stream.good ())
+        throw Storable_Exception (stream.rdstate ());
+
+      stream >> this->ui_[index];
+      if (!stream.good ())
+        throw Storable_Exception (stream.rdstate ());
+
+      stream >> this->bytes_size_[index];
+      stream.read (this->bytes_size_[index], this->bytes_[index]);
       if (!stream.good ())
         throw Storable_Exception (stream.rdstate ());
     }
-  stream >> i_;
-  if (!stream.good ())
-    throw Storable_Exception (stream.rdstate ());
-
-  stream >> this->bytes_size_;
-  stream.read (this->bytes_size_, this->bytes_);
-  if (!stream.good ())
-    throw Storable_Exception (stream.rdstate ());
 }
 
 void
@@ -138,22 +151,27 @@ Savable::write (TAO::Storable_Base & stream)
   if (!stream.good ())
     throw Storable_Exception (stream.rdstate ());
 
-  for (int i = 0; i < 2; ++i)
+  for (int index = 0; index < 2; ++index)
     {
-      stream << string_[i];
+      stream << this->string_[index];
+      if (!stream.good ())
+        throw Storable_Exception (stream.rdstate ());
+
+      stream << this->i_[index];
+      if (!stream.good ())
+        throw Storable_Exception (stream.rdstate ());
+
+      stream << this->ui_[index];
+      if (!stream.good ())
+        throw Storable_Exception (stream.rdstate ());
+
+      stream << this->bytes_size_[index];
+      if (!stream.good ())
+        throw Storable_Exception (stream.rdstate ());
+      stream.write (this->bytes_size_[index], this->bytes_[index]);
       if (!stream.good ())
         throw Storable_Exception (stream.rdstate ());
     }
-  stream << i_;
-  if (!stream.good ())
-    throw Storable_Exception (stream.rdstate ());
-
-  stream << this->bytes_size_;
-  if (!stream.good ())
-    throw Storable_Exception (stream.rdstate ());
-  stream.write (this->bytes_size_, this->bytes_);
-  if (!stream.good ())
-    throw Storable_Exception (stream.rdstate ());
 
   stream.flush ();
 }
@@ -174,39 +192,54 @@ Savable::string_get (int index)
 }
 
 void
-Savable::int_set (int i)
+Savable::int_set (int index, int i)
 {
   Savable_File_Guard fg(*this, "rw");
-  this->i_ = i;
+  this->i_[index] = i;
   this->write (fg.peer ());
 }
 
 int
-Savable::int_get ()
+Savable::int_get (int index)
 {
   Savable_File_Guard fg(*this, "r");
-  return this->i_;
+  return this->i_[index];
 }
 
 void
-Savable::bytes_set (int size, char * bytes)
+Savable::unsigned_int_set (int index, unsigned int ui)
 {
   Savable_File_Guard fg(*this, "rw");
-  bytes_size_ = size;
-  for (int i = 0; i < this->bytes_size_; ++i)
+  this->ui_[index] = ui;
+  this->write (fg.peer ());
+}
+
+unsigned int
+Savable::unsigned_int_get (int index)
+{
+  Savable_File_Guard fg(*this, "r");
+  return this->ui_[index];
+}
+
+void
+Savable::bytes_set (int index, int size, char * bytes)
+{
+  Savable_File_Guard fg(*this, "rw");
+  this->bytes_size_[index] = size;
+  for (int i = 0; i < this->bytes_size_[index]; ++i)
     {
-      this->bytes_[i] = bytes[i];
+      this->bytes_[index][i] = bytes[i];
     }
   this->write (fg.peer ());
 }
 
 int
-Savable::bytes_get (char *& bytes)
+Savable::bytes_get (int index, char * bytes)
 {
   Savable_File_Guard fg(*this, "r");
-  for (int i = 0; i < this->bytes_size_; ++i)
+  for (int i = 0; i < this->bytes_size_[index]; ++i)
     {
-      bytes[i] = this->bytes_[i];
+      bytes[i] = this->bytes_[index][i];
     }
-  return this->bytes_size_;
+  return this->bytes_size_[index];
 }

@@ -1,9 +1,11 @@
 // $Id$
 
-// Writes/reads a string to file multiple times with a
-// sleep after each write. Indented to be ran in
-// multiple processes to verify file locking is done
-// properly.
+// Assumed to be one of two processes that
+// writes/reads from persistent store.
+// Each process writes one group of attributes
+// and reads from the group written by the
+// other process. After reading a check is
+// made that expected values are read.
 
 #include "Savable.h"
 
@@ -19,7 +21,7 @@ const ACE_TCHAR *persistence_file = ACE_TEXT("test.dat");
 
 int num_loops = 10;
 int sleep_msecs = 100;
-int string_index = 0;
+int write_index = 0;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -39,20 +41,29 @@ parse_args (int argc, ACE_TCHAR *argv[])
         break;
 
       case 'i':
-        string_index = ACE_OS::atoi (get_opts.opt_arg ());
+        write_index = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-n <number-of-loops>"
-                           "-s <milliseconds-to-sleep-in-loop>"
-                           "-i <0 to modify string1, 1 to modify string2>"
-                           "\n",
+                           ACE_TEXT("usage:  %s ")
+                           ACE_TEXT("-n <number-of-loops> ")
+                           ACE_TEXT("-s <milliseconds-to-sleep-in-loop> ")
+                           ACE_TEXT("-i <index-used-for-writing> ")
+                           ACE_TEXT("\n"),
                            argv [0]),
                           -1);
       }
+
+  if (write_index != 0 && write_index != 1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT("Error: Value passed to -i should be ")
+                         ACE_TEXT("0 or 1.")),
+                         -1);
+    }
+
   // Indicates successful parsing of the command line
   return 0;
 }
@@ -63,57 +74,78 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   if (parse_args (argc, argv) != 0)
     return 1;
 
+  int read_index = write_index ? 0 : 1;
+
   TAO::Storable_FlatFileFactory factory ("./");
 
+  ACE_CString str_write_value = "test_string";
+  int int_write_value = -100;
+  unsigned int unsigned_int_write_value = 100;
+
   const int bytes_size = 8;
-  char * bytes_set = new char [bytes_size];
-  char * bytes_get = new char [bytes_size];
+  char bytes_write_value[bytes_size];
+  char bytes_read[bytes_size];
   // Set 1st byte to 32 (ASCII space) to
   // make sure fscanf doesn't consume it
   // when reading the size.
-  bytes_set[0] = 32;
+  bytes_write_value[0] = 32;
   for (int i = 1; i < bytes_size; ++i)
     {
-      bytes_set[i] = i;
+      bytes_write_value[i] = i;
     }
 
   try
     {
-      Savable savable(factory);
-
-      // In case the file was read, bytes better match up
-      if (savable.is_loaded_from_stream ())
-        {
-          int bytes_read_size = savable.bytes_get (bytes_get);
-          ACE_ASSERT (bytes_read_size == bytes_size);
-          for (int k = 0; k < bytes_size; ++k)
-            {
-              ACE_ASSERT (bytes_get[k] == bytes_set[k]);
-            }
-        }
-
-      ACE_Time_Value sleep_time (0, 1000*sleep_msecs);
-
-      char index_str[2];
-      ACE_OS::sprintf (index_str, "%d", string_index);
-      ACE_CString str_write = ACE_CString("string") + ACE_CString(index_str);
-      ACE_CString str_read;
-
       for (int j = 0; j < num_loops; ++j)
         {
-          savable.string_set(string_index, str_write);
-          savable.int_set(j);
-          savable.bytes_set(bytes_size, bytes_set);
+
+          // Constructor called num_loops times.
+          // Each time state read from persistent store.
+          Savable savable(factory);
+
+          // If the file was read, verify what was
+          // written from other process is correct.
+          if (savable.is_loaded_from_stream ())
+            {
+
+              int int_read = savable.int_get(read_index);
+              // If value read is not 0 then the other
+              // process have written to persistent store.
+              // If not, it's too soon test.
+              if (int_read != 0)
+                {
+                  ACE_ASSERT (int_read == int_write_value);
+
+                  const ACE_CString & str_read = savable.string_get(read_index);
+                  ACE_ASSERT (str_read == str_write_value);
+
+                  unsigned int unsigned_int_read = savable.unsigned_int_get (read_index);
+                  ACE_ASSERT (unsigned_int_read == unsigned_int_write_value);
+
+                  int bytes_read_size = savable.bytes_get (read_index, bytes_read);
+                  ACE_ASSERT (bytes_read_size == bytes_size);
+                  for (int k = 0; k < bytes_size; ++k)
+                    {
+                      ACE_ASSERT (bytes_read[k] == bytes_write_value[k]);
+                    }
+                }
+            }
+
+          ACE_Time_Value sleep_time (0, 1000*sleep_msecs);
+
+          // Write out state
+          savable.string_set(write_index, str_write_value);
+          savable.int_set(write_index, int_write_value);
+          savable.unsigned_int_set(write_index, unsigned_int_write_value);
+          savable.bytes_set(write_index, bytes_size, bytes_write_value);
           ACE_OS::sleep (sleep_time);
-          str_read = savable.string_get (string_index);
-          ACE_ASSERT (str_write == str_read);
-          int bytes_read_size = savable.bytes_get (bytes_get);
-          ACE_ASSERT (bytes_read_size == bytes_size);
+          int bytes_size = savable.bytes_get (write_index, bytes_read);
           for (int k = 0; k < bytes_size; ++k)
             {
-              ACE_ASSERT (bytes_get[k] == bytes_set[k]);
+              ACE_ASSERT (bytes_read[k] == bytes_write_value[k]);
             }
         }
+
     }
 
   catch (Storable_Exception &ex)
@@ -121,9 +153,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       std::cout << "Storable_Exception thrown with state " <<
         ex.get_state () << std::endl;
     }
-
-  delete [] bytes_set;
-  delete [] bytes_get;
 
   return 0;
 }
