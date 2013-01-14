@@ -1,3 +1,10 @@
+Mon Jan 14 15:28:33 UTC 2013  Adam Mitz  <mitza@ociweb.com>
+
+        * tests/Bug_4082_Regression/Bug_4082_Regression.cpp:
+        * tests/Bug_4082_Regression/Bug_4082_Regression.idl:
+
+          De-fuzzed
+
 Fri Jan 11 16:53:58 UTC 2013  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_typedef/typedef_ch.cpp:
