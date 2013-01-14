@@ -1,3 +1,20 @@
+Mon Jan 14 21:49:20 UTC 2013  Phillip LaBanca  <labancap@ociweb.com>
+
+        * orbsvcs/tests/FT_Naming/Federation/Hello.cpp:
+        * orbsvcs/tests/FT_Naming/Federation/client.cpp:
+        * orbsvcs/tests/FT_Naming/Federation/server.cpp:
+
+          Added missing ACE_TEXT wrapper macros
+
+        * orbsvcs/tests/FT_Naming/Federation/README:
+
+          Added test documentation
+
+        * orbsvcs/tests/FT_Naming/Federation/NamingTask.h:
+        * orbsvcs/tests/FT_Naming/Federation/NamingTask.cpp:
+
+          Removed these files.
+
 Mon Jan 14 19:51:29 UTC 2013  Byron Harris  <harrisb@ociweb.com>
 
         * tests/Storable/README:
