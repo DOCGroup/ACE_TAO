@@ -20,8 +20,26 @@ my $test2 = PerlACE::TestTarget::create_target (2) || die "Create target 1 faile
 
 $T2 = $test2->CreateProcess ("test", "-i 1");
 
-$T1->Spawn ();
-$T2->SpawnWaitKill ($test2->ProcessStartWaitInterval());
-$T1->WaitKill ($test1->ProcessStopWaitInterval());
+$test1_status = $T1->Spawn ();
+
+if ($test1_status != 0) {
+    print STDERR "ERROR: test 1 returned $test1_status\n";
+    exit 1;
+}
+
+$test2_status = $T2->SpawnWaitKill ($test2->ProcessStartWaitInterval());
+
+if ($test2_status != 0) {
+    print STDERR "ERROR: test 2 returned $test2_status\n";
+    exit 1;
+}
+
+
+$test1_status = $T1->WaitKill ($test1->ProcessStopWaitInterval());
+
+if ($test1_status != 0) {
+    print STDERR "ERROR: test 1 returned $test1_status\n";
+    exit 1;
+}
 
 $test1->DeleteFile ($persistent_file);

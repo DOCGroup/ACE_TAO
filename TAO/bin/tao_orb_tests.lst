@@ -470,6 +470,7 @@ TAO/tests/Bug_3853_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MI
 TAO/tests/Multiple_Retry_Tests/Retry_On_Connection_Failure/run_test.pl:
 TAO/tests/Multiple_Retry_Tests/Retry_On_Connection_Failure/run_test.pl -oneway:
 TAO/tests/Multiple_Retry_Tests/Retry_On_Reply_Failure/run_test.pl:
+TAO/tests/Storable/run_test.pl:
 TAO/DevGuideExamples/BiDirectionalGIOP/run_test.pl: !MINIMUM !CORBA_E_MICRO
 TAO/DevGuideExamples/GettingStarted/run_test.pl:
 TAO/DevGuideExamples/LocalObjects/Messenger/run_test.pl:
