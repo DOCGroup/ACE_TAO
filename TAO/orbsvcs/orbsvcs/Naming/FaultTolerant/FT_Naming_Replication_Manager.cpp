@@ -81,7 +81,8 @@ TAO_FT_Naming_Replication_Manager::notify_updated_object_group (
   int result = this->naming_svr_->update_object_group (group_info);
 
   if (result != 0)
-    ACE_ERROR ((LM_ERROR, "Unable to update object group.\n"));
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("Unable to update object group.\n")));
 }
 
 void
@@ -94,7 +95,8 @@ TAO_FT_Naming_Replication_Manager::notify_updated_context (
 
   if (result != 0)
   {
-    ACE_ERROR ((LM_ERROR, "Error while updating naming context.\n"));
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("Error while updating naming context.\n")));
   }
 }
 
@@ -151,7 +153,9 @@ TAO_FT_Naming_Replication_Manager::register_with_peer_replica (
   catch (const CORBA::Exception& ex) {
     // Unable to contact the peer replica.
     if (TAO_debug_level > 1)
-      ex._tao_print_exception ("TAO_FT_Naming_Replication_Manager::register_with_peer_replica\n");
+      ex._tao_print_exception (
+        ACE_TEXT ("TAO_FT_Naming_Replication_Manager::")
+        ACE_TEXT ("register_with_peer_replica\n"));
     result = -1;
   }
 

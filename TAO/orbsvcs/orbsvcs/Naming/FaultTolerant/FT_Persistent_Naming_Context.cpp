@@ -40,8 +40,8 @@ TAO_FT_Persistent_Naming_Context::~TAO_FT_Persistent_Naming_Context (void)
 CORBA::Boolean
 TAO_FT_Persistent_Naming_Context::is_object_group (CORBA::Object_ptr obj) const
 {
-  // If there is a tagged component with tag = IOP::TAG_FT_GROUP in the object reference
-  // then it is an object group
+  // If there is a tagged component with tag = IOP::TAG_FT_GROUP in
+  // the object reference then it is an object group
   PortableGroup::TagGroupTaggedComponent tagged_component;
   return TAO::PG_Utils::get_tagged_component (obj, tagged_component);
 }
@@ -70,7 +70,8 @@ TAO_FT_Persistent_Naming_Context::resolve (const CosNaming::Name& n)
     if ( this->naming_manager_impl_ == 0)
     {
       ACE_ERROR ((LM_ERROR,
-        "TAO_FT_Persistent_Naming_Context::resolve - No NamingManager defined.\n"));
+                  ACE_TEXT ("TAO_FT_Persistent_Naming_Context::resolve ")
+                  ACE_TEXT ("- No NamingManager defined.\n")));
 
       throw CORBA::INTERNAL ();
     }
@@ -88,7 +89,8 @@ TAO_FT_Persistent_Naming_Context::resolve (const CosNaming::Name& n)
   catch (CORBA::Exception& ex)
   {
      ex._tao_print_exception (
-        "TAO_FT_Persistent_Naming_Context::resolve - Some unhandled error occurred\n");
+        ACE_TEXT ("TAO_FT_Persistent_Naming_Context::resolve ")
+        ACE_TEXT ("- Some unhandled error occurred\n"));
       return CORBA::Object::_nil ();
   }
 
@@ -96,7 +98,8 @@ TAO_FT_Persistent_Naming_Context::resolve (const CosNaming::Name& n)
 }
 
 void
-TAO_FT_Persistent_Naming_Context::set_naming_manager_impl (TAO_FT_Naming_Manager *mgr_impl)
+TAO_FT_Persistent_Naming_Context::set_naming_manager_impl (
+  TAO_FT_Naming_Manager *mgr_impl)
 {
   naming_manager_impl_ = (mgr_impl);
 }
