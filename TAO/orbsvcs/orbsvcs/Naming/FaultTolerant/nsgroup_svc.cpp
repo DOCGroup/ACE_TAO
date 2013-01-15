@@ -79,7 +79,7 @@ NS_group_svc::group_exist (
   {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("group_exist args not provided\n")),
-                      -2);
+                      false);
   }
 
   try
@@ -87,7 +87,7 @@ NS_group_svc::group_exist (
     PortableGroup::ObjectGroup_var group_var =
       this->naming_manager_->get_object_group_ref_from_name (group_name);
   }
-  catch (const PortableGroup::ObjectGroupNotFound& ex)
+  catch (const PortableGroup::ObjectGroupNotFound&)
   {
     return false;
   }
@@ -154,7 +154,7 @@ NS_group_svc::group_create (
     }
 
   }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
   {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("\nUnable to create group %C\n"),
@@ -212,13 +212,13 @@ NS_group_svc::group_bind (
                          path),
                          -1);
   }
-  catch (const CosNaming::NamingContext::CannotProceed& ex){
+  catch (const CosNaming::NamingContext::CannotProceed&){
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("\nCannot proceed with %C\n"),
                          path),
                          -1);
   }
-  catch (const CosNaming::NamingContext::NotFound& ex){
+  catch (const CosNaming::NamingContext::NotFound&){
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("\nUnable to find %C\n"),
                          path),
@@ -264,19 +264,19 @@ NS_group_svc::group_unbind (const ACE_TCHAR* path){
     this->name_service_->unbind ( name.in() );
 
   }
-  catch (const CosNaming::NamingContext::NotFound& ex){
+  catch (const CosNaming::NamingContext::NotFound&){
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("\nUnable to find %C\n"),
                          path),
                          -1);
   }
-  catch (const CosNaming::NamingContext::CannotProceed& ex){
+  catch (const CosNaming::NamingContext::CannotProceed&){
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("\nCannot proceed with %C\n"),
                          path),
                          -1);
   }
-  catch (const CosNaming::NamingContext::InvalidName& ex){
+  catch (const CosNaming::NamingContext::InvalidName&){
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("\n%C is invalid\n"),
                          path),
@@ -416,14 +416,14 @@ NS_group_svc::group_modify (
                             ACE_TEXT_ALWAYS_CHAR (group_name),
                             determine_policy_string(policy) );
   }
-  catch (const PortableGroup::ObjectGroupNotFound& ex)
+  catch (const PortableGroup::ObjectGroupNotFound&)
   {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("\nUnable to find group %C\n"),
                        group_name),
                        -1);
   }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
   {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("\nUnable to modify group %C\n"),
@@ -454,14 +454,14 @@ NS_group_svc::group_remove (const ACE_TCHAR* group_name)
     this->naming_manager_->delete_object_group (
       ACE_TEXT_ALWAYS_CHAR (group_name));
   }
-  catch (const PortableGroup::ObjectGroupNotFound& ex)
+  catch (const PortableGroup::ObjectGroupNotFound&)
   {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("\nUnable to find group %C\n"),
                        group_name),
                        -1);
   }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
   {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("\nUnable to remove group %C\n"),
@@ -517,21 +517,21 @@ NS_group_svc::member_add (
         ior_var.in());
 
   }
-  catch (const PortableGroup::ObjectGroupNotFound& ex)
+  catch (const PortableGroup::ObjectGroupNotFound&)
   {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("\nUnable to find group %C\n"),
                        group_name),
                       -1);
   }
-  catch (const PortableGroup::ObjectNotAdded& ex)
+  catch (const PortableGroup::ObjectNotAdded&)
   {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("\nUnable to add location %C to group %C\n"),
                        location, group_name),
                       -1);
   }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
   {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("\nUnable to add location %C to group %C\n"),
@@ -575,14 +575,14 @@ NS_group_svc::member_list (const ACE_TCHAR* group_name)
     }
 
   }
-  catch (const PortableGroup::ObjectGroupNotFound& ex )
+  catch (const PortableGroup::ObjectGroupNotFound&)
   {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("\nUnable to find group %C\n"),
                        group_name),
                       -1);
   }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
   {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("\nUnable to list members for group %C\n"),
@@ -632,21 +632,21 @@ NS_group_svc::member_remove (
       group_var.in(),
       location_name);
   }
-  catch (const PortableGroup::ObjectGroupNotFound& ex )
+  catch (const PortableGroup::ObjectGroupNotFound&)
   {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("\nUnable to find group %C\n"),
                        group_name),
                       -1);
   }
-  catch (const PortableGroup::MemberNotFound& ex )
+  catch (const PortableGroup::MemberNotFound&)
   {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("\nUnable to find member %C\n"),
                        location),
                       -1);
   }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
   {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("\nUnable to remove member %C\n"),
@@ -694,21 +694,21 @@ NS_group_svc::member_show (
 
     std::cout << ior_string.in() << std::endl;
   }
-  catch (const PortableGroup::ObjectGroupNotFound& ex )
+  catch (const PortableGroup::ObjectGroupNotFound&)
   {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("\nUnable to find group %C\n"),
                        group_name),
                       -1);
   }
-  catch (const PortableGroup::MemberNotFound& ex )
+  catch (const PortableGroup::MemberNotFound&)
   {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("\nUnable to find member location %C\n"),
                        location),
                       -1);
   }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
   {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("\nUnable to show member location %C\n"),

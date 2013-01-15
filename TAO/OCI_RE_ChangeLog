@@ -1,3 +1,13 @@
+Tue Jan 15 21:18:30 UTC 2013  Phillip LaBanca  <labancap@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/nsgroup_svc.cpp:
+
+          Cleanup unused arguments
+
+        * tests/Storable/Savable.cpp:
+
+          Replaced const integer literal value with ACE_CHAR_MAX macro
+
 Tue Jan 15 18:18:12 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.cpp:
