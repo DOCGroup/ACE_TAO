@@ -192,7 +192,8 @@ TAO_FT_Naming_Manager::groups (::FT_Naming::LoadBalancingStrategyValue target_st
         { // Group has no name
           (*group_names)[i] = CORBA::string_dup ("<unnamed group>");
           ACE_ERROR ((LM_ERROR,
-            ACE_TEXT ("%T %n (%P|%t) - FT_Naming_Manager::groups: no name property set on group.\n")
+                      ACE_TEXT ("%T %n (%P|%t) - FT_Naming_Manager::groups: no name ")
+                      ACE_TEXT ("property set on group.\n")
             ));
         }
       }
@@ -228,7 +229,8 @@ TAO_FT_Naming_Manager::group_name (PortableGroup::ObjectGroup_ptr group,
   if (CORBA::is_nil (group))
   {
     ACE_ERROR ((LM_ERROR,
-      ACE_TEXT ("%T %n (%P|%t) - FT_Naming_Manager::group_name: cannot get name for a null object.\n")
+                ACE_TEXT ("%T %n (%P|%t) - FT_Naming_Manager::group_name: ")
+                ACE_TEXT ("cannot get name for a null object.\n")
       ));
     return false;
   }
@@ -245,7 +247,8 @@ TAO_FT_Naming_Manager::group_name (PortableGroup::ObjectGroup_ptr group,
     else
     { // The group has no name
       ACE_ERROR_RETURN ((LM_ERROR,
-                        "TAO_FT_Naming_Manager::group_name - object group does not have a name"),
+                         ACE_TEXT ("TAO_FT_Naming_Manager::group_name - ")
+                         ACE_TEXT ("object group does not have a name")),
                         false);
     }
   }
@@ -359,7 +362,8 @@ TAO_FT_Naming_Manager::create_member (
     if (TAO_debug_level > 0)
     {
       ACE_ERROR ( (LM_ERROR,
-        ACE_TEXT ("%T %n (%P|%t) - FT_Naming_Manager::create_member: unknown group\n")
+                   ACE_TEXT ("%T %n (%P|%t) - FT_Naming_Manager::create_member: ")
+                   ACE_TEXT ("unknown group\n")
         ));
     }
     throw PortableGroup::ObjectGroupNotFound ();
@@ -388,7 +392,8 @@ TAO_FT_Naming_Manager::add_member (
     catch (...)
     {
       ACE_DEBUG ((LM_DEBUG,
-                 "TAO_FT_Naming_Manager::add_member - Issue with IOR of group or member.\n"));
+                  ACE_TEXT ("TAO_FT_Naming_Manager::add_member - ")
+                  ACE_TEXT ("Issue with IOR of group or member.\n")));
       throw PortableGroup::ObjectNotAdded ();
     }
 
@@ -400,7 +405,8 @@ TAO_FT_Naming_Manager::add_member (
     if (TAO_debug_level > 0)
     {
       ACE_ERROR ( (LM_ERROR,
-        ACE_TEXT ("%T %n (%P|%t) - FT_Naming_Manager::add_member to unknown group\n")
+                   ACE_TEXT ("%T %n (%P|%t) - FT_Naming_Manager::add_member ")
+                   ACE_TEXT ("to unknown group\n")
         ));
     }
     throw PortableGroup::ObjectGroupNotFound ();
@@ -454,7 +460,8 @@ TAO_FT_Naming_Manager::locations_of_members (
     if (TAO_debug_level > 0)
     {
       ACE_ERROR ( (LM_ERROR,
-        ACE_TEXT ("%T %n (%P|%t) - FT_Naming_Manager::locations_of_members: unknown group\n")
+                   ACE_TEXT ("%T %n (%P|%t) - FT_Naming_Manager::")
+                   ACE_TEXT ("locations_of_members: unknown group\n")
         ));
     }
     throw PortableGroup::ObjectGroupNotFound ();
@@ -485,7 +492,8 @@ TAO_FT_Naming_Manager::get_object_group_id (
     if (TAO_debug_level > 0)
     {
       ACE_ERROR ( (LM_ERROR,
-        ACE_TEXT ("%T %n (%P|%t) - FT_Naming_Manager::get_object_group_id: unknown group\n")
+                   ACE_TEXT ("%T %n (%P|%t) - FT_Naming_Manager::")
+                   ACE_TEXT ("get_object_group_id: unknown group\n")
         ));
     }
     throw PortableGroup::ObjectGroupNotFound ();
@@ -510,7 +518,8 @@ TAO_FT_Naming_Manager::get_object_group_ref (
     if (TAO_debug_level > 0)
     {
       ACE_ERROR ( (LM_ERROR,
-        ACE_TEXT ("%T %n (%P|%t) - FT_Naming_Manager::get_object_group_ref: unknown group\n")
+                   ACE_TEXT ("%T %n (%P|%t) - FT_Naming_Manager::")
+                   ACE_TEXT ("get_object_group_ref: unknown group\n")
         ));
     }
     throw PortableGroup::ObjectGroupNotFound ();
@@ -534,7 +543,8 @@ PortableGroup::ObjectGroup_ptr TAO_FT_Naming_Manager::get_object_group_ref_from_
     if (TAO_debug_level > 0)
     {
       ACE_ERROR ( (LM_ERROR,
-        ACE_TEXT ("%T %n (%P|%t) - FT_Naming_Manager::get_object_group_ref_from_id: unknown group\n")
+                   ACE_TEXT ("%T %n (%P|%t) - FT_Naming_Manager::")
+                   ACE_TEXT ("get_object_group_ref_from_id: unknown group\n")
         ));
     }
     throw PortableGroup::ObjectGroupNotFound ();
@@ -560,7 +570,8 @@ TAO_FT_Naming_Manager::get_member_ref (
     if (TAO_debug_level > 0)
     {
       ACE_ERROR ( (LM_ERROR,
-        ACE_TEXT ("%T %n (%P|%t) - FT_Naming_Manager::get_member_ref: unknown group\n")
+                   ACE_TEXT ("%T %n (%P|%t) - FT_Naming_Manager::")
+                   ACE_TEXT ("get_member_ref: unknown group\n")
         ));
     }
     throw PortableGroup::ObjectGroupNotFound ();
@@ -678,7 +689,8 @@ TAO_FT_Naming_Manager::next_member (PortableGroup::ObjectGroup_ptr object_group)
   {
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("%T %n (%P|%t) - TAO_FT_Naming_Manager::next_member: ")
-                ACE_TEXT ("object group has no TAO_FT_LOAD_BALANCING_STRATEGY property.\n")
+                ACE_TEXT ("object group has no TAO_FT_LOAD_BALANCING_STRATEGY ")
+                ACE_TEXT ("property.\n")
                ));
 
     return CORBA::Object::_nil();
