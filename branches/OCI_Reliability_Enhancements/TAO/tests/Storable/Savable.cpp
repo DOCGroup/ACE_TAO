@@ -86,7 +86,7 @@ Savable::Savable (TAO::Storable_Factory & storable_factory)
       this->bytes_[index] = new char [this->bytes_size_max];
       for (int i = 0; i < this->bytes_size_max; ++i)
         {
-          this->bytes_[index][i] = 255;
+          this->bytes_[index][i] = ACE_CHAR_MAX;
         }
     }
 
