@@ -143,6 +143,15 @@ TAO::FT_PG_Object_Group_Storable::add_member_to_iogr (CORBA::Object_ptr member)
   // type id as the first member.  We will need to replace the object
   // reference with an empty reference of the specified type id.
 
+  if (CORBA::is_nil (member))
+    {// A null object reference is not an acceptable member of the group.
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) ERROR: Unable to add null member ")
+                  ACE_TEXT ("to object group with id: %s\n"),
+                  this->tagged_component_.object_group_id));
+      return CORBA::Object::_nil ();
+    }
+
   const char* member_type_id = member->_stubobj ()->type_id.in ();
 
   if ((this->members_.current_size () == 0) &&
@@ -158,8 +167,9 @@ TAO::FT_PG_Object_Group_Storable::add_member_to_iogr (CORBA::Object_ptr member)
       catch (const CORBA::Exception&)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("(%P|%t) ERROR: Unable to create object group ")
-                      ACE_TEXT ("with id: %s for object of type: %s\n"),
+                      ACE_TEXT ("(%P|%t) ERROR: Unable to add member ")
+                      ACE_TEXT ("to object group with id: %s for object ")
+                      ACE_TEXT ("of type: %s\n"),
                       this->tagged_component_.object_group_id,
                       member_type_id));
           return CORBA::Object::_nil ();
