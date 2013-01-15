@@ -504,6 +504,13 @@ NS_group_svc::member_add (
     CORBA::Object_var ior_var =
       this->orb_->string_to_object(ACE_TEXT_ALWAYS_CHAR (ior));
 
+    if (CORBA::is_nil (ior_var.in ()))
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("\nInvalid member IOR provided.\n")),
+                          -1);
+      }
+
     this->naming_manager_->add_member (
         group_var.in(),
         location_name,

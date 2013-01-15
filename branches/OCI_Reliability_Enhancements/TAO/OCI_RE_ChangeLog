@@ -1,3 +1,18 @@
+Tue Jan 15 01:28:10 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_PG_Object_Group_Storable.cpp:
+
+          Added check for invalid nil object reference being passed in to
+          add_member_to_iogr.
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/nsgroup_svc.cpp:
+
+          Added check for user passing in a null object reference as a member.
+
+        * utils/nsgroup/run_test.pl:
+
+          Added test steps to expose Bug #468.
+
 Mon Jan 14 21:49:20 UTC 2013  Phillip LaBanca  <labancap@ociweb.com>
 
         * orbsvcs/tests/FT_Naming/Federation/Hello.cpp:
