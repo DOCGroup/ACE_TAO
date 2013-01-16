@@ -406,12 +406,14 @@ TAO_UIPMC_Mcast_Transport::handle_input (
                   this->id ()));
     }
 
-  while (this->recv_all ())
+  if (this->recv_all ())
     {
       // Unqueue the first available completed message for us to process.
       TAO_PG::UIPMC_Recv_Packet *complete = 0;
       {
         ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->complete_lock_, 0);
+        if (this->complete_.is_empty ())
+          return 0; // Another thread got here first, no problem.
         if (this->complete_.dequeue_head (complete) == -1)
           {
             ACE_DEBUG ((LM_DEBUG,
@@ -483,10 +485,8 @@ TAO_UIPMC_Mcast_Transport::handle_input (
                           ACE_TEXT ("handle_input, failed to parse input\n"),
                           this->id ()));
             }
-          continue;
         }
-
-      if (qd.missing_data () == TAO_MISSING_DATA_UNDEFINED)
+      else if (qd.missing_data () == TAO_MISSING_DATA_UNDEFINED)
         {
           // Parse/marshal error happened.
           if (TAO_debug_level)
@@ -496,10 +496,8 @@ TAO_UIPMC_Mcast_Transport::handle_input (
                           ACE_TEXT ("handle_input, got missing data\n"),
                           this->id ()));
             }
-          continue;
         }
-
-      if (message_block.length () > mesg_length)
+      else if (message_block.length () > mesg_length)
         {
           // We read too much data.
           if (TAO_debug_level)
@@ -511,11 +509,9 @@ TAO_UIPMC_Mcast_Transport::handle_input (
                           message_block.length (),
                           mesg_length));
             }
-          continue;
         }
-
-      // Process the message.
-      (void) this->process_parsed_messages (&qd, rh);
+      else // Process the message.
+        (void) this->process_parsed_messages (&qd, rh);
     }
 
   return 0;
