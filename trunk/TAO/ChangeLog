@@ -1,3 +1,24 @@
+ Wed Jan 16 08:45:30 UTC 2013  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * tao/GIOP_Message_Base.cpp:
+        * tao/ZIOP/ZIOP.cpp:
+          Reverted and then correctly modified these changes from
+          (Wed Dec 05 09:41:00 UTC 2012  Simon Massey)
+          The Data_Blocks were getting double deleted under some
+          circumstances within the MIOP transport. The correct
+          flags to be used in the above files is actually the
+          Message_block self_flags()  NOT the datablock flags.
+          The inconsistancy was originally caused by the
+          mixup with the addition of the eairlier ZIOP merge
+          (Thu Mar 12 07:42:57 UTC 2009  Marcel Smit)
+          where the CDR's were being given the data block flags
+          instead of the message block flags. My original change
+          made them consistant with the data block flags which is
+          obviously incorrect. (All other transports use consistant
+          flag settings between the Message block and the Data Block,
+          and so this decision had very limited impact, however
+          MIOP does not).
+
 Mon Jan 14 15:28:33 UTC 2013  Adam Mitz  <mitza@ociweb.com>
 
         * tests/Bug_4082_Regression/Bug_4082_Regression.cpp:
