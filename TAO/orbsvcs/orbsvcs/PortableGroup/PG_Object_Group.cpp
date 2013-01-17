@@ -6,6 +6,9 @@
 #include "orbsvcs/PortableGroup/PG_Operators.h" // Borrow operator== on CosNaming::Name
 #include "orbsvcs/PortableGroup/PG_Utils.h"
 
+#include "tao/MProfile.h"
+#include "tao/Profile.h"
+#include "tao/Stub.h"
 #include "tao/debug.h"
 
 #include "ace/Get_Opt.h"
@@ -212,6 +215,32 @@ TAO::PG_Object_Group::add_member (const PortableGroup::Location & the_location,
   // while we add it to a group.  We need a
   // IORs, not IOGRs to send new IOGRs out
   // to replicas.
+
+  // Verify that the member is not using V1.0 profiles
+  // since IIOP V1.0 does not support tagged components
+  const TAO_MProfile &member_profiles =
+    member->_stubobj ()->base_profiles ();
+  CORBA::ULong member_profile_count =
+    member_profiles.profile_count ();
+  if (member_profile_count > 0)
+    {
+      const TAO_GIOP_Message_Version & version =
+        member_profiles.get_profile (0)->version ();
+      if (version.major_version () == 1 &&
+          version.minor_version () == 0)
+        {
+          if (TAO_debug_level > 3)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("%T %n (%P|%t) - ")
+                          ACE_TEXT ("Can't add member because first profile ")
+                          ACE_TEXT ("is IIOP version 1.0, which does not ")
+                          ACE_TEXT ("support tagged components.\n")
+                          ));
+            }
+          throw PortableGroup::ObjectNotAdded ();
+        }
+    }
 
   CORBA::String_var member_ior_string =
     orb_->object_to_string (member);
