@@ -261,38 +261,6 @@ sub run_clients ()
         "group_list",
         $POSITIVE_TEST_RESULT);
 
-# Test BAE issue #468
-    run_client (
-        "group_create -group another_group -policy round",
-        $POSITIVE_TEST_RESULT);
-
-    run_client (
-        "group_list",
-        $POSITIVE_TEST_RESULT);
-
-    run_client (
-        "member_list -group another_group",
-        $POSITIVE_TEST_RESULT);
-
-# Add an inactive object IOR - will never exist during test.
-    run_client (
-        "member_add -group another_group -location explicit -ior IOR:010000002f00000049444c3a44415441424153454143434553532f45784461746162617365416363657373536572766963653a312e3000000100000000000000c600000001010000130000006d636b6e65726e65792d6c6e78362d6465760069b036642ea200000014010f004e5550000000750000000001000000526f6f74504f41006261652e756e636c6173735f757374696c2e636f72652d66756c6c2e51756572794461746162617365416363657373536572766963652e6d636b6e65726e65792d6c6e78362d6465762f51756572794461746162617365416363657373536572766963650000000000010000005175657279446174616261736541636365737353657276696365",
-        $POSITIVE_TEST_RESULT);
-
-    run_client (
-        "member_list -group another_group",
-        $POSITIVE_TEST_RESULT);
-
-    run_client (
-        "group_remove -group another_group",
-        $POSITIVE_TEST_RESULT);
-
-#end test of BAE #468
-
-    run_client (
-        "group_list",
-        $POSITIVE_TEST_RESULT);
-
     run_client (
         "group_create -group ieee -policy round",
         $POSITIVE_TEST_RESULT);

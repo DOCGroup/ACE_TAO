@@ -1,3 +1,14 @@
+Thu Jan 17 19:36:08 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * orbsvcs/tests/FT_Naming/Load_Balancing/LB_server.cpp:
+        * orbsvcs/tests/FT_Naming/Load_Balancing/client.cpp:
+
+          Wrapped literal strings in ACE_TEXT.
+
+        * utils/nsgroup/run_test.pl:
+
+          Removed test steps for Bug #468.
+
 Thu Jan 17 15:32:12 UTC 2013  Byron Harris  <harrisb@ociweb.com>
 
         * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:
