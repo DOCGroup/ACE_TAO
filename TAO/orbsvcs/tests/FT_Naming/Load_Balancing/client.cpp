@@ -23,9 +23,9 @@ parse_args (int argc, ACE_TCHAR *argv[])
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-k <ior> "
-                           "\n",
+                           ACE_TEXT ("usage:  %s ")
+                           ACE_TEXT ("-k <ior> ")
+                           ACE_TEXT ("\n"),
                            argv [0]),
                           -1);
       }
@@ -44,7 +44,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Acquiring Name Service\n"));
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%P|%t) - Acquiring Name Service\n")));
 
       TAO_Naming_Client name_svc;
       try {
@@ -52,12 +53,15 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         ACE_Time_Value timeout (10); // Wait up to 10 seconds for the naming service
         if (name_svc.init (orb.in (), &timeout) != 0)
           ACE_ERROR_RETURN ((LM_DEBUG,
-                             "client: Could not connect to naming service.\n"),
-                             1);
+                             ACE_TEXT ("client: Could not connect to ")
+                             ACE_TEXT ("naming service.\n")),
+                            1);
       }
       catch (const CORBA::Exception& ex)
       {
-        ex._tao_print_exception ("Exception caught while initializing name service facade:");
+        ex._tao_print_exception (
+          ACE_TEXT ("Exception caught while initializing name ")
+          ACE_TEXT ("service facade:"));
         return 1;
       }
 
@@ -84,13 +88,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
         catch (CORBA::Exception& ex)
           {
-            ex._tao_print_exception ("Error resolving name.\n");
+            ex._tao_print_exception (ACE_TEXT ("Error resolving name.\n"));
           }
 
         if (CORBA::is_nil (basic.in ()))
           {
             ACE_ERROR_RETURN ((LM_DEBUG,
-                               "Server obj ref not obtained from Load Balancing Name Service\n",
+                               ACE_TEXT ("Server obj ref not obtained ")
+                               ACE_TEXT ("from Load Balancing Name Service\n"),
                                ior),
                               1);
           }
@@ -99,13 +104,16 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           CORBA::String_var the_string =
             basic->get_string ();
 
-          ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Client request handled by object at <%s>\n",
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) - Client request handled ")
+                      ACE_TEXT ("by object at <%s>\n"),
                       the_string.in ()));
 
         }
         catch (CORBA::Exception& ex)
           {
-            ex._tao_print_exception ("Error invoking get_string on Basic object.\n");
+            ex._tao_print_exception (
+              ACE_TEXT ("Error invoking get_string on Basic object.\n"));
             return 1;
           }
 
@@ -119,7 +127,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
             }
             catch (CORBA::Exception& ex)
               {
-                ex._tao_print_exception ("Error invoking get_string on Basic object.\n");
+                ex._tao_print_exception (
+                  ACE_TEXT ("Error invoking get_string on Basic object.\n"));
                 return 1;
               }
           }
@@ -129,18 +138,21 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
         basic->shutdown ();
 
-        ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Shutting down server\n"));
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("(%P|%t) - Shutting down server\n")));
       }
       catch (CORBA::Exception& ex)
       {
-        ex._tao_print_exception ("Error invoking get_string on Basic object.\n");
+        ex._tao_print_exception (
+          ACE_TEXT ("Error invoking get_string on Basic object.\n"));
         return 1;
       }
       orb->destroy ();
   }
   catch (const CORBA::Exception& ex)
   {
-    ex._tao_print_exception ("Exception caught in client.cpp:");
+    ex._tao_print_exception (
+      ACE_TEXT ("Exception caught in client.cpp:"));
     return 1;
   }
 

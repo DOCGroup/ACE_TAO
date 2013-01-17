@@ -19,16 +19,12 @@ LB_server::destroy (void)
   try
     {
       this->naming_manager_->delete_object_group ("Basic Group");
-
-      //TODO: Does the FT_NamingManager need a destroy method?
-//      this->naming_manager_->destroy (1, 1);
-
       this->orb_->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception (
-        "Exception caught while destroying LB_server\n");
+        ACE_TEXT ("Exception caught while destroying LB_server\n"));
       return -1;
     }
   return 0;
@@ -62,7 +58,7 @@ LB_server::write_ior_to_file (const char *ior)
   if (output_file == 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  "Cannot open output file for writing IOR:"));
+                  ACE_TEXT ("Cannot open output file for writing IOR:")));
       return -1;
     }
 
@@ -86,9 +82,9 @@ LB_server::parse_args (int argc, ACE_TCHAR *argv[])
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-o <iorfile>"
-                           "\n",
+                           ACE_TEXT ("usage:  %s ")
+                           ACE_TEXT ("-o <iorfile>")
+                           ACE_TEXT ("\n"),
                            argv [0]),
                           -1);
       }
@@ -109,7 +105,7 @@ LB_server::start_orb_and_poa (void)
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the POA.\n"),
+                           ACE_TEXT (" (%P|%t) Unable to initialize the POA.\n")),
                           -1);
 
       this->root_poa_ = PortableServer::POA::_narrow (poa_object.in ());
@@ -122,7 +118,8 @@ LB_server::start_orb_and_poa (void)
       ACE_Time_Value timeout (10); // Wait up to 10 seconds for the naming service
       if (name_svc_.init (this->orb_, &timeout) != 0)
         ACE_ERROR_RETURN ((LM_DEBUG,
-                           "LB_server: Could not connect to naming service.\n"),
+                           ACE_TEXT ("LB_server: Could not connect to naming ")
+                           ACE_TEXT ("service.\n")),
                            -1);
 
       CORBA::Object_var obj =
@@ -133,13 +130,15 @@ LB_server::start_orb_and_poa (void)
 
       if (CORBA::is_nil (this->naming_manager_.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to get Naming Manager Reference\n"),
+                           ACE_TEXT (" (%P|%t) Unable to get Naming ")
+                           ACE_TEXT ("Manager Reference\n")),
                           -1);
 
     }
   catch (const CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("Exception raised initialising ORB or POA");
+      ex._tao_print_exception (
+        ACE_TEXT ("Exception raised initialising ORB or POA"));
       return -1;
     }
 
@@ -163,13 +162,13 @@ LB_server::create_object_group (void)
 
       // Set the membership style property
       mem_style.nam[0].id =
-        CORBA::string_dup ("org.omg.PortableGroup.MembershipStyle");
+        CORBA::string_dup (ACE_TEXT ("org.omg.PortableGroup.MembershipStyle"));
       PortableGroup::MembershipStyleValue msv =
         PortableGroup::MEMB_APP_CTRL;
       mem_style.val <<= msv;
 
       this->object_group_ = this->naming_manager_->create_object_group (
-        "Basic Group",
+        ACE_TEXT ("Basic Group"),
         FT_Naming::ROUND_ROBIN,
         criteria);
 
@@ -181,7 +180,7 @@ LB_server::create_object_group (void)
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception (
-        "Exception raised while creating object group");
+        ACE_TEXT ("Exception raised while creating object group"));
       return -1;
     }
 
@@ -208,7 +207,8 @@ LB_server::register_servant (Basic *servant, const char *loc)
     }
   catch (const CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("Exception raised while registering servant");
+      ex._tao_print_exception (
+        ACE_TEXT ("Exception raised while registering servant"));
       return -1;
     }
 
