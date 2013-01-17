@@ -1,3 +1,9 @@
+Thu Jan 17 12:25:40 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * debian/debian.control:
+          Fixed depencency on libssl-dev, thanks to Michael Ganz
+          <michael_ganz at t-online dot de> for reporting this
+
 Thu Jan 17 12:23:42 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Sig_Handler.cpp:

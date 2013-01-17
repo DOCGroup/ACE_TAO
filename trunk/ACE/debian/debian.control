@@ -74,7 +74,7 @@ Description: ACE secure socket layer library
 Package: libace-ssl-dev
 Architecture: any
 Section: libdevel
-Depends: libace-ssl-6.1.7 (= ${binary:Version}), libace-dev (= ${binary:Version}), libssl-dev (>= 6.1.7d), ${misc:Depends}
+Depends: libace-ssl-6.1.7 (= ${binary:Version}), libace-dev (= ${binary:Version}), libssl-dev (>= 0.9.7d), ${misc:Depends}
 Description: ACE secure socket layer library - development files
  This package contains the header files and static library for the ACE
  SSL library.
