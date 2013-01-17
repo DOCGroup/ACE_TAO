@@ -1,3 +1,11 @@
+Thu Jan 17 15:32:12 UTC 2013  Byron Harris  <harrisb@ociweb.com>
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:
+
+          Throw exception if trying to add a member whose first
+          profile is at IIOP version 1.0 since this version does
+          not support tagged components.
+
 Thu Jan 17 14:36:29 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * bin/tao_orb_tests.lst:
