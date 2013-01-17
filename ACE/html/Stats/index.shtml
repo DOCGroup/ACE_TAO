@@ -67,6 +67,9 @@ In addition to the statistics described above, a number of other ACE/TAO/CIAO/DA
   <a href="regular/index.html">Footprint Regular CORBA</a>
 </li>
 <li>
+  <a href="regular/index.html">Footprint versioned namespaces CORBA</a>
+</li>
+<li>
   <a href="performance.shtml">Performance metrics Regular CORBA</a>
 </li>
 </ul>
