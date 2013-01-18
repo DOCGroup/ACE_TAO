@@ -21,6 +21,8 @@ Thu Jan 17 14:36:29 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * bin/tao_orb_tests.lst:
 
+          fix path in Dynamic TP ORB test declaration.
+
 Tue Jan 15 21:18:30 UTC 2013  Phillip LaBanca  <labancap@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/FaultTolerant/nsgroup_svc.cpp:
