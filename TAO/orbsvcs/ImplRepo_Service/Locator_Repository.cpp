@@ -19,15 +19,15 @@ Locator_Repository::Locator_Repository (const Options& opts,
 {
 }
 
-Locator_Repository::~Locator_Repository()
+Locator_Repository::~Locator_Repository ()
 {
   teardown_multicast();
 }
 
 int
-Locator_Repository::init(PortableServer::POA_ptr root_poa,
-                         PortableServer::POA_ptr imr_poa,
-                         const char* this_ior)
+Locator_Repository::init (PortableServer::POA_ptr root_poa,
+                          PortableServer::POA_ptr imr_poa,
+                          const char* this_ior)
 {
   this->imr_ior_ = this_ior;
   int err = init_repo(imr_poa);
@@ -48,18 +48,18 @@ Locator_Repository::init(PortableServer::POA_ptr root_poa,
 }
 
 int
-Locator_Repository::report_ior(PortableServer::POA_ptr )
+Locator_Repository::report_ior (PortableServer::POA_ptr )
 {
   if (this->registered_)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-        "ERROR: Repository already reported IOR\n"), -1);
+        ACE_TEXT ("ERROR: Repository already reported IOR\n")), -1);
     }
 
-  if (this->opts_.debug() > 0)
+  if (this->opts_.debug () > 0)
     {
-      ACE_DEBUG((LM_INFO, ACE_TEXT("report_ior <%C>\n"),
-        this->imr_ior_.in()));
+      ACE_DEBUG ((LM_INFO, ACE_TEXT ("report_ior <%C>\n"),
+        this->imr_ior_.in ()));
     }
 
   // Register the ImR for use with INS
@@ -67,8 +67,8 @@ Locator_Repository::report_ior(PortableServer::POA_ptr )
   IORTable::Table_var ior_table = IORTable::Table::_narrow (obj.in ());
   ACE_ASSERT (! CORBA::is_nil (ior_table.in ()));
 
-  ior_table->bind("ImplRepoService", this->imr_ior_.in());
-  ior_table->bind("ImR", this->imr_ior_.in());
+  ior_table->bind ("ImplRepoService", this->imr_ior_.in());
+  ior_table->bind ("ImR", this->imr_ior_.in());
 
   // Set up multicast support (if enabled)
   if (this->opts_.multicast ())
@@ -198,7 +198,7 @@ Locator_Repository::lcase (const ACE_CString& s)
   ACE_CString ret(s);
   for (size_t i = 0; i < ret.length (); ++i)
     {
-      ret[i] = static_cast<char>(ACE_OS::ace_tolower (s[i]));
+      ret[i] = static_cast<char> (ACE_OS::ace_tolower (s[i]));
     }
   return ret;
 }
@@ -211,9 +211,12 @@ Locator_Repository::unregister_if_address_reused (
 {
   if (this->opts_.debug() > 0)
   {
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t)ImR: checking reuse address ")
+    ACE_DEBUG ((LM_DEBUG,
+      ACE_TEXT ("(%P|%t)ImR: checking reuse address ")
       ACE_TEXT ("for server \"%C %C\" ior \"%C\"\n"),
-      server_id.c_str(), name.c_str (), partial_ior));
+      server_id.c_str(),
+      name.c_str (),
+      partial_ior));
   }
 
   ACE_Vector<ACE_CString> srvs;
@@ -427,12 +430,12 @@ Locator_Repository::sync_load ()
 }
 
 bool
-Locator_Repository::registered() const
+Locator_Repository::registered () const
 {
   return this->registered_;
 }
 
-UpdateableServerInfo::UpdateableServerInfo(
+UpdateableServerInfo::UpdateableServerInfo (
   Locator_Repository* repo, const ACE_CString& name)
 : repo_(repo),
   si_(repo->get_server (name)),
@@ -440,7 +443,7 @@ UpdateableServerInfo::UpdateableServerInfo(
 {
 }
 
-UpdateableServerInfo::UpdateableServerInfo(Locator_Repository* repo,
+UpdateableServerInfo::UpdateableServerInfo (Locator_Repository* repo,
                                            const Server_Info_Ptr& si)
 : repo_(repo),
   si_(si),
@@ -448,20 +451,20 @@ UpdateableServerInfo::UpdateableServerInfo(Locator_Repository* repo,
 {
 }
 
-UpdateableServerInfo::UpdateableServerInfo(const Server_Info& si)
+UpdateableServerInfo::UpdateableServerInfo (const Server_Info& si)
 : repo_(0),
   si_(new Server_Info(si)),
   needs_update_(false)
 {
 }
 
-UpdateableServerInfo::~UpdateableServerInfo()
+UpdateableServerInfo::~UpdateableServerInfo ()
 {
   update_repo();
 }
 
 void
-UpdateableServerInfo::update_repo()
+UpdateableServerInfo::update_repo ()
 {
   if (!needs_update_)
     return;
@@ -473,27 +476,27 @@ UpdateableServerInfo::update_repo()
 }
 
 const Server_Info*
-UpdateableServerInfo::operator->() const
+UpdateableServerInfo::operator-> () const
 {
   return si_.get();
 }
 
 const Server_Info&
-UpdateableServerInfo::operator*() const
+UpdateableServerInfo::operator* () const
 {
   return *(si_.get());
 }
 
 
 const Server_Info_Ptr&
-UpdateableServerInfo::edit()
+UpdateableServerInfo::edit ()
 {
   needs_update_ = repo_ != 0;
   return si_;
 }
 
 void
-UpdateableServerInfo::needs_update()
+UpdateableServerInfo::needs_update ()
 {
   needs_update_ = true;
 }
@@ -504,24 +507,24 @@ UpdateableServerInfo::null() const
   return si_.null();
 }
 
-No_Backing_Store::No_Backing_Store(const Options& opts,
-                                   CORBA::ORB_ptr orb)
-: Locator_Repository(opts, orb)
+No_Backing_Store::No_Backing_Store (const Options& opts,
+                                    CORBA::ORB_ptr orb)
+  : Locator_Repository(opts, orb)
 {
 }
 
-No_Backing_Store::~No_Backing_Store()
+No_Backing_Store::~No_Backing_Store ()
 {
 }
 
 const ACE_TCHAR*
-No_Backing_Store::repo_mode() const
+No_Backing_Store::repo_mode () const
 {
-  return ACE_TEXT("Disabled");
+  return ACE_TEXT ("Disabled");
 }
 
 int
-No_Backing_Store::init_repo(PortableServer::POA_ptr )
+No_Backing_Store::init_repo (PortableServer::POA_ptr )
 {
   // nothing more to do for no backing store init
   return 0;
@@ -535,14 +538,14 @@ No_Backing_Store::persistent_update (const Server_Info_Ptr& , bool )
 }
 
 int
-No_Backing_Store::persistent_update(const Activator_Info_Ptr& , bool )
+No_Backing_Store::persistent_update (const Activator_Info_Ptr& , bool )
 {
   // nothing more to do for no backing store update
   return 0;
 }
 
 int
-No_Backing_Store::persistent_remove(const ACE_CString& , bool )
+No_Backing_Store::persistent_remove (const ACE_CString& , bool )
 {
   // nothing more to do for no backing store remove
   return 0;

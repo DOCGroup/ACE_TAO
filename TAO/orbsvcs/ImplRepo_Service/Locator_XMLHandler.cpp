@@ -22,7 +22,8 @@ Locator_XMLHandler::Locator_XMLHandler (XML_Backing_Store& repo,
 {
 }
 
-static void convertEnvList (const Locator_XMLHandler::EnvList& in, ImplementationRepository::EnvironmentList& out)
+static void convertEnvList (const Locator_XMLHandler::EnvList& in,
+                            ImplementationRepository::EnvironmentList& out)
 {
   CORBA::ULong sz = in.size ();
   out.length (sz);
@@ -86,10 +87,12 @@ Locator_XMLHandler::startElement (const ACEXML_Char*,
     if (attrs != 0 && attrs->getLength () >= 3)
       {
         size_t index = 0;
-        const ACE_CString aname = ACE_TEXT_ALWAYS_CHAR(attrs->getValue (index++));
+        const ACE_CString aname =
+          ACE_TEXT_ALWAYS_CHAR(attrs->getValue (index++));
         const ACE_TString token_str = attrs->getValue (index++);
         long token = ACE_OS::atoi (token_str.c_str ());
-        const ACE_CString ior = ACE_TEXT_ALWAYS_CHAR(attrs->getValue (index++));
+        const ACE_CString ior =
+          ACE_TEXT_ALWAYS_CHAR(attrs->getValue (index++));
         NameValues extra_params;
         for ( ; index < attrs->getLength(); ++index)
           {

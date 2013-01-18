@@ -122,13 +122,12 @@ namespace {
       if (this->locked_)
         return;
 
-      int ret = -1;
       if ((this->flags_ & O_RDWR) != 0)
-        ret = file_lock_->acquire();
+        file_lock_->acquire();
       if ((this->flags_ & O_WRONLY) != 0)
-        ret = file_lock_->acquire_write();
+        file_lock_->acquire_write();
       else
-        ret = file_lock_->acquire_read();
+        file_lock_->acquire_read();
 
       this->locked_ = true;
 #endif
@@ -154,14 +153,16 @@ Shared_Backing_Store::Shared_Backing_Store(const Options& opts,
   repo_id_(1),
   repo_values_(2)
 {
-  IMR_REPLICA[Options::PRIMARY_IMR] = "ImR_ReplicaPrimary";
-  IMR_REPLICA[Options::BACKUP_IMR] = "ImR_ReplicaBackup";
-  IMR_REPLICA[Options::STANDALONE_IMR] = "ImR_NoReplica";
+  IMR_REPLICA[Options::PRIMARY_IMR] = ACE_TEXT ("ImR_ReplicaPrimary");
+  IMR_REPLICA[Options::BACKUP_IMR] = ACE_TEXT ("ImR_ReplicaBackup");
+  IMR_REPLICA[Options::STANDALONE_IMR] = ACE_TEXT ("ImR_NoReplica");
 
   this->repo_values_[REPO_TYPE] =
-    std::make_pair(ACE_CString("repo_type"), ACE_CString());
+    std::make_pair(ACE_CString(ACE_TEXT ("repo_type")),
+                   ACE_CString());
   this->repo_values_[REPO_ID] =
-    std::make_pair(ACE_CString("repo_id"), ACE_CString());
+    std::make_pair(ACE_CString(ACE_TEXT ("repo_id")),
+                   ACE_CString());
 }
 
 Shared_Backing_Store::~Shared_Backing_Store()
@@ -913,13 +914,16 @@ static const typename Map::ENTRY& unique_id(
         size));
     };
 
-  XML_Backing_Store::NameValues::const_iterator name_value = extra_params.begin();
   unsigned int repo_id = 0;
   // default to this repo
   Options::ImrType repo_type = this_repo_type;
   for (unsigned int i = 0; i < size; ++i)
     {
-      ACE_DEBUG((LM_INFO, "name values %C=%C (%C)\n", extra_params[i].first.c_str(), extra_params[i].second.c_str(), repo_values[i].first.c_str()));
+      ACE_DEBUG((LM_INFO,
+                 ACE_TEXT ("name values %C=%C (%C)\n"),
+                 extra_params[i].first.c_str(),
+                 extra_params[i].second.c_str(),
+                 repo_values[i].first.c_str()));
     }
   if ((size > Shared_Backing_Store::REPO_TYPE) &&
       (extra_params[Shared_Backing_Store::REPO_TYPE].first ==
@@ -971,8 +975,9 @@ Shared_Backing_Store::load_server (
     {
       // create new or replace the existing entry
       XML_Backing_Store::load_server(
-        server_id, server_name, jacorb_server, activator_name, startup_cmd, env_vars, working_dir,
-        actmode, start_limit, partial_ior, ior, server_started, extra_params);
+        server_id, server_name, jacorb_server, activator_name, startup_cmd,
+        env_vars, working_dir, actmode, start_limit, partial_ior, ior,
+        server_started, extra_params);
       return;
     }
 

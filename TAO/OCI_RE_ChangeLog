@@ -1,3 +1,24 @@
+Fri Jan 18 22:43:55 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Config_Backing_Store.cpp:
+        * orbsvcs/ImplRepo_Service/INS_Locator.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_Options.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_XMLHandler.cpp:
+        * orbsvcs/ImplRepo_Service/Server_Info.cpp:
+        * orbsvcs/ImplRepo_Service/Shared_Backing_Store.cpp:
+        * orbsvcs/ImplRepo_Service/XML_Backing_Store.cpp:
+        * orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/Utils/FTEC_Gateway.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LeastLoaded.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LoadAverage.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LoadMinimum.cpp:
+        * tao/AnyTypeCode/TypeCode_CDR_Extraction.cpp:
+
+          Updated based on ACE Development Guidelines in preparation
+          for merge.
+
 Thu Jan 17 19:36:08 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
 
         * orbsvcs/tests/FT_Naming/Load_Balancing/LB_server.cpp:

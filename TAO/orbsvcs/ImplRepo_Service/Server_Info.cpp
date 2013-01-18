@@ -37,16 +37,19 @@ ImplementationRepository::ServerInformation*
 Server_Info::createImRServerInfo (void) const
 {
   ImplementationRepository::ServerInformation* info;
-  ACE_NEW_THROW_EX (info, ImplementationRepository::ServerInformation, CORBA::NO_MEMORY ());
+  ACE_NEW_THROW_EX (info,
+                    ImplementationRepository::ServerInformation,
+                    CORBA::NO_MEMORY ());
 
   info->startup.command_line = cmdline.c_str ();
   if (jacorb_server)
     {
-      ACE_CString jacorb_name ("JACORB:" + name);
+      ACE_CString jacorb_name (ACE_TEXT ("JACORB:") + name);
       info->server = jacorb_name.c_str();
     }
   else
     info->server = name.c_str();
+
   info->startup.command_line = cmdline.c_str ();
   info->startup.environment = env_vars;
   info->startup.working_directory = dir.c_str ();
@@ -72,5 +75,6 @@ Server_Info::reset (void)
   partial_ior = "";
   last_ping = ACE_Time_Value::zero;
   server = ImplementationRepository::ServerObject::_nil ();
-  // start_count = 0; Note : We can't do this, because it would be reset during startup.
+  // start_count = 0; Note : We can't do this, because it would
+  // be reset during startup.
 }

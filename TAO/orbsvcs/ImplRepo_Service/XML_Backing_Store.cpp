@@ -190,7 +190,10 @@ XML_Backing_Store::load (const ACE_TString& filename,
                          FILE* open_file)
 {
   // xml input source will take ownership
-  ACEXML_FileCharStream* fstm = new ACEXML_FileCharStream;
+  ACEXML_FileCharStream* fstm;
+  ACE_NEW_RETURN (fstm,
+                  ACEXML_FileCharStream,
+                  -1);
 
   int err;
   // use the open_file stream if it is provided
@@ -202,8 +205,9 @@ XML_Backing_Store::load (const ACE_TString& filename,
 
   if (debug > 9)
     {
-      ACE_DEBUG((LM_INFO, ACE_TEXT ("load %s%C\n"), filename.c_str(),
-        ((err == 0) ? "" : " (file doesn't exist)")));
+      ACE_DEBUG ((LM_INFO, ACE_TEXT ("load %s%C\n"), filename.c_str(),
+                 ((err == 0) ? ACE_TEXT ("")
+                  : ACE_TEXT (" (file doesn't exist)"))));
     }
 
   if (err != 0)
@@ -262,16 +266,23 @@ XML_Backing_Store::load_server (
 {
   const int limit = start_limit < 1 ? 1 : start_limit;
 
-  Server_Info_Ptr si(
-    new Server_Info (server_id, server_name, jacorb_server, activator_name, startup_cmd,
-                     env_vars, working_dir, actmode, limit, partial_ior, ior));
+  Server_Info *serv_inf;
+  ACE_NEW (serv_inf,
+           Server_Info (server_id, server_name, jacorb_server,
+                        activator_name, startup_cmd, env_vars,
+                        working_dir, actmode, limit,
+                        partial_ior, ior));
+
+  Server_Info_Ptr si (serv_inf);
+
   this->servers().rebind(server_name, si);
 
   create_server(server_started, si);
 }
 
 void
-XML_Backing_Store::create_server(bool server_started, const Server_Info_Ptr& si)
+XML_Backing_Store::create_server(bool server_started,
+                                 const Server_Info_Ptr& si)
 {
   if (!server_started || si->ior.is_empty())
     return;
@@ -293,6 +304,10 @@ XML_Backing_Store::load_activator (const ACE_CString& activator_name,
                                    const ACE_CString& ior,
                                    const NameValues& )
 {
-  Activator_Info_Ptr info (new Activator_Info (activator_name, token, ior));
+  Activator_Info *ai;
+  ACE_NEW (ai,
+           Activator_Info (activator_name, token, ior));
+
+  Activator_Info_Ptr info (ai);
   this->activators().rebind(activator_name, info);
 }
