@@ -384,6 +384,11 @@ TAO_UIPMC_Mcast_Transport::recv_all (void)
 
           // Add it to the complete queue.
           this->complete_.enqueue_tail (packet);
+
+          // The following break stops the eager de-queuing of
+          // further completed MIOP messages. This should probably
+          // be configuable via a MIOP Server -ORB option.
+          break;
         }
     }
 
@@ -410,6 +415,7 @@ TAO_UIPMC_Mcast_Transport::handle_input (
     {
       // Unqueue the first available completed message for us to process.
       TAO_PG::UIPMC_Recv_Packet *complete = 0;
+      ACE_Auto_Ptr<TAO_PG::UIPMC_Recv_Packet> owner (0);
       {
         ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->complete_lock_, 0);
         if (this->complete_.is_empty ())
@@ -422,38 +428,47 @@ TAO_UIPMC_Mcast_Transport::handle_input (
                         this->id ()));
             return 0;
           }
-      }
-      ACE_Auto_Ptr<TAO_PG::UIPMC_Recv_Packet> owner (complete);
+        ACE_auto_ptr_reset (owner, complete);
 
-      // If there is another message waiting to be processed (in addition
-      // to the one we have just taken off to be processed), notify another
-      // thread (if available) so this can also be processed in parrellel.
-      if (!this->complete_.is_empty ())
-        {
-          int const retval = this->notify_reactor_now ();
-          if (retval == 1)
-            {
-              // Now we have handed off to another thread, let the class
-              // know that it doesn't need to resume with OUR handle
-              // after we have processed our message.
-              rh.set_flag (TAO_Resume_Handle::TAO_HANDLE_LEAVE_SUSPENDED);
-            }
-          else if (retval < 0 && TAO_debug_level > 2)
-            {
-              ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("TAO (%P|%t) - TAO_UIPMC_Mcast_Transport[%d]::handle_input, ")
-                          ACE_TEXT ("notify to the reactor failed.\n"),
-                          this->id ()));
-            }
-        }
+        // If there is another message waiting to be processed (in addition
+        // to the one we have just taken off to be processed), notify another
+        // thread (if available) so this can also be processed in parrellel.
+        if (!this->complete_.is_empty ())
+          {
+            int const retval = this->notify_reactor_now ();
+            if (retval == 1)
+              {
+                // Now we have handed off to another thread, let the class
+                // know that it doesn't need to resume with OUR handle
+                // after we have processed our message.
+                rh.set_flag (TAO_Resume_Handle::TAO_HANDLE_LEAVE_SUSPENDED);
+              }
+            else if (retval < 0 && TAO_debug_level > 2)
+              {
+                ACE_DEBUG ((LM_DEBUG,
+                            ACE_TEXT ("TAO (%P|%t) - TAO_UIPMC_Mcast_Transport[%d]::handle_input, ")
+                            ACE_TEXT ("notify to the reactor failed.\n"),
+                            this->id ()));
+              }
+          }
+      }
 
       // Create a data block from our dequeued completed message.
+      char *buffer= 0;
+      ACE_NEW_THROW_EX (buffer,
+                        char[complete->data_length () + ACE_CDR::MAX_ALIGNMENT],
+                        CORBA::NO_MEMORY (
+                          CORBA::SystemException::_tao_minor_code (
+                            TAO::VMCID,
+                            ENOMEM),
+                          CORBA::COMPLETED_NO));
+      ACE_Auto_Array_Ptr<char> owner_buffer (buffer);
       ACE_Data_Block db (complete->data_length () + ACE_CDR::MAX_ALIGNMENT,
                          ACE_Message_Block::MB_DATA,
-                         0,
+                         buffer,
                          this->orb_core_->input_cdr_buffer_allocator (),
                          this->orb_core_->locking_strategy (),
-                         0,
+                         ACE_Message_Block::DONT_DELETE,
                          this->orb_core_->input_cdr_dblock_allocator ());
 
       // Create a message block

@@ -1,4 +1,10 @@
- Wed Jan 16 14:33:30 UTC 2013  Simon Massey  <simon dot massey at prismtech dot com>
+Fri Jan 18 11:03:30 UTC 2013  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Mcast_Transport.cpp:
+          Investigating multi-threaded MIOP servers through-put and
+          resourcing issues. Robusting/simplifying for now.
+
+Wed Jan 16 14:33:30 UTC 2013  Simon Massey  <simon dot massey at prismtech dot com>
 
         * orbsvcs/orbsvcs/PortableGroup/UIPMC_Mcast_Transport.cpp:
           Since the notify change, (Fri Jan  4 15:48:20 UTC 2013  Simon Massey)
@@ -7,7 +13,7 @@
           aquired before attempting to dequeue the complete message for
           processing (another thread could have gotten there first).
 
- Wed Jan 16 08:45:30 UTC 2013  Simon Massey  <simon dot massey at prismtech dot com>
+Wed Jan 16 08:45:30 UTC 2013  Simon Massey  <simon dot massey at prismtech dot com>
 
         * tao/GIOP_Message_Base.cpp:
         * tao/ZIOP/ZIOP.cpp:
