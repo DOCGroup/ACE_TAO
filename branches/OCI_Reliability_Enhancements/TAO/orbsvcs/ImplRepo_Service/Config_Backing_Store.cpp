@@ -24,16 +24,16 @@ static const ACE_TCHAR* JACORB_SERVER = ACE_TEXT("JacORBServer");
 static const char* WIN32_REG_KEY = "Software\\TAO\\ImplementationRepository";
 #endif
 
-Config_Backing_Store::Config_Backing_Store(const Options& opts,
-                                           CORBA::ORB_ptr orb,
-                                           ACE_Configuration& config)
-: Locator_Repository(opts, orb),
-  config_(config),
-  status_(-1)
+Config_Backing_Store::Config_Backing_Store (const Options& opts,
+					    CORBA::ORB_ptr orb,
+					    ACE_Configuration& config)
+: Locator_Repository (opts, orb),
+  config_ (config),
+  status_ (-1)
 {
 }
 
-Config_Backing_Store::~Config_Backing_Store()
+Config_Backing_Store::~Config_Backing_Store ()
 {
 }
 
@@ -41,7 +41,7 @@ void Config_Backing_Store::loadActivators ()
 {
   ACE_Configuration_Section_Key root;
   int err =
-    config_.open_section(config_.root_section(), ACTIVATORS_ROOT_KEY, 0, root);
+    config_.open_section (config_.root_section (), ACTIVATORS_ROOT_KEY, 0, root);
   if (err == 0)
     {
       int index = 0;
@@ -59,9 +59,12 @@ void Config_Backing_Store::loadActivators ()
           config_.get_string_value (key, IOR, ior);
           config_.get_integer_value (key, TOKEN, token);
 
-          Activator_Info_Ptr info (new Activator_Info (name, token, ior));
-          activators().bind (lcase (name), info);
-          index++;
+          Activator_Info* ai;
+          ACE_NEW (ai, Activator_Info (name, token, ior));
+
+          Activator_Info_Ptr info (ai);
+          activators ().bind (lcase (name), info);
+          ++index;
         }
     }
 }
@@ -71,7 +74,7 @@ Config_Backing_Store::loadServers ()
 {
   ACE_Configuration_Section_Key root;
   int err =
-    config_.open_section(config_.root_section(), SERVERS_ROOT_KEY, 0, root);
+    config_.open_section (config_.root_section (), SERVERS_ROOT_KEY, 0, root);
   if (err == 0)
     {
       int index = 0;
@@ -94,10 +97,10 @@ Config_Backing_Store::loadServers ()
           config_.get_string_value (key, STARTUP_COMMAND, cmdline);
           config_.get_string_value (key, WORKING_DIR, dir);
           config_.get_string_value (key, ENVIRONMENT, envstr);
-          config_.get_integer_value(key, ACTIVATION, amodeint);
+          config_.get_integer_value (key, ACTIVATION, amodeint);
           config_.get_string_value (key, PARTIAL_IOR, partial_ior);
           config_.get_string_value (key, IOR, ior);
-          config_.get_integer_value(key, START_LIMIT, start_limit);
+          config_.get_integer_value (key, START_LIMIT, start_limit);
 
           ImplementationRepository::ActivationMode amode =
             static_cast <ImplementationRepository::ActivationMode> (amodeint);
@@ -106,10 +109,15 @@ Config_Backing_Store::loadServers ()
             ImR_Utils::parseEnvList (envstr);
 
           bool jacorb_server = jacorbstr == "1" ? true : false;
-          Server_Info_Ptr info (new Server_Info(server_id, name,  jacorb_server, aname,
-            cmdline, env_vars, dir, amode, start_limit, partial_ior, ior));
-          servers().bind (name, info);
-          index++;
+
+          Server_Info *si;
+          ACE_NEW (si,
+                   Server_Info (server_id, name,  jacorb_server, aname,
+                                cmdline, env_vars, dir, amode, start_limit,
+                                partial_ior, ior));
+          Server_Info_Ptr info (si);
+          servers ().bind (name, info);
+          ++index;
         }
     }
 }
@@ -130,7 +138,7 @@ Config_Backing_Store::remove (const ACE_CString& name, const ACE_TCHAR* key)
   int err = config_.open_section (config_.root_section (), key, 0, root);
   if (err != 0)
     {
-      if (this->opts_.debug() > 9)
+      if (this->opts_.debug () > 9)
         {
           ACE_DEBUG((LM_INFO, ACE_TEXT ("could not remove %C, already gone!\n"),
             name.c_str()));
@@ -152,11 +160,11 @@ static int get_key (ACE_Configuration& cfg, const ACE_CString& name,
         sub_section));
       return err;
     }
-  err = cfg.open_section (root, name.c_str(), 1, key);
+  err = cfg.open_section (root, name.c_str (), 1, key);
   if (err != 0)
     {
       ACE_ERROR((LM_ERROR, ACE_TEXT ("Unable to open config section:%C\n"),
-        name.c_str()));
+        name.c_str ()));
     }
   return err;
 }
@@ -169,7 +177,7 @@ Config_Backing_Store::persistent_update(const Server_Info_Ptr& info, bool )
   if (err != 0)
     {
       ACE_ERROR((LM_ERROR, ACE_TEXT ("ERROR: could not get key for %C\n"),
-        info->name.c_str()));
+        info->name.c_str ()));
       return err;
     }
 
@@ -197,34 +205,34 @@ int
 Config_Backing_Store::persistent_update(const Activator_Info_Ptr& info, bool )
 {
   ACE_Configuration_Section_Key key;
-  int err = get_key(this->config_, info->name, ACTIVATORS_ROOT_KEY, key);
+  int err = get_key (this->config_, info->name, ACTIVATORS_ROOT_KEY, key);
   if (err != 0)
     {
       ACE_DEBUG((LM_INFO,
         ACE_TEXT ("ERROR: could not get key for activator %C\n"),
-        info->name.c_str()));
+        info->name.c_str ()));
       return err;
     }
 
   if (this->opts_.debug() > 9)
     {
       ACE_DEBUG((LM_INFO, ACE_TEXT ("updating activator %C\n"),
-        info->name.c_str()));
+        info->name.c_str ()));
     }
-  this->config_.set_integer_value(key, TOKEN, info->token);
-  this->config_.set_string_value(key, IOR, info->ior.c_str());
+  this->config_.set_integer_value (key, TOKEN, info->token);
+  this->config_.set_string_value (key, IOR, info->ior.c_str());
 
   return 0;
 }
 
 int
-Config_Backing_Store::init_repo(PortableServer::POA_ptr )
+Config_Backing_Store::init_repo (PortableServer::POA_ptr )
 {
   if (status_ != 0)
     {
-      if (this->opts_.debug() > 9)
+      if (this->opts_.debug () > 9)
         {
-          ACE_DEBUG((LM_INFO, ACE_TEXT ("not loading\n")));
+          ACE_DEBUG ((LM_INFO, ACE_TEXT ("not loading\n")));
         }
       return status_;
     }
@@ -235,16 +243,16 @@ Config_Backing_Store::init_repo(PortableServer::POA_ptr )
   return 0;
 }
 
-Heap_Backing_Store::Heap_Backing_Store(const Options& opts,
-                                       CORBA::ORB_ptr orb)
-: Config_Backing_Store(opts, orb, heap_),
-  filename_(opts.persist_file_name())
+Heap_Backing_Store::Heap_Backing_Store (const Options& opts,
+                                        CORBA::ORB_ptr orb)
+: Config_Backing_Store (opts, orb, heap_),
+  filename_ (opts.persist_file_name())
 {
-  if (opts.repository_erase())
+  if (opts.repository_erase ())
     {
-      if (this->opts_.debug() > 9)
+      if (this->opts_.debug () > 9)
         {
-          ACE_DEBUG((LM_INFO, ACE_TEXT ("Heap start clean\n")));
+          ACE_DEBUG ((LM_INFO, ACE_TEXT ("Heap start clean\n")));
         }
       ACE_OS::unlink ( this->filename_.c_str() );
     }
@@ -252,7 +260,7 @@ Heap_Backing_Store::Heap_Backing_Store(const Options& opts,
   status_ = heap_.open (this->filename_.c_str());
 }
 
-Heap_Backing_Store::~Heap_Backing_Store()
+Heap_Backing_Store::~Heap_Backing_Store ()
 {
 }
 
@@ -263,7 +271,7 @@ Heap_Backing_Store::repo_mode() const
 }
 
 #if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_REGISTRY)
-static HKEY setup_registry(const bool start_clean)
+static HKEY setup_registry (const bool start_clean)
 {
   if (start_clean)
     {
@@ -282,9 +290,9 @@ Registry_Backing_Store::Registry_Backing_Store(const Options& opts,
                                                CORBA::ORB_ptr orb)
 #if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_REGISTRY)
 : Config_Backing_Store(opts, orb, win32registry_),
-  win32registry_(setup_registry(opts.repository_erase()))
+  win32registry_ (setup_registry (opts.repository_erase()))
 #else
-: Config_Backing_Store(opts, orb, invalid_config_)
+: Config_Backing_Store (opts, orb, invalid_config_)
 #endif
 {
 #if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_REGISTRY)
@@ -296,12 +304,12 @@ Registry_Backing_Store::Registry_Backing_Store(const Options& opts,
 #endif
 }
 
-Registry_Backing_Store::~Registry_Backing_Store()
+Registry_Backing_Store::~Registry_Backing_Store ()
 {
 }
 
 const ACE_TCHAR*
-Registry_Backing_Store::repo_mode() const
+Registry_Backing_Store::repo_mode () const
 {
   return ACE_TEXT("Registry");
 }

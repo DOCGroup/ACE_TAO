@@ -315,7 +315,7 @@ get_remote_oid_ptr(CORBA::ORB_ptr orb)
 {
   PortableServer::Current_var current =
     resolve_init<PortableServer::Current>(orb,
-    "POACurrent");
+                                          "POACurrent");
 
   const PortableServer::ObjectId_var object_id =
     current->get_object_id();
