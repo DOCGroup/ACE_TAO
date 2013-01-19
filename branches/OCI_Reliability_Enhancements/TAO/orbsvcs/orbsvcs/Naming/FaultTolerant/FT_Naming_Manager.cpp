@@ -16,7 +16,7 @@
 #include "orbsvcs/PortableGroup/PG_Property_Set.h"
 #include "orbsvcs/PortableGroup/PG_Object_Group.h"
 #include "orbsvcs/PortableGroup/PG_conf.h"
-#include <orbsvcs/PortableGroup/PG_Utils.h>
+#include "orbsvcs/PortableGroup/PG_Utils.h"
 
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"

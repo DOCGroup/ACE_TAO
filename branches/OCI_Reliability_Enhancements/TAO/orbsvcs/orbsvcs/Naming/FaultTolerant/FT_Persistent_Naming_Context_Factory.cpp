@@ -21,11 +21,12 @@ TAO_FT_Persistent_Naming_Context_Factory::~TAO_FT_Persistent_Naming_Context_Fact
 
 /// Factory method for creating an implementation object for naming contexts
 TAO_Persistent_Naming_Context*
-TAO_FT_Persistent_Naming_Context_Factory::create_naming_context_impl (PortableServer::POA_ptr poa,
-                                                                      const char *poa_id,
-                                                                      TAO_Persistent_Context_Index *context_index,
-                                                                      HASH_MAP * map,
-                                                                      ACE_UINT32 *counter)
+TAO_FT_Persistent_Naming_Context_Factory::create_naming_context_impl (
+  PortableServer::POA_ptr poa,
+  const char *poa_id,
+  TAO_Persistent_Context_Index *context_index,
+  HASH_MAP * map,
+  ACE_UINT32 *counter)
 {
   // Construct the naming context, forwarding the map and counter even if they
   // are defaulted

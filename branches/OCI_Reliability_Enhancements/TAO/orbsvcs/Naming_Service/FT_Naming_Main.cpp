@@ -28,7 +28,7 @@ Naming_Svc_Shutdown::operator() (int which_signal)
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-                "FT Name Service: shutting down on signal %d\n",
+                ACE_TEXT ("FT Name Service: shutting down on signal %d\n"),
                 which_signal));
   (void) this->ns_.shutdown ();
 }
@@ -54,7 +54,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
   catch (const CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("NamingService");
+      ex._tao_print_exception (ACE_TEXT ("NamingService"));
       return 1;
     }
 

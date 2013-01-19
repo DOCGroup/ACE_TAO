@@ -62,10 +62,14 @@ public:
   FT_Naming::NamingManager_ptr peer_naming_manager (void);
 
   /// Initialize the naming manager with the ORB.
-  int init_naming_manager_with_orb (int argc, ACE_TCHAR *argv [], CORBA::ORB_ptr orb);
+  int init_naming_manager_with_orb (int argc,
+                                    ACE_TCHAR *argv [],
+                                    CORBA::ORB_ptr orb);
 
   /// Initialize the replication manager with the ORB.
-  int init_replication_manager_with_orb (int argc, ACE_TCHAR *argv [], CORBA::ORB_ptr orb);
+  int init_replication_manager_with_orb (int argc,
+                                         ACE_TCHAR *argv [],
+                                         CORBA::ORB_ptr orb);
 
   /// Overridden parse operation. Only allows options supported by the FT_Naming_Server
   /// and adds options for the object group manager
