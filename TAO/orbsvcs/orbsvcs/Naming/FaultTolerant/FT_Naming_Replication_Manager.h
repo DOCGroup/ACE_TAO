@@ -53,8 +53,9 @@ public:
 
 
   /// Implementation of the FT_Naming::ReplicationManager interface
-  virtual ::FT_Naming::ReplicaInfo * register_replica (::FT_Naming::ReplicationManager_ptr replica,
-                                                       const ::FT_Naming::ReplicaInfo & replica_info);
+  virtual ::FT_Naming::ReplicaInfo * register_replica (
+    ::FT_Naming::ReplicationManager_ptr replica,
+    const ::FT_Naming::ReplicaInfo & replica_info);
 
   /// This method implements the operation invoked by the peer replica when an
   /// object group is updated on the remote process.

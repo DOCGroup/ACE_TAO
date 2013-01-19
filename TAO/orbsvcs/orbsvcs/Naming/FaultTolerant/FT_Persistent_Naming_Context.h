@@ -30,7 +30,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * CosNaming::NamingContext implementation.
  *
  */
-class TAO_FtNaming_Export TAO_FT_Persistent_Naming_Context : public TAO_Persistent_Naming_Context
+class TAO_FtNaming_Export TAO_FT_Persistent_Naming_Context :
+      public TAO_Persistent_Naming_Context
 {
 public:
   /// Underlying data structure - typedef for ease of use.

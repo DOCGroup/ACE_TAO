@@ -45,8 +45,9 @@ TAO_FT_Naming_Replication_Manager::initialize (CORBA::ORB_ptr orb,
 }
 
 FT_Naming::ReplicaInfo*
-TAO_FT_Naming_Replication_Manager::register_replica (::FT_Naming::ReplicationManager_ptr replica,
-                                                     const ::FT_Naming::ReplicaInfo & replica_info)
+TAO_FT_Naming_Replication_Manager::register_replica (
+  ::FT_Naming::ReplicationManager_ptr replica,
+  const ::FT_Naming::ReplicaInfo & replica_info)
 {
   ACE_TRACE ("TAO_FT_Naming_Replication_Manager::register_replica");
 
@@ -64,8 +65,12 @@ TAO_FT_Naming_Replication_Manager::register_replica (::FT_Naming::ReplicationMan
 
   // Return my references to the peer
   FT_Naming::ReplicaInfo* my_info = new FT_Naming::ReplicaInfo;
-  my_info->root_context = CosNaming::NamingContext::_duplicate (this->naming_svr_->my_root_context ());
-  my_info->naming_manager = FT_Naming::NamingManager::_duplicate (this->naming_svr_->my_naming_manager ());
+
+  my_info->root_context = CosNaming::NamingContext::_duplicate (
+    this->naming_svr_->my_root_context ());
+
+  my_info->naming_manager = FT_Naming::NamingManager::_duplicate (
+    this->naming_svr_->my_naming_manager ());
 
   return my_info;
 }

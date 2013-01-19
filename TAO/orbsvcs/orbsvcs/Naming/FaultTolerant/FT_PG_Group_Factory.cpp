@@ -26,7 +26,8 @@ TAO::FT_PG_Group_Factory::~FT_PG_Group_Factory()
 }
 
 void
-TAO::FT_PG_Group_Factory::set_object_group_stale (const FT_Naming::ObjectGroupUpdate & group_info)
+TAO::FT_PG_Group_Factory::set_object_group_stale (
+  const FT_Naming::ObjectGroupUpdate & group_info)
 {
   if (this->use_persistence_)
     {
@@ -38,16 +39,16 @@ TAO::FT_PG_Group_Factory::set_object_group_stale (const FT_Naming::ObjectGroupUp
         {
           if (TAO_debug_level > 3)
             {
-              ACE_CString change_type_str ("created");
+              ACE_CString change_type_str (ACE_TEXT ("created"));
               if (group_info.change_type == FT_Naming::DELETED)
-                change_type_str = "deleted";
-              ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("%T %n (%P|%t) - ")
-                          ACE_TEXT ("Setting list store as stale "),
-                          ACE_TEXT ("because of group with ID %lld "),
-                          ACE_TEXT ("was %s"),
-                          group_id, change_type_str.c_str ()
-                          ));
+                change_type_str = ACE_TEXT ("deleted");
+                ACE_DEBUG ((LM_DEBUG,
+                            ACE_TEXT ("%T %n (%P|%t) - ")
+                            ACE_TEXT ("Setting list store as stale "),
+                            ACE_TEXT ("because of group with ID %lld "),
+                            ACE_TEXT ("was %s"),
+                            group_id, change_type_str.c_str ()
+                            ));
             }
           this->list_store_->stale(true);
         }
@@ -57,12 +58,15 @@ TAO::FT_PG_Group_Factory::set_object_group_stale (const FT_Naming::ObjectGroupUp
         {
           throw PortableGroup::ObjectNotFound ();
         }
-      FT_PG_Object_Group_Storable * og = dynamic_cast<FT_PG_Object_Group_Storable *> (group);
+      FT_PG_Object_Group_Storable * og =
+        dynamic_cast<FT_PG_Object_Group_Storable *> (group);
+
       if (TAO_debug_level > 3)
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("%T %n (%P|%t) - ")
-                      ACE_TEXT ("Setting object group with ID %lld as stale"), group_id
+                      ACE_TEXT ("Setting object group with ID %lld as stale"),
+                      group_id
                       ));
         }
       og->stale (true);

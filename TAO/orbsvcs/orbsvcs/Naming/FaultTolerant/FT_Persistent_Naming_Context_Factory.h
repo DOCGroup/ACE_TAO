@@ -42,11 +42,12 @@ public:
   virtual ~TAO_FT_Persistent_Naming_Context_Factory (void);
 
   /// Factory method for creating an implementation object for naming contexts
-  virtual TAO_Persistent_Naming_Context* create_naming_context_impl (PortableServer::POA_ptr poa,
-                                                                     const char *poa_id,
-                                                                     TAO_Persistent_Context_Index *context_index,
-                                                                     HASH_MAP * map = 0,
-                                                                     ACE_UINT32 *counter = 0);
+  virtual TAO_Persistent_Naming_Context* create_naming_context_impl (
+    PortableServer::POA_ptr poa,
+    const char *poa_id,
+    TAO_Persistent_Context_Index *context_index,
+    HASH_MAP * map = 0,
+    ACE_UINT32 *counter = 0);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

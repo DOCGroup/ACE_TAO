@@ -31,7 +31,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * CosNaming::NamingContext implementation.
  *
  */
-class TAO_FtNaming_Export TAO_FT_Storable_Naming_Context : public TAO_Storable_Naming_Context
+class TAO_FtNaming_Export TAO_FT_Storable_Naming_Context :
+      public TAO_Storable_Naming_Context
 {
 public:
   // = Initialization and termination methods.

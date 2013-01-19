@@ -16,11 +16,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // Initialize the static naming manager
 TAO_FT_Naming_Manager *TAO_FT_Persistent_Naming_Context::naming_manager_impl_ = 0;
 
-TAO_FT_Persistent_Naming_Context::TAO_FT_Persistent_Naming_Context (PortableServer::POA_ptr poa,
-                                                                    const char *poa_id,
-                                                                    TAO_Persistent_Context_Index *context_index,
-                                                                    HASH_MAP *map,
-                                                                    ACE_UINT32 *counter)
+TAO_FT_Persistent_Naming_Context::TAO_FT_Persistent_Naming_Context (
+  PortableServer::POA_ptr poa,
+  const char *poa_id,
+  TAO_Persistent_Context_Index *context_index,
+  HASH_MAP *map,
+  ACE_UINT32 *counter)
   : TAO_Persistent_Naming_Context (poa,
                                    poa_id,
                                    context_index,
@@ -49,8 +50,9 @@ TAO_FT_Persistent_Naming_Context::is_object_group (CORBA::Object_ptr obj) const
 CORBA::Object_ptr
 TAO_FT_Persistent_Naming_Context::resolve (const CosNaming::Name& n)
 {
-  // Invoke the base class resolve operation to acquire the object at the specified
-  // compound name.  Any exceptions should flow back to client.
+  // Invoke the base class resolve operation to acquire the object at the
+  // specified compound name.
+  // Any exceptions should flow back to client.
   CORBA::Object_var resolved_ref =
     TAO_Persistent_Naming_Context::resolve(n);
 
@@ -62,7 +64,8 @@ TAO_FT_Persistent_Naming_Context::resolve (const CosNaming::Name& n)
   try {
 
     // Make sure object is an object group.
-    // We will return the object reference all the way back out to the client if not
+    // We will return the object reference all the way back out to the client
+    // if not
     if (!this->is_object_group (resolved_ref.in ()))
       return resolved_ref._retn ();
 

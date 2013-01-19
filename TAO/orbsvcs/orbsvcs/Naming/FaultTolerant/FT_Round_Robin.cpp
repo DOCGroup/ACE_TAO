@@ -41,7 +41,7 @@ TAO_FT_Round_Robin::next_location (
 
   const CORBA::ULong len = locations->length ();
 
-  // No locations exist, so we cant get the next one
+  // No locations exist, so we can't get the next one
   if (len == 0)
     return false;
 
