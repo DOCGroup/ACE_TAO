@@ -1,3 +1,8 @@
+Mon Jan 21 08:16:41 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/ciao_tests.lst:
+          QueryCondition DDS tests are NDDS only
+
 Thu Dec 27 09:19:07 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * NEWS:
