@@ -103,14 +103,17 @@ class TAO_Dynamic_TP_Export TAO_DTP_Thread_Lane_Resources_Manager_Factory
 public:
 
   /// Factory method.
-  TAO_Thread_Lane_Resources_Manager *create_thread_lane_resources_manager (TAO_ORB_Core &core);
+  TAO_Thread_Lane_Resources_Manager *create_thread_lane_resources_manager (
+    TAO_ORB_Core &core);
 
 };
 
 
 
-ACE_STATIC_SVC_DECLARE_EXPORT (TAO_Dynamic_TP, TAO_DTP_Thread_Lane_Resources_Manager_Factory)
-ACE_FACTORY_DECLARE (TAO_Dynamic_TP, TAO_DTP_Thread_Lane_Resources_Manager_Factory)
+ACE_STATIC_SVC_DECLARE_EXPORT (TAO_Dynamic_TP,
+                               TAO_DTP_Thread_Lane_Resources_Manager_Factory)
+ACE_FACTORY_DECLARE (TAO_Dynamic_TP,
+                     TAO_DTP_Thread_Lane_Resources_Manager_Factory)
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

@@ -35,13 +35,13 @@ TAO::CSD::TP_Strategy_Factory::init (int argc,
   initialized = 1;
   TAO_CSD_Strategy_Repository *repo =
     ACE_Dynamic_Service<TAO_CSD_Strategy_Repository>::instance
-    ("TAO_CSD_Strategy_Repository");
+      (ACE_TEXT ("TAO_CSD_Strategy_Repository"));
 
   if (repo == 0)
     {
       TAO_CSD_ThreadPool::init ();
       repo = ACE_Dynamic_Service<TAO_CSD_Strategy_Repository>::instance
-        ("TAO_CSD_Strategy_Repository");
+        (ACE_TEXT ("TAO_CSD_Strategy_Repository"));
     }
 
   if (repo == 0)

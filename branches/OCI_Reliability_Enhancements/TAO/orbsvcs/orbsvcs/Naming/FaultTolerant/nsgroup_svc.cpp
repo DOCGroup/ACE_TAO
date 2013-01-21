@@ -21,9 +21,11 @@ NS_group_svc::NS_group_svc (void)
 FT_Naming::LoadBalancingStrategyValue
 NS_group_svc::determine_policy_string (const ACE_TCHAR *policy)
 {
-  if (ACE_OS::strcasecmp (policy, ACE_TEXT ("rand")) == 0) {
+  if (ACE_OS::strcasecmp (policy,
+                          ACE_TEXT_ALWAYS_CHAR ("rand")) == 0) {
     return FT_Naming::RANDOM;
-  } else if (ACE_OS::strcasecmp (policy, ACE_TEXT ("least")) == 0){
+  } else if (ACE_OS::strcasecmp (policy,
+                                 ACE_TEXT_ALWAYS_CHAR ("least")) == 0) {
     return FT_Naming::LEAST;
   } else {
     return FT_Naming::ROUND_ROBIN; // Default case
@@ -38,9 +40,9 @@ NS_group_svc::set_orb( CORBA::ORB_ptr orb)
 
     if (CORBA::is_nil (this->orb_))
       ACE_ERROR_RETURN ((LM_ERROR,
-                          ACE_TEXT (" (%P|%t) Unable to initialize the ")
-                          ACE_TEXT ("ORB.\n")),
-                          -1);
+                         ACE_TEXT (" (%P|%t) Unable to initialize the ")
+                         ACE_TEXT ("ORB.\n")),
+                        -1);
     return 0;
 }
 
@@ -53,7 +55,7 @@ NS_group_svc::set_naming_manager( FT_Naming::NamingManager_ptr nm)
     if (CORBA::is_nil (this->naming_manager_))
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT (" (%P|%t) Invalid Naming Manager.\n")),
-                          -1);
+                        -1);
     return 0;
 }
 
@@ -66,7 +68,7 @@ NS_group_svc::set_name_context( CosNaming::NamingContextExt_ptr nc)
     if (CORBA::is_nil (this->name_service_))
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT (" (%P|%t) Invalid Name Context.\n")),
-                          -1);
+                        -1);
     return 0;
 }
 
@@ -83,7 +85,7 @@ NS_group_svc::group_exist (
   }
 
   try
-  {
+    {
     PortableGroup::ObjectGroup_var group_var =
       this->naming_manager_->get_object_group_ref_from_name (group_name);
   }
@@ -96,9 +98,10 @@ NS_group_svc::group_exist (
 }
 
 /**
- * The naming service shall provide a command line utility for creating object groups.
- * Adds the object group to to the load balancing service with the specified
- * selection policy. On Creation, an object group contains no member objects.
+ * The naming service shall provide a command line utility for creating
+ * object groups. Adds the object group to to the load balancing service
+ * with the specified selection policy. On Creation, an object group
+ * contains no member objects.
  */
 
 int
@@ -112,7 +115,6 @@ NS_group_svc::group_create (
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("group_create args not provided\n")),
                       -2);
-
   }
 
   try
@@ -120,7 +122,7 @@ NS_group_svc::group_create (
 
     /// Verify that the group does not already exist
     /// Group names must be unique
-    if ( true == group_exist (group_name))
+    if ( true == group_exist (ACE_TEXT_ALWAYS_CHAR (group_name)))
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("Group %C already exists\n"),
@@ -135,22 +137,23 @@ NS_group_svc::group_create (
     property.nam.length (1);
 
     property.nam[0].id = CORBA::string_dup (
-        ACE_TEXT ("org.omg.PortableGroup.MembershipStyle"));
+      ACE_TEXT_ALWAYS_CHAR ("org.omg.PortableGroup.MembershipStyle"));
 
     PortableGroup::MembershipStyleValue msv = PortableGroup::MEMB_APP_CTRL;
     property.val <<= msv;
 
     CORBA::Object_var obj =
-      this->naming_manager_->create_object_group (group_name,
-                                                  determine_policy_string(policy),
-                                                  criteria);
+      this->naming_manager_->create_object_group (
+        ACE_TEXT_ALWAYS_CHAR (group_name),
+        determine_policy_string(ACE_TEXT_ALWAYS_CHAR (policy)),
+        criteria);
 
     if (CORBA::is_nil (obj.in ()))
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("\nUnable to create group %C.\n"),
                          group_name),
-                         -1);
+                        -1);
     }
 
   }
@@ -190,7 +193,7 @@ NS_group_svc::group_bind (
 
     PortableGroup::ObjectGroup_var group_var =
       this->naming_manager_->get_object_group_ref_from_name (
-        ACE_TEXT_ALWAYS_CHAR( group_name));
+        ACE_TEXT_ALWAYS_CHAR(group_name));
 
     if (CORBA::is_nil (group_var.in()))
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -200,49 +203,46 @@ NS_group_svc::group_bind (
     CORBA::String_var str = CORBA::string_dup( ACE_TEXT_ALWAYS_CHAR (path) );
     CosNaming::Name_var name = this->name_service_->to_name ( str.in() );
 
-    this->name_service_->rebind ( name.in(), group_var.in() );
+    this->name_service_->rebind (name.in(), group_var.in());
 
   }
   catch (const CosNaming::NamingContextExt::InvalidName& ex){
-      ex._tao_print_exception (
-        ACE_TEXT ("InvalidName Exception in group_bind"));
+      ex._tao_print_exception ("InvalidName Exception in group_bind");
 
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("\n%C is invalid\n"),
                          path),
-                         -1);
+                        -1);
   }
   catch (const CosNaming::NamingContext::CannotProceed&){
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("\nCannot proceed with %C\n"),
-                         path),
-                         -1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("\nCannot proceed with %C\n"),
+                       path),
+                      -1);
   }
   catch (const CosNaming::NamingContext::NotFound&){
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("\nUnable to find %C\n"),
                          path),
-                         -1);
+                        -1);
   }
   catch (const CORBA::SystemException& ex){
 
-      ex._tao_print_exception (
-        ACE_TEXT ("SystemException Exception in group_bind"));
+    ex._tao_print_exception ("SystemException Exception in group_bind");
 
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("\nUnable to bind %C\n"),
-                         path),
-                         -1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("\nUnable to bind %C\n"),
+                       path),
+                      -1);
   }
   catch (const CORBA::Exception& ex){
 
-      ex._tao_print_exception (
-        ACE_TEXT ("Exception in group_bind"));
+    ex._tao_print_exception ("Exception in group_bind");
 
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("\nUnable to bind %C\n"),
-                         path),
-                         -1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("\nUnable to bind %C\n"),
+                       path),
+                      -1);
   }
   return 0;
 }
@@ -253,22 +253,22 @@ NS_group_svc::group_unbind (const ACE_TCHAR* path){
   {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("group_unbind args not provided\n")),
-                       -2);
+                      -2);
   }
 
   try
-  {
+    {
 
-    CORBA::String_var str = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (path));
-    CosNaming::Name_var name = this->name_service_->to_name ( str.in() );
-    this->name_service_->unbind ( name.in() );
+      CORBA::String_var str = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (path));
+      CosNaming::Name_var name = this->name_service_->to_name ( str.in() );
+      this->name_service_->unbind (name.in());
 
   }
   catch (const CosNaming::NamingContext::NotFound&){
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("\nUnable to find %C\n"),
                          path),
-                         -1);
+                        -1);
   }
   catch (const CosNaming::NamingContext::CannotProceed&){
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -276,26 +276,24 @@ NS_group_svc::group_unbind (const ACE_TCHAR* path){
                          path),
                          -1);
   }
-  catch (const CosNaming::NamingContext::InvalidName&){
+  catch (const CosNaming::NamingContext::InvalidName&) {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("\n%C is invalid\n"),
                          path),
                          -1);
   }
-  catch (const CORBA::SystemException& ex){
+  catch (const CORBA::SystemException& ex) {
 
-      ex._tao_print_exception (
-        ACE_TEXT ("Exception in group_unbind"));
+      ex._tao_print_exception ("Exception in group_unbind");
 
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("\nUnable to unbind %C\n"),
                          path),
                          -1);
   }
-  catch (const CORBA::Exception& ex){
+  catch (const CORBA::Exception& ex) {
 
-      ex._tao_print_exception (
-        ACE_TEXT ("Exception in group_unbind"));
+      ex._tao_print_exception ("Exception in group_unbind");
 
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("\nUnable to unbind %C\n"),
@@ -380,13 +378,12 @@ NS_group_svc::display_load_policy_group(
   }
   catch (const CORBA::Exception& ex)
   {
-      ex._tao_print_exception (
-        ACE_TEXT ("Exception in group_list"));
+    ex._tao_print_exception ("Exception in group_list");
 
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("Unable to get %C group list\n"),
-                         display_label),
-                         -1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("Unable to get %C group list\n"),
+                       display_label),
+                      -1);
   }
   return 0;
 }
@@ -466,7 +463,7 @@ NS_group_svc::group_remove (const ACE_TCHAR* group_name)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("\nUnable to remove group %C\n"),
                        group_name),
-                       -1);
+                      -1);
   }
 
   return 0;
@@ -690,7 +687,7 @@ NS_group_svc::member_show (
       this->naming_manager_->get_member_ref (group_var.in(), location_name);
 
     CORBA::String_var ior_string  =
-      this->orb_->object_to_string( ior_var.in() );
+      this->orb_->object_to_string (ior_var.in());
 
     std::cout << ior_string.in() << std::endl;
   }

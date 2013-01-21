@@ -78,7 +78,8 @@ TAO::CSD::TP_Task::open(void* args)
     {
       ACE_ERROR_RETURN((LM_ERROR,
                         ACE_TEXT ("(%P|%t) TP_Task failed to open.  ")
-                        ACE_TEXT ("num_threads (%u) is too large.  Max is %d.\n"),
+                        ACE_TEXT ("num_threads (%u) is too large.  ")
+                        ACE_TEXT ("Max is %d.\n"),
                         num, MAX_THREADPOOL_TASK_WORKER_THREADS),
                         -1);
     }

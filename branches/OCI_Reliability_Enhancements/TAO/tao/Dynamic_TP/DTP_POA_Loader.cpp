@@ -49,7 +49,8 @@ TAO_DTP_POA_Loader::init (int argc, ACE_TCHAR* argv[])
 
   if (repo == 0)
     {
-      ACE_Service_Config::process_directive(ace_svc_desc_TAO_CSD_Strategy_Repository);
+      ACE_Service_Config::process_directive(
+        ace_svc_desc_TAO_CSD_Strategy_Repository);
       repo = ACE_Dynamic_Service<TAO_CSD_Strategy_Repository>::instance
         ("TAO_CSD_Strategy_Repository");
     }
@@ -73,10 +74,12 @@ TAO_DTP_POA_Loader::init (int argc, ACE_TCHAR* argv[])
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG((LM_DEBUG,
-                     ACE_TEXT ("TAO (%P|%t) - DTP_POA_Loader - parsing args\n")));
+                     ACE_TEXT ("TAO (%P|%t) - DTP_POA_Loader - ")
+                     ACE_TEXT ("parsing args\n")));
         }
 
-      if (ACE_OS::strcasecmp (argv[curarg], ACE_TEXT ("-DTPPOAConfigMap")) == 0)
+      if (ACE_OS::strcasecmp (argv[curarg], ACE_TEXT ("-DTPPOAConfigMap"))
+          == 0)
         {
           ++curarg;
           if (curarg >= argc)
@@ -116,7 +119,7 @@ TAO_DTP_POA_Loader::init (int argc, ACE_TCHAR* argv[])
 
 int
 TAO_DTP_POA_Loader::load_poa_map (ACE_TCHAR *map,
-                                         TAO_CSD_Strategy_Repository *repo)
+                                  TAO_CSD_Strategy_Repository *repo)
 {
 
   ACE_CString poa_name;
@@ -147,7 +150,7 @@ TAO_DTP_POA_Loader::load_poa_map (ACE_TCHAR *map,
 
   ACE_NEW_RETURN(strategy_container,
                  TAO_DTP_POA_Strategy(config_name,
-                                             false), -1);
+                                      false), -1);
 
   sep = ACE_OS::strchr (map, ',');
   while (sep != 0)
@@ -166,7 +169,7 @@ TAO_DTP_POA_Loader::load_poa_map (ACE_TCHAR *map,
 
 void
 TAO_DTP_POA_Loader::report_option_value_error (const ACE_TCHAR* name,
-                                                      const ACE_TCHAR* value)
+                                               const ACE_TCHAR* value)
 {
   if (TAO_debug_level > 0)
     {

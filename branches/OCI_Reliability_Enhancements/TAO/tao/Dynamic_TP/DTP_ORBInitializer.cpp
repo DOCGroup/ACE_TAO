@@ -60,14 +60,19 @@ TAO_DTP_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr info)
       if (TAO_debug_level > 0)
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) TAO_DTP_ORBInitializer::pre_init:\n")
-                    ACE_TEXT ("(%P|%t)   Unable to resolve DTP_Config object\n")));
+                    ACE_TEXT ("(%P|%t)   Unable to resolve DTP_Config ")
+                    ACE_TEXT ("object\n")));
 
       throw ::CORBA::INTERNAL ();
     }
 
-  // Set the name of the thread lane resources manager to be DTP_Thread_Lane_Resources_Manager.
-  tao_info->orb_core ()->orb_params ()->thread_lane_resources_manager_factory_name ("DTP_Thread_Lane_Resources_Manager_Factory");
-  ACE_Service_Config::process_directive (ace_svc_desc_TAO_DTP_Thread_Lane_Resources_Manager_Factory);
+  // Set the name of the thread lane resources manager to be
+  // DTP_Thread_Lane_Resources_Manager.
+  tao_info->orb_core ()->orb_params ()
+    ->thread_lane_resources_manager_factory_name (
+        "DTP_Thread_Lane_Resources_Manager_Factory");
+  ACE_Service_Config::process_directive (
+    ace_svc_desc_TAO_DTP_Thread_Lane_Resources_Manager_Factory);
 
 }
 
@@ -104,8 +109,10 @@ TAO_DTP_ORBInitializer::post_init (PortableInterceptor::ORBInitInfo_ptr info)
         {
           if (TAO_debug_level > 0)
             ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) TAO_DTP_ORBInitializer::post_init:\n")
-                        ACE_TEXT ("(%P|%t)   Unable to resolve DTP_Config object\n")));
+                        ACE_TEXT ("(%P|%t) TAO_DTP_ORBInitializer::")
+                        ACE_TEXT ("post_init:\n")
+                        ACE_TEXT ("(%P|%t)   Unable to resolve ")
+                        ACE_TEXT ("DTP_Config object\n")));
 
           throw ::CORBA::INTERNAL ();
         }

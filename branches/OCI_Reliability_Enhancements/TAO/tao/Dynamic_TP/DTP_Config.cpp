@@ -33,24 +33,27 @@ TAO_DTP_Config_Registry::init (int , ACE_TCHAR* [] )
 }
 
 bool
-TAO_DTP_Config_Registry::find (const ACE_CString& name, TAO_DTP_Definition &entry)
+TAO_DTP_Config_Registry::find (const ACE_CString& name,
+                               TAO_DTP_Definition &entry)
 {
   return registry_.find (name, entry) == 0;
 }
 
 int
-TAO_DTP_Config_Registry::bind (const ACE_CString& name, TAO_DTP_Definition &entry)
+TAO_DTP_Config_Registry::bind (const ACE_CString& name,
+                               TAO_DTP_Definition &entry)
 {
   return registry_.bind (name, entry);
 }
 
 int
-TAO_DTP_Config_Registry::rebind (const ACE_CString& name, TAO_DTP_Definition &entry)
+TAO_DTP_Config_Registry::rebind (const ACE_CString& name,
+                                 TAO_DTP_Definition &entry)
 {
   return registry_.rebind (name, entry);
 }
 
-//--------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------
 
 TAO_DTP_Config::TAO_DTP_Config (void)
 {
@@ -63,12 +66,7 @@ TAO_DTP_Config::~TAO_DTP_Config (void)
 int
 TAO_DTP_Config::init (int argc, ACE_TCHAR* argv[])
 {
-//  TAO_DTP_Definition entry =  {-1,5,-1,0,60,0};
   TAO_DTP_Definition entry;
-  bool min_threads_set = false;
-  bool init_threads_set = false;
-  bool max_threads_set = false;
-  bool timeout_set = false;
 
   ACE_TCHAR *name = 0;
   bool overwrite = false;
@@ -79,48 +77,68 @@ TAO_DTP_Config::init (int argc, ACE_TCHAR* argv[])
   for (curarg = 0; curarg < argc; ++curarg)
     {
       long val = 0;
-      if ((r = this->parse_string (curarg, argc, argv, ACE_TEXT("-DTPName"),name )) != 0)
+      if ((r = this->parse_string (curarg,
+                                   argc,
+                                   argv,
+                                   ACE_TEXT("-DTPName"),name )) != 0)
         {
           if (r < 0)
             {
               return -1;
             }
         }
-      else if ((r = this->parse_bool (curarg, argc, argv, ACE_TEXT("-DTPOverwrite"), overwrite )) != 0)
+      else if ((r = this->parse_bool (curarg,
+                                      argc,
+                                      argv,
+                                      ACE_TEXT("-DTPOverwrite"),
+                                      overwrite )) != 0)
         {
           if (r < 0)
             {
               return -1;
             }
         }
-      else if ((r = this->parse_long (curarg, argc, argv, ACE_TEXT("-DTPMin"), val )) != 0)
+      else if ((r = this->parse_long (curarg,
+                                      argc,
+                                      argv,
+                                      ACE_TEXT("-DTPMin"),
+                                      val )) != 0)
         {
           if (r < 0)
             {
               return -1;
             }
-          min_threads_set = true;
           entry.min_threads_ = val;
         }
-      else if ((r = this->parse_long (curarg, argc, argv, ACE_TEXT("-DTPInit"), val )) != 0)
+      else if ((r = this->parse_long (curarg,
+                                      argc,
+                                      argv,
+                                      ACE_TEXT("-DTPInit"),
+                                      val )) != 0)
         {
           if (r < 0)
             {
               return -1;
             }
-          init_threads_set = true;
           entry.init_threads_ = val;
         }
-      else if ((r = this->parse_long (curarg, argc, argv, ACE_TEXT("-DTPMax"), val )) != 0)
+      else if ((r = this->parse_long (curarg,
+                                      argc,
+                                      argv,
+                                      ACE_TEXT("-DTPMax"),
+                                      val )) != 0)
         {
           if (r < 0)
             {
               return -1;
             }
-          max_threads_set = true;
           entry.max_threads_ = val;
         }
-      else if ((r = this->parse_long (curarg, argc, argv, ACE_TEXT("-DTPStack"), val )) != 0)
+      else if ((r = this->parse_long (curarg,
+                                      argc,
+                                      argv,
+                                      ACE_TEXT("-DTPStack"),
+                                      val )) != 0)
         {
           if (r < 0)
             {
@@ -128,16 +146,23 @@ TAO_DTP_Config::init (int argc, ACE_TCHAR* argv[])
             }
           entry.stack_size_ = val;
         }
-      else if ((r = this->parse_long (curarg, argc, argv, ACE_TEXT("-DTPTImeout"), val )) != 0)
+      else if ((r = this->parse_long (curarg,
+                                      argc,
+                                      argv,
+                                      ACE_TEXT("-DTPTImeout"),
+                                      val )) != 0)
         {
           if (r < 0)
             {
               return -1;
             }
-          timeout_set = true;
           entry.timeout_ = val;
         }
-      else if ((r = this->parse_long (curarg, argc, argv, ACE_TEXT("-DTPQueue"), val )) != 0)
+      else if ((r = this->parse_long (curarg,
+                                      argc,
+                                      argv,
+                                      ACE_TEXT("-DTPQueue"),
+                                      val )) != 0)
         {
           if (r < 0)
             {
@@ -150,7 +175,8 @@ TAO_DTP_Config::init (int argc, ACE_TCHAR* argv[])
           if (TAO_debug_level > 0)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("TAO (%P|%t) - DTP_Config - Unrecognized argv[%d], %C\n"),
+                          ACE_TEXT ("TAO (%P|%t) - DTP_Config - ")
+                          ACE_TEXT ("Unrecognized argv[%d], %C\n"),
                          curarg, argv[curarg]));
             }
           return -1;
@@ -163,9 +189,13 @@ TAO_DTP_Config::init (int argc, ACE_TCHAR* argv[])
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) - DTP_Config - thread count constraint ")
-                      ACE_TEXT ("violated, min: %d <= init: %d <= max: %d or max = -1\n"),
-                      entry.min_threads_, entry.init_threads_, entry.max_threads_));
+                      ACE_TEXT ("TAO (%P|%t) - DTP_Config - ")
+                      ACE_TEXT ("thread count constraint ")
+                      ACE_TEXT ("violated, min: %d <= init: %d <= max: ")
+                      ACE_TEXT ("%d or max = -1\n"),
+                      entry.min_threads_,
+                      entry.init_threads_,
+                      entry.max_threads_));
         }
       return 0;
     }
@@ -186,7 +216,8 @@ TAO_DTP_Config::init (int argc, ACE_TCHAR* argv[])
           if (TAO_debug_level > 0)
             {
               ACE_DEBUG((LM_DEBUG,
-                         ACE_TEXT ("TAO (%P|%t) - DTP_Config - cannot initialize registry\n")));
+                         ACE_TEXT ("TAO (%P|%t) - DTP_Config - ")
+                         ACE_TEXT ("cannot initialize registry\n")));
             }
           return -1;
         }
@@ -240,8 +271,8 @@ TAO_DTP_Config::parse_bool (int &curarg,
 
 int
 TAO_DTP_Config::parse_string (int &curarg,
-                                     int argc, ACE_TCHAR *argv[],
-                                     const ACE_TCHAR *match, ACE_TCHAR *&value)
+                              int argc, ACE_TCHAR *argv[],
+                              const ACE_TCHAR *match, ACE_TCHAR *&value)
 {
   if (ACE_OS::strcasecmp (argv[curarg], match) != 0)
     return 0;
@@ -260,7 +291,7 @@ TAO_DTP_Config::parse_string (int &curarg,
 
 void
 TAO_DTP_Config::report_option_value_error (const ACE_TCHAR* option_name,
-                                                  const ACE_TCHAR* option_value)
+                                           const ACE_TCHAR* option_value)
 {
   if (TAO_debug_level > 0)
     {

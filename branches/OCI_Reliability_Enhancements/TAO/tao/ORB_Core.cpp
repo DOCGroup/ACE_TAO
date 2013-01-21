@@ -1109,32 +1109,35 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
           arg_shifter.consume_arg ();
         }
       else if (0 != (current_arg = arg_shifter.get_the_parameter
-                (ACE_TEXT("-ORBForwardOnCommFailureLimit"))))
+                     (ACE_TEXT("-ORBForwardOnCommFailureLimit"))))
         {
           int limit = ACE_OS::atoi (current_arg);
-          this->orb_params_.forward_on_exception_limit (TAO::FOE_COMM_FAILURE, limit);
+          this->orb_params_.forward_on_exception_limit (
+                              TAO::FOE_COMM_FAILURE, limit);
           arg_shifter.consume_arg ();
         }
       else if (0 != (current_arg = arg_shifter.get_the_parameter
-                (ACE_TEXT("-ORBForwardOnObjectNotExistLimit"))))
+                     (ACE_TEXT("-ORBForwardOnObjectNotExistLimit"))))
         {
           int limit = ACE_OS::atoi (current_arg);
-          this->orb_params_.forward_on_exception_limit (TAO::FOE_OBJECT_NOT_EXIST, limit);
+          this->orb_params_.forward_on_exception_limit (
+                              TAO::FOE_OBJECT_NOT_EXIST, limit);
           arg_shifter.consume_arg ();
         }
       else if (0 != (current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBForwardOnInvObjrefLimit"))))
         {
           int limit = ACE_OS::atoi (current_arg);
-          this->orb_params_.forward_on_exception_limit (TAO::FOE_INV_OBJREF, limit);
+          this->orb_params_.forward_on_exception_limit (
+                              TAO::FOE_INV_OBJREF, limit);
           arg_shifter.consume_arg ();
         }
       else if (0 != (current_arg = arg_shifter.get_the_parameter
-                (ACE_TEXT("-ORBForwardOnReplyClosedLimit"))))
+                     (ACE_TEXT("-ORBForwardOnReplyClosedLimit"))))
         {
           int limit = ACE_OS::atoi (current_arg);
-          this->orb_params_.invocation_retry_params ().forward_on_reply_closed_limit_ =
-            limit;
+          this->orb_params_.invocation_retry_params ()
+            .forward_on_reply_closed_limit_ = limit;
           arg_shifter.consume_arg ();
         }
       else if (0 != (current_arg = arg_shifter.get_the_parameter
@@ -1146,7 +1149,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
           arg_shifter.consume_arg ();
         }
       else if (0 != (current_arg = arg_shifter.get_the_parameter
-                (ACE_TEXT("-ORBForwardOnceOnObjectNotExist"))))
+                     (ACE_TEXT("-ORBForwardOnceOnObjectNotExist"))))
         {
           int forward = ACE_OS::atoi (current_arg);
           if (forward)
@@ -1182,14 +1185,14 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
           arg_shifter.consume_arg ();
         }
      else if (0 != (current_arg = arg_shifter.get_the_parameter
-               (ACE_TEXT("-ORBAllowZIOPNoServerPolicies"))))
+                    (ACE_TEXT("-ORBAllowZIOPNoServerPolicies"))))
         {
           // This option takes a boolean 0 (off/dissallow) or 1 (on/allow)
           this->orb_params_.allow_ziop_no_server_policies (!!ACE_OS::atoi (current_arg));
           arg_shifter.consume_arg ();
         }
      else if (0 != (current_arg = arg_shifter.get_the_parameter
-               (ACE_TEXT("-ORBDynamicThreadPoolName"))))
+                    (ACE_TEXT("-ORBDynamicThreadPoolName"))))
         {
           // This option takes a boolean 0 (off/dissallow) or 1 (on/allow)
           this->orb_params_.dynamic_thread_pool_config_name (current_arg);

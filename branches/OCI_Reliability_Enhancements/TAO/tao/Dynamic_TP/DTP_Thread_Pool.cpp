@@ -55,7 +55,7 @@ TAO_DTP_Thread_Pool_Threads::svc (void)
     {
       // No point propagating this exception.  Print it out.
       ACE_ERROR ((LM_ERROR,
-                  "orb->run() raised exception for thread %t\n"));
+                  ACE_TEXT ("orb->run() raised exception for thread %t\n")));
 
       ex._tao_print_exception ("");
     }
@@ -271,7 +271,8 @@ TAO_DTP_Thread_Pool::TAO_DTP_Thread_Pool (TAO_DTP_Thread_Pool_Manager &manager,
     threads_ (*this),
     new_thread_generator_ (*this)
 {
-  manager_.orb_core ().leader_follower ().set_new_leader_generator (&new_thread_generator_);
+  manager_.orb_core ().leader_follower ().set_new_leader_generator (
+                                            &new_thread_generator_);
 }
 
 void
@@ -388,9 +389,9 @@ TAO_DTP_Thread_Pool_Manager::create_threadpool_i (TAO_DTP_Definition &def)
 
   ACE_NEW_THROW_EX (thread_pool,
                     TAO_DTP_Thread_Pool (*this,
-                                     this->thread_pool_id_counter_,
-                                     def
-                                    ),
+                                         this->thread_pool_id_counter_,
+                                         def
+                                         ),
                     CORBA::NO_MEMORY ());
 
   return this->create_threadpool_helper (thread_pool);
