@@ -48,10 +48,11 @@ public:
    * The constructor takes arguments needed to create a
    * TAO_Storable_Naming_Context and TAO_Naming_Context on demand.
    */
-  TAO_Storable_Naming_Context_Activator (CORBA::ORB_ptr orb,
-                                         TAO::Storable_Factory *factory,
-                                         TAO_Storable_Naming_Context_Factory *context_impl_factory,
-                                         const ACE_TCHAR *persistence_directory);
+  TAO_Storable_Naming_Context_Activator (
+    CORBA::ORB_ptr orb,
+    TAO::Storable_Factory *factory,
+    TAO_Storable_Naming_Context_Factory *context_impl_factory,
+    const ACE_TCHAR *persistence_directory);
 
   virtual ~TAO_Storable_Naming_Context_Activator();
 

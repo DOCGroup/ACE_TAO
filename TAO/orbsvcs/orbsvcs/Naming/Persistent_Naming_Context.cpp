@@ -250,7 +250,8 @@ TAO_Persistent_Naming_Context::TAO_Persistent_Naming_Context (PortableServer::PO
   // Set the superclass pointer.
   context_ = persistent_context_;
 
-  // If a map was provided (i.e., not defaulted) then set it in the persistent_context_
+  // If a map was provided (i.e., not defaulted) then set it in the
+  // persistent_context_
   if (map != 0)
     persistent_context_->set (map, index_->allocator ());
 }
@@ -294,8 +295,9 @@ TAO_Persistent_Naming_Context::make_new_context (PortableServer::POA_ptr poa,
 
   // Put together a servant for the new Naming Context.
 
-  TAO_Persistent_Naming_Context *context_impl = ind->create_naming_context_impl(poa,
-                                                                                poa_id);
+  TAO_Persistent_Naming_Context *context_impl = ind->create_naming_context_impl(
+    poa,
+    poa_id);
 
   // Verify that a context implementation was created. If not, throw an exception
   if (context_impl == 0)

@@ -67,9 +67,10 @@ public:
   // = Initialization and termination methods.
 
   /// Constructor.
-  TAO_Persistent_Context_Index (CORBA::ORB_ptr orb,
-                                PortableServer::POA_ptr poa,
-                                TAO_Persistent_Naming_Context_Factory *context_impl_factory);
+  TAO_Persistent_Context_Index (
+    CORBA::ORB_ptr orb,
+    PortableServer::POA_ptr poa,
+    TAO_Persistent_Naming_Context_Factory *context_impl_factory);
 
   /**
    * Create ACE_Allocator, open/create memory-mapped file with the
@@ -94,8 +95,9 @@ public:
    * using the naming context factory that was provided in the ctor
    * for the index.
    */
-  TAO_Persistent_Naming_Context *create_naming_context_impl (PortableServer::POA_ptr poa,
-                                                             const char *poa_id);
+  TAO_Persistent_Naming_Context *create_naming_context_impl (
+    PortableServer::POA_ptr poa,
+    const char *poa_id);
 
   /**
    * Destructor.  The memory mapped file that was opened/created is
