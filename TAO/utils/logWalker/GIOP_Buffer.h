@@ -38,7 +38,10 @@ public:
   static const size_t giop_header_len;
   static void init_leadin (int version);
 
-  GIOP_Buffer (const char *text, size_t offset, Thread *thread, Invocation *owner = 0);
+  GIOP_Buffer (const char *text,
+               size_t offset,
+               Thread *thread,
+               Invocation *owner = 0);
   GIOP_Buffer (void);
   ~GIOP_Buffer (void);
 

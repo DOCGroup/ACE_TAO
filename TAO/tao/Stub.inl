@@ -60,7 +60,9 @@ TAO_Stub::reset_profiles (void)
   if (TAO_debug_level > 5)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - Stub::reset_profiles, acquired profile lock this = 0x%x\n"), this));
+                  ACE_TEXT ("TAO (%P|%t) - Stub::reset_profiles, acquired ")
+                  ACE_TEXT ("profile lock this = 0x%x\n"),
+                  this));
     }
 
   this->reset_profiles_i ();
@@ -151,7 +153,10 @@ TAO_Stub::next_profile_i (void)
             if (TAO_debug_level > 5)
               {
                 ACE_DEBUG ((LM_DEBUG,
-                            ACE_TEXT ("TAO (%P|%t) - Stub::next_profile_i, released profile lock to reinitialize this = 0x%x\n"), this));
+                            ACE_TEXT ("TAO (%P|%t) - Stub::next_profile_i, ")
+                            ACE_TEXT ("released profile lock to reinitialize ")
+                            ACE_TEXT ("this = 0x%x\n"),
+                            this));
               }
             // We may have been forwarded to / from a collocated situation
             // Check for this and apply / remove optimisation if required.
@@ -160,7 +165,10 @@ TAO_Stub::next_profile_i (void)
           if (TAO_debug_level > 5)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("TAO (%P|%t) - Stub::next_profile_i, reacquired profile lock on object this = 0x%x\n"), this));
+                          ACE_TEXT ("TAO (%P|%t) - Stub::next_profile_i, ")
+                          ACE_TEXT ("reacquired profile lock on object ")
+                          ACE_TEXT ("this = 0x%x\n"),
+                          this));
               }
         }
       else

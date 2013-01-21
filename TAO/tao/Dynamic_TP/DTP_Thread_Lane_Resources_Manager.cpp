@@ -14,10 +14,11 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_DTP_Thread_Lane_Resources_Manager::TAO_DTP_Thread_Lane_Resources_Manager (TAO_ORB_Core &orb_core)
-  : TAO_Thread_Lane_Resources_Manager (orb_core),
-    default_lane_resources_ (0),
-    tp_manager_ (0)
+TAO_DTP_Thread_Lane_Resources_Manager::TAO_DTP_Thread_Lane_Resources_Manager
+  (TAO_ORB_Core &orb_core)
+    : TAO_Thread_Lane_Resources_Manager (orb_core),
+      default_lane_resources_ (0),
+      tp_manager_ (0)
 {
   // Create the default resources.
   ACE_NEW (this->default_lane_resources_,
@@ -104,7 +105,8 @@ TAO_DTP_Thread_Lane_Resources_Manager::tp_manager (void)
 }
 
 TAO_Thread_Lane_Resources_Manager *
-TAO_DTP_Thread_Lane_Resources_Manager_Factory::create_thread_lane_resources_manager (TAO_ORB_Core &core)
+TAO_DTP_Thread_Lane_Resources_Manager_Factory::create_thread_lane_resources_manager (
+  TAO_ORB_Core &core)
 {
   TAO_Thread_Lane_Resources_Manager *manager = 0;
 

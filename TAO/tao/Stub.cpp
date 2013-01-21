@@ -121,7 +121,9 @@ TAO_Stub::add_forward_profiles (const TAO_MProfile &mprofiles,
   if (TAO_debug_level > 5)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - Stub::add_forward_profiles, acquired profile lock this = 0x%x\n"), this));
+                  ACE_TEXT ("TAO (%P|%t) - Stub::add_forward_profiles, ")
+                  ACE_TEXT ("acquired profile lock this = 0x%x\n"),
+                  this));
     }
 
   if (permanent_forward)
@@ -171,7 +173,9 @@ TAO_Stub::create_ior_info (IOP::IOR *&ior_info, CORBA::ULong &index)
   if (TAO_debug_level > 5)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - Stub::create_ior_info, acquired profile lock this = 0x%x\n"), this));
+                  ACE_TEXT ("TAO (%P|%t) - Stub::create_ior_info, acquired ")
+                  ACE_TEXT ("profile lock this = 0x%x\n"),
+                  this));
     }
 
 
@@ -238,7 +242,8 @@ TAO_Stub::object_key (void) const
     {
       // Double-checked
       // FUZZ: disable check_for_ACE_Guard
-      ACE_Guard<TAO_SYNCH_MUTEX> obj (const_cast <TAO_SYNCH_MUTEX&>(this->profile_lock_));
+      ACE_Guard<TAO_SYNCH_MUTEX> obj (
+        const_cast <TAO_SYNCH_MUTEX&>(this->profile_lock_));
       // FUZZ: enable check_for_ACE_Guard
 
       if (obj.locked () != 0 &&  this->forward_profiles_ != 0)
@@ -538,7 +543,9 @@ TAO_Stub::marshal (TAO_OutputCDR &cdr)
   if (TAO_debug_level > 5)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - Stub::marshal, acquired profile lock this = 0x%x\n"), this));
+                  ACE_TEXT ("TAO (%P|%t) - Stub::marshal, acquired ")
+                  ACE_TEXT ("profile lock this = 0x%x\n"),
+                  this));
     }
 
 

@@ -17,10 +17,12 @@ namespace
   {
     if (command_line_params.forward_on_exception_limit_[ex] !=
         result.forward_on_exception_limit_[ex])
-      result.forward_on_exception_limit_[ex] = command_line_params.forward_on_exception_limit_[ex];
+      result.forward_on_exception_limit_[ex] =
+        command_line_params.forward_on_exception_limit_[ex];
     else if (client_factory_params.forward_on_exception_limit_[ex] !=
-        result.forward_on_exception_limit_[ex])
-      result.forward_on_exception_limit_[ex] = client_factory_params.forward_on_exception_limit_[ex];
+             result.forward_on_exception_limit_[ex])
+      result.forward_on_exception_limit_[ex] =
+        client_factory_params.forward_on_exception_limit_[ex];
   }
 
   /// Calculate the retry parameters by giving a command line parameter
@@ -42,10 +44,12 @@ namespace
   // Retry on reply closed limit
   if (command_line_params.forward_on_reply_closed_limit_ !=
       result.forward_on_reply_closed_limit_)
-    result.forward_on_reply_closed_limit_ = command_line_params.forward_on_reply_closed_limit_;
+    result.forward_on_reply_closed_limit_ =
+      command_line_params.forward_on_reply_closed_limit_;
   else if (client_factory_params.forward_on_reply_closed_limit_ !=
-      result.forward_on_reply_closed_limit_)
-    result.forward_on_reply_closed_limit_ = client_factory_params.forward_on_reply_closed_limit_;
+           result.forward_on_reply_closed_limit_)
+    result.forward_on_reply_closed_limit_ =
+      client_factory_params.forward_on_reply_closed_limit_;
 
   // Forward on exception limits
 
@@ -86,9 +90,11 @@ TAO::Invocation_Retry_State::Invocation_Retry_State (TAO_Stub &stub)
 
   // Cast away const to avoid tedious iterator operations on the ACE_Array_Map.
   TAO::Invocation_Retry_Params &command_line_params =
-    const_cast<TAO::Invocation_Retry_Params &> (stub.orb_core ()->orb_params ()->invocation_retry_params ());
+    const_cast<TAO::Invocation_Retry_Params &> (stub.orb_core ()
+      ->orb_params ()->invocation_retry_params ());
   TAO::Invocation_Retry_Params &client_factory_params =
-    const_cast<TAO::Invocation_Retry_Params &> (stub.orb_core ()->client_factory ()->invocation_retry_params ());
+    const_cast<TAO::Invocation_Retry_Params &> (stub.orb_core ()
+      ->client_factory ()->invocation_retry_params ());
 
   retry_params_calc(command_line_params,
                     client_factory_params,
@@ -160,7 +166,7 @@ void
 TAO::Invocation_Retry_State::sleep_at_starting_profile () const
 {
   if (stub_.at_starting_profile ())
-    this->sleep();
+    this->sleep ();
 }
 
 void

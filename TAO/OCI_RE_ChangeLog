@@ -1,3 +1,59 @@
+Mon Jan 21 22:52:17 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context.cpp:
+
+          Added check for nil object prior to querying if it is a group.
+
+        * utils/nsgroup/run_test.pl:
+
+          Added tests to expose the issue with nil objects in naming service.
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/nsgroup_svc.cpp:
+
+        * tao/CSD_Framework/CSD_Framework_Loader.cpp:
+
+        * tao/CSD_ThreadPool/CSD_TP_Strategy_Factory.cpp:
+        * tao/CSD_ThreadPool/CSD_TP_Task.cpp:
+        * tao/CSD_ThreadPool/CSD_ThreadPool.cpp:
+
+        * tao/Dynamic_TP/DTP_Config.cpp:
+        * tao/Dynamic_TP/DTP_ORBInitializer.cpp:
+        * tao/Dynamic_TP/DTP_ORB_Loader.cpp:
+        * tao/Dynamic_TP/DTP_POA_Loader.h:
+        * tao/Dynamic_TP/DTP_POA_Loader.cpp:
+        * tao/Dynamic_TP/DTP_POA_Strategy.inl:
+        * tao/Dynamic_TP/DTP_POA_Strategy.cpp:
+        * tao/Dynamic_TP/DTP_Task.cpp:
+        * tao/Dynamic_TP/DTP_Thread_Lane_Resources_Manager.h:
+        * tao/Dynamic_TP/DTP_Thread_Lane_Resources_Manager.cpp:
+        * tao/Dynamic_TP/DTP_Thread_Pool.h:
+        * tao/Dynamic_TP/DTP_Thread_Pool.cpp:
+
+        * tao/ImR_Client/ImR_Client.cpp:
+
+        * tao/Invocation_Adapter.cpp:
+        * tao/Invocation_Retry_State.cpp:
+        * tao/ORB_Core.cpp:
+
+        * tao/PortableServer/LifespanStrategy.h:
+        * tao/PortableServer/LifespanStrategyPersistent.cpp:
+        * tao/PortableServer/LifespanStrategyTransient.h:
+        * tao/PortableServer/LifespanStrategyTransient.cpp:
+        * tao/PortableServer/Root_POA.cpp:
+
+        * tao/Stub.inl:
+        * tao/Stub.cpp:
+        * tao/Synch_Invocation.cpp:
+        * tao/default_client.cpp:
+
+        * utils/logWalker/GIOP_Buffer.h:
+        * utils/logWalker/GIOP_Buffer.cpp:
+
+        * utils/nsgroup/nsgroup.cpp:
+
+          Additional updates to conform with ACE Development Guidelines
+          in preparation for merge.
+
 Mon Jan 21 21:43:20 UTC 2013  Phillip LaBanca  <labancap@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/Persistent_Context_Index.h:

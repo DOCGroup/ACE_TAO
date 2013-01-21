@@ -353,6 +353,13 @@ sub run_clients ()
 
     run_nsdel("$DEF_REF"." --name iso --destroy");
 
+    # Verify we can handle a non-existent ior to add to the list
+    run_nsadd("$DEF_REF --name does_not_exist --ior file://thisfiledoesnotexist");
+    run_nslist("$NS_REF");
+    run_nsdel("$DEF_REF"." --name does_not_exist");
+    run_nslist("$NS_REF");
+
+
     run_client (
         "-help",
         $POSITIVE_TEST_RESULT);

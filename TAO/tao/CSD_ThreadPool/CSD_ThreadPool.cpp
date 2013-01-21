@@ -58,7 +58,8 @@ TAO_CSD_ThreadPool::init (void)
       PortableInterceptor::ORBInitializer_var dll_initializer;
       dll_initializer = temp_dll_initializer;
 
-      PortableInterceptor::register_orb_initializer (dll_initializer.in ());
+      PortableInterceptor::register_orb_initializer (
+          dll_initializer.in ());
     }
   catch (const ::CORBA::Exception& ex)
     {
@@ -69,7 +70,8 @@ TAO_CSD_ThreadPool::init (void)
     }
 
 
-  return ACE_Service_Config::process_directive (ace_svc_desc_TAO_CSD_TP_Strategy_Factory);
+  return ACE_Service_Config::process_directive (
+            ace_svc_desc_TAO_CSD_TP_Strategy_Factory);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

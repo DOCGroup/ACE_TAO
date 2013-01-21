@@ -1946,8 +1946,8 @@ TAO_Root_POA::key_to_object (const TAO::ObjectKey &key,
   if (indirect && this->orb_core ().imr_endpoints_in_ior ())
     {
       CORBA::Object_ptr obj = this->active_policy_strategies_.
-        lifespan_strategy()->imr_key_to_object(key, type_id);
-      if (!CORBA::is_nil(obj))
+        lifespan_strategy()->imr_key_to_object (key, type_id);
+      if (!CORBA::is_nil (obj))
         {
           return obj;
         }

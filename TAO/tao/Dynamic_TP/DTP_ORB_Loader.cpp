@@ -47,7 +47,7 @@ TAO_DTP_ORB_Loader::init (int argc, ACE_TCHAR* argv[])
                 {
                   ACE_DEBUG ((LM_DEBUG,
                               ACE_TEXT ("TAO (%P|%t) - DTP_ORB_Loader - ")
-                              ACE_TEXT ("DTPORB arbument missing value\n")));
+                              ACE_TEXT ("DTPORB argument missing value\n")));
                 }
               return -1;
             }

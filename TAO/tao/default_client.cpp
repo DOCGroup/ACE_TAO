@@ -100,11 +100,13 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
                                            ACE_TEXT("MT_NOUPCALL")) == 0)
                 this->wait_strategy_ = TAO_WAIT_ON_LF_NO_UPCALL;
               else
-                this->report_option_value_error (ACE_TEXT("-ORBClientConnectionHandler"), name);
+                this->report_option_value_error (
+                  ACE_TEXT("-ORBClientConnectionHandler"), name);
             }
         }
       else if (ACE_OS::strcasecmp (argv[curarg],
-                                   ACE_TEXT("-ORBTransportMuxStrategy")) == 0)
+                                   ACE_TEXT("-ORBTransportMuxStrategy"))
+               == 0)
         {
           curarg++;
           if (curarg < argc)
@@ -118,11 +120,13 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
                                            ACE_TEXT("EXCLUSIVE")) == 0)
                 this->transport_mux_strategy_ = TAO_EXCLUSIVE_TMS;
               else
-                this->report_option_value_error (ACE_TEXT("-ORBTransportMuxStrategy"), name);
+                this->report_option_value_error (
+                  ACE_TEXT("-ORBTransportMuxStrategy"), name);
             }
         }
       else if (ACE_OS::strcasecmp (argv[curarg],
-                                   ACE_TEXT("-ORBTransportMuxStrategyLock")) == 0)
+                                   ACE_TEXT("-ORBTransportMuxStrategyLock"))
+               == 0)
         {
           curarg++;
           if (curarg < argc)
@@ -136,7 +140,8 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
                                            ACE_TEXT("thread")) == 0)
                 this->muxed_strategy_lock_type_ = TAO_THREAD_LOCK;
               else
-                this->report_option_value_error (ACE_TEXT("-ORBTransportMuxStrategyLock"), name);
+                this->report_option_value_error (
+                  ACE_TEXT("-ORBTransportMuxStrategyLock"), name);
             }
         }
       else if (ACE_OS::strcasecmp (argv[curarg],
@@ -157,11 +162,14 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
                                            ACE_TEXT("LF")) == 0)
                 this->connect_strategy_ = TAO_LEADER_FOLLOWER_CONNECT;
               else
-                this->report_option_value_error (ACE_TEXT("-ORBConnectStrategy"), name);
+                this->report_option_value_error (
+                  ACE_TEXT("-ORBConnectStrategy"),
+                  name);
             }
         }
       else if (ACE_OS::strcasecmp (argv[curarg],
-                                   ACE_TEXT("-ORBReplyDispatcherTableSize")) == 0)
+                                   ACE_TEXT("-ORBReplyDispatcherTableSize"))
+               == 0)
         {
           curarg++;
           if (curarg < argc)
@@ -184,11 +192,13 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
                         ACE_OS::strcasecmp (name, ACE_TEXT("true")) == 0)
                  this->use_cleanup_options_ = true;
                else
-                 this->report_option_value_error (ACE_TEXT("-ORBConnectionHandlerCleanup"), name);
+                 this->report_option_value_error (
+                   ACE_TEXT("-ORBConnectionHandlerCleanup"), name);
              }
          }
       else if (ACE_OS::strcmp (argv[curarg],
-                               ACE_TEXT("-ORBForwardOnCommFailureLimit")) == 0)
+                               ACE_TEXT("-ORBForwardOnCommFailureLimit"))
+               == 0)
          {
            curarg++;
            if (curarg < argc)
@@ -199,11 +209,13 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
                long limit = ACE_OS::strtol (name, &err, 10);
                if (err && *err != 0)
                  {
-                   this->report_option_value_error (ACE_TEXT("-ORBForwardOnCommFailureLimit"),
-                                                    name);
+                   this->report_option_value_error (
+                     ACE_TEXT("-ORBForwardOnCommFailureLimit"),
+                     name);
                  }
                else
-                 this->invocation_retry_params_.forward_on_exception_limit_[TAO::FOE_COMM_FAILURE] =
+                 this->invocation_retry_params_
+                   .forward_on_exception_limit_[TAO::FOE_COMM_FAILURE] =
                    limit;
              }
          }
@@ -219,16 +231,19 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
                long limit = ACE_OS::strtol (name, &err, 10);
                if (err && *err != 0)
                  {
-                   this->report_option_value_error (ACE_TEXT("-ORBForwardOnTransientLimit"),
-                                                    name);
+                   this->report_option_value_error (
+                     ACE_TEXT("-ORBForwardOnTransientLimit"),
+                     name);
                  }
                else
-                 this->invocation_retry_params_.forward_on_exception_limit_[TAO::FOE_TRANSIENT] =
+                 this->invocation_retry_params_
+                   .forward_on_exception_limit_[TAO::FOE_TRANSIENT] =
                    limit;
              }
          }
       else if (ACE_OS::strcmp (argv[curarg],
-                               ACE_TEXT("-ORBForwardOnObjectNotExistLimit")) == 0)
+                               ACE_TEXT("-ORBForwardOnObjectNotExistLimit"))
+               == 0)
          {
            curarg++;
            if (curarg < argc)
@@ -239,11 +254,13 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
                long limit = ACE_OS::strtol (name, &err, 10);
                if (err && *err != 0)
                  {
-                   this->report_option_value_error (ACE_TEXT("-ORBForwardOnObjectNotExistLimit"),
-                                                    name);
+                   this->report_option_value_error (
+                     ACE_TEXT("-ORBForwardOnObjectNotExistLimit"),
+                     name);
                  }
                else
-                 this->invocation_retry_params_.forward_on_exception_limit_[TAO::FOE_OBJECT_NOT_EXIST] =
+                 this->invocation_retry_params_
+                   .forward_on_exception_limit_[TAO::FOE_OBJECT_NOT_EXIST] =
                    limit;
              }
          }
@@ -259,15 +276,18 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
                long limit = ACE_OS::strtol (name, &err, 10);
                if (err && *err != 0)
                  {
-                   this->report_option_value_error (ACE_TEXT("-ORBForwardOnInvObjrefLimit"), name);
+                   this->report_option_value_error (
+                     ACE_TEXT("-ORBForwardOnInvObjrefLimit"), name);
                  }
                else
-                 this->invocation_retry_params_.forward_on_exception_limit_[TAO::FOE_INV_OBJREF] =
+                 this->invocation_retry_params_
+                   .forward_on_exception_limit_[TAO::FOE_INV_OBJREF] =
                    limit;
              }
          }
       else if (ACE_OS::strcmp (argv[curarg],
-                               ACE_TEXT("-ORBForwardOnReplyClosedLimit")) == 0)
+                               ACE_TEXT("-ORBForwardOnReplyClosedLimit"))
+               == 0)
          {
            curarg++;
            if (curarg < argc)
@@ -278,10 +298,12 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
                long limit = ACE_OS::strtol (name, &err, 10);
                if (err && *err != 0)
                  {
-                   this->report_option_value_error (ACE_TEXT("-ORBForwardOnReplyClosedLimit"), name);
+                   this->report_option_value_error (
+                     ACE_TEXT("-ORBForwardOnReplyClosedLimit"), name);
                  }
                else
-                 this->invocation_retry_params_.forward_on_reply_closed_limit_ = limit;
+                 this->invocation_retry_params_
+                   .forward_on_reply_closed_limit_ = limit;
              }
          }
       else if (ACE_OS::strncmp (argv[curarg], ACE_TEXT("-ORB"), 4) == 0)
@@ -306,7 +328,8 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
 
 /// Create the correct client transport muxing strategy.
 TAO_Transport_Mux_Strategy *
-TAO_Default_Client_Strategy_Factory::create_transport_mux_strategy (TAO_Transport *transport)
+TAO_Default_Client_Strategy_Factory::create_transport_mux_strategy (
+   TAO_Transport *transport)
 {
   TAO_Transport_Mux_Strategy *tms = 0;
 
@@ -364,13 +387,14 @@ TAO_Default_Client_Strategy_Factory::reply_dispatcher_table_size (void) const
 }
 
 TAO_Wait_Strategy *
-TAO_Default_Client_Strategy_Factory::create_wait_strategy (TAO_Transport *transport)
+TAO_Default_Client_Strategy_Factory::create_wait_strategy (
+  TAO_Transport *transport)
 {
   TAO_Wait_Strategy *ws = 0;
 
 /*
- * Hook to customize the wait strategy object when the concrete wait strategy
- * object is known a priori.
+ * Hook to customize the wait strategy object when the concrete
+ * wait strategy object is known a priori.
  */
 //@@ WAIT_STRATEGY_SPL_COMMENT_HOOK_START
   switch (this->wait_strategy_)
@@ -416,7 +440,8 @@ TAO_Default_Client_Strategy_Factory::connect_strategy (void) const
 }
 
 TAO_Connect_Strategy *
-TAO_Default_Client_Strategy_Factory::create_connect_strategy (TAO_ORB_Core *orb_core)
+TAO_Default_Client_Strategy_Factory::create_connect_strategy (
+  TAO_ORB_Core *orb_core)
 {
   TAO_Connect_Strategy *cs = 0;
 
@@ -484,7 +509,8 @@ ACE_STATIC_SVC_DEFINE (TAO_Default_Client_Strategy_Factory,
                        ACE_TEXT ("Client_Strategy_Factory"),
                        ACE_SVC_OBJ_T,
                        &ACE_SVC_NAME (TAO_Default_Client_Strategy_Factory),
-                       ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
+                       ACE_Service_Type::DELETE_THIS |
+                       ACE_Service_Type::DELETE_OBJ,
                        0)
 ACE_FACTORY_DEFINE (TAO, TAO_Default_Client_Strategy_Factory)
 

@@ -120,7 +120,7 @@ namespace TAO
         }
     }
 
-    LifespanStrategyPersistent::LifespanStrategyPersistent() :
+    LifespanStrategyPersistent::LifespanStrategyPersistent () :
       use_imr_ (true)
     {
     }
@@ -144,13 +144,13 @@ namespace TAO
     }
 
     CORBA::Object_ptr
-    LifespanStrategyPersistent::imr_key_to_object(const TAO::ObjectKey &key,
-                                                  const char *type_id) const
+    LifespanStrategyPersistent::imr_key_to_object (const TAO::ObjectKey &key,
+                                                   const char *type_id) const
     {
       if (!this->use_imr_)
         {
           // not using the imr
-          return CORBA::Object::_nil();
+          return CORBA::Object::_nil ();
         }
 
       // The user specified that the ImR should be used.
@@ -161,7 +161,7 @@ namespace TAO
       if (adapter == 0)
         {
           // couldn't load adapter, already reported error
-          return CORBA::Object::_nil();
+          return CORBA::Object::_nil ();
         }
 
       return adapter->imr_key_to_object (this->poa_, key, type_id);

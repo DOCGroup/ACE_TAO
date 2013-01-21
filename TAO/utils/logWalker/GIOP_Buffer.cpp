@@ -228,7 +228,7 @@ GIOP_Buffer::~GIOP_Buffer(void)
 }
 
 int
-GIOP_Buffer::add_octets(const char *text, size_t offset)
+GIOP_Buffer::add_octets (const char *text, size_t offset)
 {
   if (this->octets_ == 0)
     {
@@ -238,7 +238,9 @@ GIOP_Buffer::add_octets(const char *text, size_t offset)
 
   const char *c = text;
   char *err;
-  for (int count = 0; count < 16 && this->cur_size() < this->buffer_size_; count++)
+  for (int count = 0;
+       count < 16 && this->cur_size() < this->buffer_size_;
+       count++)
     {
       if (count == 8)
         ++c;
@@ -278,7 +280,7 @@ GIOP_Buffer::sending (void) const
 }
 
 bool
-GIOP_Buffer::is_full(void) const
+GIOP_Buffer::is_full (void) const
 {
   return this->buffer_size_ > 0 && this->cur_size() == this->buffer_size_;
 }
@@ -316,7 +318,7 @@ GIOP_Buffer::num_contexts (void) const
 }
 
 bool
-GIOP_Buffer::is_oneway(void)
+GIOP_Buffer::is_oneway (void)
 {
   if (this->octets_ == 0)
     {
@@ -348,7 +350,7 @@ GIOP_Buffer::time (void) const
 }
 
 const ACE_CString &
-GIOP_Buffer::preamble(void) const
+GIOP_Buffer::preamble (void) const
 {
   return this->preamble_;
 }
@@ -370,13 +372,13 @@ GIOP_Buffer::msg_size (void)
 }
 
 size_t
-GIOP_Buffer::expected_req_id(void) const
+GIOP_Buffer::expected_req_id (void) const
 {
   return this->expected_req_id_;
 }
 
 size_t
-GIOP_Buffer::actual_req_id(void)
+GIOP_Buffer::actual_req_id (void)
 {
   if (this->octets_ == 0)
     return 0;
@@ -388,7 +390,7 @@ GIOP_Buffer::actual_req_id(void)
 }
 
 size_t
-GIOP_Buffer::cur_size(void) const
+GIOP_Buffer::cur_size (void) const
 {
   return this->wr_pos_ - this->octets_;
 }
@@ -490,7 +492,7 @@ GIOP_Buffer::parse_header (void)
 }
 
 const char *
-GIOP_Buffer::target_oid(size_t &len)
+GIOP_Buffer::target_oid (size_t &len)
 {
   if (this->octets_ == 0)
     {
@@ -508,7 +510,7 @@ GIOP_Buffer::target_oid(size_t &len)
 }
 
 const char *
-GIOP_Buffer::operation(void)
+GIOP_Buffer::operation (void)
 {
   if (octets_ == 0)
     return 0;
@@ -520,7 +522,7 @@ GIOP_Buffer::operation(void)
 }
 
 ACE_InputCDR &
-GIOP_Buffer::payload(void)
+GIOP_Buffer::payload (void)
 {
   if (octets_ != 0 && !this->header_parsed_)
     this->header_parsed_ = this->parse_header();

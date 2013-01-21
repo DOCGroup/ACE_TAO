@@ -73,7 +73,7 @@ namespace TAO
     // Although not used explicitly here, constructs
     // the retry state that will stub that be used
     // when restarting invocation.
-    TAO::Invocation_Retry_State retry_state(*stub);
+    TAO::Invocation_Retry_State retry_state (*stub);
 
     while (status == TAO_INVOKE_START || status == TAO_INVOKE_RESTART)
       {
