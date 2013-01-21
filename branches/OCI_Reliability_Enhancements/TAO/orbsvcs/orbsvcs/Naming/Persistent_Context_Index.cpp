@@ -193,14 +193,6 @@ TAO_Persistent_Context_Index::recreate_all (void)
                                                                  this,
                                                                  entry->int_id_.hash_map_,
                                                                  entry->int_id_.counter_);
-/*      ACE_NEW_RETURN (context_impl,
-                      TAO_Persistent_Naming_Context (poa_.in (),
-                                                     entry->ext_id_.poa_id_,
-                                                     this,
-                                                     entry->int_id_.hash_map_,
-                                                     entry->int_id_.counter_),
-                  -1);
-*/
 
       // Put <context_impl> into the auto pointer temporarily, in case next
       // allocation fails.
@@ -238,8 +230,9 @@ TAO_Persistent_Context_Index::recreate_all (void)
 }
 
 TAO_Persistent_Naming_Context*
-TAO_Persistent_Context_Index::create_naming_context_impl (PortableServer::POA_ptr poa,
-                                                          const char *poa_id)
+TAO_Persistent_Context_Index::create_naming_context_impl (
+  PortableServer::POA_ptr poa,
+  const char *poa_id)
 {
   return this->context_impl_factory_->create_naming_context_impl(poa,
                                                                  poa_id,

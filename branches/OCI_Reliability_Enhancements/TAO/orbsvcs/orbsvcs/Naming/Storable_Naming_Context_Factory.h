@@ -37,25 +37,29 @@ class TAO_Naming_Serv_Export TAO_Storable_Naming_Context_Factory
 {
 public:
 
-  /// Data structure used by TAO_Persistent_Context_Index - typedef for ease of use.
+  /// Data structure used by TAO_Persistent_Context_Index
+  /// - typedef for ease of use.
   typedef TAO_Storable_Naming_Context::HASH_MAP HASH_MAP;
 
   // = Initialization and termination methods.
 
   /// Constructor.
-  TAO_Storable_Naming_Context_Factory (size_t hash_table_size = ACE_DEFAULT_MAP_SIZE);
+  TAO_Storable_Naming_Context_Factory (
+    size_t hash_table_size = ACE_DEFAULT_MAP_SIZE);
 
   /// Destructor.  Does not deallocate the hash map: if an instance of
   /// this class goes out of scope, its hash_map remains in persistent storage.
   virtual ~TAO_Storable_Naming_Context_Factory (void);
 
   /// Factory method for creating an implementation object for naming contexts.
-  /// If an existing naming context implementation is being rebuilt, the map and counter parameters
-  /// should be provided to the underlying HASH_MAP implementation
-  virtual TAO_Storable_Naming_Context* create_naming_context_impl (CORBA::ORB_ptr orb,
-                                                                   PortableServer::POA_ptr poa,
-                                                                   const char *poa_id,
-                                                                   TAO::Storable_Factory *factory);
+  /// If an existing naming context implementation is being rebuilt, the map
+  /// and counter parameters should be provided to the underlying HASH_MAP
+  /// implementation
+  virtual TAO_Storable_Naming_Context* create_naming_context_impl (
+    CORBA::ORB_ptr orb,
+    PortableServer::POA_ptr poa,
+    const char *poa_id,
+    TAO::Storable_Factory *factory);
 
 protected:
   /// The size for persisted naming context objects in hash map

@@ -1,3 +1,18 @@
+Mon Jan 21 21:43:20 UTC 2013  Phillip LaBanca  <labancap@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/Persistent_Context_Index.h:
+        * orbsvcs/orbsvcs/Naming/Persistent_Context_Index.cpp:
+        * orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.cpp:
+        * orbsvcs/orbsvcs/Naming/Persistent_Naming_Context_Factory.cpp:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context_Activator.h:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context_Activator.cpp:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context_Factory.h:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context_Factory.cpp:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context_ReaderWriter.cpp:
+
+          Updated based on ACE Development Guidelines in preparation
+          for merge.
+
 Fri Jan 18 23:51:32 UTC 2013  Phillip LaBanca  <labancap@ociweb.com>
 
         * orbsvcs/Naming_Service/FT_Naming_Main.cpp:
