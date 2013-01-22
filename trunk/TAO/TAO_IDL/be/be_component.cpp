@@ -267,6 +267,7 @@ be_component::scan (UTL_Scope *s)
     }
 
   AST_Component *c = AST_Component::narrow_from_scope (s);
+  AST_Interface *iface = 0;
 
   if (c != 0)
     {
@@ -281,6 +282,15 @@ be_component::scan (UTL_Scope *s)
       // Check the base component. If there is none, the arg to scan()
       // will be 0 and the call will return immediately.
       this->scan (c->base_component ());
+    }
+  else if ((iface = AST_Interface::narrow_from_scope (s)) != 0)
+    {
+      for (long i = 0; i < iface->n_inherits (); ++i)
+        {
+          // Will pick up a chain of inheritance,
+          // no need to use inherits_flat().
+          this->scan (DeclAsScope (iface->inherits ()[i]));
+        }
     }
 }
 
