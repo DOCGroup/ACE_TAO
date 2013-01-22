@@ -64,6 +64,7 @@ TAO_FT_Naming_Server::TAO_FT_Naming_Server (void)
     replication_manager_ (0),
     combined_naming_service_ior_file_name_ (0),
     combined_naming_manager_ior_file_name_ (0),
+    naming_manager_ior_file_name_ (0),
     naming_manager_persistence_file_name_ (0),
     use_object_group_persistence_ (0),
     server_role_ (STANDALONE)
@@ -117,7 +118,7 @@ TAO_FT_Naming_Server::init_with_orb (int argc,
   try {
 
     // Initialize the replication manager
-    result = init_replication_manager_with_orb(argc, argv, orb);
+    result = init_replication_manager_with_orb (argc, argv, orb);
     if (result != 0)
       return result;
   }
