@@ -6,7 +6,7 @@ Tue Jan 22 16:26:24 UTC 2013  Jeff Parsons <j.parsons@vanderbilt.edu>
           in such an interface would generate the servant get/set methods, but
           not trigger the top-level set_attributes() method. Thanks to
           Jiang Wei <jiangwei_1976 at yahoo dot com dot cn> for reporting
-          the problem and supplying a patch.
+          the problem and supplying a patch. Bugzilla 4086 fix.
 
 Fri Jan 18 11:03:30 UTC 2013  Simon Massey  <simon dot massey at prismtech dot com>
 
