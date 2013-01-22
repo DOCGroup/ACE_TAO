@@ -507,7 +507,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       }
 
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("Unable to run %C\n"),

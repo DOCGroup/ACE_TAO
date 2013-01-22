@@ -54,7 +54,7 @@ public:
   char expected_type (void) const;
   bool sending (void) const;
   char minor_version (void) const;
-  char reply_status (void) const;
+  size_t reply_status (void) const;
   size_t num_contexts (void) const;
   bool is_oneway (void);
   bool is_full (void) const;

@@ -193,7 +193,10 @@ Invocation::req_line (void)
 }
 
 void
-Invocation::dump_detail (ostream &strm, int indent, Dump_Mode mode, bool show_handle)
+Invocation::dump_detail (ostream &strm,
+                         int indent,
+                         Dump_Mode mode,
+                         bool show_handle)
 {
   const char *opname = "";
   const char *dir_1 = "sent to ";
@@ -229,14 +232,15 @@ Invocation::dump_detail (ostream &strm, int indent, Dump_Mode mode, bool show_ha
   strm << " [" << opname << "]\t";
   time_t req_time = 0;
   time_t rep_time = 0;
-  long delta = 0;
+  size_t delta = 0;
   if (!this->is_oneway() && this->req_octets_ != 0)
     {
       req_time = this->req_octets_->time();
       if (this->repl_octets_ != 0)
         {
           rep_time = this->repl_octets_->time();
-          delta = this->repl_octets_->log_posn() - this->req_octets_->log_posn();
+          delta = this->repl_octets_->log_posn() -
+            this->req_octets_->log_posn();
         }
     }
   if (req_time != 0 && rep_time != 0)
@@ -262,7 +266,8 @@ Invocation::dump_detail (ostream &strm, int indent, Dump_Mode mode, bool show_ha
         {
           strm << " Reply, ";
           if (this->repl_octets_->num_contexts() > 0)
-            strm << "with " << this->repl_octets_->num_contexts() << " contexts, ";
+            strm << "with " << this->repl_octets_->num_contexts()
+                 << " contexts, ";
           strm << "size " << this->repl_octets_->expected_size() << " ";
           strm << "line " << this->repl_octets_->log_posn();
 #if defined (SHOW_THREAD_ID)
@@ -308,10 +313,13 @@ Invocation::dump_special_details (ostream &strm, const char *opname)
     {
       opid = 1;
       ACE_InputCDR &giop_cdr = this->req_octets_->payload();
-      ACE_InputCDR cdr (giop_cdr.rd_ptr(),giop_cdr.length(),giop_cdr.byte_order());
+      ACE_InputCDR cdr (giop_cdr.rd_ptr(),
+                        giop_cdr.length(),
+                        giop_cdr.byte_order());
       ACE_CDR::ULong len;
       if (cdr >> len)
-        strm << "\n        expected type ( len = " << len << ") " << cdr.rd_ptr();
+        strm << "\n        expected type ( len = " << len << ") "
+             << cdr.rd_ptr();
     }
   else if (ACE_OS::strcmp (opname, "_get_MyID") == 0)
     {
@@ -321,7 +329,9 @@ Invocation::dump_special_details (ostream &strm, const char *opname)
     {
       opid = 3;
       ACE_InputCDR &giop_cdr = this->req_octets_->payload();
-      ACE_InputCDR cdr (giop_cdr.rd_ptr(),giop_cdr.length(),giop_cdr.byte_order());
+      ACE_InputCDR cdr (giop_cdr.rd_ptr(),
+                        giop_cdr.length(),
+                        giop_cdr.byte_order());
       ACE_CDR::ULong len;
       if (cdr >> len)
         strm << "\n        name len = " << len << ") " << cdr.rd_ptr();
@@ -334,7 +344,9 @@ Invocation::dump_special_details (ostream &strm, const char *opname)
     {
       opid = 3;
       ACE_InputCDR &giop_cdr = this->req_octets_->payload();
-      ACE_InputCDR cdr (giop_cdr.rd_ptr(),giop_cdr.length(),giop_cdr.byte_order());
+      ACE_InputCDR cdr (giop_cdr.rd_ptr(),
+                        giop_cdr.length(),
+                        giop_cdr.byte_order());
       ACE_CDR::ULong count;
       if (cdr >> count)
         {
@@ -369,7 +381,9 @@ Invocation::dump_special_details (ostream &strm, const char *opname)
 
 
   ACE_InputCDR &giop_cdr = this->repl_octets_->payload();
-  ACE_InputCDR cdr (giop_cdr.rd_ptr(), giop_cdr.length(), giop_cdr.byte_order());
+  ACE_InputCDR cdr (giop_cdr.rd_ptr(),
+                    giop_cdr.length(),
+                    giop_cdr.byte_order());
 
   if (rstat == 0)
     {

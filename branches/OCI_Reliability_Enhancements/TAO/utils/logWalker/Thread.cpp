@@ -88,7 +88,7 @@ Thread::exit_wait (PeerProcess *pp, size_t linenum)
 long
 Thread::max_depth (void) const
 {
-  return this->max_depth_;
+  return static_cast<long> (this->max_depth_);
 }
 
 long
@@ -226,7 +226,10 @@ Thread::dump_detail (ostream &strm) const
 }
 
 void
-Thread::get_summary (long &sent_reqs, long &recv_reqs, size_t &sent_size, size_t &recv_size)
+Thread::get_summary (long &sent_reqs,
+                     long &recv_reqs,
+                     size_t &sent_size,
+                     size_t &recv_size)
 {
   for (ACE_DLList_Iterator <Invocation> i(this->invocations_);
        !i.done();
@@ -250,20 +253,21 @@ Thread::get_summary (long &sent_reqs, long &recv_reqs, size_t &sent_size, size_t
 void
 Thread::dump_invocations (ostream &strm)
 {
-  unsigned long total_request_bytes = 0;
-  strm << "   " << this->alias_ << " handled " << this->invocations_.size() << " invocations" << endl;
+  size_t total_request_bytes = 0;
+  strm << "   " << this->alias_ << " handled " << this->invocations_.size()
+       << " invocations" << endl;
 
   std::stack<Invocation *> nested;
-  for (ACE_DLList_Iterator <Invocation> i(this->invocations_);
+  for (ACE_DLList_Iterator <Invocation> i (this->invocations_);
        !i.done();
        i.advance())
     {
       Invocation *inv;
       i.next(inv);
-      int level = 0;
-      while (!nested.empty())
+      size_t level = 0;
+      while (!nested.empty ())
         {
-          if (nested.top()->contains(inv->req_line()))
+          if (nested.top()->contains (inv->req_line ()))
             {
               level = nested.size();
               break;

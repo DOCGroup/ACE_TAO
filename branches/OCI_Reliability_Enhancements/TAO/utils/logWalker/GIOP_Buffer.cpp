@@ -305,7 +305,7 @@ GIOP_Buffer::minor_version (void) const
   return this->ver_minor_;
 }
 
-char
+size_t
 GIOP_Buffer::reply_status (void) const
 {
   return this->reply_status_;

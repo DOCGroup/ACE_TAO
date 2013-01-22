@@ -1,11 +1,24 @@
+Tue Jan 22 15:12:59 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * utils/logWalker/GIOP_Buffer.h:
+        * utils/logWalker/GIOP_Buffer.cpp:
+        * utils/logWalker/Invocation.cpp:
+        * utils/logWalker/Thread.cpp:
+
+          Fixed type conversion issues - size_t to long & int.
+
+        * utils/nsgroup/nsgroup.cpp:
+
+          Fixed warning for unused exception variable.
+
 Tue Jan 22 04:05:51 UTC 2013  "Kevin Stanley"  <stanleyk@ociweb.com>
 
         * bin/tao_other_tests.lst:
-         
+
           Excluded tests for FT_Naming from Win32.
 
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:
-        
+
           Added missing initialization for naming_manager_ior_file_name_.
 
 Mon Jan 21 22:52:17 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
