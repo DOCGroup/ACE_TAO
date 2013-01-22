@@ -32,13 +32,13 @@ namespace TAO
   class TAO_Export Storable_Base
   {
   public:
-    Storable_Base();
+    Storable_Base ();
 
-    virtual ~Storable_Base();
+    virtual ~Storable_Base ();
 
-    virtual void remove() = 0;
+    virtual void remove () = 0;
 
-    virtual int exists() = 0;
+    virtual int exists () = 0;
 
     virtual int open () = 0;
 
@@ -48,7 +48,7 @@ namespace TAO
 
     virtual int funlock (int whence, int start, int len) = 0;
 
-    virtual time_t last_changed(void) = 0;
+    virtual time_t last_changed (void) = 0;
 
     // Mimic a portion of the std::ios interface.  We need to be able
     // to indicate error states from the extraction operators below.

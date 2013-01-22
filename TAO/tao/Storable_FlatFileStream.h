@@ -35,8 +35,8 @@ namespace TAO
   {
   public:
 
-    Storable_FlatFileStream(const ACE_CString & file, const char * mode);
-    virtual ~Storable_FlatFileStream();
+    Storable_FlatFileStream (const ACE_CString & file, const char * mode);
+    virtual ~Storable_FlatFileStream ();
 
     /// Remove a file by name (file is not open)
     virtual void remove ();
@@ -98,7 +98,7 @@ namespace TAO
 
     /// @param directory Directory to contain file passed in
     /// create_stream (). The directory is assumed to already exist.
-    Storable_FlatFileFactory(const ACE_CString & directory);
+    Storable_FlatFileFactory (const ACE_CString & directory);
 
     const ACE_CString & get_directory () const;
 

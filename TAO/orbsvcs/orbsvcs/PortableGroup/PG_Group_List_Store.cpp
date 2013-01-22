@@ -26,7 +26,8 @@ namespace TAO
   class PG_Group_List_Store_File_Guard : public TAO::Storable_File_Guard
   {
   public:
-    PG_Group_List_Store_File_Guard ( PG_Group_List_Store & list_store, const char * mode);
+    PG_Group_List_Store_File_Guard ( PG_Group_List_Store & list_store,
+                                     const char * mode);
 
     ~PG_Group_List_Store_File_Guard ();
 
@@ -50,9 +51,10 @@ private:
   };
 }
 
-TAO::PG_Group_List_Store_File_Guard::PG_Group_List_Store_File_Guard (PG_Group_List_Store & list_store, const char * mode)
-  : TAO::Storable_File_Guard(true)
-  , list_store_(list_store)
+TAO::PG_Group_List_Store_File_Guard::PG_Group_List_Store_File_Guard (
+  PG_Group_List_Store & list_store, const char * mode)
+  : TAO::Storable_File_Guard(true),
+  list_store_(list_store)
 {
   this->init(mode);
 }
@@ -63,7 +65,8 @@ TAO::PG_Group_List_Store_File_Guard::~PG_Group_List_Store_File_Guard ()
 }
 
 void
-TAO::PG_Group_List_Store_File_Guard::set_object_last_changed (const time_t & time)
+TAO::PG_Group_List_Store_File_Guard::set_object_last_changed (
+  const time_t & time)
 {
   list_store_.last_changed_ = time;
 }
@@ -111,7 +114,8 @@ TAO::PG_Group_List_Store_File_Guard::create_stream (const char * mode)
 
 typedef TAO::PG_Group_List_Store_File_Guard File_Guard;
 
-TAO::PG_Group_List_Store::PG_Group_List_Store (Storable_Factory & storable_factory)
+TAO::PG_Group_List_Store::PG_Group_List_Store (
+  Storable_Factory & storable_factory)
   : next_group_id_ (0)
   , storable_factory_ (storable_factory)
   , loaded_from_stream_ (false)
@@ -122,18 +126,20 @@ TAO::PG_Group_List_Store::PG_Group_List_Store (Storable_Factory & storable_facto
   // version already exists.
   bool stream_exists = false;
   {
-    ACE_Auto_Ptr<TAO::Storable_Base> stream (this->create_stream ("r"));
+    ACE_Auto_Ptr<TAO::Storable_Base> stream (
+      this->create_stream (ACE_TEXT_ALWAYS_CHAR ("r")));
+
     if (stream->exists ())
       stream_exists = true;
   }
 
   if (stream_exists)
     {
-      File_Guard fg(*this, "r");
+      File_Guard fg(*this, ACE_TEXT_ALWAYS_CHAR ("r"));
     }
   else
     {
-      File_Guard fg(*this, "wc");
+      File_Guard fg(*this, ACE_TEXT_ALWAYS_CHAR ("wc"));
       this->write (fg.peer ());
     }
 }
@@ -183,7 +189,7 @@ TAO::PG_Group_List_Store::remove (PortableGroup::ObjectGroupId id)
 TAO::PG_Group_List_Store::Group_Ids &
 TAO::PG_Group_List_Store::get_group_ids ()
 {
-  File_Guard fg(*this, "r");
+  File_Guard fg(*this, ACE_TEXT_ALWAYS_CHAR ("r"));
   return group_ids_;
 }
 
@@ -229,7 +235,8 @@ TAO::PG_Group_List_Store::write (TAO::Storable_Base & stream)
 
   int size = group_ids_.size ();
   stream << size;
-  for (Group_Id_Const_Iterator it = group_ids_.begin (); it != group_ids_.end (); ++it)
+  for (Group_Id_Const_Iterator it = group_ids_.begin ();
+                               it != group_ids_.end (); ++it)
     {
       int group_id = static_cast<int> (*it);
       stream << group_id;
@@ -241,7 +248,8 @@ TAO::PG_Group_List_Store::write (TAO::Storable_Base & stream)
 TAO::Storable_Base *
 TAO::PG_Group_List_Store::create_stream (const char * mode)
 {
-  return this->storable_factory_.create_stream ("ObjectGroup_global", mode);
+  return this->storable_factory_.create_stream (
+    ACE_TEXT_ALWAYS_CHAR ("ObjectGroup_global"), mode);
 }
 
 bool

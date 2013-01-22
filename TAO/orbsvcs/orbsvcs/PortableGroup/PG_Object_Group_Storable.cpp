@@ -23,7 +23,7 @@ namespace
 
   char *tmp = 0;
   ACE_NEW_THROW_EX (tmp, char [size], CORBA::NO_MEMORY ());
-  ACE_Auto_Basic_Array_Ptr<char> buf(tmp);
+  ACE_Auto_Basic_Array_Ptr<char> buf (tmp);
   stream.read (size, buf.get ());
   if (!stream.good ())
     {
@@ -79,8 +79,9 @@ namespace TAO
 
 }
 
-TAO::Object_Group_File_Guard::Object_Group_File_Guard ( TAO::PG_Object_Group_Storable & object_group,
-                                              const char *mode)
+TAO::Object_Group_File_Guard::Object_Group_File_Guard (
+  TAO::PG_Object_Group_Storable & object_group,
+  const char *mode)
   : TAO::Storable_File_Guard(true)
   , object_group_(object_group)
 {
@@ -170,18 +171,20 @@ TAO::PG_Object_Group_Storable::PG_Object_Group_Storable (
   // version already exists.
   bool stream_exists = false;
   {
-    ACE_Auto_Ptr<TAO::Storable_Base> stream (this->create_stream ("r"));
+    ACE_Auto_Ptr<TAO::Storable_Base> stream (
+      this->create_stream (ACE_TEXT_ALWAYS_CHAR ("r")));
+
     if (stream->exists ())
       stream_exists = true;
   }
 
   if (stream_exists)
     {
-      Object_Group_File_Guard fg (*this, "r");
+      Object_Group_File_Guard fg (*this, ACE_TEXT_ALWAYS_CHAR ("r"));
     }
   else
     {
-      Object_Group_File_Guard fg (*this, "wc");
+      Object_Group_File_Guard fg (*this, ACE_TEXT_ALWAYS_CHAR ("wc"));
       this->write (fg.peer ());
     }
 }
@@ -207,14 +210,16 @@ TAO::PG_Object_Group_Storable::PG_Object_Group_Storable (
   // version already exists.
   bool stream_exists = false;
   {
-    ACE_Auto_Ptr<TAO::Storable_Base> stream (this->create_stream ("r"));
+    ACE_Auto_Ptr<TAO::Storable_Base> stream (
+      this->create_stream (ACE_TEXT_ALWAYS_CHAR ("r")));
+
     if (stream->exists ())
       stream_exists = true;
   }
 
   if (stream_exists)
     {
-      Object_Group_File_Guard fg (*this, "r");
+      Object_Group_File_Guard fg (*this, ACE_TEXT_ALWAYS_CHAR ("r"));
     }
   else
     {
@@ -226,7 +231,9 @@ TAO::PG_Object_Group_Storable::~PG_Object_Group_Storable (void)
 {
   if (destroyed_)
     {
-      ACE_Auto_Ptr<TAO::Storable_Base> stream (this->create_stream ("r"));
+      ACE_Auto_Ptr<TAO::Storable_Base> stream (
+        this->create_stream (ACE_TEXT_ALWAYS_CHAR ("r")));
+
       if (stream->exists ())
         {
           stream->remove ();
@@ -245,26 +252,27 @@ TAO::PG_Object_Group_Storable::set_destroyed (bool destroyed)
 const PortableGroup::Location &
 TAO::PG_Object_Group_Storable::get_primary_location (void)
 {
-  Object_Group_File_Guard fg (*this, "r");
+  Object_Group_File_Guard fg (*this, ACE_TEXT_ALWAYS_CHAR ("r"));
   return TAO::PG_Object_Group::get_primary_location ();
 }
 
 
 void
-TAO::PG_Object_Group_Storable::add_member (const PortableGroup::Location & the_location,
-                                           CORBA::Object_ptr member)
+TAO::PG_Object_Group_Storable::add_member (
+  const PortableGroup::Location & the_location,
+  CORBA::Object_ptr member)
 {
-  Object_Group_File_Guard fg (*this, "rw");
+  Object_Group_File_Guard fg (*this, ACE_TEXT_ALWAYS_CHAR ("rw"));
   PG_Object_Group::add_member (the_location, member);
   this->write (fg.peer ());
 }
 
 int
 TAO::PG_Object_Group_Storable::set_primary_member (
-                                                   TAO_IOP::TAO_IOR_Property * prop,
-                                                   const PortableGroup::Location & the_location)
+  TAO_IOP::TAO_IOR_Property * prop,
+  const PortableGroup::Location & the_location)
 {
-  Object_Group_File_Guard fg (*this, "rw");
+  Object_Group_File_Guard fg (*this, ACE_TEXT_ALWAYS_CHAR ("rw"));
   int primary_member = PG_Object_Group::set_primary_member (prop, the_location);
   this->write (fg.peer ());
   return primary_member;
@@ -272,9 +280,9 @@ TAO::PG_Object_Group_Storable::set_primary_member (
 
 void
 TAO::PG_Object_Group_Storable::remove_member (
-                                              const PortableGroup::Location & the_location)
+  const PortableGroup::Location & the_location)
 {
-  Object_Group_File_Guard fg (*this, "rw");
+  Object_Group_File_Guard fg (*this, ACE_TEXT_ALWAYS_CHAR ("rw"));
   PG_Object_Group::remove_member (the_location);
   this->write (fg.peer ());
 }
@@ -283,17 +291,17 @@ TAO::PG_Object_Group_Storable::remove_member (
 PortableGroup::Locations *
 TAO::PG_Object_Group_Storable::locations_of_members (void)
 {
-  Object_Group_File_Guard fg (*this, "r");
+  Object_Group_File_Guard fg (*this, ACE_TEXT_ALWAYS_CHAR ("r"));
   return PG_Object_Group::locations_of_members ();
 }
 
 void
 TAO::PG_Object_Group_Storable::create_member (
-                                              const PortableGroup::Location & the_location,
-                                              const char * type_id,
-                                              const PortableGroup::Criteria & the_criteria)
+  const PortableGroup::Location & the_location,
+  const char * type_id,
+  const PortableGroup::Criteria & the_criteria)
 {
-  Object_Group_File_Guard fg (*this, "rw");
+  Object_Group_File_Guard fg (*this, ACE_TEXT_ALWAYS_CHAR ("rw"));
   PG_Object_Group::create_member (the_location,
                                   type_id,
                                   the_criteria);
@@ -303,7 +311,7 @@ TAO::PG_Object_Group_Storable::create_member (
 void
 TAO::PG_Object_Group_Storable::set_name (const char* group_name)
 {
-  Object_Group_File_Guard fg (*this, "rw");
+  Object_Group_File_Guard fg (*this, ACE_TEXT_ALWAYS_CHAR ("rw"));
   PG_Object_Group::set_name (group_name);
   this->write (fg.peer ());
 }
@@ -332,16 +340,17 @@ TAO::PG_Object_Group_Storable::minimum_populate (void)
 }
 
 int
-TAO::PG_Object_Group_Storable::has_member_at (const PortableGroup::Location & location)
+TAO::PG_Object_Group_Storable::has_member_at (
+  const PortableGroup::Location & location)
 {
-  Object_Group_File_Guard fg (*this, "r");
+  Object_Group_File_Guard fg (*this, ACE_TEXT_ALWAYS_CHAR ("r"));
   return PG_Object_Group::has_member_at (location);
 }
 
 void
 TAO::PG_Object_Group_Storable::distribute (int value)
 {
-  Object_Group_File_Guard fg (*this, "rw");
+  Object_Group_File_Guard fg (*this, ACE_TEXT_ALWAYS_CHAR ("rw"));
   PG_Object_Group::distribute (value);
   this->write (fg.peer ());
 }
@@ -350,7 +359,7 @@ CORBA::Object_ptr
 TAO::PG_Object_Group_Storable::get_member_reference (
   const PortableGroup::Location & the_location)
 {
-  Object_Group_File_Guard fg (*this, "r");
+  Object_Group_File_Guard fg (*this, ACE_TEXT_ALWAYS_CHAR ("r"));
   return PG_Object_Group::get_member_reference (the_location);
 }
 
@@ -371,7 +380,7 @@ TAO::PG_Object_Group_Storable::create_stream (const char * mode)
   // to long long int, make ID type explicit to avoid
   // GNU C++ warning on sprintf statement.
   long long int id =  this->get_object_group_id ();
-  ACE_OS::sprintf (file_name, "ObjectGroup_%lld", id);
+  ACE_OS::sprintf (file_name, ACE_TEXT_ALWAYS_CHAR ("ObjectGroup_%lld"), id);
   return this->storable_factory_.create_stream (file_name, mode);
 }
 
@@ -487,7 +496,7 @@ TAO::PG_Object_Group_Storable::read (TAO::Storable_Base & stream)
         }
 
       MemberInfo * info = 0;
-      ACE_NEW_THROW_EX (info, MemberInfo(member.in(),
+      ACE_NEW_THROW_EX (info, MemberInfo(member.in (),
                                          the_location,
                                          factory,
                                          factory_id),
@@ -513,7 +522,7 @@ TAO::PG_Object_Group_Storable::write (TAO::Storable_Base & stream)
   stream << this->role_;
 
   TAO_OutputCDR primary_location_cdr;
-  primary_location_cdr << PG_Object_Group::get_primary_location();
+  primary_location_cdr << PG_Object_Group::get_primary_location ();
   stream << primary_location_cdr;
 
   ACE_CString reference_ior = this->orb_->object_to_string (this->reference_.in ());
@@ -530,7 +539,7 @@ TAO::PG_Object_Group_Storable::write (TAO::Storable_Base & stream)
 
   TAO_OutputCDR properties_cdr;
   PortableGroup::Criteria properties;
-  this->properties_.export_properties(properties);
+  this->properties_.export_properties (properties);
   properties_cdr << properties;
   stream << properties_cdr;
 

@@ -1,3 +1,25 @@
+Tue Jan 22 19:37:57 UTC 2013  Phillip LaBanca  <labancap@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Replication_Manager.cpp:
+
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context_ReaderWriter.cpp:
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_Factory.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_Factory.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_List_Store.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_List_Store.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group_Storable.cpp:
+
+        * tao/Storable_Base.h:
+        * tao/Storable_Base.inl:
+        * tao/Storable_File_Guard.cpp:
+        * tao/Storable_FlatFileStream.h:
+        * tao/Storable_FlatFileStream.cpp:
+
+          Additional ACE Development Guidelines conformance updates in
+          preparation for merge.
+
 Tue Jan 22 15:12:59 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
 
         * utils/logWalker/GIOP_Buffer.h:

@@ -23,7 +23,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/PortableGroup/PG_Object_Group_Manipulator.h"
-
 #include "orbsvcs/PortableGroupC.h"
 
 #include "tao/PortableServer/PortableServer.h"
@@ -57,14 +56,16 @@ namespace TAO
   {
     ////////////////////////////////////////////////////////////
     // typedef private implementation classes
-    typedef ACE_Hash_Map_Manager_Ex<
+    typedef ACE_Hash_Map_Manager_Ex <
         PortableGroup::ObjectGroupId,
         ::TAO::PG_Object_Group *,
         ACE_Hash<ACE_UINT64>,
         ACE_Equal_To<ACE_UINT64>,
          TAO_SYNCH_MUTEX> Group_Map;
 
-    typedef ACE_Hash_Map_Entry <PortableGroup::ObjectGroupId, ::TAO::PG_Object_Group *> Group_Map_Entry;
+    typedef ACE_Hash_Map_Entry <
+      PortableGroup::ObjectGroupId,
+      ::TAO::PG_Object_Group *> Group_Map_Entry;
 
     typedef ACE_Hash_Map_Iterator_Ex <
       PortableGroup::ObjectGroupId,
@@ -114,32 +115,40 @@ namespace TAO
      * note: uses group id extracted from group object
      * @return bool true if insertion successful
      */
-    int insert_group ( ::TAO::PG_Object_Group * group);
+    int insert_group (::TAO::PG_Object_Group * group);
 
     /**
      * insert group.  Take ownership
      * @return bool true if insertion successful
      */
-    int insert_group (PortableGroup::ObjectGroupId group_id, ::TAO::PG_Object_Group * group);
+    int insert_group (
+      PortableGroup::ObjectGroupId group_id,
+      ::TAO::PG_Object_Group * group);
 
     /**
      * find group
      * @return bool true if found
      */
-    int find_group (PortableGroup::ObjectGroupId group_id, ::TAO::PG_Object_Group *& group);
+    int find_group (
+      PortableGroup::ObjectGroupId group_id,
+      ::TAO::PG_Object_Group *& group);
 
     /**
      * find group
      * note: uses group id extracted from object_group
      * @return bool true if found
      */
-    int find_group (PortableGroup::ObjectGroup_ptr object_group, ::TAO::PG_Object_Group *& group);
+    int find_group (
+      PortableGroup::ObjectGroup_ptr object_group,
+      ::TAO::PG_Object_Group *& group);
 
     /**
      * find group with the property with the designated value
      * @return bool true if found
      */
-    int find_group_with_name (const char* group_name, ::TAO::PG_Object_Group *& group);
+    int find_group_with_name (
+      const char* group_name,
+      ::TAO::PG_Object_Group *& group);
 
     /**
      * remove group from map and delete it.
