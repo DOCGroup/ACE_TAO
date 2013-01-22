@@ -1,3 +1,14 @@
+Tue Jan 22 22:52:17 UTC 2013  Quynh Nguyen  <nguyenq@stladvantage.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+
+        * tao/ImR_Client:
+        * tao/Monitor:
+        * tao/Utils:
+
+        Fix bug 479 caused by the Activator, which truncated a
+        server's command line string it is more than 1024 bytes.  
+
 Tue Nov 20 22:41:56 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
 
         * MPC/config/ft_naming_serv.mpb:
