@@ -293,7 +293,7 @@ ImR_Activator_i::start_server(const char* name,
   if (debug_ > 1)
     ACE_DEBUG((LM_DEBUG,
             "\tcommand line : len=%d <%s>\n\tdirectory : <%C>\n",
-            cmdline_buf_len, cmdline_tstr.c_str(), dir));
+            cmdline_buf_len, cmdline_tstr.c_str(), dir)  );
 
   ACE_Process_Options proc_opts (
                         1,
