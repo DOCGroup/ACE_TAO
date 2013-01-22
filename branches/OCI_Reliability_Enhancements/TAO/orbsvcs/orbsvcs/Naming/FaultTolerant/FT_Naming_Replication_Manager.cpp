@@ -49,7 +49,7 @@ TAO_FT_Naming_Replication_Manager::register_replica (
   ::FT_Naming::ReplicationManager_ptr replica,
   const ::FT_Naming::ReplicaInfo & replica_info)
 {
-  ACE_TRACE ("TAO_FT_Naming_Replication_Manager::register_replica");
+  ACE_TRACE ( ACE_TEXT("TAO_FT_Naming_Replication_Manager::register_replica"));
 
   ACE_GUARD_THROW_EX (ACE_SYNCH_MUTEX,
                       ace_mon,
@@ -79,7 +79,8 @@ void
 TAO_FT_Naming_Replication_Manager::notify_updated_object_group (
     const FT_Naming::ObjectGroupUpdate & group_info)
 {
-  ACE_TRACE ("TAO_FT_Naming_Replication_Manager::notify_updated_object_group");
+  ACE_TRACE ( ACE_TEXT ("TAO_FT_Naming_Replication_Manager::")
+              ACE_TEXT ("notify_updated_object_group"));
 
   // Make sure that we have a valid naming server
   ACE_ASSERT (naming_svr_);
@@ -94,7 +95,8 @@ void
 TAO_FT_Naming_Replication_Manager::notify_updated_context (
     const FT_Naming::NamingContextUpdate & context_info)
 {
-  ACE_TRACE ("TAO_FT_Naming_Replication_Manager::notify_updated_context");
+  ACE_TRACE (ACE_TEXT ("TAO_FT_Naming_Replication_Manager::")
+             ACE_TEXT ("notify_updated_context"));
   ACE_ASSERT (naming_svr_);
   int result = this->naming_svr_->update_naming_context (context_info);
 
@@ -108,7 +110,7 @@ TAO_FT_Naming_Replication_Manager::notify_updated_context (
 FT_Naming::ReplicationManager_ptr
 TAO_FT_Naming_Replication_Manager::peer_replica (void)
 {
-  ACE_TRACE ("TAO_FT_Naming_Replication_Manager::peer_replica");
+  ACE_TRACE (ACE_TEXT ("TAO_FT_Naming_Replication_Manager::peer_replica"));
   // Return a copy of the stored peer to the requester
   return FT_Naming::ReplicationManager::_duplicate (peer_replica_.in ());
 }
@@ -119,7 +121,8 @@ TAO_FT_Naming_Replication_Manager::register_with_peer_replica (
       CosNaming::NamingContext_ptr nc,
       FT_Naming::NamingManager_ptr nm)
 {
-  ACE_TRACE ("TAO_FT_Naming_Replication_Manager::register_with_peer_replica");
+  ACE_TRACE (ACE_TEXT ("TAO_FT_Naming_Replication_Manager::")
+             ACE_TEXT ("register_with_peer_replica"));
 
   int result = 0;
   FT_Naming::ReplicaInfo my_info;
@@ -171,6 +174,6 @@ TAO_FT_Naming_Replication_Manager::register_with_peer_replica (
 FT_Naming::ReplicationManager_ptr
 TAO_FT_Naming_Replication_Manager::reference (void)
 {
-  ACE_TRACE("TAO_FT_Naming_Replication_Manager::reference");
+  ACE_TRACE (ACE_TEXT ("TAO_FT_Naming_Replication_Manager::reference"));
   return FT_Naming::ReplicationManager::_duplicate (reference_.in ());
 }

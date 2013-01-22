@@ -17,13 +17,13 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-TAO::Storable_Base::Storable_Base()
+TAO::Storable_Base::Storable_Base ()
  : state_ (goodbit)
 {
 }
 
 ACE_INLINE
-TAO::Storable_Base::~Storable_Base()
+TAO::Storable_Base::~Storable_Base ()
 {
 }
 

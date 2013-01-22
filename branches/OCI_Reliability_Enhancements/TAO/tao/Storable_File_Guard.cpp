@@ -16,20 +16,20 @@
 
 TAO::Storable_File_Guard::
 Storable_File_Guard (bool redundant)
-  : redundant_(redundant)
-  , closed_(1)
+  : redundant_ (redundant)
+  , closed_ (1)
 {
-  ACE_TRACE("TAO::Storable_File_Guard::Storable_File_Guard");
+  ACE_TRACE (ACE_TEXT ("TAO::Storable_File_Guard::Storable_File_Guard"));
 }
 
 void
-TAO::Storable_File_Guard::init(const char * mode)
+TAO::Storable_File_Guard::init (const char * mode)
 {
-  ACE_TRACE("TAO::Storable_File_Guard::init");
+  ACE_TRACE (ACE_TEXT ("TAO::Storable_File_Guard::init"));
 
   // We only accept a subset of mode argument, check it
   rwflags_ = 0;
-  for( unsigned int i = 0; i<ACE_OS::strlen(mode); i++ )
+  for ( unsigned int i = 0; i<ACE_OS::strlen (mode); i++ )
     {
       switch (mode[i])
         {
@@ -45,25 +45,25 @@ TAO::Storable_File_Guard::init(const char * mode)
   if( rwflags_ <= 0 )
     {
       errno = EINVAL;
-      throw CORBA::PERSIST_STORE();
+      throw CORBA::PERSIST_STORE ();
     }
 
   // Create the stream
-  fl_ = this->create_stream(mode);
+  fl_ = this->create_stream (mode);
   if (redundant_)
     {
-      if (fl_->open() != 0)
+      if (fl_->open () != 0)
         {
           delete fl_;
-          throw CORBA::PERSIST_STORE();
+          throw CORBA::PERSIST_STORE ();
         }
 
       // acquire a lock on it
-      if (fl_ -> flock(0, 0, 0) != 0)
+      if (fl_ -> flock (0, 0, 0) != 0)
         {
-          fl_->close();
+          fl_->close ();
           delete fl_;
-          throw CORBA::INTERNAL();
+          throw CORBA::INTERNAL ();
         }
 
       // now that the file is successfully opened and locked it must be
@@ -82,12 +82,12 @@ TAO::Storable_File_Guard::init(const char * mode)
     }
   else if ( ! this->is_loaded_from_stream () || (rwflags_ & mode_write) )
     {
-      bool file_has_data = fl_->exists();
+      bool file_has_data = fl_->exists ();
 
-      if (fl_->open() != 0)
+      if (fl_->open () != 0)
         {
           delete fl_;
-          throw CORBA::PERSIST_STORE();
+          throw CORBA::PERSIST_STORE ();
         }
 
       // now that the file is successfully opened
@@ -123,7 +123,7 @@ TAO::Storable_File_Guard::mark_object_current (void)
 void
 TAO::Storable_File_Guard::release (void)
 {
-  ACE_TRACE("TAO::Storable_File_Guard::release");
+  ACE_TRACE (ACE_TEXT ("TAO::Storable_File_Guard::release"));
   if ( ! closed_ )
     {
       // If we updated the disk, save the time stamp
@@ -140,9 +140,9 @@ TAO::Storable_File_Guard::release (void)
             }
 
           // Release the lock
-          fl_->funlock(0, 0, 0);
+          fl_->funlock (0, 0, 0);
         }
-      fl_->close();
+      fl_->close ();
       delete fl_;
       closed_ = 1;
     }
@@ -158,5 +158,5 @@ TAO::Storable_File_Guard::peer ()
 TAO::Storable_File_Guard::
 ~Storable_File_Guard ()
 {
-  ACE_TRACE("TAO::Storable_File_Guard::~Storable_File_Guard");
+  ACE_TRACE (ACE_TEXT ("TAO::Storable_File_Guard::~Storable_File_Guard"));
 }

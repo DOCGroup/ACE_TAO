@@ -220,7 +220,8 @@ TAO_Storable_Naming_Context_ReaderWriter::read_header (
 }
 
 void
-TAO_Storable_Naming_Context_ReaderWriter::write_record (const TAO_NS_Persistence_Record & record)
+TAO_Storable_Naming_Context_ReaderWriter::write_record (
+  const TAO_NS_Persistence_Record & record)
 {
   TAO_NS_Persistence_Record::Record_Type type = record.type ();
   stream_ << type;
@@ -233,7 +234,8 @@ TAO_Storable_Naming_Context_ReaderWriter::write_record (const TAO_NS_Persistence
 }
 
 void
-TAO_Storable_Naming_Context_ReaderWriter::read_record (TAO_NS_Persistence_Record & record)
+TAO_Storable_Naming_Context_ReaderWriter::read_record (
+  TAO_NS_Persistence_Record & record)
 {
   int temp_type_in;
   stream_ >> temp_type_in;
@@ -255,7 +257,8 @@ TAO_Storable_Naming_Context_ReaderWriter::read_record (TAO_NS_Persistence_Record
 }
 
 void
-TAO_Storable_Naming_Context_ReaderWriter::write_global (const TAO_NS_Persistence_Global & global)
+TAO_Storable_Naming_Context_ReaderWriter::write_global (
+  const TAO_NS_Persistence_Global & global)
 {
   stream_.rewind ();
   stream_ << global.counter ();
@@ -263,7 +266,8 @@ TAO_Storable_Naming_Context_ReaderWriter::write_global (const TAO_NS_Persistence
 }
 
 void
-TAO_Storable_Naming_Context_ReaderWriter::read_global (TAO_NS_Persistence_Global & global)
+TAO_Storable_Naming_Context_ReaderWriter::read_global (
+  TAO_NS_Persistence_Global & global)
 {
   unsigned int counter = 0;
 

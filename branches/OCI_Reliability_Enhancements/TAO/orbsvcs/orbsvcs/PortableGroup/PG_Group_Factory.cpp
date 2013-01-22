@@ -54,7 +54,7 @@ TAO::PG_Group_Factory::PG_Group_Factory ()
   , orb_ (CORBA::ORB::_nil())
   , poa_ (PortableServer::POA::_nil())
   , manipulator_ ()
-  , domain_id_ ("default-domain")
+  , domain_id_ (ACE_TEXT_ALWAYS_CHAR ("default-domain"))
   , groups_read_ (false)
   , storable_factory_ (0)
 {
@@ -86,7 +86,9 @@ void TAO::PG_Group_Factory::init (
 
   this->orb_ = CORBA::ORB::_duplicate(orb);
   this->poa_ = PortableServer::POA::_duplicate (poa);
-  this->factory_registry_ = PortableGroup::FactoryRegistry::_duplicate (factory_registry);
+
+  this->factory_registry_ =
+    PortableGroup::FactoryRegistry::_duplicate (factory_registry);
 
 
   ACE_ASSERT (!CORBA::is_nil (this->orb_.in ()));
@@ -177,7 +179,8 @@ TAO::PG_Object_Group * TAO::PG_Group_Factory::create_group (
   return objectGroup;
 }
 
-void TAO::PG_Group_Factory::delete_group (PortableGroup::ObjectGroup_ptr object_group)
+void TAO::PG_Group_Factory::delete_group (
+  PortableGroup::ObjectGroup_ptr object_group)
 {
   if (! destroy_group (object_group))
   {
@@ -186,7 +189,8 @@ void TAO::PG_Group_Factory::delete_group (PortableGroup::ObjectGroup_ptr object_
 }
 
 
-void TAO::PG_Group_Factory::delete_group (PortableGroup::ObjectGroupId group_id)
+void TAO::PG_Group_Factory::delete_group (
+  PortableGroup::ObjectGroupId group_id)
 {
   if (! destroy_group (group_id))
   {
@@ -200,17 +204,20 @@ int TAO::PG_Group_Factory::insert_group ( ::TAO::PG_Object_Group * group)
   return insert_group (group->get_object_group_id(), group);
 }
 
-int TAO::PG_Group_Factory::insert_group (PortableGroup::ObjectGroupId group_id, ::TAO::PG_Object_Group * group)
+int TAO::PG_Group_Factory::insert_group (PortableGroup::ObjectGroupId group_id,
+                                         ::TAO::PG_Object_Group * group)
 {
   return (this->get_group_map ().bind (group_id, group) == 0);
 }
 
-int TAO::PG_Group_Factory::find_group (PortableGroup::ObjectGroupId group_id, ::TAO::PG_Object_Group *& group)
+int TAO::PG_Group_Factory::find_group (PortableGroup::ObjectGroupId group_id,
+                                       ::TAO::PG_Object_Group *& group)
 {
   return (this->get_group_map ().find (group_id , group) == 0);
 }
 
-int TAO::PG_Group_Factory::find_group (PortableGroup::ObjectGroup_ptr object_group, ::TAO::PG_Object_Group *& group)
+int TAO::PG_Group_Factory::find_group (PortableGroup::ObjectGroup_ptr object_group,
+                                       ::TAO::PG_Object_Group *& group)
 {
   int result = 0;
   PortableGroup::TagGroupTaggedComponent tc;
@@ -256,7 +263,8 @@ int TAO::PG_Group_Factory::destroy_group (PortableGroup::ObjectGroupId group_id)
   {
     if (this->use_persistence_)
       {
-        PG_Object_Group_Storable *og = dynamic_cast<PG_Object_Group_Storable *> (group);
+        PG_Object_Group_Storable *og =
+          dynamic_cast<PG_Object_Group_Storable *> (group);
         og->set_destroyed (true);
         result = (this->list_store_->remove (group->get_object_group_id ())
           == 0);
@@ -333,7 +341,8 @@ TAO::PG_Group_Factory::all_groups (void)
 }
 
 void
-TAO::PG_Group_Factory::set_object_group_storable_factory (TAO::Storable_Factory * factory)
+TAO::PG_Group_Factory::set_object_group_storable_factory (
+  TAO::Storable_Factory * factory)
 {
   this->use_persistence_ = true;
   this->storable_factory_  = factory;
@@ -357,13 +366,15 @@ TAO::PG_Group_Factory::get_group_map ()
           // Extract IDs from group_map_ to set for comparison with IDs in persistent store
           // This is to avoid having to repopulate the map from scratch.
           PG_Group_List_Store::Group_Ids map_ids;
-          for (Group_Map_Iterator it = group_map_.begin (); it != group_map_.end (); ++it)
+          for (Group_Map_Iterator it = group_map_.begin ();
+                                  it != group_map_.end (); ++it)
             {
               map_ids.insert (it->key ());
             }
 
           // Get the latest groups from persistent store
-          const PG_Group_List_Store::Group_Ids & persistent_ids = list_store_->get_group_ids ();
+          const PG_Group_List_Store::Group_Ids & persistent_ids =
+            list_store_->get_group_ids ();
 
           // Find groups added since map was last updated
           PG_Group_List_Store::Group_Ids groups_added;
@@ -375,7 +386,7 @@ TAO::PG_Group_Factory::get_group_map ()
 
           // Bind added groups
           for (PG_Group_List_Store::Group_Id_Const_Iterator it = groups_added.begin ();
-               it != groups_added.end (); ++it)
+              it != groups_added.end (); ++it)
             {
               PortableGroup::ObjectGroupId group_id = *it;
               TAO::PG_Object_Group * objectGroup = 0;

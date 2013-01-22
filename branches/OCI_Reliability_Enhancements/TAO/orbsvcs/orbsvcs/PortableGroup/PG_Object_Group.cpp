@@ -316,8 +316,8 @@ TAO::PG_Object_Group::set_primary_member (
     {
       int cleared = 0;
       this->primary_location_ = the_location;
-      for (MemberMap_Iterator it = this->members_.begin();
-           !cleared && it != this->members_.end();
+      for (MemberMap_Iterator it = this->members_.begin ();
+           !cleared && it != this->members_.end ();
            ++it)
         {
           cleared = (*it).int_id_->is_primary_;
@@ -383,7 +383,7 @@ TAO::PG_Object_Group::remove_member (
   MemberInfo * info = 0;
   if (this->members_.unbind (the_location, info) == 0)
     {
-      if (this->members_.current_size() > 0)
+      if (this->members_.current_size () > 0)
         {
           this->reference_ =
             this->manipulator_.remove_profiles (this->reference_.in (),
@@ -398,7 +398,7 @@ TAO::PG_Object_Group::remove_member (
 
       if (the_location == this->primary_location_)
         {
-          this->primary_location_.length(0);
+          this->primary_location_.length (0);
         }
 
       if (this->increment_version ())
@@ -412,8 +412,8 @@ TAO::PG_Object_Group::remove_member (
       if (TAO_debug_level > 6)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "TAO-PG (%P|%t) - "
-                      "remove_member throwing MemberNotFound.\n"
+                      ACE_TEXT ("TAO-PG (%P|%t) - ")
+                      ACE_TEXT ("remove_member throwing MemberNotFound.\n")
                       ));
         }
       throw PortableGroup::MemberNotFound();

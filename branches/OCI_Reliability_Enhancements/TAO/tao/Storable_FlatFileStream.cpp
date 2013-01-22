@@ -27,9 +27,9 @@ namespace
   /// consumed. This could create problems if
   /// the data the follows the newline is binary.
   template<typename T>
-  void read_integer(const char * format, T & i,
-                    TAO::Storable_Base::Storable_State & state,
-                    FILE * fl)
+  void read_integer (const char * format, T & i,
+                     TAO::Storable_Base::Storable_State & state,
+                     FILE * fl)
   {
     char buf[BUFSIZ];
     char * result = fgets (buf, BUFSIZ, fl);
@@ -77,73 +77,74 @@ namespace
 }
 
 TAO::Storable_FlatFileStream::Storable_FlatFileStream (const ACE_CString & file,
-                                                            const char * mode)
+                                                       const char * mode)
   : fl_ (0)
 {
-  ACE_TRACE("TAO::Storable_FlatFileStream");
+  ACE_TRACE ( ACE_TEXT ("TAO::Storable_FlatFileStream"));
   file_ = file;
   mode_ = mode;
 }
 
 TAO::Storable_FlatFileStream::~Storable_FlatFileStream ()
 {
-  ACE_TRACE("~Storable_FlatFileStream");
+  ACE_TRACE (ACE_TEXT ("~Storable_FlatFileStream"));
   if ( fl_ != 0 )
-    this->close();
+    this->close ();
 }
 
 void
 TAO::Storable_FlatFileStream::remove ()
 {
-  ACE_TRACE("remove");
-  ACE_OS::unlink(ACE_TEXT_CHAR_TO_TCHAR(file_.c_str()));
+  ACE_TRACE (ACE_TEXT ("remove"));
+  ACE_OS::unlink (ACE_TEXT_CHAR_TO_TCHAR (file_.c_str()));
 }
 
 int
 TAO::Storable_FlatFileStream::exists ()
 {
-  ACE_TRACE("exists");
+  ACE_TRACE (ACE_TEXT ("exists"));
   // We could check the mode for this file, but for now just check exists
-  return ! ACE_OS::access(file_.c_str(), F_OK);
+  return ! ACE_OS::access (file_.c_str (), F_OK);
 }
 
 int
-TAO::Storable_FlatFileStream::open()
+TAO::Storable_FlatFileStream::open ()
 {
-  ACE_TRACE("open");
+  ACE_TRACE ( ACE_TEXT ("open"));
   // For now, three flags exist "r", "w",  and "c"
   int flags = 0;
   const char *fdmode = 0;
-  if( ACE_OS::strchr(mode_.c_str(), 'r') )
-    if( ACE_OS::strchr(mode_.c_str(), 'w') )
+  if( ACE_OS::strchr (mode_.c_str (), 'r') )
+    if( ACE_OS::strchr (mode_.c_str (), 'w') )
       flags = O_RDWR, fdmode = "r+";
     else
       flags = O_RDONLY, fdmode = "r";
   else
     flags = O_WRONLY, fdmode = "w";
-  if( ACE_OS::strchr(mode_.c_str(), 'c') )
+  if( ACE_OS::strchr (mode_.c_str (), 'c') )
     flags |= O_CREAT;
 #ifndef ACE_WIN32
-  if( ACE_OS::flock_init (&filelock_, flags, ACE_TEXT_CHAR_TO_TCHAR(file_.c_str()), 0666) != 0 )
+  if( ACE_OS::flock_init (&filelock_, flags, ACE_TEXT_CHAR_TO_TCHAR (file_.c_str()), 0666) != 0 )
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Cannot open file %s for mode %s: (%d) %s\n",
-                       file_.c_str(), mode_.c_str(),
-                       errno, ACE_OS::strerror(errno)),
+                       ACE_TEXT ("Cannot open file %s for mode %s: (%d) %s\n"),
+                       file_.c_str (), mode_.c_str (),
+                       errno, ACE_OS::strerror (errno)),
                       -1);
 #else
-  if( (filelock_.handle_= ACE_OS::open (ACE_TEXT_CHAR_TO_TCHAR(file_.c_str()), flags, 0)) == ACE_INVALID_HANDLE )
+  if( (filelock_.handle_= ACE_OS::open (
+    ACE_TEXT_CHAR_TO_TCHAR (file_.c_str ()), flags, 0)) == ACE_INVALID_HANDLE )
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Cannot open file %s for mode %s: (%d) %s\n",
-                       file_.c_str(), mode_.c_str(),
-                       ACE_ERRNO_GET, ACE_OS::strerror(ACE_ERRNO_GET)),
+                       ACE_TEXT ("Cannot open file %s for mode %s: (%d) %s\n"),
+                       file_.c_str (), mode_.c_str (),
+                       ACE_ERRNO_GET, ACE_OS::strerror (ACE_ERRNO_GET)),
                       -1);
 #endif
-  this->fl_ = ACE_OS::fdopen(filelock_.handle_, ACE_TEXT_CHAR_TO_TCHAR(fdmode));
+  this->fl_ = ACE_OS::fdopen (filelock_.handle_, ACE_TEXT_CHAR_TO_TCHAR (fdmode));
   if (this->fl_ == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Cannot fdopen file %s for mode %s: (%d) %s\n",
-                       file_.c_str(), mode_.c_str(),
-                       ACE_ERRNO_GET, ACE_OS::strerror(ACE_ERRNO_GET)),
+                       ACE_TEXT ("Cannot fdopen file %s for mode %s: (%d) %s\n"),
+                       file_.c_str (), mode_.c_str (),
+                       ACE_ERRNO_GET, ACE_OS::strerror (ACE_ERRNO_GET)),
                       -1);
   return 0;
 }
@@ -151,8 +152,8 @@ TAO::Storable_FlatFileStream::open()
 int
 TAO::Storable_FlatFileStream::close()
 {
-  ACE_TRACE("close");
-  ACE_OS::fflush(fl_);
+  ACE_TRACE (ACE_TEXT ("close"));
+  ACE_OS::fflush (fl_);
 #ifndef ACE_WIN32
   ACE_OS::flock_destroy (&filelock_, 0);
 #endif
@@ -166,16 +167,16 @@ TAO::Storable_FlatFileStream::close()
 int
 TAO::Storable_FlatFileStream::flock (int whence, int start, int len)
 {
-  ACE_TRACE("flock");
+  ACE_TRACE (ACE_TEXT ("flock"));
 #if defined (ACE_WIN32)
   ACE_UNUSED_ARG (whence);
   ACE_UNUSED_ARG (start);
   ACE_UNUSED_ARG (len);
 #else
-  if( ACE_OS::strcmp(mode_.c_str(), "r") == 0 )
-    ACE_OS::flock_rdlock(&filelock_, whence, start, len);
+  if( ACE_OS::strcmp (mode_.c_str(), ACE_TEXT_ALWAYS_CHAR ("r")) == 0 )
+    ACE_OS::flock_rdlock (&filelock_, whence, start, len);
   else
-    ACE_OS::flock_wrlock(&filelock_, whence, start, len);
+    ACE_OS::flock_wrlock (&filelock_, whence, start, len);
 #endif
   return 0;
 }
@@ -183,36 +184,36 @@ TAO::Storable_FlatFileStream::flock (int whence, int start, int len)
 int
 TAO::Storable_FlatFileStream::funlock (int whence, int start, int len)
 {
-  ACE_TRACE("funlock");
+  ACE_TRACE (ACE_TEXT ("funlock"));
 #if defined (ACE_WIN32)
   ACE_UNUSED_ARG (whence);
   ACE_UNUSED_ARG (start);
   ACE_UNUSED_ARG (len);
 #else
-  ACE_OS::flock_unlock(&filelock_, whence, start, len);
+  ACE_OS::flock_unlock (&filelock_, whence, start, len);
 #endif
   return 0;
 }
 
 time_t
-TAO::Storable_FlatFileStream::last_changed(void)
+TAO::Storable_FlatFileStream::last_changed (void)
 {
-  ACE_TRACE("TAO::Storable_FlatFileStream::last_changed");
+  ACE_TRACE (ACE_TEXT ("TAO::Storable_FlatFileStream::last_changed"));
   ACE_stat st;
-  ACE_OS::fstat(filelock_.handle_, &st);
+  ACE_OS::fstat (filelock_.handle_, &st);
   return st.st_mtime;
 }
 
 void
 TAO::Storable_FlatFileStream::rewind (void)
 {
-  return ACE_OS::rewind(this->fl_);
+  return ACE_OS::rewind (this->fl_);
 }
 
 bool
 TAO::Storable_FlatFileStream::flush (void)
 {
-  return ACE_OS::fflush(this->fl_);
+  return ACE_OS::fflush (this->fl_);
 }
 
 int
@@ -224,7 +225,7 @@ TAO::Storable_FlatFileStream::sync (void)
 TAO::Storable_Base &
 TAO::Storable_FlatFileStream::operator << (const ACE_CString& str)
 {
-  ACE_TRACE("TAO::Storable_FlatFileStream::operator <<");
+  ACE_TRACE (ACE_TEXT ("TAO::Storable_FlatFileStream::operator <<"));
   ACE_OS::fprintf(this->fl_, ACE_SIZE_T_FORMAT_SPECIFIER ACE_TEXT("\n%s\n"),
                   str.length(), str.c_str());
 
@@ -234,11 +235,11 @@ TAO::Storable_FlatFileStream::operator << (const ACE_CString& str)
 TAO::Storable_Base &
 TAO::Storable_FlatFileStream::operator >> (ACE_CString& str)
 {
-  ACE_TRACE("TAO::Storable_FlatFileStream::operator >>");
+  ACE_TRACE ( ACE_TEXT ("TAO::Storable_FlatFileStream::operator >>"));
   int bufSize = 0;
   ACE_CString::size_type const max_buf_len =
     ACE_Numeric_Limits<ACE_CString::size_type>::max ();
-  switch (fscanf(fl_, "%d\n", &bufSize))
+  switch (fscanf (fl_, ACE_TEXT_ALWAYS_CHAR ("%d\n"), &bufSize))
     {
     case 0:
       this->setstate (badbit);
@@ -274,18 +275,18 @@ TAO::Storable_FlatFileStream::operator >> (ACE_CString& str)
 TAO::Storable_Base &
 TAO::Storable_FlatFileStream::operator << (int i)
 {
-  ACE_TRACE("TAO::Storable_FlatFileStream::operator <<");
-  ACE_OS::fprintf (this->fl_, "%d\n", i);
+  ACE_TRACE (ACE_TEXT ("TAO::Storable_FlatFileStream::operator <<"));
+  ACE_OS::fprintf (this->fl_, ACE_TEXT ("%d\n"), i);
   return *this;
 }
 
 TAO::Storable_Base &
 TAO::Storable_FlatFileStream::operator >> (int &i)
 {
-  ACE_TRACE("TAO::Storable_FlatFileStream::operator >>");
+  ACE_TRACE (ACE_TEXT ("TAO::Storable_FlatFileStream::operator >>"));
 
   Storable_State state = this->rdstate ();
-  read_integer ("%d\n", i, state, fl_);
+  read_integer (ACE_TEXT_ALWAYS_CHAR ("%d\n"), i, state, fl_);
   this->setstate (state);
 
   return *this;
@@ -294,18 +295,18 @@ TAO::Storable_FlatFileStream::operator >> (int &i)
 TAO::Storable_Base &
 TAO::Storable_FlatFileStream::operator << (unsigned int i)
 {
-  ACE_TRACE("TAO::Storable_FlatFileStream::operator <<");
-  ACE_OS::fprintf (this->fl_, "%u\n", i);
+  ACE_TRACE (ACE_TEXT ("TAO::Storable_FlatFileStream::operator <<"));
+  ACE_OS::fprintf (this->fl_, ACE_TEXT ("%u\n"), i);
   return *this;
 }
 
 TAO::Storable_Base &
 TAO::Storable_FlatFileStream::operator >> (unsigned int &i)
 {
-  ACE_TRACE("TAO::Storable_FlatFileStream::operator >>");
+  ACE_TRACE (ACE_TEXT ("TAO::Storable_FlatFileStream::operator >>"));
 
   Storable_State state = this->rdstate ();
-  read_integer ("%u\n", i, state, fl_);
+  read_integer (ACE_TEXT_ALWAYS_CHAR ("%u\n"), i, state, fl_);
   this->setstate (state);
 
   return *this;
@@ -314,7 +315,7 @@ TAO::Storable_FlatFileStream::operator >> (unsigned int &i)
 TAO::Storable_Base &
 TAO::Storable_FlatFileStream::operator << (const TAO_OutputCDR & cdr)
 {
-  ACE_TRACE("TAO::Storable_FlatFileStream::operator <<");
+  ACE_TRACE (ACE_TEXT ("TAO::Storable_FlatFileStream::operator <<"));
 
   unsigned int length = cdr.total_length ();
   *this << length;
@@ -358,12 +359,14 @@ TAO::Storable_Base *
 TAO::Storable_FlatFileFactory::create_stream (const ACE_CString & file,
                                               const ACE_TCHAR * mode)
 {
-  ACE_TRACE("TAO::Storable_FlatFileFactory::create_stream");
+  ACE_TRACE (ACE_TEXT ("TAO::Storable_FlatFileFactory::create_stream"));
   TAO::Storable_Base *stream = 0;
-  ACE_CString path = this->directory_ + "/" + file;
+  ACE_CString path = this->directory_ + ACE_TEXT ("/") + file;
   ACE_NEW_RETURN (stream,
-                  TAO::Storable_FlatFileStream(path, ACE_TEXT_ALWAYS_CHAR (mode)),
-                  0);
+                  TAO::Storable_FlatFileStream (
+                    path,
+                    ACE_TEXT_ALWAYS_CHAR (mode)),
+                    0);
   return stream;
 }
 
