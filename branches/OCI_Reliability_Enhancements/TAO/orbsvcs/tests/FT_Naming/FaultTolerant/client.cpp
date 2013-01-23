@@ -549,6 +549,7 @@ do_failover_name_test (
     level1[0].id = CORBA::string_dup ("level1_context");
     CosNaming::NamingContext_var level1_context;
     level1_context = root_context_1->bind_new_context (level1);
+    ACE_OS::thr_yield ();
 
     for (i=0; i<o_breadth; i++)
     {
@@ -565,6 +566,7 @@ do_failover_name_test (
       level1[1].id = CORBA::string_dup (wide_name);
 
       root_context_1->bind (level1, obj1.in ());
+      ACE_OS::thr_yield ();
 
       // See if the newly bound object is available in the
       // replica
@@ -618,6 +620,7 @@ do_failover_name_test (
       deep[0].id = CORBA::string_dup (deep_name);
       CosNaming::NamingContext_var deep_context;
       deep_context = next_context->bind_new_context (deep);
+      ACE_OS::thr_yield ();
       next_context = deep_context;
     }
   }
@@ -641,6 +644,7 @@ do_failover_name_test (
       wide[0].id = CORBA::string_dup (wide_name);
       CosNaming::NamingContext_var wide_context;
       wide_context = root_context_1->bind_new_context (wide);
+      ACE_OS::thr_yield ();
 
       try {
         // Check if the new context is available in the replica
@@ -690,6 +694,7 @@ do_failover_name_test (
     ACE_OS::sprintf(wide_name, ACE_TEXT_ALWAYS_CHAR ("obj_%d"), o_breadth-2);
     wide1[1].id = CORBA::string_dup (wide_name);
     root_context_1->unbind (wide1);
+    ACE_OS::thr_yield ();
 
     bool retried = false;
     // Make sure it is gone from the replica
@@ -740,6 +745,7 @@ do_failover_name_test (
 
     result_object->destroy();
     root_context_1->unbind (wide2);
+    ACE_OS::thr_yield ();
 
     // Remove the last context from the deep Naming Context
     CosNaming::Name deep;
@@ -765,6 +771,7 @@ do_failover_name_test (
 
     result_object->destroy();
     root_context_1->unbind (deep);
+    ACE_OS::thr_yield ();
 
     retried = false;
     // Make sure it is gone from the replica
@@ -1167,6 +1174,7 @@ do_persistence_name_test (
     if( false == validate_only ) {
       CosNaming::NamingContext_var level1_context;
       level1_context = root_context_1->bind_new_context (level1);
+      ACE_OS::thr_yield ();
     }
 
     for (i=0; i<o_breadth; i++)
@@ -1183,7 +1191,9 @@ do_persistence_name_test (
 
       if( false == validate_only ) {
         root_context_1->bind (level1, obj1.in ());
+        ACE_OS::thr_yield ();
       }
+
 
       // See if the newly bound object is available in the repository
       try {
@@ -1235,6 +1245,7 @@ do_persistence_name_test (
 
         CosNaming::NamingContext_var deep_context;
         deep_context = next_context->bind_new_context (deep);
+        ACE_OS::thr_yield ();
         next_context = deep_context;
       }
     }
@@ -1260,6 +1271,7 @@ do_persistence_name_test (
       if( false == validate_only ) {
         CosNaming::NamingContext_var wide_context;
         wide_context = root_context_1->bind_new_context (wide);
+        ACE_OS::thr_yield ();
       }
 
       try {
@@ -1622,6 +1634,7 @@ do_equivalence_name_test (
     level1[0].id = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR("level1_context"));
     CosNaming::NamingContext_var level1_context;
     level1_context = root_context_1->bind_new_context (level1);
+    ACE_OS::thr_yield ();
 
     for (i=0; i<o_breadth; i++)
     {
@@ -1635,6 +1648,7 @@ do_equivalence_name_test (
       ACE_OS::sprintf(wide_name, ACE_TEXT_ALWAYS_CHAR ("obj_%d"), i);
       level1[1].id = CORBA::string_dup (wide_name);
       root_context_1->bind (level1, obj1.in ());
+      ACE_OS::thr_yield ();
 
       // See if the newly bound object is available in the
       // replica
@@ -1684,6 +1698,7 @@ do_equivalence_name_test (
       deep[0].id = CORBA::string_dup (deep_name);
       CosNaming::NamingContext_var deep_context;
       deep_context = next_context->bind_new_context (deep);
+      ACE_OS::thr_yield ();
       next_context = deep_context;
     }
   }
@@ -1707,6 +1722,7 @@ do_equivalence_name_test (
       wide[0].id = CORBA::string_dup (wide_name);
       CosNaming::NamingContext_var wide_context;
       wide_context = root_context_1->bind_new_context (wide);
+      ACE_OS::thr_yield ();
 
       try {
         // Check if the new context is available in the replica
@@ -1763,6 +1779,7 @@ do_equivalence_name_test (
     ACE_OS::sprintf(wide_name, ACE_TEXT_ALWAYS_CHAR ("obj_%d"), o_breadth-2);
     wide1[1].id = CORBA::string_dup (wide_name);
     root_context_1->unbind (wide1);
+    ACE_OS::thr_yield ();
 
     bool retried = false;
     // Make sure it is gone from the replica
@@ -1813,6 +1830,7 @@ do_equivalence_name_test (
 
     result_object->destroy();
     root_context_1->unbind (wide2);
+    ACE_OS::thr_yield ();
 
     // Remove the last context from the deep Naming Context
     CosNaming::Name deep;
@@ -1834,6 +1852,7 @@ do_equivalence_name_test (
     }
     result_object->destroy();
     root_context_1->unbind (deep);
+    ACE_OS::thr_yield ();
 
     retried = false;
     // Make sure it is gone from the replica
