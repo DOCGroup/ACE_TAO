@@ -1,3 +1,10 @@
+Wed Jan 23 19:12:02 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/SL3CSI.idl:
+        * orbsvcs/orbsvcs/SL3TCPIP.idl:
+        * orbsvcs/orbsvcs/SL3TLS.idl:
+          Removed these files, not used at all
+
 Tue Jan 22 16:26:24 UTC 2013  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_component_cpp (scan):
