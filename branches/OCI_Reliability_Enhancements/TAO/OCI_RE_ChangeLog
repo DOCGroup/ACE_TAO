@@ -1,3 +1,14 @@
+Wed Jan 23 00:05:57 UTC 2013  Phillip LaBanca  <labancap@ociweb.com>
+
+        * utils/nslist/nslist.cpp:
+
+          Added --count argument to override the default maximum number of
+          entries to retrieve per request to the NameService. The tao_ft_naming
+          server returns CORBA:NO_IMPLEMENT when the number of entries is greater
+          than the how_many argument and the tao_ft_naming server was started
+          the -u or -r flags. The tao_ft_naming server is not able to support the
+          iterator interface in redundant mode (-u or -r flags).
+
 Tue Jan 22 22:52:17 UTC 2013  Quynh Nguyen  <nguyenq@stladvantage.com>
 
         * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
@@ -7,7 +18,7 @@ Tue Jan 22 22:52:17 UTC 2013  Quynh Nguyen  <nguyenq@stladvantage.com>
         * tao/Utils:
 
         Fix bug 479 caused by the Activator, which truncated a
-        server's command line string it is more than 1024 bytes.  
+        server's command line string it is more than 1024 bytes.
 
 
 Tue Jan 22 19:37:57 UTC 2013  Phillip LaBanca  <labancap@ociweb.com>
