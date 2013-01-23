@@ -1,3 +1,14 @@
+Wed Jan 23 23:05:41 UTC 2013  Phillip LaBanca  <labancap@ociweb.com>
+
+        * orbsvcs/tests/FT_Naming/FaultTolerant/client.cpp:
+
+          Add yield calls to equivalence test section to avert race conditions
+          on some platforms.
+
+        * utils/nslist/nslist.cpp:
+
+          Change count argument conversion to strtoul to better match range.
+
 Wed Jan 23 16:55:34 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
 
         * orbsvcs/Naming_Service/Naming_Service.mpc:

@@ -644,7 +644,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                     }
                  else
                     {
-                     CORBA::ULong count = ACE_OS::atoi (*argv);
+                     CORBA::ULong count = ACE_OS::strtoul (ACE_TEXT_ALWAYS_CHAR (*argv), 0, 10);
                      if (count > 0)
                        {
                         max_count = count;
@@ -655,7 +655,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                     ACE_TEXT ("Error: --count requires a number")
                                     ACE_TEXT (" greater than 0\n")));
                         failed = true;
-                     }
+                       }
                     }
                 }
               else
@@ -684,7 +684,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             ACE_TEXT ("  --kindsep <character> {<name> ID/Kind separation character, default .}\n")
             ACE_TEXT ("  --max <number>        {If given, limits displayed sub-context depth}\n")
             ACE_TEXT ("  --rtt <seconds>       {If given, sets the relative round trip timeout policy}\n")
-            ACE_TEXT ("  --count <number>      {If given, sets the maximum number of entries per request from the NameService}\n"),
+            ACE_TEXT ("  --count <number>      {If given, sets the maximum ")
+            ACE_TEXT ("number of entries per request from the NameService}\n"),
             pname));
           orb->destroy ();
           return 1;
