@@ -1,3 +1,10 @@
+Wed Jan 23 16:55:34 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * orbsvcs/Naming_Service/Naming_Service.mpc:
+
+          Removed install to $ACE_ROOT/bin to revert back to how
+          Naming Service was previously.
+
 Wed Jan 23 00:05:57 UTC 2013  Phillip LaBanca  <labancap@ociweb.com>
 
         * utils/nslist/nslist.cpp:
