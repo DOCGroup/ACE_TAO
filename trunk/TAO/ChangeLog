@@ -1,3 +1,10 @@
+Wed Jan 23 19:43:50 UTC 2013  Adam Mitz  <mitza@ociweb.com>
+
+        * tao/RTScheduling/Request_Interceptor.cpp:
+
+          Use size_t consistently for generating RTScheduling::Current::IdType.
+          Some platforms have sizeof(size_t) != sizeof(long).
+
 Wed Jan 23 19:12:02 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/SL3CSI.idl:
