@@ -12,7 +12,7 @@ $status = 0;
 
 my $target = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 
-$I2X = $target->CreateProcess ("$ENV{'CIAO_ROOT'}/bin/tao_idl3_to_xmi");
+$I2X = $target->CreateProcess ("$ENV{'ACE_ROOT'}/bin/tao_idl3_to_xmi");
 $VAL = $target->CreateProcess ("xmlvalidator");
 
 

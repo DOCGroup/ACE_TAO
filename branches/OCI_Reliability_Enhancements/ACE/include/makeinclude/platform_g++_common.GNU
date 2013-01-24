@@ -29,9 +29,9 @@ else
       TAO_IDLFLAGS += -g $(HOST_ROOT)/bin/ace_gperf
       TAO_IDL = $(HOST_ROOT)/bin/tao_idl
       TAO_IDL_DEP = $(TAO_IDL)
-      TAO_IDL3_TO_IDL2 = $(HOST_ROOT)/TAO/CIAO/bin/tao_idl3_to_idl2
+      TAO_IDL3_TO_IDL2 = $(HOST_ROOT)/bin/tao_idl3_to_idl2
       TAO_IDL3_TO_IDL2_DEP = $(TAO_IDL3_TO_IDL2)
-      TAO_IDL3_TO_XMI = $(HOST_ROOT)/TAO/CIAO/bin/tao_idl3_to_xmi
+      TAO_IDL3_TO_XMI = $(HOST_ROOT)/bin/tao_idl3_to_xmi
       TAO_IDL3_TO_XMI_DEP = $(TAO_IDL3_TO_XMI)
       # make sure to use the target compiler, not the cross-compiler
       # as preprocessor for the cross-compiled idl tools
@@ -67,7 +67,8 @@ ifeq ($(c++0x),1)
 endif
 
 ifeq ($(gcov),1)
-  FLAGS_C_CC += -fprofile-arcs -ftest-coverage
+  CCFLAGS += --coverage
+  LDFLAGS += --coverage
 endif
 
 ifeq ($(CXX),insure)
@@ -105,7 +106,7 @@ templates ?= automatic
 # If the platform file didn't already set versioned_so, default to 1.
 versioned_so ?= 1
 with_ld ?=
-ifeq ($(versioned_so),1)
+ifneq ($(versioned_so),0)
   ifeq ($(with_ld),hpux)
     SOFLAGS += -Wl,+h -Wl,$(SONAME)
   else
@@ -115,6 +116,10 @@ ifeq ($(versioned_so),1)
       SOFLAGS += -Wl,-h -Wl,$(SONAME)
     endif
   endif
+endif
+
+ifeq ($(versioned_so),2)
+  FLAGS_C_CC += -DACE_VERSIONED_SO=2
 endif
 
 static_libs_only ?=

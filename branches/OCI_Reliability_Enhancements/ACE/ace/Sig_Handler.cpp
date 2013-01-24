@@ -215,8 +215,10 @@ ACE_Sig_Handler::remove_handler_i (int signum,
 
   // Allow the event handler to close down if necessary.
   if (eh)
-    eh->handle_close (ACE_INVALID_HANDLE,
-                      ACE_Event_Handler::SIGNAL_MASK);
+    {
+      eh->handle_close (ACE_INVALID_HANDLE,
+                        ACE_Event_Handler::SIGNAL_MASK);
+    }
 
   // Register either the new disposition or restore the default.
   return new_disp->register_action (signum, old_disp);

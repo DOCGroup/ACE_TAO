@@ -404,7 +404,7 @@ public:
         TAO::Portable_Server::POA_Current_Impl &poa_current_impl);
 
   /**
-   * Find the the servant with ObjectId <system_id>, and retrieve
+   * Find the the servant with ObjectId @a system_id, and retrieve
    * its priority. Usually used in RT CORBA with SERVER_DECLARED
    * priority model.
    *
@@ -649,8 +649,6 @@ protected:
   /// try to create one but assumes the POA lock is already hold
   TAO::ORT_Adapter *ORT_adapter_i (void);
 
-  TAO::ORT_Adapter_Factory *ORT_adapter_factory (void);
-
   CORBA::Boolean persistent (void);
 
   static char persistent_key_char (void);
@@ -705,6 +703,9 @@ protected:
 
   /// Pointer to the object reference template adapter.
   TAO::ORT_Adapter *ort_adapter_;
+
+  /// Pointer to the object reference template adapter factory.
+  TAO::ORT_Adapter_Factory *ort_adapter_factory_;
 
   /// Adapter can be accepting, rejecting etc.
   PortableInterceptor::AdapterState adapter_state_;

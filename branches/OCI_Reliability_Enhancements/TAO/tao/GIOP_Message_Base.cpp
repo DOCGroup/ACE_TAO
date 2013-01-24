@@ -695,7 +695,7 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
     }
 
   TAO_InputCDR input_cdr (db,
-                          db->flags (),
+                          flg,
                           rd_pos,
                           wr_pos,
                           qd->byte_order (),
@@ -813,7 +813,7 @@ TAO_GIOP_Message_Base::process_reply_message (
   // we pass it on to the higher layers of the ORB. So we dont to any
   // copies at all here.
   TAO_InputCDR input_cdr (db,
-                          db->flags (),
+                          flg,
                           rd_pos,
                           wr_pos,
                           qd->byte_order (),

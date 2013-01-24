@@ -196,6 +196,11 @@ namespace CIAO_Foo_Impl
     virtual ::string_array_slice *my_string_array (void);
 
     virtual void my_string_array (const ::string_array my_string_array);
+
+    virtual StructModule::StructStruct my_struct_struct (void);
+
+    virtual void my_struct_struct (const StructModule::StructStruct & my_struct_struct);
+
     //@}
 
     //@{
@@ -231,7 +236,8 @@ namespace CIAO_Foo_Impl
       my_string_sequence_,
       my_fixed_string_,
       my_variable_string_,
-      supported_short_;
+      supported_short_,
+      my_struct_struct_;
 
   };
 

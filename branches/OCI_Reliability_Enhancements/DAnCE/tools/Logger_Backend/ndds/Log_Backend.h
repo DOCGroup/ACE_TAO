@@ -10,13 +10,13 @@
 #ifndef DAnCE_LOG_BACKEND_H
 #define DAnCE_LOG_BACKEND_H
 
-#include <string>
-#include <ndds/ndds_cpp.h>
-
 #include "ace/Log_Msg_Backend.h"
 #include "ace/Service_Object.h"
 
 #include "DAnCE_NDDS_Log_Export.h"
+
+#include <string>
+#include <ndds/ndds_cpp.h>
 
 #include "Log_RecordSupport.h"
 #include "Log_RecordPlugin.h"

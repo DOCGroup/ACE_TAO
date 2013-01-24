@@ -194,7 +194,7 @@ namespace TAO
     transport_descriptor_type *transport_property_;
 
     /// Do we need to delete transport_property?
-    CORBA::Boolean is_delete_;
+    bool is_delete_;
 
     /**
      * This is a supplementary index. Would be set to zero by

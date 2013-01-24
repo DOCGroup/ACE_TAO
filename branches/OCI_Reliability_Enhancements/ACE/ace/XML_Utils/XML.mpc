@@ -37,4 +37,8 @@ project (ACE_XML_Utils) : install, acelib, xerces, ace_output {
     XML_Schema_Resolver.cpp
     XML_Typedefs.cpp
   }
+
+  Pkgconfig_Files {
+    ACE_XML_Utils.pc.in
+  }
 }

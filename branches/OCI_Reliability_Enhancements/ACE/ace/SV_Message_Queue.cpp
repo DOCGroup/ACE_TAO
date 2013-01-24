@@ -21,7 +21,8 @@ ACE_SV_Message_Queue::dump (void) const
 #endif /* ACE_HAS_DUMP */
 }
 
-ACE_SV_Message_Queue::ACE_SV_Message_Queue (void)
+ACE_SV_Message_Queue::ACE_SV_Message_Queue (void) :
+  internal_id_ (-1)
 {
   ACE_TRACE ("ACE_SV_Message_Queue::ACE_SV_Message_Queue");
 }

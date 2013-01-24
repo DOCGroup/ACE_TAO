@@ -1,34 +1,488 @@
-Tue Jan 22 22:52:17 UTC 2013  Quynh Nguyen  <nguyenq@stladvantage.com>
+Wed Jan 23 19:43:50 UTC 2013  Adam Mitz  <mitza@ociweb.com>
 
-        * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+        * tao/RTScheduling/Request_Interceptor.cpp:
 
-        * tao/ImR_Client:
-        * tao/Monitor:
-        * tao/Utils:
+          Use size_t consistently for generating RTScheduling::Current::IdType.
+          Some platforms have sizeof(size_t) != sizeof(long).
 
-        Fix bug 479 caused by the Activator, which truncated a
-        server's command line string it is more than 1024 bytes.  
+Wed Jan 23 19:12:02 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-Tue Nov 20 22:41:56 UTC 2012  "Kevin Stanley"  <stanleyk@ociweb.com>
+        * orbsvcs/orbsvcs/SL3CSI.idl:
+        * orbsvcs/orbsvcs/SL3TCPIP.idl:
+        * orbsvcs/orbsvcs/SL3TLS.idl:
+          Removed these files, not used at all
 
-        * MPC/config/ft_naming_serv.mpb:
+Tue Jan 22 16:26:24 UTC 2013  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_component_cpp (scan):
+
+          Added scan for ancestors of supported interface, if any. An attribute
+          in such an interface would generate the servant get/set methods, but
+          not trigger the top-level set_attributes() method. Thanks to
+          Jiang Wei <jiangwei_1976 at yahoo dot com dot cn> for reporting
+          the problem and supplying a patch. Bugzilla 4086 fix.
+
+Fri Jan 18 11:03:30 UTC 2013  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Mcast_Transport.cpp:
+          Investigating multi-threaded MIOP servers through-put and
+          resourcing issues. Robusting/simplifying for now.
+
+Wed Jan 16 14:33:30 UTC 2013  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Mcast_Transport.cpp:
+          Since the notify change, (Fri Jan  4 15:48:20 UTC 2013  Simon Massey)
+          there is no requirement for the message processing while loop, the
+          reactor handles that. Also add a second check after the lock is
+          aquired before attempting to dequeue the complete message for
+          processing (another thread could have gotten there first).
+
+Wed Jan 16 08:45:30 UTC 2013  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * tao/GIOP_Message_Base.cpp:
+        * tao/ZIOP/ZIOP.cpp:
+          Reverted and then correctly modified these changes from
+          (Wed Dec 05 09:41:00 UTC 2012  Simon Massey)
+          The Data_Blocks were getting double deleted under some
+          circumstances within the MIOP transport. The correct
+          flags to be used in the above files is actually the
+          Message_block self_flags()  NOT the datablock flags.
+          The inconsistancy was originally caused by the
+          mixup with the addition of the eairlier ZIOP merge
+          (Thu Mar 12 07:42:57 UTC 2009  Marcel Smit)
+          where the CDR's were being given the data block flags
+          instead of the message block flags. My original change
+          made them consistant with the data block flags which is
+          obviously incorrect. (All other transports use consistant
+          flag settings between the Message block and the Data Block,
+          and so this decision had very limited impact, however
+          MIOP does not).
+
+Mon Jan 14 15:28:33 UTC 2013  Adam Mitz  <mitza@ociweb.com>
+
+        * tests/Bug_4082_Regression/Bug_4082_Regression.cpp:
+        * tests/Bug_4082_Regression/Bug_4082_Regression.idl:
+
+          De-fuzzed
+
+Fri Jan 11 16:53:58 UTC 2013  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_typedef/typedef_ch.cpp:
+
+          Fixed a bug in the logic of typecode declaration generation. Some
+          sequence typecodes were getting generated twice. Thanks to Sergey
+          Onuchin <sonuchin at parallels dot com> for reporting the bug.
+
+Thu Jan 10 20:45:55 UTC 2013  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/tao_orb_tests.lst:
+        * tests/Bug_4082_Regression/Bug_4082_Regression.idl:
+        * tests/Bug_4082_Regression/Bug_4082_Regression.mpc:
+        * tests/Bug_4082_Regression/Bug_4082_Regression.cpp:
+
+          Added a new test for this bug (regression currently fails).
+
+Mon Jan  7 14:00:00 UTC 2013  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * tao/Transport.inl:
+          The new inline function has been moved outside of the #if #endif section
+          it shouldn't have been conditional.
+
+Fri Jan  4 15:48:20 UTC 2013  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Mcast_Transport.cpp:
+          Correction to the placement of the notify.
+
+Fri Jan  4 15:28:20 UTC 2013  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * bin/tao_other_tests.lst:
+        * orbsvcs/tests/Bug_4080_Regression/Bug_4080_Regression.mpc:
+        * orbsvcs/tests/Bug_4080_Regression/client.cpp:
+        * orbsvcs/tests/Bug_4080_Regression/README:
+        * orbsvcs/tests/Bug_4080_Regression/run_test.pl:
+        * orbsvcs/tests/Bug_4080_Regression/server.cpp:
+        * orbsvcs/tests/Bug_4080_Regression/svc.conf:
+        * orbsvcs/tests/Bug_4080_Regression/test.idl:
+        * orbsvcs/tests/Bug_4080_Regression/test_impl.cpp:
+        * orbsvcs/tests/Bug_4080_Regression/test_impl.h:
+
+          Bugzilla 4080 test.
+
+        * orbsvcs/orbsvcs/PortableGroup/Portable_Group_Map.h:
+        * orbsvcs/orbsvcs/PortableGroup/Portable_Group_Map.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Mcast_Transport.cpp:
+        * tao/Transport.h:
+        * tao/Transport.inl:
+        * tao/Transport.cpp:
+
+          Bugzilla 4080 Fix.
+
+Fri Jan  4 12:07:03 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Monitor/Monitor.cpp:
+          Fixed versioned namespace problem
+
+Thu Dec 27 09:19:04 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+          Updated in preparation of next release
+
+Thu Dec 27 10:00:49 CET 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO version 2.1.7 released.
+
+Tue Dec 18 16:23:19 UTC 2012  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * NEWS:
+
+          Added tao_idl bug fix entry.
+
+Mon Dec 17 13:40:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * orbsvcs/tests/Miop/McastHello/svc.conf:
+          Updated to enable -ORBListenOnAll 1.
+
+ Wed Dec 05 09:41:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Mcast_Transport.cpp:
+          Re-fixed the memory leak in MIOP server listener (as previous).
+          Since this data block's buffer is malloced internally (heap),
+          it definatly does need to be deleted by the data block as required.
+          (Obviously when the don't delete flags was set on the data block
+          incorrectly, previous to the fix, no deletion occured at all,
+          so the allocated memory buffer leaked.) The data block itself however
+          is stack based, and so the message block doesn't need to allocate or
+          delete the data block that holds this memory buffer itself. This is
+          apparently different to most other listeners where both the message
+          and data blocks are on the stack and thus the two block's flags agree.
+
+        * tao/GIOP_Message_Base.cpp:
+        * tao/ZIOP/ZIOP.cpp:
+          Corrected the mix-up of the Message block self_flags() being used where the
+          internal data block flags() should have been. ACE_InputCDR's were being
+          initialised with copies of these malloced datablock's buffers and they were
+          being deleted premiturely since the duplication hadn't been performed correctly.
+          The check for this duplication was incorrectly using the message block self_flags()
+          instead of the data block flags() and was therefore seeing the memory buffers
+          as stack based and not requiring duplication, but the ACE_InputCDR was then being
+          passed the actual data block flags which changed this requirement so the
+          ~ACE_InputCDR duly deleted the memory block eairly.
+
+Mon Dec  3 15:28:17 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/AnyTypeCode/Sequence_TypeCode_Static.h:
+        * tao/AnyTypeCode/String_TypeCode.h:
+        * tao/AnyTypeCode/String_TypeCode_Static.h:
+        * tao/AnyTypeCode/Struct_TypeCode_Static.h:
+        * tao/AnyTypeCode/Union_TypeCode.h:
+          Layout changes
+
+Mon Dec 03 09:253:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Mcast_Transport.cpp:
+          Re-introduced memory leak in MIOP server listener. Something
+          more complex and unknown is interacting with the memory block
+          requiring it's extended life.
+
+Fri Nov 30 15:23:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Mcast_Transport.cpp:
+          Fixed memory leak and alignment in MIOP server listener.
+
+Fri Nov 30 12:29:48 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * utils/nslist/nsadd.cpp:
+          No need to call orb destroy in catch, we do that already a
+          few lines further
+
+Thu Nov 29 14:33:56 UTC 2012  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/IDL_Test/PEMNaming.idl:
+
+          Fixed more fuzz errors.
+
+Thu Nov 29 10:13:16 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/DLL_ORB/client.cpp:
+        * tests/DLL_ORB/server.cpp:
+          Fixed compile problems
+
+Thu Nov 29 10:12:20 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2677_Regression/server.cpp:
+        * tests/Bug_3542_Regression/server.cpp:
+          Fixed compile problems
+
+Wed Nov 28 14:14:51 UTC 2012  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/util/utl_global.cpp (destroy):
+
+          Added check for null before calling
+          reset_last_in_same_parent_scope() on the internal CORBA
+          module AST node. Thanks to Simon Massey
+          <simon dot massey at primstech dot com> for pointing
+          out this problem.
+
+Wed Nov 28 07:33:16 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/AnyTypeCode/Any.cpp:
+        * tao/AnyTypeCode/Any_Basic_Impl.cpp:
+        * tao/AnyTypeCode/Any_Impl_T.cpp:
+        * tao/AnyTypeCode/Any_Special_Impl_T.cpp:
+        * tao/AnyTypeCode/Objref_TypeCode.h:
+          Layout changes
+
+        * tests/Bug_2936_Regression/bug2936.cpp:
+          Fixed compile problems
+
+Tue Nov 27 21:50:14 UTC 2012  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/IDL_Test/loader_const.idl:
+        * tests/IDL_Test/PEMNaming.idl:
+        * TAO_IDL/ast/ast_module.cpp:
+          Fixed fuzz errors.
+
+Tue Nov 27 12:43:30 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.mpc:
+          Install fixes for install data
+
+Tue Nov 27 11:52:55 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/Trading_Service/Trading_Service.mpc:
+          Install fixes for install data
+
+Tue Nov 27 11:24:11 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/Naming_Service/Naming_Service.mpc:
+        * orbsvcs/Notify_Service/Notify_Service.mpc:
+          Install fixes for install data
 
-        * orbsvcs/orbsvcs/FtNaming.mpc:
+Tue Nov 27 10:27:01 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_NamingReplication.idl:
-        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Serv.mpc:
-        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.h:
-        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:
-        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context.h:
-        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context.cpp:
-        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context_Factory.cpp:
+        * utils/catior/catior.mpc:
+        * utils/nslist/nslist.mpc:
+          Install fixes
 
-        * orbsvcs/orbsvcs/Naming/Persistent_Naming_Context_Factory.cpp:
-        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context_Activator.cpp:
+Tue Nov 27 09:54:12 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * utils/nsgroup/run_test.pl:
+        * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
+          Set gendir tao-imr for docu files
+
+Mon Nov 26 11:50:40 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
+          Added install back for imr
+
+Sat Nov 24 10:02:12 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
+          No need to set explicit install
+
+Sat Nov 24 09:17:21 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Notify/Bug_2926_Regression/server.cpp:
+          Fixed compile error
+
+Fri Nov 23 19:15:15 UTC 2012  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_module.cpp:
+        * TAO_IDL/include/ast_module.h:
+        * TAO_IDL/util/utl_global.cpp:
+
+          Fixed bug caused by (1) processing multiple IDL files in one pass
+          and (2) any IDL file except the last containing an include of
+          orb.idl. This include causes reopenings of the CORBA module,
+          in addition to the one created internally by tao_idl to contain
+          the basic types. This last is a special module, but like other
+          AST nodes, contains a reference to the most recent reopening
+          in its parent scope. Since the reopened CORBA modules are
+          destroyed after the included file is processed, this special
+          module contained a garbage reference, since it is not destroyed
+          until all IDL files are processed. Code was added to reset
+          this reference to the module itself after each file is processed.
+          Thanks to Sergey Onuchin <sonuchin at parallels dot com> for
+          reporting the bug and for supplying example IDL files.
+
+        * TAO_IDL/util/utl_scope.cpp:
+
+          Cosmetic changes.
+
+        * tests/IDL_Test/loader_const.idl:
+        * tests/IDL_Test/PEMNaming.idl:
+
+          New files that formerly reproduced the bug described above.
+
+        * tests/IDL_Test/IDL_Test.mpc:
+
+          Updated the MPC file to use the new IDL files above.
+
+Fri Nov 23 17:55:33 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
+          Updated for rename of readme
+
+Fri Nov 23 16:48:56 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/ImplRepo_Service/README:
+        * orbsvcs/ImplRepo_Service/README.txt:
+          Renamed to README to be consistent with other orbsvcs
+
+Fri Nov 23 15:35:46 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
+          Use install as base instead of install_bin
+
+Fri Nov 23 15:27:26 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/Concurrency_Service/Concurrency_Service.mpc:
+        * orbsvcs/CosEvent_Service/CosEvent_Service.mpc:
+        * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
+        * orbsvcs/Naming_Service/Naming_Service.mpc:
+        * orbsvcs/Notify_Service/Notify_Service.mpc:
+        * orbsvcs/Time_Service/Time_Service.mpc:
+        * orbsvcs/Trading_Service/Trading_Service.mpc:
+        * utils/catior/catior.mpc:
+        * utils/nslist/nslist.mpc:
+          Install readme files also
+
+Fri Nov 23 13:31:09 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/Naming_Service/Naming_Service.mpc:
+          Also install readme
+
+Fri Nov 23 08:08:57 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/PortableGroup/PortableGroup_ORBInitializer.cpp:
+        * orbsvcs/tests/Bug_3486_Regression/server.cpp:
+        * orbsvcs/tests/Notify/Bug_2926_Regression/server.cpp:
+        * orbsvcs/tests/Notify/Bug_3252_Regression/server.cpp:
+        * orbsvcs/tests/Notify/Bug_3646b_Regression/server.cpp:
+        * orbsvcs/tests/Notify/Bug_3646c_Regression/server.cpp:
+        * orbsvcs/tests/Notify/Bug_3646d_Regression/server.cpp:
+        * orbsvcs/tests/Notify/Bug_3663_Regression/server.cpp:
+        * orbsvcs/tests/Notify/Bug_3688b_Regression/server.cpp:
+        * tao/CSD_Framework/CSD_ORBInitializer.cpp:
+        * tao/Codeset/Codeset_Manager_i.cpp:
+        * tao/ORBInitializer_Registry.cpp:
+        * tao/ORB_Core.cpp:
+        * tao/PI/ORBInitInfo.cpp:
+        * tao/PortableServer/LifespanStrategyPersistent.cpp:
+        * tao/RTCORBA/RT_ORBInitializer.cpp:
+        * tao/TAO_Internal.cpp:
+        * tao/params.cpp:
+        * tests/Bug_2677_Regression/server.cpp:
+        * tests/Bug_2936_Regression/bug2936.cpp:
+        * tests/Bug_3542_Regression/server.cpp:
+        * tests/DLL_ORB/client.cpp:
+        * tests/DLL_ORB/server.cpp:
+        * tests/ORB_Local_Config/Bug_2612/Test.cpp:
+        * tests/ORB_Local_Config/Service_Dependency/Test.cpp:
+        * tests/TransportCurrent/Framework/simple.cpp:
+          Use ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE with the TAO_VERSION
+          so that with Debian/Ubuntu packaged distro's we try to load
+          the correct library which for example are named libTAO-6.1.1.so
+
+Tue Nov 20 19:32:42 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Utils/PolicyList_Destroyer.cpp:
+          Call index also in the try/catch scope because it can also
+          throw an exception
+
+Tue Nov 20 13:39:00 UTC 2012  Simon Massey  <Simon dot massey at prismtech dot com>
+
+        * TAO_IDL/be/be_util.cpp:
+          Remove Help message concerning -si parameter that is no longer
+          accepted. (As of Sun Nov 27 18:19:18 UTC 2011  Johnny Willemsen
+          the S.inl files are not generated anymore.)
+
+Mon Nov 12 10:07:02 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+          Updated for next release
+
+Mon Nov 12 09:34:14 CET 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO version 2.1.6 released.
+
+Fri Nov  9 12:06:03 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Simple/time/Time_Client_i.cpp:
+          Don't shutdown the orb, the client template already does
+          that
+
+        * examples/Simple/time/server.cpp:
+          Layout changes
+
+        * examples/Simple/Simple_util.cpp:
+          Fixed memory leak
+
+Tue Nov  6 14:06:48 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+          Updated for ObjRefTemplate chnages
+
+Mon Nov  5 08:25:48 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Cache_Entries_T.h:
+          Use bool instead of CORBA::Boolean
+
+        * tao/LocateRequest_Invocation.cpp:
+        * tao/Transport.h:
+        * tao/Transport_Cache_Manager_T.cpp:
+        * tao/Transport_Connector.cpp:
+          Const, layout, and doxygen changes
+
+Wed Oct 31 09:09:25 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Root_POA.cpp:
+          Updated if comparison
+
+        * tests/CSD_Strategy_Tests/TP_Test_2/run_test.pl:
+          Increased wait time for slower targets
+
+Tue Oct 30 10:50:49 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Root_POA.h:
+        * tao/PortableServer/Root_POA.cpp:
+          Cache ORT_Adapter_Factory in the POA at creation, prevents
+          a lookup when (un)registering a servant which could trigger
+          a possible deadlock when the registering of the servant is
+          coming from the init of an ACE service
+
+Fri Oct 19 07:56:56 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/AnyTypeCode/Alias_TypeCode.cpp:
+        * tao/AnyTypeCode/Alias_TypeCode_Static.cpp:
+        * tao/AnyTypeCode/Objref_TypeCode.cpp:
+        * tao/AnyTypeCode/Objref_TypeCode_Static.cpp:
+        * tao/Any_Insert_Policy_T.h:
+          Layout changes
+
+Wed Oct 17 12:31:27 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ObjRefTemplate/ORT_Adapter_Factory_Impl.h:
+          Doxygen change
+
+        * tao/PortableServer/Root_POA.cpp:
+          Layout change
+
+Mon Oct 15 13:26:27 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Messaging/AMH_Response_Handler.h:
+          Use virtual inheritance
+
+        * tao/PortableServer/Root_POA.h:
+          Doxygen fix
+
+Fri Oct 12 10:51:27 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+          Updated for x.1.5
+
+Fri Oct 12 11:20:25 CEST 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO version 2.1.5 released.
 
 Wed Oct  3 08:25:41 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 

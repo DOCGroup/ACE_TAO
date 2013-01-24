@@ -55,8 +55,9 @@ testCurrentLoader (int, char *[])
 
 #if !defined (TAO_AS_STATIC_LIBS)
           int ret = ACE_Service_Config::process_directive
-            (ACE_DYNAMIC_SERVICE_DIRECTIVE("TAO_Transport_Current_Loader",
+            (ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE("TAO_Transport_Current_Loader",
                                            "TAO_Transport_Current",
+                                           TAO_VERSION
                                            "_make_TAO_Transport_Current_Loader",
                                            ""));
           ACE_ASSERT (ret == 0);

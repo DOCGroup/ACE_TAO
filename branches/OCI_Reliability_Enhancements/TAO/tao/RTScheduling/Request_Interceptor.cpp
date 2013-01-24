@@ -39,7 +39,7 @@ Client_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
         {
           // Generate GUID.
           RTScheduling::Current::IdType guid;
-          guid.length (sizeof(long));
+          guid.length (sizeof(size_t));
 
           size_t temp = ++TAO_RTScheduler_Current::guid_counter;
           ACE_OS::memcpy (guid.get_buffer (),

@@ -1,3 +1,54 @@
+Thu Dec 27 09:19:10 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+          Updated in preparation of next release
+
+Thu Dec 27 10:00:49 CET 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE version 1.1.7 released.
+
+Thu Dec 20 07:39:24 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tools/Logger_Backend/ndds/Log_Backend.h:
+          Reordered includes to fix compile errors with msvc release
+          compilation
+
+Tue Dec 18 10:17:27 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * dance/Deployment/Deployment_Core.mpc:
+          Removed commandline option we don't use anymore
+
+        * dance/NodeApplication/NodeApplication_Impl.cpp:
+          Layout change
+
+Mon Nov 12 10:07:08 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+          Updated for next release
+
+Mon Nov 12 09:34:14 CET 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE version 1.1.6 released.
+
+Fri Oct 12 11:18:36 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * dance/LocalityManager/Handler/Inst_Handler_Impl.cpp:
+          Fixed incorrect else
+
+        * dance/Plan_Launcher/EM_Launcher.cpp:
+        * dance/Plan_Launcher/LM_Launcher.cpp:
+        * dance/Plan_Launcher/NM_Launcher.cpp:
+          Layout changes
+
+Fri Oct 12 10:52:52 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+          Updated for x.1.5
+
+Fri Oct 12 11:20:25 CEST 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE version 1.1.5 released.
+
 Tue Sep 25 18:36:35 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * dance/LocalityManager/Handler/Config_Handler_Impl.h:

@@ -333,8 +333,7 @@ NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedRe
 
       try
         {
-          i->second->finishLaunch (providedReference,
-                                   start);
+          i->second->finishLaunch (providedReference, start);
         }
       catch (CORBA::Exception &ex)
         {

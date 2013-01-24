@@ -1,17 +1,15 @@
 // $Id$
 
 #include "WaitSet.h"
-
-#include "ndds/ndds_cpp.h"
-
 #include "dds4ccm/impl/ndds/Condition.h"
 #include "dds4ccm/impl/ndds/QueryCondition.h"
 #include "dds4ccm/impl/ndds/ReadCondition.h"
 #include "dds4ccm/impl/ndds/convertors/Duration_t.h"
 #include "dds4ccm/impl/ndds/convertors/InstanceHandle_t.h"
 #include "dds4ccm/impl/Utils.h"
-
 #include "dds4ccm/impl/logger/Log_Macros.h"
+#include "ndds/ndds_cpp.h"
+
 
 namespace CIAO
 {

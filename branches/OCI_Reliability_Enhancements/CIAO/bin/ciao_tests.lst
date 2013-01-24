@@ -27,6 +27,7 @@ TAO/CIAO/tests/Bug_3834_Regression/descriptors/run_test.pl:
 TAO/CIAO/tests/Bug_3834_Regression/descriptors/run_test_without_ns.pl:
 TAO/CIAO/tests/IDL3/Events/Any/run_test.pl: !CCM_NOEVENT
 TAO/CIAO/tests/Bug_3769_Regression/descriptors/run_test.pl:
+TAO/CIAO/tests/Bug_3769_Regression/descriptors/run_test_cdr.pl:
 TAO/CIAO/tests/Thread/descriptors/run_test.pl: !CCM_NOEVENT
 TAO/CIAO/tests/Thread/descriptors/run_test_cdd.pl: !CCM_NOEVENT
 TAO/CIAO/tests/CIF/descriptors/run_test.pl: ATIC
@@ -128,8 +129,8 @@ TAO/CIAO/connectors/dds4ccm/tests/QueryCondition/Different/descriptors/run_test.
 TAO/CIAO/connectors/dds4ccm/tests/QueryCondition/TwoListeners/descriptors/run_test.pl: DDS4CCM
 TAO/CIAO/connectors/dds4ccm/tests/QueryCondition/TwoQueries/descriptors/run_test.pl: DDS4CCM
 TAO/CIAO/connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany/descriptors/run_test.pl: DDS4CCM
-TAO/CIAO/connectors/dds4ccm/tests/QueryCondition/DDS/descriptors/run_test.pl: DDS4CCM
-TAO/CIAO/connectors/dds4ccm/tests/QueryCondition/DDS_OneByOne/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/QueryCondition/DDS/descriptors/run_test.pl: DDS4CCM_NDDS
+TAO/CIAO/connectors/dds4ccm/tests/QueryCondition/DDS_OneByOne/descriptors/run_test.pl: DDS4CCM_NDDS
 TAO/CIAO/connectors/dds4ccm/tests/TopicName/descriptors/run_test.pl: DDS4CCM
 TAO/CIAO/connectors/dds4ccm/tests/MemLeakDetection/Event_MemLeakDetection_Test/descriptors/run_test.pl: DDS4CCM
 TAO/CIAO/connectors/dds4ccm/tests/MemLeakDetection/State_MemLeakDetection_Test/descriptors/run_test.pl: DDS4CCM

@@ -269,7 +269,6 @@ private:
 
   /// 1 if we're on the same local machine as the name server, else 0.
   int local (void);
-
 };
 
 /**

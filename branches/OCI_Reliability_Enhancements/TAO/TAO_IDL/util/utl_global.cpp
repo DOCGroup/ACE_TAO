@@ -928,6 +928,14 @@ IDL_GlobalData::destroy (void)
   ACE::strdelete (this->recursion_start_);
   this->recursion_start_ = 0;
 
+  // Reset the member of the CORBA module containing the basic types
+  // to point to itself, since all the other CORBA modules (if any)
+  // will be destroyed.
+  if (this->corba_module_ != 0)
+    {
+      this->corba_module_->reset_last_in_same_parent_scope ();
+    }
+
   if (0 != this->pd_root)
     {
       this->pd_root->destroy ();

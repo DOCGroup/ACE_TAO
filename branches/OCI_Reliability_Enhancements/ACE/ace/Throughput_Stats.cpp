@@ -40,11 +40,11 @@ ACE_Throughput_Stats::accumulate (const ACE_Throughput_Stats &rhs)
   if (this->samples_count () == 0u)
     {
       this->throughput_last_   = rhs.throughput_last_;
-      return;
     }
-
-  if (this->throughput_last_ < rhs.throughput_last_)
-    this->throughput_last_ = rhs.throughput_last_;
+  else if (this->throughput_last_ < rhs.throughput_last_)
+    {
+      this->throughput_last_ = rhs.throughput_last_;
+    }
 }
 
 void

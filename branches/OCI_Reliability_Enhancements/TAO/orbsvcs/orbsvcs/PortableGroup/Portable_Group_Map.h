@@ -120,7 +120,7 @@ public:
 
 protected:
   /// Lock used to synchronize access to map_.
-  TAO_SYNCH_MUTEX lock_;
+  TAO_SYNCH_RW_MUTEX lock_;
 
   /// Id map.
   GroupId_Table map_;

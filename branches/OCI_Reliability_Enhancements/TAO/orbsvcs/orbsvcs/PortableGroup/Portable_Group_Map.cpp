@@ -30,12 +30,10 @@ TAO_Portable_Group_Map::~TAO_Portable_Group_Map (void)
           delete entry;
           entry = next;
         }
-
     }
 
   this->map_.close ();
 }
-
 
 void
 TAO_Portable_Group_Map::add_groupid_objectkey_pair (
@@ -43,9 +41,9 @@ TAO_Portable_Group_Map::add_groupid_objectkey_pair (
     const TAO::ObjectKey &key
   )
 {
-  ACE_GUARD (TAO_SYNCH_MUTEX,
-             guard,
-             this->lock_);
+  ACE_WRITE_GUARD (TAO_SYNCH_RW_MUTEX,
+                   guard,
+                   this->lock_);
 
   Map_Entry *new_entry;
 
@@ -66,8 +64,7 @@ TAO_Portable_Group_Map::add_groupid_objectkey_pair (
 
   // First, check if the GroupId is already in the map.
   Map_Entry *entry = 0;
-  if (this->map_.find (group_id,
-                       entry) == 0)
+  if (this->map_.find (group_id, entry) == 0)
     {
       // Add the object key to the list of object keys serviced by this GroupId.
       new_entry->next = entry->next;
@@ -79,8 +76,7 @@ TAO_Portable_Group_Map::add_groupid_objectkey_pair (
 
       // Add the
       int result =
-        this->map_.bind (group_id,
-                         new_entry);
+        this->map_.bind (group_id, new_entry);
 
       if (result != 0)
         {
@@ -97,9 +93,7 @@ void
 TAO_Portable_Group_Map::remove_groupid_objectkey_pair (const PortableGroup::TagGroupTaggedComponent* /*group_id*/,
                                                        const TAO::ObjectKey &/*key*/)
 {
-
 }
-
 
 void
 TAO_Portable_Group_Map::dispatch (PortableGroup::TagGroupTaggedComponent* group_id,
@@ -107,16 +101,14 @@ TAO_Portable_Group_Map::dispatch (PortableGroup::TagGroupTaggedComponent* group_
                                   TAO_ServerRequest &request,
                                   CORBA::Object_out forward_to)
 {
-  ACE_GUARD (TAO_SYNCH_MUTEX,
-             guard,
-             this->lock_);
+  ACE_READ_GUARD (TAO_SYNCH_RW_MUTEX,
+                  guard,
+                  this->lock_);
 
   // Look up the GroupId.
   Map_Entry *entry = 0;
-  if (this->map_.find (group_id,
-                       entry) == 0)
+  if (this->map_.find (group_id, entry) == 0)
     {
-
       // Save the read pointer in the message block since
       // every time we dispatch the request, we need to
       // reset it so that the request demarshals correctly.
@@ -148,7 +140,6 @@ TAO_GroupId_Hash::operator () (const PortableGroup::TagGroupTaggedComponent *id)
 
   // Truncate the object_group_id in half for the has.
   hash += (u_long) (id->object_group_id / 1);
-
   hash += id->object_group_ref_version;
 
   return hash;
