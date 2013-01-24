@@ -1766,48 +1766,65 @@ strategy.
                   define an MTU of around <em>1458-1500</em>, it is therefore advisable to 
                   specify the correct <code>&#8209;ORBMaxFragmentSize</code> value otherwise some 
                   fragments may be lost.</b> See also the <code>&#8209;ORBSndSock</code> option 
-                below. Note also if this value is changed (during development) and the <code>&#8209;ORBMaxFragmentRate</code>
-                option below is also specified, you should change that value by the same 
-                factor, otherwise the speed of transmission will be effected as these two 
-                options specify a working ratio.
+                below. Note also if this value is changed (during development) and the <code>&#8209;ORBSendThrottling</code>
+                (see below) is enabled, you should change any specified <code>&#8209;ORBMaxFragmentRate</code>
+                value (see below) by the same factor, otherwise the speed of transmission will 
+                be effected as these two options specify a working ratio.
               </td>
             </tr>
             <tr>
               <td ALIGN="left"><code>&#8209;ORBMaxFragmentRate</code> <em>microseconds</em></td>
               <td ALIGN="left">
-                <P>This client-side option specifies a non-zero, positive amount of time (in 
-                  uSec, i.e. microseconds) that it takes to transmit and process an individual 
-                  message fragment of the maximum size; see the <code>&#8209;ORBMaxFragmentSize</code>
-                  option above. (This is the total of the 
-                  client&#8209;&gt;server&#8209;&gt;servant processing time not just the average 
-                  network transmission delay.) The client attempts to keep the rate at which it 
-                  sends messages down to this speed by purposly delaying sending message 
-                  fragments, if it would exceeding this capacity (but also see the <code>&#8209;ORBSendHighWaterMark</code>
-                  option below). The default is same value as specified, or is defaulted by, the <code>
-                    &#8209;ORBMaxFragmentSize</code> option above, but this time teated as 
-                  microseconds not bytes. (This default delay value is approximatly the time 
-                  required to transmit that number of bytes on a 10Base&#8209;T network.) Larger 
-                  values will throttle back the clients transmittion rate, smaller values will 
-                  speed it up; but note this value is used with the <code>&#8209;ORBMaxFragmentSize</code>
-                  option above&nbsp;to&nbsp;specify a working ratio&nbsp;so this value may need 
-                  to be altered if the size is changed.
+                <P>This client-side option (if enabled, see <code>&#8209;ORBSendThrottling</code> 
+                  below) specifies a non-zero, positive amount of time (in uSec, i.e. 
+                  microseconds) that it takes to transmit and process an individual message 
+                  fragment of the maximum size; see the <code>&#8209;ORBMaxFragmentSize</code> option 
+                  above. (This is the total of the client&#8209;&gt;server&#8209;&gt;servant 
+                  processing time not just the average network transmission delay.) The client 
+                  attempts to keep the rate at which it sends messages down to this speed by 
+                  purposly delaying sending message fragments, if it would exceeding this 
+                  capacity (but also see the <code>&#8209;ORBSendHighWaterMark</code> option 
+                  below). The default is same value as specified, or is defaulted by, the <code>&#8209;ORBMaxFragmentSize</code>
+                  option above, but this time teated as microseconds not bytes. (This default 
+                  delay value is approximatly the time required to transmit that number of bytes 
+                  on a 10Base&#8209;T network.) Larger values will throttle back the clients 
+                  transmittion rate, smaller values will speed it up; but note this value is used 
+                  with the <code>&#8209;ORBMaxFragmentSize</code> option 
+                  above&nbsp;to&nbsp;specify a working ratio&nbsp;so this value may need to be 
+                  altered if the size is changed.
                 </P>
               </td>
             </tr>
             <tr>
               <td ALIGN="left"><code>&#8209;ORBSendHighWaterMark</code> <em>bytes</em></td>
-              <td ALIGN="left">This client-side option is the usable size of the message 
-                buffer, i.e how much data can be sent without introducing delays into the 
-                transmition of individual MIOP fragments (due to the <code>&#8209;ORBMaxFragmentRate</code>
-                option above). Its default value is the size of the buffer maintained by the 
-                Operating System for the sending socket at the client side (see the <code>&#8209;ORBSndSock</code>
-                option below) as although it should idealy be based on the server's receive 
-                socket buffer size, that information is not available to the client, and the 
-                two values normally default to the same size anyway.</B> If in doubt specify 
-                this value and&nbsp;set it to a smaller value than the full size of the servers <CODE>
-                  &#8209;ORBRcvSock</CODE> option&nbsp;(especially if multiple clients are all 
-                broadcasting to the same server, when each client should only use a fraction of 
-                the full buffer size based upon the number of clients actually in use).
+              <td ALIGN="left">This client-side option (if enabled, see <code>&#8209;ORBSendThrottling</code>
+                below) is the usable size of the message buffer, i.e how much data can be sent 
+                without introducing delays into the transmition of individual MIOP fragments 
+                (due to the <code>&#8209;ORBMaxFragmentRate</code> option above). Its default 
+                value is the size of the buffer maintained by the Operating System for the 
+                sending socket at the client side (see the <code>&#8209;ORBSndSock</code> option 
+                below) as although it should idealy be based on the server's receive socket 
+                buffer size, that information is not available to the client, and the two 
+                values normally default to the same size anyway.</B> If in doubt specify this 
+                value and&nbsp;set it to a smaller value than the full size of the servers <CODE>&#8209;ORBRcvSock</CODE>
+                option&nbsp;(especially if multiple clients are all broadcasting to the same 
+                server, when each client should only use a fraction of the full buffer size 
+                based upon the number of clients actually in use).
+              </td>
+            </tr>
+            <tr>
+              <td ALIGN="left"><code>&#8209;ORBSendThrottling</code> <em>0 | 1</em></td>
+              <td ALIGN="left">This is a client-side option that is enabled by default; 
+                although this default can be overriden when the TAO libraries are built in the <CODE>
+                  ace/config.h</CODE>, by specifying the new default such as <CODE>#define&nbsp;TAO_DEFAULT_MIOP_SEND_THROTTLING&nbsp;false</CODE>
+                which in this case would turn off throttling by default, unless specified in 
+                the service file. If disabled (0) the client will always attempt to transmit 
+                all MIOP message fragments without any delay. If enabled (1) the client will 
+                attempt to automatically restrict the speed of sending individual MIOP messages 
+                to maintain an average of <code>&#8209;ORBMaxFragmentSize</code> bytes per <code>&#8209;ORBMaxFragmentRate</code>
+                microseconds once the threshold of <code>&#8209;ORBSendHighWaterMark</code> bytes 
+                of data are currently being transmitted or are in progress via each individual transport
+                (i.e. each individual client-side connection to the server).
               </td>
             </tr>
             <tr>
@@ -1842,6 +1859,28 @@ strategy.
                 option is advisable to maximize the available sockets receive buffer space, but 
                 obviosuly this is a trade off between available memory and other OS non-paged 
                 memory uses.
+              </td>
+            </tr>
+            <tr>
+              <td ALIGN="left"><code>&#8209;ORBEagerDequeueing</code> <em>0 | 1</em></td>
+              <td ALIGN="left">This is a server-side option that is enabled by default; 
+                although this default can be overriden when the TAO libraries are built in the <CODE>
+                  ace/config.h</CODE>, by specifying the new default such as <CODE>#define&nbsp;TAO_DEFAULT_MIOP_EAGER_DEQUEUEING&nbsp;false</CODE>
+                which in this case would turn this off by default, unless specified in the 
+                service file. If disabled (0) each thread servicing the MIOP listener will only 
+                dequeue enough MIOP message fragments from the socket receive buffer to 
+                complete a single full MIOP message which it will then process. This action 
+                reduces the amount of user memory consumed by the server process, but it also 
+                increases the likelyhood of the OS sockets receive buffer overflowing (as 
+                whilst processing each message, the thread cannot dequeue other incomming 
+                message fragments). If enabled (1) it specifies that each server thread will 
+                attempt to dequeue all available MIOP messages from the receiver's socket and 
+                queue these up in a user memory FIFO queue, before attempting to process a 
+                single MIOP message from the head of this FIFO queue. This action attempts to 
+                speed up the dequeueing of MIOP messages from the OS socket receive buffer 
+                (with a corresponding increase in the amount of user memory consumed by the 
+                server process) so as to limit the number of MIOP messages that the server may 
+                miss due to the OS sockets receive buffer becoming full.
               </td>
             </tr>
             <tr>
