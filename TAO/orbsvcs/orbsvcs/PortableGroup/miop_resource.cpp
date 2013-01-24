@@ -20,6 +20,8 @@ TAO_MIOP_Resource_Factory::TAO_MIOP_Resource_Factory (void)
   , send_hi_water_mark_  (0u) // Zero sets this to actual -ORBSndSock
   , send_buffer_size_    (0u) // Zero is unspecified (-ORBSndSock).
   , receive_buffer_size_ (0u) // Zero is unspecified (-ORBRcvSock).
+  , enable_throttling_    (!!(TAO_DEFAULT_MIOP_SEND_THROTTLING))  // Client-side SendRate throttling enabled.
+  , enable_eager_dequeue_ (!!(TAO_DEFAULT_MIOP_EAGER_DEQUEUEING)) // Server-side Multiple message dequeueing.
 {
 }
 
@@ -340,6 +342,18 @@ u_long
 TAO_MIOP_Resource_Factory::receive_buffer_size (void) const
 {
   return receive_buffer_size_;
+}
+
+bool
+TAO_MIOP_Resource_Factory::enable_throttling (void) const
+{
+  return enable_throttling_;
+}
+
+bool
+TAO_MIOP_Resource_Factory::enable_eager_dequeue (void) const
+{
+  return enable_eager_dequeue_;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

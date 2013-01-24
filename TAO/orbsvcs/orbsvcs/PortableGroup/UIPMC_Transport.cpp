@@ -330,10 +330,11 @@ TAO_UIPMC_Transport::send (
            this_fragment_size-= static_cast<u_long> (already_sent))
         {
           // Make sure we don't send our fragments too quickly
-          this->throttle_send_rate (
-            factory->max_fragment_rate (),
-            max_fragment_size,
-            this_fragment_size);
+          if (factory->enable_throttling ())
+            this->throttle_send_rate (
+              factory->max_fragment_rate (),
+              max_fragment_size,
+              this_fragment_size);
 
           // Haven't sent some of the data yet, we need to adjust the fragments iov's
           // to skip the data we have actually manage to send so far.
@@ -382,7 +383,8 @@ TAO_UIPMC_Transport::send (
             }
 
           // Keep a note of the number of bytes we have just buffered
-          this->total_bytes_outstanding_+= static_cast<u_long> (already_sent);
+          if (factory->enable_throttling ())
+            this->total_bytes_outstanding_+= static_cast<u_long> (already_sent);
         } // Keep sending the rest of the fragment
 
       // Increment the number of bytes of payload transferred.
