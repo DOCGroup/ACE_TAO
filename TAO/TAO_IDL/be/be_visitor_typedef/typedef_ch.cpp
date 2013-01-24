@@ -104,29 +104,32 @@ be_visitor_typedef_ch::visit_typedef (be_typedef *node)
                             -1);
         }
 
-      // accept on this base type, but generate code for the typedef node.
-      if (bt->accept (this) == -1)
+      if (!node->imported ())
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_typedef_ch::"
-                             "visit_typedef - "
-                             "failed to accept visitor\n"),
-                            -1);
-        }
-
-      // Generate the typecode decl for this typedef node.
-      if (!node->imported () && be_global->tc_support ())
-        {
-          be_visitor_context ctx (*this->ctx_);
-          be_visitor_typecode_decl visitor (&ctx);
-
-          if (node->accept (&visitor) == -1)
+          // accept on this base type, but generate code for the typedef node.
+          if (bt->accept (this) == -1)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_typedef_ch::"
                                  "visit_typedef - "
-                                 "TypeCode declaration failed\n"),
+                                 "failed to accept visitor\n"),
                                 -1);
+            }
+
+          // Generate the typecode decl for this typedef node.
+          if (be_global->tc_support ())
+            {
+              be_visitor_context ctx (*this->ctx_);
+              be_visitor_typecode_decl visitor (&ctx);
+
+              if (node->accept (&visitor) == -1)
+                {
+                  ACE_ERROR_RETURN ((LM_ERROR,
+                                     "(%N:%l) be_visitor_typedef_ch::"
+                                     "visit_typedef - "
+                                     "TypeCode declaration failed\n"),
+                                    -1);
+                }
             }
         }
 

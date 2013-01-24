@@ -92,8 +92,7 @@ namespace TAO
     try
       {
         CORBA::TypeCode_ptr any_tc = any._tao_get_typecode ();
-        CORBA::Boolean const _tao_equiv =
-          any_tc->equivalent (tc);
+        CORBA::Boolean const _tao_equiv = any_tc->equivalent (tc);
 
         if (!_tao_equiv)
           {

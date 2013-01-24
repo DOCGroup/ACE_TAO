@@ -24,10 +24,6 @@
 
 #include "ace/OS_NS_Thread.h"
 
-#if defined (ACE_HAS_THREADS)
-
-// ACE platform supports some form of threading.
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ACE_Export ACE_Condition_Attributes
@@ -94,8 +90,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #if defined (__ACE_INLINE__)
 #include "ace/Condition_Attributes.inl"
 #endif /* __ACE_INLINE__ */
-
-#endif /* !ACE_HAS_THREADS */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_CONDITION_ATTRIBUTES_H */

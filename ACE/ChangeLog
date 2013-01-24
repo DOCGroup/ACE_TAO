@@ -1,3 +1,676 @@
+Tue Jan 22 12:28:19 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/CDR_Size.h:
+          Doxygen changs
+
+        * tests/FlReactor_Test.cpp:
+          Unicode fixes
+
+Mon Jan 21 08:24:11 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * html/Stats/index.shtml:
+          Corrected link
+
+Thu Jan 17 12:25:40 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * debian/debian.control:
+          Fixed depencency on libssl-dev, thanks to Michael Ganz
+          <michael_ganz at t-online dot de> for reporting this
+
+Thu Jan 17 12:23:42 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Sig_Handler.cpp:
+          Layout changes
+
+        * docs/bczar/bczar.html:
+          Updated packages
+
+        * html/Stats/index.shtml:
+          Added another page
+
+Fri Jan  4 21:52:14 UTC 2013  Adam Mitz  <mitza@ociweb.com>
+
+        * include/makeinclude/platform_linux_clang.GNU:
+
+          Added clang command-line option required to build TAO.
+
+Fri Jan  4 12:11:12 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rpmbuild/ace-tao-init-suse/init.d/tao-cosconcurrency:
+        * rpmbuild/ace-tao-init-suse/init.d/tao-cosevent:
+        * rpmbuild/ace-tao-init-suse/init.d/tao-cosnaming:
+        * rpmbuild/ace-tao-init-suse/init.d/tao-cosnotification:
+        * rpmbuild/ace-tao-init-suse/init.d/tao-costrading:
+        * rpmbuild/ace-tao-init-suse/init.d/tao-rtevent:
+          Add $network to Required-Start line, thanks to John Fletcher
+          <john dot fletcher at rd dot bbc dot co dot uk> for reporting
+          this.
+
+Thu Jan  3 22:53:44 UTC 2013  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS_NS_netdb.cpp (ACE_OS::getmacaddress): On Linux, search for
+          an interface to get the MAC address for; don't assume eth0 is
+          present and usable.
+
+        * tests/Bug_3744_Regression_Test.cpp: Fix ACE_LOG_MSG output.
+
+Wed Jan  2 19:19:58 UTC 2013  Thomas Girard  <thomas.g.girard@free.fr>
+
+        * ace/Service_Config.h: ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE
+          fix when ACE_VERSIONED_SO=2. Because of '.' in the version,
+          addition of prefix ACE_DLL_PREDIX and suffix ACE_DLL_SUFFIX
+          is skipped, preventing ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE
+          from working when ACE+TAO is built with versioned_so=2.
+
+Thu Dec 27 09:18:39 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+        * bin/diff-builds-and-group-fixed-tests-only.sh:
+        * docs/Download.html:
+        * docs/bczar/bczar.html:
+        * etc/index.html:
+          Updated in preparation of next release
+
+Thu Dec 27 10:00:49 CET 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE version 6.1.7 released.
+
+Fri Dec 21 09:22:41 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * protocols/tests/HTBP/Reactor_Tests/run_test.pl:
+        * protocols/tests/HTBP/Send_Large_Msg/run_test.pl:
+        * protocols/tests/HTBP/Send_Recv_Tests/run_test.pl:
+        * protocols/tests/HTBP/ping/run_test.pl:
+          Check return value of spawn, if it fails directly exit the
+          test run
+
+Wed Dec 19 14:46:24 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_cegcc.GNU:
+        * include/makeinclude/platform_g++_common.GNU:
+        * include/makeinclude/platform_rtems.x_g++.GNU:
+        * include/makeinclude/platform_vxworks6.2.GNU:
+        * include/makeinclude/platform_vxworks6.3.GNU:
+          Install tao_idl3_to_idl2 and tao_idl3_to_xmi into ACE_ROOT/bin
+          to handle cross compilation in a flat layout more easily, this
+          way we can use the same approach as tao_idl does
+
+Mon Dec 17 20:53:22 UTC 2012  Adam Mitz  <mitza@ociweb.com>
+
+        * ace/Message_Queue_Vx.inl:
+
+          Updated for VxWorks 6.9 32-bit kernel mode.
+
+Mon Dec 17 18:26:27 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Acceptor.cpp:
+          Fixed warning
+
+Mon Dec 17 13:40:00 UTC 2012  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * ace/SOCK_Dgram.cpp: ACE_SOCK_Dgram::make_multicast_ifaddr ()
+          Uncovered due to TAO UIPMC option -ORBListenOnAll 1 being
+          enabled. The SOCK_Dgram_Mcast.cpp ACE_SOCK_Dgram_Mcast::subscribe_ifs()
+          call iterates through the list of IP addresses for all interfaces
+          NOT the list of Interface Names. This works only for windows and newer
+          linuxes (where they are automatically converted into interface names).
+          Older linuxes do not and expect the actual interface names (eg. "Eth0")
+          to be given. This fix allows both forms to be given on older linuxes as well.
+          (Test TAO/orbscvc/tests/Miop/McastHello updated to enable -ORBListenOnAll 1.)
+
+Mon Dec 17 09:59:45 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_Thread.inl:
+        * ace/OS_NS_sys_shm.cpp:
+        * ace/OS_NS_sys_socket.cpp:
+        * ace/OS_NS_sys_stat.cpp:
+        * ace/OS_NS_sys_uio.cpp:
+          Zapped empty lines
+
+Mon Dec 17 09:31:49 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Acceptor.cpp:
+          Fixed one-shot acceptor, could call null ptr
+
+        * ace/Throughput_Stats.cpp:
+          Simplified code
+
+        * protocols/tests/RMCast/Receiver.cpp:
+          Fixed incorrect argument to memcpy
+
+Fri Dec 14 19:36:20 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/bczar/bczar.html:
+          Added patch
+
+Sun Dec  9 14:38:27 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/POSIX_Proactor.cpp:
+        * ace/Parse_Node.cpp:
+        * ace/SV_Message_Queue.inl:
+        * ace/SV_Message_Queue.cpp:
+          Fixed coverity errors
+
+Fri Dec  7 20:14:27 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_g++_common.GNU:
+          Improved support for gcov=1
+
+Fri Dec  7 13:06:07 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Strategies_T.cpp:
+          Check return value of enable (ACE_NONBLOCK), fixes Coverity
+          reported errors
+
+Thu Nov 29 15:08:26 UTC 2012  Steve Huston  <shuston@riverace.com>
+
+        * ace/ACE.cpp (handle_timed_complete): Adapt to an occasionally seen
+          scenario where only the POLLERR bit is set on a failed connect.
+          This is for the poll() case, not select().
+
+Thu Nov 29 10:31:05 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/CDR_Stream.cpp:
+          Removed another occurance of arm handling here, gets handled
+          at a lower layer already
+
+Thu Nov 29 10:10:56 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Service_Config.h:
+          Fixed compile errors in xml builds
+
+Thu Nov 29 08:49:39 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/CDR_Stream.cpp:
+          Removed arm handling here, gets handled at a lower layer
+          already
+
+Wed Nov 28 09:34:00 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * debian/libace-dev.install:
+          rle has no install files
+
+Wed Nov 28 08:55:49 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * debian/ace.dsc:
+        * debian/debian.changelog:
+        * debian/debian.compat:
+        * debian/debian.control:
+        * debian/debian.rules:
+        * debian/libace-6.1.6.install:
+        * debian/libace-dev.install:
+        * debian/libtao-dev.install:
+          Added rle compressor and added files as currently work
+          on OBS
+
+Wed Nov 28 07:35:14 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * debian/debian.control:
+        * debian/ace-netsvcs.doc-base:
+        * debian/ace-netsvcs.docs:
+        * debian/ace-netsvcs.install:
+        * debian/ace-netsvcs.manpages:
+        * debian/libnetsvcs-6.1.6.docs:
+        * debian/libnetsvcs-6.1.6.install:
+        * debian/libnetsvcs-dev.docs:
+        * debian/libnetsvcs-dev.install:
+        * debian/mwc_workspace.txt:
+          Don't package netsvcs
+
+Tue Nov 27 14:41:19 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * debian/ace-netsvcs.manpages:
+        * debian/tao-idl.manpages:
+        * debian/tao-log.manpages:
+        * debian/tao-tls.manpages:
+        * debian/tao-utils.manpages:
+          No manpage for the moment
+
+Tue Nov 27 14:10:46 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * debian/mpc-ace.manpages:
+          No manpage for the moment
+
+Tue Nov 27 12:43:06 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * debian/tao-log.docs:
+          Debian package improvements
+
+Tue Nov 27 11:53:18 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * debian/tao-trading.docs:
+          Debian package improvements
+
+Tue Nov 27 11:23:41 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * debian/tao-naming.docs:
+        * debian/tao-notify.docs:
+          Debian package improvements
+
+Tue Nov 27 10:26:32 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * debian/tao-utils.docs:
+          Don't install test
+
+Mon Nov 26 12:37:04 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * debian/mwc_workspace.txt:
+          Added netsvcs/servers
+
+Sun Nov 25 20:08:55 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/rules.local.GNU:
+          Fixex AIX errors
+
+Sun Nov 25 20:05:25 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * debian/mwc_workspace.txt:
+        * debian/TAO_ACE.mwc:
+          Renamed to .txt, resolves problems on windows builds
+
+Fri Nov 23 19:28:35 UTC 2012  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * THANKS:
+
+          Added Sergey Onuchin <sonuchin at parallels dot com>.
+
+Fri Nov 23 16:49:35 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * debian/tao-imr.docs:
+        * debian/tao-log.docs:
+        * debian/tao-notify.docs:
+        * debian/tao-trading.docs:
+          Updated README locations
+
+Fri Nov 23 15:26:38 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * debian/tao-concurrency.docs:
+        * debian/tao-cosconcurrency.docs:
+        * debian/tao-cosevent.docs:
+        * debian/tao-cosnotification.docs:
+        * debian/tao-costime.docs:
+        * debian/tao-costrading.docs:
+        * debian/tao-event.docs:
+        * debian/tao-ft.docs:
+        * debian/tao-ifr.docs:
+        * debian/tao-imr.docs:
+        * debian/tao-load.docs:
+        * debian/tao-log.docs:
+        * debian/tao-naming.docs:
+        * debian/tao-notify.docs:
+        * debian/tao-time.docs:
+        * debian/tao-tls.docs:
+        * debian/tao-utils.docs:
+          We are going to install the README files also
+
+Fri Nov 23 14:21:18 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * debian/tao-cosnaming.docs:
+          Updated path
+
+Fri Nov 23 12:58:40 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * debian/libtao-doc.docs:
+          Install fix
+
+Fri Nov 23 12:33:16 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/rules.lib.GNU:
+          Fix for AIX
+
+Fri Nov 23 12:28:20 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Service_Config.h:
+          msvc fix
+
+Fri Nov 23 12:19:09 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * debian/libace-dev.docs:
+        * debian/libace-doc.docs:
+        * debian/libnetsvcs-6.1.6.docs:
+        * debian/libnetsvcs-6.1.6.install:
+        * debian/libtao-2.1.6.docs:
+        * debian/libtao-dev.docs:
+        * debian/libnetsvcs-6.1.2.docs:
+        * debian/libnetsvcs-6.1.2.install:
+          Doc install fixes
+
+Fri Nov 23 09:51:01 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * debian/README.source:
+          Removed comment of patch that got integrated
+
+        * debian/libtao-2.1.6.install:
+        * debian/libtao-dev.install:
+          Added missing libraries
+
+Fri Nov 23 09:39:17 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * debian/TAO_ACE.mwc:
+        * debian/libace-6.1.6.docs:
+        * debian/libace-dev.docs:
+        * debian/libace-dev.install:
+        * debian/libace-doc.docs:
+        * debian/libtao-2.1.6.docs:
+        * debian/libtao-dev.docs:
+        * debian/libtao-doc.docs:
+          More install fixes
+
+Fri Nov 23 08:07:23 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ETCL/ETCL_Constraint.inl:
+          Fixed coverity error by initializing pointer value
+
+        * ace/Message_Queue.h:
+        * ace/Timer_Queue_Iterator.h:
+          Doxygen improvements
+
+        * ace/Timer_Queue_Iterator.cpp:
+          Initialize all members in default constructor
+
+Thu Nov 22 13:31:20 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * debian/tao-log.install:
+          Fixed executable name
+
+Thu Nov 22 12:56:20 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * debian/ACE-DPKG.mwc:
+        * debian/TAO-DPKG.mwc:
+          Removed these files.
+
+Thu Nov 22 12:55:05 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * debian/default.features:
+        * debian/libtao-2.1.6.install:
+        * debian/libtao-dev.install:
+        * debian/platform_macros.GNU:
+          Remove lzo1 compressor
+
+Thu Nov 22 12:38:34 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Service_Config.h:
+          Added new ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE which accepts
+          an explicit version to be loaded. Needed for debian for example
+
+        * debian/patches/series:
+        * debian/patches/15-fix-lzo-flags.diff:
+        * debian/patches/34-bts386713.diff:
+          Cleanup
+
+        * debian/platform_macros.GNU:
+          Set versioned_so=2
+
+        * include/makeinclude/platform_g++_common.GNU:
+          When versioned_so=2 add ACE_VERSIONED_SO=2 as
+          define
+
+Thu Nov 22 09:20:46 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_g++_common.GNU:
+        * include/makeinclude/rules.lib.GNU:
+        * include/makeinclude/rules.local.GNU:
+        * include/makeinclude/wrapper_macros.GNU:
+          Added support for versioned_so=2, that will create
+          for example libACE-6.1.6.so instead of libACE.so.6.1.6
+
+        * debian/patches/20-versioned_libs.diff:
+          Removed this file.
+
+Wed Nov 21 10:18:22 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * debian/libace-xml-utils-6.1.6.install:
+        * debian/libace-xml-utils-dev.install:
+          New files
+
+        * debian/platform_macros.GNU.in:
+          Removed this file.
+
+Tue Nov 20 23:55:57 UTC 2012  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-hpux-11.00.h:
+        * ace/OS_NS_netdb.inl: Although HP-UX 11 doesn't have the _r
+          netdb calls, the regular ones are reentrant for multiple threads.
+          Therefore, do not use the mutex-acquiring wrapper for HP-UX 11.
+
+Tue Nov 20 19:10:38 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/XML_Utils/ACE_XML_Utils.pc.in:
+        * ace/XML_Utils/XML.mpc:
+          Added missing pc.in file for ACE_XML_Utils
+
+Tue Nov 13 18:17:24 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/run_test.lst:
+          Bug_4055_Regression_Test needs threads
+
+Tue Nov 13 13:29:28 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Condition_Attributes.h:
+        * ace/Condition_Attributes.inl:
+        * ace/Condition_Attributes.cpp:
+          Now also needed in single threaded builds
+
+Mon Nov 12 19:26:41 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Malloc.cpp:
+        * ace/Naming_Context.h:
+        * ace/Naming_Context.cpp:
+        * ace/Read_Buffer.cpp:
+        * ace/Recursive_Thread_Mutex.cpp:
+        * ace/SV_Semaphore_Simple.cpp:
+          Coverity fixes
+
+Mon Nov 12 17:21:25 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_Thread.inl:
+          Fixed win32 compile errors
+
+Mon Nov 12 13:34:35 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Sig_Adapter.cpp:
+          Fixed coverity errors
+
+        * ace/Signal.h:
+          Doxygen change
+
+Mon Nov 12 12:19:18 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_Thread.inl:
+          Fixed missing ACE_INLINE
+
+Mon Nov 12 10:45:51 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_Thread.h:
+        * ace/OS_NS_Thread.inl:
+          Added constructor for ACE_event_t to initialize pointers
+          explicitly to 0, fixes coverity #743165
+
+        * tests/Bug_4055_Regression_Test.cpp:
+          Check return value of clock_settime, fixes coverity #743164
+
+Mon Nov 12 10:06:57 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+        * bin/diff-builds-and-group-fixed-tests-only.sh:
+        * docs/Download.html:
+        * docs/bczar/bczar.html:
+        * etc/index.html:
+          Updated for next release
+
+Mon Nov 12 09:34:14 CET 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE version 6.1.6 released.
+
+Sun Nov 11 14:26:17 UTC 2012  Martin Corino  <mcorino@remedy.nl>
+
+        * tests/Monotonic_Manual_Event_Test.cpp:
+        * tests/Monotonic_Message_Queue_Test.cpp:
+        * tests/Monotonic_Task_Test.cpp:
+          Further narrowing of preprocessor test to prevent running
+          test on unsupported platforms.
+
+Sat Nov 10 11:35:57 UTC 2012  Martin Corino  <mcorino@remedy.nl>
+
+        * tests/Monotonic_Manual_Event_Test.cpp:
+        * tests/Monotonic_Message_Queue_Test.cpp:
+        * tests/Monotonic_Task_Test.cpp:
+          Further narrowing of preprocessor test to prevent running
+          test on unsupported platforms.
+          Small logging changes.
+
+Fri Nov  9 10:29:37 UTC 2012  Martin Corino  <mcorino@remedy.nl>
+
+        * tests/Monotonic_Manual_Event_Test.cpp:
+        * tests/Monotonic_Message_Queue_Test.cpp:
+        * tests/Monotonic_Task_Test.cpp:
+          Narrowing down the selection test for supported platforms.
+
+Fri Nov  9 08:28:23 UTC 2012  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/OS_NS_Thread.inl:
+          Fixed compile error resulting from previous change.
+
+Wed Nov  7 19:16:47 UTC 2012  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/OS_NS_Thread.inl:
+          Fix for unused arg warnings.
+
+Wed Nov  7 13:51:14 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/SSL/SSL_Context.h:
+        * ace/SSL/SSL_Context.cpp:
+        * protocols/ace/INet/HTTP_Simple_exec.cpp:
+          Resolve compile problems with OpenSSL on recent debian/ubuntu
+          versions which don't ship SSLv2 anymore
+
+        * debian/patches/series:
+        * debian/patches/35_disable_sslv2.diff:
+          Patch is not needed anymore
+
+Sat Oct 20 14:13:07 UTC 2012  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Timer_Hash_T.h: Added a forward declaration of
+          ACE_Event_Handler to ensure ACE compiles properly on certain
+          platforms.  Thanks to Peng Xu <pengxu7 at gmail dot com> for
+          reporting this.
+
+Tue Nov  6 18:59:48 UTC 2012  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/ace_for_tao.mpc:
+          Reflect fact that Event classes are now templates.
+          Added new Event base class.
+
+Tue Nov  6 14:44:38 UTC 2012  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS_NS_Thread.cpp (ACE_TSS_Cleanup::thread_detach_key): If
+          given a key which was never set, ignore it. Only throw an assertion
+          if the key's table slot is used but does not match the key asked
+          to free. The never-set case happens if a ACE_TSS object fails
+          when setting its value; the later cleanup would cause an assert.
+
+Tue Nov  6 13:34:20 UTC 2012  Martin Corino  <mcorino@remedy.nl>
+
+        * NEWS:
+          Updated for new time policy support for ACE Events.
+
+Tue Nov  6 11:46:45 UTC 2012  Martin Corino  <mcorino@remedy.nl>
+
+        * bin/fuzz.pl:
+          Fixed missing 'next;' in check_for_ACE_Thread_Mutex()
+          fuzzer.
+
+Tue Nov  6 11:42:26 UTC 2012  Martin Corino  <mcorino@remedy.nl>
+
+        * tests/Monotonic_Manual_Event_Test.cpp:
+          Fixed file comment.
+
+Tue Nov  6 10:55:47 UTC 2012  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/OS_NS_Thread.h:
+        * ace/OS_NS_Thread.inl:
+        * ace/OS_NS_Thread.cpp:
+          Extended OS wrappers for event and sema with
+          variants excepting condition attributes.
+
+        * ace/Event_Base.h:
+        * ace/Event_Base.inl:
+        * ace/Event_Base.cpp:
+          Added non-template base class for events.
+
+        * ace/Auto_Event.h:
+        * ace/Auto_Event.inl:
+        * ace/Auto_Event.cpp:
+        * ace/Event.h:
+        * ace/Event.inl:
+        * ace/Event.cpp:
+        * ace/Manual_Event.h:
+        * ace/Manual_Event.inl:
+        * ace/Manual_Event.cpp:
+          Refactored into TIME_POLICY based templates.
+          Added inlined derived classes of default
+          template instantiations to satisfy old code.
+
+        * ace/ace.mpc:
+          Reflect fact that Event classes are now templates.
+          Added new Event base class.
+
+        * docs/ACE-monotonic-timer.html:
+          Added documentation concerning Event changes.
+
+        * tests/Manual_Event_Test.cpp:
+          Removed dead code.
+
+        * tests/Monotonic_Manual_Event_Test.cpp:
+        * tests/run_test.lst:
+        * tests/tests.mpc:
+          Added new regression test for time policy
+          support of events.
+
+Tue Oct 30 07:48:18 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rpmbuild/ace-tao.spec:
+          Fixes for OpenSuSE 12.2
+
+Sat Oct 27 18:59:36 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/TSS_T.inl:
+          Use the word error in the ACE_ERROR messages in this file
+
+Tue Oct 23 20:09:07 UTC 2012  Abdullah Sowayan  <sowayan@gmail.com>
+
+        * ace/config-macosx-mountain-lion.h:
+        * include/makeinclude/platform_macosx_mountain_lion.GNU:
+
+          Adding Mountain Lion support
+
+Fri Oct 12 10:50:28 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+        * bin/diff-builds-and-group-fixed-tests-only.sh:
+        * docs/Download.html:
+        * docs/bczar/bczar.html:
+        * etc/index.html:
+          Updated for x.1.5
+
+Fri Oct 12 11:20:25 CEST 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE version 6.1.5 released.
+
+Wed Oct 10 22:45:23 UTC 2012  Steve Huston  <shuston@riverace.com>
+
+        * ace/Reactor.h: Corrected the comments concerning removal of
+          signal handler registrations - they DO call handle_close() now.
+
+        * tests/Network_Adapters_Test.{cpp, h}: Corrected the call to remove
+          signal handlers and added a check in Stop_Handler::handle_close()
+          to ignore calls as a result of removing a signal handler.
+
+Wed Oct 10 18:47:12 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/bczar/bczar.html:
+          Package updates
+
 Mon Oct  8 13:27:58 UTC 2012  Steve Huston  <shuston@riverace.com>
 
         * ace/Sig_Handler.{cpp, inl}: Reverted change from:

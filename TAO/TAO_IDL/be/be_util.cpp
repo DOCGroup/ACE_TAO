@@ -795,11 +795,6 @@ be_util::usage (void)
     ));
   ACE_DEBUG ((
       LM_DEBUG,
-      ACE_TEXT (" -si\t\t\tServer's inline file name ending.")
-      ACE_TEXT (" Default is S.inl\n")
-    ));
-  ACE_DEBUG ((
-      LM_DEBUG,
       ACE_TEXT (" -ss\t\t\tServer's skeleton file name ending.")
       ACE_TEXT (" Default is S.cpp\n")
     ));

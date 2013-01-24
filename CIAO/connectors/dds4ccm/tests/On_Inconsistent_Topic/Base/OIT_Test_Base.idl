@@ -30,7 +30,7 @@ typedef sequence<OIT_Receiver_Topic> OIT_Receiver_TopicSeq;
 struct OIT_Sender_Topic {
   string symbol; //@key
   long x;
-  long y;
+  short y;
   long z;
 };
 

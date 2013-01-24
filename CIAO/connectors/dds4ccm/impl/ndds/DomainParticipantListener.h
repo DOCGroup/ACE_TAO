@@ -12,7 +12,7 @@
 
 #include "dds4ccm/idl/ndds/ndds_dcpsC.h"
 #include "dds4ccm/impl/ndds/dds4ccm_ndds_export.h"
-# include "ndds/ndds_cpp.h"
+#include "ndds/ndds_cpp.h"
 
 namespace CIAO
 {

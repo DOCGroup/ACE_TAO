@@ -230,7 +230,7 @@ TAO::PG_Group_List_Store::write (TAO::Storable_Base & stream)
 {
   stream.rewind ();
 
-  unsigned int next_group_id = this->next_group_id_;
+  unsigned int next_group_id = static_cast<unsigned int> (this->next_group_id_);
   stream << next_group_id;
 
   int size = group_ids_.size ();

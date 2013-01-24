@@ -10,6 +10,7 @@ usr/lib/libTAO_DynamicAny-*.so
 usr/lib/libTAO_DynamicInterface-*.so
 usr/lib/libTAO_EndpointPolicy-*.so
 usr/lib/libTAO_IFR_Client-*.so
+usr/lib/libTAO_IFR_Client_skel-*.so
 usr/lib/libTAO_IORInterceptor-*.so
 usr/lib/libTAO_IORManip-*.so
 usr/lib/libTAO_IORTable-*.so
@@ -32,7 +33,6 @@ usr/lib/libTAO_ImR_Client-*.so
 usr/lib/libTAO_DiffServPolicy-*.so
 usr/lib/libTAO_ZlibCompressor-*.so
 usr/lib/libTAO_Bzip2Compressor-*.so
-usr/lib/libTAO_LzoCompressor-*.so
 usr/lib/libTAO_IFR_BE-*.so
 usr/lib/libTAO_IDL_FE-*.so
 usr/lib/libTAO_IDL_BE-*.so

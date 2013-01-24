@@ -33,6 +33,10 @@ ACE_Timer_Node_T<TYPE>::dump (void) const
 
 template <class TYPE>
 ACE_Timer_Node_T<TYPE>::ACE_Timer_Node_T (void)
+  : act_ (0),
+    prev_ (0),
+    next_ (0),
+    timer_id_ (-1)
 {
   ACE_TRACE ("ACE_Timer_Node_T::ACE_Timer_Node_T");
 }

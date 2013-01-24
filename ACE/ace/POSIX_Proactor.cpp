@@ -630,7 +630,11 @@ ACE_AIOCB_Notify_Pipe_Manager::ACE_AIOCB_Notify_Pipe_Manager (ACE_POSIX_AIOCB_Pr
     read_stream_ (posix_aiocb_proactor)
 {
   // Open the pipe.
-  this->pipe_.open ();
+  if (this->pipe_.open () == -1)
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT("%N:%l:%p\n"),
+                ACE_TEXT("ACE_AIOCB_Notify_Pipe_Manager::ACE_AIOCB_Notify_Pipe_Manager:")
+                ACE_TEXT("Open of pipe failed")));
 
   // Set write side in NONBLOCK mode
   ACE::set_flags (this->pipe_.write_handle (), ACE_NONBLOCK);

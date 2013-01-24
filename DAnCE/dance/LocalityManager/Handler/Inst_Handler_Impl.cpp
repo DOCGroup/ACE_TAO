@@ -153,15 +153,15 @@ namespace DAnCE
               {
                 deps.insert (id);
               }
-          }
-        else
-          {
-            DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
-                         (LM_ERROR, DLINFO
-                          ACE_TEXT ("Inst_Handler_Impl::install_instance - ")
-                          ACE_TEXT ("Unable to extract dependency order from string")));
-            throw ::Deployment::StartError (idd.name.in (),
-                                            "Unable to extract dependency order from string");
+            else
+              {
+                DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
+                            (LM_ERROR, DLINFO
+                              ACE_TEXT ("Inst_Handler_Impl::install_instance - ")
+                              ACE_TEXT ("Unable to extract dependency order from string")));
+                throw ::Deployment::StartError (idd.name.in (),
+                                                "Unable to extract dependency order from string");
+              }
           }
       }
 

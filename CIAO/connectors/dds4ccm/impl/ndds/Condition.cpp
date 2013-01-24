@@ -1,9 +1,8 @@
 // $Id$
 
 #include "Condition.h"
-
-#include "ndds/ndds_cpp.h"
 #include "dds4ccm/impl/logger/Log_Macros.h"
+#include "ndds/ndds_cpp.h"
 
 namespace CIAO
 {

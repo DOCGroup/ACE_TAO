@@ -231,6 +231,12 @@ public:
   virtual
   AST_PortType *fe_add_porttype (AST_PortType *pt);
 
+  // Reset the last_in_same_parent_scope_ member to ourself
+  // (called by AST_Root::destroy on the CORBA module containing
+  // the basic types, since it isn't destroyed between processing
+  // multiple IDL files.
+  void reset_last_in_same_parent_scope (void);
+
 private: // Data
   bool pd_has_nested_valuetype_;
 

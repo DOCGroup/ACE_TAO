@@ -544,8 +544,8 @@ public:
    * thread can execute it on the same instance concurrently.
    *
    * @param buffer ORB allocated buffer where the data should be
-   * @@ The ACE_Time_Value *s is just a place holder for now.  It is
-   * not clear this this is the best place to specify this.  The actual
+   * @param timeout The ACE_Time_Value *s is just a place holder for now. It is
+   * not clear this this is the best place to specify this. The actual
    * timeout values will be kept in the Policies.
    */
   virtual ssize_t recv (char *buffer,
@@ -1052,6 +1052,14 @@ private:
    */
   int notify_reactor (void);
 
+protected:
+  /*
+   * Same as notify_reactor above but does NOT first check for a
+   * registered TAO_Wait_Strategy.
+   */
+  int notify_reactor_now (void);
+
+private:
   /// Assume the lock is held
   void send_connection_closed_notifications_i (void);
 

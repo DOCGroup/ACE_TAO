@@ -11,6 +11,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
 #include "tao/GIOP_Message_Base.h"
+#include "tao/Resume_Handle.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -383,6 +384,11 @@ TAO_UIPMC_Mcast_Transport::recv_all (void)
 
           // Add it to the complete queue.
           this->complete_.enqueue_tail (packet);
+
+          // The following break stops the eager de-queuing of
+          // further completed MIOP messages. This should probably
+          // be configuable via a MIOP Server -ORB option.
+          break;
         }
     }
 
@@ -405,22 +411,61 @@ TAO_UIPMC_Mcast_Transport::handle_input (
                   this->id ()));
     }
 
-  while (this->recv_all ())
+  if (this->recv_all ())
     {
+      // Unqueue the first available completed message for us to process.
       TAO_PG::UIPMC_Recv_Packet *complete = 0;
-
+      ACE_Auto_Ptr<TAO_PG::UIPMC_Recv_Packet> owner (0);
       {
         ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->complete_lock_, 0);
+        if (this->complete_.is_empty ())
+          return 0; // Another thread got here first, no problem.
         if (this->complete_.dequeue_head (complete) == -1)
-          return 0;
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("TAO (%P|%t) - TAO_UIPMC_Mcast_Transport[%d]::handle_input, ")
+                        ACE_TEXT ("unable to dequeue completed message\n"),
+                        this->id ()));
+            return 0;
+          }
+        ACE_auto_ptr_reset (owner, complete);
+
+        // If there is another message waiting to be processed (in addition
+        // to the one we have just taken off to be processed), notify another
+        // thread (if available) so this can also be processed in parrellel.
+        if (!this->complete_.is_empty ())
+          {
+            int const retval = this->notify_reactor_now ();
+            if (retval == 1)
+              {
+                // Now we have handed off to another thread, let the class
+                // know that it doesn't need to resume with OUR handle
+                // after we have processed our message.
+                rh.set_flag (TAO_Resume_Handle::TAO_HANDLE_LEAVE_SUSPENDED);
+              }
+            else if (retval < 0 && TAO_debug_level > 2)
+              {
+                ACE_DEBUG ((LM_DEBUG,
+                            ACE_TEXT ("TAO (%P|%t) - TAO_UIPMC_Mcast_Transport[%d]::handle_input, ")
+                            ACE_TEXT ("notify to the reactor failed.\n"),
+                            this->id ()));
+              }
+          }
       }
 
-      ACE_Auto_Ptr<TAO_PG::UIPMC_Recv_Packet> owner (complete);
-
-      // Create a data block.
-      ACE_Data_Block db (complete->data_length (),
+      // Create a data block from our dequeued completed message.
+      char *buffer= 0;
+      ACE_NEW_THROW_EX (buffer,
+                        char[complete->data_length () + ACE_CDR::MAX_ALIGNMENT],
+                        CORBA::NO_MEMORY (
+                          CORBA::SystemException::_tao_minor_code (
+                            TAO::VMCID,
+                            ENOMEM),
+                          CORBA::COMPLETED_NO));
+      ACE_Auto_Array_Ptr<char> owner_buffer (buffer);
+      ACE_Data_Block db (complete->data_length () + ACE_CDR::MAX_ALIGNMENT,
                          ACE_Message_Block::MB_DATA,
-                         0,
+                         buffer,
                          this->orb_core_->input_cdr_buffer_allocator (),
                          this->orb_core_->locking_strategy (),
                          ACE_Message_Block::DONT_DELETE,
@@ -455,10 +500,8 @@ TAO_UIPMC_Mcast_Transport::handle_input (
                           ACE_TEXT ("handle_input, failed to parse input\n"),
                           this->id ()));
             }
-          continue;
         }
-
-      if (qd.missing_data () == TAO_MISSING_DATA_UNDEFINED)
+      else if (qd.missing_data () == TAO_MISSING_DATA_UNDEFINED)
         {
           // Parse/marshal error happened.
           if (TAO_debug_level)
@@ -468,10 +511,8 @@ TAO_UIPMC_Mcast_Transport::handle_input (
                           ACE_TEXT ("handle_input, got missing data\n"),
                           this->id ()));
             }
-          continue;
         }
-
-      if (message_block.length () > mesg_length)
+      else if (message_block.length () > mesg_length)
         {
           // We read too much data.
           if (TAO_debug_level)
@@ -483,11 +524,9 @@ TAO_UIPMC_Mcast_Transport::handle_input (
                           message_block.length (),
                           mesg_length));
             }
-          continue;
         }
-
-      // Process the message.
-      (void) this->process_parsed_messages (&qd, rh);
+      else // Process the message.
+        (void) this->process_parsed_messages (&qd, rh);
     }
 
   return 0;

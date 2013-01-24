@@ -7,18 +7,20 @@
 
 char const * const scpc_orbId = "testDllOrb";
 
-ACE_TCHAR const * const scpc_loadOrb = ACE_DYNAMIC_SERVICE_DIRECTIVE(
+ACE_TCHAR const * const scpc_loadOrb = ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE(
   "testDllOrb",
   "bug3486",
+  TAO_VERSION,
   "_make_DllORB",
   "testDllOrb -ORBDebugLevel 0 -ORBId testDllOrb -ORBDottedDecimalAddresses 1"
 );
 
 ACE_TCHAR const * const scpc_unloadOrb = ACE_REMOVE_SERVICE_DIRECTIVE("testDllOrb");
 
-ACE_TCHAR const * const scpc_loadNamingService = ACE_DYNAMIC_SERVICE_DIRECTIVE(
+ACE_TCHAR const * const scpc_loadNamingService = ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE(
   "testNamingService",
   "TAO_CosNaming_Serv",
+  TAO_VERSION,
   "_make_TAO_Naming_Loader",
   ""
 );

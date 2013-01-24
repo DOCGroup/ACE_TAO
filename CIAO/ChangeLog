@@ -1,3 +1,189 @@
+Mon Jan 21 08:16:41 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/ciao_tests.lst:
+          QueryCondition DDS tests are NDDS only
+
+Thu Dec 27 09:19:07 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+          Updated in preparation of next release
+
+Thu Dec 27 10:00:49 CET 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * CIAO version 1.1.7 released.
+
+Sun Dec 23 11:44:31 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tools/IDL3_to_XMI/IDL3_TO_XMI.mpc:
+          Fixed post install
+
+Sat Dec 22 15:22:31 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Base/CIAO_Base.mpc:
+          Fixed location of ciao tools
+
+Thu Dec 20 13:55:46 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tools/IDL3_to_IDL2/IDL3_to_IDL2.mpc:
+          Fixed post install
+
+Thu Dec 20 07:13:50 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/taoidl3toxmidefaults.mpb:
+          Updated location of tao_idl3_to_xmi
+
+Wed Dec 19 14:44:43 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/taobaseidl3toidl2defaults.mpb:
+        * docs/fm/CIAO.htm:
+        * tests/IDL3_to_XMI/Bug_3607_Regression/run_test.pl:
+        * tests/IDL3_to_XMI/IDL2XMI_Test/run_test.pl:
+        * tests/IDL3_to_XMI/XMI_For_Array/run_test.pl:
+        * tests/IDL3_to_XMI/XMI_For_Included_File/run_test.pl:
+        * tests/IDL3_to_XMI/XMI_For_Module_Reopen/run_test.pl:
+        * tests/IDL3_to_XMI/XMI_For_Native/run_test.pl:
+        * tests/IDL3_to_XMI/XMI_For_Sequence/run_test.pl:
+        * tools/IDL3_to_IDL2/IDL3_to_IDL2.mpc:
+        * tools/IDL3_to_XMI/IDL3_TO_XMI.mpc:
+          Install tao_idl3_to_idl2 and tao_idl3_to_xmi into ACE_ROOT/bin
+          to handle cross compilation in a flat layout more easily, this
+          way we can use the same approach as tao_idl does
+
+Wed Dec 19 08:30:15 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/idl/ndds/ndds_dcps.idl:
+        * connectors/dds4ccm/impl/Utils.h:
+          Extended PresentationQosPolicyAccessScopeKind and
+          SampleRejectedStatusKind. Both enums are extended by
+          RTI DDS 5.0.0 with some new enum values.
+
+Mon Dec 17 18:49:30 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/Condition.cpp:
+        * connectors/dds4ccm/impl/ndds/ContentFilteredTopic.cpp:
+        * connectors/dds4ccm/impl/ndds/DataWriter.cpp:
+        * connectors/dds4ccm/impl/ndds/DomainParticipantListener.h:
+        * connectors/dds4ccm/impl/ndds/QueryCondition.cpp:
+        * connectors/dds4ccm/impl/ndds/WaitSet.cpp:
+          Don't include ndds_cpp.h as first include, fixes problems
+          with msvc release mode compilation
+
+Mon Dec 17 10:14:59 UTC 2012  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/Bug_3769_Regression/Foo_exec.cpp:
+          Using ACE::is_inequal to compare floating point and
+          double values.
+
+Sun Dec 16 09:49:50 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/Policies/dr_qos_test.cpp:
+        * connectors/dds4ccm/tests/Policies/typeconsistencyenforcement_qos_test.h:
+        * connectors/dds4ccm/tests/Policies/typeconsistencyenforcement_qos_test.cpp:
+          Fixed compile error with RTI DDS < 5
+
+Fri Dec 14 18:38:56 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/convertors/DataReaderQos.h:
+          Fixed compile error with RTI DDS < 5
+
+Thu Dec 13 08:40:18 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/idl/ndds/ndds_dcps.idl:
+        * connectors/dds4ccm/impl/ndds/convertors/DataReaderQos.h:
+        * connectors/dds4ccm/impl/ndds/convertors/TypeConsistencyEnforcementQosPolicy.h:
+        * connectors/dds4ccm/tests/Policies/dr_qos_test.cpp:
+        * connectors/dds4ccm/tests/Policies/policies.mpc:
+        * connectors/dds4ccm/tests/Policies/typeconsistencyenforcement_qos_test.h:
+        * connectors/dds4ccm/tests/Policies/typeconsistencyenforcement_qos_test.cpp:
+          Added support for the new DDS TypeConsistencyEnforcementQosPolicy
+          which is coming from the DDS X-Types specification.
+
+        * connectors/dds4ccm/tests/On_Inconsistent_Topic/Base/OIT_Test_Base.idl:
+          Made both topics completely inconsistent, the topics
+          we had where seen as concistent by the DDS X-Types
+          specification
+
+Sun Dec  9 19:36:14 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DomainParticipantFactory.cpp:
+          Fixed coverity error
+
+Fri Nov 30 10:11:11 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/idl/ndds/ndds_dcps.idl:
+        * connectors/dds4ccm/impl/Utils.h:
+          Extended SampleRejectedStatusKind with the RTI defined extensions,
+          detected by Coverity
+
+Sat Nov 24 14:18:41 UTC 2012  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/Bug_3769_Regression/Foo_exec.cpp:
+          Fuzz : Trailing whitespaces
+
+Fri Nov 23 12:53:17 UTC 2012  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/Bug_3769_Regression/Foo_exec.cpp:
+          Fixed fuzz and test.
+
+        * tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
+          Fixed fuzz.
+
+Fri Nov 23 10:56:41 UTC 2012  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/Bug_3769_Regression/Foo_exec.cpp:
+          Minor layout change.
+
+        * tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
+          Added new attribute.
+
+        * bin/ciao_tests.lst:
+        * tests/Bug_3769_Regression/descriptors/run_test_cdr.pl:
+          New test: using CDR as input for the plan launcher.
+
+Fri Nov 23 10:28:23 UTC 2012  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/Bug_3769_Regression/Foo.idl:
+        * tests/Bug_3769_Regression/Foo_exec.h:
+        * tests/Bug_3769_Regression/Foo_exec.cpp:
+          Expanded test. Added a struct within a struct which
+          is placed in a separate module. checking whether the
+          correct values are set.
+
+Mon Nov 19 18:15:16 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/DataReaderListener_T.cpp:
+          Layout changes
+
+        * connectors/dds4ccm/impl/DomainParticipantManager.cpp:
+          Check for (un)registration of nil domain participants, log
+          profile during unregistration
+
+Mon Nov 12 10:07:05 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+          Updated for next release
+
+Mon Nov 12 09:34:14 CET 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * CIAO version 1.1.6 released.
+
+Fri Oct 12 11:18:03 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ccm/CCM_Transaction.idl:
+          Removed old comment
+
+        * ciao/Deployment/Interceptors/Deployment_Interceptors.cpp:
+          Fixed some logging statements
+
+Fri Oct 12 10:53:23 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+          Updated for x.1.5
+
+Fri Oct 12 11:20:25 CEST 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * CIAO version 1.1.5 released.
+
 Mon Oct  8 08:02:52 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Deployment/Handlers/Component_Handler.cpp:

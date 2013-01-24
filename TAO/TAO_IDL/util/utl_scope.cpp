@@ -1127,7 +1127,7 @@ UTL_Scope::lookup_by_name_local (Identifier *e,
       return 0;
     }
 
-  bool in_corba = !ACE_OS::strcmp (e->get_string (), "CORBA");
+  bool in_corba = (ACE_OS::strcmp (e->get_string (), "CORBA") == 0);
 
   // We search only the decls here, the local types are done
   // below as a last resort.
@@ -1136,16 +1136,18 @@ UTL_Scope::lookup_by_name_local (Identifier *e,
        i.next ())
     {
       d = i.item ()->adjust_found (true, full_def_only);
-      if (d)
+
+      if (d != 0)
         {
           Identifier *item_name = d->local_name ();
-          if (item_name
+
+          if (item_name != 0
           // Right now we populate the global scope with all the CORBA basic
           // types, so something like 'ULong' in an IDL file will find a
           // match, unless we skip over these items. This is a workaround until
           // there's time to fix the code generation for CORBA basic types.
-              && (in_corba || ACE_OS::strcmp (
-                  d->name ()->head ()->get_string (), "CORBA"))
+              && (in_corba
+                  || (ACE_OS::strcmp (d->name ()->head ()->get_string (), "CORBA") != 0))
               && e->case_compare (item_name))
             {
               return d; // We have found the one and only one we are looking for.
