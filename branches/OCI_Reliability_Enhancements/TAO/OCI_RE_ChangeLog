@@ -1,3 +1,18 @@
+Fri Jan 25 22:39:26 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * orbsvcs/tests/FT_Naming/FaultTolerant/client.cpp:
+
+          Fixed warnings for unused exception variables. Some of them were
+          printing the wrong exception.
+
+        * utils/logWalker/Log.cpp:
+
+          Fixed warning for sprintf of size_t.
+
+        * utils/nslist/nslist.cpp:
+
+          Changed variables to size_t to avoid potential loss of data warning.
+
 Fri Jan 25 22:05:54 UTC 2013  Phillip LaBanca  <labancap@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/README:

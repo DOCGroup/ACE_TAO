@@ -775,7 +775,8 @@ Log::parse_notify_poa_helper_i (void)
 
   char buffer[100];
   ACE_OS::sprintf (buffer,"Notify object %s, object id %ld, POA %ld on line %ld",
-                   (activate ? "activation" : "deactivation"), objid, poaid, this->offset_);
+                   (activate ? "activation" : "deactivation"), objid, poaid,
+                   (unsigned long)this->offset_);
   ACE_CString text (buffer);
 
   inv->add_notify_incident (text, this->offset_);

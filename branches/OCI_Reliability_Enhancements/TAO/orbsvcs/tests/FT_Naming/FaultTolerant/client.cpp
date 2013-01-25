@@ -592,7 +592,7 @@ do_failover_name_test (
           }
           catch (const CosNaming::NamingContext::NotFound& second_ex)
             {
-              ex._tao_print_exception (
+              second_ex._tao_print_exception (
                 ACE_TEXT ("ERROR: It really is not there. Failing...\n"));
               return RC_ERROR;
             }
@@ -670,7 +670,7 @@ do_failover_name_test (
           }
           catch (const CosNaming::NamingContext::NotFound& second_ex)
             {
-              ex._tao_print_exception (
+              second_ex._tao_print_exception (
                 ACE_TEXT ("ERROR: It really is not there. Failing...\n"));
               return RC_ERROR;
             }
@@ -716,7 +716,7 @@ do_failover_name_test (
                           ACE_TEXT ("on retry\n")),
                           RC_ERROR);
     }
-    catch (const CosNaming::NamingContext::NotFound& ex)
+    catch (const CosNaming::NamingContext::NotFound&)
       {
         // Not on replica --- as it should be.
         if (retried)  // Was found on the retry
@@ -793,7 +793,7 @@ do_failover_name_test (
                          ACE_TEXT ("on retry\n")),
                          RC_ERROR);
     }
-    catch (const CosNaming::NamingContext::NotFound& ex)
+    catch (const CosNaming::NamingContext::NotFound&)
       {
         // Not on replica --- as it should be.
         if (retried)  // Was found on the retry
@@ -1214,7 +1214,7 @@ do_persistence_name_test (
           }
           catch (const CosNaming::NamingContext::NotFound& second_ex)
             {
-              ex._tao_print_exception (
+              second_ex._tao_print_exception (
                 ACE_TEXT ("ERROR: It really is not there. Failing...\n"));
               return RC_ERROR;
             }
@@ -1471,7 +1471,7 @@ do_persistence_objectgroup_test (
               return RC_ERROR;
             }
           }
-          catch (const PortableGroup::MemberNotFound& ex )
+          catch (const PortableGroup::MemberNotFound&)
           {
             ACE_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("ERROR: Unable to find member location %C\n"),
@@ -1482,14 +1482,14 @@ do_persistence_objectgroup_test (
       }
 
     }
-    catch (const PortableGroup::ObjectGroupNotFound& ex )
+    catch (const PortableGroup::ObjectGroupNotFound&)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("ERROR: Unable to find group %C\n"),
                          basic_group_name),
                          RC_ERROR);
     }
-    catch (const CORBA::Exception& ex)
+    catch (const CORBA::Exception&)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("ERROR: Unable to list members for group %C\n"),
@@ -1670,7 +1670,7 @@ do_equivalence_name_test (
           }
           catch (const CosNaming::NamingContext::NotFound& second_ex)
             {
-              ex._tao_print_exception (
+              second_ex._tao_print_exception (
                 ACE_TEXT ("ERROR: It really is not there. Failing...\n"));
               return RC_ERROR;
             }
@@ -1753,7 +1753,7 @@ do_equivalence_name_test (
           }
           catch (const CosNaming::NamingContext::NotFound& second_ex)
             {
-              ex._tao_print_exception (
+              second_ex._tao_print_exception (
                 ACE_TEXT ("ERROR: It really is not there. Failing...\n"));
               return RC_ERROR;
             }
@@ -1801,7 +1801,7 @@ do_equivalence_name_test (
                           ACE_TEXT ("on retry\n")),
                           RC_ERROR);
     }
-    catch (const CosNaming::NamingContext::NotFound& ex)
+    catch (const CosNaming::NamingContext::NotFound&)
       {
         // Not on replica --- as it should be.
         if (retried)  // Was found on the retry
@@ -1874,7 +1874,7 @@ do_equivalence_name_test (
                           ACE_TEXT (" on retry\n")),
                           RC_ERROR);
     }
-    catch (const CosNaming::NamingContext::NotFound& ex)
+    catch (const CosNaming::NamingContext::NotFound&)
       {
         // Not on replica --- as it should be.
         if (retried)  // Was found on the retry
