@@ -13,9 +13,9 @@ $server_level = '0';
 $client_level = '0';
 
 $orbs = 10;
-$payload = 300000;
-$threads = 10;
-$count = 10;
+$payload = 3000;
+$threads = 5;
+$count = 5;
 
 foreach $i (@ARGV) {
     if ($i eq '-debug') {

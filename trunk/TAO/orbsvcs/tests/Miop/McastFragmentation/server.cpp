@@ -195,6 +195,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       return -1;
     }
 
+  if (Number_of_Problems.value ())
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("\nServer finished with *Possiably* %u PROBLEMS.\n"),
+                  Number_of_Problems.value ()));
+      return 1;
+    }
+
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("\nServer finished successfully.\n")));
   return 0;
