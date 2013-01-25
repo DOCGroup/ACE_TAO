@@ -32,13 +32,15 @@ UIPMC_Object_Impl::~UIPMC_Object_Impl (void)
       this->received_.find (Test::ClientIDs[i], count);
 
       if (count != this->calls_)
-        // This perfectly ok for MIOP to lose messages.
-        // So, this is not an error.
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("DEBUG: expected %d messages from '%c' client ")
-                    ACE_TEXT ("but only %d encountered\n"),
-                    this->calls_, Test::ClientIDs[i], count));
-      ++Number_of_Problems;
+        {
+          // This perfectly ok for MIOP to lose messages.
+          // So, this is not an error.
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("DEBUG: expected %d messages from '%c' client ")
+                      ACE_TEXT ("but only %d encountered\n"),
+                      this->calls_, Test::ClientIDs[i], count));
+          ++Number_of_Problems;
+        }
     }
 }
 
