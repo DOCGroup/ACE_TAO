@@ -1,3 +1,16 @@
+Fri Jan 25 13:35:00 UTC 2013  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * orbsvcs/orbsvcs/PortableGroup/miop_resource.cpp:
+        * orbsvcs/tests/Miop/McastFragmentation/client.cpp:
+        * orbsvcs/tests/Miop/McastFragmentation/Hello_Impl.cpp:
+        * orbsvcs/tests/Miop/McastFragmentation/Hello_Impl.h:
+        * orbsvcs/tests/Miop/McastFragmentation/run_test.pl:
+        * orbsvcs/tests/Miop/McastFragmentation/run_test_ipv6.pl:
+        * orbsvcs/tests/Miop/McastFragmentation/server.cpp:
+          Missed the parameter parsing changes from the last update and report
+          possiable problems from the McastFragmentation test but make the test
+          less demanding for the scoreboard systems.
+
 Thu Jan 24 15:51:00 UTC 2013  Simon Massey  <simon dot massey at prismtech dot com>
 
         * NEWS:

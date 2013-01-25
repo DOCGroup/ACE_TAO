@@ -7,6 +7,9 @@
 
 #include "ace/Hash_Map_Manager_T.h"
 #include "HelloS.h"
+#include "ace/Atomic_Op_T.h"
+
+extern ACE_Atomic_Op< TAO_SYNCH_MUTEX, u_long > Number_of_Problems;
 
 class UIPMC_Object_Impl : public virtual POA_Test::UIPMC_Object
 {
