@@ -1,3 +1,9 @@
+Fri Jan 25 22:05:54 UTC 2013  Phillip LaBanca  <labancap@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/README:
+
+          Updated FaultTolerant_ImR_Locator section
+
 Thu Jan 24 16:01:37 UTC 2013  "Kevin Stanley"  <stanleyk@ociweb.com>
 
           Merged trunk to OCI_Reliability_Enhancements branch.
