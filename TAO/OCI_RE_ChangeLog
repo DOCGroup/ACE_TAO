@@ -1,3 +1,67 @@
+Sun Jan 27 18:57:35 UTC 2013  Byron Harris  <harrisb@ociweb.com>
+
+        * tao/Storable_Base.h:
+        * tao/Storable_Base.inl:
+        * tao/Storable_Base.cpp:
+        * tao/Storable_Factory.h:
+        * tao/Storable_File_Guard.h:
+        * tao/Storable_File_Guard.cpp:
+        * tao/Storable_FlatFileStream.h:
+        * tao/Storable_FlatFileStream.cpp:
+
+          Added exceptions to throw when read and write
+          failures occur.
+          Added support to backup persistent files
+          and restoring when an exception is encountered
+          when trying to read from the file.
+
+        * tests/Storable/Savable.h:
+        * tests/Storable/Savable.cpp:
+        * tests/Storable/data_files:
+        * tests/Storable/data_files/bad_binary.dat:
+        * tests/Storable/data_files/bad_int.dat:
+        * tests/Storable/data_files/bad_string.dat:
+        * tests/Storable/data_files/bad_unsigned_int.dat:
+        * tests/Storable/data_files/good.dat:
+        * tests/Storable/run_test.pl:
+        * tests/Storable/test.cpp:
+
+          Update to test that backup file will be
+          used if an exception is encountered.
+          Verify this works for reading of various
+          types of data.
+
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.h:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context_ReaderWriter.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_List_Store.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group_Storable.cpp:
+
+          Removed streaming reading error handling and let
+          Storable_FlatFileStream operations throw
+          Storable_Read_Exceptions instead. This way Storable_File_Guard
+          can transparently try to use backup files if a read exception
+          is encountered during reading.
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:
+
+          Enable support for backup/restore of persistent files.
+
+        * orbsvcs/tests/FT_Naming/FaultTolerant/corrupt_data:
+        * orbsvcs/tests/FT_Naming/FaultTolerant/corrupt_data/GroupService:
+        * orbsvcs/tests/FT_Naming/FaultTolerant/corrupt_data/GroupService/ObjectGroup_0:
+        * orbsvcs/tests/FT_Naming/FaultTolerant/corrupt_data/GroupService/ObjectGroup_global:
+        * orbsvcs/tests/FT_Naming/FaultTolerant/corrupt_data/NameService:
+        * orbsvcs/tests/FT_Naming/FaultTolerant/corrupt_data/NameService/NameService:
+        * orbsvcs/tests/FT_Naming/FaultTolerant/corrupt_data/NameService/NameService_0:
+        * orbsvcs/tests/FT_Naming/FaultTolerant/corrupt_data/NameService/NameService_1:
+        * orbsvcs/tests/FT_Naming/FaultTolerant/corrupt_data/NameService/NameService_2:
+        * orbsvcs/tests/FT_Naming/FaultTolerant/run_persistence_test.pl:
+
+          Update persistence test to verify that backup files are
+          generated and will be used if a corrupt file is being
+          read.
+
 Fri Jan 25 22:39:26 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
 
         * orbsvcs/tests/FT_Naming/FaultTolerant/client.cpp:

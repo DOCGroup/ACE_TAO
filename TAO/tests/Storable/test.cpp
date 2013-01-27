@@ -19,14 +19,15 @@
 
 const ACE_TCHAR *persistence_file = ACE_TEXT("test.dat");
 
-int num_loops = 10;
+int num_loops = 1;
 int sleep_msecs = 100;
 int write_index = 0;
+bool use_backup = false;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("n:s:i:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("n:s:i:b"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -44,6 +45,10 @@ parse_args (int argc, ACE_TCHAR *argv[])
         write_index = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
+      case 'b':
+        use_backup = true;
+        break;
+
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -51,6 +56,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            ACE_TEXT("-n <number-of-loops> ")
                            ACE_TEXT("-s <milliseconds-to-sleep-in-loop> ")
                            ACE_TEXT("-i <index-used-for-writing> ")
+                           ACE_TEXT("-b (use backup) ")
                            ACE_TEXT("\n"),
                            argv [0]),
                           -1);
@@ -71,10 +77,14 @@ parse_args (int argc, ACE_TCHAR *argv[])
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
+  int exit_status = 0;
+
   if (parse_args (argc, argv) != 0)
     return 1;
 
   int read_index = write_index ? 0 : 1;
+
+  TAO::Storable_Base::use_backup_default = use_backup;
 
   TAO::Storable_FlatFileFactory factory ("./");
 
@@ -148,11 +158,25 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
     }
 
-  catch (Storable_Exception &ex)
+  catch (Savable_Exception &)
     {
-      std::cout << "Storable_Exception thrown with state " <<
-        ex.get_state () << std::endl;
+      std::cout << "Savable_Exception thrown" << std::endl;
+      exit_status = 1;
     }
 
-  return 0;
+  catch (TAO::Storable_Read_Exception &ex)
+    {
+      std::cout << "TAO::Storable_Read_Exception thrown with state " <<
+        ex.get_state () << std::endl;
+      exit_status = 1;
+    }
+
+  catch (TAO::Storable_Write_Exception &ex)
+    {
+      std::cout << "TAO::Storable_Write_Exception thrown with state " <<
+        ex.get_state () << std::endl;
+      exit_status = 1;
+    }
+
+  return exit_status;
 }

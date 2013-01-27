@@ -14,15 +14,12 @@
 #ifndef TAO_STORABLE_FILE_GUARD_H
 #define TAO_STORABLE_FILE_GUARD_H
 
-#include "tao/orbconf.h"
-#include "tao/TAO_Export.h"
+#include "tao/Storable_Base.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-
-  class Storable_Base;
 
   /**
    * @class Storable_File_Guard
@@ -38,7 +35,8 @@ namespace TAO
   {
   public:
 
-    Storable_File_Guard (bool redundant);
+    Storable_File_Guard (bool redundant,
+                         bool use_backup = Storable_Base::use_backup_default);
 
     virtual ~Storable_File_Guard ();
 
@@ -53,12 +51,31 @@ namespace TAO
     /// Get the underlying stream being used.
     TAO::Storable_Base & peer ();
 
+    /// Indicate how the state of the object is being used.
+    /// This is used for determine the mode for accessing
+    /// the persistent store.
+    enum Method_Type
+    {
+
+      /// Construction with persistent file already existing
+      CREATE_WITH_FILE,
+
+      /// Construction with persistent file not existing
+      CREATE_WITHOUT_FILE,
+
+      /// Getting object state
+      ACCESSOR,
+
+      /// Setting object state
+      MUTATOR
+    };
+
   protected:
 
     /// Should be called by constructors of derived classes
-    /// since can't call virtual functions below in constructor
+    /// since can't call the virtual functions below in constructor
     /// of this class.
-    void init (const char * mode);
+    void init (Method_Type method_type);
 
     /// Check if the object is current with the last update.
     virtual bool object_obsolete (void);
@@ -82,6 +99,8 @@ namespace TAO
 
   private:
 
+    void load ();
+
     bool redundant_;
 
     /// A flag to keep us from trying to close things more than once.
@@ -89,6 +108,9 @@ namespace TAO
 
     /// The flags that we were opened with
     int rwflags_;
+
+    /// A flag indicating if backup/restore should be performed
+    bool use_backup_;
 
     /// Symbolic values for the flags in the above
     enum { mode_write = 1, mode_read = 2, mode_create = 4 };

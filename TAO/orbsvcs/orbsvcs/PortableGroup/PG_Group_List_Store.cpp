@@ -26,8 +26,8 @@ namespace TAO
   class PG_Group_List_Store_File_Guard : public TAO::Storable_File_Guard
   {
   public:
-    PG_Group_List_Store_File_Guard ( PG_Group_List_Store & list_store,
-                                     const char * mode);
+    PG_Group_List_Store_File_Guard (PG_Group_List_Store & list_store,
+                                    Method_Type method_type);
 
     ~PG_Group_List_Store_File_Guard ();
 
@@ -52,11 +52,18 @@ private:
 }
 
 TAO::PG_Group_List_Store_File_Guard::PG_Group_List_Store_File_Guard (
-  PG_Group_List_Store & list_store, const char * mode)
+  PG_Group_List_Store & list_store, Method_Type method_type)
   : TAO::Storable_File_Guard(true),
   list_store_(list_store)
 {
-  this->init(mode);
+  try
+    {
+      this->init (method_type);
+    }
+  catch (const TAO::Storable_Read_Exception &)
+    {
+      throw CORBA::INTERNAL ();
+    }
 }
 
 TAO::PG_Group_List_Store_File_Guard::~PG_Group_List_Store_File_Guard ()
@@ -114,6 +121,9 @@ TAO::PG_Group_List_Store_File_Guard::create_stream (const char * mode)
 
 typedef TAO::PG_Group_List_Store_File_Guard File_Guard;
 
+// Make shortcut to get to Method_Type enums
+typedef TAO::Storable_File_Guard SFG;
+
 TAO::PG_Group_List_Store::PG_Group_List_Store (
   Storable_Factory & storable_factory)
   : next_group_id_ (0)
@@ -135,11 +145,11 @@ TAO::PG_Group_List_Store::PG_Group_List_Store (
 
   if (stream_exists)
     {
-      File_Guard fg(*this, ACE_TEXT_ALWAYS_CHAR ("r"));
+      File_Guard fg(*this, SFG::CREATE_WITH_FILE);
     }
   else
     {
-      File_Guard fg(*this, ACE_TEXT_ALWAYS_CHAR ("wc"));
+      File_Guard fg(*this, SFG::CREATE_WITHOUT_FILE);
       this->write (fg.peer ());
     }
 }
@@ -151,7 +161,7 @@ TAO::PG_Group_List_Store::~PG_Group_List_Store ()
 PortableGroup::ObjectGroupId
 TAO::PG_Group_List_Store::get_next_group_id ()
 {
-  File_Guard fg(*this, "rw");
+  File_Guard fg(*this, SFG::ACCESSOR);
   PortableGroup::ObjectGroupId next_id = this->next_group_id_;
   ++this->next_group_id_;
   this->write (fg.peer ());
@@ -161,7 +171,7 @@ TAO::PG_Group_List_Store::get_next_group_id ()
 int
 TAO::PG_Group_List_Store::add (PortableGroup::ObjectGroupId id)
 {
-  File_Guard fg(*this, "rw");
+  File_Guard fg(*this, SFG::MUTATOR);
   Group_Id_Const_Iterator it = std::find (this->group_ids_.begin (),
                                           this->group_ids_.end (),
                                           id);
@@ -175,7 +185,7 @@ TAO::PG_Group_List_Store::add (PortableGroup::ObjectGroupId id)
 int
 TAO::PG_Group_List_Store::remove (PortableGroup::ObjectGroupId id)
 {
-  File_Guard fg(*this, "rw");
+  File_Guard fg(*this, SFG::MUTATOR);
   Group_Id_Iterator it = std::find (this->group_ids_.begin (),
                                     this->group_ids_.end (),
                                     id);
@@ -189,7 +199,7 @@ TAO::PG_Group_List_Store::remove (PortableGroup::ObjectGroupId id)
 TAO::PG_Group_List_Store::Group_Ids &
 TAO::PG_Group_List_Store::get_group_ids ()
 {
-  File_Guard fg(*this, ACE_TEXT_ALWAYS_CHAR ("r"));
+  File_Guard fg(*this, SFG::ACCESSOR);
   return group_ids_;
 }
 
@@ -199,19 +209,13 @@ TAO::PG_Group_List_Store::read (TAO::Storable_Base & stream)
   group_ids_.clear ();
 
   stream.rewind ();
-  if (!stream.good ())
-    throw CORBA::INTERNAL ();
 
   unsigned int next_group_id;
   stream >> next_group_id;
   this->next_group_id_ = next_group_id;
-  if (!stream.good ())
-    throw CORBA::INTERNAL ();
 
   int size;
   stream >> size;
-  if (!stream.good ())
-    throw CORBA::INTERNAL ();
 
   // TODO: Look at adding streaming of unsigned long long
   // PortableGroup::ObjectGroupId group_id;
@@ -219,8 +223,6 @@ TAO::PG_Group_List_Store::read (TAO::Storable_Base & stream)
   for (int i = 0; i < size; ++i)
     {
       stream >> group_id;
-      if (!stream.good ())
-        throw CORBA::INTERNAL ();
       group_ids_.insert (group_id);
     }
 }

@@ -35,11 +35,11 @@ namespace TAO
   {
   public:
 
-    Storable_FlatFileStream (const ACE_CString & file, const char * mode);
-    virtual ~Storable_FlatFileStream ();
+    Storable_FlatFileStream(const ACE_CString & file, const char * mode,
+                            bool use_backup =
+                            Storable_Base::use_backup_default);
 
-    /// Remove a file by name (file is not open)
-    virtual void remove ();
+    virtual ~Storable_FlatFileStream();
 
     /// Check if a file exists on disk (file is not open)
     virtual int exists ();
@@ -47,7 +47,7 @@ namespace TAO
     /// Open a file (the remaining methods below all require an open file)
     virtual int open ();
 
-    /// Close an open file
+    /// Acquire a file lock
     virtual int close ();
 
     /// Acquire a file lock
@@ -85,7 +85,30 @@ namespace TAO
 
     virtual size_t read (size_t size, char * bytes);
 
+    virtual int restore_backup ();
+
+  protected:
+
+    virtual void do_remove ();
+
+    virtual void remove_backup ();
+
+    virtual int create_backup ();
+
   private:
+
+    /// Throw a Storable_Read_Exception if the state
+    /// is not good due to a read error.
+    void throw_on_read_error (Storable_State state)
+      throw (Storable_Read_Exception);
+
+    /// Throw a Storable_Write_Exception if the state
+    /// is not good due to a write error.
+    void throw_on_write_error (Storable_State state)
+      throw (Storable_Write_Exception);
+
+    ACE_CString backup_file_name ();
+
     ACE_OS::ace_flock_t filelock_;
     FILE* fl_;
     ACE_CString file_;
@@ -98,7 +121,7 @@ namespace TAO
 
     /// @param directory Directory to contain file passed in
     /// create_stream (). The directory is assumed to already exist.
-    Storable_FlatFileFactory (const ACE_CString & directory);
+    Storable_FlatFileFactory(const ACE_CString & directory);
 
     const ACE_CString & get_directory () const;
 
@@ -108,7 +131,9 @@ namespace TAO
 
   /// Create the stream that can operate on a disk file
     virtual Storable_Base *create_stream (const ACE_CString & file,
-                                          const ACE_TCHAR * mode);
+                                          const ACE_TCHAR * mode,
+                                          bool use_backup =
+                                          Storable_Base::use_backup_default);
   private:
     ACE_CString directory_;
 

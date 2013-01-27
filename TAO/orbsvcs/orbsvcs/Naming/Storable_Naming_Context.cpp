@@ -261,11 +261,18 @@ TAO_Storable_Naming_Context::load_map (TAO::Storable_Base& storable)
 TAO_Storable_Naming_Context::
 File_Open_Lock_and_Check::File_Open_Lock_and_Check (
                                  TAO_Storable_Naming_Context * context,
-                                 const char * mode)
+                                 Method_Type method_type)
 : TAO::Storable_File_Guard (TAO_Storable_Naming_Context::redundant_),
   context_(context)
 {
-  init(mode);
+  try
+    {
+      this->init (method_type);
+    }
+  catch (const TAO::Storable_Read_Exception &)
+    {
+      throw CORBA::INTERNAL ();
+    }
 }
 
 TAO_Storable_Naming_Context::
@@ -345,6 +352,8 @@ File_Open_Lock_and_Check::create_stream (const char * mode)
   return context_->factory_->create_stream(file_name, ACE_TEXT_CHAR_TO_TCHAR(mode));
 }
 
+// Make shortcut to get to Method_Type enums
+typedef TAO::Storable_File_Guard SFG;
 
 TAO_Storable_Naming_Context::TAO_Storable_Naming_Context (
                                CORBA::ORB_ptr orb,
@@ -476,7 +485,7 @@ TAO_Storable_Naming_Context::new_context (void)
 
   {
     // Open the backing file
-    File_Open_Lock_and_Check flck(this, "r");
+    File_Open_Lock_and_Check flck(this, SFG::ACCESSOR);
 
     // Check to make sure this object didn't have <destroy> method
     // invoked on it.
@@ -499,12 +508,6 @@ TAO_Storable_Naming_Context::new_context (void)
          throw CORBA::INTERNAL();
     // get the counter from disk
     rw.read_global(global);
-    if (!gfl_.get ()->good () &&
-        gfl_.get ()->rdstate () != TAO::Storable_Base::eofbit)
-      {
-        gfl_.get ()->clear ();
-        throw CORBA::INTERNAL ();
-      }
     gcounter_ = global.counter();
     // use it to generate a new name
   }
@@ -542,7 +545,7 @@ TAO_Storable_Naming_Context::new_context (void)
                     CORBA::NO_MEMORY ());
   new_context->context_ = new_context->storable_context_;
 
-  File_Open_Lock_and_Check flck(new_context, "wc");
+  File_Open_Lock_and_Check flck(new_context, SFG::CREATE_WITHOUT_FILE);
   new_context->Write(flck.peer());
 
   return result._retn ();
@@ -566,7 +569,7 @@ TAO_Storable_Naming_Context::rebind (const CosNaming::Name& n,
                       CORBA::INTERNAL ());
 
   // Open the backing file
-  File_Open_Lock_and_Check flck(this, name_len > 1 ? "r" : "rw");
+  File_Open_Lock_and_Check flck(this, name_len > 1 ? SFG::ACCESSOR : SFG::MUTATOR);
 
   // Check to make sure this object didn't have <destroy> method
   // invoked on it.
@@ -633,7 +636,7 @@ TAO_Storable_Naming_Context::bind_context (const CosNaming::Name &n,
                       CORBA::INTERNAL ());
 
   // Open the backing file
-  File_Open_Lock_and_Check flck(this, name_len > 1 ? "r" : "rw");
+  File_Open_Lock_and_Check flck(this, name_len > 1 ? SFG::ACCESSOR : SFG::MUTATOR);
 
   // Check to make sure this object didn't have <destroy> method
   // invoked on it.
@@ -693,7 +696,7 @@ TAO_Storable_Naming_Context::rebind_context (const CosNaming::Name &n,
                       CORBA::INTERNAL ());
 
   // Open the backing file
-  File_Open_Lock_and_Check flck(this, name_len > 1 ? "r" : "rw");
+  File_Open_Lock_and_Check flck(this, name_len > 1 ? SFG::ACCESSOR : SFG::MUTATOR);
 
   // Check to make sure this object didn't have <destroy> method
   // invoked on it.
@@ -752,7 +755,7 @@ TAO_Storable_Naming_Context::resolve (const CosNaming::Name& n)
                       CORBA::INTERNAL ());
 
   // Open the backing file
-  File_Open_Lock_and_Check flck(this, "r");
+  File_Open_Lock_and_Check flck(this, SFG::ACCESSOR);
 
   // Check to make sure this object didn't have <destroy> method
   // invoked on it.
@@ -841,7 +844,8 @@ TAO_Storable_Naming_Context::unbind (const CosNaming::Name& n)
                       CORBA::INTERNAL ());
 
   // Open the backing file
-  File_Open_Lock_and_Check flck(this, name_len > 1 ? "r" : "rw");
+  File_Open_Lock_and_Check flck(this, name_len > 1 ?
+                                SFG::ACCESSOR : SFG::MUTATOR);
 
   // Check to make sure this object didn't have <destroy> method
   // invoked on it.
@@ -900,7 +904,8 @@ TAO_Storable_Naming_Context::bind_new_context (const CosNaming::Name& n)
     throw CORBA::OBJECT_NOT_EXIST ();
 
   // Open the backing file
-  File_Open_Lock_and_Check flck(this, name_len > 1 ? "r" : "rw");
+  File_Open_Lock_and_Check flck(this, name_len > 1 ?
+                                SFG::ACCESSOR : SFG::MUTATOR);
 
   // Check to make sure this object didn't have <destroy> method
   // invoked on it.
@@ -969,7 +974,7 @@ TAO_Storable_Naming_Context::destroy (void)
                       CORBA::INTERNAL ());
 
   // Open the backing file
-  File_Open_Lock_and_Check flck(this, "rw");
+  File_Open_Lock_and_Check flck(this, SFG::MUTATOR);
 
   // Check to make sure this object didn't have <destroy> method
   // invoked on it.
@@ -1038,7 +1043,8 @@ TAO_Storable_Naming_Context::bind (const CosNaming::Name& n,
                       CORBA::INTERNAL ());
 
   // Open the backing file
-  File_Open_Lock_and_Check flck(this, name_len > 1 ? "r" : "rw");
+  File_Open_Lock_and_Check flck(this, name_len > 1 ?
+                                SFG::ACCESSOR : SFG::MUTATOR);
 
   // Check to make sure this object didn't have <destroy> method
   // invoked on it.
@@ -1101,7 +1107,7 @@ TAO_Storable_Naming_Context::list (CORBA::ULong how_many,
                       CORBA::INTERNAL ());
 
   // Open the backing file
-  File_Open_Lock_and_Check flck(this, "r");
+  File_Open_Lock_and_Check flck(this, SFG::ACCESSOR);
 
   // Check to make sure this object didn't have <destroy> method
   // invoked on it.
@@ -1248,7 +1254,7 @@ CosNaming::NamingContext_ptr TAO_Storable_Naming_Context::recreate_all (
   if (fl->exists ())
   {
     // Load the map from disk
-    File_Open_Lock_and_Check flck (new_context, "r");
+    File_Open_Lock_and_Check flck (new_context, SFG::CREATE_WITH_FILE);
   }
   else
   {
@@ -1257,15 +1263,20 @@ CosNaming::NamingContext_ptr TAO_Storable_Naming_Context::recreate_all (
                       TAO_Storable_Bindings_Map (context_size,orb),
                       CORBA::NO_MEMORY ());
     new_context->context_ = new_context->storable_context_;
-    File_Open_Lock_and_Check flck (new_context, "wc");
+    File_Open_Lock_and_Check flck (new_context, SFG::CREATE_WITHOUT_FILE);
     new_context->Write (flck.peer ());
   }
 
   // build the global file name
   file_name += ACE_TEXT("_global");
 
-  // Create the stream for the counter used to uniquely creat context names
-  gfl_.reset(pers_factory->create_stream (ACE_TEXT_ALWAYS_CHAR(file_name.c_str()), ACE_TEXT("crw")));
+  // Create the stream for the counter used to uniquely create context names
+  // Pass false for use_backup since access to this file is not wrapped
+  // around a Storable_File_Guard derived class.
+  gfl_.reset(pers_factory->
+             create_stream (ACE_TEXT_ALWAYS_CHAR(file_name.c_str()),
+                            ACE_TEXT("crw"),
+                            false));
   if (gfl_->open() != 0)
     {
       delete gfl_.release();
@@ -1276,12 +1287,6 @@ CosNaming::NamingContext_ptr TAO_Storable_Naming_Context::recreate_all (
   TAO_NS_Persistence_Global global;
   TAO_Storable_Naming_Context_ReaderWriter rw(*gfl_.get());
   rw.read_global(global);
-  if (!gfl_.get ()->good () &&
-      gfl_.get ()->rdstate () != TAO::Storable_Base::eofbit)
-    {
-      gfl_.get ()->clear ();
-      throw CORBA::INTERNAL ();
-    }
   gcounter_ = global.counter();
   if(redundant_) gfl_->close();
 
