@@ -608,6 +608,8 @@ TAO_FT_Naming_Server::parse_args (int argc,
   int u_opt_used = 0;
   int r_opt_used = 0;
 
+  int v_opt_used = 0;
+
   // TODO: remove unsupported options with FT Naming Server
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -673,6 +675,7 @@ TAO_FT_Naming_Server::parse_args (int argc,
       case 'v':
         this->use_object_group_persistence_ = 1;
         this->object_group_dir_ = get_opts.opt_arg ();
+        v_opt_used = 1;
         break;
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
@@ -733,6 +736,14 @@ TAO_FT_Naming_Server::parse_args (int argc,
                        ACE_TEXT ("ERROR: Only one persistence option ")
                        ACE_TEXT ("can be provided.\n\n")),
                       -1);
+
+  // If naming context or object group persistence is being used then
+  // enable backup/restore compability of persitent files.
+  if (u_opt_used || r_opt_used || v_opt_used)
+    {
+      TAO::Storable_Base::use_backup_default = true;
+    }
+
   if (!role_defined)
     { // No role specified, so we will become a STANDALONE server
       this->replica_id_ = ACE_TEXT ("Standalone");

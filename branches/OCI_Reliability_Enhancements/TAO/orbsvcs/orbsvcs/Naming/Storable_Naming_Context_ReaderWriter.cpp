@@ -21,30 +21,27 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Storable_Naming_Context_ReaderWriter::
 TAO_Storable_Naming_Context_ReaderWriter (TAO::Storable_Base & stream)
-  : stream_ (stream)
+  : stream_(stream)
 {
 }
 
 void
-TAO_Storable_Naming_Context_ReaderWriter::write (
-  TAO_Storable_Naming_Context & context)
+TAO_Storable_Naming_Context_ReaderWriter::write (TAO_Storable_Naming_Context & context)
 {
   TAO_NS_Persistence_Header header;
 
-  header.size (static_cast<unsigned int> (
-    context.storable_context_->current_size ()));
-
+  header.size (static_cast<unsigned int> (context.storable_context_->current_size()));
   header.destroyed (context.destroyed_);
 
-  this->write_header (header);
+  this->write_header(header);
 
   if (0u == header.size ())
     return;
 
-  ACE_Hash_Map_Iterator<TAO_Storable_ExtId,TAO_Storable_IntId, ACE_Null_Mutex>
-    it = context.storable_context_->map ().begin ();
-  ACE_Hash_Map_Iterator<TAO_Storable_ExtId,TAO_Storable_IntId,ACE_Null_Mutex>
-    itend = context.storable_context_->map ().end ();
+  ACE_Hash_Map_Iterator<TAO_Storable_ExtId,TAO_Storable_IntId,
+                        ACE_Null_Mutex> it = context.storable_context_->map().begin();
+  ACE_Hash_Map_Iterator<TAO_Storable_ExtId,TAO_Storable_IntId,
+                        ACE_Null_Mutex> itend = context.storable_context_->map().end();
 
   ACE_Hash_Map_Entry<TAO_Storable_ExtId,TAO_Storable_IntId> ent = *it;
 
@@ -107,34 +104,32 @@ TAO_Storable_Naming_Context_ReaderWriter::write (
         name.set ((*it).int_id_.ref_.in ()); // The non-context object IOR
         record.type (TAO_NS_Persistence_Record::OBJREF);
       }
-    record.ref (name);
+    record.ref(name);
 
-    const char *myid = (*it).ext_id_.id ();
-    ACE_CString id (myid);
-    record.id (id);
+    const char *myid = (*it).ext_id_.id();
+    ACE_CString id(myid);
+    record.id(id);
 
-    const char *mykind = (*it).ext_id_.kind ();
-    ACE_CString kind (mykind);
-    record.kind (kind);
+    const char *mykind = (*it).ext_id_.kind();
+    ACE_CString kind(mykind);
+    record.kind(kind);
 
     write_record (record);
-    it.advance ();
+    it.advance();
   }
 
   context.write_occurred_ = 1;
 }
 
 int
-TAO_Storable_Naming_Context_ReaderWriter::read (
-  TAO_Storable_Naming_Context & context)
+TAO_Storable_Naming_Context_ReaderWriter::read (TAO_Storable_Naming_Context & context)
 {
   // assume file already open for reading
   TAO_Storable_Bindings_Map *bindings_map;
 
   // create the new bindings map
   ACE_NEW_THROW_EX (bindings_map,
-                    TAO_Storable_Bindings_Map (context.hash_table_size_,
-                                               context.orb_.in ()),
+                    TAO_Storable_Bindings_Map (context.hash_table_size_, context.orb_.in()),
                     CORBA::NO_MEMORY ());
 
   // get the data for this bindings map from the file
@@ -143,25 +138,15 @@ TAO_Storable_Naming_Context_ReaderWriter::read (
   TAO_NS_Persistence_Record record;
 
   // we are only using the size from this header
-  this->read_header (header);
-  if (!stream_.good ())
-    {
-      stream_.clear ();
-      throw CORBA::INTERNAL ();
-    }
+  this->read_header(header);
 
   // reset the destroyed flag
-  context.destroyed_ = header.destroyed ();
+  context.destroyed_ = header.destroyed();
 
   // read in the data for the map
-  for (unsigned int i= 0u; i<header.size (); ++i)
+  for (unsigned int i= 0u; i<header.size(); ++i)
     {
-      this->read_record (record);
-      if (!stream_.good ())
-        {
-          stream_.clear ();
-          throw CORBA::INTERNAL ();
-        }
+      this->read_record(record);
 
       if (TAO_NS_Persistence_Record::LOCAL_NCONTEXT == record.type ())
         {
@@ -183,8 +168,7 @@ TAO_Storable_Naming_Context_ReaderWriter::read (
           bindings_map->bind ( record.id ().c_str (),
                                record.kind ().c_str (),
                                objref.in (),
-                               ((TAO_NS_Persistence_Record::REMOTE_NCONTEXT
-                                == record.type ())
+                               ((TAO_NS_Persistence_Record::REMOTE_NCONTEXT == record.type ())
                                 ? CosNaming::ncontext    // REMOTE_NCONTEXT
                                 : CosNaming::nobject )); // OBJREF
         }
@@ -195,47 +179,43 @@ TAO_Storable_Naming_Context_ReaderWriter::read (
 }
 
 void
-TAO_Storable_Naming_Context_ReaderWriter::write_header (
-  const TAO_NS_Persistence_Header & header)
+TAO_Storable_Naming_Context_ReaderWriter::write_header (const TAO_NS_Persistence_Header & header)
 {
-  stream_.rewind ();
-  stream_ << header.size ();
-  stream_ << header.destroyed ();
-  stream_.flush ();
+  stream_.rewind();
+  stream_ << header.size();
+  stream_ << header.destroyed();
+  stream_.flush();
 }
 void
-TAO_Storable_Naming_Context_ReaderWriter::read_header (
-  TAO_NS_Persistence_Header & header)
+TAO_Storable_Naming_Context_ReaderWriter::read_header (TAO_NS_Persistence_Header & header)
 {
   unsigned int size;
   int destroyed;
 
-  stream_.rewind ();
+  stream_.rewind();
 
   stream_ >> size;
-  header.size (size);
+  header.size(size);
 
   stream_ >> destroyed;
-  header.destroyed (destroyed);
+  header.destroyed(destroyed);
 }
 
 void
-TAO_Storable_Naming_Context_ReaderWriter::write_record (
-  const TAO_NS_Persistence_Record & record)
+TAO_Storable_Naming_Context_ReaderWriter::write_record (const TAO_NS_Persistence_Record & record)
 {
-  TAO_NS_Persistence_Record::Record_Type type = record.type ();
+  TAO_NS_Persistence_Record::Record_Type type = record.type();
   stream_ << type;
 
-  stream_ << record.id ();
-  stream_ << record.kind ();
-  stream_ << record.ref ();
+  stream_ << record.id();
+  stream_ << record.kind();
+  stream_ << record.ref();
 
-  stream_.flush ();
+  stream_.flush();
 }
 
 void
-TAO_Storable_Naming_Context_ReaderWriter::read_record (
-  TAO_NS_Persistence_Record & record)
+TAO_Storable_Naming_Context_ReaderWriter::read_record (TAO_NS_Persistence_Record & record)
 {
   int temp_type_in;
   stream_ >> temp_type_in;
@@ -257,23 +237,33 @@ TAO_Storable_Naming_Context_ReaderWriter::read_record (
 }
 
 void
-TAO_Storable_Naming_Context_ReaderWriter::write_global (
-  const TAO_NS_Persistence_Global & global)
+TAO_Storable_Naming_Context_ReaderWriter::write_global (const TAO_NS_Persistence_Global & global)
 {
-  stream_.rewind ();
-  stream_ << global.counter ();
-  stream_.flush ();
+  stream_.rewind();
+  stream_ << global.counter();
+  stream_.flush();
 }
 
 void
-TAO_Storable_Naming_Context_ReaderWriter::read_global (
-  TAO_NS_Persistence_Global & global)
+TAO_Storable_Naming_Context_ReaderWriter::read_global (TAO_NS_Persistence_Global
+                                                       & global)
 {
   unsigned int counter = 0;
 
-  stream_.rewind ();
-  stream_ >> counter;
-  global.counter (counter);
+  stream_.rewind();
+  // We expect an exception to be thrown with EOF state if the file is empty.
+  try
+    {
+      stream_ >> counter;
+    }
+  catch (TAO::Storable_Read_Exception &ex)
+    {
+      if (ex.get_state() != TAO::Storable_Base::goodbit &&
+          ex.get_state() != TAO::Storable_Base::eofbit)
+        throw CORBA::INTERNAL ();
+    }
+
+  global.counter(counter);
 
 }
 

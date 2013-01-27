@@ -8,6 +8,8 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
 use Cwd;
+use File::Compare;
+use File::Copy;
 
 #$ENV{ACE_TEST_VERBOSE} = "1";
 
@@ -86,6 +88,21 @@ sub restore_output()
 {
     open (STDERR, ">&OLDERR") or die "Can't dup OLDERR: $!";
     open (STDOUT, ">&OLDOUT") or die "Can't dup OLDOUT: $!";
+}
+
+sub compare_file_with_backup($)
+{
+    my $file = shift;
+    my $backup = $file . ".bak";
+    unless (-e $backup) {
+	print STDERR "ERROR: Backup file $backup does not exist\n";
+	return 1;
+    }
+    my $result = compare ($file, $backup);
+    if ($result != 0) {
+	print STDERR "ERROR: Backup file $backup does not agree with $file\n";
+    }
+    return $result;
 }
 
 sub run_nsgroup ($$)
@@ -222,7 +239,7 @@ sub clean_persistence_dir($$)
 
 # Make sure that the directory to use to hold the naming contexts exists
 # and is cleaned out
-sub init_naming_context_directory($$)
+sub init_persistence_dir($$)
 {
     my $target = shift;
     my $directory_name = shift;
@@ -286,8 +303,8 @@ sub persistence_test ()
     my $client_nm_iorfile = $client->LocalFile ($nm_iorfile);
 
     print_msg("Persistence Test");
-    init_naming_context_directory ($server, $name_dir );
-    init_naming_context_directory ($server, $group_dir );
+    init_persistence_dir ($server, $name_dir );
+    init_persistence_dir ($server, $group_dir );
 
     my $ns_args       = "-ORBListenEndPoints $ns_endpoint1 ".
                         "-ORBDebugLevel $debug_level " .
@@ -338,8 +355,7 @@ sub persistence_test ()
         exit 1;
     }
 
-    ##2. Create new contexts
-    ##3. Create a new object group
+    ##2. Create new contexts and new object groups
     print_msg("INFO: starting test server");
     $server_status = $SV2->Spawn ();
     if ($server_status != 0) {
@@ -353,7 +369,7 @@ sub persistence_test ()
         exit 1;
     }
 
-    ##4. Verify the new context and object group
+    ##3. Creation additional contexts and object groups and verify
     print_msg("INFO: Starting client1");
     $client_status = $CL1->SpawnWaitKill ($client->ProcessStartWaitInterval());
     if ($client_status != 0) {
@@ -361,7 +377,7 @@ sub persistence_test ()
         $status = 1;
     }
 
-    ##5. Kill the tao_ft_naming server
+    ##4. Kill the tao_ft_naming server
     print_msg("Kill the tao_ft_naming server");
     $server_status = $NS1->TerminateWaitKill ($server->ProcessStopWaitInterval());
     if ($server_status != 0) {
@@ -369,7 +385,7 @@ sub persistence_test ()
         $status = 1;
     }
 
-    ##6. Start a new instance of the tao_ft_naming server
+    ##5. Start a new instance of the tao_ft_naming server
     print_msg("Start a new instance of the tao_ft_naming server");
     $server->DeleteFile ($ns_iorfile);
     $NS1->Spawn ();
@@ -380,8 +396,196 @@ sub persistence_test ()
         $status = 1;
     }
 
-    ##7. Verify the new name, object group and member are in the tao_ft_naming repository.
+    ##6. Verify the new name, object group and member are in the tao_ft_naming repository.
     print_msg("Verify the new name, object group and member are in the tao_ft_naming repository");
+    print_msg("INFO: Starting client2");
+    $client_status = $CL2->SpawnWaitKill ($client->ProcessStartWaitInterval());
+    if ($client_status != 0) {
+        print STDERR "ERROR: client2 returned $client_status\n";
+        $status = 1;
+    }
+
+    print_msg("INFO: terminating test server");
+    $server_status = $SV2->TerminateWaitKill ($server2->ProcessStopWaitInterval());
+    if ($server_status != 0) {
+        print STDERR "ERROR: server returned $server_status\n";
+        $status = 1;
+    }
+
+    $server_status = $NS1->TerminateWaitKill ($server->ProcessStopWaitInterval());
+    if ($server_status != 0) {
+        print STDERR "ERROR: server 1 returned $server_status\n";
+        $status = 1;
+    }
+
+    if ( $status == 0 ) {
+        $status = $previous_status;
+    }
+
+    return $status;
+}
+
+################################################################################
+# Validate that when a corrupt persistent file is read that the contents of the
+# backup file is used instead.
+################################################################################
+sub backup_restore_test ()
+{
+
+    my $num_child_contexts = 8;
+    my $num_object_groups = 1;
+
+    my $previous_status = $status;
+    $status = 0;
+
+    my $hostname          = $server->HostName ();
+    my $ns_orb_port1      = 10001 + $server->RandomPort ();
+    my $ns_endpoint1      = "iiop://$hostname:$ns_orb_port1";
+    my $default_init_ref  = "-ORBDefaultInitRef corbaloc:iiop:$hostname:$ns_orb_port1";
+    my $client_nm_iorfile = $client->LocalFile ($nm_iorfile);
+
+    print_msg("Backup/Restore Test");
+    init_persistence_dir ($server, $name_dir );
+    init_persistence_dir ($server, $group_dir );
+
+    my $ns_args       = "-ORBListenEndPoints $ns_endpoint1 ".
+                        "-ORBDebugLevel $debug_level " .
+                        "-g $nm_iorfile ".
+                        "-o $ns_iorfile ".
+                        "-v $group_dir ".
+                        "-u $name_dir ";
+
+    my $tao_ft_naming = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_ft_naming";
+
+    my $client1_args = "--persistence " .
+                       "--create " .
+                        "-ORBDebugLevel $debug_level " .
+                       "-p corbaloc:iiop:$hostname:$ns_orb_port1/NameService " .
+                       "-r corbaloc:iiop:$hostname:$ns_orb_port1/NamingManager " .
+                       "-b 4 " .
+                       "-d 4 ";
+
+    my $client2_args = "--persistence " .
+                       "--validate " .
+                       "-ORBDebugLevel $debug_level " .
+                       "-p corbaloc:iiop:$hostname:$ns_orb_port1/NameService " .
+                       "-r corbaloc:iiop:$hostname:$ns_orb_port1/NamingManager " .
+                       "-b 4 " .
+                       "-d 4 ";
+
+    my $client_prog = "$startdir/client";
+
+
+    ##1. Run one instance of tao_ft_naming service
+    $NS1 = $server->CreateProcess ($tao_ft_naming, $ns_args);
+    $CL1 = $client->CreateProcess ($client_prog, $client1_args);
+    $CL2 = $client->CreateProcess ($client_prog, $client2_args);
+
+
+    my $server2_args = "-ORBdebuglevel $debug_level " .
+                       "$default_init_ref ".
+                       "-o $sv2_iorfile ";
+
+    $SV2 = $server2->CreateProcess ("$startdir/server", $server2_args);
+
+    $server->DeleteFile ($ns_iorfile);
+    $NS1->Spawn ();
+    if ($server->WaitForFileTimed ($ns_iorfile,
+                                   $server->ProcessStartWaitInterval()) == -1) {
+        print STDERR "ERROR: cannot find file <$ns_iorfile>\n";
+        $NS1->Kill (); $NS1->TimedWait (1);
+        exit 1;
+    }
+
+    ##2. Create new contexts and new object groups
+    print_msg("INFO: starting test server");
+    $server_status = $SV2->Spawn ();
+    if ($server_status != 0) {
+        print STDERR "ERROR: server returned $server_status\n";
+        exit 1;
+    }
+    if ($server2->WaitForFileTimed ($sv_iorfile,
+                                   $server2->ProcessStartWaitInterval()) == -1) {
+        print STDERR "ERROR: cannot find file <$sv_iorfile>\n";
+        $SV2->Kill (); $SV2->TimedWait (1);
+        exit 1;
+    }
+
+    ##3. Creation additional contexts and object groups and verify
+    print_msg("INFO: Starting client1");
+    $client_status = $CL1->SpawnWaitKill ($client->ProcessStartWaitInterval());
+    if ($client_status != 0) {
+        print STDERR "ERROR: client1 returned $client_status\n";
+        $status = 1;
+    }
+
+    ##4. Kill the tao_ft_naming server
+    print_msg("Kill the tao_ft_naming server");
+    $server_status = $NS1->TerminateWaitKill ($server->ProcessStopWaitInterval());
+    if ($server_status != 0) {
+        print STDERR "ERROR: server 1 returned $server_status\n";
+        $status = 1;
+    }
+
+    ##4. Verify that backup files are created
+
+    print_msg("Verifying naming context backup files");
+    $file = $name_dir . "/NameService";
+    if (compare_file_with_backup ($file) != 0) {
+	$status = 1;
+    }
+    for ($i = 0; $i < $num_child_contexts; $i++) {
+	$file = $name_dir . "/NameService_$i";
+	if (compare_file_with_backup ($file) != 0) {
+	    $status = 1;
+	}
+    }
+
+    print_msg("Verifying object group backup files");
+    $file = $group_dir . "/ObjectGroup_global";
+    if (compare_file_with_backup ($file) != 0) {
+	$status = 1;
+    }
+    for ($i = 0; $i < $num_object_groups; $i++) {
+	$file = $group_dir . "/ObjectGroup_$i";
+	if (compare_file_with_backup ($file) != 0) {
+	    $status = 1;
+	}
+    }
+
+    ##. Replace some of the data files with corrupt files
+    print_msg("Replace data files with corrupt files");
+    my $corrupt_data_dir = $startdir . "/corrupt_data/";
+
+    my $corrupt_name_dir = $corrupt_data_dir . $name_dir . "/";
+    opendir(NAMEDIR, $corrupt_name_dir);
+    @allfiles = grep(/^NameService/, readdir(NAMEDIR));
+    closedir(NAMEDIR);
+    foreach $file (@allfiles) {
+	copy ($corrupt_name_dir . $file, $name_dir . "/" . $file) or die "Copy failed: $!\n";
+    }
+
+    my $corrupt_group_dir = $corrupt_data_dir . $group_dir . "/";
+    opendir(GROUPDIR, $corrupt_group_dir);
+    @allfiles = grep(/^ObjectGroup/, readdir(GROUPDIR));
+    closedir(GROUPDIR);
+    foreach $file (@allfiles) {
+	copy ($corrupt_group_dir . $file, $group_dir . "/" . $file) or die "Copy failed: $!\n";
+    }
+
+    ##5. Start a new instance of the tao_ft_naming server
+    print_msg("Start a new instance of the tao_ft_naming server");
+    $server->DeleteFile ($ns_iorfile);
+    $NS1->Spawn ();
+    if ($server->WaitForFileTimed ($ns_iorfile,
+                                   $server->ProcessStartWaitInterval()) == -1) {
+        print STDERR "ERROR: cannot find file <$ns_iorfile>\n";
+        $NS1->Kill (); $NS1->TimedWait (1);
+        $status = 1;
+    }
+
+    ##6. Verify the new name, object group and member are in the tao_ft_naming repository.
+    print_msg("Verify the backup files are used when the corrupt files are read");
     print_msg("INFO: Starting client2");
     $client_status = $CL2->SpawnWaitKill ($client->ProcessStartWaitInterval());
     if ($client_status != 0) {
@@ -429,6 +633,7 @@ sub show_result($$)
 }
 
 my $result = persistence_test ();
+my $result = backup_restore_test ();
 
 show_result($result, "Persistence Test");
 

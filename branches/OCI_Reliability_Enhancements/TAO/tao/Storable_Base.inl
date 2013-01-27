@@ -17,8 +17,9 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-TAO::Storable_Base::Storable_Base ()
- : state_ (goodbit)
+TAO::Storable_Base::Storable_Base (bool use_backup)
+  : use_backup_ (use_backup)
+  , state_ (goodbit)
 {
 }
 

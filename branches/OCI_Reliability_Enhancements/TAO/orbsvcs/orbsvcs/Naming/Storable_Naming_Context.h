@@ -435,7 +435,7 @@ public:
 
   /// Constructor - we always need the object which we guard.
   File_Open_Lock_and_Check (TAO_Storable_Naming_Context * context,
-                           const char * mode);
+                            Method_Type method_type);
 
   ~File_Open_Lock_and_Check ();
 

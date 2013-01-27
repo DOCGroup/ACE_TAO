@@ -9,22 +9,8 @@ namespace TAO
   class Storable_Factory;
 }
 
-class Storable_Exception
+class Savable_Exception
 {
- public:
-
-  Storable_Exception(TAO::Storable_Base::Storable_State state)
-    : stream_state_(state)
-  {
-  }
-
-  TAO::Storable_Base::Storable_State get_state ()
-    {
-      return stream_state_;
-    }
-
- private:
-  TAO::Storable_Base::Storable_State stream_state_;
 };
 
 /// A simple class to use for testing whose contents

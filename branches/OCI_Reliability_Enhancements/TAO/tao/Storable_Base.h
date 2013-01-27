@@ -29,16 +29,32 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
+
   class TAO_Export Storable_Base
   {
   public:
-    Storable_Base ();
+
+    Storable_Base (bool use_backup);
 
     virtual ~Storable_Base ();
 
-    virtual void remove () = 0;
+    /// The process-wide default policy
+    /// for doing a backup when close ()
+    /// is called.
+    /// The backup can then be restored if
+    /// restore_backup () is called.
+    /// The initial value for the default is false.
+    static bool use_backup_default;
 
-    virtual int exists () = 0;
+    bool use_backup ();
+
+    /// Remove the file that is assumed to not be open.
+    /// If backup are used, the backup will also be removed.
+    void remove();
+
+    virtual int create_backup () = 0;
+
+    virtual int exists() = 0;
 
     virtual int open () = 0;
 
@@ -48,7 +64,7 @@ namespace TAO
 
     virtual int funlock (int whence, int start, int len) = 0;
 
-    virtual time_t last_changed (void) = 0;
+    virtual time_t last_changed(void) = 0;
 
     // Mimic a portion of the std::ios interface.  We need to be able
     // to indicate error states from the extraction operators below.
@@ -71,6 +87,8 @@ namespace TAO
     bool eof (void) const;
 
     bool fail (void) const;
+
+    static ACE_CString state_as_string (Storable_State state);
 
     virtual void rewind (void) = 0;
 
@@ -98,9 +116,57 @@ namespace TAO
 
     virtual size_t read (size_t size, char * bytes) = 0;
 
+    virtual int restore_backup () = 0;
+
+  protected:
+
+    virtual void do_remove () = 0;
+
+    /// If a backup file exists, remove it.
+    virtual void remove_backup () = 0;
+
+    bool use_backup_;
+
   private:
     Storable_State state_;
 
+  };
+
+  /// Base class for exceptions thrown when encountering
+  /// errors working with persistent files.
+  class TAO_Export Storable_Exception
+  {
+  public:
+    Storable_Exception (Storable_Base::Storable_State state,
+                        const ACE_CString & file_name);
+
+    virtual ~Storable_Exception ();
+
+    Storable_Base::Storable_State get_state () const;
+
+    const ACE_CString & get_file_name () const;
+
+  private:
+    TAO::Storable_Base::Storable_State storable_state_;
+    ACE_CString file_name_;
+  };
+
+  /// Exception thrown when an error is encountered
+  /// during reading of the persistent store.
+  class TAO_Export Storable_Read_Exception : public Storable_Exception
+  {
+  public:
+    Storable_Read_Exception (Storable_Base::Storable_State state,
+                             const ACE_CString & file_name);
+  };
+
+  /// Exception thrown when an error is encountered
+  /// during writing to the persistent store.
+  class TAO_Export Storable_Write_Exception : public Storable_Exception
+  {
+  public:
+    Storable_Write_Exception (Storable_Base::Storable_State state,
+                              const ACE_CString & file_name);
   };
 
 }
