@@ -2,7 +2,6 @@
 #ifndef ACE_CONFIG_MACOSX_SNOWLEOPARD_H
 #define ACE_CONFIG_MACOSX_SNOWLEOPARD_H
 
-
 #include "ace/config-macosx-leopard.h"
 
 #ifdef __clang__
