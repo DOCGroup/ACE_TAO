@@ -4,6 +4,8 @@
 
 #include "Hello_Impl.h"
 
+ACE_Atomic_Op< TAO_SYNCH_MUTEX, u_long > Number_of_Problems = 0uL;
+
 UIPMC_Object_Impl::UIPMC_Object_Impl (CORBA::ULong payload,
                                       CORBA::ULong clients,
                                       CORBA::ULong calls)
@@ -20,6 +22,7 @@ UIPMC_Object_Impl::~UIPMC_Object_Impl (void)
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("ERROR: expected %d clients but only %d encountered\n"),
                   this->clients_, this->received_.current_size ()));
+      ++Number_of_Problems;
       return;
     }
 
@@ -29,12 +32,15 @@ UIPMC_Object_Impl::~UIPMC_Object_Impl (void)
       this->received_.find (Test::ClientIDs[i], count);
 
       if (count != this->calls_)
-        // This perfectly ok for MIOP to lose messages.
-        // So, this is not an error.
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("DEBUG: expected %d messages from '%c' client ")
-                    ACE_TEXT ("but only %d encountered\n"),
-                    this->calls_, Test::ClientIDs[i], count));
+        {
+          // This perfectly ok for MIOP to lose messages.
+          // So, this is not an error.
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("DEBUG: expected %d messages from '%c' client ")
+                      ACE_TEXT ("but only %d encountered\n"),
+                      this->calls_, Test::ClientIDs[i], count));
+          ++Number_of_Problems;
+        }
     }
 }
 
@@ -47,6 +53,7 @@ UIPMC_Object_Impl::process (Test::Octets const &payload)
                   ACE_TEXT ("ERROR: expected %d but received %d ")
                   ACE_TEXT ("sequence length\n"),
                   this->payload_, payload.length ()));
+      ++Number_of_Problems;
       return;
     }
 
@@ -66,6 +73,7 @@ UIPMC_Object_Impl::process (Test::Octets const &payload)
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("ERROR: received malformed message from client '%c'\n"),
                   c));
+      ++Number_of_Problems;
       return;
     }
 
@@ -74,6 +82,7 @@ UIPMC_Object_Impl::process (Test::Octets const &payload)
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("ERROR: client id '%c' doesn't match any known value\n"),
                   c));
+      ++Number_of_Problems;
       return;
     }
 
@@ -82,6 +91,7 @@ UIPMC_Object_Impl::process (Test::Octets const &payload)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("ERROR: cann't rebind received count\n")));
+      ++Number_of_Problems;
     }
 }
 
@@ -107,6 +117,7 @@ Hello_Impl::shutdown (void)
     }
   catch (const CORBA::Exception& ex)
     {
+      ++Number_of_Problems;
       ex._tao_print_exception ("Exception caught in shutdown():");
     }
 }

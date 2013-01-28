@@ -284,115 +284,206 @@ TAO_UIPMC_Mcast_Transport::recv_packet (
   return &buf[miop_header_size];
 }
 
-bool
-TAO_UIPMC_Mcast_Transport::recv_all (void)
+TAO_PG::UIPMC_Recv_Packet *
+TAO_UIPMC_Mcast_Transport::recv_all (TAO_Resume_Handle &rh)
 {
-  // FUZZ: disable check_for_ACE_Guard
-  // Only one thread will do recv.
-  ACE_Guard<TAO_SYNCH_MUTEX> recv_guard (this->recv_lock_, 0); // tryacquire
-  if (!recv_guard.locked ())
-    return !this->complete_.is_empty ();
-  // FUZZ: enable check_for_ACE_Guard
+  const TAO_MIOP_Resource_Factory *const factory =
+    ACE_Dynamic_Service<TAO_MIOP_Resource_Factory>::instance (
+      this->orb_core_->configuration(),
+      ACE_TEXT ("MIOP_Resource_Factory"));
+  const bool eager_dequeue= factory->enable_eager_dequeue ();
 
-  // The buffer on the stack which will be used to hold the input
-  // messages.
-  char buf [MIOP_MAX_DGRAM_SIZE + ACE_CDR::MAX_ALIGNMENT];
-  char *aligned_buf = ACE_ptr_align_binary (buf, ACE_CDR::MAX_ALIGNMENT);
+  // Only one thread will do recv at the same time.
+  // FUZZ: disable check_for_ACE_Guard
+  ACE_Guard<TAO_SYNCH_MUTEX> recv_guard (this->recv_lock_, 0); // tryacquire
+  // FUZZ: enable check_for_ACE_Guard
+  if (recv_guard.locked ())
+    {
+      // The buffer on the stack which will be used to hold the input
+      // messages.
+      char buf [MIOP_MAX_DGRAM_SIZE + ACE_CDR::MAX_ALIGNMENT];
+      char *aligned_buf = ACE_ptr_align_binary (buf, ACE_CDR::MAX_ALIGNMENT);
 
 #if defined (ACE_INITIALIZE_MEMORY_BEFORE_USE)
-  (void) ACE_OS::memset (buf,
-                         '\0',
-                         sizeof buf);
+      (void) ACE_OS::memset (buf, '\0', sizeof buf);
 #endif /* ACE_INITIALIZE_MEMORY_BEFORE_USE */
 
-  while (true)
-    {
-      // This guard will cleanup expired packets each iteration.
-      TAO_PG::UIPMC_Recv_Packet_Cleanup_Guard guard (this);
-
-      ACE_INET_Addr from_addr;
-      CORBA::UShort packet_length;
-      CORBA::ULong packet_number;
-      bool stop_packet;
-      u_long id_hash;
-
-      char *start_data =
-        this->recv_packet (aligned_buf, MIOP_MAX_DGRAM_SIZE, from_addr,
-                           packet_length, packet_number, stop_packet, id_hash);
-
-      // The socket buffer is empty. Try to do other useful things.
-      if (start_data == 0)
+      while (true)
         {
-          if (errno != EWOULDBLOCK && errno != EAGAIN)
+          // This guard will cleanup expired packets each iteration.
+          TAO_PG::UIPMC_Recv_Packet_Cleanup_Guard guard (this);
+
+          ACE_INET_Addr from_addr;
+          CORBA::UShort packet_length;
+          CORBA::ULong packet_number;
+          bool stop_packet;
+          u_long id_hash;
+
+          char *start_data =
+            this->recv_packet (aligned_buf, MIOP_MAX_DGRAM_SIZE, from_addr,
+                               packet_length, packet_number, stop_packet, id_hash);
+
+          // The socket buffer is empty. Try to do other useful things.
+          if (start_data == 0)
             {
+              if (errno != EWOULDBLOCK && errno != EAGAIN)
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              ACE_TEXT ("TAO (%P|%t) - UIPMC_Mcast_Transport[%d]::")
+                              ACE_TEXT ("recv_all, unexpected failure of recv_packet '%m'\n"),
+                              this->id ()));
+                }
+              break;
+            }
+
+          if (TAO_debug_level >= 9)
+            {
+              char tmp[INET6_ADDRSTRLEN];
+              from_addr.get_host_addr (tmp, sizeof tmp);
               ACE_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("TAO (%P|%t) - UIPMC_Mcast_Transport[%d]::")
-                          ACE_TEXT ("recv_all, unexpected failure of recv_packet '%m'\n"),
-                          this->id ()));
+                          ACE_TEXT ("recv, received %d bytes from <%C:%u> ")
+                          ACE_TEXT ("(hash %d)\n"),
+                          this->id (),
+                          packet_length,
+                          tmp,
+                          from_addr.get_port_number (),
+                          id_hash));
             }
-          break;
-        }
 
-      if (TAO_debug_level >= 10)
-        {
-          char tmp[INET6_ADDRSTRLEN];
-          from_addr.get_host_addr (tmp, sizeof tmp);
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) - UIPMC_Mcast_Transport[%d]::")
-                      ACE_TEXT ("recv, received %d bytes from <%C:%u> ")
-                      ACE_TEXT ("(hash %d)\n"),
-                      this->id (),
-                      packet_length,
-                      tmp,
-                      from_addr.get_port_number (),
-                      id_hash));
-        }
-
-      TAO_PG::UIPMC_Recv_Packet *packet = 0;
-      if (this->incomplete_.find (id_hash, packet) == -1)
-        {
-          ACE_NEW_THROW_EX (packet,
-                            TAO_PG::UIPMC_Recv_Packet,
-                            CORBA::NO_MEMORY (
-                              CORBA::SystemException::_tao_minor_code (
-                                TAO::VMCID,
-                                ENOMEM),
-                              CORBA::COMPLETED_NO));
-
-          if (this->incomplete_.bind (id_hash, packet) != 0)
+          TAO_PG::UIPMC_Recv_Packet *packet = 0;
+          if (this->incomplete_.find (id_hash, packet) == -1)
             {
-              // Cleanup the packet.
-              ACE_Auto_Ptr<TAO_PG::UIPMC_Recv_Packet> bail_guard (packet);
-              continue;
+              ACE_NEW_THROW_EX (packet,
+                                TAO_PG::UIPMC_Recv_Packet,
+                                CORBA::NO_MEMORY (
+                                  CORBA::SystemException::_tao_minor_code (
+                                    TAO::VMCID,
+                                    ENOMEM),
+                                  CORBA::COMPLETED_NO));
+
+              if (this->incomplete_.bind (id_hash, packet) != 0)
+                {
+                  // Cleanup the packet.
+                  delete packet;
+                  ACE_DEBUG ((LM_DEBUG,
+                              ACE_TEXT ("TAO (%P|%t) - UIPMC_Mcast_Transport[%d]::")
+                              ACE_TEXT ("recv_all, could not queue fragment\n"),
+                              this->id ()));
+                  continue;
+                }
+            }
+
+          // We have incomplete packet so add a new data to it.
+          // add_fragment returns 1 iff the packet is complete.
+          if (1 == packet->add_fragment (start_data, packet_length,
+                                         packet_number, stop_packet))
+            {
+              // Remove this packet from incomplete packets.
+              this->incomplete_.unbind (id_hash);
+
+              // If there are no completed message ahead of us AND
+              // we only want a single message, just return it.
+              if (this->complete_.is_empty () && !eager_dequeue)
+                {
+                  if (TAO_debug_level >= 9)
+                    {
+                      ACE_DEBUG ((LM_DEBUG,
+                                  ACE_TEXT ("TAO (%P|%t) - UIPMC_Mcast_Transport[%d]::")
+                                  ACE_TEXT ("recv_all, completed MIOP message %@\n"),
+                                  this->id (), static_cast<void *> (packet)));
+                    }
+
+                  return packet;
+                }
+              ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                                guard,
+                                this->complete_lock_,
+                                packet);
+              if (this->complete_.is_empty () && !eager_dequeue)
+                {
+                  // Another thread dequeued the waiting MIOP message before we got
+                  // the lock, simply return our single message, don't bother queueing
+                  // it after all.
+                  if (TAO_debug_level >= 9)
+                    {
+                      ACE_DEBUG ((LM_DEBUG,
+                                  ACE_TEXT ("TAO (%P|%t) - UIPMC_Mcast_Transport[%d]::")
+                                  ACE_TEXT ("recv_all, completed MIOP message %@\n"),
+                                  this->id (), static_cast<void *> (packet)));
+                    }
+
+                  return packet;
+                }
+
+              if (TAO_debug_level >= 9)
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              ACE_TEXT ("TAO (%P|%t) - UIPMC_Mcast_Transport[%d]::")
+                              ACE_TEXT ("recv_all, completed MIOP message %@ (QUEUED)\n"),
+                              this->id (), static_cast<void *> (packet)));
+                }
+
+              // Add it to the complete queue.
+              this->complete_.enqueue_tail (packet);
+
+              // Stop attempting to queue more messages if we are not in eager mode.
+              if (!eager_dequeue)
+                break;
             }
         }
+      recv_guard.release ();
+    }
 
-      // We have incomplete packet so add a new data to it.
-      int const ret = packet->add_fragment (start_data, packet_length,
-                                            packet_number, stop_packet);
+  // Ok we have received as many packets as we could, now if we have
+  // any completed packets queued up, return the first to the caller.
+  if (this->complete_.is_empty ())
+    return 0;
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, complete_guard, this->complete_lock_, 0);
+  if (this->complete_.is_empty ())
+    return 0; // Another thread got here first, not a problem.
 
-      // add_fragment returns 1 iff the packet is complete.
-      if (ret == 1)
+  TAO_PG::UIPMC_Recv_Packet *packet = 0;
+  if (this->complete_.dequeue_head (packet) == -1)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("TAO (%P|%t) - TAO_UIPMC_Mcast_Transport[%d]::recv_all, ")
+                  ACE_TEXT ("unable to dequeue completed message\n"),
+                  this->id ()));
+      return 0;
+    }
+
+  if (TAO_debug_level >= 9)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("TAO (%P|%t) - UIPMC_Mcast_Transport[%d]::")
+                  ACE_TEXT ("recv_all, completed MIOP message %@ (DEQUEUED)\n"),
+                  this->id (), static_cast<void *> (packet)));
+    }
+
+  // If there is another message waiting to be processed (in addition
+  // to the one we have just taken off), notify another thread (if
+  // available) so this can also be processed in parrellel.
+  if (!this->complete_.is_empty ())
+    {
+      int const retval = this->notify_reactor_now ();
+      if (retval == 1)
         {
-          // Remove this packet from incomplete packets.
-          this->incomplete_.unbind (id_hash);
-
-          ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
-                            guard,
-                            this->complete_lock_,
-                            !this->complete_.is_empty ());
-
-          // Add it to the complete queue.
-          this->complete_.enqueue_tail (packet);
-
-          // The following break stops the eager de-queuing of
-          // further completed MIOP messages. This should probably
-          // be configuable via a MIOP Server -ORB option.
-          break;
+          // Now we have handed off to another thread, let the class
+          // know that it doesn't need to resume with OUR handle
+          // after we have processed our message.
+          rh.set_flag (TAO_Resume_Handle::TAO_HANDLE_LEAVE_SUSPENDED);
+        }
+      else if (retval < 0 && TAO_debug_level > 2)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("TAO (%P|%t) - TAO_UIPMC_Mcast_Transport[%d]::recv_all, ")
+                      ACE_TEXT ("notify to the reactor failed.\n"),
+                      this->id ()));
         }
     }
 
-  return !this->complete_.is_empty ();
+  return packet;
 }
 
 int
@@ -411,47 +502,17 @@ TAO_UIPMC_Mcast_Transport::handle_input (
                   this->id ()));
     }
 
-  if (this->recv_all ())
+  // Grab the next completed MIOP message to process from the FIFO Queue.
+  ACE_Auto_Ptr<TAO_PG::UIPMC_Recv_Packet> complete_owner (this->recv_all (rh));
+  if (TAO_PG::UIPMC_Recv_Packet *complete = complete_owner.get ())
     {
-      // Unqueue the first available completed message for us to process.
-      TAO_PG::UIPMC_Recv_Packet *complete = 0;
-      ACE_Auto_Ptr<TAO_PG::UIPMC_Recv_Packet> owner (0);
-      {
-        ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->complete_lock_, 0);
-        if (this->complete_.is_empty ())
-          return 0; // Another thread got here first, no problem.
-        if (this->complete_.dequeue_head (complete) == -1)
-          {
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("TAO (%P|%t) - TAO_UIPMC_Mcast_Transport[%d]::handle_input, ")
-                        ACE_TEXT ("unable to dequeue completed message\n"),
-                        this->id ()));
-            return 0;
-          }
-        ACE_auto_ptr_reset (owner, complete);
-
-        // If there is another message waiting to be processed (in addition
-        // to the one we have just taken off to be processed), notify another
-        // thread (if available) so this can also be processed in parrellel.
-        if (!this->complete_.is_empty ())
-          {
-            int const retval = this->notify_reactor_now ();
-            if (retval == 1)
-              {
-                // Now we have handed off to another thread, let the class
-                // know that it doesn't need to resume with OUR handle
-                // after we have processed our message.
-                rh.set_flag (TAO_Resume_Handle::TAO_HANDLE_LEAVE_SUSPENDED);
-              }
-            else if (retval < 0 && TAO_debug_level > 2)
-              {
-                ACE_DEBUG ((LM_DEBUG,
-                            ACE_TEXT ("TAO (%P|%t) - TAO_UIPMC_Mcast_Transport[%d]::handle_input, ")
-                            ACE_TEXT ("notify to the reactor failed.\n"),
-                            this->id ()));
-              }
-          }
-      }
+      if (TAO_debug_level >= 9)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("TAO (%P|%t) - UIPMC_Mcast_Transport[%d]::")
+                      ACE_TEXT ("handle_input, processing MIOP message %@ (%d bytes)\n"),
+                      this->id (), static_cast<void *> (complete), complete->data_length ()));
+        }
 
       // Create a data block from our dequeued completed message.
       char *buffer= 0;

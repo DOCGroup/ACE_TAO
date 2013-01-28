@@ -1,3 +1,32 @@
+Mon Jan 28 16:09:03 UTC 2013  "Kevin Stanley"  <stanleyk@ociweb.com>
+        * docs/Options.html:
+
+          Resolved conflict between trunk update and branch changes.
+
+        * NEWS:
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * examples/Advanced/ch_12/client.cpp:
+        * examples/Advanced/ch_18/client.cpp:
+        * examples/Advanced/ch_21/client.cpp:
+        * examples/Advanced/ch_8_and_10/client.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Mcast_Transport.h:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Mcast_Transport.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/miop_resource.h:
+        * orbsvcs/orbsvcs/PortableGroup/miop_resource.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/miopconf.h:
+        * orbsvcs/tests/Miop/McastFragmentation/Hello_Impl.h:
+        * orbsvcs/tests/Miop/McastFragmentation/Hello_Impl.cpp:
+        * orbsvcs/tests/Miop/McastFragmentation/client.cpp:
+        * orbsvcs/tests/Miop/McastFragmentation/run_test.pl:
+        * orbsvcs/tests/Miop/McastFragmentation/run_test_ipv6.pl:
+        * orbsvcs/tests/Miop/McastFragmentation/server.cpp:
+        * tao/DynamicInterface/Request.h:
+
+        Merged trunk to OCI_Reliability_Enhancements branch.  These files were changed on
+          the trunk.
+
 Sun Jan 27 18:57:35 UTC 2013  Byron Harris  <harrisb@ociweb.com>
 
         * tao/Storable_Base.h:

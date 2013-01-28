@@ -1,3 +1,18 @@
+Mon Jan 28 10:11:13 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/ciao_tests.lst:
+        * tests/Bug_4086_Regression/Bug_4086_Regression.mpc:
+        * tests/Bug_4086_Regression/Foo.idl:
+        * tests/Bug_4086_Regression/Foo_exec.h:
+        * tests/Bug_4086_Regression/Foo_exec.cpp:
+        * tests/Bug_4086_Regression/descriptors/DeploymentPlan.cdp:
+        * tests/Bug_4086_Regression/descriptors/run_test.pl:
+        * tests/Bug_4086_Regression/descriptors/run_test_cdr.pl:
+          New test for components with attributes as part of
+          supported interfaces. Thanks to Jiang Wei
+          <jiangwei_1976 at yahoo dot com dot cn> for reporting this and
+          providing the patch and unit test
+
 Mon Jan 21 08:16:41 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/ciao_tests.lst:

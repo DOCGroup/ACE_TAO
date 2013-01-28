@@ -1,3 +1,53 @@
+Mon Jan 28 12:44:24 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Advanced/ch_12/client.cpp:
+        * examples/Advanced/ch_18/client.cpp:
+        * examples/Advanced/ch_21/client.cpp:
+        * examples/Advanced/ch_8_and_10/client.cpp:
+          Fixed compile errors when ostream streaming is enabled
+          in TAO_IDL
+
+Mon Jan 28 11:26:06 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+          Generate also ostream insertion methods for components
+
+        * tao/DynamicInterface/Request.h:
+          Doxygen fixes
+
+Fri Jan 25 13:55:00 UTC 2013  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * orbsvcs/tests/Miop/McastFragmentation/server.cpp:
+          Correction.
+
+Fri Jan 25 13:35:00 UTC 2013  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * orbsvcs/orbsvcs/PortableGroup/miop_resource.cpp:
+        * orbsvcs/tests/Miop/McastFragmentation/client.cpp:
+        * orbsvcs/tests/Miop/McastFragmentation/Hello_Impl.cpp:
+        * orbsvcs/tests/Miop/McastFragmentation/Hello_Impl.h:
+        * orbsvcs/tests/Miop/McastFragmentation/run_test.pl:
+        * orbsvcs/tests/Miop/McastFragmentation/run_test_ipv6.pl:
+        * orbsvcs/tests/Miop/McastFragmentation/server.cpp:
+          Missed the parameter parsing changes from the last update and report
+          possiable problems from the McastFragmentation test but make the test
+          less demanding for the scoreboard systems.
+
+Thu Jan 24 15:51:00 UTC 2013  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * NEWS:
+        * doc/Options.h:
+        * orbsvcs/orbsvcs/PortableGroup/miop_resource.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/miop_resource.h:
+        * orbsvcs/orbsvcs/PortableGroup/miopconf.h:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Mcast_Transport.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Mcast_Transport.h:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp:
+          Added MIOP configuration options -ORBSendThrottling and -ORBEagerDequeueing,
+          along with #define overrides for their default settings. See the descriptions
+          in the MIOP section of doc/Options.html for their use.
+
 Wed Jan 23 19:43:50 UTC 2013  Adam Mitz  <mitza@ociweb.com>
 
         * tao/RTScheduling/Request_Interceptor.cpp:

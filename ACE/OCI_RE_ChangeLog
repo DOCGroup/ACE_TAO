@@ -1,3 +1,17 @@
+Mon Jan 28 16:13:07 UTC 2013  "Kevin Stanley"  <stanleyk@ociweb.com>
+
+        * ace/config-macosx-lion.h:
+        * ace/config-macosx-mountainlion.h:
+        * ace/config-macosx-snowleopard.h:
+        * examples/Shared_Memory/test_MM.cpp:
+        * examples/Shared_Memory/test_SV.cpp:
+        * include/makeinclude/platform_macosx_mountainlion.GNU:
+        * ace/config-macosx-mountain-lion.h:
+        * include/makeinclude/platform_macosx_mountain_lion.GNU:
+
+          Merged trunk into branch. The above files were changed in the
+          trunk.
+          
 Wed Dec 19 17:52:25 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/Mem_Map.inl:
