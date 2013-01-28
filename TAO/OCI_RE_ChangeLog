@@ -1,3 +1,13 @@
+Mon Jan 28 22:54:36 UTC 2013  Phillip LaBanca  <labancap@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/README:
+
+          Update documentation for fault tolerant tao_imr_locator
+
+        * utils/nsgroup/run_test.pl:
+
+          Fix file redirection option check in run_client()
+
 Mon Jan 28 22:20:12 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/Naming_Loader.h:

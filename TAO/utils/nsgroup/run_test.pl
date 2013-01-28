@@ -166,7 +166,7 @@ sub run_client ($$)
     if ($client_status != $expected_test_result) {
         my $time = localtime;
         print STDERR "ERROR: client returned $client_status at $time\n";
-        if ($debug_level == 0) {
+        if ($redirection_enabled) {
             cat_file($client_stderr_file);
             cat_file($client_stdout_file);
         }
