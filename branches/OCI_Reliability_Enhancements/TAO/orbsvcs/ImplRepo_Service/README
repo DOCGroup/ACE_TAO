@@ -222,7 +222,7 @@ The ImR_Locator implements a fault tolerant service with the following options:
   file system directory to use as the backing store for the redundant service
   pair.
 
-  The --o <ft_imr_ior_filename> option tells the ImR_Locator to output the
+  The -o <ft_imr_ior_filename> option tells the ImR_Locator to output the
   redundant service pair ImRService ior file, which it can only do after
   successfully starting the primary and backup ImRService instances. The ior
   file contains the combined profiles of the primary and backup ImRLocators. The
@@ -230,8 +230,7 @@ The ImR_Locator implements a fault tolerant service with the following options:
 
 The primary and backup ImRLocator instances should have the same ORBEndPoint
 protocol list so that any client can send a request to either primary or backup
-regardless of protocol (IIOP,UIOP,etc...). The ORBEndPoint port numbers do not
-have to match.
+regardless of protocol (IIOP,UIOP,etc...).
 
 The ImR_Locator primary and backup options cannot be passed on the command
 line along with -ORBObjRefStyle URL, since that style will cause the backup
@@ -252,7 +251,8 @@ same time the Fault Tolerant ImplRepo_Service will always be available.
 <ol>
   <li>
     <em>Start the primary.</em><br>
-    It will write the replication ior to a file in the persistence directory.<br>
+    It will write the replication ior to a file in the shared persistence
+    directory.<br>
     <code>
       tao_imr_locator
         --primary
@@ -262,7 +262,7 @@ same time the Fault Tolerant ImplRepo_Service will always be available.
   </li>
   <li>
     </em>Start the backup.</em><br>
-    Reads the primary replication ior from the persistence directory.<br>
+    Reads the primary replication ior from the shared persistence directory.<br>
     Writes the multi-profile ior to ft_imr_ior_filename<br>.
     <code>
       tao_imr_locator
@@ -291,15 +291,15 @@ same information.
 
 The Commandline parameters that are valid for ImR_Activator are
 
--c:        Run the Service command.
--d:number  Debug Information
--l         lock the database.
--o         Generate the IOR to a file (just in case some one wants to read the
-           IOR)
--r         Enable Win32 regsitry implementation.
--s         Run as a service.
--t         Set a timeout value.
--h         Prints the help.
+-c:          Run the Service command.
+-d:number    Debug Information
+-l           lock the database.
+-o           Generate the IOR to a file (just in case some one wants to read the
+             IOR)
+-r           Enable Win32 regsitry implementation.
+-s           Run as a service.
+-t           Set a timeout value.
+-h           Prints the help.
 
         When Persistence of an ImR_Activator is required, we will save
 the information about the server's that this ImR_Activator is related
