@@ -1,3 +1,9 @@
+Mon Jan 28 18:16:09 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_sequence.cpp:
+          Fixed compile error when using ostream and alternate mapping
+          together
+
 Mon Jan 28 12:44:24 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Advanced/ch_12/client.cpp:
