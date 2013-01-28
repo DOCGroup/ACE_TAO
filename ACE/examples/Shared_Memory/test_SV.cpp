@@ -4,8 +4,6 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_unistd.h"
 
-
-
 #define SHMSZ 27
 #define SHM_KEY (key_t) 5678
 
