@@ -1,3 +1,11 @@
+Mon Jan 28 20:09:12 UTC 2013  Byron Harris  <harrisb@ociweb.com>
+
+        * orbsvcs/tests/FT_Naming/FaultTolerant/run_persistence_test.pl:
+
+          Redirect output wih expected error messages encountered
+          reading corrupt files so that these messages will not
+          indicated test failure.
+
 Mon Jan 28 16:09:03 UTC 2013  "Kevin Stanley"  <stanleyk@ociweb.com>
         * docs/Options.html:
 
