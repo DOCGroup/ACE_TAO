@@ -1,3 +1,16 @@
+Mon Jan 28 22:20:12 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/Naming_Loader.h:
+        * orbsvcs/orbsvcs/Naming/Naming_Loader.cpp:
+
+          Creates the Naming Server object if one is not passed in
+          as it did before. Allows user to pass in a derived
+          Naming Server if they wish to use it.
+
+        * utils/nslist/nslist.cpp:
+
+          Avoid warnings regarding conversions.
+
 Mon Jan 28 22:22:09 UTC 2013  Byron Harris  <harrisb@ociweb.com>
 
         * tests/Storable/run_test.pl:

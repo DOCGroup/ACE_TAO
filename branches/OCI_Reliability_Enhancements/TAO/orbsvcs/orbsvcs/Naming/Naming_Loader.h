@@ -33,7 +33,10 @@ class TAO_Naming_Serv_Export TAO_Naming_Loader : public TAO_Object_Loader
 public:
 
   /// Constructor
-  TAO_Naming_Loader (void);
+  /// By default will use the standard Naming_Server.  If a server is provided
+  /// it will use that one instead. This object takes ownership of the provided
+  /// Naming Server.
+  TAO_Naming_Loader (TAO_Naming_Server *server = 0);
 
   /// Destructor
   ~TAO_Naming_Loader (void);
