@@ -527,7 +527,7 @@ sub backup_restore_test ()
         $status = 1;
     }
 
-    ##4. Verify that backup files are created
+    ##5. Verify that backup files are created
 
     print_msg("Verifying naming context backup files");
     $file = $name_dir . "/NameService";
@@ -553,7 +553,7 @@ sub backup_restore_test ()
 	}
     }
 
-    ##. Replace some of the data files with corrupt files
+    ##6. Replace some of the data files with corrupt files
     print_msg("Replace data files with corrupt files");
     my $corrupt_data_dir = $startdir . "/corrupt_data/";
 
@@ -573,24 +573,36 @@ sub backup_restore_test ()
 	copy ($corrupt_group_dir . $file, $group_dir . "/" . $file) or die "Copy failed: $!\n";
     }
 
-    ##5. Start a new instance of the tao_ft_naming server
-    print_msg("Start a new instance of the tao_ft_naming server");
+    ##7. Start a new instance of the tao_ft_naming server
+    print_msg("Start a new instance of the tao_ft_naming server and then running client 2");
     $server->DeleteFile ($ns_iorfile);
+    # Redirect output so that expected error messages are not interpreted as
+    # test failure and rely instead of return status.
+    redirect_output();
+    my $restore_status = 0;
     $NS1->Spawn ();
     if ($server->WaitForFileTimed ($ns_iorfile,
                                    $server->ProcessStartWaitInterval()) == -1) {
         print STDERR "ERROR: cannot find file <$ns_iorfile>\n";
         $NS1->Kill (); $NS1->TimedWait (1);
         $status = 1;
+        $restorestatus = 1;
     }
 
-    ##6. Verify the new name, object group and member are in the tao_ft_naming repository.
+    ##8. Verify the new name, object group and member are in the tao_ft_naming repository.
     print_msg("Verify the backup files are used when the corrupt files are read");
     print_msg("INFO: Starting client2");
     $client_status = $CL2->SpawnWaitKill ($client->ProcessStartWaitInterval());
+    restore_output();
     if ($client_status != 0) {
         print STDERR "ERROR: client2 returned $client_status\n";
         $status = 1;
+        $restorestatus = 1;
+    }
+
+    if ($restore_status == 1) {
+	cat_file($client_stderr_file);
+	cat_file($client_stdout_file);
     }
 
     print_msg("INFO: terminating test server");
