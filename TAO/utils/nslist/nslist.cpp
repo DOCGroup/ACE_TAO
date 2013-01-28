@@ -41,8 +41,8 @@ namespace
   const char
     *myTree = "|",      // Default string to draw tree "tram-lines"
     *myNode = "+";      // Default string to draw tree node end-points
-  size_t sizeMyTree;    // Initialised by main to strlen (myTree)
-  size_t sizeMyNode;    // Initialised by main to strlen (myNode)
+  int sizeMyTree;       // Initialised by main to strlen (myTree)
+  int sizeMyNode;       // Initialised by main to strlen (myNode)
   int maxDepth= 0;      // Limit to display depth (default unlimited)
   ACE_Time_Value
     rtt = ACE_Time_Value::zero; // relative roundtrip timeout for ctx
