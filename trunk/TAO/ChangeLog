@@ -1,3 +1,10 @@
+Mon Jan 28 18:51:42 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Advanced/ch_12/client.cpp:
+        * examples/Advanced/ch_18/client.cpp:
+        * examples/Advanced/ch_8_and_10/client.cpp:
+          Fixed compile errors when ostream is disabled
+
 Mon Jan 28 18:16:09 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_sequence.cpp:

@@ -14,7 +14,6 @@
 
 
 #include "CCSC.h"        // ORB-specific
-#include <iterator>
 #include <ace/streams.h>
 
 using namespace std;
@@ -23,8 +22,7 @@ using namespace std;
 // name, if available, and the repository ID otherwise.
 
 // This inserter may or may not be needed for your ORB.
-#if !defined (GEN_OSTREAM_OPS)
-
+#if 0
 static ostream &
 operator<< (ostream &os, const CORBA::Exception &e)
 {
@@ -39,6 +37,9 @@ operator<< (ostream &os, const CORBA::Exception &e)
         os << tc->id ();
     return os;
 }
+#endif
+
+#if !defined (GEN_OSTREAM_OPS)
 
 // Show the details for a thermometer or thermostat.
 
