@@ -1,3 +1,12 @@
+Mon Jan 28 12:44:24 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Advanced/ch_12/client.cpp:
+        * examples/Advanced/ch_18/client.cpp:
+        * examples/Advanced/ch_21/client.cpp:
+        * examples/Advanced/ch_8_and_10/client.cpp:
+          Fixed compile errors when ostream streaming is enabled
+          in TAO_IDL
+
 Mon Jan 28 11:26:06 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:

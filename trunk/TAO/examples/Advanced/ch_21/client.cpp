@@ -22,7 +22,8 @@ using namespace std;
 // Generic ostream inserter for exceptions. Inserts the exception
 // name, if available, and the repository ID otherwise.
 
-#if 0   // This inserter is not needed for TAO.
+// This inserter may or may not be needed for your ORB.
+#if !defined (GEN_OSTREAM_OPS)
 
 static ostream &
 operator<<(ostream & os, const CORBA::Exception & e)
@@ -38,8 +39,6 @@ operator<<(ostream & os, const CORBA::Exception & e)
         os << tc->id();
     return os;
 }
-
-#endif
 
 //----------------------------------------------------------------
 
@@ -103,6 +102,8 @@ operator<<(std::ostream &os, const CCS::Controller::EChange &ec)
     }
     return os;
 }
+
+#endif
 
 //----------------------------------------------------------------
 

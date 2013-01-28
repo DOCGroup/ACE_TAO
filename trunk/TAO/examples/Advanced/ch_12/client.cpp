@@ -14,6 +14,7 @@
 
 
 #include "CCSC.h"        // ORB-specific
+#include <iterator>
 #include <ace/streams.h>
 
 using namespace std;
@@ -21,7 +22,8 @@ using namespace std;
 // Generic ostream inserter for exceptions. Inserts the exception
 // name, if available, and the repository ID otherwise.
 
-#if 0   // This inserter may or may not be needed for your ORB.
+// This inserter may or may not be needed for your ORB.
+#if !defined (GEN_OSTREAM_OPS)
 
 static ostream &
 operator<< (ostream &os, const CORBA::Exception &e)
@@ -37,8 +39,6 @@ operator<< (ostream &os, const CORBA::Exception &e)
         os << tc->id ();
     return os;
 }
-
-#endif
 
 // Show the details for a thermometer or thermostat.
 
@@ -99,8 +99,9 @@ operator<< (std::ostream &os, const CCS::Controller::EChange &ec)
   return os;
 }
 
-// Change the temperature of a thermostat.
+#endif
 
+// Change the temperature of a thermostat.
 static void
 set_temp (CCS::Thermostat_ptr tmstat, CCS::TempType new_temp)
 {
