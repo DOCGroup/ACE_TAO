@@ -14,6 +14,7 @@
 
 #include "CCSC.h"        // ORB-specific
 #include "assert.h"
+#include <iterator>
 #include <orbsvcs/CosNamingC.h>
 #include <ace/streams.h>
 // ----------------------------------------------------------------
@@ -130,6 +131,9 @@ operator<<(ostream & os, const CORBA::Exception & e)
 
 // Show the details for a thermometer or thermostat.
 
+// This inserter may or may not be needed for your ORB.
+#if !defined (GEN_OSTREAM_OPS)
+
 static std::ostream &
 operator<<(std::ostream &os, CCS::Thermometer_ptr t)
 {
@@ -188,6 +192,8 @@ operator<<(std::ostream &os, const CCS::Controller::EChange &ec)
     }
     return os;
 }
+
+#endif
 
 //----------------------------------------------------------------
 
