@@ -29,7 +29,7 @@ CC              = gcc
 CXX             = g++
 
 ifeq ($(threads),1)
-  CPPFLAGS      += -D_REENTRANT
+  CPPFLAGS      += -D_REENTRANT -D_POSIX_PTHREAD_SEMANTICS
 endif
 
 DLD             = $(CXX)
