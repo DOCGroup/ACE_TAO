@@ -1,3 +1,12 @@
+Mon Jan 28 11:26:06 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+          Generate also ostream insertion methods for components
+
+        * tao/DynamicInterface/Request.h:
+          Doxygen fixes
+
 Fri Jan 25 13:55:00 UTC 2013  Simon Massey  <simon dot massey at prismtech dot com>
 
         * orbsvcs/tests/Miop/McastFragmentation/server.cpp:
