@@ -13,6 +13,38 @@ my $status = 0;
 
 my $test1 = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 
+my $stdout_file        = "test.out";
+my $stderr_file        = "test.err";
+my $test_stdout_file = $test1->LocalFile ($stdout_file);
+my $test_stderr_file = $test1->LocalFile ($stderr_file);
+
+sub cat_file($)
+{
+    my $file_name = shift;
+    if (-s $file_name ) # size of file is greater than zero
+    {
+        open TESTFILE, $file_name or die "Couldn't open file: $!";
+        my @teststring = <TESTFILE>; # read in all of the file
+        print STDERR "\n@teststring\n";
+        close TESTFILE;
+    }
+}
+
+sub redirect_output()
+{
+    open (OLDOUT, ">&", \*STDOUT) or die "Can't dup STDOUT: $!";
+    open (OLDERR, ">&", \*STDERR) or die "Can't dup STDERR: $!";
+    open STDERR, '>', $test_stderr_file;
+    open STDOUT, '>', $test_stdout_file;
+}
+
+sub restore_output()
+{
+    open (STDERR, ">&OLDERR") or die "Can't dup OLDERR: $!";
+    open (STDOUT, ">&OLDOUT") or die "Can't dup OLDOUT: $!";
+}
+
+
 my $persistent_file = "test.dat";
 $test1->DeleteFile ($persistent_file);
 
@@ -60,10 +92,16 @@ sub test_backup_recovery($)
     copy("data_files/good.dat", $backup_file) or die "Copy failed: $!";
 
     $T = $test1->CreateProcess ("test", "-b");
+    # Redirect output so that expected error messages are not interpreted as
+    # test failure and rely instead of return status.
+    redirect_output();
     my $test_status = $T->SpawnWaitKill ($test1->ProcessStartWaitInterval());
+    restore_output();
     if ($test_status != 0) {
 	$status = 1;
 	print STDERR "ERROR: Backup recovery test using $bad_file failed\n";
+	cat_file($test_stderr_file);
+	cat_file($test_stdout_file);
     }
     else {
 	print STDERR "Recovery successful\n";
