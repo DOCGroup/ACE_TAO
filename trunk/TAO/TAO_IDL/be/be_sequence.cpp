@@ -391,9 +391,18 @@ be_sequence::gen_ostream_operator (TAO_OutStream *os,
       << "const " << this->name () << " &_tao_sequence" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
-      << "strm << \"" << this->name () << "[\";" << be_nl_2
-      << "for (CORBA::ULong i = 0; i < _tao_sequence.length (); ++i)"
-      << be_idt_nl
+      << "strm << \"" << this->name () << "[\";" << be_nl_2;
+
+  if (be_global->alt_mapping ())
+    {
+      *os << "for (CORBA::ULong i = 0; i < _tao_sequence.size (); ++i)";
+    }
+  else
+    {
+      *os << "for (CORBA::ULong i = 0; i < _tao_sequence.length (); ++i)";
+    }
+
+  *os << be_idt_nl
       << "{" << be_idt_nl
       << "if (i != 0)" << be_idt_nl
       << "{" << be_idt_nl
