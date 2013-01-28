@@ -171,7 +171,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
           << "virtual TAO_Policy_Scope _tao_scope (void) const;" << be_nl;
     }
 
-  if (c == 0 && be_global->gen_ostream_operators ())
+  if (be_global->gen_ostream_operators ())
     {
       *os << be_nl
           << "virtual std::ostream &_tao_stream_v (std::ostream &) const;";

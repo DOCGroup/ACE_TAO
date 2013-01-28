@@ -139,7 +139,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "}" << be_nl;
     }
 
-  if (c == 0 && be_global->gen_ostream_operators ())
+  if (be_global->gen_ostream_operators ())
     {
       *os << be_nl_2
           << "std::ostream &" << be_nl

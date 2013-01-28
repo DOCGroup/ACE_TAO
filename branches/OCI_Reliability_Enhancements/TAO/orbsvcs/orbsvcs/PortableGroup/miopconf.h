@@ -98,6 +98,14 @@ static u_long const TAO_DEFAULT_MIOP_FRAGMENT_SIZE     = MIOP_MAX_DGRAM_SIZE;
 static u_long const TAO_DEFAULT_MIOP_MAX_FRAGMENTS = 0u; // Zero is unlimited
 #endif
 
+#if !defined (TAO_DEFAULT_MIOP_SEND_THROTTLING)
+static bool const TAO_DEFAULT_MIOP_SEND_THROTTLING = true; // Enabled
+#endif
+
+#if !defined (TAO_DEFAULT_MIOP_EAGER_DEQUEUEING)
+static bool const TAO_DEFAULT_MIOP_EAGER_DEQUEUEING = true; // Enabled
+#endif
+
 static CORBA::Octet const miop_magic[4] = {
   0x4d, 0x49, 0x4f, 0x50
 }; // in ASCII this is 'M', 'I', 'O', 'P'

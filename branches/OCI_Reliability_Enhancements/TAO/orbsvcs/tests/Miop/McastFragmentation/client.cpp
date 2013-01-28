@@ -185,10 +185,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("Exception caught in client main ():");
-      return -1;
+      return 1;
     }
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("\nClient finished successfully\n")));
+              ACE_TEXT ("\nClient finished successfully.\n")));
   return 0;
 }

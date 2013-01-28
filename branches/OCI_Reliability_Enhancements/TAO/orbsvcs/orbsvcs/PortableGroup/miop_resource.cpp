@@ -20,6 +20,8 @@ TAO_MIOP_Resource_Factory::TAO_MIOP_Resource_Factory (void)
   , send_hi_water_mark_  (0u) // Zero sets this to actual -ORBSndSock
   , send_buffer_size_    (0u) // Zero is unspecified (-ORBSndSock).
   , receive_buffer_size_ (0u) // Zero is unspecified (-ORBRcvSock).
+  , enable_throttling_    (!!(TAO_DEFAULT_MIOP_SEND_THROTTLING))  // Client-side SendRate throttling enabled.
+  , enable_eager_dequeue_ (!!(TAO_DEFAULT_MIOP_EAGER_DEQUEUEING)) // Server-side Multiple message dequeueing.
 {
 }
 
@@ -235,6 +237,32 @@ TAO_MIOP_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
                         ACE_TEXT ("TAO (%P|%t) - MIOP_Resource_Factory ")
                         ACE_TEXT ("-ORBRcvSock missing size in bytes.\n")));
         }
+      else if (ACE_OS::strcasecmp (argv[curarg],
+                                   ACE_TEXT ("-ORBSendThrottling")) == 0 ||
+               ACE_OS::strcasecmp (argv[curarg],
+                                   ACE_TEXT ("-ORBSendThrottle")) == 0)
+        {
+          if (++curarg < argc)
+            this->enable_throttling_= static_cast<bool> (ACE_OS::atoi (argv[curarg]));
+          else
+            ACE_DEBUG ((LM_ERROR,
+                        ACE_TEXT ("TAO (%P|%t) - MIOP_Resource_Factory ")
+                        ACE_TEXT ("%s missing 0 or 1 parameter.\n"),
+                        argv[curarg-1]));
+        }
+      else if (ACE_OS::strcasecmp (argv[curarg],
+                                   ACE_TEXT ("-ORBEagerDequeueing")) == 0 ||
+               ACE_OS::strcasecmp (argv[curarg],
+                                   ACE_TEXT ("-ORBEagerDequeue")) == 0)
+        {
+          if (++curarg < argc)
+            this->enable_eager_dequeue_= static_cast<bool> (ACE_OS::atoi (argv[curarg]));
+          else
+            ACE_DEBUG ((LM_ERROR,
+                        ACE_TEXT ("TAO (%P|%t) - MIOP_Resource_Factory ")
+                        ACE_TEXT ("%s missing 0 or 1 parameter.\n"),
+                        argv[curarg-1]));
+        }
       else if (ACE_OS::strncmp (argv[curarg], ACE_TEXT ("-ORB"), 4) == 0)
         {
           // Can we assume there is an argument after the option?
@@ -340,6 +368,18 @@ u_long
 TAO_MIOP_Resource_Factory::receive_buffer_size (void) const
 {
   return receive_buffer_size_;
+}
+
+bool
+TAO_MIOP_Resource_Factory::enable_throttling (void) const
+{
+  return enable_throttling_;
+}
+
+bool
+TAO_MIOP_Resource_Factory::enable_eager_dequeue (void) const
+{
+  return enable_eager_dequeue_;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
