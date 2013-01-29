@@ -25,6 +25,8 @@ using namespace std;
 // This inserter may or may not be needed for your ORB.
 #if !defined (GEN_OSTREAM_OPS)
 
+#if 0
+
 static ostream &
 operator<<(ostream & os, const CORBA::Exception & e)
 {
@@ -39,6 +41,8 @@ operator<<(ostream & os, const CORBA::Exception & e)
         os << tc->id();
     return os;
 }
+
+#endif
 
 //----------------------------------------------------------------
 
