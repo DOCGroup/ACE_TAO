@@ -1,3 +1,22 @@
+Tue Jan 29 15:13:13 UTC 2013  "Kevin Stanley"  <stanleyk@ociweb.com>
+
+        * ChangeLog:
+        * TAO_IDL:
+        * TAO_IDL/be/be_sequence.cpp:
+        * examples/Advanced/ch_12/client.cpp:
+        * examples/Advanced/ch_18/client.cpp:
+        * examples/Advanced/ch_21/client.cpp:
+        * examples/Advanced/ch_8_and_10/client.cpp:
+        * orbsvcs/tests/Miop/McastFragmentation/client.cpp:
+        * orbsvcs/tests/Miop/McastFragmentation/run_test.pl:
+        * orbsvcs/tests/Miop/McastFragmentation/run_test_ipv6.pl:
+        * orbsvcs/tests/Miop/McastFragmentation/uipmc_client.conf:
+        * orbsvcs/tests/Miop/McastFragmentation/uipmc_server.conf:
+        * orbsvcs/tests/Miop/McastFragmentation/uipmc_server_m.conf:
+        * orbsvcs/tests/Miop/McastFragmentation/uipmc_server_n.conf:
+
+          Merged Doc group trunk into branch to resolve issues with building examples.
+          
 Mon Jan 28 22:54:36 UTC 2013  Phillip LaBanca  <labancap@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/README:
