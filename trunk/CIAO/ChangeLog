@@ -1,3 +1,10 @@
+Tue Jan 29 12:20:08 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.cpp:
+          Fixed bugzilla 4087, thanks to
+          Jiang Wei <jiangwei_1976 at yahoo dot com dot cn> for
+          providing this patch
+
 Tue Jan 29 12:17:09 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/ciao_tests.lst:
