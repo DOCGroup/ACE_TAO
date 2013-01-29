@@ -19,9 +19,9 @@ $count = 5;
 
 foreach $i (@ARGV) {
     if ($i eq '-debug') {
-        $server_level = '9';
+        $server_level = '3';
         # Level enough for reporting errors.
-        $client_level = '3';
+        $client_level = '9';
     }
 }
 
@@ -59,7 +59,6 @@ $client3->DeleteFile($iorbase);
 $SV = $server->CreateProcess ("server",
                               "-ORBdebuglevel $server_level " .
                               "-ORBSvcConf $server_svcconf " .
-                              "-ORBRcvSock 500000 " .
                               "-o $server_iorfile -u $uipmc -s $orbs " .
                               "-p $payload -t " .
                               $threads * 1 . " -c $count");

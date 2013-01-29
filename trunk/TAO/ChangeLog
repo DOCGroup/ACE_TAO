@@ -1,3 +1,14 @@
+Tue Jan 29 11:00:00 UTC 2013  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * orbsvcs/tests/Miop/McastFragmentation/run_test.pl:
+        * orbsvcs/tests/Miop/McastFragmentation/run_test_ipv6.pl:
+        * orbsvcs/tests/Miop/McastFragmentation/client.cpp:
+        * orbsvcs/tests/Miop/McastFragmentation/uipmc_client.conf:
+        * orbsvcs/tests/Miop/McastFragmentation/uipmc_server.conf:
+        * orbsvcs/tests/Miop/McastFragmentation/uipmc_server_n.conf:
+        * orbsvcs/tests/Miop/McastFragmentation/uipmc_server_m.conf:
+          Minor timing/tuning adjustments and updates.
+
 Tue Jan 29 07:55:44 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Advanced/ch_21/client.cpp:
