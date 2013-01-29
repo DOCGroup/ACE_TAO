@@ -41,6 +41,7 @@ TAO/CIAO/tests/Bug_3937_Regression/run_test.pl
 TAO/CIAO/tests/Bug_3944_Regression/run_test.pl
 TAO/CIAO/tests/Bug_4086_Regression/descriptors/run_test.pl:
 TAO/CIAO/tests/Bug_4086_Regression/descriptors/run_test_cdr.pl:
+TAO/CIAO/tests/Bug_4087_Regression/descriptors/run_test.pl:
 TAO/CIAO/tests/IDL_Test/Cornucopia/run_test.pl: DOXYGEN
 TAO/CIAO/tests/Cookies/run_test.pl
 TAO/CIAO/tests/TTSCTest/descriptors/run_test.pl:

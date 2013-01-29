@@ -1,3 +1,13 @@
+Tue Jan 29 12:17:09 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/ciao_tests.lst:
+        * tests/Bug_4087_Regression:
+        * tests/Bug_4087_Regression/run_test.pl:
+        * tests/Bug_4087_Regression/test.idl:
+          New unit test for idl3_to_idl2, currently failing. Thanks to
+          Jiang Wei <jiangwei_1976 at yahoo dot com dot cn> for
+          creating this test.
+
 Mon Jan 28 10:11:13 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/ciao_tests.lst:
