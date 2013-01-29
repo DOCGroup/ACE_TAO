@@ -897,7 +897,18 @@ idl3_to_idl2_visitor::visit_porttype_scope_mirror (
               break;
             }
           default:
-            return d->ast_accept (this);
+            {
+              if (d->ast_accept (this) == -1)
+                {
+                  ACE_ERROR_RETURN ((LM_ERROR,
+                                     ACE_TEXT ("idl3_to_idl2_visitor")
+                                     ACE_TEXT ("::visit_porttype_mirror - ")
+                                     ACE_TEXT ("codegen for mirror port failed\n")),
+                                    -1);
+                }
+
+              break;
+            }
         }
     }
 
