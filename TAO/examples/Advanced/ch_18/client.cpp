@@ -14,7 +14,6 @@
 
 #include "CCSC.h"        // ORB-specific
 #include "assert.h"
-#include <iterator>
 #include <orbsvcs/CosNamingC.h>
 #include <ace/streams.h>
 // ----------------------------------------------------------------

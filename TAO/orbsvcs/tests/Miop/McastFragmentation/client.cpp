@@ -162,7 +162,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                           -1);
 
       if (do_shutdown)
-        hello->shutdown ();
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("\nClient sending server shutdown message....\n")));
+          ACE_OS::sleep (7);
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("Shutting down NOW\n")));
+          hello->shutdown ();
+        }
       else
         {
           Test::UIPMC_Object_var uipmc_obj = hello->get_object ();

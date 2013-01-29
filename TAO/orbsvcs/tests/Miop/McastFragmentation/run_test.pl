@@ -59,7 +59,6 @@ $client3->DeleteFile($iorbase);
 $SV = $server->CreateProcess ("server",
                               "-ORBdebuglevel $server_level " .
                               "-ORBSvcConf $server_svcconf " .
-                              "-ORBRcvSock 500000 " .
                               "-o $server_iorfile -u $uipmc -s $orbs " .
                               "-p $payload -t " .
                               $threads * 1 . " -c $count");
