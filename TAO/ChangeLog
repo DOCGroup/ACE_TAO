@@ -1,3 +1,10 @@
+Wed Jan 30 12:44:00 UTC 2013  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * tao/GIOP_Message_Base.cpp:
+          Fix a memory leak of a datablock due to ZIOP decompression (possiably)
+          replacing it. If replaced the original db may need to be released and
+          the new db always does.
+
 Tue Jan 29 11:00:00 UTC 2013  Simon Massey  <simon dot massey at prismtech dot com>
 
         * orbsvcs/tests/Miop/McastFragmentation/run_test.pl:
