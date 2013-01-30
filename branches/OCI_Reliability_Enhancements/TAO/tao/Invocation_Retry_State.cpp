@@ -79,10 +79,8 @@ namespace
 
 TAO::Invocation_Retry_State::Invocation_Retry_State (TAO_Stub &stub)
   : forward_on_reply_closed_count_ (0)
-  , stub_ (stub)
   , forward_on_exception_limit_used_ (false)
 {
-  this->stub_.invocation_retry_state (this);
   this->ex_count_map_[FOE_OBJECT_NOT_EXIST] = 0;
   this->ex_count_map_[FOE_COMM_FAILURE] = 0;
   this->ex_count_map_[FOE_TRANSIENT] = 0;
@@ -114,7 +112,6 @@ TAO::Invocation_Retry_State::Invocation_Retry_State (TAO_Stub &stub)
 
 TAO::Invocation_Retry_State::~Invocation_Retry_State ()
 {
-  this->stub_.invocation_retry_state (0);
 }
 
 bool
@@ -156,16 +153,16 @@ TAO::Invocation_Retry_State::forward_on_reply_closed_increment ()
 }
 
 void
-TAO::Invocation_Retry_State::next_profile_retry (void) const
+TAO::Invocation_Retry_State::next_profile_retry (TAO_Stub &stub) const
 {
-  this->stub_.next_profile_retry ();
-  this->sleep_at_starting_profile ();
+  stub.next_profile_retry ();
+  this->sleep_at_starting_profile (stub);
 }
 
 void
-TAO::Invocation_Retry_State::sleep_at_starting_profile () const
+TAO::Invocation_Retry_State::sleep_at_starting_profile (TAO_Stub &stub) const
 {
-  if (stub_.at_starting_profile ())
+  if (stub.at_starting_profile ())
     this->sleep ();
 }
 

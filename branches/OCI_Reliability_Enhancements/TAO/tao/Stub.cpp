@@ -19,7 +19,6 @@
 #include "tao/Policy_Set.h"
 #include "tao/SystemException.h"
 #include "tao/CDR.h"
-#include "tao/Invocation_Retry_State.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Stub.inl"
@@ -53,7 +52,6 @@ TAO_Stub::TAO_Stub (const char *repository_id,
   , forwarded_ior_info_ (0)
   , collocation_opt_ (orb_core->optimize_collocation_objects ())
   , forwarded_on_exception_ (false)
-  , invocation_retry_state_ (0)
 {
   if (this->orb_core_.get() == 0)
     {
@@ -575,18 +573,6 @@ TAO_Stub::marshal (TAO_OutputCDR &cdr)
     }
 
   return (CORBA::Boolean) cdr.good_bit ();
-}
-
-void
-TAO_Stub::invocation_retry_state (TAO::Invocation_Retry_State *state)
-{
-  this->invocation_retry_state_ = state;
-}
-
-TAO::Invocation_Retry_State *
-TAO_Stub::invocation_retry_state () const
-{
-  return this->invocation_retry_state_;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -36,6 +36,7 @@ class TAO_Bind_Dispatcher_Guard;
 namespace TAO
 {
   class Profile_Transport_Resolver;
+  class Invocation_Retry_State;
 
   /**
    * @class Synch_Twoway_Invocation
@@ -82,6 +83,12 @@ namespace TAO
      */
     Invocation_Status remote_twoway (ACE_Time_Value *max_wait_time);
 
+    /**
+     * Indicate that retry state should be tracked and controlled
+     * in the presense of exceptions.
+     */
+    void set_retry_state (Invocation_Retry_State *retry_state);
+
   protected:
 
     /**
@@ -107,6 +114,8 @@ namespace TAO
                                       TAO_Synch_Reply_Dispatcher &rd,
                                       TAO_Bind_Dispatcher_Guard &bd);
 
+    Invocation_Retry_State *retry_state_;
+
   private:
 
     /// Helper method that checks the reply status of the
@@ -115,6 +124,7 @@ namespace TAO
      * This method returns an exception when there is an error.
      */
     Invocation_Status check_reply_status (TAO_Synch_Reply_Dispatcher &rd);
+
   };
 
   /**

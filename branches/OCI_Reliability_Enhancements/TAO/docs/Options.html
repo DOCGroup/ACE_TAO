@@ -959,7 +959,7 @@ having them use the same configurator file.
         <th>Description</th>
       </tr>
       <tr>
-        <td><code>-ORBForwardTransientLimit</code> <em>limit</em></td>
+        <td><code>-ORBForwardOnTransientLimit</code> <em>limit</em></td>
         <td>Use this option to cycle through profiles when
 	establishing a connection with a server or when a
 	server replies to a request with a TRANSIENT
@@ -967,7 +967,7 @@ having them use the same configurator file.
         The number of retries will not exceed <em>limit</em>.</td>
       </tr>
       <tr>
-        <td><code>-ORBForwardCommFailureLimit</code> <em>limit</em></td>
+        <td><code>-ORBForwardOnCommFailureLimit</code> <em>limit</em></td>
         <td>Use this option to cycle through profiles when a
 	server replies to a request with a COMM_FAILURE
 	exception.
@@ -992,7 +992,7 @@ having them use the same configurator file.
         <td>Use this option to cycle through profiles when it has
 	been detected that a connection is closed when reading a server reply.
         The number of retries will not exceed <em>limit</em>.
-	If this option is used then -ORBForwardTransientLimit should
+	If this option is used then -ORBForwardOnTransientLimit should
 	also be used to avoid a TRANSIENT exception being thrown.
 	</td>
       </tr>
@@ -1908,7 +1908,7 @@ strategy.
             <tr>
               <td ALIGN="left"><code>&#8209;ORBMaxFragmentRate</code> <em>microseconds</em></td>
               <td ALIGN="left">
-                <P>This client-side option (if enabled, see <code>&#8209;ORBSendThrottling</code> below) 
+                <P>This client-side option (if enabled, see <code>&#8209;ORBSendThrottling</code> below)
                   specifies a non-zero, positive amount of time (in
                   uSec, i.e. microseconds) that it takes to transmit and process an individual
                   message fragment of the maximum size; see the <code>&#8209;ORBMaxFragmentSize</code>
@@ -1947,15 +1947,15 @@ strategy.
             </tr>
             <tr>
               <td ALIGN="left"><code>&#8209;ORBSendThrottling</code> <em>0 | 1</em></td>
-              <td ALIGN="left">This is a client-side option that is enabled by default; 
+              <td ALIGN="left">This is a client-side option that is enabled by default;
                 although this default can be overriden when the TAO libraries are built in the <CODE>
                   ace/config.h</CODE>, by specifying the new default such as <CODE>#define&nbsp;TAO_DEFAULT_MIOP_SEND_THROTTLING&nbsp;false</CODE>
-                which in this case would turn off throttling by default, unless specified in 
-                the service file. If disabled (0) the client will always attempt to transmit 
-                all MIOP message fragments without any delay. If enabled (1) the client will 
-                attempt to automatically restrict the speed of sending individual MIOP messages 
+                which in this case would turn off throttling by default, unless specified in
+                the service file. If disabled (0) the client will always attempt to transmit
+                all MIOP message fragments without any delay. If enabled (1) the client will
+                attempt to automatically restrict the speed of sending individual MIOP messages
                 to maintain an average of <code>&#8209;ORBMaxFragmentSize</code> bytes per <code>&#8209;ORBMaxFragmentRate</code>
-                microseconds once the threshold of <code>&#8209;ORBSendHighWaterMark</code> bytes 
+                microseconds once the threshold of <code>&#8209;ORBSendHighWaterMark</code> bytes
                 of data are currently being transmitted or are in progress via each individual transport
                 (i.e. each individual client-side connection to the server).
               </td>
@@ -1996,28 +1996,28 @@ strategy.
             </tr>
             <tr>
               <td ALIGN="left"><code>&#8209;ORBEagerDequeueing</code> <em>0 | 1</em></td>
-              <td ALIGN="left">This is a server-side option that is enabled by default; 
+              <td ALIGN="left">This is a server-side option that is enabled by default;
                 although this default can be overriden when the TAO libraries are built in the <CODE>
                   ace/config.h</CODE>, by specifying the new default such as <CODE>#define&nbsp;TAO_DEFAULT_MIOP_EAGER_DEQUEUEING&nbsp;false</CODE>
-                which in this case would turn this off by default, unless specified in the 
-                service file. If disabled (0) each thread servicing the MIOP listener will only 
-                dequeue enough MIOP message fragments from the socket receive buffer to 
-                complete a single full MIOP message which it will then process. This action 
-                reduces the amount of user memory consumed by the server process, but it also 
-                increases the likelyhood of the OS sockets receive buffer overflowing (as 
-                whilst processing each message, the thread cannot dequeue other incomming 
-                message fragments). If enabled (1) it specifies that each server thread will 
-                attempt to dequeue all available MIOP messages from the receiver's socket and 
-                queue these up in a user memory FIFO queue, before attempting to process a 
-                single MIOP message from the head of this FIFO queue. This action attempts to 
-                speed up the dequeueing of MIOP messages from the OS socket receive buffer 
-                (with a corresponding increase in the amount of user memory consumed by the 
-                server process) so as to limit the number of MIOP messages that the server may 
+                which in this case would turn this off by default, unless specified in the
+                service file. If disabled (0) each thread servicing the MIOP listener will only
+                dequeue enough MIOP message fragments from the socket receive buffer to
+                complete a single full MIOP message which it will then process. This action
+                reduces the amount of user memory consumed by the server process, but it also
+                increases the likelyhood of the OS sockets receive buffer overflowing (as
+                whilst processing each message, the thread cannot dequeue other incomming
+                message fragments). If enabled (1) it specifies that each server thread will
+                attempt to dequeue all available MIOP messages from the receiver's socket and
+                queue these up in a user memory FIFO queue, before attempting to process a
+                single MIOP message from the head of this FIFO queue. This action attempts to
+                speed up the dequeueing of MIOP messages from the OS socket receive buffer
+                (with a corresponding increase in the amount of user memory consumed by the
+                server process) so as to limit the number of MIOP messages that the server may
                 miss due to the OS sockets receive buffer becoming full.
               </td>
             </tr>
               <tr>
-              <td ALIGN="left"><code>&#8209;ORBFragmentsCleanupStrategy</code> <em>DELAY | NUMBER 
+              <td ALIGN="left"><code>&#8209;ORBFragmentsCleanupStrategy</code> <em>DELAY | NUMBER
                   | MEMORY</em></td>
               <td ALIGN="left">This option is used on the server to specify the incomplete
                 fragments cleanup strategy. The default is <em>DELAY</em>, indicating that the

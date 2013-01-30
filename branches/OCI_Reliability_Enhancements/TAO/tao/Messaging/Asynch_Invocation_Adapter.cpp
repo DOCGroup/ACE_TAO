@@ -152,8 +152,11 @@ namespace TAO
     TAO_Operation_Details &op,
     CORBA::Object_var &effective_target,
     Profile_Transport_Resolver &r,
-    ACE_Time_Value *&max_wait_time)
+    ACE_Time_Value *&max_wait_time,
+    Invocation_Retry_State *retry_state)
   {
+    ACE_UNUSED_ARG (retry_state);
+
     // Simple sanity check
     if (this->mode_ != TAO_ASYNCHRONOUS_CALLBACK_INVOCATION
         || this->type_ != TAO_TWOWAY_INVOCATION)
