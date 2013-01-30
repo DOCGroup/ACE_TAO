@@ -1,3 +1,8 @@
+Wed Jan 30 11:58:00 UTC 2013  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * bin/valgrind.supp:
+          Add a supression for a faulty system zlib.
+
 Mon Jan 28 23:33:25 UTC 2013  Adam Mitz  <mitza@ociweb.com>
 
         * include/makeinclude/platform_sunos5_g++.GNU:
