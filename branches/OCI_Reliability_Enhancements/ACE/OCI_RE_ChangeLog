@@ -1,3 +1,17 @@
+Wed Jan 30 23:54:14 UTC 2013  Phillip LaBanca  <labancap@ociweb.com>
+
+        * ace/Message_Block.cpp:
+
+          Applied bug 3247 duplicate patch that replaced recursion with
+          iteration to support the copying of large message blocks.
+
+        * tests/Message_Block_Large_Copy_Test.cpp:
+        * tests/run_test.lst:
+        * tests/tests.mpc:
+
+          Created test to cover the cloning and duplication of
+          large Message_Blocks.
+
 Tue Jan 29 15:15:09 UTC 2013  "Kevin Stanley"  <stanleyk@ociweb.com>
 
         * include/makeinclude/platform_sunos5_g++.GNU:

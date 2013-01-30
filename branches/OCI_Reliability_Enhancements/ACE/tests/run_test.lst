@@ -138,6 +138,7 @@ Map_Test: !ACE_FOR_TAO
 Max_Default_Port_Test: !ST
 Mem_Map_Test: !VxWorks !nsk !ACE_FOR_TAO
 Memcpy_Test: !ACE_FOR_TAO
+Message_Block_Large_Copy_Test
 Message_Block_Test: !ACE_FOR_TAO
 Message_Queue_Notifications_Test
 Message_Queue_Test: !ACE_FOR_TAO

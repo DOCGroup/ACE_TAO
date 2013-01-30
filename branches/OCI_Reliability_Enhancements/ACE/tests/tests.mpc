@@ -1407,6 +1407,13 @@ project(Simple Message Block Test) : acetest {
   }
 }
 
+project(Message Block Large Copy Test) : acetest {
+  exename = Message_Block_Large_Copy_Test
+  Source_Files {
+    Message_Block_Large_Copy_Test.cpp
+  }
+}
+
 project(Singleton Test) : acetest {
   exename = Singleton_Test
   Source_Files {
