@@ -1,3 +1,26 @@
+Wed Jan 30 19:03:33 UTC 2013  Byron Harris  <harrisb@ociweb.com>
+
+        * docs/Options.html:
+
+          Fix typos for for a few invocation retry parameters.
+
+        * tao/DynamicInterface/DII_Invocation_Adapter.h:
+        * tao/DynamicInterface/DII_Invocation_Adapter.cpp:
+        * tao/Invocation_Adapter.h:
+        * tao/Invocation_Adapter.cpp:
+        * tao/Invocation_Retry_State.h:
+        * tao/Invocation_Retry_State.cpp:
+        * tao/Messaging/Asynch_Invocation_Adapter.h:
+        * tao/Messaging/Asynch_Invocation_Adapter.cpp:
+        * tao/Stub.h:
+        * tao/Stub.cpp:
+        * tao/Synch_Invocation.h:
+        * tao/Synch_Invocation.cpp:
+
+          Fixed bad assumption I made for invocation retries
+          that Invocation_Adapter::invoke () would not be
+          done asynchronously with the same TAO_Stub.
+
 Tue Jan 29 15:13:13 UTC 2013  "Kevin Stanley"  <stanleyk@ociweb.com>
 
         * ChangeLog:
@@ -16,7 +39,7 @@ Tue Jan 29 15:13:13 UTC 2013  "Kevin Stanley"  <stanleyk@ociweb.com>
         * orbsvcs/tests/Miop/McastFragmentation/uipmc_server_n.conf:
 
           Merged Doc group trunk into branch to resolve issues with building examples.
-          
+
 Mon Jan 28 22:54:36 UTC 2013  Phillip LaBanca  <labancap@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/README:

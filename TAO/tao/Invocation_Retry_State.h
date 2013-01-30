@@ -68,13 +68,13 @@ namespace TAO
      * sleep ().
      * @see TAO_Stub::next_profile_retry()
      */
-    void next_profile_retry (void) const;
+    void next_profile_retry (TAO_Stub &stub) const;
 
     /**
      * Sleep if profile is the starting
      * base profile.
      */
-    void sleep_at_starting_profile () const;
+    void sleep_at_starting_profile (TAO_Stub &stub) const;
 
     /**
      * Sleep according to the delay value
@@ -87,7 +87,6 @@ namespace TAO
     typedef ACE_Array_Map<int, int> Ex_Count_Map;
     Ex_Count_Map ex_count_map_;
     int forward_on_reply_closed_count_;
-    TAO_Stub &stub_;
     Invocation_Retry_Params retry_params_;
     bool forward_on_exception_limit_used_;
   };

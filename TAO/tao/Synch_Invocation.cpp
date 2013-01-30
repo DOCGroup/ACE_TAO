@@ -43,7 +43,14 @@ namespace TAO
                          resolver,
                          detail,
                          response_expected)
+    , retry_state_ (0)
   {
+  }
+
+  void
+  Synch_Twoway_Invocation::set_retry_state (Invocation_Retry_State *retry_state)
+  {
+    this->retry_state_ = retry_state;
   }
 
   Invocation_Status
@@ -80,15 +87,15 @@ namespace TAO
 
         if (!transport)
           {
-            TAO::Invocation_Retry_State *retry_state = this->stub ()->invocation_retry_state ();
-            if (retry_state->forward_on_exception_increment(FOE_TRANSIENT))
+            if (this->retry_state_ &&
+                this->retry_state_->forward_on_exception_increment(FOE_TRANSIENT))
                   {
                     if (TAO_debug_level > 0)
                       ACE_DEBUG ((LM_INFO,
                                   ACE_TEXT ("TAO (%P|%t) - Synch_Twoway_Invocation::")
                                   ACE_TEXT ("remote_twoway retrying on TRANSIENT ")
                                   ACE_TEXT ("exception\n")));
-                    retry_state->next_profile_retry ();
+                    this->retry_state_->next_profile_retry (*this->stub ());
                     return TAO_INVOKE_RESTART;
                   }
             else
@@ -329,17 +336,16 @@ namespace TAO
             (void) bd.unbind_dispatcher ();
             this->resolver_.transport ()->close_connection ();
 
-            TAO::Invocation_Retry_State *retry_state =
-              this->stub ()->invocation_retry_state ();
-            if (this->resolver_.transport ()->connection_closed_on_read() &&
-                retry_state->forward_on_reply_closed_increment ())
+            if (this->retry_state_ &&
+                this->resolver_.transport ()->connection_closed_on_read() &&
+                this->retry_state_->forward_on_reply_closed_increment ())
               {
                 if (TAO_debug_level > 4)
                   ACE_DEBUG ((LM_DEBUG,
                               ACE_TEXT ("TAO (%P|%t) - Synch_Twoway_Invocation::")
                               ACE_TEXT ("wait_for_reply, forward profile on ")
                               ACE_TEXT ("connection closed\n")));
-                retry_state->next_profile_retry ();
+                this->retry_state_->next_profile_retry (*this->stub ());
                 return TAO_INVOKE_RESTART;
               }
 
@@ -353,7 +359,8 @@ namespace TAO
               }
             catch (const ::CORBA::Exception&)
               {
-                if (!this->stub ()->invocation_retry_state ()->forward_on_exception_limit_used ())
+                if (this->retry_state_ == 0 ||
+                    !this->retry_state_->forward_on_exception_limit_used ())
                   {
                     this->resolver_.stub ()->reset_profiles ();
                   }
@@ -572,27 +579,27 @@ namespace TAO
     bool do_forward = false;
 
     const TAO_ORB_Parameters *orb_params = this->stub ()->orb_core ()->orb_params ();
-    TAO::Invocation_Retry_State *retry_state = this->stub ()->invocation_retry_state ();
 
-    if (retry_state->forward_on_exception_limit_used () &&
+    if (this->retry_state_ &&
+        this->retry_state_->forward_on_exception_limit_used () &&
         (CORBA::CompletionStatus) completion == CORBA::COMPLETED_NO)
       {
         if ((ACE_OS_String::strcmp (type_id.in (),
                                    "IDL:omg.org/CORBA/TRANSIENT:1.0") == 0 &&
-             retry_state->forward_on_exception_increment (TAO::FOE_TRANSIENT)) ||
+             this->retry_state_->forward_on_exception_increment (TAO::FOE_TRANSIENT)) ||
             (ACE_OS_String::strcmp (type_id.in (),
                                    "IDL:omg.org/CORBA/COMM_FAILURE:1.0") == 0 &&
-             retry_state->forward_on_exception_increment (TAO::FOE_COMM_FAILURE)) ||
+             this->retry_state_->forward_on_exception_increment (TAO::FOE_COMM_FAILURE)) ||
             (ACE_OS_String::strcmp (type_id.in (),
                                    "IDL:omg.org/CORBA/OBJECT_NOT_EXIST:1.0") == 0 &&
-             retry_state->forward_on_exception_increment (TAO::FOE_OBJECT_NOT_EXIST)) ||
+             this->retry_state_->forward_on_exception_increment (TAO::FOE_OBJECT_NOT_EXIST)) ||
             (ACE_OS_String::strcmp (type_id.in (),
                                    "IDL:omg.org/CORBA/INV_OBJREF:1.0") == 0 &&
-             retry_state->forward_on_exception_increment (TAO::FOE_INV_OBJREF))
+             this->retry_state_->forward_on_exception_increment (TAO::FOE_INV_OBJREF))
             )
           {
             retry_on_exception = true;
-            retry_state->sleep_at_starting_profile ();
+            this->retry_state_->sleep_at_starting_profile (*this->stub ());
           }
       }
     else
@@ -751,17 +758,17 @@ namespace TAO
 
         if (!transport)
           {
-            TAO::Invocation_Retry_State *retry_state = this->stub ()->invocation_retry_state ();
-            if (retry_state->forward_on_exception_limit_used ())
+            if (this->retry_state_ &&
+                this->retry_state_->forward_on_exception_limit_used ())
               {
-                if (retry_state->forward_on_exception_increment(FOE_TRANSIENT))
+                if (this->retry_state_->forward_on_exception_increment(FOE_TRANSIENT))
                   {
                     if (TAO_debug_level > 0)
                       ACE_DEBUG ((LM_INFO,
                                   ACE_TEXT ("TAO (%P|%t) - Synch_Oneway_Invocation::")
                                   ACE_TEXT ("remote_oneway retrying on TRANSIENT ")
                                   ACE_TEXT ("exception\n")));
-                    retry_state->next_profile_retry ();
+                    this->retry_state_->next_profile_retry (*this->stub ());
                     return TAO_INVOKE_RESTART;
                   }
               }
