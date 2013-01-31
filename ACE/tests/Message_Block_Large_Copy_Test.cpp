@@ -17,15 +17,11 @@
 #include "ace/Message_Block.h"
 
 size_t
-run_duplicate_test (size_t msg_block_count, size_t msg_block_size)
+run_duplicate_test (const size_t msg_block_count,
+                    const char * block,
+                    const size_t msg_block_size)
 {
     size_t rc = 0;
-    char* block = new char[msg_block_size];
-
-    for(size_t j = 0 ; j != msg_block_size; j++)
-      block[j] = 'A';
-
-    block[msg_block_size-1] = 0;
 
     ACE_Message_Block* mb_top = new ACE_Message_Block ();
     ACE_Message_Block* mb = mb_top;
@@ -39,7 +35,6 @@ run_duplicate_test (size_t msg_block_count, size_t msg_block_size)
     }
 
     ACE_Message_Block* mb_test = mb_top->duplicate ();
-
     if (mb_test != 0)
     {
       rc = mb_test->total_size();
@@ -49,24 +44,17 @@ run_duplicate_test (size_t msg_block_count, size_t msg_block_size)
                   mb_test->total_size(),
                   mb_test->total_length()));
       mb_test-> release();
-      mb_top-> release();
     }
-
-    delete block;
-
+    mb_top-> release();
     return rc;
 }
 
 size_t
-run_clone_test (size_t msg_block_count, size_t msg_block_size)
+run_clone_test (const size_t msg_block_count,
+                const char * block,
+                const size_t msg_block_size)
 {
     size_t rc = 0;
-    char* block = new char[msg_block_size];
-
-    for (size_t j = 0 ; j != msg_block_size; j++)
-      block[j] = 'A';
-
-    block[msg_block_size-1] = 0;
 
     ACE_Message_Block* mb_top = new ACE_Message_Block ();
     ACE_Message_Block* mb = mb_top;
@@ -80,7 +68,6 @@ run_clone_test (size_t msg_block_count, size_t msg_block_size)
     }
 
     ACE_Message_Block* mb_test = mb_top->clone ();
-
     if (mb_test != 0)
     {
       rc = mb_test->total_size();
@@ -90,10 +77,8 @@ run_clone_test (size_t msg_block_count, size_t msg_block_size)
                   mb_test->total_size(),
                   mb_test->total_length()));
       mb_test-> release();
-      mb_top-> release();
     }
-
-    delete block;
+    mb_top-> release();
     return rc;
 }
 
@@ -117,8 +102,14 @@ run_main (int , ACE_TCHAR *[])
                 MSG_BLOCK_SIZE,
                 MSG_BLOCK_TOTAL));
 
+    char block[MSG_BLOCK_SIZE];
+    for(size_t j = 0 ; j != MSG_BLOCK_SIZE; j++)
+      block[j] = 'A';
+    block[MSG_BLOCK_SIZE-1] = 0;
+
     size_t duplicate_total = run_duplicate_test (
       MSG_BLOCK_COUNT,
+      block,
       MSG_BLOCK_SIZE);
     if (duplicate_total != MSG_BLOCK_TOTAL )
     {
@@ -130,6 +121,7 @@ run_main (int , ACE_TCHAR *[])
 
     size_t clone_total = run_clone_test (
       MSG_BLOCK_COUNT,
+      block,
       MSG_BLOCK_SIZE);
     if (clone_total != MSG_BLOCK_TOTAL )
     {
