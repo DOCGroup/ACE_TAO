@@ -118,6 +118,7 @@ short_stream (void)
   ACE_CDR::Long l_array[3] = { -345678, 0, 345678 };
   ACE_CDR::Float f_array[3] = { -1.23f, 0.0f, 1.23f };
   ACE_CDR::Double d_array[3] = { -123.456789, 0.0, 123.456789 };
+  ACE_CDR::Boolean b_array[3] = { false, true, false };
 
   ACE_OutputCDR::from_char fc (ch);
   ACE_OutputCDR::from_wchar fwc (wch);
@@ -135,6 +136,7 @@ short_stream (void)
   os.write_long_array (l_array, 3);
   os.write_float_array (f_array, 3);
   os.write_double_array (d_array, 3);
+  os.write_boolean_array (b_array, 3);
 
   // Do the same for size stream.
   ss << fc;
@@ -151,6 +153,7 @@ short_stream (void)
   ss.write_long_array (l_array, 3);
   ss.write_float_array (f_array, 3);
   ss.write_double_array (d_array, 3);
+  ss.write_boolean_array (b_array, 3);
 
   // Check the size.
   if (ss.total_length () != os.total_length ())
