@@ -55,8 +55,8 @@ TAO_FT_Storable_Naming_Context::is_object_group (CORBA::Object_ptr obj) const
 CORBA::Object_ptr
 TAO_FT_Storable_Naming_Context::resolve (const CosNaming::Name& n)
 {
-  // Invoke the base class resolve operation to acquire the object at the specified
-  // compound name.  Any exceptions should flow back to client.
+  // Invoke the base class resolve operation to acquire the object at the
+  // specified compound name.  Any exceptions should flow back to client.
   CORBA::Object_var resolved_ref =
     TAO_Storable_Naming_Context::resolve(n);
 
@@ -75,7 +75,7 @@ TAO_FT_Storable_Naming_Context::resolve (const CosNaming::Name& n)
     if ( this->naming_manager_ == 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("TAO_FT_Persistent_Naming_Context::resolve ")
+                  ACE_TEXT ("TAO_FT_Storable_Naming_Context::resolve ")
                   ACE_TEXT ("- No NamingManager defined.\n")));
 
       throw CORBA::INTERNAL ();
@@ -93,10 +93,10 @@ TAO_FT_Storable_Naming_Context::resolve (const CosNaming::Name& n)
   }
   catch (CORBA::Exception& ex)
   {
-     ex._tao_print_exception (
+    ex._tao_print_exception (
        ACE_TEXT ("TAO_FT_Storable_Naming_Context::resolve - ")
        ACE_TEXT ("Some unhandled error occurred\n"));
-      return CORBA::Object::_nil ();
+    return CORBA::Object::_nil ();
   }
 
   return resolved_ref._retn ();
@@ -137,7 +137,8 @@ TAO_FT_Storable_Naming_Context::propagate_update_notification (
 }
 
 void
-TAO_FT_Storable_Naming_Context::set_naming_manager (TAO_FT_Naming_Manager *mgr_impl)
+TAO_FT_Storable_Naming_Context::set_naming_manager (
+  TAO_FT_Naming_Manager *mgr_impl)
 {
   naming_manager_ = mgr_impl;
 }

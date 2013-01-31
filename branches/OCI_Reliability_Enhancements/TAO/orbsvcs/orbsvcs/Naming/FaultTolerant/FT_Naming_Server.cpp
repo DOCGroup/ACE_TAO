@@ -134,8 +134,8 @@ TAO_FT_Naming_Server::init_with_orb (int argc,
   // references to files.
   if (this->server_role_ == TAO_FT_Naming_Server::BACKUP)
     {
-      // The backup should write out the combined IOR for the primary and backup
-      // naming service and naming manager.
+      // The backup should write out the combined IOR for the primary
+      // and backup naming service and naming manager.
       result = export_ft_naming_references ();
     }
 
@@ -152,8 +152,8 @@ TAO_FT_Naming_Server::init_naming_manager_with_orb (int argc,
 
   int result = 0;
 
-  // Need to lock during startup to prevent access of partially initialized
-  // variables
+  // Need to lock during startup to prevent access of partially
+  // initialized variables
   ACE_GUARD_THROW_EX (ACE_SYNCH_RECURSIVE_MUTEX,
                       ace_mon,
                       this->lock_,
@@ -223,10 +223,12 @@ TAO_FT_Naming_Server::init_naming_manager_with_orb (int argc,
 
     // Register with the POA.
     PortableServer::ObjectId_var id =
-      PortableServer::string_to_ObjectId (ACE_TEXT_ALWAYS_CHAR ("NamingManager"));
+      PortableServer::string_to_ObjectId (
+         ACE_TEXT_ALWAYS_CHAR ("NamingManager"));
 
-    this->naming_manager_poa_->activate_object_with_id (id.in (),
-                                                        &this->naming_manager_);
+    this->naming_manager_poa_->activate_object_with_id (
+       id.in (),
+       &this->naming_manager_);
 
     CORBA::Object_var nm_obj =
       this->naming_manager_poa_->id_to_reference (id.in ());
@@ -388,16 +390,19 @@ TAO_FT_Naming_Server::init_replication_manager_with_orb (int argc,
       orb->object_to_string (repl_mgr_ref.in ());
 
     // Provide the replication manager its ORB and POA
-    this->replication_manager_->initialize (this->orb_.in (),
-                                            this->replication_manager_poa_.in ());
+    this->replication_manager_->initialize (
+      this->orb_.in (),
+      this->replication_manager_poa_.in ());
 
     ACE_CString primary_file_name (this->persistence_file_name_);
     primary_file_name += ACE_TEXT ("/");
-    primary_file_name += TAO_FT_Naming_Server::primary_replica_ior_filename;
+    primary_file_name +=
+      TAO_FT_Naming_Server::primary_replica_ior_filename;
 
     ACE_CString backup_file_name (this->persistence_file_name_);
     backup_file_name += ACE_TEXT ("/");
-    backup_file_name += TAO_FT_Naming_Server::backup_replica_ior_filename;
+    backup_file_name +=
+      TAO_FT_Naming_Server::backup_replica_ior_filename;
 
     if (this->server_role_ == PRIMARY)
       { // We are the primary
@@ -433,17 +438,20 @@ TAO_FT_Naming_Server::init_replication_manager_with_orb (int argc,
                           ACE_TEXT ("(%P|%t) - FT_Naming_Server ")
                           ACE_TEXT ("narrowing IOR\n")));
             if (CORBA::is_nil (peer_ref.in ()))
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 ACE_TEXT ("(%P|%t) ERROR: IOR in file %s is not ")
-                                 ACE_TEXT ("a FT_Naming::ReplicationManager\n"),
-                                 primary_file_name.c_str ()),
-                                -1);
+              ACE_ERROR_RETURN (
+                (LM_ERROR,
+                 ACE_TEXT ("(%P|%t) ERROR: IOR in file %s is not ")
+                 ACE_TEXT ("a FT_Naming::ReplicationManager\n"),
+                 primary_file_name.c_str ()),
+                -1);
 
             try {
               if (TAO_debug_level > 3)
-                ACE_DEBUG ((LM_DEBUG,
-                            ACE_TEXT ("(%P|%t) - FT_Naming_Server registering ")
-                            ACE_TEXT ("with backup.\n")));
+                ACE_DEBUG (
+                  (LM_DEBUG,
+                   ACE_TEXT ("(%P|%t) - FT_Naming_Server registering ")
+                   ACE_TEXT ("with backup.\n")));
+
               // Register with the backup
               CosNaming::NamingContext_var root = this->my_root_context ();
               FT_Naming::NamingManager_var nm = this->my_naming_manager ();
@@ -682,7 +690,8 @@ TAO_FT_Naming_Server::parse_args (int argc,
 #endif /* !CORBA_E_MICRO */
       case 'z':
         this->use_round_trip_timeout_ = 1;
-        this->round_trip_timeout_ = (int)1.0e7 * ACE_OS::atoi (get_opts.opt_arg ());
+        this->round_trip_timeout_ =
+          (int)1.0e7 * ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case 0:   // A long option was found
         {
@@ -693,7 +702,8 @@ TAO_FT_Naming_Server::parse_args (int argc,
               this->server_role_ = TAO_FT_Naming_Server::BACKUP;
               role_defined = true;
             }
-          else if (ACE_OS::strcmp (long_option, ACE_TEXT ("primary")) == 0)
+          else if (ACE_OS::strcmp (long_option,
+                                   ACE_TEXT ("primary")) == 0)
             {
               this->replica_id_ = ACE_TEXT ("Primary");
               this->server_role_ = TAO_FT_Naming_Server::PRIMARY;
@@ -886,7 +896,8 @@ TAO_FT_Naming_Server::read_reference_from_file (const char* replica_file_name,
   }
   catch (const CORBA::Exception& ex)
     {
-      ex._tao_print_exception (ACE_TEXT ("Invalid object reference in file: %s\n"));
+      ex._tao_print_exception (
+        ACE_TEXT ("Invalid object reference in file: %s\n"));
       return -1;
     }
 
