@@ -20,7 +20,7 @@ size_t
 run_duplicate_test (size_t msg_block_count, size_t msg_block_size)
 {
     size_t rc = 0;
-    char block[msg_block_size];
+    char* block = new char[msg_block_size];
 
     for(size_t j = 0 ; j != msg_block_size; j++)
       block[j] = 'A';
@@ -51,6 +51,8 @@ run_duplicate_test (size_t msg_block_count, size_t msg_block_size)
       mb_test-> release();
       mb_top-> release();
     }
+
+    delete block;
 
     return rc;
 }
