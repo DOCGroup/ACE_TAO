@@ -238,6 +238,16 @@ XML_Backing_Store::load (const ACE_TString& filename,
       ex.print ();
       return -1;
     }
+    catch ( const ACEXML_SAXParseException* sax_ex)
+    {
+      ACE_ERROR ((LM_ERROR,
+        ACE_TEXT ("Error during load of ImR persistence xml file (%s)."),
+        filename.c_str()));
+      sax_ex->print ();
+      return -1;
+    }
+
+
 
   return 0;
 }

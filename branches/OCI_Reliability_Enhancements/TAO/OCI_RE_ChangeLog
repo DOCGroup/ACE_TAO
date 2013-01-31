@@ -1,3 +1,25 @@
+Thu Jan 31 23:31:54 UTC 2013  Marc Neeley  <neeley_m@ociweb.com>
+
+        * bin/tao_other_tests.lst:
+        * orbsvcs/tests/ImplRepo/run_test.pl:
+          Three tests were added to test a corruption of
+           (1) a primary listing file - persistent_listingcorrupt
+           (2) a primary activator file - persistent_activatorcorrupt
+           (3) a primary server file  - persistent_servercorrupt
+
+Thu Jan 31 23:21:08 UTC 2013  Marc Neeley  <neeley_m@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Shared_Backing_Store.h:
+        * orbsvcs/ImplRepo_Service/Shared_Backing_Store.cpp:
+        * orbsvcs/ImplRepo_Service/XML_Backing_Store.cpp:
+          Added a new method to Shared_Backing_Store class called write_listing.
+          This new method is refactoring to allow either a primary or backup
+          listing file to be written. Modifications were also made to write to
+          a primary and a backup file (the primary file name with a .bak ext)
+          for the server and activator services. Reading modifications were
+          made for listing, server, and activator files such that if the read
+          from primary failed, then the read from the backup would be performed.
+
 Thu Jan 31 19:12:02 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
 
         * bin/tao_other_tests.lst:

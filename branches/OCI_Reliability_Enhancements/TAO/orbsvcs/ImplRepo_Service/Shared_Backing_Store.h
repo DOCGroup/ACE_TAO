@@ -261,6 +261,10 @@ private:
   ///        that will be locked when the function returns
   int persist_listings(Lockable_File& listing_lf);
 
+  /// write content to the listings file and optionally its backup
+  /// @param File pointer to write to. Can be primary or backup.
+  void write_listing(FILE *);
+
   /// connect this replica to its peer replica
   /// @param this_replica a pointer to this Replica object
   int connect_replicas(Replica_ptr this_replica);
