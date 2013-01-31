@@ -1,3 +1,18 @@
+Thu Jan 31 14:10:56 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context.cpp:
+
+          Fixed formatting issues. Lines too long.
+
+        * orbsvcs/tests/FT_Naming/FaultTolerant/client.cpp:
+
+          Fixed error in which exception was being printed in catch block.
+
+        * tao/ORB_Core.cpp:
+
+          Fixed copy paste error in comment.
+
 Wed Jan 30 19:03:33 UTC 2013  Byron Harris  <harrisb@ociweb.com>
 
         * docs/Options.html:

@@ -1301,7 +1301,7 @@ do_persistence_name_test (
           }
           catch (const CosNaming::NamingContext::NotFound& second_ex)
             {
-              ex._tao_print_exception (
+              second_ex._tao_print_exception (
                   ACE_TEXT ("ERROR: It really is not there. Failing...\n"));
               return RC_ERROR;
             }
