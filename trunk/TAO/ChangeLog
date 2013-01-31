@@ -1,3 +1,8 @@
+thu Jan 31 17:46:00 UTC 2013  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Mcast_Transport.cpp:
+          Remove any unprocessed but dequeued/completed messages at shutdown.
+
 Wed Jan 30 12:44:00 UTC 2013  Simon Massey  <simon dot massey at prismtech dot com>
 
         * tao/GIOP_Message_Base.cpp:
