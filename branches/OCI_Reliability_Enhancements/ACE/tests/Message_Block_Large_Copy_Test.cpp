@@ -39,13 +39,21 @@ run_duplicate_test (const size_t msg_block_count,
     {
       rc = mb_test->total_size();
       ACE_ERROR ((LM_DEBUG,
+                  ACE_TEXT ("(%P|%t) %u top reference_count ()\n"),
+                  mb_top->reference_count ()));
+      ACE_ERROR ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) duplicated: %@ %d %d\n"),
                   mb_test,
                   mb_test->total_size(),
                   mb_test->total_length()));
       mb_test-> release();
     }
-    mb_top-> release();
+
+    ACE_ERROR ((LM_DEBUG,
+                ACE_TEXT ("(%P|%t) %u top reference_count ()\n"),
+                mb_top->reference_count ()));
+
+    mb_top-> release ();
     return rc;
 }
 
@@ -72,12 +80,20 @@ run_clone_test (const size_t msg_block_count,
     {
       rc = mb_test->total_size();
       ACE_ERROR ((LM_DEBUG,
+                  ACE_TEXT ("(%P|%t) %u top reference_count ()\n"),
+                  mb_top->reference_count ()));
+      ACE_ERROR ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) cloned: %@ %d %d\n"),
                   mb_test,
                   mb_test->total_size(),
                   mb_test->total_length()));
       mb_test-> release();
     }
+
+    ACE_ERROR ((LM_DEBUG,
+                ACE_TEXT ("(%P|%t) %u top reference_count ()\n"),
+                mb_top->reference_count ()));
+
     mb_top-> release();
     return rc;
 }
@@ -135,4 +151,3 @@ run_main (int , ACE_TCHAR *[])
   ACE_END_TEST;
   return rc;
 }
-
