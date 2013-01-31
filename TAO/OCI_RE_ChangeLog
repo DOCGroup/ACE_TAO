@@ -1,3 +1,10 @@
+Thu Jan 31 15:59:23 UTC 2013  Byron Harris  <harrisb@ociweb.com>
+
+        * bin/tao_orb_tests.lst:
+
+          Disable Storable test under Windows because of file locking
+          problems.
+
 Thu Jan 31 14:10:56 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:
