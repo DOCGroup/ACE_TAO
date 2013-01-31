@@ -1,3 +1,9 @@
+Thu Jan 31 19:21:31 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/CDR_Test.cpp:
+          Test CDR_Size::write_boolean_array, according to Coverity
+          this method was not tested
+
 Wed Jan 30 11:58:00 UTC 2013  Simon Massey  <simon dot massey at prismtech dot com>
 
         * bin/valgrind.supp:
