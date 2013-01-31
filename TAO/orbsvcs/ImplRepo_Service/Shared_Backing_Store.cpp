@@ -91,10 +91,10 @@ namespace {
                           flags_,
                           0666,
                           unlink_in_destructor));
-      if ((flags & O_RDWR) == 0)
-        {
-          ACE_OS::ftruncate(this->file_lock_->get_handle(), 0);
-        }
+
+      // Truncating output so this will not allow reading then writing
+
+      ACE_OS::ftruncate(this->file_lock_->get_handle(), 0);
       this->file_ = ACE_OS::fdopen(this->file_lock_->get_handle(), flags_str);
 #endif
     }
@@ -451,6 +451,7 @@ Shared_Backing_Store::persistent_update(const Server_Info_Ptr& info, bool add)
         fname.c_str(), info->name.c_str()));
     }
   Lockable_File server_file(fname, O_WRONLY);
+  const ACE_TString bfname = fname.c_str() + ACE_TString(".bak");
   FILE* fp = server_file.get_file();
   if (fp == 0)
     {
@@ -466,6 +467,13 @@ Shared_Backing_Store::persistent_update(const Server_Info_Ptr& info, bool add)
   this->repo_values_[REPO_ID].second = entry.int_id_.repo_id_str;
 
   persist(fp, *info, "", this->repo_values_);
+
+  // Copy the current file to a backup.
+  FILE* bfp = ACE_OS::fopen(bfname.c_str(),ACE_TEXT("w"));
+  ACE_OS::fprintf (bfp,"<?xml version=\"1.0\"?>\n");
+  persist(bfp, *info, "", this->repo_values_);
+  ACE_OS::fflush(bfp);
+  ACE_OS::fclose(bfp);
   server_file.release();
 
   const ImplementationRepository::UpdateType type = add ?
@@ -502,6 +510,7 @@ Shared_Backing_Store::persistent_update(const Activator_Info_Ptr& info,
         fname.c_str(), info->name.c_str()));
     }
   Lockable_File activator_file(fname, O_WRONLY);
+  const ACE_TString bfname = fname.c_str() + ACE_TString(".bak");
   FILE* fp = activator_file.get_file();
   if (fp == 0)
     {
@@ -517,6 +526,13 @@ Shared_Backing_Store::persistent_update(const Activator_Info_Ptr& info,
   this->repo_values_[REPO_ID].second = entry.int_id_.repo_id_str;
 
   persist(fp, *info, "", this->repo_values_);
+
+  // Copy the current file to a backup.
+  FILE* bfp = ACE_OS::fopen(bfname.c_str(),ACE_TEXT("w+"));
+  ACE_OS::fprintf (bfp,"<?xml version=\"1.0\"?>\n");
+  persist(bfp, *info, "", this->repo_values_);
+  ACE_OS::fflush(bfp);
+  ACE_OS::fclose(bfp);
   activator_file.release();
 
   const ImplementationRepository::UpdateType type = add ?
@@ -706,7 +722,11 @@ Shared_Backing_Store::persistent_load (bool only_changes)
     {
       const ACE_TString& fname = filenames[i];
       Lockable_File file(fname, O_RDONLY);
-      load(fname, file.get_file());
+
+      if(load(fname, file.get_file()) != 0)
+        {
+          load(fname + ".bak");
+        }
     }
 
   return 0;
@@ -732,7 +752,13 @@ Shared_Backing_Store::get_listings(Lockable_File& listing_lf,
            this->opts_.debug(),
            listing_lf.get_file(this->listing_file_, O_RDONLY)) != 0)
     {
-      listings_handler.reset();
+
+      if (load(this->listing_file_ + ".bak",
+         *listings_handler,
+         this->opts_.debug()) != 0)
+         {
+           listings_handler.reset();
+         }
     }
 
   return listings_handler;
@@ -778,7 +804,7 @@ Shared_Backing_Store::sync_load ()
   return err;
 }
 
-static void write_listing(FILE* list, const ACE_TString& fname,
+static void write_listing_item(FILE* list, const ACE_TString& fname,
                           const ACE_CString& name, const ACE_TCHAR* tag)
 {
   ACE_OS::fprintf (list, "\t<%s", tag);
@@ -786,16 +812,9 @@ static void write_listing(FILE* list, const ACE_TString& fname,
   ACE_OS::fprintf (list, " name=\"%s\" />\n", name.c_str ());
 }
 
-int
-Shared_Backing_Store::persist_listings (Lockable_File& listing_lf)
+void
+Shared_Backing_Store::write_listing(FILE* list)
 {
-  FILE* list = listing_lf.get_file(this->listing_file_, O_WRONLY);
-  if (list == 0)
-    {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Couldn't write to file %s\n"),
-                  this->listing_file_.c_str()));
-      return -1;
-    }
   ACE_OS::fprintf (list,"<?xml version=\"1.0\"?>\n");
   ACE_OS::fprintf (list,"<ImRListing>\n");
 
@@ -806,11 +825,11 @@ Shared_Backing_Store::persist_listings (Lockable_File& listing_lf)
     {
       const Server_Info_Ptr& info = sientry->int_id_;
 
-      const ServerUIMap::ENTRY& entry =
+      const Shared_Backing_Store::ServerUIMap::ENTRY& entry =
         unique_id(sientry->ext_id_, this->server_uids_,
                   this->imr_type_, this->repo_id_);
       ACE_CString listing_name = ACEXML_escape_string (info->name);
-      write_listing(list, entry.int_id_.unique_filename, listing_name,
+      write_listing_item(list, entry.int_id_.unique_filename, listing_name,
         Locator_XMLHandler::SERVER_INFO_TAG);
     }
 
@@ -823,11 +842,41 @@ Shared_Backing_Store::persist_listings (Lockable_File& listing_lf)
       const ActivatorUIMap::ENTRY& entry =
         unique_id(aname, this->activator_uids_,
                   this->imr_type_, this->repo_id_);
-      write_listing(list, entry.int_id_.unique_filename, aname,
+      write_listing_item(list, entry.int_id_.unique_filename, aname,
         Locator_XMLHandler::ACTIVATOR_INFO_TAG);
     }
 
   ACE_OS::fprintf (list,"</ImRListing>\n");
+}
+
+int
+Shared_Backing_Store::persist_listings (Lockable_File& listing_lf)
+{
+  FILE* list = listing_lf.get_file(this->listing_file_, O_WRONLY);
+  if (list == 0)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Couldn't write to file %s\n"),
+                  this->listing_file_.c_str()));
+      return -1;
+    }
+
+   write_listing(list);
+
+  const ACE_TString bfname = this->listing_file_.c_str() + ACE_TString(".bak");
+
+  // Write backup file
+  FILE* baklist = ACE_OS::fopen(bfname.c_str(),ACE_TEXT("w"));
+  if (baklist == 0)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Couldn't write to file %s\n"),
+                  bfname.c_str()));
+      return -1;
+    }
+
+  write_listing(baklist);
+  ACE_OS::fflush(baklist);
+  ACE_OS::fclose(baklist);
+
   return 0;
 }
 

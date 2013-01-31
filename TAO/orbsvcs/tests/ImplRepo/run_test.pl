@@ -1909,10 +1909,10 @@ sub persistent_ir_test
         }
     }
     elsif ($backing_store_flag eq "--directory") {
-        cleanup_replication($backing_store);
+#        cleanup_replication($backing_store);
     }
     else {
-        $imr->DeleteFile ($backing_store);
+#        $imr->DeleteFile ($backing_store);
     }
     $imr->DeleteFile ($imriorfile);
     $act->DeleteFile ($imriorfile);
@@ -2244,6 +2244,12 @@ sub failover_test
 
 sub persistent_ft_test
 {
+    my $corrupted = shift;
+
+    if (!$corrupted) {
+       $corrupted = 0;
+    }
+
     if (!$replica) {
       # The persistent_ft test needs the -replica flag
       return 0;
@@ -2438,6 +2444,19 @@ print "Comment line arguments: -d $test_debug_level -o $repo{imr_imriorfile} " .
     $replica_imr->DeleteFile ($replica_imriorfile);
     $replica_imr->DeleteFile ($backupiorfile);
     print "killed the backup tao_imr_locator\n";
+
+    if($corrupted == 1){
+      my $file= "./imr_listing.xml";
+      if (open LIST_FILE, ">$file") {
+         print LIST_FILE "I'm corrupt!!!";
+      }
+    } elsif ($corrupted > 1) {
+      my $file = "./1_" .($corrupted -1). ".xml";
+      if (open LIST_FILE, ">$file") {
+         print LIST_FILE "I'm corrupt!!!";
+      }
+    }
+        
 
     print "\n\nstarting primary tao_imr_locator again\n";
     $repo{IMR}->Arguments ("-d $test_debug_level -o $repo{imr_imriorfile} " .
@@ -2858,6 +2877,15 @@ for ($i = 0; $i <= $#ARGV; $i++) {
     }
     elsif ($ARGV[$i] eq "persistent_ft") {
         $ret = persistent_ft_test ();
+    }
+    elsif ($ARGV[$i] eq "persistent_listingcorrupt") {
+        $ret = persistent_ft_test (1);
+    }
+    elsif ($ARGV[$i] eq "persistent_activatorcorrupt") {
+        $ret = persistent_ft_test (2);
+    }
+    elsif ($ARGV[$i] eq "persistent_servercorrupt") {
+        $ret = persistent_ft_test (3);
     }
     elsif ($ARGV[$i] eq "failover") {
         $ret = failover_test ();
