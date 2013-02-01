@@ -6,6 +6,10 @@
 // and reads from the group written by the
 // other process. After reading a check is
 // made that expected values are read.
+// A sleep is done at the end of the loop
+// to account for limitation in resolution
+// of timestamp on file used to determine
+// if the file is stale.
 
 #include "Savable.h"
 
@@ -104,6 +108,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       bytes_write_value[i] = i;
     }
 
+  ACE_Time_Value sleep_time (0, 1000*sleep_msecs);
+
   try
     {
       for (int j = 0; j < num_loops; ++j)
@@ -120,8 +126,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
               int int_read = savable.int_get(read_index);
               // If value read is not 0 then the other
-              // process have written to persistent store.
-              // If not, it's too soon test.
+              // process has written to persistent store.
+              // If not, it's too soon to test.
               if (int_read != 0)
                 {
                   ACE_ASSERT (int_read == int_write_value);
@@ -129,10 +135,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                   const ACE_CString & str_read = savable.string_get(read_index);
                   ACE_ASSERT (str_read == str_write_value);
 
-                  unsigned int unsigned_int_read = savable.unsigned_int_get (read_index);
+                  unsigned int unsigned_int_read =
+                    savable.unsigned_int_get (read_index);
                   ACE_ASSERT (unsigned_int_read == unsigned_int_write_value);
 
-                  int bytes_read_size = savable.bytes_get (read_index, bytes_read);
+                  int bytes_read_size =
+                    savable.bytes_get (read_index, bytes_read);
                   ACE_ASSERT (bytes_read_size == bytes_size);
                   for (int k = 0; k < bytes_size; ++k)
                     {
@@ -141,21 +149,19 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                 }
             }
 
-          ACE_Time_Value sleep_time (0, 1000*sleep_msecs);
-
           // Write out state
           savable.string_set(write_index, str_write_value);
           savable.int_set(write_index, int_write_value);
           savable.unsigned_int_set(write_index, unsigned_int_write_value);
           savable.bytes_set(write_index, bytes_size, bytes_write_value);
-          ACE_OS::sleep (sleep_time);
           int bytes_size = savable.bytes_get (write_index, bytes_read);
           for (int k = 0; k < bytes_size; ++k)
             {
               ACE_ASSERT (bytes_read[k] == bytes_write_value[k]);
             }
-        }
 
+          ACE_OS::sleep (sleep_time);
+        }
     }
 
   catch (Savable_Exception &)
