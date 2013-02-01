@@ -1,3 +1,14 @@
+Fri Feb  1 21:44:54 UTC 2013  Marc Neeley  <neeley_m@ociweb.com>
+
+        * orbsvcs/tests/ImplRepo/run_test.pl:
+          Changed the way the backup files were cleaned up in
+          run script as it was causing an indirect error to occur
+          in the scoreboard log.
+
+          Trapped XML parse errors in run script for tests where
+          the XML persistence files were purposefully corrupted
+          causing false tests fail condition in the scoreboard log.
+
 Thu Jan 31 23:31:54 UTC 2013  Marc Neeley  <neeley_m@ociweb.com>
 
         * bin/tao_other_tests.lst:

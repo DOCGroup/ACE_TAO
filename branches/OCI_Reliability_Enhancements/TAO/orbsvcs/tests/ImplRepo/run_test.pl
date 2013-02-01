@@ -77,6 +77,9 @@ my $replica_imriorfile = "replica_imr_locator.ior";
 my $nesteaiorfile = "nestea.ior";
 my $nestea_dat = "nestea.dat";
 
+my $stdout_file         = "test.out";
+my $stderr_file         = "test.err";
+
 my $n_cli_nesteaiorfile = $n_cli->LocalFile ($nesteaiorfile);
 
 my $refstyle = " -ORBObjRefStyle URL";
@@ -211,18 +214,39 @@ sub cleanup_replication
     }
 
     my $listings = "$dir/imr_listing.xml";
+    my $fnd = 0;
     if (open FILE, "<$listings") {
         while (<FILE>) {
             if ($_ =~ /fname="([^"]+)"?/) {
+                $fnd = 1;
                 my $file = "$dir/$1";
                 test_info("deleting $file\n");
                 $imr->DeleteFile ($file);
+                $imr->DeleteFile ($file . ".bak");
             }
         }
-        close FILE;
+         close FILE;
+    }
+
+#   If the primary listings file has been corrupt then perform the
+#   deletions from the backup file.
+
+    if (!$fnd) {
+       if (open FILE, "<$listings" . ".bak") {
+           while (<FILE>) {
+               if ($_ =~ /fname="([^"]+)"?/) {
+                   my $file = "$dir/$1";
+                   test_info("deleting $file\n");
+                   $imr->DeleteFile ($file);
+                   $imr->DeleteFile ($file . ".bak");
+               }
+           }
+            close FILE;
+       }
     }
     test_info("deleting $listings\n");
     $imr->DeleteFile ("$listings");
+    $imr->DeleteFile ("$listings" . ".bak");
     $imr->DeleteFile ("$dir/$primaryiorfile");
     $imr->DeleteFile ("$dir/$backupiorfile");
 }
@@ -444,6 +468,28 @@ sub kill_then_timed_wait
   for ($index = 0; $index < $length; ++$index) {
     $srvrs->[$index]->Kill (); $srvrs->[$index]->TimedWait (1);
   }
+}
+
+
+###############################################################################
+
+sub redirect_output
+{
+
+    my $test_stdout_file = shift;
+    my $test_stderr_file = shift;
+    open (OLDOUT, ">&", \*STDOUT) or die "Can't dup STDOUT: $!";
+    open (OLDERR, ">&", \*STDERR) or die "Can't dup STDERR: $!";
+    open STDOUT, '>', $test_stdout_file;
+    open STDERR, '>', $test_stderr_file;
+}
+
+###############################################################################
+
+sub restore_output()
+{
+    open (STDERR, ">&OLDERR") or die "Can't dup OLDERR: $!";
+    open (STDOUT, ">&OLDOUT") or die "Can't dup OLDOUT: $!";
 }
 
 
@@ -1371,7 +1417,6 @@ sub perclient
 
     return $status;
 }
-
 ###############################################################################
 
 sub shutdown_repo
@@ -1909,10 +1954,10 @@ sub persistent_ir_test
         }
     }
     elsif ($backing_store_flag eq "--directory") {
-#        cleanup_replication($backing_store);
+        cleanup_replication($backing_store);
     }
     else {
-#        $imr->DeleteFile ($backing_store);
+        $imr->DeleteFile ($backing_store);
     }
     $imr->DeleteFile ($imriorfile);
     $act->DeleteFile ($imriorfile);
@@ -2461,7 +2506,18 @@ print "Comment line arguments: -d $test_debug_level -o $repo{imr_imriorfile} " .
     print "\n\nstarting primary tao_imr_locator again\n";
     $repo{IMR}->Arguments ("-d $test_debug_level -o $repo{imr_imriorfile} " .
         "$imr_refstyle $repo{imr_endpoint_flag} $repo{imr_backing_store_flag}");
+   
+    my $test_stdout_file = $imr->LocalFile ($stdout_file);
+    my $test_stderr_file = $imr->LocalFile ($stderr_file);
+
+    $imr->DeleteFile ($stdout_file);
+    $imr->DeleteFile ($stderr_file);
+
+#   Rely on return value only, so redirect output
+    redirect_output($test_stdout_file,$test_stderr_file);
     $IMR_status = $repo{IMR}->Spawn ();
+    restore_output();
+
     if ($IMR_status != 0) {
         print STDERR "ERROR: ImR Service returned $IMR_status\n";
         return 1;
@@ -2477,7 +2533,11 @@ print "Comment line arguments: -d $test_debug_level -o $repo{imr_imriorfile} " .
         "$backup_repo{imriorfile} $imr_refstyle " .
         "$backup_repo{imr_endpoint_flag} " .
         "$backup_repo{imr_backing_store_flag}");
+
+    redirect_output($test_stdout_file,$test_stderr_file);
     $replica_IMR_status = $backup_repo{IMR}->Spawn ();
+    restore_output();
+
     if ($replica_IMR_status != 0) {
         print STDERR "ERROR: ImR Service replica returned $replica_IMR_status\n";
         return 1;
