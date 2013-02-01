@@ -48,13 +48,33 @@ sub restore_output()
 my $persistent_file = "test.dat";
 $test1->DeleteFile ($persistent_file);
 
-my $num_loops = 10;
+my $num_loops = 5;
+my $loop_sleep_msec = 200;
+
+if ($#ARGV >= 0) {
+    for (my $i = 0; $i <= $#ARGV; $i++) {
+	if ($ARGV[$i] eq '-num_loops') {
+	    $i++;
+	    $num_loops = $ARGV[$i];
+	}
+	elsif ($ARGV[$i] eq "-loop_sleep") {
+	    $i++;
+	    $loop_sleep_msec = $ARGV[$i];
+	}
+	else {
+	    print "Usage: run_test.pl ".
+		"[-num_loops <num=$num_loops>] ".
+		"[-loop_sleep <msec=$loop_sleep_msec>]\n";
+	    exit 1;
+	}
+    }
+}
 
 $T1 = $test1->CreateProcess ("test", "-i 0 -n $num_loops");
 
 my $test2 = PerlACE::TestTarget::create_target (2) || die "Create target 1 failed\n";
 
-$T2 = $test2->CreateProcess ("test", "-i 1 -n $num_loops");
+$T2 = $test2->CreateProcess ("test", "-i 1 -n $num_loops -s $loop_sleep_msec");
 
 $test1_status = $T1->Spawn ();
 
@@ -115,7 +135,8 @@ sub test_backup_recovery($)
 	print STDERR "ERROR: Backup file was not created\n";
     }
     $test1->DeleteFile ($persistent_file);
-
+    $test1->DeleteFile ($stdout_file);
+    $test1->DeleteFile ($stderr_file);
     return $status;
 }
 
