@@ -73,6 +73,13 @@ namespace TAO
     void value (const T &);
 
     T * value_;
+
+  private:
+    static CORBA::Boolean replace (TAO_InputCDR &,
+                                   const CORBA::Any &,
+                                   _tao_destructor,
+                                   CORBA::TypeCode_ptr,
+                                   const T *&);
   };
 }
 
