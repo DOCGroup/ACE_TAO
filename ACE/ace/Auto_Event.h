@@ -74,7 +74,8 @@ public:
                   const char *name = 0,
                   void *arg = 0)
   : ACE_Auto_Event_T<ACE_System_Time_Policy> (initial_state, type, name, arg)
-  {}
+  {
+  }
 
 #if defined (ACE_HAS_WCHAR)
   /// Constructor which will create auto event (wchar_t version)
@@ -83,11 +84,14 @@ public:
                   const wchar_t *name,
                   void *arg = 0)
   : ACE_Auto_Event_T<ACE_System_Time_Policy> (initial_state, type, name, arg)
-  {}
+  {
+  }
 #endif /* ACE_HAS_WCHAR */
 
   /// Default dtor.
-  virtual ~ACE_Auto_Event (void) {}
+  virtual ~ACE_Auto_Event (void)
+  {
+  }
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
