@@ -3,9 +3,6 @@ Sat Feb  2 19:08:18 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
         * ace/Auto_Event.h:
           Layout changes
 
-        * protocols/ace/INet/SSL_Proxy_Connector.h:
-          Export this class to resolve link errors
-
 Thu Jan 31 19:21:31 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/CDR_Test.cpp:
