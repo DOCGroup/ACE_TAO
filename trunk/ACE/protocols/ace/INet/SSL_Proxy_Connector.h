@@ -12,6 +12,7 @@
 #include /**/ "ace/pre.h"
 
 #include "ace/SSL/SSL_SOCK_Stream.h"
+#include "ace/INet/INet_SSL_Export.h"
 #include "ace/Time_Value.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -30,7 +31,7 @@ namespace ACE
         * over the tunnel by performing an SSL handhake after setting the socket
         * in the @c SSL_SOCK_Stream.
         */
-        class SSL_Proxy_Connector
+        class ACE_INET_SSL_Export SSL_Proxy_Connector
           {
             public:
               SSL_Proxy_Connector ();
