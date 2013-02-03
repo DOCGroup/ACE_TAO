@@ -1,3 +1,9 @@
+Sun Feb  3 18:37:32 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/ciao_tests.lst:
+          Added !NO_IDL3_TO_IDL2 to Bug_4087_Regression, invoking idl3_to_idl2
+          means we need gcc which we don't have on all targets
+
 Thu Jan 31 11:33:37 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/ciao_tests.lst:
