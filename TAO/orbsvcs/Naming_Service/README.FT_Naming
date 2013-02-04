@@ -12,6 +12,8 @@ How to Run the TAO FT Naming Service
 1. Syntax
 
         % tao_ft_naming  [-ORBNameServicePort nsport]
+                         [--primary]
+                         [--backup]
                          [-b base_address]
                          [-d debug_flag]
                          [-m (1=enable multicast responses,0=disable(default)]
