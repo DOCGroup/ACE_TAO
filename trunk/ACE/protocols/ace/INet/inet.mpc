@@ -9,7 +9,6 @@ project(INet) : acelib, ace_output, install {
   avoids += old_stdstream
   avoids += exclude_inet
   avoids += ace_for_tao
-  avoids += corba_e_compact
   Source_Files {
     IOS_util.cpp
     INet_Log.cpp
@@ -59,44 +58,4 @@ project(INet) : acelib, ace_output, install {
     ACE_INet.pc.in
   }
 
-}
-
-// This project will be generated with and without ssl=1 feature
-// but will only build when the ssl macro != 1 (i.e. ssl off)
-project(HTTP_Simple_exec) : aceexe, inet {
-  exename = http_simple_wget
-  Source_Files {
-    HTTP_Simple_exec.cpp
-  }
-  verbatim(gnuace, circuit) {
-    "ifeq ($(ssl),1)"
-    "override BIN:="
-    "ifdef ARCH"
-    "override ARCH_BIN:="
-    "endif #ARCH"
-    "all: avoid_warning"
-    "endif"
-  }
-  
-  verbatim(gnuace, local) {
-    "ifeq ($(ssl),1)"
-    "avoids_enabled_macros += ssl"
-    "endif"
-  }
-}
-
-// This project will only be generated with the ssl=1 feature
-// and will only build when the ssl macro = 1 (i.e. ssl on)
-project(HTTPS_Simple_exec) : aceexe, inet, inetssl {
-  exename = https_simple_wget
-  Source_Files {
-    HTTP_Simple_exec.cpp
-  }
-}
-
-project(FTP_Simple_exec) : aceexe, inet {
-  exename = ftp_simple_wget
-  Source_Files {
-    FTP_Simple_exec.cpp
-  }
 }
