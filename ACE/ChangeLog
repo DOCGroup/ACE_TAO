@@ -1,3 +1,14 @@
+Mon Feb  4 08:58:35 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * protocols/ace/INet/inet.mpc:
+        * protocols/ace/INet/FTP_Simple_exec.cpp:
+        * protocols/ace/INet/HTTP_Simple_exec.cpp:
+        * protocols/examples/INet/FTP_Simple_exec.cpp:
+        * protocols/examples/INet/HTTP_Simple_exec.cpp:
+        * protocols/examples/INet/inet.mpc:
+          Moved INet examples out of the ace/INet directory and into
+          a new example directory
+
 Sat Feb  2 19:08:18 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Auto_Event.h:

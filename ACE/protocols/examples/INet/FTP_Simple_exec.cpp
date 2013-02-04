@@ -3,8 +3,8 @@
 #include "ace/Get_Opt.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/OS_NS_errno.h"
-#include "FTP_URL.h"
-#include "FTP_ClientRequestHandler.h"
+#include "ace/INet/FTP_URL.h"
+#include "ace/INet/FTP_ClientRequestHandler.h"
 #include <iostream>
 #include <fstream>
 
