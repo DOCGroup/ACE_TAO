@@ -1,3 +1,11 @@
+Mon Feb  4 08:11:50 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp (activate_topic):
+          Fixed logic error, when no listener is passed in we create
+          the default one, but always install a listener. Thanks to
+          Jiang Wei <jiangwei_1976 at yahoo dot com dot cn> for
+          reporting this problem. This fixes bugzilla 4089
+
 Sun Feb  3 18:37:32 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/ciao_tests.lst:
