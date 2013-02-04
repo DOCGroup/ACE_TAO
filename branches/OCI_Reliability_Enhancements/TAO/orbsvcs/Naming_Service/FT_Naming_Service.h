@@ -27,10 +27,10 @@ class TAO_Naming_Server;
  * @class TAO_FT_Naming_Service
  *
  * @brief Defines a class that encapsulates the implementation of the
- * COS Naming Service.
+ * Fault Tolerant Naming Service.
  *
  * This class overrides the create_naming_server factory method inherited
- * from <TAO_Naming_Service>
+ * from <TAO_Naming_Service>.
  */
 class TAO_FT_Naming_Service : public TAO_Naming_Service
 {

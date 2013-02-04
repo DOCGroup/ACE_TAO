@@ -76,19 +76,17 @@ public:
   virtual int parse_args (int argc,
                           ACE_TCHAR *argv[]);
 
-  /* Factory method to create a naming context factory for use with
-   * the -u and -r options.
-   */
+  /// Factory method to create a naming context factory for use with
+  /// the -u and -r options.
   virtual TAO_Storable_Naming_Context_Factory *
     storable_naming_context_factory (size_t context_size);
 
-  /* Factory method to create a naming context factory for use with
-   * the -f option.
-   */
+  /// Factory method to create a naming context factory for use with
+  /// the -f option.
   virtual TAO_Persistent_Naming_Context_Factory *
     persistent_naming_context_factory (void);
 
-  /// Returns the IOR of the naming manager.
+  /// Returns the IOR of the replication manager.
   char* replication_manager_ior (void);
 
   /// Returns the IOR of the naming manager.

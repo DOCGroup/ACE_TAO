@@ -1,3 +1,18 @@
+Mon Feb  4 22:57:48 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * orbsvcs/Naming_Service/FT_Naming_Service.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.h:
+
+          Updates to doxygen comments.
+
+        * orbsvcs/Naming_Service/README.FT_Naming:
+
+          Added in two missing options to summary description.
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Property_Set.cpp:
+
+          Filled in incomplete documentation.
+
 Fri Feb  1 21:55:33 UTC 2013  Byron Harris  <harrisb@ociweb.com>
 
         * tests/Storable/run_test.pl:
