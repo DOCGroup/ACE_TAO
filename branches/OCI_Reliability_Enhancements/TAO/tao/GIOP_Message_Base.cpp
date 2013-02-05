@@ -679,8 +679,21 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
 #if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
   if (qd->state ().compressed ())
     {
+      ACE_Data_Block *const orig_db = db;
       if (!this->decompress (&db, *qd, rd_pos, wr_pos))
         return -1;
+      if (orig_db != db)
+        {
+          // Since the decompression has replaced our original datablock,
+          // if we were supposed to delete it, do so now.
+          if (ACE_BIT_DISABLED (flg, ACE_Message_Block::DONT_DELETE))
+            static_cast<void> (orig_db->release ());
+          else
+            // and make sure that the new datablock is always deleted by
+            // the upcomming input_cdr going out of scope as we have been
+            // given ownership of it.
+            ACE_CLR_BITS (flg, ACE_Message_Block::DONT_DELETE);
+        }
     }
 #endif
   if (TAO_debug_level > 9)
@@ -794,8 +807,21 @@ TAO_GIOP_Message_Base::process_reply_message (
 #if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
    if (qd->state ().compressed ())
     {
+      ACE_Data_Block *const orig_db = db;
       if (!this->decompress (&db, *qd, rd_pos, wr_pos))
         return -1;
+      if (orig_db != db)
+        {
+          // Since the decompression has replaced our original datablock,
+          // if we were supposed to delete it, do so now.
+          if (ACE_BIT_DISABLED (flg, ACE_Message_Block::DONT_DELETE))
+            static_cast<void> (orig_db->release ());
+          else
+            // and make sure that the new datablock is always deleted by
+            // the upcomming input_cdr going out of scope as we have been
+            // given ownership of it.
+            ACE_CLR_BITS (flg, ACE_Message_Block::DONT_DELETE);
+        }
     }
 #endif
   if (TAO_debug_level > 9)

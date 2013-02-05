@@ -1,3 +1,35 @@
+Tue Feb  5 13:46:00 UTC 2013  Simon Massey  <simon.massey@prismtech.com>
+
+        * docs/Options.html:
+
+          Typo corrections.
+
+Fri Feb  1 15:13:31 UTC 2013  Adam Mitz  <mitza@ociweb.com>
+
+        * tao/AnyTypeCode/Any_Dual_Impl_T.h:
+        * tao/AnyTypeCode/Any_Dual_Impl_T.cpp:
+
+          Fixed bug 4082: allows extraction to type that's equivalent
+          but not equal, as required by the spec.  The common example
+          is different sequences with the same base type.
+
+        * bin/tao_orb_tests.lst:
+        * tests/Bug_4082_Regression/run_test.pl:
+
+          Added test script and removed condition for !FIXED_BUGS_ONLY.
+
+Thu Jan 31 17:46:00 UTC 2013  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Mcast_Transport.cpp:
+          Remove any unprocessed but dequeued/completed messages at shutdown.
+
+Wed Jan 30 12:44:00 UTC 2013  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * tao/GIOP_Message_Base.cpp:
+          Fix a memory leak of a datablock due to ZIOP decompression (possiably)
+          replacing it. If replaced the original db may need to be released and
+          the new db always does.
+
 Tue Jan 29 11:00:00 UTC 2013  Simon Massey  <simon dot massey at prismtech dot com>
 
         * orbsvcs/tests/Miop/McastFragmentation/run_test.pl:

@@ -779,6 +779,8 @@ DDS_Base_Connector_T<CCM_TYPE>::activate_topic (
 
   if (mask != 0)
     {
+      // If no listener has been passed in we create the default
+      // topic listener
       if (::CORBA::is_nil (listener))
         {
           ACE_NEW_THROW_EX (listener,
@@ -786,18 +788,17 @@ DDS_Base_Connector_T<CCM_TYPE>::activate_topic (
                               error_listener.in (),
                               reactor),
                             ::CORBA::NO_MEMORY ());
+        }
 
-          DDS::ReturnCode_t const retcode = topic->set_listener (listener,
-                                                                   mask);
+      DDS::ReturnCode_t const retcode = topic->set_listener (listener, mask);
 
-          if (retcode != ::DDS::RETCODE_OK)
-            {
-              DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-                            "DDS_Base_Connector_T::activate_topic - "
-                            "Error while setting the listener on the topic - <%C>\n",
-                            ::CIAO::DDS4CCM::translate_retcode (retcode)));
-              throw ::CORBA::INTERNAL ();
-            }
+      if (retcode != ::DDS::RETCODE_OK)
+        {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                        "DDS_Base_Connector_T::activate_topic - "
+                        "Error while setting the listener on the topic - <%C>\n",
+                        ::CIAO::DDS4CCM::translate_retcode (retcode)));
+          throw ::CORBA::INTERNAL ();
         }
     }
 }

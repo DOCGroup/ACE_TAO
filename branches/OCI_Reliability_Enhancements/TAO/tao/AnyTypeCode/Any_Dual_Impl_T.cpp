@@ -118,25 +118,15 @@ TAO::Any_Dual_Impl_T<T>::extract (const CORBA::Any & any,
 
           if (narrow_impl == 0)
             {
-              return false;
+              TAO_OutputCDR ocdr;
+              impl->marshal_value (ocdr);
+              TAO_InputCDR icdr (ocdr);
+              return replace (icdr, any, destructor, any_tc, _tao_elem);
             }
 
           _tao_elem = narrow_impl->value_;
           return true;
         }
-
-      T *empty_value = 0;
-      ACE_NEW_RETURN (empty_value,
-                      T,
-                      false);
-      TAO::Any_Dual_Impl_T<T> *replacement = 0;
-      ACE_NEW_RETURN (replacement,
-                      TAO::Any_Dual_Impl_T<T> (destructor,
-                                               any_tc,
-                                               empty_value),
-                      false);
-
-      auto_ptr<TAO::Any_Dual_Impl_T<T> > replacement_safety (replacement);
 
       // We know this will work since the unencoded case is covered above.
       TAO::Unknown_IDL_Type * const unk =
@@ -149,24 +139,48 @@ TAO::Any_Dual_Impl_T<T>::extract (const CORBA::Any & any,
       // shared by another Any. This copies the state, not the buffer.
       TAO_InputCDR for_reading (unk->_tao_get_cdr ());
 
-      CORBA::Boolean const good_decode =
-        replacement->demarshal_value (for_reading);
-
-      if (good_decode)
-        {
-          _tao_elem = replacement->value_;
-          const_cast<CORBA::Any &> (any).replace (replacement);
-          replacement_safety.release ();
-          return true;
-        }
-
-      // Duplicated by Any_Impl base class constructor.
-      ::CORBA::release (any_tc);
+      return replace (for_reading, any, destructor, any_tc, _tao_elem);
     }
   catch (const ::CORBA::Exception&)
     {
     }
 
+  return false;
+}
+
+template<typename T>
+CORBA::Boolean
+TAO::Any_Dual_Impl_T<T>::replace (TAO_InputCDR &cdr,
+                                  const CORBA::Any &any,
+                                  _tao_destructor destructor,
+                                  CORBA::TypeCode_ptr any_tc,
+                                  const T *&_tao_elem)
+{
+  T *empty_value = 0;
+  ACE_NEW_RETURN (empty_value,
+                  T,
+                  false);
+  TAO::Any_Dual_Impl_T<T> *replacement = 0;
+  ACE_NEW_RETURN (replacement,
+                  TAO::Any_Dual_Impl_T<T> (destructor,
+                                           any_tc,
+                                           empty_value),
+                  false);
+
+  auto_ptr<TAO::Any_Dual_Impl_T<T> > replacement_safety (replacement);
+
+  CORBA::Boolean const good_decode = replacement->demarshal_value (cdr);
+
+  if (good_decode)
+    {
+      _tao_elem = replacement->value_;
+      const_cast<CORBA::Any &> (any).replace (replacement);
+      replacement_safety.release ();
+      return true;
+    }
+
+  // Duplicated by Any_Impl base class constructor.
+  ::CORBA::release (any_tc);
   return false;
 }
 

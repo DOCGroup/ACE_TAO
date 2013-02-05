@@ -1,3 +1,16 @@
+Tue Feb  5 17:00:14 UTC 2013  "Kevin Stanley"  <stanleyk@ociweb.com>
+
+        * bin/tao_orb_tests.lst:
+        * docs/Options.html:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Mcast_Transport.cpp:
+        * tao/AnyTypeCode/Any_Dual_Impl_T.h:
+        * tao/AnyTypeCode/Any_Dual_Impl_T.cpp:
+        * tao/GIOP_Message_Base.cpp:
+        * tests/Bug_4082_Regression/run_test.pl:
+
+          Merged changes from trunk in preparation for merge. The 
+          above files had changes.
+          
 Mon Feb  4 22:57:48 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
 
         * orbsvcs/Naming_Service/FT_Naming_Service.h:

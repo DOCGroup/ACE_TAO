@@ -34,6 +34,18 @@ TAO_UIPMC_Mcast_Transport::~TAO_UIPMC_Mcast_Transport (void)
 {
   // Cleanup all packets.
   this->cleanup_packets (false);
+
+  // Remove any unprocessed completed messages
+  if (!this->complete_.is_empty ())
+    {
+      ACE_GUARD (TAO_SYNCH_MUTEX, complete_guard, this->complete_lock_);
+      while (!this->complete_.is_empty ())
+        {
+          TAO_PG::UIPMC_Recv_Packet *packet = 0;
+          this->complete_.dequeue_head (packet);
+          delete packet;
+        }
+    }
 }
 
 void
@@ -54,7 +66,7 @@ TAO_UIPMC_Mcast_Transport::cleanup_packets (bool expired_only)
   else
     {
       for (Packets_Map::iterator iter = this->incomplete_.begin ();
-           iter != this->incomplete_.end ();)
+           !iter.done ();)
         {
           // Move forward iter because what it was pointing to could be
           // unbound at the end of the loop leaving the iterator pointing
