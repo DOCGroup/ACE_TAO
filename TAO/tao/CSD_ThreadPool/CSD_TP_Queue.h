@@ -22,6 +22,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Versioned_Namespace.h"
+#include "tao/orbconf.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -76,7 +77,6 @@ namespace TAO
       /// and have the ability to stop visiting at any time (ie, before
       /// visiting every request).
       void accept_visitor(TP_Queue_Visitor& visitor);
-
 
     private:
 

@@ -13,17 +13,18 @@ The following describes how to run the TAO Naming Service.
 1. Syntax
 
         % Naming_Service [-ORBNameServicePort nsport]
+                         [-b base_address]
+                         [-d ]
+                         [-f persistence_file_name]
+			 [-m (1=enable multicast responses,0=disable(default)]
+                         [-n number_of_threads]
                          [-o ior_output_file]
                          [-p pid_file_name]
+                         [-r directory]
                          [-s context_size]
                          [-t time]
-                         [-f persistence_file_name]
-                         [-b base_address]
-			 [-m (1=enable multicast responses,0=disable(default)]
-			 [-z time]
-                         [-d ]
                          [-u directory]
-                         [-r directory]
+			 [-z time]
 
 
 2. Optional Command-line Arguments
@@ -33,6 +34,36 @@ The following describes how to run the TAO Naming Service.
                 trying to bootstrap to a Naming Service through the
                 use of multicast.  This is only used when multicast
                 responding is enabled via '-m 1'.
+
+        -b base_address
+                The address used for memory mapping the file specified
+                with the "-f" option above.  The value supplied with
+                this option is only used when the Naming Service runs
+                in persistent mode, i.e., "-f" option is present.
+
+        -d
+               Provides Naming Service specific debug information. By default
+               no diagnostics are given.
+
+        -f persistence_file_name
+                The name of the file to use to store/retrieve
+                persistent state of the Naming Service.  Without this
+                option, Naming Service is started in non-persistent
+                mode.
+
+	-m <0|1>
+                TAO offers a simple, very non-standard method for
+                clients to discover the initial reference for the
+                Naming Service.  However, since it can be inadequate and cause
+		unexpected results if, for example, there are multiple
+		naming services running on the network, the DEFAULT
+		behavior is for the Naming Service to NOT RESPOND to
+		such multicast queries (use the Interoperable Naming
+		Service bootstrap options instead).
+
+        -n number_of_threads
+                Specify a number of threads to be used to run the ORB.
+                Default is 1.
 
         -o ior_output_file
                 The name of the file, in which to store the IOR of the
@@ -52,27 +83,17 @@ The following describes how to run the TAO Naming Service.
                 How long (in seconds) the server should listen for
                 client requests before terminating.
 
-        -f persistence_file_name
-                The name of the file to use to store/retrieve
-                persistent state of the Naming Service.  Without this
-                option, Naming Service is started in non-persistent
-                mode.
+        -r directory
+               Use redundant flat-file persistence; same as the -u option,
+               except more than one instance of the TAO Naming Service server
+               can run, each using the same set of disk files, to achieve a
+               degree of fault tolerence (as long as directory is accessible
+               to both servers).
 
-        -b base_address
-                The address used for memory mapping the file specified
-                with the "-f" option above.  The value supplied with
-                this option is only used when the Naming Service runs
-                in persistent mode, i.e., "-f" option is present.
-
-	-m <0|1>
-                TAO offers a simple, very non-standard method for
-                clients to discover the initial reference for the
-                Naming Service.  However, since it can be inadequate and cause
-		unexpected results if, for example, there are multiple
-		naming services running on the network, the DEFAULT
-		behavior is for the Naming Service to NOT RESPOND to
-		such multicast queries (use the Interoperable Naming
-		Service bootstrap options instead).
+        -u directory
+               Use a flat-file persistence implementation that stores object
+               reference information in a file per context. Each context file
+               is placed in the directory specified.
 
         -z time
                 A relative round trip timeout value (in seconds) that
@@ -80,23 +101,6 @@ The following describes how to run the TAO Naming Service.
                 operation through a federated naming context before
                 timing out and throwing a 'Cannot proceed' exception
                 to the client. If no value is set this will never occur.
-
-        -d
-               Provides Naming Service specific debug information. By default
-               no diagnostics are given.
-
-        -u directory
-               Use a flat-file persistence implementation that stores object
-               reference information in a file per context. Each context file
-               is placed in the directory specified.
-
-        -r directory
-               Use redundant flat-file persistnece; same as the -u option,
-               except more than one instance of the TAO Naming Service server
-               can run, each using the same set of disk files, to achieve a
-               degree of fault tolerence (as long as directory is accessible
-               to both servers).
-
 
 3. Environment Variables
 

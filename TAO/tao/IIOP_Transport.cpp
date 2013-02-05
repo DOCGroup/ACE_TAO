@@ -166,6 +166,8 @@ TAO_IIOP_Transport::recv (char *buf,
                           size_t len,
                           const ACE_Time_Value *max_wait_time)
 {
+  this->connection_closed_on_read_ = false;
+
   ssize_t const n = this->connection_handler_->peer ().recv (buf,
                                                              len,
                                                              max_wait_time);
@@ -196,6 +198,7 @@ TAO_IIOP_Transport::recv (char *buf,
   // @@ What are the other error handling here??
   else if (n == 0)
     {
+      this->connection_closed_on_read_ = true;
       return -1;
     }
 

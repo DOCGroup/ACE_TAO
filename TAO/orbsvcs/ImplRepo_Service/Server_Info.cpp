@@ -5,6 +5,7 @@ Server_Info::Server_Info
 (
  const ACE_CString& serverId,
  const ACE_CString& server_name,
+ bool jacorbs,
  const ACE_CString& aname,
  const ACE_CString& cmdline,
  const ImplementationRepository::EnvironmentList& env,
@@ -16,6 +17,7 @@ Server_Info::Server_Info
  ImplementationRepository::ServerObject_ptr svrobj)
  : server_id (serverId)
  , name (server_name)
+ , jacorb_server( jacorbs)
  , activator (aname)
  , cmdline( cmdline)
  , env_vars (env)
@@ -32,12 +34,22 @@ Server_Info::Server_Info
 }
 
 ImplementationRepository::ServerInformation*
-Server_Info::createImRServerInfo (void)
+Server_Info::createImRServerInfo (void) const
 {
   ImplementationRepository::ServerInformation* info;
-  ACE_NEW_THROW_EX (info, ImplementationRepository::ServerInformation, CORBA::NO_MEMORY ());
+  ACE_NEW_THROW_EX (info,
+                    ImplementationRepository::ServerInformation,
+                    CORBA::NO_MEMORY ());
 
-  info->server = name.c_str ();
+  info->startup.command_line = cmdline.c_str ();
+  if (jacorb_server)
+    {
+      ACE_CString jacorb_name (ACE_TEXT ("JACORB:") + name);
+      info->server = jacorb_name.c_str();
+    }
+  else
+    info->server = name.c_str();
+
   info->startup.command_line = cmdline.c_str ();
   info->startup.environment = env_vars;
   info->startup.working_directory = dir.c_str ();
@@ -63,5 +75,6 @@ Server_Info::reset (void)
   partial_ior = "";
   last_ping = ACE_Time_Value::zero;
   server = ImplementationRepository::ServerObject::_nil ();
-  // start_count = 0; Note : We can't do this, because it would be reset during startup.
+  // start_count = 0; Note : We can't do this, because it would
+  // be reset during startup.
 }

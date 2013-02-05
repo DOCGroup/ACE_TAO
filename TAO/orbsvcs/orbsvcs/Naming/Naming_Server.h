@@ -34,6 +34,9 @@ class TAO_Persistent_Context_Index;
 class TAO_Storable_Naming_Context_Activator;
 #endif /* !CORBA_E_MICRO */
 
+class TAO_Storable_Naming_Context_Factory;
+class TAO_Persistent_Naming_Context_Factory;
+
 /**
  * @class TAO_Naming_Server
  *
@@ -121,13 +124,13 @@ public:
 
   /// Initialize the Naming Service with the command line arguments and
   /// the ORB.
-  int init_with_orb (int argc, ACE_TCHAR *argv [], CORBA::ORB_ptr orb);
+  virtual int init_with_orb (int argc, ACE_TCHAR *argv [], CORBA::ORB_ptr orb);
 
   /// Destroy the child POA created in @c init_with_orb
-  int fini (void);
+  virtual int fini (void);
 
   /// Destructor.
-  ~TAO_Naming_Server (void);
+  virtual ~TAO_Naming_Server (void);
 
   /// Returns the IOR of the naming service.
   char * naming_service_ior (void);
@@ -137,7 +140,8 @@ public:
 
 protected:
   /**
-   * Helper method: create Naming Service locally.
+   * Helper method: create Naming Service locally. Can be specialized to
+   * refine how Naming Service components are created and initialized
    * Make the root context of size
    * <context_size>, register it under the <root_poa>, and make the Naming
    * Service persistent if <persistence_location> is not 0.
@@ -146,7 +150,7 @@ protected:
    * If <enable_multicast> is not zero then the service will respond
    * to multicast location queries.
    */
-  int init_new_naming (CORBA::ORB_ptr orb,
+  virtual int init_new_naming (CORBA::ORB_ptr orb,
                        PortableServer::POA_ptr root_poa,
                        const ACE_TCHAR *persistence_location,
                        void *base_addr,
@@ -157,7 +161,23 @@ protected:
                        int use_round_trip_timeout = 0);
 
   /// parses the arguments.
-  int parse_args (int argc, ACE_TCHAR *argv[]);
+  virtual int parse_args (int argc, ACE_TCHAR *argv[]);
+
+  /// Write the provided ior_string to the file. Return 0 if success.
+  int write_ior_to_file (const char* ior_string,
+                         const char* file_name);
+
+  /* Factory method to create a naming context factory for use with
+   * the -u and -r options.
+   */
+  virtual TAO_Storable_Naming_Context_Factory *
+    storable_naming_context_factory (size_t context_size);
+
+  /* Factory method to create a naming context factory for use with
+   * the -f option.
+   */
+  virtual TAO_Persistent_Naming_Context_Factory *
+    persistent_naming_context_factory (void);
 
   /// Root NamingContext_ptr.
   CosNaming::NamingContext_var naming_context_;
@@ -233,6 +253,7 @@ protected:
   /// If not zero use round trip timeout policy set to value specified
   int round_trip_timeout_;
   int use_round_trip_timeout_;
+
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

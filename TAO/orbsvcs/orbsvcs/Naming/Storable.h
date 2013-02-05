@@ -21,8 +21,9 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Versioned_Namespace.h"
+#include "tao/Storable_Base.h"
 #include "ace/SString.h"
+#include "orbsvcs/Naming/naming_serv_export.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -68,7 +69,7 @@ class TAO_NS_Persistence_Record
   ACE_CString ref_;
 };
 
-class TAO_NS_Persistence_Global
+class TAO_Naming_Serv_Export TAO_NS_Persistence_Global
 {
  public:
   void counter (unsigned int counter);
@@ -76,84 +77,6 @@ class TAO_NS_Persistence_Global
 
   private:
   unsigned int counter_;
-};
-
-class TAO_Storable_Base
-{
-public:
-  TAO_Storable_Base();
-
-  virtual ~TAO_Storable_Base();
-
-  virtual void remove() = 0;
-
-  virtual int exists() = 0;
-
-  virtual int open () = 0;
-
-  virtual int close () = 0;
-
-  virtual int flock (int whence, int start, int len) = 0;
-
-  virtual int funlock (int whence, int start, int len) = 0;
-
-  virtual time_t last_changed(void) = 0;
-
-  // Mimic a portion of the std::ios interface.  We need to be able
-  // to indicate error states from the extraction operators below.
-  enum Storable_State { goodbit = 0,
-                        badbit  = 1,
-                        eofbit  = 2,
-                        failbit = 4
-                      };
-
-  void clear (Storable_State state = goodbit);
-
-  void setstate (Storable_State state);
-
-  Storable_State rdstate (void) const;
-
-  bool good (void) const;
-
-  bool bad (void) const;
-
-  bool eof (void) const;
-
-  bool fail (void) const;
-
-  virtual TAO_Storable_Base& operator << (
-              const TAO_NS_Persistence_Header& header) = 0;
-
-  virtual TAO_Storable_Base& operator << (
-              const TAO_NS_Persistence_Record& record) = 0;
-
-  virtual TAO_Storable_Base& operator >> (
-              TAO_NS_Persistence_Header& header)  = 0;
-
-  virtual TAO_Storable_Base& operator >> (
-              TAO_NS_Persistence_Record& record) = 0;
-
-  virtual TAO_Storable_Base& operator << (
-              const TAO_NS_Persistence_Global& global) = 0;
-
-  virtual TAO_Storable_Base& operator >> (
-              TAO_NS_Persistence_Global& global)  = 0;
-
-private:
-  Storable_State state_;
-};
-
-class TAO_Naming_Service_Persistence_Factory
-{
-public:
-  TAO_Naming_Service_Persistence_Factory();
-
-  virtual ~TAO_Naming_Service_Persistence_Factory();
-
-  // Factory Methods
-
-  virtual TAO_Storable_Base *create_stream(const ACE_CString & file,
-                                           const ACE_TCHAR * mode) = 0;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

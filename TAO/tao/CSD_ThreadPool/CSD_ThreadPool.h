@@ -17,8 +17,6 @@
 
 #include "tao/CSD_ThreadPool/CSD_TP_Export.h"
 #include "tao/Versioned_Namespace.h"
-#include "ace/Service_Object.h"
-#include "ace/Service_Config.h"
 
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -28,11 +26,13 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
- * @class TP_Strategy_Factory
+ * @class TAO_CSD_ThreadPool
  *
- * @brief An ACE_Service_Object capable of creating TP_Strategy objects.
+ * @brief the static initializer for the CSD Thread Pool library
  *
- * TBD - Explain in more detail.
+ * The loader appears to be born of the CSD_TP_Factory, which is the
+ * real service object. This separation seems to be necesary to ensure
+ * the CSD_Framework gets loaded prior to initializing the TP Factory.
  *
  */
 class TAO_CSD_TP_Export TAO_CSD_ThreadPool

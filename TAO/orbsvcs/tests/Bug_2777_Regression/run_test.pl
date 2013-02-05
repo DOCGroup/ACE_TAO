@@ -17,36 +17,7 @@ foreach $i (@ARGV) {
     }
 }
 
-my $exec_extn = "";
-if ($^O eq "MSWin32") {
-    $exec_extn = ".exe";
-}
-
-my @nslist_paths = (["../../../../bin", ""],
-                    ["../../../bin", ""],
-                    ["../../../../TAO/utils/nslist", ""]);
-if (grep(($_ eq 'ARCH'), @PerlACE::ConfigList::Configs)) {
-    push @nslist_paths, ["../../../../bin/" . $PerlACE::Process::ExeSubDir,
-                         "../../../../bin"];
-}
-
-my $nslist_path = "";
-for my $p (@nslist_paths) {
-  my $use_path = ($p->[1] eq "") ? $p->[0] : $p->[1];
-  if (-e $p->[0] . '/tao_nslist') {
-    $nslist_path = $use_path . '/tao_nslist';
-    last;
-  }
-  if ($exec_extn ne "" && -e $p->[0] . '/tao_nslist' . $exec_extn) {
-    $nslist_path = $use_path . '/tao_nslist';
-    last;
-  }
-}
-
-if ($nslist_path eq "") {
-    print STDERR "ERROR: tao_nslist utility not found.\n";
-    exit 1;
-}
+my $nslist_path = "$ENV{ACE_ROOT}/bin/tao_nslist";
 
 ## The two test targets will communicate over shared memory (SHMIOP) so they
 ## can't be 32-bit and 64-bit executables on the same host.

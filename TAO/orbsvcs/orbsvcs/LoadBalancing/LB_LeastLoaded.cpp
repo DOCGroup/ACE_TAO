@@ -155,7 +155,7 @@ TAO_LB_LeastLoaded::get_loads (CosLoadBalancing::LoadManager_ptr load_manager,
 
   this->push_loads (the_location,
                     loads.in (),
-                    loads[0]);
+                    loads.inout ()[0]);
 
   return loads._retn ();
 }

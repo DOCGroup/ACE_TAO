@@ -82,7 +82,7 @@ public:
   /// a useable decode_endpoints
   virtual int decode (TAO_InputCDR &cdr);
   virtual void parse_string (const char *string);
-  virtual char * to_string (void);
+  virtual char * to_string (void) const;
   virtual int encode_endpoints (void);
   virtual void encodeAddressInfo (TAO_OutputCDR &stream) const;
   virtual TAO_Endpoint *endpoint (void);

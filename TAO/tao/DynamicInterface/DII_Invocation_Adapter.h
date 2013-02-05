@@ -102,7 +102,8 @@ namespace TAO
         TAO_Operation_Details &op,
         CORBA::Object_var &effective_target,
         Profile_Transport_Resolver &r,
-        ACE_Time_Value *&max_wait_time);
+        ACE_Time_Value *&max_wait_time,
+        Invocation_Retry_State *retry_state = 0);
 
     virtual Invocation_Status invoke_collocated_i (
         TAO_Stub *stub,
@@ -154,7 +155,8 @@ namespace TAO
         TAO_Operation_Details &op,
         CORBA::Object_var &effective_target,
         Profile_Transport_Resolver &r,
-        ACE_Time_Value *&max_wait_time);
+        ACE_Time_Value *&max_wait_time,
+        Invocation_Retry_State *retry_state = 0);
 
     virtual Invocation_Status invoke_collocated_i (
         TAO_Stub *stub,
@@ -199,7 +201,8 @@ namespace TAO
                 TAO_Operation_Details &op,
                 CORBA::Object_var &effective_target,
                 Profile_Transport_Resolver &r,
-                ACE_Time_Value *&max_wait_time);
+                ACE_Time_Value *&max_wait_time,
+                Invocation_Retry_State *retry_state = 0);
   };
 #endif /* TAO_HAS_AMI */
 

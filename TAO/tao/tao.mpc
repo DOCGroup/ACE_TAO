@@ -174,6 +174,8 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, taoid
     Invocation_Adapter.cpp
     Invocation_Base.cpp
     Invocation_Endpoint_Selectors.cpp
+    Invocation_Retry_State.cpp
+    Invocation_Retry_Params.cpp
     IOPC.cpp
     IOR_Parser.cpp
     IORInterceptor_Adapter.cpp
@@ -274,6 +276,10 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, taoid
     ShortSeqC.cpp
     String_Alloc.cpp
     StringSeqC.cpp
+    Storable_Base.cpp
+    Storable_FlatFileStream.cpp
+    Storable_Factory.cpp
+    Storable_File_Guard.cpp
     Stub.cpp
     Stub_Factory.cpp
     Synch_Invocation.cpp

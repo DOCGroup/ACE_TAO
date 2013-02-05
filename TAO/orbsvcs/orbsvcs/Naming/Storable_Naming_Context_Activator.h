@@ -26,7 +26,12 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-class TAO_Naming_Service_Persistence_Factory;
+namespace TAO
+{
+  class Storable_Factory;
+}
+
+class TAO_Storable_Naming_Context_Factory;
 
 /**
  * A servant activator to be use with a TAO_Storable_Naming_Context.
@@ -43,10 +48,11 @@ public:
    * The constructor takes arguments needed to create a
    * TAO_Storable_Naming_Context and TAO_Naming_Context on demand.
    */
-  TAO_Storable_Naming_Context_Activator(CORBA::ORB_ptr orb,
-                                        TAO_Naming_Service_Persistence_Factory *factory,
-                                        const ACE_TCHAR *persistence_directory,
-                                        size_t context_size);
+  TAO_Storable_Naming_Context_Activator (
+    CORBA::ORB_ptr orb,
+    TAO::Storable_Factory *factory,
+    TAO_Storable_Naming_Context_Factory *context_impl_factory,
+    const ACE_TCHAR *persistence_directory);
 
   virtual ~TAO_Storable_Naming_Context_Activator();
 
@@ -70,9 +76,14 @@ public:
 private:
 
   CORBA::ORB_ptr orb_;
-  TAO_Naming_Service_Persistence_Factory *factory_;
+
+  /// The factory for constructing the persistence mechanism for the contexts
+  TAO::Storable_Factory *persistence_factory_;
+
+  /// The factory for constructing naming contexts within the index
+  TAO_Storable_Naming_Context_Factory *context_impl_factory_;
+
   const ACE_TCHAR *persistence_directory_;
-  size_t context_size_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -76,6 +76,13 @@ ImR_Activator_i::register_with_imr (ImplementationRepository::Activator_ptr acti
 
       if (!CORBA::is_nil (locator_.in ()))
         {
+          if (this->debug_ > 9)
+            {
+              CORBA::String_var ior = orb_->object_to_string (obj.in ());
+              ACE_DEBUG((LM_DEBUG, "ImR Activator: ImplRepoService ior=<%s>\n",
+                ior.in()));
+            }
+
           this->registration_token_ =
             locator_->register_activator (name_.c_str (), activator);
 
@@ -84,6 +91,8 @@ ImR_Activator_i::register_with_imr (ImplementationRepository::Activator_ptr acti
 
           return;
         }
+      else if (this->debug_ > 1)
+        ACE_DEBUG((LM_DEBUG, "ImR Activator: ImplRepoService not found\n"));
     }
   catch (const CORBA::Exception& ex)
     {
@@ -278,12 +287,17 @@ ImR_Activator_i::start_server(const char* name,
 {
   if (debug_ > 1)
     ACE_DEBUG((LM_DEBUG, "ImR Activator: Starting server <%s>...\n", name));
+
+  ACE_TString cmdline_tstr(ACE_TEXT_CHAR_TO_TCHAR(cmdline));
+  size_t cmdline_buf_len = cmdline_tstr.length();
   if (debug_ > 1)
-    ACE_DEBUG((LM_DEBUG, "\tcommand line : <%s>\n\tdirectory : <%s>\n", cmdline, dir));
+    ACE_DEBUG((LM_DEBUG,
+            "\tcommand line : len=%d <%s>\n\tdirectory : <%C>\n",
+            cmdline_buf_len, cmdline_tstr.c_str(), dir)  );
 
   ACE_Process_Options proc_opts (
                         1,
-                        ACE_Process_Options::DEFAULT_COMMAND_LINE_BUF_LEN,
+                        cmdline_buf_len + 1,
                         this->env_buf_len_, this->max_env_vars_);
   proc_opts.command_line (ACE_TEXT_CHAR_TO_TCHAR(cmdline));
   proc_opts.working_directory (dir);

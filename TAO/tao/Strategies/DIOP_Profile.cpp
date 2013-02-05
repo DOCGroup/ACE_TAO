@@ -363,7 +363,7 @@ TAO_DIOP_Profile::add_endpoint (TAO_DIOP_Endpoint *endp)
 }
 
 char *
-TAO_DIOP_Profile::to_string (void)
+TAO_DIOP_Profile::to_string (void) const
 {
   // corbaloc:diop:1.2@host:port,diop:1.2@host:port,.../key
 

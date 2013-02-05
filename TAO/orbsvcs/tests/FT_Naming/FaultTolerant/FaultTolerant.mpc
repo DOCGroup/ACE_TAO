@@ -1,0 +1,32 @@
+// -*- MPC -*-
+// $Id$
+
+project(*Client) : ftnaming {
+  exename  = client
+
+  Source_Files {
+    client.cpp
+  }
+
+}
+
+project(*idl): taoidldefaults {
+  IDL_Files {
+    Test.idl
+  }
+  custom_only = 1
+}
+
+project(*server): ftnaming {
+  after += *idl
+  exename = server
+  Source_Files {
+	TestC.cpp
+	TestS.cpp
+	server.cpp
+	LB_server.cpp
+	Basic.cpp
+  }
+  IDL_Files {
+  }
+}

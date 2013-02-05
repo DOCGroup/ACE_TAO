@@ -2,6 +2,7 @@
 
 #include "orbsvcs/Naming/Persistent_Context_Index.h"
 #include "orbsvcs/Naming/Persistent_Naming_Context.h"
+#include "orbsvcs/Naming/Persistent_Naming_Context_Factory.h"
 
 #include "tao/debug.h"
 
@@ -80,19 +81,22 @@ TAO_Persistent_Context_Index::bind (const char *poa_id,
 
 TAO_Persistent_Context_Index::TAO_Persistent_Context_Index
   (CORBA::ORB_ptr orb,
-   PortableServer::POA_ptr poa)
+   PortableServer::POA_ptr poa,
+   TAO_Persistent_Naming_Context_Factory * context_impl_factory)
   : allocator_ (0),
     index_ (0),
     index_file_ (0),
     base_address_ (0),
     orb_ (CORBA::ORB::_duplicate (orb)),
-    poa_ (PortableServer::POA::_duplicate (poa))
+    poa_ (PortableServer::POA::_duplicate (poa)),
+    context_impl_factory_ (context_impl_factory)
 {
 }
 
 TAO_Persistent_Context_Index::~TAO_Persistent_Context_Index (void)
 {
   delete allocator_;
+  delete context_impl_factory_;
   ACE_OS::free (reinterpret_cast<void *> (const_cast<ACE_TCHAR *> (index_file_)));
 }
 
@@ -181,17 +185,14 @@ TAO_Persistent_Context_Index::recreate_all (void)
     {
       index_iter->next (entry);
 
-      // Put together a servant for the new Naming Context.
-
-      TAO_Persistent_Naming_Context *context_impl = 0;
-      ACE_NEW_RETURN (context_impl,
-                      TAO_Persistent_Naming_Context (poa_.in (),
-                                                     entry->ext_id_.poa_id_,
-                                                     this,
-                                                     entry->int_id_.hash_map_,
-                                                     entry->int_id_.counter_),
-                  -1);
-
+      // Put together a servant for the new Naming Context
+      // Using the naming context factory to create a naming context of the appropriate type
+      TAO_Persistent_Naming_Context *context_impl =
+        this->context_impl_factory_->create_naming_context_impl (poa_.in (),
+                                                                 entry->ext_id_.poa_id_,
+                                                                 this,
+                                                                 entry->int_id_.hash_map_,
+                                                                 entry->int_id_.counter_);
 
       // Put <context_impl> into the auto pointer temporarily, in case next
       // allocation fails.
@@ -226,6 +227,16 @@ TAO_Persistent_Context_Index::recreate_all (void)
     } while (index_iter->advance ());
 
   return 0;
+}
+
+TAO_Persistent_Naming_Context*
+TAO_Persistent_Context_Index::create_naming_context_impl (
+  PortableServer::POA_ptr poa,
+  const char *poa_id)
+{
+  return this->context_impl_factory_->create_naming_context_impl(poa,
+                                                                 poa_id,
+                                                                 this);
 }
 
 int

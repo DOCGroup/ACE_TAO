@@ -6,6 +6,9 @@
 #include "orbsvcs/PortableGroup/PG_Operators.h" // Borrow operator== on CosNaming::Name
 #include "orbsvcs/PortableGroup/PG_Utils.h"
 
+#include "tao/MProfile.h"
+#include "tao/Profile.h"
+#include "tao/Stub.h"
 #include "tao/debug.h"
 
 #include "ace/Get_Opt.h"
@@ -61,11 +64,13 @@ TAO::PG_Object_Group::PG_Object_Group (
   , orb_ (CORBA::ORB::_duplicate (orb))
   , factory_registry_ (PortableGroup::FactoryRegistry::_duplicate (factory_registry))
   , manipulator_ (manipulator)
+  , distribute_ (1)
   , empty_ (1)
   , role_ (type_id)
   , type_id_ (CORBA::string_dup (type_id))
   , tagged_component_ (tagged_component)
   , reference_ (CORBA::Object::_duplicate(empty_group))
+  , group_name_ (0)
   , members_ ()
   , primary_location_(0)
   , properties_ (the_criteria, type_properties)
@@ -75,16 +80,35 @@ TAO::PG_Object_Group::PG_Object_Group (
 {
 }
 
+TAO::PG_Object_Group::PG_Object_Group (
+  CORBA::ORB_ptr orb,
+  PortableGroup::FactoryRegistry_ptr factory_registry,
+  TAO::PG_Object_Group_Manipulator & manipulator)
+  : internals_()
+  , orb_ (CORBA::ORB::_duplicate (orb))
+  , factory_registry_ (PortableGroup::FactoryRegistry::_duplicate (factory_registry))
+  , manipulator_ (manipulator)
+  , distribute_ (1)
+  , empty_ (1)
+  , role_ ("")
+  , type_id_ ()
+  , tagged_component_ ()
+  , reference_ (CORBA::Object::_nil ())
+  , group_name_ (0)
+  , members_ ()
+  , primary_location_(0)
+  , properties_ ()
+  , initial_number_members_ (0)
+  , minimum_number_members_ (0)
+  , group_specific_factories_ ()
+{
+}
+
 TAO::PG_Object_Group::~PG_Object_Group (void)
 {
-  for (MemberMap_Iterator it = this->members_.begin();
-      it != this->members_.end();
-      ++it)
-    {
-      MemberInfo * member = (*it).int_id_;
-      delete member;
-    }
-  this->members_.unbind_all ();
+  CORBA::string_free (this->group_name_);
+
+  this->clear_members_map ();
 }
 
 #if 0   // may want this again someday
@@ -127,7 +151,7 @@ TAO::PG_Object_Group::get_group_specific_factories (
 }
 
 const PortableGroup::Location &
-TAO::PG_Object_Group::get_primary_location (void) const
+TAO::PG_Object_Group::get_primary_location (void)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     guard,
@@ -192,11 +216,55 @@ TAO::PG_Object_Group::add_member (const PortableGroup::Location & the_location,
   // IORs, not IOGRs to send new IOGRs out
   // to replicas.
 
+  // Verify that the member is not using V1.0 profiles
+  // since IIOP V1.0 does not support tagged components
+  const TAO_MProfile &member_profiles =
+    member->_stubobj ()->base_profiles ();
+  CORBA::ULong member_profile_count =
+    member_profiles.profile_count ();
+  if (member_profile_count > 0)
+    {
+      const TAO_GIOP_Message_Version & version =
+        member_profiles.get_profile (0)->version ();
+      if (version.major_version () == 1 &&
+          version.minor_version () == 0)
+        {
+          if (TAO_debug_level > 3)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("%T %n (%P|%t) - ")
+                          ACE_TEXT ("Can't add member because first profile ")
+                          ACE_TEXT ("is IIOP version 1.0, which does not ")
+                          ACE_TEXT ("support tagged components.\n")
+                          ));
+            }
+          throw PortableGroup::ObjectNotAdded ();
+        }
+    }
+
   CORBA::String_var member_ior_string =
     orb_->object_to_string (member);
 
-  PortableGroup::ObjectGroup_var new_reference =
-    add_member_to_iogr (member);
+  PortableGroup::ObjectGroup_var new_reference;
+  try {
+    new_reference =
+      this->add_member_to_iogr (member);
+  }
+  catch (const TAO_IOP::Duplicate&)
+    {
+      throw PortableGroup::MemberAlreadyPresent ();
+    }
+  catch (const TAO_IOP::Invalid_IOR&)
+    {
+      throw PortableGroup::ObjectNotAdded ();
+    }
+  catch (...)
+    {
+      throw;
+    }
+
+  if (CORBA::is_nil (new_reference.in ()))
+    throw PortableGroup::ObjectNotAdded ();
 
   // Convert new member back to a (non group) ior.
   CORBA::Object_var member_ior =
@@ -216,20 +284,21 @@ TAO::PG_Object_Group::add_member (const PortableGroup::Location & the_location,
 
   this->reference_ = new_reference; // note var-to-var assignment does
                                     // a duplicate
+
   if (this->increment_version ())
     {
       this->distribute_iogr ();
     }
   else
-    {
+    { // Issue with incrementing the version
       throw PortableGroup::ObjectNotAdded ();
     }
 
   if (TAO_debug_level > 6)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT("PG (%P|%t) exit Object_Group add_member\n")));
-    }
+  {
+    ACE_DEBUG ((LM_DEBUG,
+      ACE_TEXT("PG (%P|%t) exit Object_Group add_member\n")));
+  }
 }
 
 int
@@ -247,8 +316,8 @@ TAO::PG_Object_Group::set_primary_member (
     {
       int cleared = 0;
       this->primary_location_ = the_location;
-      for (MemberMap_Iterator it = this->members_.begin();
-           !cleared && it != this->members_.end();
+      for (MemberMap_Iterator it = this->members_.begin ();
+           !cleared && it != this->members_.end ();
            ++it)
         {
           cleared = (*it).int_id_->is_primary_;
@@ -314,7 +383,7 @@ TAO::PG_Object_Group::remove_member (
   MemberInfo * info = 0;
   if (this->members_.unbind (the_location, info) == 0)
     {
-      if (this->members_.current_size() > 0)
+      if (this->members_.current_size () > 0)
         {
           this->reference_ =
             this->manipulator_.remove_profiles (this->reference_.in (),
@@ -329,7 +398,7 @@ TAO::PG_Object_Group::remove_member (
 
       if (the_location == this->primary_location_)
         {
-          this->primary_location_.length(0);
+          this->primary_location_.length (0);
         }
 
       if (this->increment_version ())
@@ -343,8 +412,8 @@ TAO::PG_Object_Group::remove_member (
       if (TAO_debug_level > 6)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "TAO-PG (%P|%t) - "
-                      "remove_member throwing MemberNotFound.\n"
+                      ACE_TEXT ("TAO-PG (%P|%t) - ")
+                      ACE_TEXT ("remove_member throwing MemberNotFound.\n")
                       ));
         }
       throw PortableGroup::MemberNotFound();
@@ -425,6 +494,10 @@ TAO::PG_Object_Group::increment_version (void)
 void
 TAO::PG_Object_Group::distribute_iogr (void)
 {
+  // Check if the object group is configured to distribute
+  if (!this->distribute_)
+    return;
+
   // assume internals is locked
   CORBA::String_var iogr =
     this->orb_->object_to_string (this->reference_.in());
@@ -509,6 +582,7 @@ TAO::PG_Object_Group::locations_of_members (void)
     const PortableGroup::Location & location = (*it).ext_id_;
     PortableGroup::Location & out = (*result)[pos];
     out = location;
+    ++pos;
   }
   return result;
 }
@@ -793,6 +867,40 @@ int
 TAO::PG_Object_Group::has_member_at (const PortableGroup::Location & location)
 {
   return (0 == this->members_.find (location));
+}
+
+void
+TAO::PG_Object_Group::distribute (int value)
+{
+  this->distribute_ = value;
+}
+
+void
+TAO::PG_Object_Group::set_name (const char* group_name)
+{
+  if (group_name_ != 0)
+    CORBA::string_free (group_name_);
+
+  group_name_ = CORBA::string_dup (group_name);
+}
+
+const char*
+TAO::PG_Object_Group::get_name (void)
+{
+  return group_name_;
+}
+
+void
+TAO::PG_Object_Group::clear_members_map (void)
+{
+  for (MemberMap_Iterator it = this->members_.begin();
+      it != this->members_.end();
+      ++it)
+    {
+      MemberInfo * member = (*it).int_id_;
+      delete member;
+    }
+  this->members_.unbind_all ();
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

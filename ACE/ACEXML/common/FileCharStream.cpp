@@ -12,7 +12,8 @@
 #endif /* ACE_USES_WCHAR */
 
 ACEXML_FileCharStream::ACEXML_FileCharStream (void)
-  : filename_ (0), encoding_ (0), size_ (0), infile_ (0), peek_ (0)
+  : filename_ (0), encoding_ (0), size_ (0), infile_ (0),
+    close_infile_ (true), peek_ (0)
 {
 }
 
@@ -22,7 +23,7 @@ ACEXML_FileCharStream::~ACEXML_FileCharStream (void)
 }
 
 int
-ACEXML_FileCharStream::open (const ACEXML_Char *name)
+ACEXML_FileCharStream::use_stream_i (FILE* open_file, const ACEXML_Char *name)
 {
   delete[] this->filename_;
   this->filename_ = 0;
@@ -30,7 +31,7 @@ ACEXML_FileCharStream::open (const ACEXML_Char *name)
   delete[] this->encoding_;
   this->encoding_ = 0;
 
-  this->infile_ = ACE_OS::fopen (name, ACE_TEXT ("r"));
+  this->infile_ = open_file;
   if (this->infile_ == 0)
     return -1;
 
@@ -41,6 +42,23 @@ ACEXML_FileCharStream::open (const ACEXML_Char *name)
   this->size_ = ACE_Utils::truncate_cast<ACE_OFF_T> (statbuf.st_size);
   this->filename_ = ACE::strnew (name);
   return this->determine_encoding();
+}
+
+int
+ACEXML_FileCharStream::use_stream (FILE* open_file, const ACEXML_Char *name)
+{
+  if (open_file != 0)
+    ACE_OS::rewind(open_file);
+
+  this->close_infile_ = false;
+  return use_stream_i(open_file, name);
+}
+
+int
+ACEXML_FileCharStream::open (const ACEXML_Char *name)
+{
+  this->close_infile_ = true;
+  return use_stream_i(ACE_OS::fopen (name, ACE_TEXT ("r")), name);
 }
 
 int
@@ -114,7 +132,10 @@ ACEXML_FileCharStream::close (void)
 {
   if (this->infile_ != 0)
     {
-      ACE_OS::fclose (this->infile_);
+      if (this->close_infile_)
+        {
+          ACE_OS::fclose (this->infile_);
+        }
       this->infile_ = 0;
     }
   delete[] this->filename_;

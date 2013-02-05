@@ -32,13 +32,14 @@ public:
 
 
 typedef ACE_RB_Tree<u_long, PeerObject*, ACE_Less_Than<u_long>, ACE_Null_Mutex> PeerObjectTable;
+typedef ACE_RB_Tree<long, PeerObject*, ACE_Less_Than<long>, ACE_Null_Mutex> ObjectByIndex;
 typedef ACE_DLList<Invocation> InvocationList;
 typedef ACE_DLList<Transport> TransportList;
 
 class PeerProcess
 {
 public:
-  static char *nextIdent(void);
+  static char *nextIdent(bool is_server);
   PeerProcess (size_t offset, bool is_server);
 
   virtual ~PeerProcess (void);
@@ -49,16 +50,18 @@ public:
   HostProcess *owner (void);
 
   void match_hosts (Session *session);
-  void set_server_addr (const char *addr);
-  const ACE_CString &server_addr (void) const;
+  void set_server_addr (const ACE_CString &addr);
+  ACE_CString server_addr (void) const;
   const ACE_CString &last_client_addr (void) const;
 
   bool is_server (void) const;
+  void ssl (bool is_ssl);
   void add_transport (Transport *t);
   Transport *last_transport (void);
   Transport *find_transport (long handle);
 
   bool match_local (const char *addr) const;
+  bool match_server_addr (const ACE_CString &addr, Session &session) const;
 
   Invocation *new_invocation (size_t req_id, Thread *thr);
   Invocation *find_invocation (size_t req_id, long handle);
@@ -72,15 +75,20 @@ public:
 
 private:
   char *ident_;
+  char *origin_;
   HostProcess *owner_;
   HostProcess *remote_;
-  ACE_CString server_addr_;
+  ACE_CString server_port_;
+  ACE_CString server_host_;
   TransportList transports_;
   Transport *last_transport_;
   bool server_;
+  bool ssl_;
+  bool localhost_;
   size_t origin_offset_;
   PeerObjectTable objects_;
   InvocationList invocations_;
+  ObjectByIndex object_by_index_;
 };
 
 

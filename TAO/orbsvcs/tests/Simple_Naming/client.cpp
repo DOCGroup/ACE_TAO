@@ -276,7 +276,11 @@ MT_Test::svc (void)
     }
 
   if (name_service.in () == 0)
-    return -1;
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "ERROR: Unable to narrow naming IOR to a NamingContext.\n"));
+      return -1;
+    }
 
   // Bind the object.
   try
@@ -344,6 +348,7 @@ MT_Test::svc (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Unable to unbind in thread %t\n"));
+      return -1;
     }
   catch (const CORBA::Exception& ex)
     {
@@ -915,7 +920,9 @@ Iterator_Test::execute (TAO_Naming_Client &root_context)
           || bindings_list->length () != 1
           || bindings_list[0u].binding_type != CosNaming::nobject)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "CosNaming::list does not function properly\n"),
+                           "Iterator_Test -> CosNaming::list does not function properly. \
+Should have returned one CosNaming::nobject element in bindings_list. Length = %d, \
+Binding Type = %d\n", bindings_list->length (), bindings_list[0u].binding_type),
                           -1);
       ACE_DEBUG ((LM_DEBUG,
                   "First binding: %C\n",
@@ -1214,7 +1221,7 @@ Persistent_List_Test::execute (TAO_Naming_Client &root_context)
       if (CORBA::is_nil (iter.in ())
           || bindings_list->length () != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "CosNaming::list does not function properly\n"),
+                           "Persistent_List_Test -> CosNaming::list does not function properly. Should have returned an iterator.\n"),
                           -1);
 
       while (iter->next_one (binding.out ()))
@@ -1270,7 +1277,7 @@ Persistent_List_Test::execute (TAO_Naming_Client &root_context)
       if (CORBA::is_nil (iter.in ())
           || bindings_list->length () != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "CosNaming::list does not function properly\n"),
+                           "Persistent_List_Test -> CosNaming::list does not function properly. Should have returned an iterator.\n"),
                           -1);
 
       while (iter->next_one (binding.out ()))

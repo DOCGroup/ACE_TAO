@@ -547,7 +547,7 @@ TAO_UIPMC_Profile::endpoint_count (void) const
 }
 
 char *
-TAO_UIPMC_Profile::to_string (void)
+TAO_UIPMC_Profile::to_string (void) const
 {
   // corbaloc:miop:1.0@1.0-group_id-1-1/host:port
 

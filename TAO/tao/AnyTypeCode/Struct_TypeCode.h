@@ -78,6 +78,9 @@ namespace TAO
       virtual void tao_release (void);
       //@}
 
+      /// Accessor for fields_
+      const FieldArrayType& fields() const;
+
     protected:
 
       /**

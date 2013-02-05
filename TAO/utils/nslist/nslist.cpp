@@ -41,15 +41,19 @@ namespace
   const char
     *myTree = "|",      // Default string to draw tree "tram-lines"
     *myNode = "+";      // Default string to draw tree node end-points
-  int
-    sizeMyTree,         // Initialised by main to strlen (myTree)
-    sizeMyNode,         // Initialised by main to strlen (myNode)
-    maxDepth= 0;        // Limit to display depth (default unlimited)
+  int sizeMyTree;       // Initialised by main to strlen (myTree)
+  int sizeMyNode;       // Initialised by main to strlen (myNode)
+  int maxDepth= 0;      // Limit to display depth (default unlimited)
   ACE_Time_Value
     rtt = ACE_Time_Value::zero; // relative roundtrip timeout for ctx
 
+  const CORBA::ULong MAX_COUNT_DEFAULT = 100;
+  CORBA::ULong max_count = MAX_COUNT_DEFAULT;
+
   void list_context (const CosNaming::NamingContext_ptr,
-                     int level);
+                     int level,
+                     CORBA::ULong max_count);
+
   CORBA::Object_ptr set_rtt(CORBA::Object_ptr obj);
 
   //==========================================================================
@@ -271,7 +275,7 @@ namespace
                     ACE_DEBUG ((LM_DEBUG, "\n"));
                     if (xc.in ())
                       {
-                        list_context (xc.in (), level + 1);
+                        list_context (xc.in (), level + 1, max_count);
                       }
                   }
                 else
@@ -301,14 +305,15 @@ namespace
 
   //==========================================================================
   void
-  list_context (const CosNaming::NamingContext_ptr nc, int level)
+  list_context (const CosNaming::NamingContext_ptr nc,
+                int level,
+                CORBA::ULong max_count)
   {
     CosNaming::BindingIterator_var it;
     CosNaming::BindingList_var bl;
-    CORBA::ULong const CHUNK = 100;
 
     NestedNamingContexts::add (nc);
-    nc->list (CHUNK, bl, it);
+    nc->list (max_count, bl, it);
 
     show_chunk (nc, bl.in (), level);
 
@@ -318,7 +323,7 @@ namespace
 
         do
           {
-            more = it->next_n (CHUNK, bl);
+            more = it->next_n (max_count, bl);
             show_chunk (nc, bl.in (), level);
           } while (more);
 
@@ -567,14 +572,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   else if (1 != ACE_OS::strlen(*(++argv)))
                     {
                        ACE_DEBUG ((LM_DEBUG,
-                                  "Error: --kindsep takes a single character (not %s)\n", *argv));
+                                  ACE_TEXT ("Error: --kindsep takes a single ")
+                                  ACE_TEXT ("character (not %s)\n"), *argv));
                       failed = true;
                     }
                   else if (showNSonly)
                     {
                       ACE_DEBUG ((LM_DEBUG,
-                                 "Error: --nsior and --kindsep are "
-                                 "both specified\n"));
+                                 ACE_TEXT ("Error: --nsior and --kindsep are ")
+                                 ACE_TEXT ("both specified\n")));
                       failed = true;
                     }
                   else
@@ -591,14 +597,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   else if (!--argc || !ACE_OS::ace_isdigit (ACE_TEXT_ALWAYS_CHAR (*(++argv))[0]))
                     {
                       ACE_DEBUG ((LM_DEBUG,
-                                 "Error: --max requires a number\n"));
+                                 ACE_TEXT ("Error: --max requires a number\n")));
                       failed = true;
                     }
                   else if (showNSonly)
                     {
                       ACE_DEBUG ((LM_DEBUG,
-                                 "Error: --nsior and --max are "
-                                 "both specified\n"));
+                                 ACE_TEXT ("Error: --nsior and --max are ")
+                                 ACE_TEXT ("both specified\n")));
                       failed = true;
                     }
                   else
@@ -609,22 +615,53 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   if (rtt != ACE_Time_Value::zero)
                     {
                       ACE_DEBUG ((LM_DEBUG,
-                                 "Error: --rtt given more than once\n"));
+                                 ACE_TEXT ("Error: --rtt given more than once\n")));
                       failed = true;
                     }
                   else if (!--argc || !ACE_OS::ace_isdigit (ACE_TEXT_ALWAYS_CHAR (*(++argv))[0]))
                     {
                       ACE_DEBUG ((LM_DEBUG,
-                                 "Error: --rtt requires a number\n"));
+                                 ACE_TEXT ("Error: --rtt requires a number\n")));
                       failed = true;
                     }
                  else
-                   rtt.set(ACE_OS::atoi (*argv), 0);
+                   rtt.set (ACE_OS::atoi (*argv), 0);
+                }
+              else if (0 == ACE_OS::strcmp(*argv, ACE_TEXT ("--count")))
+                {
+                  if (max_count != MAX_COUNT_DEFAULT)
+                    {
+                      ACE_DEBUG ((LM_DEBUG,
+                                 ACE_TEXT ("Error: --count given more than once\n")));
+                      failed = true;
+                    }
+                  else if (!--argc || !ACE_OS::ace_isdigit (ACE_TEXT_ALWAYS_CHAR (*(++argv))[0]))
+                    {
+                      ACE_DEBUG ((LM_DEBUG,
+                                 ACE_TEXT ("Error: --count requires a number\n")));
+                      failed = true;
+                    }
+                 else
+                    {
+                     CORBA::ULong count = ACE_OS::strtoul (ACE_TEXT_ALWAYS_CHAR (*argv), 0, 10);
+                     if (count > 0)
+                       {
+                        max_count = count;
+                       }
+                     else
+                       {
+                        ACE_DEBUG ((LM_DEBUG,
+                                    ACE_TEXT ("Error: --count requires a number")
+                                    ACE_TEXT (" greater than 0\n")));
+                        failed = true;
+                       }
+                    }
                 }
               else
                 {
                   ACE_DEBUG ((LM_DEBUG,
-                             "Unknown option %s\n", *argv));
+                              ACE_TEXT ("Unknown option %s\n"),
+                              *argv));
                   failed = true;
                 }
             }
@@ -632,20 +669,22 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       if (failed)
         {
-          ACE_DEBUG ((LM_DEBUG, "\n%s options:\n"
-            "  --nsior               {Display the naming service IOR and exit}\n"
-            "or:\n"
-            "  --ns <ior>            {Defaults to standard NameService}\n"
-            "  --ior                 {Display ior for end points}\n"
-            "  --ctxior              {Display ior for naming contexts}\n"
-            "  --tree \"xx\"           {Defaults to | for drawing tramlines}\n"
-            "  --node \"xx\"           {Defaults to + for drawing nodes}\n"
-            "  --noloops             {Inhibit drawing of naming context loops}\n"
-            "  --name <name>         {Lists sub-set, defaults to root}\n"
-            "  --ctxsep  <character> {<name> Context separation character, default /}\n"
-            "  --kindsep <character> {<name> ID/Kind separation character, default .}\n"
-            "  --max <number>        {If given, limits displayed sub-context depth}\n",
-            "  --rtt <seconds>       {If given, sets the relative round trip timeout policy}\n",
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n%s options:\n")
+            ACE_TEXT ("  --nsior               {Display the naming service IOR and exit}\n")
+            ACE_TEXT ("or:\n")
+            ACE_TEXT ("  --ns <ior>            {Defaults to standard NameService}\n")
+            ACE_TEXT ("  --ior                 {Display ior for end points}\n")
+            ACE_TEXT ("  --ctxior              {Display ior for naming contexts}\n")
+            ACE_TEXT ("  --tree \"xx\"           {Defaults to | for drawing tramlines}\n")
+            ACE_TEXT ("  --node \"xx\"           {Defaults to + for drawing nodes}\n")
+            ACE_TEXT ("  --noloops             {Inhibit drawing of naming context loops}\n")
+            ACE_TEXT ("  --name <name>         {Lists sub-set, defaults to root}\n")
+            ACE_TEXT ("  --ctxsep  <character> {<name> Context separation character, default /}\n")
+            ACE_TEXT ("  --kindsep <character> {<name> ID/Kind separation character, default .}\n")
+            ACE_TEXT ("  --max <number>        {If given, limits displayed sub-context depth}\n")
+            ACE_TEXT ("  --rtt <seconds>       {If given, sets the relative round trip timeout policy}\n")
+            ACE_TEXT ("  --count <number>      {If given, sets the maximum ")
+            ACE_TEXT ("number of entries per request from the NameService}\n"),
             pname));
           orb->destroy ();
           return 1;
@@ -718,7 +757,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ACE_DEBUG ((LM_DEBUG,
                      "Naming Service: %C\n---------------\n",
                      ((showCtxIOR)? str.in () : "")));
-          list_context (root_nc.in (), 1);
+          list_context (root_nc.in (), 1, max_count);
         }
     }
   catch (const CORBA::Exception& ex)

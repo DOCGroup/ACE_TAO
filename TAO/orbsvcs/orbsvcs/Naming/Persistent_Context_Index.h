@@ -23,6 +23,9 @@
 #include "ace/Malloc_T.h"
 #include "ace/MMAP_Memory_Pool.h"
 
+class TAO_Persistent_Naming_Context;
+class TAO_Persistent_Naming_Context_Factory;
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
@@ -64,8 +67,10 @@ public:
   // = Initialization and termination methods.
 
   /// Constructor.
-  TAO_Persistent_Context_Index (CORBA::ORB_ptr orb,
-                                PortableServer::POA_ptr poa);
+  TAO_Persistent_Context_Index (
+    CORBA::ORB_ptr orb,
+    PortableServer::POA_ptr poa,
+    TAO_Persistent_Naming_Context_Factory *context_impl_factory);
 
   /**
    * Create ACE_Allocator, open/create memory-mapped file with the
@@ -84,6 +89,15 @@ public:
    * success and -1 on failure.
    */
   int init (size_t context_size);
+
+  /**
+   * Create a naming context implementation to be used for this index
+   * using the naming context factory that was provided in the ctor
+   * for the index.
+   */
+  TAO_Persistent_Naming_Context *create_naming_context_impl (
+    PortableServer::POA_ptr poa,
+    const char *poa_id);
 
   /**
    * Destructor.  The memory mapped file that was opened/created is
@@ -161,6 +175,9 @@ private:
 
   /// The reference to the root Naming Context.
   CosNaming::NamingContext_var root_context_;
+
+  /// The factory for constructing naming contexts within the index
+  TAO_Persistent_Naming_Context_Factory *context_impl_factory_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

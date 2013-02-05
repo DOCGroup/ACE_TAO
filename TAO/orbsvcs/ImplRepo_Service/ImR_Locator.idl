@@ -18,5 +18,54 @@ module ImplementationRepository
     /// process that it had started.
     void notify_child_death (in string name);
   };
+
+  enum UpdateType
+  {
+    repo_add,
+    repo_update,
+    repo_remove
+  };
+
+  typedef long SequenceNum;
+
+  struct ServerUpdate
+  {
+    string      name;
+    string      server_id;
+    UpdateType  type;
+    long        repo_id;
+    long        repo_type;
+    SequenceNum seq_num;
+  };
+
+  struct ActivatorUpdate
+  {
+    string      name;
+    UpdateType  type;
+    long        repo_id;
+    long        repo_type;
+    SequenceNum seq_num;
+  };
+
+  exception InvalidPeer
+  {
+    string reason;
+  };
+
+  interface UpdatePushNotification
+  {
+    /// indicate existing server with name was updated
+    oneway void notify_updated_server(in ServerUpdate server);
+
+    /// indicate existing activator with name was updated
+    //oneway void notify_updated_activator(in ActivatorUpdate activator);
+    oneway void notify_updated_activator(in ActivatorUpdate activator);
+
+    /// register peer as replica and indicate sequence number
+    void register_replica(in UpdatePushNotification peer,
+                          inout string ft_imr_ior,
+                          out SequenceNum seq_num)
+      raises (InvalidPeer);
+  };
 };
 

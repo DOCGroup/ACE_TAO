@@ -143,6 +143,7 @@ TAO_Transport::TAO_Transport (CORBA::ULong tag,
   , recv_buffer_size_ (0)
   , sent_byte_count_ (0)
   , is_connected_ (false)
+  , connection_closed_on_read_ (false)
   , messaging_object_ (0)
   , char_translator_ (0)
   , wchar_translator_ (0)
@@ -2879,6 +2880,12 @@ bool
 TAO_Transport::using_blocking_io_for_asynch_messages (void) const
 {
   return false;
+}
+
+bool
+TAO_Transport::connection_closed_on_read (void) const
+{
+  return connection_closed_on_read_;
 }
 
 /*

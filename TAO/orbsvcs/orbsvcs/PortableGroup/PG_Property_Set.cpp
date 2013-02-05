@@ -149,24 +149,22 @@ void TAO::PG_Property_Set::set_property (
     CORBA::NO_MEMORY ());
 
   const PortableGroup::Value * replaced_value = 0;
-  if (0 == this->values_.rebind (name, value_copy, replaced_value))
-  {
-    if (0 != replaced_value)
-    {
+  int rebind_result = this->values_.rebind (name, value_copy, replaced_value);
+  if (1 == rebind_result)
+    { // Existing value was replaced
       delete replaced_value;
     }
-  }
-  else
-  {
-    if (TAO_debug_level > 3)
-    {
-      ACE_ERROR ( (LM_ERROR,
-        "%n\n%T: Property_set: rebind failed.\n"
-        ));
+  else if (-1 == rebind_result)
+    { // Value was not rebound.
+      if (TAO_debug_level > 3)
+        {
+          ACE_ERROR ( (LM_ERROR,
+                       "%n\n%T: Property_set: rebind failed.\n"
+                       ));
+        }
+      // @@ should throw something here
+      throw CORBA::NO_MEMORY ();
     }
-    // @@ should throw something here
-    throw CORBA::NO_MEMORY ();
-  }
 }
 
 

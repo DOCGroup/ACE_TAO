@@ -58,6 +58,9 @@ namespace TAO
 
       virtual bool use_imr () const;
 
+      virtual CORBA::Object_ptr imr_key_to_object (const TAO::ObjectKey &key,
+                                                   const char *type_id) const;
+
     private:
       TAO::Portable_Server::Creation_Time creation_time_;
     };

@@ -1,0 +1,35 @@
+// -*- MPC -*-
+// $Id$
+
+project(Dynamic_TP_POA_Test_Static_idl): taoidldefaults {
+  IDL_Files {
+    Test.idl
+  }
+  custom_only = 1
+}
+
+project(Dynamic_TP_POA_Test_Static_Server): taoserver, csd_framework, dynamic_tp {
+  after += Dynamic_TP_POA_Test_Static_idl
+  Source_Files {
+    Hello.cpp
+    server.cpp
+    TestC.cpp
+    TestS.cpp
+  }
+
+  IDL_Files {
+  }
+
+}
+
+project(Dynamic_TP_POA_Test_Static_Client): taoclient {
+  after += Dynamic_TP_POA_Test_Static_Server
+  Source_Files {
+    TestC.cpp
+    client.cpp
+  }
+
+  IDL_Files {
+  }
+
+}

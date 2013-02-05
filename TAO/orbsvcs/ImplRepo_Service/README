@@ -1,5 +1,7 @@
 /** -*- HTML-Helper -*- $Id$
 
+$Id$
+
 @mainpage Implementation Repository
 
 @section intro Introduction
@@ -30,7 +32,7 @@ as the specification for TAO's ImR.
 
 @ref ntservice - Running the ImR as a NT Service
 
-@ref imrandnaming - Using the Naming Service with the Implmentation Repository
+@ref imrandnaming - Using the Naming Service with the Implementation Repository
 
 @ref movefromoldImR - Moving from IMR as in TAO 1.2.2 to the present version.
 
@@ -63,7 +65,7 @@ As with any program, there is always a wishlist of things to do.
 
 @subsection ort Use Object Reference Template (ORT) Features
 
-   Use ORT so that the ImR-ified IORs doesnt have any information
+   Use ORT so that the ImR-ified IORs doesn't have any information
 about the ImR_Activators. Right now, even though, the ImplRepo_Service is
 the one that is exposed to the client, the IOR will have a reference
 to the ImR_Activator. By using ORT features, we want the IOR to refer
@@ -138,7 +140,7 @@ Nothing yet.
 @subsection XML Database Support
 
   As of now, the support is only to be able to have the information
-	about a registered server written to an XML file. Have to support
+  about a registered server written to an XML file. Have to support
 retrieving information from the XML file to be able to do any actions
 on the registered servers.
 
@@ -161,7 +163,7 @@ communicate with an Implementation Repository, if one is available.
 
 @subsection description The New ImR
 
-	 The new ImR is based on the ImR in TAO 1.2.2 with added
+   The new ImR is based on the ImR in TAO 1.2.2 with added
 features to help improve throughput and load balancing. The work to be
 performed by the Implementation Repository is distributed between two
 entities (ImplRepo_Service and ImR_Activator) to help achieve the goal of
@@ -169,7 +171,7 @@ better throughput and load balance.
 
 @subsection locator ImplRepo_Service
 
-	The ImplRepo_Service acts as the main server which is visible to
+  The ImplRepo_Service acts as the main server which is visible to
 the application intending to use the ImR. It receives requests sent
 via tao_ImR and distributes the work to the registered ImR_Activators.
 It is stateless and does not maintain any information except about the
@@ -186,39 +188,118 @@ Commandline Arguments that can be passed to ImplRepo_Service
 -o  generate the ior.
 -x  support persistence to the ImplRepo_Service. We use XML to support
     persistence. Names of the activators registered with the locator,
-	their IORs, and the servers registered with each of the activators are
-	saved to the xml file. Use this option to pass the name of the file
-	where the data has to be saved.
+    their IORs, and the servers registered with each of the activators are
+    saved to the xml file. Use this option to pass the name of the file
+    where the data has to be saved.
+-p  similar to "-x" but using an ACE_Configuration_Heap file to persist
+    the data.
+-r  similar to "-p" but using an ACE_Configuration_Win32Registry to persist
+    the data. (only available on Win32 platforms)
+--directory  similar to "-x" option, but the repository will be written out
+    to multiple files in the indicated directory: "imr_listings.xml" which
+    indicates all servers and activators in the repository indicating the
+    filename containing that server's or activator's persistence data.
+    This option is used along with the "--primary" or "--backup" option
+    to create a Fault Tolerant ImplRepo_Service.
+--primary  pass along with "--directory <dir>" to startup the primary
+    ImR_Locator. See ft_imr_locator subsection.
+--backup  pass along with "--directory <dir>" to startup the backup
+    ImR_Locator. See ft_imr_locator subsection.
 
-	And, ofcourse, the ORB Options.
+  And, of course, the ORB Options.
 
+@subsection ft_imr_locator FaultTolerant_ImR_Locator
+
+The ImR_Locator implements a fault tolerant service with the following options:
+
+  The --primary option tells the ImR_Locator that it will startup as the primary
+  in a redundant service pair.
+
+  The --backup option tells the ImR_Locator that it will startup as the backup
+  in a redundant service pair.
+
+  The --directory <ft_imr_shared_dir> option tells the ImR_Locator the shared
+  file system directory to use as the backing store for the redundant service
+  pair.
+
+  The -o <ft_imr_ior_filename> option tells the ImR_Locator to output the
+  redundant service pair ImRService ior file, which it can only do after
+  successfully starting the primary and backup ImRService instances. The ior
+  file contains the combined profiles of the primary and backup ImRLocators. The
+  client must use the ior file to use the fault tolerent ImplRepo_Service.
+
+The primary and backup ImRLocator instances should have the same ORBEndPoint
+protocol list so that any client can send a request to either primary or backup
+regardless of protocol (IIOP,UIOP,etc...).
+
+The ImR_Locator primary and backup options cannot be passed on the command
+line along with -ORBObjRefStyle URL, since that style will cause the backup
+profile to not be available in the ior.
+
+At startup the primary must be started first, then the backup. When
+a single ImR_Locator goes down, it can be restarted at anytime
+(using the same ORBEndPoints). If they are both shutdown then Fault Tolerant
+ImplRepo_Service will be down until both the primary and backup are restarted
+in that order.. The previous ior file will only remain valid if the ORBEndPoint
+list remains the same for both instances.
+
+As long as both the primary and backup ImR_Locators are not shutdown at the
+same time the Fault Tolerant ImplRepo_Service will always be available.
+
+@subsection ft_imr_locator_startup FaultTolerant_ImR_Locator Startup
+
+<ol>
+  <li>
+    <em>Start the primary.</em><br>
+    It will write the replication ior to a file in the shared persistence
+    directory.<br>
+    <code>
+      tao_imr_locator
+        --primary
+        -ORBEndpoint <primary_hostname:port>
+        --directory <ft_imr_shared_dir>
+    </code>
+  </li>
+  <li>
+    </em>Start the backup.</em><br>
+    Reads the primary replication ior from the shared persistence directory.<br>
+    Writes the multi-profile ior to ft_imr_ior_filename<br>.
+    <code>
+      tao_imr_locator
+        --backup
+        -ORBEndpoint <backup_hostname:port>
+        --directory <ft_imr_shared_dir>
+        -o <ft_imr_ior_filename>
+    </code>
+  </li>
+</ol>
 
 @subsection activator ImR_Activator
 
-	ImR_Activators, as you might have guessed, do the real work of
+  ImR_Activators, as you might have guessed, do the real work of
 activating servers or shutting them down and maintaining the information
 about servers related to them. Only one instance of an ImR_Activator
 can be run on one host. The ImR_Activator is not exposed at all to the
 application. Only the ImplRepo_Service needs to and it is the only one that
 can contact the ImR_Activator.
 
-	An instance of ImR_Activator first registers itself with the
+  An instance of ImR_Activator first registers itself with the
 ImplRepo_Service so that it can begin to receive requests. When registering
 with the ImplRepo_Service, it passes the hostname where it is being run and
 its IOR to the ImplRepo_Service. And, the ImplRepo_Service reaches it using the
 same information.
 
-The Commandline paramters that are valid for ImR_Activator are
+The Commandline parameters that are valid for ImR_Activator are
 
--c:	     Run the Service command.
+-c:          Run the Service command.
 -d:number    Debug Information
--l	     lock the database.
--o 	     Generate the IOR to a file (just in case some one wants
-	     to read the IOR)
--r	     Enable Win32 regsitry implementation.
--s	     Run as a service.
--t 	     Set a timeout value.
--h 	     Prints the help.
+-l           lock the database.
+-o           Generate the IOR to a file (just in case some one wants to read the
+             IOR)
+-r           Enable Win32 regsitry implementation.
+-s           Run as a service.
+-t           Set a timeout value.
+-h           Prints the help.
 
         When Persistence of an ImR_Activator is required, we will save
 the information about the server's that this ImR_Activator is related
@@ -227,44 +308,44 @@ information about each server include its startup options, location,
 working directory which are needed to execute the requests that can
 passed by tao_imr with regards to the server.
 
-	There are two ways in which you can store data in the
+        There are two ways in which you can store data in the
 file. One way is to use ACE_Configuration_Heap to save all
 the information to the file. To do this, we have to pass the '-p' option.
 
--p	     Pass the ImplRepo service a filename to use for the
+-p      Pass the ImplRepo service a filename to use for the
              backing store. Uses ACE_Configuration_Heap.
 
-	The second way is to save in XML-ized format.
+  The second way is to save in XML-ized format.
 
--x	     Pass the filename where the repository information should
+-x      Pass the filename where the repository information should
              be saved. Use XML format.
 
 
 @subsection work So how does the whole thing work?
 
-	The first thing to do is to have an ImplRepo_Service running. Once
+  The first thing to do is to have an ImplRepo_Service running. Once
 the ImplRepo_Service is running, we can instantiate one or more ImR_Activators
 as needed per the application. As mentioned already, the
 ImR_Activators, upon instantiation, register with the ImplRepo_Service to
 be able to receive requests.
 
-	When a new server has to be added or any change has to the
+  When a new server has to be added or any change has to the
 done to an existing server, a request is to be sent to the ImplRepo_Service
 via the tao_imr utility. Startup commands, the working directory, the
 host where the server should be started up and such other information
-are passed to the ImplRepo_Service via the TAO_ImR commandline arguments.
+are passed to the ImplRepo_Service via the TAO_ImR command line arguments.
 
-	If the host where the server should be started up is passed
+  If the host where the server should be started up is passed
 while adding a new server, the ImplRepo_Service chooses the ImR_Activator
 that is running on that host to be responsible for the server's
 activities. Otherwise, an ImR_Activator is chosen based on the Round
 robin algorithm. We plan to use better algorithms based on the
 existing load for the same purpose in future. Whatever way the
 ImR_Activator is chosen for a server, once an ImR_Activator is chosen,
-that ImR_Activator remains reponsible for the server throughout the
+that ImR_Activator remains responsible for the server throughout the
 server's lifetime.
 
-	After an ImR_Activator is chosen, the ImplRepo_Service passes the
+  After an ImR_Activator is chosen, the ImplRepo_Service passes the
 request to the chosen ImR_Activator. The ImR_Activator acts on the request
 and updates its database to reflect the new state of the server.
 
@@ -459,13 +540,13 @@ registered to it each time it starts up. The way to accomplish this is to add<br
  to the ImR_Activator's startup command line. The host
 name can be obtained portably in C++ code with the lines<br>
 
-	ACE_INET_addr ad;<br>
-	char *hostname = ad.get_host_name ();<br>
+  ACE_INET_addr ad;<br>
+  char *hostname = ad.get_host_name ();<br>
 
 or in a Perl script by adding<br>
 
-	use Sys::Hostname;<br>
-	$hostname = hostname();<br>
+  use Sys::Hostname;<br>
+  $hostname = hostname();<br>
 
 There are even specific port numbers, assigned to the OMG by the IANA,
 which can be used for this purpose. They are 683 (for IIOP) and 684
@@ -574,7 +655,7 @@ balance.
 
 <b>.</b> The added step that you would have to now do is run the
 ImR_Activator. You can just run one instance of it to get the same
-behaviour as you were getting before.
+behavior as you were getting before.
 
 If you run the ImplRepo_Service in multicast mode, the
 ImR_Activator will be able to get access to it via
@@ -588,3 +669,4 @@ now be passed to the ImR_Activator since that is the one that is
 dealing with the database.
 
 */
+

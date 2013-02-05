@@ -2,12 +2,17 @@
 
 #include "orbsvcs/Naming/Naming_Server.h"
 #include "orbsvcs/Naming/Transient_Naming_Context.h"
+#include "orbsvcs/Naming/Persistent_Naming_Context_Factory.h"
+#include "orbsvcs/Naming/Storable_Naming_Context_Factory.h"
+
 
 #if !defined (CORBA_E_MICRO)
 #include "orbsvcs/Naming/Persistent_Context_Index.h"
 #include "orbsvcs/Naming/Storable_Naming_Context.h"
 #include "orbsvcs/Naming/Storable_Naming_Context_Activator.h"
-#include "orbsvcs/Naming/Flat_File_Persistence.h"
+
+#include "tao/Storable_FlatFileStream.h"
+
 #endif /* CORBA_E_MICRO */
 
 #include "orbsvcs/CosNamingC.h"
@@ -269,6 +274,7 @@ TAO_Naming_Server::parse_args (int argc,
                            ACE_TEXT ("-p <pid_file_name> ")
                            ACE_TEXT ("-s <context_size> ")
                            ACE_TEXT ("-b <base_address> ")
+                           ACE_TEXT ("-u <persistence dir name> ")
                            ACE_TEXT ("-m <1=enable multicast, 0=disable multicast(default) ")
                            ACE_TEXT ("%s")
                            ACE_TEXT ("-z <relative round trip timeout> ")
@@ -419,10 +425,12 @@ TAO_Naming_Server::init_with_orb (int argc,
       return -1;
     }
 
+  // If an ior file name was provided on command line
   if (this->ior_file_name_ != 0)
     {
-      FILE *iorf = ACE_OS::fopen (this->ior_file_name_, ACE_TEXT("w"));
-      if (iorf == 0)
+      CORBA::String_var ns_ior = this->naming_service_ior ();
+      if (this->write_ior_to_file (ns_ior.in (),
+                                   this->ior_file_name_) != 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT("Unable to open %s for writing:(%u) %p\n"),
@@ -431,11 +439,6 @@ TAO_Naming_Server::init_with_orb (int argc,
                              ACE_TEXT("TAO_Naming_Server::init_with_orb")),
                             -1);
         }
-
-      CORBA::String_var str = this->naming_service_ior ();
-
-      ACE_OS::fprintf (iorf, "%s\n", str.in ());
-      ACE_OS::fclose (iorf);
     }
 
   if (this->pid_file_name_ != 0)
@@ -476,9 +479,18 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
           // In lieu of a fully implemented service configurator version
           // of this Reader and Writer, let's just take something off the
           // command line for now.
-          TAO_Naming_Service_Persistence_Factory* pf = 0;
-          ACE_NEW_RETURN(pf, TAO_NS_FlatFileFactory, -1);
-          auto_ptr<TAO_Naming_Service_Persistence_Factory> persFactory(pf);
+          TAO::Storable_Factory* pf = 0;
+          ACE_NEW_RETURN (pf, TAO::Storable_FlatFileFactory(persistence_location), -1);
+          auto_ptr<TAO::Storable_Factory> persFactory(pf);
+
+          // Use an auto_ptr to ensure that we clean up the factory in the case
+          // of a failure in creating and registering the Activator.
+          TAO_Storable_Naming_Context_Factory* cf =
+            this->storable_naming_context_factory (context_size);
+          // Make sure we got a factory
+          if (cf == 0) return -1;
+          auto_ptr<TAO_Storable_Naming_Context_Factory> contextFactory (cf);
+
           // This instance will either get deleted after recreate all or,
           // in the case of a servant activator's use, on destruction of the
           // activator.
@@ -487,7 +499,7 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
           if (persistence_location == 0)
             {
               // No, assign the default location "NameService"
-              persistence_location = ACE_TEXT("NameService");
+              persistence_location = ACE_TEXT  ("NameService");
             }
 
           // Now make sure this directory exists
@@ -502,34 +514,70 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
               ACE_NEW_THROW_EX (this->servant_activator_,
                                 TAO_Storable_Naming_Context_Activator (orb,
                                                                        persFactory.get(),
-                                                                       persistence_location,
-                                                                       context_size),
+                                                                       contextFactory.get (),
+                                                                       persistence_location),
                                 CORBA::NO_MEMORY ());
               this->ns_poa_->set_servant_manager(this->servant_activator_);
             }
 #endif /* TAO_HAS_MINIMUM_POA */
+          try {  // The following might throw an exception.
+            this->naming_context_ =
+              TAO_Storable_Naming_Context::recreate_all (orb,
+              poa,
+              TAO_ROOT_NAMING_CONTEXT,
+              context_size,
+              0,
+              contextFactory.get (),
+              persFactory.get (),
+              use_redundancy_);
+          }
+          catch (const CORBA::Exception& ex)
+          {
+            // The activator already took over the factories so we need to release the auto_ptr
+            if (this->use_servant_activator_)
+            {
+              // The context factory is now owned by the activator
+              // so we should release it
+              contextFactory.release ();
+              // If using a servant activator, the activator now owns the
+              // factory, so we should release it
+              persFactory.release ();
+            }
+            // Print out the exception and return failure
+            ex._tao_print_exception (
+              "TAO_Naming_Server::init_new_naming");
+            return -1;
+          }
 
-          this->naming_context_ =
-            TAO_Storable_Naming_Context::recreate_all (orb,
-                                                       poa,
-                                                       TAO_ROOT_NAMING_CONTEXT,
-                                                       context_size,
-                                                       0,
-                                                       persFactory.get(),
-                                                       persistence_location,
-                                                       use_redundancy_);
+        // Kind of a duplicate of the above here, but we must also release the
+        // factory autoptrs in the good case as well.
+        if (this->use_servant_activator_)
+            {
+              // The context factory is now owned by the activator
+              // so we should release it
+              contextFactory.release ();
+              // If using a servant activator, the activator now owns the
+              // factory, so we should release it
+              persFactory.release ();
+            }
 
-          if (this->use_servant_activator_)
-            persFactory.release();
-        }
+      }
       else if (persistence_location != 0)
         //
         // Initialize Persistent Naming Service.
         //
         {
+
+          // Create Naming Context Implementation Factory to be used for the creation of
+          // naming contexts by the TAO_Persistent_Context_Index
+          TAO_Persistent_Naming_Context_Factory *naming_context_factory =
+            this->persistent_naming_context_factory ();
+          // Make sure we got a factory.
+          if (naming_context_factory == 0) return -1;
+
           // Allocate and initialize Persistent Context Index.
           ACE_NEW_RETURN (this->context_index_,
-                          TAO_Persistent_Context_Index (orb, poa),
+                          TAO_Persistent_Context_Index (orb, poa, naming_context_factory),
                           -1);
 
           if (this->context_index_->open (persistence_location,
@@ -706,6 +754,51 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
 }
 
 int
+TAO_Naming_Server::write_ior_to_file (const char* ior_string,
+                                      const char* file_name)
+{
+  if ((file_name != 0) &&
+      (ior_string != 0))
+    {
+      FILE *iorf = ACE_OS::fopen (file_name, ACE_TEXT("w"));
+      if (iorf == 0)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT("Unable to open %s for writing:(%u) %p\n"),
+                             file_name,
+                             ACE_ERRNO_GET,
+                             ACE_TEXT("Naming_Server::write_ior_to_file")),
+                            -1);
+        }
+
+      ACE_OS::fprintf (iorf, "%s\n", ior_string);
+      ACE_OS::fclose (iorf);
+    }
+  else
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Invalid file name or IOR string provided")
+                         ACE_TEXT ("to TAO_Naming_Server::write_ior_to_file\n")),
+                        -1);
+
+    }
+
+  return 0;
+}
+
+TAO_Storable_Naming_Context_Factory *
+TAO_Naming_Server::storable_naming_context_factory (size_t context_size)
+{
+  return new (ACE_nothrow) TAO_Storable_Naming_Context_Factory (context_size);
+}
+
+TAO_Persistent_Naming_Context_Factory *
+TAO_Naming_Server::persistent_naming_context_factory (void)
+{
+  return new (ACE_nothrow) TAO_Persistent_Naming_Context_Factory;
+}
+
+int
 TAO_Naming_Server::fini (void)
 {
   // First get rid of the multi cast handler
@@ -773,12 +866,17 @@ TAO_Naming_Server::operator-> (void) const
   return this->naming_context_.ptr ();
 }
 
+
 TAO_Naming_Server::~TAO_Naming_Server (void)
 {
 #if (TAO_HAS_MINIMUM_POA == 0) && \
     !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
-  if (this->use_servant_activator_)
-    delete this->servant_activator_;
+  if (this->use_servant_activator_ &&
+      this->servant_activator_)
+    {
+      // Activator is reference counted. Don't delete it directly.
+      this->servant_activator_->_remove_ref ();
+    }
 #endif /* TAO_HAS_MINIMUM_POA */
 }
 

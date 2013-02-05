@@ -9,14 +9,8 @@
 
 PeerNode::PeerNode (long h, PeerProcess *p)
   :handle_ (h),
-   peer_ (p),
-   closed_ (false)
+   peer_ (p)
 {
-}
-
-PeerNode::~PeerNode (void)
-{
-  delete peer_;
 }
 
 HostProcess::HostProcess (const ACE_CString &src, long pid)
@@ -39,24 +33,15 @@ HostProcess::~HostProcess (void)
     {
       delete reinterpret_cast<Thread *>(i.next()->item_);
     }
-
-  for (PeerArray::ITERATOR i(this->by_handle_); !i.done(); i++)
+#if 0
+  for (PeerProcs::ITERATOR i = by_addr_.begin(); i != servers_.end(); i++)
     {
-      ACE_DLList_Node *entry;
+      PeerProcs::ENTRY *entry;
       if (i.next(entry) == 0)
         break;
-      //i.remove ();
-
-      PeerNode *node = reinterpret_cast<PeerNode*>(entry->item_);
-      PeerProcess *pp = node->peer_;
-      const ACE_CString &addr = pp->is_server() ?
-        pp->server_addr() : pp->last_client_addr();
-      this->by_addr_.unbind (addr);
-      delete node;
+      delete entry->item();
     }
-
-  this->by_addr_.close();
-
+#endif
 }
 
 void
@@ -72,7 +57,7 @@ HostProcess::proc_name (void) const
 }
 
 Thread *
-HostProcess::find_thread (long tid)
+HostProcess::find_thread (long tid, size_t offset)
 {
   Thread *thr = 0;
   for (ACE_DLList_Iterator<Thread> i(threads_);
@@ -86,9 +71,28 @@ HostProcess::find_thread (long tid)
   char alias[20];
   ACE_OS::sprintf (alias,"Thread[" ACE_SIZE_T_FORMAT_SPECIFIER_ASCII "]",
                    this->threads_.size() + 1);
-  thr = new Thread (tid, alias);
+  thr = new Thread (tid, alias, offset);
   threads_.insert_tail (thr);
   return thr;
+}
+
+Thread *
+HostProcess::find_thread_for_peer (const ACE_CString &addr, Session &session)
+{
+  Thread *thr = 0;
+  for (ACE_DLList_Iterator<Thread> i(threads_);
+       !i.done();
+       i.advance())
+    {
+      i.next(thr);
+      PeerProcess *pp = thr->pending_peer();
+      if (pp == 0)
+        continue;
+
+      if (pp->match_server_addr(addr, session))
+        return thr;
+    }
+  return 0;
 }
 
 Thread *
@@ -115,8 +119,8 @@ HostProcess::find_peer (const ACE_CString &addr)
   return pp;
 }
 
-PeerNode *
-HostProcess::find_peer_i (long h)
+PeerProcess *
+HostProcess::find_peer (long h)
 {
   if (this->by_handle_.size() == 0)
     return 0;
@@ -126,19 +130,8 @@ HostProcess::find_peer_i (long h)
     {
       PeerNode *node = reinterpret_cast<PeerNode *>(i.next()->item_);
       if (node->handle_ == h)
-        return node;
+        return node->peer_;
     }
-
-  return 0;
-}
-
-
-PeerProcess *
-HostProcess::find_peer (long h, bool ignore_closed)
-{
-  PeerNode *node = this->find_peer_i (h);
-  if (node != 0 && !(ignore_closed && node->closed_) )
-    return node->peer_;
   return 0;
 }
 
@@ -181,8 +174,8 @@ void
 HostProcess::add_peer(long handle, PeerProcess *peer)
 {
   peer->set_owner (this);
-  PeerNode *node = this->find_peer_i(handle);
-  if (node != 0 && !node->closed_ )
+  PeerProcess *existing = this->find_peer(handle);
+  if (existing != 0)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "add_peer, found existing for %d\n",
@@ -190,29 +183,16 @@ HostProcess::add_peer(long handle, PeerProcess *peer)
     }
   const ACE_CString &addr = peer->is_server() ?
     peer->server_addr() : peer->last_client_addr();
-  errno = 0;
-
   int result = this->by_addr_.bind (addr,peer);
-  if (result == -1)
-    {
-      ACE_ERROR ((LM_ERROR,"add_peer, cannot bind handle %d to addr %s %p\n",
-                  handle, addr.c_str(), "by_addr_.bind"));
-    }
+  if (result < 0)
+    ACE_ERROR ((LM_ERROR,"add_peer, cannot bind to addr %s result = %d,  %p\n", addr.c_str(), result, "by_addr_.bind"));
 
-  if (node == 0)
-    {
-      node = new PeerNode (handle,peer);
-      this->by_handle_.insert_tail(node);
-    }
-  else
-    {
-      node->closed_ = false;
-      node->peer_ = peer;
-    }
+  PeerNode *node = new PeerNode (handle,peer);
+  this->by_handle_.insert_tail(node);
 }
 
 void
-HostProcess::close_peer(long h)
+HostProcess::remove_peer(long h)
 {
   if (this->by_handle_.size() == 0)
     return;
@@ -223,7 +203,7 @@ HostProcess::close_peer(long h)
       PeerNode *node = reinterpret_cast<PeerNode *>(i.next()->item_);
       if (node->handle_ == h)
         {
-          node->closed_ = true;
+          this->by_handle_.remove(i.next());
           return;
         }
     }
@@ -273,7 +253,11 @@ HostProcess::dump_ident (ostream &strm, const char *message)
 void
 HostProcess::dump_thread_detail (ostream &strm)
 {
-  this->dump_ident (strm, " thread details:");
+  this->dump_ident (strm, "thread details:");
+  long total_sent = 0;
+  long total_recv = 0;
+  size_t total_bytes_sent = 0;
+  size_t total_bytes_recv = 0;
   for (ACE_DLList_Iterator <Thread> t_iter (this->threads_);
        !t_iter.done();
        t_iter.advance())
@@ -281,13 +265,16 @@ HostProcess::dump_thread_detail (ostream &strm)
       Thread *thr = 0;
       t_iter.next(thr);
       thr->dump_detail (strm);
+      thr->get_summary (total_recv, total_sent, total_bytes_recv, total_bytes_sent);
     }
+  strm << "Total requests sent: " << total_sent << " received: " << total_recv << endl;
+  strm << "Total requests bytes sent: " << total_bytes_sent << " received: " << total_bytes_recv << endl;
 }
 
 void
 HostProcess::dump_thread_invocations (ostream &strm)
 {
-  this->dump_ident (strm, " invocations by thread:");
+  this->dump_ident (strm, "invocations by thread:");
   for (ACE_DLList_Iterator <Thread> t_iter (this->threads_);
        !t_iter.done();
        t_iter.advance())
@@ -345,7 +332,7 @@ HostProcess::iterate_peers (int group,
 void
 HostProcess::dump_peer_detail (ostream &strm)
 {
-  this->dump_ident (strm, " peer processes:");
+  this->dump_ident (strm, "peer processes:");
   size_t num_servers = 0;
   size_t num_clients = 0;
   strm << " total peers: " << this->by_addr_.current_size() << endl;
@@ -372,16 +359,16 @@ HostProcess::dump_peer_detail (ostream &strm)
 void
 HostProcess::dump_object_detail (ostream &strm)
 {
-  this->dump_ident (strm, " peer objects: ");
+  this->dump_ident (strm, "peer objects: ");
   this->iterate_peers (3, 1, &strm);
 }
 
 void
 HostProcess::dump_invocation_detail(ostream &strm)
 {
-  this->dump_ident (strm, " invocations: ");
+  this->dump_ident (strm, "invocations: ");
   this->iterate_peers (3, 2, &strm);
-  this->dump_ident (strm, " end invocation report");
+  this->dump_ident (strm, "end invocation report");
 }
 
 void
