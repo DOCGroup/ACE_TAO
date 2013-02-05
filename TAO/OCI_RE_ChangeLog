@@ -1,3 +1,11 @@
+Tue Feb  5 17:10:58 UTC 2013  "Kevin Stanley"  <stanleyk@ociweb.com>
+
+        * TAO_IDL/be/be_enum.cpp:
+        * TAO_IDL/be/be_visitor_enum/enum_cs.cpp:
+
+          Merged additional changes from trunk in preparation for merge. The
+          above files had changes.
+          
 Tue Feb  5 17:00:14 UTC 2013  "Kevin Stanley"  <stanleyk@ociweb.com>
 
         * bin/tao_orb_tests.lst:
@@ -8,9 +16,9 @@ Tue Feb  5 17:00:14 UTC 2013  "Kevin Stanley"  <stanleyk@ociweb.com>
         * tao/GIOP_Message_Base.cpp:
         * tests/Bug_4082_Regression/run_test.pl:
 
-          Merged changes from trunk in preparation for merge. The 
+          Merged changes from trunk in preparation for merge. The
           above files had changes.
-          
+
 Mon Feb  4 22:57:48 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
 
         * orbsvcs/Naming_Service/FT_Naming_Service.h:

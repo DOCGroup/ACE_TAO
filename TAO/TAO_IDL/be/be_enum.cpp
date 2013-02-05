@@ -59,13 +59,18 @@ be_enum::gen_ostream_operator (TAO_OutStream *os,
       << "switch (_tao_enumerator)" << be_idt_nl
       << "{" << be_idt_nl;
 
-  for (int i = 0; i < this->member_count (); ++i)
-    {
-      UTL_ScopedName *mname =
-        this->value_to_name (static_cast<unsigned long> (i));
+  // The enum's type name itself is not part of the scope of the
+  // enum values. If the enum is defined at global scope, this will
+  // produce an empty string when streamed to the output file.
+  UTL_ScopedName *s = ScopeAsDecl (this->defined_in ())->name ();
 
-      *os << "case " << mname << ": return strm << \""
-          << mname << "\";" << be_nl;
+  for (UTL_ScopeActiveIterator i (this, IK_decls); !i.is_done (); i.next ())
+    {
+      Identifier *id = i.item ()->local_name ();
+
+      *os << "case " << s << "::" << id
+          << ": return strm << \"" << s << "::" << id
+          << "\";" << be_nl;
     }
 
   *os << "default: return strm;" << be_uidt_nl

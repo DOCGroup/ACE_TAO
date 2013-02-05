@@ -1,3 +1,14 @@
+Tue Feb  5 16:21:20 UTC 2013  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_enum.cpp (gen_ostream_operator):
+
+          Fixed generation of enum value scoped name for ostreams
+          when the enum is nested. Closes [BUGID 4090].
+
+        * TAO_IDL/be/be_visitor_enum/enum_cs.cpp:
+
+          Cosmetic changes.
+
 Tue Feb  5 13:46:00 UTC 2013  Simon Massey  <simon.massey@prismtech.com>
 
         * docs/Options.html:
