@@ -1,3 +1,30 @@
+Mon Feb  4 08:58:35 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * protocols/ace/INet/inet.mpc:
+        * protocols/ace/INet/FTP_Simple_exec.cpp:
+        * protocols/ace/INet/HTTP_Simple_exec.cpp:
+        * protocols/examples/INet/FTP_Simple_exec.cpp:
+        * protocols/examples/INet/HTTP_Simple_exec.cpp:
+        * protocols/examples/INet/inet.mpc:
+          Moved INet examples out of the ace/INet directory and into
+          a new example directory
+
+Sat Feb  2 19:08:18 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Auto_Event.h:
+          Layout changes
+
+Thu Jan 31 19:21:31 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/CDR_Test.cpp:
+          Test CDR_Size::write_boolean_array, according to Coverity
+          this method was not tested
+
+Wed Jan 30 11:58:00 UTC 2013  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * bin/valgrind.supp:
+          Add a supression for a faulty system zlib.
+
 Mon Jan 28 23:33:25 UTC 2013  Adam Mitz  <mitza@ociweb.com>
 
         * include/makeinclude/platform_sunos5_g++.GNU:

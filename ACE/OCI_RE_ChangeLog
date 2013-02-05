@@ -1,3 +1,16 @@
+Tue Feb  5 17:01:48 UTC 2013  "Kevin Stanley"  <stanleyk@ociweb.com>
+
+        * ace/Auto_Event.h:
+        * bin/valgrind.supp:
+        * protocols/ace/INet/inet.mpc:
+        * protocols/examples/INet:
+        * tests/CDR_Test.cpp:
+        * protocols/ace/INet/FTP_Simple_exec.cpp:
+        * protocols/ace/INet/HTTP_Simple_exec.cpp:
+
+          Merged changes from trunk in preparation for merge. The 
+          above files had changes.
+
 Thu Jan 31 22:39:53 UTC 2013  Phillip LaBanca  <labancap@ociweb.com>
 
         * ace/Message_Block.cpp:
