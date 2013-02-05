@@ -29,11 +29,12 @@ Options::Options ()
 , debug_ (1)
 , multicast_ (false)
 , service_ (false)
-, ping_interval_(DEFAULT_PING_INTERVAL)
-, startup_timeout_(DEFAULT_START_TIMEOUT)
+, ping_interval_ (DEFAULT_PING_INTERVAL)
+, startup_timeout_ (DEFAULT_START_TIMEOUT)
 , readonly_ (false)
-, service_command_(SC_NONE)
+, service_command_ (SC_NONE)
 , unregister_if_address_reused_ (false)
+, imr_type_ (STANDALONE_IMR)
 {
 }
 
@@ -57,18 +58,21 @@ Options::parse_args (int &argc, ACE_TCHAR *argv[])
             }
 
           if (ACE_OS::strcasecmp (shifter.get_current (),
-                                   ACE_TEXT ("install")) == 0)
+                                  ACE_TEXT ("install")) == 0)
             {
               this->service_command_ = SC_INSTALL;
             }
           else if (ACE_OS::strcasecmp (shifter.get_current (),
-                                   ACE_TEXT ("remove")) == 0)
+                                       ACE_TEXT ("remove")) == 0)
             {
               this->service_command_ = SC_REMOVE;
             }
           else
             {
-              ACE_ERROR((LM_ERROR, "Error: Unknown service command : %s\n", shifter.get_current()));
+              ACE_ERROR ((
+                LM_ERROR,
+                ACE_TEXT ("Error: Unknown service command : %s\n"),
+                shifter.get_current ()));
               this->print_usage ();
               return -1;
             }
@@ -165,6 +169,38 @@ Options::parse_args (int &argc, ACE_TCHAR *argv[])
           this->repo_mode_ = REPO_XML_FILE;
         }
       else if (ACE_OS::strcasecmp (shifter.get_current (),
+                                   ACE_TEXT ("--primary")) == 0)
+        {
+          this->imr_type_ = PRIMARY_IMR;
+        }
+      else if (ACE_OS::strcasecmp (shifter.get_current (),
+                                   ACE_TEXT ("--backup")) == 0)
+        {
+          this->imr_type_ = BACKUP_IMR;
+        }
+      else if (ACE_OS::strcasecmp (shifter.get_current (),
+                                   ACE_TEXT ("--directory")) == 0)
+        {
+          shifter.consume_arg ();
+
+          if (!shifter.is_anything_left () || shifter.get_current ()[0] == '-')
+            {
+              ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("Error: --directory option needs a filename\n")));
+              this->print_usage ();
+              return -1;
+            }
+
+          this->persist_file_name_ = shifter.get_current ();
+          this->repo_mode_ = REPO_SHARED_FILES;
+
+          if (this->persist_file_name_.length() &&
+              this->persist_file_name_[this->persist_file_name_.length() - 1] != '/')
+            {
+              this->persist_file_name_ += '/';
+            }
+        }
+      else if (ACE_OS::strcasecmp (shifter.get_current (),
                                    ACE_TEXT ("-e")) == 0)
         {
           this->erase_repo_ = true;
@@ -176,7 +212,8 @@ Options::parse_args (int &argc, ACE_TCHAR *argv[])
 
           if (!shifter.is_anything_left () || shifter.get_current ()[0] == '-')
             {
-              ACE_ERROR ((LM_ERROR, "Error: -t option needs a value\n"));
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("Error: -t option needs a value\n")));
               this->print_usage ();
               return -1;
             }
@@ -190,7 +227,8 @@ Options::parse_args (int &argc, ACE_TCHAR *argv[])
 
           if (!shifter.is_anything_left () || shifter.get_current ()[0] == '-')
             {
-              ACE_ERROR ((LM_ERROR, "Error: -v option needs a value\n"));
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("Error: -v option needs a value\n")));
               this->print_usage ();
               return -1;
             }
@@ -239,20 +277,27 @@ void
 Options::print_usage (void) const
 {
   ACE_ERROR ((LM_ERROR,
-              "Usage:\n"
-              "\n"
-              "ImplRepo_Service [-c cmd] [-d 0|1|2] [-m] [-o file]\n"
-              " [-r|-p file|-x file] [-s] [-t secs] [-v secs]\n"
-              "  -c command  Runs nt service commands ('install' or 'remove')\n"
-              "  -d level    Sets the debug level (default 1)\n"
-              "  -l          Lock the database\n"
-              "  -m          Turn on multicast\n"
-              "  -o file     Outputs the ImR's IOR to a file\n"
-              "  -p file     Use file for storing/loading settings\n"
-              "  -x file     Use XML file for storing/loading setting\n"
-              "  -r          Use the registry for storing/loading settings\n"
-              "  -t secs     Server startup timeout.(Default=60s)\n"
-              "  -v msecs     Server verification interval.(Default=10s)\n"
+    ACE_TEXT ("Usage:\n")
+    ACE_TEXT ("\n")
+    ACE_TEXT ("ImplRepo_Service [-c cmd] [-d 0|1|2] [-e] [-m] [-o file]\n")
+    ACE_TEXT (" [-r|-p file|-x file|--directory dir [--primary|--backup] ]\n")
+    ACE_TEXT (" [-s] [-t secs] [-v secs]\n")
+    ACE_TEXT ("  -c command      Runs nt service commands ('install' or 'remove')\n")
+    ACE_TEXT ("  -d level        Sets the debug level (default 1)\n")
+    ACE_TEXT ("  -e              Erase the persisted repository at startup\n")
+    ACE_TEXT ("  -l              Lock the database\n")
+    ACE_TEXT ("  -m              Turn on multicast\n")
+    ACE_TEXT ("  -o file         Outputs the ImR's IOR to a file\n")
+    ACE_TEXT ("  -p file         Use file for storing/loading settings\n")
+    ACE_TEXT ("  -x file         Use XML file for storing/loading settings\n")
+    ACE_TEXT ("  --directory dir Use individual XML files for storing/loading\n")
+    ACE_TEXT ("                  settings in the provided directory\n")
+    ACE_TEXT ("  --primary       Replicate the ImplRepo as the primary ImR\n")
+    ACE_TEXT ("  --backup        Replicate the ImplRepo as the backup ImR\n")
+    ACE_TEXT ("  -r              Use the registry for storing/loading settings\n")
+    ACE_TEXT ("  -s              Run as a service\n")
+    ACE_TEXT ("  -t secs         Server startup timeout.(Default=60s)\n")
+    ACE_TEXT ("  -v msecs        Server verification interval.(Default=10s)\n")
               ));
 }
 
@@ -265,7 +310,7 @@ Options::save_registry_options ()
   LONG err = ACE_TEXT_RegCreateKeyEx (SERVICE_REG_ROOT,
                              SERVICE_REG_PATH,
                              0,
-                             const_cast<ACE_TCHAR*> (ACE_TEXT("")), // class
+                             const_cast<ACE_TCHAR*> (ACE_TEXT ("")), // class
                              REG_OPTION_NON_VOLATILE,
                              KEY_ALL_ACCESS,
                              0,
@@ -276,45 +321,49 @@ Options::save_registry_options ()
     {
       return -1;
     }
-  err = ACE_TEXT_RegSetValueEx (key, ACE_TEXT("ORBInitOptions"), 0, REG_SZ,
+  err = ACE_TEXT_RegSetValueEx (key, ACE_TEXT ("ORBInitOptions"), 0, REG_SZ,
     (LPBYTE) this->cmdline_.c_str (), this->cmdline_.length () + 1);
   ACE_ASSERT (err == ERROR_SUCCESS);
 
-  err = ACE_TEXT_RegSetValueEx (key, ACE_TEXT("IORFile"), 0, REG_SZ,
+  err = ACE_TEXT_RegSetValueEx (key, ACE_TEXT ("IORFile"), 0, REG_SZ,
     (LPBYTE) ior_output_file_.c_str (), ior_output_file_.length () + 1);
   ACE_ASSERT (err == ERROR_SUCCESS);
 
-  err = ACE_TEXT_RegSetValueEx (key, ACE_TEXT("DebugLevel"), 0, REG_DWORD,
+  err = ACE_TEXT_RegSetValueEx (key, ACE_TEXT ("DebugLevel"), 0, REG_DWORD,
     (LPBYTE) &debug_ , sizeof (debug_));
   ACE_ASSERT(err == ERROR_SUCCESS);
 
-  err = ACE_TEXT_RegSetValueEx (key, ACE_TEXT("PersistFile"), 0, REG_SZ,
+  err = ACE_TEXT_RegSetValueEx (key, ACE_TEXT ("PersistFile"), 0, REG_SZ,
     (LPBYTE) this->persist_file_name_.c_str (), this->persist_file_name_.length () + 1);
   ACE_ASSERT (err == ERROR_SUCCESS);
 
   DWORD tmp = this->ping_interval_.msec ();
-  err = ACE_TEXT_RegSetValueEx (key, ACE_TEXT("PingInterval"), 0, REG_DWORD,
+  err = ACE_TEXT_RegSetValueEx (key, ACE_TEXT ("PingInterval"), 0, REG_DWORD,
     (LPBYTE) &tmp, sizeof (DWORD));
   ACE_ASSERT (err == ERROR_SUCCESS);
 
   tmp = this->readonly_ ? 1 : 0;
-  err = ACE_TEXT_RegSetValueEx (key, ACE_TEXT("Lock"), 0, REG_DWORD,
+  err = ACE_TEXT_RegSetValueEx (key, ACE_TEXT ("Lock"), 0, REG_DWORD,
     (LPBYTE) &tmp, sizeof (DWORD));
   ACE_ASSERT (err == ERROR_SUCCESS);
 
   tmp = this->repo_mode_;
-  err = ACE_TEXT_RegSetValueEx (key, ACE_TEXT("PersistType"), 0, REG_DWORD,
+  err = ACE_TEXT_RegSetValueEx (key, ACE_TEXT ("PersistType"), 0, REG_DWORD,
     (LPBYTE) &tmp, sizeof (DWORD));
   ACE_ASSERT (err == ERROR_SUCCESS);
 
   tmp = static_cast<DWORD> (this->startup_timeout_.sec());
-  err = ACE_TEXT_RegSetValueEx (key, ACE_TEXT("Timeout"), 0, REG_DWORD,
+  err = ACE_TEXT_RegSetValueEx (key, ACE_TEXT ("Timeout"), 0, REG_DWORD,
     (LPBYTE) &tmp, sizeof (DWORD));
   ACE_ASSERT (err == ERROR_SUCCESS);
 
-  tmp = multicast_ ? 1 : 0;
-  err = ACE_TEXT_RegSetValueEx (key, ACE_TEXT("Multicast"), 0, REG_DWORD,
+  tmp = this->multicast_ ? 1 : 0;
+  err = ACE_TEXT_RegSetValueEx (key, ACE_TEXT ("Multicast"), 0, REG_DWORD,
     (LPBYTE) &tmp, sizeof (DWORD));
+  ACE_ASSERT (err == ERROR_SUCCESS);
+
+  err = ACE_TEXT_RegSetValueEx (key, ACE_TEXT ("ImrType"), 0, REG_DWORD,
+    (LPBYTE) &this->imr_type_ , sizeof (this->imr_type_));
   ACE_ASSERT (err == ERROR_SUCCESS);
 
   err = ::RegCloseKey (key);
@@ -343,7 +392,7 @@ Options::load_registry_options ()
   ACE_TCHAR tmpstr[4096];
   DWORD sz = sizeof (tmpstr);
   DWORD type = 0;
-  err = ACE_TEXT_RegQueryValueEx (key, ACE_TEXT("ORBInitOptions"), 0, &type,
+  err = ACE_TEXT_RegQueryValueEx (key, ACE_TEXT ("ORBInitOptions"), 0, &type,
     (LPBYTE) tmpstr, &sz);
   if (err == ERROR_SUCCESS)
     {
@@ -353,7 +402,7 @@ Options::load_registry_options ()
     }
 
   sz = sizeof(tmpstr);
-  err = ACE_TEXT_RegQueryValueEx (key, ACE_TEXT("IORFile"), 0, &type,
+  err = ACE_TEXT_RegQueryValueEx (key, ACE_TEXT ("IORFile"), 0, &type,
     (LPBYTE) tmpstr, &sz);
   if (err == ERROR_SUCCESS)
     {
@@ -363,7 +412,7 @@ Options::load_registry_options ()
     }
 
   sz = sizeof(debug_);
-  err = ACE_TEXT_RegQueryValueEx (key, ACE_TEXT("DebugLevel"), 0, &type,
+  err = ACE_TEXT_RegQueryValueEx (key, ACE_TEXT ("DebugLevel"), 0, &type,
     (LPBYTE) &this->debug_ , &sz);
   if (err == ERROR_SUCCESS)
     {
@@ -372,7 +421,7 @@ Options::load_registry_options ()
 
   DWORD tmp = 0;
   sz = sizeof(tmp);
-  err = ACE_TEXT_RegQueryValueEx (key, ACE_TEXT("PingInterval"), 0, &type,
+  err = ACE_TEXT_RegQueryValueEx (key, ACE_TEXT ("PingInterval"), 0, &type,
     (LPBYTE) &tmp, &sz);
   if (err == ERROR_SUCCESS)
     {
@@ -382,7 +431,7 @@ Options::load_registry_options ()
 
   tmp = 0;
   sz = sizeof(tmp);
-  err = ACE_TEXT_RegQueryValueEx (key, ACE_TEXT("Lock"), 0, &type,
+  err = ACE_TEXT_RegQueryValueEx (key, ACE_TEXT ("Lock"), 0, &type,
     (LPBYTE) &tmp, &sz);
   if (err == ERROR_SUCCESS)
     {
@@ -391,7 +440,7 @@ Options::load_registry_options ()
     }
 
   sz = sizeof(this->repo_mode_);
-  err = ACE_TEXT_RegQueryValueEx (key, ACE_TEXT("PersistType"), 0, &type,
+  err = ACE_TEXT_RegQueryValueEx (key, ACE_TEXT ("PersistType"), 0, &type,
     (LPBYTE) &this->repo_mode_, &sz);
   if (err == ERROR_SUCCESS)
     {
@@ -400,7 +449,7 @@ Options::load_registry_options ()
 
   tmp = 0;
   sz = sizeof(tmp);
-  err = ACE_TEXT_RegQueryValueEx (key, ACE_TEXT("Timeout"), 0, &type,
+  err = ACE_TEXT_RegQueryValueEx (key, ACE_TEXT ("Timeout"), 0, &type,
     (LPBYTE) &tmp, &sz);
   if (err == ERROR_SUCCESS)
     {
@@ -410,7 +459,7 @@ Options::load_registry_options ()
 
   tmp = 0;
   sz = sizeof(tmp);
-  err = ACE_TEXT_RegQueryValueEx (key, ACE_TEXT("Multicast"), 0, &type,
+  err = ACE_TEXT_RegQueryValueEx (key, ACE_TEXT ("Multicast"), 0, &type,
     (LPBYTE) &tmp, &sz);
   if (err == ERROR_SUCCESS)
     {
@@ -419,13 +468,21 @@ Options::load_registry_options ()
     }
 
   sz = sizeof(tmpstr);
-  err = ACE_TEXT_RegQueryValueEx (key, ACE_TEXT("PersistFile"), 0, &type,
+  err = ACE_TEXT_RegQueryValueEx (key, ACE_TEXT ("PersistFile"), 0, &type,
     (LPBYTE) tmpstr, &sz);
   if (err == ERROR_SUCCESS)
     {
       ACE_ASSERT (type == REG_SZ);
       tmpstr[sz - 1] = '\0';
       this->persist_file_name_ = tmpstr;
+    }
+
+  sz = sizeof(imr_type_);
+  err = ACE_TEXT_RegQueryValueEx (key, ACE_TEXT ("ImrType"), 0, &type,
+    (LPBYTE) &this->imr_type_ , &sz);
+  if (err == ERROR_SUCCESS)
+    {
+      ACE_ASSERT (type == REG_DWORD);
     }
 
   err = ::RegCloseKey (key);
@@ -508,4 +565,9 @@ bool
 Options::unregister_if_address_reused (void) const
 {
   return this->unregister_if_address_reused_;
+}
+
+Options::ImrType
+Options::imr_type(void) const {
+  return this->imr_type_;
 }

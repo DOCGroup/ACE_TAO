@@ -33,7 +33,10 @@ class TAO_Naming_Serv_Export TAO_Naming_Loader : public TAO_Object_Loader
 public:
 
   /// Constructor
-  TAO_Naming_Loader (void);
+  /// By default will use the standard Naming_Server.  If a server is provided
+  /// it will use that one instead. This object takes ownership of the provided
+  /// Naming Server.
+  TAO_Naming_Loader (TAO_Naming_Server *server = 0);
 
   /// Destructor
   ~TAO_Naming_Loader (void);
@@ -53,8 +56,9 @@ public:
                                            ACE_TCHAR *argv[]);
 
  protected:
+  /// TODO: Need to set up service configurator to initialize the naming server
   /// Instance of the TAO_Naming_Server
-  TAO_Naming_Server naming_server_;
+  TAO_Naming_Server* naming_server_;
 
 private:
   TAO_Naming_Loader (const TAO_Naming_Loader &);

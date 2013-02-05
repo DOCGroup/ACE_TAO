@@ -17,7 +17,8 @@ const char SERVER_NAME[] = "airplane_server";
 
 Airplane_Server_i::Airplane_Server_i (void)
   : server_impl_ (0),
-    ior_output_file_ (0)
+    ior_output_file_ (0),
+    server_name_(SERVER_NAME)
 {
   // Nothing
 }
@@ -25,7 +26,7 @@ Airplane_Server_i::Airplane_Server_i (void)
 int
 Airplane_Server_i::parse_args (void)
 {
-  ACE_Get_Opt get_opts (this->argc_, this->argv_, ACE_TEXT("do:"));
+  ACE_Get_Opt get_opts (this->argc_, this->argv_, ACE_TEXT("do:s:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -41,12 +42,16 @@ Airplane_Server_i::parse_args (void)
                              "Unable to open %s for writing: %p\n",
                              get_opts.opt_arg ()), -1);
         break;
+      case 's':  // extension to the server name.
+        this->server_name_ = get_opts.opt_arg ();
+        break;
       case '?':  // display help for use of the server.
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s"
                            " [-d]"
-                           " [-o] <ior_output_file>"
+                           " [-o <ior_output_file>]"
+                           " [-s <the server name>]"
                            "\n",
                            argv_ [0]),
                           1);
@@ -59,10 +64,6 @@ Airplane_Server_i::parse_args (void)
 int
 Airplane_Server_i::init (int argc, ACE_TCHAR** argv)
 {
-  // Since the Implementation Repository keys off of the POA name, we need
-  // to use the SERVER_NAME as the POA's name.
-  const char *poa_name = SERVER_NAME;
-
   try
     {
       // Initialize the ORB
@@ -101,10 +102,12 @@ Airplane_Server_i::init (int argc, ACE_TCHAR** argv)
       policies[1] =
         this->root_poa_->create_lifespan_policy (PortableServer::PERSISTENT);
 
+      // Since the Implementation Repository keys off of the POA name, we need
+      // to use the server_name_ as the POA's name.
       this->airplane_poa_ =
-        this->root_poa_->create_POA (poa_name,
-                              this->poa_manager_.in (),
-                              policies);
+        this->root_poa_->create_POA (this->server_name_.c_str(),
+                                     this->poa_manager_.in (),
+                                     policies);
 
       // Creation of the new POA is over, so destroy the Policy_ptr's.
       for (CORBA::ULong i = 0; i < policies.length (); ++i)
@@ -142,7 +145,7 @@ Airplane_Server_i::init (int argc, ACE_TCHAR** argv)
       IORTable::Table_var adapter =
         IORTable::Table::_narrow (obj.in ());
       ACE_ASSERT(! CORBA::is_nil (adapter.in ()));
-      adapter->bind (poa_name, plain_ior.in ());
+      adapter->bind (this->server_name_.c_str(), plain_ior.in ());
 
       this->poa_manager_->activate ();
 

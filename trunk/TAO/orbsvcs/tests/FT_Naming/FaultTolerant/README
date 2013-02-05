@@ -1,0 +1,234 @@
+$Id$
+
+This program tests the following fault tolerant naming service implementation
+use cases:
+
+1) Failover: Validate that a client can seamlessly connect to the alternate
+   server of a server naming server pair after the other server has been
+   terminated.
+
+2) Persistence: Validate that repository data written by the naming service is
+   available upon startup.
+
+3) Equivalence: Validate that a client can seamlessly invoke naming operations
+   on either server instance.
+
+
+================================================================================
+Failover Test
+================================================================================
+
+<hostname> = <local_host>
+<port1>    = <first unused port>
+<port2>    = <second unused port>
+
+1) Create empty NameService and GroupService directories
+
+	cd $TAO_ROOT/orbsvcs/tests/FT_Naming/FaultTolerant
+	mkdir NameService
+	mkdir GroupService
+
+2) Start primary tao_ft_naming process
+	$TAO_ROOT/orbsvcs/Naming_Service/tao_ft_naming --primary \
+		-ORBListenEndPoints iiop://<hostname>:<port1> \
+		-m 0 \
+		-r NameService \
+		-v GroupService &
+
+3) Start backup tao_ft_naming process
+
+	$TAO_ROOT/orbsvcs/Naming_Service/tao_ft_naming --backup \
+		-ORBListenEndPoints iiop://<hostname>:<port2> \
+		-m 0 \
+		-c $TAO_ROOT/orbsvcs/tests/FT_Naming/FaultTolerant/ns.ior \
+		-g $TAO_ROOT/orbsvcs/tests/FT_Naming/FaultTolerant/nm.ior \
+		-r NameService \
+		-v GroupService &
+
+4) Terminate primary tao_ft_naming process
+
+5) Run client with failover argument
+
+	client --failover \
+	       -p file:///$TAO_ROOT/orbsvcs/tests/FT_Naming/FaultTolerant/ns.ior \
+	       -r file://$TAO_ROOT/orbsvcs/tests/FT_Naming/FaultTolerant/nm.ior \
+	       -b 4 -d 4
+
+	==============================================================================
+	Example Output:
+	==============================================================================
+	INFO: Failover Name Test OK
+	INFO: nm1ref: file:///tmp/ramdisk/tmp/nm.ior
+	INFO: Object Group Found In Repository
+	INFO: Failover ObjectGroup Test OK
+
+6) Cleanup
+
+	rm -rf NameService
+	rm -rf GroupService
+
+================================================================================
+Persistence Test
+================================================================================
+
+<hostname> = <local_host>
+<port1>    = <unused port>
+
+1) Create empty NameService and GroupService directories
+
+	cd $TAO_ROOT/orbsvcs/tests/FT_Naming/FaultTolerant
+	mkdir NameService
+	mkdir GroupService
+
+2) Start tao_ft_naming
+
+	$TAO_ROOT/orbsvcs/Naming_Service/tao_ft_naming \
+		-ORBListenEndPoints iiop://<hostname>:<port1> \
+		-g $TAO_ROOT/orbsvcs/tests/FT_Naming/FaultTolerant/nm.ior \
+		-o $TAO_ROOT/orbsvcs/tests/FT_Naming/FaultTolerant/ns.ior \
+		-v GroupService \
+		-u NameService &
+
+3) Start test object server
+
+	server -ORBDefaultInitRef corbaloc:iiop:<hostname>:<port1> \
+				 -o $TAO_ROOT/orbsvcs/tests/FT_Naming/FaultTolerant/srv.ior &
+
+4) Run the test client with the persistence and create arguments
+
+	client --persistence --create \
+	       -p corbaloc:iiop:<hostname>:<port1>/NameService \
+	       -r corbaloc:iiop:<hostname>:<port1>/NamingManager \
+	       -b 4 -d 4
+
+	==============================================================================
+	Example Output:
+	==============================================================================
+	INFO: Persistence Creation Name Test OK
+	INFO: Object Group BasicGroup Found In Repository
+	INFO: validating group member location1
+	INFO: object group member at location1 reports location1
+	INFO: validating group member location2
+	INFO: object group member at location2 reports location2
+	INFO: validating group member location3
+	INFO: object group member at location3 reports location3
+	INFO: validating group member location4
+	INFO: object group member at location4 reports location4
+	INFO: validating group member location5
+	INFO: object group member at location5 reports location5
+	INFO: validating group member location6
+	INFO: object group member at location6 reports location6
+	INFO: Persistence Creation ObjectGroup Test OK
+
+
+5) Terminate tao_ft_naming and then restart it with the original arguments
+
+	kill `pidof $TAO_ROOT/orbsvcs/Naming_Service/tao_ft_naming`
+
+	$TAO_ROOT/orbsvcs/Naming_Service/tao_ft_naming \
+		-ORBListenEndPoints iiop://<hostname>:<port1> \
+		-g $TAO_ROOT/orbsvcs/tests/FT_Naming/FaultTolerant/nm.ior \
+		-o $TAO_ROOT/orbsvcs/tests/FT_Naming/FaultTolerant/ns.ior \
+		-v GroupService \
+		-u NameService &
+
+6) Now run the test client with the persistence and valdiate arguments
+
+	client --persistence --validate \
+		-p corbaloc:iiop:<hostname>:<port1>/NameService \
+		-r corbaloc:iiop:<hostname>:<port1>/NamingManager \
+		-b 4 -d 4
+
+	==============================================================================
+	Example Output:
+	==============================================================================
+	INFO: Persistence Validation Name Test OK
+	INFO: Object Group BasicGroup Found In Repository
+	INFO: validating group member location1
+	INFO: object group member at location1 reports location1
+	INFO: validating group member location2
+	INFO: object group member at location2 reports location2
+	INFO: validating group member location3
+	INFO: object group member at location3 reports location3
+	INFO: validating group member location4
+	INFO: object group member at location4 reports location4
+	INFO: validating group member location5
+	INFO: object group member at location5 reports location5
+	INFO: validating group member location6
+	INFO: object group member at location6 reports location6
+	INFO: Persistence Validation ObjectGroup Test OK
+
+7) Cleanup
+
+	rm -rf NameService
+	rm -rf GroupService
+
+
+================================================================================
+Redundant Equivalancy Test
+================================================================================
+
+<hostname> = <local_host>
+<port1>    = <first unused port>
+<port2>    = <second unused port>
+
+1) Create empty NameService and GroupService directories
+
+	cd $TAO_ROOT/orbsvcs/tests/FT_Naming/FaultTolerant
+	mkdir NameService
+	mkdir GroupService
+
+2) Start primary tao_ft_naming process
+
+	$TAO_ROOT/orbsvcs/Naming_Service/tao_ft_naming \
+	  --primary \
+		-ORBListenEndPoints iiop://<hostname>:<port1> \
+		-o /tmp/ns_primary.ior \
+		-h /tmp/nm_primary.ior \
+		-r NameService \
+		-v GroupService &
+
+3) Start backup tao_ft_naming process
+
+	$TAO_ROOT/orbsvcs/Naming_Service/tao_ft_naming \
+	  --backup \
+		-ORBListenEndPoints iiop://<hostname>:<port2> \
+		-o /tmp/ns_backup.ior \
+		-h /tmp/nm_backup.ior \
+		-c /tmp/ns_multi_profile.ior \
+		-g /tmp/nm_multi_profile.ior \
+		-r NameService \
+		-v GroupService &
+
+4) Now run the test client with the equivalence argument
+
+	client --equivalence \
+		-p file:///tmp/ns_primary.ior \
+		-q file:///tmp/ns_backup.ior \
+		-r file:///tmp/nm_primary.ior \
+		-s file:///tmp/nm_backup.ior \
+		-b 4 -d 4
+
+	==============================================================================
+	Example Output:
+	==============================================================================
+	INFO: ns1ref is not equivalent to ns2ref
+	INFO: ns1ref profile count: 1
+	INFO: ns2ref profile count: 1
+	INFO: Equivalence Name Test OK
+	INFO: nm1ref: file:///tmp/nm_primary.ior
+	INFO: nm2ref: file:///tmp/nm_backup.ior
+	INFO: nm1ref is not equivalent to nm2ref
+	INFO: nm1ref profile count: 1
+	INFO: nm2ref profile count: 1
+	INFO: Primary Found Object Group test_group_1 Created By Primary In Repository
+	INFO: Backup Found Object Group test_group_2 Created By Backup In Repository
+	INFO: Primary Found Object Group test_group_2 Created By Backup In Repository
+	INFO: Backup Found Object Group test_group_1 Created By Primary In Repository
+	INFO: Equivalence ObjectGroup Test OK
+
+5) Cleanup
+
+	rm -rf NameService
+	rm -rf GroupService
+

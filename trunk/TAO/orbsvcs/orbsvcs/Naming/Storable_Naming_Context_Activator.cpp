@@ -14,26 +14,29 @@
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 #include "orbsvcs/Naming/Naming_Context_Interface.h"
 #include "orbsvcs/Naming/Storable_Naming_Context.h"
+#include "orbsvcs/Naming/Storable_Naming_Context_Factory.h"
 #include "orbsvcs/Naming/Storable.h"
+#include "tao/Storable_Factory.h"
 #include "ace/Auto_Ptr.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Storable_Naming_Context_Activator::TAO_Storable_Naming_Context_Activator (
   CORBA::ORB_ptr orb,
-  TAO_Naming_Service_Persistence_Factory *factory,
-  const ACE_TCHAR *persistence_directory,
-  size_t context_size)
+  TAO::Storable_Factory *persistence_factory,
+  TAO_Storable_Naming_Context_Factory *context_impl_factory,
+  const ACE_TCHAR *persistence_directory)
   : orb_(orb),
-    factory_(factory),
-    persistence_directory_(persistence_directory),
-    context_size_(context_size)
+    persistence_factory_(persistence_factory),
+    context_impl_factory_(context_impl_factory),
+    persistence_directory_(persistence_directory)
 {
 }
 
 TAO_Storable_Naming_Context_Activator::~TAO_Storable_Naming_Context_Activator ()
 {
-  delete factory_;
+  delete persistence_factory_;
+  delete this->context_impl_factory_;
 }
 
 PortableServer::Servant
@@ -43,7 +46,10 @@ TAO_Storable_Naming_Context_Activator::incarnate (
 {
 
   // Make sure complete initialization has been done
-  ACE_ASSERT (factory_ != 0);
+  ACE_ASSERT (persistence_factory_ != 0);
+
+  // Make sure complete initialization has been done
+  ACE_ASSERT (context_impl_factory_ != 0);
 
   CORBA::String_var poa_id = PortableServer::ObjectId_to_string (oid);
 
@@ -53,29 +59,25 @@ TAO_Storable_Naming_Context_Activator::incarnate (
   // context is accessed it will be determined that the contents of
   // the persistence elment needs to be read in.
 
-  // Does this already exist on disk?
-  ACE_TString file_name(persistence_directory_);
-  file_name += ACE_TEXT("/");
-  file_name += ACE_TEXT_CHAR_TO_TCHAR(poa_id.in());
-  TAO_Storable_Base * fl = factory_->create_stream(ACE_TEXT_ALWAYS_CHAR(file_name.c_str()), ACE_TEXT("rw"));
-  if (!fl->exists()) {
-    throw CORBA::OBJECT_NOT_EXIST ();
+  { // Does this already exist on disk?
+
+    ACE_TString file_name = ACE_TEXT_CHAR_TO_TCHAR (poa_id.in ());
+    ACE_Auto_Ptr<TAO::Storable_Base> fl (
+       persistence_factory_->create_stream (ACE_TEXT_ALWAYS_CHAR (file_name.c_str ()),
+                                            ACE_TEXT ("rw")));
+
+    if (!fl->exists()) {
+      throw CORBA::OBJECT_NOT_EXIST ();
+    }
   }
 
-  // Store the stub we will return here.
-  CosNaming::NamingContext_var result (CosNaming::NamingContext::_nil());
-
   // Put together a servant for the new Naming Context.
-
-  TAO_Storable_Naming_Context *context_impl = 0;
-  ACE_NEW_THROW_EX (context_impl,
-                    TAO_Storable_Naming_Context (orb_,
-                                                 poa,
-                                                 poa_id.in (),
-                                                 factory_,
-                                                 persistence_directory_,
-                                                 context_size_),
-                                                 CORBA::NO_MEMORY ());
+  // Will throw NO_MEMORY exception if unable to construct one
+  TAO_Storable_Naming_Context *context_impl =
+    this->context_impl_factory_->create_naming_context_impl (orb_,
+                                                             poa,
+                                                             poa_id.in (),
+                                                             persistence_factory_);
 
   // Put <context_impl> into the auto pointer temporarily, in case next
   // allocation fails.

@@ -22,6 +22,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Client_Strategy_Factory.h"
+#include "tao/Invocation_Retry_Params.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -61,6 +62,7 @@ public:
   virtual TAO_Connect_Strategy *create_connect_strategy (TAO_ORB_Core *);
   virtual bool use_cleanup_options (void) const;
   virtual Connect_Strategy connect_strategy (void) const;
+  virtual const TAO::Invocation_Retry_Params &invocation_retry_params (void) const;
 
 protected:
   void report_option_value_error (const ACE_TCHAR* option_name,
@@ -104,6 +106,9 @@ private:
 
   /// Cleanupoptions for RW strategy
   bool use_cleanup_options_;
+
+  /// Retry options when exceptions occur
+  TAO::Invocation_Retry_Params invocation_retry_params_;
 };
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_Default_Client_Strategy_Factory)

@@ -17,7 +17,10 @@
 #ifndef TAO_NAMING_SERVICE_H
 #define TAO_NAMING_SERVICE_H
 
-#include "orbsvcs/Naming/Naming_Server.h"
+#include /**/ "ace/pre.h"
+#include "tao/ORB.h"
+
+class TAO_Naming_Server;
 
 /**
  * @class TAO_Naming_Service
@@ -44,10 +47,13 @@ public:
   virtual int fini (void);
 
   /// Run the TAO_Naming_Service.
-  int run (void);
+  virtual int run (void);
 
   /// Shut down the TAO_Naming_Service; you must still call fini().
-  void shutdown (void);
+  virtual void shutdown (void);
+
+  /// Factory method to create a server object for the naming service
+  virtual TAO_Naming_Server* create_naming_server ();
 
   /// Destructor.
   virtual ~TAO_Naming_Service (void);
@@ -62,7 +68,7 @@ protected:
   CORBA::ORB_var orb_;
 
   /// Naming Server instance.
-  TAO_Naming_Server my_naming_server_;
+  TAO_Naming_Server* my_naming_server_;
 
   /// After how long the server should stop listening to requests (in
   /// seconds).
@@ -71,5 +77,7 @@ protected:
   /// Number of threads for running the ORB. Default is 1
   int num_threads_;
 };
+
+#include /**/ "ace/post.h"
 
 #endif /* TAO_NAMING_SERVICE_H */

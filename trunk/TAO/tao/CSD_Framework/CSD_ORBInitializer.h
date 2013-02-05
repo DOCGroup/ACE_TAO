@@ -36,7 +36,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-class TAO_CSD_ORBInitializer
+class TAO_CSD_FW_Export TAO_CSD_ORBInitializer
   : public virtual PortableInterceptor::ORBInitializer
   , public virtual ::CORBA::LocalObject
 {

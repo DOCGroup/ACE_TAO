@@ -9,8 +9,6 @@
 
 long
 Session::tao_version_ = 200;
-int
-Session::date_format_ = 1;
 
 Session::Session (void)
 {
@@ -53,24 +51,6 @@ Session::tao_version (void)
   return tao_version_;
 }
 
-bool
-Session::set_date_format (ACE_TCHAR *str)
-{
-  if (ACE_OS::strncmp(str, ACE_TEXT("1"), 1)== 0)
-    date_format_ = 1;
-  else if (ACE_OS::strncmp (str, ACE_TEXT("2"), 1) == 0)
-    date_format_ = 2;
-   else
-    return false;
-  return true;
-}
-
-int
-Session::date_format (void)
-{
-  return date_format_;
-}
-
 void
 Session::add_process (HostProcess *proc)
 {
@@ -93,6 +73,19 @@ Session::alternate_address (const char *addrspec)
   ACE_CString name (addrspec,(equal - addrspec));
   ACE_CString value (equal+1);
   this->alt_addrs_.bind(name,value);
+}
+
+bool
+Session::is_equivalent (const ACE_CString &primary,
+                        const ACE_CString &alternate)
+{
+  ACE_CString test(primary);
+  ACE_CString alt;
+  if (this->alt_addrs_.find(test,alt) == 0)
+    {
+      return alt == alternate;
+    }
+  return false;
 }
 
 void

@@ -5,13 +5,15 @@
 feature(!corba_e_micro) {
   Source_Files(ORBSVCS_COMPONENTS) {
     Naming {
-      Naming/Flat_File_Persistence.cpp
       Naming/Persistent_Context_Index.cpp
       Naming/Persistent_Entries.cpp
       Naming/Persistent_Naming_Context.cpp
       Naming/Storable.cpp
       Naming/Storable_Naming_Context.cpp
       Naming/Storable_Naming_Context_Activator.cpp
+      Naming/Storable_Naming_Context_ReaderWriter.cpp
+      Naming/Persistent_Naming_Context_Factory.cpp
+      Naming/Storable_Naming_Context_Factory.cpp
     }
   }
 }

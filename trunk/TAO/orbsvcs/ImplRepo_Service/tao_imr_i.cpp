@@ -817,9 +817,18 @@ TAO_IMR_Op_IOR::run (void)
       ACE_CString ior (imr_str.in ());
 
       // Add the key
-      ior += this->server_name_;
+      const char jacorb[] = ACE_TEXT_ALWAYS_CHAR ("JACORB:");
+      const char *posjacorb = ACE_OS::strstr (server_name_.c_str (), jacorb);
+      if (posjacorb)
+      {
+        ior += posjacorb + sizeof(jacorb) - 1;
+      }
+      else
+      {
+        ior += this->server_name_;
+      }
 
-      ACE_DEBUG ((LM_DEBUG, "%s\n", ior.c_str ()));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%s\n"), ior.c_str ()));
 
       if (this->filename_.length () > 0)
       {
@@ -828,7 +837,7 @@ TAO_IMR_Op_IOR::run (void)
         if (file == 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-            "Error: Unable to open %s for writing: %p\n",
+            ACE_TEXT ("Error: Unable to open %s for writing: %p\n"),
             this->filename_.c_str ()),
             -1);
         }

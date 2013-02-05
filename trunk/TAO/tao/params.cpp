@@ -57,6 +57,7 @@ TAO_ORB_Parameters::TAO_ORB_Parameters (void)
   , stub_factory_name_ ("Default_Stub_Factory")
   , endpoint_selector_factory_name_ ("Default_Endpoint_Selector_Factory")
   , thread_lane_resources_manager_factory_name_ ("Default_Thread_Lane_Resources_Manager_Factory")
+  , dynamic_thread_pool_config_name_ ()
   , poa_factory_name_ ("TAO_Object_Adapter_Factory")
   , poa_factory_directive_
       (ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE("TAO_Object_Adapter_Factory",
@@ -65,7 +66,7 @@ TAO_ORB_Parameters::TAO_ORB_Parameters (void)
                                      "_make_TAO_Object_Adapter_Factory",
                                      ""))
   , forward_invocation_on_object_not_exist_ (false)
-  , forward_once_exception_ (TAO::FOE_NON)
+  , forward_once_exception_ (0)
   , collocation_resolver_name_ ("Default_Collocation_Resolver")
   , allow_ziop_no_server_policies_ (!!TAO_ALLOW_ZIOP_NO_SERVER_POLICIES_DEFAULT)
 {
@@ -365,6 +366,18 @@ TAO_ORB_Parameters::thread_lane_resources_manager_factory_name (void) const
 }
 
 void
+TAO_ORB_Parameters::dynamic_thread_pool_config_name (const char *s)
+{
+  this->dynamic_thread_pool_config_name_ = s;
+}
+
+const char *
+TAO_ORB_Parameters::dynamic_thread_pool_config_name (void) const
+{
+  return this->dynamic_thread_pool_config_name_.c_str ();
+}
+
+void
 TAO_ORB_Parameters::stub_factory_name (const char *s)
 {
   this->stub_factory_name_ = s;
@@ -410,6 +423,30 @@ const char *
 TAO_ORB_Parameters::endpoint_selector_factory_name (void) const
 {
   return this->endpoint_selector_factory_name_.c_str ();
+}
+
+const TAO::Invocation_Retry_Params &
+TAO_ORB_Parameters::invocation_retry_params (void) const
+{
+  return this->invocation_retry_params_;
+}
+
+TAO::Invocation_Retry_Params &
+TAO_ORB_Parameters::invocation_retry_params (void)
+{
+  return this->invocation_retry_params_;
+}
+
+void
+TAO_ORB_Parameters::forward_on_exception_limit (const int ef, const int limit)
+{
+  this->invocation_retry_params_.forward_on_exception_limit_[ef] = limit;
+}
+
+void
+TAO_ORB_Parameters::forward_on_exception_delay (const ACE_Time_Value &delay)
+{
+  this->invocation_retry_params_.init_retry_delay_ = delay;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

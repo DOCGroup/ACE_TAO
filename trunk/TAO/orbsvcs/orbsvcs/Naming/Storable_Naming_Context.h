@@ -15,6 +15,7 @@
 #include /**/ "ace/pre.h"
 
 #include "orbsvcs/Naming/Hash_Naming_Context.h"
+#include "tao/Storable_File_Guard.h"
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Auto_Ptr.h"
 
@@ -25,6 +26,14 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+namespace TAO
+{
+  class Storable_Base;
+  class Storable_Factory;
+}
+
+class TAO_Storable_Naming_Context_Factory;
 
 class TAO_Naming_Serv_Export TAO_Storable_IntId
 {
@@ -229,8 +238,8 @@ public:
   TAO_Storable_Naming_Context (CORBA::ORB_ptr orb,
                                PortableServer::POA_ptr poa,
                                const char *poa_id,
-                               TAO_Naming_Service_Persistence_Factory *factory,
-                               const ACE_TCHAR *persistence_directory,
+                               TAO_Storable_Naming_Context_Factory *cxt_factory,
+                               TAO::Storable_Factory *factory,
                                size_t hash_table_size = ACE_DEFAULT_MAP_SIZE);
 
   /// Destructor.
@@ -247,22 +256,21 @@ public:
   static CosNaming::NamingContext_ptr make_new_context (
                                CORBA::ORB_ptr orb,
                                PortableServer::POA_ptr poa,
-                               const char *poa_id,
-                               size_t context_size,
-                               TAO_Naming_Service_Persistence_Factory *factory,
-                               const ACE_TCHAR *persistence_directory,
+                               const char *context_id,
+                               TAO_Storable_Naming_Context_Factory *cxt_factory,
+                               TAO::Storable_Factory *pers_factory,
                                TAO_Storable_Naming_Context **new_context);
 
   // = Methods not implemented in TAO_Hash_Naming_Context.
 
-  static CosNaming::NamingContext_ptr recreate_all(
+  static CosNaming::NamingContext_ptr recreate_all (
                               CORBA::ORB_ptr orb,
                               PortableServer::POA_ptr poa,
-                              const char *poa_id,
+                              const char *context_id,
                               size_t context_size,
                               int reentering,
-                              TAO_Naming_Service_Persistence_Factory *factory,
-                              const ACE_TCHAR *persistence_directory,
+                              TAO_Storable_Naming_Context_Factory *cxt_factory,
+                              TAO::Storable_Factory *pers_factory,
                               int use_redundancy);
 
 
@@ -353,6 +361,21 @@ public:
 
 protected:
 
+  /**
+   * An internal callback invoked by the File_Open_Lock_and_Check object to
+   * signal that this context was updated and written to disk.
+   * This will have been done after the file is closed. Check the
+   * last_changed_ attribute for the time of the write.
+   */
+  virtual void context_written (void);
+
+  /**
+   * An internal callback invoked by the File_Open_Lock_and_Check
+   * object to determine if this context is obsolete with respect to the
+   * file object .
+   */
+  virtual bool is_obsolete (time_t stored_time);
+
   /// Global counter used for generation of POA ids for children Naming
   /// Contexts.
   static ACE_UINT32 gcounter_;
@@ -371,11 +394,16 @@ protected:
 
   CORBA::ORB_var orb_;
 
-  ACE_CString name_;
+  /// The name of the context used as its object id when registered
+  /// with the POA.
+  ACE_CString context_name_;
 
+  /// The POA that this context was registered with.
   PortableServer::POA_var poa_;
 
-  TAO_Naming_Service_Persistence_Factory *factory_;
+  TAO_Storable_Naming_Context_Factory *context_factory_;
+
+  TAO::Storable_Factory *factory_;
 
   /// The directory in which to store the files
   ACE_CString persistence_directory_;
@@ -386,73 +414,72 @@ protected:
   /// Disk time that match current memory state
   time_t last_changed_;
 
-  /// Flag to tell use whether we are redundant or not
+  /// Flag to tell us whether we are redundant or not
   static int redundant_;
 
   static const char * root_name_;
 
   /// The pointer to the global file used to allocate new contexts
-  static ACE_Auto_Ptr<TAO_Storable_Base> gfl_;
+  static ACE_Auto_Ptr<TAO::Storable_Base> gfl_;
 
 /**
  * @class File_Open_Lock_and_Check
  *
- * @brief Helper class for the TAO_Storable_Naming_Context.
+ * @brief File guard specific for storable naming contexts.
  *
- * Guard class for the TAO_Storable_Naming_Context.  It opens
- * a file for read/write and sets a lock on it.  It then checks
- * if the file has changed and re-reads it if it has.
- *
- * The destructor insures that the lock gets released.
- *
- * <pre>
- * How to use this class:
- *   File_Open_Lock_and_Check flck(this, name_len > 1 ? "r" : "rw");
- * </pre>
  */
-class File_Open_Lock_and_Check
+class TAO_Naming_Serv_Export File_Open_Lock_and_Check :
+public TAO::Storable_File_Guard
 {
 public:
 
   /// Constructor - we always need the object which we guard.
-  File_Open_Lock_and_Check(TAO_Storable_Naming_Context * context,
-                                const char * mode);
+  File_Open_Lock_and_Check (TAO_Storable_Naming_Context * context,
+                            Method_Type method_type);
 
-  /// Destructor
-  ~File_Open_Lock_and_Check(void);
+  ~File_Open_Lock_and_Check ();
 
-  /// Releases the lock, closes the file, and deletes the I/O stream.
-  void release(void);
+protected:
 
-  /// Returns the stream to read/write on
-  TAO_Storable_Base & peer(void);
+  /// Check if the guarded object is current with the last
+  /// update which could have been performed independently of
+  /// the owner of this object.
+  virtual bool object_obsolete (void);
+
+  /// Mark the object as current with respect to the
+  /// file to which it was persisted.
+  virtual void mark_object_current (void);
+
+  /// Mark the time at which the object was modified and
+  virtual void set_object_last_changed (const time_t & time);
+
+  /// Get the time which the object was last written to the
+  /// file.
+  virtual time_t get_object_last_changed ();
+
+  virtual void load_from_stream ();
+
+  virtual bool is_loaded_from_stream ();
+
+  virtual TAO::Storable_Base * create_stream (const char * mode);
 
 private:
   /// Default constructor
   File_Open_Lock_and_Check(void);
 
-  /// A flag to keep us from trying to close things more than once.
-  int closed_;
-
-  /// We need to save the pointer to our parent for cleaning up
   TAO_Storable_Naming_Context * context_;
 
-  /// The pointer to the actual file I/O (bridge pattern)
-  TAO_Storable_Base *fl_;
-
-  /// The flags that we were opened with
-  int rwflags_;
-
-  /// Symbolic values for the flags in the above
-  enum{ mode_write = 1, mode_read = 2, mode_create = 4 };
 }; // end of embedded class File_Open_Lock_and_Check
 
   friend class File_Open_Lock_and_Check;
+  friend class TAO_Storable_Naming_Context_ReaderWriter;
 
-  int load_map(File_Open_Lock_and_Check *flck);
+  int load_map(TAO::Storable_Base& storable);
 
-  void Write(TAO_Storable_Base& wrtr);
+  void Write(TAO::Storable_Base& wrtr);
 
+  /// Is set by the Write operation.  Used to determine
+  int write_occurred_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

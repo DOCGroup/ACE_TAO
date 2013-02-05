@@ -239,7 +239,7 @@ TAO_UIOP_Profile::add_endpoint (TAO_UIOP_Endpoint *endp)
 
 
 char *
-TAO_UIOP_Profile::to_string (void)
+TAO_UIOP_Profile::to_string (void) const
 {
   CORBA::String_var key;
   TAO::ObjectKey::encode_sequence_to_string (key.inout(),

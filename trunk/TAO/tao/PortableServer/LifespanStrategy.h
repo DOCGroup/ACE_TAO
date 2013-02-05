@@ -37,9 +37,9 @@ namespace TAO
     public:
       LifespanStrategy (void);
 
-      virtual void strategy_init(TAO_Root_POA *poa);
+      virtual void strategy_init (TAO_Root_POA *poa);
 
-      virtual void strategy_cleanup(void);
+      virtual void strategy_cleanup (void);
 
       void create (const char *name, const TAO::ObjectKey &key);
 
@@ -72,9 +72,13 @@ namespace TAO
       /// Check the state of the POA.
       virtual void check_state (void) = 0;
 
-      virtual ::PortableServer::LifespanPolicyValue type() const = 0;
+      virtual ::PortableServer::LifespanPolicyValue type () const = 0;
 
       virtual bool use_imr () const = 0;
+
+      virtual CORBA::Object_ptr imr_key_to_object (
+        const TAO::ObjectKey &key,
+        const char *type_id) const = 0;
 
     protected:
       TAO_Root_POA *poa_;

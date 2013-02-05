@@ -474,7 +474,7 @@ TAO_IIOP_Profile::add_generic_endpoint (TAO_Endpoint *endp)
 }
 
 char *
-TAO_IIOP_Profile::to_string (void)
+TAO_IIOP_Profile::to_string (void) const
 {
   // corbaloc:iiop:1.2@host:port,iiop:1.2@host:port,.../key
 

@@ -1948,76 +1948,15 @@ TAO_Root_POA::key_to_object (const TAO::ObjectKey &key,
   //
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
-  CORBA::Object_ptr obj = CORBA::Object::_nil ();
-
-  if (indirect && this->active_policy_strategies_.lifespan_strategy()->use_imr ()
-         && this->orb_core ().imr_endpoints_in_ior ())
+  if (indirect && this->orb_core ().imr_endpoints_in_ior ())
     {
-      // Check to see if we alter the IOR.
-      CORBA::Object_var imr = this->orb_core ().implrepo_service ();
-
-      if (CORBA::is_nil (imr.in ())
-          || !imr->_stubobj ()
-          || !imr->_stubobj ()->profile_in_use ())
+      CORBA::Object_ptr obj = this->active_policy_strategies_.
+        lifespan_strategy()->imr_key_to_object (key, type_id);
+      if (!CORBA::is_nil (obj))
         {
-          if (TAO_debug_level > 1)
-            {
-              ACE_DEBUG ((LM_DEBUG,
-                          "Missing ImR IOR, will not use the ImR\n"));
-            }
-          goto orbkey;
+          return obj;
         }
-
-      CORBA::String_var imr_str =
-        imr->_stubobj ()->profile_in_use ()->to_string ();
-
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "IMR IOR =\n%C\n",
-                    imr_str.in ()));
-
-      // Search for "corbaloc:" alone, without the protocol.  This code
-      // should be protocol neutral.
-      const char corbaloc[] = "corbaloc:";
-      char *pos = ACE_OS::strstr (imr_str.inout (), corbaloc);
-      pos = ACE_OS::strchr (pos + sizeof (corbaloc), ':');
-
-      pos = ACE_OS::strchr (pos + 1,
-                            imr->_stubobj ()->profile_in_use ()->object_key_delimiter ());
-
-      if (pos)
-        pos[1] = 0;  // Crop the string.
-      else
-        {
-          if (TAO_debug_level > 0)
-            ACE_ERROR ((LM_ERROR,
-                        "Could not parse ImR IOR, skipping ImRification\n"));
-          goto orbkey;
-        }
-
-      ACE_CString ior (imr_str.in ());
-
-      // Add the key.
-
-      CORBA::String_var key_str;
-      TAO::ObjectKey::encode_sequence_to_string (key_str.inout (), key);
-
-      ior += key_str.in ();
-
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "ImR-ified IOR =\n%C\n",
-                    ior.c_str ()));
-
-      obj = this->orb_core_.orb ()->string_to_object (ior.c_str ());
-
-      // type_id info is not in the corbaloc, so set it here
-      obj->_stubobj()->type_id = type_id;
-
-      return obj;
     }
-
-orbkey:
 
 #else
   ACE_UNUSED_ARG (indirect);

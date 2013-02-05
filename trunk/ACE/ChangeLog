@@ -1,3 +1,116 @@
+Tue Feb  5 21:04:17 UTC 2013  "Kevin Stanley"  <stanleyk@ociweb.com>
+
+    Several new features and bug fixes captured in Bugzilla 4091, 4092, 4093,
+    4094, 4095, and 4096. Also includes Bugzilla 3247. Specific details of the
+    changes described below through the tag at the end bookmarked with:
+    *****  OCI_Reliability_Enhancements Changes
+
+    Tue Feb  5 17:01:48 UTC 2013  "Kevin Stanley"  <stanleyk@ociweb.com>
+
+            * ace/Auto_Event.h:
+            * bin/valgrind.supp:
+            * protocols/ace/INet/inet.mpc:
+            * protocols/examples/INet:
+            * tests/CDR_Test.cpp:
+            * protocols/ace/INet/FTP_Simple_exec.cpp:
+            * protocols/ace/INet/HTTP_Simple_exec.cpp:
+
+              Merged changes from trunk in preparation for merge. The
+              above files had changes.
+
+    Thu Jan 31 22:39:53 UTC 2013  Phillip LaBanca  <labancap@ociweb.com>
+
+            * ace/Message_Block.cpp:
+
+              Fixed problem with allocator in clone and duplicate
+
+            * tests/Message_Block_Large_Copy_Test.cpp:
+
+              Added reference count output
+
+    Thu Jan 31 18:41:26 UTC 2013  Phillip LaBanca  <labancap@ociweb.com>
+
+            * tests/Message_Block_Large_Copy_Test.cpp:
+
+              Corrected test for scoreboard
+
+    Thu Jan 31 14:38:03 UTC 2013  "Kevin Stanley"  <stanleyk@ociweb.com>
+
+            * tests/Message_Block_Large_Copy_Test.cpp:
+
+              Fixed another error in allocation missed the first time.
+
+    Thu Jan 31 14:31:17 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
+
+            * tests/Message_Block_Large_Copy_Test.cpp:
+
+              Fixed error in allocation of character array.
+
+    Wed Jan 30 23:54:14 UTC 2013  Phillip LaBanca  <labancap@ociweb.com>
+
+            * ace/Message_Block.cpp:
+
+              Applied bug 3247 duplicate patch that replaced recursion with
+              iteration to support the copying of large message blocks.
+
+            * tests/Message_Block_Large_Copy_Test.cpp:
+            * tests/run_test.lst:
+            * tests/tests.mpc:
+
+              Created test to cover the cloning and duplication of
+              large Message_Blocks.
+
+    Tue Jan 29 15:15:09 UTC 2013  "Kevin Stanley"  <stanleyk@ociweb.com>
+
+            * include/makeinclude/platform_sunos5_g++.GNU:
+
+              Merged trunk into branch.
+
+    Mon Jan 28 16:13:07 UTC 2013  "Kevin Stanley"  <stanleyk@ociweb.com>
+
+            * ace/config-macosx-lion.h:
+            * ace/config-macosx-mountainlion.h:
+            * ace/config-macosx-snowleopard.h:
+            * examples/Shared_Memory/test_MM.cpp:
+            * examples/Shared_Memory/test_SV.cpp:
+            * include/makeinclude/platform_macosx_mountainlion.GNU:
+            * ace/config-macosx-mountain-lion.h:
+            * include/makeinclude/platform_macosx_mountain_lion.GNU:
+
+              Merged trunk into branch. The above files were changed in the
+              trunk.
+
+    Wed Dec 19 17:52:25 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
+
+            * ace/Mem_Map.inl:
+
+              Fix a warning about signed/unsigned mix.
+
+            * include/makeinclude/platform_clang_common.GNU:
+
+              Increase the warning level used by the CLang++ compiler to show all warnings
+
+    Mon Dec 17 14:39:07 UTC 2012  Brian Johnson  <johnsonb@ociweb.com>
+
+            * ACEXML/common/FileCharStream.cpp:
+
+              Fixed to not close the infile_ if it was passed to the
+              FileCharStream.
+
+    Fri Dec 14 17:31:22 UTC 2012  Brian Johnson  <johnsonb@ociweb.com>
+
+            * ACEXML/common/FileCharStream.h:
+            * ACEXML/common/FileCharStream.cpp:
+
+              Added interface to accept an already open FILE stream.
+
+    Mon Oct 15 18:26:57 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
+
+            * OCI_RE_ChangeLog:
+              Created change log for the OCI Reliability Enhancements branch
+
+    *****  OCI_Reliability_Enhancements Changes
+
 Mon Feb  4 08:58:35 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * protocols/ace/INet/inet.mpc:

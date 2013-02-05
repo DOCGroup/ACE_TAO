@@ -17,6 +17,7 @@ project(CosNaming_Serv) : cosnaming_serv_persistence, orbsvcslib, orbsvcs_output
       Naming/Naming_Context_Interface.cpp
       Naming/Naming_Loader.cpp
       Naming/Naming_Server.cpp
+      Naming/Storable_Naming_Context_Factory.cpp
       Naming/Transient_Naming_Context.cpp
     }
   }

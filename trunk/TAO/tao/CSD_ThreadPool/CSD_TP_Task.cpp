@@ -45,11 +45,11 @@ TAO::CSD::TP_Task::add_request(TP_Request* request)
 
 
 int
-TAO::CSD::TP_Task::open(void* num_threads_ptr)
+TAO::CSD::TP_Task::open(void* args)
 {
   Thread_Counter num = 1;
 
-  Thread_Counter* tmp = static_cast<Thread_Counter*> (num_threads_ptr);
+  Thread_Counter* tmp = static_cast<Thread_Counter*> (args);
 
   if (tmp == 0)
     {
@@ -78,7 +78,8 @@ TAO::CSD::TP_Task::open(void* num_threads_ptr)
     {
       ACE_ERROR_RETURN((LM_ERROR,
                         ACE_TEXT ("(%P|%t) TP_Task failed to open.  ")
-                        ACE_TEXT ("num_threads (%u) is too large.  Max is %d.\n"),
+                        ACE_TEXT ("num_threads (%u) is too large.  ")
+                        ACE_TEXT ("Max is %d.\n"),
                         num, MAX_THREADPOOL_TASK_WORKER_THREADS),
                         -1);
     }

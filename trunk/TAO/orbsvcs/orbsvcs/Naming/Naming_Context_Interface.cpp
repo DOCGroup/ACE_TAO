@@ -461,8 +461,28 @@ TAO_Naming_Context::resolve_str (const char * n)
   return this->resolve (name.in ());
 }
 
+void
+TAO_Naming_Context::stale (bool value)
+{
+  this->impl_->stale (value);
+}
+
 TAO_Naming_Context_Impl::~TAO_Naming_Context_Impl (void)
 {
+}
+
+void
+TAO_Naming_Context_Impl::stale (bool value)
+{
+  ACE_UNUSED_ARG (value);
+  // Default implementation is no-op
+}
+
+bool
+TAO_Naming_Context_Impl::stale (void)
+{
+  // Default implementation is to reply false
+  return false;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -46,7 +46,7 @@ private:
   int parse_args (void);
 
   /// Ask the Paper Airplane Server for <count> planes.
-  void get_planes (size_t count);
+  int get_planes (size_t count);
 
   /// # of arguments on the command line.
   int argc_;

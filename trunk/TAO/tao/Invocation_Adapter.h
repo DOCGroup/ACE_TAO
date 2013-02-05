@@ -47,6 +47,7 @@ namespace TAO
   class Argument;
   struct Exception_Data;
   class Profile_Transport_Resolver;
+  class Invocation_Retry_State;
 
   /**
    * @class Invocation_Adapter
@@ -124,7 +125,9 @@ namespace TAO
      * @param ex_count Number of elements in the array.
      */
     virtual void invoke (TAO::Exception_Data *ex, unsigned long ex_count);
+
   protected:
+
     /**
      * The stub pointer passed to this call has all the details about
      * the object to which the invocation needs to be routed to. The
@@ -163,7 +166,8 @@ namespace TAO
         TAO_Stub *stub,
         TAO_Operation_Details &details,
         CORBA::Object_var &effective_target,
-        ACE_Time_Value *&max_wait_time);
+        ACE_Time_Value *&max_wait_time,
+        Invocation_Retry_State *retry_state = 0);
 
     /// Make a collocated call.
     /**
@@ -193,7 +197,8 @@ namespace TAO
         TAO_Operation_Details &details,
         CORBA::Object_var &effective_target,
         Profile_Transport_Resolver &r,
-        ACE_Time_Value *&max_wait_time);
+        ACE_Time_Value *&max_wait_time,
+        Invocation_Retry_State *retry_state = 0);
 
     /// Helper method to make a one way invocation.
     /**
