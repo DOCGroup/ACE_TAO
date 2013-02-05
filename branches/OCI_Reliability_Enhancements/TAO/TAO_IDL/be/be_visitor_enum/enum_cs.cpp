@@ -36,7 +36,7 @@ be_visitor_enum_cs::visit_enum (be_enum *node)
   if (node->cli_stub_gen ()
       || node->imported ())
     {
-                  return 0;
+      return 0;
     }
 
   if (be_global->tc_support ())
