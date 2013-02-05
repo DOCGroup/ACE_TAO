@@ -165,6 +165,11 @@ public:
    */
   void reset_profiles (void);
 
+  /// Returns true if the profile in use is
+  /// the same as the profile in use after
+  /// reset_profiles() is called.
+  CORBA::Boolean at_starting_profile (void) const;
+
   /// Returns true if a forward profile has successfully been used.
   /// profile_success_ && forward_profiles_
   CORBA::Boolean valid_forward_profile (void);
@@ -406,6 +411,7 @@ protected:
   /// True if forwarding request upon some specific exceptions
   /// (e.g. OBJECT_NOT_EXIST) already happened.
   ACE_Atomic_Op<TAO_SYNCH_MUTEX, bool> forwarded_on_exception_;
+
 };
 
 // Define a TAO_Stub auto_ptr class.

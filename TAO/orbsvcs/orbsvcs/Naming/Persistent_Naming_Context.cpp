@@ -235,23 +235,6 @@ TAO_Persistent_Bindings_Map::shared_bind (const char * id,
 
 TAO_Persistent_Naming_Context::TAO_Persistent_Naming_Context (PortableServer::POA_ptr poa,
                                                               const char *poa_id,
-                                                              TAO_Persistent_Context_Index *context_index)
-
-  : TAO_Hash_Naming_Context (poa,
-                             poa_id),
-    counter_ (0),
-    persistent_context_ (0),
-    index_ (context_index)
-{
-  ACE_NEW (this->persistent_context_,
-           TAO_Persistent_Bindings_Map (context_index->orb ()));
-
-  // Set the superclass pointer.
-  context_ = persistent_context_;
-}
-
-TAO_Persistent_Naming_Context::TAO_Persistent_Naming_Context (PortableServer::POA_ptr poa,
-                                                              const char *poa_id,
                                                               TAO_Persistent_Context_Index *context_index,
                                                               HASH_MAP *map,
                                                               ACE_UINT32 *counter)
@@ -267,7 +250,10 @@ TAO_Persistent_Naming_Context::TAO_Persistent_Naming_Context (PortableServer::PO
   // Set the superclass pointer.
   context_ = persistent_context_;
 
-  persistent_context_->set (map, index_->allocator ());
+  // If a map was provided (i.e., not defaulted) then set it in the
+  // persistent_context_
+  if (map != 0)
+    persistent_context_->set (map, index_->allocator ());
 }
 
 int
@@ -309,12 +295,13 @@ TAO_Persistent_Naming_Context::make_new_context (PortableServer::POA_ptr poa,
 
   // Put together a servant for the new Naming Context.
 
-  TAO_Persistent_Naming_Context *context_impl = 0;
-  ACE_NEW_THROW_EX (context_impl,
-                    TAO_Persistent_Naming_Context (poa,
-                                                   poa_id,
-                                                   ind),
-                    CORBA::NO_MEMORY ());
+  TAO_Persistent_Naming_Context *context_impl = ind->create_naming_context_impl(
+    poa,
+    poa_id);
+
+  // Verify that a context implementation was created. If not, throw an exception
+  if (context_impl == 0)
+    throw CORBA::NO_MEMORY ();
 
   // Put <context_impl> into the auto pointer temporarily, in case next
   // allocation fails.

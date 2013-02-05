@@ -63,6 +63,16 @@ namespace TAO
       const char * domain_id,
       PortableGroup::ObjectGroupId & group_id);
 
+    /**
+     * Create an empty object group using a specific ID.
+     * Note that this should not also be used with create_object_group ()
+     * as the next object group ID to use will not necessarily be unique.
+     */
+    PortableGroup::ObjectGroup_ptr create_object_group_using_id (
+      const char * type_id,
+      const char * domain_id,
+      const PortableGroup::ObjectGroupId & group_id);
+
     PortableGroup::ObjectGroup_ptr remove_profiles (
       PortableGroup::ObjectGroup_ptr group,
       PortableGroup::ObjectGroup_ptr profile) const;

@@ -30,7 +30,7 @@ parse_filename (Session &session, char * buffer)
   Log log(session);
   if (ACE_OS::strchr(buffer,'=') == 0)
     {
-      log.init(ACE_TEXT_CHAR_TO_TCHAR(buffer));
+      log.process_file (ACE_TEXT_CHAR_TO_TCHAR(buffer));
     }
   else
     {
@@ -38,7 +38,7 @@ parse_filename (Session &session, char * buffer)
       tokens.delimiter_replace('=', 0);
       char *alias = tokens.next();
       ACE_TString filename = ACE_TEXT_CHAR_TO_TCHAR(tokens.next());
-      log.init(filename.c_str(), alias);
+      log.process_file (filename.c_str(), alias);
     }
 }
 
@@ -111,13 +111,12 @@ void
 print_help (void)
 {
   ACE_DEBUG ((LM_DEBUG, "tao_logWalker recongizes the following arguments\n"));
-  ACE_DEBUG ((LM_DEBUG, "-outfile <filename> - write all output to specified file\n"));
-  ACE_DEBUG ((LM_DEBUG, "-dir <directory> - create separate output files, one per log, and put them in specified directory.\n   Either -outfile or -dir may be set but not both. Default output to stdout.\n"));
-  ACE_DEBUG ((LM_DEBUG, "-manifest <manifest> - Take inputs from named manifest file\n"));
-  ACE_DEBUG ((LM_DEBUG, "-tao <1.5 .. 2.0>  - set source TAO version, default 2.0\n"));
-  ACE_DEBUG ((LM_DEBUG, "-date <1|2> - interpret dates as 1) YYYY-MM-DD hh:mm:ss.sss, or 2) MMM DD hh:mm:ss.sss YYYY\n"));
-  ACE_DEBUG ((LM_DEBUG, "-alias <name=address> - bind an alias to a host address.\n   Repeat as many times as necessary.\n"));
-  ACE_DEBUG ((LM_DEBUG, "-proc <service=address> - bind a service such as Naming to a specific endpoint address\n"));
+  ACE_DEBUG ((LM_DEBUG, "-o <filename> - write all output to specified file\n"));
+  ACE_DEBUG ((LM_DEBUG, "-d <directory> - create separate output files, one per log, and put them in specified directory.\n   Either -o or -d may be set but not both. Default output to stdout.\n"));
+  ACE_DEBUG ((LM_DEBUG, "-m <manifest> - Take inputs from named manifest file\n"));
+  ACE_DEBUG ((LM_DEBUG, "-t <1.5 .. 2.0>  - set source TAO version, default 2.0\n"));
+  ACE_DEBUG ((LM_DEBUG, "-a <name=address> - bind an alias to a host address.\n   Repeat as many times as necessary.\n"));
+  ACE_DEBUG ((LM_DEBUG, "-p <service=address> - bind a service such as Naming to a specific endpoint address\n"));
 }
 
 int
@@ -132,8 +131,7 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
   Session session;
   for (int i = 1; i < argc; i++)
     {
-      if (ACE_OS::strcasecmp (argv[i], ACE_TEXT("-outfile")) == 0 ||
-          ACE_OS::strcasecmp (argv[i], ACE_TEXT("-o")) == 0)
+      if (ACE_OS::strcasecmp (argv[i], ACE_TEXT("-o")) == 0)
         {
           if (session.has_dir())
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -142,8 +140,7 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
           session.outfile(ACE_TEXT_ALWAYS_CHAR(argv[++i]));
           continue;
         }
-      if (ACE_OS::strcasecmp (argv[i], ACE_TEXT("-dir")) == 0 ||
-          ACE_OS::strcasecmp (argv[i], ACE_TEXT("-d")) == 0)
+      if (ACE_OS::strcasecmp (argv[i], ACE_TEXT("-d")) == 0)
         {
           if (session.has_outfile())
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -152,14 +149,12 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
           session.make_dir (ACE_TEXT_ALWAYS_CHAR(argv[++i]));
           continue;
         }
-      if (ACE_OS::strcasecmp (argv[i], ACE_TEXT("-manifest")) == 0 ||
-          ACE_OS::strcasecmp (argv[i], ACE_TEXT("-m")) == 0)
+      if (ACE_OS::strcasecmp (argv[i], ACE_TEXT("-m")) == 0)
         {
           parse_manifest (session, argv[++i]);
           continue;
         }
-      if (ACE_OS::strcasecmp (argv[i], ACE_TEXT("-tao")) == 0 ||
-          ACE_OS::strcasecmp (argv[i], ACE_TEXT("-t")) == 0)
+      if (ACE_OS::strcasecmp (argv[i], ACE_TEXT("-t")) == 0)
         {
           if (Session::set_tao_version (argv[++i]))
             continue;
@@ -167,23 +162,12 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
             ACE_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT("TAO version must be 1.5, 1.6, 1.7, 1.8, or 2.0 \n")), 0);
         }
-      if (ACE_OS::strcasecmp (argv[i], ACE_TEXT ("-date")) == 0)
-        {
-          if (Session::set_date_format (argv[++i]))
-            continue;
-          else
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT("Date format option must be 1 or 2\n")), 0);
-        }
-
-      if (ACE_OS::strcasecmp (argv[i], ACE_TEXT("-alias")) == 0 ||
-          ACE_OS::strcasecmp (argv[i], ACE_TEXT("-a")) == 0)
+      if (ACE_OS::strcasecmp (argv[i], ACE_TEXT("-a")) == 0)
         {
           session.alternate_address (ACE_TEXT_ALWAYS_CHAR (argv[++i]));
           continue;
         }
-      if (ACE_OS::strcasecmp (argv[i], ACE_TEXT("-proc")) == 0 ||
-          ACE_OS::strcasecmp (argv[i], ACE_TEXT("-p")) == 0)
+      if (ACE_OS::strcasecmp (argv[i], ACE_TEXT("-p")) == 0)
         {
           session.default_service (ACE_TEXT_ALWAYS_CHAR (argv[++i]));
           continue;

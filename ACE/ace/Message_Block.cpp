@@ -1016,78 +1016,93 @@ ACE_Message_Block::duplicate (void) const
 {
   ACE_TRACE ("ACE_Message_Block::duplicate");
 
+  ACE_Message_Block *nb_top = 0;
   ACE_Message_Block *nb = 0;
 
-  // Create a new <ACE_Message_Block> that contains unique copies of
-  // the message block fields, but a reference counted duplicate of
-  // the <ACE_Data_Block>.
-
-  // If there is no allocator, use the standard new and delete calls.
-  if (this->message_block_allocator_ == 0)
-    ACE_NEW_RETURN (nb,
-                    ACE_Message_Block (0, // size
-                                       ACE_Message_Type (0), // type
-                                       0, // cont
-                                       0, // data
-                                       0, // allocator
-                                       0, // locking strategy
-                                       0, // flags
-                                       this->priority_, // priority
-                                       ACE_EXECUTION_TIME,
-                                       ACE_DEADLINE_TIME,
-                                       // Get a pointer to a
-                                       // "duplicated" <ACE_Data_Block>
-                                       // (will simply increment the
-                                       // reference count).
-                                       this->data_block ()->duplicate  (),
-                                       this->data_block ()->data_block_allocator (),
-                                       this->message_block_allocator_),
-                  0);
-  else // Otherwise, use the message_block_allocator passed in.
-    ACE_NEW_MALLOC_RETURN (nb,
-                           static_cast<ACE_Message_Block*> (
-                             message_block_allocator_->malloc (sizeof (ACE_Message_Block))),
-                           ACE_Message_Block (0, // size
-                                              ACE_Message_Type (0), // type
-                                              0, // cont
-                                              0, // data
-                                              0, // allocator
-                                              0, // locking strategy
-                                              0, // flags
-                                              this->priority_, // priority
-                                              ACE_EXECUTION_TIME,
-                                              ACE_DEADLINE_TIME,
-                                              // Get a pointer to a
-                                              // "duplicated" <ACE_Data_Block>
-                                              // (will simply increment the
-                                              // reference count).
-                                              this->data_block ()->duplicate  (),
-                                              this->data_block ()->data_block_allocator (),
-                                              this->message_block_allocator_),
-                           0);
-
-  // Set the read and write pointers in the new <Message_Block> to the
-  // same relative offset as in the existing <Message_Block>.  Note
-  // that we are assuming that the data_block()->base() pointer
-  // doesn't change when it's duplicated.
-  nb->rd_ptr (this->rd_ptr_);
-  nb->wr_ptr (this->wr_ptr_);
+  const ACE_Message_Block *current = this;
 
   // Increment the reference counts of all the continuation messages.
-  if (this->cont_)
+  while (current)
     {
-      nb->cont_ = this->cont_->duplicate ();
+      ACE_Message_Block* cur_dup = 0;
 
-      // If things go wrong, release all of our resources and return
-      // 0.
-      if (nb->cont_ == 0)
+      // Create a new <ACE_Message_Block> that contains unique copies of
+      // the message block fields, but a reference counted duplicate of
+      // the <ACE_Data_Block>.
+
+      // If there is no allocator, use the standard new and delete calls.
+      if (current->message_block_allocator_ == 0)
+        ACE_NEW_NORETURN (cur_dup,
+                          ACE_Message_Block (0, // size
+                                             ACE_Message_Type (0), // type
+                                             0, // cont
+                                             0, // data
+                                             0, // allocator
+                                             0, // locking strategy
+                                             0, // flags
+                                             current->priority_, // priority
+                                             ACE_EXECUTION_TIME,
+                                             ACE_DEADLINE_TIME,
+                                             // Get a pointer to a
+                                             // "duplicated" <ACE_Data_Block>
+                                             // (will simply increment the
+                                             // reference count).
+                                             current->data_block ()->duplicate  (),
+                                             current->data_block ()->data_block_allocator (),
+                                             current->message_block_allocator_));
+      else // Otherwise, use the message_block_allocator passed in.
+        ACE_NEW_MALLOC_NORETURN (cur_dup,
+                                 static_cast<ACE_Message_Block*> (
+                                      current->message_block_allocator_->malloc (sizeof (ACE_Message_Block))),
+                                 ACE_Message_Block (0, // size
+                                                    ACE_Message_Type (0), // type
+                                                    0, // cont
+                                                    0, // data
+                                                    0, // allocator
+                                                    0, // locking strategy
+                                                    0, // flags
+                                                    current->priority_, // priority
+                                                    ACE_EXECUTION_TIME,
+                                                    ACE_DEADLINE_TIME,
+                                                    // Get a pointer to a
+                                                    // "duplicated" <ACE_Data_Block>
+                                                    // (will simply increment the
+                                                    // reference count).
+                                                    current->data_block ()->duplicate  (),
+                                                    current->data_block ()->data_block_allocator (),
+                                                    current->message_block_allocator_));
+
+
+      // If allocation failed above, release everything done so far and return NULL
+      if (cur_dup == 0)
         {
-          nb->release ();
-          nb = 0;
+          nb_top->release ();
+          return NULL;
         }
+
+      // Set the read and write pointers in the new <Message_Block> to the
+      // same relative offset as in the existing <Message_Block>.  Note
+      // that we are assuming that the data_block()->base() pointer
+      // doesn't change when it's duplicated.
+      cur_dup->rd_ptr (current->rd_ptr_);
+      cur_dup->wr_ptr (current->wr_ptr_);
+
+      if (!nb)
+        {
+          /* First in the list: set leading pointers */
+          nb_top = nb = cur_dup;
+        }
+      else
+        {
+          /* Continuing on: append to nb and walk down the list */
+          nb->cont_ = cur_dup;
+          nb = nb->cont_;
+        }
+
+      current = current->cont_;
     }
 
-  return nb;
+  return nb_top;
 }
 
 ACE_Message_Block *
@@ -1216,7 +1231,7 @@ ACE_Message_Block::clone (Message_Flags mask) const
           // the cloned data block that was created above. If we used
           // ACE_NEW_MALLOC_RETURN, there would be a memory leak because the
           // above db pointer would be left dangling.
-          new_message_block = static_cast<ACE_Message_Block*> (message_block_allocator_->malloc (sizeof (ACE_Message_Block)));
+          new_message_block = static_cast<ACE_Message_Block*> (old_message_block->message_block_allocator_->malloc (sizeof (ACE_Message_Block)));
           if (new_message_block != 0)
             new (new_message_block) ACE_Message_Block (0, // size
                                                        ACE_Message_Type (0), // type

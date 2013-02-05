@@ -41,13 +41,6 @@ public:
     SC_REMOVE
   };
 
-  enum RepoMode {
-    REPO_NONE,
-    REPO_XML_FILE,
-    REPO_HEAP_FILE,
-    REPO_REGISTRY
-  };
-
   Options ();
 
   /// Parse the command-line arguments and initialize the options.
@@ -81,6 +74,14 @@ public:
   /// Do we allow modifications to the servers?
   bool readonly (void) const;
 
+  /// Which type of repository is to be used?
+  enum RepoMode {
+    REPO_NONE,
+    REPO_XML_FILE,
+    REPO_SHARED_FILES,
+    REPO_HEAP_FILE,
+    REPO_REGISTRY
+  };
   RepoMode repository_mode (void) const;
 
   /// Do we wish to clear out the repository
@@ -95,6 +96,10 @@ public:
   ACE_Time_Value ping_interval (void) const;
 
   bool unregister_if_address_reused (void) const;
+
+  /// Indicate what type of ImR Locator this is.
+  enum ImrType { BACKUP_IMR, PRIMARY_IMR, STANDALONE_IMR };
+  ImrType imr_type(void) const;
 
 private:
   /// Parses and pulls out arguments for the ImR
@@ -148,6 +153,9 @@ private:
   /// Should check the server address and remove previous server if
   /// the address is reused.
   bool unregister_if_address_reused_;
+
+  /// The type of ImR Locator this is.
+  ImrType imr_type_;
 };
 
 #endif

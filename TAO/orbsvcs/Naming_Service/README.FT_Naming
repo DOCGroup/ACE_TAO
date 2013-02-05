@@ -1,0 +1,252 @@
+$Id$
+
+This directory contains files that implement a server for the TAO
+FT Naming Service. The FT Naming Service supports a dual redundant
+scheme for fault tolerance and also implements a load balancing
+mechanism when objects are bound to an object group within a named
+element in the naming service.
+
+How to Run the TAO FT Naming Service
+=================================
+
+1. Syntax
+
+        % tao_ft_naming  [-ORBNameServicePort nsport]
+                         [--primary]
+                         [--backup]
+                         [-b base_address]
+                         [-d debug_flag]
+                         [-m (1=enable multicast responses,0=disable(default)]
+                         [-n number_of_threads]
+                         [-c ft_naming_service_ior_file]
+                         [-g ft_naming_manager_ior_file]
+                         [-o this_servers_object_ref_ior_file]
+                         [-r directory_for_naming_context_replication]
+                         [-v directory_for_object_group_replication]
+                         [-s context_size]
+                         [-z time]
+
+2. Optional Command-line Arguments
+
+        --primary
+                Start this FT Naming Server in the primary role for the
+                dual redundant replication scheme. The primary must be
+                started first and then the backup. If neither primary
+                nor backup options are supplied, the server will run
+                standalone without support for fault tolerance.
+
+        --backup
+                Start this FT Naming Service in the backup role for the
+                dual redundant replication scheme. The backup must be
+                started after the primary and will coordinate with the
+                primary to set up the notifications with the peer for
+                changes to the naming contexts and object groups.
+
+        -ORBNameServicePort nsport
+                Multicast port for listening for requests from clients
+                trying to bootstrap to a Naming Service through the
+                use of multicast.  This is only used when multicast
+                responding is enabled via '-m 1'.
+
+        -b base_address
+                The address used for memory mapping the file specified
+                with the "-f" option above.  The value supplied with
+                this option is only used when the Naming Service runs
+                in persistent mode, i.e., "-f" option is present.
+
+        -d
+               Provides Naming Service specific debug information. By default
+               no diagnostics are given.
+
+        -m <0|1>
+                TAO offers a simple, very non-standard method for
+                clients to discover the initial reference for the
+                Naming Service.  However, since it can be inadequate and cause
+                unexpected results if, for example, there are multiple
+                naming services running on the network, the DEFAULT
+                behavior is for the Naming Service to NOT RESPOND to
+                such multicast queries (use the Interoperable Naming
+                Service bootstrap options instead).  The multicast option
+                only works with for standalone servers and fault tolerance
+                will not be supported by the server when started with this
+                option.
+
+        -n number_of_threads
+                Specify a number of threads to be used to run the ORB.
+                Default is 1.
+
+        -c ns_ior_output_file
+                The name of the file, in which to store the IOR containing
+                the profiles for both this naming servers root naming
+                context and the peer naming service root naming context.
+                This option should only be used for the --backup naming
+                service.
+
+        -g nm_ior_output_file
+                The name of the file, in which to store the IOR containing
+                the profiles for both this naming manager and the peer naming
+                manager. This option should only be used for the --backup
+                naming service.
+
+        -h nm_ior_output_file
+                The name of the file, in wich to store the IOR of the
+                naming manager for just this service. This option can
+                be useful for testing.
+
+        -o ior_output_file
+                The name of the file, in which to store the IOR of the
+                root Naming Service context for just this server.  This
+                option is useful if you want to run the naming service
+                standalone, without the backup and need to obtain the
+                IOR of the root context implemented by this process.
+
+        -p pid_file_name
+                The name of the file, in which to store the process id
+                of the Naming Service server.
+
+        -s context_size
+                Size of the hash table allocated for the root Naming
+                Context (if one is created).  All contexts created
+                under the root will use the same size for their hash
+                tables.  The default is 1024.
+
+        -t time
+                How long (in seconds) the server should listen for
+                client requests before terminating.
+
+        -f persistence_file_name
+                The name of the file to use to store/retrieve
+                persistent state of the Naming Service.
+
+        -r directory
+               Use redundant flat-file persistence; same as the -u option,
+               except more than one instance of the TAO Naming Service server
+               can run, each using the same set of disk files, to achieve a
+               degree of fault tolerence (as long as directory is accessible
+               to both servers). Make sure you start the --primary and --backup
+               with the same directory so they will share the persistence
+               directory.
+
+        -u directory
+               Use a flat-file persistence implementation that stores object
+               reference information in a file per context. Each context file
+               is placed in the directory specified. This option can be used
+               when running the FT Naming Service standalone - without
+               fault tolerance/redundancyl.
+
+        -v directory
+               Use redundant flat-file persistence for naming contexts that
+               are created within this server. Users can add object to the
+               object group and bind the object group to a name within the
+               naming service to obtain a load balancing capability.
+               Make sure you start the --primary and --backup
+               with the same directory so they will share the persistence
+               directory.
+
+        -z time
+                A relative round trip timeout value (in seconds) that
+                the service should wait for when trying to progress an
+                operation through a federated naming context before
+                timing out and throwing a 'Cannot proceed' exception
+                to the client. If no value is set this will never occur.
+
+3. Environment Variables
+
+        NameServicePort
+                Multicast port for listening for requests from clients
+                trying to bootstrap to a Naming Service through the
+                use of multicast.  This is only used when multicast
+                responding is enabled via '-m 1'.
+
+4. Persistence
+
+        When running as a fault tolerant service, the TAO FT Naming Service
+        uses flat file persistence. It may also be run with no persistence,
+        however, upon the failure of the process, no state will be saved
+        and it will not provide the dual-redundant fault-tolerance capability.
+
+        1. If the specified persistence directories for naming context
+           data and object group data do not exist, the server will exit.
+
+        2. If the specified file exists, it is scanned and:
+
+                a) If any inconsistency is detected in the stored
+                state, or the file is not recognized by the Naming
+                Service, the server exits.  (This may happen, for
+                example, if a server or host crashed in the middle of
+                writing a record to this file on a previous run).  A
+                noncorrupted version of the file must be used instead.
+
+                b) If the file is recognized and is ok, the state
+                stored in the file becomes the current state of the
+                Naming Service.
+
+5. Implementation Policies
+
+        a. No support for BindingIterators
+
+                With the use of redundancy between a pair of naming
+                servers, there is no way to guarantee that the context
+                structure being iterated on would remain consistent,
+                so the user must ensure that when invoking the list
+                operation that a 'how_many' value must be provided that
+                is sufficiently large to hold all returned bindings in
+                a BindingList with no BindingIterator being needed. If
+                the 'how_many' parameter is insufficiently large, the
+                FT Naming Service will throw a CORBA::NO_IMPLEMENT
+                exception.
+
+        b. Dealing with orphaned contexts
+
+                This implementation of the Naming Service does not
+                include any form of 'garbage collection' for orphaned
+                naming contexts.  It is solely the responsibility of
+                clients to clean up after themselves and not leak
+                server resources.  All the resources, including
+                orphaned contexts, are released during the Naming
+                Server shutdown.
+
+6. Clients: ways to bootstrap to the Naming Service:
+
+        There are several methods for a client to bootstrap to a
+        Naming Service, i.e., there are several mechanisms
+        <resolve_initial_references> can use when asked for
+        "NameService".  In order of predictable behavior, they are:
+
+        1. Command-line options
+
+                The "-ORBInitRef NameService=IOR:..." or environment
+                variable NameServiceIOR can be used on the client side
+                to specify the object that the call to
+                <resolve_initial_references> should return to the
+                client.  (On the server side, -c option can be used in
+                the backup Naming Service to write the ior).
+
+                Example (Unix, same host):
+
+                        % $TAO_ROOT/orbsvcs/Naming_Service/Naming_Service
+                          -r NameService -v ObjectGroups --primary
+                        % $TAO_ROOT/orbsvcs/Naming_Service/Naming_Service
+                          -r NameService -v ObjectGroups -c ns_ior_file --backup
+                        % my_client -ORBInitRef NameService=file://ns_ior_file
+
+                        On the first line, we start the primary Naming
+                        Service. On the second line we start the backup
+                        Naming Service and output the multi-profile IOR to
+                        to <ns_ior_file>.  On the third line, we start
+                        some client, and specify the ior
+                        <resolve_initial_references> should return for
+                        the Naming Service in a file format.
+
+
+Troubleshooting
+============================================
+
+Q1. Error Message: "Invalid persistence directory" or "Invalid object
+group persistence directory"
+
+A1. On starting, the error message "Invalid persistence directory"
+indicates that the supplied value for the -r option does not point
+to a directory that can be used to store the state of the naming contexts
+or object groups. Make sure that the provided directories exist and
+that they are write enabled.

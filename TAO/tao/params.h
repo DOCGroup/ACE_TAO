@@ -14,9 +14,11 @@
 #define TAO_PARAMS_H
 
 #include /**/ "ace/pre.h"
+#include "tao/Invocation_Retry_Params.h"
 #include "ace/Unbounded_Queue.h"
 #include "ace/Array_Map.h"
 #include "ace/Synch.h"
+#include "ace/Time_Value.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -41,6 +43,8 @@ typedef ACE_Unbounded_Queue<ACE_CString> TAO_EndpointSet;
 typedef ACE_Unbounded_Queue_Const_Iterator<ACE_CString> TAO_EndpointSetIterator;
 
 // -------------------------------------------------------------------
+
+
 
 /**
  * @class TAO_ORB_Parameters
@@ -237,6 +241,9 @@ public:
   void thread_lane_resources_manager_factory_name (const char *s);
   const char *thread_lane_resources_manager_factory_name (void) const;
 
+  void dynamic_thread_pool_config_name (const char *s);
+  const char *dynamic_thread_pool_config_name (void) const;
+
   void stub_factory_name (const char *s);
   const char *stub_factory_name (void) const;
 
@@ -255,7 +262,13 @@ public:
   void forward_invocation_on_object_not_exist (bool opt);
   bool forward_invocation_on_object_not_exist (void) const;
 
-  void forward_once_exception (const int);
+  void forward_on_exception_limit (const int ef, const int limit);
+  void forward_on_exception_delay (const ACE_Time_Value &delay);
+
+  TAO::Invocation_Retry_Params &invocation_retry_params (void);
+  const TAO::Invocation_Retry_Params &invocation_retry_params (void) const;
+
+  void forward_once_exception (const int ef);
   int forward_once_exception () const;
 
   void allow_ziop_no_server_policies (bool opt);
@@ -458,6 +471,13 @@ private:
   ACE_CString thread_lane_resources_manager_factory_name_;
 
   /**
+   * Name of the non-RT dynamic thread pool configuration set to load.
+   * This is only used if the Dynamic_TP library is linked. Default
+   * is an empty string.
+   */
+  ACE_CString dynamic_thread_pool_config_name_;
+
+  /**
    * Name of the service object used to create the RootPOA.  The
    * default value is "TAO_POA".  If TAO_RTCORBA is loaded, this
    * will be changed to TAO_RT_POA so that a POA equipped with
@@ -478,13 +498,15 @@ private:
    */
   bool forward_invocation_on_object_not_exist_;
 
+  TAO::Invocation_Retry_Params invocation_retry_params_;
 
   /**
    * The exceptions upon which the requests will be forwarded once.
+   * This is retained for backward compatibility of behavior.
    */
   int forward_once_exception_;
 
-  /**
+/**
    * Name of the collocation resolver that needs to be instantiated.
    * The default value is "Default_Collocation_Resolver". If
    * TAO_RTCORBA is linked, the set_collocation_resolver will be

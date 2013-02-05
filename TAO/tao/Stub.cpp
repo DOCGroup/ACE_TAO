@@ -116,6 +116,13 @@ TAO_Stub::add_forward_profiles (const TAO_MProfile &mprofiles,
   ACE_MT (ACE_GUARD (TAO_SYNCH_MUTEX,
                      guard,
                      this->profile_lock_));
+  if (TAO_debug_level > 5)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("TAO (%P|%t) - Stub::add_forward_profiles, ")
+                  ACE_TEXT ("acquired profile lock this = 0x%x\n"),
+                  this));
+    }
 
   if (permanent_forward)
     {
@@ -133,8 +140,10 @@ TAO_Stub::add_forward_profiles (const TAO_MProfile &mprofiles,
            TAO_MProfile (mprofiles));
 
   if (permanent_forward)
-    // bookmark the new element at bottom of stack
-    this->forward_profiles_perm_ = this->forward_profiles_;
+    {
+      // bookmark the new element at bottom of stack
+      this->forward_profiles_perm_ = this->forward_profiles_;
+    }
 
   // forwarded profile points to the new IOR (profiles)
   this->profile_in_use_->forward_to (this->forward_profiles_);
@@ -159,6 +168,14 @@ TAO_Stub::create_ior_info (IOP::IOR *&ior_info, CORBA::ULong &index)
                             guard,
                             this->profile_lock_,
                             -1));
+  if (TAO_debug_level > 5)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("TAO (%P|%t) - Stub::create_ior_info, acquired ")
+                  ACE_TEXT ("profile lock this = 0x%x\n"),
+                  this));
+    }
+
 
   IOP::IOR *tmp_info = 0;
 
@@ -223,7 +240,8 @@ TAO_Stub::object_key (void) const
     {
       // Double-checked
       // FUZZ: disable check_for_ACE_Guard
-      ACE_Guard<TAO_SYNCH_MUTEX> obj (const_cast <TAO_SYNCH_MUTEX&>(this->profile_lock_));
+      ACE_Guard<TAO_SYNCH_MUTEX> obj (
+        const_cast <TAO_SYNCH_MUTEX&>(this->profile_lock_));
       // FUZZ: enable check_for_ACE_Guard
 
       if (obj.locked () != 0 &&  this->forward_profiles_ != 0)
@@ -520,6 +538,14 @@ TAO_Stub::marshal (TAO_OutputCDR &cdr)
                                 guard,
                                 this->profile_lock_,
                                 0));
+  if (TAO_debug_level > 5)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("TAO (%P|%t) - Stub::marshal, acquired ")
+                  ACE_TEXT ("profile lock this = 0x%x\n"),
+                  this));
+    }
+
 
       ACE_ASSERT(this->forward_profiles_ !=0);
 

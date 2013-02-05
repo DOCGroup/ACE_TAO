@@ -71,7 +71,7 @@ namespace TAO
     TAO_DII_ASYNCH_INVOCATION
   };
 
-  enum Forward_Once_Exception
+  enum Forward_On_Exception
     {
       FOE_NON              = 0x0,
       FOE_OBJECT_NOT_EXIST = 0x1,

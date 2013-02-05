@@ -56,9 +56,10 @@ Airplane_Client_i::parse_args (void)
 
 // Retreives <count> paper airplanes from the server.
 
-void
+int
 Airplane_Client_i::get_planes (size_t count)
 {
+  int rc = 0;
   for (size_t i = 0; i < count; i++)
     {
       try
@@ -72,8 +73,10 @@ Airplane_Client_i::get_planes (size_t count)
         {
           ACE_ERROR ((LM_ERROR, "Plane %d exception:\n", i));
           ex._tao_print_exception ("get_planes");
+          rc = 1;
         }
     }
+  return rc;
 }
 
 
@@ -82,9 +85,7 @@ Airplane_Client_i::get_planes (size_t count)
 int
 Airplane_Client_i::run ()
 {
-  this->get_planes (this->loop_count_);
-
-  return 0;
+  return this->get_planes (this->loop_count_);
 }
 
 Airplane_Client_i::~Airplane_Client_i (void)

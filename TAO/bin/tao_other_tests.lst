@@ -81,7 +81,8 @@ TAO/orbsvcs/tests/HTIOP/AMI/run_test.pl: !NO_UUID !ST !STATIC !MINIMUM !CORBA_E_
 TAO/orbsvcs/tests/HTIOP/BiDirectional/run_test.pl: !NO_UUID !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !LynxOS
 TAO/orbsvcs/tests/Simple_Naming/run_test.pl: !ST !NO_MESSAGING !ACE_FOR_TAO !LynxOS !CORBA_E_MICRO !DISTRIBUTED
 TAO/orbsvcs/tests/Simple_Naming/run_test_ffp.pl: !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NO_MESSAGING !ACE_FOR_TAO !DISTRIBUTED
-TAO/orbsvcs/tests/Redundant_Naming/run_test.pl: !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !DISTRIBUTED
+TAO/orbsvcs/tests/Simple_Naming/run_test_ft.pl: !Win32 !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NO_MESSAGING !ACE_FOR_TAO !DISTRIBUTED
+TAO/orbsvcs/tests/Redundant_Naming/run_test.pl: !Win32 !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !DISTRIBUTED
 TAO/orbsvcs/tests/Trading/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/orbsvcs/tests/unit/Trading/Interpreter/run_test.pl: !CORBA_E_MICRO
 TAO/orbsvcs/tests/Event/Basic/run_test.pl: !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO
@@ -116,6 +117,13 @@ TAO/orbsvcs/tests/ImplRepo/run_test.pl persistent_ir: !MINIMUM !CORBA_E_COMPACT 
 TAO/orbsvcs/tests/ImplRepo/run_test.pl nt_service_ir: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR Win32 !ACE_FOR_TAO
 TAO/orbsvcs/tests/ImplRepo/run_test.pl shutdown: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !LynxOS !ACE_FOR_TAO
 TAO/orbsvcs/tests/ImplRepo/run_test.pl perclient: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !ACE_FOR_TAO
+TAO/orbsvcs/tests/ImplRepo/run_test.pl persistent_ir_hash: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !ACE_FOR_TAO
+TAO/orbsvcs/tests/ImplRepo/run_test.pl persistent_ir_shared: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !ACE_FOR_TAO !Win32
+TAO/orbsvcs/tests/ImplRepo/run_test.pl failover -replica: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !ACE_FOR_TAO !Win32
+TAO/orbsvcs/tests/ImplRepo/run_test.pl persistent_ft -replica: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !ACE_FOR_TAO !Win32
+TAO/orbsvcs/tests/ImplRepo/run_test.pl persistent_listingcorrupt -replica: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !ACE_FOR_TAO !Win32
+TAO/orbsvcs/tests/ImplRepo/run_test.pl persistent_activatorcorrupt -replica: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !ACE_FOR_TAO !Win32
+TAO/orbsvcs/tests/ImplRepo/run_test.pl persistent_servercorrupt -replica: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !ACE_FOR_TAO !Win32
 TAO/orbsvcs/tests/ImplRepo/NameService/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !ACE_FOR_TAO
 TAO/orbsvcs/tests/ImplRepo/locked/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !LynxOS !ACE_FOR_TAO
 TAO/orbsvcs/tests/ImplRepo/scale/run_test.pl -servers 5 -objects 5: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !ACE_FOR_TAO !LynxOS
@@ -124,6 +132,7 @@ TAO/orbsvcs/tests/ImplRepo/Bug_2604_Regression/run_test.pl: !MINIMUM !CORBA_E_CO
 TAO/orbsvcs/tests/ImplRepo/ReconnectServer/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !ACE_FOR_TAO !LynxOS
 TAO/orbsvcs/tests/ImplRepo/ReconnectServer/run_test.pl -forwardalways: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !ACE_FOR_TAO !LynxOS
 TAO/orbsvcs/tests/ImplRepo/ReconnectServer/run_test.pl -forwardonce: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !ACE_FOR_TAO !LynxOS
+TAO/orbsvcs/tests/ImplRepo/RestartServer/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !ACE_FOR_TAO !LynxOS
 TAO/orbsvcs/examples/ImR/Combined_Service/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !STATIC !ST !ACE_FOR_TAO !LynxOS
 TAO/orbsvcs/examples/CosEC/TypedSimple/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NO_IFR !ACE_FOR_TAO !WCHAR
 TAO/orbsvcs/tests/CosEvent/Timeout/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !NO_MESSAGING !ACE_FOR_TAO !LynxOS
@@ -259,3 +268,8 @@ TAO/orbsvcs/DevGuideExamples/NamingService/corbaname_Messenger/run_test.pl: !COR
 TAO/orbsvcs/DevGuideExamples/ValueTypes/Notify/run_test.pl: !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !LynxOS
 TAO/orbsvcs/DevGuideExamples/InterfaceRepo/run_test.pl: !MINIMUM !NO_IFR !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !ACE_FOR_TAO
 TAO/orbsvcs/DevGuideExamples/PortableInterceptors/PICurrent_NameService/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS !LynxOS !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
+TAO/utils/nsgroup/run_test.pl: !Win32 !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !STATIC !ACE_FOR_TAO !LynxOS !ST
+TAO/orbsvcs/tests/FT_Naming/Load_Balancing/run_test.pl: !Win32 !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !ACE_FOR_TAO !LynxOS !ST
+TAO/orbsvcs/tests/FT_Naming/Replication/run_test.pl: !Win32 !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !ACE_FOR_TAO !LynxOS !ST
+TAO/orbsvcs/tests/FT_Naming/FaultTolerant/run_test.pl: !Win32 !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !ACE_FOR_TAO !LynxOS !ST
+TAO/orbsvcs/tests/FT_Naming/Federation/run_test.pl: !Win32 !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !ACE_FOR_TAO !LynxOS !ST

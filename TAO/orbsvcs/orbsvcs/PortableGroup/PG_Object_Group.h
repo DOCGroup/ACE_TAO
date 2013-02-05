@@ -57,6 +57,9 @@ namespace TAO
    */
   class TAO_PortableGroup_Export PG_Object_Group
   {
+
+  protected:
+
     // Information about an object group member
     struct MemberInfo
     {
@@ -72,7 +75,6 @@ namespace TAO
 
       /// Location where this member exists
       PortableGroup::Location location_;
-
 
       /// TRUE if this is primary member
       CORBA::Boolean is_primary_;
@@ -126,16 +128,24 @@ namespace TAO
       const PortableGroup::Criteria & the_criteria,
       TAO::PG_Property_Set * type_properties);
 
+    /**
+     * This constructor is to be used for initialization when
+     * reading the object group from a stream.
+     */
+    PG_Object_Group (
+      CORBA::ORB_ptr orb,
+      PortableGroup::FactoryRegistry_ptr factory_registry,
+      TAO::PG_Object_Group_Manipulator & manipulator);
 
     /// Destructor
-    ~PG_Object_Group ();
+    virtual ~PG_Object_Group ();
 
     /////////////////
     // public methods
 
   public:
     /// return a duplicated reference to this group (IOGR)
-    PortableGroup::ObjectGroup_ptr reference()const;
+    PortableGroup::ObjectGroup_ptr reference() const;
 
     /**
      * Note the caller receives a copy of the factoryinfos in the result argument.
@@ -146,7 +156,7 @@ namespace TAO
     /**
      * get location of primary member
      */
-    const PortableGroup::Location & get_primary_location() const;
+    virtual const PortableGroup::Location & get_primary_location();
 
     /**
      * returns a duplicate
@@ -186,14 +196,14 @@ namespace TAO
     /**
      * @@TODO DOC
      */
-    PortableGroup::ObjectGroupId  get_object_group_id () const;
+    virtual PortableGroup::ObjectGroupId  get_object_group_id () const;
 
     /**
      * Add a new member to the group.
      * @param the_location the location for the new member
      * @param member the member to be added
      */
-    void add_member (
+    virtual void add_member (
         const PortableGroup::Location & the_location,
         CORBA::Object_ptr member);
 
@@ -204,21 +214,21 @@ namespace TAO
      * it returns a boolean result.  A false return means caller should
      * throw FT::PrimaryNot_Set.
      */
-    int set_primary_member (
+    virtual int set_primary_member (
       TAO_IOP::TAO_IOR_Property * prop,
       const PortableGroup::Location & the_location);
 
     /**
      * @@TODO DOC
      */
-    void remove_member (
+    virtual void remove_member (
         const PortableGroup::Location & the_location);
 
 
     /**
      * @@TODO DOC
      */
-    void create_member (
+    virtual void create_member (
         const PortableGroup::Location & the_location,
         const char * type_id,
         const PortableGroup::Criteria & the_criteria);
@@ -226,30 +236,41 @@ namespace TAO
     /**
      * @@TODO DOC
      */
-    PortableGroup::Locations * locations_of_members (void);
+    virtual PortableGroup::Locations * locations_of_members (void);
 
     /**
      * @@TODO DOC
      */
-    CORBA::Object_ptr get_member_reference (
+    virtual CORBA::Object_ptr get_member_reference (
         const PortableGroup::Location & the_location);
 
 
     /**
      * @@TODO DOC
      */
-    void initial_populate (void);
+    virtual void initial_populate (void);
 
     /**
      * @@TODO DOC
      */
-    void minimum_populate (void);
+    virtual void minimum_populate (void);
 
 
     /**
      * @@TODO DOC
      */
-    int has_member_at (const PortableGroup::Location & location );
+    virtual int has_member_at (const PortableGroup::Location & location );
+
+
+    /**
+     * Tell the object group that it should distribute updates to the object
+     * group state.
+     */
+    virtual void distribute (int value);
+
+    virtual void set_name (const char* group_name);
+
+    virtual const char* get_name (void);
 
     /////////////////////////
     // Implementation methods
@@ -259,11 +280,13 @@ namespace TAO
 
     void distribute_iogr (void);
 
-    PortableGroup::ObjectGroup_ptr add_member_to_iogr(CORBA::Object_ptr member);
-
-
     void create_members (size_t count);
 
+  protected:
+
+    virtual PortableGroup::ObjectGroup_ptr add_member_to_iogr(CORBA::Object_ptr member);
+
+    void clear_members_map (void);
 
     /////////////////////////
     // Forbidden methods
@@ -290,19 +313,28 @@ namespace TAO
      */
     mutable TAO_SYNCH_MUTEX internals_;
 
+  protected:
     CORBA::ORB_var orb_;
+
+  private:
 
     /// Where to find the factories for replicas.
     PortableGroup::FactoryRegistry_var factory_registry_;
 
+  protected:
 
     // The object group manipulator
     TAO::PG_Object_Group_Manipulator & manipulator_;
+
+    /// boolean true if updates should be distributed
+    int distribute_;
 
     /// boolean true if empty group
     int empty_;
 
     ACE_CString role_;
+
+
     PortableGroup::TypeId_var type_id_;
 
     /**
@@ -324,6 +356,12 @@ namespace TAO
      * The CORBA object id assigned to this object group
      */
     PortableServer::ObjectId_var object_id_;
+
+    /**
+     * an optional attribute of the object group which is a string
+     * name that is assigned to the object group by the creator.
+     */
+    char* group_name_;
 
     // group members
     MemberMap members_;

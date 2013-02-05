@@ -17,7 +17,7 @@ class HostProcess;
 
 typedef ACE_RB_Tree<long, HostProcess *, ACE_Less_Than<long>, ACE_Null_Mutex> Processes;
 typedef ACE_RB_Tree<ACE_CString, HostProcess *, ACE_Less_Than<ACE_CString>, ACE_Null_Mutex> Procs_By_Name;
-typedef ACE_Hash_Map_Manager<ACE_CString, ACE_CString, ACE_Null_Mutex> AltAddresses;
+typedef ACE_Hash_Map_Manager<const ACE_CString, ACE_CString, ACE_Null_Mutex> AltAddresses;
 
 class Session
 {
@@ -33,10 +33,9 @@ public:
 
   static bool set_tao_version (ACE_TCHAR *str);
   static long tao_version (void);
-  static int date_format (void);
-  static bool set_date_format (ACE_TCHAR *ser);
-
   void alternate_address (const char *string);
+  bool is_equivalent (const ACE_CString &primary,
+                      const ACE_CString &alternate);
   void default_service (const char *string);
 
   void make_dir (const char * );
@@ -56,7 +55,6 @@ private:
   ACE_CString base_dir_;
   ACE_CString outfile_;
   static long tao_version_;
-  static int date_format_;
 };
 
 #endif // LOG_WALKER_SESSION_H

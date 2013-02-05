@@ -27,10 +27,8 @@ class Thread;
 struct PeerNode
 {
   PeerNode (long h, PeerProcess *p);
-  ~PeerNode (void);
   long handle_;
   PeerProcess *peer_;
-  bool closed_;
 };
 
 typedef ACE_DLList<Thread> ThreadList;
@@ -57,7 +55,10 @@ public:
 
   // Returns a thread instance based on thread id. Will create an instance
   // as needed.
-  Thread * find_thread (long tid);
+  Thread * find_thread (long tid, size_t offset);
+
+  // Returns a thread that has a pending peer with the supplied address
+  Thread * find_thread_for_peer (const ACE_CString& addr, Session &session);
 
   // Returns a thread that had previously worked with handle h. May return
   // a null pointer.
@@ -85,9 +86,12 @@ public:
 
   // locate a peer process by handle or address
   PeerProcess *find_peer (const ACE_CString& addr);
-  PeerProcess *find_peer (long handle, bool ignore_closed);
+  PeerProcess *find_peer (long handle);
 
-  void close_peer (long handle);
+  void remove_peer (long handle);
+
+  // remove a peer by handle, noting the line.
+  void close_peer (long handle, size_t offset);
 
   // various output methods
   void dump_ident (ostream &strm, const char *extra);
@@ -103,8 +107,6 @@ public:
   void reconcile_peers (Session *session);
 
 private:
-  PeerNode *find_peer_i (long handle);
-
   void iterate_peers (int group,
                       int operation,
                       ostream *strm = 0,

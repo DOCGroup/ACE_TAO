@@ -70,6 +70,9 @@ private:
 
   /// File where the IOR of the server object is stored.
   FILE *ior_output_file_;
+
+  /// the server name
+  ACE_CString server_name_;
 };
 
 #endif /* AIRPLANE_SERVER_I_H */

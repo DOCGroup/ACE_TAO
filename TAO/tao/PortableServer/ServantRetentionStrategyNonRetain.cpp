@@ -17,6 +17,10 @@
 #include "tao/PortableServer/Servant_Base.h"
 #include "tao/debug.h"
 
+#include "ace/OS_NS_sys_time.h"
+#include "ace/Time_Value.h"
+#include "ace/OS_NS_sys_time.h"
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
@@ -24,7 +28,8 @@ namespace TAO
   namespace Portable_Server
   {
     ServantRetentionStrategyNonRetain::ServantRetentionStrategyNonRetain (void) :
-      poa_ (0)
+      poa_ (0),
+      sys_id_count_ (0)
     {
     }
 
@@ -188,11 +193,28 @@ namespace TAO
       PortableServer::ObjectId user_id;
 
       // Otherwise, it is the NON_RETAIN policy.  Therefore, any ol'
-      // object id will do (even an empty one).
+      // object id will do (even an empty one). However, to make an
+      // object id useful for discriminating objects in applications
+      // use a simple id of a counter and a time stamp. The use of a
+      // counter by itself is not sufficient for uniqueness over time
+      // and a timestamp isn't sufficient since multiple IDs may be
+      // requested within the same time unit.
+
       PortableServer::ObjectId *sys_id = 0;
       ACE_NEW_THROW_EX (sys_id,
-                        PortableServer::ObjectId,
+                        PortableServer::ObjectId (8),
                         CORBA::NO_MEMORY ());
+
+      sys_id->length(8);
+
+      long count = this->sys_id_count_++;
+      ACE_Time_Value now = ACE_OS::gettimeofday();
+
+      *reinterpret_cast<ACE_UINT32 *>(sys_id->get_buffer()) =
+        count;
+
+      *reinterpret_cast<ACE_UINT32 *>(sys_id->get_buffer() + 4) =
+        static_cast<ACE_UINT32>(now.sec());
 
       system_id = sys_id;
 

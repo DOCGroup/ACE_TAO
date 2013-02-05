@@ -1,0 +1,14 @@
+$Id$
+
+  This tests shows that by using -ORBForwardOnTransientLimit and -ORBForwardDelay
+  options on a client, the client will retry establishing
+  a connection to a server before throwing a TRANSIENT exception.
+
+  This is done by having the client start first, wait a few seconds, and then
+  start the server.
+
+  To run the test use the run_test.pl script:
+
+$ ./run_test.pl
+
+  the script returns 0 if the test was successful.

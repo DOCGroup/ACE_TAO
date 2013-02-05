@@ -801,7 +801,7 @@ TAO_Unknown_Profile::object_key_delimiter (void) const
 }
 
 char *
-TAO_Unknown_Profile::to_string (void)
+TAO_Unknown_Profile::to_string (void) const
 {
   // @@ THROW something?
   return 0;
