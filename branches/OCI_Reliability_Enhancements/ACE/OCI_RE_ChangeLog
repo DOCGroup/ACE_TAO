@@ -1,3 +1,7 @@
+Tue Feb  5 18:06:34 UTC 2013  "Kevin Stanley"  <stanleyk@ociweb.com>
+
+        * ChangeLog:
+
 Tue Feb  5 17:01:48 UTC 2013  "Kevin Stanley"  <stanleyk@ociweb.com>
 
         * ace/Auto_Event.h:
@@ -8,7 +12,7 @@ Tue Feb  5 17:01:48 UTC 2013  "Kevin Stanley"  <stanleyk@ociweb.com>
         * protocols/ace/INet/FTP_Simple_exec.cpp:
         * protocols/ace/INet/HTTP_Simple_exec.cpp:
 
-          Merged changes from trunk in preparation for merge. The 
+          Merged changes from trunk in preparation for merge. The
           above files had changes.
 
 Thu Jan 31 22:39:53 UTC 2013  Phillip LaBanca  <labancap@ociweb.com>
