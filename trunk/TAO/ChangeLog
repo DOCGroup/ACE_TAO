@@ -1,3 +1,9 @@
+Wed Feb  6 20:48:55 UTC 2013  Phillip LaBanca  <labancap@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/Naming_Server.cpp:
+
+          Scoreboard cleanup for wchar compatibility.
+
 Wed Feb  6 20:42:56 UTC 2013  Byron Harris  <harrisb@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Replication_Manager.h:
