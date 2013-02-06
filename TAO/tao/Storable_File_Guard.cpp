@@ -95,7 +95,7 @@ TAO::Storable_File_Guard::init(Method_Type method_type)
     }
 
   // Create the stream
-  fl_ = this->create_stream(mode.c_str ());
+  fl_ = this->create_stream(ACE_TEXT_CHAR_TO_TCHAR (mode.c_str ()));
   if (redundant_)
     {
       if (fl_->open() != 0)

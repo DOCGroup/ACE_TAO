@@ -23,7 +23,7 @@ public:
 
   virtual bool is_loaded_from_stream ();
 
-  virtual TAO::Storable_Base * create_stream (const char * mode);
+  virtual TAO::Storable_Base * create_stream (const ACE_TCHAR * mode);
 
 private:
   Savable & savable_;
@@ -76,7 +76,7 @@ Savable_File_Guard::is_loaded_from_stream ()
 }
 
 TAO::Storable_Base *
-Savable_File_Guard::create_stream (const char * mode)
+Savable_File_Guard::create_stream (const ACE_TCHAR * mode)
 {
   return savable_.storable_factory_.create_stream ("test.dat", mode);
 }
@@ -101,7 +101,7 @@ Savable::Savable (TAO::Storable_Factory & storable_factory)
     }
 
   ACE_Auto_Ptr<TAO::Storable_Base>
-    stream (storable_factory_.create_stream("test.dat", "r"));
+    stream (storable_factory_.create_stream("test.dat", ACE_TEXT ("r")));
   if (stream->exists ())
     {
       Savable_File_Guard fg(*this, SFG::CREATE_WITH_FILE);
