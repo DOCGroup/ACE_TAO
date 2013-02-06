@@ -1,3 +1,17 @@
+Wed Feb  6 15:42:25 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * MPC/config/ft_naming_serv.mpb:
+
+          Added dependency on portablegroup.
+
+        * orbsvcs/Naming_Service/Naming_Service.mpc:
+
+          Moved avoids to correct project. Should have been on FT_Naming_Service.
+
+        * tao/Storable_File_Guard.cpp:
+
+          Removed unused exception variable.
+
 Wed Feb  6 14:57:44 UTC 2013  Byron Harris  <harrisb@ociweb.com>
 
         * bin/tao_other_tests.lst:

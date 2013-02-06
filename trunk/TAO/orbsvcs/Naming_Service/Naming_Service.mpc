@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : orbsvcsexe, install, naming_serv, imr_client, svc_utils, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+project : orbsvcsexe, install, naming_serv, imr_client, svc_utils {
   exename  = tao_cosnaming
   Source_Files {
     Naming_Server.cpp
@@ -13,7 +13,7 @@ project : orbsvcsexe, install, naming_serv, imr_client, svc_utils, avoids_minimu
   }
 }
 
-project (FT_Naming_Service) : orbsvcsexe, install, ft_naming_serv, naming_serv, imr_client, svc_utils {
+project (FT_Naming_Service) : orbsvcsexe, install, ft_naming_serv, naming_serv, imr_client, svc_utils, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
   exename  = tao_ft_naming
   Header_Files {
  FT_Naming_Service.h

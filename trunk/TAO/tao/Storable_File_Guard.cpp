@@ -243,7 +243,7 @@ TAO::Storable_File_Guard::load ()
             {
               this->load_from_stream ();
             }
-          catch (const Storable_Read_Exception &ex)
+          catch (const Storable_Read_Exception)
             {
               ACE_ERROR ((LM_ERROR,
                           ACE_TEXT ("TAO: (%P|%t) ERROR: Unable to restore ")
