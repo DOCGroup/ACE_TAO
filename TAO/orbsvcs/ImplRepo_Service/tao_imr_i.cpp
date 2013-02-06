@@ -817,7 +817,7 @@ TAO_IMR_Op_IOR::run (void)
       ACE_CString ior (imr_str.in ());
 
       // Add the key
-      const char jacorb[] = ACE_TEXT_ALWAYS_CHAR ("JACORB:");
+      const char jacorb[] = "JACORB:";
       const char *posjacorb = ACE_OS::strstr (server_name_.c_str (), jacorb);
       if (posjacorb)
       {
