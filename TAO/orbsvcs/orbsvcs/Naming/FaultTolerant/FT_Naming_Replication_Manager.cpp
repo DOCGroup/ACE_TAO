@@ -51,7 +51,7 @@ TAO_FT_Naming_Replication_Manager::register_replica (
 {
   ACE_TRACE ( ACE_TEXT("TAO_FT_Naming_Replication_Manager::register_replica"));
 
-  ACE_GUARD_THROW_EX (ACE_SYNCH_MUTEX,
+  ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX,
                       ace_mon,
                       this->lock_,
                       CORBA::INTERNAL ());
@@ -127,7 +127,7 @@ TAO_FT_Naming_Replication_Manager::register_with_peer_replica (
   int result = 0;
   FT_Naming::ReplicaInfo my_info;
   { // Guard the access to the Replication Manager state
-    ACE_GUARD_THROW_EX (ACE_SYNCH_MUTEX,
+    ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX,
                         ace_mon,
                         this->lock_,
                         CORBA::INTERNAL ());
@@ -149,7 +149,7 @@ TAO_FT_Naming_Replication_Manager::register_with_peer_replica (
       this->peer_replica_->register_replica (my_ref.in (),
                                              my_info);
 
-    ACE_GUARD_THROW_EX (ACE_SYNCH_MUTEX,
+    ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX,
                         ace_mon,
                         this->lock_,
                         CORBA::INTERNAL ());

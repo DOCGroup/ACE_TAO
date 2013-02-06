@@ -1077,7 +1077,7 @@ ACE_Message_Block::duplicate (void) const
       if (cur_dup == 0)
         {
           nb_top->release ();
-          return NULL;
+          return 0;
         }
 
       // Set the read and write pointers in the new <Message_Block> to the

@@ -1,3 +1,9 @@
+Wed Feb  6 01:55:37 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * ace/Message_Block.cpp:
+
+          Fixed fuzz error. Return 0 instead of NULL.
+
 Tue Feb  5 21:04:17 UTC 2013  "Kevin Stanley"  <stanleyk@ociweb.com>
 
     Several new features and bug fixes captured in Bugzilla 4091, 4092, 4093,
