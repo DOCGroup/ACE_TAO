@@ -1,3 +1,23 @@
+Wed Feb  6 14:57:44 UTC 2013  Byron Harris  <harrisb@ociweb.com>
+
+        * bin/tao_other_tests.lst:
+
+        * orbsvcs/tests/ImplRepo/scale_clients:
+        * orbsvcs/tests/ImplRepo/scale_clients/README:
+        * orbsvcs/tests/ImplRepo/scale_clients/Test.idl:
+        * orbsvcs/tests/ImplRepo/scale_clients/Test_i.h:
+        * orbsvcs/tests/ImplRepo/scale_clients/Test_i.cpp:
+        * orbsvcs/tests/ImplRepo/scale_clients/client.cpp:
+        * orbsvcs/tests/ImplRepo/scale_clients/run_test.pl:
+        * orbsvcs/tests/ImplRepo/scale_clients/scale_clients.mpc:
+        * orbsvcs/tests/ImplRepo/scale_clients/server.cpp:
+
+          Added a test that spawns multiple clients making requests to a
+          single server. As described in the README, this is useful for
+          showing how numerous clients waiting to forward requests to a
+          server being pinged by the ImplRepo can cause deep recursion that
+          could cause a stack overflow.
+
 Wed Feb  6 14:51:55 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
 
         * orbsvcs/Naming_Service/Naming_Service.mpc:
@@ -8,7 +28,7 @@ Wed Feb  6 14:51:55 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.h:
 
           Moved pragma after first ACE include.
-        
+
 Wed Feb  6 14:20:33 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/Dynamic_TP/DTP_POA_Strategy.h:
