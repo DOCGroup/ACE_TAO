@@ -1,3 +1,10 @@
+Wed Feb  6 22:04:56 UTC 2013  Byron Harris  <harrisb@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.h:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp:
+
+          Fixes to get clean compiles when wchar support is enabled.
+
 Wed Feb  6 21:49:45 UTC 2013  Byron Harris  <harrisb@ociweb.com>
 
         * orbsvcs/orbsvcs/PortableGroup/PG_Group_Factory.cpp:

@@ -344,12 +344,12 @@ File_Open_Lock_and_Check::is_loaded_from_stream ()
 
 TAO::Storable_Base *
 TAO_Storable_Naming_Context::
-File_Open_Lock_and_Check::create_stream (const char * mode)
+File_Open_Lock_and_Check::create_stream (const ACE_TCHAR * mode)
 {
   ACE_CString file_name = context_->context_name_;
 
   // Create the stream
-  return context_->factory_->create_stream(file_name, ACE_TEXT_CHAR_TO_TCHAR(mode));
+  return context_->factory_->create_stream(file_name, mode);
 }
 
 // Make shortcut to get to Method_Type enums
