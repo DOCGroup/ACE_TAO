@@ -25,8 +25,8 @@ static const char* WIN32_REG_KEY = "Software\\TAO\\ImplementationRepository";
 #endif
 
 Config_Backing_Store::Config_Backing_Store (const Options& opts,
-					    CORBA::ORB_ptr orb,
-					    ACE_Configuration& config)
+                                            CORBA::ORB_ptr orb,
+                                            ACE_Configuration& config)
 : Locator_Repository (opts, orb),
   config_ (config),
   status_ (-1)

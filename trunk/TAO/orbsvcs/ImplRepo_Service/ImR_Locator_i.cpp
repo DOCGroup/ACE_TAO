@@ -20,8 +20,8 @@
 
 static const int DEFAULT_START_LIMIT = 1;
 
-static const int PING_RETRY_SCHEDULE[] = {0, 10, 100, 500, 1000, 1000, 1000, 
-					  1000, 5000, 5000};
+static const int PING_RETRY_SCHEDULE[] = {0, 10, 100, 500, 1000, 1000, 1000,
+                                          1000, 5000, 5000};
 
 static const ACE_Time_Value DEFAULT_SERVER_TIMEOUT (0, 10 * 1000); // 10ms
 
@@ -108,7 +108,7 @@ ImR_Locator_i::init_with_orb (CORBA::ORB_ptr orb, Options& opts)
   ACE_ASSERT (! CORBA::is_nil (this->imr_poa_.in ()));
 
   waiter_svt_.debug (debug_ > 1);
-  PortableServer::ObjectId_var id = 
+  PortableServer::ObjectId_var id =
     PortableServer::string_to_ObjectId ("ImR_AsyncStartupWaiter");
   this->imr_poa_->activate_object_with_id (id.in (), &waiter_svt_);
   obj = this->imr_poa_->id_to_reference (id.in ());
@@ -734,8 +734,8 @@ ImR_Locator_i::set_timeout_policy (CORBA::Object_ptr obj, const ACE_Time_Value& 
 
       CORBA::PolicyList policies (1);
       policies.length (1);
-      policies[0] = orb_->create_policy (Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE, 
-					 tmp);
+      policies[0] = orb_->create_policy (Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE,
+                                         tmp);
 
       ret = obj->_set_policy_overrides (policies, CORBA::ADD_OVERRIDE);
 
@@ -857,10 +857,10 @@ ImR_Locator_i::add_or_update_server (
 }
 
 void
-ImR_Locator_i::parse_id(const char* id, 
-			ACE_CString& server_id, 
-			ACE_CString& name, 
-			bool& jacorb_server)
+ImR_Locator_i::parse_id(const char* id,
+                        ACE_CString& server_id,
+                        ACE_CString& name,
+                        bool& jacorb_server)
 {
   const char *pos = ACE_OS::strchr (id, ':');
   if (pos)
@@ -912,9 +912,9 @@ ImR_Locator_i::remove_server (const char* name)
       if (this->repository_->remove_server (serverKey) == 0)
         {
           if (this->debug_ > 1)
-            ACE_DEBUG ((LM_DEBUG, 
-			ACE_TEXT ("ImR: Removing Server <%C>...\n"), 
-			name));
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("ImR: Removing Server <%C>...\n"),
+                        name));
 
           PortableServer::POA_var poa = findPOA (serverKey.c_str());
           if (! CORBA::is_nil (poa.in ()))
@@ -987,8 +987,8 @@ ImR_Locator_i::shutdown_server (const char* server)
 
   try
     {
-      CORBA::Object_var obj = this->set_timeout_policy (info->server.in (), 
-							DEFAULT_SHUTDOWN_TIMEOUT);
+      CORBA::Object_var obj = this->set_timeout_policy (info->server.in (),
+                                                        DEFAULT_SHUTDOWN_TIMEOUT);
       ImplementationRepository::ServerObject_var server =
         ImplementationRepository::ServerObject::_unchecked_narrow (obj.in ());
       server->shutdown ();
@@ -1090,8 +1090,8 @@ ImR_Locator_i::server_is_running (const char* id,
       if (info->activation_mode != ImplementationRepository::PER_CLIENT) {
         info.edit ()->ior = ior.in ();
         info.edit ()->partial_ior = partial_ior;
-	// Will connect at first access
-        info.edit ()->server = ImplementationRepository::ServerObject::_nil (); 
+        // Will connect at first access
+        info.edit ()->server = ImplementationRepository::ServerObject::_nil ();
 
         info.update_repo();
 
@@ -1158,8 +1158,8 @@ ImR_Locator_i::find (const char* server,
     }
   else
     {
-      ACE_NEW_THROW_EX (imr_info, ImplementationRepository::ServerInformation, 
-			CORBA::NO_MEMORY ());
+      ACE_NEW_THROW_EX (imr_info, ImplementationRepository::ServerInformation,
+                        CORBA::NO_MEMORY ());
       imr_info->startup.activation= ImplementationRepository::NORMAL;
       if (this->debug_ > 1)
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ImR: Cannot find server <%C>\n"),
@@ -1179,8 +1179,8 @@ ImR_Locator_i::list (CORBA::ULong how_many,
   // not be dangling.
   server_iterator = ImplementationRepository::ServerInformationIterator::_nil ();
   ACE_NEW_THROW_EX (server_list,
-                    ImplementationRepository::ServerInformationList (0), 
-		    CORBA::NO_MEMORY ());
+                    ImplementationRepository::ServerInformationList (0),
+                    CORBA::NO_MEMORY ());
 
   Locator_Repository::SIMap::ENTRY* entry = 0;
   Locator_Repository::SIMap::ITERATOR it (this->repository_->servers ());
@@ -1427,9 +1427,9 @@ ImR_Locator_i::is_alive (UpdateableServerInfo& info)
         ACE_TEXT ("ImR: <%C> Ping retry count exceeded. alive=maybe.\n"),
         info->name.c_str ()));
     }
-  // We return true here, because the server *might* be alive, it's just 
-  // not starting in a timely manner. We can't return false, because then 
-  // we'll just try to start another instance, and the same thing will 
+  // We return true here, because the server *might* be alive, it's just
+  // not starting in a timely manner. We can't return false, because then
+  // we'll just try to start another instance, and the same thing will
   // likely happen.
   info.edit ()->last_ping = ACE_OS::gettimeofday ();
   return true;
@@ -1580,11 +1580,11 @@ ImR_Locator_i::is_alive_i (UpdateableServerInfo& info)
                 info->name.c_str ()));
             }
           info.edit ()->last_ping = ACE_Time_Value::zero;
-          // still potentially ambiguous, the server could be so busy 
-	  // it couldn't even accept a connection. However the more 
-	  // likely assumption is the server is on windows, and is dead, 
-	  // but the host ignored the request rather than rejecting it.
-	  return 0; 
+          // still potentially ambiguous, the server could be so busy
+          // it couldn't even accept a connection. However the more
+          // likely assumption is the server is on windows, and is dead,
+          // but the host ignored the request rather than rejecting it.
+          return 0;
         }
       if (debug_ > 1)
         {

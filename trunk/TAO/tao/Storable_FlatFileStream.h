@@ -99,13 +99,11 @@ namespace TAO
 
     /// Throw a Storable_Read_Exception if the state
     /// is not good due to a read error.
-    void throw_on_read_error (Storable_State state)
-      throw (Storable_Read_Exception);
+    void throw_on_read_error (Storable_State state);
 
     /// Throw a Storable_Write_Exception if the state
     /// is not good due to a write error.
-    void throw_on_write_error (Storable_State state)
-      throw (Storable_Write_Exception);
+    void throw_on_write_error (Storable_State state);
 
     ACE_CString backup_file_name ();
 
