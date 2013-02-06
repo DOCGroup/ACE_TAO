@@ -21,7 +21,7 @@ namespace
   {
     // Search for "corbaloc:" alone, without the protocol.  This code
     // should be protocol neutral.
-    const char corbaloc[] = ACE_TEXT_ALWAYS_CHAR ("corbaloc:");
+    const char corbaloc[] = "corbaloc:";
     char *pos = ACE_OS::strstr (ior, corbaloc);
     pos = ACE_OS::strchr (pos + sizeof (corbaloc), ':');
 
@@ -99,7 +99,7 @@ namespace
           if (!combine_profile (i))
             {
               return default_obj (
-                ACE_TEXT_ALWAYS_CHAR ("could not resolve IORManipulation"));
+                "could not resolve IORManipulation");
             }
         }
 
@@ -109,7 +109,7 @@ namespace
       if (CORBA::is_nil (IORM.in ()))
         {
           return default_obj (
-            ACE_TEXT_ALWAYS_CHAR ("could not resolve IORManipulation"));
+            "could not resolve IORManipulation");
         }
 
       TAO_IOP::TAO_IOR_Manipulation_var iorm =
@@ -118,7 +118,7 @@ namespace
       if (CORBA::is_nil (iorm.in ()))
         {
           return default_obj (
-            ACE_TEXT_ALWAYS_CHAR ("could not narrow IORManipulation"));
+            "could not narrow IORManipulation");
         }
 
       try
@@ -128,7 +128,7 @@ namespace
       catch (const ::CORBA::Exception& )
         {
           return default_obj (
-            ACE_TEXT_ALWAYS_CHAR ("could not ImRify object with all profiles."));
+            "could not ImRify object with all profiles.");
         }
     }
   private:
@@ -156,7 +156,7 @@ namespace
     {
       const CORBA::ULong pcount = base_profiles_.profile_count ();
       const char* info =
-        ACE_TEXT ("because couldn't find ImR profile_in_use in profiles");
+        "because couldn't find ImR profile_in_use in profiles";
 
       // identify the profile in use to see if we can default to
       // that profiles partial ImR-ification
@@ -168,7 +168,7 @@ namespace
               // the profile
               if (CORBA::is_nil(objs_[i].in ()) && !combine_profile (i))
                 {
-                  info = ACE_TEXT ("because couldn't ImR-ify profile_in_use");
+                  info = "because couldn't ImR-ify profile_in_use";
                   break;
                 }
               ACE_ERROR((LM_ERROR,
@@ -430,7 +430,7 @@ namespace TAO
     ImR_Client_Adapter_Impl::Initializer (void)
     {
       TAO_Root_POA::imr_client_adapter_name (
-        ACE_TEXT_ALWAYS_CHAR ("Concrete_ImR_Client_Adapter"));
+        "Concrete_ImR_Client_Adapter");
 
       return ACE_Service_Config::process_directive (
         ace_svc_desc_ImR_Client_Adapter_Impl);
@@ -467,7 +467,7 @@ namespace TAO
           return combine(orb_core,
                          *base_profiles.get_profile(0),
                          key_str.in(),
-                         ACE_TEXT_ALWAYS_CHAR (type_id));
+                         type_id);
         }
 
       // need to combine each profile in the ImR with the key and
@@ -476,7 +476,7 @@ namespace TAO
                              imr->_stubobj ()->profile_in_use (),
                              orb_core,
                              key_str,
-                             ACE_TEXT_ALWAYS_CHAR (type_id));
+                             type_id);
 
       return imrify.combined_ior ();
     }
@@ -485,7 +485,7 @@ namespace TAO
 
 ACE_STATIC_SVC_DEFINE (
   ImR_Client_Adapter_Impl,
-  ACE_TEXT_ALWAYS_CHAR ("Concrete_ImR_Client_Adapter"),
+  ACE_TEXT ("Concrete_ImR_Client_Adapter"),
   ACE_SVC_OBJ_T,
   &ACE_SVC_NAME (ImR_Client_Adapter_Impl),
   ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
