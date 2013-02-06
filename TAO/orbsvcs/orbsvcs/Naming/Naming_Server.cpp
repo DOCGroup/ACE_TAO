@@ -429,8 +429,9 @@ TAO_Naming_Server::init_with_orb (int argc,
   if (this->ior_file_name_ != 0)
     {
       CORBA::String_var ns_ior = this->naming_service_ior ();
-      if (this->write_ior_to_file (ns_ior.in (),
-                                   this->ior_file_name_) != 0)
+      if (this->write_ior_to_file (
+            ns_ior.in (),
+            ACE_TEXT_ALWAYS_CHAR (this->ior_file_name_)) != 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT("Unable to open %s for writing:(%u) %p\n"),
@@ -480,7 +481,8 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
           // of this Reader and Writer, let's just take something off the
           // command line for now.
           TAO::Storable_Factory* pf = 0;
-          ACE_NEW_RETURN (pf, TAO::Storable_FlatFileFactory(persistence_location), -1);
+          ACE_CString directory (ACE_TEXT_ALWAYS_CHAR (persistence_location));
+          ACE_NEW_RETURN (pf, TAO::Storable_FlatFileFactory (directory), -1);
           auto_ptr<TAO::Storable_Factory> persFactory(pf);
 
           // Use an auto_ptr to ensure that we clean up the factory in the case
@@ -499,7 +501,7 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
           if (persistence_location == 0)
             {
               // No, assign the default location "NameService"
-              persistence_location = ACE_TEXT  ("NameService");
+              persistence_location = ACE_TEXT ("NameService");
             }
 
           // Now make sure this directory exists
