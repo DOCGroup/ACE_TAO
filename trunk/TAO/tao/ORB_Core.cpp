@@ -1194,7 +1194,8 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
      else if (0 != (current_arg = arg_shifter.get_the_parameter
                     (ACE_TEXT("-ORBDynamicThreadPoolName"))))
         {
-          this->orb_params_.dynamic_thread_pool_config_name (current_arg);
+          this->orb_params_.dynamic_thread_pool_config_name (ACE_TEXT_ALWAYS_CHAR
+                                                             (current_arg));
           arg_shifter.consume_arg ();
         }
 

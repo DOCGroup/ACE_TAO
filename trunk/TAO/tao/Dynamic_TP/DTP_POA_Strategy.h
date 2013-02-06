@@ -14,6 +14,11 @@
 #define TAO_DYNAMIC_TP_POA_STRATEGY_H
 
 #include /**/ "ace/pre.h"
+
+#include "tao/orbconf.h"
+
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+
 #include "tao/Dynamic_TP/dynamic_tp_export.h"
 #include "tao/Dynamic_TP/DTP_Config.h"
 #include "tao/Dynamic_TP/DTP_Task.h"
@@ -214,6 +219,8 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #if defined (__ACE_INLINE__)
 #include "tao/Dynamic_TP/DTP_POA_Strategy.inl"
 #endif /* __ACE_INLINE__ */
+
+#endif /* (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0 */
 
 #include /**/ "ace/post.h"
 
