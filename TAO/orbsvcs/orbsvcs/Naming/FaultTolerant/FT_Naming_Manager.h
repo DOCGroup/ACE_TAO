@@ -19,20 +19,18 @@
 #include "orbsvcs/Naming/FaultTolerant/ftnaming_export.h"
 
 #include "orbsvcs/FT_NamingManagerS.h"
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
-
 #include "orbsvcs/FT_NamingManagerC.h"
-
 #include "orbsvcs/PortableGroup/PG_FactoryRegistry.h"
 #include "orbsvcs/PortableGroup/PG_Properties_Support.h"
 #include "orbsvcs/Naming/FaultTolerant/FT_PG_Group_Factory.h"
 #include "orbsvcs/Naming/FaultTolerant/FT_Round_Robin.h"
+#include "tao/Condition.h"
 
 #include "ace/Task.h"
-#include "tao/Condition.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
