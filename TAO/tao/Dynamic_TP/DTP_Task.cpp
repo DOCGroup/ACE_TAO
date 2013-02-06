@@ -1,6 +1,9 @@
 // $Id$
 
 #include "tao/Dynamic_TP/DTP_Task.h"
+
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+
 #include "tao/CSD_ThreadPool/CSD_TP_Request.h"
 #include "tao/CSD_ThreadPool/CSD_TP_Dispatchable_Visitor.h"
 #include "tao/CSD_ThreadPool/CSD_TP_Cancel_Visitor.h"
@@ -477,3 +480,5 @@ TAO_DTP_Task::cancel_servant (PortableServer::Servant servant)
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0 */
