@@ -1,3 +1,9 @@
+Wed Feb  6 20:00:43 UTC 2013  Phillip LaBanca  <labancap@ociweb.com>
+
+        * tao/ImR_Client/ImR_Client.cpp:
+
+          Scoreboard cleanup for wchar compatibility.
+
 Wed Feb  6 19:44:23 UTC 2013  Byron Harris  <harrisb@ociweb.com>
 
         * tao/Storable_FlatFileStream.h:
