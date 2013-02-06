@@ -1,3 +1,16 @@
+Wed Feb  6 21:49:45 UTC 2013  Byron Harris  <harrisb@ociweb.com>
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_Factory.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_List_Store.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_List_Store.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group_Storable.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group_Storable.cpp:
+        * tao/Storable_File_Guard.h:
+        * tao/Storable_File_Guard.cpp:
+        * tests/Storable/Savable.cpp:
+
+          Fixes to get clean compiles when wchar support is enabled.
+
 Wed Feb  6 20:55:51 UTC 2013  Phillip LaBanca  <labancap@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/tao_imr_i.cpp:

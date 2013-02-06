@@ -54,7 +54,7 @@ TAO::PG_Group_Factory::PG_Group_Factory ()
   , orb_ (CORBA::ORB::_nil())
   , poa_ (PortableServer::POA::_nil())
   , manipulator_ ()
-  , domain_id_ (ACE_TEXT_ALWAYS_CHAR ("default-domain"))
+  , domain_id_ ("default-domain")
   , groups_read_ (false)
   , storable_factory_ (0)
 {

@@ -92,7 +92,7 @@ namespace TAO
     /// Answer if object has been loaded from file
     virtual bool is_loaded_from_stream () = 0;
 
-    virtual Storable_Base * create_stream (const char * mode) = 0;
+    virtual Storable_Base * create_stream (const ACE_TCHAR * mode) = 0;
 
     /// The pointer to the actual file I/O (bridge pattern)
     Storable_Base *fl_;

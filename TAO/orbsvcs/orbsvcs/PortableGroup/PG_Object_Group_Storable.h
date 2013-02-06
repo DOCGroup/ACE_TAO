@@ -152,7 +152,7 @@ namespace TAO
     bool group_previously_stored_;
     PortableGroup::ObjectGroupId group_id_previously_stored_;
 
-    TAO::Storable_Base * create_stream (const char * mode);
+    TAO::Storable_Base * create_stream (const ACE_TCHAR * mode);
 
     void read (TAO::Storable_Base & stream);
 
