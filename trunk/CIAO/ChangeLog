@@ -1,3 +1,9 @@
+Wed Feb  6 23:17:27 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * CIAO_TAO.mwc:
+          Added exclude for nsgroup since it is not using the FT_Naming
+          service. Was causing build errors due to missing FT_NamingManager.
+
 Mon Feb  4 08:11:50 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp (activate_topic):

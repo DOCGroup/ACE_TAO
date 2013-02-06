@@ -24,4 +24,8 @@ workspace {
   examples
   performance-tests
   tutorials
+  exclude {
+    $(TAO_ROOT)/utils/nsgroup
+  }
+
 }
