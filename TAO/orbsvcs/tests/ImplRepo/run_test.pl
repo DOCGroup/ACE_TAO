@@ -2501,12 +2501,11 @@ print "Comment line arguments: -d $test_debug_level -o $repo{imr_imriorfile} " .
          print LIST_FILE "I'm corrupt!!!";
       }
     }
-        
 
     print "\n\nstarting primary tao_imr_locator again\n";
     $repo{IMR}->Arguments ("-d $test_debug_level -o $repo{imr_imriorfile} " .
         "$imr_refstyle $repo{imr_endpoint_flag} $repo{imr_backing_store_flag}");
-   
+
     my $test_stdout_file = $imr->LocalFile ($stdout_file);
     my $test_stderr_file = $imr->LocalFile ($stderr_file);
 

@@ -85,7 +85,7 @@ INS_Locator::locate (const char* object_key)
                 }
 
               CORBA::String_var located =
-		this->imr_locator_.activate_server_by_object (key2.c_str ());
+                this->imr_locator_.activate_server_by_object (key2.c_str ());
 
               ACE_CString tmp = located.in ();
               tmp += object_key;
@@ -93,8 +93,8 @@ INS_Locator::locate (const char* object_key)
               if (imr_locator_.debug () > 0)
                 {
                   ACE_DEBUG ((LM_DEBUG,
-			      ACE_TEXT ("ImR: Forwarding invocation on <%s> ")
-			      ACE_TEXT ("to <%s>\n"), key2.c_str (), tmp.c_str()));
+                              ACE_TEXT ("ImR: Forwarding invocation on <%s> ")
+                              ACE_TEXT ("to <%s>\n"), key2.c_str (), tmp.c_str()));
                 }
 
               return CORBA::string_dup (tmp.c_str ());

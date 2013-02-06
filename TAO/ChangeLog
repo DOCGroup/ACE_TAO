@@ -1,3 +1,20 @@
+Wed Feb  6 01:55:23 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Replication_Manager.cpp:
+          Use TAO_ macro instead of ACE_ macro.
+
+        * orbsvcs/ImplRepo_Service/Config_Backing_Store.cpp:
+        * orbsvcs/ImplRepo_Service/INS_Locator.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/tests/ImplRepo/run_test.pl:
+
+          Fixed whitespace fuzz errors.
+
+        * tao/Storable_FlatFileStream.h:
+        * tao/Storable_FlatFileStream.cpp:
+
+          Removed exception specification to avoid fuzz error.
+
 Tue Feb  5 21:02:55 UTC 2013  "Kevin Stanley"  <stanleyk@ociweb.com>
 
     Several new features and bug fixes captured in Bugzilla 4091, 4092, 4093,

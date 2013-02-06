@@ -419,7 +419,6 @@ TAO::Storable_FlatFileStream::restore_backup ()
 
 void
 TAO::Storable_FlatFileStream::throw_on_read_error (Storable_State state)
-  throw (Storable_Read_Exception)
 {
   this->setstate (state);
 
@@ -431,7 +430,6 @@ TAO::Storable_FlatFileStream::throw_on_read_error (Storable_State state)
 
 void
 TAO::Storable_FlatFileStream::throw_on_write_error (Storable_State state)
-  throw (Storable_Write_Exception)
 {
   this->setstate (state);
 
