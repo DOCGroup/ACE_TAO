@@ -14,6 +14,8 @@
 #include "orbsvcs/FT_NamingManagerC.h"
 #include /**/ "orbsvcs/Naming/FaultTolerant/ftnaming_intf_export.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class NS_group_svc
  *
@@ -180,5 +182,7 @@ private:
   CORBA::ORB_var orb_;
 
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif
