@@ -1,3 +1,11 @@
+Wed Feb  6 20:42:56 UTC 2013  Byron Harris  <harrisb@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Replication_Manager.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/nsgroup_svc.h:
+
+          Added missing versioned namespace declarations.
+
 Wed Feb  6 20:00:43 UTC 2013  Phillip LaBanca  <labancap@ociweb.com>
 
         * tao/ImR_Client/ImR_Client.cpp:
