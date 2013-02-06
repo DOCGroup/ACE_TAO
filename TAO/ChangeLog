@@ -1,3 +1,15 @@
+Wed Feb  6 14:20:33 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/Dynamic_TP/DTP_POA_Strategy.h:
+        * tao/Dynamic_TP/DTP_Task.h:
+        * tao/Dynamic_TP/DTP_Task.cpp:
+
+          Scoreboard cleanup for compact or other builds lacking Messaging support.
+
+        * tao/ORB_Core.cpp:
+
+          Scoreboard cleanup for wchar compatibility.
+
 Wed Feb  6 01:55:23 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Replication_Manager.cpp:
