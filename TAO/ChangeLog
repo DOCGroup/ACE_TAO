@@ -1,3 +1,9 @@
+Wed Feb  6 19:12:01 UTC 2013  Phillip LaBanca  <labancap@ociweb.com>
+
+        * tao/AnyTypeCode/TypeCode_CDR_Extraction.cpp:
+
+          Removed unnecessary ACE_TEXT_ALWAYS_CHAR wrappers.
+
 Wed Feb  6 17:10:17 UTC 2013  Byron Harris  <harrisb@ociweb.com>
 
         * orbsvcs/Naming_Service/FT_Naming_Service.mpc:
