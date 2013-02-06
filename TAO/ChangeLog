@@ -1,3 +1,12 @@
+Wed Feb  6 17:10:17 UTC 2013  Byron Harris  <harrisb@ociweb.com>
+
+        * orbsvcs/Naming_Service/FT_Naming_Service.mpc:
+        * orbsvcs/Naming_Service/Naming_Service.mpc:
+
+          Split out FT_Naming_Service project to its own file
+          so that the Naming Service can be built and not
+          the FT version.
+
 Wed Feb  6 15:42:25 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
 
         * MPC/config/ft_naming_serv.mpb:
