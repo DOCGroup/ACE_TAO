@@ -376,14 +376,11 @@ TAO::TypeCodeFactory::tc_objref_factory (CORBA::TCKind kind,
   if (!(cdr >> TAO_InputCDR::to_string (id.out (), 0)))
     return false;
 
-  static char const Object_id[]    =
-    ACE_TEXT_ALWAYS_CHAR ("IDL:omg.org/CORBA/Object:1.0");
-  static char const CCMObject_id[] =
-    ACE_TEXT_ALWAYS_CHAR ("IDL:omg.org/CORBA/CCMObject:1.0");
-  static char const CCMHome_id[]   =
-    ACE_TEXT_ALWAYS_CHAR ("IDL:omg.org/CORBA/CCMHome:1.0");
+  static char const Object_id[]    = "IDL:omg.org/CORBA/Object:1.0";
+  static char const CCMObject_id[] = "IDL:omg.org/CORBA/CCMObject:1.0";
+  static char const CCMHome_id[]   = "IDL:omg.org/CORBA/CCMHome:1.0";
 
-  char const * tc_constant_id = ACE_TEXT_ALWAYS_CHAR ("");
+  char const * tc_constant_id = "";
 
   switch (kind)
     {
