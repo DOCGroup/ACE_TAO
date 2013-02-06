@@ -1,3 +1,9 @@
+Wed Feb  6 20:55:51 UTC 2013  Phillip LaBanca  <labancap@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
+
+          Scoreboard cleanup for wchar compatibility.
+
 Wed Feb  6 20:48:55 UTC 2013  Phillip LaBanca  <labancap@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/Naming_Server.cpp:
