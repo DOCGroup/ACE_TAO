@@ -26,6 +26,8 @@
 
 #include "orbsvcs/FT_NamingReplicationC.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_FT_Naming_Server;
 
 /**
@@ -105,6 +107,9 @@ protected:
   TAO_SYNCH_MUTEX lock_;
 
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #include /**/ "ace/post.h"
 
 #endif /* TAO_FT_NAMING_REPLICATION_MANAGER_H */

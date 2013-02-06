@@ -25,6 +25,8 @@
 #include "tao/IORManipulation/IORManip_Loader.h"
 #include "ace/Recursive_Thread_Mutex.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_FT_Naming_Server
  *
@@ -185,5 +187,7 @@ private:
   static const ACE_TCHAR* backup_replica_ior_filename;
 
  };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_FT_NAMING_SERVER_H */
