@@ -55,28 +55,26 @@ parse_args (int argc, ACE_TCHAR *argv[])
 void
 set_parms ( TAO_DTP_Definition * this_config)
 {
-  ACE_TCHAR *sep;
-  long val;
+  // Get past the brace
+  ACE_TCHAR *sep = parms + 1;
 
-    // Get past the brace
-    val = ACE_OS::strtol(parms,&sep,10);
-    // min_threads_ = -1;
-    this_config->min_threads_ = ACE_OS::strtol(sep+1,&sep,10);
+  // min_threads_ = -1;
+  this_config->min_threads_ = ACE_OS::strtol(sep+1,&sep,10);
 
-    // init_threads_ = 1;
-    this_config->init_threads_ = ACE_OS::strtol(sep+1,&sep,10);
+  // init_threads_ = 1;
+  this_config->init_threads_ = ACE_OS::strtol(sep+1,&sep,10);
 
-    // max_threads_ = 1;
-    this_config->max_threads_ = ACE_OS::strtol(sep+1,&sep,10);
+  // max_threads_ = 1;
+  this_config->max_threads_ = ACE_OS::strtol(sep+1,&sep,10);
 
-    // stack_size_ = 0;
-    this_config->stack_size_ = ACE_OS::strtol(sep+1,&sep,10);
+  // stack_size_ = 0;
+  this_config->stack_size_ = ACE_OS::strtol(sep+1,&sep,10);
 
-    // timeout_ = 60;
-    this_config->timeout_.set(ACE_OS::strtol(sep+1,&sep,10),0);
+  // timeout_ = 60;
+  this_config->timeout_.set(ACE_OS::strtol(sep+1,&sep,10),0);
 
-    // queue_depth_ = 0;
-    this_config->queue_depth_ = ACE_OS::strtol(sep+1,&sep,10);
+  // queue_depth_ = 0;
+  this_config->queue_depth_ = ACE_OS::strtol(sep+1,&sep,10);
 }
 
 int
