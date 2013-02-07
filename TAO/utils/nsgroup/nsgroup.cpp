@@ -99,11 +99,11 @@ public:
   /// Display command line interface usage
   int show_usage( void );
 
-  const char * group_arg(void) const { return group_arg_; }
-  const char * policy_arg(void) const { return policy_arg_; }
-  const char * location_arg(void) const { return location_arg_; }
-  const char * ior_arg(void) const { return ior_arg_; }
-  const char * namepath_arg(void) const { return namepath_arg_; }
+  const ACE_TCHAR * group_arg(void) const { return group_arg_; }
+  const ACE_TCHAR * policy_arg(void) const { return policy_arg_; }
+  const ACE_TCHAR * location_arg(void) const { return location_arg_; }
+  const ACE_TCHAR * ior_arg(void) const { return ior_arg_; }
+  const ACE_TCHAR * namepath_arg(void) const { return namepath_arg_; }
 
 private:
 
@@ -121,12 +121,12 @@ private:
   NSGROUP_COMMAND nsgroup_cmd_;
 
   /// parsed command line arguments
-  const char *group_arg_;
-  const char *policy_arg_;
-  const char *typeid_arg_;
-  const char *location_arg_;
-  const char *ior_arg_;
-  const char *namepath_arg_;
+  const ACE_TCHAR *group_arg_;
+  const ACE_TCHAR *policy_arg_;
+  const ACE_TCHAR *typeid_arg_;
+  const ACE_TCHAR *location_arg_;
+  const ACE_TCHAR *ior_arg_;
+  const ACE_TCHAR *namepath_arg_;
 };
 
 
@@ -172,7 +172,7 @@ NSGROUP::start_orb (void)
     //
     //////////////////////////////////////////////////////////////////////////
     CORBA::Object_var naming_manager_object =
-      orb_->resolve_initial_references (ACE_TEXT_ALWAYS_CHAR ("NamingManager"));
+      orb_->resolve_initial_references ("NamingManager");
 
     FT_Naming::NamingManager_var naming_manager_ =
       FT_Naming::NamingManager::_narrow (naming_manager_object.in ());
@@ -188,7 +188,7 @@ NSGROUP::start_orb (void)
     //
     //////////////////////////////////////////////////////////////////////////
     CORBA::Object_var naming_object =
-      orb_->resolve_initial_references(ACE_TEXT_ALWAYS_CHAR ("NameService"));
+      orb_->resolve_initial_references("NameService");
 
     CosNaming::NamingContextExt_var name_service_ =
       CosNaming::NamingContextExt::_narrow (naming_object.in ());
@@ -365,7 +365,7 @@ NSGROUP::parse_command_line (void)
     switch (c)
       {
       case 'g':  // group
-        this->group_arg_ = get_opts.opt_arg ();
+        this->group_arg_ =  get_opts.opt_arg ();
         break;
       case 'p':  // policy
         this->policy_arg_ = get_opts.opt_arg ();

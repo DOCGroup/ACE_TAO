@@ -1,3 +1,21 @@
+Thu Feb  7 00:54:59 UTC 2013  Phillip LaBanca  <labancap@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_PG_Group_Factory.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/nsgroup_svc.cpp:
+        * orbsvcs/tests/FT_Naming/FaultTolerant/Basic.cpp:
+        * orbsvcs/tests/FT_Naming/FaultTolerant/LB_server.cpp:
+        * orbsvcs/tests/FT_Naming/FaultTolerant/client.cpp:
+        * orbsvcs/tests/FT_Naming/FaultTolerant/server.cpp:
+        * orbsvcs/tests/FT_Naming/Federation/Hello.cpp:
+        * orbsvcs/tests/FT_Naming/Federation/client.cpp:
+        * orbsvcs/tests/FT_Naming/Federation/server.cpp:
+        * orbsvcs/tests/FT_Naming/Load_Balancing/LB_server.cpp:
+        * utils/nsgroup/nsgroup.cpp:
+
+          Scoreboard cleanup for wchar compatibility.
+
 Wed Feb  6 22:04:56 UTC 2013  Byron Harris  <harrisb@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.h:

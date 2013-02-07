@@ -13,8 +13,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var tmp =
-        orb->string_to_object (
-          ACE_TEXT_ALWAYS_CHAR ("corbaloc:iiop:1.2@localhost:9931/NameService"));
+        orb->string_to_object ("corbaloc:iiop:1.2@localhost:9931/NameService");
 
       CosNaming::NamingContext_var root =
         CosNaming::NamingContext::_narrow (tmp.in ());
@@ -31,9 +30,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       CosNaming::Name name;
       name.length(3);
-      name[0].id = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR ("nsB"));
-      name[1].id = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR ("example"));
-      name[2].id = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR ("Hello"));
+      name[0].id = CORBA::string_dup ("nsB");
+      name[1].id = CORBA::string_dup ("example");
+      name[2].id = CORBA::string_dup ("Hello");
 
       try
         {

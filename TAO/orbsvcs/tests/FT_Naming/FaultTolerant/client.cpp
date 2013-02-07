@@ -260,7 +260,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           break;
         case 0:   // A long option was found
           {
-            const char* long_option = get_opts.long_option ();
+            const ACE_TCHAR * long_option = get_opts.long_option ();
             if (ACE_OS::strcmp (long_option,
                                 ACE_TEXT ("failover")) == 0)
               {
@@ -562,7 +562,7 @@ do_failover_name_test (
       level1.length (2);
 
       char wide_name[16];
-      ACE_OS::sprintf(wide_name, ACE_TEXT_ALWAYS_CHAR ("obj_%d"), i);
+      ACE_OS::sprintf (wide_name, "obj_%d", i);
       level1[1].id = CORBA::string_dup (wide_name);
 
       root_context_1->bind (level1, obj1.in ());
@@ -616,7 +616,7 @@ do_failover_name_test (
       CosNaming::Name deep;
       deep.length (1);
       char deep_name[16];
-      ACE_OS::sprintf(deep_name, ACE_TEXT_ALWAYS_CHAR ("deep_%d"), i);
+      ACE_OS::sprintf (deep_name, "deep_%d", i);
       deep[0].id = CORBA::string_dup (deep_name);
       CosNaming::NamingContext_var deep_context;
       deep_context = next_context->bind_new_context (deep);
@@ -640,7 +640,7 @@ do_failover_name_test (
       CosNaming::Name wide;
       wide.length (1);
       char wide_name[16];
-      ACE_OS::sprintf(wide_name, ACE_TEXT_ALWAYS_CHAR ("wide_%d"), i);
+      ACE_OS::sprintf (wide_name, "wide_%d", i);
       wide[0].id = CORBA::string_dup (wide_name);
       CosNaming::NamingContext_var wide_context;
       wide_context = root_context_1->bind_new_context (wide);
@@ -689,9 +689,9 @@ do_failover_name_test (
     // Remove the second to last object from the Naming Context
     CosNaming::Name wide1;
     wide1.length (2);
-    wide1[0].id = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR ("level1_context"));
+    wide1[0].id = CORBA::string_dup ("level1_context");
     char wide_name[16];
-    ACE_OS::sprintf(wide_name, ACE_TEXT_ALWAYS_CHAR ("obj_%d"), o_breadth-2);
+    ACE_OS::sprintf (wide_name, "obj_%d", o_breadth-2);
     wide1[1].id = CORBA::string_dup (wide_name);
     root_context_1->unbind (wide1);
     ACE_OS::thr_yield ();
@@ -727,7 +727,7 @@ do_failover_name_test (
     // Remove the second to last context from the wide root Naming Context
     CosNaming::Name wide2;
     wide2.length (1);
-    ACE_OS::sprintf(wide_name, ACE_TEXT_ALWAYS_CHAR ("wide_%d"), c_breadth-2);
+    ACE_OS::sprintf (wide_name, "wide_%d", c_breadth-2);
     wide2[0].id = CORBA::string_dup (wide_name);
 
     CORBA::Object_var result_obj_ref = root_context_1->resolve (wide2);
@@ -754,7 +754,7 @@ do_failover_name_test (
     char deep_name[16];
     for (i=0; i<c_depth; i++)
     {
-      ACE_OS::sprintf(deep_name, ACE_TEXT_ALWAYS_CHAR ("deep_%d"), i);
+      ACE_OS::sprintf (deep_name, "deep_%d", i);
       deep[i].id = CORBA::string_dup (deep_name);
     }
 
@@ -815,9 +815,9 @@ do_failover_name_test (
     // Access the last object from the Naming Context
     CosNaming::Name wide;
     wide.length (2);
-    wide[0].id = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR ("level1_context"));
+    wide[0].id = CORBA::string_dup ("level1_context");
     char wide_name[16];
-    ACE_OS::sprintf(wide_name, ACE_TEXT_ALWAYS_CHAR ("obj_%d"), o_breadth-1);
+    ACE_OS::sprintf (wide_name, "obj_%d", o_breadth-1);
     wide[1].id = CORBA::string_dup (wide_name);
     CORBA::Object_var result_obj_ref = root_context_1->resolve (wide);
     Test_Object_var result_object = Test_Object::_narrow (result_obj_ref.in ());
@@ -841,9 +841,9 @@ do_failover_name_test (
     // Access the deleted second to last object from the Naming Context
     CosNaming::Name wide;
     wide.length (2);
-    wide[0].id = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR ("level1_context"));
+    wide[0].id = CORBA::string_dup ("level1_context");
     char wide_name[16];
-    ACE_OS::sprintf(wide_name, ACE_TEXT_ALWAYS_CHAR ("obj_%d"), o_breadth-2);
+    ACE_OS::sprintf (wide_name, "obj_%d", o_breadth-2);
     wide[1].id = CORBA::string_dup (wide_name);
 
     CORBA::Object_var result_obj_ref = root_context_1->resolve (wide);
@@ -877,7 +877,7 @@ do_failover_name_test (
     CosNaming::Name wide;
     wide.length (1);
     char wide_name[16];
-    ACE_OS::sprintf(wide_name, ACE_TEXT_ALWAYS_CHAR ("wide_%d"), c_breadth-1);
+    ACE_OS::sprintf (wide_name, "wide_%d", c_breadth-1);
     wide[0].id = CORBA::string_dup (wide_name);
 
     CORBA::Object_var result_obj_ref = root_context_1->resolve (wide);
@@ -909,7 +909,7 @@ do_failover_name_test (
     CosNaming::Name wide;
     wide.length (2);
     char wide_name[16];
-    ACE_OS::sprintf(wide_name, ACE_TEXT_ALWAYS_CHAR ("wide_%d"), c_breadth-2);
+    ACE_OS::sprintf (wide_name, "wide_%d", c_breadth-2);
     wide[0].id = CORBA::string_dup (wide_name);
 
     CORBA::Object_var result_obj_ref = root_context_1->resolve (wide);
@@ -937,7 +937,7 @@ do_failover_name_test (
     char deep_name[16];
     for (i=0; i<c_depth; i++)
     {
-      ACE_OS::sprintf(deep_name, ACE_TEXT_ALWAYS_CHAR ("deep_%d"), i);
+      ACE_OS::sprintf (deep_name, "deep_%d", i);
       deep[i].id = CORBA::string_dup (deep_name);
     }
 
@@ -968,7 +968,7 @@ do_failover_name_test (
     char deep_name[16];
     for (i=0; i<c_depth-1; i++)
     {
-      ACE_OS::sprintf(deep_name, ACE_TEXT_ALWAYS_CHAR ("deep_%d"), i);
+      ACE_OS::sprintf (deep_name, "deep_%d", i);
       deep[i].id = CORBA::string_dup (deep_name);
     }
 
@@ -1068,8 +1068,8 @@ do_failover_objectgroup_test (
     }
 
 
-    const char* test_group = "test_group";
-    const char* policy     = "round";
+    const ACE_TCHAR * test_group = ACE_TEXT ("test_group");
+    const ACE_TCHAR * policy     = ACE_TEXT ("round");
 
     if (RC_SUCCESS != svc.group_create (test_group, policy))
     {
@@ -1169,7 +1169,7 @@ do_persistence_name_test (
     // Bind one context level under root.
     CosNaming::Name level1;
     level1.length (1);
-    level1[0].id = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR ("level1_context"));
+    level1[0].id = CORBA::string_dup ("level1_context");
 
     if( false == validate_only ) {
       CosNaming::NamingContext_var level1_context;
@@ -1186,7 +1186,7 @@ do_persistence_name_test (
 
       level1.length (2);
       char wide_name[16];
-      ACE_OS::sprintf(wide_name, ACE_TEXT_ALWAYS_CHAR ("obj_%d"), i);
+      ACE_OS::sprintf (wide_name, "obj_%d", i);
       level1[1].id = CORBA::string_dup (wide_name);
 
       if( false == validate_only ) {
@@ -1240,7 +1240,7 @@ do_persistence_name_test (
         CosNaming::Name deep;
         deep.length (1);
         char deep_name[16];
-        ACE_OS::sprintf(deep_name, ACE_TEXT_ALWAYS_CHAR ("deep_%d"), i);
+        ACE_OS::sprintf (deep_name, "deep_%d", i);
         deep[0].id = CORBA::string_dup (deep_name);
 
         CosNaming::NamingContext_var deep_context;
@@ -1265,7 +1265,7 @@ do_persistence_name_test (
       CosNaming::Name wide;
       wide.length (1);
       char wide_name[16];
-      ACE_OS::sprintf(wide_name, ACE_TEXT_ALWAYS_CHAR ("wide_%d"), i);
+      ACE_OS::sprintf (wide_name, "wide_%d", i);
       wide[0].id = CORBA::string_dup (wide_name);
 
       if( false == validate_only ) {
@@ -1395,7 +1395,7 @@ do_persistence_objectgroup_test (
     }
 
     /// get BasicGroup member object and verify that it reports the same location
-    const char* basic_group_name = "BasicGroup";
+    const ACE_TCHAR * basic_group_name = ACE_TEXT ("BasicGroup");
 
     if (false == group_svc.group_exist(basic_group_name))
     {
@@ -1412,7 +1412,8 @@ do_persistence_objectgroup_test (
     try
     {
       PortableGroup::ObjectGroup_var group_var =
-        naming_manager_1->get_object_group_ref_from_name (basic_group_name);
+        naming_manager_1->get_object_group_ref_from_name (
+          ACE_TEXT_ALWAYS_CHAR (basic_group_name));
 
       PortableGroup::Locations_var locations =
         naming_manager_1->locations_of_members (group_var.in());
@@ -1631,7 +1632,7 @@ do_equivalence_name_test (
     // Bind one context level under root.
     CosNaming::Name level1;
     level1.length (1);
-    level1[0].id = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR("level1_context"));
+    level1[0].id = CORBA::string_dup ("level1_context");
     CosNaming::NamingContext_var level1_context;
     level1_context = root_context_1->bind_new_context (level1);
     ACE_OS::thr_yield ();
@@ -1645,7 +1646,7 @@ do_equivalence_name_test (
 
       level1.length (2);
       char wide_name[16];
-      ACE_OS::sprintf(wide_name, ACE_TEXT_ALWAYS_CHAR ("obj_%d"), i);
+      ACE_OS::sprintf (wide_name, "obj_%d", i);
       level1[1].id = CORBA::string_dup (wide_name);
       root_context_1->bind (level1, obj1.in ());
       ACE_OS::thr_yield ();
@@ -1694,7 +1695,7 @@ do_equivalence_name_test (
       CosNaming::Name deep;
       deep.length (1);
       char deep_name[16];
-      ACE_OS::sprintf(deep_name, ACE_TEXT_ALWAYS_CHAR ("deep_%d"), i);
+      ACE_OS::sprintf (deep_name, "deep_%d", i);
       deep[0].id = CORBA::string_dup (deep_name);
       CosNaming::NamingContext_var deep_context;
       deep_context = next_context->bind_new_context (deep);
@@ -1718,7 +1719,7 @@ do_equivalence_name_test (
       CosNaming::Name wide;
       wide.length (1);
       char wide_name[16];
-      ACE_OS::sprintf(wide_name, ACE_TEXT_ALWAYS_CHAR ("wide_%d"), i);
+      ACE_OS::sprintf (wide_name, "wide_%d", i);
       wide[0].id = CORBA::string_dup (wide_name);
       CosNaming::NamingContext_var wide_context;
       wide_context = root_context_1->bind_new_context (wide);
@@ -1773,10 +1774,10 @@ do_equivalence_name_test (
     CosNaming::Name wide1;
     wide1.length (2);
 
-    wide1[0].id = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR ("level1_context"));
+    wide1[0].id = CORBA::string_dup ("level1_context");
 
     char wide_name[16];
-    ACE_OS::sprintf(wide_name, ACE_TEXT_ALWAYS_CHAR ("obj_%d"), o_breadth-2);
+    ACE_OS::sprintf (wide_name, "obj_%d", o_breadth-2);
     wide1[1].id = CORBA::string_dup (wide_name);
     root_context_1->unbind (wide1);
     ACE_OS::thr_yield ();
@@ -1812,7 +1813,7 @@ do_equivalence_name_test (
     // Remove the second to last context from the wide root Naming Context
     CosNaming::Name wide2;
     wide2.length (1);
-    ACE_OS::sprintf(wide_name, ACE_TEXT_ALWAYS_CHAR ("wide_%d"), c_breadth-2);
+    ACE_OS::sprintf (wide_name, "wide_%d", c_breadth-2);
     wide2[0].id = CORBA::string_dup (wide_name);
 
     CORBA::Object_var result_obj_ref = root_context_1->resolve (wide2);
@@ -1838,7 +1839,7 @@ do_equivalence_name_test (
     char deep_name[16];
     for (i=0; i<c_depth; i++)
     {
-      ACE_OS::sprintf(deep_name, ACE_TEXT_ALWAYS_CHAR ("deep_%d"), i);
+      ACE_OS::sprintf (deep_name, "deep_%d", i);
       deep[i].id = CORBA::string_dup (deep_name);
     }
     result_obj_ref = root_context_1->resolve (deep);
@@ -1896,9 +1897,9 @@ do_equivalence_name_test (
     // Access the last object from the Naming Context
     CosNaming::Name wide;
     wide.length (2);
-    wide[0].id = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR ("level1_context"));
+    wide[0].id = CORBA::string_dup ("level1_context");
     char wide_name[16];
-    ACE_OS::sprintf(wide_name, ACE_TEXT_ALWAYS_CHAR ("obj_%d"), o_breadth-1);
+    ACE_OS::sprintf (wide_name, "obj_%d", o_breadth-1);
     wide[1].id = CORBA::string_dup (wide_name);
     CORBA::Object_var result_obj_ref = root_context_2->resolve (wide);
     Test_Object_var result_object = Test_Object::_narrow (result_obj_ref.in ());
@@ -1924,9 +1925,9 @@ do_equivalence_name_test (
     // Access the deleted second to last object from the Naming Context
     CosNaming::Name wide;
     wide.length (2);
-    wide[0].id = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR ("level1_context"));
+    wide[0].id = CORBA::string_dup ("level1_context");
     char wide_name[16];
-    ACE_OS::sprintf(wide_name, ACE_TEXT_ALWAYS_CHAR ("obj_%d"), o_breadth-2);
+    ACE_OS::sprintf (wide_name, "obj_%d", o_breadth-2);
     wide[1].id = CORBA::string_dup (wide_name);
 
     CORBA::Object_var result_obj_ref = root_context_2->resolve (wide);
@@ -1959,7 +1960,7 @@ do_equivalence_name_test (
     CosNaming::Name wide;
     wide.length (1);
     char wide_name[16];
-    ACE_OS::sprintf(wide_name, ACE_TEXT_ALWAYS_CHAR ("wide_%d"), c_breadth-1);
+    ACE_OS::sprintf (wide_name, "wide_%d", c_breadth-1);
     wide[0].id = CORBA::string_dup (wide_name);
     CORBA::Object_var result_obj_ref = root_context_2->resolve (wide);
 
@@ -1992,7 +1993,7 @@ do_equivalence_name_test (
     CosNaming::Name wide;
     wide.length (2);
     char wide_name[16];
-    ACE_OS::sprintf(wide_name, ACE_TEXT_ALWAYS_CHAR ("wide_%d"), c_breadth-2);
+    ACE_OS::sprintf (wide_name, "wide_%d", c_breadth-2);
     wide[0].id = CORBA::string_dup (wide_name);
     CORBA::Object_var result_obj_ref = root_context_2->resolve (wide);
 
@@ -2021,7 +2022,7 @@ do_equivalence_name_test (
     char deep_name[16];
     for (i=0; i<c_depth; i++)
     {
-      ACE_OS::sprintf(deep_name, ACE_TEXT_ALWAYS_CHAR ("deep_%d"), i);
+      ACE_OS::sprintf (deep_name, "deep_%d", i);
       deep[i].id = CORBA::string_dup (deep_name);
     }
     CORBA::Object_var result_obj_ref = root_context_1->resolve (deep);
@@ -2052,7 +2053,7 @@ do_equivalence_name_test (
     char deep_name[16];
     for (i=0; i<c_depth-1; i++)
     {
-      ACE_OS::sprintf(deep_name, ACE_TEXT_ALWAYS_CHAR ("deep_%d"), i);
+      ACE_OS::sprintf (deep_name, "deep_%d", i);
       deep[i].id = CORBA::string_dup (deep_name);
     }
     CORBA::Object_var result_obj_ref = root_context_1->resolve (deep);
@@ -2236,9 +2237,9 @@ do_equivalence_objectgroup_test (
     }
 
     /// Now validate seamless operations between the two instances of NS_group
-    const char* policy       = ACE_TEXT_ALWAYS_CHAR ("round");
-    const char* test_group_1 = ACE_TEXT_ALWAYS_CHAR ("test_group_1");
-    const char* test_group_2 = ACE_TEXT_ALWAYS_CHAR ("test_group_2");
+    const ACE_TCHAR * policy       = ACE_TEXT ("round");
+    const ACE_TCHAR * test_group_1 = ACE_TEXT ("test_group_1");
+    const ACE_TCHAR * test_group_2 = ACE_TEXT ("test_group_2");
 
     if (RC_SUCCESS != svc1.group_create (test_group_1, policy))
     {

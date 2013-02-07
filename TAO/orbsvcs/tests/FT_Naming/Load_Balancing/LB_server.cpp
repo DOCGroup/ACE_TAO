@@ -162,13 +162,13 @@ LB_server::create_object_group (void)
 
       // Set the membership style property
       mem_style.nam[0].id =
-        CORBA::string_dup (ACE_TEXT ("org.omg.PortableGroup.MembershipStyle"));
+        CORBA::string_dup ("org.omg.PortableGroup.MembershipStyle");
       PortableGroup::MembershipStyleValue msv =
         PortableGroup::MEMB_APP_CTRL;
       mem_style.val <<= msv;
 
       this->object_group_ = this->naming_manager_->create_object_group (
-        ACE_TEXT ("Basic Group"),
+        "Basic Group",
         FT_Naming::ROUND_ROBIN,
         criteria);
 

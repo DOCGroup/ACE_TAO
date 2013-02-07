@@ -23,7 +23,7 @@ private:
 
 TestTask::TestTask(int argc, ACE_TCHAR **argv)
 {
-  orb_ = CORBA::ORB_init (argc, argv, ACE_TEXT_ALWAYS_CHAR ("ServerORB"));
+  orb_ = CORBA::ORB_init (argc, argv, "ServerORB");
   shutdown_ns_ = false;
   parse_args (argc, argv);
 }
@@ -59,8 +59,7 @@ int TestTask::svc()
 
   try {
     // Get reference to Root POA
-    CORBA::Object_var obj = orb_->resolve_initial_references (
-      ACE_TEXT_ALWAYS_CHAR ("RootPOA"));
+    CORBA::Object_var obj = orb_->resolve_initial_references ("RootPOA");
 
     PortableServer::POA_var poa = PortableServer::POA::_narrow (obj.in ());
 
@@ -70,7 +69,7 @@ int TestTask::svc()
 
     // Find the Naming Service
     obj = orb_->string_to_object (
-      ACE_TEXT_ALWAYS_CHAR ("corbaloc:iiop:1.2@localhost:9932/NameService"));
+      "corbaloc:iiop:1.2@localhost:9932/NameService");
 
     CosNaming::NamingContext_var rootB =
       CosNaming::NamingContext::_narrow (obj.in ());
@@ -84,7 +83,7 @@ int TestTask::svc()
     CosNaming::NamingContext_var example_nc;
     CosNaming::Name name;
     name.length(1);
-    name[0].id = CORBA::string_dup( ACE_TEXT_ALWAYS_CHAR ("example"));
+    name[0].id = CORBA::string_dup( "example");
     try
     {
       obj = rootB->resolve (name);
@@ -98,7 +97,7 @@ int TestTask::svc()
 
     // Bind the Test object
     name.length (2);
-    name[1].id = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR ("Hello"));
+    name[1].id = CORBA::string_dup ("Hello");
 
     // Create an object
     Hello servant (orb_.in ());
@@ -110,10 +109,10 @@ int TestTask::svc()
                 ACE_TEXT ("Hello object bound in Naming Service B\n")));
 
     name.length (1);
-    name[0].id = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR ("nsB"));
+    name[0].id = CORBA::string_dup ("nsB");
 
     obj = orb_->string_to_object (
-      ACE_TEXT_ALWAYS_CHAR ("corbaloc:iiop:1.2@localhost:9931/NameService"));
+      "corbaloc:iiop:1.2@localhost:9931/NameService");
 
     CosNaming::NamingContext_var rootA =
       CosNaming::NamingContext::_narrow (obj.in ());
