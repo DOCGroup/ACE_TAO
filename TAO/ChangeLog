@@ -1,3 +1,16 @@
+Thu Feb  7 23:02:53 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * bin/tao_orb_tests.lst:
+
+        * tao/RTCORBA/RT_Invocation_Endpoint_Selectors.cpp:
+
+        * tao/Stub.h:
+        * tao/Stub.inl:
+
+        * tests/Bug_4059_Regression:
+
+          Fix for bugzilla 4059.
+
 Thu Feb  7 22:55:30 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * MPC/config/dynamic_tp.mpb:
