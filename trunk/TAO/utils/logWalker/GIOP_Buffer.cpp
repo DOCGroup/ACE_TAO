@@ -550,7 +550,8 @@ GIOP_Buffer::matches (GIOP_Buffer *other) const
   if (other->header_parsed_)
     return this->expected_req_id_ == other->actual_req_id() &&
       this->expected_type_ == other->type() &&
-      this->expected_size_ == other->msg_size();
+      (this->expected_size_ == other->msg_size() ||
+       this->expected_size_ == other->msg_size() + 4);
   else
     return this->expected_req_id_ == other->expected_req_id() &&
       this->expected_type_ == other->expected_type() &&

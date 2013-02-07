@@ -1,3 +1,11 @@
+Thu Feb  7 23:26:20 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * utils/logWalker/GIOP_Buffer.cpp:
+        * utils/logWalker/Invocation.h:
+        * utils/logWalker/Invocation.cpp:
+
+          Incremental improvments for buffer parsing and reporting
+
 Thu Feb  7 23:02:53 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * bin/tao_orb_tests.lst:

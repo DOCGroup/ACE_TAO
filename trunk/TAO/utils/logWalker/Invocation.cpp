@@ -193,6 +193,17 @@ Invocation::req_line (void)
 }
 
 void
+Invocation::new_line (ostream &strm, int indent, bool add_nl)
+{
+  if (add_nl)
+    {
+      strm << "\n";
+    }
+  while (indent-- > 0)
+    strm << "  ";
+}
+
+void
 Invocation::dump_detail (ostream &strm,
                          int indent,
                          Dump_Mode mode,
@@ -212,8 +223,7 @@ Invocation::dump_detail (ostream &strm,
         }
     }
 
-  while (indent-- > 0)
-    strm << "  ";
+  this->new_line (strm, indent, false);
 
   if (opname == 0 || opname[0] == 0)
     opname = "<no operation>";
@@ -288,9 +298,8 @@ Invocation::dump_detail (ostream &strm,
     }
   if (delta > 0)
     strm << " log span = " << delta;
-  if (this->req_octets_ != 0 && this->req_octets_->has_octets() &&
-      this->repl_octets_ != 0 && this->repl_octets_->has_octets())
-    this->dump_special_details (strm, opname);
+  if (this->req_octets_ != 0 && this->req_octets_->has_octets())
+    this->dump_special_details (strm, indent, opname);
   strm << endl;
   if (this->notify_incidents_.size() > 0)
     {
@@ -305,9 +314,12 @@ Invocation::dump_detail (ostream &strm,
 }
 
 void
-Invocation::dump_special_details (ostream &strm, const char *opname)
+Invocation::dump_special_details (ostream &strm, int indent, const char *opname)
 {
-  char rstat = this->repl_octets_->reply_status();
+  char rstat = 0;
+  bool excep_nl = false;
+  if (this->repl_octets_ != 0 && this->repl_octets_->has_octets())
+    rstat = this->repl_octets_->reply_status();
   int opid = 0;
   if (ACE_OS::strcmp (opname, "_is_a") == 0)
     {
@@ -316,10 +328,17 @@ Invocation::dump_special_details (ostream &strm, const char *opname)
       ACE_InputCDR cdr (giop_cdr.rd_ptr(),
                         giop_cdr.length(),
                         giop_cdr.byte_order());
+      this->new_line (strm, indent + 8, true);
+      excep_nl = true;
       ACE_CDR::ULong len;
       if (cdr >> len)
-        strm << "\n        expected type ( len = " << len << ") "
-             << cdr.rd_ptr();
+        {
+          strm << "expected type ( len = " << len << ") " << cdr.rd_ptr();
+        }
+      else
+        {
+          strm << "expected type parse failed";
+        }
     }
   else if (ACE_OS::strcmp (opname, "_get_MyID") == 0)
     {
@@ -334,7 +353,11 @@ Invocation::dump_special_details (ostream &strm, const char *opname)
                         giop_cdr.byte_order());
       ACE_CDR::ULong len;
       if (cdr >> len)
-        strm << "\n        name len = " << len << ") " << cdr.rd_ptr();
+        {
+          this->new_line (strm, indent + 8, true);
+          excep_nl = true;
+          strm << "name (len = " << len << ") " << cdr.rd_ptr();
+        }
     }
   else if (ACE_OS::strcmp (opname, "resolve") == 0 ||
            ACE_OS::strcmp (opname, "bind") == 0 ||
@@ -350,7 +373,8 @@ Invocation::dump_special_details (ostream &strm, const char *opname)
       ACE_CDR::ULong count;
       if (cdr >> count)
         {
-          strm << "\n   name_seq.lengh = " << count << " ";
+          this->new_line (strm, indent + 3, true);
+          strm << "name_seq.lengh = " << count << " ";
           while (count-- > 0)
             {
               ACE_CDR::ULong len;
@@ -378,7 +402,33 @@ Invocation::dump_special_details (ostream &strm, const char *opname)
             }
         }
     }
+  else if (ACE_OS::strcmp (opname, "register_activator") == 0 ||
+           ACE_OS::strcmp (opname, "unregister_activator") == 0 ||
+           ACE_OS::strcmp (opname, "notify_child_death") == 0 ||
+           ACE_OS::strcmp (opname, "start_server") == 0 ||
+           ACE_OS::strcmp (opname, "wait_for_startup") == 0 ||
+           ACE_OS::strcmp (opname, "activate_server") == 0 ||
+           ACE_OS::strcmp (opname, "add_or_update_server") == 0 ||
+           ACE_OS::strcmp (opname, "shutdown_server") == 0 ||
+           ACE_OS::strcmp (opname, "server_is_running") == 0 ||
+           ACE_OS::strcmp (opname, "server_is_shutting_down") == 0 ||
+           ACE_OS::strcmp (opname, "find") == 0)
+    {
+      ACE_InputCDR &giop_cdr = this->req_octets_->payload();
+      ACE_InputCDR cdr (giop_cdr.rd_ptr(),
+                        giop_cdr.length(),
+                        giop_cdr.byte_order());
+      ACE_CDR::ULong len;
+      if (cdr >> len)
+        {
+          this->new_line (strm, indent + 8, true);
+          excep_nl = true;
+          strm << "name ( len = " << len << ") " << cdr.rd_ptr();
+        }
+    }
 
+  if (this->repl_octets_ == 0 || !this->repl_octets_->has_octets())
+    return;
 
   ACE_InputCDR &giop_cdr = this->repl_octets_->payload();
   ACE_InputCDR cdr (giop_cdr.rd_ptr(),
@@ -398,9 +448,10 @@ Invocation::dump_special_details (ostream &strm, const char *opname)
           }
         case 2:
           {
+            this->new_line (strm, indent + 8, true);
             ACE_CDR::Long x;
             if (cdr >> x)
-              strm << " \n        MyID reply: " << x;
+              strm << "MyID reply: " << x;
             break;
           }
         default:;
@@ -408,22 +459,35 @@ Invocation::dump_special_details (ostream &strm, const char *opname)
     }
   else
     {
-      if (opid == 0)
-        {
-          strm << "\n                    ";
-        }
+      this->new_line (strm, indent + 8, excep_nl);
+      ACE_CDR::ULong len;
       if (rstat == 1 || rstat == 2)
         {
-          strm << " Exception ";
+          strm << "Exception ";
         }
       else
         {
-          strm << " Redirect to ";
+          strm << "Redirect to ";
+          if (cdr >> len)
+            {
+             cdr.skip_bytes(len);
+             strm << "(first skip " << len << ") ";
+            }
+
+          if (cdr >> len)
+            {
+             cdr.skip_bytes(len);
+             strm << "(second skip " << len << ") ";
+            }
+
         }
-      ACE_CDR::ULong len;
       if (cdr >> len)
         {
-          strm << cdr.rd_ptr();
+          strm << "(len = " << len << ") " << cdr.rd_ptr();
+        }
+      else
+        {
+          strm << "unparsable";
         }
     }
 
