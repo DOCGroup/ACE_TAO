@@ -61,10 +61,10 @@ TAO_Storable_Naming_Context_Activator::incarnate (
 
   { // Does this already exist on disk?
 
-    ACE_TString file_name = ACE_TEXT_CHAR_TO_TCHAR (poa_id.in ());
+    ACE_CString file_name = poa_id.in ();
     ACE_Auto_Ptr<TAO::Storable_Base> fl (
-       persistence_factory_->create_stream (ACE_TEXT_ALWAYS_CHAR (file_name.c_str ()),
-                                            ACE_TEXT ("rw")));
+       persistence_factory_->create_stream (file_name.c_str (),
+                                            "rw"));
 
     if (!fl->exists()) {
       throw CORBA::OBJECT_NOT_EXIST ();

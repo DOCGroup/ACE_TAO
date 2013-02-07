@@ -136,7 +136,7 @@ TAO::Storable_FlatFileStream::~Storable_FlatFileStream ()
 void
 TAO::Storable_FlatFileStream::do_remove ()
 {
-  ACE_OS::unlink(ACE_TEXT_CHAR_TO_TCHAR(file_.c_str()));
+  ACE_OS::unlink(file_.c_str());
 }
 
 int
@@ -162,21 +162,22 @@ TAO::Storable_FlatFileStream::open()
   if( ACE_OS::strchr(mode_.c_str(), 'c') )
     flags |= O_CREAT;
 #ifndef ACE_WIN32
-  if( ACE_OS::flock_init (&filelock_, flags, ACE_TEXT_CHAR_TO_TCHAR(file_.c_str()), 0666) != 0 )
+  if( ACE_OS::flock_init (&filelock_, flags,
+                          ACE_TEXT_CHAR_TO_TCHAR (file_.c_str()), 0666) != 0 )
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Cannot open file %s for mode %s: (%d) %s\n",
                        file_.c_str(), mode_.c_str(),
                        errno, ACE_OS::strerror(errno)),
                       -1);
 #else
-  if( (filelock_.handle_= ACE_OS::open (ACE_TEXT_CHAR_TO_TCHAR(file_.c_str()), flags, 0)) == ACE_INVALID_HANDLE )
+  if( (filelock_.handle_= ACE_OS::open (file_.c_str(), flags, 0)) == ACE_INVALID_HANDLE )
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Cannot open file %s for mode %s: (%d) %s\n",
                        file_.c_str(), mode_.c_str(),
                        ACE_ERRNO_GET, ACE_OS::strerror(ACE_ERRNO_GET)),
                       -1);
 #endif
-  this->fl_ = ACE_OS::fdopen(filelock_.handle_, ACE_TEXT_CHAR_TO_TCHAR(fdmode));
+  this->fl_ = ACE_OS::fdopen(filelock_.handle_, ACE_TEXT_CHAR_TO_TCHAR (fdmode));
   if (this->fl_ == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Cannot fdopen file %s for mode %s: (%d) %s\n",
@@ -259,7 +260,7 @@ TAO::Storable_Base &
 TAO::Storable_FlatFileStream::operator << (const ACE_CString& str)
 {
   int n =
-    ACE_OS::fprintf(this->fl_, ACE_SIZE_T_FORMAT_SPECIFIER ACE_TEXT("\n%s\n"),
+    ACE_OS::fprintf(this->fl_, ACE_SSIZE_T_FORMAT_SPECIFIER_ASCII "\n%s\n",
                     str.length(), str.c_str());
   if (n < 0)
     this->throw_on_write_error (badbit);
@@ -289,7 +290,7 @@ TAO::Storable_FlatFileStream::operator >> (ACE_CString& str)
   {
     ACE_Auto_Basic_Array_Ptr<char> str_array (new char[bufSize + 1]);
     str_array[0] = '\0';
-    if (ACE_OS::fgets (ACE_TEXT_CHAR_TO_TCHAR (str_array.get ()),
+    if (ACE_OS::fgets (str_array.get (),
                        bufSize + 1,
                        this->fl_) == 0
         && bufSize != 0)
@@ -393,9 +394,9 @@ TAO::Storable_FlatFileStream::remove_backup ()
 {
   ACE_CString backup_name = this->backup_file_name ();
 
-  if (ACE_OS::access (ACE_TEXT_CHAR_TO_TCHAR (backup_name.c_str ()), F_OK) == 0)
+  if (ACE_OS::access (backup_name.c_str (), F_OK) == 0)
     {
-      ACE_OS::unlink (ACE_TEXT_CHAR_TO_TCHAR (backup_name.c_str ()));
+      ACE_OS::unlink (backup_name.c_str ());
     }
 }
 
@@ -404,10 +405,10 @@ TAO::Storable_FlatFileStream::restore_backup ()
 {
   ACE_CString backup_name = this->backup_file_name ().c_str ();
 
-  if (ACE_OS::access (ACE_TEXT_CHAR_TO_TCHAR (backup_name.c_str ()), F_OK))
+  if (ACE_OS::access (backup_name.c_str (), F_OK))
     return -1;
 
-  FILE * backup = ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR (backup_name.c_str ()),
+  FILE * backup = ACE_OS::fopen (backup_name.c_str (),
                                  "r");
   this->rewind();
   int result = file_copy(backup, this->fl_);
@@ -457,14 +458,14 @@ TAO::Storable_FlatFileFactory::get_directory () const
 
 TAO::Storable_Base *
 TAO::Storable_FlatFileFactory::create_stream (const ACE_CString & file,
-                                              const ACE_TCHAR * mode,
+                                              const char * mode,
                                               bool use_backup)
 {
   TAO::Storable_Base *stream = 0;
   ACE_CString path = this->directory_ + "/" + file;
   ACE_NEW_RETURN (stream,
                   TAO::Storable_FlatFileStream(path,
-                                               ACE_TEXT_ALWAYS_CHAR (mode),
+                                               mode,
                                                use_backup),
                   0);
   return stream;

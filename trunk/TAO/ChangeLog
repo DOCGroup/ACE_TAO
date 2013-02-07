@@ -1,3 +1,29 @@
+Thu Feb  7 21:39:47 UTC 2013  Byron Harris  <harrisb@ociweb.com>
+
+        * tao/Storable_Factory.h:
+        * tao/Storable_File_Guard.h:
+        * tao/Storable_File_Guard.cpp:
+        * tao/Storable_FlatFileStream.h:
+        * tao/Storable_FlatFileStream.cpp:
+
+          Instead of a mixture of char and ACE_TCHAR usage,
+          changed to use char wherever possible since the
+          data being persisted will not be of wide character type.
+          Doing this resulted in tests that use this code
+          to pass when wchar usage is enabled.
+
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.h:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context_Activator.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_List_Store.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_List_Store.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group_Storable.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group_Storable.cpp:
+        * tests/Storable/Savable.cpp:
+
+          Updated to account for the API changes in the Storable
+          classes.
+
 Thu Feb  7 20:16:29 UTC 2013  Phillip LaBanca  <labancap@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/Naming_Server.cpp:
