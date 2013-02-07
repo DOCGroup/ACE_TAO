@@ -60,7 +60,7 @@ namespace TAO
 
     virtual bool is_loaded_from_stream ();
 
-    virtual TAO::Storable_Base * create_stream (const ACE_TCHAR * mode);
+    virtual TAO::Storable_Base * create_stream (const char * mode);
 
   private:
 
@@ -133,7 +133,7 @@ TAO::Object_Group_File_Guard::is_loaded_from_stream ()
 }
 
 TAO::Storable_Base *
-TAO::Object_Group_File_Guard::create_stream (const  ACE_TCHAR * mode)
+TAO::Object_Group_File_Guard::create_stream (const  char * mode)
 {
   return object_group_.create_stream (mode);
 }
@@ -172,7 +172,7 @@ TAO::PG_Object_Group_Storable::PG_Object_Group_Storable (
   bool stream_exists = false;
   {
     ACE_Auto_Ptr<TAO::Storable_Base> stream (
-      this->create_stream (ACE_TEXT ("r")));
+      this->create_stream ("r"));
 
     if (stream->exists ())
       stream_exists = true;
@@ -211,7 +211,7 @@ TAO::PG_Object_Group_Storable::PG_Object_Group_Storable (
   bool stream_exists = false;
   {
     ACE_Auto_Ptr<TAO::Storable_Base> stream (
-      this->create_stream (ACE_TEXT ("r")));
+      this->create_stream ("r"));
 
     if (stream->exists ())
       stream_exists = true;
@@ -232,7 +232,7 @@ TAO::PG_Object_Group_Storable::~PG_Object_Group_Storable (void)
   if (destroyed_)
     {
       ACE_Auto_Ptr<TAO::Storable_Base> stream (
-        this->create_stream (ACE_TEXT ("r")));
+        this->create_stream ("r"));
 
       if (stream->exists ())
         {
@@ -373,7 +373,7 @@ TAO::PG_Object_Group_Storable::get_object_group_id () const
 }
 
 TAO::Storable_Base *
-TAO::PG_Object_Group_Storable::create_stream (const ACE_TCHAR * mode)
+TAO::PG_Object_Group_Storable::create_stream (const char * mode)
 {
   char file_name[BUFSIZ];
   // Although PortableGroup::ObjectGroupId is a typedef

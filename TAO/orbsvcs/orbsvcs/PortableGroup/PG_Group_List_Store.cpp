@@ -43,7 +43,7 @@ namespace TAO
 
     virtual bool is_loaded_from_stream ();
 
-    virtual TAO::Storable_Base * create_stream (const ACE_TCHAR * mode);
+    virtual TAO::Storable_Base * create_stream (const char * mode);
 
 private:
 
@@ -114,7 +114,7 @@ TAO::PG_Group_List_Store_File_Guard::is_loaded_from_stream ()
 }
 
 TAO::Storable_Base *
-TAO::PG_Group_List_Store_File_Guard::create_stream (const ACE_TCHAR * mode)
+TAO::PG_Group_List_Store_File_Guard::create_stream (const char * mode)
 {
   return list_store_.create_stream (mode);
 }
@@ -137,7 +137,7 @@ TAO::PG_Group_List_Store::PG_Group_List_Store (
   bool stream_exists = false;
   {
     ACE_Auto_Ptr<TAO::Storable_Base> stream (
-      this->create_stream (ACE_TEXT ("r")));
+      this->create_stream ("r"));
 
     if (stream->exists ())
       stream_exists = true;
@@ -248,7 +248,7 @@ TAO::PG_Group_List_Store::write (TAO::Storable_Base & stream)
 }
 
 TAO::Storable_Base *
-TAO::PG_Group_List_Store::create_stream (const ACE_TCHAR * mode)
+TAO::PG_Group_List_Store::create_stream (const char * mode)
 {
   ACE_CString file_name("ObjectGroup_global");
 
@@ -260,7 +260,7 @@ bool
 TAO::PG_Group_List_Store::list_obsolete ()
 {
   // TODO: Upate if obsolete flag is set based on CORBA call.
-  ACE_Auto_Ptr<TAO::Storable_Base> stream (this->create_stream (ACE_TEXT ("r")));
+  ACE_Auto_Ptr<TAO::Storable_Base> stream (this->create_stream ("r"));
   if (!stream->exists ())
     throw CORBA::INTERNAL ();
   stream->open ();

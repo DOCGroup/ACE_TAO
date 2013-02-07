@@ -96,7 +96,7 @@ namespace TAO
     /// removed.
     PortableGroup::ObjectGroupId next_group_id_;
 
-    TAO::Storable_Base * create_stream (const ACE_TCHAR * mode);
+    TAO::Storable_Base * create_stream (const char * mode);
 
     Storable_Factory & storable_factory_;
     bool loaded_from_stream_;
