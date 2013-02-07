@@ -461,7 +461,7 @@ protected:
 
   virtual bool is_loaded_from_stream ();
 
-  virtual TAO::Storable_Base * create_stream (const ACE_TCHAR * mode);
+  virtual TAO::Storable_Base * create_stream (const char * mode);
 
 private:
   /// Default constructor

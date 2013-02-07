@@ -344,7 +344,7 @@ File_Open_Lock_and_Check::is_loaded_from_stream ()
 
 TAO::Storable_Base *
 TAO_Storable_Naming_Context::
-File_Open_Lock_and_Check::create_stream (const ACE_TCHAR * mode)
+File_Open_Lock_and_Check::create_stream (const char * mode)
 {
   ACE_CString file_name = context_->context_name_;
 
@@ -393,8 +393,7 @@ TAO_Storable_Naming_Context::~TAO_Storable_Naming_Context (void)
       // Now delete the file
       ACE_Auto_Ptr<TAO::Storable_Base>
         fl (
-          this->factory_->create_stream(file_name.c_str(),
-                                        ACE_TEXT("r"))
+          this->factory_->create_stream(file_name.c_str(), "r")
           );
       if (fl.get())
         {
@@ -1248,9 +1247,9 @@ CosNaming::NamingContext_ptr TAO_Storable_Naming_Context::recreate_all (
                       &new_context);
 
   // Now does this already exist on disk?
-  ACE_TString file_name = ACE_TEXT_CHAR_TO_TCHAR(poa_id);
+  ACE_CString file_name = poa_id;
   ACE_Auto_Ptr<TAO::Storable_Base> fl (
-    pers_factory->create_stream (ACE_TEXT_ALWAYS_CHAR (file_name.c_str ()), ACE_TEXT ("r")));
+    pers_factory->create_stream (file_name.c_str (), "r"));
   if (fl->exists ())
   {
     // Load the map from disk
@@ -1268,14 +1267,14 @@ CosNaming::NamingContext_ptr TAO_Storable_Naming_Context::recreate_all (
   }
 
   // build the global file name
-  file_name += ACE_TEXT("_global");
+  file_name += "_global";
 
   // Create the stream for the counter used to uniquely create context names
   // Pass false for use_backup since access to this file is not wrapped
   // around a Storable_File_Guard derived class.
   gfl_.reset(pers_factory->
-             create_stream (ACE_TEXT_ALWAYS_CHAR(file_name.c_str()),
-                            ACE_TEXT("crw"),
+             create_stream (file_name.c_str(),
+                            "crw",
                             false));
   if (gfl_->open() != 0)
     {
