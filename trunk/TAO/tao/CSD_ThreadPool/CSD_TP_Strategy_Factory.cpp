@@ -90,7 +90,8 @@ TAO::CSD::TP_Strategy_Factory::init (int argc,
                 }
               if (*sep == ':')
                 {
-                  if (ACE_OS::strcasecmp (sep + 1, "OFF") == 0)
+                  if (ACE_OS::strcasecmp (
+                    sep + 1, ACE_TEXT_CHAR_TO_TCHAR ("OFF")) == 0)
                     {
                       serialize_servants = false;
                     }
