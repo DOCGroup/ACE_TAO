@@ -1,3 +1,11 @@
+Thu Feb  7 20:16:29 UTC 2013  Phillip LaBanca  <labancap@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/Naming_Server.cpp:
+        * orbsvcs/tests/ImplRepo/airplane_client_i.cpp:
+        * orbsvcs/tests/ImplRepo/airplane_server_i.cpp:
+
+          Scoreboard cleanup for wchar compatibility.
+
 Thu Feb  7 17:00:28 UTC 2013  Phillip LaBanca  <labancap@ociweb.com>
 
         * tao/CSD_ThreadPool/CSD_TP_Strategy_Factory.cpp:
