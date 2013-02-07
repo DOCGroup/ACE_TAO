@@ -200,7 +200,7 @@ TAO_DTP_Config::init (int argc, ACE_TCHAR* argv[])
       return 0;
     }
 
-  ACE_CString name_str = name;
+  ACE_CString name_str = ACE_TEXT_ALWAYS_CHAR (name);
   ACE_Service_Gestalt *current = ACE_Service_Config::current();
   TAO_DTP_Config_Registry* registry =
     ACE_Dynamic_Service<TAO_DTP_Config_Registry>::instance

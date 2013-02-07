@@ -1,3 +1,10 @@
+Thu Feb  7 17:00:28 UTC 2013  Phillip LaBanca  <labancap@ociweb.com>
+
+        * tao/CSD_ThreadPool/CSD_TP_Strategy_Factory.cpp:
+        * tao/Dynamic_TP/DTP_Config.cpp:
+
+          Scoreboard cleanup for wchar compatibility.
+
 Thu Feb  7 00:54:59 UTC 2013  Phillip LaBanca  <labancap@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.cpp:
