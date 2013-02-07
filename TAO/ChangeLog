@@ -1,3 +1,10 @@
+Thu Feb  7 22:45:43 UTC 2013  Phillip LaBanca  <labancap@ociweb.com>
+
+        * orbsvcs/tests/FT_Naming/Load_Balancing/Basic.cpp:
+        * orbsvcs/tests/FT_Naming/Load_Balancing/client.cpp:
+
+          Scoreboard cleanup for wchar compatibility.
+
 Thu Feb  7 22:28:22 UTC 2013  Phillip LaBanca  <labancap@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/FaultTolerant/nsgroup_svc.cpp:
