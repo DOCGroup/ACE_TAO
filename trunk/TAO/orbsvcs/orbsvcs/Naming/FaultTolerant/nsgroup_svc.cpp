@@ -22,10 +22,10 @@ FT_Naming::LoadBalancingStrategyValue
 NS_group_svc::determine_policy_string (const ACE_TCHAR *policy)
 {
   if (ACE_OS::strcasecmp (policy,
-                          ACE_TEXT_ALWAYS_CHAR ("rand")) == 0) {
+      ACE_TEXT_CHAR_TO_TCHAR ("rand")) == 0) {
     return FT_Naming::RANDOM;
   } else if (ACE_OS::strcasecmp (policy,
-                                 ACE_TEXT_ALWAYS_CHAR ("least")) == 0) {
+      ACE_TEXT_CHAR_TO_TCHAR ("least")) == 0) {
     return FT_Naming::LEAST;
   } else {
     return FT_Naming::ROUND_ROBIN; // Default case
@@ -87,7 +87,8 @@ NS_group_svc::group_exist (
   try
     {
     PortableGroup::ObjectGroup_var group_var =
-      this->naming_manager_->get_object_group_ref_from_name (group_name);
+      this->naming_manager_->get_object_group_ref_from_name (
+        ACE_TEXT_ALWAYS_CHAR (group_name));
   }
   catch (const PortableGroup::ObjectGroupNotFound&)
   {
@@ -122,7 +123,7 @@ NS_group_svc::group_create (
 
     /// Verify that the group does not already exist
     /// Group names must be unique
-    if ( true == group_exist (ACE_TEXT_ALWAYS_CHAR (group_name)))
+    if ( true == group_exist (group_name))
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("Group %C already exists\n"),
@@ -137,7 +138,7 @@ NS_group_svc::group_create (
     property.nam.length (1);
 
     property.nam[0].id = CORBA::string_dup (
-      ACE_TEXT_ALWAYS_CHAR ("org.omg.PortableGroup.MembershipStyle"));
+      "org.omg.PortableGroup.MembershipStyle");
 
     PortableGroup::MembershipStyleValue msv = PortableGroup::MEMB_APP_CTRL;
     property.val <<= msv;
@@ -145,7 +146,7 @@ NS_group_svc::group_create (
     CORBA::Object_var obj =
       this->naming_manager_->create_object_group (
         ACE_TEXT_ALWAYS_CHAR (group_name),
-        determine_policy_string(ACE_TEXT_ALWAYS_CHAR (policy)),
+        determine_policy_string(policy),
         criteria);
 
     if (CORBA::is_nil (obj.in ()))

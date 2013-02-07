@@ -39,9 +39,9 @@ TAO::FT_PG_Group_Factory::set_object_group_stale (
         {
           if (TAO_debug_level > 3)
             {
-              ACE_CString change_type_str (ACE_TEXT ("created"));
+              ACE_CString change_type_str ("created");
               if (group_info.change_type == FT_Naming::DELETED)
-                change_type_str = ACE_TEXT ("deleted");
+                change_type_str = "deleted";
                 ACE_DEBUG ((LM_DEBUG,
                             ACE_TEXT ("%T %n (%P|%t) - ")
                             ACE_TEXT ("Setting list store as stale "),

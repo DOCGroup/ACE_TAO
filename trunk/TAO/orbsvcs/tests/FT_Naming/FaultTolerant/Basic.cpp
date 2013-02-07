@@ -6,7 +6,7 @@ Basic::Basic (CORBA::Object_ptr object_group,
               FT_Naming::NamingManager_ptr lm,
               CORBA::ORB_ptr orb,
               const char *loc)
-  : object_group_name_ (ACE_TEXT_ALWAYS_CHAR ("BasicGroup")),
+  : object_group_name_ ("BasicGroup"),
     orb_ (CORBA::ORB::_duplicate (orb))
 {
   this->object_group_ = CORBA::Object::_duplicate (object_group);
