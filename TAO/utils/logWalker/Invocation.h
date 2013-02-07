@@ -81,8 +81,9 @@ public:
   Thread *waiter (void) const;
   long handle (void) const;
 
+  void new_line (ostream &strm, int indent, bool add_nl);
   void dump_detail (ostream &strm, int indent, Dump_Mode mode, bool show_handle);
-  void dump_special_details (ostream &strm, const char *opname);
+  void dump_special_details (ostream &strm, int indent, const char *opname);
 
 private:
   GIOP_Buffer *req_octets_;
