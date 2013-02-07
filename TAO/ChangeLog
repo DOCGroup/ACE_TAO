@@ -1,3 +1,10 @@
+Thu Feb  7 22:55:30 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * MPC/config/dynamic_tp.mpb:
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Static/server.cpp:
+
+          Fix scoreboard issues with corba_e_micro avoidance and a compile warning.
+
 Thu Feb  7 22:45:43 UTC 2013  Phillip LaBanca  <labancap@ociweb.com>
 
         * orbsvcs/tests/FT_Naming/Load_Balancing/Basic.cpp:
