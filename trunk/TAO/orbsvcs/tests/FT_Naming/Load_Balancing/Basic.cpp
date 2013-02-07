@@ -32,7 +32,7 @@ Basic::remove_member (void)
       this->nm_->remove_member (this->object_group_.in (),
                                 location);
 
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Removed Member at Location <%s>\n",
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Removed Member at Location <%C>\n",
                       this->location_.in ()));
 
     }

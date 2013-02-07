@@ -106,7 +106,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) - Client request handled ")
-                      ACE_TEXT ("by object at <%s>\n"),
+                      ACE_TEXT ("by object at <%C>\n"),
                       the_string.in ()));
 
         }
