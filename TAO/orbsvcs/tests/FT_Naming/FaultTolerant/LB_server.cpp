@@ -18,8 +18,7 @@ LB_server::destroy (void)
 {
   try
     {
-      this->naming_manager_->delete_object_group (
-        ACE_TEXT_ALWAYS_CHAR ("BasicGroup"));
+      this->naming_manager_->delete_object_group ("BasicGroup");
 
       //TODO: Does the FT_NamingManager need a destroy method?
 //      this->naming_manager_->destroy (1, 1);
@@ -58,7 +57,7 @@ int
 LB_server::write_ior_to_file (const char *ior)
 {
   FILE *output_file =
-    ACE_OS::fopen (this->ior_output_file_, ACE_TEXT_ALWAYS_CHAR("w"));
+    ACE_OS::fopen (this->ior_output_file_, "w");
 
   if (output_file == 0)
     {
@@ -67,7 +66,7 @@ LB_server::write_ior_to_file (const char *ior)
       return -1;
     }
 
-  ACE_OS::fprintf (output_file, ACE_TEXT_ALWAYS_CHAR ("%s"), ior);
+  ACE_OS::fprintf (output_file, "%s", ior);
   ACE_OS::fclose (output_file);
   return 0;
 }
@@ -106,7 +105,7 @@ LB_server::start_orb_and_poa (void)
       this->orb_ = CORBA::ORB_init (this->argc_, this->argv_);
 
       CORBA::Object_var poa_object =
-        this->orb_->resolve_initial_references( ACE_TEXT_ALWAYS_CHAR ("RootPOA"));
+        this->orb_->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -129,7 +128,7 @@ LB_server::start_orb_and_poa (void)
                            -1);
 
       CORBA::Object_var obj = this->orb_->resolve_initial_references (
-        ACE_TEXT_ALWAYS_CHAR ("NamingManager"));
+        "NamingManager");
 
       this->naming_manager_ =
         FT_Naming::NamingManager::_narrow (obj.in ());
@@ -168,14 +167,14 @@ LB_server::create_object_group (void)
 
       // Set the membership style property
       mem_style.nam[0].id = CORBA::string_dup (
-        ACE_TEXT_ALWAYS_CHAR ("org.omg.PortableGroup.MembershipStyle"));
+        "org.omg.PortableGroup.MembershipStyle");
 
       PortableGroup::MembershipStyleValue msv =
         PortableGroup::MEMB_APP_CTRL;
       mem_style.val <<= msv;
 
       this->object_group_ = this->naming_manager_->create_object_group (
-        ACE_TEXT_ALWAYS_CHAR ("BasicGroup"),
+        "BasicGroup",
         FT_Naming::ROUND_ROBIN,
         criteria);
 

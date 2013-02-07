@@ -13,7 +13,7 @@ Hello::Hello (CORBA::ORB_ptr orb)
 char *
 Hello::get_string (void)
 {
-  return CORBA::string_dup ( ACE_TEXT ("Hello there!"));
+  return CORBA::string_dup ("Hello there!");
 }
 
 void
