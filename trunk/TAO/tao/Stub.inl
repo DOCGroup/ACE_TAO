@@ -294,6 +294,12 @@ TAO_Stub::forward_profiles (void) const
   return this->forward_profiles_;
 }
 
+ACE_INLINE TAO_MProfile *
+TAO_Stub::forward_profiles (void)
+{
+  return this->forward_profiles_;
+}
+
 ACE_INLINE CORBA::Boolean
 TAO_Stub::is_collocated (void) const
 {
