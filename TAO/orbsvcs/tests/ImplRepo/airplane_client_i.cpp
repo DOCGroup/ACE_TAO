@@ -67,7 +67,7 @@ Airplane_Client_i::get_planes (size_t count)
           CORBA::String_var response =
             this->server_->get_plane ();
 
-          ACE_DEBUG ((LM_DEBUG, "Plane %d is %s\n", i, response.in ()));
+          ACE_DEBUG ((LM_DEBUG, "Plane %d is %C\n", i, response.in ()));
         }
       catch (const CORBA::Exception& ex)
         {

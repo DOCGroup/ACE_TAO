@@ -43,7 +43,7 @@ Airplane_Server_i::parse_args (void)
                              get_opts.opt_arg ()), -1);
         break;
       case 's':  // extension to the server name.
-        this->server_name_ = get_opts.opt_arg ();
+        this->server_name_ = ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ());
         break;
       case '?':  // display help for use of the server.
       default:
