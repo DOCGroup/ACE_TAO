@@ -361,9 +361,9 @@ NS_group_svc::display_load_policy_group(
 
       for (unsigned int i = 0; i < list->length (); ++i)
       {
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("  %s\n"),
-                    ACE_TEXT_CHAR_TO_TCHAR((*list)[i])));
+        std::cout << ACE_TEXT ("  ")
+                  << (*list)[i]
+                  << std::endl;
       }
 
     } else {
