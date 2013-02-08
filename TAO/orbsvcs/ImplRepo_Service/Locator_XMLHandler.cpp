@@ -14,6 +14,7 @@ const ACE_TCHAR* Locator_XMLHandler::ENVIRONMENT_TAG = ACE_TEXT("EnvironmentVari
 Locator_XMLHandler::Locator_XMLHandler (XML_Backing_Store& repo,
                                         CORBA::ORB_ptr orb)
 : repo_(repo),
+  jacorb_server_ (false),
   start_limit_(0),
   server_started_(false),
   repo_id_(0),

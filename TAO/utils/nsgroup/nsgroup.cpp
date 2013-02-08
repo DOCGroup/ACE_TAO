@@ -133,7 +133,13 @@ private:
  NSGROUP::NSGROUP (int argc, ACE_TCHAR **argv)
   : argc_ (argc),
     argv_ (argv),
-    nsgroup_cmd_(NSGROUP::NSGROUP_NONE)
+    nsgroup_cmd_(NSGROUP::NSGROUP_NONE),
+    group_arg_ (0),
+    policy_arg_ (0),
+    typeid_arg_ (0),
+    location_arg_ (0),
+    ior_arg_ (0),
+    namepath_arg_ (0)
 {
 }
 

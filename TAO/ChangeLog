@@ -1,3 +1,25 @@
+Fri Feb  8 03:47:02 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * tao/CDR.h:
+
+          Fix Coverity 972947. Non-virtual destructor.
+
+        * orbsvcs/ImplRepo_Service/Locator_XMLHandler.cpp:
+
+          Fix Coverity 972940 Uninitialized scalar field.
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.cpp:
+
+          Fix Coverity 972941 - Uninitialized scalar field.
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:
+
+          Fix Coverity 972946 - Double free.
+
+        * utils/nsgroup/nsgroup.cpp:
+
+          Fix Coverity 972945 - Uninitialized pointer field.
+
 Thu Feb  7 23:26:20 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * utils/logWalker/GIOP_Buffer.cpp:
