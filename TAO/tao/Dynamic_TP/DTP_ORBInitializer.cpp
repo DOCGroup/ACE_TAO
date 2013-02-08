@@ -105,7 +105,7 @@ TAO_DTP_ORBInitializer::post_init (PortableInterceptor::ORBInitInfo_ptr info)
 
       TAO_DTP_Definition def;
 
-      if (!config_registry->find(dtp_name, def))
+      if (config_registry == 0 || !config_registry->find(dtp_name, def))
         {
           if (TAO_debug_level > 0)
             ACE_ERROR ((LM_ERROR,

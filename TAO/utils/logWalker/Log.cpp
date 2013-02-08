@@ -463,6 +463,14 @@ Log::parse_cleanup_queue_i (void)
   char *hpos = ACE_OS::strchr(this->info_,'[');
   long handle = ACE_OS::strtol(hpos+1,0,10);
   PeerProcess *pp = this->hostproc_->find_peer(handle);
+  if (pp == 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "%d: cleanup queue, error parsing %C, can't find peer "
+                  "for handle %d, text = %s\n",
+                  this->offset_, this->origin_.c_str(), handle, this->info_));
+      return;
+    }
 
   Thread *original_thr = this->thr_;
   GIOP_Buffer *target = original_thr->giop_target();
