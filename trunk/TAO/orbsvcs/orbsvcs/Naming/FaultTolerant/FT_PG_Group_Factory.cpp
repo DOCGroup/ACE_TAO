@@ -43,7 +43,7 @@ TAO::FT_PG_Group_Factory::set_object_group_stale (
               if (group_info.change_type == FT_Naming::DELETED)
                 change_type_str = "deleted";
                 ACE_DEBUG ((LM_DEBUG,
-                            ACE_TEXT ("%T %n (%P|%t) - ")
+                            ACE_TEXT ("%T %n (%P|%t) - FT_PG_Group_Factory: ")
                             ACE_TEXT ("Setting list store as stale "),
                             ACE_TEXT ("because of group with ID %lld "),
                             ACE_TEXT ("was %s"),
@@ -60,6 +60,15 @@ TAO::FT_PG_Group_Factory::set_object_group_stale (
         }
       FT_PG_Object_Group_Storable * og =
         dynamic_cast<FT_PG_Object_Group_Storable *> (group);
+
+      if (!og)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("%T %n (%P|%t) - FT_PG_Group_Factory ")
+                      ACE_TEXT ("In setting object group stale could not cast ")
+                      ACE_TEXT ("to FT_PG_Object_Group_Storable\n")));
+          throw CORBA::INTERNAL ();
+        }
 
       if (TAO_debug_level > 3)
         {
