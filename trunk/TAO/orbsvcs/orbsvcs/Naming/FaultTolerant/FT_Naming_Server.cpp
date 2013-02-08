@@ -851,7 +851,6 @@ TAO_FT_Naming_Server::fini (void)
   peer_root_context_ = CosNaming::NamingContext::_nil ();
 
 #if !defined (CORBA_E_MICRO)
-  delete this->context_index_;
   delete replication_manager_;
 #endif /* CORBA_E_MICRO */
 

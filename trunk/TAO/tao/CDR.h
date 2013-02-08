@@ -414,7 +414,7 @@ public:
                 TAO_ORB_Core* orb_core = 0);
 
   /// Destructor
-  ~TAO_InputCDR (void);
+  virtual ~TAO_InputCDR (void);
 
   // = TAO specific methods.
 

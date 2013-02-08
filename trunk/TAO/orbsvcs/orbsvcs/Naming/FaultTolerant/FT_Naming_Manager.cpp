@@ -63,7 +63,8 @@ TAO_FT_Naming_Manager::TAO_FT_Naming_Manager (void)
   : factory_registry_ ("NamingManager::FactoryRegistry"),
     group_factory_ (),
     built_in_balancing_strategy_name_ (1),
-    object_group_property_name_ (1)
+    object_group_property_name_ (1),
+    shutdown_ (0)
 
 {
   // The name for the property which contains the load balancing strategy value
