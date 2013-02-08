@@ -1,3 +1,10 @@
+Fri Feb  8 13:26:17 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * ace/CDR_Stream.h:
+
+          Fix Coverity Issue 972947 - Non virtual destructor. Made
+          TAO_InputCDR destructor virtual.
+
 Wed Feb  6 01:55:37 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
 
         * ace/Message_Block.cpp:

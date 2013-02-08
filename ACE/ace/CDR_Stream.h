@@ -737,7 +737,7 @@ public:
   ACE_InputCDR (Transfer_Contents rhs);
 
   /// Destructor
-  ~ACE_InputCDR (void);
+  virtual ~ACE_InputCDR (void);
 
   /// Disambiguate overloading when extracting octets, chars,
   /// booleans, and bounded strings
