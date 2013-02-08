@@ -155,7 +155,11 @@ TAO::Invocation_Retry_State::forward_on_reply_closed_increment ()
 void
 TAO::Invocation_Retry_State::next_profile_retry (TAO_Stub &stub) const
 {
-  stub.next_profile_retry ();
+  if (!stub.next_profile_retry ())
+    {
+      stub.reset_profiles ();
+    }
+
   this->sleep_at_starting_profile (stub);
 }
 

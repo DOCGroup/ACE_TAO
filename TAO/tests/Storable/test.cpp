@@ -14,9 +14,9 @@
 #include "Savable.h"
 
 #include "tao/Storable_FlatFileStream.h"
+#include "tao/SystemException.h"
 
 #include "ace/Get_Opt.h"
-
 #include "ace/OS_NS_unistd.h"
 
 #include <iostream>
@@ -181,6 +181,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     {
       std::cout << "TAO::Storable_Write_Exception thrown with state " <<
         ex.get_state () << std::endl;
+      exit_status = 1;
+    }
+
+  catch (CORBA::PERSIST_STORE &)
+    {
+      std::cout << "CORBA::PERSIST_STORE thrown" << std::endl;
       exit_status = 1;
     }
 

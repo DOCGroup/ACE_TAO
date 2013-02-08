@@ -1,3 +1,29 @@
+Fri Feb  8 19:25:49 UTC 2013  Byron Harris  <harrisb@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_PG_Group_Factory.cpp:
+
+          Fix Coverity 972923. Unchecked dynamic_cast.
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_Factory.cpp:
+
+          Fix Coverity 972924. Unchecked dynamic_cast.
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_List_Store.cpp:
+
+          Fix Coverity 972907.  Unchecked return value.
+
+        * tao/Invocation_Retry_State.cpp:
+
+          Fix Coverity 972908. Unchecked return value.
+
+        * tao/Storable_File_Guard.cpp:
+
+          Fix Coverity 972943. Uninitialized pointer field.
+
+        * tests/Storable/test.cpp:
+
+          Fix Coverity 972939. Uncaught exception.
+
 Fri Feb  8 19:10:05 UTC 2013  Phillip LaBanca  <labancap@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/FaultTolerant/nsgroup_svc.cpp:

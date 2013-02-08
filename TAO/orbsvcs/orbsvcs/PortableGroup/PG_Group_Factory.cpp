@@ -265,9 +265,21 @@ int TAO::PG_Group_Factory::destroy_group (PortableGroup::ObjectGroupId group_id)
       {
         PG_Object_Group_Storable *og =
           dynamic_cast<PG_Object_Group_Storable *> (group);
-        og->set_destroyed (true);
-        result = (this->list_store_->remove (group->get_object_group_id ())
-          == 0);
+        if (!og)
+          {
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("%T %n (%P|%t) - PG_Group_Factory ")
+                        ACE_TEXT ("In destroying group could not cast ")
+                        ACE_TEXT ("to PG_Object_Group_Storable\n")));
+            result = 0;
+          }
+        else
+          {
+            og->set_destroyed (true);
+            result = (this->list_store_->remove (group->get_object_group_id ())
+                      == 0);
+          }
+
       }
     if (result)
       delete group;
