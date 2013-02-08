@@ -1,3 +1,9 @@
+Fri Feb  8 21:43:54 UTC 2013  Phillip LaBanca  <labancap@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:
+
+        Fix Coverity 972933.  Variable "IORM" Resource Leak.
+
 Fri Feb  8 19:25:49 UTC 2013  Byron Harris  <harrisb@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_PG_Group_Factory.cpp:

@@ -971,11 +971,11 @@ TAO_FT_Naming_Server::export_ft_naming_references (void)
                             -1);
         }
 
-      CORBA::Object_ptr IORM =
+      CORBA::Object_var IORM =
         this->orb_->resolve_initial_references (TAO_OBJID_IORMANIPULATION, 0);
 
       TAO_IOP::TAO_IOR_Manipulation_var iorm =
-        TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM);
+        TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM.in ());
 
       // Combine the primary and backup (my) object references for the naming service
       CORBA::Object_var combined_obj_ref =
