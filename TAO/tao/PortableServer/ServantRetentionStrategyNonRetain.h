@@ -125,7 +125,7 @@ namespace TAO
 
     protected:
       TAO_Root_POA *poa_;
-      ACE_Atomic_Op<TAO_SYNCH_MUTEX,long> sys_id_count_;
+      ACE_Atomic_Op<TAO_SYNCH_MUTEX,ACE_UINT32> sys_id_count_;
     };
   }
 }

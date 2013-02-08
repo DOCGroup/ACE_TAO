@@ -23,7 +23,12 @@ TAO_DTP_Task::TAO_DTP_Task ()
     accepting_requests_ (false),
     shutdown_ (false),
     opened_ (false),
-    num_queue_requests_ ((size_t)0)
+    num_queue_requests_ ((size_t)0),
+    init_pool_threads_ ((size_t)0),
+    min_pool_threads_ ((size_t)0),
+    max_pool_threads_ ((size_t)0),
+    max_request_queue_depth_ ((size_t)0),
+    thread_stack_size_ ((size_t)0)
 {
 }
 

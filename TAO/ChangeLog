@@ -1,3 +1,26 @@
+Fri Feb  8 22:28:42 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/Dynamic_TP/DTP_ORBInitializer.cpp:
+
+          Fix Coverity 972925. Unchecked dynamic cast.
+
+        * tao/Dynamic_TP/DTP_Task.cpp:
+
+          Fix Coverity 972742. Unintialized members.
+
+        * tao/PortableServer/ServantRetentionStrategyNonRetain.h:
+        * tao/PortableServer/ServantRetentionStrategyNonRetain.cpp:
+
+          Fix Coverity 972992. Stray pointer arethmetic.
+
+        * utils/logWalker/GIOP_Buffer.cpp:
+
+          Fix Coverity 972917. Logically dead code.
+
+        * utils/logWalker/Log.cpp:
+
+          Fix Coverity 972930. Potential null dereference.
+
 Fri Feb  8 21:43:54 UTC 2013  Phillip LaBanca  <labancap@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:
