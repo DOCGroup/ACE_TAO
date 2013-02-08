@@ -361,9 +361,10 @@ NS_group_svc::display_load_policy_group(
 
       for (unsigned int i = 0; i < list->length (); ++i)
       {
-        std::cout << ACE_TEXT ("  ")
-                  << (*list)[i]
-                  << std::endl;
+        CORBA::String_var s = CORBA::string_dup (list[i]);
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("  %C\n"),
+                    s.in ()));
       }
 
     } else {
@@ -565,8 +566,8 @@ NS_group_svc::member_list (const ACE_TCHAR* group_name)
       const PortableGroup::Location & loc = locations[i];
       if (loc.length() > 0) {
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("%s\n"),
-                    ACE_TEXT_CHAR_TO_TCHAR (loc[0].id.in())));
+                    ACE_TEXT ("%C\n"),
+                    loc[0].id.in()));
       }
     }
 
@@ -688,7 +689,10 @@ NS_group_svc::member_show (
     CORBA::String_var ior_string  =
       this->orb_->object_to_string (ior_var.in());
 
-    std::cout << ior_string.in() << std::endl;
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("%C\n"),
+                ior_string.in()));
+
   }
   catch (const PortableGroup::ObjectGroupNotFound&)
   {
