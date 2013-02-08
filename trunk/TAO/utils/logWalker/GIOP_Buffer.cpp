@@ -166,12 +166,16 @@ GIOP_Buffer::GIOP_Buffer(const char *text,
     header_parsed_ (false),
     payload_start_ (0)
 {
-  const char *size_str = ACE_OS::strstr(text, size_leadin) + leadin_len;
-  const char *id = size_str == 0 ? 0 : ACE_OS::strchr(size_str, '[') + 1;
+  const char *size_str = ACE_OS::strstr(text, size_leadin);
+  if (size_str != 0)
+    {
+      size_str += 4;
+      this->expected_size_ = ACE_OS::strtol(size_str, 0, 10);
+      const char *id = ACE_OS::strchr(size_str, '[') + 1;
+      this->expected_req_id_ = ACE_OS::strtol(id, 0, 10);
+    }
   this->sending_ = ACE_OS::strstr(text,"send") ? 0 : 1;
   this->expected_type_ = ACE_OS::strstr(text,"Request") ? 0 : 1;
-  this->expected_size_ = ACE_OS::strtol(size_str, 0,10);
-  this->expected_req_id_ = ACE_OS::strtol(id, 0, 10);
   const char *time_tok = ACE_OS::strchr (text,'@');
   if (time_tok != 0)
     {

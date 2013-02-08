@@ -210,11 +210,10 @@ namespace TAO
       long count = this->sys_id_count_++;
       ACE_Time_Value now = ACE_OS::gettimeofday();
 
-      *reinterpret_cast<ACE_UINT32 *>(sys_id->get_buffer()) =
-        count;
+      ACE_UINT32 *id_ptr = reinterpret_cast<ACE_UINT32 *>(sys_id->get_buffer());
 
-      *reinterpret_cast<ACE_UINT32 *>(sys_id->get_buffer() + 4) =
-        static_cast<ACE_UINT32>(now.sec());
+      *(id_ptr++) = count;
+      *id_ptr = static_cast<ACE_UINT32>(now.sec());
 
       system_id = sys_id;
 
