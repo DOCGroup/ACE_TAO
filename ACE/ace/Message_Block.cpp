@@ -1076,7 +1076,10 @@ ACE_Message_Block::duplicate (void) const
       // If allocation failed above, release everything done so far and return NULL
       if (cur_dup == 0)
         {
-          nb_top->release ();
+          if (nb_top != 0)
+            {
+              nb_top->release ();
+            }
           return 0;
         }
 
