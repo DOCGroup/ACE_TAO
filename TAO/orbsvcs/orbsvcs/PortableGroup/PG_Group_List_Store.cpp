@@ -263,7 +263,8 @@ TAO::PG_Group_List_Store::list_obsolete ()
   ACE_Auto_Ptr<TAO::Storable_Base> stream (this->create_stream ("r"));
   if (!stream->exists ())
     throw CORBA::INTERNAL ();
-  stream->open ();
+  if (stream->open () != 0)
+    throw CORBA::INTERNAL ();
   return this->is_obsolete (stream->last_changed ());
 }
 

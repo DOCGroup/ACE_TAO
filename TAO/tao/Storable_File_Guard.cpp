@@ -16,8 +16,10 @@
 
 TAO::Storable_File_Guard::
 Storable_File_Guard (bool redundant, bool use_backup)
-  : redundant_(redundant)
+  : fl_(0)
+  , redundant_(redundant)
   , closed_(1)
+  , rwflags_(0)
   , use_backup_(use_backup)
 {
 }
