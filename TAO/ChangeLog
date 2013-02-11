@@ -1,3 +1,13 @@
+Mon Feb 11 20:08:11 UTC 2013  Byron Harris  <harrisb@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.cpp:
+
+          Fix Coverity 972906: Unchecked return value.
+
+        * tao/Synch_Invocation.cpp:
+
+          Fix Coverity 972926: Dereference after null check.
+
 Mon Feb 11 17:46:21 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
 
         * orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.h:

@@ -172,7 +172,17 @@ TAO_FT_Naming_Manager::groups (::FT_Naming::LoadBalancingStrategyValue target_st
     lb_strat_property_name[0].id = CORBA::string_dup (::FT_Naming::TAO_FT_LOAD_BALANCING_STRATEGY);
     PortableGroup::Properties_var props = this->get_properties (obj_group);
     PortableGroup::Value value;
-    TAO_PG::get_property_value (lb_strat_property_name, props.in (), value);
+    if (!TAO_PG::get_property_value (lb_strat_property_name, props.in (), value))
+      {
+        (*group_names)[i] =
+          CORBA::string_dup ("<group without LB property>");
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("%T %n (%P|%t) - FT_Naming_Manager::groups: no LB ")
+                    ACE_TEXT ("property set on group.\n")
+                    ));
+        continue;
+      }
+
     ::FT_Naming::LoadBalancingStrategyValue lb_strategy_val;
     value >>= lb_strategy_val;
 
