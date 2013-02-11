@@ -221,15 +221,7 @@ TAO_PG_ObjectGroupManager::remove_member (
     throw PortableGroup::ObjectGroupNotFound ();
 
   // remove the element from the array and resize the array.
-  const size_t groups_len = groups->size ();
-  size_t j;
-  for (size_t i = to_be_removed; i < groups_len - 1; ++i)
-    {
-      j = i + 1;
-      (*groups)[i] = (*groups)[j];
-    }
-
-  groups->size (groups_len - 1);
+  this->remove_entry_from_groups (to_be_removed, groups);
 
   TAO_PG_MemberInfo_Set & member_infos = group_entry->member_infos;
 
@@ -539,6 +531,11 @@ TAO_PG_ObjectGroupManager::destroy_object_group (
   if (this->object_group_map_.unbind (oid, group_entry) != 0)
     throw PortableGroup::ObjectNotFound ();
 
+  // Must remove entries for group in location_map_ or they
+  // will be accessed in later lookups.
+  this->remove_group_from_location_map (group_entry);
+
+  // The entry can now be destroyed.
   delete group_entry;
 }
 
@@ -760,6 +757,75 @@ TAO_PG_ObjectGroupManager::valid_type_id (
   static_cast<void> (this->get_group_entry (object_group));
 
   return right_type_id;
+}
+
+int
+TAO_PG_ObjectGroupManager::remove_group_from_location_map (
+   TAO_PG_ObjectGroup_Map_Entry * group_entry)
+{
+  // Get the locations from this group entry and for each location
+  // remove that group from the location_map_ entry for that location.
+  TAO_PG_MemberInfo_Set & member_infos = group_entry->member_infos;
+
+  TAO_PG_MemberInfo_Set::iterator end = member_infos.end ();
+
+  for (TAO_PG_MemberInfo_Set::iterator info = member_infos.begin ();
+       info != end;
+       ++info)
+  {
+    PortableGroup::Location& loc = (*info).location;
+
+    // Now that we have a location, we must find the groups at that
+    // location and remove this group from them
+    TAO_PG_ObjectGroup_Array * groups = 0;
+    if (this->location_map_.find (loc, groups) == 0)
+      {
+        int to_be_removed = this->get_object_group_position (*groups,
+                                                             group_entry);
+        if (TAO_debug_level > 8)
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) TAO_PG_ObjectGroupManager::")
+                      ACE_TEXT ("remove_group_from_location_map -")
+                      ACE_TEXT ("Found group at location: %s, position %i, size = %i\n"),
+                      loc[0].id.in (), to_be_removed, groups->size ()));
+        // Dont need to destroy the entry. Just need to remove it from the
+        // Groups Array.
+        this->remove_entry_from_groups (to_be_removed, groups);
+      }
+    else
+      {
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("ERROR: (%P|%t) TAO_PG_ObjectGroupManager::remove_group_from_location_map -")
+                    ACE_TEXT ("Group not at expected location: \n"),
+                    loc[0].id.in ()));
+        return -1;  // The group was not at the location it should have been.
+      }
+  }
+
+  return 0;
+}
+
+size_t
+TAO_PG_ObjectGroupManager::remove_entry_from_groups (int to_be_removed,
+                                                     TAO_PG_ObjectGroup_Array * groups)
+{
+  if (TAO_debug_level > 8)
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("(%P|%t) TAO_PG_ObjectGroupManager::remove_entry_from_groups -")
+                ACE_TEXT ("Found group at position %i, size = %i\n"),
+                to_be_removed, groups->size ()));
+  // remove the element from the array and resize the array.
+  const size_t groups_len = groups->size ();
+  size_t j;
+  for (size_t i = to_be_removed; i < groups_len - 1; ++i)
+    {
+      j = i + 1;
+      (*groups)[i] = (*groups)[j];
+    }
+
+  size_t new_len = groups_len - 1;
+  groups->size (new_len);
+  return new_len;
 }
 
 void
