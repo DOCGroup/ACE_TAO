@@ -269,7 +269,7 @@ File_Open_Lock_and_Check::File_Open_Lock_and_Check (
     {
       this->init (method_type);
     }
-  catch (const TAO::Storable_Read_Exception &)
+  catch (const TAO::Storable_Exception &)
     {
       throw CORBA::INTERNAL ();
     }
