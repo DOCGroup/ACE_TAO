@@ -26,7 +26,7 @@ Mon Feb 11 14:46:52 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
           Clean up compile error triggered by earlier fix.
 
-Mon Feb 11 01:32:19 UTC 2013  Phil Mesnier  <mesnier_p@socket.net>
+Mon Feb 11 01:32:19 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/orbsvcs/HTIOP/HTIOP_Connector.cpp:
 
