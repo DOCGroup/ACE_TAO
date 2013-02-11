@@ -759,18 +759,15 @@ namespace TAO
         if (!transport)
           {
             if (this->retry_state_ &&
-                this->retry_state_->forward_on_exception_limit_used ())
+                this->retry_state_->forward_on_exception_increment(FOE_TRANSIENT))
               {
-                if (this->retry_state_->forward_on_exception_increment(FOE_TRANSIENT))
-                  {
-                    if (TAO_debug_level > 0)
-                      ACE_DEBUG ((LM_INFO,
-                                  ACE_TEXT ("TAO (%P|%t) - Synch_Oneway_Invocation::")
-                                  ACE_TEXT ("remote_oneway retrying on TRANSIENT ")
-                                  ACE_TEXT ("exception\n")));
-                    this->retry_state_->next_profile_retry (*this->stub ());
-                    return TAO_INVOKE_RESTART;
-                  }
+                if (TAO_debug_level > 0)
+                  ACE_DEBUG ((LM_INFO,
+                              ACE_TEXT ("TAO (%P|%t) - Synch_Oneway_Invocation::")
+                              ACE_TEXT ("remote_oneway retrying on TRANSIENT ")
+                              ACE_TEXT ("exception\n")));
+                this->retry_state_->next_profile_retry (*this->stub ());
+                return TAO_INVOKE_RESTART;
               }
             else
               {
@@ -781,75 +778,78 @@ namespace TAO
               }
 
           }
+        else
+          {
+            ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, transport->output_cdr_lock (),
+                              TAO_INVOKE_FAILURE);
 
-        {
-          ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, transport->output_cdr_lock (),
-                            TAO_INVOKE_FAILURE);
+            TAO_OutputCDR &cdr = transport->out_stream ();
 
-          TAO_OutputCDR &cdr = transport->out_stream ();
+            cdr.message_attributes (this->details_.request_id (),
+                                    this->resolver_.stub (),
+                                    TAO_Message_Semantics (TAO_Message_Semantics::
+                                                           TAO_ONEWAY_REQUEST),
+                                    max_wait_time);
 
-          cdr.message_attributes (this->details_.request_id (),
-                                  this->resolver_.stub (),
-                                  TAO_Message_Semantics (TAO_Message_Semantics::TAO_ONEWAY_REQUEST),
-                                  max_wait_time);
+            this->write_header (cdr);
 
-          this->write_header (cdr);
+            this->marshal_data (cdr);
 
-          this->marshal_data (cdr);
+            countdown.update ();
 
-          countdown.update ();
+            if (transport->is_connected ())
+              {
+                // We have a connected transport so we can send the message
+                s = this->send_message (cdr,
+                                        TAO_Message_Semantics (TAO_Message_Semantics::
+                                                               TAO_ONEWAY_REQUEST),
+                                        max_wait_time);
 
-          if (transport->is_connected ())
-            {
-              // We have a connected transport so we can send the message
-              s = this->send_message (cdr,
-                                      TAO_Message_Semantics (TAO_Message_Semantics::TAO_ONEWAY_REQUEST),
-                                      max_wait_time);
+                if (transport->wait_strategy ()->non_blocking () == 0 &&
+                    transport->orb_core ()->client_factory ()->use_cleanup_options ())
+                  {
+                    if (!transport->wait_strategy ()->is_registered())
+                      {
+                        ACE_Event_Handler * const eh =
+                          transport->event_handler_i ();
 
-              if (transport->wait_strategy ()->non_blocking () == 0 &&
-                  transport->orb_core ()->client_factory ()->use_cleanup_options ())
-                {
-                  if (!transport->wait_strategy ()->is_registered())
-                    {
-                      ACE_Event_Handler * const eh =
-                        transport->event_handler_i ();
+                        ACE_Reactor * const r =
+                          transport->orb_core ()->reactor ();
 
-                      ACE_Reactor * const r =
-                        transport->orb_core ()->reactor ();
+                        if (r->register_handler (eh, ACE_Event_Handler::READ_MASK) == -1)
+                          {
+                            if (TAO_debug_level > 0)
+                              ACE_ERROR ((LM_ERROR,
+                                          ACE_TEXT ("TAO (%P|%t) - Synch_Oneway_Invocation::")
+                                          ACE_TEXT ("remote_oneway transport[%d] ")
+                                          ACE_TEXT ("registration withreactor ")
+                                          ACE_TEXT ("returned an error\n"),
+                                          transport->id ()));
+                          }
+                        else
+                          {
+                            // Only set this flag when registration succeeds
+                            transport->wait_strategy ()->is_registered (true);
+                          }
+                      }
+                  }
 
-                      if (r->register_handler (eh, ACE_Event_Handler::READ_MASK) == -1)
-                        {
-                          if (TAO_debug_level > 0)
-                            ACE_ERROR ((LM_ERROR,
+              }
+            else
+              {
+                if (TAO_debug_level > 4)
+                  ACE_DEBUG ((LM_DEBUG,
                               ACE_TEXT ("TAO (%P|%t) - Synch_Oneway_Invocation::")
-                              ACE_TEXT ("remote_oneway transport[%d] registration with")
-                              ACE_TEXT ("reactor returned an error\n"),
-                              transport->id ()));
-                        }
-                      else
-                        {
-                          // Only set this flag when registration succeeds
-                          transport->wait_strategy ()->is_registered (true);
-                        }
-                    }
-                }
+                              ACE_TEXT ("remote_oneway, queueing message\n")));
 
-            }
-          else
-            {
-              if (TAO_debug_level > 4)
-                ACE_DEBUG ((LM_DEBUG,
-                            ACE_TEXT ("TAO (%P|%t) - Synch_Oneway_Invocation::")
-                            ACE_TEXT ("remote_oneway, queueing message\n")));
-
-              if (transport->format_queue_message (cdr,
-                                                   max_wait_time,
-                                                   this->resolver_.stub()) != 0)
-                {
-                  s = TAO_INVOKE_FAILURE;
-                }
-            }
-        }
+                if (transport->format_queue_message (cdr,
+                                                     max_wait_time,
+                                                     this->resolver_.stub()) != 0)
+                  {
+                    s = TAO_INVOKE_FAILURE;
+                  }
+              }
+          }
 
 #if TAO_HAS_INTERCEPTORS == 1
         s = this->receive_other_interception ();
