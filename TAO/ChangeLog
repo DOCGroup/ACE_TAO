@@ -1,3 +1,11 @@
+Mon Feb 11 17:46:21 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.cpp:
+
+          Fixed an oversight in cleaning up the location_map_ when
+          an ObjectGroup is destroyed.
+
 Mon Feb 11 15:46:44 UTC 2013  Byron Harris  <harrisb@ociweb.com>
 
         * tao/Storable_FlatFileStream.cpp:
