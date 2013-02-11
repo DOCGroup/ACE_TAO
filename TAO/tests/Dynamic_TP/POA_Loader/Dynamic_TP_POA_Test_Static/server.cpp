@@ -52,29 +52,35 @@ parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
+long
+next_parm (const ACE_TCHAR **pstart)
+{
+  ACE_TCHAR *sep = 0;
+  long rtn = ACE_OS::strtol (*pstart, &sep, 10);
+  *pstart = sep + 1;
+  if (!(**pstart == '-' || (**pstart >= '0' && **pstart <= '9')))
+    ++(*pstart);
+  return rtn;
+}
+
 void
 set_parms ( TAO_DTP_Definition * this_config)
 {
   // Get past the brace
-  ACE_TCHAR *sep = parms + 1;
+  const ACE_TCHAR *pstart = parms + 1;
 
   // min_threads_ = -1;
-  this_config->min_threads_ = ACE_OS::strtol(sep+1,&sep,10);
-
+  this_config->min_threads_ = next_parm (&pstart);
   // init_threads_ = 1;
-  this_config->init_threads_ = ACE_OS::strtol(sep+1,&sep,10);
-
+  this_config->init_threads_ = next_parm (&pstart);
   // max_threads_ = 1;
-  this_config->max_threads_ = ACE_OS::strtol(sep+1,&sep,10);
-
+  this_config->max_threads_ = next_parm (&pstart);
   // stack_size_ = 0;
-  this_config->stack_size_ = ACE_OS::strtol(sep+1,&sep,10);
-
+  this_config->stack_size_ = next_parm (&pstart);
   // timeout_ = 60;
-  this_config->timeout_.set(ACE_OS::strtol(sep+1,&sep,10),0);
-
+  this_config->timeout_.set (next_parm (&pstart),0);
   // queue_depth_ = 0;
-  this_config->queue_depth_ = ACE_OS::strtol(sep+1,&sep,10);
+  this_config->queue_depth_ = next_parm (&pstart);
 }
 
 int

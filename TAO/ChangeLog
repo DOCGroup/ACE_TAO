@@ -1,3 +1,9 @@
+Mon Feb 11 14:46:52 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Static/server.cpp:
+
+          Clean up compile error triggered by earlier fix.
+
 Mon Feb 11 01:32:19 UTC 2013  Phil Mesnier  <mesnier_p@socket.net>
 
         * orbsvcs/orbsvcs/HTIOP/HTIOP_Connector.cpp:
