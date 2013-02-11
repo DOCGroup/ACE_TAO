@@ -242,6 +242,14 @@ protected:
     TAO_PG_ObjectGroup_Map_Entry * group_entry,
     CORBA::Object_ptr member);
 
+  /// Remove references to the object group from location map. There may be
+  /// multiple of them.
+  int remove_group_from_location_map (TAO_PG_ObjectGroup_Map_Entry * group_entry);
+
+  /// Remove the entry from the group array and return the new size.
+  size_t remove_entry_from_groups (int to_be_removed,
+                                   TAO_PG_ObjectGroup_Array * groups);
+
 private:
 
   /// Help function to get active or inactive member infos.
