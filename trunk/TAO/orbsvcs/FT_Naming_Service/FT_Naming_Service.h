@@ -17,11 +17,9 @@
 #ifndef TAO_FT_NAMING_SERVICE_H
 #define TAO_FT_NAMING_SERVICE_H
 
-#include /**/ "Naming_Service.h"
-
 #include "tao/ORB.h"
+#include "orbsvcs/Naming/FaultTolerant/FT_Naming_Server.h"
 
-class TAO_Naming_Server;
 
 /**
  * @class TAO_FT_Naming_Service
@@ -29,10 +27,8 @@ class TAO_Naming_Server;
  * @brief Defines a class that encapsulates the implementation of the
  * Fault Tolerant Naming Service.
  *
- * This class overrides the create_naming_server factory method inherited
- * from <TAO_Naming_Service>.
  */
-class TAO_FT_Naming_Service : public TAO_Naming_Service
+class TAO_FT_Naming_Service
 {
 public:
   /// Default Constructor.
@@ -41,12 +37,39 @@ public:
   /// Constructor taking the command-line arguments.
   TAO_FT_Naming_Service (int argc, ACE_TCHAR* argv[]);
 
-  /// Factory method to create a server object for the naming service
-  virtual TAO_Naming_Server* create_naming_server ();
+  /// Initialize the Naming Service with the arguments.
+  virtual int init (int argc, ACE_TCHAR* argv[]);
+
+  /// The opposite of init().
+  virtual int fini (void);
+
+  /// Run the TAO_Naming_Service.
+  virtual int run (void);
+
+  /// Shut down the TAO_Naming_Service; you must still call fini().
+  virtual void shutdown (void);
 
   /// Destructor.
   virtual ~TAO_FT_Naming_Service (void);
 
+protected:
+
+  /// Parse the command line arguments to find
+  /// the timeout period.
+  int parse_args (int &argc, ACE_TCHAR* argv[]);
+
+  /// The ORB.
+  CORBA::ORB_var orb_;
+
+  /// Naming Server instance.
+  TAO_FT_Naming_Server my_naming_server_;
+
+  /// After how long the server should stop listening to requests (in
+  /// seconds).
+  long time_;
+
+  /// Number of threads for running the ORB. Default is 1
+  int num_threads_;
 };
 
 #endif /* TAO_FT_NAMING_SERVICE_H */

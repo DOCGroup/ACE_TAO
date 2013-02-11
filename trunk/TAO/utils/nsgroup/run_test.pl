@@ -61,7 +61,7 @@ my $DEF_REF  = "-ORBDefaultInitRef corbaloc:iiop:$hostname:$ns_orb_port1";
 my $NS_REF   = "--ns file://$name_srv_client_iorfile";
 my $LOAD_ARG = "$DEF_REF $DEBUG_LEVEL";
 
-my $tao_ft_naming = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_ft_naming";
+my $tao_ft_naming = "$ENV{TAO_ROOT}/orbsvcs/FT_Naming_Service/tao_ft_naming";
 my $name_dir      = "NameService";
 my $group_dir     = "Groups";
 my $ns_args       = "$DEBUG_LEVEL " .

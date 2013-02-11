@@ -93,7 +93,7 @@ $ns2->DeleteFile ($ns2_ior);
 $SV = $server->CreateProcess ("server", "-ORBdebuglevel $debug_level -o $server_iorfile");
 $CL = $client->CreateProcess ("client", "-ORBdebuglevel $debug_level");
 
-my $tao_ft_naming = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_ft_naming";
+my $tao_ft_naming = "$ENV{TAO_ROOT}/orbsvcs/FT_Naming_Service/tao_ft_naming";
 
 my $name_dir1 = "NameService1";
 my $name_dir2 = "NameService2";
