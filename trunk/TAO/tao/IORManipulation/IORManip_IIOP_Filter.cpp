@@ -118,7 +118,7 @@ TAO_IORManip_IIOP_Filter::filter_and_add (TAO_Profile* profile,
                   }
                 else
                   {
-                    ep->host (CORBA::string_dup (endpoints[i].host));
+                    ep->host (endpoints[i].host);
                     ep->port (endpoints[i].port);
                     ep->priority (endpoints[i].priority);
                   }

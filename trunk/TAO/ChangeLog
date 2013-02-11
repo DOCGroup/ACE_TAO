@@ -1,3 +1,13 @@
+Mon Feb 11 01:32:19 UTC 2013  Phil Mesnier  <mesnier_p@socket.net>
+
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Connector.cpp:
+
+          Fix Coverity 310907. Resource leak.
+
+        * tao/IORManipulation/IORManip_IIOP_Filter.cpp:
+
+          Fix Coverity 300639. Resource leak.
+
 Fri Feb  8 22:28:42 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/Dynamic_TP/DTP_ORBInitializer.cpp:
