@@ -67,7 +67,7 @@ $test->DeleteFile($persistent_log_file);
 sub name_server
 {
     my $args = "-u NameService -ORBMulticastDiscoveryEndpoint $multicast:$ns_multicast_port -o $test_iorfile -m 1 @_";
-    my $prog = "$startdir/../../Naming_Service/tao_ft_naming";
+    my $prog = "$startdir/../../FT_Naming_Service/tao_ft_naming";
 
     $SV = $test->CreateProcess ("$prog", "$args");
 

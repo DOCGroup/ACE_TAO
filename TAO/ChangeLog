@@ -1,3 +1,50 @@
+Mon Feb 11 22:57:43 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * orbsvcs/FT_Naming_Service:
+        * orbsvcs/FT_Naming_Service/README:
+
+          Created new directory to keep the FT_Naming Service
+          separate from the CosNaming Serverice. Renamed README
+          since it is the only one in this dir now.
+
+        * orbsvcs/FT_Naming_Service/FT_Naming_Main.cpp:
+        * orbsvcs/FT_Naming_Service/FT_Naming_Service.h:
+        * orbsvcs/FT_Naming_Service/FT_Naming_Service.cpp:
+        * orbsvcs/FT_Naming_Service/FT_Naming_Service.mpc:
+
+          Changed so FT_Naming_Service no longer inherits from
+          Naming_Service.
+
+        * orbsvcs/Naming_Service/Naming_Service.h:
+        * orbsvcs/Naming_Service/Naming_Service.cpp:
+
+          Removed factory method for Naming_Server since it is no
+          longer derived.
+
+        * orbsvcs/tests/FT_Naming/FaultTolerant/README:
+        * orbsvcs/tests/FT_Naming/FaultTolerant/run_equivalence_test.pl:
+        * orbsvcs/tests/FT_Naming/FaultTolerant/run_failover_test.pl:
+        * orbsvcs/tests/FT_Naming/FaultTolerant/run_persistence_test.pl:
+        * orbsvcs/tests/FT_Naming/Federation/run_test.pl:
+        * orbsvcs/tests/FT_Naming/Load_Balancing/run_test.pl:
+        * orbsvcs/tests/FT_Naming/Replication/run_test.pl:
+        * orbsvcs/tests/Simple_Naming/run_test_ffp.pl:
+        * orbsvcs/tests/Simple_Naming/run_test_ft.pl:
+        * utils/nsgroup/run_test.pl:
+        * orbsvcs/Naming_Service/FT_Naming_Main.cpp:
+        * orbsvcs/Naming_Service/FT_Naming_Service.h:
+        * orbsvcs/Naming_Service/FT_Naming_Service.cpp:
+        * orbsvcs/Naming_Service/FT_Naming_Service.mpc:
+        * orbsvcs/Naming_Service/README.FT_Naming:
+
+          Modified references to tao_ft_naming to be in the
+          FT_Naming directory.
+
+        * utils/nsgroup/README.nsgroup:
+        * utils/nsgroup/README:
+
+          Renamed to README with no extension.
+
 Mon Feb 11 20:08:11 UTC 2013  Byron Harris  <harrisb@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.cpp:

@@ -29,7 +29,7 @@ Failover Test
 	mkdir GroupService
 
 2) Start primary tao_ft_naming process
-	$TAO_ROOT/orbsvcs/Naming_Service/tao_ft_naming --primary \
+	$TAO_ROOT/orbsvcs/FT_Naming_Service/tao_ft_naming --primary \
 		-ORBListenEndPoints iiop://<hostname>:<port1> \
 		-m 0 \
 		-r NameService \
@@ -37,7 +37,7 @@ Failover Test
 
 3) Start backup tao_ft_naming process
 
-	$TAO_ROOT/orbsvcs/Naming_Service/tao_ft_naming --backup \
+	$TAO_ROOT/orbsvcs/FT_Naming_Service/tao_ft_naming --backup \
 		-ORBListenEndPoints iiop://<hostname>:<port2> \
 		-m 0 \
 		-c $TAO_ROOT/orbsvcs/tests/FT_Naming/FaultTolerant/ns.ior \
@@ -82,7 +82,7 @@ Persistence Test
 
 2) Start tao_ft_naming
 
-	$TAO_ROOT/orbsvcs/Naming_Service/tao_ft_naming \
+	$TAO_ROOT/orbsvcs/FT_Naming_Service/tao_ft_naming \
 		-ORBListenEndPoints iiop://<hostname>:<port1> \
 		-g $TAO_ROOT/orbsvcs/tests/FT_Naming/FaultTolerant/nm.ior \
 		-o $TAO_ROOT/orbsvcs/tests/FT_Naming/FaultTolerant/ns.ior \
@@ -123,9 +123,9 @@ Persistence Test
 
 5) Terminate tao_ft_naming and then restart it with the original arguments
 
-	kill `pidof $TAO_ROOT/orbsvcs/Naming_Service/tao_ft_naming`
+	kill `pidof $TAO_ROOT/orbsvcs/FT_Naming_Service/tao_ft_naming`
 
-	$TAO_ROOT/orbsvcs/Naming_Service/tao_ft_naming \
+	$TAO_ROOT/orbsvcs/FT_Naming_Service/tao_ft_naming \
 		-ORBListenEndPoints iiop://<hostname>:<port1> \
 		-g $TAO_ROOT/orbsvcs/tests/FT_Naming/FaultTolerant/nm.ior \
 		-o $TAO_ROOT/orbsvcs/tests/FT_Naming/FaultTolerant/ns.ior \
@@ -180,7 +180,7 @@ Redundant Equivalancy Test
 
 2) Start primary tao_ft_naming process
 
-	$TAO_ROOT/orbsvcs/Naming_Service/tao_ft_naming \
+	$TAO_ROOT/orbsvcs/FT_Naming_Service/tao_ft_naming \
 	  --primary \
 		-ORBListenEndPoints iiop://<hostname>:<port1> \
 		-o /tmp/ns_primary.ior \
@@ -190,7 +190,7 @@ Redundant Equivalancy Test
 
 3) Start backup tao_ft_naming process
 
-	$TAO_ROOT/orbsvcs/Naming_Service/tao_ft_naming \
+	$TAO_ROOT/orbsvcs/FT_Naming_Service/tao_ft_naming \
 	  --backup \
 		-ORBListenEndPoints iiop://<hostname>:<port2> \
 		-o /tmp/ns_backup.ior \
