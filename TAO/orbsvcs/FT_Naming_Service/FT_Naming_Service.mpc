@@ -9,6 +9,5 @@ project (FT_Naming_Service) : orbsvcsexe, install, ft_naming_serv, naming_serv, 
   Source_Files {
     FT_Naming_Main.cpp
     FT_Naming_Service.cpp
-    Naming_Service.cpp
   }
 }

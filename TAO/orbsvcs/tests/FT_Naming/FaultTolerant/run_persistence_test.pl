@@ -313,7 +313,7 @@ sub persistence_test ()
                         "-v $group_dir ".
                         "-u $name_dir ";
 
-    my $tao_ft_naming = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_ft_naming";
+    my $tao_ft_naming = "$ENV{TAO_ROOT}/orbsvcs/FT_Naming_Service/tao_ft_naming";
 
     my $client1_args = "--persistence " .
                        "--create " .
@@ -455,7 +455,7 @@ sub backup_restore_test ()
                         "-v $group_dir ".
                         "-u $name_dir ";
 
-    my $tao_ft_naming = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_ft_naming";
+    my $tao_ft_naming = "$ENV{TAO_ROOT}/orbsvcs/FT_Naming_Service/tao_ft_naming";
 
     my $client1_args = "--persistence " .
                        "--create " .

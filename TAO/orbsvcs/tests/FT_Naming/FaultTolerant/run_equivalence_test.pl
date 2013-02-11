@@ -315,7 +315,7 @@ sub redundant_equivalency_test()
     my $client_stdout_file        = $client->LocalFile ($stdout_file);
     my $client_stderr_file        = $client->LocalFile ($stderr_file);
 
-    my $tao_ft_naming = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_ft_naming";
+    my $tao_ft_naming = "$ENV{TAO_ROOT}/orbsvcs/FT_Naming_Service/tao_ft_naming";
 
     # Run two Naming Servers
     my $ns1_args = "--primary ".

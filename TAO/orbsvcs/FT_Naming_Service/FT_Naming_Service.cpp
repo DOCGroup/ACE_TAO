@@ -1,22 +1,22 @@
 // $Id$
 
-#include "Naming_Service.h"
-
-#include "orbsvcs/Naming/Naming_Server.h"
+#include "FT_Naming_Service.h"
+#include "orbsvcs/Naming/FaultTolerant/FT_Naming_Server.h"
+#include "orbsvcs/Naming/Persistent_Naming_Context_Factory.h"
 #include "orbsvcs/Daemon_Utilities.h"
 #include "ace/Get_Opt.h"
 #include "ace/Argv_Type_Converter.h"
 #include "ace/Task.h"
 
 // Default Constructor.
-TAO_Naming_Service::TAO_Naming_Service (void)
+TAO_FT_Naming_Service::TAO_FT_Naming_Service (void)
   : time_ (0),
     num_threads_ (1)
 {
 }
 
 // Constructor taking command-line arguments.
-TAO_Naming_Service::TAO_Naming_Service (int argc, ACE_TCHAR* argv[])
+TAO_FT_Naming_Service::TAO_FT_Naming_Service (int argc, ACE_TCHAR* argv[])
   : time_ (0),
     num_threads_ (1)
 {
@@ -24,9 +24,9 @@ TAO_Naming_Service::TAO_Naming_Service (int argc, ACE_TCHAR* argv[])
 }
 
 
-// Initialize the state of the TAO_Naming_Service object
+// Initialize the state of the TAO_FT_Naming_Service object
 int
-TAO_Naming_Service::init (int argc, ACE_TCHAR* argv[])
+TAO_FT_Naming_Service::init (int argc, ACE_TCHAR* argv[])
 {
   try
     {
@@ -54,7 +54,7 @@ TAO_Naming_Service::init (int argc, ACE_TCHAR* argv[])
     }
   catch (const CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("TAO_Naming_Service::init");
+      ex._tao_print_exception ("TAO_FT_Naming_Service::init");
       return -1;
     }
 
@@ -62,7 +62,7 @@ TAO_Naming_Service::init (int argc, ACE_TCHAR* argv[])
 }
 
 int
-TAO_Naming_Service::parse_args (int &argc, ACE_TCHAR* argv[])
+TAO_FT_Naming_Service::parse_args (int &argc, ACE_TCHAR* argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("-t:n:"));
   int c;
@@ -148,7 +148,7 @@ private:
 };
 
 int
-TAO_Naming_Service::run (void)
+TAO_FT_Naming_Service::run (void)
 {
   ORB_Runner runner (this->orb_.in(), time_);
   if (this->num_threads_ == 1)
@@ -163,7 +163,7 @@ TAO_Naming_Service::run (void)
 }
 
 void
-TAO_Naming_Service::shutdown (void)
+TAO_FT_Naming_Service::shutdown (void)
 {
   if (!CORBA::is_nil (orb_.in ()))
     {
@@ -172,7 +172,7 @@ TAO_Naming_Service::shutdown (void)
 }
 
 int
-TAO_Naming_Service::fini (void)
+TAO_FT_Naming_Service::fini (void)
 {
   this->my_naming_server_.fini();
 
@@ -186,13 +186,13 @@ TAO_Naming_Service::fini (void)
   }
   catch (const CORBA::Exception& ex)
   {
-    ex._tao_print_exception ("TAO_Naming_Service::fini");
+    ex._tao_print_exception ("TAO_FT_Naming_Service::fini");
     return -1;
   }
   return 0;
 }
 
 // Destructor.
-TAO_Naming_Service::~TAO_Naming_Service (void)
+TAO_FT_Naming_Service::~TAO_FT_Naming_Service (void)
 {
 }

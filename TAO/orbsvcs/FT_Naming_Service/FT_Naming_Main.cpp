@@ -11,14 +11,14 @@
 class Naming_Svc_Shutdown : public Shutdown_Functor
 {
 public:
-  Naming_Svc_Shutdown (TAO_Naming_Service& ns);
+  Naming_Svc_Shutdown (TAO_FT_Naming_Service& ns);
 
   void operator() (int which_signal);
 private:
-  TAO_Naming_Service& ns_;
+  TAO_FT_Naming_Service& ns_;
 };
 
-Naming_Svc_Shutdown::Naming_Svc_Shutdown (TAO_Naming_Service& ns)
+Naming_Svc_Shutdown::Naming_Svc_Shutdown (TAO_FT_Naming_Service& ns)
   : ns_(ns)
 {
 }
