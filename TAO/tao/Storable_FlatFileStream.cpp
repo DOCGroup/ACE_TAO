@@ -122,9 +122,12 @@ TAO::Storable_FlatFileStream::Storable_FlatFileStream (const ACE_CString & file,
                                                        bool use_backup)
   : Storable_Base(use_backup)
   , fl_ (0)
+  , file_(file)
+  , mode_(mode)
 {
-  file_ = file;
-  mode_ = mode;
+  // filelock_ will be completely initialized in call to init ().
+  filelock_.handle_ = 0;
+  filelock_.lockname_ = 0;
 }
 
 TAO::Storable_FlatFileStream::~Storable_FlatFileStream ()
@@ -210,9 +213,27 @@ TAO::Storable_FlatFileStream::flock (int whence, int start, int len)
   ACE_UNUSED_ARG (len);
 #else
   if( ACE_OS::strcmp(mode_.c_str(), "r") == 0 )
-    ACE_OS::flock_rdlock(&filelock_, whence, start, len);
+    {
+       if (ACE_OS::flock_rdlock(&filelock_, whence, start, len) != 0)
+         ACE_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT ("TAO (%P|%t) - ")
+                            ACE_TEXT ("Storable_FlatFileStream::flock, ")
+                            ACE_TEXT ("Error trying to get a read lock for file %s\n"),
+                            file_.c_str ()),
+                           -1);
+    }
+
   else
-    ACE_OS::flock_wrlock(&filelock_, whence, start, len);
+    {
+      if (ACE_OS::flock_wrlock(&filelock_, whence, start, len) != 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("TAO (%P|%t) - ")
+                           ACE_TEXT ("Storable_FlatFileStream::flock, ")
+                           ACE_TEXT ("Error trying to get a write lock for file %s\n"),
+                           file_.c_str ()),
+                          -1);
+    }
+
 #endif
   return 0;
 }
@@ -225,7 +246,13 @@ TAO::Storable_FlatFileStream::funlock (int whence, int start, int len)
   ACE_UNUSED_ARG (start);
   ACE_UNUSED_ARG (len);
 #else
-  ACE_OS::flock_unlock(&filelock_, whence, start, len);
+  if (ACE_OS::flock_unlock(&filelock_, whence, start, len) != 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("TAO (%P|%t) - ")
+                       ACE_TEXT ("Storable_FlatFileStream::funlock, ")
+                       ACE_TEXT ("Error trying to unlock file %s\n"),
+                       file_.c_str ()),
+                      -1);
 #endif
   return 0;
 }
@@ -234,7 +261,15 @@ time_t
 TAO::Storable_FlatFileStream::last_changed(void)
 {
   ACE_stat st;
-  ACE_OS::fstat(filelock_.handle_, &st);
+  if (ACE_OS::fstat(filelock_.handle_, &st) != 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("TAO (%P|%t) - ")
+                  ACE_TEXT ("Storable_FlatFileStream::last_changed, ")
+                  ACE_TEXT ("Error getting file information\n")));
+      throw Storable_Exception (this->file_);
+    }
+
   return st.st_mtime;
 }
 
@@ -274,24 +309,28 @@ TAO::Storable_FlatFileStream::operator >> (ACE_CString& str)
   int bufSize = 0;
   ACE_CString::size_type const max_buf_len =
     ACE_Numeric_Limits<ACE_CString::size_type>::max ();
+  int const max_int = ACE_Numeric_Limits<int>::max ();
   switch (fscanf(fl_, "%d\n", &bufSize))
     {
     case 0:
       this->throw_on_read_error (badbit);
+      break;
     case EOF:
       this->throw_on_read_error (eofbit);
     }
 
   if (bufSize < 0
-      || static_cast<ACE_CString::size_type> (bufSize) >= max_buf_len)
+      || static_cast<ACE_CString::size_type> (bufSize) >= max_buf_len
+      || bufSize == max_int)
     {
       this->throw_on_read_error (badbit);
     }
   {
-    ACE_Auto_Basic_Array_Ptr<char> str_array (new char[bufSize + 1]);
+    int strSize = bufSize + 1; // Account for newline
+    ACE_Auto_Basic_Array_Ptr<char> str_array (new char[strSize]);
     str_array[0] = '\0';
     if (ACE_OS::fgets (str_array.get (),
-                       bufSize + 1,
+                       strSize,
                        this->fl_) == 0
         && bufSize != 0)
       {

@@ -137,17 +137,13 @@ namespace TAO
   class TAO_Export Storable_Exception
   {
   public:
-    Storable_Exception (Storable_Base::Storable_State state,
-                        const ACE_CString & file_name);
+    Storable_Exception (const ACE_CString & file_name);
 
     virtual ~Storable_Exception ();
-
-    Storable_Base::Storable_State get_state () const;
 
     const ACE_CString & get_file_name () const;
 
   private:
-    TAO::Storable_Base::Storable_State storable_state_;
     ACE_CString file_name_;
   };
 
@@ -158,6 +154,11 @@ namespace TAO
   public:
     Storable_Read_Exception (Storable_Base::Storable_State state,
                              const ACE_CString & file_name);
+
+    Storable_Base::Storable_State get_state () const;
+
+  private:
+    TAO::Storable_Base::Storable_State storable_state_;
   };
 
   /// Exception thrown when an error is encountered
@@ -167,6 +168,11 @@ namespace TAO
   public:
     Storable_Write_Exception (Storable_Base::Storable_State state,
                               const ACE_CString & file_name);
+
+    Storable_Base::Storable_State get_state () const;
+
+  private:
+    TAO::Storable_Base::Storable_State storable_state_;
   };
 
 }

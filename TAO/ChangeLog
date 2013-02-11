@@ -1,3 +1,25 @@
+Mon Feb 11 15:46:44 UTC 2013  Byron Harris  <harrisb@ociweb.com>
+
+        * tao/Storable_FlatFileStream.cpp:
+
+          Fix Coverity 972909, 972910, 972911, 972912:
+          Unchecked return value from library.
+          Fix Coverity 972927: Integer overflowed argument.
+          Fix Coverity 972928: Missing break in switch.
+          Fix Coverity 972938: Use of untrusted scalar value.
+
+        * tao/Storable_Base.h:
+        * tao/Storable_Base.cpp:
+
+          Refactored so base class Storable_Exception can be thrown
+          directly when bad value from ACE_OS call is returned.
+
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_List_Store.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group_Storable.cpp:
+
+          Catch Storable_Exception instead of just Storable_Read_Exception.
+
 Mon Feb 11 14:46:52 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Static/server.cpp:

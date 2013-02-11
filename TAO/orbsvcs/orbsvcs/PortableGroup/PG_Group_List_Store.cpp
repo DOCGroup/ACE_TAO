@@ -60,7 +60,7 @@ TAO::PG_Group_List_Store_File_Guard::PG_Group_List_Store_File_Guard (
     {
       this->init (method_type);
     }
-  catch (const TAO::Storable_Read_Exception &)
+  catch (const TAO::Storable_Exception &)
     {
       throw CORBA::INTERNAL ();
     }

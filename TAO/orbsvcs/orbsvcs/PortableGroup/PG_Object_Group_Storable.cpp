@@ -79,7 +79,7 @@ TAO::Object_Group_File_Guard::Object_Group_File_Guard (
     {
       this->init (method_type);
     }
-  catch (const TAO::Storable_Read_Exception &)
+  catch (const TAO::Storable_Exception &)
     {
       throw CORBA::INTERNAL ();
     }
