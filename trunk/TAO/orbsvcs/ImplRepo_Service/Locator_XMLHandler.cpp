@@ -78,8 +78,10 @@ Locator_XMLHandler::startElement (const ACEXML_Char*,
             }
           for ( ; index < attrs->getLength(); ++index)
             {
-              this->extra_params_.push_back(std::make_pair(
-                attrs->getLocalName(index), attrs->getValue(index)));
+              ACE_CString name (attrs->getLocalName(index));
+              ACE_CString value (attrs->getValue(index));
+              this->extra_params_.push_back(std::make_pair(name,
+                                                           value));
             }
         }
     }
@@ -97,8 +99,10 @@ Locator_XMLHandler::startElement (const ACEXML_Char*,
         NameValues extra_params;
         for ( ; index < attrs->getLength(); ++index)
           {
-            extra_params.push_back(std::make_pair(
-              attrs->getLocalName(index), attrs->getValue(index)));
+            ACE_CString name (attrs->getLocalName(index));
+            ACE_CString value (attrs->getValue(index));
+            extra_params.push_back(std::make_pair(name,
+                                                  value));
           }
         this->repo_.load_activator (aname, token, ior, extra_params);
       }

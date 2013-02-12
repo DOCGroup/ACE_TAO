@@ -1,3 +1,10 @@
+Tue Feb 12 02:33:59 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Locator_XMLHandler.cpp:
+
+          Implicit conversion not working on some compilers. Added
+          explicit conversion.
+
 Mon Feb 11 22:57:43 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
 
         * orbsvcs/FT_Naming_Service:
