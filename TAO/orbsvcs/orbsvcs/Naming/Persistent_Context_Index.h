@@ -23,10 +23,10 @@
 #include "ace/Malloc_T.h"
 #include "ace/MMAP_Memory_Pool.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_Persistent_Naming_Context;
 class TAO_Persistent_Naming_Context_Factory;
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Persistent_Context_Index

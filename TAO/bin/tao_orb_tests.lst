@@ -455,8 +455,8 @@ TAO/tests/CSD_Strategy_Tests/TP_Test_4/run_test.pl big: !ST !CORBA_E_MICRO !Lynx
 TAO/tests/CSD_Strategy_Tests/TP_Test_Dynamic/run_test.pl: !STATIC !ST !CORBA_E_MICRO !LynxOS
 TAO/tests/CSD_Strategy_Tests/TP_Test_Static/run_test.pl: !ST !CORBA_E_MICRO !LynxOS
 TAO/tests/CSD_Collocation/run_test.pl: !ST !CORBA_E_COMPACT !CORBA_E_MICRO !MINIMUM !LynxOS
-TAO/tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Static/run_test.pl: !ST !CORBA_E_MICRO !LynxOS
-TAO/tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Dynamic/run_test.pl: !ST !CORBA_E_MICRO !LynxOS
+TAO/tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Static/run_test.pl: !ST !CORBA_E_MICRO !CORBA_E_COMPACT !LynxOS
+TAO/tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Dynamic/run_test.pl: !ST !CORBA_E_MICRO !CORBA_E_COMPACT !LynxOS
 TAO/tests/Dynamic_TP/ORB_ThreadPool/run_test.pl: !ST !CORBA_E_MICRO !LynxOS
 TAO/tests/Permanent_Forward/run_test.pl:
 TAO/tests/Parallel_Connect_Strategy/run_test.pl: !QUICK55
