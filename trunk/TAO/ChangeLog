@@ -1,3 +1,17 @@
+Tue Feb 12 16:31:45 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * orbsvcs/tests/ImplRepo/scale_clients/Test_i.cpp:
+
+          Added missing include.
+
+        * tests/Bug_4059_Regression/client.cpp:
+
+          Fix c++11 fuzz error regarding ACE_Thread_Mutex.
+
+        * tests/Storable/test.cpp:
+
+          Avoid warnings about unused variables.
+
 Tue Feb 12 16:28:13 UTC 2013  Byron Harris  <harrisb@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/Shared_Backing_Store.cpp:
