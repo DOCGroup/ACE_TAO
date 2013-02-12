@@ -1,3 +1,14 @@
+Tue Feb 12 22:39:37 UTC 2013  Phillip LaBanca  <labancap@ociweb.com>
+
+        * tao/DynamicAny/DynAny_i.cpp:
+        * tao/DynamicAny/DynCommon.cpp:
+
+          Apply patches from Bug 4082 that enable faster DynamicAny
+
+        * tests/Bug_4082_Regression/Bug_4082_Regression.cpp:
+
+          Added missing include for tao/AnyTypeCode/Any.h
+
 Tue Feb 12 19:53:48 UTC 2013  Byron Harris  <harrisb@ociweb.com>
 
         * tests/Dynamic_TP/Config_Loader/Test.cpp:
