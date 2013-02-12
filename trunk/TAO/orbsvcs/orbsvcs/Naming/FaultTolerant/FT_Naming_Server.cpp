@@ -861,13 +861,21 @@ TAO_FT_Naming_Server::fini (void)
 TAO_Storable_Naming_Context_Factory *
 TAO_FT_Naming_Server::storable_naming_context_factory (size_t context_size)
 {
+#if defined (ACE_HAS_NEW_NOTHROW)
   return new (ACE_nothrow) TAO_FT_Storable_Naming_Context_Factory (context_size);
+#else
+  return new TAO_FT_Storable_Naming_Context_Factory (context_size);
+#endif /* ACE_HAS_NEW_NOTHROW */
 }
 
 TAO_Persistent_Naming_Context_Factory *
 TAO_FT_Naming_Server::persistent_naming_context_factory (void)
 {
+#if defined (ACE_HAS_NEW_NOTHROW)
   return new (ACE_nothrow) TAO_FT_Persistent_Naming_Context_Factory;
+#else
+  return new TAO_FT_Persistent_Naming_Context_Factory;
+#endif /* ACE_HAS_NEW_NOTHROW */
 }
 
 
