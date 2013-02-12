@@ -1,3 +1,9 @@
+Tue Feb 12 15:56:38 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * orbsvcs/orbsvcs/FT_Naming_Serv.mpc:
+
+          Added missing dependency on loadbalancing.
+
 Tue Feb 12 14:39:28 UTC 2013  Byron Harris  <harrisb@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:
