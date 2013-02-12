@@ -10,8 +10,8 @@
 #include "ace/Thread.h"
 #include "ace/Get_Opt.h"
 
-ACE_Thread_Mutex lock;
-ACE_Condition<ACE_Thread_Mutex> cond (lock);
+TAO_SYNCH_MUTEX lock;
+ACE_Condition<TAO_SYNCH_MUTEX> cond (lock);
 bool is_ok = false;
 CORBA::ORB_var orb;
 
