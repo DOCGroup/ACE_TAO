@@ -10,6 +10,7 @@
 
 #include "ace/Get_Opt.h"
 #include "ace/streams.h"
+#include "ace/OS_NS_unistd.h"
 
 PortableServer::POA_ptr
 createPOA(PortableServer::POA_ptr root_poa, const char* poa_name)
