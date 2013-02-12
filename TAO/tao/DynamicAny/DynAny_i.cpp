@@ -56,19 +56,7 @@ TAO_DynAny_i::check_typecode (CORBA::TypeCode_ptr tc)
     case CORBA::tk_longdouble:
       break;
     case CORBA::tk_sequence:
-      if (tc == CORBA::_tc_BooleanSeq
-          || tc == CORBA::_tc_OctetSeq
-          || tc == CORBA::_tc_CharSeq
-          || tc == CORBA::_tc_WCharSeq
-          || tc == CORBA::_tc_ShortSeq
-          || tc == CORBA::_tc_UShortSeq
-          || tc == CORBA::_tc_LongSeq
-          || tc == CORBA::_tc_ULongSeq
-          || tc == CORBA::_tc_LongLongSeq
-          || tc == CORBA::_tc_ULongLongSeq
-          || tc == CORBA::_tc_FloatSeq
-          || tc == CORBA::_tc_DoubleSeq
-          || tc == CORBA::_tc_LongDoubleSeq)
+      if (TAO_DynCommon::is_basic_type_seq (tc))
         {
           // Otherwise fall through.
           break;
