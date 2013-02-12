@@ -1,6 +1,7 @@
 // $Id$
 #include "Bug_4082_RegressionC.h"
 #include "tao/AnyTypeCode/TypeCode.h"
+#include "tao/AnyTypeCode/Any.h"
 
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
