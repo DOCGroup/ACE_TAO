@@ -1,14 +1,14 @@
 // -*- MPC -*-
 // $Id$
 
-project(*idl): taoidldefaults {
+project(*idl): taoidldefaults, avoids_corba_e_compact, avoids_corba_e_micro {
   IDL_Files {
     Test.idl
   }
   custom_only = 1
 }
 
-project(Dynamic_TP_POA_Test_Dynamic_Server): taoserver, csd_framework, dynamic_tp {
+project(Dynamic_TP_POA_Test_Dynamic_Server): taoserver, csd_framework, dynamic_tp, avoids_corba_e_compact, avoids_corba_e_micro {
   after += *idl
   Source_Files {
     Hello.cpp
@@ -22,7 +22,7 @@ project(Dynamic_TP_POA_Test_Dynamic_Server): taoserver, csd_framework, dynamic_t
 
 }
 
-project(Dynamic_TP_POA_Test_Dynamic_Client): taoclient {
+project(Dynamic_TP_POA_Test_Dynamic_Client): taoclient, avoids_corba_e_compact, avoids_corba_e_micro {
   after += Dynamic_TP_POA_Test_Dynamic_Server
   Source_Files {
     TestC.cpp

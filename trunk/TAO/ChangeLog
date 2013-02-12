@@ -1,3 +1,18 @@
+Tue Feb 12 19:34:45 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * DevGuideExamples/Multithreading/DynamicThreadPool/DynamicThreadPool.mpc:
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Dynamic/Dynamic_TP_POA_Test_Dynamic.mpc:
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Static/Dynamic_TP_POA_Test_Static.mpc:
+        * tests/Dynamic_TP/Config_Loader/Config_Loader.mpc:
+        * tests/Dynamic_TP/POA_Loader/POA_Loader.mpc:
+        * bin/tao_orb_tests.lst:
+
+          Added avoids for corba_e_compact and corba_e_micro.
+
+        * orbsvcs/orbsvcs/Naming/Persistent_Context_Index.h:
+
+          Fixed versioned namespace issue.
+
 Tue Feb 12 16:56:58 UTC 2013  Byron Harris  <harrisb@ociweb.com>
 
         * orbsvcs/tests/ImplRepo/scale_clients/server.cpp:
