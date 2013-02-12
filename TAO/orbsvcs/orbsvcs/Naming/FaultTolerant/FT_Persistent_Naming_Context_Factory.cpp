@@ -30,11 +30,19 @@ TAO_FT_Persistent_Naming_Context_Factory::create_naming_context_impl (
 {
   // Construct the naming context, forwarding the map and counter even if they
   // are defaulted
+#if defined (ACE_HAS_NEW_NOTHROW)
   return new (ACE_nothrow) TAO_FT_Persistent_Naming_Context (poa,
                                                              poa_id,
                                                              context_index,
                                                              map,
                                                              counter);
+#else
+  return new TAO_FT_Persistent_Naming_Context (poa,
+                                               poa_id,
+                                               context_index,
+                                               map,
+                                               counter);
+#endif /* ACE_HAS_NEW_NOTHROW */
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

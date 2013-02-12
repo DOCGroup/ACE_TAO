@@ -1,3 +1,13 @@
+Tue Feb 12 14:39:28 UTC 2013  Byron Harris  <harrisb@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Persistent_Naming_Context_Factory.cpp:
+        * orbsvcs/orbsvcs/Naming/Naming_Server.cpp:
+        * orbsvcs/orbsvcs/Naming/Persistent_Naming_Context_Factory.cpp:
+
+          Account for compilers, such as version 8 of the AIX xlC
+          C++ compiler, not have support for std::nothrow.
+
 Tue Feb 12 02:33:59 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/Locator_XMLHandler.cpp:
