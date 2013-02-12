@@ -1,5 +1,5 @@
 // $Id$
 
-project(*test) : dynamic_tp {
+project(*test) : dynamic_tp, avoids_corba_e_compact, avoids_corba_e_micro {
   exename = test
 }
