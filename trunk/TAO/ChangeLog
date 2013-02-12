@@ -1,3 +1,10 @@
+Tue Feb 12 19:45:02 UTC 2013  Byron Harris  <harrisb@ociweb.com>
+
+        * orbsvcs/FT_Naming_Service/README:
+
+          Added discussion about backup files used for persistent
+          data.
+
 Tue Feb 12 19:34:45 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
 
         * DevGuideExamples/Multithreading/DynamicThreadPool/DynamicThreadPool.mpc:
