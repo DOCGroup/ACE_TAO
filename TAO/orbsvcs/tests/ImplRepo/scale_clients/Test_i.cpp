@@ -1,6 +1,7 @@
 /* -*- C++ -*- $Id$ */
 
 #include "Test_i.h"
+#include "ace/OS_NS_unistd.h"
 
 /* static */ bool Test_i::expected_requests_made_ = false;
 

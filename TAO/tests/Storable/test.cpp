@@ -133,15 +133,22 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                   ACE_ASSERT (int_read == int_write_value);
 
                   const ACE_CString & str_read = savable.string_get(read_index);
-                  ACE_ASSERT (str_read == str_write_value);
+                  if (str_read != str_write_value)
+                    ACE_ERROR ((LM_ERROR,
+                                ACE_TEXT ("String read != num written.\n")));
 
                   unsigned int unsigned_int_read =
                     savable.unsigned_int_get (read_index);
-                  ACE_ASSERT (unsigned_int_read == unsigned_int_write_value);
+                  if (unsigned_int_read != unsigned_int_write_value)
+                    ACE_ERROR ((LM_ERROR,
+                                ACE_TEXT ("Int read != num written.\n")));
 
                   int bytes_read_size =
                     savable.bytes_get (read_index, bytes_read);
-                  ACE_ASSERT (bytes_read_size == bytes_size);
+                  if (bytes_read_size != bytes_size)
+                    ACE_ERROR ((LM_ERROR,
+                                ACE_TEXT ("Bytes read != num written.\n")));
+
                   for (int k = 0; k < bytes_size; ++k)
                     {
                       ACE_ASSERT (bytes_read[k] == bytes_write_value[k]);
