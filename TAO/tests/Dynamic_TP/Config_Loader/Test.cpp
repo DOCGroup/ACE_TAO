@@ -53,7 +53,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   for (int i = 0; name_list[i] != 0; i++)
     {
-      bool found = registry->find (name_list[i], entry);
+      bool found = registry->find (ACE_TEXT_ALWAYS_CHAR (name_list[i]), entry);
       if (!found && (i != 1))
         {
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Cannot find TP Config definition for %C\n"), name_list[i]));
@@ -73,7 +73,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
       else
         {
-          show_tp_config (name_list[i], entry);
+          show_tp_config (ACE_TEXT_ALWAYS_CHAR (name_list[i]), entry);
         }
     }
   return 0;

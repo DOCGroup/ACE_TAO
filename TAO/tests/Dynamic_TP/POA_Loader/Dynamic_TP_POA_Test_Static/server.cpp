@@ -17,7 +17,7 @@ int sleep_sec = 1;
 // timeout_ = 60;
 // queue_depth_ = 0;
 
-const ACE_TCHAR *parms = "{-1,1,-1,0,60,0}";
+const ACE_TCHAR *parms = ACE_TEXT ("{-1,1,-1,0,60,0}");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])

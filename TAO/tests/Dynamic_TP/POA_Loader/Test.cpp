@@ -74,7 +74,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     {
       mapped_strategy = 0;
       ACE_DEBUG ((LM_INFO, ACE_TEXT("Config definition for %C\n"), poa_list[i]));
-      mapped_strategy = dynamic_cast <TAO_DTP_POA_Strategy*> (dtp_poa_strat_repo->find (poa_list[i]));
+      mapped_strategy = dynamic_cast <TAO_DTP_POA_Strategy*>
+        (dtp_poa_strat_repo->find (ACE_TEXT_ALWAYS_CHAR (poa_list[i])));
       if ((mapped_strategy == 0) && (i != 1) && (i != 3))
         {
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Cannot find TP Config definition for %C\n"), poa_list[i]));

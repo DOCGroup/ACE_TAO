@@ -1,3 +1,9 @@
+Tue Feb 12 19:53:48 UTC 2013  Byron Harris  <harrisb@ociweb.com>
+
+        * tests/Dynamic_TP/Config_Loader/Test.cpp:
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Static/server.cpp:
+        * tests/Dynamic_TP/POA_Loader/Test.cpp:
+
 Tue Feb 12 19:45:02 UTC 2013  Byron Harris  <harrisb@ociweb.com>
 
         * orbsvcs/FT_Naming_Service/README:
