@@ -161,21 +161,29 @@ How to Run the TAO FT Naming Service
 4. Persistence
 
         When running as a fault tolerant service, the TAO FT Naming Service
-        uses flat file persistence. It may also be run with no persistence,
-        however, upon the failure of the process, no state will be saved
-        and it will not provide the dual-redundant fault-tolerance capability.
+        persists the state of naming contexts and object groups to files.
+        This allows the state to be restored when starting and
+        restarting the naming service and allows for dual-redundant
+        fault-tolerance capability.
 
         1. If the specified persistence directories for naming context
            data and object group data do not exist, the server will exit.
 
-        2. If the specified file exists, it is scanned and:
+        2. When a file is successfully created or updated, a backup of
+           the file is made.
 
-                a) If any inconsistency is detected in the stored
-                state, or the file is not recognized by the Naming
-                Service, the server exits.  (This may happen, for
+        3. If the specified file exists, it is read in and:
+
+                a) If a field can not be properly read because the
+                data is corrupt, an attempt will be made to read from
+                the backup of the file.  (The data could be corrupt, for
                 example, if a server or host crashed in the middle of
-                writing a record to this file on a previous run).  A
-                noncorrupted version of the file must be used instead.
+                writing a record to this file on a previous run.) If
+                the backup file can be read it will replace the
+                primary file. Because the state of the naming context
+                or object group reverted to an earlier state, a log
+                message is generated alerting that the backup is being
+                used.
 
                 b) If the file is recognized and is ok, the state
                 stored in the file becomes the current state of the
