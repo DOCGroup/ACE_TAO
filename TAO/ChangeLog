@@ -1,3 +1,12 @@
+Tue Feb 12 16:28:13 UTC 2013  Byron Harris  <harrisb@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Shared_Backing_Store.cpp:
+
+          To avoid AIX xlC compile errors, moved all static
+          functions to anonymous namespace, and renamed unique_id
+          functions to get_unique_id to avoid conflict with
+          struct of the same name in xlC header file.
+
 Tue Feb 12 15:56:38 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
 
         * orbsvcs/orbsvcs/FT_Naming_Serv.mpc:
