@@ -63,7 +63,6 @@ public:
 
   /// TAO extension.
   _retn_type    ptr (void) const;
-  operator T *& ();
 
 protected:
   T * ptr_;
@@ -122,6 +121,9 @@ public:
 
   T_elem operator[] (CORBA::ULong index);
   T_const_elem operator[] (CORBA::ULong index) const;
+
+  /// Variable-size base types only.
+  operator T *& ();
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,3 +1,13 @@
+Wed Feb 13 19:25:06 UTC 2013  "Kevin Stanley"  <stanleyk@ociweb.com>
+
+        * tao/Seq_Var_T.h:
+        * tao/Seq_Var_T.inl:
+
+          Backed out change which moved explicit point dereference operation
+          from variable length vars to base so it can be applied to vars for
+          fixed length types. Was causing issues with MSVC compilers related
+          to ambiguity.  
+
 Wed Feb 13 18:28:34 UTC 2013  Byron Harris  <harrisb@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.h:
