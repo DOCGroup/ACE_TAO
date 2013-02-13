@@ -389,6 +389,20 @@ TAO_FT_Naming_Manager::add_member (
     CORBA::Object_ptr member)
 {
   METHOD_ENTRY (TAO::FT_Naming_Manager::add_member);
+
+  if (CORBA::is_nil (object_group))
+    {
+      if (TAO_debug_level > 3)
+        {
+          ACE_ERROR (
+            (LM_ERROR,
+             ACE_TEXT ("%T %n (%P|%t) - TAO_FT_Naming_Manager::add_member")
+             ACE_TEXT ("Null object group provided.\n")
+             ));
+        }
+      throw PortableGroup::ObjectGroupNotFound ();
+    }
+
   PortableGroup::ObjectGroup_var result = PortableGroup::ObjectGroup::_nil ();
 
   // Find the object group corresponding to this IOGR
