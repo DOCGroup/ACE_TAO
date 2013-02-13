@@ -1,3 +1,15 @@
+Wed Feb 13 15:05:15 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.cpp:
+
+          Added check for null Object Group being provided. Will
+          now throw an exception and log an error.
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:
+
+          Added check for null member being added to Object Group.  Will
+          now throw an exception and log an error.
+
 Tue Feb 12 22:39:37 UTC 2013  Phillip LaBanca  <labancap@ociweb.com>
 
         * tao/DynamicAny/DynAny_i.cpp:
