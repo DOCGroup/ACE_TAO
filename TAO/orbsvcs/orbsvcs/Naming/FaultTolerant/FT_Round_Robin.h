@@ -29,9 +29,9 @@
 #include "ace/Vector_T.h"
 #include "orbsvcs/Naming/FaultTolerant/ftnaming_export.h"
 
-class TAO_FT_Naming_Manager;
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+class TAO_FT_Naming_Manager;
 
 /**
  * @class TAO_LB_RoundRobin_Strategy

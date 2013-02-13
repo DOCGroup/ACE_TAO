@@ -1,10 +1,17 @@
 // $Id$
 
 #include "orbsvcs/Naming/Naming_Server.h"
+
+// Placing the include of Messanging.h at this point
+// allows for successful compilation if versioned namespaces
+// are enabled.
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+#include "tao/Messaging/Messaging.h"
+#endif
+
 #include "orbsvcs/Naming/Transient_Naming_Context.h"
 #include "orbsvcs/Naming/Persistent_Naming_Context_Factory.h"
 #include "orbsvcs/Naming/Storable_Naming_Context_Factory.h"
-
 
 #if !defined (CORBA_E_MICRO)
 #include "orbsvcs/Naming/Persistent_Context_Index.h"
@@ -22,10 +29,6 @@
 #include "tao/ORB_Core.h"
 
 #include "tao/IORTable/IORTable.h"
-
-#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
-#include "tao/Messaging/Messaging.h"
-#endif
 
 #include "tao/AnyTypeCode/Any.h"
 
