@@ -106,13 +106,6 @@ TAO_Seq_Var_Base_T<T>::ptr (void) const
   return this->ptr_;
 }
 
-template<typename T>
-ACE_INLINE
-TAO_Seq_Var_Base_T<T>::operator T *& ()
-{
-  return this->ptr_;
-}
-
 // ***************************************************************
 
 template<typename T>
@@ -199,6 +192,14 @@ TAO_VarSeq_Var_T<T>::operator= (T * p)
   delete this->ptr_;
   this->ptr_ = p;
   return *this;
+}
+
+// Variable-size types only
+template<typename T>
+ACE_INLINE
+TAO_VarSeq_Var_T<T>::operator T *& ()
+{
+  return this->ptr_;
 }
 
 template<typename T>
