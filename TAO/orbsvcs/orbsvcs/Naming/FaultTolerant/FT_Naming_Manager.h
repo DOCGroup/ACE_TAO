@@ -40,11 +40,6 @@ namespace TAO
   class Storable_Factory;
 }
 
-namespace FT_Naming
-{
-  struct ObjectGroupUpdate;
-}
-
 /**
  * @class TAO_FT_Naming_Manager
  * @brief Implements the NamingManager interface for the Fault
@@ -80,7 +75,7 @@ public:
   ///@param[in] the_criteria Properties to be used by the object group.
   virtual PortableGroup::ObjectGroup_ptr create_object_group (
     const char * group_name,
-    FT_Naming::LoadBalancingStrategyValue lb_strategy,
+    ::FT_Naming::LoadBalancingStrategyValue lb_strategy,
     const ::PortableGroup::Criteria & the_criteria);
 
   /// Deletes the object group with the provided group_name.
@@ -95,11 +90,11 @@ public:
   /// name.
   virtual void set_load_balancing_strategy (
       const char * group_name,
-      FT_Naming::LoadBalancingStrategyValue lb_strategy);
+      ::FT_Naming::LoadBalancingStrategyValue lb_strategy);
 
   /// Retreive the names of the groups with the specified load balanacing
   /// strategy that have been created in this Naming Manager.
-  virtual FT_Naming::GroupNames * groups (
+  virtual ::FT_Naming::GroupNames * groups (
      ::FT_Naming::LoadBalancingStrategyValue target_strategy);
 
   /**
