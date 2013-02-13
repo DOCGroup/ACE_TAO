@@ -1,3 +1,11 @@
+Wed Feb 13 14:29:09 UTC 2013  Adam Mitz  <mitza@ociweb.com>
+
+        * include/makeinclude/platform_vxworks6.7.GNU:
+
+          Removed workaround for RTP shared libraries.  With the current
+          updates to VxWorks 6.7, the workaround is not only not needed,
+          but it creates RTP executables that will not run on the target.
+
 Fri Feb  8 19:03:33 UTC 2013  Phillip LaBanca  <labancap@ociweb.com>
 
         * ace/Message_Block.cpp:
