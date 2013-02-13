@@ -122,6 +122,15 @@ namespace {
       if (this->locked_)
         return;
 
+      if (file_lock_.get () == 0)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT("(%P|%t) ERROR: attempting to lock ")
+                      ACE_TEXT ("an uninitialized Lockable_File.")));
+          this->locked_ = false;
+          return;
+        }
+
       if ((this->flags_ & O_RDWR) != 0)
         file_lock_->acquire();
       if ((this->flags_ & O_WRONLY) != 0)

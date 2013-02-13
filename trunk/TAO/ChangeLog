@@ -1,3 +1,18 @@
+Wed Feb 13 17:18:10 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * bin/tao_orb_tests.lst:
+
+          Don't run ORB_ThreadPool test on CORBA_E_COMPACT.
+
+        * orbsvcs/ImplRepo_Service/Shared_Backing_Store.cpp:
+
+          Added null test for file_lock_ to fix Coverity Issues:
+          972905, 972903.
+
+        * tests/Dynamic_TP/ORB_ThreadPool/ORB_ThreadPool.mpc:
+
+          Avoid building ORB_ThreadPool under corba_e_compact.
+
 Wed Feb 13 15:05:15 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.cpp:
