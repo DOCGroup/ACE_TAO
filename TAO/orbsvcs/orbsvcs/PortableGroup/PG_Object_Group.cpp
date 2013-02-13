@@ -209,6 +209,18 @@ TAO::PG_Object_Group::add_member (const PortableGroup::Location & the_location,
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->internals_);
 
+  if (CORBA::is_nil (member))
+    {
+      if (TAO_debug_level > 3)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("%T %n (%P|%t) - TAO::PG_Object_Group::add_member")
+                      ACE_TEXT ("Can't add a null member to object group\n")
+                      ));
+        }
+      throw PortableGroup::ObjectNotAdded ();
+    }
+
   /////////////////////////////////////////
   // Convert the new member to a string IOR
   // This keeps a clean IOR (not an IOGR!)
