@@ -25,4 +25,8 @@ workspace {
   performance-tests
   tutorials
   $(DDS_ROOT)/DDS_TAOv2.mwc
+  exclude {
+    $(TAO_ROOT)/utils/nsgroup
+  }
+
 }
