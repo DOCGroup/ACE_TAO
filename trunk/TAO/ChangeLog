@@ -1,3 +1,13 @@
+Wed Feb 13 18:28:34 UTC 2013  Byron Harris  <harrisb@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Round_Robin.h:
+        * orbsvcs/orbsvcs/Naming/Naming_Server.cpp:
+        * tests/Storable/Savable.h:
+
+          Changes to get to compile when versioned namespaces are used.
+
 Wed Feb 13 17:18:10 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
 
         * bin/tao_orb_tests.lst:

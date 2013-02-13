@@ -70,12 +70,12 @@ TAO_FT_Naming_Manager::TAO_FT_Naming_Manager (void)
   // The name for the property which contains the load balancing strategy value
   this->built_in_balancing_strategy_name_.length (1);
   this->built_in_balancing_strategy_name_[0].id =
-    FT_Naming::TAO_FT_LOAD_BALANCING_STRATEGY;
+    ::FT_Naming::TAO_FT_LOAD_BALANCING_STRATEGY;
 
   // The name for the property which contains the object group name
   this->object_group_property_name_.length (1);
   this->object_group_property_name_[0].id =
-    FT_Naming::TAO_FT_OBJECT_GROUP_NAME;
+    ::FT_Naming::TAO_FT_OBJECT_GROUP_NAME;
 }
 
 TAO_FT_Naming_Manager::~TAO_FT_Naming_Manager (void)
@@ -88,7 +88,7 @@ TAO_FT_Naming_Manager::~TAO_FT_Naming_Manager (void)
 CORBA::Object_ptr
 TAO_FT_Naming_Manager::create_object_group (
     const char * group_name,
-    FT_Naming::LoadBalancingStrategyValue lb_strategy,
+    ::FT_Naming::LoadBalancingStrategyValue lb_strategy,
     const ::PortableGroup::Criteria & the_criteria)
 {
   // The when creating the object group, it starts as a generic
@@ -100,11 +100,11 @@ TAO_FT_Naming_Manager::create_object_group (
   TAO::PG_Property_Set property_set (the_criteria);
   PortableGroup::Value value;
   value <<= group_name;
-  property_set.set_property (FT_Naming::TAO_FT_OBJECT_GROUP_NAME, value);
+  property_set.set_property (::FT_Naming::TAO_FT_OBJECT_GROUP_NAME, value);
 
   // Add the load balancing strategy to the properties
   value <<= lb_strategy;
-  property_set.set_property (FT_Naming::TAO_FT_LOAD_BALANCING_STRATEGY, value);
+  property_set.set_property (::FT_Naming::TAO_FT_LOAD_BALANCING_STRATEGY, value);
 
   PortableGroup::Criteria new_criteria;
   property_set.export_properties (new_criteria);
@@ -155,10 +155,10 @@ TAO_FT_Naming_Manager::groups (::FT_Naming::LoadBalancingStrategyValue target_st
   PortableGroup::ObjectGroups_var all_groups = this->group_factory_.all_groups ();
   int num_groups = all_groups->length ();
 
-  FT_Naming::GroupNames* group_names;
+  ::FT_Naming::GroupNames* group_names;
   ACE_NEW_THROW_EX (
     group_names,
-    FT_Naming::GroupNames (num_groups),
+    ::FT_Naming::GroupNames (num_groups),
     CORBA::NO_MEMORY());
 
   int matching_groups = 0;
@@ -226,7 +226,7 @@ TAO_FT_Naming_Manager::set_load_balancing_strategy (
   PortableGroup::Value value;
   // Add the load balancing strategy to the properties
   value <<= lb_strategy;
-  property_set.set_property (FT_Naming::TAO_FT_LOAD_BALANCING_STRATEGY, value);
+  property_set.set_property (::FT_Naming::TAO_FT_LOAD_BALANCING_STRATEGY, value);
   PortableGroup::Properties properties;
   property_set.export_properties (properties);
   this->set_properties_dynamically (group, properties);
@@ -722,7 +722,7 @@ TAO_FT_Naming_Manager::next_member (PortableGroup::ObjectGroup_ptr object_group)
   }
 
   // Extract the load balancing strategy value
-  FT_Naming::LoadBalancingStrategyValue load_bal_strategy;
+  ::FT_Naming::LoadBalancingStrategyValue load_bal_strategy;
   value >>= load_bal_strategy;
 
   PortableGroup::Location next_location;
@@ -731,7 +731,7 @@ TAO_FT_Naming_Manager::next_member (PortableGroup::ObjectGroup_ptr object_group)
 
   switch (load_bal_strategy)
   {
-  case FT_Naming::ROUND_ROBIN:
+  case ::FT_Naming::ROUND_ROBIN:
     result = this->round_robin_.next_location (object_group, this, next_location);
     break;
   default:

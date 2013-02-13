@@ -1,13 +1,13 @@
 // $Id$
 
 #include "tao/Storable_Base.h"
+#include "tao/Storable_Factory.h"
+
+#include "tao/orbconf.h"
+#include /**/ "tao/Version.h"
+#include /**/ "tao/Versioned_Namespace.h"
 
 #include "ace/SString.h"
-
-namespace TAO
-{
-  class Storable_Factory;
-}
 
 class Savable_Exception
 {
