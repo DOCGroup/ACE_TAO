@@ -21,12 +21,13 @@
 #include "orbsvcs/Naming/Hash_Naming_Context.h"
 #include "orbsvcs/Naming/Storable_Naming_Context.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   class Storable_Factory;
 }
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Storable_Naming_Context_Factory

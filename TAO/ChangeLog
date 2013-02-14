@@ -1,3 +1,10 @@
+Thu Feb 14 18:06:34 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context_Factory.h:
+
+          Moved forward declaration for Storable_Factory into the versioned
+          namespace declaration.
+
 Thu Feb 14 16:27:21 UTC 2013  Byron Harris  <harrisb@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/Config_Backing_Store.h:
