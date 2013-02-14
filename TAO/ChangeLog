@@ -1,3 +1,14 @@
+Thu Feb 14 16:27:21 UTC 2013  Byron Harris  <harrisb@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Config_Backing_Store.h:
+        * orbsvcs/ImplRepo_Service/Locator_Repository.h:
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Replication_Manager.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_PG_Group_Factory.h:
+
+          Further changes to get to compile when versioned namespaces are used.
+
 Thu Feb 14 14:28:58 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/Storable.h:

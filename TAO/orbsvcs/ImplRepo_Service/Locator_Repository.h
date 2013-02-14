@@ -27,12 +27,11 @@
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Configuration.h"
 #include "ace/Auto_Ptr.h"
+#include "ace/Reactor.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-class ACE_Reactor;
 
 /**
 * @class Locator_Repository
