@@ -48,7 +48,9 @@ class TAO_NS_Persistence_Header
 class TAO_NS_Persistence_Record
 {
  public:
-  enum Record_Type {LOCAL_NCONTEXT, OBJREF, REMOTE_NCONTEXT};
+  enum Record_Type {UNDEFINED, LOCAL_NCONTEXT, OBJREF, REMOTE_NCONTEXT};
+
+  TAO_NS_Persistence_Record (Record_Type type = TAO_NS_Persistence_Record::UNDEFINED);
 
   Record_Type type () const;
   void type (Record_Type type);
