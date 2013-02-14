@@ -38,6 +38,12 @@ TAO_NS_Persistence_Header::destroyed () const
   return this->destroyed_;
 }
 
+ACE_INLINE
+TAO_NS_Persistence_Record::TAO_NS_Persistence_Record (
+   TAO_NS_Persistence_Record::Record_Type type)
+  : type_ (type)
+{
+}
 
 ACE_INLINE TAO_NS_Persistence_Record::Record_Type
 TAO_NS_Persistence_Record::type () const
