@@ -22,7 +22,7 @@
 
 #include "Locator_Repository.h"
 
-class ACE_Configuration;
+#include "ace/Configuration.h"
 
 /**
 * @class Config_Backing_Store
