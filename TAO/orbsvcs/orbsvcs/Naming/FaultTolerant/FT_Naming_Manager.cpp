@@ -472,6 +472,14 @@ PortableGroup::Locations *
 TAO_FT_Naming_Manager::locations_of_members (
     PortableGroup::ObjectGroup_ptr object_group)
 {
+  if (CORBA::is_nil (object_group))
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("TAO_FT_Naming_Manager::locations_of_members ")
+                  ACE_TEXT ("- null object group passed.\n")));
+      throw PortableGroup::ObjectGroupNotFound ();
+    }
+
   PortableGroup::Locations_var result = 0;
 
   // Find the object group corresponding to this IOGR
@@ -505,6 +513,15 @@ PortableGroup::ObjectGroupId
 TAO_FT_Naming_Manager::get_object_group_id (
     PortableGroup::ObjectGroup_ptr object_group)
 {
+
+  if (CORBA::is_nil (object_group))
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("TAO_FT_Naming_Manager::get_object_group_id ")
+                  ACE_TEXT ("- null object group passed.\n")));
+      throw PortableGroup::ObjectGroupNotFound ();
+    }
+
   PortableGroup::ObjectGroupId result = 0;
   TAO::PG_Object_Group * group = 0;
   if (this->group_factory_.find_group (object_group, group))
@@ -530,6 +547,14 @@ PortableGroup::ObjectGroup_ptr
 TAO_FT_Naming_Manager::get_object_group_ref (
     PortableGroup::ObjectGroup_ptr object_group)
 {
+  if (CORBA::is_nil (object_group))
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("TAO_FT_Naming_Manager::get_object_group_ref ")
+                  ACE_TEXT ("- null object group passed.\n")));
+      throw PortableGroup::ObjectGroupNotFound ();
+    }
+
   PortableGroup::ObjectGroup_var result = PortableGroup::ObjectGroup::_nil ();
 
   // Find the object group corresponding to this IOGR
@@ -582,6 +607,15 @@ TAO_FT_Naming_Manager::get_member_ref (
     PortableGroup::ObjectGroup_ptr object_group,
     const PortableGroup::Location & the_location)
 {
+
+  if (CORBA::is_nil (object_group))
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("TAO_FT_Naming_Manager::get_member_ref ")
+                  ACE_TEXT ("- null object group passed.\n")));
+      throw PortableGroup::ObjectGroupNotFound ();
+    }
+
   CORBA::Object_var result = CORBA::Object::_nil();
 
   // Find the object group corresponding to this IOGR

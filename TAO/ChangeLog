@@ -1,3 +1,10 @@
+Thu Feb 14 22:54:41 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.cpp:
+
+          Added checks for null object groups as inputs to naming manager
+          through the Portable Group interface.
+
 Thu Feb 14 19:50:37 UTC 2013  Byron Harris  <harrisb@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context_Factory.cpp:
