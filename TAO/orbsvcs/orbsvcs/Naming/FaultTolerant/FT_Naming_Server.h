@@ -55,13 +55,13 @@ public:
   CosNaming::NamingContext_ptr my_root_context (void) const;
 
   /// Returns the reference for this servers local naming manager servant.
-  FT_Naming::NamingManager_ptr my_naming_manager (void) const;
+  ::FT_Naming::NamingManager_ptr my_naming_manager (void) const;
 
   void peer_root_context (CosNaming::NamingContext_ptr peer_cxt);
   CosNaming::NamingContext_ptr peer_root_context (void);
 
-  void peer_naming_manager (FT_Naming::NamingManager_ptr peer_nm);
-  FT_Naming::NamingManager_ptr peer_naming_manager (void);
+  void peer_naming_manager (::FT_Naming::NamingManager_ptr peer_nm);
+  ::FT_Naming::NamingManager_ptr peer_naming_manager (void);
 
   /// Initialize the naming manager with the ORB.
   int init_naming_manager_with_orb (int argc,
@@ -95,10 +95,10 @@ public:
   char * naming_manager_ior (void);
 
   virtual int update_object_group (
-    const FT_Naming::ObjectGroupUpdate & group_info);
+    const ::FT_Naming::ObjectGroupUpdate & group_info);
 
   virtual int update_naming_context (
-    const FT_Naming::NamingContextUpdate & naming_context);
+    const ::FT_Naming::NamingContextUpdate & naming_context);
 
   /// Destroy the child POAs created in @c init_with_orb,
   /// @c init_naming_manager_with_orb, and
@@ -125,10 +125,10 @@ protected:
   TAO_FT_Naming_Manager naming_manager_;
 
   /// Object reference for the local naming manager servant.
-  FT_Naming::NamingManager_var my_naming_manager_;
+  ::FT_Naming::NamingManager_var my_naming_manager_;
 
   /// Object reference for the peer naming service's naming manager.
-  FT_Naming::NamingManager_var peer_naming_manager_;
+  ::FT_Naming::NamingManager_var peer_naming_manager_;
 
   /// Object reference for the peer naming service's naming manager.
   CosNaming::NamingContext_var peer_root_context_;
