@@ -108,7 +108,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                     max_tries));
       }
 
-    CORBA::Short n;
+    CORBA::Short n = 0;
     for (int i = 0; i < max_tries; ++i)
       {
         try
@@ -122,6 +122,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               throw;
           }
       }
+
+    ACE_ASSERT (n > 0);
 
     return 0;
 
