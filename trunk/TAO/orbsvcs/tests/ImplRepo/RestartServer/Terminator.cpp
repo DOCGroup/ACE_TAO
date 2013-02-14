@@ -23,7 +23,7 @@ Terminator::svc()
 {
   while (1)
     {
-      ACE_Message_Block* mb;
+      ACE_Message_Block* mb = 0;
       ACE_ASSERT(this->getq(mb) != -1);
       if (mb->msg_type () == ACE_Message_Block::MB_HANGUP)
         {

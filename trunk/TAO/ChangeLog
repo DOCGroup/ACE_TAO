@@ -1,3 +1,14 @@
+Thu Feb 14 19:50:37 UTC 2013  Byron Harris  <harrisb@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context_Factory.cpp:
+
+          Added include of ace/pre.h.
+
+        * orbsvcs/tests/ImplRepo/RestartServer/Terminator.cpp:
+        * orbsvcs/tests/ImplRepo/scale_clients/client.cpp:
+
+          Addressed a few compiler warnings.
+
 Thu Feb 14 18:06:34 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/Storable_Naming_Context_Factory.h:
