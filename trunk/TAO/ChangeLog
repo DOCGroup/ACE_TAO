@@ -1,3 +1,19 @@
+Thu Feb 14 14:28:58 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/Storable.h:
+        * orbsvcs/orbsvcs/Naming/Storable.inl:
+
+          Added initialization of type_ member to fix Coverity issue.
+
+        * tests/Var_Deref:
+        * tests/Var_Deref/README.txt:
+        * tests/Var_Deref/Test.idl:
+        * tests/Var_Deref/Var_Deref.mpc:
+        * tests/Var_Deref/var_deref.cpp:
+
+          Removed these files.  No longer needed since this feature
+          was removed in the previous commit.
+
 Wed Feb 13 19:25:06 UTC 2013  "Kevin Stanley"  <stanleyk@ociweb.com>
 
         * tao/Seq_Var_T.h:
@@ -6,7 +22,7 @@ Wed Feb 13 19:25:06 UTC 2013  "Kevin Stanley"  <stanleyk@ociweb.com>
           Backed out change which moved explicit point dereference operation
           from variable length vars to base so it can be applied to vars for
           fixed length types. Was causing issues with MSVC compilers related
-          to ambiguity.  
+          to ambiguity.
 
 Wed Feb 13 18:28:34 UTC 2013  Byron Harris  <harrisb@ociweb.com>
 
