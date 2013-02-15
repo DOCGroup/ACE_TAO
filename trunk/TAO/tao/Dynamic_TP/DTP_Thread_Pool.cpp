@@ -70,7 +70,6 @@ TAO_DTP_Thread_Pool_Threads::run (TAO_ORB_Core &orb_core)
   // A timeout is specified, run the ORB in an idle loop, if we
   // don't handle any operations for the given timeout we just
   // exit the loop and this thread ends itself.
-  ACE_Time_Value tv;
   if (TAO_debug_level > 7)
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -79,10 +78,13 @@ TAO_DTP_Thread_Pool_Threads::run (TAO_ORB_Core &orb_core)
                   ACE_TEXT ("setting timeout for %d sec, %d usec\n"),
                   this->pool_.id (),
                   this->thr_count (),
-                  tv.sec(), tv.usec()));
+                  this->pool_.dynamic_thread_time().sec(),
+                  this->pool_.dynamic_thread_time().usec()));
     }
 
+  ACE_Time_Value tv;
   this->pool_.add_active();
+  bool must_deactivate = true;
   while (!orb_core.has_shutdown ())
     {
       tv = this->pool_.dynamic_thread_time ();
@@ -92,16 +94,20 @@ TAO_DTP_Thread_Pool_Threads::run (TAO_ORB_Core &orb_core)
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - DTP Pool %d ")
-                      ACE_TEXT ("run: above_min = %d, tv = (%d, %d), timeout = %d\n"),
+                      ACE_TEXT ("run: above_min = %d, timeout = %d\n"),
                       this->pool_.id(), this->pool_.above_minimum(), timeout));
         }
-      if (timeout && this->pool_.above_minimum ())
+      if (timeout && this->pool_.remove_active (false))
         {
           // we've timed out, but the pool is not yet at the minimum
+          must_deactivate = false;
           break;
         }
     }
-  this->pool_.remove_active();
+  if (must_deactivate)
+    {
+      this->pool_.remove_active (true);
+    }
 
   if (TAO_debug_level > 7)
     {
@@ -191,11 +197,16 @@ TAO_DTP_Thread_Pool::add_active (void)
   ++this->active_count_;
 }
 
-void
-TAO_DTP_Thread_Pool::remove_active (void)
+bool
+TAO_DTP_Thread_Pool::remove_active (bool force)
 {
-  ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
-  --this->active_count_;
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_, false);
+  if (force || this->above_minimum())
+    {
+      --this->active_count_;
+      return true;
+    }
+  return false;
 }
 
 int
