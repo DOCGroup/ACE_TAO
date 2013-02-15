@@ -9,12 +9,13 @@
 #include "tao/ORB_Core.h"
 #include "tao/Dynamic_TP/DTP_Thread_Pool.h"
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT ("server.ior");
+const ACE_TCHAR *ior_output_file = ACE_TEXT ("middle.ior");
+const ACE_TCHAR *upstream_ior = ACE_TEXT ("file://server.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:s:p:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:o:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -23,11 +24,15 @@ parse_args (int argc, ACE_TCHAR *argv[])
       case 'o':
         ior_output_file = get_opts.opt_arg ();
         break;
+      case 'k':
+        upstream_ior = get_opts.opt_arg ();
+        break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
                            "-o <iorfile>"
+                           "-k <upstream_ior>"
                            "\n",
                            argv [0]),
                           -1);
@@ -44,15 +49,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
-      CORBA::Object_var poa_object =
+      CORBA::Object_var obj =
         orb->resolve_initial_references("RootPOA");
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in ());
+        PortableServer::POA::_narrow (obj.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Server panic: nil RootPOA\n"),
+                           " (%P|%t) Middle panic: nil RootPOA\n"),
                           1);
 
       PortableServer::POAManager_var poa_manager =
@@ -61,15 +66,25 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      Sleeper_i *test_impl;
-      ACE_NEW_RETURN (test_impl, Sleeper_i (orb.in ()), 1);
+      obj = orb->string_to_object (upstream_ior);
+      Test::Sleeper_var sleeper = Test::Sleeper::_narrow (obj.in ());
+
+      if (CORBA::is_nil (sleeper.in()))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           " (%P|%t) Middle panic: nil sleeper reference\n"),
+                          1);
+
+
+      Middle_i *test_impl;
+      ACE_NEW_RETURN (test_impl, Middle_i (orb.in (), sleeper.in()), 1);
       PortableServer::ServantBase_var owner_transfer(test_impl);
       PortableServer::ObjectId_var id = root_poa->activate_object (test_impl);
-      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
-      Test::Sleeper_var sleeper = Test::Sleeper::_narrow (object.in ());
-      CORBA::String_var ior = orb->object_to_string (sleeper.in ());
+      obj = root_poa->id_to_reference (id.in ());
 
-      ACE_DEBUG ((LM_DEBUG,"Server calling poa_manager::activate()\n"));
+      Test::Middle_var middle = Test::Middle::_narrow (obj.in ());
+      CORBA::String_var ior = orb->object_to_string (middle.in ());
+
+      ACE_DEBUG ((LM_DEBUG,"Middle calling poa_manager::activate()\n"));
       poa_manager->activate ();
 
       // Output the IOR to the <ior_output_file>
@@ -93,21 +108,21 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       if (pool == 0)
         {
-          ACE_DEBUG ((LM_DEBUG,"Server calling orb->run()\n"));
+          ACE_DEBUG ((LM_DEBUG,"Middle calling orb->run()\n"));
           orb->run ();
         }
       else
         {
-          ACE_DEBUG ((LM_DEBUG,"Server calling pool->wait()\n"));
+          ACE_DEBUG ((LM_DEBUG,"Middle calling pool->wait()\n"));
           pool->wait();
         }
 
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) Server - event loop finished\n"));
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) Middle - event loop finished\n"));
       orb->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("Server Exception caught:");
+      ex._tao_print_exception ("Middle Exception caught:");
       return 1;
     }
 

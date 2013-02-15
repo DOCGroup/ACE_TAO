@@ -70,31 +70,44 @@ TAO_DTP_Thread_Pool_Threads::run (TAO_ORB_Core &orb_core)
   // A timeout is specified, run the ORB in an idle loop, if we
   // don't handle any operations for the given timeout we just
   // exit the loop and this thread ends itself.
-  ACE_Time_Value tv (this->pool_.dynamic_thread_time ());
+  ACE_Time_Value tv;
+  if (TAO_debug_level > 7)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("TAO (%P|%t) - DTP Pool %d - ")
+                  ACE_TEXT ("Starting worker, count = %d; ")
+                  ACE_TEXT ("setting timeout for %d sec, %d usec\n"),
+                  this->pool_.id (),
+                  this->thr_count (),
+                  tv.sec(), tv.usec()));
+    }
 
+  this->pool_.add_active();
   while (!orb_core.has_shutdown ())
     {
-      bool has_work = orb->work_pending (tv);
-      if (!has_work && this->pool_.above_minimum ())
+      tv = this->pool_.dynamic_thread_time ();
+      orb->perform_work (tv);
+      bool timeout = errno == ETIME;
+      if (TAO_debug_level > 7)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("TAO (%P|%t) - DTP Pool %d ")
+                      ACE_TEXT ("run: above_min = %d, tv = (%d, %d), timeout = %d\n"),
+                      this->pool_.id(), this->pool_.above_minimum(), timeout));
+        }
+      if (timeout && this->pool_.above_minimum ())
         {
           // we've timed out, but the pool is not yet at the minimum
           break;
         }
-
-      // Run the ORB for the specified timeout, this prevents looping
-      // between work_pending/handle_events
-      tv = this->pool_.dynamic_thread_time ();
-      orb->run (tv);
-      // Reset the idle timeout
-      tv = this->pool_.dynamic_thread_time ();
     }
+  this->pool_.remove_active();
 
   if (TAO_debug_level > 7)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO Process %P Pool %d Thread %t\n")
-                  ACE_TEXT ("Current number of dynamic threads left = %d; ")
-                  ACE_TEXT ("DTP worker thread is ending!\n"),
+                  ACE_TEXT ("TAO (%P|%t) - DTP Pool %d ")
+                  ACE_TEXT ("Terminating worker, remaining pool thread count = %d\n"),
                   this->pool_.id (),
                   this->thr_count () - 1));
     }
@@ -106,7 +119,7 @@ bool
 TAO_DTP_Thread_Pool::above_minimum (void)
 {
   return this->definition_.min_threads_ > 0 &&
-    (int)this->threads_.thr_count () > this->definition_.min_threads_;
+    (int)this->active_count_ > this->definition_.min_threads_;
 }
 
 bool
@@ -114,6 +127,12 @@ TAO_DTP_Thread_Pool::new_dynamic_thread (void)
 {
   // Note that we are checking this condition below without the lock
   // held.
+  if (TAO_debug_level > 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("TAO (%P|%t) DTP Pool %d new_dynamic_thread, max = %d, current = %d\n"),
+                  this->id_, this->definition_.max_threads_, (int)this->threads_.thr_count ()));
+    }
   if (this->definition_.max_threads_ > 0 &&
       (int)this->threads_.thr_count () >= this->definition_.max_threads_)
     return false;
@@ -129,7 +148,7 @@ TAO_DTP_Thread_Pool::new_dynamic_thread (void)
     {
       if (TAO_debug_level > 7)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO Process %P Pool %d Thread %t\n")
+                    ACE_TEXT ("TAO (%P|%t) DTP Pool %d ")
                     ACE_TEXT ("Current number of threads = %d; ")
                     ACE_TEXT ("min threads = %d; max threads = %d\n")
                     ACE_TEXT ("No leaders available; DTP creating new leader!\n"),
@@ -138,7 +157,7 @@ TAO_DTP_Thread_Pool::new_dynamic_thread (void)
                     this->definition_.min_threads_,
                     this->definition_.max_threads_));
 
-      if (this->create_threads_i (1, THR_BOUND | THR_DETACHED))
+      if (this->create_threads_i (1, THR_NEW_LWP | THR_JOINABLE))
         {
           if (TAO_debug_level > 0)
             {
@@ -165,6 +184,20 @@ TAO_DTP_Thread_Pool::current_threads (void) const
   return this->threads_.thr_count ();
 }
 
+void
+TAO_DTP_Thread_Pool::add_active (void)
+{
+  ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
+  ++this->active_count_;
+}
+
+void
+TAO_DTP_Thread_Pool::remove_active (void)
+{
+  ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
+  --this->active_count_;
+}
+
 int
 TAO_DTP_Thread_Pool::create_initial_threads (void)
 {
@@ -178,43 +211,21 @@ TAO_DTP_Thread_Pool::create_initial_threads (void)
   // if the min threads count is -1 that means all threads are static
 
   size_t count = (size_t)this->definition_.init_threads_;
-  size_t extra = 0;
-  if (this->definition_.min_threads_ != -1)
-    {
-      extra = count - (size_t) this->definition_.min_threads_;
-      count = (size_t) this->definition_.min_threads_;
-    }
 
   if (TAO_debug_level > 7)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) DTP_Thread_Pool::create_initial_threads ")
-                  ACE_TEXT ("Creating %d static and %d dynamic threads\n"),
-                  count, extra));
+                  ACE_TEXT ("Creating %d threads\n"),
+                  count));
     }
 
   int result = this->create_threads_i (count, THR_NEW_LWP | THR_JOINABLE);
-  if (result != -1 && extra > 0)
-    {
-      result = this->create_threads_i (extra, THR_BOUND | THR_DETACHED);
-    }
   return result;
 }
 
 int
-TAO_DTP_Thread_Pool::create_dynamic_threads (size_t count)
-{
-  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
-                    mon,
-                    this->lock_,
-                    0);
-
-  return this->create_threads_i (count, THR_BOUND | THR_DETACHED);
-}
-
-int
-TAO_DTP_Thread_Pool::create_threads_i (size_t count,
-                                       long thread_flags)
+TAO_DTP_Thread_Pool::create_threads_i (size_t count, long thread_flags)
 {
   // Overwritten parameters.
   int force_active = 1;
@@ -269,6 +280,7 @@ TAO_DTP_Thread_Pool::TAO_DTP_Thread_Pool (TAO_DTP_Thread_Pool_Manager &manager,
     shutdown_ (false),
     definition_ (def),
     threads_ (*this),
+    active_count_ (0),
     new_thread_generator_ (*this)
 {
   manager_.orb_core ().leader_follower ().set_new_leader_generator (
@@ -301,7 +313,17 @@ TAO_DTP_Thread_Pool::shutting_down (void)
 void
 TAO_DTP_Thread_Pool::wait (void)
 {
-  this->threads_.wait ();
+  while (this->active_count_ > 0)
+    {
+      this->threads_.wait ();
+      if (TAO_debug_level > 7)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("TAO (%P|%t) DTP_Thread_Pool::wait, ")
+                      ACE_TEXT ("active_count = %d, thread_count = %d\n"),
+                      this->active_count_, threads_.thr_count()));
+        }
+    }
 }
 
 #define TAO_THREAD_POOL_MANAGER_GUARD \

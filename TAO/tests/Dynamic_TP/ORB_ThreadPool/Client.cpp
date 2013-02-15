@@ -7,15 +7,18 @@
 class MT_Requestor : public virtual ACE_Task_Base
 {
 public:
-  MT_Requestor (Test::Sleeper_ptr s);
+  MT_Requestor (Test::Middle_ptr m, CORBA::Short sec);
 
   virtual int svc (void);
 private:
-  Test::Sleeper_var sleeper_;
+  Test::Middle_var middle_;
+  CORBA::Short seconds_;
 };
 
-MT_Requestor::MT_Requestor (Test::Sleeper_ptr s)
-  : sleeper_ (Test::Sleeper::_duplicate (s))
+MT_Requestor::MT_Requestor (Test::Middle_ptr m, CORBA::Short sec)
+  : middle_ (Test::Middle::_duplicate (m)),
+    seconds_ (sec)
+
 {
 }
 
@@ -30,7 +33,7 @@ MT_Requestor::svc ()
                   retries));
       try
         {
-          this->sleeper_->delay();
+          this->middle_->call_delay(seconds_);
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("Client thread %t delay succeeded\n")));
           break;
@@ -46,14 +49,15 @@ MT_Requestor::svc ()
   return 0;
 }
 
-const ACE_TCHAR *ior = ACE_TEXT("file://server.ior");
+const ACE_TCHAR *ior = ACE_TEXT("file://middle.ior");
 bool do_shutdown = false;
+CORBA::Short sec = 2;
 int num_threads = 1;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:n:x"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:n:s:x"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -64,6 +68,9 @@ parse_args (int argc, ACE_TCHAR *argv[])
         break;
       case 'n':
         num_threads = ACE_OS::atoi (get_opts.opt_arg ());
+        break;
+      case 's':
+        sec = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case 'x':
         do_shutdown = true;
@@ -98,24 +105,24 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::Object_var tmp =
         orb->string_to_object(ior);
 
-      Test::Sleeper_var sleeper =
-        Test::Sleeper::_narrow(tmp.in ());
+      Test::Middle_var middle =
+        Test::Middle::_narrow(tmp.in ());
 
-      if (CORBA::is_nil (sleeper.in ()))
+      if (CORBA::is_nil (middle.in ()))
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
-                             "Nil Test::Sleeper reference <%s>\n",
+                             "Nil Test::Middle reference <%s>\n",
                              ior),
                             1);
         }
 
-      MT_Requestor requestor (sleeper.in());
+      MT_Requestor requestor (middle.in(), sec);
       requestor.activate (THR_NEW_LWP | THR_JOINABLE, num_threads);
       requestor.wait ();
 
       if (do_shutdown)
       {
-        sleeper->shutdown();
+        middle->shutdown();
       }
 
       orb->destroy ();
