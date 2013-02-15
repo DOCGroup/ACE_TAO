@@ -22,6 +22,21 @@ project(*Server): taoserver, dynamic_tp, avoids_corba_e_compact, avoids_corba_e_
 
 }
 
+project(*Middle): taoserver, dynamic_tp, avoids_corba_e_compact, avoids_corba_e_micro {
+  exename=middle
+  after += *idl
+  Source_Files {
+    Test_i.cpp
+    Middle.cpp
+    TestC.cpp
+    TestS.cpp
+  }
+
+  IDL_Files {
+  }
+
+}
+
 project(*Client): taoclient, avoids_corba_e_compact, avoids_corba_e_micro {
   after += *idl
   Source_Files {

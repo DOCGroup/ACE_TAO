@@ -149,16 +149,14 @@ public:
   TAO_DTP_Thread_Pool_Manager &manager (void) const;
   CORBA::ULong id (void) const;
   CORBA::ULong current_threads (void) const;
+  void add_active (void);
+  void remove_active (void);
 
   // @}
 
 private:
 
   int create_threads_i (size_t count, long thread_flags);
-
-  /// Create @a number_of_threads of dynamic threads.  Can be called
-  /// multiple times.
-  int create_dynamic_threads (size_t count);
 
   TAO_DTP_Thread_Pool_Manager &manager_;
 
@@ -172,6 +170,8 @@ private:
 
   /// Array with all threads
   TAO_DTP_Thread_Pool_Threads threads_;
+
+  CORBA::ULong active_count_;
 
   TAO_DTP_New_Leader_Generator new_thread_generator_;
 

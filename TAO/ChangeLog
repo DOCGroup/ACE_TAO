@@ -1,3 +1,26 @@
+Fri Feb 15 19:25:53 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/Dynamic_TP/DTP_Thread_Pool.h:
+        * tao/Dynamic_TP/DTP_Thread_Pool.cpp:
+
+          Ensure that the thread pool shrinks as required when threads go idle.
+          ALso make sure that waiting on the pool continues waiting in the face
+          of dynamic pool growth.
+
+        * tests/Dynamic_TP/ORB_ThreadPool/Client.cpp:
+        * tests/Dynamic_TP/ORB_ThreadPool/Middle.cpp:
+        * tests/Dynamic_TP/ORB_ThreadPool/ORB_ThreadPool.mpc:
+        * tests/Dynamic_TP/ORB_ThreadPool/Server.cpp:
+        * tests/Dynamic_TP/ORB_ThreadPool/Test.idl:
+        * tests/Dynamic_TP/ORB_ThreadPool/Test_i.h:
+        * tests/Dynamic_TP/ORB_ThreadPool/Test_i.cpp:
+        * tests/Dynamic_TP/ORB_ThreadPool/client.conf:
+        * tests/Dynamic_TP/ORB_ThreadPool/middle.conf:
+        * tests/Dynamic_TP/ORB_ThreadPool/run_test.pl:
+        * tests/Dynamic_TP/ORB_ThreadPool/server.conf:
+
+          Enhance the test case to illustrate the behavior of a middle tier server
+
 Thu Feb 14 22:54:41 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.cpp:
