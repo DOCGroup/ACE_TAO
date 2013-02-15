@@ -150,7 +150,7 @@ public:
   CORBA::ULong id (void) const;
   CORBA::ULong current_threads (void) const;
   void add_active (void);
-  void remove_active (void);
+  bool remove_active (bool force);
 
   // @}
 

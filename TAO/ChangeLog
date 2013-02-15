@@ -1,3 +1,12 @@
+Fri Feb 15 19:56:11 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/Dynamic_TP/DTP_Thread_Pool.h:
+        * tao/Dynamic_TP/DTP_Thread_Pool.cpp:
+
+          There was still a potential race condition between when a thread was
+          determined to exit and when it actually removed itself from the count.
+          this could lead to a premature temination of the thread pool.
+
 Fri Feb 15 19:25:53 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/Dynamic_TP/DTP_Thread_Pool.h:
