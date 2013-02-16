@@ -1,3 +1,19 @@
+Sat Feb 16 14:42:54 UTC 2013  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * examples/C++NPv2/AIO_Client_Logging_Daemon.cpp: Moved the definition of
+  
+          ACE_FACTORY_DEFINE (AIO_CLD, AIO_Client_Logging_Daemon)
+        
+          to the right place in the #ifdefs.  Thanks to Journeyer J. Joh
+          <oosaprogrammer at gmail dot com> for reporting this.
+
+Sat Feb 16 14:34:30 UTC 2013  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/SSL/SSL_Context.cpp (ACE_SSL_Context::set_mode),
+        * ace/SSL/SSL_Context.h (ACE_SSL_Context): Added support for TLS
+          1.1 and 1.2.  Thanks to pkow88776 at onet dot pl for
+          contributing this.
+
 Wed Feb 13 14:29:09 UTC 2013  Adam Mitz  <mitza@ociweb.com>
 
         * include/makeinclude/platform_vxworks6.7.GNU:

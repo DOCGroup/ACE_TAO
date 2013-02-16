@@ -32,8 +32,6 @@
 #include "AIO_Client_Logging_Daemon.h"
 #include <openssl/ssl.h>
 
-
-
 class AIO_CLD_Acceptor
   : public ACE_Asynch_Acceptor<AIO_Input_Handler> {
 public:
@@ -357,6 +355,8 @@ int AIO_Client_Logging_Daemon::fini () {
   return 0;
 }
 
+#endif /* (ACE_WIN32 && !ACE_HAS_WINCE) || ACE_HAS_AIO_CALLS */
+
 ACE_FACTORY_DEFINE (AIO_CLD, AIO_Client_Logging_Daemon)
 
-#endif /* (ACE_WIN32 && !ACE_HAS_WINCE) || ACE_HAS_AIO_CALLS */
+
