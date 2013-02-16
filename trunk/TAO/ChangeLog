@@ -1,3 +1,10 @@
+Sat Feb 16 21:24:58 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group_Storable.cpp:
+
+          Fixed compilation error for OpenVMS. Needed to use .in() operator
+          on _var type.
+
 Sat Feb 16 16:43:10 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/XML_Backing_Store.cpp:
