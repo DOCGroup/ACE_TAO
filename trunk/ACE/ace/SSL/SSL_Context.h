@@ -117,7 +117,7 @@ public:
     SSLv23,
     TLSv1_client,
     TLSv1_server,
-    TLSv1
+    TLSv1,
     TLSv1_1_client,
     TLSv1_1_server,
     TLSv1_1,

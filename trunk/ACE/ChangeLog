@@ -1,9 +1,15 @@
+Sat Feb 16 21:53:26 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * ace/SSL/SSL_Context.h:
+
+          Fixed missing ',' in enumerated type value.
+
 Sat Feb 16 14:42:54 UTC 2013  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * examples/C++NPv2/AIO_Client_Logging_Daemon.cpp: Moved the definition of
-  
+
           ACE_FACTORY_DEFINE (AIO_CLD, AIO_Client_Logging_Daemon)
-        
+
           to the right place in the #ifdefs.  Thanks to Journeyer J. Joh
           <oosaprogrammer at gmail dot com> for reporting this.
 
