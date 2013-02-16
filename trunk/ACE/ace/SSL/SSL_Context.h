@@ -118,6 +118,12 @@ public:
     TLSv1_client,
     TLSv1_server,
     TLSv1
+    TLSv1_1_client,
+    TLSv1_1_server,
+    TLSv1_1,
+    TLSv1_2_client,
+    TLSv1_2_server,
+    TLSv1_2
   };
 
   /// Constructor
