@@ -230,20 +230,20 @@ XML_Backing_Store::load (const ACE_TString& filename,
     {
       parser.parse (&input);
     }
-  catch (const ACEXML_Exception& ex)
-    {
-      ACE_ERROR ((LM_ERROR,
-        ACE_TEXT ("Error during load of ImR persistence xml file (%s)."),
-        filename.c_str()));
-      ex.print ();
-      return -1;
-    }
     catch ( const ACEXML_SAXParseException* sax_ex)
     {
       ACE_ERROR ((LM_ERROR,
         ACE_TEXT ("Error during load of ImR persistence xml file (%s)."),
         filename.c_str()));
       sax_ex->print ();
+      return -1;
+    }
+    catch (const ACEXML_Exception& ex)
+    {
+      ACE_ERROR ((LM_ERROR,
+        ACE_TEXT ("Error during load of ImR persistence xml file (%s)."),
+        filename.c_str()));
+      ex.print ();
       return -1;
     }
 

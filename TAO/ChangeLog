@@ -1,3 +1,14 @@
+Sat Feb 16 16:43:10 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/XML_Backing_Store.cpp:
+
+         Placed more generic Exception handler after specific one.
+
+        * tao/Stub.inl:
+
+          ACE_MT_SYNCH::MUTEX was undefined in certain corba_e_micro builds.
+          changed to use TAO_SYNCH_MUTEX instead.
+
 Fri Feb 15 19:56:11 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/Dynamic_TP/DTP_Thread_Pool.h:
