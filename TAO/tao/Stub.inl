@@ -147,7 +147,7 @@ TAO_Stub::next_profile_i (void)
             }
 
           {
-            typedef ACE_Reverse_Lock<ACE_MT_SYNCH::MUTEX> TAO_REVERSE_LOCK;
+            typedef ACE_Reverse_Lock<TAO_SYNCH_MUTEX> TAO_REVERSE_LOCK;
             TAO_REVERSE_LOCK reverse (this->profile_lock_);
             ACE_MT (ACE_GUARD_RETURN (TAO_REVERSE_LOCK, ace_mon, reverse, 0));
             if (TAO_debug_level > 5)
