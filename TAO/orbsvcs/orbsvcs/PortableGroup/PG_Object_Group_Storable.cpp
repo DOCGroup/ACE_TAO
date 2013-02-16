@@ -434,7 +434,7 @@ TAO::PG_Object_Group_Storable::read (TAO::Storable_Base & stream)
       stream >> member_ior;
       CORBA::Object_var member =
         this->orb_->string_to_object (member_ior.c_str ());
-      if (CORBA::is_nil (member))
+      if (CORBA::is_nil (member.in ()))
         throw CORBA::INV_OBJREF ();
 
       ///// location /////
