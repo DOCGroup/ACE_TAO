@@ -1,3 +1,11 @@
+Sun Feb 17 20:28:52 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * orbsvcs/tests/ImplRepo/scale_clients/Test_i.h:
+        * orbsvcs/tests/ImplRepo/scale_clients/Test_i.cpp:
+
+          Argument differed from interface mapping. Removed const
+          declaration for argument.
+
 Sat Feb 16 21:24:58 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
 
         * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group_Storable.cpp:
