@@ -1,3 +1,8 @@
+Sun Feb 17 03:37:42 UTC 2013  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/SSL/SSL_Context.h (ACE_SSL_Context): Added a missing comma.
+          Thanks to Johnny for reporting this.
+
 Sat Feb 16 21:53:26 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
 
         * ace/SSL/SSL_Context.h:
