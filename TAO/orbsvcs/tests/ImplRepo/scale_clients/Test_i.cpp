@@ -18,7 +18,7 @@ Test_i::~Test_i ()
 }
 
 CORBA::Short
-Test_i::get_num_requests (const CORBA::Short delay_secs)
+Test_i::get_num_requests (CORBA::Short delay_secs)
 {
   ACE_OS::sleep (delay_secs);
   return ++this->num_requests_made_;

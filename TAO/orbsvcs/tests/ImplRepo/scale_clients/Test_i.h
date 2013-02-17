@@ -18,7 +18,7 @@ public:
 
   virtual ~Test_i ();
 
-  virtual CORBA::Short get_num_requests (const CORBA::Short delay_secs);
+  virtual CORBA::Short get_num_requests (CORBA::Short delay_secs);
 
   /// Valid after shutdown () is called.
   static bool expected_requests_made ();
