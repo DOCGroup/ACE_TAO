@@ -69,7 +69,10 @@ int
 TAO_Naming_Loader::fini (void)
 {
   // Remove the Naming Service.
-  return this->naming_server_->fini ();
+  if (this->naming_server_ == 0)
+    return 0;
+  else
+    return this->naming_server_->fini ();
 }
 
 CORBA::Object_ptr

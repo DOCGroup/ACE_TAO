@@ -67,7 +67,7 @@ TAO::PG_Object_Group::PG_Object_Group (
   , distribute_ (1)
   , empty_ (1)
   , role_ (type_id)
-  , type_id_ (CORBA::string_dup (type_id))
+  , type_id_ (type_id)
   , tagged_component_ (tagged_component)
   , reference_ (CORBA::Object::_duplicate(empty_group))
   , group_name_ (0)
