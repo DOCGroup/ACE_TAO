@@ -276,24 +276,24 @@ ACE_SSL_Context::set_mode (int mode)
       break;
 #ifdef TLS1_1_VERSION
     case ACE_SSL_Context::TLSv1_1_client:
-      method =3D ::TLSv1_1_client_method ();
+      method = ::TLSv1_1_client_method ();
       break;
     case ACE_SSL_Context::TLSv1_1_server:
-      method =3D ::TLSv1_1_server_method ();
+      method = ::TLSv1_1_server_method ();
       break;
     case ACE_SSL_Context::TLSv1_1:
-      method =3D ::TLSv1_1_method ();
+      method = ::TLSv1_1_method ();
       break;
 #endif
 #ifdef TLS1_2_VERSION
     case ACE_SSL_Context::TLSv1_2_client:
-      method =3D ::TLSv1_2_client_method ();
+      method = ::TLSv1_2_client_method ();
       break;
     case ACE_SSL_Context::TLSv1_2_server:
-      method =3D ::TLSv1_2_server_method ();
+      method = ::TLSv1_2_server_method ();
       break;
     case ACE_SSL_Context::TLSv1_2:
-      method =3D ::TLSv1_2_method ();
+      method = ::TLSv1_2_method ();
       break;
 #endif
     default:
