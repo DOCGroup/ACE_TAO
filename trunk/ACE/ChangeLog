@@ -1,3 +1,10 @@
+Mon Feb 18 01:57:31 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * ace/SSL/SSL_Context.cpp:
+
+          Removed what appeared to be extraneous characters '3D'
+          from cut and paste.
+
 Sun Feb 17 03:37:42 UTC 2013  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/SSL/SSL_Context.h (ACE_SSL_Context): Added a missing comma.
