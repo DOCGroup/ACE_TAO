@@ -1,3 +1,35 @@
+Mon Feb 18 18:36:08 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/Naming_Loader.cpp:
+
+          Check pointer prior to access.
+
+        * orbsvcs/orbsvcs/Naming/Naming_Server.cpp:
+
+          Use %C for logging ascii strings.
+
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp:
+
+          Added checks for null pointers prior to access.
+
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context_ReaderWriter.cpp:
+
+          Added check for stream_.good () prior to return. Still in need of
+          additional checks elsewhere.
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:
+
+          Fixed memory leak for type_id_.
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group_Storable.cpp:
+
+          Fixed memory leaks with object_to_string.
+
+        * tests/Dynamic_TP/ORB_ThreadPool/Test_i.h:
+        * tests/Dynamic_TP/ORB_ThreadPool/Test_i.cpp:
+
+          Avoid fuzz warning regarding use of ACE_Thread_Mutex.
+
 Mon Feb 18 15:34:16 UTC 2013  Byron Harris  <harrisb@ociweb.com>
 
         * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group_Storable.cpp:

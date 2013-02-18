@@ -44,7 +44,7 @@ private:
   CORBA::ORB_var orb_;
   Test::Sleeper_var sleeper_;
 
-  ACE_Thread_Mutex lock_;
+  TAO_SYNCH_MUTEX lock_;
   ACE_Unbounded_Set<ACE_hthread_t> threads_;
 
 };
