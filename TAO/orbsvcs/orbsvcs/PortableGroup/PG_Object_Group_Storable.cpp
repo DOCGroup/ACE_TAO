@@ -56,7 +56,7 @@ namespace TAO
     /// file to which it was persisted.
     virtual void mark_object_current ();
 
-    virtual void load_from_stream ();
+    virtual int load_from_stream ();
 
     virtual bool is_loaded_from_stream ();
 
@@ -119,11 +119,12 @@ TAO::Object_Group_File_Guard::mark_object_current ()
   TAO::Storable_File_Guard::mark_object_current ();
 }
 
-void
+int
 TAO::Object_Group_File_Guard::load_from_stream ()
 {
   object_group_.read (this->peer ());
   object_group_.loaded_from_stream_ = true;
+  return this->peer ().good ();
 }
 
 bool

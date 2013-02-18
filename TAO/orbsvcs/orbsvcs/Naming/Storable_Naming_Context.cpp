@@ -325,7 +325,7 @@ File_Open_Lock_and_Check::get_object_last_changed ()
   return context_->last_changed_;
 }
 
-void
+int
 TAO_Storable_Naming_Context::
 File_Open_Lock_and_Check::load_from_stream ()
 {
@@ -344,7 +344,7 @@ File_Open_Lock_and_Check::load_from_stream ()
     }
 
   // and build a new one from disk
-  context_->load_map (this->peer());
+  return context_->load_map (this->peer());
 }
 
 bool

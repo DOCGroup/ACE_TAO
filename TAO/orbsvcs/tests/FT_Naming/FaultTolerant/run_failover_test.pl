@@ -325,6 +325,9 @@ sub failover_test()
 
     my $client_prog = "$startdir/client";
 
+    print STDERR "$tao_ft_naming $ns1_args\n";
+    print STDERR "$tao_ft_naming $ns2_args\n";
+
     $NS1 = $server->CreateProcess ($tao_ft_naming, $ns1_args);
     $NS2 = $server->CreateProcess ($tao_ft_naming, $ns2_args);
     $CL  = $client->CreateProcess ($client_prog, $client_args);

@@ -39,7 +39,7 @@ namespace TAO
 
     virtual void mark_object_current ();
 
-    virtual void load_from_stream ();
+    virtual int load_from_stream ();
 
     virtual bool is_loaded_from_stream ();
 
@@ -99,12 +99,13 @@ TAO::PG_Group_List_Store_File_Guard::mark_object_current ()
   this->set_object_last_changed (fl_->last_changed ());
 }
 
-void
+int
 TAO::PG_Group_List_Store_File_Guard::load_from_stream ()
 {
   list_store_.read (this->peer ());
   list_store_.loaded_from_stream_ = true;
   this->peer ().rewind ();
+  return this->peer ().good ();
 }
 
 bool
