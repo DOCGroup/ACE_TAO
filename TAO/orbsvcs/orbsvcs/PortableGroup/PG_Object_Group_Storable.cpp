@@ -484,9 +484,9 @@ TAO::PG_Object_Group_Storable::write (TAO::Storable_Base & stream)
   primary_location_cdr << PG_Object_Group::get_primary_location ();
   stream << primary_location_cdr;
 
-  ACE_CString reference_ior =
+  CORBA::String_var reference_ior =
     this->orb_->object_to_string (this->reference_.in ());
-  stream << reference_ior;
+  stream << reference_ior.in ();
 
   TAO_OutputCDR tagged_component_cdr;
   tagged_component_cdr << this->tagged_component_;
@@ -516,17 +516,17 @@ TAO::PG_Object_Group_Storable::write (TAO::Storable_Base & stream)
       stream << the_location_cdr;
 
       MemberInfo * member = it->item ();
-      ACE_CString member_ior =
+      CORBA::String_var member_ior =
         this->orb_->object_to_string (member->member_.in ());
-      stream << member_ior;
+      stream << member_ior.in ();
 
       TAO_OutputCDR location_cdr;
       location_cdr << member->location_;
       stream << location_cdr;
 
-      ACE_CString factory_ior =
+      CORBA::String_var factory_ior =
         this->orb_->object_to_string (member->factory_.in ());
-      stream << factory_ior;
+      stream << factory_ior.in ();
 
       TAO_OutputCDR factory_id_cdr;
       factory_id_cdr << member->factory_id_;

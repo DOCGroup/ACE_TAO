@@ -329,8 +329,20 @@ void
 TAO_Storable_Naming_Context::
 File_Open_Lock_and_Check::load_from_stream ()
 {
+  if (context_ == 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) File_Open_Lock_and_Check::load_from_stream -")
+                  ACE_TEXT ("null context_ encountered.")));
+      throw CORBA::INTERNAL ();
+    }
   // Throw our map away
-  delete context_->storable_context_;
+  if (context_->storable_context_)
+    {
+      delete context_->storable_context_;
+      context_->storable_context_ = 0;
+    }
+
   // and build a new one from disk
   context_->load_map (this->peer());
 }
