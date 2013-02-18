@@ -376,11 +376,8 @@ TAO::Storable_Base *
 TAO::PG_Object_Group_Storable::create_stream (const char * mode)
 {
   char file_name[BUFSIZ];
-  // Although PortableGroup::ObjectGroupId is a typedef
-  // to long long int, make ID type explicit to avoid
-  // GNU C++ warning on sprintf statement.
-  long long int id =  this->get_object_group_id ();
-  ACE_OS::sprintf (file_name, "ObjectGroup_%lld", id);
+  int id =  static_cast<int> (this->get_object_group_id ());
+  ACE_OS::sprintf (file_name, "ObjectGroup_%d", id);
   return this->storable_factory_.create_stream (file_name, mode);
 }
 

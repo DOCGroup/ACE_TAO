@@ -1,3 +1,10 @@
+Mon Feb 18 15:34:16 UTC 2013  Byron Harris  <harrisb@ociweb.com>
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group_Storable.cpp:
+
+          Avoid using long long format specifier to avoid compile
+          warning from MinGW compiler.
+
 Mon Feb 18 02:24:23 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
 
         * orbsvcs/FT_Naming_Service/FT_Naming_Service.mpc:
