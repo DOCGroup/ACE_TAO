@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project (FT_Naming_Service) : orbsvcsexe, install, ft_naming_serv, naming_serv, imr_client, svc_utils, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+project (FT_Naming_Service) : orbsvcsexe, install, ft_naming_serv, ftnaming, naming_serv, imr_client, svc_utils, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
   exename  = tao_ft_naming
   Header_Files {
  FT_Naming_Service.h
