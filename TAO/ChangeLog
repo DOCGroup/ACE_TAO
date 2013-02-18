@@ -1,3 +1,39 @@
+Mon Feb 18 22:49:18 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.cpp:
+
+          Prevent object groups with identical names from being added.
+
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.h:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp:
+
+          Added return value to indicate failure in read.
+
+        * tao/Storable_File_Guard.h:
+        * tao/Storable_File_Guard.cpp:
+
+          Updated code to use the stream.good() status and return it as
+          appropriate.
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_List_Store.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group_Storable.cpp:
+
+          Added return value to indicate failure. Check the stream.good()
+          status for return value.
+
+        * tests/Storable/Savable.cpp:
+
+          Update test to provide the return value for the stream status.
+
+        * orbsvcs/tests/FT_Naming/FaultTolerant/LB_server.h:
+        * orbsvcs/tests/FT_Naming/FaultTolerant/LB_server.cpp:
+        * orbsvcs/tests/FT_Naming/FaultTolerant/run_failover_test.pl:
+        * orbsvcs/tests/FT_Naming/FaultTolerant/server.cpp:
+
+          Updated tests to check removal of members and allow for multiple
+          runs to verify code correctly deals with attempt to creat the
+          same object group muliple times.
+
 Mon Feb 18 18:36:08 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/Naming_Loader.cpp:

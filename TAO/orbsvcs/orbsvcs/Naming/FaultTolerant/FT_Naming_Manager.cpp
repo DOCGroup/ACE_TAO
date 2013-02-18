@@ -91,7 +91,15 @@ TAO_FT_Naming_Manager::create_object_group (
     ::FT_Naming::LoadBalancingStrategyValue lb_strategy,
     const ::PortableGroup::Criteria & the_criteria)
 {
-  // The when creating the object group, it starts as a generic
+  // Make sure the object group does not already exist.
+  TAO::PG_Object_Group* group;
+  if (this->group_factory_.find_group_with_name (group_name,
+                                                 group))
+    {
+      throw PortableGroup::ObjectNotCreated ();
+    }
+
+  // When creating the object group, it starts as a generic
   // CORBA Object. It will become the type of the first added
   // member.
   const char * type_id = "IDL:omg.org:CORBA/Object:1.0";

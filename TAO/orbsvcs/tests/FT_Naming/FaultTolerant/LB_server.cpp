@@ -152,7 +152,7 @@ LB_server::start_orb_and_poa (void)
 }
 
 int
-LB_server::create_object_group (void)
+LB_server::create_object_group (const char *group_name)
 {
   try
     {
@@ -173,8 +173,11 @@ LB_server::create_object_group (void)
         PortableGroup::MEMB_APP_CTRL;
       mem_style.val <<= msv;
 
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%P|%t) LB_server - creating the object group\n")));
+
       this->object_group_ = this->naming_manager_->create_object_group (
-        "BasicGroup",
+        group_name,
         FT_Naming::ROUND_ROBIN,
         criteria);
 
@@ -182,6 +185,13 @@ LB_server::create_object_group (void)
         this->orb_->object_to_string (this->object_group_.in ());
 
       this->write_ior_to_file (ior.in ());
+    }
+  catch (const PortableGroup::ObjectNotCreated&)
+    {
+      this->object_group_ = this->naming_manager_->get_object_group_ref_from_name (group_name);
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%P|%t) LB_server - object group already exists\n"));
+      return 1;
     }
   catch (const CORBA::Exception& ex)
     {
@@ -211,6 +221,11 @@ LB_server::register_servant (Basic *servant, const char *loc)
                              location,
                              basic.in ());
     }
+  catch (const PortableGroup::ObjectNotAdded& )
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%P|%t) Member was already added previously.\n"));
+    }
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception (
@@ -219,6 +234,29 @@ LB_server::register_servant (Basic *servant, const char *loc)
     }
 
   return 0;
+}
+
+int
+LB_server::remove_servant (const char *loc)
+{
+  PortableGroup::Location location (1);
+  location.length (1);
+
+  location[0].id = CORBA::string_dup (loc);
+
+  try {
+    this->naming_manager_->remove_member (this->object_group_.in (),
+                                          location);
+  }
+  catch (const CORBA::Exception& ex)
+    {
+      ex._tao_print_exception (
+        ACE_TEXT ("Exception raised while removing servant"));
+      return -1;
+    }
+
+  return 0;
+
 }
 
 TAO_Naming_Client&
