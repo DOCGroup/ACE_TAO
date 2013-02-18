@@ -86,8 +86,8 @@ namespace TAO
     /// Indicate when the object in memory has last changed
     virtual void set_object_last_changed (const time_t & time) = 0;
 
-    /// Load object from file to memory
-    virtual void load_from_stream () = 0;
+    /// Load object from file to memory. Return 0 on success.
+    virtual int load_from_stream () = 0;
 
     /// Answer if object has been loaded from file
     virtual bool is_loaded_from_stream () = 0;
@@ -99,7 +99,8 @@ namespace TAO
 
   private:
 
-    void load ();
+    // Return 0 if succesful.
+    int load ();
 
     bool redundant_;
 

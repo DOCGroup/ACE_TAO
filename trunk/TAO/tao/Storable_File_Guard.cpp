@@ -208,21 +208,24 @@ TAO::Storable_File_Guard::peer ()
   return *fl_;
 }
 
-void
+int
 TAO::Storable_File_Guard::load ()
 {
+  int result = 0;
   if (!this->use_backup_)
-    {
-      this->load_from_stream ();
-      return;
+    { // Not using a backup file. Just attempt to
+      // load from the stream and return.
+      return this->load_from_stream ();
     }
 
+  // We are using a backup.
   try
     {
-      this->load_from_stream ();
+      // Attempt to load from the stream from the primary.
+      result = this->load_from_stream ();
     }
   catch (const Storable_Read_Exception &ex)
-    {
+    { // Failed to load from primary.
       ACE_CString state_str = Storable_Base::state_as_string (ex.get_state());
 
       ACE_ERROR ((LM_ERROR,
@@ -231,9 +234,11 @@ TAO::Storable_File_Guard::load ()
                   ACE_TEXT ("state from file\n%s\n"),
                   state_str.c_str (), ex.get_file_name().c_str ()));
 
-      int result = this->fl_->restore_backup ();
+      // The following opens the backup file, and copies it
+      // to the primary file location.
+      result = this->fl_->restore_backup ();
 
-      // result of 0 means OK.
+      // result of 0 means OK. We should now have a good primary file.
       if (!result)
         {
 
@@ -242,11 +247,11 @@ TAO::Storable_File_Guard::load ()
                       ACE_TEXT ("from backup\n")));
 
           try
-            {
-              this->load_from_stream ();
+            { // Load the data from the newly restored primary.
+              result = this->load_from_stream ();
             }
           catch (const Storable_Read_Exception)
-            {
+            { // Still having trouble reading from the file. Time to bail.
               ACE_ERROR ((LM_ERROR,
                           ACE_TEXT ("TAO: (%P|%t) ERROR: Unable to restore ")
                           ACE_TEXT ("the state from backup.\n")));
@@ -265,4 +270,7 @@ TAO::Storable_File_Guard::load ()
         }
 
     }
+
+  // Return a result value for the load operation.
+  return result;
 }

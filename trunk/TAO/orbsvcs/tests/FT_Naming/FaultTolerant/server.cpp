@@ -8,6 +8,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
     {
+      const char *group_name = "BasicGroup";
       const char *location1 = "location1";
       const char *location2 = "location2";
       const char *location3 = "location3";
@@ -20,9 +21,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (lb_server.start_orb_and_poa () != 0)
         return 1;
 
-      if (lb_server.create_object_group () != 0)
-        return 1;
-
+      // Either the object group was created or it existed
+      // previously.
+      if (lb_server.create_object_group (group_name) == -1)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "(%P|%t) server - Unable to create the object group\n"));
+          return 1;
+        }
       CosNaming::Name name (1);
       name.length (1);
       name[0].id = CORBA::string_dup ("basic_name");
@@ -101,6 +107,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           (void) lb_server.destroy ();
           return 1;
         }
+
+      // Remove one of the servants.
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%P|%t) server - removing servant at location6\n")));
+      if (lb_server.remove_servant (location6) == -1)
+        return 1;
 
       lb_server.orb ()->run ();
 

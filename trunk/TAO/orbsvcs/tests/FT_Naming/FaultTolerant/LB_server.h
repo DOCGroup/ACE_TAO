@@ -51,10 +51,16 @@ public:
   int init (int argc, ACE_TCHAR **argv);
 
   /// Create the Object Group using the Load Manager Reference.
-  int create_object_group (void);
+  /// Returns 0 on successful creation. Returns 1 if object
+  /// group already exists. Returns -1 if object group cannot
+  /// be created for some reason.
+  int create_object_group (const char *group_name);
 
   /// register the servants with the object group.
   int register_servant (Basic *servant, const char *loc);
+
+  /// remove a servant from the object group.
+  int remove_servant (const char *loc);
 
   /// obtain the name service facade
   TAO_Naming_Client& name_svc ();

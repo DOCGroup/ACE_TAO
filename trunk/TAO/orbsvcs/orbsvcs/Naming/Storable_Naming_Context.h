@@ -457,7 +457,7 @@ protected:
   /// file.
   virtual time_t get_object_last_changed ();
 
-  virtual void load_from_stream ();
+  virtual int load_from_stream ();
 
   virtual bool is_loaded_from_stream ();
 
