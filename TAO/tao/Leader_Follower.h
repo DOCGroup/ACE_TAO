@@ -111,6 +111,11 @@ public:
   /// Checks if we are a leader thread
   bool is_client_leader_thread (void) const;
 
+  /// Sets the client leader avoidance flag true. This is used with the
+  /// noupcall wait strategy to allow the creation of dynamic threads
+  /// when possible
+  void set_avoid_client_leader (void);
+
   /**
    * A leader thread is relinquishing its role, unless there are more
    * leader threads running pick up a follower (if there is any) to
@@ -183,7 +188,7 @@ public:
   ACE_Reactor *reactor (void);
 
   /// Called when we are out of leaders.
-  void no_leaders_available (void);
+  bool no_leaders_available (void);
 
   /// Set the new leader generator.
   void set_new_leader_generator(TAO_New_Leader_Generator *new_leader_generator);
@@ -257,6 +262,13 @@ private:
 
   /// The reactor
   ACE_Reactor *reactor_;
+
+  /// Flag to indicate that it is preferable to start a new thread, if possible
+  /// rather than become a client leader. In particular when using the no-upcall
+  /// wait strategy along with the dynamic thread pool, this is the case. It is
+  /// still possible for a client leader to emerge in the case when no additional
+  /// threads may be generated.
+  bool avoid_client_leader_;
 
   /// Is a client thread the current leader?
   int client_thread_is_leader_;

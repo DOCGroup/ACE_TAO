@@ -28,11 +28,11 @@ TAO_RT_New_Leader_Generator::TAO_RT_New_Leader_Generator (
 {
 }
 
-void
+bool
 TAO_RT_New_Leader_Generator::no_leaders_available (void)
 {
   // Request a new dynamic thread from the Thread Lane
-  this->lane_.new_dynamic_thread ();
+  return this->lane_.new_dynamic_thread ();
 }
 
 TAO_Thread_Pool_Threads::TAO_Thread_Pool_Threads (TAO_Thread_Lane &lane)

@@ -53,7 +53,7 @@ public:
 
   /// Leader/Follower class uses this method to notify the system that
   /// we are out of leaders.
-  void no_leaders_available (void);
+  bool no_leaders_available (void);
 
 private:
 

@@ -27,10 +27,10 @@ TAO_DTP_New_Leader_Generator::TAO_DTP_New_Leader_Generator (
 {
 }
 
-void
+bool
 TAO_DTP_New_Leader_Generator::no_leaders_available (void)
 {
-  this->pool_.new_dynamic_thread ();
+  return this->pool_.new_dynamic_thread ();
 }
 
 TAO_DTP_Thread_Pool_Threads::TAO_DTP_Thread_Pool_Threads (TAO_DTP_Thread_Pool &p)
@@ -140,7 +140,7 @@ TAO_DTP_Thread_Pool::new_dynamic_thread (void)
                   this->id_, this->definition_.max_threads_, (int)this->threads_.thr_count ()));
     }
   if (this->definition_.max_threads_ > 0 &&
-      (int)this->threads_.thr_count () >= this->definition_.max_threads_)
+      (int)this->active_count_ >= this->definition_.max_threads_)
     return false;
 
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
@@ -150,18 +150,14 @@ TAO_DTP_Thread_Pool::new_dynamic_thread (void)
 
   if (!this->manager_.orb_core ().has_shutdown () && !this->shutdown_ &&
       (this->definition_.max_threads_ == -1 ||
-       (int)this->threads_.thr_count () < this->definition_.max_threads_))
+       (int)this->active_count_ < this->definition_.max_threads_))
     {
       if (TAO_debug_level > 7)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) DTP Pool %d ")
-                    ACE_TEXT ("Current number of threads = %d; ")
-                    ACE_TEXT ("min threads = %d; max threads = %d\n")
-                    ACE_TEXT ("No leaders available; DTP creating new leader!\n"),
+                    ACE_TEXT ("TAO (%P|%t) DTP Pool %d new_dynamic_thread, ")
+                    ACE_TEXT ("count = %d, creating new thread\n"),
                     this->id_,
-                    this->threads_.thr_count (),
-                    this->definition_.min_threads_,
-                    this->definition_.max_threads_));
+                    this->active_count_));
 
       if (this->create_threads_i (1, THR_NEW_LWP | THR_JOINABLE))
         {

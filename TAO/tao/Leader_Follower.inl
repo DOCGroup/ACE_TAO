@@ -17,6 +17,7 @@ TAO_Leader_Follower::TAO_Leader_Follower (TAO_ORB_Core* orb_core,
     leaders_ (0),
     clients_ (0),
     reactor_ (0),
+    avoid_client_leader_ (false),
     client_thread_is_leader_ (0),
     event_loop_threads_waiting_ (0),
     event_loop_threads_condition_ (lock_),
@@ -30,17 +31,24 @@ TAO_Leader_Follower::get_tss_resources (void) const
   return this->orb_core_->get_tss_resources ();
 }
 
+ACE_INLINE void
+TAO_Leader_Follower::set_avoid_client_leader (void)
+{
+  this->avoid_client_leader_ = true;
+}
+
 ACE_INLINE bool
 TAO_Leader_Follower::follower_available (void) const
 {
   return !this->follower_set_.is_empty ();
 }
 
-ACE_INLINE void
+ACE_INLINE bool
 TAO_Leader_Follower::no_leaders_available (void)
 {
   if (this->new_leader_generator_)
-    this->new_leader_generator_->no_leaders_available ();
+    return this->new_leader_generator_->no_leaders_available ();
+  return false;
 }
 
 ACE_INLINE int
