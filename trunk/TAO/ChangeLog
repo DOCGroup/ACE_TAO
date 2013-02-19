@@ -1,3 +1,33 @@
+Tue Feb 19 01:48:59 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/Leader_Follower.h:
+        * tao/Leader_Follower.inl:
+        * tao/Leader_Follower.cpp:
+        * tao/New_Leader_Generator.h:
+
+          Added an explicit call to start a new thread when a dynamic thread pool is
+          attached and a client thread would otherwise become a client leader. This
+          adds a conditional on the critical path, but only when a client would become
+          a leader anyway, which is a suboptimal performance path. The formerly void
+          no_leader_available call now returns a bool, which is necessary to decide
+          whether to continue waiting or press on as a client leader.
+
+        * tao/Dynamic_TP/DTP_ORBInitializer.cpp:
+
+          When the ORB has a dynamic thread pool attached, this sets the new client
+          leader avoidance flag.
+
+        * tao/Dynamic_TP/DTP_Thread_Pool.h:
+        * tao/Dynamic_TP/DTP_Thread_Pool.cpp:
+        * tao/RTCORBA/Thread_Pool.h:
+        * tao/RTCORBA/Thread_Pool.cpp:
+
+          Propagate the return value change.
+
+        * tests/Dynamic_TP/ORB_ThreadPool/middle.conf:
+
+          Update to use the noupcall wait strategy.
+
 Mon Feb 18 22:49:18 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.cpp:
