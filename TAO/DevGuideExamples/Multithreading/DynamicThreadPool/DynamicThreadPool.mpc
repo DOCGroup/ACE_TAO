@@ -8,7 +8,7 @@ project(*idl): taoidldefaults, avoids_corba_e_compact, avoids_corba_e_micro {
   custom_only = 1
 }
 
-project(*Server): taoserver, csd_framework, dynamic_tp, avoids_corba_e_compact, avoids_corba_e_micro {
+project(*Server): taoserver, csd_threadpool, dynamic_tp, avoids_corba_e_compact, avoids_corba_e_micro {
   exename = MessengerServer
   after += *idl
   Source_Files {

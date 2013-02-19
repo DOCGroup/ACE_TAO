@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : orbsvcslib, naming_skel, portablegroup, naming_serv, iortable, messaging_optional, svc_utils {
+project : orbsvcslib, naming_skel, portablegroup, ftnaming_replication, naming_serv, iortable, messaging_optional, svc_utils {
   after     += FT_Naming_Serv
   libs      += TAO_FT_Naming_Serv
 }
