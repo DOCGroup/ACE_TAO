@@ -80,8 +80,8 @@ TAO_Leader_Follower::elect_new_leader_i (void)
 
 #if defined (TAO_DEBUG_LEADER_FOLLOWER)
   ACE_DEBUG ((LM_DEBUG,
-              "TAO (%P|%t) - TAO_Leader_Follower::elect_new_leader_i - "
-              "follower is %@\n",
+              ACE_TEXT ("TAO (%P|%t) - TAO_Leader_Follower::elect_new_leader_i - ")
+              ACE_TEXT ("follower is %@\n"),
               follower));
 #endif /* TAO_DEBUG_LEADER_FOLLOWER */
 
@@ -210,8 +210,8 @@ TAO_Leader_Follower::defer_event (ACE_Event_Handler* eh)
 
   if (TAO_debug_level > 7)
     ACE_DEBUG ((LM_DEBUG,
-                "TAO (%P|%t) - TAO_Leader_Follower::defer_event, "
-                "deferring event handler[%d]\n",
+                ACE_TEXT ("TAO (%P|%t) - TAO_Leader_Follower::defer_event, ")
+                ACE_TEXT ("deferring event handler[%d]\n"),
                 eh->get_handle ()));
   Deferred_Event* ptr = 0;
   ACE_NEW_RETURN (ptr,
@@ -303,8 +303,8 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
 
         if (TAO_debug_level >= 5)
           ACE_DEBUG ((LM_DEBUG,
-                      "TAO (%P|%t) - Leader_Follower[%d]::wait_for_event,"
-                      " (follower), cond <%@>\n",
+                      ACE_TEXT ("TAO (%P|%t) - Leader_Follower[%d]::wait_for_event,")
+                      ACE_TEXT (" (follower), cond <%@>\n"),
                       t_id, follower.get ()));
 
         // Bound the follower and the LF_Event, this is important to
@@ -346,8 +346,8 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
               {
                 if (TAO_debug_level >= 5)
                   ACE_DEBUG ((LM_DEBUG,
-                              "TAO (%P|%t) - Leader_Follower[%d]::wait_for_event, "
-                              " (follower) [no timer, cond failed]\n",
+                              ACE_TEXT ("TAO (%P|%t) - Leader_Follower[%d]::wait_for_event, ")
+                              ACE_TEXT (" (follower) [no timer, cond failed]\n"),
                               t_id));
 
                 // @@ Michael: What is our error handling in this case?
@@ -365,8 +365,8 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
               {
                 if (TAO_debug_level >= 5)
                   ACE_DEBUG ((LM_DEBUG,
-                              "TAO (%P|%t) - Leader_Follower[%d]::wait, "
-                              "(follower) [has timer, follower failed]\n",
+                              ACE_TEXT ("TAO (%P|%t) - Leader_Follower[%d]::wait, ")
+                              ACE_TEXT ("(follower) [has timer, follower failed]\n"),
                               t_id ));
 
                 // If we have timedout set the state in the
@@ -397,8 +397,8 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
                       && TAO_debug_level > 0)
                   {
                     ACE_ERROR ((LM_ERROR,
-                                "TAO (%P|%t) - Leader_Follower[%d]::wait_for_event, "
-                                "elect_new_leader failed\n",
+                                ACE_TEXT("TAO (%P|%t) - Leader_Follower[%d]::wait_for_event, ")
+                                ACE_TEXT("elect_new_leader failed\n"),
                                 t_id ));
                   }
                 }
@@ -419,8 +419,8 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
 
         if (TAO_debug_level >= 5)
           ACE_DEBUG ((LM_DEBUG,
-                      "TAO (%P|%t) - Leader_Follower[%d]::wait_for_event,"
-                      " done (follower), successful %d\n",
+                      ACE_TEXT ("TAO (%P|%t) - Leader_Follower[%d]::wait_for_event,")
+                      ACE_TEXT (" done (follower), successful %d\n"),
                       t_id,
                       event->successful ()));
 
@@ -439,6 +439,36 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
         // i.e. ACE_ASSERT (event->successful () == 0);
       } // End Scope #3: we are no longer a follower
 
+      // One last attempt to avoid becoming a client-leader
+      // If there is a new_leader_generator attached, give it a chance to
+      // create a leader thread before becoming a leader.
+      if (this->avoid_client_leader_ && this->no_leaders_available())
+        {
+          if (TAO_debug_level >= 5)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("TAO (%P|%t) - Leader_Follower[%d]::wait_for_event, ")
+                          ACE_TEXT ("Would become client leader, ")
+                          ACE_TEXT ("but generating new thread\n"),
+                          t_id));
+            }
+
+          // Yield, providing the event thread some time to grab leadership
+          ACE_GUARD_RETURN (ACE_Reverse_Lock<TAO_SYNCH_MUTEX>, rev_mon,
+                            this->reverse_lock (), -1);
+          ACE_OS::thr_yield ();
+          continue;
+        }
+      else
+        {
+          if (TAO_debug_level >= 5)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("TAO (%P|%t) - Leader_Follower[%d]::wait_for_event, ")
+                          ACE_TEXT ("Becoming client leader.\n"),
+                          t_id));
+            }
+        }
       // = Leader Code.
 
       // The only way to reach this point is if we must become the
@@ -465,8 +495,8 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
           // Run the reactor event loop.
           if (TAO_debug_level >= 5)
             ACE_DEBUG ((LM_DEBUG,
-                        "TAO (%P|%t) - Leader_Follower[%d]::wait_for_event,"
-                        " (leader) enter reactor event loop\n",
+                        ACE_TEXT ("TAO (%P|%t) - Leader_Follower[%d]::wait_for_event,")
+                        ACE_TEXT (" (leader) enter reactor event loop\n"),
                         t_id));
 
           // If we got our event, no need to run the event loop any
@@ -500,8 +530,8 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
 
           if (TAO_debug_level >= 5)
             ACE_DEBUG ((LM_DEBUG,
-                        "TAO (%P|%t) - Leader_Follower[%d]::wait_for_event,"
-                        " (leader) exit reactor event loop\n",
+                        ACE_TEXT ("TAO (%P|%t) - Leader_Follower[%d]::wait_for_event,")
+                        ACE_TEXT (" (leader) exit reactor event loop\n"),
                         t_id));
         } // End Scope #6: we should now hold the lock again
 
@@ -523,15 +553,15 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
       {
         if (TAO_debug_level >= 5)
           ACE_DEBUG ((LM_DEBUG,
-                      "TAO (%P|%t) - Leader_Follower[%d]::wait_for_event,"
-                      " (client) waking and yielding to allow event thread leadership\n",
+                      ACE_TEXT ("TAO (%P|%t) - Leader_Follower[%d]::wait_for_event,")
+                      ACE_TEXT (" (client) waking and yielding to allow event thread leadership\n"),
                       t_id));
 
         // Wake up the next leader (in case not yet done)
         if (this->elect_new_leader () == -1)
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "TAO (%P|%t) - Leader_Follower[%d]::wait_for_event,"
-                             " failed to elect new leader\n",
+                             ACE_TEXT ("TAO (%P|%t) - Leader_Follower[%d]::wait_for_event,")
+                             ACE_TEXT (" failed to elect new leader\n"),
                              t_id),
                             -1);
 
@@ -559,15 +589,15 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
 
   if (this->elect_new_leader () == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "TAO (%P|%t) - Leader_Follower[%d]::wait_for_event,"
-                       " failed to elect new leader\n",
+                       ACE_TEXT ("TAO (%P|%t) - Leader_Follower[%d]::wait_for_event,")
+                       ACE_TEXT (" failed to elect new leader\n"),
                        t_id),
                       -1);
 
   if (result == -1 && !this->reactor_->reactor_event_loop_done ())
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "TAO (%P|%t) - Leader_Follower[%d]::wait_for_event,"
-                       " handle_events failed\n",
+                       ACE_TEXT ("TAO (%P|%t) - Leader_Follower[%d]::wait_for_event,")
+                       ACE_TEXT (" handle_events failed\n"),
                        t_id),
                       -1);
 

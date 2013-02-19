@@ -41,7 +41,7 @@ public:
 
   /// Leader/Follower class uses this method to notify the system that
   /// we are out of leaders.
-  virtual void no_leaders_available (void) = 0;
+  virtual bool no_leaders_available (void) = 0;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

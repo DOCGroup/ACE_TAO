@@ -11,6 +11,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/PI/ORBInitInfo.h"
 #include "tao/debug.h"
+#include "tao/Leader_Follower.h"
 
 #include "ace/Service_Repository.h"
 #include "ace/Svc_Conf.h"
@@ -121,6 +122,9 @@ TAO_DTP_ORBInitializer::post_init (PortableInterceptor::ORBInitInfo_ptr info)
         dynamic_cast<TAO_DTP_Thread_Lane_Resources_Manager &>(tlrm);
 
       dtp_tlrm.tp_manager().create_threadpool (def);
+
+      tao_info->orb_core ()->leader_follower ().set_avoid_client_leader ();
+
     }
 
 
