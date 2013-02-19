@@ -207,6 +207,9 @@ protected:
   /// If true, more server information is displayed.
   int verbose_server_information_;
 
+  /// If true, only show servers that are currently active.
+  int list_only_active_servers_;
+
   /// Prints out the information contained in a ServerInformation structure.
   /// Specialized to only print server information
   void display_server_information (const ImplementationRepository::ServerInformation &info);

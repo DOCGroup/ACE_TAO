@@ -80,6 +80,7 @@ public:
     ImplementationRepository::ServerInformation_out info);
   virtual void list (
     CORBA::ULong how_many,
+    CORBA::Boolean determine_active_status,
     ImplementationRepository::ServerInformationList_out server_list,
     ImplementationRepository::ServerInformationIterator_out server_iterator);
   virtual void shutdown(CORBA::Boolean activators, CORBA::Boolean servers);
