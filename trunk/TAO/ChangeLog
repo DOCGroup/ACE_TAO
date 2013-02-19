@@ -1,3 +1,13 @@
+Tue Feb 19 18:28:46 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * DevGuideExamples/Multithreading/DynamicThreadPool/DynamicThreadPool.mpc:
+
+        * MPC/config/ft_naming_serv.mpb:
+
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Static/Dynamic_TP_POA_Test_Static.mpc:
+
+          Fix dependencies for static builds.
+
 Tue Feb 19 13:57:57 UTC 2013  Byron Harris  <harrisb@ociweb.com>
 
         * orbsvcs/tests/ImplRepo/scale/run_test.pl:
