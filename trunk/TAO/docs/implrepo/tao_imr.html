@@ -19,7 +19,7 @@ content="text/html; charset=iso-8859-1">
 [command-arguments]</code></p>
 
 <p><i>ORB_options</i> is the ORB options to be given. This is where
-options like &quot;-ORBInitRef ImplRepoService=file://implrepo.ior&quot; would be placed. 
+options like &quot;-ORBInitRef ImplRepoService=file://implrepo.ior&quot; would be placed.
 <i>command </i>is one of the supported commands like add, remove, etc. <i>command-arguments</i>
 are dependent on the command used. For example, <i>add </i>will need a
 server name for registration, but list does not necessarily need any arguments.</p>
@@ -169,7 +169,7 @@ copies if the server is already activated.</p>
 <hr>
 
 <h3><a name="ior">ior</a></h3>
-<p><code><b>tao_imr </b>[<a href="../Options.html">ORB options</a>] ior <i>name</i> [-h] 
+<p><code><b>tao_imr </b>[<a href="../Options.html">ORB options</a>] ior <i>name</i> [-h]
 [-f <i>filename</i>]</code></p>
 
 <p>Creates a simple IOR that can be used with the Implementation Repository. Please refer
@@ -215,6 +215,19 @@ identified by its server (POA) name.</p>
     <td>When listing the list of servers (no <i>name</i> specified), display
       verbose information for all servers.</td>
   </tr>
+  <tr>
+    <td>-a</td>
+    <td>Filters the list of servers to include only those that are
+    active. If the server has recently responding to a ping request
+    within the ping interval used by the implementation repository
+    (adjustable by passing the -v option to tao_imr_locator) then the
+    server is considered active. If not, an attempt is made to ping
+    the server, and if it successful, then the server is considered
+    active. This option is only applicable if the activator is being
+    used. Note that if there a large number of servers registered with
+    the implementation repository it may take a long time to complete
+    if it needs to sequentially ping the servers to determine if it is
+    active.</td>
 </table>
 
 <hr>
