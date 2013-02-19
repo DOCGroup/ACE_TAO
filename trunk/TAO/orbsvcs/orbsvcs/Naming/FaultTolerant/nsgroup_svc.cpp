@@ -38,7 +38,7 @@ NS_group_svc::set_orb( CORBA::ORB_ptr orb)
 
     this->orb_ = CORBA::ORB::_duplicate (orb);
 
-    if (CORBA::is_nil (this->orb_))
+    if (CORBA::is_nil (this->orb_.in ()))
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT (" (%P|%t) Unable to initialize the ")
                          ACE_TEXT ("ORB.\n")),
@@ -52,7 +52,7 @@ NS_group_svc::set_naming_manager( FT_Naming::NamingManager_ptr nm)
 
     this->naming_manager_ = FT_Naming::NamingManager::_duplicate (nm);
 
-    if (CORBA::is_nil (this->naming_manager_))
+    if (CORBA::is_nil (this->naming_manager_.in ()))
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT (" (%P|%t) Invalid Naming Manager.\n")),
                         -1);
@@ -65,7 +65,7 @@ NS_group_svc::set_name_context( CosNaming::NamingContextExt_ptr nc)
 
     this->name_service_ = CosNaming::NamingContextExt::_duplicate (nc);
 
-    if (CORBA::is_nil (this->name_service_))
+    if (CORBA::is_nil (this->name_service_.in ()))
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT (" (%P|%t) Invalid Name Context.\n")),
                         -1);
