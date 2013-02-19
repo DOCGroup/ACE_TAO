@@ -1,3 +1,9 @@
+Tue Feb 19 13:57:57 UTC 2013  Byron Harris  <harrisb@ociweb.com>
+
+        * orbsvcs/tests/ImplRepo/scale/run_test.pl:
+
+          Fix so runs properly when activator is used.
+
 Tue Feb 19 03:29:14 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/FaultTolerant/nsgroup_svc.cpp:

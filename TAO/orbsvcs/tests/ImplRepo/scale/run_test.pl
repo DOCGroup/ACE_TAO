@@ -126,7 +126,7 @@ sub scale_test
                                 " -ORBUseIMR 1 -p $objprefix" . '_' . "$i -c $obj_count ".
                                 "-ORBInitRef ImplRepoService=file://$imr_imriorfile\"");
 
-                $TI_status = $TI->Spawn ();
+                $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
                 if ($TI_status != 0) {
                     print STDERR "ERROR: tao_imr returned $TI_status\n";
                     $ACT->Kill (); $ACT->TimedWait (1);
