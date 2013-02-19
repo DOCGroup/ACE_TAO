@@ -1169,6 +1169,7 @@ ImR_Locator_i::find (const char* server,
 
 void
 ImR_Locator_i::list (CORBA::ULong how_many,
+   CORBA::Boolean determine_active_status,
    ImplementationRepository::ServerInformationList_out server_list,
    ImplementationRepository::ServerInformationIterator_out server_iterator)
 {
@@ -1210,6 +1211,24 @@ ImR_Locator_i::list (CORBA::ULong how_many,
 
       ImplementationRepository::ServerInformation_var imr_info =
         info.createImRServerInfo ();
+      if (determine_active_status)
+        {
+          UpdateableServerInfo updatable_info (info);
+          if (this->is_alive(updatable_info))
+            {
+              imr_info->activeStatus = ImplementationRepository::ACTIVE_YES;
+            }
+          else
+            {
+              imr_info->activeStatus = ImplementationRepository::ACTIVE_NO;
+              if (this->debug_ > 0)
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              ACE_TEXT ("ImR: Server %s is not active\n"),
+                              info.name.c_str ()));
+                }
+            }
+        }
       server_list[i] = *imr_info;
     }
 

@@ -65,6 +65,8 @@ Server_Info::createImRServerInfo (void) const
     }
   info->partial_ior = partial_ior.c_str();
 
+  info->activeStatus = ImplementationRepository::ACTIVE_MAYBE;
+
   return info;
 }
 
