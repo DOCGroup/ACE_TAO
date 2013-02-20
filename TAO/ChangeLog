@@ -1,3 +1,14 @@
+Wed Feb 20 19:17:39 UTC 2013  Byron Harris  <harrisb@ociweb.com>
+
+        * orbsvcs/tests/ImplRepo/scale_clients/client.cpp:
+
+          Fix compiler warning about unused variable.
+
+        * orbsvcs/tests/ImplRepo/scale_clients/run_test.pl:
+
+          Remove usage of Time::HiRes which isn't available on
+          all supported platforms.
+
 Wed Feb 20 17:56:53 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Replication_Manager.cpp:
