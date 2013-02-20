@@ -1,3 +1,9 @@
+Wed Feb 20 04:41:54 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/Dynamic_TP/POA_Loader/POA_Loader.mpc:
+
+          Another static build fix.
+
 Wed Feb 20 03:49:14 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.cpp:
