@@ -1,3 +1,17 @@
+Wed Feb 20 03:49:14 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.cpp:
+
+          Added checks for null object group passed to operations.
+          Throw an exception if such an object group is passed.
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group_Storable.cpp:
+
+          Fixed bug in replication related to loading a file containing
+          object group members. The empty_ attribute was not being
+          set upon load. This was causing problems with adding a
+          member to an object group with existing members.
+
 Tue Feb 19 21:34:33 UTC 2013  Byron Harris  <harrisb@ociweb.com>
 
         * tao/ImR_Client/ImplRepo.pidl:
