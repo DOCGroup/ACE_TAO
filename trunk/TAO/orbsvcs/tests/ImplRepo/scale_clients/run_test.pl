@@ -8,7 +8,6 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 ###############################################################################
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
-use Time::HiRes # Use to wait less than a second between client invocations.
 
 $status = 0;
 $debug_level = '0';
@@ -17,7 +16,7 @@ $debug_level = '0';
 my $no_imr = 0;
 
 my $clients_count = 6;
-my $msecs_between_clients = 500;
+my $secs_between_clients = 1;
 my $server_init_delay = 1;
 my $server_reply_delay = 0;
 my $rt_timeout_msecs = 0;
@@ -37,9 +36,9 @@ if ($#ARGV >= 0) {
 	    $i++;
 	    $rt_timeout_msecs = $ARGV[$i];
 	}
-	elsif ($ARGV[$i] eq "-msecs_between_clients") {
+	elsif ($ARGV[$i] eq "-secs_between_clients") {
 	    $i++;
-	    $msecs_between_clients = $ARGV[$i];
+	    $secs_between_clients = $ARGV[$i];
 	}
 	elsif ($ARGV[$i] eq "-server_init_delay") {
 	    $i++;
@@ -225,7 +224,7 @@ sub scale_clients_test
 	    $status = 1;
 	    last;
 	}
-	Time::HiRes::usleep(1000 * $msecs_between_clients);
+	sleep($secs_between_clients);
     }
 
     sleep (server_request_delay);
@@ -279,7 +278,7 @@ sub scale_clients_test
 sub usage() {
     print "Usage: run_test.pl ".
 	"[-clients <num=$clients_count>] ".
-	"[-msecs_between_clients <msecs=$msecs_between_clients>] ".
+	"[-secs_between_clients <seconds=$secs_between_clients>] ".
 	"[-server_init_delay <seconds=$server_init_delay>] ".
 	"[-server_reply_delay <seconds=$server_reply_delay] ".
 	"[-rt_timeout <round-trip-timeout-msecs=$rt_timeout_msecs>] ".
