@@ -11,7 +11,7 @@ Basic::Basic (CORBA::Object_ptr object_group,
 {
   this->object_group_ = CORBA::Object::_duplicate (object_group);
   this->nm_ = FT_Naming::NamingManager::_duplicate (lm);
-  this->location_ = CORBA::string_dup (loc);
+  this->location_ = loc;
 }
 
 char *

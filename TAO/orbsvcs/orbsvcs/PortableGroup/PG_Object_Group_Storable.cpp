@@ -419,6 +419,11 @@ TAO::PG_Object_Group_Storable::read (TAO::Storable_Base & stream)
   int num_members;
   stream >> num_members;
 
+  if (num_members == 0)
+    this->empty_ = 1;
+  else
+    this->empty_ = 0;
+
   this->clear_members_map ();
 
   for (int i = 0; i < num_members; ++i)

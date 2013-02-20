@@ -55,6 +55,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                              lb_server.orb (),
                              location1),
                       1);
+
       PortableServer::ServantBase_var owner_transfer1(basic_servant1);
 
       ACE_NEW_RETURN (basic_servant2,
