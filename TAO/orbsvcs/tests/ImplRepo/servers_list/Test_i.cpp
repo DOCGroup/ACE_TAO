@@ -2,6 +2,7 @@
 
 #include "Test_i.h"
 #include "Terminator.h"
+#include "ace/OS_NS_unistd.h"
 
 Test_i::Test_i (CORBA::Short server_num, Terminator &terminator)
   : server_num_ (server_num)
