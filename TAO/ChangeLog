@@ -1,3 +1,11 @@
+Wed Feb 20 16:22:38 UTC 2013  Byron Harris  <harrisb@ociweb.com>
+
+        * orbsvcs/tests/ImplRepo/servers_list/run_test.pl:
+
+          Provide timing information for the list commands to see
+          the impact, if any, of determining if servers are
+          active for a large number of servers.
+
 Wed Feb 20 14:47:30 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/tests/ImplRepo/servers_list/Test_i.cpp:
