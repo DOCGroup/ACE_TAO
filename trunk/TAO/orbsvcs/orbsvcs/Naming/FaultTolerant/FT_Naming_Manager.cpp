@@ -453,6 +453,19 @@ TAO_FT_Naming_Manager::remove_member (
     PortableGroup::ObjectGroup_ptr object_group,
     const PortableGroup::Location & the_location)
 {
+  if (CORBA::is_nil (object_group))
+    {
+      if (TAO_debug_level > 3)
+        {
+          ACE_ERROR (
+            (LM_ERROR,
+             ACE_TEXT ("%T %n (%P|%t) - TAO_FT_Naming_Manager::add_member")
+             ACE_TEXT ("Null object group provided.\n")
+             ));
+        }
+      throw PortableGroup::ObjectGroupNotFound ();
+    }
+
   PortableGroup::ObjectGroup_var result = PortableGroup::ObjectGroup::_nil ();
 
   // Find the object group corresponding to this IOGR
@@ -736,6 +749,19 @@ TAO_FT_Naming_Manager::initialize (CORBA::ORB_ptr orb,
 CORBA::Object_ptr
 TAO_FT_Naming_Manager::next_member (PortableGroup::ObjectGroup_ptr object_group)
 {
+  if (CORBA::is_nil (object_group))
+    {
+      if (TAO_debug_level > 3)
+        {
+          ACE_ERROR (
+            (LM_ERROR,
+             ACE_TEXT ("%T %n (%P|%t) - TAO_FT_Naming_Manager::add_member")
+             ACE_TEXT ("Null object group provided.\n")
+             ));
+        }
+      throw PortableGroup::ObjectGroupNotFound ();
+    }
+
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     monitor,
                     this->lock_,

@@ -54,10 +54,11 @@ LB_server::naming_manager (void)
 }
 
 int
-LB_server::write_ior_to_file (const char *ior)
+LB_server::write_ior_to_file (const char* file_name,
+                              const char *ior)
 {
   FILE *output_file =
-    ACE_OS::fopen (this->ior_output_file_, "w");
+    ACE_OS::fopen (file_name, "w");
 
   if (output_file == 0)
     {
@@ -184,7 +185,7 @@ LB_server::create_object_group (const char *group_name)
       CORBA::String_var ior =
         this->orb_->object_to_string (this->object_group_.in ());
 
-      this->write_ior_to_file (ior.in ());
+      this->write_ior_to_file (this->ior_output_file_, ior.in ());
     }
   catch (const PortableGroup::ObjectNotCreated&)
     {
@@ -211,6 +212,15 @@ LB_server::register_servant (Basic *servant, const char *loc)
     {
       Test::Basic_var basic =
         servant->_this ();
+
+      ACE_DEBUG ((LM_DEBUG,
+                  "Writing ior to file: %C\n",
+                  loc));
+      CORBA::String_var ior =
+        this->orb_->object_to_string (basic.in ());
+
+      this->write_ior_to_file (loc,
+                               ior);
 
       PortableGroup::Location location (1);
       location.length (1);
