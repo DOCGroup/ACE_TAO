@@ -1255,19 +1255,19 @@ TAO_DynCommon::check_type (CORBA::TypeCode_ptr tc)
 bool
 TAO_DynCommon::is_basic_type_seq (CORBA::TypeCode_ptr tc)
 {
-  return (tc->equivalent (CORBA::_tc_BooleanSeq)
-          || tc->equivalent (CORBA::_tc_OctetSeq)
-          || tc->equivalent (CORBA::_tc_CharSeq)
-          || tc->equivalent (CORBA::_tc_WCharSeq)
-          || tc->equivalent (CORBA::_tc_ShortSeq)
-          || tc->equivalent (CORBA::_tc_UShortSeq)
-          || tc->equivalent (CORBA::_tc_LongSeq)
-          || tc->equivalent (CORBA::_tc_ULongSeq)
-          || tc->equivalent (CORBA::_tc_LongLongSeq)
-          || tc->equivalent (CORBA::_tc_ULongLongSeq)
-          || tc->equivalent (CORBA::_tc_FloatSeq)
-          || tc->equivalent (CORBA::_tc_DoubleSeq)
-          || tc->equivalent (CORBA::_tc_LongDoubleSeq));
+  return (tc->equal (CORBA::_tc_BooleanSeq)
+          || tc->equal (CORBA::_tc_OctetSeq)
+          || tc->equal (CORBA::_tc_CharSeq)
+          || tc->equal (CORBA::_tc_WCharSeq)
+          || tc->equal (CORBA::_tc_ShortSeq)
+          || tc->equal (CORBA::_tc_UShortSeq)
+          || tc->equal (CORBA::_tc_LongSeq)
+          || tc->equal (CORBA::_tc_ULongSeq)
+          || tc->equal (CORBA::_tc_LongLongSeq)
+          || tc->equal (CORBA::_tc_ULongLongSeq)
+          || tc->equal (CORBA::_tc_FloatSeq)
+          || tc->equal (CORBA::_tc_DoubleSeq)
+          || tc->equal (CORBA::_tc_LongDoubleSeq));
 }
 
 CORBA::Boolean

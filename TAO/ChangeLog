@@ -1,3 +1,14 @@
+Wed Feb 20 21:53:29 UTC 2013  Phillip LaBanca  <labancap@ociweb.com>
+
+        * tao/DynamicAny/DynAny_i.cpp:
+
+        Changed check_typecode() to use TypeCode equivalence() for
+        CORBA::tk_sequence typecode checks.
+
+        * tao/DynamicAny/DynCommon.cpp:
+
+        Changed is_basic_type_seq() to use TypeCode equal().
+
 Wed Feb 20 19:17:39 UTC 2013  Byron Harris  <harrisb@ociweb.com>
 
         * orbsvcs/tests/ImplRepo/scale_clients/client.cpp:
