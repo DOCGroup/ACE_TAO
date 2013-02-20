@@ -1,3 +1,10 @@
+Wed Feb 20 14:47:30 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/tests/ImplRepo/servers_list/Test_i.cpp:
+
+          Made explicit an implicit inclusion that failed to build on compact/noinline
+          builds.
+
 Wed Feb 20 04:41:54 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/Dynamic_TP/POA_Loader/POA_Loader.mpc:
