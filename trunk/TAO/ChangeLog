@@ -1,3 +1,10 @@
+Wed Feb 20 17:56:53 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Replication_Manager.cpp:
+
+          Fixed a leak resulting from the double duplication of a couple of object
+          references.
+
 Wed Feb 20 16:33:22 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
 
         * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:

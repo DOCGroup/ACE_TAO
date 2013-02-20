@@ -66,11 +66,9 @@ TAO_FT_Naming_Replication_Manager::register_replica (
   // Return my references to the peer
   ::FT_Naming::ReplicaInfo* my_info = new ::FT_Naming::ReplicaInfo;
 
-  my_info->root_context = CosNaming::NamingContext::_duplicate (
-    this->naming_svr_->my_root_context ());
+  my_info->root_context = this->naming_svr_->my_root_context ();
 
-  my_info->naming_manager = ::FT_Naming::NamingManager::_duplicate (
-    this->naming_svr_->my_naming_manager ());
+  my_info->naming_manager = this->naming_svr_->my_naming_manager ();
 
   return my_info;
 }
