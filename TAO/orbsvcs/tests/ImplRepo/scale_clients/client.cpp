@@ -123,7 +123,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           }
       }
 
-    ACE_ASSERT (n > 0);
+    if (n == 0)
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "ERROR: Expected number of requests from "
+                           "server to by > 0\n"),
+                          -1);
+      }
+
 
     return 0;
 
