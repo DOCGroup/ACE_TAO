@@ -19,6 +19,7 @@ $debug_level = '0';
 my $ping_interval_milliseconds = 1000;
 
 my $servers_count = 2;
+my $servers_kill_count = 1;
 my $server_init_delay = 0;
 my $server_reply_delay = 0;
 my $use_activator = 1;
@@ -32,6 +33,10 @@ if ($#ARGV >= 0) {
 	elsif ($ARGV[$i] eq "-servers") {
 	    $i++;
 	    $servers_count = $ARGV[$i];
+	}
+	elsif ($ARGV[$i] eq "-servers_to_kill") {
+	    $i++;
+	    $servers_kill_count = $ARGV[$i];
 	}
 	elsif ($ARGV[$i] eq "-server_init_delay") {
 	    $i++;
@@ -270,10 +275,12 @@ sub shutdown_servers($)
 sub list_active_servers($)
 {
     my $list_options = shift;
+    my $start_time = time();
     $TI->Arguments ("-ORBInitRef ImplRepoService=file://$ti_imriorfile list $list_options");
     # Redirect output so we can count number of lines in output
     redirect_output();
     $result = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
+    my $list_time = time() - $start_time;
     restore_output();
     if ($TI_status != 0) {
 	print STDERR "ERROR: tao_imr returned $TI_status\n";
@@ -288,6 +295,7 @@ sub list_active_servers($)
 	$active_servers++;
     }
     close FILE;
+    print STDERR "List took $list_time seconds.\n";
     return $active_servers;
 }
 
@@ -338,29 +346,31 @@ sub servers_list_test
     # CORBA requests.
     make_server_requests();
 
-    print "\nList of active servers before kill server\n";
+    print "\nList of active servers before killing server(s)\n";
     $active_servers_before_kill = list_active_servers("-a");
 
-    # Kill server 0 and verify listing of active servers is correct.
-    print "\nKilling server\n";
-    $CLI->Arguments ("-ORBInitRef Test=corbaloc::localhost:$port/$objprefix" . '_' . 0 .
-		     " -d $server_reply_delay -a");
-    $CLI_status = $CLI->SpawnWaitKill ($cli->ProcessStartWaitInterval());
-    if ($CLI_status != 0) {
-	print STDERR "ERROR: client returned $CLI_status\n";
-	$status = 1;
-	return 1;
+    # Kill servers and verify listing of active servers is correct.
+    print "\nKilling $servers_kill_count servers\n";
+    for (my $i = 0; $i < $servers_kill_count; $i++) {
+	$CLI->Arguments ("-ORBInitRef Test=corbaloc::localhost:$port/$objprefix" . '_' . $i .
+			 " -d $server_reply_delay -a");
+	$CLI_status = $CLI->SpawnWaitKill ($cli->ProcessStartWaitInterval());
+	if ($CLI_status != 0) {
+	    print STDERR "ERROR: client returned $CLI_status\n";
+	    $status = 1;
+	    return 1;
+	}
+	$SRV[$i]->Kill ();
     }
-    $SRV[0]->Kill ();
 
     sleep (2);
 
     print "\nList of active servers after killing a server\n";
     $active_servers_after_kill = list_active_servers("-a");
-    if ($active_servers_after_kill != $active_servers_before_kill - 1) {
+    if ($active_servers_after_kill != $active_servers_before_kill - $servers_kill_count) {
 	print STDERR
 	    "ERROR: Excepted list of active servers after killing ".
-	    "a server to be " . ($active_servers_before_kill - 1) .
+	    "a server to be " . ($active_servers_before_kill -  $servers_kill_count) .
 	    " but was $active_servers_after_kill\n";
 	$status = 1;
     }
@@ -370,7 +380,7 @@ sub servers_list_test
 
     print "\n";
 
-    shutdown_servers(1);
+    shutdown_servers($servers_kill_count);
 
     if ($use_activator) {
 	my $ACT_status = $ACT->TerminateWaitKill ($act->ProcessStopWaitInterval());
@@ -396,6 +406,7 @@ sub servers_list_test
 sub usage() {
     print "Usage: run_test.pl ".
 	"[-servers <num=$servers_count>] ".
+	"[-servers_to_kill <num=$servers_kill_count>] ".
 	"[-server_init_delay <seconds=$server_init_delay>] ".
 	"[-server_reply_delay <seconds=$server_reply_delay ".
 	"[-no_activator]\n";
