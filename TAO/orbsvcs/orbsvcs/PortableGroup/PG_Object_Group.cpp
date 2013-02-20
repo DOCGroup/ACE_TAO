@@ -106,6 +106,11 @@ TAO::PG_Object_Group::PG_Object_Group (
 
 TAO::PG_Object_Group::~PG_Object_Group (void)
 {
+  if (TAO_debug_level > 3)
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("%T %n (%P|%t) - Destroying object group: %s"),
+                this->group_name_));
+
   CORBA::string_free (this->group_name_);
 
   this->clear_members_map ();
@@ -290,6 +295,8 @@ TAO::PG_Object_Group::add_member (const PortableGroup::Location & the_location,
 
   if (this->members_.bind (the_location, info) != 0)
     {
+      delete info;
+
       // @@ Dale why this is a NO MEMORY exception?
       throw CORBA::NO_MEMORY();
     }
@@ -303,6 +310,16 @@ TAO::PG_Object_Group::add_member (const PortableGroup::Location & the_location,
     }
   else
     { // Issue with incrementing the version
+
+      if (TAO_debug_level > 6)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("PG (%P|%t) Issue incrementing the ")
+                      ACE_TEXT ("version in Object_Group add_member\n")));
+        }
+      // Must unbind the new member and delete it.
+      if (this->members_.unbind (the_location, info) == 0)
+        delete info;
       throw PortableGroup::ObjectNotAdded ();
     }
 

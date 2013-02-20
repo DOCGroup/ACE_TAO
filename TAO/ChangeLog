@@ -1,3 +1,10 @@
+Wed Feb 20 16:33:22 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:
+
+          Fixed leak with MemberInfo in object group when the addition
+          of a member fails for some reason.
+
 Wed Feb 20 16:22:38 UTC 2013  Byron Harris  <harrisb@ociweb.com>
 
         * orbsvcs/tests/ImplRepo/servers_list/run_test.pl:
