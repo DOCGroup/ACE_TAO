@@ -1,3 +1,13 @@
+Thu Feb 21 23:45:22 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/tests/ImplRepo/servers_list/server.cpp:
+
+          Missed an implicit include of an ACE_OS header.
+
+        * tao/Dynamic_TP/DTP_POA_Loader.cpp:
+
+          Fix a memory leak.
+
 Wed Feb 20 21:53:29 UTC 2013  Phillip LaBanca  <labancap@ociweb.com>
 
         * tao/DynamicAny/DynAny_i.cpp:
