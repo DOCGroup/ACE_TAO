@@ -164,6 +164,8 @@ TAO_DTP_POA_Loader::load_poa_map (ACE_TCHAR *map,
   poa_name = ACE_TEXT_ALWAYS_CHAR (map);
   repo->add_strategy(poa_name, strategy_container);
 
+  CORBA::release (strategy_container);
+
   return 0;
 }
 
