@@ -51,6 +51,7 @@ TAO::PG_Property_Set::PG_Property_Set (
 TAO::PG_Property_Set::~PG_Property_Set ()
 {
   this->clear ();
+  delete defaults_;
 }
 
 void

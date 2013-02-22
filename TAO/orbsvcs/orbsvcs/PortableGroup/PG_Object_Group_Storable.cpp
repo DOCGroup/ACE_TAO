@@ -13,21 +13,21 @@ namespace
   template <typename T>
   void read_cdr (TAO::Storable_Base & stream, T & corba_data)
   {
-  int size;
-  stream >> size;
+    int size;
+    stream >> size;
 
-  char *tmp = 0;
-  ACE_NEW_THROW_EX (tmp, char [size], CORBA::NO_MEMORY ());
-  ACE_Auto_Basic_Array_Ptr<char> buf (tmp);
-  stream.read (size, buf.get ());
+    char *tmp = 0;
+    ACE_NEW_THROW_EX (tmp, char [size], CORBA::NO_MEMORY ());
+    ACE_Auto_Basic_Array_Ptr<char> buf (tmp);
+    stream.read (size, buf.get ());
 
-  TAO_InputCDR cdr (buf.get (), size);
-  cdr >> corba_data;
-  if (!cdr.good_bit ())
-    {
-      stream.clear ();
-      throw CORBA::INTERNAL ();
-    }
+    TAO_InputCDR cdr (buf.get (), size);
+    cdr >> corba_data;
+    if (!cdr.good_bit ())
+      {
+        stream.clear ();
+        throw CORBA::INTERNAL ();
+      }
   }
 }
 
@@ -408,7 +408,11 @@ TAO::PG_Object_Group_Storable::read (TAO::Storable_Base & stream)
   read_cdr (stream, this->tagged_component_);
 
   ///// type_id_ /////
-  read_cdr(stream, this->type_id_);
+  // special note: A memory leak appears when the type_id_ is read into directly.
+  // reading into a temporary string and handing that to the type_id_ does not leak.
+  CORBA::String_var tmp;
+  read_cdr(stream, tmp);
+  this->type_id_ = tmp._retn();
 
   ///// properties_ /////
   PortableGroup::Criteria properties;
