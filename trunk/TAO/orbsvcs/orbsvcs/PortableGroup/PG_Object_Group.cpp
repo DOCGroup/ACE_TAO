@@ -112,7 +112,7 @@ TAO::PG_Object_Group::~PG_Object_Group (void)
                 this->group_name_));
 
   CORBA::string_free (this->group_name_);
-
+  CORBA::string_free (this->type_id_._retn());
   this->clear_members_map ();
 }
 

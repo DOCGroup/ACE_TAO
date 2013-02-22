@@ -87,9 +87,9 @@ TAO::FT_PG_Object_Group_Storable::propagate_update_notification
     if (TAO_debug_level > 3)
       {
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("%T %n (%P|%t) - ")
+                    ACE_TEXT ("TAO (%P|%t) - propagate_update_notification ")
                     ACE_TEXT ("Notifying peer that object group with ID %lld ")
-                    ACE_TEXT ("has been updated"), object_group_info.id
+                    ACE_TEXT ("has been updated\n"), object_group_info.id
                     ));
       }
     peer->notify_updated_object_group (object_group_info);

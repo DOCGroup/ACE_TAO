@@ -1086,9 +1086,9 @@ TAO_FT_Naming_Server::update_object_group (
       if (TAO_debug_level > 3)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("%T %n (%P|%t) - ")
+                      ACE_TEXT ("(%P|%t) - ")
                       ACE_TEXT ("An update of object group with ID %lld ")
-                      ACE_TEXT ("has been made by the peer"),
+                      ACE_TEXT ("has been made by the peer\n"),
                       group_info.id
                       ));
         }
@@ -1099,7 +1099,7 @@ TAO_FT_Naming_Server::update_object_group (
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) ERROR: Attempting to update object group ")
                   ACE_TEXT ("as stale with obect group persistence not ")
-                  ACE_TEXT ("enabled.")));
+                  ACE_TEXT ("enabled.\n")));
       return -1;
     }
 
