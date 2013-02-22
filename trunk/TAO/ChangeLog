@@ -1,3 +1,11 @@
+Fri Feb 22 04:24:41 UTC 2013  Phillip LaBanca  <labancap@ociweb.com>
+
+        * tests/DynAny_Test/da_tests.idl:
+        * tests/DynAny_Test/test_dynsequence.cpp:
+
+         Added use case tests of narrowing DynSequence from a DynAny
+         containing a basic type sequence.
+
 Thu Feb 21 23:45:22 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/tests/ImplRepo/servers_list/server.cpp:
