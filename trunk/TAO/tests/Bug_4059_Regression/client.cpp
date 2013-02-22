@@ -10,8 +10,8 @@
 #include "ace/Thread.h"
 #include "ace/Get_Opt.h"
 
-TAO_SYNCH_MUTEX lock;
-ACE_Condition<TAO_SYNCH_MUTEX> cond (lock);
+TAO_SYNCH_MUTEX test_lock;
+ACE_Condition<TAO_SYNCH_MUTEX> cond (test_lock);
 bool is_ok = false;
 CORBA::ORB_var orb;
 
@@ -45,10 +45,10 @@ parse_args (int argc, ACE_TCHAR *argv[])
 
 ACE_THR_FUNC_RETURN failsafe (void *)
 {
-  lock.acquire();
+  test_lock.acquire();
   ACE_Time_Value timeout = ACE_OS::gettimeofday() + ACE_Time_Value (10,0);
   cond.wait(&timeout);
-  lock.release();
+  test_lock.release();
   if (!is_ok)
     {
       ACE_DEBUG ((LM_DEBUG, "FAILURE: failsafe timed out\n"));
@@ -105,9 +105,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       Test::Hello_var hello = Test::Hello::_narrow(object.in());
 
       is_ok = true;
-      lock.acquire ();
+      test_lock.acquire ();
       cond.signal();
-      lock.release ();
+      test_lock.release ();
       ACE_DEBUG ((LM_DEBUG, "SUCCESS: test did not spin.\n"));
 
       CORBA::String_var the_string = hello->get_string ();

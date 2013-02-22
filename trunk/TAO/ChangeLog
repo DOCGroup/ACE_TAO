@@ -1,3 +1,15 @@
+Fri Feb 22 14:25:37 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * orbsvcs/tests/FT_Naming/FaultTolerant/LB_server.h:
+        * orbsvcs/tests/FT_Naming/FaultTolerant/LB_server.cpp:
+
+          Fixed wchar issue in tests.
+
+        * tests/Bug_4059_Regression/client.cpp:
+
+          Replaced global variable name = lock to avoid issue on QNX
+          of collision with lock() function defined in unistd.h.
+
 Fri Feb 22 04:24:41 UTC 2013  Phillip LaBanca  <labancap@ociweb.com>
 
         * tests/DynAny_Test/da_tests.idl:
