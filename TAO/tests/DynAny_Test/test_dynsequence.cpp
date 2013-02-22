@@ -258,6 +258,52 @@ Test_DynSequence::run_test (void)
                             -1);
         }
 
+      ACE_DEBUG ((
+        LM_DEBUG,
+        ACE_TEXT ("testing: constructor(%C)/create_dyn_any_from_type_code\n"),
+        "BooleanSeq"
+        ));
+
+      DynamicAny::DynAny_var da_bool =
+        dynany_factory->create_dyn_any_from_type_code (
+                            DynAnyTests::_tc_SeqBoolean
+                          );
+
+      DynamicAny::DynSequence_var ds_bool =
+        DynamicAny::DynSequence::_narrow (da_bool.in ());
+
+      if (CORBA::is_nil (ds_bool.in ()))
+      {
+        ACE_DEBUG ((
+          LM_DEBUG,
+          ACE_TEXT ("DynSequence::_narrow() returned nil\n")
+          ));
+        this->error_count_++;
+      }
+
+      ACE_DEBUG ((
+        LM_DEBUG,
+        ACE_TEXT ("testing: constructor(%C)/create_dyn_any_from_type_code\n"),
+        "ShortSeq"
+        ));
+
+      DynamicAny::DynAny_var da_short =
+        dynany_factory->create_dyn_any_from_type_code (
+                            DynAnyTests::_tc_SeqShort
+                          );
+
+      DynamicAny::DynSequence_var ds_short =
+        DynamicAny::DynSequence::_narrow (da_short.in ());
+
+      if (CORBA::is_nil (ds_short.in ()))
+      {
+        ACE_DEBUG ((
+          LM_DEBUG,
+          ACE_TEXT ("DynSequence::_narrow() returned nil\n")
+          ));
+        this->error_count_++;
+      }
+
       ts[0] = CORBA::string_dup (data.m_string1);
       CORBA::Any in_any2;
       in_any2 <<= ts;
