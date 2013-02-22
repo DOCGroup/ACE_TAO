@@ -54,8 +54,8 @@ LB_server::naming_manager (void)
 }
 
 int
-LB_server::write_ior_to_file (const char* file_name,
-                              const char *ior)
+LB_server::write_ior_to_file (const ACE_TCHAR *file_name,
+                              const ACE_TCHAR *ior)
 {
   FILE *output_file =
     ACE_OS::fopen (file_name, "w");

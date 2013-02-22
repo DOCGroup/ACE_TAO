@@ -93,7 +93,8 @@ private:
   static int called_once_;
 
   /// write the IOR to a file so that it can be read later.
-  int write_ior_to_file (const char *filename, const char *ior);
+  int write_ior_to_file (const ACE_TCHAR *filename,
+                         const ACE_TCHAR *ior);
 
   CORBA::ORB_var orb_;
   int argc_;
