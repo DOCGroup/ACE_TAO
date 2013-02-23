@@ -20,7 +20,7 @@ public:
   //Destructor
   virtual ~Test_i ();
 
-  virtual CORBA::Short get_server_num (const CORBA::Short delay_secs);
+  virtual CORBA::Short get_server_num (CORBA::Short delay_secs);
 
   virtual void abort (CORBA::Short delay_secs);
 
