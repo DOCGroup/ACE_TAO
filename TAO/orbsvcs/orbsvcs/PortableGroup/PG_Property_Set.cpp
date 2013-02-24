@@ -26,32 +26,34 @@ TAO::PG_Property_Set::PG_Property_Set()
 {
 }
 
-TAO::PG_Property_Set::PG_Property_Set (
-  const PortableGroup::Properties & property_set)
+TAO::PG_Property_Set::PG_Property_Set (const PortableGroup::Properties & ps)
   : defaults_ (0)
 {
-  this->decode (property_set);
+  this->decode (ps);
 }
 
-TAO::PG_Property_Set::PG_Property_Set (
-    const PortableGroup::Properties & property_set,
-    PG_Property_Set * defaults)
-  : defaults_ (defaults)
+TAO::PG_Property_Set::PG_Property_Set (const PortableGroup::Properties & ps,
+                                       PG_Property_Set * defaults,
+                                       bool own_defaults)
+  : defaults_ (defaults),
+    own_defaults_ (own_defaults)
 {
-  this->decode (property_set);
+  this->decode (ps);
 }
 
 
-TAO::PG_Property_Set::PG_Property_Set (
-    PG_Property_Set * defaults)
-  : defaults_ (defaults)
+TAO::PG_Property_Set::PG_Property_Set (PG_Property_Set * defaults,
+                                       bool own_defaults)
+  : defaults_ (defaults),
+    own_defaults_ (own_defaults)
 {
 }
 
 TAO::PG_Property_Set::~PG_Property_Set ()
 {
   this->clear ();
-  delete defaults_;
+  if (this->own_defaults_)
+    delete this->defaults_;
 }
 
 void

@@ -78,14 +78,16 @@ namespace TAO
      * @param defaults a propert set decoder that supplies default values.
      */
     PG_Property_Set (const PortableGroup::Properties & property_set,
-                     PG_Property_Set * defaults);
+                     PG_Property_Set * defaults,
+                     bool own_defaults);
 
     /**
      * constructor with defaults, but no properties (yet)
      * (note this is not a copy constructor)
      * @param defaults a propert set decoder that supplies default values.
      */
-    PG_Property_Set (PG_Property_Set * defaults);
+    PG_Property_Set (PG_Property_Set * defaults,
+                     bool own_defaults);
 
 
     ~PG_Property_Set ();
@@ -167,6 +169,10 @@ namespace TAO
      * @todo reference counted pointers would be a good idea here.
      */
     PG_Property_Set * defaults_;
+    /**
+     * flag denoting ownership of the defaults.
+     */
+    bool own_defaults_;
   };
 
 

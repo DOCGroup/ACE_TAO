@@ -91,7 +91,8 @@ namespace TAO
     TAO::PG_Object_Group * create_group (
         const char * type_id,
         const PortableGroup::Criteria & the_criteria,
-        TAO::PG_Property_Set * typeid_properties);
+        TAO::PG_Property_Set * typeid_properties,
+        bool give_props);
 
 
     void delete_group (PortableGroup::ObjectGroup_ptr object_group);
@@ -183,6 +184,7 @@ namespace TAO
       const char * type_id,
       const PortableGroup::Criteria & the_criteria,
       TAO::PG_Property_Set * type_properties,
+      bool give_properties,
       TAO::Storable_Factory & storable_factory);
 
     /**

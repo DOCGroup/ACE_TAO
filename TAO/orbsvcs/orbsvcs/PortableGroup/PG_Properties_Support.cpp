@@ -63,7 +63,7 @@ TAO::PG_Properties_Support::set_type_properties (
   {
     ACE_NEW_THROW_EX (
       typeid_properties,
-      TAO::PG_Property_Set (overrides, & this->default_properties_),
+      TAO::PG_Property_Set (overrides, & this->default_properties_, false),
       CORBA::NO_MEMORY());
     this->properties_map_.bind (type_id, typeid_properties);
   }
@@ -119,7 +119,7 @@ TAO::PG_Properties_Support::find_typeid_properties (
   {
     ACE_NEW_THROW_EX (
       typeid_properties,
-      TAO::PG_Property_Set (& this->default_properties_),
+      TAO::PG_Property_Set (& this->default_properties_, false),
       CORBA::NO_MEMORY());
     this->properties_map_.bind (type_id, typeid_properties);
   }

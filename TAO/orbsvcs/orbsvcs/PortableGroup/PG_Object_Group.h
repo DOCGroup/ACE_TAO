@@ -126,7 +126,8 @@ namespace TAO
       const PortableGroup::TagGroupTaggedComponent & tagged_component,
       const char * type_id,
       const PortableGroup::Criteria & the_criteria,
-      TAO::PG_Property_Set * type_properties);
+      TAO::PG_Property_Set * type_properties,
+      bool give_proprerties);
 
     /**
      * This constructor is to be used for initialization when

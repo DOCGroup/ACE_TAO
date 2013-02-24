@@ -59,7 +59,8 @@ TAO::PG_Object_Group::PG_Object_Group (
   const PortableGroup::TagGroupTaggedComponent & tagged_component,
   const char * type_id,
   const PortableGroup::Criteria & the_criteria,
-  TAO::PG_Property_Set * type_properties)
+  TAO::PG_Property_Set * type_properties,
+  bool give_properties)
   : internals_()
   , orb_ (CORBA::ORB::_duplicate (orb))
   , factory_registry_ (PortableGroup::FactoryRegistry::_duplicate (factory_registry))
@@ -73,7 +74,7 @@ TAO::PG_Object_Group::PG_Object_Group (
   , group_name_ (0)
   , members_ ()
   , primary_location_(0)
-  , properties_ (the_criteria, type_properties)
+  , properties_ (the_criteria, type_properties, give_properties)
   , initial_number_members_ (0)
   , minimum_number_members_ (0)
   , group_specific_factories_ ()
