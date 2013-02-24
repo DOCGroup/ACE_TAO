@@ -675,11 +675,11 @@ TAO_FT_Naming_Manager::create_object (
   ACE_Auto_Ptr<TAO::PG_Property_Set> typeid_properties
     (this->properties_support_.find_typeid_properties (type_id));
 
-  TAO::PG_Object_Group * group
-    = this->group_factory_.create_group (
-      type_id,
+  TAO::PG_Object_Group * group = this->group_factory_.create_group
+    ( type_id,
       the_criteria,
-      typeid_properties.get ());
+      typeid_properties.get (),
+      true);
 
   // The group now owns the properties.
   typeid_properties.release ();
