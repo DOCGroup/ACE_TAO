@@ -1,3 +1,9 @@
+Mon Feb 25 01:32:42 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/tests/FT_Naming/FaultTolerant/LB_server.cpp:
+
+          Address wide character scoreboard failures.
+
 Mon Feb 25 00:46:10 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.cpp:
