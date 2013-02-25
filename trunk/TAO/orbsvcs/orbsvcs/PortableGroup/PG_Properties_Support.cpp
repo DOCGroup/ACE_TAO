@@ -18,22 +18,27 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::PG_Properties_Support::PG_Properties_Support ()
 {
+  TAO::PG_Property_Set *props;
+  ACE_NEW_THROW_EX (props,
+                    TAO::PG_Property_Set (),
+                    CORBA::NO_MEMORY());
+  this->default_properties_.reset (props);
 }
 
 TAO::PG_Properties_Support::~PG_Properties_Support ()
 {
-
+  this->properties_map_.unbind_all ();
 }
 
 void TAO::PG_Properties_Support::set_default_property (const char * name,
       const PortableGroup::Value & value)
 {
-  this->default_properties_.set_property(name, value);
+  this->default_properties_->set_property(name, value);
 }
 
 void TAO::PG_Properties_Support::set_default_properties (const PortableGroup::Properties & props)
 {
-  this->default_properties_.decode (props);
+  this->default_properties_->decode (props);
 }
 
 PortableGroup::Properties *
@@ -41,14 +46,14 @@ TAO::PG_Properties_Support::get_default_properties ()
 {
   PortableGroup::Properties_var result;
   ACE_NEW_THROW_EX ( result, PortableGroup::Properties(), CORBA::NO_MEMORY());
-  this->default_properties_.export_properties (*result);
+  this->default_properties_->export_properties (*result);
   return result._retn ();
 }
 
 void TAO::PG_Properties_Support::remove_default_properties (
     const PortableGroup::Properties & props)
 {
-  this->default_properties_.remove (props);
+  this->default_properties_->remove (props);
 }
 
 void
@@ -58,13 +63,15 @@ TAO::PG_Properties_Support::set_type_properties (
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->internals_);
 
-  TAO::PG_Property_Set * typeid_properties = 0;
+  TAO::PG_Property_Set_var typeid_properties;
   if ( 0 != this->properties_map_.find (type_id, typeid_properties))
   {
-    ACE_NEW_THROW_EX (
-      typeid_properties,
-      TAO::PG_Property_Set (overrides, & this->default_properties_, false),
-      CORBA::NO_MEMORY());
+    TAO::PG_Property_Set *props;
+    ACE_NEW_THROW_EX (props,
+                      TAO::PG_Property_Set (overrides,
+                                            this->default_properties_),
+                      CORBA::NO_MEMORY());
+    typeid_properties.reset (props);
     this->properties_map_.bind (type_id, typeid_properties);
   }
   typeid_properties->clear ();
@@ -80,7 +87,7 @@ TAO::PG_Properties_Support::get_type_properties (
 
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->internals_, 0);
 
-  TAO::PG_Property_Set * typeid_properties = 0;
+  TAO::PG_Property_Set_var typeid_properties;
   if ( 0 != this->properties_map_.find (type_id, typeid_properties))
   {
     typeid_properties->export_properties (*result);
@@ -100,7 +107,7 @@ TAO::PG_Properties_Support::remove_type_properties (
 
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->internals_);
 
-  TAO::PG_Property_Set * typeid_properties = 0;
+  TAO::PG_Property_Set_var typeid_properties;
   if ( 0 != this->properties_map_.find (type_id, typeid_properties))
   {
     typeid_properties->remove (props);
@@ -108,22 +115,22 @@ TAO::PG_Properties_Support::remove_type_properties (
 }
 
 
-TAO::PG_Property_Set *
-TAO::PG_Properties_Support::find_typeid_properties (
-    const char *type_id)
+TAO::PG_Property_Set_var
+TAO::PG_Properties_Support::find_typeid_properties (const char *type_id)
 {
-  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->internals_, 0);
+  TAO::PG_Property_Set_var result;
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->internals_, result);
 
-  TAO::PG_Property_Set * typeid_properties = 0;
-  if ( 0 != this->properties_map_.find (type_id, typeid_properties))
+  if ( 0 != this->properties_map_.find (type_id, result))
   {
-    ACE_NEW_THROW_EX (
-      typeid_properties,
-      TAO::PG_Property_Set (& this->default_properties_, false),
-      CORBA::NO_MEMORY());
-    this->properties_map_.bind (type_id, typeid_properties);
+    TAO::PG_Property_Set * props;
+    ACE_NEW_THROW_EX (props,
+                      TAO::PG_Property_Set (this->default_properties_),
+                      CORBA::NO_MEMORY());
+    result.reset (props);
+    this->properties_map_.bind (type_id, result);
   }
-  return typeid_properties;
+  return result;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

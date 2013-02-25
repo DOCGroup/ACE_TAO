@@ -150,8 +150,7 @@ TAO::PG_Object_Group_Storable::PG_Object_Group_Storable (
   const PortableGroup::TagGroupTaggedComponent & tagged_component,
   const char * type_id,
   const PortableGroup::Criteria & the_criteria,
-  TAO::PG_Property_Set * type_properties,
-  bool give_properties,
+  const TAO::PG_Property_Set_var & type_properties,
   TAO::Storable_Factory & storable_factory)
   : PG_Object_Group(orb,
                     factory_registry,
@@ -160,8 +159,7 @@ TAO::PG_Object_Group_Storable::PG_Object_Group_Storable (
                     tagged_component,
                     type_id,
                     the_criteria,
-                    type_properties,
-                    give_properties)
+                    type_properties)
   , group_previously_stored_(false)
   , group_id_previously_stored_(0)
   , storable_factory_ (storable_factory)

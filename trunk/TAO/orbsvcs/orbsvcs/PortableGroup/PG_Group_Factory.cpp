@@ -102,8 +102,7 @@ void TAO::PG_Group_Factory::init (
 TAO::PG_Object_Group * TAO::PG_Group_Factory::create_group (
     const char * type_id,
     const PortableGroup::Criteria & the_criteria,
-    TAO::PG_Property_Set * typeid_properties,
-    bool give_properties)
+    const TAO::PG_Property_Set_var & typeid_properties)
 {
   ///////////////////////////////////
   // Create an empty group reference
@@ -151,7 +150,6 @@ TAO::PG_Object_Group * TAO::PG_Group_Factory::create_group (
           type_id,
           the_criteria,
           typeid_properties,
-          give_properties,
           *storable_factory_);
 
       this->list_store_->add(group_id);
@@ -168,9 +166,7 @@ TAO::PG_Object_Group * TAO::PG_Group_Factory::create_group (
           tagged_component,
           type_id,
           the_criteria,
-          typeid_properties,
-          give_properties
-          ),
+          typeid_properties),
         CORBA::NO_MEMORY());
     }
 
@@ -452,8 +448,7 @@ TAO::PG_Group_Factory::create_persistent_group (
       const PortableGroup::TagGroupTaggedComponent & tagged_component,
       const char * type_id,
       const PortableGroup::Criteria & the_criteria,
-      TAO::PG_Property_Set * type_properties,
-      bool give_properties,
+      const TAO::PG_Property_Set_var & type_properties,
       TAO::Storable_Factory & storable_factory)
 {
   TAO::PG_Object_Group_Storable * objectGroup = 0;
@@ -468,7 +463,6 @@ TAO::PG_Group_Factory::create_persistent_group (
     type_id,
     the_criteria,
     type_properties,
-    give_properties,
     storable_factory
     ),
   CORBA::NO_MEMORY());

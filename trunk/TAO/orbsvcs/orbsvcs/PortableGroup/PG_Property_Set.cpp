@@ -33,27 +33,21 @@ TAO::PG_Property_Set::PG_Property_Set (const PortableGroup::Properties & ps)
 }
 
 TAO::PG_Property_Set::PG_Property_Set (const PortableGroup::Properties & ps,
-                                       PG_Property_Set * defaults,
-                                       bool own_defaults)
-  : defaults_ (defaults),
-    own_defaults_ (own_defaults)
+                                       const PG_Property_Set_var & defaults)
+  : defaults_ (defaults)
 {
   this->decode (ps);
 }
 
 
-TAO::PG_Property_Set::PG_Property_Set (PG_Property_Set * defaults,
-                                       bool own_defaults)
-  : defaults_ (defaults),
-    own_defaults_ (own_defaults)
+TAO::PG_Property_Set::PG_Property_Set (const PG_Property_Set_var & defaults)
+  : defaults_ (defaults)
 {
 }
 
 TAO::PG_Property_Set::~PG_Property_Set ()
 {
   this->clear ();
-  if (this->own_defaults_)
-    delete this->defaults_;
 }
 
 void

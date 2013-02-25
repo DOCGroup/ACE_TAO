@@ -23,6 +23,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/PortableGroup/PG_Object_Group_Manipulator.h"
+#include "orbsvcs/PortableGroup/PG_Property_Set.h"
 #include "orbsvcs/PortableGroupC.h"
 
 #include "tao/PortableServer/PortableServer.h"
@@ -37,7 +38,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // Forward references
 namespace TAO
 {
-  class PG_Property_Set;
   class PG_Group_List_Store;
   class PG_Object_Group_Storable;
   class Storable_Factory;
@@ -91,8 +91,7 @@ namespace TAO
     TAO::PG_Object_Group * create_group (
         const char * type_id,
         const PortableGroup::Criteria & the_criteria,
-        TAO::PG_Property_Set * typeid_properties,
-        bool give_props);
+        const TAO::PG_Property_Set_var & typeid_properties);
 
 
     void delete_group (PortableGroup::ObjectGroup_ptr object_group);
@@ -183,8 +182,7 @@ namespace TAO
       const PortableGroup::TagGroupTaggedComponent & tagged_component,
       const char * type_id,
       const PortableGroup::Criteria & the_criteria,
-      TAO::PG_Property_Set * type_properties,
-      bool give_properties,
+      const TAO::PG_Property_Set_var & type_properties,
       TAO::Storable_Factory & storable_factory);
 
     /**

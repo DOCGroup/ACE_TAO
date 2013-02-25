@@ -858,7 +858,7 @@ TAO::FT_ReplicationManager::create_object (
   ////////////////////////////////
   // find the properties for this
   // type of object group
-  TAO::PG_Property_Set * typeid_properties
+  TAO::PG_Property_Set_var typeid_properties
     = this->properties_support_.find_typeid_properties (
       type_id);
 
@@ -866,8 +866,7 @@ TAO::FT_ReplicationManager::create_object (
     = this->group_factory_.create_group (
       type_id,
       the_criteria,
-      typeid_properties,
-      false);
+      typeid_properties);
 
   group->initial_populate ();
     //@@ on error we should remove the group from the Group_Factory
