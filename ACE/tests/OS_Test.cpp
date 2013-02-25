@@ -683,6 +683,20 @@ getpwnam_r_test (void)
 }
 
 static int
+compiler_test (void)
+{
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing compiler methods\n")));
+
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Using compiler %s with major version %d minor version %d beta version %d\n"),
+    ACE::compiler_name(),
+    ACE::compiler_major_version(),
+    ACE::compiler_minor_version (),
+    ACE::compiler_beta_version ()));
+
+  return 0;
+}
+
+static int
 ctime_r_test (void)
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing ctime_r\n")));
@@ -1424,6 +1438,9 @@ run_main (int, ACE_TCHAR *[])
       status = result;
 
   if ((result = ace_ctype_test ()) != 0)
+      status = result;
+
+  if ((result = compiler_test ()) != 0)
       status = result;
 
   ACE_END_TEST;
