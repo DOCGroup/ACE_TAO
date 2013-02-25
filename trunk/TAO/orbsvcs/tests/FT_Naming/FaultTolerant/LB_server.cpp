@@ -55,7 +55,7 @@ LB_server::naming_manager (void)
 
 int
 LB_server::write_ior_to_file (const ACE_TCHAR *file_name,
-                              const ACE_TCHAR *ior)
+                              const char *ior)
 {
   FILE *output_file =
     ACE_OS::fopen (file_name, "w");
@@ -214,13 +214,12 @@ LB_server::register_servant (Basic *servant, const char *loc)
         servant->_this ();
 
       ACE_DEBUG ((LM_DEBUG,
-                  "Writing ior to file: %C\n",
+                  ACE_TEXT ("Writing ior to file: %s\n"),
                   loc));
       CORBA::String_var ior =
         this->orb_->object_to_string (basic.in ());
 
-      this->write_ior_to_file (loc,
-                               ior);
+      this->write_ior_to_file (ACE_TEXT_CHAR_TO_TCHAR (loc), ior);
 
       PortableGroup::Location location (1);
       location.length (1);
