@@ -1,3 +1,9 @@
+Fri Feb 22 19:32:58 UTC 2013  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/Trader/Service_Type_Repository.cpp (list_types):
+          Delete the types to avoid a memory leak.  Thanks to Rudy Pot
+          <rpot at aweta dot nl> for reporting this.
+
 Mon Feb 25 01:32:42 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/tests/FT_Naming/FaultTolerant/LB_server.cpp:
