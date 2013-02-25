@@ -87,17 +87,17 @@ protected:
   //@{
   void init_domain (::DDS::DomainParticipant_ptr & participant);
 
-  virtual void register_type    (::DDS::DomainParticipant_ptr participant,
-                         const char * typesupport_name) = 0;
+  virtual void register_type (::DDS::DomainParticipant_ptr participant,
+                              const char * typesupport_name) = 0;
 
-  void init_topic       (::DDS::DomainParticipant_ptr participant,
-                         ::DDS::Topic_ptr & topic,
-                         const char * topic_name,
-                         const char * typesupport_name);
-  void init_publisher   (::DDS::DomainParticipant_ptr participant,
-                         ::DDS::Publisher_ptr & publisher);
-  void init_subscriber  (::DDS::DomainParticipant_ptr participant,
-                         ::DDS::Subscriber_ptr & subscriber);
+  void init_topic (::DDS::DomainParticipant_ptr participant,
+                   ::DDS::Topic_ptr & topic,
+                   const char * topic_name,
+                   const char * typesupport_name);
+  void init_publisher (::DDS::DomainParticipant_ptr participant,
+                       ::DDS::Publisher_ptr & publisher);
+  void init_subscriber (::DDS::DomainParticipant_ptr participant,
+                        ::DDS::Subscriber_ptr & subscriber);
   //@}
 
   /**
@@ -108,15 +108,15 @@ protected:
    *
    */
   //@{
-  void activate_topic       (ACE_Reactor* reactor,
-                             ::DDS::Topic_ptr topic,
-                             ::DDS::TopicListener_ptr & listener);
-  void activate_publisher   (ACE_Reactor* reactor,
-                             ::DDS::Publisher_ptr publisher,
-                             ::DDS::PublisherListener_ptr & publisher_listener);
-  void activate_subscriber  (ACE_Reactor* reactor,
-                             ::DDS::Subscriber_ptr subscriber,
-                             ::DDS::SubscriberListener_ptr & subscriber_listener);
+  void activate_topic (ACE_Reactor* reactor,
+                       ::DDS::Topic_ptr topic,
+                       ::DDS::TopicListener_ptr & listener);
+  void activate_publisher (ACE_Reactor* reactor,
+                           ::DDS::Publisher_ptr publisher,
+                           ::DDS::PublisherListener_ptr & publisher_listener);
+  void activate_subscriber (ACE_Reactor* reactor,
+                            ::DDS::Subscriber_ptr subscriber,
+                            ::DDS::SubscriberListener_ptr & subscriber_listener);
   //@}
 
   /**
@@ -144,10 +144,10 @@ protected:
    *
    */
   //@{
-  void passivate_topic      (::DDS::Topic_ptr topic,
-                             ::DDS::TopicListener_ptr topic_listener);
-  void passivate_publisher  (::DDS::Publisher_ptr publisher,
-                             ::DDS::PublisherListener_ptr publisher_listener);
+  void passivate_topic (::DDS::Topic_ptr topic,
+                        ::DDS::TopicListener_ptr topic_listener);
+  void passivate_publisher (::DDS::Publisher_ptr publisher,
+                            ::DDS::PublisherListener_ptr publisher_listener);
   void passivate_subscriber (::DDS::Subscriber_ptr subscriber,
                              ::DDS::SubscriberListener_ptr subscriber_listener);
   //@}
@@ -162,17 +162,17 @@ protected:
    * See 'Passivation of a connector' in this file.
    */
   //@{
-  void remove_topic       (::DDS::DomainParticipant_ptr participant,
-                           ::DDS::Topic_ptr topic);
-  void remove_publisher   (::DDS::DomainParticipant_ptr participant,
-                           ::DDS::Publisher_ptr publisher);
-  void remove_subscriber  (::DDS::DomainParticipant_ptr participant,
-                           ::DDS::Subscriber_ptr subscriber);
-  void remove_domain      (::DDS::DomainParticipant_ptr participant);
+  void remove_topic (::DDS::DomainParticipant_ptr participant,
+                     ::DDS::Topic_ptr topic);
+  void remove_publisher (::DDS::DomainParticipant_ptr participant,
+                         ::DDS::Publisher_ptr publisher);
+  void remove_subscriber (::DDS::DomainParticipant_ptr participant,
+                          ::DDS::Subscriber_ptr subscriber);
+  void remove_domain (::DDS::DomainParticipant_ptr participant);
 
   virtual
-  void unregister_type    (::DDS::DomainParticipant_ptr participant,
-                           const char * typesupport_name) = 0;
+  void unregister_type (::DDS::DomainParticipant_ptr participant,
+                        const char * typesupport_name) = 0;
   //@}
 
   /// Get the reactor associated with this component
