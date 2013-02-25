@@ -866,7 +866,8 @@ TAO::FT_ReplicationManager::create_object (
     = this->group_factory_.create_group (
       type_id,
       the_criteria,
-      typeid_properties);
+      typeid_properties,
+      false);
 
   group->initial_populate ();
     //@@ on error we should remove the group from the Group_Factory

@@ -1,4 +1,10 @@
-Sun Feb 24 23:01:05 UTC 2013  Phil Mesnier  <mesnier_p@socket.net>
+Mon Feb 25 00:46:10 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.cpp:
+
+          Fox for propagaing ownership of the property set.
+
+Sun Feb 24 23:01:05 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.cpp:
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_PG_Group_Factory.h:
@@ -4601,7 +4607,7 @@ Tue Feb  5 21:02:55 UTC 2013  "Kevin Stanley"  <stanleyk@ociweb.com>
 
               Fixed compilation errors.
 
-    Wed Nov 21 06:16:58 UTC 2012  Phil Mesnier  <mesnier_p@local>
+    Wed Nov 21 06:16:58 UTC 2012  Phil Mesnier  <mesnier_p@ociweb.com>
 
             * tao/Dynamic_TP/Dynamic_TP_Config.h:
             * tao/Dynamic_TP/Dynamic_TP_POA_Strategy.h:
