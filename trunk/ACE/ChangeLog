@@ -1,3 +1,13 @@
+Mon Feb 25 08:09:24 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Sock_Connect.cpp:
+          Don't use MAX_IF as constant, is a system defined constant on
+          some operating systems
+
+        * tests/OS_Test.cpp:
+          Call compiler version methods, should fix some Coverity test
+          coverage issues
+
 Mon Feb 18 01:57:31 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
 
         * ace/SSL/SSL_Context.cpp:
