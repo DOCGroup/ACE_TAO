@@ -177,7 +177,10 @@ list_types (const CosTradingRepos::ServiceTypeRepository::SpecifiedServiceTypes 
 
       if (all
           || num < type_info->type_struct_.incarnation)
-        types[i++] = CORBA::string_dup (type_name);
+        {
+          CORBA::string_free (types[i]);
+          types[i++] = CORBA::string_dup (type_name);
+        }
     }
 
   CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq *tmp = 0;

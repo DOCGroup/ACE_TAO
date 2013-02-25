@@ -1,3 +1,8 @@
+Fri Feb 22 14:29:39 UTC 2013  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Message_Queue_Vx.inl (defined): Added a fix for RTP.  Thanks
+          to Thomas dot Lockhart at jpl dot nasa dot gov for contributing this.
+
 Mon Feb 25 08:09:24 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Sock_Connect.cpp:

@@ -19,8 +19,8 @@ ACE_Message_Queue_Vx::msgq (void)
 #elif defined __RTP__
                                 reinterpret_cast<int> (tail_)
 #else
-                                tail_
-#endif
+                                reinterpret_cast<MSG_Q_ID> (tail_)
+#endif /* __RTP__ */
                                 );
 }
 
