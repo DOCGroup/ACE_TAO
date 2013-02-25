@@ -27,11 +27,15 @@
 #include "ace/Hash_Map_Manager.h"
 #include "ace/SString.h"
 #include "ace/Null_Mutex.h"
+#include "ace/Refcounted_Auto_Ptr.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
+
+  class PG_Property_Set;
+  typedef ACE_Refcounted_Auto_Ptr<PG_Property_Set, TAO_SYNCH_MUTEX> PG_Property_Set_var;
 
   /**
    * The PG_Property_Set captures the set of properties from a
@@ -78,17 +82,14 @@ namespace TAO
      * @param defaults a propert set decoder that supplies default values.
      */
     PG_Property_Set (const PortableGroup::Properties & property_set,
-                     PG_Property_Set * defaults,
-                     bool own_defaults);
+                     const PG_Property_Set_var & defaults);
 
     /**
      * constructor with defaults, but no properties (yet)
      * (note this is not a copy constructor)
      * @param defaults a propert set decoder that supplies default values.
      */
-    PG_Property_Set (PG_Property_Set * defaults,
-                     bool own_defaults);
-
+    PG_Property_Set (const PG_Property_Set_var & defaults);
 
     ~PG_Property_Set ();
 
@@ -102,7 +103,7 @@ namespace TAO
      * @param pValue an out parameter to receive a pointer to the Any containing the value
      * @returns boolean true if found
      */
-    int find (const ACE_CString & key, const PortableGroup::Value *& pValue)const;
+    int find (const ACE_CString & key, const PortableGroup::Value *& pValue) const;
 
 
     /**
@@ -166,13 +167,8 @@ namespace TAO
     /**
      * a parent to another property decoder that provides default values
      * these can be chained indefinitely.
-     * @todo reference counted pointers would be a good idea here.
      */
-    PG_Property_Set * defaults_;
-    /**
-     * flag denoting ownership of the defaults.
-     */
-    bool own_defaults_;
+    PG_Property_Set_var defaults_;
   };
 
 

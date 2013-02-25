@@ -54,11 +54,11 @@ namespace TAO
   {
     typedef ACE_Hash_Map_Manager<
       ACE_CString,
-      ::TAO::PG_Property_Set *,
+      ::TAO::PG_Property_Set_var,
       TAO_SYNCH_MUTEX> Properties_Map;
     typedef ACE_Hash_Map_Iterator<
       ACE_CString,
-      ::TAO::PG_Property_Set *,
+      ::TAO::PG_Property_Set_var,
       TAO_SYNCH_MUTEX> Properties_Map_Iterator;
 
   public:
@@ -157,7 +157,7 @@ namespace TAO
      * @param type_id identifies the set of properties to be found.
      * @returns a pointer to a Property_Set owned by this Properties_Support object.
      */
-    TAO::PG_Property_Set *  find_typeid_properties (
+    TAO::PG_Property_Set_var  find_typeid_properties (
         const char *type_id);
 
     /**
@@ -182,7 +182,7 @@ namespace TAO
     TAO_SYNCH_MUTEX internals_;
 
     /// The default property set.
-    TAO::PG_Property_Set default_properties_;
+    TAO::PG_Property_Set_var default_properties_;
 
     /// A collection of property sets indexed by type_id.
     Properties_Map properties_map_;
