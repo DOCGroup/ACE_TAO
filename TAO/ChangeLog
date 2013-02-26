@@ -1,3 +1,9 @@
+Tue Feb 26 14:03:02 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/tests/FT_Naming/FaultTolerant/LB_server.h:
+
+          Complete the wide char fix started on Feb 25 01:32:42 UTC 2013.
+
 Mon Feb 25 17:32:02 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.cpp:

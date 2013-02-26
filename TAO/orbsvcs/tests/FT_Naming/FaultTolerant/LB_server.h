@@ -94,7 +94,7 @@ private:
 
   /// write the IOR to a file so that it can be read later.
   int write_ior_to_file (const ACE_TCHAR *filename,
-                         const ACE_TCHAR *ior);
+                         const char *ior);
 
   CORBA::ORB_var orb_;
   int argc_;
