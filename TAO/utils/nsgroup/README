@@ -5,11 +5,10 @@ tao_ft_naming service supports the NameService and NamingManager interfaces.
 
 Here is a summary of the commands and options:
 
-tao_nsgroup group_create  -group <group> -policy <round | rand | least>
+tao_nsgroup group_create  -group <group> -policy <round>
 tao_nsgroup group_remove  -group <group>
 tao_nsgroup group_bind    -group <group> -name <name>
 tao_nsgroup group_unbind  -name <name>
-tao_nsgroup group_modify  -group <group> -policy <round | rand | least>
 tao_nsgroup group_list
 tao_nsgroup member_add    -group <group> -location <location> -ior <ior>
 tao_nsgroup member_remove -group <group> -location <location>
@@ -17,140 +16,121 @@ tao_nsgroup member_show   -group <group> -location <location>
 tao_nsgroup member_list   -group <group>
 tao_nsgroup -help
 
-tao_nsgroup group_create -group <group> -policy <round | rand | least>
+tao_nsgroup group_create -group <group> -policy <round>
 
-	Adds the object group to to the load balancing naming manager service with the
-	specified selection policy. On Creation, an object group contains no member
-	objects. Returns error if <group> is not unique.
+  Adds the object group to to the load balancing naming manager service with the
+  specified selection policy. On Creation, an object group contains no member
+  objects. Returns error if <group> is not unique. Currently the only load
+  balancing policy supported is round-robin.
 
-	Returns Success(0), Error(1)
+  Returns Success(0), Error(1)
 
-	Example:
-	$ACE_ROOT/bin/tao_nsgroup group_create -group ieee -policy round \
-		-ORBInitRef NameService=file://ns.ior -ORBInitRef NamingManager=file://nm.ior
+  Example:
+  $ACE_ROOT/bin/tao_nsgroup group_create -group ieee -policy round \
+    -ORBInitRef NameService=file://ns.ior -ORBInitRef NamingManager=file://nm.ior
 
 tao_nsgroup group_remove -group <group>
 
-	Removes the specified object group from the load balancing naming manager
-	service.
+  Removes the specified object group from the load balancing naming manager
+  service.
 
-	Returns Success(0), Error(1)
+  Returns Success(0), Error(1)
 
-	Example:
-	$ACE_ROOT/bin/tao_nsgroup group_remove -group ieee \
-		-ORBInitRef NameService=file://ns.ior -ORBInitRef NamingManager=file://nm.ior
+  Example:
+  $ACE_ROOT/bin/tao_nsgroup group_remove -group ieee \
+    -ORBInitRef NameService=file://ns.ior -ORBInitRef NamingManager=file://nm.ior
 
-	Note: If the object group is bound with group_bind, you must also unbind it
-	with group_unbind.
+  Note: If the object group is bound with group_bind, you must also unbind it
+  with group_unbind.
 
 tao_nsgroup group_bind -group <group> -name <name>
 
-	Binds the specified object group to the specified stringified name in the
-	naming service. When clients resolve that name, they tranparently obtain a
-	member of the specified object group from the load balancing naming manager
-	service.
+  Binds the specified object group to the specified stringified name in the
+  naming service. When clients resolve that name, they tranparently obtain a
+  member of the specified object group from the load balancing naming manager
+  service.
 
-	Returns Success(0), Error(1)
+  Returns Success(0), Error(1)
 
-	Example:
+  Example:
 
-	$ACE_ROOT/bin/tao_nsgroup group_bind -group ieee -name iso/ieee \
-		-ORBInitRef NameService=file://ns.ior -ORBInitRef NamingManager=file://nm.ior
+  $ACE_ROOT/bin/tao_nsgroup group_bind -group ieee -name iso/ieee \
+    -ORBInitRef NameService=file://ns.ior -ORBInitRef NamingManager=file://nm.ior
 
-	Note: The iso context used in this example must be created before calling
-	group_bind.
+  Note: The iso context used in this example must be created before calling
+  group_bind.
 
 tao_nsgroup group_unbind -name <name>
 
-	Unbinds the specified stringified name from the naming service, but does not
-	remove the object group.
+  Unbinds the specified stringified name from the naming service, but does not
+  remove the object group.
 
-	Returns Success(0), Error(1)
+  Returns Success(0), Error(1)
 
-	Example:
+  Example:
 
-	$ACE_ROOT/bin/tao_nsgroup group_unbind -name iso/ieee \
-		-ORBInitRef NameService=file://ns.ior -ORBInitRef NamingManager=file://nm.ior
-
-tao_nsgroup group_modify -group <group> -policy <round | rand | least>
-
-	Changes the selection algorithm for the specified object group. An object
-	group's selection algorithm determines how the load balancing naming manager
-	service directs client requests to object group members.
-
-	Returns Success(0), Error(1)
-
-	Example:
-	$ACE_ROOT/bin/tao_nsgroup group_modify -group ieee -policy rand \
-		-ORBInitRef NameService=file://ns.ior -ORBInitRef NamingManager=file://nm.ior
+  $ACE_ROOT/bin/tao_nsgroup group_unbind -name iso/ieee \
+    -ORBInitRef NameService=file://ns.ior -ORBInitRef NamingManager=file://nm.ior
 
 tao_nsgroup group_list
 
-	Displays all object groups that currently exist in the load balancing naming
-	manager service by selection policy.
+  Displays all object groups that currently exist in the load balancing naming
+  manager service by selection policy.
 
-	Returns Success(0), Error(1)
+  Returns Success(0), Error(1)
 
-	Example:
-	$ACE_ROOT/bin/tao_nsgroup group_list \
-		-ORBInitRef NameService=file://ns.ior -ORBInitRef NamingManager=file://nm.ior
+  Example:
+  $ACE_ROOT/bin/tao_nsgroup group_list \
+    -ORBInitRef NameService=file://ns.ior -ORBInitRef NamingManager=file://nm.ior
 
-	Round Robin Load Balancing Groups:
-	  ieee
-
-	Random Load Balancing Groups:
-	  ieed
-
-	Least Load Balancing Groups:
-	No Least Load Balancing Groups Registered
+  Round Robin Load Balancing Groups:
+    ieee
 
 
 tao_nsgroup member_add -group <group> -location <location> -ior <ior>
 
-	Adds an member object to the specified object group. After being added, the
-	member object is available for selection. Returns error if the ior is not
-	unique for the specified object group.
+  Adds an member object to the specified object group. After being added, the
+  member object is available for selection. Returns error if the ior is not
+  unique for the specified object group.
 
-	Returns Success(0), Error(1)
+  Returns Success(0), Error(1)
 
-	Example:
-	$ACE_ROOT/bin/tao_nsgroup member_add -group ieee -location 127.0.0.1 \
-		-ior file://mo.ior -ORBInitRef NameService=file://ns.ior \
-		-ORBInitRef NamingManager=file://nm.ior
+  Example:
+  $ACE_ROOT/bin/tao_nsgroup member_add -group ieee -location 127.0.0.1 \
+    -ior file://mo.ior -ORBInitRef NameService=file://ns.ior \
+    -ORBInitRef NamingManager=file://nm.ior
 
 tao_nsgroup member_remove -group <group> -location <location>
 
-	Removes the specified member object location from the specified object group.
+  Removes the specified member object location from the specified object group.
 
-	Returns Success(0), Error(1)
+  Returns Success(0), Error(1)
 
-	Example:
-	$ACE_ROOT/bin/tao_nsgroup member_remove -group ieee -location 127.0.0.1 \
-		-ORBInitRef NameService=file://ns.ior -ORBInitRef NamingManager=file://nm.ior
+  Example:
+  $ACE_ROOT/bin/tao_nsgroup member_remove -group ieee -location 127.0.0.1 \
+    -ORBInitRef NameService=file://ns.ior -ORBInitRef NamingManager=file://nm.ior
 
 tao_nsgroup member_list -group <group>
 
-	Lists the member locations of the specified object group.
+  Lists the member locations of the specified object group.
 
-	Returns Success(0), Error(1)
+  Returns Success(0), Error(1)
 
-	Example:
-	$ACE_ROOT/bin/tao_nsgroup member_list -group ieee \
-		-ORBInitRef NameService=file://ns.ior -ORBInitRef NamingManager=file://nm.ior
-	127.0.0.1
+  Example:
+  $ACE_ROOT/bin/tao_nsgroup member_list -group ieee \
+    -ORBInitRef NameService=file://ns.ior -ORBInitRef NamingManager=file://nm.ior
+  127.0.0.1
 
 
 tao_nsgroup member_show -group <group> -location <location>
 
-	Displays the object reference that cooresponds to the specified member location
-	of an object group.
+  Displays the object reference that cooresponds to the specified member location
+  of an object group.
 
-	Returns Success(0), Error(1)
+  Returns Success(0), Error(1)
 
-	Example:
+  Example:
 
-	$ACE_ROOT/bin/tao_nsgroup member_show -group ieee -location 127.0.0.1 \
-		-ORBInitRef NameService=file://ns.ior -ORBInitRef NamingManager=file://nm.ior
-	IOR:010000002100000049444c3a6f6d672e6f72672f46542f4e616d696e674d616e616765723a312e300000000001000000000000006c000000010102000e00000031302e3230312e3230302e363400e1841b00000014010f005253541571a65076c60a000000000001000000010000000002000000000000000800000001000000004f41540100000018000000010000000100010001000000010001050901010000000000
-
-
+  $ACE_ROOT/bin/tao_nsgroup member_show -group ieee -location 127.0.0.1 \
+    -ORBInitRef NameService=file://ns.ior -ORBInitRef NamingManager=file://nm.ior
+  IOR:010000002100000049444c3a6f6d672e6f72672f46542f4e616d696e674d616e616765723a312e300000000001000000000000006c000000010102000e00000031302e3230312e3230302e363400e1841b00000014010f005253541571a65076c60a000000000001000000010000000002000000000000000800000001000000004f41540100000018000000010000000100010001000000010001050901010000000000

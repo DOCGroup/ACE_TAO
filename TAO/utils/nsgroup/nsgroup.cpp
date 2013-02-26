@@ -416,7 +416,8 @@ NSGROUP::parse_command_line (void)
     else if(ACE_OS::strncmp (this->argv_[i], ACE_TEXT("group_modify"),
                              ACE_OS::strlen (ACE_TEXT("group_modify"))) == 0 )
       {
-      nsgroup_cmd_ =  NSGROUP_GROUP_MODIFY;
+        /// reserve cmd NSGROUP_GROUP_MODIFY for future use
+        nsgroup_cmd_ =  NSGROUP_NONE;//
       }
     else if(ACE_OS::strncmp (this->argv_[i], ACE_TEXT("group_list"),
                                ACE_OS::strlen (ACE_TEXT("group_list"))) == 0 )
@@ -472,10 +473,9 @@ NSGROUP::show_usage ( void )
   ACE_DEBUG ((LM_INFO,
     ACE_TEXT ("Usage:\n")
     ACE_TEXT ("  %s\n")
-    ACE_TEXT ("  group_create  -group <group> -policy <round | rand | least> \n")
+    ACE_TEXT ("  group_create  -group <group> -policy <round> \n")
     ACE_TEXT ("  group_bind    -group <group> -name <name>\n")
     ACE_TEXT ("  group_unbind  -name <name>\n")
-    ACE_TEXT ("  group_modify  -group <group> -policy <round | rand | least> \n")
     ACE_TEXT ("  group_list\n")
     ACE_TEXT ("  group_remove  -group <group>\n")
     ACE_TEXT ("  member_list   -group <group>\n")
@@ -516,7 +516,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   catch (const CORBA::Exception&)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("Unable to run %C\n"),
+                         ACE_TEXT ("Unable to run %s\n"),
                          argv[0]),
                          1);
     }

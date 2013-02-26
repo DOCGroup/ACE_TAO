@@ -71,7 +71,8 @@ public:
   /// @param[in] group_name The symbolic name of the group that can
   /// be used to refer to the group in other operations.
   /// @param[in] lb_strategy The strategy to be used by the Naming
-  /// Service when this object group is resolved.
+  /// Service when this object group is resolved. Currently only
+  /// FT_Naming::ROUND_ROBIN is supported.
   ///@param[in] the_criteria Properties to be used by the object group.
   virtual PortableGroup::ObjectGroup_ptr create_object_group (
     const char * group_name,
@@ -82,7 +83,7 @@ public:
   virtual void delete_object_group (
     const char * group_name);
 
-  /// Retreives a reference to a group with the specified name
+  /// Retrieves a reference to a group with the specified name
   virtual PortableGroup::ObjectGroup_ptr get_object_group_ref_from_name (
     const char * group_name);
 
@@ -92,7 +93,7 @@ public:
       const char * group_name,
       ::FT_Naming::LoadBalancingStrategyValue lb_strategy);
 
-  /// Retreive the names of the groups with the specified load balanacing
+  /// Retrieve the names of the groups with the specified load balancing
   /// strategy that have been created in this Naming Manager.
   virtual ::FT_Naming::GroupNames * groups (
      ::FT_Naming::LoadBalancingStrategyValue target_strategy);
