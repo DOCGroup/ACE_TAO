@@ -99,6 +99,12 @@ TAO_FT_Naming_Manager::create_object_group (
       throw PortableGroup::ObjectNotCreated ();
     }
 
+  /// Currently only FT_Naming::ROUND_ROBIN is supported
+  if (lb_strategy != FT_Naming::ROUND_ROBIN)
+    {
+      throw PortableGroup::ObjectNotCreated ();
+    }
+
   // When creating the object group, it starts as a generic
   // CORBA Object. It will become the type of the first added
   // member.
@@ -177,7 +183,8 @@ TAO_FT_Naming_Manager::groups (::FT_Naming::LoadBalancingStrategyValue target_st
     // Extract the group's Load Balancing property
     PortableGroup::Name lb_strat_property_name (1);
     lb_strat_property_name.length (1);
-    lb_strat_property_name[0].id = CORBA::string_dup (::FT_Naming::TAO_FT_LOAD_BALANCING_STRATEGY);
+    lb_strat_property_name[0].id =
+      CORBA::string_dup (::FT_Naming::TAO_FT_LOAD_BALANCING_STRATEGY);
     PortableGroup::Properties_var props = this->get_properties (obj_group);
     PortableGroup::Value value;
     if (!TAO_PG::get_property_value (lb_strat_property_name, props.in (), value))

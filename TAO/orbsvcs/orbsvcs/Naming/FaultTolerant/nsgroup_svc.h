@@ -37,7 +37,7 @@ public:
    * object groups.
    *
    * @param group    group name
-   * @param policy   round | rand | least
+   * @param policy   round
    *
    * @return 0 on success, -1 on failure, -2 on bad argument.
    */
@@ -75,7 +75,7 @@ public:
    *  balancing strategy for a specified object group.
    *
    *  @param group    group name
-   *  @param policy   round | rand | least
+   *  @param policy   round
    *
    *  @return 0 on success, -1 on failure, -2 on bad argument.
    */
@@ -162,16 +162,22 @@ public:
 private:
 
   /**
-   *  determine stategy based on policy string value default to ROUND_ROBIN
+   *  determine stategy based on policy string
    *
-   *  @param policy   round | rand | least
+   *  @param const ACE_TCHAR *policy ["round"]
+   *  @param FT_Naming::LoadBalancingStrategyValue& value
+   *  @return true on success, false on failure.
    */
-  FT_Naming::LoadBalancingStrategyValue determine_policy_string (const ACE_TCHAR *policy);
+  bool determine_policy_string (
+    const ACE_TCHAR *policy,
+    FT_Naming::LoadBalancingStrategyValue& value);
 
   /**
    *  @return 0 on success, -1 on failure.
    */
-  int display_load_policy_group( FT_Naming::LoadBalancingStrategyValue strategy, const ACE_TCHAR *display_label);
+  int display_load_policy_group (
+    FT_Naming::LoadBalancingStrategyValue strategy,
+    const ACE_TCHAR *display_label);
 
 private:
 
