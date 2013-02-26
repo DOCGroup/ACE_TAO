@@ -214,7 +214,7 @@ LB_server::register_servant (Basic *servant, const char *loc)
         servant->_this ();
 
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Writing ior to file: %s\n"),
+                  ACE_TEXT ("Writing ior to file: %C\n"),
                   loc));
       CORBA::String_var ior =
         this->orb_->object_to_string (basic.in ());
