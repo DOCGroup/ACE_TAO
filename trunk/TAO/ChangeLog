@@ -1,3 +1,17 @@
+Tue Feb 26 16:48:47 UTC 2013  Phillip LaBanca  <labancap@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/nsgroup_svc.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/nsgroup_svc.cpp:
+
+        * utils/nsgroup/README:
+        * utils/nsgroup/nsgroup.cpp:
+        * utils/nsgroup/run_test.pl:
+
+          Modify nsgroup command line interface to only support round robin
+          policy strategy.
+
 Tue Feb 26 14:03:02 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/tests/FT_Naming/FaultTolerant/LB_server.h:

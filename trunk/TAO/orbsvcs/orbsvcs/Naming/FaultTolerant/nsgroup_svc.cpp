@@ -18,18 +18,20 @@ NS_group_svc::NS_group_svc (void)
 {
 }
 
-FT_Naming::LoadBalancingStrategyValue
-NS_group_svc::determine_policy_string (const ACE_TCHAR *policy)
+bool
+NS_group_svc::determine_policy_string (
+  const ACE_TCHAR *policy,
+  FT_Naming::LoadBalancingStrategyValue& value)
 {
-  if (ACE_OS::strcasecmp (policy,
-      ACE_TEXT_CHAR_TO_TCHAR ("rand")) == 0) {
-    return FT_Naming::RANDOM;
-  } else if (ACE_OS::strcasecmp (policy,
-      ACE_TEXT_CHAR_TO_TCHAR ("least")) == 0) {
-    return FT_Naming::LEAST;
-  } else {
-    return FT_Naming::ROUND_ROBIN; // Default case
+  bool rc = false;
+
+  if (ACE_OS::strcasecmp (policy, ACE_TEXT_CHAR_TO_TCHAR ("round")) == 0)
+  {
+    value = FT_Naming::ROUND_ROBIN;
+    rc = true;
   }
+
+  return rc;
 }
 
 int
@@ -118,9 +120,18 @@ NS_group_svc::group_create (
                       -2);
   }
 
+  /// Validate load balancing strategy policy string
+  FT_Naming::LoadBalancingStrategyValue strategy;
+  if (false == determine_policy_string (policy, strategy))
+  {
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("%s is not a valid policy.\n"),
+                       policy),
+                      -2);
+  }
+
   try
   {
-
     /// Verify that the group does not already exist
     /// Group names must be unique
     if ( true == group_exist (group_name))
@@ -146,7 +157,7 @@ NS_group_svc::group_create (
     CORBA::Object_var obj =
       this->naming_manager_->create_object_group (
         ACE_TEXT_ALWAYS_CHAR (group_name),
-        determine_policy_string(policy),
+        strategy,
         criteria);
 
     if (CORBA::is_nil (obj.in ()))
@@ -317,22 +328,14 @@ NS_group_svc::group_list (void)
   // naming manager IDL to support requesting the group list - which is a list of names
 
   /// Display object group list for each load balancing strategy
+  /// Currently only support FT_Naming::ROUND_ROBIN
   int rc = 0;
   if( display_load_policy_group (FT_Naming::ROUND_ROBIN,
                                  ACE_TEXT ("Round Robin")) < 0 )
   {
     rc = -1;
   }
-  if( display_load_policy_group (FT_Naming::RANDOM,
-                                 ACE_TEXT ("Random")) < 0 )
-  {
-    rc = -1;
-  }
-  if( display_load_policy_group (FT_Naming::LEAST,
-                                 ACE_TEXT ("Least")) < 0 )
-  {
-    rc = -1;
-  }
+
   return rc;
 }
 
@@ -405,11 +408,21 @@ NS_group_svc::group_modify (
                       -2);
   }
 
+  /// Validate load balancing strategy policy string
+  FT_Naming::LoadBalancingStrategyValue strategy;
+  if (false == determine_policy_string (policy, strategy))
+  {
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("%s is not a valid policy.\n"),
+                       policy),
+                      -2);
+  }
+
   try
   {
     this->naming_manager_->set_load_balancing_strategy (
                             ACE_TEXT_ALWAYS_CHAR (group_name),
-                            determine_policy_string(policy) );
+                            strategy );
   }
   catch (const PortableGroup::ObjectGroupNotFound&)
   {
