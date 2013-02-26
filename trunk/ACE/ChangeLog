@@ -1,3 +1,9 @@
+Tue Feb 26 23:07:17 UTC 2013  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/platform_g++_common.GNU: When turning on
+          no-strict-aliasing, add the option to FLAGS_C_CC instead of
+          CCFLAGS so that both C and C++ compilers get it.
+
 Fri Feb 22 14:29:39 UTC 2013  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/Message_Queue_Vx.inl (defined): Added a fix for RTP.  Thanks
