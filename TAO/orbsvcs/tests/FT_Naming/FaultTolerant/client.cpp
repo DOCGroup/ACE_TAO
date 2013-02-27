@@ -23,6 +23,8 @@
 #include "ace/OS_NS_unistd.h"
 #include "orbsvcs/Naming/FaultTolerant/nsgroup_svc.h"
 
+#include <iostream>
+
 #if defined (_MSC_VER)
 # pragma warning (disable : 4250)
 #endif /* _MSC_VER */
@@ -1333,7 +1335,6 @@ do_persistence_objectgroup_test (
   ACE_UNUSED_ARG (c_breadth);
   ACE_UNUSED_ARG (c_depth);
   ACE_UNUSED_ARG (o_breadth);
-  ACE_UNUSED_ARG (validate_only);
 
   const int RC_ERROR   = -1;
   const int RC_SUCCESS =  0;
@@ -1480,6 +1481,121 @@ do_persistence_objectgroup_test (
                                RC_ERROR);
           }
         }
+      }
+
+      std::string member_data_file(ACE_TEXT_ALWAYS_CHAR ("member.dat"));
+
+      // Test persisting group modification in first pass and reading
+      // the persistent data in the second pass.
+      // This is done by removal of a group member in first pass and
+      // then adding it back in the second, validation, pass,
+      // verifying that member count is what it was before the removal.
+      // This is tracked by saving member data to a file
+      // in the first pass and then reading it in the second pass.
+
+      if (!validate_only)
+        {
+          try
+          {
+            PortableGroup::Locations_var locations =
+              naming_manager_1->locations_of_members (group_var.in());
+            const PortableGroup::Location & loc = locations[0];
+            unsigned int num_locations = locations->length();
+
+            PortableGroup::Location location_name (1);
+            location_name.length (1);
+            location_name[0].id = CORBA::string_dup(loc[0].id.in());
+
+            CORBA::Object_var ior_var =
+              naming_manager_1->get_member_ref (group_var.in(), location_name);
+
+              // Narrow it to a Basic object
+            Test::Basic_var basic = Test::Basic::_narrow (ior_var.in ());
+            if (CORBA::is_nil (basic.in ()))
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("ERROR: Unable to narrow from ")
+                                 ACE_TEXT ("member ior from %C\n"),
+                                 loc[0].id.in()),
+                                 RC_ERROR);
+            }
+            naming_manager_1->remove_member (group_var.in(), location_name);
+
+            // Save data for the removed member
+            CORBA::String_var member_str = theOrb->object_to_string(basic.in ());
+            std::ofstream out(member_data_file.c_str ());
+            out << num_locations << std::endl;
+            out << loc[0].id.in () << std::endl;
+            out << member_str.in() << std::endl;
+
+          }
+          catch (const PortableGroup::ObjectGroupNotFound&)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("ERROR: Unable to find group %C\n"),
+                                 basic_group_name),
+                                RC_ERROR);
+            }
+          catch (const CORBA::Exception&)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("ERROR: Unable to remove members ")
+                                 ACE_TEXT ("for group %C\n"),
+                                 basic_group_name),
+                                RC_ERROR);
+            }
+        } else {
+        try
+          {
+            // Read in member data
+            std::ifstream in (member_data_file.c_str ());
+            unsigned int num_locations;
+            in >> num_locations;
+            std::string location_str;
+            in >> location_str;
+            std::string member_ior;
+            in >> member_ior;
+
+            CORBA::Object_var member =
+              theOrb->string_to_object(member_ior.c_str ());
+            PortableGroup::Location location_name (1);
+            location_name.length (1);
+            location_name[0].id = CORBA::string_dup(location_str.c_str ());
+            PortableGroup::ObjectGroup_var group_var =
+              naming_manager_1->get_object_group_ref_from_name
+              (ACE_TEXT_ALWAYS_CHAR (basic_group_name));
+
+            // Add back member
+            naming_manager_1->add_member (group_var, location_name, member);
+            PortableGroup::Locations_var locations =
+              naming_manager_1->locations_of_members (group_var);
+
+            // Verify number of locations was what it was before removing/adding
+            if (locations->length () != num_locations)
+              {
+                ACE_ERROR ((LM_ERROR,
+                            ACE_TEXT ("ERROR: Expected %d members but got %d ")
+                            ACE_TEXT ("instead\n"),
+                            num_locations, locations->length ()));
+              }
+
+            // Verify data wasn't corrupt so still can still get
+            // group information
+            FT_Naming::GroupNames_var group_names =
+              naming_manager_1->groups (FT_Naming::ROUND_ROBIN);
+            if (group_names->length () == 0)
+              {
+                ACE_ERROR ((LM_ERROR,
+                            ACE_TEXT ("ERROR: No group names found")));
+              }
+          }
+        catch (const CORBA::Exception&)
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("ERROR: Unable to remove member for group %C\n"),
+                               basic_group_name),
+                              RC_ERROR);
+          }
       }
 
     }
