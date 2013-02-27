@@ -1,11 +1,12 @@
 // $Id$
 
 #include "ace/ACE.h"
+#include "ace/Log_Msg.h"
 #include "test_config.h"
 
 bool match (const char *str, const char *pat, bool cs = true, bool cc = false)
 {
-  bool result = ACE::wild_match (str, pat, cs, cc);
+  bool const result = ACE::wild_match (str, pat, cs, cc);
   ACE_DEBUG ((LM_DEBUG, "string {%C} %C pattern {%s}\t%C\t%C\n", str,
               (result ? "matches" : "does not match"), pat,
               (cs ? "" : "case-insensitive"), (cc ? "char classes" : "")));
@@ -36,6 +37,7 @@ int run_main (int, ACE_TCHAR *[])
 
   ok &= !match ("C2",               "?[!2]",              true,   true);
   ok &=  match ("C1",               "?[!2]",              true,   true);
+  ok &= !match (0,                  "[!C]?",              true,   true);
 
   // invalid classes: results are undefined but we shouldn't crash
   match ("foo", "f[o-a]o", true, true);
@@ -43,6 +45,11 @@ int run_main (int, ACE_TCHAR *[])
   match ("bar", "[z", true, true);
   match ("bar", "[]x", true, true);
   match ("foo", "[f-f]oo", true, true);
+
+  if (!ok)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Wild_Match_Test failed\n")));
+    }
 
   ACE_END_TEST;
   return ok ? 0 : 1;
