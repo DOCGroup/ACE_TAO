@@ -40,6 +40,7 @@ my $stdout_file        = "test.out";
 my $stderr_file        = "test.err";
 my $client_stdout_file = $client->LocalFile ($stdout_file);
 my $client_stderr_file = $client->LocalFile ($stderr_file);
+my $client_member_file = "member.dat";
 
 my $status = 0;
 my $POSITIVE_TEST_RESULT = 0;
@@ -272,6 +273,7 @@ END
     $client->DeleteFile ($nm_iorfile);
     $client->DeleteFile ($stdout_file);
     $client->DeleteFile ($stderr_file);
+    $client->DeleteFile ($client_member_file);
     $server2->DeleteFile($sv_iorfile);
 
     if ( -d $name_dir ) {
