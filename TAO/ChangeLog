@@ -1,3 +1,13 @@
+Wed Feb 27 19:56:57 UTC 2013  Byron Harris  <harrisb@ociweb.com>
+
+        * orbsvcs/tests/FT_Naming/FaultTolerant/client.cpp:
+        * orbsvcs/tests/FT_Naming/FaultTolerant/run_persistence_test.pl:
+
+          Extend object group persistence test to test saving
+          of state change by removing a member from a group in first
+          pass of test and then adding the member back in the second,
+          verification-only, pass of test.
+
 Tue Feb 26 20:41:29 UTC 2013  Phillip LaBanca  <labancap@ociweb.com>
 
         * orbsvcs/tests/FT_Naming/FaultTolerant/LB_server.cpp:
