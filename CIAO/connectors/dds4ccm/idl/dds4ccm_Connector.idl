@@ -23,6 +23,11 @@ module CCM_DDS
       setraises (NonChangeable);
     attribute DDS::StringSeq key_fields
       setraises (NonChangeable);
+    /// The type_name that will be used by DDS4CCM when
+    /// registering the topic to DDS. If empty the default
+    /// typename from the DDS typesupport will be used, this
+    /// default typename is vendor specific
+    attribute string type_name;
   };
 };
 

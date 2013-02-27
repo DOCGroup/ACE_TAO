@@ -41,7 +41,7 @@ DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::stop_dds (
 {
   DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::stop_dds");
 
-  if (!::CORBA::is_nil (this->topic_name_.in ()))
+  if (this->topic_name_.in () != 0)
     { //topic name already set
       // do not stop DDS when topic names are equal
       if (ACE_OS::strlen (this->topic_name_.in ()) == 0)
@@ -90,13 +90,19 @@ DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::configuration_complete 
   DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::configuration_complete");
 
   BaseConnector::configuration_complete ();
-  ::CORBA::String_var typesupport_name;
+
+  // When the user has not set a type_name we default to the DDS
+  // vendor defined default type_name
+  if (this->type_name_.in () == 0 ||
+      ACE_OS::strlen (this->type_name_.in ()) == 0)
+    {
 #if (CIAO_DDS4CCM_NDDS==1)
-  typesupport_name = ::CORBA::string_dup (DDS_TYPE::type_support::get_type_name ());
+      this->type_name_ = ::CORBA::string_dup (DDS_TYPE::type_support::get_type_name ());
 #elif (CIAO_DDS4CCM_OPENDDS==1)
-  typename DDS_TYPE::type_support type;
-  typesupport_name = type.get_type_name ();
+      typename DDS_TYPE::type_support type;
+      this->type_name_ = type.get_type_name ();
 #endif
+    }
 
   ::CCM_DDS::ConnectorStatusListener_var error_listener =
     this->context_->get_connection_error_listener ();
@@ -106,12 +112,12 @@ DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::configuration_complete 
   if (::CORBA::is_nil (this->topic_.in ()))
     {
       this->register_type (this->domain_participant_.in (),
-                           typesupport_name);
+                           this->type_name_.in ());
 
       this->init_topic (this->domain_participant_.in (),
                         this->topic_.inout () ,
                         this->topic_name_.in (),
-                        typesupport_name.in ());
+                        this->type_name_.in ());
     }
 
   if (this->init_subscriber_)
@@ -208,16 +214,8 @@ DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::ccm_remove (void)
       topic = ::DDS::Topic::_nil ();
     }
 
-  ::CORBA::String_var typesupport_name;
-#if (CIAO_DDS4CCM_NDDS==1)
-  typesupport_name = ::CORBA::string_dup (DDS_TYPE::type_support::get_type_name ());
-#elif (CIAO_DDS4CCM_OPENDDS==1)
-  typename DDS_TYPE::type_support type;
-  typesupport_name = type.get_type_name ();
-#endif
-
   this->unregister_type (this->domain_participant_.in (),
-                         typesupport_name.in ());
+                         this->type_name_.in ());
 
   ::DDS::Subscriber_var subscriber = this->subscriber_._retn ();
   if (!::CORBA::is_nil (subscriber.in ()))
@@ -341,6 +339,25 @@ DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::topic_name (
   DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::topic_name");
 
   this->topic_name_ = topic_name;
+}
+
+template <typename CCM_TYPE, typename DDS_TYPE, typename SEQ_TYPE>
+char *
+DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::type_name (void)
+{
+  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::type_name");
+
+  return CORBA::string_dup (this->type_name_.in ());
+}
+
+template <typename CCM_TYPE, typename DDS_TYPE, typename SEQ_TYPE>
+void
+DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::type_name (
+  const char * type_name)
+{
+  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, FIXED>::type_name");
+
+  this->type_name_ = type_name;
 }
 
 template <typename CCM_TYPE, typename DDS_TYPE, typename SEQ_TYPE>
