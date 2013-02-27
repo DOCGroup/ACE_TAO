@@ -93,7 +93,7 @@ protected:
   void init_topic (::DDS::DomainParticipant_ptr participant,
                    ::DDS::Topic_ptr & topic,
                    const char * topic_name,
-                   const char * typesupport_name);
+                   const char * type_name);
   void init_publisher (::DDS::DomainParticipant_ptr participant,
                        ::DDS::Publisher_ptr & publisher);
   void init_subscriber (::DDS::DomainParticipant_ptr participant,

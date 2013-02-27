@@ -1,3 +1,19 @@
+Wed Feb 27 08:17:40 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/idl/dds4ccm_Connector.idl:
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.h:
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.h:
+        * connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.cpp:
+          Added a type_name attribute to the DDS TopicBase connector.
+          When the user doesn't specifiy this in the cdp we will
+          default to the DDS vendor specific type_name which is
+          not standardized. In case of interoperability problems
+          this type_name could be needed. This addition has been
+          reported to the OMG as issue 18499. Updated a few logging
+          statements to include type_name and don't use CORBA::is_nil
+          for checking whether a String_var has content
+
 Wed Feb 13 22:38:40 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
 
         * CIAO_TAO_OpenDDS.mwc:
