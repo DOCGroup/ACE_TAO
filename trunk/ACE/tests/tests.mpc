@@ -671,6 +671,13 @@ project(Compiler_Features_18_Test) : acetest {
   }
 }
 
+project(Compiler_Features_19_Test) : acetest {
+  exename = Compiler_Features_19_Test
+  Source_Files {
+    Compiler_Features_19_Test.cpp
+  }
+}
+
 project(Config Test) : acetest {
   avoids += ace_for_tao
   exename = Config_Test
