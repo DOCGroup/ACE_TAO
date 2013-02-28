@@ -1,3 +1,10 @@
+Thu Feb 28 19:45:03 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Compiler_Features_19_Test.cpp:
+        * tests/run_test.lst:
+        * tests/tests.mpc:
+          Added C++11 test for template alias support
+
 Wed Feb 27 13:54:27 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Wild_Match_Test.cpp:
