@@ -2,6 +2,11 @@
 
 #include "Hello.h"
 #include "tao/Dynamic_TP/DTP_POA_Strategy.h"
+#include "tao/Dynamic_TP/DTP_POA_Loader.h"
+#include "tao/CSD_Framework/CSD_Framework_Loader.h"
+#include "tao/CSD_Framework/CSD_ORBInitializer.h"
+#include "tao/CSD_Threadpool/CSD_Threadpool.h"
+
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/Thread_Manager.h"
