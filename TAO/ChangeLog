@@ -1,3 +1,12 @@
+Thu Feb 28 17:43:15 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * MPC/config/ftclientorb.mpb:
+
+          FT_ClientORB depends on threads to be built, so any
+          component that depends on it must also be build in a
+          threaded environment.  Added threads to dependencies
+          to this base project.
+
 Wed Feb 27 19:56:57 UTC 2013  Byron Harris  <harrisb@ociweb.com>
 
         * orbsvcs/tests/FT_Naming/FaultTolerant/client.cpp:
