@@ -1,3 +1,10 @@
+Fri Mar  1 20:17:57 UTC 2013  Byron Harris  <harrisb@ociweb.com>
+
+        * NEWS:
+
+          Added entry about ImR being interoperable with JacORB
+          servers.
+
 Fri Mar  1 19:15:40 UTC 2013  Byron Harris  <harrisb@ociweb.com>
 
         * orbsvcs/tests/FT_Naming/FaultTolerant/client.cpp:
