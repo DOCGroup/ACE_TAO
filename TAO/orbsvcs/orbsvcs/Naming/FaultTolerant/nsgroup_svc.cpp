@@ -519,10 +519,9 @@ NS_group_svc::member_add (
                           -1);
       }
 
-    this->naming_manager_->add_member (
-        group_var.in(),
-        location_name,
-        ior_var.in());
+    group_var = this->naming_manager_->add_member (group_var.in(),
+                                                   location_name,
+                                                   ior_var.in());
 
   }
   catch (const PortableGroup::ObjectGroupNotFound&)
@@ -638,9 +637,8 @@ NS_group_svc::member_remove (
       this->naming_manager_->get_object_group_ref_from_name (
         ACE_TEXT_ALWAYS_CHAR (group_name));
 
-    this->naming_manager_->remove_member (
-      group_var.in(),
-      location_name);
+    group_var = this->naming_manager_->remove_member (group_var.in(),
+                                                      location_name);
   }
   catch (const PortableGroup::ObjectGroupNotFound&)
   {

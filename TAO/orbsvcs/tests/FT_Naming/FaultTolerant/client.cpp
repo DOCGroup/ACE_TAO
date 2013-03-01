@@ -1519,7 +1519,9 @@ do_persistence_objectgroup_test (
                                  loc[0].id.in()),
                                  RC_ERROR);
             }
-            naming_manager_1->remove_member (group_var.in(), location_name);
+            group_var =
+              naming_manager_1->remove_member (group_var.in(),
+                                               location_name);
 
             // Save data for the removed member
             CORBA::String_var member_str = theOrb->object_to_string(basic.in ());
@@ -1566,7 +1568,8 @@ do_persistence_objectgroup_test (
               (ACE_TEXT_ALWAYS_CHAR (basic_group_name));
 
             // Add back member
-            naming_manager_1->add_member (group_var, location_name, member);
+            group_var =
+              naming_manager_1->add_member (group_var, location_name, member);
             PortableGroup::Locations_var locations =
               naming_manager_1->locations_of_members (group_var);
 
