@@ -157,7 +157,7 @@ LB_server::create_object_group (void)
       if (this->parse_args (argc_, argv_) != 0)
         return -1;
 
-      PortableGroup::Criteria criteria (2);
+      PortableGroup::Criteria criteria (1);
       criteria.length (1);
 
       PortableGroup::Property &mem_style = criteria[0];
