@@ -1050,7 +1050,7 @@ Shared_Backing_Store::load_server (
   else
     // will create a new server below if no previous server
     // or the ior has changed
-    server_started = CORBA::is_nil(si->server) || new_ior;
+    server_started = CORBA::is_nil(si->server.in ()) || new_ior;
 
   create_server(server_started, si);
 }

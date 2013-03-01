@@ -1499,7 +1499,7 @@ do_persistence_objectgroup_test (
           {
             PortableGroup::Locations_var locations =
               naming_manager_1->locations_of_members (group_var.in());
-            const PortableGroup::Location & loc = locations[CORBA::ULong (0)];
+            const PortableGroup::Location & loc = locations.inout ()[0];
             unsigned int num_locations = locations->length();
 
             PortableGroup::Location location_name (1);
