@@ -1483,7 +1483,7 @@ do_persistence_objectgroup_test (
         }
       }
 
-      std::string member_data_file(ACE_TEXT_ALWAYS_CHAR ("member.dat"));
+      std::string member_data_file ("member.dat");
 
       // Test persisting group modification in first pass and reading
       // the persistent data in the second pass.

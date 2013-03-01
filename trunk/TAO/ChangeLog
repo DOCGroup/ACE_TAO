@@ -1,3 +1,9 @@
+Fri Mar  1 19:15:40 UTC 2013  Byron Harris  <harrisb@ociweb.com>
+
+        * orbsvcs/tests/FT_Naming/FaultTolerant/client.cpp:
+
+          Fix build problem when wide characters are enabled.
+
 Fri Mar  1 16:54:37 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/FaultTolerant/nsgroup_svc.cpp:
