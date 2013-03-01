@@ -1,3 +1,10 @@
+Fri Mar  1 15:02:34 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Static/server.cpp:
+
+          Fix the spelling of the included file. Mac's apparently are case-
+          insensitive when finding include files.
+
 Thu Feb 28 23:49:27 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
 
         * orbsvcs/tests/FT_Naming/FaultTolerant/client.cpp:
