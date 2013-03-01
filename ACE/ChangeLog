@@ -1,3 +1,10 @@
+Fri Mar  1 11:21:33 UTC 2013  Martin Corino  <mcorino@remedy.nl>
+
+        * bin/auto_run_tests.pl:
+          Fix for problems with explicit test root and test folders
+          that are also available in default roots.
+
+
 Thu Feb 28 19:45:03 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Compiler_Features_19_Test.cpp:
