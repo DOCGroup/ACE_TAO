@@ -204,9 +204,10 @@ LB_server::register_servant (Basic *servant, const char *loc)
 
       location[0].id = CORBA::string_dup (loc);
 
-      this->naming_manager_->add_member (this->object_group_.in (),
-                             location,
-                             basic.in ());
+      this->object_group_ =
+        this->naming_manager_->add_member (this->object_group_.in (),
+                                           location,
+                                           basic.in ());
     }
   catch (const CORBA::Exception& ex)
     {

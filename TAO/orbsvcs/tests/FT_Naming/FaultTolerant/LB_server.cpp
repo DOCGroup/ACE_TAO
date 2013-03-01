@@ -20,8 +20,7 @@ LB_server::destroy (void)
     {
       this->naming_manager_->delete_object_group ("BasicGroup");
 
-      //TODO: Does the FT_NamingManager need a destroy method?
-//      this->naming_manager_->destroy (1, 1);
+      this->root_poa_->destroy (1, 1);
 
       this->orb_->destroy ();
     }
@@ -189,7 +188,8 @@ LB_server::create_object_group (const char *group_name)
     }
   catch (const PortableGroup::ObjectNotCreated&)
     {
-      this->object_group_ = this->naming_manager_->get_object_group_ref_from_name (group_name);
+      this->object_group_ =
+        this->naming_manager_->get_object_group_ref_from_name (group_name);
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) LB_server - object group already exists\n"));
       return 1;
@@ -226,9 +226,10 @@ LB_server::register_servant (Basic *servant, const char *loc)
 
       location[0].id = CORBA::string_dup (loc);
 
-      this->naming_manager_->add_member (this->object_group_.in (),
-                             location,
-                             basic.in ());
+      this->object_group_ =
+        this->naming_manager_->add_member (this->object_group_.in (),
+                                           location,
+                                           basic.in ());
     }
   catch (const PortableGroup::ObjectNotAdded& )
     {
@@ -254,8 +255,9 @@ LB_server::remove_servant (const char *loc)
   location[0].id = CORBA::string_dup (loc);
 
   try {
-    this->naming_manager_->remove_member (this->object_group_.in (),
-                                          location);
+    this->object_group_ =
+      this->naming_manager_->remove_member (this->object_group_.in (),
+                                            location);
   }
   catch (const CORBA::Exception& ex)
     {

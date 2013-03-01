@@ -1,3 +1,16 @@
+Fri Mar  1 16:54:37 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/nsgroup_svc.cpp:
+        * orbsvcs/tests/FT_Naming/FaultTolerant/Basic.cpp:
+        * orbsvcs/tests/FT_Naming/FaultTolerant/LB_server.cpp:
+        * orbsvcs/tests/FT_Naming/FaultTolerant/client.cpp:
+        * orbsvcs/tests/FT_Naming/Load_Balancing/Basic.cpp:
+        * orbsvcs/tests/FT_Naming/Load_Balancing/LB_server.cpp:
+
+          Avoid memory leaks by placing object group reference
+          returned from add_member and remove_member in an
+          ObjectGroup_var to ensure it is cleaned up.
+
 Fri Mar  1 15:30:10 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/Shared_Backing_Store.cpp:
