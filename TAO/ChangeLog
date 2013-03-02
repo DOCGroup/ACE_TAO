@@ -1,3 +1,9 @@
+Sat Mar  2 19:32:43 UTC 2013  Phil Mesnier  <mesnier_p@socket.net>
+
+        * bin/tao_orb_tests.lst:
+
+          Avoid running the Dynamic_TP/ORB_Loader test for static builds.
+
 Fri Mar  1 20:17:57 UTC 2013  Byron Harris  <harrisb@ociweb.com>
 
         * NEWS:
