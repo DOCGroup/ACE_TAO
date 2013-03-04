@@ -38,6 +38,12 @@
 #include /**/ "Receiver_exec_export.h"
 #include "tao/LocalObject.h"
 
+// 2013 version of the DDS shapes example moves
+// the ShapeType to a nested module
+using org::omg::dds::demo::ShapeType;
+using org::omg::dds::demo::ShapeTypeSeq;
+using org::omg::dds::demo::ShapeType_var;
+
 namespace CIAO_Shapes_Receiver_Impl
 {
   class Receiver_exec_i;

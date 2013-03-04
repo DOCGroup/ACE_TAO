@@ -229,6 +229,17 @@
         </value>
       </value>
     </configProperty>
+    <configProperty>
+      <name>type_name</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>ShapeType</string>
+        </value>
+      </value>
+    </configProperty>
   </instance>
   <instance xmi:id="Shapes_ConnectorComponentInstance2">
     <name>Shapes_ConnectorComponent2</name>
@@ -244,6 +255,17 @@
         </type>
         <value>
           <string>Square</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>type_name</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>ShapeType</string>
         </value>
       </value>
     </configProperty>
