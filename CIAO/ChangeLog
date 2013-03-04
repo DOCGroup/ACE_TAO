@@ -1,3 +1,14 @@
+Mon Mar  4 12:55:09 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Shapes/Base/Shapes_Base.idl:
+        * connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector.idl:
+        * connectors/dds4ccm/examples/Shapes/Receiver/Shapes_Receiver_exec.h:
+        * connectors/dds4ccm/examples/Shapes/Sender/Shapes_Sender_exec.h:
+        * connectors/dds4ccm/examples/Shapes/descriptors/Plan.cdp:
+          Moved the ShapeType into a nested module and update the cdp
+          to set a fixed typename. Matches the 2013 version of the
+          shapes example
+
 Wed Feb 27 08:17:40 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/idl/dds4ccm_Connector.idl:

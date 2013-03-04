@@ -11,30 +11,46 @@
 #pragma ndds typesupport "Base/Shapes_BaseSupport.h"
 #pragma opendds typesupport "Base/Shapes_BaseTypeSupportImpl.h"
 
-#pragma DCPS_DATA_TYPE "ShapeType"
-#pragma DCPS_DATA_KEY "ShapeType color"
+#pragma DCPS_DATA_TYPE "org::omg::dds::demo::ShapeType"
+#pragma DCPS_DATA_KEY "org::omg::dds::demo::ShapeType color"
 
-struct ShapeType {
-  string color; //@key
-  long x;
-  long y;
-  long shapesize;
+module org {
+  module omg {
+    module dds {
+      module demo {
+        struct ShapeType {
+          string color; //@key
+          long x;
+          long y;
+          long shapesize;
+        };
+#if defined DDS4CCM_NEEDS_SEQUENCES_DEFINED
+        typedef sequence<ShapeType> ShapeTypeSeq;
+#endif
+      };
+    };
+  };
 };
 
-#if defined DDS4CCM_NEEDS_SEQUENCES_DEFINED
-typedef sequence<ShapeType> ShapeTypeSeq;
-#endif
 
 #pragma keylist ShapeType color
 
-#pragma DCPS_DATA_TYPE "Attributes"
-#pragma DCPS_DATA_KEY "Attributes shape"
-#pragma DCPS_DATA_KEY "Attributes color"
+#pragma DCPS_DATA_TYPE "org::omg::dds::demo::Attributes"
+#pragma DCPS_DATA_KEY "org::omg::dds::demo::Attributes shape"
+#pragma DCPS_DATA_KEY "org::omg::dds::demo::Attributes color"
 
-struct Attributes {
-  string shape; //@key
-  string color; //@key
-  float speed;
+module org {
+  module omg {
+    module dds {
+      module demo {
+        struct Attributes {
+          string shape; //@key
+          string color; //@key
+          float speed;
+        };
+      };
+    };
+  };
 };
 
 // #pragma DCPS_DATA_SEQUENCE_TYPE "AttributesSeq"
