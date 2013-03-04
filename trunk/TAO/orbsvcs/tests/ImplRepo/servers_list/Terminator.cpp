@@ -24,7 +24,13 @@ Terminator::svc()
   while (1)
     {
       ACE_Message_Block* mb = 0;
-      ACE_ASSERT(this->getq(mb) != -1);
+      if (this->getq(mb) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%P|%t|%T) ERROR: Terminator::svc() could not get "
+                             "message block from queue"), -1);
+        }
+
       if (mb->msg_type () == ACE_Message_Block::MB_HANGUP)
         {
           mb->release ();
