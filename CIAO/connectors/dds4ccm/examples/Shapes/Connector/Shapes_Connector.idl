@@ -19,7 +19,7 @@
 # include "Base/Shapes_BaseTypeSupport.idl"
 #endif
 
-module ::CCM_DDS::Typed < ::ShapeType, ::ShapeTypeSeq> Shapes;
+module ::CCM_DDS::Typed < ::org::omg::dds::demo::ShapeType, ::org::omg::dds::demo::ShapeTypeSeq> Shapes;
 
 #endif /* SHAPES_CONNECTOR_IDL_ */
 

@@ -38,6 +38,12 @@
 #include /**/ "Sender_exec_export.h"
 #include "tao/LocalObject.h"
 
+// 2013 version of the DDS shapes example moves
+// the ShapeType to a nested module
+using org::omg::dds::demo::ShapeType;
+using org::omg::dds::demo::ShapeTypeSeq;
+using org::omg::dds::demo::ShapeType_var;
+
 namespace CIAO_Shapes_Sender_Impl
 {
   class Sender_exec_i;
