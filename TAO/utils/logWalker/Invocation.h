@@ -81,7 +81,7 @@ public:
   Thread *waiter (void) const;
   long handle (void) const;
 
-  void new_line (ostream &strm, int indent, bool add_nl);
+  void new_line (ostream &strm, int indent, int offset,  bool add_nl, bool show_indent);
   void dump_detail (ostream &strm, int indent, Dump_Mode mode, bool show_handle);
   void dump_special_details (ostream &strm, int indent, const char *opname);
 

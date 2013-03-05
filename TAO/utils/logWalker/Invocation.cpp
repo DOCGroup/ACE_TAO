@@ -193,14 +193,26 @@ Invocation::req_line (void)
 }
 
 void
-Invocation::new_line (ostream &strm, int indent, bool add_nl)
+Invocation::new_line (ostream &strm, int indent, int offset, bool add_nl, bool show_indent)
 {
   if (add_nl)
     {
       strm << "\n";
     }
-  while (indent-- > 0)
-    strm << "  ";
+
+  if (indent > 9)
+    {
+      if (show_indent)
+        strm << "[indent " << indent << "] ---> ";
+      else
+        strm << "                   ";
+    }
+  else
+    {
+      indent += offset;
+      while (indent-- > 0)
+        strm << "  ";
+    }
 }
 
 void
@@ -223,7 +235,7 @@ Invocation::dump_detail (ostream &strm,
         }
     }
 
-  this->new_line (strm, indent, false);
+  this->new_line (strm, indent, 0, false, true);
 
   if (opname == 0 || opname[0] == 0)
     opname = "<no operation>";
@@ -328,7 +340,7 @@ Invocation::dump_special_details (ostream &strm, int indent, const char *opname)
       ACE_InputCDR cdr (giop_cdr.rd_ptr(),
                         giop_cdr.length(),
                         giop_cdr.byte_order());
-      this->new_line (strm, indent + 8, true);
+      this->new_line (strm, indent, 8, true, false);
       excep_nl = true;
       ACE_CDR::ULong len;
       if (cdr >> len)
@@ -354,7 +366,7 @@ Invocation::dump_special_details (ostream &strm, int indent, const char *opname)
       ACE_CDR::ULong len;
       if (cdr >> len)
         {
-          this->new_line (strm, indent + 8, true);
+          this->new_line (strm, indent, 8, true, false);
           excep_nl = true;
           strm << "name (len = " << len << ") " << cdr.rd_ptr();
         }
@@ -373,7 +385,7 @@ Invocation::dump_special_details (ostream &strm, int indent, const char *opname)
       ACE_CDR::ULong count;
       if (cdr >> count)
         {
-          this->new_line (strm, indent + 3, true);
+          this->new_line (strm, indent, 3, true, false);
           strm << "name_seq.lengh = " << count << " ";
           while (count-- > 0)
             {
@@ -421,7 +433,7 @@ Invocation::dump_special_details (ostream &strm, int indent, const char *opname)
       ACE_CDR::ULong len;
       if (cdr >> len)
         {
-          this->new_line (strm, indent + 8, true);
+          this->new_line (strm, indent, 8, true, false);
           excep_nl = true;
           strm << "name ( len = " << len << ") " << cdr.rd_ptr();
         }
@@ -448,7 +460,7 @@ Invocation::dump_special_details (ostream &strm, int indent, const char *opname)
           }
         case 2:
           {
-            this->new_line (strm, indent + 8, true);
+            this->new_line (strm, indent, 8, true, false);
             ACE_CDR::Long x;
             if (cdr >> x)
               strm << "MyID reply: " << x;
@@ -459,7 +471,7 @@ Invocation::dump_special_details (ostream &strm, int indent, const char *opname)
     }
   else
     {
-      this->new_line (strm, indent + 8, excep_nl);
+      this->new_line (strm, indent, 8, true, false); //excep_nl, false);
       ACE_CDR::ULong len;
       if (rstat == 1 || rstat == 2)
         {
