@@ -169,7 +169,8 @@ GIOP_Buffer::GIOP_Buffer(const char *text,
   const char *size_str = ACE_OS::strstr(text, size_leadin);
   if (size_str != 0)
     {
-      size_str += 4;
+      size_str += ACE_OS::strlen (size_leadin);
+      size_str += 3;
       this->expected_size_ = ACE_OS::strtol(size_str, 0, 10);
       const char *id = ACE_OS::strchr(size_str, '[') + 1;
       this->expected_req_id_ = ACE_OS::strtol(id, 0, 10);

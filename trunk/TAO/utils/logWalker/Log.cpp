@@ -267,7 +267,7 @@ Log::parse_dump_giop_msg_i (void)
       target = inv->octets(true);
       if (target == 0)
         {
-          ACE_DEBUG ((LM_DEBUG, "%d: no target octets for new recv reqeust, id = %d\n",
+          ACE_ERROR ((LM_ERROR, "%d: no target octets for new recv reqeust, id = %d\n",
                       this->offset_, rid));
           return;
         }
@@ -319,7 +319,7 @@ Log::parse_dump_giop_msg_i (void)
           GIOP_Buffer *tgt = other_thr->giop_target();
           if (target == 0)
             {
-              ACE_DEBUG ((LM_DEBUG, "%d: parse_dump_giop_msg_i, target is null, mode = %d, reqid = %d\n",
+              ACE_ERROR ((LM_ERROR, "%d: dump_giop_msg_i, target is null, mode = %d, reqid = %d\n",
                           this->offset_, mode, rid));
               return;
             }
@@ -380,7 +380,7 @@ Log::parse_muxed_tms_i (void)
 
   Invocation *inv = pp->new_invocation(req_id, this->thr_);
   if (inv == 0)
-    ACE_DEBUG ((LM_DEBUG,"%d: peer %s already has invocation id %d\n",
+    ACE_ERROR ((LM_ERROR,"%d: peer %s already has invocation id %d\n",
                 this->offset_, pp->id(), req_id));
   this->thr_->incoming_from (pp);
 }
@@ -403,7 +403,7 @@ Log::parse_exclusive_tms_i (void)
 
   Invocation *inv = pp->new_invocation(req_id, this->thr_);
   if (inv == 0)
-    ACE_DEBUG ((LM_DEBUG,"%d: peer %s already has invocation id %d\n",
+    ACE_ERROR ((LM_ERROR,"%d: peer %s already has invocation id %d\n",
                 this->offset_, pp->id(), req_id));
   this->thr_->incoming_from (pp);
 }
@@ -443,7 +443,7 @@ Log::parse_wait_for_event_i (void)
 
   PeerProcess *pp = this->thr_->incoming();
   if (pp == 0)
-    pp = this->thr_->pending_peer();
+    pp = this->thr_->peek_new_connection();
   if (pp != 0 && done)
     {
       this->thr_->exit_wait(pp, this->offset_);
@@ -529,6 +529,37 @@ Log::parse_cleanup_queue_i (void)
 }
 
 void
+Log::parse_complete_connection_i (void)
+{
+  if (ACE_OS::strstr (this->info_, "failed") == 0)
+    return;
+  char *addr = ACE_OS::strrchr(this->info_,'<') +1;
+  char *c = ACE_OS::strchr(addr,'>');
+  *c = '\0';
+  //  ACE_DEBUG ((LM_DEBUG, "%d, complete_connection, failed for addr %s\n", this->offset_, addr));
+
+  if (this->conn_waiters_.size() > 0)
+    {
+      // ACE_DEBUG ((LM_DEBUG,"%d: complete_connection: conn_waiters_.size() = %d, addr = %s\n",
+      //             this->offset_, this->conn_waiters_.size(), addr));
+      for (ACE_DLList_Iterator<PeerProcess> c_iter (this->conn_waiters_);
+           !c_iter.done();
+           c_iter.advance())
+        {
+          PeerProcess *waiter = 0;
+          c_iter.next(waiter);
+          if (waiter != 0 && waiter->match_server_addr (addr, session_))
+            {
+              c_iter.remove();
+              // ACE_DEBUG ((LM_DEBUG,"%d: complete_connection: purging waiter\n",this->offset_));
+              delete waiter;
+              break;
+            }
+        }
+    }
+}
+
+void
 Log::parse_close_connection_i (void)
 {
   char *hpos = ACE_OS::strchr(this->info_,'[');
@@ -558,6 +589,8 @@ Log::parse_handler_open_i (bool is_ssl)
   PeerProcess *pp = 0;
   if (this->conn_waiters_.size() > 0)
     {
+      // ACE_DEBUG ((LM_DEBUG,"%d: handler_open: conn_waiters_.size() = %d, addr = %s\n",
+      //             this->offset_, this->conn_waiters_.size(), addr));
       for (ACE_DLList_Iterator<PeerProcess> c_iter (this->conn_waiters_);
            !c_iter.done();
            c_iter.advance())
@@ -570,15 +603,19 @@ Log::parse_handler_open_i (bool is_ssl)
               c_iter.remove();
               break;
             }
+          // else
+          //   ACE_DEBUG ((LM_DEBUG,"%d: handler_open: no match waiter addr = %s\n",
+          //               this->offset_, (waiter == 0 ? "<null>" :  waiter->server_addr().c_str()) ));
+
         }
     }
   else
     {
-      pp = this->thr_->pending_peer();
+      pp = this->thr_->pop_new_connection();
     }
   if (pp == 0)
   {
-    ACE_ERROR ((LM_ERROR,"%d: no pending peer for addr %s\n",
+    ACE_ERROR ((LM_ERROR,"%d: handler_open: no pending peer for addr %s\n",
                 this->offset_, addr));
     return;
   }
@@ -621,7 +658,6 @@ Log::parse_handler_open_i (bool is_ssl)
       pp->add_transport(trans);
     }
   trans->handle_ = handle;
-  this->thr_->pending_peer(0);
   this->hostproc_->add_peer (handle,pp);
 }
 
@@ -638,7 +674,17 @@ Log::parse_begin_connection_i (void)
       pp->set_server_addr (addr);
     }
   this->conn_waiters_.insert_tail (pp);
-  this->thr_->pending_peer (pp);
+  this->thr_->push_new_connection (pp);
+  // ACE_DEBUG ((LM_DEBUG,"%d: begin_connection: pushing pp for addr %s\n", offset_,addr));
+}
+
+void
+Log::parse_connection_handler_ctor_i (void)
+{
+  char *c = ACE_OS::strchr (this->info_, '[') + 1;
+  size_t handle = ACE_OS::strtol (c, 0, 10);
+  // ACE_DEBUG ((LM_DEBUG,"%d: constructed new handler for %d\n", offset_, handle));
+
 }
 
 void
@@ -648,7 +694,7 @@ Log::parse_local_addr_i (void)
   char *c = ACE_OS::strchr(addr,'>');
   *c = '\0';
 
-  PeerProcess *peer = this->thr_->pending_peer();
+  PeerProcess *peer = this->thr_->peek_new_connection();
   if (peer == 0)
     {
       this->thr_->pending_local_addr (addr);
@@ -670,22 +716,31 @@ Log::parse_local_addr_i (void)
 void
 Log::parse_connection_not_complete_i (void)
 {
-  this->thr_->pending_peer (0);
+  PeerProcess *pp = this->thr_->pop_new_connection ();
+  if (pp != 0)
+    {
+      // ACE_DEBUG ((LM_DEBUG,"%d: connection_not_complete: popping pp from %d\n",
+      //             offset_, pp->offset()));
+    }
+  else
+    ACE_DEBUG ((LM_DEBUG,"%d: connection_not_complete: no pending peer\n", offset_));
 }
 
 void
 Log::parse_open_as_server_i (void)
 {
-  this->thr_->pending_peer (new PeerProcess(this->offset_, false));
+  // ACE_DEBUG ((LM_DEBUG,"%d: open_as_server: adding peer process\n", offset_));
+
+  this->thr_->push_new_connection (new PeerProcess(this->offset_, false));
 }
 
 void
 Log::parse_iiop_connection_handler_ctor_i (void)
 {
-  PeerProcess *pp = this->thr_->pending_peer();
+  PeerProcess *pp = this->thr_->peek_new_connection();
   if (pp == 0)
     {
-      ACE_ERROR ((LM_ERROR, "%d: parse_iiop_connection_handler_ctor_i: no pending peer on thread\n", this->offset_));
+      ACE_ERROR ((LM_ERROR, "%d: iiop_connection_handler_ctor_i: no pending peer on thread\n", this->offset_));
       return;
     }
 
@@ -699,13 +754,14 @@ Log::parse_iiop_connection_handler_ctor_i (void)
 void
 Log::parse_wait_for_connection_i (void)
 {
-  ACE_ERROR ((LM_ERROR,"%d: parse_wait_for_connection, line = %s\n", this->offset_, this->line_));
+  //  ACE_ERROR ((LM_ERROR,"%d: wait_for_connection, line = %s\n", this->offset_, this->info_));
   if (ACE_OS::strstr (this->info_,"Connection not complete") == 0)
     {
       return;
     }
   else if (ACE_OS::strstr (this->info_,"wait done result =") == 0)
     {
+#if 0
       char *pos = ACE_OS::strchr (this->info_, '=') + 2;
       int result = ACE_OS::strtol (pos, 0, 10);
       if (result == 1)
@@ -714,7 +770,7 @@ Log::parse_wait_for_connection_i (void)
       long handle = ACE_OS::strtol (pos, 0, 10);
       PeerProcess *pp = 0;
 
-      ACE_DEBUG ((LM_DEBUG, "%d: parse_wait_for_connection: wait done, result = %d, purging handle = %d\n", this->offset_, result, handle));
+      ACE_DEBUG ((LM_DEBUG, "%d: wait_for_connection: wait done, result = %d, purging handle = %d\n", this->offset_, result, handle));
 
       if (this->conn_waiters_.size() > 0)
         {
@@ -738,32 +794,29 @@ Log::parse_wait_for_connection_i (void)
         }
       else
         {
-          pp = this->thr_->pending_peer();
+          pp = this->thr_->pop_new_connection ();
           Transport *t = pp->find_transport (handle);
           if (t == 0)
             {
+              this->thr_->push_new_connection (pp);
               pp = 0;
-            }
-          else
-            {
-              this->thr_->pending_peer (0);
             }
         }
       if (pp == 0)
         {
-          ACE_ERROR ((LM_ERROR,"%d: no pending peer for handle %s\n",
+          ACE_ERROR ((LM_ERROR,"%d: wait_for_connection: no pending peer for handle %s\n",
                       this->offset_, handle));
           return;
         }
       delete pp;
-
+#endif
     }
 }
 
 void
 Log::parse_post_open_i (void)
 {
-  //  ACE_ERROR ((LM_ERROR,"%d: parse_post_open, line = %s\n", this->offset_, this->line_));
+  //  ACE_ERROR ((LM_ERROR,"%d: post_open, line = %s\n", this->offset_, this->line_));
 }
 
 void
@@ -772,7 +825,7 @@ Log::parse_notify_poa_helper_i (void)
   Invocation *inv = this->thr_->current_invocation ();
   if (inv == 0)
     {
-      ACE_ERROR ((LM_ERROR,"%d: parse_notify_poa_helper line = %s, no current invocation on thread\n", this->offset_, this->info_));
+      ACE_ERROR ((LM_ERROR,"%d: notify_poa_helper line = %s, no current invocation on thread\n", this->offset_, this->info_));
       return;
     }
   bool activate = ACE_OS::strstr (this->info_, "Activating") != 0;
@@ -796,7 +849,7 @@ Log::parse_notify_object_i (void)
   Invocation *inv = this->thr_->current_invocation ();
   if (inv == 0)
     {
-      // ACE_ERROR ((LM_ERROR,"%d: parse_notify_object line = %s, no current invocation on thread\n", this->offset_, this->info_));
+      // ACE_ERROR ((LM_ERROR,"%d: notify_object line = %s, no current invocation on thread\n", this->offset_, this->info_));
     }
 
   char *ptr = ACE_OS::strstr (this->info_, "object:") + 7;
@@ -939,9 +992,17 @@ Log::parse_line (void)
     {
       this->parse_close_connection_i();
     }
+  else if (ACE_OS::strstr (this->info_, "complete_connection, connection to") != 0)
+    {
+      this->parse_complete_connection_i();
+    }
   else if (ACE_OS::strstr (this->info_, "IIOP_Connector::begin_connection, to ") != 0)
     {
       this->parse_begin_connection_i();
+    }
+  else if (ACE_OS::strstr (this->info_, "::IIOP_Connection_Handler ") != 0)
+    {
+      this->parse_connection_handler_ctor_i();
     }
   else if (ACE_OS::strstr (this->info_, "IIOP_Connection_Handler::open, The local addr is") != 0)
     {
@@ -959,7 +1020,7 @@ Log::parse_line (void)
     {
       this->parse_got_existing_i();
     }
-  else if (ACE_OS::strstr (this->info_, "Transport_Connector::wait_for_connection_competion") != 0)
+  else if (ACE_OS::strstr (this->info_, "Transport_Connector::wait_for_connection_completion") != 0)
     {
       this->parse_wait_for_connection_i();
     }

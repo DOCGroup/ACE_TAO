@@ -85,7 +85,7 @@ HostProcess::find_thread_for_peer (const ACE_CString &addr, Session &session)
        i.advance())
     {
       i.next(thr);
-      PeerProcess *pp = thr->pending_peer();
+      PeerProcess *pp = thr->peek_new_connection();
       if (pp == 0)
         continue;
 
