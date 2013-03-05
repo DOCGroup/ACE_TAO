@@ -1,3 +1,19 @@
+Tue Mar  5 21:47:07 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * utils/logWalker/GIOP_Buffer.cpp:
+        * utils/logWalker/HostProcess.cpp:
+        * utils/logWalker/Invocation.h:
+        * utils/logWalker/Invocation.cpp:
+        * utils/logWalker/Log.h:
+        * utils/logWalker/Log.cpp:
+        * utils/logWalker/PeerProcess.h:
+        * utils/logWalker/PeerProcess.cpp:
+        * utils/logWalker/Thread.h:
+        * utils/logWalker/Thread.cpp:
+
+          Improve the parsing and readability of heavily recursive
+          logs.
+
 Mon Mar  4 21:24:45 UTC 2013  Byron Harris  <harrisb@ociweb.com>
 
         * orbsvcs/tests/ImplRepo/RestartServer/Terminator.cpp:

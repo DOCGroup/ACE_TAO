@@ -55,6 +55,7 @@ public:
   const ACE_CString &last_client_addr (void) const;
 
   bool is_server (void) const;
+  size_t offset (void) const;
   void ssl (bool is_ssl);
   void add_transport (Transport *t);
   Transport *last_transport (void);

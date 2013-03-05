@@ -16,7 +16,7 @@ Thread::Thread (long tid, const char *alias, size_t offset)
     nested_ (0),
     pending_(),
     incoming_(0),
-    new_connection_(0),
+    new_connection_(),
     giop_target_(0),
     target_dup_(0),
     current_invocation_ (),
@@ -26,15 +26,25 @@ Thread::Thread (long tid, const char *alias, size_t offset)
 }
 
 void
-Thread::pending_peer (PeerProcess *pp)
+Thread::push_new_connection (PeerProcess *pp)
 {
-  this->new_connection_ = pp;
+  this->new_connection_.push (pp);
 }
 
 PeerProcess *
-Thread::pending_peer (void) const
+Thread::pop_new_connection (void)
 {
-  return this->new_connection_;
+  PeerProcess *pp = 0;
+  this->new_connection_.pop (pp);
+  return pp;
+}
+
+PeerProcess *
+Thread::peek_new_connection (void) const
+{
+  PeerProcess *pp = 0;
+  this->new_connection_.top (pp);
+  return pp;
 }
 
 void

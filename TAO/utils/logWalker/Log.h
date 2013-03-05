@@ -52,6 +52,7 @@ protected:
   bool match_target(void);
 
   void parse_handler_open_i (bool is_ssl);
+  void parse_connection_handler_ctor_i (void);
   void parse_dump_giop_msg_i (void);
   void parse_HEXDUMP_i (void);
   void parse_open_listener_i (void);
@@ -62,6 +63,7 @@ protected:
   void parse_wait_for_event_i (void);
   void parse_wait_on_read_i (void);
   void parse_cleanup_queue_i (void);
+  void parse_complete_connection_i (void);
   void parse_close_connection_i (void);
   void parse_begin_connection_i (void);
   void parse_local_addr_i (void);

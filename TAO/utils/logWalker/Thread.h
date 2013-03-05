@@ -13,7 +13,7 @@
 #include "Invocation.h"
 #include "PeerProcess.h"
 
-typedef ACE_Unbounded_Stack<PeerProcess *> UpcallStack;
+typedef ACE_Unbounded_Stack<PeerProcess *> PeerProcessStack;
 typedef ACE_Unbounded_Stack<Invocation *> InvocationStack;
 
 class Thread
@@ -40,8 +40,11 @@ public:
   void dump_detail (ostream &strm) const;
   void dump_invocations (ostream &strm);
   void get_summary (long &sent_reqs, long &recv_reqs, size_t &sent_size, size_t &recv_size);
-  PeerProcess *pending_peer (void) const;
-  void pending_peer (PeerProcess *pp);
+
+  void push_new_connection (PeerProcess *pp);
+  PeerProcess *pop_new_connection (void);
+  PeerProcess *peek_new_connection (void) const;
+
   void pending_local_addr (const ACE_CString &addr);
   const ACE_CString& pending_local_addr (void) const;
   void active_handle (long handle);
@@ -58,9 +61,9 @@ private:
   long client_encounters_;
   long server_encounters_;
   long nested_;
-  UpcallStack pending_;
+  PeerProcessStack pending_;
   PeerProcess *incoming_;
-  PeerProcess *new_connection_;
+  PeerProcessStack new_connection_;
   ACE_CString pending_local_addr_;
   GIOP_Buffer *giop_target_;
   Thread *target_dup_;

@@ -110,6 +110,12 @@ PeerProcess::is_server (void) const
   return this->server_;
 }
 
+size_t
+PeerProcess::offset (void) const
+{
+  return this->origin_offset_;
+}
+
 void
 PeerProcess::ssl (bool is_ssl)
 {
