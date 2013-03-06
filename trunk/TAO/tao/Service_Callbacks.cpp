@@ -57,7 +57,7 @@ TAO_Service_Callbacks::raise_comm_failure (
   throw ::CORBA::COMM_FAILURE (
     CORBA::SystemException::_tao_minor_code (
       TAO_INVOCATION_RECV_REQUEST_MINOR_CODE,
-      -1),
+      0),
     CORBA::COMPLETED_MAYBE);
 }
 
@@ -69,7 +69,7 @@ TAO_Service_Callbacks::raise_transient_failure (
   throw ::CORBA::TRANSIENT (
     CORBA::SystemException::_tao_minor_code (
       TAO_INVOCATION_RECV_REQUEST_MINOR_CODE,
-      -1),
+      0),
     CORBA::COMPLETED_MAYBE);
 }
 

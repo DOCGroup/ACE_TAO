@@ -15,14 +15,15 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_UIPMC_Acceptor::TAO_UIPMC_Acceptor (bool listen_on_all_ifs)
+TAO_UIPMC_Acceptor::TAO_UIPMC_Acceptor (
+  bool listen_on_all_ifs)
   : TAO_Acceptor (IOP::TAG_UIPMC),
     addrs_ (0),
     hosts_ (0),
     endpoint_count_ (0),
     version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
     orb_core_ (0),
-    listen_on_all_(listen_on_all_ifs)
+    listen_on_all_ (listen_on_all_ifs)
 {
 }
 
@@ -34,14 +35,15 @@ TAO_UIPMC_Acceptor::~TAO_UIPMC_Acceptor (void)
 
   delete [] this->addrs_;
 
-  for (size_t i = 0; i < this->endpoint_count_; ++i)
+  for (size_t i = 0u; i < this->endpoint_count_; ++i)
     CORBA::string_free (this->hosts_[i]);
 
   delete [] this->hosts_;
 }
 
 int
-TAO_UIPMC_Acceptor::create_profile (const TAO::ObjectKey &,
+TAO_UIPMC_Acceptor::create_profile (
+  const TAO::ObjectKey &,
   TAO_MProfile &,
   CORBA::Short)
 {
@@ -73,12 +75,13 @@ TAO_UIPMC_Acceptor::close (void)
 }
 
 int
-TAO_UIPMC_Acceptor::open (TAO_ORB_Core *orb_core,
-                          ACE_Reactor *reactor,
-                          int major,
-                          int minor,
-                          const char *address,
-                          const char *options)
+TAO_UIPMC_Acceptor::open (
+  TAO_ORB_Core *orb_core,
+  ACE_Reactor *reactor,
+  int major,
+  int minor,
+  const char *address,
+  const char *options)
 {
   this->orb_core_ = orb_core;
 
@@ -142,15 +145,13 @@ TAO_UIPMC_Acceptor::open (TAO_ORB_Core *orb_core,
         }
     }
   else
-    {
 #endif /* ACE_HAS_IPV6 */
+    {
       // Extract out just the host part of the address.
       size_t len = port_separator_loc - address;
       ACE_OS::memcpy (tmp_host, address, len);
       tmp_host[len] = '\0';
-#if defined (ACE_HAS_IPV6)
     }
-#endif /* ACE_HAS_IPV6 */
 
   // Both host and port have to be specified.
   if (port_separator_loc == 0)
@@ -208,11 +209,12 @@ TAO_UIPMC_Acceptor::open (TAO_ORB_Core *orb_core,
 }
 
 int
-TAO_UIPMC_Acceptor::open_default (TAO_ORB_Core *,
-                                  ACE_Reactor *,
-                                  int,
-                                  int,
-                                  const char *)
+TAO_UIPMC_Acceptor::open_default (
+  TAO_ORB_Core *,
+  ACE_Reactor *,
+  int,
+  int,
+  const char *)
 {
   // There is no such thing as a default multicast listen
   // port.  The mechanism for choosing these ports is done
@@ -221,23 +223,25 @@ TAO_UIPMC_Acceptor::open_default (TAO_ORB_Core *,
 }
 
 int
-TAO_UIPMC_Acceptor::open_i (const ACE_INET_Addr& addr,
-                            ACE_Reactor *reactor)
+TAO_UIPMC_Acceptor::open_i (
+  const ACE_INET_Addr &addr,
+  ACE_Reactor *reactor)
 {
+  // Create our connection handler and pass it our configurtion options.
   TAO_UIPMC_Mcast_Connection_Handler *connection_handler = 0;
   ACE_NEW_RETURN (connection_handler,
                   TAO_UIPMC_Mcast_Connection_Handler (this->orb_core_),
                   -1);
-
   connection_handler->local_addr (addr);
   connection_handler->listen_on_all (this->listen_on_all_);
   if (connection_handler->open (0))
     {
-        ACE_DEBUG ((LM_ERROR,
-                      ACE_TEXT("TAO (%P|%t) - TAO_UIPMC_Acceptor::open_i, ")
-                      ACE_TEXT("failed to open connection handler.\n")
-                  ));
-        return -1;
+      ACE_DEBUG ((LM_ERROR,
+                  ACE_TEXT("TAO (%P|%t) - TAO_UIPMC_Acceptor::open_i, ")
+                  ACE_TEXT("failed to open connection handler.\n")
+                ));
+      delete connection_handler;
+      return -1;
     }
 
   int result =
@@ -258,18 +262,16 @@ TAO_UIPMC_Acceptor::open_i (const ACE_INET_Addr& addr,
   // the same port.  This is how a wildcard socket bind() is supposed
   // to work.
   u_short port = addr.get_port_number ();
-  for (size_t j = 0; j < this->endpoint_count_; ++j)
-    this->addrs_[j].set_port_number (port, 1);
-
-  if (TAO_debug_level > 5)
+  for (size_t j = 0u; j < this->endpoint_count_; ++j)
     {
-      for (size_t i = 0; i < this->endpoint_count_; ++i)
+      this->addrs_[j].set_port_number (port, 1);
+      if (TAO_debug_level > 5)
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - UIPMC_Acceptor::open_i, ")
                       ACE_TEXT ("listening on: <%C:%u>\n"),
-                      this->hosts_[i],
-                      this->addrs_[i].get_port_number ()));
+                      this->hosts_[j],
+                      this->addrs_[j].get_port_number ()));
         }
     }
 
@@ -277,18 +279,20 @@ TAO_UIPMC_Acceptor::open_i (const ACE_INET_Addr& addr,
 }
 
 int
-TAO_UIPMC_Acceptor::hostname (TAO_ORB_Core *,
-                              ACE_INET_Addr &addr,
-                              char *&host,
-                              const char *)
+TAO_UIPMC_Acceptor::hostname (
+  TAO_ORB_Core *,
+  ACE_INET_Addr &addr,
+  char *&host,
+  const char *)
 {
   // Only have dotted decimal addresses for multicast.
   return this->dotted_decimal_address (addr, host);
 }
 
 int
-TAO_UIPMC_Acceptor::dotted_decimal_address (ACE_INET_Addr &addr,
-                                            char *&host)
+TAO_UIPMC_Acceptor::dotted_decimal_address (
+  ACE_INET_Addr &addr,
+  char *&host)
 {
   char tmp[INET6_ADDRSTRLEN];
   if (!addr.get_host_addr (tmp, sizeof tmp))
@@ -297,7 +301,7 @@ TAO_UIPMC_Acceptor::dotted_decimal_address (ACE_INET_Addr &addr,
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) - UIPMC_Acceptor::")
                     ACE_TEXT ("dotted_decimal_address, cannot determine ")
-                    ACE_TEXT ("hostname '%m'\n")));
+                    ACE_TEXT ("hostname (Errno: '%m')\n")));
       return -1;
     }
 
@@ -312,8 +316,9 @@ TAO_UIPMC_Acceptor::endpoint_count (void)
 }
 
 int
-TAO_UIPMC_Acceptor::object_key (IOP::TaggedProfile &,
-                                TAO::ObjectKey &)
+TAO_UIPMC_Acceptor::object_key (
+  IOP::TaggedProfile &,
+  TAO::ObjectKey &)
 {
   // No object key to extract.  Just return success.
   return 1;
@@ -355,7 +360,7 @@ TAO_UIPMC_Acceptor::parse_options (const char *str)
   ACE_CString::size_type begin = 0;
   ACE_CString::size_type end = 0;
 
-  for (CORBA::ULong j = 0; j < option_count;)
+  for (CORBA::ULong j = 0u; j < option_count;)
     {
       if (j < option_count - 1)
         end = options.find (option_delimiter, begin);

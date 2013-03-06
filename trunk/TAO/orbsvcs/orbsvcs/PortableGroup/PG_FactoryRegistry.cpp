@@ -273,7 +273,7 @@ int TAO::PG_FactoryRegistry::init (CORBA::ORB_ptr orb)
 */
 
 TAO::PG_FactoryRegistry::RoleInfo::RoleInfo(size_t estimated_number_entries)
-  : infos_(estimated_number_entries)
+  : infos_(static_cast<CORBA::ULong> (estimated_number_entries))
 {
 }
 
@@ -311,8 +311,8 @@ void TAO::PG_FactoryRegistry::register_factory (
     }
 
   PortableGroup::FactoryInfos & infos = role_info->infos_;;
-  size_t length = infos.length();
-  for (size_t nInfo = 0; nInfo < length; ++nInfo)
+  CORBA::ULong length = infos.length();
+  for (CORBA::ULong nInfo = 0u; nInfo < length; ++nInfo)
     {
       PortableGroup::FactoryInfo & info = infos[nInfo];
       if (info.the_location == factory_info.the_location)
@@ -356,8 +356,8 @@ void TAO::PG_FactoryRegistry::unregister_factory (
   {
     PortableGroup::FactoryInfos & infos = role_info->infos_;
     int found = 0;
-    size_t length = infos.length();
-    for (size_t nInfo = 0; !found && nInfo < length; ++nInfo)
+    CORBA::ULong length = infos.length();
+    for (CORBA::ULong nInfo = 0u; !found && nInfo < length; ++nInfo)
     {
       PortableGroup::FactoryInfo & info = infos[nInfo];
       if (info.the_location == location)
@@ -500,8 +500,8 @@ void TAO::PG_FactoryRegistry::unregister_factory_by_location (
     // ACE_ERROR((LM_INFO,  "unregister_factory_by_location: Checking role %s\n", role.c_str()  ));
 
     int found = 0;
-    size_t length = infos.length();
-    for (size_t nInfo = 0; !found && nInfo < length; ++nInfo)
+    CORBA::ULong length = infos.length();
+    for (CORBA::ULong nInfo = 0u; !found && nInfo < length; ++nInfo)
     {
       PortableGroup::FactoryInfo & info = infos[nInfo];
       if (info.the_location == location)
@@ -625,7 +625,10 @@ void TAO::PG_FactoryRegistry::unregister_factory_by_location (
 {
   METHOD_ENTRY(TAO::PG_FactoryRegistry::list_factories_by_location);
   ::PortableGroup::FactoryInfos_var result;
-  ACE_NEW_THROW_EX (result, ::PortableGroup::FactoryInfos(this->registry_.current_size()),
+  ACE_NEW_THROW_EX (
+    result,
+    ::PortableGroup::FactoryInfos(
+      static_cast<CORBA::ULong> (this->registry_.current_size())),
     CORBA::NO_MEMORY (TAO::VMCID, CORBA::COMPLETED_NO));
 
 
@@ -642,16 +645,16 @@ void TAO::PG_FactoryRegistry::unregister_factory_by_location (
     PortableGroup::FactoryInfos & found_infos = role_info->infos_;
     // iterate through the entry for this type
     int found = 0;
-    size_t length = found_infos.length();
-    for (size_t nInfo = 0; !found && nInfo < length; ++nInfo)
+    CORBA::ULong length = found_infos.length();
+    for (CORBA::ULong nInfo = 0u; !found && nInfo < length; ++nInfo)
     {
       PortableGroup::FactoryInfo & info = found_infos[nInfo];
       if (info.the_location == location)
       {
         found = 1;
         result_length += 1;
-        result->length(result_length);
-        (*result)[result_length-1] = info;
+        result->length (static_cast<CORBA::ULong> (result_length));
+        (*result)[static_cast<CORBA::ULong> (result_length-1u)] = info;
       }
     }
   }

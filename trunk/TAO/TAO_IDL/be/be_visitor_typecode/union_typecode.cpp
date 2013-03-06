@@ -118,7 +118,8 @@ TAO::be_visitor_union_typecode::visit_union (be_union * node)
      << "\"" << node->original_local_name () << "\"," << be_nl
      << "&" << discriminant_type->tc_name () << "," << be_nl
      << "_tao_cases_" << node->flat_name () << "," << be_nl
-     << node->nfields () << ", "
+     << "sizeof (_tao_cases_" << node->flat_name () << ")/"
+        "sizeof (_tao_cases_" << node->flat_name () << "[0])," << be_nl
      << node->default_index () << ");" << be_uidt_nl
      << be_uidt_nl;
 
@@ -135,9 +136,9 @@ TAO::be_visitor_union_typecode::gen_case_typecodes (be_union * node)
 {
   AST_Field ** member_ptr = 0;
 
-  size_t const count = node->nfields ();
+  ACE_CDR::ULong const count = node->nfields ();
 
-  for (size_t i = 0; i < count; ++i)
+  for (ACE_CDR::ULong i = 0u; i < count; ++i)
     {
       node->field (member_ptr, i);
 
@@ -184,15 +185,14 @@ TAO::be_visitor_union_typecode::visit_cases (be_union * node)
   const char *fields_name_str = fields_name.c_str ();
 
   TAO_OutStream & os = *this->ctx_->stream ();
+  ACE_CDR::ULong countLabels = 0u;
 
   // Start with static instances of each array element-to-be.
-  ACE_CDR::ULong const count = node->nfields ();
-
-  for (ACE_CDR::ULong i = 0; i < count; ++i)
+  ACE_CDR::ULong const countFields = node->nfields ();
+  for (ACE_CDR::ULong fieldNumber = 0u; fieldNumber < countFields; ++fieldNumber)
     {
       AST_Field ** member_ptr = 0;
-
-      node->field (member_ptr, i);
+      node->field (member_ptr, fieldNumber);
 
       be_type * const type =
         be_type::narrow_from_decl ((*member_ptr)->field_type ());
@@ -201,34 +201,53 @@ TAO::be_visitor_union_typecode::visit_cases (be_union * node)
         be_union_branch::narrow_from_decl (*member_ptr);
 
       ACE_ASSERT (branch != 0);
+      ACE_CDR::ULong numberOfLabels = branch->label_list_length ();
 
-      os << "static TAO::TypeCode::Case_T<"
-         << discriminant_type->full_name () << ", "
-         << "char const *, ::CORBA::TypeCode_ptr const *> const "
-         << fields_name_str << "__" << i <<" (";
+      // Check for a default branch for the current union field.
+      ACE_CDR::ULong labelNumber;
+      for (labelNumber= 0u; labelNumber < numberOfLabels; ++labelNumber)
+        if (branch->label (labelNumber)->label_kind ()
+            == AST_UnionLabel::UL_default)
+          {
+            // Generate the default branch ONLY for the current union field.
+            os << "static TAO::TypeCode::Case_T<"
+               << discriminant_type->full_name () << ", "
+               << "char const *, ::CORBA::TypeCode_ptr const *> const "
+               << fields_name_str << "__" << countLabels++ << " (";
 
-      if (branch->label ()->label_kind () == AST_UnionLabel::UL_label)
+            branch->gen_default_label_value (&os, node);
+
+            os << ", \"" << branch->original_local_name () << "\", "
+               << "&"  << type->tc_name ()
+               << ");" << be_nl;
+
+            // Since we have just generated the default case, there is no
+            // point in generating the other alternative cases as they
+            // are all covered by this default anyway and any other
+            // cases covered by the default will take up extra static
+            // memory space for no reason.
+            numberOfLabels = 0u;
+            break;
+          }
+
+      // Now we have handled the default case for this type (if any),
+      // generate all the other alternate case labels for the type.
+      for (labelNumber= 0u; labelNumber < numberOfLabels; ++labelNumber)
         {
-          // Non-default case.
+          ACE_ASSERT (branch->label (labelNumber)->label_kind ()
+                      == AST_UnionLabel::UL_label);
 
-          // Generate the label value.  Only the first label value is
-          // used in the case where multiple labels are used for the
-          // same union branch/case.
-          branch->gen_label_value (&os, 0);
+          os << "static TAO::TypeCode::Case_T<"
+             << discriminant_type->full_name () << ", "
+             << "char const *, ::CORBA::TypeCode_ptr const *> const "
+             << fields_name_str << "__" << countLabels++ << " (";
+
+          branch->gen_label_value (&os, labelNumber);
+
+          os << ", \"" << branch->original_local_name () << "\", "
+             << "&"  << type->tc_name ()
+             << ");" << be_nl;
         }
-      else
-        {
-          // Default case.
-
-          ACE_ASSERT (branch->label ()->label_kind ()
-                      == AST_UnionLabel::UL_default);
-
-          branch->gen_default_label_value (&os, node);
-        }
-
-      os << ", \"" << branch->original_local_name () << "\", "
-         << "&"  << type->tc_name ()
-         << ");" << be_nl;
     }
 
   // Now generate the TAO::TypeCode::Case array.
@@ -239,20 +258,21 @@ TAO::be_visitor_union_typecode::visit_cases (be_union * node)
      << "[] =" << be_idt_nl
      << "{" << be_idt_nl;
 
-  for (ACE_CDR::ULong n = 0; n < count; ++n)
+  for (ACE_CDR::ULong n = 0u; n < countLabels; ++n)
     {
       os << "&" << fields_name_str << "__" << n;
 
-      if (n < count - 1)
+      if (n < countLabels - 1u)
         {
-          os << ",";
+          os << "," << be_nl;
         }
-
-      os << be_nl;
+      else
+        {
+          os << be_uidt_nl;
+        }
     }
 
-  os << be_uidt_nl
-     << "};" << be_uidt_nl << be_nl;
+  os << "};" << be_uidt_nl << be_nl;
 
   return 0;
 }

@@ -160,6 +160,7 @@ TAO::Any_Dual_Impl_T<T>::replace (TAO_InputCDR &cdr,
   ACE_NEW_RETURN (empty_value,
                   T,
                   false);
+  auto_ptr<T> empty_value_safety (empty_value);
   TAO::Any_Dual_Impl_T<T> *replacement = 0;
   ACE_NEW_RETURN (replacement,
                   TAO::Any_Dual_Impl_T<T> (destructor,
@@ -176,6 +177,7 @@ TAO::Any_Dual_Impl_T<T>::replace (TAO_InputCDR &cdr,
       _tao_elem = replacement->value_;
       const_cast<CORBA::Any &> (any).replace (replacement);
       replacement_safety.release ();
+      empty_value_safety.release ();
       return true;
     }
 

@@ -399,18 +399,6 @@ TAO_IIOP_Endpoint::object_addr_i (void) const
     }
 }
 
-static ACE_CString find_local(const ACE_Vector<ACE_CString>& local_ips,
-                              const ACE_CString& pattern)
-{
-  for (size_t i = 0; i < local_ips.size(); ++i)
-  {
-    ACE_CString ret = local_ips[i];
-    if (ACE::wild_match(ret.c_str(), pattern.c_str()))
-      return ret;
-  }
-  return "";
-}
-
 TAO_IIOP_Endpoint *
 TAO_IIOP_Endpoint::add_local_endpoint (TAO_IIOP_Endpoint *ep,
                                        const char *local,
@@ -423,11 +411,12 @@ TAO_IIOP_Endpoint::add_local_endpoint (TAO_IIOP_Endpoint *ep,
   return tmp;
 }
 
+// local helper function for TAO_IIOP_Endpoint::find_preferred_interfaces
 static void
-get_ip_interfaces(ACE_Vector<ACE_CString>& local_ips)
+TAO_IIOP_Endpoint_get_ip_interfaces (ACE_Vector<ACE_CString> &local_ips)
 {
   ACE_INET_Addr* tmp = 0;
-  size_t cnt = 0;
+  size_t cnt = 0u;
   int err = ACE::get_ip_interfaces (cnt, tmp);
   if (err != 0)
     return;
@@ -436,17 +425,31 @@ get_ip_interfaces(ACE_Vector<ACE_CString>& local_ips)
 #else /* ACE_HAS_IPV6 */
   char buf[32];
 #endif /* !ACE_HAS_IPV6 */
-  for (size_t i = 0; i < cnt; ++i)
+  for (size_t i = 0u; i < cnt; ++i)
   {
-    const char *s_if = tmp[i].get_host_addr(buf, sizeof (buf));
-    ACE_ASSERT(s_if != 0);
-    ACE_CString tmp(s_if);
-    //ssize_t pos = tmp.find(':');
-    //if (pos != ACE_CString::npos)
-    //  tmp = tmp.substr(0, pos);
-    local_ips.push_back(tmp);
+    const char *s_if = tmp[i].get_host_addr (buf, sizeof (buf));
+    ACE_ASSERT (s_if != 0);
+    ACE_CString tmp (s_if);
+    local_ips.push_back (tmp);
   }
   delete[] tmp;
+}
+
+// local helper function for TAO_IIOP_Endpoint::find_preferred_interfaces
+static void
+TAO_IIOP_Endpoint_none_duplicate_insert (
+  const ACE_CString &value,
+  ACE_Vector<ACE_CString> &vector)
+{
+  bool found= false;
+  for (size_t x= 0u; x < vector.size (); ++x)
+    if (vector[x] == value)
+      {
+        found= true;
+        break;
+      }
+  if (!found)
+    vector.push_back (value);
 }
 
 // Given a comma separated list of preferred interface directives, which
@@ -455,78 +458,86 @@ get_ip_interfaces(ACE_Vector<ACE_CString>& local_ips)
 // the list of all local ip interfaces, for any directive where wild_remote
 // matches the host from our endpoint.
 void
-TAO_IIOP_Endpoint::find_preferred_interfaces (const ACE_CString& host,
-                                              const ACE_CString& csvPreferred,
-                                              ACE_Vector<ACE_CString>& preferred)
+TAO_IIOP_Endpoint::find_preferred_interfaces (
+  const ACE_CString &host,
+  const ACE_CString &csvPreferred,
+  ACE_Vector<ACE_CString> &preferred)
 {
   ACE_Vector<ACE_CString> local_ips;
-  get_ip_interfaces(local_ips);
-  if (local_ips.size() == 0)
+  TAO_IIOP_Endpoint_get_ip_interfaces (local_ips);
+  if (local_ips.size () == 0)
     return;
 
   // The outer loop steps through each preferred interface directive
   // and chains a new endpoint if the remote interface matches the
   // current endpoint.
   ACE_CString::size_type index = 0;
-  while (index < csvPreferred.length())
-  {
-    ACE_CString::size_type comma = csvPreferred.find(',', index);
-    ACE_CString::size_type assign = csvPreferred.find('=', index);
-
-    if (assign == ACE_CString::npos)
+  while (index < csvPreferred.length ())
     {
-      assign = csvPreferred.find(':', index);
+      ACE_CString::size_type comma = csvPreferred.find (',', index);
+      ACE_CString::size_type assign = csvPreferred.find ('=', index);
+
       if (assign == ACE_CString::npos)
-      {
-        ACE_ASSERT(assign != ACE_CString::npos);
-        return;
-      }
-    }
+        {
+          assign = csvPreferred.find (':', index);
+          if (assign == ACE_CString::npos)
+            {
+              ACE_ASSERT (assign != ACE_CString::npos);
+              return;
+            }
+        }
 
-    ACE_CString wild_local;
-    if (comma == ACE_CString::npos)
-      wild_local = csvPreferred.substr(assign + 1);
-    else
-      wild_local = csvPreferred.substr(assign + 1, comma - assign - 1);
-    ACE_CString wild_remote = csvPreferred.substr(index, assign - index);
-
-    index = comma + 1;
-
-    // For now, we just try to match against the host literally. In
-    // the future it might be worthwhile to resolve some aliases for
-    // this->host_ using DNS (and possibly reverse DNS) lookups. Then we
-    // could try matching against those too.
-    if (ACE::wild_match(host.c_str(), wild_remote.c_str(), false))
-    {
-      // If it's a match, then it means we need to use a
-      // local interface that matches wild_local.
-      ACE_CString local = find_local(local_ips, wild_local);
-      if (local.length() > 0)
-      {
-        preferred.push_back(local);
-      }
+      ACE_CString wild_local;
+      if (comma == ACE_CString::npos)
+        wild_local = csvPreferred.substr (assign + 1);
       else
-      {
+        wild_local = csvPreferred.substr (assign + 1, comma - assign - 1);
+      ACE_CString wild_remote = csvPreferred.substr (index, assign - index);
+      index = comma + 1;
+
+      // For now, we just try to match against the host literally. In
+      // the future it might be worthwhile to resolve some aliases for
+      // this->host_ using DNS (and possibly reverse DNS) lookups. Then we
+      // could try matching against those too.
+      if (ACE::wild_match (host.c_str (), wild_remote.c_str (), false))
+        {
+          // If it's a match, then it means we need to use any/all
+          // local interface(s) that matches wild_local.
+          const char *const wild_local_cstr =  wild_local.c_str ();
+          bool found= false;
+          for (size_t i = 0u; i < local_ips.size (); ++i)
+            {
+              ACE_CString &ret = local_ips[i];
+              if (ACE::wild_match (ret.c_str (), wild_local_cstr))
+                {
+                  found= true;
+                  TAO_IIOP_Endpoint_none_duplicate_insert (ret, preferred);
+                }
+            }
+
+          if (!found)
+            {
 #if defined (ACE_HAS_IPV6)
-        // We interpret the preferred wild_local as an actual interface name/id.
-        // This is useful for link local IPv6 multicast
-        ACE_CString if_name("if=");
-        if_name += wild_local;
-        preferred.push_back(if_name);
+              // We interpret the preferred wild_local as an actual interface name/id.
+              // This is useful for link local IPv6 multicast
+
+              ACE_CString if_name ("if=");
+              if_name += wild_local;
+              TAO_IIOP_Endpoint_none_duplicate_insert (if_name, preferred);
 #else
-        // There is no matching local interface, so we can skip
-        // to the next preferred interface directive.
+              // There is no matching local interface, so we can skip
+              // to the next preferred interface directive.
 #endif
-      }
+            }
+        }
+      else
+        {
+          // The preferred interface directive is for a different
+          // remote endpoint.
+        }
+      if (comma == ACE_CString::npos)
+        break;
     }
-    else
-    {
-      // The preferred interface directive is for a different
-      // remote endpoint.
-    }
-    if (comma == ACE_CString::npos)
-      break;
-  }
 }
 
 CORBA::ULong
@@ -536,7 +547,7 @@ TAO_IIOP_Endpoint::preferred_interfaces (const char *csv,
 {
   ACE_Vector<ACE_CString> preferred;
   find_preferred_interfaces(this->host_.in(), csv, preferred);
-  CORBA::ULong count = preferred.size();
+  CORBA::ULong count = static_cast<CORBA::ULong> (preferred.size());
   size_t i = 0;
   while (i < count && ACE_OS::strstr (preferred[i].c_str(), "if=") != 0)
     {
