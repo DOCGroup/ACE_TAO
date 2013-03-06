@@ -2,12 +2,12 @@
 
 #include "Bug_4097_RegressionS.h"
 
-#include <tao/corba.h>
-#include <tao/ORB.h>
-#include <tao/Object.h>
-#include <tao/Object_T.h>
-#include <tao/ORB_Core.h>
-#include <tao/CodecFactory/CodecFactory.h>
+#include "tao/corba.h"
+#include "tao/ORB.h"
+#include "tao/Object.h"
+#include "tao/Object_T.h"
+#include "tao/ORB_Core.h"
+#include "tao/CodecFactory/CodecFactory.h"
 
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
@@ -42,7 +42,7 @@ checkResult (const CORBA::Any &any, const MultiLabelUnion &mlu)
     }
   else
     {
-      ACE_DEBUG ((LM_DEBUG,  ". DID NOT Extract from any (Test Failure)\n"));      
+      ACE_DEBUG ((LM_DEBUG,  ". DID NOT Extract from any (Test Failure)\n"));
       error = true;
     }
 
