@@ -492,7 +492,7 @@ namespace TAO
         throw ::CORBA::MARSHAL (
           CORBA::SystemException::_tao_minor_code (
             TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE,
-            errno),
+            EINVAL),
           CORBA::COMPLETED_NO);
       }
 

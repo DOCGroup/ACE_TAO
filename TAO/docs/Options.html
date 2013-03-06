@@ -37,6 +37,7 @@ Selection </a> </li>
           </li>
           <li><a href="#TSSF">Server_Strategy_Factory </a> </li>
           <li><a href="#TCSF">Client_Strategy_Factory </a></li>
+          <li><a href="#TUPF">TAO_UIPMC_Protocol_Factory </a></li>
           <li><a href="#TMSF">MIOP_Strategy_Factory </a></li>
           <li><a href="#TTSM">Time_Policy_Manager</a></li>
         </ol>
@@ -570,8 +571,8 @@ is <code>0</code>. This option is disabled (<code>0</code>) by default.</td>
         option instead. </font> </td>
       </tr>
       <tr>
-        <td><code>-ORBPreferredInterfaces</code>
-        <em>"targetNetwork:localNetwork,.."</em></td>
+        <td><code>&#8209;ORBPreferredInterfaces</code>
+        <em>targetNetwork=localNetwork[,...]</em></td>
         <td><a name="-ORBPreferredInterfaces"></a>  This option allows
     clients running on a multihomed host to pick a local
     network/interface to communicate with a remote target.
@@ -579,11 +580,13 @@ is <code>0</code>. This option is disabled (<code>0</code>) by default.</td>
     matching targetNetwork, then it will use the local ip address
     matching localNetwork. Simple wildcards can be used for both
     parameters, and multiple preferred interfaces can be specified
-    using comma separators. For example, for a machine with two network cards
+    using comma separators (no embedded spaces allowed) or additional &#8209;ORBPreferredInterfaces directives.
+    For example, for a machine with two network cards
     identified by the ip addresses 192.168.1.10 and 192.168.1.20, you can
-    use -ORBPreferredInterfaces *=*10,*=*20.
-    Or to force all communication on the loopback address to try to first
-    use the loopback address, use -ORBPreferredInterfaces 127.0.0.1=127* .
+    use -ORBPreferredInterfaces *=*10,*=*20 (or the two directives
+    &#8209;ORBPreferredInterfaces *=*10  &#8209;ORBPreferredInterfaces *=*20).
+    Or to force all communication to first try to
+    use the loopback address, use <code>&#8209;ORBPreferredInterfaces *=127.0.0.1</code> .
     <em>targetNetwork</em> can use any string, and must typically match
     with the value read from an IOR.
     <em>localNetwork</em> must use a dotted decimal address, because it
@@ -867,15 +870,15 @@ is set. The default is true. </td>
       <tr>
         <td><code>-ORBAllowZiopNoServerPolicies</code> <em>boolean (0|1)</em></td>
         <td><a name="-ORBAllowZiopNoServerPolicies"></a> If this option is <CODE>1</CODE>
-          (true) it directs a client ORB to use any client-side configured ZIOP compression
-          without having seen any server-side ZIOP available compressor's list policies.
+          (true) it directs a client ORB to use any client-side (sender) configured ZIOP compression
+          without having seen any server-side (listener) ZIOP available compressor's list policies.
           The CORBA Compressed GIOP (ZIOP) V1.0 specification states that the Server publishes
           its available (i.e. allowable) compressors in the IOR of each server object. This
           option allows ZIOP to be used with MIOP and/or CORBALOCs that have no such
           compression list policies embedded. The client simply has to trust that the server is
           configured to allow its highest priority compressor to be used. Any servers
           that cannot decompress the client's used ZIOP compressor will reject the
-          request as they simply cannot decode or handle it (client-side comms will simply
+          request as they simply cannot decode or handle it (client-side (sender) comms will simply
           timeout or lock-up for any such incorrect two-way requests, or be oblivious
           to the failure for any such incorrect one-way requests). The default
           setting is <CODE>0</CODE> (false) i.e. to disallow compression in such cases
@@ -1126,6 +1129,11 @@ creates various strategies of special utility to the ORB, useful for
 controlling the behavior of clients. This factory is responsible for
 creating strategies useful for clients such as request multiplexing
 strategies, wait strategies, connect strategies etc.
+    <p></p>
+  </li>
+  <li> <a href="#TUPF">TAO UIPMC Protocol Factory </a> This factory is
+responsible for controlling the behavior of clients and servers that
+use UDP sockets.
     <p></p>
   </li>
   <li> <a href="#TMSF">MIOP Strategy Factory.</a> This factory is
@@ -1800,14 +1808,61 @@ strategy.
   </table>
   </p>
 </blockquote>
-    <h4><a name="TMSF">4. MIOP_Strategy_Factory</a></h4>
-    This factory is located in the <code>TAO_PortableGroup</code> library and it
-    accepts the options below. This factory can be loaded dynamically using a
+    <h4><a name="TUPF">4. TAO_UIPMC_Protocol_Factory</a></h4>
+    This factory is located in the <code>TAO_PortableGroup</code> library and
+    is used with the DIOP and MIOP protocols managing the UDP connectionless
+    sockets (normally one-way calls only) instead of the standard IIOP TCP/IP
+    two-way connection based sockets. It accepts the options shown below.
+    (Any options required should be given
+    to the TAO_UIPMC_Protocol_Factory between the two double-quotes at the end
+    of the line as a space separated list; however none are required as all
+    options take default values if not specified.) This factory can be loaded
+    dynamically using service configurator directives of the form (all on one line):
+    <p><code>dynamic UIPMC_Factory Service_Object * 
+        TAO_PortableGroup:_make_TAO_UIPMC_Protocol_Factory() ""</code></p>
+    <p>Normally however in order to set up the TAO_UIPMC_Protocol_Factory correctly,
+    the application will have to use other service configurator directives as well;
+    for example:</p>
+    <code>dynamic UIPMC_Factory Service_Object * 
+        TAO_PortableGroup:_make_TAO_UIPMC_Protocol_Factory() ""<br>
+        static Resource_Factory "&#8209;ORBProtocolFactory IIOP_Factory 
+        &#8209;ORBProtocolFactory UIPMC_Factory"<br>
+        dynamic PortableGroup_Loader Service_Object * 
+        TAO_PortableGroup:_make_TAO_PortableGroup_Loader() ""</code></p>
+    <blockquote>
+      <p></p>
+      <table border="2" cellpadding="0" cellspacing="2">
+        <tbody>
+          <tr>
+            <th>Option</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td ALIGN="left"><code>&#8209;ORBListenOnAll</code> <em>0 | 1</em></td>
+            <td ALIGN="left">This is a server-side (listener) option that by default is disabled.
+            <p>If disabled (<em>0</em>) the multicast address will be listened for only on the default multicast
+            interface associated with the <CODE>INADDR_ANY</CODE> local address (normally the first such
+            local interface on the system), the loopback interface is normally excluded.</p>
+            If enabled (<em>1</em>) the multicast address will be listened for on ALL the local network
+            interface(s) which are multicast enabled (again the loopback interface is normally excluded).
+            </td>
+          </tr>
+        </tbody>
+      </table>
+  </blockquote>
+    <h4><a name="TMSF">5. MIOP_Strategy_Factory</a></h4>
+    This factory is located in the <code>TAO_PortableGroup</code> library and
+    uses the <a href="#TUPF">TAO_UIPMC_Protocol_Factory</a> (see above) to
+    manage its UDP sockets, you should also look at that factories configuration
+    options. The MIOP factory accepts it own options detailed below which
+    should be  specified between the two double-quotes shown here as a space
+    separated list; however none are required as all options take default
+    values if not specified. This factory can be loaded dynamically using a 
     service configurator directive of the form (all on one line):
     <p><code>dynamic MIOP_Resource_Factory Service_Object *
         TAO_PortableGroup:_make_TAO_MIOP_Resource_Factory () ""</code></p>
-    Normally in order to set up the MIOP implementation correctly, the application
-    will have to use other service configurator directives as well (for example):
+    You would normally have to use other service configurator
+    directives as well; for example:
     <p><code>dynamic UIPMC_Factory Service_Object *
         TAO_PortableGroup:_make_TAO_UIPMC_Protocol_Factory() ""<br>
         static Resource_Factory "&#8209;ORBProtocolFactory IIOP_Factory
@@ -1816,9 +1871,6 @@ strategy.
         TAO_PortableGroup:_make_TAO_PortableGroup_Loader() ""<br>
         dynamic MIOP_Resource_Factory Service_Object *
         TAO_PortableGroup:_make_TAO_MIOP_Resource_Factory () ""</code></p>
-    Any options required to be given to the MIOP_Resource_Factory should be
-    specified between the two double-quotes shown above as a space separated list;
-    however none are required as all options take default values if not specified.
     Since MIOP uses UDP sockets (which is not a "reliable" transport unlike tcp/ip)
     it is easy to configure MIOP in such a way that messages will not actually
     reach the servant. The options below are intended to maximize MIOP reliability
@@ -1835,7 +1887,7 @@ strategy.
       <li>
       The client sends too large a message fragment, or sends messages too fast,
       overwhelming the client socket's transmission buffer. (In which case the
-      client-side OS simply ignores the excess send requests and some of the
+      client-side (sender) OS simply ignores the excess send requests and some of the
       fragments are not actually sent on the wire.)
       <li>
       The server socket's receive buffer became too full to acquire the fragments off
@@ -1866,7 +1918,7 @@ strategy.
             </tr>
             <tr>
               <td ALIGN="left"><code>&#8209;ORBMaxFragments</code> <em>limit</em></td>
-              <td ALIGN="left">This is a client-side option used to limit the maximum number of
+              <td ALIGN="left">This is a client-side (sender) option used to limit the maximum number of
                 fragments that a client can break the outgoing message up into. The limit must
                 be a positive number or zero (indicating an unlimited number). The default is
                 normally <em>0 (i.e. unlimited)</em>, but this default can be overriden when
@@ -1884,7 +1936,7 @@ strategy.
             </tr>
             <tr>
               <td ALIGN="left"><code>&#8209;ORBMaxFragmentSize</code> <em>bytes</em></td>
-              <td ALIGN="left">Another client-side option used to limit the number of bytes in
+              <td ALIGN="left">Another client-side (sender) option used to limit the number of bytes in
                 each individual MIOP fragment, which must be between <em>272</em> and <em><code>ACE_MAX_UDP_PACKET_SIZE</code>
                   (normally 65507)</em> bytes inclusive. Smaller values increase (and larger
                 values decrease) the number of fragments required to send the actual payload
@@ -1908,7 +1960,7 @@ strategy.
             <tr>
               <td ALIGN="left"><code>&#8209;ORBMaxFragmentRate</code> <em>microseconds</em></td>
               <td ALIGN="left">
-                <P>This client-side option (if enabled, see <code>&#8209;ORBSendThrottling</code> below)
+                <P>This client-side (sender) option (if enabled, see <code>&#8209;ORBSendThrottling</code> below)
                   specifies a non-zero, positive amount of time (in
                   uSec, i.e. microseconds) that it takes to transmit and process an individual
                   message fragment of the maximum size; see the <code>&#8209;ORBMaxFragmentSize</code>
@@ -1930,7 +1982,7 @@ strategy.
             </tr>
             <tr>
               <td ALIGN="left"><code>&#8209;ORBSendHighWaterMark</code> <em>bytes</em></td>
-              <td ALIGN="left">This client-side option (if enabled, see <code>&#8209;ORBSendThrottling</code> below)
+              <td ALIGN="left">This client-side (sender) option (if enabled, see <code>&#8209;ORBSendThrottling</code> below)
                 is the usable size of the message
                 buffer, i.e how much data can be sent without introducing delays into the
                 transmition of individual MIOP fragments (due to the <code>&#8209;ORBMaxFragmentRate</code>
@@ -1947,7 +1999,7 @@ strategy.
             </tr>
             <tr>
               <td ALIGN="left"><code>&#8209;ORBSendThrottling</code> <em>0 | 1</em></td>
-              <td ALIGN="left">This is a client-side option that is enabled by default;
+              <td ALIGN="left">This is a client-side (sender) option that is enabled by default;
                 although this default can be overriden when the TAO libraries are built in the <CODE>
                   ace/config.h</CODE>, by specifying the new default such as <CODE>#define&nbsp;TAO_DEFAULT_MIOP_SEND_THROTTLING&nbsp;false</CODE>
                 which in this case would turn off throttling by default, unless specified in
@@ -1957,12 +2009,12 @@ strategy.
                 to maintain an average of <code>&#8209;ORBMaxFragmentSize</code> bytes per <code>&#8209;ORBMaxFragmentRate</code>
                 microseconds once the threshold of <code>&#8209;ORBSendHighWaterMark</code> bytes
                 of data are currently being transmitted or are in progress via each individual transport
-                (i.e. each individual client-side connection to the server).
+                (i.e. each individual client-side (sender) connection to the server).
               </td>
             </tr>
             <tr>
               <td ALIGN="left"><code>&#8209;ORBSndSock</code> <em>bytes</em></td>
-              <td ALIGN="left">This client-side option is the size of the outgoing socket's
+              <td ALIGN="left">This client-side (sender) option is the size of the outgoing socket's
                 message buffer. If specified in the service configuration file, this value will
                 override (for MIOP only) the value specified by the corresponding ORB_init
                 parameter. If NOT specified in either place, the default value for the system
@@ -1978,7 +2030,7 @@ strategy.
             </tr>
             <tr>
               <td ALIGN="left"><code>&#8209;ORBRcvSock</code> <em>bytes</em></td>
-              <td ALIGN="left">This server-side option is the size of the incoming socket's 
+              <td ALIGN="left">This server-side (listener) option is the size of the incoming socket's 
                 message buffer, i.e., how much data can be received directly off the wire by the 
                 server and queued for processing by the servant whilst it is busy. If specified 
                 in the service configuration file, this value will override (for MIOP only) the 
@@ -1996,7 +2048,7 @@ strategy.
             </tr>
             <tr>
               <td ALIGN="left"><code>&#8209;ORBEagerDequeueing</code> <em>0 | 1</em></td>
-              <td ALIGN="left">This is a server-side option that is enabled by default;
+              <td ALIGN="left">This is a server-side (listener) option that is enabled by default;
                 although this default can be overriden when the TAO libraries are built in the <CODE>
                   ace/config.h</CODE>, by specifying the new default such as <CODE>#define&nbsp;TAO_DEFAULT_MIOP_EAGER_DEQUEUEING&nbsp;false</CODE>
                 which in this case would turn this off by default, unless specified in the 
@@ -2043,7 +2095,7 @@ strategy.
         </table>
       </p>
     </blockquote>
-<h4><a name="TTSM">5. Time_Policy_Manager</a></h4>
+<h4><a name="TTSM">6. Time_Policy_Manager</a></h4>
 The TIME_POLICY manager controls the actual TIME_POLICY strategy used for
 ORB timers and countdowns. TAO provides a default strategy manager called
 <code>Time_Policy_Manager</code>.
