@@ -152,7 +152,7 @@ namespace PortableInterceptor
 #if TAO_HAS_EXTENDED_FT_INTERCEPTORS == 1
 
     virtual void tao_ft_interception_point (
-       	::PortableInterceptor::ServerRequestInfo_ptr,
+        ::PortableInterceptor::ServerRequestInfo_ptr,
         ::CORBA::OctetSeq_out
       )
       {}
@@ -290,7 +290,4 @@ namespace TAO
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
-
 #endif /* ifndef */
-
-
