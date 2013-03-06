@@ -230,7 +230,7 @@ TAO_Asynch_Reply_Dispatcher::reply_timed_out (void)
           CORBA::TIMEOUT timeout_failure (
             CORBA::SystemException::_tao_minor_code (
                 TAO_TIMEOUT_RECV_MINOR_CODE,
-                errno),
+                ETIME),
              CORBA::COMPLETED_MAYBE);
 
           TAO_OutputCDR out_cdr;

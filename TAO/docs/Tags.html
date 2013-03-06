@@ -160,8 +160,8 @@ bgcolor="#ffffff">
           set to <CODE>0x54410</CODE>,
           the other 12 bits are used to describe more precisely the
           cause of the exception.
-          The lower 4 bits encode the errno that caused the exception,
-          the 8 intermediate bits encode the location where the
+          The lower 7 bits encode the errno that caused the exception,
+          the 5 intermediate bits encode the location where the
           exception was raised.
         </TD>
       </TR>
@@ -172,54 +172,244 @@ bgcolor="#ffffff">
 
 
     <P><TABLE BORDER="2" CELLSPACING="2" CELLPADDING="0" >
-      <TR><TH>Errno Value</TH><TH>Description</TH></TR>
-      <TR>
-        <TD>0x00</TD><TD>The error was not caused by a failed system
-          call</TD>
-      </TR>
-      <TR><TD>0x01</TD><TD>ETIMEDTOUT</TD></TR>
-      <TR><TD>0x02</TD><TD>ENFILE</TD></TR>
-      <TR><TD>0x03</TD><TD>EMFILE</TD></TR>
-      <TR><TD>0x04</TD><TD>EPIPE</TD></TR>
-      <TR><TD>0x05</TD><TD>ECONNREFUSED</TD></TR>
-      <TR><TD>0x06</TD><TD>ENOENT</TD></TR>
-      <TR><TD>0x07</TD><TD>EBADF</TD></TR>
-      <TR><TD>0x08</TD><TD>ENOSYS</TD></TR>
-      <TR><TD>0x09</TD><TD>EPERM</TD></TR>
-      <TR><TD>0x0A</TD><TD>EAFNOSUPPORT</TD></TR>
+      <tr>
+        <th>
+          TAO (7-bit) Error Code</th>
+        <th>
+          Description</th>
+        <th>
+          Value</th>
+      </tr>
+      <tr>
+        <td>TAO_UNSPECIFIED_MINOR_CODE</td>
+        <td>Unspecified minor code</td>
+        <td>0x00u</td>
+      </tr>
+      <tr>
+        <td>TAO_ETIMEDOUT_MINOR_CODE</td>
+        <td>Connection timed out</td>
+        <td>0x01u</td>
+      </tr>
+      <tr>
+        <td>TAO_ENFILE_MINOR_CODE</td>
+        <td>Too many files open in system</td>
+        <td>0x02u</td>
+      </tr>
+      <tr>
+        <td>TAO_EMFILE_MINOR_CODE</td>
+        <td>Too many open files</td>
+        <td>0x03u</td>
+      </tr>
+      <tr>
+        <td>TAO_EPIPE_MINOR_CODE</td>
+        <td>Broken pipe</td>
+        <td>0x04u</td>
+      </tr>
+      <tr>
+        <td>TAO_ECONNREFUSED_MINOR_CODE</td>
+        <td>Connection refused</td>
+        <td>0x05u</td>
+      </tr>
+      <tr>
+        <td>TAO_ENOENT_MINOR_CODE</td>
+        <td>No such file or directory</td>
+        <td>0x06u</td>
+      </tr>
+      <tr>
+        <td>TAO_EBADF_MINOR_CODE</td>
+        <td>Bad file descriptor</td>
+        <td>0x07u</td>
+      </tr>
+      <tr>
+        <td>TAO_ENOSYS_MINOR_CODE</td>
+        <td>Function not implemented</td>
+        <td>0x08u</td>
+      </tr>
+      <tr>
+        <td>TAO_EPERM_MINOR_CODE</td>
+        <td>Operation not permitted</td>
+        <td>0x09u</td>
+      </tr>
+      <tr>
+        <td>TAO_EAFNOSUPPORT_MINOR_CODE</td>
+        <td>Protocol family not supported</td>
+        <td>0x0au</td>
+      </tr>
+      <tr>
+        <td>TAO_EAGAIN_MINOR_CODE</td>
+        <td>Resource temporarily not available</td>
+        <td>0x0bu</td>
+      </tr>
+      <tr>
+        <td>TAO_ENOMEM_MINOR_CODE</td>
+        <td>Not enough space</td>
+        <td>0x0cu</td>
+      </tr>
+      <tr>
+        <td>TAO_EACCES_MINOR_CODE</td>
+        <td>Permission denied</td>
+        <td>0x0du</td>
+      </tr>
+      <tr>
+        <td>TAO_EFAULT_MINOR_CODE</td>
+        <td>Bad address</td>
+        <td>0x0eu</td>
+      </tr>
+      <tr>
+        <td>TAO_EBUSY_MINOR_CODE</td>
+        <td>Device or resource busy</td>
+        <td>0x0fu</td>
+      </tr>
+      <tr>
+        <td>TAO_EEXIST_MINOR_CODE</td>
+        <td>File exists</td>
+        <td>0x10u</td>
+      </tr>
+      <tr>
+        <td>TAO_EINVAL_MINOR_CODE</td>
+        <td>Invalid argument</td>
+        <td>0x11u</td>
+      </tr>
+      <tr>
+        <td>TAO_ECOMM_MINOR_CODE</td>
+        <td>Communication error on send</td>
+        <td>0x12u</td>
+      </tr>
+      <tr>
+        <td>TAO_ECONNRESET_MINOR_CODE</td>
+        <td>Connection reset</td>
+        <td>0x13u</td>
+      </tr>
+      <tr>
+        <td>TAO_ENOTSUP_MINOR_CODE</td>
+        <td>Operation not supported</td>
+        <td>0x14u</td>
+      </tr>
     </TABLE></P>
 
     <P>Please consult the documentation for your OS for more details
       about the errno meanings</P>
 
     <P><TABLE BORDER="2" CELLSPACING="2" CELLPADDING="0" >
-      <TR><TH>Location encoding</TH><TH>Description</TH></TR>
-      <TR><TD>0x01</TD>
-        <TD>Connect failed</TD></TR>
-      <TR><TD>0x02</TD>
-        <TD>Location forward failed</TD></TR>
-      <TR><TD>0x03</TD>
-        <TD>Send request failed</TD></TR>
-      <TR><TD>0x04</TD>
-        <TD>POA in discarding state</TD></TR>
-      <TR><TD>0x05</TD>
-        <TD>POA in holding state</TD></TR>
-      <TR><TD>0x06</TD>
-        <TD>Unhandled C++ exception in server side</TD></TR>
-      <TR><TD>0x07</TD>
-        <TD>Failure while reading the reply</TD></TR>
-      <TR><TD>0x08</TD>
-        <TD>All protocols failed to parse the IOR</TD></TR>
-      <TR><TD>0x09</TD>
-        <TD>Attempt to use null pointer</TD></TR>
-      <TR><TD>0x0A</TD>
-        <TD>Error during MProfile creation</TD></TR>
-      <TR><TD>0x0B</TD>
-        <TD>Timeout while trying to establish the connection</TD></TR>
-      <TR><TD>0x0C</TD>
-        <TD>Timeout while sending the request</TD></TR>
-      <TR><TD>0x0D</TD>
-        <TD>Timeout while waiting for the reply</TD></TR>
+      <tr>
+        <th>
+          TAO (5-bit) Location Code</th>
+        <th>
+          Description</th>
+        <th>
+          Value</th>
+      </tr>
+      <tr>
+        <td></td>
+        <td class="right">No specific location details indicated</td>
+        <td>(0x00u &lt;&lt; 7)</td>
+      </tr>
+      <tr>
+        <td>TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE</td>
+        <td class="right">Location forward failed</td>
+        <td>(0x01u &lt;&lt; 7)</td>
+      </tr>
+      <tr>
+        <td>TAO_INVOCATION_SEND_REQUEST_MINOR_CODE</td>
+        <td class="right">Send request failed</td>
+        <td>(0x02u &lt;&lt; 7)</td>
+      </tr>
+      <tr>
+        <td>TAO_POA_DISCARDING</td>
+        <td class="right">POA in discarding state</td>
+        <td>(0x03u &lt;&lt; 7)</td>
+      </tr>
+      <tr>
+        <td>TAO_POA_HOLDING</td>
+        <td class="right">POA in holding state</td>
+        <td>(0x04u &lt;&lt; 7)</td>
+      </tr>
+      <tr>
+        <td>TAO_UNHANDLED_SERVER_CXX_EXCEPTION</td>
+        <td class="right">Unhandled C++ exception in server side</td>
+        <td>(0x05u &lt;&lt; 7)</td>
+      </tr>
+      <tr>
+        <td>TAO_INVOCATION_RECV_REQUEST_MINOR_CODE</td>
+        <td class="right">Failed to receive request response</td>
+        <td>(0x06u &lt;&lt; 7)</td>
+      </tr>
+      <tr>
+        <td>TAO_CONNECTOR_REGISTRY_NO_USABLE_PROTOCOL
+        </td>
+        <td class="right">All protocols failed to parse the IOR</td>
+        <td>(0x07u &lt;&lt; 7)</td>
+      </tr>
+      <tr>
+        <td>TAO_MPROFILE_CREATION_ERROR</td>
+        <td class="right">Error during MProfile creation</td>
+        <td>(0x08u &lt;&lt; 7)</td>
+      </tr>
+      <tr>
+        <td>TAO_TIMEOUT_CONNECT_MINOR_CODE</td>
+        <td class="right">Timeout during connect</td>
+        <td>(0x09u &lt;&lt; 7)</td>
+      </tr>
+      <tr>
+        <td>TAO_TIMEOUT_SEND_MINOR_CODE</td>
+        <td class="right">Timeout during send</td>
+        <td>(0x0au &lt;&lt; 7)</td>
+      </tr>
+      <tr>
+        <td>TAO_TIMEOUT_RECV_MINOR_CODE</td>
+        <td class="right">Timeout during receive</td>
+        <td>(0x0bu &lt;&lt; 7)</td>
+      </tr>
+      <tr>
+        <td>TAO_IMPLREPO_MINOR_CODE</td>
+        <td class="right">Implrepo server exception</td>
+        <td>(0x0cu &lt;&lt; 7)</td>
+      </tr>
+      <tr>
+        <td>TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE</td>
+        <td class="right">Endpoint initialization failure in Acceptor Registry</td>
+        <td>(0x0du &lt;&lt; 7)</td>
+      </tr>
+      <tr>
+        <td>TAO_ORB_CORE_INIT_LOCATION_CODE</td>
+        <td class="right">ORB core initialization failed</td>
+        <td>(0x0eu &lt;&lt; 7)</td>
+      </tr>
+      <tr>
+        <td>TAO_POLICY_NARROW_CODE</td>
+        <td class="right">Failure when narrowing a Policy</td>
+        <td>(0x0fu &lt;&lt; 7)</td>
+      </tr>
+      <tr>
+        <td>TAO_GUARD_FAILURE</td>
+        <td class="right">Failure when trying to acquire a guard/monitor</td>
+        <td>(0x10u &lt;&lt; 7)</td>
+      </tr>
+      <tr>
+        <td>TAO_POA_BEING_DESTROYED</td>
+        <td class="right">POA has been destroyed or is currently being destroyed</td>
+        <td>(0x11u &lt;&lt; 7)</td>
+      </tr>
+      <tr>
+        <td>TAO_POA_INACTIVE</td>
+        <td class="right">POA in inactive state</td>
+        <td>(0x12u &lt;&lt; 7)</td>
+      </tr>
+      <tr>
+        <td>TAO_CONNECTOR_REGISTRY_INIT_LOCATION_CODE</td>
+        <td class="right">Initialization failure in Connector Registry</td>
+        <td>(0x13u &lt;&lt; 7)</td>
+      </tr>
+      <tr>
+        <td>TAO_AMH_REPLY_LOCATION_CODE</td>
+        <td class="right">Failure when trying to send AHM reply</td>
+        <td>(0x14u &lt;&lt; 7)</td>
+      </tr>
+      <tr>
+        <td>TAO_RTCORBA_THREAD_CREATION_LOCATION_CODE</td>
+        <td class="right">Failure in thread creation for RTCORBA thread pool</td>
+        <td>(0x15u &lt;&lt; 7)</td>
+      </tr>
     </TABLE></P>
 
     <P><HR></P>

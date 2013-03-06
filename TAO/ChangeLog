@@ -1,3 +1,51 @@
+Wed Mar 06 09:20:00 UTC 2013  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * docs/Tags.html:
+        * tao/Invocation_Adapter.cpp:
+        * tao/LocateRequest_Invocation_Adapter.cpp:
+        * tao/Service_Callbacks.cpp:
+        * tao/Synch_Invocation.cpp:
+        * tao/Messaging/Asynch_Reply_Dispatcher.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.cpp:
+
+          Correct minor error and location codes to reflect current code
+          and correct general errno copies where fixed error codes should
+          be thrown.
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_FactoryRegistry.cpp:
+        * tao/PI_Server/ServerRequestInterceptorC.h:
+        * tao/AnyTypeCode/Any_Dual_Impl_T.cpp:
+
+          Minor 64bit type warnings and unused variables, possiable
+          memory leaks under error conditions etc.
+
+        * docs/Options.html:
+        * tao/ORB_Core.cpp:
+        * tao/IIOP_Endpoint.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Acceptor.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Endpoint.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Mcast_Transport.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp:
+
+          Add missing UIPMC factory section and -ORBListenOnAll parameter
+          to Options and fix -ORBEnforcePreferredInterfaces inversion
+          and allow multiple -ORBPreferredInterfaces strings to be
+          concatenated. Fix minor possiable memory leaks and processing,
+          general tidy up.
+
+        * bin/tao_orb_tests.lst:
+        * TAO_IDL/be/be_visitor_typecode/union_typecode.cpp:
+        * tests/Bug_4097_Regression/Bug_4097_Regression.cpp:
+        * tests/Bug_4097_Regression/Bug_4097_Regression.idl:
+        * tests/Bug_4097_Regression/Bug_4097_Regression.mpc:
+        * tests/Bug_4097_Regression/README:
+        * tests/Bug_4097_Regression/run_test.pl:
+
+        Bugzilla_4097 fix (Prismtech Jira TAO-69)
+        Typecodes for UNIONs with multiple labels per individual case were
+        generated incorrectly. Look at the tests README for details.
+
 Tue Mar  5 21:47:07 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * utils/logWalker/GIOP_Buffer.cpp:

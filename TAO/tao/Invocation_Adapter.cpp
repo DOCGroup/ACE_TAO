@@ -376,14 +376,14 @@ namespace TAO
       throw ::CORBA::TRANSIENT (
         CORBA::SystemException::_tao_minor_code (
           TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE,
-          errno),
+          0),
         CORBA::COMPLETED_NO);
 
     if (stubobj == 0)
       throw ::CORBA::INTERNAL (
         CORBA::SystemException::_tao_minor_code (
           TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE,
-          errno),
+          EINVAL),
         CORBA::COMPLETED_NO);
 
     // Reset the profile in the stubs
@@ -393,7 +393,7 @@ namespace TAO
       throw ::CORBA::TRANSIENT (
         CORBA::SystemException::_tao_minor_code (
           TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE,
-          errno),
+          0),
         CORBA::COMPLETED_NO);
   }
 

@@ -147,7 +147,7 @@ namespace TAO
             throw CORBA::TRANSIENT (
               CORBA::SystemException::_tao_minor_code (
                 TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE,
-                errno),
+                ETIME),
               CORBA::COMPLETED_NO);
           }
       }

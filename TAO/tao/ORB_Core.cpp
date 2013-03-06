@@ -659,7 +659,9 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
           arg_shifter.consume_arg ();
         }
       else if (0 != (current_arg = arg_shifter.get_the_parameter
-                (ACE_TEXT("-ORBPreferredInterfaces"))))
+                (ACE_TEXT("-ORBPreferredInterfaces"))) ||
+               0 != (current_arg = arg_shifter.get_the_parameter
+                (ACE_TEXT("-ORBPreferredInterface"))) )
         {
           if (this->orb_params ()->preferred_interfaces (
                 ACE_TEXT_ALWAYS_CHAR (current_arg)) == false)
@@ -672,14 +674,12 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
           arg_shifter.consume_arg ();
         }
       else if (0 != (current_arg = arg_shifter.get_the_parameter
-                (ACE_TEXT("-ORBEnforcePreferredInterfaces"))))
+                (ACE_TEXT("-ORBEnforcePreferredInterfaces"))) ||
+               0 != (current_arg = arg_shifter.get_the_parameter
+                (ACE_TEXT("-ORBEnforcePreferredInterface"))) )
         {
-          int enforce_pref_interfaces = ACE_OS::atoi (current_arg);
-          if (enforce_pref_interfaces)
-            this->orb_params ()->enforce_pref_interfaces (false);
-          else
-            this->orb_params ()->enforce_pref_interfaces (true);
-
+          this->orb_params ()->enforce_pref_interfaces (
+            !!ACE_OS::atoi (current_arg));
           arg_shifter.consume_arg ();
         }
 #if defined (ACE_HAS_IPV6)

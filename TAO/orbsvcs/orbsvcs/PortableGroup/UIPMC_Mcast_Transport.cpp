@@ -342,7 +342,7 @@ TAO_UIPMC_Mcast_Transport::recv_all (TAO_Resume_Handle &rh)
                 {
                   ACE_DEBUG ((LM_DEBUG,
                               ACE_TEXT ("TAO (%P|%t) - UIPMC_Mcast_Transport[%d]::")
-                              ACE_TEXT ("recv_all, unexpected failure of recv_packet '%m'\n"),
+                              ACE_TEXT ("recv_all, unexpected failure of recv_packet (Errno: '%m')\n"),
                               this->id ()));
                 }
               break;
@@ -386,7 +386,7 @@ TAO_UIPMC_Mcast_Transport::recv_all (TAO_Resume_Handle &rh)
                 }
             }
 
-          // We have incomplete packet so add a new data to it.
+          // We have incomplete packet so add the new data to it.
           // add_fragment returns 1 iff the packet is complete.
           if (1 == packet->add_fragment (start_data, packet_length,
                                          packet_number, stop_packet))

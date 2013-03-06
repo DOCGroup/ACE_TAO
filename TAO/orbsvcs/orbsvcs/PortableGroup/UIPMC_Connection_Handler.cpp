@@ -58,7 +58,7 @@ TAO_UIPMC_Connection_Handler::~TAO_UIPMC_Connection_Handler (void)
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("TAO (%P|%t) - UIPMC_Connection_Handler::")
                   ACE_TEXT ("~UIPMC_Connection_Handler, ")
-                  ACE_TEXT ("release_os_resources() failed %m\n")));
+                  ACE_TEXT ("release_os_resources() failed (Errno: '%m')\n")));
     }
 }
 
@@ -188,7 +188,7 @@ TAO_UIPMC_Connection_Handler::open (void*)
             {
               ACE_ERROR ((LM_ERROR,
                           ACE_TEXT("TAO (%P|%t) - UIPMC_Connection_Handler::open, ")
-                          ACE_TEXT("couldn't set hop limit '%m'\n")));
+                          ACE_TEXT("couldn't set hop limit (Errno: '%m')\n")));
             }
           return -1;
         }
@@ -240,7 +240,7 @@ TAO_UIPMC_Connection_Handler::open (void*)
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO (%P|%t) - UIPMC_Connection_Handler::open, ")
-                      ACE_TEXT ("couldn't %s multicast packets looping '%m'\n"),
+                      ACE_TEXT ("couldn't %s multicast packets looping (Errno: '%m')\n"),
                       protocol_properties.enable_multicast_loop_ ?
                       ACE_TEXT ("enable") : ACE_TEXT ("disable")
                      ));
@@ -252,14 +252,14 @@ TAO_UIPMC_Connection_Handler::open (void*)
   if (!this->send_hi_water_mark_)
     {
 #if defined (ACE_LACKS_SO_SNDBUF)
-          // Assume a small buffer
-          this->send_hi_water_mark_ = 1024u;
-          if (TAO_debug_level)
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("TAO (%P|%t) - UIPMC_Connection_Handler::")
-                        ACE_TEXT ("open, -ORBSendHighWaterMark not specified ")
-                        ACE_TEXT ("using %u bytes\n"),
-                        this->send_hi_water_mark_));
+      // Assume a small buffer
+      this->send_hi_water_mark_ = 1024u;
+      if (TAO_debug_level)
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("TAO (%P|%t) - UIPMC_Connection_Handler::")
+                    ACE_TEXT ("open, -ORBSendHighWaterMark not specified ")
+                    ACE_TEXT ("using %u bytes\n"),
+                    this->send_hi_water_mark_));
 #else
       int size = sizeof (this->send_hi_water_mark_);
       result =
@@ -288,7 +288,7 @@ TAO_UIPMC_Connection_Handler::open (void*)
             ACE_ERROR ((LM_ERROR,
                         ACE_TEXT ("TAO (%P|%t) - UIPMC_Connection_Handler::")
                         ACE_TEXT ("open, -ORBSendHighWaterMark not specified ")
-                        ACE_TEXT ("and getsockopt failed '%m', using %u bytes\n"),
+                        ACE_TEXT ("and getsockopt failed (Errno: '%m'), using %u bytes\n"),
                         this->send_hi_water_mark_));
           return -1;
         }

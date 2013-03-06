@@ -1,0 +1,7 @@
+union MultiLabelUnion switch (long) {
+  case 0:
+  case 1:
+    char mlu_char;
+  case 2:
+    long mlu_long;
+};

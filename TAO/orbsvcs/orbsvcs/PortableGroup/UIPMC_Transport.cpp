@@ -366,7 +366,7 @@ TAO_UIPMC_Transport::send (
             {
               ACE_DEBUG ((LM_ERROR,
                           ACE_TEXT ("TAO (%P|%t) - UIPMC_Transport[%d]::send, ")
-                          ACE_TEXT ("error sending data '%m'\n"),
+                          ACE_TEXT ("error sending data (Errno: '%m')\n"),
                           this->id ()));
               return -1;
             }
@@ -487,7 +487,7 @@ TAO_UIPMC_Transport::send_message (
         ACE_DEBUG ((LM_ERROR,
                     ACE_TEXT ("TAO: (%P|%t) - UIPMC_Transport[%d]::")
                     ACE_TEXT ("send_message, closing transport %d after ")
-                    ACE_TEXT ("fault '%m'\n"),
+                    ACE_TEXT ("fault (Errno: '%m')\n"),
                     this->id ()));
       return -1;
     }
