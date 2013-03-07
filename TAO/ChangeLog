@@ -1,3 +1,14 @@
+Thu Mar  7 16:55:43 UTC 2013  Byron Harris  <harrisb@ociweb.com>
+
+        * NEWS:
+        * bin/tao_other_tests.lst:
+        * docs/Options.html:
+        * orbsvcs/tests/ImplRepo/RestartServer/MessengerClient.cpp:
+        * orbsvcs/tests/ImplRepo/RestartServer/run_test.pl:
+
+          Address that -ORBForwardOnReplyClosedLimit does not work
+          under FreeBSD, OpenVMS, and Solaris.
+
 Thu Mar  7 13:57:18 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * utils/logWalker/Invocation.cpp:
