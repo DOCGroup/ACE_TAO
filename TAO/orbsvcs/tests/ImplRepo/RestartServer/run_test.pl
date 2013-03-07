@@ -200,7 +200,13 @@ if ($c1->PutFile ($messenger_ior) == -1) {
 print ">>> " . $C1->CommandLine() . "\n";
 $C1_status = $C1->SpawnWaitKill ($c1->ProcessStartWaitInterval() + $extra_timeout);
 
-if ($C1_status != 0) {
+if ($C1_status == 2) {
+    print STDERR "Warning: This test does not currently run under this operating system.\n";
+    $IR->Kill (); $IR->TimedWait (1);
+    $ACT->Kill (); $ACT->TimedWait (1);
+    exit 0;
+}
+elsif ($C1_status != 0) {
     print STDERR "ERROR: Client1 returned $C1_status\n";
     $IR->Kill (); $IR->TimedWait (1);
     $ACT->Kill (); $ACT->TimedWait (1);
