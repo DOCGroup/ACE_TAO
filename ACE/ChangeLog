@@ -1,3 +1,9 @@
+Thu Mar  7 19:17:15 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/OS_NS_Thread.cpp:
+
+          QNX also only supports system scope for threads.
+
 Fri Mar  1 11:21:33 UTC 2013  Martin Corino  <mcorino@remedy.nl>
 
         * bin/auto_run_tests.pl:
