@@ -245,7 +245,7 @@ Thread::get_summary (long &sent_reqs,
        !i.done();
        i.advance())
     {
-      Invocation *inv;
+      Invocation *inv = 0;
       i.next(inv);
       if (inv->sent_request())
         {

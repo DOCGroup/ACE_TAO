@@ -329,7 +329,6 @@ void
 Invocation::dump_special_details (ostream &strm, int indent, const char *opname)
 {
   char rstat = 0;
-  bool excep_nl = false;
   if (this->repl_octets_ != 0 && this->repl_octets_->has_octets())
     rstat = this->repl_octets_->reply_status();
   int opid = 0;
@@ -341,7 +340,6 @@ Invocation::dump_special_details (ostream &strm, int indent, const char *opname)
                         giop_cdr.length(),
                         giop_cdr.byte_order());
       this->new_line (strm, indent, 8, true, false);
-      excep_nl = true;
       ACE_CDR::ULong len;
       if (cdr >> len)
         {
@@ -367,7 +365,6 @@ Invocation::dump_special_details (ostream &strm, int indent, const char *opname)
       if (cdr >> len)
         {
           this->new_line (strm, indent, 8, true, false);
-          excep_nl = true;
           strm << "name (len = " << len << ") " << cdr.rd_ptr();
         }
     }
@@ -434,7 +431,12 @@ Invocation::dump_special_details (ostream &strm, int indent, const char *opname)
       if (cdr >> len)
         {
           this->new_line (strm, indent, 8, true, false);
-          excep_nl = true;
+          if (this->repl_octets_ == 0)
+            strm << "<nrf> ";
+          else if (ACE_OS::strcmp (opname, "server_is_running") == 0)
+            strm << "<sir> ";
+          else if (ACE_OS::strcmp (opname, "server_is_shutting_down") == 0)
+            strm << "<ssd> ";
           strm << "name ( len = " << len << ") " << cdr.rd_ptr();
         }
     }
@@ -471,7 +473,7 @@ Invocation::dump_special_details (ostream &strm, int indent, const char *opname)
     }
   else
     {
-      this->new_line (strm, indent, 8, true, false); //excep_nl, false);
+      this->new_line (strm, indent, 8, true, false);
       ACE_CDR::ULong len;
       if (rstat == 1 || rstat == 2)
         {
@@ -480,18 +482,6 @@ Invocation::dump_special_details (ostream &strm, int indent, const char *opname)
       else
         {
           strm << "Redirect to ";
-          if (cdr >> len)
-            {
-             cdr.skip_bytes(len);
-             strm << "(first skip " << len << ") ";
-            }
-
-          if (cdr >> len)
-            {
-             cdr.skip_bytes(len);
-             strm << "(second skip " << len << ") ";
-            }
-
         }
       if (cdr >> len)
         {
