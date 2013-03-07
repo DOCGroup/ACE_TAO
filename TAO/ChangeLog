@@ -1,3 +1,15 @@
+Thu Mar  7 17:03:16 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * MPC/config/dynamic_tp.mpb:
+        * MPC/config/ft_naming_serv.mpb:
+
+        * orbsvcs/FT_Naming_Service/FT_Naming_Service.mpc:
+
+        * tests/Dynamic_TP/POA_Loader/POA_Loader.mpc:
+
+          Fix library dependency issues manifested by out of order
+          declarations on the link command line.
+
 Thu Mar  7 16:55:43 UTC 2013  Byron Harris  <harrisb@ociweb.com>
 
         * NEWS:
