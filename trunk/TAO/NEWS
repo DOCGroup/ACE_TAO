@@ -47,12 +47,16 @@ USER VISIBLE CHANGES BETWEEN TAO-2.1.7 and TAO-2.1.8
   a pool of threads that wait to service calls coming in on a
   particular queue.
 
-. Enhanced TAO Invocation Retry [#4096] - Extended TAO to support retry
-  in the presence of COMM_FAILURE exceptions. This feature is used to
-  support fault tolerant services (specifically the Fault Tolerant
-  Naming and Implementation Repository services described earlier).
-  The new invocation retry support allows configuration on how many
-  times to try to connect to each server and the delay between tries.
+. Multiple Invocation Retry [#4096] - Extended TAO to support multiple
+  retry in the presence of COMM_FAILURE, TRANSIENT, OBJECT_NOT_EXIST,
+  and INV_OBJREF exceptions. In addition, retries can occur if it has
+  been detected that a connection has closed while waiting for a reply
+  (currently not available under FreeBSD, OpenVMS, and Solaris). This
+  feature can be used to support fault tolerant services (specifically
+  the Fault Tolerant Naming and Implementation Repository services
+  described earlier).  The invocation retry support allows
+  configuration on how many times to try to connect to each server and
+  the delay between tries.
 
 . Added MIOP configuration options -ORBSendThrottling and -ORBEagerDequeueing,
   along with #define overrides for their default settings. See the descriptions

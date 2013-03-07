@@ -23,7 +23,7 @@
           <li><a href="#ORP">Optimizing Request Processing </a> </li>
           <li><a href="#CMPS">Connection Management and Protocol
 Selection </a> </li>
-	  <li><a href="#IRO">Invocation Retry Options</a></li>
+	  <li><a href="#IRO">Multiple Invocation Retry Options</a></li>
           <li><a href="#MO">Miscellaneous Options </a></li>
         </ol>
       </li>
@@ -890,7 +890,7 @@ is set. The default is true. </td>
   </table>
   </p>
 </blockquote>
-<h4><a name="IRO">5. Invocation Retry Options</a></h4>
+<h4><a name="IRO">5. Multiple Invocation Retry Options</a></h4>
 In cases such as connection timing issues or a load balancing server
 is temporarily not able to handle requests, it may be desirable to have
 the ORB transparently retry an invocation a maximum number of times
@@ -993,7 +993,10 @@ having them use the same configurator file.
       <tr>
         <td><code>-ORBForwardOnReplyClosedLimit</code> <em>limit</em></td>
         <td>Use this option to cycle through profiles when it has
-	been detected that a connection is closed when reading a server reply.
+	been detected that a connection is closed when reading a server reply
+        and having the server possibly process the reqest more than once
+        is acceptable. This option currently does not work under FreeBSD,
+        OpenVMS, and Solaris.
         The number of retries will not exceed <em>limit</em>.
 	If this option is used then -ORBForwardOnTransientLimit should
 	also be used to avoid a TRANSIENT exception being thrown.
@@ -1797,7 +1800,7 @@ strategy.
       <tr>
 	<td>Invocation Retry options</td>
 	<td>Options of the same names as the command-line options
-	    described in <a href="#IRO">Invocation Retry Options</a>
+	    described in <a href="#IRO">Multiple Invocation Retry Options</a>
 	    can also be applied client strategy factory service. Any
 	    option provided on the command line will override the
 	    corresponding option in the service configurator
@@ -1818,16 +1821,16 @@ strategy.
     of the line as a space separated list; however none are required as all
     options take default values if not specified.) This factory can be loaded
     dynamically using service configurator directives of the form (all on one line):
-    <p><code>dynamic UIPMC_Factory Service_Object * 
+    <p><code>dynamic UIPMC_Factory Service_Object *
         TAO_PortableGroup:_make_TAO_UIPMC_Protocol_Factory() ""</code></p>
     <p>Normally however in order to set up the TAO_UIPMC_Protocol_Factory correctly,
     the application will have to use other service configurator directives as well;
     for example:</p>
-    <code>dynamic UIPMC_Factory Service_Object * 
+    <code>dynamic UIPMC_Factory Service_Object *
         TAO_PortableGroup:_make_TAO_UIPMC_Protocol_Factory() ""<br>
-        static Resource_Factory "&#8209;ORBProtocolFactory IIOP_Factory 
+        static Resource_Factory "&#8209;ORBProtocolFactory IIOP_Factory
         &#8209;ORBProtocolFactory UIPMC_Factory"<br>
-        dynamic PortableGroup_Loader Service_Object * 
+        dynamic PortableGroup_Loader Service_Object *
         TAO_PortableGroup:_make_TAO_PortableGroup_Loader() ""</code></p>
     <blockquote>
       <p></p>
@@ -1857,7 +1860,7 @@ strategy.
     options. The MIOP factory accepts it own options detailed below which
     should be  specified between the two double-quotes shown here as a space
     separated list; however none are required as all options take default
-    values if not specified. This factory can be loaded dynamically using a 
+    values if not specified. This factory can be loaded dynamically using a
     service configurator directive of the form (all on one line):
     <p><code>dynamic MIOP_Resource_Factory Service_Object *
         TAO_PortableGroup:_make_TAO_MIOP_Resource_Factory () ""</code></p>
@@ -2030,19 +2033,19 @@ strategy.
             </tr>
             <tr>
               <td ALIGN="left"><code>&#8209;ORBRcvSock</code> <em>bytes</em></td>
-              <td ALIGN="left">This server-side (listener) option is the size of the incoming socket's 
-                message buffer, i.e., how much data can be received directly off the wire by the 
-                server and queued for processing by the servant whilst it is busy. If specified 
-                in the service configuration file, this value will override (for MIOP only) the 
-                value specified by the corresponding ORB_init parameter. If NOT specified in 
-                either place, the default value for the system itself will be used. Again for a 
-                Linux type OS, the systems RcvSock is usually about <b>65535</b> bytes, but 
-                whatever value is actually specified it is normally doubled internally to take 
-                account of the control structures required to track the messages themselves and 
-                so it is not a hard limit. Specifying as large a value as possible (i.e. 
+              <td ALIGN="left">This server-side (listener) option is the size of the incoming socket's
+                message buffer, i.e., how much data can be received directly off the wire by the
+                server and queued for processing by the servant whilst it is busy. If specified
+                in the service configuration file, this value will override (for MIOP only) the
+                value specified by the corresponding ORB_init parameter. If NOT specified in
+                either place, the default value for the system itself will be used. Again for a
+                Linux type OS, the systems RcvSock is usually about <b>65535</b> bytes, but
+                whatever value is actually specified it is normally doubled internally to take
+                account of the control structures required to track the messages themselves and
+                so it is not a hard limit. Specifying as large a value as possible (i.e.
                 whatever upper limit the OS will allow) with the MIOP <code>&#8209;ORBRcvSock</code>
-                option is advisable to maximize the available socket's receive buffer space, but 
-                obviously this is a trade off between available memory and other OS non-paged 
+                option is advisable to maximize the available socket's receive buffer space, but
+                obviously this is a trade off between available memory and other OS non-paged
                 memory uses.
               </td>
             </tr>
@@ -2051,20 +2054,20 @@ strategy.
               <td ALIGN="left">This is a server-side (listener) option that is enabled by default;
                 although this default can be overriden when the TAO libraries are built in the <CODE>
                   ace/config.h</CODE>, by specifying the new default such as <CODE>#define&nbsp;TAO_DEFAULT_MIOP_EAGER_DEQUEUEING&nbsp;false</CODE>
-                which in this case would turn this off by default, unless specified in the 
-                service file. If disabled (0) each thread servicing the MIOP listener will only 
-                dequeue enough MIOP message fragments from the socket receive buffer to 
-                complete a single full MIOP message which it will then process. This action 
-                reduces the amount of user memory consumed by the server process, but it also 
-                increases the likelihood of the OS sockets receive buffer overflowing (as 
-                whilst processing each message, the thread cannot dequeue other incomming 
-                message fragments). If enabled (1) it specifies that each server thread will 
-                attempt to dequeue all available MIOP messages from the receiver's socket and 
-                queue these up in a user memory FIFO queue, before attempting to process a 
-                single MIOP message from the head of this FIFO queue. This action attempts to 
-                speed up the dequeueing of MIOP messages from the OS socket receive buffer 
-                (with a corresponding increase in the amount of user memory consumed by the 
-                server process) so as to limit the number of MIOP messages that the server may 
+                which in this case would turn this off by default, unless specified in the
+                service file. If disabled (0) each thread servicing the MIOP listener will only
+                dequeue enough MIOP message fragments from the socket receive buffer to
+                complete a single full MIOP message which it will then process. This action
+                reduces the amount of user memory consumed by the server process, but it also
+                increases the likelihood of the OS sockets receive buffer overflowing (as
+                whilst processing each message, the thread cannot dequeue other incomming
+                message fragments). If enabled (1) it specifies that each server thread will
+                attempt to dequeue all available MIOP messages from the receiver's socket and
+                queue these up in a user memory FIFO queue, before attempting to process a
+                single MIOP message from the head of this FIFO queue. This action attempts to
+                speed up the dequeueing of MIOP messages from the OS socket receive buffer
+                (with a corresponding increase in the amount of user memory consumed by the
+                server process) so as to limit the number of MIOP messages that the server may
                 miss due to the OS sockets receive buffer becoming full.
               </td>
             </tr>
