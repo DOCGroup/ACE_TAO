@@ -1,3 +1,10 @@
+Fri Mar  8 16:13:18 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * orbsvcs/tests/FT_Naming/FaultTolerant/FaultTolerant.mpc:
+
+          Added dependency on idl generation to prevent parallel compile
+          from failing.
+
 Fri Mar  8 14:56:14 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
 
         * orbsvcs/tests/ImplRepo/RestartServer/RestartServer.mpc:
