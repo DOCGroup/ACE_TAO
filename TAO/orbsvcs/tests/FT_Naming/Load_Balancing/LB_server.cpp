@@ -119,7 +119,7 @@ LB_server::start_orb_and_poa (void)
       poa_manager->activate ();
 
       ACE_Time_Value timeout (10); // Wait up to 10 seconds for the naming service
-      if (name_svc_.init (this->orb_, &timeout) != 0)
+      if (name_svc_.init (this->orb_.in (), &timeout) != 0)
         ACE_ERROR_RETURN ((LM_DEBUG,
                            ACE_TEXT ("LB_server: Could not connect to naming ")
                            ACE_TEXT ("service.\n")),

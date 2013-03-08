@@ -653,7 +653,7 @@ do_failover_name_test (
         CORBA::Object_var obj1_on_replica = root_context_1->resolve (wide);
         // Make sure it is a context
         CosNaming::NamingContext_var nc =
-          CosNaming::NamingContext::_narrow (obj1_on_replica);
+          CosNaming::NamingContext::_narrow (obj1_on_replica.in ());
       }
       catch (const CosNaming::NamingContext::NotFound& ex)
         {
@@ -1062,7 +1062,7 @@ do_failover_objectgroup_test (
                           RC_ERROR);
     }
 
-    if (RC_SUCCESS != svc.set_naming_manager (naming_manager_1))
+    if (RC_SUCCESS != svc.set_naming_manager (naming_manager_1.in ()))
     {
       ACE_ERROR_RETURN (( LM_ERROR,
                           ACE_TEXT ("ERROR: invalid ior <%s>\n"),nm1ref),
@@ -1284,7 +1284,7 @@ do_persistence_name_test (
 
         // Make sure it is a context
         CosNaming::NamingContext_var nc =
-          CosNaming::NamingContext::_narrow (obj1_on_replica);
+          CosNaming::NamingContext::_narrow (obj1_on_replica.in ());
       }
       catch (const CosNaming::NamingContext::NotFound& ex)
         {
@@ -1388,7 +1388,7 @@ do_persistence_objectgroup_test (
                           RC_ERROR);
     }
 
-    if( RC_SUCCESS != group_svc.set_naming_manager (naming_manager_1) )
+    if( RC_SUCCESS != group_svc.set_naming_manager (naming_manager_1.in ()) )
     {
       ACE_ERROR_RETURN (( LM_ERROR,
                           ACE_TEXT ("ERROR: invalid ior <%s>\n"),nm1ref),
@@ -1569,7 +1569,9 @@ do_persistence_objectgroup_test (
 
             // Add back member
             group_var =
-              naming_manager_1->add_member (group_var, location_name, member);
+              naming_manager_1->add_member (group_var.in (),
+                                            location_name,
+                                            member.in ());
             PortableGroup::Locations_var locations =
               naming_manager_1->locations_of_members (group_var);
 
@@ -1851,7 +1853,7 @@ do_equivalence_name_test (
 
         // Make sure it is a context
         CosNaming::NamingContext_var nc =
-          CosNaming::NamingContext::_narrow (obj1_on_replica);
+          CosNaming::NamingContext::_narrow (obj1_on_replica.in ());
       }
       catch (const CosNaming::NamingContext::NotFound& ex)
         {
@@ -2331,7 +2333,7 @@ do_equivalence_objectgroup_test (
                           RC_ERROR);
     }
 
-    if (RC_SUCCESS != svc1.set_naming_manager (naming_manager_1))
+    if (RC_SUCCESS != svc1.set_naming_manager (naming_manager_1.in ()))
     {
       ACE_ERROR_RETURN (( LM_ERROR,
                           ACE_TEXT ("ERROR: invalid ior <%s>\n"),
@@ -2348,7 +2350,7 @@ do_equivalence_objectgroup_test (
                           RC_ERROR);
     }
 
-    if (RC_SUCCESS != svc2.set_naming_manager (naming_manager_2))
+    if (RC_SUCCESS != svc2.set_naming_manager (naming_manager_2.in ()))
     {
       ACE_ERROR_RETURN (( LM_ERROR,
                           ACE_TEXT ("ERROR: invalid ior <%s>\n"),nm2ref),
