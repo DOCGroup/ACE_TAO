@@ -1,3 +1,26 @@
+Fri Mar  8 00:06:30 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Shared_Backing_Store.cpp:
+
+          Print correct error message. Should report replica not running.
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:
+
+          Refactored init to have a separate function for replication pairing.
+          In replication pairing, add logic to allow the backup to start withou
+          a running primary if the the primary/backup have successfully started
+          previously. It will check to see if the primary ior file was written
+          and if it cannot connect to the primary it will assume the primary
+          will be started in the future and initiate the pairing then.
+
+        * orbsvcs/tests/FT_Naming/FaultTolerant/run_backup_restart_test.pl:
+        * orbsvcs/tests/FT_Naming/FaultTolerant/run_test.pl:
+
+          Add a test for starting the primary, then the backup naming service.
+          Then shutdown both the primary and backup and restart the backup
+          naming service and try and communicate with it from the client.
+
 Thu Mar  7 17:03:16 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * MPC/config/dynamic_tp.mpb:

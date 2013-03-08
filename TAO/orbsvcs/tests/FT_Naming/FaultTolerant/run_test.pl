@@ -12,7 +12,8 @@ use Cwd;
 
 my @list=("run_failover_test.pl",
           "run_persistence_test.pl",
-          "run_equivalence_test.pl");
+          "run_equivalence_test.pl",
+          "run_backup_restart_test.pl");
 
 my $status = 0;
 
