@@ -73,6 +73,12 @@ public:
                                          ACE_TCHAR *argv [],
                                          CORBA::ORB_ptr orb);
 
+  /// Setup pairing with peer replica.
+  /// Returns 0 on successful pairing with peer.
+  /// Returns 1 if peer IOR file is present, but peer is not responding
+  /// Returns -1 if pairing is not possible.
+  int init_replication_pairing (void);
+
   /// Overridden parse operation. Only allows options supported by the FT_Naming_Server
   /// and adds options for the object group manager
   virtual int parse_args (int argc,
