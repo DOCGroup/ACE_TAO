@@ -1,3 +1,11 @@
+Fri Mar  8 20:27:36 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Shared_Backing_Store.cpp:
+        * utils/logWalker/Invocation.h:
+        * utils/logWalker/Invocation.cpp:
+
+          Fix warning on size_t.
+
 Fri Mar  8 20:06:15 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
 
         * bin/tao_other_tests.lst:

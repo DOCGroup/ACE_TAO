@@ -389,7 +389,7 @@ namespace {
                                            unsigned int& this_repo_id,
                                            const unsigned int debug)
   {
-    const unsigned int size = extra_params.size();
+    const size_t size = extra_params.size();
     if ((size != 2) && (debug > 4))
       {
         ACE_ERROR((
@@ -726,7 +726,7 @@ Shared_Backing_Store::init_repo(PortableServer::POA_ptr imr_poa)
       else
         {
           const ACE_Vector<ACE_TString>& filenames = listings->filenames();
-          CORBA::ULong sz = filenames.size ();
+          size_t sz = filenames.size ();
           for (CORBA::ULong i = 0; i < sz; ++i)
             {
               if (this->opts_.debug() > 9)
@@ -775,7 +775,7 @@ Shared_Backing_Store::persistent_load (bool only_changes)
     }
 
   const ACE_Vector<ACE_TString>& filenames = listings->filenames();
-  CORBA::ULong sz = filenames.size ();
+  size_t sz = filenames.size ();
   if (this->opts_.debug() > 9)
     {
       ACE_DEBUG((LM_INFO, ACE_TEXT ("persistent_load %d files\n"), sz));
