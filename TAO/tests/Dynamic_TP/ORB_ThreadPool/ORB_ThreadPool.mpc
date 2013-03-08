@@ -1,14 +1,14 @@
 // -*- MPC -*-
 // $Id$
 
-project(*idl): taoidldefaults, avoids_corba_e_compact, avoids_corba_e_micro {
+project(*idl): taoidldefaults, avoids_corba_e_compact, avoids_corba_e_micro, threads {
   IDL_Files {
     Test.idl
   }
   custom_only = 1
 }
 
-project(*Server): taoserver, dynamic_tp, avoids_corba_e_compact, avoids_corba_e_micro {
+project(*Server): taoserver, dynamic_tp, avoids_corba_e_compact, avoids_corba_e_micro, threads {
   after += *idl
   Source_Files {
     Test_i.cpp
@@ -22,7 +22,7 @@ project(*Server): taoserver, dynamic_tp, avoids_corba_e_compact, avoids_corba_e_
 
 }
 
-project(*Middle): taoserver, dynamic_tp, avoids_corba_e_compact, avoids_corba_e_micro {
+project(*Middle): taoserver, dynamic_tp, avoids_corba_e_compact, avoids_corba_e_micro, threads {
   exename=middle
   after += *idl
   Source_Files {
@@ -37,7 +37,7 @@ project(*Middle): taoserver, dynamic_tp, avoids_corba_e_compact, avoids_corba_e_
 
 }
 
-project(*Client): taoclient, avoids_corba_e_compact, avoids_corba_e_micro {
+project(*Client): taoclient, avoids_corba_e_compact, avoids_corba_e_micro, threads {
   after += *idl
   Source_Files {
     TestC.cpp
