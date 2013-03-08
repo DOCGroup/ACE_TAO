@@ -217,7 +217,7 @@ Invocation::new_line (ostream &strm, int indent, int offset, bool add_nl, bool s
 
 void
 Invocation::dump_detail (ostream &strm,
-                         int indent,
+                         size_t indent,
                          Dump_Mode mode,
                          bool show_handle)
 {
@@ -295,7 +295,7 @@ Invocation::dump_detail (ostream &strm,
 #if defined (SHOW_THREAD_ID)
           strm << " " << this->repl_octets_->thread()->alias();
 #endif
-          char rstat = this->repl_octets_->reply_status();
+          size_t rstat = this->repl_octets_->reply_status();
           if (rstat == 1 || rstat == 2)
             {
               strm << (rstat == 1 ? " User" : " System") << " Exception";
@@ -326,9 +326,9 @@ Invocation::dump_detail (ostream &strm,
 }
 
 void
-Invocation::dump_special_details (ostream &strm, int indent, const char *opname)
+Invocation::dump_special_details (ostream &strm, size_t indent, const char *opname)
 {
-  char rstat = 0;
+  size_t rstat = 0;
   if (this->repl_octets_ != 0 && this->repl_octets_->has_octets())
     rstat = this->repl_octets_->reply_status();
   int opid = 0;

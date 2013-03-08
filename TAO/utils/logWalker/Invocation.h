@@ -82,8 +82,8 @@ public:
   long handle (void) const;
 
   void new_line (ostream &strm, int indent, int offset,  bool add_nl, bool show_indent);
-  void dump_detail (ostream &strm, int indent, Dump_Mode mode, bool show_handle);
-  void dump_special_details (ostream &strm, int indent, const char *opname);
+  void dump_detail (ostream &strm, size_t indent, Dump_Mode mode, bool show_handle);
+  void dump_special_details (ostream &strm, size_t indent, const char *opname);
 
 private:
   GIOP_Buffer *req_octets_;
