@@ -137,7 +137,7 @@ TAO_FT_Naming_Manager::delete_object_group (const char * group_name)
   if (!CORBA::is_nil (group.in()))
   {
     PortableGroup::ObjectGroupId group_id =
-      this->get_object_group_id (group);
+      this->get_object_group_id (group.in ());
 
     // Delete the object group from the factory
     this->group_factory_.delete_group (group_id);
@@ -185,7 +185,8 @@ TAO_FT_Naming_Manager::groups (::FT_Naming::LoadBalancingStrategyValue target_st
     lb_strat_property_name.length (1);
     lb_strat_property_name[0].id =
       CORBA::string_dup (::FT_Naming::TAO_FT_LOAD_BALANCING_STRATEGY);
-    PortableGroup::Properties_var props = this->get_properties (obj_group);
+    PortableGroup::Properties_var props =
+      this->get_properties (obj_group.in ());
     PortableGroup::Value value;
     if (!TAO_PG::get_property_value (lb_strat_property_name, props.in (), value))
       {
@@ -241,10 +242,11 @@ TAO_FT_Naming_Manager::set_load_balancing_strategy (
   PortableGroup::Value value;
   // Add the load balancing strategy to the properties
   value <<= lb_strategy;
-  property_set.set_property (::FT_Naming::TAO_FT_LOAD_BALANCING_STRATEGY, value);
+  property_set.set_property (::FT_Naming::TAO_FT_LOAD_BALANCING_STRATEGY,
+                             value);
   PortableGroup::Properties properties;
   property_set.export_properties (properties);
-  this->set_properties_dynamically (group, properties);
+  this->set_properties_dynamically (group.in (), properties);
 }
 
 

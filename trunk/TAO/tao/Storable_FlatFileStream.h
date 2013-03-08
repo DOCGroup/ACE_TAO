@@ -15,6 +15,7 @@
 #define STORABLE_FLATFILESTREAM_H
 
 #include /**/ "ace/pre.h"
+#include "ace/config-lite.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once

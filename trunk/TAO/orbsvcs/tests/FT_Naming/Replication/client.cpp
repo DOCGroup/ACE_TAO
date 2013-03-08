@@ -288,7 +288,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           root_context_2->resolve (wide);
         // Make sure it is a context
         CosNaming::NamingContext_var nc =
-          CosNaming::NamingContext::_narrow (obj1_on_replica);
+          CosNaming::NamingContext::_narrow (obj1_on_replica.in ());
       }
       catch (const CosNaming::NamingContext::NotFound& ex)
         {

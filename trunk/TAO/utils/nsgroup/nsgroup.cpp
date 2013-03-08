@@ -166,7 +166,7 @@ NSGROUP::start_orb (void)
 
     CORBA::ORB_var orb_ = CORBA::ORB_init (this->argc_, this->argv_);
 
-    if (RC_SUCCESS != svc_.set_orb (orb_))
+    if (RC_SUCCESS != svc_.set_orb (orb_.in ()))
     {
 
       ACE_ERROR_RETURN (( LM_ERROR,
@@ -183,7 +183,7 @@ NSGROUP::start_orb (void)
     FT_Naming::NamingManager_var naming_manager_ =
       FT_Naming::NamingManager::_narrow (naming_manager_object.in ());
 
-    if (RC_SUCCESS != svc_.set_naming_manager (naming_manager_))
+    if (RC_SUCCESS != svc_.set_naming_manager (naming_manager_.in ()))
     {
       ACE_ERROR_RETURN (( LM_ERROR,
                           ACE_TEXT (" (%P|%t) Unable to get Naming ")
@@ -199,7 +199,7 @@ NSGROUP::start_orb (void)
     CosNaming::NamingContextExt_var name_service_ =
       CosNaming::NamingContextExt::_narrow (naming_object.in ());
 
-    if (RC_SUCCESS != svc_.set_name_context (name_service_))
+    if (RC_SUCCESS != svc_.set_name_context (name_service_.in ()))
     {
       ACE_ERROR_RETURN (( LM_ERROR,
                           ACE_TEXT (" (%P|%t) Unable to get Name Service ")

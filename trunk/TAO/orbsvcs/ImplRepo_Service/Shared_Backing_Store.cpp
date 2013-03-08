@@ -478,13 +478,13 @@ Shared_Backing_Store::persistent_remove (const ACE_CString& name,
     {
       err = remove<ImplementationRepository::ActivatorUpdate>
         (name, this->activator_uids_, this->filename_, listing_lf,
-         this->peer_replica_, this->seq_num_);
+         this->peer_replica_.in (), this->seq_num_);
     }
   else
     {
       err = remove<ImplementationRepository::ServerUpdate>
         (name, this->server_uids_, this->filename_, listing_lf,
-         this->peer_replica_, this->seq_num_);
+         this->peer_replica_.in (), this->seq_num_);
     }
   return err;
 }
@@ -542,7 +542,7 @@ Shared_Backing_Store::persistent_update(const Server_Info_Ptr& info, bool add)
     ImplementationRepository::repo_add :
     ImplementationRepository::repo_update;
   replicate<ImplementationRepository::ServerUpdate, ServerUIMap>
-    (peer_replica_, entry, type, ++seq_num_);
+    (peer_replica_.in (), entry, type, ++seq_num_);
   return 0;
 }
 
@@ -601,7 +601,7 @@ Shared_Backing_Store::persistent_update(const Activator_Info_Ptr& info,
     ImplementationRepository::repo_add :
     ImplementationRepository::repo_update;
   replicate<ImplementationRepository::ActivatorUpdate, ActivatorUIMap>
-    (peer_replica_, entry, type, ++seq_num_);
+    (peer_replica_.in (), entry, type, ++seq_num_);
   return 0;
 }
 
@@ -1225,7 +1225,7 @@ Shared_Backing_Store::register_replica(
   this->imr_ior_ = (const char*)ft_imr_ior;
 
   PortableServer::POA_var null_poa;
-  Locator_Repository::report_ior(null_poa);
+  Locator_Repository::report_ior(null_poa.in ());
 }
 
 ACE_CString

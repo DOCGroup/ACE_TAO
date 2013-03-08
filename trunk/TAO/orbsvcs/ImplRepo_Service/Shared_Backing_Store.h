@@ -17,6 +17,8 @@
 #ifndef SHARED_BACKING_STORE_H
 #define SHARED_BACKING_STORE_H
 
+#include "ace/config-lite.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */

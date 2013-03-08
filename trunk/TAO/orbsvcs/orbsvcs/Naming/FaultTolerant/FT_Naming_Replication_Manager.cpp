@@ -153,8 +153,8 @@ TAO_FT_Naming_Replication_Manager::register_with_peer_replica (
                         CORBA::INTERNAL ());
 
     // Store the returned references locally
-    this->naming_svr_->peer_root_context (peer_info->root_context);
-    this->naming_svr_->peer_naming_manager (peer_info->naming_manager);
+    this->naming_svr_->peer_root_context (peer_info->root_context. in ());
+    this->naming_svr_->peer_naming_manager (peer_info->naming_manager.in ());
   }
   catch (const CORBA::Exception& ex) {
     // Unable to contact the peer replica.

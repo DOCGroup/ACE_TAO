@@ -173,7 +173,9 @@ ImR_Locator_i::init_with_orb (CORBA::ORB_ptr orb, Options& opts)
 
   // initialize the repository. This will load any values that
   // may have been persisted before.
-  return this->repository_->init(this->root_poa_, this->imr_poa_, ior);
+  return this->repository_->init(this->root_poa_.in (),
+                                 this->imr_poa_.in (),
+                                 ior);
 }
 
 int

@@ -1,3 +1,33 @@
+Fri Mar  8 14:56:14 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * orbsvcs/tests/ImplRepo/RestartServer/RestartServer.mpc:
+        * bin/tao_other_tests.lst:
+
+          Dont run ImplRepo RestartServer test in single threaded builds.
+
+        * orbsvcs/ImplRepo_Service/Config_Backing_Store.h:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/Shared_Backing_Store.h:
+        * orbsvcs/ImplRepo_Service/Shared_Backing_Store.cpp:
+        * orbsvcs/ImplRepo_Service/XML_Backing_Store.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Replication_Manager.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context_ReaderWriter.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group_Storable.cpp:
+        * orbsvcs/tests/FT_Naming/FaultTolerant/LB_server.cpp:
+        * orbsvcs/tests/FT_Naming/FaultTolerant/client.cpp:
+        * orbsvcs/tests/FT_Naming/Load_Balancing/LB_server.cpp:
+        * orbsvcs/tests/FT_Naming/Replication/client.cpp:
+        * tao/Storable_FlatFileStream.h:
+        * utils/nsgroup/nsgroup.cpp:
+
+          Fix issues with implicit conversion of _var types by using ".in ()".
+          Addresses compilation issues on QNX and LynxOS.
+
+          Also included ace/config-lite.h prior to use of ACE_LACKS_PRAGMA_ONCE
+          macro to ensure it was defined.
+
 Fri Mar  8 00:06:30 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/Shared_Backing_Store.cpp:
