@@ -650,7 +650,7 @@ Shared_Backing_Store::connect_replicas (Replica_ptr this_replica)
       if (this->imr_type_ == Options::BACKUP_IMR)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-            ACE_TEXT("Error: No primary ImR replica file found <%s>\n"),
+            ACE_TEXT("Error: No primary ImR replica is running <%s>\n"),
             replica_ior.c_str()), -1);
         }
 

@@ -121,22 +121,40 @@ TAO_FT_Naming_Server::init_with_orb (int argc,
     result = init_replication_manager_with_orb (argc, argv, orb);
     if (result != 0)
       return result;
+
+    // Setup the pairing with peer
+    result = init_replication_pairing ();
+
+    // If we successfully paired, we are a backup and
+    // we have a peer_root_context, then export the combined IORs
+    if ((result == 0) &&
+        (this->server_role_ == TAO_FT_Naming_Server::BACKUP) &&
+        (!CORBA::is_nil (peer_root_context_.in ())))
+          { // If we successfully initialized the replication manager and we are
+            // a backup server, then we should export the multi-profile
+            // references to files. No need to write out the IOR if we
+
+            if (TAO_debug_level > 3)
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%P|%t) - FT_Naming_Server ")
+                          ACE_TEXT ("Writing combined IOR.\n")));
+
+            result = export_ft_naming_references ();
+          }
+    else if (result == 1)
+      { // Primary was started in the past, but it is not currently
+        // accessible for pairing. Primary will initiate pairing when
+        // it is restarted.
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("Unable to pair with primary\n")));
+        result = 0; // This is a normal situation on backup restart.
+      }
   }
   catch (const CORBA::Exception& ex)
-  {
-    ex._tao_print_exception (
-      ACE_TEXT ("TAO_FT_Naming_Server::init_with_orb"));
-    return -1;
-  }
-
-  // If we successfully initialized the replication manager and we are
-  // a backup server, then we should export the multi-profile
-  // references to files.
-  if (this->server_role_ == TAO_FT_Naming_Server::BACKUP)
-    {
-      // The backup should write out the combined IOR for the primary
-      // and backup naming service and naming manager.
-      result = export_ft_naming_references ();
+    { // No exceptions are expected.
+      ex._tao_print_exception (
+        ACE_TEXT ("TAO_FT_Naming_Server::init_with_orb"));
+      return -1;
     }
 
   return result;
@@ -394,67 +412,82 @@ TAO_FT_Naming_Server::init_replication_manager_with_orb (int argc,
     this->replication_manager_->initialize (
       this->orb_.in (),
       this->replication_manager_poa_.in ());
+  }
+  catch (const CORBA::Exception& ex)
+    {
+      ex._tao_print_exception (
+        ACE_TEXT ("TAO_FT_Naming_Server::init_replication_manager_with_orb.\n"));
+      return -1;
+    }
 
-    ACE_CString primary_file_name (
+  // Success
+  return 0;
+}
+
+int
+TAO_FT_Naming_Server::init_replication_pairing (void)
+{
+
+  ACE_CString primary_file_name (
       ACE_TEXT_ALWAYS_CHAR (this->persistence_file_name_));
-    primary_file_name += "/";
-    primary_file_name +=
-      ACE_TEXT_ALWAYS_CHAR (TAO_FT_Naming_Server::primary_replica_ior_filename);
+  primary_file_name += "/";
+  primary_file_name +=
+    ACE_TEXT_ALWAYS_CHAR (TAO_FT_Naming_Server::primary_replica_ior_filename);
 
-    ACE_CString backup_file_name (
+  ACE_CString backup_file_name (
       ACE_TEXT_ALWAYS_CHAR (this->persistence_file_name_));
-    backup_file_name += "/";
-    backup_file_name +=
-      ACE_TEXT_ALWAYS_CHAR (TAO_FT_Naming_Server::backup_replica_ior_filename);
+  backup_file_name += "/";
+  backup_file_name +=
+    ACE_TEXT_ALWAYS_CHAR (TAO_FT_Naming_Server::backup_replica_ior_filename);
 
-    if (this->server_role_ == PRIMARY)
-      { // We are the primary
-        if (TAO_debug_level > 3)
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) - FT_Naming_Server ")
-                      ACE_TEXT ("is a primary\n")));
+  if (this->server_role_ == PRIMARY)
+    { // We are the primary
+      if (TAO_debug_level > 3)
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("(%P|%t) - FT_Naming_Server ")
+                    ACE_TEXT ("is a primary\n")));
 
-        // Write out this replicas IOR for the backup to use to bootstrap
-        CORBA::String_var replication_ior = naming_service_ior ();
-        this->write_ior_to_file (
-          this->replication_manager_ior_.in (),
-          primary_file_name.c_str ());
+      // Write out this replicas IOR for the backup to use to bootstrap
+      CORBA::String_var replication_ior = naming_service_ior ();
+      this->write_ior_to_file (
+                               this->replication_manager_ior_.in (),
+                               primary_file_name.c_str ());
 
-        // Check if there is already a backup IOR file. If so, then the backup
-        // may be up and running so we should register with it.
-        CORBA::Object_var backup_ior;
-        if (TAO_debug_level > 3)
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) - FT_Naming_Server reading ")
-                      ACE_TEXT ("backup ior file\n")));
+      // Check if there is already a backup IOR file. If so, then the backup
+      // may be up and running so we should register with it.
+      CORBA::Object_var backup_ior;
+      if (TAO_debug_level > 3)
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("(%P|%t) - FT_Naming_Server reading ")
+                    ACE_TEXT ("backup ior file\n")));
 
-        if ((ACE_OS::access (primary_file_name.c_str (),
-                             R_OK) == 0) &&
-            this->read_reference_from_file (backup_file_name.c_str (),
-                                            backup_ior.out ()) == 0)
-          {// Success in reading backup IOR file
-            // Store the backup reference as our peer
-            FT_Naming::ReplicationManager_var peer_ref =
+      if ((ACE_OS::access (primary_file_name.c_str (),
+                           R_OK) == 0) &&
+          this->read_reference_from_file (backup_file_name.c_str (),
+                                          backup_ior.out ()) == 0)
+        {// Success in reading backup IOR file
+          // Store the backup reference as our peer
+          FT_Naming::ReplicationManager_var peer_ref =
               FT_Naming::ReplicationManager::_narrow (backup_ior.in ());
 
-            if (TAO_debug_level > 3)
-              ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%P|%t) - FT_Naming_Server ")
-                          ACE_TEXT ("narrowing IOR\n")));
-            if (CORBA::is_nil (peer_ref.in ()))
-              ACE_ERROR_RETURN (
-                (LM_ERROR,
-                 ACE_TEXT ("(%P|%t) ERROR: IOR in file %s is not ")
-                 ACE_TEXT ("a FT_Naming::ReplicationManager\n"),
-                 primary_file_name.c_str ()),
-                -1);
+          if (TAO_debug_level > 3)
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("(%P|%t) - FT_Naming_Server ")
+                        ACE_TEXT ("narrowing IOR\n")));
+          if (CORBA::is_nil (peer_ref.in ()))
+            ACE_ERROR_RETURN (
+                              (LM_ERROR,
+                               ACE_TEXT ("(%P|%t) ERROR: IOR in file %s is not ")
+                               ACE_TEXT ("a FT_Naming::ReplicationManager\n"),
+                               primary_file_name.c_str ()),
+                              -1);
 
-            try {
+          try {
               if (TAO_debug_level > 3)
                 ACE_DEBUG (
-                  (LM_DEBUG,
-                   ACE_TEXT ("(%P|%t) - FT_Naming_Server registering ")
-                   ACE_TEXT ("with backup.\n")));
+                           (LM_DEBUG,
+                            ACE_TEXT ("(%P|%t) - FT_Naming_Server registering ")
+                            ACE_TEXT ("with backup.\n")));
 
               // Register with the backup
               CosNaming::NamingContext_var root = this->my_root_context ();
@@ -480,115 +513,104 @@ TAO_FT_Naming_Server::init_replication_manager_with_orb (int argc,
                                 ACE_TEXT ("(%P|%t) - FT_Naming_Server:Backup peer ")
                                 ACE_TEXT ("replica not started yet.\n")));
                 }
+          }
+          catch (const CORBA::Exception& ex)
+            {
+              // Its Ok that we were unable to contact the backup peer.
+              // It has apparently not started yet.
+              // It will register with the primary when it starts up.
+              ex._tao_print_exception (
+                 ACE_TEXT ("Backup peer replica not started yet.\n"));
             }
-            catch (const CORBA::Exception& ex)
-              {
-                // Its Ok that we were unable to contact the backup peer.
-                // It has apparently not started yet.
-                // It will register with the primary when it starts up.
-                ex._tao_print_exception (
-                   ACE_TEXT ("Backup peer replica not started yet.\n"));
-              }
+        }
+      else
+        {
+          // Could not get the backup replica from the IOR file, which is OK.
+          // The backup will register with us in the future.
+          if (TAO_debug_level > 3)
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("(%P|%t) - FT_Naming_Server no Replica ")
+                        ACE_TEXT ("IOR file. Waiting for registration.\n")));
           }
-        else
-          {
-            // Could not get the backup replica from the IOR file, which is OK.
-            // The backup will register with us in the future.
-            if (TAO_debug_level > 3)
-              ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%P|%t) - FT_Naming_Server no Replica ")
-                          ACE_TEXT ("IOR file. Waiting for registration.\n")));
-          }
-      }
-    else if (this->server_role_ == TAO_FT_Naming_Server::BACKUP)
-      { // We are the backup
-        if (TAO_debug_level > 3)
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) - FT_Naming_Server:Is a Backup\n")));
+    }
+  else if (this->server_role_ == TAO_FT_Naming_Server::BACKUP)
+    { // We are the backup
+      if (TAO_debug_level > 3)
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("(%P|%t) - FT_Naming_Server:Is a Backup\n")));
 
-        if (TAO_debug_level > 3)
+      if (TAO_debug_level > 3)
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) - FT_Naming_Server writing ")
                       ACE_TEXT ("replica ior\n")));
-        // Write out the backup ior for use by the primary if it must be restarted.
-        this->write_ior_to_file (
-          replication_manager_ior_.in (),
-          backup_file_name.c_str ());
+      // Write out the backup ior for use by the primary if it must be restarted.
+      this->write_ior_to_file (
+                               replication_manager_ior_.in (),
+                               backup_file_name.c_str ());
 
-        // Get the ior file for the primary from the
-        // persistence directory. If not there, fail.
-        CORBA::Object_var primary_ref = CORBA::Object::_nil ();
+      CORBA::Object_var primary_ref = CORBA::Object::_nil ();
 
-        if (TAO_debug_level > 3)
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) - FT_Naming_Server ")
-                      ACE_TEXT ("reading primary ior file\n")));
-        // Check for the primary IOR.  We must have it to bootstrap the redundant
-        // naming pair.
-        if ((ACE_OS::access (primary_file_name.c_str (), R_OK) == 0) &&
-            (this->read_reference_from_file (primary_file_name.c_str (),
-                                             primary_ref.out ()) == 0))
-          {
-            if (TAO_debug_level > 3)
-              ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%P|%t) - FT_Naming_Server ")
-                          ACE_TEXT ("toring the primary reference ior\n")));
-            // Store the primary reference as our peer
-            FT_Naming::ReplicationManager_var peer_ref =
-              FT_Naming::ReplicationManager::_narrow (primary_ref.in ());
+      if (TAO_debug_level > 3)
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("(%P|%t) - FT_Naming_Server ")
+                    ACE_TEXT ("reading primary ior file\n")));
+      // Check for the primary IOR.  We must have it to bootstrap the redundant
+      // naming pair.
+      if ((ACE_OS::access (primary_file_name.c_str (), R_OK) == 0) &&
+          (this->read_reference_from_file (primary_file_name.c_str (),
+                                           primary_ref.out ()) == 0))
+        { // There is a primary IOR file, so we must be restarting.
+          if (TAO_debug_level > 3)
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("(%P|%t) - FT_Naming_Server ")
+                        ACE_TEXT ("storing the primary reference ior\n")));
+          // Store the primary reference as our peer
+          FT_Naming::ReplicationManager_var peer_ref =
+            FT_Naming::ReplicationManager::_narrow (primary_ref.in ());
 
-            if (CORBA::is_nil (peer_ref.in ()))
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 ACE_TEXT ("(%P|%t) ERROR: IOR in file %s ")
-                                 ACE_TEXT ("is not a FT_Naming::ReplicationManager\n"),
-                                 primary_file_name.c_str ()),
-                                -1);
-
-            if (TAO_debug_level > 3)
-              ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%P|%t) - FT_Naming_Server ")
-                          ACE_TEXT ("backup registering with primary.\n")));
-            // Register with the primary
-            CosNaming::NamingContext_var root = this->my_root_context ();
-            FT_Naming::NamingManager_var nm = this->my_naming_manager ();
-            int registration_result =
-              this->replication_manager_->register_with_peer_replica (peer_ref.in (),
-                                                                      root.in (),
-                                                                      nm.in ());
-            if (registration_result == -1)
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 ACE_TEXT ("(%P|%t) ERROR: Backup unable to ")
-                                 ACE_TEXT ("register with the primary\n")),
-                                -1);
-          }
-        else
-          {
+          if (CORBA::is_nil (peer_ref.in ()))
             ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("(%P|%t) ERROR: No primary IOR ")
-                               ACE_TEXT ("available. Have you started the ")
-                               ACE_TEXT ("primary? Exiting.\n")),
+                               ACE_TEXT ("(%P|%t) ERROR: IOR in file %s ")
+                               ACE_TEXT ("is not a FT_Naming::ReplicationManager\n"),
+                               primary_file_name.c_str ()),
                               -1);
-          }
-      }
-    else
-      {// We are neither a primary or replica, but running in standalone mode
-        if (TAO_debug_level > 3)
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) - FT_Naming_Server:Is Standalone\n")));
 
-      }
-  }
-  catch (const CORBA::Exception& ex)
-    {
-      ex._tao_print_exception (
-        ACE_TEXT ("TAO_FT_Naming_Server::init_replication_manager_with_orb.\n"));
-      return -1;
+          if (TAO_debug_level > 3)
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("(%P|%t) - FT_Naming_Server ")
+                        ACE_TEXT ("backup registering with primary.\n")));
+          // Register with the primary
+          CosNaming::NamingContext_var root = this->my_root_context ();
+          FT_Naming::NamingManager_var nm = this->my_naming_manager ();
+          int registration_result =
+            this->replication_manager_->register_with_peer_replica (peer_ref.in (),
+                                                                    root.in (),
+                                                                    nm.in ());
+          if (registration_result == -1)
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("(%P|%t) Backup unable to ")
+                               ACE_TEXT ("register with the primary at this time.\n")),
+                              1);
+        }
+      else
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("(%P|%t) ERROR: No primary IOR ")
+                             ACE_TEXT ("available. Have you started the ")
+                             ACE_TEXT ("primary? Exiting.\n")),
+                            -1);
+        }
     }
+  else
+    {// We are neither a primary or replica, but running in standalone mode
+      if (TAO_debug_level > 3)
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("(%P|%t) - FT_Naming_Server:Is Standalone\n")));
 
-  // Success
+      }
+
   return 0;
 }
-
 
 int
 TAO_FT_Naming_Server::parse_args (int argc,
@@ -795,7 +817,6 @@ TAO_FT_Naming_Server::parse_args (int argc,
                            ACE_TEXT ("IOR (using '-c' option) from the backup")
                            ACE_TEXT (" server.\n\n")),
                           -1);
-
     }
   return 0;
 }
