@@ -1,3 +1,19 @@
+Fri Mar  8 20:06:15 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * bin/tao_other_tests.lst:
+
+          Dont run the servers_list test in single threaded configuration.
+
+        * orbsvcs/tests/ImplRepo/servers_list/servers_list.mpc:
+
+          Don't build servers_list in a single threaded configuration.
+
+        * tests/Dynamic_TP/Config_Loader/Config_Loader.mpc:
+        * tests/Dynamic_TP/ORB_ThreadPool/ORB_ThreadPool.mpc:
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Dynamic/Dynamic_TP_POA_Test_Dynamic.mpc:
+
+          Don't build Dynamic_TP tests in a single threaded configuration.
+
 Fri Mar  8 16:13:18 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
 
         * orbsvcs/tests/FT_Naming/FaultTolerant/FaultTolerant.mpc:

@@ -8,7 +8,7 @@ project(*idl): taoidldefaults {
   custom_only = 1
 }
 
-project(*server): taoserver, iortable, avoids_minimum_corba, avoids_corba_e_micro {
+project(*server): taoserver, iortable, avoids_minimum_corba, avoids_corba_e_micro, threads {
   after += *idl
   exename = server
   IDL_Files {
@@ -22,7 +22,7 @@ project(*server): taoserver, iortable, avoids_minimum_corba, avoids_corba_e_micr
   }
 }
 
-project(*client): taoclient, anytypecode, avoids_minimum_corba {
+project(*client): taoclient, anytypecode, avoids_minimum_corba, threads {
   after += *idl
   exename = client
   Source_Files {
