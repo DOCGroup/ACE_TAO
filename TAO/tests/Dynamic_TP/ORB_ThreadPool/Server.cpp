@@ -3,6 +3,7 @@
 #include "Test_i.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_stdlib.h"
 #include "ace/Thread_Manager.h"
 
 #include "tao/ORB_Core_TSS_Resources.h"
@@ -98,6 +99,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
       else
         {
+          ACE_OS::sleep (1);
           ACE_DEBUG ((LM_DEBUG,"Server calling pool->wait()\n"));
           pool->wait();
         }
