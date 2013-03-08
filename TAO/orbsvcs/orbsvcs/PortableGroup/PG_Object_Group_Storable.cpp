@@ -467,7 +467,7 @@ TAO::PG_Object_Group_Storable::read (TAO::Storable_Base & stream)
       MemberInfo * info = 0;
       ACE_NEW_THROW_EX (info, MemberInfo(member.in (),
                                          the_location,
-                                         factory,
+                                         factory.in (),
                                          factory_id),
                         CORBA::NO_MEMORY());
 
