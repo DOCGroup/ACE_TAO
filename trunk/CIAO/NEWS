@@ -1,6 +1,10 @@
 USER VISIBLE CHANGES BETWEEN CIAO-1.1.7 and CIAO-1.1.8
 =======================================================
 
+. Added type_name attribute to DDS4CCM TopicBase connector
+
+. Fixed a few code generation bugs
+
 USER VISIBLE CHANGES BETWEEN CIAO-1.1.6 and CIAO-1.1.7
 =======================================================
 
