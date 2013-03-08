@@ -197,8 +197,9 @@ sub test_3
     my $status = 0;
 
     print "\nRunning Test 3....\n";
-    $test_num=3;
-    $num_clients=15;
+    my $test_num=3;
+    my $num_clients=15;
+    my $valid_num_exceptions=5;
     my $lfname = "server_test" . $test_num . ".log";
     my $scname = "svc" . $test_num . ".conf";
     my $server_iorfile = $server->LocalFile ($iorbase);
@@ -224,23 +225,8 @@ sub test_3
         exit 1;
     }
 
-    for ($i = 0; $i < $num_clients; $i++) {
-        $CLS[$i] = $client->CreateProcess ("client", "-c $i -k file://$client_iorfile -e 0");
-        $CLS[$i]->Spawn ();
-    }
-
-    my $valid_num_exceptions=5;
-    my $num_exceptions=0;
-
-    for ($i = 0; $i < $num_clients; $i++) {
-
-        $client_status = $CLS[$i]->WaitKill ($client->ProcessStopWaitInterval());
-
-        if ($client_status != 0) {
-            $num_exceptions++;
-            print STDERR "STATUS: client $i returned $client_status\n";
-        }
-    }
+    $CLS = $client->CreateProcess ("client", "-k file://$client_iorfile -e 0 -n $num_clients -t max_queue -g $valid_num_exceptions");
+    $status = $CLS->SpawnWaitKill ($client->ProcessStopWaitInterval() * $num_clients);
 
     $SC = $client->CreateProcess ("client", "-k file://$client_iorfile -s");
     $client_status = $SC->SpawnWaitKill ($client->ProcessStopWaitInterval());
@@ -248,9 +234,9 @@ sub test_3
         print STDERR "ERROR: client $i returned $client_status\n";
     }
 
-    if ($num_exceptions != $valid_num_exceptions)
+    if ($status != 0)
     {
-      print STDERR "ERROR: max_request_queue_depth test failed w/$num_exceptions instead of $valid_num_exceptions\n";
+      print STDERR "ERROR: max_request_queue_depth test failed\n";
       $status = 1;
     }
     elsif ($deletelogs) {
@@ -300,7 +286,7 @@ sub test_4
 
     $server->DeleteFile($lfname);
 
-    $SV = $server->CreateProcess ("server", " -ORBDebugLevel 5 -ORBLogFile $server_logfile -s 5 -p {-1,1,5,0,60,10} -o $server_iorfile");
+    $SV = $server->CreateProcess ("server", " -ORBDebugLevel 5 -ORBLogFile $server_logfile -s 3 -p {-1,1,5,0,60,10} -o $server_iorfile");
     $SC = $client->CreateProcess ("client", "-k file://$client_iorfile -s");
 
     $server_status = $SV->Spawn ();
@@ -317,22 +303,10 @@ sub test_4
         exit 1;
     }
 
-    for ($i = 0; $i < $num_clients; $i++) {
-        $CLS[$i] = $client->CreateProcess ("client", "-c $i -k file://$client_iorfile");
-        $CLS[$i]->Spawn ();
-    }
+    $CLS = $client->CreateProcess ("client", "-k file://$client_iorfile -n $num_clients");
+    $status = $CLS->SpawnWaitKill ($client->ProcessStopWaitInterval());
 
-
-    for ($i = 0; $i < $num_clients; $i++) {
-
-        $client_status = $CLS[$i]->WaitKill ($client->ProcessStopWaitInterval());
-
-        if ($client_status != 0) {
-            print STDERR "ERROR: client $i returned $client_status\n";
-        }
-    }
-
-    $client_status = $SC->SpawnWaitKill ($client->ProcessStopWaitInterval());
+    $client_status = $SC->SpawnWaitKill ($client->ProcessStopWaitInterval() * $num_clients);
 
      # Now find the spawned threads in the log file.
 
