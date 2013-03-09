@@ -287,8 +287,6 @@ sub test_4
     $server->DeleteFile($lfname);
 
     $SV = $server->CreateProcess ("server", " -ORBDebugLevel 5 -ORBSvcConf $svc_conf -ORBLogFile $server_logfile -s 3 -o $server_iorfile");
-    $SC = $client->CreateProcess ("client", "-k file://$client_iorfile -s");
-
     $server_status = $SV->Spawn ();
 
     if ($server_status != 0) {
@@ -304,9 +302,10 @@ sub test_4
     }
 
     $CLS = $client->CreateProcess ("client", "-k file://$client_iorfile -n $num_clients");
-    $status = $CLS->SpawnWaitKill ($client->ProcessStopWaitInterval());
+    $status = $CLS->SpawnWaitKill ($client->ProcessStopWaitInterval() * $num_clients);
 
-    $client_status = $SC->SpawnWaitKill ($client->ProcessStopWaitInterval() * $num_clients);
+    $SC = $client->CreateProcess ("client", "-k file://$client_iorfile -s");
+    $client_status = $SC->SpawnWaitKill ($client->ProcessStopWaitInterval());
 
      # Now find the spawned threads in the log file.
 
