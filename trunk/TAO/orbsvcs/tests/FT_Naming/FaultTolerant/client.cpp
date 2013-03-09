@@ -1573,7 +1573,7 @@ do_persistence_objectgroup_test (
                                             location_name,
                                             member.in ());
             PortableGroup::Locations_var locations =
-              naming_manager_1->locations_of_members (group_var);
+              naming_manager_1->locations_of_members (group_var.in ());
 
             // Verify number of locations was what it was before removing/adding
             if (locations->length () != num_locations)

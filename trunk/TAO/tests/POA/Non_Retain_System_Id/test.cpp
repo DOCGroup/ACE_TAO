@@ -174,7 +174,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
             {
               object = sys_id_poa->create_reference ("IDL:ID_Check:1.0");
               refs[i] = ID_Check::_narrow (object.in());
-              obj_id = sys_id_poa->reference_to_id (object);
+              obj_id = sys_id_poa->reference_to_id (object.in());
               servant->set_id (i, obj_id);
             }
           else

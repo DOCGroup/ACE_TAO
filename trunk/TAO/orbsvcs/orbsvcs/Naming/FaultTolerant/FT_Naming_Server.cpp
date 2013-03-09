@@ -275,7 +275,7 @@ TAO_FT_Naming_Server::init_naming_manager_with_orb (int argc,
     }
 
   this->naming_manager_.initialize (this->orb_.in (),
-                                    this->naming_manager_poa_);
+                                    this->naming_manager_poa_.in ());
 
   }
   catch (const CORBA::Exception& ex)
