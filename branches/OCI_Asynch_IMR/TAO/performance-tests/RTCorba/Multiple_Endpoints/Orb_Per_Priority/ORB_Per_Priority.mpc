@@ -1,0 +1,14 @@
+// -*- MPC -*-
+// $Id$
+
+project(*server): rt_server, strategies, rtcorbacommon, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+  Source_Files {
+    server.cpp
+  }
+}
+
+project(*client): rt_client, strategies, rtcorbacommon {
+  Source_Files {
+    client.cpp
+  }
+}
