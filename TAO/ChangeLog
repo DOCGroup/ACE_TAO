@@ -1,3 +1,10 @@
+Sat Mar  9 19:08:55 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Dynamic/run_test.pl:
+
+          Fix the delay for the new test_4 client. It necessarily runs longer
+          than the standard client timeout.
+
 Sat Mar  9 16:31:33 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:
