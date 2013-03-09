@@ -109,12 +109,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           return 1;
         }
 
-      // Remove one of the servants.
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%P|%t) server - removing servant at location6\n")));
-      if (lb_server.remove_servant (location6) == -1)
-        return 1;
-
       lb_server.orb ()->run ();
 
       ACE_DEBUG ((LM_DEBUG,

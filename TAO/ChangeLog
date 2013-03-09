@@ -1,3 +1,35 @@
+Sat Mar  9 16:31:33 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:
+
+          Use .in() to avoid warning for implicit conversion of _var.
+
+        * orbsvcs/tests/FT_Naming/FaultTolerant/client.cpp:
+
+          Use .in() to avoid warning for implicit conversion of _var.
+
+        * orbsvcs/tests/FT_Naming/FaultTolerant/server.cpp:
+
+          Removed code that removed a servant. Was causing a race condition
+          on some platforms between getting the location strings and then
+          iterating through them on the client. In some instances the client
+          saw the member in the list right before it was removed. Removal is
+          already tested elsewhere.
+
+        * tao/Storable_Factory.h:
+
+          Added include of an ace header to ensure that ACE_LACKS_PRAGMA_ONCE
+          was defined.
+
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Dynamic/client.cpp:
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Static/client.cpp:
+
+          Added return of result that is set in the test code.
+
+        * tests/POA/Non_Retain_System_Id/test.cpp:
+
+          Use .in() to avoid warning for implicit conversion of _var.
+
 Fri Mar  8 23:04:49 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Dynamic/client.cpp:
