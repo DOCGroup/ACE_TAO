@@ -5,6 +5,7 @@ project(ImR_Activator_IDL) : orbsvcslib, orbsvcs_output, conv_lib, portableserve
   dynamicflags += ACTIVATOR_IDL_BUILD_DLL
   idlflags += -Wb,export_macro=ActivatorIDL_Export -Wb,export_include=activator_idl_export.h
   idl_files {
+    idlflags    += -GH -GC
     ImR_Activator.idl
   }
   source_files {
@@ -25,11 +26,12 @@ project(ImR_Locator_IDL) : orbsvcslib, orbsvcs_output, conv_lib, valuetype, port
   dynamicflags += LOCATOR_IDL_BUILD_DLL
   idlflags    += -Wb,export_macro=LocatorIDL_Export -Wb,export_include=locator_idl_export.h
   idl_files {
+    idlflags += -GH
     ImR_Locator.idl
   }
 
   idl_files {
-    idlflags    += -GH
+    idlflags    += -GH -GC
     AsyncStartupWaiter.idl
   }
 
@@ -63,7 +65,7 @@ project(ImR_Activator) : orbsvcslib, orbsvcs_output, conv_lib, acexml, avoids_mi
   }
 }
 
-project(ImR_Locator) : orbsvcslib, orbsvcs_output, conv_lib, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, iortable, portableserver, messaging, svc_utils, acexml, imr_client, iormanip {
+project(ImR_Locator) : orbsvcslib, orbsvcs_output, conv_lib, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, iortable, portableserver, messaging, svc_utils, acexml, imr_client, iormanip, dynamicinterface {
   sharedname   = TAO_ImR_Locator
   dynamicflags += LOCATOR_BUILD_DLL
   after       += ImR_Locator_IDL ImR_Activator_IDL

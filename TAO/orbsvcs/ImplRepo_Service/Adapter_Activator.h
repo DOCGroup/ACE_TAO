@@ -24,6 +24,8 @@
 
 #include "tao/LocalObject.h"
 
+class TAO_ServantBase;
+
 
 /**
  * @class ImR_Adapter_Activator
@@ -48,10 +50,13 @@ public:
     const char *name
   );
 
-  void init(PortableServer::ServantLocator_ptr servant);
+  void init(PortableServer::ServantLocator_ptr locator);
+  void init(TAO_ServantBase * servant);
 private:
   /// The ServantLocator registered in each new POA.
   PortableServer::ServantLocator_ptr servant_locator_;
+  /// Alternatively, the default servant used.
+  TAO_ServantBase *default_servant_;
 };
 
 #endif /* IMR_ADAPTER_ACTIVATOR_H */

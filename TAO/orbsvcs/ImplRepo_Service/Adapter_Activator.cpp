@@ -12,21 +12,29 @@
 #include "Adapter_Activator.h"
 
 #include "ace/Log_Msg.h"
+#include "tao/PortableServer/Servant_Base.h"
 
 ImR_Adapter::ImR_Adapter (void)
-: servant_locator_ (0)
+  : servant_locator_ (0),
+    default_servant_ (0)
 {
 }
 
 void
-ImR_Adapter::init (PortableServer::ServantLocator_ptr servant)
+ImR_Adapter::init (PortableServer::ServantLocator_ptr locator)
 {
-  servant_locator_ = servant;
+  servant_locator_ = locator;
+}
+
+void
+ImR_Adapter::init (TAO_ServantBase * servant)
+{
+  default_servant_ = servant;
 }
 
 CORBA::Boolean
 ImR_Adapter::unknown_adapter (PortableServer::POA_ptr parent,
-                                        const char *name)
+                              const char *name)
 {
   ACE_ASSERT (! CORBA::is_nil(parent));
   ACE_ASSERT (name != 0);
@@ -34,7 +42,7 @@ ImR_Adapter::unknown_adapter (PortableServer::POA_ptr parent,
   policies.length (2);
 
   const char *exception_message = "Null Message";
-
+  bool use_loc = this->servant_locator_ != 0;
   try
     {
       // Servant Retention Policy
@@ -44,8 +52,11 @@ ImR_Adapter::unknown_adapter (PortableServer::POA_ptr parent,
 
       // Request Processing Policy
       exception_message = "While PortableServer::POA::create_request_processing_policy";
+
       policies[1] =
-        parent->create_request_processing_policy (PortableServer::USE_SERVANT_MANAGER);
+        parent->create_request_processing_policy (use_loc ?
+                                                  PortableServer::USE_SERVANT_MANAGER :
+                                                  PortableServer::USE_DEFAULT_SERVANT);
 
       PortableServer::POAManager_var poa_manager =
         parent->the_POAManager ();
@@ -66,8 +77,17 @@ ImR_Adapter::unknown_adapter (PortableServer::POA_ptr parent,
       exception_message = "While child->the_activator";
       child->the_activator (this);
 
-      exception_message = "While unknown_adapter, set_servant_manager";
-      child->set_servant_manager (this->servant_locator_);
+      if (use_loc)
+        {
+          exception_message = "While unknown_adapter, set_servant_manager";
+          child->set_servant_manager (this->servant_locator_);
+        }
+      else
+        {
+          exception_message = "While unknown_adapter, set_servant";
+          child->set_servant (this->default_servant_);
+        }
+
     }
   catch (const CORBA::Exception& ex)
     {
