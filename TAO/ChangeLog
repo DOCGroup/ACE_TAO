@@ -1,3 +1,11 @@
+Mon Mar 11 13:17:41 UTC 2013  Byron Harris  <harrisb@ociweb.com>
+
+        * NEWS:
+        * docs/Options.html:
+        * orbsvcs/tests/ImplRepo/RestartServer/MessengerClient.cpp:
+
+          Added AIX to systems not supporting -ORBForwardOnReplyClosedLimit.
+
 Mon Mar 11 09:42:00 UTC 2013  Simon Massey  <simon dot massey at prismtech dot com>
 
         * tests/Bug_4097_Regression/Bug_4097_Regression.cpp:

@@ -38,7 +38,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
 
   // Detection of closed on read currently not working certain platforms.
-#if defined (sun) || defined (__FreeBSD_version)
+#if defined (sun) || defined (AIX) || defined (__FreeBSD_version)
   return 2;
 #endif
 
