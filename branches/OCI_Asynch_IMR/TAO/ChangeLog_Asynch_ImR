@@ -1,0 +1,30 @@
+Mon Mar 11 01:50:33 UTC 2013  Phil Mesnier  <mesnier_p@socket.net>
+
+        * orbsvcs/ImplRepo_Service/Adapter_Activator.h:
+        * orbsvcs/ImplRepo_Service/Adapter_Activator.cpp:
+
+          In order to support asynchronous interfaces, the adapter has to use the
+          default servant rather than the servant locator. The servant locator does
+          not give an opportunity for asynch processing.
+
+        * orbsvcs/ImplRepo_Service/Forwarder.h:
+        * orbsvcs/ImplRepo_Service/Forwarder.cpp:
+
+          The initial cut at implementing AMH.
+
+        * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
+        * orbsvcs/ImplRepo_Service/Locator_Options.h:
+        * orbsvcs/ImplRepo_Service/Locator_Options.cpp:
+
+          The feature is optional for now at least.
+
+        * tao/ImR_Client/ImR_Client.mpc:
+
+          Add support for generating asyncronous stubs and skeletons for working
+          with the ImR.
+
+Local Variables:
+mode: change-log
+add-log-time-format: (lambda () (progn (setq tz (getenv "TZ")) (set-time-zone-rule "UTC") (setq time (format-time-string "%a %b %e %H:%M:%S %Z %Y" (current-time))) (set-time-zone-rule tz) time))
+indent-tabs-mode: nil
+End:

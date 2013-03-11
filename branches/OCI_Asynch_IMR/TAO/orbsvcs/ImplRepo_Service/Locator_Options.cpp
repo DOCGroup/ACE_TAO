@@ -35,6 +35,7 @@ Options::Options ()
 , service_command_ (SC_NONE)
 , unregister_if_address_reused_ (false)
 , imr_type_ (STANDALONE_IMR)
+, use_dsi_ (false)
 {
 }
 
@@ -235,6 +236,11 @@ Options::parse_args (int &argc, ACE_TCHAR *argv[])
           this->ping_interval_ =
             ACE_Time_Value (0, 1000 * ACE_OS::atoi (shifter.get_current ()));
         }
+      else if (ACE_OS::strcasecmp (shifter.get_current (),
+                                   ACE_TEXT ("--use_dsi")) == 0)
+        {
+          this->use_dsi_ = true;
+        }
       else
         {
           shifter.ignore_arg ();
@@ -298,6 +304,7 @@ Options::print_usage (void) const
     ACE_TEXT ("  -s              Run as a service\n")
     ACE_TEXT ("  -t secs         Server startup timeout.(Default=60s)\n")
     ACE_TEXT ("  -v msecs        Server verification interval.(Default=10s)\n")
+    ACE_TEXT ("  --use_dsi       Servant dispatching using \n")
               ));
 }
 
@@ -364,6 +371,10 @@ Options::save_registry_options ()
 
   err = ACE_TEXT_RegSetValueEx (key, ACE_TEXT ("ImrType"), 0, REG_DWORD,
     (LPBYTE) &this->imr_type_ , sizeof (this->imr_type_));
+  ACE_ASSERT (err == ERROR_SUCCESS);
+
+  err = ACE_TEXT_RegSetValueEx (key, ACE_TEXT ("UseDSI"), 0, REG_DWORD,
+    (LPBYTE) &this->use_dsi_ , sizeof (this->use_dsi_));
   ACE_ASSERT (err == ERROR_SUCCESS);
 
   err = ::RegCloseKey (key);
@@ -485,6 +496,14 @@ Options::load_registry_options ()
       ACE_ASSERT (type == REG_DWORD);
     }
 
+  sz = sizeof(use_dsi_);
+  err = ACE_TEXT_RegQueryValueEx (key, ACE_TEXT ("UseDSI"), 0, &type,
+    (LPBYTE) &this->use_dsi_ , &sz);
+  if (err == ERROR_SUCCESS)
+    {
+      ACE_ASSERT (type == REG_DWORD);
+    }
+
   err = ::RegCloseKey (key);
   ACE_ASSERT (err == ERROR_SUCCESS);
 #endif
@@ -568,6 +587,13 @@ Options::unregister_if_address_reused (void) const
 }
 
 Options::ImrType
-Options::imr_type(void) const {
+Options::imr_type (void) const
+{
   return this->imr_type_;
+}
+
+bool
+Options::use_dsi (void) const
+{
+  return this->use_dsi_;
 }
