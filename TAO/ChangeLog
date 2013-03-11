@@ -1,3 +1,14 @@
+Mon Mar 11 14:51:28 UTC 2013  Byron Harris  <harrisb@ociweb.com>
+
+        * orbsvcs/tests/FT_Naming/Replication/run_test.pl:
+
+          Added to wait time for spawn of client as it may
+          take longer than 15 seconds to run on some systems
+          such as a SPARC T1000.
+
+          Removed duplicate function definition causing prototype
+          mismatch warning from perl.
+
 Mon Mar 11 13:33:14 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
 
         * orbsvcs/tests/FT_Naming/FaultTolerant/client.cpp:
