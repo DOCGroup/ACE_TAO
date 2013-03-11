@@ -7,7 +7,7 @@ project(*idl): taoidldefaults {
   custom_only = 1
 }
 
-project(*Server): taoserver, iortable, avoids_minimum_corba, avoids_corba_e_micro, threads {
+project(*Server): portableserver, orbsvcsexe, avoids_minimum_corba, iortable, imr_client, avoids_corba_e_micro, threads {
   exename = MessengerServer
   after += *idl
   Source_Files {
