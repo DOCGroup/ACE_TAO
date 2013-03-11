@@ -57,6 +57,7 @@ createPersistentPOA (PortableServer::POA_ptr root_poa, const char* poa_name) {
 
 ImR_Locator_i::ImR_Locator_i (void)
   : forwarder_ (*this)
+  , dsi_forwarder_ (*this)
   , ins_locator_ (0)
   , debug_ (0)
   , read_only_ (false)
@@ -95,8 +96,16 @@ ImR_Locator_i::init_with_orb (CORBA::ORB_ptr orb, Options& opts)
   this->root_poa_ = PortableServer::POA::_narrow (obj.in ());
   ACE_ASSERT (! CORBA::is_nil (this->root_poa_.in ()));
 
-  this->forwarder_.init (orb);
-  this->adapter_.init (& this->forwarder_);
+  if (opts.use_asynch())
+    {
+      this->dsi_forwarder_.init (orb);
+      this->adapter_.init (& this->dsi_forwarder_);
+    }
+  else
+    {
+      this->forwarder_.init (orb);
+      this->adapter_.init (& this->forwarder_);
+    }
 
   // Register the Adapter_Activator reference to be the RootPOA's
   // Adapter Activator.
