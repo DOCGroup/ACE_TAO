@@ -35,7 +35,7 @@ Options::Options ()
 , service_command_ (SC_NONE)
 , unregister_if_address_reused_ (false)
 , imr_type_ (STANDALONE_IMR)
-, use_dsi_ (false)
+, use_asynch_ (false)
 {
 }
 
@@ -237,9 +237,9 @@ Options::parse_args (int &argc, ACE_TCHAR *argv[])
             ACE_Time_Value (0, 1000 * ACE_OS::atoi (shifter.get_current ()));
         }
       else if (ACE_OS::strcasecmp (shifter.get_current (),
-                                   ACE_TEXT ("--use_dsi")) == 0)
+                                   ACE_TEXT ("--asynch")) == 0)
         {
-          this->use_dsi_ = true;
+          this->use_asynch_ = true;
         }
       else
         {
@@ -304,7 +304,7 @@ Options::print_usage (void) const
     ACE_TEXT ("  -s              Run as a service\n")
     ACE_TEXT ("  -t secs         Server startup timeout.(Default=60s)\n")
     ACE_TEXT ("  -v msecs        Server verification interval.(Default=10s)\n")
-    ACE_TEXT ("  --use_dsi       Servant dispatching using \n")
+    ACE_TEXT ("  --asynch        Servant dispatching using asynch method handling\n")
               ));
 }
 
@@ -373,8 +373,8 @@ Options::save_registry_options ()
     (LPBYTE) &this->imr_type_ , sizeof (this->imr_type_));
   ACE_ASSERT (err == ERROR_SUCCESS);
 
-  err = ACE_TEXT_RegSetValueEx (key, ACE_TEXT ("UseDSI"), 0, REG_DWORD,
-    (LPBYTE) &this->use_dsi_ , sizeof (this->use_dsi_));
+  err = ACE_TEXT_RegSetValueEx (key, ACE_TEXT ("Asynch"), 0, REG_DWORD,
+    (LPBYTE) &this->use_asynch_ , sizeof (this->use_asynch_));
   ACE_ASSERT (err == ERROR_SUCCESS);
 
   err = ::RegCloseKey (key);
@@ -496,9 +496,9 @@ Options::load_registry_options ()
       ACE_ASSERT (type == REG_DWORD);
     }
 
-  sz = sizeof(use_dsi_);
-  err = ACE_TEXT_RegQueryValueEx (key, ACE_TEXT ("UseDSI"), 0, &type,
-    (LPBYTE) &this->use_dsi_ , &sz);
+  sz = sizeof(use_asynch_);
+  err = ACE_TEXT_RegQueryValueEx (key, ACE_TEXT ("Asynch"), 0, &type,
+    (LPBYTE) &this->use_asynch_ , &sz);
   if (err == ERROR_SUCCESS)
     {
       ACE_ASSERT (type == REG_DWORD);
@@ -593,7 +593,7 @@ Options::imr_type (void) const
 }
 
 bool
-Options::use_dsi (void) const
+Options::use_asynch (void) const
 {
-  return this->use_dsi_;
+  return this->use_asynch_;
 }

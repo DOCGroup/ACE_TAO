@@ -101,7 +101,7 @@ public:
   enum ImrType { BACKUP_IMR, PRIMARY_IMR, STANDALONE_IMR };
   ImrType imr_type(void) const;
 
-  bool use_dsi (void) const;
+  bool use_asynch (void) const;
 
 private:
   /// Parses and pulls out arguments for the ImR
@@ -159,8 +159,8 @@ private:
   /// The type of ImR Locator this is.
   ImrType imr_type_;
 
-  /// Is the dispatching handled by a ServantLocator or a default servant?
-  bool use_dsi_;
+  /// Is the implementation using synchronous or asynchronous handling?
+  bool use_asynch_;
 
 };
 

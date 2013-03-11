@@ -133,6 +133,9 @@ private:
   // The class that handles the forwarding.
   ImR_Forwarder forwarder_;
 
+  // The alternative forwarder uses DSI/AMH for asynch forwarding.
+  ImR_DSI_Forwarder dsi_forwarder_;
+
   // Used for the forwarding of any type of POA.
   ImR_Adapter adapter_;
 

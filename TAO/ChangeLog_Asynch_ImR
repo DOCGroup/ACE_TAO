@@ -1,4 +1,20 @@
-Mon Mar 11 01:50:33 UTC 2013  Phil Mesnier  <mesnier_p@socket.net>
+Mon Mar 11 16:31:08 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_Options.h:
+        * orbsvcs/ImplRepo_Service/Locator_Options.cpp:
+
+          Actually select the DSI/AMH implementation when the asynch
+          option is supplied. Avoid confusion with the option by calling
+          it --asynch rather than the earlier --use_dsi
+
+        * orbsvcs/tests/ImplRepo/scale_clients/run_test.pl:
+
+          Modify the test to verify that both synchronous and asynch
+          implementations work.
+
+Mon Mar 11 01:50:33 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/Adapter_Activator.h:
         * orbsvcs/ImplRepo_Service/Adapter_Activator.cpp:
