@@ -578,7 +578,10 @@ do_failover_name_test (
       catch (const CosNaming::NamingContext::NotFound& ex)
         {
           ex._tao_print_exception (
-            ACE_TEXT ("INFO: Unable to resolve object from replica.\n"));
+            ACE_TEXT ("INFO: Unable to resolve object from replica. Sleeping for a second.\n"));
+
+          // Give it a second to be processed
+          ACE_OS::sleep (1);
 
           // Try again...
           try {
@@ -659,7 +662,9 @@ do_failover_name_test (
         {
           ex._tao_print_exception (
               ACE_TEXT ("INFO: Unable to resolve wide context object from ")
-              ACE_TEXT ("replica.\n"));
+              ACE_TEXT ("replica. Sleeping for a second.\n"));
+
+          ACE_OS::sleep (1);
 
           // Try again to see if it just was a race condition
           try {
@@ -1204,7 +1209,9 @@ do_persistence_name_test (
       catch (const CosNaming::NamingContext::NotFound& ex)
         {
           ex._tao_print_exception (
-            ACE_TEXT ("ERROR: Unable to resolve object from repository.\n"));
+            ACE_TEXT ("ERROR: Unable to resolve object from repository. Sleeping for a second.\n"));
+
+          ACE_OS::sleep (1);
 
           // Try again...
           try {
@@ -1290,7 +1297,9 @@ do_persistence_name_test (
         {
           ex._tao_print_exception (
               ACE_TEXT ("INFO: Unable to resolve wide context object from ")
-              ACE_TEXT ("repository.\n"));
+              ACE_TEXT ("repository. Sleeping for a second.\n"));
+
+          ACE_OS::sleep (1);
 
           // Try again to see if it just was a race condition
           try {
@@ -1779,7 +1788,9 @@ do_equivalence_name_test (
       }
       catch (const CosNaming::NamingContext::NotFound& ex)
         {
-          ex._tao_print_exception ("INFO: Unable to resolve object from replica.\n");
+          ex._tao_print_exception ("INFO: Unable to resolve object from replica. Sleeping for a second.\n");
+
+          ACE_OS::sleep (1);
 
           // Try again...
           try {
@@ -1859,7 +1870,9 @@ do_equivalence_name_test (
         {
           ex._tao_print_exception (
               ACE_TEXT ("INFO: Unable to resolve wide context object from ")
-              ACE_TEXT ("replica.\n"));
+              ACE_TEXT ("replica. Sleeping for a second.\n"));
+
+          ACE_OS::sleep (1);
 
           // Try again to see if it just was a race condition
           try {
