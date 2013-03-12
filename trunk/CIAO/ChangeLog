@@ -1,3 +1,28 @@
+Tue Mar 12 13:49:26 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_1.cdp:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_1.pl:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_2.cdp:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_2.pl:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_2.xml:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_3.cdp:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_3.pl:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_3.xml:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_4.cdp:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_4.pl:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_4.xml:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_6.cdp:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_6.pl:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_7.cdp:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_7.pl:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_8.cdp:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_8.pl:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_8.xml:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_9.cdp:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_9.pl:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_9.xml:
+          Various plans for 2013 DDS interop demo
+
 Mon Mar  4 12:55:09 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Shapes/Base/Shapes_Base.idl:
