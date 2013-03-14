@@ -1,3 +1,8 @@
+Thu Mar 14 12:44:10 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/make_release.py:
+          Exclude new workspace
+
 Thu Mar 14 10:08:55 UTC 2013  Marcel Smit  <msmit@remedy.nl>
 
         * bin/fuzz.pl:
