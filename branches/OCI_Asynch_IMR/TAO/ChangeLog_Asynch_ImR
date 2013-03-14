@@ -1,3 +1,20 @@
+Thu Mar 14 21:36:30 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/AsyncStartupWaiter_i.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+
+          Some syntactic clean up and apply a fix for a memory leak Kevin applied to
+          the trunk.
+
+        * utils/logWalker/HostProcess.cpp:
+        * utils/logWalker/Invocation.h:
+        * utils/logWalker/Invocation.cpp:
+        * utils/logWalker/Thread.h:
+        * utils/logWalker/Thread.cpp:
+
+          Add a new type of by-thread output that highlights nested upcalls and the
+          processing impact of delaying action on replies.
+
 Mon Mar 11 16:31:08 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:

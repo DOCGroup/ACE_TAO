@@ -303,8 +303,6 @@ ImR_Locator_i::fini (void)
       if (debug_ > 1)
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ImR: Shutting down...\n")));
 
-      this->repository_.release();
-
       this->root_poa_->destroy (1, 1);
 
       this->orb_->destroy ();

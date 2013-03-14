@@ -76,6 +76,7 @@ public:
 
   bool contains (size_t line);
   size_t req_line (void);
+  size_t repl_line (void);
 
   void add_notify_incident (const ACE_CString &text, size_t offset);
   Thread *waiter (void) const;
@@ -83,6 +84,8 @@ public:
 
   void new_line (ostream &strm, int indent, int offset,  bool add_nl, bool show_indent);
   void dump_detail (ostream &strm, size_t indent, Dump_Mode mode, bool show_handle);
+  void dump_start_line (ostream &strm, size_t indent);
+  void dump_finish_line (ostream &strm, size_t indent);
   void dump_special_details (ostream &strm, size_t indent, const char *opname);
 
 private:
@@ -95,6 +98,9 @@ private:
   size_t req_id_;
   PeerObject *target_;
   long handle_;
+  bool finish_reported_;
+  size_t req_level_;
+  size_t repl_level_;
 };
 
 #endif // LOG_WALKER_INVOCATION_H

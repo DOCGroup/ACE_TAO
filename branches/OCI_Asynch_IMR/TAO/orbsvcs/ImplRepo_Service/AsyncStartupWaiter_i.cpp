@@ -77,7 +77,8 @@ AsyncStartupWaiter_i::send_response (ImplementationRepository::AMH_AsyncStartupW
 }
 
 void
-AsyncStartupWaiter_i::unblock_one (const char* name, const char* partial_ior, const char* ior, bool queue) {
+AsyncStartupWaiter_i::unblock_one (const char* name, const char* partial_ior, const char* ior, bool queue)
+{
   ImplementationRepository::AMH_AsyncStartupWaiterResponseHandler_var rh = get_one_waiter(name);
   if (! CORBA::is_nil(rh.in ()))
     {
@@ -102,7 +103,8 @@ AsyncStartupWaiter_i::unblock_one (const char* name, const char* partial_ior, co
 }
 
 void
-AsyncStartupWaiter_i::unblock_all (const char* name) {
+AsyncStartupWaiter_i::unblock_all (const char* name)
+{
   RHList tmp;
 
   get_all_waiters (name, tmp);
