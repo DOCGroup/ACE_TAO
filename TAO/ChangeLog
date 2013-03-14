@@ -1,3 +1,11 @@
+Thu Mar 14 20:21:19 UTC 2013  Byron Harris  <harrisb@ociweb.com>
+
+        * orbsvcs/tests/ImplRepo/RestartServer/MessengerClient.cpp:
+        * orbsvcs/tests/ImplRepo/RestartServer/run_test.pl:
+
+          If valgrind is being ran, adjust delay parameters to
+          account for valgrind slowing processes down.
+
 Thu Mar 14 15:54:03 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
 
         * orbsvcs/tests/ImplRepo/run_test.pl:
