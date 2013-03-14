@@ -146,6 +146,9 @@ protected:
   /// report the ImR Locator's IOR
   virtual int report_ior(PortableServer::POA_ptr imr_poa);
 
+  /// recover the ImR Locator's IOR from the persisted file
+  virtual int recover_ior(void);
+
   int setup_multicast (ACE_Reactor* reactor, const char* imr_ior);
   void teardown_multicast();
 
