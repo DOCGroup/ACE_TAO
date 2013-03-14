@@ -1,3 +1,13 @@
+Thu Mar 14 08:38:57 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ChangeLog:
+        * NEWS:
+        * bin/diff-builds-and-group-fixed-tests-only.sh:
+        * docs/Download.html:
+        * docs/bczar/bczar.html:
+        * etc/index.html:
+          Making new x.1.8 public available
+
 Thu Mar 14 09:04:46 CET 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ACE version 6.1.8 released.
@@ -13,7 +23,6 @@ Fri Mar  1 11:21:33 UTC 2013  Martin Corino  <mcorino@remedy.nl>
         * bin/auto_run_tests.pl:
           Fix for problems with explicit test root and test folders
           that are also available in default roots.
-
 
 Thu Feb 28 19:45:03 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
