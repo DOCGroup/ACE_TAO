@@ -614,47 +614,87 @@ Shared_Backing_Store::repo_mode() const
 int
 Shared_Backing_Store::connect_replicas (Replica_ptr this_replica)
 {
-  const ACE_TString& replica_ior = replica_ior_filename(true);
+  const ACE_TString& replica_ior_file = replica_ior_filename(true);
   if (this->opts_.debug() > 1)
     {
       ACE_DEBUG((LM_INFO,
-        ACE_TEXT("Resolving ImR replica %s\n"), replica_ior.c_str()));
+        ACE_TEXT("Resolving ImR replica %s\n"), replica_ior_file.c_str()));
     }
 
-  CORBA::Object_var obj =
-    this->orb_->string_to_object (replica_ior.c_str());
-
-  if (!CORBA::is_nil (obj.in ()))
+  // Determine if the peer has started previously by checking if the
+  // ior file for the replica is there.
+  int peer_started_previously = 0;
+  if (ACE_OS::access (replica_ior_file.c_str (), F_OK) == 0)
     {
-      bool non_exist = true;
-      try
-        {
-          this->peer_replica_ = ImplementationRepository::
-            UpdatePushNotification::_narrow (obj.in());
-          non_exist = (this->peer_replica_->_non_existent() == 1);
-        }
-      catch (const CORBA::Exception& )
-        {
-          // let error be handled below
-        }
+      peer_started_previously = 1;
+    }
+  else
+    this->peer_replica_ =
+      ImplementationRepository::UpdatePushNotification::_nil();
 
-      if (non_exist)
+  if (peer_started_previously)
+    {
+      ACE_TString replica_ior = "file://" + replica_ior_file;
+      CORBA::Object_var obj =
+        this->orb_->string_to_object (replica_ior.c_str());
+
+      if (!CORBA::is_nil (obj.in ()))
         {
-          this->peer_replica_ =
-            ImplementationRepository::UpdatePushNotification::_nil();
+          bool non_exist = true;
+          try
+            {
+              this->peer_replica_ = ImplementationRepository::
+                UpdatePushNotification::_narrow (obj.in());
+              non_exist = (this->peer_replica_->_non_existent() == 1);
+            }
+          catch (const CORBA::Exception& )
+            {
+              // let error be handled below
+            }
+
+          if (non_exist)
+            {
+              this->peer_replica_ =
+                ImplementationRepository::UpdatePushNotification::_nil();
+            }
         }
     }
 
+  // Check if a peer IOR is defined
   if (CORBA::is_nil (this->peer_replica_.in()))
     {
       if (this->imr_type_ == Options::BACKUP_IMR)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-            ACE_TEXT("Error: No primary ImR replica is running <%s>\n"),
-            replica_ior.c_str()), -1);
+        { // We are a backup IMR Locator
+
+          // If the primary has started at some point in the past, but is
+          // not available right now, then we will assume that we are in
+          // a restart situation where the backup is being started while
+          // the primary is still down. This implies that a successful
+          // start of the replication pair has been made in the past and
+          // we can use the combined ior from the previous run.
+          if (peer_started_previously)
+            {
+              // Verify that we recovered the IOR successfully. If we did not
+              // then fail startup of the backup IMR Locator.
+              if (this->recover_ior () == -1)
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   ACE_TEXT("Error: Unable to retrieve IOR from combined IOR ")
+                                   ACE_TEXT ("file: %C\n"),
+                                   replica_ior_file.c_str()),
+                                  -1);
+            }
+          else
+            { // There has been a startup error. The backup can only be started
+              // after the primary has been successfully started.
+              ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT("Error: Primary has not been started previously.\n ")
+                               ACE_TEXT ("file: %C\n"),
+                               replica_ior_file.c_str()),
+                              -1);
+            }
         }
 
-      // no connection currently, just wait for backup
+      // For either primary or backup - no connection currently, just wait for peer to start
       return 0;
     }
 
@@ -674,7 +714,7 @@ Shared_Backing_Store::connect_replicas (Replica_ptr this_replica)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
         ACE_TEXT("Error: obj key <%s> is an invalid ImR replica because %s\n"),
-        replica_ior.c_str(), ip.reason.in()), -1);
+        replica_ior_file.c_str(), ip.reason.in()), -1);
     }
 
   if (opts_.debug() > 9)
@@ -1240,11 +1280,6 @@ Shared_Backing_Store::replica_ior_filename(bool peer_ior_file) const
     }
   ACE_CString ior =
     this->filename_ + IMR_REPLICA[desired_type] + ACE_TEXT(".ior");
-  if (peer_ior_file)
-    {
-      // the peer ior file needs the file prefix
-      ior = "file://" + ior;
-    }
 
   return ior;
 }

@@ -381,9 +381,10 @@ sub backup_restart_test()
         $status = 1;
     }
 
+    print_msg("INFO: killing backup server");
     $server_status = $NS2->TerminateWaitKill ($server->ProcessStopWaitInterval());
     if ($server_status != 0) {
-        print STDERR "ERROR: server 2 returned $server_status\n";
+        print STDERR "ERROR: Backup Naming Server shutdown returned $server_status\n";
         $status = 1;
     }
 
