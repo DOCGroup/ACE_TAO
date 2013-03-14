@@ -1,3 +1,7 @@
+Thu Mar 14 09:04:46 CET 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE version 6.1.8 released.
+
 Thu Mar  7 19:17:15 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/OS_NS_Thread.cpp:
