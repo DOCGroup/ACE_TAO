@@ -1,3 +1,9 @@
+Thu Mar 14 10:08:55 UTC 2013  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/fuzz.pl:
+          Checking the last part of the given @file entry, instead of
+          the filename only.
+
 Thu Mar 14 08:38:57 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ChangeLog:
