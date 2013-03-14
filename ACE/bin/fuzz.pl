@@ -1511,11 +1511,9 @@ sub check_for_mismatched_filename ()
             while (<FILE>) {
                 if (m/\@file\s*([^\s]+)/){
                     # $file includes complete path, $1 is the name after
-                    # @file. We must strip the complete path from $file.
-                    # we do that using the basename function from
-                    # File::BaseName
-                    $filename = basename($file,"");
-                    if (!($filename eq $1)){
+                    # @file. We must check whether the last part of $file
+                    # is equal to $1
+                    if ($file !~ /$1$/) {
                         print_error ("$file:$.: \@file mismatch in $file, found $1");
                     }
                 }
