@@ -283,6 +283,8 @@ HostProcess::dump_thread_invocations (ostream &strm)
       t_iter.next(thr);
       thr->dump_invocations (strm);
       strm << endl;
+      thr->dump_incidents (strm);
+      strm << endl;
     }
 }
 
