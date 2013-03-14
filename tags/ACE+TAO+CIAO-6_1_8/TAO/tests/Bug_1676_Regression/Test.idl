@@ -1,0 +1,39 @@
+// -*- IDL -*-
+
+//=============================================================================
+/**
+ * @file Test.idl
+ *
+ * $Id$
+ *
+ * "test" IDL interface for the Uninitialized "out" param for sequence<string>
+ * can cause server to core test.
+ *
+ * @author Kees van Marle <kvmarle@ermedy.nl>
+ */
+//=============================================================================
+
+
+module Test
+{
+  typedef sequence<string> StringList;
+
+  /// A very simple interface
+  interface Hello
+  {
+    /// Return a string list
+    StringList get_stringList ();
+
+    /// Return a string list
+    void get_stringList2 (in boolean initialize, out StringList osl);
+
+    /// Modify a string list
+    void mod_stringList (inout StringList iosl);
+
+    /// A method to shutdown the ORB
+    /**
+     * This method is used to simplify the test shutdown process
+     */
+    oneway void shutdown ();
+  };
+};

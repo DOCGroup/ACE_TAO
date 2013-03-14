@@ -1,0 +1,8 @@
+// $Id$
+
+module hello {
+    interface GoodDay {
+        short number ();
+        oneway void shutdown ();
+    };
+};

@@ -1,0 +1,6 @@
+$Id$
+
+This is an almost exact copy of the test for TAO Bug 1330 (Prism RT Bug 324).
+
+It is meant to provide regression for Prism RT Bug 596:
+"ORBEndpoint QoS" (i.e. it tests that you can define endpoint values as an environment variable). 
