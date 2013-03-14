@@ -1,3 +1,9 @@
+Thu Mar 14 12:42:30 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * CIAO_TAO_DAnCE_OpenDDS_shapes.mwc:
+          New workspace for compiling just the shapes example with everything
+          related to it
+
 Thu Mar 14 08:39:03 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * NEWS:
