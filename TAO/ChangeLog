@@ -1,3 +1,35 @@
+Thu Mar 14 15:54:03 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * orbsvcs/tests/ImplRepo/run_test.pl:
+        * bin/tao_other_tests.lst:
+
+          Added test for backup_restart feature for ImR.
+
+        * orbsvcs/ImplRepo_Service/Locator_Repository.h:
+        * orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
+
+          Added method to support recovering the ior from the combined ior
+          file when restarting the backup.
+
+        * orbsvcs/ImplRepo_Service/README:
+
+          Updated documentation to indicate that backup can now be started
+          without the primary running when a restart is occuring.
+
+        * orbsvcs/ImplRepo_Service/Shared_Backing_Store.cpp:
+
+          Implemented feature for restarting backup after a replicated pair
+          has been successfully started in the past.
+
+        * orbsvcs/tests/FT_Naming/FaultTolerant/run_backup_restart_test.pl:
+
+          Added test for restart of FT_Naming_Server backup after the FT
+          pair has successfully started in the past.
+
+        * tao/ImR_Client/ImR_Client.cpp:
+
+          Fixed memory leak. Clean up list_buffer_ array in destructor.
+
 Thu Mar 14 08:39:00 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * NEWS:
