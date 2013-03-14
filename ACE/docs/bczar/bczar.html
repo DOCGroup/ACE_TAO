@@ -225,7 +225,7 @@
     <p><code>$ ssh ..<br>
         No default printer<br>
         screen<br>
-        cd /tmp<br>
+        cd $HOME<br>
         rm -rf DOC_ROOT<br>
         mkdir DOC_ROOT<br>
         export DOC_ROOT=$PWD/DOC_ROOT<br>
@@ -311,15 +311,15 @@
       </li></ul>
             <code>
         screen<br>
-        cd /tmp<br>
+        cd $HOME<br>
         rm -rf doxygen<br>
         mkdir doxygen<br>
         cd doxygen<br>
         wget https://svn.dre.vanderbilt.edu/viewvc/Middleware/trunk/ACE/docs/svn/config?view=co -O $HOME/.subversion/config<br>
-        svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-6_1_7/ACE ACE_wrappers<br>
-        svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-6_1_7/TAO ACE_wrappers/TAO<br>
-        svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-6_1_7/CIAO ACE_wrappers/TAO/CIAO<br>
-        svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-6_1_7/DAnCE ACE_wrappers/TAO/DAnCE<br>
+        svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-6_1_8/ACE ACE_wrappers<br>
+        svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-6_1_8/TAO ACE_wrappers/TAO<br>
+        svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-6_1_8/CIAO ACE_wrappers/TAO/CIAO<br>
+        svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-6_1_8/DAnCE ACE_wrappers/TAO/DAnCE<br>
         cd ACE_wrappers<br>
         export ACE_ROOT=$PWD<br>
         export TAO_ROOT=$ACE_ROOT/TAO<br>
