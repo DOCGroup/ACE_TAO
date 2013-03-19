@@ -71,6 +71,7 @@ project(ImR_Locator) : orbsvcslib, orbsvcs_output, conv_lib, avoids_minimum_corb
   after       += ImR_Locator_IDL ImR_Activator_IDL
   libs        += TAO_ImR_Locator_IDL TAO_ImR_Activator_IDL
   avoids      += uses_wchar
+
   Source_Files {
     Activator_Info.cpp
     Adapter_Activator.cpp
@@ -78,6 +79,7 @@ project(ImR_Locator) : orbsvcslib, orbsvcs_output, conv_lib, avoids_minimum_corb
     ImR_Locator_i.cpp
     AsyncStartupWaiter_i.cpp
     INS_Locator.cpp
+    LiveCheck.cpp
     Locator_XMLHandler.cpp
     Locator_Loader.cpp
     Locator_Options.cpp

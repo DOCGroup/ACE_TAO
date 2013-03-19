@@ -1,3 +1,19 @@
+Tue Mar 19 13:31:43 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
+        * orbsvcs/ImplRepo_Service/LiveCheck.h:
+        * orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+
+          Adding new mechanism for pinging servers asynchronously. When the IMR is
+          interested in the status of a server, it now registers a callback object and
+          a ping is scheduled. At the appropriate time, the ping request is sent using
+          AMI. The reply or exception is then handled asynchronously.
+
+          For testing in an otherwise synchronous locator, a blocking ping reply waiter
+          is used.
+
 Thu Mar 14 21:36:30 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/AsyncStartupWaiter_i.cpp:

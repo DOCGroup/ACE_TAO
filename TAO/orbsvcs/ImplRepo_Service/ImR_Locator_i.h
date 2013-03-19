@@ -10,6 +10,7 @@
 #include "Adapter_Activator.h"
 #include "Activator_Info.h"
 #include "Forwarder.h"
+#include "LiveCheck.h"
 #include "Locator_Options.h"
 #include "Server_Info.h"
 #include "ace/Auto_Ptr.h"
@@ -18,6 +19,7 @@
 
 #include "ImR_LocatorS.h"
 #include "AsyncStartupWaiterS.h"
+#include "LiveCheck.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -142,6 +144,9 @@ private:
   /// The locator interface for the IORTable
   IORTable::Locator_var ins_locator_;
 
+  /// The asynch server ping adapter
+  LiveCheck pinger_;
+
   CORBA::ORB_var orb_;
   PortableServer::POA_var root_poa_;
   PortableServer::POA_var imr_poa_;
@@ -158,6 +163,27 @@ private:
   ACE_Time_Value ping_interval_;
   bool unregister_if_address_reused_;
 };
+
+class Locator_Export SyncListener : public LiveListener
+{
+ public:
+  SyncListener (const char *server, CORBA::ORB_ptr orb, LiveCheck *pinger);
+
+  bool is_alive (void);
+
+  void status_changed (LiveStatus status);
+
+ private:
+  CORBA::ORB_var orb_;
+  LiveCheck *pinger_;
+  LiveStatus status_;
+  bool got_it_;
+  int retries_;
+
+};
+
+
+
 
 #include /**/ "ace/post.h"
 #endif /* IMR_LOCATOR_I_H */
