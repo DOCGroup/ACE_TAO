@@ -100,6 +100,7 @@ ImR_Locator_i::init_with_orb (CORBA::ORB_ptr orb, Options& opts)
     {
       this->dsi_forwarder_.init (orb);
       this->adapter_.init (& this->dsi_forwarder_);
+      this->pinger_.init (orb,ping_interval_);
     }
   else
     {
@@ -435,7 +436,7 @@ ImR_Locator_i::activate_server_by_name (const char* name, bool manual_start)
   ACE_CString serverKey;
   ACE_CString server_id;
   bool jacorb_server = false;
-  parse_id(name, server_id, serverKey, jacorb_server);
+  this->parse_id(name, server_id, serverKey, jacorb_server);
   UpdateableServerInfo info(this->repository_.get(), serverKey);
   if (info.null ())
     {
@@ -525,7 +526,7 @@ ImR_Locator_i::activate_server_i (UpdateableServerInfo& info,
 
       // Note: We already updated info with StartupInfo in server_is_running ()
       ImplementationRepository::StartupInfo_var si =
-        start_server (info, manual_start, info.edit()->waiting_clients);
+        this->start_server (info, manual_start, info.edit()->waiting_clients);
     }
 }
 
@@ -539,7 +540,7 @@ ImR_Locator_i::activate_perclient_server_i (UpdateableServerInfo& shared_info,
   do
     {
       ImplementationRepository::StartupInfo* psi =
-        start_server (info, manual_start, shared_info.edit()->waiting_clients);
+        this->start_server (info, manual_start, shared_info.edit()->waiting_clients);
 
       // waiting_clients will be updated by each call to start_server
       shared_info.update_repo ();
@@ -563,7 +564,8 @@ ImR_Locator_i::activate_perclient_server_i (UpdateableServerInfo& shared_info,
             }
           info.edit()->reset ();
         }
-    } while (info->start_count < info->start_limit);
+    }
+  while (info->start_count < info->start_limit);
 
   if (this->debug_ > 0)
     {
@@ -629,8 +631,7 @@ ImR_Locator_i::start_server (UpdateableServerInfo& info, bool manual_start,
                 ACE_TEXT ("ImR: Starting server <%C>. Attempt %d/%d.\n"),
                 info->name.c_str (), info->start_count, info->start_limit));
             }
-          ainfo->activator->start_server (
-                                          info->name.c_str (),
+          ainfo->activator->start_server (info->name.c_str (),
                                           info->cmdline.c_str (),
                                           info->dir.c_str (),
                                           info->env_vars);
@@ -806,7 +807,7 @@ ImR_Locator_i::add_or_update_server (
   ACE_CString serverKey;
   ACE_CString server_id;
   bool jacorb_server = false;
-  parse_id(server, server_id, serverKey, jacorb_server);
+  this->parse_id(server, server_id, serverKey, jacorb_server);
   UpdateableServerInfo info(this->repository_.get(), serverKey);
   if (info.null ())
     {
@@ -914,7 +915,7 @@ ImR_Locator_i::remove_server (const char* name)
   ACE_CString serverKey;
   ACE_CString server_id;
   bool jacorb_server = false;
-  parse_id(name, server_id, serverKey, jacorb_server);
+  this->parse_id(name, server_id, serverKey, jacorb_server);
   Server_Info_Ptr info = this->repository_->get_server (serverKey);
   if (! info.null ())
     {
@@ -971,7 +972,7 @@ ImR_Locator_i::shutdown_server (const char* server)
   ACE_CString name;
   ACE_CString server_id;
   bool jacorb_server = false;
-  parse_id(server, server_id, name, jacorb_server);
+  this->parse_id(server, server_id, name, jacorb_server);
 
   UpdateableServerInfo info(this->repository_.get(), name);
   if (info.null ())
@@ -1044,7 +1045,7 @@ ImR_Locator_i::server_is_running (const char* id,
   ACE_CString server_id;
   ACE_CString name;
   bool jacorb_server = false;
-  parse_id(id, server_id, name, jacorb_server);
+  this->parse_id(id, server_id, name, jacorb_server);
 
   if (this->debug_ > 0)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ImR: Server %C is running at %C.\n"),
@@ -1059,6 +1060,12 @@ ImR_Locator_i::server_is_running (const char* id,
 
   if (this->unregister_if_address_reused_)
     this->repository_->unregister_if_address_reused (server_id, name, partial_ior);
+
+  CORBA::Object_var obj = this->set_timeout_policy (server,ACE_Time_Value (1,0));
+  ImplementationRepository::ServerObject_var s =
+    ImplementationRepository::ServerObject::_narrow (obj.in());
+
+  this->pinger_.add_server (server_id.c_str(), s);
 
   UpdateableServerInfo info(this->repository_.get(), name);
   if (info.null ())
@@ -1156,7 +1163,7 @@ ImR_Locator_i::find (const char* server,
   ACE_CString serverKey;
   ACE_CString server_id;
   bool jacorb_server = false;
-  parse_id(server, server_id, serverKey, jacorb_server);
+  this->parse_id(server, server_id, serverKey, jacorb_server);
   UpdateableServerInfo info(this->repository_.get(), serverKey);
   if (! info.null ())
     {
@@ -1648,3 +1655,45 @@ ImR_Locator_i::debug () const
 {
   return debug_;
 }
+
+
+SyncListener::SyncListener (const char *server,
+                             CORBA::ORB_ptr orb,
+                             LiveCheck *pinger)
+  :LiveListener (server),
+   orb_ (CORBA::ORB::_duplicate (orb)),
+   pinger_ (pinger),
+   status_ (LS_UNKNOWN),
+   got_it_ (false),
+   retries_ (10)
+{
+}
+
+bool
+SyncListener::is_alive (void)
+{
+
+  this->status_ = this->pinger_->is_alive(this->server().c_str());
+
+  if (this->status_ == LS_ALIVE)
+    return true;
+
+  this->pinger_->add_listener (this);
+  while (!this->got_it_)
+    {
+      ACE_Time_Value delay (1,0);
+      this->orb_->perform_work (delay);
+      this->pinger_->add_listener (this);
+    }
+  this->got_it_ = false;
+  this->retries_ = 10;
+  return this->status_ != LS_DEAD;
+}
+
+void
+SyncListener::status_changed (LiveStatus status)
+{
+  this->status_ = status;
+  this->got_it_ = (status != LS_TRANSIENT) || (--this->retries_ == 0);
+}
+
