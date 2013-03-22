@@ -1,9 +1,10 @@
 // -*- C++ -*-
-//
+// $Id$
 
 #include "LiveCheck.h"
 #include "tao/ORB_Core.h"
 #include "ace/Reactor.h"
+#include "ace/OS_NS_time.h"
 
 LiveListener::LiveListener (const char *server)
  : server_(server)
@@ -205,7 +206,6 @@ LiveCheck::~LiveCheck (void)
       i.next (pair);
       this->entry_map_.unbind(pair);
       delete pair->item();
-      delete pair;
     }
 }
 
