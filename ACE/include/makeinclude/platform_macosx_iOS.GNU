@@ -7,7 +7,7 @@ include $(ACE_ROOT)/include/makeinclude/platform_macosx_common.GNU
 ifneq (,$(XCODE_ROOT))
   XCODE:=$(XCODE_ROOT)
 else
-  XCODE:=/Developer
+  XCODE:=/Applications/Xcode.app
 endif
 
 ifeq ($(IPHONE_TARGET), SIMULATOR)
@@ -34,8 +34,8 @@ endif
   rwho = 0
 endif
 
-CC:=$(IPHONE_PLATFORM)/usr/bin/clang
-CXX:=$(IPHONE_PLATFORM)/usr/bin/clang++
+CC:=$(XCODE)/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang
+CXX:=$(XCODE)/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++
 AR:=$(IPHONE_PLATFORM)/usr/bin/ar
 RANLIB:=$(IPHONE_PLATFORM)/usr/bin/ranlib
 DLD = $(CXX)
