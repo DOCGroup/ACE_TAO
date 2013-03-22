@@ -1,3 +1,9 @@
+Fri Mar 22 02:58:06 UTC 2013  Abdullah Sowayan  <sowayan@gmail.com>
+
+        * include/makeinclude/platform_macosx_iOS.GNU:
+
+          Minor updates to fix iOS builds.
+
 Thu Mar 14 12:44:10 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/make_release.py:
