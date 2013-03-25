@@ -38,7 +38,7 @@ class UpdateableServerInfo;
 /// requests an activator to take care of activating the
 /// corresponding server and raises a forward exception to the
 /// client pointing to the correct server.
-class ImR_Locator_i : public virtual POA_ImplementationRepository::Locator
+class Locator_Export ImR_Locator_i : public virtual POA_ImplementationRepository::Locator
 {
 public:
   ImR_Locator_i();
