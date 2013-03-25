@@ -1,3 +1,9 @@
+Mon Mar 25 21:03:54 UTC 2013  Abdullah Sowayan  <sowayan@gmail.com>
+
+        * include/makeinclude/platform_macosx_iOS.GNU:
+
+          Minor updates to fix iOS builds.
+
 Fri Mar 22 02:58:06 UTC 2013  Abdullah Sowayan  <sowayan@gmail.com>
 
         * include/makeinclude/platform_macosx_iOS.GNU:
