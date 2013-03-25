@@ -30,6 +30,7 @@
 
 class ImR_Locator_i;
 
+//---------------------------------------------------------------------------
 /**
  * @class ImR_Forwarder:
  *
@@ -73,20 +74,51 @@ private:
   CORBA::ORB_ptr orb_;
 };
 
+
+//---------------------------------------------------------------------------
+/**
+ * @class ImR_ReplyHandler
+ *
+ * @brief interface serving as the basis for different strategies of activating
+ * servers on demand
+ *
+ */
+
+class ImR_ReplyHandler
+{
+public:
+  ImR_ReplyHandler (void);
+  virtual ~ImR_ReplyHandler (void);
+
+  virtual void send_ior (const char *pior) = 0;
+  virtual void send_exception (void) = 0;
+};
+
+//----------------------------------------------------------------------------
+/**
+ * @class ImR_DSI_ReplyHandler
+ *
+ * @brief specialized reply handler for forward requests that need to send an
+ * ior
+ *
+ * Used to send either a Location_Forward exception, or some other error
+ * exception.
+ */
+
 // forward declare the types used to manage AMH/DSI coupling
 class TAO_AMH_DSI_Response_Handler;
 typedef TAO_AMH_DSI_Response_Handler * TAO_AMH_DSI_Response_Handler_ptr;
 class TAO_AMH_DSI_Response_Handler_var;
 
-class ImR_ReplyHandler
+class ImR_DSI_ReplyHandler : public ImR_ReplyHandler
 {
 public:
-  ImR_ReplyHandler (const char *key,
-                    const char *server_name,
-                    CORBA::ORB_ptr orb,
-                    TAO_AMH_DSI_Response_Handler_ptr resp);
+  ImR_DSI_ReplyHandler (const char *key,
+                        const char *server_name,
+                        CORBA::ORB_ptr orb,
+                        TAO_AMH_DSI_Response_Handler_ptr resp);
 
-  ~ImR_ReplyHandler (void);
+  ~ImR_DSI_ReplyHandler (void);
 
   void send_ior (const char *pior);
   void send_exception (void);
@@ -98,6 +130,18 @@ private:
   TAO_AMH_DSI_Response_Handler_var resp_;
 };
 
+
+//---------------------------------------------------------------------------
+/**
+ * @class ImR_Forwarder:
+ *
+ * @brief Implementation Repository Forwarder for AMH
+ *
+ * This class provides a Default servant implementation that is used to handle
+ * arbitrary calls and forward them to the correct place. Combinds DSI with
+ * AMH to ensure the handling thread is never blocked waiting for an upcall
+ * if one is necessary
+ */
 class ImR_DSI_Forwarder : public virtual TAO_DynamicImplementation
 {
 public:

@@ -72,18 +72,30 @@ LiveEntry::status (LiveStatus l)
       ACE_Time_Value now (ACE_OS::time());
       this->next_check_ = now + owner_->ping_interval();
     }
+#if 0
   for (ACE_Vector_Iterator<LiveListener *> i (this->listeners_);
        !i.done();
        i.advance())
     {
-      LiveListener *item = 0;
-      LiveListener **ll  = &item;
+      LiveListener **ll  = 0;
       i.next(ll);
-      if (item != 0)
+      if (*ll != 0)
         {
-          item->status_changed (this->liveliness_);
+          (*ll)->status_changed (this->liveliness_);
         }
     }
+#else
+  ACE_DEBUG ((LM_DEBUG,"LiveEntry::status, listeners.size = %d\n",
+              listeners_.size()));
+  for (size_t i = 0; i < this->listeners_.size(); i++)
+    {
+      LiveListener *ll = this->listeners_[i];
+      if (ll != 0)
+        {
+          (ll)->status_changed (this->liveliness_);
+        }
+    }
+#endif
   this->listeners_.clear();
 }
 
@@ -147,6 +159,7 @@ PingReceiver::~PingReceiver (void)
 void
 PingReceiver::ping (void)
 {
+  ACE_DEBUG ((LM_DEBUG,"ping received\n"));
   this->entry_->status (LS_ALIVE);
   PortableServer::ObjectId_var oid = this->poa_->servant_to_id (this);
   poa_->deactivate_object (oid.in());

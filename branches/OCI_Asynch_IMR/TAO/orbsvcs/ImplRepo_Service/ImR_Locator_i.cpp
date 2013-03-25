@@ -62,6 +62,7 @@ ImR_Locator_i::ImR_Locator_i (void)
   , debug_ (0)
   , read_only_ (false)
   , unregister_if_address_reused_ (false)
+  , use_asynch_ (true)
 {
   // Visual C++ 6.0 is not smart enough to do a direct assignment
   // while allocating the INS_Locator.  So, we have to do it in
@@ -98,12 +99,14 @@ ImR_Locator_i::init_with_orb (CORBA::ORB_ptr orb, Options& opts)
 
   if (opts.use_asynch())
     {
+      this->use_asynch_ = true;
       this->dsi_forwarder_.init (orb);
       this->adapter_.init (& this->dsi_forwarder_);
-      this->pinger_.init (orb,ping_interval_);
+      this->pinger_.init (orb, ping_interval_);
     }
   else
     {
+      this->use_asynch_ = true;
       this->forwarder_.init (orb);
       this->adapter_.init (& this->forwarder_);
     }
@@ -450,7 +453,35 @@ ImR_Locator_i::activate_server_by_name (const char* name, bool manual_start)
   //MDM
   info.edit()->start_count = 0;
 
-  return activate_server_i (info, manual_start);
+  return this->activate_server_i (info, manual_start);
+}
+
+void
+ImR_Locator_i::activate_server_by_name (const char* name, bool manual_start,
+                                        ImR_ReplyHandler *rh)
+{
+  // Activate the server, starting it if necessary. Don't start MANUAL
+  // servers unless manual_start=true
+  ACE_ASSERT (name != 0);
+
+  ACE_CString serverKey;
+  ACE_CString server_id;
+  bool jacorb_server = false;
+  this->parse_id(name, server_id, serverKey, jacorb_server);
+  UpdateableServerInfo info(this->repository_.get(), serverKey);
+  if (info.null ())
+    {
+      ACE_ERROR ((
+        LM_ERROR,
+        ACE_TEXT ("ImR: Cannot find info for server <%C>\n"),
+        name));
+      throw ImplementationRepository::NotFound ();
+    }
+
+  //MDM
+  info.edit()->start_count = 0;
+
+  this->activate_server_i (info, manual_start, rh);
 }
 
 char*
@@ -480,6 +511,29 @@ ImR_Locator_i::activate_server_by_object (const char* object_name)
     }
 }
 
+
+void
+ImR_Locator_i::activate_server_i (UpdateableServerInfo& info,
+                                  bool manual_start,
+                                  ImR_ReplyHandler *rh)
+{
+  if (info->activation_mode == ImplementationRepository::PER_CLIENT)
+    {
+      activate_perclient_server_i (info, manual_start,rh);
+      return;
+    }
+
+  try
+    {
+      CORBA::String_var ior = this->activate_server_i (info, manual_start);
+      rh->send_ior (ior.in());
+    }
+  catch (CORBA::Exception &)
+    {
+      rh->send_exception ();
+    }
+}
+
 char*
 ImR_Locator_i::activate_server_i (UpdateableServerInfo& info,
                                   bool manual_start)
@@ -491,7 +545,7 @@ ImR_Locator_i::activate_server_i (UpdateableServerInfo& info,
 
   while (true)
     {
-      if (is_alive (info))
+      if (this->is_alive (info))
         {
           if (debug_ > 1)
             {
@@ -530,6 +584,22 @@ ImR_Locator_i::activate_server_i (UpdateableServerInfo& info,
     }
 }
 
+void
+ImR_Locator_i::activate_perclient_server_i (UpdateableServerInfo& info,
+                                            bool manual_start,
+                                            ImR_ReplyHandler *rh)
+{
+  try
+    {
+      CORBA::String_var ior = this->activate_perclient_server_i (info, manual_start);
+      rh->send_ior (ior.in());
+    }
+  catch (CORBA::Exception &)
+    {
+      rh->send_exception ();
+    }
+}
+
 char*
 ImR_Locator_i::activate_perclient_server_i (UpdateableServerInfo& shared_info,
                                             bool manual_start)
@@ -551,7 +621,7 @@ ImR_Locator_i::activate_perclient_server_i (UpdateableServerInfo& shared_info,
           info.edit ()->partial_ior = si->partial_ior.in ();
           info.edit ()->ior = si->ior.in ();
 
-          if (is_alive (info))
+          if (this->is_alive (info))
             {
               if (debug_ > 1)
                 {
@@ -1065,7 +1135,7 @@ ImR_Locator_i::server_is_running (const char* id,
   ImplementationRepository::ServerObject_var s =
     ImplementationRepository::ServerObject::_narrow (obj.in());
 
-  this->pinger_.add_server (server_id.c_str(), s);
+  this->pinger_.add_server (name.c_str(), s);
 
   UpdateableServerInfo info(this->repository_.get(), name);
   if (info.null ())
@@ -1230,7 +1300,7 @@ ImR_Locator_i::list (CORBA::ULong how_many,
       if (determine_active_status)
         {
           UpdateableServerInfo updatable_info (info);
-          if (this->is_alive(updatable_info))
+          if (this->is_alive (updatable_info))
             {
               imr_info->activeStatus = ImplementationRepository::ACTIVE_YES;
             }
@@ -1424,6 +1494,15 @@ ImR_Locator_i::connect_server (UpdateableServerInfo& info)
 bool
 ImR_Locator_i::is_alive (UpdateableServerInfo& info)
 {
+  if (this->use_asynch_)
+    {
+      this->connect_server (info);
+      SyncListener listener (info->name.c_str(),
+                             this->orb_.in(),
+                             this->pinger_);
+      return listener.is_alive();
+    }
+
   const size_t table_size = sizeof (PING_RETRY_SCHEDULE) /
                             sizeof (*PING_RETRY_SCHEDULE);
 
@@ -1656,10 +1735,11 @@ ImR_Locator_i::debug () const
   return debug_;
 }
 
+//-------------------------------------------------------------------------
 
 SyncListener::SyncListener (const char *server,
                              CORBA::ORB_ptr orb,
-                             LiveCheck *pinger)
+                             LiveCheck &pinger)
   :LiveListener (server),
    orb_ (CORBA::ORB::_duplicate (orb)),
    pinger_ (pinger),
@@ -1673,17 +1753,21 @@ bool
 SyncListener::is_alive (void)
 {
 
-  this->status_ = this->pinger_->is_alive(this->server().c_str());
+  this->status_ = this->pinger_.is_alive(this->server().c_str());
 
   if (this->status_ == LS_ALIVE)
     return true;
+  else if (this->status_ == LS_DEAD)
+    return false;
 
-  this->pinger_->add_listener (this);
+  int count = this->retries_;
+  this->pinger_.add_listener (this);
   while (!this->got_it_)
     {
       ACE_Time_Value delay (1,0);
       this->orb_->perform_work (delay);
-      this->pinger_->add_listener (this);
+      if (count != this->retries_)
+        this->pinger_.add_listener (this);
     }
   this->got_it_ = false;
   this->retries_ = 10;
@@ -1695,5 +1779,6 @@ SyncListener::status_changed (LiveStatus status)
 {
   this->status_ = status;
   this->got_it_ = (status != LS_TRANSIENT) || (--this->retries_ == 0);
+  ACE_DEBUG ((LM_DEBUG, "SynchLisener::status_changed, got it = %d, status = %d\n", got_it_, status));
 }
 

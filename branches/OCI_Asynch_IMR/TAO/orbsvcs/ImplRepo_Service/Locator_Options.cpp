@@ -35,7 +35,7 @@ Options::Options ()
 , service_command_ (SC_NONE)
 , unregister_if_address_reused_ (false)
 , imr_type_ (STANDALONE_IMR)
-, use_asynch_ (false)
+, use_asynch_ (true)
 {
 }
 
@@ -237,9 +237,9 @@ Options::parse_args (int &argc, ACE_TCHAR *argv[])
             ACE_Time_Value (0, 1000 * ACE_OS::atoi (shifter.get_current ()));
         }
       else if (ACE_OS::strcasecmp (shifter.get_current (),
-                                   ACE_TEXT ("--asynch")) == 0)
+                                   ACE_TEXT ("--old")) == 0)
         {
-          this->use_asynch_ = true;
+          this->use_asynch_ = false;
         }
       else
         {

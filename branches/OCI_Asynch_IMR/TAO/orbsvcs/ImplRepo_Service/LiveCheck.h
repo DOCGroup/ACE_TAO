@@ -25,7 +25,8 @@
 
 class LiveCheck;
 
-/*---------------------------------------------------------------------------
+//---------------------------------------------------------------------------
+/*
  * @enum LiveStatus
  *
  * @brief indication of the known condition of a target server
@@ -44,7 +45,8 @@ enum LiveStatus {
   LS_TIMEDOUT
 };
 
-/*---------------------------------------------------------------------------
+//---------------------------------------------------------------------------
+/*
  * @class LiveListener
  *
  * @brief An interface for receiving asynch liveness status updates
@@ -74,7 +76,8 @@ class Locator_Export LiveListener
   ACE_CString server_;
 };
 
-/*---------------------------------------------------------------------------
+//---------------------------------------------------------------------------
+/*
  * @class LiveEntry
  *
  * @brief Contains a list of interested listeners for a server
@@ -107,7 +110,8 @@ class Locator_Export LiveEntry
   TAO_SYNCH_MUTEX lock_;
 };
 
-/*---------------------------------------------------------------------------
+//---------------------------------------------------------------------------
+/*
  * @class PingReceiver
  *
  * @brief callback handler for asynch ping requests
@@ -130,7 +134,8 @@ class Locator_Export PingReceiver :
   LiveEntry * entry_;
 };
 
-/*---------------------------------------------------------------------------
+//---------------------------------------------------------------------------
+/*
  * @class LiveCheck
  *
  * @brief The manager class used for pinging servers as needed.

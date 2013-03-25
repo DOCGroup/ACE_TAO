@@ -33,7 +33,9 @@ INS_Locator::locate (const char* object_key)
       }
 
       if (imr_locator_.debug () > 1)
-        ACE_DEBUG ((LM_DEBUG, "ImR: Activating server <%s>.\n", key.c_str ()));
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("ImR: Activating server <%s>.\n"),
+                    key.c_str ()));
 
       CORBA::String_var located =
         this->imr_locator_.activate_server_by_object (key.c_str ());
@@ -42,7 +44,9 @@ INS_Locator::locate (const char* object_key)
       tmp += object_key;
 
       if (imr_locator_.debug () > 0)
-        ACE_DEBUG ((LM_DEBUG, "ImR: Forwarding invocation on <%s> to <%s>\n", key.c_str (), tmp.c_str()));
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("ImR: Forwarding invocation on <%s> to <%s>\n"),
+                    key.c_str (), tmp.c_str()));
 
       return CORBA::string_dup (tmp.c_str ());
     }
@@ -124,8 +128,7 @@ INS_Locator::locate (const char* object_key)
         } // while()
 
       //  No match is found
-      throw CORBA::TRANSIENT (
-                              CORBA::SystemException::_tao_minor_code (
+      throw CORBA::TRANSIENT (CORBA::SystemException::_tao_minor_code (
                                 TAO_IMPLREPO_MINOR_CODE,
                                 0),
                               CORBA::COMPLETED_NO);
