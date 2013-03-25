@@ -20,6 +20,7 @@
 #include "ImR_LocatorS.h"
 #include "AsyncStartupWaiterS.h"
 #include "LiveCheck.h"
+//#include "AsyncAccessManager.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -37,8 +38,7 @@ class UpdateableServerInfo;
 /// requests an activator to take care of activating the
 /// corresponding server and raises a forward exception to the
 /// client pointing to the correct server.
-class Locator_Export ImR_Locator_i
-  : public virtual POA_ImplementationRepository::Locator
+class ImR_Locator_i : public virtual POA_ImplementationRepository::Locator
 {
 public:
   ImR_Locator_i();
@@ -75,13 +75,12 @@ public:
 
   virtual void activate_server (const char * name);
   virtual void add_or_update_server (const char * name,
-    const ImplementationRepository::StartupOptions &options);
+               const ImplementationRepository::StartupOptions &options);
   virtual void remove_server (const char * name);
   virtual void shutdown_server (const char * name);
   virtual void find (const char * name,
-    ImplementationRepository::ServerInformation_out info);
-  virtual void list (
-    CORBA::ULong how_many,
+                     ImplementationRepository::ServerInformation_out info);
+  virtual void list (CORBA::ULong how_many,
     CORBA::Boolean determine_active_status,
     ImplementationRepository::ServerInformationList_out server_list,
     ImplementationRepository::ServerInformationIterator_out server_iterator);
@@ -90,22 +89,32 @@ public:
   // Server->Locator
 
   virtual void server_is_running (const char* name,
-    const char* partial_ior,
-    ImplementationRepository::ServerObject_ptr server_object);
+                                  const char* partial_ior,
+               ImplementationRepository::ServerObject_ptr server_object);
   virtual void server_is_shutting_down (const char * name);
 
   // Used by the INS_Locator to start a sever given an object name
   char* activate_server_by_object (const char* object_name);
-
   char* activate_server_by_name (const char * name, bool manual_start);
+  void  activate_server_by_name (const char * name,
+                                 bool manual_start,
+                                 ImR_ReplyHandler *rh);
 
 private:
 
   char* activate_server_i (UpdateableServerInfo& info,
                            bool manual_start);
 
+  void  activate_server_i (UpdateableServerInfo& info,
+                           bool manual_start,
+                           ImR_ReplyHandler *rh);
+
   char* activate_perclient_server_i (UpdateableServerInfo& info,
                                      bool manual_start);
+
+  void  activate_perclient_server_i (UpdateableServerInfo& info,
+                                     bool manual_start,
+                                     ImR_ReplyHandler *rh);
 
   ImplementationRepository::StartupInfo*
     start_server(UpdateableServerInfo& info,
@@ -162,12 +171,17 @@ private:
   ACE_Time_Value startup_timeout_;
   ACE_Time_Value ping_interval_;
   bool unregister_if_address_reused_;
+  bool use_asynch_;
 };
 
-class Locator_Export SyncListener : public LiveListener
+//----------------------------------------------------------------------------
+/*
+ */
+
+class SyncListener : public LiveListener
 {
  public:
-  SyncListener (const char *server, CORBA::ORB_ptr orb, LiveCheck *pinger);
+  SyncListener (const char *server, CORBA::ORB_ptr orb, LiveCheck &pinger);
 
   bool is_alive (void);
 
@@ -175,14 +189,11 @@ class Locator_Export SyncListener : public LiveListener
 
  private:
   CORBA::ORB_var orb_;
-  LiveCheck *pinger_;
+  LiveCheck &pinger_;
   LiveStatus status_;
   bool got_it_;
   int retries_;
-
 };
-
-
 
 
 #include /**/ "ace/post.h"

@@ -1,3 +1,24 @@
+Mon Mar 25 17:35:24 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.h:
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * orbsvcs/ImplRepo_Service/Forwarder.h:
+        * orbsvcs/ImplRepo_Service/Forwarder.cpp:
+        * orbsvcs/ImplRepo_Service/INS_Locator.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
+        * orbsvcs/ImplRepo_Service/LiveCheck.h:
+        * orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_Options.cpp:
+
+          Continue with implementation. Added some temporary debug output, hooked up the
+          sync version of the reactive ping-wait. Started in on the next stage, which is
+          making the rest of the server access Asynchronous. Changed the mode select flag
+          for start up from defaulting to the traditional sync-style of calls to the new
+          asynch style. The temporary command line flag is now --old, to use the old
+          style for comparison.
+
 Fri Mar 22 18:16:00 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/LiveCheck.cpp:
