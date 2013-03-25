@@ -38,11 +38,11 @@ ImR_Adapter::unknown_adapter (PortableServer::POA_ptr parent,
 {
   ACE_ASSERT (! CORBA::is_nil(parent));
   ACE_ASSERT (name != 0);
-  CORBA::PolicyList policies (2);
-  policies.length (2);
+  CORBA::PolicyList policies (3);
 
   const char *exception_message = "Null Message";
   bool use_loc = this->servant_locator_ != 0;
+  policies.length (use_loc ? 2 : 3);
   try
     {
       // Servant Retention Policy
@@ -53,10 +53,19 @@ ImR_Adapter::unknown_adapter (PortableServer::POA_ptr parent,
       // Request Processing Policy
       exception_message = "While PortableServer::POA::create_request_processing_policy";
 
-      policies[1] =
-        parent->create_request_processing_policy (use_loc ?
-                                                  PortableServer::USE_SERVANT_MANAGER :
-                                                  PortableServer::USE_DEFAULT_SERVANT);
+      if (use_loc)
+        {
+          policies[1] =
+            parent->create_request_processing_policy (PortableServer::USE_SERVANT_MANAGER);
+        }
+      else
+        {
+          policies[1] =
+            parent->create_request_processing_policy (PortableServer::USE_DEFAULT_SERVANT);
+          policies[2] =
+            parent->create_id_uniqueness_policy (PortableServer::MULTIPLE_ID);
+        }
+
 
       PortableServer::POAManager_var poa_manager =
         parent->the_POAManager ();
@@ -67,7 +76,7 @@ ImR_Adapter::unknown_adapter (PortableServer::POA_ptr parent,
                             poa_manager.in (),
                             policies);
 
-      exception_message = "While unknown_adapter::policy->destroy";
+      exception_message = "While policy->destroy";
       for (CORBA::ULong i = 0; i < policies.length (); ++i)
         {
           CORBA::Policy_ptr policy = policies[i];
@@ -79,12 +88,12 @@ ImR_Adapter::unknown_adapter (PortableServer::POA_ptr parent,
 
       if (use_loc)
         {
-          exception_message = "While unknown_adapter, set_servant_manager";
+          exception_message = "While set_servant_manager";
           child->set_servant_manager (this->servant_locator_);
         }
       else
         {
-          exception_message = "While unknown_adapter, set_servant";
+          exception_message = "While set_servant";
           child->set_servant (this->default_servant_);
         }
 
