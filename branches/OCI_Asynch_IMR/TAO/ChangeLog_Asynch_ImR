@@ -1,3 +1,9 @@
+Mon Mar 25 20:41:16 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Adapter_Activator.cpp:
+
+          Fix policy inconsitency.
+
 Mon Mar 25 17:35:24 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/AsyncAccessManager.h:
