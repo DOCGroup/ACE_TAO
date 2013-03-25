@@ -11,7 +11,7 @@ else
 endif
 
 ifeq ($(IPHONE_TARGET), SIMULATOR)
-  IPHONE_PLATFORM:=$(XCODE)/Platforms/iPhoneSimulator.platform/Developer
+  IPHONE_PLATFORM:=$(XCODE)/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer
   IPHONE_SDK:=$(IPHONE_PLATFORM)/SDKs/iPhoneSimulator${IPHONE_VERSION}.sdk
   IPHONE_HARDWARE_ARCHITECTURE=i386
 
@@ -24,7 +24,7 @@ endif
 
 ifeq ($(IPHONE_TARGET), HARDWARE)
   CROSS-COMPILE=1
-  IPHONE_PLATFORM:=$(XCODE)/Platforms/iPhoneOS.platform/Developer
+  IPHONE_PLATFORM:=$(XCODE)/Contents/Developer/Platforms/iPhoneOS.platform/Developer
   IPHONE_SDK:=$(IPHONE_PLATFORM)/SDKs/iPhoneOS${IPHONE_VERSION}.sdk
   IPHONE_HARDWARE_ARCHITECTURE=armv7
 ifeq ($(iphone_codesign),1)
