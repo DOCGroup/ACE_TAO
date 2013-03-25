@@ -1,3 +1,9 @@
+Mon Mar 25 20:52:13 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
+
+          Restore the export macro in the ImR_Locator impl class.
+
 Mon Mar 25 20:41:16 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/Adapter_Activator.cpp:
