@@ -326,7 +326,7 @@ ImR_DSI_ReplyHandler::ImR_DSI_ReplyHandler (const char *key,
   :key_str_ (key),
    server_name_ (server_name),
    orb_(CORBA::ORB::_duplicate (orb)),
-   resp_ (resp)
+   resp_ (TAO_AMH_DSI_Response_Handler::_duplicate (resp))
 {
 }
 
@@ -365,7 +365,7 @@ ImR_DSI_ReplyHandler::send_ior (const char *pior)
                 ACE_TEXT ("to <%s>\n"),
                 this->server_name_.in(), ior.c_str()));
 
-  CORBA::Object_var forward_obj;
+  CORBA::Object_var forward_obj =
     this->orb_->string_to_object (ior.c_str ());
 
   if (!CORBA::is_nil (forward_obj.in ()))

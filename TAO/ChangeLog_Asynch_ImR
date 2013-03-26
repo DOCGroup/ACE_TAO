@@ -1,3 +1,17 @@
+Tue Mar 26 16:35:26 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Forwarder.cpp:
+
+          Clean up error in validating the forward-to IOR.
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator.cpp:
+
+          Clean up the shutdown handler for single-thread use.
+
+        * tao/Messaging/AMH_Response_Handler.cpp:
+
+          Add the explicit handling of ForwardRequest exceptions.
+
 Tue Mar 26 15:52:50 UTC 2013  Byron Harris  <harrisb@ociweb.com>
 
         * bin/tao_other_tests.lst:
