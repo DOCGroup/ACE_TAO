@@ -25,7 +25,7 @@ ImR_Locator_Shutdown::operator () (int /*which_signal*/)
 {
   try
     {
-      this->imr_.shutdown (true);
+      this->imr_.shutdown (false);
     }
   catch (const CORBA::Exception& ex)
     {
