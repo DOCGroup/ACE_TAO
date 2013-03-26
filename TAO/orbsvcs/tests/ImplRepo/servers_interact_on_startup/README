@@ -1,0 +1,64 @@
+$Id$
+
+Servers Interacting on Startup Test
+===================================
+
+Description
+-----------
+
+This is a test of the implementation repository with various servers
+registered with it that interact with each other and may be
+ill-behaved (a server reports it is running but there is a delay in
+activating the POA). Furthermore, in this test, a server may make an
+invocation on another server before the first server's POA is
+activated. This results in a stack of ImR server ping requests.
+
+To achieve this there are three servers used:
+
+S1: This server makes an invocation to S2 after its POA has been
+created (which includes a notification to the ImR that it is running)
+but before the POA has been activated.
+
+S2: This server is similar to S1 but it makes an invocation to S3
+after its POA has been created.
+
+S3: The CORBA object for this server waits for awhile before replying
+to its request. Because of this it will take awhile for S2's ORB to
+start running.
+
+S1 and S2 are both launched by the Activator. S3 is directly spawned
+by the test.
+
+Two clients are also used:
+
+C1: Makes an invocation to S1 through the ImR so that S1 will start.
+
+C2: After C1 is started, a wait of the verification interval is made
+and then C2 is started and also makes an invocation to S1. The waiting
+over the verification interval is done to ensure that the ImR will
+ping S1 to verify it is still alive.
+
+In earlier versions of the ImR, the invocation from C2 to S1 would
+cause new ping requests to stack on top of the ping requests caused by
+C1's invocation to S2 and the original ping requests would be
+blocked. If S3's reply delay is long enough it can cause C2 to receive
+a TRANSIENT exception. For example, it was found on a Linux computer
+that if the request delay was set to 20 seconds ( the value for
+-server_reply_delay described below) the C2 would get this
+exception. If the delay was set to 30 seconds both C1 and C2 would get
+transient exceptions.
+
+Usage
+-----
+
+To run this test, run the run_test.pl perl script. It takes two
+optional arguments:
+
+-server_reply_delay <seconds> This is the delay in seconds the CORBA
+object in S3 will make before replying to a request.
+
+-v <milliseconds>
+The verification interval in milliseconds for the ImR to use.
+
+-?
+The usage and default value of the options.
