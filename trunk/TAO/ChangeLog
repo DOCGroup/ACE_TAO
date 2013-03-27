@@ -1,3 +1,17 @@
+Wed Mar 27 13:11:36 UTC 2013  Byron Harris  <harrisb@ociweb.com>
+
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup:
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup/README:
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup/Test.idl:
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup/Test_i.h:
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup/Test_i.cpp:
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup/client.cpp:
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup/run_test.pl:
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup/server.cpp:
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup/servers_interact_on_startup.mpc:
+
+          Added test for ImR pinging of ill-behaved, interacting servers.
+
 Thu Mar 14 20:21:19 UTC 2013  Byron Harris  <harrisb@ociweb.com>
 
         * orbsvcs/tests/ImplRepo/RestartServer/MessengerClient.cpp:
