@@ -142,9 +142,7 @@ private:
 private:
 
   // The class that handles the forwarding.
-  ImR_Forwarder forwarder_;
 
-  // The alternative forwarder uses DSI/AMH for asynch forwarding.
   ImR_DSI_Forwarder dsi_forwarder_;
 
   // Used for the forwarding of any type of POA.
@@ -171,7 +169,6 @@ private:
   ACE_Time_Value startup_timeout_;
   ACE_Time_Value ping_interval_;
   bool unregister_if_address_reused_;
-  bool use_asynch_;
 };
 
 //----------------------------------------------------------------------------
@@ -185,14 +182,14 @@ class SyncListener : public LiveListener
 
   bool is_alive (void);
 
-  void status_changed (LiveStatus status);
+  void status_changed (LiveStatus status, bool may_retry);
 
  private:
   CORBA::ORB_var orb_;
   LiveCheck &pinger_;
   LiveStatus status_;
   bool got_it_;
-  int retries_;
+  bool callback_;
 };
 
 

@@ -35,7 +35,6 @@ Options::Options ()
 , service_command_ (SC_NONE)
 , unregister_if_address_reused_ (false)
 , imr_type_ (STANDALONE_IMR)
-, use_asynch_ (true)
 {
 }
 
@@ -236,11 +235,6 @@ Options::parse_args (int &argc, ACE_TCHAR *argv[])
           this->ping_interval_ =
             ACE_Time_Value (0, 1000 * ACE_OS::atoi (shifter.get_current ()));
         }
-      else if (ACE_OS::strcasecmp (shifter.get_current (),
-                                   ACE_TEXT ("--old")) == 0)
-        {
-          this->use_asynch_ = false;
-        }
       else
         {
           shifter.ignore_arg ();
@@ -373,10 +367,6 @@ Options::save_registry_options ()
     (LPBYTE) &this->imr_type_ , sizeof (this->imr_type_));
   ACE_ASSERT (err == ERROR_SUCCESS);
 
-  err = ACE_TEXT_RegSetValueEx (key, ACE_TEXT ("Asynch"), 0, REG_DWORD,
-    (LPBYTE) &this->use_asynch_ , sizeof (this->use_asynch_));
-  ACE_ASSERT (err == ERROR_SUCCESS);
-
   err = ::RegCloseKey (key);
   ACE_ASSERT (err == ERROR_SUCCESS);
 #endif
@@ -496,14 +486,6 @@ Options::load_registry_options ()
       ACE_ASSERT (type == REG_DWORD);
     }
 
-  sz = sizeof(use_asynch_);
-  err = ACE_TEXT_RegQueryValueEx (key, ACE_TEXT ("Asynch"), 0, &type,
-    (LPBYTE) &this->use_asynch_ , &sz);
-  if (err == ERROR_SUCCESS)
-    {
-      ACE_ASSERT (type == REG_DWORD);
-    }
-
   err = ::RegCloseKey (key);
   ACE_ASSERT (err == ERROR_SUCCESS);
 #endif
@@ -590,10 +572,4 @@ Options::ImrType
 Options::imr_type (void) const
 {
   return this->imr_type_;
-}
-
-bool
-Options::use_asynch (void) const
-{
-  return this->use_asynch_;
 }

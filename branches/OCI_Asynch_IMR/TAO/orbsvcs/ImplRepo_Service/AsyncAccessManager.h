@@ -119,13 +119,12 @@ class AsyncLiveListener : public LiveListener
   AsyncLiveListener (AsyncAccessManager &aam, LiveCheck *pinger);
   ~AsyncLiveListener (void);
 
-  void status_changed (LiveStatus status);
+  void status_changed (LiveStatus status, bool may_retry);
 
  private:
   AsyncAccessManager &aam_;
   LiveCheck *pinger_;
   LiveStatus status_;
-  int retries_;
 };
 
 

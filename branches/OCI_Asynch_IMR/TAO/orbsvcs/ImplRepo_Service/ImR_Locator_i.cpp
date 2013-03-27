@@ -20,9 +20,6 @@
 
 static const int DEFAULT_START_LIMIT = 1;
 
-static const int PING_RETRY_SCHEDULE[] = {0, 10, 100, 500, 1000, 1000, 1000,
-                                          1000, 5000, 5000};
-
 static const ACE_Time_Value DEFAULT_SERVER_TIMEOUT (0, 10 * 1000); // 10ms
 
 /// We want to give shutdown a little more time to work, so that we
@@ -56,13 +53,11 @@ createPersistentPOA (PortableServer::POA_ptr root_poa, const char* poa_name) {
 }
 
 ImR_Locator_i::ImR_Locator_i (void)
-  : forwarder_ (*this)
-  , dsi_forwarder_ (*this)
+  : dsi_forwarder_ (*this)
   , ins_locator_ (0)
   , debug_ (0)
   , read_only_ (false)
   , unregister_if_address_reused_ (false)
-  , use_asynch_ (true)
 {
   // Visual C++ 6.0 is not smart enough to do a direct assignment
   // while allocating the INS_Locator.  So, we have to do it in
@@ -97,19 +92,9 @@ ImR_Locator_i::init_with_orb (CORBA::ORB_ptr orb, Options& opts)
   this->root_poa_ = PortableServer::POA::_narrow (obj.in ());
   ACE_ASSERT (! CORBA::is_nil (this->root_poa_.in ()));
 
-  if (opts.use_asynch())
-    {
-      this->use_asynch_ = true;
-      this->dsi_forwarder_.init (orb);
-      this->adapter_.init (& this->dsi_forwarder_);
-      this->pinger_.init (orb, ping_interval_);
-    }
-  else
-    {
-      this->use_asynch_ = true;
-      this->forwarder_.init (orb);
-      this->adapter_.init (& this->forwarder_);
-    }
+  this->dsi_forwarder_.init (orb);
+  this->adapter_.init (& this->dsi_forwarder_);
+  this->pinger_.init (orb, ping_interval_);
 
   // Register the Adapter_Activator reference to be the RootPOA's
   // Adapter Activator.
@@ -439,8 +424,8 @@ ImR_Locator_i::activate_server_by_name (const char* name, bool manual_start)
   ACE_CString serverKey;
   ACE_CString server_id;
   bool jacorb_server = false;
-  this->parse_id(name, server_id, serverKey, jacorb_server);
-  UpdateableServerInfo info(this->repository_.get(), serverKey);
+  this->parse_id (name, server_id, serverKey, jacorb_server);
+  UpdateableServerInfo info (this->repository_.get(), serverKey);
   if (info.null ())
     {
       ACE_ERROR ((
@@ -467,8 +452,8 @@ ImR_Locator_i::activate_server_by_name (const char* name, bool manual_start,
   ACE_CString serverKey;
   ACE_CString server_id;
   bool jacorb_server = false;
-  this->parse_id(name, server_id, serverKey, jacorb_server);
-  UpdateableServerInfo info(this->repository_.get(), serverKey);
+  this->parse_id (name, server_id, serverKey, jacorb_server);
+  UpdateableServerInfo info (this->repository_.get(), serverKey);
   if (info.null ())
     {
       ACE_ERROR ((
@@ -1494,239 +1479,11 @@ ImR_Locator_i::connect_server (UpdateableServerInfo& info)
 bool
 ImR_Locator_i::is_alive (UpdateableServerInfo& info)
 {
-  if (this->use_asynch_)
-    {
-      this->connect_server (info);
-      SyncListener listener (info->name.c_str(),
-                             this->orb_.in(),
-                             this->pinger_);
-      return listener.is_alive();
-    }
-
-  const size_t table_size = sizeof (PING_RETRY_SCHEDULE) /
-                            sizeof (*PING_RETRY_SCHEDULE);
-
-  for (size_t i = 0; i < table_size; ++i)
-    {
-      int status = this->is_alive_i (info);
-      if (status == 0)
-        return false;
-      if (status == 1)
-        return true;
-
-      // This is evil, but there's not much else we can do for now. We
-      // should never reach this code once the ImR Servers are fixed
-      // so that they don't lie about server_is_running. Currently,
-      // they send this notification during poa creation.  We have to
-      // run the orb, because the very thing that may be slowing the
-      // aliveness of the servers is the fact that they're trying to
-      // register more objects with us.  In practical testing, we
-      // never retried the ping more than once, because the second
-      // ping always timed out, even if the servers poa manager had
-      // not been activated. The only way we saw multiple retries was
-      // if we ran the orb on the server before the poa manager was
-      // activated.  For this reason, the first retry is immediate,
-      // and the orb->run () call is not required. The call will
-      // likely timeout, and is_alive will return true.
-      if (PING_RETRY_SCHEDULE[i] > 0)
-        {
-          ACE_Time_Value tv (0, PING_RETRY_SCHEDULE[i] * 1000);
-          this->orb_->run (tv);
-        }
-    }
-  if (debug_ > 0)
-    {
-      ACE_DEBUG ((
-        LM_DEBUG,
-        ACE_TEXT ("ImR: <%C> Ping retry count exceeded. alive=maybe.\n"),
-        info->name.c_str ()));
-    }
-  // We return true here, because the server *might* be alive, it's just
-  // not starting in a timely manner. We can't return false, because then
-  // we'll just try to start another instance, and the same thing will
-  // likely happen.
-  info.edit ()->last_ping = ACE_OS::gettimeofday ();
-  return true;
-}
-
-int
-ImR_Locator_i::is_alive_i (UpdateableServerInfo& info)
-{
-  // This is used by the ACE_TRY below when exceptions are turned off.
-
-  if (info->ior.length () == 0 || info->partial_ior.length () == 0)
-    {
-      if (debug_ > 1)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("ImR: <%C> not running. alive=false.\n"),
-                      info->name.c_str ()));
-        }
-      info.edit ()->last_ping = ACE_Time_Value::zero;
-      return 0;
-    }
-
-  if (ping_interval_ == ACE_Time_Value::zero)
-    {
-      if (debug_ > 1)
-        {
-          ACE_DEBUG ((
-            LM_DEBUG,
-            ACE_TEXT ("ImR: <%C> Ping verification disabled. alive=true.\n"),
-            info->name.c_str ()));
-        }
-      return 1;
-    }
-
-  if ((ACE_OS::gettimeofday () - info->last_ping) < ping_interval_)
-    {
-      if (debug_ > 1)
-        {
-          ACE_DEBUG ((
-            LM_DEBUG,
-            ACE_TEXT ("ImR: <%C> within ping interval. alive=true.\n"),
-            info->name.c_str ()));
-        }
-      return 1;
-    }
-
-  // If we don't have enough information to start the server if it isn't already
-  // then we might as well assume it is running. That way the client can get the
-  // status directly from the server.
-  if (info->cmdline.length () == 0 || ! repository_->has_activator (info->activator))
-    {
-      if (debug_ > 1)
-        {
-          ACE_DEBUG ((
-            LM_DEBUG,
-            ACE_TEXT ("ImR: Ping verification skipped. <%C> not startable.\n"),
-            info->name.c_str ()));
-        }
-      return 1;
-    }
-
   this->connect_server (info);
-
-  if (CORBA::is_nil (info->server.in ()))
-    {
-      if (debug_ > 1)
-        {
-          ACE_DEBUG ((
-            LM_DEBUG,
-            ACE_TEXT ("ImR: <%C> Could not connect. alive=false.\n"),
-            info->name.c_str ()));
-        }
-      return 0;
-    }
-
-  try
-    {
-      // Make a copy, in case the info is updated during the ping.
-      ImplementationRepository::ServerObject_var server = info->server;
-
-      // This will timeout if it takes too long
-      server->ping ();
-
-      if (debug_ > 1)
-        {
-          ACE_DEBUG ((
-            LM_DEBUG,
-            ACE_TEXT ("ImR: <%C> Ping successful. alive=true\n"),
-            info->name.c_str ()));
-        }
-      info.edit ()->last_ping = ACE_OS::gettimeofday ();
-    }
-  catch (const CORBA::TRANSIENT& ex)
-    {
-      const CORBA::ULong BITS_5_THRU_12_MASK = 0x00000f80;
-      switch (ex.minor () & BITS_5_THRU_12_MASK)
-        {
-        case TAO_INVOCATION_SEND_REQUEST_MINOR_CODE:
-          {
-            if (debug_ > 1)
-              {
-                ACE_DEBUG ((
-                  LM_DEBUG,
-                  ACE_TEXT ("ImR: <%C> Local TRANSIENT. alive=false.\n"),
-                  info->name.c_str ()));
-              }
-          }
-        info.edit ()->last_ping = ACE_Time_Value::zero;
-        return 0;
-        case TAO_POA_DISCARDING:
-        case TAO_POA_HOLDING:
-          {
-            if (debug_ > 1)
-              {
-                ACE_DEBUG ((
-                  LM_DEBUG,
-                  ACE_TEXT ("ImR: <%C> Remote TRANSIENT. alive=maybe.\n"),
-                  info->name.c_str ()));
-              }
-          }
-        return -1; // We keep trying to ping, because returning 1 now, would just lead
-        // to clients getting the same exception. If we can't ping after several
-        // attempts, then we'll give up and return 1, letting the client worry about it.
-        default:
-          {
-            if (debug_ > 1)
-              {
-                ACE_DEBUG ((
-                  LM_DEBUG,
-                  ACE_TEXT ("ImR: <%C> TRANSIENT exception. alive=false.\n"),
-                  info->name.c_str ()));
-              }
-            info.edit ()->last_ping = ACE_Time_Value::zero;
-          }
-        return 0;
-        }
-    }
-  catch (const CORBA::TIMEOUT& ex)
-    {
-      if (ex.completed() == CORBA::COMPLETED_NO)
-        {
-          if (debug_ > 1)
-            {
-              ACE_DEBUG ((
-                LM_DEBUG,
-                ACE_TEXT ("ImR: <%C> Ping timed out during connection. ")
-                ACE_TEXT ("alive=false.\n"),
-                info->name.c_str ()));
-            }
-          info.edit ()->last_ping = ACE_Time_Value::zero;
-          // still potentially ambiguous, the server could be so busy
-          // it couldn't even accept a connection. However the more
-          // likely assumption is the server is on windows, and is dead,
-          // but the host ignored the request rather than rejecting it.
-          return 0;
-        }
-      if (debug_ > 1)
-        {
-          ACE_DEBUG ((
-            LM_DEBUG,
-            ACE_TEXT ("ImR: <%C> Ping timed out, maybe completed. ")
-            ACE_TEXT ("alive=true.\n"),
-            info->name.c_str ()));
-        }
-      return 1; // This is "alive" as far as we're concerned. Presumably the client
-      // will have a less stringent timeout policy, or will want to know
-      // about the timeout. In any case, we're only guaranteeing that the
-      // server is alive, not that it's responsive.
-    }
-  catch (const CORBA::Exception& ex)
-    {
-      if (debug_ > 1)
-        {
-          ACE_DEBUG ((
-            LM_DEBUG,
-            ACE_TEXT ("ImR: <%C> Unexpected Ping exception. alive=false\n"),
-            info->name.c_str ()));
-          ex._tao_print_exception ("\n");
-        }
-      info.edit ()->last_ping = ACE_Time_Value::zero;
-      return 0;
-    }
-  return 1;
+  SyncListener listener (info->name.c_str(),
+                         this->orb_.in(),
+                         this->pinger_);
+  return listener.is_alive();
 }
 
 int
@@ -1745,40 +1502,47 @@ SyncListener::SyncListener (const char *server,
    pinger_ (pinger),
    status_ (LS_UNKNOWN),
    got_it_ (false),
-   retries_ (10)
+   callback_ (false)
 {
 }
 
 bool
 SyncListener::is_alive (void)
 {
+  this->status_ = this->pinger_.is_alive(this->server());
 
-  this->status_ = this->pinger_.is_alive(this->server().c_str());
+  // ACE_DEBUG ((LM_DEBUG,
+  //             "ImR: SyncListener::is_alive() this = %x, server = <%C>, status = %d\n",
+  //             this, this->server(), status_));
 
   if (this->status_ == LS_ALIVE)
     return true;
   else if (this->status_ == LS_DEAD)
     return false;
 
-  int count = this->retries_;
-  this->pinger_.add_listener (this);
+  this->callback_ = true;
   while (!this->got_it_)
     {
-      ACE_Time_Value delay (1,0);
+      if (this->callback_)
+        {
+          this->pinger_.add_listener (this);
+        }
+      this->callback_ = false;
+      ACE_Time_Value delay (10,0);
       this->orb_->perform_work (delay);
-      if (count != this->retries_)
-        this->pinger_.add_listener (this);
     }
   this->got_it_ = false;
-  this->retries_ = 10;
   return this->status_ != LS_DEAD;
 }
 
 void
-SyncListener::status_changed (LiveStatus status)
+SyncListener::status_changed (LiveStatus status, bool may_retry)
 {
+  this->callback_ = true;
   this->status_ = status;
-  this->got_it_ = (status != LS_TRANSIENT) || (--this->retries_ == 0);
-  ACE_DEBUG ((LM_DEBUG, "SynchLisener::status_changed, got it = %d, status = %d\n", got_it_, status));
+  this->got_it_ = (status != LS_TRANSIENT) || (! may_retry);
+  // ACE_DEBUG ((LM_DEBUG,
+  //             "SynchLisener(%x)::status_changed, got it = %d, status = %d\n",
+  //             this, got_it_, status));
 }
 

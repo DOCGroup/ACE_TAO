@@ -67,13 +67,13 @@ class Locator_Export LiveListener
 
   /// called by the asynch ping receiver when a reply or an exception
   /// is received.
-  virtual void status_changed (LiveStatus status) = 0;
+  virtual void status_changed (LiveStatus status, bool may_retry) = 0;
 
   /// accessor for the server name. Used by the LiveCheck to associate a listener
-  const ACE_CString & server (void) const;
+  const char *server (void) const;
 
  private:
-  ACE_CString server_;
+  const char *server_;
 };
 
 //---------------------------------------------------------------------------
@@ -90,7 +90,9 @@ class Locator_Export LiveListener
 class Locator_Export LiveEntry
 {
  public:
-  LiveEntry (LiveCheck *owner, ImplementationRepository::ServerObject_ptr ref);
+  LiveEntry (LiveCheck *owner,
+             const char *server,
+             ImplementationRepository::ServerObject_ptr ref);
   ~LiveEntry (void);
 
   void add_listener (LiveListener * ll);
@@ -98,16 +100,24 @@ class Locator_Export LiveEntry
   void status (LiveStatus l);
   bool do_ping (PortableServer::POA_ptr poa);
   const ACE_Time_Value &next_check (void) const;
+  static void set_reping_limit (int max);
+  bool reping_available (void);
+  int next_reping (void);
 
  private:
   LiveCheck *owner_;
+  ACE_CString server_;
   ImplementationRepository::ServerObject_var ref_;
   LiveStatus liveliness_;
   ACE_Time_Value next_check_;
   short retry_count_;
+  int repings_;
   bool ping_away_;
   ACE_Vector<LiveListener *> listeners_;
   TAO_SYNCH_MUTEX lock_;
+  static const int reping_msec_ [];
+  static int reping_limit_;
+
 };
 
 //---------------------------------------------------------------------------
