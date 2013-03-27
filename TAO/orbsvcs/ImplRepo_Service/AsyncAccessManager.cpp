@@ -78,7 +78,6 @@ AsyncLiveListener::AsyncLiveListener (AsyncAccessManager &aam, LiveCheck &pinger
   :aam_ (aam),
    pinger_ (pinger),
    status_ (LS_UNKNOWN),
-   retries_ (10)
 {
   this->aam_.add_ref ();
   this->pinger_.add_listener (this);
@@ -90,11 +89,13 @@ AsyncLiveListener::~AsyncLiveListener (void)
 }
 
 void
-AsyncLiveListener::status_changed (LiveStatus status)
+AsyncLiveListener::status_changed (LiveStatus status, bool may_retry)
 {
   this->status_ = status;
-  if (status == LS_TRANSIENT && --this->retries_ > 0)
+  if (status == LS_TRANSIENT && may_retry)
     this->pinger_.add_listener (this);
   else
-    this->aam_.ping_replied (status != LS_DEAD);
+    {
+      this->aam_.ping_replied (status != LS_DEAD);
+    }
 }

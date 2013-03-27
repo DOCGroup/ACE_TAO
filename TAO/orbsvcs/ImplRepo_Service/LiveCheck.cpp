@@ -7,11 +7,11 @@
 #include "ace/OS_NS_time.h"
 
 LiveListener::LiveListener (const char *server)
- : server_(server)
+  : server_(server)
 {
 }
 
-const ACE_CString &
+const char *
 LiveListener::server (void) const
 {
   return this->server_;
@@ -20,13 +20,43 @@ LiveListener::server (void) const
 //---------------------------------------------------------------------------
 //---------------------------------------------------------------------------
 
+const int LiveEntry::reping_msec_[] = {0, 10, 100, 500, 1000, 1000,
+                                             1000, 1000, 5000, 5000};
+int LiveEntry::reping_limit_ = sizeof (LiveEntry::reping_msec_) / sizeof (int);
+
+void
+LiveEntry::set_reping_limit (int max)
+{
+  LiveEntry::reping_limit_ = max;
+}
+
+bool
+LiveEntry::reping_available (void)
+{
+  return this->repings_ < LiveEntry::reping_limit_;
+}
+
+int
+LiveEntry::next_reping (void)
+{
+  if ( this->repings_ < LiveEntry::reping_limit_)
+    {
+      return LiveEntry::reping_msec_[this->repings_++];
+    }
+  else
+    return -1;
+}
+
 LiveEntry::LiveEntry (LiveCheck *owner,
+                      const char *server,
                       ImplementationRepository::ServerObject_ptr ref)
   : owner_ (owner),
+    server_ (server),
     ref_ (ImplementationRepository::ServerObject::_duplicate (ref)),
     liveliness_ (LS_UNKNOWN),
     next_check_ (ACE_OS::time()),
     retry_count_ (0),
+    repings_ (0),
     ping_away_ (false),
     listeners_ (),
     lock_ ()
@@ -81,18 +111,20 @@ LiveEntry::status (LiveStatus l)
       i.next(ll);
       if (*ll != 0)
         {
-          (*ll)->status_changed (this->liveliness_);
+          (*ll)->status_changed (this->liveliness_, this->reping_available());
         }
     }
 #else
-  ACE_DEBUG ((LM_DEBUG,"LiveEntry::status, listeners.size = %d\n",
-              listeners_.size()));
+  // ACE_DEBUG ((LM_DEBUG,
+  //             ACE_TEXT ("(%P|%t) LiveEntry::status(%d), server = %s,")
+  //             ACE_TEXT (" listeners.size = %d\n"),
+  //             l, this->server_.c_str(), listeners_.size()));
   for (size_t i = 0; i < this->listeners_.size(); i++)
     {
       LiveListener *ll = this->listeners_[i];
       if (ll != 0)
         {
-          (ll)->status_changed (this->liveliness_);
+          (ll)->status_changed (this->liveliness_, this->reping_available());
         }
     }
 #endif
@@ -127,7 +159,16 @@ LiveEntry::do_ping (PortableServer::POA_ptr poa)
       this->next_check_ = now + owner_->ping_interval();
       break;
     case LS_TRANSIENT:
-      this->next_check_ = now + ACE_Time_Value (0,5000); // retry delay
+      {
+        int ms = this->next_reping ();
+        if (ms != -1)
+          {
+            ACE_Time_Value next (ms / 1000, (ms % 1000) * 1000);
+            this->next_check_ = now + next;
+          }
+        else
+          return false;
+      }
       break;
     default:;
     }
@@ -159,7 +200,7 @@ PingReceiver::~PingReceiver (void)
 void
 PingReceiver::ping (void)
 {
-  ACE_DEBUG ((LM_DEBUG,"ping received\n"));
+  // ACE_DEBUG ((LM_DEBUG,"ping received\n"));
   this->entry_->status (LS_ALIVE);
   PortableServer::ObjectId_var oid = this->poa_->servant_to_id (this);
   poa_->deactivate_object (oid.in());
@@ -258,9 +299,9 @@ void
 LiveCheck::add_server (const char *server,
                        ImplementationRepository::ServerObject_ptr ref)
 {
-  ACE_CString s(server);
+  ACE_CString s (server);
   LiveEntry *entry = 0;
-  ACE_NEW (entry, LiveEntry(this,ref));
+  ACE_NEW (entry, LiveEntry (this, server, ref));
   int result = entry_map_.bind (s, entry);
   if (result != 0)
     {
@@ -284,19 +325,30 @@ void
 LiveCheck::add_listener (LiveListener *l)
 {
   LiveEntry *entry = 0;
-  int result = entry_map_.find (l->server(), entry);
+  ACE_CString key (l->server());
+  int result = entry_map_.find (key, entry);
+
   if (result == 0 && entry != 0)
     {
       entry->add_listener (l);
       ACE_Time_Value now (ACE_OS::time());
       ACE_Time_Value next = entry->next_check ();
+
       if (next <= now)
         {
+          // ACE_DEBUG ((LM_DEBUG,
+          //             ACE_TEXT ("(%P|%t) LiveCheck::add_listener %x, ")
+          //             ACE_TEXT ("immediate callback for <%C>\n"),
+          //             l, l->server()));
           this->reactor()->schedule_timer (this,0,ACE_Time_Value::zero);
         }
       else
         {
           ACE_Time_Value delay = next - now;
+          // ACE_DEBUG ((LM_DEBUG,
+          //             ACE_TEXT ("(%P|%t) LiveCheck::add_listener %x, ")
+          //             ACE_TEXT ("callback in %d ms for <%C>\n"),
+          //             l, delay.sec() * 1000 + delay.usec() / 1000, l->server()));
           this->reactor()->schedule_timer (this, 0, delay);
         }
 

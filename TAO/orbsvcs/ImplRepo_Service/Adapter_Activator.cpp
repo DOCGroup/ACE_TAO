@@ -15,20 +15,14 @@
 #include "tao/PortableServer/Servant_Base.h"
 
 ImR_Adapter::ImR_Adapter (void)
-  : servant_locator_ (0),
-    default_servant_ (0)
+  : default_servant_ (0)
 {
-}
-
-void
-ImR_Adapter::init (PortableServer::ServantLocator_ptr locator)
-{
-  servant_locator_ = locator;
 }
 
 void
 ImR_Adapter::init (TAO_ServantBase * servant)
 {
+  ACE_DEBUG ((LM_DEBUG, "ImR_Adapter::init with default servant\n"));
   default_servant_ = servant;
 }
 
@@ -41,8 +35,7 @@ ImR_Adapter::unknown_adapter (PortableServer::POA_ptr parent,
   CORBA::PolicyList policies (3);
 
   const char *exception_message = "Null Message";
-  bool use_loc = this->servant_locator_ != 0;
-  policies.length (use_loc ? 2 : 3);
+  policies.length (3);
   try
     {
       // Servant Retention Policy
@@ -53,19 +46,10 @@ ImR_Adapter::unknown_adapter (PortableServer::POA_ptr parent,
       // Request Processing Policy
       exception_message = "While PortableServer::POA::create_request_processing_policy";
 
-      if (use_loc)
-        {
-          policies[1] =
-            parent->create_request_processing_policy (PortableServer::USE_SERVANT_MANAGER);
-        }
-      else
-        {
-          policies[1] =
-            parent->create_request_processing_policy (PortableServer::USE_DEFAULT_SERVANT);
-          policies[2] =
-            parent->create_id_uniqueness_policy (PortableServer::MULTIPLE_ID);
-        }
-
+      policies[1] =
+        parent->create_request_processing_policy (PortableServer::USE_DEFAULT_SERVANT);
+      policies[2] =
+        parent->create_id_uniqueness_policy (PortableServer::MULTIPLE_ID);
 
       PortableServer::POAManager_var poa_manager =
         parent->the_POAManager ();
@@ -86,17 +70,8 @@ ImR_Adapter::unknown_adapter (PortableServer::POA_ptr parent,
       exception_message = "While child->the_activator";
       child->the_activator (this);
 
-      if (use_loc)
-        {
-          exception_message = "While set_servant_manager";
-          child->set_servant_manager (this->servant_locator_);
-        }
-      else
-        {
-          exception_message = "While set_servant";
-          child->set_servant (this->default_servant_);
-        }
-
+      exception_message = "While set_servant";
+      child->set_servant (this->default_servant_);
     }
   catch (const CORBA::Exception& ex)
     {
