@@ -50,7 +50,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   try {
     CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
 
-    ACE_CString other_server_ior;
+    ACE_TCHAR *other_server_ior = 0;
 
     int server_num = 0;
     int reply_delay_secs = 0;
@@ -124,13 +124,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     table->bind(poa_name.c_str (), test_ior.in());
 
     // Make invocation to other server before POA is activated.
-    if (other_server_ior.length () > 0)
+    if (other_server_ior != 0)
       {
         ACE_DEBUG ((LM_DEBUG,
                     "(%P|%t|%T) Server %d sending request to %s\n",
-                    server_num, other_server_ior.c_str ()));
+                    server_num, other_server_ior));
         CORBA::Object_var other_server =
-          orb->string_to_object (other_server_ior.c_str ());
+          orb->string_to_object (other_server_ior);
         ACE_ASSERT (!CORBA::is_nil (other_server.in ()));
         Test_var test = Test::_narrow (other_server.in());
         ACE_ASSERT (!CORBA::is_nil (test.in()));
