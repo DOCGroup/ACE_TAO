@@ -1,6 +1,7 @@
 /* -*- C++ -*- $Id$ */
 
 #include "Test_i.h"
+#include "ace/OS_NS_unistd.h"
 
 Test_i::Test_i (CORBA::Short server_num,
                 CORBA::Short reply_delay_secs)
