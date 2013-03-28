@@ -168,9 +168,15 @@ class Locator_Export LiveCheck : public ACE_Event_Handler
 
   void add_server (const char *server,
                    ImplementationRepository::ServerObject_ptr ref);
+
   void remove_server (const char *server);
 
-  void add_listener (LiveListener *waiter);
+  void remove_per_client_entry (LiveEntry *entry);
+
+  bool add_listener (LiveListener *listener);
+
+  bool add_per_client_listener (LiveListener *listener,
+                                ImplementationRepository::ServerObject_ptr ref);
 
   LiveStatus is_alive (const char *server);
 
@@ -182,8 +188,10 @@ class Locator_Export LiveCheck : public ACE_Event_Handler
                                   ACE_Hash<ACE_CString>,
                                   ACE_Equal_To<ACE_CString>,
                                   TAO_SYNCH_MUTEX> LiveEntryMap;
+  typedef ACE_Unbounded_Stack <LiveEntry *> PerClientStack;
 
   LiveEntryMap entry_map_;
+  PerClientStack per_client_;
   PortableServer::POA_var poa_;
   ACE_Time_Value ping_interval_;
 };

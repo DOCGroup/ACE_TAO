@@ -12,10 +12,11 @@
 
 #include "locator_export.h"
 
-#include "tao/ImR_Client/ServerObjectS.h" // ServerObject_AMIS.h
-
+#include "ImR_ActivatorS.h" // ImR_Activator_AMIS.h
 #include "ace/Vector_T.h"
 #include "ace/SString.h"
+
+#include "Forwarder.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -25,7 +26,7 @@
 
 class ImR_Locator_i;
 class ImR_ReplyHandler;
-class UpdateableServerInfo;
+struct Server_Info;
 
 //----------------------------------------------------------------------------
 /*
@@ -53,59 +54,77 @@ enum AAM_Status
     AAM_ACTIVATION_SENT,
     AAM_WAIT_FOR_RUNNING,
     AAM_WAIT_FOR_PING,
+    AAM_WAIT_FOR_ALIVE,
     AAM_SERVER_READY,
-    AAM_SERVER_DEAD
+    AAM_SERVER_DEAD,
+    AAM_NOT_MANUAL,
+    AAM_NO_ACTIVATOR
   };
 
 class AsyncAccessManager
 {
  public:
-  AsyncAccessManager (UpdateableServerInfo &info, ImR_Locator_i &locator);
+  AsyncAccessManager (const Server_Info &info,
+                      bool manual,
+                      ImR_Locator_i &locator);
+
   ~AsyncAccessManager (void);
+
+  bool has_server (const char *name);
 
   void add_interest (ImR_ReplyHandler *rh);
   AAM_Status status (void) const;
 
-  void activator_replied (void);
-  void server_is_running (void);
+  void activator_replied (bool success);
+  void server_is_running (const char *partial_ior);
   void ping_replied (bool is_alive);
 
   void add_ref (void);
   void remove_ref (void);
 
  private:
-  UpdateableServerInfo &info_;
-  ImR_Locator_i &locator_;
+  void final_state (void);
+  void status (AAM_Status s);
+  bool send_start_request (void);
 
+  Server_Info *info_;
+  bool manual_start_;
+  ImR_Locator_i &locator_;
+  PortableServer::POA_var poa_;
   ACE_Vector<ImR_ReplyHandler *> rh_list_;
 
   AAM_Status status_;
 
   int refcount_;
   TAO_SYNCH_MUTEX lock_;
-
 };
+
+
 
 //----------------------------------------------------------------------------
 /*
- * @class ImR_Loc_ReplyHandler
+ * @class ActivatorReceiver
  *
- * @brief specialized reply handler for Locator interface calls which have a
- * void return.
+ * @brief callback for handling asynch server startup requests
+ *
  */
 
-class ImR_Loc_ReplyHandler : public ImR_ReplyHandler
+class ActivatorReceiver :
+  public virtual POA_ImplementationRepository::AMI_ActivatorHandler
 {
 public:
-  ImR_Loc_ReplyHandler (ImplementationRepository::AMH_LocatorResponseHandler_ptr rh);
-  virtual ~ImR_Loc_ReplyHandler (void);
+  ActivatorReceiver (AsyncAccessManager *aam, PortableServer::POA_ptr poa);
+  virtual ~ActivatorReceiver (void);
 
-  virtual void send_ior (const char *pior);
-  virtual void send_exception (void);
+  void start_server (void);
+  void start_server_excep (Messaging::ExceptionHolder * excep_holder);
+
+  void shutdown (void);
+  void shutdown_excep (Messaging::ExceptionHolder * excep_holder);
 
 private:
-  ImplementationRepository::AMH_LocatorResponseHandler_var rh_;
-
+  AsyncAccessManager *aam_;
+  PortableServer::POA_var poa_;
 };
 
 
@@ -116,14 +135,17 @@ private:
 class AsyncLiveListener : public LiveListener
 {
  public:
-  AsyncLiveListener (AsyncAccessManager &aam, LiveCheck *pinger);
-  ~AsyncLiveListener (void);
+  AsyncLiveListener (const char * server,
+                     AsyncAccessManager &aam,
+                     LiveCheck &pinger);
+  virtual ~AsyncLiveListener (void);
+  bool start (void);
 
   void status_changed (LiveStatus status, bool may_retry);
 
  private:
   AsyncAccessManager &aam_;
-  LiveCheck *pinger_;
+  LiveCheck &pinger_;
   LiveStatus status_;
 };
 

@@ -196,7 +196,6 @@ private:
   virtual int persistent_remove(const ACE_CString& name, bool activator);
 };
 
-
 /**
 * @class UpdateableServerInfo
 *
@@ -222,10 +221,10 @@ public:
   UpdateableServerInfo(const Server_Info& si);
 
   /// destructor (updates repo if needed)
-  ~UpdateableServerInfo();
+  ~UpdateableServerInfo(void);
 
   /// explicitly update repo if needed
-  void update_repo();
+  void update_repo(void);
 
   /// const Server_Info access
   const Server_Info* operator->() const;
@@ -235,13 +234,14 @@ public:
 
   /// retrieve smart pointer to non-const Server_Info
   /// and indicate repo update required
-  const Server_Info_Ptr& edit();
+  const Server_Info_Ptr& edit(void);
 
   /// force indication of update needed
-  void needs_update();
+  void needs_update(void);
 
   /// indicate it Server_Info_Ptr is null
-  bool null() const;
+  bool null(void) const;
+
 private:
   UpdateableServerInfo(const UpdateableServerInfo& );
   const UpdateableServerInfo& operator=(const UpdateableServerInfo& );

@@ -55,6 +55,7 @@ createPersistentPOA (PortableServer::POA_ptr root_poa, const char* poa_name) {
 ImR_Locator_i::ImR_Locator_i (void)
   : dsi_forwarder_ (*this)
   , ins_locator_ (0)
+  , aam_set_ ()
   , debug_ (0)
   , read_only_ (false)
   , unregister_if_address_reused_ (false)
@@ -502,6 +503,31 @@ ImR_Locator_i::activate_server_i (UpdateableServerInfo& info,
                                   bool manual_start,
                                   ImR_ReplyHandler *rh)
 {
+  AsyncAccessManager *aam = 0;
+  if (info->activation_mode == ImplementationRepository::PER_CLIENT)
+    {
+      ACE_NEW (aam, AsyncAccessManager (*info, manual_start, *this));
+      this->aam_set_.insert (aam);
+    }
+  else
+    {
+      aam = this->find_aam (info->name.c_str());
+      if (aam == 0)
+        {
+          ACE_NEW (aam, AsyncAccessManager (*info, manual_start, *this));
+          this->aam_set_.insert (aam);
+        }
+    }
+  aam->add_interest (rh);
+}
+
+
+#if 0
+void
+ImR_Locator_i::activate_server_i (UpdateableServerInfo& info,
+                                  bool manual_start,
+                                  ImR_ReplyHandler *rh)
+{
   if (info->activation_mode == ImplementationRepository::PER_CLIENT)
     {
       activate_perclient_server_i (info, manual_start,rh);
@@ -518,6 +544,7 @@ ImR_Locator_i::activate_server_i (UpdateableServerInfo& info,
       rh->send_exception ();
     }
 }
+#endif
 
 char*
 ImR_Locator_i::activate_server_i (UpdateableServerInfo& info,
@@ -656,7 +683,7 @@ ImR_Locator_i::start_server (UpdateableServerInfo& info, bool manual_start,
         "No command line registered for server.");
     }
 
-  Activator_Info_Ptr ainfo = get_activator (info->activator);
+  Activator_Info_Ptr ainfo = this->get_activator (info->activator);
 
   if (ainfo.null () || CORBA::is_nil (ainfo->activator.in ()))
     {
@@ -668,7 +695,6 @@ ImR_Locator_i::start_server (UpdateableServerInfo& info, bool manual_start,
         "No activator registered for server.");
     }
 
-  ImplementationRepository::StartupInfo_var si;
   try
     {
       ++waiting_clients;
@@ -1126,28 +1152,30 @@ ImR_Locator_i::server_is_running (const char* id,
   if (info.null ())
     {
       if (this->debug_ > 0)
-        ACE_DEBUG ((
-          LM_DEBUG,
-          ACE_TEXT ("ImR: Auto adding NORMAL server <%C>.\n"),
-          name.c_str ()));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("ImR: Auto adding NORMAL server <%C>.\n"),
+                      name.c_str ()));
+        }
 
       ImplementationRepository::EnvironmentList env (0);
       this->repository_->add_server (server_id,
-                                    name,
-                                    jacorb_server,
-                                    "", // no activator
-                                    "", // no cmdline
-                                    ImplementationRepository::EnvironmentList (),
-                                    "", // no working dir
-                                    ImplementationRepository::NORMAL,
-                                    DEFAULT_START_LIMIT,
-                                    partial_ior,
-                                    ior.in (),
-                                    ImplementationRepository::ServerObject::_nil () // Will connect at first access
-                                    );
+                                     name,
+                                     jacorb_server,
+                                     "", // no activator
+                                     "", // no cmdline
+                                     ImplementationRepository::EnvironmentList (),
+                                     "", // no working dir
+                                     ImplementationRepository::NORMAL,
+                                     DEFAULT_START_LIMIT,
+                                     partial_ior,
+                                     ior.in (),
+                                     ImplementationRepository::ServerObject::_nil ()
+                                     );
     }
   else
     {
+#if 0
       if (info->server_id != server_id)
       {
         if (! info->server_id.empty())
@@ -1158,29 +1186,58 @@ ImR_Locator_i::server_is_running (const char* id,
         info.edit ()->server_id = server_id;
       }
 
-      if (info->activation_mode != ImplementationRepository::PER_CLIENT) {
-        info.edit ()->ior = ior.in ();
-        info.edit ()->partial_ior = partial_ior;
-        // Will connect at first access
-        info.edit ()->server = ImplementationRepository::ServerObject::_nil ();
-
-        info.update_repo();
-
-        waiter_svt_.unblock_one (name.c_str (), partial_ior, ior.in (), false);
-      } else {
-        // Note : There's no need to unblock all the waiting request until
-        // we know the final status of the server.
-        if (info->waiting_clients > 0)
+      if (info->activation_mode != ImplementationRepository::PER_CLIENT)
         {
-          waiter_svt_.unblock_one (name.c_str (), partial_ior, ior.in (), true);
+          info.edit ()->ior = ior.in ();
+          info.edit ()->partial_ior = partial_ior;
+          // Will connect at first access
+          info.edit ()->server = ImplementationRepository::ServerObject::_nil ();
+
+          info.update_repo();
+
+          waiter_svt_.unblock_one (name.c_str (), partial_ior, ior.in (), false);
         }
-        else if (this->debug_ > 1)
+      else
         {
+          // Note : There's no need to unblock all the waiting request until
+          // we know the final status of the server.
+          if (info->waiting_clients > 0)
+            {
+              waiter_svt_.unblock_one (name.c_str (), partial_ior, ior.in (), true);
+            }
+          else if (this->debug_ > 1)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("ImR - Ignoring server_is_running due to no ")
+                          ACE_TEXT ("waiting PER_CLIENT clients.\n")));
+            }
+        }
+#else
+
+      if (info->server_id != server_id)
+      {
+        if (! info->server_id.empty())
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("ImR - Ignoring server_is_running due to no ")
-                      ACE_TEXT ("waiting PER_CLIENT clients.\n")));
-        }
+            ACE_TEXT ("ImR - WARNING: server \"%C\" changed server id from ")
+            ACE_TEXT ("\"%C\" to \"%C\" waiting PER_CLIENT clients.\n"),
+            name.c_str (), info->server_id.c_str (), server_id.c_str ()));
+        info.edit ()->server_id = server_id;
       }
+
+      if (info->activation_mode != ImplementationRepository::PER_CLIENT)
+        {
+          info.edit ()->ior = ior.in ();
+          info.edit ()->partial_ior = partial_ior;
+          info.edit ()->server = s;
+
+          info.update_repo();
+
+        }
+
+      AsyncAccessManager *aam = this->find_aam (name.c_str());
+      if (aam != 0)
+        aam->server_is_running (partial_ior);
+#endif
     }
 }
 
@@ -1205,6 +1262,13 @@ ImR_Locator_i::server_is_shutting_down (const char* server)
   if (this->debug_ > 0)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ImR: Server <%C> is shutting down.\n"),
                 server));
+
+  this->pinger_.remove_server (server);
+  AsyncAccessManager *aam = this->find_aam (server);
+  if (aam != 0)
+    {
+      this->remove_aam (aam);
+    }
 
   info.edit ()->reset ();
 }
@@ -1489,7 +1553,57 @@ ImR_Locator_i::is_alive (UpdateableServerInfo& info)
 int
 ImR_Locator_i::debug () const
 {
-  return debug_;
+  return this->debug_;
+}
+
+LiveCheck&
+ImR_Locator_i::pinger (void)
+{
+  return this->pinger_;
+}
+
+PortableServer::POA_ptr
+ImR_Locator_i::root_poa (void)
+{
+  return PortableServer::POA::_duplicate (this->root_poa_.in());
+}
+
+void
+ImR_Locator_i::remove_aam (AsyncAccessManager *aam)
+{
+  this->aam_set_.remove (aam);
+  aam->remove_ref();
+}
+
+AsyncAccessManager *
+ImR_Locator_i::find_aam (const char *name)
+{
+
+  if (debug_ > 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%P|%t) find_aam: name = %s, aam_set_.size = %d\n"),
+                  name, aam_set_.size()));
+    }
+
+  for (AAM_Set::ITERATOR i(this->aam_set_);
+       !i.done();
+       i.advance ())
+    {
+      AsyncAccessManager **entry = 0;
+      i.next(entry);
+      if (*entry != 0 && (*entry)->has_server (name))
+        {
+          return (*entry);
+        }
+    }
+  if (debug_ > 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%P|%t) find_aam: did not find\n")));
+    }
+
+  return 0;
 }
 
 //-------------------------------------------------------------------------
@@ -1511,10 +1625,6 @@ SyncListener::is_alive (void)
 {
   this->status_ = this->pinger_.is_alive(this->server());
 
-  // ACE_DEBUG ((LM_DEBUG,
-  //             "ImR: SyncListener::is_alive() this = %x, server = <%C>, status = %d\n",
-  //             this, this->server(), status_));
-
   if (this->status_ == LS_ALIVE)
     return true;
   else if (this->status_ == LS_DEAD)
@@ -1525,7 +1635,10 @@ SyncListener::is_alive (void)
     {
       if (this->callback_)
         {
-          this->pinger_.add_listener (this);
+          if (!this->pinger_.add_listener (this))
+            {
+              return false;
+            }
         }
       this->callback_ = false;
       ACE_Time_Value delay (10,0);
@@ -1541,8 +1654,37 @@ SyncListener::status_changed (LiveStatus status, bool may_retry)
   this->callback_ = true;
   this->status_ = status;
   this->got_it_ = (status != LS_TRANSIENT) || (! may_retry);
-  // ACE_DEBUG ((LM_DEBUG,
-  //             "SynchLisener(%x)::status_changed, got it = %d, status = %d\n",
-  //             this, got_it_, status));
 }
 
+//---------------------------------------------------------------------------
+//---------------------------------------------------------------------------
+#if 0
+ImR_Loc_ReplyHandler::ImR_Loc_ReplyHandler (AMH_ImplementationRepository::LocatorResponseHandler_ptr rh)
+  :rh_ (AMH_ImplementationRepository::LocatorResponseHandler::_duplicate(rh))
+{
+}
+
+ImR_Loc_ReplyHandler::~ImR_Loc_ReplyHandler (void)
+{
+}
+
+void
+ImR_Loc_ReplyHandler::send_ior (const char *)
+{
+  rh_->activate_server (); // void return
+  delete this;
+
+}
+
+void
+ImR_Loc_ReplyHandler::send_exception (void)
+{
+  CORBA::TRANSIENT ex (CORBA::SystemException::_tao_minor_code
+                       ( TAO_IMPLREPO_MINOR_CODE, 0),
+                       CORBA::COMPLETED_NO);
+  TAO_AMH_DSI_Exception_Holder h(&ex);
+  resp_->invoke_excep(&h);
+  delete this;
+}
+
+#endif
