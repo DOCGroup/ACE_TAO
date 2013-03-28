@@ -102,32 +102,14 @@ LiveEntry::status (LiveStatus l)
       ACE_Time_Value now (ACE_OS::time());
       this->next_check_ = now + owner_->ping_interval();
     }
-#if 0
-  for (ACE_Vector_Iterator<LiveListener *> i (this->listeners_);
-       !i.done();
-       i.advance())
-    {
-      LiveListener **ll  = 0;
-      i.next(ll);
-      if (*ll != 0)
-        {
-          (*ll)->status_changed (this->liveliness_, this->reping_available());
-        }
-    }
-#else
-  // ACE_DEBUG ((LM_DEBUG,
-  //             ACE_TEXT ("(%P|%t) LiveEntry::status(%d), server = %s,")
-  //             ACE_TEXT (" listeners.size = %d\n"),
-  //             l, this->server_.c_str(), listeners_.size()));
   for (size_t i = 0; i < this->listeners_.size(); i++)
     {
       LiveListener *ll = this->listeners_[i];
       if (ll != 0)
         {
-          (ll)->status_changed (this->liveliness_, this->reping_available());
+          ll->status_changed (this->liveliness_, this->reping_available());
         }
     }
-#endif
   this->listeners_.clear();
 }
 
@@ -141,7 +123,12 @@ bool
 LiveEntry::do_ping (PortableServer::POA_ptr poa)
 {
   ACE_Time_Value now (ACE_OS::time());
-  if (this->next_check_ > now || this->liveliness_ == LS_DEAD || this->ping_away_)
+  if (this->ping_away_)
+    {
+      return true;
+    }
+
+  if (this->next_check_ > now || this->liveliness_ == LS_DEAD)
     {
       return false;
     }
@@ -200,7 +187,6 @@ PingReceiver::~PingReceiver (void)
 void
 PingReceiver::ping (void)
 {
-  // ACE_DEBUG ((LM_DEBUG,"ping received\n"));
   this->entry_->status (LS_ALIVE);
   PortableServer::ObjectId_var oid = this->poa_->servant_to_id (this);
   poa_->deactivate_object (oid.in());
@@ -284,14 +270,28 @@ int
 LiveCheck::handle_timeout (const ACE_Time_Value &,
                            const void *)
 {
-  for (LiveEntryMap::iterator i (this->entry_map_);
-       !i.done();
-       i.advance ())
+  for (LiveEntryMap::iterator le (this->entry_map_);
+       !le.done ();
+       le.advance ())
     {
       LiveEntryMap::value_type *pair = 0;
-      i.next(pair);
-      pair->item()->do_ping(poa_.in());
+      le.next(pair);
+      pair->item()->do_ping (poa_.in());
     }
+  for (PerClientStack::ITERATOR pe (this->per_client_);
+       !pe.done ();
+       pe.advance ())
+    {
+      LiveEntry *entry = 0;
+      LiveEntry **n = &entry;
+      pe.next(n);
+      if (entry != 0 && !entry->do_ping (poa_.in()))
+        {
+          this->per_client_.remove (entry);
+        }
+
+    }
+
   return 0;
 }
 
@@ -322,37 +322,59 @@ LiveCheck::remove_server (const char *server)
 }
 
 void
+LiveCheck::remove_per_client_entry (LiveEntry *e)
+{
+  this->per_client_.remove (e);
+}
+
+bool
+LiveCheck::add_per_client_listener (LiveListener *l,
+                                    ImplementationRepository::ServerObject_ptr ref)
+{
+  LiveEntry *entry = 0;
+  ACE_NEW_RETURN (entry, LiveEntry (this, 0, ref), false);
+  if (this->per_client_.push(entry) == 0)
+    {
+      entry->add_listener (l);
+      this->reactor()->schedule_timer (this,0,ACE_Time_Value::zero);
+      return true;
+    }
+  return false;
+}
+
+bool
 LiveCheck::add_listener (LiveListener *l)
 {
   LiveEntry *entry = 0;
   ACE_CString key (l->server());
   int result = entry_map_.find (key, entry);
-
-  if (result == 0 && entry != 0)
+  if (result == -1 || entry == 0)
     {
-      entry->add_listener (l);
-      ACE_Time_Value now (ACE_OS::time());
-      ACE_Time_Value next = entry->next_check ();
-
-      if (next <= now)
-        {
-          // ACE_DEBUG ((LM_DEBUG,
-          //             ACE_TEXT ("(%P|%t) LiveCheck::add_listener %x, ")
-          //             ACE_TEXT ("immediate callback for <%C>\n"),
-          //             l, l->server()));
-          this->reactor()->schedule_timer (this,0,ACE_Time_Value::zero);
-        }
-      else
-        {
-          ACE_Time_Value delay = next - now;
-          // ACE_DEBUG ((LM_DEBUG,
-          //             ACE_TEXT ("(%P|%t) LiveCheck::add_listener %x, ")
-          //             ACE_TEXT ("callback in %d ms for <%C>\n"),
-          //             l, delay.sec() * 1000 + delay.usec() / 1000, l->server()));
-          this->reactor()->schedule_timer (this, 0, delay);
-        }
-
+      return false;
     }
+
+  entry->add_listener (l);
+  ACE_Time_Value now (ACE_OS::time());
+  ACE_Time_Value next = entry->next_check ();
+
+  if (next <= now)
+    {
+      // ACE_DEBUG ((LM_DEBUG,
+      //             ACE_TEXT ("(%P|%t) LiveCheck::add_listener %x, ")
+      //             ACE_TEXT ("immediate callback for <%C>\n"),
+      //             l, l->server()));
+      this->reactor()->schedule_timer (this,0,ACE_Time_Value::zero);
+    }
+  else
+    {
+      ACE_Time_Value delay = next - now;
+      // ACE_DEBUG ((LM_DEBUG,
+      //             ACE_TEXT ("(%P|%t) LiveCheck::add_listener %x, ")
+      //             ACE_TEXT ("callback in %d ms for <%C>\n"),
+      //             l, delay.sec() * 1000 + delay.usec() / 1000, l->server()));
+      this->reactor()->schedule_timer (this, 0, delay);
+    }
+  return true;
 }
 
 LiveStatus

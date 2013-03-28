@@ -15,12 +15,12 @@
 #include "Server_Info.h"
 #include "ace/Auto_Ptr.h"
 #include "AsyncStartupWaiter_i.h"
+#include "AsyncAccessManager.h"
 #include "tao/IORTable/IORTable.h"
 
 #include "ImR_LocatorS.h"
 #include "AsyncStartupWaiterS.h"
 #include "LiveCheck.h"
-//#include "AsyncAccessManager.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -100,6 +100,13 @@ public:
                                  bool manual_start,
                                  ImR_ReplyHandler *rh);
 
+  LiveCheck &pinger (void);
+  PortableServer::POA_ptr root_poa (void);
+  Activator_Info_Ptr get_activator (const ACE_CString& name);
+
+  void remove_aam (AsyncAccessManager *aam);
+  AsyncAccessManager *find_aam (const char *name);
+
 private:
 
   char* activate_server_i (UpdateableServerInfo& info,
@@ -126,7 +133,6 @@ private:
 
   void unregister_activator_i(const char* activator);
 
-  Activator_Info_Ptr get_activator (const ACE_CString& name);
   void connect_activator (Activator_Info& info);
 
   void auto_start_servers(void);
@@ -138,7 +144,11 @@ private:
 
   PortableServer::POA_ptr findPOA(const char* name);
 
-  void parse_id(const char* id, ACE_CString& server_id, ACE_CString& name, bool& jacorb_server);
+  void parse_id(const char* id,
+                ACE_CString& server_id,
+                ACE_CString& name,
+                bool& jacorb_server);
+
 private:
 
   // The class that handles the forwarding.
@@ -153,6 +163,10 @@ private:
 
   /// The asynch server ping adapter
   LiveCheck pinger_;
+
+  /// A collection of asynch activator instances
+  typedef ACE_Unbounded_Set<AsyncAccessManager *> AAM_Set;
+  AAM_Set aam_set_;
 
   CORBA::ORB_var orb_;
   PortableServer::POA_var root_poa_;
@@ -192,6 +206,26 @@ class SyncListener : public LiveListener
   bool callback_;
 };
 
+//----------------------------------------------------------------------------
+/*
+ * @class ImR_Loc_ReplyHandler
+ *
+ * @brief specialized reply handler for Locator interface calls which have a
+ * void return.
+ */
+class ImR_Loc_ReplyHandler : public ImR_ReplyHandler
+{
+public:
+  ImR_Loc_ReplyHandler (ImplementationRepository::AMH_LocatorResponseHandler_ptr rh);
+  virtual ~ImR_Loc_ReplyHandler (void);
+
+  virtual void send_ior (const char *pior);
+  virtual void send_exception (void);
+
+private:
+  ImplementationRepository::AMH_LocatorResponseHandler_var rh_;
+
+};
 
 #include /**/ "ace/post.h"
 #endif /* IMR_LOCATOR_I_H */
