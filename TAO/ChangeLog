@@ -1,3 +1,24 @@
+Thu Mar 28 15:25:46 UTC 2013  Byron Harris  <harrisb@ociweb.com>
+
+        * bin/tao_other_tests.lst:
+
+          Added servers_interact_on_startup test but disabled from
+          test statistics for now as it exposes a problem with the
+          ImR currently being addressed.
+
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup/Test_i.cpp:
+
+          Fixed missing protocol seen on certain compilers.
+
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup/client.cpp:
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup/server.cpp:
+
+          Fixed to build with wide characters enabled.
+
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup/run_test.pl:
+
+          Made server reply delay long enough to reveal problem under Linux.
+
 Wed Mar 27 13:11:36 UTC 2013  Byron Harris  <harrisb@ociweb.com>
 
         * orbsvcs/tests/ImplRepo/servers_interact_on_startup:

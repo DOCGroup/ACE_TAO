@@ -15,7 +15,7 @@ my $debug_level = '0';
 my $imr_debug_level = $debug_level;
 my $servers_count = 3;
 my $client_count = 2;
-my $server_reply_delay = 5;
+my $server_reply_delay = 20;
 my $usage = 0;
 
 # Ping interval in milliseconds
