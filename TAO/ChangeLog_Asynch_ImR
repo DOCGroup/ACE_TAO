@@ -1,3 +1,9 @@
+Fri Mar 29 00:23:44 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
+
+          Added messaging library dependency to tao_imr.
+
 Fri Mar 29 00:14:00 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/AsyncAccessManager.h:
