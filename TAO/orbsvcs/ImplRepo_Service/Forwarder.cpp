@@ -147,8 +147,8 @@ ImR_DSI_Forwarder::invoke (CORBA::ServerRequest_ptr request,
   TAO::Portable_Server::POA_Current_Impl* impl = tao_current->implementation ();
   TAO::ObjectKey::encode_sequence_to_string (key_str.out (), impl->object_key ());
 
-  ImR_DSI_ReplyHandler * rh = 0;
-  ACE_NEW (rh, ImR_DSI_ReplyHandler(key_str.in(),
+  ImR_DSI_ResponseHandler * rh = 0;
+  ACE_NEW (rh, ImR_DSI_ResponseHandler(key_str.in(),
                                     this->locator_.debug() > 0 ?
                                     server_name.in() : "",
                                     this->orb_, resp));
@@ -170,17 +170,7 @@ ImR_DSI_Forwarder::invoke_primary_interface(CORBA::ServerRequest_ptr )
 
 //--------------------------------------------------------------------
 
-ImR_ReplyHandler::ImR_ReplyHandler ()
-{
-}
-
-ImR_ReplyHandler::~ImR_ReplyHandler (void)
-{
-}
-
-//--------------------------------------------------------------------
-
-ImR_DSI_ReplyHandler::ImR_DSI_ReplyHandler (const char *key,
+ImR_DSI_ResponseHandler::ImR_DSI_ResponseHandler (const char *key,
                                             const char *server_name,
                                             CORBA::ORB_ptr orb,
                                             TAO_AMH_DSI_Response_Handler_ptr resp)
@@ -191,12 +181,12 @@ ImR_DSI_ReplyHandler::ImR_DSI_ReplyHandler (const char *key,
 {
 }
 
-ImR_DSI_ReplyHandler::~ImR_DSI_ReplyHandler (void)
+ImR_DSI_ResponseHandler::~ImR_DSI_ResponseHandler (void)
 {
 }
 
 void
-ImR_DSI_ReplyHandler::send_ior (const char *pior)
+ImR_DSI_ResponseHandler::send_ior (const char *pior)
 {
   ACE_CString ior = pior;
 
@@ -205,7 +195,7 @@ ImR_DSI_ReplyHandler::send_ior (const char *pior)
   if (ior.find ("corbaloc:") != 0 || ior[ior.length () - 1] != '/')
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("ImR_ReplyHandler::send_ior (): Invalid corbaloc ior.\n")
+                  ACE_TEXT ("ImR_ResponseHandler::send_ior (): Invalid corbaloc ior.\n")
                   ACE_TEXT ("\t<%s>\n"),
                   ior.c_str()));
 
@@ -222,8 +212,8 @@ ImR_DSI_ReplyHandler::send_ior (const char *pior)
 
   if (this->server_name_[0] != 0)
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("ImR_ReplyHandler::send_ior(): Forwarding invocation on <%s> ")
-                ACE_TEXT ("to <%s>\n"),
+                ACE_TEXT ("ImR_DSI_ResponseHandler::send_ior(): Forwarding invocation ")
+                ACE_TEXT ("on <%s> to <%s>\n"),
                 this->server_name_.in(), ior.c_str()));
 
   CORBA::Object_var forward_obj =
@@ -239,7 +229,7 @@ ImR_DSI_ReplyHandler::send_ior (const char *pior)
   else
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("ImR_ReplyHandler::send_ior (): Forward_to ")
+                  ACE_TEXT ("ImR_DSI_ResponseHandler::send_ior (): Forward_to ")
                   ACE_TEXT ("reference is nil.\n")));
 
       CORBA::OBJECT_NOT_EXIST ex (CORBA::SystemException::_tao_minor_code
@@ -252,7 +242,7 @@ ImR_DSI_ReplyHandler::send_ior (const char *pior)
 }
 
 void
-ImR_DSI_ReplyHandler::send_exception (void)
+ImR_DSI_ResponseHandler::send_exception (CORBA::Exception *)
 {
   CORBA::TRANSIENT ex (CORBA::SystemException::_tao_minor_code
                        ( TAO_IMPLREPO_MINOR_CODE, 0),

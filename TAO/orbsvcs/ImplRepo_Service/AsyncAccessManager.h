@@ -58,7 +58,8 @@ enum AAM_Status
     AAM_SERVER_READY,
     AAM_SERVER_DEAD,
     AAM_NOT_MANUAL,
-    AAM_NO_ACTIVATOR
+    AAM_NO_ACTIVATOR,
+    AAM_NO_COMMANDLINE
   };
 
 class AsyncAccessManager
@@ -72,7 +73,7 @@ class AsyncAccessManager
 
   bool has_server (const char *name);
 
-  void add_interest (ImR_ReplyHandler *rh);
+  void add_interest (ImR_ResponseHandler *rh);
   AAM_Status status (void) const;
 
   void activator_replied (bool success);
@@ -91,7 +92,7 @@ class AsyncAccessManager
   bool manual_start_;
   ImR_Locator_i &locator_;
   PortableServer::POA_var poa_;
-  ACE_Vector<ImR_ReplyHandler *> rh_list_;
+  ACE_Vector<ImR_ResponseHandler *> rh_list_;
 
   AAM_Status status_;
 

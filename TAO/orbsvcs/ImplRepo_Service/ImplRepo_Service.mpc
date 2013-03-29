@@ -30,16 +30,9 @@ project(ImR_Locator_IDL) : orbsvcslib, orbsvcs_output, conv_lib, valuetype, port
     ImR_Locator.idl
   }
 
-  idl_files {
-    idlflags    += -GH -GC
-    AsyncStartupWaiter.idl
-  }
-
   source_files {
     ImR_LocatorS.cpp
     ImR_LocatorC.cpp
-    AsyncStartupWaiterS.cpp
-    AsyncStartupWaiterC.cpp
   }
   header_files {
     locator_idl_export.h
@@ -75,10 +68,10 @@ project(ImR_Locator) : orbsvcslib, orbsvcs_output, conv_lib, avoids_minimum_corb
   Source_Files {
     Activator_Info.cpp
     Adapter_Activator.cpp
-    AsyncStartupWaiter_i.cpp
     AsyncAccessManager.cpp
     Forwarder.cpp
     ImR_Locator_i.cpp
+    ImR_ResponseHandler.cpp
     INS_Locator.cpp
     LiveCheck.cpp
     Locator_XMLHandler.cpp
