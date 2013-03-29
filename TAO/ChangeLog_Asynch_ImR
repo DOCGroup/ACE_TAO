@@ -1,3 +1,19 @@
+Fri Mar 29 22:52:42 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.h:
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * orbsvcs/ImplRepo_Service/Forwarder.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/LiveCheck.h:
+        * orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+
+          Improve the ping retry state machine, add more diagonstics.
+
+        * utils/logWalker/Log.cpp:
+
+          Fix a memory managment error.
+
 Fri Mar 29 00:23:44 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:

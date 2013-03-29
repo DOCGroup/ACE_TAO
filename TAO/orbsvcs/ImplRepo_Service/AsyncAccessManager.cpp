@@ -82,6 +82,11 @@ AsyncAccessManager::add_interest (ImR_ResponseHandler *rh)
           this->status (AAM_WAIT_FOR_PING);
         }
     }
+
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("(%P|%t) AsyncAccessManager::add_interest: ")
+              ACE_TEXT ("server = <%C>, status = %d returning\n"),
+              this->info_->name.c_str(), this->status_));
 }
 
 void
@@ -91,8 +96,8 @@ AsyncAccessManager::final_state (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) AsyncAccessManager::final_state: ")
-                  ACE_TEXT ("status = %d, pior = <%C>\n"),
-                  this->status_, this->info_->partial_ior.c_str()));
+                  ACE_TEXT ("status = %d, server = <%C> list size = %d\n"),
+                  this->status_, this->info_->name.c_str(), rh_list_.size()));
     }
 
   for (size_t i = 0; i < this->rh_list_.size(); i++)
@@ -206,22 +211,32 @@ AsyncAccessManager::server_is_running (const char *partial_ior)
 }
 
 void
-AsyncAccessManager::ping_replied (bool is_alive)
+AsyncAccessManager::ping_replied (LiveStatus server)
 {
-  if (is_alive)
+  switch (server)
     {
+    case LS_ALIVE:
+    case LS_LAST_TRANSIENT:
+    case LS_TIMEDOUT:
       this->status (AAM_SERVER_READY);
-    }
-  else if (this->status_ == AAM_WAIT_FOR_PING)
-    {
-      if (this->send_start_request ())
-        {
-          return;
-        }
-    }
-  else
-    {
-      this->status (AAM_SERVER_DEAD);
+      break;
+    case LS_DEAD:
+      {
+        if (this->status_ == AAM_WAIT_FOR_PING)
+          {
+            if (this->send_start_request ())
+              {
+                return;
+              }
+          }
+        else
+          {
+            this->status (AAM_SERVER_DEAD);
+          }
+      }
+      break;
+    default:
+      return;
     }
   this->final_state();
 }
@@ -353,30 +368,36 @@ bool
 AsyncLiveListener::start (void)
 {
   bool rtn = this->pinger_.add_listener (this);
+  ACE_DEBUG ((LM_DEBUG,
+              "AsyncLiveListener::start, add_listener returned %d\n", rtn));
   if (!rtn)
     delete this;
   return rtn;
 }
 
-void
-AsyncLiveListener::status_changed (LiveStatus status, bool may_retry)
+bool
+AsyncLiveListener::status_changed (LiveStatus status)
 {
   this->status_ = status;
-  if (status == LS_TRANSIENT && may_retry)
+  if (status == LS_TRANSIENT)
     {
       if (!this->pinger_.add_listener (this))
         {
           ACE_DEBUG ((LM_DEBUG,
                       "AsyncLiveListener::status_changed,  deleting(1)\n"));
-          this->aam_.ping_replied (false);
+          this->aam_.ping_replied (status);
           delete this;
+          return true;
         }
+      return false;
     }
   else
     {
       ACE_DEBUG ((LM_DEBUG,
                   "AsyncLiveListener::status_changed, status = %d, deleting(2)\n", status));
-      this->aam_.ping_replied (status != LS_DEAD);
+      this->aam_.ping_replied (status);
       delete this;
+      return true;
     }
+  return true;
 }
