@@ -1,3 +1,16 @@
+Fri Mar 29 13:11:10 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/tao_versioning_idl_defaults.mpb:
+          Zapped empty line
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be/be_util.cpp:
+        * TAO_IDL/be_include/be_global.h:
+          Added versioning_include to specify a different versioned
+          header include and resolved some problems when trying to
+          use versioned namespaces also for the application code
+
 Fri Mar 29 12:26:13 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/util/utl_err.cpp:
