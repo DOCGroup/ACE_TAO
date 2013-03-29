@@ -1,3 +1,8 @@
+Fri Mar 29 12:26:13 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/util/utl_err.cpp:
+          Fixed crash when feeding tao_idl illegal IDL
+
 Thu Mar 28 15:25:46 UTC 2013  Byron Harris  <harrisb@ociweb.com>
 
         * bin/tao_other_tests.lst:
