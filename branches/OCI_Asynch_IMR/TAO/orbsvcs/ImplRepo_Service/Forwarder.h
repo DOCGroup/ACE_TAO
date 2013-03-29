@@ -26,28 +26,9 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/LocalObject.h"
-
+#include "ImR_ResponseHandler.h"
 
 class ImR_Locator_i;
-
-//----------------------------------------------------------------------------
-/**
- * @class ImR_ReplyHandler
- *
- * @brief interface serving as the basis for different strategies of activating
- * servers on demand
- *
- */
-
-class ImR_ReplyHandler
-{
-public:
-  ImR_ReplyHandler (void);
-  virtual ~ImR_ReplyHandler (void);
-
-  virtual void send_ior (const char *pior) = 0;
-  virtual void send_exception (void) = 0;
-};
 
 //----------------------------------------------------------------------------
 /**
@@ -65,18 +46,18 @@ class TAO_AMH_DSI_Response_Handler;
 typedef TAO_AMH_DSI_Response_Handler * TAO_AMH_DSI_Response_Handler_ptr;
 class TAO_AMH_DSI_Response_Handler_var;
 
-class ImR_DSI_ReplyHandler : public ImR_ReplyHandler
+class ImR_DSI_ResponseHandler : public ImR_ResponseHandler
 {
 public:
-  ImR_DSI_ReplyHandler (const char *key,
+  ImR_DSI_ResponseHandler (const char *key,
                         const char *server_name,
                         CORBA::ORB_ptr orb,
                         TAO_AMH_DSI_Response_Handler_ptr resp);
 
-  ~ImR_DSI_ReplyHandler (void);
+  ~ImR_DSI_ResponseHandler (void);
 
   void send_ior (const char *pior);
-  void send_exception (void);
+  void send_exception (CORBA::Exception *ex);
 
 private:
   CORBA::String_var key_str_;

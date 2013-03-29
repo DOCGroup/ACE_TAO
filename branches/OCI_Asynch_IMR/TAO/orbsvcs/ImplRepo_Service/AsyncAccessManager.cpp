@@ -39,7 +39,7 @@ AsyncAccessManager::has_server (const char *s)
 }
 
 void
-AsyncAccessManager::add_interest (ImR_ReplyHandler *rh)
+AsyncAccessManager::add_interest (ImR_ResponseHandler *rh)
 {
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
@@ -97,7 +97,7 @@ AsyncAccessManager::final_state (void)
 
   for (size_t i = 0; i < this->rh_list_.size(); i++)
     {
-      ImR_ReplyHandler *rh = this->rh_list_[i];
+      ImR_ResponseHandler *rh = this->rh_list_[i];
       if (rh != 0)
         {
           if (this->status_ == AAM_SERVER_READY)
@@ -106,7 +106,28 @@ AsyncAccessManager::final_state (void)
             }
           else
             {
-              rh->send_exception ();
+              try
+                {
+                  switch (this->status_)
+                    {
+                    case AAM_NO_ACTIVATOR:
+                      throw ImplementationRepository::CannotActivate
+                        ("No activator registered for server.");
+                    case AAM_NOT_MANUAL:
+                      throw ImplementationRepository::CannotActivate
+                        ("Cannot implicitly activate MANUAL server.");
+                    case AAM_NO_COMMANDLINE:
+                      throw ImplementationRepository::CannotActivate
+                        ("No command line registered for server.");
+                    default:
+                      throw ImplementationRepository::CannotActivate
+                        ("Unknown Failure");
+                    }
+                }
+              catch (CORBA::Exception &ex)
+                {
+                  rh->send_exception (&ex);
+                }
             }
         }
     }
@@ -212,6 +233,12 @@ AsyncAccessManager::send_start_request (void)
       !this->manual_start_)
     {
       this->status (AAM_NOT_MANUAL);
+      return false;
+    }
+
+  if (this->info_->cmdline.length () == 0)
+    {
+      this->status (AAM_NO_COMMANDLINE);
       return false;
     }
 

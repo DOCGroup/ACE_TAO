@@ -11,16 +11,14 @@
 #include "Activator_Info.h"
 #include "Forwarder.h"
 #include "LiveCheck.h"
+#include "ImR_ResponseHandler.h"
 #include "Locator_Options.h"
 #include "Server_Info.h"
 #include "ace/Auto_Ptr.h"
-#include "AsyncStartupWaiter_i.h"
 #include "AsyncAccessManager.h"
 #include "tao/IORTable/IORTable.h"
 
 #include "ImR_LocatorS.h"
-#include "AsyncStartupWaiterS.h"
-#include "LiveCheck.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -38,7 +36,8 @@ class UpdateableServerInfo;
 /// requests an activator to take care of activating the
 /// corresponding server and raises a forward exception to the
 /// client pointing to the correct server.
-class Locator_Export ImR_Locator_i : public virtual POA_ImplementationRepository::Locator
+class Locator_Export ImR_Locator_i :
+  public virtual POA_ImplementationRepository::AMH_Locator
 {
 public:
   ImR_Locator_i();
@@ -65,40 +64,76 @@ public:
 
   // Activator->Locator
 
-  virtual CORBA::Long register_activator (const char* name,
-    ImplementationRepository::Activator_ptr admin);
-  virtual void unregister_activator (const char* name,
-    CORBA::Long token);
-  virtual void notify_child_death (const char* name);
+  virtual void register_activator
+    (ImplementationRepository::AMH_LocatorResponseHandler_ptr _tao_rh,
+     const char* name,
+     ImplementationRepository::Activator_ptr admin);
+
+  virtual void unregister_activator
+    (ImplementationRepository::AMH_LocatorResponseHandler_ptr _tao_rh,
+     const char* name,
+     CORBA::Long token);
+
+  virtual void notify_child_death
+    (ImplementationRepository::AMH_LocatorResponseHandler_ptr _tao_rh,
+     const char* name);
 
   // tao_imr->Locator
 
-  virtual void activate_server (const char * name);
-  virtual void add_or_update_server (const char * name,
-               const ImplementationRepository::StartupOptions &options);
-  virtual void remove_server (const char * name);
-  virtual void shutdown_server (const char * name);
-  virtual void find (const char * name,
-                     ImplementationRepository::ServerInformation_out info);
-  virtual void list (CORBA::ULong how_many,
-    CORBA::Boolean determine_active_status,
-    ImplementationRepository::ServerInformationList_out server_list,
-    ImplementationRepository::ServerInformationIterator_out server_iterator);
-  virtual void shutdown(CORBA::Boolean activators, CORBA::Boolean servers);
+  virtual void activate_server
+    (ImplementationRepository::AMH_AdministrationResponseHandler_ptr _tao_rh,
+     const char * name);
+
+  virtual void add_or_update_server
+    (ImplementationRepository::AMH_AdministrationResponseHandler_ptr _tao_rh,
+     const char * name,
+     const ImplementationRepository::StartupOptions &options);
+
+  virtual void remove_server
+    (ImplementationRepository::AMH_AdministrationResponseHandler_ptr _tao_rh,
+     const char * name);
+
+  virtual void shutdown_server
+    (ImplementationRepository::AMH_AdministrationResponseHandler_ptr _tao_rh,
+     const char * name);
+
+  virtual void find
+    (ImplementationRepository::AMH_AdministrationResponseHandler_ptr _tao_rh,
+     const char * name);
+
+  virtual void list
+    (ImplementationRepository::AMH_AdministrationResponseHandler_ptr _tao_rh,
+     CORBA::ULong how_many,
+     CORBA::Boolean determine_active_status);
+
+  virtual void shutdown
+    (ImplementationRepository::AMH_AdministrationResponseHandler_ptr _tao_rh,
+     CORBA::Boolean activators,
+     CORBA::Boolean servers);
 
   // Server->Locator
 
-  virtual void server_is_running (const char* name,
-                                  const char* partial_ior,
-               ImplementationRepository::ServerObject_ptr server_object);
-  virtual void server_is_shutting_down (const char * name);
+  virtual void server_is_running
+    (ImplementationRepository::AMH_AdministrationResponseHandler_ptr _tao_rh,
+     const char* name,
+     const char* partial_ior,
+     ImplementationRepository::ServerObject_ptr server_object);
+
+  virtual void server_is_shutting_down
+    (ImplementationRepository::AMH_AdministrationResponseHandler_ptr _tao_rh,
+     const char * name);
 
   // Used by the INS_Locator to start a sever given an object name
   char* activate_server_by_object (const char* object_name);
   char* activate_server_by_name (const char * name, bool manual_start);
+
+  // Helper function also used by the Forwarder
+
   void  activate_server_by_name (const char * name,
                                  bool manual_start,
-                                 ImR_ReplyHandler *rh);
+                                 ImR_ResponseHandler *rh);
+
+  // interfaces to aid with collaboration
 
   LiveCheck &pinger (void);
   PortableServer::POA_ptr root_poa (void);
@@ -109,27 +144,15 @@ public:
 
 private:
 
-  char* activate_server_i (UpdateableServerInfo& info,
-                           bool manual_start);
-
   void  activate_server_i (UpdateableServerInfo& info,
                            bool manual_start,
-                           ImR_ReplyHandler *rh);
-
-  char* activate_perclient_server_i (UpdateableServerInfo& info,
-                                     bool manual_start);
-
-  void  activate_perclient_server_i (UpdateableServerInfo& info,
-                                     bool manual_start,
-                                     ImR_ReplyHandler *rh);
-
-  ImplementationRepository::StartupInfo*
-    start_server(UpdateableServerInfo& info,
-                 bool manual_start,
-                 int& waiting_clients);
+                           ImR_ResponseHandler *rh);
 
   bool is_alive(UpdateableServerInfo& info);
+
+#if 0
   int is_alive_i(UpdateableServerInfo& info);
+#endif
 
   void unregister_activator_i(const char* activator);
 
@@ -152,7 +175,6 @@ private:
 private:
 
   // The class that handles the forwarding.
-
   ImR_DSI_Forwarder dsi_forwarder_;
 
   // Used for the forwarding of any type of POA.
@@ -175,9 +197,6 @@ private:
   int debug_;
 
   auto_ptr<Locator_Repository> repository_;
-
-  AsyncStartupWaiter_i waiter_svt_;
-  ImplementationRepository::AsyncStartupWaiter_var waiter_;
 
   bool read_only_;
   ACE_Time_Value startup_timeout_;
@@ -208,22 +227,58 @@ class SyncListener : public LiveListener
 
 //----------------------------------------------------------------------------
 /*
- * @class ImR_Loc_ReplyHandler
+ * @class ImR_Loc_ResponseHandler
  *
  * @brief specialized reply handler for Locator interface calls which have a
  * void return.
  */
-class ImR_Loc_ReplyHandler : public ImR_ReplyHandler
+class ImR_SyncResponseHandler : public ImR_ResponseHandler
 {
 public:
-  ImR_Loc_ReplyHandler (ImplementationRepository::AMH_LocatorResponseHandler_ptr rh);
-  virtual ~ImR_Loc_ReplyHandler (void);
+  ImR_SyncResponseHandler (CORBA::ORB_ptr orb);
+  virtual ~ImR_SyncResponseHandler (void);
 
   virtual void send_ior (const char *pior);
-  virtual void send_exception (void);
+  virtual void send_exception (CORBA::Exception *ex);
+
+  char *wait_for_result (void);
 
 private:
-  ImplementationRepository::AMH_LocatorResponseHandler_var rh_;
+  CORBA::String_var result_;
+  CORBA::Exception *excep_;
+  CORBA::ORB_var orb_;
+};
+
+//----------------------------------------------------------------------------
+/*
+ * @class ImR_Loc_ResponseHandler
+ *
+ * @brief specialized reply handler for Locator interface calls which have a
+ * void return.
+ */
+class ImR_Loc_ResponseHandler : public ImR_ResponseHandler
+{
+public:
+  enum Loc_Operation_Id
+    {
+      LOC_ACTIVATE_SERVER,
+      LOC_ADD_OR_UPDATE_SERVER,
+      LOC_REMOVE_SERVER,
+      LOC_SHUTDOWN_SERVER,
+      LOC_SERVER_IS_RUNNING,
+      LOC_SERVER_IS_SHUTTING_DOWN,
+    };
+
+  ImR_Loc_ResponseHandler (Loc_Operation_Id opid,
+                           ImplementationRepository::AMH_AdministrationResponseHandler_ptr rh);
+  virtual ~ImR_Loc_ResponseHandler (void);
+
+  virtual void send_ior (const char *pior);
+  virtual void send_exception (CORBA::Exception *ex);
+
+private:
+  Loc_Operation_Id op_id_;
+  ImplementationRepository::AMH_AdministrationResponseHandler_var resp_;
 
 };
 
