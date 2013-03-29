@@ -2657,6 +2657,13 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
                               "tao/Versioned_Namespace.h",
                               true);
 
+  if ((be_global->versioning_include () != 0) && (ACE_OS::strlen (be_global->versioning_include ()) > 0))
+    {
+      this->gen_standard_include (this->client_header_,
+                                  be_global->versioning_include (),
+                                  true);
+    }
+
   // On some platforms, this include isn't needed if certain command
   // line options are present. Rather than try to sort that all out,
   // and to keep cross-compiling robust, we always generate this

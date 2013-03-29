@@ -147,6 +147,7 @@ be_util::prep_be_arg (char *s)
   static const char arg_post_include[]     = "post_include=";
   static const char arg_versioning_begin[] = "versioning_begin=";
   static const char arg_versioning_end[]   = "versioning_end=";
+  static const char arg_versioning_include[]  = "versioning_include=";
   static const char obv_opt_accessor[]     = "obv_opt_accessor";
   static const char ciao_container_type[]  = "ciao_container_type=";
   static const char include_guard[]        = "include_guard=";
@@ -298,6 +299,12 @@ be_util::prep_be_arg (char *s)
           char const * const val =
             arg + sizeof (arg_versioning_end) - 1;
           be_global->versioning_end (val);
+        }
+      else if (ACE_OS::strstr (arg, arg_versioning_include) == arg)
+        {
+          char const * const val =
+            arg + sizeof (arg_versioning_include) - 1;
+          be_global->versioning_include (val);
         }
       else if (ACE_OS::strstr (arg, dds_impl) == arg)
         {
@@ -522,6 +529,11 @@ be_util::usage (void)
   ACE_DEBUG ((
       LM_DEBUG,
       ACE_TEXT (" -Wb,versioning_end\t\t\tSet text that closes a ")
+      ACE_TEXT ("a \"versioned\" namespace\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Wb,versioning_include\t\t\tSet text that will be used as include for ")
       ACE_TEXT ("a \"versioned\" namespace\n")
     ));
 #endif  /* ACE_HAS_VERSIONED_NAMESPACE || TAO_HAS_VERSIONED_NAMESPACE */
