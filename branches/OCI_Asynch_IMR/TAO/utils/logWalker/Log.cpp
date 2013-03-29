@@ -552,7 +552,7 @@ Log::parse_complete_connection_i (void)
             {
               c_iter.remove();
               // ACE_DEBUG ((LM_DEBUG,"%d: complete_connection: purging waiter\n",this->offset_));
-              delete waiter;
+              // delete waiter;
               break;
             }
         }

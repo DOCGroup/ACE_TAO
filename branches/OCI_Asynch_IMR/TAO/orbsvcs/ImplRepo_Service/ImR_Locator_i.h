@@ -150,10 +150,6 @@ private:
 
   bool is_alive(UpdateableServerInfo& info);
 
-#if 0
-  int is_alive_i(UpdateableServerInfo& info);
-#endif
-
   void unregister_activator_i(const char* activator);
 
   void connect_activator (Activator_Info& info);
@@ -215,7 +211,7 @@ class SyncListener : public LiveListener
 
   bool is_alive (void);
 
-  void status_changed (LiveStatus status, bool may_retry);
+  bool status_changed (LiveStatus status);
 
  private:
   CORBA::ORB_var orb_;

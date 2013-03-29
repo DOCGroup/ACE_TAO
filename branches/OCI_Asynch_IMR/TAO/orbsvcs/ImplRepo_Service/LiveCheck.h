@@ -39,9 +39,11 @@ class LiveCheck;
  */
 enum LiveStatus {
   LS_UNKNOWN,
+  LS_PING_AWAY,
   LS_DEAD,
   LS_ALIVE,
   LS_TRANSIENT,
+  LS_LAST_TRANSIENT,
   LS_TIMEDOUT
 };
 
@@ -66,8 +68,8 @@ class Locator_Export LiveListener
   LiveListener (const char *server);
 
   /// called by the asynch ping receiver when a reply or an exception
-  /// is received.
-  virtual void status_changed (LiveStatus status, bool may_retry) = 0;
+  /// is received. Returns true if finished listening
+  virtual bool status_changed (LiveStatus status) = 0;
 
   /// accessor for the server name. Used by the LiveCheck to associate a listener
   const char *server (void) const;
@@ -112,8 +114,9 @@ class Locator_Export LiveEntry
   ACE_Time_Value next_check_;
   short retry_count_;
   int repings_;
-  bool ping_away_;
-  ACE_Vector<LiveListener *> listeners_;
+
+  typedef ACE_Unbounded_Set<LiveListener *> Listen_Set;
+  Listen_Set listeners_;
   TAO_SYNCH_MUTEX lock_;
   static const int reping_msec_ [];
   static int reping_limit_;
@@ -177,6 +180,8 @@ class Locator_Export LiveCheck : public ACE_Event_Handler
 
   bool add_per_client_listener (LiveListener *listener,
                                 ImplementationRepository::ServerObject_ptr ref);
+
+  void schedule_ping (LiveEntry *entry);
 
   LiveStatus is_alive (const char *server);
 

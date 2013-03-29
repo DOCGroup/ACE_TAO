@@ -78,7 +78,7 @@ class AsyncAccessManager
 
   void activator_replied (bool success);
   void server_is_running (const char *partial_ior);
-  void ping_replied (bool is_alive);
+  void ping_replied (LiveStatus server);
 
   void add_ref (void);
   void remove_ref (void);
@@ -142,7 +142,7 @@ class AsyncLiveListener : public LiveListener
   virtual ~AsyncLiveListener (void);
   bool start (void);
 
-  void status_changed (LiveStatus status, bool may_retry);
+  bool status_changed (LiveStatus status);
 
  private:
   AsyncAccessManager &aam_;

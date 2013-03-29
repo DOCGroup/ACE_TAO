@@ -1280,14 +1280,6 @@ ImR_Locator_i::remove_aam (AsyncAccessManager *aam)
 AsyncAccessManager *
 ImR_Locator_i::find_aam (const char *name)
 {
-
-  if (debug_ > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%P|%t) find_aam: name = %s, aam_set_.size = %d\n"),
-                  name, aam_set_.size()));
-    }
-
   for (AAM_Set::ITERATOR i(this->aam_set_);
        !i.done();
        i.advance ())
@@ -1299,12 +1291,6 @@ ImR_Locator_i::find_aam (const char *name)
           return (*entry);
         }
     }
-  if (debug_ > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%P|%t) find_aam: did not find\n")));
-    }
-
   return 0;
 }
 
@@ -1350,12 +1336,13 @@ SyncListener::is_alive (void)
   return this->status_ != LS_DEAD;
 }
 
-void
-SyncListener::status_changed (LiveStatus status, bool may_retry)
+bool
+SyncListener::status_changed (LiveStatus status)
 {
   this->callback_ = true;
   this->status_ = status;
-  this->got_it_ = (status != LS_TRANSIENT) || (! may_retry);
+  this->got_it_ = (status != LS_TRANSIENT);
+  return true;
 }
 
 //---------------------------------------------------------------------------
