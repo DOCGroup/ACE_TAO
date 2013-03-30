@@ -13,6 +13,7 @@
 #include "ace/Log_Record.h"
 #include "ace/Handle_Set.h"
 #include "ace/Basic_Types.h"
+#include "ace/Truncate.h"
 #include "ace/os_include/os_fcntl.h"
 #include "Iterative_Logging_Server.h"
 
@@ -35,7 +36,7 @@ protected:
 
   virtual int wait_for_multiple_events () {
     active_handles_ = master_handle_set_;
-    int width = (int)active_handles_.max_set () + 1;
+    int width = ACE_Utils::truncate_cast<int> ((intptr_t)active_handles_.max_set ()) + 1;
     if (select (width,
                 active_handles_.fdset (),
                 0,        // no write_fds

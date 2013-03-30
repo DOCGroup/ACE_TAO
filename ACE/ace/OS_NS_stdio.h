@@ -117,7 +117,7 @@ inline ACE_HANDLE ace_fileno_helper (FILE *fp)
   return (ACE_HANDLE)fileno (fp);
 # undef fileno
 # else
-  return (ACE_HANDLE)ACE_STD_NAMESPACE::fileno (fp);
+  return (ACE_HANDLE)(intptr_t)ACE_STD_NAMESPACE::fileno (fp);
 # endif /* defined (fileno) */
 }
 #endif /* !ACE_FILENO_EQUIVALENT */

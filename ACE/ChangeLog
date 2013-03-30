@@ -1,3 +1,44 @@
+Sat Mar 30 09:30:10 UTC 2013  Martin Corino  <mcorino@remedy.nl>
+
+        * include/makeinclude/platform_mingw32.GNU:
+          Added support for latest GCC from MinGW64.
+
+        * ace/config-win32.h:
+        * ace/config-win32-mingw.h:
+          Split support for MinGW64 variants of MinGW compilers
+          into separate files because of tricky differences between
+          MinGW32 and MinGW64 APIs.
+
+        * ace/config-win32-mingw64.h:
+          Added separate support file for MinGW64 compilers (both
+          32 and 64 bit).
+
+        * ace/CDR_Base.inl:
+          More standardized use of ACE_LACKS_INLINE_ASSEMBLY for benefit
+          of MinGW64 64bit compiler.
+
+        * ace/Functor_T.h:
+        * ace/Functor_T.inl:
+        * ace/OS_NS_stdio.h:
+        * ace/OS_NS_stdio.inl:
+        * ace/OS_NS_sys_stat.inl:
+        * ace/Process.cpp:
+        * ace/SV_Semaphore_Simple.cpp:
+        * ace/Timer_Wheel_T.cpp:
+        * apps/Gateway/Gateway/Gateway.cpp:
+        * examples/C++NPv1/Reactive_Logging_Server.h:
+        * examples/C++NPv1/Reactive_Logging_Server_Ex.h:
+        * examples/IPC_SAP/SOCK_SAP/CPP-inserver.cpp:
+        * examples/Reactor/Misc/test_early_timeouts.cpp:
+        * performance-tests/SCTP/SOCK_STREAM_srv.cpp:
+        * tests/Map_Test.h:
+        * tests/Process_Env_Test.cpp:
+        * tests/Thread_Timer_Queue_Adapter_Test.cpp:
+          All kinds of minor updates and corrections to silence
+          warnings and errors relating to either 64bit Windows or
+          the very latest GCC (4.8.0). Mostly precision loss and
+          truncating casts.
+
 Thu Mar 28 08:52:43 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/ACE-bug-process.html:
