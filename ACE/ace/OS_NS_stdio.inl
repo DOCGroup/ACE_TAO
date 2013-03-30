@@ -583,7 +583,7 @@ ACE_INLINE ACE_HANDLE
 ACE_OS::fileno (FILE *stream)
 {
 #if defined ACE_FILENO_EQUIVALENT
-  return (ACE_HANDLE)ACE_FILENO_EQUIVALENT (stream);
+  return (ACE_HANDLE)((intptr_t)ACE_FILENO_EQUIVALENT (stream));
 #else
   return ace_fileno_helper (stream);
 #endif
@@ -1013,6 +1013,12 @@ ACE_OS::vsprintf (wchar_t *buffer, const wchar_t *format, va_list argptr)
   // to see if the operation will remain in bounds). If this isn't ok, use
   // ACE_OS::snprintf().
   return vswprintf (buffer, 4096, format, argptr);
+
+# elif defined (__MINGW64_VERSION_MAJOR) && !defined (WIN64)
+  // the MingW64 32bit version causes link errors when using the
+  // 'standard' vswprint(). Luckily they have a mingw special.
+
+  return __mingw_vswprintf (buffer, format, argptr);
 
 # elif defined (ACE_WIN32)
   // Windows has vswprintf, but the pre-VC8 signature is from the older

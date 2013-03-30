@@ -33,3 +33,13 @@ ifeq ($(winsock2),1)
 endif
 
 LIBS += -lwsock32 -lnetapi32
+
+ifeq ($(GXX_4_OR_BETTER),1)
+  ifeq ($(CXX_MAJOR_VERSION),4)
+    ifeq ($(findstring $(CXX_MINOR_VERSION),7 8 9),$(CXX_MINOR_VERSION))
+      CPPFLAGS += -Wno-unknown-pragmas
+    endif
+  else
+    CPPFLAGS += -Wno-unknown-pragmas
+  endif
+endif

@@ -26,11 +26,15 @@
 
 // Include the config-win32-* file specific to the compiler
 #if defined (_MSC_VER)
-#    include "ace/config-win32-msvc.h"
+# include "ace/config-win32-msvc.h"
 #elif defined (ACE_HAS_CEGCC) //need to be prior to MINGW32
-#    include "ace/config-win32-cegcc.h"
+# include "ace/config-win32-cegcc.h"
 #elif defined (__MINGW32__)
-#    include "ace/config-win32-mingw.h"
+# if defined (__MINGW64_VERSION_MAJOR)
+#   include "ace/config-win32-mingw64.h"
+# else
+#   include "ace/config-win32-mingw.h"
+# endif
 #elif defined (__DMC__)
 #    include "ace/config-win32-dmc.h"
 #else
