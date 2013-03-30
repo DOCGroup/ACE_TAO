@@ -23,6 +23,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_fcntl.h"
 #include "ace/Malloc_Base.h"
+#include "ace/Truncate.h"
 
 MT_Client_Task::MT_Client_Task (int argc, ACE_TCHAR **argv,
                                 int client_number)
@@ -196,7 +197,7 @@ MT_Client::init (int argc, ACE_TCHAR **argv,
   try
     {
       char buf[64];
-      ACE_OS::sprintf (buf, "thread_%lx", reinterpret_cast<long> (this));
+      ACE_OS::sprintf (buf, "thread_%lx", ACE_Utils::truncate_cast<long> ((intptr_t)this));
 
       this->orb_var_ =
         CORBA::ORB_init (this->argc_,

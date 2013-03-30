@@ -18,6 +18,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_fcntl.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/Truncate.h"
 
 // IDL File::System constructor
 FileImpl::System::System (PortableServer::POA_ptr poa)
@@ -58,7 +59,7 @@ FileImpl::System::open (const char *file_name,
   // convert ACE_HANDLE to a string
   ACE_OS::sprintf (file_descriptor_buffer,
                    "%ld",
-                   (long int) file_descriptor);
+                   ACE_Utils::truncate_cast<long int> ((intptr_t)file_descriptor));
 
   //Create an objectID from the ACE_HANDLE string
   PortableServer::ObjectId_var oid =
