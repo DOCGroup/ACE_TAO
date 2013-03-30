@@ -144,7 +144,7 @@ FileImpl::Descriptor::fd (void)
     PortableServer::ObjectId_to_string (oid1.in ());
 
   // Get the ACE_HANDLE from the string
-  return (ACE_HANDLE) ACE_OS::atol (s.in ());
+  return (ACE_HANDLE)(intptr_t)ACE_OS::atol (s.in ());
 }
 
 CORBA::Long
