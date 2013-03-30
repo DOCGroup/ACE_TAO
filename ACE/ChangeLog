@@ -1,3 +1,8 @@
+Sat Mar 30 18:11:06 UTC 2013  Martin Corino  <mcorino@remedy.nl>
+
+        * examples/C++NPv1/Reactive_Logging_Server_Ex.h:
+          Fixed truncating cast error.
+
 Sat Mar 30 09:44:50 UTC 2013  Martin Corino  <mcorino@remedy.nl>
 
         * ace/config-win32-mingw64.h:
