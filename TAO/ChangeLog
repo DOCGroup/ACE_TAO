@@ -1,3 +1,9 @@
+Sat Mar 30 18:12:28 UTC 2013  Martin Corino  <mcorino@remedy.nl>
+
+        * tests/File_IO/File_i.cpp:
+        * tests/POA/Default_Servant2/File_i.cpp:
+          Fixed int-to-pointer cast warnings.
+
 Sat Mar 30 09:39:40 UTC 2013  Martin Corino  <mcorino@remedy.nl>
 
         * orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.h:
