@@ -1,3 +1,20 @@
+Sat Mar 30 09:39:40 UTC 2013  Martin Corino  <mcorino@remedy.nl>
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedEventChannel.h:
+        * orbsvcs/orbsvcs/Event/EC_Basic_Factory.cpp:
+        * performance-tests/POA/Object_Creation_And_Registration/registration.cpp:
+        * tao/PortableServer/Key_Adapters.cpp:
+        * tao/TransportCurrent/IIOP_Current_Impl.cpp:
+        * tests/File_IO/File_i.cpp:
+        * tests/NestedUpcall/MT_Client_Test/client.cpp:
+        * tests/POA/Default_Servant2/File_i.cpp:
+          Added MinGW64 compilers support.
+          All kinds of minor updates and corrections to silence
+          warnings and errors relating to either 64bit Windows or
+          the very latest GCC (4.8.0). Mostly precision loss and
+          truncating casts.
+
 Fri Mar 29 13:11:10 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/tao_versioning_idl_defaults.mpb:
