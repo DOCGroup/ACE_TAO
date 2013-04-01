@@ -571,11 +571,11 @@ ImR_Locator_i::add_or_update_server
                   ACE_TEXT ("ImR: Cannot add/update server <%C> due to locked ")
                   ACE_TEXT ("database.\n"),
                   server));
-      CORBA::NO_PERMISSION ex
-        (CORBA::SystemException::_tao_minor_code
-         (TAO_IMPLREPO_MINOR_CODE,0),
-         CORBA::COMPLETED_NO);
-      ImplementationRepository::AMH_AdministrationExceptionHolder h (&ex);
+      CORBA::Exception *ex =
+        new CORBA::NO_PERMISSION (CORBA::SystemException::_tao_minor_code
+                                  (TAO_IMPLREPO_MINOR_CODE,0),
+                                  CORBA::COMPLETED_NO);
+      ImplementationRepository::AMH_AdministrationExceptionHolder h (ex);
       _tao_rh->add_or_update_server_excep (&h);
       return;
     }
@@ -693,11 +693,11 @@ ImR_Locator_i::remove_server
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("ImR: Can't remove server <%C> due to locked database.\n"),
                   name));
-      CORBA::NO_PERMISSION ex
-        (CORBA::SystemException::_tao_minor_code
-         (TAO_IMPLREPO_MINOR_CODE, 0),
-         CORBA::COMPLETED_NO);
-      ImplementationRepository::AMH_AdministrationExceptionHolder h (&ex);
+      CORBA::Exception *ex =
+        new CORBA::NO_PERMISSION (CORBA::SystemException::_tao_minor_code
+                                  (TAO_IMPLREPO_MINOR_CODE, 0),
+                                  CORBA::COMPLETED_NO);
+      ImplementationRepository::AMH_AdministrationExceptionHolder h (ex);
       _tao_rh->remove_server_excep (&h);
       return;
     }
@@ -737,8 +737,8 @@ ImR_Locator_i::remove_server
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("ImR: Can't remove unknown server <%C>.\n"), name));
-      ImplementationRepository::NotFound ex;
-      ImplementationRepository::AMH_AdministrationExceptionHolder h (&ex);
+      CORBA::Exception *ex = new ImplementationRepository::NotFound;
+      ImplementationRepository::AMH_AdministrationExceptionHolder h (ex);
       _tao_rh->remove_server_excep (&h);
       return;
     }
@@ -782,8 +782,8 @@ ImR_Locator_i::shutdown_server
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("ImR: shutdown_server () Cannot find info for server <%C>\n"),
                   server));
-      ImplementationRepository::NotFound ex;
-      ImplementationRepository::AMH_AdministrationExceptionHolder h (&ex);
+      CORBA::Exception *ex = new ImplementationRepository::NotFound;
+      ImplementationRepository::AMH_AdministrationExceptionHolder h (ex);
       _tao_rh->shutdown_server_excep (&h);
       return;
     }
@@ -795,9 +795,16 @@ ImR_Locator_i::shutdown_server
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("ImR: shutdown_server () Cannot connect to server <%C>\n"),
                   server));
-      ImplementationRepository::NotFound ex;
-      ImplementationRepository::AMH_AdministrationExceptionHolder h (&ex);
-      _tao_rh->shutdown_server_excep (&h);
+      CORBA::Exception *ex = new ImplementationRepository::NotFound;
+      ImplementationRepository::AMH_AdministrationExceptionHolder h (ex);
+      try
+        {
+          _tao_rh->shutdown_server_excep (&h);
+        }
+      catch (CORBA::Exception &ex)
+        {
+          ex._tao_print_exception (ACE_TEXT ("reporting connect error\n"));
+        }
       return;
     }
 
@@ -809,7 +816,7 @@ ImR_Locator_i::shutdown_server
         ImplementationRepository::ServerObject::_unchecked_narrow (obj.in ());
       server->shutdown ();
     }
-  catch (CORBA::TIMEOUT &ex)
+  catch (CORBA::TIMEOUT &to_ex)
     {
       info.edit ()->reset ();
       // Note : This is a good thing. It means we didn't waste our time waiting for
@@ -820,7 +827,7 @@ ImR_Locator_i::shutdown_server
                       ACE_TEXT ("ImR: Timeout while waiting for <%C> shutdown.\n"),
                       server));
         }
-      ImplementationRepository::AMH_AdministrationExceptionHolder h (&ex);
+      ImplementationRepository::AMH_AdministrationExceptionHolder h (to_ex._tao_duplicate());
       _tao_rh->shutdown_server_excep (&h);
       return;
     }
@@ -902,6 +909,27 @@ ImR_Locator_i::server_is_running
                                      ior.in (),
                                      ImplementationRepository::ServerObject::_nil ()
                                      );
+
+      Server_Info_Ptr temp_info = this->repository_->get_server(name);
+      if (temp_info.null ())
+        {
+          if (this->debug_ > 0)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("ImR: Auto adding failed, giving up <%C>\n"),
+                          name.c_str ()));
+            }
+
+          _tao_rh->server_is_running ();
+          return;
+        }
+
+      AsyncAccessManager *aam_raw;
+      ACE_NEW (aam_raw, AsyncAccessManager (*temp_info, true, *this));
+      AsyncAccessManager_ptr aam (aam_raw);
+      aam->started_running ();
+      int result = this->aam_set_.insert (aam);
+      ACE_DEBUG ((LM_DEBUG, "ImR_Locator_i::server_is_running insert_aam returned %d\n", result));
     }
   else
     {
@@ -927,7 +955,17 @@ ImR_Locator_i::server_is_running
       AsyncAccessManager_ptr aam(this->find_aam (name.c_str()));
       if (*aam != 0)
         aam->server_is_running (partial_ior);
-      ACE_DEBUG ((LM_DEBUG, "Server_Is_Running, aam ptr should die\n"));
+      else
+        {
+          ACE_DEBUG ((LM_DEBUG, "Server_Is_Running, %s not found in aam set\n",
+                      name.c_str()));
+          AsyncAccessManager *aam_raw;
+          ACE_NEW (aam_raw, AsyncAccessManager (*info, true, *this));
+          AsyncAccessManager_ptr aam (aam_raw);
+          aam->started_running ();
+          int result = this->aam_set_.insert (aam);
+          ACE_DEBUG ((LM_DEBUG, "ImR_Locator_i::server_is_running insert_aam returned %d\n", result));
+        }
     }
   _tao_rh->server_is_running ();
 }
@@ -1005,7 +1043,7 @@ ImR_Locator_i::find
     }
   catch (CORBA::Exception &ex)
     {
-      ImplementationRepository::AMH_AdministrationExceptionHolder h (&ex);
+      ImplementationRepository::AMH_AdministrationExceptionHolder h (ex._tao_duplicate());
       _tao_rh->find_excep (&h);
       return;
     }
@@ -1108,7 +1146,7 @@ ImR_Locator_i::list
         }
       catch (CORBA::Exception& ex)
         {
-          ImplementationRepository::AMH_AdministrationExceptionHolder h (&ex);
+          ImplementationRepository::AMH_AdministrationExceptionHolder h (ex._tao_duplicate());
           _tao_rh->list_excep (&h);
         }
     }
@@ -1292,16 +1330,16 @@ ImR_Locator_i::remove_aam (AsyncAccessManager_ptr &aam)
 AsyncAccessManager *
 ImR_Locator_i::find_aam (const char *name)
 {
-  for (AAM_Set::ITERATOR i(this->aam_set_);
-       !i.done();
-       i.advance ())
+  ACE_DEBUG ((LM_DEBUG, "ImR_Locator_i::find_aam called for %s, set size = %d\n", name, aam_set_.size()));
+
+  for (AAM_Set::ITERATOR i = this->aam_set_.begin();
+       i != this->aam_set_.end();
+       ++i)
     {
-      AsyncAccessManager_ptr *entry = 0;
-      i.next (entry);
-      if (*(*entry) != 0 && (*entry)->has_server (name))
+      if ((*i)->has_server (name))
         {
           ACE_DEBUG ((LM_DEBUG, "ImR_Locator_i::find_aam add ref and return\n"));
-          return (*entry)._retn()->add_ref();
+          return (*i)->add_ref();
         }
     }
   return 0;
