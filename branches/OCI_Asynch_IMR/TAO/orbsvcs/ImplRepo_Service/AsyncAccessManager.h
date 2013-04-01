@@ -32,6 +32,7 @@ struct Server_Info;
 enum AAM_Status
   {
     AAM_INIT,
+    AAM_SERVER_STARTED_RUNNING,
     AAM_ACTIVATION_SENT,
     AAM_WAIT_FOR_RUNNING,
     AAM_WAIT_FOR_PING,
@@ -71,6 +72,8 @@ class AsyncAccessManager
                       ImR_Locator_i &locator);
 
   ~AsyncAccessManager (void);
+
+  void started_running (void);
 
   bool has_server (const char *name);
 

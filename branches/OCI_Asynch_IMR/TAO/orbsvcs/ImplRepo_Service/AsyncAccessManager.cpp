@@ -20,21 +20,31 @@ AsyncAccessManager::AsyncAccessManager (const Server_Info &info,
    refcount_(1),
    lock_()
 {
-  ACE_DEBUG ((LM_DEBUG,"New AAM: this = %x, name = %s\n",
+  ACE_DEBUG ((LM_DEBUG,"AAM(%x), ctor, name = %s\n",
               this, info.name.c_str()));
   this->info_ = new Server_Info (info);
 }
 
 AsyncAccessManager::~AsyncAccessManager (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "AAM (%x): dtor\n", this));
+  ACE_DEBUG ((LM_DEBUG, "AAM (%x): dtor, name = %s\n", this,
+              info_->name.c_str()));
   delete this->info_;
+}
+
+void
+AsyncAccessManager::started_running (void)
+{
+  this->status_ = AAM_SERVER_STARTED_RUNNING;
 }
 
 bool
 AsyncAccessManager::has_server (const char *s)
 {
-  return ACE_OS::strcmp (this->info_->name.c_str(),s) == 0;
+  int result = ACE_OS::strcmp (this->info_->name.c_str(),s);
+  ACE_DEBUG ((LM_DEBUG, "AAM (%x): has_server test, my name = %s, s = %s result = %d\n",
+              this, info_->name.c_str(), s, result));
+  return result == 0;
 }
 
 void
@@ -52,10 +62,11 @@ AsyncAccessManager::add_interest (ImR_ResponseHandler *rh)
                   this->info_->name.c_str(), this->status_, this->rh_list_.size()));
     }
 
-  if (this->status_ == AAM_SERVER_READY)
+  if (this->status_ == AAM_SERVER_READY || this->status_ == AAM_SERVER_STARTED_RUNNING)
     {
       if (this->locator_.pinger().is_alive (this->info_->name.c_str()))
         {
+          this->status_ = AAM_SERVER_READY;
           this->final_state();
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) AsyncAccessManager::add_interest: ")
@@ -65,7 +76,7 @@ AsyncAccessManager::add_interest (ImR_ResponseHandler *rh)
         }
     }
 
-  if (this->status_ == AAM_INIT || this->status_ == AAM_SERVER_READY)
+  if (this->status_ == AAM_INIT || this->status_ == AAM_SERVER_READY || this->status_ == AAM_SERVER_STARTED_RUNNING)
     {
       // This is not a leak. The listener registers with
       // the pinger and will delete itself when done.
@@ -82,7 +93,14 @@ AsyncAccessManager::add_interest (ImR_ResponseHandler *rh)
         }
       else
         {
-          this->status (AAM_WAIT_FOR_PING);
+          if (this->status_ == AAM_SERVER_STARTED_RUNNING)
+            {
+              this->status (AAM_WAIT_FOR_ALIVE);
+            }
+          else
+            {
+              this->status (AAM_WAIT_FOR_PING);
+            }
         }
     }
 
@@ -164,13 +182,13 @@ AsyncAccessManager::status (AAM_Status s)
 void
 AsyncAccessManager::activator_replied (bool success)
 {
-  if (this->locator_.debug() > 0)
-    {
+  // if (this->locator_.debug() > 0)
+  //   {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) AsyncAccessManager::activator_replied: ")
                   ACE_TEXT ("success = %d, status = %d\n"),
                   success, this->status_));
-    }
+      // }
   if (success)
     {
       this->status (AAM_WAIT_FOR_RUNNING);
@@ -192,13 +210,13 @@ AsyncAccessManager::server_is_shutting_down (void)
 void
 AsyncAccessManager::server_is_running (const char *partial_ior)
 {
-  if (this->locator_.debug() > 0)
-    {
+  // if (this->locator_.debug() > 0)
+  //   {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) AsyncAccessManager::server_is_running: ")
                   ACE_TEXT ("name = %C, status = %d\n"),
                   this->info_->name.c_str(), this->status_));
-    }
+    // }
   this->status (AAM_WAIT_FOR_ALIVE);
   this->info_->partial_ior = partial_ior;
 
