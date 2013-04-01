@@ -28,6 +28,21 @@ class ImR_Locator_i;
 class ImR_ReplyHandler;
 struct Server_Info;
 
+
+enum AAM_Status
+  {
+    AAM_INIT,
+    AAM_ACTIVATION_SENT,
+    AAM_WAIT_FOR_RUNNING,
+    AAM_WAIT_FOR_PING,
+    AAM_WAIT_FOR_ALIVE,
+    AAM_SERVER_READY,
+    AAM_SERVER_DEAD,
+    AAM_NOT_MANUAL,
+    AAM_NO_ACTIVATOR,
+    AAM_NO_COMMANDLINE
+  };
+
 //----------------------------------------------------------------------------
 /*
  * @class AsyncAccessManager
@@ -48,20 +63,6 @@ struct Server_Info;
  * will have its own AAM instance.
  */
 
-enum AAM_Status
-  {
-    AAM_INIT,
-    AAM_ACTIVATION_SENT,
-    AAM_WAIT_FOR_RUNNING,
-    AAM_WAIT_FOR_PING,
-    AAM_WAIT_FOR_ALIVE,
-    AAM_SERVER_READY,
-    AAM_SERVER_DEAD,
-    AAM_NOT_MANUAL,
-    AAM_NO_ACTIVATOR,
-    AAM_NO_COMMANDLINE
-  };
-
 class AsyncAccessManager
 {
  public:
@@ -78,9 +79,10 @@ class AsyncAccessManager
 
   void activator_replied (bool success);
   void server_is_running (const char *partial_ior);
+  void server_is_shutting_down (void);
   void ping_replied (LiveStatus server);
 
-  void add_ref (void);
+  AsyncAccessManager *add_ref (void);
   void remove_ref (void);
 
  private:
@@ -100,7 +102,31 @@ class AsyncAccessManager
   TAO_SYNCH_MUTEX lock_;
 };
 
+class AsyncAccessManager_ptr
+{
+public:
+  AsyncAccessManager_ptr (void);
+  AsyncAccessManager_ptr (AsyncAccessManager *aam);
+  AsyncAccessManager_ptr (const AsyncAccessManager_ptr &aam_ptr);
+  ~AsyncAccessManager_ptr (void);
 
+  AsyncAccessManager_ptr &operator = (const AsyncAccessManager_ptr &aam_ptr);
+  AsyncAccessManager_ptr &operator = (AsyncAccessManager *aam);
+  const AsyncAccessManager * operator-> () const;
+  const AsyncAccessManager * operator* () const;
+  AsyncAccessManager * operator-> ();
+  AsyncAccessManager * operator* ();
+  bool operator== (const AsyncAccessManager_ptr &aam_ptr) const;
+  bool operator== (const AsyncAccessManager *aam) const;
+
+  AsyncAccessManager * clone (void) const;
+  AsyncAccessManager * _retn (void);
+
+  void assign (AsyncAccessManager *aam);
+
+private:
+  AsyncAccessManager * val_;
+};
 
 //----------------------------------------------------------------------------
 /*
@@ -114,7 +140,8 @@ class ActivatorReceiver :
   public virtual POA_ImplementationRepository::AMI_ActivatorHandler
 {
 public:
-  ActivatorReceiver (AsyncAccessManager *aam, PortableServer::POA_ptr poa);
+  ActivatorReceiver (AsyncAccessManager *aam,
+                     PortableServer::POA_ptr poa);
   virtual ~ActivatorReceiver (void);
 
   void start_server (void);
@@ -124,7 +151,7 @@ public:
   void shutdown_excep (Messaging::ExceptionHolder * excep_holder);
 
 private:
-  AsyncAccessManager *aam_;
+  AsyncAccessManager_ptr aam_;
   PortableServer::POA_var poa_;
 };
 
@@ -137,7 +164,7 @@ class AsyncLiveListener : public LiveListener
 {
  public:
   AsyncLiveListener (const char * server,
-                     AsyncAccessManager &aam,
+                     AsyncAccessManager *aam,
                      LiveCheck &pinger);
   virtual ~AsyncLiveListener (void);
   bool start (void);
@@ -145,7 +172,7 @@ class AsyncLiveListener : public LiveListener
   bool status_changed (LiveStatus status);
 
  private:
-  AsyncAccessManager &aam_;
+  AsyncAccessManager_ptr aam_;
   LiveCheck &pinger_;
   LiveStatus status_;
 };

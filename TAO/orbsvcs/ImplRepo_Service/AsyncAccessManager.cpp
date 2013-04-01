@@ -5,8 +5,6 @@
 #include "ImR_Locator_i.h"
 #include "Locator_Repository.h"
 
-
-
 //---------------------------------------------------------------------------
 //---------------------------------------------------------------------------
 
@@ -29,6 +27,7 @@ AsyncAccessManager::AsyncAccessManager (const Server_Info &info,
 
 AsyncAccessManager::~AsyncAccessManager (void)
 {
+  ACE_DEBUG ((LM_DEBUG, "AAM (%x): dtor\n", this));
   delete this->info_;
 }
 
@@ -58,6 +57,10 @@ AsyncAccessManager::add_interest (ImR_ResponseHandler *rh)
       if (this->locator_.pinger().is_alive (this->info_->name.c_str()))
         {
           this->final_state();
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) AsyncAccessManager::add_interest: ")
+                      ACE_TEXT ("server = <%C>, server is alive\n"),
+                      this->info_->name.c_str()));
           return;
         }
     }
@@ -68,7 +71,7 @@ AsyncAccessManager::add_interest (ImR_ResponseHandler *rh)
       // the pinger and will delete itself when done.
       AsyncLiveListener *l = 0;
       ACE_NEW (l, AsyncLiveListener (this->info_->name.c_str(),
-                                     *this,
+                                     this,
                                      this->locator_.pinger()));
       if (!l->start())
         {
@@ -140,7 +143,8 @@ AsyncAccessManager::final_state (void)
   if (this->info_->activation_mode == ImplementationRepository::PER_CLIENT ||
       this->status_ != AAM_SERVER_READY)
     {
-      this->locator_.remove_aam (this);
+      AsyncAccessManager_ptr aam (this);
+      this->locator_.remove_aam (aam);
     }
 }
 
@@ -179,6 +183,13 @@ AsyncAccessManager::activator_replied (bool success)
 }
 
 void
+AsyncAccessManager::server_is_shutting_down (void)
+{
+  this->status (AAM_SERVER_DEAD);
+  this->final_state ();
+}
+
+void
 AsyncAccessManager::server_is_running (const char *partial_ior)
 {
   if (this->locator_.debug() > 0)
@@ -201,7 +212,7 @@ AsyncAccessManager::server_is_running (const char *partial_ior)
   // the pinger and will delete itself when done.
   AsyncLiveListener *l = 0;
   ACE_NEW (l, AsyncLiveListener (this->info_->name.c_str(),
-                                 *this,
+                                 this,
                                  this->locator_.pinger()));
   if (!l->start())
     {
@@ -282,17 +293,21 @@ AsyncAccessManager::send_start_request (void)
   return true;
 }
 
-void
+AsyncAccessManager *
 AsyncAccessManager::add_ref (void)
 {
-  ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_, 0);
   ++this->refcount_;
+
+  ACE_DEBUG ((LM_DEBUG, "AAM (%x): add_ref count now = %d\n", this, this->refcount_));
+  return this;
 }
 
 void
 AsyncAccessManager::remove_ref (void)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
+  ACE_DEBUG ((LM_DEBUG, "AAM (%x): remove_ref count pre decr = %d\n", this, this->refcount_));
   if (--this->refcount_ == 0)
     {
       delete this;
@@ -302,18 +317,134 @@ AsyncAccessManager::remove_ref (void)
 //---------------------------------------------------------------------------
 //---------------------------------------------------------------------------
 
+AsyncAccessManager_ptr::AsyncAccessManager_ptr (void)
+  : val_ (0)
+{
+}
+
+AsyncAccessManager_ptr::AsyncAccessManager_ptr (AsyncAccessManager *aam)
+  :val_ (aam)
+{
+}
+
+AsyncAccessManager_ptr::AsyncAccessManager_ptr (const AsyncAccessManager_ptr &aam_ptr)
+  :val_ (aam_ptr.clone())
+{
+}
+
+AsyncAccessManager_ptr::~AsyncAccessManager_ptr (void)
+{
+  if (val_ != 0)
+    {
+      val_->remove_ref();
+    }
+}
+
+AsyncAccessManager_ptr &
+AsyncAccessManager_ptr::operator= (const AsyncAccessManager_ptr &aam_ptr)
+{
+  if (val_ != *aam_ptr)
+    {
+      if (val_ != 0)
+        {
+          val_->remove_ref();
+        }
+      val_ = aam_ptr.clone();
+    }
+  return *this;
+}
+
+AsyncAccessManager_ptr &
+AsyncAccessManager_ptr::operator= (AsyncAccessManager *aam)
+{
+  if (val_ != aam)
+    {
+      if (val_ != 0)
+        {
+          val_->remove_ref();
+        }
+      val_ = aam;
+    }
+  return *this;
+}
+
+const AsyncAccessManager *
+AsyncAccessManager_ptr::operator-> () const
+{
+  return val_;
+}
+
+const AsyncAccessManager *
+AsyncAccessManager_ptr::operator* () const
+{
+  return val_;
+}
+
+AsyncAccessManager *
+AsyncAccessManager_ptr::operator-> ()
+{
+  return val_;
+}
+
+AsyncAccessManager *
+AsyncAccessManager_ptr::operator* ()
+{
+  return val_;
+}
+
+bool
+AsyncAccessManager_ptr::operator== (const AsyncAccessManager_ptr &aam_ptr) const
+{
+  return val_ == *aam_ptr;
+}
+
+bool
+AsyncAccessManager_ptr::operator== (const AsyncAccessManager *aam) const
+{
+  return val_ == aam;
+}
+
+AsyncAccessManager *
+AsyncAccessManager_ptr::clone (void) const
+{
+  if (val_ != 0)
+    {
+      val_->add_ref();
+    }
+  return val_;
+}
+
+AsyncAccessManager *
+AsyncAccessManager_ptr::_retn (void)
+{
+  AsyncAccessManager * aam = val_;
+  val_ = 0;
+  return aam;
+}
+
+void
+AsyncAccessManager_ptr::assign (AsyncAccessManager *aam)
+{
+  if (val_ != 0)
+    {
+      val_->remove_ref();
+    }
+  val_ = aam;
+}
+
+//---------------------------------------------------------------------------
+//---------------------------------------------------------------------------
+
 ActivatorReceiver::ActivatorReceiver (AsyncAccessManager *aam,
                                       PortableServer::POA_ptr poa)
-  :aam_ (aam),
+  :aam_ (aam->add_ref ()),
    poa_ (PortableServer::POA::_duplicate (poa))
 {
-  this->aam_->add_ref ();
 }
 
 
 ActivatorReceiver::~ActivatorReceiver (void)
 {
-  this->aam_->remove_ref ();
 }
 
 void
@@ -349,19 +480,19 @@ ActivatorReceiver::shutdown_excep (Messaging::ExceptionHolder * )
 //---------------------------------------------------------------------------
 
 AsyncLiveListener::AsyncLiveListener (const char *server,
-                                      AsyncAccessManager &aam,
+                                      AsyncAccessManager *aam,
                                       LiveCheck &pinger)
   :LiveListener (server),
-   aam_ (aam),
+   aam_ (aam->add_ref ()),
    pinger_ (pinger),
    status_ (LS_UNKNOWN)
 {
-  this->aam_.add_ref ();
+  ACE_DEBUG ((LM_DEBUG, "AsyncLiveListener ctor, this = %x\n", this));
 }
 
 AsyncLiveListener::~AsyncLiveListener (void)
 {
-  this->aam_.remove_ref ();
+  ACE_DEBUG ((LM_DEBUG, "AsyncLiveListener dtor, this = %x\n", this));
 }
 
 bool
@@ -381,23 +512,14 @@ AsyncLiveListener::status_changed (LiveStatus status)
   this->status_ = status;
   if (status == LS_TRANSIENT)
     {
-      if (!this->pinger_.add_listener (this))
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      "AsyncLiveListener::status_changed,  deleting(1)\n"));
-          this->aam_.ping_replied (status);
-          delete this;
-          return true;
-        }
       return false;
     }
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "AsyncLiveListener::status_changed, status = %d, deleting(2)\n", status));
-      this->aam_.ping_replied (status);
+                  "AsyncLiveListener::status_changed, status = %d, deleting(%x)\n", status, this));
+      this->aam_->ping_replied (status);
       delete this;
-      return true;
     }
   return true;
 }

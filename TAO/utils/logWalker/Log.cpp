@@ -606,11 +606,13 @@ Log::parse_handler_open_i (bool is_ssl)
           // else
           //   ACE_DEBUG ((LM_DEBUG,"%d: handler_open: no match waiter addr = %s\n",
           //               this->offset_, (waiter == 0 ? "<null>" :  waiter->server_addr().c_str()) ));
-
         }
     }
-  else
+
+  if (pp == 0)
     {
+      // ACE_DEBUG ((LM_DEBUG,"%d: handler_open: calling pop_new_connection, addr = %s\n",
+      //             this->offset_, addr));
       pp = this->thr_->pop_new_connection();
     }
   if (pp == 0)

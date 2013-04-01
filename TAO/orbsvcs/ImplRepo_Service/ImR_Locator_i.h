@@ -139,7 +139,7 @@ public:
   PortableServer::POA_ptr root_poa (void);
   Activator_Info_Ptr get_activator (const ACE_CString& name);
 
-  void remove_aam (AsyncAccessManager *aam);
+  void remove_aam (AsyncAccessManager_ptr &aam);
   AsyncAccessManager *find_aam (const char *name);
 
 private:
@@ -183,7 +183,7 @@ private:
   LiveCheck pinger_;
 
   /// A collection of asynch activator instances
-  typedef ACE_Unbounded_Set<AsyncAccessManager *> AAM_Set;
+  typedef ACE_Unbounded_Set<AsyncAccessManager_ptr> AAM_Set;
   AAM_Set aam_set_;
 
   CORBA::ORB_var orb_;

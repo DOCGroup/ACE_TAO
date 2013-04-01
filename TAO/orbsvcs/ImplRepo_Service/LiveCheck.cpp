@@ -105,6 +105,8 @@ LiveEntry::status (LiveStatus l)
   ACE_DEBUG ((LM_DEBUG, "LiveEntry(%s)::status updating listeners, size = %d\n",
               this->server_.c_str(), this->listeners_.size()));
 
+  Listen_Set remove;
+
   LiveStatus ls = this->liveliness_;
   if (ls == LS_TRANSIENT && ! this->reping_available())
     ls = LS_LAST_TRANSIENT;
@@ -118,11 +120,25 @@ LiveEntry::status (LiveStatus l)
         {
           if ((*ll)->status_changed (this->liveliness_))
             {
-              ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
-              this->listeners_.remove (*ll);
+              remove.insert (*ll);
             }
         }
     }
+
+  {
+    ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
+    for (Listen_Set::ITERATOR i (remove);
+         !i.done();
+         i.advance ())
+      {
+        LiveListener **ll = 0;
+        i.next (ll);
+        if (*ll != 0)
+          {
+            this->listeners_.remove (*ll);
+          }
+      }
+  }
 
   if (this->listeners_.size() > 0)
     {
@@ -267,7 +283,8 @@ PingReceiver::ping_excep (Messaging::ExceptionHolder * excep_holder)
 //---------------------------------------------------------------------------
 
 LiveCheck::LiveCheck ()
-  :ping_interval_()
+  :ping_interval_(),
+   running_ (false)
 {
 }
 
@@ -292,6 +309,14 @@ LiveCheck::init (CORBA::ORB_ptr orb,
   this->reactor (r);
   CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA");
   this->poa_ = PortableServer::POA::_narrow (obj.in());
+  this->running_ = true;
+}
+
+void
+LiveCheck::shutdown (void)
+{
+  this->running_ = false;
+  this->reactor()->cancel_timer (this);
 }
 
 const ACE_Time_Value &
@@ -304,7 +329,10 @@ int
 LiveCheck::handle_timeout (const ACE_Time_Value &,
                            const void *)
 {
-  ACE_DEBUG ((LM_DEBUG, "LiveCheck::handle_timeout\n"));
+  ACE_DEBUG ((LM_DEBUG, "LiveCheck::handle_timeout running = %d\n", this->running_));
+  if (!this->running_)
+    return -1;
+
   bool want_reping = false;
   ACE_Time_Value next;
   for (LiveEntryMap::iterator le (this->entry_map_);
@@ -373,6 +401,9 @@ void
 LiveCheck::add_server (const char *server,
                        ImplementationRepository::ServerObject_ptr ref)
 {
+  if (!this->running_)
+    return;
+
   ACE_CString s (server);
   LiveEntry *entry = 0;
   ACE_NEW (entry, LiveEntry (this, server, ref));
@@ -405,6 +436,9 @@ bool
 LiveCheck::add_per_client_listener (LiveListener *l,
                                     ImplementationRepository::ServerObject_ptr ref)
 {
+  if (!this->running_)
+    return false;
+
   LiveEntry *entry = 0;
   ACE_NEW_RETURN (entry, LiveEntry (this, 0, ref), false);
   if (this->per_client_.push(entry) == 0)
@@ -419,6 +453,9 @@ LiveCheck::add_per_client_listener (LiveListener *l,
 bool
 LiveCheck::add_listener (LiveListener *l)
 {
+  if (!this->running_)
+    return false;
+
   LiveEntry *entry = 0;
   ACE_CString key (l->server());
   int result = entry_map_.find (key, entry);
@@ -435,6 +472,9 @@ LiveCheck::add_listener (LiveListener *l)
 void
 LiveCheck::schedule_ping (LiveEntry *entry)
 {
+  if (!this->running_)
+    return;
+
   ACE_Time_Value now (ACE_OS::time());
   ACE_Time_Value next = entry->next_check ();
 
@@ -455,6 +495,9 @@ LiveCheck::schedule_ping (LiveEntry *entry)
 LiveStatus
 LiveCheck::is_alive (const char *server)
 {
+  if (!this->running_)
+    return LS_DEAD;
+
   if (this->ping_interval_ == ACE_Time_Value::zero)
     {
       return LS_ALIVE;

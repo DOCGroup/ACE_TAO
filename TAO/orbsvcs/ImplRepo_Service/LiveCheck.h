@@ -165,6 +165,7 @@ class Locator_Export LiveCheck : public ACE_Event_Handler
   ~LiveCheck (void);
 
   void init (CORBA::ORB_ptr orb, const ACE_Time_Value &interval);
+  void shutdown (void);
 
   int handle_timeout (const ACE_Time_Value &current_time,
                       const void *act = 0);
@@ -199,6 +200,7 @@ class Locator_Export LiveCheck : public ACE_Event_Handler
   PerClientStack per_client_;
   PortableServer::POA_var poa_;
   ACE_Time_Value ping_interval_;
+  bool running_;
 };
 
 #endif /* IMR_LIVECHECK_H_  */
