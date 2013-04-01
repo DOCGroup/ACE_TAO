@@ -171,7 +171,7 @@ int
 ImR_Locator_i::init (Options& opts)
 {
   ACE_CString cmdline = opts.cmdline ();
-  cmdline += " -orbcollocation no -orbuseimr 0";
+  cmdline += " -orbuseimr 0";
   ACE_ARGV av (cmdline.c_str ());
   int argc = av.argc ();
   ACE_TCHAR** argv = av.argv ();
