@@ -210,12 +210,6 @@ ImR_DSI_ResponseHandler::send_ior (const char *pior)
 
   ior += this->key_str_.in();
 
-  if (this->server_name_[0] != 0)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("ImR_DSI_ResponseHandler::send_ior(): Forwarding invocation ")
-                ACE_TEXT ("on <%s> to <%s>\n"),
-                this->server_name_.in(), ior.c_str()));
-
   CORBA::Object_var forward_obj =
     this->orb_->string_to_object (ior.c_str ());
 
@@ -244,14 +238,10 @@ ImR_DSI_ResponseHandler::send_ior (const char *pior)
 void
 ImR_DSI_ResponseHandler::send_exception (CORBA::Exception *)
 {
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("ImR_DSI_ResponseHandler::send_exception() ")
-              ACE_TEXT ("on <%s>\n"),
-              this->server_name_.in()));
-  CORBA::TRANSIENT ex (CORBA::SystemException::_tao_minor_code
-                       ( TAO_IMPLREPO_MINOR_CODE, 0),
-                       CORBA::COMPLETED_NO);
-  TAO_AMH_DSI_Exception_Holder h(&ex);
+  CORBA::Exception *ex = new CORBA::TRANSIENT (CORBA::SystemException::_tao_minor_code
+                                               ( TAO_IMPLREPO_MINOR_CODE, 0),
+                                               CORBA::COMPLETED_NO);
+  TAO_AMH_DSI_Exception_Holder h(ex);
   resp_->invoke_excep(&h);
   delete this;
 }
