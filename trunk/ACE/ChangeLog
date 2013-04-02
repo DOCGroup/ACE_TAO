@@ -1,3 +1,8 @@
+Tue Apr  2 09:07:13 UTC 2013  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/OS_NS_stdio.h:
+          Fix missing intptr_t declaration on QNX.
+
 Sat Mar 30 18:11:06 UTC 2013  Martin Corino  <mcorino@remedy.nl>
 
         * examples/C++NPv1/Reactive_Logging_Server_Ex.h:
