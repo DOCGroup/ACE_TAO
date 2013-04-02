@@ -509,8 +509,9 @@ ImR_Locator_i::activate_server_i (UpdateableServerInfo& info,
           AsyncAccessManager *aam_raw;
           ACE_NEW (aam_raw, AsyncAccessManager (*info, manual_start, *this));
           aam = aam_raw;
-          int result = this->aam_set_.insert (aam);
-          ACE_DEBUG ((LM_DEBUG, "ImR_Locator_i::activate_server_i insert_aam returned %d\n", result));
+          ACE_DEBUG ((LM_DEBUG, "ImR_Locator_i::activate_server_i calling insert_aam size = %d\n", aam_set_.size()));
+          int result = this->aam_set_.insert_tail (aam);
+          ACE_DEBUG ((LM_DEBUG, "ImR_Locator_i::activate_server_i after insert_aam size = %d returned %d\n", aam_set_.size(), result));
         }
     }
   aam->add_interest (rh);
@@ -1001,7 +1002,6 @@ ImR_Locator_i::server_is_shutting_down
     if (*aam != 0)
       {
         aam->server_is_shutting_down ();
-        this->remove_aam (aam);
       }
   }
   info.edit ()->reset ();
@@ -1323,8 +1323,10 @@ ImR_Locator_i::root_poa (void)
 void
 ImR_Locator_i::remove_aam (AsyncAccessManager_ptr &aam)
 {
-  ACE_DEBUG ((LM_DEBUG, "ImR_Locator_i::remove_aam called\n"));
-  this->aam_set_.remove (aam);
+  ACE_DEBUG ((LM_DEBUG, "ImR_Locator_i::remove_aam calling remove\n"));
+  int result = this->aam_set_.remove (aam);
+  ACE_DEBUG ((LM_DEBUG, "ImR_Locator_i::remove_aam, remove returned %d\n", result));
+
 }
 
 AsyncAccessManager *

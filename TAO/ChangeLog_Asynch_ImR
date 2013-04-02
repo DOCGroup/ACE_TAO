@@ -1,3 +1,10 @@
+Tue Apr  2 01:37:35 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+
+          More debugging added for scoreboard processing.
+
 Mon Apr  1 23:52:37 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/AsyncAccessManager.h:
