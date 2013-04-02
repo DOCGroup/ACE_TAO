@@ -163,6 +163,7 @@ AsyncAccessManager::final_state (void)
     {
       AsyncAccessManager_ptr aam (this);
       this->locator_.remove_aam (aam);
+      aam._retn(); // release w/o decrementing since table held last reference.
     }
 }
 
@@ -324,8 +325,8 @@ AsyncAccessManager::add_ref (void)
 void
 AsyncAccessManager::remove_ref (void)
 {
-  ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
   ACE_DEBUG ((LM_DEBUG, "AAM (%x): remove_ref count pre decr = %d\n", this, this->refcount_));
+  ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
   if (--this->refcount_ == 0)
     {
       delete this;
@@ -338,20 +339,24 @@ AsyncAccessManager::remove_ref (void)
 AsyncAccessManager_ptr::AsyncAccessManager_ptr (void)
   : val_ (0)
 {
+  ACE_DEBUG ((LM_DEBUG,"AAM_Ptr (%x) ctor default\n", this));
 }
 
 AsyncAccessManager_ptr::AsyncAccessManager_ptr (AsyncAccessManager *aam)
   :val_ (aam)
 {
+  ACE_DEBUG ((LM_DEBUG,"AAM_Ptr (%x) ctor taking ownership of aam = %x\n", this, aam));
 }
 
 AsyncAccessManager_ptr::AsyncAccessManager_ptr (const AsyncAccessManager_ptr &aam_ptr)
   :val_ (aam_ptr.clone())
 {
+  ACE_DEBUG ((LM_DEBUG,"AAM_Ptr (%x) ctor taking ownership of aam_clone = %x\n", this, val_));
 }
 
 AsyncAccessManager_ptr::~AsyncAccessManager_ptr (void)
 {
+  ACE_DEBUG ((LM_DEBUG,"AAM_Ptr (%x) dtor releasing %x\n", this, val_));
   if (val_ != 0)
     {
       val_->remove_ref();
@@ -361,6 +366,8 @@ AsyncAccessManager_ptr::~AsyncAccessManager_ptr (void)
 AsyncAccessManager_ptr &
 AsyncAccessManager_ptr::operator= (const AsyncAccessManager_ptr &aam_ptr)
 {
+  ACE_DEBUG ((LM_DEBUG,"AAM_Ptr (%x) assignment releasing %x, taking ownership of aam_clone = %x\n", this, val_, *aam_ptr));
+
   if (val_ != *aam_ptr)
     {
       if (val_ != 0)
@@ -375,6 +382,7 @@ AsyncAccessManager_ptr::operator= (const AsyncAccessManager_ptr &aam_ptr)
 AsyncAccessManager_ptr &
 AsyncAccessManager_ptr::operator= (AsyncAccessManager *aam)
 {
+  ACE_DEBUG ((LM_DEBUG,"AAM_Ptr (%x) assignment releasing %x, taking ownership of aam = %x\n", this, val_, aam));
   if (val_ != aam)
     {
       if (val_ != 0)
