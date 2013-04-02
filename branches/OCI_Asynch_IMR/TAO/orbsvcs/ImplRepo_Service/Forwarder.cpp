@@ -53,7 +53,6 @@ ImR_DSI_Forwarder::init (CORBA::ORB_ptr orb)
     }
   catch (const CORBA::Exception&)
     {
-      ACE_DEBUG ((LM_DEBUG, "ImR_Forwarder::init() Exception ignored.\n"));
     }
   ACE_ASSERT (!CORBA::is_nil (this->poa_current_var_.in ()));
 }
@@ -215,8 +214,8 @@ ImR_DSI_ResponseHandler::send_ior (const char *pior)
 
   if (!CORBA::is_nil (forward_obj.in ()))
     {
-      PortableServer::ForwardRequest fwd (forward_obj.in ());
-      TAO_AMH_DSI_Exception_Holder h(&fwd);
+      CORBA::Exception *fwd = new PortableServer::ForwardRequest (forward_obj.in ());
+      TAO_AMH_DSI_Exception_Holder h(fwd);
       this->resp_->invoke_excep(&h);
       delete this;
     }
@@ -226,10 +225,10 @@ ImR_DSI_ResponseHandler::send_ior (const char *pior)
                   ACE_TEXT ("ImR_DSI_ResponseHandler::send_ior (): Forward_to ")
                   ACE_TEXT ("reference is nil.\n")));
 
-      CORBA::OBJECT_NOT_EXIST ex (CORBA::SystemException::_tao_minor_code
-                                  ( TAO_IMPLREPO_MINOR_CODE, 0),
-                                  CORBA::COMPLETED_NO);
-      TAO_AMH_DSI_Exception_Holder h(&ex);
+      CORBA::Exception *ex = new CORBA::OBJECT_NOT_EXIST (CORBA::SystemException::_tao_minor_code
+                                                          ( TAO_IMPLREPO_MINOR_CODE, 0),
+                                                          CORBA::COMPLETED_NO);
+      TAO_AMH_DSI_Exception_Holder h(ex);
       this->resp_->invoke_excep(&h);
       delete this;
     }
