@@ -201,6 +201,7 @@ class Locator_Export LiveCheck : public ACE_Event_Handler
   PortableServer::POA_var poa_;
   ACE_Time_Value ping_interval_;
   bool running_;
+  int token_;
 };
 
 #endif /* IMR_LIVECHECK_H_  */

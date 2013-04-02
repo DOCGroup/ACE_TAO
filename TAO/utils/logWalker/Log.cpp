@@ -162,7 +162,7 @@ Log::get_preamble ()
           }
         }
 
-      this->session_.add_process(this->hostproc_);
+      this->session_.add_process (this->hostproc_);
     }
   this->thr_ = this->hostproc_->find_thread (tid, this->offset_);
   return;
@@ -338,7 +338,7 @@ Log::parse_open_listener_i (void)
   char *addr = ACE_OS::strchr(this->info_,'<') +1;
   char *c = ACE_OS::strchr(addr,'>');
   *c = '\0';
-  ACE_CString server_addr(addr);
+  Endpoint server_addr(addr);
   this->hostproc_->add_listen_endpoint(server_addr);
 }
 
@@ -548,7 +548,7 @@ Log::parse_complete_connection_i (void)
         {
           PeerProcess *waiter = 0;
           c_iter.next(waiter);
-          if (waiter != 0 && waiter->match_server_addr (addr, session_))
+          if (waiter != 0 && waiter->match_server_addr (addr))
             {
               c_iter.remove();
               // ACE_DEBUG ((LM_DEBUG,"%d: complete_connection: purging waiter\n",this->offset_));
@@ -597,7 +597,7 @@ Log::parse_handler_open_i (bool is_ssl)
         {
           PeerProcess *waiter = 0;
           c_iter.next(waiter);
-          if (waiter != 0 && waiter->match_server_addr (addr, session_))
+          if (waiter != 0 && waiter->match_server_addr (addr))
             {
               pp = waiter;
               c_iter.remove();
@@ -629,7 +629,7 @@ Log::parse_handler_open_i (bool is_ssl)
     {
       if (pp->is_server())
         {
-          Transport *t = new Transport (addr, true, this->offset_);
+          Transport *t = new Transport (local_addr.c_str(), true, this->offset_);
           pp->add_transport (t);
           this->hostproc_->add_client_endpoint (t->client_endpoint_);
         }

@@ -33,8 +33,8 @@ struct PeerNode
 
 typedef ACE_DLList<Thread> ThreadList;
 typedef ACE_DLList<PeerNode> PeerArray;
-typedef ACE_DLList<ACE_CString> AddrList;
-typedef ACE_RB_Tree<ACE_CString, PeerProcess *, ACE_Less_Than<ACE_CString>, ACE_Null_Mutex> PeerProcs;
+typedef ACE_DLList<Endpoint> AddrList;
+typedef ACE_RB_Tree<Endpoint, PeerProcess *, ACE_Less_Than<Endpoint>, ACE_Null_Mutex> PeerProcs;
 
 /*
  * HostProcess encapsulates the state related a specific process instance
@@ -58,7 +58,7 @@ public:
   Thread * find_thread (long tid, size_t offset);
 
   // Returns a thread that has a pending peer with the supplied address
-  Thread * find_thread_for_peer (const ACE_CString& addr, Session &session);
+  Thread * find_thread_for_peer (const ACE_CString& addr);
 
   // Returns a thread that had previously worked with handle h. May return
   // a null pointer.
@@ -70,15 +70,15 @@ public:
   // returns true if the supplied endpoint has been visited before. This
   // may be either a listen endpoint or a client endpoint used to connect
   // to another peer.
-  bool has_endpoint (ACE_CString& addr, bool listen);
+  bool has_endpoint (const Endpoint& addr, bool listen);
 
   // adds a new endpoint to the list of listen endpoints. Client endpoints
   // are added as part of the process to add a new peer process
-  void add_client_endpoint (ACE_CString& addr);
+  void add_client_endpoint (const Endpoint& addr);
 
   // adds a new endpoint to the list of listen endpoints. Client endpoints
   // are added as part of the process to add a new peer process
-  void add_listen_endpoint (ACE_CString& addr);
+  void add_listen_endpoint (const Endpoint& addr);
 
   // add a peer to the connection list. If the peer is not in the
   // by_addr_ table, it will be added there too.

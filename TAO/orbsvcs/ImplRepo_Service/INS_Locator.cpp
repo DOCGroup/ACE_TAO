@@ -32,7 +32,7 @@ INS_Locator::locate (const char* object_key)
         key = key.substring (0, poaidx);
       }
 
-      if (imr_locator_.debug () > 1)
+      if (imr_locator_.debug () > 0)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("ImR: Activating server <%s>.\n"),
                     key.c_str ()));
@@ -81,7 +81,7 @@ INS_Locator::locate (const char* object_key)
         {
           try
             {
-              if (imr_locator_.debug () > 1)
+              if (imr_locator_.debug () > 0)
                 {
                   ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("ImR: Try activating server using <%s>.\n"),

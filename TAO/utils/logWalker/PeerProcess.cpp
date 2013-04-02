@@ -10,11 +10,88 @@
 #include "Thread.h"
 #include "Session.h"
 
+Endpoint::Endpoint (void)
+  : addr_ (),
+    host_ (),
+    port_ (),
+    is_localhost_ (false),
+    role_ (ER_UNKNOWN)
+{
+}
+
+Endpoint::Endpoint (const char *addr, EndpointRole role)
+  : addr_ (),
+    host_ (),
+    port_ (),
+    is_localhost_ (false),
+    role_ (ER_UNKNOWN)
+{
+  this->assign (addr, role);
+}
+
+Endpoint::Endpoint (const Endpoint &other)
+{
+  operator = (other);
+}
+
+void
+Endpoint::assign (const char *addr, EndpointRole role)
+{
+  this->addr_ = addr;
+  this->role_ = role;
+  size_t p = addr_.rfind (':');
+  this->port_ = addr_.substring(p);
+  this->host_ = addr_.substring(0,p);
+
+  this->is_localhost_ = this->host_ == "localhost" ||
+    this->host_ == "127.0.0.1" || this->host_ == "[::1]";
+}
+
+Endpoint&
+Endpoint::operator = (const Endpoint &other)
+{
+  this->addr_ = other.addr_;
+  this->role_ = other.role_;
+  this->host_ = other.host_;
+  this->port_ = other.port_;
+  this->is_localhost_ = other.is_localhost_;
+  return *this;
+}
+
+bool
+Endpoint::operator == (const Endpoint &other) const
+{
+  if (this->port_ != other.port_)
+    return false;
+  if (this->is_localhost_ != other.is_localhost_)
+    return false;
+  if (this->is_localhost_)
+    return true;
+  if (this->host_ == other.host_)
+    return true;
+  return Session::is_equivalent (this->host_, other.host_);
+}
+
+bool
+Endpoint::operator < (const Endpoint &other) const
+{
+  if (this->port_ < other.port_)
+    return true;
+  if (this->host_ < other.host_)
+    return true;
+  return false;
+}
+
+bool
+Endpoint::is_client (void) const
+{
+  return this->role_ != ER_SERVER;
+}
+
 
 Transport::Transport (const char *addr, bool is_client, size_t offset)
   : handle_ (0),
-    client_endpoint_ (addr),
-    local_is_client_ (is_client),
+    client_endpoint_ (addr, is_client ? ER_CLIENT : ER_SERVER),
     open_offset_ (offset),
     close_offset_ (0)
 {
@@ -32,11 +109,9 @@ PeerProcess::nextIdent(bool is_server)
 PeerProcess::PeerProcess (size_t offset, bool is_server)
   : owner_ (0),
     remote_ (0),
-    server_port_(),
-    server_host_(),
-    server_(is_server),
+    server_ep_(),
+    is_server_role_(is_server),
     ssl_(false),
-    localhost_(false),
     origin_offset_ (offset),
     objects_ (),
     object_by_index_ ()
@@ -64,41 +139,22 @@ PeerProcess::~PeerProcess (void)
 void
 PeerProcess::set_server_addr (const ACE_CString &addr)
 {
-  size_t p = addr.rfind (':');
-  this->server_port_ = addr.substring(p);
-  this->server_host_ = addr.substring(0,p);
-
-  this->localhost_ = this->server_host_ == "localhost" ||
-    this->server_host_ == "127.0.0.1" || this->server_host_ == "[::1]";
+  this->server_ep_.assign (addr.c_str(), this->is_server_role_ ? ER_SERVER : ER_CLIENT);
 }
 
 bool
-PeerProcess::match_server_addr (const ACE_CString &addr, Session &session) const
+PeerProcess::match_server_addr (const Endpoint &addr) const
 {
-  size_t p = addr.rfind (':');
-  ACE_CString port = addr.substring (p);
-  ACE_CString host = addr.substring (0,p);
-  if (port != this->server_port_)
-    return false;
-
-  if (this->localhost_)
-    {
-      return host == "localhost" || host == "127.0.0.1" || host == "[::1]";
-    }
-
-  if (this->server_host_ == host)
-    return true;
-
-  return session.is_equivalent (this->server_host_, host);
+  return this->server_ep_ == addr;
 }
 
-ACE_CString
+const Endpoint &
 PeerProcess::server_addr (void) const
 {
-  return this->server_host_ + this->server_port_;
+  return this->server_ep_;
 }
 
-const ACE_CString&
+const Endpoint &
 PeerProcess::last_client_addr (void) const
 {
   return this->last_transport_->client_endpoint_;
@@ -107,7 +163,7 @@ PeerProcess::last_client_addr (void) const
 bool
 PeerProcess::is_server (void) const
 {
-  return this->server_;
+  return this->is_server_role_;
 }
 
 size_t
@@ -159,8 +215,8 @@ PeerProcess::match_hosts (Session *session)
   // on the server addr. But if the local side is the server
   // then this wants to find the remote based on the Transport
   // instance
-  if (this->server_)
-    this->remote_ = session->find_host(this->server_host_, true);
+  if (this->is_server_role_)
+    this->remote_ = session->find_host(this->server_ep_, true);
   else
     {
       Transport *t = 0;
@@ -272,11 +328,11 @@ PeerProcess::dump_summary (ostream &strm)
   strm << " is a ";
   if (this->ssl_)
     strm << "secure ";
-  if (this->server_)
+  if (this->is_server_role_)
     strm << "server at ";
   else
     strm << "client to ";
-  strm << this->server_host_ << this->server_port_;
+  strm << this->server_ep_.host_ << ":" << this->server_ep_.port_;
   strm << " with " << num_transports << " connections, ";
   strm << " referenced " << this->objects_.current_size()
        << " objects in " << this->invocations_.size() << " invocations";
@@ -288,8 +344,8 @@ PeerProcess::dump_summary (ostream &strm)
       Transport *tran = 0;
       i.next(tran);
       strm << "    connection[" << tran->handle_ << "] ";
-      strm << (tran->local_is_client_ ? "to " : "from ");
-      strm << tran->client_endpoint_;
+      strm << (tran->client_endpoint_.is_client() ? "to " : "from ");
+      strm << tran->client_endpoint_.host_ << ":" << tran->client_endpoint_.port_;
       strm << " created line " << tran->open_offset_;
       if (tran->close_offset_)
         strm << " closed line " << tran->close_offset_;
@@ -302,7 +358,7 @@ PeerProcess::dump_object_detail (ostream &strm)
 {
   strm << this->objects_.current_size()
        << " Objects referenced";
-  if (this->server_)
+  if (this->is_server_role_)
     strm << " in ";
   else
     strm << " by ";
@@ -329,7 +385,7 @@ void
 PeerProcess::dump_invocation_detail (ostream &strm)
 {
   strm << "\n " << this->invocations_.size() << " Invocations ";
-  strm << (this->server_ ? "to " : "from ");
+  strm << (this->is_server_role_ ? "to " : "from ");
   if (this->remote_)
     strm << remote_->proc_name();
   else
