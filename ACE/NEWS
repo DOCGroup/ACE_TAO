@@ -1,6 +1,10 @@
 USER VISIBLE CHANGES BETWEEN ACE-6.1.8 and ACE-6.2.0
 ====================================================
 
+. Added MinGW64 as supported platform
+
+. Added support for GCC 4.8.0
+
 USER VISIBLE CHANGES BETWEEN ACE-6.1.7 and ACE-6.1.8
 ====================================================
 
