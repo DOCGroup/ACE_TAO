@@ -1,3 +1,9 @@
+Wed Apr  3 08:13:00 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/auto_run_tests.pl:
+        * tests/run_test.pl:
+          Set some additional variables that can be used with coverity
+
 Tue Apr  2 09:07:13 UTC 2013  Martin Corino  <mcorino@remedy.nl>
 
         * ace/OS_NS_stdio.h:
