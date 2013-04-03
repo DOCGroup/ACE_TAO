@@ -3,6 +3,8 @@
 #include "LB_server.h"
 #include "Basic.h"
 
+#include <iostream>
+
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
@@ -108,6 +110,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           (void) lb_server.destroy ();
           return 1;
         }
+
+      // Use status file instead of IOR to indicate server is ready
+      // as basic servant operations are done after server's IOR
+      // is written.
+      {
+        std::ofstream out ("server.status");
+        out << "started" << endl;
+      }
 
       lb_server.orb ()->run ();
 
