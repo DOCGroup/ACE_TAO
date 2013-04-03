@@ -1,3 +1,21 @@
+Wed Apr  3 16:40:46 UTC 2013  Byron Harris  <harrisb@ociweb.com>
+
+        * orbsvcs/tests/FT_Naming/FaultTolerant/client.cpp:
+
+          Add additional error checking/output in
+          do_persistence_objectgroup_test() to help diagnose test
+          failure seen on a few platforms.
+
+        * orbsvcs/tests/FT_Naming/FaultTolerant/server.cpp:
+
+          Write a status file to indicate server is running.
+
+        * orbsvcs/tests/FT_Naming/FaultTolerant/run_persistence_test.pl:
+
+          Use server's status file to check that server is running
+          since group member IOR files are written after server's IOR
+          is written.
+
 Sat Mar 30 18:12:28 UTC 2013  Martin Corino  <mcorino@remedy.nl>
 
         * tests/File_IO/File_i.cpp:
