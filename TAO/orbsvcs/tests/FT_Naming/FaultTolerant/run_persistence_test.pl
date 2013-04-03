@@ -257,8 +257,11 @@ my $group_dir   = "GroupService";
 my $nm_iorfile  = "nm.ior";
 my $ns_iorfile  = "ns.ior";
 my $sv_iorfile  = "obj.ior";
+my $sv_statusfile = "server.status";
+
 my $ns_ref      = "--ns file://$ns_iorfile";
 my $sv2_iorfile = $server2->LocalFile ($sv_iorfile);
+my $sv2_statusfile = $server2->LocalFile ($sv_statusfile);
 
 
 
@@ -275,6 +278,7 @@ END
     $client->DeleteFile ($stderr_file);
     $client->DeleteFile ($client_member_file);
     $server2->DeleteFile($sv_iorfile);
+    $server2->DeleteFile($sv_statusfile);
 
     if ( -d $name_dir ) {
         print STDERR "INFO: removing <$name_dir>\n";
@@ -364,9 +368,9 @@ sub persistence_test ()
         print STDERR "ERROR: server returned $server_status\n";
         exit 1;
     }
-    if ($server2->WaitForFileTimed ($sv_iorfile,
+    if ($server2->WaitForFileTimed ($sv_statusfile,
                                    $server2->ProcessStartWaitInterval()) == -1) {
-        print STDERR "ERROR: cannot find file <$sv_iorfile>\n";
+        print STDERR "ERROR: cannot find file <$sv_statusfile>\n";
         $SV2->Kill (); $SV2->TimedWait (1);
         exit 1;
     }
@@ -506,9 +510,9 @@ sub backup_restore_test ()
         print STDERR "ERROR: server returned $server_status\n";
         exit 1;
     }
-    if ($server2->WaitForFileTimed ($sv_iorfile,
+    if ($server2->WaitForFileTimed ($sv_statusfile,
                                    $server2->ProcessStartWaitInterval()) == -1) {
-        print STDERR "ERROR: cannot find file <$sv_iorfile>\n";
+        print STDERR "ERROR: cannot find file <$sv_statusfile>\n";
         $SV2->Kill (); $SV2->TimedWait (1);
         exit 1;
     }

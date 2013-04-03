@@ -1567,6 +1567,15 @@ do_persistence_objectgroup_test (
             std::string member_ior;
             in >> member_ior;
 
+            if (!in.good ())
+              {
+                ACE_ERROR_RETURN  ((LM_ERROR,
+                                    ACE_TEXT ("ERROR: Unable to read member data ")
+                                    ACE_TEXT ("from file %C\n"),
+                                    member_data_file.c_str ()),
+                                   RC_ERROR);
+              }
+
             CORBA::Object_var member =
               theOrb->string_to_object(member_ior.c_str ());
             PortableGroup::Location location_name (1);
@@ -1603,12 +1612,13 @@ do_persistence_objectgroup_test (
                             ACE_TEXT ("ERROR: No group names found")));
               }
           }
-        catch (const CORBA::Exception&)
+        catch (const CORBA::Exception& ex)
           {
             ACE_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("ERROR: Unable to remove member for group %C\n"),
                                basic_group_name),
                               RC_ERROR);
+            ex._tao_print_exception ("CORBA::Exception caught:");
           }
       }
 
