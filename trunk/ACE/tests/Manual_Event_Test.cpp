@@ -133,7 +133,7 @@ worker (void *)
       if (evt.signal () == -1)
         ACE_ERROR ((LM_ERROR, ACE_TEXT (" (%P|%t) %p\n"), ACE_TEXT ("signal")));
 
-      ACE_OS::sleep (ACE_Time_Value (0, 200 * 1000 * 100));  // 200 msec
+      ACE_OS::sleep (ACE_Time_Value (0, 200 * 1000));  // 200 msec
     }
 
   if (evt.wait () == -1)
