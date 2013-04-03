@@ -1394,7 +1394,6 @@ ImR_SyncResponseHandler::ImR_SyncResponseHandler (CORBA::ORB_ptr orb)
 
 ImR_SyncResponseHandler::~ImR_SyncResponseHandler (void)
 {
-  delete excep_;
 }
 
 void
@@ -1406,7 +1405,7 @@ ImR_SyncResponseHandler::send_ior (const char *pior)
 void
 ImR_SyncResponseHandler::send_exception (CORBA::Exception *ex)
 {
-  this->excep_ = ex;
+  this->excep_ = ex->_tao_duplicate();
 }
 
 char *
@@ -1417,7 +1416,10 @@ ImR_SyncResponseHandler::wait_for_result (void)
       this->orb_->perform_work ();
     }
   if (this->excep_ != 0)
-    throw this->excep_;
+    {
+      TAO_AMH_DSI_Exception_Holder h(this->excep_);
+      h.raise_invoke ();
+    }
   return this->result_._retn();
 }
 

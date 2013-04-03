@@ -55,7 +55,7 @@ for(my $i = 0; $i <= $client_count; $i++) {
     push (@cli, PerlACE::TestTarget::create_target (++$tgt_num)) || die "Create target $tgt_num failed\n";
 }
 
-my $refstyle = "-ORBobjrefstyle URL";
+my $refstyle = ""; # "-ORBobjrefstyle URL";
 my $obj_count = 1;
 my $port = $imr->RandomPort();
 
@@ -64,6 +64,7 @@ my $forward_on_exception_arg = "-ORBForwardOnceOnTransient 1";
 my $debug_arg = "-ORBDebugLevel $debug_level";
 my $imr_debug_arg = "-ORBDebugLevel $imr_debug_level";
 if ($imr_debug_level == 10) {
+    $debug_arg = "-ORBDebugLevel $debug_level -ORBVerboseLogging 1 -ORBLogFile";
     $imr_debug_arg = $imr_debug_arg . " -ORBVerboseLogging 1 -ORBLogFile imr_loc.log ";
 }
 
@@ -90,6 +91,8 @@ my @srvstatusfile;
 my @srv_statusfile;
 my @obj;
 my @srv_server_cmd;
+my $debug_log_file = "";
+
 # Have list indices match server IDs (S1, S2, S3) with first element of list not being used.
 for(my $i = 0; $i <= $servers_count; $i++) {
     push (@srv, PerlACE::TestTarget::create_target (++$tgt_num)) || die "Create target $tgt_num failed\n";
@@ -106,7 +109,10 @@ for(my $i = 0; $i <= $servers_count; $i++) {
 }
 
 for(my $i = 0; $i <= $client_count; $i++) {
-    push (@CLI, $cli[$i]->CreateProcess ("client", "$debug_arg -k file://$srviorfile[1] -n $i $forward_on_exception_arg"));
+    if ($debug_level == 10) {
+        $debug_log_file = "test_client_$i" . ".log";
+    }
+    push (@CLI, $cli[$i]->CreateProcess ("client", "-k file://$srviorfile[1] -n $i $forward_on_exception_arg $debug_arg $debug_log_file"));
 }
 
 sub cleanup_output {
@@ -140,9 +146,12 @@ sub run_imr_util {
 sub register_server_with_activator {
     my $srv_id = shift;
     my $srv_to_invoke_id = shift;
-
+    my $srv_debug_log = "";
+    if ($debug_level == 10) {
+        $srv_debug_log = "test_server_$srv_id" . ".log";
+    }
     $srv_args =
-	"$debug_arg -orbuseimr 1 $refstyle ".
+	"$debug_arg $srv_debug_log -orbuseimr 1 $refstyle ".
 	"$forward_on_exception_arg ".
 	"-ORBInitRef ImplRepoService=file://$imr_imriorfile -n $srv_id";
 
@@ -220,8 +229,11 @@ sub run_test
     ##### Start Activator #####
 
     print_msg ("Start Activator");
-
-    $ACT->Arguments ("$debug_arg -d 1 -o $act_actiorfile -ORBInitRef ImplRepoService=file://$act_imriorfile");
+    my $act_debug_log = "";
+    if ($debug_level == 10) {
+        $act_debug_log = "imr_act.log";
+    }
+    $ACT->Arguments ("$debug_arg $act_debug_log -d 1 -o $act_actiorfile -ORBInitRef ImplRepoService=file://$act_imriorfile");
     print ">>> " . $ACT->CommandLine () . "\n";
 
     $ACT_status = $ACT->Spawn ();
@@ -239,8 +251,11 @@ sub run_test
     ##### Start S3 #####
 
     print_msg ("Start S3");
-
-    $SRV[3]->Arguments ("$debug_arg -orbuseimr 1 $refstyle -ORBInitRef ImplRepoService=file://$imr_imriorfile ".
+    my $s3_debug_log = "";
+    if ($debug_level == 10) {
+        $s3_debug_log = "test_server_3.log";
+    }
+    $SRV[3]->Arguments ("$debug_arg $s3_debug_log -orbuseimr 1 $refstyle -ORBInitRef ImplRepoService=file://$imr_imriorfile ".
 			    "-d $server_reply_delay -n 3");
     print ">>> " . $SRV[3]->CommandLine () . "\n";
     $SRV[3]-> Spawn();
