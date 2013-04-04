@@ -89,6 +89,8 @@ public:
   virtual void _remove_ref (void);
   //@}
 
+  TAO_ORB_Core *orb_core (void) const;
+
 protected:
 
   /// Sets up the various parameters in anticipation of returning a reply
@@ -105,6 +107,7 @@ protected:
   /// Send back a location forward exception to the client.
   void _tao_rh_send_location_forward (CORBA::Object_ptr fwd,
                                       CORBA::Boolean is_perm);
+
 
   /// The outgoing CDR stream
   /**

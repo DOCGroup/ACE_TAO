@@ -214,7 +214,9 @@ public:
   /// constructor
   /// @param repo the repo to report updates to
   /// @param si an already retrieved Server_Info_Ptr
-  UpdateableServerInfo(Locator_Repository* repo, const Server_Info_Ptr& si);
+  UpdateableServerInfo(Locator_Repository* repo,
+                       const Server_Info_Ptr& si,
+                       bool reset_start_count = false);
 
   /// constructor (no repo updates will be performed)
   /// @param si a Server_Info to create a non-stored Server_Info_Ptr from

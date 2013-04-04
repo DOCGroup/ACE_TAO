@@ -71,6 +71,7 @@ LiveEntry::add_listener (LiveListener* ll)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
   this->listeners_.insert (ll);
+  //  ACE_DEBUG ((LM_DEBUG, "LiveEntry(%s)::add_listener\n", this->server_.c_str()));
 }
 
 LiveStatus
@@ -100,7 +101,12 @@ LiveEntry::status (LiveStatus l)
       this->retry_count_ = 0;
       ACE_Time_Value now (ACE_High_Res_Timer::gettimeofday_hr());
       this->next_check_ = now + owner_->ping_interval();
+      ACE_DEBUG ((LM_DEBUG, "LiveEntry(%s)::status updating next check to now + %d ms\n",
+                  this->server_.c_str(),
+                  owner_->ping_interval().msec()));
     }
+  ACE_DEBUG ((LM_DEBUG, "LiveEntry(%s)::status updating listeners, size = %d\n",
+              this->server_.c_str(), this->listeners_.size()));
 
   Listen_Set remove;
 
@@ -139,6 +145,8 @@ LiveEntry::status (LiveStatus l)
 
   if (this->listeners_.size() > 0)
     {
+      ACE_DEBUG ((LM_DEBUG, "LiveEntry(%s)::status requesting new ping\n",
+                  this->server_.c_str()));
       this->owner_->schedule_ping (this);
     }
 }
@@ -155,22 +163,30 @@ LiveEntry::do_ping (PortableServer::POA_ptr poa)
   ACE_Time_Value now (ACE_High_Res_Timer::gettimeofday_hr());
   if (this->liveliness_ == LS_PING_AWAY || this->listeners_.size() == 0)
     {
+      ACE_DEBUG ((LM_DEBUG, "LiveEntry(%s)::do_ping, ping_away_ is %d, listeners size = %d\n",
+                  this->server_.c_str(), (this->liveliness_ == LS_PING_AWAY), this->listeners_.size()));
       return false;
     }
 
   if (this->next_check_ > now || this->liveliness_ == LS_DEAD)
     {
       ACE_Time_Value diff = next_check_ - now;
+      ACE_DEBUG ((LM_DEBUG, "LiveEntry(%s)::do_ping, too soon = %d, nc = %d, now = %d,  come back in %d ms, status = %d\n",
+                  this->server_.c_str(), (this->next_check_ > now), this->next_check_.msec(), now.msec(), diff.msec(), liveliness_));
       return false;
     }
 
   switch (this->liveliness_)
     {
     case LS_UNKNOWN:
+      ACE_DEBUG ((LM_DEBUG, "LiveEntry(%s)::do_ping, unknown, seting next_check_ to now\n",
+                  this->server_.c_str()));
       this->next_check_ = now;
       break;
     case LS_ALIVE:
     case LS_TIMEDOUT:
+      ACE_DEBUG ((LM_DEBUG, "LiveEntry(%s)::do_ping, alive or timed out, seting next_check_ to ping interval\n",
+                  this->server_.c_str()));
       this->next_check_ = now + owner_->ping_interval();
       break;
     case LS_TRANSIENT:
@@ -179,10 +195,14 @@ LiveEntry::do_ping (PortableServer::POA_ptr poa)
         if (ms != -1)
           {
             ACE_Time_Value next (ms / 1000, (ms % 1000) * 1000);
+            ACE_DEBUG ((LM_DEBUG, "LiveEntry(%s)::do_ping, transient, adding %d ms (should be %d)\n",
+                        this->server_.c_str(), next.msec(), ms));
             this->next_check_ = now + next;
           }
         else
           {
+            ACE_DEBUG ((LM_DEBUG, "LiveEntry(%s)::do_ping, transient, but no next\n",
+                        this->server_.c_str()));
             return false;
           }
       }
@@ -195,6 +215,8 @@ LiveEntry::do_ping (PortableServer::POA_ptr poa)
     this->liveliness_ = LS_PING_AWAY;
     this->retry_count_++;
   }
+  ACE_DEBUG ((LM_DEBUG, "LiveEntry(%s)::do_ping, sending ping, retry count = %d\n",
+              this->server_.c_str(), retry_count_));
   PortableServer::ServantBase_var callback = new PingReceiver (this, poa);
   PortableServer::ObjectId_var oid = poa->activate_object (callback.in());
   CORBA::Object_var obj = poa->id_to_reference (oid.in());
@@ -220,6 +242,7 @@ PingReceiver::~PingReceiver (void)
 void
 PingReceiver::ping (void)
 {
+  ACE_DEBUG ((LM_DEBUG, "PingReceiver::ping\n"));
   this->entry_->status (LS_ALIVE);
   PortableServer::ObjectId_var oid = this->poa_->servant_to_id (this);
   poa_->deactivate_object (oid.in());
@@ -230,6 +253,7 @@ PingReceiver::ping_excep (Messaging::ExceptionHolder * excep_holder)
 {
   try
     {
+      ACE_DEBUG ((LM_DEBUG, "PingReceiver::ping_excep\n"));
       excep_holder->raise_exception ();
     }
   catch (CORBA::TRANSIENT &ex)
@@ -288,6 +312,8 @@ void
 LiveCheck::init (CORBA::ORB_ptr orb,
                  const ACE_Time_Value &pi )
 {
+  ACE_DEBUG ((LM_DEBUG, "LiveCheck::init (), ping interval = %d ms\n",
+              pi.msec()));
   this->ping_interval_ = pi;
   ACE_Reactor *r = orb->orb_core()->reactor();
   this->reactor (r);
@@ -311,12 +337,14 @@ LiveCheck::ping_interval (void) const
 
 int
 LiveCheck::handle_timeout (const ACE_Time_Value &,
-                           const void */*tok*/)
+                           const void *tok)
 {
-  //  long token = reinterpret_cast<long>(tok);
+  long token = reinterpret_cast<long>(tok);
   if (!this->running_)
     return -1;
 
+  ACE_DEBUG ((LM_DEBUG, "LiveCheck::handle_timeout (tok = %d) entry_map.size = %d\n",
+              token, this->entry_map_.current_size()));
   bool want_reping = false;
   ACE_Time_Value next;
   LiveEntryMap::iterator the_end = this->entry_map_.end();
@@ -395,6 +423,8 @@ LiveCheck::handle_timeout (const ACE_Time_Value &,
       ACE_Time_Value now (ACE_High_Res_Timer::gettimeofday_hr());
       ACE_Time_Value delay = next - now;
       ++this->token_;
+      ACE_DEBUG ((LM_DEBUG, "LiveCheck::handle_timeout schdeuling next (tok = %d) - in %d ms \n",
+                  this->token_, delay.msec()));
       this->reactor()->schedule_timer (this, reinterpret_cast<void *>(this->token_), delay);
     }
 
@@ -450,6 +480,9 @@ LiveCheck::add_per_client_listener (LiveListener *l,
       entry->add_listener (l);
 
       ++this->token_;
+      ACE_DEBUG ((LM_DEBUG,
+                  "LiveCheck::add_per_client_listener schdeuling next (tok = %d) now\n",
+                  this->token_));
       this->reactor()->schedule_timer (this,
                                        reinterpret_cast<void *>(this->token_),
                                        ACE_Time_Value::zero);
@@ -486,6 +519,9 @@ LiveCheck::schedule_ping (LiveEntry *entry)
   LiveStatus status = entry->status();
   if (status == LS_PING_AWAY || status == LS_DEAD)
     {
+      ACE_DEBUG ((LM_DEBUG,
+                  "LiveCheck::schedule_ping ignoring, status = %d\n",
+                  status));
       return;
     }
 
@@ -494,6 +530,9 @@ LiveCheck::schedule_ping (LiveEntry *entry)
   ++this->token_;
   if (next <= now)
     {
+      ACE_DEBUG ((LM_DEBUG,
+                  "LiveCheck::schedule_ping (tok = %d) - immediate \n",
+                  this->token_));
       this->reactor()->schedule_timer (this,
                                        reinterpret_cast<void *>(this->token_),
                                        ACE_Time_Value::zero);
@@ -501,6 +540,9 @@ LiveCheck::schedule_ping (LiveEntry *entry)
   else
     {
       ACE_Time_Value delay = next - now;
+      ACE_DEBUG ((LM_DEBUG,
+                  "LiveCheck::schedule_ping (tok = %d) - in %dms \n",
+                  this->token_, delay.msec()));
       this->reactor()->schedule_timer (this,
                                        reinterpret_cast<void *>(this->token_),
                                        delay);

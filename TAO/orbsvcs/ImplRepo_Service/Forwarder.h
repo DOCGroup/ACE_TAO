@@ -60,6 +60,8 @@ public:
   void send_exception (CORBA::Exception *ex);
 
 private:
+  void invoke_excep_i (CORBA::Exception *ex);
+
   CORBA::String_var key_str_;
   CORBA::String_var server_name_;
   CORBA::ORB_var orb_;

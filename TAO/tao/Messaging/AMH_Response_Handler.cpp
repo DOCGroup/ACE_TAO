@@ -77,6 +77,7 @@ TAO_AMH_Response_Handler::init(TAO_ServerRequest &server_request,
   response_expected_  = server_request.response_expected_;
   transport_ = server_request.transport ();
   orb_core_ = server_request.orb_core ();
+  ACE_DEBUG ((LM_DEBUG, "AMH_Response_Handler::init, orb_core_ = %x\n", orb_core_));
   allocator_ = allocator;
 
   TAO_GIOP_Message_Version v;
@@ -84,6 +85,12 @@ TAO_AMH_Response_Handler::init(TAO_ServerRequest &server_request,
   this->_tao_out.set_version(v.major, v.minor);
   this->transport_->assign_translators (0, &this->_tao_out);
   this->transport_->add_reference ();
+}
+
+TAO_ORB_Core *
+TAO_AMH_Response_Handler::orb_core (void) const
+{
+  return this->orb_core_;
 }
 
 void
