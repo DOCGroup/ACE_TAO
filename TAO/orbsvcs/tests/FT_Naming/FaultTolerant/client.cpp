@@ -1796,9 +1796,11 @@ do_equivalence_name_test (
       try {
         CORBA::Object_var obj1_on_replica = root_context_2->resolve (level1);
       }
-      catch (const CosNaming::NamingContext::NotFound& ex)
+      catch (const CosNaming::NamingContext::NotFound& )
         {
-          ex._tao_print_exception ("INFO: Unable to resolve object from replica. Sleeping for a second.\n");
+          ACE_DEBUG ((LM_INFO,
+                      "INFO: Unable to resolve object from replica. "
+                      "Sleeping for a second.\n"));
 
           ACE_OS::sleep (1);
 
