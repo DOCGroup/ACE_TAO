@@ -123,15 +123,19 @@ public:
     (ImplementationRepository::AMH_AdministrationResponseHandler_ptr _tao_rh,
      const char * name);
 
-  // Used by the INS_Locator to start a sever given an object name
+  // Used by the INS_Locator to start a sever given an object name synchronously
   char* activate_server_by_object (const char* object_name);
   char* activate_server_by_name (const char * name, bool manual_start);
 
-  // Helper function also used by the Forwarder
+  // Asynchronous versions, used by both INS_Locator and Forwarder
+  void activate_server_by_info (const Server_Info_Ptr &si,
+                                ImR_ResponseHandler *rh);
 
-  void  activate_server_by_name (const char * name,
-                                 bool manual_start,
-                                 ImR_ResponseHandler *rh);
+  void activate_server_by_name (const char * name,
+                                bool manual_start,
+                                ImR_ResponseHandler *rh);
+
+  bool split_key (ACE_CString &full, ACE_CString &key, Server_Info_Ptr &si);
 
   // interfaces to aid with collaboration
 
@@ -143,6 +147,8 @@ public:
   AsyncAccessManager *find_aam (const char *name);
 
 private:
+
+  bool get_info_for_name (const char *name, Server_Info_Ptr &si);
 
   void  activate_server_i (UpdateableServerInfo& info,
                            bool manual_start,
@@ -231,7 +237,7 @@ class SyncListener : public LiveListener
 class ImR_SyncResponseHandler : public ImR_ResponseHandler
 {
 public:
-  ImR_SyncResponseHandler (CORBA::ORB_ptr orb);
+  ImR_SyncResponseHandler (const char *key, CORBA::ORB_ptr orb);
   virtual ~ImR_SyncResponseHandler (void);
 
   virtual void send_ior (const char *pior);
@@ -242,6 +248,7 @@ public:
 private:
   CORBA::String_var result_;
   CORBA::Exception *excep_;
+  ACE_CString key_;
   CORBA::ORB_var orb_;
 };
 

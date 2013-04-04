@@ -405,6 +405,29 @@ ImR_Locator_i::notify_child_death
   _tao_rh->notify_child_death ();
 }
 
+char*
+ImR_Locator_i::activate_server_by_name (const char* name, bool manual_start)
+{
+  ImR_SyncResponseHandler rh ("", this->orb_.in());
+  this->activate_server_by_name (name, manual_start, &rh);
+  return rh.wait_for_result ();
+}
+
+char*
+ImR_Locator_i::activate_server_by_object (const char* object_name)
+{
+  Server_Info_Ptr si;
+  ACE_CString key;
+  ACE_CString full (object_name);
+  if (this->split_key (full, key, si))
+    {
+      ImR_SyncResponseHandler rh (key.c_str(), this->orb_.in());
+      this->activate_server_by_info (si, &rh);
+      return rh.wait_for_result ();
+    }
+  throw ImplementationRepository::NotFound();
+}
+
 void
 ImR_Locator_i::activate_server
 (ImplementationRepository::AMH_AdministrationResponseHandler_ptr _tao_rh,
@@ -424,6 +447,40 @@ ImR_Locator_i::activate_server
   activate_server_by_name (server, true, rh);
 }
 
+bool
+ImR_Locator_i::get_info_for_name (const char* name, Server_Info_Ptr &si)
+{
+  ACE_CString serverKey;
+  ACE_CString server_id;
+  bool jacorb_server = false;
+  this->parse_id (name, server_id, serverKey, jacorb_server);
+  si = this->repository_->get_server (serverKey);
+  return !si.null();
+}
+
+bool
+ImR_Locator_i::split_key (ACE_CString &full, ACE_CString &key, Server_Info_Ptr &si)
+{
+  key = full;
+  if (this->get_info_for_name (full.c_str(), si))
+    {
+      return true;
+    }
+
+  ACE_CString::size_type pos = full.rfind ('/');
+  while (pos != ACE_CString::npos)
+    {
+      ACE_CString server = full.substring (0, pos);
+      if (this->get_info_for_name (server.c_str (), si))
+        {
+          return true;
+        }
+      pos = server.rfind ('/');
+    }
+
+  return false;
+}
+
 void
 ImR_Locator_i::activate_server_by_name (const char* name, bool manual_start,
                                         ImR_ResponseHandler *rh)
@@ -432,59 +489,24 @@ ImR_Locator_i::activate_server_by_name (const char* name, bool manual_start,
   // servers unless manual_start=true
   ACE_ASSERT (name != 0);
 
-  ACE_CString serverKey;
-  ACE_CString server_id;
-  bool jacorb_server = false;
-  this->parse_id (name, server_id, serverKey, jacorb_server);
-  UpdateableServerInfo info (this->repository_.get(), serverKey);
-  if (info.null ())
+  Server_Info_Ptr si;
+  if (!this->get_info_for_name(name, si))
     {
-      ACE_ERROR ((
-        LM_ERROR,
-        ACE_TEXT ("ImR: Cannot find info for server <%C>\n"),
-        name));
-      throw ImplementationRepository::NotFound ();
+      rh->send_exception ( new ImplementationRepository::NotFound );
+      return;
     }
 
-  //MDM
-  info.edit()->start_count = 0;
+  UpdateableServerInfo info (this->repository_.get(), si, true);
 
   this->activate_server_i (info, manual_start, rh);
 }
 
-char*
-ImR_Locator_i::activate_server_by_name (const char* name, bool manual_start)
+void
+ImR_Locator_i::activate_server_by_info (const Server_Info_Ptr &si,
+                                        ImR_ResponseHandler *rh)
 {
-  ImR_SyncResponseHandler rh (this->orb_.in());
-  this->activate_server_by_name (name, manual_start, &rh);
-  return rh.wait_for_result ();
-}
-
-char*
-ImR_Locator_i::activate_server_by_object (const char* object_name)
-{
-  ACE_ASSERT (object_name != 0);
-
-  // We assume that the first part of the object name is the server name.
-  // So a name of foo/bar means that the server name is foo.
-  ACE_CString server_name (object_name);
-  ACE_CString::size_type pos = server_name.find ('/');
-  if (pos != ACE_CString::npos)
-    {
-      try
-        {
-          return activate_server_by_name (object_name, false);
-        }
-      catch (ImplementationRepository::NotFound&)
-        {
-          server_name = server_name.substr (pos + 1);
-          return activate_server_by_name (server_name.c_str (), false);
-        }
-    }
-  else
-    {
-      return activate_server_by_name (server_name.c_str (), false);
-    }
+  UpdateableServerInfo info (this->repository_.get(), si, true);
+  this->activate_server_i (info, false, rh);
 }
 
 void
@@ -498,7 +520,8 @@ ImR_Locator_i::activate_server_i (UpdateableServerInfo& info,
       AsyncAccessManager *aam_raw;
       ACE_NEW (aam_raw, AsyncAccessManager (*info, manual_start, *this));
       aam = aam_raw;
-      this->aam_set_.insert (aam);
+      int result = this->aam_set_.insert (aam);
+      ACE_DEBUG ((LM_DEBUG, "ImR_Locator_i::activate_server_i(PC) insert_aam returned %d\n", result));
     }
   else
     {
@@ -508,10 +531,13 @@ ImR_Locator_i::activate_server_i (UpdateableServerInfo& info,
           AsyncAccessManager *aam_raw;
           ACE_NEW (aam_raw, AsyncAccessManager (*info, manual_start, *this));
           aam = aam_raw;
-          this->aam_set_.insert_tail (aam);
+          ACE_DEBUG ((LM_DEBUG, "ImR_Locator_i::activate_server_i calling insert_aam size = %d\n", aam_set_.size()));
+          int result = this->aam_set_.insert_tail (aam);
+          ACE_DEBUG ((LM_DEBUG, "ImR_Locator_i::activate_server_i after insert_aam size = %d returned %d\n", aam_set_.size(), result));
         }
     }
   aam->add_interest (rh);
+  ACE_DEBUG ((LM_DEBUG, "ImR_Locator_i::activate_server_i returning\n"));
 }
 
 CORBA::Object_ptr
@@ -593,7 +619,7 @@ ImR_Locator_i::add_or_update_server
   ACE_CString serverKey;
   ACE_CString server_id;
   bool jacorb_server = false;
-  this->parse_id(server, server_id, serverKey, jacorb_server);
+  this->parse_id (server, server_id, serverKey, jacorb_server);
   UpdateableServerInfo info(this->repository_.get(), serverKey);
   if (info.null ())
     {
@@ -655,10 +681,10 @@ ImR_Locator_i::add_or_update_server
 }
 
 void
-ImR_Locator_i::parse_id(const char* id,
-                        ACE_CString& server_id,
-                        ACE_CString& name,
-                        bool& jacorb_server)
+ImR_Locator_i::parse_id (const char* id,
+                         ACE_CString& server_id,
+                         ACE_CString& name,
+                         bool& jacorb_server)
 {
   const char *pos = ACE_OS::strchr (id, ':');
   if (pos)
@@ -925,7 +951,8 @@ ImR_Locator_i::server_is_running
       ACE_NEW (aam_raw, AsyncAccessManager (*temp_info, true, *this));
       AsyncAccessManager_ptr aam (aam_raw);
       aam->started_running ();
-      this->aam_set_.insert (aam);
+      int result = this->aam_set_.insert (aam);
+      ACE_DEBUG ((LM_DEBUG, "ImR_Locator_i::server_is_running insert_aam returned %d\n", result));
     }
   else
     {
@@ -953,11 +980,14 @@ ImR_Locator_i::server_is_running
         aam->server_is_running (partial_ior);
       else
         {
+          ACE_DEBUG ((LM_DEBUG, "Server_Is_Running, %s not found in aam set\n",
+                      name.c_str()));
           AsyncAccessManager *aam_raw;
           ACE_NEW (aam_raw, AsyncAccessManager (*info, true, *this));
           AsyncAccessManager_ptr aam (aam_raw);
           aam->started_running ();
-          this->aam_set_.insert (aam);
+          int result = this->aam_set_.insert (aam);
+          ACE_DEBUG ((LM_DEBUG, "ImR_Locator_i::server_is_running insert_aam returned %d\n", result));
         }
     }
   _tao_rh->server_is_running ();
@@ -1315,18 +1345,24 @@ ImR_Locator_i::root_poa (void)
 void
 ImR_Locator_i::remove_aam (AsyncAccessManager_ptr &aam)
 {
-  this->aam_set_.remove (aam);
+  ACE_DEBUG ((LM_DEBUG, "ImR_Locator_i::remove_aam calling remove\n"));
+  int result = this->aam_set_.remove (aam);
+  ACE_DEBUG ((LM_DEBUG, "ImR_Locator_i::remove_aam, remove returned %d\n", result));
+
 }
 
 AsyncAccessManager *
 ImR_Locator_i::find_aam (const char *name)
 {
+  ACE_DEBUG ((LM_DEBUG, "ImR_Locator_i::find_aam called for %s, set size = %d\n", name, aam_set_.size()));
+
   for (AAM_Set::ITERATOR i = this->aam_set_.begin();
        i != this->aam_set_.end();
        ++i)
     {
       if ((*i)->has_server (name))
         {
+          ACE_DEBUG ((LM_DEBUG, "ImR_Locator_i::find_aam add ref and return\n"));
           return (*i)->add_ref();
         }
     }
@@ -1386,8 +1422,9 @@ SyncListener::status_changed (LiveStatus status)
 
 //---------------------------------------------------------------------------
 
-ImR_SyncResponseHandler::ImR_SyncResponseHandler (CORBA::ORB_ptr orb)
+ImR_SyncResponseHandler::ImR_SyncResponseHandler (const char *objkey, CORBA::ORB_ptr orb)
   :excep_ (0),
+   key_ (objkey),
    orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
@@ -1399,7 +1436,10 @@ ImR_SyncResponseHandler::~ImR_SyncResponseHandler (void)
 void
 ImR_SyncResponseHandler::send_ior (const char *pior)
 {
-  this->result_ = pior;
+  ACE_DEBUG ((LM_DEBUG,"ImR_SyncResponseHandler send_ior called\n"));
+  ACE_CString full (pior);
+  full += this->key_;
+  this->result_ = full.c_str();
 }
 
 void
@@ -1439,6 +1479,7 @@ ImR_Loc_ResponseHandler::~ImR_Loc_ResponseHandler (void)
 void
 ImR_Loc_ResponseHandler::send_ior (const char *)
 {
+  ACE_DEBUG ((LM_DEBUG,"ImR_Loc_ResponseHandler send_ior called, opid = %d\n", op_id_));
   switch (this->op_id_)
     {
     case LOC_ACTIVATE_SERVER:

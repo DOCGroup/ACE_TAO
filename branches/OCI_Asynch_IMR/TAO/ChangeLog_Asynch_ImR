@@ -1,3 +1,38 @@
+Thu Apr  4 23:15:58 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * orbsvcs/ImplRepo_Service/Forwarder.h:
+        * orbsvcs/ImplRepo_Service/Forwarder.cpp:
+        * orbsvcs/ImplRepo_Service/INS_Locator.h:
+        * orbsvcs/ImplRepo_Service/INS_Locator.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_Repository.h:
+        * orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
+
+        * tao/Adapter.h:
+
+        * tao/DynamicInterface/AMH_DSI_Response_Handler.cpp:
+
+        * tao/IORTable/IORTable.h:
+        * tao/IORTable/IORTable.mpc:
+        * tao/IORTable/IORTable.pidl:
+        * tao/IORTable/IOR_Table_Impl.h:
+        * tao/IORTable/IOR_Table_Impl.cpp:
+        * tao/IORTable/Locate_ResponseHandler.h:
+        * tao/IORTable/Locate_ResponseHandler.inl:
+        * tao/IORTable/Locate_ResponseHandler.cpp:
+        * tao/IORTable/Table_Adapter.h:
+        * tao/IORTable/Table_Adapter.cpp:
+
+        * tao/Messaging/AMH_Response_Handler.h:
+        * tao/Messaging/AMH_Response_Handler.cpp:
+
+          Adding support for an asynchronous IORTable locator. This commit
+          also contains a lot of intermediate debugging artifacts. It still
+          crashes. Committing for easy distribution to other test hosts.
+
 Wed Apr  3 14:20:28 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:

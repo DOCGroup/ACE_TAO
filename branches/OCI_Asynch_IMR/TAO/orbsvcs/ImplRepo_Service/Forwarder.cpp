@@ -191,56 +191,56 @@ ImR_DSI_ResponseHandler::send_ior (const char *pior)
 
   // Check that the returned ior is the expected partial ior with
   // missing ObjectKey.
-  if (ior.find ("corbaloc:") != 0 || ior[ior.length () - 1] != '/')
+  if (ior.find ("corbaloc:") == 0 && ior[ior.length () -1] == '/')
+    {
+      ior += this->key_str_.in();
+
+      CORBA::Object_var forward_obj =
+        this->orb_->string_to_object (ior.c_str ());
+
+      if (!CORBA::is_nil (forward_obj.in ()))
+        {
+          this->resp_->invoke_location_forward(forward_obj.in(), true);
+          delete this;
+          return;
+        }
+      else
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("ImR_DSI_ResponseHandler::send_ior (): Forward_to ")
+                      ACE_TEXT ("reference is nil.\n")));
+        }
+    }
+  else
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("ImR_ResponseHandler::send_ior (): Invalid corbaloc ior.\n")
                   ACE_TEXT ("\t<%s>\n"),
                   ior.c_str()));
-
-      CORBA::OBJECT_NOT_EXIST ex (CORBA::SystemException::_tao_minor_code
-                                  ( TAO_IMPLREPO_MINOR_CODE, 0),
-                                  CORBA::COMPLETED_NO);
-      TAO_AMH_DSI_Exception_Holder h(&ex);
-      this->resp_->invoke_excep(&h);
-      delete this;
-      return;
     }
 
-  ior += this->key_str_.in();
-
-  CORBA::Object_var forward_obj =
-    this->orb_->string_to_object (ior.c_str ());
-
-  if (!CORBA::is_nil (forward_obj.in ()))
-    {
-      CORBA::Exception *fwd = new PortableServer::ForwardRequest (forward_obj.in ());
-      TAO_AMH_DSI_Exception_Holder h(fwd);
-      this->resp_->invoke_excep(&h);
-      delete this;
-    }
-  else
-    {
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("ImR_DSI_ResponseHandler::send_ior (): Forward_to ")
-                  ACE_TEXT ("reference is nil.\n")));
-
-      CORBA::Exception *ex = new CORBA::OBJECT_NOT_EXIST (CORBA::SystemException::_tao_minor_code
-                                                          ( TAO_IMPLREPO_MINOR_CODE, 0),
-                                                          CORBA::COMPLETED_NO);
-      TAO_AMH_DSI_Exception_Holder h(ex);
-      this->resp_->invoke_excep(&h);
-      delete this;
-    }
+  this->invoke_excep_i (new CORBA::OBJECT_NOT_EXIST
+                        (CORBA::SystemException::_tao_minor_code
+                         ( TAO_IMPLREPO_MINOR_CODE, 0),
+                         CORBA::COMPLETED_NO));
 }
 
 void
-ImR_DSI_ResponseHandler::send_exception (CORBA::Exception *)
+ImR_DSI_ResponseHandler::invoke_excep_i (CORBA::Exception *ex)
 {
-  CORBA::Exception *ex = new CORBA::TRANSIENT (CORBA::SystemException::_tao_minor_code
-                                               ( TAO_IMPLREPO_MINOR_CODE, 0),
-                                               CORBA::COMPLETED_NO);
   TAO_AMH_DSI_Exception_Holder h(ex);
-  resp_->invoke_excep(&h);
+  this->resp_->invoke_excep(&h);
   delete this;
+}
+
+void
+ImR_DSI_ResponseHandler::send_exception (CORBA::Exception *ex)
+{
+  //discard the exception, always throw a transient:
+  delete ex;
+
+  this->invoke_excep_i (new CORBA::TRANSIENT
+                        (CORBA::SystemException::_tao_minor_code
+                         (TAO_IMPLREPO_MINOR_CODE, 0),
+                         CORBA::COMPLETED_NO));
 }
