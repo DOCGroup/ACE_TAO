@@ -14,8 +14,8 @@
 #include "ace/Svc_Handler.h"
 #include "ace/Sig_Adapter.h"
 
-template <ACE_PEER_STREAM_1>
-class Peer_Handler : public ACE_Svc_Handler<ACE_PEER_STREAM_2, ACE_SYNCH>
+template <typename PEER_STREAM>
+class Peer_Handler : public ACE_Svc_Handler<PEER_STREAM, ACE_SYNCH>
 {
   // = TITLE
   //   Handles communication with the server.
@@ -48,12 +48,12 @@ protected:
   int connected (void);
   int stdio (void);
 
-  int (Peer_Handler<ACE_PEER_STREAM_2>::*action_) (void);
+  int (Peer_Handler<PEER_STREAM>::*action_) (void);
   // Keeps track of which state we are in.
 };
 
-template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1>
-class IPC_Client : public ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>
+template <typename SVC_HANDLER, typename PEER_CONNECTOR>
+class IPC_Client : public ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>
 {
   // = TITLE
   //   This class illustrates how the <ACE_Connector> works.
@@ -76,7 +76,7 @@ public:
   // Run the svc.
 
 private:
-  typedef ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>
+  typedef ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>
           inherited;
 
   ACE_Synch_Options options_;
