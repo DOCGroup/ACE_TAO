@@ -8,29 +8,20 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/Signal.h"
 
-
-
-#define PR_ST_1 ACE_PEER_STREAM_1
-#define PR_ST_2 ACE_PEER_STREAM_2
-#define PR_CO_1 ACE_PEER_CONNECTOR_1
-#define PR_CO_2 ACE_PEER_CONNECTOR_2
-#define PR_AD ACE_PEER_CONNECTOR_ADDR
-#define SVH SVC_HANDLER
-
-template <PR_ST_1>
-Peer_Handler<PR_ST_2>::Peer_Handler (ACE_Reactor *r)
-  : action_ (&Peer_Handler<PR_ST_2>::uninitialized)
+template <typename PEER_STREAM>
+Peer_Handler<PEER_STREAM>::Peer_Handler (ACE_Reactor *r)
+  : action_ (&Peer_Handler<PEER_STREAM>::uninitialized)
 {
   this->reactor (r);
 }
 
-template <PR_ST_1> int
-Peer_Handler<PR_ST_2>::open (void *)
+template <typename PEER_STREAM> int
+Peer_Handler<PEER_STREAM>::open (void *)
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("activating %d\n"),
               this->peer ().get_handle ()));
-  this->action_ = &Peer_Handler<PR_ST_2>::connected;
+  this->action_ = &Peer_Handler<PEER_STREAM>::connected;
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("please enter input..: ")));
 
@@ -59,8 +50,8 @@ Peer_Handler<PR_ST_2>::open (void *)
   return 0;
 }
 
-template <PR_ST_1> int
-Peer_Handler<PR_ST_2>::close (u_long)
+template <typename PEER_STREAM> int
+Peer_Handler<PEER_STREAM>::close (u_long)
 {
   ACE_ERROR ((LM_ERROR,
               ACE_TEXT ("Connect not successful: ending reactor event loop\n")));
@@ -68,15 +59,15 @@ Peer_Handler<PR_ST_2>::close (u_long)
   return 0;
 }
 
-template <PR_ST_1> int
-Peer_Handler<PR_ST_2>::uninitialized (void)
+template <typename PEER_STREAM> int
+Peer_Handler<PEER_STREAM>::uninitialized (void)
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("uninitialized!\n")));
   return 0;
 }
 
-template <PR_ST_1> int
-Peer_Handler<PR_ST_2>::connected (void)
+template <typename PEER_STREAM> int
+Peer_Handler<PEER_STREAM>::connected (void)
 {
   char buf[BUFSIZ];
 
@@ -106,8 +97,8 @@ Peer_Handler<PR_ST_2>::connected (void)
     }
 }
 
-template <PR_ST_1> int
-Peer_Handler<PR_ST_2>::stdio (void)
+template <typename PEER_STREAM> int
+Peer_Handler<PEER_STREAM>::stdio (void)
 {
   char buf[BUFSIZ];
 
@@ -131,26 +122,26 @@ Peer_Handler<PR_ST_2>::stdio (void)
     return -1;
 }
 
-template <PR_ST_1> int
-Peer_Handler<PR_ST_2>::handle_timeout (const ACE_Time_Value &,
+template <typename PEER_STREAM> int
+Peer_Handler<PEER_STREAM>::handle_timeout (const ACE_Time_Value &,
                                        const void *)
 {
   ACE_ERROR ((LM_ERROR, ACE_TEXT ("Connect timedout. ")));
   return this->close ();
 }
 
-template <PR_ST_1> int
-Peer_Handler<PR_ST_2>::handle_output (ACE_HANDLE)
+template <typename PEER_STREAM> int
+Peer_Handler<PEER_STREAM>::handle_output (ACE_HANDLE)
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("in handle_output\n")));
 
   return (this->*action_) ();
 }
 
-template <PR_ST_1> int
-Peer_Handler<PR_ST_2>::handle_signal (int,
-                                      siginfo_t *,
-                                      ucontext_t *)
+template <typename PEER_STREAM> int
+Peer_Handler<PEER_STREAM>::handle_signal (int,
+                                          siginfo_t *,
+                                          ucontext_t *)
 {
   // @@ Note that this code is not portable to all OS platforms since
   // it uses print statements within signal handler context.
@@ -159,16 +150,16 @@ Peer_Handler<PR_ST_2>::handle_signal (int,
   return (this->*action_) ();
 }
 
-template <PR_ST_1> int
-Peer_Handler<PR_ST_2>::handle_input (ACE_HANDLE)
+template <typename PEER_STREAM> int
+Peer_Handler<PEER_STREAM>::handle_input (ACE_HANDLE)
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("in handle_input\n")));
 
   return (this->*action_) ();
 }
 
-template <PR_ST_1> int
-Peer_Handler<PR_ST_2>::handle_close (ACE_HANDLE h,
+template <typename PEER_STREAM> int
+Peer_Handler<PEER_STREAM>::handle_close (ACE_HANDLE h,
                                      ACE_Reactor_Mask mask)
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -176,7 +167,7 @@ Peer_Handler<PR_ST_2>::handle_close (ACE_HANDLE h,
               h,
               mask));
 
-  if (this->action_ == &Peer_Handler<PR_ST_2>::stdio)
+  if (this->action_ == &Peer_Handler<PEER_STREAM>::stdio)
     {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("moving to closed state\n")));
       this->reactor ()->end_reactor_event_loop ();
@@ -184,7 +175,7 @@ Peer_Handler<PR_ST_2>::handle_close (ACE_HANDLE h,
   else
     {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("moving to stdio state\n")));
-      this->action_ = &Peer_Handler<PR_ST_2>::stdio;
+      this->action_ = &Peer_Handler<PEER_STREAM>::stdio;
       this->peer ().close ();
       ACE_OS::rewind (stdin);
 
@@ -208,8 +199,8 @@ Peer_Handler<PR_ST_2>::handle_close (ACE_HANDLE h,
   return 0;
 }
 
-template <class SVH, PR_CO_1> int
-IPC_Client<SVH, PR_CO_2>::svc (void)
+template <typename SVC_HANDLER, typename PEER_CONNECTOR> int
+IPC_Client<SVC_HANDLER, PEER_CONNECTOR>::svc (void)
 {
   if (this->reactor ())
     this->reactor ()->run_reactor_event_loop ();
@@ -217,20 +208,20 @@ IPC_Client<SVH, PR_CO_2>::svc (void)
   return 0;
 }
 
-template <class SVH, PR_CO_1> int
-IPC_Client<SVH, PR_CO_2>::fini (void)
+template <typename SVC_HANDLER, typename PEER_CONNECTOR> int
+IPC_Client<SVC_HANDLER, PEER_CONNECTOR>::fini (void)
 {
   return 0;
 }
 
-template <class SVH, PR_CO_1>
-IPC_Client<SVH, PR_CO_2>::IPC_Client (void)
+template <typename SVC_HANDLER, typename PEER_CONNECTOR>
+IPC_Client<SVC_HANDLER, PEER_CONNECTOR>::IPC_Client (void)
   : done_handler_ (ACE_Sig_Handler_Ex (ACE_Reactor::end_event_loop))
 {
 }
 
-template <class SVH, PR_CO_1> int
-IPC_Client<SVH, PR_CO_2>::init (int argc, ACE_TCHAR *argv[])
+template <typename SVC_HANDLER, typename PEER_CONNECTOR> int
+IPC_Client<SVC_HANDLER, PEER_CONNECTOR>::init (int argc, ACE_TCHAR *argv[])
 {
   // Call down to the CONNECTOR's open() method to do the
   // initialization.
@@ -251,13 +242,13 @@ IPC_Client<SVH, PR_CO_2>::init (int argc, ACE_TCHAR *argv[])
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("register_handler")),
                       -1);
-  PR_AD remote_addr (r_addr);
+  typename PEER_CONNECTOR::PEER_ADDR remote_addr (r_addr);
   this->options_.set (ACE_Synch_Options::USE_REACTOR,
                       timeout);
 
-  SVH *sh;
+  SVC_HANDLER *sh;
   ACE_NEW_RETURN (sh,
-                  SVH (this->reactor ()),
+                  SVC_HANDLER (this->reactor ()),
                   -1);
 
   // Connect to the peer.
@@ -273,15 +264,9 @@ IPC_Client<SVH, PR_CO_2>::init (int argc, ACE_TCHAR *argv[])
     return 0;
 }
 
-template <class SVH, PR_CO_1>
-IPC_Client<SVH, PR_CO_2>::~IPC_Client (void)
+template <typename SVC_HANDLER, typename PEER_CONNECTOR>
+IPC_Client<SVC_HANDLER, PEER_CONNECTOR>::~IPC_Client (void)
 {
 }
 
-#undef PR_ST_1
-#undef PR_ST_2
-#undef PR_CO_1
-#undef PR_CO_2
-#undef PR_AD
-#undef SVH
 #endif /* CPP_CONNECTOR_C */
