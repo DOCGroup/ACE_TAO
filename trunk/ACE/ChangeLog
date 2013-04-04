@@ -1,3 +1,11 @@
+Thu Apr  4 18:41:36 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * debian/ace.dsc:
+        * debian/debian.changelog:
+        * debian/debian.control:
+          Updated for new release, thanks to Michael Ganz <michael_ganz at t-online dot de>
+          for reporting this
+
 Wed Apr  3 13:41:19 UTC 2013  Adam Mitz  <mitza@ociweb.com>
 
         * tests/Manual_Event_Test.cpp:
