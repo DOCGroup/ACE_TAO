@@ -20,15 +20,11 @@ AsyncAccessManager::AsyncAccessManager (const Server_Info &info,
    refcount_(1),
    lock_()
 {
-  ACE_DEBUG ((LM_DEBUG,"AAM(%x), ctor, name = %s\n",
-              this, info.name.c_str()));
   this->info_ = new Server_Info (info);
 }
 
 AsyncAccessManager::~AsyncAccessManager (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "AAM (%x): dtor, name = %s\n", this,
-              info_->name.c_str()));
   delete this->info_;
 }
 
@@ -42,8 +38,6 @@ bool
 AsyncAccessManager::has_server (const char *s)
 {
   int result = ACE_OS::strcmp (this->info_->name.c_str(),s);
-  ACE_DEBUG ((LM_DEBUG, "AAM (%x): has_server test, my name = %s, s = %s result = %d\n",
-              this, info_->name.c_str(), s, result));
   return result == 0;
 }
 
@@ -68,10 +62,6 @@ AsyncAccessManager::add_interest (ImR_ResponseHandler *rh)
         {
           this->status_ = AAM_SERVER_READY;
           this->final_state();
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) AsyncAccessManager::add_interest: ")
-                      ACE_TEXT ("server = <%C>, server is alive\n"),
-                      this->info_->name.c_str()));
           return;
         }
     }
@@ -103,11 +93,6 @@ AsyncAccessManager::add_interest (ImR_ResponseHandler *rh)
             }
         }
     }
-
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%P|%t) AsyncAccessManager::add_interest: ")
-              ACE_TEXT ("server = <%C>, status = %d returning\n"),
-              this->info_->name.c_str(), this->status_));
 }
 
 void
@@ -128,8 +113,6 @@ AsyncAccessManager::final_state (void)
         {
           if (this->status_ == AAM_SERVER_READY)
             {
-              ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%P|%t) AsyncAccessManager::final_state calling send_ior\n")));
               rh->send_ior (this->info_->partial_ior.c_str());
             }
           else
@@ -154,7 +137,7 @@ AsyncAccessManager::final_state (void)
                 }
               catch (CORBA::Exception &ex)
                 {
-                  rh->send_exception (&ex);
+                  rh->send_exception (ex._tao_duplicate());
                 }
             }
         }
@@ -185,13 +168,13 @@ AsyncAccessManager::status (AAM_Status s)
 void
 AsyncAccessManager::activator_replied (bool success)
 {
-  // if (this->locator_.debug() > 0)
-  //   {
+  if (this->locator_.debug() > 0)
+    {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) AsyncAccessManager::activator_replied: ")
                   ACE_TEXT ("success = %d, status = %d\n"),
                   success, this->status_));
-      // }
+    }
   if (success)
     {
       this->status (AAM_WAIT_FOR_RUNNING);
@@ -213,13 +196,13 @@ AsyncAccessManager::server_is_shutting_down (void)
 void
 AsyncAccessManager::server_is_running (const char *partial_ior)
 {
-  // if (this->locator_.debug() > 0)
-  //   {
+  if (this->locator_.debug() > 0)
+    {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) AsyncAccessManager::server_is_running: ")
                   ACE_TEXT ("name = %C, status = %d\n"),
                   this->info_->name.c_str(), this->status_));
-    // }
+    }
   this->status (AAM_WAIT_FOR_ALIVE);
   this->info_->partial_ior = partial_ior;
 
@@ -320,16 +303,18 @@ AsyncAccessManager::add_ref (void)
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_, 0);
   ++this->refcount_;
 
-  ACE_DEBUG ((LM_DEBUG, "AAM (%x): add_ref count now = %d\n", this, this->refcount_));
   return this;
 }
 
 void
 AsyncAccessManager::remove_ref (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "AAM (%x): remove_ref count pre decr = %d\n", this, this->refcount_));
-  ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
-  if (--this->refcount_ == 0)
+  int count = 0;
+  {
+    ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
+    count = --this->refcount_;
+  }
+  if (count == 0)
     {
       delete this;
     }
@@ -341,24 +326,20 @@ AsyncAccessManager::remove_ref (void)
 AsyncAccessManager_ptr::AsyncAccessManager_ptr (void)
   : val_ (0)
 {
-  ACE_DEBUG ((LM_DEBUG,"AAM_Ptr (%x) ctor default\n", this));
 }
 
 AsyncAccessManager_ptr::AsyncAccessManager_ptr (AsyncAccessManager *aam)
   :val_ (aam)
 {
-  ACE_DEBUG ((LM_DEBUG,"AAM_Ptr (%x) ctor taking ownership of aam = %x\n", this, aam));
 }
 
 AsyncAccessManager_ptr::AsyncAccessManager_ptr (const AsyncAccessManager_ptr &aam_ptr)
   :val_ (aam_ptr.clone())
 {
-  ACE_DEBUG ((LM_DEBUG,"AAM_Ptr (%x) ctor taking ownership of aam_clone = %x\n", this, val_));
 }
 
 AsyncAccessManager_ptr::~AsyncAccessManager_ptr (void)
 {
-  ACE_DEBUG ((LM_DEBUG,"AAM_Ptr (%x) dtor releasing %x\n", this, val_));
   if (val_ != 0)
     {
       val_->remove_ref();
@@ -368,8 +349,6 @@ AsyncAccessManager_ptr::~AsyncAccessManager_ptr (void)
 AsyncAccessManager_ptr &
 AsyncAccessManager_ptr::operator= (const AsyncAccessManager_ptr &aam_ptr)
 {
-  ACE_DEBUG ((LM_DEBUG,"AAM_Ptr (%x) assignment releasing %x, taking ownership of aam_clone = %x\n", this, val_, *aam_ptr));
-
   if (val_ != *aam_ptr)
     {
       if (val_ != 0)
@@ -384,7 +363,6 @@ AsyncAccessManager_ptr::operator= (const AsyncAccessManager_ptr &aam_ptr)
 AsyncAccessManager_ptr &
 AsyncAccessManager_ptr::operator= (AsyncAccessManager *aam)
 {
-  ACE_DEBUG ((LM_DEBUG,"AAM_Ptr (%x) assignment releasing %x, taking ownership of aam = %x\n", this, val_, aam));
   if (val_ != aam)
     {
       if (val_ != 0)
@@ -515,20 +493,16 @@ AsyncLiveListener::AsyncLiveListener (const char *server,
    pinger_ (pinger),
    status_ (LS_UNKNOWN)
 {
-  ACE_DEBUG ((LM_DEBUG, "AsyncLiveListener ctor, this = %x\n", this));
 }
 
 AsyncLiveListener::~AsyncLiveListener (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "AsyncLiveListener dtor, this = %x\n", this));
 }
 
 bool
 AsyncLiveListener::start (void)
 {
   bool rtn = this->pinger_.add_listener (this);
-  ACE_DEBUG ((LM_DEBUG,
-              "AsyncLiveListener::start, add_listener returned %d\n", rtn));
   if (!rtn)
     delete this;
   return rtn;
@@ -544,8 +518,6 @@ AsyncLiveListener::status_changed (LiveStatus status)
     }
   else
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  "AsyncLiveListener::status_changed, status = %d, deleting(%x)\n", status, this));
       this->aam_->ping_replied (status);
       delete this;
     }

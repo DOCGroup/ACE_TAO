@@ -27,6 +27,7 @@
 #include "tao/Versioned_Namespace.h"
 #include "tao/Messaging/AMH_Response_Handler.h"
 #include "tao/Valuetype/ValueBase.h"
+#include "tao/ORB.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -36,7 +37,7 @@ namespace CORBA
 }
 
 class TAO_AMH_Locate_ResponseHandler;
-typedef
+
 typedef TAO_AMH_Locate_ResponseHandler *TAO_AMH_Locate_ResponseHandler_ptr;
 
 /**
@@ -75,126 +76,6 @@ private:
   TAO_AMH_Locate_ResponseHandler_ptr ptr_;
 };
 
-#if 0
-class TAO_AMH_Locate_Exception_Holder;
-typedef TAO_AMH_Locate_Exception_Holder *TAO_AMH_Locate_Exception_Holder_ptr;
-
-/**
- * @class TAO_AMH_Locate_Exception_Holder_var
- *
- * @brief The T_var class for exception holder
- *
- * As any other pseudo object, this class has a T_var class too.
- *
- */
-class TAO_IORTable_Export TAO_AMH_Locate_Exception_Holder_var
-{
-public:
-  TAO_AMH_Locate_Exception_Holder_var (void);
-  TAO_AMH_Locate_Exception_Holder_var (TAO_AMH_Locate_Exception_Holder*);
-  TAO_AMH_Locate_Exception_Holder_var (const TAO_AMH_Locate_Exception_Holder*);
-  TAO_AMH_Locate_Exception_Holder_var (const TAO_AMH_Locate_Exception_Holder_var &);
-  ~TAO_AMH_Locate_Exception_Holder_var (void);
-
-  TAO_AMH_Locate_Exception_Holder_var &operator= (TAO_AMH_Locate_Exception_Holder*);
-  TAO_AMH_Locate_Exception_Holder_var &operator= (
-      const TAO_AMH_Locate_Exception_Holder_var &);
-  TAO_AMH_Locate_Exception_Holder* operator-> (void) const;
-
-  operator const TAO_AMH_Locate_Exception_Holder* () const;
-  operator TAO_AMH_Locate_Exception_Holder*& ();
-
-  TAO_AMH_Locate_Exception_Holder* in (void) const;
-  TAO_AMH_Locate_Exception_Holder*& inout (void);
-  TAO_AMH_Locate_Exception_Holder*& out (void);
-  TAO_AMH_Locate_Exception_Holder* _retn (void);
-  TAO_AMH_Locate_Exception_Holder* ptr (void) const;
-
-  // Hooks used by template sequence and valuetype manager classes
-  // for non-defined forward declared valuetypes.
-  static void tao_add_ref (TAO_AMH_Locate_Exception_Holder *);
-  static void tao_remove_ref (TAO_AMH_Locate_Exception_Holder *);
-
-private:
-  TAO_AMH_Locate_Exception_Holder* ptr_;
-};
-
-/**
- * @class TAO_AMH_Locate_Exception_Holder_out
- *
- * @brief The T_out class for exception holder
- *
- */
-class TAO_IORTable_Export TAO_AMH_Locate_Exception_Holder_out
-{
-public:
-  TAO_AMH_Locate_Exception_Holder_out (TAO_AMH_Locate_Exception_Holder* &);
-  TAO_AMH_Locate_Exception_Holder_out (TAO_AMH_Locate_Exception_Holder_var &);
-  TAO_AMH_Locate_Exception_Holder_out (const TAO_AMH_Locate_Exception_Holder_out &);
-  TAO_AMH_Locate_Exception_Holder_out &operator= (
-      const TAO_AMH_Locate_Exception_Holder_out &);
-  TAO_AMH_Locate_Exception_Holder_out &operator= (
-      const TAO_AMH_Locate_Exception_Holder_var &);
-  TAO_AMH_Locate_Exception_Holder_out &operator= (
-      TAO_AMH_Locate_Exception_Holder*);
-  operator TAO_AMH_Locate_Exception_Holder*& ();
-  TAO_AMH_Locate_Exception_Holder*& ptr (void);
-  TAO_AMH_Locate_Exception_Holder* operator-> (void);
-
-private:
-  TAO_AMH_Locate_Exception_Holder* &ptr_;
-};
-
-/**
- * @class TAO_AMH_Locate_Exception_Holder
- *
- * @brief This is the class for holding exception.
- *
- */
-class TAO_IORTable_Export TAO_AMH_Locate_Exception_Holder
-  : public virtual CORBA::DefaultValueRefCountBase,
-    public virtual CORBA::ValueBase
-{
-public:
-  typedef TAO_AMH_Locate_Exception_Holder_var _var_type;
-  TAO_AMH_Locate_Exception_Holder (CORBA::Exception *ex);
-
-  virtual ~TAO_AMH_Locate_Exception_Holder (void);
-
-  static TAO_AMH_Locate_Exception_Holder* _downcast ( CORBA::ValueBase* );
-
-  static CORBA::Boolean _tao_unmarshal ( TAO_InputCDR &,
-                                         TAO_AMH_Locate_Exception_Holder *& );
-  virtual const char* _tao_obv_repository_id (void) const;
-  static const char* _tao_obv_static_repository_id (void);
-
-  static void _tao_any_destructor (void *);
-
-  virtual void raise_invoke ( );
-
-  CORBA::TypeCode_ptr _tao_type (void) const;
-  void _tao_obv_truncatable_repo_ids (Repository_Id_List &) const;
-  CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
-
-protected:
-  TAO_AMH_Locate_Exception_Holder (void);
-  ///  *** Terrible Hack ? ***
-  virtual CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
-  virtual CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
-
-private:
-  TAO_AMH_Locate_Exception_Holder (const TAO_AMH_Locate_Exception_Holder &);
-  void operator= (const TAO_AMH_Locate_Exception_Holder &);
-  CORBA::Exception *exception_;
-
-protected:
-  virtual CORBA::Boolean _tao_marshal__Test_TAO_AMH_Locate_Exception_Holder (
-              TAO_OutputCDR &);
-  virtual CORBA::Boolean _tao_unmarshal__Test_TAO_AMH_Locate_Exception_Holder (
-              TAO_InputCDR &);
-};
-
-#endif
 
 /**
  * @class TAO_AMH_Locate_ResponseHandler
@@ -250,7 +131,7 @@ protected:
   virtual void *_downcast (const char *repository_id);
 
 private:
-  TAO_ORB_Core *orb_core_;
+  CORBA::ORB_var orb_;
 };
 
 
