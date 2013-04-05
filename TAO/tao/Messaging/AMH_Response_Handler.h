@@ -89,8 +89,6 @@ public:
   virtual void _remove_ref (void);
   //@}
 
-  TAO_ORB_Core *orb_core (void) const;
-
 protected:
 
   /// Sets up the various parameters in anticipation of returning a reply

@@ -75,18 +75,11 @@ INS_Loc_ResponseHandler::INS_Loc_ResponseHandler (const char *key,
   : key_(key),
     rh_ (handler)
 {
-  CORBA::ORB_var orb = rh_->orb_core()->orb();
-  ACE_DEBUG ((LM_DEBUG, "INS_Loc_ResponseHandler ctor, rh_ = %x, orb = %x\n",
-              rh_.ptr(), orb.ptr()));
 }
 
 void
 INS_Loc_ResponseHandler::send_ior (const char *pior)
 {
-  CORBA::ORB_var orb = rh_->orb_core()->orb();
-  ACE_DEBUG ((LM_DEBUG, "INS_Loc_ResponseHandler send_ior, rh_ = %x, orb = %x, key = %s\n",
-              rh_.ptr(), orb.ptr(), key_.c_str()));
-
   ACE_CString ior = pior;
   ior += key_;
   rh_->forward_ior (ior.c_str(), false);
@@ -96,9 +89,6 @@ INS_Loc_ResponseHandler::send_ior (const char *pior)
 void
 INS_Loc_ResponseHandler::send_exception (CORBA::Exception *ex)
 {
-  ACE_DEBUG ((LM_DEBUG, "INS_Loc_ResponseHandler send_exception, rh_ = %x\n",
-              rh_.ptr()));
-
   delete ex;
   rh_->raise_excep (CORBA::TRANSIENT (CORBA::SystemException::_tao_minor_code
                                               (TAO_IMPLREPO_MINOR_CODE, 0),

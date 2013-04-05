@@ -307,7 +307,7 @@ sub run_test
     ##### Wait for clients to terminate #####
     print_msg ("Wait for clients to terminate");
     for (my $i = 1; $i <= $client_count; $i++) {
-	if ($CLI[$i]->WaitKill ($cli[$i]->ProcessStopWaitInterval () + $server_reply_delay + 60) == -1) {
+	if ($CLI[$i]->WaitKill ($cli[$i]->ProcessStopWaitInterval () + $server_reply_delay + 20) == -1) {
 	    print STDERR "ERROR: client $i not terminated correctly\n";
 	    $status = 1;
 	}
