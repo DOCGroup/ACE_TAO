@@ -44,11 +44,6 @@ INS_Locator::async_locate (::IORTable::Locate_ResponseHandler handler,
 {
   ACE_ASSERT (object_key != 0);
 
-  if (imr_locator_.debug () > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("ImR: Activating server <%s> asynchronously .\n"),
-                object_key));
-
   Server_Info_Ptr si;
   ACE_CString key;
   ACE_CString full (object_key);
@@ -60,8 +55,6 @@ INS_Locator::async_locate (::IORTable::Locate_ResponseHandler handler,
     }
   else
     {
-      ACE_DEBUG ((LM_DEBUG, "async_locate: split key failed!\n"));
-
       handler->raise_excep (CORBA::TRANSIENT (CORBA::SystemException::_tao_minor_code
                                               (TAO_IMPLREPO_MINOR_CODE, 0),
                                               CORBA::COMPLETED_NO));

@@ -48,13 +48,6 @@ AsyncAccessManager::add_interest (ImR_ResponseHandler *rh)
     ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
     this->rh_list_.push_back (rh);
   }
-  if (this->locator_.debug() > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%P|%t) AsyncAccessManager::add_interest: ")
-                  ACE_TEXT ("server = <%C>, status = %d count = %d\n"),
-                  this->info_->name.c_str(), this->status_, this->rh_list_.size()));
-    }
 
   if (this->status_ == AAM_SERVER_READY || this->status_ == AAM_SERVER_STARTED_RUNNING)
     {
@@ -98,14 +91,6 @@ AsyncAccessManager::add_interest (ImR_ResponseHandler *rh)
 void
 AsyncAccessManager::final_state (void)
 {
-  if (this->locator_.debug() > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%P|%t) AsyncAccessManager::final_state: ")
-                  ACE_TEXT ("status = %d, server = <%C> list size = %d\n"),
-                  this->status_, this->info_->name.c_str(), rh_list_.size()));
-    }
-
   for (size_t i = 0; i < this->rh_list_.size(); i++)
     {
       ImR_ResponseHandler *rh = this->rh_list_[i];
@@ -168,13 +153,6 @@ AsyncAccessManager::status (AAM_Status s)
 void
 AsyncAccessManager::activator_replied (bool success)
 {
-  if (this->locator_.debug() > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%P|%t) AsyncAccessManager::activator_replied: ")
-                  ACE_TEXT ("success = %d, status = %d\n"),
-                  success, this->status_));
-    }
   if (success)
     {
       this->status (AAM_WAIT_FOR_RUNNING);
@@ -196,13 +174,6 @@ AsyncAccessManager::server_is_shutting_down (void)
 void
 AsyncAccessManager::server_is_running (const char *partial_ior)
 {
-  if (this->locator_.debug() > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%P|%t) AsyncAccessManager::server_is_running: ")
-                  ACE_TEXT ("name = %C, status = %d\n"),
-                  this->info_->name.c_str(), this->status_));
-    }
   this->status (AAM_WAIT_FOR_ALIVE);
   this->info_->partial_ior = partial_ior;
 
