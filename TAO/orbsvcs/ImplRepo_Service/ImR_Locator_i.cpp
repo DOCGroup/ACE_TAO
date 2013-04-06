@@ -520,9 +520,8 @@ ImR_Locator_i::activate_server_i (UpdateableServerInfo& info,
       AsyncAccessManager *aam_raw;
       ACE_NEW (aam_raw, AsyncAccessManager (*info, manual_start, *this));
       aam = aam_raw;
-      int result = this->aam_set_.insert (aam);
-      ACE_DEBUG ((LM_DEBUG, "ImR_Locator_i::activate_server_i(PC) insert_aam returned %d\n", result));
-    }
+      this->aam_set_.insert (aam);
+  }
   else
     {
       aam = this->find_aam (info->name.c_str());
@@ -531,13 +530,10 @@ ImR_Locator_i::activate_server_i (UpdateableServerInfo& info,
           AsyncAccessManager *aam_raw;
           ACE_NEW (aam_raw, AsyncAccessManager (*info, manual_start, *this));
           aam = aam_raw;
-          ACE_DEBUG ((LM_DEBUG, "ImR_Locator_i::activate_server_i calling insert_aam size = %d\n", aam_set_.size()));
-          int result = this->aam_set_.insert_tail (aam);
-          ACE_DEBUG ((LM_DEBUG, "ImR_Locator_i::activate_server_i after insert_aam size = %d returned %d\n", aam_set_.size(), result));
+          this->aam_set_.insert_tail (aam);
         }
     }
   aam->add_interest (rh);
-  ACE_DEBUG ((LM_DEBUG, "ImR_Locator_i::activate_server_i returning\n"));
 }
 
 CORBA::Object_ptr
@@ -951,8 +947,7 @@ ImR_Locator_i::server_is_running
       ACE_NEW (aam_raw, AsyncAccessManager (*temp_info, true, *this));
       AsyncAccessManager_ptr aam (aam_raw);
       aam->started_running ();
-      int result = this->aam_set_.insert (aam);
-      ACE_DEBUG ((LM_DEBUG, "ImR_Locator_i::server_is_running insert_aam returned %d\n", result));
+      this->aam_set_.insert (aam);
     }
   else
     {
@@ -980,14 +975,11 @@ ImR_Locator_i::server_is_running
         aam->server_is_running (partial_ior);
       else
         {
-          ACE_DEBUG ((LM_DEBUG, "Server_Is_Running, %s not found in aam set\n",
-                      name.c_str()));
           AsyncAccessManager *aam_raw;
           ACE_NEW (aam_raw, AsyncAccessManager (*info, true, *this));
           AsyncAccessManager_ptr aam (aam_raw);
           aam->started_running ();
-          int result = this->aam_set_.insert (aam);
-          ACE_DEBUG ((LM_DEBUG, "ImR_Locator_i::server_is_running insert_aam returned %d\n", result));
+          this->aam_set_.insert (aam);
         }
     }
   _tao_rh->server_is_running ();
@@ -1345,16 +1337,13 @@ ImR_Locator_i::root_poa (void)
 void
 ImR_Locator_i::remove_aam (AsyncAccessManager_ptr &aam)
 {
-  ACE_DEBUG ((LM_DEBUG, "ImR_Locator_i::remove_aam calling remove\n"));
-  int result = this->aam_set_.remove (aam);
-  ACE_DEBUG ((LM_DEBUG, "ImR_Locator_i::remove_aam, remove returned %d\n", result));
+  this->aam_set_.remove (aam);
 
 }
 
 AsyncAccessManager *
 ImR_Locator_i::find_aam (const char *name)
 {
-  ACE_DEBUG ((LM_DEBUG, "ImR_Locator_i::find_aam called for %s, set size = %d\n", name, aam_set_.size()));
 
   for (AAM_Set::ITERATOR i = this->aam_set_.begin();
        i != this->aam_set_.end();
@@ -1362,7 +1351,6 @@ ImR_Locator_i::find_aam (const char *name)
     {
       if ((*i)->has_server (name))
         {
-          ACE_DEBUG ((LM_DEBUG, "ImR_Locator_i::find_aam add ref and return\n"));
           return (*i)->add_ref();
         }
     }
@@ -1436,7 +1424,6 @@ ImR_SyncResponseHandler::~ImR_SyncResponseHandler (void)
 void
 ImR_SyncResponseHandler::send_ior (const char *pior)
 {
-  ACE_DEBUG ((LM_DEBUG,"ImR_SyncResponseHandler send_ior called\n"));
   ACE_CString full (pior);
   full += this->key_;
   this->result_ = full.c_str();
@@ -1479,7 +1466,6 @@ ImR_Loc_ResponseHandler::~ImR_Loc_ResponseHandler (void)
 void
 ImR_Loc_ResponseHandler::send_ior (const char *)
 {
-  ACE_DEBUG ((LM_DEBUG,"ImR_Loc_ResponseHandler send_ior called, opid = %d\n", op_id_));
   switch (this->op_id_)
     {
     case LOC_ACTIVATE_SERVER:

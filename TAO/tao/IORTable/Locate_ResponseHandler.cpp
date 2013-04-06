@@ -36,7 +36,7 @@ TAO_AMH_Locate_ResponseHandler::_nil (void)
 TAO_AMH_Locate_ResponseHandler::TAO_AMH_Locate_ResponseHandler (
     TAO_ServerRequest & sr)
   : TAO_AMH_Response_Handler (),
-    orb_ (sr.orb())
+    orb_ (CORBA::ORB::_duplicate (sr.orb()))
 {
   this->init (sr,0);
 }
