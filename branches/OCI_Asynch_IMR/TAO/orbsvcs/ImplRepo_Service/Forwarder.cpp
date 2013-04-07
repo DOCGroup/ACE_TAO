@@ -200,7 +200,7 @@ ImR_DSI_ResponseHandler::send_ior (const char *pior)
 
       if (!CORBA::is_nil (forward_obj.in ()))
         {
-          this->resp_->invoke_location_forward(forward_obj.in(), true);
+          this->resp_->invoke_location_forward(forward_obj.in(), false);
           delete this;
           return;
         }

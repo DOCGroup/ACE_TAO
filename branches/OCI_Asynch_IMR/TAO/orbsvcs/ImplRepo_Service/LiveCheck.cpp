@@ -278,7 +278,7 @@ LiveCheck::~LiveCheck (void)
       LiveEntryMap::value_type *pair = 0;
       i.next (pair);
       this->entry_map_.unbind(pair);
-      //      delete pair->item();
+      delete pair->item();
     }
 }
 
