@@ -1,4 +1,11 @@
-Sat Apr  6 12:36:48 UTC 2013  Phil Mesnier  <mesnier_p@local>
+Sun Apr  7 13:55:15 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Forwarder.cpp:
+        * orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+
+          Fix for memory leak and scoreboard failures.
+
+Sat Apr  6 12:36:48 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
         * orbsvcs/ImplRepo_Service/INS_Locator.cpp:
