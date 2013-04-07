@@ -108,17 +108,37 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 // FUZZ: disable check_for_ACE_Guard
 
-// Convenient macro for testing for deadlock, as well as for detecting
-// when mutexes fail.
-/* @warning
- *   Use of ACE_GUARD() is rarely correct.  ACE_GUARD() causes the current
- *   function to return if the lock is not acquired.  Since merely returning
- *   (no value) almost certainly fails to handle the acquisition failure
- *   and almost certainly fails to communicate the failure to the caller
- *   for the caller to handle, ACE_GUARD() is almost always the wrong
- *   thing to do.  The same goes for ACE_WRITE_GUARD() and ACE_READ_GUARD() .
- *   ACE_GUARD_REACTION() is better because it lets you specify error
- *   handling code.
+/* Convenient macro for testing for deadlock, as well as for detecting
+ * when mutexes fail.
+ *
+ * The parameters to the ACE_GUARD_XXX macros are used as follows:
+ *
+ * MUTEX - This is the type used as the template parameter for ACE_Guard
+ *
+ * OBJ - Name for the guard object. This name should not be declared
+ *       outside the macro.
+ *
+ * LOCK - The actual lock (mutex) variable. This should be a variable
+ *        of type MUTEX, see above.
+ *
+ * ACTION - Code segment to be run, if and only if the lock is
+ *          acquired.
+ *
+ * REACTION - Code segment to be run, if and only if the lock is not
+ *            acquired.
+ *
+ * RETURN - A value to be returned from the calling function, if and
+ *          only if the lock is not acquired.
+ *
+ * @warning
+ *   Use of ACE_GUARD() is rarely correct.  ACE_GUARD() causes the
+ *   current function to return if the lock is not acquired.  Since
+ *   merely returning (no value) almost certainly fails to handle the
+ *   acquisition failure and almost certainly fails to communicate the
+ *   failure to the caller for the caller to handle, ACE_GUARD() is
+ *   almost always the wrong thing to do.  The same goes for
+ *   ACE_WRITE_GUARD() and ACE_READ_GUARD() .  ACE_GUARD_REACTION() is
+ *   better because it lets you specify error handling code.
  */
 #if !defined (ACE_GUARD_ACTION)
 #define ACE_GUARD_ACTION(MUTEX, OBJ, LOCK, ACTION, REACTION) \

@@ -1,3 +1,9 @@
+Sun Apr  7 00:20:49 UTC 2013  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Global_Macros.h: Added documentation for the arguments to
+          the ACE_GUARD_XXX macros.  Thanks to Neil Youngman <ny at
+          youngman dot org dot uk> for contributing this.
+
 Thu Apr  4 16:29:07 UTC 2013  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * examples/Connection/non_blocking/CPP-acceptor.{h,cpp},
