@@ -14,7 +14,7 @@
 
 #include "tao/ImR_Client/ServerObjectS.h" // ServerObject_AMIS.h
 
-#include "ace/Vector_T.h"
+#include "ace/Unbounded_Set.h"
 #include "ace/Hash_Map_Manager.h"
 #include "ace/SString.h"
 #include "ace/Event_Handler.h"
@@ -194,7 +194,7 @@ class Locator_Export LiveCheck : public ACE_Event_Handler
                                   ACE_Hash<ACE_CString>,
                                   ACE_Equal_To<ACE_CString>,
                                   TAO_SYNCH_MUTEX> LiveEntryMap;
-  typedef ACE_Unbounded_Stack <LiveEntry *> PerClientStack;
+  typedef ACE_Unbounded_Set<LiveEntry *> PerClientStack;
 
   LiveEntryMap entry_map_;
   PerClientStack per_client_;
