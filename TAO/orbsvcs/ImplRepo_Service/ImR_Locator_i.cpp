@@ -520,7 +520,7 @@ ImR_Locator_i::activate_server_i (UpdateableServerInfo& info,
       AsyncAccessManager *aam_raw;
       ACE_NEW (aam_raw, AsyncAccessManager (*info, manual_start, *this));
       aam = aam_raw;
-      this->aam_set_.insert (aam);
+      this->aam_set_.insert_tail (aam);
   }
   else
     {
@@ -902,8 +902,6 @@ ImR_Locator_i::server_is_running
   ImplementationRepository::ServerObject_var s =
     ImplementationRepository::ServerObject::_narrow (obj.in());
 
-  this->pinger_.add_server (name.c_str(), s);
-
   UpdateableServerInfo info(this->repository_.get(), name);
   if (info.null ())
     {
@@ -926,7 +924,7 @@ ImR_Locator_i::server_is_running
                                      DEFAULT_START_LIMIT,
                                      partial_ior,
                                      ior.in (),
-                                     ImplementationRepository::ServerObject::_nil ()
+                                     s.in ()
                                      );
 
       Server_Info_Ptr temp_info = this->repository_->get_server(name);
@@ -943,6 +941,7 @@ ImR_Locator_i::server_is_running
           return;
         }
 
+      this->pinger_.add_server (name.c_str(), s);
       AsyncAccessManager *aam_raw;
       ACE_NEW (aam_raw, AsyncAccessManager (*temp_info, true, *this));
       AsyncAccessManager_ptr aam (aam_raw);
@@ -968,18 +967,22 @@ ImR_Locator_i::server_is_running
           info.edit ()->server = s;
 
           info.update_repo();
+          this->pinger_.add_server (name.c_str(), s);
         }
 
       AsyncAccessManager_ptr aam(this->find_aam (name.c_str()));
       if (*aam != 0)
-        aam->server_is_running (partial_ior);
+        aam->server_is_running (partial_ior, s);
       else
         {
-          AsyncAccessManager *aam_raw;
-          ACE_NEW (aam_raw, AsyncAccessManager (*info, true, *this));
-          AsyncAccessManager_ptr aam (aam_raw);
-          aam->started_running ();
-          this->aam_set_.insert (aam);
+          if (info->activation_mode != ImplementationRepository::PER_CLIENT)
+            {
+              AsyncAccessManager *aam_raw;
+              ACE_NEW (aam_raw, AsyncAccessManager (*info, true, *this));
+              AsyncAccessManager_ptr aam (aam_raw);
+              aam->started_running ();
+              this->aam_set_.insert (aam);
+            }
         }
     }
   _tao_rh->server_is_running ();
@@ -1010,14 +1013,17 @@ ImR_Locator_i::server_is_shutting_down
                 ACE_TEXT ("ImR: Server <%C> is shutting down.\n"),
                 server));
 
-  this->pinger_.remove_server (server);
-  {
-    AsyncAccessManager_ptr aam = this->find_aam (server);
-    if (*aam != 0)
+  if (info->activation_mode != ImplementationRepository::PER_CLIENT)
+    {
+      this->pinger_.remove_server (server);
       {
-        aam->server_is_shutting_down ();
+        AsyncAccessManager_ptr aam = this->find_aam (server);
+        if (*aam != 0)
+          {
+            aam->server_is_shutting_down ();
+          }
       }
-  }
+    }
   info.edit ()->reset ();
   _tao_rh->server_is_shutting_down ();
 }
