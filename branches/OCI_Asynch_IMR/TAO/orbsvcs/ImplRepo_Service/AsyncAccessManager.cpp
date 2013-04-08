@@ -51,8 +51,6 @@ AsyncAccessManager::add_interest (ImR_ResponseHandler *rh)
 
   if (this->info_->activation_mode == ImplementationRepository::PER_CLIENT)
     {
-      ACE_DEBUG ((LM_DEBUG, "AAM adding PerClient interest, this=%x\n", this));
-
       if (!this->send_start_request())
         {
           this->final_state();
@@ -166,8 +164,6 @@ AsyncAccessManager::status (AAM_Status s)
 void
 AsyncAccessManager::activator_replied (bool success)
 {
-  ACE_DEBUG ((LM_DEBUG, "AAM activator_replied PerClient, this=%x, success = %d\n", this, success));
-
   if (success)
     {
       this->status (AAM_WAIT_FOR_RUNNING);
@@ -194,14 +190,11 @@ AsyncAccessManager::server_is_running (const char *partial_ior,
   this->info_->partial_ior = partial_ior;
   this->info_->server = ImplementationRepository::ServerObject::_duplicate (ref);
 
-  ACE_DEBUG ((LM_DEBUG, "AAM server_is_running PerClient, this=%x, calling is_alive\n", this));
-
   if (this->locator_.pinger().is_alive (this->info_->name.c_str()))
     {
       this->status (AAM_SERVER_READY);
       this->final_state ();
     }
-  ACE_DEBUG ((LM_DEBUG, "AAM server_is_running PerClient, this=%x, prepaing for ping\n", this));
 
   // This is not a leak. The listener registers with
   // the pinger and will delete itself when done.

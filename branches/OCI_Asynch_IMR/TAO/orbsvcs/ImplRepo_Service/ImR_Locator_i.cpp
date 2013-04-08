@@ -1086,9 +1086,19 @@ ImR_Locator_i::list
   // Initialize the out variables, so if we return early, they will
   // not be dangling.
   server_iterator = ImplementationRepository::ServerInformationIterator::_nil ();
-  ACE_NEW_THROW_EX (server_list,
-                    ImplementationRepository::ServerInformationList (0),
-                    CORBA::NO_MEMORY ());
+
+  try
+    {
+      ACE_NEW_THROW_EX (server_list,
+                        ImplementationRepository::ServerInformationList (0),
+                        CORBA::NO_MEMORY ());
+    }
+  catch (CORBA::Exception& ex)
+    {
+      ImplementationRepository::AMH_AdministrationExceptionHolder h (ex._tao_duplicate());
+      _tao_rh->list_excep (&h);
+      return;
+    }
 
   Locator_Repository::SIMap::ENTRY* entry = 0;
   Locator_Repository::SIMap::ITERATOR it (this->repository_->servers ());
@@ -1161,8 +1171,6 @@ ImR_Locator_i::list
           CORBA::Object_var obj = this->imr_poa_->id_to_reference (id.in ());
           server_iterator = ImplementationRepository::
             ServerInformationIterator::_unchecked_narrow (obj.in ());
-
-          _tao_rh->list (server_list.in(), server_iterator.in());
         }
       catch (CORBA::Exception& ex)
         {
@@ -1170,6 +1178,7 @@ ImR_Locator_i::list
           _tao_rh->list_excep (&h);
         }
     }
+  _tao_rh->list (server_list.in(), server_iterator.in());
 }
 
 Activator_Info_Ptr
