@@ -140,6 +140,10 @@ LiveEntry::status (LiveStatus l)
     {
       this->owner_->schedule_ping (this);
     }
+  else
+    {
+      this->owner_->remove_per_client_entry (this);
+    }
 }
 
 const ACE_Time_Value &
@@ -193,6 +197,9 @@ LiveEntry::do_ping (PortableServer::POA_ptr poa)
     this->liveliness_ = LS_PING_AWAY;
     this->retry_count_++;
   }
+
+  ACE_DEBUG ((LM_DEBUG, "do_ping sending request for entry = %x\n", this));
+
   PortableServer::ServantBase_var callback = new PingReceiver (this, poa);
   PortableServer::ObjectId_var oid = poa->activate_object (callback.in());
   CORBA::Object_var obj = poa->id_to_reference (oid.in());
@@ -317,9 +324,9 @@ LiveCheck::handle_timeout (const ACE_Time_Value &,
 
   bool want_reping = false;
   ACE_Time_Value next;
-  LiveEntryMap::iterator the_end = this->entry_map_.end();
+  LiveEntryMap::iterator le_end = this->entry_map_.end();
   for (LiveEntryMap::iterator le = this->entry_map_.begin();
-       le != the_end;
+       le != le_end;
        ++le)
     {
       if (le->item ()->do_ping (poa_.in ()))
@@ -336,53 +343,43 @@ LiveCheck::handle_timeout (const ACE_Time_Value &,
         }
 
     }
-#if 0
-  for (LiveEntryMap::iterator le (this->entry_map_);
-       !le.done ();
-       le.advance ())
+
+  PerClientStack::iterator pe_end = this->per_client_.end();
+  int i = 0;
+  for (PerClientStack::iterator pe = this->per_client_.begin();
+       pe != pe_end;
+       ++pe)
     {
-      LiveEntryMap::value_type *pair = 0;
-      le.next(pair);
-      if (pair->item()->do_ping (poa_.in ()))
+      LiveEntry *entry = *pe;
+      ACE_DEBUG ((LM_DEBUG, "Checking PerClient entry[%d] %x\n",i++, entry));
+      if (entry != 0)
         {
-          LiveStatus status = pair->item ()->status ();
-          if (status != LS_DEAD)
-            {
-              if (!want_reping || pair->item ()->next_check() < next)
-                {
-                  want_reping = true;
-                  next = pair->item ()->next_check();
-                }
-            }
-        }
-    }
-#endif
-  for (PerClientStack::ITERATOR pe (this->per_client_);
-       !pe.done ();
-       pe.advance ())
-    {
-      LiveEntry **entry = 0;
-      pe.next(entry);
-      if (*entry != 0)
-        {
-          bool result = (*entry)->do_ping (poa_.in ());
-          LiveStatus status = (*entry)->status ();
+          bool result = entry->do_ping (poa_.in ());
+          LiveStatus status = entry->status ();
           if (result)
             {
               if (status != LS_DEAD)
                 {
-                  if (!want_reping || (*entry)->next_check() < next)
+                  ACE_DEBUG ((LM_DEBUG, "Checking PerClient entry[%d] %x, want_reping = %d next check = %d ms\n",
+                              i++, entry, want_reping, entry->next_check().msec()));
+                  if (!want_reping || entry->next_check() < next)
                     {
                       want_reping = true;
-                      next = (*entry)->next_check();
+                      next = entry->next_check();
                     }
+                }
+              else
+                {
+                  ACE_DEBUG ((LM_DEBUG, "Removing Per Client entry %x, status = DEAD (%d)\n", entry, status));
+                  this->per_client_.remove (entry);
                 }
             }
           else
             {
               if (status != LS_PING_AWAY && status != LS_TRANSIENT)
                 {
-                  this->per_client_.remove (*entry);
+                  ACE_DEBUG ((LM_DEBUG, "Removing Per Client entry %x, status = %d\n", entry, status));
+                  this->per_client_.remove (entry);
                 }
             }
         }
@@ -431,6 +428,7 @@ LiveCheck::remove_server (const char *server)
 void
 LiveCheck::remove_per_client_entry (LiveEntry *e)
 {
+  ACE_DEBUG ((LM_DEBUG, "Explicitly removing PerClient entry %x\n", e));
   this->per_client_.remove (e);
 }
 
@@ -443,7 +441,9 @@ LiveCheck::add_per_client_listener (LiveListener *l,
 
   LiveEntry *entry = 0;
   ACE_NEW_RETURN (entry, LiveEntry (this, 0, ref), false);
-  if (this->per_client_.push(entry) == 0)
+  ACE_DEBUG ((LM_DEBUG, "Adding PerClient entry %x\n", entry));
+
+  if (this->per_client_.insert_tail(entry) == 0)
     {
       entry->add_listener (l);
 
