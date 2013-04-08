@@ -49,6 +49,15 @@ AsyncAccessManager::add_interest (ImR_ResponseHandler *rh)
     this->rh_list_.push_back (rh);
   }
 
+  if (this->info_->activation_mode == ImplementationRepository::PER_CLIENT)
+    {
+      if (!this->send_start_request())
+        {
+          this->final_state();
+        }
+      return;
+   }
+
   if (this->status_ == AAM_SERVER_READY || this->status_ == AAM_SERVER_STARTED_RUNNING)
     {
       if (this->locator_.pinger().is_alive (this->info_->name.c_str()))
@@ -59,7 +68,9 @@ AsyncAccessManager::add_interest (ImR_ResponseHandler *rh)
         }
     }
 
-  if (this->status_ == AAM_INIT || this->status_ == AAM_SERVER_READY || this->status_ == AAM_SERVER_STARTED_RUNNING)
+  if (this->status_ == AAM_INIT ||
+      this->status_ == AAM_SERVER_READY ||
+      this->status_ == AAM_SERVER_STARTED_RUNNING)
     {
       // This is not a leak. The listener registers with
       // the pinger and will delete itself when done.
@@ -172,10 +183,12 @@ AsyncAccessManager::server_is_shutting_down (void)
 }
 
 void
-AsyncAccessManager::server_is_running (const char *partial_ior)
+AsyncAccessManager::server_is_running (const char *partial_ior,
+                                       ImplementationRepository::ServerObject_ptr ref)
 {
   this->status (AAM_WAIT_FOR_ALIVE);
   this->info_->partial_ior = partial_ior;
+  this->info_->server = ImplementationRepository::ServerObject::_duplicate (ref);
 
   if (this->locator_.pinger().is_alive (this->info_->name.c_str()))
     {
@@ -186,9 +199,19 @@ AsyncAccessManager::server_is_running (const char *partial_ior)
   // This is not a leak. The listener registers with
   // the pinger and will delete itself when done.
   AsyncLiveListener *l = 0;
-  ACE_NEW (l, AsyncLiveListener (this->info_->name.c_str(),
-                                 this,
-                                 this->locator_.pinger()));
+  if (this->info_->activation_mode == ImplementationRepository::PER_CLIENT)
+    {
+      ACE_NEW (l, AsyncLiveListener (this->info_->name.c_str(),
+                                     this,
+                                     this->locator_.pinger(),
+                                     this->info_->server.in()));
+    }
+  else
+    {
+      ACE_NEW (l, AsyncLiveListener (this->info_->name.c_str(),
+                                     this,
+                                     this->locator_.pinger()));
+    }
   if (!l->start())
     {
       this->status (AAM_SERVER_DEAD);
@@ -462,7 +485,22 @@ AsyncLiveListener::AsyncLiveListener (const char *server,
   :LiveListener (server),
    aam_ (aam->add_ref ()),
    pinger_ (pinger),
-   status_ (LS_UNKNOWN)
+   status_ (LS_UNKNOWN),
+   per_client_ (false),
+   srv_ref_ (ImplementationRepository::ServerObject::_nil())
+{
+}
+
+AsyncLiveListener::AsyncLiveListener (const char *server,
+                                      AsyncAccessManager *aam,
+                                      LiveCheck &pinger,
+                                      ImplementationRepository::ServerObject_ptr ref)
+  :LiveListener (server),
+   aam_ (aam->add_ref ()),
+   pinger_ (pinger),
+   status_ (LS_UNKNOWN),
+   per_client_ (true),
+   srv_ref_ (ImplementationRepository::ServerObject::_duplicate (ref))
 {
 }
 
@@ -473,7 +511,8 @@ AsyncLiveListener::~AsyncLiveListener (void)
 bool
 AsyncLiveListener::start (void)
 {
-  bool rtn = this->pinger_.add_listener (this);
+  bool rtn = this->per_client_ ? this->pinger_.add_per_client_listener (this,srv_ref_.in())
+    : this->pinger_.add_listener (this);
   if (!rtn)
     delete this;
   return rtn;

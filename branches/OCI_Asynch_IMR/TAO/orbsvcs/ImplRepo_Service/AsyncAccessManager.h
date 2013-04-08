@@ -81,7 +81,8 @@ class AsyncAccessManager
   AAM_Status status (void) const;
 
   void activator_replied (bool success);
-  void server_is_running (const char *partial_ior);
+  void server_is_running (const char *partial_ior,
+                          ImplementationRepository::ServerObject_ptr ref);
   void server_is_shutting_down (void);
   void ping_replied (LiveStatus server);
 
@@ -168,7 +169,13 @@ class AsyncLiveListener : public LiveListener
  public:
   AsyncLiveListener (const char * server,
                      AsyncAccessManager *aam,
+                     LiveCheck &pinger,
+                     ImplementationRepository::ServerObject_ptr ref);
+
+  AsyncLiveListener (const char * server,
+                     AsyncAccessManager *aam,
                      LiveCheck &pinger);
+
   virtual ~AsyncLiveListener (void);
   bool start (void);
 
@@ -178,6 +185,8 @@ class AsyncLiveListener : public LiveListener
   AsyncAccessManager_ptr aam_;
   LiveCheck &pinger_;
   LiveStatus status_;
+  bool per_client_;
+  ImplementationRepository::ServerObject_var srv_ref_;
 };
 
 
