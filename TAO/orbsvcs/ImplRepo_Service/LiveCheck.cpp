@@ -198,8 +198,6 @@ LiveEntry::do_ping (PortableServer::POA_ptr poa)
     this->retry_count_++;
   }
 
-  ACE_DEBUG ((LM_DEBUG, "do_ping sending request for entry = %x\n", this));
-
   PortableServer::ServantBase_var callback = new PingReceiver (this, poa);
   PortableServer::ObjectId_var oid = poa->activate_object (callback.in());
   CORBA::Object_var obj = poa->id_to_reference (oid.in());
@@ -345,13 +343,11 @@ LiveCheck::handle_timeout (const ACE_Time_Value &,
     }
 
   PerClientStack::iterator pe_end = this->per_client_.end();
-  int i = 0;
   for (PerClientStack::iterator pe = this->per_client_.begin();
        pe != pe_end;
        ++pe)
     {
       LiveEntry *entry = *pe;
-      ACE_DEBUG ((LM_DEBUG, "Checking PerClient entry[%d] %x\n",i++, entry));
       if (entry != 0)
         {
           bool result = entry->do_ping (poa_.in ());
@@ -360,8 +356,6 @@ LiveCheck::handle_timeout (const ACE_Time_Value &,
             {
               if (status != LS_DEAD)
                 {
-                  ACE_DEBUG ((LM_DEBUG, "Checking PerClient entry[%d] %x, want_reping = %d next check = %d ms\n",
-                              i++, entry, want_reping, entry->next_check().msec()));
                   if (!want_reping || entry->next_check() < next)
                     {
                       want_reping = true;
@@ -370,7 +364,6 @@ LiveCheck::handle_timeout (const ACE_Time_Value &,
                 }
               else
                 {
-                  ACE_DEBUG ((LM_DEBUG, "Removing Per Client entry %x, status = DEAD (%d)\n", entry, status));
                   this->per_client_.remove (entry);
                 }
             }
@@ -378,7 +371,6 @@ LiveCheck::handle_timeout (const ACE_Time_Value &,
             {
               if (status != LS_PING_AWAY && status != LS_TRANSIENT)
                 {
-                  ACE_DEBUG ((LM_DEBUG, "Removing Per Client entry %x, status = %d\n", entry, status));
                   this->per_client_.remove (entry);
                 }
             }
@@ -428,7 +420,6 @@ LiveCheck::remove_server (const char *server)
 void
 LiveCheck::remove_per_client_entry (LiveEntry *e)
 {
-  ACE_DEBUG ((LM_DEBUG, "Explicitly removing PerClient entry %x\n", e));
   this->per_client_.remove (e);
 }
 
@@ -441,7 +432,6 @@ LiveCheck::add_per_client_listener (LiveListener *l,
 
   LiveEntry *entry = 0;
   ACE_NEW_RETURN (entry, LiveEntry (this, 0, ref), false);
-  ACE_DEBUG ((LM_DEBUG, "Adding PerClient entry %x\n", entry));
 
   if (this->per_client_.insert_tail(entry) == 0)
     {
