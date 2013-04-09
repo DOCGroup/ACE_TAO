@@ -39,6 +39,7 @@ Terminator::svc()
         }
       int delay_secs = ACE_OS::atoi(mb->rd_ptr());
       ACE_OS::sleep(delay_secs);
+      ACE_DEBUG ((LM_DEBUG, "(%P) Terminator::svc() aborting after sleep of %d seconds\n", delay_secs));
       ACE_OS::abort();
     }
   return 0;
