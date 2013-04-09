@@ -100,11 +100,14 @@ class Locator_Export LiveEntry
   void add_listener (LiveListener * ll);
   LiveStatus status (void) const;
   void status (LiveStatus l);
+  void reset_status (void);
+
   bool do_ping (PortableServer::POA_ptr poa);
   const ACE_Time_Value &next_check (void) const;
   static void set_reping_limit (int max);
   bool reping_available (void);
   int next_reping (void);
+  void max_retry_msec (int max);
 
  private:
   LiveCheck *owner_;
@@ -114,6 +117,7 @@ class Locator_Export LiveEntry
   ACE_Time_Value next_check_;
   short retry_count_;
   int repings_;
+  int max_retry_;
 
   typedef ACE_Unbounded_Set<LiveListener *> Listen_Set;
   Listen_Set listeners_;
@@ -178,6 +182,8 @@ class Locator_Export LiveCheck : public ACE_Event_Handler
   void remove_per_client_entry (LiveEntry *entry);
 
   bool add_listener (LiveListener *listener);
+
+  bool add_poll_listener (LiveListener *listener);
 
   bool add_per_client_listener (LiveListener *listener,
                                 ImplementationRepository::ServerObject_ptr ref);

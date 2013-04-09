@@ -26,24 +26,33 @@ int LiveEntry::reping_limit_ = sizeof (LiveEntry::reping_msec_) / sizeof (int);
 void
 LiveEntry::set_reping_limit (int max)
 {
-  LiveEntry::reping_limit_ = max;
+  int array_max =  sizeof (LiveEntry::reping_msec_) / sizeof (int);
+  LiveEntry::reping_limit_ = max < array_max && max >= 0 ? max : array_max;
 }
 
 bool
 LiveEntry::reping_available (void)
 {
-  return this->repings_ < LiveEntry::reping_limit_;
+  return this->repings_ < this->max_retry_;
 }
 
 int
 LiveEntry::next_reping (void)
 {
-  if ( this->repings_ < LiveEntry::reping_limit_)
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_, -1);
+  return this->reping_available() ? LiveEntry::reping_msec_[this->repings_++] : -1;
+}
+
+void
+LiveEntry::max_retry_msec (int msec)
+{
+  ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
+  for (this->max_retry_ = 0;
+       this->max_retry_ <  LiveEntry::reping_limit_ && msec > 0;
+       ++this->max_retry_)
     {
-      return LiveEntry::reping_msec_[this->repings_++];
+      msec -= LiveEntry::reping_msec_[this->repings_];
     }
-  else
-    return -1;
 }
 
 LiveEntry::LiveEntry (LiveCheck *owner,
@@ -56,6 +65,7 @@ LiveEntry::LiveEntry (LiveCheck *owner,
     next_check_ (ACE_High_Res_Timer::gettimeofday_hr()),
     retry_count_ (0),
     repings_ (0),
+    max_retry_ (LiveEntry::reping_limit_),
     listeners_ (),
     lock_ ()
 {
@@ -70,6 +80,17 @@ LiveEntry::add_listener (LiveListener* ll)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
   this->listeners_.insert (ll);
+}
+
+void
+LiveEntry::reset_status (void)
+{
+  ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
+  if ( this->liveliness_ == LS_ALIVE)
+    {
+      this->liveliness_ = LS_UNKNOWN;
+      this->next_check_ = ACE_High_Res_Timer::gettimeofday_hr();
+    }
 }
 
 LiveStatus
@@ -93,14 +114,13 @@ LiveEntry::status (LiveStatus l)
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
     this->liveliness_ = l;
+    if (l == LS_ALIVE)
+      {
+        this->retry_count_ = 0;
+        ACE_Time_Value now (ACE_High_Res_Timer::gettimeofday_hr());
+        this->next_check_ = now + owner_->ping_interval();
+      }
   }
-  if (l == LS_ALIVE)
-    {
-      this->retry_count_ = 0;
-      ACE_Time_Value now (ACE_High_Res_Timer::gettimeofday_hr());
-      this->next_check_ = now + owner_->ping_interval();
-    }
-
   Listen_Set remove;
 
   LiveStatus ls = this->liveliness_;
@@ -444,6 +464,26 @@ LiveCheck::add_per_client_listener (LiveListener *l,
       return true;
     }
   return false;
+}
+
+bool
+LiveCheck::add_poll_listener (LiveListener *l)
+{
+  if (!this->running_)
+    return false;
+
+  LiveEntry *entry = 0;
+  ACE_CString key (l->server());
+  int result = entry_map_.find (key, entry);
+  if (result == -1 || entry == 0)
+    {
+      return false;
+    }
+
+  entry->add_listener (l);
+  entry->reset_status ();
+  this->schedule_ping (entry);
+  return true;
 }
 
 bool
