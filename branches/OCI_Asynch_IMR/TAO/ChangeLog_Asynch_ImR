@@ -1,3 +1,19 @@
+Tue Apr  9 15:44:55 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+
+          Cleaned up explicit debug output, added a catch for errors during
+          connection establishment with the async ping. The AMI callback
+          exception handler is only invoked after a successful send of the
+          invocation. A connection failure is still an exception in the
+          caller's context.
+
+        * orbsvcs/tests/ImplRepo/servers_list/Terminator.cpp:
+        * orbsvcs/tests/ImplRepo/servers_list/run_test.pl:
+
+          Reverted earlier change.
+
 Tue Apr  9 14:42:10 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:

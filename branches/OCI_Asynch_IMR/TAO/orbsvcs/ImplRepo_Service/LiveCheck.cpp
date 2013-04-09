@@ -212,18 +212,24 @@ LiveEntry::do_ping (PortableServer::POA_ptr poa)
     default:;
     }
 
-  {
-    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_, false);
-    this->liveliness_ = LS_PING_AWAY;
-    this->retry_count_++;
-  }
-
   PortableServer::ServantBase_var callback = new PingReceiver (this, poa);
   PortableServer::ObjectId_var oid = poa->activate_object (callback.in());
   CORBA::Object_var obj = poa->id_to_reference (oid.in());
   ImplementationRepository::AMI_ServerObjectHandler_var cb =
     ImplementationRepository::AMI_ServerObjectHandler::_narrow (obj.in());
-  this->ref_->sendc_ping (cb.in());
+  try
+    {
+      this->ref_->sendc_ping (cb.in());
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_, false);
+      this->liveliness_ = LS_PING_AWAY;
+      this->retry_count_++;
+    }
+  catch (CORBA::Exception &)
+    {
+      this->status (LS_DEAD);
+      this->retry_count_++;
+    }
+
   return false;
 }
 

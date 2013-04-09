@@ -1389,14 +1389,6 @@ SyncListener::SyncListener (const char *server,
 bool
 SyncListener::is_alive (void)
 {
-#if 0
-  this->status_ = this->pinger_.is_alive(this->server());
-
-  if (this->status_ == LS_ALIVE)
-    return true;
-  else if (this->status_ == LS_DEAD)
-    return false;
-#endif
   this->callback_ = true;
   while (!this->got_it_)
     {
@@ -1412,8 +1404,7 @@ SyncListener::is_alive (void)
       this->orb_->perform_work (delay);
     }
   this->got_it_ = false;
-  ACE_DEBUG ((LM_DEBUG, "SyncListener::is_alive returning %d (stat = %d)\n", status_ != LS_DEAD, status_));
-  return this->status_ != LS_DEAD;
+  return this->status_ == LS_ALIVE;
 }
 
 bool

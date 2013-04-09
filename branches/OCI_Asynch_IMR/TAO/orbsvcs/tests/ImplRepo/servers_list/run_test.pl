@@ -305,12 +305,7 @@ sub servers_list_test
 
     my $result = 0;
     my $start_time = time();
-    my $verbose_logging = "";
-    if ($debug_level > 0) {
-        $verbose_logging = "-ORBDebugLevel 10 -ORBVerboseLogging 1 -ORBLogFile imr_loc.log";
-    }
-    print "starting IMR with command line: -d $debug_level $verbose_logging -v 1000 -o $imr_imriorfile -orbendpoint iiop://:$port\n";
-    $IMR->Arguments ("-d $debug_level $verbose_logging -v 1000 -o $imr_imriorfile -orbendpoint iiop://:$port");
+    $IMR->Arguments ("-d $debug_level -v 1000 -o $imr_imriorfile -orbendpoint iiop://:$port");
 
     ##### Start ImplRepo #####
     $IMR_status = $IMR->Spawn ();
