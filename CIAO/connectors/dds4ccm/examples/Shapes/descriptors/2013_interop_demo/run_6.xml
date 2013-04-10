@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Id$ -->
+<dds xmlns="http://www.omg.org/dds"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:schemaLocation="http://www.omg.org/dds dds_qos.xsd">
+  <qos_profile name="square">
+     <publisher_qos>
+          <partition>
+            <name>
+               <element>A</element>
+            </name>
+         </partition>
+     </publisher_qos>
+    <subscriber_qos>
+          <partition>
+            <name>
+               <element>A</element>
+            </name>
+         </partition>
+     </subscriber_qos>
+  </qos_profile>
+  <qos_profile name="circle">
+     <publisher_qos>
+          <partition>
+            <name>
+               <element>B</element>
+            </name>
+         </partition>
+     </publisher_qos>
+    <subscriber_qos>
+          <partition>
+            <name>
+               <element>A</element>
+            </name>
+         </partition>
+     </subscriber_qos>
+  </qos_profile>
+  <qos_profile name="triangle">
+     <publisher_qos>
+          <partition>
+            <name>
+               <element>*</element>
+            </name>
+         </partition>
+     </publisher_qos>
+    <subscriber_qos>
+          <partition>
+            <name>
+               <element>A</element>
+            </name>
+         </partition>
+     </subscriber_qos>
+  </qos_profile>
+</dds>

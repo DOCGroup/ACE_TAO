@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Id$ -->
+<dds xmlns="http://www.omg.org/dds"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:schemaLocation="http://www.omg.org/dds dds_qos.xsd">
+  <qos_profile name="square">
+     <datawriter_qos>
+          <ownership>
+               <kind>SHARED_OWNERSHIP_QOS</kind>
+         </ownership>
+     </datawriter_qos>
+    <datareader_qos>
+          <ownership>
+               <kind>SHARED_OWNERSHIP_QOS</kind>
+          </ownership>
+     </datareader_qos>
+  </qos_profile>
+  <qos_profile name="circle">
+     <datawriter_qos>
+          <ownership>
+               <kind>EXCLUSIVE_OWNERSHIP_QOS</kind>
+         </ownership>
+     </datawriter_qos>
+    <datareader_qos>
+          <ownership>
+               <kind>EXCLUSIVE_OWNERSHIP_QOS</kind>
+          </ownership>
+     </datareader_qos>
+  </qos_profile>
+  <qos_profile name="triangle">
+     <datawriter_qos>
+          <ownership>
+               <kind>EXCLUSIVE_OWNERSHIP_QOS</kind>
+         </ownership>
+     </datawriter_qos>
+    <datareader_qos>
+          <ownership>
+               <kind>SHARED_OWNERSHIP_QOS</kind>
+          </ownership>
+     </datareader_qos>
+  </qos_profile>
+</dds>

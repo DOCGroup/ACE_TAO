@@ -84,8 +84,28 @@ namespace CIAO_Shapes_Receiver_Impl
   info_out_data_listener_exec_i::on_one_data (const ::ShapeType & datum,
   const ::CCM_DDS::ReadInfo & /* info */)
   {
+    ::Shapes::Reader_var reader =
+      this->ciao_context_->get_connection_info_out_data ();
+    ::CORBA::Object_var cmp = reader->_get_component ();
+    if (::CORBA::is_nil (cmp.in ()))
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: info_out_data_listener_exec_i::on_one_data - "
+                              "Unable to get component interface\n"));
+        throw ::CORBA::INTERNAL ();
+      }
+    ::Shapes::CCM_DDS_Event_var conn =
+      ::Shapes::CCM_DDS_Event::_narrow (cmp.in ());
+    if (::CORBA::is_nil (conn.in ()))
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: info_out_data_listener_exec_i::on_one_data - "
+                              "Unable to narrow connector interface\n"));
+        throw ::CORBA::INTERNAL ();
+      }
+    CORBA::String_var topic = conn->topic_name ();
+
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ShapeType_Listener: ")
-            ACE_TEXT ("received shape_info for <%C> at X <%u> Y <%u> size <%u>\n"),
+            ACE_TEXT ("received shape_info <%C> for <%C> at X <%u> Y <%u> size <%u>\n"),
+            topic.in (),
             datum.color.in (),
             datum.x,
             datum.y,
@@ -216,13 +236,31 @@ namespace CIAO_Shapes_Receiver_Impl
           this->ciao_context_->get_connection_info_out_data ();
         if (! ::CORBA::is_nil (reader.in ()))
           {
+            ::CORBA::Object_var cmp = reader->_get_component ();
+            if (::CORBA::is_nil (cmp.in ()))
+              {
+                ACE_ERROR ((LM_ERROR, "ERROR: Receiver_exec_i::read_one - "
+                                      "Unable to get component interface\n"));
+                throw ::CORBA::INTERNAL ();
+              }
+            ::Shapes::CCM_DDS_Event_var conn =
+              ::Shapes::CCM_DDS_Event::_narrow (cmp.in ());
+            if (::CORBA::is_nil (conn.in ()))
+              {
+                ACE_ERROR ((LM_ERROR, "ERROR: Receiver_exec_i::read_one - "
+                                      "Unable to narrow connector interface\n"));
+                throw ::CORBA::INTERNAL ();
+              }
+            CORBA::String_var topic = conn->topic_name ();
+
             reader->read_one_last (shape_info, readinfo, ::DDS::HANDLE_NIL);
             ACE_Time_Value time;
             time <<= readinfo.source_timestamp;
             ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ONE Read_Info ")
                       ACE_TEXT (" -> date = %#T\n"), &time));
             ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ ON shape info : ")
-                ACE_TEXT ("received shape_info for <%C> at X <%u> Y <%u> size <%u>\n"),
+                ACE_TEXT ("received shape_info <%C> for <%C> at X <%u> Y <%u> size <%u>\n"),
+                topic.in (),
                 shape_info.color.in (),
                 shape_info.x,
                 shape_info.y,
@@ -250,6 +288,23 @@ namespace CIAO_Shapes_Receiver_Impl
       this->ciao_context_->get_connection_info_out_data ();
     if (! ::CORBA::is_nil (reader.in ()))
       {
+        ::CORBA::Object_var cmp = reader->_get_component ();
+        if (::CORBA::is_nil (cmp.in ()))
+          {
+            ACE_ERROR ((LM_ERROR, "ERROR: Receiver_exec_i::read_all - "
+                                  "Unable to get component interface\n"));
+            throw ::CORBA::INTERNAL ();
+          }
+        ::Shapes::CCM_DDS_Event_var conn =
+          ::Shapes::CCM_DDS_Event::_narrow (cmp.in ());
+        if (::CORBA::is_nil (conn.in ()))
+          {
+            ACE_ERROR ((LM_ERROR, "ERROR: Receiver_exec_i::read_all - "
+                                  "Unable to narrow connector interface\n"));
+            throw ::CORBA::INTERNAL ();
+          }
+        CORBA::String_var topic = conn->topic_name ();
+
         reader->read_all(shape_infos, readinfoseq);
         for(CORBA::ULong i = 0; i < readinfoseq.length(); ++i)
           {
@@ -261,8 +316,8 @@ namespace CIAO_Shapes_Receiver_Impl
         for(CORBA::ULong i = 0; i < shape_infos.length(); ++i)
           {
             ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ALL Shape Info : ")
-                ACE_TEXT ("received shape_info for <%C> at X <%u> Y <%u> size <%u>\n"),
-                i,
+                ACE_TEXT ("received shape_info <%C> for <%C> at X <%u> Y <%u> size <%u>\n"),
+                topic.in (),
                 shape_infos[i].color.in (),
                 shape_infos[i].x,
                 shape_infos[i].y,
@@ -288,6 +343,23 @@ namespace CIAO_Shapes_Receiver_Impl
           this->ciao_context_->get_connection_info_get_fresh_data ();
         if (! ::CORBA::is_nil (getter.in ()))
           {
+            ::CORBA::Object_var cmp = getter->_get_component ();
+            if (::CORBA::is_nil (cmp.in ()))
+              {
+                ACE_ERROR ((LM_ERROR, "ERROR: Receiver_exec_i::get_one - "
+                                      "Unable to get component interface\n"));
+                throw ::CORBA::INTERNAL ();
+              }
+            ::Shapes::CCM_DDS_Event_var conn =
+              ::Shapes::CCM_DDS_Event::_narrow (cmp.in ());
+            if (::CORBA::is_nil (conn.in ()))
+              {
+                ACE_ERROR ((LM_ERROR, "ERROR: Receiver_exec_i::get_one - "
+                                      "Unable to narrow connector interface\n"));
+                throw ::CORBA::INTERNAL ();
+              }
+            CORBA::String_var topic = conn->topic_name ();
+
             if (getter->get_one (shape_info.out (), readinfo.out ()))
               {
                 ACE_Time_Value time;
@@ -295,7 +367,8 @@ namespace CIAO_Shapes_Receiver_Impl
                 ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("GET_ONE ReadInfo -> ")
                                       ACE_TEXT ("date = %#T\n"), &time));
                 ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("GET_ONE ShapeType : ")
-                    ACE_TEXT ("received shape_info for <%C> at X <%u> Y <%u> size <%u>\n"),
+                    ACE_TEXT ("received shape_info <%C> for <%C> at X <%u> Y <%u> size <%u>\n"),
+                    topic.in (),
                     shape_info->color.in (),
                     shape_info->x,
                     shape_info->y,
@@ -458,7 +531,7 @@ namespace CIAO_Shapes_Receiver_Impl
   Receiver_exec_i::ccm_activate (void)
   {
     ::CCM_DDS::DataListenerControl_var lc =
-    this->ciao_context_->get_connection_info_out_data_control ();
+      this->ciao_context_->get_connection_info_out_data_control ();
 
     if (::CORBA::is_nil (lc.in ()))
       {

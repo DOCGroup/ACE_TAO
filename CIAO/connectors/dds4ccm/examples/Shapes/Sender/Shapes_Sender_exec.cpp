@@ -146,8 +146,26 @@ namespace CIAO_Shapes_Sender_Impl
           this->ciao_context_->get_connection_info_write_data ();
         if (! ::CORBA::is_nil (writer.in ()))
           {
+            ::CORBA::Object_var cmp = writer->_get_component ();
+            if (::CORBA::is_nil (cmp.in ()))
+              {
+                ACE_ERROR ((LM_ERROR, "ERROR: Sender_exec_i::tick - "
+                                      "Unable to get component interface\n"));
+                throw ::CORBA::INTERNAL ();
+              }
+            ::Shapes::CCM_DDS_Event_var conn =
+              ::Shapes::CCM_DDS_Event::_narrow (cmp.in ());
+            if (::CORBA::is_nil (conn.in ()))
+              {
+                ACE_ERROR ((LM_ERROR, "ERROR: Sender_exec_i::tick - "
+                                      "Unable to narrow connector interface\n"));
+                throw ::CORBA::INTERNAL ();
+              }
+            CORBA::String_var topic = conn->topic_name ();
+
             writer->write_one (*this->square_, this->instance_handle_);
-            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("UPDATED Shape_info for <%C> %u:%u:%u\n"),
+            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("UPDATED Shape_info <%C> for <%C> %u:%u:%u\n"),
+                      topic.in (),
                       this->square_->color.in (),
                       this->square_->x,
                       this->square_->y,
@@ -162,8 +180,8 @@ namespace CIAO_Shapes_Sender_Impl
     catch (const CCM_DDS::NonExistent& )
       {
         ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("Shape_info for <%C> not updated: <%C> didn't exist.\n"),
-                    this->square_->color.in (), this->square_->color.in ()));
+                    ACE_TEXT ("Shape_info for <%C> not updated: didn't exist.\n"),
+                    this->square_->color.in ()));
       }
     catch (const CCM_DDS::InternalError& )
       {
