@@ -188,7 +188,7 @@ class Locator_Export LiveCheck : public ACE_Event_Handler
   bool add_per_client_listener (LiveListener *listener,
                                 ImplementationRepository::ServerObject_ptr ref);
 
-  void schedule_ping (LiveEntry *entry);
+  bool schedule_ping (LiveEntry *entry);
 
   LiveStatus is_alive (const char *server);
 
