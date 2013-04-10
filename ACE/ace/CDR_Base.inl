@@ -145,12 +145,14 @@ ACE_CDR::swap_8 (const char* orig, char* target)
 #elif defined (ACE_HAS_BSWAP_64)
   *reinterpret_cast<uint64_t *> (target) =
     bswap_64 (*reinterpret_cast<uint64_t const *> (orig));
-#elif (defined (__amd64__) || defined (__x86_64__)) && defined(__GNUG__)
+#elif (defined (__amd64__) || defined (__x86_64__)) && defined(__GNUG__) \
+    && !defined(ACE_LACKS_INLINE_ASSEMBLY)
   register unsigned long x =
     * reinterpret_cast<const unsigned long*> (orig);
   asm ("bswapq %1" : "=r" (x) : "0" (x));
   *reinterpret_cast<unsigned long*> (target) = x;
-#elif defined(ACE_HAS_PENTIUM) && defined(__GNUG__)
+#elif defined(ACE_HAS_PENTIUM) && defined(__GNUG__) \
+    && !defined(ACE_LACKS_INLINE_ASSEMBLY)
   register unsigned int i =
     *reinterpret_cast<const unsigned int*> (orig);
   register unsigned int j =

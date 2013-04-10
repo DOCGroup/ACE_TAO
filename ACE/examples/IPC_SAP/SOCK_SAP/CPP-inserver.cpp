@@ -12,7 +12,7 @@
 #include "ace/Basic_Types.h"
 #include "ace/OS_NS_sys_select.h"
 #include "ace/OS_main.h"
-
+#include "ace/Truncate.h"
 
 
 // Are we running verbosely?
@@ -328,7 +328,7 @@ run_event_loop (u_short port)
       ACE_Time_Value timeout (ACE_DEFAULT_TIMEOUT);
       ACE_Handle_Set temp = handle_set;
 
-      int result = ACE_OS::select (int (oneway_acceptor.get_handle ()) + 1,
+      int result = ACE_OS::select (ACE_Utils::truncate_cast<int> ((intptr_t)oneway_acceptor.get_handle ()) + 1,
                                    (fd_set *) temp,
                                    0,
                                    0,

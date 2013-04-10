@@ -28,7 +28,8 @@ void create_large_env (setenvfn_t setenv, void *ctx)
   static const size_t varsize = 1200;
   for (int i = 0; i < 26; i++)
     {
-      char name[2] = { 'A' + i, '\0' };
+      char name[2] = { 'A', '\0' };
+      name[0] += i;
       char value[varsize];
       ACE_OS::memset (value, 'R', varsize);
       value[varsize - 1] = '\0';
