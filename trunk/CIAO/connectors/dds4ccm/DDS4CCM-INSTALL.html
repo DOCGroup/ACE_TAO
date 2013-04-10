@@ -52,7 +52,12 @@ For compiling and installing CIAO see <a href="../../CIAO-INSTALL.html">CIAO-INS
     </p>
     <p>
       To be sure that CIAO, DAnCE and DDS4CCM are build correctly, one might
-      use the $CIAO_ROOT/CIAO_TAO_DAnCE.mwc workspace for RTI DDS and $CIAO_ROOT/CIAO_TAO_DAnCE_OpenDDS.mwc for OpenDDS.
+      use the $CIAO_ROOT/CIAO_TAO_DAnCE.mwc workspace for RTI DDS. 
+<p>
+</p>
+      When using DDS4CCM with OpenDDS we commend you to use the $CIAO_ROOT/CIAO_TAO_DAnCE_OpenDDS.mwc workspace. This workspace
+      will compile all needed parts of ACE, TAO, CIAO, DAnCE, and OpenDDS. OpenDDS has to be compiled before compiling DDS4CCM
+      because we are using several of the OpenDDS libraries and the OpenDDS IDL compiler.
     </p>
     <hr>
 

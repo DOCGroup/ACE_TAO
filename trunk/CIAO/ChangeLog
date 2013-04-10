@@ -1,3 +1,8 @@
+Wed Apr 10 14:08:25 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/DDS4CCM-INSTALL.html:
+          Extended instructions for OpenDDS
+
 Thu Mar 14 12:42:30 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * CIAO_TAO_DAnCE_OpenDDS_shapes.mwc:
