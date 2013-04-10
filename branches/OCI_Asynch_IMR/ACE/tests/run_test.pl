@@ -115,6 +115,7 @@ sub run_program ($@)
     ## if the executable doesn't exist, the error will show
     ## up as part of the previous test.
     print "auto_run_tests: tests/$path $arguments\n";
+    $ENV{COVERITY_TEST_NAME} = "tests/$path";
 
     my ($program, $dir, $suffix) = fileparse($path);
     my $start_dir = getcwd ();
@@ -127,7 +128,6 @@ sub run_program ($@)
     unlink "core";
 
     my $P = $target->CreateProcess($program, $arguments);
-
     if ($config_list->check_config ('Valgrind')) {
       $P->IgnoreExeSubDir(1);
     }

@@ -141,7 +141,7 @@ ACE_SV_Semaphore_Simple::name_2_key (const char *name)
 #  pragma warning(push)
 #  pragma warning(disable : 4312)
 #endif /* defined (ACE_WIN32) && defined (_MSC_VER) */
-  return (key_t) ACE::crc32 (name);
+  return (key_t)(intptr_t)ACE::crc32 (name);
 #if defined (ACE_WIN32) && defined (_MSC_VER)
 #  pragma warning(pop)
 #endif /* defined (ACE_WIN32) && defined (_MSC_VER) */

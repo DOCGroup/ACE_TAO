@@ -13,9 +13,8 @@
 #include "ace/Svc_Handler.h"
 #include "ace/Sig_Adapter.h"
 
-
-template <ACE_PEER_STREAM_1>
-class Svc_Handler : public ACE_Svc_Handler <ACE_PEER_STREAM_2, ACE_NULL_SYNCH>
+template <typename PEER_STREAM>
+class Svc_Handler : public ACE_Svc_Handler <PEER_STREAM, ACE_NULL_SYNCH>
 {
   // = TITLE
   //     This class does the work once the <ACE_Oneshot_Acceptor> has
@@ -37,12 +36,12 @@ public:
   // Handles acceptor timeouts.
 
 private:
-  typedef ACE_Svc_Handler <ACE_PEER_STREAM_2, ACE_NULL_SYNCH>
+  typedef ACE_Svc_Handler <PEER_STREAM, ACE_NULL_SYNCH>
           SVC_HANDLER;
 };
 
-template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
-class IPC_Server : public ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>
+template <typename SVC_HANDLER, typename PEER_ACCEPTOR>
+class IPC_Server : public ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>
 {
   // = TITLE
   //     This class illustrates how the <ACE_Oneshot_Acceptor> works.
@@ -71,10 +70,10 @@ public:
   // Run the interative service.
 
 private:
-  typedef ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>
+  typedef ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>
           inherited;
 
-  ACE_PEER_ACCEPTOR_ADDR server_addr_;
+  typename PEER_ACCEPTOR::PEER_ADDR server_addr_;
   // Address of this server.
 
   ACE_Synch_Options options_;
