@@ -1,0 +1,40 @@
+// -*- MPC -*-
+// $Id$
+
+project(*idl): taoidldefaults {
+  IDL_Files {
+    MCast.idl
+  }
+  custom_only = 1
+}
+
+project(*server): namingexe, iortable, svc_utils {
+  exename = server
+
+  after += *idl
+  Source_Files {
+    server_i.cpp
+    MCast_Server_i.cpp
+    MCastS.cpp
+    MCastC.cpp
+    server.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*client): namingexe, iortable, svc_utils {
+  exename = client
+
+  after += *idl
+  Source_Files {
+    ior_mcast_client_i.cpp
+    server_i.cpp
+    MCast_Server_i.cpp
+    MCastS.cpp
+    MCastC.cpp
+    client.cpp
+  }
+  IDL_Files {
+  }
+}

@@ -1,0 +1,19 @@
+// $Id$
+
+#include <Components.idl>
+
+eventtype foo_event
+{
+};
+
+interface A
+{
+  long do_something ();
+};
+
+connector B
+{
+  provides A x;
+  uses A y;
+  publishes foo_event p_foo;
+};

@@ -1,0 +1,50 @@
+// -*- MPC -*-
+// $Id$
+
+project(*IDL): taoidldefaults, strategies {
+  IDL_Files {
+    cubit.idl
+  }
+  custom_only = 1
+}
+
+project(*server): taoserver, utils, strategies, avoids_corba_e_micro {
+  after += *IDL
+
+  Source_Files {
+    Timer.cpp
+    Cubit_Task.cpp
+    Globals.cpp
+    cubit_i.cpp
+    server.cpp
+    cubitS.cpp
+    cubitC.cpp
+  }
+
+  IDL_Files {
+  }
+}
+
+project(*client): taoclient, utils, strategies, avoids_corba_e_micro {
+  exename = client
+  after += *IDL
+  avoids += ace_for_tao
+  Source_Files {
+    Timer.cpp
+    Globals.cpp
+    cubit_i.cpp
+    Cubit_Task.cpp
+    Util_Thread.cpp
+    Task_Client.cpp
+    client.cpp
+    cubitS.cpp
+    cubitC.cpp
+  }
+
+  IDL_Files {
+  }
+
+  verbatim(gnuace, local) {
+    LDLIBS += $(MATHLIB)
+  }
+}

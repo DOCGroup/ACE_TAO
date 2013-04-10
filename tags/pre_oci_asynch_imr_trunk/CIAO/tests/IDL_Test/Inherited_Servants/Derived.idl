@@ -1,0 +1,65 @@
+// $Id$
+
+#ifndef DERIVED_IDL
+#define DERIVED_IDL
+
+#include <Components.idl>
+
+#include "Base.idl"
+
+#pragma ciao lem "DerivedE.idl"
+
+module Inherited
+{
+  interface derived_interface {
+    void do_derived ();
+    readonly attribute string str_derived_interface;
+  };
+
+  interface derived_2_interface : derived_interface {
+    void do_derived_2 ();
+    readonly attribute string str_derived_interface_2;
+  };
+
+  interface Tester
+  {
+    void set_long_base (in long base);
+    long get_long_base ();
+
+    void set_long_derived (in long derived);
+    long get_long_derived ();
+  };
+
+  component Derived_comp : Inherited::Base_comp
+    supports Inherited::Tester
+  {
+    provides Inherited::derived_interface prov_derived;
+    uses     Inherited::derived_interface uses_derived;
+
+    attribute long derived;
+  };
+
+  component Derived_2_comp : Inherited::Derived_comp
+  {
+    provides Inherited::derived_2_interface prov_derived_2;
+    uses     Inherited::derived_2_interface uses_derived_2;
+
+    attribute long derived_2;
+  };
+};
+
+// Without a module
+interface derived_3_interface : Inherited::derived_interface {
+  void do_derived_3 ();
+  readonly attribute string str_derived_interface_3;
+};
+
+component Derived_3_comp : Inherited::Derived_comp
+{
+  provides derived_3_interface prov_derived_3;
+  uses     derived_3_interface uses_derived_3;
+
+  attribute long derived_3;
+};
+
+#endif /* DERIVED_IDL */

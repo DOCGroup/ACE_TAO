@@ -1,0 +1,4 @@
+// $Id$
+#include "tao/LongSeq.pidl"
+
+typedef sequence<long> MyLongSeq;
