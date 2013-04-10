@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--  -->
+<!--  $Id$ -->
+<!--  -->
+
+<!--
+/*
+ *
+ */
+-->
+
+<project name="wc_test" default="compile" basedir=".">
+  <target name="init" >
+    <property environment="env" />
+    <property name="jacorb.home" value="${env.JACORB_HOME}" />
+    <property name="debug" value="on" />
+
+    <!-- generated source -->
+    <mkdir dir="gensrc" />
+    <!-- compiled java -->
+    <mkdir dir="../classes" />
+    <taskdef name="jacidl" classname="org.jacorb.idl.JacIDL">
+      <classpath>
+        <fileset dir="${jacorb.home}/lib">
+          <include name="*.jar"/>
+        </fileset>
+      </classpath>
+    </taskdef>
+  </target>
+
+  <target name="compile" depends="init">
+    <jacidl srcdir="." destdir="gensrc" />
+    <javac debug="${debug}"
+           debuglevel="${debuglevel}"
+           srcdir="."
+           destdir="../classes" >
+    <classpath>
+      <fileset dir="${jacorb.home}/lib">
+         <include name="*.jar"/>
+        </fileset>
+      </classpath>
+    </javac>
+  </target>
+
+</project>

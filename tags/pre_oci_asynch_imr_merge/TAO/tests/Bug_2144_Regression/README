@@ -1,0 +1,4 @@
+$Id$
+
+There is nothing to run for this test. It passes if the generated code
+compiles. See bugzilla #2144.

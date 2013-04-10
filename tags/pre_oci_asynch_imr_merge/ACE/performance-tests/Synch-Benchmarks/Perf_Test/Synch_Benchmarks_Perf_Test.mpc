@@ -1,0 +1,11 @@
+// -*- MPC -*-
+// $Id$
+
+project : acelib {
+  sharedname = Perf_Test
+  avoids   += ace_for_tao
+  after    += Synch_Lib
+  libs     += Synch_Lib
+  libpaths += ../Synch_Lib
+  includes += ..
+}

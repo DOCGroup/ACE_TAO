@@ -1,0 +1,7 @@
+// -*- MPC -*-
+// $Id$
+
+project : dance, dance_deployment_stub, dance_skel, dance_tools {
+   after += DAnCE_Artifact_Installation
+   libs += DAnCE_Artifact_Installation
+}

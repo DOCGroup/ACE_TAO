@@ -1,0 +1,17 @@
+//
+// $Id$
+//
+
+#include "ccm/CCM_Cookie.idl"
+
+module Test
+{
+  interface Cook
+  {
+    ::Components::Cookie get_cookie ();
+
+    void check_cookie (in ::Components::Cookie ck);
+
+    oneway void shutdown ();
+  };
+};

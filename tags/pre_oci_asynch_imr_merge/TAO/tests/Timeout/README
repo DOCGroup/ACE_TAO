@@ -1,0 +1,19 @@
+$Id$
+
+        A simple test for timeouts.  The client sets each one of the
+policy overrides (object, thread and ORB) and issues requests using
+those policies.  The requests take a client controlled amount of time
+on the server.
+
+        As the client increases the duration of the request the
+requests should start to timeout.
+
+Please see the file README.expected_behavior for a more detailed
+description of what to expect and what has been observed on real-time Linux and non real-time Linux operating systems.
+
+        To run it do:
+
+$ server -o test.ior
+$ client -k file://test.ior -l 5 -h 15
+
+        or use the run_test.pl script.
