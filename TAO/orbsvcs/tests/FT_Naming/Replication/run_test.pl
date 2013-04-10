@@ -61,6 +61,18 @@ my $test_primary_iorfile = $test->LocalFile ($primary_iorfile);
 
 $status = 0;
 
+sub clean_persistence_dir
+{
+    chdir $naming_persistence_dir;
+    opendir(THISDIR, ".");
+    @allfiles = grep(!/^\.\.?$/, readdir(THISDIR));
+    closedir(THISDIR);
+    foreach $tmp (@allfiles){
+        $test->DeleteFile ($tmp);
+    }
+    chdir "..";
+}
+
 print "INFO: Running the test in ", getcwd(), "\n";
 
 sub clean_persistence_dir($$)
@@ -162,11 +174,7 @@ print STDERR "Starting Client: $prog $args\n";
 
 $CL = $test->CreateProcess ("$prog", "$args");
 
-# Some systems may take a very long time to process 100 objects.
-# For example, on a Solaris/SPARC system it was found that it took
-# 8 seconds to bind 100 objects compared to 0.08 seconds on a
-# Linux/Intel computer. So add to the wait time.
-$client = $CL->SpawnWaitKill ($test->ProcessStartWaitInterval() + 105);
+$client = $CL->SpawnWaitKill ($test->ProcessStartWaitInterval());
 
 if ($client != 0) {
     print STDERR "ERROR: client returned $client\n";

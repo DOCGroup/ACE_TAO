@@ -11,7 +11,6 @@
 #include "ace/Guard_T.h"
 #include "ace/Timer_Wheel_T.h"
 #include "ace/Log_Msg.h"
-#include "ace/Truncate.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -322,7 +321,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::generate_timer_id (u_in
 #  pragma warning(push)
 #  pragma warning(disable : 4311)
 #endif /* ACE_WIN64 */
-  long next_cnt = ACE_Utils::truncate_cast<long> ((intptr_t)root->get_act ());
+  long next_cnt = reinterpret_cast<long> (root->get_act ());
 #if defined (ACE_WIN64)
 #  pragma warning(pop)
 #endif /* ACE_WIN64 */

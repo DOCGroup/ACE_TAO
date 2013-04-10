@@ -20,9 +20,6 @@
 
 static const int DEFAULT_START_LIMIT = 1;
 
-static const int PING_RETRY_SCHEDULE[] = {0, 10, 100, 500, 1000, 1000, 1000,
-                                          1000, 5000, 5000};
-
 static const ACE_Time_Value DEFAULT_SERVER_TIMEOUT (0, 10 * 1000); // 10ms
 
 /// We want to give shutdown a little more time to work, so that we
@@ -56,8 +53,9 @@ createPersistentPOA (PortableServer::POA_ptr root_poa, const char* poa_name) {
 }
 
 ImR_Locator_i::ImR_Locator_i (void)
-  : forwarder_ (*this)
+  : dsi_forwarder_ (*this)
   , ins_locator_ (0)
+  , aam_set_ ()
   , debug_ (0)
   , read_only_ (false)
   , unregister_if_address_reused_ (false)
@@ -95,8 +93,9 @@ ImR_Locator_i::init_with_orb (CORBA::ORB_ptr orb, Options& opts)
   this->root_poa_ = PortableServer::POA::_narrow (obj.in ());
   ACE_ASSERT (! CORBA::is_nil (this->root_poa_.in ()));
 
-  this->forwarder_.init (orb);
-  this->adapter_.init (& this->forwarder_);
+  this->dsi_forwarder_.init (orb);
+  this->adapter_.init (& this->dsi_forwarder_);
+  this->pinger_.init (orb, ACE_Time_Value (10,0)); // ping_interval_);
 
   // Register the Adapter_Activator reference to be the RootPOA's
   // Adapter Activator.
@@ -107,18 +106,8 @@ ImR_Locator_i::init_with_orb (CORBA::ORB_ptr orb, Options& opts)
                                         "ImplRepo_Service");
   ACE_ASSERT (! CORBA::is_nil (this->imr_poa_.in ()));
 
-  waiter_svt_.debug (debug_ > 1);
   PortableServer::ObjectId_var id =
-    PortableServer::string_to_ObjectId ("ImR_AsyncStartupWaiter");
-  this->imr_poa_->activate_object_with_id (id.in (), &waiter_svt_);
-  obj = this->imr_poa_->id_to_reference (id.in ());
-  if (startup_timeout_ > ACE_Time_Value::zero)
-    {
-      obj = this->set_timeout_policy (obj.in (), startup_timeout_);
-    }
-  waiter_ = ImplementationRepository::AsyncStartupWaiter::_narrow (obj.in ());
-
-  id = PortableServer::string_to_ObjectId ("ImplRepo_Service");
+    PortableServer::string_to_ObjectId ("ImplRepo_Service");
   this->imr_poa_->activate_object_with_id (id.in (), this);
 
   obj = this->imr_poa_->id_to_reference (id.in ());
@@ -182,7 +171,7 @@ int
 ImR_Locator_i::init (Options& opts)
 {
   ACE_CString cmdline = opts.cmdline ();
-  cmdline += " -orbcollocation no -orbuseimr 0";
+  cmdline += " -orbuseimr 0";
   ACE_ARGV av (cmdline.c_str ());
   int argc = av.argc ();
   ACE_TCHAR** argv = av.argv ();
@@ -226,8 +215,12 @@ ImR_Locator_i::run (void)
 }
 
 void
-ImR_Locator_i::shutdown (CORBA::Boolean activators, CORBA::Boolean servers)
+ImR_Locator_i::shutdown
+(ImplementationRepository::AMH_AdministrationResponseHandler_ptr _tao_rh,
+ CORBA::Boolean activators, CORBA::Boolean servers)
 {
+  this->pinger_.shutdown ();
+  this->aam_set_.reset ();
   if (servers != 0 && this->repository_->servers ().current_size () > 0)
     {
       // Note : shutdown is oneway, so we can't throw
@@ -258,7 +251,7 @@ ImR_Locator_i::shutdown (CORBA::Boolean activators, CORBA::Boolean servers)
               acts[i]->shutdown ();
               acts[i] = ImplementationRepository::Activator::_nil ();
             }
-          catch (const CORBA::Exception& ex)
+          catch (CORBA::Exception& ex)
             {
               ++shutdown_errs;
               if (debug_ > 1)
@@ -278,6 +271,8 @@ ImR_Locator_i::shutdown (CORBA::Boolean activators, CORBA::Boolean servers)
   // Technically, we should wait for all the activators to unregister, but
   // ,for now at least, it doesn't seem worth it.
   this->shutdown (false);
+
+  _tao_rh->shutdown ();
 }
 
 void
@@ -294,8 +289,6 @@ ImR_Locator_i::fini (void)
       if (debug_ > 1)
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ImR: Shutting down...\n")));
 
-      this->repository_.release();
-
       this->root_poa_->destroy (1, 1);
 
       this->orb_->destroy ();
@@ -303,7 +296,7 @@ ImR_Locator_i::fini (void)
       if (debug_ > 0)
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ImR: Shut down successfully.\n")));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception& ex)
     {
       ex._tao_print_exception (ACE_TEXT ("ImR_Locator_i::fini"));
       throw;
@@ -311,9 +304,11 @@ ImR_Locator_i::fini (void)
   return 0;
 }
 
-CORBA::Long
-ImR_Locator_i::register_activator (const char* aname,
-                                   ImplementationRepository::Activator_ptr activator)
+void
+ImR_Locator_i::register_activator
+(ImplementationRepository::AMH_LocatorResponseHandler_ptr _tao_rh,
+ const char* aname,
+ ImplementationRepository::Activator_ptr activator)
 {
   ACE_ASSERT (aname != 0);
   ACE_ASSERT (! CORBA::is_nil (activator));
@@ -335,12 +330,14 @@ ImR_Locator_i::register_activator (const char* aname,
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ImR: Activator registered for %C.\n"),
                 aname));
 
-  return token;
+  _tao_rh->register_activator (token);
 }
 
 void
-ImR_Locator_i::unregister_activator (const char* aname,
-                                     CORBA::Long token)
+ImR_Locator_i::unregister_activator
+(ImplementationRepository::AMH_LocatorResponseHandler_ptr _tao_rh,
+ const char* aname,
+ CORBA::Long token)
 {
   ACE_ASSERT (aname != 0);
   Activator_Info_Ptr info = this->get_activator (aname);
@@ -353,6 +350,7 @@ ImR_Locator_i::unregister_activator (const char* aname,
             LM_DEBUG,
             ACE_TEXT ("ImR: Ignoring unregister activator:%C. Wrong token.\n"),
             aname));
+          _tao_rh->unregister_activator ();
           return;
         }
 
@@ -371,6 +369,7 @@ ImR_Locator_i::unregister_activator (const char* aname,
           ACE_TEXT ("Unknown activator.\n"),
           aname));
     }
+  _tao_rh->unregister_activator ();
 }
 
 void
@@ -382,7 +381,9 @@ ImR_Locator_i::unregister_activator_i (const char* aname)
 }
 
 void
-ImR_Locator_i::notify_child_death (const char* name)
+ImR_Locator_i::notify_child_death
+(ImplementationRepository::AMH_LocatorResponseHandler_ptr _tao_rh,
+ const char* name)
 {
   ACE_ASSERT (name != 0);
 
@@ -401,10 +402,36 @@ ImR_Locator_i::notify_child_death (const char* name)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("ImR: Failed to find server in repository.\n")));
     }
+  _tao_rh->notify_child_death ();
+}
+
+char*
+ImR_Locator_i::activate_server_by_name (const char* name, bool manual_start)
+{
+  ImR_SyncResponseHandler rh ("", this->orb_.in());
+  this->activate_server_by_name (name, manual_start, &rh);
+  return rh.wait_for_result ();
+}
+
+char*
+ImR_Locator_i::activate_server_by_object (const char* object_name)
+{
+  Server_Info_Ptr si;
+  ACE_CString key;
+  ACE_CString full (object_name);
+  if (this->split_key (full, key, si))
+    {
+      ImR_SyncResponseHandler rh (key.c_str(), this->orb_.in());
+      this->activate_server_by_info (si, &rh);
+      return rh.wait_for_result ();
+    }
+  throw ImplementationRepository::NotFound();
 }
 
 void
-ImR_Locator_i::activate_server (const char* server)
+ImR_Locator_i::activate_server
+(ImplementationRepository::AMH_AdministrationResponseHandler_ptr _tao_rh,
+ const char* server)
 {
   if (debug_ > 1)
     {
@@ -412,314 +439,101 @@ ImR_Locator_i::activate_server (const char* server)
                   server));
     }
 
+  ImR_ResponseHandler *rh = 0;
+  ACE_NEW (rh, ImR_Loc_ResponseHandler (ImR_Loc_ResponseHandler::LOC_ACTIVATE_SERVER, _tao_rh));
+
   // This is the version called by tao_imr to activate the server, manually
   // starting it if necessary.
-  CORBA::String_var cleanup =
-    activate_server_by_name (server, true);
+  activate_server_by_name (server, true, rh);
 }
 
-char*
-ImR_Locator_i::activate_server_by_name (const char* name, bool manual_start)
+bool
+ImR_Locator_i::get_info_for_name (const char* name, Server_Info_Ptr &si)
+{
+  ACE_CString serverKey;
+  ACE_CString server_id;
+  bool jacorb_server = false;
+  this->parse_id (name, server_id, serverKey, jacorb_server);
+  si = this->repository_->get_server (serverKey);
+  return !si.null();
+}
+
+bool
+ImR_Locator_i::split_key (ACE_CString &full, ACE_CString &key, Server_Info_Ptr &si)
+{
+  key = full;
+  if (this->get_info_for_name (full.c_str(), si))
+    {
+      return true;
+    }
+
+  ACE_CString::size_type pos = full.rfind ('/');
+  while (pos != ACE_CString::npos)
+    {
+      ACE_CString server = full.substring (0, pos);
+      if (this->get_info_for_name (server.c_str (), si))
+        {
+          return true;
+        }
+      pos = server.rfind ('/');
+    }
+
+  return false;
+}
+
+void
+ImR_Locator_i::activate_server_by_name (const char* name, bool manual_start,
+                                        ImR_ResponseHandler *rh)
 {
   // Activate the server, starting it if necessary. Don't start MANUAL
   // servers unless manual_start=true
   ACE_ASSERT (name != 0);
 
-  ACE_CString serverKey;
-  ACE_CString server_id;
-  bool jacorb_server = false;
-  parse_id(name, server_id, serverKey, jacorb_server);
-  UpdateableServerInfo info(this->repository_.get(), serverKey);
-  if (info.null ())
+  Server_Info_Ptr si;
+  if (!this->get_info_for_name(name, si))
     {
-      ACE_ERROR ((
-        LM_ERROR,
-        ACE_TEXT ("ImR: Cannot find info for server <%C>\n"),
-        name));
-      throw ImplementationRepository::NotFound ();
+      rh->send_exception ( new ImplementationRepository::NotFound );
+      return;
     }
 
-  //MDM
-  info.edit()->start_count = 0;
+  UpdateableServerInfo info (this->repository_.get(), si, true);
 
-  return activate_server_i (info, manual_start);
+  this->activate_server_i (info, manual_start, rh);
 }
 
-char*
-ImR_Locator_i::activate_server_by_object (const char* object_name)
+void
+ImR_Locator_i::activate_server_by_info (const Server_Info_Ptr &si,
+                                        ImR_ResponseHandler *rh)
 {
-  ACE_ASSERT (object_name != 0);
-
-  // We assume that the first part of the object name is the server name.
-  // So a name of foo/bar means that the server name is foo.
-  ACE_CString server_name (object_name);
-  ACE_CString::size_type pos = server_name.find ('/');
-  if (pos != ACE_CString::npos)
-    {
-      try
-        {
-          return activate_server_by_name (object_name, false);
-        }
-      catch (const ImplementationRepository::NotFound&)
-        {
-          server_name = server_name.substr (pos + 1);
-          return activate_server_by_name (server_name.c_str (), false);
-        }
-    }
-  else
-    {
-      return activate_server_by_name (server_name.c_str (), false);
-    }
+  UpdateableServerInfo info (this->repository_.get(), si, true);
+  this->activate_server_i (info, false, rh);
 }
 
-char*
+void
 ImR_Locator_i::activate_server_i (UpdateableServerInfo& info,
-                                  bool manual_start)
+                                  bool manual_start,
+                                  ImR_ResponseHandler *rh)
 {
+  AsyncAccessManager_ptr aam;
   if (info->activation_mode == ImplementationRepository::PER_CLIENT)
     {
-      return activate_perclient_server_i (info, manual_start);
-    }
-
-  while (true)
+      AsyncAccessManager *aam_raw;
+      ACE_NEW (aam_raw, AsyncAccessManager (*info, manual_start, *this));
+      aam = aam_raw;
+      this->aam_set_.insert_tail (aam);
+  }
+  else
     {
-      if (is_alive (info))
+      aam = this->find_aam (info->name.c_str());
+      if (*aam == 0)
         {
-          if (debug_ > 1)
-            {
-              ACE_DEBUG ((
-                LM_DEBUG,
-                ACE_TEXT ("ImR: Successfully activated <%C> at \n\t%C\n"),
-                info->name.c_str (), info->partial_ior.c_str ()));
-            }
-          info.edit ()->start_count = 0;
-
-          waiter_svt_.unblock_all (info->name.c_str ());
-
-          return CORBA::string_dup (info->partial_ior.c_str ());
-        }
-
-      info.edit()->reset ();
-
-      if (! info->starting && info->start_count >= info->start_limit)
-        {
-          if (this->debug_ > 0)
-            {
-              ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("ImR: Cannot Activate <%C>.\n"),
-                          info->name.c_str ()));
-            }
-
-          waiter_svt_.unblock_all (info->name.c_str ());
-
-          throw ImplementationRepository::CannotActivate(
-              "Cannot start server.");
-        }
-
-      // Note: We already updated info with StartupInfo in server_is_running ()
-      ImplementationRepository::StartupInfo_var si =
-        start_server (info, manual_start, info.edit()->waiting_clients);
-    }
-}
-
-char*
-ImR_Locator_i::activate_perclient_server_i (UpdateableServerInfo& shared_info,
-                                            bool manual_start)
-{
-  // create a copy of shared_info that can be edited without affecting memory
-  // in the repository
-  UpdateableServerInfo info (*shared_info);
-  do
-    {
-      ImplementationRepository::StartupInfo* psi =
-        start_server (info, manual_start, shared_info.edit()->waiting_clients);
-
-      // waiting_clients will be updated by each call to start_server
-      shared_info.update_repo ();
-      if (psi != 0)
-        {
-          ImplementationRepository::StartupInfo_var si = psi;
-          ACE_ASSERT (info->name == si->name.in ());
-          info.edit ()->partial_ior = si->partial_ior.in ();
-          info.edit ()->ior = si->ior.in ();
-
-          if (is_alive (info))
-            {
-              if (debug_ > 1)
-                {
-                  ACE_DEBUG ((
-                    LM_DEBUG,
-                    ACE_TEXT ("ImR: Successfully activated <%C> at \n\t%C\n"),
-                    info->name.c_str (), info->partial_ior.c_str ()));
-                }
-              return CORBA::string_dup (info->partial_ior.c_str ());
-            }
-          info.edit()->reset ();
-        }
-    } while (info->start_count < info->start_limit);
-
-  if (this->debug_ > 0)
-    {
-      ACE_DEBUG ((
-        LM_DEBUG,
-        ACE_TEXT ("ImR: Cannot Activate <%C>.\n"),
-        info->name.c_str ()));
-    }
-  throw ImplementationRepository::CannotActivate("Cannot start server.");
-}
-
-ImplementationRepository::StartupInfo*
-ImR_Locator_i::start_server (UpdateableServerInfo& info, bool manual_start,
-                             int& waiting_clients)
-{
-  if (info->activation_mode == ImplementationRepository::MANUAL && ! manual_start)
-    {
-      if (debug_ > 0)
-        ACE_DEBUG ((
-          LM_DEBUG,
-          ACE_TEXT ("ImR: Cannot start server <%C>. ActivationMode=MANUAL\n"),
-          info->name.c_str ()));
-
-      throw ImplementationRepository::CannotActivate(
-        "Cannot implicitly activate MANUAL server.");
-    }
-  if (info->cmdline.length () == 0)
-    {
-      if (debug_ > 0)
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ImR: Cannot start server <%C>.")
-                    ACE_TEXT (" No command line.\n"), info->name.c_str ()));
-      throw ImplementationRepository::CannotActivate(
-        "No command line registered for server.");
-    }
-
-  Activator_Info_Ptr ainfo = get_activator (info->activator);
-
-  if (ainfo.null () || CORBA::is_nil (ainfo->activator.in ()))
-    {
-      if (debug_ > 0)
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ImR: Cannot start server <%C>. ")
-                    ACE_TEXT ("Activator <%C> not found.\n"),
-                    info->name.c_str (), info->activator.c_str ()));
-      throw ImplementationRepository::CannotActivate(
-        "No activator registered for server.");
-    }
-
-  ImplementationRepository::StartupInfo_var si;
-  try
-    {
-      ++waiting_clients;
-
-      if (waiting_clients <= 1 ||
-          info->activation_mode == ImplementationRepository::PER_CLIENT)
-        {
-          info.edit()->starting = true;
-          ++(info.edit()->start_count);
-          ACE_ASSERT (info->start_count <= info->start_limit);
-          if (this->debug_ > 0)
-            {
-              ACE_DEBUG ((
-                LM_DEBUG,
-                ACE_TEXT ("ImR: Starting server <%C>. Attempt %d/%d.\n"),
-                info->name.c_str (), info->start_count, info->start_limit));
-            }
-          ainfo->activator->start_server (
-                                          info->name.c_str (),
-                                          info->cmdline.c_str (),
-                                          info->dir.c_str (),
-                                          info->env_vars);
-        }
-
-      if (info->partial_ior.length () == 0)
-        {
-          if (this->debug_ > 0)
-            {
-              ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("ImR: Waiting for <%C> to start...\n"),
-                          info->name.c_str ()));
-            }
-
-          ImplementationRepository::StartupInfo_var si =
-            waiter_->wait_for_startup (info->name.c_str ());
-
-          --waiting_clients;
-          info.edit()->starting = false;
-
-          return si._retn ();
-        }
-      else // The server_is_running () came in before the wait_for_startup ()
-        {
-          if (this->debug_ > 0)
-            {
-              ACE_DEBUG ((
-                LM_DEBUG,
-                ACE_TEXT ("ImR: <%C> Skipping wait. Already started.\n"),
-                info->name.c_str ()));
-            }
-          --waiting_clients;
-          info.edit()->starting = false;
+          AsyncAccessManager *aam_raw;
+          ACE_NEW (aam_raw, AsyncAccessManager (*info, manual_start, *this));
+          aam = aam_raw;
+          this->aam_set_.insert_tail (aam);
         }
     }
-  catch (const CORBA::TIMEOUT&)
-    {
-      --waiting_clients;
-      info.edit()->starting = false;
-      // We may have connected successfully, because the timeout could occur before
-      // the AsyncStartupWaiter manages to return. In fact, when the ImR is very busy
-      // this is the most likely code path.
-      if (info->partial_ior.length () == 0)
-        {
-          if (debug_ > 0)
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("ImR : Timeout waiting for <%C> to start.\n"),
-                        info->name.c_str ()));
-          info.edit()->reset ();
-        }
-    }
-  catch (const ImplementationRepository::CannotActivate&)
-    {
-      --waiting_clients;
-      info.edit()->starting = false;
-      info.edit()->reset ();
-      if (debug_ > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("ImR: Activator cannot start <%C>.\n"),
-                    info->name.c_str ()));
-    }
-  catch (const CORBA::Exception& ex)
-    {
-      --waiting_clients;
-      info.edit()->starting = false;
-      if (debug_ > 0)
-        ACE_DEBUG ((
-          LM_DEBUG,
-          ACE_TEXT ("ImR: Unexpected exception while starting <%C>.\n"),
-          info->name.c_str ()));
-      if (debug_ > 1)
-        ex._tao_print_exception ("");
-      info.edit()->reset ();
-
-      // Before we reset the activator info, let's see if it's still
-      // there then let's keep it around for a while.
-      bool dead_activator = false;
-      try
-        {
-          dead_activator = ainfo->activator->_non_existent ();
-        }
-      catch (const CORBA::Exception&)
-        {
-          dead_activator = true;
-        }
-
-      if (dead_activator)
-        {
-          // Activator is damaged - reset our info.
-          // Client's trying to restart a server on this host will
-          // subsequently be told "no activator found for host ..." or
-          // some such.
-          ainfo->reset ();
-        }
-    }
-  return 0; // This is not a corba call, so a zero should be ok
+  aam->add_interest (rh);
 }
 
 CORBA::Object_ptr
@@ -753,7 +567,7 @@ ImR_Locator_i::set_timeout_policy (CORBA::Object_ptr obj, const ACE_Time_Value& 
           ret = CORBA::Object::_duplicate (obj);
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception& ex)
     {
       ex._tao_print_exception (
         ACE_TEXT ("ImR_Locator_i::set_timeout_policy ()"));
@@ -763,24 +577,26 @@ ImR_Locator_i::set_timeout_policy (CORBA::Object_ptr obj, const ACE_Time_Value& 
 }
 
 void
-ImR_Locator_i::add_or_update_server (
-    const char* server,
-    const ImplementationRepository::StartupOptions &options)
+ImR_Locator_i::add_or_update_server
+(ImplementationRepository::AMH_AdministrationResponseHandler_ptr _tao_rh,
+ const char* server,
+ const ImplementationRepository::StartupOptions &options)
 {
   ACE_ASSERT (server != 0);
 
   if (this->read_only_)
     {
-      ACE_DEBUG ((
-        LM_DEBUG,
-        ACE_TEXT ("ImR: Cannot add/update server <%C> due to locked ")
-        ACE_TEXT ("database.\n"),
-        server));
-      throw CORBA::NO_PERMISSION (
-        CORBA::SystemException::_tao_minor_code (
-          TAO_IMPLREPO_MINOR_CODE,
-          0),
-        CORBA::COMPLETED_NO);
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("ImR: Cannot add/update server <%C> due to locked ")
+                  ACE_TEXT ("database.\n"),
+                  server));
+      CORBA::Exception *ex =
+        new CORBA::NO_PERMISSION (CORBA::SystemException::_tao_minor_code
+                                  (TAO_IMPLREPO_MINOR_CODE,0),
+                                  CORBA::COMPLETED_NO);
+      ImplementationRepository::AMH_AdministrationExceptionHolder h (ex);
+      _tao_rh->add_or_update_server_excep (&h);
+      return;
     }
 
   if (debug_ > 0)
@@ -799,7 +615,7 @@ ImR_Locator_i::add_or_update_server (
   ACE_CString serverKey;
   ACE_CString server_id;
   bool jacorb_server = false;
-  parse_id(server, server_id, serverKey, jacorb_server);
+  this->parse_id (server, server_id, serverKey, jacorb_server);
   UpdateableServerInfo info(this->repository_.get(), serverKey);
   if (info.null ())
     {
@@ -856,13 +672,15 @@ ImR_Locator_i::add_or_update_server (
                     options.environment[i].name.in (),
                     options.environment[i].value.in ()));
     }
+
+  _tao_rh->add_or_update_server ();
 }
 
 void
-ImR_Locator_i::parse_id(const char* id,
-                        ACE_CString& server_id,
-                        ACE_CString& name,
-                        bool& jacorb_server)
+ImR_Locator_i::parse_id (const char* id,
+                         ACE_CString& server_id,
+                         ACE_CString& name,
+                         bool& jacorb_server)
 {
   const char *pos = ACE_OS::strchr (id, ':');
   if (pos)
@@ -884,20 +702,23 @@ ImR_Locator_i::parse_id(const char* id,
 }
 
 void
-ImR_Locator_i::remove_server (const char* name)
+ImR_Locator_i::remove_server
+(ImplementationRepository::AMH_AdministrationResponseHandler_ptr _tao_rh,
+ const char* name)
 {
   ACE_ASSERT (name != 0);
   if (this->read_only_)
     {
-      ACE_ERROR ((
-        LM_ERROR,
-        ACE_TEXT ("ImR: Can't remove server <%C> due to locked database.\n"),
-        name));
-      throw CORBA::NO_PERMISSION (
-        CORBA::SystemException::_tao_minor_code (
-          TAO_IMPLREPO_MINOR_CODE,
-          0),
-        CORBA::COMPLETED_NO);
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("ImR: Can't remove server <%C> due to locked database.\n"),
+                  name));
+      CORBA::Exception *ex =
+        new CORBA::NO_PERMISSION (CORBA::SystemException::_tao_minor_code
+                                  (TAO_IMPLREPO_MINOR_CODE, 0),
+                                  CORBA::COMPLETED_NO);
+      ImplementationRepository::AMH_AdministrationExceptionHolder h (ex);
+      _tao_rh->remove_server_excep (&h);
+      return;
     }
 
   // Note : This will be safe, because any Server_Info_Ptr objects will still
@@ -907,7 +728,7 @@ ImR_Locator_i::remove_server (const char* name)
   ACE_CString serverKey;
   ACE_CString server_id;
   bool jacorb_server = false;
-  parse_id(name, server_id, serverKey, jacorb_server);
+  this->parse_id(name, server_id, serverKey, jacorb_server);
   Server_Info_Ptr info = this->repository_->get_server (serverKey);
   if (! info.null ())
     {
@@ -926,7 +747,8 @@ ImR_Locator_i::remove_server (const char* name)
               poa->destroy (etherealize, wait);
             }
           if (this->debug_ > 0)
-            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ImR: Removed Server <%C>.\n"),
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("ImR: Removed Server <%C>.\n"),
                         name));
         }
     }
@@ -934,8 +756,12 @@ ImR_Locator_i::remove_server (const char* name)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("ImR: Can't remove unknown server <%C>.\n"), name));
-      throw ImplementationRepository::NotFound ();
+      CORBA::Exception *ex = new ImplementationRepository::NotFound;
+      ImplementationRepository::AMH_AdministrationExceptionHolder h (ex);
+      _tao_rh->remove_server_excep (&h);
+      return;
     }
+  _tao_rh->remove_server ();
 }
 
 PortableServer::POA_ptr
@@ -946,45 +772,59 @@ ImR_Locator_i::findPOA (const char* name)
       bool activate_it = false;
       return root_poa_->find_POA (name, activate_it);
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception&)
     {// Ignore
     }
   return PortableServer::POA::_nil ();
 }
 
 void
-ImR_Locator_i::shutdown_server (const char* server)
+ImR_Locator_i::shutdown_server
+(ImplementationRepository::AMH_AdministrationResponseHandler_ptr _tao_rh,
+ const char* server)
 {
   ACE_ASSERT (server != 0);
 
   if (this->debug_ > 0)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ImR: Shutting down server <%C>.\n"),
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("ImR: Shutting down server <%C>.\n"),
                 server));
 
   ACE_CString name;
   ACE_CString server_id;
   bool jacorb_server = false;
-  parse_id(server, server_id, name, jacorb_server);
+  this->parse_id(server, server_id, name, jacorb_server);
 
   UpdateableServerInfo info(this->repository_.get(), name);
   if (info.null ())
     {
-      ACE_ERROR ((
-        LM_ERROR,
-        ACE_TEXT ("ImR: shutdown_server () Cannot find info for server <%C>\n"),
-        server));
-      throw ImplementationRepository::NotFound ();
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("ImR: shutdown_server () Cannot find info for server <%C>\n"),
+                  server));
+      CORBA::Exception *ex = new ImplementationRepository::NotFound;
+      ImplementationRepository::AMH_AdministrationExceptionHolder h (ex);
+      _tao_rh->shutdown_server_excep (&h);
+      return;
     }
 
   this->connect_server (info);
 
   if (CORBA::is_nil (info->server.in ()))
     {
-      ACE_ERROR ((
-        LM_ERROR,
-        ACE_TEXT ("ImR: shutdown_server () Cannot connect to server <%C>\n"),
-        server));
-      throw ImplementationRepository::NotFound ();
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("ImR: shutdown_server () Cannot connect to server <%C>\n"),
+                  server));
+      CORBA::Exception *ex = new ImplementationRepository::NotFound;
+      ImplementationRepository::AMH_AdministrationExceptionHolder h (ex);
+      try
+        {
+          _tao_rh->shutdown_server_excep (&h);
+        }
+      catch (CORBA::Exception &ex)
+        {
+          ex._tao_print_exception (ACE_TEXT ("reporting connect error\n"));
+        }
+      return;
     }
 
   try
@@ -995,26 +835,26 @@ ImR_Locator_i::shutdown_server (const char* server)
         ImplementationRepository::ServerObject::_unchecked_narrow (obj.in ());
       server->shutdown ();
     }
-  catch (const CORBA::TIMEOUT&)
+  catch (CORBA::TIMEOUT &to_ex)
     {
       info.edit ()->reset ();
       // Note : This is a good thing. It means we didn't waste our time waiting for
       // the server to finish shutting down.
       if (this->debug_ > 1)
         {
-          ACE_DEBUG ((
-            LM_DEBUG,
-            ACE_TEXT ("ImR: Timeout while waiting for <%C> shutdown.\n"),
-            server));
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("ImR: Timeout while waiting for <%C> shutdown.\n"),
+                      server));
         }
-      throw;
+      ImplementationRepository::AMH_AdministrationExceptionHolder h (to_ex._tao_duplicate());
+      _tao_rh->shutdown_server_excep (&h);
+      return;
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception&)
     {
       if (this->debug_ > 1)
         {
-          ACE_DEBUG ((
-            LM_DEBUG,
+          ACE_DEBUG ((LM_DEBUG,
             ACE_TEXT ("ImR: Exception ignored while shutting down <%C>\n"),
             server));
         }
@@ -1023,12 +863,15 @@ ImR_Locator_i::shutdown_server (const char* server)
   // Note : In most cases this has already been done in the server_is_shutting_down ()
   // operation, but it doesn't hurt to update it again.
   info.edit ()->reset ();
+  _tao_rh->shutdown_server ();
 }
 
 void
-ImR_Locator_i::server_is_running (const char* id,
-                                  const char* partial_ior,
-                                  ImplementationRepository::ServerObject_ptr server)
+ImR_Locator_i::server_is_running
+(ImplementationRepository::AMH_AdministrationResponseHandler_ptr _tao_rh,
+ const char* id,
+ const char* partial_ior,
+ ImplementationRepository::ServerObject_ptr server)
 {
   ACE_ASSERT (id != 0);
   ACE_ASSERT (partial_ior != 0);
@@ -1037,45 +880,73 @@ ImR_Locator_i::server_is_running (const char* id,
   ACE_CString server_id;
   ACE_CString name;
   bool jacorb_server = false;
-  parse_id(id, server_id, name, jacorb_server);
+  this->parse_id(id, server_id, name, jacorb_server);
 
   if (this->debug_ > 0)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ImR: Server %C is running at %C.\n"),
-      name.c_str (), partial_ior));
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("ImR: Server %C is running at %C.\n"),
+                name.c_str (), partial_ior));
 
 
   CORBA::String_var ior = orb_->object_to_string (server);
 
   if (this->debug_ > 1)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ImR: Server %C callback at %C.\n"),
-      name.c_str (), ior.in ()));
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("ImR: Server %C callback at %C.\n"),
+                name.c_str (), ior.in ()));
 
   if (this->unregister_if_address_reused_)
     this->repository_->unregister_if_address_reused (server_id, name, partial_ior);
+
+  CORBA::Object_var obj = this->set_timeout_policy (server,ACE_Time_Value (1,0));
+  ImplementationRepository::ServerObject_var s =
+    ImplementationRepository::ServerObject::_narrow (obj.in());
 
   UpdateableServerInfo info(this->repository_.get(), name);
   if (info.null ())
     {
       if (this->debug_ > 0)
-        ACE_DEBUG ((
-          LM_DEBUG,
-          ACE_TEXT ("ImR: Auto adding NORMAL server <%C>.\n"),
-          name.c_str ()));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("ImR: Auto adding NORMAL server <%C>.\n"),
+                      name.c_str ()));
+        }
 
       ImplementationRepository::EnvironmentList env (0);
       this->repository_->add_server (server_id,
-                                    name,
-                                    jacorb_server,
-                                    "", // no activator
-                                    "", // no cmdline
-                                    ImplementationRepository::EnvironmentList (),
-                                    "", // no working dir
-                                    ImplementationRepository::NORMAL,
-                                    DEFAULT_START_LIMIT,
-                                    partial_ior,
-                                    ior.in (),
-                                    ImplementationRepository::ServerObject::_nil () // Will connect at first access
-                                    );
+                                     name,
+                                     jacorb_server,
+                                     "", // no activator
+                                     "", // no cmdline
+                                     ImplementationRepository::EnvironmentList (),
+                                     "", // no working dir
+                                     ImplementationRepository::NORMAL,
+                                     DEFAULT_START_LIMIT,
+                                     partial_ior,
+                                     ior.in (),
+                                     s.in ()
+                                     );
+
+      Server_Info_Ptr temp_info = this->repository_->get_server(name);
+      if (temp_info.null ())
+        {
+          if (this->debug_ > 0)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("ImR: Auto adding failed, giving up <%C>\n"),
+                          name.c_str ()));
+            }
+
+          _tao_rh->server_is_running ();
+          return;
+        }
+
+      this->pinger_.add_server (name.c_str(), s);
+      AsyncAccessManager *aam_raw;
+      ACE_NEW (aam_raw, AsyncAccessManager (*temp_info, true, *this));
+      AsyncAccessManager_ptr aam (aam_raw);
+      aam->started_running ();
+      this->aam_set_.insert (aam);
     }
   else
     {
@@ -1083,107 +954,151 @@ ImR_Locator_i::server_is_running (const char* id,
       {
         if (! info->server_id.empty())
           ACE_DEBUG ((LM_DEBUG,
-            ACE_TEXT ("ImR - WARNING: server \"%C\" changed server id from ")
-            ACE_TEXT ("\"%C\" to \"%C\" waiting PER_CLIENT clients.\n"),
-            name.c_str (), info->server_id.c_str (), server_id.c_str ()));
+                      ACE_TEXT ("ImR - WARNING: server \"%C\" changed server id from ")
+                      ACE_TEXT ("\"%C\" to \"%C\" waiting PER_CLIENT clients.\n"),
+                      name.c_str (), info->server_id.c_str (), server_id.c_str ()));
         info.edit ()->server_id = server_id;
       }
 
-      if (info->activation_mode != ImplementationRepository::PER_CLIENT) {
-        info.edit ()->ior = ior.in ();
-        info.edit ()->partial_ior = partial_ior;
-        // Will connect at first access
-        info.edit ()->server = ImplementationRepository::ServerObject::_nil ();
-
-        info.update_repo();
-
-        waiter_svt_.unblock_one (name.c_str (), partial_ior, ior.in (), false);
-      } else {
-        // Note : There's no need to unblock all the waiting request until
-        // we know the final status of the server.
-        if (info->waiting_clients > 0)
+      if (info->activation_mode != ImplementationRepository::PER_CLIENT)
         {
-          waiter_svt_.unblock_one (name.c_str (), partial_ior, ior.in (), true);
+          info.edit ()->ior = ior.in ();
+          info.edit ()->partial_ior = partial_ior;
+          info.edit ()->server = s;
+
+          info.update_repo();
+          this->pinger_.add_server (name.c_str(), s);
         }
-        else if (this->debug_ > 1)
+
+      AsyncAccessManager_ptr aam(this->find_aam (name.c_str()));
+      if (*aam != 0)
+        aam->server_is_running (partial_ior, s);
+      else
         {
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("ImR - Ignoring server_is_running due to no ")
-                      ACE_TEXT ("waiting PER_CLIENT clients.\n")));
+          if (info->activation_mode != ImplementationRepository::PER_CLIENT)
+            {
+              AsyncAccessManager *aam_raw;
+              ACE_NEW (aam_raw, AsyncAccessManager (*info, true, *this));
+              AsyncAccessManager_ptr aam (aam_raw);
+              aam->started_running ();
+              this->aam_set_.insert (aam);
+            }
         }
-      }
     }
+  _tao_rh->server_is_running ();
 }
 
 void
-ImR_Locator_i::server_is_shutting_down (const char* server)
+ImR_Locator_i::server_is_shutting_down
+(ImplementationRepository::AMH_AdministrationResponseHandler_ptr _tao_rh,
+ const char* server)
 {
   ACE_ASSERT (server != 0);
-  UpdateableServerInfo info(this->repository_.get(), server);
+  UpdateableServerInfo info (this->repository_.get(), server);
   if (info.null ())
     {
       if (this->debug_ > 1)
         {
-          ACE_DEBUG ((
-            LM_DEBUG,
-            ACE_TEXT ("ImR_Locator_i::server_is_shutting_down: ")
-            ACE_TEXT ("Unknown server:%C\n"),
-            server));
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("ImR_Locator_i::server_is_shutting_down: ")
+                      ACE_TEXT ("Unknown server:%C\n"),
+                      server));
         }
+      _tao_rh->server_is_shutting_down ();
       return;
     }
 
   if (this->debug_ > 0)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ImR: Server <%C> is shutting down.\n"),
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("ImR: Server <%C> is shutting down.\n"),
                 server));
 
+  if (info->activation_mode != ImplementationRepository::PER_CLIENT)
+    {
+      this->pinger_.remove_server (server);
+      {
+        AsyncAccessManager_ptr aam = this->find_aam (server);
+        if (*aam != 0)
+          {
+            aam->server_is_shutting_down ();
+          }
+      }
+    }
   info.edit ()->reset ();
+  _tao_rh->server_is_shutting_down ();
 }
 
 void
-ImR_Locator_i::find (const char* server,
-                     ImplementationRepository::ServerInformation_out imr_info)
+ImR_Locator_i::find
+(ImplementationRepository::AMH_AdministrationResponseHandler_ptr _tao_rh,
+ const char* server)
 {
   ACE_ASSERT (server != 0);
 
   ACE_CString serverKey;
   ACE_CString server_id;
   bool jacorb_server = false;
-  parse_id(server, server_id, serverKey, jacorb_server);
+  this->parse_id(server, server_id, serverKey, jacorb_server);
   UpdateableServerInfo info(this->repository_.get(), serverKey);
-  if (! info.null ())
+  ImplementationRepository::ServerInformation_var imr_info;
+  try
     {
-      imr_info = info->createImRServerInfo ();
+      if (! info.null ())
+        {
+          imr_info = info->createImRServerInfo ();
 
-      if (this->debug_ > 1)
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ImR: Found server %C.\n"), server));
+          if (this->debug_ > 1)
+            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ImR: Found server %C.\n"), server));
+        }
+      else
+        {
+          ACE_NEW_THROW_EX (imr_info, ImplementationRepository::ServerInformation,
+                            CORBA::NO_MEMORY ());
+          imr_info->startup.activation= ImplementationRepository::NORMAL;
+          if (this->debug_ > 1)
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("ImR: Cannot find server <%C>\n"),
+                        server));
+        }
     }
-  else
+  catch (CORBA::Exception &ex)
     {
-      ACE_NEW_THROW_EX (imr_info, ImplementationRepository::ServerInformation,
-                        CORBA::NO_MEMORY ());
-      imr_info->startup.activation= ImplementationRepository::NORMAL;
-      if (this->debug_ > 1)
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ImR: Cannot find server <%C>\n"),
-                    server));
+      ImplementationRepository::AMH_AdministrationExceptionHolder h (ex._tao_duplicate());
+      _tao_rh->find_excep (&h);
+      return;
     }
+  _tao_rh->find (imr_info.in());
+  //  delete imr_info;
 }
 
 void
-ImR_Locator_i::list (CORBA::ULong how_many,
-   CORBA::Boolean determine_active_status,
-   ImplementationRepository::ServerInformationList_out server_list,
-   ImplementationRepository::ServerInformationIterator_out server_iterator)
+ImR_Locator_i::list
+(ImplementationRepository::AMH_AdministrationResponseHandler_ptr _tao_rh,
+ CORBA::ULong how_many,
+ CORBA::Boolean determine_active_status)
 {
+  ImplementationRepository::ServerInformationList_var server_list;
+  ImplementationRepository::ServerInformationIterator_var server_iterator;
+
   if (this->debug_ > 1)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ImR: List servers.\n")));
 
   // Initialize the out variables, so if we return early, they will
   // not be dangling.
   server_iterator = ImplementationRepository::ServerInformationIterator::_nil ();
-  ACE_NEW_THROW_EX (server_list,
-                    ImplementationRepository::ServerInformationList (0),
-                    CORBA::NO_MEMORY ());
+
+  try
+    {
+      ACE_NEW_THROW_EX (server_list,
+                        ImplementationRepository::ServerInformationList (0),
+                        CORBA::NO_MEMORY ());
+    }
+  catch (CORBA::Exception& ex)
+    {
+      ImplementationRepository::AMH_AdministrationExceptionHolder h (ex._tao_duplicate());
+      _tao_rh->list_excep (&h);
+      return;
+    }
 
   Locator_Repository::SIMap::ENTRY* entry = 0;
   Locator_Repository::SIMap::ITERATOR it (this->repository_->servers ());
@@ -1198,10 +1113,11 @@ ImR_Locator_i::list (CORBA::ULong how_many,
   server_list->length (n);
 
   if (this->debug_ > 1)
-    ACE_DEBUG ((
-      LM_DEBUG,
-      ACE_TEXT ("ImR_Locator_i::list: Filling ServerList with %d servers\n"),
-      n));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("ImR_Locator_i::list: Filling ServerList with %d servers\n"),
+                  n));
+    }
 
   for (CORBA::ULong i = 0; i < n; i++)
     {
@@ -1216,7 +1132,7 @@ ImR_Locator_i::list (CORBA::ULong how_many,
       if (determine_active_status)
         {
           UpdateableServerInfo updatable_info (info);
-          if (this->is_alive(updatable_info))
+          if (this->is_alive (updatable_info))
             {
               imr_info->activeStatus = ImplementationRepository::ACTIVE_YES;
             }
@@ -1237,33 +1153,32 @@ ImR_Locator_i::list (CORBA::ULong how_many,
   if (this->repository_->servers ().current_size () > n)
     {
       if (this->debug_ > 1)
-        ACE_DEBUG ((
-          LM_DEBUG,
-          ACE_TEXT ("ImR_Locator_i::list: Creating ServerInformation ")
-          ACE_TEXT ("Iterator\n")));
-
-      ImR_Iterator* imr_iter = 0;
-
-      ACE_NEW_THROW_EX (
-        imr_iter,
-        ImR_Iterator (n, *this->repository_, this->imr_poa_.in ()),
-        CORBA::NO_MEMORY ());
-
-      PortableServer::ServantBase_var tmp (imr_iter);
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("ImR_Locator_i::list: Creating ServerInformation ")
+                    ACE_TEXT ("Iterator\n")));
 
       try
         {
+          ImR_Iterator* imr_iter = 0;
+          ACE_NEW_THROW_EX (imr_iter,
+                            ImR_Iterator (n, *this->repository_, this->imr_poa_.in ()),
+                            CORBA::NO_MEMORY ());
+
+          PortableServer::ServantBase_var tmp (imr_iter);
+
           PortableServer::ObjectId_var id =
             this->imr_poa_->activate_object (imr_iter);
           CORBA::Object_var obj = this->imr_poa_->id_to_reference (id.in ());
           server_iterator = ImplementationRepository::
             ServerInformationIterator::_unchecked_narrow (obj.in ());
         }
-      catch (const CORBA::Exception&)
+      catch (CORBA::Exception& ex)
         {
-          throw;
+          ImplementationRepository::AMH_AdministrationExceptionHolder h (ex._tao_duplicate());
+          _tao_rh->list_excep (&h);
         }
     }
+  _tao_rh->list (server_list.in(), server_iterator.in());
 }
 
 Activator_Info_Ptr
@@ -1314,7 +1229,7 @@ ImR_Locator_i::connect_activator (Activator_Info& info)
           ACE_TEXT ("ImR: Connected to activator <%C>\n"),
           info.name.c_str ()));
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception&)
     {
       info.reset ();
     }
@@ -1342,18 +1257,17 @@ ImR_Locator_i::auto_start_servers (void)
           if (info->activation_mode == ImplementationRepository::AUTO_START
               && info->cmdline.length () > 0)
             {
-              CORBA::String_var cleanup =
-                this->activate_server_i (info, true);
+              ImR_ResponseHandler rh;
+              this->activate_server_i (info, true, &rh);
             }
         }
-      catch (const CORBA::Exception& ex)
+      catch (CORBA::Exception& ex)
         {
           if (this->debug_ > 1)
             {
-              ACE_DEBUG ((
-                LM_DEBUG,
-                ACE_TEXT ("ImR: AUTO_START Could not activate <%C>\n"),
-                server_entry->ext_id_.c_str ()));
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("ImR: AUTO_START Could not activate <%C>\n"),
+                          server_entry->ext_id_.c_str ()));
               ex._tao_print_exception ("AUTO_START");
             }
           // Ignore exceptions
@@ -1401,7 +1315,7 @@ ImR_Locator_i::connect_server (UpdateableServerInfo& info)
                     ACE_TEXT ("ImR: Connected to server <%C>\n"),
                     info->name.c_str ()));
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception&)
     {
       info.edit ()->reset ();
     }
@@ -1410,234 +1324,206 @@ ImR_Locator_i::connect_server (UpdateableServerInfo& info)
 bool
 ImR_Locator_i::is_alive (UpdateableServerInfo& info)
 {
-  const size_t table_size = sizeof (PING_RETRY_SCHEDULE) /
-                            sizeof (*PING_RETRY_SCHEDULE);
-
-  for (size_t i = 0; i < table_size; ++i)
-    {
-      int status = this->is_alive_i (info);
-      if (status == 0)
-        return false;
-      if (status == 1)
-        return true;
-
-      // This is evil, but there's not much else we can do for now. We
-      // should never reach this code once the ImR Servers are fixed
-      // so that they don't lie about server_is_running. Currently,
-      // they send this notification during poa creation.  We have to
-      // run the orb, because the very thing that may be slowing the
-      // aliveness of the servers is the fact that they're trying to
-      // register more objects with us.  In practical testing, we
-      // never retried the ping more than once, because the second
-      // ping always timed out, even if the servers poa manager had
-      // not been activated. The only way we saw multiple retries was
-      // if we ran the orb on the server before the poa manager was
-      // activated.  For this reason, the first retry is immediate,
-      // and the orb->run () call is not required. The call will
-      // likely timeout, and is_alive will return true.
-      if (PING_RETRY_SCHEDULE[i] > 0)
-        {
-          ACE_Time_Value tv (0, PING_RETRY_SCHEDULE[i] * 1000);
-          this->orb_->run (tv);
-        }
-    }
-  if (debug_ > 0)
-    {
-      ACE_DEBUG ((
-        LM_DEBUG,
-        ACE_TEXT ("ImR: <%C> Ping retry count exceeded. alive=maybe.\n"),
-        info->name.c_str ()));
-    }
-  // We return true here, because the server *might* be alive, it's just
-  // not starting in a timely manner. We can't return false, because then
-  // we'll just try to start another instance, and the same thing will
-  // likely happen.
-  info.edit ()->last_ping = ACE_OS::gettimeofday ();
-  return true;
-}
-
-int
-ImR_Locator_i::is_alive_i (UpdateableServerInfo& info)
-{
-  // This is used by the ACE_TRY below when exceptions are turned off.
-
-  if (info->ior.length () == 0 || info->partial_ior.length () == 0)
-    {
-      if (debug_ > 1)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("ImR: <%C> not running. alive=false.\n"),
-                      info->name.c_str ()));
-        }
-      info.edit ()->last_ping = ACE_Time_Value::zero;
-      return 0;
-    }
-
-  if (ping_interval_ == ACE_Time_Value::zero)
-    {
-      if (debug_ > 1)
-        {
-          ACE_DEBUG ((
-            LM_DEBUG,
-            ACE_TEXT ("ImR: <%C> Ping verification disabled. alive=true.\n"),
-            info->name.c_str ()));
-        }
-      return 1;
-    }
-
-  if ((ACE_OS::gettimeofday () - info->last_ping) < ping_interval_)
-    {
-      if (debug_ > 1)
-        {
-          ACE_DEBUG ((
-            LM_DEBUG,
-            ACE_TEXT ("ImR: <%C> within ping interval. alive=true.\n"),
-            info->name.c_str ()));
-        }
-      return 1;
-    }
-
-  // If we don't have enough information to start the server if it isn't already
-  // then we might as well assume it is running. That way the client can get the
-  // status directly from the server.
-  if (info->cmdline.length () == 0 || ! repository_->has_activator (info->activator))
-    {
-      if (debug_ > 1)
-        {
-          ACE_DEBUG ((
-            LM_DEBUG,
-            ACE_TEXT ("ImR: Ping verification skipped. <%C> not startable.\n"),
-            info->name.c_str ()));
-        }
-      return 1;
-    }
-
   this->connect_server (info);
-
-  if (CORBA::is_nil (info->server.in ()))
-    {
-      if (debug_ > 1)
-        {
-          ACE_DEBUG ((
-            LM_DEBUG,
-            ACE_TEXT ("ImR: <%C> Could not connect. alive=false.\n"),
-            info->name.c_str ()));
-        }
-      return 0;
-    }
-
-  try
-    {
-      // Make a copy, in case the info is updated during the ping.
-      ImplementationRepository::ServerObject_var server = info->server;
-
-      // This will timeout if it takes too long
-      server->ping ();
-
-      if (debug_ > 1)
-        {
-          ACE_DEBUG ((
-            LM_DEBUG,
-            ACE_TEXT ("ImR: <%C> Ping successful. alive=true\n"),
-            info->name.c_str ()));
-        }
-      info.edit ()->last_ping = ACE_OS::gettimeofday ();
-    }
-  catch (const CORBA::TRANSIENT& ex)
-    {
-      const CORBA::ULong BITS_5_THRU_12_MASK = 0x00000f80;
-      switch (ex.minor () & BITS_5_THRU_12_MASK)
-        {
-        case TAO_INVOCATION_SEND_REQUEST_MINOR_CODE:
-          {
-            if (debug_ > 1)
-              {
-                ACE_DEBUG ((
-                  LM_DEBUG,
-                  ACE_TEXT ("ImR: <%C> Local TRANSIENT. alive=false.\n"),
-                  info->name.c_str ()));
-              }
-          }
-        info.edit ()->last_ping = ACE_Time_Value::zero;
-        return 0;
-        case TAO_POA_DISCARDING:
-        case TAO_POA_HOLDING:
-          {
-            if (debug_ > 1)
-              {
-                ACE_DEBUG ((
-                  LM_DEBUG,
-                  ACE_TEXT ("ImR: <%C> Remote TRANSIENT. alive=maybe.\n"),
-                  info->name.c_str ()));
-              }
-          }
-        return -1; // We keep trying to ping, because returning 1 now, would just lead
-        // to clients getting the same exception. If we can't ping after several
-        // attempts, then we'll give up and return 1, letting the client worry about it.
-        default:
-          {
-            if (debug_ > 1)
-              {
-                ACE_DEBUG ((
-                  LM_DEBUG,
-                  ACE_TEXT ("ImR: <%C> TRANSIENT exception. alive=false.\n"),
-                  info->name.c_str ()));
-              }
-            info.edit ()->last_ping = ACE_Time_Value::zero;
-          }
-        return 0;
-        }
-    }
-  catch (const CORBA::TIMEOUT& ex)
-    {
-      if (ex.completed() == CORBA::COMPLETED_NO)
-        {
-          if (debug_ > 1)
-            {
-              ACE_DEBUG ((
-                LM_DEBUG,
-                ACE_TEXT ("ImR: <%C> Ping timed out during connection. ")
-                ACE_TEXT ("alive=false.\n"),
-                info->name.c_str ()));
-            }
-          info.edit ()->last_ping = ACE_Time_Value::zero;
-          // still potentially ambiguous, the server could be so busy
-          // it couldn't even accept a connection. However the more
-          // likely assumption is the server is on windows, and is dead,
-          // but the host ignored the request rather than rejecting it.
-          return 0;
-        }
-      if (debug_ > 1)
-        {
-          ACE_DEBUG ((
-            LM_DEBUG,
-            ACE_TEXT ("ImR: <%C> Ping timed out, maybe completed. ")
-            ACE_TEXT ("alive=true.\n"),
-            info->name.c_str ()));
-        }
-      return 1; // This is "alive" as far as we're concerned. Presumably the client
-      // will have a less stringent timeout policy, or will want to know
-      // about the timeout. In any case, we're only guaranteeing that the
-      // server is alive, not that it's responsive.
-    }
-  catch (const CORBA::Exception& ex)
-    {
-      if (debug_ > 1)
-        {
-          ACE_DEBUG ((
-            LM_DEBUG,
-            ACE_TEXT ("ImR: <%C> Unexpected Ping exception. alive=false\n"),
-            info->name.c_str ()));
-          ex._tao_print_exception ("\n");
-        }
-      info.edit ()->last_ping = ACE_Time_Value::zero;
-      return 0;
-    }
-  return 1;
+  SyncListener listener (info->name.c_str(),
+                         this->orb_.in(),
+                         this->pinger_);
+  return listener.is_alive();
 }
 
 int
 ImR_Locator_i::debug () const
 {
-  return debug_;
+  return this->debug_;
 }
+
+LiveCheck&
+ImR_Locator_i::pinger (void)
+{
+  return this->pinger_;
+}
+
+PortableServer::POA_ptr
+ImR_Locator_i::root_poa (void)
+{
+  return PortableServer::POA::_duplicate (this->root_poa_.in());
+}
+
+void
+ImR_Locator_i::remove_aam (AsyncAccessManager_ptr &aam)
+{
+  this->aam_set_.remove (aam);
+
+}
+
+AsyncAccessManager *
+ImR_Locator_i::find_aam (const char *name)
+{
+
+  for (AAM_Set::ITERATOR i = this->aam_set_.begin();
+       i != this->aam_set_.end();
+       ++i)
+    {
+      if ((*i)->has_server (name))
+        {
+          return (*i)->add_ref();
+        }
+    }
+  return 0;
+}
+
+//-------------------------------------------------------------------------
+
+SyncListener::SyncListener (const char *server,
+                             CORBA::ORB_ptr orb,
+                             LiveCheck &pinger)
+  :LiveListener (server),
+   orb_ (CORBA::ORB::_duplicate (orb)),
+   pinger_ (pinger),
+   status_ (LS_UNKNOWN),
+   got_it_ (false),
+   callback_ (false)
+{
+}
+
+bool
+SyncListener::is_alive (void)
+{
+  this->callback_ = true;
+  while (!this->got_it_)
+    {
+      if (this->callback_)
+        {
+          if (!this->pinger_.add_poll_listener (this))
+            {
+              return false;
+            }
+        }
+      this->callback_ = false;
+      ACE_Time_Value delay (10,0);
+      this->orb_->perform_work (delay);
+    }
+  this->got_it_ = false;
+  return this->status_ == LS_ALIVE;
+}
+
+bool
+SyncListener::status_changed (LiveStatus status)
+{
+  this->callback_ = true;
+  this->status_ = status;
+  this->got_it_ = (status != LS_TRANSIENT);
+  return true;
+}
+
+//---------------------------------------------------------------------------
+
+ImR_SyncResponseHandler::ImR_SyncResponseHandler (const char *objkey, CORBA::ORB_ptr orb)
+  :excep_ (0),
+   key_ (objkey),
+   orb_ (CORBA::ORB::_duplicate (orb))
+{
+}
+
+ImR_SyncResponseHandler::~ImR_SyncResponseHandler (void)
+{
+}
+
+void
+ImR_SyncResponseHandler::send_ior (const char *pior)
+{
+  ACE_CString full (pior);
+  full += this->key_;
+  this->result_ = full.c_str();
+}
+
+void
+ImR_SyncResponseHandler::send_exception (CORBA::Exception *ex)
+{
+  this->excep_ = ex->_tao_duplicate();
+}
+
+char *
+ImR_SyncResponseHandler::wait_for_result (void)
+{
+  while (this->result_.in() == 0 && this->excep_ == 0)
+    {
+      this->orb_->perform_work ();
+    }
+  if (this->excep_ != 0)
+    {
+      TAO_AMH_DSI_Exception_Holder h(this->excep_);
+      h.raise_invoke ();
+    }
+  return this->result_._retn();
+}
+
+//---------------------------------------------------------------------------
+
+ImR_Loc_ResponseHandler::ImR_Loc_ResponseHandler (Loc_Operation_Id opid,
+                                            ImplementationRepository::AMH_AdministrationResponseHandler_ptr rh)
+  :op_id_ (opid),
+   resp_ (ImplementationRepository::AMH_AdministrationResponseHandler::_duplicate (rh))
+{
+}
+
+ImR_Loc_ResponseHandler::~ImR_Loc_ResponseHandler (void)
+{
+}
+
+void
+ImR_Loc_ResponseHandler::send_ior (const char *)
+{
+  switch (this->op_id_)
+    {
+    case LOC_ACTIVATE_SERVER:
+      resp_->activate_server ();
+      break;
+    case LOC_ADD_OR_UPDATE_SERVER:
+      resp_->add_or_update_server ();
+      break;
+    case LOC_REMOVE_SERVER:
+      resp_->remove_server ();
+      break;
+    case LOC_SHUTDOWN_SERVER:
+      resp_->shutdown_server ();
+      break;
+    case LOC_SERVER_IS_RUNNING:
+      resp_->server_is_running ();
+      break;
+    case LOC_SERVER_IS_SHUTTING_DOWN:
+      resp_->server_is_shutting_down ();
+      break;
+    };
+
+  delete this;
+}
+
+void
+ImR_Loc_ResponseHandler::send_exception (CORBA::Exception *ex)
+{
+  ImplementationRepository::AMH_AdministrationExceptionHolder h (ex);
+  switch (this->op_id_)
+    {
+    case LOC_ACTIVATE_SERVER:
+      resp_->activate_server_excep (&h);
+      break;
+    case LOC_ADD_OR_UPDATE_SERVER:
+      resp_->add_or_update_server_excep (&h);
+      break;
+    case LOC_REMOVE_SERVER:
+      resp_->remove_server_excep (&h);
+      break;
+    case LOC_SHUTDOWN_SERVER:
+      resp_->shutdown_server_excep (&h);
+      break;
+    case LOC_SERVER_IS_RUNNING:
+      resp_->server_is_running_excep (&h);
+      break;
+    case LOC_SERVER_IS_SHUTTING_DOWN:
+      resp_->server_is_shutting_down_excep (&h);
+      break;
+    };
+  delete this;
+}
+

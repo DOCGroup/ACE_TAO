@@ -935,23 +935,15 @@ void
 UTL_Error::inheritance_fwd_error (UTL_ScopedName *n,
                                   AST_Interface *f)
 {
-  if (f)
-    {
-      idl_error_header (EIDL_INHERIT_FWD_ERROR,
-                      f->line (),
-                      f->file_name ());
-    }
-
+  idl_error_header (EIDL_INHERIT_FWD_ERROR,
+                    f->line (),
+                    f->file_name ());
   ACE_ERROR ((LM_ERROR,
               "interface "));
   n->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR,
               " cannot inherit from forward declared interface "));
-  if (f)
-    {
-      f->local_name ()->dump (*ACE_DEFAULT_LOG_STREAM);
-    }
-
+  f->local_name ()->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR,
               "\n"));
   idl_global->set_err_count (idl_global->err_count () + 1);

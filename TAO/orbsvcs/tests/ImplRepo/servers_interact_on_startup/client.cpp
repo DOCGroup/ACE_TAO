@@ -6,7 +6,7 @@
 #include "ace/OS_NS_unistd.h"
 
 int client_num = 0;
-ACE_TCHAR *server_ior = 0;
+ACE_CString server_ior;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -50,9 +50,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     ACE_DEBUG ((LM_DEBUG,
                 "(%P|%t|%T) Client %d sending request to %s\n",
-                client_num, server_ior));
+                client_num, server_ior.c_str ()));
     CORBA::Object_var obj =
-      orb->string_to_object (server_ior);
+      orb->string_to_object (server_ior.c_str ());
     ACE_ASSERT (!CORBA::is_nil (obj.in ()));
     Test_var test = Test::_narrow (obj.in());
     ACE_ASSERT (!CORBA::is_nil (test.in()));

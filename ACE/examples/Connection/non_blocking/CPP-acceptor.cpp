@@ -9,14 +9,23 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/Signal.h"
 
-template <typename PEER_STREAM>
-Svc_Handler<PEER_STREAM>::Svc_Handler (ACE_Reactor *r)
+
+
+#define PR_ST_1 ACE_PEER_STREAM_1
+#define PR_ST_2 ACE_PEER_STREAM_2
+#define PR_AC_1 ACE_PEER_ACCEPTOR_1
+#define PR_AC_2 ACE_PEER_ACCEPTOR_2
+#define PR_AD ACE_PEER_STREAM_ADDR
+#define SVH SVC_HANDLER
+
+template <PR_ST_1>
+Svc_Handler<PR_ST_2>::Svc_Handler (ACE_Reactor *r)
   : SVC_HANDLER (0, 0, r)
 {
 }
 
-template <typename PEER_STREAM> int
-Svc_Handler<PEER_STREAM>::close (u_long)
+template <PR_ST_1> int
+Svc_Handler<PR_ST_2>::close (u_long)
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("calling Svc_Handler close\n")));
 
@@ -25,10 +34,10 @@ Svc_Handler<PEER_STREAM>::close (u_long)
   return 0;
 }
 
-template <typename PEER_STREAM> int
-Svc_Handler<PEER_STREAM>::open (void *)
+template <PR_ST_1> int
+Svc_Handler<PR_ST_2>::open (void *)
 {
-  typename PEER_STREAM::PEER_ADDR client_addr;
+  PR_AD client_addr;
   ACE_TCHAR buf[BUFSIZ];
 
   if (this->peer ().get_remote_addr (client_addr) == -1)
@@ -55,8 +64,8 @@ Svc_Handler<PEER_STREAM>::open (void *)
 
 // Receive and process the data from the client.
 
-template <typename PEER_STREAM> int
-Svc_Handler<PEER_STREAM>::handle_input (ACE_HANDLE)
+template <PR_ST_1> int
+Svc_Handler<PR_ST_2>::handle_input (ACE_HANDLE)
 {
   char buf[BUFSIZ];
 
@@ -85,16 +94,16 @@ Svc_Handler<PEER_STREAM>::handle_input (ACE_HANDLE)
   return 0;
 }
 
-template <typename PEER_STREAM> int
-Svc_Handler<PEER_STREAM>::handle_timeout (const ACE_Time_Value &,
+template <PR_ST_1> int
+Svc_Handler<PR_ST_2>::handle_timeout (const ACE_Time_Value &,
                                       const void *)
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%p\n"), ACE_TEXT ("handle_timeout")));
   return 0;
 }
 
-template <typename SVC_HANDLER, typename PEER_ACCEPTOR> int
-IPC_Server<SVC_HANDLER, PEER_ACCEPTOR>::init (int argc, ACE_TCHAR *argv[])
+template <class SVH, PR_AC_1> int
+IPC_Server<SVH, PR_AC_2>::init (int argc, ACE_TCHAR *argv[])
 {
   const ACE_TCHAR *local_addr = argc > 1
     ? argv[1]
@@ -146,25 +155,25 @@ IPC_Server<SVC_HANDLER, PEER_ACCEPTOR>::init (int argc, ACE_TCHAR *argv[])
     return 0;
 }
 
-template <typename SVC_HANDLER, typename PEER_ACCEPTOR>
-IPC_Server<SVC_HANDLER, PEER_ACCEPTOR>::IPC_Server (void)
+template <class SVH, PR_AC_1>
+IPC_Server<SVH, PR_AC_2>::IPC_Server (void)
   : done_handler_ (ACE_Sig_Handler_Ex (ACE_Reactor::end_event_loop))
 {
 }
 
-template <typename SVC_HANDLER, typename PEER_ACCEPTOR> int
-IPC_Server<SVC_HANDLER, PEER_ACCEPTOR>::fini (void)
+template <class SVH, PR_AC_1> int
+IPC_Server<SVH, PR_AC_2>::fini (void)
 {
   return 0;
 }
 
-template <typename SVC_HANDLER, typename PEER_ACCEPTOR>
-IPC_Server<SVC_HANDLER, PEER_ACCEPTOR>::~IPC_Server (void)
+template <class SVH, PR_AC_1>
+IPC_Server<SVH, PR_AC_2>::~IPC_Server (void)
 {
 }
 
-template <typename SVC_HANDLER, typename PEER_ACCEPTOR> int
-IPC_Server<SVC_HANDLER, PEER_ACCEPTOR>::handle_close (ACE_HANDLE handle,
+template <class SVH, PR_AC_1> int
+IPC_Server<SVH, PR_AC_2>::handle_close (ACE_HANDLE handle,
                                        ACE_Reactor_Mask mask)
 {
   ACE_UNUSED_ARG (handle);
@@ -177,8 +186,8 @@ IPC_Server<SVC_HANDLER, PEER_ACCEPTOR>::handle_close (ACE_HANDLE handle,
 
 // Run the interative service.
 
-template <typename SVC_HANDLER, typename PEER_ACCEPTOR> int
-IPC_Server<SVC_HANDLER, PEER_ACCEPTOR>::svc (void)
+template <class SVH, PR_AC_1> int
+IPC_Server<SVH, PR_AC_2>::svc (void)
 {
   ACE_TCHAR buf[BUFSIZ];
 
@@ -198,9 +207,9 @@ IPC_Server<SVC_HANDLER, PEER_ACCEPTOR>::svc (void)
 
   while (ACE_Reactor::event_loop_done () == 0)
     {
-      SVC_HANDLER sh (this->reactor ());
+      SVH sh (this->reactor ());
 
-      // Create a new <SVC_HANDLER> endpoint, which performs all processing in
+      // Create a new <SVH> endpoint, which performs all processing in
       // its <open> method (note no automatic restart if errno ==
       // EINTR).
 
@@ -221,7 +230,7 @@ IPC_Server<SVC_HANDLER, PEER_ACCEPTOR>::svc (void)
                         this->acceptor ().get_handle ()));
         }
 
-      // <SVC_HANDLER>'s destructor closes the stream implicitly but the
+      // <SVH>'s destructor closes the stream implicitly but the
       // listening endpoint stays open.
     }
 
@@ -229,4 +238,10 @@ IPC_Server<SVC_HANDLER, PEER_ACCEPTOR>::svc (void)
   return 0;
 }
 
+#undef PR_ST_1
+#undef PR_ST_2
+#undef PR_AC_1
+#undef PR_AC_2
+#undef PR_AD
+#undef SVH
 #endif /* CPP_ACCEPTOR_C */

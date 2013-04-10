@@ -91,8 +91,6 @@ namespace
     {
     }
 
-    ~ImRifyProfiles () { delete [] list_buffer_; }
-
     CORBA::Object_ptr combined_ior ()
     {
       const CORBA::ULong pcount = base_profiles_.profile_count ();

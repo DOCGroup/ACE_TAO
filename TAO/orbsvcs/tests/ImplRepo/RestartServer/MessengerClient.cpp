@@ -6,12 +6,11 @@
 #include "ace/OS_NS_unistd.h"
 
 const ACE_TCHAR *ior = ACE_TEXT("file://Messenger.ior");
-int seconds_between_requests = 4;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:d:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -21,16 +20,11 @@ parse_args (int argc, ACE_TCHAR *argv[])
         ior = get_opts.opt_arg ();
         break;
 
-      case 'd':
-        seconds_between_requests = ACE_OS::atoi (get_opts.opt_arg ());
-        break;
-
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
                            "-k <ior> "
-                           "-d <seconds> (Delay between requests) "
                            "\n",
                            argv [0]),
                           -1);
@@ -44,7 +38,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
 
   // Detection of closed on read currently not working certain platforms.
-#if defined (sun) || defined (AIX) || defined (__FreeBSD_version)
+#if defined (sun) || defined (__FreeBSD_version)
   return 2;
 #endif
 
@@ -76,7 +70,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     // Force server to abort to verify it will be brought
     // back up when send_message() is called.
     messenger->abort(2);
-    ACE_OS::sleep(seconds_between_requests);
+    ACE_OS::sleep(4);
 
     ACE_DEBUG ((LM_INFO,
                 "(%P|%t) - Sending another message after abort of server\n"));

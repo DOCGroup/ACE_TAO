@@ -43,11 +43,6 @@ Options::parse_args (int &argc, ACE_TCHAR *argv[])
 {
   ACE_Arg_Shifter shifter (argc, argv);
 
-  // Don't let persistence options co-mingle.
-  bool binary_persistence_used = false;
-  bool xml_persistence_used = false;
-  bool directory_persistence_used = false;
-
   while (shifter.is_anything_left ())
     {
       if (ACE_OS::strcasecmp (shifter.get_current (),
@@ -147,7 +142,6 @@ Options::parse_args (int &argc, ACE_TCHAR *argv[])
 
           this->persist_file_name_ = shifter.get_current ();
           this->repo_mode_ = REPO_HEAP_FILE;
-          binary_persistence_used = true;
         }
       else if (ACE_OS::strcasecmp (shifter.get_current (),
                                    ACE_TEXT ("-UnregisterIfAddressReused")) == 0)
@@ -173,7 +167,6 @@ Options::parse_args (int &argc, ACE_TCHAR *argv[])
 
           this->persist_file_name_ = shifter.get_current ();
           this->repo_mode_ = REPO_XML_FILE;
-          xml_persistence_used = true;
         }
       else if (ACE_OS::strcasecmp (shifter.get_current (),
                                    ACE_TEXT ("--primary")) == 0)
@@ -206,7 +199,6 @@ Options::parse_args (int &argc, ACE_TCHAR *argv[])
             {
               this->persist_file_name_ += '/';
             }
-          directory_persistence_used = true;
         }
       else if (ACE_OS::strcasecmp (shifter.get_current (),
                                    ACE_TEXT ("-e")) == 0)
@@ -250,26 +242,6 @@ Options::parse_args (int &argc, ACE_TCHAR *argv[])
         }
 
       shifter.consume_arg ();
-    }
-
-  if ((this->imr_type_ == BACKUP_IMR || this->imr_type_ == PRIMARY_IMR) &&
-      !directory_persistence_used)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  "Error: Redundancy is used but the "
-                  "--directory option is not passed\n"));
-      this->print_usage ();
-      return -1;
-    }
-
-  if ((binary_persistence_used + directory_persistence_used +
-       xml_persistence_used)
-      > 1)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  "Error: Only one persistence option can be used\n"));
-      this->print_usage ();
-      return -1;
     }
 
   return 0;
@@ -326,6 +298,7 @@ Options::print_usage (void) const
     ACE_TEXT ("  -s              Run as a service\n")
     ACE_TEXT ("  -t secs         Server startup timeout.(Default=60s)\n")
     ACE_TEXT ("  -v msecs        Server verification interval.(Default=10s)\n")
+    ACE_TEXT ("  --asynch        Servant dispatching using asynch method handling\n")
               ));
 }
 
@@ -596,6 +569,7 @@ Options::unregister_if_address_reused (void) const
 }
 
 Options::ImrType
-Options::imr_type(void) const {
+Options::imr_type (void) const
+{
   return this->imr_type_;
 }

@@ -578,10 +578,7 @@ do_failover_name_test (
       catch (const CosNaming::NamingContext::NotFound& ex)
         {
           ex._tao_print_exception (
-            ACE_TEXT ("INFO: Unable to resolve object from replica. Sleeping for a second.\n"));
-
-          // Give it a second to be processed
-          ACE_OS::sleep (1);
+            ACE_TEXT ("INFO: Unable to resolve object from replica.\n"));
 
           // Try again...
           try {
@@ -662,9 +659,7 @@ do_failover_name_test (
         {
           ex._tao_print_exception (
               ACE_TEXT ("INFO: Unable to resolve wide context object from ")
-              ACE_TEXT ("replica. Sleeping for a second.\n"));
-
-          ACE_OS::sleep (1);
+              ACE_TEXT ("replica.\n"));
 
           // Try again to see if it just was a race condition
           try {
@@ -1209,9 +1204,7 @@ do_persistence_name_test (
       catch (const CosNaming::NamingContext::NotFound& ex)
         {
           ex._tao_print_exception (
-            ACE_TEXT ("ERROR: Unable to resolve object from repository. Sleeping for a second.\n"));
-
-          ACE_OS::sleep (1);
+            ACE_TEXT ("ERROR: Unable to resolve object from repository.\n"));
 
           // Try again...
           try {
@@ -1297,9 +1290,7 @@ do_persistence_name_test (
         {
           ex._tao_print_exception (
               ACE_TEXT ("INFO: Unable to resolve wide context object from ")
-              ACE_TEXT ("repository. Sleeping for a second.\n"));
-
-          ACE_OS::sleep (1);
+              ACE_TEXT ("repository.\n"));
 
           // Try again to see if it just was a race condition
           try {
@@ -1567,15 +1558,6 @@ do_persistence_objectgroup_test (
             std::string member_ior;
             in >> member_ior;
 
-            if (!in.good ())
-              {
-                ACE_ERROR_RETURN  ((LM_ERROR,
-                                    ACE_TEXT ("ERROR: Unable to read member data ")
-                                    ACE_TEXT ("from file %C\n"),
-                                    member_data_file.c_str ()),
-                                   RC_ERROR);
-              }
-
             CORBA::Object_var member =
               theOrb->string_to_object(member_ior.c_str ());
             PortableGroup::Location location_name (1);
@@ -1612,13 +1594,12 @@ do_persistence_objectgroup_test (
                             ACE_TEXT ("ERROR: No group names found")));
               }
           }
-        catch (const CORBA::Exception& ex)
+        catch (const CORBA::Exception&)
           {
             ACE_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("ERROR: Unable to remove member for group %C\n"),
                                basic_group_name),
                               RC_ERROR);
-            ex._tao_print_exception ("CORBA::Exception caught:");
           }
       }
 
@@ -1796,13 +1777,9 @@ do_equivalence_name_test (
       try {
         CORBA::Object_var obj1_on_replica = root_context_2->resolve (level1);
       }
-      catch (const CosNaming::NamingContext::NotFound& )
+      catch (const CosNaming::NamingContext::NotFound& ex)
         {
-          ACE_DEBUG ((LM_INFO,
-                      "INFO: Unable to resolve object from replica. "
-                      "Sleeping for a second.\n"));
-
-          ACE_OS::sleep (1);
+          ex._tao_print_exception ("INFO: Unable to resolve object from replica.\n");
 
           // Try again...
           try {
@@ -1882,9 +1859,7 @@ do_equivalence_name_test (
         {
           ex._tao_print_exception (
               ACE_TEXT ("INFO: Unable to resolve wide context object from ")
-              ACE_TEXT ("replica. Sleeping for a second.\n"));
-
-          ACE_OS::sleep (1);
+              ACE_TEXT ("replica.\n"));
 
           // Try again to see if it just was a race condition
           try {

@@ -35,7 +35,6 @@
 
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Null_Mutex.h"
-#include "ace/Truncate.h"
 #include "ace/SString.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -118,7 +117,7 @@ public:
   {
   public:
     u_long operator() (PortableServer::ServantBase* const & ptr) const {
-      return ACE_Utils::truncate_cast<u_long> ((intptr_t)ptr);
+      return reinterpret_cast<u_long> (ptr);
     }
   };
 

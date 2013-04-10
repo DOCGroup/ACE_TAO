@@ -6,6 +6,7 @@
 #include "GIOP_Buffer.h"
 #include "ace/OS_NS_stdio.h"
 #include <stack>
+#include <deque>
 
 Thread::Thread (long tid, const char *alias, size_t offset)
   : id_(tid),
@@ -223,13 +224,13 @@ Thread::current_invocation (void) const
 }
 
 void
-Thread::dump_detail (ostream &strm) const
+Thread::dump_detail (ostream &strm)
 {
   strm << "   " << this->alias_ << " tid = 0x" << hex << this->id_
        << "\tfirst line " << dec << this->first_line_ << "\t"
        << this->server_encounters_ << " requests sent "
        << this->client_encounters_ << " requests received";
-  if (nested_ > 0)
+  if (this->count_nesting () > 0)
     strm <<", with " << this->nested_ << " nested upcalls, max depth "
          << this->max_depth_;
   strm << endl;
@@ -241,6 +242,7 @@ Thread::get_summary (long &sent_reqs,
                      size_t &sent_size,
                      size_t &recv_size)
 {
+
   for (ACE_DLList_Iterator <Invocation> i(this->invocations_);
        !i.done();
        i.advance())
@@ -264,7 +266,7 @@ void
 Thread::dump_invocations (ostream &strm)
 {
   size_t total_request_bytes = 0;
-  strm << "   " << this->alias_ << " handled " << this->invocations_.size()
+  strm << this->alias_ << " handled " << this->invocations_.size()
        << " invocations" << endl;
 
   std::stack<Invocation *> nested;
@@ -272,14 +274,17 @@ Thread::dump_invocations (ostream &strm)
        !i.done();
        i.advance())
     {
-      Invocation *inv;
+      Invocation *inv = 0;
       i.next(inv);
       size_t level = 0;
+
       while (!nested.empty ())
         {
           if (nested.top()->contains (inv->req_line ()))
             {
               level = nested.size();
+              if (level > this->nested_)
+                this->nested_ = level;
               break;
             }
           nested.pop();
@@ -290,4 +295,77 @@ Thread::dump_invocations (ostream &strm)
       total_request_bytes += inv->request_bytes();
     }
   strm << "total request octet count: " << total_request_bytes;
+}
+
+void
+Thread::dump_incidents (ostream &strm)
+{
+  if (this->nested_ == 0)
+    return;
+  strm << "\n" << this->alias_  << " handled " << this->invocations_.size()
+       << " invocations with a max nesting level of " << this->nested_ << endl;
+
+  std::deque<Invocation *> nested_queue;
+  for (ACE_DLList_Iterator <Invocation> i (this->invocations_);
+       !i.done();
+       i.advance())
+    {
+      Invocation *inv = 0;
+      i.next(inv);
+      size_t level = nested_queue.size();
+
+      while (!nested_queue.empty ())
+        {
+          Invocation *prev = nested_queue.back ();
+          if (prev->contains (inv->req_line ()))
+            {
+              break;
+            }
+          nested_queue.pop_back ();
+          level--;
+          prev->dump_finish_line (strm, level);
+        }
+      if (nested_queue.size() > 1)
+        {
+          size_t inv_line = inv->req_line ();
+          for (std::deque<Invocation *>::iterator j = nested_queue.begin ();
+               j != nested_queue.end ();
+               j++)
+            {
+              if ((*j)->repl_line () < inv_line)
+                {
+                  (*j)->dump_finish_line (strm, level);
+                }
+            }
+        }
+      nested_queue.push_back (inv);
+      inv->dump_start_line (strm, level);
+    }
+}
+
+size_t
+Thread::count_nesting (void)
+{
+  std::stack<Invocation *> nested;
+  for (ACE_DLList_Iterator <Invocation> i (this->invocations_);
+       !i.done();
+       i.advance())
+    {
+      Invocation *inv = 0;
+      i.next(inv);
+      size_t level = 0;
+      while (!nested.empty ())
+        {
+          level = nested.size();
+          if (level > this->nested_)
+            this->nested_ = level;
+          if (nested.top()->contains (inv->req_line ()))
+            {
+              break;
+            }
+          nested.pop ();
+        }
+      nested.push (inv);
+    }
+  return this->nested_;
 }

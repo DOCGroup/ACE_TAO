@@ -17,14 +17,13 @@ TAO_Incremental_Key_Generator::TAO_Incremental_Key_Generator (void)
 int
 TAO_Incremental_Key_Generator::operator() (PortableServer::ObjectId &id)
 {
-  const size_t cntr_size = sizeof this->counter_;
   // Resize to accommodate the counter.
-  id.length (cntr_size);
+  id.length (sizeof this->counter_);
 
   // Add new key data.
   ACE_OS::memcpy (id.get_buffer (),
                   &++this->counter_,
-                  cntr_size);
+                  sizeof this->counter_);
 
   // Success.
   return 0;

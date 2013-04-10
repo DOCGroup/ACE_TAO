@@ -7,7 +7,6 @@
 #include "ace/Thread_Manager.h"
 #include "ace/Handle_Set.h"
 #include "ace/CDR_Stream.h"
-#include "ace/Truncate.h"
 
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
@@ -312,7 +311,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv){
     // services. So select was needed to wait on both sockets
     // simultaneously. In this test we could just call accept on the
     // one socket.
-    int result = ACE_OS::select(ACE_Utils::truncate_cast<int> ((intptr_t)acceptor_socket.get_handle()) +1,
+    int result = ACE_OS::select((int) (acceptor_socket.get_handle()) +1,
                                 (fd_set *) temp,
                                 0,
                                 0,

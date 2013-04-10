@@ -37,7 +37,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Functor_String.h"
-#include "ace/Truncate.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
