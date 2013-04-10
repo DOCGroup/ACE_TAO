@@ -1,6 +1,7 @@
 // $Id$
 
 #include "ace/INET_Addr.h"
+#include "ace/Truncate.h"
 #include "tao/IIOP_Connection_Handler.h"
 #include "tao/IIOP_Transport.h"
 #include "tao/Transport_Selection_Guard.h"
@@ -70,7 +71,7 @@ namespace TAO
 #if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
       // Need to use cast to pacify windows compilers complaining
       // about the implicit HANDLE -> CORBA::Long conversion.
-      return (CORBA::Long) this->handler ()->get_handle ();
+      return ACE_Utils::truncate_cast<CORBA::Long> ((intptr_t)this->handler ()->get_handle ());
 #else
       throw ::CORBA::NO_IMPLEMENT ();
 #endif

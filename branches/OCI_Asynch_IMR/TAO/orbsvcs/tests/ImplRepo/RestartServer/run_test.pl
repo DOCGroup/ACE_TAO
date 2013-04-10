@@ -18,6 +18,14 @@ foreach $i (@ARGV) {
 
 my $extra_timeout = 45;
 
+my $seconds_between_requests = 4;
+
+# Valgrind may slow down processes enough that an extra delay
+# is needed between client requests.
+if (exists $ENV{'ACE_RUN_VALGRIND_CMD'}) {
+    $seconds_between_requests = 10;
+}
+
 my $c1 = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 my $imr = PerlACE::TestTarget::create_target (3) || die "Create target 3 failed\n";
 my $act = PerlACE::TestTarget::create_target (4) || die "Create target 4 failed\n";
@@ -87,7 +95,8 @@ $SI = $si->CreateProcess ($tao_imr, "-ORBInitRef ImplRepoService=file://$si_imri
 
 $C1 = $c1->CreateProcess ("MessengerClient", "-k file://$c1_srviorfile ".
 			  "-ORBForwardOnReplyClosedLimit 20 -ORBForwardDelay 500 ".
-			  "-ORBSvcConf $c1_conffile -ORBdebuglevel $debug_level");
+			  "-ORBSvcConf $c1_conffile -ORBdebuglevel $debug_level ".
+			  "-d $seconds_between_requests");
 
 $SDN = $sdn->CreateProcess ("$tao_imr", "-ORBInitRef ImplRepoService=file://$sdn_imriorfile ".
                                         "shutdown MessengerService");
