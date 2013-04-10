@@ -8,5 +8,4 @@
 project : taoidldefaults {
   idlflags += -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL \
               -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL
-
 }

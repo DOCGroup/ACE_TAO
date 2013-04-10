@@ -1,3 +1,210 @@
+Thu Apr  4 13:35:46 UTC 2013  Byron Harris  <harrisb@ociweb.com>
+
+        * orbsvcs/tests/FT_Naming/FaultTolerant/client.cpp:
+
+          Avoid output containing "EXCEPTION" that triggers
+          test as a failure while allowing for retries in
+          the presence of exceptions due to timing issues.
+
+Wed Apr  3 16:40:46 UTC 2013  Byron Harris  <harrisb@ociweb.com>
+
+        * orbsvcs/tests/FT_Naming/FaultTolerant/client.cpp:
+
+          Add additional error checking/output in
+          do_persistence_objectgroup_test() to help diagnose test
+          failure seen on a few platforms.
+
+        * orbsvcs/tests/FT_Naming/FaultTolerant/server.cpp:
+
+          Write a status file to indicate server is running.
+
+        * orbsvcs/tests/FT_Naming/FaultTolerant/run_persistence_test.pl:
+
+          Use server's status file to check that server is running
+          since group member IOR files are written after server's IOR
+          is written.
+
+Sat Mar 30 18:12:28 UTC 2013  Martin Corino  <mcorino@remedy.nl>
+
+        * tests/File_IO/File_i.cpp:
+        * tests/POA/Default_Servant2/File_i.cpp:
+          Fixed int-to-pointer cast warnings.
+
+Sat Mar 30 09:39:40 UTC 2013  Martin Corino  <mcorino@remedy.nl>
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedEventChannel.h:
+        * orbsvcs/orbsvcs/Event/EC_Basic_Factory.cpp:
+        * performance-tests/POA/Object_Creation_And_Registration/registration.cpp:
+        * tao/PortableServer/Key_Adapters.cpp:
+        * tao/TransportCurrent/IIOP_Current_Impl.cpp:
+        * tests/File_IO/File_i.cpp:
+        * tests/NestedUpcall/MT_Client_Test/client.cpp:
+        * tests/POA/Default_Servant2/File_i.cpp:
+          Added MinGW64 compilers support.
+          All kinds of minor updates and corrections to silence
+          warnings and errors relating to either 64bit Windows or
+          the very latest GCC (4.8.0). Mostly precision loss and
+          truncating casts.
+
+Fri Mar 29 13:11:10 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/tao_versioning_idl_defaults.mpb:
+          Zapped empty line
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be/be_util.cpp:
+        * TAO_IDL/be_include/be_global.h:
+          Added versioning_include to specify a different versioned
+          header include and resolved some problems when trying to
+          use versioned namespaces also for the application code
+
+Fri Mar 29 12:26:13 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/util/utl_err.cpp:
+          Fixed crash when feeding tao_idl illegal IDL
+
+Thu Mar 28 15:25:46 UTC 2013  Byron Harris  <harrisb@ociweb.com>
+
+        * bin/tao_other_tests.lst:
+
+          Added servers_interact_on_startup test but disabled from
+          test statistics for now as it exposes a problem with the
+          ImR currently being addressed.
+
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup/Test_i.cpp:
+
+          Fixed missing protocol seen on certain compilers.
+
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup/client.cpp:
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup/server.cpp:
+
+          Fixed to build with wide characters enabled.
+
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup/run_test.pl:
+
+          Made server reply delay long enough to reveal problem under Linux.
+
+Wed Mar 27 13:11:36 UTC 2013  Byron Harris  <harrisb@ociweb.com>
+
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup:
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup/README:
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup/Test.idl:
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup/Test_i.h:
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup/Test_i.cpp:
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup/client.cpp:
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup/run_test.pl:
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup/server.cpp:
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup/servers_interact_on_startup.mpc:
+
+          Added test for ImR pinging of ill-behaved, interacting servers.
+
+Thu Mar 14 20:21:19 UTC 2013  Byron Harris  <harrisb@ociweb.com>
+
+        * orbsvcs/tests/ImplRepo/RestartServer/MessengerClient.cpp:
+        * orbsvcs/tests/ImplRepo/RestartServer/run_test.pl:
+
+          If valgrind is being ran, adjust delay parameters to
+          account for valgrind slowing processes down.
+
+Thu Mar 14 15:54:03 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * orbsvcs/tests/ImplRepo/run_test.pl:
+        * bin/tao_other_tests.lst:
+
+          Added test for backup_restart feature for ImR.
+
+        * orbsvcs/ImplRepo_Service/Locator_Repository.h:
+        * orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
+
+          Added method to support recovering the ior from the combined ior
+          file when restarting the backup.
+
+        * orbsvcs/ImplRepo_Service/README:
+
+          Updated documentation to indicate that backup can now be started
+          without the primary running when a restart is occuring.
+
+        * orbsvcs/ImplRepo_Service/Shared_Backing_Store.cpp:
+
+          Implemented feature for restarting backup after a replicated pair
+          has been successfully started in the past.
+
+        * orbsvcs/tests/FT_Naming/FaultTolerant/run_backup_restart_test.pl:
+
+          Added test for restart of FT_Naming_Server backup after the FT
+          pair has successfully started in the past.
+
+        * tao/ImR_Client/ImR_Client.cpp:
+
+          Fixed memory leak. Clean up list_buffer_ array in destructor.
+
+Thu Mar 14 08:39:00 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+          Updated for next release
+
+Thu Mar 14 09:04:46 CET 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO version 2.1.8 released.
+
+Mon Mar 11 19:25:19 UTC 2013  Byron Harris  <harrisb@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Locator_Options.cpp:
+
+          Generate error if more than one persistence mechanism
+          type is specifed. Generate error if --primary or --backup
+          is based and --directory is not.
+
+Mon Mar 11 16:23:46 UTC 2013  Byron Harris  <harrisb@ociweb.com>
+
+        * orbsvcs/tests/ImplRepo/RestartServer/RestartServer.mpc:
+        * orbsvcs/tests/ImplRepo/scale_clients/scale_clients.mpc:
+        * orbsvcs/tests/ImplRepo/servers_list/servers_list.mpc:
+
+          For server project add imr_client to base projects
+          to support resolving ImR client code for static builds.
+
+Mon Mar 11 14:51:28 UTC 2013  Byron Harris  <harrisb@ociweb.com>
+
+        * orbsvcs/tests/FT_Naming/Replication/run_test.pl:
+
+          Added to wait time for spawn of client as it may
+          take longer than 15 seconds to run on some systems
+          such as a SPARC T1000.
+
+          Removed duplicate function definition causing prototype
+          mismatch warning from perl.
+
+Mon Mar 11 13:33:14 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * orbsvcs/tests/FT_Naming/FaultTolerant/client.cpp:
+
+          Added sleep in test after first failure to allow time for the
+          replication to happen between redundant servers.
+
+Mon Mar 11 13:17:41 UTC 2013  Byron Harris  <harrisb@ociweb.com>
+
+        * NEWS:
+        * docs/Options.html:
+        * orbsvcs/tests/ImplRepo/RestartServer/MessengerClient.cpp:
+
+          Added AIX to systems not supporting -ORBForwardOnReplyClosedLimit.
+
+Mon Mar 11 09:42:00 UTC 2013  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * tests/Bug_4097_Regression/Bug_4097_Regression.cpp:
+
+        Missing main try/catch coverity fix.
+
+Sun Mar 10 05:19:06 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Dynamic/client.cpp:
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Static/client.cpp:
+
+          Fix wchar compatibility.
+
 Sat Mar  9 19:08:55 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Dynamic/run_test.pl:

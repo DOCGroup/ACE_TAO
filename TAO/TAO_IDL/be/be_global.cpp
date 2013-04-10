@@ -62,6 +62,7 @@ BE_GlobalData::BE_GlobalData (void)
     core_versioning_end_   ("\nTAO_END_VERSIONED_NAMESPACE_DECL\n"),
     versioning_begin_ (),
     versioning_end_ (),
+    versioning_include_ (),
     client_hdr_ending_ (ACE::strnew ("C.h")),
     client_stub_ending_ (ACE::strnew ("C.cpp")),
     client_inline_ending_ (ACE::strnew ("C.inl")),
@@ -1110,22 +1111,22 @@ BE_GlobalData::stripped_filename (const char *s)
   this->stripped_filename_ = ACE::strnew (s);
 }
 
-void
-BE_GlobalData::versioning_begin (const char * s)
-{
-  this->versioning_begin_ =
-    ACE_CString ("\n\n")
-    + ACE_CString (s)
-    + ACE_CString ("\n\n");
-
-  this->core_versioning_end_ += this->versioning_begin_;
-  // Yes, "begin".
-}
-
 const char *
 BE_GlobalData::versioning_begin (void) const
 {
   return this->versioning_begin_.c_str ();
+}
+
+void
+BE_GlobalData::versioning_include (const char * s)
+{
+  this->versioning_include_ = s;
+}
+
+const char *
+BE_GlobalData::versioning_include (void) const
+{
+  return this->versioning_include_.c_str ();
 }
 
 const char *
@@ -1143,8 +1144,23 @@ BE_GlobalData::versioning_end (const char * s)
     + ACE_CString ("\n\n");
 
   this->core_versioning_begin_ =
-    this->versioning_end_  // Yes, "end".
-    + this->core_versioning_begin_;  // Initialized in constructor.
+    this->versioning_end_ + // Yes, "end".
+    "\nTAO_BEGIN_VERSIONED_NAMESPACE_DECL\n";
+}
+
+void
+BE_GlobalData::versioning_begin (const char * s)
+{
+  this->versioning_begin_ =
+    ACE_CString ("\n\n")
+    + ACE_CString (s)
+    + ACE_CString ("\n\n");
+
+  this->core_versioning_end_ =
+    "\nTAO_END_VERSIONED_NAMESPACE_DECL\n"
+    + this->versioning_begin_;  // Yes, "begin".
+
+  // Yes, "begin".
 }
 
 const char *

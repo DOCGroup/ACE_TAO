@@ -67,8 +67,8 @@ Locator_Repository::report_ior (PortableServer::POA_ptr )
   IORTable::Table_var ior_table = IORTable::Table::_narrow (obj.in ());
   ACE_ASSERT (! CORBA::is_nil (ior_table.in ()));
 
-  ior_table->bind ("ImplRepoService", this->imr_ior_.in());
-  ior_table->bind ("ImR", this->imr_ior_.in());
+  ior_table->rebind ("ImplRepoService", this->imr_ior_.in());
+  ior_table->rebind ("ImR", this->imr_ior_.in());
 
   // Set up multicast support (if enabled)
   if (this->opts_.multicast ())
@@ -113,6 +113,70 @@ Locator_Repository::report_ior (PortableServer::POA_ptr )
           ACE_OS::fprintf (fp, "%s", this->imr_ior_.in ());
           ACE_OS::fclose (fp);
         }
+    }
+
+  registered_ = true;
+
+  return 0;
+}
+
+int
+Locator_Repository::recover_ior (void)
+{
+  if (this->registered_)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+         ACE_TEXT ("ERROR: Repository already registered IOR. ")
+         ACE_TEXT ("recover_ior should not be called.\n")), -1);
+    }
+
+  if (this->opts_.debug () > 0)
+    {
+      ACE_DEBUG ((LM_INFO, ACE_TEXT ("recover_ior <%C>\n"),
+                  this->opts_.ior_filename ().c_str()));
+    }
+
+  // Load the IOR from the specified file if it is available.
+  const ACE_TString& combined_ior_file = this->opts_.ior_filename ();
+
+  // Check if the file exists. If not, then return 1 indicating
+  // we cannot recover our state.
+  if (ACE_OS::access (combined_ior_file.c_str (), F_OK) != 0)
+    return -1;
+
+  try {
+    ACE_TString combined_ior = "file://" + combined_ior_file;
+
+    CORBA::Object_var combined_obj =
+      this->orb_->string_to_object (combined_ior.c_str());
+
+    if (!CORBA::is_nil (combined_obj.in ()))
+      {
+        // Convert the object back into an IOR string to store in the
+        // imr_ior_ attribute.
+        this->imr_ior_ = this->orb_->object_to_string (combined_obj.in ());
+      }
+  }
+  catch (const CORBA::Exception& ex)
+    {
+      ex._tao_print_exception ("Attempting to read combined_ior for ImR_Locator\n");
+      return -1;
+    }
+
+  // Register the ImR for use with INS
+  CORBA::Object_var obj = this->orb_->resolve_initial_references ("IORTable");
+  IORTable::Table_var ior_table = IORTable::Table::_narrow (obj.in ());
+  ACE_ASSERT (! CORBA::is_nil (ior_table.in ()));
+
+  ior_table->bind ("ImplRepoService", this->imr_ior_.in());
+  ior_table->bind ("ImR", this->imr_ior_.in());
+
+  // Set up multicast support (if enabled)
+  if (this->opts_.multicast ())
+    {
+      ACE_Reactor* reactor = this->orb_->orb_core ()->reactor ();
+      if (this->setup_multicast (reactor, this->imr_ior_.in ()) != 0)
+        return -1;
     }
 
   registered_ = true;

@@ -54,89 +54,102 @@ int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   ACE_DEBUG ((LM_DEBUG, "Starting\n"));
-  CORBA::ORB_var orb (CORBA::ORB_init (argc, argv));
-
-  CORBA::Object_var obj (orb->resolve_initial_references ("CodecFactory"));
-  IOP::CodecFactory_var codecFactory (IOP::CodecFactory::_narrow (obj.in ()));
-
-  IOP::Encoding cdr_encoding;
-  cdr_encoding.format = IOP::ENCODING_CDR_ENCAPS;
-  cdr_encoding.major_version = 1;
-  cdr_encoding.minor_version = 2;
-  IOP::Codec_var codec (codecFactory->create_codec (cdr_encoding));
-
-  // Test starts here with first case
-
-  ACE_DEBUG ((LM_DEBUG,  "Creating union using default descriminant of mlu_char type\n"));
-  MultiLabelUnion mlu;
-  mlu.mlu_char ('x');
-  CORBA::Any any;
-  any <<= mlu;
-  bool error = checkResult (any, mlu);
-
-  ACE_DEBUG ((LM_DEBUG,  "Encode->Decode any with union using default descriminant of mlu_char type\n"));
-  CORBA::OctetSeq_var messageInCDR (codec->encode (any));
-  ACE_DEBUG ((LM_DEBUG,  ". Size of encoding is %d\n", messageInCDR->length ()));
-  CORBA::Any_var decoded = codec->decode (messageInCDR);
-  if (!decoded.ptr ())
+  try
     {
-      ACE_DEBUG ((LM_DEBUG,  "No decoding\n"));
-      error = true;
+      CORBA::ORB_var orb (CORBA::ORB_init (argc, argv));
+
+      CORBA::Object_var obj (orb->resolve_initial_references ("CodecFactory"));
+      IOP::CodecFactory_var codecFactory (IOP::CodecFactory::_narrow (obj.in ()));
+
+      IOP::Encoding cdr_encoding;
+      cdr_encoding.format = IOP::ENCODING_CDR_ENCAPS;
+      cdr_encoding.major_version = 1;
+      cdr_encoding.minor_version = 2;
+      IOP::Codec_var codec (codecFactory->create_codec (cdr_encoding));
+
+      // Test starts here with first case
+
+      ACE_DEBUG ((LM_DEBUG,  "Creating union using default descriminant of mlu_char type\n"));
+      MultiLabelUnion mlu;
+      mlu.mlu_char ('x');
+      CORBA::Any any;
+      any <<= mlu;
+      bool error = checkResult (any, mlu);
+
+      ACE_DEBUG ((LM_DEBUG,  "Encode->Decode any with union using default descriminant of mlu_char type\n"));
+      CORBA::OctetSeq_var messageInCDR (codec->encode (any));
+      ACE_DEBUG ((LM_DEBUG,  ". Size of encoding is %d\n", messageInCDR->length ()));
+      CORBA::Any_var decoded = codec->decode (messageInCDR);
+      if (!decoded.ptr ())
+        {
+          ACE_DEBUG ((LM_DEBUG,  "No decoding\n"));
+          error = true;
+        }
+      else if (checkResult (decoded.in (), mlu))
+        {
+          error = true;
+        }
+
+      ACE_DEBUG ((LM_DEBUG,  "Creating union using case 0\n"));
+      mlu.mlu_char ('y');
+      mlu._d (static_cast<CORBA::Long> (0)); // Note first case label for type.
+      any <<= mlu;
+      if (checkResult (any, mlu))
+        {
+          error = true;
+        }
+
+      ACE_DEBUG ((LM_DEBUG,  "Encode->Decode any with union using case 0\n"));
+      messageInCDR = codec->encode (any);
+      ACE_DEBUG ((LM_DEBUG,  ". Size of encoding is %d\n", messageInCDR->length ()));
+      decoded = codec->decode (messageInCDR);
+      if (!decoded.ptr ())
+        {
+          ACE_DEBUG ((LM_DEBUG,  "No decoding\n"));
+          error = true;
+        }
+      else if (checkResult (decoded.in (), mlu))
+        {
+          error = true;
+        }
+
+      ACE_DEBUG ((LM_DEBUG,  "Creating union using case 1\n"));
+      mlu.mlu_char ('z');
+      mlu._d (static_cast<CORBA::Long> (1)); // Note second case label for same type as before
+      any <<= mlu;
+      if (checkResult (any, mlu))
+        {
+          error = true;
+        }
+
+      ACE_DEBUG ((LM_DEBUG,  "Encode->Decode any with union using case 1\n"));
+      messageInCDR = codec->encode (any);
+      ACE_DEBUG ((LM_DEBUG,  ". Size of encoding is %d\n", messageInCDR->length ()));
+      decoded = codec->decode (messageInCDR);
+      if (!decoded.ptr ())
+        {
+          ACE_DEBUG ((LM_DEBUG,  "No decoding\n"));
+          error = true;
+        }
+      else if (checkResult (decoded.in (), mlu))
+        {
+          error = true;
+        }
+
+      if (error)
+        {
+          ACE_DEBUG ((LM_DEBUG, "Test FAILED.\n"));
+          return 1;
+        }
     }
-  else if (checkResult (decoded.in (), mlu))
+  catch (const CORBA::Exception &ex)
     {
-      error = true;
+      ex._tao_print_exception ("Test FAILED due to Exception:");
+      return 1;
     }
-
-  ACE_DEBUG ((LM_DEBUG,  "Creating union using case 0\n"));
-  mlu.mlu_char ('y');
-  mlu._d (static_cast<CORBA::Long> (0)); // Note first case label for type.
-  any <<= mlu;
-  if (checkResult (any, mlu))
+  catch (...)
     {
-      error = true;
-    }
-
-  ACE_DEBUG ((LM_DEBUG,  "Encode->Decode any with union using case 0\n"));
-  messageInCDR = codec->encode (any);
-  ACE_DEBUG ((LM_DEBUG,  ". Size of encoding is %d\n", messageInCDR->length ()));
-  decoded = codec->decode (messageInCDR);
-  if (!decoded.ptr ())
-    {
-      ACE_DEBUG ((LM_DEBUG,  "No decoding\n"));
-      error = true;
-    }
-  else if (checkResult (decoded.in (), mlu))
-    {
-      error = true;
-    }
-
-  ACE_DEBUG ((LM_DEBUG,  "Creating union using case 1\n"));
-  mlu.mlu_char ('z');
-  mlu._d (static_cast<CORBA::Long> (1)); // Note second case label for same type as before
-  any <<= mlu;
-  if (checkResult (any, mlu))
-    {
-      error = true;
-    }
-
-  ACE_DEBUG ((LM_DEBUG,  "Encode->Decode any with union using case 1\n"));
-  messageInCDR = codec->encode (any);
-  ACE_DEBUG ((LM_DEBUG,  ". Size of encoding is %d\n", messageInCDR->length ()));
-  decoded = codec->decode (messageInCDR);
-  if (!decoded.ptr ())
-    {
-      ACE_DEBUG ((LM_DEBUG,  "No decoding\n"));
-      error = true;
-    }
-  else if (checkResult (decoded.in (), mlu))
-    {
-      error = true;
-    }
-
-  if (error)
-    {
-      ACE_DEBUG ((LM_DEBUG, "Test FAILED.\n"));
+      ACE_DEBUG ((LM_DEBUG, "Test FAILED (UNKNOWN exception).\n"));
       return 1;
     }
 

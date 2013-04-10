@@ -238,9 +238,11 @@ profile to not be available in the ior.
 
 At startup the primary must be started first, then the backup. When
 a single ImR_Locator goes down, it can be restarted at anytime
-(using the same ORBEndPoints). If they are both shutdown then Fault Tolerant
-ImplRepo_Service will be down until both the primary and backup are restarted
-in that order.. The previous ior file will only remain valid if the ORBEndPoint
+(using the same ORBEndPoints). If they are both shutdown after a successful
+startup of the redundant pair, then either the primary or backup can be
+restarted first. With only a single server running, there is no fault
+tolerance support, but the original fault tolerant ior which was created
+by the backup with the -o option can still be used as long as the ORBEndPoint
 list remains the same for both instances.
 
 As long as both the primary and backup ImR_Locators are not shutdown at the
@@ -276,7 +278,7 @@ same time the Fault Tolerant ImplRepo_Service will always be available.
 
 @subsection activator ImR_Activator
 
-  ImR_Activators, as you might have guessed, do the real work of
+ImR_Activators, as you might have guessed, do the real work of
 activating servers or shutting them down and maintaining the information
 about servers related to them. Only one instance of an ImR_Activator
 can be run on one host. The ImR_Activator is not exposed at all to the
