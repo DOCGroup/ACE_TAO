@@ -488,8 +488,7 @@ LiveCheck::add_poll_listener (LiveListener *l)
 
   entry->add_listener (l);
   entry->reset_status ();
-  this->schedule_ping (entry);
-  return true;
+  return this->schedule_ping (entry);
 }
 
 bool
@@ -507,20 +506,19 @@ LiveCheck::add_listener (LiveListener *l)
     }
 
   entry->add_listener (l);
-  this->schedule_ping (entry);
-  return true;
+  return this->schedule_ping (entry);
 }
 
-void
+bool
 LiveCheck::schedule_ping (LiveEntry *entry)
 {
   if (!this->running_)
-    return;
+    return false;
 
   LiveStatus status = entry->status();
   if (status == LS_PING_AWAY || status == LS_DEAD)
     {
-      return;
+      return status != LS_DEAD;
     }
 
   ACE_Time_Value now (ACE_High_Res_Timer::gettimeofday_hr());
@@ -539,6 +537,7 @@ LiveCheck::schedule_ping (LiveEntry *entry)
                                        reinterpret_cast<void *>(this->token_),
                                        delay);
     }
+  return true;
 }
 
 LiveStatus
