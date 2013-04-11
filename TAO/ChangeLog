@@ -1,3 +1,16 @@
+Thu Apr 11 17:18:36 UTC 2013  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * tao/Transport.cpp (TAO_Transport::send_asynchronous_message_i):
+          Applied a patch from Russ Noseworthy <J.Russell.Noseworthy at
+          TENA-SDA dot org> that fixes a problem when sending a large (>
+          64k) number of bytes in a (oneway) RMI on OS X.  What happened
+          was that, for large payloads, the send in Transport.cpp returns
+          a value of n, not equal to the number of bytes to send.  What's
+          supposed to happen is that the rest of the bytes get sent with
+          the next send.  Instead, if the current value of errno happens
+          to be ETIME (for any reason), the send never completes, and
+          instead declares that it's timed out.  This fixes bugid 4103.
+
 Thu Apr 11 16:51:31 UTC 2013  Martin Corino  <mcorino@remedy.nl>
         
         Implemented an improvement (fix) for oneways with SYNC_NONE sync scope

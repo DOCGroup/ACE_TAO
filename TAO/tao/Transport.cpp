@@ -1516,7 +1516,7 @@ TAO_Transport::send_asynchronous_message_i (TAO_Stub *stub,
       }
 
       // If it was partially sent, then push to front of queue and don't flush
-      if (errno == ETIME)
+      if (n == -1 && errno == ETIME)
       {
         timeout_encountered = true;
         if (byte_count == 0)
