@@ -6,7 +6,7 @@
 #include "ace/Atomic_Op_T.h"
 
 #ifdef ACE_HAS_DUMP
-# include "ace/Log_Msg.h"
+# include "ace/Log_Category.h"
 #endif  /* ACE_HAS_DUMP */
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -36,9 +36,9 @@ ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::dump (void) const
 {
 #if defined (ACE_HAS_DUMP)
   // ACE_TRACE ("ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::dump");
-  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   this->mutex_.dump ();
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
 

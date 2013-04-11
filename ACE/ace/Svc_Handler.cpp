@@ -163,30 +163,30 @@ template <PR_ST_1, ACE_SYNCH_DECL> int
 ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::open (void *)
 {
   ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::open");
-#if defined (ACE_DEBUGGING)
+#if defined (ACELIB_DEBUGGING)
   ACE_TCHAR buf[BUFSIZ];
   ACE_PEER_STREAM_ADDR client_addr;
 
   if (this->peer_.get_remote_addr (client_addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ACELIB_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("get_remote_addr")),
                       -1);
   else if (client_addr.addr_to_string (buf, sizeof buf) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ACELIB_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("can't obtain peer's address")),
                       -1);
-  ACE_DEBUG ((LM_DEBUG,
+  ACELIB_DEBUG ((LM_DEBUG,
               ACE_TEXT ("connected to %s on fd %d\n"),
               buf,
               this->peer_.get_handle ()));
-#endif /* ACE_DEBUGGING */
+#endif /* ACELIB_DEBUGGING */
   if (this->reactor ()
       && this->reactor ()->register_handler
       (this,
        ACE_Event_Handler::READ_MASK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ACELIB_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("unable to register client handler")),
                       -1);
@@ -239,16 +239,16 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::dump (void) const
   ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::dump");
 
   this->peer_.dump ();
-  ACE_DEBUG ((LM_DEBUG,
+  ACELIB_DEBUG ((LM_DEBUG,
               "dynamic_ = %d\n",
               this->dynamic_));
-  ACE_DEBUG ((LM_DEBUG,
+  ACELIB_DEBUG ((LM_DEBUG,
               "closing_ = %d\n",
               this->closing_));
-  ACE_DEBUG ((LM_DEBUG,
+  ACELIB_DEBUG ((LM_DEBUG,
               "recycler_ = %d\n",
               this->recycler_));
-  ACE_DEBUG ((LM_DEBUG,
+  ACELIB_DEBUG ((LM_DEBUG,
               "recycling_act_ = %d\n",
               this->recycling_act_));
 #endif /* ACE_HAS_DUMP */
@@ -499,14 +499,14 @@ ACE_Buffered_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::dump (void) const
   ACE_TRACE ("ACE_Buffered_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::dump");
 
   ACE_Buffered_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::dump ();
-  ACE_DEBUG ((LM_DEBUG,
+  ACELIB_DEBUG ((LM_DEBUG,
               "maximum_buffer_size_ = %d\n",
               this->maximum_buffer_size_));
-  ACE_DEBUG ((LM_DEBUG,
+  ACELIB_DEBUG ((LM_DEBUG,
               "current_buffer_size_ = %d\n",
               this->current_buffer_size_));
   if (this->timeoutp_ != 0)
-    ACE_DEBUG ((LM_DEBUG,
+    ACELIB_DEBUG ((LM_DEBUG,
                 "next_timeout_.sec = %d, next_timeout_.usec = %d\n",
                 this->next_timeout_.sec (),
                 this->next_timeout_.usec ()));

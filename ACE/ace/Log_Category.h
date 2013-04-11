@@ -16,6 +16,7 @@
 #include /**/ "ace/pre.h"
 
 #include "ace/Log_Priority.h"
+#include "ace/Log_Msg.h"
 #include "ace/Thread_Mutex.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

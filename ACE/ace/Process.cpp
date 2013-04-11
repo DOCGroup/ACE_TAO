@@ -10,7 +10,7 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/Signal.h"
 #include "ace/SString.h"
-#include "ace/Log_Msg.h"
+#include "ace/Log_Category.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_sys_socket.h"
@@ -378,10 +378,10 @@ ACE_Process::spawn (ACE_Process_Options &options)
                               options.getgroup ()) < 0)
         {
 #if !defined (ACE_HAS_THREADS)
-          // We can't emit this log message because ACE_ERROR(), etc.
+          // We can't emit this log message because ACELIB_ERROR(), etc.
           // will invoke async signal unsafe functions, which results
           // in undefined behavior in threaded programs.
-          ACE_ERROR ((LM_ERROR,
+          ACELIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("%p.\n"),
                       ACE_TEXT ("ACE_Process::spawn: setpgid failed.")));
 #endif
@@ -395,10 +395,10 @@ ACE_Process::spawn (ACE_Process_Options &options)
                               options.getegid ()) == -1)
           {
 #if !defined (ACE_HAS_THREADS)
-            // We can't emit this log message because ACE_ERROR(), etc.
+            // We can't emit this log message because ACELIB_ERROR(), etc.
             // will invoke async signal unsafe functions, which results
             // in undefined behavior in threaded programs.
-            ACE_ERROR ((LM_ERROR,
+            ACELIB_ERROR ((LM_ERROR,
                         ACE_TEXT ("%p.\n"),
                         ACE_TEXT ("ACE_Process::spawn: setregid failed.")));
 #endif
@@ -413,10 +413,10 @@ ACE_Process::spawn (ACE_Process_Options &options)
                               options.geteuid ()) == -1)
           {
 #if !defined (ACE_HAS_THREADS)
-            // We can't emit this log message because ACE_ERROR(), etc.
+            // We can't emit this log message because ACELIB_ERROR(), etc.
             // will invoke async signal unsafe functions, which results
             // in undefined behavior in threaded programs.
-            ACE_ERROR ((LM_ERROR,
+            ACELIB_ERROR ((LM_ERROR,
                         ACE_TEXT ("%p.\n"),
                         ACE_TEXT ("ACE_Process::spawn: setreuid failed.")));
 #endif
@@ -906,7 +906,7 @@ ACE_Process_Options::inherit_environment (void)
       // Add the string to our env buffer.
       if (this->setenv_i (existing_environment + slot, len) == -1)
         {
-          ACE_ERROR ((LM_ERROR,
+          ACELIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("%p.\n"),
                       ACE_TEXT ("ACE_Process_Options::ACE_Process_Options")));
           break;
@@ -1203,7 +1203,7 @@ ACE_Process_Options::command_line (const ACE_TCHAR *const argv[])
 
           if (cur_len > command_line_buf_len_)
             {
-              ACE_ERROR_RETURN ((LM_ERROR,
+              ACELIB_ERROR_RETURN ((LM_ERROR,
                                  ACE_TEXT ("ACE_Process:command_line: ")
                                  ACE_TEXT ("command line is ")
                                  ACE_TEXT ("longer than %d\n"),

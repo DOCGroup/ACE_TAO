@@ -4,7 +4,7 @@
 #define ACECACHING_STRATEGIES_T_CPP
 
 #include "ace/Caching_Strategies_T.h"
-#include "ace/Log_Msg.h"
+#include "ace/Log_Category.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Caching_Strategies_T.inl"

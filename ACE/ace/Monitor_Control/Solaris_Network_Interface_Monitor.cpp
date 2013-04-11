@@ -4,7 +4,7 @@
 
 #if defined (ACE_HAS_KSTAT)
 
-#include "ace/Log_Msg.h"
+#include "ace/Log_Category.h"
 #include "ace/OS_NS_stdio.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -61,7 +61,7 @@ namespace ACE
 
       if (this->kstats_ == 0)
         {
-          ACE_ERROR ((LM_ERROR,
+          ACELIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("opening kstats file failed\n")));
           return;
         }
@@ -139,7 +139,7 @@ namespace ACE
 
               if (! this->kstat_id_ > 0)
                 {
-                  ACE_ERROR ((LM_ERROR, "kstat is is not > 0.\n"));
+                  ACELIB_ERROR ((LM_ERROR, "kstat is is not > 0.\n"));
                   break;
                 }
             }
@@ -153,7 +153,7 @@ namespace ACE
 
       if (status != 0)
         {
-          ACE_ERROR ((LM_ERROR,
+          ACELIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("closing kstats file failed\n")));
         }
     }
@@ -168,7 +168,7 @@ namespace ACE
     {
       if (! (ks_instance < which_max))
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
+          ACELIB_ERROR_RETURN ((LM_ERROR,
                              "%s exceeded.\n",
                              max_str),
                             -1);
@@ -201,7 +201,7 @@ namespace ACE
 
       if (value->data_type != KSTAT_DATA_UINT32)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
+          ACELIB_ERROR_RETURN ((LM_ERROR,
                              "Wrong data type.\n"),
                             -1);
         }

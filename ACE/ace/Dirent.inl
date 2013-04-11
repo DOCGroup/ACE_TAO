@@ -2,7 +2,7 @@
 //
 // $Id$
 
-#include "ace/Log_Msg.h"
+#include "ace/Log_Category.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -37,7 +37,7 @@ ACE_Dirent::ACE_Dirent (const ACE_TCHAR *dirname)
   : dirp_ (0)
 {
   if (this->open (dirname) == -1)
-    ACE_ERROR ((LM_ERROR,
+    ACELIB_ERROR ((LM_ERROR,
                 ACE_TEXT ("%p\n"),
                 ACE_TEXT ("ACE_Dirent::ACE_Dirent")));
 }

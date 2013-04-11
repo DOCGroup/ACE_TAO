@@ -393,7 +393,7 @@ ACE_Log_Msg::instance (void)
 }
 
 // Not inlined to help prevent having to include OS.h just to
-// get ACE_DEBUG, et al, macros.
+// get ACELIB_DEBUG, et al, macros.
 int
 ACE_Log_Msg::last_error_adapter (void)
 {
@@ -2403,36 +2403,36 @@ ACE_Log_Msg::dump (void) const
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Log_Msg::dump");
 
-  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("status_ = %d\n"), this->status_));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nerrnum_ = %d\n"), this->errnum_));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nlinenum_ = %d\n"), this->linenum_));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nfile_ = %C\n"), this->file_));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nmsg_ = %s\n"), this->msg_));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nrestart_ = %d\n"), this->restart_));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nostream_ = %@\n"), this->ostream_));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nmsg_callback_ = %@\n"),
+  ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("status_ = %d\n"), this->status_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nerrnum_ = %d\n"), this->errnum_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nlinenum_ = %d\n"), this->linenum_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nfile_ = %C\n"), this->file_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nmsg_ = %s\n"), this->msg_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nrestart_ = %d\n"), this->restart_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nostream_ = %@\n"), this->ostream_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nmsg_callback_ = %@\n"),
               this->msg_callback_));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nprogram_name_ = %s\n"),
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nprogram_name_ = %s\n"),
               this->program_name_ ? this->program_name_
                                   : ACE_TEXT ("<unknown>")));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nlocal_host_ = %s\n"),
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nlocal_host_ = %s\n"),
               this->local_host_ ? this->local_host_
                                 : ACE_TEXT ("<unknown>")));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\npid_ = %d\n"), this->getpid ()));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nflags_ = 0x%x\n"), this->flags_));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\ntrace_depth_ = %d\n"),
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\npid_ = %d\n"), this->getpid ()));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nflags_ = 0x%x\n"), this->flags_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\ntrace_depth_ = %d\n"),
               this->trace_depth_));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\ntrace_active_ = %d\n"),
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\ntrace_active_ = %d\n"),
               this->trace_active_));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\ntracing_enabled_ = %d\n"),
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\ntracing_enabled_ = %d\n"),
               this->tracing_enabled_));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\npriority_mask_ = 0x%x\n"),
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\npriority_mask_ = 0x%x\n"),
               this->priority_mask_));
   if (this->thr_desc_ != 0 && this->thr_desc_->state () != 0)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nthr_state_ = %d\n"),
+    ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nthr_state_ = %d\n"),
                 this->thr_desc_->state ()));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nmsg_off_ = %d\n"), this->msg_off_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nmsg_off_ = %d\n"), this->msg_off_));
 
   // Be sure that there is a message_queue_, with multiple threads.
   ACE_MT (ACE_Log_Msg_Manager::init_backend ());
@@ -2440,7 +2440,7 @@ ACE_Log_Msg::dump (void) const
   ACE_MT (ACE_Log_Msg_Manager::get_lock ()->dump ());
   // Synchronize output operations.
 
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
 

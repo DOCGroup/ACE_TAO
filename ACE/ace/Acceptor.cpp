@@ -25,9 +25,9 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::dump (void) const
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::dump");
 
-  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   this->peer_acceptor_.dump ();
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
 
@@ -131,7 +131,7 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Acceptor
                   flags,
                   use_select,
                   reuse_addr) == -1)
-    ACE_ERROR ((LM_ERROR,
+    ACELIB_ERROR ((LM_ERROR,
                 ACE_TEXT ("%p\n"),
                 ACE_TEXT ("ACE_Acceptor::ACE_Acceptor")));
 }
@@ -235,7 +235,7 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_close (ACE_HANDLE,
 
       // Shut down the listen socket to recycle the handles.
       if (this->peer_acceptor_.close () == -1)
-        ACE_ERROR ((LM_ERROR,
+        ACELIB_ERROR ((LM_ERROR,
                     ACE_TEXT ("close\n")));
       // Set the Reactor to 0 so that we don't try to close down
       // again.
@@ -399,7 +399,7 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_input (ACE_HANDLE listene
         {
           if (ACE::debug ())
             {
-              ACE_DEBUG ((LM_DEBUG,
+              ACELIB_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("%p\n"),
                           ACE_TEXT ("make_svc_handler")));
             }
@@ -412,7 +412,7 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_input (ACE_HANDLE listene
           // on failure.
           if (ACE::debug ())
             {
-              ACE_DEBUG ((LM_DEBUG,
+              ACELIB_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("%p\n"),
                           ACE_TEXT ("accept_svc_handler")));
             }
@@ -435,7 +435,7 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_input (ACE_HANDLE listene
 
           if (ACE::debug ())
             {
-              ACE_DEBUG ((LM_DEBUG,
+              ACELIB_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("%p\n"),
                           ACE_TEXT ("activate_svc_handler")));
             }
@@ -480,22 +480,22 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::dump (void) const
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::dump");
 
-  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::dump ();
   this->creation_strategy_->dump ();
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("delete_creation_strategy_ = %d"), delete_creation_strategy_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("delete_creation_strategy_ = %d"), delete_creation_strategy_));
   this->accept_strategy_->dump ();
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("delete_accept_strategy_ = %d"), delete_accept_strategy_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("delete_accept_strategy_ = %d"), delete_accept_strategy_));
   this->concurrency_strategy_->dump ();
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("delete_concurrency_strategy_ = %d"), delete_concurrency_strategy_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("delete_concurrency_strategy_ = %d"), delete_concurrency_strategy_));
   this->scheduling_strategy_->dump ();
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("delete_scheduling_strategy_ = %d"), delete_scheduling_strategy_));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nservice_name_ = %s"),
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("delete_scheduling_strategy_ = %d"), delete_scheduling_strategy_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nservice_name_ = %s"),
               this->service_name_ == 0 ? ACE_TEXT ("<unknown>") : this->service_name_));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nservice_description_ = %s"),
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nservice_description_ = %s"),
               this->service_description_ == 0 ? ACE_TEXT ("<unknown>") : this->service_description_));
   this->service_addr_.dump ();
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
 
@@ -701,7 +701,7 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Strategy_Acceptor
                   service_description,
                   use_select,
                   reuse_addr) == -1)
-    ACE_ERROR ((LM_ERROR,
+    ACELIB_ERROR ((LM_ERROR,
                 ACE_TEXT ("%p\n"),
                 ACE_TEXT ("ACE_Strategy_Acceptor::ACE_Strategy_Acceptor")));
 }
@@ -865,14 +865,14 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::dump (void) const
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::dump");
 
-  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nsvc_handler_ = %x"), this->svc_handler_));
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nrestart_ = %d"), this->restart_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nsvc_handler_ = %x"), this->svc_handler_));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nrestart_ = %d"), this->restart_));
   this->peer_acceptor_.dump ();
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("delete_concurrency_strategy_ = %d"),
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("delete_concurrency_strategy_ = %d"),
               delete_concurrency_strategy_));
   this->concurrency_strategy_->dump ();
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
 
@@ -923,7 +923,7 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Oneshot_Acceptor
 {
   ACE_TRACE ("ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Oneshot_Acceptor");
   if (this->open (local_addr, reactor, cs) == -1)
-    ACE_ERROR ((LM_ERROR,
+    ACELIB_ERROR ((LM_ERROR,
                 ACE_TEXT ("%p\n"),
                 ACE_TEXT ("ACE_Oneshot_Acceptor::ACE_Oneshot_Acceptor")));
 }
@@ -964,7 +964,7 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_close (ACE_HANDLE
        ACE_Event_Handler::ACCEPT_MASK | ACE_Event_Handler::DONT_CALL);
 
   if (this->peer_acceptor_.close () == -1)
-    ACE_ERROR ((LM_ERROR,
+    ACELIB_ERROR ((LM_ERROR,
                 ACE_TEXT ("close\n")));
   return 0;
 }

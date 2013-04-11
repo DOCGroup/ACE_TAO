@@ -48,23 +48,23 @@ template <class T> void
 ACE_Future_Rep<T>::dump (void) const
 {
 #if defined (ACE_HAS_DUMP)
-  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,
+  ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  ACELIB_DEBUG ((LM_DEBUG,
               "ref_count_ = %d\n",
  (int) this->ref_count_));
-  ACE_DEBUG ((LM_INFO,"value_:\n"));
+  ACELIB_DEBUG ((LM_INFO,"value_:\n"));
   if (this->value_)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (NON-NULL)\n")));
+    ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT (" (NON-NULL)\n")));
   else
     //FUZZ: disable check_for_NULL
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (NULL)\n")));
+    ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT (" (NULL)\n")));
     //FUZZ: enable check_for_NULL
 
-  ACE_DEBUG ((LM_INFO,"value_ready_:\n"));
+  ACELIB_DEBUG ((LM_INFO,"value_ready_:\n"));
   this->value_ready_.dump ();
-  ACE_DEBUG ((LM_INFO,"value_ready_mutex_:\n"));
+  ACELIB_DEBUG ((LM_INFO,"value_ready_mutex_:\n"));
   this->value_ready_mutex_.dump ();
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
 
@@ -408,13 +408,13 @@ template <class T> void
 ACE_Future<T>::dump (void) const
 {
 #if defined (ACE_HAS_DUMP)
-  ACE_DEBUG ((LM_DEBUG,
+  ACELIB_DEBUG ((LM_DEBUG,
               ACE_BEGIN_DUMP, this));
 
   if (this->future_rep_)
     this->future_rep_->dump ();
 
-  ACE_DEBUG ((LM_DEBUG,
+  ACELIB_DEBUG ((LM_DEBUG,
               ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }

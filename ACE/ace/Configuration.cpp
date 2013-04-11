@@ -1289,7 +1289,7 @@ ACE_Configuration_Heap::open (const ACE_TCHAR* file_name,
 #if !defined (ACE_LACKS_ACCESS)
   // Now check if the backing store has been created successfully.
   if (ACE_OS::access (file_name, F_OK) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ACELIB_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("create_index\n")),
                       -1);
 #endif /* ACE_LACKS_ACCESS */
@@ -1320,7 +1320,7 @@ ACE_Configuration_Heap::create_index (void)
                                      section_index) == -1)
         {
           // Attempt to clean up.
-          ACE_ERROR ((LM_ERROR,
+          ACELIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("create_index failed\n")));
           this->allocator_->remove ();
           return -1;

@@ -1,7 +1,7 @@
 // $Id$
 
 #include "ace/FIFO_Recv.h"
-#include "ace/Log_Msg.h"
+#include "ace/Log_Category.h"
 #include "ace/OS_NS_fcntl.h"
 
 #if !defined (__ACE_INLINE__)
@@ -19,10 +19,10 @@ ACE_FIFO_Recv::dump (void) const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_FIFO_Recv::dump");
-  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_FIFO::dump ();
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("aux_handle_ = %d"), this->aux_handle_));
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("aux_handle_ = %d"), this->aux_handle_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
 
@@ -82,7 +82,7 @@ ACE_FIFO_Recv::ACE_FIFO_Recv (const ACE_TCHAR *fifo_name,
                                  perms,
                                  persistent,
                                  sa) == -1)
-    ACE_ERROR ((LM_ERROR,  ACE_TEXT ("%p\n"),  ACE_TEXT ("ACE_FIFO_Recv")));
+    ACELIB_ERROR ((LM_ERROR,  ACE_TEXT ("%p\n"),  ACE_TEXT ("ACE_FIFO_Recv")));
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

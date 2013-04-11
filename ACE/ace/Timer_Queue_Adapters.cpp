@@ -86,7 +86,7 @@ ACE_Async_Timer_Queue_Adapter<TQ, TYPE>::schedule (TYPE eh,
   long tid = this->timer_queue_.schedule (eh, act, future_time);
 
   if (tid == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ACELIB_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("schedule_timer")),
                       -1);
@@ -112,7 +112,7 @@ ACE_Async_Timer_Queue_Adapter<TQ, TYPE>::ACE_Async_Timer_Queue_Adapter (ACE_Sig_
                      SA_RESTART);
 
   if (this->sig_handler_.register_handler (SIGALRM, this, &sa) == -1)
-    ACE_ERROR ((LM_ERROR,
+    ACELIB_ERROR ((LM_ERROR,
                 ACE_TEXT ("%p\n"),
                 ACE_TEXT ("register_handler")));
 }
@@ -147,7 +147,7 @@ ACE_Async_Timer_Queue_Adapter<TQ, TYPE>::handle_signal (int signum,
         /* NOTREACHED */
       }
     default:
-      ACE_ERROR_RETURN ((LM_ERROR,
+      ACELIB_ERROR_RETURN ((LM_ERROR,
                          "unexpected signal %S\n",
                          signum),
                         -1);
@@ -280,7 +280,7 @@ ACE_Thread_Timer_Queue_Adapter<TQ, TYPE>::svc (void)
               // use ACE_OS::gettimeofday() to convert the tv to the
               // absolute time.
               ACE_Time_Value const tv = ACE_OS::gettimeofday () + (tv_earl - tv_curr);
-              // ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("waiting until %u.%3.3u secs\n"),
+              // ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("waiting until %u.%3.3u secs\n"),
               // tv.sec(), tv.msec()));
               this->condition_.wait (&tv);
             }

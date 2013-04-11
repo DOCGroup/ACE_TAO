@@ -21,9 +21,9 @@ ACE_MEM_Connector::dump (void) const
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_MEM_Connector::dump");
 
-  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\n")));
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\n")));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
 
@@ -69,7 +69,7 @@ ACE_MEM_Connector::connect (ACE_MEM_Stream &new_stream,
   ACE_TRACE ("ACE_MEM_Connector::connect");
 
   if (!this->address_.same_host (remote_sap))
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ACELIB_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("(%P|%t) MEM_Connector can't connect ")
                        ACE_TEXT ("to %C:%d which is not a local endpoint ")
                        ACE_TEXT ("(local address is %C:%d)\n"),
@@ -88,7 +88,7 @@ ACE_MEM_Connector::connect (ACE_MEM_Stream &new_stream,
                                    this->address_.get_local_addr (),
                                    timeout, local_sap,
                                    reuse_addr, flags, perms) == -1)
-    ACE_ERROR_RETURN ((LM_DEBUG,
+    ACELIB_ERROR_RETURN ((LM_DEBUG,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("ACE_MEM_Connector::connect")),
                       -1);
@@ -107,7 +107,7 @@ ACE_MEM_Connector::connect (ACE_MEM_Stream &new_stream,
   // Receive the signaling strategy theserver support.
   if (ACE::recv (new_handle, &server_strategy,
                  sizeof (ACE_INT16)) == -1)
-    ACE_ERROR_RETURN ((LM_DEBUG,
+    ACELIB_ERROR_RETURN ((LM_DEBUG,
                        ACE_TEXT ("ACE_MEM_Connector::connect error receiving strategy\n")),
                       -1);
 
@@ -120,19 +120,19 @@ ACE_MEM_Connector::connect (ACE_MEM_Stream &new_stream,
 
   if (ACE::send (new_handle, &server_strategy,
                  sizeof (ACE_INT16)) == -1)
-    ACE_ERROR_RETURN ((LM_DEBUG,
+    ACELIB_ERROR_RETURN ((LM_DEBUG,
                        ACE_TEXT ("ACE_MEM_Connector::connect error sending strategy\n")),
                       -1);
 
   ACE_INT16 buf_len;
   // Byte-order is not a problem for this read.
   if (ACE::recv (new_handle, &buf_len, sizeof (buf_len)) == -1)
-    ACE_ERROR_RETURN ((LM_DEBUG,
+    ACELIB_ERROR_RETURN ((LM_DEBUG,
                        ACE_TEXT ("ACE_MEM_Connector::connect error receiving shm filename length\n")),
                       -1);
 
   if (ACE::recv (new_handle, buf, buf_len) == -1)
-    ACE_ERROR_RETURN ((LM_DEBUG,
+    ACELIB_ERROR_RETURN ((LM_DEBUG,
                        ACE_TEXT ("ACE_MEM_Connector::connect error receiving shm filename.\n")),
                       -1);
 

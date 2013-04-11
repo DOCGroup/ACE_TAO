@@ -2,7 +2,7 @@
 
 #include "ace/FIFO_Send_Msg.h"
 
-#include "ace/Log_Msg.h"
+#include "ace/Log_Category.h"
 #include "ace/OS_NS_sys_uio.h"
 
 #if !defined (__ACE_INLINE__)
@@ -74,7 +74,7 @@ ACE_FIFO_Send_Msg::ACE_FIFO_Send_Msg (const ACE_TCHAR *fifo_name,
 {
   ACE_TRACE ("ACE_FIFO_Send_Msg::ACE_FIFO_Send_Msg");
   if (this->ACE_FIFO_Send_Msg::open (fifo_name, flags, perms, sa) == -1)
-    ACE_ERROR ((LM_ERROR,  ACE_TEXT ("%p\n"),  ACE_TEXT ("ACE_FIFO_Send_Msg")));
+    ACELIB_ERROR ((LM_ERROR,  ACE_TEXT ("%p\n"),  ACE_TEXT ("ACE_FIFO_Send_Msg")));
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

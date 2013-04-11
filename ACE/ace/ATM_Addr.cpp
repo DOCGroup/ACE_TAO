@@ -5,7 +5,7 @@
 #include "ace/ATM_Addr.h"
 #if defined (ACE_HAS_ATM)
 
-#include "ace/Log_Msg.h"
+#include "ace/Log_Category.h"
 
 #if defined (ACE_HAS_FORE_ATM_WS2)
 #include /**/ "forews2.h"
@@ -353,7 +353,7 @@ ACE_ATM_Addr::string_to_addr (const ACE_TCHAR sap[])
  (struct sockaddr *)& (atm_addr_.sockaddratmsvc),
                  sizeof (atm_addr_.sockaddratmsvc),
                  T2A_SVC | T2A_NAME) < 0) {
-     ACE_DEBUG (LM_DEBUG,
+     ACELIB_DEBUG (LM_DEBUG,
                "Error : text2atm failed!\n");
      errno = EINVAL;
      return -1;
@@ -420,7 +420,7 @@ ACE_ATM_Addr::addr_to_string (ACE_TCHAR addr[],
                             sizeof buffer,
  (struct sockaddr *)& (atm_addr_.sockaddratmsvc),
                             A2T_PRETTY)) < 0) {
-    ACE_DEBUG ((LM_DEBUG,"ACE_ATM_Addr (addr_to_string): atm2text failed\n"));
+    ACELIB_DEBUG ((LM_DEBUG,"ACE_ATM_Addr (addr_to_string): atm2text failed\n"));
     return -1;
   }
   if (addrlen < (size_t)total_len)
@@ -506,14 +506,14 @@ ACE_ATM_Addr::dump (void) const
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_ATM_Addr::dump");
 
-  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 
   ACE_TCHAR s[ACE_MAX_FULLY_QUALIFIED_NAME_LEN + 16];
   ACE_OS::sprintf (s,
                    ACE_TEXT ("%s"),
                    this->addr_to_string ());
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%s"), s));
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("%s"), s));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
 

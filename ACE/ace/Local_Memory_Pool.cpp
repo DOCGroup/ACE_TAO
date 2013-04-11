@@ -4,7 +4,7 @@
 #include "ace/Local_Memory_Pool.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/OS_Memory.h"
-#include "ace/Log_Msg.h"
+#include "ace/Log_Category.h"
 
 
 
@@ -62,7 +62,7 @@ ACE_Local_Memory_Pool::acquire (size_t nbytes,
   ACE_Auto_Basic_Array_Ptr<char> cp (temp);
 
   if (this->allocated_chunks_.insert (cp.get ()) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ACELIB_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("(%P|%t) insertion into set failed\n")),
                       0);
 

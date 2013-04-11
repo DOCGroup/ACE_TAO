@@ -1,7 +1,7 @@
 // $Id$
 
 #include "ace/SV_Semaphore_Simple.h"
-#include "ace/Log_Msg.h"
+#include "ace/Log_Category.h"
 #include "ace/ACE.h"
 #include "ace/os_include/sys/os_sem.h"
 
@@ -112,7 +112,7 @@ ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple (key_t k,
 {
   ACE_TRACE ("ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple");
   if (this->open (k, flags, initial_value, n, perms) == -1)
-    ACE_ERROR ((LM_ERROR,  ACE_TEXT ("%p\n"),  ACE_TEXT ("ACE_SV_Semaphore::ACE_SV_Semaphore")));
+    ACELIB_ERROR ((LM_ERROR,  ACE_TEXT ("%p\n"),  ACE_TEXT ("ACE_SV_Semaphore::ACE_SV_Semaphore")));
 }
 
 // Convert name to key.  This function is used internally to create keys
@@ -181,7 +181,7 @@ ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple (const char *name,
                   initial_value,
                   n,
                   perms) == -1)
-    ACE_ERROR ((LM_ERROR,
+    ACELIB_ERROR ((LM_ERROR,
                 ACE_TEXT ("%p\n"),
                 ACE_TEXT ("ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple")));
 }
@@ -199,7 +199,7 @@ ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple (const wchar_t *name,
                   initial_value,
                   nsems,
                   perms) == -1)
-    ACE_ERROR ((LM_ERROR,
+    ACELIB_ERROR ((LM_ERROR,
                 ACE_TEXT ("%p\n"),
                 ACE_TEXT ("ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple")));
 }

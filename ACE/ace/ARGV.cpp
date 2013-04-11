@@ -3,7 +3,7 @@
 #ifndef ACE_ARGV_CPP
 #define ACE_ARGV_CPP
 
-#include "ace/Log_Msg.h"
+#include "ace/Log_Category.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_Memory.h"
@@ -25,10 +25,10 @@ ACE_ARGV_Queue_Entry_T<CHAR_TYPE>::dump (void) const
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_ARGV_Queue_Entry_T::dump");
 
-  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("arg_ = %s"), this->arg_));
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("quote_arg_ = %d"), (int)this->quote_arg_));
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("arg_ = %s"), this->arg_));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("quote_arg_ = %d"), (int)this->quote_arg_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
 
@@ -39,20 +39,20 @@ ACE_ARGV_T<CHAR_TYPE>::dump (void) const
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_ARGV_T::dump");
 
-  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("argc_ = %d"), this->argc_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("argc_ = %d"), this->argc_));
 
   ACE_ARGV *this_obj = const_cast<ACE_ARGV *> (this);
 
   for (int i = 0; i < this->argc_; i++)
-    ACE_DEBUG ((LM_DEBUG,
+    ACELIB_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("\nargv_[%i] = %s"),
                 i,
                 this_obj->argv ()[i]));
 
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nbuf = %s\n"), this->buf_));
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\n")));
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nbuf = %s\n"), this->buf_));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\n")));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
 
@@ -96,7 +96,7 @@ ACE_ARGV_T<CHAR_TYPE>::ACE_ARGV_T (const CHAR_TYPE buf[],
 
   // Create this->argv_.
   if (this->string_to_argv () == -1)
-    ACE_ERROR ((LM_ERROR,
+    ACELIB_ERROR ((LM_ERROR,
                 ACE_TEXT ("%p\n"),
                 ACE_TEXT ("string_to_argv")));
 }
@@ -249,7 +249,7 @@ ACE_ARGV_T<CHAR_TYPE>::add (const CHAR_TYPE *next_arg, bool quote_arg)
 
   // Put the new argument at the end of the queue.
   if (this->queue_.enqueue_tail (ACE_ARGV_Queue_Entry_T<CHAR_TYPE> (next_arg, quote_arg)) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ACELIB_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("Can't add more to ARGV queue")),
                       -1);
 
