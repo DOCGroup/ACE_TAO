@@ -1,3 +1,18 @@
+Thu Apr 11 15:20:21 UTC 2013  Huang-Ming Huang  <huangh@ociweb.com>
+
+        * ace/Log_Category.h:
+        * ace/Log_Category.inl:
+        * ace/Log_Category.cpp:
+        * ace/Log_Msg.h:
+        * ace/Log_Msg.cpp:
+        * ace/Log_Record.h:
+        * ace/Log_Record.inl:
+        * ace/Log_Record.cpp:
+        * ace/ace.mpc:
+        * tests/Log_Msg_Test.cpp:
+        Added ACE_Log_Category class so that log messages can be separated into
+        different categories and be enabled/disabled independently.
+
 Thu Apr 11 11:13:34 UTC 2013  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * README: Updated this file, which was horribly out of date!
