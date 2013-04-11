@@ -1,3 +1,7 @@
+Thu Apr 11 11:13:34 UTC 2013  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * README: Updated this file, which was horribly out of date!
+
 Sun Apr  7 00:20:49 UTC 2013  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/Global_Macros.h: Added documentation for the arguments to
