@@ -1,3 +1,8 @@
+Thu Apr 11 17:54:55 UTC 2013  Huang-Ming Huang  <huangh@ociweb.com>
+
+        * ace/ace_for_tao.mpc:
+        Added missing file.
+
 Thu Apr 11 15:45:41 UTC 2013  Huang-Ming Huang  <huangh@ociweb.com>
 
         * ace/ACE.cpp:
