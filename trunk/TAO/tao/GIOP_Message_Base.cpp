@@ -94,7 +94,7 @@ TAO_GIOP_Message_Base::generate_request_header (
     {
       if (TAO_debug_level)
         {
-          ACE_ERROR ((LM_ERROR,
+          TAOLIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("(%P|%t) Error in writing GIOP header\n")));
         }
 
@@ -109,7 +109,7 @@ TAO_GIOP_Message_Base::generate_request_header (
   if (!generator_parser->write_request_header (op, spec, cdr))
     {
       if (TAO_debug_level)
-        ACE_ERROR ((LM_ERROR,
+        TAOLIB_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) Error in writing request header\n")));
 
       return -1;
@@ -136,7 +136,7 @@ TAO_GIOP_Message_Base::generate_locate_request_header (
   if (!this->write_protocol_header (GIOP::LocateRequest, giop_version, cdr))
     {
       if (TAO_debug_level)
-        ACE_ERROR ((LM_ERROR,
+        TAOLIB_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) Error in writing GIOP header\n")));
 
       return -1;
@@ -147,7 +147,7 @@ TAO_GIOP_Message_Base::generate_locate_request_header (
       (op.request_id (), spec, cdr))
     {
       if (TAO_debug_level)
-        ACE_ERROR ((LM_ERROR,
+        TAOLIB_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) Error in writing locate request header\n")));
 
 
@@ -171,7 +171,7 @@ TAO_GIOP_Message_Base::generate_reply_header (
   if (!this->write_protocol_header (GIOP::Reply, giop_version, cdr))
     {
       if (TAO_debug_level)
-        ACE_ERROR ((LM_ERROR,
+        TAOLIB_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) Error in writing GIOP header\n")));
 
       return -1;
@@ -187,7 +187,7 @@ TAO_GIOP_Message_Base::generate_reply_header (
       if (!generator_parser->write_reply_header (cdr, params))
         {
           if (TAO_debug_level > 4)
-            ACE_ERROR ((LM_ERROR,
+            TAOLIB_ERROR ((LM_ERROR,
                         ACE_TEXT ("(%P|%t) Error in writing reply ")
                         ACE_TEXT ("header\n")));
 
@@ -229,7 +229,7 @@ TAO_GIOP_Message_Base::generate_fragment_header (TAO_OutputCDR & cdr,
       || !generator_parser->write_fragment_header (cdr, request_id))
     {
       if (TAO_debug_level)
-        ACE_ERROR ((LM_ERROR,
+        TAOLIB_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) Error in writing GIOP header\n")));
 
       return -1;
@@ -286,7 +286,7 @@ TAO_GIOP_Message_Base::format_message (TAO_OutputCDR &stream, TAO_Stub *stub, TA
 
           if (log_msg && !compressed)
             {
-              ACE_DEBUG ((LM_DEBUG,
+              TAOLIB_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("TAO (%P|%t) - ")
                           ACE_TEXT ("TAO_GIOP_Message_Base::format_message, ")
                           ACE_TEXT ("GIOP message not compressed\n")));
@@ -401,7 +401,7 @@ TAO_GIOP_Message_Base::extract_next_message (ACE_Message_Block &incoming,
             {
               if (TAO_debug_level > 0)
                 {
-                  ACE_ERROR((LM_ERROR,
+                  TAOLIB_ERROR((LM_ERROR,
                              ACE_TEXT ("TAO (%P|%t) - TAO_GIOP_Message_Base::extract_next_message, ")
                              ACE_TEXT ("out of memory\n")));
                 }
@@ -437,7 +437,7 @@ TAO_GIOP_Message_Base::extract_next_message (ACE_Message_Block &incoming,
     {
       if (TAO_debug_level > 0)
         {
-          ACE_ERROR ((LM_ERROR,
+          TAOLIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO (%P|%t) - TAO_GIOP_Message_Base::extract_next_message, ")
                       ACE_TEXT ("out of memory\n")));
         }
@@ -515,7 +515,7 @@ TAO_GIOP_Message_Base::consolidate_node (TAO_Queued_Data *qd,
         {
           if (TAO_debug_level > 0)
             {
-              ACE_ERROR ((LM_ERROR,
+              TAOLIB_ERROR ((LM_ERROR,
                   ACE_TEXT ("TAO (%P|%t) - TAO_GIOP_Message_Base::consolidate_node, ")
                   ACE_TEXT ("error parsing header\n") ));
             }
@@ -762,7 +762,7 @@ TAO_GIOP_Message_Base::decompress (ACE_Data_Block **db, TAO_Queued_Data& qd,
   else
     {
       if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_ERROR,
+        TAOLIB_ERROR ((LM_ERROR,
                     ACE_TEXT ("TAO (%P|%t) ERROR: Unable to decompress ")
                     ACE_TEXT ("data (Server is not ZIOP enabled).\n")));
 
@@ -881,7 +881,7 @@ TAO_GIOP_Message_Base::process_reply_message (
       // Something really critical happened, we will forget about
       // every reply on this connection.
       if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_ERROR,
+        TAOLIB_ERROR ((LM_ERROR,
                     ACE_TEXT ("TAO (%P|%t) - GIOP_Message_Base[%d]::process_reply_message, ")
                     ACE_TEXT ("dispatch reply failed\n"),
                     params.transport_->id ()));
@@ -915,7 +915,7 @@ TAO_GIOP_Message_Base::generate_exception_reply (
 
       // Close the handle.
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
+        TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t|%N|%l) cannot marshal exception, ")
                   ACE_TEXT ("generate_exception_reply ()\n")));
       return -1;
@@ -1046,7 +1046,7 @@ TAO_GIOP_Message_Base::process_request (
           if (!(output << forward_to.in ()))
             {
               if (TAO_debug_level > 0)
-                ACE_ERROR ((LM_ERROR,
+                TAOLIB_ERROR ((LM_ERROR,
                             ACE_TEXT ("TAO (%P|%t) ERROR: Unable to marshal ")
                             ACE_TEXT ("forward reference.\n")));
 
@@ -1065,7 +1065,7 @@ TAO_GIOP_Message_Base::process_request (
                 {
                   // No exception but some kind of error, yet a
                   // response is required.
-                  ACE_ERROR ((LM_ERROR,
+                  TAOLIB_ERROR ((LM_ERROR,
                               ACE_TEXT ("TAO: (%P|%t|%N|%l) %p: ")
                               ACE_TEXT ("cannot send reply\n"),
                               ACE_TEXT ("TAO_GIOP_Message_Base::process_request")));
@@ -1090,7 +1090,7 @@ TAO_GIOP_Message_Base::process_request (
             {
               if (TAO_debug_level > 0)
                 {
-                  ACE_ERROR ((LM_ERROR,
+                  TAOLIB_ERROR ((LM_ERROR,
                               ACE_TEXT ("TAO: (%P|%t|%N|%l) %p: ")
                               ACE_TEXT ("cannot send exception\n"),
                               ACE_TEXT ("process_connector_request ()")));
@@ -1109,7 +1109,7 @@ TAO_GIOP_Message_Base::process_request (
           // However, in this case, we cannot close the connection
           // down, since it really isn't the client's fault.
 
-          ACE_ERROR ((LM_ERROR,
+          TAOLIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("(%P|%t) exception thrown ")
                       ACE_TEXT ("but client is not waiting a response\n")));
 
@@ -1143,7 +1143,7 @@ TAO_GIOP_Message_Base::process_request (
                                           &exception) == -1
               && TAO_debug_level > 0)
             {
-              ACE_ERROR ((LM_ERROR,
+              TAOLIB_ERROR ((LM_ERROR,
                           ACE_TEXT ("TAO (%P|%t) - TAO_GIOP_Message_Base::process_request[3], ")
                           ACE_TEXT ("%p: ")
                           ACE_TEXT ("cannot send exception\n"),
@@ -1159,7 +1159,7 @@ TAO_GIOP_Message_Base::process_request (
           // user) when the client was not expecting a response.
           // However, in this case, we cannot close the connection
           // down, since it really isn't the client's fault.
-          ACE_ERROR ((LM_ERROR,
+          TAOLIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO (%P|%t) exception thrown ")
                       ACE_TEXT ("but client is not waiting a response\n")));
         }
@@ -1237,7 +1237,7 @@ TAO_GIOP_Message_Base::process_locate_request (TAO_Transport *transport,
           status_info.status = GIOP::OBJECT_FORWARD;
           status_info.forward_location_var = forward_to;
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
+            TAOLIB_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("TAO (%P|%t) - TAO_GIOP_Message_Base::process_locate_request, ")
                         ACE_TEXT ("called: forwarding\n")));
         }
@@ -1246,7 +1246,7 @@ TAO_GIOP_Message_Base::process_locate_request (TAO_Transport *transport,
           // We got no exception, so the object is here.
           status_info.status = GIOP::OBJECT_HERE;
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
+            TAOLIB_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("TAO (%P|%t) - TAO_GIOP_Message_Base::process_locate_request, ")
                         ACE_TEXT ("found\n")));
         }
@@ -1254,7 +1254,7 @@ TAO_GIOP_Message_Base::process_locate_request (TAO_Transport *transport,
         {
           // Normal exception, so the object is not here
           status_info.status = GIOP::UNKNOWN_OBJECT;
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - TAO_GIOP_Message_Base::process_locate_request, ")
                       ACE_TEXT ("not here\n")));
         }
@@ -1265,7 +1265,7 @@ TAO_GIOP_Message_Base::process_locate_request (TAO_Transport *transport,
       // Normal exception, so the object is not here
       status_info.status = GIOP::UNKNOWN_OBJECT;
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
+        TAOLIB_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) - TAO_GIOP_Message_Base::process_locate_request, ")
                     ACE_TEXT ("CORBA exception raised\n")));
     }
@@ -1274,7 +1274,7 @@ TAO_GIOP_Message_Base::process_locate_request (TAO_Transport *transport,
       // Normal exception, so the object is not here
       status_info.status = GIOP::UNKNOWN_OBJECT;
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
+        TAOLIB_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) TAO_GIOP_Message_Base::process_locate_request - ")
                     ACE_TEXT ("C++ exception raised\n")));
     }
@@ -1319,7 +1319,7 @@ TAO_GIOP_Message_Base::make_send_locate_reply (TAO_Transport *transport,
     {
       if (TAO_debug_level > 0)
         {
-          ACE_ERROR ((LM_ERROR,
+          TAOLIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO: (%P|%t) %p: cannot send reply\n"),
                       ACE_TEXT ("TAO_GIOP_Message_Base::make_send_locate_reply")));
         }
@@ -1374,7 +1374,7 @@ TAO_GIOP_Message_Base::send_error (TAO_Transport *transport)
   if (result == -1)
     {
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
+        TAOLIB_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%N|%l|%P|%t) error sending error to transport %u\n"),
                     transport->id ()));
     }
@@ -1483,13 +1483,13 @@ TAO_GIOP_Message_Base::
   if (result == -1)
     {
       if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_ERROR,
+        TAOLIB_ERROR ((LM_ERROR,
            ACE_TEXT ("(%P|%t) error closing connection %u, errno = %d\n"),
            transport->id (), ACE_ERRNO_GET));
     }
 
   transport->close_connection ();
-  ACE_DEBUG ((LM_DEBUG,
+  TAOLIB_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) shut down transport, handle %d\n"),
       transport-> id ()));
 }
@@ -1620,7 +1620,7 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
       }
 
     // Print.
-    ACE_DEBUG ((LM_DEBUG,
+    TAOLIB_DEBUG ((LM_DEBUG,
                 ACE_TEXT("TAO (%P|%t) - GIOP_Message_Base::dump_msg, ")
                 ACE_TEXT("%C GIOP message v%c.%c, %d data bytes, %s endian, ")
                 ACE_TEXT("Type %C[%u]\n"),
@@ -1631,7 +1631,7 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
                 (byte_order == TAO_ENCAP_BYTE_ORDER) ? ACE_TEXT("my") : ACE_TEXT("other"),
                 message_name,
                 *id));
-    ACE_HEX_DUMP ((LM_DEBUG,
+    TAOLIB_HEX_DUMP ((LM_DEBUG,
                    (const char *) ptr,
                    len,
                    ACE_TEXT ("GIOP message")));
@@ -1686,7 +1686,7 @@ TAO_GIOP_Message_Base::make_queued_data (size_t sz)
     {
       if (TAO_debug_level > 0)
         {
-          ACE_ERROR ((LM_ERROR,
+          TAOLIB_ERROR ((LM_ERROR,
             ACE_TEXT ("TAO (%P|%t) - TAO_GIOP_Message_Base::make_queued_data, ")
             ACE_TEXT ("out of memory, failed to allocate queued data object\n")));
         }

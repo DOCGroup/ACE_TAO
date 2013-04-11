@@ -110,13 +110,13 @@ TAO_Codeset_Manager_i::set_tcs (TAO_Profile &theProfile,
       if (trans.is_tcs_set ())
         {
           if(TAO_debug_level > 2)
-            ACE_DEBUG ((LM_DEBUG,
+            TAOLIB_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("TAO (%P|%t) - Codeset_Manager_i::set_tcs, ")
                         ACE_TEXT ("transport already set\n")));
           return;
         }
       if (TAO_debug_level > 2)
-        ACE_DEBUG ((LM_DEBUG,
+        TAOLIB_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) - Codeset_Manager_i::set_tcs, ")
                     ACE_TEXT ("No codeset component in profile\n")));
 
@@ -140,7 +140,7 @@ TAO_Codeset_Manager_i::set_tcs (TAO_Profile &theProfile,
          computeTCS (remote.ForCharData,
                      this->codeset_info_.ForCharData);
        if (TAO_debug_level > 2)
-         ACE_DEBUG ((LM_DEBUG,
+         TAOLIB_DEBUG ((LM_DEBUG,
                      ACE_TEXT("TAO (%P|%t) - Codeset_Manager_i::set_tcs, ")
                      ACE_TEXT("setting char translator (%08x)\n"),
                      tcs));
@@ -150,7 +150,7 @@ TAO_Codeset_Manager_i::set_tcs (TAO_Profile &theProfile,
                          this->codeset_info_.ForWcharData);
 
        if (TAO_debug_level > 2)
-         ACE_DEBUG ((LM_DEBUG,
+         TAOLIB_DEBUG ((LM_DEBUG,
                      ACE_TEXT("TAO (%P|%t) - Codeset_Manager_i::set_tcs, ")
                      ACE_TEXT("setting wchar translator (%08x)\n"),
                      tcs));
@@ -193,7 +193,7 @@ TAO_Codeset_Manager_i::process_service_context (TAO_ServerRequest &request)
       if (request.transport()->is_tcs_set())
         return;
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
+        TAOLIB_DEBUG ((LM_DEBUG,
                     ACE_TEXT("TAO (%P|%t) - ")
                     ACE_TEXT("Codeset_Manager_i::process_service_context ")
                     ACE_TEXT("no codeset context in request, using defaults\n")
@@ -207,7 +207,7 @@ TAO_Codeset_Manager_i::process_service_context (TAO_ServerRequest &request)
       ACE_CString tcs_w_locale;
       ACE_Codeset_Registry::registry_to_locale (tcs_c, tcs_c_locale, 0, 0);
       ACE_Codeset_Registry::registry_to_locale (tcs_w, tcs_w_locale, 0, 0);
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - Codeset_Manager_i::")
                   ACE_TEXT ("process_service_context, ")
                   ACE_TEXT ("using tcsc <%C> (%08x), tcsw <%C> (%08x)\n"),
@@ -245,7 +245,7 @@ TAO_Codeset_Manager_i::generate_service_context (TAO_Operation_Details &opd,
       ACE_CString tcs_w_locale;
       ACE_Codeset_Registry::registry_to_locale (codeset_cntx.char_data, tcs_c_locale, 0, 0);
       ACE_Codeset_Registry::registry_to_locale (codeset_cntx.wchar_data, tcs_w_locale, 0, 0);
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - Codeset_Manager_i::")
                   ACE_TEXT ("generate_service_context, ")
                   ACE_TEXT ("using tcs_c <%C> (%08x), tcs_w <%C> (%08x)\n"),
@@ -360,7 +360,7 @@ TAO_Codeset_Manager_i::open(TAO_ORB_Core& core)
   else
     {
       if (TAO_debug_level > 2)
-        ACE_DEBUG ((LM_DEBUG,
+        TAOLIB_DEBUG ((LM_DEBUG,
                     ACE_TEXT("TAO (%P|%t) - Codeset_Manager_i::open skipping ")
                     ACE_TEXT("redundant load of UTF8_Latin1_Factory\n")
                     ));
@@ -378,7 +378,7 @@ TAO_Codeset_Manager_i::open(TAO_ORB_Core& core)
   else
     {
       if (TAO_debug_level > 2)
-        ACE_DEBUG ((LM_DEBUG,
+        TAOLIB_DEBUG ((LM_DEBUG,
                     ACE_TEXT("TAO (%P|%t) - Codeset_Manager_i::open skipping ")
                     ACE_TEXT("redundant load of UTF16_BOM_Factory\n")
                     ));
@@ -401,7 +401,7 @@ TAO_Codeset_Manager_i::open(TAO_ORB_Core& core)
                 this->codeset_info_.ForCharData) == -1)
     {
       if (TAO_debug_level)
-        ACE_ERROR ((LM_ERROR,
+        TAOLIB_ERROR ((LM_ERROR,
                     ACE_TEXT ("TAO (%P|%t) - Codeset_Manager_i::")
                     ACE_TEXT ("configure_codeset_factories, failed to init ")
                     ACE_TEXT ("char codeset factories\n")));
@@ -411,7 +411,7 @@ TAO_Codeset_Manager_i::open(TAO_ORB_Core& core)
                 this->codeset_info_.ForWcharData) == -1)
     {
       if (TAO_debug_level)
-        ACE_ERROR ((LM_ERROR,
+        TAOLIB_ERROR ((LM_ERROR,
                     ACE_TEXT ("TAO (%P|%t) - Codeset_Manager_i::")
                     ACE_TEXT ("configure_codeset_factories, failed to init ")
                     ACE_TEXT ("wchar codeset factories\n")));
@@ -438,7 +438,7 @@ TAO_Codeset_Manager_i::init_ccs (TAO_Codeset_Descriptor& cd,
       if (tlist->translator_factory_ == 0)
         {
           if (TAO_debug_level)
-            ACE_ERROR ((LM_ERROR,
+            TAOLIB_ERROR ((LM_ERROR,
                         ACE_TEXT ("TAO (%P|%t) - Codeset_Manager_i::")
                         ACE_TEXT ("init_ccs, Unable to load ")
                         ACE_TEXT ("code set translator <%s>, %m\n"),
@@ -449,7 +449,7 @@ TAO_Codeset_Manager_i::init_ccs (TAO_Codeset_Descriptor& cd,
       if (tlist->translator_factory_->ncs() != cs_comp.native_code_set)
         {
           if (TAO_debug_level)
-            ACE_ERROR ((LM_ERROR,
+            TAOLIB_ERROR ((LM_ERROR,
                         ACE_TEXT ("TAO (%P|%t) - Codeset_Manager_i::")
                         ACE_TEXT ("init_ccs, codeset translator <%s> ")
                         ACE_TEXT ("has wrong ncs (%d), %m\n"),
@@ -467,7 +467,7 @@ TAO_Codeset_Manager_i::init_ccs (TAO_Codeset_Descriptor& cd,
         tlist->translator_factory_->tcs();
       if (TAO_debug_level > 2)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - Codeset_Manager_i::")
                       ACE_TEXT ("init_ccs, Loaded Codeset translator ")
                       ACE_TEXT ("<%s>, ncs = %08x tcs = %08x\n"),

@@ -106,7 +106,7 @@ TAO_SHMIOP_Profile::decode_profile (TAO_InputCDR& cdr)
     {
       if (TAO_debug_level > 0)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) SHMIOP_Profile::decode - ")
                       ACE_TEXT ("error while decoding host/port")));
         }
@@ -213,7 +213,7 @@ TAO_SHMIOP_Profile::parse_string_i (const char *string
         if (tmp == 0)
           {
             if (TAO_debug_level > 0)
-              ACE_DEBUG ((LM_DEBUG,
+              TAOLIB_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("\n\nTAO (%P|%t) ")
                           ACE_TEXT ("SHMIOP_Profile::parse_string ")
                           ACE_TEXT ("- %p\n\n"),
@@ -240,7 +240,7 @@ TAO_SHMIOP_Profile::parse_string_i (const char *string
     {
       if (TAO_debug_level > 0)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) SHMIOP_Profile::parse_string () -\n")
                       ACE_TEXT ("TAO (%P|%t) ACE_INET_Addr::set () failed")));
         }
@@ -387,7 +387,7 @@ TAO_SHMIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
     encap << this->ref_object_key_->object_key ();
   else
     {
-      ACE_ERROR ((LM_ERROR,
+      TAOLIB_ERROR ((LM_ERROR,
                   "(%P|%t) TAO - UIOP_Profile::create_profile_body "
                   "no object key marshalled\n"));
     }

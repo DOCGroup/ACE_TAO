@@ -651,7 +651,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
             }
           else
             {
-              ACE_DEBUG ((LM_WARNING,
+              TAOLIB_DEBUG ((LM_WARNING,
                           ACE_TEXT ("WARNING: Unknown option to ")
                           ACE_TEXT ("'-ORBCollocation': %s\n"), opt));
             }
@@ -734,7 +734,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
           const ACE_TCHAR *pos = ACE_OS::strchr (current_arg, '=');
           if (pos == 0)
             {
-              ACE_ERROR ((LM_ERROR,
+              TAOLIB_ERROR ((LM_ERROR,
                           ACE_TEXT ("Invalid ORBInitRef argument '%s'")
                           ACE_TEXT ("format is ObjectID=IOR\n"),
                           current_arg));
@@ -751,7 +751,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
                  std::make_pair (InitRefMap::key_type (object_id),
                                  InitRefMap::data_type (IOR))).second)
             {
-              ACE_ERROR ((LM_ERROR,
+              TAOLIB_ERROR ((LM_ERROR,
                           ACE_TEXT ("Duplicate -ORBInitRef ")
                           ACE_TEXT ("argument '%s'\n"),
                           current_arg));
@@ -793,7 +793,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
       else if (0 != (current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBResources"))))
         {
-          ACE_DEBUG ((LM_WARNING,
+          TAOLIB_DEBUG ((LM_WARNING,
                       ACE_TEXT ("\"-ORBResources\" has been ")
                       ACE_TEXT ("deprecated.\n")));
 
@@ -802,7 +802,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
       else if (0 != (current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBLogFile"))))
         {
-          // redirect all ACE_DEBUG and ACE_ERROR output to a file
+          // redirect all TAOLIB_DEBUG and TAOLIB_ERROR output to a file
           // USAGE: -ORBLogFile <file>
           // default: if <file> is present     = append
           //          if <file> is not present = create
@@ -1207,7 +1207,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
           if (TAO_debug_level > 0)
             {
               current_arg = arg_shifter.get_current ();
-              ACE_ERROR ((LM_ERROR,
+              TAOLIB_ERROR ((LM_ERROR,
                           ACE_TEXT ("ERROR: Unknown \"-ORB\" option ")
                           ACE_TEXT ("<%s>.\n"),
                           ((current_arg == 0) ? ACE_TEXT("<NULL>")
@@ -1244,7 +1244,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
         {
           if (TAO_debug_level > 0)
             {
-              ACE_ERROR ((LM_ERROR,
+              TAOLIB_ERROR ((LM_ERROR,
                           ACE_TEXT ("ERROR: Environment variable ")
                           ACE_TEXT ("TAO_ORBENDPOINT set to invalid value ")
                           ACE_TEXT ("<%C>.\n"),
@@ -1283,7 +1283,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
 
   if (trf == 0)
     {
-      ACE_ERROR ((LM_ERROR,
+      TAOLIB_ERROR ((LM_ERROR,
                   ACE_TEXT ("TAO (%P|%t) - %p\n"),
                   ACE_TEXT ("ORB Core unable to find a ")
                   ACE_TEXT ("Resource Factory instance")));
@@ -1303,7 +1303,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
   ACE_Reactor *reactor = this->reactor ();
   if (reactor == 0)
     {
-      ACE_ERROR ((LM_ERROR,
+      TAOLIB_ERROR ((LM_ERROR,
                   ACE_TEXT ("TAO (%P|%t) - %p\n"),
                   ACE_TEXT ("ORB Core unable to initialize reactor")));
       throw ::CORBA::INITIALIZE (
@@ -1317,7 +1317,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
 
   if (ssf == 0)
     {
-      ACE_ERROR ((LM_ERROR,
+      TAOLIB_ERROR ((LM_ERROR,
                   ACE_TEXT ("TAO (%P|%t) - %p\n"),
                   ACE_TEXT ("ORB Core unable to find a ")
                   ACE_TEXT ("Server Strategy Factory instance")));
@@ -1421,7 +1421,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
     this->codeset_manager_->open(*this);
   else
     if  (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
+        TAOLIB_DEBUG ((LM_DEBUG,
                     ACE_TEXT("TAO (%P|%t) - ORB_Core: ")
                     ACE_TEXT("Codeset Manager not available\n")));
 
@@ -1532,7 +1532,7 @@ TAO_ORB_Core::fini (void)
 
   if (TAO_debug_level > 2)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - Destroying ORB <%C>\n"),
                   this->orbid_));
     }
@@ -1573,7 +1573,7 @@ TAO_ORB_Core::set_gui_resource_factory (TAO::GUIResource_Factory *gui_resource_f
     {
       if (TAO_debug_level > 2)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       "TAO (%P|%t) - Deleting old gui_resource_factory.\n"));
         }
       delete TAO_TSS_Resources::instance ()->gui_resource_factory_;
@@ -2241,7 +2241,7 @@ TAO_ORB_Core::run (ACE_Time_Value *tv, int perform_work)
 
   if (TAO_debug_level > 10)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - ORB_Core::run, ")
                   ACE_TEXT ("start [%s]\n"),
                   perform_work?ACE_TEXT("perform_work"):ACE_TEXT("run")));
@@ -2292,7 +2292,7 @@ TAO_ORB_Core::run (ACE_Time_Value *tv, int perform_work)
 
       if (TAO_debug_level > 10)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - ORB_Core::run, ")
                       ACE_TEXT ( "calling handle_events()\n")));
         }
@@ -2301,7 +2301,7 @@ TAO_ORB_Core::run (ACE_Time_Value *tv, int perform_work)
 
       if (TAO_debug_level > 10)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - ORB_Core::run, ")
                       ACE_TEXT ("handle_events() returns %d\n"),
                       result));
@@ -2339,7 +2339,7 @@ TAO_ORB_Core::run (ACE_Time_Value *tv, int perform_work)
 
   if (TAO_debug_level > 10)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - ORB_Core::run, ")
                   ACE_TEXT ("ends with result = %d\n"),
                   result));
@@ -2503,7 +2503,7 @@ TAO_ORB_Core::destroy_interceptors (void)
       // .. catch all the exceptions..
       if (TAO_debug_level > 3)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - Exception in TAO_ORB_Core")
                       ACE_TEXT ("::destroy_interceptors ()\n")));
         }
@@ -2541,7 +2541,7 @@ TAO_ORB_Core::resolve_typecodefactory_i (void)
 
       if (loader == 0)
         {
-          ACE_ERROR ((LM_ERROR,
+          TAOLIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO (%P|%t) Unable to instantiate ")
                       ACE_TEXT ("a TypeCodeFactory_Loader\n")));
           throw ::CORBA::ORB::InvalidName ();
@@ -2794,7 +2794,7 @@ TAO_ORB_Core::set_endpoint_helper (const ACE_CString &lane,
 {
   if (this->orb_params ()->add_endpoints (lane, endpoints) != 0)
     {
-      ACE_ERROR ((LM_ERROR,
+      TAOLIB_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) ")
                   ACE_TEXT ("Invalid endpoint(s) specified: <%C>.\n"),
                   endpoints.c_str ()));
@@ -3219,7 +3219,7 @@ TAO_ORB_Core::connection_timeout_hook (Timeout_Hook hook)
     {
       if (TAO_debug_level > 2)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT("TAO (%P|%t) - Setting primary connection ")
                       ACE_TEXT("timeout hook\n")));
         }
@@ -3230,7 +3230,7 @@ TAO_ORB_Core::connection_timeout_hook (Timeout_Hook hook)
     {
       if (TAO_debug_level > 2)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT("TAO (%P|%t) - Setting alternate connection ")
                       ACE_TEXT("timeout hook\n")));
         }
@@ -3239,7 +3239,7 @@ TAO_ORB_Core::connection_timeout_hook (Timeout_Hook hook)
   else
     if (TAO_debug_level > 2)
       {
-        ACE_DEBUG ((LM_DEBUG,
+        TAOLIB_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) - Not overwriting alternate ")
                     ACE_TEXT ("connection timeout hook. It is %@\n"),
                     TOCSRi->alt_connection_timeout_hook_));
@@ -3342,7 +3342,7 @@ TAO_ORB_Core::add_interceptor (
     }
   else
     {
-      ACE_ERROR ((LM_ERROR,
+      TAOLIB_ERROR ((LM_ERROR,
                   ACE_TEXT ("TAO (%P|%t) - %p\n"),
                   ACE_TEXT ("ERROR: ORB Core unable to find the ")
                   ACE_TEXT ("IORInterceptor Adapter Factory instance")));
@@ -3399,7 +3399,7 @@ TAO_ORB_Core::add_interceptor (
     }
   else
     {
-      ACE_ERROR ((LM_ERROR,
+      TAOLIB_ERROR ((LM_ERROR,
                   ACE_TEXT ("TAO (%P|%t) - %p\n"),
                   ACE_TEXT ("ERROR: ORB Core unable to find the ")
                   ACE_TEXT ("Client Request Interceptor Adapter Factory ")
@@ -3448,7 +3448,7 @@ TAO_ORB_Core::add_interceptor (
     }
   else
     {
-      ACE_ERROR ((LM_ERROR,
+      TAOLIB_ERROR ((LM_ERROR,
                   ACE_TEXT ("TAO (%P|%t) - %p\n"),
                   ACE_TEXT ("ERROR: ORB Core unable to find the ")
                   ACE_TEXT ("Server Request Interceptor Adapter Factory ")
@@ -3472,7 +3472,7 @@ TAO_ORB_Core::add_interceptor (
     }
   else
     {
-      ACE_ERROR ((LM_ERROR,
+      TAOLIB_ERROR ((LM_ERROR,
                   ACE_TEXT ("TAO (%P|%t) - %p\n"),
                   ACE_TEXT ("ERROR: ORB Core unable to find the ")
                   ACE_TEXT ("Client Request Interceptor Adapter Factory ")
@@ -3496,7 +3496,7 @@ TAO_ORB_Core::add_interceptor (
     }
   else
     {
-      ACE_ERROR ((LM_ERROR,
+      TAOLIB_ERROR ((LM_ERROR,
                   ACE_TEXT ("TAO (%P|%t) - %p\n"),
                   ACE_TEXT ("ERROR: ORB Core unable to find the ")
                   ACE_TEXT ("Server Request Interceptor Adapter Factory ")

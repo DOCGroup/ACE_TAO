@@ -68,7 +68,7 @@ TAO_On_Demand_Fragmentation_Strategy::fragment (
       cdr.more_fragments (true);
 
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
+        TAOLIB_DEBUG ((LM_DEBUG,
                     "TAO (%P|%t) - On_Demand_Fragmentation_Strategy::fragment, "
                     "sending fragment of size %d\n",
                     cdr.total_length ()));

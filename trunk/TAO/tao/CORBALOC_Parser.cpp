@@ -161,7 +161,7 @@ TAO_CORBALOC_Parser::parse_string (const char * ior, CORBA::ORB_ptr orb)
     if (endpoints[ndx].profile_ == 0)
       {
         if (TAO_debug_level)
-          ACE_ERROR ((LM_ERROR,
+          TAOLIB_ERROR ((LM_ERROR,
                       ACE_TEXT("TAO (%P|%t) - TAO_CORBALOC_Parser::parse_string ")
                       ACE_TEXT("could not parse from %C\n"),
                       ior));
@@ -191,7 +191,7 @@ TAO_CORBALOC_Parser::parse_string (const char * ior, CORBA::ORB_ptr orb)
 
     // anything else is a violation.
     if (TAO_debug_level)
-      ACE_ERROR ((LM_ERROR,
+      TAOLIB_ERROR ((LM_ERROR,
                   ACE_TEXT("TAO (%P|%t) - TAO_CORBALOC_Parser::parse_string ")
                   ACE_TEXT("could not parse from %C\n"),
                   ior));
@@ -223,7 +223,7 @@ TAO_CORBALOC_Parser::parse_string (const char * ior, CORBA::ORB_ptr orb)
           // insufficient heap to allocate the mprofile, hence the
           // mprofile's size is 0, and give_profile fails.
           if (TAO_debug_level)
-            ACE_ERROR ((LM_ERROR,
+            TAOLIB_ERROR ((LM_ERROR,
                         ACE_TEXT("TAO (%P|%t) - TAO_CORBALOC_Parser::parse_string ")
                         ACE_TEXT("mprofile.give_profile failed for i = %d\n"),
                         i));
@@ -279,7 +279,7 @@ TAO_CORBALOC_Parser::make_canonical (const char *ior,
           // No valid IPv6 address specified but that will come out later.
           if (TAO_debug_level > 0)
             {
-              ACE_ERROR ((LM_ERROR,
+              TAOLIB_ERROR ((LM_ERROR,
                          ACE_TEXT ("TAO (%P|%t) - TAO_CORBALOC_Parser: ")
                          ACE_TEXT ("Invalid IPv6 decimal address specified.\n")));
             }
@@ -324,7 +324,7 @@ TAO_CORBALOC_Parser::make_canonical (const char *ior,
           // initialized.  Just throw an exception.
 
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
+            TAOLIB_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("TAO (%P|%t) - ")
                         ACE_TEXT ("Cannot determine hostname.\n")));
 

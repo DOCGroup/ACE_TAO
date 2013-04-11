@@ -60,7 +60,7 @@ TAO_CSD_Strategy_Repository::add_strategy (const ACE_CString& name,
 
   if (TAO_debug_level > 3)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT("Strategy_Repository::add_strategy for %C\n"),
                   name.c_str ()));
     }

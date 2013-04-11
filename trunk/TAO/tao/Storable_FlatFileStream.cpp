@@ -17,6 +17,7 @@
 #include "ace/OS_NS_fcntl.h"
 #include "ace/OS_NS_sys_stat.h"
 #include "ace/Numeric_Limits.h"
+#include "tao/debug.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -95,12 +96,12 @@ namespace
         else if (!some_read)
           {
             // Nothing was read
-            ACE_ERROR ((LM_ERROR,
+            TAOLIB_ERROR ((LM_ERROR,
                         ACE_TEXT ("TAO: (%P|%t) ERROR: could not read from file\n")));
 
             if (ferror (f1))
               {
-                ACE_ERROR ((LM_ERROR,
+                TAOLIB_ERROR ((LM_ERROR,
                             "%p\n",
                             "fread error"));
               }
@@ -167,14 +168,14 @@ TAO::Storable_FlatFileStream::open()
 #ifndef ACE_WIN32
   if( ACE_OS::flock_init (&filelock_, flags,
                           ACE_TEXT_CHAR_TO_TCHAR (file_.c_str()), 0666) != 0 )
-    ACE_ERROR_RETURN ((LM_ERROR,
+    TAOLIB_ERROR_RETURN ((LM_ERROR,
                        "Cannot open file %s for mode %s: (%d) %s\n",
                        file_.c_str(), mode_.c_str(),
                        errno, ACE_OS::strerror(errno)),
                       -1);
 #else
   if( (filelock_.handle_= ACE_OS::open (file_.c_str(), flags, 0)) == ACE_INVALID_HANDLE )
-    ACE_ERROR_RETURN ((LM_ERROR,
+    TAOLIB_ERROR_RETURN ((LM_ERROR,
                        "Cannot open file %s for mode %s: (%d) %s\n",
                        file_.c_str(), mode_.c_str(),
                        ACE_ERRNO_GET, ACE_OS::strerror(ACE_ERRNO_GET)),
@@ -182,7 +183,7 @@ TAO::Storable_FlatFileStream::open()
 #endif
   this->fl_ = ACE_OS::fdopen(filelock_.handle_, ACE_TEXT_CHAR_TO_TCHAR (fdmode));
   if (this->fl_ == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    TAOLIB_ERROR_RETURN ((LM_ERROR,
                        "Cannot fdopen file %s for mode %s: (%d) %s\n",
                        file_.c_str(), mode_.c_str(),
                        ACE_ERRNO_GET, ACE_OS::strerror(ACE_ERRNO_GET)),
@@ -215,7 +216,7 @@ TAO::Storable_FlatFileStream::flock (int whence, int start, int len)
   if( ACE_OS::strcmp(mode_.c_str(), "r") == 0 )
     {
        if (ACE_OS::flock_rdlock(&filelock_, whence, start, len) != 0)
-         ACE_ERROR_RETURN ((LM_ERROR,
+         TAOLIB_ERROR_RETURN ((LM_ERROR,
                             ACE_TEXT ("TAO (%P|%t) - ")
                             ACE_TEXT ("Storable_FlatFileStream::flock, ")
                             ACE_TEXT ("Error trying to get a read lock for file %s\n"),
@@ -226,7 +227,7 @@ TAO::Storable_FlatFileStream::flock (int whence, int start, int len)
   else
     {
       if (ACE_OS::flock_wrlock(&filelock_, whence, start, len) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
+        TAOLIB_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("TAO (%P|%t) - ")
                            ACE_TEXT ("Storable_FlatFileStream::flock, ")
                            ACE_TEXT ("Error trying to get a write lock for file %s\n"),
@@ -247,7 +248,7 @@ TAO::Storable_FlatFileStream::funlock (int whence, int start, int len)
   ACE_UNUSED_ARG (len);
 #else
   if (ACE_OS::flock_unlock(&filelock_, whence, start, len) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    TAOLIB_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("TAO (%P|%t) - ")
                        ACE_TEXT ("Storable_FlatFileStream::funlock, ")
                        ACE_TEXT ("Error trying to unlock file %s\n"),
@@ -263,7 +264,7 @@ TAO::Storable_FlatFileStream::last_changed(void)
   ACE_stat st;
   if (ACE_OS::fstat(filelock_.handle_, &st) != 0)
     {
-      ACE_ERROR ((LM_ERROR,
+      TAOLIB_ERROR ((LM_ERROR,
                   ACE_TEXT ("TAO (%P|%t) - ")
                   ACE_TEXT ("Storable_FlatFileStream::last_changed, ")
                   ACE_TEXT ("Error getting file information\n")));
@@ -420,7 +421,7 @@ TAO::Storable_FlatFileStream::create_backup ()
   int result = file_copy(this->fl_, backup);
   if (result != 0)
     {
-      ACE_ERROR ((LM_ERROR,
+      TAOLIB_ERROR ((LM_ERROR,
                   ACE_TEXT ("TAO: (%P|%t) ERROR: Unable to create backup ")
                   ACE_TEXT ("of file\n%s\n"), file_.c_str ()));
     }

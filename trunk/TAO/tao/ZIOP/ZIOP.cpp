@@ -135,7 +135,7 @@ TAO_ZIOP_Loader::dump_msg (const char *type,  const u_char *ptr,
   static const char digits[] = "0123456789ABCD";
   int const byte_order = ptr[TAO_GIOP_MESSAGE_FLAGS_OFFSET] & 0x01;
 
-  ACE_DEBUG ((LM_DEBUG,
+  TAOLIB_DEBUG ((LM_DEBUG,
               ACE_TEXT ("ZIOP (%P|%t) ZIOP_Loader::dump_msg, ")
               ACE_TEXT ("ZIOP message v%c.%c %C, %B data bytes, %s endian, ")
               ACE_TEXT ("original_data_length = %B, ")
@@ -149,7 +149,7 @@ TAO_ZIOP_Loader::dump_msg (const char *type,  const u_char *ptr,
               TAO_ZIOP_Loader::ziop_compressorid_name (compressor_id),
               static_cast <int> (compression_level)));
 
-  ACE_HEX_DUMP ((LM_DEBUG,
+  TAOLIB_HEX_DUMP ((LM_DEBUG,
                  (const char *) ptr,
                  len,
                  ACE_TEXT ("ZIOP message")));
@@ -166,7 +166,7 @@ TAO_ZIOP_Loader::decompress (Compression::Compressor_ptr compressor,
     }
   catch (::Compression::CompressionException &e)
     {
-      ACE_ERROR_RETURN((LM_ERROR,
+      TAOLIB_ERROR_RETURN((LM_ERROR,
                         ACE_TEXT ("ZIOP (%P|%t) TAO_ZIOP_Loader::decompress, ")
                         ACE_TEXT ("decompression failed, %C\n"),
                         e._info ().c_str ()),
@@ -206,7 +206,7 @@ TAO_ZIOP_Loader::decompress (ACE_Data_Block **db, TAO_Queued_Data& qd,
 
       if (!(cdr >> data))
         {
-          ACE_DEBUG ((LM_DEBUG, "ZIOP (%P|%t) decompress failed to demarshal data.\n"));
+          TAOLIB_DEBUG ((LM_DEBUG, "ZIOP (%P|%t) decompress failed to demarshal data.\n"));
           return false;
         }
 
@@ -234,7 +234,7 @@ TAO_ZIOP_Loader::decompress (ACE_Data_Block **db, TAO_Queued_Data& qd,
 
               if (mb.copy ((char*)myout.get_buffer (false),
                            static_cast<size_t> (data.original_length)) != 0)
-                ACE_ERROR_RETURN((LM_ERROR,
+                TAOLIB_ERROR_RETURN((LM_ERROR,
                                   ACE_TEXT ("ZIOP (%P|%t) ")
                                   ACE_TEXT ("TAO_ZIOP_Loader::decompress, ")
                                   ACE_TEXT ("failed to copy decompressed data, ")
@@ -260,14 +260,14 @@ TAO_ZIOP_Loader::decompress (ACE_Data_Block **db, TAO_Queued_Data& qd,
         }
       catch (const ::Compression::UnknownCompressorId &)
         {
-          ACE_DEBUG ((LM_DEBUG, "ZIOP (%P|%t) client used ZIOP with an unregistered (at the server) compressor (ID %d: %C)\n",
+          TAOLIB_DEBUG ((LM_DEBUG, "ZIOP (%P|%t) client used ZIOP with an unregistered (at the server) compressor (ID %d: %C)\n",
                       static_cast <int> (data.compressor), TAO_ZIOP_Loader::ziop_compressorid_name (data.compressor)));
           return false;
         }
     }
   else
     {
-      ACE_DEBUG ((LM_DEBUG, "ZIOP (%P|%t) failed to obtain compression manager\n"));
+      TAOLIB_DEBUG ((LM_DEBUG, "ZIOP (%P|%t) failed to obtain compression manager\n"));
       return false;
     }
 #else /* TAO_HAS_ZIOP */
@@ -340,7 +340,7 @@ TAO_ZIOP_Loader::compress (Compression::Compressor_ptr compressor,
     }
   catch (::Compression::CompressionException &e)
     {
-      ACE_ERROR_RETURN((LM_ERROR,
+      TAOLIB_ERROR_RETURN((LM_ERROR,
                         ACE_TEXT ("ZIOP (%P|%t) TAO_ZIOP_Loader::compress, ")
                         ACE_TEXT ("compression failed, %C\n"),
                         e._info ().c_str ()),
@@ -376,7 +376,7 @@ TAO_ZIOP_Loader::check_min_ratio (const ::Compression::CompressionRatio &this_ra
     {
       if (TAO_debug_level > 8)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("ZIOP (%P|%t) TAO_ZIOP_Loader::check_min_ratio, ")
                       ACE_TEXT ("this ratio (%4.2f <= %4.2f) min ratio, ")
                       ACE_TEXT ("average so far %4.2f (allowed compression).\n"),
@@ -385,7 +385,7 @@ TAO_ZIOP_Loader::check_min_ratio (const ::Compression::CompressionRatio &this_ra
     }
   else if (TAO_debug_level > 8)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("ZIOP (%P|%t) TAO_ZIOP_Loader::check_min_ratio, ")
                   ACE_TEXT ("COMPRESSION_MIN_RATIO_POLICY applied, ")
                   ACE_TEXT ("this ratio (%4.2f > %4.2f) min ratio, ")
@@ -410,7 +410,7 @@ TAO_ZIOP_Loader::get_compressor_details (
 
       if (TAO_debug_level > 6)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("ZIOP (%P|%t) ")
                       ACE_TEXT ("TAO_ZIOP_Loader::get_compressor_details, ")
                       ACE_TEXT ("compressor policy found, compressor = %C@%d\n"),
@@ -423,7 +423,7 @@ TAO_ZIOP_Loader::get_compressor_details (
     {
       if (TAO_debug_level > 6)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("ZIOP (%P|%t) ")
                       ACE_TEXT ("TAO_ZIOP_Loader::get_compressor_details, ")
                       ACE_TEXT ("no appropriate compressor found\n")));
@@ -451,7 +451,7 @@ TAO_ZIOP_Loader::get_compression_details(
           use_ziop = srp->compression_enabled ();
           if (!use_ziop && TAO_debug_level > 8)
             {
-              ACE_DEBUG ((LM_DEBUG,
+              TAOLIB_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("ZIOP (%P|%t) ")
                           ACE_TEXT ("TAO_ZIOP_Loader::get_compression_details, ")
                           ACE_TEXT ("ZIOP enabled policy not set\n")));
@@ -462,7 +462,7 @@ TAO_ZIOP_Loader::get_compression_details(
     {
       if (TAO_debug_level > 6)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                      ACE_TEXT ("ZIOP (%P|%t) ")
                      ACE_TEXT ("TAO_ZIOP_Loader::get_compression_details, ")
                      ACE_TEXT ("compression_enabling_policy is NIL, no ZIOP\n")));
@@ -486,7 +486,7 @@ TAO_ZIOP_Loader::get_compression_details(
         {
           if (TAO_debug_level > 6)
             {
-              ACE_DEBUG ((LM_DEBUG,
+              TAOLIB_DEBUG ((LM_DEBUG,
                          ACE_TEXT("ZIOP (%P|%t) ")
                          ACE_TEXT("TAO_ZIOP_Loader::get_compression_details, ")
                          ACE_TEXT("compressor ID/Level list policy not found\n")));
@@ -526,7 +526,7 @@ TAO_ZIOP_Loader::complete_compression (Compression::Compressor_ptr compressor,
         {
           if (TAO_debug_level > 0)
             {
-              ACE_DEBUG ((LM_ERROR,
+              TAOLIB_DEBUG ((LM_ERROR,
                           ACE_TEXT ("ZIOP (%P|%t) ")
                           ACE_TEXT ("TAO_ZIOP_Loader::complete_compression, ")
                           ACE_TEXT ("Compressor failed to compress message!\n")));
@@ -537,7 +537,7 @@ TAO_ZIOP_Loader::complete_compression (Compression::Compressor_ptr compressor,
         {
           if (TAO_debug_level > 8)
             {
-              ACE_DEBUG ((LM_DEBUG,
+              TAOLIB_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("ZIOP (%P|%t) ")
                           ACE_TEXT ("TAO_ZIOP_Loader::complete_compression, ")
                           ACE_TEXT ("compressed length (%u >= %u) ")
@@ -578,7 +578,7 @@ TAO_ZIOP_Loader::complete_compression (Compression::Compressor_ptr compressor,
     }
     else if (TAO_debug_level > 8)
       {
-        ACE_DEBUG ((LM_DEBUG,
+        TAOLIB_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("ZIOP (%P|%t) ")
                     ACE_TEXT ("TAO_ZIOP_Loader::complete_compression, ")
                     ACE_TEXT ("COMPRESSION_LOW_VALUE_POLICY applied, ")
@@ -685,7 +685,7 @@ TAO_ZIOP_Loader::marshal_data (TAO_OutputCDR &cdr, TAO_ORB_Core &orb_core, TAO_S
     {
       if (6 < TAO_debug_level)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT("ZIOP (%P|%t) ")
                       ACE_TEXT("TAO_ZIOP_Loader::marshal_data (server_reply), ")
                       ACE_TEXT("client policies not available (did not compress).\n")));
@@ -702,7 +702,7 @@ TAO_ZIOP_Loader::marshal_data (TAO_OutputCDR &cdr, TAO_ORB_Core &orb_core, TAO_S
     {
       if (6 < TAO_debug_level)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT("ZIOP (%P|%t) ")
                       ACE_TEXT("TAO_ZIOP_Loader::marshal_data (server_reply), ")
                       ACE_TEXT("clientCompressionEnablingPolicy (did not compress).\n")));
@@ -719,7 +719,7 @@ TAO_ZIOP_Loader::marshal_data (TAO_OutputCDR &cdr, TAO_ORB_Core &orb_core, TAO_S
     {
       if (6 < TAO_debug_level)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT("ZIOP (%P|%t) ")
                       ACE_TEXT("TAO_ZIOP_Loader::marshal_data (server_reply), ")
                       ACE_TEXT("serverCompressionEnablingPolicy (did not compress).\n")));
@@ -735,7 +735,7 @@ TAO_ZIOP_Loader::marshal_data (TAO_OutputCDR &cdr, TAO_ORB_Core &orb_core, TAO_S
     {
       if (6 < TAO_debug_level)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT("ZIOP (%P|%t) ")
                       ACE_TEXT("TAO_ZIOP_Loader::marshal_data (server_reply), ")
                       ACE_TEXT("no clientCompressorIdLevelListPolicy (did not compress).\n")));
@@ -754,7 +754,7 @@ TAO_ZIOP_Loader::marshal_data (TAO_OutputCDR &cdr, TAO_ORB_Core &orb_core, TAO_S
     {
       if (6 < TAO_debug_level)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT("ZIOP (%P|%t) ")
                       ACE_TEXT("TAO_ZIOP_Loader::marshal_data (server_reply), ")
                       ACE_TEXT("no serverCompressorIdLevelListPolicy (did not compress).\n")));
@@ -783,7 +783,7 @@ TAO_ZIOP_Loader::marshal_data (TAO_OutputCDR &cdr, TAO_ORB_Core &orb_core, TAO_S
                                              clientEntry->compression_level);
               if (6 < TAO_debug_level)
                 {
-                  ACE_DEBUG ((LM_DEBUG,
+                  TAOLIB_DEBUG ((LM_DEBUG,
                               ACE_TEXT("ZIOP (%P|%t) ")
                               ACE_TEXT("TAO_ZIOP_Loader::marshal_data (server_reply), ")
                               ACE_TEXT("Found (Server %d: %C@%d == Client %d: %C@%d) using @%d.\n"),
@@ -818,7 +818,7 @@ TAO_ZIOP_Loader::marshal_data (TAO_OutputCDR &cdr, TAO_ORB_Core &orb_core, TAO_S
 
           if (7 < TAO_debug_level)
             {
-              ACE_DEBUG ((LM_DEBUG,
+              TAOLIB_DEBUG ((LM_DEBUG,
                           ACE_TEXT("ZIOP (%P|%t) ")
                           ACE_TEXT("TAO_ZIOP_Loader::marshal_data (server_reply), ")
                           ACE_TEXT("checking (Server %d: %C@%d != Client %d: %C@%d).\n"),
@@ -834,7 +834,7 @@ TAO_ZIOP_Loader::marshal_data (TAO_OutputCDR &cdr, TAO_ORB_Core &orb_core, TAO_S
 
   if (6 < TAO_debug_level)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT("ZIOP (%P|%t) ")
                   ACE_TEXT("TAO_ZIOP_Loader::marshal_data (server_reply), ")
                   ACE_TEXT("no matching CompressorIdLevelListPolicy (did not compress).\n")));

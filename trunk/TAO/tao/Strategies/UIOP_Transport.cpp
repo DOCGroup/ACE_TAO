@@ -70,7 +70,7 @@ TAO_UIOP_Transport::recv (char *buf,
       TAO_debug_level > 4 &&
       errno != ETIME)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - UIOP_Transport::recv, %p %p\n"),
                   ACE_TEXT ("TAO - read message failure ")
                   ACE_TEXT ("recv ()\n")));
@@ -141,7 +141,7 @@ TAO_UIOP_Transport::send_message (TAO_OutputCDR &stream,
   if (n == -1)
     {
       if (TAO_debug_level)
-        ACE_DEBUG ((LM_DEBUG,
+        TAOLIB_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) closing transport %d after fault %p\n"),
                     this->id (),
                     ACE_TEXT ("send_message ()\n")));

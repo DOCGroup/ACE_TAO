@@ -41,7 +41,7 @@ TAO_DII_Deferred_Reply_Dispatcher::dispatch_reply (
     {
       if (TAO_debug_level > 2)
         {
-          ACE_ERROR ((
+          TAOLIB_ERROR ((
             LM_ERROR,
             "TAO (%P|%t) - DII_Deferred_Reply_Dispatcher::dispatch_reply "
             "clone_from failed\n"));
@@ -67,7 +67,7 @@ TAO_DII_Deferred_Reply_Dispatcher::dispatch_reply (
 
   if (TAO_debug_level >= 4)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P | %t):TAO_Asynch_Reply_Dispatcher::dispatch_reply:\n")));
     }
 
@@ -176,7 +176,7 @@ TAO_DII_Asynch_Reply_Dispatcher::dispatch_reply (
 
   if (TAO_debug_level >= 4)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P | %t):")
                   ACE_TEXT ("TAO_DII_Asynch_Reply_Dispatcher::dispatch_reply: status = %d\n"),
                   this->reply_status_));

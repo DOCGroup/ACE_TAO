@@ -32,7 +32,7 @@ namespace TAO
           {
             case ::PortableServer::RETAIN :
             {
-              ACE_ERROR ((LM_ERROR, "Incorrect type in RequestProcessingStrategyServantLocatorFactoryImpl"));
+              TAOLIB_ERROR ((LM_ERROR, "Incorrect type in RequestProcessingStrategyServantLocatorFactoryImpl"));
               break;
             }
             case ::PortableServer::NON_RETAIN :
@@ -45,7 +45,7 @@ namespace TAO
         }
         default :
         {
-          ACE_ERROR ((LM_ERROR, "Incorrect type in RequestProcessingStrategyServantLocatorFactoryImpl"));
+          TAOLIB_ERROR ((LM_ERROR, "Incorrect type in RequestProcessingStrategyServantLocatorFactoryImpl"));
           break;
         }
       }

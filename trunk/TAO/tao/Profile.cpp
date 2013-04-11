@@ -159,7 +159,7 @@ TAO_Profile::decode (TAO_InputCDR& cdr)
     {
       if (TAO_debug_level > 0)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - Profile::decode - v%d.%d\n"),
                       this->version_.major,
                       this->version_.minor));
@@ -219,7 +219,7 @@ TAO_Profile::decode (TAO_InputCDR& cdr)
     {
       // If there is extra data in the profile we are supposed to
       // ignore it, but print a warning just in case...
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("%d bytes out of %d left after profile data\n"),
                   cdr.length (),
                   encap_len));
@@ -329,7 +329,7 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list)
     {
       if (TAO_debug_level)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO_Profile::policies: ")
                       ACE_TEXT ("Null Policy List!\n")));
         }
@@ -490,7 +490,7 @@ TAO_Profile::get_policies (CORBA::PolicyList& pl)
                       // spec. ptc/99-05-03 we just ignore these
                       // un-understood policies.
                       if (TAO_debug_level >= 5)
-                        ACE_DEBUG ((LM_DEBUG,
+                        TAOLIB_DEBUG ((LM_DEBUG,
                                     ACE_TEXT ("The IOR contains unsupported ")
                                     ACE_TEXT ("policies.\n")));
                     }
@@ -525,7 +525,7 @@ TAO_Profile::verify_orb_configuration (void)
     {
       if (TAO_debug_level > 0)
         {
-          ACE_ERROR ((LM_ERROR,
+          TAOLIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("(%P|%t) Cannot add ")
                       ACE_TEXT ("IOP::TaggedComponent to profile.\n")
                       ACE_TEXT ("(%P|%t) Standard profile components ")
@@ -558,7 +558,7 @@ TAO_Profile::verify_profile_version (void)
     {
       if (TAO_debug_level > 0)
         {
-          ACE_ERROR ((LM_ERROR,
+          TAOLIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("(%P|%t) Cannot add ")
                       ACE_TEXT ("IOP::TaggedComponent to GIOP 1.0")
                       ACE_TEXT ("IOR profile.\n")

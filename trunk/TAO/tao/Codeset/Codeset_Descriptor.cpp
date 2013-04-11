@@ -68,7 +68,7 @@ TAO_Codeset_Descriptor::ncs (ACE_CDR::ULong n)
   if (this->max_bytes_ == 0)
     {
       if (TAO_debug_level > 0)
-        ACE_ERROR((LM_ERROR,
+        TAOLIB_ERROR((LM_ERROR,
                    ACE_TEXT("(%P|%t) TAO_Codeset_Descriptor::ncs, ")
                    ACE_TEXT("unknown codeset id 0x%x\n"),
                    n));

@@ -37,7 +37,7 @@ namespace TAO
         ACE_Dynamic_Service<ImplicitActivationStrategy>::instance (strategy_name);
 
       if (strategy == 0)
-        ACE_ERROR ((LM_ERROR,
+        TAOLIB_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) ERROR, Unable to get %s\n"),
                     strategy_name));
 

@@ -38,7 +38,7 @@ namespace
     CORBA::String_var profile_str = profile.to_string ();
 
 //          if (TAO_debug_level > 0)
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("**************    IMR partial IOR =\n%C\n"),
                   profile_str.in ()));
 
@@ -49,7 +49,7 @@ namespace
     else
       {
         if (TAO_debug_level > 0)
-          ACE_ERROR ((LM_ERROR,
+          TAOLIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("Could not parse ImR IOR, skipping ImRification\n")));
         return CORBA::Object::_nil();
       }
@@ -60,7 +60,7 @@ namespace
     ior += key_str;
 
 //          if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
+    TAOLIB_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("**************    ImR-ified IOR =\n%C\n\n"),
                 ior.c_str ()));
 
@@ -173,7 +173,7 @@ namespace
                   info = "because couldn't ImR-ify profile_in_use";
                   break;
                 }
-              ACE_ERROR((LM_ERROR,
+              TAOLIB_ERROR((LM_ERROR,
                 ACE_TEXT("ERROR: %C. ")
                 ACE_TEXT("Defaulting to ImR-ifying profile_in_use\n"),
                 desc));
@@ -181,7 +181,7 @@ namespace
             }
         }
 
-      ACE_ERROR((LM_ERROR,
+      TAOLIB_ERROR((LM_ERROR,
                  ACE_TEXT ("ERROR: %C, ")
                  ACE_TEXT ("but cannot default to ImR-ifying profile_in_use %C\n"),
                  desc,
@@ -216,7 +216,7 @@ namespace TAO
 
       if (CORBA::is_nil (imr.in ()))
         {
-          ACE_ERROR ((LM_ERROR,
+          TAOLIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("(%P|%t) ERROR: No usable IMR initial reference ")
                       ACE_TEXT ("available but use IMR has been specified.\n")));
           throw ::CORBA::TRANSIENT (
@@ -233,7 +233,7 @@ namespace TAO
               CORBA::String_var ior = orb->object_to_string (imr.in ());
               imr_info = ACE_CString (", IMR IOR=") + ior.in ();
             }
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("Notifying ImR of startup%s\n"),
                       imr_info.c_str ()));
         }
@@ -251,7 +251,7 @@ namespace TAO
 
       if (CORBA::is_nil (imr_locator.in ()))
         {
-          ACE_ERROR ((LM_ERROR,
+          TAOLIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("(%P|%t) ERROR: Narrowed IMR initial reference ")
                       ACE_TEXT ("is nil but use IMR has been specified.\n")));
 
@@ -287,14 +287,14 @@ namespace TAO
 
       if (!svr->_stubobj () || !svr->_stubobj ()->profile_in_use ())
         {
-          ACE_ERROR ((LM_ERROR, "Invalid ImR ServerObject, bailing out.\n"));
+          TAOLIB_ERROR ((LM_ERROR, "Invalid ImR ServerObject, bailing out.\n"));
           return;
         }
 
       CORBA::String_var full_ior = root_poa->_get_orb()->object_to_string (obj.in ());
       TAO_Profile& profile = *(svr->_stubobj ()->profile_in_use ());
       CORBA::String_var ior = profile.to_string();
-      ACE_DEBUG((LM_INFO,
+      TAOLIB_DEBUG((LM_INFO,
                  "\n\nfull_ior=<%s>\n\nior=<%s>\n\n",
                  full_ior.in(),
                  ior.in()));
@@ -305,7 +305,7 @@ namespace TAO
       const ACE_CString partial_ior (ior.in (), (pos - ior.in ()) + 1);
 
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
+        TAOLIB_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("Informing IMR that we are running at: %C\n"),
                     partial_ior.c_str ()));
 
@@ -342,7 +342,7 @@ namespace TAO
         }
 
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
+        TAOLIB_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("Successfully notified ImR of Startup\n")));
     }
 
@@ -362,7 +362,7 @@ namespace TAO
           if (TAO_debug_level > 0)
             {
               CORBA::String_var poaname = poa->the_name ();
-              ACE_DEBUG ((LM_DEBUG,
+              TAOLIB_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("Notifying IMR of Shutdown server:%s\n"),
                           poaname.in ()));
             }
@@ -383,7 +383,7 @@ namespace TAO
           // configured to drop replies during shutdown (it does by default in
           // the LF model) we get a COMM_FAILURE exception which we ignore
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
+            TAOLIB_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("Ignoring COMM_FAILURE while unregistering")
                         ACE_TEXT ("from ImR.\n")));
         }
@@ -391,7 +391,7 @@ namespace TAO
         {
           // Similarly, there are cases where we could get a TRANSIENT.
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
+            TAOLIB_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("Ignoring TRANSIENT while unregistering")
                         ACE_TEXT ("from ImR.\n")));
         }
@@ -453,7 +453,7 @@ namespace TAO
         {
           if (TAO_debug_level > 1)
             {
-              ACE_DEBUG ((LM_DEBUG,
+              TAOLIB_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("Missing ImR IOR, will not use the ImR\n")));
             }
           return CORBA::Object::_nil();

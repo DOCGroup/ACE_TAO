@@ -27,7 +27,7 @@ namespace TAO
           if (strategy_factory != 0)
             strategy = strategy_factory->create (value);
           else
-            ACE_ERROR ((LM_ERROR,
+            TAOLIB_ERROR ((LM_ERROR,
                         ACE_TEXT ("(%P|%t) %p\n"),
                         ACE_TEXT ("ERROR, Unable to get ")
                         ACE_TEXT ("ThreadStrategySingleFactory")));
@@ -40,7 +40,7 @@ namespace TAO
             ACE_Dynamic_Service<ThreadStrategy>::instance ("ThreadStrategyORBControl");
 
           if (strategy == 0)
-            ACE_ERROR ((LM_ERROR,
+            TAOLIB_ERROR ((LM_ERROR,
                         ACE_TEXT ("(%P|%t) %p\n"),
                         ACE_TEXT ("ERROR, Unable to get ")
                         ACE_TEXT ("ThreadStrategyORBControl")));

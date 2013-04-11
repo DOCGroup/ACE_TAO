@@ -174,7 +174,7 @@ TAO_DTP_Config::init (int argc, ACE_TCHAR* argv[])
         {
           if (TAO_debug_level > 0)
             {
-              ACE_DEBUG ((LM_DEBUG,
+              TAOLIB_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("TAO (%P|%t) - DTP_Config - ")
                           ACE_TEXT ("Unrecognized argv[%d], %C\n"),
                          curarg, argv[curarg]));
@@ -188,7 +188,7 @@ TAO_DTP_Config::init (int argc, ACE_TCHAR* argv[])
     {
       if (TAO_debug_level > 0)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - DTP_Config - ")
                       ACE_TEXT ("thread count constraint ")
                       ACE_TEXT ("violated, min: %d <= init: %d <= max: ")
@@ -215,7 +215,7 @@ TAO_DTP_Config::init (int argc, ACE_TCHAR* argv[])
         {
           if (TAO_debug_level > 0)
             {
-              ACE_DEBUG((LM_DEBUG,
+              TAOLIB_DEBUG((LM_DEBUG,
                          ACE_TEXT ("TAO (%P|%t) - DTP_Config - ")
                          ACE_TEXT ("cannot initialize registry\n")));
             }
@@ -295,7 +295,7 @@ TAO_DTP_Config::report_option_value_error (const ACE_TCHAR* option_name,
 {
   if (TAO_debug_level > 0)
     {
-      ACE_DEBUG((LM_DEBUG,
+      TAOLIB_DEBUG((LM_DEBUG,
                  ACE_TEXT ("TAO (%P|%t) - DTP_Config - unknown ")
                  ACE_TEXT ("argument <%s> for <%s>\n"),
                  option_value, option_name));

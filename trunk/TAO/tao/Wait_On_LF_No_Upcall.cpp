@@ -35,7 +35,7 @@ namespace TAO
       tss->upcalls_temporarily_suspended_on_this_thread_ = true;
 
       if (TAO_debug_level > 6)
-        ACE_DEBUG ((LM_DEBUG,
+        TAOLIB_DEBUG ((LM_DEBUG,
                     "TAO (%P|%t) - Wait_On_LF_No_Upcall[%d]::wait, "
                     "disabling upcalls\n", t->id ()));
     }
@@ -49,7 +49,7 @@ namespace TAO
 
       if (TAO_debug_level > 6)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       "TAO (%P|%t) - Wait_On_LF_No_Upcall[%d]::wait, "
                       "re-enabling upcalls\n", this->t_->id ()));
         }
@@ -109,7 +109,7 @@ namespace TAO
   Wait_On_LF_No_Upcall::defer_upcall (ACE_Event_Handler* eh)
   {
     if (TAO_debug_level > 6)
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   "TAO (%P|%t) - Wait_On_LF_No_Upcall[%d]::defer_upcall, "
                   "deferring upcall on transport "
                   "because upcalls temporarily suspended on this thread\n",

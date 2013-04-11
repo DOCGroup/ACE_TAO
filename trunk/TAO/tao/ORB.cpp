@@ -156,7 +156,7 @@ CORBA::ORB::destroy (void)
 
   if (TAO_debug_level > 2)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("CORBA::ORB::destroy() called on ORB <%C>.\n"),
                   this->orb_core ()->orbid ()));
     }
@@ -251,7 +251,7 @@ CORBA::ORB::create_list (CORBA::Long count, CORBA::NVList_ptr &new_list)
 
   if (adapter == 0)
     {
-      ACE_ERROR ((LM_ERROR,
+      TAOLIB_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) %p\n"),
                   ACE_TEXT ("ORB unable to find the ")
                   ACE_TEXT ("NVList Adapter instance")));
@@ -309,7 +309,7 @@ CORBA::ORB::create_named_value (CORBA::NamedValue_ptr &nv)
 
   if (adapter == 0)
     {
-      ACE_ERROR ((LM_ERROR,
+      TAOLIB_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) %p\n"),
                   ACE_TEXT ("ORB unable to find the ")
                   ACE_TEXT ("NVList Adapter instance")));
@@ -1168,7 +1168,7 @@ namespace TAO
               return oc->configuration ();
 
           if (TAO_debug_level > 0)
-              ACE_ERROR ((LM_ERROR,
+              TAOLIB_ERROR ((LM_ERROR,
               ACE_TEXT ("ERROR: Unable to find ORB: %s. Invalid shared ")
               ACE_TEXT ("configuration argument \"%s\"\n"),
                 orbid.c_str (), arg));
@@ -1183,7 +1183,7 @@ namespace TAO
 
       // Unknown value
       if (TAO_debug_level > 0)
-            ACE_ERROR ((LM_ERROR,
+            TAOLIB_ERROR ((LM_ERROR,
                         ACE_TEXT ("ERROR: -ORBGestalt unknown value <%s>\n"),
                         orbconfig_string.c_str()));
 
@@ -1324,7 +1324,7 @@ CORBA::ORB_init (int &argc, ACE_TCHAR *argv[], const char *orbid)
   // Check for errors returned from <TAO_Internal::open_services>.
   if (result != 0 && errno != ENOENT)
     {
-      ACE_ERROR ((LM_ERROR,
+      TAOLIB_ERROR ((LM_ERROR,
                   ACE_TEXT ("TAO (%P|%t) %p\n"),
                   ACE_TEXT ("Unable to initialize the ")
                   ACE_TEXT ("Service Configurator")));
@@ -1365,7 +1365,7 @@ CORBA::ORB_init (int &argc, ACE_TCHAR *argv[], const char *orbid)
 
   if (TAO_debug_level > 2)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT("TAO (%P|%t) - Created new ORB <%s>\n"),
                   orbid_string.c_str ()));
     }
@@ -1485,7 +1485,7 @@ CORBA::ORB::object_to_string (CORBA::Object_ptr obj)
       if (CORBA::is_nil (obj) || obj->_stubobj () == 0)
         {
           if (TAO_debug_level > 0)
-            ACE_ERROR ((LM_ERROR,
+            TAOLIB_ERROR ((LM_ERROR,
                         ACE_TEXT ("Nil object reference or TAO_Stub ")
                         ACE_TEXT ("pointer is zero when converting\n")
                         ACE_TEXT ("object reference to URL IOR.\n")));
@@ -1508,7 +1508,7 @@ CORBA::ORB::object_to_string (CORBA::Object_ptr obj)
         }
 
       if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_ERROR,
+        TAOLIB_ERROR ((LM_ERROR,
                     ACE_TEXT ("TAO (%P|%t) - Cannot stringify given ")
                     ACE_TEXT ("object. No or only unknown profiles.\n")));
 

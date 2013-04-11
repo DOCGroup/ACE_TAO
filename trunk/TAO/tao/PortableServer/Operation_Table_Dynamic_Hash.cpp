@@ -46,7 +46,7 @@ TAO_Dynamic_Hash_OpTable::TAO_Dynamic_Hash_OpTable (
 
       // @@ (ASG): what happens if bind fails ???
       if (this->bind (db[i].opname, s) == -1)
-        ACE_ERROR ((LM_ERROR,
+        TAOLIB_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) %p\n"),
                     ACE_TEXT ("bind failed")));
     }

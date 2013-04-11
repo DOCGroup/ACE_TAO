@@ -64,7 +64,7 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
           ACE_ASSERT (lane->pool ().id () ==
                       thread_pool->id ());
 
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("Using thread pool with lane ")
                       ACE_TEXT ("(%P|%t|%d|%d): original thread ")
                       ACE_TEXT ("CORBA/native priority %d/%d not changed\n"),
@@ -167,7 +167,7 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
                 throw ::CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2,
                                                 CORBA::COMPLETED_NO);
 
-              ACE_DEBUG ((LM_DEBUG,
+              TAOLIB_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("(%P|%t): %C processing using %C ")
                           ACE_TEXT ("original thread CORBA/native priority %d/%d ")
                           ACE_TEXT ("not changed\n"),
@@ -180,7 +180,7 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
     // current thread priority.  Therefore, print out a simpler message.
     #else /* ACE_HAS_THREADS */
 
-              ACE_DEBUG ((LM_DEBUG,
+              TAOLIB_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("(%P|%t): %C processing using %C ")
                           ACE_TEXT ("original thread CORBA/native priority ")
                           ACE_TEXT ("not changed\n"),
@@ -217,7 +217,7 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
                   CORBA::Short native_priority = 0;
                   tph->get_thread_native_priority (native_priority);
 
-                  ACE_DEBUG ((LM_DEBUG,
+                  TAOLIB_DEBUG ((LM_DEBUG,
                               ACE_TEXT ("%C processing using %C ")
                               ACE_TEXT ("(%P|%t): original thread CORBA/native priority %d/%d ")
                               ACE_TEXT ("temporarily changed to CORBA/native priority %d/%d\n"),
@@ -234,7 +234,7 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
             {
               if (TAO_debug_level > 0)
                 {
-                  ACE_DEBUG ((LM_DEBUG,
+                  TAOLIB_DEBUG ((LM_DEBUG,
                               ACE_TEXT ("%C processing using %C ")
                               ACE_TEXT ("(%P|%t): original thread CORBA/native priority %d/%d ")
                               ACE_TEXT ("is the same as the target priority\n"),

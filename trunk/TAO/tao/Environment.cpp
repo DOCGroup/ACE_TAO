@@ -177,7 +177,7 @@ CORBA::Environment::print_exception (const char *info,
     {
       const char *id = this->exception_->_rep_id ();
 
-      ACE_ERROR ((LM_ERROR,
+      TAOLIB_ERROR ((LM_ERROR,
                   ACE_TEXT ("TAO: (%P|%t) EXCEPTION, %C\n"),
                   info));
 
@@ -190,12 +190,12 @@ CORBA::Environment::print_exception (const char *info,
         // @@ we can use the exception's typecode to dump all the data
         // held within it ...
 
-        ACE_ERROR ((LM_ERROR,
+        TAOLIB_ERROR ((LM_ERROR,
                     ACE_TEXT ("TAO: (%P|%t) user exception, ID '%C'\n"),
                     id));
     }
   else
-    ACE_ERROR ((LM_ERROR,
+    TAOLIB_ERROR ((LM_ERROR,
                 ACE_TEXT ("TAO: (%P|%t) no exception, %C\n"), info));
 }
 
