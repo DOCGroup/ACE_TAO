@@ -205,12 +205,6 @@ TAO_Transport::sent_byte_count (void) const
   return this->sent_byte_count_;
 }
 
-ACE_INLINE void
-TAO_Transport::set_flush_in_post_open (void)
-{
-  this->flush_in_post_open_ = true;
-}
-
 #if TAO_HAS_TRANSPORT_CURRENT == 1
 
 ACE_INLINE TAO::Transport::Stats*
