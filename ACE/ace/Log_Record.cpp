@@ -8,6 +8,7 @@
 #include "ace/CDR_Stream.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Truncate.h"
+#include "ace/Log_Category.h"
 
 #if !defined (__ACE_INLINE__)
 # include "ace/Log_Record.inl"
@@ -146,7 +147,8 @@ ACE_Log_Record::ACE_Log_Record (ACE_Log_Priority lp,
     usecs_ (0),
     pid_ (ACE_UINT32 (p)),
     msg_data_ (0),
-    msg_data_size_ (0)
+    msg_data_size_ (0),
+    category_(0)
 {
   // ACE_TRACE ("ACE_Log_Record::ACE_Log_Record");
   ACE_NEW_NORETURN (this->msg_data_, ACE_TCHAR[MAXLOGMSGLEN]);
@@ -166,7 +168,8 @@ ACE_Log_Record::ACE_Log_Record (ACE_Log_Priority lp,
     usecs_ ((ACE_UINT32) ts.usec ()),
     pid_ (ACE_UINT32 (p)),
     msg_data_ (0),
-    msg_data_size_ (0)
+    msg_data_size_ (0),
+    category_(0)
 {
   // ACE_TRACE ("ACE_Log_Record::ACE_Log_Record");
   ACE_NEW_NORETURN (this->msg_data_, ACE_TCHAR[MAXLOGMSGLEN]);
@@ -269,12 +272,20 @@ ACE_Log_Record::format_msg (const ACE_TCHAR host_name[],
   return 0;
 }
 
+inline bool
+log_priority_enabled(ACE_Log_Category_TSS* category, ACE_Log_Priority priority)
+{
+  if (category && !category->log_priority_enabled (priority))
+    return false;
+  return ACE_LOG_MSG->log_priority_enabled (priority);
+}
+
 int
 ACE_Log_Record::print (const ACE_TCHAR host_name[],
                        u_long verbose_flag,
                        FILE *fp)
 {
-  if (ACE_LOG_MSG->log_priority_enabled (ACE_Log_Priority (this->type_)))
+  if ( log_priority_enabled(this->category(), ACE_Log_Priority (this->type_)) )
     {
       ACE_TCHAR *verbose_msg = 0;
       ACE_NEW_RETURN (verbose_msg, ACE_TCHAR[MAXVERBOSELOGMSGLEN], -1);
@@ -374,7 +385,7 @@ ACE_Log_Record::print (const ACE_TCHAR host_name[],
                        u_long verbose_flag,
                        ACE_OSTREAM_TYPE &s)
 {
-  if (ACE_LOG_MSG->log_priority_enabled (ACE_Log_Priority (this->type_)))
+  if ( log_priority_enabled(this->category(), ACE_Log_Priority (this->type_)) )
     {
       ACE_TCHAR* verbose_msg = 0;
       ACE_NEW_RETURN (verbose_msg, ACE_TCHAR[MAXVERBOSELOGMSGLEN], -1);

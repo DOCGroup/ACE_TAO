@@ -971,7 +971,8 @@ ACE_Log_Msg::log (ACE_Log_Priority log_priority,
 ssize_t
 ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                   ACE_Log_Priority log_priority,
-                  va_list argp)
+                  va_list argp,
+                  ACE_Log_Category_TSS* category)
 {
   ACE_TRACE ("ACE_Log_Msg::log");
   // External decls.
@@ -1008,6 +1009,8 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
   ACE_Log_Record log_record (log_priority,
                              ACE_OS::gettimeofday (),
                              this->getpid ());
+
+  log_record.category(category);
 
   // bp is pointer to where to put next part of logged message.
   // bspace is the number of characters remaining in msg_.
@@ -2292,61 +2295,73 @@ int
 ACE_Log_Msg::log_hexdump (ACE_Log_Priority log_priority,
                           const char *buffer,
                           size_t size,
-                          const ACE_TCHAR *text)
+                          const ACE_TCHAR *text,
+                          ACE_Log_Category_TSS* category)
 {
   // Only print the message if <priority_mask_> hasn't been reset to
   // exclude this logging priority.
   if (this->log_priority_enabled (log_priority) == 0)
     return 0;
 
-  ACE_TCHAR* buf = 0;
-  size_t const buf_sz =
-    ACE_Log_Record::MAXLOGMSGLEN - ACE_Log_Record::VERBOSE_LEN - 58;
-  ACE_NEW_RETURN (buf, ACE_TCHAR[buf_sz], -1);
+  size_t text_sz = 0;
+  if (text)
+    text_sz = ACE_OS::strlen (text);
 
-  ACE_TCHAR *msg_buf = 0;
-  const size_t text_sz = text ? ACE_OS::strlen(text) : 0;
-  ACE_NEW_RETURN (msg_buf,
-                  ACE_TCHAR[text_sz + 58],
-                 -1);
+  size_t total_buffer_size =  ACE_Log_Record::MAXLOGMSGLEN - ACE_Log_Record::VERBOSE_LEN +text_sz;
 
-  buf[0] = 0; // in case size = 0
+  ACE_Array<ACE_TCHAR> msg_buf(total_buffer_size);
+  if (msg_buf.size() == 0)
+    return -1;
 
-  size_t const len = ACE::format_hexdump
-    (buffer, size, buf, buf_sz / sizeof (ACE_TCHAR) - text_sz);
+  ACE_TCHAR* end_ptr = &msg_buf[0] + total_buffer_size;
+  ACE_TCHAR* wr_ptr = &msg_buf[0];
+  msg_buf[0] = 0; // in case size = 0
 
-  int sz = 0;
 
   if (text)
-    sz = ACE_OS::sprintf (msg_buf,
+    wr_ptr += ACE_OS::snprintf (wr_ptr,
+                                  end_ptr - wr_ptr,
 #if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-                          ACE_TEXT ("%ls - "),
+                                  ACE_TEXT ("%ls - "),
 #else
-                          ACE_TEXT ("%s - "),
+                                  ACE_TEXT ("%s - "),
 #endif
-                          text);
+                                  text);
 
-  sz += ACE_OS::sprintf (msg_buf + sz,
-                         ACE_TEXT ("HEXDUMP ")
-                         ACE_SIZE_T_FORMAT_SPECIFIER
-                         ACE_TEXT (" bytes"),
-                         size);
+  wr_ptr += ACE_OS::snprintf (wr_ptr,
+                            end_ptr - wr_ptr,
+                            ACE_TEXT ("HEXDUMP ")
+                            ACE_SIZE_T_FORMAT_SPECIFIER
+                            ACE_TEXT (" bytes"),
+                            size);
 
-  if (len < size)
-    ACE_OS::sprintf (msg_buf + sz,
-                     ACE_TEXT (" (showing first ")
-                     ACE_SIZE_T_FORMAT_SPECIFIER
-                     ACE_TEXT (" bytes)"),
-                     len);
+  // estimate how many bytes can be output
+  // We can fit 16 bytes output in text mode per line, 4 chars per byte;
+  // i.e. we need 68 bytes of buffer per line.
+  size_t hexdump_size = (end_ptr - wr_ptr -58)/68*16;
+
+  if (hexdump_size < size) {
+    wr_ptr += ACE_OS::snprintf (wr_ptr,
+                        end_ptr - wr_ptr,
+                        ACE_TEXT (" (showing first ")
+                        ACE_SIZE_T_FORMAT_SPECIFIER
+                        ACE_TEXT (" bytes)"),
+                        hexdump_size);
+    size = hexdump_size;
+  }
+
+  *wr_ptr++ = '\n';
+  ACE::format_hexdump(buffer, size, wr_ptr, end_ptr - wr_ptr);
 
   // Now print out the formatted buffer.
-  this->log (log_priority,
-             ACE_TEXT ("%s\n%s"),
-             msg_buf,
-             buf);
+  ACE_Log_Record log_record (log_priority,
+                             ACE_OS::gettimeofday (),
+                             this->getpid ());
 
-  delete [] msg_buf;
-  delete [] buf;
+  log_record.category(category);
+  log_record.msg_data(&msg_buf[0]);
+
+  this->log (log_record, false);
   return 0;
 }
 

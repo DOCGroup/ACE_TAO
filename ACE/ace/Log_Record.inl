@@ -24,6 +24,21 @@ ACE_Log_Record::type (void) const
 }
 
 ACE_INLINE void
+ACE_Log_Record::category (ACE_Log_Category_TSS* t)
+{
+  ACE_TRACE ("ACE_Log_Record::category");
+  this->category_ = t;
+}
+
+
+ACE_INLINE ACE_Log_Category_TSS*
+ACE_Log_Record::category (void) const
+{
+  ACE_TRACE ("ACE_Log_Record::type");
+  return this->category_;
+}
+
+ACE_INLINE void
 ACE_Log_Record::type (ACE_UINT32 t)
 {
   ACE_TRACE ("ACE_Log_Record::type");
