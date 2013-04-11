@@ -1,3 +1,8 @@
+Thu Apr 11 19:47:49 UTC 2013  Huang-Ming Huang  <huangh@ociweb.com>
+
+        * tao/debug.h:
+        Fixed TAOLIB_ERROR_RETURN()  control reaches end of non-void function warning.
+
 Thu Apr 11 18:03:24 UTC 2013  Huang-Ming Huang  <huangh@ociweb.com>
 
         * tao/Acceptor_Impl.cpp:
