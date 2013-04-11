@@ -92,6 +92,7 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     Lib_Find.cpp
     Local_Memory_Pool.cpp
     Lock.cpp
+    Log_Category.cpp
     Log_Msg.cpp
     Log_Msg_Backend.cpp
     Log_Msg_Callback.cpp
