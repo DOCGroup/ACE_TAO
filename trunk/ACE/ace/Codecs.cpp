@@ -1,7 +1,7 @@
 // $Id$
 
 #include "ace/Codecs.h"
-#include "ace/Log_Msg.h"
+#include "ace/Log_Category.h"
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_ctype.h"
 
@@ -179,7 +179,7 @@ ACE_Base64::decode (const ACE_Byte* input, size_t* output_len)
     {
       if (char_count)
         {
-          ACE_ERROR ((LM_ERROR,
+          ACELIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("Decoding incomplete: atleast %d bits truncated\n"),
                       (4 - char_count) * 6));
           ++errors;
@@ -190,7 +190,7 @@ ACE_Base64::decode (const ACE_Byte* input, size_t* output_len)
       switch (char_count)
         {
         case 1:
-          ACE_ERROR ((LM_ERROR,
+          ACELIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("Decoding incomplete: atleast 2 bits missing\n")));
           ++errors;
           break;

@@ -2,7 +2,7 @@
 //
 // $Id$
 
-#include "ace/Log_Msg.h"
+#include "ace/Log_Category.h"
 
 // AIX defines bzero() in this odd file... used by FD_ZERO
 #if defined (ACE_HAS_STRINGS)

@@ -110,7 +110,7 @@ ACE_Naming_Context::open (Context_Scope_Type scope_in, int lite)
     }
 
   if (ACE_LOG_MSG->op_status () != 0 || this->name_space_ == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ACELIB_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("NAME_SPACE::NAME_SPACE\n")),
                       -1);
   return 0;
@@ -162,7 +162,7 @@ ACE_Naming_Context::ACE_Naming_Context (Context_Scope_Type scope_in,
 
   // Initialize.
   if (this->open (scope_in, lite) == -1)
-    ACE_ERROR ((LM_ERROR,
+    ACELIB_ERROR ((LM_ERROR,
                 ACE_TEXT ("%p\n"),
                 ACE_TEXT ("ACE_Naming_Context::ACE_Naming_Context")));
 }
@@ -399,7 +399,7 @@ int
 ACE_Naming_Context::init (int argc, ACE_TCHAR *argv[])
 {
   if (ACE::debug ())
-    ACE_DEBUG ((LM_DEBUG,
+    ACELIB_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("ACE_Naming_Context::init\n")));
   this->name_options_->parse_args (argc, argv);
   return this->open (this->name_options_->context ());
@@ -409,7 +409,7 @@ int
 ACE_Naming_Context::fini (void)
 {
   if (ACE::debug ())
-    ACE_DEBUG ((LM_DEBUG,
+    ACELIB_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("ACE_Naming_Context::fini\n")));
   this->close_down ();
   return 0;
@@ -435,7 +435,7 @@ ACE_Name_Options::ACE_Name_Options (void)
 
   if (ACE::get_temp_dir (this->namespace_dir_, MAXPATHLEN) == -1)
     {
-      ACE_ERROR ((LM_ERROR,
+      ACELIB_ERROR ((LM_ERROR,
                   ACE_TEXT ("Temporary path too long, ")
                   ACE_TEXT ("defaulting to current directory\n")));
       ACE_OS::strcpy (this->namespace_dir_, ACE_TEXT ("."));

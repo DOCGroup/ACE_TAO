@@ -1,7 +1,7 @@
 // $Id$
 
 #include "ace/Signal.h"
-// #include "ace/Log_Msg.h"
+// #include "ace/Log_Category.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Signal.inl"

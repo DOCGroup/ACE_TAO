@@ -3,7 +3,7 @@
 #include "ace/SOCK_SEQPACK_Association.h"
 
 #include "ace/Auto_Ptr.h"
-#include "ace/Log_Msg.h"
+#include "ace/Log_Category.h"
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_string.h"
 

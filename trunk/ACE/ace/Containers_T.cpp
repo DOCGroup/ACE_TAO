@@ -3,7 +3,7 @@
 #ifndef ACE_CONTAINERS_T_CPP
 #define ACE_CONTAINERS_T_CPP
 
-#include "ace/Log_Msg.h"
+#include "ace/Log_Category.h"
 #include "ace/Malloc_Base.h"
 #include "ace/OS_Memory.h"
 
@@ -442,9 +442,9 @@ ACE_Double_Linked_List_Iterator_Base<T>::do_retreat (void)
 template <class T> void
 ACE_Double_Linked_List_Iterator_Base<T>::dump_i (void) const
 {
-  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("current_ = %x"), this->current_));
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("current_ = %x"), this->current_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
 //--------------------------------------------------
@@ -1622,10 +1622,10 @@ ACE_Ordered_MultiSet<T>::dump (void) const
 #if defined (ACE_HAS_DUMP)
   //  ACE_TRACE ("ACE_Ordered_MultiSet<T>::dump");
   //
-  //  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  //  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nhead_ = %u"), this->head_));
-  //  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nhead_->next_ = %u"), this->head_->next_));
-  //  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\ncur_size_ = %d\n"), this->cur_size_));
+  //  ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  //  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nhead_ = %u"), this->head_));
+  //  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nhead_->next_ = %u"), this->head_->next_));
+  //  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\ncur_size_ = %d\n"), this->cur_size_));
   //
   //  T *item = 0;
   //  size_t count = 1;
@@ -1633,9 +1633,9 @@ ACE_Ordered_MultiSet<T>::dump (void) const
   //  for (ACE_Ordered_MultiSet_Iterator<T> iter (*(ACE_Ordered_MultiSet<T> *) this);
   //       iter.next (item) != 0;
   //       iter.advance ())
-  //    ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("count = %d\n"), count++));
+  //    ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("count = %d\n"), count++));
   //
-  //  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+  //  ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
 

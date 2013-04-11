@@ -6,7 +6,7 @@
 #include "ace/Event_Base.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Log_Msg.h"
+#include "ace/Log_Category.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -68,8 +68,8 @@ void
 ACE_Event_Base::dump (void) const
 {
 #if defined (ACE_HAS_DUMP)
-  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
 

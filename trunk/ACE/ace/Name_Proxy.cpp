@@ -1,7 +1,7 @@
 // $Id$
 
 #include "ace/Name_Proxy.h"
-#include "ace/Log_Msg.h"
+#include "ace/Log_Category.h"
 #include "ace/os_include/arpa/os_inet.h"
 
 
@@ -14,11 +14,11 @@ ACE_Name_Proxy::dump (void) const
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Name_Proxy::dump");
 
-  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   this->connector_.dump ();
   this->peer_.dump ();
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("reactor_ = %x"), this->reactor_));
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("reactor_ = %x"), this->reactor_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
 
@@ -58,7 +58,7 @@ ACE_Name_Proxy::ACE_Name_Proxy (
   ACE_TRACE ("ACE_Name_Proxy::ACE_Name_Proxy");
   if (this->open (remote_addr, options) == -1
       && options[ACE_Synch_Options::USE_TIMEOUT] && errno != EWOULDBLOCK)
-    ACE_ERROR ((LM_ERROR,
+    ACELIB_ERROR ((LM_ERROR,
                 ACE_TEXT ("%p\n"),
                 ACE_TEXT ("ACE_Name_Proxy::ACE_Name_Proxy")));
 }
@@ -80,7 +80,7 @@ ACE_Name_Proxy::request_reply (ACE_Name_Request &request)
   ssize_t length = request.encode (buffer);
 
   if (length == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ACELIB_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("encode failed")),
                       -1);
@@ -88,7 +88,7 @@ ACE_Name_Proxy::request_reply (ACE_Name_Request &request)
   // Transmit request via a blocking send.
 
   if (this->peer_.send_n (buffer, length) != length)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ACELIB_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("send_n failed")),
                       -1);
@@ -100,12 +100,12 @@ ACE_Name_Proxy::request_reply (ACE_Name_Request &request)
 
       if (this->peer_.recv_n (&reply,
                               sizeof reply) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
+        ACELIB_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("%p\n"),
                            ACE_TEXT ("recv failed")),
                           -1);
       else if (reply.decode () == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
+        ACELIB_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("%p\n"),
                            ACE_TEXT ("decode failed")),
                           -1);
@@ -122,7 +122,7 @@ ACE_Name_Proxy::send_request (ACE_Name_Request &request)
   ssize_t length = request.encode (buffer);
 
   if (length == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ACELIB_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("encode failed")),
                       -1);
@@ -130,7 +130,7 @@ ACE_Name_Proxy::send_request (ACE_Name_Request &request)
   // Transmit request via a blocking send.
 
   else if (this->peer_.send_n (buffer, length) != length)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ACELIB_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("send_n failed")),
                       -1);
@@ -150,10 +150,10 @@ ACE_Name_Proxy::recv_reply (ACE_Name_Request &reply)
     {
     case -1:
       // FALLTHROUGH
-      ACE_DEBUG ((LM_DEBUG,
+      ACELIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("****************** recv_reply returned -1\n")));
     default:
-      ACE_ERROR ((LM_ERROR,
+      ACELIB_ERROR ((LM_ERROR,
                   ACE_TEXT ("%p got %d bytes, expected %d bytes\n"),
                   ACE_TEXT ("recv failed"),
                   n,
@@ -177,7 +177,7 @@ ACE_Name_Proxy::recv_reply (ACE_Name_Request &reply)
         // Subtract off the size of the part we skipped over...
         if (n != ssize_t (length - sizeof (ACE_UINT32)))
           {
-            ACE_ERROR ((LM_ERROR,
+            ACELIB_ERROR ((LM_ERROR,
                         ACE_TEXT ("%p expected %d, got %d\n"),
                         ACE_TEXT ("invalid length"),
                         length,
@@ -188,7 +188,7 @@ ACE_Name_Proxy::recv_reply (ACE_Name_Request &reply)
         // Decode the request into host byte order.
         if (reply.decode () == -1)
           {
-            ACE_ERROR ((LM_ERROR,
+            ACELIB_ERROR ((LM_ERROR,
                         ACE_TEXT ("%p\n"),
                         ACE_TEXT ("decode failed")));
             return -1;

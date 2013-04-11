@@ -23,7 +23,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Unbounded_Queue.h"
-#include "ace/Log_Msg.h"
+#include "ace/Log_Category.h"
 #include "ace/Basic_Stats.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

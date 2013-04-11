@@ -31,7 +31,7 @@ ACE_System_Time::ACE_System_Time (const ACE_TCHAR *poolname)
                                       MAXPATHLEN - 17) == -1)
         // -17 for ace-malloc-XXXXXX
         {
-          ACE_ERROR ((LM_ERROR,
+          ACELIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("Temporary path too long, ")
                       ACE_TEXT ("defaulting to current directory\n")));
           this->poolname_[0] = 0;

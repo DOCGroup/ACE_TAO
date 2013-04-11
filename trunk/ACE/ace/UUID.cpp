@@ -7,7 +7,7 @@
 #include "ace/UUID.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Log_Msg.h"
+#include "ace/Log_Category.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_sys_time.h"
@@ -131,7 +131,7 @@ namespace ACE_Utils
   {
     if (uuid_string.length () < NIL_UUID.to_string ()->length ())
       {
-        ACE_ERROR ((LM_ERROR,
+        ACELIB_ERROR ((LM_ERROR,
                     "%N ACE_UUID::from_string_i - "
                     "IllegalArgument (incorrect string length)\n"));
         return;
@@ -182,7 +182,7 @@ namespace ACE_Utils
 
         if (nScanned != 11)
           {
-            ACE_DEBUG ((LM_DEBUG,
+            ACELIB_DEBUG ((LM_DEBUG,
                         "UUID::from_string_i - "
                         "IllegalArgument (invalid string representation)\n"));
             return;
@@ -228,7 +228,7 @@ namespace ACE_Utils
 
         if (nScanned != 12)
           {
-            ACE_DEBUG ((LM_DEBUG,
+            ACELIB_DEBUG ((LM_DEBUG,
                         "ACE_UUID::from_string_i - "
                         "IllegalArgument (invalid string representation)\n"));
             return;
@@ -248,7 +248,7 @@ namespace ACE_Utils
     if ((this->uuid_.clock_seq_hi_and_reserved_ & 0xc0) != 0x80 &&
         (this->uuid_.clock_seq_hi_and_reserved_ & 0xc0) != 0xc0)
       {
-        ACE_DEBUG ((LM_DEBUG,
+        ACELIB_DEBUG ((LM_DEBUG,
                     "ACE_UUID::from_string_i - "
                     "IllegalArgument (unsupported variant)\n"));
         return;
@@ -261,7 +261,7 @@ namespace ACE_Utils
         (V1 & 0xF000) != 0x3000 &&
         (V1 & 0xF000) != 0x4000)
       {
-        ACE_DEBUG ((LM_DEBUG,
+        ACELIB_DEBUG ((LM_DEBUG,
                     "ACE_UUID::from_string_i - "
                     "IllegalArgument (unsupported version)\n"));
         return;
@@ -271,7 +271,7 @@ namespace ACE_Utils
       {
         if (uuid_string.length () == NIL_UUID.to_string ()->length ())
           {
-            ACE_DEBUG ((LM_DEBUG,
+            ACELIB_DEBUG ((LM_DEBUG,
                       "ACE_UUID::from_string_i - "
                         "IllegalArgument (Missing Thread and Process Id)\n"));
             return;
@@ -279,7 +279,7 @@ namespace ACE_Utils
         ACE_CString thr_pid_str (thr_pid_buf);
         ssize_t pos = static_cast<ssize_t> (thr_pid_str.find ('-'));
         if (pos == -1)
-          ACE_DEBUG ((LM_DEBUG,
+          ACELIB_DEBUG ((LM_DEBUG,
                       "ACE_UUID::from_string_i - "
                       "IllegalArgument (Thread and Process Id format incorrect)\n"));
 

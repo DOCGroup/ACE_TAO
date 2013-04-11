@@ -20,14 +20,14 @@ ACE_Tokens::dump (void) const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Tokens::dump");
-  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("ACE_Tokens::dump:\n")
+  ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("ACE_Tokens::dump:\n")
                         ACE_TEXT (" reference_cont_ = %d\n")
                         ACE_TEXT (" token_name_ = %s\n"),
                         reference_count_, token_name_));
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("waiters_\n")));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("waiters_\n")));
   this->waiters_.dump ();
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
 
@@ -78,8 +78,8 @@ ACE_TPQ_Entry::dump (void) const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_TPQ_Entry::dump");
-  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,
+  ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  ACELIB_DEBUG ((LM_DEBUG,
               ACE_TEXT ("ACE_TPQ_Entry::dump:\n")
               ACE_TEXT (" nesting_level_ = %d\n")
               ACE_TEXT (" client_id_ = %s\n"),
@@ -88,12 +88,12 @@ ACE_TPQ_Entry::dump (void) const
 
   if (next_ != 0)
     {
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("next:.\n")));
+      ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("next:.\n")));
       next_->dump ();
     }
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ACE_TPQ_Entry::dump end.\n")));
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("ACE_TPQ_Entry::dump end.\n")));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
 
@@ -186,13 +186,13 @@ ACE_TSS_TPQ_Entry::dump (void) const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_TSS_TPQ_Entry::dump");
-  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("ACE_TSS_TPQ_Entry::dump:\n")
+  ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("ACE_TSS_TPQ_Entry::dump:\n")
                         ACE_TEXT (" client_id_ = %s\n"),
                         client_id_ == 0 ? ACE_TEXT ("0") : client_id_));
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("base:\n")));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("base:\n")));
   ACE_TPQ_ENTRY::dump ();
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
 
@@ -270,12 +270,12 @@ ACE_TPQ_Iterator::dump (void) const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_TPQ_Iterator::dump");
-  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("ACE_TPQ_Iterator::dump:\n")
+  ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("ACE_TPQ_Iterator::dump:\n")
               ACE_TEXT (" current_ = %d\n"),
               (long) this->current_));
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("head_ and tail_\n")));
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("head_ and tail_\n")));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
 
@@ -284,16 +284,16 @@ ACE_Token_Proxy_Queue::dump (void) const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Token_Proxy_Queue::dump");
-  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ACE_Token_Proxy_Queue::dump:\n")
+  ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("ACE_Token_Proxy_Queue::dump:\n")
                         ACE_TEXT (" size_ = %d\n"),
                         size_));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("head_ and tail_\n")));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("head_ and tail_\n")));
   if (this->head_ != 0)
     this->head_->dump ();
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ACE_Token_Proxy_Queue::dump end.\n")));
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("ACE_Token_Proxy_Queue::dump end.\n")));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
 
@@ -374,7 +374,7 @@ ACE_Token_Proxy_Queue::dequeue (void)
   --this->size_;
 
   if (this->head_ == 0 && this->size_ != 0)
-    ACE_ERROR ((LM_ERROR,
+    ACELIB_ERROR ((LM_ERROR,
                 ACE_TEXT ("incorrect size = %d\n"),
                 this->size_));
 }
@@ -448,14 +448,14 @@ ACE_Mutex_Token::dump (void) const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Mutex_Token::dump");
-  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("ACE_Mutex_Token::dump:\n")));
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("lock_\n")));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("ACE_Mutex_Token::dump:\n")));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("lock_\n")));
   lock_.dump ();
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("base:\n")));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("base:\n")));
   ACE_Tokens::dump ();
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("ACE_Mutex_Token::dump end.\n")));
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("ACE_Mutex_Token::dump end.\n")));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
 
@@ -703,15 +703,15 @@ ACE_RW_Token::dump (void) const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_RW_Token::dump");
-  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("ACE_RW_Token::dump:\n")
+  ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("ACE_RW_Token::dump:\n")
                         ACE_TEXT ("num_writers_ = %d\n"), num_writers_));
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("lock_\n")));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("lock_\n")));
   this->lock_.dump ();
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("base:\n")));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("base:\n")));
   ACE_Tokens::dump ();
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("ACE_RW_Token::dump end.\n")));
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("ACE_RW_Token::dump end.\n")));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
 
@@ -1085,20 +1085,20 @@ ACE_Token_Proxy::dump (void) const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Token_Proxy::dump");
-  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("ACE_Token_Proxy::dump:\n")
+  ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("ACE_Token_Proxy::dump:\n")
                         ACE_TEXT (" type = %d\n")
                         ACE_TEXT (" ignore_deadlock_ = %d\n")
                         ACE_TEXT (" debug_ = %d\n"),
                         (int) this->type (), ignore_deadlock_, debug_));
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("mutex_, and waiter_\n")));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("mutex_, and waiter_\n")));
 
   if (this->token_ != 0)
     this->token_->dump ();
 
   this->waiter_.dump ();
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ACE_Token_Proxy::dump end.\n")));
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("ACE_Token_Proxy::dump end.\n")));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
 
@@ -1203,7 +1203,7 @@ ACE_Token_Proxy::open (const ACE_TCHAR *token_name,
   if (this->token_ == 0)
     {
       errno = ENOMEM;
-      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Can't allocate mutex")), -1);
+      ACELIB_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Can't allocate mutex")), -1);
     }
 
   return 0;
@@ -1218,7 +1218,7 @@ ACE_Token_Proxy::acquire (int notify,
   if (this->token_ == 0)
     {
       errno = ENOENT;
-      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Not open.\n")), -1);
+      ACELIB_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Not open.\n")), -1);
     }
 
   // Make sure no one calls our token_acquired until we have a chance
@@ -1247,7 +1247,7 @@ ACE_Token_Proxy::acquire (int notify,
 
         case EWOULDBLOCK :
           if (this->debug_)
-            ACE_DEBUG ((LM_DEBUG,
+            ACELIB_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("(%t) waiting for %s, owner is %s, ")
                         ACE_TEXT ("total waiters == %d\n"),
                         this->name (),
@@ -1268,7 +1268,7 @@ ACE_Token_Proxy::acquire (int notify,
 
         default :
           waiter_->cond_var_.mutex ().release ();
-          ACE_ERROR_RETURN ((LM_ERROR,
+          ACELIB_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("%p\n"),
                              ACE_TEXT ("Token Proxy acquire.")),
                             -1);
@@ -1278,7 +1278,7 @@ ACE_Token_Proxy::acquire (int notify,
     // we have the token
     {
       if (debug_)
-        ACE_DEBUG ((LM_DEBUG,
+        ACELIB_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("(%t) acquired %s\n"),
                     this->name ()));
       waiter_->cond_var_.mutex ().release ();
@@ -1294,7 +1294,7 @@ ACE_Token_Proxy::tryacquire (void (*sleep_hook)(void *))
   if (this->token_ == 0)
     {
       errno = ENOENT;
-      ACE_ERROR_RETURN ((LM_ERROR,
+      ACELIB_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("Not open.\n")),
                         -1);
     }
@@ -1312,7 +1312,7 @@ ACE_Token_Proxy::renew (int requeue_position,
   if (this->token_ == 0)
     {
       errno = ENOENT;
-      ACE_ERROR_RETURN ((LM_ERROR,
+      ACELIB_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("Not open.\n")),
                         -1);
     }
@@ -1325,11 +1325,11 @@ ACE_Token_Proxy::renew (int requeue_position,
     {
       // check for error
       if (errno != EWOULDBLOCK)
-        ACE_ERROR_RETURN ((LM_ERROR,
+        ACELIB_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("%p renew failed\n"), ACE_TEXT ("ACE_Token_Proxy")), -1);
 
       if (this->debug_)
-        ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%t) renew blocking for %s, owner is %s\n"),
+        ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%t) renew blocking for %s, owner is %s\n"),
                     this->name (),
                     token_->owner_id ()));
 
@@ -1340,7 +1340,7 @@ ACE_Token_Proxy::renew (int requeue_position,
     // we have the token
     {
       if (this->debug_)
-        ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%t) renewed %s\n"),
+        ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%t) renewed %s\n"),
                     this->name ()));
       waiter_->cond_var_.mutex ().release ();
       return 0;
@@ -1375,12 +1375,12 @@ ACE_Token_Proxy::handle_options (ACE_Synch_Options &options,
           // We come here if a timeout occurs or some serious
           // ACE_Condition object error.
           cv.mutex ().release ();
-          ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("condition variable wait")
+          ACELIB_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("condition variable wait")
                              ACE_TEXT (" bombed.")), -1);
         }
 
       if (this->debug_)
-        ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%t) unblocking %s.\n"),
+        ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%t) unblocking %s.\n"),
                     this->client_id ()));
       cv.mutex ().release ();
       return 0;       // operation succeeded
@@ -1396,7 +1396,7 @@ ACE_Token_Proxy::release (ACE_Synch_Options &)
     {
       errno = ENOENT;
       if (debug_)
-        ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("Must open before releasing.\n")));
+        ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("Must open before releasing.\n")));
       ACE_RETURN (-1);
     }
 
@@ -1405,13 +1405,13 @@ ACE_Token_Proxy::release (ACE_Synch_Options &)
       // Release failed.
       this->token_->remove (this->waiter_);
       if (debug_)
-        ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%t) %p.\n"), ACE_TEXT ("release failed")));
+        ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%t) %p.\n"), ACE_TEXT ("release failed")));
       return -1;
     }
   else
     {
       if (this->debug_)
-        ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%t) released %s, owner is %s\n"),
+        ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%t) released %s, owner is %s\n"),
                     this->name (),
                     token_->owner_id ()));
 
@@ -1510,11 +1510,11 @@ ACE_Token_Name::dump (void) const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Token_Name::dump");
-  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("ACE_Token_Name::dump:\n")
+  ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("ACE_Token_Name::dump:\n")
                         ACE_TEXT (" token_name_ = %s\n"),
               token_name_ == 0 ? ACE_TEXT ("no name") : token_name_));
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
 

@@ -27,7 +27,7 @@
 #include "ace/Containers.h"
 #include "ace/Free_List.h"
 #include "ace/Singleton.h"
-#include "ace/Log_Msg.h"
+#include "ace/Log_Category.h"
 #include "ace/Synch_Traits.h"
 #include "ace/Basic_Types.h"
 

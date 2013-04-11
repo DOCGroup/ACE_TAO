@@ -344,7 +344,7 @@ ACE_OS::fork_exec (ACE_TCHAR *argv[])
           if (ACE_OS::execv (argv[0], argv) == -1)
             {
               // The OS layer should not print stuff out
-              // ACE_ERROR ((LM_ERROR,
+              // ACELIB_ERROR ((LM_ERROR,
               //             "%p Exec failed\n"));
 
               // If the execv fails, this child needs to exit.

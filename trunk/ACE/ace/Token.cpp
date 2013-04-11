@@ -11,7 +11,7 @@
 #if defined (ACE_HAS_THREADS)
 
 #include "ace/Thread.h"
-#include "ace/Log_Msg.h"
+#include "ace/Log_Category.h"
 
 #if defined (ACE_TOKEN_DEBUGGING)
 // FUZZ: disable check_for_streams_include
@@ -28,16 +28,16 @@ ACE_Token::dump (void) const
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Token::dump");
 
-  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nthread = %d"), ACE_Thread::self ()));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nthread = %d"), ACE_Thread::self ()));
   // @@ Is there a portable way to do this?
-  // ACE_DEBUG ((LM_DEBUG, "\nowner_ = %d", (long) this->owner_));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nowner_ addr = %x"), &this->owner_));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nwaiters_ = %d"), this->waiters_));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nin_use_ = %d"), this->in_use_));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nnesting level = %d"), this->nesting_level_));
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+  // ACELIB_DEBUG ((LM_DEBUG, "\nowner_ = %d", (long) this->owner_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nowner_ addr = %x"), &this->owner_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nwaiters_ = %d"), this->waiters_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nin_use_ = %d"), this->in_use_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nnesting level = %d"), this->nesting_level_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
 
@@ -293,7 +293,7 @@ ACE_Token::shared_acquire (void (*sleep_hook_func)(void *),
   queue->remove_entry (&my_entry);
 
 #if defined (ACE_TOKEN_DEBUGGING)
-  ACE_DEBUG ((LM_DEBUG, "(%t) ACE_Token::shared_acquire (UNBLOCKED)\n"));
+  ACELIB_DEBUG ((LM_DEBUG, "(%t) ACE_Token::shared_acquire (UNBLOCKED)\n"));
 #endif /* ACE_TOKEN_DEBUGGING */
 
   // If timeout occured
@@ -439,7 +439,7 @@ ACE_Token::renew (int requeue_position,
   this_threads_queue->remove_entry (&my_entry);
 
 #if defined (ACE_TOKEN_DEBUGGING)
-  ACE_DEBUG ((LM_DEBUG, "(%t) ACE_Token::renew (UNBLOCKED)\n"));
+  ACELIB_DEBUG ((LM_DEBUG, "(%t) ACE_Token::renew (UNBLOCKED)\n"));
 #endif /* ACE_TOKEN_DEBUGGING */
 
   // If timeout occured

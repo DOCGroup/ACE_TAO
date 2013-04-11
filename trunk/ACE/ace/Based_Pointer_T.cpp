@@ -5,7 +5,7 @@
 
 #include "ace/Based_Pointer_T.h"
 #include "ace/Based_Pointer_Repository.h"
-#include "ace/Log_Msg.h"
+#include "ace/Log_Category.h"
 
 #   define ACE_TRACEX(X) ACE_Trace ____ (ACE_TEXT (X), __LINE__, ACE_TEXT (__FILE__))
 
@@ -27,12 +27,12 @@ ACE_Based_Pointer_Basic<CONCRETE>::dump (void) const
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Based_Pointer_Basic<CONCRETE>::dump");
 
-  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\ntarget_ = %d\n"), this->target_));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("base_offset_ = %d\n"), this->base_offset_));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("computed pointer = %x\n"),
+  ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\ntarget_ = %d\n"), this->target_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("base_offset_ = %d\n"), this->base_offset_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("computed pointer = %x\n"),
               (CONCRETE *)(ACE_COMPUTE_BASED_POINTER (this))));
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
 

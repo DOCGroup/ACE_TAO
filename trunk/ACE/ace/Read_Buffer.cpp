@@ -8,7 +8,7 @@
 #include "ace/Read_Buffer.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Log_Msg.h"
+#include "ace/Log_Category.h"
 #include "ace/Malloc_Base.h"
 #include "ace/Service_Config.h"
 #include "ace/OS_NS_stdio.h"
@@ -20,12 +20,12 @@ ACE_Read_Buffer::dump (void) const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Read_Buffer::dump");
-  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("size_ = %d"), this->size_));
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\noccurrences_ = %d"), this->occurrences_));
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nstream_ = %x"), this->stream_));
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nallocator_ = %x"), this->allocator_));
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("size_ = %d"), this->size_));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\noccurrences_ = %d"), this->occurrences_));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nstream_ = %x"), this->stream_));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nallocator_ = %x"), this->allocator_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
 

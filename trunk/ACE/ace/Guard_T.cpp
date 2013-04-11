@@ -15,7 +15,7 @@
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_HAS_DUMP)
-# include "ace/Log_Msg.h"
+# include "ace/Log_Category.h"
 #endif /* ACE_HAS_DUMP */
 
 // ****************************************************************
@@ -30,10 +30,10 @@ ACE_Guard<ACE_LOCK>::dump (void) const
 #if defined (ACE_HAS_DUMP)
 // ACE_TRACE ("ACE_Guard<ACE_LOCK>::dump");
 
-  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("mutex_ = %x\n"), this->lock_));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("owner_ = %d\n"), this->owner_));
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("mutex_ = %x\n"), this->lock_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("owner_ = %d\n"), this->owner_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
 

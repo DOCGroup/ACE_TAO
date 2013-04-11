@@ -32,7 +32,7 @@ ACE_TLI_Connector::ACE_TLI_Connector (ACE_TLI_Stream &new_stream,
                      udata,
                      opt) == -1
       && timeout != 0 && !(errno == EWOULDBLOCK || errno == ETIME))
-    ACE_ERROR ((LM_ERROR,
+    ACELIB_ERROR ((LM_ERROR,
                 ACE_TEXT ("%p\n"),
                 ACE_TEXT ("ACE_TLI_Stream::ACE_TLI_Stream")));
 }

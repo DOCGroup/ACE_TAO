@@ -3,7 +3,7 @@
 #include "ace/LSOCK_CODgram.h"
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
-#include "ace/Log_Msg.h"
+#include "ace/Log_Category.h"
 
 
 
@@ -21,10 +21,10 @@ ACE_LSOCK_CODgram::dump (void) const
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_LSOCK_CODgram::dump");
 
-  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_SOCK_CODgram::dump ();
   ACE_LSOCK::dump ();
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
 
@@ -54,7 +54,7 @@ ACE_LSOCK_CODgram::ACE_LSOCK_CODgram (const ACE_Addr &remote,
   ACE_TRACE ("ACE_LSOCK_CODgram::ACE_LSOCK_CODgram");
   if (this->open (remote, local, protocol_family,
                   protocol) == -1)
-    ACE_ERROR ((LM_ERROR,  ACE_TEXT ("%p\n"),  ACE_TEXT ("ACE_LSOCK_CODgram")));
+    ACELIB_ERROR ((LM_ERROR,  ACE_TEXT ("%p\n"),  ACE_TEXT ("ACE_LSOCK_CODgram")));
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

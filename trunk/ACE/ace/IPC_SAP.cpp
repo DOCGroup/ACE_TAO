@@ -2,7 +2,7 @@
 
 #include "ace/IPC_SAP.h"
 
-#include "ace/Log_Msg.h"
+#include "ace/Log_Category.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/os_include/os_signal.h"
 #include "ace/OS_NS_errno.h"
@@ -24,10 +24,10 @@ ACE_IPC_SAP::dump (void) const
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_IPC_SAP::dump");
 
-  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("handle_ = %d"), this->handle_));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\npid_ = %d"), this->pid_));
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("handle_ = %d"), this->handle_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\npid_ = %d"), this->pid_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
 

@@ -41,7 +41,7 @@ namespace ACE
 
       if (this->monitor_ == 0)
         {
-          ACE_ERROR ((LM_ERROR, "Monitor_Query - monitor lookup failed\n"));
+          ACELIB_ERROR ((LM_ERROR, "Monitor_Query - monitor lookup failed\n"));
         }
     }
 
@@ -50,7 +50,7 @@ namespace ACE
     {
       if (this->monitor_ == 0)
         {
-          ACE_ERROR ((LM_ERROR, "Monitor_Query::query - null monitor\n"));
+          ACELIB_ERROR ((LM_ERROR, "Monitor_Query::query - null monitor\n"));
           return;
         }
 
