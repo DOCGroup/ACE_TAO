@@ -36,7 +36,7 @@ namespace TAO
             }
             case ::PortableServer::NON_RETAIN :
             {
-              ACE_ERROR ((LM_ERROR, "Incorrect type in RequestProcessingStrategyServantActivatorFactoryImpl"));
+              TAOLIB_ERROR ((LM_ERROR, "Incorrect type in RequestProcessingStrategyServantActivatorFactoryImpl"));
               break;
             }
           }
@@ -44,7 +44,7 @@ namespace TAO
         }
         default :
         {
-          ACE_ERROR ((LM_ERROR, "Incorrect type in RequestProcessingStrategyServantActivatorFactoryImpl"));
+          TAOLIB_ERROR ((LM_ERROR, "Incorrect type in RequestProcessingStrategyServantActivatorFactoryImpl"));
           break;
         }
       }

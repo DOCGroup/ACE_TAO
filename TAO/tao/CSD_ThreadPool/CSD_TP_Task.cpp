@@ -23,7 +23,7 @@ TAO::CSD::TP_Task::add_request(TP_Request* request)
 
   if (!this->accepting_requests_)
     {
-      ACE_DEBUG((LM_DEBUG,"(%P|%t) TP_Task::add_request() - "
+      TAOLIB_DEBUG((LM_DEBUG,"(%P|%t) TP_Task::add_request() - "
                  "not accepting requests\n"));
       return false;
     }
@@ -54,7 +54,7 @@ TAO::CSD::TP_Task::open(void* args)
   if (tmp == 0)
     {
       //FUZZ: disable check_for_lack_ACE_OS
-      ACE_ERROR_RETURN((LM_ERROR,
+      TAOLIB_ERROR_RETURN((LM_ERROR,
                         ACE_TEXT ("(%P|%t) TP_Task failed to open.  ")
                         ACE_TEXT ("Invalid argument type passed to open().\n")),
                         -1);
@@ -66,7 +66,7 @@ TAO::CSD::TP_Task::open(void* args)
   // We can't activate 0 threads.  Make sure this isn't the case.
   if (num < 1)
     {
-      ACE_ERROR_RETURN((LM_ERROR,
+      TAOLIB_ERROR_RETURN((LM_ERROR,
                         ACE_TEXT ("(%P|%t) TP_Task failed to open.  ")
                         ACE_TEXT ("num_threads (%u) is less-than 1.\n"),
                         num),
@@ -76,7 +76,7 @@ TAO::CSD::TP_Task::open(void* args)
   // Likewise, we can't activate too many.  Make sure this isn't the case.
   if (num > MAX_THREADPOOL_TASK_WORKER_THREADS)
     {
-      ACE_ERROR_RETURN((LM_ERROR,
+      TAOLIB_ERROR_RETURN((LM_ERROR,
                         ACE_TEXT ("(%P|%t) TP_Task failed to open.  ")
                         ACE_TEXT ("num_threads (%u) is too large.  ")
                         ACE_TEXT ("Max is %d.\n"),
@@ -92,7 +92,7 @@ TAO::CSD::TP_Task::open(void* args)
   if (this->opened_)
     {
       //FUZZ: disable check_for_lack_ACE_OS
-      ACE_ERROR_RETURN((LM_ERROR,
+      TAOLIB_ERROR_RETURN((LM_ERROR,
                         ACE_TEXT ("(%P|%t) TP_Task failed to open.  ")
                         ACE_TEXT ("Task has previously been open()'ed.\n")),
                        -1);
@@ -104,7 +104,7 @@ TAO::CSD::TP_Task::open(void* args)
     {
       // Assumes that when activate returns non-zero return code that
       // no threads were activated.
-      ACE_ERROR_RETURN((LM_ERROR,
+      TAOLIB_ERROR_RETURN((LM_ERROR,
                         ACE_TEXT ("(%P|%t) TP_Task failed to activate ")
                         ACE_TEXT ("(%d) worker threads.\n"),
                         num),

@@ -119,7 +119,7 @@ TAO_RTScheduler_Current::end_scheduling_segment (const char * name)
 
   if (impl == 0)
     {
-      ACE_ERROR ((LM_ERROR,
+      TAOLIB_ERROR ((LM_ERROR,
                   "Missing scheduling context OR DT cancelled\n"));
       throw ::CORBA::BAD_INV_ORDER ();
       return;
@@ -515,7 +515,7 @@ TAO_RTScheduler_Current_i::spawn (RTScheduling::ThreadAction_ptr start,
   if (dttask->activate_task (base_priority,
                              stack_size) == -1)
     {
-      ACE_ERROR((LM_ERROR,
+      TAOLIB_ERROR((LM_ERROR,
                  "Unable to activate DistributableThread\n"));
 
       delete dttask;
@@ -566,7 +566,7 @@ DTTask::activate_task (RTCORBA::Priority base_priority,
                       ) == -1)
     {
       if (ACE_OS::last_error () == EPERM)
-        ACE_ERROR_RETURN ((LM_ERROR,
+        TAOLIB_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("Insufficient privilege to run this test.\n")),
                           -1);
     }
@@ -688,7 +688,7 @@ TAO_RTScheduler_Current_i::cancel_thread (void)
                   this->guid_.get_buffer (),
                   this->guid_.length ());
 
-  ACE_DEBUG ((LM_DEBUG,
+  TAOLIB_DEBUG ((LM_DEBUG,
               "Distributable Thread - %d is cancelled\n",
               guid));
 

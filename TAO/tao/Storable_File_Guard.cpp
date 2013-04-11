@@ -13,6 +13,7 @@
 #include "tao/Storable_Base.h"
 
 #include "tao/SystemException.h"
+#include "tao/debug.h"
 
 TAO::Storable_File_Guard::
 Storable_File_Guard (bool redundant, bool use_backup)
@@ -228,7 +229,7 @@ TAO::Storable_File_Guard::load ()
     { // Failed to load from primary.
       ACE_CString state_str = Storable_Base::state_as_string (ex.get_state());
 
-      ACE_ERROR ((LM_ERROR,
+      TAOLIB_ERROR ((LM_ERROR,
                   ACE_TEXT ("TAO: (%P|%t) ERROR: State %s ")
                   ACE_TEXT ("encountered reading persistent ")
                   ACE_TEXT ("state from file\n%s\n"),
@@ -242,7 +243,7 @@ TAO::Storable_File_Guard::load ()
       if (!result)
         {
 
-          ACE_ERROR ((LM_INFO,
+          TAOLIB_ERROR ((LM_INFO,
                       ACE_TEXT ("TAO: (%P|%t) Attempting to restore ")
                       ACE_TEXT ("from backup\n")));
 
@@ -252,18 +253,18 @@ TAO::Storable_File_Guard::load ()
             }
           catch (const Storable_Read_Exception)
             { // Still having trouble reading from the file. Time to bail.
-              ACE_ERROR ((LM_ERROR,
+              TAOLIB_ERROR ((LM_ERROR,
                           ACE_TEXT ("TAO: (%P|%t) ERROR: Unable to restore ")
                           ACE_TEXT ("the state from backup.\n")));
               throw;
             }
-          ACE_ERROR ((LM_INFO,
+          TAOLIB_ERROR ((LM_INFO,
                       ACE_TEXT ("TAO: (%P|%t) The state was restored ")
                       ACE_TEXT ("from backup.\n")));
         }
       else
         {
-          ACE_ERROR ((LM_ERROR,
+          TAOLIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO: (%P|%t) ERROR: Could not read ")
                       ACE_TEXT ("backup file\n")));
             throw;

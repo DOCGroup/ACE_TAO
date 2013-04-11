@@ -1,7 +1,7 @@
 // $Id$
 
 #include "tao/default_server.h"
-#include "ace/Log_Msg.h"
+#include "tao/debug.h"
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_string.h"
 
@@ -319,14 +319,14 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
       {
         // Can we assume there is an argument after the option?
         // ++curarg;
-        ACE_ERROR ((LM_ERROR,
+        TAOLIB_ERROR ((LM_ERROR,
                     ACE_TEXT("Server_Strategy_Factory - ")
                     ACE_TEXT("unknown option <%s>\n"),
                     argv[curarg]));
       }
     else
       {
-        ACE_DEBUG ((LM_DEBUG,
+        TAOLIB_DEBUG ((LM_DEBUG,
                     ACE_TEXT("Server_Strategy_Factory - ")
                     ACE_TEXT("ignoring option <%s>\n"),
                     argv[curarg]));
@@ -340,7 +340,7 @@ TAO_Default_Server_Strategy_Factory::report_option_value_error (
                                  const ACE_TCHAR* option_name,
                                  const ACE_TCHAR* option_value)
 {
-  ACE_DEBUG((LM_DEBUG,
+  TAOLIB_DEBUG((LM_DEBUG,
              ACE_TEXT ("Server_Strategy_Factory - unknown argument")
              ACE_TEXT (" <%s> for <%s>\n"),
              option_value, option_name));

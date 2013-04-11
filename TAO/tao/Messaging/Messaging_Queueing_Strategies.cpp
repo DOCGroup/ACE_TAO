@@ -133,7 +133,7 @@ namespace TAO
 
     if (TAO_debug_level > 6)
       {
-        ACE_DEBUG ((LM_DEBUG,
+        TAOLIB_DEBUG ((LM_DEBUG,
                     "TAO (%P|%t) - TAO_Eager_Buffering_Sync_Strategy::timer_check, "
                     "Now = %u, Current = %u, New = %u\n",
                     now.msec (), current_deadline.msec (),

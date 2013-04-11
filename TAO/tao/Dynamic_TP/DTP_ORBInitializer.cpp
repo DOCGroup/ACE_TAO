@@ -32,7 +32,7 @@ TAO_DTP_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr info)
   if (CORBA::is_nil (tao_info.in ()))
     {
       if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_ERROR,
+        TAOLIB_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) TAO_DTP_ORBInitializer::pre_init:\n")
                     ACE_TEXT ("(%P|%t)    Unable to narrow ")
                     ACE_TEXT ("\"PortableInterceptor::ORBInitInfo_ptr\" to\n")
@@ -59,7 +59,7 @@ TAO_DTP_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr info)
   if (config_mgr == 0)
     {
       if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_ERROR,
+        TAOLIB_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) TAO_DTP_ORBInitializer::pre_init:\n")
                     ACE_TEXT ("(%P|%t)   Unable to resolve DTP_Config ")
                     ACE_TEXT ("object\n")));
@@ -94,7 +94,7 @@ TAO_DTP_ORBInitializer::post_init (PortableInterceptor::ORBInitInfo_ptr info)
     {
       if (TAO_debug_level > 0)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) TAO_DTP_ORBInitializer::post_init ")
                       ACE_TEXT ("using thread pool name %s\n"), dtp_name));
         }
@@ -109,7 +109,7 @@ TAO_DTP_ORBInitializer::post_init (PortableInterceptor::ORBInitInfo_ptr info)
       if (config_registry == 0 || !config_registry->find(dtp_name, def))
         {
           if (TAO_debug_level > 0)
-            ACE_ERROR ((LM_ERROR,
+            TAOLIB_ERROR ((LM_ERROR,
                         ACE_TEXT ("(%P|%t) TAO_DTP_ORBInitializer::")
                         ACE_TEXT ("post_init:\n")
                         ACE_TEXT ("(%P|%t)   Unable to resolve ")

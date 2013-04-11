@@ -211,7 +211,7 @@ CORBA::Object::_is_a (const char *type_id)
   if (this->protocol_proxy_ == 0)
     {
       if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_ERROR,
+        TAOLIB_ERROR ((LM_ERROR,
                     ACE_TEXT ("TAO (%P|%t) - No protocol proxy for %C\n"),
                     type_id));
 
@@ -317,7 +317,7 @@ CORBA::Object::_key (void)
 
   if (TAO_debug_level > 2)
     {
-      ACE_ERROR ((LM_ERROR,
+      TAOLIB_ERROR ((LM_ERROR,
                   ACE_TEXT ("TAO (%P|%t) Null object key return from ")
                   ACE_TEXT ("profile in use\n")));
     }
@@ -375,7 +375,7 @@ CORBA::Object::_create_request (CORBA::Context_ptr ctx,
   if (ctx != 0 || this->protocol_proxy_ == 0)
     {
       if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_ERROR,
+        TAOLIB_ERROR ((LM_ERROR,
                     ACE_TEXT ("TAO (%P|%t) - No protocol proxy for %C\n"),
                     operation));
 
@@ -420,7 +420,7 @@ CORBA::Object::_create_request (CORBA::Context_ptr ctx,
   if (ctx != 0 || this->protocol_proxy_ == 0)
     {
       if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_ERROR,
+        TAOLIB_ERROR ((LM_ERROR,
                     ACE_TEXT ("TAO (%P|%t) - No protocol proxy for %C\n"),
                     operation));
 
@@ -463,7 +463,7 @@ CORBA::Object::_request (const char *operation)
   else
     {
       if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_ERROR,
+        TAOLIB_ERROR ((LM_ERROR,
                     ACE_TEXT ("TAO (%P|%t) - No protocol proxy for %C\n"),
                     operation));
 
@@ -539,7 +539,7 @@ CORBA::Object::_get_policy (CORBA::PolicyType type)
   else
     {
       if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_ERROR,
+        TAOLIB_ERROR ((LM_ERROR,
                     ACE_TEXT ("TAO (%P|%t) - No protocol proxy in _get_policy\n")));
 
       throw ::CORBA::NO_IMPLEMENT ();
@@ -556,7 +556,7 @@ CORBA::Object::_get_cached_policy (TAO_Cached_Policy_Type type)
   else
     {
       if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_ERROR,
+        TAOLIB_ERROR ((LM_ERROR,
                     ACE_TEXT ("TAO (%P|%t) - No protocol proxy in _get_policy\n")));
 
       throw ::CORBA::NO_IMPLEMENT ();
@@ -573,7 +573,7 @@ CORBA::Object::_set_policy_overrides (
   if (!this->protocol_proxy_)
     {
       if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_ERROR,
+        TAOLIB_ERROR ((LM_ERROR,
                     ACE_TEXT ("TAO (%P|%t) - No protocol proxy in _get_policy\n")));
 
       throw ::CORBA::NO_IMPLEMENT ();
@@ -616,7 +616,7 @@ CORBA::Object::_get_policy_overrides (const CORBA::PolicyTypeSeq & types)
   else
     {
       if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_ERROR,
+        TAOLIB_ERROR ((LM_ERROR,
                     ACE_TEXT ("TAO (%P|%t) - No protocol proxy in _get_policy\n")));
 
       throw ::CORBA::NO_IMPLEMENT ();
@@ -675,7 +675,7 @@ CORBA::Object::_get_orb (void)
       else
         {
           if (TAO_debug_level > 0)
-            ACE_ERROR ((LM_ERROR,
+            TAOLIB_ERROR ((LM_ERROR,
                         ACE_TEXT ("TAO (%P|%t) - No protocol proxy in _get_policy\n")));
 
           throw ::CORBA::NO_IMPLEMENT ();
@@ -752,7 +752,7 @@ CORBA::Object::tao_object_initialize (CORBA::Object *obj)
       orb_core = TAO_ORB_Core_instance ();
       if (TAO_debug_level > 0)
         {
-          ACE_DEBUG ((LM_WARNING,
+          TAOLIB_DEBUG ((LM_WARNING,
                       ACE_TEXT ("TAO (%P|%t) - Object::tao_object_initialize ")
                       ACE_TEXT ("WARNING: extracting object from ")
                       ACE_TEXT ("default ORB_Core\n")));
@@ -789,7 +789,7 @@ CORBA::Object::tao_object_initialize (CORBA::Object *obj)
             {
               if (mp.give_profile (pfile) == -1)
               {
-                ACE_ERROR ((LM_ERROR,
+                TAOLIB_ERROR ((LM_ERROR,
                             ACE_TEXT ("TAO (%P|%t) ERROR: give_profile\n")
                             ACE_TEXT (" returned -1\n")));
               }
@@ -801,7 +801,7 @@ CORBA::Object::tao_object_initialize (CORBA::Object *obj)
         {
           // @@ This occurs when profile creation fails when decoding the
           //    profile from the IOR.
-          ACE_ERROR ((LM_ERROR,
+          TAOLIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO (%P|%t) ERROR: XXXXX Could not create all ")
                       ACE_TEXT ("profiles while extracting object\n")
                       ACE_TEXT ("TAO (%P|%t) ERROR: reference from the ")
@@ -851,7 +851,7 @@ operator>> (TAO_InputCDR& cdr, CORBA::Object*& x)
       orb_core = TAO_ORB_Core_instance ();
       if (TAO_debug_level > 0)
         {
-          ACE_DEBUG ((LM_WARNING,
+          TAOLIB_DEBUG ((LM_WARNING,
                       ACE_TEXT ("TAO (%P|%t) WARNING: extracting object from ")
                       ACE_TEXT ("default ORB_Core\n")));
         }
@@ -892,7 +892,7 @@ operator>> (TAO_InputCDR& cdr, CORBA::Object*& x)
           orb_core = TAO_ORB_Core_instance ();
           if (TAO_debug_level > 0)
             {
-              ACE_DEBUG ((LM_WARNING,
+              TAOLIB_DEBUG ((LM_WARNING,
                           ACE_TEXT ("TAO (%P|%t) - Object::tao_object_initialize ")
                           ACE_TEXT ("WARNING: extracting object from ")
                           ACE_TEXT ("default ORB_Core\n")));
@@ -916,7 +916,7 @@ operator>> (TAO_InputCDR& cdr, CORBA::Object*& x)
                 {
                   if (mp.give_profile (pfile) == -1)
                     {
-                      ACE_ERROR ((LM_ERROR,
+                      TAOLIB_ERROR ((LM_ERROR,
                                   ACE_TEXT ("TAO (%P|%t) ERROR: give_profile\n")
                                   ACE_TEXT (" returned -1\n")));
                     }
@@ -928,7 +928,7 @@ operator>> (TAO_InputCDR& cdr, CORBA::Object*& x)
             {
               // @@ This occurs when profile creation fails when decoding the
               //    profile from the IOR.
-              ACE_ERROR_RETURN ((LM_ERROR,
+              TAOLIB_ERROR_RETURN ((LM_ERROR,
                                  ACE_TEXT ("TAO (%P|%t) - ERROR: Could not create all ")
                                  ACE_TEXT ("profiles while extracting object [%d, %d]\n")
                                  ACE_TEXT ("TAO (%P|%t) - ERROR: reference from the ")

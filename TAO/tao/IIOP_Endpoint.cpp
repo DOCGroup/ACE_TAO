@@ -164,7 +164,7 @@ TAO_IIOP_Endpoint::set (const ACE_INET_Addr &addr,
     {
       if (use_dotted_decimal_addresses == 0 && TAO_debug_level > 5)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - IIOP_Endpoint::set, ")
                       ACE_TEXT ("%p\n"),
                       ACE_TEXT ("cannot determine hostname")));
@@ -175,7 +175,7 @@ TAO_IIOP_Endpoint::set (const ACE_INET_Addr &addr,
         {
           if (TAO_debug_level > 0)
             {
-              ACE_ERROR ((LM_ERROR,
+              TAOLIB_ERROR ((LM_ERROR,
                           ACE_TEXT ("TAO (%P|%t) - IIOP_Endpoint::set, ")
                           ACE_TEXT ("%p\n"),
                           ACE_TEXT ("cannot determine hostname and hostaddr")));

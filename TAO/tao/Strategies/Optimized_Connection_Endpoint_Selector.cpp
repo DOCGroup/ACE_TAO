@@ -25,7 +25,7 @@ TAO_Optimized_Connection_Endpoint_Selector (const ACE_Time_Value &tv)
   TAO_Optimized_Connection_Endpoint_Selector::timeout_ = tv;
   if (TAO_debug_level)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO(%P|%t) Optimized Connection Enpoint Selector: ")
                   ACE_TEXT ("Initializing timeout hook tv = %d sec, %d usec\n"),
               tv.sec(), tv.usec()));

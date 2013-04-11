@@ -279,7 +279,7 @@ TAO_UIOP_Acceptor::open_i (const char *rendezvous,
   //    rendezvous point here
 
   if (TAO_debug_level > 5)
-    ACE_DEBUG ((LM_DEBUG,
+    TAOLIB_DEBUG ((LM_DEBUG,
                 "\nTAO (%P|%t) - UIOP_Acceptor::open_i - "
                 "listening on: <%C>\n",
                 addr.get_path_name ()));
@@ -329,7 +329,7 @@ TAO_UIOP_Acceptor::rendezvous_point (ACE_UNIX_Addr &addr,
   // most UNIX domain socket rendezvous points can only be less than
   // 108 characters long.
   if (length < ACE_OS::strlen (rendezvous))
-    ACE_DEBUG ((LM_WARNING,
+    TAOLIB_DEBUG ((LM_WARNING,
                 "TAO (%P|%t) - UIOP rendezvous point was truncated to <%s>\n"
                 "since it was longer than %d characters long.\n",
                 addr.get_path_name (),
@@ -362,7 +362,7 @@ TAO_UIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
     {
       if (TAO_debug_level > 0)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - UIOP_Profile::decode - v%d.%d\n"),
                       major,
                       minor));
@@ -376,7 +376,7 @@ TAO_UIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
   // Get rendezvous_point
   if (cdr.read_string (rendezvous) == 0)
     {
-      ACE_ERROR ((LM_ERROR, "error decoding UIOP rendezvous_point"));
+      TAOLIB_ERROR ((LM_ERROR, "error decoding UIOP rendezvous_point"));
 
       return -1;
     }
@@ -437,7 +437,7 @@ TAO_UIOP_Acceptor::parse_options (const char *str)
         end = len;
 
       if (end == begin)
-        ACE_ERROR_RETURN ((LM_ERROR,
+        TAOLIB_ERROR_RETURN ((LM_ERROR,
                            "TAO (%P|%t) Zero length UIOP option.\n"),
                           -1);
       else if (end != ACE_CString::npos)
@@ -449,7 +449,7 @@ TAO_UIOP_Acceptor::parse_options (const char *str)
 
           if (slot == len - 1
               || slot == ACE_CString::npos)
-            ACE_ERROR_RETURN ((LM_ERROR,
+            TAOLIB_ERROR_RETURN ((LM_ERROR,
                                "TAO (%P|%t) - UIOP option <%C> is "
                                "missing a value.\n",
                                opt.c_str ()),
@@ -461,20 +461,20 @@ TAO_UIOP_Acceptor::parse_options (const char *str)
           begin = end + 1;
 
           if (name.length () == 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
+            TAOLIB_ERROR_RETURN ((LM_ERROR,
                                "TAO (%P|%t) - Zero length UIOP "
                                "option name.\n"),
                               -1);
 
           if (name == "priority")
             {
-              ACE_ERROR_RETURN ((LM_ERROR,
+              TAOLIB_ERROR_RETURN ((LM_ERROR,
                                  ACE_TEXT ("TAO (%P|%t) - Invalid UIOP endpoint format: ")
                                  ACE_TEXT ("endpoint priorities no longer supported.\n")),
                                 -1);
             }
           else
-            ACE_ERROR_RETURN ((LM_ERROR,
+            TAOLIB_ERROR_RETURN ((LM_ERROR,
                                "TAO (%P|%t) - Invalid UIOP option: <%C>\n",
                                name.c_str ()),
                               -1);

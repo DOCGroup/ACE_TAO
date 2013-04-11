@@ -37,7 +37,7 @@ TAO_Tagged_Profile::extract_object_key (IOP::TaggedProfile &profile)
     {
       if (TAO_debug_level)
         {
-          ACE_ERROR ((LM_ERROR,
+          TAOLIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("(%P|%t)TAO_Tagged_Profile\n")));
         }
 

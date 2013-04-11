@@ -277,7 +277,7 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
 {
   if (TAO_debug_level > 2)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - ")
                   ACE_TEXT ("IIOP_Acceptor::open, address==%C, options=%C\n"),
                   address, options));
@@ -289,7 +289,7 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
     {
       // The hostname cache has already been set!
       // This is bad mojo, i.e. an internal TAO error.
-      ACE_ERROR_RETURN ((LM_ERROR,
+      TAOLIB_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("TAO (%P|%t) - ")
                          ACE_TEXT ("IIOP_Acceptor::open, ")
                          ACE_TEXT ("hostname already set\n\n")),
@@ -340,7 +340,7 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
       (addr.get_type () != AF_INET6 ||
        addr.is_ipv4_mapped_ipv6 ()))
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
+      TAOLIB_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("TAO (%P|%t) - ")
                          ACE_TEXT ("IIOP_Acceptor::open, ")
                          ACE_TEXT ("non-IPv6 endpoints not allowed when ")
@@ -351,7 +351,7 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
 
   if (TAO_debug_level > 2)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - ")
                   ACE_TEXT ("IIOP_Acceptor::open, specified host=%C:%d\n"),
                   (specified_hostname.length() == 0 ? "<null>" : specified_hostname.c_str()),
@@ -374,7 +374,7 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
     {
       if (TAO_debug_level > 2)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - ")
                       ACE_TEXT ("IIOP_Acceptor::open, ")
                       ACE_TEXT ("Overriding address in IOR with %C\n"),
@@ -410,7 +410,7 @@ TAO_IIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
     {
       // The hostname cache has already been set!
       // This is bad mojo, i.e. an internal TAO error.
-      ACE_ERROR_RETURN ((LM_ERROR,
+      TAOLIB_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("TAO (%P|%t) - ")
                          ACE_TEXT ("IIOP_Acceptor::open_default, ")
                          ACE_TEXT ("hostname already set\n\n")),
@@ -469,7 +469,7 @@ TAO_IIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
                                      this->reuse_addr_) == -1)
         {
           if (TAO_debug_level > 0)
-            ACE_ERROR ((LM_ERROR,
+            TAOLIB_ERROR ((LM_ERROR,
                         ACE_TEXT ("TAO (%P|%t) - IIOP_Acceptor::open_i, ")
                         ACE_TEXT ("%p\n"),
                         ACE_TEXT ("cannot open acceptor")));
@@ -490,7 +490,7 @@ TAO_IIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
       for (ACE_UINT32 p = requested_port; p <= last_port; p++)
         {
           if (TAO_debug_level > 5)
-            ACE_DEBUG ((LM_DEBUG,
+            TAOLIB_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("TAO (%P|%t) - IIOP_Acceptor::open_i, ")
                         ACE_TEXT ("trying to listen on port %d\n"), p));
 
@@ -513,7 +513,7 @@ TAO_IIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
       if (! found_a_port)
         {
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
+            TAOLIB_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("TAO (%P|%t) - IIOP_Acceptor::open_i, ")
                         ACE_TEXT ("cannot open acceptor in port range (%d,%d)")
                         ACE_TEXT ("- %p\n"),
@@ -529,7 +529,7 @@ TAO_IIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
       addr.is_any ())
   {
     if (TAO_debug_level > 5)
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT("TAO (%P|%t) - IIOP_Acceptor::open_i, ")
                   ACE_TEXT("setting IPV6_V6ONLY\n")));
 
@@ -540,7 +540,7 @@ TAO_IIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
                                                      (void *) &on,
                                                      sizeof (on)) == -1)
       {
-        ACE_ERROR ((LM_ERROR,
+        TAOLIB_ERROR ((LM_ERROR,
                     ACE_TEXT ("TAO (%P|%t) - IIOP_Acceptor::open_i, ")
                     ACE_TEXT ("%p\n"),
                     ACE_TEXT ("cannot set IPV6_V6ONLY")));
@@ -555,7 +555,7 @@ TAO_IIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
   if (this->base_acceptor_.acceptor ().get_local_addr (address) != 0)
     {
       if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_ERROR,
+        TAOLIB_ERROR ((LM_ERROR,
                     ACE_TEXT ("TAO (%P|%t) - IIOP_Acceptor::open_i, ")
                     ACE_TEXT ("%p\n"),
                     ACE_TEXT ("cannot get local addr")));
@@ -581,7 +581,7 @@ TAO_IIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
     {
       for (CORBA::ULong i = 0; i < this->endpoint_count_; ++i)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - IIOP_Acceptor::open_i, ")
                       ACE_TEXT ("listening on: <%C:%u>\n"),
                       this->hosts_[i],
@@ -608,7 +608,7 @@ TAO_IIOP_Acceptor::hostname (TAO_ORB_Core *orb_core,
   if (this->hostname_in_ior_ != 0)
     {
       if (TAO_debug_level >= 5)
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) IIOP_Acceptor - ")
                       ACE_TEXT ("Overriding the hostname with <%C>\n"),
                       this->hostname_in_ior_));
@@ -689,7 +689,7 @@ TAO_IIOP_Acceptor::parse_address (const char *address,
       if (cp_pos == 0)
         {
           // No valid IPv6 address specified.
-          ACE_ERROR_RETURN ((LM_ERROR,
+          TAOLIB_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("TAO (%P|%t) - ")
                              ACE_TEXT ("IIOP_Acceptor::open, ")
                              ACE_TEXT ("Invalid IPv6 decimal address specified\n\n")),
@@ -826,7 +826,7 @@ TAO_IIOP_Acceptor::dotted_decimal_address (const ACE_INET_Addr &addr,
   if (tmp == 0 || result != 0)
     {
       if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_ERROR,
+        TAOLIB_ERROR ((LM_ERROR,
                     ACE_TEXT ("TAO (%P|%t) - ")
                     ACE_TEXT ("IIOP_Acceptor::dotted_decimal_address, ")
                     ACE_TEXT ("- %p\n"),
@@ -861,7 +861,7 @@ TAO_IIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core, int def_type)
     {
       if (TAO_debug_level > 0)
         {
-          ACE_DEBUG ((LM_WARNING,
+          TAOLIB_DEBUG ((LM_WARNING,
                       ACE_TEXT ("TAO (%P|%t) - Unable to probe network ")
                       ACE_TEXT ("interfaces. Using default.\n")));
         }
@@ -974,7 +974,7 @@ TAO_IIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core, int def_type)
   if (this->endpoint_count_ == 0)
     {
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
+        TAOLIB_DEBUG ((LM_DEBUG,
                     ACE_TEXT("(%P|%t) TAO_IIOP_Acceptor::probe_interfaces ")
                     ACE_TEXT("found no usable addresses, def_type = %d\n"),
                     def_type));
@@ -1075,7 +1075,7 @@ TAO_IIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
     {
       if (TAO_debug_level > 0)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - TAO_IIOP_Acceptor::object_key, v%d.%d\n"),
                       major,
                       minor));
@@ -1092,7 +1092,7 @@ TAO_IIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
     {
       if (TAO_debug_level > 0)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - TAO_IIOP_Acceptor::object_key, ")
                       ACE_TEXT ("error while decoding host/port\n")));
         }
@@ -1156,7 +1156,7 @@ TAO_IIOP_Acceptor::parse_options (const char *str)
 
       if (end == begin)
         {
-          ACE_ERROR ((LM_ERROR,
+          TAOLIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO (%P|%t) - Zero length IIOP option.\n")));
           result = -1;
           break;
@@ -1178,12 +1178,12 @@ TAO_IIOP_Acceptor::parse_options (const char *str)
 
   if (argc > 0)
     {
-      ACE_ERROR ((LM_ERROR,
+      TAOLIB_ERROR ((LM_ERROR,
                   ACE_TEXT ("TAO (%P|%t) - IIOP")
                   ACE_TEXT (" endpoint has %d unknown options:\n"),
                   argc));
       for (int i = 0; i < argc; i++)
-        ACE_ERROR ((LM_ERROR,
+        TAOLIB_ERROR ((LM_ERROR,
                     ACE_TEXT("\t%C\n"),
                     argv[i]->c_str()));
       result = -1;
@@ -1205,7 +1205,7 @@ TAO_IIOP_Acceptor::parse_options_i (int &argc,
 
       if (slot == len - 1
           || slot == ACE_CString::npos)
-        ACE_ERROR_RETURN ((LM_ERROR,
+        TAOLIB_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("TAO (%P|%t) - IIOP option <%C> is ")
                            ACE_TEXT ("missing a value.\n"),
                            argv[i]->c_str ()),
@@ -1215,7 +1215,7 @@ TAO_IIOP_Acceptor::parse_options_i (int &argc,
       ACE_CString value = argv[i]->substring (slot + 1);
 
       if (name.length () == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
+        TAOLIB_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("TAO (%P|%t) Zero length IIOP ")
                            ACE_TEXT ("option name.\n")),
                           -1);
@@ -1224,7 +1224,7 @@ TAO_IIOP_Acceptor::parse_options_i (int &argc,
           int range = static_cast <int> (ACE_OS::atoi (value.c_str ()));
           // @@ What's the lower bound on the range?  zero, or one?
           if (range < 1 || range > ACE_MAX_DEFAULT_PORT)
-            ACE_ERROR_RETURN ((LM_ERROR,
+            TAOLIB_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("TAO (%P|%t) Invalid IIOP endpoint ")
                                ACE_TEXT ("portspan: <%C>\n")
                                ACE_TEXT ("Valid range 1 -- %d\n"),

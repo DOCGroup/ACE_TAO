@@ -64,7 +64,7 @@ TAO_Connection_Handler::set_socket_option (ACE_SOCK &sock,
                           sizeof (snd_size)) == -1)
   {
     if (TAO_debug_level)
-      ACE_DEBUG ((LM_ERROR,
+      TAOLIB_DEBUG ((LM_ERROR,
                   ACE_TEXT ("TAO (%P|%t) - Connection_Handler::")
                   ACE_TEXT ("set_socket_option, setting SO_SNDBUF failed ")
                   ACE_TEXT ("'%m'\n")));
@@ -82,7 +82,7 @@ TAO_Connection_Handler::set_socket_option (ACE_SOCK &sock,
                           sizeof (int)) == -1)
   {
       if (TAO_debug_level)
-        ACE_ERROR ((LM_ERROR,
+        TAOLIB_ERROR ((LM_ERROR,
                     ACE_TEXT ("TAO (%P|%t) - Connection_Handler::")
                     ACE_TEXT ("set_socket_option, setting SO_RCVBUF failed ")
                     ACE_TEXT ("'%m'\n")));
@@ -111,7 +111,7 @@ TAO_Connection_Handler::svc_i (void)
   int result = 0;
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
+    TAOLIB_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO (%P|%t) - Connection_Handler::svc_i begin\n")));
 
   // Here we simply synthesize the "typical" event loop one might find
@@ -162,13 +162,13 @@ TAO_Connection_Handler::svc_i (void)
       current_timeout = timeout;
 
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
+        TAOLIB_DEBUG ((LM_DEBUG,
                     "TAO (%P|%t) - Connection_Handler::svc_i - "
                     "loop <%d>\n", current_timeout.msec ()));
     }
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG  ((LM_DEBUG,
+    TAOLIB_DEBUG  ((LM_DEBUG,
                  "TAO (%P|%t) - Connection_Handler::svc_i - end\n"));
 
   return result;
@@ -226,7 +226,7 @@ TAO_Connection_Handler::handle_input_eh (ACE_HANDLE h, ACE_Event_Handler *eh)
   if (!this->transport ()->wait_strategy ()->can_process_upcalls ())
     {
       if (TAO_debug_level > 6)
-        ACE_DEBUG ((LM_DEBUG,
+        TAOLIB_DEBUG ((LM_DEBUG,
                     "TAO (%P|%t) - Connection_Handler[%d]::handle_input_eh, "
                     "not going to handle_input on transport "
                     "because upcalls temporarily suspended on this thread\n",
@@ -236,7 +236,7 @@ TAO_Connection_Handler::handle_input_eh (ACE_HANDLE h, ACE_Event_Handler *eh)
       if (this->transport ()->wait_strategy ()->defer_upcall (eh) != 0)
         {
           if (TAO_debug_level > 5)
-            ACE_ERROR ((LM_ERROR,
+            TAOLIB_ERROR ((LM_ERROR,
                       "TAO (%P|%t) - Connection_Handler[%d]::handle_input_eh, "
                       "Error deferring upcall handler[%d]\n",
                       this->transport ()->id (),
@@ -274,7 +274,7 @@ TAO_Connection_Handler::handle_input_internal (
   if (TAO_debug_level > 6)
     {
       ACE_HANDLE const handle = eh->get_handle();
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   "TAO (%P|%t) - Connection_Handler[%d]::handle_input_internal, "
                   "handle = %d/%d\n",
                   t_id, handle, h));
@@ -300,7 +300,7 @@ TAO_Connection_Handler::handle_input_internal (
   if (TAO_debug_level > 6)
     {
       ACE_HANDLE const handle = eh->get_handle ();
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   "TAO (%P|%t) - Connection_Handler[%d]::handle_input_internal, "
                   "handle = %d/%d, retval = %d\n",
                   t_id, handle, h, return_value));
@@ -330,7 +330,7 @@ TAO_Connection_Handler::close_connection_eh (ACE_Event_Handler *eh)
   size_t const id = this->transport ()->id ();
   if (TAO_debug_level)
     {
-      ACE_DEBUG  ((LM_DEBUG,
+      TAOLIB_DEBUG  ((LM_DEBUG,
                    "TAO (%P|%t) - Connection_Handler[%d]::"
                    "close_connection_eh, purging entry from cache\n",
                    handle));
@@ -358,7 +358,7 @@ TAO_Connection_Handler::close_connection_eh (ACE_Event_Handler *eh)
 
       if (TAO_debug_level)
         {
-          ACE_DEBUG  ((LM_DEBUG,
+          TAOLIB_DEBUG  ((LM_DEBUG,
                        "TAO (%P|%t) - Connection_Handler[%d]::"
                        "close_connection_eh, removing from the reactor\n",
                        handle));
@@ -382,7 +382,7 @@ TAO_Connection_Handler::close_connection_eh (ACE_Event_Handler *eh)
       // buffering
       if (TAO_debug_level)
         {
-          ACE_DEBUG  ((LM_DEBUG,
+          TAOLIB_DEBUG  ((LM_DEBUG,
                        "TAO (%P|%t) - Connection_Handler[%d]::"
                        "close_connection_eh, cancel all timers\n",
                        handle));
@@ -407,7 +407,7 @@ TAO_Connection_Handler::close_connection_eh (ACE_Event_Handler *eh)
 
   if (TAO_debug_level)
     {
-      ACE_DEBUG  ((LM_DEBUG,
+      TAOLIB_DEBUG  ((LM_DEBUG,
                    "TAO (%P|%t) - Connection_Handler[%d]::"
                    "close_connection_eh end\n",
                    id));

@@ -124,7 +124,7 @@ TAO_MCAST_Parser::multicast_query (char* & buf,
 #endif /* !ACE_HAS_IPV6 */
       || acceptor.get_local_addr (my_addr) == -1)
     {
-      ACE_ERROR ((LM_ERROR,
+      TAOLIB_ERROR ((LM_ERROR,
                   ACE_TEXT ("acceptor.open () || ")
                   ACE_TEXT ("acceptor.get_local_addr () failed\n")));
       result = -1;
@@ -135,7 +135,7 @@ TAO_MCAST_Parser::multicast_query (char* & buf,
         {
           ACE_TCHAR addr[64];
           my_addr.addr_to_string (addr, sizeof(addr));
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT(" TAO (%P|%t) - MCAST_Parser: acceptor local address %s.\n"),
                       addr));
         }
@@ -153,7 +153,7 @@ TAO_MCAST_Parser::multicast_query (char* & buf,
           && mde.length () != 0)
         if (multicast_addr.set (mde.c_str()) == -1)
           {
-            ACE_ERROR ((LM_ERROR,
+            TAOLIB_ERROR ((LM_ERROR,
                         ACE_TEXT("ORB.cpp: Multicast address setting failed\n")));
             stream.close ();
             dgram.close ();
@@ -164,7 +164,7 @@ TAO_MCAST_Parser::multicast_query (char* & buf,
       // Open the datagram.
       if (dgram.open (ACE_Addr::sap_any, multicast_addr.get_type ()) == -1)
         {
-          ACE_ERROR ((LM_ERROR,
+          TAOLIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("Unable to open the Datagram!\n")));
           result = -1;
         }
@@ -229,18 +229,18 @@ TAO_MCAST_Parser::multicast_query (char* & buf,
                                multicast_addr);
 
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
+            TAOLIB_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("\nsent multicast request.")));
 
           // Check for errors.
           if (result == -1)
-            ACE_ERROR ((LM_ERROR,
+            TAOLIB_ERROR ((LM_ERROR,
                         ACE_TEXT ("%p\n"),
                         ACE_TEXT ("error sending IIOP multicast")));
           else
             {
               if (TAO_debug_level > 0)
-                ACE_DEBUG ((LM_DEBUG,
+                TAOLIB_DEBUG ((LM_DEBUG,
                             ACE_TEXT ("\n%N; Sent multicast.")
                             ACE_TEXT ("# of bytes sent is %d.\n"),
                             result));
@@ -255,7 +255,7 @@ TAO_MCAST_Parser::multicast_query (char* & buf,
                                    0,
                                    &tv) == -1)
                 {
-                  ACE_ERROR ((LM_ERROR,
+                  TAOLIB_ERROR ((LM_ERROR,
                               ACE_TEXT ("%p\n"),
                               ACE_TEXT ("multicast_query: unable to accept")));
                   result = -1;
@@ -272,7 +272,7 @@ TAO_MCAST_Parser::multicast_query (char* & buf,
                                           &tv);
                   if (result != sizeof (ior_len))
                     {
-                      ACE_ERROR ((LM_ERROR,
+                      TAOLIB_ERROR ((LM_ERROR,
                                   ACE_TEXT ("%p\n"),
                                   ACE_TEXT ("multicast_query: unable to receive ")
                                   ACE_TEXT ("ior length")));
@@ -288,7 +288,7 @@ TAO_MCAST_Parser::multicast_query (char* & buf,
                           buf = CORBA::string_alloc (ior_len);
                           if (buf == 0)
                             {
-                              ACE_ERROR ((LM_ERROR,
+                              TAOLIB_ERROR ((LM_ERROR,
                                           ACE_TEXT ("%p\n"),
                                           ACE_TEXT ("multicast_query: unable to ")
                                           ACE_TEXT ("allocate memory")));
@@ -304,11 +304,11 @@ TAO_MCAST_Parser::multicast_query (char* & buf,
                                                   0,
                                                   &tv);
                           if (result == -1)
-                            ACE_ERROR ((LM_ERROR,
+                            TAOLIB_ERROR ((LM_ERROR,
                                         ACE_TEXT ( "%p\n"),
                                         ACE_TEXT ("error reading ior")));
                           else if (TAO_debug_level > 0)
-                            ACE_DEBUG ((LM_DEBUG,
+                            TAOLIB_DEBUG ((LM_DEBUG,
                                         ACE_TEXT ("%N: service resolved to IOR <%C>\n"),
                                         buf));
                         }
@@ -318,14 +318,14 @@ TAO_MCAST_Parser::multicast_query (char* & buf,
         }
         if (result == -1)
           {
-            ACE_ERROR ((LM_ERROR,
+            TAOLIB_ERROR ((LM_ERROR,
                         ACE_TEXT("\nmulticast discovery of %C failed.\n"),
                         service_name));
 
             if (ACE_OS::strcasecmp (service_name,
                                     "NameService") == 0)
              {
-               ACE_ERROR ((LM_ERROR,
+               TAOLIB_ERROR ((LM_ERROR,
                            ACE_TEXT("Specify -m 1 when starting Naming_Service,\n")
                            ACE_TEXT("or see http://www.theaceorb.com/faq/#115\n")
                            ACE_TEXT("for using NameService without multicast.\n\n")));
@@ -367,7 +367,7 @@ TAO_MCAST_Parser::assign_to_variables (char const * mcast_name)
           // No valid IPv6 address specified.
           if (TAO_debug_level > 0)
             {
-              ACE_ERROR ((LM_ERROR,
+              TAOLIB_ERROR ((LM_ERROR,
                           ACE_TEXT ("\nTAO (%P|%t) MCAST_Parser: ")
                           ACE_TEXT ("Invalid IPv6 decimal address specified.\n")));
             }

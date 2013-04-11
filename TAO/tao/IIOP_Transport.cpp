@@ -70,7 +70,7 @@ TAO_IIOP_Transport::send (iovec *iov, int iovcnt,
     {
       if (TAO_debug_level > 4)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - IIOP_Transport[%d]::send, ")
                       ACE_TEXT ("send failure (errno: %d) - %m\n"),
                       this->id (), ACE_ERRNO_GET));
@@ -150,7 +150,7 @@ TAO_IIOP_Transport::sendfile (TAO_MMAP_Allocator * allocator,
 
   if (retval <= 0 && TAO_debug_level > 4)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - IIOP_Transport[%d]::sendfile, ")
                   ACE_TEXT ("sendfile failure - %m (errno: %d)\n"),
                   this->id (),
@@ -176,7 +176,7 @@ TAO_IIOP_Transport::recv (char *buf,
   // occur in thread-per-connection.
   if (n == -1 && TAO_debug_level > 4 && errno != ETIME)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - IIOP_Transport[%d]::recv, ")
                   ACE_TEXT ("read failure - %m errno %d\n"),
                   this->id (),
@@ -258,7 +258,7 @@ TAO_IIOP_Transport::send_message (TAO_OutputCDR &stream,
       // a core. %m would then be softer on this.
       if (TAO_debug_level)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - IIOP_Transport[%d]::send_message, ")
                       ACE_TEXT ("write failure - %m\n"),
                       this->id ()));
@@ -310,7 +310,7 @@ TAO_IIOP_Transport::set_bidir_context_info (TAO_Operation_Details &opdetails)
           if (this->get_listen_point (listen_point_list, *acceptor) == -1)
             {
               if (TAO_debug_level > 0)
-                ACE_ERROR ((LM_ERROR,
+                TAOLIB_ERROR ((LM_ERROR,
                             "TAO (%P|%t) - IIOP_Transport::set_bidir_context_info, "
                             "error getting listen_point\n"));
 
@@ -322,7 +322,7 @@ TAO_IIOP_Transport::set_bidir_context_info (TAO_Operation_Details &opdetails)
   if (listen_point_list.length () == 0)
     {
       if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_ERROR,
+        TAOLIB_ERROR ((LM_ERROR,
                     "TAO (%P|%t) - IIOP_Transport::set_bidir_context_info, "
                     "listen_point list is empty, client should send a list "
                     "with at least one point\n"));
@@ -371,7 +371,7 @@ TAO_IIOP_Transport::get_listen_point (
   if (this->connection_handler_->peer ().get_local_addr (local_addr)
       == -1)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
+      TAOLIB_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("TAO (%P|%t) - IIOP_Transport::get_listen_point, ")
                          ACE_TEXT ("could not resolve local host address\n")),
                         -1);
@@ -397,7 +397,7 @@ TAO_IIOP_Transport::get_listen_point (
                                    endpoint_addr[index],
                                    interface_name.out ()) == -1)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
+          TAOLIB_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("TAO (%P|%t) - IIOP_Transport::get_listen_point, ")
                              ACE_TEXT ("could not resolve local host name\n")),
                             -1);
@@ -429,7 +429,7 @@ TAO_IIOP_Transport::get_listen_point (
 
       if (TAO_debug_level >= 5)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT("TAO (%P|%t) - Listen_Point_List[%d] = <%C:%d>\n"),
                       len,
                       point.host.in (),

@@ -251,7 +251,7 @@ TAO_DIOP_Acceptor::open (TAO_ORB_Core *orb_core,
     {
       // The hostname cache has already been set!
       // This is bad mojo, i.e. an internal TAO error.
-      ACE_ERROR_RETURN ((LM_ERROR,
+      TAOLIB_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("TAO (%P|%t) - ")
                          ACE_TEXT ("DIOP_Acceptor::open, ")
                          ACE_TEXT ("hostname already set\n\n")),
@@ -303,7 +303,7 @@ TAO_DIOP_Acceptor::open (TAO_ORB_Core *orb_core,
       (addr.get_type () != AF_INET6 ||
        addr.is_ipv4_mapped_ipv6 ()))
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
+      TAOLIB_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("TAO (%P|%t) - ")
                          ACE_TEXT ("DIOP_Acceptor::open, ")
                          ACE_TEXT ("non-IPv6 endpoints not allowed when ")
@@ -314,7 +314,7 @@ TAO_DIOP_Acceptor::open (TAO_ORB_Core *orb_core,
 
   if (TAO_debug_level > 2)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - ")
                   ACE_TEXT ("DIOP_Acceptor::open, specified host=%C:%d\n"),
                   (specified_hostname.length () == 0 ? "<null>" : specified_hostname.c_str ()),
@@ -361,7 +361,7 @@ TAO_DIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
     {
       // The hostname cache has already been set!
       // This is bad mojo, i.e. an internal TAO error.
-      ACE_ERROR_RETURN ((LM_ERROR,
+      TAOLIB_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("TAO (%P|%t) - ")
                          ACE_TEXT ("DIOP_Acceptor::open_default, ")
                          ACE_TEXT ("hostname already set\n\n")),
@@ -428,7 +428,7 @@ TAO_DIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
   if (this->connection_handler_->peer ().get_local_addr (address) != 0)
     {
       if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_ERROR,
+        TAOLIB_ERROR ((LM_ERROR,
                     ACE_TEXT ("TAO (%P|%t) DIOP_Acceptor::open_i, ")
                     ACE_TEXT ("%p"),
                     ACE_TEXT ("cannot get local addr\n\n")));
@@ -449,7 +449,7 @@ TAO_DIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
     {
       for (CORBA::ULong i = 0; i < this->endpoint_count_; ++i)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - DIOP_Acceptor::open_i, ")
                       ACE_TEXT ("listening on: <%C:%u>\n"),
                       this->hosts_[i],
@@ -539,7 +539,7 @@ TAO_DIOP_Acceptor::parse_address (const char *address,
       if (cp_pos == 0)
         {
           // No valid IPv6 address specified.
-          ACE_ERROR_RETURN ((LM_ERROR,
+          TAOLIB_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("TAO (%P|%t) - ")
                              ACE_TEXT ("DIOP_Acceptor::open, ")
                              ACE_TEXT ("invalid IPv6 decimal address specified\n\n")),
@@ -675,7 +675,7 @@ TAO_DIOP_Acceptor::dotted_decimal_address (ACE_INET_Addr &addr,
   if (tmp == 0 || result != 0)
     {
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
+        TAOLIB_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) - ")
                     ACE_TEXT ("DIOP_Acceptor::dotted_decimal_address, ")
                     ACE_TEXT ("%p\n\n"),
@@ -711,7 +711,7 @@ TAO_DIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core, int def_type)
     {
       if (TAO_debug_level > 0)
         {
-          ACE_DEBUG ((LM_WARNING,
+          TAOLIB_DEBUG ((LM_WARNING,
                       ACE_TEXT ("TAO (%P|%t) - Unable to probe network ")
                       ACE_TEXT ("interfaces.  Using default.")));
         }
@@ -823,7 +823,7 @@ TAO_DIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core, int def_type)
   if (this->endpoint_count_ == 0)
     {
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
+        TAOLIB_DEBUG ((LM_DEBUG,
                     ACE_TEXT("(%P|%t) - DIOP_Acceptor::probe_interfaces, ")
                     ACE_TEXT("found no usable addresses, def_type = %d\n"),
                     def_type));
@@ -924,7 +924,7 @@ TAO_DIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
   {
     if (TAO_debug_level > 0)
       {
-        ACE_DEBUG ((LM_DEBUG,
+        TAOLIB_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) - DIOP_Profile::object_key, v%d.%d\n"),
                     major,
                     minor));
@@ -941,7 +941,7 @@ TAO_DIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
     {
       if (TAO_debug_level > 0)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - DIOP_Acceptor::object_key, ")
                       ACE_TEXT ("error while decoding host/port")));
         }
@@ -1004,7 +1004,7 @@ TAO_DIOP_Acceptor::parse_options (const char *str)
 
       if (end == begin)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
+          TAOLIB_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("TAO (%P|%t) - Zero length DIOP option.\n")),
                             -1);
         }
@@ -1016,7 +1016,7 @@ TAO_DIOP_Acceptor::parse_options (const char *str)
 
           if (slot == len - 1
               || slot == ACE_CString::npos)
-            ACE_ERROR_RETURN ((LM_ERROR,
+            TAOLIB_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("TAO (%P|%t) - DIOP option <%C> is ")
                                ACE_TEXT ("missing a value.\n"),
                                opt.c_str ()),
@@ -1028,21 +1028,21 @@ TAO_DIOP_Acceptor::parse_options (const char *str)
           begin = end + 1;
 
           if (name.length () == 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
+            TAOLIB_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("TAO (%P|%t) - Zero length DIOP ")
                                ACE_TEXT ("option name.\n")),
                               -1);
 
           if (name == "priority")
             {
-              ACE_ERROR_RETURN ((LM_ERROR,
+              TAOLIB_ERROR_RETURN ((LM_ERROR,
                                  ACE_TEXT ("TAO (%P|%t) - Invalid DIOP endpoint format: ")
                                  ACE_TEXT ("endpoint priorities no longer supported.\n")),
                                 -1);
             }
           else
             {
-              ACE_ERROR_RETURN ((LM_ERROR,
+              TAOLIB_ERROR_RETURN ((LM_ERROR,
                                  ACE_TEXT ("TAO (%P|%t) - Invalid DIOP option: <%C>\n"),
                                  name.c_str ()),
                                 -1);

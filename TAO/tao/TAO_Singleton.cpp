@@ -31,9 +31,9 @@ TAO_Singleton<TYPE, ACE_LOCK>::dump (void)
   ACE_TRACE ("TAO_Singleton<TYPE, ACE_LOCK>::dump");
 
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("instance_ = %@"),
+  TAOLIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("instance_ = %@"),
               TAO_Singleton<TYPE, ACE_LOCK>::instance_i ()));
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+  TAOLIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
 #endif /* ACE_HAS_DUMP */
 }
@@ -128,9 +128,9 @@ TAO_TSS_Singleton<TYPE, ACE_LOCK>::dump (void)
   ACE_TRACE ("TAO_TSS_Singleton<TYPE, ACE_LOCK>::dump");
 
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("instance_ = %@"),
+  TAOLIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("instance_ = %@"),
               TAO_TSS_Singleton<TYPE, ACE_LOCK>::instance_i ()));
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+  TAOLIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
 #endif /* ACE_HAS_DUMP */
 }

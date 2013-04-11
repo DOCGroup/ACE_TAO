@@ -39,7 +39,7 @@ TAO_LF_Strategy_Complete::reset_event_loop_thread (int call_reset,
   int const result = lf.elect_new_leader ();
 
   if (result == -1)
-    ACE_ERROR ((LM_ERROR,
+    TAOLIB_ERROR ((LM_ERROR,
                 ACE_TEXT ("TAO (%P|%t) - Failed to wake up ")
                 ACE_TEXT ("a follower thread\n")));
 }

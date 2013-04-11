@@ -71,7 +71,7 @@ TAO::CSD::Strategy_Base::dispatch_request
 
       default:
         if (TAO_debug_level > 0)
-          ACE_ERROR((LM_ERROR,
+          TAOLIB_ERROR((LM_ERROR,
                      ACE_TEXT("(%P|%t) Unknown result (%d) from call to ")
                      ACE_TEXT("dispatch_remote_request_i().\n"), result));
         // Since we do not know what to do here, just do the minimum, which

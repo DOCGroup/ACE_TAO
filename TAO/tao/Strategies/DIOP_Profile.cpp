@@ -96,7 +96,7 @@ TAO_DIOP_Profile::decode_profile (TAO_InputCDR& cdr)
       || cdr.read_ushort (this->endpoint_.port_) == 0)
     {
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
+        TAOLIB_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) - DIOP_Profile::decode_profile, ")
                     ACE_TEXT ("error while decoding host/port\n")));
       return -1;
@@ -152,7 +152,7 @@ TAO_DIOP_Profile::parse_string_i (const char *ior)
           // No valid IPv6 address specified.
           if (TAO_debug_level > 0)
             {
-              ACE_DEBUG ((LM_ERROR,
+              TAOLIB_DEBUG ((LM_ERROR,
                           ACE_TEXT ("\nTAO (%P|%t) - DIOP_Profile::parse_string_i, ")
                           ACE_TEXT ("invalid IPv6 decimal address specified.\n")));
             }
@@ -178,7 +178,7 @@ TAO_DIOP_Profile::parse_string_i (const char *ior)
     {
       if (TAO_debug_level > 0)
         {
-          ACE_ERROR ((LM_ERROR,
+          TAOLIB_ERROR ((LM_ERROR,
                    ACE_TEXT ("\nTAO (%P|%t) DIOP_Profile: ")
                    ACE_TEXT ("Host address may be omited only when no port has been specified.\n")));
         }
@@ -262,7 +262,7 @@ TAO_DIOP_Profile::parse_string_i (const char *ior)
           // initialized.  Just throw an exception.
 
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
+            TAOLIB_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("TAO (%P|%t) - ")
                         ACE_TEXT ("DIOP_Profile::parse_string_i, ")
                         ACE_TEXT ("%p\n\n"),
@@ -489,7 +489,7 @@ TAO_DIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
     encap << this->ref_object_key_->object_key ();
   else
     {
-      ACE_ERROR ((LM_ERROR,
+      TAOLIB_ERROR ((LM_ERROR,
                   "TAO (%P|%t) - DIOP_Profile::create_profile_body, "
                   "no object key marshalled\n"));
     }

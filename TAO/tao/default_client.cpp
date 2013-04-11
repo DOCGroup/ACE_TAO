@@ -310,14 +310,14 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
         {
           // Can we assume there is an argument after the option?
           // curarg++;
-          ACE_ERROR ((LM_ERROR,
+          TAOLIB_ERROR ((LM_ERROR,
                       "Client_Strategy_Factory - "
                       "unknown option <%s>\n",
                       argv[curarg]));
         }
       else
         {
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       "Client_Strategy_Factory - "
                       "ignoring option <%s>\n",
                       argv[curarg]));
@@ -485,7 +485,7 @@ TAO_Default_Client_Strategy_Factory::report_option_value_error (
                                  const ACE_TCHAR* option_name,
                                  const ACE_TCHAR* option_value)
 {
-  ACE_DEBUG((LM_DEBUG,
+  TAOLIB_DEBUG((LM_DEBUG,
              ACE_TEXT ("Client_Strategy_Factory - unknown argument")
              ACE_TEXT (" <%s> for <%s>\n"),
              option_value, option_name));

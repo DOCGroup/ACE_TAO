@@ -98,7 +98,7 @@ TAO_Linear_Network_Priority_Mapping::to_network (
   RTCORBA::NetworkPriority &network_priority)
 {
   if (TAO_debug_level)
-    ACE_DEBUG ((LM_DEBUG,
+    TAOLIB_DEBUG ((LM_DEBUG,
                 "TAO_Linear_Network_Priority_Mapping::to_network corba_priority %d\n",
                 corba_priority));
 
@@ -113,7 +113,7 @@ TAO_Linear_Network_Priority_Mapping::to_network (
   network_priority = dscp[array_slot];
 
   if (TAO_debug_level)
-    ACE_DEBUG ((LM_DEBUG,
+    TAOLIB_DEBUG ((LM_DEBUG,
                 "TAO_Linear_Network_Priority_Mapping::to_network = %x\n",
                 network_priority));
 
@@ -125,7 +125,7 @@ TAO_Linear_Network_Priority_Mapping::to_CORBA (RTCORBA::NetworkPriority network_
                                                RTCORBA::Priority &/*corba_priority*/)
 {
   if (TAO_debug_level)
-    ACE_DEBUG ((LM_DEBUG,
+    TAOLIB_DEBUG ((LM_DEBUG,
                 "TAO_Linear_Network_Priority_Mapping::to_CORBA network_priority %d\n",
                 network_priority));
 

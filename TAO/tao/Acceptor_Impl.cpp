@@ -71,7 +71,7 @@ TAO_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *sh,
 
   // Indicate that this transport was opened in the server role
   if (TAO_debug_level > 6)
-    ACE_DEBUG ((LM_DEBUG,
+    TAOLIB_DEBUG ((LM_DEBUG,
                 "TAO (%P|%t) - Concurrency_Strategy::activate_svc_handler, "
                 "opened as TAO_SERVER_ROLE\n"));
 
@@ -102,7 +102,7 @@ TAO_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *sh,
 
       if (TAO_debug_level > 0)
         {
-          ACE_ERROR ((LM_ERROR,
+          TAOLIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO (%P|%t) - Concurrency_Strategy::activate_svc_handler, ")
                       ACE_TEXT ("could not add the handler to cache\n")));
         }
@@ -175,7 +175,7 @@ TAO_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *sh,
            else
              error = ACE_TEXT("could not register new connection in the reactor");
 
-           ACE_ERROR ((LM_ERROR,
+           TAOLIB_ERROR ((LM_ERROR,
                        ACE_TEXT("TAO (%P|%t) - Concurrency_Strategy::activate_svc_handler, ")
                        ACE_TEXT("%s\n"), error));
          }

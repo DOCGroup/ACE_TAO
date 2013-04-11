@@ -41,7 +41,7 @@ TAO_Exclusive_TMS::request_id (void)
     ++this->request_id_generator_;
 
   if (TAO_debug_level > 4)
-    ACE_DEBUG ((LM_DEBUG,
+    TAOLIB_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO (%P|%t) - Exclusive_TMS::request_id - <%d>\n"),
                 this->request_id_generator_));
 
@@ -83,7 +83,7 @@ TAO_Exclusive_TMS::dispatch_reply (TAO_Pluggable_Reply_Params &params)
   if (!this->rd_ || this->request_id_ != params.request_id_)
     {
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
+        TAOLIB_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) - Exclusive_TMS::dispatch_reply - <%d != %d>\n"),
                     this->request_id_, params.request_id_));
 
@@ -108,7 +108,7 @@ TAO_Exclusive_TMS::reply_timed_out (CORBA::ULong request_id)
   if (!this->rd_ || this->request_id_ != request_id)
     {
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
+        TAOLIB_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) - Exclusive_TMS::reply_timed_out - <%d != %d>\n"),
                     this->request_id_, request_id));
 

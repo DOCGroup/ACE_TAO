@@ -226,7 +226,7 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
               else
                 {
                   if (TAO_debug_level > 0)
-                    ACE_DEBUG ((LM_DEBUG, "ERROR: TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile. "
+                    TAOLIB_DEBUG ((LM_DEBUG, "ERROR: TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile. "
                                 "Unable to access RT CORBA Priority in client thread "
                                 "accessing object with CLIENT_PROPAGATED priority model.\n"));
                   throw CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
