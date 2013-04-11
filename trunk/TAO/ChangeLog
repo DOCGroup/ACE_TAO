@@ -1,3 +1,39 @@
+Thu Apr 11 16:51:31 UTC 2013  Martin Corino  <mcorino@remedy.nl>
+        
+        Implemented an improvement (fix) for oneways with SYNC_NONE sync scope
+        policy which makes the transport honour buffering constraints on the 
+        first oneway request queued before the connection is established.
+        This fixes Bugzilla 3384.
+
+        * tao/Profile_Transport_Resolver.cpp:
+          Removed the call to TAO_Transport::set_flush_in_post_open() since this
+          requirement is now checked in Transport::format_queue_message().
+
+        * tao/Transport.h:
+        * tao/Transport.inl:
+          Removed public method TAO_Transport::set_flush_in_post_open() since this
+          is not needed anymore.
+
+        * tao/Transport.cpp:
+          Added check on buffering constraints in TAO_Transport::format_queue_message()
+          after queuing the message setting flush_in_post_open_ as needed.
+          Added check in TAO_Transport::check_buffering_constraints_i() on connection
+          state since this method can now be called in both a connected as well as 
+          unconnected state.
+
+        * bin/tao_orb_tests.lst:
+        * tests/Bug_3384_Regression/Client_i.h:
+        * tests/Bug_3384_Regression/Client_i.cpp:
+        * tests/Bug_3384_Regression/README.txt:
+        * tests/Bug_3384_Regression/Server_i.h:
+        * tests/Bug_3384_Regression/Server_i.cpp:
+        * tests/Bug_3384_Regression/Test.idl:
+        * tests/Bug_3384_Regression/client.cpp:
+        * tests/Bug_3384_Regression/run_test.pl:
+        * tests/Bug_3384_Regression/server.cpp:
+        * tests/Bug_3384_Regression/test.mpc:
+          Added new regression test.
+
 Thu Apr 11 16:16:21 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         branch merge from branches/OCI_Asynch_ImR. This is a re-implementation

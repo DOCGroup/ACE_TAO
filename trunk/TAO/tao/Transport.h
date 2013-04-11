@@ -666,9 +666,6 @@ public:
   /// Accessor for synchronizing Transport OutputCDR access
   TAO_SYNCH_MUTEX &output_cdr_lock (void);
 
-  /// Set the flush in post open flag
-  void set_flush_in_post_open (void);
-
   /// Can the transport be purged?
   bool can_be_purged (void);
 
