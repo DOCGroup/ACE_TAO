@@ -2,10 +2,10 @@ $Id$
 
 This document is also available at the following URL:
 
-http://www.cs.wustl.edu/~schmidt/ACE.html
+http://www.dre.vanderbilt.edu/~schmidt/ACE.html
 
 All software and documentation is available via both anonymous ftp and
-the World Wide Web.]
+the http.]
 
 THE ADAPTIVE COMMUNICATION ENVIRONMENT (ACE)
 
@@ -149,17 +149,15 @@ applications provided with the ACE release include:
 
 OBTAINING ACE
 
-The current ACE release is provided as a tar file that is around 3 Meg
-compressed using GNU gzip.  ACE may be obtained electronically from
-http://www.cs.wustl.edu/~schmidt/ACE-obtain.html.  This release
-contains the source code, test drivers, and example applications
-(including JAWS) for C++ wrapper libraries and the higher-level ACE
-network programming framework developed as part of the ADAPTIVE
-project at the University of California, Irvine and at Washington
-University, St. Louis.
+ACE may be obtained electronically from
+http://download.dre.vanderbilt.edu.  This release contains the source
+code, test drivers, and example applications (including JAWS) for C++
+wrapper libraries and the higher-level ACE network programming
+framework developed as part of the ADAPTIVE project at the University
+of California, Irvine, Washington University, St. Louis, and
+Vanderbilt University.
 
-You can get The ACE ORB (TAO) in a companion release at
-http://www.cs.wustl.edu/~schmidt/TAO.html.
+You can get The ACE ORB (TAO) in a companion release at the same URL.
 
 ----------------------------------------
 
@@ -170,45 +168,45 @@ described in issues of the C++ Report, as well as in proceedings of
 many journals, conferences, and workshops.
 
 A collection of white papers and tutorial handouts are included at
-ftp://wuarchive.wustl.edu/languages/c++/ACE/ACE-documentation.  This
-directory contains postscript versions of various papers that describe
-different aspects of ACE.
 
-I update these papers periodically to reflect changes to the ACE
-architecture.  Therefore, you might want to check the date on the
-files to make sure that you have read the most recent versions of
-these papers.
+http://www.dre.vanderbilt.edu/~schmidt/ACE-papers.html
+
+This page contains PDF versions of various papers that describe
+different aspects of ACE.
 
 This material is also available available via the WWW at URL:
 
-http://www.cs.wustl.edu/~schmidt/ACE.html
+http://www.dre.vanderbilt.edu/~schmidt/ACE.html
 
 ----------------------------------------
 
 ACE MAILING LIST AND NEWSGROUP
 
-A mailing list, ace-users@list.isis.vanderbilt.edu, is available for discussing
-bug fixes, enhancements, and porting issues regarding ACE.  Please
-send mail to me at the ace-users-request@list.isis.vanderbilt.edu
-if you'd like to join the mailing list.  There is also a USENET newsgroup
-called comp.soft-sys.ace. Please see
-http://www.cs.wustl.edu/~schmidt/ACE-mail.html for details on how to
-subscribe to the mailing list.
+A mailing list, ace-users@list.isis.vanderbilt.edu, is available for
+discussing bug fixes, enhancements, and porting issues regarding ACE.
+Please send mail to me at the
+ace-users-request@list.isis.vanderbilt.edu if you'd like to join the
+mailing list.  There is also a USENET newsgroup called
+comp.soft-sys.ace. Please see
+http://www.dre.vanderbilt.edu/~schmidt/ACE-mail.html for details on
+how to subscribe to the mailing list.
 
 ----------------------------------------
 
 BUILDING AND INSTALLING ACE
 
-Please refer to the http://www.cs.wustl.edu/~schmidt/ACE-install.html
-file for information on how to build and test the ACE wrappers.  The
+Please refer to the
+http://www.dre.vanderbilt.edu/~schmidt/ACE-install.html file for
+information on how to build and test the ACE wrappers.  The
 BIBLIOGRAPHY file contains information on where to obtain articles
 that describe the ACE wrappers and the ADAPTIVE system in more detail.
 
 The current release has been tested extensively, but if you find any
 bugs, please report them to the ACE mailing list
-ace-users@cs.wustl.edu using the $ACE_ROOT/PROBLEM-REPORT-FORM.
-Please use the same form to submit questions, comments, etc.
-To ensure that you see responses, please do one of the following:
+ace-users@list.isis.vanderbilt.edu using the
+$ACE_ROOT/PROBLEM-REPORT-FORM.  Please use the same form to submit
+questions, comments, etc.  To ensure that you see responses, please do
+one of the following:
 
     1) Subscribe to the ace-users mail list, by sending email with
        contents "subscribe ace-users" to
