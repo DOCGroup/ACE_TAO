@@ -1,7 +1,7 @@
 // -*- C++ -*-
 // $Id$
 
-#include "ace/Log_Msg.h"
+#include "ace/Log_Category.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

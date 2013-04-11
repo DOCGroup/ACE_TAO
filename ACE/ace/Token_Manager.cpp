@@ -153,8 +153,8 @@ ACE_Token_Manager::check_deadlock (ACE_Tokens *token, ACE_Token_Proxy *proxy)
       // The caller is an owner, so we have a deadlock situation.
       if (debug_)
         {
-          ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%t) Deadlock detected.\n")));
-          ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("%s owns %s and is waiting for %s.\n"),
+          ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%t) Deadlock detected.\n")));
+          ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("%s owns %s and is waiting for %s.\n"),
                       proxy->client_id (),
                       token->name (),
                       proxy->token_->name ()));
@@ -175,7 +175,7 @@ ACE_Token_Manager::check_deadlock (ACE_Tokens *token, ACE_Token_Proxy *proxy)
             {
               if (debug_)
                 {
-                  ACE_DEBUG ((LM_DEBUG,
+                  ACELIB_DEBUG ((LM_DEBUG,
                               ACE_TEXT ("%s owns %s and is waiting for %s.\n"),
                               e->client_id (),
                               token->name (),
@@ -231,7 +231,7 @@ ACE_Token_Manager::release_token (ACE_Tokens *&token)
         // we did not find one in the collection
         {
           errno = ENOENT;
-          ACE_ERROR ((LM_ERROR, ACE_TEXT ("Token Manager could not release %s:%d\n"),
+          ACELIB_ERROR ((LM_ERROR, ACE_TEXT ("Token Manager could not release %s:%d\n"),
                       token->name (), token->type ()));
           // @@ bad
         }
@@ -257,13 +257,13 @@ ACE_Token_Manager::dump (void) const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Token_Manager::dump");
-  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("ACE_Token_Manager::dump:\n")));
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("lock_\n")));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("ACE_Token_Manager::dump:\n")));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("lock_\n")));
   lock_.dump ();
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("collection_\n")));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("collection_\n")));
   collection_.dump ();
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
 

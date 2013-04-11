@@ -1,7 +1,7 @@
 // $Id$
 #include "ace/Remote_Name_Space.h"
 #include "ace/Auto_Ptr.h"
-#include "ace/Log_Msg.h"
+#include "ace/Log_Category.h"
 #include "ace/SString.h"
 #include "ace/OS_NS_string.h"
 
@@ -34,7 +34,7 @@ ACE_Remote_Name_Space::ACE_Remote_Name_Space (const ACE_TCHAR *hostname,
 {
   ACE_TRACE ("ACE_Remote_Name_Space::ACE_Remote_Name_Space");
   if (this->open (hostname, port) == -1)
-    ACE_ERROR ((LM_ERROR,  ACE_TEXT ("%p\n"),  ACE_TEXT ("ACE_Remote_Name_Space::ACE_Remote_Name_Space")));
+    ACELIB_ERROR ((LM_ERROR,  ACE_TEXT ("%p\n"),  ACE_TEXT ("ACE_Remote_Name_Space::ACE_Remote_Name_Space")));
 }
 
 int
@@ -150,7 +150,7 @@ ACE_Remote_Name_Space::list_names (ACE_WSTRING_SET &set,
   while (reply.msg_type () != ACE_Name_Request::MAX_ENUM)
     {
       if (this->ns_proxy_.recv_reply (reply) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
+        ACELIB_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("%p\n"),
                            ACE_TEXT ("ACE_Remote_Name_Space::list_names")),
                            -1);
@@ -184,7 +184,7 @@ ACE_Remote_Name_Space::list_values (ACE_WSTRING_SET &set,
   while (reply.msg_type () != ACE_Name_Request::MAX_ENUM)
     {
       if (this->ns_proxy_.recv_reply (reply) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
+        ACELIB_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("%p\n"),
                            ACE_TEXT ("ACE_Remote_Name_Space::list_values")),
                            -1);
@@ -220,7 +220,7 @@ ACE_Remote_Name_Space::list_types (ACE_WSTRING_SET &set,
   while (reply.msg_type () != ACE_Name_Request::MAX_ENUM)
     {
       if (this->ns_proxy_.recv_reply (reply) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
+        ACELIB_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("%p\n"),
                            ACE_TEXT ("ACE_Remote_Name_Space::list_values")),
                            -1);
@@ -255,7 +255,7 @@ ACE_Remote_Name_Space::list_name_entries (ACE_BINDING_SET &set,
   while (reply.msg_type () != ACE_Name_Request::MAX_ENUM)
     {
       if (this->ns_proxy_.recv_reply (reply) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
+        ACELIB_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("%p\n"),
                            ACE_TEXT ("ACE_Remote_Name_Space::list_names")),
                            -1);
@@ -296,7 +296,7 @@ ACE_Remote_Name_Space::list_value_entries (ACE_BINDING_SET &set,
   while (reply.msg_type () != ACE_Name_Request::MAX_ENUM)
     {
       if (this->ns_proxy_.recv_reply (reply) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
+        ACELIB_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("%p\n"),
                            ACE_TEXT ("ACE_Remote_Name_Space::list_values")),
                            -1);
@@ -337,7 +337,7 @@ ACE_Remote_Name_Space::list_type_entries (ACE_BINDING_SET &set,
   while (reply.msg_type () != ACE_Name_Request::MAX_ENUM)
     {
       if (this->ns_proxy_.recv_reply (reply) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
+        ACELIB_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("%p\n"),
                            ACE_TEXT ("ACE_Remote_Name_Space::list_values")),
                           -1);
@@ -368,9 +368,9 @@ ACE_Remote_Name_Space::dump (void) const
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Remote_Name_Space::dump");
 
-  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   this->ns_proxy_.dump ();
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
 

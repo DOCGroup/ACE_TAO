@@ -10,7 +10,7 @@
 #include "ace/MEM_Addr.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Log_Msg.h"
+#include "ace/Log_Category.h"
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/os_include/os_netdb.h"
@@ -154,10 +154,10 @@ ACE_MEM_Addr::dump (void) const
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_MEM_Addr::dump");
 
-  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   this->external_.dump ();
   this->internal_.dump ();
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
 

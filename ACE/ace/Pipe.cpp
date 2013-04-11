@@ -3,7 +3,7 @@
 #include "ace/Pipe.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Connector.h"
-#include "ace/Log_Msg.h"
+#include "ace/Log_Category.h"
 #include "ace/OS_NS_sys_socket.h"
 #include "ace/OS_Memory.h"
 #include "ace/Truncate.h"
@@ -27,10 +27,10 @@ ACE_Pipe::dump (void) const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Pipe::dump");
-  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("handles_[0] = %d"), this->handles_[0]));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nhandles_[1] = %d\n"), this->handles_[1]));
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("handles_[0] = %d"), this->handles_[0]));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nhandles_[1] = %d\n"), this->handles_[1]));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
 
@@ -125,7 +125,7 @@ ACE_Pipe::open (int buffer_size)
 #elif defined (ACE_HAS_STREAM_PIPES) || defined (__QNX__)
   ACE_UNUSED_ARG (buffer_size);
   if (ACE_OS::pipe (this->handles_) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ACELIB_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("pipe")),
                       -1);
@@ -143,7 +143,7 @@ ACE_Pipe::open (int buffer_size)
                         (void *) arg) == -1)
     {
       this->close ();
-      ACE_ERROR_RETURN ((LM_ERROR,
+      ACELIB_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("%p\n"),
                          ACE_TEXT ("ioctl")), -1);
     }
@@ -154,7 +154,7 @@ ACE_Pipe::open (int buffer_size)
                           SOCK_STREAM,
                           0,
                           this->handles_) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ACELIB_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("socketpair")),
                       -1);
@@ -237,7 +237,7 @@ ACE_Pipe::ACE_Pipe (ACE_HANDLE handles[2])
   ACE_TRACE ("ACE_Pipe::ACE_Pipe");
 
   if (this->open (handles) == -1)
-    ACE_ERROR ((LM_ERROR,
+    ACELIB_ERROR ((LM_ERROR,
                 ACE_TEXT ("ACE_Pipe::ACE_Pipe")));
 }
 

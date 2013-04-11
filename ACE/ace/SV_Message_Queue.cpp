@@ -1,7 +1,7 @@
 // $Id$
 
 #include "ace/SV_Message_Queue.h"
-#include "ace/Log_Msg.h"
+#include "ace/Log_Category.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/SV_Message_Queue.inl"
@@ -38,7 +38,7 @@ ACE_SV_Message_Queue::ACE_SV_Message_Queue (key_t external_id,
 {
   ACE_TRACE ("ACE_SV_Message_Queue::ACE_SV_Message_Queue");
   if (this->open (external_id, create, perms) == -1)
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"),
+    ACELIB_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"),
                 ACE_TEXT ("ACE_SV_Message_Queue::ACE_SV_Message_Queue")));
 }
 

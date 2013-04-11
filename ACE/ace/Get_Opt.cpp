@@ -7,7 +7,7 @@
 #endif /* __ACE_INLINE__ */
 
 #include "ace/ACE.h"
-#include "ace/Log_Msg.h"
+#include "ace/Log_Category.h"
 #include "ace/SString.h"
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_string.h"
@@ -280,7 +280,7 @@ ACE_Get_Opt::long_option_i (void)
       // Great, we found a match, but unfortunately we found more than
       // one and it wasn't exact.
       if (this->opterr)
-        ACE_ERROR ((LM_ERROR,
+        ACELIB_ERROR ((LM_ERROR,
                     ACE_TEXT ("%s: option `%s' is ambiguous\n"),
                     this->argv_[0], this->argv_[this->optind]));
       this->nextchar_ = 0;
@@ -305,7 +305,7 @@ ACE_Get_Opt::long_option_i (void)
               // Whoops, we've got what looks like an argument, but we
               // don't want one.
               if (this->opterr)
-                  ACE_ERROR
+                  ACELIB_ERROR
                     ((LM_ERROR,
                       ACE_TEXT ("%s: long option `--%s' doesn't allow ")
                       ACE_TEXT ("an argument\n"),
@@ -326,7 +326,7 @@ ACE_Get_Opt::long_option_i (void)
             {
               // All out of elements, so we have to punt...
               if (this->opterr)
-                ACE_ERROR ((LM_ERROR,
+                ACELIB_ERROR ((LM_ERROR,
                             ACE_TEXT ("%s: long option '--%s' requires ")
                             ACE_TEXT ("an argument\n"),
                             this->argv_[0], pfound->name_));
@@ -350,7 +350,7 @@ ACE_Get_Opt::long_option_i (void)
       // signature was passed, e.g. "--", or it's not a short (not sure when
       // this could happen) it's an error.
       if (this->opterr)
-        ACE_ERROR ((LM_ERROR,
+        ACELIB_ERROR ((LM_ERROR,
                     ACE_TEXT ("%s: illegal long option '--%s'\n"),
                     this->argv_[0], this->nextchar_));
       this->nextchar_ = 0;
@@ -381,7 +381,7 @@ ACE_Get_Opt::short_option_i (void)
   if (oli == 0 || opt == ':')
     {
       if (this->opterr)
-        ACE_ERROR ((LM_ERROR,
+        ACELIB_ERROR ((LM_ERROR,
                     ACE_TEXT ("%s: illegal short option -- %c\n"),
                     this->argv_[0], opt));
       return '?';
@@ -422,7 +422,7 @@ ACE_Get_Opt::short_option_i (void)
             {
               // Ran out of arguments before finding required argument.
               if (this->opterr)
-                ACE_ERROR ((LM_ERROR,
+                ACELIB_ERROR ((LM_ERROR,
                             ACE_TEXT ("%s: short option requires ")
                             ACE_TEXT ("an argument -- %c\n"),
                             this->argv_[0], opt));
@@ -506,7 +506,7 @@ ACE_Get_Opt::long_option (const ACE_TCHAR *name,
                   if (has_arg != ARG_OPTIONAL)
                     {
                       if (this->opterr)
-                        ACE_ERROR
+                        ACELIB_ERROR
                           ((LM_ERROR,
                             ACE_TEXT ("Existing short option '%c' takes ")
                             ACE_TEXT ("optional argument; adding %s ")
@@ -519,7 +519,7 @@ ACE_Get_Opt::long_option (const ACE_TCHAR *name,
                 if (has_arg != ARG_REQUIRED)
                   {
                     if (this->opterr)
-                      ACE_ERROR
+                      ACELIB_ERROR
                         ((LM_ERROR,
                           ACE_TEXT ("Existing short option '%c' requires ")
                           ACE_TEXT ("an argument; adding %s ")
@@ -531,7 +531,7 @@ ACE_Get_Opt::long_option (const ACE_TCHAR *name,
           else if (has_arg != NO_ARG)
             {
               if (this->opterr)
-                ACE_ERROR
+                ACELIB_ERROR
                   ((LM_ERROR,
                     ACE_TEXT ("Existing short option '%c' does not ")
                     ACE_TEXT ("accept an argument; adding %s ")
@@ -563,7 +563,7 @@ ACE_Get_Opt::long_option (const ACE_TCHAR *name,
       || this->long_opts_.set (option, size) != 0)
     {
       delete option;
-      ACE_ERROR_RETURN
+      ACELIB_ERROR_RETURN
         ((LM_ERROR, ACE_TEXT ("Could not add long option to array.\n")),
          -1);
     }
@@ -597,8 +597,8 @@ ACE_Get_Opt::dump (void) const
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Get_Opt::dump");
 
-  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")
+  ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")
               ACE_TEXT ("opstring_ = %s\n")
               ACE_TEXT ("long_only_ = %d\n")
               ACE_TEXT ("has_colon_ = %d\n")
@@ -618,7 +618,7 @@ ACE_Get_Opt::dump (void) const
   size_t size = this->long_opts_.size ();
   for (u_int i = 0; i < size ; ++i)
     {
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")
+      ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")
                   ACE_TEXT ("long_option name_ = %s\n")
                   ACE_TEXT ("has_arg_ = %d\n")
                   ACE_TEXT ("val_ = %d\n"),
@@ -626,7 +626,7 @@ ACE_Get_Opt::dump (void) const
                   this->long_opts_[i]->has_arg_,
                   this->long_opts_[i]->val_));
     }
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
 

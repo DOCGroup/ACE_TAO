@@ -7,7 +7,7 @@
 #include "ace/OS_NS_errno.h"
 #include "ace/Handle_Set.h"
 #include "ace/INET_Addr.h"
-#include "ace/Log_Msg.h"
+#include "ace/Log_Category.h"
 #include "ace/Countdown_Time.h"
 #include "ace/Truncate.h"
 

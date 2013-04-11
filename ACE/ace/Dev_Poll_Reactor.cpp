@@ -279,7 +279,7 @@ int
 ACE_Dev_Poll_Reactor_Notify::handle_input (ACE_HANDLE /*handle*/)
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor_Notify::handle_input");
-  ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("SHOULD NOT BE HERE.\n")), -1);
+  ACELIB_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("SHOULD NOT BE HERE.\n")), -1);
 }
 
 ACE_HANDLE
@@ -331,7 +331,7 @@ ACE_Dev_Poll_Reactor_Notify::dispatch_notify (ACE_Notification_Buffer &buffer)
           break;
         default:
           // Should we bail out if we get an invalid mask?
-          ACE_ERROR ((LM_ERROR,
+          ACELIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("dispatch_notify invalid mask = %d\n"),
                       buffer.mask_));
         }
@@ -386,12 +386,12 @@ ACE_Dev_Poll_Reactor_Notify::dump (void) const
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Dev_Poll_Reactor_Notify::dump");
 
-  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,
+  ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  ACELIB_DEBUG ((LM_DEBUG,
               ACE_TEXT ("dp_reactor_ = %@"),
               this->dp_reactor_));
   this->notification_pipe_.dump ();
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
 
@@ -610,7 +610,7 @@ ACE_Dev_Poll_Reactor::ACE_Dev_Poll_Reactor (ACE_Sig_Handler *sh,
                   tq,
                   disable_notify_pipe,
                   notify) == -1)
-    ACE_ERROR ((LM_ERROR,
+    ACELIB_ERROR ((LM_ERROR,
                 ACE_TEXT ("%p\n"),
                 ACE_TEXT ("ACE_Dev_Poll_Reactor::open ")
                 ACE_TEXT ("failed inside ")
@@ -651,7 +651,7 @@ ACE_Dev_Poll_Reactor::ACE_Dev_Poll_Reactor (size_t size,
                   tq,
                   disable_notify_pipe,
                   notify) == -1)
-    ACE_ERROR ((LM_ERROR,
+    ACELIB_ERROR ((LM_ERROR,
                 ACE_TEXT ("%p\n"),
                 ACE_TEXT ("ACE_Dev_Poll_Reactor::open ")
                 ACE_TEXT ("failed inside ACE_Dev_Poll_Reactor::CTOR")));
@@ -1042,7 +1042,7 @@ ACE_Dev_Poll_Reactor::handle_events_i (ACE_Time_Value *max_wait_time,
     {
       result = this->work_pending_i (max_wait_time);
       if (result == -1 && (this->restart_ == 0 || errno != EINTR))
-        ACE_ERROR ((LM_ERROR, ACE_TEXT("%t: %p\n"), ACE_TEXT("work_pending_i")));
+        ACELIB_ERROR ((LM_ERROR, ACE_TEXT("%t: %p\n"), ACE_TEXT("work_pending_i")));
     }
   while (result == -1 && this->restart_ != 0 && errno == EINTR);
 
@@ -1236,7 +1236,7 @@ ACE_Dev_Poll_Reactor::dispatch_io_event (Token_Guard &guard)
         }
       else
         {
-          ACE_ERROR ((LM_ERROR,
+          ACELIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("(%t) dispatch_io h %d unknown events 0x%x\n"),
                       handle, revents));
         }
@@ -1456,7 +1456,7 @@ ACE_Dev_Poll_Reactor::register_handler_i (ACE_HANDLE handle,
 
      if (::epoll_ctl (this->poll_fd_, op, handle, &epev) == -1)
        {
-         ACE_ERROR ((LM_ERROR, ACE_TEXT("%p\n"), ACE_TEXT("epoll_ctl")));
+         ACELIB_ERROR ((LM_ERROR, ACE_TEXT("%p\n"), ACE_TEXT("epoll_ctl")));
          (void) this->handler_rep_.unbind (handle);
          return -1;
        }
@@ -1470,7 +1470,7 @@ ACE_Dev_Poll_Reactor::register_handler_i (ACE_HANDLE handle,
      // again, possibly for different event.  Add new mask to the
      // current one.
      if (this->mask_ops_i (handle, mask, ACE_Reactor::ADD_MASK) == -1)
-       ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT("%p\n"), ACE_TEXT("mask_ops_i")),
+       ACELIB_ERROR_RETURN ((LM_ERROR, ACE_TEXT("%p\n"), ACE_TEXT("mask_ops_i")),
                          -1);
    }
 
@@ -2434,17 +2434,17 @@ ACE_Dev_Poll_Reactor::dump (void) const
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Dev_Poll_Reactor::dump");
 
-  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("restart_ = %d\n"), this->restart_));
-  ACE_DEBUG ((LM_DEBUG,
+  ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("restart_ = %d\n"), this->restart_));
+  ACELIB_DEBUG ((LM_DEBUG,
               ACE_TEXT ("initialized_ = %d"),
               this->initialized_));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("poll_fd_ = %d"), this->poll_fd_));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("size_ = %u"), this->handler_rep_.size ()));
-  ACE_DEBUG ((LM_DEBUG,
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("poll_fd_ = %d"), this->poll_fd_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("size_ = %u"), this->handler_rep_.size ()));
+  ACELIB_DEBUG ((LM_DEBUG,
               ACE_TEXT ("deactivated_ = %d"),
               this->deactivated_));
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
 
@@ -2532,7 +2532,7 @@ ACE_Dev_Poll_Reactor::Token_Guard::acquire_quietly (ACE_Time_Value *max_wait)
         return 0;
       else
         {
-          ACE_ERROR ((LM_ERROR, ACE_TEXT("%t: %p\n"), ACE_TEXT("token acquire_read")));
+          ACELIB_ERROR ((LM_ERROR, ACE_TEXT("%t: %p\n"), ACE_TEXT("token acquire_read")));
           return -1;
         }
     }

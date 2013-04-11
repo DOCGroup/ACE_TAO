@@ -59,7 +59,7 @@ void
 ACE_Stats_Value::dump (void) const
 {
 #if defined (ACE_HAS_DUMP)
-  ACE_DEBUG ((LM_DEBUG,
+  ACELIB_DEBUG ((LM_DEBUG,
               ACE_TEXT ("precision: %u digits; whole: %u, fractional: %u\n"),
               precision_, whole_, fractional_));
 #endif /* ACE_HAS_DUMP */

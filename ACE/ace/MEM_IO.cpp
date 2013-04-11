@@ -50,7 +50,7 @@ ACE_Reactive_MEM_IO::recv_buf (ACE_MEM_SAP_Node *&buf,
 
   if (retv == 0)
     {
-      //      ACE_DEBUG ((LM_INFO, "MEM_Stream closed\n"));
+      //      ACELIB_DEBUG ((LM_INFO, "MEM_Stream closed\n"));
       buf = 0;
       return 0;
     }

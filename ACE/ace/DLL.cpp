@@ -2,7 +2,7 @@
 
 #include "ace/DLL.h"
 
-#include "ace/Log_Msg.h"
+#include "ace/Log_Category.h"
 #include "ace/ACE.h"
 #include "ace/DLL_Manager.h"
 #include "ace/OS_NS_string.h"
@@ -43,7 +43,7 @@ ACE_DLL::ACE_DLL (const ACE_DLL &rhs)
                      rhs.open_mode_,
                      rhs.close_handle_on_destruction_) != 0
       && ACE::debug ())
-    ACE_ERROR ((LM_ERROR,
+    ACELIB_ERROR ((LM_ERROR,
     ACE_TEXT ("ACE_DLL::copy_ctor: error: %s\n"),
     this->error ()));
 }
@@ -84,7 +84,7 @@ ACE_DLL::ACE_DLL (const ACE_TCHAR *dll_name,
 
   if (this->open (dll_name, this->open_mode_, close_handle_on_destruction) != 0
       && ACE::debug ())
-    ACE_ERROR ((LM_ERROR,
+    ACELIB_ERROR ((LM_ERROR,
                 ACE_TEXT ("ACE_DLL::open: error calling open: %s\n"),
                 this->error ()));
 }
@@ -140,7 +140,7 @@ ACE_DLL::open_i (const ACE_TCHAR *dll_filename,
   if (!dll_filename)
     {
       if (ACE::debug ())
-        ACE_ERROR ((LM_ERROR,
+        ACELIB_ERROR ((LM_ERROR,
                     ACE_TEXT ("ACE_DLL::open_i: dll_name is %s\n"),
                     this->dll_name_ == 0 ? ACE_TEXT ("(null)")
         : this->dll_name_));

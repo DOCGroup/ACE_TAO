@@ -40,7 +40,7 @@ namespace ACE
 
       if (this->file_ptr_ == 0)
         {
-          ACE_ERROR ((LM_ERROR,
+          ACELIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("Num threads - opening ")
                       ACE_TEXT ("/proc/self/status failed\n")));
           return;

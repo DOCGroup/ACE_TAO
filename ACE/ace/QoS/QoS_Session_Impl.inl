@@ -49,7 +49,7 @@ ACE_RAPI_Session::rsvp_events_handle (void)
   if (rapi_fd == -1)
     {
       this->close ();
-      ACE_ERROR_RETURN ((LM_ERROR,
+      ACELIB_ERROR_RETURN ((LM_ERROR,
                          "Error in rapi_getfd ()\n"),
                         -1);
     }

@@ -15,7 +15,7 @@
 #include /**/ "ace/pre.h"
 
 #include "ace/FILE_IO.h"
-#include "ace/Log_Msg.h"
+#include "ace/Log_Category.h"
 #include "ace/os_include/os_fcntl.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

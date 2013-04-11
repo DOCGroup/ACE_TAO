@@ -1,7 +1,7 @@
 // $Id$
 
 #include "ace/SOCK_CODgram.h"
-#include "ace/Log_Msg.h"
+#include "ace/Log_Category.h"
 #include "ace/OS_NS_sys_socket.h"
 
 #if !defined (__ACE_INLINE__)
@@ -34,7 +34,7 @@ ACE_SOCK_CODgram::ACE_SOCK_CODgram (const ACE_Addr &remote,
                   protocol_family,
                   protocol,
                   reuse_addr) == -1)
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("ACE_SOCK_CODgram")));
+    ACELIB_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("ACE_SOCK_CODgram")));
 }
 
 /* This is the general-purpose open routine.  Note that it performs

@@ -2,7 +2,7 @@
 
 #include "ace/SOCK_Dgram.h"
 
-#include "ace/Log_Msg.h"
+#include "ace/Log_Category.h"
 #include "ace/INET_Addr.h"
 #include "ace/ACE.h"
 #include "ace/OS_NS_string.h"
@@ -203,7 +203,7 @@ ACE_SOCK_Dgram::ACE_SOCK_Dgram (const ACE_Addr &local,
                   protocol_family,
                   protocol,
                   reuse_addr) == -1)
-    ACE_ERROR ((LM_ERROR,
+    ACELIB_ERROR ((LM_ERROR,
                 ACE_TEXT ("%p\n"),
                 ACE_TEXT ("ACE_SOCK_Dgram")));
 }
@@ -224,7 +224,7 @@ ACE_SOCK_Dgram::ACE_SOCK_Dgram (const ACE_Addr &local,
                   g,
                   flags,
                   reuse_addr) == -1)
-    ACE_ERROR ((LM_ERROR,
+    ACELIB_ERROR ((LM_ERROR,
                 ACE_TEXT ("%p\n"),
                 ACE_TEXT ("ACE_SOCK_Dgram")));
 }
@@ -530,7 +530,7 @@ ACE_SOCK_Dgram::set_nic (const ACE_TCHAR *net_if,
   // a non-null interface parameter in this function.)
   ACE_UNUSED_ARG (net_if);
   ACE_UNUSED_ARG (addr_family);
-  ACE_DEBUG ((LM_DEBUG,
+  ACELIB_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Send interface specification not ")
               ACE_TEXT ("supported - IGNORED.\n")));
 #endif /* !IP_MULTICAST_IF */

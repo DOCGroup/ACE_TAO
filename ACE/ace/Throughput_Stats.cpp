@@ -5,7 +5,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 #include "ace/High_Res_Timer.h"
-#include "ace/Log_Msg.h"
+#include "ace/Log_Category.h"
 
 
 
@@ -53,7 +53,7 @@ ACE_Throughput_Stats::dump_results (const ACE_TCHAR* msg,
 {
   if (this->samples_count () == 0u)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ACELIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("%s : no data collected\n"), msg));
       return;
     }
@@ -78,7 +78,7 @@ ACE_Throughput_Stats::dump_throughput (const ACE_TCHAR *msg,
 
   const double t_avg = samples_count / seconds;
 
-  ACE_DEBUG ((LM_DEBUG,
+  ACELIB_DEBUG ((LM_DEBUG,
               ACE_TEXT ("%s throughput: %.2f (events/second)\n"),
               msg, t_avg));
 #else

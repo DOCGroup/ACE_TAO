@@ -5,7 +5,7 @@
 
 #include "ace/Guard_T.h"
 #if !defined (ACE_NEW_THROWS_EXCEPTIONS)
-#  include "ace/Log_Msg.h"
+#  include "ace/Log_Category.h"
 #endif /* ACE_NEW_THROWS_EXCEPTIONS */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

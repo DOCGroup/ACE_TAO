@@ -6,7 +6,7 @@
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Guard_T.h"
-#include "ace/Log_Msg.h"
+#include "ace/Log_Category.h"
 #include "ace/Malloc_Base.h"
 #include "ace/OS_NS_string.h"
 
@@ -144,8 +144,8 @@ ACE_Data_Block::dump (void) const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Data_Block::dump");
-  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,
+  ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  ACELIB_DEBUG ((LM_DEBUG,
               ACE_TEXT ("-----( Data Block )-----\n")
               ACE_TEXT ("type_ = %d\n")
               ACE_TEXT ("cur_size_ = %u\n")
@@ -163,7 +163,7 @@ ACE_Data_Block::dump (void) const
               this->locking_strategy_,
               this->reference_count_));
   this->allocator_strategy_->dump ();
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
 
@@ -172,8 +172,8 @@ ACE_Message_Block::dump (void) const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Message_Block::dump");
-  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,
+  ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  ACELIB_DEBUG ((LM_DEBUG,
               ACE_TEXT ("-----( Message Block )-----\n")
               ACE_TEXT ("priority_ = %d\n")
               ACE_TEXT ("next_ = %@\n")
@@ -189,7 +189,7 @@ ACE_Message_Block::dump (void) const
               this->rd_ptr_,
               this->wr_ptr_));
   this->data_block ()->dump ();
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
 
@@ -404,7 +404,7 @@ ACE_Message_Block::ACE_Message_Block (const char *data,
                     0,  // data block
                     0,  // data_block allocator
                     0) == -1) // message_block allocator
-    ACE_ERROR ((LM_ERROR,
+    ACELIB_ERROR ((LM_ERROR,
                 ACE_TEXT ("ACE_Message_Block")));
 }
 
@@ -427,7 +427,7 @@ ACE_Message_Block::ACE_Message_Block (ACE_Allocator *message_block_allocator)
                     0, // data block
                     0, // data_block allocator
                     message_block_allocator) == -1) // message_block allocator
-    ACE_ERROR ((LM_ERROR,
+    ACELIB_ERROR ((LM_ERROR,
                 ACE_TEXT ("ACE_Message_Block")));
 }
 
@@ -460,7 +460,7 @@ ACE_Message_Block::ACE_Message_Block (size_t size,
                     0, // data block
                     data_block_allocator,
                     message_block_allocator) == -1)
-    ACE_ERROR ((LM_ERROR,
+    ACELIB_ERROR ((LM_ERROR,
                 ACE_TEXT ("ACE_Message_Block")));
 }
 
@@ -547,7 +547,7 @@ ACE_Message_Block::ACE_Message_Block (size_t size,
                     db,
                     data_block_allocator,
                     message_block_allocator) == -1)
-    ACE_ERROR ((LM_ERROR,
+    ACELIB_ERROR ((LM_ERROR,
                 ACE_TEXT ("ACE_Message_Block")));
 }
 
@@ -572,7 +572,7 @@ ACE_Message_Block::ACE_Message_Block (ACE_Data_Block *data_block,
                     data_block, // data block
                     data_block->data_block_allocator (),
                     message_block_allocator) == -1)
-    ACE_ERROR ((LM_ERROR,
+    ACELIB_ERROR ((LM_ERROR,
                 ACE_TEXT ("ACE_Message_Block")));
 }
 
@@ -599,7 +599,7 @@ ACE_Message_Block::ACE_Message_Block (const ACE_Message_Block &mb,
                         mb.data_block ()->duplicate (), // data block
                         mb.data_block ()->data_block_allocator (),
                         mb.message_block_allocator_) == -1)
-        ACE_ERROR ((LM_ERROR,
+        ACELIB_ERROR ((LM_ERROR,
                     ACE_TEXT ("ACE_Message_Block")));
 #if !defined (ACE_LACKS_CDR_ALIGNMENT)
       // Align ourselves
@@ -629,7 +629,7 @@ ACE_Message_Block::ACE_Message_Block (const ACE_Message_Block &mb,
                         mb.data_block ()->clone_nocopy (),// data block
                         mb.data_block ()->data_block_allocator (),
                         mb.message_block_allocator_) == -1)
-        ACE_ERROR ((LM_ERROR,
+        ACELIB_ERROR ((LM_ERROR,
                     ACE_TEXT ("ACE_Message_Block")));
 
 #if !defined (ACE_LACKS_CDR_ALIGNMENT)
