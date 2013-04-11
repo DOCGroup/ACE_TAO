@@ -102,7 +102,7 @@ TAO_SHMIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
      {
        if (TAO_debug_level > 0)
          {
-           ACE_ERROR ((LM_ERROR,
+           TAOLIB_ERROR ((LM_ERROR,
                        ACE_TEXT ("TAO (%P|%t) SHMIOP connection failed.\n")
                        ACE_TEXT ("TAO (%P|%t) This is most likely ")
                        ACE_TEXT ("due to a hostname lookup ")
@@ -122,7 +122,7 @@ TAO_SHMIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
                                        ACE_Time_Value *timeout)
 {
   if (TAO_debug_level > 0)
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - SHMIOP_Connector::make_connection, ")
                   ACE_TEXT ("looking for SHMIOP connection.\n")));
 
@@ -136,7 +136,7 @@ TAO_SHMIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
     shmiop_endpoint->object_addr ();
 
   if (TAO_debug_level > 2)
-    ACE_DEBUG ((LM_DEBUG,
+    TAOLIB_DEBUG ((LM_DEBUG,
                 "TAO (%P|%t) - SHMIOP_Connector::make_connection, "
                 "making a new connection to <%C:%d>\n",
                 shmiop_endpoint->host (),
@@ -164,7 +164,7 @@ TAO_SHMIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
       // Give users a clue to the problem.
       if (TAO_debug_level > 0)
         {
-          ACE_ERROR ((LM_ERROR,
+          TAOLIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO (%P|%t) - SHMIOP_Connector::make_connection, ")
                       ACE_TEXT ("connection to <%C:%u> failed (%p)\n"),
                       shmiop_endpoint->host (),
@@ -191,7 +191,7 @@ TAO_SHMIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
   // At this point, the connection has be successfully connected.
   // #REFCOUNT# is one.
   if (TAO_debug_level > 2)
-    ACE_DEBUG ((LM_DEBUG,
+    TAOLIB_DEBUG ((LM_DEBUG,
                 "TAO (%P|%t) - SHMIOP_Connector::make_connection, "
                 "new %C connection to <%C:%d> on Transport[%d]\n",
                 transport->is_connected() ? "connected" : "not connected",
@@ -212,7 +212,7 @@ TAO_SHMIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
 
       if (TAO_debug_level > 0)
         {
-          ACE_ERROR ((LM_ERROR,
+          TAOLIB_ERROR ((LM_ERROR,
                       ACE_TEXT("TAO (%P|%t) - SHMIOP_Connector::make_connection, ")
                       ACE_TEXT("could not add the new connection to cache\n")));
         }
@@ -240,7 +240,7 @@ TAO_SHMIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
       (void) transport->close_connection ();
 
       if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_ERROR,
+        TAOLIB_ERROR ((LM_ERROR,
                     "TAO (%P|%t) - SHMIOP_Connector [%d]::make_connection, "
                     "could not register the transport in the reactor.\n",
                     transport->id ()));

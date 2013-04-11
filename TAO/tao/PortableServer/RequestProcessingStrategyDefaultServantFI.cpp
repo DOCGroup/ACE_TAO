@@ -32,7 +32,7 @@ namespace TAO
         }
         default :
         {
-          ACE_ERROR ((LM_ERROR, "Incorrect type in RequestProcessingStrategyDefaultServantFactoryImpl"));
+          TAOLIB_ERROR ((LM_ERROR, "Incorrect type in RequestProcessingStrategyDefaultServantFactoryImpl"));
           break;
         }
       }

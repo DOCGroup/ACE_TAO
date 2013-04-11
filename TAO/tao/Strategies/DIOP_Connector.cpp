@@ -72,7 +72,7 @@ TAO_DIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
     {
       if (TAO_debug_level > 0)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - DIOP connection failed.\n")
                       ACE_TEXT ("TAO (%P|%t) This is most likely ")
                       ACE_TEXT ("due to a hostname lookup ")
@@ -112,7 +112,7 @@ TAO_DIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
           (void) remote_address.addr_to_string (remote_as_string,
                                                 sizeof remote_as_string);
 
-          ACE_ERROR ((LM_ERROR,
+          TAOLIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO (%P|%t) - DIOP_Connection_Handler::open, ")
                       ACE_TEXT ("invalid connection to IPv4 mapped IPv6 interface <%s>!\n"),
                       remote_as_string));
@@ -152,7 +152,7 @@ TAO_DIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
 
       if (TAO_debug_level > 0)
         {
-          ACE_ERROR ((LM_ERROR,
+          TAOLIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO (%P|%t) - DIOP_Connector::make_connection, ")
                       ACE_TEXT ("could not make a new connection\n")));
         }
@@ -161,7 +161,7 @@ TAO_DIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
     }
 
   if (TAO_debug_level > 2)
-    ACE_DEBUG ((LM_DEBUG,
+    TAOLIB_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO (%P|%t) - DIOP_Connector::connect, ")
                 ACE_TEXT ("new connection on HANDLE %d\n"),
                 svc_handler->peer ().get_handle ()));
@@ -176,7 +176,7 @@ TAO_DIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
 
       // Give users a clue to the problem.
       if (TAO_debug_level > 3)
-        ACE_DEBUG ((LM_ERROR,
+        TAOLIB_DEBUG ((LM_ERROR,
                     ACE_TEXT ("TAO (%P|%t) - DIOP_Connector::make_connection, ")
                     ACE_TEXT ("connection to <%C:%u> failed (%p)\n"),
                     diop_endpoint->host (),
@@ -198,7 +198,7 @@ TAO_DIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
 
       if (TAO_debug_level > 0)
         {
-          ACE_ERROR ((LM_ERROR,
+          TAOLIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO (%P|%t) - DIOP_Connector::make_connection, ")
                       ACE_TEXT ("could not add the new connection to cache\n")));
         }

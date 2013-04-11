@@ -82,7 +82,7 @@ TAO_UIOP_Connector::corbaloc_scan (const char *str, size_t &len)
   if (separator == 0)
     {
       if (TAO_debug_level)
-        ACE_DEBUG ((LM_DEBUG,
+        TAOLIB_DEBUG ((LM_DEBUG,
                     "TAO (%P|%t) - TAO_UIOP_CONNECTOR::corbaloc_scan error: "
                     "explicit terminating charactor '|' is missing from <%C>",
                     str));
@@ -111,7 +111,7 @@ TAO_UIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
      {
        if (TAO_debug_level > 0)
          {
-           ACE_DEBUG ((LM_DEBUG,
+           TAOLIB_DEBUG ((LM_DEBUG,
                        ACE_TEXT ("TAO (%P|%t) - UIOP failure.\n")
                        ACE_TEXT ("TAO (%P|%t) - This is most likely ")
                        ACE_TEXT ("due to a hostname lookup ")
@@ -130,7 +130,7 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
                                      ACE_Time_Value *max_wait_time)
 {
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
+    TAOLIB_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO (%P|%t) - UIUP_Connector::make_connection, ")
                 ACE_TEXT ("looking for UIOP connection.\n")));
 
@@ -144,7 +144,7 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
     uiop_endpoint->object_addr ();
 
   if (TAO_debug_level > 2)
-    ACE_DEBUG ((LM_DEBUG,
+    TAOLIB_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO (%P|%t) - UIUP_Connector::make_connection, ")
                 ACE_TEXT ("making a new connection\n")));
 
@@ -186,7 +186,7 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
                                                      max_wait_time))
             {
               if (TAO_debug_level > 2)
-                ACE_ERROR ((LM_ERROR, "TAO (%P|%t) - UIOP_Connector::"
+                TAOLIB_ERROR ((LM_ERROR, "TAO (%P|%t) - UIOP_Connector::"
                                       "make_connection, "
                                       "wait for completion failed\n"));
             }
@@ -203,7 +203,7 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
     {
       // Give users a clue to the problem.
       if (TAO_debug_level > 3)
-          ACE_ERROR ((LM_ERROR,
+          TAOLIB_ERROR ((LM_ERROR,
                       "TAO (%P|%t) - UIOP_Connector::make_connection, "
                       "connection to <%C> failed (%p)\n",
                       uiop_endpoint->rendezvous_point (),
@@ -225,7 +225,7 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
   // At this point, the connection has be successfully created
   // connected or not connected, but we have a connection.
   if (TAO_debug_level > 2)
-    ACE_DEBUG ((LM_DEBUG,
+    TAOLIB_DEBUG ((LM_DEBUG,
                 "TAO (%P|%t) - UIOP_Connector::make_connection, "
                 "new %C connection to <%C> on Transport[%d]\n",
                 transport->is_connected() ? "connected" : "not connected",
@@ -244,7 +244,7 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
 
       if (TAO_debug_level > 0)
         {
-          ACE_ERROR ((LM_ERROR,
+          TAOLIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO (%P|%t) - UIOP_Connector::make_connection, ")
                       ACE_TEXT ("could not add the new connection to Cache\n")));
         }
@@ -272,7 +272,7 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
       (void) transport->close_connection ();
 
       if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_ERROR,
+        TAOLIB_ERROR ((LM_ERROR,
                     "TAO (%P|%t) - UIOP_Connector [%d]::make_connection, "
                     "could not register the transport "
                     "in the reactor.\n",

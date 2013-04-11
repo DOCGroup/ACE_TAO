@@ -20,7 +20,7 @@ namespace TAO
     this->is_connected_ = transport->is_connected();
     transport->add_reference ();
     if (TAO_debug_level > 9)
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - Cache_IntId_T::Cache_IntId_T, ")
                   ACE_TEXT ("this=%@ Transport[%d] is%Cconnected\n"),
                   this, transport->id (), (is_connected_ ? " " : " not ")));
@@ -58,7 +58,7 @@ namespace TAO
   Cache_IntId_T<TRANSPORT_TYPE>::recycle_state (Cache_Entries_State st)
   {
     if (TAO_debug_level > 9)
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - Cache_IntId_T::")
+      TAOLIB_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - Cache_IntId_T::")
                   ACE_TEXT ("recycle_state, %C->%C Transport[%d] IntId=%@\n"),
                   state_name (recycle_state_), state_name (st),
                   transport_ ? transport_->id() : 0, this));

@@ -36,7 +36,7 @@ TAO::Unknown_IDL_Type::Unknown_IDL_Type (CORBA::TypeCode_ptr tc,
     {
       if (TAO_debug_level > 0)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
             ACE_TEXT ("TAO (%P|%t) %N:%l ")
             ACE_TEXT ("silent marshaling exception ")
             ACE_TEXT ("in TAO::Unknown_IDL_Type::Unknown_IDL_Type\n")));
@@ -210,7 +210,7 @@ TAO::Unknown_IDL_Type::to_value (CORBA::ValueBase* & val) const
 
           if (TAO_debug_level > 0)
             {
-              ACE_DEBUG ((LM_WARNING,
+              TAOLIB_DEBUG ((LM_WARNING,
                           ACE_TEXT ("TAO (%P|%t) WARNING: extracting ")
                           ACE_TEXT ("valuetype using default ORB_Core\n")));
             }
@@ -251,7 +251,7 @@ TAO::Unknown_IDL_Type::to_abstract_base (CORBA::AbstractBase_ptr & obj) const
 
           if (TAO_debug_level > 0)
             {
-              ACE_DEBUG ((LM_WARNING,
+              TAOLIB_DEBUG ((LM_WARNING,
                           ACE_TEXT ("TAO (%P|%t) WARNING: extracting ")
                           ACE_TEXT ("abstract base using default ORB_Core\n")));
             }

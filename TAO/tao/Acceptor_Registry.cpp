@@ -151,7 +151,7 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
         {
           if (TAO_debug_level > 0)
             {
-              ACE_ERROR ((LM_ERROR,
+              TAOLIB_ERROR ((LM_ERROR,
                           ACE_TEXT ("(%P|%t) Invalid endpoint ")
                           ACE_TEXT ("specification: <%C>.\n"),
                           iop.c_str ()));
@@ -238,7 +238,7 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
         {
           if (TAO_debug_level > 0)
             {
-              ACE_ERROR ((LM_ERROR,
+              TAOLIB_ERROR ((LM_ERROR,
                           ACE_TEXT ("(%P|%t) Invalid endpoint ")
                           ACE_TEXT ("specification: <%C>.\n"),
                           iop.c_str ()));
@@ -297,7 +297,7 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
 
       if (found == false)
         {
-          ACE_ERROR ((LM_ERROR,
+          TAOLIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO (%P|%t) ")
                       ACE_TEXT ("no usable transport protocol ")
                       ACE_TEXT ("was found.\n")));
@@ -372,7 +372,7 @@ int TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
                 {
                   if (TAO_debug_level > 0)
                     {
-                      ACE_ERROR ((
+                      TAOLIB_ERROR ((
                           LM_ERROR,
                           ACE_TEXT ("TAO (%P|%t) unable to create ")
                           ACE_TEXT ("an acceptor for <%C>\n"),
@@ -419,7 +419,7 @@ int TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
                     {
                       if (TAO_debug_level > 0)
                         {
-                          ACE_ERROR ((
+                          TAOLIB_ERROR ((
                               LM_ERROR,
                               ACE_TEXT ("TAO (%P|%t) unable to create ")
                               ACE_TEXT ("an acceptor for <%C>\n"),
@@ -520,7 +520,7 @@ int TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
     {
       if (TAO_debug_level > 0)
         {
-          ACE_ERROR ((LM_ERROR,
+          TAOLIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO (%P|%t) No default endpoints ")
                       ACE_TEXT ("opened.\n")
                       ACE_TEXT ("Please specify one or more using ")
@@ -554,7 +554,7 @@ TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
     {
       if (TAO_debug_level > 0)
         {
-          ACE_ERROR ((
+          TAOLIB_ERROR ((
               LM_ERROR,
               ACE_TEXT ("TAO (%P|%t) unable to create ")
               ACE_TEXT ("an acceptor for <%C>\n"),
@@ -591,7 +591,7 @@ TAO_Acceptor_Registry::open_default_i (TAO_ORB_Core *orb_core,
 
       if (TAO_debug_level > 0)
         {
-          ACE_ERROR ((
+          TAOLIB_ERROR ((
               LM_ERROR,
               ACE_TEXT ("TAO (%P|%t) - Unable to open ")
               ACE_TEXT ("default acceptor for <%C>%p\n"),
@@ -747,7 +747,7 @@ TAO_Acceptor_Registry::open_i (TAO_ORB_Core *orb_core,
                         {
                           if (TAO_debug_level > 0)
                             {
-                              ACE_ERROR ((
+                              TAOLIB_ERROR ((
                                   LM_ERROR,
                                   ACE_TEXT ("TAO (%P|%t) unable to create ")
                                   ACE_TEXT ("an acceptor for <%C>\n"),
@@ -841,7 +841,7 @@ TAO_Acceptor_Registry::open_i (TAO_ORB_Core *orb_core,
 
               if (TAO_debug_level > 0)
                 {
-                  ACE_ERROR ((LM_ERROR,
+                  TAOLIB_ERROR ((LM_ERROR,
                               ACE_TEXT ("TAO (%P|%t) - ")
                               ACE_TEXT ("Unable to open acceptor ")
                               ACE_TEXT ("for <%C>%p\n"),
@@ -863,7 +863,7 @@ TAO_Acceptor_Registry::open_i (TAO_ORB_Core *orb_core,
         {
           if (TAO_debug_level > 0)
             {
-              ACE_ERROR ((LM_ERROR,
+              TAOLIB_ERROR ((LM_ERROR,
                           ACE_TEXT ("TAO (%P|%t) unable to create ")
                           ACE_TEXT ("an acceptor for <%C>.\n"),
                           address.c_str ()));

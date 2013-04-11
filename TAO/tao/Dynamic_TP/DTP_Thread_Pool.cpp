@@ -54,7 +54,7 @@ TAO_DTP_Thread_Pool_Threads::svc (void)
   catch (const ::CORBA::Exception& ex)
     {
       // No point propagating this exception.  Print it out.
-      ACE_ERROR ((LM_ERROR,
+      TAOLIB_ERROR ((LM_ERROR,
                   ACE_TEXT ("orb->run() raised exception for thread %t\n")));
 
       ex._tao_print_exception ("");
@@ -72,7 +72,7 @@ TAO_DTP_Thread_Pool_Threads::run (TAO_ORB_Core &orb_core)
   // exit the loop and this thread ends itself.
   if (TAO_debug_level > 7)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - DTP Pool %d - ")
                   ACE_TEXT ("Starting worker, count = %d; ")
                   ACE_TEXT ("setting timeout for %d sec, %d usec\n"),
@@ -92,7 +92,7 @@ TAO_DTP_Thread_Pool_Threads::run (TAO_ORB_Core &orb_core)
       bool timeout = errno == ETIME;
       if (TAO_debug_level > 7)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - DTP Pool %d ")
                       ACE_TEXT ("run: above_min = %d, timeout = %d\n"),
                       this->pool_.id(), this->pool_.above_minimum(), timeout));
@@ -111,7 +111,7 @@ TAO_DTP_Thread_Pool_Threads::run (TAO_ORB_Core &orb_core)
 
   if (TAO_debug_level > 7)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - DTP Pool %d ")
                   ACE_TEXT ("Terminating worker, remaining pool thread count = %d\n"),
                   this->pool_.id (),
@@ -135,7 +135,7 @@ TAO_DTP_Thread_Pool::new_dynamic_thread (void)
   // held.
   if (TAO_debug_level > 0)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) DTP Pool %d new_dynamic_thread, max = %d, current = %d\n"),
                   this->id_, this->definition_.max_threads_, (int)this->threads_.thr_count ()));
     }
@@ -153,7 +153,7 @@ TAO_DTP_Thread_Pool::new_dynamic_thread (void)
        (int)this->active_count_ < this->definition_.max_threads_))
     {
       if (TAO_debug_level > 7)
-        ACE_DEBUG ((LM_DEBUG,
+        TAOLIB_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) DTP Pool %d new_dynamic_thread, ")
                     ACE_TEXT ("count = %d, creating new thread\n"),
                     this->id_,
@@ -163,7 +163,7 @@ TAO_DTP_Thread_Pool::new_dynamic_thread (void)
         {
           if (TAO_debug_level > 0)
             {
-              ACE_ERROR ((LM_ERROR,
+              TAOLIB_ERROR ((LM_ERROR,
                           ACE_TEXT ("Pool %d Thread %t: ")
                           ACE_TEXT ("cannot create dynamic thread\n"),
                           this->id_));
@@ -221,7 +221,7 @@ TAO_DTP_Thread_Pool::create_initial_threads (void)
 
   if (TAO_debug_level > 7)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) DTP_Thread_Pool::create_initial_threads ")
                   ACE_TEXT ("Creating %d threads\n"),
                   count));
@@ -325,7 +325,7 @@ TAO_DTP_Thread_Pool::wait (void)
       this->threads_.wait ();
       if (TAO_debug_level > 7)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) DTP_Thread_Pool::wait, ")
                       ACE_TEXT ("active_count = %d, thread_count = %d\n"),
                       this->active_count_, threads_.thr_count()));

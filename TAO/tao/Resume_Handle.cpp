@@ -53,7 +53,7 @@ TAO_Resume_Handle::handle_input_return_value_hook (int& return_value)
 
     if (TAO_debug_level > 6)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   "TAO (%P|%t) - Resume_Handle::handle_input_return_value_hook, "
                   "overriding return value of 1 with retval = %d\n",
                   return_value));
@@ -69,7 +69,7 @@ TAO_Resume_Handle::handle_input_return_value_hook (int& return_value)
 
     if (TAO_debug_level > 6)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   "TAO (%P|%t) - Resume_Handle::handle_input_return_value_hook, "
                   "handle_input returning -1, so handle is not resumed.\n"));
     }

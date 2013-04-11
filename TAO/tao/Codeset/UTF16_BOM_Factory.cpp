@@ -58,7 +58,7 @@ TAO_UTF16_BOM_Factory::init (int argc, ACE_TCHAR *argv[])
     }
     else
     {
-      ACE_ERROR ((LM_ERROR,
+      TAOLIB_ERROR ((LM_ERROR,
         ACE_TEXT ("(%P|%t)TAO_UTF16_BOM_Factory parameter error: %s\n")
         ACE_TEXT ("Usage: TAO_UTF16_BOM_Factory \"-forceBE\"\n")
         , argv[narg]
@@ -129,7 +129,7 @@ TAO_UTF16_BOM_Factory::create_translator () const
     if (this->translator_ == 0)
     {
       if (TAO_debug_level)
-        ACE_ERROR ((LM_ERROR,
+        TAOLIB_ERROR ((LM_ERROR,
                     ACE_TEXT ("TAO (%P|%t) - UTF16_BOM_Factory: ")
                     ACE_TEXT ("Cannot create translator\n")
         ));

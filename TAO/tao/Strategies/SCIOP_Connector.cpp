@@ -97,7 +97,7 @@ TAO_SCIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
      {
        if (TAO_debug_level > 0)
          {
-           ACE_DEBUG ((LM_DEBUG,
+           TAOLIB_DEBUG ((LM_DEBUG,
                        ACE_TEXT ("TAO (%P|%t) SCIOP connection failed.\n")
                        ACE_TEXT ("TAO (%P|%t) This is most likely ")
                        ACE_TEXT ("due to a hostname lookup ")
@@ -152,7 +152,7 @@ TAO_SCIOP_Connector::make_connection_i (TAO::Profile_Transport_Resolver *r,
     sciop_endpoint->object_addr ();
 
   if (TAO_debug_level > 2)
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT("TAO (%P|%t) - SCIOP_Connector::make_connection_i, ")
                   ACE_TEXT("to <%C:%d> which should %s\n"),
                   sciop_endpoint->host(),
@@ -210,7 +210,7 @@ TAO_SCIOP_Connector::make_connection_i (TAO::Profile_Transport_Resolver *r,
                                                      timeout))
             {
               if (TAO_debug_level > 2)
-                ACE_ERROR ((LM_ERROR, "TAO (%P|%t) - SCIOP_Connector::"
+                TAOLIB_ERROR ((LM_ERROR, "TAO (%P|%t) - SCIOP_Connector::"
                                       "make_connection_i, "
                                       "wait for completion failed\n"));
             }
@@ -228,7 +228,7 @@ TAO_SCIOP_Connector::make_connection_i (TAO::Profile_Transport_Resolver *r,
       // Give users a clue to the problem.
       if (TAO_debug_level)
         {
-          ACE_ERROR ((LM_ERROR,
+          TAOLIB_ERROR ((LM_ERROR,
                       ACE_TEXT("TAO (%P|%t) - SCIOP_Connector::make_connection_i, ")
                       ACE_TEXT("connection to <%C:%d> failed (%p)\n"),
                       sciop_endpoint->host (), sciop_endpoint->port (),
@@ -252,7 +252,7 @@ TAO_SCIOP_Connector::make_connection_i (TAO::Profile_Transport_Resolver *r,
   // At this point, the connection has be successfully connected.
   // #REFCOUNT# is one.
   if (TAO_debug_level > 2)
-    ACE_DEBUG ((LM_DEBUG,
+    TAOLIB_DEBUG ((LM_DEBUG,
                 "TAO (%P|%t) - SCIOP_Connector::make_connection_i, "
                 "new %C connection to <%C:%d> on Transport[%d]\n",
                 transport->is_connected() ? "connected" : "not connected",
@@ -272,7 +272,7 @@ TAO_SCIOP_Connector::make_connection_i (TAO::Profile_Transport_Resolver *r,
 
       if (TAO_debug_level > 0)
         {
-          ACE_ERROR ((LM_ERROR,
+          TAOLIB_ERROR ((LM_ERROR,
                       "TAO (%P|%t) - SCIOP_Connector::make_connection_i, "
                       "could not add the new connection to cache\n"));
         }
@@ -300,7 +300,7 @@ TAO_SCIOP_Connector::make_connection_i (TAO::Profile_Transport_Resolver *r,
       (void) transport->close_connection ();
 
       if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_ERROR,
+        TAOLIB_ERROR ((LM_ERROR,
                     "TAO (%P|%t) - SCIOP_Connector [%d]::make_connection_i, "
                     "could not register the transport "
                     "in the reactor.\n",

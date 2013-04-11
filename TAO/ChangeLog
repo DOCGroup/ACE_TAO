@@ -1,3 +1,260 @@
+Thu Apr 11 18:03:24 UTC 2013  Huang-Ming Huang  <huangh@ociweb.com>
+
+        * tao/Acceptor_Impl.cpp:
+        * tao/Acceptor_Registry.cpp:
+
+        * tao/AnyTypeCode/Any_Unknown_IDL_Type.cpp:
+        * tao/AnyTypeCode/NVList.cpp:
+        * tao/AnyTypeCode/append.cpp:
+        * tao/AnyTypeCode/skip.cpp:
+
+        * tao/Any_Insert_Policy_T.h:
+        * tao/Asynch_Queued_Message.cpp:
+
+        * tao/BiDir_GIOP/BiDir_ORBInitializer.cpp:
+
+        * tao/CORBALOC_Parser.cpp:
+        * tao/CORBANAME_Parser.cpp:
+
+        * tao/CSD_Framework/CSD_Default_Servant_Dispatcher.cpp:
+        * tao/CSD_Framework/CSD_FW_Server_Request_Wrapper.cpp:
+        * tao/CSD_Framework/CSD_ORBInitializer.cpp:
+        * tao/CSD_Framework/CSD_Strategy_Base.inl:
+        * tao/CSD_Framework/CSD_Strategy_Base.cpp:
+        * tao/CSD_Framework/CSD_Strategy_Proxy.cpp:
+        * tao/CSD_Framework/CSD_Strategy_Repository.cpp:
+
+        * tao/CSD_ThreadPool/CSD_TP_Strategy_Factory.cpp:
+        * tao/CSD_ThreadPool/CSD_TP_Task.cpp:
+
+        * tao/Cache_Entries_T.cpp:
+
+        * tao/Codeset/Codeset_Descriptor.cpp:
+        * tao/Codeset/Codeset_Manager_i.cpp:
+        * tao/Codeset/Codeset_Translator_Factory_T.cpp:
+        * tao/Codeset/UTF16_BOM_Factory.cpp:
+        * tao/Codeset/UTF16_BOM_Translator.cpp:
+        * tao/Codeset/UTF8_Latin1_Factory.cpp:
+
+        * tao/Compression/zlib/ZlibCompressor_Factory.cpp:
+
+        * tao/Condition.cpp:
+        * tao/Connection_Handler.cpp:
+        * tao/Connector_Registry.cpp:
+
+        * tao/DiffServPolicy/DiffServPolicy_ORBInitializer.cpp:
+
+        * tao/DynamicAny/DynValue_i.cpp:
+
+        * tao/DynamicInterface/DII_Invocation.cpp:
+        * tao/DynamicInterface/DII_Reply_Dispatcher.cpp:
+        * tao/DynamicInterface/DII_Reply_Handler.cpp:
+        * tao/DynamicInterface/Request.cpp:
+
+        * tao/Dynamic_TP/DTP_Config.cpp:
+        * tao/Dynamic_TP/DTP_ORBInitializer.cpp:
+        * tao/Dynamic_TP/DTP_ORB_Loader.cpp:
+        * tao/Dynamic_TP/DTP_POA_Loader.cpp:
+        * tao/Dynamic_TP/DTP_POA_Strategy.cpp:
+        * tao/Dynamic_TP/DTP_Task.cpp:
+        * tao/Dynamic_TP/DTP_Thread_Pool.cpp:
+
+        * tao/EndpointPolicy/Endpoint_Acceptor_Filter.cpp:
+
+        * tao/Environment.cpp:
+        * tao/Exception.cpp:
+        * tao/Exclusive_TMS.cpp:
+
+        * tao/FlResource/FlResource_Factory.cpp:
+
+        * tao/FoxResource/FoxResource_Factory.cpp:
+
+        * tao/GIOP_Message_Base.cpp:
+        * tao/GIOP_Message_Generator_Parser.cpp:
+        * tao/GIOP_Message_Generator_Parser_10.cpp:
+        * tao/GIOP_Message_Generator_Parser_12.cpp:
+        * tao/GIOP_Message_State.cpp:
+        * tao/HTTP_Client.cpp:
+        * tao/HTTP_Handler.cpp:
+        * tao/HTTP_Parser.cpp:
+        * tao/IIOP_Acceptor.cpp:
+        * tao/IIOP_Connection_Handler.cpp:
+        * tao/IIOP_Connector.cpp:
+        * tao/IIOP_Endpoint.cpp:
+        * tao/IIOP_Profile.cpp:
+        * tao/IIOP_Transport.cpp:
+
+        * tao/IORInterceptor/IORInterceptor_Adapter_Impl.cpp:
+
+        * tao/ImR_Client/ImR_Client.cpp:
+
+        * tao/Invocation_Adapter.cpp:
+        * tao/LF_CH_Event.cpp:
+        * tao/LF_Strategy_Complete.cpp:
+        * tao/Leader_Follower.cpp:
+        * tao/Load_Protocol_Factory_T.h:
+        * tao/LocalObject.cpp:
+        * tao/MCAST_Parser.cpp:
+        * tao/MProfile.cpp:
+
+        * tao/Messaging/AMH_Response_Handler.cpp:
+        * tao/Messaging/Asynch_Invocation_Adapter.cpp:
+        * tao/Messaging/Asynch_Reply_Dispatcher.cpp:
+        * tao/Messaging/Asynch_Timeout_Handler.cpp:
+        * tao/Messaging/Connection_Timeout_Policy_i.cpp:
+        * tao/Messaging/Messaging_ORBInitializer.cpp:
+        * tao/Messaging/Messaging_Policy_i.cpp:
+        * tao/Messaging/Messaging_Queueing_Strategies.cpp:
+
+        * tao/Muxed_TMS.cpp:
+        * tao/ORB.cpp:
+        * tao/ORBInitializer_Registry.cpp:
+        * tao/ORB_Core.cpp:
+        * tao/Object.cpp:
+        * tao/Object_Ref_Table.cpp:
+        * tao/On_Demand_Fragmentation_Strategy.cpp:
+
+        * tao/PI/ClientRequestInfo.cpp:
+        * tao/PI/DLL_Resident_ORB_Initializer.cpp:
+        * tao/PI/Interceptor_List_T.cpp:
+        * tao/PI/ORBInitializer_Registry_Impl.cpp:
+        * tao/PI/PICurrent_Impl.cpp:
+
+        * tao/Parser_Registry.cpp:
+        * tao/Policy_Validator.cpp:
+
+        * tao/PortableServer/Active_Object_Map.cpp:
+        * tao/PortableServer/IdAssignmentStrategyFactoryImpl.cpp:
+        * tao/PortableServer/IdUniquenessStrategyFactoryImpl.cpp:
+        * tao/PortableServer/IdUniquenessStrategyUniqueFactoryImpl.cpp:
+        * tao/PortableServer/ImplicitActivationStrategyFactoryImpl.cpp:
+        * tao/PortableServer/LifespanStrategyFactoryImpl.cpp:
+        * tao/PortableServer/LifespanStrategyPersistent.cpp:
+        * tao/PortableServer/LifespanStrategyPersistentFactoryImpl.cpp:
+        * tao/PortableServer/LifespanStrategyTransientFactoryImpl.cpp:
+        * tao/PortableServer/Object_Adapter.cpp:
+        * tao/PortableServer/Operation_Table_Binary_Search.cpp:
+        * tao/PortableServer/Operation_Table_Dynamic_Hash.cpp:
+        * tao/PortableServer/Operation_Table_Linear_Search.cpp:
+        * tao/PortableServer/Operation_Table_Perfect_Hash.cpp:
+        * tao/PortableServer/POA_Policy_Set.cpp:
+        * tao/PortableServer/RequestProcessingStrategyAOMOnlyFactoryImpl.cpp:
+        * tao/PortableServer/RequestProcessingStrategyDefaultServantFI.cpp:
+        * tao/PortableServer/RequestProcessingStrategyFactoryImpl.cpp:
+        * tao/PortableServer/RequestProcessingStrategyServantActivatorFI.cpp:
+        * tao/PortableServer/RequestProcessingStrategyServantLocatorFI.cpp:
+        * tao/PortableServer/ServantRetentionStrategyFactoryImpl.cpp:
+        * tao/PortableServer/ServantRetentionStrategyNonRetainFactoryImpl.cpp:
+        * tao/PortableServer/ServantRetentionStrategyRetain.cpp:
+        * tao/PortableServer/ServantRetentionStrategyRetainFactoryImpl.cpp:
+        * tao/PortableServer/ThreadStrategyFactoryImpl.cpp:
+        * tao/PortableServer/ThreadStrategySingleFactoryImpl.cpp:
+
+        * tao/Profile.cpp:
+
+        * tao/QtResource/QtResource_Factory.cpp:
+
+        * tao/Queued_Data.cpp:
+
+        * tao/RTCORBA/Linear_Network_Priority_Mapping.cpp:
+        * tao/RTCORBA/Linear_Priority_Mapping.cpp:
+        * tao/RTCORBA/Multi_Priority_Mapping.cpp:
+        * tao/RTCORBA/RT_Current.cpp:
+        * tao/RTCORBA/RT_Invocation_Endpoint_Selectors.cpp:
+        * tao/RTCORBA/RT_ORBInitializer.cpp:
+        * tao/RTCORBA/RT_ORB_Loader.cpp:
+        * tao/RTCORBA/RT_Protocols_Hooks.cpp:
+        * tao/RTCORBA/RT_Service_Context_Handler.cpp:
+        * tao/RTCORBA/Thread_Pool.cpp:
+
+        * tao/RTPortableServer/RT_Servant_Dispatcher.cpp:
+
+        * tao/RTScheduling/Current.cpp:
+        * tao/RTScheduling/RTScheduler_Initializer.cpp:
+        * tao/RTScheduling/RTScheduler_Loader.cpp:
+        * tao/RTScheduling/Request_Interceptor.cpp:
+
+        * tao/Reactive_Connect_Strategy.cpp:
+        * tao/Remote_Invocation.cpp:
+        * tao/Resume_Handle.cpp:
+        * tao/Storable_File_Guard.cpp:
+        * tao/Storable_FlatFileStream.cpp:
+
+        * tao/Strategies/COIOP_Acceptor.cpp:
+        * tao/Strategies/COIOP_Connection_Handler.cpp:
+        * tao/Strategies/COIOP_Profile.cpp:
+        * tao/Strategies/DIOP_Acceptor.cpp:
+        * tao/Strategies/DIOP_Connection_Handler.cpp:
+        * tao/Strategies/DIOP_Connector.cpp:
+        * tao/Strategies/DIOP_Endpoint.cpp:
+        * tao/Strategies/DIOP_Profile.cpp:
+        * tao/Strategies/DIOP_Transport.cpp:
+        * tao/Strategies/Optimized_Connection_Endpoint_Selector.cpp:
+        * tao/Strategies/SCIOP_Acceptor.cpp:
+        * tao/Strategies/SCIOP_Connection_Handler.cpp:
+        * tao/Strategies/SCIOP_Connector.cpp:
+        * tao/Strategies/SCIOP_Endpoint.cpp:
+        * tao/Strategies/SCIOP_Profile.cpp:
+        * tao/Strategies/SCIOP_Transport.cpp:
+        * tao/Strategies/SHMIOP_Acceptor.cpp:
+        * tao/Strategies/SHMIOP_Connection_Handler.cpp:
+        * tao/Strategies/SHMIOP_Connector.cpp:
+        * tao/Strategies/SHMIOP_Endpoint.cpp:
+        * tao/Strategies/SHMIOP_Profile.cpp:
+        * tao/Strategies/SHMIOP_Transport.cpp:
+        * tao/Strategies/Strategies_ORBInitializer.cpp:
+        * tao/Strategies/UIOP_Acceptor.cpp:
+        * tao/Strategies/UIOP_Connection_Handler.cpp:
+        * tao/Strategies/UIOP_Connector.cpp:
+        * tao/Strategies/UIOP_Profile.cpp:
+        * tao/Strategies/UIOP_Transport.cpp:
+        * tao/Strategies/advanced_resource.cpp:
+
+        * tao/Stub.inl:
+        * tao/Stub.cpp:
+        * tao/Synch_Invocation.cpp:
+        * tao/Synch_Reply_Dispatcher.cpp:
+        * tao/SystemException.cpp:
+        * tao/TAO_Internal.cpp:
+        * tao/TAO_Server_Request.cpp:
+        * tao/TAO_Singleton.cpp:
+        * tao/Tagged_Profile.cpp:
+        * tao/Time_Policy_Manager.cpp:
+
+        * tao/TkResource/TkResource_Factory.cpp:
+
+        * tao/Transport.cpp:
+
+        * tao/TransportCurrent/Current_ORBInitializer_Base.cpp:
+
+        * tao/Transport_Acceptor.cpp:
+        * tao/Transport_Cache_Manager_T.inl:
+        * tao/Transport_Cache_Manager_T.cpp:
+        * tao/Transport_Connector.cpp:
+
+        * tao/Utils/ORB_Manager.cpp:
+        * tao/Utils/Server_Main.cpp:
+
+        * tao/Valuetype/AbstractBase.cpp:
+        * tao/Valuetype/ValueBase.cpp:
+
+        * tao/Wait_On_LF_No_Upcall.cpp:
+        * tao/Wait_On_Read.cpp:
+        * tao/WrongTransactionC.cpp:
+
+        * tao/XtResource/XtResource_Factory.cpp:
+
+        * tao/ZIOP/ZIOP.cpp:
+        * tao/ZIOP/ZIOP_ORBInitializer.cpp:
+        * tao/ZIOP/ZIOP_Stub.cpp:
+
+        * tao/debug.h:
+        * tao/debug.cpp:
+        * tao/default_client.cpp:
+        * tao/default_resource.cpp:
+        * tao/default_server.cpp:
+        Change ACE_DEBUG/ACE_ERROR macros in tao to TAOLIB_DEBUG/TAOLIB_ERROR.
+
 Thu Apr 11 17:18:36 UTC 2013  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * tao/Transport.cpp (TAO_Transport::send_asynchronous_message_i):
@@ -12,9 +269,9 @@ Thu Apr 11 17:18:36 UTC 2013  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
           instead declares that it's timed out.  This fixes bugid 4103.
 
 Thu Apr 11 16:51:31 UTC 2013  Martin Corino  <mcorino@remedy.nl>
-        
+
         Implemented an improvement (fix) for oneways with SYNC_NONE sync scope
-        policy which makes the transport honour buffering constraints on the 
+        policy which makes the transport honour buffering constraints on the
         first oneway request queued before the connection is established.
         This fixes Bugzilla 3384.
 
@@ -31,7 +288,7 @@ Thu Apr 11 16:51:31 UTC 2013  Martin Corino  <mcorino@remedy.nl>
           Added check on buffering constraints in TAO_Transport::format_queue_message()
           after queuing the message setting flush_in_post_open_ as needed.
           Added check in TAO_Transport::check_buffering_constraints_i() on connection
-          state since this method can now be called in both a connected as well as 
+          state since this method can now be called in both a connected as well as
           unconnected state.
 
         * bin/tao_orb_tests.lst:

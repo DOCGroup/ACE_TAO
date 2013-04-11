@@ -90,7 +90,7 @@ void
 CORBA::Exception::_tao_print_exception (const char *user_provided_info,
                                         FILE *) const
 {
-  ACE_ERROR ((LM_ERROR,
+  TAOLIB_ERROR ((LM_ERROR,
               ACE_TEXT ("(%P|%t) EXCEPTION, %C\n")
               ACE_TEXT ("%C\n"),
               user_provided_info,

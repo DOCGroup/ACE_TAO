@@ -84,7 +84,7 @@ TAO_IORInterceptor_Adapter_Impl::establish_components (TAO_Root_POA* poa)
 
               if (name.in () != 0)
                 {
-                  ACE_DEBUG ((LM_WARNING,
+                  TAOLIB_DEBUG ((LM_WARNING,
                               "(%P|%t) Exception thrown while processing "
                               "IORInterceptor \"%C\">\n",
                               name.in ()));

@@ -54,7 +54,7 @@ TAO_UIOP_Connection_Handler::~TAO_UIOP_Connection_Handler (void)
 
   if (result == -1 && TAO_debug_level)
     {
-      ACE_ERROR ((LM_ERROR,
+      TAOLIB_ERROR ((LM_ERROR,
                   ACE_TEXT("TAO (%P|%t) - UIOP_Connection_Handler::")
                   ACE_TEXT("~UIOP_Connection_Handler, ")
                   ACE_TEXT("release_os_resources() failed %m\n")));
@@ -121,7 +121,7 @@ TAO_UIOP_Connection_Handler::open (void*)
     return -1;
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
+    TAOLIB_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO (%P|%t) UIOP connection to server ")
                 ACE_TEXT ("<%C> on %d\n"),
                 addr.get_path_name (), this->peer ().get_handle ()));

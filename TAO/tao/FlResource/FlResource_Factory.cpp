@@ -25,7 +25,7 @@ namespace TAO
                       0);
 
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
+        TAOLIB_DEBUG ((LM_DEBUG,
                     "TAO (%P|%t) - ACE_FlReactor created\n"));
     }
 

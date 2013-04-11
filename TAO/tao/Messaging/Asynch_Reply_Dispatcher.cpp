@@ -66,7 +66,7 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (TAO_Pluggable_Reply_Params &params)
     {
       if (TAO_debug_level > 2)
         {
-          ACE_ERROR ((
+          TAOLIB_ERROR ((
             LM_ERROR,
             ACE_TEXT ("TAO_Messaging (%P|%t) - Asynch_Reply_Dispatcher::dispatch_reply ")
             ACE_TEXT ("clone_from failed\n")));
@@ -95,7 +95,7 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (TAO_Pluggable_Reply_Params &params)
 
       if (TAO_debug_level >= 4)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO_Messaging (%P|%t) - Asynch_Reply_Dispatcher")
                       ACE_TEXT ("::dispatch_reply status = %d\n"),
                                 this->reply_status_));

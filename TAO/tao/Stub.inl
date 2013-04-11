@@ -59,7 +59,7 @@ TAO_Stub::reset_profiles (void)
                      this->profile_lock_));
   if (TAO_debug_level > 5)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - Stub::reset_profiles, acquired ")
                   ACE_TEXT ("profile lock this = 0x%x\n"),
                   this));
@@ -152,7 +152,7 @@ TAO_Stub::next_profile_i (void)
             ACE_MT (ACE_GUARD_RETURN (TAO_REVERSE_LOCK, ace_mon, reverse, 0));
             if (TAO_debug_level > 5)
               {
-                ACE_DEBUG ((LM_DEBUG,
+                TAOLIB_DEBUG ((LM_DEBUG,
                             ACE_TEXT ("TAO (%P|%t) - Stub::next_profile_i, ")
                             ACE_TEXT ("released profile lock to reinitialize ")
                             ACE_TEXT ("this = 0x%x\n"),
@@ -164,7 +164,7 @@ TAO_Stub::next_profile_i (void)
           }
           if (TAO_debug_level > 5)
             {
-              ACE_DEBUG ((LM_DEBUG,
+              TAOLIB_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("TAO (%P|%t) - Stub::next_profile_i, ")
                           ACE_TEXT ("reacquired profile lock on object ")
                           ACE_TEXT ("this = 0x%x\n"),
@@ -192,7 +192,7 @@ TAO_Stub::next_profile (void)
                             0));
   if (TAO_debug_level > 5)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - Stub::next_profile, acquired profile lock this = 0x%x\n"), this));
     }
   return this->next_profile_i ();
@@ -225,7 +225,7 @@ TAO_Stub::base_profiles (const TAO_MProfile &mprofiles)
                             0));
   if (TAO_debug_level > 5)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - Stub::base_profiles, acquired profile lock this = 0x%x\n"), this));
     }
 
@@ -251,7 +251,7 @@ TAO_Stub::next_profile_retry (void)
                             0));
   if (TAO_debug_level > 5)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - Stub::next_profile_retry, acquired profile lock this = 0x%x\n"), this));
     }
 

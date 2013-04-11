@@ -56,7 +56,7 @@ TAO_DII_Reply_Handler::handle_location_forward (TAO_InputCDR &incoming,
 {
   if (TAO_debug_level > 3)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT("TAO (%P|%t) Base DII_Reply_Handler::")
                   ACE_TEXT("handle_location_forward called, ")
                   ACE_TEXT("reply_status = %d\n"),

@@ -25,7 +25,7 @@ namespace TAO
         }
         case ::PortableServer::MULTIPLE_ID :
         {
-          ACE_ERROR ((LM_ERROR, "Incorrect type in IdUniquenessStrategyUniqueFactoryImpl"));
+          TAOLIB_ERROR ((LM_ERROR, "Incorrect type in IdUniquenessStrategyUniqueFactoryImpl"));
           break;
         }
       }
