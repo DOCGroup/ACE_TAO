@@ -289,6 +289,7 @@ TAO_AMH_DSI_Exception_Holder::_tao_unmarshal (
 void
 TAO_AMH_DSI_Exception_Holder::raise_invoke ()
 {
+  auto_ptr< ::CORBA::Exception> safety (this->exception_);
   this->exception_->_raise ();
 }
 

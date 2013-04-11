@@ -14,6 +14,7 @@
 
 class Log;
 class HostProcess;
+class Endpoint;
 
 typedef ACE_RB_Tree<long, HostProcess *, ACE_Less_Than<long>, ACE_Null_Mutex> Processes;
 typedef ACE_RB_Tree<ACE_CString, HostProcess *, ACE_Less_Than<ACE_CString>, ACE_Null_Mutex> Procs_By_Name;
@@ -28,14 +29,14 @@ public:
 
   void add_process (HostProcess *proc);
   HostProcess *find_process (long pid);
-  HostProcess *find_host (ACE_CString &endpoint, bool server);
+  HostProcess *find_host (const Endpoint &endpoint, bool server);
   void reconcile (void);
 
   static bool set_tao_version (ACE_TCHAR *str);
   static long tao_version (void);
-  void alternate_address (const char *string);
-  bool is_equivalent (const ACE_CString &primary,
-                      const ACE_CString &alternate);
+  static void alternate_address (const char *string);
+  static bool is_equivalent (const ACE_CString &primary,
+                             const ACE_CString &alternate);
   void default_service (const char *string);
 
   void make_dir (const char * );
@@ -47,14 +48,16 @@ public:
   void dump ();
 
 private:
+  HostProcess *find_host_i (const Endpoint &endpoint, bool server);
+
   ostream * stream_for ( ostream *, HostProcess * = 0, const char * = 0);
 
   Processes processes_;
   Procs_By_Name procs_by_name_;
-  AltAddresses alt_addrs_;
   ACE_CString base_dir_;
   ACE_CString outfile_;
   static long tao_version_;
+  static AltAddresses alt_addrs_;
 };
 
 #endif // LOG_WALKER_SESSION_H

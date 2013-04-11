@@ -20,7 +20,10 @@ Invocation::Invocation (PeerProcess *peer, Thread *thr, size_t rid)
    peer_(peer),
    req_id_(rid),
    target_(0),
-   handle_(thr->active_handle())
+   handle_(thr->active_handle()),
+   finish_reported_(false),
+   req_level_ (0),
+   repl_level_ (0)
 {
 }
 
@@ -179,17 +182,23 @@ Invocation::handle (void) const
 bool
 Invocation::contains (size_t line)
 {
-  if (this->req_octets_ == 0 || this->repl_octets_ == 0)
+  if (this->req_octets_ == 0 || this->is_oneway())
     return false;
   return
     line > this->req_octets_->log_posn() &&
-    line < this->repl_octets_->log_posn();
+    (this->repl_octets_ == 0 || line < this->repl_octets_->log_posn());
 }
 
 size_t
 Invocation::req_line (void)
 {
   return this->req_octets_ == 0 ? 0 : this->req_octets_->log_posn();
+}
+
+size_t
+Invocation::repl_line (void)
+{
+  return this->repl_octets_ == 0 ? 0 : this->repl_octets_->log_posn();
 }
 
 void
@@ -200,19 +209,125 @@ Invocation::new_line (ostream &strm, int indent, int offset, bool add_nl, bool s
       strm << "\n";
     }
 
-  if (indent > 9)
+  int steps = indent / 20;
+  int extra = indent % 20;
+
+  if (steps > 1)
     {
       if (show_indent)
-        strm << "[indent " << indent << "] ---> ";
+        {
+          strm << "[indent " << steps * 20 << "] --->";
+          extra += (indent > 99) ? 5 : 4;
+        }
       else
-        strm << "                   ";
+        {
+          extra += 20;
+        }
     }
   else
     {
-      indent += offset;
-      while (indent-- > 0)
-        strm << "  ";
+      extra += (steps * 20);
     }
+
+  extra += offset;
+  while (extra-- > 0)
+    strm << " ";
+}
+
+void
+Invocation::dump_start_line (ostream &strm, size_t indent)
+{
+  if (this->req_octets_ == 0)
+    return;
+  this->req_level_ = indent;
+  strm << setw(7) << this->req_octets_->log_posn() << " " << setw(0);
+
+  const char *opname = "";
+  const char *dir_1 = "sent to ";
+  const char *dir_2 = " in ";
+
+  if (this->req_octets_ != 0)
+    {
+      opname = this->req_octets_->operation();
+      if (this->req_octets_->sending())
+        {
+          dir_1 = "recv for ";
+          dir_2 = " from ";
+        }
+    }
+
+  this->new_line (strm, indent, 0, false, true);
+
+  strm << "start request ";
+
+  if (opname == 0 || opname[0] == 0)
+    opname = "<no operation>";
+
+  strm << dir_1;
+  if (this->target_ == 0)
+    strm << "<unknown object>" ;
+  else
+    strm << this->target_->name();
+  strm << dir_2 << this->peer_->id() << ", req " << this->req_id_;
+  strm << " [" << opname << "]";
+  if (this->is_oneway())
+    strm << " oneway";
+  else if (this->repl_octets_ == 0)
+    strm << " <no reply found>";
+  strm << endl;
+}
+
+void
+Invocation::dump_finish_line (ostream &strm, size_t indent)
+{
+  bool is_popped = this->repl_level_ > 0 && indent == this->req_level_;
+
+  if (!is_popped && (this->finish_reported_ || this->is_oneway() || this->repl_octets_ == 0))
+    return;
+
+  if (!this->finish_reported_)
+    {
+      this->repl_level_ = indent;
+    }
+
+  this->finish_reported_ = true;
+
+  strm << setw(7) << this->repl_octets_->log_posn() << " " << setw(0);
+
+  const char *opname = "";
+  const char *dir_2 = " in ";
+
+  if (this->req_octets_ != 0)
+    {
+      opname = this->req_octets_->operation();
+      if (this->req_octets_->sending())
+        {
+          dir_2 = " from ";
+        }
+    }
+
+  if (opname == 0 || opname[0] == 0)
+    {
+      opname = "<no operation>";
+    }
+
+  this->new_line (strm, indent, 0, false, true);
+
+  strm << "reply for " << this->peer_->id() << ", req " << this->req_id_;
+  strm << " [" << opname << "]";
+  if (is_popped)
+    {
+      strm << " (reply received at " << this->repl_level_ << " evaluated)";
+    }
+  else
+    {
+      if (indent != this->req_level_)
+        {
+          strm << " (req at level " << this->req_level_ << " reply at " << indent << ")";
+        }
+    }
+
+  strm << endl;
 }
 
 void

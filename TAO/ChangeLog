@@ -1,3 +1,445 @@
+Thu Apr 11 16:16:21 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        branch merge from branches/OCI_Asynch_ImR. This is a re-implementation
+        of the tao_imr_locator to improve performance using asynchronous method
+        handling and invocation (AMH/AMI) to allow many concurrent client requests
+        to be satisfied as quickly as possible, avoiding nested upcalls and
+        potentally fatal stack sizes. The only user visible change is that IMR
+        clients must now include the messaging library to satsify the linker due
+        to the AMI/AMH stubs and skeletons. MPC makes this happen automatically for
+        projects using it for build management.
+
+        Wed Apr 10 00:58:56 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/LiveCheck.h:
+        * orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+
+        Fix for the reconnect test. Use the fact that a dead server is
+        not scheduled for a ping to throw an immediate exception.
+
+        Tue Apr  9 15:44:55 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+
+        Cleaned up explicit debug output, added a catch for errors during
+        connection establishment with the async ping. The AMI callback
+        exception handler is only invoked after a successful send of the
+        invocation. A connection failure is still an exception in the
+        caller's context.
+
+        * orbsvcs/tests/ImplRepo/servers_list/Terminator.cpp:
+        * orbsvcs/tests/ImplRepo/servers_list/run_test.pl:
+
+        Reverted earlier change.
+
+        Tue Apr  9 14:42:10 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/LiveCheck.h:
+        * orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+
+        Improve the list performance by forcing a poll if an active
+        test is required.
+
+        * orbsvcs/tests/ImplRepo/servers_list/Terminator.cpp:
+        * orbsvcs/tests/ImplRepo/servers_list/run_test.pl:
+
+        enhance the debugging output.
+
+        Mon Apr  8 19:02:29 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+
+        Clean up earlier debug messages, fix the list operation.
+
+        Mon Apr  8 17:13:01 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * orbsvcs/ImplRepo_Service/LiveCheck.h:
+        * orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+
+        More work on PER_CLIENT activations.
+
+        Mon Apr  8 03:29:47 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.h:
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+
+        Coveratge for PER_CLIENT activations.
+
+        Sun Apr  7 13:55:15 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Forwarder.cpp:
+        * orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+
+        Fix for memory leak and scoreboard failures.
+
+        Sat Apr  6 12:36:48 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * orbsvcs/ImplRepo_Service/INS_Locator.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+
+        More cleanup of development-level debug messages.
+
+        * tao/IORTable/Locate_ResponseHandler.cpp:
+
+        Fix for improper memory management.
+
+        Fri Apr  5 21:21:15 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * orbsvcs/ImplRepo_Service/INS_Locator.cpp:
+        * orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup/run_test.pl:
+
+        * tao/IORTable/Locate_ResponseHandler.h:
+        * tao/IORTable/Locate_ResponseHandler.cpp:
+
+        * tao/Messaging/AMH_Response_Handler.h:
+        * tao/Messaging/AMH_Response_Handler.cpp:
+
+        Clean up some development-level logging. Fixed the memory problems. Continue
+        testing and validating.
+
+        Thu Apr  4 23:15:58 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * orbsvcs/ImplRepo_Service/Forwarder.h:
+        * orbsvcs/ImplRepo_Service/Forwarder.cpp:
+        * orbsvcs/ImplRepo_Service/INS_Locator.h:
+        * orbsvcs/ImplRepo_Service/INS_Locator.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_Repository.h:
+        * orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
+
+        * tao/Adapter.h:
+
+        * tao/DynamicInterface/AMH_DSI_Response_Handler.cpp:
+
+        * tao/IORTable/IORTable.h:
+        * tao/IORTable/IORTable.mpc:
+        * tao/IORTable/IORTable.pidl:
+        * tao/IORTable/IOR_Table_Impl.h:
+        * tao/IORTable/IOR_Table_Impl.cpp:
+        * tao/IORTable/Locate_ResponseHandler.h:
+        * tao/IORTable/Locate_ResponseHandler.inl:
+        * tao/IORTable/Locate_ResponseHandler.cpp:
+        * tao/IORTable/Table_Adapter.h:
+        * tao/IORTable/Table_Adapter.cpp:
+
+        * tao/Messaging/AMH_Response_Handler.h:
+        * tao/Messaging/AMH_Response_Handler.cpp:
+
+        Adding support for an asynchronous IORTable locator. This commit
+        also contains a lot of intermediate debugging artifacts. It still
+        crashes. Committing for easy distribution to other test hosts.
+
+        Wed Apr  3 14:20:28 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+
+        Fix how exceptions are handled when using the sync reponse handler.
+
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup/run_test.pl:
+
+        Improve the quality of output when run in debug mode.
+
+        Tue Apr  2 23:13:50 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * orbsvcs/ImplRepo_Service/Forwarder.cpp:
+        * orbsvcs/ImplRepo_Service/INS_Locator.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/LiveCheck.h:
+        * orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+
+        Clean up debugging output and improve ping retry logic.
+
+        * utils/logWalker/HostProcess.h:
+        * utils/logWalker/HostProcess.cpp:
+        * utils/logWalker/Log.cpp:
+        * utils/logWalker/PeerProcess.h:
+        * utils/logWalker/PeerProcess.cpp:
+        * utils/logWalker/Session.h:
+        * utils/logWalker/Session.cpp:
+
+        Fix up the endpoint association so multiple log files can correlate.
+
+Tue Apr  2 13:17:44 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Forwarder.cpp:
+
+        Nightly build cleanup.
+
+        Tue Apr  2 01:37:35 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+
+        More debugging added for scoreboard processing.
+
+        Mon Apr  1 23:52:37 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.h:
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+
+        More memory management and state machine improvments
+
+        Mon Apr  1 21:28:42 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.h:
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/LiveCheck.h:
+        * orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+
+        Improve memory management.
+
+        * utils/logWalker/Log.cpp:
+
+        Improve handling of nested client/server connection
+        completions.
+
+        Mon Apr  1 15:51:42 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+
+        allow collocation calls to support the AMI callbacks.
+
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup/Test_i.cpp:
+
+        Fix a scoreboard build error.
+
+        Fri Mar 29 22:52:42 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.h:
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * orbsvcs/ImplRepo_Service/Forwarder.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/LiveCheck.h:
+        * orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+
+        Improve the ping retry state machine, add more diagonstics.
+
+        * utils/logWalker/Log.cpp:
+
+        Fix a memory managment error.
+
+        Fri Mar 29 00:23:44 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
+
+        Added messaging library dependency to tao_imr.
+
+        Fri Mar 29 00:14:00 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.h:
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * orbsvcs/ImplRepo_Service/Forwarder.h:
+        * orbsvcs/ImplRepo_Service/Forwarder.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_ResponseHandler.h:
+        * orbsvcs/ImplRepo_Service/ImR_ResponseHandler.cpp:
+        * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
+
+        Completed the initial task of transitioning to an AMH Locator servant.
+        Still need to work on the INS_Locator which uses synch calls. Also need to
+        run through regression suite and debug.
+
+        * orbsvcs/ImplRepo_Service/AsyncStartupWaiter.idl:
+        * orbsvcs/ImplRepo_Service/AsyncStartupWaiter_i.h:
+        * orbsvcs/ImplRepo_Service/AsyncStartupWaiter_i.cpp:
+
+        Removed these files.
+
+        Thu Mar 28 17:05:52 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.h:
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
+        * orbsvcs/ImplRepo_Service/LiveCheck.h:
+        * orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_Repository.h:
+
+        Further improvments to the implementation. At the point where the basic ImplRepo
+        test passes.
+
+        Tue Mar 26 23:58:50 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Adapter_Activator.h:
+        * orbsvcs/ImplRepo_Service/Adapter_Activator.cpp:
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.h:
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * orbsvcs/ImplRepo_Service/Forwarder.h:
+        * orbsvcs/ImplRepo_Service/Forwarder.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/LiveCheck.h:
+        * orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_Options.h:
+        * orbsvcs/ImplRepo_Service/Locator_Options.cpp:
+
+        completed asynch ping tracking and event delivery. Removed sync/asynch
+        behavior option, it didn't work and it was temporary anyway. Stripped the
+        old code that was optional.
+
+        Tue Mar 26 16:35:26 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Forwarder.cpp:
+
+        Clean up error in validating the forward-to IOR.
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator.cpp:
+
+        Clean up the shutdown handler for single-thread use.
+
+        * tao/Messaging/AMH_Response_Handler.cpp:
+
+        Add the explicit handling of ForwardRequest exceptions.
+
+        Tue Mar 26 15:52:50 UTC 2013  Byron Harris  <harrisb@ociweb.com>
+
+        * bin/tao_other_tests.lst:
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup:
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup/README:
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup/Test.idl:
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup/Test_i.h:
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup/Test_i.cpp:
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup/client.cpp:
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup/run_test.pl:
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup/server.cpp:
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup/servers_interact_on_startup.mpc:
+
+        Added test for ImR pinging of ill-behaved, interacting servers.
+
+        Mon Mar 25 20:52:13 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
+
+        Restore the export macro in the ImR_Locator impl class.
+
+        Mon Mar 25 20:41:16 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Adapter_Activator.cpp:
+
+        Fix policy inconsitency.
+
+        Mon Mar 25 17:35:24 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.h:
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * orbsvcs/ImplRepo_Service/Forwarder.h:
+        * orbsvcs/ImplRepo_Service/Forwarder.cpp:
+        * orbsvcs/ImplRepo_Service/INS_Locator.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
+        * orbsvcs/ImplRepo_Service/LiveCheck.h:
+        * orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_Options.cpp:
+
+        Continue with implementation. Added some temporary debug output, hooked up the
+        sync version of the reactive ping-wait. Started in on the next stage, which is
+        making the rest of the server access Asynchronous. Changed the mode select flag
+        for start up from defaulting to the traditional sync-style of calls to the new
+        asynch style. The temporary command line flag is now --old, to use the old
+        style for comparison.
+
+        Fri Mar 22 18:16:00 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+
+        Fix for a core-on-exit problem.
+
+        Tue Mar 19 13:31:43 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
+        * orbsvcs/ImplRepo_Service/LiveCheck.h:
+        * orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+
+        Adding new mechanism for pinging servers asynchronously. When the IMR is
+        interested in the status of a server, it now registers a callback object and
+        a ping is scheduled. At the appropriate time, the ping request is sent using
+        AMI. The reply or exception is then handled asynchronously.
+
+        For testing in an otherwise synchronous locator, a blocking ping reply waiter
+        is used.
+
+        Thu Mar 14 21:36:30 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/AsyncStartupWaiter_i.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+
+        Some syntactic clean up and apply a fix for a memory leak Kevin applied to
+        the trunk.
+
+        * utils/logWalker/HostProcess.cpp:
+        * utils/logWalker/Invocation.h:
+        * utils/logWalker/Invocation.cpp:
+        * utils/logWalker/Thread.h:
+        * utils/logWalker/Thread.cpp:
+
+        Add a new type of by-thread output that highlights nested upcalls and the
+        processing impact of delaying action on replies.
+
+        Mon Mar 11 16:31:08 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_Options.h:
+        * orbsvcs/ImplRepo_Service/Locator_Options.cpp:
+
+        Actually select the DSI/AMH implementation when the asynch
+        option is supplied. Avoid confusion with the option by calling
+        it --asynch rather than the earlier --use_dsi
+
+        * orbsvcs/tests/ImplRepo/scale_clients/run_test.pl:
+
+        Modify the test to verify that both synchronous and asynch
+        implementations work.
+
+        Mon Mar 11 01:50:33 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Adapter_Activator.h:
+        * orbsvcs/ImplRepo_Service/Adapter_Activator.cpp:
+
+        In order to support asynchronous interfaces, the adapter has to use the
+        default servant rather than the servant locator. The servant locator does
+        not give an opportunity for asynch processing.
+
+        * orbsvcs/ImplRepo_Service/Forwarder.h:
+        * orbsvcs/ImplRepo_Service/Forwarder.cpp:
+
+        The initial cut at implementing AMH.
+
+        * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
+        * orbsvcs/ImplRepo_Service/Locator_Options.h:
+        * orbsvcs/ImplRepo_Service/Locator_Options.cpp:
+
+        The feature is optional for now at least.
+
+        * tao/ImR_Client/ImR_Client.mpc:
+
+        Add support for generating asyncronous stubs and skeletons for working
+        with the ImR.
+
 Thu Apr  4 13:35:46 UTC 2013  Byron Harris  <harrisb@ociweb.com>
 
         * orbsvcs/tests/FT_Naming/FaultTolerant/client.cpp:

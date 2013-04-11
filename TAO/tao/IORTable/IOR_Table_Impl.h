@@ -54,8 +54,16 @@ public:
   /// Constructor
   TAO_IOR_Table_Impl (void);
 
+  bool async_available (void) const
+  {
+    return this->use_async_;
+  }
+
   /// Find the object, using the locator if it is not on the table.
   char *find (const char *object_key);
+
+  void async_find (::IORTable::Locate_ResponseHandler rh,
+                   const char *object_key);
 
   /**
    * @name The IORTable::Table methods
@@ -83,6 +91,8 @@ private:
 
   /// The locator
   IORTable::Locator_var locator_;
+  IORTable::AsyncLocator_var async_locator_;
+  bool use_async_;
 
   /// Synchronization
   TAO_SYNCH_MUTEX lock_;

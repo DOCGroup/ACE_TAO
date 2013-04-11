@@ -25,7 +25,7 @@ HostProcess::~HostProcess (void)
        !i.done();
        i++)
     {
-      delete reinterpret_cast<ACE_CString *>(i.next()->item_);
+      delete reinterpret_cast<Endpoint *>(i.next()->item_);
     }
   for (ThreadList::ITERATOR i(this->threads_);
        !i.done();
@@ -77,9 +77,10 @@ HostProcess::find_thread (long tid, size_t offset)
 }
 
 Thread *
-HostProcess::find_thread_for_peer (const ACE_CString &addr, Session &session)
+HostProcess::find_thread_for_peer (const ACE_CString &addr)
 {
   Thread *thr = 0;
+  Endpoint ep (addr.c_str());
   for (ACE_DLList_Iterator<Thread> i(threads_);
        !i.done();
        i.advance())
@@ -89,7 +90,7 @@ HostProcess::find_thread_for_peer (const ACE_CString &addr, Session &session)
       if (pp == 0)
         continue;
 
-      if (pp->match_server_addr(addr, session))
+      if (pp->match_server_addr(ep))
         return thr;
     }
   return 0;
@@ -115,7 +116,8 @@ HostProcess::find_peer (const ACE_CString &addr)
 {
 
   PeerProcess *pp = 0;
-  (void)this->by_addr_.find(addr,pp);
+  Endpoint ep (addr.c_str());
+  (void)this->by_addr_.find(ep,pp);
   return pp;
 }
 
@@ -143,31 +145,31 @@ HostProcess::pid (void) const
 }
 
 bool
-HostProcess::has_endpoint (ACE_CString& addr, bool listen)
+HostProcess::has_endpoint (const Endpoint& addr, bool listen)
 {
-  ACE_CString *a = 0;
   AddrList &list = listen ? this->listen_endpoints_ : this->client_endpoints_;
-  for (ACE_DLList_Iterator<ACE_CString> i(list);
+  for (ACE_DLList_Iterator<Endpoint> i(list);
        !i.done();
-       i.advance())
+       ++i)
     {
-      i.next(a);
-      if (*a == addr)
+      Endpoint *elem;
+      i.next (elem);
+      if (*elem == addr)
         return true;
     }
   return false;
 }
 
 void
-HostProcess::add_client_endpoint(ACE_CString &addr)
+HostProcess::add_client_endpoint(const Endpoint &addr)
 {
-  this->client_endpoints_.insert_tail(new ACE_CString (addr));
+  this->client_endpoints_.insert_tail(new Endpoint (addr));
 }
 
 void
-HostProcess::add_listen_endpoint(ACE_CString &addr)
+HostProcess::add_listen_endpoint(const Endpoint &addr)
 {
-  this->listen_endpoints_.insert_tail(new ACE_CString (addr));
+  this->listen_endpoints_.insert_tail(new Endpoint (addr));
 }
 
 void
@@ -181,11 +183,12 @@ HostProcess::add_peer(long handle, PeerProcess *peer)
                   "add_peer, found existing for %d\n",
                   handle));
     }
-  const ACE_CString &addr = peer->is_server() ?
+  const Endpoint &addr = peer->is_server() ?
     peer->server_addr() : peer->last_client_addr();
   int result = this->by_addr_.bind (addr,peer);
   if (result < 0)
-    ACE_ERROR ((LM_ERROR,"add_peer, cannot bind to addr %s result = %d,  %p\n", addr.c_str(), result, "by_addr_.bind"));
+    ACE_ERROR ((LM_ERROR,"add_peer, cannot bind to addr %s result = %d,  %p\n",
+                addr.addr_.c_str(), result, "by_addr_.bind"));
 
   PeerNode *node = new PeerNode (handle,peer);
   this->by_handle_.insert_tail(node);
@@ -218,13 +221,13 @@ HostProcess::dump_summary (ostream &strm)
     {
       strm << "  listening on ";
       size_t count = 0;
-      for (ACE_DLList_Iterator <ACE_CString> t_iter (this->listen_endpoints_);
+      for (ACE_DLList_Iterator <Endpoint> t_iter (this->listen_endpoints_);
            !t_iter.done();
            t_iter.advance())
         {
-          ACE_CString *ep = 0;
+          Endpoint *ep = 0;
           t_iter.next(ep);
-          strm << ep->c_str();
+          strm << ep->addr_.c_str();
           if (++count < num)
             strm << ", ";
         }
@@ -282,6 +285,8 @@ HostProcess::dump_thread_invocations (ostream &strm)
       Thread *thr = 0;
       t_iter.next(thr);
       thr->dump_invocations (strm);
+      strm << endl;
+      thr->dump_incidents (strm);
       strm << endl;
     }
 }
