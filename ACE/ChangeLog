@@ -1,7 +1,12 @@
+Thu Apr 11 19:53:22 UTC 2013  Huang-Ming Huang  <huangh@ociweb.com>
+
+        * ace/Log_Category.h:
+        Fixed some documentation problems.
+
 Thu Apr 11 19:42:14 UTC 2013  Huang-Ming Huang  <huangh@ociweb.com>
 
         * ace/Log_Category.h:
-        Fixed ACE_ERROR_RETURN()  control reaches end of non-void function warning.
+        Fixed ACELIB_ERROR_RETURN()  control reaches end of non-void function warning.
 
         * tests/Log_Msg_Test.cpp:
         Added test for ACE_Log_Category
