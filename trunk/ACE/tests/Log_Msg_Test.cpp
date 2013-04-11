@@ -352,6 +352,108 @@ test_log_msg_features (const ACE_TCHAR *program)
               ACE_TEXT ("This LM_DEBUG message should not print!\n")));
 }
 
+// For testing how many log records has been output
+class Log_Count : public ACE_Log_Msg_Callback
+{
+  int count_;
+public:
+  /// logging!
+  Log_Count () : count_(0)
+  {
+  }
+
+  /// Logging callback
+  void log (ACE_Log_Record &)
+  {
+    ++count_;
+  }
+
+  int count() const
+  {
+    return count_;
+  }
+};
+
+static int
+test_acelib_category()
+{
+  int failed = 0;
+
+  Log_Count  counter;
+
+  ACE_LOG_MSG->msg_callback (&counter);
+
+  // Disable the LM_DEBUG and LM_INFO messages.
+  u_long priority_mask =
+    ACE_LOG_MSG->priority_mask (ACE_Log_Msg::PROCESS);
+  ACE_CLR_BITS (priority_mask,
+                LM_DEBUG | LM_INFO);
+  ACE_Log_Category::ace_lib().priority_mask (priority_mask);
+
+  ACELIB_DEBUG ((LM_INFO,
+              ACE_TEXT ("This LM_INFO message should not print!\n")));
+  ACELIB_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("This LM_DEBUG message should not print!\n")));
+
+  if (counter.count() != 0)
+  {
+    ++failed;
+  }
+
+  ACE_DEBUG ((LM_INFO,
+              ACE_TEXT ("This LM_INFO message should print!\n")));
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("This LM_DEBUG message should print!\n")));
+
+  if (counter.count() != 2)
+  {
+    ++failed;
+  }
+
+  ACE_SET_BITS (priority_mask,
+                LM_INFO);
+  ACE_Log_Category::ace_lib().priority_mask (priority_mask);
+
+  ACELIB_DEBUG ((LM_INFO,
+              ACE_TEXT ("This LM_INFO message should print!\n")));
+
+  if (counter.count() != 3)
+  {
+    ++failed;
+  }
+
+  ACELIB_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("This LM_DEBUG message should not print!\n")));
+
+  if (counter.count() != 3)
+  {
+    ++failed;
+  }
+
+  ACE_CLR_BITS (priority_mask, LM_INFO);
+  ACE_Log_Category::ace_lib().priority_mask (priority_mask);
+
+  ACELIB_DEBUG ((LM_INFO,
+              ACE_TEXT ("This LM_INFO message should not print!\n")));
+  ACELIB_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("This LM_DEBUG message should not print!\n")));
+
+  if (counter.count() != 3)
+  {
+    ++failed;
+  }
+
+
+  if (failed == 0) {
+    ACE_DEBUG((LM_DEBUG, "All ace lib category log passed\n"));
+  }
+  else {
+    ACE_ERROR((LM_ERROR, "Some ace lib category log failed\n"));
+  }
+  ACE_LOG_MSG->msg_callback (0);
+  return failed;
+}
+
 static int
 test_ostream (void)
 {
@@ -725,6 +827,8 @@ run_main (int argc, ACE_TCHAR *argv[])
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("logging specifier tests failed!\n")));
       status = 1;
     }
+
+  status += test_acelib_category();
 
   ACE_END_TEST;
   return status;

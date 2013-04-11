@@ -69,7 +69,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
   do { \
     int const __ace_error = ACE_Log_Msg::last_error_adapter (); \
     ACE_Log_Category_TSS *ace___ = ACE_Log_Category::ace_lib().per_thr_obj(); \
-    if (ace___ == 0) break;\
+    if (ace___ == 0) return Y;\
     ace___->conditional_set (__FILE__, __LINE__, Y, __ace_error); \
     ace___->log X; \
     return Y; \
@@ -103,6 +103,15 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ACE_Log_Msg;
 class ACE_Log_Category;
+
+
+/**
+ * @class ACE_Log_Category_TSS
+ *
+ * @brief The thread specific object for a ACE_Log_Categy object.
+ *
+ * @see{ACE_Log_Categy} for detailed explaination.
+ */
 
 class ACE_Export ACE_Log_Category_TSS
 {
@@ -164,16 +173,50 @@ private:
   u_long priority_mask_;
 };
 
-
+/**
+ * @class ACE_Log_Category
+ *
+ * @brief Provides a categorized message logging
+ * abstraction.
+ *
+ * This class added another level of abstraction to
+ * @c ACE_Log_Msg to separate log messages into different
+ * categories. Logs in different categories can be independently
+ * enabled or disabled. Each cateogry can have a name which
+ * is fixed at construction. The name is not used for
+ * formating the messages. However, it can be used by a
+ * message backend object for identification and reformat
+ * accordingly.
+ *
+ * To log a message into a category. Create a new @c ACE_Log_Category
+ * and then use @c per_thr_obj() for logging. For example,
+ *
+ * \code{.cpp}
+ *  ACE_Log_Category test_catogory("Test");
+ *  test_cateogry.per_thr_obj(LM_DEBUG, "Log into the Test category.");
+ *
+ *  // set the process wide priority mask
+ *  test_catogory.priority_mask(LM_DEBUG|LM_ERROR);
+ *
+ *  // set the thread specific priority mask
+ *  test_cateogry.per_thr_obj.priority_mask(LM_DEBUG);
+ * \endcode
+ */
 class ACE_Export ACE_Log_Category
 {
 public:
 
-  /// Notice that ACE_Log_Category does not
-  /// deep copy the passed \a name; therefore,
-  /// you must keep the lifetime of \a name
-  /// longer than the newly create ACE_Log_Category
-  /// object.
+  /**
+   * Initialize the logger with a name.
+   *
+   * Notice that ACE_Log_Category does not
+   * deep copy the passed \a name; therefore,
+   * you must keep the lifetime of \a name
+   * longer than the newly create ACE_Log_Category
+   * object. The rational for the design is to avoid
+   * static initialization problem when the ACE_Log_Category
+   * is created in static storage.
+   */
   ACE_Log_Category(const char* name);
   ~ACE_Log_Category();
 
