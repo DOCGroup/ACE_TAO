@@ -274,6 +274,8 @@ Thu Apr 11 15:45:41 UTC 2013  Huang-Ming Huang  <huangh@ociweb.com>
         * ace/XML_Utils/XML_Error_Handler.cpp:
 
         * ace/XTI_ATM_Mcast.inl:
+        Change the use of ACE_ERROR/ACE_DEBUG macros inside ace to ACELIB_ERROR/ACELIB_DEBUG.
+
 
 Thu Apr 11 15:20:21 UTC 2013  Huang-Ming Huang  <huangh@ociweb.com>
 
