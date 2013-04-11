@@ -626,7 +626,16 @@ TAO_Transport::format_queue_message (TAO_OutputCDR &stream,
   if (this->messaging_object ()->format_message (stream, stub, 0) != 0)
     return -1;
 
-  return this->queue_message_i (stream.begin (), max_wait_time);
+  if (this->queue_message_i (stream.begin (), max_wait_time) != 0)
+    return -1;
+
+  // check the buffering constraints to see what must be done in post_open()
+  bool must_flush = false;
+  this->flush_in_post_open_ |=
+    this->check_buffering_constraints_i (stub,
+                                         must_flush);
+
+  return 0;
 }
 
 int
@@ -1321,7 +1330,10 @@ TAO_Transport::check_buffering_constraints_i (TAO_Stub *stub, bool &must_flush)
     }
 
   // ... set the new timer, also cancel any previous timers ...
-  if (set_timer)
+  // Check for connected state since this method may be called
+  // before the connection is established and than there will be no
+  // reactor available yet.
+  if (set_timer && this->is_connected_)
     {
       ACE_Event_Handler *eh = this->event_handler_i ();
       ACE_Reactor * const reactor = eh->reactor ();
@@ -2780,7 +2792,7 @@ TAO_Transport::post_open (size_t id)
                 throw CORBA::INTERNAL ();
 
               this->flush_in_post_open_ = false;
-              (void) flushing_strategy->schedule_output (this);
+              (void)flushing_strategy->schedule_output (this);
             }
         }
       else
