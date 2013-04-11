@@ -19,13 +19,38 @@ class Invocation;
 class Session;
 class Thread;
 
+
+enum EndpointRole {
+  ER_UNKNOWN,
+  ER_CLIENT,
+  ER_SERVER
+};
+
+class Endpoint
+{
+public:
+  Endpoint (void);
+  Endpoint (const Endpoint &other);
+  Endpoint (const char *addr, EndpointRole role = ER_UNKNOWN);
+  void assign (const char *addr, EndpointRole role = ER_UNKNOWN);
+  Endpoint & operator = (const Endpoint &other);
+  bool operator == (const Endpoint &other) const;
+  bool operator < (const Endpoint &other) const;
+  bool is_client (void) const;
+
+  ACE_CString addr_;
+  ACE_CString host_;
+  ACE_CString port_;
+  bool is_localhost_;
+  EndpointRole role_;
+};
+
 class Transport
 {
 public:
   Transport (const char *addr, bool is_client, size_t offset);
   long handle_;
-  ACE_CString client_endpoint_;
-  bool local_is_client_;
+  Endpoint client_endpoint_;
   size_t open_offset_;
   size_t close_offset_;
 };
@@ -51,8 +76,8 @@ public:
 
   void match_hosts (Session *session);
   void set_server_addr (const ACE_CString &addr);
-  ACE_CString server_addr (void) const;
-  const ACE_CString &last_client_addr (void) const;
+  const Endpoint &server_addr (void) const;
+  const Endpoint &last_client_addr (void) const;
 
   bool is_server (void) const;
   size_t offset (void) const;
@@ -62,7 +87,7 @@ public:
   Transport *find_transport (long handle);
 
   bool match_local (const char *addr) const;
-  bool match_server_addr (const ACE_CString &addr, Session &session) const;
+  bool match_server_addr (const Endpoint &addr) const;
 
   Invocation *new_invocation (size_t req_id, Thread *thr);
   Invocation *find_invocation (size_t req_id, long handle);
@@ -79,13 +104,11 @@ private:
   char *origin_;
   HostProcess *owner_;
   HostProcess *remote_;
-  ACE_CString server_port_;
-  ACE_CString server_host_;
+  Endpoint server_ep_;
   TransportList transports_;
   Transport *last_transport_;
-  bool server_;
+  bool is_server_role_;
   bool ssl_;
-  bool localhost_;
   size_t origin_offset_;
   PeerObjectTable objects_;
   InvocationList invocations_;

@@ -37,8 +37,10 @@ public:
   void exit_wait (PeerProcess *, size_t linenum);
   GIOP_Buffer *giop_target (void);
   void set_giop_target (GIOP_Buffer *buffer);
-  void dump_detail (ostream &strm) const;
+  void dump_detail (ostream &strm);
   void dump_invocations (ostream &strm);
+  void dump_incidents (ostream &strm);
+
   void get_summary (long &sent_reqs, long &recv_reqs, size_t &sent_size, size_t &recv_size);
 
   void push_new_connection (PeerProcess *pp);
@@ -54,13 +56,15 @@ public:
   void swap_target (void);
   bool has_dup (void);
 
+  size_t count_nesting (void);
+
 private:
   long id_;
   ACE_CString alias_;
   size_t max_depth_;
   long client_encounters_;
   long server_encounters_;
-  long nested_;
+  size_t nested_;
   PeerProcessStack pending_;
   PeerProcess *incoming_;
   PeerProcessStack new_connection_;

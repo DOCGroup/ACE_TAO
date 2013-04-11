@@ -2,7 +2,7 @@
 project(*idl) : tao_versioning_idl_defaults, install {
   custom_only = 1
   IDL_Files {
-    idlflags += -Gp -Gd -Sorb -GA \
+    idlflags += -Gp -Gd -Sorb -GA -GC\
                 -Wb,export_macro=TAO_IMR_Client_Export \
                 -Wb,export_include=tao/ImR_Client/imr_client_export.h \
                 -iC tao/ImR_Client
@@ -11,7 +11,7 @@ project(*idl) : tao_versioning_idl_defaults, install {
   }
 
   IDL_Files {
-    idlflags += -Gp -Gd -Sorb -GX \
+    idlflags += -Gp -Gd -Sorb -GX -GH \
                 -Wb,export_macro=TAO_IMR_Client_Export \
                 -Wb,export_include=tao/ImR_Client/imr_client_export.h \
                 -iC tao/ImR_Client
@@ -24,7 +24,7 @@ project(*idl) : tao_versioning_idl_defaults, install {
   }
 }
 
-project(ImR_Client) : taolib, tao_output, install, portableserver, taoidldefaults, iormanip {
+project(ImR_Client) : taolib, tao_output, install, portableserver, taoidldefaults, iormanip, valuetype, messaging {
   after       += *idl
   sharedname   = TAO_ImR_Client
   dynamicflags += TAO_IMR_CLIENT_BUILD_DLL
