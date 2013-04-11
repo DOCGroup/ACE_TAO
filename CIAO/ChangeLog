@@ -1,3 +1,9 @@
+Thu Apr 11 06:49:15 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDS_Listen_T.h:
+          Added missing includes in case an user includes this template
+          stand alone in his own custom connector
+
 Wed Apr 10 14:08:25 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/DDS4CCM-INSTALL.html:
