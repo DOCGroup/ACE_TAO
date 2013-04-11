@@ -110,7 +110,7 @@ class ACE_Log_Category;
  *
  * @brief The thread specific object for a ACE_Log_Categy object.
  *
- * @see{ACE_Log_Categy} for detailed explaination.
+ * @see ACE_Log_Categy
  */
 
 class ACE_Export ACE_Log_Category_TSS
@@ -193,13 +193,13 @@ private:
  *
  * \code{.cpp}
  *  ACE_Log_Category test_catogory("Test");
- *  test_cateogry.per_thr_obj(LM_DEBUG, "Log into the Test category.");
+ *  test_cateogry.per_thr_obj()->log(LM_DEBUG, "Log into the Test category.");
  *
  *  // set the process wide priority mask
  *  test_catogory.priority_mask(LM_DEBUG|LM_ERROR);
  *
  *  // set the thread specific priority mask
- *  test_cateogry.per_thr_obj.priority_mask(LM_DEBUG);
+ *  test_cateogry.per_thr_obj()->priority_mask(LM_DEBUG);
  * \endcode
  */
 class ACE_Export ACE_Log_Category
