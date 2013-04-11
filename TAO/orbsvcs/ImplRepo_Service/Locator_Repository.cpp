@@ -508,11 +508,17 @@ UpdateableServerInfo::UpdateableServerInfo (
 }
 
 UpdateableServerInfo::UpdateableServerInfo (Locator_Repository* repo,
-                                           const Server_Info_Ptr& si)
+                                            const Server_Info_Ptr& si,
+                                            bool reset_start_count)
 : repo_(repo),
   si_(si),
   needs_update_(false)
 {
+  if (reset_start_count)
+    {
+      needs_update_ = repo_ != 0;
+      si_->start_count = 0;
+    }
 }
 
 UpdateableServerInfo::UpdateableServerInfo (const Server_Info& si)

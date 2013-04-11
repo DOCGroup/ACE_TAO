@@ -12,6 +12,7 @@
 #include "tao/debug.h"
 #include "tao/Buffer_Allocator_T.h"
 #include "tao/SystemException.h"
+#include "tao/PortableServer/ForwardRequestC.h"
 
 #include "ace/Copy_Disabled.h"
 
@@ -194,22 +195,36 @@ TAO_AMH_Response_Handler::_tao_rh_send_exception (const CORBA::Exception &ex)
   // @@ It appears as if there should be a more efficient way to do
   //    this: the caller already knows this because it is part of the
   //    ExceptionHolder information.
-  if (CORBA::SystemException::_downcast (&ex))
+
+  const PortableServer::ForwardRequest *fr =
+    PortableServer::ForwardRequest::_downcast (&ex);
+  if (fr != 0)
     {
-      reply_params.reply_status (GIOP::SYSTEM_EXCEPTION);
+      reply_params.reply_status (GIOP::LOCATION_FORWARD);
+      if (this->mesg_base_->generate_reply_header (this->_tao_out,
+                                                   reply_params) == -1)
+        {
+          throw ::CORBA::INTERNAL ();
+        }
+      this->_tao_out << fr->forward_reference;
     }
   else
     {
-      reply_params.reply_status (GIOP::USER_EXCEPTION);
+      if (CORBA::SystemException::_downcast (&ex))
+        {
+          reply_params.reply_status (GIOP::SYSTEM_EXCEPTION);
+        }
+      else
+        {
+          reply_params.reply_status (GIOP::USER_EXCEPTION);
+        }
+      if (this->mesg_base_->generate_exception_reply (this->_tao_out,
+                                                      reply_params,
+                                                      ex) == -1)
+        {
+          throw ::CORBA::INTERNAL ();
+        }
     }
-
-  if (this->mesg_base_->generate_exception_reply (this->_tao_out,
-                                                  reply_params,
-                                                  ex) == -1)
-    {
-      throw ::CORBA::INTERNAL ();
-    }
-
   // Send the Exception
   if (this->transport_->send_message (this->_tao_out,
                                       0,

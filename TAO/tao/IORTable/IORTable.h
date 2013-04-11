@@ -40,6 +40,7 @@ TAO_Requires_IORTable_Initializer = TAO_IORTable_Initializer::init ();
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #define TAO_IORTABLE_SAFE_INCLUDE
+#include "tao/IORTable/Locate_ResponseHandler.h"
 #include "tao/IORTable/IORTableC.h"
 #undef TAO_IORTABLE_SAFE_INCLUDE
 

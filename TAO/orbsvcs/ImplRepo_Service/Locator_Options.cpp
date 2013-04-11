@@ -326,6 +326,7 @@ Options::print_usage (void) const
     ACE_TEXT ("  -s              Run as a service\n")
     ACE_TEXT ("  -t secs         Server startup timeout.(Default=60s)\n")
     ACE_TEXT ("  -v msecs        Server verification interval.(Default=10s)\n")
+    ACE_TEXT ("  --asynch        Servant dispatching using asynch method handling\n")
               ));
 }
 
@@ -596,6 +597,7 @@ Options::unregister_if_address_reused (void) const
 }
 
 Options::ImrType
-Options::imr_type(void) const {
+Options::imr_type (void) const
+{
   return this->imr_type_;
 }

@@ -305,8 +305,7 @@ sub servers_list_test
 
     my $result = 0;
     my $start_time = time();
-
-    $IMR->Arguments ("-d 0 -v 1000 -o $imr_imriorfile -orbendpoint iiop://:$port");
+    $IMR->Arguments ("-d $debug_level -v 1000 -o $imr_imriorfile -orbendpoint iiop://:$port");
 
     ##### Start ImplRepo #####
     $IMR_status = $IMR->Spawn ();

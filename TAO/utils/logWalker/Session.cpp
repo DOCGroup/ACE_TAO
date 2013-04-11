@@ -2,6 +2,7 @@
 
 #include "Session.h"
 #include "HostProcess.h"
+#include "PeerProcess.h"
 #include "Log.h"
 #include "ace/OS_NS_strings.h"
 #include "ace/SString.h"
@@ -9,6 +10,10 @@
 
 long
 Session::tao_version_ = 200;
+
+AltAddresses
+Session::alt_addrs_;
+
 
 Session::Session (void)
 {
@@ -72,7 +77,7 @@ Session::alternate_address (const char *addrspec)
    return;
   ACE_CString name (addrspec,(equal - addrspec));
   ACE_CString value (equal+1);
-  this->alt_addrs_.bind(name,value);
+  Session::alt_addrs_.bind(name,value);
 }
 
 bool
@@ -81,7 +86,7 @@ Session::is_equivalent (const ACE_CString &primary,
 {
   ACE_CString test(primary);
   ACE_CString alt;
-  if (this->alt_addrs_.find(test,alt) == 0)
+  if (Session::alt_addrs_.find(test,alt) == 0)
     {
       return alt == alternate;
     }
@@ -95,13 +100,13 @@ Session::default_service (const char *addrspec)
   if (equal == 0)
     return;
   ACE_CString name (addrspec,(equal - addrspec));
-  ACE_CString endpoint (equal+1);
+  Endpoint ep (equal+1);
 
   static long next_def_pid = 0;
   --next_def_pid;
   HostProcess *hp = new HostProcess ("defaulted",next_def_pid);
   hp->proc_name(name);
-  hp->add_listen_endpoint (endpoint);
+  hp->add_listen_endpoint (ep);
   this->processes_.bind(next_def_pid,hp);
   this->procs_by_name_.bind(name,hp);
 }
@@ -117,22 +122,32 @@ Session::find_process (long pid)
 }
 
 HostProcess *
-Session::find_host (ACE_CString &endpoint, bool server)
+Session::find_host_i (const Endpoint &endpoint, bool server)
 {
-  ACE_CString test(endpoint);
-  ACE_CString alternate;
-  size_t sep = test.find(':');
-  if (this->alt_addrs_.find(test.substring (0,sep),alternate) == 0)
-    {
-      test = alternate + test.substring(sep);
-    }
   for (Processes::ITERATOR i (this->processes_); !i.done(); i.advance())
     {
       Processes::ENTRY *entry;
       if (i.next(entry) == 0)
         break;
-      if (entry->item()->has_endpoint(test, server))
+      if (entry->item()->has_endpoint(endpoint, server))
         return entry->item();
+    }
+  return 0;
+}
+
+HostProcess *
+Session::find_host (const Endpoint &endpoint, bool server)
+{
+  HostProcess *result = find_host_i (endpoint, server);
+  if (result != 0)
+    return result;
+
+  Endpoint test (endpoint);
+  ACE_CString alternate;
+  if (Session::alt_addrs_.find(endpoint.host_,alternate) == 0)
+    {
+      test.host_ = alternate;
+      return find_host_i (test, server);
     }
   return 0;
 }

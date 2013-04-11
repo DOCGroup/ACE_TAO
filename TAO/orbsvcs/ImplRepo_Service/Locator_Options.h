@@ -156,6 +156,7 @@ private:
 
   /// The type of ImR Locator this is.
   ImrType imr_type_;
+
 };
 
 #endif
