@@ -168,6 +168,7 @@ public:
                    const ACE_TCHAR *text = 0);
 
 private:
+  friend class ACE_Log_Category;
   ACE_Log_Category* category_;
   ACE_Log_Msg* logger_;
   u_long priority_mask_;

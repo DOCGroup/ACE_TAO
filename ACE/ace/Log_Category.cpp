@@ -29,6 +29,7 @@ ACE_Log_Category::ACE_Log_Category(const char* name)
                    | LM_CRITICAL
                    | LM_ALERT
                    | LM_EMERGENCY)
+  , per_thr_obj_(this, 0)
 {
 }
 
@@ -48,9 +49,6 @@ ACE_Log_Category_TSS::ACE_Log_Category_TSS(ACE_Log_Category* category, ACE_Log_M
   : category_(category)
   , logger_(logger)
   , priority_mask_(0)
-#if !defined (ACE_HAS_THREADS)
-  , per_thr_obj_(this, 0)
-#endif
 {
 }
 
