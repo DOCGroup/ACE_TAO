@@ -116,7 +116,7 @@ class ACE_Log_Category;
 class ACE_Export ACE_Log_Category_TSS
 {
 public:
-  ACE_Log_Category_TSS(ACE_Log_Category* category);
+  ACE_Log_Category_TSS(ACE_Log_Category* category, ACE_Log_Msg* logger);
 
   const char* name();
   unsigned int id();
@@ -236,7 +236,6 @@ public:
 
 private:
   friend class ACE_Log_Category_TSS;
-  static void tss_destroy(void * p);
 
   // disable copying
   ACE_Log_Category(const ACE_Log_Category&);
@@ -248,12 +247,16 @@ private:
 
   /// we couldn't directly use ACE_TSS because it would
   /// create circular dependency
-
+#if defined (ACE_HAS_THREADS)
+  static void tss_destroy(void * p);
   /// Avoid race conditions during initialization.
   ACE_Thread_Mutex keylock_;
   /// "First time in" flag.
   /// Key for the thread-specific error data.
   ACE_thread_key_t key_;
+#else // defined (ACE_HAS_THREADS)
+  ACE_Log_Category_TSS per_thr_obj_;
+#endif // defined (ACE_HAS_THREADS)
 };
 
 

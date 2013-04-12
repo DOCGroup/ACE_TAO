@@ -34,24 +34,30 @@ ACE_Log_Category::ACE_Log_Category(const char* name)
 
 ACE_Log_Category::~ACE_Log_Category()
 {
+#if defined (ACE_HAS_THREADS)
   ACE_GUARD (ACE_Thread_Mutex, ace_mon, this->keylock_);
 
   if (this->id_ > 0)
     {
       ACE_OS::thr_keyfree (this->key_);
     }
+#endif
 }
 
-ACE_Log_Category_TSS::ACE_Log_Category_TSS(ACE_Log_Category* category)
+ACE_Log_Category_TSS::ACE_Log_Category_TSS(ACE_Log_Category* category, ACE_Log_Msg* logger)
   : category_(category)
-  , logger_(ACE_Log_Msg::instance ())
+  , logger_(logger)
   , priority_mask_(0)
+#if !defined (ACE_HAS_THREADS)
+  , per_thr_obj_(this, 0)
+#endif
 {
 }
 
 ACE_Log_Category_TSS*
 ACE_Log_Category::per_thr_obj()
 {
+#if defined (ACE_HAS_THREADS)
   {
     // Ensure that we are serialized!
     ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->keylock_, 0);
@@ -79,7 +85,7 @@ ACE_Log_Category::per_thr_obj()
   ACE_Log_Category_TSS * result;
 
   ACE_NEW_RETURN(result,
-                 ACE_Log_Category_TSS(this),
+                 ACE_Log_Category_TSS(this, ACE_Log_Msg::instance()),
                  0);
 
  if (ACE_OS::thr_setspecific (this->key_,
@@ -89,13 +95,23 @@ ACE_Log_Category::per_thr_obj()
    }
 
   return result;
+#else // defined (ACE_HAS_THREADS)
+  if (this->id_ == 0) {
+    static unsigned int log_category_id_assigner = 0;
+    id_ = log_category_id_assigner++;
+    per_thr_obj_.logger_ = ACE_Log_Msg::instance();
+  }
+  return &per_thr_obj_;
+#endif // defined (ACE_HAS_THREADS)
 }
 
+#if defined (ACE_HAS_THREADS)
 void
 ACE_Log_Category::tss_destroy(void * p)
 {
   delete static_cast<ACE_Log_Category_TSS*>(p);
 }
+#endif // defined (ACE_HAS_THREADS)
 
 ACE_Log_Category&
 ACE_Log_Category::ace_lib()
