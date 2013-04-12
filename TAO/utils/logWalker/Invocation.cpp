@@ -295,15 +295,10 @@ Invocation::dump_finish_line (ostream &strm, size_t indent)
   strm << setw(7) << this->repl_octets_->log_posn() << " " << setw(0);
 
   const char *opname = "";
-  const char *dir_2 = " in ";
 
   if (this->req_octets_ != 0)
     {
       opname = this->req_octets_->operation();
-      if (this->req_octets_->sending())
-        {
-          dir_2 = " from ";
-        }
     }
 
   if (opname == 0 || opname[0] == 0)
