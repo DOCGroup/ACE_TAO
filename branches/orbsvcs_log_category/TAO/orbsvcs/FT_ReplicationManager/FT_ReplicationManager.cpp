@@ -36,7 +36,7 @@
 #define METHOD_ENTRY(name)    \
   if (TAO_debug_level > 6)    \
   {                           \
-    ACE_DEBUG (( LM_DEBUG,    \
+    ORBSVCS_DEBUG (( LM_DEBUG,    \
     "Enter %s\n", #name       \
       ));                     \
   }
@@ -55,7 +55,7 @@
 #define METHOD_RETURN(name)   \
   if (TAO_debug_level > 6)    \
   {                           \
-    ACE_DEBUG (( LM_DEBUG,    \
+    ORBSVCS_DEBUG (( LM_DEBUG,    \
       "Leave %s\n", #name     \
       ));                     \
   }                           \
@@ -112,7 +112,7 @@ int TAO::FT_ReplicationManager::parse_args (int argc, ACE_TCHAR * argv[])
       case '?':
         // fall thru
       default:
-        ACE_ERROR_RETURN ( (LM_ERROR,
+        ORBSVCS_ERROR_RETURN ( (LM_ERROR,
                            ACE_TEXT ("%T %n (%P|%t) - usage:  %s")
                            ACE_TEXT (" -o <iorfile (for testing)>")
                            ACE_TEXT (" -f <fault notifier IOR (for testing)>")
@@ -140,7 +140,7 @@ int TAO::FT_ReplicationManager::init (CORBA::ORB_ptr orb)
 
   if (TAO_debug_level > 1)
   {
-    ACE_DEBUG ( (LM_DEBUG,
+    ORBSVCS_DEBUG ( (LM_DEBUG,
       ACE_TEXT (
         "%T %n (%P|%t) - Enter TAO::FT_ReplicationManager::init.\n")
     ));
@@ -191,7 +191,7 @@ int TAO::FT_ReplicationManager::init (CORBA::ORB_ptr orb)
     }
     else
     {
-      ACE_ERROR_RETURN ( (LM_ERROR,
+      ORBSVCS_ERROR_RETURN ( (LM_ERROR,
         ACE_TEXT (
           "%T %n (%P|%t) - Could not resolve notifier IOR.\n")),
           -1);
@@ -213,7 +213,7 @@ int TAO::FT_ReplicationManager::init (CORBA::ORB_ptr orb)
     IORTable::Table::_narrow (ior_table_obj.in ());
   if (CORBA::is_nil (ior_table.in ()))
   {
-    ACE_ERROR_RETURN ( (LM_ERROR,
+    ORBSVCS_ERROR_RETURN ( (LM_ERROR,
       ACE_TEXT ("%T %n (%P|%t) - Unable to resolve the IORTable.\n")),
       -1);
   }
@@ -246,7 +246,7 @@ int TAO::FT_ReplicationManager::init (CORBA::ORB_ptr orb)
 
     if (CORBA::is_nil (this->naming_context_.in ()))
     {
-      ACE_ERROR_RETURN ( (LM_ERROR,
+      ORBSVCS_ERROR_RETURN ( (LM_ERROR,
         ACE_TEXT ("%T %n (%P|%t) - Unable to find the Naming Service.\n")),
         -1);
     }
@@ -263,14 +263,14 @@ int TAO::FT_ReplicationManager::init (CORBA::ORB_ptr orb)
   {
     if (result == 0)
     {
-      ACE_DEBUG ( (LM_DEBUG,
+      ORBSVCS_DEBUG ( (LM_DEBUG,
         ACE_TEXT (
           "%T %n (%P|%t) - Leave TAO::FT_ReplicationManager::init.\n")
       ));
     }
     else
     {
-      ACE_DEBUG ( (LM_DEBUG,
+      ORBSVCS_DEBUG ( (LM_DEBUG,
         ACE_TEXT (
           "%T %n (%P|%t) - FT_ReplicationManager::init failed.\n")
       ));
@@ -360,7 +360,7 @@ TAO::FT_ReplicationManager::register_fault_notifier_i (
 {
   if (CORBA::is_nil (fault_notifier))
   {
-    ACE_ERROR ( (LM_ERROR,
+    ORBSVCS_ERROR ( (LM_ERROR,
       ACE_TEXT (
         "%T %n (%P|%t) - Bad Fault Notifier object reference provided.\n")
     ));
@@ -393,7 +393,7 @@ TAO::FT_ReplicationManager::register_fault_notifier_i (
       TAO::FT_ReplicationManagerFaultAnalyzer (this));
     if (analyzer == 0)
     {
-      ACE_ERROR ( (LM_ERROR,
+      ORBSVCS_ERROR ( (LM_ERROR,
         ACE_TEXT (
           "%T %n (%P|%t) - Error creating FaultAnalyzer.\n"
           )
@@ -418,7 +418,7 @@ TAO::FT_ReplicationManager::register_fault_notifier_i (
 
   if (result != 0)
   {
-    ACE_ERROR ( (LM_ERROR,
+    ORBSVCS_ERROR ( (LM_ERROR,
       ACE_TEXT (
         "%T %n (%P|%t) - Could not re-initialize FT_FaultConsumer.\n")
     ));
@@ -632,7 +632,7 @@ TAO::FT_ReplicationManager::create_member (
   {
     if (TAO_debug_level > 0)
     {
-      ACE_ERROR ( (LM_ERROR,
+      ORBSVCS_ERROR ( (LM_ERROR,
         ACE_TEXT ("%T %n (%P|%t) - FT_ReplicationManager::create_member: unknown group\n")
         ));
     }
@@ -667,7 +667,7 @@ TAO::FT_ReplicationManager::add_member (
   {
     if (TAO_debug_level > 0)
     {
-      ACE_ERROR ( (LM_ERROR,
+      ORBSVCS_ERROR ( (LM_ERROR,
         ACE_TEXT ("%T %n (%P|%t) - FT_ReplicationManager::add_member to unknown group\n")
         ));
     }
@@ -721,7 +721,7 @@ TAO::FT_ReplicationManager::locations_of_members (
   {
     if (TAO_debug_level > 0)
     {
-      ACE_ERROR ( (LM_ERROR,
+      ORBSVCS_ERROR ( (LM_ERROR,
         ACE_TEXT ("%T %n (%P|%t) - FT_ReplicationManager::locations_of_members: unknown group\n")
         ));
     }
@@ -754,7 +754,7 @@ TAO::FT_ReplicationManager::get_object_group_id (
   {
     if (TAO_debug_level > 0)
     {
-      ACE_ERROR ( (LM_ERROR,
+      ORBSVCS_ERROR ( (LM_ERROR,
         ACE_TEXT ("%T %n (%P|%t) - FT_ReplicationManager::get_object_group_id: unknown group\n")
         ));
     }
@@ -780,7 +780,7 @@ TAO::FT_ReplicationManager::get_object_group_ref (
   {
     if (TAO_debug_level > 0)
     {
-      ACE_ERROR ( (LM_ERROR,
+      ORBSVCS_ERROR ( (LM_ERROR,
         ACE_TEXT ("%T %n (%P|%t) - FT_ReplicationManager::get_object_group_ref: unknown group\n")
         ));
     }
@@ -806,7 +806,7 @@ TAO::FT_ReplicationManager::get_object_group_ref_from_id (
   {
     if (TAO_debug_level > 0)
     {
-      ACE_ERROR ( (LM_ERROR,
+      ORBSVCS_ERROR ( (LM_ERROR,
         ACE_TEXT ("%T %n (%P|%t) - FT_ReplicationManager::get_object_group_ref_from_id: unknown group\n")
         ));
     }
@@ -833,7 +833,7 @@ TAO::FT_ReplicationManager::get_member_ref (
   {
     if (TAO_debug_level > 0)
     {
-      ACE_ERROR ( (LM_ERROR,
+      ORBSVCS_ERROR ( (LM_ERROR,
         ACE_TEXT ("%T %n (%P|%t) - FT_ReplicationManager::get_member_ref: unknown group\n")
         ));
     }
@@ -923,7 +923,7 @@ int TAO::FT_ReplicationManager::write_ior ()
   }
   else
   {
-    ACE_ERROR ( (LM_ERROR,
+    ORBSVCS_ERROR ( (LM_ERROR,
       ACE_TEXT ("%T %n (%P|%t) - Open failed for %s\n"), this->ior_output_file_
     ));
   }

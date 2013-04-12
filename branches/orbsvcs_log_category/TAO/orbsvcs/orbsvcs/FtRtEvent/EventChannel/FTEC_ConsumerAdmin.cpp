@@ -25,7 +25,7 @@ TAO_FTEC_ConsumerAdmin::~TAO_FTEC_ConsumerAdmin (void)
 RtecEventChannelAdmin::ProxyPushSupplier_ptr
 TAO_FTEC_ConsumerAdmin::obtain_push_supplier (void)
 {
-  ACE_DEBUG((LM_DEBUG,"obtain_push_supplier\n" ));
+  ORBSVCS_DEBUG((LM_DEBUG,"obtain_push_supplier\n" ));
   return obtain_proxy();
 }
 

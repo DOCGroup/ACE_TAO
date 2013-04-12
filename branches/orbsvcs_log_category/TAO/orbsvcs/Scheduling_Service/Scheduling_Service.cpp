@@ -77,7 +77,7 @@ TAO_Scheduling_Service::init (int argc, ACE_TCHAR* argv[])
             break;
 
           default:
-            ACE_ERROR_RETURN ((LM_ERROR,
+            ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                "TAO_Scheduling_Service::init: "
                                "unrecognized Scheduler_Type"), -1);
         }
@@ -87,7 +87,7 @@ TAO_Scheduling_Service::init (int argc, ACE_TCHAR* argv[])
         orb->resolve_initial_references ("NameService");
 
       if (CORBA::is_nil (naming_obj.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to locate the Naming Service.\n"),
                           -1);
       CosNaming::NamingContext_var naming_context =
@@ -99,7 +99,7 @@ TAO_Scheduling_Service::init (int argc, ACE_TCHAR* argv[])
       CORBA::String_var scheduler_ior_string =
         orb->object_to_string (scheduler.in ());
 
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT("The scheduler IOR is <%C>\n"),
+      ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT("The scheduler IOR is <%C>\n"),
                             scheduler_ior_string.in ()));
 
       // Register the servant with the Naming Context....
@@ -187,7 +187,7 @@ TAO_Scheduling_Service::parse_args (int argc, ACE_TCHAR* argv[])
             }
           else
             {
-              ACE_DEBUG ((LM_DEBUG,
+              ORBSVCS_DEBUG ((LM_DEBUG,
                           "Usage: %s "
                           "[-n service_name] "
                           "[-p pid_file_name] "
@@ -203,7 +203,7 @@ TAO_Scheduling_Service::parse_args (int argc, ACE_TCHAR* argv[])
         case '?':
         default:
 
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       "Usage: %s "
                       "[-n service_name] "
                       "[-p pid_file_name] "
@@ -225,13 +225,13 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
     {
       TAO_Scheduling_Service scheduling_service;
 
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   "%s; initializing scheduling service\n", __FILE__));
 
       if (scheduling_service.init (argc, argv) < 0)
-        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "init"), 1);
+        ORBSVCS_ERROR_RETURN ((LM_ERROR, "%p\n", "init"), 1);
 
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   "%s; running scheduling service\n", __FILE__));
 
       scheduling_service.run ();

@@ -512,7 +512,7 @@ TAO_Notify_EventChannel::load_child (const ACE_CString &type,
   else if (type == "consumer_admin")
   {
     if (DEBUG_LEVEL)
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) EventChannel reload consumer_admin %d\n")
                   , static_cast<int> (id)
                   ));
@@ -535,7 +535,7 @@ TAO_Notify_EventChannel::load_child (const ACE_CString &type,
   else if (type == "supplier_admin")
   {
     if (DEBUG_LEVEL)
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) EventChannel reload supplier_admin %d\n")
                   , static_cast<int> (id)
                   ));

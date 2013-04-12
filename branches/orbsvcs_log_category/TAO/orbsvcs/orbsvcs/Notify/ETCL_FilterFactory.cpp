@@ -223,7 +223,7 @@ TAO_Notify_ETCL_FilterFactory::load_child (const ACE_CString &type,
     {
       TAO_Notify_Object::ID const id = ACE_OS::atoi (value);
       if (DEBUG_LEVEL)
-        ACE_DEBUG ((LM_DEBUG,
+        ORBSVCS_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("(%P|%t) reload filter %d\n"),
                     static_cast<int> (id)
                     ));

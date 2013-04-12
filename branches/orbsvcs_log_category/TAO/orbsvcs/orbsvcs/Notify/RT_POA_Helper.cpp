@@ -36,7 +36,7 @@ TAO_Notify_RT_POA_Helper::init (PortableServer::POA_ptr parent_poa, const char* 
     RTCORBA::CLIENT_PROPAGATED : RTCORBA::SERVER_DECLARED;
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG, "Priority Model = %d, Server prio = %d\n"
+    ORBSVCS_DEBUG ((LM_DEBUG, "Priority Model = %d, Server prio = %d\n"
                 , tp_params.priority_model, tp_params.server_priority));
 
   policy_list.length (3);
@@ -45,7 +45,7 @@ TAO_Notify_RT_POA_Helper::init (PortableServer::POA_ptr parent_poa, const char* 
                                           tp_params.server_priority);
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG, "Creating threadpool: static threads = %d, def. prio = %d\n"
+    ORBSVCS_DEBUG ((LM_DEBUG, "Creating threadpool: static threads = %d, def. prio = %d\n"
                 , tp_params.static_threads, tp_params.default_priority));
 
   // Create the thread-pool.
@@ -100,7 +100,7 @@ TAO_Notify_RT_POA_Helper::init (PortableServer::POA_ptr parent_poa, const char* 
     {
       if (TAO_debug_level > 0)
             {
-              ACE_DEBUG ((LM_DEBUG, "Creating threadpool lane %d: priority = %d, static threads = %d\n",
+              ORBSVCS_DEBUG ((LM_DEBUG, "Creating threadpool lane %d: priority = %d, static threads = %d\n",
                           index, tpl_params.lanes[index].lane_priority, tpl_params.lanes[index].static_threads));
             }
 

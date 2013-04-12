@@ -27,13 +27,13 @@ TAO_Notify_Object::TAO_Notify_Object (void)
 , shutdown_ (false)
 {
   if (TAO_debug_level > 2 )
-    ACE_DEBUG ((LM_DEBUG,"object:%x  created\n", this ));
+    ORBSVCS_DEBUG ((LM_DEBUG,"object:%x  created\n", this ));
 }
 
 TAO_Notify_Object::~TAO_Notify_Object ()
 {
   if (TAO_debug_level > 2 )
-    ACE_DEBUG ((LM_DEBUG,"object:%x  destroyed\n", this ));
+    ORBSVCS_DEBUG ((LM_DEBUG,"object:%x  destroyed\n", this ));
 
   this->destroy_proxy_poa ();
   this->destroy_object_poa ();
@@ -95,7 +95,7 @@ TAO_Notify_Object::deactivate (void)
     if (TAO_debug_level > 2)
     {
       ex._tao_print_exception ("(%P|%t)\n");
-      ACE_DEBUG ((LM_DEBUG, "Could not deactivate object %d\n", this->id_));
+      ORBSVCS_DEBUG ((LM_DEBUG, "Could not deactivate object %d\n", this->id_));
     }
   }
 }

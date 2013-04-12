@@ -26,7 +26,7 @@ namespace TAO_Notify
   {
     if (this->output_ != 0)
     {
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
         ACE_TEXT ("(%P|%t) XML_Saver warning close not called or failed\n")
         ));
     }
@@ -102,7 +102,7 @@ namespace TAO_Notify
       if (this->output_) {
         this->close_out_ = true;
       } else {
-        ACE_ERROR ((LM_ERROR,
+        ORBSVCS_ERROR ((LM_ERROR,
           ACE_TEXT ("(%P|%t) XML_Saver unable to open %s\n"),
             base_name.c_str()));
       }

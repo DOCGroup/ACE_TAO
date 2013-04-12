@@ -85,7 +85,7 @@ ifr_adding_visitor::visit_scope (UTL_Scope *node)
 
           if (d == 0)
             {
-              ACE_ERROR_RETURN ((
+              ORBSVCS_ERROR_RETURN ((
                   LM_ERROR,
                   ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_scope -")
                   ACE_TEXT (" bad node in this scope\n")
@@ -104,7 +104,7 @@ ifr_adding_visitor::visit_scope (UTL_Scope *node)
 
           if (d->ast_accept (this) == -1)
             {
-              ACE_ERROR_RETURN ((
+              ORBSVCS_ERROR_RETURN ((
                   LM_ERROR,
                   ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_scope -")
                   ACE_TEXT (" failed to accept visitor\n")
@@ -173,7 +173,7 @@ ifr_adding_visitor::visit_module (AST_Module *node)
             }
           else
             {
-              ACE_ERROR_RETURN ((
+              ORBSVCS_ERROR_RETURN ((
                   LM_ERROR,
                   ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_module -")
                   ACE_TEXT (" scope stack is empty\n")
@@ -204,7 +204,7 @@ ifr_adding_visitor::visit_module (AST_Module *node)
 
       if (be_global->ifr_scopes ().push (new_def.in ()) != 0)
         {
-          ACE_ERROR_RETURN ((
+          ORBSVCS_ERROR_RETURN ((
               LM_ERROR,
               ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_module -")
               ACE_TEXT (" scope push failed\n")
@@ -215,7 +215,7 @@ ifr_adding_visitor::visit_module (AST_Module *node)
 
       if (this->visit_scope (node) == -1)
         {
-          ACE_ERROR_RETURN ((
+          ORBSVCS_ERROR_RETURN ((
               LM_ERROR,
               ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_module -")
               ACE_TEXT (" visit_scope failed\n")
@@ -230,7 +230,7 @@ ifr_adding_visitor::visit_module (AST_Module *node)
 
       if (be_global->ifr_scopes ().pop (tmp) != 0)
         {
-          ACE_ERROR_RETURN ((
+          ORBSVCS_ERROR_RETURN ((
               LM_ERROR,
               ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_module -")
               ACE_TEXT (" scope pop failed\n")
@@ -350,7 +350,7 @@ ifr_adding_visitor::visit_interface (AST_Interface *node)
 
                   if (CORBA::is_nil (bases[i]))
                     {
-                      ACE_ERROR_RETURN ((
+                      ORBSVCS_ERROR_RETURN ((
                           LM_ERROR,
                           ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
                           ACE_TEXT ("visit_interface -")
@@ -371,7 +371,7 @@ ifr_adding_visitor::visit_interface (AST_Interface *node)
               // Push the new IR object onto the scope stack.
               if (be_global->ifr_scopes ().push (extant_def.in ()) != 0)
                 {
-                  ACE_ERROR_RETURN ((
+                  ORBSVCS_ERROR_RETURN ((
                       LM_ERROR,
                       ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
                       ACE_TEXT ("visit_interface -")
@@ -384,7 +384,7 @@ ifr_adding_visitor::visit_interface (AST_Interface *node)
               // Visit the members, if any.
               if (this->visit_scope (node) == -1)
                 {
-                  ACE_ERROR_RETURN ((
+                  ORBSVCS_ERROR_RETURN ((
                       LM_ERROR,
                       ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
                       ACE_TEXT ("visit_interface -")
@@ -408,7 +408,7 @@ ifr_adding_visitor::visit_interface (AST_Interface *node)
               // Pop the new IR object back off the scope stack.
               if (be_global->ifr_scopes ().pop (used_scope) != 0)
                 {
-                  ACE_ERROR_RETURN ((
+                  ORBSVCS_ERROR_RETURN ((
                       LM_ERROR,
                       ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
                       ACE_TEXT ("visit_interface -")
@@ -496,7 +496,7 @@ ifr_adding_visitor::visit_interface_fwd (AST_InterfaceFwd *node)
             }
           else
             {
-              ACE_ERROR_RETURN ((
+              ORBSVCS_ERROR_RETURN ((
                   LM_ERROR,
                   ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
                   ACE_TEXT ("visit_interface_fwd -")
@@ -548,7 +548,7 @@ ifr_adding_visitor::visit_valuebox (AST_ValueBox *node)
         }
       else
         {
-          ACE_ERROR_RETURN ((
+          ORBSVCS_ERROR_RETURN ((
               LM_ERROR,
               ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_valuebox -")
               ACE_TEXT (" scope stack is empty\n")
@@ -696,7 +696,7 @@ ifr_adding_visitor::visit_valuetype (AST_ValueType *node)
               // the new object's scope.
               if (be_global->ifr_scopes ().push (extant_def.in ()) != 0)
                 {
-                  ACE_ERROR_RETURN ((
+                  ORBSVCS_ERROR_RETURN ((
                       LM_ERROR,
                       ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
                       ACE_TEXT ("visit_valuetype -")
@@ -709,7 +709,7 @@ ifr_adding_visitor::visit_valuetype (AST_ValueType *node)
               // Visit the members, if any.
               if (this->visit_scope (node) == -1)
                 {
-                  ACE_ERROR_RETURN ((
+                  ORBSVCS_ERROR_RETURN ((
                       LM_ERROR,
                       ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
                       ACE_TEXT ("visit_valuetype -")
@@ -733,7 +733,7 @@ ifr_adding_visitor::visit_valuetype (AST_ValueType *node)
               // Pop the new IR object back off the scope stack.
               if (be_global->ifr_scopes ().pop (used_scope) != 0)
                 {
-                  ACE_ERROR_RETURN ((
+                  ORBSVCS_ERROR_RETURN ((
                       LM_ERROR,
                       ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
                       ACE_TEXT ("visit_valuetype -")
@@ -820,7 +820,7 @@ ifr_adding_visitor::visit_valuetype_fwd (AST_ValueTypeFwd *node)
             }
           else
             {
-              ACE_ERROR_RETURN ((
+              ORBSVCS_ERROR_RETURN ((
                   LM_ERROR,
                   ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
                   ACE_TEXT ("visit_valuetype_fwd -")
@@ -947,7 +947,7 @@ ifr_adding_visitor::visit_component (AST_Component *node)
               // the new object's scope.
               if (be_global->ifr_scopes ().push (extant_def.in ()) != 0)
                 {
-                  ACE_ERROR_RETURN ((
+                  ORBSVCS_ERROR_RETURN ((
                       LM_ERROR,
                       ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
                       ACE_TEXT ("visit_component -")
@@ -968,7 +968,7 @@ ifr_adding_visitor::visit_component (AST_Component *node)
               // Visit the members, if any.
               if (this->visit_scope (node) == -1)
                 {
-                  ACE_ERROR_RETURN ((
+                  ORBSVCS_ERROR_RETURN ((
                       LM_ERROR,
                       ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
                       ACE_TEXT ("visit_component -")
@@ -984,7 +984,7 @@ ifr_adding_visitor::visit_component (AST_Component *node)
               // Pop the new IR object back off the scope stack.
               if (be_global->ifr_scopes ().pop (used_scope) != 0)
                 {
-                  ACE_ERROR_RETURN ((
+                  ORBSVCS_ERROR_RETURN ((
                       LM_ERROR,
                       ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
                       ACE_TEXT ("visit_interface -")
@@ -1076,7 +1076,7 @@ ifr_adding_visitor::visit_component_fwd (AST_ComponentFwd *node)
             }
           else
             {
-              ACE_ERROR_RETURN ((
+              ORBSVCS_ERROR_RETURN ((
                   LM_ERROR,
                   ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
                   ACE_TEXT ("visit_component_fwd -")
@@ -1365,7 +1365,7 @@ ifr_adding_visitor::visit_eventtype (AST_EventType *node)
               // the new object's scope.
               if (be_global->ifr_scopes ().push (extant_def.in ()) != 0)
                 {
-                  ACE_ERROR_RETURN ((
+                  ORBSVCS_ERROR_RETURN ((
                       LM_ERROR,
                       ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
                       ACE_TEXT ("visit_eventtype -")
@@ -1378,7 +1378,7 @@ ifr_adding_visitor::visit_eventtype (AST_EventType *node)
               // Visit the members, if any.
               if (this->visit_scope (node) == -1)
                 {
-                  ACE_ERROR_RETURN ((
+                  ORBSVCS_ERROR_RETURN ((
                       LM_ERROR,
                       ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
                       ACE_TEXT ("visit_eventtype -")
@@ -1402,7 +1402,7 @@ ifr_adding_visitor::visit_eventtype (AST_EventType *node)
               // Pop the new IR object back off the scope stack.
               if (be_global->ifr_scopes ().pop (used_scope) != 0)
                 {
-                  ACE_ERROR_RETURN ((
+                  ORBSVCS_ERROR_RETURN ((
                       LM_ERROR,
                       ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
                       ACE_TEXT ("visit_eventtype -")
@@ -1494,7 +1494,7 @@ ifr_adding_visitor::visit_eventtype_fwd (AST_EventTypeFwd *node)
             }
           else
             {
-              ACE_ERROR_RETURN ((
+              ORBSVCS_ERROR_RETURN ((
                   LM_ERROR,
                   ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
                   ACE_TEXT ("visit_eventtype_fwd -")
@@ -1718,7 +1718,7 @@ ifr_adding_visitor::visit_structure_fwd (AST_StructureFwd *node)
 
           if (be_global->ifr_scopes ().top (current_scope) != 0)
             {
-              ACE_ERROR_RETURN ((
+              ORBSVCS_ERROR_RETURN ((
                   LM_ERROR,
                   ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
                   ACE_TEXT ("visit_structure_fwd -")
@@ -1818,7 +1818,7 @@ ifr_adding_visitor::visit_enum (AST_Enum *node)
             }
           else
             {
-              ACE_ERROR_RETURN ((
+              ORBSVCS_ERROR_RETURN ((
                   LM_ERROR,
                   ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_enum -")
                   ACE_TEXT (" scope stack is empty\n")
@@ -1881,7 +1881,7 @@ ifr_adding_visitor::visit_field (AST_Field *node)
 
   if (ft == 0)
     {
-      ACE_ERROR_RETURN ((
+      ORBSVCS_ERROR_RETURN ((
           LM_ERROR,
           ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
           ACE_TEXT ("visit_field - ")
@@ -1893,7 +1893,7 @@ ifr_adding_visitor::visit_field (AST_Field *node)
 
   if (ft->ast_accept (this) == -1)
     {
-      ACE_ERROR_RETURN ((
+      ORBSVCS_ERROR_RETURN ((
           LM_ERROR,
           ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
           ACE_TEXT ("visit_field - ")
@@ -1978,7 +1978,7 @@ ifr_adding_visitor::visit_attribute (AST_Attribute *node)
         }
       else
         {
-          ACE_ERROR_RETURN ((
+          ORBSVCS_ERROR_RETURN ((
               LM_ERROR,
               ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_attribute -")
               ACE_TEXT (" scope stack is empty\n")
@@ -2095,7 +2095,7 @@ ifr_adding_visitor::visit_union_fwd (AST_UnionFwd *node)
 
           if (be_global->ifr_scopes ().top (current_scope) != 0)
             {
-              ACE_ERROR_RETURN ((
+              ORBSVCS_ERROR_RETURN ((
                   LM_ERROR,
                   ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
                   ACE_TEXT ("visit_union_fwd -")
@@ -2219,7 +2219,7 @@ ifr_adding_visitor::visit_constant (AST_Constant *node)
         }
       else
         {
-          ACE_ERROR_RETURN ((
+          ORBSVCS_ERROR_RETURN ((
               LM_ERROR,
               ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_constant -")
               ACE_TEXT (" scope stack is empty\n")
@@ -2366,7 +2366,7 @@ ifr_adding_visitor::visit_typedef (AST_Typedef *node)
         }
       else
         {
-          ACE_ERROR_RETURN ((
+          ORBSVCS_ERROR_RETURN ((
               LM_ERROR,
               ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_typedef -")
               ACE_TEXT (" scope stack is empty\n")
@@ -2387,7 +2387,7 @@ ifr_adding_visitor::visit_typedef (AST_Typedef *node)
         }
       else
         {
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
               "%s %s\n",
               ACE_TEXT ("ifr_adding_visitor::visit_typedef - ignoring duplicate typedef"),
               node->local_name ()->get_string ()));
@@ -2402,7 +2402,7 @@ ifr_adding_visitor::visit_root (AST_Root *node)
 {
   if (be_global->ifr_scopes ().push (be_global->repository ()) != 0)
     {
-      ACE_ERROR_RETURN ((
+      ORBSVCS_ERROR_RETURN ((
           LM_ERROR,
           ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_root -")
           ACE_TEXT (" scope push failed\n")
@@ -2413,7 +2413,7 @@ ifr_adding_visitor::visit_root (AST_Root *node)
 
   if (this->visit_scope (node) == -1)
     {
-      ACE_ERROR_RETURN ((
+      ORBSVCS_ERROR_RETURN ((
           LM_ERROR,
           ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_root -")
           ACE_TEXT (" visit_scope failed\n")
@@ -2427,7 +2427,7 @@ ifr_adding_visitor::visit_root (AST_Root *node)
 
   if (be_global->ifr_scopes ().pop (tmp) != 0)
     {
-      ACE_ERROR_RETURN ((
+      ORBSVCS_ERROR_RETURN ((
           LM_ERROR,
           ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_root -")
           ACE_TEXT (" scope pop failed\n")
@@ -2468,7 +2468,7 @@ ifr_adding_visitor::visit_native (AST_Native *node)
             }
           else
             {
-              ACE_ERROR_RETURN ((
+              ORBSVCS_ERROR_RETURN ((
                   LM_ERROR,
                   ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_native -")
                   ACE_TEXT (" scope stack is empty\n")
@@ -2697,7 +2697,7 @@ ifr_adding_visitor::element_type (AST_Type *base_type, bool owned)
     {
       if (base_type->ast_accept (this) == -1)
         {
-          ACE_ERROR ((
+          ORBSVCS_ERROR ((
               LM_ERROR,
               ACE_TEXT ("(%N:%l) ifr_adding_visitor::element_type -")
               ACE_TEXT (" failed to accept visitor\n")
@@ -2713,7 +2713,7 @@ ifr_adding_visitor::element_type (AST_Type *base_type, bool owned)
 
       if (CORBA::is_nil (contained.in ()))
         {
-          ACE_ERROR ((
+          ORBSVCS_ERROR ((
               LM_ERROR,
               ACE_TEXT ("(%N:%l) ifr_adding_visitor::element_type -")
               ACE_TEXT (" lookup_id failed\n")
@@ -2747,7 +2747,7 @@ ifr_adding_visitor::create_interface_def (AST_Interface *node)
 
           if (intf == 0)
             {
-              ACE_ERROR_RETURN ((
+              ORBSVCS_ERROR_RETURN ((
                  LM_ERROR,
                  ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
                  ACE_TEXT ("create_interface_def -")
@@ -2767,7 +2767,7 @@ ifr_adding_visitor::create_interface_def (AST_Interface *node)
 
               if (status != 0)
                 {
-                  ACE_ERROR_RETURN ((
+                  ORBSVCS_ERROR_RETURN ((
                      LM_ERROR,
                      ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
                      ACE_TEXT ("create_interface_def -")
@@ -2786,7 +2786,7 @@ ifr_adding_visitor::create_interface_def (AST_Interface *node)
 
           if (CORBA::is_nil (abs_bases[i]))
             {
-              ACE_ERROR_RETURN ((
+              ORBSVCS_ERROR_RETURN ((
                   LM_ERROR,
                   ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
                   ACE_TEXT ("create_interface_def -")
@@ -2809,7 +2809,7 @@ ifr_adding_visitor::create_interface_def (AST_Interface *node)
 
           if (intf == 0)
             {
-              ACE_ERROR_RETURN ((
+              ORBSVCS_ERROR_RETURN ((
                  LM_ERROR,
                  ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
                  ACE_TEXT ("create_interface_def -")
@@ -2829,7 +2829,7 @@ ifr_adding_visitor::create_interface_def (AST_Interface *node)
 
               if (status != 0)
                 {
-                  ACE_ERROR_RETURN ((
+                  ORBSVCS_ERROR_RETURN ((
                       LM_ERROR,
                       ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
                       ACE_TEXT ("create_interface_def -")
@@ -2848,7 +2848,7 @@ ifr_adding_visitor::create_interface_def (AST_Interface *node)
 
           if (CORBA::is_nil (bases[i]))
             {
-              ACE_ERROR_RETURN ((
+              ORBSVCS_ERROR_RETURN ((
                   LM_ERROR,
                   ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
                   ACE_TEXT ("create_interface_def -")
@@ -2907,7 +2907,7 @@ ifr_adding_visitor::create_interface_def (AST_Interface *node)
 
       if (be_global->ifr_scopes ().push (new_scope.in ()) != 0)
         {
-          ACE_ERROR_RETURN ((
+          ORBSVCS_ERROR_RETURN ((
               LM_ERROR,
               ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
               ACE_TEXT ("create_interface_def -")
@@ -2920,7 +2920,7 @@ ifr_adding_visitor::create_interface_def (AST_Interface *node)
       // Visit the members, if any.
       if (this->visit_scope (node) == -1)
         {
-          ACE_ERROR_RETURN ((
+          ORBSVCS_ERROR_RETURN ((
               LM_ERROR,
               ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
               ACE_TEXT ("create_interface_def -")
@@ -2945,7 +2945,7 @@ ifr_adding_visitor::create_interface_def (AST_Interface *node)
       // Pop the new IR object back off the scope stack.
       if (be_global->ifr_scopes ().pop (used_scope) != 0)
         {
-          ACE_ERROR_RETURN ((
+          ORBSVCS_ERROR_RETURN ((
               LM_ERROR,
               ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
               ACE_TEXT ("create_interface_def -")
@@ -2957,7 +2957,7 @@ ifr_adding_visitor::create_interface_def (AST_Interface *node)
     }
   else
     {
-      ACE_ERROR_RETURN ((
+      ORBSVCS_ERROR_RETURN ((
           LM_ERROR,
           ACE_TEXT ("(%N:%l) ifr_adding_visitor::create_interface_def -")
           ACE_TEXT (" scope stack is empty\n")
@@ -3015,7 +3015,7 @@ ifr_adding_visitor::create_value_def (AST_ValueType *node)
 
       if (be_global->ifr_scopes ().push (new_scope.in ()) != 0)
         {
-          ACE_ERROR_RETURN ((
+          ORBSVCS_ERROR_RETURN ((
               LM_ERROR,
               ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
               ACE_TEXT ("create_value_def -")
@@ -3028,7 +3028,7 @@ ifr_adding_visitor::create_value_def (AST_ValueType *node)
       // Visit the members, if any.
       if (this->visit_scope (node) == -1)
         {
-          ACE_ERROR_RETURN ((
+          ORBSVCS_ERROR_RETURN ((
               LM_ERROR,
               ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
               ACE_TEXT ("create_value_def -")
@@ -3053,7 +3053,7 @@ ifr_adding_visitor::create_value_def (AST_ValueType *node)
       // Pop the new IR object back off the scope stack.
       if (be_global->ifr_scopes ().pop (used_scope) != 0)
         {
-          ACE_ERROR_RETURN ((
+          ORBSVCS_ERROR_RETURN ((
               LM_ERROR,
               ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
               ACE_TEXT ("create_value_def -")
@@ -3065,7 +3065,7 @@ ifr_adding_visitor::create_value_def (AST_ValueType *node)
     }
   else
     {
-      ACE_ERROR_RETURN ((
+      ORBSVCS_ERROR_RETURN ((
           LM_ERROR,
           ACE_TEXT ("(%N:%l) ifr_adding_visitor::create_value_def -")
           ACE_TEXT (" scope stack is empty\n")
@@ -3107,7 +3107,7 @@ ifr_adding_visitor::create_component_def (AST_Component *node)
 
       if (be_global->ifr_scopes ().push (new_def.in ()) != 0)
         {
-          ACE_ERROR_RETURN ((
+          ORBSVCS_ERROR_RETURN ((
               LM_ERROR,
               ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
               ACE_TEXT ("create_component_def -")
@@ -3129,7 +3129,7 @@ ifr_adding_visitor::create_component_def (AST_Component *node)
       // Visit the members, if any.
       if (this->visit_scope (node) == -1)
         {
-          ACE_ERROR_RETURN ((
+          ORBSVCS_ERROR_RETURN ((
               LM_ERROR,
               ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
               ACE_TEXT ("create_component_def -")
@@ -3145,7 +3145,7 @@ ifr_adding_visitor::create_component_def (AST_Component *node)
       // Pop the new IR object back off the scope stack.
       if (be_global->ifr_scopes ().pop (used_scope) != 0)
         {
-          ACE_ERROR_RETURN ((
+          ORBSVCS_ERROR_RETURN ((
               LM_ERROR,
               ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
               ACE_TEXT ("create_component_def -")
@@ -3157,7 +3157,7 @@ ifr_adding_visitor::create_component_def (AST_Component *node)
     }
   else
     {
-      ACE_ERROR_RETURN ((
+      ORBSVCS_ERROR_RETURN ((
           LM_ERROR,
           ACE_TEXT ("(%N:%l) ifr_adding_visitor::create_component_def -")
           ACE_TEXT (" scope stack is empty\n")
@@ -3213,7 +3213,7 @@ ifr_adding_visitor::create_home_def (AST_Home *node)
 
       if (be_global->ifr_scopes ().push (new_scope.in ()) != 0)
         {
-          ACE_ERROR_RETURN ((
+          ORBSVCS_ERROR_RETURN ((
               LM_ERROR,
               ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
               ACE_TEXT ("create_home_def -")
@@ -3226,7 +3226,7 @@ ifr_adding_visitor::create_home_def (AST_Home *node)
       // Visit the members, if any.
       if (this->visit_scope (node) == -1)
         {
-          ACE_ERROR_RETURN ((
+          ORBSVCS_ERROR_RETURN ((
               LM_ERROR,
               ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
               ACE_TEXT ("create_home_def -")
@@ -3259,7 +3259,7 @@ ifr_adding_visitor::create_home_def (AST_Home *node)
       // Pop the new IR object back off the scope stack.
       if (be_global->ifr_scopes ().pop (used_scope) != 0)
         {
-          ACE_ERROR_RETURN ((
+          ORBSVCS_ERROR_RETURN ((
               LM_ERROR,
               ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
               ACE_TEXT ("create_home_def -")
@@ -3271,7 +3271,7 @@ ifr_adding_visitor::create_home_def (AST_Home *node)
     }
   else
     {
-      ACE_ERROR_RETURN ((
+      ORBSVCS_ERROR_RETURN ((
           LM_ERROR,
           ACE_TEXT ("(%N:%l) ifr_adding_visitor::create_home_def -")
           ACE_TEXT (" scope stack is empty\n")
@@ -3332,7 +3332,7 @@ ifr_adding_visitor::create_event_def (AST_EventType *node)
 
       if (be_global->ifr_scopes ().push (new_scope.in ()) != 0)
         {
-          ACE_ERROR_RETURN ((
+          ORBSVCS_ERROR_RETURN ((
               LM_ERROR,
               ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
               ACE_TEXT ("create_event_def -")
@@ -3345,7 +3345,7 @@ ifr_adding_visitor::create_event_def (AST_EventType *node)
       // Visit the members, if any.
       if (this->visit_scope (node) == -1)
         {
-          ACE_ERROR_RETURN ((
+          ORBSVCS_ERROR_RETURN ((
               LM_ERROR,
               ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
               ACE_TEXT ("create_event_def -")
@@ -3370,7 +3370,7 @@ ifr_adding_visitor::create_event_def (AST_EventType *node)
       // Pop the new IR object back off the scope stack.
       if (be_global->ifr_scopes ().pop (used_scope) != 0)
         {
-          ACE_ERROR_RETURN ((
+          ORBSVCS_ERROR_RETURN ((
               LM_ERROR,
               ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
               ACE_TEXT ("create_event_def -")
@@ -3382,7 +3382,7 @@ ifr_adding_visitor::create_event_def (AST_EventType *node)
     }
   else
     {
-      ACE_ERROR_RETURN ((
+      ORBSVCS_ERROR_RETURN ((
           LM_ERROR,
           ACE_TEXT ("(%N:%l) ifr_adding_visitor::create_event_def -")
           ACE_TEXT (" scope stack is empty\n")
@@ -3413,7 +3413,7 @@ ifr_adding_visitor::create_value_member (AST_Field *node)
           /// This will put the repo entry into ir_current_.
           if (bt->ast_accept (this) != 0)
             {
-              ACE_ERROR_RETURN ((
+              ORBSVCS_ERROR_RETURN ((
                   LM_ERROR,
                   ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
                   ACE_TEXT ("create_value_member -")
@@ -3443,7 +3443,7 @@ ifr_adding_visitor::create_value_member (AST_Field *node)
             vis = CORBA::PRIVATE_MEMBER;
             break;
           default:
-            ACE_ERROR_RETURN ((
+            ORBSVCS_ERROR_RETURN ((
                 LM_ERROR,
                 ACE_TEXT ("(%N:%l) ifr_adding_visitor::create_value_member -")
                 ACE_TEXT (" bad visibility value in node\n")
@@ -3456,7 +3456,7 @@ ifr_adding_visitor::create_value_member (AST_Field *node)
 
       if (be_global->ifr_scopes ().top (current_scope) != 0)
         {
-          ACE_ERROR_RETURN ((
+          ORBSVCS_ERROR_RETURN ((
               LM_ERROR,
               ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
               ACE_TEXT ("create_value_member -")
@@ -3501,7 +3501,7 @@ ifr_adding_visitor::get_referenced_type (AST_Type *node)
     case AST_Decl::NT_sequence:
       if (node->ast_accept (this) == -1)
         {
-          ACE_ERROR ((
+          ORBSVCS_ERROR ((
               LM_ERROR,
               ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
               ACE_TEXT ("get_scope_member -")
@@ -3834,7 +3834,7 @@ ifr_adding_visitor::fill_initializers (CORBA::ExtInitializerSeq &result,
           /// to the repository if it's not already there.
           if (arg->field_type ()->ast_accept (this) != 0)
             {
-              ACE_ERROR ((
+              ORBSVCS_ERROR ((
                   LM_ERROR,
                   ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
                   ACE_TEXT ("fill_initializers -")

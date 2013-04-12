@@ -253,7 +253,7 @@ TAO_Notify_EventTypeSeq::dump (void) const
   for (iter.first (); iter.next (event_type); iter.advance ())
     {
       event_type->dump ();
-      ACE_DEBUG ((LM_DEBUG, ", "));
+      ORBSVCS_DEBUG ((LM_DEBUG, ", "));
     }
 }
 
@@ -295,7 +295,7 @@ TAO_Notify_EventTypeSeq::load_child (const ACE_CString &type, CORBA::Long id,
 
   if ((type == "subscription") && et.init(attrs))
   {
-    if (DEBUG_LEVEL) ACE_DEBUG ((LM_DEBUG,
+    if (DEBUG_LEVEL) ORBSVCS_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) Event_Type reload subscription\n")
       ));
     inherited::insert(et);

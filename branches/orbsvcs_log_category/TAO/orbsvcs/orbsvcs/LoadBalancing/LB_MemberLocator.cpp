@@ -26,8 +26,8 @@ TAO_LB_MemberLocator::preinvoke (
       CORBA::Object_var member =
         this->load_manager_->next_member (oid);
 
-//       ACE_DEBUG ((LM_DEBUG, "%N:%l\n"));
-//       ACE_DEBUG ((LM_DEBUG,
+//       ORBSVCS_DEBUG ((LM_DEBUG, "%N:%l\n"));
+//       ORBSVCS_DEBUG ((LM_DEBUG,
 //                   "FORWARDED\n"));
 
       ACE_ASSERT (!CORBA::is_nil (member.in ()));

@@ -148,7 +148,7 @@ TAO::SSLIOP::CredentialsAcquirer::get_credentials (CORBA::Boolean on_list)
   if (::X509_check_private_key (x509.in (), evp.in ()) != 1)
     {
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_ERROR,
+        ORBSVCS_DEBUG ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) ERROR: Private key is not ")
                     ACE_TEXT ("consistent with X.509 certificate")));
 
@@ -232,7 +232,7 @@ TAO::SSLIOP::CredentialsAcquirer::make_X509 (const ::SSLIOP::File &certificate)
       if (fp == 0)
         {
           if (TAO_debug_level > 0)
-            ACE_ERROR ((LM_ERROR,
+            ORBSVCS_ERROR ((LM_ERROR,
                         ACE_TEXT ("(%P|%t) SSLIOP::CredentialsAcquirer::make_X509 - %p\n"),
                         ACE_TEXT ("fopen")));
 
@@ -252,7 +252,7 @@ TAO::SSLIOP::CredentialsAcquirer::make_X509 (const ::SSLIOP::File &certificate)
       if (fp == 0)
         {
           if (TAO_debug_level > 0)
-            ACE_ERROR ((LM_ERROR,
+            ORBSVCS_ERROR ((LM_ERROR,
                         ACE_TEXT ("(%P|%t) SSLIOP::CredentialsAcquirer::make_X509 - %p\n"),
                         ACE_TEXT ("fopen")));
 
@@ -308,7 +308,7 @@ TAO::SSLIOP::CredentialsAcquirer::make_EVP_PKEY (const ::SSLIOP::File &key)
       if (fp == 0)
         {
           if (TAO_debug_level > 0)
-            ACE_ERROR ((LM_ERROR,
+            ORBSVCS_ERROR ((LM_ERROR,
                         ACE_TEXT ("(%P|%t) SSLIOP::CredentialsAcquirer::make_EVP_PKEY ")
                         ACE_TEXT ("- %p\n"),
                         ACE_TEXT ("fopen")));
@@ -329,7 +329,7 @@ TAO::SSLIOP::CredentialsAcquirer::make_EVP_PKEY (const ::SSLIOP::File &key)
       if (fp == 0)
         {
           if (TAO_debug_level > 0)
-            ACE_ERROR ((LM_ERROR,
+            ORBSVCS_ERROR ((LM_ERROR,
                         ACE_TEXT ("(%P|%t) SSLIOP::CredentialsAcquirer::make_EVP_PKEY ")
                         ACE_TEXT ("- %p\n"),
                         ACE_TEXT ("fopen")));

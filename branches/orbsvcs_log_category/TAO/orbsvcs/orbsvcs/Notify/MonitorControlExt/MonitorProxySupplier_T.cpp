@@ -106,7 +106,7 @@ TAO_MonitorProxySupplier_T<ProxyPushSupplier>::configure(
     }
   else
     {
-      ACE_DEBUG ((LM_DEBUG, "Warning MC cannot enable statistics for buffering strategy.\n"));
+      ORBSVCS_DEBUG ((LM_DEBUG, "Warning MC cannot enable statistics for buffering strategy.\n"));
     }
 
   this->base_stat_name_ = admin_->stat_name ();

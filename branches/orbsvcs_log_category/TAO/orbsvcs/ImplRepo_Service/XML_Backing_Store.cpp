@@ -56,7 +56,7 @@ XML_Backing_Store::persist ()
   FILE* fp = ACE_OS::fopen (this->filename_.c_str (), "w");
   if (fp == 0)
     {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Couldn't write to file %C\n"),
+      ORBSVCS_ERROR ((LM_ERROR, ACE_TEXT ("Couldn't write to file %C\n"),
         this->filename_.c_str()));
       return -1;
     }
@@ -205,7 +205,7 @@ XML_Backing_Store::load (const ACE_TString& filename,
 
   if (debug > 9)
     {
-      ACE_DEBUG ((LM_INFO, ACE_TEXT ("load %s%C\n"), filename.c_str(),
+      ORBSVCS_DEBUG ((LM_INFO, ACE_TEXT ("load %s%C\n"), filename.c_str(),
                  ((err == 0) ? ACE_TEXT ("")
                   : ACE_TEXT (" (file doesn't exist)"))));
     }
@@ -232,7 +232,7 @@ XML_Backing_Store::load (const ACE_TString& filename,
     }
     catch ( const ACEXML_SAXParseException* sax_ex)
     {
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
         ACE_TEXT ("Error during load of ImR persistence xml file (%s)."),
         filename.c_str()));
       sax_ex->print ();
@@ -240,7 +240,7 @@ XML_Backing_Store::load (const ACE_TString& filename,
     }
     catch (const ACEXML_Exception& ex)
     {
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
         ACE_TEXT ("Error during load of ImR persistence xml file (%s)."),
         filename.c_str()));
       ex.print ();

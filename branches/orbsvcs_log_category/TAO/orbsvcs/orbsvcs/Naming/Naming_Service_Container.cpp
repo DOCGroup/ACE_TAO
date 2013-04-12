@@ -99,10 +99,10 @@ ACE_Unbounded_List<T>::dump (void) const
 {
   ACE_TRACE ("ACE_Unbounded_List<T>::dump");
 
-  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nhead_ = %u"), this->head_));
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nhead_->next_ = %u"), this->head_->next_));
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\ncur_size_ = %d\n"), this->cur_size_));
+  ORBSVCS_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  ORBSVCS_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nhead_ = %u"), this->head_));
+  ORBSVCS_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nhead_->next_ = %u"), this->head_->next_));
+  ORBSVCS_DEBUG ((LM_DEBUG,  ACE_TEXT ("\ncur_size_ = %d\n"), this->cur_size_));
 
   T *item = 0;
 #if !defined (ACE_NLOGGING)
@@ -112,9 +112,9 @@ ACE_Unbounded_List<T>::dump (void) const
   for (ACE_Unbounded_List_Iterator<T> iter (*(ACE_Unbounded_List<T> *) this);
        iter.next (item) != 0;
        iter.advance ())
-    ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("count = %d\n"), count++));
+    ORBSVCS_DEBUG ((LM_DEBUG,  ACE_TEXT ("count = %d\n"), count++));
 
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+  ORBSVCS_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
 template <class T> void

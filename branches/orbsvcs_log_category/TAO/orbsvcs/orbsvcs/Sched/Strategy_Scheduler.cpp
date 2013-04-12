@@ -169,7 +169,7 @@ ACE_Strategy_Scheduler::assign_priorities (
 
       default: // Should never reach here: something *bad* has happened.
 
-        ACE_ERROR ((
+        ORBSVCS_ERROR ((
           LM_ERROR,
           "Priority assignment failure: tasks"
           " \"%s\" and \"%s\" are out of order.\n",
@@ -309,7 +309,7 @@ ACE_Strategy_Scheduler::assign_subpriorities (
 
               default: // We should never reach here: something *bad* has happened.
 
-                ACE_ERROR ((
+                ORBSVCS_ERROR ((
                   LM_ERROR,
                   "Static subpriority assignment failure: tasks"
                   " \"%s\" and \"%s\" are out of order.\n",
@@ -335,7 +335,7 @@ ACE_Strategy_Scheduler::assign_subpriorities (
 
           default: // We should never reach here: something *bad* has happened.
 
-            ACE_ERROR ((
+            ORBSVCS_ERROR ((
               LM_ERROR,
               "Dynamic subpriority assignment failure: tasks"
               " \"%s\" and \"%s\" are out of order.\n",
@@ -364,7 +364,7 @@ ACE_Strategy_Scheduler::assign_subpriorities (
 
       default: // We should never reach here: something *bad* has happened.
 
-        ACE_ERROR ((
+        ORBSVCS_ERROR ((
           LM_ERROR,
           "Priority assignment failure: tasks"
           " \"%s\" and \"%s\" are out of order.\n",

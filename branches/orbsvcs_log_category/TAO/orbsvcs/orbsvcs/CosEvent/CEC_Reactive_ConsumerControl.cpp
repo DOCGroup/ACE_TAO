@@ -305,7 +305,7 @@ TAO_CEC_Reactive_ConsumerControl::consumer_not_exist (
 
       if (TAO_debug_level >= 10)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("ProxyPushSupplier disconnected due to consumer_not_exist\n")));
         }
     }
@@ -346,7 +346,7 @@ TAO_CEC_Reactive_ConsumerControl::system_exception (
 
           if (TAO_debug_level >= 10)
             {
-              ACE_DEBUG ((LM_DEBUG,
+              ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("ProxyPushSupplier disconnected due to consumer_not_exist\n")));
             }
         }

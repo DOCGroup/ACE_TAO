@@ -141,7 +141,7 @@ TAO_EC_Gateway_IIOP_Factory::init (int argc, ACE_TCHAR* argv[])
       else
         {
           arg_shifter.ignore_arg ();
-          ACE_DEBUG ((LM_WARNING,
+          ORBSVCS_DEBUG ((LM_WARNING,
                              "Ignoring <%s> option "
                              "during initialization.\n",
                       arg));
@@ -156,7 +156,7 @@ void
 TAO_EC_Gateway_IIOP_Factory::unsupported_option_value (const ACE_TCHAR * option_name,
                                                        const ACE_TCHAR * option_value)
 {
-  ACE_ERROR ((LM_ERROR,
+  ORBSVCS_ERROR ((LM_ERROR,
               "EC_Gateway_IIOP_Factory -"
               "Unsupported <%s> option value: <%s>. "
               "Ignoring this option - using defaults instead.\n",

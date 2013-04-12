@@ -199,7 +199,7 @@ TAO_FDev<T_Producer, T_Consumer>::destroy (AVStreams::FlowEndPoint_ptr /* the_ep
     }
   int result = TAO_AV_Core::deactivate_servant (this);
   if (result < 0)
-    if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_StreamEndPoint::destroy failed\n"));
+    if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"TAO_StreamEndPoint::destroy failed\n"));
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

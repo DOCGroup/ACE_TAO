@@ -18,11 +18,11 @@ int ConnectionAcceptHandler<ACE_PEER_STREAM_2>::open (void * acceptor)
 
   if (reactor_->register_handler (this,
     ACE_Event_Handler::READ_MASK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
     "(%P|%t) can't register with reactor\n"),
     -1);
 
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
     "(%P|%t) connected with %s\n",
     addr.get_host_name ()));
 

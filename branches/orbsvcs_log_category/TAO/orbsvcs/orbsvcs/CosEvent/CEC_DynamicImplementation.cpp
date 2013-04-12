@@ -40,7 +40,7 @@ TAO_CEC_DynamicImplementationServer::invoke (CORBA::ServerRequest_ptr request)
         {
           if (TAO_debug_level >= 10)
             {
-              ACE_DEBUG ((LM_DEBUG,
+              ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("***** Operation not found in IFR cache *****\n")));
             }
 
@@ -100,7 +100,7 @@ TAO_CEC_DynamicImplementationServer::is_a (CORBA::ServerRequest_ptr request)
 
   if (TAO_debug_level >= 10)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("***** TAO_CEC_DynamicImplementationServer::is_a called with value %s *****\n"),
                   value));
     }
@@ -110,10 +110,10 @@ TAO_CEC_DynamicImplementationServer::is_a (CORBA::ServerRequest_ptr request)
 
   if (TAO_debug_level >= 10)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("***** is_a using Server's RepositoryId %s *****\n"),
                   this->repository_id_));
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("***** is_a using base interface %s *****\n"),
                   object_id));
     }
@@ -131,7 +131,7 @@ TAO_CEC_DynamicImplementationServer::is_a (CORBA::ServerRequest_ptr request)
         {
           if (TAO_debug_level >= 10)
             {
-              ACE_DEBUG ((LM_DEBUG,
+              ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("***** is_a using base interface %s *****\n"),
                           this->typed_event_channel_->base_interfaces (base) ));
             }
@@ -145,7 +145,7 @@ TAO_CEC_DynamicImplementationServer::is_a (CORBA::ServerRequest_ptr request)
 
   if (TAO_debug_level >= 10)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("***** is_a returning %d *****\n"),
                   result));
     }

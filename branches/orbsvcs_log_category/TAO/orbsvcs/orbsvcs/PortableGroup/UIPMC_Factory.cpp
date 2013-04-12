@@ -72,7 +72,7 @@ TAO_UIPMC_Protocol_Factory::init (int argc,
         }
       else
         {
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO_UIPMC_Protocol_Factory::init - ")
                       ACE_TEXT ("ignoring unknown option <%s>\n"),
                       argv[curarg]));

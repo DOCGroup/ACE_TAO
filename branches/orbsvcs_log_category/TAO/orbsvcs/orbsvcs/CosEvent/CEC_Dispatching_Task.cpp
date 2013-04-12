@@ -33,7 +33,7 @@ TAO_CEC_Dispatching_Task::svc (void)
                 }
               else
                 {
-                  ACE_ERROR ((LM_ERROR,
+                  ORBSVCS_ERROR ((LM_ERROR,
                               "EC (%P|%t) getq error in Dispatching Queue\n"));
                 }
             }

@@ -64,7 +64,7 @@ int TAO::FT_DefaultFaultAnalyzer::validate_event_type (
     {
       if (TAO_debug_level > 6)
       {
-        ACE_ERROR ((LM_ERROR,
+        ORBSVCS_ERROR ((LM_ERROR,
           ACE_TEXT ("TAO::FT_DefaultFaultAnalyzer::validate_event_type: ")
           ACE_TEXT ("Received invalid event type.\n")
           ACE_TEXT ("EventType domain: <%s>\n")
@@ -103,7 +103,7 @@ int TAO::FT_DefaultFaultAnalyzer::validate_event_type (
       {
         if (TAO_debug_level > 6)
         {
-          ACE_ERROR ((LM_ERROR,
+          ORBSVCS_ERROR ((LM_ERROR,
             ACE_TEXT ("TAO::FT_DefaultFaultAnalyzer::validate_event_type: ")
             ACE_TEXT ("Received invalid structured event.\n")
             ACE_TEXT ("filterable_data[0] must be \"FTDomainId\", not \"%s\"\n"),
@@ -117,7 +117,7 @@ int TAO::FT_DefaultFaultAnalyzer::validate_event_type (
       {
         if (TAO_debug_level > 6)
         {
-          ACE_ERROR ((LM_ERROR,
+          ORBSVCS_ERROR ((LM_ERROR,
             ACE_TEXT ("TAO::FT_DefaultFaultAnalyzer::validate_event_type: ")
             ACE_TEXT ("Received invalid structured event.\n")
             ACE_TEXT ("filterable_data[1] must be \"Location\", not \"%s\"\n"),
@@ -131,7 +131,7 @@ int TAO::FT_DefaultFaultAnalyzer::validate_event_type (
     {
       if (TAO_debug_level > 6)
       {
-        ACE_ERROR ((LM_ERROR,
+        ORBSVCS_ERROR ((LM_ERROR,
           ACE_TEXT ("TAO::FT_DefaultFaultAnalyzer::validate_event_type: ")
           ACE_TEXT ("Received invalid structured event.\n")
           ACE_TEXT ("There must be at least two name/value pairs in ")
@@ -152,7 +152,7 @@ int TAO::FT_DefaultFaultAnalyzer::analyze_fault_event (
   ACE_UNUSED_ARG (event);
   if (TAO_debug_level > 6)
   {
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
       ACE_TEXT (
         "In TAO::FT_DefaultFaultAnalyzer::analyze_fault_event.\n")
     ));

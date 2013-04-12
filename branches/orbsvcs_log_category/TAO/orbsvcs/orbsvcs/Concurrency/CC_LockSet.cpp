@@ -85,7 +85,7 @@ CORBA::Boolean CC_LockSet::compatible (CC_LockModeEnum mr)
 void
 CC_LockSet::lock (CosConcurrencyControl::lock_mode mode)
 {
-  ACE_DEBUG ((LM_DEBUG, "CC_LockSet::lock\n"));
+  ORBSVCS_DEBUG ((LM_DEBUG, "CC_LockSet::lock\n"));
 
   CC_LockModeEnum lm = lmconvert (mode);
 
@@ -106,7 +106,7 @@ CC_LockSet::try_lock (CosConcurrencyControl::lock_mode mode)
 {
   CC_LockModeEnum lm = lmconvert (mode);
 
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
               "CC_LockSet::try_lock\n"));
 
   if (this->try_lock_i (lm) == 0)
@@ -143,7 +143,7 @@ CC_LockSet::lmconvert (CosConcurrencyControl::lock_mode mode)
 void
 CC_LockSet::unlock (CosConcurrencyControl::lock_mode mode)
 {
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
               "CC_LockSet::unlock\n"));
 
   CC_LockModeEnum lm = lmconvert (mode);
@@ -185,7 +185,7 @@ void
 CC_LockSet::change_mode (CosConcurrencyControl::lock_mode held_mode,
                          CosConcurrencyControl::lock_mode new_mode)
 {
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
               "CC_LockSet::change_mode\n"));
   CC_LockModeEnum lm_held = lmconvert (held_mode);
   CC_LockModeEnum lm_new = lmconvert (new_mode);
@@ -282,7 +282,7 @@ CC_LockSet::lock_held (CC_LockModeEnum lm)
 void
 CC_LockSet::dump (void)
 {
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
               "waiting_calls_: %i, IR: %i, R: %i, U: %i, IW: %i, W: %i\n",
               lock_queue_.size (),
               lock_[CC_IR],

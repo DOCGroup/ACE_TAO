@@ -83,7 +83,7 @@ TAO_Naming_Loader::create_object (CORBA::ORB_ptr orb,
 
   if (this->naming_server_ == 0)
     {
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
                   ACE_TEXT ("TAO_Naming_Loader::create_object - naming_server_ ")
                   ACE_TEXT ("never set.\n")));
     }

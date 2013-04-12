@@ -171,7 +171,7 @@ TAO::SSLIOP::ORBInitializer::get_tss_slot_id (
 
   if (security_current == 0)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   "Unable to obtain TSS slot ID from "
                   "\"SecurityCurrent\" object.\n"));
 

@@ -105,7 +105,7 @@ TAO_PortableGroup_Acceptor_Registry::open_i (const TAO_Profile* profile,
           delete acceptor;
 
           if (TAO_debug_level > 0)
-            ACE_ERROR ((LM_ERROR,
+            ORBSVCS_ERROR ((LM_ERROR,
                         ACE_TEXT ("TAO (%P|%t) ")
                         ACE_TEXT ("unable to open acceptor ")
                         ACE_TEXT ("for <%s>%p\n"),
@@ -130,7 +130,7 @@ TAO_PortableGroup_Acceptor_Registry::open_i (const TAO_Profile* profile,
           delete acceptor;
 
           if (TAO_debug_level > 0)
-            ACE_ERROR ((LM_ERROR,
+            ORBSVCS_ERROR ((LM_ERROR,
                         ACE_TEXT ("TAO (%P|%t) ")
                         ACE_TEXT ("unable to add acceptor to registry")
                         ACE_TEXT ("for <%s>%p\n"),
@@ -147,7 +147,7 @@ TAO_PortableGroup_Acceptor_Registry::open_i (const TAO_Profile* profile,
   else
     {
       if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_ERROR,
+        ORBSVCS_ERROR ((LM_ERROR,
                     ACE_TEXT ("TAO (%P|%t) ")
                     ACE_TEXT ("unable to create acceptor ")
                     ));

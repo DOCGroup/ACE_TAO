@@ -85,7 +85,7 @@ ImR_Locator_Loader::run(void)
     }
   catch (...)
     {
-      ACE_ERROR((LM_ERROR, "Exception in ImR_Locator_ORB_Runner ()\n"));
+      ORBSVCS_ERROR((LM_ERROR, "Exception in ImR_Locator_ORB_Runner ()\n"));
       return -1;
     }
 }

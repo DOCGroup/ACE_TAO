@@ -12,7 +12,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
   Server_i server;
 
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
               "[SERVER] Process/Thread Id : (%P/%t) Time Service server\n"));
 
   try

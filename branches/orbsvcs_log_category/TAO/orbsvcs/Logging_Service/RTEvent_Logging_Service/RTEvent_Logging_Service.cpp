@@ -71,7 +71,7 @@ RTEvent_Logging_Service::parse_args (int argc, ACE_TCHAR *argv[])
 
         case '?':
         default:
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       "Usage: %s "
                       "-n service_name "
                       "-o ior_file_name "
@@ -104,7 +104,7 @@ RTEvent_Logging_Service::init (int argc, ACE_TCHAR* argv[])
   if (this->rtevent_log_factory_->init (orb_.in (),
                                         poa_.in ()) != 0)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
                          "(%P|%t) Unable to initialize "
                          "the factory.\n"),
                         -1);
@@ -132,7 +132,7 @@ RTEvent_Logging_Service::init (int argc, ACE_TCHAR* argv[])
       FILE* iorf = ACE_OS::fopen (this->ior_file_name_, ACE_TEXT("w"));
       if (iorf == 0)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
                              "Cannot open output file for writing IOR: %s",
                              this->ior_file_name_),
                             -1);

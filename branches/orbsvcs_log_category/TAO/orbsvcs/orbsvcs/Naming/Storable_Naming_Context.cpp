@@ -331,7 +331,7 @@ File_Open_Lock_and_Check::load_from_stream ()
 {
   if (context_ == 0)
     {
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) File_Open_Lock_and_Check::load_from_stream -")
                   ACE_TEXT ("null context_ encountered.")));
       throw CORBA::INTERNAL ();
@@ -410,7 +410,7 @@ TAO_Storable_Naming_Context::~TAO_Storable_Naming_Context (void)
       if (fl.get())
         {
           if (TAO_debug_level > 5)
-            ACE_DEBUG ((LM_DEBUG, "(%P|%t) NameService: removing file %s\n",
+            ORBSVCS_DEBUG ((LM_DEBUG, "(%P|%t) NameService: removing file %s\n",
                         file_name.fast_rep()));
           fl->remove ();
         }

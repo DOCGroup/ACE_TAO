@@ -23,7 +23,7 @@ TAO_EC_Priority_Scheduling::add_proxy_supplier_dependencies (
       TAO_EC_ProxyPushSupplier *supplier,
       TAO_EC_ProxyPushConsumer *consumer)
 {
-  ACE_DEBUG ((LM_DEBUG, "add_proxy_supplier_dependencies - %x %x\n",
+  ORBSVCS_DEBUG ((LM_DEBUG, "add_proxy_supplier_dependencies - %x %x\n",
               supplier, consumer));
   const RtecEventChannelAdmin::SupplierQOS& qos =
     consumer->publications ();

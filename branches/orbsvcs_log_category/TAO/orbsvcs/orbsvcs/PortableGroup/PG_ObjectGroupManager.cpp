@@ -783,7 +783,7 @@ TAO_PG_ObjectGroupManager::remove_group_from_location_map (
         int to_be_removed = this->get_object_group_position (*groups,
                                                              group_entry);
         if (TAO_debug_level > 8)
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) TAO_PG_ObjectGroupManager::")
                       ACE_TEXT ("remove_group_from_location_map -")
                       ACE_TEXT ("Found group at location: %s, position %i, size = %i\n"),
@@ -794,7 +794,7 @@ TAO_PG_ObjectGroupManager::remove_group_from_location_map (
       }
     else
       {
-        ACE_ERROR ((LM_ERROR,
+        ORBSVCS_ERROR ((LM_ERROR,
                     ACE_TEXT ("ERROR: (%P|%t) TAO_PG_ObjectGroupManager::remove_group_from_location_map -")
                     ACE_TEXT ("Group not at expected location: \n"),
                     loc[0].id.in ()));
@@ -810,7 +810,7 @@ TAO_PG_ObjectGroupManager::remove_entry_from_groups (int to_be_removed,
                                                      TAO_PG_ObjectGroup_Array * groups)
 {
   if (TAO_debug_level > 8)
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%P|%t) TAO_PG_ObjectGroupManager::remove_entry_from_groups -")
                 ACE_TEXT ("Found group at position %i, size = %i\n"),
                 to_be_removed, groups->size ()));
@@ -951,7 +951,7 @@ TAO_PG_ObjectGroupManager::validate_members (CORBA::ORB_ptr orb,
                                              const TimeBase::TimeT& timeout)
 {
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t)TAO_PG_ObjectGroupManager::validate_members start\n")));
 
   /// Get list of active member info.
@@ -997,7 +997,7 @@ TAO_PG_ObjectGroupManager::validate_members (CORBA::ORB_ptr orb,
   }
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t)TAO_PG_ObjectGroupManager::validate_members end\n")));
 }
 

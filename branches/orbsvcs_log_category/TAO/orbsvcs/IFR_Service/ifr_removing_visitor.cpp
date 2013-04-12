@@ -34,7 +34,7 @@ ifr_removing_visitor::visit_scope (UTL_Scope *node)
 
               if (d == 0)
                 {
-                  ACE_ERROR_RETURN ((
+                  ORBSVCS_ERROR_RETURN ((
                       LM_ERROR,
                       ACE_TEXT ("(%N:%l) ifr_removing_visitor::visit_scope -")
                       ACE_TEXT (" bad node in this scope\n")
@@ -87,7 +87,7 @@ ifr_removing_visitor::visit_root (AST_Root *node)
 
       if (be_global->ifr_scopes ().push (new_scope.in ()) != 0)
         {
-          ACE_ERROR_RETURN ((
+          ORBSVCS_ERROR_RETURN ((
               LM_ERROR,
               ACE_TEXT ("(%N:%l) ifr_removing_visitor::visit_root -")
               ACE_TEXT (" scope push failed\n")
@@ -98,7 +98,7 @@ ifr_removing_visitor::visit_root (AST_Root *node)
 
       if (this->visit_scope (node) == -1)
         {
-          ACE_ERROR_RETURN ((
+          ORBSVCS_ERROR_RETURN ((
               LM_ERROR,
               ACE_TEXT ("(%N:%l) ifr_removing_visitor::visit_root -")
               ACE_TEXT (" visit_scope failed\n")
@@ -111,7 +111,7 @@ ifr_removing_visitor::visit_root (AST_Root *node)
 
       if (be_global->ifr_scopes ().pop (tmp) != 0)
         {
-          ACE_ERROR_RETURN ((
+          ORBSVCS_ERROR_RETURN ((
               LM_ERROR,
               ACE_TEXT ("(%N:%l) ifr_removing_visitor::visit_root -")
               ACE_TEXT (" scope pop failed\n")

@@ -12,7 +12,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
   Clerk_i clerk;
 
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
               "[SERVER] Process/Thread Id : (%P/%t) Time Service clerk\n"));
 
   try

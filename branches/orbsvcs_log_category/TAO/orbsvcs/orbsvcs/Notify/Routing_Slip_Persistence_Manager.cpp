@@ -155,7 +155,7 @@ Routing_Slip_Persistence_Manager::load(
       }
       else
       {
-        ACE_ERROR((LM_ERROR,
+        ORBSVCS_ERROR((LM_ERROR,
           ACE_TEXT(
             "(%P|%t) Reloaded Persistent Event is missing event.\n")
           ));
@@ -451,7 +451,7 @@ Routing_Slip_Persistence_Manager::store_i(const ACE_Message_Block& event,
     }
     else
     {
-      ACE_ERROR((LM_ERROR,
+      ORBSVCS_ERROR((LM_ERROR,
         ACE_TEXT(
           "(%P|%t) No Event is being stored with this routing slip.\n")
         ));

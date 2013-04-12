@@ -67,7 +67,7 @@ int TAO_Notify_Method_Request_Lookup::execute_i (void)
                                                              parent.filter_operator ());
 
   if (TAO_debug_level > 1)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Notify (%P|%t) Proxyconsumer %x filter ")
+    ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT("Notify (%P|%t) Proxyconsumer %x filter ")
                           ACE_TEXT("eval result = %d\n"),
                           &this->proxy_consumer_ , val));
 
@@ -143,14 +143,14 @@ TAO_Notify_Method_Request_Lookup::unmarshal (
       }
       else
       {
-        ACE_ERROR ((LM_ERROR,
+        ORBSVCS_ERROR ((LM_ERROR,
           ACE_TEXT ("(%P|%t) TAO_Notify_Method_Request_Lookup_No_Copy::unmarshal: unknown proxy id\n")
           ));
       }
     }
     else
     {
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
         ACE_TEXT ("(%P|%t) TAO_Notify_Method_Request_Lookup_No_Copy::unmarshal: Cant read proxy id path\n")
         ));
     }

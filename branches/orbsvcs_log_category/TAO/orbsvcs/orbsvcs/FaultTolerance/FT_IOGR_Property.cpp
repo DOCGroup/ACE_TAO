@@ -240,7 +240,7 @@ TAO_FT_IOGR_Property::encode_properties (
   if (this->ft_group_tagged_component_ == 0)
     {
       if (TAO_debug_level > 2)
-        ACE_ERROR_RETURN ((LM_ERROR,
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            "TAO-FT (%P|%t) - The group tagged component ",
                            "is null\n"),
                           0);

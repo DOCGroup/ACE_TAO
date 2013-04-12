@@ -7,7 +7,7 @@
 #include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/CDR.h"
 #include "orbsvcs/FT_CORBA_ORBC.h"
-#include "ace/Log_Msg.h"
+#include "orbsvcs/Log_Macros.h"
 #include "ace/OS_NS_string.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -119,7 +119,7 @@ namespace TAO
     if (fgvsc.object_group_ref_version >
         this->object_group_ref_version_)
       {
-        ACE_ERROR ((LM_ERROR,
+        ORBSVCS_ERROR ((LM_ERROR,
                     ACE_TEXT ("TAO_FT (%P|%t) - Wrong version information ")
                     ACE_TEXT ("within the interceptor (%u > %u)\n"),
                     fgvsc.object_group_ref_version,
