@@ -1,3 +1,9 @@
+Fri Apr 12 18:16:42 UTC 2013  Adam Mitz  <mitza@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
+
+          Added required base projects for valuetype and messaging.
+
 Fri Apr 12 17:58:35 UTC 2013  Huang-Ming Huang  <huangh@ociweb.com>
 
         * tao/LF_Strategy_Complete.cpp:
