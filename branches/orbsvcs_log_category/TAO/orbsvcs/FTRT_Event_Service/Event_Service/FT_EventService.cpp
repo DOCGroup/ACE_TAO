@@ -11,6 +11,7 @@
 #include "orbsvcs/Scheduler_Factory.h"
 #include "orbsvcs/FtRtEvent/EventChannel/FTRTEC_ServiceActivate.h"
 #include "orbsvcs/FtRtEvent/Utils/Log.h"
+#include "orbsvcs/Log_Macros.h"
 #include "ace/OS_main.h"
 #include "ace/OS_NS_strings.h"
 

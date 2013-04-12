@@ -9,6 +9,7 @@
 #include /**/ "Naming_Service.h"
 #include "tao/ORB_Core.h"
 #include "ace/ARGV.h"
+#include "orbsvcs/Log_Macros.h"
 
 #define REGISTRY_KEY_ROOT HKEY_LOCAL_MACHINE
 #define TAO_REGISTRY_SUBKEY ACE_TEXT ("SOFTWARE\\ACE\\TAO")

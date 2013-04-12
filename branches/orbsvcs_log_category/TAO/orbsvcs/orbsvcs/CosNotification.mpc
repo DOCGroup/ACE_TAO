@@ -248,7 +248,7 @@ project(CosNotification_Persist) : notification_serv, orbsvcs_output, install, a
   }
 }
 
-project(CosNotification_MC): tao_versioning_idl_defaults, orbsvcs_output, naming, tao_monitor, iortable, install {
+project(CosNotification_MC): tao_versioning_idl_defaults, orbsvcs_output, naming, tao_monitor, iortable, install, svc_utils {
   sharedname   = TAO_CosNotification_MC
   dynamicflags += TAO_NOTIFY_MC_BUILD_DLL
   tagchecks   += Notify
