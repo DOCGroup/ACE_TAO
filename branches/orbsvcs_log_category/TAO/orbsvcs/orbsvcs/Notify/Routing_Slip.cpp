@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Notify/Routing_Slip.h"
 
 #include "orbsvcs/Notify/Delivery_Request.h"

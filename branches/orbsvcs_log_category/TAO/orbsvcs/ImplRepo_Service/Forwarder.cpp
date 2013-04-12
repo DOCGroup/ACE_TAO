@@ -10,6 +10,7 @@
 */
 //=============================================================================
 
+#include "orbsvcs/Log_Macros.h"
 #include "Forwarder.h"
 #include "ImR_Locator_i.h"
 

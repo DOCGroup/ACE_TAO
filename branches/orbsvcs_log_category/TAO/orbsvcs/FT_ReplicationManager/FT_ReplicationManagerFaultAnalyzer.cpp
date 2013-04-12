@@ -11,6 +11,7 @@
  */
 //=============================================================================
 
+#include "orbsvcs/Log_Macros.h"
 #include "FT_ReplicationManagerFaultAnalyzer.h"
 #include "orbsvcs/CosNotifyCommC.h"
 #include "orbsvcs/FT_NotifierC.h"

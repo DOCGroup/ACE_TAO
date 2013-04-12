@@ -1,4 +1,5 @@
 //$Id$
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/FtRtEvent/Utils/Log.h"
 
 #if !defined(__ACE_INLINE__)

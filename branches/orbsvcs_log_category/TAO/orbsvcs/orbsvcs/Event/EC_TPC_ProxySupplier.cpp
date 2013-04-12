@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Event/EC_TPC_ProxySupplier.h"
 
 #if ! defined (__ACE_INLINE__)

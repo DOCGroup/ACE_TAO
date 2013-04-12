@@ -1,5 +1,7 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/AV/AV_Core.h"
 #include "orbsvcs/AV/FlowSpec_Entry.h"
 #include "orbsvcs/AV/Transport.h"

@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/FtRtEvent/EventChannel/Fault_Detector_Loader.h"
 #include "orbsvcs/FtRtEvent/EventChannel/Fault_Detector_T.h"
 #include "orbsvcs/FtRtEvent/EventChannel/FTEC_Fault_Listener.h"

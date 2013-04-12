@@ -17,6 +17,7 @@
 //=============================================================================
 
 
+#include "orbsvcs/Log_Macros.h"
 #include "Factory_Trader.h"
 #include "orbsvcs/CosTradingC.h"
 

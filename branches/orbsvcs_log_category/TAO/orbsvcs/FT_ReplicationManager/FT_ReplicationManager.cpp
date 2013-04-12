@@ -12,6 +12,7 @@
  *  @author Curt Hibbs <hibbs_c@ociweb.com>
  */
 //=============================================================================
+#include "orbsvcs/Log_Macros.h"
 #include "FT_ReplicationManager.h"
 #include "FT_Property_Validator.h"
 

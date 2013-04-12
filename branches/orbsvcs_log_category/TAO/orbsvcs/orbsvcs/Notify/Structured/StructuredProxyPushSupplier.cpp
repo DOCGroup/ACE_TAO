@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Notify/Structured/StructuredProxyPushSupplier.h"
 
 #include "tao/PortableServer/Servant_Base.h"

@@ -33,6 +33,8 @@
  */
 
 // $Id$
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/AV/ntp-time.h"
 #include "orbsvcs/AV/RTCP.h"
 #include "orbsvcs/AV/media_timer.h"

@@ -11,6 +11,8 @@
 #ifndef TAO_RECONFIG_SCHED_UTILS_T_CPP
 #define TAO_RECONFIG_SCHED_UTILS_T_CPP
 
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Sched/Reconfig_Sched_Utils_T.h"
 #include "ace/Sched_Params.h"
 #include "ace/ACE.h"

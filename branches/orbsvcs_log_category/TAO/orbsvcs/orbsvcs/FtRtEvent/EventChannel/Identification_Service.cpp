@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/FtRtEvent/EventChannel/Identification_Service.h"
 #include "../Utils/UUID.h"
 #include "ace/OS_NS_strings.h"

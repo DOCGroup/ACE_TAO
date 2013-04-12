@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Event/ECG_UDP_Receiver.h"
 #include "orbsvcs/Event_Utilities.h"
 #include "ace/SString.h"

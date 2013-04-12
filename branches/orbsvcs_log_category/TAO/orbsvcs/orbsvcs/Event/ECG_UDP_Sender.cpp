@@ -9,6 +9,7 @@
  *
  */
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Event/ECG_UDP_Sender.h"
 #include "orbsvcs/Event_Utilities.h"
 #include "tao/CDR.h"

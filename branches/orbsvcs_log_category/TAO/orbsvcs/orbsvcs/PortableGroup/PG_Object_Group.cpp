@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/PortableGroup/PG_Object_Group.h"
 #include "orbsvcs/PortableGroup/PG_conf.h"
 

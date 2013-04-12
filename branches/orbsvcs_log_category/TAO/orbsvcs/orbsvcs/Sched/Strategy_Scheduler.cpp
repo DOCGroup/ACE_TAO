@@ -9,6 +9,7 @@
 //=============================================================================
 
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Sched/Strategy_Scheduler.h"
 #include "ace/Sched_Params.h"
 

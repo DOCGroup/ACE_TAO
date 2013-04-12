@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Notify/POA_Helper.h"
 
 #if ! defined (__ACE_INLINE__)

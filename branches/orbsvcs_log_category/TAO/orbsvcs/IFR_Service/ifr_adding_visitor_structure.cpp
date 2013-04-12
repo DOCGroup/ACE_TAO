@@ -1,6 +1,7 @@
 /* -*- c++ -*- */
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "ast_enum.h"
 #include "ast_expression.h"
 #include "ast_field.h"

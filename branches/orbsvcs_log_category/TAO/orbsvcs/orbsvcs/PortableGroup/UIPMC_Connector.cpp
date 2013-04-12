@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/PortableGroup/UIPMC_Connector.h"
 #include "orbsvcs/PortableGroup/UIPMC_Profile.h"
 #include "orbsvcs/PortableGroup/UIPMC_Connection_Handler.h"

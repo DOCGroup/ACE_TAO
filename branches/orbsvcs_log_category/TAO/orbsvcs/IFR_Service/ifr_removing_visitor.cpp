@@ -1,6 +1,7 @@
 /* -*- c++ -*- */
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "ifr_removing_visitor.h"
 #include "utl_scope.h"
 #include "ast_root.h"

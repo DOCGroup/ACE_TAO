@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "ace/Sched_Params.h"
 #include "ace/Get_Opt.h"
 #include "ace/Argv_Type_Converter.h"

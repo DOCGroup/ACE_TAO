@@ -15,7 +15,7 @@ project(IFR_Service) : orbsvcsexe, install, ifrservice, ifr_client, imr_client  
   }
 }
 
-project(TAO_IFR_BE) : taolib, tao_output, conv_lib, ifr_client, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, tao_idl_fe {
+project(TAO_IFR_BE) : taolib, tao_output, conv_lib, ifr_client, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, tao_idl_fe, svc_utils {
   after       += IFR_Service
   sharedname   = TAO_IFR_BE
   dynamicflags += TAO_IFR_BE_BUILD_DLL

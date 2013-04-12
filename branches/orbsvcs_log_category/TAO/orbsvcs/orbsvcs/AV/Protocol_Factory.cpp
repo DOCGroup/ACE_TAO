@@ -1,6 +1,8 @@
 // $Id$
 
 
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/AV/Protocol_Factory.h"
 #include "tao/debug.h"
 #include "ace/Dynamic_Service.h"

@@ -1,4 +1,5 @@
 // $Id$
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Notify/Structured/StructuredPushConsumer.h"
 #include "ace/Bound_Ptr.h"
 #include "tao/Stub.h" // For debug messages printing out ORBid.

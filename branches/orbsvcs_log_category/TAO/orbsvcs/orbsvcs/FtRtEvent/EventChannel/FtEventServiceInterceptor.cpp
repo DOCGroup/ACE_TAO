@@ -1,4 +1,5 @@
 // $Id$
+#include "orbsvcs/Log_Macros.h"
 #include "ace/OS_NS_string.h"
 #include "ace/SString.h"
 #include "orbsvcs/FT_CORBA_ORBC.h"

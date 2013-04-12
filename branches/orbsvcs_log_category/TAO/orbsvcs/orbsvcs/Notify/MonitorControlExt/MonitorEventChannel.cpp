@@ -1,5 +1,7 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Notify/MonitorControlExt/MonitorEventChannel.h"
 
 #include "ace/Monitor_Point_Registry.h"

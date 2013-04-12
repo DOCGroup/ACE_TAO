@@ -1,5 +1,6 @@
 // // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "ImR_Locator_i.h"
 #include "utils.h"
 #include "Iterator.h"

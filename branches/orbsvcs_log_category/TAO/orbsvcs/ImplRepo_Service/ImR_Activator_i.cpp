@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "ImR_Activator_i.h"
 
 #include "Activator_Options.h"

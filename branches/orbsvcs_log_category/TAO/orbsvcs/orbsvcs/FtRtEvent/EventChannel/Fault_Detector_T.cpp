@@ -1,5 +1,7 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
 #include "ace/INET_Addr.h"
 #include "ace/os_include/os_netdb.h"
 

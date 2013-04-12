@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/LoadBalancing/LB_LeastLoaded.h"
 #include "orbsvcs/LoadBalancing/LB_LoadMap.h"
 #include "orbsvcs/LoadBalancing/LB_Random.h"

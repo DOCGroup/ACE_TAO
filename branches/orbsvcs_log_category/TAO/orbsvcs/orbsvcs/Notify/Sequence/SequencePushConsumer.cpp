@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Notify/Sequence/SequencePushConsumer.h"
 #include "ace/Truncate.h"
 #include "ace/Reactor.h"

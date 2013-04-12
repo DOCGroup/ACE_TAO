@@ -2,6 +2,7 @@
 //
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/CosEvent/CEC_DynamicImplementation.h"
 #include "tao/DynamicInterface/Request.h"
 #include "tao/DynamicInterface/Unknown_User_Exception.h"

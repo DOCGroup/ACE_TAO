@@ -2,6 +2,7 @@
 //
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/CosEvent/CEC_TypedProxyPushConsumer.h"
 #include "orbsvcs/CosEvent/CEC_TypedEventChannel.h"
 #include "orbsvcs/CosEvent/CEC_TypedConsumerAdmin.h"

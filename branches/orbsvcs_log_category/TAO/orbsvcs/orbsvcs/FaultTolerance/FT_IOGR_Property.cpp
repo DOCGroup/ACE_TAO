@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/FaultTolerance/FT_IOGR_Property.h"
 
 #include "tao/MProfile.h"

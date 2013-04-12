@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/FtRtEvent/EventChannel/UpdateableHandler.h"
 #include "orbsvcs/FtRtEvent/EventChannel/Update_Manager.h"
 #include "orbsvcs/FtRtEvent/EventChannel/AMI_Primary_Replication_Strategy.h"

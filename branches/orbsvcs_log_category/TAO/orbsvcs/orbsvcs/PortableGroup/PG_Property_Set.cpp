@@ -13,6 +13,7 @@
  *  @author Dale Wilson <wilson_d@ociweb.com>
  */
 //=============================================================================
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/PortableGroup/PG_Property_Set.h"
 #include "tao/debug.h"
 

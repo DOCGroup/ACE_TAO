@@ -15,6 +15,7 @@
  */
 //=============================================================================
 
+#include "orbsvcs/Log_Macros.h"
 #include "FT_FaultEventDescriptor.h"
 
 #include "ace/SString.h"

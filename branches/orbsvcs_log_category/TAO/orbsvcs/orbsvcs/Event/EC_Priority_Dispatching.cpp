@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Event/EC_Priority_Dispatching.h"
 #include "orbsvcs/Event/EC_Dispatching_Task.h"
 #include "orbsvcs/Event/EC_Event_Channel_Base.h"

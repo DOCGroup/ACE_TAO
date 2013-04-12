@@ -1,5 +1,7 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Notify/XML_Saver.h"
 
 #include "ACEXML/common/XML_Util.h"

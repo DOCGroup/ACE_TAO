@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/PortableGroup/miop_resource.h"
 #include "orbsvcs/PortableGroup/miopconf.h"
 #include "orbsvcs/PortableGroup/Fragments_Cleanup_Strategy.h"

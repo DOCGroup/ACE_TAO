@@ -11,6 +11,11 @@
 #ifndef RESOVLE_INIT_H
 #define RESOVLE_INIT_H
 
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
 #include "tao/Versioned_Namespace.h"
 
 #include "tao/ORB.h"

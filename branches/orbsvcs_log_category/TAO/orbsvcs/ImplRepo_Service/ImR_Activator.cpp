@@ -1,6 +1,7 @@
 /* -*- C++ -*- */
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "Activator_Options.h"
 #include "ImR_Activator_i.h"
 #include "Activator_NT_Service.h"

@@ -11,6 +11,7 @@
  */
 //=============================================================================
 
+#include "orbsvcs/Log_Macros.h"
 #include "FT_Notifier_i.h"
 
 #include "ace/Get_Opt.h"

@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Notify/Structured/StructuredProxyPushConsumer.h"
 #include "ace/Bound_Ptr.h"
 #include "ace/Auto_Ptr.h"

@@ -13,6 +13,7 @@
 //=============================================================================
 
 
+#include "orbsvcs/Log_Macros.h"
 #include "LifeCycle_Service.h"
 
 #include "ace/Argv_Type_Converter.h"

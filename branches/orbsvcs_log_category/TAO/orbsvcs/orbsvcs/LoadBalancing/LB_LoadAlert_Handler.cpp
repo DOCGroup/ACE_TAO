@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/LoadBalancing/LB_LoadAlert_Handler.h"
 #include "tao/debug.h"
 

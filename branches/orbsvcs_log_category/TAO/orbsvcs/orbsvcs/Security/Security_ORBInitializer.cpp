@@ -1,6 +1,8 @@
 // -*- C++ -*-
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Security/Security_ORBInitializer.h"
 
 #include "orbsvcs/Security/Security_Current.h"

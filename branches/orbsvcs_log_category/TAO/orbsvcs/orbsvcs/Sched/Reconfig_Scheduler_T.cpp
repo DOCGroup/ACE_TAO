@@ -12,6 +12,8 @@
 #ifndef TAO_RECONFIG_SCHEDULER_T_C
 #define TAO_RECONFIG_SCHEDULER_T_C
 
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Sched/Reconfig_Scheduler_T.h"
 #include "orbsvcs/Time_Utilities.h"
 #include "ace/Auto_Ptr.h"

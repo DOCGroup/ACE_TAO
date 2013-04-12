@@ -9,6 +9,8 @@
 //=============================================================================
 
 
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/AV/AVStreams_i.h"
 #include "orbsvcs/AV/sfp.h"
 #include "orbsvcs/AV/MCast.h"
