@@ -1,3 +1,10 @@
+Fri Apr 12 17:58:35 UTC 2013  Huang-Ming Huang  <huangh@ociweb.com>
+
+        * tao/LF_Strategy_Complete.cpp:
+        * tao/TAO_Singleton.cpp:
+
+        Fix undeclared TAOLIB_DEBUG problem.
+
 Fri Apr 12 17:27:29 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/Adapter_Activator.h:

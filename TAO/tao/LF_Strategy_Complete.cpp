@@ -4,7 +4,7 @@
 #include "tao/LF_Follower.h"
 #include "tao/Leader_Follower.h"
 #include "ace/Guard_T.h"
-#include "ace/Log_Msg.h"
+#include "tao/debug.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

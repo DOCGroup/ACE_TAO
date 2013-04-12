@@ -15,7 +15,7 @@
 
 #include "ace/Guard_T.h"
 #include "ace/Object_Manager.h"
-#include "ace/Log_Msg.h"
+#include "tao/debug.h"
 #include "ace/os_include/os_typeinfo.h"
 
 #if !defined (__ACE_INLINE__)
