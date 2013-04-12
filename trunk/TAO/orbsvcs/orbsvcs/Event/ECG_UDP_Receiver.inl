@@ -2,6 +2,9 @@
 //
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
@@ -89,7 +92,7 @@ TAO_ECG_UDP_Receiver::get_addr (const RtecEventComm::EventHeader& header,
 {
   if (CORBA::is_nil (this->addr_server_.in ()))
     {
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
                   "TAO_ECG_UDP_Receiver::get_addr() called but "
                   "nil Address Server was supplied during "
                   "initialization through init().\n"));
@@ -106,7 +109,7 @@ TAO_ECG_UDP_Receiver::get_address (const RtecEventComm::EventHeader& header,
 {
   if (CORBA::is_nil (this->addr_server_.in ()))
     {
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
                   "TAO_ECG_UDP_Receiver::get_addr() called but "
                   "nil Address Server was supplied during "
                   "initialization through init().\n"));

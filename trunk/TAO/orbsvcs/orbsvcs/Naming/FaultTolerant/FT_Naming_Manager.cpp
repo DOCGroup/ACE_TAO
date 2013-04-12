@@ -10,6 +10,7 @@
  */
 //=============================================================================
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.h"
 #include "orbsvcs/FT_NamingManagerC.h"
 #include "orbsvcs/PortableGroup/PG_Property_Utils.h"
@@ -31,7 +32,7 @@
 #define METHOD_ENTRY(name)    \
   if (TAO_debug_level > 6)    \
   {                           \
-    ACE_DEBUG (( LM_DEBUG,    \
+    ORBSVCS_DEBUG (( LM_DEBUG,    \
     "Enter %s\n", #name       \
       ));                     \
   }
@@ -50,7 +51,7 @@
 #define METHOD_RETURN(name)   \
   if (TAO_debug_level > 6)    \
   {                           \
-    ACE_DEBUG (( LM_DEBUG,    \
+    ORBSVCS_DEBUG (( LM_DEBUG,    \
       "Leave %s\n", #name     \
       ));                     \
   }                           \
@@ -192,7 +193,7 @@ TAO_FT_Naming_Manager::groups (::FT_Naming::LoadBalancingStrategyValue target_st
       {
         (*group_names)[i] =
           CORBA::string_dup ("<group without LB property>");
-        ACE_ERROR ((LM_ERROR,
+        ORBSVCS_ERROR ((LM_ERROR,
                     ACE_TEXT ("TAO (%P|%t) - FT_Naming_Manager::groups: no LB ")
                     ACE_TEXT ("property set on group.\n")
                     ));
@@ -218,7 +219,7 @@ TAO_FT_Naming_Manager::groups (::FT_Naming::LoadBalancingStrategyValue target_st
       {
         { // Group has no name
           (*group_names)[i] = CORBA::string_dup ("<unnamed group>");
-          ACE_ERROR ((LM_ERROR,
+          ORBSVCS_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO (%P|%t) - FT_Naming_Manager::groups: no name ")
                       ACE_TEXT ("property set on group.\n")
             ));
@@ -256,7 +257,7 @@ TAO_FT_Naming_Manager::group_name (PortableGroup::ObjectGroup_ptr group,
 {
   if (CORBA::is_nil (group))
   {
-    ACE_ERROR ((LM_ERROR,
+    ORBSVCS_ERROR ((LM_ERROR,
                 ACE_TEXT ("TAO (%P|%t) - FT_Naming_Manager::group_name: ")
                 ACE_TEXT ("cannot get name for a null object.\n")
       ));
@@ -274,7 +275,7 @@ TAO_FT_Naming_Manager::group_name (PortableGroup::ObjectGroup_ptr group,
     }
     else
     { // The group has no name
-      ACE_ERROR_RETURN ((LM_ERROR,
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("TAO_FT_Naming_Manager::group_name - ")
                          ACE_TEXT ("object group does not have a name")),
                         false);
@@ -389,7 +390,7 @@ TAO_FT_Naming_Manager::create_member (
   {
     if (TAO_debug_level > 0)
     {
-      ACE_ERROR ( (LM_ERROR,
+      ORBSVCS_ERROR ( (LM_ERROR,
                    ACE_TEXT ("TAO (%P|%t) - FT_Naming_Manager::create_member: ")
                    ACE_TEXT ("unknown group\n")
         ));
@@ -411,7 +412,7 @@ TAO_FT_Naming_Manager::add_member (
     {
       if (TAO_debug_level > 3)
         {
-          ACE_ERROR (
+          ORBSVCS_ERROR (
             (LM_ERROR,
              ACE_TEXT ("TAO (%P|%t) - TAO_FT_Naming_Manager::add_member")
              ACE_TEXT ("Null object group provided.\n")
@@ -433,7 +434,7 @@ TAO_FT_Naming_Manager::add_member (
     }
     catch (...)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO_FT_Naming_Manager::add_member - ")
                   ACE_TEXT ("Issue with IOR of group or member.\n")));
       throw PortableGroup::ObjectNotAdded ();
@@ -446,7 +447,7 @@ TAO_FT_Naming_Manager::add_member (
   {
     if (TAO_debug_level > 0)
     {
-      ACE_ERROR ( (LM_ERROR,
+      ORBSVCS_ERROR ( (LM_ERROR,
                    ACE_TEXT ("TAO (%P|%t) - FT_Naming_Manager::add_member ")
                    ACE_TEXT ("to unknown group\n")
         ));
@@ -466,7 +467,7 @@ TAO_FT_Naming_Manager::remove_member (
     {
       if (TAO_debug_level > 3)
         {
-          ACE_ERROR (
+          ORBSVCS_ERROR (
             (LM_ERROR,
              ACE_TEXT ("TAO (%P|%t) - TAO_FT_Naming_Manager::add_member")
              ACE_TEXT ("Null object group provided.\n")
@@ -504,7 +505,7 @@ TAO_FT_Naming_Manager::locations_of_members (
 {
   if (CORBA::is_nil (object_group))
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO_FT_Naming_Manager::locations_of_members ")
                   ACE_TEXT ("- null object group passed.\n")));
       throw PortableGroup::ObjectGroupNotFound ();
@@ -522,7 +523,7 @@ TAO_FT_Naming_Manager::locations_of_members (
   {
     if (TAO_debug_level > 0)
     {
-      ACE_ERROR ( (LM_ERROR,
+      ORBSVCS_ERROR ( (LM_ERROR,
                    ACE_TEXT ("TAO (%P|%t) - FT_Naming_Manager::")
                    ACE_TEXT ("locations_of_members: unknown group\n")
         ));
@@ -546,7 +547,7 @@ TAO_FT_Naming_Manager::get_object_group_id (
 
   if (CORBA::is_nil (object_group))
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO_FT_Naming_Manager::get_object_group_id ")
                   ACE_TEXT ("- null object group passed.\n")));
       throw PortableGroup::ObjectGroupNotFound ();
@@ -563,7 +564,7 @@ TAO_FT_Naming_Manager::get_object_group_id (
   {
     if (TAO_debug_level > 0)
     {
-      ACE_ERROR ( (LM_ERROR,
+      ORBSVCS_ERROR ( (LM_ERROR,
                    ACE_TEXT ("TAO (%P|%t) - FT_Naming_Manager::")
                    ACE_TEXT ("get_object_group_id: unknown group\n")
         ));
@@ -579,7 +580,7 @@ TAO_FT_Naming_Manager::get_object_group_ref (
 {
   if (CORBA::is_nil (object_group))
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO_FT_Naming_Manager::get_object_group_ref ")
                   ACE_TEXT ("- null object group passed.\n")));
       throw PortableGroup::ObjectGroupNotFound ();
@@ -597,7 +598,7 @@ TAO_FT_Naming_Manager::get_object_group_ref (
   {
     if (TAO_debug_level > 0)
     {
-      ACE_ERROR ( (LM_ERROR,
+      ORBSVCS_ERROR ( (LM_ERROR,
                    ACE_TEXT ("TAO (%P|%t) - FT_Naming_Manager::")
                    ACE_TEXT ("get_object_group_ref: unknown group\n")
         ));
@@ -622,7 +623,7 @@ PortableGroup::ObjectGroup_ptr TAO_FT_Naming_Manager::get_object_group_ref_from_
   {
     if (TAO_debug_level > 0)
     {
-      ACE_ERROR ( (LM_ERROR,
+      ORBSVCS_ERROR ( (LM_ERROR,
                    ACE_TEXT ("TAO (%P|%t) - FT_Naming_Manager::")
                    ACE_TEXT ("get_object_group_ref_from_id: unknown group\n")
         ));
@@ -640,7 +641,7 @@ TAO_FT_Naming_Manager::get_member_ref (
 
   if (CORBA::is_nil (object_group))
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO_FT_Naming_Manager::get_member_ref ")
                   ACE_TEXT ("- null object group passed.\n")));
       throw PortableGroup::ObjectGroupNotFound ();
@@ -658,7 +659,7 @@ TAO_FT_Naming_Manager::get_member_ref (
   {
     if (TAO_debug_level > 0)
     {
-      ACE_ERROR ( (LM_ERROR,
+      ORBSVCS_ERROR ( (LM_ERROR,
                    ACE_TEXT ("TAO (%P|%t) - FT_Naming_Manager::")
                    ACE_TEXT ("get_member_ref: unknown group\n")
         ));
@@ -756,7 +757,7 @@ TAO_FT_Naming_Manager::next_member (PortableGroup::ObjectGroup_ptr object_group)
     {
       if (TAO_debug_level > 3)
         {
-          ACE_ERROR (
+          ORBSVCS_ERROR (
             (LM_ERROR,
              ACE_TEXT ("TAO (%P|%t) - TAO_FT_Naming_Manager::add_member")
              ACE_TEXT ("Null object group provided.\n")
@@ -783,7 +784,7 @@ TAO_FT_Naming_Manager::next_member (PortableGroup::ObjectGroup_ptr object_group)
   // return failure
   if (!found)
   {
-    ACE_ERROR ((LM_ERROR,
+    ORBSVCS_ERROR ((LM_ERROR,
                 ACE_TEXT ("TAO (%P|%t) - TAO_FT_Naming_Manager::next_member: ")
                 ACE_TEXT ("object group has no TAO_FT_LOAD_BALANCING_STRATEGY ")
                 ACE_TEXT ("property.\n")
@@ -806,7 +807,7 @@ TAO_FT_Naming_Manager::next_member (PortableGroup::ObjectGroup_ptr object_group)
     result = this->round_robin_.next_location (object_group, this, next_location);
     break;
   default:
-    ACE_ERROR ((LM_ERROR,
+    ORBSVCS_ERROR ((LM_ERROR,
                 ACE_TEXT ("TAO (%P|%t) - TAO_FT_Naming_Manager::next_location: ")
                 ACE_TEXT ("unsupported load balancing strategy requested.\n")
                ));

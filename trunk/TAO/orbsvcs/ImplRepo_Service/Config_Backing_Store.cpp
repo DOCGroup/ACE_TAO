@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "Config_Backing_Store.h"
 #include "Server_Info.h"
 #include "Activator_Info.h"
@@ -140,7 +141,7 @@ Config_Backing_Store::remove (const ACE_CString& name, const ACE_TCHAR* key)
     {
       if (this->opts_.debug () > 9)
         {
-          ACE_DEBUG((LM_INFO, ACE_TEXT ("could not remove %C, already gone!\n"),
+          ORBSVCS_DEBUG((LM_INFO, ACE_TEXT ("could not remove %C, already gone!\n"),
             name.c_str()));
         }
       return 0; // Already gone.
@@ -156,14 +157,14 @@ static int get_key (ACE_Configuration& cfg, const ACE_CString& name,
   int err = cfg.open_section (cfg.root_section(), sub_section, 1, root);
   if (err != 0)
     {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to open config section:%s\n"),
+      ORBSVCS_ERROR ((LM_ERROR, ACE_TEXT ("Unable to open config section:%s\n"),
         sub_section));
       return err;
     }
   err = cfg.open_section (root, name.c_str (), 1, key);
   if (err != 0)
     {
-      ACE_ERROR((LM_ERROR, ACE_TEXT ("Unable to open config section:%C\n"),
+      ORBSVCS_ERROR((LM_ERROR, ACE_TEXT ("Unable to open config section:%C\n"),
         name.c_str ()));
     }
   return err;
@@ -176,14 +177,14 @@ Config_Backing_Store::persistent_update(const Server_Info_Ptr& info, bool )
   int err = get_key(this->config_, info->name, SERVERS_ROOT_KEY, key);
   if (err != 0)
     {
-      ACE_ERROR((LM_ERROR, ACE_TEXT ("ERROR: could not get key for %C\n"),
+      ORBSVCS_ERROR((LM_ERROR, ACE_TEXT ("ERROR: could not get key for %C\n"),
         info->name.c_str ()));
       return err;
     }
 
   if (this->opts_.debug() > 9)
     {
-      ACE_DEBUG((LM_INFO, ACE_TEXT ("updating %C\n"), info->name.c_str()));
+      ORBSVCS_DEBUG((LM_INFO, ACE_TEXT ("updating %C\n"), info->name.c_str()));
     }
   ACE_CString envstr = ImR_Utils::envListToString(info->env_vars);
 
@@ -208,7 +209,7 @@ Config_Backing_Store::persistent_update(const Activator_Info_Ptr& info, bool )
   int err = get_key (this->config_, info->name, ACTIVATORS_ROOT_KEY, key);
   if (err != 0)
     {
-      ACE_DEBUG((LM_INFO,
+      ORBSVCS_DEBUG((LM_INFO,
         ACE_TEXT ("ERROR: could not get key for activator %C\n"),
         info->name.c_str ()));
       return err;
@@ -216,7 +217,7 @@ Config_Backing_Store::persistent_update(const Activator_Info_Ptr& info, bool )
 
   if (this->opts_.debug() > 9)
     {
-      ACE_DEBUG((LM_INFO, ACE_TEXT ("updating activator %C\n"),
+      ORBSVCS_DEBUG((LM_INFO, ACE_TEXT ("updating activator %C\n"),
         info->name.c_str ()));
     }
   this->config_.set_integer_value (key, TOKEN, info->token);
@@ -232,7 +233,7 @@ Config_Backing_Store::init_repo (PortableServer::POA_ptr )
     {
       if (this->opts_.debug () > 9)
         {
-          ACE_DEBUG ((LM_INFO, ACE_TEXT ("not loading\n")));
+          ORBSVCS_DEBUG ((LM_INFO, ACE_TEXT ("not loading\n")));
         }
       return status_;
     }
@@ -252,7 +253,7 @@ Heap_Backing_Store::Heap_Backing_Store (const Options& opts,
     {
       if (this->opts_.debug () > 9)
         {
-          ACE_DEBUG ((LM_INFO, ACE_TEXT ("Heap start clean\n")));
+          ORBSVCS_DEBUG ((LM_INFO, ACE_TEXT ("Heap start clean\n")));
         }
       ACE_OS::unlink ( this->filename_.c_str() );
     }
@@ -298,7 +299,7 @@ Registry_Backing_Store::Registry_Backing_Store(const Options& opts,
 #if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_REGISTRY)
   status_ = 0;
 #else
-  ACE_ERROR ((LM_ERROR, ACE_TEXT ("Registry persistence is only ")
+  ORBSVCS_ERROR ((LM_ERROR, ACE_TEXT ("Registry persistence is only ")
                         ACE_TEXT ("supported on Windows\n")));
   status_ = -1;
 #endif

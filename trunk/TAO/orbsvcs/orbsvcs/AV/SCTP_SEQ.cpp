@@ -166,7 +166,7 @@ TAO_AV_SCTP_SEQ_Base_Acceptor::acceptor_open (TAO_AV_SCTP_SEQ_Acceptor *acceptor
                                               const ACE_INET_Addr &local_addr,
                                               TAO_FlowSpec_Entry *entry)
 {
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
               "In base acceptor open"));
 
   this->acceptor_ = acceptor;
@@ -197,12 +197,12 @@ TAO_AV_SCTP_SEQ_Base_Acceptor::acceptor_open (TAO_AV_SCTP_SEQ_Acceptor *acceptor
   multi_addr.addr_to_string (buf, BUFSIZ);
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
                 "TAO_AV_SCTP_SEQ_Base_Acceptor::open: %s",
                 buf));
 
   if (this->open (multi_addr,reactor) < 0)
-    ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_SCTP_SEQ_Base_Acceptor::open failed\n"),-1);
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,"TAO_AV_SCTP_SEQ_Base_Acceptor::open failed\n"),-1);
 
   return 0;
 }
@@ -235,7 +235,7 @@ int
 TAO_AV_SCTP_SEQ_Acceptor::make_svc_handler (TAO_AV_SCTP_SEQ_Flow_Handler *&sctp_handler)
 {
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
                 "TAO_AV_SCTP_SEQ_Acceptor::make_svc_handler\n"));
 
   if (this->endpoint_ != 0)
@@ -284,7 +284,7 @@ TAO_AV_SCTP_SEQ_Acceptor::open (TAO_Base_StreamEndPoint *endpoint,
   inet_addr->addr_to_string (buf, BUFSIZ);
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
                 "TAO_AV_SCTP_SEQ_Acceptor::open: %s",
                 buf));
 
@@ -296,7 +296,7 @@ TAO_AV_SCTP_SEQ_Acceptor::open (TAO_Base_StreamEndPoint *endpoint,
                                               *inet_addr,
                                               entry);
   if (result < 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        "TAO_AV_SCTP_SEQ_Acceptor::open failed"),
                       -1);
 
@@ -332,7 +332,7 @@ TAO_AV_SCTP_SEQ_Acceptor::open_default (TAO_Base_StreamEndPoint *endpoint,
 
 
   if (result < 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        "TAO_AV_SCTP_SEQ_Acceptor::open failed"),
                       -1);
 
@@ -345,7 +345,7 @@ TAO_AV_SCTP_SEQ_Acceptor::open_default (TAO_Base_StreamEndPoint *endpoint,
   address->addr_to_string (buf,BUFSIZ);
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
                 "TAO_AV_SCTP_SEQ_Acceptor::open_default: %s\n",
                 buf));
 
@@ -373,7 +373,7 @@ TAO_AV_SCTP_SEQ_Base_Connector::connector_open (TAO_AV_SCTP_SEQ_Connector *conne
   this->reactor_ = reactor;
 
   if (this->open (reactor) < 0)
-    ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_SCTP_SEQ_Base_Connector::open failed\n"),-1);
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,"TAO_AV_SCTP_SEQ_Base_Connector::open failed\n"),-1);
   return 0;
 }
 
@@ -399,7 +399,7 @@ TAO_AV_SCTP_SEQ_Base_Connector::connector_connect (TAO_AV_SCTP_SEQ_Flow_Handler 
                               local_addr);
 
   if (result < 0)
-    ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_SCTP_SEQ_Base_Connector::connect failed\n"),-1);
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,"TAO_AV_SCTP_SEQ_Base_Connector::connect failed\n"),-1);
   return 0;
 }
 
@@ -418,7 +418,7 @@ int
 TAO_AV_SCTP_SEQ_Connector::make_svc_handler (TAO_AV_SCTP_SEQ_Flow_Handler *&sctp_handler)
 {
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,"TAO_AV_SCTP_SEQ_Connector::make_svc_handler\n"));
+    ORBSVCS_DEBUG ((LM_DEBUG,"TAO_AV_SCTP_SEQ_Connector::make_svc_handler\n"));
 
   //  TAO_AV_Callback *callback = 0;
   if (this->endpoint_ != 0)
@@ -453,7 +453,7 @@ TAO_AV_SCTP_SEQ_Connector::open (TAO_Base_StreamEndPoint *endpoint,
   this->endpoint_ = endpoint;
   this->flow_protocol_factory_ = factory;
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,"TAO_AV_SCTP_SEQ_Connector::open "));
+    ORBSVCS_DEBUG ((LM_DEBUG,"TAO_AV_SCTP_SEQ_Connector::open "));
   int result = this->connector_.connector_open(this,
                                                av_core->reactor ());
   return result;
@@ -524,13 +524,13 @@ TAO_AV_SCTP_SEQ_Connector::connect (TAO_FlowSpec_Entry *entry,
                                                    local_addr);
 
   if (result < 0)
-    ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_SCTP_SEQ_connector::connect failed\n"),-1);
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,"TAO_AV_SCTP_SEQ_connector::connect failed\n"),-1);
   entry->handler (handler);
   transport = handler->transport ();
 
   if (TAO_debug_level > 0)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   "Local Addrs\n"));
       char buf [BUFSIZ];
       size_t size = BUFSIZ;
@@ -541,13 +541,13 @@ TAO_AV_SCTP_SEQ_Connector::connect (TAO_FlowSpec_Entry *entry,
         {
           peer_addrs [i].addr_to_string (buf,
                                          BUFSIZ);
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       "%s %d\n",
                       buf,
                       size));
         }
 
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   "Remote Addrs\n"));
 
       size = BUFSIZ;
@@ -556,7 +556,7 @@ TAO_AV_SCTP_SEQ_Connector::connect (TAO_FlowSpec_Entry *entry,
         {
           peer_addrs [i].addr_to_string (buf,
                                          BUFSIZ);
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       "%s %d\n",
                       buf,
                       size));
@@ -599,7 +599,7 @@ TAO_AV_Acceptor*
 TAO_AV_SCTP_SEQ_Factory::make_acceptor (void)
 {
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,"TAO_AV_SCTP_SEQ_Factory::make_acceptor\n"));
+    ORBSVCS_DEBUG ((LM_DEBUG,"TAO_AV_SCTP_SEQ_Factory::make_acceptor\n"));
   TAO_AV_Acceptor *acceptor = 0;
   ACE_NEW_RETURN (acceptor,
                   TAO_AV_SCTP_SEQ_Acceptor,
@@ -611,7 +611,7 @@ TAO_AV_Connector*
 TAO_AV_SCTP_SEQ_Factory::make_connector (void)
 {
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,"TAO_AV_SCTP_SEQ_Factory::make_connector\n"));
+    ORBSVCS_DEBUG ((LM_DEBUG,"TAO_AV_SCTP_SEQ_Factory::make_connector\n"));
   TAO_AV_Connector *connector = 0;
   ACE_NEW_RETURN (connector,
                   TAO_AV_SCTP_SEQ_Connector,
@@ -637,9 +637,9 @@ TAO_AV_SCTP_SEQ_Object::handle_input (void)
   int n = this->transport_->recv (this->frame_.rd_ptr (),
                                   this->frame_.size ());
   if (n == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_SCTP_SEQ_Flow_Handler::handle_input recv failed\n"),-1);
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,"TAO_AV_SCTP_SEQ_Flow_Handler::handle_input recv failed\n"),-1);
   if (n == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_SCTP_SEQ_Flow_Handler::handle_input connection closed\n"),-1);
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,"TAO_AV_SCTP_SEQ_Flow_Handler::handle_input connection closed\n"),-1);
   this->frame_.wr_ptr (this->frame_.rd_ptr () + n);
 
   return this->callback_->receive_frame (&this->frame_);
@@ -717,7 +717,7 @@ TAO_AV_SCTP_SEQ_Flow_Handler::change_qos (AVStreams::QoS qos)
 {
   if( TAO_debug_level > 0 )
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   "(%N,%l) TAO_AV_SCTP_SEQ_Flow_Handler::change_qos\n"));
     }
 
@@ -733,7 +733,7 @@ TAO_AV_SCTP_SEQ_Flow_Handler::change_qos (AVStreams::QoS qos)
       if( ACE_OS::strcmp( qos.QoSParams[i].property_name.in(), "Diffserv_Codepoint") == 0)
         {
           qos.QoSParams[i].property_value >>= dscp;
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       "DSCP %d\n",
                       dscp));
           dscp_flag=1;
@@ -741,7 +741,7 @@ TAO_AV_SCTP_SEQ_Flow_Handler::change_qos (AVStreams::QoS qos)
           if(!((dscp >= 0) && (dscp <= 63)))
             {
               dscp_flag = 0;
-              ACE_DEBUG((LM_DEBUG, "(%N,%l) ECN value can only be (0-3) not %d\n", ecn));
+              ORBSVCS_DEBUG((LM_DEBUG, "(%N,%l) ECN value can only be (0-3) not %d\n", ecn));
               return -1;
             }
         }
@@ -753,7 +753,7 @@ TAO_AV_SCTP_SEQ_Flow_Handler::change_qos (AVStreams::QoS qos)
           // IP Diffserv byte
           if(!((ecn >= 0) && (ecn <= 3)))
             {
-              ACE_DEBUG((LM_DEBUG, "(%N,%l) ECN value can only be (0-3) not %d\n", ecn));
+              ORBSVCS_DEBUG((LM_DEBUG, "(%N,%l) ECN value can only be (0-3) not %d\n", ecn));
               ecn = 0;
             }
 
@@ -774,7 +774,7 @@ TAO_AV_SCTP_SEQ_Flow_Handler::change_qos (AVStreams::QoS qos)
 
       if(TAO_debug_level > 0)
         {
-          ACE_DEBUG((LM_DEBUG, "(%N,%l) set tos: ret: %d %d\n", tos, ret));
+          ORBSVCS_DEBUG((LM_DEBUG, "(%N,%l) set tos: ret: %d %d\n", tos, ret));
         }
     }
 
@@ -782,7 +782,7 @@ TAO_AV_SCTP_SEQ_Flow_Handler::change_qos (AVStreams::QoS qos)
     {
       if(ret < 0 )
         {
-          ACE_DEBUG((LM_DEBUG, "(%N,%l) errno: %p\n"));
+          ORBSVCS_DEBUG((LM_DEBUG, "(%N,%l) errno: %p\n"));
         }
     }
   return ret;
@@ -798,7 +798,7 @@ TAO_AV_SCTP_SEQ_Flow_Handler::open (void * /*arg*/)
                                 SCTP_NODELAY,
                                 (void *) &nodelay,
                                 sizeof (nodelay)) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        "NODELAY failed\n"),
                       -1);
 #endif /* SCTP_NODELAY */
@@ -816,7 +816,7 @@ TAO_AV_SCTP_SEQ_Flow_Handler::open (void * /*arg*/)
 
   if (TAO_debug_level > 0)
     if (TAO_debug_level > 0)
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   "(%P|%t) connection to server <%s> on %d\n",
                   server, this->peer ().get_handle ()));
 
@@ -827,7 +827,7 @@ TAO_AV_SCTP_SEQ_Flow_Handler::open (void * /*arg*/)
       && this->reactor ()->register_handler
       (this,
        ACE_Event_Handler::READ_MASK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("unable to register client handler")),
                       -1);
@@ -882,7 +882,7 @@ TAO_AV_SCTP_SEQ_Flow_Factory::make_protocol_object (TAO_FlowSpec_Entry *entry,
 {
   TAO_AV_Callback *callback = 0;
   if( endpoint->get_callback (entry->flowname (), callback) ) {
-    ACE_ERROR_RETURN ((LM_ERROR, "(%N,%l) Invalid callback\n"), 0);
+    ORBSVCS_ERROR_RETURN ((LM_ERROR, "(%N,%l) Invalid callback\n"), 0);
   }
 
   TAO_AV_SCTP_SEQ_Object *object = 0;

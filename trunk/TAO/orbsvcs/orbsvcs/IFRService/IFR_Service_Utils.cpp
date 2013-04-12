@@ -1,5 +1,7 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/IFRService/IFR_Service_Utils.h"
 #include "orbsvcs/IFRService/IDLType_i.h"
 #include "orbsvcs/IFRService/Container_i.h"
@@ -41,7 +43,7 @@ TAO_IFR_Server::~TAO_IFR_Server (void)
                                  ACE_Event_Handler::READ_MASK)
          == -1)
       {
-        ACE_DEBUG ((
+        ORBSVCS_DEBUG ((
             LM_DEBUG,
             ACE_TEXT ("Interface Repository: cannot remove handler\n")
           ));
@@ -66,7 +68,7 @@ TAO_IFR_Server::init_with_orb (int argc,
 
       if (CORBA::is_nil (poa_object.in ()))
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("(%P|%t) IFR_Service::init_with_orb ")
                              ACE_TEXT ("Unable to initialize the POA.\n")),
                             -1);
@@ -246,7 +248,7 @@ TAO_IFR_Server::open_config (void)
               delete heap;
               heap = 0;
 
-              ACE_ERROR_RETURN ((
+              ORBSVCS_ERROR_RETURN ((
                   LM_ERROR,
                   ACE_TEXT ("Error:: Opening persistent heap file '%s'\n"),
                   filename
@@ -335,7 +337,7 @@ TAO_IFR_Server::create_repository (void)
 
   if (CORBA::is_nil (adapter.in ()))
     {
-      ACE_ERROR_RETURN ((LM_ERROR, "Nil IORTable\n"), -1);
+      ORBSVCS_ERROR_RETURN ((LM_ERROR, "Nil IORTable\n"), -1);
     }
   else
     {
@@ -355,7 +357,7 @@ TAO_IFR_Server::create_repository (void)
 
   if (output_file_ == 0)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("TAO_IFR_Server::create_repository - ")
                          ACE_TEXT ("can't open IOR output ")
                          ACE_TEXT ("file for writing\n")),
@@ -419,7 +421,7 @@ TAO_IFR_Server::init_multicast_server (void)
                                       TAO_SERVICEID_INTERFACEREPOSERVICE)
            == -1)
         {
-          ACE_ERROR_RETURN ((
+          ORBSVCS_ERROR_RETURN ((
               LM_ERROR,
               ACE_TEXT ("Interface Repository: cannot initialize ")
               ACE_TEXT ("multicast event handler\n")
@@ -436,7 +438,7 @@ TAO_IFR_Server::init_multicast_server (void)
                                       TAO_SERVICEID_INTERFACEREPOSERVICE)
            == -1)
         {
-          ACE_ERROR_RETURN ((
+          ORBSVCS_ERROR_RETURN ((
               LM_ERROR,
               ACE_TEXT ("Interface Repository: cannot initialize ")
               ACE_TEXT ("multicast event handler\n")
@@ -451,7 +453,7 @@ TAO_IFR_Server::init_multicast_server (void)
                                  ACE_Event_Handler::READ_MASK)
        == -1)
     {
-      ACE_ERROR_RETURN ((
+      ORBSVCS_ERROR_RETURN ((
           LM_ERROR,
           ACE_TEXT ("Interface Repository: cannot register ")
           ACE_TEXT ("multicast event handler\n")
@@ -1122,7 +1124,7 @@ TAO_IFR_Service_Utils::reference_to_path (CORBA::IRObject_ptr obj)
 {
   if (CORBA::is_nil (obj))
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   "reference_to_path - null object; check the include "
                   "order of IDL\n"));
 
@@ -1136,7 +1138,7 @@ TAO_IFR_Service_Utils::reference_to_path (CORBA::IRObject_ptr obj)
                                                   object_id);
   if (status != 0)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   "reference_to_path - parse_ir_object_key failed\n"));
       return 0;
     }
@@ -1156,7 +1158,7 @@ TAO_IFR_Service_Utils::path_to_def_kind (ACE_TString &path,
 
   if (status != 0)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   "path_to_def_kind - bad path: '%s'\n",
                   path.c_str ()));
       return CORBA::dk_none;
@@ -1187,7 +1189,7 @@ TAO_IFR_Service_Utils::path_to_idltype (ACE_TString &path,
 
   if (retval == 0)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   "path_to_idltype - not an IDLType: '%s'\n",
                   path.c_str ()));
       return 0;
@@ -1207,7 +1209,7 @@ TAO_IFR_Service_Utils::path_to_contained (ACE_TString &path,
 
   if (retval == 0)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   "path_to_contained - not a contained type: '%s'\n",
                   path.c_str ()));
       return 0;

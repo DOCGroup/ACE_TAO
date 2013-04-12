@@ -2,7 +2,7 @@
 
 #include "orbsvcs/Event/EC_Sched_Filter.h"
 #include "orbsvcs/Event/EC_QOS_Info.h"
-#include "ace/Log_Msg.h"
+#include "orbsvcs/Log_Macros.h"
 
 
 
@@ -152,7 +152,7 @@ TAO_EC_Sched_Filter::add_dependencies (const RtecEventComm::EventHeader& header,
 
       RtecScheduler::RT_Info_var info =
         this->scheduler_->get (qos_info.rt_info);
-      ACE_DEBUG ((LM_DEBUG, "[%s] ----> [%s]\n",
+      ORBSVCS_DEBUG ((LM_DEBUG, "[%s] ----> [%s]\n",
                   this->name_.c_str (),
                   info->entry_point.in ()));
     }
@@ -207,7 +207,7 @@ TAO_EC_Sched_Filter::init_rt_info (void)
 
       RtecScheduler::RT_Info_var info =
         this->scheduler_->get (child.rt_info);
-      ACE_DEBUG ((LM_DEBUG, "[%s] ----> [%s]\n",
+      ORBSVCS_DEBUG ((LM_DEBUG, "[%s] ----> [%s]\n",
                   info->entry_point.in (),
                   this->name_.c_str ()));
 
@@ -224,7 +224,7 @@ TAO_EC_Sched_Filter::init_rt_info (void)
 
       RtecScheduler::RT_Info_var info =
         this->scheduler_->get (this->body_info_);
-      ACE_DEBUG ((LM_DEBUG, "[%s] ----> [%s]\n",
+      ORBSVCS_DEBUG ((LM_DEBUG, "[%s] ----> [%s]\n",
                   info->entry_point.in (),
                   this->name_.c_str ()));
     }
@@ -238,7 +238,7 @@ TAO_EC_Sched_Filter::init_rt_info (void)
 
   RtecScheduler::RT_Info_var info =
     this->scheduler_->get (this->parent_info_);
-  ACE_DEBUG ((LM_DEBUG, "[%s] ----> [%s]\n",
+  ORBSVCS_DEBUG ((LM_DEBUG, "[%s] ----> [%s]\n",
               this->name_.c_str (),
               info->entry_point.in ()));
 #endif /* 0 */

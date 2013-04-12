@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context.h"
 #include "orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.h"
 #include "orbsvcs/Naming/FaultTolerant/FT_Naming_Replication_Manager.h"
@@ -74,7 +75,7 @@ TAO_FT_Storable_Naming_Context::resolve (const CosNaming::Name& n)
     // If there is no naming manager, we will fail and report an error.
     if ( this->naming_manager_ == 0)
     {
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
                   ACE_TEXT ("TAO_FT_Storable_Naming_Context::resolve ")
                   ACE_TEXT ("- No NamingManager defined.\n")));
 

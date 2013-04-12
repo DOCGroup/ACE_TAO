@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Notify/Structured/StructuredEvent.h"
 #include "orbsvcs/Notify/PropertySeq.h"
 #include "orbsvcs/Notify/Consumer.h"
@@ -67,7 +68,7 @@ CORBA::Boolean
 TAO_Notify_StructuredEvent_No_Copy::do_match (CosNotifyFilter::Filter_ptr filter) const
 {
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG, "Notify (%P|%t) - "
+    ORBSVCS_DEBUG ((LM_DEBUG, "Notify (%P|%t) - "
                 "TAO_Notify_StructuredEvent::do_match ()\n"));
 
   return filter->match_structured (*this->notification_);
@@ -83,7 +84,7 @@ void
 TAO_Notify_StructuredEvent_No_Copy::push (TAO_Notify_Consumer* consumer) const
 {
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG, "Notify (%P|%t) - "
+    ORBSVCS_DEBUG ((LM_DEBUG, "Notify (%P|%t) - "
                           "TAO_Notify_StructuredEvent::do_push ("
                           "CosNotifyComm::StructuredPushConsumer_ptr)\n"));
 

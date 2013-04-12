@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/PortableGroup/PG_Object_Group.h"
 #include "orbsvcs/PortableGroup/PG_conf.h"
 
@@ -107,7 +108,7 @@ TAO::PG_Object_Group::PG_Object_Group (
 TAO::PG_Object_Group::~PG_Object_Group (void)
 {
   if (TAO_debug_level > 3)
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("%T %n (%P|%t) - Destroying object group: %s"),
                 this->group_name_));
 
@@ -218,7 +219,7 @@ TAO::PG_Object_Group::add_member (const PortableGroup::Location & the_location,
     {
       if (TAO_debug_level > 3)
         {
-          ACE_ERROR ((LM_ERROR,
+          ORBSVCS_ERROR ((LM_ERROR,
                       ACE_TEXT ("%T %n (%P|%t) - TAO::PG_Object_Group::add_member")
                       ACE_TEXT ("Can't add a null member to object group\n")
                       ));
@@ -248,7 +249,7 @@ TAO::PG_Object_Group::add_member (const PortableGroup::Location & the_location,
         {
           if (TAO_debug_level > 3)
             {
-              ACE_ERROR ((LM_ERROR,
+              ORBSVCS_ERROR ((LM_ERROR,
                           ACE_TEXT ("%T %n (%P|%t) - ")
                           ACE_TEXT ("Can't add member because first profile ")
                           ACE_TEXT ("is IIOP version 1.0, which does not ")
@@ -313,7 +314,7 @@ TAO::PG_Object_Group::add_member (const PortableGroup::Location & the_location,
 
       if (TAO_debug_level > 6)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("PG (%P|%t) Issue incrementing the ")
                       ACE_TEXT ("version in Object_Group add_member\n")));
         }
@@ -325,7 +326,7 @@ TAO::PG_Object_Group::add_member (const PortableGroup::Location & the_location,
 
   if (TAO_debug_level > 6)
   {
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
       ACE_TEXT("PG (%P|%t) exit Object_Group add_member\n")));
   }
 }
@@ -362,7 +363,7 @@ TAO::PG_Object_Group::set_primary_member (
         {
           if (TAO_debug_level > 3)
             {
-              ACE_ERROR ((LM_ERROR,
+              ORBSVCS_ERROR ((LM_ERROR,
                           ACE_TEXT ("%T %n (%P|%t) - ")
                           ACE_TEXT ("Can't set primary in IOGR .\n")
                           ));
@@ -379,7 +380,7 @@ TAO::PG_Object_Group::set_primary_member (
         {
           if (TAO_debug_level > 3)
             {
-              ACE_DEBUG ((LM_DEBUG,
+              ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT("TAO-PG (%P|%t) - set_primary_location ")
                           ACE_TEXT("throwing PrimaryNotSet because increment")
                           ACE_TEXT("version failed.\n")
@@ -393,7 +394,7 @@ TAO::PG_Object_Group::set_primary_member (
     {
       if (TAO_debug_level > 3)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO-PG (%P|%t) - set_primary_location ")
                       ACE_TEXT ("throwing MemberNotFound.\n")));
         }
@@ -440,7 +441,7 @@ TAO::PG_Object_Group::remove_member (
     {
       if (TAO_debug_level > 6)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO-PG (%P|%t) - ")
                       ACE_TEXT ("remove_member throwing MemberNotFound.\n")
                       ));
@@ -502,7 +503,7 @@ TAO::PG_Object_Group::increment_version (void)
   this->tagged_component_.object_group_ref_version += 1;
   if (TAO_debug_level > 3)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("%T %n (%P|%t) - Setting IOGR version to %u\n"),
                   static_cast<unsigned> (this->tagged_component_.object_group_ref_version)
                   ));
@@ -552,7 +553,7 @@ TAO::PG_Object_Group::distribute_iogr (void)
             {
               if (TAO_debug_level > 3)
                 {
-                  ACE_DEBUG ((LM_DEBUG,
+                  ORBSVCS_DEBUG ((LM_DEBUG,
                               "PG (%P|%t) -  Object_Group pushing "
                               "IOGR to %s member: %s@%s.\n",
                               (info->is_primary_ ? "Primary" : "Backup"),
@@ -575,7 +576,7 @@ TAO::PG_Object_Group::distribute_iogr (void)
         }
       else
         {
-          ACE_ERROR ((LM_ERROR,
+          ORBSVCS_ERROR ((LM_ERROR,
                       "TAO::PG_Object_Group::distribute iogr can't "
                       "narrow member reference to "
                       "PortableGroup::TAO_UpdateObjectGroup.\n"
@@ -836,7 +837,7 @@ TAO::PG_Object_Group::create_members (size_t count)
                   // log, but otherwise ignore the errorf
                   if (TAO_debug_level > 0)
                     {
-                      ACE_ERROR ((LM_ERROR,
+                      ORBSVCS_ERROR ((LM_ERROR,
                                   ACE_TEXT ("PG (%P|%t) Replica Factory ")
                                   ACE_TEXT ("@ %s refused create_object ")
                                   ACE_TEXT ("request for type %s\n"),

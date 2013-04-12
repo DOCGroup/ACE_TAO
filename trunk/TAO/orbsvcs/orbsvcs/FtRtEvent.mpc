@@ -40,7 +40,7 @@ project (FtRtEvent) : orbsvcslib, orbsvcs_output, install, ftorbutils, rtevent_s
   }
 }
 
-project (FTRT_ClientORB) :  messaging, orbsvcslib, orbsvcs_output, pi, install {
+project (FTRT_ClientORB) :  messaging, orbsvcslib, orbsvcs_output, pi, install, svc_utils {
   sharedname   = TAO_FTRT_ClientORB
   dynamicflags += TAO_FTRT_BUILD_DLL
   tagchecks   += FTRT_ClientORB

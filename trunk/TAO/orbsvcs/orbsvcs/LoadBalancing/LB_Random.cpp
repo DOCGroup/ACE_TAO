@@ -126,7 +126,7 @@ TAO_LB_Random::_tao_next_member (
 
   ACE_ASSERT (i < len);
 
-//   ACE_DEBUG ((LM_DEBUG,
+//   ORBSVCS_DEBUG ((LM_DEBUG,
 //               "** Len = %u\t"
 //               "Location # %u\t"
 //               "Loc Name = \"%s\"\n",

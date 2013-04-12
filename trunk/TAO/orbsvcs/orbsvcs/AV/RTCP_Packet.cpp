@@ -1,4 +1,6 @@
 // $Id$
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/AV/RTCP_Packet.h"
 #include "orbsvcs/AV/RTP.h"
 
@@ -19,7 +21,7 @@ RTCP_Packet::RTCP_Packet(char* buffer)
   this->chd_.ver_ = (buffer[0] & 0xC0) >> 6;
 
   if (this->chd_.ver_ != RTP_VERSION)
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
                 "RTCP_Packet::RTCP_Packet version incorrect"));
 
   this->chd_.pad_ = (buffer[0] & 0x20) >> 5;
@@ -249,13 +251,13 @@ RTCP_BYE_Packet::build_packet(void)
 void
 RTCP_BYE_Packet::dump (void)
 {
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
               "\nRTCP_BYE_Packet:: from ssrc(s) "));
   for (int i=0; i< this->ssrc_list_length_; i++)
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
                 "%u ",
                 this->ssrc_list_[i]));
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
               "\n    Reason '%s'\n",
               this->reason_));
 }
@@ -423,21 +425,21 @@ RTCP_RR_Packet::dump (void)
   RR_Block *b = this->rr_;
   int count = 1;
 
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
               "\nRTCP_RR_Packet:: from %u - %d rr blocks follow.\n",
               this->ssrc_,
               this->chd_.count_));
 
   while (b)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   "  Block %d: ssrc %u; frac %u; lost %u; last seq %u\n",
                   count,
                   b->ssrc_,
                   b->fraction_,
                   b->lost_,
                   b->last_seq_));
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   "           jitter %u; lsr %u; dlsr %u;\n",
                   b->jitter_,
                   b->lsr_,
@@ -903,17 +905,17 @@ RTCP_SDES_Packet::dump (void)
 {
   sdesItem_t *ip;
 
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
               "\nRTCP_SDES_Packet:: "));
 
   if (this->num_chunks_ != 1)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   "Mixers not currently supported.\n"));
       return;
     }
 
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
               "from ssrc %u\n",
               this->chunk_->ssrc_));
 
@@ -934,42 +936,42 @@ RTCP_SDES_Packet::dump (void)
         case RTCP_SDES_END:
              break;
         case RTCP_SDES_CNAME:
-             ACE_DEBUG ((LM_DEBUG,
+             ORBSVCS_DEBUG ((LM_DEBUG,
                          "    CNAME '%s'\n",
                          ip->info_.standard_.data_));
              break;
         case RTCP_SDES_NAME:
-             ACE_DEBUG ((LM_DEBUG,
+             ORBSVCS_DEBUG ((LM_DEBUG,
                          "    NAME '%s'\n",
                          ip->info_.standard_.data_));
              break;
         case RTCP_SDES_EMAIL:
-             ACE_DEBUG ((LM_DEBUG,
+             ORBSVCS_DEBUG ((LM_DEBUG,
                          "    EMAIL '%s'\n",
                          ip->info_.standard_.data_));
              break;
         case RTCP_SDES_PHONE:
-             ACE_DEBUG ((LM_DEBUG,
+             ORBSVCS_DEBUG ((LM_DEBUG,
                          "    PHONE '%s'\n",
                          ip->info_.standard_.data_));
              break;
         case RTCP_SDES_LOC:
-             ACE_DEBUG ((LM_DEBUG,
+             ORBSVCS_DEBUG ((LM_DEBUG,
                          "    LOC '%s'\n",
                          ip->info_.standard_.data_));
              break;
         case RTCP_SDES_TOOL:
-             ACE_DEBUG ((LM_DEBUG,
+             ORBSVCS_DEBUG ((LM_DEBUG,
                          "    TOOL '%s'\n",
                          ip->info_.standard_.data_));
              break;
         case RTCP_SDES_NOTE:
-             ACE_DEBUG ((LM_DEBUG,
+             ORBSVCS_DEBUG ((LM_DEBUG,
                          "    NOTE '%s'\n",
                          ip->info_.standard_.data_));
              break;
         case RTCP_SDES_PRIV:
-             ACE_DEBUG ((LM_DEBUG,
+             ORBSVCS_DEBUG ((LM_DEBUG,
                          "    '%s' '%s'\n",
                          ip->info_.priv_.name_,
                          ip->info_.priv_.data_));
@@ -1175,30 +1177,30 @@ RTCP_SR_Packet::dump (void)
   RR_Block *b = this->rr_;
   int count = 1;
 
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
               "\nRTCP_SR_Packet:: from %u - %d rr blocks follow.\n",
               this->ssrc_,
               this->chd_.count_));
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
               "    NTP(sec) %u.%u; RTP ts %u\n",
               this->ntp_ts_msw_,
               this->ntp_ts_lsw_,
               this->rtp_ts_));
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
               "    packets sent %u; octets sent %u\n",
               this->psent_,
               this->osent_));
 
   while (b)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   "  Block %d: ssrc %u; frac %u; lost %u; last seq %u\n",
                   count,
                   b->ssrc_,
                   b->fraction_,
                   b->lost_,
                   b->last_seq_));
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   "           jitter %u; lsr %u; dlsr %u;\n",
                   b->jitter_,
                   b->lsr_,

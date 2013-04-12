@@ -18,7 +18,7 @@
 // ============================================================================
 
 #include "orbsvcs/Concurrency/CC_Lock.h"
-#include "ace/Log_Msg.h"
+#include "orbsvcs/Log_Macros.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -41,7 +41,7 @@ CC_Lock::~CC_Lock (void)
 void
 CC_Lock::lock (void)
 {
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
               "CC_Lock::lock\n"));
   lock_held_++;
 }
@@ -49,18 +49,18 @@ CC_Lock::lock (void)
 CORBA::Boolean
 CC_Lock::try_lock (void)
 {
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
               "CC_Lock::try_lock. "));
 
   lock_held_++;
 
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
               "lock_held_: %i, ",
               lock_held_));
 
   int success = 0;//semaphore_.tryacquire ();
 
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
               "success: %i\n", success));
 
   if (success == -1)
@@ -73,7 +73,7 @@ CC_Lock::try_lock (void)
       else
         throw CORBA::INTERNAL ();
     }
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
               "lock_held_: %i, ",
               lock_held_));
 
@@ -83,7 +83,7 @@ CC_Lock::try_lock (void)
 void
 CC_Lock::unlock (void)
 {
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
               "CC_Lock::unlock\n"));
   if (lock_held_ == 0)
     throw CosConcurrencyControl::LockNotHeld ();
@@ -95,7 +95,7 @@ CC_Lock::unlock (void)
 
   lock_held_--;
 
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
               "lock_held_: %i, ",
               lock_held_));
 }
@@ -103,7 +103,7 @@ CC_Lock::unlock (void)
 void
 CC_Lock::change_mode (CosConcurrencyControl::lock_mode new_mode)
 {
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
               "CC_Lock::change_mode\n"));
 
   // @@TAO Hmmm, we cannot really do anything at present since there
@@ -155,7 +155,7 @@ CC_Lock::DecLocksHeld (void)
 void
 CC_Lock::dump (void)
 {
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
               "mode_ %i, lock_held_: %i\n",
               mode_,
               lock_held_));

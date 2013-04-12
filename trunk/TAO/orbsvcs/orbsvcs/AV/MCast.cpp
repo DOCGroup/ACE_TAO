@@ -1,5 +1,7 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/AV/MCast.h"
 #include "orbsvcs/AV/AVStreams_i.h"
 #include "tao/debug.h"
@@ -46,7 +48,7 @@ TAO_AV_UDP_MCast_Flow_Handler::handle_timeout (const ACE_Time_Value &tv,
 ACE_HANDLE
 TAO_AV_UDP_MCast_Flow_Handler::get_handle (void) const
 {
-  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_UDP_MCast_Flow_Handler::get_handle "));
+  if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"TAO_AV_UDP_MCast_Flow_Handler::get_handle "));
   return this->get_mcast_socket ()->get_handle () ;
 }
 
@@ -161,10 +163,10 @@ TAO_AV_UDP_MCast_Transport::send (const char *buf,
                                   size_t len,
                                   ACE_Time_Value *)
 {
-//   if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_UDP_MCast_Transport::send "));
+//   if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"TAO_AV_UDP_MCast_Transport::send "));
 //   char addr [BUFSIZ];
 //   this->peer_addr_.addr_to_string (addr,BUFSIZ);
-//   if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"to %s\n",addr));
+//   if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"to %s\n",addr));
 
   return this->handler_->get_mcast_socket ()->send (buf, len);
 

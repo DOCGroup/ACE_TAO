@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Notify/Routing_Slip.h"
 
 #include "orbsvcs/Notify/Delivery_Request.h"
@@ -64,7 +65,7 @@ Routing_Slip::create (const TAO_Notify_Event::Ptr& event)
   // note we don't care about ultra-precise stats, so no guard for these
   if (DEBUG_LEVEL > 8 && ((result->sequence_ % 100) == 0))
   {
-    ACE_ERROR ((LM_ERROR,
+    ORBSVCS_ERROR ((LM_ERROR,
       ACE_TEXT ("(%P|%t) Routing_Slip_Statistics\n")
       ACE_TEXT ("  enter_transient              \t%B\n")
       ACE_TEXT ("  continue_transient           \t%B\n")
@@ -128,7 +129,7 @@ Routing_Slip::create (
           }
           else
           {
-            ACE_ERROR ((LM_ERROR,
+            ORBSVCS_ERROR ((LM_ERROR,
               ACE_TEXT ("(%P|%t) Routing_Slip::create: Unmarshalling failed for routing slip.\n")
               ));
             result.reset ();
@@ -136,7 +137,7 @@ Routing_Slip::create (
         }
         else
         {
-          ACE_ERROR ((LM_ERROR,
+          ORBSVCS_ERROR ((LM_ERROR,
             ACE_TEXT ("(%P|%t) Routing_Slip::create: Unmarshalling failed for event.\n")
             ));
         }
@@ -144,7 +145,7 @@ Routing_Slip::create (
     }
   catch (const CORBA::Exception&)
     {
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
         ACE_TEXT ("(%P|%t) Routing_Slip::create: Exception reloading event.\n")
         ));
     }
@@ -176,7 +177,7 @@ Routing_Slip::Routing_Slip(
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, sequence_lock_);
   this->sequence_ = ++routing_slip_sequence_;
-  if (DEBUG_LEVEL > 1) ACE_DEBUG ((LM_DEBUG,
+  if (DEBUG_LEVEL > 1) ORBSVCS_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) Routing Slip #%d: constructor\n"),
       this->sequence_
       ));
@@ -184,7 +185,7 @@ Routing_Slip::Routing_Slip(
 
 Routing_Slip::~Routing_Slip ()
 {
-  if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
+  if (DEBUG_LEVEL > 8) ORBSVCS_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) Routing Slip #%d: destructor\n"),
       this->sequence_
       ));
@@ -236,7 +237,7 @@ Routing_Slip::route (TAO_Notify_ProxyConsumer* pc, bool reliable_channel)
 
   size_t const request_id = delivery_requests_.size ();
 
-  if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
+  if (DEBUG_LEVEL > 8) ORBSVCS_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) Routing Slip #%d: add Delivery_Request #%B: lookup, completed %B of %B\n"),
       this->sequence_,
       request_id,
@@ -293,7 +294,7 @@ Routing_Slip::forward (TAO_Notify_ProxySupplier* ps, bool filter)
   guard.acquire();
   size_t request_id = delivery_requests_.size ();
 
-  if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
+  if (DEBUG_LEVEL > 8) ORBSVCS_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) Routing Slip #%d: add Delivery_Request #%d: Forward %s; completed %d of %d\n"),
       this->sequence_,
       static_cast<int> (request_id),
@@ -310,7 +311,7 @@ Routing_Slip::forward (TAO_Notify_ProxySupplier* ps, bool filter)
       TAO_Notify_Method_Request_Dispatch_No_Copy method (request, ps, filter);
       guard.release ();
       if (DEBUG_LEVEL > 8)
-        ACE_DEBUG ((LM_DEBUG,
+        ORBSVCS_DEBUG ((LM_DEBUG,
                     "(%P|%t) Routing Slip #%d: dispatching Delivery_Request %d to "
                     "proxy supplier %d\n",
                     this->sequence_,
@@ -321,7 +322,7 @@ Routing_Slip::forward (TAO_Notify_ProxySupplier* ps, bool filter)
   else
     {
       if (DEBUG_LEVEL > 5)
-        ACE_DEBUG ((LM_DEBUG,
+        ORBSVCS_DEBUG ((LM_DEBUG,
                     "(%P|%t) Routing Slip #%d: not dispatching Delivery_Request %d to "
                     "proxy supplier %d; already shut down\n",
                     this->sequence_,
@@ -344,7 +345,7 @@ Routing_Slip::dispatch (
 
   size_t request_id = delivery_requests_.size ();
 
-  if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
+  if (DEBUG_LEVEL > 8) ORBSVCS_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) Routing Slip #%d: add Delivery_Request #%B: Dispatch %s; completed %B of %B\n"),
       this->sequence_,
       request_id,
@@ -359,7 +360,7 @@ Routing_Slip::dispatch (
       TAO_Notify_Method_Request_Dispatch_No_Copy method (request, ps, filter);
       guard.release ();
       if (DEBUG_LEVEL > 8)
-        ACE_DEBUG ((LM_DEBUG,
+        ORBSVCS_DEBUG ((LM_DEBUG,
                     "(%P|%t) Routing Slip #%d: dispatching Delivery_Request %B to "
                     "proxy supplier %d\n",
                     this->sequence_,
@@ -370,7 +371,7 @@ Routing_Slip::dispatch (
   else
     {
       if (DEBUG_LEVEL > 5)
-        ACE_DEBUG ((LM_DEBUG,
+        ORBSVCS_DEBUG ((LM_DEBUG,
                     "(%P|%t) Routing Slip #%d: not dispatching Delivery_Request %B to "
                     "proxy supplier %d; already shut down\n",
                     this->sequence_,
@@ -391,7 +392,7 @@ Routing_Slip::delivery_request_complete (size_t request_id)
   this->delivery_requests_[request_id].reset ();
   this->complete_requests_ += 1;
 
-  if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
+  if (DEBUG_LEVEL > 8) ORBSVCS_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) Routing Slip #%d: delivery_request_complete #%B: completed %B of %B\n"),
       this->sequence_,
       request_id,
@@ -437,7 +438,7 @@ Routing_Slip::delivery_request_complete (size_t request_id)
     }
     default:
     {
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
         ACE_TEXT ("(%P|%t) Notification Service Routing Slip: Unexpected delivery_request_complete in state %d\n"),
         static_cast<int> (this->state_)
         ));
@@ -455,7 +456,7 @@ Routing_Slip::at_front_of_persist_queue ()
   {
     case rssNEW:
     {
-      if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
+      if (DEBUG_LEVEL > 8) ORBSVCS_DEBUG ((LM_DEBUG,
         ACE_TEXT ("(%P|%t) Routing Slip #%d: NEW Reached front of queue\n"),
         this->sequence_
         ));
@@ -464,7 +465,7 @@ Routing_Slip::at_front_of_persist_queue ()
     }
     case rssCOMPLETE_WHILE_NEW:
     {
-      if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
+      if (DEBUG_LEVEL > 8) ORBSVCS_DEBUG ((LM_DEBUG,
         ACE_TEXT ("(%P|%t) Routing Slip #%d: COMPLETE_WHILE_NEW Reached front of queue\n"),
         this->sequence_
         ));
@@ -475,7 +476,7 @@ Routing_Slip::at_front_of_persist_queue ()
     }
     case rssCHANGED:
     {
-      if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
+      if (DEBUG_LEVEL > 8) ORBSVCS_DEBUG ((LM_DEBUG,
         ACE_TEXT ("(%P|%t) Routing Slip #%d: CHANGED Reached front of queue\n"),
         this->sequence_
         ));
@@ -484,7 +485,7 @@ Routing_Slip::at_front_of_persist_queue ()
     }
     case rssCOMPLETE:
     {
-      if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
+      if (DEBUG_LEVEL > 8) ORBSVCS_DEBUG ((LM_DEBUG,
         ACE_TEXT ("(%P|%t) Routing Slip #%d: COMPLETE Reached front of queue\n"),
         this->sequence_
         ));
@@ -493,7 +494,7 @@ Routing_Slip::at_front_of_persist_queue ()
     }
     default:
     {
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
         ACE_TEXT ("(%P|%t) Routing Slip %d: Unexpected at_front_of_persist_queue in state %d\n"),
         this->sequence_,
         static_cast<int> (this->state_)
@@ -522,7 +523,7 @@ Routing_Slip::persist_complete ()
   {
     case rssSAVING:
     {
-      if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
+      if (DEBUG_LEVEL > 8) ORBSVCS_DEBUG ((LM_DEBUG,
         ACE_TEXT ("(%P|%t) Routing Slip #%d: SAVING persist complete\n"),
         this->sequence_
         ));
@@ -536,7 +537,7 @@ Routing_Slip::persist_complete ()
     }
     case rssUPDATING:
     {
-      if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
+      if (DEBUG_LEVEL > 8) ORBSVCS_DEBUG ((LM_DEBUG,
         ACE_TEXT ("(%P|%t) Routing Slip #%d: UPDATING persist complete\n"),
         this->sequence_
         ));
@@ -545,7 +546,7 @@ Routing_Slip::persist_complete ()
     }
     case rssDELETING:
     {
-      if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
+      if (DEBUG_LEVEL > 8) ORBSVCS_DEBUG ((LM_DEBUG,
         ACE_TEXT ("(%P|%t) Routing Slip #%d: DELETING persist complete\n"),
         this->sequence_
         ));
@@ -554,7 +555,7 @@ Routing_Slip::persist_complete ()
     }
     default:
     {
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
         ACE_TEXT ("(%P|%t) Notification Service Routing Slip: Unexpected transition in state %d\n"),
         static_cast<int> (this->state_)
         ));
@@ -588,7 +589,7 @@ void
 Routing_Slip::enter_state_new (Routing_Slip_Guard & guard)
 {
   ++count_enter_new_;
-  if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
+  if (DEBUG_LEVEL > 8) ORBSVCS_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) Routing Slip #%d: enter state NEW\n"),
       this->sequence_
       ));
@@ -611,7 +612,7 @@ Routing_Slip::enter_state_complete_while_new (Routing_Slip_Guard & guard)
 {
   ++count_enter_complete_while_new_;
   ACE_UNUSED_ARG (guard);
-  if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
+  if (DEBUG_LEVEL > 8) ORBSVCS_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) Routing Slip #%d: enter state COMPLETE_WHILE_NEW\n"),
       this->sequence_
       ));
@@ -628,7 +629,7 @@ void
 Routing_Slip::enter_state_reloaded (Routing_Slip_Guard & guard)
 {
   ++count_enter_reloaded_;
-  if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
+  if (DEBUG_LEVEL > 8) ORBSVCS_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) Routing Slip #&d: enter state RELOADED\n"),
       this->sequence_
       ));
@@ -640,7 +641,7 @@ void
 Routing_Slip::enter_state_transient (Routing_Slip_Guard & guard)
 {
   ++count_enter_transient_;
-  if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
+  if (DEBUG_LEVEL > 8) ORBSVCS_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) Routing Slip #%d: enter state TRANSIENT\n"),
       this->sequence_
       ));
@@ -687,7 +688,7 @@ Routing_Slip::enter_state_saving (Routing_Slip_Guard & guard)
   }
   else
   {
-    if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
+    if (DEBUG_LEVEL > 8) ORBSVCS_DEBUG ((LM_DEBUG,
         ACE_TEXT ("(%P|%t) Routing Slip #%d: enter state SAVING\n"),
         this->sequence_
         ));
@@ -710,7 +711,7 @@ void
 Routing_Slip::enter_state_saved (Routing_Slip_Guard & guard)
 {
   ++count_enter_saved_;
-  if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
+  if (DEBUG_LEVEL > 8) ORBSVCS_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) Routing Slip #%d: enter state SAVED\n"),
       this->sequence_
       ));
@@ -722,7 +723,7 @@ void
 Routing_Slip::enter_state_updating (Routing_Slip_Guard & guard)
 {
   ++count_enter_updating_;
-  if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
+  if (DEBUG_LEVEL > 8) ORBSVCS_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) Routing Slip #%d: enter state UPDATING\n"),
       this->sequence_
       ));
@@ -742,7 +743,7 @@ void
 Routing_Slip::enter_state_changed_while_saving (Routing_Slip_Guard & guard)
 {
   ++count_enter_changed_while_saving_;
-  if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
+  if (DEBUG_LEVEL > 8) ORBSVCS_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) Routing Slip #%d: enter state CHANGED_WHILE_SAVING\n"),
       this->sequence_
       ));
@@ -761,7 +762,7 @@ void
 Routing_Slip::enter_state_changed (Routing_Slip_Guard & guard)
 {
   ++count_enter_changed_;
-  if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
+  if (DEBUG_LEVEL > 8) ORBSVCS_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) Routing Slip #%d: enter state CHANGED\n"),
       this->sequence_
       ));
@@ -793,7 +794,7 @@ void
 Routing_Slip::enter_state_complete (Routing_Slip_Guard & guard)
 {
   ++count_enter_complete_;
-  if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
+  if (DEBUG_LEVEL > 8) ORBSVCS_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) Routing Slip #%d: enter state COMPLETE\n"),
       this->sequence_
       ));
@@ -805,7 +806,7 @@ void
 Routing_Slip::enter_state_deleting (Routing_Slip_Guard & guard)
 {
   ++count_enter_deleting_;
-  if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
+  if (DEBUG_LEVEL > 8) ORBSVCS_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) Routing Slip #%d: enter state DELETING\n"),
       this->sequence_
       ));
@@ -819,7 +820,7 @@ Routing_Slip::enter_state_terminal (Routing_Slip_Guard & guard)
 {
   ++count_enter_terminal_;
   ACE_ASSERT( this->is_safe_);
-  if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
+  if (DEBUG_LEVEL > 8) ORBSVCS_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) Routing Slip #%d: enter state TERMINAL\n"),
       this->sequence_
       ));

@@ -1,5 +1,7 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Security/SL2_SecurityManager.h"
 
 #include "tao/ORB_Constants.h"
@@ -132,7 +134,7 @@ TAO::Security::AccessDecision::~AccessDecision ()
 TAO::Security::AccessDecision::OBJECT_KEY
 TAO::Security::AccessDecision::map_key_from_objref (CORBA::Object_ptr /*obj */)
 {
-  ACE_ERROR ((LM_ERROR, "map_key_from_objref is currently not implemented\n"));
+  ORBSVCS_ERROR ((LM_ERROR, "map_key_from_objref is currently not implemented\n"));
 
   throw CORBA::NO_IMPLEMENT();
 
@@ -160,7 +162,7 @@ TAO::Security::AccessDecision::access_allowed_i (OBJECT_KEY &key,
       // Couldn't find the IOR in the map, so we use the default
       access_decision = this->default_allowance_decision_;
       if (TAO_debug_level >= 3)
-        ACE_DEBUG ((LM_DEBUG,
+        ORBSVCS_DEBUG ((LM_DEBUG,
                     "TAO (%P|%t) SL2_AccessDecision::access_decision(%x,%s)"
                     " NOT FOUND using default %d\n",
                     hash.operator()(key),
@@ -168,7 +170,7 @@ TAO::Security::AccessDecision::access_allowed_i (OBJECT_KEY &key,
     }
   else if (TAO_debug_level >= 3)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   "TAO (%P|%t) SL2_AccessDecision::access_decision(%x,%s)"
                   " found with decision %d\n",
                   hash.operator()(key),
@@ -241,7 +243,7 @@ TAO::Security::AccessDecision::add_object
     {
       // rebind shouldn't fail under normal circumstances
       if (TAO_debug_level > 1)
-        ACE_DEBUG ((LM_DEBUG,
+        ORBSVCS_DEBUG ((LM_DEBUG,
                     "TAO (%P|%t): SL2_AccessDecision::add_object(%x,%d) "
                     "unexpectedly failed (errno=%d)\n",
                     hash.operator()(key),
@@ -255,7 +257,7 @@ TAO::Security::AccessDecision::add_object
   else
     {
       if (TAO_debug_level >= 3)
-        ACE_DEBUG ((LM_DEBUG,
+        ORBSVCS_DEBUG ((LM_DEBUG,
                     "TAO (%P|%t): SL2_AccessDecision::add_object(%x,%d) okay\n",
                     hash.operator()(key),
                     allow_insecure_access));
@@ -287,7 +289,7 @@ TAO::Security::AccessDecision::remove_object
         {
           // ignore b/c we don't care...maybe log a debug message for info
           if (TAO_debug_level >= 3)
-            ACE_DEBUG ((LM_DEBUG,
+            ORBSVCS_DEBUG ((LM_DEBUG,
                         "TAO (%P|%t): SL2_AccessDecision::remove_object(%x) "
                         "object not found in access map\n",
                         hash.operator()(key)));
@@ -295,7 +297,7 @@ TAO::Security::AccessDecision::remove_object
       else
         {
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
+            ORBSVCS_DEBUG ((LM_DEBUG,
                         "TAO (%P|%t): SL2_AccessDecision::remove_object(%x) "
                         " unexpected error during unbind from map (errno=%d\n)",
                         hash.operator()(key),

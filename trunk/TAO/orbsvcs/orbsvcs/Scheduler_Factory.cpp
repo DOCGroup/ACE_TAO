@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "ace/Singleton.h"
 #include "ace/Null_Mutex.h"
 
@@ -127,7 +128,7 @@ int ACE_Scheduler_Factory::use_runtime (int cc,
                                         POD_RT_Info rti[])
 {
   if (server_ != 0 || TAO_SF_entry_count != -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT("ACE_Scheduler_Factory::use_runtime - ")
                        ACE_TEXT("server already configured\n")),
                       -1);
@@ -159,7 +160,7 @@ static_server (void)
     {
       server_ = ace_scheduler_factory_data->scheduler_._this ();
 
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT("ACE_Scheduler_Factory - configured static server\n")));
     }
   catch (const CORBA::Exception& ex)
@@ -228,7 +229,7 @@ ACE_Scheduler_Factory::server (void)
     server_ = static_server ();
 
   if (server_ == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT("ACE_Scheduler_Factor::server - ")
                        ACE_TEXT("no scheduling service configured\n")),
                       0);

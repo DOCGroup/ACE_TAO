@@ -1,5 +1,7 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Naming/Naming_Server.h"
 
 // Placing the include of Messanging.h at this point
@@ -102,7 +104,7 @@ TAO_Naming_Server::TAO_Naming_Server (CORBA::ORB_ptr orb,
                   use_storable_context,
                   round_trip_timeout,
                   use_round_trip_timeout) == -1)
-    ACE_ERROR ((LM_ERROR,
+    ORBSVCS_ERROR ((LM_ERROR,
                 "(%P|%t) %p\n",
                 "TAO_Naming_Server::init"));
 }
@@ -135,7 +137,7 @@ TAO_Naming_Server::init (CORBA::ORB_ptr orb,
               // Success in finding a Naming Service.
               //
               if (TAO_debug_level > 0)
-                ACE_DEBUG ((LM_DEBUG,
+                ORBSVCS_DEBUG ((LM_DEBUG,
                             "\nNameService found!\n"));
 
               this->naming_context_ =
@@ -154,7 +156,7 @@ TAO_Naming_Server::init (CORBA::ORB_ptr orb,
     }
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
                 "\nWe'll become a NameService\n"));
 
   // Become a Naming Service.
@@ -229,7 +231,7 @@ TAO_Naming_Server::parse_args (int argc,
 #endif /* ACE_SIZEOF_VOID_P */
                            &address);
         if (result == 0 || result == EOF)
-          ACE_ERROR_RETURN ((LM_ERROR,
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
                              "Unable to process <-b> option"),
                             -1);
         this->base_address_ = (void *) address;
@@ -270,7 +272,7 @@ TAO_Naming_Server::parse_args (int argc,
           ACE_TEXT ("");
 #endif /* TAO_HAS_MINIMUM_POA && !CORBA_E_MICRO */
 #endif /* !ACE_NLOGGING */
-        ACE_ERROR_RETURN ((LM_ERROR,
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("usage:  %s ")
                            ACE_TEXT ("-d ")
                            ACE_TEXT ("-o <ior_output_file> ")
@@ -287,7 +289,7 @@ TAO_Naming_Server::parse_args (int argc,
       }
 
   if (f_opt_used + u_opt_used + r_opt_used > 1)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("Only one persistence option can be passed")
                        ACE_TEXT ("\n")),
                       -1);
@@ -313,7 +315,7 @@ TAO_Naming_Server::init_with_orb (int argc,
 
       if (CORBA::is_nil (poa_object.in ()))
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT(" (%P|%t) Unable to initialize the POA.\n")),
                             -1);
         }
@@ -436,7 +438,7 @@ TAO_Naming_Server::init_with_orb (int argc,
             ns_ior.in (),
             ACE_TEXT_ALWAYS_CHAR (this->ior_file_name_)) != 0)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT("Unable to open %C for writing:(%u) %p\n"),
                              this->ior_file_name_,
                              ACE_ERRNO_GET,
@@ -510,7 +512,7 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
           // Now make sure this directory exists
           if (ACE_OS::access (persistence_location, W_OK|X_OK))
             {
-              ACE_ERROR_RETURN ((LM_ERROR, "Invalid persistence directory\n"), -1);
+              ORBSVCS_ERROR_RETURN ((LM_ERROR, "Invalid persistence directory\n"), -1);
             }
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT)
@@ -590,7 +592,7 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
               || this->context_index_->init (context_size) == -1)
             {
               if (TAO_debug_level >0)
-                ACE_DEBUG ((LM_DEBUG,
+                ORBSVCS_DEBUG ((LM_DEBUG,
                             "TAO_Naming_Server: context_index initialization failed\n"));
               return -1;
             }
@@ -631,7 +633,7 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
         IORTable::Table::_narrow (table_object.in ());
       if (CORBA::is_nil (adapter.in ()))
         {
-          ACE_ERROR ((LM_ERROR, "Nil IORTable\n"));
+          ORBSVCS_ERROR ((LM_ERROR, "Nil IORTable\n"));
         }
       else
         {
@@ -707,13 +709,13 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
                                          ACE_Event_Handler::READ_MASK) == -1)
             {
               if (TAO_debug_level > 0)
-                ACE_DEBUG ((LM_DEBUG,
+                ORBSVCS_DEBUG ((LM_DEBUG,
                             "TAO_Naming_Server: cannot register Event handler\n"));
               return -1;
             }
 
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
+            ORBSVCS_DEBUG ((LM_DEBUG,
                         "TAO_Naming_Server: The multicast server setup is done.\n"));
         }
 #else
@@ -768,7 +770,7 @@ TAO_Naming_Server::write_ior_to_file (const char* ior_string,
       FILE *iorf = ACE_OS::fopen (file_name, ACE_TEXT("w"));
       if (iorf == 0)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT("Unable to open %s for writing:(%u) %p\n"),
                              file_name,
                              ACE_ERRNO_GET,
@@ -781,7 +783,7 @@ TAO_Naming_Server::write_ior_to_file (const char* ior_string,
     }
   else
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("Invalid file name or IOR string provided")
                          ACE_TEXT ("to TAO_Naming_Server::write_ior_to_file\n")),
                         -1);
@@ -837,7 +839,7 @@ TAO_Naming_Server::fini (void)
         IORTable::Table::_narrow (table_object.in ());
       if (CORBA::is_nil (adapter.in ()))
         {
-          ACE_ERROR ((LM_ERROR, "Nil IORTable\n"));
+          ORBSVCS_ERROR ((LM_ERROR, "Nil IORTable\n"));
         }
       else
         {

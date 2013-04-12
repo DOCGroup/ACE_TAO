@@ -10,7 +10,7 @@
 
 #include "Locator_Options.h"
 #include "ace/Arg_Shifter.h"
-#include "ace/Log_Msg.h"
+#include "orbsvcs/Log_Macros.h"
 #include "ace/OS_NS_strings.h"
 
 #if defined (ACE_WIN32)
@@ -57,7 +57,7 @@ Options::parse_args (int &argc, ACE_TCHAR *argv[])
 
           if (!shifter.is_anything_left () || shifter.get_current ()[0] == '-')
             {
-              ACE_ERROR ((LM_ERROR, "Error: -c option needs a command\n"));
+              ORBSVCS_ERROR ((LM_ERROR, "Error: -c option needs a command\n"));
               this->print_usage ();
               return -1;
             }
@@ -74,7 +74,7 @@ Options::parse_args (int &argc, ACE_TCHAR *argv[])
             }
           else
             {
-              ACE_ERROR ((
+              ORBSVCS_ERROR ((
                 LM_ERROR,
                 ACE_TEXT ("Error: Unknown service command : %s\n"),
                 shifter.get_current ()));
@@ -89,7 +89,7 @@ Options::parse_args (int &argc, ACE_TCHAR *argv[])
 
           if (!shifter.is_anything_left () || shifter.get_current ()[0] == '-')
             {
-              ACE_ERROR ((LM_ERROR, "Error: -d option needs a debuglevel\n"));
+              ORBSVCS_ERROR ((LM_ERROR, "Error: -d option needs a debuglevel\n"));
               this->print_usage ();
               return -1;
             }
@@ -108,7 +108,7 @@ Options::parse_args (int &argc, ACE_TCHAR *argv[])
 
           if (!shifter.is_anything_left () || shifter.get_current ()[0] == '-')
             {
-              ACE_ERROR ((LM_ERROR, "Error: -o option needs a filename\n"));
+              ORBSVCS_ERROR ((LM_ERROR, "Error: -o option needs a filename\n"));
               this->print_usage ();
               return -1;
             }
@@ -140,7 +140,7 @@ Options::parse_args (int &argc, ACE_TCHAR *argv[])
 
           if (!shifter.is_anything_left () || shifter.get_current ()[0] == '-')
             {
-              ACE_ERROR ((LM_ERROR, "Error: -p option needs a filename\n"));
+              ORBSVCS_ERROR ((LM_ERROR, "Error: -p option needs a filename\n"));
               this->print_usage ();
               return -1;
             }
@@ -166,7 +166,7 @@ Options::parse_args (int &argc, ACE_TCHAR *argv[])
 
           if (!shifter.is_anything_left () || shifter.get_current ()[0] == '-')
             {
-              ACE_ERROR ((LM_ERROR, "Error: -x option needs a filename\n"));
+              ORBSVCS_ERROR ((LM_ERROR, "Error: -x option needs a filename\n"));
               this->print_usage ();
               return -1;
             }
@@ -192,7 +192,7 @@ Options::parse_args (int &argc, ACE_TCHAR *argv[])
 
           if (!shifter.is_anything_left () || shifter.get_current ()[0] == '-')
             {
-              ACE_ERROR ((LM_ERROR,
+              ORBSVCS_ERROR ((LM_ERROR,
                 ACE_TEXT ("Error: --directory option needs a filename\n")));
               this->print_usage ();
               return -1;
@@ -220,7 +220,7 @@ Options::parse_args (int &argc, ACE_TCHAR *argv[])
 
           if (!shifter.is_anything_left () || shifter.get_current ()[0] == '-')
             {
-              ACE_ERROR ((LM_ERROR,
+              ORBSVCS_ERROR ((LM_ERROR,
                           ACE_TEXT ("Error: -t option needs a value\n")));
               this->print_usage ();
               return -1;
@@ -235,7 +235,7 @@ Options::parse_args (int &argc, ACE_TCHAR *argv[])
 
           if (!shifter.is_anything_left () || shifter.get_current ()[0] == '-')
             {
-              ACE_ERROR ((LM_ERROR,
+              ORBSVCS_ERROR ((LM_ERROR,
                           ACE_TEXT ("Error: -v option needs a value\n")));
               this->print_usage ();
               return -1;
@@ -255,7 +255,7 @@ Options::parse_args (int &argc, ACE_TCHAR *argv[])
   if ((this->imr_type_ == BACKUP_IMR || this->imr_type_ == PRIMARY_IMR) &&
       !directory_persistence_used)
     {
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
                   "Error: Redundancy is used but the "
                   "--directory option is not passed\n"));
       this->print_usage ();
@@ -266,7 +266,7 @@ Options::parse_args (int &argc, ACE_TCHAR *argv[])
        xml_persistence_used)
       > 1)
     {
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
                   "Error: Only one persistence option can be used\n"));
       this->print_usage ();
       return -1;
@@ -304,7 +304,7 @@ Options::init_from_registry (void)
 void
 Options::print_usage (void) const
 {
-  ACE_ERROR ((LM_ERROR,
+  ORBSVCS_ERROR ((LM_ERROR,
     ACE_TEXT ("Usage:\n")
     ACE_TEXT ("\n")
     ACE_TEXT ("ImplRepo_Service [-c cmd] [-d 0|1|2] [-e] [-m] [-o file]\n")

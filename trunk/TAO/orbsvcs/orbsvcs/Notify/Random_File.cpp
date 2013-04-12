@@ -2,7 +2,7 @@
 
 #include "orbsvcs/Notify/Random_File.h"
 
-#include "ace/Log_Msg.h"
+#include "orbsvcs/Log_Macros.h"
 #include "ace/OS_NS_fcntl.h"
 #include "tao/debug.h"
 #include "ace/OS_NS_unistd.h"
@@ -59,7 +59,7 @@ Random_File::open(const ACE_TCHAR* filename, size_t block_size)
 
   if (result)
   {
-    if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
+    if (DEBUG_LEVEL > 8) ORBSVCS_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) Opening file %s\n")
       , filename
       ));
@@ -91,7 +91,7 @@ bool
 Random_File::write(const size_t block_number, void* buf, bool atomic)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, false);
-  if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
+  if (DEBUG_LEVEL > 8) ORBSVCS_DEBUG ((LM_DEBUG,
     ACE_TEXT ("(%P|%t) Write block %B %c\n"),
     block_number,
     (atomic ? '*' : ' ')
@@ -126,7 +126,7 @@ bool
 Random_File::read(const size_t block_number, void* buf)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, false);
-  if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
+  if (DEBUG_LEVEL > 8) ORBSVCS_DEBUG ((LM_DEBUG,
     ACE_TEXT ("(%P|%t) Read block %B\n"),
     block_number
     ));

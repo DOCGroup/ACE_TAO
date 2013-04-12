@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "Clerk_i.h"
 #include "tao/debug.h"
 #include "ace/Read_Buffer.h"
@@ -42,7 +43,7 @@ Clerk_i::read_ior (const ACE_TCHAR* filename)
   ACE_HANDLE f_handle = ACE_OS::open (filename, 0);
 
   if (f_handle == ACE_INVALID_HANDLE)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT("[CLIENT] Process/Thread Id : (%P/%t) Unable to open %s for writing: %p\n"),
                        filename),
                       -1);
@@ -53,7 +54,7 @@ Clerk_i::read_ior (const ACE_TCHAR* filename)
 
   char *data = ior_buffer.read (EOF,'\n','\n');
   if (data == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT("[CLIENT] Process/Thread Id : (%P/%t) Unable to read ior: %p\n")),
                       -1);
 
@@ -65,7 +66,7 @@ Clerk_i::read_ior (const ACE_TCHAR* filename)
            str != 0 ;
            str = ACE_OS::strtok (0, "\n"))
         {
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT("iors -> |%C|\n"),
                       str));
 
@@ -75,7 +76,7 @@ Clerk_i::read_ior (const ACE_TCHAR* filename)
           // Return if the server reference is nil.
           if (CORBA::is_nil (objref.in ()))
             {
-              ACE_ERROR ((LM_ERROR,
+              ORBSVCS_ERROR ((LM_ERROR,
                           ACE_TEXT("IOR for the server is Null\n")));
               result = -1;
               break;
@@ -129,7 +130,7 @@ Clerk_i::parse_args (int argc,
         result = this->read_ior (get_opts.opt_arg ());
 
         if (result < 0)
-          ACE_ERROR_RETURN ((LM_ERROR,
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT("[CLERK] Process/Thread Id : (%P/%t) Unable to read ior from %s : %p\n"),
                              get_opts.opt_arg ()),
                             -1);
@@ -140,7 +141,7 @@ Clerk_i::parse_args (int argc,
          ACE_OS::fopen (get_opts.opt_arg (), ACE_TEXT("w"));
 
        if (this->ior_output_file_ == 0)
-         ACE_ERROR_RETURN ((LM_ERROR,
+         ORBSVCS_ERROR_RETURN ((LM_ERROR,
                             ACE_TEXT("[SERVER] Process/Thread Id : (%P/%t)Unable to open %s for writing: %\n"),
                             get_opts.opt_arg ()), -1);
        break;
@@ -148,7 +149,7 @@ Clerk_i::parse_args (int argc,
       case '?':  // display help for use of the server.
         /* FALLTHRU */
       default:
-        ACE_ERROR_RETURN ((LM_ERROR,
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT("[SERVER] Process/Thread Id : (%P/%t)")
                            ACE_TEXT("usage:  %s")
                            ACE_TEXT(" [-d]")
@@ -194,7 +195,7 @@ Clerk_i::get_first_IOR (void)
         CosNaming::NamingContext::_narrow (temp_object.in ());
 
       if (CORBA::is_nil (server_context.in ()))
-        ACE_DEBUG ((LM_DEBUG,
+        ORBSVCS_DEBUG ((LM_DEBUG,
                     ACE_TEXT("TAO_Time_Service_Clerk::get_server_IORs:")
                     ACE_TEXT("No Active Servers in the Network\n")));
 
@@ -214,7 +215,7 @@ Clerk_i::get_first_IOR (void)
         CosTime::TimeService::_narrow (temp_object.in ());
 
       if (CORBA::is_nil (obj.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT("[CLERK] Process/Thread Id : (%P/%t) Unable to Resolve ")
                            ACE_TEXT("Server Reference\n")),
                           -1);
@@ -227,7 +228,7 @@ Clerk_i::get_first_IOR (void)
       // Iterate over the server context to get the next N IORs.
       if (next_n_IORs (iter,
                        server_context) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT("[CLERK] Process/Thread Id : (%P/%t) Unable to get next N IORs ")),
                           -1);;
     }
@@ -257,7 +258,7 @@ Clerk_i::next_n_IORs (CosNaming::BindingIterator_var iter,
           while (iter->next_one (binding.out ()))
             {
 
-              ACE_DEBUG ((LM_DEBUG,
+              ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT("Getting IOR of the server: %C\n\n"),
                           binding->binding_name[0].id.in ()));
 
@@ -321,7 +322,7 @@ Clerk_i::create_clerk (void)
         this->orb_->object_to_string (this->time_service_clerk_.in ());
 
       // Print the clerk IOR on the console.
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT("[SERVER] Process/Thread Id : (%P/%t) The Time Service CLERK IOR is: <%C>\n"),
                   objref_clerk.in ()));
 
@@ -420,7 +421,7 @@ Clerk_i::init (int argc,
       if (this->orb_manager_.init_child_poa (command.get_argc(),
                                              command.get_TCHAR_argv(),
                                              "child_poa") == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT("%p\n"),
                            ACE_TEXT("init_child_poa")),
                           -1);
@@ -437,7 +438,7 @@ Clerk_i::init (int argc,
 
       if (!this->ior_fp_)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT("IOR file not specified. Using the Naming Service instead\n")));
 
           // Initialize the Naming Service.
@@ -485,7 +486,7 @@ Clerk_i::run (void)
       int r = this->orb_manager_.run ();
 
       if (r == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT("[SERVER] Process/Thread Id : (%P/%t) Clerk_i::run")),
                           -1);
     }

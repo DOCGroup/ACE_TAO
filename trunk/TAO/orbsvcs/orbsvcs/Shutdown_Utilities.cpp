@@ -1,7 +1,7 @@
 // $Id$
 
 #include "orbsvcs/Shutdown_Utilities.h"
-#include "ace/Log_Msg.h"
+#include "orbsvcs/Log_Macros.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -49,7 +49,7 @@ Service_Shutdown::set_signals (ACE_Sig_Set& which_signals)
             if (i != 10)
 #endif
               {
-                ACE_DEBUG ((LM_WARNING,
+                ORBSVCS_DEBUG ((LM_WARNING,
                             "WARNING: Failed to register signal handler "
                             "for signal %d: %p\n",
                             i, ACE_TEXT ("register_handler")));
@@ -66,7 +66,7 @@ Service_Shutdown::set_signals (ACE_Sig_Set& which_signals)
   }
   if (! did_register)
   {
-    ACE_DEBUG ((LM_WARNING,
+    ORBSVCS_DEBUG ((LM_WARNING,
                 "WARNING: Service_Shutdown did not register any signals.\n"));
   }
 }

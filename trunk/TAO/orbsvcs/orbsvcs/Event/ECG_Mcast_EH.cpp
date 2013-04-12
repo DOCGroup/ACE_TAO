@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Event/ECG_Mcast_EH.h"
 #include "orbsvcs/Event/ECG_UDP_Receiver.h"
 #include "orbsvcs/Event_Service_Constants.h"
@@ -46,7 +47,7 @@ TAO_ECG_Mcast_EH::open (RtecEventChannelAdmin::EventChannel_ptr ec)
 
   if (CORBA::is_nil (ec))
     {
-      ACE_ERROR ((LM_ERROR,  "TAO_ECG_Mcast_EH::open(): "
+      ORBSVCS_ERROR ((LM_ERROR,  "TAO_ECG_Mcast_EH::open(): "
                              "nil ec argument"));
       throw CORBA::INTERNAL ();
     }
@@ -246,19 +247,19 @@ TAO_ECG_Mcast_EH::add_new_subscriptions (Address_Set& multicast_addresses)
       ACE_SOCK_Dgram_Mcast *socket = new_subscription.dgram;
 
       if (socket->open (new_subscription.mcast_addr, this->net_if_, 1) == -1) {
-        ACE_ERROR ((LM_ERROR,
+        ORBSVCS_ERROR ((LM_ERROR,
                     "Error: %d - Unable to open multicast socket\n",
                     ACE_ERRNO_GET));
       }
 
       if ( socket->enable (ACE_NONBLOCK) != 0 ) {
-        ACE_ERROR ((LM_ERROR,
+        ORBSVCS_ERROR ((LM_ERROR,
                     "Error: %d - Unable to enable nonblocking on mcast_eh\n",
                     ACE_ERRNO_GET));
       }
 
       if (socket->join (new_subscription.mcast_addr, 1, this->net_if_) == -1) {
-        ACE_ERROR ((LM_ERROR,
+        ORBSVCS_ERROR ((LM_ERROR,
                     "Error: %d - Unable to join multicast group\n",
                     ACE_ERRNO_GET));
       }
@@ -270,7 +271,7 @@ TAO_ECG_Mcast_EH::add_new_subscriptions (Address_Set& multicast_addresses)
                                                      sizeof (this->recvbuf_size_)) == -1)
           && errno != ENOTSUP )
         {
-          ACE_ERROR ((LM_ERROR,
+          ORBSVCS_ERROR ((LM_ERROR,
                       "Error: %d - Unable to set mcast_eh recvbuf_size:%d\n",
                       ACE_ERRNO_GET,
                       this->recvbuf_size_));

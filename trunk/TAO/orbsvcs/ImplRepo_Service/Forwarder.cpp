@@ -10,6 +10,7 @@
 */
 //=============================================================================
 
+#include "orbsvcs/Log_Macros.h"
 #include "Forwarder.h"
 #include "ImR_Locator_i.h"
 
@@ -205,14 +206,14 @@ ImR_DSI_ResponseHandler::send_ior (const char *pior)
         }
       else
         {
-          ACE_ERROR ((LM_ERROR,
+          ORBSVCS_ERROR ((LM_ERROR,
                       ACE_TEXT ("ImR_DSI_ResponseHandler::send_ior (): Forward_to ")
                       ACE_TEXT ("reference is nil.\n")));
         }
     }
   else
     {
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
                   ACE_TEXT ("ImR_ResponseHandler::send_ior (): Invalid corbaloc ior.\n")
                   ACE_TEXT ("\t<%s>\n"),
                   ior.c_str()));

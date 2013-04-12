@@ -1,7 +1,7 @@
 // $Id$
 
 #include "orbsvcs/Event_Utilities.h"
-#include "ace/Log_Msg.h"
+#include "orbsvcs/Log_Macros.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 
@@ -134,7 +134,7 @@ void event_debug (const char* p,
                   const RtecEventComm::Event& event)
 {
   size_t l = ACE_OS::strlen (p);
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
               "%*.*s - event.source: %d (0x%x)\n"
               "%*.*s   event.type: %d (0x%x)\n",
               l, l, p, event.header.source, event.header.source,
@@ -144,18 +144,18 @@ void event_debug (const char* p,
 void
 ACE_ConsumerQOS_Factory::debug (const RtecEventChannelAdmin::ConsumerQOS& qos)
 {
-  ACE_DEBUG ((LM_DEBUG, "ConsumerQOS {\n"));
-  ACE_DEBUG ((LM_DEBUG, "  is_gateway: %d\n", qos.is_gateway));
+  ORBSVCS_DEBUG ((LM_DEBUG, "ConsumerQOS {\n"));
+  ORBSVCS_DEBUG ((LM_DEBUG, "  is_gateway: %d\n", qos.is_gateway));
 
   for (u_int i = 0; i < qos.dependencies.length (); ++i)
     {
       char buf[128];
       ACE_OS::sprintf (buf, " dep[%d]", i);
       event_debug (buf, qos.dependencies[i].event);
-      ACE_DEBUG ((LM_DEBUG, "%s  rt_info: %d\n",
+      ORBSVCS_DEBUG ((LM_DEBUG, "%s  rt_info: %d\n",
                   buf, qos.dependencies[i].rt_info));
     }
-  ACE_DEBUG ((LM_DEBUG, "}\n"));
+  ORBSVCS_DEBUG ((LM_DEBUG, "}\n"));
 }
 
 // ************************************************************
@@ -202,21 +202,21 @@ ACE_SupplierQOS_Factory::insert (RtecEventComm::EventSourceID sid,
 
 void ACE_SupplierQOS_Factory::debug (const RtecEventChannelAdmin::SupplierQOS& qos)
 {
-  ACE_DEBUG ((LM_DEBUG, "SupplierQOS {\n"));
-  ACE_DEBUG ((LM_DEBUG, "  is_gateway: %d\n", qos.is_gateway));
+  ORBSVCS_DEBUG ((LM_DEBUG, "SupplierQOS {\n"));
+  ORBSVCS_DEBUG ((LM_DEBUG, "  is_gateway: %d\n", qos.is_gateway));
 
   for (u_int i = 0; i < qos.publications.length (); ++i)
     {
       char buf[128] = { 0 };
       ACE_OS::sprintf (buf, " publications[%d]", i);
       event_debug (buf, qos.publications[i].event);
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   "%s   dependency_info.rt_info: %d\n"
                   "%s   dependency_info.number_of_calls: %d\n",
                   buf, qos.publications[i].dependency_info.rt_info,
                   buf, qos.publications[i].dependency_info.number_of_calls));
         }
-  ACE_DEBUG ((LM_DEBUG, "}\n"));
+  ORBSVCS_DEBUG ((LM_DEBUG, "}\n"));
 
 }
 

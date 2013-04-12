@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/LoadBalancing/LB_ObjectReferenceFactory.h"
 #include "tao/debug.h"
 #include "ace/SString.h"
@@ -197,7 +198,7 @@ TAO_LB_ObjectReferenceFactory::find_object_group (
       if (this->table_.bind (repository_id, group) != 0)
         {
           if (TAO_debug_level > 0)
-            ACE_ERROR ((LM_ERROR,
+            ORBSVCS_ERROR ((LM_ERROR,
                         "TAO_LB_ObjectReferenceFactory::"
                         "find_object_group - "
                         "Couldn't bind object group reference.\n"));

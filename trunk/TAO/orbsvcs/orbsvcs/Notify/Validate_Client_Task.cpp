@@ -1,5 +1,6 @@
 /* -*- C++ -*- $Id$ */
 
+#include "orbsvcs/Log_Macros.h"
 #include "Validate_Client_Task.h"
 #include "EventChannelFactory.h"
 #include "tao/ORB_Core.h"
@@ -20,7 +21,7 @@ TAO_Notify_validate_client_Task::
 {
   if (this->activate (THR_NEW_LWP | THR_JOINABLE, 1) == -1)
   {
-    ACE_ERROR ((LM_ERROR,
+    ORBSVCS_ERROR ((LM_ERROR,
       ACE_TEXT("(%P|%t)TAO_Notify_validate_client_Task: %p\n"),"activate"));
   }
 }
@@ -49,12 +50,12 @@ TAO_Notify_validate_client_Task::svc (void)
     {
       if (TAO_debug_level > 0)
       {
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%P|%t)%T TAO_Notify_validate_client_Task::svc validate start\n")));
+        ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("%P|%t)%T TAO_Notify_validate_client_Task::svc validate start\n")));
       }
       this->ecf_->validate ();
       if (TAO_debug_level > 0)
       {
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%P|%t)%T TAO_Notify_validate_client_Task::svc validate end\n")));
+        ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("%P|%t)%T TAO_Notify_validate_client_Task::svc validate end\n")));
       }
     }
     catch (...)

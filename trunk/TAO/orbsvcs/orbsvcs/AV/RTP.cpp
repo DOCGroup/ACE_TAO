@@ -34,6 +34,8 @@
 
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/AV/RTP.h"
 #include "orbsvcs/AV/RTCP.h"
 
@@ -114,7 +116,7 @@ RTP_Packet::RTP_Packet(unsigned char padding,
   if (data_size > RTP_MTU-12)
   {
     data_size = RTP_MTU-12;
-    ACE_DEBUG ((LM_DEBUG, "\n(%N,%l) RTP_Packet: Warning - packet truncated\n"));
+    ORBSVCS_DEBUG ((LM_DEBUG, "\n(%N,%l) RTP_Packet: Warning - packet truncated\n"));
   }
 
   if (csrc_count > 15)
@@ -320,7 +322,7 @@ TAO_AV_RTP_Object::handle_input (void)
   TAO_AV_frame_info frame_info;
 
   if (TAO_debug_level > 1)
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
                 "\nTAO_AV_RTP_Object::handle_input\n"));
 
   // Handles the incoming RTP packet input.
@@ -329,7 +331,7 @@ TAO_AV_RTP_Object::handle_input (void)
   int n = this->transport_->recv (this->frame_.rd_ptr (),
                                   this->frame_.size ());
   if (n == 0)
-    ACE_ERROR_RETURN ( (LM_ERROR,"TAO_AV_RTP::handle_input:connection closed\n"),-1);
+    ORBSVCS_ERROR_RETURN ( (LM_ERROR,"TAO_AV_RTP::handle_input:connection closed\n"),-1);
   if (n < 0)
     {
       if ((errno == EADDRNOTAVAIL) || (errno == ECONNRESET))
@@ -338,7 +340,7 @@ TAO_AV_RTP_Object::handle_input (void)
           return -1;
         }
       else
-        ACE_ERROR_RETURN ( (LM_ERROR,"TAO_AV_RTP::handle_input:recv error\n"),-1);
+        ORBSVCS_ERROR_RETURN ( (LM_ERROR,"TAO_AV_RTP::handle_input:recv error\n"),-1);
     }
 
   this->frame_.wr_ptr (this->frame_.rd_ptr () + n);
@@ -385,7 +387,7 @@ TAO_AV_RTP_Object::send_frame (ACE_Message_Block *frame,
   if (frame_info != 0)
     {
       if (frame_info->format != this->format_)
-        ACE_DEBUG ((LM_DEBUG,
+        ORBSVCS_DEBUG ((LM_DEBUG,
                     "TAO_AV_RTP_Object::send_frame - error: format type mismatch"));
       if (frame_info->ssrc != 0)
         this->ssrc_ = frame_info->ssrc;
@@ -476,7 +478,7 @@ TAO_AV_RTP_Object::send_frame (ACE_Message_Block *frame,
 
   result = this->transport_->send (&mb);
   if (result < 0)
-    ACE_ERROR_RETURN ( (LM_ERROR,"TAO_AV_RTP::send_frame failed\n"),result);
+    ORBSVCS_ERROR_RETURN ( (LM_ERROR,"TAO_AV_RTP::send_frame failed\n"),result);
 
   TAO_AV_RTCP_Object *rtcp_prot_obj = dynamic_cast<TAO_AV_RTCP_Object*> (this->control_object_);
   if (rtcp_prot_obj)
@@ -506,7 +508,7 @@ TAO_AV_RTP_Object::send_frame (const iovec *iov,
   if (frame_info != 0)
     {
       if (frame_info->format != this->format_)
-        ACE_DEBUG ((LM_DEBUG,
+        ORBSVCS_DEBUG ((LM_DEBUG,
                     "TAO_AV_RTP_Object::send_frame - error: format type mismatch"));
       this->sequence_num_ = static_cast<ACE_UINT16> (frame_info->sequence_num);
       if (frame_info->ssrc != 0)
@@ -606,7 +608,7 @@ TAO_AV_RTP_Object::send_frame (const iovec *iov,
   delete rtp_packet;
 
   if (result < 0)
-    ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_RTP::send_frame failed\n"),result);
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,"TAO_AV_RTP::send_frame failed\n"),result);
 
   return 0;
 }
@@ -671,7 +673,7 @@ TAO_AV_RTP_Object::set_policies (const TAO_AV_PolicyList &policy_list)
             TAO_AV_Payload_Type_Policy *payload_policy =
               static_cast<TAO_AV_Payload_Type_Policy *> (policy);
             if (payload_policy == 0)
-              ACE_ERROR_RETURN ( (LM_ERROR,"TAO_AV_RTP_Object::send_frame:Payload policy not defined\n"),-1);
+              ORBSVCS_ERROR_RETURN ( (LM_ERROR,"TAO_AV_RTP_Object::send_frame:Payload policy not defined\n"),-1);
             this->format_ = payload_policy->value ();
           }
           break;
@@ -680,7 +682,7 @@ TAO_AV_RTP_Object::set_policies (const TAO_AV_PolicyList &policy_list)
             TAO_AV_SSRC_Policy *ssrc_policy =
               static_cast<TAO_AV_SSRC_Policy *> (policy);
             if (ssrc_policy == 0)
-              ACE_ERROR_RETURN ( (LM_ERROR,"TAO_AV_RTP_Object::send_frame:SSRC policy not defined\n"),-1);
+              ORBSVCS_ERROR_RETURN ( (LM_ERROR,"TAO_AV_RTP_Object::send_frame:SSRC policy not defined\n"),-1);
             this->ssrc_ = ssrc_policy->value ();;
           }
           break;
@@ -740,7 +742,7 @@ TAO_AV_RTP_Flow_Factory::make_protocol_object (TAO_FlowSpec_Entry *entry,
   TAO_AV_Callback *callback = 0;
 
   if( endpoint->get_callback (entry->flowname (), callback) ) {
-    ACE_ERROR_RETURN ((LM_ERROR, "(%N,%l) Invalid callback\n"), 0);
+    ORBSVCS_ERROR_RETURN ((LM_ERROR, "(%N,%l) Invalid callback\n"), 0);
   }
 
   TAO_AV_Protocol_Object *object = 0;

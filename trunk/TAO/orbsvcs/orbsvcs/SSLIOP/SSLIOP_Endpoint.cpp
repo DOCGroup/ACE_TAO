@@ -117,14 +117,14 @@ dump_endpoint (const char* msg, const TAO_Endpoint *other_endpoint)
 
   if (endpoint == 0)
   {
-    ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) endpoint - %s: Unable to cast an endpoint to SSLIOP_Endpoint\n", msg));
+    ORBSVCS_DEBUG ((LM_DEBUG, "TAO (%P|%t) endpoint - %s: Unable to cast an endpoint to SSLIOP_Endpoint\n", msg));
     return;
   }
 
   char hostaddr[MAXHOSTNAMELEN + 16];
   int gothost = endpoint->addr_to_string (hostaddr, sizeof hostaddr);
 
-  ACE_DEBUG ((LM_INFO, "TAO (%P|%t) SSLIOPEndpoint %s - %@ {%s, ssl=%d, iiop=%d,"
+  ORBSVCS_DEBUG ((LM_INFO, "TAO (%P|%t) SSLIOPEndpoint %s - %@ {%s, ssl=%d, iiop=%d,"
                 " qop=%d, trst=(%d,%d), c=%@, crdh=0x%x}, h=0x%x\n",
                 msg,
                 endpoint,

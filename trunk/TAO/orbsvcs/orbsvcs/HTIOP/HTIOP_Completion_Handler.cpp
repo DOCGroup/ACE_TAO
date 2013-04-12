@@ -1,5 +1,7 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/HTIOP/HTIOP_Completion_Handler.h"
 
 #include "orbsvcs/HTIOP/HTIOP_Transport.h"
@@ -82,7 +84,7 @@ TAO::HTIOP::Completion_Handler::handle_input (ACE_HANDLE h)
                     -1);
 
   if (this->channel_->pre_recv() != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        "TAO::HTIOP::Completion_Handler: pre_recv not done, "
                        "channel state = %d\n",
                        this->channel_->state()),
@@ -107,7 +109,7 @@ TAO::HTIOP::Completion_Handler::handle_input (ACE_HANDLE h)
       if (this->creation_strategy_->make_svc_handler (svc_handler) == -1)
         {
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
+            ORBSVCS_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("TAO::HTIOP::Completion_Handler %p\n"),
                         ACE_TEXT ("make_svc_handler")));
           return -1;
@@ -133,7 +135,7 @@ TAO::HTIOP::Completion_Handler::handle_input (ACE_HANDLE h)
       // on failure.
 
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
+            ORBSVCS_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("%p\n"),
                         ACE_TEXT ("activate_svc_handler")));
           return -1;

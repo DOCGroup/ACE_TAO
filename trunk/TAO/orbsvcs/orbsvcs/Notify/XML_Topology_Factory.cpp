@@ -1,5 +1,7 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Notify/XML_Topology_Factory.h"
 #include "orbsvcs/Notify/XML_Saver.h"
 #include "orbsvcs/Notify/XML_Loader.h"
@@ -71,7 +73,7 @@ namespace TAO_Notify
       if (ACE_OS::strcasecmp (av, ACE_TEXT("-v")) == 0)
       {
         verbose = true;
-        ACE_DEBUG ((LM_DEBUG,
+        ORBSVCS_DEBUG ((LM_DEBUG,
           ACE_TEXT ("(%P|%t) Standard_Event_Persistence: -verbose\n")
           ));
       }
@@ -81,7 +83,7 @@ namespace TAO_Notify
         this->load_base_path_ = argv[narg + 1];
         if (TAO_debug_level > 0 || verbose)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
             ACE_TEXT ("(%P|%t) XML_TopologyFactory: Setting -base_path: %s\n"),
             this->save_base_path_.c_str ()
           ));
@@ -93,7 +95,7 @@ namespace TAO_Notify
         this->save_base_path_ = argv[narg + 1];
         if (TAO_debug_level > 0 || verbose)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
             ACE_TEXT ("(%P|%t) XML_TopologyFactory: Setting -save_base_path: %s\n"),
             this->save_base_path_.c_str ()
           ));
@@ -105,7 +107,7 @@ namespace TAO_Notify
         this->load_base_path_ = argv[narg + 1];
         if (TAO_debug_level > 0 || verbose)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
             ACE_TEXT ("(%P|%t) XML_TopologyFactory: Setting -load_base_path: %s\n"),
             this->load_base_path_.c_str ()
           ));
@@ -117,7 +119,7 @@ namespace TAO_Notify
         this->backup_count_ = ACE_OS::atoi(argv[narg + 1]);
         if (TAO_debug_level > 0 || verbose)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
             ACE_TEXT ("(%P|%t) XML_TopologyFactory: Setting -file_count: %d\n"),
             this->backup_count_
           ));
@@ -129,14 +131,14 @@ namespace TAO_Notify
         this->timestamp_ = false;
         if (TAO_debug_level > 0 || verbose)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
             ACE_TEXT ("(%P|%t) XML_TopologyFactory: Setting -no_timestamp\n")
           ));
         }
       }
       else
       {
-        ACE_ERROR ((LM_ERROR,
+        ORBSVCS_ERROR ((LM_ERROR,
           ACE_TEXT ("(%P|%t) Unknown parameter to XML Topology Factory: %s\n"),
           argv[narg]
           ));

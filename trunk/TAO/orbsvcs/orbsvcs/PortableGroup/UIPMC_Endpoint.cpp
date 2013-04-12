@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/PortableGroup/UIPMC_Endpoint.h"
 #include "orbsvcs/PortableGroup/UIPMC_Profile.h"
 
@@ -186,7 +187,7 @@ TAO_UIPMC_Endpoint::preferred_interfaces (TAO_ORB_Core *oc)
           latest->preferred_if_ = CORBA::string_dup (preferred[i].c_str() + 3);
           latest->preferred_path_.host = (const char *) 0;
           if (TAO_debug_level > 3)
-            ACE_DEBUG ((LM_DEBUG,
+            ORBSVCS_DEBUG ((LM_DEBUG,
                       "TAO (%P|%t) - TAO_UIPMC_Endpoint::preferred_interfaces, setting network interface name <%s>"
                       " as preferred path for [%s] \n",
                       latest->preferred_if_.in(), this->host_.in ()));
@@ -198,7 +199,7 @@ TAO_UIPMC_Endpoint::preferred_interfaces (TAO_ORB_Core *oc)
             CORBA::string_dup (preferred[i].c_str());
 
           if (TAO_debug_level > 3)
-            ACE_DEBUG ((LM_DEBUG,
+            ORBSVCS_DEBUG ((LM_DEBUG,
                       "TAO (%P|%t) - TAO_UIPMC_Endpoint::preferred_interfaces, adding path [%s]"
                       " as preferred local address for [%s] \n",
                       latest->preferred_path_.host.in(), this->host_.in ()));

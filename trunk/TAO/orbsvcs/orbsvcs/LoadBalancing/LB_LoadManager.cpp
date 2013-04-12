@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/LoadBalancing/LB_LoadManager.h"
 #include "orbsvcs/LoadBalancing/LB_MemberLocator.h"
 #include "orbsvcs/LoadBalancing/LB_LoadAlert_Handler.h"
@@ -372,7 +373,7 @@ TAO_LB_LoadManager::register_load_monitor (
       if (this->timer_id_ == -1)
         {
           if (TAO_debug_level > 0)
-            ACE_ERROR ((LM_ERROR,
+            ORBSVCS_ERROR ((LM_ERROR,
                         "TAO_LB_LoadManager::register_load_monitor: "
                         "Unable to schedule timer.\n"));
 
@@ -388,7 +389,7 @@ TAO_LB_LoadManager::register_load_monitor (
   else if (result != 0)
     {
       if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_ERROR,
+        ORBSVCS_ERROR ((LM_ERROR,
                     "TAO_LB_LoadManager::register_load_monitor: "
                     "Unable to register load monitor.\n"));
 
@@ -434,7 +435,7 @@ TAO_LB_LoadManager::remove_load_monitor (
       if (this->reactor_->cancel_timer (this->timer_id_) == 0)
         {
           if (TAO_debug_level > 0)
-            ACE_ERROR ((LM_ERROR,
+            ORBSVCS_ERROR ((LM_ERROR,
                         "TAO_LB_LoadManager::remove_load_monitor: "
                         "Unable to cancel timer.\n"));
 
@@ -863,7 +864,7 @@ TAO_LB_LoadManager::initialize (ACE_Reactor * reactor,
 
   if (this->ping_interval_ > ACE_Time_Value::zero && this->activate(THR_NEW_LWP | THR_JOINABLE, 1) != 0)
   {
-    ACE_ERROR((LM_ERROR,
+    ORBSVCS_ERROR((LM_ERROR,
       ACE_TEXT ("(%P|%t)TAO_LB_LoadManager::initialize  failed to activate ")
       ACE_TEXT ("thread to validate connection.\n")));
     throw CORBA::INTERNAL ();

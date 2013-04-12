@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Notify/Buffering_Strategy.h"
 
 #include "orbsvcs/Notify/Method_Request.h"
@@ -193,7 +194,7 @@ TAO_Notify_Buffering_Strategy::enqueue (TAO_Notify_Method_Request_Queueable* met
     {
       if (this->queue (method_request) == -1)
         {
-          ACE_DEBUG((LM_DEBUG,
+          ORBSVCS_DEBUG((LM_DEBUG,
                      "Notify (%P|%t) - Panic! failed to enqueue event\n"));
           return -1;
         }
@@ -204,7 +205,7 @@ TAO_Notify_Buffering_Strategy::enqueue (TAO_Notify_Method_Request_Queueable* met
     }
   else
     {
-      ACE_DEBUG((LM_DEBUG,
+      ORBSVCS_DEBUG((LM_DEBUG,
                  "Notify (%P|%t) - Panic! did not attempt to enqueue event\n"));
       return -1;
     }
@@ -286,26 +287,26 @@ TAO_Notify_Buffering_Strategy::queue (TAO_Notify_Method_Request_Queueable* metho
       order == CosNotification::FifoOrder)
     {
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "Notify (%P|%t) - enqueue in fifo order\n"));
+        ORBSVCS_DEBUG ((LM_DEBUG, "Notify (%P|%t) - enqueue in fifo order\n"));
       return this->msg_queue_.enqueue_tail (method_request);
     }
 
   if (order == CosNotification::PriorityOrder)
     {
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "Notify (%P|%t) - enqueue in priority order\n"));
+        ORBSVCS_DEBUG ((LM_DEBUG, "Notify (%P|%t) - enqueue in priority order\n"));
       return this->msg_queue_.enqueue_prio (method_request);
     }
 
   if (order == CosNotification::DeadlineOrder)
     {
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "Notify (%P|%t) - enqueue in deadline order\n"));
+        ORBSVCS_DEBUG ((LM_DEBUG, "Notify (%P|%t) - enqueue in deadline order\n"));
       return this->msg_queue_.enqueue_deadline (method_request);
     }
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG, "Notify (%P|%t) - Invalid order policy\n"));
+    ORBSVCS_DEBUG ((LM_DEBUG, "Notify (%P|%t) - Invalid order policy\n"));
   return this->msg_queue_.enqueue_tail (method_request);
 }
 
@@ -348,7 +349,7 @@ TAO_Notify_Buffering_Strategy::discard (TAO_Notify_Method_Request_Queueable* met
   else
     {
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "Notify (%P|%t) - Invalid discard policy\n"));
+        ORBSVCS_DEBUG ((LM_DEBUG, "Notify (%P|%t) - Invalid discard policy\n"));
       result = this->msg_queue_.dequeue_head (mb);
     }
 

@@ -1,5 +1,7 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/AV/UDP.h"
 #include "orbsvcs/AV/AVStreams_i.h"
 #include "orbsvcs/AV/MCast.h"
@@ -57,7 +59,7 @@ int
 TAO_AV_UDP_Flow_Handler::set_remote_address (ACE_Addr *address)
 {
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,"TAO_AV_UDP_Flow_Handler::set_remote_address\n"));
+    ORBSVCS_DEBUG ((LM_DEBUG,"TAO_AV_UDP_Flow_Handler::set_remote_address\n"));
 
   ACE_INET_Addr *inet_addr = dynamic_cast<ACE_INET_Addr*> (address);
   this->peer_addr_ = *inet_addr;
@@ -71,7 +73,7 @@ ACE_HANDLE
 TAO_AV_UDP_Flow_Handler::get_handle (void) const
 {
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
                 "TAO_AV_UDP_Flow_Handler::get_handle:%d\n",
                 this->sock_dgram_.get_handle ()));
 
@@ -83,7 +85,7 @@ TAO_AV_UDP_Flow_Handler::change_qos(AVStreams::QoS qos)
 {
   if( TAO_debug_level > 0 )
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   "(%N,%l) TAO_AV_UDP_Flow_Handler::change_qos\n"));
     }
 
@@ -104,7 +106,7 @@ TAO_AV_UDP_Flow_Handler::change_qos(AVStreams::QoS qos)
           if(!((dscp >= 0) && (dscp <= 63)))
             {
               dscp_flag = 0;
-              ACE_DEBUG((LM_DEBUG, "(%N,%l) ECN value can only be (0-3) not %d\n", ecn));
+              ORBSVCS_DEBUG((LM_DEBUG, "(%N,%l) ECN value can only be (0-3) not %d\n", ecn));
               return -1;
             }
         }
@@ -116,7 +118,7 @@ TAO_AV_UDP_Flow_Handler::change_qos(AVStreams::QoS qos)
           // IP Diffserv byte
           if(!((ecn >= 0) && (ecn <= 3)))
             {
-              ACE_DEBUG((LM_DEBUG, "(%N,%l) ECN value can only be (0-3) not %d\n", ecn));
+              ORBSVCS_DEBUG((LM_DEBUG, "(%N,%l) ECN value can only be (0-3) not %d\n", ecn));
               ecn = 0;
             }
 
@@ -137,7 +139,7 @@ TAO_AV_UDP_Flow_Handler::change_qos(AVStreams::QoS qos)
 
           if(TAO_debug_level > 1)
             {
-              ACE_DEBUG((LM_DEBUG, "(%N,%l) set tos: ret: %d\n", ret));
+              ORBSVCS_DEBUG((LM_DEBUG, "(%N,%l) set tos: ret: %d\n", ret));
             }
         }
 
@@ -145,7 +147,7 @@ TAO_AV_UDP_Flow_Handler::change_qos(AVStreams::QoS qos)
         {
            if(ret < 0 )
              {
-                ACE_DEBUG((LM_DEBUG, "(%N,%l) errno: %p\n"));
+                ORBSVCS_DEBUG((LM_DEBUG, "(%N,%l) errno: %p\n"));
              }
         }
       return ret;
@@ -265,10 +267,10 @@ TAO_AV_UDP_Transport::send (const char *buf,
                             size_t len,
                             ACE_Time_Value *)
 {
-  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_UDP_Transport::send "));
+  if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"TAO_AV_UDP_Transport::send "));
   ACE_TCHAR addr [BUFSIZ];
   this->peer_addr_.addr_to_string (addr,BUFSIZ);
-  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"to %s\n",addr));
+  if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"to %s\n",addr));
 
   return this->handler_->get_socket ()->send (buf, len,this->peer_addr_);
 }
@@ -353,7 +355,7 @@ TAO_AV_UDP_Acceptor::open (TAO_Base_StreamEndPoint *endpoint,
                            TAO_AV_Flow_Protocol_Factory *factory,
                            TAO_AV_Core::Flow_Component flow_comp)
 {
-  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_UDP_Acceptor::open\n"));
+  if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"TAO_AV_UDP_Acceptor::open\n"));
   this->av_core_ = av_core;
   this->endpoint_ = endpoint;
   this->entry_ = entry;
@@ -377,7 +379,7 @@ TAO_AV_UDP_Acceptor::open (TAO_Base_StreamEndPoint *endpoint,
       inet_addr->addr_to_string (buf, BUFSIZ);
 
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
+        ORBSVCS_DEBUG ((LM_DEBUG,
                     "TAO_AV_UDP_Acceptor::open: %s\n",
                     buf));
     }
@@ -458,7 +460,7 @@ TAO_AV_UDP_Acceptor::open_i (ACE_INET_Addr *inet_addr,
 
         if (result < 0)
           {
-             ACE_DEBUG((LM_DEBUG,"(%N,%l) Error during connection setup: %d\n", result));
+             ORBSVCS_DEBUG((LM_DEBUG,"(%N,%l) Error during connection setup: %d\n", result));
           }
 
           local_addr->set (local_addr->get_port_number (),
@@ -546,7 +548,7 @@ TAO_AV_UDP_Acceptor::open_i (ACE_INET_Addr *inet_addr,
       ACE_TCHAR buf[BUFSIZ];
       local_addr->addr_to_string (buf,BUFSIZ);
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
+        ORBSVCS_DEBUG ((LM_DEBUG,
                     "TAO_AV_UDP_ACCEPTOR::open:%s\n",
                     buf));
     }
@@ -586,7 +588,7 @@ TAO_AV_UDP_Connector::open (TAO_Base_StreamEndPoint *endpoint,
                             TAO_AV_Flow_Protocol_Factory *factory)
 
 {
-  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_UDP_Connector::open "));
+  if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"TAO_AV_UDP_Connector::open "));
   this->endpoint_ = endpoint;
   this->av_core_ = av_core;
   this->flow_protocol_factory_ = factory;
@@ -758,7 +760,7 @@ TAO_AV_UDP_Connector::connect (TAO_FlowSpec_Entry *entry,
       local_addr->addr_to_string (buf,BUFSIZ);
 
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,"TAO_AV_UDP_CONNECTOR::connect:%s\n",buf));
+        ORBSVCS_DEBUG ((LM_DEBUG,"TAO_AV_UDP_CONNECTOR::connect:%s\n",buf));
     }
 
   // call activate svc handler.
@@ -808,7 +810,7 @@ TAO_AV_UDP_Connection_Setup::setup (TAO_AV_Flow_Handler *&flow_handler,
 
       result = handler->get_mcast_socket ()->join (*inet_addr);
       if (result < 0)
-        ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_UDP_MCast_connector::open failed\n"),-1);
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,"TAO_AV_UDP_MCast_connector::open failed\n"),-1);
 
       // Now disable Multicast loopback.
       // @@Should we make this a policy?
@@ -816,7 +818,7 @@ TAO_AV_UDP_Connection_Setup::setup (TAO_AV_Flow_Handler *&flow_handler,
       if (handler->get_mcast_socket ()->set_option (IP_MULTICAST_LOOP,
                                                     0) < 0)
         if (TAO_debug_level > 0)
-          ACE_DEBUG ((LM_DEBUG,"TAO_AV_UDP_MCast_Acceptor::multicast loop disable failed\n"));
+          ORBSVCS_DEBUG ((LM_DEBUG,"TAO_AV_UDP_MCast_Acceptor::multicast loop disable failed\n"));
       // @@ This should also be policies.
 #endif /*ACE_HAS_IP_MULTICAST*/
 
@@ -841,7 +843,7 @@ TAO_AV_UDP_Connection_Setup::setup (TAO_AV_Flow_Handler *&flow_handler,
         {
           result = handler->get_mcast_socket ()->get_local_addr (*local_addr);
           if (result < 0)
-            ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_Dgram_Connector::open: get_local_addr failed\n"),result);
+            ORBSVCS_ERROR_RETURN ((LM_ERROR,"TAO_AV_Dgram_Connector::open: get_local_addr failed\n"),result);
 
           local_addr->set (local_addr->get_port_number (),
                            local_addr->get_host_name ());
@@ -867,7 +869,7 @@ TAO_AV_UDP_Connection_Setup::setup (TAO_AV_Flow_Handler *&flow_handler,
       else
         result = handler->open (*local_addr);
       if (result < 0)
-        ACE_ERROR_RETURN ((LM_ERROR,"handler::open failed\n"),-1);
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,"handler::open failed\n"),-1);
 
       // set the socket buffer sizes to 64k.
       int sndbufsize = ACE_DEFAULT_MAX_SOCKET_BUFSIZ;
@@ -898,7 +900,7 @@ TAO_AV_UDP_Connection_Setup::setup (TAO_AV_Flow_Handler *&flow_handler,
       local_addr->addr_to_string (buf, BUFSIZ);
 
       if (result < 0)
-        ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_Dgram_Connector::open: get_local_addr failed\n"),result);
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,"TAO_AV_Dgram_Connector::open: get_local_addr failed\n"),result);
     }
 
   return 1;
@@ -929,7 +931,7 @@ TAO_AV_UDP_Factory::match_protocol (const char *protocol_string)
 TAO_AV_Acceptor*
 TAO_AV_UDP_Factory::make_acceptor (void)
 {
-  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_UDP_Factory::make_acceptor\n"));
+  if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"TAO_AV_UDP_Factory::make_acceptor\n"));
   TAO_AV_Acceptor *acceptor = 0;
   ACE_NEW_RETURN (acceptor,
                   TAO_AV_UDP_Acceptor,
@@ -940,7 +942,7 @@ TAO_AV_UDP_Factory::make_acceptor (void)
 TAO_AV_Connector*
 TAO_AV_UDP_Factory::make_connector (void)
 {
-  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_UDP_Factory::make_connector\n"));
+  if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"TAO_AV_UDP_Factory::make_connector\n"));
   TAO_AV_Connector *connector = 0;
   ACE_NEW_RETURN (connector,
                   TAO_AV_UDP_Connector,
@@ -965,7 +967,7 @@ TAO_AV_UDP_Object::handle_input (void)
   int n = this->transport_->recv (this->frame_.rd_ptr (),
                                   this->frame_.size ());
   if (n == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,"(%N,%l) TAO_AV_UDP_Flow_Handler::handle_input recv failed: errno: %m\n"),-1);
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,"(%N,%l) TAO_AV_UDP_Flow_Handler::handle_input recv failed: errno: %m\n"),-1);
 
   this->frame_.wr_ptr (this->frame_.rd_ptr () + n);
 
@@ -977,7 +979,7 @@ TAO_AV_UDP_Object::send_frame (ACE_Message_Block *frame,
                                TAO_AV_frame_info * /*frame_info*/)
 {
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,"TAO_AV_UDP_Object::send_frame\n"));
+    ORBSVCS_DEBUG ((LM_DEBUG,"TAO_AV_UDP_Object::send_frame\n"));
   int const result = this->transport_->send (frame);
   if (result < 0)
     return result;
@@ -1061,7 +1063,7 @@ TAO_AV_UDP_Flow_Factory::make_protocol_object (TAO_FlowSpec_Entry *entry,
 {
   TAO_AV_Callback *callback = 0;
   if( endpoint->get_callback (entry->flowname (), callback) ) {
-    ACE_ERROR_RETURN ((LM_ERROR, "(%N,%l) Invalid callback\n"), 0);
+    ORBSVCS_ERROR_RETURN ((LM_ERROR, "(%N,%l) Invalid callback\n"), 0);
   }
 
   TAO_AV_UDP_Object *object = 0;

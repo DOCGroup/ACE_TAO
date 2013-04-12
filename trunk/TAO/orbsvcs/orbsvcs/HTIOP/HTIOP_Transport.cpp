@@ -1,5 +1,7 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/HTIOP/HTIOP_Transport.h"
 
 #include "orbsvcs/HTIOP/HTIOP_Connection_Handler.h"
@@ -77,7 +79,7 @@ TAO::HTIOP::Transport::recv (char *buf,
       errno != ETIME)
     {
 
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - TAO::HTIOP::Transport[%d]::recv_i, ")
                   ACE_TEXT ("read failure - %m"),
                   this->id ()));
@@ -110,7 +112,7 @@ TAO::HTIOP::Transport::register_handler (void)
 {
   if (TAO_debug_level > 4)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT("TAO (%P|%t) - TAO::HTIOP::Transport[%d]::register_handler\n"),
                   this->id ()));
     }
@@ -187,7 +189,7 @@ TAO::HTIOP::Transport::send_message (TAO_OutputCDR &stream,
       // a core. %m would then be softer on this.
       if (TAO_debug_level)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - TAO::HTIOP::Transport[%d]::send_message, ")
                       ACE_TEXT (" write failure - %m\n"),
                       this->id ()));
@@ -210,7 +212,7 @@ TAO::HTIOP::Transport::tear_listen_point_list (TAO_InputCDR &cdr)
 
   ::HTIOP::ListenPointList listen_list;
   if ((cdr >> listen_list) == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,"tear_listen_point_list: no list\n"),-1);
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,"tear_listen_point_list: no list\n"),-1);
   //return -1;
 
   // As we have received a bidirectional information, set the flag to
@@ -242,7 +244,7 @@ TAO::HTIOP::Transport::set_bidir_context_info (TAO_Operation_Details &opdetails)
           if (this->get_listen_point (listen_point_list,
                                       *acceptor) == -1)
             {
-              ACE_ERROR ((LM_ERROR,
+              ORBSVCS_ERROR ((LM_ERROR,
                           ACE_TEXT("TAO (%P|%t) - TAO::HTIOP::Transport::set_bidir_info, "),
                           ACE_TEXT("error getting listen_point\n")));
 
@@ -294,7 +296,7 @@ TAO::HTIOP::Transport::get_listen_point (::HTIOP::ListenPointList &lp_list,
     if (this->connection_handler_->peer ().get_local_addr (local_addr)
         == -1)
       {
-        ACE_ERROR_RETURN ((LM_ERROR,
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("(%P|%t) Could not resolve local ")
                            ACE_TEXT ("host address in ")
                            ACE_TEXT ("get_listen_point()\n")),
@@ -315,7 +317,7 @@ TAO::HTIOP::Transport::get_listen_point (::HTIOP::ListenPointList &lp_list,
                                     local_addr,
                                     local_interface.out ()) == -1)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("(%P|%t) Could not resolve local host")
                              ACE_TEXT (" name\n")),
                             -1);

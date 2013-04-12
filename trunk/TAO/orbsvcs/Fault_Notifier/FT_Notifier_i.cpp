@@ -11,6 +11,7 @@
  */
 //=============================================================================
 
+#include "orbsvcs/Log_Macros.h"
 #include "FT_Notifier_i.h"
 
 #include "ace/Get_Opt.h"
@@ -23,7 +24,7 @@
 #define METHOD_ENTRY(name)    \
   if (TAO_debug_level > 6)    \
   {                           \
-    ACE_DEBUG (( LM_DEBUG,    \
+    ORBSVCS_DEBUG (( LM_DEBUG,    \
     "Enter %C\n", #name       \
       ));                     \
   }
@@ -42,7 +43,7 @@
 #define METHOD_RETURN(name)   \
   if (TAO_debug_level > 6)    \
   {                           \
-    ACE_DEBUG (( LM_DEBUG,    \
+    ORBSVCS_DEBUG (( LM_DEBUG,    \
       "Leave %C\n", #name     \
       ));                     \
   }                           \
@@ -100,13 +101,13 @@ int TAO::FT_FaultNotifier_i::idle(int &result)
   {
     if ( linger == 0)
     {
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
         "FaultNotifier (%P|%t) Begin linger.\n"
       ));
     }
     if(++linger > 5)//10)
     {
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
         "FaultNotifier (%P|%t) idle returnning gone\n"
       ));
     }
@@ -135,7 +136,7 @@ int TAO::FT_FaultNotifier_i::write_ior()
   }
   else
   {
-    ACE_ERROR ((LM_ERROR,
+    ORBSVCS_ERROR ((LM_ERROR,
       "%T %n (%P|%t) Open failed for %s\n", ior_output_file_
     ));
   }
@@ -173,7 +174,7 @@ int TAO::FT_FaultNotifier_i::parse_args (int argc, ACE_TCHAR * argv[])
         // fall thru
       default:
       {
-        ACE_ERROR_RETURN ((LM_ERROR,
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s"
                            " -o <iorfile>"
                            " -r disable registration with ReplicationManager"
@@ -204,7 +205,7 @@ void TAO::FT_FaultNotifier_i::_remove_ref (void)
 {
   notify_channel_->destroy();
 
-  ACE_ERROR ((LM_ERROR,
+  ORBSVCS_ERROR ((LM_ERROR,
     "FaultNotifier (%P|%t) _remove_ref setting gone\n"
   ));
   this->gone_ = 1;
@@ -228,13 +229,13 @@ int TAO::FT_FaultNotifier_i::fini (void)
     try
     {
       this->replication_manager_->register_fault_notifier(::FT::FaultNotifier::_nil ());
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
         "FaultNotifier unregistered from ReplicationManager.\n"
         ));
     }
     catch (const CORBA::Exception&)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
         "FaultNotifier Can't unregister from ReplicationManager.\n"
         ));
       // complain, but otherwise ignore this error
@@ -256,7 +257,7 @@ int TAO::FT_FaultNotifier_i::init (CORBA::ORB_ptr orb )
     this->orb_->resolve_initial_references (TAO_OBJID_ROOTPOA);
 
   if (CORBA::is_nil (poa_object.in ()))
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT (" (%P|%t) Unable to initialize the POA.\n")),
                       -1);
 
@@ -267,7 +268,7 @@ int TAO::FT_FaultNotifier_i::init (CORBA::ORB_ptr orb )
 
   if (CORBA::is_nil(this->poa_.in ()))
   {
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT (" (%P|%t) Unable to narrow the POA.\n")),
                       -1);
   }
@@ -320,7 +321,7 @@ int TAO::FT_FaultNotifier_i::init (CORBA::ORB_ptr orb )
     = ::CosNotifyChannelAdmin::StructuredProxyPushConsumer::_narrow(consumer.in ());
   if (CORBA::is_nil (this->structured_proxy_push_consumer_.in ()))
   {
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
        "%T %n (%P|%t) Should not occur: Unable to narrow Structured Proxy Push Consumer\n"),
       1);
   }
@@ -342,7 +343,7 @@ int TAO::FT_FaultNotifier_i::init (CORBA::ORB_ptr orb )
     = ::CosNotifyChannelAdmin::SequenceProxyPushConsumer::_narrow(consumer.in ());
   if (CORBA::is_nil (this->sequence_proxy_push_consumer_.in ()))
   {
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
        "%T %n (%P|%t) Should not occur: Unable to narrow Sequence Proxy Push Consumer\n"),
       1);
   }
@@ -359,7 +360,7 @@ int TAO::FT_FaultNotifier_i::init (CORBA::ORB_ptr orb )
   this->consumer_admin_ = this->notify_channel_->default_consumer_admin ();
   if (CORBA::is_nil (this->consumer_admin_.in ()))
   {
-    ACE_ERROR ((LM_ERROR,
+    ORBSVCS_ERROR ((LM_ERROR,
       "%T %n (%P|%t) NIL consumer admin\n"
       ));
     result = -1;
@@ -381,21 +382,21 @@ int TAO::FT_FaultNotifier_i::init (CORBA::ORB_ptr orb )
         if (! CORBA::is_nil (notifier.in ()))
         {
           this->replication_manager_->register_fault_notifier(notifier.in ());
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
             "FaultNotifier registered with ReplicationManager.\n"
             ));
           this->registered_ = 1;
         }
         else
         {
-          ACE_ERROR ((LM_ERROR,
+          ORBSVCS_ERROR ((LM_ERROR,
             "Error: Registration failed.  This is not a FaultNotifier (should not occur.)\n"
             ));
         }
       }
       else
       {
-        ACE_ERROR ((LM_ERROR,"FaultNotifier: Can't resolve ReplicationManager, It will not be registered.\n" ));
+        ORBSVCS_ERROR ((LM_ERROR,"FaultNotifier: Can't resolve ReplicationManager, It will not be registered.\n" ));
       }
     }
     catch (const CORBA::Exception& ex)
@@ -406,7 +407,7 @@ int TAO::FT_FaultNotifier_i::init (CORBA::ORB_ptr orb )
   }
   else
   {
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
       "FaultNotifier: ReplicationManager registration disabled.\n"
       ));
   }
@@ -435,7 +436,7 @@ int TAO::FT_FaultNotifier_i::init (CORBA::ORB_ptr orb )
         this->orb_->resolve_initial_references ("NameService");
 
       if (CORBA::is_nil(naming_obj.in ())){
-        ACE_ERROR_RETURN ((LM_ERROR,
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            "%T %n (%P|%t) Unable to find the Naming Service\n"),
                           1);
       }
@@ -444,7 +445,7 @@ int TAO::FT_FaultNotifier_i::init (CORBA::ORB_ptr orb )
         CosNaming::NamingContext::_narrow (naming_obj.in ());
       if (CORBA::is_nil(this->naming_context_.in ()))
       {
-        ACE_ERROR_RETURN ((LM_ERROR,
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,
            "%T %n (%P|%t) Should not occur: Can't narrow initial reference to naming context.\n"),
           1);
       }
@@ -542,7 +543,7 @@ FT::FaultNotifier::ConsumerId TAO::FT_FaultNotifier_i::connect_structured_fault_
   {
     // this is a shoould-not-occur situation.  The consumer admin returned
     // the wrong kind of object.
-    ACE_ERROR(( LM_ERROR,
+    ORBSVCS_ERROR(( LM_ERROR,
        "%T %n (%P|%t) Unexpected result: Wrong type of object returned from obtain_notification_push_supplier\n"
        ));
   }
@@ -603,7 +604,7 @@ FT::FaultNotifier::ConsumerId TAO::FT_FaultNotifier_i::connect_sequence_fault_co
   {
     // this is a shoould-not-occur situation.  The consumer admin returned
     // the wrong kind of object.
-    ACE_ERROR(( LM_ERROR,
+    ORBSVCS_ERROR(( LM_ERROR,
        "%T %n (%P|%t) Unexpected result: Wrong type of object returned from obtain_notification_push_supplier\n"
        ));
   }
@@ -653,7 +654,7 @@ void TAO::FT_FaultNotifier_i::disconnect_consumer (
         }
         else
         {
-          ACE_ERROR((LM_ERROR,
+          ORBSVCS_ERROR((LM_ERROR,
             "%T %n (%P|%t) Unexpected proxy supplier type\n"
             ));
           throw CosEventComm::Disconnected();
@@ -672,7 +673,7 @@ void TAO::FT_FaultNotifier_i::disconnect_consumer (
     if (! this->quitting_
       && this->consumer_connects_ == this->consumer_disconnects_)
     {
-      ACE_ERROR((LM_ERROR,
+      ORBSVCS_ERROR((LM_ERROR,
         "FaultNotifier (%P|%t) quit on idle: connects %d, disconnects %d\n",
         static_cast<unsigned int> (this->consumer_connects_),
         static_cast<unsigned int> (this->consumer_disconnects_)
