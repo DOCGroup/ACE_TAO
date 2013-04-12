@@ -1,3 +1,14 @@
+Fri Apr 12 17:27:29 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Adapter_Activator.h:
+        * orbsvcs/ImplRepo_Service/Forwarder.h:
+
+          Fix for versioned namespace builds.
+
+        * utils/logWalker/Invocation.cpp:
+
+          clean up some scoreboard warnings.
+
 Fri Apr 12 12:11:11 UTC 2013  Martin Corino  <mcorino@remedy.nl>
 
         * tests/Bug_3384_Regression/Client_i.h:
