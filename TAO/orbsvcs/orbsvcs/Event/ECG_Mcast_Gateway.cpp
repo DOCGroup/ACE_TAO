@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Event/ECG_Mcast_Gateway.h"
 
 #include "orbsvcs/Event/EC_Lifetime_Utils_T.h"

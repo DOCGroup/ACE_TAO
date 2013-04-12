@@ -3,6 +3,7 @@
 #ifndef MONITORPROXYSUPPLIER_T_CPP
 #define MONITORPROXYSUPPLIER_T_CPP
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Notify/MonitorControlExt/MonitorProxySupplier_T.h"
 #include "orbsvcs/Notify/MonitorControlExt/MonitorConsumerAdmin.h"
 #include "orbsvcs/Notify/MonitorControlExt/MonitorEventChannel.h"

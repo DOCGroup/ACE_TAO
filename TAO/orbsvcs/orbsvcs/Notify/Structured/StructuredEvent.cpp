@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Notify/Structured/StructuredEvent.h"
 #include "orbsvcs/Notify/PropertySeq.h"
 #include "orbsvcs/Notify/Consumer.h"

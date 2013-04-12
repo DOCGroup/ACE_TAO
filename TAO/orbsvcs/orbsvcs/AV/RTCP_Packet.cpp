@@ -1,4 +1,6 @@
 // $Id$
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/AV/RTCP_Packet.h"
 #include "orbsvcs/AV/RTP.h"
 

@@ -10,6 +10,7 @@
 //=============================================================================
 
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Sched/SchedEntry.h"
 #include "ace/SString.h"
 #include "ace/OS_NS_stdio.h"

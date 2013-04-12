@@ -9,6 +9,7 @@
 //=============================================================================
 
 
+#include "orbsvcs/Log_Macros.h"
 #include "ace/streams.h"
 #include "orbsvcs/CosConcurrencyControlC.h"
 #include "tao/debug.h"

@@ -4,6 +4,8 @@
 // TAO_FlowSpec_Entry
 //------------------------------------------------------------
 
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/AV/FlowSpec_Entry.h"
 #include "orbsvcs/AV/Protocol_Factory.h"
 

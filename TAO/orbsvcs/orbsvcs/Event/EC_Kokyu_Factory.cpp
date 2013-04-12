@@ -1,5 +1,7 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Event/EC_Kokyu_Factory.h"
 #include "orbsvcs/Event/EC_Kokyu_Dispatching.h"
 #include "orbsvcs/Event/EC_Kokyu_Scheduling.h"

@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Notify/ThreadPool_Task.h"
 #include "orbsvcs/Notify/Properties.h"
 #include "orbsvcs/Notify/Timer_Queue.h"

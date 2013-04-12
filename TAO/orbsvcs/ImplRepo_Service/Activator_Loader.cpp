@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "Activator_Loader.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/Task.h"

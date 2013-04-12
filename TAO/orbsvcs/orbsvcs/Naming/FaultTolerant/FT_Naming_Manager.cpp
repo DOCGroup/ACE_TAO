@@ -10,6 +10,7 @@
  */
 //=============================================================================
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.h"
 #include "orbsvcs/FT_NamingManagerC.h"
 #include "orbsvcs/PortableGroup/PG_Property_Utils.h"

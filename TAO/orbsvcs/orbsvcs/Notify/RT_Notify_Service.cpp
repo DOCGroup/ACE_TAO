@@ -1,5 +1,7 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Notify/RT_Notify_Service.h"
 #include "ace/Dynamic_Service.h"
 #include "orbsvcs/Notify/Properties.h"

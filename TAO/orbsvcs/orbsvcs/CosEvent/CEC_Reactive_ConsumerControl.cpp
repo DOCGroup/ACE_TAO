@@ -4,6 +4,7 @@
 // the Typed and Un-typed Event Channels.  A check must be made in the code
 // to ensure the correct EC is referenced.
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/CosEvent/CEC_EventChannel.h"
 #include "orbsvcs/CosEvent/CEC_ConsumerAdmin.h"
 #include "orbsvcs/CosEvent/CEC_Reactive_ConsumerControl.h"

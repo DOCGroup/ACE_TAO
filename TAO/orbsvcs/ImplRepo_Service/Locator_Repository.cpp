@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "Locator_Repository.h"
 #include "utils.h"
 #include "tao/ORB_Core.h"

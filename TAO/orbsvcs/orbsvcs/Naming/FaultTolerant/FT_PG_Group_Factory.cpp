@@ -10,6 +10,7 @@
  */
 //=============================================================================
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Naming/FaultTolerant/FT_PG_Group_Factory.h"
 #include "orbsvcs/Naming/FaultTolerant/FT_PG_Object_Group_Storable.h"
 

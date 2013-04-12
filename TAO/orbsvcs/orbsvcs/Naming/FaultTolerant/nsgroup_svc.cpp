@@ -10,6 +10,7 @@
  */
 //=============================================================================
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Naming/FaultTolerant/nsgroup_svc.h"
 #include "ace/OS_NS_strings.h"
 

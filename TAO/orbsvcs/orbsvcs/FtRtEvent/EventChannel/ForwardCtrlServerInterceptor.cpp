@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/FtRtEvent/EventChannel/ForwardCtrlServerInterceptor.h"
 #include "orbsvcs/FtRtEvent/EventChannel/GroupInfoPublisher.h"
 #include "orbsvcs/FtRtEvent/EventChannel/IOGR_Maker.h"

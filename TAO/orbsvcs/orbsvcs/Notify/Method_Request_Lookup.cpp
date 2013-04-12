@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Notify/Method_Request_Lookup.h"
 #include "orbsvcs/Notify/Consumer_Map.h"
 #include "orbsvcs/Notify/ProxySupplier.h"

@@ -1,5 +1,7 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Log/Log_i.h"
 #include "orbsvcs/Log/LogMgr_i.h"
 #include "orbsvcs/Time_Utilities.h"

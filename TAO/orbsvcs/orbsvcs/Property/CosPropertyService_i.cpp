@@ -10,6 +10,8 @@
 //=============================================================================
 
 
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Property/CosPropertyService_i.h"
 #include "ace/ACE.h"
 #include "ace/OS_NS_string.h"

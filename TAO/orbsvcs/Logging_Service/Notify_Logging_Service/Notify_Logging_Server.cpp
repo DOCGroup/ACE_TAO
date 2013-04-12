@@ -1,5 +1,6 @@
 //$Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "Notify_Logging_Service.h"
 #include "ace/OS_main.h"
 #include "orbsvcs/Shutdown_Utilities.h"

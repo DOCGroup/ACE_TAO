@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "tao_imr_i.h"
 
 #include "tao/PortableServer/PortableServer.h"

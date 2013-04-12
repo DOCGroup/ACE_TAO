@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "ace/Dynamic_Service.h"
 #include "orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel.h"
 #include "orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel_Impl.h"

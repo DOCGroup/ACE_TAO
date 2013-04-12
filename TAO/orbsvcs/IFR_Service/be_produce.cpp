@@ -67,6 +67,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // BE_produce.cc - Produce the work of the BE - does nothing in the
 //                 dummy BE
 
+#include "orbsvcs/Log_Macros.h"
 #include "global_extern.h"
 #include "TAO_IFR_BE_Export.h"
 #include "be_extern.h"

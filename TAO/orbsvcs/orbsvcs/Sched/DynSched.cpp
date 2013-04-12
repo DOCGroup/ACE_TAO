@@ -11,6 +11,7 @@
 //=============================================================================
 
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Sched/DynSched.h"
 #include "ace/Basic_Types.h"
 #include "ace/Sched_Params.h"

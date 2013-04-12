@@ -3,6 +3,7 @@
 #ifndef TAO_AV_ENDPOINT_STRATEGY_T_CPP
 #define TAO_AV_ENDPOINT_STRATEGY_T_CPP
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/AV/Endpoint_Strategy_T.h"
 
 #include "tao/debug.h"

@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Notify/Any/CosEC_ProxyPushConsumer.h"
 #include "tao/debug.h"
 #include "orbsvcs/Notify/AdminProperties.h"

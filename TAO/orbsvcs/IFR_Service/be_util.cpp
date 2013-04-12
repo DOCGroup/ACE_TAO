@@ -12,6 +12,7 @@
  */
 //=============================================================================
 
+#include "orbsvcs/Log_Macros.h"
 #include "be_util.h"
 #include "be_extern.h"
 

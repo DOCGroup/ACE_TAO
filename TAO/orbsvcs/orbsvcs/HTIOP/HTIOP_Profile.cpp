@@ -1,6 +1,8 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/HTIOP/HTIOP_Profile.h"
 #include "orbsvcs/HTIOP/htiop_endpointsC.h"
 

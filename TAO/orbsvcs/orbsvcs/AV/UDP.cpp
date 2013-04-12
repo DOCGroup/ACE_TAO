@@ -1,5 +1,7 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/AV/UDP.h"
 #include "orbsvcs/AV/AVStreams_i.h"
 #include "orbsvcs/AV/MCast.h"

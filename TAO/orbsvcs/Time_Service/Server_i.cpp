@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "Server_i.h"
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"

@@ -11,6 +11,7 @@
 //=============================================================================
 
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Naming/FaultTolerant/FT_Naming_Server.h"
 #include "orbsvcs/Naming/Naming_Server.h"
 

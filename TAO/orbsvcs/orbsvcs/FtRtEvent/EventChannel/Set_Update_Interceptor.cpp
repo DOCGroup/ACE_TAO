@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "tao/CDR.h"
 #include "tao/AnyTypeCode/IOPA.h"
 #include "orbsvcs/FtRtEvent/EventChannel/Set_Update_Interceptor.h"

@@ -14,6 +14,8 @@
 
 //===========================================================================
 
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Trader/Trading_Loader.h"
 
 #include "orbsvcs/Daemon_Utilities.h"

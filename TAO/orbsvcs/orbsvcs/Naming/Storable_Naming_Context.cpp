@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Naming/Storable_Naming_Context.h"
 #include "orbsvcs/Naming/Storable_Naming_Context_Factory.h"
 #include "orbsvcs/Naming/Storable_Naming_Context_ReaderWriter.h"

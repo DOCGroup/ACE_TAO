@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h"
 #include "orbsvcs/SSLIOP/SSLIOP_Endpoint.h"
 #include "orbsvcs/SSLIOP/SSLIOP_Util.h"

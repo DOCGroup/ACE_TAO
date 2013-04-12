@@ -1,5 +1,6 @@
 /* -*- C++ -*- $Id$ */
 
+#include "orbsvcs/Log_Macros.h"
 #include "Validate_Client_Task.h"
 #include "EventChannelFactory.h"
 #include "tao/ORB_Core.h"

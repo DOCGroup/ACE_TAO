@@ -10,6 +10,7 @@
  */
 //=============================================================================
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Naming/FaultTolerant/FT_Naming_Replication_Manager.h"
 #include "orbsvcs/Naming/FaultTolerant/FT_Naming_Server.h"
 #include "tao/corba.h"

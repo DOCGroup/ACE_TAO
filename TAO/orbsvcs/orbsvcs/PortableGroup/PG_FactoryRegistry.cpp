@@ -1,6 +1,7 @@
 // -*- C++ -*-
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/PortableGroup/PG_FactoryRegistry.h"
 
 #include "ace/Get_Opt.h"

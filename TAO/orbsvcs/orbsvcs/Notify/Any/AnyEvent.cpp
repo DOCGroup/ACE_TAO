@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Notify/Any/AnyEvent.h"
 #include "orbsvcs/Notify/Consumer.h"
 #include "tao/corba.h"

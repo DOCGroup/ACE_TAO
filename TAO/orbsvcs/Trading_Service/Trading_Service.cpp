@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "ace/Arg_Shifter.h"
 #include "Trading_Service.h"
 

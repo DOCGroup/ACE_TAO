@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/CosEvent/CEC_Default_Factory.h"
 #include "orbsvcs/CosEvent/CEC_MT_Dispatching.h"
 #include "orbsvcs/CosEvent/CEC_Reactive_Pulling_Strategy.h"

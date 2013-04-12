@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Notify/ETCL_Filter.h"
 #include "ace/Auto_Ptr.h"
 #include "tao/debug.h"

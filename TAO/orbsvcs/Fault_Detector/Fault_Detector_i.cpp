@@ -11,6 +11,7 @@
  *  @author Dale Wilson <wilson_d@ociweb.com>
  */
 //=============================================================================
+#include "orbsvcs/Log_Macros.h"
 #include "Fault_Detector_i.h"
 #include "FT_FaultDetectorFactory_i.h"
 #include "tao/debug.h"

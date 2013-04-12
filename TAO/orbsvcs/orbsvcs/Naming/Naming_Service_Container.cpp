@@ -13,6 +13,8 @@
 #ifndef NS_CONTAINER_CPP
 #define NS_CONTAINER_CPP
 
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
 #include "ace/Malloc_Base.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

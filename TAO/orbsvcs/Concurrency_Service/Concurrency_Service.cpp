@@ -13,6 +13,7 @@
 //=============================================================================
 
 
+#include "orbsvcs/Log_Macros.h"
 #include "Concurrency_Service.h"
 
 #include "orbsvcs/Daemon_Utilities.h"

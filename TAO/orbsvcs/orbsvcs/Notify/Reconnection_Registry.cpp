@@ -7,6 +7,7 @@
  *
  *  @author Dale Wilson <wilson_d@ociweb.com>
  */
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Notify/Reconnection_Registry.h"
 
 #include "tao/debug.h"

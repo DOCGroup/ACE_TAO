@@ -1,5 +1,7 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Log/LogMgr_i.h"
 #include "orbsvcs/Log/Hash_LogRecordStore.h"
 #include "orbsvcs/Log/Hash_Iterator_i.h"

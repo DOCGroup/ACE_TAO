@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Notify/Sequence/SequenceProxyPushSupplier.h"
 #include "tao/debug.h"
 #include "orbsvcs/Notify/Sequence/SequencePushConsumer.h"

@@ -4,6 +4,7 @@
 // before TAO_Pseudo_{Var,Out}_T templates.  All required
 // non-dependent names must be parsed prior to the template in
 // question when using compilers like g++ 3.4.x.
+#include "orbsvcs/Log_Macros.h"
 #include "tao/DynamicInterface/DII_CORBA_methods.h"
 
 #include "orbsvcs/CosEvent/CEC_ProxyPushSupplier.h"

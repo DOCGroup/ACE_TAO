@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "XML_Backing_Store.h"
 #include "Server_Info.h"
 #include "Activator_Info.h"

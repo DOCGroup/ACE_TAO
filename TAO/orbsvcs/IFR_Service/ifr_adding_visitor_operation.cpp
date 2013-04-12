@@ -1,6 +1,7 @@
 /* -*- c++ -*- */
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "ast_argument.h"
 #include "ast_exception.h"
 #include "ast_expression.h"

@@ -15,6 +15,7 @@
 //=============================================================================
 
 
+#include "orbsvcs/Log_Macros.h"
 #include "tao/ORB_Constants.h"
 #include "tao/ORB.h"
 #include "ace/Service_Config.h"

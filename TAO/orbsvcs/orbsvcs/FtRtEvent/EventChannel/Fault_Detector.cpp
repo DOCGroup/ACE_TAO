@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "ace/Reactor.h"
 #include "orbsvcs/FtRtEvent/EventChannel/Fault_Detector.h"
 #include "ace/Select_Reactor.h"

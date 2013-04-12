@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "ace/Singleton.h"
 #include "ace/Null_Mutex.h"
 
