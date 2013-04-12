@@ -4,6 +4,8 @@
 // TAO_FlowSpec_Entry
 //------------------------------------------------------------
 
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/AV/FlowSpec_Entry.h"
 #include "orbsvcs/AV/Protocol_Factory.h"
 
@@ -203,12 +205,12 @@ TAO_FlowSpec_Entry::set_protocol (void)
   if (this->address_ != 0)
     {
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "TAO_FlowSpec_Entry::set_protocol address is not 0\n"));
+        ORBSVCS_DEBUG ((LM_DEBUG, "TAO_FlowSpec_Entry::set_protocol address is not 0\n"));
       ACE_INET_Addr *inet_addr = dynamic_cast<ACE_INET_Addr*> (this->address_);
       ACE_TCHAR buf[BUFSIZ];
       inet_addr->addr_to_string (buf,BUFSIZ);
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,"TAO_FlowSpec_Entry::set_protocol:%s %x\n",buf, inet_addr->get_ip_address ()));
+        ORBSVCS_DEBUG ((LM_DEBUG,"TAO_FlowSpec_Entry::set_protocol:%s %x\n",buf, inet_addr->get_ip_address ()));
       if (IN_CLASSD (inet_addr->get_ip_address ()))
         {
           this->is_multicast_ = 1;
@@ -239,7 +241,7 @@ TAO_FlowSpec_Entry::parse_address (const char *address,
                                    TAO_AV_Core::Flow_Component flow_comp)
 {
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG, "TAO_FlowSpec_Entry::parse_address [%s]\n", address));
+    ORBSVCS_DEBUG ((LM_DEBUG, "TAO_FlowSpec_Entry::parse_address [%s]\n", address));
 
   if (address == 0)
     return 0;
@@ -255,7 +257,7 @@ TAO_FlowSpec_Entry::parse_address (const char *address,
 
   if (protocol_tokenizer [1] != 0)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   "Protocol tokenixer is not null\n"));
       if ((flow_comp == TAO_AV_Core::TAO_AV_DATA) ||
           //(flow_comp == TAO_AV_Core::TAO_AV_BOTH) ||
@@ -266,7 +268,7 @@ TAO_FlowSpec_Entry::parse_address (const char *address,
             {
               TAO_Tokenizer addr_token (protocol_tokenizer [1], ';');
 
-              ACE_DEBUG ((LM_DEBUG,
+              ORBSVCS_DEBUG ((LM_DEBUG,
                           "Number of local sec addresses = %d\n",
                           addr_token.num_tokens () - 1));
 
@@ -276,7 +278,7 @@ TAO_FlowSpec_Entry::parse_address (const char *address,
                   ACE_NEW_RETURN (local_sec_addr_, char* [addr_token.num_tokens () - 1],-1);
                   for (int j = 1; j <= addr_token.num_tokens () - 1; j++)
                     {
-                      ACE_DEBUG ((LM_DEBUG,
+                      ORBSVCS_DEBUG ((LM_DEBUG,
                                   "adding addresses to sequence %s\n",
                                   addr_token [j]));
 
@@ -318,7 +320,7 @@ TAO_FlowSpec_Entry::parse_address (const char *address,
                 if (IN_CLASSD (inet_addr->get_ip_address ()))
                   {
                     if (TAO_debug_level > 0)
-                      ACE_DEBUG ((LM_DEBUG, "TAO_FlowSpec_Entry::parse_address is multicast\n"));
+                      ORBSVCS_DEBUG ((LM_DEBUG, "TAO_FlowSpec_Entry::parse_address is multicast\n"));
 
                     this->is_multicast_ = 1;
                     switch (this->protocol_)
@@ -342,12 +344,12 @@ TAO_FlowSpec_Entry::parse_address (const char *address,
               }
               break;
             default:
-              if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"ATM support not added yet\n"));
+              if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"ATM support not added yet\n"));
             }
         }
       else
         {
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       "AV BOTH %s\n",
                       protocol_tokenizer[1]));
 
@@ -360,7 +362,7 @@ TAO_FlowSpec_Entry::parse_address (const char *address,
 
           if (this->protocol_ == TAO_AV_Core::TAO_AV_SCTP_SEQ)
             {
-              ACE_DEBUG ((LM_DEBUG,
+              ORBSVCS_DEBUG ((LM_DEBUG,
                           "Number of local sec addresses = %d\n",
                           port_tokenizer.num_tokens () - 1));
 
@@ -369,7 +371,7 @@ TAO_FlowSpec_Entry::parse_address (const char *address,
                   ACE_NEW_RETURN (local_sec_addr_, char* [port_tokenizer.num_tokens () - 1],-1);
                   for (int j = 1; j <= port_tokenizer.num_tokens () - 1; j++)
                     {
-                      ACE_DEBUG ((LM_DEBUG,
+                      ORBSVCS_DEBUG ((LM_DEBUG,
                                   "adding addresses to sequence %s\n",
                                   port_tokenizer [j]));
 
@@ -425,7 +427,7 @@ TAO_FlowSpec_Entry::parse_address (const char *address,
                 if (IN_CLASSD (inet_addr->get_ip_address ()))
                   {
                     if (TAO_debug_level > 0)
-                      ACE_DEBUG ((LM_DEBUG, "TAO_FlowSpec_Entry::parse_address is multicast\n"));
+                      ORBSVCS_DEBUG ((LM_DEBUG, "TAO_FlowSpec_Entry::parse_address is multicast\n"));
 
                     this->is_multicast_ = 1;
                     switch (this->protocol_)
@@ -449,11 +451,11 @@ TAO_FlowSpec_Entry::parse_address (const char *address,
               }
               break;
             default:
-              if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"ATM support not added yet\n"));
+              if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"ATM support not added yet\n"));
             }
         }
     }
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
               "Return from parse address\n"));
   return 0;
 }
@@ -480,7 +482,7 @@ TAO_FlowSpec_Entry::get_local_addr_str (void)
         return cstring.rep ();
       }
     default:
-      ACE_ERROR_RETURN ((LM_ERROR,"Address family not supported"),0);
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,"Address family not supported"),0);
     }
 }
 
@@ -541,7 +543,7 @@ TAO_Forward_FlowSpec_Entry::parse (const char *flowSpec_entry)
   this->flowname_ = tokenizer [TAO_AV_FLOWNAME];
 
   if (TAO_debug_level > 0)
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   "TAO_Forward_FlowSpec_Entry::parse [%s]\n",
                   flowSpec_entry));
 
@@ -564,7 +566,7 @@ TAO_Forward_FlowSpec_Entry::parse (const char *flowSpec_entry)
         {
           TAO_Tokenizer addr_token (tokenizer [TAO_AV_PEER_ADDR], ';');
 
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       "Number of peer sec addresses = %d\n",
                       addr_token.num_tokens () - 1));
 
@@ -577,7 +579,7 @@ TAO_Forward_FlowSpec_Entry::parse (const char *flowSpec_entry)
               ACE_NEW_RETURN (peer_sec_addr_, char* [addr_token.num_tokens () - 1],-1);
               for (int j = 1; j <= addr_token.num_tokens () - 1; j++)
                 {
-                  ACE_DEBUG ((LM_DEBUG,
+                  ORBSVCS_DEBUG ((LM_DEBUG,
                               "adding addresses to sequence %s\n",
                               addr_token [j]));
 
@@ -597,7 +599,7 @@ TAO_Forward_FlowSpec_Entry::parse (const char *flowSpec_entry)
 
       ACE_TCHAR buf [BUFSIZ];
       addr->addr_to_string (buf, BUFSIZ);
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   "Peer Address %s\n",
                   buf));
 
@@ -811,11 +813,11 @@ TAO_Forward_FlowSpec_Entry::entry_to_string (void)
       this->entry_ += "\\";
       this->entry_ += peer_address_str;
     }
-  else ACE_DEBUG ((LM_DEBUG,
+  else ORBSVCS_DEBUG ((LM_DEBUG,
                    "No peer address specified\n"));
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,"Forward entry_to_string: entry = %s\n",this->entry_.c_str()));
+    ORBSVCS_DEBUG ((LM_DEBUG,"Forward entry_to_string: entry = %s\n",this->entry_.c_str()));
 
   return this->entry_.c_str();
 }
@@ -894,7 +896,7 @@ TAO_Reverse_FlowSpec_Entry::parse (const char *flowSpec_entry)
   this->flowname_ = tokenizer [TAO_AV_FLOWNAME];
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
                 "TAO_Reverse_FlowSpec_Entry::parse [%s]\n",
                 flowSpec_entry));
 
@@ -1009,7 +1011,7 @@ TAO_Reverse_FlowSpec_Entry::entry_to_string (void)
 //  this->entry_ += "\\";
 //  this->entry_ += format_;
 
-  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"Reverse entry_to_string: entry = %s\n",this->entry_.c_str() ));
+  if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"Reverse entry_to_string: entry = %s\n",this->entry_.c_str() ));
   return this->entry_.c_str();
 }
 

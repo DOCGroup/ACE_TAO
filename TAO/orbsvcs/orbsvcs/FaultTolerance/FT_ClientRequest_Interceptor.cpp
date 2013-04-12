@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.h"
 #include "orbsvcs/FaultTolerance/FT_Service_Callbacks.h"
 #include "orbsvcs/FT_CORBA_ORBC.h"
@@ -70,7 +71,7 @@ namespace TAO
         CORBA::String_var op =
           ri->operation ();
 
-        ACE_DEBUG ((LM_DEBUG,
+        ORBSVCS_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO_FT (%P|%t) - %s called for %s\n"),
                     this->name_,
                     op.in ()));
@@ -138,7 +139,7 @@ namespace TAO
 
             if (TAO_debug_level > 3)
               {
-                ACE_DEBUG ((LM_DEBUG,
+                ORBSVCS_DEBUG ((LM_DEBUG,
                         "TAO_FT (%P|%t): FT_ClientRequest_Interceptor::receive_other - LOCATION_FORWARD received after request expiration.\n"));
               }
 
@@ -372,7 +373,7 @@ namespace TAO
       {
         if (TAO_debug_level > 3)
           {
-            ACE_DEBUG ((LM_DEBUG,
+            ORBSVCS_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("TAO_FT (%P|%t) - Using default value")
                         ACE_TEXT ("of 1.5 seconds\n")));
           }

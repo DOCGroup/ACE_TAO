@@ -2,7 +2,7 @@
 
 #include "orbsvcs/Event/EC_Kokyu_Filter.h"
 #include "orbsvcs/Event/EC_QOS_Info.h"
-#include "ace/Log_Msg.h"
+#include "orbsvcs/Log_Macros.h"
 
 
 
@@ -169,12 +169,12 @@ TAO_EC_Kokyu_Filter::add_dependencies (const RtecEventComm::EventHeader& header,
                                        const TAO_EC_QOS_Info &qos_info)
 {
 #ifdef EC_KOKYU_LOGGING
-  ACE_DEBUG ((LM_DEBUG, "Entering EC_Kokyu_Filter::add_dependencies\n"));
+  ORBSVCS_DEBUG ((LM_DEBUG, "Entering EC_Kokyu_Filter::add_dependencies\n"));
 #endif
   this->init_rt_info ();
 
 #ifdef EC_KOKYU_LOGGING
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
               "this->rt_info_ = %d, header.type = %d, qos_info.rt_info = %d\n",
               this->rt_info_, header.type, qos_info.rt_info));
 #endif
@@ -186,14 +186,14 @@ TAO_EC_Kokyu_Filter::add_dependencies (const RtecEventComm::EventHeader& header,
   if (matches != 0)
     {
 #ifdef EC_KOKYU_LOGGING
-      ACE_DEBUG ((LM_DEBUG, "Kokyu_Filter::matches != 0\n"));
+      ORBSVCS_DEBUG ((LM_DEBUG, "Kokyu_Filter::matches != 0\n"));
 #endif
       this->scheduler_->add_dependency (this->rt_info_, qos_info.rt_info, 1,
                                         RtecBase::ONE_WAY_CALL);
 
       RtecScheduler::RT_Info_var info =
         this->scheduler_->get (qos_info.rt_info);
-      ACE_DEBUG ((LM_DEBUG, "[%s][%d] ----> [%s][%d]\n",
+      ORBSVCS_DEBUG ((LM_DEBUG, "[%s][%d] ----> [%s][%d]\n",
                   this->name_.c_str (),
                   this->rt_info_,
                   info->entry_point.in (),
@@ -202,12 +202,12 @@ TAO_EC_Kokyu_Filter::add_dependencies (const RtecEventComm::EventHeader& header,
   else
     {
 #ifdef EC_KOKYU_LOGGING
-      ACE_DEBUG ((LM_DEBUG, "Kokyu_Filter::matches == 0\n"));
+      ORBSVCS_DEBUG ((LM_DEBUG, "Kokyu_Filter::matches == 0\n"));
 #endif
     }
 
 #ifdef EC_KOKYU_LOGGING
-  ACE_DEBUG ((LM_DEBUG, "about to iterate thru children\n"));
+  ORBSVCS_DEBUG ((LM_DEBUG, "about to iterate thru children\n"));
 #endif
   ChildrenIterator end = this->end ();
   for (ChildrenIterator i = this->begin (); i != end; ++i)
@@ -215,7 +215,7 @@ TAO_EC_Kokyu_Filter::add_dependencies (const RtecEventComm::EventHeader& header,
       (*i)->add_dependencies (header, qos_info);
     }
 #ifdef EC_KOKYU_LOGGING
-  ACE_DEBUG ((LM_DEBUG, "Exiting EC_Kokyu_Filter: add_dependencies\n"));
+  ORBSVCS_DEBUG ((LM_DEBUG, "Exiting EC_Kokyu_Filter: add_dependencies\n"));
 #endif
   return 0;
 }
@@ -260,7 +260,7 @@ TAO_EC_Kokyu_Filter::init_rt_info (void)
 
       RtecScheduler::RT_Info_var info =
         this->scheduler_->get (this->body_info_);
-      ACE_DEBUG ((LM_DEBUG, "[%s] ----> [%s]\n",
+      ORBSVCS_DEBUG ((LM_DEBUG, "[%s] ----> [%s]\n",
                   info->entry_point.in (),
                   this->name_.c_str ()));
     }
@@ -274,7 +274,7 @@ TAO_EC_Kokyu_Filter::init_rt_info (void)
 
   RtecScheduler::RT_Info_var info =
     this->scheduler_->get (this->parent_info_);
-  ACE_DEBUG ((LM_DEBUG, "[%s] ----> [%s]\n",
+  ORBSVCS_DEBUG ((LM_DEBUG, "[%s] ----> [%s]\n",
               this->name_.c_str (),
               info->entry_point.in ()));
 #endif /* 0 */

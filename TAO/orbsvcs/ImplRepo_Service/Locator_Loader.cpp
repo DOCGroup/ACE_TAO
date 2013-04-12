@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "Locator_Loader.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/Task.h"
@@ -85,7 +86,7 @@ ImR_Locator_Loader::run(void)
     }
   catch (...)
     {
-      ACE_ERROR((LM_ERROR, "Exception in ImR_Locator_ORB_Runner ()\n"));
+      ORBSVCS_ERROR((LM_ERROR, "Exception in ImR_Locator_ORB_Runner ()\n"));
       return -1;
     }
 }

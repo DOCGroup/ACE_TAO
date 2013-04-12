@@ -1,4 +1,5 @@
 //$Id$
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/FtRtEvent/Utils/Log.h"
 
 #if !defined(__ACE_INLINE__)
@@ -21,7 +22,7 @@ unsigned int Log::log_level_;
       va_start(p, format);
       ACE_TCHAR str[1024];
       ACE_OS::vsprintf(str, format, p);
-      ACE_DEBUG((LM_DEBUG, str));
+      ORBSVCS_DEBUG((LM_DEBUG, str));
       va_end(p);
     }
   }

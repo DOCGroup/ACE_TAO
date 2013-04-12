@@ -4,7 +4,7 @@
 #include "orbsvcs/HTIOP/HTIOP_Profile.h"
 
 #include "ace/os_include/os_netdb.h"
-#include "ace/Log_Msg.h"
+#include "orbsvcs/Log_Macros.h"
 
 #include "tao/IOPC.h"
 #include "tao/debug.h"
@@ -91,7 +91,7 @@ TAO::HTIOP::Endpoint::set (const ACE::HTBP::Addr &addr,
       if (tmp == 0)
         {
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
+            ORBSVCS_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("\n\nTAO (%P|%t) ")
                         ACE_TEXT ("TAO::HTIOP::Endpoint::set ")
                         ACE_TEXT ("- %p\n\n"),

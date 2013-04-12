@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/PortableGroup/UIPMC_Profile.h"
 #include "orbsvcs/PortableGroup/miopconf.h"
 #include "tao/CDR.h"
@@ -105,7 +106,7 @@ TAO_UIPMC_Profile::decode (TAO_InputCDR& cdr)
     {
       if (TAO_debug_level)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - UIPMC_Profile::decode, ")
                       ACE_TEXT ("can't read version\n")));
         }
@@ -118,7 +119,7 @@ TAO_UIPMC_Profile::decode (TAO_InputCDR& cdr)
     {
       if (TAO_debug_level)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - UIPMC_Profile::decode, ")
                       ACE_TEXT ("unsupported version %d.%d\n"),
                       major,
@@ -144,7 +145,7 @@ TAO_UIPMC_Profile::decode (TAO_InputCDR& cdr)
     {
       // If there is extra data in the profile we are supposed to
       // ignore it, but print a warning just in case...
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - UIPMC_Profile::decode, %d bytes ")
                   ACE_TEXT ("out of %u left after profile data\n"),
                   cdr.length (),
@@ -172,7 +173,7 @@ TAO_UIPMC_Profile::decode_profile (TAO_InputCDR& cdr)
       !cdr.read_ushort (port)      )
     {
       if (TAO_debug_level)
-        ACE_DEBUG ((LM_ERROR,
+        ORBSVCS_DEBUG ((LM_ERROR,
                     ACE_TEXT ("TAO (%P|%t) - UIPMC_Profile::decode, ")
                     ACE_TEXT ("Couldn't unmarshal address and port!\n")));
       return -1;
@@ -376,7 +377,7 @@ TAO_UIPMC_Profile::parse_string_i (const char *string)
       // since it wasn't found.
       if (TAO_debug_level > 0)
         {
-            ACE_ERROR ((LM_ERROR,
+            ORBSVCS_ERROR ((LM_ERROR,
                         ACE_TEXT ("TAO (%P|%t) - UIPMC_Profile: ")
                         ACE_TEXT ("Invalid ref: can't find multicast address in %s\n"),
                         string
@@ -407,7 +408,7 @@ TAO_UIPMC_Profile::parse_string_i (const char *string)
           // No valid IPv6 address specified.
           if (TAO_debug_level)
             {
-              ACE_ERROR ((LM_ERROR,
+              ORBSVCS_ERROR ((LM_ERROR,
                           ACE_TEXT ("\nTAO (%P|%t) - UIPMC_Profile::")
                           ACE_TEXT ("parse_string_i, Invalid IPv6 ")
                           ACE_TEXT ("decimal address specified.\n")));
@@ -717,7 +718,7 @@ TAO_UIPMC_Profile::update_cached_group_component (void)
   if ((out_cdr << group) == 0)
     {
       if (TAO_debug_level)
-        ACE_DEBUG ((LM_ERROR,
+        ORBSVCS_DEBUG ((LM_ERROR,
                     ACE_TEXT ("TAO (%P|%t) - UIPMC_Profile::")
                     ACE_TEXT ("update_cached_group_component, Error ")
                     ACE_TEXT ("marshaling group component!")));
@@ -833,7 +834,7 @@ TAO_UIPMC_Profile::extract_group_component (
       !cdr.read_octet (minor)   )
     {
       if (TAO_debug_level)
-        ACE_DEBUG ((LM_DEBUG,
+        ORBSVCS_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) - UIPMC_Profile::")
                     ACE_TEXT ("extract_group_component, couldn't unmarshal version\n")));
       return -1;
@@ -847,7 +848,7 @@ TAO_UIPMC_Profile::extract_group_component (
       !cdr.read_ushort (port)      )
     {
       if (TAO_debug_level)
-        ACE_DEBUG ((LM_ERROR,
+        ORBSVCS_DEBUG ((LM_ERROR,
                     ACE_TEXT ("TAO (%P|%t) - UIPMC_Profile::")
                     ACE_TEXT ("extract_group_component, Couldn't ")
                     ACE_TEXT ("unmarshal address and port!\n")));

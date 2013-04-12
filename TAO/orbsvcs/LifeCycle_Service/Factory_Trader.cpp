@@ -17,6 +17,7 @@
 //=============================================================================
 
 
+#include "orbsvcs/Log_Macros.h"
 #include "Factory_Trader.h"
 #include "orbsvcs/CosTradingC.h"
 
@@ -116,7 +117,7 @@ Factory_Trader::_cxx_export (const char * name,
     {
       if (CORBA::is_nil(object_ptr))
         {
-          ACE_ERROR ((LM_ERROR, "LifeCycle Server (Factory_Trader::export): "
+          ORBSVCS_ERROR ((LM_ERROR, "LifeCycle Server (Factory_Trader::export): "
                                 "Object pointer is nil, cannot export!\n"));
           return;
         }
@@ -197,13 +198,13 @@ Factory_Trader::query (const char* constraint)
               object_ptr = CORBA::Object::_duplicate (offerSeq_var[0u].reference.in());
 
               if (CORBA::is_nil (object_ptr))
-                ACE_ERROR_RETURN ((LM_ERROR,"Factory_Trader::query: Object reference is nil.\n"), 0);
+                ORBSVCS_ERROR_RETURN ((LM_ERROR,"Factory_Trader::query: Object reference is nil.\n"), 0);
               else
                 if (this->debug_level_ >= 2)
-                  ACE_DEBUG ((LM_DEBUG, "Factory_Trader::query: Received a proper object reference.\n"));
+                  ORBSVCS_DEBUG ((LM_DEBUG, "Factory_Trader::query: Received a proper object reference.\n"));
             }
           else
-            ACE_ERROR ((LM_ERROR, "Factory_Trader::query: OfferSequence.length is smaller than 1.\n"));
+            ORBSVCS_ERROR ((LM_ERROR, "Factory_Trader::query: OfferSequence.length is smaller than 1.\n"));
         }
       return object_ptr;
     }

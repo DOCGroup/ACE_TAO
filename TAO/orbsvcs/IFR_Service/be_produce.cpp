@@ -67,6 +67,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // BE_produce.cc - Produce the work of the BE - does nothing in the
 //                 dummy BE
 
+#include "orbsvcs/Log_Macros.h"
 #include "global_extern.h"
 #include "TAO_IFR_BE_Export.h"
 #include "be_extern.h"
@@ -87,7 +88,7 @@ BE_cleanup (void)
 TAO_IFR_BE_Export void
 BE_abort (void)
 {
-  ACE_ERROR ((LM_ERROR,
+  ORBSVCS_ERROR ((LM_ERROR,
               ACE_TEXT ("Fatal Error - Aborting\n")));
 
   // BE_cleanup will be called after the exception is caught.
@@ -104,7 +105,7 @@ BE_ifr_repo_init (void)
 
     if (CORBA::is_nil (object.in ()))
       {
-        ACE_ERROR_RETURN ((
+        ORBSVCS_ERROR_RETURN ((
             LM_ERROR,
             ACE_TEXT ("Null objref from resolve_initial_references\n")
           ),
@@ -117,7 +118,7 @@ BE_ifr_repo_init (void)
 
     if (CORBA::is_nil (repo.in ()))
       {
-        ACE_ERROR_RETURN ((
+        ORBSVCS_ERROR_RETURN ((
             LM_ERROR,
             ACE_TEXT ("CORBA::Repository::_narrow failed\n")
           ),
@@ -129,7 +130,7 @@ BE_ifr_repo_init (void)
   }
   catch (CORBA::ORB::InvalidName &)
   {
-    ACE_ERROR ((LM_ERROR,
+    ORBSVCS_ERROR ((LM_ERROR,
                 ACE_TEXT ("resolution of Interface Repository failed\n")));
     throw Bailout ();
   }
@@ -156,7 +157,7 @@ BE_produce (void)
 
       if (root == 0)
         {
-          ACE_ERROR ((LM_ERROR,
+          ORBSVCS_ERROR ((LM_ERROR,
                       ACE_TEXT ("(%N:%l) BE_produce - ")
                       ACE_TEXT ("No Root\n")));
 
@@ -173,7 +174,7 @@ BE_produce (void)
           // only visit_scope() for the removing visitor.
           if (visitor.visit_scope (root) == -1)
             {
-              ACE_ERROR ((
+              ORBSVCS_ERROR ((
                   LM_ERROR,
                   ACE_TEXT ("(%N:%l) BE_produce -")
                   ACE_TEXT (" failed to accept removing visitor\n")
@@ -190,7 +191,7 @@ BE_produce (void)
 
           if (root->ast_accept (&visitor) == -1)
             {
-              ACE_ERROR ((
+              ORBSVCS_ERROR ((
                   LM_ERROR,
                   ACE_TEXT ("(%N:%l) BE_produce -")
                   ACE_TEXT (" failed to accept adding visitor\n")

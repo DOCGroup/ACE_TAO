@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "Signal_Handler.h"
 #include "orbsvcs/LoadBalancing/LB_LoadManager.h"
 #include "tao/ORB_Core.h"
@@ -20,7 +21,7 @@ static int ping_interval_seconds = 0;
 void
 usage (const ACE_TCHAR * cmd)
 {
-  ACE_DEBUG ((LM_INFO,
+  ORBSVCS_DEBUG ((LM_INFO,
               ACE_TEXT ("Usage:\n")
               ACE_TEXT ("  %s\n")
               ACE_TEXT ("    -o <ior_output_file>\n")
@@ -62,7 +63,7 @@ parse_args (int argc,
                                        ACE_TEXT("LeastLoaded")) == 0)
             default_strategy = 2;
           else
-            ACE_DEBUG ((LM_DEBUG,
+            ORBSVCS_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("Unknown strategy, using RoundRobin\n")));
           break;
         case 'i':
@@ -182,7 +183,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           strategy_info.name = CORBA::string_dup ("LeastLoaded");
           break;
         default:
-          ACE_ERROR_RETURN ((LM_ERROR,
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
                             ACE_TEXT ("ERROR: LoadBalancer internal error.\n")
                             ACE_TEXT ("       Unknown built-in strategy.\n")),
                             -1);
@@ -215,7 +216,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (ACE_Thread_Manager::instance ()->spawn (::TAO_LB_run_load_manager,
                                                   orb.in ()) == -1)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
                              "ERROR:  Unable to spawn TAO LoadManager's "
                              "ORB thread.\n"),
                             -1);
@@ -230,7 +231,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Block waiting for the registered signals.
       if (ACE_OS::sigwait (sigset, &signum) == -1)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
                              "(%P|%t) %p\n",
                              "ERROR waiting on signal"),
                             -1);
@@ -245,7 +246,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       if (signal_handler.activate () != 0)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
                              "Error: can't activate LB signal handler, exiting.\n"),
                              -1);
         }
@@ -265,7 +266,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
 //   catch (const PortableGroup::InvalidProperty& ex)
 //     {
-//       ACE_DEBUG ((LM_DEBUG, "Property ----> %s\n", ex.nam[0].id.in ()));
+//       ORBSVCS_DEBUG ((LM_DEBUG, "Property ----> %s\n", ex.nam[0].id.in ()));
 //     }
   catch (const CORBA::Exception& ex)
     {

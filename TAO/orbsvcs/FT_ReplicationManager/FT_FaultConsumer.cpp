@@ -16,6 +16,7 @@
  */
 //=============================================================================
 
+#include "orbsvcs/Log_Macros.h"
 #include "FT_FaultConsumer.h"
 #include "orbsvcs/FT_ReplicationManagerC.h"
 #include "orbsvcs/FT_ReplicationManager/FT_FaultAnalyzer.h"
@@ -58,7 +59,7 @@ int TAO::FT_FaultConsumer::init (
 
   if (TAO_debug_level > 1)
   {
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
       ACE_TEXT (
         "Enter TAO::FT_FaultConsumer::init.\n")
     ));
@@ -100,7 +101,7 @@ int TAO::FT_FaultConsumer::init (
 
   if (TAO_debug_level > 1)
   {
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
       ACE_TEXT (
         "Leave TAO::FT_FaultConsumer::init.\n")
     ));
@@ -120,7 +121,7 @@ int TAO::FT_FaultConsumer::fini (void)
 
   if (TAO_debug_level > 1)
   {
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
       ACE_TEXT ("Enter TAO::FT_FaultConsumer::fini.\n")
     ));
   }
@@ -134,7 +135,7 @@ int TAO::FT_FaultConsumer::fini (void)
 
       if (TAO_debug_level > 1)
       {
-        ACE_DEBUG ((LM_DEBUG,
+        ORBSVCS_DEBUG ((LM_DEBUG,
           ACE_TEXT ("TAO::FT_FaultConsumer::fini: ")
           ACE_TEXT ("Disconnecting consumer from FaultNotifier.\n")
         ));
@@ -145,7 +146,7 @@ int TAO::FT_FaultConsumer::fini (void)
 
       if (TAO_debug_level > 1)
       {
-        ACE_DEBUG ((LM_DEBUG,
+        ORBSVCS_DEBUG ((LM_DEBUG,
           ACE_TEXT ("TAO::FT_FaultConsumer::fini: ")
           ACE_TEXT ("Deactivating from POA.\n")
         ));
@@ -165,7 +166,7 @@ int TAO::FT_FaultConsumer::fini (void)
 
   if (TAO_debug_level > 1)
   {
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
       ACE_TEXT ("TAO::FT_FaultConsumer::fini: ")
       ACE_TEXT ("Setting our object reference to nil.\n")
     ));
@@ -175,7 +176,7 @@ int TAO::FT_FaultConsumer::fini (void)
 
   if (TAO_debug_level > 1)
   {
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
       ACE_TEXT ("Leave TAO::FT_FaultConsumer::fini.\n")
     ));
   }
@@ -212,7 +213,7 @@ void TAO::FT_FaultConsumer::push_structured_event (
   this->notifications_ += 1;
   if (TAO_debug_level > 1)
   {
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
       ACE_TEXT ("TAO::FT_FaultConsumer::push_structured_event: ")
       ACE_TEXT ("Received Fault notification(%d):\n"),
       static_cast<unsigned int> (this->notifications_)
@@ -227,7 +228,7 @@ void TAO::FT_FaultConsumer::push_structured_event (
     result = this->fault_analyzer_->validate_event_type (event);
     if (result != 0)
     {
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
         ACE_TEXT ("TAO::FT_FaultConsumer::push_structured_event: ")
         ACE_TEXT ("Received invalid fault event type.\n")
       ));
@@ -240,7 +241,7 @@ void TAO::FT_FaultConsumer::push_structured_event (
     result = this->fault_analyzer_->analyze_fault_event (event);
     if (result != 0)
     {
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
         ACE_TEXT ("TAO::FT_FaultConsumer::push_structured_event: ")
         ACE_TEXT ("Could not analyze fault event.\n")
       ));
@@ -257,7 +258,7 @@ void TAO::FT_FaultConsumer::offer_change (
 {
   ACE_UNUSED_ARG (added);
   ACE_UNUSED_ARG (removed);
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
     ACE_TEXT("TAO::FT_FaultConsumer::offer_change() call ignored.\n")
   ));
 }
@@ -266,7 +267,7 @@ void TAO::FT_FaultConsumer::disconnect_structured_push_consumer (
   )
 {
   //TODO: For now, we are just ignoring the disconnect callback.
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
     ACE_TEXT("TAO::FT_FaultConsumer::disconnect_structured_push_consumer() ")
     ACE_TEXT("call ignored.\n")
     ));

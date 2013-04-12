@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Event/ECG_UDP_Receiver.h"
 #include "orbsvcs/Event_Utilities.h"
 #include "ace/SString.h"
@@ -29,7 +30,7 @@ TAO_ECG_UDP_Receiver::init (RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
   // is invoked, it throws an exception.
   if (CORBA::is_nil (lcl_ec))
     {
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
                   "TAO_ECG_UDP_Receiver::init(): "
                   "<lcl_ec> argument is nil.\n"));
       throw CORBA::INTERNAL ();
@@ -50,7 +51,7 @@ TAO_ECG_UDP_Receiver::connect (const RtecEventChannelAdmin::SupplierQOS& pub)
   if (CORBA::is_nil (this->lcl_ec_.in ()))
     {
       //FUZZ: disable check_for_lack_ACE_OS
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
                   "Error initializing TAO_ECG_UDP_Receiver: "
                   "init() hasn't been called before connect().\n"));
       //FUZZ: enable check_for_lack_ACE_OS
@@ -60,7 +61,7 @@ TAO_ECG_UDP_Receiver::connect (const RtecEventChannelAdmin::SupplierQOS& pub)
 
   if (pub.publications.length () == 0)
     {
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
                   "TAO_ECG_UDP_Receiver::connect(): "
                   "0-length publications argument.\n"));
       throw CORBA::INTERNAL ();
@@ -168,7 +169,7 @@ TAO_ECG_Event_CDR_Decoder::decode (TAO_InputCDR &cdr)
 {
   if (!(cdr >> this->events))
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
                          "Error decoding events cdr.\n"),
                         -1);
     }
@@ -184,7 +185,7 @@ TAO_ECG_UDP_Receiver::handle_input (ACE_SOCK_Dgram& dgram)
       // any further.
       if (CORBA::is_nil (this->consumer_proxy_.in ()))
         {
-          ACE_ERROR ((LM_ERROR,
+          ORBSVCS_ERROR ((LM_ERROR,
                       "TAO_ECG_UDP_Receiver::handle_input() "
                       "called but the Receiver is not connected "
                       "to an event channel. Shutting down the Receiver.\n"));
@@ -204,7 +205,7 @@ TAO_ECG_UDP_Receiver::handle_input (ACE_SOCK_Dgram& dgram)
         }
       if (result == -1)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
                             "Error receiving multicasted events.\n"),
                             0);
         }
@@ -214,7 +215,7 @@ TAO_ECG_UDP_Receiver::handle_input (ACE_SOCK_Dgram& dgram)
 
   catch (const CORBA::Exception& ex)
     {
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
                   "Caught and swallowed EXCEPTION in "
                   "ECG_UDP_Receiver::handle_input: %C\n",
                   ex._info ().c_str ()));

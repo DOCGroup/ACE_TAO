@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Event/EC_TPC_Dispatching.h"
 #include "orbsvcs/Event/EC_Defaults.h"
 
@@ -48,21 +49,21 @@ TAO_EC_TPC_Dispatching::add_consumer (RtecEventComm::PushConsumer_ptr consumer)
     RtecEventComm::PushConsumer::_duplicate(consumer);
 
   if (TAO_EC_TPC_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG, "EC (%P|%t) TPC_Dispatching::add_consumer(%@)\n", pc.in()));
+    ORBSVCS_DEBUG ((LM_DEBUG, "EC (%P|%t) TPC_Dispatching::add_consumer(%@)\n", pc.in()));
 
   TAO_EC_Dispatching_Task* dtask =
     new TAO_EC_TPC_Dispatching_Task (&this->thread_manager_,
                                      this->queue_full_service_object_);
 
   if (TAO_EC_TPC_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG, "EC (%P|%t) TPC_Dispatching::add_consumer(%@): new task %@\n", pc.in(), dtask));
+    ORBSVCS_DEBUG ((LM_DEBUG, "EC (%P|%t) TPC_Dispatching::add_consumer(%@): new task %@\n", pc.in(), dtask));
 
   if ((dtask->activate (this->thread_creation_flags_,
                        1, // we only want one thread to dispatch to a consumer
                        1, // magic number??
                         this->thread_priority_)) == -1)
     {
-      ACE_DEBUG ((LM_WARNING,
+      ORBSVCS_DEBUG ((LM_WARNING,
                   "EC (%P|%t): TPC_Dispatching::add_consumer unable to activate"
                   " dispatching task for consumer (%@)\n",
                   consumer));
@@ -81,7 +82,7 @@ TAO_EC_TPC_Dispatching::add_consumer (RtecEventComm::PushConsumer_ptr consumer)
 
   if (explanation != 0)
     {
-      ACE_DEBUG ((LM_WARNING,
+      ORBSVCS_DEBUG ((LM_WARNING,
                   "EC (%P|%t): TPC_Dispatching::add_consumer failed to bind consumer (%@)"
                   " and dispatch task in map (%s): %p\n",
                   consumer, explanation));
@@ -103,7 +104,7 @@ TAO_EC_TPC_Dispatching::remove_consumer (RtecEventComm::PushConsumer_ptr consume
 
   if (this->consumer_task_map_.find (consumer, dtask) == -1)
     {
-      ACE_DEBUG ((LM_WARNING,
+      ORBSVCS_DEBUG ((LM_WARNING,
                   "EC (%P|%t): TPC_Dispatching::remove_consumer failed to"
                   " find consumer (%@) in map\n", consumer));
       return -1;
@@ -112,7 +113,7 @@ TAO_EC_TPC_Dispatching::remove_consumer (RtecEventComm::PushConsumer_ptr consume
   // Must have found it...first try to unbind
   if (this->consumer_task_map_.unbind (consumer) == -1)
     {
-      ACE_DEBUG ((LM_WARNING,
+      ORBSVCS_DEBUG ((LM_WARNING,
                   "EC (%P|%t): TPC_Dispatching::remove_consumer failed to"
                   " unbind consumer (%@) and task in map\n",  consumer));
       return -1;
@@ -181,14 +182,14 @@ TAO_EC_TPC_Dispatching::push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
                                     TAO_EC_QOS_Info&)
 {
   if (TAO_EC_TPC_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG, "EC (%P|%t) TPC_Dispatching::push_nocopy(supplier=%@,consumer=%@)\n", proxy, consumer));
+    ORBSVCS_DEBUG ((LM_DEBUG, "EC (%P|%t) TPC_Dispatching::push_nocopy(supplier=%@,consumer=%@)\n", proxy, consumer));
 
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
   TAO_EC_Dispatching_Task* dtask = 0;
 
   if (this->consumer_task_map_.find (consumer, dtask) == -1)
     {
-      ACE_DEBUG ((LM_WARNING,
+      ORBSVCS_DEBUG ((LM_WARNING,
                   "EC (%P|%t): TPC_Dispatching::push_nocopy failed to"
                   " find consumer (%@) in map\n", consumer));
     }

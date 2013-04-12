@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/SSLIOP/IIOP_SSL_Connector.h"
 
 #include "tao/debug.h"
@@ -91,7 +92,7 @@ TAO::IIOP_SSL_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
     {
       if (TAO_debug_level > 0)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - IIOP_SSL connection failed.\n")
                       ACE_TEXT ("TAO (%P|%t) - This is most likely ")
                       ACE_TEXT ("due to a hostname lookup failure.\n")));
@@ -119,7 +120,7 @@ TAO::IIOP_SSL_Connector::make_connection (
     iiop_endpoint->object_addr ();
 
   if (TAO_debug_level > 4)
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%P|%t) IIOP_SSL_Connector::connect ")
                 ACE_TEXT ("making a new connection\n")));
 
@@ -164,7 +165,7 @@ TAO::IIOP_SSL_Connector::make_connection (
                                                      max_wait_time))
             {
               if (TAO_debug_level > 2)
-                ACE_ERROR ((LM_ERROR, "TAO (%P|%t) - IIOP_SSL_Connector::"
+                ORBSVCS_ERROR ((LM_ERROR, "TAO (%P|%t) - IIOP_SSL_Connector::"
                                       "make_connection, "
                                       "wait for completion failed\n"));
             }
@@ -182,7 +183,7 @@ TAO::IIOP_SSL_Connector::make_connection (
       // Give users a clue to the problem.
       if (TAO_debug_level)
         {
-          ACE_DEBUG ((LM_ERROR,
+          ORBSVCS_DEBUG ((LM_ERROR,
                       "TAO (%P|%t) - IIOP_SSL_Connector::make_connection, "
                       "connection to <%s:%d> failed (%p)\n",
                       iiop_endpoint->host (), iiop_endpoint->port (),
@@ -200,7 +201,7 @@ TAO::IIOP_SSL_Connector::make_connection (
   // At this point, the connection has be successfully connected.
   // #REFCOUNT# is one.
   if (TAO_debug_level > 2)
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
                 "TAO (%P|%t) - IIOP_SSL_Connector::make_connection, "
                 "new connection to <%s:%d> on Transport[%d]\n",
                 iiop_endpoint->host (), iiop_endpoint->port (),
@@ -220,7 +221,7 @@ TAO::IIOP_SSL_Connector::make_connection (
 
       if (TAO_debug_level > 0)
         {
-          ACE_ERROR ((LM_ERROR,
+          ORBSVCS_ERROR ((LM_ERROR,
                       "TAO (%P|%t) - IIOP_SSL_Connector::make_connection, "
                       "could not add the new connection to cache\n"));
         }
@@ -241,7 +242,7 @@ TAO::IIOP_SSL_Connector::make_connection (
       (void) transport->close_connection ();
 
       if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_ERROR,
+        ORBSVCS_ERROR ((LM_ERROR,
                     "TAO (%P|%t) - IIOP_SSL_Connector [%d]::make_connection, "
                     "could not register the transport "
                     "in the reactor.\n",

@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/LoadBalancing/LB_CPU_Utilization_Monitor.h"
 #include "tao/ORB_Constants.h"
 #include "ace/OS_NS_time.h"
@@ -148,7 +149,7 @@ TAO_LB_CPU_Utilization_Monitor::loads (void)
   load_list[0].id = CosLoadBalancing::LoadAverage;
   load_list[0].value = load;
 
-  ACE_DEBUG ((LM_DEBUG, "%2f\n", load_list[0].value));
+  ORBSVCS_DEBUG ((LM_DEBUG, "%2f\n", load_list[0].value));
 
   return load_list._retn ();
 

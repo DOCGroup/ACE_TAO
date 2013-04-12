@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Event/EC_TPC_ProxySupplier.h"
 
 #if ! defined (__ACE_INLINE__)
@@ -24,7 +25,7 @@ void
 TAO_EC_TPC_ProxyPushSupplier:: disconnect_push_supplier (void)
 {
   if (TAO_EC_TPC_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG, "EC (%P|%t): enter EC_TPC_ProxySupplier::disconnect_push_supplier (%@): refcount=%u,consumer=%@\n",
+    ORBSVCS_DEBUG ((LM_DEBUG, "EC (%P|%t): enter EC_TPC_ProxySupplier::disconnect_push_supplier (%@): refcount=%u,consumer=%@\n",
                 this,
                 this->refcount_,
                 this->consumer_.in()));
@@ -36,7 +37,7 @@ TAO_EC_TPC_ProxyPushSupplier:: disconnect_push_supplier (void)
   BASECLASS::disconnect_push_supplier ();
 
   if (TAO_EC_TPC_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG, "EC (%P|%t): leave EC_TPC_ProxySupplier::disconnect_push_supplier (%@)\n", this));
+    ORBSVCS_DEBUG ((LM_DEBUG, "EC (%P|%t): leave EC_TPC_ProxySupplier::disconnect_push_supplier (%@)\n", this));
 }
 
 TAO_EC_TPC_Dispatching*
@@ -55,7 +56,7 @@ TAO_EC_TPC_ProxyPushSupplier::connect_push_consumer (
   BASECLASS::connect_push_consumer (push_consumer, qos);
 
   if (TAO_EC_TPC_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG, "EC (%P|%t): EC_ProxySupplier(%@): refcount=%u,consumer=%@\n",
+    ORBSVCS_DEBUG ((LM_DEBUG, "EC (%P|%t): EC_ProxySupplier(%@): refcount=%u,consumer=%@\n",
               this, this->refcount_, this->consumer_.in()));
 
   TAO_EC_TPC_Dispatching* tpcdispatcher = this->tpc_dispatching ();

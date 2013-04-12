@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Notify/ThreadPool_Task.h"
 #include "orbsvcs/Notify/Properties.h"
 #include "orbsvcs/Notify/Timer_Queue.h"
@@ -85,10 +86,10 @@ TAO_Notify_ThreadPool_Task::init (const NotifyExt::ThreadPoolParams& tp_params,
         }
 
       if (ACE_OS::last_error () == EPERM)
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Insufficient privilege.\n")));
+        ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Insufficient privilege.\n")));
       else if (ACE_OS::last_error () == EAGAIN)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) task activation at priority %d failed %p\n"),
                       tp_params.default_priority, "activate"));
           throw CORBA::NO_RESOURCES ();
@@ -110,7 +111,7 @@ TAO_Notify_ThreadPool_Task::execute (TAO_Notify_Method_Request& method_request)
           ACE_Message_Block::release (request_copy);
 
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG, "NS_ThreadPool_Task (%P|%t) - "
+            ORBSVCS_DEBUG ((LM_DEBUG, "NS_ThreadPool_Task (%P|%t) - "
                         "failed to enqueue\n"));
         }
     }
@@ -150,7 +151,7 @@ TAO_Notify_ThreadPool_Task::svc (void)
           else
             {
               if (TAO_debug_level > 0)
-                ACE_DEBUG ((LM_DEBUG, "(%P|%t)ThreadPool_Task dequeue failed\n"));
+                ORBSVCS_DEBUG ((LM_DEBUG, "(%P|%t)ThreadPool_Task dequeue failed\n"));
             }
         }
       catch (const CORBA::Exception& ex)

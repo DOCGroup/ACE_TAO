@@ -15,6 +15,7 @@
  */
 //=============================================================================
 
+#include "orbsvcs/Log_Macros.h"
 #include "FT_FaultEventDescriptor.h"
 
 #include "ace/SString.h"
@@ -46,7 +47,7 @@ void TAO::FT_FaultEventDescriptor::dump ()
 
   if (this->all_at_location_failed == 1)
   {
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
       ACE_TEXT ("TAO::FT_FaultEventDescriptor::dump: ")
       ACE_TEXT ("All objects at location <%s> failed.\n"),
         loc_as_string.c_str()
@@ -55,7 +56,7 @@ void TAO::FT_FaultEventDescriptor::dump ()
 
   if (this->all_of_type_at_location_failed == 1)
   {
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
       ACE_TEXT ("TAO::FT_FaultEventDescriptor::dump: ")
       ACE_TEXT ("All objects of type <%s> at location <%s> failed.\n"),
         this->type_id.in(),
@@ -65,7 +66,7 @@ void TAO::FT_FaultEventDescriptor::dump ()
 
   if (this->object_at_location_failed == 1)
   {
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
       ACE_TEXT ("TAO::FT_FaultEventDescriptor::dump: ")
       ACE_TEXT ("Replica of type <%s> with ObjectGroupId <%Q> ")
       ACE_TEXT ("at location <%s> failed.\n"),
@@ -77,7 +78,7 @@ void TAO::FT_FaultEventDescriptor::dump ()
 
   if (this->object_is_primary == 1)
   {
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
       ACE_TEXT ("TAO::FT_FaultEventDescriptor::dump: ")
       ACE_TEXT ("Primary replica of ObjectGroupId <%Q> failed.\n"),
         this->object_group_id

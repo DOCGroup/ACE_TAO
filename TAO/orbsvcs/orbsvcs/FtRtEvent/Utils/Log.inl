@@ -2,6 +2,10 @@
 //
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_FTRTEC {
@@ -22,7 +26,7 @@ namespace TAO_FTRTEC {
   void Log::hexdump(unsigned int level, const char* buf, size_t len, const ACE_TCHAR* msg)
   {
     if (Log::log_level_ >= level)
-      ACE_HEX_DUMP((LM_DEBUG, buf, len, msg));
+      ORBSVCS_HEX_DUMP((LM_DEBUG, buf, len, msg));
   }
 #else // NDEBUG
   ACE_INLINE

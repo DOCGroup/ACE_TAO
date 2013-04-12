@@ -12,6 +12,8 @@
 #ifndef TAO_RECONFIG_SCHEDULER_T_C
 #define TAO_RECONFIG_SCHEDULER_T_C
 
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Sched/Reconfig_Scheduler_T.h"
 #include "orbsvcs/Time_Utilities.h"
 #include "ace/Auto_Ptr.h"
@@ -62,7 +64,7 @@ TAO_Reconfig_Scheduler (int enforce_schedule_stability,
     critical_utilization_threshold_ (critical_utilization_threshold)
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler default ctor.\n"));
 #endif /* SCHEDULER_LOGGING */
 }
@@ -96,7 +98,7 @@ TAO_Reconfig_Scheduler (int config_count,
     critical_utilization_threshold_ (critical_utilization_threshold)
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler alternative ctor.\n"));
 #endif /* SCHEDULER_LOGGING */
 
@@ -115,7 +117,7 @@ TAO_Reconfig_Scheduler (int config_count,
     }
   catch (const CORBA::SystemException& )
     {
-       ACE_ERROR ((LM_ERROR, "TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, "
+       ORBSVCS_ERROR ((LM_ERROR, "TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, "
                              "ACE_LOCK>::TAO_Reconfig_Scheduler "
                              "system exception: cannot init scheduler.\n"));
     }
@@ -129,7 +131,7 @@ TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 ~TAO_Reconfig_Scheduler ()
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler dtor.\n"));
 #endif /* SCHEDULER_LOGGING */
 
@@ -139,7 +141,7 @@ TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
     }
   catch (const CORBA::SystemException& )
     {
-      ACE_ERROR ((LM_ERROR, "TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, "
+      ORBSVCS_ERROR ((LM_ERROR, "TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, "
                             "ACE_LOCK>::~TAO_Reconfig_Scheduler "
                             "exception: cannot close scheduler.\n"));
     }
@@ -163,7 +165,7 @@ init (int config_count,
       u_long stability_flags)
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::init.\n"));
 #endif /* SCHEDULER_LOGGING */
 
@@ -311,7 +313,7 @@ template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> void
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::close (void)
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::close.\n"));
 #endif /* SCHEDULER_LOGGING */
 
@@ -426,7 +428,7 @@ TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 create (const char *entry_point)
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::create.\n"));
 #endif /* SCHEDULER_LOGGING */
 
@@ -453,7 +455,7 @@ TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 lookup (const char * entry_point)
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::lookup.\n"));
 #endif /* SCHEDULER_LOGGING */
 
@@ -475,7 +477,7 @@ TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 get (RtecScheduler::handle_t handle)
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::get.\n"));
 #endif /* SCHEDULER_LOGGING */
 
@@ -518,7 +520,7 @@ set (::RtecScheduler::handle_t handle,
      ::RtecScheduler::Info_Type_t info_type)
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::set.\n"));
 #endif /* SCHEDULER_LOGGING */
 
@@ -574,7 +576,7 @@ reset (RtecScheduler::handle_t handle,
        RtecScheduler::Info_Type_t info_type)
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::reset.\n"));
 #endif /* SCHEDULER_LOGGING */
 
@@ -633,7 +635,7 @@ TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 set_seq (const RtecScheduler::RT_Info_Set& infos)
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::set_seq.\n"));
 #endif /* SCHEDULER_LOGGING */
 
@@ -689,7 +691,7 @@ TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 reset_seq (const RtecScheduler::RT_Info_Set& infos)
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::reset_seq.\n"));
 #endif /* SCHEDULER_LOGGING */
 
@@ -767,7 +769,7 @@ TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 replace_seq (const RtecScheduler::RT_Info_Set& infos)
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::replace_seq.\n"));
 #endif /* SCHEDULER_LOGGING */
 
@@ -905,7 +907,7 @@ entry_point_priority (const char * entry_point,
                       RtecScheduler::Preemption_Priority_t& p_priority)
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::entry_point_priority.\n"));
 #endif /* SCHEDULER_LOGGING */
 
@@ -933,7 +935,7 @@ add_dependency (RtecScheduler::handle_t handle /* RT_Info that has the dependenc
                 RtecScheduler::Dependency_Type_t dependency_type)
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::add_dependency.\n"));
 #endif /* SCHEDULER_LOGGING */
 
@@ -962,7 +964,7 @@ remove_dependency (RtecScheduler::handle_t handle,
                    RtecScheduler::Dependency_Type_t dependency_type)
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::remove_dependency.\n"));
 #endif /* SCHEDULER_LOGGING */
 
@@ -991,7 +993,7 @@ set_dependency_enable_state (RtecScheduler::handle_t handle,
                              RtecScheduler::Dependency_Enabled_Type_t enabled)
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::set_dependency_enable_state.\n"));
 #endif /* SCHEDULER_LOGGING */
 
@@ -1012,7 +1014,7 @@ TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 set_dependency_enable_state_seq (const RtecScheduler::Dependency_Set & dependencies)
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::set_dependency_enable_state_seq.\n"));
 #endif /* SCHEDULER_LOGGING */
 
@@ -1040,7 +1042,7 @@ set_rt_info_enable_state (RtecScheduler::handle_t handle,
                           RtecScheduler::RT_Info_Enabled_Type_t enabled)
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::set_rt_info_enable_state.\n"));
 #endif /* SCHEDULER_LOGGING */
 
@@ -1072,7 +1074,7 @@ TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 set_rt_info_enable_state_seq (const RtecScheduler::RT_Info_Enable_State_Pair_Set & pair_set)
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::set_rt_info_enable_state_seq.\n"));
 #endif /* SCHEDULER_LOGGING */
 
@@ -1125,11 +1127,11 @@ compute_scheduling (CORBA::Long minimum_priority,
   this->get_config_info_set (configs);
 
 #if defined (SCHEDULER_DUMP)
-  ACE_DEBUG ((LM_TRACE, "Schedule prepared.\n"));
-  ACE_DEBUG ((LM_TRACE, "Dumping to stdout.\n"));
+  ORBSVCS_DEBUG ((LM_TRACE, "Schedule prepared.\n"));
+  ORBSVCS_DEBUG ((LM_TRACE, "Dumping to stdout.\n"));
   ACE_Scheduler_Factory::dump_schedule (*(infos.ptr()), *(dependencies.ptr()), *(configs.ptr()),
                                             *(anomalies.ptr()), 0);
-  ACE_DEBUG ((LM_TRACE, "Dump done.\n"));
+  ORBSVCS_DEBUG ((LM_TRACE, "Dump done.\n"));
 #endif // SCHEDULER_DUMP
 
   return;
@@ -1145,7 +1147,7 @@ recompute_scheduling (CORBA::Long /* minimum_priority */,
                       RtecScheduler::Scheduling_Anomaly_Set_out anomalies)
 {
 #if defined (SCHEDULER_LOGGING)
-   ACE_DEBUG ((LM_TRACE,
+   ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::compute_scheduling.\n"));
 #endif /* SCHEDULER_LOGGING */
 
@@ -1268,7 +1270,7 @@ recompute_scheduling (CORBA::Long /* minimum_priority */,
                         CORBA::NO_MEMORY ());
     }
 
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
               "cutil = %f, ncutil = %f\n",
               this->critical_utilization_,
               this->noncritical_utilization_));
@@ -1404,7 +1406,7 @@ dispatch_configuration (RtecScheduler::Preemption_Priority_t p_priority,
                         RtecScheduler::Dispatching_Type_t & d_type)
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::dispatch_configuration.\n"));
 #endif /* SCHEDULER_LOGGING */
 
@@ -1440,7 +1442,7 @@ TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 last_scheduled_priority (void)
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::last_scheduled_priority.\n"));
 #endif /* SCHEDULER_LOGGING */
 
@@ -1507,7 +1509,7 @@ create_i (const char *entry_point,
           int ignore_duplicates)
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::create_i.\n"));
 #endif /* SCHEDULER_LOGGING */
 
@@ -1634,14 +1636,14 @@ set_i (TAO_RT_Info_Ex *rt_info,
        RtecScheduler::Info_Type_t info_type)
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::set_i.\n"));
 #endif /* SCHEDULER_LOGGING */
 
   // Do not allow conjunction nodes for now.
   if (info_type == RtecScheduler::CONJUNCTION)
     {
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
                   ACE_TEXT("Conjunction Nodes are not supported currently.")));
       throw RtecScheduler::INTERNAL ();
     }
@@ -1664,7 +1666,7 @@ set_i (TAO_RT_Info_Ex *rt_info,
       TAO_Reconfig_Scheduler_Entry * rse_ptr =
         ACE_LONGLONG_TO_PTR (TAO_Reconfig_Scheduler_Entry *,
                              rt_info->volatile_token);
-//      ACE_DEBUG((LM_DEBUG, "Updating or inserting tuple for RT_Info: %d, entry_ptr: %x\n", rt_info->handle, rse_ptr));
+//      ORBSVCS_DEBUG((LM_DEBUG, "Updating or inserting tuple for RT_Info: %d, entry_ptr: %x\n", rt_info->handle, rse_ptr));
       if (rse_ptr == 0)
         {
           throw RtecScheduler::INTERNAL ();
@@ -1687,7 +1689,7 @@ set_i (TAO_RT_Info_Ex *rt_info,
           // Make sure the new tuple is cleaned up if we exit abruptly.
           auto_ptr<TAO_RT_Info_Tuple> tuple_auto_ptr (tuple_ptr);
 
-//          ACE_DEBUG((LM_DEBUG, "Tuple not found.  Inserting new tuple for RT_Info: %d, entry_ptr: 0x%x, tuple_ptr: 0x%x\n",
+//          ORBSVCS_DEBUG((LM_DEBUG, "Tuple not found.  Inserting new tuple for RT_Info: %d, entry_ptr: 0x%x, tuple_ptr: 0x%x\n",
 //                     rt_info->handle,
 //                     rse_ptr,
 //                     tuple_ptr));
@@ -1725,7 +1727,7 @@ TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 lookup_i (const char * entry_point)
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::lookup_i.\n"));
 #endif /* SCHEDULER_LOGGING */
 
@@ -1779,7 +1781,7 @@ add_dependency_i (RtecScheduler::handle_t handle /* RT_Info that has the depende
                   RtecScheduler::Dependency_Enabled_Type_t enabled)
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::add_dependency_i.\n"));
 #endif /* SCHEDULER_LOGGING */
 
@@ -1873,7 +1875,7 @@ remove_dependency_i (RtecScheduler::handle_t handle /* RT_Info that has the depe
                      RtecScheduler::Dependency_Type_t dependency_type)
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::remove_dependency_i.\n"));
 #endif /* SCHEDULER_LOGGING */
 
@@ -1944,7 +1946,7 @@ set_dependency_enable_state_i (RtecScheduler::handle_t handle,
                                RtecScheduler::Dependency_Enabled_Type_t enabled)
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::set_dependency_enable_state_i.\n"));
 #endif /* SCHEDULER_LOGGING */
 
@@ -2018,7 +2020,7 @@ map_dependency_i (RtecScheduler::handle_t key,
                   RtecScheduler::Dependency_Enabled_Type_t enabled)
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::map_dependency_i.\n"));
 #endif /* SCHEDULER_LOGGING */
 
@@ -2062,7 +2064,7 @@ unmap_dependency_i (RtecScheduler::handle_t key,
                     RtecScheduler::Dependency_Type_t dependency_type)
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::unmap_dependency_i.\n"));
 #endif /* SCHEDULER_LOGGING */
 
@@ -2128,7 +2130,7 @@ map_dependency_enable_state_i (RtecScheduler::handle_t key,
                                RtecScheduler::Dependency_Enabled_Type_t enabled)
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::map_dependency_enable_state_i.\n"));
 #endif /* SCHEDULER_LOGGING */
 
@@ -2181,7 +2183,7 @@ TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 dfs_traverse_i (void)
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::dfs_traverse_i.\n"));
 #endif /* SCHEDULER_LOGGING */
 
@@ -2219,7 +2221,7 @@ TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 detect_cycles_i (void)
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::detect_cycles_i.\n"));
 #endif /* SCHEDULER_LOGGING */
 
@@ -2263,7 +2265,7 @@ TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 perform_admission_i (void)
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::perform_admission_i.\n"));
 #endif /* SCHEDULER_LOGGING */
 
@@ -2323,7 +2325,7 @@ TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 crit_dfs_traverse_i (void)
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::crit_dfs_traverse_i.\n"));
 #endif /* SCHEDULER_LOGGING */
 
@@ -2357,7 +2359,7 @@ TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 propagate_criticalities_i (void)
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::propagate_criticalities_i.\n"));
 #endif /* SCHEDULER_LOGGING */
 
@@ -2399,7 +2401,7 @@ TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 propagate_characteristics_i (void)
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::propagate_characteristics_i.\n"));
 #endif /* SCHEDULER_LOGGING */
 
@@ -2439,15 +2441,15 @@ assign_priorities_i (void)
 {
   int i;
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::assign_priorities_i.\n"));
 
-  ACE_DEBUG ((LM_DEBUG, "Scheduler::entry ptr array before sorting is\n"));
+  ORBSVCS_DEBUG ((LM_DEBUG, "Scheduler::entry ptr array before sorting is\n"));
   for (i = 0; i < this->rt_info_count_; ++i)
     {
       RtecScheduler::RT_Info* rt_info_ptr =
         this->entry_ptr_array_[i]->actual_rt_info ();
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   " %s [%d] crit=%d,prio=%d,preemption_prio=%d,subprio=%d\n",
                   rt_info_ptr->entry_point.in (),
                   rt_info_ptr->handle,
@@ -2467,12 +2469,12 @@ assign_priorities_i (void)
                  reinterpret_cast<COMP_FUNC> (RECONFIG_SCHED_STRATEGY::total_priority_comp));
 
 #ifdef SCHEDULER_LOGGING
-  ACE_DEBUG ((LM_DEBUG, "Scheduler::qsorted array is\n"));
+  ORBSVCS_DEBUG ((LM_DEBUG, "Scheduler::qsorted array is\n"));
   for (i = 0; i < this->rt_info_count_; ++i)
     {
       RtecScheduler::RT_Info* rt_info_ptr =
         this->entry_ptr_array_[i]->actual_rt_info ();
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   " %s [%d] crit=%d,prio=%d,preemption_prio=%d,subprio=%d\n",
                   rt_info_ptr->entry_point.in (),
                   rt_info_ptr->handle,
@@ -2582,7 +2584,7 @@ TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 refresh_tuple_ptr_array_i (void)
 {
 #if defined (SCHEDULER_LOGGING)
-  ACE_DEBUG ((LM_TRACE,
+  ORBSVCS_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::refresh_tuple_ptr_array_i.\n"));
 #endif /* SCHEDULER_LOGGING */
 

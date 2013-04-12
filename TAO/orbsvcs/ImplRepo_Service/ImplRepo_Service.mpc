@@ -39,7 +39,7 @@ project(ImR_Locator_IDL) : orbsvcslib, orbsvcs_output, conv_lib, valuetype, port
   }
 }
 
-project(ImR_Activator) : orbsvcslib, orbsvcs_output, conv_lib, acexml, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, valuetype, portableserver, imr_client, messaging, pi, codecfactory {
+project(ImR_Activator) : orbsvcslib, orbsvcs_output, conv_lib, acexml, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, valuetype, portableserver, imr_client, messaging, pi, codecfactory, svc_utils {
   sharedname   = TAO_ImR_Activator
   dynamicflags += ACTIVATOR_BUILD_DLL
   after       += ImR_Activator_IDL ImR_Locator_IDL
@@ -131,7 +131,7 @@ project(ImR_Activator_Service) : orbsvcsexe, install, acexml, avoids_minimum_cor
 }
 
 
-project(tao_imr) : orbsvcsexe, install, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, portableserver, imr_client, messaging {
+project(tao_imr) : orbsvcsexe, install, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, portableserver, imr_client, messaging, svc_utils {
   install         = $(ACE_ROOT)/bin
   exename  = tao_imr
   Source_Files {

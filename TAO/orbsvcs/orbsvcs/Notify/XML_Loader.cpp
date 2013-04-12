@@ -1,5 +1,7 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Notify/XML_Loader.h"
 #include "orbsvcs/Notify/Topology_Object.h"
 
@@ -100,14 +102,14 @@ namespace TAO_Notify
         catch (const ACEXML_Exception& ex)
         {
           // The only way to find out what it is, it to let it print itself, so...
-          ACE_ERROR ((LM_ERROR, "Unable to load \"%s\".\n Will try backup file.\n", this->file_name_.c_str ()));
+          ORBSVCS_ERROR ((LM_ERROR, "Unable to load \"%s\".\n Will try backup file.\n", this->file_name_.c_str ()));
           ex.print ();
           result = false;
         }
       }
       else
       {
-        ACE_DEBUG((LM_DEBUG, ACE_TEXT("Unable to open the XML input file: %s.\n Will try backup file.\n"), file_name_.c_str()));
+        ORBSVCS_DEBUG((LM_DEBUG, ACE_TEXT("Unable to open the XML input file: %s.\n Will try backup file.\n"), file_name_.c_str()));
         result = false;
       }
     }
@@ -154,14 +156,14 @@ namespace TAO_Notify
       catch (const ACEXML_Exception& ex)
       {
         // The only way to find out what it is, it to let it print itself, so...
-        ACE_ERROR ((LM_ERROR, "Unable to load \"%s\".\n", this->file_name_.c_str ()));
+        ORBSVCS_ERROR ((LM_ERROR, "Unable to load \"%s\".\n", this->file_name_.c_str ()));
         ex.print ();
         throw CORBA::INTERNAL();
       }
     }
     else
     {
-      ACE_DEBUG((LM_DEBUG, ACE_TEXT("Unable to open the XML input file: %s.\n"), file_name_.c_str()));
+      ORBSVCS_DEBUG((LM_DEBUG, ACE_TEXT("Unable to open the XML input file: %s.\n"), file_name_.c_str()));
       throw CORBA::INTERNAL();
     }
   }
@@ -185,7 +187,7 @@ namespace TAO_Notify
           NVPList attrs;
           CORBA::Long id = makeNVPList (attrs, xml_attrs);
 
-          if (DEBUG_LEVEL > 5) ACE_DEBUG ((LM_INFO,
+          if (DEBUG_LEVEL > 5) ORBSVCS_DEBUG ((LM_INFO,
             ACE_TEXT("(%P|%t) XML_Loader: Element %s\n"),
             name
             ));
@@ -214,7 +216,7 @@ namespace TAO_Notify
       ACE_ASSERT (object_stack_.size () > 0);
       if (DEBUG_LEVEL > 5)
         {
-          ACE_DEBUG ((LM_INFO,
+          ORBSVCS_DEBUG ((LM_INFO,
                       ACE_TEXT("(%P|%t) XML_Loader: End Element %s\n"),
                       name));
         }

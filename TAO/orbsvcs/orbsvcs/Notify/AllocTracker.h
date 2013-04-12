@@ -47,7 +47,7 @@ public:
     _CrtMemState diff;
     _CrtMemDifference (&diff, &before_, &after);
 
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) %s: New heap blocks: %d; bytes: %d\n"),
       name_.c_str (),
       static_cast<int> (diff.lCounts[_NORMAL_BLOCK]),

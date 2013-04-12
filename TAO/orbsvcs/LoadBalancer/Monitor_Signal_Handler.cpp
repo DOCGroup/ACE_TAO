@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "Monitor_Signal_Handler.h"
 
 TAO_LB_Monitor_Signal_Handler::TAO_LB_Monitor_Signal_Handler (
@@ -30,7 +31,7 @@ TAO_LB_Monitor_Signal_Handler::perform_cleanup (int signum)
     {
       ex._tao_print_exception ("Caught exception");
 
-      ACE_ERROR_RETURN ((LM_ERROR,
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
                          "Problem during LoadMonitor cleanup "
                          "initiated by signal %d.\n",
                          signum),

@@ -1,5 +1,7 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/AV/FlowSpec_Entry.h"
 #include "tao/debug.h"
 #include "orbsvcs/AV/Policy.h"
@@ -61,14 +63,14 @@ TAO_AV_Callback::open (TAO_AV_Protocol_Object *object,
 int
 TAO_AV_Callback::handle_start (void)
 {
-  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_Callback::handle_start\n"));
+  if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"TAO_AV_Callback::handle_start\n"));
   return -1;
 }
 
 int
 TAO_AV_Callback::handle_stop (void)
 {
-  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_Callback::handle_stop\n"));
+  if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"TAO_AV_Callback::handle_stop\n"));
   return -1;
 }
 
@@ -77,7 +79,7 @@ TAO_AV_Callback::receive_frame (ACE_Message_Block * /*frame*/,
                                 TAO_AV_frame_info *,
                                 const ACE_Addr &)
 {
-  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_Callback::receive_frame\n"));
+  if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"TAO_AV_Callback::receive_frame\n"));
   return -1;
 }
 
@@ -91,7 +93,7 @@ TAO_AV_Callback::receive_control_frame (ACE_Message_Block *,
 int
 TAO_AV_Callback::handle_destroy (void)
 {
-  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_Callback::handle_end_stream\n"));
+  if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"TAO_AV_Callback::handle_end_stream\n"));
   return -1;
 }
 
@@ -99,14 +101,14 @@ void
 TAO_AV_Callback::get_timeout (ACE_Time_Value *& tv,
                               void *& /*arg*/)
 {
-  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_Callback::get_timeout\n"));
+  if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"TAO_AV_Callback::get_timeout\n"));
   tv = 0;
 }
 
 int
 TAO_AV_Callback::handle_timeout (void * /*arg*/)
 {
-  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_Callback::handle_timeout\n"));
+  if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"TAO_AV_Callback::handle_timeout\n"));
   return 0;
 }
 

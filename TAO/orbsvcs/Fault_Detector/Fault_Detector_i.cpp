@@ -11,6 +11,7 @@
  *  @author Dale Wilson <wilson_d@ociweb.com>
  */
 //=============================================================================
+#include "orbsvcs/Log_Macros.h"
 #include "Fault_Detector_i.h"
 #include "FT_FaultDetectorFactory_i.h"
 #include "tao/debug.h"
@@ -55,7 +56,7 @@ TAO::Fault_Detector_i::Fault_Detector_i (
 {
   this->notifier_ = FT::FaultNotifier::_duplicate(notifier);
   this->monitorable_ = FT::PullMonitorable::_duplicate(monitorable);
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
     "Object type %s\n", object_type
     ));
 }
@@ -97,7 +98,7 @@ void TAO::Fault_Detector_i::run()
       }
       else
       {
-        ACE_ERROR ((LM_INFO,
+        ORBSVCS_ERROR ((LM_INFO,
           "FaultDetector%d FAULT: not alive.\n",
           id_
           ));
@@ -107,7 +108,7 @@ void TAO::Fault_Detector_i::run()
     }
     catch (const CORBA::Exception&)// todo refine this
     {
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
         "FaultDetector FAULT: exception.\n"
         ));
       notify();
@@ -159,7 +160,7 @@ void TAO::Fault_Detector_i::notify()
     {
       if (TAO_debug_level > 5)
       {
-        ACE_ERROR ((LM_ERROR,
+        ORBSVCS_ERROR ((LM_ERROR,
         "call Fault Detector push Structured Event.\n"
         ));
       }
@@ -167,7 +168,7 @@ void TAO::Fault_Detector_i::notify()
       if (TAO_debug_level > 5)
       {
 
-        ACE_ERROR ((LM_ERROR,
+        ORBSVCS_ERROR ((LM_ERROR,
         "return from Fault Detector push Structured Event.\n"
         ));
       }
@@ -179,7 +180,7 @@ void TAO::Fault_Detector_i::notify()
   }
   else
   {
-    ACE_ERROR ((LM_ERROR,
+    ORBSVCS_ERROR ((LM_ERROR,
       "Fault Detector cannot create Structured Event.\n"
       ));
   }

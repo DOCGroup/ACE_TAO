@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/SSLIOP/SSLIOP_Acceptor.h"
 #include "orbsvcs/SSLIOP/SSLIOP_Profile.h"
 
@@ -474,7 +475,7 @@ TAO::SSLIOP::Acceptor::ssliop_open_i (TAO_ORB_Core *orb_core,
                                     this->reuse_addr_) == -1)
         {
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
+            ORBSVCS_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("\n\nTAO (%P|%t) ")
                         ACE_TEXT ("SSLIOP_Acceptor::open_i - %p\n\n"),
                         ACE_TEXT ("cannot open acceptor")));
@@ -495,7 +496,7 @@ TAO::SSLIOP::Acceptor::ssliop_open_i (TAO_ORB_Core *orb_core,
       for (ACE_UINT32 p = requested_port; p <= last_port; p++)
         {
           if (TAO_debug_level > 5)
-            ACE_DEBUG ((LM_DEBUG,
+            ORBSVCS_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("TAO (%P|%t) IIOP_Acceptor::open_i() ")
                         ACE_TEXT ("trying to listen on port %d\n"), p));
 
@@ -518,7 +519,7 @@ TAO::SSLIOP::Acceptor::ssliop_open_i (TAO_ORB_Core *orb_core,
       if (! found_a_port)
         {
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
+            ORBSVCS_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("\n\nTAO (%P|%t) ")
                         ACE_TEXT ("SSLIOP_Acceptor::open_i - %p\n\n"),
                         ACE_TEXT ("cannot open acceptor")));
@@ -534,7 +535,7 @@ TAO::SSLIOP::Acceptor::ssliop_open_i (TAO_ORB_Core *orb_core,
     {
       // @@ Should this be a catastrophic error???
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
+        ORBSVCS_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("\n\nTAO (%P|%t) ")
                     ACE_TEXT ("SSLIOP_Acceptor::open_i - %p\n\n"),
                     ACE_TEXT ("cannot get local addr")));
@@ -555,7 +556,7 @@ TAO::SSLIOP::Acceptor::ssliop_open_i (TAO_ORB_Core *orb_core,
     {
       for (size_t i = 0; i < this->endpoint_count_; ++i)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) ")
                       ACE_TEXT ("SSLIOP_Acceptor::open_i - ")
                       ACE_TEXT ("listening on: <%s:%u>\n"),
@@ -595,7 +596,7 @@ TAO::SSLIOP::Acceptor::parse_options_i (int &argc, ACE_CString ** argv)
 
       if (name == "priority")
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("TAO (%P|%t) Invalid SSLIOP endpoint format: ")
                              ACE_TEXT ("endpoint priorities no longer supported.\n"),
                              value.c_str ()),
@@ -608,7 +609,7 @@ TAO::SSLIOP::Acceptor::parse_options_i (int &argc, ACE_CString ** argv)
           if (ssl_port >= 0 && ssl_port < 65536)
             this->ssl_component_.port = ssl_port;
           else
-            ACE_ERROR_RETURN ((LM_ERROR,
+            ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("TAO (%P|%t) Invalid ")
                                ACE_TEXT ("IIOP/SSL endpoint ")
                                ACE_TEXT ("port: <%s>\n"),
@@ -668,7 +669,7 @@ TAO::SSLIOP::Acceptor::verify_secure_configuration (TAO_ORB_Core *orb_core,
                            ::Security::NoProtection))
     {
       if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_ERROR,
+        ORBSVCS_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) Cannot support secure ")
                     ACE_TEXT ("IIOP over SSL connection if\n")
                     ACE_TEXT ("(%P|%t) standard profile ")

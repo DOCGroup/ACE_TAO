@@ -13,6 +13,7 @@
 //=============================================================================
 
 
+#include "orbsvcs/Log_Macros.h"
 #include "Concurrency_Service.h"
 
 #include "orbsvcs/Daemon_Utilities.h"
@@ -30,7 +31,7 @@ Concurrency_Service::Concurrency_Service (void)
     ior_file_name_ (0),
     pid_file_name_ (0)
 {
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
              ACE_TEXT("Concurrency_Service::Concurrency_Service (void)\n")));
 }
 
@@ -39,7 +40,7 @@ Concurrency_Service::Concurrency_Service (void)
 Concurrency_Service::Concurrency_Service (int argc,
                                           ACE_TCHAR** argv)
 {
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
               ACE_TEXT("Concurrency_Service::Concurrency_Service (...)\n")));
   this->init (argc, argv);
 }
@@ -47,7 +48,7 @@ Concurrency_Service::Concurrency_Service (int argc,
 int
 Concurrency_Service::parse_args (int argc, ACE_TCHAR** argv)
 {
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
               ACE_TEXT("Concurrency_Service::parse_args\n")));
 
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("do:p:s"));
@@ -69,7 +70,7 @@ Concurrency_Service::parse_args (int argc, ACE_TCHAR** argv)
         this->use_naming_service_ = 0;
         break;
       default:
-        ACE_ERROR_RETURN ((LM_ERROR,
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT("usage:  %s")
                            ACE_TEXT(" [-d]")
                            ACE_TEXT(" [-o] <ior_output_file>")
@@ -87,7 +88,7 @@ int
 Concurrency_Service::init (int argc,
                            ACE_TCHAR **argv)
 {
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
               "Concurrency_Service::init\n"));
 
   // Check if -ORBDaemon is specified and if so, daemonize at this moment,
@@ -100,18 +101,18 @@ Concurrency_Service::init (int argc,
   if (this->orb_manager_.init_child_poa (command_line.get_argc(),
                                          command_line.get_TCHAR_argv(),
                                          "child_poa") == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT("%p\n"),
                        ACE_TEXT("init_child_poa")),
                       -1);
 
   if (this->parse_args (command_line.get_argc(), command_line.get_TCHAR_argv())!=0)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT("Could not parse command line\n")),
                      -1);
   CORBA::String_var str =
     this->orb_manager_.activate (this->my_concurrency_server_.GetLockSetFactory ());
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
               "The IOR is: <%C>\n",
               str.in ()));
 
@@ -120,7 +121,7 @@ Concurrency_Service::init (int argc,
       FILE* iorf = ACE_OS::fopen (ior_file_name_, ACE_TEXT("w"));
       if (iorf == 0)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
                              "Cannot open output file for writing IOR: %s",
                              ior_file_name_),
                             -1);
@@ -151,7 +152,7 @@ Concurrency_Service::init (int argc,
 int
 Concurrency_Service::init_naming_service (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "Concurrency_Service::init_naming_service (...)\n"));
+  ORBSVCS_DEBUG ((LM_DEBUG, "Concurrency_Service::init_naming_service (...)\n"));
   CORBA::ORB_var orb;
   PortableServer::POA_var child_poa;
 
@@ -184,12 +185,12 @@ Concurrency_Service::init_naming_service (void)
 int
 Concurrency_Service::run (void)
 {
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
               "Concurrency_Service::run (...)\n"));
 
   int retval = this->orb_manager_.run ();
   if (retval == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
                       "Concurrency_Service::run"),
                      -1);
   return 0;
@@ -199,7 +200,7 @@ Concurrency_Service::run (void)
 
 Concurrency_Service::~Concurrency_Service (void)
 {
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
               "Concurrency_Service::~Concurrency_Service (void)\n"));
 }
 
@@ -208,7 +209,7 @@ ACE_TMAIN (int argc, ACE_TCHAR ** argv)
 {
   Concurrency_Service concurrency_service;
 
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
               "\n \t Concurrency Service:SERVER \n\n"));
 
   try

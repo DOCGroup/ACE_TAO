@@ -3,7 +3,7 @@
 // $Id$
 
 
-project(LoadManager): namingexe, portableserver, install, iortable, iormanip, loadbalancing {
+project(LoadManager): namingexe, portableserver, install, iortable, iormanip, loadbalancing, svc_utils {
   exename  = tao_loadmanager
   requires += ami interceptors
   Source_Files {
@@ -12,7 +12,7 @@ project(LoadManager): namingexe, portableserver, install, iortable, iormanip, lo
   }
 }
 
-project(LoadMonitor): namingexe, portableserver, install, loadbalancing {
+project(LoadMonitor): namingexe, portableserver, install, loadbalancing, svc_utils {
   requires += ami interceptors
   exename  = tao_loadmonitor
   Source_Files {

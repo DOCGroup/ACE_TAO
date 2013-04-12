@@ -214,7 +214,7 @@ TAO_Notify_EventChannelFactory::get_event_channel (CosNotifyChannelAdmin::Channe
 void
 TAO_Notify_EventChannelFactory::set_topology_factory(TAO_Notify::Topology_Factory* f)
 {
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
     ACE_TEXT ("(%P,%t) Debug Topology_Factory installed in EventChannelFactory.\n")
     ));
   // If the above meessage appears when you don't expect it
@@ -239,7 +239,7 @@ TAO_Notify_EventChannelFactory::load_topology (void)
   else
   {
     if (TAO_debug_level > 0)
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Topology persistence disabled.\n")));
+      ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Topology persistence disabled.\n")));
   }
   this->loading_topology_ = false;
 }
@@ -319,7 +319,7 @@ TAO_Notify_EventChannelFactory::load_event_persistence (void)
           {
             //@@todo: tell the rspm it's an orphan, but we can't during reload
             // we need collect these and come back later to remove them
-            ACE_DEBUG ((LM_DEBUG,
+            ORBSVCS_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) Reload persistent event failed.\n")
               ));
           }
@@ -328,7 +328,7 @@ TAO_Notify_EventChannelFactory::load_event_persistence (void)
     }
     else
     {
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
         ACE_TEXT ("(%P|%t) Notify Service: Configuration error.  Event Persistence requires Topology Persistence.\n")
         ));
       throw CORBA::PERSIST_STORE();
@@ -377,7 +377,7 @@ TAO_Notify_EventChannelFactory::load_child (const ACE_CString& type,
   TAO_Notify::Topology_Object * result = this;
   if (type == "channel")
   {
-    if (DEBUG_LEVEL) ACE_DEBUG ((LM_DEBUG,
+    if (DEBUG_LEVEL) ORBSVCS_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) EventChannelFactory reload channel %d\n")
       , static_cast<int> (id)
       ));
@@ -510,7 +510,7 @@ TAO_Notify_EventChannelFactory::activate_self (void)
   {
     if (DEBUG_LEVEL > 9)
     {
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) TAO_Notify_EventChannelFactory::activate_self\n") ));
+      ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) TAO_Notify_EventChannelFactory::activate_self\n") ));
     }
     this->reconnect ();
   }

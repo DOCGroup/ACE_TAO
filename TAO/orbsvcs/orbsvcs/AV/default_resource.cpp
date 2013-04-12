@@ -1,5 +1,7 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/AV/default_resource.h"
 
 #include "tao/ORB_Core.h"
@@ -11,7 +13,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_AV_Default_Resource_Factory::TAO_AV_Default_Resource_Factory (void)
 {
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
                 "TAO_AV_Default_Resource_Factory::TAO_AV_Default_Resource_Factory %d\n"));
 }
 
@@ -36,7 +38,7 @@ TAO_AV_Default_Resource_Factory::~TAO_AV_Default_Resource_Factory (void)
   TAO_AV_CORE::instance ()->flow_protocol_factories ()->reset ();
 
   if (TAO_debug_level > 0)
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
               "TAO_AV_Default_Resource_Factory::~TAO_AV_Default_Resource_Factory\n"));
 }
 
@@ -44,7 +46,7 @@ int
 TAO_AV_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
 {
   if (TAO_debug_level > 0)
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
               "TAO_AV_Default_Resource_Factory::init\n"));
 
   int curarg = 0;
@@ -63,7 +65,7 @@ TAO_AV_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
                               TAO_AV_Transport_Item (ACE_TEXT_ALWAYS_CHAR(argv[curarg])),
                               -1);
               if (tset->insert (item) == -1)
-                ACE_ERROR ((LM_ERROR,
+                ORBSVCS_ERROR ((LM_ERROR,
                             ACE_TEXT ("(%P|%t) Unable to add transport factories for %s: %p\n"),
 
               argv[curarg]));
@@ -81,7 +83,7 @@ TAO_AV_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
                               TAO_AV_Flow_Protocol_Item (ACE_TEXT_ALWAYS_CHAR(argv[curarg])),
                               -1);
               if (fpset->insert (item) == -1)
-                ACE_ERROR ((LM_ERROR,
+                ORBSVCS_ERROR ((LM_ERROR,
                             ACE_TEXT ("(%P|%t) Unable to add flow protocol factories for %s: %p\n"),
 
               argv[curarg]));

@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Notify/Any/PushConsumer.h"
 #include "ace/Bound_Ptr.h"
 #include "tao/Stub.h" // For debug messages printing out ORBid.
@@ -71,7 +72,7 @@ TAO_Notify_PushConsumer::init (CosEventComm::PushConsumer_ptr push_consumer)
         //--cj verify dispatching ORB
         if (TAO_debug_level >= 10)
           {
-            ACE_DEBUG ((LM_DEBUG, "(%P|%t) Any push init dispatching ORB id is %s.\n",
+            ORBSVCS_DEBUG ((LM_DEBUG, "(%P|%t) Any push init dispatching ORB id is %s.\n",
                         obj->_stubobj()->orb_core()->orbid()));
           }
         //--cj end
@@ -80,7 +81,7 @@ TAO_Notify_PushConsumer::init (CosEventComm::PushConsumer_ptr push_consumer)
   catch (const CORBA::TRANSIENT& ex)
     {
       ex._tao_print_exception ("Got a TRANSIENT in NS_PushConsumer::init");
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) got it for NS_PushConsumer %@\n", this));
+      ORBSVCS_DEBUG ((LM_DEBUG, "(%P|%t) got it for NS_PushConsumer %@\n", this));
     }
   catch (const CORBA::Exception&)
     {
@@ -100,7 +101,7 @@ TAO_Notify_PushConsumer::push (const CORBA::Any& payload)
 {
   //--cj verify dispatching ORB
   if (TAO_debug_level >= 10) {
-    ACE_DEBUG ((LM_DEBUG, "(%P|%t) Any push dispatching ORB id is %s.\n",
+    ORBSVCS_DEBUG ((LM_DEBUG, "(%P|%t) Any push dispatching ORB id is %s.\n",
                 this->push_consumer_->_stubobj()->orb_core()->orbid()));
   }
   //--cj end
