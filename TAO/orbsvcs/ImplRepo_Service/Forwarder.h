@@ -42,9 +42,11 @@ class ImR_Locator_i;
  */
 
 // forward declare the types used to manage AMH/DSI coupling
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_AMH_DSI_Response_Handler;
 typedef TAO_AMH_DSI_Response_Handler * TAO_AMH_DSI_Response_Handler_ptr;
 class TAO_AMH_DSI_Response_Handler_var;
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 class ImR_DSI_ResponseHandler : public ImR_ResponseHandler
 {
