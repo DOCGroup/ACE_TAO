@@ -72,7 +72,7 @@ project(CosProperty_Skel) : orbsvcslib, orbsvcs_output, install, property, porta
   }
 }
 
-project(CosProperty_Serv) : orbsvcslib, orbsvcs_output, install, property_skel {
+project(CosProperty_Serv) : orbsvcslib, orbsvcs_output, install, property_skel, svc_utils {
   sharedname   = TAO_CosProperty_Serv
   dynamicflags += TAO_PROPERTY_SERV_BUILD_DLL
   tagchecks   += Property

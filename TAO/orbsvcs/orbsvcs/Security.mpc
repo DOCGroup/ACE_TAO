@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(Security) : orbsvcslib, orbsvcs_output, corba_messaging, install, portableserver, pi, interceptors, valuetype, tao_versioning_idl_defaults {
+project(Security) : orbsvcslib, orbsvcs_output, corba_messaging, install, portableserver, pi, interceptors, valuetype, tao_versioning_idl_defaults, svc_utils {
   sharedname   = TAO_Security
   idlflags    += -Wb,export_macro=TAO_Security_Export -Wb,export_include=orbsvcs/Security/security_export.h
   dynamicflags += TAO_SECURITY_BUILD_DLL
