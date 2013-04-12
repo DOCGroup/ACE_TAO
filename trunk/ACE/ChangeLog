@@ -1,3 +1,16 @@
+Fri Apr 12 19:49:50 UTC 2013  Steve Huston  <shuston@riverace.com>
+
+        * ace/Dev_Poll_Reactor.cpp:
+        * ace/Dev_Poll_Reactor.h: Take advantage of the thread-safe behavior
+          of epoll_ctl/epoll_wait and allow changes to the wait set to be made
+          without interrupting the waiting leader thread. To make timers and
+          notifies more predictable, still allow only one thread to wait for
+          events at a time, but allow registrations, removals, etc. to the
+          wait set to be made by any thread. The "reactor token" now controls
+          the leader/followers for event dispatching; a new repository token
+          is added to synchronize access to the handler repository, independent
+          of waiting for events.
+
 Fri Apr 12 19:43:34 UTC 2013  Huang-Ming Huang  <huangh@ociweb.com>
 
         * ace/Log_Category.cpp:
