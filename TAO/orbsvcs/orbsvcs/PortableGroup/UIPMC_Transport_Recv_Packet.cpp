@@ -59,7 +59,7 @@ namespace TAO_PG
     this->data_length_ += len;
 
     if (TAO_debug_level >= 10)
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - TAO_PG::UIPMC_Recv_Packet::")
                   ACE_TEXT ("add_fragment, adding fragment %d with %d out ")
                   ACE_TEXT ("of %d bytes\n"),

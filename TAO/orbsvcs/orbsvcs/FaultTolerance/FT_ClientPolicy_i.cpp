@@ -2,7 +2,7 @@
 #include "orbsvcs/FaultTolerance/FT_ClientPolicy_i.h"
 
 #include "tao/debug.h"
-#include "ace/Log_Msg.h"
+#include "orbsvcs/Log_Macros.h"
 #include "tao/ORB_Constants.h"
 #include "tao/SystemException.h"
 #include "tao/AnyTypeCode/Any.h"
@@ -80,7 +80,7 @@ TAO_FT_Request_Duration_Policy::set_time_value (ACE_Time_Value &time_value)
 
   if (TAO_debug_level > 0)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO_FT (%P|%t) - Timeout is <%dms>\n"),
                   time_value.msec ()));
     }
@@ -165,7 +165,7 @@ TAO_FT_Heart_Beat_Policy::set_time_value (ACE_Time_Value &time_value,
 
   if (TAO_debug_level > 0)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO_FT (%P|%t) - Timeout is <%dms>\n"),
                   time_value.msec ()));
     }

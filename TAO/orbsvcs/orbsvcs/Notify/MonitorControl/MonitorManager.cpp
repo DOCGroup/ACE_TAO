@@ -50,7 +50,7 @@ TAO_MonitorManager::init (int argc, ACE_TCHAR* argv[])
           this->task_.ior_output_ = opts.opt_arg ();
           if (TAO_debug_level > 7)
             {
-              ACE_DEBUG((LM_INFO,
+              ORBSVCS_DEBUG((LM_INFO,
                 ACE_TEXT("(%P|%t) TAO_MonitorManager: Setting IOR output file to: %s"),
                   this->task_.ior_output_.c_str ()));
             }
@@ -61,7 +61,7 @@ TAO_MonitorManager::init (int argc, ACE_TCHAR* argv[])
               ACE_TCHAR * orbArgs = opts.opt_arg ();
               if (TAO_debug_level > 7)
                 {
-                  ACE_DEBUG((LM_INFO,
+                  ORBSVCS_DEBUG((LM_INFO,
                     ACE_TEXT("(%P|%t) TAO_MonitorManager: Setting Orb arguments to: %s"),
                       orbArgs));
                 }
@@ -71,14 +71,14 @@ TAO_MonitorManager::init (int argc, ACE_TCHAR* argv[])
             {
               if (TAO_debug_level > 7)
                 {
-                  ACE_DEBUG((LM_INFO,
+                  ORBSVCS_DEBUG((LM_INFO,
                     ACE_TEXT("(%P|%t) TAO_MonitorManager: Not using naming service")));
                 }
               this->task_.use_name_svc_ = false;
             }
           break;
         case ':':
-          ACE_ERROR_RETURN ((LM_ERROR,
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("(%P|%t) TAO_MonitorManager: %s requires an argument\n"),
                              opts.last_option ()),
                              -1);
@@ -184,7 +184,7 @@ TAO_MonitorManager::ORBTask::svc (void)
     {
       if (CORBA::is_nil (this->orb_.in ()))
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
                              "(%P|%t) TAO_MonitorManager: Unable to "
                              "initialize the ORB\n"),
                             1);
@@ -202,7 +202,7 @@ TAO_MonitorManager::ORBTask::svc (void)
 
         if (CORBA::is_nil (poa.in ()))
           {
-            ACE_ERROR_RETURN ((LM_ERROR,
+            ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                "(%P|%t) TAO_MonitorManager: Unable to "
                                "resolve the RootPOA\n"),
                               1);
@@ -228,7 +228,7 @@ TAO_MonitorManager::ORBTask::svc (void)
 
         if (CORBA::is_nil (iortable.in ()))
           {
-            ACE_ERROR_RETURN ((LM_ERROR,
+            ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                "(%P|%t) TAO_MonitorManager: Unable to "
                                "resolve the IORTable\n"),
                               1);
@@ -252,7 +252,7 @@ TAO_MonitorManager::ORBTask::svc (void)
 
             if (fp == 0)
               {
-                ACE_ERROR_RETURN ((LM_ERROR,
+                ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                    ACE_TEXT ("(%P|%t) TAO_MonitorManager: "
                                    ACE_TEXT ("Unable to write to %s\n")),
                                    this->ior_output_.c_str ()),
@@ -318,7 +318,7 @@ TAO_MonitorManager::ORBTask::svc (void)
           this->orb_ = CORBA::ORB::_nil ();
         }
 
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
                   "Unexpected exception type caught "
                   "in TAO_MonitorManager::ORBTask::svc"));
     }

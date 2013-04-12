@@ -102,7 +102,7 @@ TAO_Notify_Constraint_Interpreter::build_tree (
 
   if (TAO_debug_level > 0)
     {
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Constraint: %C\n"),
+      ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Constraint: %C\n"),
         exp_str.c_str ()));
     }
   this->build_tree (exp_str.c_str ());

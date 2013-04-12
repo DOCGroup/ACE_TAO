@@ -82,7 +82,7 @@ GroupInfoPublisherBase::setup_info(const FTRT::ManagerInfoList & info_list,
   result->iogr =
     ::FtRtecEventChannelAdmin::EventChannel::_narrow(obj.in());
 
-  ACE_DEBUG((LM_DEBUG, "In setup_info\n"));
+  ORBSVCS_DEBUG((LM_DEBUG, "In setup_info\n"));
   //log_obj_endpoints(result->iogr.in());
 
   /// check if sucessor changed

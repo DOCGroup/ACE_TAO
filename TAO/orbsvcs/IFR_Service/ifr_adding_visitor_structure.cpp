@@ -42,7 +42,7 @@ ifr_adding_visitor_structure::visit_scope (UTL_Scope *node)
         {
           if (s->field (f, i) != 0)
             {
-              ACE_ERROR_RETURN ((
+              ORBSVCS_ERROR_RETURN ((
                 LM_ERROR,
                 ACE_TEXT ("(%N:%l) ifr_adding_visitor_structure::")
                 ACE_TEXT ("visit_scope -")
@@ -66,7 +66,7 @@ ifr_adding_visitor_structure::visit_scope (UTL_Scope *node)
 
                   if (ft->ast_accept (&visitor) == -1)
                     {
-                      ACE_ERROR_RETURN ((
+                      ORBSVCS_ERROR_RETURN ((
                         LM_ERROR,
                         ACE_TEXT ("(%N:%l) ifr_adding_visitor_structure::")
                         ACE_TEXT ("visit_scope -")
@@ -81,7 +81,7 @@ ifr_adding_visitor_structure::visit_scope (UTL_Scope *node)
                 {
                   if (ft->ast_accept (this) == -1)
                     {
-                      ACE_ERROR_RETURN ((
+                      ORBSVCS_ERROR_RETURN ((
                         LM_ERROR,
                         ACE_TEXT ("(%N:%l) ifr_adding_visitor_structure::")
                         ACE_TEXT ("visit_scope -")
@@ -139,7 +139,7 @@ ifr_adding_visitor_structure::visit_structure (AST_Structure *node)
 
           if (be_global->ifr_scopes ().top (current_scope) != 0)
             {
-              ACE_ERROR_RETURN ((
+              ORBSVCS_ERROR_RETURN ((
                 LM_ERROR,
                 ACE_TEXT ("(%N:%l) ifr_adding_visitor_structure::")
                 ACE_TEXT ("visit_structure -")
@@ -158,7 +158,7 @@ ifr_adding_visitor_structure::visit_structure (AST_Structure *node)
 
           if (be_global->ifr_scopes ().push (struct_def.in ()) != 0)
             {
-              ACE_ERROR_RETURN ((
+              ORBSVCS_ERROR_RETURN ((
                   LM_ERROR,
                   ACE_TEXT ("(%N:%l) ifr_adding_visitor_structure::")
                   ACE_TEXT ("visit_structure -")
@@ -171,7 +171,7 @@ ifr_adding_visitor_structure::visit_structure (AST_Structure *node)
           // Then add the real structure members (which corrupts ir_current_).
           if (this->add_members (node, struct_def.in ()) == -1)
             {
-              ACE_ERROR_RETURN ((
+              ORBSVCS_ERROR_RETURN ((
                 LM_ERROR,
                 ACE_TEXT ("(%N:%l) ifr_adding_visitor_structure::")
                 ACE_TEXT ("visit_structure -")
@@ -187,7 +187,7 @@ ifr_adding_visitor_structure::visit_structure (AST_Structure *node)
           // Pop the new IR object back off the scope stack.
           if (be_global->ifr_scopes ().pop (used_scope) != 0)
             {
-              ACE_ERROR_RETURN ((
+              ORBSVCS_ERROR_RETURN ((
                   LM_ERROR,
                   ACE_TEXT ("(%N:%l) ifr_adding_visitor_structure::")
                   ACE_TEXT ("visit_structure -")
@@ -207,7 +207,7 @@ ifr_adding_visitor_structure::visit_structure (AST_Structure *node)
 
           if (be_global->ifr_scopes ().push (struct_def.in ()) != 0)
             {
-              ACE_ERROR_RETURN ((
+              ORBSVCS_ERROR_RETURN ((
                   LM_ERROR,
                   ACE_TEXT ("(%N:%l) ifr_adding_visitor_structure::")
                   ACE_TEXT ("visit_structure -")
@@ -219,7 +219,7 @@ ifr_adding_visitor_structure::visit_structure (AST_Structure *node)
 
           if (this->add_members (node, struct_def.in ()) == -1)
             {
-              ACE_ERROR_RETURN ((
+              ORBSVCS_ERROR_RETURN ((
                 LM_ERROR,
                 ACE_TEXT ("(%N:%l) ifr_adding_visitor_structure::")
                 ACE_TEXT ("visit_structure -")
@@ -235,7 +235,7 @@ ifr_adding_visitor_structure::visit_structure (AST_Structure *node)
           // Pop the new IR object back off the scope stack.
           if (be_global->ifr_scopes ().pop (used_scope) != 0)
             {
-              ACE_ERROR_RETURN ((
+              ORBSVCS_ERROR_RETURN ((
                   LM_ERROR,
                   ACE_TEXT ("(%N:%l) ifr_adding_visitor_structure::")
                   ACE_TEXT ("visit_structure -")
@@ -395,7 +395,7 @@ ifr_adding_visitor_structure::add_members (AST_Structure *node,
 {
   if (this->visit_scope (node) == -1)
     {
-      ACE_ERROR_RETURN ((
+      ORBSVCS_ERROR_RETURN ((
         LM_ERROR,
         ACE_TEXT ("(%N:%l) ifr_adding_visitor_structure::")
         ACE_TEXT ("visit_structure -")

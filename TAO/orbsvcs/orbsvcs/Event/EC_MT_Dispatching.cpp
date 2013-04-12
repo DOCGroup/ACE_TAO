@@ -40,11 +40,11 @@ TAO_EC_MT_Dispatching::activate (void)
     {
       if (this->force_activate_ != 0)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       "EC (%P|%t) activating dispatching queue at"
                       " default priority\n"));
           if (this->task_.activate (THR_BOUND, this->nthreads_) == -1)
-            ACE_ERROR ((LM_ERROR,
+            ORBSVCS_ERROR ((LM_ERROR,
                         "EC (%P|%t) cannot activate dispatching queue.\n"));
         }
     }

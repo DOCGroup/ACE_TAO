@@ -19,7 +19,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
           trader.run ();
         }
       else
-        ACE_ERROR_RETURN ((LM_ERROR,
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            "Failed to initialize the trader.\n"),
                           1);
     }

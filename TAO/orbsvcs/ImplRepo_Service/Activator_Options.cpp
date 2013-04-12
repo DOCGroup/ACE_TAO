@@ -11,7 +11,7 @@
 
 #include "ace/Arg_Shifter.h"
 #include "ace/OS_NS_strings.h"
-#include "ace/Log_Msg.h"
+#include "orbsvcs/Log_Macros.h"
 
 #if defined (ACE_WIN32)
 static const HKEY SERVICE_REG_ROOT = HKEY_LOCAL_MACHINE;
@@ -44,7 +44,7 @@ Activator_Options::parse_args (int &argc, ACE_TCHAR *argv[])
 
           if (!shifter.is_anything_left () || shifter.get_current ()[0] == '-')
             {
-              ACE_ERROR ((LM_ERROR, "Error: -c option needs a command\n"));
+              ORBSVCS_ERROR ((LM_ERROR, "Error: -c option needs a command\n"));
               this->print_usage ();
               return -1;
             }
@@ -66,7 +66,7 @@ Activator_Options::parse_args (int &argc, ACE_TCHAR *argv[])
             }
           else
             {
-              ACE_ERROR((LM_ERROR, "Error: Unknown service command : %s\n", shifter.get_current()));
+              ORBSVCS_ERROR((LM_ERROR, "Error: Unknown service command : %s\n", shifter.get_current()));
               this->print_usage ();
               return -1;
             }
@@ -78,7 +78,7 @@ Activator_Options::parse_args (int &argc, ACE_TCHAR *argv[])
 
           if (!shifter.is_anything_left () || shifter.get_current ()[0] == '-')
             {
-              ACE_ERROR ((LM_ERROR, "Error: -d option needs a debuglevel\n"));
+              ORBSVCS_ERROR ((LM_ERROR, "Error: -d option needs a debuglevel\n"));
               this->print_usage ();
               return -1;
             }
@@ -92,7 +92,7 @@ Activator_Options::parse_args (int &argc, ACE_TCHAR *argv[])
 
           if (!shifter.is_anything_left () || shifter.get_current ()[0] == '-')
             {
-              ACE_ERROR ((LM_ERROR, "Error: -e option needs "
+              ORBSVCS_ERROR ((LM_ERROR, "Error: -e option needs "
                                     "an environment buffer length\n"));
               this->print_usage ();
               return -1;
@@ -107,7 +107,7 @@ Activator_Options::parse_args (int &argc, ACE_TCHAR *argv[])
 
           if (!shifter.is_anything_left () || shifter.get_current ()[0] == '-')
             {
-              ACE_ERROR ((LM_ERROR, "Error: -m option needs "
+              ORBSVCS_ERROR ((LM_ERROR, "Error: -m option needs "
                                     "a maximum number of environment vars\n"));
               this->print_usage ();
               return -1;
@@ -122,7 +122,7 @@ Activator_Options::parse_args (int &argc, ACE_TCHAR *argv[])
 
           if (!shifter.is_anything_left () || shifter.get_current ()[0] == '-')
             {
-              ACE_ERROR ((LM_ERROR, "Error: -o option needs a filename\n"));
+              ORBSVCS_ERROR ((LM_ERROR, "Error: -o option needs a filename\n"));
               this->print_usage ();
               return -1;
             }
@@ -148,7 +148,7 @@ Activator_Options::parse_args (int &argc, ACE_TCHAR *argv[])
 
           if (!shifter.is_anything_left () || shifter.get_current ()[0] == '-')
             {
-              ACE_ERROR ((LM_ERROR, "Error: -n option needs a name\n"));
+              ORBSVCS_ERROR ((LM_ERROR, "Error: -n option needs a name\n"));
               this->print_usage ();
               return -1;
             }
@@ -199,7 +199,7 @@ Activator_Options::init_from_registry (void)
 void
 Activator_Options::print_usage (void) const
 {
-  ACE_ERROR ((LM_ERROR,
+  ORBSVCS_ERROR ((LM_ERROR,
               "Usage:\n"
               "\n"
               "ImR_Activator [-c cmd] [-d 0|1|2] [-e buflen] [-o file] [-l] [-n name] [-m maxenv]\n"

@@ -87,7 +87,7 @@ TAO::PG_Property_Set::decode (const PortableGroup::Properties & property_set)
     {
       if (TAO_debug_level > 3)
       {
-        ACE_ERROR ( (LM_ERROR,
+        ORBSVCS_ERROR ( (LM_ERROR,
           "%n\n%T: Property_set: rebind failed.\n"
           ));
       }
@@ -155,7 +155,7 @@ void TAO::PG_Property_Set::set_property (
     { // Value was not rebound.
       if (TAO_debug_level > 3)
         {
-          ACE_ERROR ( (LM_ERROR,
+          ORBSVCS_ERROR ( (LM_ERROR,
                        "%n\n%T: Property_set: rebind failed.\n"
                        ));
         }
@@ -273,7 +273,7 @@ int TAO_PG::test_encode_decode ()
   {
     if (longResult != testLong)
     {
-      ACE_ERROR ( (LM_ERROR,
+      ORBSVCS_ERROR ( (LM_ERROR,
         "%n\n%T: %s = %d expecting %d\n",
           testLongKey,
           (int)longResult,
@@ -284,7 +284,7 @@ int TAO_PG::test_encode_decode ()
   }
   else
   {
-    ACE_ERROR ( (LM_ERROR,
+    ORBSVCS_ERROR ( (LM_ERROR,
       "%n\n%T: Can't find value for %s\n", testLongKey
       ));
     result = 0;
@@ -295,7 +295,7 @@ int TAO_PG::test_encode_decode ()
   {
     if (0 != ACE_OS::strcmp (testString, stringResult))
     {
-      ACE_ERROR ( (LM_ERROR,
+      ORBSVCS_ERROR ( (LM_ERROR,
         "%n\n%T: %s = \"%s\" expecting \"%s\"\n",
           testStringKey,
           (int)stringResult,
@@ -306,7 +306,7 @@ int TAO_PG::test_encode_decode ()
   }
   else
   {
-    ACE_ERROR ( (LM_ERROR,
+    ORBSVCS_ERROR ( (LM_ERROR,
       "%n\n%T: Can't find value for %s\n", testStringKey
       ));
     result = 0;
@@ -318,7 +318,7 @@ int TAO_PG::test_encode_decode ()
   {
     if (doubleResult != testDouble)
     {
-      ACE_ERROR ( (LM_ERROR,
+      ORBSVCS_ERROR ( (LM_ERROR,
         "%n\n%T: %s = \"%f\" expecting \"%f\"\n",
           testDoubleKey,
           doubleResult,
@@ -329,7 +329,7 @@ int TAO_PG::test_encode_decode ()
   }
   else
   {
-    ACE_ERROR ( (LM_ERROR,
+    ORBSVCS_ERROR ( (LM_ERROR,
       "%n\n%T: Can't find value for %s\n", testDoubleKey
       ));
     result = 0;

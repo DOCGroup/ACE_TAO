@@ -178,7 +178,7 @@ TAO_Persistent_Context_Index::recreate_all (void)
   IND_DEF::ENTRY *entry = 0;
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG, "Starting to recreate Naming Contexts from the file...\n"));
+    ORBSVCS_DEBUG ((LM_DEBUG, "Starting to recreate Naming Contexts from the file...\n"));
 
   // For each entry in <index_>, create a Naming Context servant.
   do
@@ -262,7 +262,7 @@ TAO_Persistent_Context_Index::create_index (void)
 #if !defined (ACE_LACKS_ACCESS)
   // Now check if the backing store has been created successfully.
   if (ACE_OS::access (this->index_file_, F_OK) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        "create_index\n"),
                       -1);
 #endif /* ACE_LACKS_ACCESS */
@@ -287,7 +287,7 @@ TAO_Persistent_Context_Index::create_index (void)
                                      context_index) == -1)
         {
           // Attempt to clean up.
-          ACE_ERROR ((LM_ERROR,
+          ORBSVCS_ERROR ((LM_ERROR,
                       "create_index\n"));
           this->allocator_->remove ();
           return -1;

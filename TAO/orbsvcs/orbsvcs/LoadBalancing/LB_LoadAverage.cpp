@@ -124,7 +124,7 @@ TAO_LB_LoadAverage::push_loads (
           if (this->load_map_->bind (the_location, eff_load) != 0)
             {
               if (TAO_debug_level > 0)
-                ACE_ERROR ((LM_ERROR,
+                ORBSVCS_ERROR ((LM_ERROR,
                             "ERROR: TAO_LB_LoadAverage - "
                             "Unable to push loads\n"));
 
@@ -229,7 +229,7 @@ TAO_LB_LoadAverage::analyze_loads (
           tmp[i] = load;
 
           /*
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                        "TOTAL == %f\n",
                        total_load.value));
           */
@@ -243,7 +243,7 @@ TAO_LB_LoadAverage::analyze_loads (
 
   avg_load.value = total_load.value / len;
 /*
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
               "AVERAGE LOAD == %f\n",
               avg_load.value));
 */
@@ -257,7 +257,7 @@ TAO_LB_LoadAverage::analyze_loads (
           const PortableGroup::Location & loc = locations[j];
 
          /*
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                        "EFFECTIVE_LOAD == %f\n"
                        "AVERAGE       == %f\n",
                        tmp[i].value,
@@ -278,7 +278,7 @@ TAO_LB_LoadAverage::analyze_loads (
                 percent_diff = 0;
               }
 /*
-              ACE_DEBUG ((LM_DEBUG,
+              ORBSVCS_DEBUG ((LM_DEBUG,
                           "ALERT LOC == %u"
                           "\tAVG LOAD == %f\n"
                           "\tLOAD == %f\n"
@@ -300,7 +300,7 @@ TAO_LB_LoadAverage::analyze_loads (
                        && (percent_diff < 1))
               {
 /*
-                ACE_DEBUG ((LM_DEBUG,
+                ORBSVCS_DEBUG ((LM_DEBUG,
                             "%P --- ALERTING LOCATION %u\n",
                             i));
 */
@@ -374,7 +374,7 @@ TAO_LB_LoadAverage::init (const PortableGroup::Properties & props)
   this->per_balance_load_   = per_balance_load;
 
   /*
-   ACE_DEBUG ((LM_DEBUG,
+   ORBSVCS_DEBUG ((LM_DEBUG,
                "--------------------------------\n"
                "tolerance          = %f\n"
                "dampening          = %f\n"

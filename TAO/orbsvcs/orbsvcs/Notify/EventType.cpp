@@ -3,7 +3,7 @@
 #include "orbsvcs/Notify/EventType.h"
 
 #include "ace/ACE.h"
-#include "ace/Log_Msg.h"
+#include "orbsvcs/Log_Macros.h"
 #include "ace/OS_NS_string.h"
 
 #if ! defined (__ACE_INLINE__)
@@ -123,7 +123,7 @@ TAO_Notify_EventType::is_special (void) const
 void
 TAO_Notify_EventType::dump (void) const
 {
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
               "(%s,%s)",
               this->event_type_.domain_name.in (),
               this->event_type_.type_name.in ()));

@@ -56,7 +56,7 @@ TAO_EC_Kokyu_Filter_Builder::build (
 #ifdef EC_KOKYU_LOGGING
   for (i=0; i<qos.dependencies.length (); ++i)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   "consumerqos[%d] event.header.type = %s,"
                   "rt_info = %d\n",
                   i,
@@ -100,7 +100,7 @@ TAO_EC_Kokyu_Filter_Builder::build (
   RtecScheduler::handle_t h_final_consumer_rep_rt_info = 0;
 
 #ifdef EC_KOKYU_LOGGING
-  ACE_DEBUG ((LM_DEBUG, "consumer rt_info found in consumerqos[%d]\n", npos));
+  ORBSVCS_DEBUG ((LM_DEBUG, "consumer rt_info found in consumerqos[%d]\n", npos));
 #endif
 
   if (npos >= 0 && establish_final_consumer_dependency == 1)
@@ -109,7 +109,7 @@ TAO_EC_Kokyu_Filter_Builder::build (
       h_final_consumer_rt_info = qos.dependencies[npos].rt_info;
 
 #ifdef EC_KOKYU_LOGGING
-      ACE_DEBUG ((LM_DEBUG, "about to get rt_info =  %d\n",
+      ORBSVCS_DEBUG ((LM_DEBUG, "about to get rt_info =  %d\n",
                   h_final_consumer_rep_rt_info));
 #endif
 
@@ -120,7 +120,7 @@ TAO_EC_Kokyu_Filter_Builder::build (
       final_consumer_rep_name += "#rep";
 
 #ifdef EC_KOKYU_LOGGING
-      ACE_DEBUG ((LM_DEBUG, "about to create consumer rep %s\n",
+      ORBSVCS_DEBUG ((LM_DEBUG, "about to create consumer rep %s\n",
                   final_consumer_rep_name.c_str ()));
 #endif
 
@@ -128,7 +128,7 @@ TAO_EC_Kokyu_Filter_Builder::build (
       h_final_consumer_rep_rt_info =
         scheduler->create (final_consumer_rep_name.c_str ());
 #ifdef EC_KOKYU_LOGGING
-      ACE_DEBUG ((LM_DEBUG, "consumer rep created\n"));
+      ORBSVCS_DEBUG ((LM_DEBUG, "consumer rep created\n"));
 #endif
 
     }
@@ -144,7 +144,7 @@ TAO_EC_Kokyu_Filter_Builder::build (
                            );
 
 #ifdef EC_KOKYU_LOGGING
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
               "Filter_Builder::Verifying whether root filter"
               " dependency can be established\n"));
 #endif
@@ -152,7 +152,7 @@ TAO_EC_Kokyu_Filter_Builder::build (
   if (npos >= 0 && establish_final_consumer_dependency == 1)
     {
 #ifdef EC_KOKYU_LOGGING
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   "Filter_Builder::root filter dependency "
                   "can be established\n"));
 #endif
@@ -183,13 +183,13 @@ TAO_EC_Kokyu_Filter_Builder::recursive_build (
   const RtecEventComm::Event& e = qos.dependencies[pos].event;
 
 #ifdef EC_KOKYU_LOGGING
-  ACE_DEBUG ((LM_DEBUG, "Filter_Builder::In recursive build\n"));
+  ORBSVCS_DEBUG ((LM_DEBUG, "Filter_Builder::In recursive build\n"));
 #endif
 
   if (e.header.type == ACE_ES_CONJUNCTION_DESIGNATOR)
     {
 #ifdef EC_KOKYU_LOGGING
-      ACE_DEBUG ((LM_DEBUG, "Filter_Builder::Conjuction designator\n"));
+      ORBSVCS_DEBUG ((LM_DEBUG, "Filter_Builder::Conjuction designator\n"));
 #endif
       CORBA::ULong npos = pos;
       ACE_CString name;
@@ -231,7 +231,7 @@ TAO_EC_Kokyu_Filter_Builder::recursive_build (
   else if (e.header.type == ACE_ES_DISJUNCTION_DESIGNATOR)
     {
 #ifdef EC_KOKYU_LOGGING
-      ACE_DEBUG ((LM_DEBUG, "Filter_Builder::Disjunction designator\n"));
+      ORBSVCS_DEBUG ((LM_DEBUG, "Filter_Builder::Disjunction designator\n"));
 #endif
       CORBA::ULong npos = pos;
       ACE_CString name;
@@ -274,7 +274,7 @@ TAO_EC_Kokyu_Filter_Builder::recursive_build (
              || e.header.type == ACE_ES_EVENT_DEADLINE_TIMEOUT)
       {
 #ifdef EC_KOKYU_LOGGING
-        ACE_DEBUG ((LM_DEBUG, "Filter_Builder::Timeout designator\n"));
+        ORBSVCS_DEBUG ((LM_DEBUG, "Filter_Builder::Timeout designator\n"));
 #endif
         // @@ We need a unique name for each timeout, assigned by the
         //    application?
@@ -337,7 +337,7 @@ TAO_EC_Kokyu_Filter_Builder::recursive_build (
   else
     {
 #ifdef EC_KOKYU_LOGGING
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   "Kokyu_Filter_Builder::No designator for this entry. "
                   "Must be a body\n"));
 #endif

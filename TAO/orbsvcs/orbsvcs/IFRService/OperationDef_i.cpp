@@ -226,7 +226,7 @@ TAO_OperationDef_i::params_i (void)
       // We have an undefined interface
       if (impl == 0)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("Encountered undefined parameter type "
                                 "for variable: %s\n"),
                       name.c_str ()));

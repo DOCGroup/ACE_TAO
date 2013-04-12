@@ -26,7 +26,7 @@ static long push_interval = TAO_LB_PULL_HANDLER_INTERVAL;
 void
 usage (const ACE_TCHAR * cmd)
 {
-  ACE_DEBUG ((LM_INFO,
+  ORBSVCS_DEBUG ((LM_INFO,
               ACE_TEXT ("Usage:\n")
               ACE_TEXT ("  %s\n")
               ACE_TEXT ("    -l <location_id>\n")
@@ -79,7 +79,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
           push_interval = ACE_OS::atoi (s);
           if (push_interval < 1)
             {
-              ACE_ERROR ((LM_ERROR,
+              ORBSVCS_ERROR ((LM_ERROR,
                            ACE_TEXT ("ERROR: Invalid push interval: %s\n"),
                            s));
 
@@ -167,7 +167,7 @@ get_load_monitor (CORBA::ORB_ptr orb,
                || ACE_OS::strcasecmp (::mtype, ACE_TEXT("Memory")) == 0
                || ACE_OS::strcasecmp (::mtype, ACE_TEXT("Network")) == 0)
         {
-          ACE_ERROR ((LM_ERROR,
+          ORBSVCS_ERROR ((LM_ERROR,
                       ACE_TEXT ("ERROR: \"%s\" load monitor currently ")
                       ACE_TEXT ("unimplemented.\n"),
                       ::mtype));
@@ -176,7 +176,7 @@ get_load_monitor (CORBA::ORB_ptr orb,
         }
       else
         {
-          ACE_ERROR ((LM_ERROR,
+          ORBSVCS_ERROR ((LM_ERROR,
                       ACE_TEXT ("ERROR: Unrecognized built-in load monitor ")
                       ACE_TEXT ("type: <%s>.\n"),
                       ::mtype));
@@ -212,7 +212,7 @@ register_load_monitor (CosLoadBalancing::LoadManager_ptr manager,
 
       if (timer_id == -1)
         {
-          ACE_ERROR ((LM_ERROR,
+          ORBSVCS_ERROR ((LM_ERROR,
                       ACE_TEXT ("ERROR: Unable to schedule timer for ")
                       ACE_TEXT ("\"PUSH\" style load monitoring.\n")));
 
@@ -221,7 +221,7 @@ register_load_monitor (CosLoadBalancing::LoadManager_ptr manager,
     }
   else
     {
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
                   ACE_TEXT ("ERROR: Unrecognized load monitoring ")
                   ACE_TEXT ("style: <%s>.\n"),
                   ::mstyle));
@@ -283,7 +283,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (ACE_Thread_Manager::instance ()->spawn (::TAO_LB_run_load_monitor,
                                                   orb.in ()) == -1)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
                              "ERROR:  Unable to spawn TAO LoadMonitor's "
                              "ORB thread.\n"),
                             -1);
@@ -298,7 +298,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Block waiting for the registered signals.
       if (ACE_OS::sigwait (sigset, &signum) == -1)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
                              "(%P|%t) %p\n",
                              "ERROR waiting on signal"),
                             -1);
@@ -346,7 +346,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       if (timer_id != -1 && reactor->cancel_timer (timer_id) == 0)
         {
-          ACE_ERROR ((LM_ERROR,
+          ORBSVCS_ERROR ((LM_ERROR,
                       ACE_TEXT ("ERROR: Unable to cancel \"push\" load ")
                       ACE_TEXT ("monitoring timer.\n")));
 

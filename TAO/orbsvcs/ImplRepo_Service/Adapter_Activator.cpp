@@ -11,7 +11,7 @@
 
 #include "Adapter_Activator.h"
 
-#include "ace/Log_Msg.h"
+#include "orbsvcs/Log_Macros.h"
 #include "tao/PortableServer/Servant_Base.h"
 
 ImR_Adapter::ImR_Adapter (void)
@@ -22,7 +22,7 @@ ImR_Adapter::ImR_Adapter (void)
 void
 ImR_Adapter::init (TAO_ServantBase * servant)
 {
-  ACE_DEBUG ((LM_DEBUG, "ImR_Adapter::init with default servant\n"));
+  ORBSVCS_DEBUG ((LM_DEBUG, "ImR_Adapter::init with default servant\n"));
   default_servant_ = servant;
 }
 
@@ -75,7 +75,7 @@ ImR_Adapter::unknown_adapter (PortableServer::POA_ptr parent,
     }
   catch (const CORBA::Exception& ex)
     {
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
                   "IMR_Adapter_Activator::unknown_adapter - %s\n",
                   exception_message));
       ex._tao_print_exception ("System Exception");

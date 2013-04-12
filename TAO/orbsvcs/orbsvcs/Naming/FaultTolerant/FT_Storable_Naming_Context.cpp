@@ -74,7 +74,7 @@ TAO_FT_Storable_Naming_Context::resolve (const CosNaming::Name& n)
     // If there is no naming manager, we will fail and report an error.
     if ( this->naming_manager_ == 0)
     {
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
                   ACE_TEXT ("TAO_FT_Storable_Naming_Context::resolve ")
                   ACE_TEXT ("- No NamingManager defined.\n")));
 

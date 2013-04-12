@@ -26,7 +26,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
         orb->resolve_initial_references ("NameService");
 
       if (CORBA::is_nil(naming_obj.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to find the Naming Service\n"),
                           1);
 

@@ -48,7 +48,7 @@ void UpdateableHandler::dispatch(UpdateableHandler::Handler handler)
   ACE_OS::memcpy(&mgr, object_id->get_buffer(), sizeof(mgr));
   ACE_OS::memcpy(&id, object_id->get_buffer()+sizeof(mgr), sizeof(id));
 
-  ACE_DEBUG((LM_DEBUG, "%d\n", id));
+  ORBSVCS_DEBUG((LM_DEBUG, "%d\n", id));
 
   (mgr->*handler)(id);
 
@@ -58,14 +58,14 @@ void UpdateableHandler::dispatch(UpdateableHandler::Handler handler)
 void UpdateableHandler::set_update (
                                     )
 {
-  ACE_DEBUG((LM_DEBUG,"Received reply from "));
+  ORBSVCS_DEBUG((LM_DEBUG,"Received reply from "));
   dispatch(&Update_Manager::handle_reply);
 }
 void UpdateableHandler::set_update_excep (
   ::Messaging::ExceptionHolder * excep_holder
   )
 {
-  ACE_DEBUG((LM_DEBUG, "Received Exception from"));
+  ORBSVCS_DEBUG((LM_DEBUG, "Received Exception from"));
   try{
     excep_holder->raise_exception();
   }

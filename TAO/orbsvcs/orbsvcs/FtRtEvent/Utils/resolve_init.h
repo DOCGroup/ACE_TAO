@@ -35,13 +35,13 @@ resolve_init (CORBA::ORB_ptr orb,
 
     catch (const CORBA::Exception&)
     {
-      ACE_ERROR((
+      ORBSVCS_ERROR((
                   LM_ERROR,
                   " (%P|%t) Unable to initialize %s.\n",
               id
             ));
       if (!CORBA::is_nil(obj.in()))
-        ACE_ERROR((
+        ORBSVCS_ERROR((
                     LM_ERROR,
                     "    due to narrowing problem\n"
               ));

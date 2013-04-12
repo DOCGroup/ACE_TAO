@@ -63,13 +63,13 @@ TAO_MIOP_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
                     TAO_MIOP_CLEANUP_MEMORY_BOUND;
                 }
               else
-                ACE_DEBUG ((LM_ERROR,
+                ORBSVCS_DEBUG ((LM_ERROR,
                             ACE_TEXT ("TAO (%P|%t) - MIOP_Resource_Factory ")
                             ACE_TEXT ("-ORBFragmentsCleanupStrategy %s is unknown.\n"),
                             name));
             }
           else
-            ACE_DEBUG ((LM_ERROR,
+            ORBSVCS_DEBUG ((LM_ERROR,
                         ACE_TEXT ("TAO (%P|%t) - MIOP_Resource_Factory ")
                         ACE_TEXT ("-ORBFragmentsCleanupStrategy missing type.\n")));
         }
@@ -79,7 +79,7 @@ TAO_MIOP_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
           if (++curarg < argc)
             this->fragments_cleanup_bound_ = ACE_OS::atoi (argv[curarg]);
           else
-            ACE_DEBUG ((LM_ERROR,
+            ORBSVCS_DEBUG ((LM_ERROR,
                         ACE_TEXT ("TAO (%P|%t) - MIOP_Resource_Factory ")
                         ACE_TEXT ("-ORBFragmentsCleanupBound missing value.\n")));
         }
@@ -91,7 +91,7 @@ TAO_MIOP_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
               int const max= ACE_OS::atoi (argv[curarg]);
               if (max < 0)
                 {
-                  ACE_ERROR ((LM_ERROR,
+                  ORBSVCS_ERROR ((LM_ERROR,
                               ACE_TEXT ("TAO (%P|%t) - MIOP_Resource_Factory ")
                               ACE_TEXT ("-ORBMaxFragments %d ")
                               ACE_TEXT ("is invalid (using %u).\n"),
@@ -103,7 +103,7 @@ TAO_MIOP_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
                 this->max_fragments_ = static_cast<u_long> (max);
             }
           else
-            ACE_DEBUG ((LM_ERROR,
+            ORBSVCS_DEBUG ((LM_ERROR,
                         ACE_TEXT ("TAO (%P|%t) - MIOP_Resource_Factory ")
                         ACE_TEXT ("-ORBMaxFragments missing limit.\n")));
         }
@@ -116,7 +116,7 @@ TAO_MIOP_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
               if (size < static_cast<int> (MIOP_MAX_HEADER_SIZE) ||
                   size > static_cast<int> (MIOP_MAX_DGRAM_SIZE)    )
                 {
-                  ACE_DEBUG ((LM_ERROR,
+                  ORBSVCS_DEBUG ((LM_ERROR,
                               ACE_TEXT ("TAO (%P|%t) - MIOP_Resource_Factory ")
                               ACE_TEXT ("-ORBMaxFragmentSize %d is not within ")
                               ACE_TEXT ("range %u to %u (using %u).\n"),
@@ -130,7 +130,7 @@ TAO_MIOP_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
                 this->max_fragment_size_ = static_cast<u_long> (size);
             }
           else
-            ACE_DEBUG ((LM_ERROR,
+            ORBSVCS_DEBUG ((LM_ERROR,
                         ACE_TEXT ("TAO (%P|%t) - MIOP_Resource_Factory ")
                         ACE_TEXT ("-ORBMaxFragmentSize missing limit.\n")));
         }
@@ -142,7 +142,7 @@ TAO_MIOP_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
               int const tx_time= ACE_OS::atoi (argv[curarg]);
               if (tx_time <= 0)
                 {
-                  ACE_DEBUG ((LM_ERROR,
+                  ORBSVCS_DEBUG ((LM_ERROR,
                               ACE_TEXT ("TAO (%P|%t) - MIOP_Resource_Factory ")
                               ACE_TEXT ("-ORBMaxFragmentRate %d is invalid ")
                               ACE_TEXT ("(using -ORBMaxFragmentSize in micro seconds).\n"),
@@ -153,7 +153,7 @@ TAO_MIOP_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
                 this->max_fragment_rate_= static_cast<u_long> (tx_time);
             }
           else
-            ACE_DEBUG ((LM_ERROR,
+            ORBSVCS_DEBUG ((LM_ERROR,
                         ACE_TEXT ("TAO (%P|%t) - MIOP_Resource_Factory ")
                         ACE_TEXT ("-ORBMaxFragmentRate missing micro-seconds.\n")));
         }
@@ -175,7 +175,7 @@ TAO_MIOP_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
               int const hwm= ACE_OS::atoi (argv[curarg]);
               if (hwm <= 0)
                 {
-                  ACE_DEBUG ((LM_ERROR,
+                  ORBSVCS_DEBUG ((LM_ERROR,
                               ACE_TEXT ("TAO (%P|%t) - MIOP_Resource_Factory ")
                               ACE_TEXT ("%s %d is invalid ")
                               ACE_TEXT ("(using actual -ORBSndSock size).\n"),
@@ -188,7 +188,7 @@ TAO_MIOP_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
                 this->send_hi_water_mark_ = static_cast<u_long> (hwm);
             }
           else
-            ACE_DEBUG ((LM_ERROR,
+            ORBSVCS_DEBUG ((LM_ERROR,
                         ACE_TEXT ("TAO (%P|%t) - MIOP_Resource_Factory ")
                         ACE_TEXT ("%s missing limit.\n"),
                         argv[curarg-1]));
@@ -201,7 +201,7 @@ TAO_MIOP_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
               int const bytes= ACE_OS::atoi (argv[curarg]);
               if (bytes <= 0)
                 {
-                  ACE_DEBUG ((LM_ERROR,
+                  ORBSVCS_DEBUG ((LM_ERROR,
                               ACE_TEXT ("TAO (%P|%t) - MIOP_Resource_Factory ")
                               ACE_TEXT ("-ORBSndSock %d is invalid.\n"),
                               bytes));
@@ -211,7 +211,7 @@ TAO_MIOP_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
                 this->send_buffer_size_= static_cast<u_long> (bytes);
             }
           else
-            ACE_DEBUG ((LM_ERROR,
+            ORBSVCS_DEBUG ((LM_ERROR,
                         ACE_TEXT ("TAO (%P|%t) - MIOP_Resource_Factory ")
                         ACE_TEXT ("-ORBSndSock missing size in bytes.\n")));
         }
@@ -223,7 +223,7 @@ TAO_MIOP_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
               int const bytes= ACE_OS::atoi (argv[curarg]);
               if (bytes <= 0)
                 {
-                  ACE_DEBUG ((LM_ERROR,
+                  ORBSVCS_DEBUG ((LM_ERROR,
                               ACE_TEXT ("TAO (%P|%t) - MIOP_Resource_Factory ")
                               ACE_TEXT ("-ORBRcvSock %d is invalid.\n"),
                               bytes));
@@ -233,7 +233,7 @@ TAO_MIOP_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
                 this->receive_buffer_size_= static_cast<u_long> (bytes);
             }
           else
-            ACE_DEBUG ((LM_ERROR,
+            ORBSVCS_DEBUG ((LM_ERROR,
                         ACE_TEXT ("TAO (%P|%t) - MIOP_Resource_Factory ")
                         ACE_TEXT ("-ORBRcvSock missing size in bytes.\n")));
         }
@@ -245,7 +245,7 @@ TAO_MIOP_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
           if (++curarg < argc)
             this->enable_throttling_= static_cast<bool> (ACE_OS::atoi (argv[curarg]));
           else
-            ACE_DEBUG ((LM_ERROR,
+            ORBSVCS_DEBUG ((LM_ERROR,
                         ACE_TEXT ("TAO (%P|%t) - MIOP_Resource_Factory ")
                         ACE_TEXT ("%s missing 0 or 1 parameter.\n"),
                         argv[curarg-1]));
@@ -258,7 +258,7 @@ TAO_MIOP_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
           if (++curarg < argc)
             this->enable_eager_dequeue_= static_cast<bool> (ACE_OS::atoi (argv[curarg]));
           else
-            ACE_DEBUG ((LM_ERROR,
+            ORBSVCS_DEBUG ((LM_ERROR,
                         ACE_TEXT ("TAO (%P|%t) - MIOP_Resource_Factory ")
                         ACE_TEXT ("%s missing 0 or 1 parameter.\n"),
                         argv[curarg-1]));
@@ -267,14 +267,14 @@ TAO_MIOP_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
         {
           // Can we assume there is an argument after the option?
           // ++curarg;
-          ACE_ERROR ((LM_ERROR,
+          ORBSVCS_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO (%P|%t) - MIOP_Resource_Factory - ")
                       ACE_TEXT ("unknown option <%s>.\n"),
                       argv[curarg]));
         }
       else
         {
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - MIOP_Resource_Factory - ")
                       ACE_TEXT ("ignoring option <%s>.\n"),
                       argv[curarg]));

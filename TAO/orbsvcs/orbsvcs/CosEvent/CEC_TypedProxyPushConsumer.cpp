@@ -37,7 +37,7 @@ TAO_CEC_TypedProxyPushConsumer::TAO_CEC_TypedProxyPushConsumer
   // DSI initialization
   if (TAO_debug_level >= 10)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("***** Initializing the DSI for the new TypedProxyPushConsumer *****\n")));
     }
 

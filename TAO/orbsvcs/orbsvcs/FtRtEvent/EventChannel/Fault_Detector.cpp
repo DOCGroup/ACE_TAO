@@ -46,7 +46,7 @@ int Fault_Detector::init(int argc, ACE_TCHAR** argv)
   {
     if (!reactor_task_.thr_count() &&
       reactor_task_.activate (THR_NEW_LWP | THR_JOINABLE, 1) != 0)
-      ACE_ERROR_RETURN ((LM_ERROR,"Cannot activate reactor thread\n"),
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,"Cannot activate reactor thread\n"),
       -1);
     return 0;
   }

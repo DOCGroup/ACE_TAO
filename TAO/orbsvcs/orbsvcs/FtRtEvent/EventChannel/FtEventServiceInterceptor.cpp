@@ -110,7 +110,7 @@ get_transaction_depth_context(
   }
   catch (const CORBA::BAD_PARAM&)
   {
-    ACE_DEBUG((LM_DEBUG, "Received request without transaction depth context\n"));
+    ORBSVCS_DEBUG((LM_DEBUG, "Received request without transaction depth context\n"));
     return -1;
   }
 

@@ -88,7 +88,7 @@ TAO_CEC_Default_Factory::parse_collection_arg (ACE_TCHAR* opt)
       else if (ACE_OS::strcasecmp (arg, ACE_TEXT("delayed")) == 0)
         iteration_type = 3;
       else
-        ACE_ERROR ((LM_ERROR,
+        ORBSVCS_ERROR ((LM_ERROR,
                     "CEC_Default_Factory - "
                     "unknown collection modifier <%s>\n",
                     arg));
@@ -127,7 +127,7 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
                 }
               else
                 {
-                  ACE_ERROR ((LM_ERROR,
+                  ORBSVCS_ERROR ((LM_ERROR,
                               "CEC_Default_Factory - "
                               "unsupported dispatching <%s>\n",
                               opt));
@@ -198,7 +198,7 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
                 }
               else
                 {
-                  ACE_ERROR ((LM_ERROR,
+                  ORBSVCS_ERROR ((LM_ERROR,
                               "CEC_Default_Factory - "
                               "unsupported consumer lock <%s>\n",
                               opt));
@@ -228,7 +228,7 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
                 }
               else
                 {
-                  ACE_ERROR ((LM_ERROR,
+                  ORBSVCS_ERROR ((LM_ERROR,
                               "CEC_Default_Factory - "
                               "unsupported supplier lock <%s>\n",
                               opt));
@@ -279,7 +279,7 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
                 }
               else
                 {
-                  ACE_ERROR ((LM_ERROR,
+                  ORBSVCS_ERROR ((LM_ERROR,
                               "CEC_Default_Factory - "
                               "unsupported consumer control <%s>\n",
                               opt));
@@ -305,7 +305,7 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
                 }
               else
                 {
-                  ACE_ERROR ((LM_ERROR,
+                  ORBSVCS_ERROR ((LM_ERROR,
                               "CEC_Default_Factory - "
                               "unsupported supplier control <%s>\n",
                               opt));
@@ -407,7 +407,7 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
       else if (ACE_OS::strncmp (arg, ACE_TEXT("-CEC"), 3) == 0)
         {
           arg_shifter.consume_arg ();
-          ACE_ERROR ((LM_ERROR,
+          ORBSVCS_ERROR ((LM_ERROR,
                       "CEC_Default_Factory - "
                       "unknown option <%s>\n",
                       arg));
@@ -415,7 +415,7 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
       else
         {
           arg_shifter.consume_arg ();
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       "CEC_Default_Factory - "
                       "ignoring option <%s>\n",
                       arg));

@@ -210,7 +210,7 @@ TAO_ECG_Reconnect_ConsumerEC_Control::event_channel_not_exist (
 {
   try
     {
-      //ACE_DEBUG ((LM_DEBUG,
+      //ORBSVCS_DEBUG ((LM_DEBUG,
       //            "ECG_Reconnect_ConsumerControl(%P|%t) - "
       //            "channel %x does not exists\n"));
       is_consumer_ec_connected_ = 0;
@@ -244,7 +244,7 @@ TAO_ECG_Reconnect_ConsumerEC_Control::system_exception (
       //   return;
 
       // Anything else is serious, including timeouts...
-      //ACE_DEBUG ((LM_DEBUG,
+      //ORBSVCS_DEBUG ((LM_DEBUG,
       //            "ECG_Reconnect_ConsumerControl(%P|%t) - "
       //            "channel %x does not exists system except\n"));
       is_consumer_ec_connected_ = 0;

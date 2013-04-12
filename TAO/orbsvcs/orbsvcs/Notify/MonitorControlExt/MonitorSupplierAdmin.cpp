@@ -74,7 +74,7 @@ TAO_MonitorSupplierAdmin::register_stats_controls (
   if (!cinstance->add (control))
     {
       delete control;
-      ACE_ERROR ((LM_ERROR, "Unable to add control: %s\n",
+      ORBSVCS_ERROR ((LM_ERROR, "Unable to add control: %s\n",
                   this->control_name_.c_str ()));
     }
 }

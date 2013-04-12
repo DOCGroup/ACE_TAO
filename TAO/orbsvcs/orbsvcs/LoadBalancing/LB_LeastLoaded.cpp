@@ -126,7 +126,7 @@ TAO_LB_LeastLoaded::push_loads (
           if (this->load_map_->bind (the_location, eff_load) != 0)
             {
               if (TAO_debug_level > 0)
-                ACE_ERROR ((LM_ERROR,
+                ORBSVCS_ERROR ((LM_ERROR,
                             "ERROR: TAO_LB_LeastLoaded - "
                             "Unable to push loads\n"));
 
@@ -186,7 +186,7 @@ TAO_LB_LeastLoaded::next_member (
 
   if (found_location)
     {
-//       ACE_DEBUG ((LM_DEBUG,
+//       ORBSVCS_DEBUG ((LM_DEBUG,
 //                   "RETURNING REFERENCE FOR LOCATION \"%s\"\n",
 //                   location[0].id.in ()));
 
@@ -246,7 +246,7 @@ TAO_LB_LeastLoaded::analyze_loads (
                             current_loads.in (),
                             load);
 /*
-           ACE_DEBUG ((LM_DEBUG,
+           ORBSVCS_DEBUG ((LM_DEBUG,
                        "EFFECTIVE_LOAD == %f\n"
                        "CRITICAL       == %f\n"
                        "REJECT         == %f\n"
@@ -263,7 +263,7 @@ TAO_LB_LeastLoaded::analyze_loads (
               if (load.value > this->critical_threshold_)
                 {
 /*
-                   ACE_DEBUG ((LM_DEBUG,
+                   ORBSVCS_DEBUG ((LM_DEBUG,
                                "%P --- ALERTING LOCATION %u\n",
                                i));
 */
@@ -332,7 +332,7 @@ TAO_LB_LeastLoaded::get_location (
                             current_loads.in (),
                             load);
 /*
-           ACE_DEBUG ((LM_DEBUG,
+           ORBSVCS_DEBUG ((LM_DEBUG,
                        "LOC = %u"
                        "\tC = %d"
                        "\treject = %f"
@@ -349,7 +349,7 @@ TAO_LB_LeastLoaded::get_location (
                || load.value < this->reject_threshold_)
               && load.value < min_load)
             {
-//               ACE_DEBUG ((LM_DEBUG,
+//               ORBSVCS_DEBUG ((LM_DEBUG,
 //                           "**** LOAD == %f\n",
 //                           load.value));
 
@@ -405,15 +405,15 @@ TAO_LB_LeastLoaded::get_location (
                           location_index = i;
                           found_location = 1;
 
-//                           ACE_DEBUG ((LM_DEBUG,
+//                           ORBSVCS_DEBUG ((LM_DEBUG,
 //                                       "** NEW MIN_LOAD == %f\n",
 //                                       min_load));
                         }
 
 //                       if (n == 0)
-//                         ACE_DEBUG ((LM_DEBUG, "^^^^^ PREVIOUS LOCATION\n"));
+//                         ORBSVCS_DEBUG ((LM_DEBUG, "^^^^^ PREVIOUS LOCATION\n"));
 //                       else
-//                         ACE_DEBUG ((LM_DEBUG, "^^^^^ CURRENT LOCATION\n"));
+//                         ORBSVCS_DEBUG ((LM_DEBUG, "^^^^^ CURRENT LOCATION\n"));
 
                     }
                   else
@@ -422,7 +422,7 @@ TAO_LB_LeastLoaded::get_location (
                       location_index = i;
                       found_location = 1;
 
-//                       ACE_DEBUG ((LM_DEBUG,
+//                       ORBSVCS_DEBUG ((LM_DEBUG,
 //                                   "***** NEW MIN_LOAD == %f\n",
 //                                   min_load));
                     }
@@ -433,13 +433,13 @@ TAO_LB_LeastLoaded::get_location (
                   location_index = i;
                   found_location = 1;
 
-//                   ACE_DEBUG ((LM_DEBUG,
+//                   ORBSVCS_DEBUG ((LM_DEBUG,
 //                               "NEW MIN_LOAD == %f\n",
 //                               min_load));
                 }
             }
 
-          // ACE_DEBUG ((LM_DEBUG, "NEW MIN_LOAD == %f\n", min_load));
+          // ORBSVCS_DEBUG ((LM_DEBUG, "NEW MIN_LOAD == %f\n", min_load));
         }
       catch (const CosLoadBalancing::LocationNotFound&)
         {
@@ -448,7 +448,7 @@ TAO_LB_LeastLoaded::get_location (
         }
     }
 
-//   ACE_DEBUG ((LM_DEBUG,
+//   ORBSVCS_DEBUG ((LM_DEBUG,
 //               "FOUND_LOAD     == %u\n"
 //               "FOUND_LOCATION == %u\n",
 //               found_load,
@@ -461,13 +461,13 @@ TAO_LB_LeastLoaded::get_location (
     {
       if (found_location)
       {
-        //ACE_DEBUG ((LM_DEBUG, "LOCATED = %u\n", location_index));
+        //ORBSVCS_DEBUG ((LM_DEBUG, "LOCATED = %u\n", location_index));
         location = locations[location_index];
       }
       else if (!ACE::is_equal (this->reject_threshold_, 0.0f))
         throw CORBA::TRANSIENT ();
 
-//       ACE_DEBUG ((LM_DEBUG, "LOCATION ID == %s\n", location[0].id.in ()));
+//       ORBSVCS_DEBUG ((LM_DEBUG, "LOCATION ID == %s\n", location[0].id.in ()));
     }
 
   return found_location;
@@ -548,7 +548,7 @@ TAO_LB_LeastLoaded::init (const PortableGroup::Properties & props)
   this->dampening_          = dampening;
   this->per_balance_load_   = per_balance_load;
 /*
-   ACE_DEBUG ((LM_DEBUG,
+   ORBSVCS_DEBUG ((LM_DEBUG,
                "--------------------------------\n"
                "critical_threshold = %f\n"
                "reject_threshold   = %f\n"

@@ -23,7 +23,7 @@ TAO_LB_Push_Handler::handle_timeout (
       CosLoadBalancing::LoadList_var loads =
         this->monitor_->loads ();
 
-//       ACE_DEBUG ((LM_DEBUG,
+//       ORBSVCS_DEBUG ((LM_DEBUG,
 //                   "PUSHING LOAD:\n"
 //                   "  id:    %u\n"
 //                   "  value: %f\n",

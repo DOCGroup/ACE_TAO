@@ -147,7 +147,7 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
             case '?':
             default:
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-              ACE_DEBUG ((LM_DEBUG,
+              ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("Usage: %s ")
                           ACE_TEXT ("-n service_name ")
                           ACE_TEXT ("-o ior_file_name ")
@@ -160,7 +160,7 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
                           ACE_TEXT ("\n"),
                           argv[0]));
 #else
-              ACE_DEBUG ((LM_DEBUG,
+              ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("Usage: %s ")
                           ACE_TEXT ("-n service_name ")
                           ACE_TEXT ("-o ior_file_name ")
@@ -277,7 +277,7 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
           // IFR initialization
           if (TAO_debug_level >= 10)
             {
-              ACE_DEBUG ((LM_DEBUG,
+              ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("***** Initializing the IFR connection... *****\n")));
             }
 
@@ -290,7 +290,7 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
             {
               if (TAO_debug_level >= 10)
                 {
-                  ACE_DEBUG ((LM_DEBUG,
+                  ORBSVCS_DEBUG ((LM_DEBUG,
                               ACE_TEXT ("***** resolve_initial_references for IFR failed\n *****")));
                 }
               return CORBA::Object::_nil ();
@@ -303,7 +303,7 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
                 {
                   if (TAO_debug_level >= 10)
                     {
-                      ACE_DEBUG ((LM_DEBUG,
+                      ORBSVCS_DEBUG ((LM_DEBUG,
                                   ACE_TEXT ("***** CORBA::Repository::_narrow failed *****\n")));
                     }
                   return CORBA::Object::_nil ();
@@ -312,7 +312,7 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
                 {
                   if (TAO_debug_level >= 10)
                     {
-                      ACE_DEBUG ((LM_DEBUG,
+                      ORBSVCS_DEBUG ((LM_DEBUG,
                                   ACE_TEXT ("***** ...IFR connection completed *****\n")));
                     }
                 }

@@ -100,7 +100,7 @@ namespace TAO_PG
               (*cur_iter).item ()->started () == ACE_Time_Value::zero ?
               ACE_TEXT ("broken ") : ACE_TEXT ("");
 
-            ACE_DEBUG ((LM_DEBUG,
+            ORBSVCS_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("TAO (%P|%t) - TBFCS::cleanup, ")
                         ACE_TEXT ("cleaning %s%d bytes (hash %d)\n"),
                         b, (*cur_iter).item ()->data_length (),
@@ -151,7 +151,7 @@ namespace TAO_PG
               sorted_set[i]->item ()->started () == ACE_Time_Value::zero ?
               ACE_TEXT ("broken ") : ACE_TEXT ("");
 
-            ACE_DEBUG ((LM_DEBUG,
+            ORBSVCS_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("TAO (%P|%t) - NBFCS::cleanup, ")
                         ACE_TEXT ("cleaning %s%d bytes (hash %d)\n"),
                         b, sorted_set[i]->item ()->data_length (),
@@ -182,7 +182,7 @@ namespace TAO_PG
         if ((*cur_iter).item ()->started () == ACE_Time_Value::zero)
           {
             if (TAO_debug_level >= 8)
-              ACE_DEBUG ((LM_DEBUG,
+              ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("TAO (%P|%t) - MBFCS::cleanup, ")
                           ACE_TEXT ("cleaning broken %d bytes (hash %d)\n"),
                           (*cur_iter).item ()->data_length (),
@@ -222,7 +222,7 @@ namespace TAO_PG
           break;
 
         if (TAO_debug_level >= 8)
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - MBFCS::cleanup, ")
                       ACE_TEXT ("cleaning %d bytes (hash %d)\n"),
                       sorted_set[i]->item ()->data_length (),

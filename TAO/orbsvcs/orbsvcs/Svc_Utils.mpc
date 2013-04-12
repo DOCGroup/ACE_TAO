@@ -20,6 +20,7 @@ project(Svc_Utils) : orbsvcslib, orbsvcs_output, install, portableserver, tao_ve
     Time_Utilities.cpp
     IOR_Multicast.cpp
     Daemon_Utilities.cpp
+    Log_Macros.cpp
   }
 
   Header_Files {
