@@ -4,8 +4,8 @@ $Id$
 
 @page Bug_3384_Regression Test README File
 
-A regression test for a bug in (un)reliable oneways with the SYNC_NONE scope. 
-The test verifies if a oneway sent as the first request on a new transport 
+A regression test for a bug in (un)reliable oneways with the SYNC_NONE scope.
+The test verifies if a oneway sent as the first request on a new transport
 gets correctly pushed out as soon as the new transort has connected.
 This is a regression test for:
 
