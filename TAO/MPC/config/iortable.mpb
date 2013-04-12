@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : taolib {
+project : taolib, messaging, dynamicinterface {
   after   += IORTable
   libs    += TAO_IORTable
 }

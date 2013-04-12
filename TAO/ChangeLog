@@ -1,3 +1,9 @@
+Fri Apr 12 20:58:38 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * MPC/config/iortable.mpb:
+
+          Add new base projects to satisfy static builds.
+
 Fri Apr 12 18:16:42 UTC 2013  Adam Mitz  <mitza@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
