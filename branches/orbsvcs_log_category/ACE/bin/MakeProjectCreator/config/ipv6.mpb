@@ -1,6 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-feature(ipv6) {
-  macros += ACE_HAS_IPV6
-}

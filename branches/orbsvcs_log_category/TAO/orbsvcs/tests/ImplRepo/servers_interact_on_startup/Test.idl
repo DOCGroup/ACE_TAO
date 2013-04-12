@@ -1,8 +1,0 @@
-// $Id$
-
-interface Test
-{
-  // Return the number of the server
-  short get_server_num ();
-};
-
