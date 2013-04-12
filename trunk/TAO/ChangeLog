@@ -1,3 +1,11 @@
+Fri Apr 12 12:11:11 UTC 2013  Martin Corino  <mcorino@remedy.nl>
+
+        * tests/Bug_3384_Regression/Client_i.h:
+        * tests/Bug_3384_Regression/Client_i.cpp:
+        * tests/Bug_3384_Regression/Server_i.h:
+        * tests/Bug_3384_Regression/Server_i.cpp:
+          More fixes for fuzzy fuzzer.
+
 Fri Apr 12 09:47:06 UTC 2013  Martin Corino  <mcorino@remedy.nl>
 
         * tests/Bug_3384_Regression/Client_i.h:
