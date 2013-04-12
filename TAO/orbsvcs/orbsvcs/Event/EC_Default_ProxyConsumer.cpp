@@ -68,7 +68,7 @@ TAO_EC_Default_ProxyPushConsumer::connect_push_supplier (
     this->qos_ = qos;
 
 #if TAO_EC_ENABLE_DEBUG_MESSAGES
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
                  "Building filter for supplier <%x>.\n",
                 this));
 #endif /* TAO_EC_ENABLED_DEBUG_MESSAGES */

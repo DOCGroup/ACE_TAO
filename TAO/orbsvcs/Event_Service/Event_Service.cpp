@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "Event_Service.h"
 
 #include "ace/Get_Opt.h"
@@ -79,7 +80,7 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
       CORBA::Object_var root_poa_object =
         this->orb_->resolve_initial_references("RootPOA");
       if (CORBA::is_nil (root_poa_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize the root POA.\n"),
                           1);
 
@@ -107,7 +108,7 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
             this->orb_->resolve_initial_references ("NameService");
 
           if (CORBA::is_nil (naming_obj.in ()))
-            ACE_ERROR_RETURN ((LM_ERROR,
+            ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                 " (%P|%t) Unable to initialize the Naming Service.\n"),
                               1);
 
@@ -147,7 +148,7 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
           scheduler = RtecScheduler::Scheduler::_narrow (tmp.in ());
 
           if (CORBA::is_nil (scheduler.in ()))
-            ACE_ERROR_RETURN ((LM_ERROR,
+            ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                 " (%P|%t) Unable to resolve the Scheduling Service.\n"),
                               1);
         }
@@ -224,7 +225,7 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
             }
 
           if (CORBA::is_nil (child_poa.in ()))
-            ACE_ERROR_RETURN ((LM_ERROR,
+            ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                " (%P|%t) Unable to initialize the child POA.\n"),
                               1);
 
@@ -249,7 +250,7 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
             ACE_OS::fopen (this->ior_file_name_.c_str(),
                            ACE_TEXT("w"));
           if (output_file == 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
+            ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                "Cannot open output file for writing IOR: %s",
                                this->ior_file_name_.c_str()),
                               1);
@@ -271,7 +272,7 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
             }
         }
 
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT("The EC IOR is <%C>\n"),
                   str.in ()));
 
@@ -283,7 +284,7 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
           naming_context->rebind (channel_name, ec.in ());
         }
 
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT("%C; running event service\n"),
                   __FILE__));
 
@@ -372,7 +373,7 @@ Event_Service::parse_args (int argc, ACE_TCHAR* argv [])
             }
           else
             {
-              ACE_DEBUG ((LM_DEBUG,
+              ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT("Unknown scheduling type <%s> ")
                           ACE_TEXT("defaulting to none\n"),
                           get_opt.opt_arg ()));
@@ -382,7 +383,7 @@ Event_Service::parse_args (int argc, ACE_TCHAR* argv [])
 
         case '?':
         default:
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT("Usage: %s ")
                       ACE_TEXT("-a ")
                       ACE_TEXT("-n service_name ")

@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/PortableGroup/UIPMC_Profile.h"
 #include "orbsvcs/PortableGroup/UIPMC_Acceptor.h"
 #include "orbsvcs/PortableGroup/UIPMC_Mcast_Connection_Handler.h"
@@ -89,7 +90,7 @@ TAO_UIPMC_Acceptor::open (
     {
       // The hostname cache has already been set!
       // This is bad mojo, i.e. an internal TAO error.
-      ACE_ERROR_RETURN ((LM_ERROR,
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("TAO (%P|%t) - UIPMC_Acceptor::open, ")
                          ACE_TEXT ("hostname already set\n")),
                         -1);
@@ -127,7 +128,7 @@ TAO_UIPMC_Acceptor::open (
       if (cp_pos == 0)
         {
           // No valid IPv6 address specified.
-          ACE_ERROR_RETURN ((LM_ERROR,
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("TAO (%P|%t) - UIPMC_Acceptor::open, ")
                              ACE_TEXT ("Invalid IPv6 decimal address specified\n")),
                             -1);
@@ -156,7 +157,7 @@ TAO_UIPMC_Acceptor::open (
   // Both host and port have to be specified.
   if (port_separator_loc == 0)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("TAO (%P|%t) - UIPMC_Acceptor::open, ")
                          ACE_TEXT ("port is not specified\n")),
                         -1);
@@ -173,7 +174,7 @@ TAO_UIPMC_Acceptor::open (
       (addr.get_type () != AF_INET6 ||
        addr.is_ipv4_mapped_ipv6 ()))
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("TAO (%P|%t) - UIPMC_Acceptor::open, ")
                          ACE_TEXT ("non-IPv6 endpoints not allowed when ")
                          ACE_TEXT ("connect_ipv6_only is set\n")),
@@ -236,7 +237,7 @@ TAO_UIPMC_Acceptor::open_i (
   connection_handler->listen_on_all (this->listen_on_all_);
   if (connection_handler->open (0))
     {
-      ACE_DEBUG ((LM_ERROR,
+      ORBSVCS_DEBUG ((LM_ERROR,
                   ACE_TEXT("TAO (%P|%t) - TAO_UIPMC_Acceptor::open_i, ")
                   ACE_TEXT("failed to open connection handler.\n")
                 ));
@@ -267,7 +268,7 @@ TAO_UIPMC_Acceptor::open_i (
       this->addrs_[j].set_port_number (port, 1);
       if (TAO_debug_level > 5)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - UIPMC_Acceptor::open_i, ")
                       ACE_TEXT ("listening on: <%C:%u>\n"),
                       this->hosts_[j],
@@ -298,7 +299,7 @@ TAO_UIPMC_Acceptor::dotted_decimal_address (
   if (!addr.get_host_addr (tmp, sizeof tmp))
     {
       if (TAO_debug_level)
-        ACE_DEBUG ((LM_DEBUG,
+        ORBSVCS_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) - UIPMC_Acceptor::")
                     ACE_TEXT ("dotted_decimal_address, cannot determine ")
                     ACE_TEXT ("hostname (Errno: '%m')\n")));
@@ -370,7 +371,7 @@ TAO_UIPMC_Acceptor::parse_options (const char *str)
       ++j;  // In this way we fight MS VS warning about unreachable code.
 
       if (end == begin)
-        ACE_ERROR_RETURN ((LM_ERROR,
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("TAO (%P|%t) Zero length UIPMC option.\n")),
                           -1);
       else if (end != ACE_CString::npos)
@@ -381,7 +382,7 @@ TAO_UIPMC_Acceptor::parse_options (const char *str)
 
           if (slot == len - 1
               || slot == ACE_CString::npos)
-            ACE_ERROR_RETURN ((LM_ERROR,
+            ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("TAO (%P|%t) UIPMC option <%s> is ")
                                ACE_TEXT ("missing a value.\n"),
                                opt.c_str ()),
@@ -393,21 +394,21 @@ TAO_UIPMC_Acceptor::parse_options (const char *str)
           begin = end + 1;
 
           if (name.length () == 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
+            ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("TAO (%P|%t) Zero length UIPMC ")
                                ACE_TEXT ("option name.\n")),
                               -1);
 
           if (name == "priority")
             {
-              ACE_ERROR_RETURN ((LM_ERROR,
+              ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                  ACE_TEXT ("TAO (%P|%t) Invalid UIPMC endpoint format: ")
                                  ACE_TEXT ("endpoint priorities no longer supported.\n"),
                                  value.c_str ()),
                                 -1);
             }
           else
-            ACE_ERROR_RETURN ((LM_ERROR,
+            ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("TAO (%P|%t) Invalid UIPMC option: <%s>\n"),
                                name.c_str ()),
                               -1);

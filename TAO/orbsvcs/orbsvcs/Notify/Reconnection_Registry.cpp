@@ -7,6 +7,7 @@
  *
  *  @author Dale Wilson <wilson_d@ociweb.com>
  */
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Notify/Reconnection_Registry.h"
 
 #include "tao/debug.h"
@@ -51,7 +52,7 @@ namespace TAO_Notify
 
     if (DEBUG_LEVEL > 0)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
         ACE_TEXT ("(%P|%t) Reconnect registry: registering %d\n"),
         static_cast<int> (next_id)
         ));
@@ -75,7 +76,7 @@ namespace TAO_Notify
   {
     if (DEBUG_LEVEL > 0)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
         ACE_TEXT ("(%P|%t) Reconnect registry: unregistering %d\n"),
         static_cast<int> (id)
         ));
@@ -115,7 +116,7 @@ namespace TAO_Notify
       NVPList cattrs;
       if (DEBUG_LEVEL > 0)
       {
-        ACE_DEBUG ((LM_DEBUG,
+        ORBSVCS_DEBUG ((LM_DEBUG,
           ACE_TEXT ("(%P|%t) Reconnect registry: saving %d\n"),
           static_cast<int> (entry->ext_id_)
           ));
@@ -153,7 +154,7 @@ namespace TAO_Notify
 
           if (DEBUG_LEVEL > 0)
           {
-            ACE_DEBUG ((LM_DEBUG,
+            ORBSVCS_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) Reconnect registry: reloading %d\n"),
               static_cast<int> (id)
               ));
@@ -166,7 +167,7 @@ namespace TAO_Notify
       }
       else
       {
-        ACE_ERROR ((LM_ERROR,
+        ORBSVCS_ERROR ((LM_ERROR,
           ACE_TEXT ("(%P|%t) Reconnect registry: missing attribute\n")
           ));
       }
@@ -190,7 +191,7 @@ namespace TAO_Notify
       {
         if (DEBUG_LEVEL > 0)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
             ACE_TEXT ("(%P|%t) Reconnection Registry: Sending reconnection to client %d\n"),
               static_cast<int> (entry->ext_id_)
             ));
@@ -205,7 +206,7 @@ namespace TAO_Notify
         }
         else
         {
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
             ACE_TEXT ("(%P|%t) Reconnection Registry: Can't resolve reconnection client's IOR %d\n"),
               static_cast<int> (entry->ext_id_)
             ));
@@ -216,7 +217,7 @@ namespace TAO_Notify
       }
       catch (const CORBA::Exception&)
       {
-        ACE_DEBUG ((LM_DEBUG,
+        ORBSVCS_DEBUG ((LM_DEBUG,
           ACE_TEXT ("(%P|%t) Reconnection Registry: Exception sending reconnection to client -- discarding registry entry\n")
           ));
         //throw this entry away but you've got an iterator so be careful

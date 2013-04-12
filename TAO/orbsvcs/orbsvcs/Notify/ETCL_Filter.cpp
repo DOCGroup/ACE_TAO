@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Notify/ETCL_Filter.h"
 #include "ace/Auto_Ptr.h"
 #include "tao/debug.h"
@@ -71,7 +72,7 @@ TAO_Notify_Constraint_Expr::load_child (
 
     CORBA::ULong len = this->constr_expr.event_types.length ();
     if (DEBUG_LEVEL)
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) reload EventType %d \n"),
                   len + 1));
 
@@ -115,13 +116,13 @@ TAO_Notify_ETCL_Filter::~TAO_Notify_ETCL_Filter ()
   catch (const CORBA::Exception&)
     {
       if (TAO_debug_level)
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Error in Filter dtor\n")));
+        ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("Error in Filter dtor\n")));
 
       // @@ eat exception.
     }
 
   if (TAO_debug_level > 1)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Filter Destroyed\n")));
+    ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("Filter Destroyed\n")));
 }
 
 char*
@@ -151,7 +152,7 @@ TAO_Notify_ETCL_Filter::add_constraint_i (CosNotifyFilter::ConstraintID cnstr_id
   auto_ptr <TAO_Notify_Constraint_Expr> auto_expr (notify_constr_expr);
 
   if (TAO_debug_level > 1)
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
                 ACE_TEXT("Added an empty constraint to filter\n")));
 
   if (this->constraint_expr_list_.bind (cnstr_id, notify_constr_expr) == -1)
@@ -185,7 +186,7 @@ TAO_Notify_ETCL_Filter::add_constraint_i
   if (cnstr_id == 0)
   {
     if (TAO_debug_level > 1)
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("Added constraint %C to filter %d\n"),
                   expr.constraint_expr.in (), this->id_));
 
@@ -194,7 +195,7 @@ TAO_Notify_ETCL_Filter::add_constraint_i
   else
   {
     if (TAO_debug_level > 1)
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("Loaded constraint %C to filter %d\n"),
                   expr.constraint_expr.in (), this->id_));
   }
@@ -216,7 +217,7 @@ TAO_Notify_ETCL_Filter::add_constraints (
   CORBA::ULong const constraint_length = constraint_list.length ();
 
   if (TAO_debug_level > 0)
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("constraint_length = %d\n"),
                   constraint_length));
 
@@ -237,7 +238,7 @@ TAO_Notify_ETCL_Filter::add_constraints (
 
       if (TAO_debug_level > 0)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("Adding constraint %d, %C\n"),
                       pop_index,
                       constraint_list [pop_index].constraint_expr.in ()));
@@ -586,7 +587,7 @@ TAO_Notify_ETCL_Filter::load_child (const ACE_CString &type,
       constraint_expr_ids_ = id;
 
       if (DEBUG_LEVEL)
-        ACE_DEBUG ((LM_DEBUG,
+        ORBSVCS_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("(%P|%t) reload filter %d constraint %d\n"),
                     static_cast<int> (this->id_), static_cast<int> (id)));
 

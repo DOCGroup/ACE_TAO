@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Time_Utilities.h"
 #include "orbsvcs/Runtime_Scheduler.h"
 #include "ace/OS_NS_string.h"
@@ -102,7 +103,7 @@ ACE_Runtime_Scheduler::set (::RtecScheduler::handle_t handle,
   // any differences.
   if (handle <= 0 || handle > entry_count_)
     {
-      ACE_DEBUG ((LM_DEBUG, "Unknown task: no entry for handle %d\n",
+      ORBSVCS_DEBUG ((LM_DEBUG, "Unknown task: no entry for handle %d\n",
                   handle));
       throw RtecScheduler::UNKNOWN_TASK();
       // NOTREACHED
@@ -116,7 +117,7 @@ ACE_Runtime_Scheduler::set (::RtecScheduler::handle_t handle,
       || rt_info_[handle - 1].quantum != quantum
       || rt_info_[handle - 1].info_type != info_type
       || rt_info_[handle - 1].threads != static_cast<CORBA::Long> (threads))
-    ACE_ERROR ((LM_ERROR,
+    ORBSVCS_ERROR ((LM_ERROR,
                 "invalid data for RT_Info: %s\n",
                 (const char*)rt_info_[handle - 1].entry_point));
   // TODO: throw something here.
@@ -253,7 +254,7 @@ ACE_Runtime_Scheduler::add_dependency (RtecScheduler::handle_t handle,
           return;
         }
     }
-  ACE_ERROR ((LM_ERROR, "unmatched dependency on %s\n",
+  ORBSVCS_ERROR ((LM_ERROR, "unmatched dependency on %s\n",
               (const char*)rt_info_[handle - 1]->entry_point));
 #endif
 }

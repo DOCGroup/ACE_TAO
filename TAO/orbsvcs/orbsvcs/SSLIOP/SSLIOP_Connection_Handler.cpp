@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h"
 #include "orbsvcs/SSLIOP/SSLIOP_Endpoint.h"
 #include "orbsvcs/SSLIOP/SSLIOP_Util.h"
@@ -61,7 +62,7 @@ TAO::SSLIOP::Connection_Handler::~Connection_Handler (void)
 
   if (result == -1 && TAO_debug_level)
     {
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
                   ACE_TEXT("TAO (%P|%t) - SSLIOP_Connection_Handler::")
                   ACE_TEXT("~SSLIOP_Connection_Handler, ")
                   ACE_TEXT("release_os_resources() failed %m\n")));
@@ -192,7 +193,7 @@ TAO::SSLIOP::Connection_Handler::open (void *)
                                              sizeof (remote_as_string) / sizeof (ACE_TCHAR));
           (void) local_addr.addr_to_string (local_as_string,
                                             sizeof (local_as_string) / sizeof (ACE_TCHAR));
-          ACE_ERROR ((LM_ERROR,
+          ORBSVCS_ERROR ((LM_ERROR,
                       ACE_TEXT("TAO(%P|%t) - TAO::SSLIOP::Connection_Handler::open, ")
                       ACE_TEXT("Holy Cow! The remote addr and ")
                       ACE_TEXT("local addr are identical (%s == %s)\n"),
@@ -213,7 +214,7 @@ TAO::SSLIOP::Connection_Handler::open (void *)
         ACE_OS::strcpy (client, ACE_TEXT("*unable to obtain*"));
       }
 
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) SSLIOP connection from ")
                   ACE_TEXT ("client <%s> on [%d]\n"),
                   client,
@@ -226,7 +227,7 @@ TAO::SSLIOP::Connection_Handler::open (void *)
         ACE_OS::strcpy (client, ACE_TEXT("*unable to obtain*"));
       }
 
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) SSLIOP connection accepted from ")
                   ACE_TEXT ("server <%s> on [%d]\n"),
                   client,
@@ -382,7 +383,7 @@ TAO::SSLIOP::Connection_Handler::process_listen_point_list (
 
       if (TAO_debug_level > 0)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       "(%P|%t) Listening port [%d] on [%C]\n",
                       listen_point.port,
                       listen_point.host.in ()));

@@ -1,5 +1,5 @@
 // $Id$
-project(*Lib): orbsvcslib, orbsvcs_output, conv_lib, fault_tolerance, notification_skel, ftorb, portablegroup, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, install {
+project(*Lib): orbsvcslib, orbsvcs_output, conv_lib, fault_tolerance, notification_skel, ftorb, portablegroup, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, install, svc_utils {
   sharedname   = TAO_ReplicationManagerLib
   dynamicflags += TAO_REPLICATIONMANAGERLIB_BUILD_DLL
 
@@ -19,7 +19,7 @@ project(*Lib): orbsvcslib, orbsvcs_output, conv_lib, fault_tolerance, notificati
   }
 }
 
-project : taoserver, orbsvcsexe, fault_tolerance, notification_skel, iormanip, iortable, ftorb, install {
+project : taoserver, orbsvcsexe, fault_tolerance, notification_skel, iormanip, iortable, ftorb, install, svc_utils {
   exename  = tao_ft_replicationmanager
   libs    += TAO_ReplicationManagerLib
   after   += FT_ReplicationManager_Lib

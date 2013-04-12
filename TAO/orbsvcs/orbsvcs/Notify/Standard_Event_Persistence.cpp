@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Notify/Standard_Event_Persistence.h"
 #include "orbsvcs/Notify/Persistent_File_Allocator.h"
 #include "tao/debug.h"
@@ -64,7 +65,7 @@ Standard_Event_Persistence::init (int argc, ACE_TCHAR *argv[])
     if (ACE_OS::strcasecmp (av, ACE_TEXT ("-v")) == 0)
     {
       verbose = true;
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
         ACE_TEXT ("(%P|%t) Standard_Event_Persistence: -verbose\n")
         ));
     }
@@ -73,7 +74,7 @@ Standard_Event_Persistence::init (int argc, ACE_TCHAR *argv[])
       this->filename_ = argv[narg + 1];
       if (TAO_debug_level > 0 || verbose)
       {
-        ACE_DEBUG ((LM_DEBUG,
+        ORBSVCS_DEBUG ((LM_DEBUG,
           ACE_TEXT ("(%P|%t) Standard_Event_Persistence: Setting -file_path: %s\n"),
           this->filename_.c_str ()
         ));
@@ -85,7 +86,7 @@ Standard_Event_Persistence::init (int argc, ACE_TCHAR *argv[])
       this->block_size_ = ACE_OS::atoi(argv[narg + 1]);
       if (TAO_debug_level > 0 || verbose)
       {
-        ACE_DEBUG ((LM_DEBUG,
+        ORBSVCS_DEBUG ((LM_DEBUG,
           ACE_TEXT ("(%P|%t) Standard_Event_Persistence: Setting -block_size: %d\n"),
           this->block_size_
         ));
@@ -94,7 +95,7 @@ Standard_Event_Persistence::init (int argc, ACE_TCHAR *argv[])
     }
     else
     {
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
         ACE_TEXT ("(%P|%t) Unknown parameter to Standard Event Persistence: %s\n"),
         argv[narg]
         ));
@@ -144,7 +145,7 @@ Standard_Event_Persistence_Factory::~Standard_Event_Persistence_Factory()
 {
   if (TAO_debug_level > 0)
   {
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) Standard_Event_Persistence_Factory::~Standard_Event_Persistence_Factory\n")
     ));
   }

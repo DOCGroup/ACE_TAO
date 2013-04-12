@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Notify/Any/AnyEvent.h"
 #include "orbsvcs/Notify/Consumer.h"
 #include "tao/corba.h"
@@ -39,7 +40,7 @@ CORBA::Boolean
 TAO_Notify_AnyEvent_No_Copy::do_match (CosNotifyFilter::Filter_ptr filter) const
 {
   if (DEBUG_LEVEL > 0)
-    ACE_DEBUG ((LM_DEBUG, "Notify (%P|%t) - "
+    ORBSVCS_DEBUG ((LM_DEBUG, "Notify (%P|%t) - "
                 "TAO_Notify_AnyEvent::do_match ()\n"));
 
   return filter->match(*this->event_);
@@ -49,7 +50,7 @@ void
 TAO_Notify_AnyEvent_No_Copy::push (TAO_Notify_Consumer* consumer) const
 {
   if (DEBUG_LEVEL > 0)
-    ACE_DEBUG ((LM_DEBUG, "Notify (%P|%t) - "
+    ORBSVCS_DEBUG ((LM_DEBUG, "Notify (%P|%t) - "
                 "TAO_Notify_AnyEvent::push\n"));
 
   consumer->push (*this->event_);

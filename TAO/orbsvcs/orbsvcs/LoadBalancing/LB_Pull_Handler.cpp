@@ -54,7 +54,7 @@ TAO_LB_Pull_Handler::handle_timeout (
           this->load_manager_->push_loads (location,
                                            load_list.in ());
 
-//           ACE_DEBUG ((LM_DEBUG,
+//           ORBSVCS_DEBUG ((LM_DEBUG,
 //                       "LOCATION = %s\tLOAD = %f\n",
 //                       location[0].id.in (),
 //                       load_list[0].value));

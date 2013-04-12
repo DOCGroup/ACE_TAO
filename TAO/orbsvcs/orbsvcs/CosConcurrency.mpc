@@ -73,7 +73,7 @@ project(CosConcurrency_Skel): orbsvcslib, orbsvcs_output, install, concurrency, 
   }
 }
 
-project(CosConcurrency_Serv) : orbsvcslib, orbsvcs_output, install, concurrency_skel, avoids_corba_e_micro {
+project(CosConcurrency_Serv) : orbsvcslib, orbsvcs_output, install, concurrency_skel, avoids_corba_e_micro, svc_utils {
   sharedname   = TAO_CosConcurrency_Serv
   dynamicflags += TAO_CONCURRENCY_SERV_BUILD_DLL
   tagchecks   += Concurrency

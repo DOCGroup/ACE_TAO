@@ -10,7 +10,7 @@ project(CosNaming_IDL) : orbsvcslib, orbsvcs_output, install, tao_versioning_idl
   }
 }
 
-project(CosNaming) : orbsvcslib, orbsvcs_output, install {
+project(CosNaming) : orbsvcslib, orbsvcs_output, install, svc_utils {
   sharedname   = TAO_CosNaming
   dynamicflags += TAO_NAMING_BUILD_DLL
   tagchecks   += Naming

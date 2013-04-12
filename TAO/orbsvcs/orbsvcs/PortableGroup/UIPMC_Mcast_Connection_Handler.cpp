@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/PortableGroup/UIPMC_Mcast_Connection_Handler.h"
 #include "orbsvcs/PortableGroup/UIPMC_Endpoint.h"
 #include "orbsvcs/PortableGroup/UIPMC_Mcast_Transport.h"
@@ -55,7 +56,7 @@ TAO_UIPMC_Mcast_Connection_Handler::~TAO_UIPMC_Mcast_Connection_Handler (void)
 
   if (result == -1 && TAO_debug_level)
     {
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
                   ACE_TEXT ("TAO (%P|%t) - UIPMC_Mcast_Connection_Handler::")
                   ACE_TEXT ("~UIPMC_Mcast_Connection_Handler, ")
                   ACE_TEXT ("release_os_resources() failed '%m'\n")));
@@ -116,7 +117,7 @@ TAO_UIPMC_Mcast_Connection_Handler::open (void*)
         {
           char tmp[INET6_ADDRSTRLEN];
           this->local_addr_.get_host_addr (tmp, sizeof tmp);
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT("TAO (%P|%t) - UIPMC_Mcast_Connection_Handler::open, ")
                       ACE_TEXT("subscribed to multicast group at %C:%u\n"),
                       tmp,
@@ -129,7 +130,7 @@ TAO_UIPMC_Mcast_Connection_Handler::open (void*)
     {
       char tmp[INET6_ADDRSTRLEN];
       this->local_addr_.get_host_addr (tmp, sizeof tmp);
-      ACE_DEBUG ((LM_ERROR,
+      ORBSVCS_DEBUG ((LM_ERROR,
                   ACE_TEXT("TAO (%P|%t) - UIPMC_Mcast_Connection_Handler::open, ")
                   ACE_TEXT("failed to subscribe to multicast group at %C:%u '%m'\n"),
                   tmp,
@@ -151,7 +152,7 @@ TAO_UIPMC_Mcast_Connection_Handler::open (void*)
   if (this->peer ().enable (ACE_NONBLOCK) == -1)
     {
       if (TAO_debug_level)
-        ACE_ERROR ((LM_ERROR,
+        ORBSVCS_ERROR ((LM_ERROR,
                     ACE_TEXT ("TAO (%P|%t) - UIPMC_Mcast_Connection_Handler::")
                     ACE_TEXT ("open, failed to set to non-blocking mode ")
                     ACE_TEXT ("'%m'\n")));

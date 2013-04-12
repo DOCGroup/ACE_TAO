@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "Notify_Service.h"
 
 #include "orbsvcs/Daemon_Utilities.h"
@@ -66,7 +67,7 @@ TAO_Notify_Service_Driver::init_ORB (int& argc, ACE_TCHAR *argv [])
     this->orb_->resolve_initial_references("RootPOA");
 
   if (CORBA::is_nil (object.in ()))
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        " (%P|%t) Unable to resolve the RootPOA.\n"),
                       -1);
 
@@ -142,7 +143,7 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[])
     {
       if (TAO_debug_level > 0)
         {
-          ACE_ERROR ((LM_ERROR,
+          ORBSVCS_ERROR ((LM_ERROR,
                       ACE_TEXT ("Service not found. Check service ")
                       ACE_TEXT ("configurator file.\n")));
         }
@@ -169,7 +170,7 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[])
     {
       if (TAO_debug_level > 0)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT("Running %d ORB threads\n"),
                       this->nthreads_));
         }
@@ -188,7 +189,7 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[])
       if (worker_.activate (flags,
                             this->nthreads_, 0, priority) != 0)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
                              "Cannot activate client threads\n"), -1);
         }
     }
@@ -205,7 +206,7 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[])
 
   if (TAO_debug_level > 0)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT("\nStarting up the Notification Service...\n")));
     }
 
@@ -228,7 +229,7 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[])
         {
           if (TAO_debug_level > 0)
             {
-              ACE_ERROR ((LM_ERROR,
+              ORBSVCS_ERROR ((LM_ERROR,
                           "Nil IORTable. corbaloc support not enabled.\n"));
             }
         }
@@ -251,7 +252,7 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[])
 
       if (TAO_debug_level > 0)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       "Registered with the naming service as: %C\n",
                       this->notify_factory_name_.c_str()));
         }
@@ -296,7 +297,7 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[])
 
               if (TAO_debug_level > 0)
                 {
-                  ACE_DEBUG ((LM_DEBUG,
+                  ORBSVCS_DEBUG ((LM_DEBUG,
                               "Registered an Event Channel with the naming "
                               "service as: %C\n",
                               (*ci).c_str()));
@@ -316,7 +317,7 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[])
                                               ACE_TEXT("w"));
        if (ior_output_file == 0)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
                              "Unable to open %s for writing: %p\n",
                              this->ior_output_file_name_, "Notify_Service"),
                              -1);
@@ -327,7 +328,7 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[])
     }
   else if (TAO_debug_level > 0)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("The Notification Event Channel Factory IOR is <%C>\n"),
                   str.in ()));
     }
@@ -345,7 +346,7 @@ TAO_Notify_Service_Driver::resolve_naming_service (void)
 
       // Need to check return value for errors.
       if (CORBA::is_nil (naming_obj.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to resolve the Naming Service.\n"),
                           -1);
 
@@ -353,13 +354,13 @@ TAO_Notify_Service_Driver::resolve_naming_service (void)
     }
   catch (CORBA::Exception &)
     {
-        ACE_ERROR_RETURN ((LM_ERROR,
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to resolve the Naming Service.\n"),
                           -1);
     }
   catch (...)
     {
-        ACE_ERROR_RETURN ((LM_ERROR,
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to resolve the Naming Service.\n"),
                           -1);
     }
@@ -370,7 +371,7 @@ int
 TAO_Notify_Service_Driver::run (void)
 {
   if (TAO_debug_level > 0 )
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("%C: Running the Notification Service\n"),
                 __FILE__));
 
@@ -523,7 +524,7 @@ TAO_Notify_Service_Driver::parse_args (int argc, ACE_TCHAR *argv[])
             {
               if (TAO_debug_level > 0)
                 {
-                  ACE_DEBUG ((LM_DEBUG,
+                  ORBSVCS_DEBUG ((LM_DEBUG,
                               ACE_TEXT ("Using separate dispatching ORB\n")));
                 }
               this->separate_dispatching_orb_ =
@@ -533,7 +534,7 @@ TAO_Notify_Service_Driver::parse_args (int argc, ACE_TCHAR *argv[])
             {
               if (TAO_debug_level > 0)
                 {
-                  ACE_DEBUG ((LM_DEBUG,
+                  ORBSVCS_DEBUG ((LM_DEBUG,
                               ACE_TEXT ("WARNING: Unrecognized ")
                               ACE_TEXT ("argument (%s) to ")
                               ACE_TEXT ("-UseSeparateDispatchingORB.\n"),
@@ -585,7 +586,7 @@ TAO_Notify_Service_Driver::parse_args (int argc, ACE_TCHAR *argv[])
         {
           if (TAO_debug_level > 0)
             {
-              ACE_DEBUG((LM_DEBUG,
+              ORBSVCS_DEBUG((LM_DEBUG,
                          ACE_TEXT ("-Notify_TPReactor option is deprecated, ")
                          ACE_TEXT ("use -RunThreads option\n")));
             }
@@ -606,7 +607,7 @@ TAO_Notify_Service_Driver::parse_args (int argc, ACE_TCHAR *argv[])
 #else
           if (TAO_debug_level > 0)
             {
-              ACE_DEBUG((LM_DEBUG,
+              ORBSVCS_DEBUG((LM_DEBUG,
                          ACE_TEXT ("WARNING: CORBA Messaging has been disabled.")
                          ACE_TExT ("The timeout will not be applied.\n")));
             }
@@ -619,7 +620,7 @@ TAO_Notify_Service_Driver::parse_args (int argc, ACE_TCHAR *argv[])
         }
       else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-?")) == 0)
         {
-          ACE_DEBUG((LM_DEBUG,
+          ORBSVCS_DEBUG((LM_DEBUG,
                      ACE_TEXT ("usage: %s -Factory factory_name ")
                      ACE_TEXT ("-Boot -[No]NameSvc ")
                      ACE_TEXT ("-IORoutput file_name ")
@@ -660,7 +661,7 @@ LoggingWorker::start ()
     ACE_Dynamic_Service<ACE_Logging_Strategy>::instance ("Logging_Strategy");
   if (logging_strategy == 0)
     {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) logging_strategy == 0\n")));
+      ORBSVCS_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) logging_strategy == 0\n")));
     }
   else
     {
@@ -668,7 +669,7 @@ LoggingWorker::start ()
         {
           if (TAO_debug_level > 0)
             {
-              ACE_ERROR ((LM_ERROR,
+              ORBSVCS_ERROR ((LM_ERROR,
                          ACE_TEXT ("(%P|%t) Can not activate the ")
                          ACE_TEXT ("logging event thread\n")));
             }
@@ -681,7 +682,7 @@ LoggingWorker::start ()
                               this->ns_->logging_interval_);
           if (timer_id_ == -1)
             {
-              ACE_ERROR ((LM_ERROR,
+              ORBSVCS_ERROR ((LM_ERROR,
                           ACE_TEXT("(%P|%t) Failed to schedule ")
                           ACE_TEXT("logging switch timer\n")));
             }
@@ -695,7 +696,7 @@ LoggingWorker::svc (void)
 {
   if (TAO_debug_level > 0)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t)Running logging reactor \n")));
     }
   started_ = true;
@@ -749,7 +750,7 @@ Worker::svc (void)
     {
       if (TAO_debug_level > 0)
         {
-          ACE_ERROR ((LM_ERROR,
+          ORBSVCS_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO (%P|%t) - Failed to get ")
                       ACE_TEXT ("Worker thread priority\n")));
         }
@@ -758,7 +759,7 @@ Worker::svc (void)
 
   if (TAO_debug_level > 0)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("Activated Worker Thread to run ")
                   ACE_TEXT ("the ORB @ priority:%d\n", priority));
     }

@@ -1,4 +1,5 @@
 // $Id$
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Notify/Structured/StructuredPushConsumer.h"
 #include "ace/Bound_Ptr.h"
 #include "tao/Stub.h" // For debug messages printing out ORBid.
@@ -53,7 +54,7 @@ TAO_Notify_StructuredPushConsumer::init (CosNotifyComm::StructuredPushConsumer_p
           //--cj verify dispatching ORB
           if (TAO_debug_level >= 10)
             {
-              ACE_DEBUG ((LM_DEBUG,
+              ORBSVCS_DEBUG ((LM_DEBUG,
                           "(%P|%t) Structured push init dispatching ORB id is %s.\n",
                           obj->_stubobj()->orb_core()->orbid()));
           }
@@ -63,7 +64,7 @@ TAO_Notify_StructuredPushConsumer::init (CosNotifyComm::StructuredPushConsumer_p
         {
           ex._tao_print_exception (
             "Got a TRANSIENT in NS_StructuredPushConsumer::init");
-          ACE_DEBUG ((LM_DEBUG, "(%P|%t) got it for NS_StructuredPushConsumer %@\n", this));
+          ORBSVCS_DEBUG ((LM_DEBUG, "(%P|%t) got it for NS_StructuredPushConsumer %@\n", this));
         }
       catch (const CORBA::Exception&)
         {
@@ -98,7 +99,7 @@ TAO_Notify_StructuredPushConsumer::push (const CORBA::Any& event)
         // Expected exception when a bad connection is found
         if (TAO_debug_level >= 1)
           {
-            ACE_DEBUG ((LM_DEBUG, "(%P|%t) Found bad connection.\n"));
+            ORBSVCS_DEBUG ((LM_DEBUG, "(%P|%t) Found bad connection.\n"));
           }
       }
     connection_valid = 1;
@@ -114,7 +115,7 @@ TAO_Notify_StructuredPushConsumer::push (const CosNotification::StructuredEvent&
 {
   //--cj verify dispatching ORB
   if (TAO_debug_level >= 10) {
-    ACE_DEBUG ((LM_DEBUG, "(%P|%t) Structured push dispatching ORB id is %s.\n",
+    ORBSVCS_DEBUG ((LM_DEBUG, "(%P|%t) Structured push dispatching ORB id is %s.\n",
                 this->push_consumer_->_stubobj()->orb_core()->orbid()));
   }
   //--cj end
@@ -131,7 +132,7 @@ TAO_Notify_StructuredPushConsumer::push (const CosNotification::StructuredEvent&
         // Expected exception when a bad connection is found
         if (TAO_debug_level >= 1)
           {
-            ACE_DEBUG ((LM_DEBUG, "(%P|%t) Found bad connection.\n"));
+            ORBSVCS_DEBUG ((LM_DEBUG, "(%P|%t) Found bad connection.\n"));
           }
       }
     connection_valid = 1;

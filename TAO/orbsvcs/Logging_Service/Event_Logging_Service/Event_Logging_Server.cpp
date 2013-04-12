@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "Event_Logging_Service.h"
 #include "ace/OS_main.h"
 
@@ -27,7 +28,7 @@ void
 Logging_Svc_Shutdown::operator() (int which_signal)
 {
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
                 "Event_Logging_Service: shutting down on signal %d\n",
                 which_signal));
 
@@ -50,13 +51,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       int rc = service.init (argc, argv);
       if (rc == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            "Failed to initialize the Telecom Log Service.\n"),
                           1);
 
       rc = service.run ();
       if (rc == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            "Failed to start the Telecom Log Service.\n"),
                           1);
     }

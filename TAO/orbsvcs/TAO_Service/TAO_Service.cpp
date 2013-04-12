@@ -15,10 +15,11 @@
 //=============================================================================
 
 
+#include "orbsvcs/Log_Macros.h"
 #include "tao/ORB_Constants.h"
 #include "tao/ORB.h"
 #include "ace/Service_Config.h"
-#include "ace/Log_Msg.h"
+#include "orbsvcs/Log_Macros.h"
 #include "ace/Signal.h"
 #include "ace/Time_Value.h"
 #include "ace/Argv_Type_Converter.h"
@@ -44,7 +45,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
           orb->perform_work (tv);
 
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       "Reconfig flag = %d\n",
                       ACE_Service_Config::reconfig_occurred ()));
 

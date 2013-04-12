@@ -10,6 +10,7 @@
 //=============================================================================
 
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Sched/SchedEntry.h"
 #include "ace/SString.h"
 #include "ace/OS_NS_stdio.h"
@@ -200,7 +201,7 @@ Task_Entry::disjunctive_merge (Dependency_Type dt,
               // Propagate the unresolved remote dependency flag, and
               // issue a debug scheduler warning.
               this->has_unresolved_remote_dependencies (1);
-              ACE_DEBUG ((LM_DEBUG,
+              ORBSVCS_DEBUG ((LM_DEBUG,
                           "Warning: an operation identified by "
                           "\"%s\" has unresolved remote dependencies.\n",
                           (const char*) this->rt_info ()->entry_point));
@@ -224,7 +225,7 @@ Task_Entry::disjunctive_merge (Dependency_Type dt,
               // Propagate the unresolved local dependency flag, and
               // issue a debug scheduler warning.
               this->has_unresolved_local_dependencies (1);
-              ACE_DEBUG ((LM_DEBUG,
+              ORBSVCS_DEBUG ((LM_DEBUG,
                           "Warning: an operation identified by "
                           "\"%s\" has unresolved local dependencies.\n",
                           (const char*) this->rt_info ()->entry_point));
@@ -298,7 +299,7 @@ Task_Entry::conjunctive_merge (Dependency_Type dt,
               // Propagate the unresolved remote dependency flag, and
               // issue a debug scheduler warning.
               this->has_unresolved_remote_dependencies (1);
-              ACE_DEBUG ((LM_DEBUG,
+              ORBSVCS_DEBUG ((LM_DEBUG,
                           "Warning: an operation identified by "
                           "\"%s\" has unresolved remote dependencies.\n",
                           (const char*) this->rt_info ()->entry_point));
@@ -321,7 +322,7 @@ Task_Entry::conjunctive_merge (Dependency_Type dt,
               // Propagate the unresolved local dependency flag, and
               // issue a debug scheduler warning.
               this->has_unresolved_local_dependencies (1);
-              ACE_DEBUG ((LM_DEBUG,
+              ORBSVCS_DEBUG ((LM_DEBUG,
                           "Warning: an operation identified by "
                           "\"%s\" has unresolved local dependencies.\n",
                           (const char*) this->rt_info ()->entry_point));

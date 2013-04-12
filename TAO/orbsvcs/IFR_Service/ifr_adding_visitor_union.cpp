@@ -1,6 +1,7 @@
 /* -*- c++ -*- */
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "ast_enum.h"
 #include "ast_expression.h"
 #include "ast_union.h"
@@ -52,7 +53,7 @@ ifr_adding_visitor_union::visit_scope (UTL_Scope *node)
         {
           if (u->field (f, i) != 0)
             {
-              ACE_ERROR_RETURN ((
+              ORBSVCS_ERROR_RETURN ((
                   LM_ERROR,
                   ACE_TEXT ("(%N:%l) ifr_adding_visitor_union::")
                   ACE_TEXT ("visit_scope -")
@@ -79,7 +80,7 @@ ifr_adding_visitor_union::visit_scope (UTL_Scope *node)
 
                   if (ft->ast_accept (&visitor) == -1)
                     {
-                      ACE_ERROR_RETURN ((
+                      ORBSVCS_ERROR_RETURN ((
                         LM_ERROR,
                         ACE_TEXT ("(%N:%l) ifr_adding_visitor_union::")
                         ACE_TEXT ("visit_scope -")
@@ -94,7 +95,7 @@ ifr_adding_visitor_union::visit_scope (UTL_Scope *node)
                 {
                   if (ft->ast_accept (this) == -1)
                     {
-                      ACE_ERROR_RETURN ((
+                      ORBSVCS_ERROR_RETURN ((
                         LM_ERROR,
                         ACE_TEXT ("(%N:%l) ifr_adding_visitor_union::")
                         ACE_TEXT ("visit_scope -")
@@ -317,7 +318,7 @@ ifr_adding_visitor_union::visit_union (AST_Union *node)
       // This will put the discriminator in ir_current_.
       if (node->disc_type ()->ast_accept (this) == -1)
         {
-          ACE_ERROR_RETURN ((
+          ORBSVCS_ERROR_RETURN ((
             LM_ERROR,
             ACE_TEXT ("(%N:%l) ifr_adding_visitor_union::")
             ACE_TEXT ("visit_union -")
@@ -339,7 +340,7 @@ ifr_adding_visitor_union::visit_union (AST_Union *node)
 
           if (be_global->ifr_scopes ().top (current_scope) != 0)
             {
-              ACE_ERROR_RETURN ((
+              ORBSVCS_ERROR_RETURN ((
                 LM_ERROR,
                 ACE_TEXT ("(%N:%l) ifr_adding_visitor_union::")
                 ACE_TEXT ("visit_union -")
@@ -359,7 +360,7 @@ ifr_adding_visitor_union::visit_union (AST_Union *node)
 
           if (be_global->ifr_scopes ().push (union_def.in ()) != 0)
             {
-              ACE_ERROR_RETURN ((
+              ORBSVCS_ERROR_RETURN ((
                   LM_ERROR,
                   ACE_TEXT ("(%N:%l) ifr_adding_visitor_union::")
                   ACE_TEXT ("visit_union -")
@@ -372,7 +373,7 @@ ifr_adding_visitor_union::visit_union (AST_Union *node)
           // Then add the real union members (which corrupts ir_current_).
           if (this->add_members (node, union_def.in ()) == -1)
             {
-              ACE_ERROR_RETURN ((
+              ORBSVCS_ERROR_RETURN ((
                 LM_ERROR,
                 ACE_TEXT ("(%N:%l) ifr_adding_visitor_union::visit_union -")
                 ACE_TEXT (" visit_scope failed\n")),
@@ -387,7 +388,7 @@ ifr_adding_visitor_union::visit_union (AST_Union *node)
           // Pop the new IR object back off the scope stack.
           if (be_global->ifr_scopes ().pop (used_scope) != 0)
             {
-              ACE_ERROR_RETURN ((
+              ORBSVCS_ERROR_RETURN ((
                   LM_ERROR,
                   ACE_TEXT ("(%N:%l) ifr_adding_visitor_union::")
                   ACE_TEXT ("visit_union -")
@@ -408,7 +409,7 @@ ifr_adding_visitor_union::visit_union (AST_Union *node)
 
           if (be_global->ifr_scopes ().push (union_def.in ()) != 0)
             {
-              ACE_ERROR_RETURN ((
+              ORBSVCS_ERROR_RETURN ((
                   LM_ERROR,
                   ACE_TEXT ("(%N:%l) ifr_adding_visitor_union::")
                   ACE_TEXT ("visit_union -")
@@ -420,7 +421,7 @@ ifr_adding_visitor_union::visit_union (AST_Union *node)
 
           if (this->add_members (node, union_def.in ()) == -1)
             {
-              ACE_ERROR_RETURN ((
+              ORBSVCS_ERROR_RETURN ((
                 LM_ERROR,
                 ACE_TEXT ("(%N:%l) ifr_adding_visitor_union::")
                 ACE_TEXT ("visit_union -")
@@ -436,7 +437,7 @@ ifr_adding_visitor_union::visit_union (AST_Union *node)
           // Pop the new IR object back off the scope stack.
           if (be_global->ifr_scopes ().pop (used_scope) != 0)
             {
-              ACE_ERROR_RETURN ((
+              ORBSVCS_ERROR_RETURN ((
                   LM_ERROR,
                   ACE_TEXT ("(%N:%l) ifr_adding_visitor_union::")
                   ACE_TEXT ("visit_union -")
@@ -471,7 +472,7 @@ ifr_adding_visitor_union::add_members (AST_Union *node,
 {
   if (this->visit_scope (node) == -1)
     {
-      ACE_ERROR_RETURN ((
+      ORBSVCS_ERROR_RETURN ((
         LM_ERROR,
         ACE_TEXT ("(%N:%l) ifr_adding_visitor_union::visit_union -")
         ACE_TEXT (" visit_scope failed\n")),

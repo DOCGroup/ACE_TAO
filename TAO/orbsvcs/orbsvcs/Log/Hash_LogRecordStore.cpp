@@ -1,5 +1,7 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Log/LogMgr_i.h"
 #include "orbsvcs/Log/Hash_LogRecordStore.h"
 #include "orbsvcs/Log/Hash_Iterator_i.h"
@@ -136,7 +138,7 @@ TAO_Hash_LogRecordStore::log (const DsLogAdmin::LogRecord &const_rec)
   // First, bind the id to the LogRecord in the hash_map
   if (this->rec_map_.bind (rec.id, rec) != 0)
     {
-           ACE_ERROR_RETURN ((LM_ERROR,
+           ORBSVCS_ERROR_RETURN ((LM_ERROR,
                          "LogRecordStore (%P|%t):Failed to bind %Q in the hash map\n",
                          rec.id),
                        -1);
@@ -377,7 +379,7 @@ TAO_Hash_LogRecordStore::query_i (const char *constraint,
         {
           if (TAO_debug_level > 0)
             {
-              ACE_DEBUG ((LM_DEBUG,"Matched constraint! d = %Q, Time = %Q\n",
+              ORBSVCS_DEBUG ((LM_DEBUG,"Matched constraint! d = %Q, Time = %Q\n",
                 iter->item ().id,
                 iter->item ().time));
             }

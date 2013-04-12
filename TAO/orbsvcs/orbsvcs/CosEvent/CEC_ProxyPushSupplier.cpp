@@ -4,6 +4,7 @@
 // before TAO_Pseudo_{Var,Out}_T templates.  All required
 // non-dependent names must be parsed prior to the template in
 // question when using compilers like g++ 3.4.x.
+#include "orbsvcs/Log_Macros.h"
 #include "tao/DynamicInterface/DII_CORBA_methods.h"
 
 #include "orbsvcs/CosEvent/CEC_ProxyPushSupplier.h"
@@ -337,7 +338,7 @@ TAO_CEC_ProxyPushSupplier::connect_push_consumer (
       {
         if (TAO_debug_level >= 10)
           {
-            ACE_DEBUG ((LM_DEBUG,
+            ORBSVCS_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("***** connect_push_consumer, ")
                         ACE_TEXT ("Event channel is typed *****\n")));
           }
@@ -400,7 +401,7 @@ TAO_CEC_ProxyPushSupplier::connect_push_consumer (
 
         if (TAO_debug_level >= 10)
           {
-            ACE_DEBUG ((LM_DEBUG,
+            ORBSVCS_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("***** connect_push_consumer, ")
                         ACE_TEXT ("Event channel is un-typed *****\n")));
           }

@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Event/ECG_UDP_EH.h"
 #include "ace/Reactor.h"
 #include "ace/INET_Addr.h"
@@ -31,7 +32,7 @@ TAO_ECG_UDP_EH::open (const ACE_INET_Addr& ipaddr,
     return -1;
 
   if (this->dgram_.open (ipaddr, PF_INET, 0, reuse_addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        "Unable to open udp handler: "
                        "error opening receiving dgram.\n"),
                        -1);
@@ -42,7 +43,7 @@ TAO_ECG_UDP_EH::open (const ACE_INET_Addr& ipaddr,
                                                   ACE_Event_Handler::READ_MASK))
     {
       this->dgram_.close ();
-      ACE_ERROR_RETURN ((LM_ERROR,
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
                          "Cannot register handler with reactor.\n"),
                         -1);
     }
@@ -64,13 +65,13 @@ TAO_ECG_UDP_EH::shutdown (void)
                                                  ACE_Event_Handler::READ_MASK);
     }
   if (result != 0)
-    ACE_ERROR ((LM_ERROR,
+    ORBSVCS_ERROR ((LM_ERROR,
                 "Unable to deregister handler from reactor "
                 "on shutdown.\n"));
 
   result = this->dgram_.close ();
   if (result != 0)
-    ACE_ERROR ((LM_ERROR,
+    ORBSVCS_ERROR ((LM_ERROR,
                 "Unable to close receiving dgram on shutdown.\n"));
 
   this->receiver_ = 0;

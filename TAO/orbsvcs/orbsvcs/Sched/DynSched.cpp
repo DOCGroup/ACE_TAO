@@ -11,6 +11,7 @@
 //=============================================================================
 
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Sched/DynSched.h"
 #include "ace/Basic_Types.h"
 #include "ace/Sched_Params.h"
@@ -433,7 +434,7 @@ int ACE_DynScheduler::add_dependency(RT_Info* rt_info,
       // swap the handles and point to the caller instead of the called operation
       if (lookup_rt_info (d.rt_info, temp_info) != SUCCEEDED)
       {
-        ACE_ERROR ((LM_ERROR,
+        ORBSVCS_ERROR ((LM_ERROR,
                     ACE_TEXT("cannot find %d to add dependency\n"), d.rt_info));
         return -1;
       }
@@ -443,13 +444,13 @@ int ACE_DynScheduler::add_dependency(RT_Info* rt_info,
 
     default:
 
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
                   ACE_TEXT("unrecognized dependency type %d for %C\n"),
                   d.dependency_type, rt_info->entry_point.in ()));
       return -1;
   }
 
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
               ACE_TEXT("Sched (%t) adding %s dependency to caller: %C\n"),
               (const ACE_TCHAR *) ((d.dependency_type == RtecBase::TWO_WAY_CALL)
                               ? ACE_TEXT("TWO_WAY") : ACE_TEXT("ONE_WAY")),
@@ -510,7 +511,7 @@ ACE_DynScheduler::dispatch_configuration (const Preemption_Priority & p_priority
   Config_Info *config_info;
   if (lookup_config_info (p_priority, config_info) != SUCCEEDED)
   {
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT("Config info for priority %lu could not be found\n"),
                        p_priority),
                       -1);
@@ -1546,7 +1547,7 @@ ACE_DynScheduler::identify_threads (ACE_CString & unresolved_locals,
 
           task_entries_ [i].has_unresolved_remote_dependencies (1);
 
-          ACE_DEBUG (
+          ORBSVCS_DEBUG (
              (LM_DEBUG,
               ACE_TEXT("Warning: an operation identified by ")
               ACE_TEXT("\"%C\" has unresolved remote dependencies.\n"),
@@ -1562,7 +1563,7 @@ ACE_DynScheduler::identify_threads (ACE_CString & unresolved_locals,
       else
         {
           // Local node that no one calls and has neither rate nor threads is suspect
-          ACE_DEBUG (
+          ORBSVCS_DEBUG (
              (LM_DEBUG,
               ACE_TEXT("Error: operation \"%C\" does not specify a period or\n")
               ACE_TEXT("visible threads, and is not called by any other operation.\n")
@@ -1650,7 +1651,7 @@ ACE_DynScheduler::check_dependency_cycles_recurse (Task_Entry &entry)
     if ((*calling_entry_link)->caller ().dfs_status () == Task_Entry::NOT_VISITED)
     {
       // indicate the two tasks are in (the same) dependency cycle
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
                   ACE_TEXT("Tasks \"%C\" and \"%C\" are part of a call cycle.\n"),
                   (*calling_entry_link)->caller ().rt_info ()->entry_point.in (),
                   entry.rt_info ()->entry_point.in ()));
@@ -1758,7 +1759,7 @@ ACE_DynScheduler::store_assigned_info (void)
       if ((! ordered_dispatch_entries_) || (! (ordered_dispatch_entries_[i])) ||
           (! (ordered_dispatch_entries_[i]->task_entry ().rt_info ())))
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT("ACE_DynScheduler::store_assigned_info () could not store ")
                              ACE_TEXT("priority information (error in internal representation)")),
                              ST_BAD_INTERNAL_POINTER);
@@ -1934,7 +1935,7 @@ ACE_DynScheduler::output_dispatch_priorities (const char *filename)
   }
   else
   {
-    ACE_ERROR ((LM_ERROR,
+    ORBSVCS_ERROR ((LM_ERROR,
                 ACE_TEXT("ACE_DynScheduler::output_dispatch_priorities: ")
                 ACE_TEXT("Could not open schedule file (\"%C\")"),
                 filename));
@@ -1988,7 +1989,7 @@ ACE_DynScheduler::output_dispatch_priorities (FILE *file)
       int(minimum_critical_priority ())) < 0)
 
   {
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT("ACE_DynScheduler::output_dispatch_priorities: ")
                        ACE_TEXT("Could not write to schedule file\n")),
                       UNABLE_TO_WRITE_SCHEDULE_FILE);
@@ -2004,7 +2005,7 @@ ACE_DynScheduler::output_dispatch_priorities (FILE *file)
         ordered_dispatch_entries_[i]->dynamic_subpriority (),
         ordered_dispatch_entries_[i]->static_subpriority ()) < 0)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT("ACE_DynScheduler::output_dispatch_priorities: ")
                          ACE_TEXT("Could not write to schedule file\n")),
                         UNABLE_TO_WRITE_SCHEDULE_FILE);
@@ -2029,7 +2030,7 @@ ACE_DynScheduler::output_dispatch_timeline (const char *filename)
   }
   else
   {
-    ACE_ERROR ((LM_ERROR,
+    ORBSVCS_ERROR ((LM_ERROR,
                 ACE_TEXT("ACE_DynScheduler::output_dispatch_timeline: ")
                 ACE_TEXT("Could not open schedule file (\"%s\")"),
                 filename));
@@ -2048,7 +2049,7 @@ ACE_DynScheduler::output_dispatch_timeline (FILE *file)
             "operation             ID   (nsec)    (nsec)    (nsec)      (nsec)  time (nsec)      (nsec)        (nsec)\n"
             "---------    -----------  -------  --------     -----      ------  -----------      -------       ------\n") < 0)
   {
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT("ACE_DynScheduler::output_dispatch_timeline: ")
                        ACE_TEXT("Could not write to schedule file")),
                       UNABLE_TO_WRITE_SCHEDULE_FILE);
@@ -2064,7 +2065,7 @@ ACE_DynScheduler::output_dispatch_timeline (FILE *file)
     TimeLine_Entry_Link *link;
     if ((iter.next (link) == 0) || (! link))
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT("ACE_DynScheduler::output_dispatch_timeline: ")
                          ACE_TEXT("Bad internal pointer\n")),
                         ST_BAD_INTERNAL_POINTER);
@@ -2104,7 +2105,7 @@ ACE_DynScheduler::output_dispatch_timeline (FILE *file)
                               last_entry->stop ())) < 0)
 
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT("ACE_DynScheduler::output_dispatch_timeline: ")
                              ACE_TEXT("Unable to write to schedule file\n")),
                             UNABLE_TO_WRITE_SCHEDULE_FILE);
@@ -2129,7 +2130,7 @@ ACE_DynScheduler::output_dispatch_timeline (FILE *file)
                               last_entry->stop ())) < 0)
 
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT("ACE_DynScheduler::output_dispatch_timeline: ")
                              ACE_TEXT("Unable to write to schedule file\n")),
                             UNABLE_TO_WRITE_SCHEDULE_FILE);
@@ -2156,7 +2157,7 @@ ACE_DynScheduler::output_preemption_timeline (const char *filename)
   }
   else
   {
-    ACE_ERROR ((LM_ERROR,
+    ORBSVCS_ERROR ((LM_ERROR,
                 ACE_TEXT("ACE_DynScheduler::output_preemption_timeline: ")
                 ACE_TEXT("Cannot open timeline file (\"%C\")\n"),
                 filename));
@@ -2174,7 +2175,7 @@ ACE_DynScheduler::output_preemption_timeline (FILE *file)
         "operation           ID    (nsec)    (nsec)\n"
         "---------  -----------    ------    ------\n") < 0)
   {
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT("ACE_DynScheduler::output_preemption_timeline: ")
                        ACE_TEXT("Cannot write to timeline file\n")),
                       UNABLE_TO_WRITE_SCHEDULE_FILE);
@@ -2187,7 +2188,7 @@ ACE_DynScheduler::output_preemption_timeline (FILE *file)
   {
     if ((iter.next (link) == 0) || (! link))
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT("ACE_DynScheduler::output_preemption_timeline: ")
                          ACE_TEXT("Bad internal pointer\n")),
                          ST_BAD_INTERNAL_POINTER);
@@ -2204,7 +2205,7 @@ ACE_DynScheduler::output_preemption_timeline (FILE *file)
             ACE_U64_TO_U32 (link->entry ().start ()),
             ACE_U64_TO_U32 (link->entry ().stop ())) < 0)
       {
-        ACE_ERROR_RETURN ((LM_ERROR,
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT("ACE_DynScheduler::output_preemption_timeline: ")
                            ACE_TEXT("Cannot write to timeline file\n")),
                           UNABLE_TO_WRITE_SCHEDULE_FILE);
@@ -2220,7 +2221,7 @@ ACE_DynScheduler::output_preemption_timeline (FILE *file)
             ACE_U64_TO_U32 (link->entry ().start ()),
             ACE_U64_TO_U32 (link->entry ().stop ())) < 0)
       {
-        ACE_ERROR_RETURN ((LM_ERROR,
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT("ACE_DynScheduler::output_preemption_timeline: ")
                            ACE_TEXT("Cannot write to timeline file\n")),
                           UNABLE_TO_WRITE_SCHEDULE_FILE);
@@ -2361,7 +2362,7 @@ ACE_DynScheduler::output_timeline (const char *filename, const char *heading)
   if ((! up_to_date_) || (! timeline_))
   {
     status = NOT_SCHEDULED;
-    ACE_ERROR ((LM_ERROR,
+    ORBSVCS_ERROR ((LM_ERROR,
                 ACE_TEXT("ACE_DynScheduler::output_timeline: ")
                 ACE_TEXT("Schedule not generated")));
   }
@@ -2373,7 +2374,7 @@ ACE_DynScheduler::output_timeline (const char *filename, const char *heading)
     if (! file)
     {
       status = UNABLE_TO_OPEN_SCHEDULE_FILE;
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
                   ACE_TEXT("ACE_DynScheduler::output_timeline: ")
                   ACE_TEXT("Could not open schedule file")));
     }
@@ -2384,7 +2385,7 @@ ACE_DynScheduler::output_timeline (const char *filename, const char *heading)
     if (ACE_OS::fprintf (file, "%s\n\n", heading) < 0)
     {
       status = UNABLE_TO_WRITE_SCHEDULE_FILE;
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
                   ACE_TEXT("ACE_DynScheduler::output_timeline: ")
                   ACE_TEXT("Could not write to schedule file")));
     }

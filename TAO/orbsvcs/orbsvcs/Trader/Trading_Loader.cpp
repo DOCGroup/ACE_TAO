@@ -14,6 +14,8 @@
 
 //===========================================================================
 
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Trader/Trading_Loader.h"
 
 #include "orbsvcs/Daemon_Utilities.h"
@@ -47,7 +49,7 @@ TAO_Trading_Loader::TAO_Trading_Loader (void)
         {
           const char *tmp = localhost.get_host_addr ();
           if (tmp == 0)
-            ACE_DEBUG ((LM_DEBUG,
+            ORBSVCS_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("\n\nTAO Trading Service (%P|%t) ")
                         ACE_TEXT ("TAO_Trading_Loader ")
                         ACE_TEXT ("- %p\n\n"),
@@ -66,7 +68,7 @@ TAO_Trading_Loader::TAO_Trading_Loader (void)
            *dot = '_')
         continue;
 
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   "*** Trading Service %C initializing.\n",
                   trader_name));
 
@@ -126,7 +128,7 @@ TAO_Trading_Loader::fini (void)
           CosTrading::LinkNameSeq_var link_name_seq =
             our_link->list_links ();
 
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       "*** Unlinking from federated traders.\n"));
 
           for (CORBA::ULong j = 0;
@@ -136,12 +138,12 @@ TAO_Trading_Loader::fini (void)
               CORBA::ULong i =
                 link_name_seq->length () - j - 1;
 
-              ACE_DEBUG ((LM_DEBUG,
+              ORBSVCS_DEBUG ((LM_DEBUG,
                           "*** Describing the next link.\n"));
               CosTrading::Link::LinkInfo_var link_info =
                 our_link->describe_link (link_name_seq[i]);
 
-              ACE_DEBUG ((LM_DEBUG,
+              ORBSVCS_DEBUG ((LM_DEBUG,
                           "*** Removing link to %C.\n",
                           static_cast<const char *> (link_name_seq[i])));
               our_link->remove_link (link_name_seq[i]);
@@ -150,12 +152,12 @@ TAO_Trading_Loader::fini (void)
               remote_lookup =
                 link_info->target.in ();
 
-              ACE_DEBUG ((LM_DEBUG,
+              ORBSVCS_DEBUG ((LM_DEBUG,
                           "*** Retrieving its link interface.\n"));
               CosTrading::Link_var remote_link =
                 remote_lookup->link_if ();
 
-              ACE_DEBUG ((LM_DEBUG,
+              ORBSVCS_DEBUG ((LM_DEBUG,
                           "*** Removing its link to us.\n"));
 
               if (this->bootstrapper_)
@@ -239,7 +241,7 @@ TAO_Trading_Loader::create_object (CORBA::ORB_ptr orb_ptr,
 
   if (CORBA::is_nil (adapter.in ()))
     {
-      ACE_ERROR ((LM_ERROR, "Nil IORTable\n"));
+      ORBSVCS_ERROR ((LM_ERROR, "Nil IORTable\n"));
     }
   else
     {
@@ -273,23 +275,23 @@ TAO_Trading_Loader::bootstrap_to_federation (void)
   CORBA::ORB_var orb =
     this->orb_manager_.orb ();
 
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
               "*** Bootstrapping to another Trading Service.\n"));
   CORBA::Object_var trading_obj =
     orb->resolve_initial_references ("TradingService");
 
   if (CORBA::is_nil (trading_obj.in ()))
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        "We're all alone. "
                        "Unable to link to other traders.\n"),
                       -1);
 
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
               "*** Narrowing the lookup interface.\n"));
   CosTrading::Lookup_var lookup_if =
     CosTrading::Lookup::_narrow (trading_obj.in ());
 
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
               "*** Obtaining the link interface.\n"));
   CosTrading::Link_var link_if =
     lookup_if->link_if ();
@@ -301,26 +303,26 @@ TAO_Trading_Loader::bootstrap_to_federation (void)
   CosTrading::Link_ptr our_link =
     trd_comp.link_if ();
 
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
               "*** Linking found trader to self.\n"));
   link_if->add_link (this->name_.in (),
                      our_lookup,
                      CosTrading::always,
                      CosTrading::always);
 
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
               "*** Linking self to found trader.\n"));
   our_link->add_link ("Bootstrap",
                       lookup_if.in (),
                       CosTrading::always,
                       CosTrading::always);
 
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
               "*** Retrieving list of known linked traders.\n"));
   CosTrading::LinkNameSeq_var link_name_seq =
     link_if->list_links ();
 
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
               "*** Linking self to all linked traders.\n"));
   for (CORBA::ULong i = link_name_seq->length () - 1;
        i > 0;
@@ -330,7 +332,7 @@ TAO_Trading_Loader::bootstrap_to_federation (void)
       if (ACE_OS::strcmp (static_cast<const char *> (link_name_seq[i]),
                           this->name_.in ()) != 0)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       "*** Getting info for link %s.\n",
                       static_cast<const char *> (link_name_seq[i])));
           CosTrading::Link::LinkInfo_var link_info =
@@ -339,19 +341,19 @@ TAO_Trading_Loader::bootstrap_to_federation (void)
           CosTrading::Lookup_ptr remote_lookup;
           remote_lookup = link_info->target.in ();
 
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       "*** Retrieving its link interface.\n"));
           CosTrading::Link_var remote_link =
             remote_lookup->link_if ();
 
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       "*** Creating a link to me from it.\n"));
           remote_link->add_link (this->name_.in (),
                                  our_lookup,
                                  CosTrading::always,
                                  CosTrading::always);
 
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       "*** Creating a link to it from me.\n"));
           our_link->add_link (link_name_seq[i],
                               remote_lookup,
@@ -404,7 +406,7 @@ TAO_Trading_Loader::init_multicast_server (void)
                                      port,
                                      ACE_DEFAULT_MULTICAST_ADDR,
                                      TAO_SERVICEID_TRADINGSERVICE) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            "Failed to init IOR multicast.\n"),
                           -1);
     }
@@ -412,10 +414,10 @@ TAO_Trading_Loader::init_multicast_server (void)
   // Register event handler for the ior multicast.
   if (reactor->register_handler (&this->ior_multicast_,
                                  ACE_Event_Handler::READ_MASK) == -1)
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
                 "cannot register Event handler\n"));
   else
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
                 "The multicast server setup is done.\n"));
 
   // Other trader instances will bootstrap to us.
@@ -453,7 +455,7 @@ TAO_Trading_Loader::parse_args (int &argc, ACE_TCHAR *argv [])
                 ACE_OS::fopen (file_name, ACE_TEXT("w"));
 
               if (this->ior_output_file_ == 0)
-                ACE_ERROR_RETURN ((LM_ERROR,
+                ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                    "Unable to open %s for writing: %p\n",
                                    file_name), -1);
               arg_shifter.consume_arg ();

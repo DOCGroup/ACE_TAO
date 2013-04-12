@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Event/EC_Dispatching_Task.h"
 #include "orbsvcs/Event/EC_ProxySupplier.h"
 #include "orbsvcs/Event/EC_Defaults.h"
@@ -110,7 +111,7 @@ TAO_EC_Dispatching_Task::svc (void)
                 }
               else
                 {
-                  ACE_ERROR ((LM_ERROR,
+                  ORBSVCS_ERROR ((LM_ERROR,
                             "EC (%P|%t) getq error in Dispatching Queue\n"));
                 }
             }

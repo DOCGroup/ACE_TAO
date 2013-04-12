@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Notify/Method_Request_Dispatch.h"
 #include "orbsvcs/Notify/ProxySupplier.h"
 #include "orbsvcs/Notify/Consumer.h"
@@ -71,7 +72,7 @@ int TAO_Notify_Method_Request_Dispatch::execute_i (void)
                                                                   parent.filter_operator ());
 
       if (TAO_debug_level > 1)
-        ACE_DEBUG ((LM_DEBUG,
+        ORBSVCS_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("Notify (%P|%t) Proxysupplier %x filter ")
                     ACE_TEXT ("eval result = %d\n"),
           &this->proxy_supplier_ , val));
@@ -138,7 +139,7 @@ TAO_Notify_Method_Request_Dispatch::unmarshal (
       if (proxy_supplier != 0)
       {
         if (DEBUG_LEVEL > 6)
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) TAO_Notify_Method_Request_Dispatch")
                       ACE_TEXT (" reload event for %C\n"),
                       textpath.c_str()));
@@ -150,14 +151,14 @@ TAO_Notify_Method_Request_Dispatch::unmarshal (
         TAO_Notify_ProxyConsumer * proxy_consumer = ecf.find_proxy_consumer (id_path, 0); //@@todo
         if (proxy_consumer == 0)
         {
-          ACE_ERROR ((LM_ERROR,
+          ORBSVCS_ERROR ((LM_ERROR,
                       ACE_TEXT ("(%P|%t) TAO_Notify_Method_Request_Dispatch")
                       ACE_TEXT ("::unmarshal: unknown proxy id %C\n"),
                       textpath.c_str()));
         }
         else
         {
-          ACE_ERROR ((LM_ERROR,
+          ORBSVCS_ERROR ((LM_ERROR,
                       ACE_TEXT ("(%P|%t) TAO_Notify_Method_Request_Dispatch")
                       ACE_TEXT ("::unmarshal: wrong type of proxy id %C\n"),
                       textpath.c_str()));
@@ -166,7 +167,7 @@ TAO_Notify_Method_Request_Dispatch::unmarshal (
     }
     else
     {
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) TAO_Notify_Method_Request_Dispatch")
                   ACE_TEXT ("::unmarshal: Cant read proxy id path\n")));
     }

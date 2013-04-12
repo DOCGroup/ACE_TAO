@@ -1,5 +1,6 @@
 // // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/FtRtEvent/EventChannel/FTEC_Group_Manager.h"
 #include "orbsvcs/FtRtEvent/EventChannel/Replication_Service.h"
 #include "orbsvcs/FtRtEvent/EventChannel/Fault_Detector.h"
@@ -27,11 +28,11 @@ int find_by_location(const FTRT::ManagerInfoList& list,
 /*
 void print(const FTRT::Location& location)
 {
-  ACE_DEBUG((LM_DEBUG, "{"));
+  ORBSVCS_DEBUG((LM_DEBUG, "{"));
   for (size_t i = 0; i < location.length(); ++i) {
-    ACE_DEBUG((LM_DEBUG, "<%s,%s>", location[i].id.in(), location[i].kind.in()));
+    ORBSVCS_DEBUG((LM_DEBUG, "<%s,%s>", location[i].id.in(), location[i].kind.in()));
   }
-  ACE_DEBUG((LM_DEBUG, "}"));
+  ORBSVCS_DEBUG((LM_DEBUG, "}"));
 }
 */
 
@@ -86,7 +87,7 @@ void TAO_FTEC_Group_Manager::create_group (
   if (impl_->my_position > 0) {
     Fault_Detector* detector = Fault_Detector::instance();
     if ( detector->connect(impl_->info_list[impl_->my_position-1].the_location) == -1) {
-      ACE_DEBUG((LM_DEBUG, "Cannot connect to predecesor\n"));
+      ORBSVCS_DEBUG((LM_DEBUG, "Cannot connect to predecesor\n"));
       throw FTRT::PredecessorUnreachable();
     }
   }

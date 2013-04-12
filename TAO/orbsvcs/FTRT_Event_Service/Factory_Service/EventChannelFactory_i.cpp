@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "EventChannelFactory_i.h"
 #include "ace/Process.h"
 #include "ace/Read_Buffer.h"
@@ -23,7 +24,7 @@ CORBA::Object_ptr EventChannelFactory_i::create_object (
   )
 {
 
-  ACE_DEBUG((LM_DEBUG,"EventChannelFactory_i::create_object\n"));
+  ORBSVCS_DEBUG((LM_DEBUG,"EventChannelFactory_i::create_object\n"));
   FILE* file = 0;
   char *id_str=0, *prog=0;
 
@@ -123,7 +124,7 @@ CORBA::Object_ptr EventChannelFactory_i::create_process (
     }
   }
 
-  ACE_DEBUG((LM_DEBUG, "Command Line : %s\n", str.c_str()));
+  ORBSVCS_DEBUG((LM_DEBUG, "Command Line : %s\n", str.c_str()));
 
   options.command_line(str.c_str());
 
@@ -135,7 +136,7 @@ CORBA::Object_ptr EventChannelFactory_i::create_process (
   if (new_process.spawn (options) == -1)
   {
     int error = ACE_OS::last_error ();
-    ACE_ERROR ((LM_ERROR,
+    ORBSVCS_ERROR ((LM_ERROR,
       "%p errno = %d.\n",
       str.c_str(),
       error));
@@ -145,12 +146,12 @@ CORBA::Object_ptr EventChannelFactory_i::create_process (
   ACE_INET_Addr client_addr;
   ACE_SOCK_Stream stream;
 
-  ACE_DEBUG((LM_DEBUG, "accepting connection from event channel\n"));
+  ORBSVCS_DEBUG((LM_DEBUG, "accepting connection from event channel\n"));
   if (acceptor.accept(stream, &client_addr, &timeout) == -1)
-     ACE_ERROR_RETURN((LM_ERROR, "accept fail\n"), 0);
+     ORBSVCS_ERROR_RETURN((LM_ERROR, "accept fail\n"), 0);
 
 
-  ACE_DEBUG((LM_DEBUG, "Factory Connect established with %s:%d\n",
+  ORBSVCS_DEBUG((LM_DEBUG, "Factory Connect established with %s:%d\n",
     client_addr.get_host_name(), client_addr.get_port_number() ));
 
   // receive the ior string from the created object

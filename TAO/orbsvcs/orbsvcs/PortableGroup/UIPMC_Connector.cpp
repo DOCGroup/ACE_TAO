@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/PortableGroup/UIPMC_Connector.h"
 #include "orbsvcs/PortableGroup/UIPMC_Profile.h"
 #include "orbsvcs/PortableGroup/UIPMC_Connection_Handler.h"
@@ -71,7 +72,7 @@ TAO_UIPMC_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
     {
       if (TAO_debug_level > 0)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) UIPMC connection failed.\n")
                       ACE_TEXT ("TAO (%P|%t) This is most likely ")
                       ACE_TEXT ("due to a hostname lookup ")
@@ -111,7 +112,7 @@ TAO_UIPMC_Connector::make_connection (TAO::Profile_Transport_Resolver *,
           (void) remote_address.addr_to_string (remote_as_string,
                                                 sizeof remote_as_string);
 
-          ACE_ERROR ((LM_ERROR,
+          ORBSVCS_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO (%P|%t) - UIPMC_Connector::open, ")
                       ACE_TEXT ("invalid connection to IPv4 mapped IPv6 ")
                       ACE_TEXT ("interface <%s>!\n"),
@@ -164,7 +165,7 @@ TAO_UIPMC_Connector::make_connection (TAO::Profile_Transport_Resolver *,
               if (svc_handler->peer ().set_nic(prefer_if, AF_INET6))
                 {
                   if (TAO_debug_level > 0)
-                        ACE_ERROR ((LM_ERROR,
+                        ORBSVCS_ERROR ((LM_ERROR,
                             "TAO (%P|%t) - UIPMC_Connector::make_connection, "
                             "connection to <%C:%u> - failed to set requested local network interface <%s>\n",
                              uipmc_endpoint->host (),
@@ -179,7 +180,7 @@ TAO_UIPMC_Connector::make_connection (TAO::Profile_Transport_Resolver *,
       else
        {
            if (TAO_debug_level > 3)
-                ACE_ERROR ((LM_ERROR,
+                ORBSVCS_ERROR ((LM_ERROR,
                             "TAO (%P|%t) - UIPMC_Connector::make_connection, "
                             "connection to <%C:%u> from interface <%s> failed (%p)\n",
                              uipmc_endpoint->host (),
@@ -197,7 +198,7 @@ TAO_UIPMC_Connector::make_connection (TAO::Profile_Transport_Resolver *,
 
       if (TAO_debug_level > 0)
         {
-          ACE_ERROR ((LM_ERROR,
+          ORBSVCS_ERROR ((LM_ERROR,
                       "TAO (%P|%t) - UIPMC_Connector::make_connection, "
                       "failed to open the connection to <%C:%u>\n",
                       remote_address.get_host_addr (),
@@ -218,7 +219,7 @@ TAO_UIPMC_Connector::make_connection (TAO::Profile_Transport_Resolver *,
       char remote_hostaddr[INET6_ADDRSTRLEN];
       remote_address.get_host_addr (remote_hostaddr, sizeof remote_hostaddr);
 
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - UIPMC_Connector::make_connection, ")
                   ACE_TEXT ("new connection from <%C:%u> to <%C:%u> on ")
                   ACE_TEXT ("HANDLE %d\n"),
@@ -238,7 +239,7 @@ TAO_UIPMC_Connector::make_connection (TAO::Profile_Transport_Resolver *,
 
       // Give users a clue to the problem.
       if (TAO_debug_level)
-          ACE_ERROR ((LM_ERROR,
+          ORBSVCS_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO (%P|%t) - UIPMC_Connector:")
                       ACE_TEXT (":make_connection, connection to ")
                       ACE_TEXT ("<%C:%u> failed (%p)\n"),
@@ -261,7 +262,7 @@ TAO_UIPMC_Connector::make_connection (TAO::Profile_Transport_Resolver *,
 
       if (TAO_debug_level)
         {
-          ACE_ERROR ((LM_ERROR,
+          ORBSVCS_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO (%P|%t) - UIPMC_Connector::")
                       ACE_TEXT ("make_connection, could not add the ")
                       ACE_TEXT ("new connection to cache\n")));

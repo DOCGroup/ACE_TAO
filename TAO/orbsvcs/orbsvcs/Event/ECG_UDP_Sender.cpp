@@ -9,6 +9,7 @@
  *
  */
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Event/ECG_UDP_Sender.h"
 #include "orbsvcs/Event_Utilities.h"
 #include "tao/CDR.h"
@@ -30,14 +31,14 @@ TAO_ECG_UDP_Sender::init (RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
 {
   if (CORBA::is_nil (lcl_ec))
     {
-      ACE_ERROR ((LM_ERROR, "TAO_ECG_UDP_Sender::init(): "
+      ORBSVCS_ERROR ((LM_ERROR, "TAO_ECG_UDP_Sender::init(): "
                             "<lcl_ec> argument is nil."));
       throw CORBA::INTERNAL ();
     }
 
   if (CORBA::is_nil (addr_server))
     {
-      ACE_ERROR ((LM_ERROR, "TAO_ECG_UDP_Sender::init(): "
+      ORBSVCS_ERROR ((LM_ERROR, "TAO_ECG_UDP_Sender::init(): "
                             "address server argument is nil."));
       throw CORBA::INTERNAL ();
     }
@@ -57,7 +58,7 @@ TAO_ECG_UDP_Sender::connect (const RtecEventChannelAdmin::ConsumerQOS& sub)
   if (CORBA::is_nil (this->lcl_ec_.in ()))
     {
       //FUZZ: disable check_for_lack_ACE_OS
-      ACE_ERROR ((LM_ERROR, "Error initializing TAO_ECG_UDP_Sender: "
+      ORBSVCS_ERROR ((LM_ERROR, "Error initializing TAO_ECG_UDP_Sender: "
                             "init() has not been called before connect()."));
       //FUZZ: enable check_for_lack_ACE_OS
 
@@ -66,7 +67,7 @@ TAO_ECG_UDP_Sender::connect (const RtecEventChannelAdmin::ConsumerQOS& sub)
 
   if (sub.dependencies.length () == 0)
     {
-      ACE_ERROR ((LM_ERROR, "TAO_ECG_UDP_Sender::connect(): "
+      ORBSVCS_ERROR ((LM_ERROR, "TAO_ECG_UDP_Sender::connect(): "
                             "0-length subscriptions argument."));
       throw CORBA::INTERNAL ();
     }
@@ -161,7 +162,7 @@ TAO_ECG_UDP_Sender::push (const RtecEventComm::EventSet &events)
 {
   if (events.length () == 0)
     {
-      // ACE_DEBUG ((EC_FORMAT (DEBUG,
+      // ORBSVCS_DEBUG ((EC_FORMAT (DEBUG,
       //                        "Nothing to multicast: "
       //                        "0-length EventSet.")));
       return;

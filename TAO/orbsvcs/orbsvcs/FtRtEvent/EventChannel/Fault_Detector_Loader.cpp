@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/FtRtEvent/EventChannel/Fault_Detector_Loader.h"
 #include "orbsvcs/FtRtEvent/EventChannel/Fault_Detector_T.h"
 #include "orbsvcs/FtRtEvent/EventChannel/FTEC_Fault_Listener.h"
@@ -47,7 +48,7 @@ namespace FTRTEC {
 #if (TAO_HAS_SCIOP == 1)
       ACE_auto_ptr_reset(detector_, detector);
 #else
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   "(%P|%t) SCTP not enabled. ",
                   " Enable SCTP and rebuild ACE+TAO\n"));
 #endif /* TAO_HAS_SCIOP */

@@ -10,6 +10,7 @@
  */
 //=============================================================================
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Naming/FaultTolerant/FT_Naming_Replication_Manager.h"
 #include "orbsvcs/Naming/FaultTolerant/FT_Naming_Server.h"
 #include "tao/corba.h"
@@ -85,7 +86,7 @@ TAO_FT_Naming_Replication_Manager::notify_updated_object_group (
   int result = this->naming_svr_->update_object_group (group_info);
 
   if (result != 0)
-    ACE_ERROR ((LM_ERROR,
+    ORBSVCS_ERROR ((LM_ERROR,
                 ACE_TEXT ("Unable to update object group.\n")));
 }
 
@@ -100,7 +101,7 @@ TAO_FT_Naming_Replication_Manager::notify_updated_context (
 
   if (result != 0)
   {
-    ACE_ERROR ((LM_ERROR,
+    ORBSVCS_ERROR ((LM_ERROR,
                 ACE_TEXT ("Error while updating naming context.\n")));
   }
 }

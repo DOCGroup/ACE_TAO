@@ -4,6 +4,7 @@
 // the Typed and Un-typed Event Channels.  A check must be made in the code
 // to ensure the correct EC is referenced.
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/CosEvent/CEC_EventChannel.h"
 #include "orbsvcs/CosEvent/CEC_ConsumerAdmin.h"
 #include "orbsvcs/CosEvent/CEC_Reactive_ConsumerControl.h"
@@ -305,7 +306,7 @@ TAO_CEC_Reactive_ConsumerControl::consumer_not_exist (
 
       if (TAO_debug_level >= 10)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("ProxyPushSupplier disconnected due to consumer_not_exist\n")));
         }
     }
@@ -346,7 +347,7 @@ TAO_CEC_Reactive_ConsumerControl::system_exception (
 
           if (TAO_debug_level >= 10)
             {
-              ACE_DEBUG ((LM_DEBUG,
+              ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("ProxyPushSupplier disconnected due to consumer_not_exist\n")));
             }
         }

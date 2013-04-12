@@ -20,7 +20,7 @@ int
 TAO_EC_Timeout_Adapter::handle_timeout (const ACE_Time_Value & /* tv */,
                                         const void *vp)
 {
-  //  ACE_DEBUG ((LM_DEBUG,
+  //  ORBSVCS_DEBUG ((LM_DEBUG,
   //              "TAO_EC_Timeout_Adapter::handle_timeout -"
   //              " expire at %d:%d\n",
   //              tv.sec (), tv.usec ()));

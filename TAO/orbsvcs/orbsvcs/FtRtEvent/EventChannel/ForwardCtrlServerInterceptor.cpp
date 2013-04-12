@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/FtRtEvent/EventChannel/ForwardCtrlServerInterceptor.h"
 #include "orbsvcs/FtRtEvent/EventChannel/GroupInfoPublisher.h"
 #include "orbsvcs/FtRtEvent/EventChannel/IOGR_Maker.h"
@@ -152,7 +153,7 @@ void ForwardCtrlServerInterceptor::send_reply (PortableInterceptor::ServerReques
     maker->get_ref_version(), version);
 
   if (version < maker->get_ref_version()) {
-    ACE_DEBUG((LM_DEBUG, "Outdated IOGR version, passing new IOGR\n"));
+    ORBSVCS_DEBUG((LM_DEBUG, "Outdated IOGR version, passing new IOGR\n"));
 
     try{
       CORBA::Object_var forward = get_forward(ri);
@@ -187,7 +188,7 @@ void ForwardCtrlServerInterceptor::send_reply (PortableInterceptor::ServerReques
 
       ri->add_reply_service_context (sc, 0);
 
-      ACE_DEBUG((LM_DEBUG, "reply_service_context added\n"));
+      ORBSVCS_DEBUG((LM_DEBUG, "reply_service_context added\n"));
     }
     catch (...){
     }

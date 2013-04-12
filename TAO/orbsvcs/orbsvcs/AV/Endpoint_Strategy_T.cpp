@@ -3,6 +3,7 @@
 #ifndef TAO_AV_ENDPOINT_STRATEGY_T_CPP
 #define TAO_AV_ENDPOINT_STRATEGY_T_CPP
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/AV/Endpoint_Strategy_T.h"
 
 #include "tao/debug.h"
@@ -64,13 +65,13 @@ TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activ
   try
     {
       this->activate_stream_endpoint ();
-      if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"(%P|%t)TAO_AV_Endpoint_Reactive_Strategy::activated stream_endpoint\n"));
+      if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"(%P|%t)TAO_AV_Endpoint_Reactive_Strategy::activated stream_endpoint\n"));
 
       this->activate_vdev ();
-      if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"(%P|%t)TAO_AV_Endpoint_Reactive_Strategy::activated vdev\n"));
+      if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"(%P|%t)TAO_AV_Endpoint_Reactive_Strategy::activated vdev\n"));
 
       this->activate_mediactrl ();
-      if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"(%P|%t)TAO_AV_Endpoint_Reactive_Strategy::activated mediactrl\n"));
+      if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"(%P|%t)TAO_AV_Endpoint_Reactive_Strategy::activated mediactrl\n"));
     }
   catch (const CORBA::Exception& ex)
     {
@@ -114,7 +115,7 @@ TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activ
       // Activate the object under the root poa.
 //      CORBA::String_var vdev_ior = this->activate_with_poa (vdev,
 //);
-//      if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"(%P|%t)TAO_AV_Endpoint_Reactive_Strategy::activate_vdev, vdev ior is:%s\n",
+//      if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"(%P|%t)TAO_AV_Endpoint_Reactive_Strategy::activate_vdev, vdev ior is:%s\n",
 //                  vdev_ior. in ()));
 
       // Save the object reference, so that create_A can return it
@@ -233,7 +234,7 @@ TAO_AV_Endpoint_Reactive_Strategy_A<T_StreamEndpoint, T_VDev, T_MediaCtrl>::crea
                                                                                       AVStreams::VDev_ptr &vdev)
 {
   if (this->activate () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        "(%P|%t) TAO_AV_Endpoint_Reactive_Strategy_A: Error in activate ()\n"),
                       -1);
 
@@ -322,7 +323,7 @@ TAO_AV_Endpoint_Reactive_Strategy_B<T_StreamEndpoint, T_VDev, T_MediaCtrl>::crea
                                                                                       AVStreams::VDev_ptr &vdev)
 {
   if (this->activate () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        "(%P|%t) TAO_AV_Endpoint_Reactive_Strategy_B: Error in activate ()\n"),
                       -1);
 
@@ -347,7 +348,7 @@ TAO_AV_Child_Process <T_StreamEndpoint_B, T_VDev, T_MediaCtrl>::TAO_AV_Child_Pro
 {
   this->pid_ = ACE_OS::getpid ();
   if (this->pid_ == 0)
-    ACE_ERROR ((LM_ERROR,"getpid () failed\n"));
+    ORBSVCS_ERROR ((LM_ERROR,"getpid () failed\n"));
   ACE_OS::hostname (this->host_,
                     sizeof this->host_);
 }
@@ -387,7 +388,7 @@ TAO_AV_Child_Process  <T_StreamEndpoint_B, T_VDev, T_MediaCtrl>::init (int argc,
 
   // release the semaphore the parent is waiting on
   if (this->release_semaphore () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        "(%P|%t) Error releasing semaphores\n"),
                       -1);
 
@@ -433,20 +434,20 @@ TAO_AV_Child_Process  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activate_objects 
 
       // activate the stream_endpoint
       CORBA::String_var stream_endpoint_ior = this->activate_with_poa (this->stream_endpoint_);
-      if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,
+      if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,
                                            "(%P|%t)TAO_AV_Child_Process::activate_objects,stream_endpoint_ior :%s\n",
                                            stream_endpoint_ior.in ()));
 
       // activate the vdev
       CORBA::String_var vdev_ior = this->activate_with_poa (this->vdev_);
-      if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,
+      if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,
                                            "(%P|%t)TAO_AV_Child_Process::activate_objects, vdev ior is :%s\n",
                                            vdev_ior.in ()));
 
       // activate the media controller
       CORBA::String_var media_ctrl_ior = this->activate_with_poa (this->media_ctrl_);
 
-      if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"(%P|%t)TAO_AV_Child_Process::activate_objects,media_ctrl_ior is: %s\n",media_ctrl_ior.in ()));
+      if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"(%P|%t)TAO_AV_Child_Process::activate_objects,media_ctrl_ior is: %s\n",media_ctrl_ior.in ()));
     }
   catch (const CORBA::Exception& ex)
     {
@@ -466,10 +467,10 @@ TAO_AV_Child_Process  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::bind_to_naming_se
       CORBA::Object_var naming_obj =
         this->orb_->resolve_initial_references ("NameService");
       if (CORBA::is_nil (naming_obj.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to resolve the Name Service.\n"),
                           -1);
-      //  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG, "(%P|%t) %s:%d\n", __FILE__, __LINE__));
+      //  if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG, "(%P|%t) %s:%d\n", __FILE__, __LINE__));
       this->naming_context_ =
         CosNaming::NamingContext::_narrow (naming_obj.in ());
     }
@@ -496,7 +497,7 @@ TAO_AV_Child_Process  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::register_vdev (vo
                        this->host_,
                        static_cast<long> (this->pid_));
 
-      if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"(%P|%t)%s\n",vdev_name));
+      if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"(%P|%t)%s\n",vdev_name));
       // create the name
       this->vdev_name_.length (1);
       this->vdev_name_ [0].id = CORBA::string_dup (vdev_name);
@@ -571,7 +572,7 @@ TAO_AV_Child_Process  <T_StreamEndpoint_B, T_VDev, T_MediaCtrl>::release_semapho
                    this->host_,
                    pid);
 
-  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,
+  if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,
               "(%P|%t) semaphore is %s\n",
               sem_str));
 
@@ -581,7 +582,7 @@ TAO_AV_Child_Process  <T_StreamEndpoint_B, T_VDev, T_MediaCtrl>::release_semapho
                                    sem_str);
 
   if (semaphore.release () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        "(%P|%t) Error releasing semaphore %s: %p\n",
                        sem_str,
                        "semaphore.release ()"),
@@ -648,7 +649,7 @@ template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 int
 TAO_AV_Child_Process<T_StreamEndpoint, T_VDev, T_MediaCtrl>::make_mediactrl (T_MediaCtrl *&media_ctrl)
 {
-  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"(%P|%t) TAO_AV_Child_Process::make_mediactrl ()\n"));
+  if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"(%P|%t) TAO_AV_Child_Process::make_mediactrl ()\n"));
   ACE_NEW_RETURN (media_ctrl,
                   T_MediaCtrl,
                   -1);
@@ -705,7 +706,7 @@ TAO_AV_Child_Process_A<T_StreamEndpoint, T_VDev, T_MediaCtrl>::TAO_AV_Child_Proc
                    this->host_,
                    static_cast<long> (this->pid_));
 
-  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"(%P|%t)%s\n",stream_endpoint_name));
+  if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"(%P|%t)%s\n",stream_endpoint_name));
   this->stream_endpoint_name_.length (1);
   this->stream_endpoint_name_ [0].id = CORBA::string_dup (stream_endpoint_name);
 }
@@ -731,7 +732,7 @@ TAO_AV_Child_Process_B<T_StreamEndpoint, T_VDev, T_MediaCtrl>::TAO_AV_Child_Proc
                    this->host_,
                    static_cast<long> (this->pid_));
 
-  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"(%P|%t)%s\n",stream_endpoint_name));
+  if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"(%P|%t)%s\n",stream_endpoint_name));
   this->stream_endpoint_name_.length (1);
   this->stream_endpoint_name_ [0].id = CORBA::string_dup (stream_endpoint_name);
 }

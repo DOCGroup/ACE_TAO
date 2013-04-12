@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "ImR_Locator_i.h"
 #include "Locator_NT_Service.h"
 #include "Locator_Options.h"
@@ -91,7 +92,7 @@ run_service (void)
   ACE_NT_SERVICE_RUN (service, SERVICE::instance (), ret);
 
   if (ret == 0)
-    ACE_ERROR ((LM_ERROR, "%p\n", "Couldn't start service"));
+    ORBSVCS_ERROR ((LM_ERROR, "%p\n", "Couldn't start service"));
 
   return ret;
 #else /* ACE_WIN32 */
@@ -122,7 +123,7 @@ run_service_command (Options& opts)
       DWORD length = ACE_TEXT_GetModuleFileName (0, pathname, MAX_PATH_LENGTH);
       if (length == 0 || length >= MAX_PATH_LENGTH - sizeof(" -s"))
         {
-          ACE_ERROR ((LM_ERROR, "Error: Could not get module file name\n"));
+          ORBSVCS_ERROR ((LM_ERROR, "Error: Could not get module file name\n"));
           return -1;
         }
 
@@ -134,12 +135,12 @@ run_service_command (Options& opts)
                                            pathname);
       if (ret != -1)
         {
-          ACE_DEBUG ((LM_DEBUG, "ImR: Service installed.\n"));
+          ORBSVCS_DEBUG ((LM_DEBUG, "ImR: Service installed.\n"));
           opts.save_registry_options ();
         }
       else
         {
-          ACE_ERROR ((LM_ERROR, "Error: Failed to install service. error:%d\n", errno));
+          ORBSVCS_ERROR ((LM_ERROR, "Error: Failed to install service. error:%d\n", errno));
         }
       if (ret == 0)
         return 1;
@@ -147,13 +148,13 @@ run_service_command (Options& opts)
   else if (opts.service_command () == Options::SC_REMOVE)
     {
       int ret = SERVICE::instance ()->remove ();
-      ACE_DEBUG ((LM_DEBUG, "ImR: Service removed.\n"));
+      ORBSVCS_DEBUG ((LM_DEBUG, "ImR: Service removed.\n"));
       if (ret == 0)
         return 1; // If successful, then we don't want to continue.
     }
   else
     {
-      ACE_ERROR ((LM_ERROR, "Error: Unknown service command :%d\n",
+      ORBSVCS_ERROR ((LM_ERROR, "Error: Unknown service command :%d\n",
         opts.service_command ()));
       return -1;
     }
@@ -161,7 +162,7 @@ run_service_command (Options& opts)
   return -1;
 
 #else /* ACE_WIN32 */
-  ACE_ERROR ((LM_ERROR, "NT Service not supported on this platform"));
+  ORBSVCS_ERROR ((LM_ERROR, "NT Service not supported on this platform"));
   return -1;
 #endif /* ACE_WIN32 && !ACE_LACKS_WIN32_SERVICES */
 }
