@@ -1,3 +1,10 @@
+Fri Apr 12 20:38:29 UTC 2013  Adam Mitz  <mitza@ociweb.com>
+
+        * dance/Logger/Log_Macros.h:
+        * dance/Logger/Log_Macros.cpp:
+
+          Use a distinct ACE Log Category for DAnCE logging.
+
 Thu Apr 11 17:30:55 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/dance_tests.lst:
