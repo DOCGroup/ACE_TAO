@@ -1,3 +1,12 @@
+Fri Apr 12 20:40:54 UTC 2013  Adam Mitz  <mitza@ociweb.com>
+
+        * ciao/Logger/Log_Macros.h:
+        * ciao/Logger/Log_Macros.cpp:
+        * connectors/dds4ccm/impl/logger/Log_Macros.h:
+        * connectors/dds4ccm/impl/logger/Log_Macros.cpp:
+
+          Use distinct ACE Log Categories for both CIAO and DDS4CCM.
+
 Thu Apr 11 06:49:15 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/DDS_Listen_T.h:
