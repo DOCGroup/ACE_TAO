@@ -9,6 +9,8 @@
 #ifndef DANCE_LOG_MACROS_H_
 #define DANCE_LOG_MACROS_H_
 
+#include "ace/Log_Category.h"
+
 #include "DAnCE_Logger_Export.h"
 
 #if !defined (DLINFO)
@@ -16,6 +18,8 @@
 #endif
 
 extern DAnCE_Logger_Export unsigned int DAnCE_debug_level;
+
+extern DAnCE_Logger_Export ACE_Log_Category DAnCE_log_category;
 
 // Defines for logging levels
 
@@ -102,7 +106,8 @@ extern DAnCE_Logger_Export unsigned int DAnCE_debug_level;
     if (DAnCE_debug_level >= L) \
       { \
         int const __ace_error = ACE_Log_Msg::last_error_adapter (); \
-        ACE_Log_Msg *ace___ = ACE_Log_Msg::instance ();               \
+        ACE_Log_Category_TSS *ace___ = DAnCE_log_category.per_thr_obj (); \
+        if (ace___ == 0) break; \
         ace___->conditional_set (__FILE__, __LINE__, -1, __ace_error); \
         ace___->log X; \
       } \
@@ -114,7 +119,8 @@ extern DAnCE_Logger_Export unsigned int DAnCE_debug_level;
     if (DAnCE_debug_level >= L) \
       { \
         int const __ace_error = ACE_Log_Msg::last_error_adapter (); \
-        ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
+        ACE_Log_Category_TSS *ace___ = DAnCE_log_category.per_thr_obj (); \
+        if (ace___ == 0) break; \
         ace___->conditional_set (__FILE__, __LINE__, 0, __ace_error); \
         ace___->log X; \
       } \
@@ -126,7 +132,8 @@ extern DAnCE_Logger_Export unsigned int DAnCE_debug_level;
     if (DAnCE_debug_level >= L) \
       { \
         int const __ace_error = ACE_Log_Msg::last_error_adapter (); \
-        ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
+        ACE_Log_Category_TSS *ace___ = DAnCE_log_category.per_thr_obj (); \
+        if (ace___ == 0) break; \
         ace___->conditional_set (__FILE__, __LINE__, 0, __ace_error); \
         ace___->log X; \
       } \
@@ -138,7 +145,8 @@ extern DAnCE_Logger_Export unsigned int DAnCE_debug_level;
     if (DAnCE_debug_level >= L) \
       { \
         int const __ace_error = ACE_Log_Msg::last_error_adapter (); \
-        ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
+        ACE_Log_Category_TSS *ace___ = DAnCE_log_category.per_thr_obj (); \
+        if (ace___ == 0) break; \
         ace___->conditional_set (__FILE__, __LINE__, Y, __ace_error); \
         ace___->log X; \
         return Y; \
