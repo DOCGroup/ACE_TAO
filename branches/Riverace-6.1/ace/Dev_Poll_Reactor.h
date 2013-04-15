@@ -975,7 +975,7 @@ protected:
   //// callback it will be reacquired before return.
   int remove_handler_i (ACE_HANDLE handle,
                         ACE_Reactor_Mask mask,
-                        ACE_Guard<ACE_DEV_POLL_TOKEN> &repo_guard,
+                        ACE_Guard<ACE_SYNCH_MUTEX> &repo_guard,
                         ACE_Event_Handler *eh = 0);
 
   /// Temporarily remove the given handle from the "interest set."
@@ -1048,7 +1048,8 @@ protected:
 
   /// Token used to protect manipulation of the handler repository.
   /// No need to hold the waiter token to change the repo.
-  ACE_DEV_POLL_TOKEN repo_token_;
+  //  ACE_DEV_POLL_TOKEN repo_token_;
+  ACE_SYNCH_MUTEX repo_lock_;
 
   /// The repository that contains all registered event handlers.
   Handler_Repository handler_rep_;
