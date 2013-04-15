@@ -1,6 +1,7 @@
 Mon Apr 15 14:28:43 UTC 2013  Steve Huston  <shuston@riverace.com>
 
         * ace/Dev_Poll_Reactor.cpp: Fixed single-threaded build issues.
+          Fuzz tweaks.
 
 Mon Apr 15 13:59:55 UTC 2013  Adam Mitz  <mitza@ociweb.com>
 
