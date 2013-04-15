@@ -140,7 +140,6 @@ ACE_Log_Category_TSS::log_hexdump (ACE_Log_Priority priority,
   return logger_->log_hexdump(priority, buffer, size, text, this);
 }
 
-#if defined (ACE_HAS_THREADS)
 /// Get the current ACE_Log_Priority mask.
 ACE_INLINE u_long
 ACE_Log_Category::priority_mask ()
@@ -156,6 +155,5 @@ ACE_Log_Category::priority_mask (u_long n_mask)
   this->priority_mask_ = n_mask;
   return o_mask;
 }
-#endif
 
 ACE_END_VERSIONED_NAMESPACE_DECL
