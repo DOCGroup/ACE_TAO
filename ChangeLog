@@ -1,3 +1,10 @@
+Mon Apr 15 22:45:14 UTC 2013  Steve Huston  <shuston@riverace.com>
+
+        * ace/Dev_Poll_Reactor.h:
+        * ace/Dev_Poll_Reactor.cpp: Changed the repository lock (repo_token_)
+          from an ACE_DEV_POLL_TOKEN to ACE_SYNCH_MUTEX and renamed it
+          repo_lock_. Gets a few more percent improvement in performance.
+
 Mon Apr 15 14:28:43 UTC 2013  Steve Huston  <shuston@riverace.com>
 
         * ace/Dev_Poll_Reactor.cpp: Fixed single-threaded build issues.
