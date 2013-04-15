@@ -1,3 +1,9 @@
+Mon Apr 15 17:03:16 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/Async_IORTable/Async_IORTable.mpc:
+
+          Fixed the project name for uniqueness.
+
 Mon Apr 15 16:48:16 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * MPC/config/async_iortable.mpb:
