@@ -58,16 +58,12 @@ public:
 
   virtual CORBA::Long initialize_collocated_object (TAO_Stub *stub);
 
-private:
+protected:
   static ACE_Lock * create_lock (TAO_SYNCH_MUTEX &l);
 
   /// Helper method to find an object bound in the table.
   bool find_object (TAO::ObjectKey &key,
                     CORBA::Object_out forward_to);
-
-  void find_object (::IORTable::Locate_ResponseHandler rh,
-                    TAO::ObjectKey &key);
-
 
   /// The ORB Core we belong to
   TAO_ORB_Core &orb_core_;

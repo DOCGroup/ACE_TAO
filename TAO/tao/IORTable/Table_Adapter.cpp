@@ -9,7 +9,6 @@
 
 #include "tao/IORTable/Table_Adapter.h"
 #include "tao/IORTable/IOR_Table_Impl.h"
-#include "tao/IORTable/Locate_ResponseHandler.h"
 
 #include "tao/ORB_Core.h"
 #include "tao/Server_Strategy_Factory.h"
@@ -94,15 +93,6 @@ TAO_Table_Adapter::dispatch (TAO::ObjectKey &key,
       return TAO_Adapter::DS_MISMATCHED_KEY;
     rootref = this->root_;
   }
-
-  if (this->root_->async_available ())
-    {
-      // construct a callback handler
-      TAO_AMH_Locate_ResponseHandler_var rh;
-      ACE_NEW_RETURN (rh, TAO_AMH_Locate_ResponseHandler (request), DS_MISMATCHED_KEY);
-      this->find_object (rh, key);
-      return 0;
-    }
 
   if (this->find_object (key, forward_to))
     {
@@ -198,16 +188,6 @@ TAO_Table_Adapter::find_object (TAO::ObjectKey &key,
       return false;
     }
   return true;
-}
-
-
-void
-TAO_Table_Adapter::find_object (IORTable::Locate_ResponseHandler rh,
-                                TAO::ObjectKey &key)
-{
-  CORBA::String_var object_key;
-  TAO::ObjectKey::encode_sequence_to_string (object_key.out (), key);
-  root_->async_find (rh, object_key.in ());
 }
 
 // ****************************************************************

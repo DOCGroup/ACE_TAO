@@ -23,7 +23,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "iortable_export.h"
+#include "async_iortable_export.h"
 #include "tao/Versioned_Namespace.h"
 #include "tao/Messaging/AMH_Response_Handler.h"
 #include "tao/Valuetype/ValueBase.h"
@@ -48,7 +48,7 @@ typedef TAO_AMH_Locate_ResponseHandler *TAO_AMH_Locate_ResponseHandler_ptr;
  * As any other pseudo object, this class has a T_var class too.
  *
  */
-class TAO_IORTable_Export TAO_AMH_Locate_ResponseHandler_var
+class TAO_Async_IORTable_Export TAO_AMH_Locate_ResponseHandler_var
 {
 public:
   TAO_AMH_Locate_ResponseHandler_var (void);
@@ -98,7 +98,7 @@ private:
  * representing the interface and the implementation.
  *
  */
-class TAO_IORTable_Export TAO_AMH_Locate_ResponseHandler
+class TAO_Async_IORTable_Export TAO_AMH_Locate_ResponseHandler
   : public virtual TAO_AMH_Response_Handler
 {
 public:
