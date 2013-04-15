@@ -1,3 +1,52 @@
+Mon Apr 15 16:48:16 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * MPC/config/async_iortable.mpb:
+        * MPC/config/imr_client.mpb:
+        * MPC/config/iortable.mpb:
+
+        * orbsvcs/ImplRepo_Service/INS_Locator.h:
+        * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
+
+        * tao/Async_IORTable:
+
+        * tao/Async_IORTable/Async_IORTable.h:
+        * tao/Async_IORTable/Async_IORTable.cpp:
+        * tao/Async_IORTable/Async_IORTable.mpc:
+        * tao/Async_IORTable/Async_IORTable.pidl:
+        * tao/Async_IORTable/Async_IOR_Table_Impl.h:
+        * tao/Async_IORTable/Async_IOR_Table_Impl.cpp:
+        * tao/Async_IORTable/Async_Table_Adapter.h:
+        * tao/Async_IORTable/Async_Table_Adapter.cpp:
+        * tao/Async_IORTable/Locate_ResponseHandler.h:
+        * tao/Async_IORTable/Locate_ResponseHandler.inl:
+        * tao/Async_IORTable/Locate_ResponseHandler.cpp:
+        * tao/Async_IORTable/TAO_Async_IORTable.pc.in:
+        * tao/Async_IORTable/TAO_Async_IORTable.rc:
+
+        * tao/IORTable/IORTable.h:
+        * tao/IORTable/IORTable.mpc:
+        * tao/IORTable/IORTable.pidl:
+        * tao/IORTable/IOR_Table_Impl.h:
+        * tao/IORTable/IOR_Table_Impl.cpp:
+        * tao/IORTable/Table_Adapter.h:
+        * tao/IORTable/Table_Adapter.cpp:
+
+        * tao/ORB_Core.cpp:
+
+        * tao/IORTable/Locate_ResponseHandler.h:
+        * tao/IORTable/Locate_ResponseHandler.inl:
+        * tao/IORTable/Locate_ResponseHandler.cpp:
+
+          Refactored the IORTable to restore the minimal dependency of
+          the base library so that small footprint builds can continue
+          using the IORTable as needed. The new features added to support
+          asynchronous use of the IMR are now in a new library. While the
+          new Async_IORTable is registered as a distinct object in the
+          service object registry, the ORB Core will load it if present
+          when an application uses resolve_initial_references ("IORTable").
+          Right now the only use case for the async ior table is with the
+          IMR, which has its own implementation of the locator objeect.
+
 Mon Apr 15 14:26:39 UTC 2013  Adam Mitz  <mitza@ociweb.com>
 
         * MPC/config/ftclientorb.mpb:

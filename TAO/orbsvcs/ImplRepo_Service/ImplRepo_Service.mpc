@@ -58,7 +58,7 @@ project(ImR_Activator) : orbsvcslib, orbsvcs_output, conv_lib, acexml, avoids_mi
   }
 }
 
-project(ImR_Locator) : orbsvcslib, orbsvcs_output, conv_lib, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, iortable, portableserver, messaging, svc_utils, acexml, imr_client, iormanip, dynamicinterface {
+project(ImR_Locator) : orbsvcslib, orbsvcs_output, conv_lib, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, async_iortable, portableserver, messaging, svc_utils, acexml, imr_client, iormanip, dynamicinterface {
   sharedname   = TAO_ImR_Locator
   dynamicflags += LOCATOR_BUILD_DLL
   after       += ImR_Locator_IDL ImR_Activator_IDL
@@ -92,7 +92,7 @@ project(ImR_Locator) : orbsvcslib, orbsvcs_output, conv_lib, avoids_minimum_corb
   }
 }
 
-project(ImR_Locator_Service) : orbsvcsexe, install_bin, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, iortable, messaging, acexml ,svc_utils, pi_server, imr_client, iormanip {
+project(ImR_Locator_Service) : orbsvcsexe, install_bin, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, async_iortable, messaging, acexml ,svc_utils, pi_server, imr_client, iormanip {
   exename  = tao_imr_locator
   after   += ImR_Locator ImR_Activator_IDL ImR_Locator_IDL
   libs    += TAO_ImR_Locator TAO_ImR_Activator_IDL TAO_ImR_Locator_IDL
