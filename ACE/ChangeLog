@@ -1,3 +1,9 @@
+Mon Apr 15 13:59:55 UTC 2013  Adam Mitz  <mitza@ociweb.com>
+
+        * ace/Log_Record.inl:
+
+          Fixed ACE_TRACE macro to match actual method name.
+
 Fri Apr 12 19:49:50 UTC 2013  Steve Huston  <shuston@riverace.com>
 
         * ace/Dev_Poll_Reactor.cpp:

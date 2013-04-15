@@ -34,7 +34,7 @@ ACE_Log_Record::category (ACE_Log_Category_TSS* t)
 ACE_INLINE ACE_Log_Category_TSS*
 ACE_Log_Record::category (void) const
 {
-  ACE_TRACE ("ACE_Log_Record::type");
+  ACE_TRACE ("ACE_Log_Record::category");
   return this->category_;
 }
 
