@@ -1,3 +1,9 @@
+Mon Apr 15 17:46:24 UTC 2013  Huang-Ming Huang  <huangh@ociweb.com>
+
+        * ace/Log_Category.inl:
+
+        Fixed linking problem for ST build.
+
 Mon Apr 15 14:28:43 UTC 2013  Steve Huston  <shuston@riverace.com>
 
         * ace/Dev_Poll_Reactor.cpp: Fixed single-threaded build issues.
