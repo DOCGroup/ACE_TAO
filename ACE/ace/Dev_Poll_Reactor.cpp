@@ -1570,11 +1570,13 @@ ACE_Dev_Poll_Reactor::remove_handler (ACE_HANDLE handle,
   return this->remove_handler_i (handle, mask, grd);
 }
 
+// FUZZ: disable check_for_ACE_Guard
 int
 ACE_Dev_Poll_Reactor::remove_handler_i (ACE_HANDLE handle,
                                         ACE_Reactor_Mask mask,
                                         ACE_Guard<ACE_DEV_POLL_TOKEN> &repo_guard,
                                         ACE_Event_Handler *eh)
+// FUZZ: enable check_for_ACE_Guard
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor::remove_handler_i");
 
@@ -1599,7 +1601,7 @@ ACE_Dev_Poll_Reactor::remove_handler_i (ACE_HANDLE handle,
 
   if (ACE_BIT_DISABLED (mask, ACE_Event_Handler::DONT_CALL))
     {
-      // It would be great if ACE_Reverse_Lock worked with ACE_Guard.
+      // It would be great if ACE_Reverse_Lock worked with the Guard.
       repo_guard.release ();
       eh->handle_close (handle, mask);
       repo_guard.acquire ();
