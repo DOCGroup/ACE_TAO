@@ -1,3 +1,10 @@
+Mon Apr 15 14:12:56 UTC 2013  Adam Mitz  <mitza@ociweb.com>
+
+        * MPC/config/naming.mpb:
+        * orbsvcs/orbsvcs/SSLIOP.mpc:
+
+          Added svc_utils base project.
+
 Fri Apr 12 22:41:43 UTC 2013  Adam Mitz  <mitza@ociweb.com>
 
         * orbsvcs/orbsvcs/Svc_Utils.mpc:
