@@ -1,3 +1,20 @@
+Mon Apr 15 08:59:47 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/DDS4CCM-INSTALL.html:
+          Added exact instructions how to compile DDS4CCM with OpenDDS
+          on linux. These can be copied to the console and will compile
+          everything
+
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_1.pl:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_2.pl:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_3.pl:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_4.pl:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_6.pl:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_7.pl:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_8.pl:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_9.pl:
+          Make these running on trunk, only run_8.pl needs some more work
+
 Fri Apr 12 20:40:54 UTC 2013  Adam Mitz  <mitza@ociweb.com>
 
         * ciao/Logger/Log_Macros.h:
