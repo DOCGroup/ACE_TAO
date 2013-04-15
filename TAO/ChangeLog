@@ -1,3 +1,14 @@
+Mon Apr 15 14:26:39 UTC 2013  Adam Mitz  <mitza@ociweb.com>
+
+        * MPC/config/ftclientorb.mpb:
+        * MPC/config/ftserverorb.mpb:
+        * MPC/config/notify_monitor_control.mpb:
+        * MPC/config/portablegroup.mpb:
+        * orbsvcs/IFR_Service/IFR_Service.mpc:
+        * orbsvcs/tests/FT_App/FT_App.mpc:
+
+          Added svc_utils for static link.
+
 Mon Apr 15 14:12:56 UTC 2013  Adam Mitz  <mitza@ociweb.com>
 
         * MPC/config/naming.mpb:
