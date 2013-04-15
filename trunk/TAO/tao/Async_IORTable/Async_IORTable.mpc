@@ -1,0 +1,40 @@
+//$Id$
+project(*core_idl) : tao_versioning_idl_defaults, install {
+  custom_only = 1
+  IDL_Files {
+    idlflags += -Gp -Gd -Sci -SS -Sorb \
+                -Wb,export_macro=TAO_Async_IORTable_Export \
+                -Wb,export_include=tao/Async_IORTable/async_iortable_export.h \
+                -Wb,stub_export_file=async_iortable_export.h \
+                -Wb,include_guard=TAO_IORTABLE_SAFE_INCLUDE \
+                -Wb,safe_include=tao/Async_IORTable/Async_IORTable.h \
+                -iC tao/IORTable -Gxhst
+    Async_IORTable.pidl
+  }
+
+  specific {
+    install_dir = tao/Async_IORTable
+  }
+}
+
+project(IORTable) : taolib, portableserver, iortable, dynamicinterface, tao_output, install, taoidldefaults {
+  after       += *core_idl
+  sharedname   = TAO_Async_IORTable
+  dynamicflags += TAO_Async_IORTable_BUILD_DLL
+
+  Source_Files {
+    *.cpp
+    Async_IORTableC.cpp
+  }
+
+  Header_Files {
+    *.h
+    async_iortable_export.h
+    Async_IORTableC.h
+    Async_IORTableS.h
+  }
+
+  specific {
+    install_dir = tao/Async_IORTable
+  }
+}

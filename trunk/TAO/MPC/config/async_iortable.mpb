@@ -1,0 +1,7 @@
+// -*- MPC -*-
+// $Id$
+
+project : taolib, messaging, dynamicinterface {
+  after   += Async_IORTable
+  libs    += TAO_Async_IORTable
+}

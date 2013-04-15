@@ -17,7 +17,7 @@ project(*core_idl) : tao_versioning_idl_defaults, install {
   }
 }
 
-project(IORTable) : taolib, portableserver, dynamicinterface, tao_output, install, taoidldefaults {
+project(IORTable) : taolib, portableserver, tao_output, install, taoidldefaults {
   after       += *core_idl
   sharedname   = TAO_IORTable
   dynamicflags += TAO_IORTable_BUILD_DLL
