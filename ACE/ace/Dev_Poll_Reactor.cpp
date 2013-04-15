@@ -1172,7 +1172,7 @@ ACE_Dev_Poll_Reactor::dispatch_io_event (Token_Guard &guard)
       int (ACE_Event_Handler::*callback)(ACE_HANDLE) = 0;
       bool reactor_resumes_eh = false;
       {
-        ACE_GUARD_RETURN (ACE_DEV_POLL_TOKEN, grd, this->repo_token_, -1);
+        ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, grd, this->repo_lock_, -1);
         info = this->handler_rep_.find (handle);
         if (info == 0)   // No registered handler any longer
           return 0;
@@ -1295,7 +1295,7 @@ ACE_Dev_Poll_Reactor::dispatch_io_event (Token_Guard &guard)
             // same handle/handler combination still.
             if (reactor_resumes_eh)
               {
-                ACE_GUARD_RETURN (ACE_DEV_POLL_TOKEN, grd, this->repo_token_, -1);
+                ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, grd, this->repo_lock_, -1);
                 info = this->handler_rep_.find (handle);
                 if (info != 0 && info->event_handler == eh)
                   this->resume_handler_i (handle);
@@ -1309,7 +1309,7 @@ ACE_Dev_Poll_Reactor::dispatch_io_event (Token_Guard &guard)
         // If the upcalled handler is still the handler of record for handle,
         // continue with checking whether or not to remove or resume the
         // handler.
-        ACE_GUARD_RETURN (ACE_DEV_POLL_TOKEN, grd, this->repo_token_, 1);
+        ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, grd, this->repo_lock_, 1);
         info = this->handler_rep_.find (handle);
         if (info != 0 && info->event_handler == eh)
           {
@@ -1368,7 +1368,7 @@ ACE_Dev_Poll_Reactor::register_handler (ACE_Event_Handler *handler,
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor::register_handler");
 
-  ACE_MT (ACE_GUARD_RETURN (ACE_DEV_POLL_TOKEN, grd, this->repo_token_, -1));
+  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, grd, this->repo_lock_, -1));
 
   return this->register_handler_i (handler->get_handle (),
                                    handler,
@@ -1382,7 +1382,7 @@ ACE_Dev_Poll_Reactor::register_handler (ACE_HANDLE handle,
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor::register_handler");
 
-  ACE_MT (ACE_GUARD_RETURN (ACE_DEV_POLL_TOKEN, grd, this->repo_token_, -1));
+  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, grd, this->repo_lock_, -1));
 
   return this->register_handler_i (handle,
                                    event_handler,
@@ -1488,7 +1488,7 @@ ACE_Dev_Poll_Reactor::register_handler (const ACE_Handle_Set &handle_set,
 
   ACE_Handle_Set_Iterator handle_iter (handle_set);
 
-  ACE_MT (ACE_GUARD_RETURN (ACE_DEV_POLL_TOKEN, grd, this->repo_token_, -1));
+  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, grd, this->repo_lock_, -1));
 
   // @@ It might be more efficient to construct a pollfd array and
   //    pass it to the write () call in register_handler_i () only once,
@@ -1555,7 +1555,7 @@ ACE_Dev_Poll_Reactor::remove_handler (ACE_Event_Handler *handler,
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor::remove_handler");
 
-  ACE_GUARD_RETURN (ACE_DEV_POLL_TOKEN, grd, this->repo_token_, -1);
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, grd, this->repo_lock_, -1);
   return this->remove_handler_i (handler->get_handle (), mask, grd);
 }
 
@@ -1565,7 +1565,7 @@ ACE_Dev_Poll_Reactor::remove_handler (ACE_HANDLE handle,
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor::remove_handler");
 
-  ACE_GUARD_RETURN (ACE_DEV_POLL_TOKEN, grd, this->repo_token_, -1);
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, grd, this->repo_lock_, -1);
 
   return this->remove_handler_i (handle, mask, grd);
 }
@@ -1574,7 +1574,7 @@ ACE_Dev_Poll_Reactor::remove_handler (ACE_HANDLE handle,
 int
 ACE_Dev_Poll_Reactor::remove_handler_i (ACE_HANDLE handle,
                                         ACE_Reactor_Mask mask,
-                                        ACE_Guard<ACE_DEV_POLL_TOKEN> &repo_guard,
+                                        ACE_Guard<ACE_SYNCH_MUTEX> &repo_guard,
                                         ACE_Event_Handler *eh)
 // FUZZ: enable check_for_ACE_Guard
 {
@@ -1626,7 +1626,7 @@ ACE_Dev_Poll_Reactor::remove_handler (const ACE_Handle_Set &handle_set,
        h != ACE_INVALID_HANDLE;
        h = handle_iter ())
     {
-      ACE_GUARD_RETURN (ACE_DEV_POLL_TOKEN, grd, this->repo_token_, -1);
+      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, grd, this->repo_lock_, -1);
       if (this->remove_handler_i (h, mask, grd) == -1)
         return -1;
     }
@@ -1683,7 +1683,7 @@ ACE_Dev_Poll_Reactor::suspend_handler (ACE_Event_Handler *event_handler)
 
   ACE_HANDLE handle = event_handler->get_handle ();
 
-  ACE_MT (ACE_GUARD_RETURN (ACE_DEV_POLL_TOKEN, grd, this->repo_token_, -1));
+  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, grd, this->repo_lock_, -1));
 
   return this->suspend_handler_i (handle);
 }
@@ -1693,7 +1693,7 @@ ACE_Dev_Poll_Reactor::suspend_handler (ACE_HANDLE handle)
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor::suspend_handler");
 
-  ACE_MT (ACE_GUARD_RETURN (ACE_DEV_POLL_TOKEN, grd, this->repo_token_, -1));
+  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, grd, this->repo_lock_, -1));
 
   return this->suspend_handler_i (handle);
 }
@@ -1706,7 +1706,7 @@ ACE_Dev_Poll_Reactor::suspend_handler (const ACE_Handle_Set &handles)
   ACE_Handle_Set_Iterator handle_iter (handles);
   ACE_HANDLE h;
 
-  ACE_MT (ACE_GUARD_RETURN (ACE_DEV_POLL_TOKEN, grd, this->repo_token_, -1));
+  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, grd, this->repo_lock_, -1));
 
   while ((h = handle_iter ()) != ACE_INVALID_HANDLE)
     if (this->suspend_handler_i (h) == -1)
@@ -1720,7 +1720,7 @@ ACE_Dev_Poll_Reactor::suspend_handlers (void)
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor::suspend_handlers");
 
-  ACE_MT (ACE_GUARD_RETURN (ACE_DEV_POLL_TOKEN, grd, this->repo_token_, -1));
+  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, grd, this->repo_lock_, -1));
 
   size_t const len = this->handler_rep_.max_size ();
 
@@ -1794,7 +1794,7 @@ ACE_Dev_Poll_Reactor::resume_handler (ACE_Event_Handler *event_handler)
 
   ACE_HANDLE handle = event_handler->get_handle ();
 
-  ACE_MT (ACE_GUARD_RETURN (ACE_DEV_POLL_TOKEN, grd, this->repo_token_, -1));
+  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, grd, this->repo_lock_, -1));
 
   return this->resume_handler_i (handle);
 }
@@ -1804,7 +1804,7 @@ ACE_Dev_Poll_Reactor::resume_handler (ACE_HANDLE handle)
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor::resume_handler");
 
-  ACE_MT (ACE_GUARD_RETURN (ACE_DEV_POLL_TOKEN, grd, this->repo_token_, -1));
+  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, grd, this->repo_lock_, -1));
 
   return this->resume_handler_i (handle);
 }
@@ -1817,7 +1817,7 @@ ACE_Dev_Poll_Reactor::resume_handler (const ACE_Handle_Set &handles)
   ACE_Handle_Set_Iterator handle_iter (handles);
   ACE_HANDLE h;
 
-  ACE_MT (ACE_GUARD_RETURN (ACE_DEV_POLL_TOKEN, grd, this->repo_token_, -1));
+  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, grd, this->repo_lock_, -1));
 
   while ((h = handle_iter ()) != ACE_INVALID_HANDLE)
     if (this->resume_handler_i (h) == -1)
@@ -1831,7 +1831,7 @@ ACE_Dev_Poll_Reactor::resume_handlers (void)
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor::resume_handlers");
 
-  ACE_MT (ACE_GUARD_RETURN (ACE_DEV_POLL_TOKEN, grd, this->repo_token_, -1));
+  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, grd, this->repo_lock_, -1));
 
   size_t const len = this->handler_rep_.max_size ();
 
@@ -2069,7 +2069,7 @@ ACE_Dev_Poll_Reactor::purge_pending_notifications (ACE_Event_Handler * eh,
 ACE_Event_Handler *
 ACE_Dev_Poll_Reactor::find_handler (ACE_HANDLE handle)
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_DEV_POLL_TOKEN, grd, this->repo_token_, 0));
+  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, grd, this->repo_lock_, 0));
 
   Event_Tuple *info = this->handler_rep_.find (handle);
   if (info)
@@ -2090,7 +2090,7 @@ ACE_Dev_Poll_Reactor::handler (ACE_HANDLE handle,
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor::handler");
 
-  ACE_MT (ACE_GUARD_RETURN (ACE_DEV_POLL_TOKEN, grd, this->repo_token_, -1));
+  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, grd, this->repo_lock_, -1));
 
   Event_Tuple *info = this->handler_rep_.find (handle);
 
@@ -2226,7 +2226,7 @@ ACE_Dev_Poll_Reactor::mask_ops (ACE_Event_Handler *event_handler,
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor::mask_ops");
 
-  ACE_MT (ACE_GUARD_RETURN (ACE_DEV_POLL_TOKEN, grd, this->repo_token_, -1));
+  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, grd, this->repo_lock_, -1));
 
   return this->mask_ops_i (event_handler->get_handle (), mask, ops);
 }
@@ -2238,7 +2238,7 @@ ACE_Dev_Poll_Reactor::mask_ops (ACE_HANDLE handle,
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor::mask_ops");
 
-  ACE_MT (ACE_GUARD_RETURN (ACE_DEV_POLL_TOKEN, grd, this->repo_token_, -1));
+  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, grd, this->repo_lock_, -1));
 
   return this->mask_ops_i (handle, mask, ops);
 }
