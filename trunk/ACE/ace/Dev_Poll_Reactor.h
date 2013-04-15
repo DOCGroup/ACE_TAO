@@ -973,10 +973,12 @@ protected:
   /// @repo_guard referencing that token. It will be temporarily released
   /// during a handle_close() callback if needed; if it is released for the
   //// callback it will be reacquired before return.
+  // FUZZ: disable check_for_ACE_Guard
   int remove_handler_i (ACE_HANDLE handle,
                         ACE_Reactor_Mask mask,
-                        ACE_Guard<ACE_DEV_POLL_TOKEN> &repo_guard,
+                        ACE_Guard<ACE_SYNCH_MUTEX> &repo_guard,
                         ACE_Event_Handler *eh = 0);
+  // FUZZ: enable check_for_ACE_Guard
 
   /// Temporarily remove the given handle from the "interest set."
   int suspend_handler_i (ACE_HANDLE handle);
@@ -1048,7 +1050,8 @@ protected:
 
   /// Token used to protect manipulation of the handler repository.
   /// No need to hold the waiter token to change the repo.
-  ACE_DEV_POLL_TOKEN repo_token_;
+  //  ACE_DEV_POLL_TOKEN repo_token_;
+  ACE_SYNCH_MUTEX repo_lock_;
 
   /// The repository that contains all registered event handlers.
   Handler_Repository handler_rep_;
