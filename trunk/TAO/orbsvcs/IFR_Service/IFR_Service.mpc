@@ -40,7 +40,7 @@ project(TAO_IFR_BE) : taolib, tao_output, conv_lib, ifr_client, avoids_minimum_c
 }
 
 
-project(TAO_IFR_EXE) : aceexe, install, ifr_client, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, tao_idl_fe {
+project(TAO_IFR_EXE) : aceexe, install, ifr_client, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, tao_idl_fe, svc_utils {
   after          += TAO_IFR_BE
   exename         = tao_ifr
   libs           += TAO_IFR_BE TAO
