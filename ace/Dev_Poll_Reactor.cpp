@@ -1555,7 +1555,7 @@ ACE_Dev_Poll_Reactor::remove_handler (ACE_Event_Handler *handler,
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor::remove_handler");
 
-  ACE_MT (ACE_GUARD_RETURN (ACE_DEV_POLL_TOKEN, grd, this->repo_token_, -1));
+  ACE_GUARD_RETURN (ACE_DEV_POLL_TOKEN, grd, this->repo_token_, -1);
   return this->remove_handler_i (handler->get_handle (), mask, grd);
 }
 
@@ -1565,7 +1565,7 @@ ACE_Dev_Poll_Reactor::remove_handler (ACE_HANDLE handle,
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor::remove_handler");
 
-  ACE_MT (ACE_GUARD_RETURN (ACE_DEV_POLL_TOKEN, grd, this->repo_token_, -1));
+  ACE_GUARD_RETURN (ACE_DEV_POLL_TOKEN, grd, this->repo_token_, -1);
 
   return this->remove_handler_i (handle, mask, grd);
 }
@@ -1624,7 +1624,7 @@ ACE_Dev_Poll_Reactor::remove_handler (const ACE_Handle_Set &handle_set,
        h != ACE_INVALID_HANDLE;
        h = handle_iter ())
     {
-      ACE_MT (ACE_GUARD_RETURN (ACE_DEV_POLL_TOKEN, grd, this->repo_token_, -1));
+      ACE_GUARD_RETURN (ACE_DEV_POLL_TOKEN, grd, this->repo_token_, -1);
       if (this->remove_handler_i (h, mask, grd) == -1)
         return -1;
     }
