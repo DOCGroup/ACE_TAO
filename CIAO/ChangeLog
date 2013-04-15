@@ -1,3 +1,9 @@
+Mon Apr 15 18:18:18 UTC 2013  Adam Mitz  <mitza@ociweb.com>
+
+        * CIAO_DAnCE.mwc:
+
+          Added ami4ccm and dds4ccm connectors to this workspace.
+
 Mon Apr 15 08:59:47 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/DDS4CCM-INSTALL.html:
