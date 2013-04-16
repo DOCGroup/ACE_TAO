@@ -106,7 +106,7 @@ TAO_Async_Table_Adapter_Factory::create (TAO_ORB_Core *oc)
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-ACE_FACTORY_DEFINE (TAO_IORTable, TAO_Async_Table_Adapter_Factory)
+ACE_FACTORY_DEFINE (TAO_Async_IORTable, TAO_Async_Table_Adapter_Factory)
 ACE_STATIC_SVC_DEFINE (TAO_Async_Table_Adapter_Factory,
                        ACE_TEXT ("TAO_Async_IORTable"),
                        ACE_SVC_OBJ_T,
