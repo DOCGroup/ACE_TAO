@@ -1,3 +1,8 @@
+Tue Apr 16 17:30:31 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/DDS4CCM-INSTALL.html:
+          Detailed step by step instructions for DDS4CCM with RTI DDS on Linux
+
 Mon Apr 15 18:18:18 UTC 2013  Adam Mitz  <mitza@ociweb.com>
 
         * CIAO_DAnCE.mwc:

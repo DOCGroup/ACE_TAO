@@ -64,7 +64,7 @@ For compiling and installing CIAO see <a href="../../CIAO-INSTALL.html">CIAO-INS
     
 Building DDS4CCM with OpenDDS integration takes a few manual steps to get the job done. Besides downloading ACE+TAO+CIAO+DAnCE and OpenDDS
 the build has to be configured. For this integration we need 3 configuration files. For controlling the MPC makefile generation
-we need to create $ACE_ROOT/bin/MakeProjectCreator/config/defealt.features. This is needed because each DDS vendor has its own IDL compiler
+we need to create $ACE_ROOT/bin/MakeProjectCreator/config/default.features. This is needed because each DDS vendor has its own IDL compiler
 which has to be triggered during the build step. Secondly we need to create $ACE_ROOT/include/makeinclude/platform_macros.GNU to define
 the settings for GNU make, and as last we create $ACE_ROOT/ace/config.h to control the compiler settings. After initial compilation you can
 tweak more settings in these 3 files, but we do recommend to do a full rebuild when changing any of these files.
@@ -87,6 +87,43 @@ export LD_LIBRARY_PATH=$ACE_ROOT/lib:$DDS_ROOT/lib:$LD_LIBRARY_PATH
 echo -e '#include "ace/config-linux.h"' > $ACE_ROOT/ace/config.h
 echo -e 'dds4ccm_opendds=1\nxerces3=1\ninclude $(ACE_ROOT)/include/makeinclude/platform_linux.GNU' > $ACE_ROOT/include/makeinclude/platform_macros.GNU
 echo -e 'dds4ccm_opendds=1\ndds_suppress_anys=0\nxerces3=1\n' > $ACE_ROOT/bin/MakeProjectCreator/config/default.features
+cd $CIAO_ROOT && $ACE_ROOT/bin/mwc.pl -type gnuace -workers 4 CIAO_TAO_DAnCE_OpenDDS.mwc
+cd $CIAO_ROOT/connectors/dds4ccm/examples/Shapes && $ACE_ROOT/bin/mwc.pl -type gnuace -workers 4 
+cd $CIAO_ROOT && make
+cd $CIAO_ROOT/connectors/dds4ccm/examples/Shapes && make
+cd $CIAO_ROOT/connectors/dds4ccm/examples/Shapes/descriptors && perl run_test.pl
+</pre>
+    <h3>Building and Installing DDS4CCM with RTI DDS on Linux</h3>
+    
+Building DDS4CCM with RTI DDS integration takes a few manual steps to get the job done. Besides downloading ACE+TAO+CIAO+DAnCE and RTI DDS
+the build has to be configured. For this integration we need 3 configuration files. For controlling the MPC makefile generation
+we need to create $ACE_ROOT/bin/MakeProjectCreator/config/default.features. This is needed because each DDS vendor has its own IDL compiler
+which has to be triggered during the build step. Secondly we need to create $ACE_ROOT/include/makeinclude/platform_macros.GNU to define
+the settings for GNU make, and as last we create $ACE_ROOT/ace/config.h to control the compiler settings. After initial compilation you can
+tweak more settings in these 3 files, but we do recommend to do a full rebuild when changing any of these files.
+</p><p>
+The steps below assume that RTI DDS has been obtained from RTI including their CORBA Compatibility Kit (CCK). The environment
+variables NDDSHOME and  NDDSARCHITECTURE must be defined accordingly the RTI documentation.
+
+</p><p>
+The steps below download ATCD, create all needed ATCD environment variables and configuration
+files and compiles all core code and the DDS4CCM shapes example. As last step it deploys this
+example which dumps shapes information to the console.
+<pre>
+wget http://download.dre.vanderbilt.edu/ACE+TAO-distribution/ACE+TAO+CIAO-src.tar.bz2
+wget http://download.ociweb.com/OpenDDS/OpenDDS-3.4.1.tar.gz
+tar xvf ACE+TAO+CIAO-src.tar.bz2
+tar xvf OpenDDS-3.4.1.tar.gz
+export DOC_ROOT=`pwd`
+export ACE_ROOT=$DOC_ROOT/ACE_wrappers
+export TAO_ROOT=$ACE_ROOT/TAO
+export CIAO_ROOT=$TAO_ROOT/CIAO
+export DANCE_ROOT=$TAO_ROOT/DAnCE
+export DDS_ROOT=$DOC_ROOT/DDS
+export LD_LIBRARY_PATH=$ACE_ROOT/lib:$DDS_ROOT/lib:$LD_LIBRARY_PATH
+echo -e '#include "ace/config-linux.h"' > $ACE_ROOT/ace/config.h
+echo -e 'dds4ccm_ndds=1\nndds=1\nxerces3=1\ninclude $(ACE_ROOT)/include/makeinclude/platform_linux.GNU' > $ACE_ROOT/include/makeinclude/platform_macros.GNU
+echo -e 'dds4ccm_ndds=1\nndds=1\nxerces3=1\n' > $ACE_ROOT/bin/MakeProjectCreator/config/default.features
 cd $CIAO_ROOT && $ACE_ROOT/bin/mwc.pl -type gnuace -workers 4 CIAO_TAO_DAnCE_OpenDDS.mwc
 cd $CIAO_ROOT/connectors/dds4ccm/examples/Shapes && $ACE_ROOT/bin/mwc.pl -type gnuace -workers 4 
 cd $CIAO_ROOT && make
