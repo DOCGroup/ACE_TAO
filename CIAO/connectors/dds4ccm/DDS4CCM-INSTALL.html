@@ -111,20 +111,17 @@ files and compiles all core code and the DDS4CCM shapes example. As last step it
 example which dumps shapes information to the console.
 <pre>
 wget http://download.dre.vanderbilt.edu/ACE+TAO-distribution/ACE+TAO+CIAO-src.tar.bz2
-wget http://download.ociweb.com/OpenDDS/OpenDDS-3.4.1.tar.gz
 tar xvf ACE+TAO+CIAO-src.tar.bz2
-tar xvf OpenDDS-3.4.1.tar.gz
 export DOC_ROOT=`pwd`
 export ACE_ROOT=$DOC_ROOT/ACE_wrappers
 export TAO_ROOT=$ACE_ROOT/TAO
 export CIAO_ROOT=$TAO_ROOT/CIAO
 export DANCE_ROOT=$TAO_ROOT/DAnCE
-export DDS_ROOT=$DOC_ROOT/DDS
-export LD_LIBRARY_PATH=$ACE_ROOT/lib:$DDS_ROOT/lib:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=$ACE_ROOT/lib:$LD_LIBRARY_PATH
 echo -e '#include "ace/config-linux.h"' > $ACE_ROOT/ace/config.h
 echo -e 'dds4ccm_ndds=1\nndds=1\nxerces3=1\ninclude $(ACE_ROOT)/include/makeinclude/platform_linux.GNU' > $ACE_ROOT/include/makeinclude/platform_macros.GNU
 echo -e 'dds4ccm_ndds=1\nndds=1\nxerces3=1\n' > $ACE_ROOT/bin/MakeProjectCreator/config/default.features
-cd $CIAO_ROOT && $ACE_ROOT/bin/mwc.pl -type gnuace -workers 4 CIAO_TAO_DAnCE_OpenDDS.mwc
+cd $CIAO_ROOT && $ACE_ROOT/bin/mwc.pl -type gnuace -workers 4 CIAO_TAO_DAnCE.mwc
 cd $CIAO_ROOT/connectors/dds4ccm/examples/Shapes && $ACE_ROOT/bin/mwc.pl -type gnuace -workers 4 
 cd $CIAO_ROOT && make
 cd $CIAO_ROOT/connectors/dds4ccm/examples/Shapes && make
