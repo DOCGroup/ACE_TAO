@@ -1,3 +1,26 @@
+Tue Apr 16 14:25:30 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/IORTable/IOR_Table_Impl.h:
+
+          Add the export macro on the class definition as well as the
+          forward declaration.
+
+        * tao/Messaging/AMH_Response_Handler.cpp:
+
+          Ensure the library can be built even on corba subset builds.
+
+Mon Apr 15 19:49:48 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup/run_test.pl:
+
+          Fix the timing on the test so the condition being tested is actually
+          allowed to occur. The total ping retry schedule is about 15 seconds,
+          so a 20 second timeout means the threshold is exceeded. When the
+          full ping retry schedule is exhausted, the IMR gives up and returns
+          the IOR, letting the client deal with the server directly. In this
+          case, doing so meant the client got a transient exception and thus
+          failed.
+
 Tue Apr 16 03:10:56 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * MPC/config/async_iortable.mpb:
