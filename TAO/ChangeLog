@@ -1,3 +1,14 @@
+Tue Apr 16 03:10:56 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * MPC/config/async_iortable.mpb:
+
+        * tao/Async_IORTable/Async_IORTable.cpp:
+        * tao/Async_IORTable/Async_Table_Adapter.cpp:
+
+        * tao/IORTable/IOR_Table_Impl.h:
+
+          clean up some scoreboard issues for visibility builds.
+
 Mon Apr 15 17:03:16 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/Async_IORTable/Async_IORTable.mpc:
