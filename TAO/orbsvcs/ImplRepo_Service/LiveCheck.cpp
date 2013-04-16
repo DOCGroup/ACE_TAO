@@ -57,6 +57,7 @@ LiveEntry::max_retry_msec (int msec)
 
 LiveEntry::LiveEntry (LiveCheck *owner,
                       const char *server,
+                      bool may_ping,
                       ImplementationRepository::ServerObject_ptr ref)
   : owner_ (owner),
     server_ (server),
@@ -66,6 +67,7 @@ LiveEntry::LiveEntry (LiveCheck *owner,
     retry_count_ (0),
     repings_ (0),
     max_retry_ (LiveEntry::reping_limit_),
+    may_ping_ (may_ping),
     listeners_ (),
     lock_ ()
 {
@@ -96,6 +98,8 @@ LiveEntry::reset_status (void)
 LiveStatus
 LiveEntry::status (void) const
 {
+  if (!this->may_ping_)
+    return LS_ALIVE;
   if ( this->liveliness_ == LS_ALIVE &&
        this->owner_->ping_interval() != ACE_Time_Value::zero )
     {
@@ -416,6 +420,7 @@ LiveCheck::handle_timeout (const ACE_Time_Value &,
 
 void
 LiveCheck::add_server (const char *server,
+                       bool may_ping,
                        ImplementationRepository::ServerObject_ptr ref)
 {
   if (!this->running_)
@@ -423,7 +428,7 @@ LiveCheck::add_server (const char *server,
 
   ACE_CString s (server);
   LiveEntry *entry = 0;
-  ACE_NEW (entry, LiveEntry (this, server, ref));
+  ACE_NEW (entry, LiveEntry (this, server, may_ping, ref));
   int result = entry_map_.bind (s, entry);
   if (result != 0)
     {
@@ -457,7 +462,7 @@ LiveCheck::add_per_client_listener (LiveListener *l,
     return false;
 
   LiveEntry *entry = 0;
-  ACE_NEW_RETURN (entry, LiveEntry (this, 0, ref), false);
+  ACE_NEW_RETURN (entry, LiveEntry (this, 0, true, ref), false);
 
   if (this->per_client_.insert_tail(entry) == 0)
     {

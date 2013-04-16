@@ -2,6 +2,8 @@
 
 #include "orbsvcs/Log_Macros.h"
 #include "Locator_Repository.h"
+#include "ImR_Locator_i.h"
+
 #include "utils.h"
 #include "tao/ORB_Core.h"
 #include "tao/default_ports.h"
@@ -272,7 +274,9 @@ int
 Locator_Repository::unregister_if_address_reused (
   const ACE_CString& server_id,
   const ACE_CString& name,
-  const char* partial_ior)
+  const char* partial_ior,
+  ImR_Locator_i* imr_locator)
+
 {
   if (this->opts_.debug() > 0)
   {
@@ -320,7 +324,7 @@ Locator_Repository::unregister_if_address_reused (
   int err = 0;
   for (size_t i = 0; i < srvs.size (); ++i)
   {
-
+    imr_locator->remove_aam (srvs[i].c_str());
     if (this->remove_server (srvs[i]) != 0)
     {
       err = -1;
