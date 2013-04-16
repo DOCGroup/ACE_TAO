@@ -94,6 +94,7 @@ class Locator_Export LiveEntry
  public:
   LiveEntry (LiveCheck *owner,
              const char *server,
+             bool may_ping,
              ImplementationRepository::ServerObject_ptr ref);
   ~LiveEntry (void);
 
@@ -118,6 +119,7 @@ class Locator_Export LiveEntry
   short retry_count_;
   int repings_;
   int max_retry_;
+  bool may_ping_;
 
   typedef ACE_Unbounded_Set<LiveListener *> Listen_Set;
   Listen_Set listeners_;
@@ -175,6 +177,7 @@ class Locator_Export LiveCheck : public ACE_Event_Handler
                       const void *act = 0);
 
   void add_server (const char *server,
+                   bool may_ping,
                    ImplementationRepository::ServerObject_ptr ref);
 
   void remove_server (const char *server);

@@ -33,6 +33,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+class ImR_Locator_i;
+
 /**
 * @class Locator_Repository
 *
@@ -62,7 +64,8 @@ public:
 
   int unregister_if_address_reused (const ACE_CString& server_id,
                                     const ACE_CString& name,
-                                    const char* partial_ior);
+                                    const char* partial_ior,
+                                    ImR_Locator_i* imr_locator);
 
   /// Add a new server to the Repository
   int add_server (const ACE_CString& server_id,
