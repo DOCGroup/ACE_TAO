@@ -1,3 +1,14 @@
+Tue Apr 16 19:46:38 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/LiveCheck.h:
+        * orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_Repository.h:
+        * orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
+
+          Fix for the regression failure with the ReconnectServer test.
+
 Tue Apr 16 14:51:42 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/Messaging/AMH_Response_Handler.cpp:

@@ -897,7 +897,7 @@ ImR_Locator_i::server_is_running
                 name.c_str (), ior.in ()));
 
   if (this->unregister_if_address_reused_)
-    this->repository_->unregister_if_address_reused (server_id, name, partial_ior);
+    this->repository_->unregister_if_address_reused (server_id, name, partial_ior, this);
 
   CORBA::Object_var obj = this->set_timeout_policy (server,ACE_Time_Value (1,0));
   ImplementationRepository::ServerObject_var s =
@@ -942,7 +942,7 @@ ImR_Locator_i::server_is_running
           return;
         }
 
-      this->pinger_.add_server (name.c_str(), s);
+      this->pinger_.add_server (name.c_str(), false, s);
       AsyncAccessManager *aam_raw;
       ACE_NEW (aam_raw, AsyncAccessManager (*temp_info, true, *this));
       AsyncAccessManager_ptr aam (aam_raw);
@@ -968,7 +968,7 @@ ImR_Locator_i::server_is_running
           info.edit ()->server = s;
 
           info.update_repo();
-          this->pinger_.add_server (name.c_str(), s);
+          this->pinger_.add_server (name.c_str(), true, s);
         }
 
       AsyncAccessManager_ptr aam(this->find_aam (name.c_str()));
@@ -1357,10 +1357,24 @@ ImR_Locator_i::remove_aam (AsyncAccessManager_ptr &aam)
 
 }
 
+void
+ImR_Locator_i::remove_aam (const char *name)
+{
+  for (AAM_Set::ITERATOR i = this->aam_set_.begin();
+       i != this->aam_set_.end();
+       ++i)
+    {
+      if ((*i)->has_server (name))
+        {
+          this->aam_set_.remove (*i);
+          return;
+        }
+    }
+}
+
 AsyncAccessManager *
 ImR_Locator_i::find_aam (const char *name)
 {
-
   for (AAM_Set::ITERATOR i = this->aam_set_.begin();
        i != this->aam_set_.end();
        ++i)

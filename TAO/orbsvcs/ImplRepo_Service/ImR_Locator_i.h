@@ -144,6 +144,7 @@ public:
   Activator_Info_Ptr get_activator (const ACE_CString& name);
 
   void remove_aam (AsyncAccessManager_ptr &aam);
+  void remove_aam (const char *name);
   AsyncAccessManager *find_aam (const char *name);
 
 private:
