@@ -196,7 +196,8 @@ TAO_AMH_Response_Handler::_tao_rh_send_exception (const CORBA::Exception &ex)
   //    this: the caller already knows this because it is part of the
   //    ExceptionHolder information.
 
-  const PortableServer::ForwardRequest *fr =
+#if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO) && !defined (TAO_HAS_MINIMUM_POA)
+  const PortableServer::ForwardReuest *fr =
     PortableServer::ForwardRequest::_downcast (&ex);
   if (fr != 0)
     {
@@ -209,6 +210,7 @@ TAO_AMH_Response_Handler::_tao_rh_send_exception (const CORBA::Exception &ex)
       this->_tao_out << fr->forward_reference;
     }
   else
+#endif
     {
       if (CORBA::SystemException::_downcast (&ex))
         {
