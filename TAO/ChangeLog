@@ -1,3 +1,10 @@
+Tue Apr 16 14:51:42 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/Messaging/AMH_Response_Handler.cpp:
+
+          Fix to the previous fix. I was too cavalier in copying the CORBA
+          subset macro tests from the ForwardRequest.pidl file.
+
 Tue Apr 16 14:25:30 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/IORTable/IOR_Table_Impl.h:
@@ -7,7 +14,7 @@ Tue Apr 16 14:25:30 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/Messaging/AMH_Response_Handler.cpp:
 
-          Ensure the library can be built even on corba subset builds.
+          Ensure the library can be built even on CORBA subset builds.
 
 Mon Apr 15 19:49:48 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
