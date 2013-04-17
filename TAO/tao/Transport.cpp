@@ -1292,7 +1292,7 @@ TAO_Transport::cleanup_queue (size_t byte_count)
     }
 }
 
-int
+bool
 TAO_Transport::check_buffering_constraints_i (TAO_Stub *stub, bool &must_flush)
 {
   // First let's compute the size of the queue:

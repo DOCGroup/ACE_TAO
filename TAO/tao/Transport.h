@@ -975,7 +975,7 @@ private:
   void cleanup_queue_i ();
 
   /// Check if the buffering constraints have been reached
-  int check_buffering_constraints_i (TAO_Stub *stub, bool &must_flush);
+  bool check_buffering_constraints_i (TAO_Stub *stub, bool &must_flush);
 
   /// Send a synchronous message, i.e. block until the message is on
   /// the wire
