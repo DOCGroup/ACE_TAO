@@ -59,6 +59,7 @@ ImR_Locator_i::ImR_Locator_i (void)
   , aam_set_ ()
   , debug_ (0)
   , read_only_ (false)
+  , ping_external_ (false)
   , unregister_if_address_reused_ (false)
 {
   // Visual C++ 6.0 is not smart enough to do a direct assignment
@@ -86,6 +87,7 @@ ImR_Locator_i::init_with_orb (CORBA::ORB_ptr orb, Options& opts)
   debug_ = opts.debug ();
   read_only_ = opts.readonly ();
   startup_timeout_ = opts.startup_timeout ();
+  ping_external_ = opts.ping_external ();
   ping_interval_ = opts.ping_interval ();
   unregister_if_address_reused_ = opts.unregister_if_address_reused ();
 
@@ -942,7 +944,7 @@ ImR_Locator_i::server_is_running
           return;
         }
 
-      this->pinger_.add_server (name.c_str(), false, s);
+      this->pinger_.add_server (name.c_str(), this->ping_external_, s);
       AsyncAccessManager *aam_raw;
       ACE_NEW (aam_raw, AsyncAccessManager (*temp_info, true, *this));
       AsyncAccessManager_ptr aam (aam_raw);
