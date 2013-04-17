@@ -156,7 +156,7 @@ ImR_Locator_i::init_with_orb (CORBA::ORB_ptr orb, Options& opts)
     }
 
   // Register the ImR for use with INS
-  obj = orb->resolve_initial_references ("IORTable");
+  obj = orb->resolve_initial_references ("AsyncIORTable");
   IORTable::Table_var ior_table = IORTable::Table::_narrow (obj.in ());
   ACE_ASSERT (! CORBA::is_nil (ior_table.in ()));
   ior_table->set_locator (this->ins_locator_.in ());
