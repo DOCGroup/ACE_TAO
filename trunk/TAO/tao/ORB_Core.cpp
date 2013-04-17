@@ -2729,38 +2729,18 @@ TAO_ORB_Core::resolve_ior_table_i (void)
 {
   TAO_Adapter_Factory *factory = 0;
   ACE_Dynamic_Service<TAO_Adapter_Factory>::instance
-    (this->configuration (), ACE_TEXT("TAO_Async_IORTable"));
-
+    (this->configuration (), ACE_TEXT("TAO_IORTable"));
   if (factory == 0)
     {
       this->configuration ()->process_directive
-        (ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE("TAO_Async_IORTable",
-                                                 "TAO_Async_IORTable",
+        (ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE("TAO_IORTable",
+                                                 "TAO_IORTable",
                                                  TAO_VERSION,
-                                                 "_make_TAO_Async_Table_Adapter_Factory",
+                                                 "_make_TAO_Table_Adapter_Factory",
                                                  ""));
       factory =
         ACE_Dynamic_Service<TAO_Adapter_Factory>::instance
-        (this->configuration (), ACE_TEXT("TAO_Async_IORTable"));
-    }
-
-  if (factory == 0)
-    {
-      ACE_Dynamic_Service<TAO_Adapter_Factory>::instance
         (this->configuration (), ACE_TEXT("TAO_IORTable"));
-
-      if (factory == 0)
-        {
-          this->configuration ()->process_directive
-            (ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE("TAO_IORTable",
-                                                     "TAO_IORTable",
-                                                     TAO_VERSION,
-                                                     "_make_TAO_Table_Adapter_Factory",
-                                                     ""));
-          factory =
-            ACE_Dynamic_Service<TAO_Adapter_Factory>::instance
-            (this->configuration (), ACE_TEXT("TAO_IORTable"));
-        }
     }
 
   if (factory != 0)
@@ -2774,6 +2754,40 @@ TAO_ORB_Core::resolve_ior_table_i (void)
 
       // It is now (exception) safe to release ownership from the auto pointers
       this->ior_table_= tmp_root._retn ();
+      iortable_adapter.release ();
+    }
+}
+
+void
+TAO_ORB_Core::resolve_async_ior_table_i (void)
+{
+  TAO_Adapter_Factory *factory = 0;
+  ACE_Dynamic_Service<TAO_Adapter_Factory>::instance
+    (this->configuration (), ACE_TEXT("TAO_Async_IORTable"));
+  if (factory == 0)
+    {
+      this->configuration ()->process_directive
+        (ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE("TAO_Async_IORTable",
+                                                 "TAO_Async_IORTable",
+                                                 TAO_VERSION,
+                                                 "_make_TAO_Async_Table_Adapter_Factory",
+                                                 ""));
+      factory =
+        ACE_Dynamic_Service<TAO_Adapter_Factory>::instance
+        (this->configuration (), ACE_TEXT("TAO_Async_IORTable"));
+    }
+
+  if (factory != 0)
+    {
+      ACE_Auto_Ptr <TAO_Adapter> iortable_adapter (factory->create (this));
+      iortable_adapter->open ();
+
+      CORBA::Object_var tmp_root = iortable_adapter->root ();
+
+      this->adapter_registry_.insert (iortable_adapter.get ());
+
+      // It is now (exception) safe to release ownership from the auto pointers
+      this->async_ior_table_= tmp_root._retn ();
       iortable_adapter.release ();
     }
 }

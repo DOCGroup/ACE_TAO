@@ -665,6 +665,9 @@ public:
   /// Resolve the IOR Table reference for this ORB.
   CORBA::Object_ptr resolve_ior_table (void);
 
+  /// Resolve the Async IOR Table reference for this ORB.
+  CORBA::Object_ptr resolve_async_ior_table (void);
+
   /// Resolve the Monitor reference for this ORB.
   CORBA::Object_ptr resolve_monitor (void);
 
@@ -996,8 +999,11 @@ private:
   void operator=(const TAO_ORB_Core&);
   //@}
 
-  /// Obtain and cache the dynamic any factory object reference.
+  /// Obtain and cache the ior table object reference.
   void resolve_ior_table_i (void);
+
+  /// Obtain and cache the async ior table object reference.
+  void resolve_async_ior_table_i (void);
 
   /// Checks to see whether collocation optimizations have to be
   /// applied on objects in the @a other_orb
@@ -1046,6 +1052,9 @@ protected:
 
   /// The cached object reference for the IORTable.
   CORBA::Object_ptr ior_table_;
+
+  /// The cached object reference for the Async_IORTable.
+  CORBA::Object_ptr async_ior_table_;
 
   /// The cached object reference for the Monitor.
   CORBA::Object_ptr monitor_;

@@ -52,6 +52,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 #define TAO_OBJID_POLICYCURRENT       "PolicyCurrent"
 #define TAO_OBJID_IORMANIPULATION     "IORManipulation"
 #define TAO_OBJID_IORTABLE            "IORTable"
+#define TAO_OBJID_ASYNCIORTABLE       "AsyncIORTable"
 #define TAO_OBJID_DYNANYFACTORY       "DynAnyFactory"
 #define TAO_OBJID_TYPECODEFACTORY     "TypeCodeFactory"
 #define TAO_OBJID_RTORB               "RTORB"

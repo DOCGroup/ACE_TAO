@@ -1,3 +1,16 @@
+Wed Apr 17 14:19:35 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+
+        * tao/ORB.cpp:
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.inl:
+        * tao/ORB_Core.cpp:
+        * tao/objectid.h:
+
+          Make explicit the distinction between the traditional IORTable and the
+          Asynchronous version used with the ImplRepo service.
+
 Wed Apr 17 12:54:37 UTC 2013  Adam Mitz  <mitza@ociweb.com>
 
         * orbsvcs/orbsvcs/Log_Macros.h:
