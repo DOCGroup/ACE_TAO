@@ -1,3 +1,9 @@
+Wed Apr 17 12:54:37 UTC 2013  Adam Mitz  <mitza@ociweb.com>
+
+        * orbsvcs/orbsvcs/Log_Macros.h:
+
+          Added empty comments for fuzz script.
+
 Wed Apr 17 07:06:17 UTC 2013  Martin Corino  <mcorino@remedy.nl>
 
         * tao/Transport.h:

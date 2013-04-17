@@ -2,7 +2,7 @@
 
 #ifndef TAO_ORBSVCS_LOG_MACROS_H
 #define TAO_ORBSVCS_LOG_MACROS_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Log_Category.h"
 #include "ace/Log_Msg.h"
@@ -74,5 +74,5 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #endif
 #endif /* ACE_NLOGGING */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif
