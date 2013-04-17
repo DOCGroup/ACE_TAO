@@ -29,6 +29,7 @@ Options::Options ()
 , debug_ (1)
 , multicast_ (false)
 , service_ (false)
+, ping_external_ (false)
 , ping_interval_ (DEFAULT_PING_INTERVAL)
 , startup_timeout_ (DEFAULT_START_TIMEOUT)
 , readonly_ (false)
@@ -229,6 +230,11 @@ Options::parse_args (int &argc, ACE_TCHAR *argv[])
             ACE_Time_Value (ACE_OS::atoi (shifter.get_current ()));
         }
       else if (ACE_OS::strcasecmp (shifter.get_current (),
+                                   ACE_TEXT ("-i")) == 0)
+        {
+          this->ping_external_ = true;
+        }
+      else if (ACE_OS::strcasecmp (shifter.get_current (),
                                    ACE_TEXT ("-v")) == 0)
         {
           shifter.consume_arg ();
@@ -326,7 +332,7 @@ Options::print_usage (void) const
     ACE_TEXT ("  -s              Run as a service\n")
     ACE_TEXT ("  -t secs         Server startup timeout.(Default=60s)\n")
     ACE_TEXT ("  -v msecs        Server verification interval.(Default=10s)\n")
-    ACE_TEXT ("  --asynch        Servant dispatching using asynch method handling\n")
+    ACE_TEXT ("  -i              Ping servers without activators too. (Default=false)\n")
               ));
 }
 
@@ -364,6 +370,11 @@ Options::save_registry_options ()
 
   err = ACE_TEXT_RegSetValueEx (key, ACE_TEXT ("PersistFile"), 0, REG_SZ,
     (LPBYTE) this->persist_file_name_.c_str (), this->persist_file_name_.length () + 1);
+  ACE_ASSERT (err == ERROR_SUCCESS);
+
+  DWORD tmp = this->ping_external_ ? 1 : 0;
+  err = ACE_TEXT_RegSetValueEx (key, ACE_TEXT ("PingExternals"), 0, REG_DWORD,
+    (LPBYTE) &tmp, sizeof (DWORD));
   ACE_ASSERT (err == ERROR_SUCCESS);
 
   DWORD tmp = this->ping_interval_.msec ();
@@ -449,6 +460,16 @@ Options::load_registry_options ()
     }
 
   DWORD tmp = 0;
+  sz = sizeof(tmp);
+  err = ACE_TEXT_RegQueryValueEx (key, ACE_TEXT ("PingExternal"), 0, &type,
+    (LPBYTE) &tmp, &sz);
+  if (err == ERROR_SUCCESS)
+    {
+      ACE_ASSERT (type == REG_DWORD);
+      ping_external_ = tmp != 0;
+    }
+
+  tmp = 0;
   sz = sizeof(tmp);
   err = ACE_TEXT_RegQueryValueEx (key, ACE_TEXT ("PingInterval"), 0, &type,
     (LPBYTE) &tmp, &sz);
@@ -564,6 +585,12 @@ ACE_Time_Value
 Options::startup_timeout (void) const
 {
   return this->startup_timeout_;
+}
+
+bool
+Options::ping_external (void) const
+{
+  return this->ping_external_;
 }
 
 ACE_Time_Value

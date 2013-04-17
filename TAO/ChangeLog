@@ -1,3 +1,26 @@
+Wed Apr 17 19:00:17 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * bin/tao_other_tests.lst:
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_Options.h:
+        * orbsvcs/ImplRepo_Service/Locator_Options.cpp:
+
+          Servers may be started externally to the ImR but register with
+          it so that clients may still be forwarded to it. Traditionally,
+          such servers are not pinged by the ImR in the spirit that since
+          its own means were used to activate the service, the ImR should
+          let the client deal with the server no matter the consequences.
+          However, the ImR is in a position to give more information to the
+          client or lists of active servers, so enabling the ping_external_
+          option will override the assumption of liveness and actively ping,
+          based on the existing rules, all registered servers.
+
+        * orbsvcs/tests/ImplRepo/ReconnectServer/run_test.pl:
+
+          Added a new test variant to run the new feature.
+
 Wed Apr 17 14:19:35 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:

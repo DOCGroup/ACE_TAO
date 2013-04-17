@@ -28,6 +28,7 @@ my $srv_port_base = $srva->RandomPort ();
 my $srv_a_id = "AAA";
 my $srv_b_id = "BBB";
 my $client_duration = 30;
+my $ping_ext = '';
 
 foreach my $i (@ARGV) {
     if ($i eq '-debug') {
@@ -42,6 +43,11 @@ foreach my $i (@ARGV) {
         $delay = '5';
         $forward_opt = "-ORBForwardOnceOnObjectNotExist 1";
         $got_object_not_exist_exception = 1;
+    }
+    if ($i eq '-pingexternal') {
+        $delay = '5';
+        $forward_opt = "-ORBForwardOnceOnObjectNotExist 1";
+        $ping_ext = '-i';
     }
 }
 
@@ -71,6 +77,7 @@ $IMR = $imr->CreateProcess ("../../../ImplRepo_Service/tao_imr_locator",
                             "-ORBEndpoint "."$protocol"."://:".$port." ".
                             "-UnregisterIfAddressReused ".
                             "-d $imr_debug_level ".
+                            "$ping_ext ".
                             "-o $imr_imriorfile ".
                             "-p $imr_imrdbfile");
 $SRV_A = $srva->CreateProcess ("serverA",
