@@ -887,6 +887,10 @@ CORBA::ORB::resolve_initial_references (const char *name,
     {
       result = this->orb_core ()->resolve_ior_table ();
     }
+  else if (ACE_OS::strcmp (name, TAO_OBJID_ASYNCIORTABLE) == 0)
+    {
+      result = this->orb_core ()->resolve_async_ior_table ();
+    }
   else if (ACE_OS::strcmp (name, TAO_OBJID_DYNANYFACTORY) == 0)
     {
       result = this->orb_core ()->resolve_dynanyfactory ();
