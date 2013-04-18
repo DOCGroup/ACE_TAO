@@ -330,6 +330,7 @@ TAO/tests/POA/RootPOA/run_test.pl:
 TAO/tests/DiffServ/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/tests/IORManipulation/run_test.pl:
 TAO/tests/IORManipulation/filter/run_test.pl:
+TAO/tests/IORTable_Locator/run_test.pl:
 TAO/tests/Policies/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST
 TAO/tests/Timeout/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/tests/MT_Timeout/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !OpenVMS_IA64Crash
