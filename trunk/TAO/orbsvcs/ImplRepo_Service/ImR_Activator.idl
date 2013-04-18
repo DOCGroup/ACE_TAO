@@ -2,7 +2,7 @@
 
 // $Id$
 
-#include "tao/ImR_Client/ImplRepo.pidl"
+#include "ImplRepo.idl"
 
 module ImplementationRepository
 {

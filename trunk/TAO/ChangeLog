@@ -1,3 +1,36 @@
+Thu Apr 18 22:32:11 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * MPC/config/imr_client.mpb:
+
+          Revert addition of messaging dependency.
+
+        * orbsvcs/ImplRepo_Service/ImR_Activator.idl:
+        * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
+        * orbsvcs/ImplRepo_Service/Iterator.h:
+        * orbsvcs/ImplRepo_Service/LiveCheck.h:
+        * orbsvcs/ImplRepo_Service/Server_Info.h:
+        * orbsvcs/ImplRepo_Service/tao_imr_i.h:
+        * orbsvcs/ImplRepo_Service/utils.h:
+
+          In order to shield client applications from the AMI/AMH imposed
+          dependencies, the project now makes a local compilation of the
+          ImR_Client based stubs and skeletons with the async modifiers.
+
+        * tao/ImR_Client/ImR_Client.mpc:
+        * tao/ImR_Client/ImplRepo.idl:
+        * tao/ImR_Client/ServerObject.idl:
+
+          As a companion to the above change, this restores the more narrow
+          dependency so that clients of the ImR do not need to load the messaging
+          library.
+
+        * tao/ImR_Client/ImplRepo.pidl:
+        * tao/ImR_Client/ServerObject.pidl:
+
+          Removed these files. It was necessary to rename from .pidl to .idl so
+          the stub/skeleton includes would be generated correctly. There is nothing
+          pseudo about these idls anyway so no need to use .pidl.
+
 Thu Apr 18 19:37:19 UTC 2013  Adam Mitz  <mitza@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:

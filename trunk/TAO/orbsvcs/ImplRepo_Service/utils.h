@@ -2,7 +2,7 @@
 #ifndef TAO_IMR_UTILS_H
 #define TAO_IMR_UTILS_H
 
-#include "tao/ImR_Client/ImplRepoC.h"
+#include "ImplRepoC.h"
 
 #include "ace/SString.h"
 
