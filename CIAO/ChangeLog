@@ -1,3 +1,8 @@
+Thu Apr 18 09:44:00 UTC 2013  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/dds4ccm/tests/HomeDerived/Connector2/Hello_Connector2.idl:
+        Fuzz error
+
 Thu Apr 18 08:50:34 UTC 2013  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * bin/ciao_tests.lst:
@@ -20,7 +25,7 @@ Thu Apr 18 08:50:34 UTC 2013  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
         * connectors/dds4ccm/tests/HomeDerived/descriptors/DeploymentPlan.cdp:
         * connectors/dds4ccm/tests/HomeDerived/descriptors/USER_QOS_PROFILES.xml:
         * connectors/dds4ccm/tests/HomeDerived/descriptors/run_test.pl:
-        Test with derived homes and derived home components .    
+        Test with derived homes and derived home components .
 
 Tue Apr 16 17:54:56 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
