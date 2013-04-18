@@ -249,7 +249,6 @@ private:
   /// we couldn't directly use ACE_TSS because it would
   /// create circular dependency
 #if defined (ACE_HAS_THREADS)
-  static void tss_destroy(void * p);
   /// Avoid race conditions during initialization.
   ACE_Thread_Mutex keylock_;
   /// "First time in" flag.
