@@ -1,3 +1,8 @@
+Thu Apr 18 14:37:41 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/HomeDerived/Sender/Hello_Sender.mpc:
+          Make project names unique
+
 Thu Apr 18 13:04:48 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/HomeDerived/descriptors/DeploymentPlan.cdp:
