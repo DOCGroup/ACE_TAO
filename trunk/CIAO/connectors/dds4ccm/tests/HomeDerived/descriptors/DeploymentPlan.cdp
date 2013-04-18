@@ -332,28 +332,6 @@
         </value>
       </value>
     </configProperty>
-    <configProperty>
-      <name>qos_profile</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>HelloTest_Library#HelloProfile</string>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
-      <name>qos_profile</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>HelloTest_Library#HelloProfile</string>
-        </value>
-      </value>
-    </configProperty>
   </instance>
 
   <instance xmi:id="Foo_Connector_2_ComponentInstance">
@@ -381,28 +359,6 @@
         </type>
         <value>
           <string>Hello</string>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
-      <name>qos_profile</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>HelloTest_Library#HelloProfile</string>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
-      <name>qos_profile</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>HelloTest_Library#HelloProfile</string>
         </value>
       </value>
     </configProperty>
@@ -436,28 +392,6 @@
         </value>
       </value>
     </configProperty>
-    <configProperty>
-      <name>qos_profile</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>HelloTest_Library#HelloProfile</string>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
-      <name>qos_profile</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>HelloTest_Library#HelloProfile</string>
-        </value>
-      </value>
-    </configProperty>
   </instance>
 
   <instance xmi:id="Bar_Connector_2_ComponentInstance">
@@ -485,28 +419,6 @@
         </type>
         <value>
           <string>Hello</string>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
-      <name>qos_profile</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>HelloTest_Library#HelloProfile</string>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
-      <name>qos_profile</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>HelloTest_Library#HelloProfile</string>
         </value>
       </value>
     </configProperty>
