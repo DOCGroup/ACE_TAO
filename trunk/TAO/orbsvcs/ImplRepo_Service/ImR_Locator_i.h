@@ -217,6 +217,8 @@ class SyncListener : public LiveListener
  public:
   SyncListener (const char *server, CORBA::ORB_ptr orb, LiveCheck &pinger);
 
+  virtual ~SyncListener ();
+
   bool is_alive (void);
 
   bool status_changed (LiveStatus status);
