@@ -1,0 +1,841 @@
+<!-- $Id$ -->
+<Deployment:DeploymentPlan
+   xmlns:Deployment="http://www.omg.org/Deployment"
+   xmlns:xmi="http://www.omg.org/XMI"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+  <label>Hello_Depl_1</label>
+  <UUID>Hello_Depl_1</UUID>
+
+  <implementation xmi:id="DerivedEmpty_compComponentImplementation">
+    <name>DerivedEmpty_compComponentImplementation</name>
+    <source/>
+    <artifact xmi:idref="DerivedEmpty_comp_ExecArtifact" />
+    <artifact xmi:idref="DerivedEmpty_comp_SvntArtifact" />
+    <execParameter>
+      <!-- entrypoint as exec parameter (see 10.6.1) -->
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Hello_DerivedEmpty_comp_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Hello_DerivedEmpty_comp_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>DerivedEmpty_comp_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>DerivedEmpty_comp_exec</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+  <implementation xmi:id="Foo_ConnectorComponentImplementation">
+    <name>Foo_ConnectorComponentImplementation</name>
+    <source/>
+    <artifact xmi:idref="Foo_Connector_ExecArtifact" />
+    <artifact xmi:idref="Foo_Connector_SvntArtifact" />
+    <execParameter>
+      <!-- entrypoint as exec parameter (see 10.6.1) -->
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Foo_conn_DDS_Event_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Foo_conn_DDS_Event_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Foo_Connector_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Foo_Connector_exec</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+  <implementation xmi:id="Bar_ConnectorComponentImplementation">
+    <name>Bar_ConnectorComponentImplementation</name>
+    <source/>
+    <artifact xmi:idref="Bar_Connector_ExecArtifact" />
+    <artifact xmi:idref="Bar_Connector_SvntArtifact" />
+    <execParameter>
+      <!-- entrypoint as exec parameter (see 10.6.1) -->
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Bar_conn_DDS_Event_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Bar_conn_DDS_Event_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Bar_Connector_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Bar_Connector_exec</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+
+  <implementation xmi:id="Base_compHomeComponentImplementation">
+    <name>Base_compHomeComponentImplementation</name>
+    <source/>
+    <artifact xmi:idref="Base_compHome_ExecArtifact" />
+    <artifact xmi:idref="Base_compHome_SvntArtifact" />
+    <execParameter>
+      <!-- entrypoint as exec parameter (see 10.6.1) -->
+      <name>home factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Hello_Base_compHome_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Hello_Base_compHome_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Base_compHome_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Base_compHome_exec</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+  <implementation xmi:id="Base_compComponentImplementation">
+    <name>Base_compComponentImplementation</name>
+    <source/>
+    <artifact xmi:idref="Base_compHome_ExecArtifact" />
+    <artifact xmi:idref="Base_compHome_SvntArtifact" />
+    <execParameter>
+      <name>edu.vanderbilt.dre.DAnCE.ImplementationType</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>edu.vanderbilt.dre.CCM.HomedComponent</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+  <implementation xmi:id="Derived_compHomeComponentImplementation">
+    <name>Derived_compHomeComponentImplementation</name>
+    <source/>
+    <artifact xmi:idref="Derived_compHome_ExecArtifact" />
+    <artifact xmi:idref="Derived_compHome_SvntArtifact" />
+    <execParameter>
+      <name>home factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Hello_Derived_compHome_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Hello_Derived_compHome_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Derived_compHome_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Derived_compHome_exec</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+  <implementation xmi:id="Derived_compComponentImplementation">
+    <name>Derived_compComponentImplementation</name>
+    <source/>
+    <artifact xmi:idref="Derived_compHome_ExecArtifact" />
+    <artifact xmi:idref="Derived_compHome_SvntArtifact" />
+    <execParameter>
+      <name>edu.vanderbilt.dre.DAnCE.ImplementationType</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>edu.vanderbilt.dre.CCM.HomedComponent</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+
+  <instance xmi:id="Foo_Connector_1_ComponentInstance">
+    <name>Foo_Connector_1_Component</name>
+    <node>Node1</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="Foo_ConnectorComponentImplementation" />
+     <configProperty>
+      <name>domain_id</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>9</long>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>topic_name</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Hello</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>qos_profile</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>HelloTest_Library#HelloProfile</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>qos_profile</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>HelloTest_Library#HelloProfile</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <instance xmi:id="Foo_Connector_2_ComponentInstance">
+    <name>Foo_Connector_2_Component</name>
+    <node>Node1</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="Foo_ConnectorComponentImplementation" />
+     <configProperty>
+      <name>domain_id</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>9</long>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>topic_name</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Hello</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>qos_profile</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>HelloTest_Library#HelloProfile</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>qos_profile</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>HelloTest_Library#HelloProfile</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <instance xmi:id="Bar_Connector_1_ComponentInstance">
+    <name>Bar_Connector_1_Component</name>
+    <node>Node1</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="Bar_ConnectorComponentImplementation" />
+     <configProperty>
+      <name>domain_id</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>99</long>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>topic_name</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Hello</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>qos_profile</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>HelloTest_Library#HelloProfile</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>qos_profile</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>HelloTest_Library#HelloProfile</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <instance xmi:id="Bar_Connector_2_ComponentInstance">
+    <name>Bar_Connector_2_Component</name>
+    <node>Node1</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="Bar_ConnectorComponentImplementation" />
+     <configProperty>
+      <name>domain_id</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>99</long>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>topic_name</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Hello</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>qos_profile</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>HelloTest_Library#HelloProfile</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>qos_profile</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>HelloTest_Library#HelloProfile</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <instance xmi:id="Derived_comp_1_ComponentInstance">
+    <name>Derived_comp_1_Component</name>
+    <node>Node1</node>
+    <source/>
+    <implementation xmi:idref="Derived_compComponentImplementation" />
+    <configProperty>
+      <name>edu.vanderbilt.dre.CIAO.ComponentHomeId</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Derived_compHome_1_Component</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <instance xmi:id="Derived_comp_2_ComponentInstance">
+    <name>Derived_comp_2_Component</name>
+    <node>Node1</node>
+    <source/>
+    <implementation xmi:idref="Derived_compComponentImplementation" />
+    <configProperty>
+      <name>edu.vanderbilt.dre.CIAO.ComponentHomeId</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Derived_compHome_2_Component</string>
+        </value>
+      </value>
+    </configProperty>
+ </instance>
+
+ <instance xmi:id="Derived_compHome_1_ComponentInstance">
+    <name>Derived_compHome_1_Component</name>
+    <node>Node1</node>
+    <source/>
+    <implementation xmi:idref="Derived_compHomeComponentImplementation" />
+  </instance>
+
+ <instance xmi:id="Derived_compHome_2_ComponentInstance">
+    <name>Derived_compHome_2_Component</name>
+    <node>Node1</node>
+    <source/>
+    <implementation xmi:idref="Derived_compHomeComponentImplementation" />
+  </instance>
+
+  <instance xmi:id="DerivedEmpty_compComponentInstance">
+    <name>DerivedEmpty_compComponent</name>
+    <node>Node1</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="DerivedEmpty_compComponentImplementation" />
+  </instance>
+
+
+  <connection>
+    <name>writer_1_foo_connection</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>fooPub_data</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="Derived_comp_1_ComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>supplier_data</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="Foo_Connector_1_ComponentInstance" />
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>writer_2_foo_connection</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>fooPub_data</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="Derived_comp_2_ComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>supplier_data</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="Foo_Connector_2_ComponentInstance" />
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>writer_1_bar_connection</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>barPub_data</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="Derived_comp_1_ComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>supplier_data</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="Bar_Connector_1_ComponentInstance" />
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>writer_2_bar_connection</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>barPub_data</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="Derived_comp_2_ComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>supplier_data</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="Bar_Connector_2_ComponentInstance" />
+    </internalEndpoint>
+   </connection>
+
+   <connection>
+   <name>MessageConnection1</name>
+    <internalEndpoint>
+      <portName>baseRecept</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="Derived_comp_1_ComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>baseFacet</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="Derived_comp_2_ComponentInstance" />
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+   <name>MessageConnection2</name>
+    <internalEndpoint>
+      <portName>baseRecept</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="Derived_comp_2_ComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>baseFacet</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="Derived_comp_1_ComponentInstance" />
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+   <name>MessageConnectionDerived1</name>
+    <internalEndpoint>
+      <portName>derivedRecept</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="Derived_comp_1_ComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>derivedFacet</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="Derived_comp_2_ComponentInstance" />
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+   <name>MessageConnectionDerived2</name>
+    <internalEndpoint>
+      <portName>derivedRecept</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="Derived_comp_2_ComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>derivedFacet</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="Derived_comp_1_ComponentInstance" />
+    </internalEndpoint>
+  </connection>
+
+
+  <artifact xmi:id="Base_compHome_ExecArtifact">
+    <name>Base_compHome_exec</name>
+    <source/>
+    <node/>
+    <location>Sender_exec</location>
+  </artifact>
+  <artifact xmi:id="Base_compHome_SvntArtifact">
+    <name>Base_compHome_svnt</name>
+    <source/>
+    <node/>
+    <location>Sender_svnt</location>
+  </artifact>
+  <artifact xmi:id="Base_compHome_StubArtifact">
+    <name>Base_compHome_stub</name>
+    <source/>
+    <node/>
+    <location>Sender_stub</location>
+  </artifact>
+
+
+  <artifact xmi:id="Derived_compHome_ExecArtifact">
+    <name>Derived_compHome_exec</name>
+    <source/>
+    <node/>
+    <location>Sender_exec</location>
+  </artifact>
+  <artifact xmi:id="Derived_compHome_SvntArtifact">
+    <name>Derived_compHome_svnt</name>
+    <source/>
+    <node/>
+    <location>Sender_svnt</location>
+  </artifact>
+  <artifact xmi:id="Derived_compHome_StubArtifact">
+    <name>Derived_compHome_stub</name>
+    <source/>
+    <node/>
+    <location>Sender_stub</location>
+  </artifact>
+
+
+
+  <artifact xmi:id="Foo_Connector_ExecArtifact">
+    <name>Foo_Connector_exec</name>
+    <source/>
+    <node/>
+    <location>Home_Hello_Connector_exec</location>
+  </artifact>
+  <artifact xmi:id="Foo_Connector_SvntArtifact">
+    <name>Foo_Connector_svnt</name>
+    <source/>
+    <node/>
+    <location>Home_Hello_Connector_svnt</location>
+  </artifact>
+  <artifact xmi:id="Foo_Connector_StubArtifact">
+    <name>Foo_Connector_stub</name>
+    <source/>
+    <node/>
+    <location>Home_Hello_Connector_stub</location>
+  </artifact>
+
+  <artifact xmi:id="Bar_Connector_ExecArtifact">
+    <name>Bar_Connector_exec</name>
+    <source/>
+    <node/>
+    <location>Home_Hello_Connector2_exec</location>
+  </artifact>
+  <artifact xmi:id="Bar_Connector_SvntArtifact">
+    <name>Bar_Connector_svnt</name>
+    <source/>
+    <node/>
+    <location>Home_Hello_Connector2_svnt</location>
+  </artifact>
+  <artifact xmi:id="Bar_Connector_StubArtifact">
+    <name>Bar_Connector_stub</name>
+    <source/>
+    <node/>
+    <location>Home_Hello_Connector2_stub</location>
+  </artifact>
+
+
+
+  <artifact xmi:id="DerivedEmpty_comp_ExecArtifact">
+    <name>DerivedEmpty_comp_exec</name>
+    <source/>
+    <node/>
+    <location>Sender_exec</location>
+  </artifact>
+  <artifact xmi:id="DerivedEmpty_comp_SvntArtifact">
+    <name>DerivedEmpty_comp_svnt</name>
+    <source/>
+    <node/>
+    <location>Sender_svnt</location>
+  </artifact>
+  <artifact xmi:id="DerivedEmpty_comp_StubArtifact">
+    <name>DerivedEmpty_comp_stub</name>
+    <source/>
+    <node/>
+    <location>Sender_stub</location>
+  </artifact>
+
+   <localityConstraint>
+    <constraint>DifferentProcess</constraint>
+    <constrainedInstance xmi:idref="Derived_comp_1_ComponentInstance" />
+    <constrainedInstance xmi:idref="Derived_comp_2_ComponentInstance" />
+  </localityConstraint>
+
+  <localityConstraint>
+    <constraint>SameProcess</constraint>
+    <constrainedInstance xmi:idref="Derived_comp_1_ComponentInstance" />
+    <constrainedInstance xmi:idref="Foo_Connector_1_ComponentInstance" />
+    <constrainedInstance xmi:idref="Bar_Connector_1_ComponentInstance" />
+    <constrainedInstance xmi:idref="Derived_compHome_1_ComponentInstance" />
+  </localityConstraint>
+
+  <localityConstraint>
+    <constraint>SameProcess</constraint>
+    <constrainedInstance xmi:idref="Derived_comp_2_ComponentInstance" />
+    <constrainedInstance xmi:idref="Foo_Connector_2_ComponentInstance" />
+    <constrainedInstance xmi:idref="Bar_Connector_2_ComponentInstance" />
+    <constrainedInstance xmi:idref="Derived_compHome_2_ComponentInstance" />
+  </localityConstraint>
+
+</Deployment:DeploymentPlan>

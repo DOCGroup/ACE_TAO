@@ -1,0 +1,26 @@
+// $Id$
+
+/**
+ * @file Hello_Connector.idl
+ * @author Marcel Smit (msmit@remedy.nl)
+ */
+
+#ifndef HELLO_CONNECTOR2_IDL_
+#define HELLO_CONNECTOR2_IDL_
+
+#include <Components.idl>
+#include <ccm_dds.idl>
+
+#include "Base/Hello_Base.idl"
+
+#pragma ciao lem "Connector2/Hello_Connector2E.idl"
+
+#if (CIAO_DDS4CCM_OPENDDS==1)
+# include "Base/Hello_BaseTypeSupport.idl"
+#endif
+
+module ::CCM_DDS::Typed < ::DDSHello, ::DDSHelloSeq> Bar_conn;
+
+#endif /* HELLO_CONNECTOR_IDL_ */
+
+
