@@ -377,7 +377,7 @@ Options::save_registry_options ()
     (LPBYTE) &tmp, sizeof (DWORD));
   ACE_ASSERT (err == ERROR_SUCCESS);
 
-  DWORD tmp = this->ping_interval_.msec ();
+  tmp = this->ping_interval_.msec ();
   err = ACE_TEXT_RegSetValueEx (key, ACE_TEXT ("PingInterval"), 0, REG_DWORD,
     (LPBYTE) &tmp, sizeof (DWORD));
   ACE_ASSERT (err == ERROR_SUCCESS);
