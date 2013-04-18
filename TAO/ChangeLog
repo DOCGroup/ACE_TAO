@@ -1,3 +1,17 @@
+Thu Apr 18 07:26:52 UTC 2013  Martin Corino  <mcorino@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+        * tests/IORTable_Locator/Test.mpc:
+        * tests/IORTable_Locator/client.cpp:
+        * tests/IORTable_Locator/run_test.pl:
+        * tests/IORTable_Locator/server.cpp:
+        * tests/IORTable_Locator/simple_test.idl:
+        * tests/IORTable_Locator/simple_test_i.h:
+        * tests/IORTable_Locator/simple_test_i.cpp:
+          Added simple test to test corbaloc resolving through
+          IORTable::Locator (*not* collocated like in
+          Bug_3790_Regression test).
+
 Wed Apr 17 19:00:17 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * bin/tao_other_tests.lst:
