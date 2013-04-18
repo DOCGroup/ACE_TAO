@@ -1,3 +1,8 @@
+Thu Apr 18 10:25:57 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/06_compilation.html:
+          html fix
+
 Thu Apr 18 09:44:00 UTC 2013  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/dds4ccm/tests/HomeDerived/Connector2/Hello_Connector2.idl:
