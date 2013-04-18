@@ -15,7 +15,7 @@
 #ifndef TAO_IMR_I_H
 #define TAO_IMR_I_H
 
-#include "tao/ImR_Client/ImplRepoC.h"
+#include "ImplRepoC.h"
 #include "tao/corba.h"
 #include "ace/SString.h"
 #include "ace/Auto_Ptr.h"

@@ -12,7 +12,7 @@
 
 #include "locator_export.h"
 
-#include "tao/ImR_Client/ServerObjectS.h" // ServerObject_AMIS.h
+#include "ServerObjectS.h" // ServerObject_AMIS.h
 
 #include "ace/Unbounded_Set.h"
 #include "ace/Hash_Map_Manager.h"
