@@ -1,3 +1,11 @@
+Thu Apr 18 16:21:32 UTC 2013  Huang-Ming Huang  <huangh@ociweb.com>
+
+        * ace/Log_Category.h:
+        * ace/Log_Category.cpp:
+
+        Fixed main thread Log_Category_TSS object not cleaned up before
+        program exits.
+
 Mon Apr 15 22:45:14 UTC 2013  Steve Huston  <shuston@riverace.com>
 
         * ace/Dev_Poll_Reactor.h:

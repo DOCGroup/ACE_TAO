@@ -13,6 +13,15 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
+#if defined (ACE_HAS_THREADS)
+extern "C" void
+ACE_Log_Category_tss_destroy(void * p)
+{
+  delete static_cast<ACE_Log_Category_TSS*>(p);
+}
+#endif // defined (ACE_HAS_THREADS)
+
+
 ACE_Log_Category::ACE_Log_Category(const char* name)
   : name_(name)
   , id_(0)
@@ -42,6 +51,15 @@ ACE_Log_Category::~ACE_Log_Category()
 
   if (this->id_ > 0)
     {
+      void *temp = 0;
+      if (ACE_OS::thr_getspecific (this->key_, &temp) == -1)
+        {
+          return; // This should not happen!
+        }
+      if (temp != 0) {
+        delete static_cast <ACE_Log_Category_TSS *> (temp);
+        ACE_OS::thr_setspecific (this->key_, 0);
+      }
       ACE_OS::thr_keyfree (this->key_);
     }
 #endif
@@ -69,7 +87,7 @@ ACE_Log_Category::per_thr_obj()
         id_ = log_category_id_assigner++; // for atomic integers, post increment is more efficient
 
         if (ACE_OS::thr_keycreate (&this->key_,
-                                   &ACE_Log_Category::tss_destroy) != 0)
+                                   &ACE_Log_Category_tss_destroy) != 0)
           return 0; // Major problems, this should *never* happen!
       }
   }
@@ -105,13 +123,7 @@ ACE_Log_Category::per_thr_obj()
 #endif // defined (ACE_HAS_THREADS)
 }
 
-#if defined (ACE_HAS_THREADS)
-void
-ACE_Log_Category::tss_destroy(void * p)
-{
-  delete static_cast<ACE_Log_Category_TSS*>(p);
-}
-#endif // defined (ACE_HAS_THREADS)
+
 
 ACE_Log_Category&
 ACE_Log_Category::ace_lib()
