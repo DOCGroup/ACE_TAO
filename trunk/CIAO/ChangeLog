@@ -1,3 +1,11 @@
+Thu Apr 18 18:37:16 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/CCM_DataReader.h:
+          Layout change
+
+        * connectors/dds4ccm/impl/ContentFilterSetting.cpp:
+          Log name of CFT
+
 Thu Apr 18 14:37:41 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/HomeDerived/Sender/Hello_Sender.mpc:

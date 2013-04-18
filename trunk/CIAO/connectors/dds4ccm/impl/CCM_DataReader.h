@@ -106,8 +106,7 @@ namespace CIAO
 
       void set_dds_entity (::DDS::DataReader_ptr dr);
 
-      ::DDS::DataReader_ptr
-      get_dds_entity (void);
+      ::DDS::DataReader_ptr get_dds_entity (void);
 
     private:
       ::DDS::DataReader_var dds_entity_;
