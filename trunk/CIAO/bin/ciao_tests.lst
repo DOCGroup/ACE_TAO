@@ -86,6 +86,7 @@ TAO/CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/descriptors/run_t
 TAO/CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/Deployments/run_test.pl: DDS4CCM
 TAO/CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/Exception/descriptors/run_test.pl: DDS4CCM
 TAO/CIAO/connectors/dds4ccm/tests/KeyedSamples/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/tests/HomeDerived/descriptors/run_test.pl: DDS4CCM
 TAO/CIAO/connectors/dds4ccm/tests/UnkeyedSamples/descriptors/run_test.pl: DDS4CCM
 TAO/CIAO/connectors/dds4ccm/tests/Event_Connection_Test/descriptors/run_test.pl: DDS4CCM
 TAO/CIAO/connectors/dds4ccm/tests/State_Connection_Test/descriptors/run_test.pl: DDS4CCM
