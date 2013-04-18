@@ -271,7 +271,7 @@ public:
       LOC_REMOVE_SERVER,
       LOC_SHUTDOWN_SERVER,
       LOC_SERVER_IS_RUNNING,
-      LOC_SERVER_IS_SHUTTING_DOWN,
+      LOC_SERVER_IS_SHUTTING_DOWN
     };
 
   ImR_Loc_ResponseHandler (Loc_Operation_Id opid,

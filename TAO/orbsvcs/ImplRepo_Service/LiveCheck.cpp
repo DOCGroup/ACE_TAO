@@ -344,7 +344,7 @@ LiveCheck::ping_interval (void) const
 
 int
 LiveCheck::handle_timeout (const ACE_Time_Value &,
-                           const void */*tok*/)
+                           const void * /*tok*/)
 {
   //  long token = reinterpret_cast<long>(tok);
   if (!this->running_)
