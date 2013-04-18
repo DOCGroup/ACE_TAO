@@ -152,7 +152,7 @@ HostProcess::has_endpoint (const Endpoint& addr, bool listen)
        !i.done();
        ++i)
     {
-      Endpoint *elem;
+      Endpoint *elem = 0;
       i.next (elem);
       if (*elem == addr)
         return true;

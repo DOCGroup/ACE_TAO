@@ -1403,6 +1403,10 @@ SyncListener::SyncListener (const char *server,
 {
 }
 
+SyncListener::~SyncListener ()
+{
+}
+
 bool
 SyncListener::is_alive (void)
 {
