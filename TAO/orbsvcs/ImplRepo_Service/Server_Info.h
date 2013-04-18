@@ -15,7 +15,7 @@
 
 #include "ace/Bound_Ptr.h"
 
-#include "tao/ImR_Client/ImplRepoC.h"
+#include "ImplRepoC.h"
 
 #include "ace/SString.h"
 
