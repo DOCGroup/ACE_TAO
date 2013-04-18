@@ -1,3 +1,11 @@
+Thu Apr 18 13:04:48 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/HomeDerived/descriptors/DeploymentPlan.cdp:
+          Don't use qos_profile, not needed for this test
+
+        * connectors/dds4ccm/tests/HomeDerived/descriptors/USER_QOS_PROFILES.xml:
+          Removed this file.
+
 Thu Apr 18 12:42:46 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
