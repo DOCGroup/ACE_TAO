@@ -1,6 +1,9 @@
 USER VISIBLE CHANGES BETWEEN CIAO-1.1.8 and CIAO-1.2.0
 =======================================================
 
+. Improved support of DDS4CCM with OpenDDS as underlying
+  DDS implementation
+
 USER VISIBLE CHANGES BETWEEN CIAO-1.1.7 and CIAO-1.1.8
 =======================================================
 
