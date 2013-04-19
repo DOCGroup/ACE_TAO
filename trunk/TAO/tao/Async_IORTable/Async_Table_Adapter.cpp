@@ -55,7 +55,9 @@ TAO_Async_Table_Adapter::dispatch (TAO::ObjectKey &key,
                       *this->lock_,
                       TAO_Adapter::DS_MISMATCHED_KEY);
     if (this->closed_)
-      return TAO_Adapter::DS_MISMATCHED_KEY;
+      {
+        return TAO_Adapter::DS_MISMATCHED_KEY;
+      }
     rootref = this->root_;
   }
 
@@ -85,7 +87,14 @@ TAO_Async_Table_Adapter::find_object (IORTable::Locate_ResponseHandler rh,
   TAO::ObjectKey::encode_sequence_to_string (object_key.out (), key);
   TAO_Async_IOR_Table_Impl * aroot =
     dynamic_cast<TAO_Async_IOR_Table_Impl *>(this->root_.ptr());
-  aroot->async_find (rh, object_key.in ());
+  if (aroot != 0)
+    {
+      aroot->async_find (rh, object_key.in ());
+    }
+  else
+    {
+      rh->raise_excep (IORTable::NotFound ());
+    }
 }
 
 // ****************************************************************
