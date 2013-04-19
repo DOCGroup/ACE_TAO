@@ -1,3 +1,9 @@
+Fri Apr 19 11:15:43 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/IPC_SAP/SOCK_SAP/CPP-inclient.cpp:
+        * examples/IPC_SAP/SSL_SAP/SSL-client.cpp:
+          Fixed warnings in single threaded builds
+
 Thu Apr 18 16:21:32 UTC 2013  Huang-Ming Huang  <huangh@ociweb.com>
 
         * ace/Log_Category.h:
