@@ -846,7 +846,7 @@ extern MINIZIP_EXPORT int zipOpenNewFileInZip3 (zipFile file,const char* filenam
       unsigned char bufHead[RAND_HEAD_LEN];
       unsigned int sizeHead;
       zi->ci.encrypt = 1;
-      zi->ci.pcrc_32_tab = get_crc_table();
+      zi->ci.pcrc_32_tab = (unsigned long*)get_crc_table();
       /*init_keys(password,zi->ci.keys,zi->ci.pcrc_32_tab);*/
 
       sizeHead=crypthead(password,bufHead,RAND_HEAD_LEN,zi->ci.keys,zi->ci.pcrc_32_tab,crcForCrypting);
