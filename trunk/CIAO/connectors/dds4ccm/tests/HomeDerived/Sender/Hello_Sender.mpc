@@ -121,7 +121,7 @@ project(Home_Hello_Sender_svnt) : ciao_servant, dds4ccm_lem_stub, dds4ccm_skel {
   sharedname  = Sender_svnt
   libs       += Sender_stub Sender_lem_stub  \
                 Home_Hello_Base_stub Home_Hello_Connector_stub Home_Hello_Connector_svnt Home_Hello_Connector_lem_stub \
-                Home_Hello_Connector2_svnt Home_Hello_Connector2_lem_stub
+                Home_Hello_Connector2_stub Home_Hello_Connector2_svnt Home_Hello_Connector2_lem_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..
