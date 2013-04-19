@@ -1,3 +1,24 @@
+Fri Apr 19 16:08:52 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/tests/FT_Naming/FaultTolerant/client.cpp:
+        * tao/Async_IORTable/Async_Table_Adapter.cpp:
+
+          Clean up covarity related issues.
+
+        * tao/Async_IORTable/Async_IOR_Table_Impl.cpp:
+
+          fix to ensure that if the Async IORTable is intialized with a
+          non-async capable locator, it still works.
+
+        * bin/tao_orb_tests.lst:
+
+        * tests/IORTable_Locator/Test.mpc:
+        * tests/IORTable_Locator/async_server.cpp:
+        * tests/IORTable_Locator/run_test.pl:
+
+          Added a new test variant to run the async IORTable locator as well
+          as the sync version.
+
 Fri Apr 19 03:28:07 UTC 2013  Adam Mitz  <mitza@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:

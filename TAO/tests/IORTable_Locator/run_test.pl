@@ -10,10 +10,23 @@ use PerlACE::TestTarget;
 
 $status = 0;
 $debug_level = '0';
+$server_name = "server";
+$async_opt = "";
 
 foreach $i (@ARGV) {
     if ($i eq '-debug') {
         $debug_level = '10';
+    }
+    elsif ($i eq "-async_1") {
+        $server_name = "async_server";
+    }
+    elsif ($i eq "-async_2") {
+        $server_name = "async_server";
+        $async_opt = "-as";
+    }
+    elsif ($i eq "-async_3") {
+        $server_name = "async_server";
+        $async_opt = "-aa";
     }
 }
 
@@ -26,12 +39,12 @@ my $port = $client->RandomPort ();
 $server->DeleteFile($iorbase);
 $client->DeleteFile($iorbase);
 
-$SV = $server->CreateProcess ("server", "-ORBdebuglevel $debug_level -ORBListenEndpoints iiop://$TARGETHOSTNAME:$port");
+$SV = $server->CreateProcess ($server_name, "$async_opt -ORBdebuglevel $debug_level -ORBListenEndpoints iiop://$TARGETHOSTNAME:$port");
 $CL = $client->CreateProcess ("client",
                               "-ORBdebuglevel $debug_level ".
                               "-a corbaloc:iiop:$TARGETHOSTNAME:$port/SIMPLE_TEST_KEY");
 
-print "Starting Server\n";
+print "Starting $server_name $async_opt\n";
 $server_status = $SV->Spawn ();
 
 if ($server_status != 0) {
