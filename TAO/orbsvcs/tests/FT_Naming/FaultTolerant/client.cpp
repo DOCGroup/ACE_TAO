@@ -1614,11 +1614,11 @@ do_persistence_objectgroup_test (
           }
         catch (const CORBA::Exception& ex)
           {
+            ex._tao_print_exception ("CORBA::Exception caught:");
             ACE_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("ERROR: Unable to remove member for group %C\n"),
                                basic_group_name),
                               RC_ERROR);
-            ex._tao_print_exception ("CORBA::Exception caught:");
           }
       }
 
