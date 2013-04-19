@@ -58,4 +58,7 @@ project(ImR_Client) : taolib, tao_output, install, portableserver, taoidldefault
   specific {
     install_dir = tao/ImR_Client
   }
+
+  IDL_Files {
+  }
 }

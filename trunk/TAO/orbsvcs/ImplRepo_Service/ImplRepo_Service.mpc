@@ -1,15 +1,20 @@
 // $Id$
 
-project(Async_ImR_Client_IDL) : orbsvcslib, orbsvcs_output, conv_lib, valuetype, portableserver, messaging, imr_client, tao_versioning_idl_defaults {
+project(Async_ImR_Client_IDL) : orbsvcslib, orbsvcs_output, conv_lib, valuetype, portableserver, messaging, tao_versioning_idl_defaults {
   sharedname = TAO_Async_ImR_Client_IDL
   dynamicflags += ASYNC_IMR_CLIENT_BUILD_DLL
 
   idlflags += -Gp -Gd -Sorb \
               -I$(TAO_ROOT)/tao/ImR_Client \
               -Wb,export_macro=Async_IMR_Client_Export \
-              -Wb,export_include=async_imr_client_export.h \
-              -Gxhst
+              -Wb,export_include=async_imr_client_export.h
+
   idlflags -= -Sa -St
+
+  Modify_Custom(IDL) {
+    output_follows_input = 0
+  }
+
   IDL_Files {
     idlflags += -GA -GC
     ../../tao/ImR_Client/ServerObject.idl
@@ -20,13 +25,10 @@ project(Async_ImR_Client_IDL) : orbsvcslib, orbsvcs_output, conv_lib, valuetype,
     ../../tao/ImR_Client/ImplRepo.idl
   }
 
-  source_files {
-    ImplRepoS.cpp
-    ImplRepoC.cpp
-    ServerObjectC.cpp
-    ServerObjectS.cpp
+  Source_Files {
   }
-  header_files {
+
+  Header_Files {
     async_imr_client_export.h
   }
 }

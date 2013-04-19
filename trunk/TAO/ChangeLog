@@ -1,3 +1,15 @@
+Fri Apr 19 03:28:07 UTC 2013  Adam Mitz  <mitza@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
+        * orbsvcs/ImplRepo_Service/async_imr_client_export.h:
+
+          New async stubs lib can't have a dependency on imr_client.
+          Fixed generation of stubs and skeletons with correct export macro.
+
+        * tao/ImR_Client/ImR_Client.mpc:
+
+          Make sure not to run tao_idl in the non-idl project.
+
 Thu Apr 18 22:32:11 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * MPC/config/imr_client.mpb:
