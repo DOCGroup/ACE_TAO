@@ -38,7 +38,9 @@ ACE_Log_Category::ACE_Log_Category(const char* name)
                    | LM_CRITICAL
                    | LM_ALERT
                    | LM_EMERGENCY)
-#if !defined (ACE_HAS_THREADS)
+#if defined (ACE_HAS_THREADS)
+  , key_(ACE_OS::NULL_key)
+#else
   , per_thr_obj_(this, 0)
 #endif
 {

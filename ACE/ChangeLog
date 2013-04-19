@@ -1,3 +1,10 @@
+Fri Apr 19 14:39:41 UTC 2013  Huang-Ming Huang  <huangh@ociweb.com>
+
+        * ace/Log_Category.cpp:
+        * ace/Log_Record.cpp:
+
+        Fixed Coverity warnings.
+
 Fri Apr 19 12:02:36 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * contrib/minizip/unzip.c:

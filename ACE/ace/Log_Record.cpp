@@ -200,7 +200,8 @@ ACE_Log_Record::ACE_Log_Record (void)
     usecs_ (0),
     pid_ (0),
     msg_data_ (0),
-    msg_data_size_ (0)
+    msg_data_size_ (0),
+    category_(0)
 {
   // ACE_TRACE ("ACE_Log_Record::ACE_Log_Record");
   ACE_NEW_NORETURN (this->msg_data_, ACE_TCHAR[MAXLOGMSGLEN]);
