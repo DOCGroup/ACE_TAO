@@ -253,7 +253,7 @@ sub check_for_id_string ()
     print "Running \$Id\$ string check\n";
     foreach $file (@files_cpp, @files_inl, @files_h, @files_mpc, @files_bor,
                    @files_gnu, @files_html, @files_idl, @files_pl,
-                   @makefile_files, @files_cdp, @files_py, @files_conf, @files_generic) {
+                   @files_cdp, @files_py, @files_conf, @files_generic) {
         my $found = 0;
         if (open (FILE, $file)) {
             print "Looking at file $file\n" if $opt_d;
@@ -1218,9 +1218,9 @@ sub check_for_empty_files ()
         if (open (FILE, $file)) {
             print "Looking at file $file\n" if $opt_d;
             while (<FILE>) {
-              next if /^[:blank:]*$/; # skip empty lines
-              next if /^[:blank:]*\/\//; # skip C++ comments
-              next if /^[:blank:]*\/\*/; # skip C++ comments
+              next if /^[[:blank:]]*$/; # skip empty lines
+              next if /^[[:blank:]]*\/\//; # skip C++ comments
+              next if /^[[:blank:]]*\/\*/; # skip C++ comments
               $found_non_empty_line = 1;
               last;
             }
@@ -2284,7 +2284,6 @@ sub check_for_include_OS_h ()
                 }
                 elsif ($disable == 0 and /^\s*#\s*include\s*<[(ace)|(TAO)|(CIAO)]\/.*>/) {
                     print_error ("$file:$.: include <ace\/..> used");
-                    ++$bad_occurance;
                 }
                 else {
                     if ($disable == 0 and /^\s*#\s*include\s*"ace\/OS.h"/) {
@@ -2299,6 +2298,62 @@ sub check_for_include_OS_h ()
         }
     }
 }
+
+sub check_for_ace_log_categories ()
+{
+    return if is_suppressed ();
+
+    print "Running the ACE log categories check\n";
+
+    my @macros = qw/HEX_DUMP ERROR ERROR_RETURN ERROR_BREAK DEBUG/;
+    my $macros = join ('|', @macros);
+
+    for my $f (@files_h, @files_cpp, @files_inl) {
+        my $cat = 'ACE';
+        if ($f =~ /\/ace\/(\w+)/) {
+            next if $1 eq 'Log_Msg' || $` =~ /\/protocols$/;
+            $cat = 'ACELIB';
+        }
+        elsif ($f =~ /\/tao\//) {
+            $cat = 'TAOLIB';
+        }
+        elsif ($f =~ /\/orbsvcs\// && $f !~ /tests|examples/i) {
+            $cat = 'ORBSVCS';
+        }
+        elsif ($f =~ /CIAO\// || $f =~ /DAnCE\//) {
+            next;
+        }
+        elsif ($f =~ /\/tests\/Log_Msg_Test\.cpp/) {
+            next;
+        }
+
+        if (open (IN, $f)) {
+            print "Looking at file $f for category $cat\n" if $opt_d;
+            my $disable = 0;
+            while (<IN>) {
+                if (/FUZZ: disable check_for_ace_log_categories/) {
+                    $disable = 1;
+                    next;
+                }
+                elsif (/FUZZ: enable check_for_ace_log_categories/) {
+                    $disable = 0;
+                    next;
+                }
+                elsif ($disable == 0
+                       && /\b(ACE|ACELIB|TAOLIB|ORBSVCS)_($macros)\b/g
+                       && $1 ne $cat) {
+                    print_error ("$f:$.: found log macro $1_$2, "
+                                 . "expecting ${cat}_$2");
+                }
+            }
+            close IN;
+        }
+        else {
+            print STDERR "Error: Could not open $f\n";
+        }
+    }
+}
+
 
 ##############################################################################
 
@@ -2318,7 +2373,8 @@ if (!getopts ('cdhl:t:s:mv') || $opt_h) {
     print "    -m             only check locally modified files (uses svn)\n";
     print "======================================================\n";
     print "list of the tests that could be run or suppressed:\n";
-    print "\t   check_for_noncvs_files
+    print <<EOT;
+           check_for_noncvs_files
            check_for_generated_headers
            check_for_synch_include
            check_for_streams_include
@@ -2355,7 +2411,12 @@ if (!getopts ('cdhl:t:s:mv') || $opt_h) {
            check_for_TAO_Local_RefCounted_Object
            check_for_ORB_init
            check_for_trailing_whitespace
-           check_for_include_OS_h\n";
+           check_for_include_OS_h
+           check_for_numeric_log
+           check_for_ORB_init
+           check_for_old_documentation_style
+           check_for_ace_log_categories
+EOT
     exit (1);
 }
 
@@ -2439,6 +2500,7 @@ check_for_include_OS_h () if ($opt_l >= 1);
 check_for_numeric_log () if ($opt_l >= 3);
 check_for_ORB_init () if ($opt_l >= 1);
 check_for_old_documentation_style () if ($opt_l >= 6);
+check_for_ace_log_categories () if ($opt_l >= 5);
 
 print "\nfuzz.pl - $errors error(s), $warnings warning(s)\n";
 
