@@ -1,3 +1,13 @@
+Fri Apr 19 19:15:42 UTC 2013  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/fuzz.pl:
+
+          Added a fuzz check for the category-specifc ACE log macros.
+
+        * ace/XML_Utils/XML_Helper.tpp:
+
+          Fixed fuzz error.
+
 Fri Apr 19 14:39:41 UTC 2013  Huang-Ming Huang  <huangh@ociweb.com>
 
         * ace/Log_Category.cpp:
