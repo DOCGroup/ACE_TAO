@@ -23,12 +23,16 @@ project(IORTable) : taolib, portableserver, tao_output, install, taoidldefaults 
   dynamicflags += TAO_IORTable_BUILD_DLL
 
   Source_Files {
-    *.cpp
+    IORTable.cpp
+    IOR_Table_Impl.cpp
+    Table_Adapter.cpp
     IORTableC.cpp
   }
 
   Header_Files {
-    *.h
+    IORTable.h
+    IOR_Table_Impl.h
+    Table_Adapter.h
     iortable_export.h
     IORTableC.h
     IORTableS.h

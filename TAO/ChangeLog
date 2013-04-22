@@ -1,3 +1,48 @@
+Mon Apr 22 19:56:55 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/IORTable/Async_IORTable.h:
+        * tao/IORTable/Async_IORTable.cpp:
+        * tao/IORTable/Async_IORTable.mpc:
+        * tao/IORTable/Async_IORTable.pidl:
+        * tao/IORTable/Async_IOR_Table_Impl.h:
+        * tao/IORTable/Async_IOR_Table_Impl.cpp:
+        * tao/IORTable/Async_Table_Adapter.h:
+        * tao/IORTable/Async_Table_Adapter.cpp:
+        * tao/IORTable/IORTable.mpc:
+        * tao/IORTable/Locate_ResponseHandler.h:
+        * tao/IORTable/Locate_ResponseHandler.inl:
+        * tao/IORTable/Locate_ResponseHandler.cpp:
+        * tao/IORTable/TAO_Async_IORTable.pc.in:
+        * tao/IORTable/TAO_Async_IORTable.rc:
+
+          Move the Async_IORTable sources back into the IORTable directory
+          even though it still builds as a separate library. This eases a
+          maintenance burden with some dependant projects that build the
+          ImR service.
+
+        * tests/IORTable_Locator/async_server.cpp:
+        * orbsvcs/ImplRepo_Service/INS_Locator.h:
+
+          These explicitly reference Async_IORTable headers.
+
+
+        * tao/Async_IORTable:
+        * tao/Async_IORTable/Async_IORTable.h:
+        * tao/Async_IORTable/Async_IORTable.cpp:
+        * tao/Async_IORTable/Async_IORTable.mpc:
+        * tao/Async_IORTable/Async_IORTable.pidl:
+        * tao/Async_IORTable/Async_IOR_Table_Impl.h:
+        * tao/Async_IORTable/Async_IOR_Table_Impl.cpp:
+        * tao/Async_IORTable/Async_Table_Adapter.h:
+        * tao/Async_IORTable/Async_Table_Adapter.cpp:
+        * tao/Async_IORTable/Locate_ResponseHandler.h:
+        * tao/Async_IORTable/Locate_ResponseHandler.inl:
+        * tao/Async_IORTable/Locate_ResponseHandler.cpp:
+        * tao/Async_IORTable/TAO_Async_IORTable.pc.in:
+        * tao/Async_IORTable/TAO_Async_IORTable.rc:
+
+          Removed these files.
+
 Mon Apr 22 19:13:01 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
