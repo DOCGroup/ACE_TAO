@@ -133,7 +133,7 @@ project(ImR_Locator) : orbsvcslib, orbsvcs_output, conv_lib, avoids_minimum_corb
   }
 }
 
-project(ImR_Locator_Service) : orbsvcsexe, install_bin, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, async_iortable, messaging, acexml ,svc_utils, pi_server, imr_client, iormanip {
+project(ImR_Locator_Service) : orbsvcsexe, install_bin, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, async_iortable, messaging, acexml ,svc_utils, pi_server, iormanip {
   exename  = tao_imr_locator
   after   += ImR_Locator
   libs    += TAO_ImR_Locator TAO_ImR_Activator_IDL TAO_ImR_Locator_IDL TAO_Async_ImR_Client_IDL
