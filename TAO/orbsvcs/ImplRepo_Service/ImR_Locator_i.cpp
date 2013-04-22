@@ -1071,7 +1071,6 @@ ImR_Locator_i::find
       return;
     }
   _tao_rh->find (imr_info.in());
-  //  delete imr_info;
 }
 
 void
@@ -1328,10 +1327,14 @@ bool
 ImR_Locator_i::is_alive (UpdateableServerInfo& info)
 {
   this->connect_server (info);
-  SyncListener listener (info->name.c_str(),
-                         this->orb_.in(),
-                         this->pinger_);
-  return listener.is_alive();
+  SyncListener *listener = 0;
+  ACE_NEW_RETURN (listener,
+                  SyncListener (info->name.c_str(),
+                                this->orb_.in(),
+                                this->pinger_),
+                  false);
+  LiveListener_ptr llp(listener);
+  return listener->is_alive();
 }
 
 int
