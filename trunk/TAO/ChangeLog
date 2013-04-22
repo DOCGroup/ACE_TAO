@@ -1,3 +1,10 @@
+Mon Apr 22 14:54:18 UTC 2013  Adam Mitz  <mitza@ociweb.com>
+
+        * tao/ImR_Client/ImplRepo.idl:
+        * tao/ImR_Client/ServerObject.idl:
+
+          Fixed fuzz errors.
+
 Fri Apr 19 19:17:11 UTC 2013  Adam Mitz  <mitza@ociweb.com>
 
         * TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
