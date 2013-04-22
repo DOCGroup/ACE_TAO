@@ -15,7 +15,7 @@
 #define IMR_INS_LOCATOR_H
 #include /**/ "ace/pre.h"
 
-#include "tao/Async_IORTable/Async_IORTable.h"
+#include "tao/IORTable/Async_IORTable.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -23,7 +23,7 @@
 
 #include "tao/LocalObject.h"
 #include "ImR_ResponseHandler.h"
-#include "tao/Async_IORTable/Locate_ResponseHandler.h"
+#include "tao/IORTable/Locate_ResponseHandler.h"
 
 class ImR_Locator_i;
 

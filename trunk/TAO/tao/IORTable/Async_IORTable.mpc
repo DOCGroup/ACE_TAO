@@ -4,16 +4,16 @@ project(*core_idl) : tao_versioning_idl_defaults, install {
   IDL_Files {
     idlflags += -Gp -Gd -Sci -SS -Sorb \
                 -Wb,export_macro=TAO_Async_IORTable_Export \
-                -Wb,export_include=tao/Async_IORTable/async_iortable_export.h \
+                -Wb,export_include=tao/IORTable/async_iortable_export.h \
                 -Wb,stub_export_file=async_iortable_export.h \
                 -Wb,include_guard=TAO_IORTABLE_SAFE_INCLUDE \
-                -Wb,safe_include=tao/Async_IORTable/Async_IORTable.h \
+                -Wb,safe_include=tao/IORTable/Async_IORTable.h \
                 -iC tao/IORTable -Gxhst
     Async_IORTable.pidl
   }
 
   specific {
-    install_dir = tao/Async_IORTable
+    install_dir = tao/IORTable
   }
 }
 
@@ -23,18 +23,24 @@ project(Async_IORTable) : taolib, portableserver, iortable, dynamicinterface, ta
   dynamicflags += TAO_Async_IORTable_BUILD_DLL
 
   Source_Files {
-    *.cpp
+    Async_IORTable.cpp
+    Async_IOR_Table_Impl.cpp
+    Async_Table_Adapter.cpp
+    Locate_ResponseHandler.cpp
     Async_IORTableC.cpp
   }
 
   Header_Files {
-    *.h
+    Async_IORTable.h
+    Async_IOR_Table_Impl.h
+    Async_Table_Adapter.h
+    Locate_ResponseHandler.h
     async_iortable_export.h
     Async_IORTableC.h
     Async_IORTableS.h
   }
 
   specific {
-    install_dir = tao/Async_IORTable
+    install_dir = tao/IORTable
   }
 }
