@@ -1,3 +1,10 @@
+Mon Apr 22 17:53:36 UTC 2013  Adam Mitz  <mitza@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
+
+          The ImR locator binary can't link to the ImR_Client library
+          since it should be using the async stubs instead.
+
 Mon Apr 22 15:05:31 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/ORB_Core.cpp:
