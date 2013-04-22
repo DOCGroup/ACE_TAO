@@ -1,3 +1,9 @@
+Mon Apr 22 15:05:31 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/ORB_Core.cpp:
+
+          Fix an uninitialized pointer
+
 Mon Apr 22 14:54:18 UTC 2013  Adam Mitz  <mitza@ociweb.com>
 
         * tao/ImR_Client/ImplRepo.idl:
