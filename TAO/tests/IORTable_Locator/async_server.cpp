@@ -5,7 +5,7 @@
 #include "ace/OS_NS_strings.h"
 
 #include "tao/ORB_Core.h"
-#include "tao/Async_IORTable/Async_IORTable.h"
+#include "tao/IORTable/Async_IORTable.h"
 #include "tao/IORTable/IORTable.h"
 #include "tao/LocalObject.h"
 #include "tao/PortableServer/PortableServer.h"

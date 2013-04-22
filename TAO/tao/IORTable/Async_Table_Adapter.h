@@ -15,9 +15,9 @@
 #define TAO_ASYNC_TABLE_ADAPTER_H
 #include /**/ "ace/pre.h"
 
-#include "tao/Async_IORTable/async_iortable_export.h"
-#include "tao/Async_IORTable/Async_IORTable.h"
-#include "tao/Async_IORTable/Async_IOR_Table_Impl.h"
+#include "tao/IORTable/async_iortable_export.h"
+#include "tao/IORTable/Async_IORTable.h"
+#include "tao/IORTable/Async_IOR_Table_Impl.h"
 
 #include "tao/IORTable/Table_Adapter.h"
 
