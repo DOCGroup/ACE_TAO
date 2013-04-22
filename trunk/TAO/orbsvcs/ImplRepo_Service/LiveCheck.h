@@ -67,6 +67,8 @@ class Locator_Export LiveListener
   /// look up a listener entry in the LiveCheck map.
   LiveListener (const char *server);
 
+  virtual ~LiveListener (void);
+
   /// called by the asynch ping receiver when a reply or an exception
   /// is received. Returns true if finished listening
   virtual bool status_changed (LiveStatus status) = 0;
@@ -74,9 +76,42 @@ class Locator_Export LiveListener
   /// accessor for the server name. Used by the LiveCheck to associate a listener
   const char *server (void) const;
 
+  LiveListener *add_ref (void);
+  void remove_ref (void);
+
  private:
-  const char *server_;
+  ACE_CString server_;
+
+  int refcount_;
+  TAO_SYNCH_MUTEX lock_;
 };
+
+class LiveListener_ptr
+{
+public:
+  LiveListener_ptr (void);
+  LiveListener_ptr (LiveListener *aam);
+  LiveListener_ptr (const LiveListener_ptr &aam_ptr);
+  ~LiveListener_ptr (void);
+
+  LiveListener_ptr &operator = (const LiveListener_ptr &aam_ptr);
+  LiveListener_ptr &operator = (LiveListener *aam);
+  const LiveListener * operator-> () const;
+  const LiveListener * operator* () const;
+  LiveListener * operator-> ();
+  LiveListener * operator* ();
+  bool operator== (const LiveListener_ptr &aam_ptr) const;
+  bool operator== (const LiveListener *aam) const;
+
+  LiveListener * clone (void) const;
+  LiveListener * _retn (void);
+
+  void assign (LiveListener *aam);
+
+private:
+  LiveListener * val_;
+};
+
 
 //---------------------------------------------------------------------------
 /*
@@ -98,7 +133,7 @@ class Locator_Export LiveEntry
              ImplementationRepository::ServerObject_ptr ref);
   ~LiveEntry (void);
 
-  void add_listener (LiveListener * ll);
+  void add_listener (LiveListener *ll);
   LiveStatus status (void) const;
   void status (LiveStatus l);
   void reset_status (void);
@@ -121,7 +156,7 @@ class Locator_Export LiveEntry
   int max_retry_;
   bool may_ping_;
 
-  typedef ACE_Unbounded_Set<LiveListener *> Listen_Set;
+  typedef ACE_Unbounded_Set<LiveListener_ptr> Listen_Set;
   Listen_Set listeners_;
   TAO_SYNCH_MUTEX lock_;
   static const int reping_msec_ [];
