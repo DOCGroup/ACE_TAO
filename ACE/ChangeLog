@@ -1,3 +1,9 @@
+Mon Apr 22 14:43:53 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Hash_Map_Manager_T.inl:
+        * ace/Hash_Map_Manager_T.cpp:
+          Fixed maybe unitialized warnings
+
 Fri Apr 19 19:15:42 UTC 2013  Adam Mitz  <mitza@ociweb.com>
 
         * bin/fuzz.pl:
