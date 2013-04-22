@@ -1,3 +1,12 @@
+Mon Apr 22 19:13:01 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/LiveCheck.h:
+        * orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+
+          Fix a memory leak related to liveness callback handlers.
+
 Mon Apr 22 17:53:36 UTC 2013  Adam Mitz  <mitza@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
