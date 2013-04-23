@@ -8,6 +8,7 @@
 
 #include "tao/IORTable/IORTable.h"
 #include "tao/PortableServer/Root_POA.h"
+#include "tao/ImR_Client/ImR_Client.h"
 
 #include <iostream>
 
