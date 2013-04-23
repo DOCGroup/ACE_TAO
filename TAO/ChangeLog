@@ -1,3 +1,11 @@
+Tue Apr 23 16:12:25 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/tests/ImplRepo/RestartServer/MessengerServer.cpp:
+        * orbsvcs/tests/ImplRepo/scale_clients/server.cpp:
+        * orbsvcs/tests/ImplRepo/servers_list/server.cpp:
+
+          More static-linked fixes.
+
 Tue Apr 23 15:41:07 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/tests/ImplRepo/servers_interact_on_startup/server.cpp:
