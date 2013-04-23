@@ -40,6 +40,14 @@ project(Async_IORTable) : taolib, portableserver, iortable, dynamicinterface, ta
     Async_IORTableS.h
   }
 
+  Resource_Files {
+    TAO_Async_IORTable.rc
+  }
+
+  Pkgconfig_Files {
+    TAO_Async_IORTable.pc.in
+  }
+
   specific {
     install_dir = tao/IORTable
   }
