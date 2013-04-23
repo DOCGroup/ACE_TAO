@@ -56,7 +56,7 @@ project(ImR_Activator_IDL) : orbsvcslib, orbsvcs_output, conv_lib, valuetype, dy
   }
 }
 
-project(ImR_Locator_IDL) : orbsvcslib, orbsvcs_output, conv_lib, valuetype, portableserver, messaging, tao_versioning_idl_defaults {
+project(ImR_Locator_IDL) : orbsvcslib, orbsvcs_output, conv_lib, valuetype, portableserver, messaging, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro,tao_versioning_idl_defaults {
   sharedname   = TAO_ImR_Locator_IDL
   after       += ImR_Activator_IDL
   libs        += TAO_ImR_Activator_IDL TAO_Async_ImR_Client_IDL
