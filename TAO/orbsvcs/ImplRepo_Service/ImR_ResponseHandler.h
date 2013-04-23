@@ -11,12 +11,11 @@
 #ifndef IMR_RESPONSE_HANDLER_H
 #define IMR_RESPONSE_HANDLER_H
 
+#include "tao/LocalObject.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "tao/LocalObject.h"
 
 
 //----------------------------------------------------------------------------

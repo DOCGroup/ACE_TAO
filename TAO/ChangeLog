@@ -1,3 +1,10 @@
+Tue Apr 23 17:13:04 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_ResponseHandler.h:
+        * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
+
+          Scoreboard cleanup for QNX and corba_e builds.
+
 Tue Apr 23 16:12:25 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/tests/ImplRepo/RestartServer/MessengerServer.cpp:
