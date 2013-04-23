@@ -22,7 +22,7 @@ $daemons_running = 0;
 $em_running = 0;
 $ns_running = 0;
 
-$nr_daemon = 3;
+$nr_daemon = 2;
 @ports = ( 60001, 60002 );
 @iorbases = ( "Node1.ior", "Node2.ior" );
 @iorfiles = 0;
