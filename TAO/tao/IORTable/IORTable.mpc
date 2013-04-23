@@ -38,6 +38,14 @@ project(IORTable) : taolib, portableserver, tao_output, install, taoidldefaults 
     IORTableS.h
   }
 
+  Resource_Files {
+    TAO_IORTable.rc
+  }
+
+  Pkgconfig_Files {
+    TAO_IORTable.pc.in
+  }
+
   specific {
     install_dir = tao/IORTable
   }
