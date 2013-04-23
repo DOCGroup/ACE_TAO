@@ -1,3 +1,8 @@
+Tue Apr 23 7:34:41 UTC 2013  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/dds4ccm/tests/HomeDerived/descriptors/run_test.pl:
+          Changed nr of deamons.
+
 Fri Apr 19 10:22:41 UTC 2013  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/dds4ccm/tests/HomeDerived/Sender/Hello_Sender.mpc:
