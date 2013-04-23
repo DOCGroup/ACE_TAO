@@ -1,3 +1,10 @@
+Tue Apr 23 15:41:07 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup/server.cpp:
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup/servers_interact_on_startup.mpc:
+
+          Support for static-linked builds
+
 Tue Apr 23 14:45:23 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/IORTable/Async_IORTable.mpc:
