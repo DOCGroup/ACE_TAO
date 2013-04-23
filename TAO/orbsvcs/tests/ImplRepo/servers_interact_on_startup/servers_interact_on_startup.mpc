@@ -8,7 +8,7 @@ project(*idl): taoidldefaults {
   custom_only = 1
 }
 
-project(*server): taoserver, iortable, avoids_minimum_corba, avoids_corba_e_micro {
+project(*server): taoserver, iortable, imr_client, avoids_minimum_corba, avoids_corba_e_micro {
   after += *idl
   exename = server
   IDL_Files {
