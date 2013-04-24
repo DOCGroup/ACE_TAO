@@ -1,3 +1,18 @@
+Wed Apr 24 08:21:00 UTC 2013  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * tao/AnyTypeCode/AnyTypeCode_Adapter_Impl.cpp:
+
+          Thread unsafe singleton TAO::Unknown_IDL_Type::lock_i ()
+          initialization, used with any demarshaling, moved into dynamic
+          library loading initalization. This now happens prior to main
+          which is single threaded. Priviously, and only very rarely, multiple
+          threads attempt to demarshal the "first" Unknown_IDL_Type
+          and they all race to initialise the lock resulting in non-multual
+          exculsion and multiple partial locks being created, followed by
+          pure virtual functions being called and finaly aborts.
+          Failure occured appoximatly once every 300000 startups making this
+          impossialble to test and hard to detect.
+
 Tue Apr 23 17:13:04 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/ImR_ResponseHandler.h:
