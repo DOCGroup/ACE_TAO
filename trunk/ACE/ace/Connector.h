@@ -155,18 +155,18 @@ private:
  * service.  Both blocking and non-blocking connects are supported.
  * Further, non-blocking connects support timeouts.
  */
-template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1>
+template <typename SVC_HANDLER, typename PEER_CONNECTOR>
 class ACE_Connector : public ACE_Connector_Base<SVC_HANDLER>, public ACE_Service_Object
 {
 public:
 
   // Useful STL-style traits.
-  typedef typename SVC_HANDLER::addr_type        addr_type;
-  typedef ACE_PEER_CONNECTOR                     connector_type;
-  typedef SVC_HANDLER                            handler_type;
-  typedef typename SVC_HANDLER::stream_type      stream_type;
-  typedef typename ACE_PEER_CONNECTOR::PEER_ADDR peer_addr_type;
-  typedef ACE_PEER_CONNECTOR_ADDR                ACE_PEER_ADDR_TYPEDEF;
+  typedef typename SVC_HANDLER::addr_type addr_type;
+  typedef PEER_CONNECTOR connector_type;
+  typedef SVC_HANDLER handler_type;
+  typedef typename SVC_HANDLER::stream_type stream_type;
+  typedef typename PEER_CONNECTOR::PEER_ADDR peer_addr_type;
+  typedef typename PEER_CONNECTOR::PEER_ADDR PEER_ADDR_TYPEDEF;
 
   /**
    * Initialize a connector.  @a flags indicates how SVC_HANDLER's
@@ -203,10 +203,10 @@ public:
    * automatically to prevent resource leaks.
    */
   virtual int connect (SVC_HANDLER *&svc_handler,
-                       const ACE_PEER_CONNECTOR_ADDR &remote_addr,
+                       const typename PEER_CONNECTOR::PEER_ADDR &remote_addr,
                        const ACE_Synch_Options &synch_options = ACE_Synch_Options::defaults,
-                       const ACE_PEER_CONNECTOR_ADDR &local_addr
-                       = (peer_addr_type &) ACE_PEER_CONNECTOR_ADDR_ANY,
+                       const typename PEER_CONNECTOR::PEER_ADDR &local_addr 
+                         = (peer_addr_type &) peer_addr_type::sap_any,
                        int reuse_addr = 0,
                        int flags = O_RDWR,
                        int perms = 0);
@@ -223,10 +223,10 @@ public:
    */
   virtual int connect (SVC_HANDLER *&svc_handler_hint,
                        SVC_HANDLER *&svc_handler,
-                       const ACE_PEER_CONNECTOR_ADDR &remote_addr,
+                       const typename PEER_CONNECTOR::PEER_ADDR &remote_addr,
                        const ACE_Synch_Options &synch_options = ACE_Synch_Options::defaults,
-                       const ACE_PEER_CONNECTOR_ADDR &local_addr
-                       = (peer_addr_type &) ACE_PEER_CONNECTOR_ADDR_ANY,
+                       const typename PEER_CONNECTOR::PEER_ADDR &local_addr
+                         = (peer_addr_type &) peer_addr_type::sap_any,
                        int reuse_addr = 0,
                        int flags = O_RDWR,
                        int perms = 0);
@@ -241,7 +241,7 @@ public:
    */
   virtual int connect_n (size_t n,
                          SVC_HANDLER *svc_handlers[],
-                         ACE_PEER_CONNECTOR_ADDR remote_addrs[],
+                         typename PEER_CONNECTOR::PEER_ADDR remote_addrs[],
                          ACE_TCHAR *failed_svc_handlers = 0,
                          const ACE_Synch_Options &synch_options =
                          ACE_Synch_Options::defaults);
@@ -259,7 +259,7 @@ public:
   virtual int close (void);
 
   /// Return the underlying PEER_CONNECTOR object.
-  virtual ACE_PEER_CONNECTOR &connector (void) const;
+  virtual PEER_CONNECTOR &connector (void) const;
 
   /// Initialize Svc_Handler.
   virtual void initialize_svc_handler (ACE_HANDLE handle,
@@ -301,17 +301,17 @@ protected:
    * <PEER_CONNECTOR::connect>.
    */
   virtual int connect_svc_handler (SVC_HANDLER *&svc_handler,
-                                   const ACE_PEER_CONNECTOR_ADDR &remote_addr,
+                                   const typename PEER_CONNECTOR::PEER_ADDR &remote_addr,
                                    ACE_Time_Value *timeout,
-                                   const ACE_PEER_CONNECTOR_ADDR &local_addr,
+                                   const typename PEER_CONNECTOR::PEER_ADDR &local_addr,
                                    int reuse_addr,
                                    int flags,
                                    int perms);
   virtual int connect_svc_handler (SVC_HANDLER *&svc_handler,
                                    SVC_HANDLER *&sh_copy,
-                                   const ACE_PEER_CONNECTOR_ADDR &remote_addr,
+                                   const typename PEER_CONNECTOR::PEER_ADDR &remote_addr,
                                    ACE_Time_Value *timeout,
-                                   const ACE_PEER_CONNECTOR_ADDR &local_addr,
+                                   const typename PEER_CONNECTOR::PEER_ADDR &local_addr,
                                    int reuse_addr,
                                    int flags,
                                    int perms);
@@ -335,9 +335,9 @@ protected:
   /// Implementation of the connect methods.
   virtual int connect_i (SVC_HANDLER *&svc_handler,
                          SVC_HANDLER **sh_copy,
-                         const ACE_PEER_CONNECTOR_ADDR &remote_addr,
+                         const typename PEER_CONNECTOR::PEER_ADDR &remote_addr,
                          const ACE_Synch_Options &synch_options,
-                         const ACE_PEER_CONNECTOR_ADDR &local_addr,
+                         const typename PEER_CONNECTOR::PEER_ADDR &local_addr,
                          int reuse_addr,
                          int flags,
                          int perms);
@@ -368,7 +368,7 @@ protected:
 
 private:
   /// This is the peer connector factory.
-  ACE_PEER_CONNECTOR connector_;
+  PEER_CONNECTOR connector_;
 
   /**
    * Flags that indicate how SVC_HANDLER's should be initialized
@@ -400,30 +400,30 @@ private:
  * and (3) activating the SVC_HANDLER with a
  * particular concurrency mechanism after the connection is established.
  */
-template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1>
+template <class SVC_HANDLER, typename PEER_CONNECTOR>
 class ACE_Strategy_Connector
-  : public ACE_Connector <SVC_HANDLER, ACE_PEER_CONNECTOR_2>
+  : public ACE_Connector <SVC_HANDLER, PEER_CONNECTOR>
 {
 public:
 
   // Useful STL-style traits.
   typedef ACE_Creation_Strategy<SVC_HANDLER>
   creation_strategy_type;
-  typedef ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2>
+  typedef ACE_Connect_Strategy<SVC_HANDLER, PEER_CONNECTOR>
   connect_strategy_type;
   typedef ACE_Concurrency_Strategy<SVC_HANDLER>
   concurrency_strategy_type;
-  typedef ACE_Connector <SVC_HANDLER, ACE_PEER_CONNECTOR_2>
+  typedef ACE_Connector <SVC_HANDLER, PEER_CONNECTOR>
   base_type;
 
   // = Define some useful (old style) traits.
   typedef ACE_Creation_Strategy<SVC_HANDLER>
   CREATION_STRATEGY;
-  typedef ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2>
+  typedef ACE_Connect_Strategy<SVC_HANDLER, PEER_CONNECTOR>
   CONNECT_STRATEGY;
   typedef ACE_Concurrency_Strategy<SVC_HANDLER>
   CONCURRENCY_STRATEGY;
-  typedef ACE_Connector <SVC_HANDLER, ACE_PEER_CONNECTOR_2>
+  typedef ACE_Connector <SVC_HANDLER, PEER_CONNECTOR>
   SUPER;
 
   /**
@@ -434,7 +434,7 @@ public:
    */
   ACE_Strategy_Connector (ACE_Reactor *r = ACE_Reactor::instance (),
                           ACE_Creation_Strategy<SVC_HANDLER> * = 0,
-                          ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2> * = 0,
+                          ACE_Connect_Strategy<SVC_HANDLER, PEER_CONNECTOR> * = 0,
                           ACE_Concurrency_Strategy<SVC_HANDLER> * = 0,
                           int flags = 0);
 
@@ -456,7 +456,7 @@ public:
    */
   virtual int open (ACE_Reactor *r = ACE_Reactor::instance (),
                     ACE_Creation_Strategy<SVC_HANDLER> * = 0,
-                    ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2> * = 0,
+                    ACE_Connect_Strategy<SVC_HANDLER, PEER_CONNECTOR> * = 0,
                     ACE_Concurrency_Strategy<SVC_HANDLER> * = 0,
                     int flags = 0);
 
@@ -468,7 +468,7 @@ public:
 
   // = Strategies accessors
   virtual ACE_Creation_Strategy<SVC_HANDLER> *creation_strategy (void) const;
-  virtual ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2> *connect_strategy (void) const;
+  virtual ACE_Connect_Strategy<SVC_HANDLER, PEER_CONNECTOR> *connect_strategy (void) const;
   virtual ACE_Concurrency_Strategy<SVC_HANDLER> *concurrency_strategy (void) const;
 
 protected:
@@ -495,9 +495,9 @@ protected:
    * <PEER_CONNECTOR::connect> in the <Connect_Strategy>.
    */
   virtual int connect_svc_handler (SVC_HANDLER *&sh,
-                                   const ACE_PEER_CONNECTOR_ADDR &remote_addr,
+                                   const typename PEER_CONNECTOR::PEER_ADDR &remote_addr,
                                    ACE_Time_Value *timeout,
-                                   const ACE_PEER_CONNECTOR_ADDR &local_addr,
+                                   const typename PEER_CONNECTOR::PEER_ADDR &local_addr,
                                    int reuse_addr,
                                    int flags,
                                    int perms);
@@ -514,9 +514,9 @@ protected:
    */
   virtual int connect_svc_handler (SVC_HANDLER *&sh,
                                    SVC_HANDLER *&sh_copy,
-                                   const ACE_PEER_CONNECTOR_ADDR &remote_addr,
+                                   const typename PEER_CONNECTOR::PEER_ADDR &remote_addr,
                                    ACE_Time_Value *timeout,
-                                   const ACE_PEER_CONNECTOR_ADDR &local_addr,
+                                   const typename PEER_CONNECTOR::PEER_ADDR &local_addr,
                                    int reuse_addr,
                                    int flags,
                                    int perms);
