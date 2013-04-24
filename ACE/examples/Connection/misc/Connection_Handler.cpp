@@ -5,16 +5,15 @@
  *
  *  $Id$
  *
- *    This test illustrates how to use the Acceptor pattern to
- *    create multiple threads, each running its own Reactor.  You
- *    can connect to this via telnet and keep typing until you enter
- *    '^D'.
+ *    This test illustrates how to use the Acceptor role of the
+ *    Acceptor-Connector pattern to create multiple threads, each
+ *    running its own Reactor.  You can connect to this via telnet and
+ *    keep typing until you enter '^D'.
  *
  *
  *  @author Doug Schmidt
  */
 //=============================================================================
-
 
 #include "ace/Acceptor.h"
 #include "ace/SOCK_Acceptor.h"
@@ -23,8 +22,6 @@
 #include "ace/Sig_Adapter.h"
 
 #include "Connection_Handler.h"
-
-
 
 int
 Connection_Handler::open (void *)

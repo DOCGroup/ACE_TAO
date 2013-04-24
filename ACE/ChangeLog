@@ -1,3 +1,35 @@
+Wed Apr 24 14:43:25 UTC 2013  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Acceptor.{h,cpp}, ace/Connector.{h,cpp},
+          ace/Svc_Handler.{h,cpp}: Replaced all the obsolete
+          ACE_PEER_{STREAM,ACCEPTOR,CONNECTOR} macros that have been
+          deprecated.  Thanks to Clyde Gerber <clyde_gerber at symantec
+          dot com> for motivating this.
+
+Wed Apr 24 14:42:50 UTC 2013  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Global_Macros.h: Added comments that indicate the
+          ACE_PEER_{STREAM,ACCEPTOR,CONNECTOR} macros have been
+          deprecated.  Thanks to Clyde Gerber <clyde_gerber at symantec
+          dot com> for motivating this.
+
+Wed Apr 24 13:57:02 UTC 2013  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Svc_Handler.{h,cpp}: Zapped the obsolete ACE_PEER_STREAM*
+          macros since compilers that ACE supports now should handle the
+          traits classes properly.
+
+Thu Apr 18 16:42:03 UTC 2013  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Svc_Handler.h: Updated the documentation for
+          ACE_Svc_Handler::open() method.  Thanks to Andreas Florath
+          <andreas at florath dot org> for motivating this.
+
+Mon Apr 15 01:59:34 UTC 2013  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * examples/Connection/misc/Connection_Handler.cpp: Improved the
+          documentation.
+
 Mon Apr 22 14:43:53 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Hash_Map_Manager_T.inl:
@@ -92,6 +124,7 @@ Fri Apr 12 19:30:05 UTC 2013  Huang-Ming Huang  <huangh@ociweb.com>
         * tests/Log_Msg_Test.cpp:
         Fixed problem for WCHAR build
 
+>>>>>>> .r97068
 Thu Apr 11 19:53:22 UTC 2013  Huang-Ming Huang  <huangh@ociweb.com>
 
         * ace/Log_Category.h:
