@@ -1,3 +1,9 @@
+Wed Apr 24 14:45:54 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/tao_imr_i.h:
+
+          Include the correct version of ImplRepoC.h for the tao_imr tool.
+
 Wed Apr 24 08:21:00 UTC 2013  Simon Massey  <simon dot massey at prismtech dot com>
 
         * tao/AnyTypeCode/AnyTypeCode_Adapter_Impl.cpp:
