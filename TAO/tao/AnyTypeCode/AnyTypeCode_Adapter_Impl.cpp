@@ -6,6 +6,7 @@
 #include "tao/AnyTypeCode/WrongTransactionA.h"
 #include "tao/AnyTypeCode/PolicyA.h"
 #include "tao/AnyTypeCode/Any.h"
+#include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
 
 #include "tao/AnyTypeCode/BooleanSeqA.h"
 #include "tao/AnyTypeCode/OctetSeqA.h"
@@ -290,6 +291,13 @@ TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, const CORBA::WS
 int
 TAO_AnyTypeCode_Adapter_Impl::Initializer (void)
 {
+  // The TAO::Unknown_IDL_Type::lock_i () is a PRIVATE thread unsafe singleton
+  // which we need to initialise before Unknown_IDL_Types are used in a
+  // threaded environment. This singleton is called for every constructed
+  // Unknown_IDL_Type, so just create a throw-a-way from a null typecode.
+  TAO::Unknown_IDL_Type singleton_initaliser (0);
+  ACE_UNUSED_ARG (singleton_initaliser);
+
   return ACE_Service_Config::process_directive (
         ace_svc_desc_TAO_AnyTypeCode_Adapter_Impl);
 }
