@@ -1,3 +1,10 @@
+Thu Apr 25 21:04:51 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup/run_test.pl:
+
+          add -debuglog variant to have each process write output to a separate
+          log file with timestamps.
+
 Thu Apr 25 18:42:02 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/Forwarder.cpp:
