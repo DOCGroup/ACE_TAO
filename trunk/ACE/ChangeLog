@@ -1,7 +1,13 @@
+Thu Apr 25 07:20:58 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/ace.doxygen:
+          Set MAX_DOT_GRAPH_DEPTH to 5, thanks to Clyde Gerber
+          <clyde_gerber at symantec dot com> for motivating this.
+
 Wed Apr 24 14:43:25 UTC 2013  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
-        * ace/Acceptor.{h,cpp}, ace/Connector.{h,cpp},
-          ace/Svc_Handler.{h,cpp}: Replaced all the obsolete
+        * ace/Acceptor.{h,cpp}, ace/Connector.{h,cpp}:
+        * ace/Svc_Handler.{h,cpp}: Replaced all the obsolete
           ACE_PEER_{STREAM,ACCEPTOR,CONNECTOR} macros that have been
           deprecated.  Thanks to Clyde Gerber <clyde_gerber at symantec
           dot com> for motivating this.
