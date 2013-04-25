@@ -64,8 +64,11 @@ TAO_Async_Table_Adapter::dispatch (TAO::ObjectKey &key,
   if (this->root_->async_available ())
     {
       // construct a callback handler
-      TAO_AMH_Locate_ResponseHandler_var rh;
-      ACE_NEW_RETURN (rh, TAO_AMH_Locate_ResponseHandler (request), DS_MISMATCHED_KEY);
+      TAO_AMH_Locate_ResponseHandler_ptr rhp;
+      ACE_NEW_RETURN (rhp,
+                      TAO_AMH_Locate_ResponseHandler (request),
+                      DS_MISMATCHED_KEY);
+      TAO_AMH_Locate_ResponseHandler_var rh (rhp);
       this->find_object (rh, key);
       return 0;
     }

@@ -944,7 +944,7 @@ ImR_Locator_i::server_is_running
           return;
         }
 
-      this->pinger_.add_server (name.c_str(), this->ping_external_, s);
+      this->pinger_.add_server (name.c_str(), this->ping_external_, s.in());
       AsyncAccessManager *aam_raw;
       ACE_NEW (aam_raw, AsyncAccessManager (*temp_info, true, *this));
       AsyncAccessManager_ptr aam (aam_raw);
@@ -970,12 +970,12 @@ ImR_Locator_i::server_is_running
           info.edit ()->server = s;
 
           info.update_repo();
-          this->pinger_.add_server (name.c_str(), true, s);
+          this->pinger_.add_server (name.c_str(), true, s.in());
         }
 
       AsyncAccessManager_ptr aam(this->find_aam (name.c_str()));
       if (*aam != 0)
-        aam->server_is_running (partial_ior, s);
+        aam->server_is_running (partial_ior, s.in());
       else
         {
           if (info->activation_mode != ImplementationRepository::PER_CLIENT)

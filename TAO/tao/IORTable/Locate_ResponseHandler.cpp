@@ -52,10 +52,11 @@ TAO_AMH_Locate_ResponseHandler::raise_excep (const CORBA::Exception &ex)
 }
 
 void
-TAO_AMH_Locate_ResponseHandler::forward_ior (const char *ior, CORBA::Boolean is_perm)
+TAO_AMH_Locate_ResponseHandler::forward_ior (const char *ior,
+                                             CORBA::Boolean is_perm)
 {
   CORBA::Object_var fwd = this->orb_->string_to_object (ior);
-  this->_tao_rh_send_location_forward (fwd, is_perm);
+  this->_tao_rh_send_location_forward (fwd.in(), is_perm);
 }
 
 

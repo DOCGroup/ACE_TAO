@@ -88,8 +88,9 @@ ImR_DSI_Forwarder::_dispatch (TAO_ServerRequest &request,
            CORBA::ServerRequest (request));
   try
     {
-      TAO_AMH_DSI_Response_Handler_var rh;
-      ACE_NEW (rh, TAO_AMH_DSI_Response_Handler(request));
+      TAO_AMH_DSI_Response_Handler_ptr rhp;
+      ACE_NEW (rhp, TAO_AMH_DSI_Response_Handler(request));
+      TAO_AMH_DSI_Response_Handler_var rh(rhp);
 
       rh->init (request, 0);
       // Delegate to user.
