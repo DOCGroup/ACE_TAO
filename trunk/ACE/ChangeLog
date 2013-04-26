@@ -1,3 +1,11 @@
+Thu Apr 25 16:51:06 UTC 2013  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Svc_Handler.h: 
+          ace/Connector.h: 
+          ace/Acceptor.h:  Added template parameter documentation.
+          Thanks to Clyde Gerber <clyde_gerber at symantec dot com> for
+          contributing this.
+
 Thu Apr 25 07:20:58 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * etc/ace.doxygen:

@@ -34,20 +34,28 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * activating the SVC_HANDLER.
  *
  * Implements the basic strategy for passively establishing
- * connections with clients.  An ACE_Acceptor is parameterized
- * by concrete types that conform to the interfaces of
- * PEER_ACCEPTOR and SVC_HANDLER.  The PEER_ACCEPTOR is
- * instantiated with a transport mechanism that passively
- * establishes connections.  The SVC_HANDLER is instantiated
- * with a concrete type that performs the application-specific
- * service.  An ACE_Acceptor inherits from ACE_Service_Object,
- * which in turn inherits from ACE_Event_Handler.  This enables
- * the ACE_Reactor to dispatch the ACE_Acceptor's handle_input
- * method when connection events occur.  The handle_input method
- * performs the ACE_Acceptor's default creation, connection
- * establishment, and service activation strategies.  These
- * strategies can be overridden by subclasses individually or as
- * a group.
+ * connections with clients.  An ACE_Acceptor inherits from
+ * ACE_Service_Object, which in turn inherits from ACE_Event_Handler.
+ * This enables the ACE_Reactor to dispatch the ACE_Acceptor's
+ * handle_input method when connection events occur.  The handle_input
+ * method performs the ACE_Acceptor's default creation, connection
+ * establishment, and service activation strategies.  These strategies
+ * can be overridden by subclasses individually or as a group.
+ *
+ * An ACE_Acceptor is parameterized by concrete types that conform to
+ * the interfaces of SVC_HANDLER and PEER_ACCEPTOR described below.
+ *
+ * @tparam SVC_HANDLER The name of the concrete type that performs the
+ *         application-specific service.  The SVC_HANDLER typically
+ *         inherits from ACE_Svc_Handler.  @see Svc_Handler.h.
+ *
+ * @tparam PEER_ACCEPTOR The name of the class that implements the
+ *         PEER_ACCEPTOR endpoint (e.g., ACE_SOCK_Acceptor) to
+ *         passively establish connections.  A PEER_ACCEPTOR
+ *         implementation must provide a PEER_STREAM and PEER_ADDR
+ *         trait to identify the type of stream (e.g.,
+ *         ACE_SOCK_Stream) and type of address (e.g., ACE_INET_Addr)
+ *         used by the endpoint.
  */
 template <typename SVC_HANDLER, typename PEER_ACCEPTOR>
 class ACE_Acceptor : public ACE_Service_Object

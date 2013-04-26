@@ -147,13 +147,23 @@ private:
  * service handlers (SVC_HANDLERs).
  *
  * Implements the strategy for actively establishing connections with
- * clients.  An ACE_Connector is parameterized by concrete types that
- * conform to the interfaces of PEER_CONNECTOR and SVC_HANDLER.  The
- * PEER_CONNECTOR is instantiated with a transport mechanism that
- * actively establishes connections.  The SVC_HANDLER is instantiated
- * with a concrete type that performs the application-specific
- * service.  Both blocking and non-blocking connects are supported.
- * Further, non-blocking connects support timeouts.
+ * clients.  Both blocking and non-blocking connects are supported.
+ * Moreover, non-blocking connects support timeouts.
+ *
+ * An ACE_Connector is parameterized by concrete types that conform to
+ * the interfaces of SVC_HANDLER and PEER_CONNECTOR described below.
+ *
+ * @tparam SVC_HANDLER The name of the concrete type that performs the
+ *         application-specific service.  The SVC_HANDLER typically
+ *         inherits from ACE_Svc_Handler.  @see Svc_Handler.h.
+ *
+ * @tparam PEER_CONNECTOR The name of the class that implements the
+ *         PEER_CONNECTOR endpoint (e.g., ACE_SOCK_Connector) to
+ *         passively establish connections.  A PEER_CONNECTOR
+ *         implementation must provide a PEER_STREAM and PEER_ADDR
+ *         trait to identify the type of stream (e.g.,
+ *         ACE_SOCK_Stream) and type of address (e.g., ACE_INET_Addr)
+ *         used by the endpoint.
  */
 template <typename SVC_HANDLER, typename PEER_CONNECTOR>
 class ACE_Connector : public ACE_Connector_Base<SVC_HANDLER>, public ACE_Service_Object
