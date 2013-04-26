@@ -43,15 +43,29 @@ enum ACE_Svc_Handler_Close { NORMAL_CLOSE_OPERATION = 0x00,
  * @brief Defines the interface for a service that exchanges data with
  * its connected peer.
  *
- * This class provides a well-defined interface that the
- * Acceptor and Connector pattern factories use as their target.
- * Typically, client applications will subclass ACE_Svc_Handler
- * and do all the interesting work in the subclass.  One thing
- * that the ACE_Svc_Handler does contain is a PEER_STREAM
- * endpoint that is initialized by an ACE_Acceptor or
- * ACE_Connector when a connection is established successfully.
- * This endpoint is used to exchange data between a
- * ACE_Svc_Handler and the peer it is connected with.
+ * This class provides a well-defined interface that the ACE_Acceptor
+ * and ACE_Connector factories use as their target.  Typically, client
+ * applications will subclass ACE_Svc_Handler and do all the
+ * interesting work in the subclass.  An ACE_Svc_Handler is
+ * parameterized by concrete types that conform to the interfaces of
+ * PEER_ACCEPTOR and SYNCH_TRAITS described below.
+ *
+ * @tparam PEER_STREAM The name of the class that implements the
+ *         PEER_STREAM endpoint (e.g., ACE_SOCK_Stream) that is
+ *         contained in an ACE_Svc_Handler and initialized by an
+ *         ACE_Acceptor or ACE_Connector when a connection is
+ *         established successfully.  A PEER_STREAM implementation
+ *         must provide a PEER_ADDR trait (e.g., ACE_INET_Addr to
+ *         identify the type of address used by the endpoint.  This
+ *         endpoint is used to exchange data between a ACE_Svc_Handler
+ *         and the peer it is connected with.
+ *
+ * @tparam SYNCH_TRAITS The name of the synchronization traits class
+ *         that will be used by the ACE_Svc_Handler (e.g.,
+ *         ACE_NULL_SYNCH or ACE_MT_SYNCH). The synchronization traits
+ *         class provides typedefs for the mutex, condition, and
+ *         semaphore implementations the ACE_Svc_Handler will
+ *         use. @see Synch_Traits.h.
  */
 template <typename PEER_STREAM, typename SYNCH_TRAITS>
 class ACE_Svc_Handler : public ACE_Task<SYNCH_TRAITS>
