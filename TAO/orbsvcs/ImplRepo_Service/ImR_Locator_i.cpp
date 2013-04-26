@@ -83,13 +83,13 @@ ImR_Locator_i::~ImR_Locator_i (void)
 int
 ImR_Locator_i::init_with_orb (CORBA::ORB_ptr orb, Options& opts)
 {
-  orb_ = CORBA::ORB::_duplicate (orb);
-  debug_ = opts.debug ();
-  read_only_ = opts.readonly ();
-  startup_timeout_ = opts.startup_timeout ();
-  ping_external_ = opts.ping_external ();
-  ping_interval_ = opts.ping_interval ();
-  unregister_if_address_reused_ = opts.unregister_if_address_reused ();
+  this->orb_ = CORBA::ORB::_duplicate (orb);
+  this->debug_ = opts.debug ();
+  this->read_only_ = opts.readonly ();
+  this->startup_timeout_ = opts.startup_timeout ();
+  this->ping_external_ = opts.ping_external ();
+  this->ping_interval_ = opts.ping_interval ();
+  this->unregister_if_address_reused_ = opts.unregister_if_address_reused ();
 
   CORBA::Object_var obj =
     this->orb_->resolve_initial_references ("RootPOA");
@@ -98,7 +98,7 @@ ImR_Locator_i::init_with_orb (CORBA::ORB_ptr orb, Options& opts)
 
   this->dsi_forwarder_.init (orb);
   this->adapter_.init (& this->dsi_forwarder_);
-  this->pinger_.init (orb, ACE_Time_Value (10,0)); // ping_interval_);
+  this->pinger_.init (orb, this->ping_interval_, this->debug_);
 
   // Register the Adapter_Activator reference to be the RootPOA's
   // Adapter Activator.
@@ -266,9 +266,8 @@ ImR_Locator_i::shutdown
         }
       if (debug_ > 0 && shutdown_errs > 0)
         {
-          ORBSVCS_DEBUG ((
-            LM_DEBUG,
-            ACE_TEXT ("ImR: Some activators could not be shut down.\n")));
+          ORBSVCS_DEBUG (( LM_DEBUG,
+                           ACE_TEXT ("ImR: Some activators could not be shut down.\n")));
         }
     }
   // Technically, we should wait for all the activators to unregister, but

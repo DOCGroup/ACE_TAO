@@ -22,6 +22,7 @@ my $debuglog = "";
 my @srvlogfile = ( "", "", "" );
 my @cltlogfile = ( "", "", "" );
 my $actlogfile = "";
+my $loclogfile = "";
 
 # Ping interval in milliseconds
 my $verification_interval_msecs = 1000;
@@ -30,16 +31,18 @@ if ($#ARGV >= 0) {
     for (my $i = 0; $i <= $#ARGV; $i++) {
 	if ($ARGV[$i] eq "-debug") {
 	    $debug_level = '10';
-	    $imr_debug_level = '10';
+	    $imr_debug_level = '2';
+            $loclogfile = "imr_loc.log";
             $i++;
         }
         elsif ($ARGV[$i] eq "-debuglog") {
 	    $debug_level = '10';
-	    $imr_debug_level = '10';
+	    $imr_debug_level = '3';
             $debuglog = "-ORBVerboseLogging 1 -ORBLogFile ";
             @srvlogfile = ( "server1.log", "server2.log", "server3.log" );
             @cltlogfile = ( "client1.log", "client2.log", "client3.log" );
             $actlogfile = "imr_act.log";
+            $loclogfile = "imr_loc.log";
 	    $i++;
 	}
 	elsif ($ARGV[$i] eq "-server_reply_delay") {
@@ -75,10 +78,10 @@ my $port = $imr->RandomPort();
 
 my $forward_on_exception_arg = "-ORBForwardOnceOnTransient 1";
 
-my $debug_arg = "-ORBDebugLevel $debug_level" . $debuglog;
-my $imr_debug_arg = "-ORBDebugLevel $imr_debug_level";
-if ($imr_debug_level == 10) {
-    $imr_debug_arg = $imr_debug_arg . " -ORBVerboseLogging 1 -ORBLogFile imr_loc.log ";
+my $debug_arg = "-ORBDebugLevel $debug_level " . $debuglog;
+my $imr_debug_arg = "-ORBDebugLevel $imr_debug_level ";
+if ($loclogfile ne "") {
+    $imr_debug_arg = $imr_debug_arg . "-ORBVerboseLogging 1 -ORBLogFile $loclogfile ";
 }
 
 my $objprefix = "TestObject";
@@ -121,6 +124,9 @@ for(my $i = 0; $i < $servers_count; $i++) {
 
 for(my $i = 0; $i < $client_count; $i++) {
     push (@CLI, $cli[$i]->CreateProcess ("client", "$debug_arg $cltlogfile[$i] -k file://$srviorfile[0] -n $i $forward_on_exception_arg"));
+    if ($cltlogfile[$i] ne "") {
+        $cli[$i]->DeleteFile ($cltlogfile[$i]);
+    }
 }
 
 sub cleanup_output {
@@ -192,9 +198,13 @@ sub run_test
 
     print_msg ("Start ImplRepo");
 
+    if ($loclogfile ne "") {
+        $imr->DeleteFile ($loclogfile);
+    }
+
     $IMR->Arguments ("-o $imr_imriorfile $refstyle -orbendpoint iiop://:$port ".
 		     "$forward_on_exception_arg ".
-		     "-d 2 $imr_debug_arg ".
+		     "-d $imr_debug_level $imr_debug_arg ".
 		     "-v $verification_interval_msecs");
     print ">>> " . $IMR->CommandLine () . "\n";
     $IMR_status = $IMR->Spawn ();
@@ -224,6 +234,10 @@ sub run_test
         return 1;
     }
     for (my $i = 0; $i < $servers_count; $i++) {
+        if ($srvllogfile[$i] ne "") {
+            $srv[$i]->DeleteFile ($srvlogfile[$i]);
+        }
+
 	if ($srv[$i]->PutFile ($imriorfile) == -1) {
 	    print STDERR "ERROR: cannot set file <$srv_imriorfile>\n";
 	    $IMR->Kill (); $IMR->TimedWait (1);
@@ -234,6 +248,10 @@ sub run_test
     ##### Start Activator #####
 
     print_msg ("Start Activator");
+
+    if ($actlogfile ne "") {
+        $act->DeleteFile ($actlogfile);
+    }
 
     $ACT->Arguments ("$debug_arg $actlogfile -d 2 -o $act_actiorfile -ORBInitRef ImplRepoService=file://$act_imriorfile");
     print ">>> " . $ACT->CommandLine () . "\n";
