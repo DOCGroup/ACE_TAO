@@ -138,7 +138,8 @@ class Locator_Export LiveEntry
   void status (LiveStatus l);
   void reset_status (void);
 
-  bool do_ping (PortableServer::POA_ptr poa);
+  bool validate_ping (bool &want_reping, ACE_Time_Value &next);
+  void do_ping (PortableServer::POA_ptr poa);
   const ACE_Time_Value &next_check (void) const;
   static void set_reping_limit (int max);
   bool reping_available (void);
@@ -205,7 +206,9 @@ class Locator_Export LiveCheck : public ACE_Event_Handler
   LiveCheck ();
   ~LiveCheck (void);
 
-  void init (CORBA::ORB_ptr orb, const ACE_Time_Value &interval);
+  void init (CORBA::ORB_ptr orb,
+             const ACE_Time_Value &interval,
+             int debug_level);
   void shutdown (void);
 
   int handle_timeout (const ACE_Time_Value &current_time,
@@ -232,6 +235,8 @@ class Locator_Export LiveCheck : public ACE_Event_Handler
 
   const ACE_Time_Value &ping_interval (void) const;
 
+  int debug (void) const;
+
  private:
   typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
                                   LiveEntry *,
@@ -246,6 +251,7 @@ class Locator_Export LiveCheck : public ACE_Event_Handler
   ACE_Time_Value ping_interval_;
   bool running_;
   int token_;
+  int debug_;
 };
 
 #endif /* IMR_LIVECHECK_H_  */
