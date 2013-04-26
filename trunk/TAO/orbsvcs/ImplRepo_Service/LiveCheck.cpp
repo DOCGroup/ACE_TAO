@@ -1,10 +1,12 @@
 // -*- C++ -*-
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "LiveCheck.h"
 #include "tao/ORB_Core.h"
 #include "ace/Reactor.h"
 #include "ace/High_Res_Timer.h"
+#include "ace/Log_Msg.h"
 
 LiveListener::LiveListener (const char *server)
   : server_(server),
@@ -314,17 +316,46 @@ LiveEntry::next_check (void) const
 }
 
 bool
-LiveEntry::do_ping (PortableServer::POA_ptr poa)
+LiveEntry::validate_ping (bool &want_reping, ACE_Time_Value& next)
 {
-  ACE_Time_Value now (ACE_High_Res_Timer::gettimeofday_hr());
-  if (this->liveliness_ == LS_PING_AWAY || this->listeners_.size() == 0)
+  if (this->owner_->debug () > 2)
     {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) LiveEntry::validate_ping, server = %C\n"),
+                      this->server_.c_str()));
+    }
+  if (this->liveliness_ == LS_PING_AWAY ||
+      this->liveliness_ == LS_DEAD ||
+      this->listeners_.size () == 0)
+    {
+      if (this->owner_->debug () > 2)
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%P|%t) LiveEntry::validate_ping, first test, ")
+                          ACE_TEXT ("status = %d, listeners = %d\n"),
+                          this->liveliness_, this->listeners_.size ()));
+        }
       return false;
     }
-
-  if (this->next_check_ > now || this->liveliness_ == LS_DEAD)
+  ACE_Time_Value now (ACE_High_Res_Timer::gettimeofday_hr());
+  ACE_Time_Value diff = this->next_check_ - now;
+  long msec = diff.msec();
+  if (msec > 0)
     {
-      ACE_Time_Value diff = next_check_ - now;
+      if (!want_reping || this->next_check_ < next)
+        {
+          want_reping = true;
+          next = this->next_check_;
+        }
+      if (this->owner_->debug () > 2)
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%P|%t) LiveEntry::validate_ping, second test, ")
+                          ACE_TEXT ("status = %d, listeners = %d, ")
+                          ACE_TEXT ("diff = %d,%d, msec = %d\n"),
+                          this->liveliness_, this->listeners_.size (),
+                          diff.sec(), diff.usec(), msec));
+        }
       return false;
     }
 
@@ -346,13 +377,24 @@ LiveEntry::do_ping (PortableServer::POA_ptr poa)
           }
         else
           {
-            return false;
+            if (this->owner_->debug () > 2)
+              {
+                ORBSVCS_DEBUG ((LM_DEBUG,
+                                ACE_TEXT ("(%P|%t) LiveEntry::validate_ping, ")
+                                ACE_TEXT ("transient, no more repings\n")));
+              }
+           return false;
           }
       }
       break;
     default:;
     }
+  return true;
+}
 
+void
+LiveEntry::do_ping (PortableServer::POA_ptr poa)
+{
   PortableServer::ServantBase_var callback = new PingReceiver (this, poa);
   PortableServer::ObjectId_var oid = poa->activate_object (callback.in());
   CORBA::Object_var obj = poa->id_to_reference (oid.in());
@@ -361,7 +403,7 @@ LiveEntry::do_ping (PortableServer::POA_ptr poa)
   try
     {
       this->ref_->sendc_ping (cb.in());
-      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_, false);
+      ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
       this->liveliness_ = LS_PING_AWAY;
       this->retry_count_++;
     }
@@ -370,8 +412,6 @@ LiveEntry::do_ping (PortableServer::POA_ptr poa)
       this->status (LS_DEAD);
       this->retry_count_++;
     }
-
-  return false;
 }
 
 //---------------------------------------------------------------------------
@@ -438,7 +478,8 @@ PingReceiver::ping_excep (Messaging::ExceptionHolder * excep_holder)
 LiveCheck::LiveCheck ()
   :ping_interval_(),
    running_ (false),
-   token_ (100)
+   token_ (100),
+   debug_ (0)
 {
 }
 
@@ -456,9 +497,11 @@ LiveCheck::~LiveCheck (void)
 
 void
 LiveCheck::init (CORBA::ORB_ptr orb,
-                 const ACE_Time_Value &pi )
+                 const ACE_Time_Value &pi,
+                 int debug_level)
 {
   this->ping_interval_ = pi;
+  this->debug_ = debug_level;
   ACE_Reactor *r = orb->orb_core()->reactor();
   this->reactor (r);
   CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA");
@@ -481,9 +524,16 @@ LiveCheck::ping_interval (void) const
 
 int
 LiveCheck::handle_timeout (const ACE_Time_Value &,
-                           const void * /*tok*/)
+                           const void * tok)
 {
-  //  long token = reinterpret_cast<long>(tok);
+  long token = reinterpret_cast<long>(tok);
+  if (this->debug_ > 2)
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) LiveCheck::handle_timeout(%d), ")
+                      ACE_TEXT ("running = %d\n"),
+                      token, this->running_));
+    }
   if (!this->running_)
     return -1;
 
@@ -494,19 +544,28 @@ LiveCheck::handle_timeout (const ACE_Time_Value &,
        le != le_end;
        ++le)
     {
-      if (le->item ()->do_ping (poa_.in ()))
+      LiveEntry *entry = le->item ();
+      if (entry->validate_ping (want_reping, next))
         {
-          LiveStatus status = le->item ()->status ();
-          if (status != LS_DEAD)
+          entry->do_ping (poa_.in ());
+          if (this->debug_ > 2)
             {
-              if (!want_reping || le->item ()->next_check() < next)
-                {
-                  want_reping = true;
-                  next = le->item ()->next_check();
-                }
+              ORBSVCS_DEBUG ((LM_DEBUG,
+                              ACE_TEXT ("(%P|%t) LiveCheck::handle_timeout(%d)")
+                              ACE_TEXT (", ping sent\n"),
+                              token));
             }
         }
-
+      else
+        {
+          if (this->debug_ > 2)
+            {
+              ORBSVCS_DEBUG ((LM_DEBUG,
+                              ACE_TEXT ("(%P|%t) LiveCheck::handle_timeout(%d)")
+                              ACE_TEXT (", ping skipped\n"),
+                              token));
+            }
+        }
     }
 
   PerClientStack::iterator pe_end = this->per_client_.end();
@@ -517,29 +576,14 @@ LiveCheck::handle_timeout (const ACE_Time_Value &,
       LiveEntry *entry = *pe;
       if (entry != 0)
         {
-          bool result = entry->do_ping (poa_.in ());
-          LiveStatus status = entry->status ();
-          if (result)
+          if (entry->validate_ping (want_reping, next))
             {
-              if (status != LS_DEAD)
-                {
-                  if (!want_reping || entry->next_check() < next)
-                    {
-                      want_reping = true;
-                      next = entry->next_check();
-                    }
-                }
-              else
-                {
-                  this->per_client_.remove (entry);
-                }
+              entry->do_ping (poa_.in ());
             }
-          else
+          LiveStatus status = entry->status ();
+          if (status != LS_PING_AWAY && status != LS_TRANSIENT)
             {
-              if (status != LS_PING_AWAY && status != LS_TRANSIENT)
-                {
-                  this->per_client_.remove (entry);
-                }
+              this->per_client_.remove (entry);
             }
         }
     }
@@ -548,6 +592,13 @@ LiveCheck::handle_timeout (const ACE_Time_Value &,
     {
       ACE_Time_Value now (ACE_High_Res_Timer::gettimeofday_hr());
       ACE_Time_Value delay = next - now;
+      if (this->debug_ > 2)
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%P|%t) LiveCheck::handle_timeout(%d),")
+                          ACE_TEXT (" want reping, delay = %d,%d\n"),
+                          token, delay.sec(), delay.usec()));
+        }
       ++this->token_;
       this->reactor()->schedule_timer (this, reinterpret_cast<void *>(this->token_), delay);
     }
@@ -701,4 +752,10 @@ LiveCheck::is_alive (const char *server)
       return entry->status ();
     }
   return LS_DEAD;
+}
+
+int
+LiveCheck::debug (void) const
+{
+  return this->debug_;
 }

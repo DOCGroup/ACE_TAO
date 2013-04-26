@@ -1,3 +1,16 @@
+Fri Apr 26 16:35:54 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/LiveCheck.h:
+        * orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+
+          Reworked the ping timinging to avoid potential deadlocks
+          and add more permanent debugging.
+
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup/run_test.pl:
+
+          Enhance the debug log management.
+
 Thu Apr 25 21:04:51 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/tests/ImplRepo/servers_interact_on_startup/run_test.pl:
