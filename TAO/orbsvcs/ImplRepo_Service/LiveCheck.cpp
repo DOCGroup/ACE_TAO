@@ -526,7 +526,11 @@ int
 LiveCheck::handle_timeout (const ACE_Time_Value &,
                            const void * tok)
 {
-  long token = reinterpret_cast<long>(tok);
+#if (ACE_SIZEOF_VOID_P == 8)
+  ACE_INT64 token = reinterpret_cast<ACE_INT64>(tok);
+#else
+  ACE_INT32 token = reinterpret_cast<ACE_INT32>(tok);
+#endif
   if (this->debug_ > 2)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
