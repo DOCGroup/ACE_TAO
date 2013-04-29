@@ -56,12 +56,18 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     int server_num = 0;
     int reply_delay_secs = 0;
 
-    ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("s:d:n:?"));
+    bool expect_transient = false;
+
+    ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("es:d:n:?"));
     int c;
 
     while ((c = get_opts ()) != -1)
       switch (c)
         {
+        case 'e':
+          expect_transient = true;
+          break;
+
         case 's':
           other_server_ior = get_opts.opt_arg ();
           break;
@@ -76,10 +82,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
         case '?':
           ACE_DEBUG ((LM_DEBUG,
-                      "usage: %s "
-                      "-s <ior-of-server-to-invoke> "
-                      "-d <seconds to delay before initializing POA> "
-                      "-n Number of the server\n",
+                      ACE_TEXT ("usage: %C ")
+                      ACE_TEXT ("-e ")
+                      ACE_TEXT ("-s <ior-of-server-to-invoke> ")
+                      ACE_TEXT ("-d <seconds to delay before initializing POA> ")
+                      ACE_TEXT ("-n Number of the server\n"),
                       argv[0]));
           return 1;
           break;
@@ -95,7 +102,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     PortableServer::POA_var test_poa = createPOA(root_poa.in(), poa_name.c_str ());
 
     ACE_DEBUG ((LM_DEBUG,
-                "(%P|%t|%T) Server %d created POA %s\n",
+                ACE_TEXT ("(%P|%t|%T) Server %d created POA %C\n"),
                 server_num, poa_name.c_str ()));
 
     PortableServer::Servant_var<Test_i> test_servant =
@@ -128,16 +135,35 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     if (other_server_ior != 0)
       {
         ACE_DEBUG ((LM_DEBUG,
-                    "(%P|%t|%T) Server %d sending request to %s\n",
+                    ACE_TEXT ("(%P|%t|%T) Server %d sending request to %s\n"),
                     server_num, other_server_ior));
-        CORBA::Object_var other_server =
-          orb->string_to_object (other_server_ior);
-        ACE_ASSERT (!CORBA::is_nil (other_server.in ()));
-        Test_var test = Test::_narrow (other_server.in());
-        ACE_ASSERT (!CORBA::is_nil (test.in()));
-        CORBA::Short n = test->get_server_num ();
-        ACE_DEBUG ((LM_DEBUG,
-                    "(%P|%t|%T) Server %d received reply from server %d\n", server_num, n));
+        try
+          {
+            CORBA::Object_var other_server =
+              orb->string_to_object (other_server_ior);
+            ACE_ASSERT (!CORBA::is_nil (other_server.in ()));
+            Test_var test = Test::_narrow (other_server.in());
+            ACE_ASSERT (!CORBA::is_nil (test.in()));
+            CORBA::Short n = test->get_server_num ();
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("(%P|%t|%T) Server %d received reply from server %d\n"),
+                        server_num, n));
+          }
+        catch (CORBA::TRANSIENT &)
+          {
+            if (expect_transient)
+              {
+                ACE_DEBUG ((LM_DEBUG,
+                            ACE_TEXT ("(%P|%t|%T) Server %d got expected transient exception\n"),
+                            server_num));
+              }
+            else
+              {
+                ACE_ERROR ((LM_ERROR,
+                            ACE_TEXT ("ERROR: (%P|%t|%T) Server %d got unexpected Transent\n"),
+                            server_num));
+              }
+          }
       }
 
 
@@ -155,7 +181,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     mgr->activate();
 
     ACE_DEBUG ((LM_DEBUG,
-                "(%P|%t|%T) Server %d started serving %s\n",
+                ACE_TEXT ("(%P|%t|%T) Server %d started serving %C\n"),
                 server_num, poa_name.c_str()));
 
     {
@@ -170,12 +196,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     orb->destroy();
 
     ACE_DEBUG ((LM_DEBUG,
-                "(%P|%t|%T) Server %d ending serving of %s\n",
+                ACE_TEXT ("(%P|%t|%T) Server %d ending serving of %C\n"),
                 server_num, poa_name.c_str ()));
 
   }
   catch(const CORBA::Exception& ex) {
-    ex._tao_print_exception ("Server main()");
+    ex._tao_print_exception (ACE_TEXT ("Server main()"));
     return 1;
   }
 

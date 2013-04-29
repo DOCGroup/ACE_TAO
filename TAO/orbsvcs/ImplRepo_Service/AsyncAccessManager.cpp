@@ -5,6 +5,8 @@
 #include "ImR_Locator_i.h"
 #include "Locator_Repository.h"
 
+#include "orbsvcs/Log_Macros.h"
+
 //---------------------------------------------------------------------------
 //---------------------------------------------------------------------------
 
@@ -223,6 +225,12 @@ AsyncAccessManager::server_is_running (const char *partial_ior,
 void
 AsyncAccessManager::ping_replied (LiveStatus server)
 {
+  if (ImR_Locator_i::debug () > 2)
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) AsyncAccessManager, status = %d\n"),
+                      server));
+    }
   switch (server)
     {
     case LS_ALIVE:

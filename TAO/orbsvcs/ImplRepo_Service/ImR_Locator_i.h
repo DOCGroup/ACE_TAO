@@ -59,7 +59,7 @@ public:
   /// Shutdown the orb.
   void shutdown (bool wait_for_completion);
 
-  int debug() const;
+  static int debug (void);
   // Note : See the IDL for descriptions of the operations.
 
   // Activator->Locator
@@ -177,6 +177,8 @@ private:
 
 private:
 
+  static int debug_;
+
   // The class that handles the forwarding.
   ImR_DSI_Forwarder dsi_forwarder_;
 
@@ -196,8 +198,6 @@ private:
   CORBA::ORB_var orb_;
   PortableServer::POA_var root_poa_;
   PortableServer::POA_var imr_poa_;
-
-  int debug_;
 
   auto_ptr<Locator_Repository> repository_;
 
