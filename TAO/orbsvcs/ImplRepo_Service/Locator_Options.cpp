@@ -315,7 +315,7 @@ Options::print_usage (void) const
     ACE_TEXT ("\n")
     ACE_TEXT ("ImplRepo_Service [-c cmd] [-d 0|1|2] [-e] [-m] [-o file]\n")
     ACE_TEXT (" [-r|-p file|-x file|--directory dir [--primary|--backup] ]\n")
-    ACE_TEXT (" [-s] [-t secs] [-v secs]\n")
+    ACE_TEXT (" [-s] [-t secs] [-v msecs]\n")
     ACE_TEXT ("  -c command      Runs nt service commands ('install' or 'remove')\n")
     ACE_TEXT ("  -d level        Sets the debug level (default 1)\n")
     ACE_TEXT ("  -e              Erase the persisted repository at startup\n")
@@ -330,8 +330,8 @@ Options::print_usage (void) const
     ACE_TEXT ("  --backup        Replicate the ImplRepo as the backup ImR\n")
     ACE_TEXT ("  -r              Use the registry for storing/loading settings\n")
     ACE_TEXT ("  -s              Run as a service\n")
-    ACE_TEXT ("  -t secs         Server startup timeout.(Default=60s)\n")
-    ACE_TEXT ("  -v msecs        Server verification interval.(Default=10s)\n")
+    ACE_TEXT ("  -t secs         Server startup timeout.(Default = 60s)\n")
+    ACE_TEXT ("  -v msecs        Server verification interval.(Default = 10000ms)\n")
     ACE_TEXT ("  -i              Ping servers without activators too. (Default=false)\n")
               ));
 }
