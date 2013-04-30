@@ -405,6 +405,13 @@ ImR_Locator_i::notify_child_death
         ORBSVCS_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("ImR: Failed to find server in repository.\n")));
     }
+
+  AsyncAccessManager_ptr aam(this->find_aam (name));
+  if (*aam != 0)
+    {
+      aam->notify_child_death ();
+    }
+
   _tao_rh->notify_child_death ();
 }
 

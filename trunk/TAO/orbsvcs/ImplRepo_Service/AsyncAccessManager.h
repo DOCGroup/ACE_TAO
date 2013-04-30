@@ -84,6 +84,7 @@ class AsyncAccessManager
   void server_is_running (const char *partial_ior,
                           ImplementationRepository::ServerObject_ptr ref);
   void server_is_shutting_down (void);
+  void notify_child_death (void);
   void ping_replied (LiveStatus server);
 
   AsyncAccessManager *add_ref (void);
