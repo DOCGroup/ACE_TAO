@@ -8,6 +8,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 ###############################################################################
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
+use File::Copy;
 
 $status = 0;
 
@@ -18,7 +19,9 @@ my $client_count = 2;
 my $server_reply_delay = 5;
 my $usage = 0;
 my $use_imr_start = 0;
+my $hide_server = 0;
 my $expect_transient = "";
+my $notify_locator = "";
 
 my $debuglog = "";
 my @srvlogfile = ( "", "", "" );
@@ -52,6 +55,10 @@ if ($#ARGV >= 0) {
                 $expect_transient = "-e";
             }
 	}
+        elsif ($ARGV[$i] eq "-hide_server") {
+            $hide_server = 1;
+            $notify_locator = "-l";
+        }
         elsif ($ARGV[$i] eq "-imr_start") {
             $use_imr_start = 1;
         }
@@ -187,7 +194,7 @@ sub register_server_with_activator {
 
     run_imr_util("ior $obj[$srv_id] -f $srviorfile[$srv_id]");
     run_imr_util("shutdown $obj[$srv_id]");
-    run_imr_util("update $obj[$srv_id] -c \"server $srv_args\"");
+    run_imr_util("update $obj[$srv_id] -c \"./server $srv_args\"");
 }
 
 my $start_time = time();
@@ -259,7 +266,7 @@ sub init_test
         $act->DeleteFile ($actlogfile);
     }
 
-    $ACT->Arguments ("$debug_arg $actlogfile -d 2 -o $act_actiorfile -ORBInitRef ImplRepoService=file://$act_imriorfile");
+    $ACT->Arguments ("$debug_arg $actlogfile $notify_locator -d 2 -o $act_actiorfile -ORBInitRef ImplRepoService=file://$act_imriorfile");
     print ">>> " . $ACT->CommandLine () . "\n";
 
     $ACT_status = $ACT->Spawn ();
@@ -303,12 +310,20 @@ sub init_test
     print_msg ("Register S1 with ImR to start on demand");
 
     register_server_with_activator(0, 1);
+
+    if ($hide_server == 1) {
+        rename ("server", "hidden") or die "Rename failed: $!";
+    }
 }
 
 sub fini_test
 {
 
     print_msg ("Shutting down");
+
+    if ($hide_server == 1) {
+        rename ("hidden", "server") or die "Rename failed: $!";
+    }
 
     if ($srv[1]->WaitForFileTimed ($srvstatusfile[1], $srv[1]->ProcessStartWaitInterval() + $server_reply_delay) == -1) {
         print STDERR "ERROR: cannot find file $srvstatusfile[1]\n";
@@ -351,7 +366,10 @@ sub run_imr_start_test
 {
     init_test ();
 
+    print_msg ("using IMR to start $obj[1]");
+
     $result = run_imr_util ("start $obj[1]");
+
     $result |= fini_test ();
 
     return $result;

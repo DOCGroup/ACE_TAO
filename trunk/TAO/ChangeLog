@@ -1,3 +1,10 @@
+Tue Apr 30 16:29:22 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup/run_test.pl:
+
+          Added a new -hide_server variant to test failure notification from
+          the activator.
+
 Tue Apr 30 15:18:30 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/AsyncAccessManager.h:
