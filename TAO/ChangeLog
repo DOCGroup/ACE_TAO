@@ -1,3 +1,17 @@
+Tue Apr 30 15:18:30 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.h:
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+
+          Add handling of child death notification during the server
+          start up process. This is necessary on unix style platforms
+          where the activator will "succeed" with a fork and later
+          fail the exec. This puts the locator in a state of expecting
+          a server_is_running that will never come. For this to work,
+          the Activator must be run with the -l option to notify the
+          locator of child death.
+
 Mon Apr 29 16:35:35 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * bin/tao_other_tests.lst:
