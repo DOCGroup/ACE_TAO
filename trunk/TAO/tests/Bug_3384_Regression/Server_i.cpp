@@ -14,7 +14,7 @@ void Server::request (
   ::CORBA::Long sel)
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Server::request -> %d\n", sel));
-  if (! CORBA::is_nil (this->cli_))
+  if (! CORBA::is_nil (this->cli_.in ()))
   {
     this->cli_->reply ("Hello world!");
   }
