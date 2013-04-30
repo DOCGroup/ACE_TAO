@@ -223,14 +223,21 @@ AsyncAccessManager::server_is_running (const char *partial_ior,
 }
 
 void
-AsyncAccessManager::ping_replied (LiveStatus server)
+AsyncAccessManager::notify_child_death (void)
 {
   if (ImR_Locator_i::debug () > 2)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) AsyncAccessManager, status = %d\n"),
-                      server));
+                      ACE_TEXT ("(%P|%t) AsyncAccessManager, child death\n")));
     }
+  this->status (AAM_SERVER_DEAD);
+  this->final_state ();
+}
+
+
+void
+AsyncAccessManager::ping_replied (LiveStatus server)
+{
   switch (server)
     {
     case LS_ALIVE:
