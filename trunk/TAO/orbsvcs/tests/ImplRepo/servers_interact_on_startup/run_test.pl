@@ -312,7 +312,8 @@ sub init_test
     register_server_with_activator(0, 1);
 
     if ($hide_server == 1) {
-        rename ("server", "hidden") or die "Rename failed: $!";
+        $name = $SRV[0]->Executable();
+        rename ($name, "hidden") or die "Rename ($name, \"hidden\") failed: $!";
     }
 }
 
@@ -322,7 +323,8 @@ sub fini_test
     print_msg ("Shutting down");
 
     if ($hide_server == 1) {
-        rename ("hidden", "server") or die "Rename failed: $!";
+        $name = $SRV[0]->Executable();
+        rename ("hidden", "server") or die "Rename ($name, \"hidden\") failed: $!";
     }
 
     if ($srv[1]->WaitForFileTimed ($srvstatusfile[1], $srv[1]->ProcessStartWaitInterval() + $server_reply_delay) == -1) {
