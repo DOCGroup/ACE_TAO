@@ -78,8 +78,8 @@ $IMR = $imr->CreateProcess ("../../../ImplRepo_Service/tao_imr_locator",
                             "-UnregisterIfAddressReused ".
                             "-d $imr_debug_level ".
                             "$ping_ext ".
-                            "-o $imr_imriorfile ".
-                            "-p $imr_imrdbfile");
+                            "-o $imr_imriorfile ");
+#                            "-p $imr_imrdbfile");
 $SRV_A = $srva->CreateProcess ("serverA",
                                "_ORBDebugLevel = $debug_level ".
                                "-ORBEndpoint " . "$protocol" . "://:" . "$srv_port_base/portspan=20 ".

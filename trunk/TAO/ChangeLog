@@ -1,3 +1,14 @@
+Wed May  1 13:32:09 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/tests/ImplRepo/ReconnectServer/run_test.pl:
+
+          The test does not require persistence, removing it allows the test
+          to work as intended on MacOS.
+
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup/README:
+
+          Document the new test variations.
+
 Tue Apr 30 20:31:14 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * bin/tao_other_tests.lst:

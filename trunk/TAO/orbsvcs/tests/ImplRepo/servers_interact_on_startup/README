@@ -54,11 +54,29 @@ Usage
 To run this test, run the run_test.pl perl script. It takes two
 optional arguments:
 
--server_reply_delay <seconds> This is the delay in seconds the CORBA
-object in S3 will make before replying to a request.
+-server_reply_delay <seconds>
+This is the delay in seconds the CORBA object in S3 will make before replying
+to a request.
 
 -v <milliseconds>
 The verification interval in milliseconds for the ImR to use.
 
 -?
 The usage and default value of the options.
+
+-debug
+get debug output from all the processes. The IMR Locator log output is
+captured in ./imr_loc.log
+
+-debuglog
+All the processes write log output to individual log files
+
+-imr_start
+Use this option to run a simple test where the tao_imr start command is
+uesd to launch a server.
+This should not time out.
+
+-hide_server
+Use this along with the -imr_start option to test an error condition of a
+registered server being removed from the filesystem. The tao_imr start
+command should recover without hanging.
