@@ -71,12 +71,20 @@ captured in ./imr_loc.log
 -debuglog
 All the processes write log output to individual log files
 
+-hide_server
+Use this along with the -imr_start option to test an error condition of a
+registered server being removed from the filesystem. The tao_imr start
+command should recover without hanging.
+
 -imr_start
 Use this option to run a simple test where the tao_imr start command is
 uesd to launch a server.
 This should not time out.
 
--hide_server
-Use this along with the -imr_start option to test an error condition of a
-registered server being removed from the filesystem. The tao_imr start
-command should recover without hanging.
+-list
+Use the tao_imr list command to test. May be used with or without restarting
+the locator.
+
+-restart_loc
+Use to bounce the locator process by itself mid test. Only used by the list
+test for now.

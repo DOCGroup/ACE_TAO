@@ -214,7 +214,6 @@ LiveEntry::LiveEntry (LiveCheck *owner,
     ref_ (ImplementationRepository::ServerObject::_duplicate (ref)),
     liveliness_ (LS_UNKNOWN),
     next_check_ (ACE_High_Res_Timer::gettimeofday_hr()),
-    retry_count_ (0),
     repings_ (0),
     max_retry_ (LiveEntry::reping_limit_),
     may_ping_ (may_ping),
@@ -239,9 +238,10 @@ void
 LiveEntry::reset_status (void)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
-  if ( this->liveliness_ == LS_ALIVE)
+  if ( this->liveliness_ == LS_ALIVE || this->liveliness_ == LS_LAST_TRANSIENT)
     {
       this->liveliness_ = LS_UNKNOWN;
+      this->repings_ = 0;
       this->next_check_ = ACE_High_Res_Timer::gettimeofday_hr();
     }
 }
@@ -265,29 +265,14 @@ LiveEntry::status (void) const
 }
 
 void
-LiveEntry::status (LiveStatus l)
+LiveEntry::update_listeners (void)
 {
-  {
-    ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
-    this->liveliness_ = l;
-    if (l == LS_ALIVE)
-      {
-        this->retry_count_ = 0;
-        ACE_Time_Value now (ACE_High_Res_Timer::gettimeofday_hr());
-        this->next_check_ = now + owner_->ping_interval();
-      }
-  }
   Listen_Set remove;
-
-  LiveStatus ls = this->liveliness_;
-  if (ls == LS_TRANSIENT && ! this->reping_available())
-    ls = LS_LAST_TRANSIENT;
-
   for (Listen_Set::ITERATOR i(this->listeners_);
        !i.done();
        i.advance ())
     {
-      if ((*i)->status_changed (ls))
+      if ((*i)->status_changed (this->liveliness_))
         {
           remove.insert (*i);
         }
@@ -302,6 +287,25 @@ LiveEntry::status (LiveStatus l)
         this->listeners_.remove (*i);
       }
   }
+}
+
+void
+LiveEntry::status (LiveStatus l)
+{
+  {
+    ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
+    this->liveliness_ = l;
+    if (l == LS_ALIVE)
+      {
+        ACE_Time_Value now (ACE_High_Res_Timer::gettimeofday_hr());
+        this->next_check_ = now + owner_->ping_interval();
+      }
+    if (l == LS_TRANSIENT && !this->reping_available())
+      {
+        this->liveliness_ = LS_LAST_TRANSIENT;
+      }
+  }
+  this->update_listeners ();
 
   if (this->listeners_.size() > 0)
     {
@@ -328,22 +332,17 @@ LiveEntry::next_check (void) const
 bool
 LiveEntry::validate_ping (bool &want_reping, ACE_Time_Value& next)
 {
-  if (ImR_Locator_i::debug () > 2)
-    {
-      ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) LiveEntry::validate_ping, server = %C\n"),
-                      this->server_.c_str()));
-    }
   if (this->liveliness_ == LS_PING_AWAY ||
       this->liveliness_ == LS_DEAD ||
       this->listeners_.size () == 0)
     {
-      if (ImR_Locator_i::debug () > 2)
+      if (ImR_Locator_i::debug () > 5)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%P|%t) LiveEntry::validate_ping, first test, ")
-                          ACE_TEXT ("status = %d, listeners = %d\n"),
-                          this->liveliness_, this->listeners_.size ()));
+                          ACE_TEXT ("(%P|%t) LiveEntry::validate_ping, status ")
+                          ACE_TEXT ("= %d, listeners = %d server %C\n"),
+                          this->liveliness_, this->listeners_.size (),
+                          this->server_.c_str()));
         }
       return false;
     }
@@ -360,11 +359,13 @@ LiveEntry::validate_ping (bool &want_reping, ACE_Time_Value& next)
       if (ImR_Locator_i::debug () > 2)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%P|%t) LiveEntry::validate_ping, second test, ")
+                          ACE_TEXT ("(%P|%t) LiveEntry::validate_ping, ")
                           ACE_TEXT ("status = %d, listeners = %d, ")
-                          ACE_TEXT ("diff = %d,%d, msec = %d\n"),
+                          ACE_TEXT ("diff = %d,%d, msec = %d ")
+                          ACE_TEXT ("server %C\n"),
                           this->liveliness_, this->listeners_.size (),
-                          diff.sec(), diff.usec(), msec));
+                          diff.sec(), diff.usec(), msec,
+                          this->server_.c_str()));
         }
       return false;
     }
@@ -374,23 +375,43 @@ LiveEntry::validate_ping (bool &want_reping, ACE_Time_Value& next)
       break;
     case LS_ALIVE:
     case LS_TIMEDOUT:
-      this->next_check_ = now + owner_->ping_interval();
+      {
+        ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_, false);
+        this->next_check_ = now + owner_->ping_interval();
+      }
       break;
     case LS_TRANSIENT:
+    case LS_LAST_TRANSIENT:
       {
         int ms = this->next_reping ();
         if (ms != -1)
           {
+            ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_, false);
+            if (this->liveliness_ == LS_LAST_TRANSIENT)
+              {
+                this->liveliness_ = LS_TRANSIENT;
+              }
             ACE_Time_Value next (ms / 1000, (ms % 1000) * 1000);
             this->next_check_ = now + next;
           }
         else
           {
+            if (this->liveliness_ == LS_TRANSIENT)
+              {
+                ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_, false);
+                this->liveliness_ = LS_LAST_TRANSIENT;
+              }
             if (ImR_Locator_i::debug () > 2)
               {
                 ORBSVCS_DEBUG ((LM_DEBUG,
                                 ACE_TEXT ("(%P|%t) LiveEntry::validate_ping, ")
-                                ACE_TEXT ("transient, no more repings\n")));
+                                ACE_TEXT ("transient, no more repings, ")
+                                ACE_TEXT ("server %C\n"),
+                                this->server_.c_str()));
+              }
+            if (this->listeners_.size() > 0)
+              {
+                this->update_listeners ();
               }
             return false;
           }
@@ -414,12 +435,10 @@ LiveEntry::do_ping (PortableServer::POA_ptr poa)
       this->ref_->sendc_ping (cb.in());
       ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
       this->liveliness_ = LS_PING_AWAY;
-      this->retry_count_++;
     }
   catch (CORBA::Exception &)
     {
       this->status (LS_DEAD);
-      this->retry_count_++;
     }
 }
 
@@ -568,7 +587,7 @@ LiveCheck::handle_timeout (const ACE_Time_Value &,
         }
       else
         {
-          if (ImR_Locator_i::debug () > 2)
+          if (ImR_Locator_i::debug () > 5)
             {
               ORBSVCS_DEBUG ((LM_DEBUG,
                               ACE_TEXT ("(%P|%t) LiveCheck::handle_timeout(%d)")
@@ -615,6 +634,15 @@ LiveCheck::handle_timeout (const ACE_Time_Value &,
     }
 
   return 0;
+}
+
+bool
+LiveCheck::has_server (const char *server)
+{
+  ACE_CString s (server);
+  LiveEntry *entry = 0;
+  int result = entry_map_.find (s, entry);
+  return (result == 0 && entry != 0);
 }
 
 void

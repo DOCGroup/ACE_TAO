@@ -164,11 +164,40 @@ ImR_Locator_i::init_with_orb (CORBA::ORB_ptr orb, Options& opts)
   ACE_ASSERT (! CORBA::is_nil (ior_table.in ()));
   ior_table->set_locator (this->ins_locator_.in ());
 
+
   // initialize the repository. This will load any values that
   // may have been persisted before.
-  return this->repository_->init(this->root_poa_.in (),
-                                 this->imr_poa_.in (),
-                                 ior);
+  int result = this->repository_->init(this->root_poa_.in (),
+                                       this->imr_poa_.in (),
+                                       ior);
+  if (result == 0)
+    {
+      Locator_Repository::SIMap::ENTRY* entry = 0;
+      Locator_Repository::SIMap::ITERATOR it (this->repository_->servers ());
+
+      // Number of servers that will go into the server_list.
+      CORBA::ULong n = this->repository_->servers ().current_size ();
+
+      for (CORBA::ULong i = 0; i < n; i++)
+        {
+          it.next (entry);
+          it.advance ();
+          ACE_ASSERT (entry != 0);
+
+          const Server_Info& info = *(entry->int_id_);
+          //          ImplementationRepository::ServerInformation_var imr_info =
+          //            info.createImRServerInfo ();
+
+          if (!this->pinger_.has_server (info.name.c_str()))
+            {
+              this->pinger_.add_server (info.name.c_str(),
+                                        this->ping_external_,
+                                        info.server.in());
+            }
+        }
+    }
+
+  return result;
 }
 
 int
@@ -1289,6 +1318,12 @@ ImR_Locator_i::connect_server (UpdateableServerInfo& info)
 {
   if (! CORBA::is_nil (info->server.in ()))
     {
+      if (!this->pinger_.has_server (info->name.c_str()))
+        {
+          this->pinger_.add_server (info->name.c_str(),
+                                    this->ping_external_,
+                                    info->server.in());
+        }
       return; // already connected
     }
 
@@ -1323,6 +1358,11 @@ ImR_Locator_i::connect_server (UpdateableServerInfo& info)
         ORBSVCS_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("ImR: Connected to server <%C>\n"),
                     info->name.c_str ()));
+      this->pinger_.add_server (info->name.c_str(),
+                                this->ping_external_,
+                                info->server.in());
+
+
     }
   catch (CORBA::Exception&)
     {
@@ -1435,7 +1475,7 @@ SyncListener::is_alive (void)
       this->orb_->perform_work (delay);
     }
   this->got_it_ = false;
-  return this->status_ == LS_ALIVE;
+  return this->status_ != LS_DEAD;
 }
 
 bool
