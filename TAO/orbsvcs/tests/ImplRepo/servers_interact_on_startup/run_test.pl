@@ -372,6 +372,11 @@ sub run_imr_start_test
 
     $result = run_imr_util ("start $obj[1]");
 
+    if ($hide_server == 1 && $result == 4) {
+        print_msg ("SUCCESS: tao_imr start $obj[1] returned $result\n");
+        $result = 0
+    }
+
     $result |= fini_test ();
 
     return $result;
