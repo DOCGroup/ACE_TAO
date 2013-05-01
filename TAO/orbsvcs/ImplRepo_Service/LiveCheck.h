@@ -138,6 +138,7 @@ class Locator_Export LiveEntry
   void status (LiveStatus l);
   void reset_status (void);
 
+  void update_listeners (void);
   bool validate_ping (bool &want_reping, ACE_Time_Value &next);
   void do_ping (PortableServer::POA_ptr poa);
   const ACE_Time_Value &next_check (void) const;
@@ -212,6 +213,8 @@ class Locator_Export LiveCheck : public ACE_Event_Handler
 
   int handle_timeout (const ACE_Time_Value &current_time,
                       const void *act = 0);
+
+  bool has_server (const char *server);
 
   void add_server (const char *server,
                    bool may_ping,

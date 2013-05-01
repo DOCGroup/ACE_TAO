@@ -19,15 +19,18 @@ my $client_count = 2;
 my $server_reply_delay = 5;
 my $usage = 0;
 my $use_imr_start = 0;
+my $restart_loc = 0;
+my $list_test = 0;
 my $hide_server = 0;
 my $expect_transient = "";
 my $notify_locator = "";
-
 my $debuglog = "";
 my @srvlogfile = ( "", "", "" );
 my @cltlogfile = ( "", "", "" );
 my $actlogfile = "";
 my $loclogfile = "";
+my $back_store_flag = "";
+my $back_store_file = "";
 
 # Ping interval in milliseconds
 my $verification_interval_msecs = 1000;
@@ -61,6 +64,16 @@ if ($#ARGV >= 0) {
         }
         elsif ($ARGV[$i] eq "-imr_start") {
             $use_imr_start = 1;
+        }
+        elsif ($ARGV[$i] eq "-list") {
+            $imr_debug_level = 3;
+            $list_test = 1;
+        }
+        elsif ($ARGV[$i] eq "-restart_loc") {
+            $restart_loc = 1;
+            $back_store_flag = "--directory";
+            $back_store_file = ".";
+            $server_reply_delay = 0;
         }
 	elsif ($ARGV[$i] eq "-v") {
 	    $i++;
@@ -217,6 +230,7 @@ sub init_test
 
     $IMR->Arguments ("-o $imr_imriorfile $refstyle -orbendpoint iiop://:$port ".
 		     "$forward_on_exception_arg ".
+                     "$back_store_flag $back_store_file ".
 		     "-d $imr_debug_level $imr_debug_arg ".
 		     "-v $verification_interval_msecs");
     print ">>> " . $IMR->CommandLine () . "\n";
@@ -363,12 +377,31 @@ sub fini_test
     return $status;
 }
 
+sub restart_imr_locator
+{
+    print_msg ("restarting locator");
+    my $IMR_status = $IMR->TerminateWaitKill ($imr->ProcessStopWaitInterval());
+    if ($IMR_status != 0) {
+        print STDERR "ERROR: IMR returned $IMR_status\n";
+        $status = 1;
+    }
+
+    print ">>> " . $IMR->CommandLine () . "\n";
+    $IMR_status = $IMR->Spawn ();
+
+    if ($IMR_status != 0) {
+        print STDERR "ERROR: ImplRepo Service returned $IMR_status\n";
+        return 1;
+    }
+
+    print "sleeping (5).... ";
+    sleep (5);
+    print "done\n";
+}
 
 sub run_imr_start_test
 {
     init_test ();
-
-    print_msg ("using IMR to start $obj[1]");
 
     $result = run_imr_util ("start $obj[1]");
 
@@ -380,6 +413,27 @@ sub run_imr_start_test
     $result |= fini_test ();
 
     return $result;
+}
+
+sub run_list_test
+{
+    init_test ();
+    run_imr_util ("start $obj[1]");
+    run_imr_util ("start $obj[0]");
+    run_imr_util ("list -a");
+
+    if ($restart_loc == 1) {
+        restart_imr_locator ();
+        run_imr_util ("list -a");
+    }
+
+    print "sleeping (20).... ";
+    sleep (20);
+    print "done\n";
+
+    run_imr_util ("list -a");
+
+    fini_test ();
 }
 
 sub run_client_activate_test
@@ -443,6 +497,9 @@ sub usage() {
 my $ret = 0;
 if ($use_imr_start == 1) {
     $ret = run_imr_start_test ();
+}
+elsif ($list_test == 1) {
+    $ret = run_list_test ();
 }
 else {
     $ret = run_client_activate_test ();
