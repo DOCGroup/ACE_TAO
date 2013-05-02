@@ -296,7 +296,9 @@ XML_Backing_Store::create_server(bool server_started,
                                  const Server_Info_Ptr& si)
 {
   if (!server_started || si->ior.is_empty())
-    return;
+    {
+      return;
+    }
 
   CORBA::Object_var obj = this->orb_->string_to_object(si->ior.c_str());
   if (!CORBA::is_nil(obj.in()))
@@ -305,8 +307,6 @@ XML_Backing_Store::create_server(bool server_started,
         ImplementationRepository::ServerObject::_unchecked_narrow (obj.in());
       si->last_ping = ACE_Time_Value::zero;
     }
-  else
-    si->server = ImplementationRepository::ServerObject::_nil();
 }
 
 void
@@ -320,5 +320,5 @@ XML_Backing_Store::load_activator (const ACE_CString& activator_name,
            Activator_Info (activator_name, token, ior));
 
   Activator_Info_Ptr info (ai);
-  this->activators().rebind(activator_name, info);
+  this->activators().rebind(Locator_Repository::lcase (activator_name), info);
 }

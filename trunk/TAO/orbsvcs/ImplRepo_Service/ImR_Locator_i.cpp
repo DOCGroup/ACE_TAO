@@ -188,7 +188,8 @@ ImR_Locator_i::init_with_orb (CORBA::ORB_ptr orb, Options& opts)
           //          ImplementationRepository::ServerInformation_var imr_info =
           //            info.createImRServerInfo ();
 
-          if (!this->pinger_.has_server (info.name.c_str()))
+          if (!CORBA::is_nil (info.server.in()) &&
+              !this->pinger_.has_server (info.name.c_str()))
             {
               this->pinger_.add_server (info.name.c_str(),
                                         this->ping_external_,
