@@ -1720,6 +1720,11 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   const char* thr_name (void);
 
+  // Stores a string version of the current thread id into buffer and
+  // returns the size of this thread id in bytes.
+  ACE_NAMESPACE_INLINE_FUNCTION
+  ssize_t thr_id (char buffer[], size_t buffer_length);
+
   /// State is THR_CANCEL_ENABLE or THR_CANCEL_DISABLE
   ACE_NAMESPACE_INLINE_FUNCTION
   int thr_setcancelstate (int new_state, int *old_state);

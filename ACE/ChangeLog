@@ -1,3 +1,9 @@
+Tue May  7 15:04:24 UTC 2013  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/OS_NS_Thread.{h,inl}: Added a new ACE_OS::thr_id() method
+          that stores a string version of the current thread id into
+          buffer and returns the size of this thread id in bytes.
+
 Thu Apr 25 16:51:06 UTC 2013  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/Svc_Handler.h: 
