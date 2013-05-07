@@ -128,9 +128,13 @@ worker (int iterations)
 #else
           if (thr_mgr->testcancel (ACE_Thread::self ()) != 0)
             {
+              char thr_id[BUFSIZ];
+              // Test out the ACE_OS::thr_id() method.
+              ssize_t len = ACE_OS::thr_id (thr_id, sizeof thr_id);
               ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%t) has been cancelled ")
+                          ACE_TEXT ("(%s) has been cancelled ")
                           ACE_TEXT ("before iteration %d!\n"),
+                          thr_id,
                           i));
               break;
             }

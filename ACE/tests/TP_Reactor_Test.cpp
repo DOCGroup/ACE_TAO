@@ -65,8 +65,6 @@
 #include "ace/Synch_Traits.h"
 #include "ace/Thread_Semaphore.h"
 
-
-
 //  Some debug helper functions
 static int disable_signal (int sigmin, int sigmax);
 
