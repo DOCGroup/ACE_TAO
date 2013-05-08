@@ -445,16 +445,16 @@ ImR_Locator_i::notify_child_death
   _tao_rh->notify_child_death ();
 }
 
-bool
-ImR_Locator_i::get_info_for_name (const char* name, Server_Info_Ptr &si)
+char*
+ImR_Locator_i::activate_server_by_name (const char* name, bool manual_start)
 {
   ImR_SyncResponseHandler rh ("", this->orb_.in());
   this->activate_server_by_name (name, manual_start, &rh);
   return rh.wait_for_result ();
 }
 
-bool
-ImR_Locator_i::split_key (ACE_CString &full, ACE_CString &key, Server_Info_Ptr &si)
+char*
+ImR_Locator_i::activate_server_by_object (const char* object_name)
 {
   Server_Info_Ptr si;
   ACE_CString key;

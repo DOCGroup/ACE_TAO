@@ -65,10 +65,6 @@ protected:
   bool find_object (TAO::ObjectKey &key,
                     CORBA::Object_out forward_to);
 
-  void find_object (::IORTable::Locate_ResponseHandler rh,
-                    TAO::ObjectKey &key);
-
-
   /// The ORB Core we belong to
   TAO_ORB_Core &orb_core_;
 

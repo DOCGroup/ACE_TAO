@@ -27,7 +27,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_ServantBase;
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-
 /**
  * @class ImR_Adapter_Activator
  *

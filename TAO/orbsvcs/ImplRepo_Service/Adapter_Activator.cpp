@@ -13,7 +13,6 @@
 
 #include "orbsvcs/Log_Macros.h"
 #include "tao/PortableServer/Servant_Base.h"
-#include "tao/PortableServer/Servant_Base.h"
 
 ImR_Adapter::ImR_Adapter (void)
   : default_servant_ (0)

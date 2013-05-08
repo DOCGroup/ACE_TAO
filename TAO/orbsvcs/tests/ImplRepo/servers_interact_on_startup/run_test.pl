@@ -98,7 +98,7 @@ for(my $i = 0; $i < $client_count; $i++) {
     push (@cli, PerlACE::TestTarget::create_target (++$tgt_num)) || die "Create target $tgt_num failed\n";
 }
 
-my $refstyle = ""; # "-ORBobjrefstyle URL";
+my $refstyle = "-ORBobjrefstyle URL";
 my $obj_count = 1;
 my $port = $imr->RandomPort();
 
@@ -133,8 +133,6 @@ my @srvstatusfile;
 my @srv_statusfile;
 my @obj;
 my @srv_server_cmd;
-my $debug_log_file = "";
-
 # Have list indices match server IDs (S1, S2, S3) with first element of list not being used.
 for(my $i = 0; $i < $servers_count; $i++) {
     push (@srv, PerlACE::TestTarget::create_target (++$tgt_num)) || die "Create target $tgt_num failed\n";
@@ -187,10 +185,7 @@ sub run_imr_util {
 sub register_server_with_activator {
     my $srv_id = shift;
     my $srv_to_invoke_id = shift;
-    my $srv_debug_log = "";
-    if ($debug_level == 10) {
-        $srv_debug_log = "test_server_$srv_id" . ".log";
-    }
+
     $srv_args =
 	"$debug_arg $srvlogfile[$srv_id] -orbuseimr 1 $refstyle ".
         "$expect_transient ".

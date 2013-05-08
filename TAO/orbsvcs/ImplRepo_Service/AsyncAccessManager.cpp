@@ -5,6 +5,8 @@
 #include "ImR_Locator_i.h"
 #include "Locator_Repository.h"
 
+#include "orbsvcs/Log_Macros.h"
+
 //---------------------------------------------------------------------------
 //---------------------------------------------------------------------------
 
@@ -78,6 +80,7 @@ AsyncAccessManager::add_interest (ImR_ResponseHandler *rh)
       ACE_NEW (l, AsyncLiveListener (this->info_->name.c_str(),
                                      this,
                                      this->locator_.pinger()));
+      LiveListener_ptr llp(l);
       if (!l->start())
         {
           if (!this->send_start_request())
@@ -196,8 +199,6 @@ AsyncAccessManager::server_is_running (const char *partial_ior,
       this->final_state ();
     }
 
-  // This is not a leak. The listener registers with
-  // the pinger and will delete itself when done.
   AsyncLiveListener *l = 0;
   if (this->info_->activation_mode == ImplementationRepository::PER_CLIENT)
     {
@@ -212,12 +213,27 @@ AsyncAccessManager::server_is_running (const char *partial_ior,
                                      this,
                                      this->locator_.pinger()));
     }
+
+  LiveListener_ptr llp(l);
   if (!l->start())
     {
       this->status (AAM_SERVER_DEAD);
       this->final_state ();
     }
 }
+
+void
+AsyncAccessManager::notify_child_death (void)
+{
+  if (ImR_Locator_i::debug () > 2)
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) AsyncAccessManager, child death\n")));
+    }
+  this->status (AAM_SERVER_DEAD);
+  this->final_state ();
+}
+
 
 void
 AsyncAccessManager::ping_replied (LiveStatus server)
@@ -511,10 +527,9 @@ AsyncLiveListener::~AsyncLiveListener (void)
 bool
 AsyncLiveListener::start (void)
 {
-  bool rtn = this->per_client_ ? this->pinger_.add_per_client_listener (this,srv_ref_.in())
-    : this->pinger_.add_listener (this);
-  if (!rtn)
-    delete this;
+  bool rtn = this->per_client_ ?
+    this->pinger_.add_per_client_listener (this, srv_ref_.in()) :
+    this->pinger_.add_listener (this);
   return rtn;
 }
 
@@ -529,7 +544,6 @@ AsyncLiveListener::status_changed (LiveStatus status)
   else
     {
       this->aam_->ping_replied (status);
-      delete this;
     }
   return true;
 }
