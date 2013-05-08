@@ -384,7 +384,7 @@ TAO_ClientRequestInfo::request_id (void)
   else
     {
       if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_ERROR,
+        TAOLIB_ERROR ((LM_ERROR,
                     "(%P|%t) ClientRequestInfo::request_id() failed\n"
                     "(%P|%t) since its request ID generator is not\n"
                     "(%P|%t) supported on this platform.\n"));

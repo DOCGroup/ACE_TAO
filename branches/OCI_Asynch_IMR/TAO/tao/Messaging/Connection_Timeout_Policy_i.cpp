@@ -89,7 +89,7 @@ TAO_ConnectionTimeoutPolicy::hook (TAO_ORB_Core *orb_core,
         {
           ACE_UINT64 msecs;
           const_cast<ACE_Time_Value const &> (time_value).msec (msecs);
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - Connect timeout is ")
                       ACE_TEXT ("%Q milliseconds\n"),
                       msecs));
@@ -168,7 +168,7 @@ TAO_ConnectionTimeoutPolicy::set_time_value (ACE_Time_Value &time_value)
     {
       ACE_UINT64 msecs;
       const_cast<ACE_Time_Value const &> (time_value).msec (msecs);
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - Connect timeout is ")
                   ACE_TEXT ("%Q milliseconds\n"),
                   msecs));

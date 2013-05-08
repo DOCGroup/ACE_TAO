@@ -58,7 +58,7 @@ public:
 
   virtual CORBA::Long initialize_collocated_object (TAO_Stub *stub);
 
-private:
+protected:
   static ACE_Lock * create_lock (TAO_SYNCH_MUTEX &l);
 
   /// Helper method to find an object bound in the table.

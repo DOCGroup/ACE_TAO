@@ -64,7 +64,7 @@ TAO::Utils::Server_Main<SERVANT>::run (int argc, ACE_TCHAR *argv[])
 
         if (result == 0)
         {
-          ACE_ERROR ((LM_INFO,
+          TAOLIB_ERROR ((LM_INFO,
             "%T %C (%P|%t) Ready %C\n", name_, servant.identity ()
             ));
 
@@ -86,7 +86,7 @@ TAO::Utils::Server_Main<SERVANT>::run (int argc, ACE_TCHAR *argv[])
 
           orb->shutdown (1);
 
-          ACE_ERROR ((LM_INFO,
+          TAOLIB_ERROR ((LM_INFO,
                       "%T %C (%P|%t) Terminated normally. %C\n",
                       name_,
                       servant.identity ()
@@ -94,7 +94,7 @@ TAO::Utils::Server_Main<SERVANT>::run (int argc, ACE_TCHAR *argv[])
         }
         else
         {
-          ACE_ERROR ((LM_ERROR,
+          TAOLIB_ERROR ((LM_ERROR,
             "%T %C (%P|%t) Registration failed: %m\n", name_
             ));
           result = -1;
@@ -102,7 +102,7 @@ TAO::Utils::Server_Main<SERVANT>::run (int argc, ACE_TCHAR *argv[])
       }
       else
       {
-        ACE_ERROR ((LM_ERROR,
+        TAOLIB_ERROR ((LM_ERROR,
           "%T %C (%P|%t) ORB manager init failed\n", name_
         ));
         result = -1;

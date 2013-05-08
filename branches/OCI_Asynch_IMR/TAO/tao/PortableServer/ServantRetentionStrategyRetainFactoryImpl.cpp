@@ -28,7 +28,7 @@ namespace TAO
         }
         case ::PortableServer::NON_RETAIN :
         {
-          ACE_ERROR ((LM_ERROR, "Incorrect type in ServantRetentionStrategyNonRetainFactoryImpl"));
+          TAOLIB_ERROR ((LM_ERROR, "Incorrect type in ServantRetentionStrategyNonRetainFactoryImpl"));
           break;
         }
       }

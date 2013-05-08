@@ -79,7 +79,7 @@ TAO_DIOP_Transport::recv (char *buf,
 
   if (TAO_debug_level > 0)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   "TAO (%P|%t) - DIOP_Transport::recv, received %d bytes from %C:%d %d\n",
                   n,
                   from_addr.get_host_name (),
@@ -91,7 +91,7 @@ TAO_DIOP_Transport::recv (char *buf,
   // Now the message has been read
   if (n == -1 && TAO_debug_level > 4)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - DIOP_Transport::recv, %p\n"),
                   ACE_TEXT ("TAO - read message failure ")
                   ACE_TEXT ("recv ()\n")));
@@ -272,7 +272,7 @@ TAO_DIOP_Transport::send_message (TAO_OutputCDR &stream,
   if (n == -1)
     {
       if (TAO_debug_level)
-        ACE_DEBUG ((LM_DEBUG,
+        TAOLIB_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) - DIOP_Transport::send_message, ")
                     ACE_TEXT ("closing transport %d after fault %p\n"),
                     this->id (),

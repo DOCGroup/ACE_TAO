@@ -1,3 +1,1690 @@
+Thu May  2 09:00:38 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/XML_Backing_Store.cpp:
+
+          Clean up issues related to restarting the locator with persisted info.
+
+Wed May  1 21:06:50 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+
+          Repopulate the pinger with all known servers on a restart with
+          a persistent store. This helps the list -a command return
+          accurate results. Also list -a considers all final states that
+          are not LS_DEAD to be be equivalent to alive.
+
+        * orbsvcs/ImplRepo_Service/LiveCheck.h:
+        * orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+
+          Ensure that when a server is in a final state of LS_LAST_TRANSIENT
+          a new listener will be notified of that state.
+
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup/README:
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup/run_test.pl:
+
+          Add new test variants for listing and locator restarts.
+
+Wed May  1 14:16:54 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup/run_test.pl:
+
+          Clear the result returned by the tao_imr when it is expected to
+          return a non-zero value.
+
+Wed May  1 13:32:09 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/tests/ImplRepo/ReconnectServer/run_test.pl:
+
+          The test does not require persistence, removing it allows the test
+          to work as intended on MacOS.
+
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup/README:
+
+          Document the new test variations.
+
+Tue Apr 30 20:31:14 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * bin/tao_other_tests.lst:
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup/run_test.pl:
+
+          Fix the new hidden server test so it is portable and added to the
+          nightly builds.
+
+Tue Apr 30 17:13:13 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3384_Regression/Server_i.cpp:
+          Fixed OpenVMS compile error
+
+Tue Apr 30 16:29:22 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup/run_test.pl:
+
+          Added a new -hide_server variant to test failure notification from
+          the activator.
+
+Tue Apr 30 15:18:30 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.h:
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+
+          Add handling of child death notification during the server
+          start up process. This is necessary on unix style platforms
+          where the activator will "succeed" with a fork and later
+          fail the exec. This puts the locator in a state of expecting
+          a server_is_running that will never come. For this to work,
+          the Activator must be run with the -l option to notify the
+          locator of child death.
+
+Mon Apr 29 16:35:35 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * bin/tao_other_tests.lst:
+
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/LiveCheck.h:
+        * orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_Options.cpp:
+
+          Clean up and add more debugging output. Fix the scenario where a
+          registered server takes longer than 16.610 seconds to get from
+          creating a POA to activating that POA.
+
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup/client.cpp:
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup/run_test.pl:
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup/server.cpp:
+
+          Add a test variant for using the IMR command line utility to
+          start a delayed server to validate that use case.
+
+Sun Apr 28 14:37:50 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+
+          Fix for some 64-bit windows builds
+
+Fri Apr 26 16:35:54 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/LiveCheck.h:
+        * orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+
+          Reworked the ping timinging to avoid potential deadlocks
+          and add more permanent debugging.
+
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup/run_test.pl:
+
+          Enhance the debug log management.
+
+Thu Apr 25 21:04:51 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup/run_test.pl:
+
+          add -debuglog variant to have each process write output to a separate
+          log file with timestamps.
+
+Thu Apr 25 18:42:02 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Forwarder.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+
+        * tao/IORTable/Async_Table_Adapter.cpp:
+        * tao/IORTable/Locate_ResponseHandler.cpp:
+
+          Scoreboard cleanup.
+
+Wed Apr 24 14:45:54 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/tao_imr_i.h:
+
+          Include the correct version of ImplRepoC.h for the tao_imr tool.
+
+Wed Apr 24 08:21:00 UTC 2013  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * tao/AnyTypeCode/AnyTypeCode_Adapter_Impl.cpp:
+
+          Thread unsafe singleton TAO::Unknown_IDL_Type::lock_i ()
+          initialization, used with any demarshaling, moved into dynamic
+          library loading initalization. This now happens prior to main
+          which is single threaded. Priviously, and only very rarely, multiple
+          threads attempt to demarshal the "first" Unknown_IDL_Type
+          and they all race to initialise the lock resulting in non-multual
+          exculsion and multiple partial locks being created, followed by
+          pure virtual functions being called and finaly aborts.
+          Failure occured appoximatly once every 300000 startups making this
+          impossialble to test and hard to detect.
+
+Tue Apr 23 17:13:04 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_ResponseHandler.h:
+        * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
+
+          Scoreboard cleanup for QNX and corba_e builds.
+
+Tue Apr 23 16:12:25 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/tests/ImplRepo/RestartServer/MessengerServer.cpp:
+        * orbsvcs/tests/ImplRepo/scale_clients/server.cpp:
+        * orbsvcs/tests/ImplRepo/servers_list/server.cpp:
+
+          More static-linked fixes.
+
+Tue Apr 23 15:41:07 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup/server.cpp:
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup/servers_interact_on_startup.mpc:
+
+          Support for static-linked builds
+
+Tue Apr 23 14:45:23 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/IORTable/Async_IORTable.mpc:
+        * tao/IORTable/IORTable.mpc:
+
+          Be explicit with the resource and package file assignments.
+
+Mon Apr 22 19:56:55 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/IORTable/Async_IORTable.h:
+        * tao/IORTable/Async_IORTable.cpp:
+        * tao/IORTable/Async_IORTable.mpc:
+        * tao/IORTable/Async_IORTable.pidl:
+        * tao/IORTable/Async_IOR_Table_Impl.h:
+        * tao/IORTable/Async_IOR_Table_Impl.cpp:
+        * tao/IORTable/Async_Table_Adapter.h:
+        * tao/IORTable/Async_Table_Adapter.cpp:
+        * tao/IORTable/IORTable.mpc:
+        * tao/IORTable/Locate_ResponseHandler.h:
+        * tao/IORTable/Locate_ResponseHandler.inl:
+        * tao/IORTable/Locate_ResponseHandler.cpp:
+        * tao/IORTable/TAO_Async_IORTable.pc.in:
+        * tao/IORTable/TAO_Async_IORTable.rc:
+
+          Move the Async_IORTable sources back into the IORTable directory
+          even though it still builds as a separate library. This eases a
+          maintenance burden with some dependant projects that build the
+          ImR service.
+
+        * tests/IORTable_Locator/async_server.cpp:
+        * orbsvcs/ImplRepo_Service/INS_Locator.h:
+
+          These explicitly reference Async_IORTable headers.
+
+
+        * tao/Async_IORTable:
+        * tao/Async_IORTable/Async_IORTable.h:
+        * tao/Async_IORTable/Async_IORTable.cpp:
+        * tao/Async_IORTable/Async_IORTable.mpc:
+        * tao/Async_IORTable/Async_IORTable.pidl:
+        * tao/Async_IORTable/Async_IOR_Table_Impl.h:
+        * tao/Async_IORTable/Async_IOR_Table_Impl.cpp:
+        * tao/Async_IORTable/Async_Table_Adapter.h:
+        * tao/Async_IORTable/Async_Table_Adapter.cpp:
+        * tao/Async_IORTable/Locate_ResponseHandler.h:
+        * tao/Async_IORTable/Locate_ResponseHandler.inl:
+        * tao/Async_IORTable/Locate_ResponseHandler.cpp:
+        * tao/Async_IORTable/TAO_Async_IORTable.pc.in:
+        * tao/Async_IORTable/TAO_Async_IORTable.rc:
+
+          Removed these files.
+
+Mon Apr 22 19:13:01 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/LiveCheck.h:
+        * orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+
+          Fix a memory leak related to liveness callback handlers.
+
+Mon Apr 22 17:53:36 UTC 2013  Adam Mitz  <mitza@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
+
+          The ImR locator binary can't link to the ImR_Client library
+          since it should be using the async stubs instead.
+
+Mon Apr 22 15:05:31 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/ORB_Core.cpp:
+
+          Fix an uninitialized pointer
+
+Mon Apr 22 14:54:18 UTC 2013  Adam Mitz  <mitza@ociweb.com>
+
+        * tao/ImR_Client/ImplRepo.idl:
+        * tao/ImR_Client/ServerObject.idl:
+
+          Fixed fuzz errors.
+
+Fri Apr 19 19:17:11 UTC 2013  Adam Mitz  <mitza@ociweb.com>
+
+        * TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
+
+          Fixed fuzz error in use of the new ACE log category macros.
+
+Fri Apr 19 16:08:52 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/tests/FT_Naming/FaultTolerant/client.cpp:
+        * tao/Async_IORTable/Async_Table_Adapter.cpp:
+
+          Clean up covarity related issues.
+
+        * tao/Async_IORTable/Async_IOR_Table_Impl.cpp:
+
+          fix to ensure that if the Async IORTable is intialized with a
+          non-async capable locator, it still works.
+
+        * bin/tao_orb_tests.lst:
+
+        * tests/IORTable_Locator/Test.mpc:
+        * tests/IORTable_Locator/async_server.cpp:
+        * tests/IORTable_Locator/run_test.pl:
+
+          Added a new test variant to run the async IORTable locator as well
+          as the sync version.
+
+Fri Apr 19 03:28:07 UTC 2013  Adam Mitz  <mitza@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
+        * orbsvcs/ImplRepo_Service/async_imr_client_export.h:
+
+          New async stubs lib can't have a dependency on imr_client.
+          Fixed generation of stubs and skeletons with correct export macro.
+
+        * tao/ImR_Client/ImR_Client.mpc:
+
+          Make sure not to run tao_idl in the non-idl project.
+
+Thu Apr 18 22:32:11 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * MPC/config/imr_client.mpb:
+
+          Revert addition of messaging dependency.
+
+        * orbsvcs/ImplRepo_Service/ImR_Activator.idl:
+        * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
+        * orbsvcs/ImplRepo_Service/Iterator.h:
+        * orbsvcs/ImplRepo_Service/LiveCheck.h:
+        * orbsvcs/ImplRepo_Service/Server_Info.h:
+        * orbsvcs/ImplRepo_Service/tao_imr_i.h:
+        * orbsvcs/ImplRepo_Service/utils.h:
+
+          In order to shield client applications from the AMI/AMH imposed
+          dependencies, the project now makes a local compilation of the
+          ImR_Client based stubs and skeletons with the async modifiers.
+
+        * tao/ImR_Client/ImR_Client.mpc:
+        * tao/ImR_Client/ImplRepo.idl:
+        * tao/ImR_Client/ServerObject.idl:
+
+          As a companion to the above change, this restores the more narrow
+          dependency so that clients of the ImR do not need to load the messaging
+          library.
+
+        * tao/ImR_Client/ImplRepo.pidl:
+        * tao/ImR_Client/ServerObject.pidl:
+
+          Removed these files. It was necessary to rename from .pidl to .idl so
+          the stub/skeleton includes would be generated correctly. There is nothing
+          pseudo about these idls anyway so no need to use .pidl.
+
+Thu Apr 18 19:37:19 UTC 2013  Adam Mitz  <mitza@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * utils/logWalker/HostProcess.cpp:
+
+          Fixed compiler warnings.
+
+Thu Apr 18 13:18:10 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
+        * orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_Options.cpp:
+
+          Scoreboard cleanup.
+
+Thu Apr 18 07:26:52 UTC 2013  Martin Corino  <mcorino@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+        * tests/IORTable_Locator/Test.mpc:
+        * tests/IORTable_Locator/client.cpp:
+        * tests/IORTable_Locator/run_test.pl:
+        * tests/IORTable_Locator/server.cpp:
+        * tests/IORTable_Locator/simple_test.idl:
+        * tests/IORTable_Locator/simple_test_i.h:
+        * tests/IORTable_Locator/simple_test_i.cpp:
+          Added simple test to test corbaloc resolving through
+          IORTable::Locator (*not* collocated like in
+          Bug_3790_Regression test).
+
+Wed Apr 17 19:00:17 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * bin/tao_other_tests.lst:
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_Options.h:
+        * orbsvcs/ImplRepo_Service/Locator_Options.cpp:
+
+          Servers may be started externally to the ImR but register with
+          it so that clients may still be forwarded to it. Traditionally,
+          such servers are not pinged by the ImR in the spirit that since
+          its own means were used to activate the service, the ImR should
+          let the client deal with the server no matter the consequences.
+          However, the ImR is in a position to give more information to the
+          client or lists of active servers, so enabling the ping_external_
+          option will override the assumption of liveness and actively ping,
+          based on the existing rules, all registered servers.
+
+        * orbsvcs/tests/ImplRepo/ReconnectServer/run_test.pl:
+
+          Added a new test variant to run the new feature.
+
+Wed Apr 17 14:19:35 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+
+        * tao/ORB.cpp:
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.inl:
+        * tao/ORB_Core.cpp:
+        * tao/objectid.h:
+
+          Make explicit the distinction between the traditional IORTable and the
+          Asynchronous version used with the ImplRepo service.
+
+Wed Apr 17 12:54:37 UTC 2013  Adam Mitz  <mitza@ociweb.com>
+
+        * orbsvcs/orbsvcs/Log_Macros.h:
+
+          Added empty comments for fuzz script.
+
+Wed Apr 17 07:06:17 UTC 2013  Martin Corino  <mcorino@remedy.nl>
+
+        * tao/Transport.h:
+        * tao/Transport.cpp:
+          Change return type of method. Fixes VC8 warnings.
+
+Tue Apr 16 19:46:38 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/LiveCheck.h:
+        * orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_Repository.h:
+        * orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
+
+          Fix for the regression failure with the ReconnectServer test.
+
+Tue Apr 16 14:51:42 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/Messaging/AMH_Response_Handler.cpp:
+
+          Fix to the previous fix. I was too cavalier in copying the CORBA
+          subset macro tests from the ForwardRequest.pidl file.
+
+Tue Apr 16 14:25:30 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/IORTable/IOR_Table_Impl.h:
+
+          Add the export macro on the class definition as well as the
+          forward declaration.
+
+        * tao/Messaging/AMH_Response_Handler.cpp:
+
+          Ensure the library can be built even on CORBA subset builds.
+
+Mon Apr 15 19:49:48 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup/run_test.pl:
+
+          Fix the timing on the test so the condition being tested is actually
+          allowed to occur. The total ping retry schedule is about 15 seconds,
+          so a 20 second timeout means the threshold is exceeded. When the
+          full ping retry schedule is exhausted, the IMR gives up and returns
+          the IOR, letting the client deal with the server directly. In this
+          case, doing so meant the client got a transient exception and thus
+          failed.
+
+Tue Apr 16 03:10:56 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * MPC/config/async_iortable.mpb:
+
+        * tao/Async_IORTable/Async_IORTable.cpp:
+        * tao/Async_IORTable/Async_Table_Adapter.cpp:
+
+        * tao/IORTable/IOR_Table_Impl.h:
+
+          clean up some scoreboard issues for visibility builds.
+
+Mon Apr 15 17:03:16 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/Async_IORTable/Async_IORTable.mpc:
+
+          Fixed the project name for uniqueness.
+
+Mon Apr 15 16:48:16 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * MPC/config/async_iortable.mpb:
+        * MPC/config/imr_client.mpb:
+        * MPC/config/iortable.mpb:
+
+        * orbsvcs/ImplRepo_Service/INS_Locator.h:
+        * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
+
+        * tao/Async_IORTable:
+
+        * tao/Async_IORTable/Async_IORTable.h:
+        * tao/Async_IORTable/Async_IORTable.cpp:
+        * tao/Async_IORTable/Async_IORTable.mpc:
+        * tao/Async_IORTable/Async_IORTable.pidl:
+        * tao/Async_IORTable/Async_IOR_Table_Impl.h:
+        * tao/Async_IORTable/Async_IOR_Table_Impl.cpp:
+        * tao/Async_IORTable/Async_Table_Adapter.h:
+        * tao/Async_IORTable/Async_Table_Adapter.cpp:
+        * tao/Async_IORTable/Locate_ResponseHandler.h:
+        * tao/Async_IORTable/Locate_ResponseHandler.inl:
+        * tao/Async_IORTable/Locate_ResponseHandler.cpp:
+        * tao/Async_IORTable/TAO_Async_IORTable.pc.in:
+        * tao/Async_IORTable/TAO_Async_IORTable.rc:
+
+        * tao/IORTable/IORTable.h:
+        * tao/IORTable/IORTable.mpc:
+        * tao/IORTable/IORTable.pidl:
+        * tao/IORTable/IOR_Table_Impl.h:
+        * tao/IORTable/IOR_Table_Impl.cpp:
+        * tao/IORTable/Table_Adapter.h:
+        * tao/IORTable/Table_Adapter.cpp:
+
+        * tao/ORB_Core.cpp:
+
+        * tao/IORTable/Locate_ResponseHandler.h:
+        * tao/IORTable/Locate_ResponseHandler.inl:
+        * tao/IORTable/Locate_ResponseHandler.cpp:
+
+          Refactored the IORTable to restore the minimal dependency of
+          the base library so that small footprint builds can continue
+          using the IORTable as needed. The new features added to support
+          asynchronous use of the IMR are now in a new library. While the
+          new Async_IORTable is registered as a distinct object in the
+          service object registry, the ORB Core will load it if present
+          when an application uses resolve_initial_references ("IORTable").
+          Right now the only use case for the async ior table is with the
+          IMR, which has its own implementation of the locator objeect.
+
+Mon Apr 15 14:26:39 UTC 2013  Adam Mitz  <mitza@ociweb.com>
+
+        * MPC/config/ftclientorb.mpb:
+        * MPC/config/ftserverorb.mpb:
+        * MPC/config/notify_monitor_control.mpb:
+        * MPC/config/portablegroup.mpb:
+        * orbsvcs/IFR_Service/IFR_Service.mpc:
+        * orbsvcs/tests/FT_App/FT_App.mpc:
+
+          Added svc_utils for static link.
+
+Mon Apr 15 14:12:56 UTC 2013  Adam Mitz  <mitza@ociweb.com>
+
+        * MPC/config/naming.mpb:
+        * orbsvcs/orbsvcs/SSLIOP.mpc:
+
+          Added svc_utils base project.
+
+Fri Apr 12 22:41:43 UTC 2013  Adam Mitz  <mitza@ociweb.com>
+
+        * orbsvcs/orbsvcs/Svc_Utils.mpc:
+        * orbsvcs/orbsvcs/Log_Macros.h:
+        * orbsvcs/orbsvcs/Log_Macros.cpp:
+
+          Added a distinct ACE Log Category for orbsvcs.
+
+        * orbsvcs/Concurrency_Service/Concurrency_Service.cpp:
+        * orbsvcs/Dump_Schedule/Dump_Schedule.cpp:
+        * orbsvcs/Event_Service/Event_Service.cpp:
+        * orbsvcs/FTRT_Event_Service/Event_Service/FT_EventService.cpp:
+        * orbsvcs/FTRT_Event_Service/Factory_Service/EventChannelFactory_i.cpp:
+        * orbsvcs/FTRT_Event_Service/Factory_Service/FTRTEC_Factory_Service.cpp:
+        * orbsvcs/FTRT_Event_Service/Factory_Service/FTRTEC_Factory_Service.mpc:
+        * orbsvcs/FTRT_Event_Service/Gateway_Service/FTRTEC_Gateway_Service.cpp:
+        * orbsvcs/FT_Naming_Service/FT_Naming_Main.cpp:
+        * orbsvcs/FT_ReplicationManager/FT_DefaultFaultAnalyzer.cpp:
+        * orbsvcs/FT_ReplicationManager/FT_FaultConsumer.cpp:
+        * orbsvcs/FT_ReplicationManager/FT_FaultEventDescriptor.cpp:
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.cpp:
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.mpc:
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManagerFaultAnalyzer.cpp:
+        * orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.cpp:
+        * orbsvcs/Fault_Detector/Fault_Detector.mpc:
+        * orbsvcs/Fault_Detector/Fault_Detector_i.cpp:
+        * orbsvcs/Fault_Notifier/FT_Notifier_i.cpp:
+        * orbsvcs/IFR_Service/IFR_Server.cpp:
+        * orbsvcs/IFR_Service/IFR_Service.mpc:
+        * orbsvcs/IFR_Service/be_global.cpp:
+        * orbsvcs/IFR_Service/be_init.cpp:
+        * orbsvcs/IFR_Service/be_produce.cpp:
+        * orbsvcs/IFR_Service/be_util.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_exception.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_operation.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_structure.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_union.cpp:
+        * orbsvcs/IFR_Service/ifr_removing_visitor.cpp:
+        * orbsvcs/ImplRepo_Service/Activator_Loader.cpp:
+        * orbsvcs/ImplRepo_Service/Activator_Options.cpp:
+        * orbsvcs/ImplRepo_Service/Adapter_Activator.cpp:
+        * orbsvcs/ImplRepo_Service/Config_Backing_Store.cpp:
+        * orbsvcs/ImplRepo_Service/Forwarder.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Activator.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
+        * orbsvcs/ImplRepo_Service/Locator_Loader.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_Options.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
+        * orbsvcs/ImplRepo_Service/Shared_Backing_Store.cpp:
+        * orbsvcs/ImplRepo_Service/XML_Backing_Store.cpp:
+        * orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
+        * orbsvcs/LifeCycle_Service/Factory_Trader.cpp:
+        * orbsvcs/LifeCycle_Service/LifeCycle_Service.cpp:
+        * orbsvcs/LifeCycle_Service/LifeCycle_Service_i.cpp:
+        * orbsvcs/LoadBalancer/LoadBalancer.mpc:
+        * orbsvcs/LoadBalancer/LoadManager.cpp:
+        * orbsvcs/LoadBalancer/LoadMonitor.cpp:
+        * orbsvcs/LoadBalancer/Monitor_Signal_Handler.cpp:
+        * orbsvcs/LoadBalancer/Push_Handler.cpp:
+        * orbsvcs/LoadBalancer/Signal_Handler.cpp:
+        * orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Server.cpp:
+        * orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.cpp:
+        * orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Server.cpp:
+        * orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.cpp:
+        * orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Server.cpp:
+        * orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.cpp:
+        * orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Server.cpp:
+        * orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.cpp:
+        * orbsvcs/Naming_Service/NT_Naming_Server.cpp:
+        * orbsvcs/Naming_Service/NT_Naming_Service.cpp:
+        * orbsvcs/Naming_Service/Naming_Server.cpp:
+        * orbsvcs/Notify_Service/NT_Notify_Server.cpp:
+        * orbsvcs/Notify_Service/Notify_Server.cpp:
+        * orbsvcs/Notify_Service/Notify_Service.cpp:
+        * orbsvcs/Scheduling_Service/Scheduling_Service.cpp:
+        * orbsvcs/TAO_Service/TAO_Service.cpp:
+        * orbsvcs/TAO_Service/TAO_Service.mpc:
+        * orbsvcs/Time_Service/Clerk_i.cpp:
+        * orbsvcs/Time_Service/Server_i.cpp:
+        * orbsvcs/Time_Service/Time_Service_Clerk.cpp:
+        * orbsvcs/Time_Service/Time_Service_Server.cpp:
+        * orbsvcs/Trading_Service/Trading_Server.cpp:
+        * orbsvcs/Trading_Service/Trading_Service.cpp:
+        * orbsvcs/orbsvcs/AV.mpc:
+        * orbsvcs/orbsvcs/AV/AVStreams_i.inl:
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+        * orbsvcs/orbsvcs/AV/AV_Core.cpp:
+        * orbsvcs/orbsvcs/AV/Endpoint_Strategy.cpp:
+        * orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp:
+        * orbsvcs/orbsvcs/AV/FlowSpec_Entry.inl:
+        * orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp:
+        * orbsvcs/orbsvcs/AV/Flows_T.cpp:
+        * orbsvcs/orbsvcs/AV/MCast.cpp:
+        * orbsvcs/orbsvcs/AV/Policy.cpp:
+        * orbsvcs/orbsvcs/AV/Protocol_Factory.cpp:
+        * orbsvcs/orbsvcs/AV/QoS_UDP.cpp:
+        * orbsvcs/orbsvcs/AV/RTCP.cpp:
+        * orbsvcs/orbsvcs/AV/RTCP_Channel.cpp:
+        * orbsvcs/orbsvcs/AV/RTCP_Packet.cpp:
+        * orbsvcs/orbsvcs/AV/RTP.cpp:
+        * orbsvcs/orbsvcs/AV/SCTP_SEQ.cpp:
+        * orbsvcs/orbsvcs/AV/TCP.cpp:
+        * orbsvcs/orbsvcs/AV/Transport.cpp:
+        * orbsvcs/orbsvcs/AV/UDP.cpp:
+        * orbsvcs/orbsvcs/AV/default_resource.cpp:
+        * orbsvcs/orbsvcs/AV/sfp.cpp:
+        * orbsvcs/orbsvcs/Concurrency/CC_Lock.cpp:
+        * orbsvcs/orbsvcs/Concurrency/CC_LockSet.cpp:
+        * orbsvcs/orbsvcs/Concurrency/Concurrency_Utils.cpp:
+        * orbsvcs/orbsvcs/CosConcurrency.mpc:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Dispatching_Task.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_DynamicImplementation.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_MT_Dispatching.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_ConsumerControl.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedEventChannel.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedProxyPushConsumer.cpp:
+        * orbsvcs/orbsvcs/CosLoadBalancing.mpc:
+        * orbsvcs/orbsvcs/CosNaming.mpc:
+        * orbsvcs/orbsvcs/CosNotification.mpc:
+        * orbsvcs/orbsvcs/CosProperty.mpc:
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Sender.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_Complex_Address_Server.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_Reactive_ConsumerEC_Control.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_Reconnect_ConsumerEC_Control.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_Simple_Mcast_EH.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_EH.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.inl:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Sender.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Default_ProxyConsumer.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Default_ProxySupplier.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Dispatching_Task.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Gateway_IIOP.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Gateway_IIOP_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Kokyu_Dispatching.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Kokyu_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Kokyu_Filter.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Kokyu_Filter_Builder.cpp:
+        * orbsvcs/orbsvcs/Event/EC_MT_Dispatching.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Priority_Dispatching.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Priority_Scheduling.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_ConsumerControl.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Sched_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Sched_Filter.cpp:
+        * orbsvcs/orbsvcs/Event/EC_TPC_Dispatching.cpp:
+        * orbsvcs/orbsvcs/Event/EC_TPC_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_TPC_ProxyConsumer.cpp:
+        * orbsvcs/orbsvcs/Event/EC_TPC_ProxySupplier.inl:
+        * orbsvcs/orbsvcs/Event/EC_TPC_ProxySupplier.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Thread_Flags.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Timeout_Filter.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Timeout_Generator.cpp:
+        * orbsvcs/orbsvcs/Event_Utilities.cpp:
+        * orbsvcs/orbsvcs/FTORB.mpc:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ClientPolicy_i.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Invocation_Endpoint_Selectors.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ServerRequest_Interceptor.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent.mpc:
+        * orbsvcs/orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Interceptor.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/ConnectionHandler_T.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_ConsumerAdmin.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_Group_Manager.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Fault_Detector.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Fault_Detector_Loader.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Fault_Detector_T.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/ForwardCtrlServerInterceptor.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FtEventServiceInterceptor.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/GroupInfoPublisher.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/IOGR_Maker.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Identification_Service.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Set_Update_Interceptor.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/UpdateableHandler.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/Utils/FTEC_Gateway.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/Utils/Log.inl:
+        * orbsvcs/orbsvcs/FtRtEvent/Utils/Log.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/Utils/resolve_init.h:
+        * orbsvcs/orbsvcs/HTIOP.mpc:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Acceptor.cpp:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Completion_Handler.cpp:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Connector.cpp:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Endpoint.cpp:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Profile.cpp:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Transport.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp:
+        * orbsvcs/orbsvcs/IFRService/IRObject_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/OperationDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/Options.cpp:
+        * orbsvcs/orbsvcs/IFRService/Repository_i.cpp:
+        * orbsvcs/orbsvcs/IOR_Multicast.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Utilization_Monitor.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LeastLoaded.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LoadAlert_Handler.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LoadAverage.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LoadManager.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LoadMinimum.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_MemberLocator.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_ObjectReferenceFactory.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_Pull_Handler.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_Random.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_ServerRequestInterceptor.cpp:
+        * orbsvcs/orbsvcs/Log/Hash_LogRecordStore.cpp:
+        * orbsvcs/orbsvcs/Log/Log_i.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Replication_Manager.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_PG_Group_Factory.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_PG_Object_Group_Storable.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Persistent_Naming_Context.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/nsgroup_svc.cpp:
+        * orbsvcs/orbsvcs/Naming/Naming_Client.cpp:
+        * orbsvcs/orbsvcs/Naming/Naming_Loader.cpp:
+        * orbsvcs/orbsvcs/Naming/Naming_Server.cpp:
+        * orbsvcs/orbsvcs/Naming/Naming_Service_Container.cpp:
+        * orbsvcs/orbsvcs/Naming/Persistent_Context_Index.cpp:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp:
+        * orbsvcs/orbsvcs/Notify/Admin.cpp:
+        * orbsvcs/orbsvcs/Notify/AllocTracker.h:
+        * orbsvcs/orbsvcs/Notify/Any/AnyEvent.cpp:
+        * orbsvcs/orbsvcs/Notify/Any/CosEC_ProxyPushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Any/CosEC_ProxyPushSupplier.cpp:
+        * orbsvcs/orbsvcs/Notify/Any/ProxyPushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Any/ProxyPushSupplier.cpp:
+        * orbsvcs/orbsvcs/Notify/Any/PushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Buffering_Strategy.cpp:
+        * orbsvcs/orbsvcs/Notify/Consumer.cpp:
+        * orbsvcs/orbsvcs/Notify/ConsumerAdmin.cpp:
+        * orbsvcs/orbsvcs/Notify/CosNotify_Service.cpp:
+        * orbsvcs/orbsvcs/Notify/Delivery_Request.cpp:
+        * orbsvcs/orbsvcs/Notify/ETCL_Filter.cpp:
+        * orbsvcs/orbsvcs/Notify/ETCL_FilterFactory.cpp:
+        * orbsvcs/orbsvcs/Notify/Event.cpp:
+        * orbsvcs/orbsvcs/Notify/EventChannel.cpp:
+        * orbsvcs/orbsvcs/Notify/EventChannelFactory.cpp:
+        * orbsvcs/orbsvcs/Notify/EventType.cpp:
+        * orbsvcs/orbsvcs/Notify/EventTypeSeq.cpp:
+        * orbsvcs/orbsvcs/Notify/Event_Manager.cpp:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch.cpp:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Lookup.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/MonitorManager.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/NotificationServiceMonitor_i.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MC_Notify_Service.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorConsumerAdmin.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorEventChannel.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorProxySupplier_T.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorSupplierAdmin.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Interpreter.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.cpp:
+        * orbsvcs/orbsvcs/Notify/Object.cpp:
+        * orbsvcs/orbsvcs/Notify/POA_Helper.cpp:
+        * orbsvcs/orbsvcs/Notify/Persistent_File_Allocator.cpp:
+        * orbsvcs/orbsvcs/Notify/Properties.cpp:
+        * orbsvcs/orbsvcs/Notify/ProxyConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/RT_Notify_Service.cpp:
+        * orbsvcs/orbsvcs/Notify/RT_POA_Helper.cpp:
+        * orbsvcs/orbsvcs/Notify/Random_File.cpp:
+        * orbsvcs/orbsvcs/Notify/Reconnection_Registry.cpp:
+        * orbsvcs/orbsvcs/Notify/Refcountable.cpp:
+        * orbsvcs/orbsvcs/Notify/Routing_Slip.cpp:
+        * orbsvcs/orbsvcs/Notify/Routing_Slip_Persistence_Manager.cpp:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushSupplier.cpp:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Standard_Event_Persistence.cpp:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredEvent.cpp:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushSupplier.cpp:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredPushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/SupplierAdmin.cpp:
+        * orbsvcs/orbsvcs/Notify/ThreadPool_Task.cpp:
+        * orbsvcs/orbsvcs/Notify/Validate_Client_Task.cpp:
+        * orbsvcs/orbsvcs/Notify/Validate_Worker_T.cpp:
+        * orbsvcs/orbsvcs/Notify/XML_Loader.cpp:
+        * orbsvcs/orbsvcs/Notify/XML_Saver.cpp:
+        * orbsvcs/orbsvcs/Notify/XML_Topology_Factory.cpp:
+        * orbsvcs/orbsvcs/PortableGroup.mpc:
+        * orbsvcs/orbsvcs/PortableGroup/Fragments_Cleanup_Strategy.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_FactoryRegistry.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_Factory.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group_Manipulator.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Property_Set.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PortableGroup_Acceptor_Registry.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PortableGroup_ORBInitializer.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Acceptor.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Endpoint.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Factory.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Mcast_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Mcast_Transport.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport_Recv_Packet.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/miop_resource.cpp:
+        * orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp:
+        * orbsvcs/orbsvcs/Runtime_Scheduler.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_CredentialsAcquirer.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Invocation_Interceptor.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_ORBInitializer.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
+        * orbsvcs/orbsvcs/Sched/Config_Scheduler.cpp:
+        * orbsvcs/orbsvcs/Sched/DynSched.cpp:
+        * orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils.cpp:
+        * orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils_T.cpp:
+        * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp:
+        * orbsvcs/orbsvcs/Sched/SchedEntry.cpp:
+        * orbsvcs/orbsvcs/Sched/Scheduler.cpp:
+        * orbsvcs/orbsvcs/Sched/Strategy_Scheduler.cpp:
+        * orbsvcs/orbsvcs/Scheduler_Factory.cpp:
+        * orbsvcs/orbsvcs/Security.mpc:
+        * orbsvcs/orbsvcs/Security/SL2_SecurityManager.cpp:
+        * orbsvcs/orbsvcs/Security/Security_ORBInitializer.cpp:
+        * orbsvcs/orbsvcs/Shutdown_Utilities.cpp:
+        * orbsvcs/orbsvcs/Time/TAO_Time_Service_Clerk.cpp:
+        * orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.cpp:
+        * orbsvcs/orbsvcs/Time/Timer_Helper.cpp:
+        * orbsvcs/orbsvcs/Trader/Trading_Loader.cpp:
+
+          Use new logging macros for orbsvcs.
+
+Fri Apr 12 20:58:38 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * MPC/config/iortable.mpb:
+
+          Add new base projects to satisfy static builds.
+
+Fri Apr 12 18:16:42 UTC 2013  Adam Mitz  <mitza@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
+
+          Added required base projects for valuetype and messaging.
+
+Fri Apr 12 17:58:35 UTC 2013  Huang-Ming Huang  <huangh@ociweb.com>
+
+        * tao/LF_Strategy_Complete.cpp:
+        * tao/TAO_Singleton.cpp:
+
+        Fix undeclared TAOLIB_DEBUG problem.
+
+Fri Apr 12 17:27:29 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Adapter_Activator.h:
+        * orbsvcs/ImplRepo_Service/Forwarder.h:
+
+          Fix for versioned namespace builds.
+
+        * utils/logWalker/Invocation.cpp:
+
+          clean up some scoreboard warnings.
+
+Fri Apr 12 12:11:11 UTC 2013  Martin Corino  <mcorino@remedy.nl>
+
+        * tests/Bug_3384_Regression/Client_i.h:
+        * tests/Bug_3384_Regression/Client_i.cpp:
+        * tests/Bug_3384_Regression/Server_i.h:
+        * tests/Bug_3384_Regression/Server_i.cpp:
+          More fixes for fuzzy fuzzer.
+
+Fri Apr 12 09:47:06 UTC 2013  Martin Corino  <mcorino@remedy.nl>
+
+        * tests/Bug_3384_Regression/Client_i.h:
+        * tests/Bug_3384_Regression/Client_i.cpp:
+        * tests/Bug_3384_Regression/README.txt:
+        * tests/Bug_3384_Regression/Server_i.h:
+        * tests/Bug_3384_Regression/Server_i.cpp:
+          Fuzz fixes.
+
+Thu Apr 11 19:52:53 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * NEWS:
+
+          Documented new ImR.
+
+Thu Apr 11 19:47:49 UTC 2013  Huang-Ming Huang  <huangh@ociweb.com>
+
+        * tao/debug.h:
+        Fixed TAOLIB_ERROR_RETURN()  control reaches end of non-void function warning.
+
+Thu Apr 11 18:03:24 UTC 2013  Huang-Ming Huang  <huangh@ociweb.com>
+
+        * tao/Acceptor_Impl.cpp:
+        * tao/Acceptor_Registry.cpp:
+
+        * tao/AnyTypeCode/Any_Unknown_IDL_Type.cpp:
+        * tao/AnyTypeCode/NVList.cpp:
+        * tao/AnyTypeCode/append.cpp:
+        * tao/AnyTypeCode/skip.cpp:
+
+        * tao/Any_Insert_Policy_T.h:
+        * tao/Asynch_Queued_Message.cpp:
+
+        * tao/BiDir_GIOP/BiDir_ORBInitializer.cpp:
+
+        * tao/CORBALOC_Parser.cpp:
+        * tao/CORBANAME_Parser.cpp:
+
+        * tao/CSD_Framework/CSD_Default_Servant_Dispatcher.cpp:
+        * tao/CSD_Framework/CSD_FW_Server_Request_Wrapper.cpp:
+        * tao/CSD_Framework/CSD_ORBInitializer.cpp:
+        * tao/CSD_Framework/CSD_Strategy_Base.inl:
+        * tao/CSD_Framework/CSD_Strategy_Base.cpp:
+        * tao/CSD_Framework/CSD_Strategy_Proxy.cpp:
+        * tao/CSD_Framework/CSD_Strategy_Repository.cpp:
+
+        * tao/CSD_ThreadPool/CSD_TP_Strategy_Factory.cpp:
+        * tao/CSD_ThreadPool/CSD_TP_Task.cpp:
+
+        * tao/Cache_Entries_T.cpp:
+
+        * tao/Codeset/Codeset_Descriptor.cpp:
+        * tao/Codeset/Codeset_Manager_i.cpp:
+        * tao/Codeset/Codeset_Translator_Factory_T.cpp:
+        * tao/Codeset/UTF16_BOM_Factory.cpp:
+        * tao/Codeset/UTF16_BOM_Translator.cpp:
+        * tao/Codeset/UTF8_Latin1_Factory.cpp:
+
+        * tao/Compression/zlib/ZlibCompressor_Factory.cpp:
+
+        * tao/Condition.cpp:
+        * tao/Connection_Handler.cpp:
+        * tao/Connector_Registry.cpp:
+
+        * tao/DiffServPolicy/DiffServPolicy_ORBInitializer.cpp:
+
+        * tao/DynamicAny/DynValue_i.cpp:
+
+        * tao/DynamicInterface/DII_Invocation.cpp:
+        * tao/DynamicInterface/DII_Reply_Dispatcher.cpp:
+        * tao/DynamicInterface/DII_Reply_Handler.cpp:
+        * tao/DynamicInterface/Request.cpp:
+
+        * tao/Dynamic_TP/DTP_Config.cpp:
+        * tao/Dynamic_TP/DTP_ORBInitializer.cpp:
+        * tao/Dynamic_TP/DTP_ORB_Loader.cpp:
+        * tao/Dynamic_TP/DTP_POA_Loader.cpp:
+        * tao/Dynamic_TP/DTP_POA_Strategy.cpp:
+        * tao/Dynamic_TP/DTP_Task.cpp:
+        * tao/Dynamic_TP/DTP_Thread_Pool.cpp:
+
+        * tao/EndpointPolicy/Endpoint_Acceptor_Filter.cpp:
+
+        * tao/Environment.cpp:
+        * tao/Exception.cpp:
+        * tao/Exclusive_TMS.cpp:
+
+        * tao/FlResource/FlResource_Factory.cpp:
+
+        * tao/FoxResource/FoxResource_Factory.cpp:
+
+        * tao/GIOP_Message_Base.cpp:
+        * tao/GIOP_Message_Generator_Parser.cpp:
+        * tao/GIOP_Message_Generator_Parser_10.cpp:
+        * tao/GIOP_Message_Generator_Parser_12.cpp:
+        * tao/GIOP_Message_State.cpp:
+        * tao/HTTP_Client.cpp:
+        * tao/HTTP_Handler.cpp:
+        * tao/HTTP_Parser.cpp:
+        * tao/IIOP_Acceptor.cpp:
+        * tao/IIOP_Connection_Handler.cpp:
+        * tao/IIOP_Connector.cpp:
+        * tao/IIOP_Endpoint.cpp:
+        * tao/IIOP_Profile.cpp:
+        * tao/IIOP_Transport.cpp:
+
+        * tao/IORInterceptor/IORInterceptor_Adapter_Impl.cpp:
+
+        * tao/ImR_Client/ImR_Client.cpp:
+
+        * tao/Invocation_Adapter.cpp:
+        * tao/LF_CH_Event.cpp:
+        * tao/LF_Strategy_Complete.cpp:
+        * tao/Leader_Follower.cpp:
+        * tao/Load_Protocol_Factory_T.h:
+        * tao/LocalObject.cpp:
+        * tao/MCAST_Parser.cpp:
+        * tao/MProfile.cpp:
+
+        * tao/Messaging/AMH_Response_Handler.cpp:
+        * tao/Messaging/Asynch_Invocation_Adapter.cpp:
+        * tao/Messaging/Asynch_Reply_Dispatcher.cpp:
+        * tao/Messaging/Asynch_Timeout_Handler.cpp:
+        * tao/Messaging/Connection_Timeout_Policy_i.cpp:
+        * tao/Messaging/Messaging_ORBInitializer.cpp:
+        * tao/Messaging/Messaging_Policy_i.cpp:
+        * tao/Messaging/Messaging_Queueing_Strategies.cpp:
+
+        * tao/Muxed_TMS.cpp:
+        * tao/ORB.cpp:
+        * tao/ORBInitializer_Registry.cpp:
+        * tao/ORB_Core.cpp:
+        * tao/Object.cpp:
+        * tao/Object_Ref_Table.cpp:
+        * tao/On_Demand_Fragmentation_Strategy.cpp:
+
+        * tao/PI/ClientRequestInfo.cpp:
+        * tao/PI/DLL_Resident_ORB_Initializer.cpp:
+        * tao/PI/Interceptor_List_T.cpp:
+        * tao/PI/ORBInitializer_Registry_Impl.cpp:
+        * tao/PI/PICurrent_Impl.cpp:
+
+        * tao/Parser_Registry.cpp:
+        * tao/Policy_Validator.cpp:
+
+        * tao/PortableServer/Active_Object_Map.cpp:
+        * tao/PortableServer/IdAssignmentStrategyFactoryImpl.cpp:
+        * tao/PortableServer/IdUniquenessStrategyFactoryImpl.cpp:
+        * tao/PortableServer/IdUniquenessStrategyUniqueFactoryImpl.cpp:
+        * tao/PortableServer/ImplicitActivationStrategyFactoryImpl.cpp:
+        * tao/PortableServer/LifespanStrategyFactoryImpl.cpp:
+        * tao/PortableServer/LifespanStrategyPersistent.cpp:
+        * tao/PortableServer/LifespanStrategyPersistentFactoryImpl.cpp:
+        * tao/PortableServer/LifespanStrategyTransientFactoryImpl.cpp:
+        * tao/PortableServer/Object_Adapter.cpp:
+        * tao/PortableServer/Operation_Table_Binary_Search.cpp:
+        * tao/PortableServer/Operation_Table_Dynamic_Hash.cpp:
+        * tao/PortableServer/Operation_Table_Linear_Search.cpp:
+        * tao/PortableServer/Operation_Table_Perfect_Hash.cpp:
+        * tao/PortableServer/POA_Policy_Set.cpp:
+        * tao/PortableServer/RequestProcessingStrategyAOMOnlyFactoryImpl.cpp:
+        * tao/PortableServer/RequestProcessingStrategyDefaultServantFI.cpp:
+        * tao/PortableServer/RequestProcessingStrategyFactoryImpl.cpp:
+        * tao/PortableServer/RequestProcessingStrategyServantActivatorFI.cpp:
+        * tao/PortableServer/RequestProcessingStrategyServantLocatorFI.cpp:
+        * tao/PortableServer/ServantRetentionStrategyFactoryImpl.cpp:
+        * tao/PortableServer/ServantRetentionStrategyNonRetainFactoryImpl.cpp:
+        * tao/PortableServer/ServantRetentionStrategyRetain.cpp:
+        * tao/PortableServer/ServantRetentionStrategyRetainFactoryImpl.cpp:
+        * tao/PortableServer/ThreadStrategyFactoryImpl.cpp:
+        * tao/PortableServer/ThreadStrategySingleFactoryImpl.cpp:
+
+        * tao/Profile.cpp:
+
+        * tao/QtResource/QtResource_Factory.cpp:
+
+        * tao/Queued_Data.cpp:
+
+        * tao/RTCORBA/Linear_Network_Priority_Mapping.cpp:
+        * tao/RTCORBA/Linear_Priority_Mapping.cpp:
+        * tao/RTCORBA/Multi_Priority_Mapping.cpp:
+        * tao/RTCORBA/RT_Current.cpp:
+        * tao/RTCORBA/RT_Invocation_Endpoint_Selectors.cpp:
+        * tao/RTCORBA/RT_ORBInitializer.cpp:
+        * tao/RTCORBA/RT_ORB_Loader.cpp:
+        * tao/RTCORBA/RT_Protocols_Hooks.cpp:
+        * tao/RTCORBA/RT_Service_Context_Handler.cpp:
+        * tao/RTCORBA/Thread_Pool.cpp:
+
+        * tao/RTPortableServer/RT_Servant_Dispatcher.cpp:
+
+        * tao/RTScheduling/Current.cpp:
+        * tao/RTScheduling/RTScheduler_Initializer.cpp:
+        * tao/RTScheduling/RTScheduler_Loader.cpp:
+        * tao/RTScheduling/Request_Interceptor.cpp:
+
+        * tao/Reactive_Connect_Strategy.cpp:
+        * tao/Remote_Invocation.cpp:
+        * tao/Resume_Handle.cpp:
+        * tao/Storable_File_Guard.cpp:
+        * tao/Storable_FlatFileStream.cpp:
+
+        * tao/Strategies/COIOP_Acceptor.cpp:
+        * tao/Strategies/COIOP_Connection_Handler.cpp:
+        * tao/Strategies/COIOP_Profile.cpp:
+        * tao/Strategies/DIOP_Acceptor.cpp:
+        * tao/Strategies/DIOP_Connection_Handler.cpp:
+        * tao/Strategies/DIOP_Connector.cpp:
+        * tao/Strategies/DIOP_Endpoint.cpp:
+        * tao/Strategies/DIOP_Profile.cpp:
+        * tao/Strategies/DIOP_Transport.cpp:
+        * tao/Strategies/Optimized_Connection_Endpoint_Selector.cpp:
+        * tao/Strategies/SCIOP_Acceptor.cpp:
+        * tao/Strategies/SCIOP_Connection_Handler.cpp:
+        * tao/Strategies/SCIOP_Connector.cpp:
+        * tao/Strategies/SCIOP_Endpoint.cpp:
+        * tao/Strategies/SCIOP_Profile.cpp:
+        * tao/Strategies/SCIOP_Transport.cpp:
+        * tao/Strategies/SHMIOP_Acceptor.cpp:
+        * tao/Strategies/SHMIOP_Connection_Handler.cpp:
+        * tao/Strategies/SHMIOP_Connector.cpp:
+        * tao/Strategies/SHMIOP_Endpoint.cpp:
+        * tao/Strategies/SHMIOP_Profile.cpp:
+        * tao/Strategies/SHMIOP_Transport.cpp:
+        * tao/Strategies/Strategies_ORBInitializer.cpp:
+        * tao/Strategies/UIOP_Acceptor.cpp:
+        * tao/Strategies/UIOP_Connection_Handler.cpp:
+        * tao/Strategies/UIOP_Connector.cpp:
+        * tao/Strategies/UIOP_Profile.cpp:
+        * tao/Strategies/UIOP_Transport.cpp:
+        * tao/Strategies/advanced_resource.cpp:
+
+        * tao/Stub.inl:
+        * tao/Stub.cpp:
+        * tao/Synch_Invocation.cpp:
+        * tao/Synch_Reply_Dispatcher.cpp:
+        * tao/SystemException.cpp:
+        * tao/TAO_Internal.cpp:
+        * tao/TAO_Server_Request.cpp:
+        * tao/TAO_Singleton.cpp:
+        * tao/Tagged_Profile.cpp:
+        * tao/Time_Policy_Manager.cpp:
+
+        * tao/TkResource/TkResource_Factory.cpp:
+
+        * tao/Transport.cpp:
+
+        * tao/TransportCurrent/Current_ORBInitializer_Base.cpp:
+
+        * tao/Transport_Acceptor.cpp:
+        * tao/Transport_Cache_Manager_T.inl:
+        * tao/Transport_Cache_Manager_T.cpp:
+        * tao/Transport_Connector.cpp:
+
+        * tao/Utils/ORB_Manager.cpp:
+        * tao/Utils/Server_Main.cpp:
+
+        * tao/Valuetype/AbstractBase.cpp:
+        * tao/Valuetype/ValueBase.cpp:
+
+        * tao/Wait_On_LF_No_Upcall.cpp:
+        * tao/Wait_On_Read.cpp:
+        * tao/WrongTransactionC.cpp:
+
+        * tao/XtResource/XtResource_Factory.cpp:
+
+        * tao/ZIOP/ZIOP.cpp:
+        * tao/ZIOP/ZIOP_ORBInitializer.cpp:
+        * tao/ZIOP/ZIOP_Stub.cpp:
+
+        * tao/debug.h:
+        * tao/debug.cpp:
+        * tao/default_client.cpp:
+        * tao/default_resource.cpp:
+        * tao/default_server.cpp:
+        Change ACE_DEBUG/ACE_ERROR macros in tao to TAOLIB_DEBUG/TAOLIB_ERROR.
+
+Thu Apr 11 17:18:36 UTC 2013  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * tao/Transport.cpp (TAO_Transport::send_asynchronous_message_i):
+          Applied a patch from Russ Noseworthy <J.Russell.Noseworthy at
+          TENA-SDA dot org> that fixes a problem when sending a large (>
+          64k) number of bytes in a (oneway) RMI on OS X.  What happened
+          was that, for large payloads, the send in Transport.cpp returns
+          a value of n, not equal to the number of bytes to send.  What's
+          supposed to happen is that the rest of the bytes get sent with
+          the next send.  Instead, if the current value of errno happens
+          to be ETIME (for any reason), the send never completes, and
+          instead declares that it's timed out.  This fixes bugid 4103.
+
+Thu Apr 11 16:51:31 UTC 2013  Martin Corino  <mcorino@remedy.nl>
+
+        Implemented an improvement (fix) for oneways with SYNC_NONE sync scope
+        policy which makes the transport honour buffering constraints on the
+        first oneway request queued before the connection is established.
+        This fixes Bugzilla 3384.
+
+        * tao/Profile_Transport_Resolver.cpp:
+          Removed the call to TAO_Transport::set_flush_in_post_open() since this
+          requirement is now checked in Transport::format_queue_message().
+
+        * tao/Transport.h:
+        * tao/Transport.inl:
+          Removed public method TAO_Transport::set_flush_in_post_open() since this
+          is not needed anymore.
+
+        * tao/Transport.cpp:
+          Added check on buffering constraints in TAO_Transport::format_queue_message()
+          after queuing the message setting flush_in_post_open_ as needed.
+          Added check in TAO_Transport::check_buffering_constraints_i() on connection
+          state since this method can now be called in both a connected as well as
+          unconnected state.
+
+        * bin/tao_orb_tests.lst:
+        * tests/Bug_3384_Regression/Client_i.h:
+        * tests/Bug_3384_Regression/Client_i.cpp:
+        * tests/Bug_3384_Regression/README.txt:
+        * tests/Bug_3384_Regression/Server_i.h:
+        * tests/Bug_3384_Regression/Server_i.cpp:
+        * tests/Bug_3384_Regression/Test.idl:
+        * tests/Bug_3384_Regression/client.cpp:
+        * tests/Bug_3384_Regression/run_test.pl:
+        * tests/Bug_3384_Regression/server.cpp:
+        * tests/Bug_3384_Regression/test.mpc:
+          Added new regression test.
+
+Thu Apr 11 16:16:21 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        branch merge from branches/OCI_Asynch_ImR. This is a re-implementation
+        of the tao_imr_locator to improve performance using asynchronous method
+        handling and invocation (AMH/AMI) to allow many concurrent client requests
+        to be satisfied as quickly as possible, avoiding nested upcalls and
+        potentally fatal stack sizes. The only user visible change is that IMR
+        clients must now include the messaging library to satsify the linker due
+        to the AMI/AMH stubs and skeletons. MPC makes this happen automatically for
+        projects using it for build management.
+
+        Wed Apr 10 00:58:56 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/LiveCheck.h:
+        * orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+
+        Fix for the reconnect test. Use the fact that a dead server is
+        not scheduled for a ping to throw an immediate exception.
+
+        Tue Apr  9 15:44:55 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+
+        Cleaned up explicit debug output, added a catch for errors during
+        connection establishment with the async ping. The AMI callback
+        exception handler is only invoked after a successful send of the
+        invocation. A connection failure is still an exception in the
+        caller's context.
+
+        * orbsvcs/tests/ImplRepo/servers_list/Terminator.cpp:
+        * orbsvcs/tests/ImplRepo/servers_list/run_test.pl:
+
+        Reverted earlier change.
+
+        Tue Apr  9 14:42:10 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/LiveCheck.h:
+        * orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+
+        Improve the list performance by forcing a poll if an active
+        test is required.
+
+        * orbsvcs/tests/ImplRepo/servers_list/Terminator.cpp:
+        * orbsvcs/tests/ImplRepo/servers_list/run_test.pl:
+
+        enhance the debugging output.
+
+        Mon Apr  8 19:02:29 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+
+        Clean up earlier debug messages, fix the list operation.
+
+        Mon Apr  8 17:13:01 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * orbsvcs/ImplRepo_Service/LiveCheck.h:
+        * orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+
+        More work on PER_CLIENT activations.
+
+        Mon Apr  8 03:29:47 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.h:
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+
+        Coveratge for PER_CLIENT activations.
+
+        Sun Apr  7 13:55:15 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Forwarder.cpp:
+        * orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+
+        Fix for memory leak and scoreboard failures.
+
+        Sat Apr  6 12:36:48 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * orbsvcs/ImplRepo_Service/INS_Locator.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+
+        More cleanup of development-level debug messages.
+
+        * tao/IORTable/Locate_ResponseHandler.cpp:
+
+        Fix for improper memory management.
+
+        Fri Apr  5 21:21:15 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * orbsvcs/ImplRepo_Service/INS_Locator.cpp:
+        * orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup/run_test.pl:
+
+        * tao/IORTable/Locate_ResponseHandler.h:
+        * tao/IORTable/Locate_ResponseHandler.cpp:
+
+        * tao/Messaging/AMH_Response_Handler.h:
+        * tao/Messaging/AMH_Response_Handler.cpp:
+
+        Clean up some development-level logging. Fixed the memory problems. Continue
+        testing and validating.
+
+        Thu Apr  4 23:15:58 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * orbsvcs/ImplRepo_Service/Forwarder.h:
+        * orbsvcs/ImplRepo_Service/Forwarder.cpp:
+        * orbsvcs/ImplRepo_Service/INS_Locator.h:
+        * orbsvcs/ImplRepo_Service/INS_Locator.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_Repository.h:
+        * orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
+
+        * tao/Adapter.h:
+
+        * tao/DynamicInterface/AMH_DSI_Response_Handler.cpp:
+
+        * tao/IORTable/IORTable.h:
+        * tao/IORTable/IORTable.mpc:
+        * tao/IORTable/IORTable.pidl:
+        * tao/IORTable/IOR_Table_Impl.h:
+        * tao/IORTable/IOR_Table_Impl.cpp:
+        * tao/IORTable/Locate_ResponseHandler.h:
+        * tao/IORTable/Locate_ResponseHandler.inl:
+        * tao/IORTable/Locate_ResponseHandler.cpp:
+        * tao/IORTable/Table_Adapter.h:
+        * tao/IORTable/Table_Adapter.cpp:
+
+        * tao/Messaging/AMH_Response_Handler.h:
+        * tao/Messaging/AMH_Response_Handler.cpp:
+
+        Adding support for an asynchronous IORTable locator. This commit
+        also contains a lot of intermediate debugging artifacts. It still
+        crashes. Committing for easy distribution to other test hosts.
+
+        Wed Apr  3 14:20:28 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+
+        Fix how exceptions are handled when using the sync reponse handler.
+
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup/run_test.pl:
+
+        Improve the quality of output when run in debug mode.
+
+        Tue Apr  2 23:13:50 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * orbsvcs/ImplRepo_Service/Forwarder.cpp:
+        * orbsvcs/ImplRepo_Service/INS_Locator.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/LiveCheck.h:
+        * orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+
+        Clean up debugging output and improve ping retry logic.
+
+        * utils/logWalker/HostProcess.h:
+        * utils/logWalker/HostProcess.cpp:
+        * utils/logWalker/Log.cpp:
+        * utils/logWalker/PeerProcess.h:
+        * utils/logWalker/PeerProcess.cpp:
+        * utils/logWalker/Session.h:
+        * utils/logWalker/Session.cpp:
+
+        Fix up the endpoint association so multiple log files can correlate.
+
+Tue Apr  2 13:17:44 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Forwarder.cpp:
+
+        Nightly build cleanup.
+
+        Tue Apr  2 01:37:35 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+
+        More debugging added for scoreboard processing.
+
+        Mon Apr  1 23:52:37 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.h:
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+
+        More memory management and state machine improvments
+
+        Mon Apr  1 21:28:42 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.h:
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/LiveCheck.h:
+        * orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+
+        Improve memory management.
+
+        * utils/logWalker/Log.cpp:
+
+        Improve handling of nested client/server connection
+        completions.
+
+        Mon Apr  1 15:51:42 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+
+        allow collocation calls to support the AMI callbacks.
+
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup/Test_i.cpp:
+
+        Fix a scoreboard build error.
+
+        Fri Mar 29 22:52:42 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.h:
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * orbsvcs/ImplRepo_Service/Forwarder.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/LiveCheck.h:
+        * orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+
+        Improve the ping retry state machine, add more diagonstics.
+
+        * utils/logWalker/Log.cpp:
+
+        Fix a memory managment error.
+
+        Fri Mar 29 00:23:44 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
+
+        Added messaging library dependency to tao_imr.
+
+        Fri Mar 29 00:14:00 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.h:
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * orbsvcs/ImplRepo_Service/Forwarder.h:
+        * orbsvcs/ImplRepo_Service/Forwarder.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_ResponseHandler.h:
+        * orbsvcs/ImplRepo_Service/ImR_ResponseHandler.cpp:
+        * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
+
+        Completed the initial task of transitioning to an AMH Locator servant.
+        Still need to work on the INS_Locator which uses synch calls. Also need to
+        run through regression suite and debug.
+
+        * orbsvcs/ImplRepo_Service/AsyncStartupWaiter.idl:
+        * orbsvcs/ImplRepo_Service/AsyncStartupWaiter_i.h:
+        * orbsvcs/ImplRepo_Service/AsyncStartupWaiter_i.cpp:
+
+        Removed these files.
+
+        Thu Mar 28 17:05:52 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.h:
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
+        * orbsvcs/ImplRepo_Service/LiveCheck.h:
+        * orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_Repository.h:
+
+        Further improvments to the implementation. At the point where the basic ImplRepo
+        test passes.
+
+        Tue Mar 26 23:58:50 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Adapter_Activator.h:
+        * orbsvcs/ImplRepo_Service/Adapter_Activator.cpp:
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.h:
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * orbsvcs/ImplRepo_Service/Forwarder.h:
+        * orbsvcs/ImplRepo_Service/Forwarder.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/LiveCheck.h:
+        * orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_Options.h:
+        * orbsvcs/ImplRepo_Service/Locator_Options.cpp:
+
+        completed asynch ping tracking and event delivery. Removed sync/asynch
+        behavior option, it didn't work and it was temporary anyway. Stripped the
+        old code that was optional.
+
+        Tue Mar 26 16:35:26 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Forwarder.cpp:
+
+        Clean up error in validating the forward-to IOR.
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator.cpp:
+
+        Clean up the shutdown handler for single-thread use.
+
+        * tao/Messaging/AMH_Response_Handler.cpp:
+
+        Add the explicit handling of ForwardRequest exceptions.
+
+        Tue Mar 26 15:52:50 UTC 2013  Byron Harris  <harrisb@ociweb.com>
+
+        * bin/tao_other_tests.lst:
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup:
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup/README:
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup/Test.idl:
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup/Test_i.h:
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup/Test_i.cpp:
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup/client.cpp:
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup/run_test.pl:
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup/server.cpp:
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup/servers_interact_on_startup.mpc:
+
+        Added test for ImR pinging of ill-behaved, interacting servers.
+
+        Mon Mar 25 20:52:13 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
+
+        Restore the export macro in the ImR_Locator impl class.
+
+        Mon Mar 25 20:41:16 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Adapter_Activator.cpp:
+
+        Fix policy inconsitency.
+
+        Mon Mar 25 17:35:24 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.h:
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * orbsvcs/ImplRepo_Service/Forwarder.h:
+        * orbsvcs/ImplRepo_Service/Forwarder.cpp:
+        * orbsvcs/ImplRepo_Service/INS_Locator.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
+        * orbsvcs/ImplRepo_Service/LiveCheck.h:
+        * orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_Options.cpp:
+
+        Continue with implementation. Added some temporary debug output, hooked up the
+        sync version of the reactive ping-wait. Started in on the next stage, which is
+        making the rest of the server access Asynchronous. Changed the mode select flag
+        for start up from defaulting to the traditional sync-style of calls to the new
+        asynch style. The temporary command line flag is now --old, to use the old
+        style for comparison.
+
+        Fri Mar 22 18:16:00 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+
+        Fix for a core-on-exit problem.
+
+        Tue Mar 19 13:31:43 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
+        * orbsvcs/ImplRepo_Service/LiveCheck.h:
+        * orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+
+        Adding new mechanism for pinging servers asynchronously. When the IMR is
+        interested in the status of a server, it now registers a callback object and
+        a ping is scheduled. At the appropriate time, the ping request is sent using
+        AMI. The reply or exception is then handled asynchronously.
+
+        For testing in an otherwise synchronous locator, a blocking ping reply waiter
+        is used.
+
+        Thu Mar 14 21:36:30 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/AsyncStartupWaiter_i.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+
+        Some syntactic clean up and apply a fix for a memory leak Kevin applied to
+        the trunk.
+
+        * utils/logWalker/HostProcess.cpp:
+        * utils/logWalker/Invocation.h:
+        * utils/logWalker/Invocation.cpp:
+        * utils/logWalker/Thread.h:
+        * utils/logWalker/Thread.cpp:
+
+        Add a new type of by-thread output that highlights nested upcalls and the
+        processing impact of delaying action on replies.
+
+        Mon Mar 11 16:31:08 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_Options.h:
+        * orbsvcs/ImplRepo_Service/Locator_Options.cpp:
+
+        Actually select the DSI/AMH implementation when the asynch
+        option is supplied. Avoid confusion with the option by calling
+        it --asynch rather than the earlier --use_dsi
+
+        * orbsvcs/tests/ImplRepo/scale_clients/run_test.pl:
+
+        Modify the test to verify that both synchronous and asynch
+        implementations work.
+
+        Mon Mar 11 01:50:33 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Adapter_Activator.h:
+        * orbsvcs/ImplRepo_Service/Adapter_Activator.cpp:
+
+        In order to support asynchronous interfaces, the adapter has to use the
+        default servant rather than the servant locator. The servant locator does
+        not give an opportunity for asynch processing.
+
+        * orbsvcs/ImplRepo_Service/Forwarder.h:
+        * orbsvcs/ImplRepo_Service/Forwarder.cpp:
+
+        The initial cut at implementing AMH.
+
+        * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
+        * orbsvcs/ImplRepo_Service/Locator_Options.h:
+        * orbsvcs/ImplRepo_Service/Locator_Options.cpp:
+
+        The feature is optional for now at least.
+
+        * tao/ImR_Client/ImR_Client.mpc:
+
+        Add support for generating asyncronous stubs and skeletons for working
+        with the ImR.
+
 Thu Apr  4 13:35:46 UTC 2013  Byron Harris  <harrisb@ociweb.com>
 
         * orbsvcs/tests/FT_Naming/FaultTolerant/client.cpp:

@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h"
 #include "orbsvcs/SSLIOP/SSLIOP_Transport.h"
 #include "orbsvcs/SSLIOP/SSLIOP_Profile.h"
@@ -87,7 +88,7 @@ TAO::SSLIOP::Transport::recv (char *buf,
   // Now the message has been read
   if (n == -1 && TAO_debug_level > 4 && errno != ETIME)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - SSLIOP_Transport[%d]::recv, ")
                   ACE_TEXT ("read failure - %m errno %d\n"),
                   this->id (),
@@ -156,7 +157,7 @@ TAO::SSLIOP::Transport::send_message (TAO_OutputCDR &stream,
   if (n == -1)
     {
       if (TAO_debug_level)
-        ACE_ERROR ((LM_ERROR,
+        ORBSVCS_ERROR ((LM_ERROR,
                     ACE_TEXT ("TAO (%P|%t) - SSLIOP_Transport::send_message, ")
                     ACE_TEXT ("closing transport %d after fault %p\n"),
                     this->id (),
@@ -212,7 +213,7 @@ TAO::SSLIOP::Transport::set_bidir_context_info (
         {
           if (this->get_listen_point (listen_point_list, *acceptor) == -1)
             {
-              ACE_ERROR ((LM_ERROR,
+              ORBSVCS_ERROR ((LM_ERROR,
                           "TAO (%P|%t) - SSLIOP_Transport::set_bidir_info, ",
                           "error getting listen_point\n"));
               return;
@@ -262,7 +263,7 @@ TAO::SSLIOP::Transport::get_listen_point (
   {
     if (this->connection_handler_->peer ().get_local_addr (local_addr) == -1)
       {
-        ACE_ERROR_RETURN ((LM_ERROR,
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("(%P|%t) Could not resolve local host")
                            ACE_TEXT (" address in get_listen_point()\n")),
                         -1);
@@ -280,7 +281,7 @@ TAO::SSLIOP::Transport::get_listen_point (
                                  local_addr,
                                  local_interface.out ()) == -1)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("(%P|%t) Could not resolve local host")
                          ACE_TEXT (" name\n")),
                         -1);

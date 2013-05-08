@@ -1,5 +1,7 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/HTIOP/HTIOP_Connection_Handler.h"
 
 #include "orbsvcs/HTIOP/HTIOP_Transport.h"
@@ -55,7 +57,7 @@ TAO::HTIOP::Connection_Handler::~Connection_Handler (void)
 
   if (result == -1 && TAO_debug_level)
     {
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
                   ACE_TEXT("TAO (%P|%t) - HTIOP_Connection_Handler::")
                   ACE_TEXT("~HTIOP_Connection_Handler, ")
                   ACE_TEXT("release_os_resources() failed %m\n")));
@@ -106,7 +108,7 @@ TAO::HTIOP::Connection_Handler::open (void*)
           (void) local_addr.addr_to_string (local_as_string,
                                             sizeof(local_as_string),
                                             0);
-          ACE_ERROR ((LM_ERROR,
+          ORBSVCS_ERROR ((LM_ERROR,
                       ACE_TEXT("TAO(%P|%t) - TAO::HTIOP::Connection_Handler::open, ")
                       ACE_TEXT("Holy Cow! The remote addr and ")
                       ACE_TEXT("local addr are identical (%s == %s)\n"),
@@ -123,7 +125,7 @@ TAO::HTIOP::Connection_Handler::open (void*)
       if (remote_addr.addr_to_string (client, sizeof (client), 0) == -1)
         return -1;
 
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) TAO_HTIOP connection to peer ")
                   ACE_TEXT ("<%s> on %d\n"),
                   client, this->peer ().get_handle ()));
@@ -165,7 +167,7 @@ TAO::HTIOP::Connection_Handler::handle_input (ACE_HANDLE h)
       if (result != -1 && peer().session())
         {
           if (TAO_debug_level > 2)
-            ACE_DEBUG ((LM_DEBUG,
+            ORBSVCS_DEBUG ((LM_DEBUG,
                         ACE_TEXT("TAO::HTIOP::Connection_Handler::handle_input: ")
                         ACE_TEXT("now binding to %d\n"),
                         peer().get_handle()));
@@ -257,7 +259,7 @@ TAO::HTIOP::Connection_Handler::process_listen_point_list
 
       if (TAO_debug_level > 0)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT("(%P|%t) Listening port [%d] on [%C],[%C]\n"),
                       listen_point.port,
                       listen_point.host.in (),

@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "Signal_Handler.h"
 #include "tao/ORB_Core.h"
 #include "ace/Reactor.h"
@@ -30,7 +31,7 @@ TAO_LB_Signal_Handler::svc (void)
   // Block waiting for the registered signals.
   if (ACE_OS::sigwait (this->sigset_, &signum) == -1)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
                          "(%P|%t) %p\n",
                          "ERROR waiting on signal"),
                         -1);
@@ -38,7 +39,7 @@ TAO_LB_Signal_Handler::svc (void)
 
   ACE_ASSERT (signum == SIGINT || signum == SIGTERM);
 
-//   ACE_DEBUG ((LM_DEBUG,
+//   ORBSVCS_DEBUG ((LM_DEBUG,
 //               ACE_TEXT ("(%P|%t) synchronous signal handler done\n")));
 
   return this->perform_cleanup (signum);
@@ -95,7 +96,7 @@ TAO_LB_Signal_Handler::activate (long flags,
 int
 TAO_LB_Signal_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
 {
-//   ACE_DEBUG ((LM_DEBUG,
+//   ORBSVCS_DEBUG ((LM_DEBUG,
 //               ACE_TEXT ("(%P|%t) ASYNCHRONOUS signal handler done\n")));
 
   // This method is only used in the asynchronous signal handling case
@@ -128,7 +129,7 @@ TAO_LB_Signal_Handler::perform_cleanup (int signum)
     {
       ex._tao_print_exception ("Caught exception");
 
-      ACE_ERROR_RETURN ((LM_ERROR,
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
                          "Problem during cleanup initiated by signal %d.\n",
                          signum),
                         -1);

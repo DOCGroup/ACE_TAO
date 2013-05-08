@@ -48,7 +48,7 @@ TAO::CSD::TP_Strategy_Factory::init (int argc,
     {
       if (TAO_debug_level > 0)
         {
-          ACE_DEBUG((LM_DEBUG,
+          TAOLIB_DEBUG((LM_DEBUG,
                      ACE_TEXT ("TAO (%P|%t) - TP_Strategy_Factory - ")
                      ACE_TEXT ("cannot initialize strategy repo\n")));
         }
@@ -111,7 +111,7 @@ TAO::CSD::TP_Strategy_Factory::init (int argc,
         {
           if (TAO_debug_level > 0)
             {
-              ACE_ERROR ((LM_ERROR,
+              TAOLIB_ERROR ((LM_ERROR,
                           ACE_TEXT("CSD_ORB_Loader: Unknown option ")
                           ACE_TEXT("<%s>.\n"),
                           argv[curarg]));

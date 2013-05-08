@@ -2,6 +2,7 @@
 //
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/CosEvent/CEC_TypedEventChannel.h"
 #include "orbsvcs/CosEvent/CEC_Dispatching.h"
 #include "orbsvcs/CosEvent/CEC_TypedConsumerAdmin.h"
@@ -224,7 +225,7 @@ TAO_CEC_TypedEventChannel::clear_ifr_cache (void)
     {
       if (TAO_debug_level >= 10)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("***** Destroying operation %s from ifr cache *****\n"),
                       const_cast<char *> ((*i).ext_id_)));
         }
@@ -264,7 +265,7 @@ TAO_CEC_TypedEventChannel::cache_interface_description (const char *interface_)
         {
           if (TAO_debug_level >= 10)
             {
-              ACE_DEBUG ((LM_DEBUG,
+              ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("***** CORBA::InterfaceDef::_narrow failed for interface %s *****\n"),
                           interface_));
             }
@@ -282,7 +283,7 @@ TAO_CEC_TypedEventChannel::cache_interface_description (const char *interface_)
             {
               for (CORBA::ULong base=0; base<fid->base_interfaces.length(); base++)
                 {
-                  ACE_DEBUG ((LM_DEBUG,
+                  ORBSVCS_DEBUG ((LM_DEBUG,
                               ACE_TEXT ("***** Base interface %s found on interface %s *****\n"),
                               static_cast<char const*>(fid->base_interfaces[base]),
                               interface_ ));
@@ -294,7 +295,7 @@ TAO_CEC_TypedEventChannel::cache_interface_description (const char *interface_)
             {
               if (TAO_debug_level >= 10)
                 {
-                  ACE_DEBUG ((LM_DEBUG,
+                  ORBSVCS_DEBUG ((LM_DEBUG,
                               ACE_TEXT ("***** Operation %s found on interface %s, num params %d *****\n"),
                               fid->operations[oper].name.in(),
                               interface_,
@@ -324,7 +325,7 @@ TAO_CEC_TypedEventChannel::cache_interface_description (const char *interface_)
 
                   if (TAO_debug_level >= 10)
                     {
-                      ACE_DEBUG ((LM_DEBUG,
+                      ORBSVCS_DEBUG ((LM_DEBUG,
                                   ACE_TEXT ("***** Parameter %s found on operation %s *****\n"),
                                   oper_params->parameters_[param].name_.in(),
                                   fid->operations[oper].name.in() ));
@@ -333,7 +334,7 @@ TAO_CEC_TypedEventChannel::cache_interface_description (const char *interface_)
 
               if (TAO_debug_level >= 10)
                 {
-                  ACE_DEBUG ((LM_DEBUG,
+                  ORBSVCS_DEBUG ((LM_DEBUG,
                               ACE_TEXT ("***** Adding operation %s with %d parameters to the IFR cache *****\n"),
                               fid->operations[oper].name.in(),
                               oper_params->num_params_ ));
@@ -344,7 +345,7 @@ TAO_CEC_TypedEventChannel::cache_interface_description (const char *interface_)
                 {
                   if (TAO_debug_level >= 10)
                     {
-                      ACE_DEBUG ((LM_DEBUG,
+                      ORBSVCS_DEBUG ((LM_DEBUG,
                                   ACE_TEXT ("***** Adding operation to IFR cache failed *****\n")));
                     }
                 }
@@ -395,7 +396,7 @@ TAO_CEC_TypedEventChannel::consumer_register_uses_interace (const char *uses_int
         {
           if (TAO_debug_level >= 10)
             {
-              ACE_DEBUG ((LM_DEBUG,
+              ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("***** different uses_interface_ already registered *****\n")));
             }
           return -1;
@@ -415,7 +416,7 @@ TAO_CEC_TypedEventChannel::consumer_register_uses_interace (const char *uses_int
         {
           if (TAO_debug_level >= 10)
             {
-              ACE_DEBUG ((LM_DEBUG,
+              ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("***** different supported_interface_ already registered *****\n")));
             }
           return -1;
@@ -457,7 +458,7 @@ TAO_CEC_TypedEventChannel::supplier_register_supported_interface (const char *su
         {
           if (TAO_debug_level >= 10)
             {
-              ACE_DEBUG ((LM_DEBUG,
+              ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("***** different supported_interface_ already registered *****\n")));
             }
           return -1;
@@ -477,7 +478,7 @@ TAO_CEC_TypedEventChannel::supplier_register_supported_interface (const char *su
         {
           if (TAO_debug_level >= 10)
             {
-              ACE_DEBUG ((LM_DEBUG,
+              ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("***** different uses_interface_ already registered *****\n")));
             }
           return -1;

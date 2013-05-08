@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Naming/FaultTolerant/FT_PG_Object_Group_Storable.h"
 #include "orbsvcs/PortableGroup/PG_Object_Group_Storable.h"
 
@@ -86,7 +87,7 @@ TAO::FT_PG_Object_Group_Storable::propagate_update_notification
     // Notify the naming_manager of the updated context
     if (TAO_debug_level > 3)
       {
-        ACE_DEBUG ((LM_DEBUG,
+        ORBSVCS_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) - propagate_update_notification ")
                     ACE_TEXT ("Notifying peer that object group with ID %lld ")
                     ACE_TEXT ("has been updated\n"), object_group_info.id
@@ -145,7 +146,7 @@ TAO::FT_PG_Object_Group_Storable::add_member_to_iogr (CORBA::Object_ptr member)
 
   if (CORBA::is_nil (member))
     {// A null object reference is not an acceptable member of the group.
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) ERROR: Unable to add null member ")
                   ACE_TEXT ("to object group with id: %s\n"),
                   this->tagged_component_.object_group_id));
@@ -166,7 +167,7 @@ TAO::FT_PG_Object_Group_Storable::add_member_to_iogr (CORBA::Object_ptr member)
       }
       catch (const CORBA::Exception&)
         {
-          ACE_ERROR ((LM_ERROR,
+          ORBSVCS_ERROR ((LM_ERROR,
                       ACE_TEXT ("(%P|%t) ERROR: Unable to add member ")
                       ACE_TEXT ("to object group with id: %s for object ")
                       ACE_TEXT ("of type: %s\n"),

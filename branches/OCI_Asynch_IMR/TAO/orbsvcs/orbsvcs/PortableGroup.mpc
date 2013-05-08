@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(PortableGroup) : orbsvcslib, orbsvcs_output, install, naming, iormanip, messaging, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, tao_versioning_idl_defaults {
+project(PortableGroup) : orbsvcslib, orbsvcs_output, install, naming, iormanip, messaging, svc_utils, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, tao_versioning_idl_defaults {
   sharedname   = TAO_PortableGroup
   idlflags    += -Wb,export_macro=TAO_PortableGroup_Export \
                  -Wb,export_include=orbsvcs/PortableGroup/portablegroup_export.h

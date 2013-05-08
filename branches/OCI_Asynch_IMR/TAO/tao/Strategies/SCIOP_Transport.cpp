@@ -75,7 +75,7 @@ TAO_SCIOP_Transport::recv (char *buf,
       TAO_debug_level > 4 &&
       errno != ETIME)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - SCIOP_Transport[%d]::recv, ")
                   ACE_TEXT ("read failure - %m\n"),
                   this->id ()));
@@ -149,7 +149,7 @@ TAO_SCIOP_Transport::send_message (TAO_OutputCDR &stream,
   if (n == -1)
     {
       if (TAO_debug_level)
-        ACE_ERROR ((LM_ERROR,
+        TAOLIB_ERROR ((LM_ERROR,
                     ACE_TEXT ("TAO (%P|%t) - SCIOP_Transport[%d]::send_message, ")
                     ACE_TEXT (" write failure - %m\n"),
                     this->id ()));
@@ -201,7 +201,7 @@ TAO_SCIOP_Transport::set_bidir_context_info (TAO_Operation_Details &opdetails)
           if (this->get_listen_point (listen_point_list,
                                       *acceptor) == -1)
             {
-              ACE_ERROR ((LM_ERROR,
+              TAOLIB_ERROR ((LM_ERROR,
                           "TAO (%P|%t) - SCIOP_Transport::set_bidir_info, "
                           "error getting listen_point\n"));
 
@@ -244,7 +244,7 @@ TAO_SCIOP_Transport::get_listen_point (
 
   if (this->connection_handler_->peer ().get_local_addr (local_addr) == -1)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
+      TAOLIB_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("(%P|%t) Could not resolve local ")
                          ACE_TEXT ("host address in ")
                          ACE_TEXT ("get_listen_point()\n")),
@@ -261,7 +261,7 @@ TAO_SCIOP_Transport::get_listen_point (
                                local_addr,
                                local_interface.out ()) == -1)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
+      TAOLIB_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("(%P|%t) Could not resolve local host")
                          ACE_TEXT (" name\n")),
                         -1);

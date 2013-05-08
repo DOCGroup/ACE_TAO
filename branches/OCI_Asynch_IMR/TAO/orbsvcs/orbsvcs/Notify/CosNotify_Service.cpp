@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Notify/CosNotify_Service.h"
 #include "orbsvcs/Notify/Properties.h"
 #include "orbsvcs/Notify/Default_Factory.h"
@@ -43,7 +44,7 @@ TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
       if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-MTDispatching")) == 0)
         {
           arg_shifter.consume_arg ();
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) The -MTDispatching option has been deprecated, use -DispatchingThreads\n")));
         }
       else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-DispatchingThreads"))))
@@ -54,7 +55,7 @@ TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
       else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-MTSourceEval")) == 0)
         {
           arg_shifter.consume_arg ();
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) The -MTSourceEval option has been deprecated, use -SourceThreads\n")));
         }
       else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-SourceThreads"))))
@@ -65,27 +66,27 @@ TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
       else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-MTLookup")) == 0)
         {
           arg_shifter.consume_arg ();
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) The -MTLookup option has been deprecated, use -SourceThreads\n")));
         }
       else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-LookupThreads"))))
         {
           supplier_threads += ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) The -LookupThreads option has been deprecated, use -SourceThreads\n")));
         }
       else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-MTListenerEval")) == 0)
         {
           arg_shifter.consume_arg ();
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) The -MTListenerEval option has been deprecated, use -DispatchingThreads\n")));
         }
       else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-ListenerThreads"))))
         {
           // Since this option is always added to consumer_threads, we'll
           // deprecate it in favor of that option.
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) The -ListenerThreads option has been deprecated, use -DispatchingThreads\n")));
           consumer_threads += ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
@@ -117,12 +118,12 @@ TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
             {
               properties->separate_dispatching_orb (
                             static_cast<bool> (ACE_OS::atoi(current_arg)));
-              ACE_DEBUG ((LM_DEBUG,
+              ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("Using separate Dispatching ORB\n")));
             }
           else
             {
-              ACE_DEBUG ((LM_DEBUG,
+              ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("(%P|%t) WARNING: Unrecognized ")
                           ACE_TEXT ("argument (%s).  Ignoring invalid ")
                           ACE_TEXT ("-UseSeparateDispatchingORB usage.\n"),
@@ -147,7 +148,7 @@ TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
                       op = CosNotifyChannelAdmin::OR_OP;
         else
           {
-            ACE_DEBUG ((LM_DEBUG,
+            ORBSVCS_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("(%P|%t) WARNING: Unrecognized ")
                         ACE_TEXT ("argument (%s).  Ignoring invalid ")
                         ACE_TEXT ("-DefaultConsumerAdminFilterOp usage.\n"),
@@ -167,7 +168,7 @@ TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
                       op = CosNotifyChannelAdmin::OR_OP;
         else
           {
-            ACE_DEBUG ((LM_DEBUG,
+            ORBSVCS_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("(%P|%t) WARNING: Unrecognized ")
                         ACE_TEXT ("argument (%s).  Ignoring invalid ")
                         ACE_TEXT ("-DefaultSupplierAdminFilterOp usage.\n"),
@@ -180,7 +181,7 @@ TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
       {
         arg_shifter.consume_arg ();
         TAO_Notify_PROPERTIES::instance()->validate_client (true);
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Using reactive client control.\n")));
+        ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("Using reactive client control.\n")));
       }
       else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-ValidateClientDelay")) == 0)
       {
@@ -192,7 +193,7 @@ TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
         }
         else
         {
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
             ACE_TEXT ("(%P|%t) WARNING: Unrecognized ")
             ACE_TEXT ("argument (%s).  Ignoring invalid ")
             ACE_TEXT ("-ValidateClientDelay usage.\n"),
@@ -211,7 +212,7 @@ TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
         }
         else
         {
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
             ACE_TEXT ("(%P|%t) WARNING: Unrecognized ")
             ACE_TEXT ("argument (%s).  Ignoring invalid ")
             ACE_TEXT ("-ValidateClientDelay usage.\n"),
@@ -222,7 +223,7 @@ TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
       }
       else
       {
-        ACE_ERROR ((LM_ERROR,
+        ORBSVCS_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) Ignoring unknown option for Notify Factory: %s\n"),
                     arg_shifter.get_current()
           ));
@@ -242,7 +243,7 @@ TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
       // Set the per ConsumerAdmin QoS
       {
         if (consumer_threads > 0)
-          ACE_DEBUG((LM_DEBUG, "Using %d threads for each ConsumerAdmin.\n", consumer_threads));
+          ORBSVCS_DEBUG((LM_DEBUG, "Using %d threads for each ConsumerAdmin.\n", consumer_threads));
         CosNotification::QoSProperties qos;
         this->set_threads (qos, consumer_threads);
         properties->default_consumer_admin_qos_properties (qos);
@@ -251,7 +252,7 @@ TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
       // Set the per SupplierAdmin QoS
       {
         if (supplier_threads > 0)
-          ACE_DEBUG((LM_DEBUG, "Using %d threads for each SupplierAdmin.\n", supplier_threads));
+          ORBSVCS_DEBUG((LM_DEBUG, "Using %d threads for each SupplierAdmin.\n", supplier_threads));
         CosNotification::QoSProperties qos;
         this->set_threads (qos, supplier_threads);
         properties->default_supplier_admin_qos_properties (qos);
@@ -262,7 +263,7 @@ TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
       // Set the per ProxyConsumer QoS
       {
         if (supplier_threads > 0)
-          ACE_DEBUG((LM_DEBUG, "Using %d threads for each Supplier.\n", supplier_threads));
+          ORBSVCS_DEBUG((LM_DEBUG, "Using %d threads for each Supplier.\n", supplier_threads));
         CosNotification::QoSProperties qos;
         this->set_threads (qos, supplier_threads); // lookup thread per proxy doesn't make sense.
         properties->default_proxy_consumer_qos_properties (qos);
@@ -271,7 +272,7 @@ TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
       // Set the per ProxySupplier QoS
       {
         if (consumer_threads > 0)
-          ACE_DEBUG((LM_DEBUG, "Using %d threads for each Consumer.\n", consumer_threads));
+          ORBSVCS_DEBUG((LM_DEBUG, "Using %d threads for each Consumer.\n", consumer_threads));
         CosNotification::QoSProperties qos;
         this->set_threads (qos, consumer_threads);
         properties->default_proxy_supplier_qos_properties (qos);
@@ -313,14 +314,14 @@ TAO_CosNotify_Service::fini (void)
 void
 TAO_CosNotify_Service::init_service (CORBA::ORB_ptr orb)
 {
-  ACE_DEBUG ((LM_DEBUG, "Loading the Cos Notification Service...\n"));
+  ORBSVCS_DEBUG ((LM_DEBUG, "Loading the Cos Notification Service...\n"));
 
   if (TAO_Notify_PROPERTIES::instance()->separate_dispatching_orb())
     {
       // got here by way of svc.conf. no second orb supplied so create one
       if (CORBA::is_nil (TAO_Notify_PROPERTIES::instance()->dispatching_orb()))
         {
-          ACE_DEBUG ((LM_DEBUG, "No dispatching orb supplied. Creating default one.\n"));
+          ORBSVCS_DEBUG ((LM_DEBUG, "No dispatching orb supplied. Creating default one.\n"));
 
           int argc = 0;
           ACE_TCHAR *argv0 = 0;
@@ -397,7 +398,7 @@ TAO_CosNotify_Service::init_i (CORBA::ORB_ptr orb)
     orb->resolve_initial_references("RootPOA");
 
   if (CORBA::is_nil (object.in ()))
-    ACE_ERROR ((LM_ERROR,
+    ORBSVCS_ERROR ((LM_ERROR,
                 " (%P|%t) Unable to resolve the RootPOA.\n"));
 
   PortableServer::POA_var default_poa = PortableServer::POA::_narrow (object.in ());
@@ -426,7 +427,7 @@ TAO_CosNotify_Service::init_i2 (CORBA::ORB_ptr orb, CORBA::ORB_ptr dispatching_o
     orb->resolve_initial_references("RootPOA");
 
   if (CORBA::is_nil (object.in ()))
-    ACE_ERROR ((LM_ERROR, " (%P|%t) Unable to resolve the RootPOA.\n"));
+    ORBSVCS_ERROR ((LM_ERROR, " (%P|%t) Unable to resolve the RootPOA.\n"));
 
   PortableServer::POA_var default_poa = PortableServer::POA::_narrow (object.in ());
 

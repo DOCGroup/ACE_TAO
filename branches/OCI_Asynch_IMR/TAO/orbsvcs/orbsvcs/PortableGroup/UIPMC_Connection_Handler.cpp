@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/PortableGroup/UIPMC_Connection_Handler.h"
 #include "orbsvcs/PortableGroup/UIPMC_Endpoint.h"
 #include "orbsvcs/PortableGroup/UIPMC_Transport.h"
@@ -55,7 +56,7 @@ TAO_UIPMC_Connection_Handler::~TAO_UIPMC_Connection_Handler (void)
 
   if (result == -1 && TAO_debug_level)
     {
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
                   ACE_TEXT ("TAO (%P|%t) - UIPMC_Connection_Handler::")
                   ACE_TEXT ("~UIPMC_Connection_Handler, ")
                   ACE_TEXT ("release_os_resources() failed (Errno: '%m')\n")));
@@ -186,7 +187,7 @@ TAO_UIPMC_Connection_Handler::open (void*)
         {
           if (TAO_debug_level)
             {
-              ACE_ERROR ((LM_ERROR,
+              ORBSVCS_ERROR ((LM_ERROR,
                           ACE_TEXT("TAO (%P|%t) - UIPMC_Connection_Handler::open, ")
                           ACE_TEXT("couldn't set hop limit (Errno: '%m')\n")));
             }
@@ -238,7 +239,7 @@ TAO_UIPMC_Connection_Handler::open (void*)
     {
       if (TAO_debug_level)
         {
-          ACE_ERROR ((LM_ERROR,
+          ORBSVCS_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO (%P|%t) - UIPMC_Connection_Handler::open, ")
                       ACE_TEXT ("couldn't %s multicast packets looping (Errno: '%m')\n"),
                       protocol_properties.enable_multicast_loop_ ?
@@ -255,7 +256,7 @@ TAO_UIPMC_Connection_Handler::open (void*)
       // Assume a small buffer
       this->send_hi_water_mark_ = 1024u;
       if (TAO_debug_level)
-        ACE_ERROR ((LM_ERROR,
+        ORBSVCS_ERROR ((LM_ERROR,
                     ACE_TEXT ("TAO (%P|%t) - UIPMC_Connection_Handler::")
                     ACE_TEXT ("open, -ORBSendHighWaterMark not specified ")
                     ACE_TEXT ("using %u bytes\n"),
@@ -274,7 +275,7 @@ TAO_UIPMC_Connection_Handler::open (void*)
           // value is what is returned by the get_option, so it is best to halve.
           this->send_hi_water_mark_ >>= 1;
           if (TAO_debug_level)
-            ACE_ERROR ((LM_ERROR,
+            ORBSVCS_ERROR ((LM_ERROR,
                         ACE_TEXT ("TAO (%P|%t) - UIPMC_Connection_Handler::")
                         ACE_TEXT ("open, -ORBSendHighWaterMark not specified, ")
                         ACE_TEXT ("using -ORBSndSock value of %u bytes\n"),
@@ -285,7 +286,7 @@ TAO_UIPMC_Connection_Handler::open (void*)
           // Assume a small buffer
           this->send_hi_water_mark_ = 1024u;
           if (TAO_debug_level)
-            ACE_ERROR ((LM_ERROR,
+            ORBSVCS_ERROR ((LM_ERROR,
                         ACE_TEXT ("TAO (%P|%t) - UIPMC_Connection_Handler::")
                         ACE_TEXT ("open, -ORBSendHighWaterMark not specified ")
                         ACE_TEXT ("and getsockopt failed (Errno: '%m'), using %u bytes\n"),
@@ -428,7 +429,7 @@ TAO_UIPMC_Connection_Handler::set_tos (int tos)
         {
           if (TAO_debug_level)
             {
-              ACE_DEBUG ((LM_DEBUG,
+              ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("TAO (%P|%t) - UIPMC_Connection_Handler::")
                           ACE_TEXT ("set_dscp_codepoint -> IPV6_TCLASS not ")
                           ACE_TEXT ("supported yet\n")));
@@ -450,7 +451,7 @@ TAO_UIPMC_Connection_Handler::set_tos (int tos)
 
       if (TAO_debug_level)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - UIPMC_Connection_Handler::")
                       ACE_TEXT ("set_dscp_codepoint -> dscp: %x; ")
                       ACE_TEXT ("result: %d; %s\n"),

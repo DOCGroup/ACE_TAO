@@ -1,22 +1,24 @@
 //$Id$
+
 project(*idl) : tao_versioning_idl_defaults, install {
   custom_only = 1
   IDL_Files {
-    idlflags += -Gp -Gd -Sorb -GA -GC\
+    idlflags += -Gp -Gd -Sorb -GA\
                 -Wb,export_macro=TAO_IMR_Client_Export \
                 -Wb,export_include=tao/ImR_Client/imr_client_export.h \
                 -iC tao/ImR_Client
     idlflags -= -Sa -St
-    ServerObject.pidl
+    ServerObject.idl
   }
 
   IDL_Files {
-    idlflags += -Gp -Gd -Sorb -GX -GH \
+    idlflags += -Gp -Gd -Sorb -GX\
+                -I$(TAO_ROOT)/tao/ImR_Client \
                 -Wb,export_macro=TAO_IMR_Client_Export \
                 -Wb,export_include=tao/ImR_Client/imr_client_export.h \
                 -iC tao/ImR_Client
     idlflags -= -Sa -St
-    ImplRepo.pidl
+    ImplRepo.idl
   }
 
   specific {
@@ -55,5 +57,8 @@ project(ImR_Client) : taolib, tao_output, install, portableserver, taoidldefault
 
   specific {
     install_dir = tao/ImR_Client
+  }
+
+  IDL_Files {
   }
 }

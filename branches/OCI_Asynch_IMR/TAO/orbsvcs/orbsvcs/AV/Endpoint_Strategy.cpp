@@ -10,6 +10,8 @@
 //=============================================================================
 
 
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/AV/Endpoint_Strategy.h"
 
 #include "tao/debug.h"
@@ -44,7 +46,7 @@ int
 TAO_AV_Endpoint_Strategy::create_A (AVStreams::StreamEndPoint_A_ptr & /* stream_endpoint */,
                                     AVStreams::VDev_ptr & /* vdev */)
 {
-  ACE_ERROR_RETURN ((LM_ERROR,
+  ORBSVCS_ERROR_RETURN ((LM_ERROR,
                      "(%P|%t) Error creating A endpoint\n"),
                     -1);
 }
@@ -57,7 +59,7 @@ int
 TAO_AV_Endpoint_Strategy::create_B (AVStreams::StreamEndPoint_B_ptr & /* stream_endpoint */,
                                     AVStreams::VDev_ptr & /*vdev */)
 {
-  ACE_ERROR_RETURN ((LM_ERROR,
+  ORBSVCS_ERROR_RETURN ((LM_ERROR,
                      "(%P|%t) Error creating B endpoint\n"),
                     -1);
 }
@@ -95,7 +97,7 @@ TAO_AV_Endpoint_Process_Strategy::activate (void)
 
   // Process creation failed
   if (this->pid_ == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        "(%P|%t) ACE_Process:: spawn failed: %p\n",
                        "spawn"),
                       -1);
@@ -110,7 +112,7 @@ TAO_AV_Endpoint_Process_Strategy::activate (void)
                    this->host_,
                    static_cast<long int> (this->pid_));
 
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
               "(%P|%t) semaphore is %s\n",
               sem_str));
   // Create the semaphore
@@ -126,7 +128,7 @@ TAO_AV_Endpoint_Process_Strategy::activate (void)
           // See if my child process is still alive -- if not, return an error
           if (ACE_OS::kill (this->pid_,
                             0) == -1)
-            ACE_ERROR_RETURN ((LM_ERROR,
+            ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                "(%P|%t) Process_Strategy: Process being waited on died unexpectedly.\n"),
                               -1);
           // if we were not interrupted due to a EINTR, break
@@ -139,7 +141,7 @@ TAO_AV_Endpoint_Process_Strategy::activate (void)
 
   // The job of the semaphore is done, remove it.
   if (semaphore.remove () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        "(%P|%t) semaphore remove failed: %p\n",
                        "remove"),
                       -1);
@@ -177,7 +179,7 @@ TAO_AV_Endpoint_Process_Strategy::bind_to_naming_service (void)
         TAO_ORB_Core_instance ()->orb ()->resolve_initial_references ("NameService");
 
       if (CORBA::is_nil (naming_obj.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to resolve the Name Service.\n"),
                           -1);
       this->naming_context_ =
@@ -205,7 +207,7 @@ TAO_AV_Endpoint_Process_Strategy::get_vdev (void)
                        this->host_,
                        (long) this->pid_);
 
-      if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"(%P|%t)%s\n",vdev_name));
+      if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"(%P|%t)%s\n",vdev_name));
 
       // Create the name
       CosNaming::Name VDev_Name (1);
@@ -222,7 +224,7 @@ TAO_AV_Endpoint_Process_Strategy::get_vdev (void)
 
       // Check if valid
       if (CORBA::is_nil (this->vdev_.in() ))
-        ACE_ERROR_RETURN ((LM_ERROR,
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            " could not resolve Stream_Endpoint_B in Naming service <%s>\n"),
                           -1);
     }
@@ -257,7 +259,7 @@ TAO_AV_Endpoint_Process_Strategy_A::create_A (AVStreams::StreamEndPoint_A_ptr &s
 {
   // use the baseclass activate
   if (this->activate () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        "(%P|%t) TAO_AV_Endpoint_Process_Strategy: Error in activate ()\n"),
                       -1);
 
@@ -281,7 +283,7 @@ TAO_AV_Endpoint_Process_Strategy_A::get_stream_endpoint (void)
                        this->host_,
                        (long) this->pid_);
 
-      if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"(%P|%t)%s\n",stream_endpoint_name));
+      if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"(%P|%t)%s\n",stream_endpoint_name));
 
       // Create the name
       CosNaming::Name Stream_Endpoint_A_Name (1);
@@ -299,7 +301,7 @@ TAO_AV_Endpoint_Process_Strategy_A::get_stream_endpoint (void)
 
       // Check for validity
       if (CORBA::is_nil (this->stream_endpoint_a_.in() ))
-        ACE_ERROR_RETURN ((LM_ERROR,
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            " could not resolve Stream_Endpoint_A in Naming service <%s>\n"),
                           -1);
     }
@@ -335,11 +337,11 @@ TAO_AV_Endpoint_Process_Strategy_B::create_B (AVStreams::StreamEndPoint_B_ptr &s
   try
     {
     if (this->activate () == -1)
-      ACE_ERROR_RETURN ((LM_ERROR,
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
                          "(%P|%t) TAO_AV_Endpoint_Process_Strategy: Error in activate ()\n"),
                         -1);
 
-    if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"(%P|%t)TAO_AV_Endpoint_Process_Strategy_B::create_B ()\n: stream_endpoint is:%s\n",
+    if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"(%P|%t)TAO_AV_Endpoint_Process_Strategy_B::create_B ()\n: stream_endpoint is:%s\n",
                 TAO_ORB_Core_instance ()->orb ()->object_to_string (this->stream_endpoint_b_.in())));
     stream_endpoint = AVStreams::StreamEndPoint_B::_duplicate ( this->stream_endpoint_b_.in() );
     vdev = AVStreams::VDev::_duplicate( this->vdev_.in() );
@@ -366,7 +368,7 @@ TAO_AV_Endpoint_Process_Strategy_B::get_stream_endpoint (void)
                        this->host_,
                        (long) this->pid_);
 
-      if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"(%P|%t)%s\n",stream_endpoint_name));
+      if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"(%P|%t)%s\n",stream_endpoint_name));
 
       // Create the name
       CosNaming::Name Stream_Endpoint_B_Name (1);
@@ -384,7 +386,7 @@ TAO_AV_Endpoint_Process_Strategy_B::get_stream_endpoint (void)
 
       // Check for validity
       if (CORBA::is_nil (this->stream_endpoint_b_.in() ))
-        ACE_ERROR_RETURN ((LM_ERROR,
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            " could not resolve Stream_Endpoint_B in Naming service <%s>\n"),
                           -1);
     }

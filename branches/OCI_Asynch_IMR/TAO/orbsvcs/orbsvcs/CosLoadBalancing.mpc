@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(CosLoadBalancing) : orbsvcslib, orbsvcs_output, install, naming, iormanip, portablegroup, ami, avoids_minimum_corba, pi, pi_server, iorinterceptor, tao_versioning_idl_defaults {
+project(CosLoadBalancing) : orbsvcslib, orbsvcs_output, install, naming, iormanip, portablegroup, ami, avoids_minimum_corba, pi, pi_server, iorinterceptor, tao_versioning_idl_defaults, svc_utils {
   sharedname   = TAO_CosLoadBalancing
   idlflags    += -Wb,export_macro=TAO_LoadBalancing_Export -Wb,export_include=orbsvcs/LoadBalancing/LoadBalancing_export.h
   dynamicflags += TAO_LOADBALANCING_BUILD_DLL

@@ -73,7 +73,7 @@ TAO_Connector_Registry::open (TAO_ORB_Core *orb_core)
         {
          if (connector->open (orb_core) != 0)
            {
-             ACE_ERROR_RETURN ((LM_ERROR,
+             TAOLIB_ERROR_RETURN ((LM_ERROR,
                                 ACE_TEXT ("TAO (%P|%t) - TAO_Connector_Registry")
                                 ACE_TEXT ("::open: unable to open connector for ")
                                 ACE_TEXT ("<%C>.\n"),
@@ -177,7 +177,7 @@ TAO_Connector_Registry::create_profile (TAO_InputCDR &cdr)
     {
       if (TAO_debug_level > 0)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - TAO_Connector_Registry::")
                       ACE_TEXT ("create_profile: Unknown profile tag 0x%x\n"),
                       tag));
@@ -189,7 +189,7 @@ TAO_Connector_Registry::create_profile (TAO_InputCDR &cdr)
           orb_core = TAO_ORB_Core_instance ();
           if (TAO_debug_level > 0)
             {
-              ACE_DEBUG ((LM_WARNING,
+              TAOLIB_DEBUG ((LM_WARNING,
                           ACE_TEXT ("TAO (%P|%t) - TAO_Connector_Registry")
                           ACE_TEXT ("::create_profile: ")
                           ACE_TEXT ("WARNING: extracting object from ")

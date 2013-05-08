@@ -26,7 +26,7 @@ namespace TAO
         }
         case ::PortableServer::TRANSIENT :
         {
-          ACE_ERROR ((LM_ERROR, "Incorrect type in LifespanStrategyPersistentFactoryImpl"));
+          TAOLIB_ERROR ((LM_ERROR, "Incorrect type in LifespanStrategyPersistentFactoryImpl"));
           break;
         }
       }

@@ -25,7 +25,7 @@ TAO::CSD::Strategy_Base::apply_to (PortableServer::POA_ptr poa)
   if (CORBA::is_nil(poa))
     {
       if (TAO_debug_level > 0)
-        ACE_ERROR((LM_ERROR,
+        TAOLIB_ERROR((LM_ERROR,
                    ACE_TEXT("(%P|%t) CSD Strategy cannot ")
                    ACE_TEXT("be applied to a nil POA.\n")));
       return false;
@@ -34,7 +34,7 @@ TAO::CSD::Strategy_Base::apply_to (PortableServer::POA_ptr poa)
   if (!CORBA::is_nil(this->poa_.in()))
     {
       if (TAO_debug_level > 0)
-        ACE_ERROR((LM_ERROR,
+        TAOLIB_ERROR((LM_ERROR,
                    ACE_TEXT("(%P|%t) CSD Strategy already ")
                    ACE_TEXT("applied to a POA.\n")));
       return false;
@@ -47,7 +47,7 @@ TAO::CSD::Strategy_Base::apply_to (PortableServer::POA_ptr poa)
   if (poa_impl == 0)
     {
       if (TAO_debug_level > 0)
-        ACE_ERROR((LM_ERROR,
+        TAOLIB_ERROR((LM_ERROR,
                    ACE_TEXT("(%P|%t) CSD Strategy cannot ")
                    ACE_TEXT("be applied to a non CSD POA.\n")));
       return false;

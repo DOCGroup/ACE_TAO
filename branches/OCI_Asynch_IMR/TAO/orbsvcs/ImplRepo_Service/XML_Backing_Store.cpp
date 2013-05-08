@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "XML_Backing_Store.h"
 #include "Server_Info.h"
 #include "Activator_Info.h"
@@ -56,7 +57,7 @@ XML_Backing_Store::persist ()
   FILE* fp = ACE_OS::fopen (this->filename_.c_str (), "w");
   if (fp == 0)
     {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Couldn't write to file %C\n"),
+      ORBSVCS_ERROR ((LM_ERROR, ACE_TEXT ("Couldn't write to file %C\n"),
         this->filename_.c_str()));
       return -1;
     }
@@ -205,7 +206,7 @@ XML_Backing_Store::load (const ACE_TString& filename,
 
   if (debug > 9)
     {
-      ACE_DEBUG ((LM_INFO, ACE_TEXT ("load %s%C\n"), filename.c_str(),
+      ORBSVCS_DEBUG ((LM_INFO, ACE_TEXT ("load %s%C\n"), filename.c_str(),
                  ((err == 0) ? ACE_TEXT ("")
                   : ACE_TEXT (" (file doesn't exist)"))));
     }
@@ -232,7 +233,7 @@ XML_Backing_Store::load (const ACE_TString& filename,
     }
     catch ( const ACEXML_SAXParseException* sax_ex)
     {
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
         ACE_TEXT ("Error during load of ImR persistence xml file (%s)."),
         filename.c_str()));
       sax_ex->print ();
@@ -240,7 +241,7 @@ XML_Backing_Store::load (const ACE_TString& filename,
     }
     catch (const ACEXML_Exception& ex)
     {
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
         ACE_TEXT ("Error during load of ImR persistence xml file (%s)."),
         filename.c_str()));
       ex.print ();
@@ -295,7 +296,9 @@ XML_Backing_Store::create_server(bool server_started,
                                  const Server_Info_Ptr& si)
 {
   if (!server_started || si->ior.is_empty())
-    return;
+    {
+      return;
+    }
 
   CORBA::Object_var obj = this->orb_->string_to_object(si->ior.c_str());
   if (!CORBA::is_nil(obj.in()))
@@ -304,8 +307,6 @@ XML_Backing_Store::create_server(bool server_started,
         ImplementationRepository::ServerObject::_unchecked_narrow (obj.in());
       si->last_ping = ACE_Time_Value::zero;
     }
-  else
-    si->server = ImplementationRepository::ServerObject::_nil();
 }
 
 void
@@ -319,5 +320,5 @@ XML_Backing_Store::load_activator (const ACE_CString& activator_name,
            Activator_Info (activator_name, token, ior));
 
   Activator_Info_Ptr info (ai);
-  this->activators().rebind(activator_name, info);
+  this->activators().rebind(Locator_Repository::lcase (activator_name), info);
 }

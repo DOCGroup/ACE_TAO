@@ -35,12 +35,12 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-class TAO_IOR_Table_Impl;
+class TAO_IORTable_Export TAO_IOR_Table_Impl;
 typedef TAO_IOR_Table_Impl *TAO_IOR_Table_Impl_ptr;
 typedef TAO_Objref_Var_T <TAO_IOR_Table_Impl> TAO_IOR_Table_Impl_var;
 typedef TAO_Objref_Out_T <TAO_IOR_Table_Impl> TAO_IOR_Table_Impl_out;
 
-class TAO_IOR_Table_Impl
+class TAO_IORTable_Export TAO_IOR_Table_Impl
   : public virtual IORTable::Table,
     public virtual ::CORBA::LocalObject
 {
@@ -54,10 +54,7 @@ public:
   /// Constructor
   TAO_IOR_Table_Impl (void);
 
-  bool async_available (void) const
-  {
-    return this->use_async_;
-  }
+  virtual bool async_available (void) { return false; }
 
   /// Find the object, using the locator if it is not on the table.
   char *find (const char *object_key);
@@ -80,7 +77,7 @@ public:
   virtual void set_locator (IORTable::Locator_ptr the_locator);
   //@}
 
-private:
+protected:
   typedef ACE_Hash_Map_Manager_Ex <ACE_CString, ACE_CString,
                                    ACE_Hash <ACE_CString>,
                                    ACE_Equal_To <ACE_CString>,

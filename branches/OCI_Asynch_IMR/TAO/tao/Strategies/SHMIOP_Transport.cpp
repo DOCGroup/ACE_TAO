@@ -92,7 +92,7 @@ TAO_SHMIOP_Transport::recv (char *buf,
     {
       if (TAO_debug_level > 3 && errno != ETIME)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) -  SHMIOP_Transport::recv, %p\n"),
                       ACE_TEXT ("TAO - read message failure ")
                       ACE_TEXT ("recv_i ()\n")));
@@ -111,7 +111,7 @@ TAO_SHMIOP_Transport::handle_input (TAO_Resume_Handle &rh,
 {
   if (TAO_debug_level > 3)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   "TAO (%P|%t) - SHMIOP_Transport[%d]::handle_input\n",
                   this->id ()));
     }
@@ -214,7 +214,7 @@ TAO_SHMIOP_Transport::handle_input (TAO_Resume_Handle &rh,
           {
             if (TAO_debug_level > 0)
               {
-                ACE_ERROR ((LM_ERROR,
+                TAOLIB_ERROR ((LM_ERROR,
                  "TAO (%P|%t) - SHMIOP_Transport[%d]::handle_input, "
                  "error growing message buffer\n",
                  this->id () ));
@@ -319,7 +319,7 @@ TAO_SHMIOP_Transport::send_message (TAO_OutputCDR &stream,
   if (n == -1)
     {
       if (TAO_debug_level)
-        ACE_DEBUG ((LM_DEBUG,
+        TAOLIB_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) closing transport %d after fault %p\n"),
                     this->id (),
                     ACE_TEXT ("send_message ()\n")));

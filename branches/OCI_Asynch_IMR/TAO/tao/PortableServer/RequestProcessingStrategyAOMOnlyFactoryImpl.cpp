@@ -29,7 +29,7 @@ namespace TAO
         }
         default :
         {
-          ACE_ERROR ((LM_ERROR, "Incorrect type in RequestProcessingStrategyAOMOnlyFactoryImpl"));
+          TAOLIB_ERROR ((LM_ERROR, "Incorrect type in RequestProcessingStrategyAOMOnlyFactoryImpl"));
           break;
         }
       }

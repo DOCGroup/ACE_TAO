@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(FTORB_Utils) : orbsvcslib, orbsvcs_output, install, iormanip, portableserver, portablegroup, avoids_minimum_corba, tao_versioning_idl_defaults {
+project(FTORB_Utils) : orbsvcslib, orbsvcs_output, install, iormanip, portableserver, portablegroup, avoids_minimum_corba, tao_versioning_idl_defaults, svc_utils {
   sharedname   = TAO_FTORB_Utils
   idlflags    += -Wb,skel_export_include=tao/PortableServer/PolicyS.h
   dynamicflags += TAO_FT_ORB_UTILS_BUILD_DLL
@@ -29,7 +29,7 @@ project(FTORB_Utils) : orbsvcslib, orbsvcs_output, install, iormanip, portablese
   }
 }
 
-project(FT_ClientORB) : orbsvcslib, orbsvcs_output, ftorbutils, install, messaging, portablegroup, interceptors, threads {
+project(FT_ClientORB) : orbsvcslib, orbsvcs_output, ftorbutils, install, messaging, portablegroup, interceptors, threads, svc_utils {
   avoids      += ace_for_tao      // Requires ace/UUID
   sharedname   = TAO_FT_ClientORB
   dynamicflags += TAO_FT_CLIENTORB_BUILD_DLL
@@ -65,7 +65,7 @@ project(FT_ClientORB) : orbsvcslib, orbsvcs_output, ftorbutils, install, messagi
   }
 }
 
-project(FT_ServerORB) : orbsvcslib, orbsvcs_output, ftorbutils, install, messaging, portablegroup, pi_server, pi, interceptors {
+project(FT_ServerORB) : orbsvcslib, orbsvcs_output, ftorbutils, install, messaging, portablegroup, pi_server, pi, interceptors, svc_utils {
   sharedname   = TAO_FT_ServerORB
   dynamicflags += TAO_FT_SERVERORB_BUILD_DLL
   tagchecks   += FT_ServerORB

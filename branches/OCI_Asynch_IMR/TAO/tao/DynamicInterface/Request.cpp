@@ -370,7 +370,7 @@ CORBA::Request::handle_response (TAO_InputCDR &incoming,
     case GIOP::LOCATION_FORWARD_PERM:
     default:
       // @@ (JP) Don't know what to do about any of these yet.
-      ACE_ERROR ((LM_ERROR,
+      TAOLIB_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) unhandled reply status\n")));
   }
 }

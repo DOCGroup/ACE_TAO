@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Notify/Sequence/SequencePushConsumer.h"
 #include "ace/Truncate.h"
 #include "ace/Reactor.h"
@@ -67,7 +68,7 @@ TAO_Notify_SequencePushConsumer::init (CosNotifyComm::SequencePushConsumer_ptr p
           //--cj verify dispatching ORB
           if (TAO_debug_level >= 10)
             {
-              ACE_DEBUG ((LM_DEBUG,
+              ORBSVCS_DEBUG ((LM_DEBUG,
                           "(%P|%t) Sequence push init dispatching ORB id is %s.\n",
                           obj->_stubobj()->orb_core()->orbid()));
             }
@@ -77,7 +78,7 @@ TAO_Notify_SequencePushConsumer::init (CosNotifyComm::SequencePushConsumer_ptr p
         {
           ex._tao_print_exception (
             "Got a TRANSIENT in NS_SequencePushConsumer::init");
-          ACE_DEBUG ((LM_DEBUG, "(%P|%t) got it for NS_SequencePushConsumer %@\n", this));
+          ORBSVCS_DEBUG ((LM_DEBUG, "(%P|%t) got it for NS_SequencePushConsumer %@\n", this));
         }
       catch (const CORBA::Exception&)
         {
@@ -101,7 +102,7 @@ TAO_Notify_SequencePushConsumer::dispatch_from_queue (Request_Queue& requests, A
   bool result = true;
   if (DEBUG_LEVEL > 0)
   {
-    ACE_DEBUG ( (LM_DEBUG,
+    ORBSVCS_DEBUG ( (LM_DEBUG,
       ACE_TEXT ("(%P|%t) SequencePushConsumer dispatch queued requests. queue size:%u\n"),
       requests.size ()));
   }
@@ -130,7 +131,7 @@ TAO_Notify_SequencePushConsumer::dispatch_from_queue (Request_Queue& requests, A
     {
       if (DEBUG_LEVEL > 0)
       {
-        ACE_DEBUG ( (LM_DEBUG,
+        ORBSVCS_DEBUG ( (LM_DEBUG,
           ACE_TEXT ("(%P|%t) Sequence Dispatch Method_Request_Dispatch @%@\n"),
           request));
       }
@@ -174,7 +175,7 @@ TAO_Notify_SequencePushConsumer::dispatch_from_queue (Request_Queue& requests, A
           if (request->should_retry ())
           {
             if (DEBUG_LEVEL > 0)
-              ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Consumer %d: Will retry %d\n"),
+              ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Consumer %d: Will retry %d\n"),
                           static_cast <int> (this->proxy ()->id ()),
                           request->sequence ()));
             requests.enqueue_head (request);
@@ -183,7 +184,7 @@ TAO_Notify_SequencePushConsumer::dispatch_from_queue (Request_Queue& requests, A
           else
           {
             if (DEBUG_LEVEL > 0)
-              ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Consumer %d: Discarding %d\n"),
+              ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Consumer %d: Discarding %d\n"),
                           static_cast<int> (this->proxy ()->id ()),
                           request->sequence ()));
             request->complete ();
@@ -195,7 +196,7 @@ TAO_Notify_SequencePushConsumer::dispatch_from_queue (Request_Queue& requests, A
           if (request->should_retry ())
           {
             if (DEBUG_LEVEL > 0)
-              ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Consumer %d: Will retry %d\n"),
+              ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Consumer %d: Will retry %d\n"),
                           static_cast<int> (this->proxy ()->id ()),
                           request->sequence ()));
             requests.enqueue_head (request);
@@ -204,7 +205,7 @@ TAO_Notify_SequencePushConsumer::dispatch_from_queue (Request_Queue& requests, A
           else
           {
             if (DEBUG_LEVEL > 0)
-              ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Consumer %d: Discarding %d\n"),
+              ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Consumer %d: Discarding %d\n"),
                           static_cast<int> (this->proxy ()->id ()),
                           request->sequence ()));
             request->complete ();
@@ -233,7 +234,7 @@ TAO_Notify_SequencePushConsumer::dispatch_from_queue (Request_Queue& requests, A
           if (request->should_retry ())
           {
             if (DEBUG_LEVEL > 0)
-              ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Consumer %d: Will retry %d\n"),
+              ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Consumer %d: Will retry %d\n"),
                           static_cast<int> (this->proxy ()->id ()),
                           request->sequence ()));
             requests.enqueue_head (request);
@@ -242,7 +243,7 @@ TAO_Notify_SequencePushConsumer::dispatch_from_queue (Request_Queue& requests, A
           else
           {
             if (DEBUG_LEVEL > 0)
-              ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Consumer %d: Discarding %d\n"),
+              ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Consumer %d: Discarding %d\n"),
                           static_cast<int> (this->proxy ()->id ()),
                           request->sequence ()));
             request->complete ();
@@ -266,7 +267,7 @@ TAO_Notify_SequencePushConsumer::enqueue_if_necessary (
   TAO_Notify_Method_Request_Event * request)
 {
   if (DEBUG_LEVEL > 0)
-    ACE_DEBUG ( (LM_DEBUG, "SequencePushConsumer enqueing event.\n"));
+    ORBSVCS_DEBUG ( (LM_DEBUG, "SequencePushConsumer enqueing event.\n"));
   this->enqueue_request (request);
 
   size_t mbs = static_cast<size_t>(this->max_batch_size_.value());
@@ -301,7 +302,7 @@ TAO_Notify_SequencePushConsumer::push (const CosNotification::EventBatch& event_
 {
   //--cj verify dispatching ORB
   if (TAO_debug_level >= 10) {
-    ACE_DEBUG ((LM_DEBUG, "(%P|%t) Sequence push dispatching ORB id is %s.\n",
+    ORBSVCS_DEBUG ((LM_DEBUG, "(%P|%t) Sequence push dispatching ORB id is %s.\n",
                 this->push_consumer_->_stubobj()->orb_core()->orbid()));
   }
   //--cj end

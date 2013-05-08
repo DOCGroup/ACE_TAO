@@ -1,6 +1,7 @@
 /* -*- c++ -*- */
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "ast_argument.h"
 #include "ast_exception.h"
 #include "ast_expression.h"
@@ -51,7 +52,7 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
 
       if (this->visit_scope (node) == -1)
         {
-          ACE_ERROR_RETURN ((
+          ORBSVCS_ERROR_RETURN ((
               LM_ERROR,
               ACE_TEXT ("(%N:%l) ifr_adding_visitor_operation::")
               ACE_TEXT ("visit_operation -")
@@ -179,7 +180,7 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
         }
       else
         {
-          ACE_ERROR_RETURN ((
+          ORBSVCS_ERROR_RETURN ((
               LM_ERROR,
               ACE_TEXT ("(%N:%l) ifr_adding_visitor_operation::")
               ACE_TEXT ("visit_operation -")

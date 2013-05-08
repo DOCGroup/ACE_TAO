@@ -52,7 +52,7 @@ TAO_DTP_Task::add_request (TAO::CSD::TP_Request* request)
       {
         if (TAO_debug_level > 4)
           {
-            ACE_DEBUG ((LM_DEBUG,
+            TAOLIB_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("TAO (%P|%t) - DTP_Task::add_request() ")
                         ACE_TEXT ("not accepting requests.\n")
                         ACE_TEXT ("TAO (%P|%t) - DTP_Task::add_request() ")
@@ -82,7 +82,7 @@ TAO_DTP_Task::add_request (TAO::CSD::TP_Request* request)
     this->work_available_.signal ();
     if (TAO_debug_level > 4 )
       {
-        ACE_DEBUG((LM_DEBUG,
+        TAOLIB_DEBUG((LM_DEBUG,
                    ACE_TEXT ("TAO (%P|%t) - DTP_Task::add_request() - ")
                    ACE_TEXT ("work available\n")));
       }
@@ -136,7 +136,7 @@ TAO_DTP_Task::open (void* /* args */)
   //if (tmp == 0)
   //  {
   //    //FUZZ: disable check_for_lack_ACE_OS
-  //    ACE_ERROR_RETURN ((LM_ERROR,
+  //    TAOLIB_ERROR_RETURN ((LM_ERROR,
   //                       ACE_TEXT ("(%P|%t) DTP_Task::open() failed to open.  ")
   //                       ACE_TEXT ("Invalid argument type passed to open().\n")),
   //                      -1);
@@ -153,7 +153,7 @@ TAO_DTP_Task::open (void* /* args */)
 
   if (TAO_debug_level > 4)
   {
-    ACE_DEBUG((LM_DEBUG,
+    TAOLIB_DEBUG((LM_DEBUG,
         ACE_TEXT ("TAO (%P|%t) - DTP_Task::open() initialized with:\n")
         ACE_TEXT ("TAO (%P|%t) - DTP_Task::open() init_threads_ \t\t: [%d]\n")
         ACE_TEXT ("TAO (%P|%t) - DTP_Task::open() min_pool_threads_ \t\t: [%d]\n")
@@ -173,7 +173,7 @@ TAO_DTP_Task::open (void* /* args */)
   // We can't activate 0 threads.  Make sure this isn't the case.
   if (num < 1)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
+      TAOLIB_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("TAO (%P|%t) DTP_Task::open() failed to open.  ")
                          ACE_TEXT ("num_threads (%u) is less-than 1.\n"),
                          num),
@@ -188,7 +188,7 @@ TAO_DTP_Task::open (void* /* args */)
   if (this->opened_)
     {
       //FUZZ: disable check_for_lack_ACE_OS
-      ACE_ERROR_RETURN ((LM_ERROR,
+      TAOLIB_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("TAO (%P|%t) DTP_Task::open() failed to open.  ")
                          ACE_TEXT ("Task has previously been open()'ed.\n")),
                         -1);
@@ -201,7 +201,7 @@ TAO_DTP_Task::open (void* /* args */)
     {
       if (this->activate (THR_NEW_LWP | THR_DETACHED, num, 1) != 0)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
+          TAOLIB_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("(%P|%t) DTP_Task::open() failed to activate ")
                              ACE_TEXT ("(%d) worker threads.\n"),
                              num),
@@ -226,7 +226,7 @@ TAO_DTP_Task::open (void* /* args */)
                           0,
                           stack_sz_arr) != 0)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
+          TAOLIB_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("(%P|%t) DTP_Task::open() failed to activate ")
                              ACE_TEXT ("(%d) worker threads.\n"),
                              num),
@@ -267,7 +267,7 @@ TAO_DTP_Task::clear_request (TAO::CSD::TP_Request_Handle &r)
 
   if (TAO_debug_level > 4 )
     {
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - DTP_Task::svc() ")
                   ACE_TEXT ("Decrementing num_queue_requests.")
                   ACE_TEXT ("New queue depth:%d\n"),
@@ -283,7 +283,7 @@ TAO_DTP_Task::svc (void)
   ++this->busy_threads_;
   if (TAO_debug_level > 4)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - DTP_Task::svc() ")
                   ACE_TEXT ("New thread created.\n")));
     }
@@ -301,7 +301,7 @@ TAO_DTP_Task::svc (void)
 
               if (TAO_debug_level > 4)
                 {
-                  ACE_DEBUG ((LM_DEBUG,
+                  TAOLIB_DEBUG ((LM_DEBUG,
                               ACE_TEXT ("TAO (%P|%t) - DTP_Task::svc() ")
                               ACE_TEXT ("Decrementing busy_threads_. ")
                               ACE_TEXT ("Busy thread count:%d\n"),
@@ -327,7 +327,7 @@ TAO_DTP_Task::svc (void)
                       {
                         if (TAO_debug_level > 4)
                           {
-                            ACE_DEBUG ((LM_DEBUG,
+                            TAOLIB_DEBUG ((LM_DEBUG,
                                         ACE_TEXT ("TAO (%P|%t) - DTP_Task::svc() ")
                                         ACE_TEXT ("Existing thread expiring.\n")));
                           }
@@ -339,7 +339,7 @@ TAO_DTP_Task::svc (void)
               ++this->busy_threads_;
               if (TAO_debug_level > 4)
                 {
-                  ACE_DEBUG ((LM_DEBUG,
+                  TAOLIB_DEBUG ((LM_DEBUG,
                               ACE_TEXT ("TAO (%P|%t) - DTP_Task::svc() ")
                               ACE_TEXT ("Incrementing busy_threads_. ")
                               ACE_TEXT ("Busy thread count:%d\n"),
@@ -364,7 +364,7 @@ TAO_DTP_Task::svc (void)
                              this->thread_stack_size_ == 0 ? 0 :
                              &this->thread_stack_size_) != 0)
             {
-              ACE_ERROR ((LM_ERROR,
+              TAOLIB_ERROR ((LM_ERROR,
                           ACE_TEXT ("(%P|%t) DTP_Task::svc() failed to grow ")
                           ACE_TEXT ("to %d worker threads.\n"), count));
             }
@@ -372,7 +372,7 @@ TAO_DTP_Task::svc (void)
           {
              if (TAO_debug_level > 4)
                {
-                 ACE_DEBUG ((LM_DEBUG,
+                 TAOLIB_DEBUG ((LM_DEBUG,
                  ACE_TEXT ("TAO (%P|%t) - DTP_Task::svc() ")
                  ACE_TEXT ("Growing threadcount. ")
                  ACE_TEXT ("New thread count:%d\n"),
@@ -417,7 +417,7 @@ TAO_DTP_Task::close(u_long flag)
   size_t in_task = (this->thr_mgr ()->task () == this) ? 1 : 0;
   if (TAO_debug_level > 4)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - DTP_Task::close() ")
                   ACE_TEXT ("shutting down. in_task = %d,  Count = %d \n"),
                   in_task,  this->thr_count ()));

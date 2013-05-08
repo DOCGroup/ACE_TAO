@@ -86,7 +86,7 @@ namespace TAO
 
         if (TAO_debug_level > 2)
           {
-            ACE_DEBUG ((LM_DEBUG,
+            TAOLIB_DEBUG ((LM_DEBUG,
               ACE_TEXT("TAO (%P|%t) - Invocation_Adapter::invoke_i, ")
               ACE_TEXT("making a %C invocation\n"),
               TAO::translate_collocation_strategy(strat)));
@@ -121,7 +121,7 @@ namespace TAO
 
             if (TAO_debug_level > 2)
               {
-                ACE_DEBUG ((LM_DEBUG,
+                TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT("TAO (%P|%t) - Invocation_Adapter::invoke_i, ")
                   ACE_TEXT("handling forwarded locations\n")));
               }
@@ -147,7 +147,7 @@ namespace TAO
       {
         if (TAO_debug_level > 0)
           {
-            ACE_ERROR ((LM_ERROR,
+            TAOLIB_ERROR ((LM_ERROR,
                         ACE_TEXT ("Invocation_Adapter::get_stub, ")
                         ACE_TEXT ("raising CORBA::INTERNAL because of nil ")
                         ACE_TEXT ("stub.\n")));
@@ -252,7 +252,7 @@ namespace TAO
     if (TAO_debug_level)
       {
         if (max_wait_time && *max_wait_time == ACE_Time_Value::zero)
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - Invocation_Adapter::invoke_remote_i, ")
                       ACE_TEXT ("max wait time consumed during transport resolution\n")));
       }
@@ -423,7 +423,7 @@ namespace TAO
                     {
                       if (TAO_debug_level > 0)
                         {
-                          ACE_ERROR ((LM_ERROR,
+                          TAOLIB_ERROR ((LM_ERROR,
                                       ACE_TEXT ("Invocation_Adapter::collocation_strategy, ")
                                       ACE_TEXT ("request for through poa collocation ")
                                       ACE_TEXT ("without needed collocation opportunity.\n")));
@@ -449,7 +449,7 @@ namespace TAO
                     {
                       if (TAO_debug_level > 0)
                         {
-                          ACE_ERROR ((LM_ERROR,
+                          TAOLIB_ERROR ((LM_ERROR,
                                       ACE_TEXT ("Invocation_Adapter::collocation_strategy, ")
                                       ACE_TEXT ("request for direct collocation ")
                                       ACE_TEXT ("without needed collocation opportunity.\n")));

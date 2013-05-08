@@ -37,7 +37,7 @@ namespace TAO
       if (strategy_factory != 0)
         strategy = strategy_factory->create (value);
       else
-        ACE_ERROR ((LM_ERROR,
+        TAOLIB_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) ERROR, Unable to get %s\n"),
                     strategy_name));
 

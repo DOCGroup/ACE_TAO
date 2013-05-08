@@ -56,7 +56,7 @@ TAO_GIOP_Message_Generator_Parser_10::write_request_header (
     {
       if (TAO_debug_level)
         {
-          ACE_ERROR ((LM_ERROR,
+          TAOLIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("(%N |%l) Unable to handle this request\n")));
         }
       return false;
@@ -132,7 +132,7 @@ TAO_GIOP_Message_Generator_Parser_10::write_locate_request_header (
     {
       if (TAO_debug_level)
         {
-          ACE_ERROR ((LM_ERROR,
+          TAOLIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("(%N | %l) Unable to handle this request\n")));
         }
       return false;
@@ -290,7 +290,7 @@ TAO_GIOP_Message_Generator_Parser_10::write_locate_reply_mesg (
         {
           if (TAO_debug_level > 0)
             {
-              ACE_ERROR ((
+              TAOLIB_ERROR ((
                   LM_ERROR,
                   ACE_TEXT ("TAO (%P|%t|%N|%l) write_locate_reply_mesg-")
                   ACE_TEXT (" cannot marshal object reference\n")
@@ -429,7 +429,7 @@ TAO_GIOP_Message_Generator_Parser_10::parse_reply (
     {
       if (TAO_debug_level > 0)
         {
-          ACE_ERROR ((LM_ERROR,
+          TAOLIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO (%P|%t) parse_reply, ")
                       ACE_TEXT ("extracting context\n")));
         }

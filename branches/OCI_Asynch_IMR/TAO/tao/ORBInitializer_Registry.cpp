@@ -32,7 +32,7 @@ namespace PortableInterceptor
       // Make sure TAO's singleton manager is initialized.
       if (TAO_Singleton_Manager::instance ()->init () == -1)
         {
-          ACE_ERROR ((LM_ERROR,
+          TAOLIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO (%P|%t) - register_orb_initializer: ")
                       ACE_TEXT ("Unable to pre-initialize TAO\n")));
         }
@@ -64,7 +64,7 @@ namespace PortableInterceptor
       }
     else
       {
-        ACE_ERROR ((LM_ERROR,
+        TAOLIB_ERROR ((LM_ERROR,
                     ACE_TEXT ("TAO (%P|%t) %p\n"),
                     ACE_TEXT ("ERROR: ORBInitializer Registry unable to find the ")
                     ACE_TEXT ("ORBInitializer Registry instance")));

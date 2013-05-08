@@ -15,14 +15,14 @@
 //=============================================================================
 
 
-#include "ace/Log_Msg.h"
+#include "orbsvcs/Log_Macros.h"
 
 #if !defined (ACE_WIN32) || defined (ACE_LACKS_WIN32_SERVICES)
 
 int
 ACE_TMAIN(int, ACE_TCHAR *[])
 {
-  ACE_ERROR ((LM_INFO,
+  ORBSVCS_ERROR ((LM_INFO,
               "This program is only supported "
               "on Win32 platforms\n"));
   return 1;
@@ -93,7 +93,7 @@ Options::~Options (void)
 void
 Options::print_usage_and_die (void)
 {
-  ACE_DEBUG ((LM_INFO,
+  ORBSVCS_DEBUG ((LM_INFO,
               ACE_TEXT("Usage: %s")
               ACE_TEXT(" -in -r -s -k -tn -d\n")
               ACE_TEXT("  -i: Install this program as an NT service, with specified startup\n")
@@ -207,7 +207,7 @@ Options::run (int argc, ACE_TCHAR* argv[])
                           SERVICE::instance (),
                           ret);
       if (ret == 0)
-        ACE_ERROR ((LM_ERROR,
+        ORBSVCS_ERROR ((LM_ERROR,
                     "%p\n",
                     "Couldn't start service"));
     }

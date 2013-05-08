@@ -248,7 +248,7 @@ TAO::ORB::open_global_services (int argc, ACE_TCHAR **argv)
 
   if (TAO_debug_level > 2)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
       ACE_TEXT ("TAO (%P|%t) Initializing the ")
       ACE_TEXT ("process-wide service context\n")));
     }
@@ -327,7 +327,7 @@ TAO::ORB::open_global_services (int argc, ACE_TCHAR **argv)
         {
           if (TAO_debug_level > 0)
             {
-              ACE_ERROR ((LM_ERROR,
+              TAOLIB_ERROR ((LM_ERROR,
                           ACE_TEXT ("TAO (%P|%t) - Failed to open process-")
                           ACE_TEXT ("wide service configuration context\n")));
             }
@@ -336,7 +336,7 @@ TAO::ORB::open_global_services (int argc, ACE_TCHAR **argv)
       else
         {
           if (TAO_debug_level > 4)
-            ACE_DEBUG ((LM_DEBUG,
+            TAOLIB_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("TAO (%P|%t) - Did not find default ")
                         ACE_TEXT ("svc.conf\n")));
           status = 0;
@@ -348,7 +348,7 @@ TAO::ORB::open_global_services (int argc, ACE_TCHAR **argv)
       // one or more directives failed, but we don't know which
       if (TAO_debug_level > 0)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - process-wide service ")
                       ACE_TEXT ("configuration context had %d failed ")
                       ACE_TEXT ("directives\n"), status));
@@ -356,19 +356,19 @@ TAO::ORB::open_global_services (int argc, ACE_TCHAR **argv)
     }
 
   if (TAO_debug_level > 2)
-    ACE_DEBUG ((LM_DEBUG,
+    TAOLIB_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO (%P|%t) - Completed initializing the ")
                 ACE_TEXT ("process-wide service context\n")));
 
   if (TAO_debug_level > 4)
-    ACE_DEBUG ((LM_DEBUG,
+    TAOLIB_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO (%P|%t) - Default ORB services initialization begins\n")));
 
   // Load more ORB-related services
   register_additional_services_i (theone);
 
   if (TAO_debug_level > 4)
-    ACE_DEBUG ((LM_DEBUG,
+    TAOLIB_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO (%P|%t) - Default ORB services initialization completed\n")));
 
   // Notify all other threads that may be waiting, that the global
@@ -397,7 +397,7 @@ TAO::ORB::open_services (ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> pcfg,
     if (service_open_count == 1)
       {
         if (TAO_debug_level > 4)
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - Waiting for the default ")
                       ACE_TEXT ("ORB to complete the global ")
                       ACE_TEXT ("initialization\n")));
@@ -406,7 +406,7 @@ TAO::ORB::open_services (ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> pcfg,
       TAO_Ubergestalt_Ready_Condition::instance ()->wait ());
 
         if (TAO_debug_level > 4)
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - The default ")
                       ACE_TEXT ("ORB must have completed the global ")
                       ACE_TEXT ("initialization...\n")));
@@ -415,7 +415,7 @@ TAO::ORB::open_services (ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> pcfg,
     else
       {
         if (TAO_debug_level > 4)
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - We are%Cthe default ")
                       ACE_TEXT ("ORB ...\n"),
                       (service_open_count == 0) ? " " : " not "));
@@ -458,7 +458,7 @@ TAO::ORB::open_services (ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> pcfg,
   int status = parse_global_args_i(argc, argv, global_svc_config_argv, false);
 
   if (status == -1 && TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
+    TAOLIB_DEBUG ((LM_DEBUG,
     ACE_TEXT ("TAO (%P|%t) - Skipping the process-wide ")
     ACE_TEXT ("service configuration, service_open_count ")
     ACE_TEXT ("= %d, status = %d\n"),
@@ -466,7 +466,7 @@ TAO::ORB::open_services (ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> pcfg,
     status));
 
   if (TAO_debug_level > 2)
-    ACE_DEBUG ((LM_DEBUG,
+    TAOLIB_DEBUG ((LM_DEBUG,
     ACE_TEXT ("TAO (%P|%t) - Initializing the ")
     ACE_TEXT ("orb-specific services\n")));
 
@@ -490,7 +490,7 @@ TAO::ORB::open_services (ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> pcfg,
       if (errno != ENOENT)
         {
           if (TAO_debug_level > 0)
-            ACE_ERROR ((LM_ERROR,
+            TAOLIB_ERROR ((LM_ERROR,
                         ACE_TEXT ("TAO (%P|%t) - Failed to open ORB-specific ")
                         ACE_TEXT ("service configuration\n")));
           return -1;
@@ -498,7 +498,7 @@ TAO::ORB::open_services (ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> pcfg,
       else
         {
           if (TAO_debug_level > 4)
-            ACE_DEBUG ((LM_DEBUG,
+            TAOLIB_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("TAO (%P|%t) - Did not find default ")
                         ACE_TEXT ("svc.conf\n")));
           status = 0;
@@ -510,7 +510,7 @@ TAO::ORB::open_services (ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> pcfg,
       // one or more directives failed, but we don't know which
       if (TAO_debug_level > 0)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - ORB-specific service ")
                       ACE_TEXT ("configuration context had %d failed ")
                       ACE_TEXT ("directives\n"), status));
@@ -625,7 +625,7 @@ namespace
           {
             if (TAO_debug_level > 0)
               {
-                ACE_ERROR ((LM_ERROR,
+                TAOLIB_ERROR ((LM_ERROR,
                             ACE_TEXT ("TAO (%P|%t) ORB_Core: ")
                             ACE_TEXT ("Unable to initialize ")
                             ACE_TEXT ("Codeset Manager\n")));
@@ -837,7 +837,7 @@ namespace
                 // the errno is set to ENOENT for some reason.
                 errno = EINVAL;
 
-                ACE_ERROR_RETURN ((LM_ERROR,
+                TAOLIB_ERROR_RETURN ((LM_ERROR,
                                    ACE_TEXT ("TAO (%P|%t) - Error, unable to open file <%s>")
                                    ACE_TEXT (", referenced by -ORBSvcConf option\n"),
                                    current_arg),
@@ -971,7 +971,7 @@ namespace
                 TAO_debug_level = 1;
               }
 
-            ACE_DEBUG ((LM_DEBUG,
+            TAOLIB_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("TAO_debug_level == %d\n"),
                         TAO_debug_level));
           }

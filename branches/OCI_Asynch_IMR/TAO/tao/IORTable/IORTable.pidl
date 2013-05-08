@@ -65,19 +65,6 @@ module IORTable
       raises (NotFound);
   };
 
-  /// Callback interface to locate object keys dynamically
-  /**
-   * The application can provide a callback interface to locate object
-   * keys dynamically.
-   */
-  native Locate_ResponseHandler;
-  local interface AsyncLocator : Locator
-  {
-    /// Uses AMH semantics to send IOR for @a object_key via the supplied
-    /// response handler
-    void async_locate (in Locate_ResponseHandler rh, in string object_key);
-
-  };
 };
 
 #endif /* TAO_IORTABLE_IORTABLE_PIDL */

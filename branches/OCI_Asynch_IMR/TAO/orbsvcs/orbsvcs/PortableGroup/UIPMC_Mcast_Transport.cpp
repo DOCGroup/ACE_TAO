@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/PortableGroup/UIPMC_Mcast_Transport.h"
 #include "orbsvcs/PortableGroup/miopconf.h"
 #include "orbsvcs/PortableGroup/UIPMC_Transport_Recv_Packet.h"
@@ -75,7 +76,7 @@ TAO_UIPMC_Mcast_Transport::cleanup_packets (bool expired_only)
 
           if (TAO_debug_level >= 8)
             {
-              ACE_DEBUG ((LM_DEBUG,
+              ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("TAO (%P|%t) - UIPMC_Mcast_Transport[%d]::")
                           ACE_TEXT ("cleanup_packets, cleaning %d bytes\n"),
                           this->id (),
@@ -171,7 +172,7 @@ TAO_UIPMC_Mcast_Transport::recv_packet (
     {
       if (TAO_debug_level)
         {
-          ACE_ERROR ((LM_ERROR,
+          ORBSVCS_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO (%P|%t) - UIPMC_Mcast_Transport[%d]::")
                       ACE_TEXT ("recv_packet, packet of size %d is ")
                       ACE_TEXT ("too small\n"),
@@ -196,7 +197,7 @@ TAO_UIPMC_Mcast_Transport::recv_packet (
     {
       if (TAO_debug_level)
         {
-          ACE_ERROR ((LM_ERROR,
+          ORBSVCS_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO (%P|%t) - UIPMC_Mcast_Transport[%d]::")
                       ACE_TEXT ("recv_packet, packet didn't contain ")
                       ACE_TEXT ("magic bytes\n"),
@@ -214,7 +215,7 @@ TAO_UIPMC_Mcast_Transport::recv_packet (
     {
       if (TAO_debug_level)
         {
-          ACE_ERROR ((LM_ERROR,
+          ORBSVCS_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO (%P|%t) - UIPMC_Mcast_Transport[%d]::")
                       ACE_TEXT ("recv_packet, packet has wrong version ")
                       ACE_TEXT ("%d.%d\n"),
@@ -254,7 +255,7 @@ TAO_UIPMC_Mcast_Transport::recv_packet (
     {
       if (TAO_debug_level)
         {
-          ACE_ERROR ((LM_ERROR,
+          ORBSVCS_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO (%P|%t) - UIPMC_Mcast_Transport[%d]::")
                       ACE_TEXT ("recv_packet, malformed packet\n"),
                       this->id ()));
@@ -269,7 +270,7 @@ TAO_UIPMC_Mcast_Transport::recv_packet (
     {
       if (TAO_debug_level)
         {
-          ACE_ERROR ((LM_ERROR,
+          ORBSVCS_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO (%P|%t) - UIPMC_Mcast_Transport[%d]::")
                       ACE_TEXT ("recv_packet, packet not large enough ")
                       ACE_TEXT ("for padding\n"),
@@ -285,7 +286,7 @@ TAO_UIPMC_Mcast_Transport::recv_packet (
   // Normally we don't need to log this but if someone will want. Here we are.
   if (TAO_debug_level >= 10)
     {
-      ACE_HEX_DUMP ((LM_DEBUG,
+      ORBSVCS_HEX_DUMP ((LM_DEBUG,
                      (char const *) buf,
                      miop_header_size,
                      ACE_TEXT ("MIOP header")));
@@ -340,7 +341,7 @@ TAO_UIPMC_Mcast_Transport::recv_all (TAO_Resume_Handle &rh)
             {
               if (errno != EWOULDBLOCK && errno != EAGAIN)
                 {
-                  ACE_DEBUG ((LM_DEBUG,
+                  ORBSVCS_DEBUG ((LM_DEBUG,
                               ACE_TEXT ("TAO (%P|%t) - UIPMC_Mcast_Transport[%d]::")
                               ACE_TEXT ("recv_all, unexpected failure of recv_packet (Errno: '%m')\n"),
                               this->id ()));
@@ -352,7 +353,7 @@ TAO_UIPMC_Mcast_Transport::recv_all (TAO_Resume_Handle &rh)
             {
               char tmp[INET6_ADDRSTRLEN];
               from_addr.get_host_addr (tmp, sizeof tmp);
-              ACE_DEBUG ((LM_DEBUG,
+              ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("TAO (%P|%t) - UIPMC_Mcast_Transport[%d]::")
                           ACE_TEXT ("recv, received %d bytes from <%C:%u> ")
                           ACE_TEXT ("(hash %d)\n"),
@@ -378,7 +379,7 @@ TAO_UIPMC_Mcast_Transport::recv_all (TAO_Resume_Handle &rh)
                 {
                   // Cleanup the packet.
                   delete packet;
-                  ACE_DEBUG ((LM_DEBUG,
+                  ORBSVCS_DEBUG ((LM_DEBUG,
                               ACE_TEXT ("TAO (%P|%t) - UIPMC_Mcast_Transport[%d]::")
                               ACE_TEXT ("recv_all, could not queue fragment\n"),
                               this->id ()));
@@ -400,7 +401,7 @@ TAO_UIPMC_Mcast_Transport::recv_all (TAO_Resume_Handle &rh)
                 {
                   if (TAO_debug_level >= 9)
                     {
-                      ACE_DEBUG ((LM_DEBUG,
+                      ORBSVCS_DEBUG ((LM_DEBUG,
                                   ACE_TEXT ("TAO (%P|%t) - UIPMC_Mcast_Transport[%d]::")
                                   ACE_TEXT ("recv_all, completed MIOP message %@\n"),
                                   this->id (), static_cast<void *> (packet)));
@@ -419,7 +420,7 @@ TAO_UIPMC_Mcast_Transport::recv_all (TAO_Resume_Handle &rh)
                   // it after all.
                   if (TAO_debug_level >= 9)
                     {
-                      ACE_DEBUG ((LM_DEBUG,
+                      ORBSVCS_DEBUG ((LM_DEBUG,
                                   ACE_TEXT ("TAO (%P|%t) - UIPMC_Mcast_Transport[%d]::")
                                   ACE_TEXT ("recv_all, completed MIOP message %@\n"),
                                   this->id (), static_cast<void *> (packet)));
@@ -430,7 +431,7 @@ TAO_UIPMC_Mcast_Transport::recv_all (TAO_Resume_Handle &rh)
 
               if (TAO_debug_level >= 9)
                 {
-                  ACE_DEBUG ((LM_DEBUG,
+                  ORBSVCS_DEBUG ((LM_DEBUG,
                               ACE_TEXT ("TAO (%P|%t) - UIPMC_Mcast_Transport[%d]::")
                               ACE_TEXT ("recv_all, completed MIOP message %@ (QUEUED)\n"),
                               this->id (), static_cast<void *> (packet)));
@@ -458,7 +459,7 @@ TAO_UIPMC_Mcast_Transport::recv_all (TAO_Resume_Handle &rh)
   TAO_PG::UIPMC_Recv_Packet *packet = 0;
   if (this->complete_.dequeue_head (packet) == -1)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - TAO_UIPMC_Mcast_Transport[%d]::recv_all, ")
                   ACE_TEXT ("unable to dequeue completed message\n"),
                   this->id ()));
@@ -467,7 +468,7 @@ TAO_UIPMC_Mcast_Transport::recv_all (TAO_Resume_Handle &rh)
 
   if (TAO_debug_level >= 9)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - UIPMC_Mcast_Transport[%d]::")
                   ACE_TEXT ("recv_all, completed MIOP message %@ (DEQUEUED)\n"),
                   this->id (), static_cast<void *> (packet)));
@@ -488,7 +489,7 @@ TAO_UIPMC_Mcast_Transport::recv_all (TAO_Resume_Handle &rh)
         }
       else if (retval < 0 && TAO_debug_level > 2)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - TAO_UIPMC_Mcast_Transport[%d]::recv_all, ")
                       ACE_TEXT ("notify to the reactor failed.\n"),
                       this->id ()));
@@ -508,7 +509,7 @@ TAO_UIPMC_Mcast_Transport::handle_input (
 
   if (TAO_debug_level >= 8)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - UIPMC_Mcast_Transport[%d]::")
                   ACE_TEXT ("handle_input, started\n"),
                   this->id ()));
@@ -520,7 +521,7 @@ TAO_UIPMC_Mcast_Transport::handle_input (
     {
       if (TAO_debug_level >= 9)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - UIPMC_Mcast_Transport[%d]::")
                       ACE_TEXT ("handle_input, processing MIOP message %@ (%d bytes)\n"),
                       this->id (), static_cast<void *> (complete), complete->data_length ()));
@@ -568,7 +569,7 @@ TAO_UIPMC_Mcast_Transport::handle_input (
         {
           if (TAO_debug_level)
             {
-              ACE_ERROR ((LM_ERROR,
+              ORBSVCS_ERROR ((LM_ERROR,
                           ACE_TEXT ("TAO (%P|%t) - UIPMC_Mcast_Transport[%d]::")
                           ACE_TEXT ("handle_input, failed to parse input\n"),
                           this->id ()));
@@ -579,7 +580,7 @@ TAO_UIPMC_Mcast_Transport::handle_input (
           // Parse/marshal error happened.
           if (TAO_debug_level)
             {
-              ACE_ERROR ((LM_ERROR,
+              ORBSVCS_ERROR ((LM_ERROR,
                           ACE_TEXT ("TAO (%P|%t) - UIPMC_Mcast_Transport[%d]::")
                           ACE_TEXT ("handle_input, got missing data\n"),
                           this->id ()));
@@ -590,7 +591,7 @@ TAO_UIPMC_Mcast_Transport::handle_input (
           // We read too much data.
           if (TAO_debug_level)
             {
-              ACE_ERROR ((LM_ERROR,
+              ORBSVCS_ERROR ((LM_ERROR,
                           ACE_TEXT ("TAO (%P|%t) - UIPMC_Mcast_Transport[%d]::")
                           ACE_TEXT ("handle_input, read %d but expected %d\n"),
                           this->id (),

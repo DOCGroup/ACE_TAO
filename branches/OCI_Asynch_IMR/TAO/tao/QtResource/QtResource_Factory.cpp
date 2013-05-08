@@ -19,7 +19,7 @@ namespace TAO
   {    // synchronized by external locks
     if (this->qapp_ == 0)
       {
-        ACE_ERROR ((LM_ERROR,
+        TAOLIB_ERROR ((LM_ERROR,
                     "TAO (%P|%t) - QApplication is undefined.",
                     " Cannot create ACE_QtReactor\n"));
         return 0;
@@ -32,7 +32,7 @@ namespace TAO
                         0);
 
         if (TAO_debug_level > 0)
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       "TAO (%P|%t) - ACE_QtReactor created\n"));
       }
 

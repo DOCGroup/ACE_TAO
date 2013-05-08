@@ -1,6 +1,7 @@
 /* -*- c++ -*- */
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "ast_enum.h"
 #include "ast_exception.h"
 #include "ast_expression.h"
@@ -51,7 +52,7 @@ ifr_adding_visitor_exception::visit_scope (UTL_Scope *node)
         {
           if (e->field (f, i) != 0)
             {
-              ACE_ERROR_RETURN ((
+              ORBSVCS_ERROR_RETURN ((
                   LM_ERROR,
                   ACE_TEXT ("(%N:%l) ifr_adding_visitor_exception::")
                   ACE_TEXT ("visit_scope -")
@@ -71,7 +72,7 @@ ifr_adding_visitor_exception::visit_scope (UTL_Scope *node)
             {
               if (ft->ast_accept (this) == -1)
                 {
-                  ACE_ERROR_RETURN ((
+                  ORBSVCS_ERROR_RETURN ((
                       LM_ERROR,
                       ACE_TEXT ("(%N:%l) ifr_adding_visitor_exception::")
                       ACE_TEXT ("visit_scope -")
@@ -183,7 +184,7 @@ ifr_adding_visitor_exception::visit_exception (AST_Exception *node)
 
           if (be_global->ifr_scopes ().top (current_scope) != 0)
             {
-              ACE_ERROR_RETURN ((
+              ORBSVCS_ERROR_RETURN ((
                   LM_ERROR,
                   ACE_TEXT ("(%N:%l) ifr_adding_visitor_exception::")
                   ACE_TEXT ("visit_exception -")
@@ -201,7 +202,7 @@ ifr_adding_visitor_exception::visit_exception (AST_Exception *node)
 
           if (be_global->ifr_scopes ().push (new_def.in ()) != 0)
             {
-              ACE_ERROR_RETURN ((
+              ORBSVCS_ERROR_RETURN ((
                   LM_ERROR,
                   ACE_TEXT ("(%N:%l) ifr_adding_visitor_exception::")
                   ACE_TEXT ("visit_exception -")
@@ -214,7 +215,7 @@ ifr_adding_visitor_exception::visit_exception (AST_Exception *node)
           // Then add the real exception members.
           if (this->add_members (node, new_def.in ()) == -1)
             {
-              ACE_ERROR_RETURN ((
+              ORBSVCS_ERROR_RETURN ((
                 LM_ERROR,
                 ACE_TEXT ("(%N:%l) ifr_adding_visitor_exception::")
                 ACE_TEXT ("visit_exception -")
@@ -228,7 +229,7 @@ ifr_adding_visitor_exception::visit_exception (AST_Exception *node)
           // Pop the new IR object back off the scope stack.
           if (be_global->ifr_scopes ().pop (used_scope) != 0)
             {
-              ACE_ERROR_RETURN ((
+              ORBSVCS_ERROR_RETURN ((
                   LM_ERROR,
                   ACE_TEXT ("(%N:%l) ifr_adding_visitor_exception::")
                   ACE_TEXT ("visit_exception -")
@@ -244,7 +245,7 @@ ifr_adding_visitor_exception::visit_exception (AST_Exception *node)
 
           if (be_global->ifr_scopes ().push (new_def.in ()) != 0)
             {
-              ACE_ERROR_RETURN ((
+              ORBSVCS_ERROR_RETURN ((
                   LM_ERROR,
                   ACE_TEXT ("(%N:%l) ifr_adding_visitor_exception::")
                   ACE_TEXT ("visit_exception -")
@@ -257,7 +258,7 @@ ifr_adding_visitor_exception::visit_exception (AST_Exception *node)
           // Then add the real exception members.
           if (this->add_members (node, new_def.in ()) == -1)
             {
-              ACE_ERROR_RETURN ((
+              ORBSVCS_ERROR_RETURN ((
                 LM_ERROR,
                 ACE_TEXT ("(%N:%l) ifr_adding_visitor_exception::")
                 ACE_TEXT ("visit_exception -")
@@ -271,7 +272,7 @@ ifr_adding_visitor_exception::visit_exception (AST_Exception *node)
           // Pop the new IR object back off the scope stack.
           if (be_global->ifr_scopes ().pop (used_scope) != 0)
             {
-              ACE_ERROR_RETURN ((
+              ORBSVCS_ERROR_RETURN ((
                   LM_ERROR,
                   ACE_TEXT ("(%N:%l) ifr_adding_visitor_exception::")
                   ACE_TEXT ("visit_exception -")
@@ -430,7 +431,7 @@ ifr_adding_visitor_exception::add_members (AST_Exception *node,
 {
   if (this->visit_scope (node) == -1)
     {
-      ACE_ERROR_RETURN ((
+      ORBSVCS_ERROR_RETURN ((
           LM_ERROR,
           ACE_TEXT ("(%N:%l) ifr_adding_visitor_exception::")
           ACE_TEXT ("visit_exception -")

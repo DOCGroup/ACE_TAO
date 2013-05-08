@@ -1,5 +1,7 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/AV/TCP.h"
 #include "orbsvcs/AV/AVStreams_i.h"
 
@@ -179,7 +181,7 @@ TAO_AV_TCP_Factory::match_protocol (const char *protocol_string)
 TAO_AV_Acceptor*
 TAO_AV_TCP_Factory::make_acceptor (void)
 {
-  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_TCP_Factory::make_acceptor "));
+  if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"TAO_AV_TCP_Factory::make_acceptor "));
   TAO_AV_Acceptor *acceptor = 0;
   ACE_NEW_RETURN (acceptor,
                   TAO_AV_TCP_Acceptor,
@@ -190,7 +192,7 @@ TAO_AV_TCP_Factory::make_acceptor (void)
 TAO_AV_Connector*
 TAO_AV_TCP_Factory::make_connector (void)
 {
-  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_TCP_Factory::make_connector "));
+  if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"TAO_AV_TCP_Factory::make_connector "));
   TAO_AV_Connector *connector = 0;
   ACE_NEW_RETURN (connector,
                   TAO_AV_TCP_Connector,
@@ -208,9 +210,9 @@ TAO_AV_TCP_Object::handle_input (void)
   int n = this->transport_->recv (this->frame_.rd_ptr (),
                                   this->frame_.size ());
   if (n == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_TCP_Flow_Handler::handle_input recv failed\n"),-1);
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,"TAO_AV_TCP_Flow_Handler::handle_input recv failed\n"),-1);
   if (n == 0)
-    ACE_ERROR_RETURN ((LM_DEBUG,"TAO_AV_TCP_Flow_Handler::handle_input connection closed\n"),-1);
+    ORBSVCS_ERROR_RETURN ((LM_DEBUG,"TAO_AV_TCP_Flow_Handler::handle_input connection closed\n"),-1);
   this->frame_.wr_ptr (this->frame_.rd_ptr () + n);
 
   return this->callback_->receive_frame (&this->frame_);
@@ -296,7 +298,7 @@ TAO_AV_TCP_Flow_Factory::make_protocol_object (TAO_FlowSpec_Entry *entry,
   TAO_AV_Callback *callback = 0;
   if (endpoint->get_callback (entry->flowname (), callback))
     {
-      ACE_ERROR_RETURN ((LM_ERROR, "(%N,%l) Invalid callback\n"), 0);
+      ORBSVCS_ERROR_RETURN ((LM_ERROR, "(%N,%l) Invalid callback\n"), 0);
     }
 
   TAO_AV_TCP_Object *object = 0;
@@ -327,7 +329,7 @@ TAO_AV_TCP_Base_Connector::connector_open (TAO_AV_TCP_Connector *connector,
 
   int result = ACE_Connector <TAO_AV_TCP_Flow_Handler,ACE_SOCK_CONNECTOR>::open (reactor);
   if (result < 0)
-    ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_TCP_Base_Connector::open failed\n"),-1);
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,"TAO_AV_TCP_Base_Connector::open failed\n"),-1);
   return 0;
 }
 
@@ -350,7 +352,7 @@ TAO_AV_TCP_Base_Connector::connector_connect (TAO_AV_TCP_Flow_Handler *&handler,
     ACE_Connector <TAO_AV_TCP_Flow_Handler,ACE_SOCK_CONNECTOR>::connect (handler,
                                                                          remote_addr);
   if (result < 0)
-    ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_TCP_Base_Connector::connect failed\n"),-1);
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,"TAO_AV_TCP_Base_Connector::connect failed\n"),-1);
   return 0;
 }
 
@@ -368,7 +370,7 @@ TAO_AV_TCP_Connector::~TAO_AV_TCP_Connector (void)
 int
 TAO_AV_TCP_Connector::make_svc_handler (TAO_AV_TCP_Flow_Handler *&tcp_handler)
 {
-  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_TCP_Connector::make_svc_handler\n"));
+  if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"TAO_AV_TCP_Connector::make_svc_handler\n"));
   //  TAO_AV_Callback *callback = 0;
   if (this->endpoint_ != 0)
     {
@@ -402,7 +404,7 @@ TAO_AV_TCP_Connector::open (TAO_Base_StreamEndPoint *endpoint,
 {
   this->endpoint_ = endpoint;
   this->flow_protocol_factory_ = factory;
-  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_TCP_Connector::open "));
+  if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"TAO_AV_TCP_Connector::open "));
   int result = this->connector_.connector_open(this,
                                                av_core->reactor ());
   return result;
@@ -424,7 +426,7 @@ TAO_AV_TCP_Connector::connect (TAO_FlowSpec_Entry *entry,
   int result = this->connector_.connector_connect (handler,
                                                    *inet_addr);
   if (result < 0)
-    ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_TCP_connector::connect failed\n"),-1);
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,"TAO_AV_TCP_connector::connect failed\n"),-1);
   entry->handler (handler);
   transport = handler->transport ();
   return 0;
@@ -453,7 +455,7 @@ TAO_AV_TCP_Base_Acceptor::acceptor_open (TAO_AV_TCP_Acceptor *acceptor,
   int const result =
     ACE_Acceptor <TAO_AV_TCP_Flow_Handler,ACE_SOCK_ACCEPTOR>::open (local_addr,reactor);
   if (result < 0)
-    ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_TCP_Base_Connector::open failed\n"),-1);
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,"TAO_AV_TCP_Base_Connector::open failed\n"),-1);
   return 0;
 }
 
@@ -485,7 +487,7 @@ int
 TAO_AV_TCP_Acceptor::make_svc_handler (TAO_AV_TCP_Flow_Handler *&tcp_handler)
 {
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
                 "TAO_AV_TCP_Acceptor::make_svc_handler\n"
                 ));
 
@@ -520,7 +522,7 @@ TAO_AV_TCP_Acceptor::open (TAO_Base_StreamEndPoint *endpoint,
   this->flow_protocol_factory_ = factory;
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
                 "TAO_AV_TCP_Acceptor::open "));
 
   this->av_core_ = av_core;
@@ -542,7 +544,7 @@ TAO_AV_TCP_Acceptor::open (TAO_Base_StreamEndPoint *endpoint,
                              BUFSIZ);
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
                 "TAO_AV_TCP_Acceptor::open: %s",
                 buf
                 ));
@@ -553,7 +555,7 @@ TAO_AV_TCP_Acceptor::open (TAO_Base_StreamEndPoint *endpoint,
                                      entry);
 
   if (result < 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        "TAO_AV_TCP_Acceptor::open failed"),
                       -1);
 
@@ -589,7 +591,7 @@ TAO_AV_TCP_Acceptor::open_default (TAO_Base_StreamEndPoint *endpoint,
 
 
   if (result < 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        "TAO_AV_TCP_Acceptor::open failed"),
                       -1);
 
@@ -602,7 +604,7 @@ TAO_AV_TCP_Acceptor::open_default (TAO_Base_StreamEndPoint *endpoint,
   address->addr_to_string (buf,BUFSIZ);
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
                 "TAO_AV_TCP_Acceptor::open_default: %s\n",
                 buf));
 
@@ -651,7 +653,7 @@ TAO_AV_TCP_Flow_Handler::open (void * /*arg*/)
                                 TCP_NODELAY,
                                 (void *) &nodelay,
                                 sizeof (nodelay)) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        "NODELAY failed\n"),
                       -1);
 #endif /* TCP_NODELAY */
@@ -677,7 +679,7 @@ TAO_AV_TCP_Flow_Handler::open (void * /*arg*/)
   (void) addr.addr_to_string (server, sizeof (server));
 
   if (TAO_debug_level > 0)
-    if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,
+    if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,
                 "(%P|%t) connection to server <%s> on %d\n",
                 server, this->peer ().get_handle ()));
 
@@ -687,7 +689,7 @@ TAO_AV_TCP_Flow_Handler::open (void * /*arg*/)
       && this->reactor ()->register_handler
       (this,
        ACE_Event_Handler::READ_MASK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("unable to register client handler")),
                       -1);

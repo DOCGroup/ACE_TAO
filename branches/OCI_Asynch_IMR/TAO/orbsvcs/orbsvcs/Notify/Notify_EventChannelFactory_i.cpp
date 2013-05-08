@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Notify/Notify_EventChannelFactory_i.h"
 
 #include "orbsvcs/Notify/Service.h"
@@ -19,7 +20,7 @@ TAO_Notify_EventChannelFactory_i::create (PortableServer::POA_ptr default_POA,
 
   if (notify_service == 0)
   {
-    ACE_DEBUG ((LM_DEBUG, "Service not found! check conf. file\n"));
+    ORBSVCS_DEBUG ((LM_DEBUG, "Service not found! check conf. file\n"));
     return notify_factory._retn ();
   }
 

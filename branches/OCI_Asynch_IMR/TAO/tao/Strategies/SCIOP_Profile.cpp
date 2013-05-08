@@ -91,7 +91,7 @@ TAO_SCIOP_Profile::decode_profile (TAO_InputCDR& cdr)
   if (cdr.read_ushort (this->endpoint_.port_) == 0)
     {
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
+        TAOLIB_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) SCIOP_Profile::decode - ")
                     ACE_TEXT ("error while decoding host/port")));
       return -1;
@@ -207,7 +207,7 @@ TAO_SCIOP_Profile::parse_string_i (const char *ior
           // initialized.  Just throw an exception.
 
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
+            TAOLIB_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("\n\nTAO (%P|%t) ")
                         ACE_TEXT ("SCIOP_Profile::parse_string ")
                         ACE_TEXT ("- %p\n\n"),
@@ -391,7 +391,7 @@ TAO_SCIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
     encap << this->ref_object_key_->object_key ();
   else
     {
-      ACE_ERROR ((LM_ERROR,
+      TAOLIB_ERROR ((LM_ERROR,
                   "(%P|%t) TAO - IIOP_Profile::create_profile_body "
                   "no object key marshalled\n"));
     }

@@ -1,5 +1,7 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Event/EC_Kokyu_Factory.h"
 #include "orbsvcs/Event/EC_Kokyu_Dispatching.h"
 #include "orbsvcs/Event/EC_Kokyu_Scheduling.h"
@@ -58,7 +60,7 @@ TAO_EC_Kokyu_Factory::init (int argc, ACE_TCHAR* argv[])
                 }
               else
                 {
-                  ACE_ERROR ((LM_ERROR,
+                  ORBSVCS_ERROR ((LM_ERROR,
                               ACE_TEXT("EC_Kokyu_Factory - ")
                               ACE_TEXT("unsupported dispatching <%s>\n"),
                               opt));
@@ -127,7 +129,7 @@ TAO_EC_Kokyu_Factory::init (int argc, ACE_TCHAR* argv[])
                 }
               else
                 {
-                  ACE_ERROR ((LM_ERROR,
+                  ORBSVCS_ERROR ((LM_ERROR,
                               ACE_TEXT("EC_Kokyu_Factory - ")
                               ACE_TEXT("unsupported filtering <%s>\n"),
                               opt));
@@ -155,7 +157,7 @@ TAO_EC_Kokyu_Factory::init (int argc, ACE_TCHAR* argv[])
 #endif /* 0 */
               else
                 {
-                  ACE_ERROR ((LM_ERROR,
+                  ORBSVCS_ERROR ((LM_ERROR,
                               ACE_TEXT("EC_Kokyu_Factory - ")
                               ACE_TEXT("unsupported timeout <%s>\n"),
                               opt));
@@ -185,7 +187,7 @@ TAO_EC_Kokyu_Factory::init (int argc, ACE_TCHAR* argv[])
                 }
               else
                 {
-                  ACE_ERROR ((LM_ERROR,
+                  ORBSVCS_ERROR ((LM_ERROR,
                               ACE_TEXT("EC_Kokyu_Factory - ")
                               ACE_TEXT("unsupported scheduling <%s>\n"),
                               opt));

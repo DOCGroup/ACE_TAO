@@ -24,7 +24,7 @@ TAO_GIOP_Message_Generator_Parser::parse_reply (
     {
       if (TAO_debug_level)
         {
-          ACE_ERROR ((LM_ERROR,
+          TAOLIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO (%P|%t) : TAO_GIOP_Message_Generator_Parser::parse_reply :")
                       ACE_TEXT ("extracting request id\n")));
         }
@@ -39,7 +39,7 @@ TAO_GIOP_Message_Generator_Parser::parse_reply (
     {
       if (TAO_debug_level > 0)
         {
-          ACE_ERROR ((LM_ERROR,
+          TAOLIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO (%P|%t) : TAO_GIOP_Message_Generator_Parser::parse_reply, ")
                       ACE_TEXT ("extracting reply status\n")));
         }
@@ -61,7 +61,7 @@ TAO_GIOP_Message_Generator_Parser::parse_locate_reply (
   if (!cdr.read_ulong (params.request_id_))
     {
       if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_ERROR,
+        TAOLIB_ERROR ((LM_ERROR,
                     ACE_TEXT ("TAO (%P|%t|%N|%l):parse_locate_reply, ")
                     ACE_TEXT ("extracting request id\n")));
 
@@ -79,7 +79,7 @@ TAO_GIOP_Message_Generator_Parser::parse_locate_reply (
   if (!cdr.read_ulong (locate_reply_status))
     {
       if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_ERROR,
+        TAOLIB_ERROR ((LM_ERROR,
                     ACE_TEXT ("TAO N|(%P|%t|l) parse_locate_reply, ")
                     ACE_TEXT ("extracting locate reply status\n")));
 

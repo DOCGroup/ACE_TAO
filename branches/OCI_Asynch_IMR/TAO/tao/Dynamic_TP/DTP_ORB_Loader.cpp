@@ -45,7 +45,7 @@ TAO_DTP_ORB_Loader::init (int argc, ACE_TCHAR* argv[])
             {
               if (TAO_debug_level > 0)
                 {
-                  ACE_DEBUG ((LM_DEBUG,
+                  TAOLIB_DEBUG ((LM_DEBUG,
                               ACE_TEXT ("TAO (%P|%t) - DTP_ORB_Loader - ")
                               ACE_TEXT ("DTPORB argument missing value\n")));
                 }
@@ -56,7 +56,7 @@ TAO_DTP_ORB_Loader::init (int argc, ACE_TCHAR* argv[])
         {
           if (TAO_debug_level > 0)
             {
-              ACE_DEBUG ((LM_DEBUG,
+              TAOLIB_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("TAO (%P|%t) - DTP_ORB_Loader -")
                           ACE_TEXT (" Unrecognized argv[%d], %C\n"),
                           curarg, argv[curarg]));

@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Notify/Event_Manager.h"
 #include "orbsvcs/Notify/ProxyConsumer.h"
 #include "orbsvcs/Notify/ProxySupplier.h"
@@ -66,7 +67,7 @@ TAO_Notify_Event_Manager::~TAO_Notify_Event_Manager ()
 {
   if (TAO_debug_level > 0)
     {
-      ACE_DEBUG ((LM_DEBUG, "destroying consumer/supplier map count = %d/%d,\n",
+      ORBSVCS_DEBUG ((LM_DEBUG, "destroying consumer/supplier map count = %d/%d,\n",
                   this->consumer_map().proxy_count (), this->supplier_map().proxy_count ()));
     }
 }

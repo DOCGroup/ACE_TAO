@@ -9,7 +9,6 @@
 
 #include "tao/IORTable/IOR_Table_Impl.h"
 #include "tao/PortableServer/ForwardRequestC.h"
-#include "tao/DynamicInterface/AMH_DSI_Response_Handler.h"
 #include "ace/Guard_T.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

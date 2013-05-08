@@ -4,13 +4,13 @@
 *
 *  $Id$
 *
-*  @brief  Definition of ImR_Forwarder
+*  @brief  Definition of ImR_DSI_Forwarder
 *
-*  @author Darrell Brunsch <brunsch@cs.wustl.edu>
-*  @author Priyanka Gontla <pgontla@doc.ece.uci.edu>
+*  @author Phil Mesnier <mesnier_p@ociweb.com>
 */
 //=============================================================================
 
+#include "orbsvcs/Log_Macros.h"
 #include "Forwarder.h"
 #include "ImR_Locator_i.h"
 
@@ -22,11 +22,11 @@
 #include "tao/PortableServer/POA_Current_Impl.h"
 #include "tao/PortableServer/POA_Current.h"
 
-#include <tao/TAO_Server_Request.h>
-#include <tao/DynamicInterface/Request.h>
-#include <tao/DynamicInterface/Server_Request.h>
-#include <tao/DynamicInterface/AMH_DSI_Response_Handler.h>
-#include <tao/Messaging/AMH_Response_Handler.h>
+#include "tao/TAO_Server_Request.h"
+#include "tao/DynamicInterface/Request.h"
+#include "tao/DynamicInterface/Server_Request.h"
+#include "tao/DynamicInterface/AMH_DSI_Response_Handler.h"
+#include "tao/Messaging/AMH_Response_Handler.h"
 
 ImR_DSI_Forwarder::ImR_DSI_Forwarder (ImR_Locator_i& imr_impl)
   : locator_ (imr_impl)
@@ -88,8 +88,9 @@ ImR_DSI_Forwarder::_dispatch (TAO_ServerRequest &request,
            CORBA::ServerRequest (request));
   try
     {
-      TAO_AMH_DSI_Response_Handler_var rh;
-      ACE_NEW (rh, TAO_AMH_DSI_Response_Handler(request));
+      TAO_AMH_DSI_Response_Handler_ptr rhp;
+      ACE_NEW (rhp, TAO_AMH_DSI_Response_Handler(request));
+      TAO_AMH_DSI_Response_Handler_var rh(rhp);
 
       rh->init (request, 0);
       // Delegate to user.
@@ -206,14 +207,14 @@ ImR_DSI_ResponseHandler::send_ior (const char *pior)
         }
       else
         {
-          ACE_ERROR ((LM_ERROR,
+          ORBSVCS_ERROR ((LM_ERROR,
                       ACE_TEXT ("ImR_DSI_ResponseHandler::send_ior (): Forward_to ")
                       ACE_TEXT ("reference is nil.\n")));
         }
     }
   else
     {
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
                   ACE_TEXT ("ImR_ResponseHandler::send_ior (): Invalid corbaloc ior.\n")
                   ACE_TEXT ("\t<%s>\n"),
                   ior.c_str()));

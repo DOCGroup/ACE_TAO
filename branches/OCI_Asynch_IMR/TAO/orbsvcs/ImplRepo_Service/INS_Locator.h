@@ -15,7 +15,7 @@
 #define IMR_INS_LOCATOR_H
 #include /**/ "ace/pre.h"
 
-#include "tao/IORTable/IORTable.h"
+#include "tao/IORTable/Async_IORTable.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

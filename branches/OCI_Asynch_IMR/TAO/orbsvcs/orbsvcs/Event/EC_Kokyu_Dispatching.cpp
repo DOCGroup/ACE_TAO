@@ -45,7 +45,7 @@ TAO_EC_Kokyu_Dispatching::activate (void)
 
   this->dispatcher_->activate ();
 
-  //ACE_DEBUG ((LM_DEBUG, "Kokyu dispatcher activated\n"));
+  //ORBSVCS_DEBUG ((LM_DEBUG, "Kokyu dispatcher activated\n"));
 }
 
 void
@@ -94,7 +94,7 @@ TAO_EC_Kokyu_Dispatching::setup_lanes (void)
   this->dispatcher_ = tmp;
   this->lanes_setup_ = 1;
 
-  //ACE_DEBUG ((LM_DEBUG, "Kokyu dispatcher setup\n"));
+  //ORBSVCS_DEBUG ((LM_DEBUG, "Kokyu dispatcher setup\n"));
 }
 
 void
@@ -179,7 +179,7 @@ TAO_EC_Kokyu_Push_Command::execute ()
 
   try
     {
-      //ACE_DEBUG ((LM_DEBUG,
+      //ORBSVCS_DEBUG ((LM_DEBUG,
       //            "(%t) Command object executed.\n"));
 
       this->proxy_->push_to_consumer (this->consumer_.in (),

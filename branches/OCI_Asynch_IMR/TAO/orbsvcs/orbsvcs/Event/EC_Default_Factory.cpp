@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Event/EC_Default_Factory.h"
 #include "orbsvcs/Event/EC_Reactive_Dispatching.h"
 #include "orbsvcs/Event/EC_MT_Dispatching.h"
@@ -59,7 +60,7 @@ void
 TAO_EC_Default_Factory::unsupported_option_value (const ACE_TCHAR * option_name,
                                                   const ACE_TCHAR * option_value)
 {
-  ACE_ERROR ((LM_ERROR,
+  ORBSVCS_ERROR ((LM_ERROR,
               "EC_Default_Factory - "
               "Unsupported <%s> option value: <%s>. "
               "Ignoring this option - using defaults instead.\n",
@@ -267,7 +268,7 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
                   else if (ACE_OS::strcasecmp (arg, ACE_TEXT("delayed")) == 0)
                     iteration_type = 3;
                   else
-                    ACE_ERROR ((LM_ERROR,
+                    ORBSVCS_ERROR ((LM_ERROR,
                                 "EC_Default_Factory - "
                                 "Unknown consumer collection modifier <%s>.\n", arg));
                 }
@@ -312,7 +313,7 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
                   else if (ACE_OS::strcasecmp (arg, ACE_TEXT("delayed")) == 0)
                     iteration_type = 3;
                   else
-                    ACE_ERROR ((LM_ERROR,
+                    ORBSVCS_ERROR ((LM_ERROR,
                                 "EC_Default_Factory - "
                                 "Unknown supplier collection modifier <%s>.\n", arg));
                 }
@@ -471,7 +472,7 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
 
       else if (ACE_OS::strcasecmp (arg, ACE_TEXT("-ECPushSupplierSet")) == 0)
         {
-          ACE_ERROR ((LM_ERROR,
+          ORBSVCS_ERROR ((LM_ERROR,
                       "EC_Default_Factory - "
                       "obsolete option <%s>, ignored\n", arg));
           arg_shifter.consume_arg ();
@@ -490,7 +491,7 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
 
       else if (ACE_OS::strcasecmp (arg, ACE_TEXT("-ECConsumerAdminLock")) == 0)
         {
-          ACE_ERROR ((LM_ERROR,
+          ORBSVCS_ERROR ((LM_ERROR,
                       "EC_Default_Factory - "
                       "obsolete option <%s>, ignored\n", arg));
           arg_shifter.consume_arg ();
@@ -498,7 +499,7 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
 
       else if (ACE_OS::strcasecmp (arg, ACE_TEXT("-ECSupplierAdminLock")) == 0)
         {
-          ACE_ERROR ((LM_ERROR,
+          ORBSVCS_ERROR ((LM_ERROR,
                       "EC_Default_Factory - "
                       "obsolete option <%s>, ignored\n", arg));
           arg_shifter.consume_arg ();
@@ -507,7 +508,7 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
       else if (ACE_OS::strncmp (arg, ACE_TEXT("-EC"), 3) == 0)
         {
           arg_shifter.consume_arg ();
-          ACE_ERROR ((LM_ERROR,
+          ORBSVCS_ERROR ((LM_ERROR,
                       "EC_Default_Factory - "
                       "unknown option <%s>\n",
                       arg));
@@ -515,7 +516,7 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
       else
         {
           arg_shifter.consume_arg ();
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       "EC_Default_Factory - "
                       "ignoring option <%s>\n",
                       arg));
@@ -541,7 +542,7 @@ TAO_EC_Default_Factory::find_service_object (const ACE_TCHAR* wanted,
   if (so != 0)
     return so;
 
-  ACE_ERROR ((LM_ERROR,
+  ORBSVCS_ERROR ((LM_ERROR,
               "EC (%P|%t) EC_Default_Factory::find_service_object "
               "unable to find queue full service object '%s'; "
               "using '%s' instead\n",
@@ -552,7 +553,7 @@ TAO_EC_Default_Factory::find_service_object (const ACE_TCHAR* wanted,
   if (so != 0)
     return so;
 
-  ACE_ERROR ((LM_ERROR,
+  ORBSVCS_ERROR ((LM_ERROR,
               "EC (%P|%t) EC_Default_Factory::find_service_object "
                       "unable find default queue full service object '%s'; "
                       "aborting.\n",

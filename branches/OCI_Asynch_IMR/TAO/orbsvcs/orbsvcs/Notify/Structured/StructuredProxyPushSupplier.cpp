@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Notify/Structured/StructuredProxyPushSupplier.h"
 
 #include "tao/PortableServer/Servant_Base.h"
@@ -69,7 +70,7 @@ TAO_Notify_StructuredProxyPushSupplier::validate ()
   {
     if (TAO_debug_level > 0)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) TAO_Notify_StructuredProxyPushSupplier::validate(%d)")
                   ACE_TEXT ("disconnecting \n"), this->id ()));
     }

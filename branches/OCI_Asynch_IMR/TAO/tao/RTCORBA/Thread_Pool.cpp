@@ -61,7 +61,7 @@ TAO_Thread_Pool_Threads::svc (void)
   catch (const ::CORBA::Exception& ex)
     {
       // No point propagating this exception.  Print it out.
-      ACE_ERROR ((LM_ERROR,
+      TAOLIB_ERROR ((LM_ERROR,
                   "orb->run() raised exception for thread %t\n"));
 
       ex._tao_print_exception ("");
@@ -141,7 +141,7 @@ TAO_Dynamic_Thread_Pool_Threads::run (TAO_ORB_Core &orb_core)
 
   if (TAO_debug_level > 7)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO Process %P Pool %d Lane %d Thread %t\n")
                   ACE_TEXT ("Current number of dynamic threads left = %d; ")
                   ACE_TEXT ("RTCorba worker thread is ending!\n"),
@@ -196,7 +196,7 @@ TAO_Thread_Lane::new_dynamic_thread (void)
       this->dynamic_threads_.thr_count () < this->dynamic_threads_number_)
     {
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
+        TAOLIB_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO Process %P Pool %d Lane %d Thread %t\n")
                     ACE_TEXT ("Current number of dynamic threads = %d; ")
                     ACE_TEXT ("static threads = %d; max dynamic threads = %d\n")
@@ -213,7 +213,7 @@ TAO_Thread_Lane::new_dynamic_thread (void)
                                 THR_BOUND | THR_DETACHED);
 
       if (result != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
+        TAOLIB_ERROR_RETURN ((LM_ERROR,
                           ACE_TEXT ("Pool %d Lane %d Thread %t: ")
                           ACE_TEXT ("cannot create dynamic thread\n"),
                           this->pool_.id (),
@@ -274,7 +274,7 @@ TAO_Thread_Lane::validate_and_map_priority (void)
 
   if (TAO_debug_level > 3)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - creating thread at ")
                   ACE_TEXT ("(corba:native) priority %d:%d\n"),
                   this->lane_priority_,

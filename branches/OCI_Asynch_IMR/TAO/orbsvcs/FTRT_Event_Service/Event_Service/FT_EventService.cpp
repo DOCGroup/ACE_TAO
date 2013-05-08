@@ -11,6 +11,7 @@
 #include "orbsvcs/Scheduler_Factory.h"
 #include "orbsvcs/FtRtEvent/EventChannel/FTRTEC_ServiceActivate.h"
 #include "orbsvcs/FtRtEvent/Utils/Log.h"
+#include "orbsvcs/Log_Macros.h"
 #include "ace/OS_main.h"
 #include "ace/OS_NS_strings.h"
 
@@ -48,7 +49,7 @@ FT_EventService::run(int argc, ACE_TCHAR* argv[])
     CORBA::Object_var root_poa_object =
       orb_->resolve_initial_references("RootPOA");
     if (CORBA::is_nil (root_poa_object.in ()))
-      ACE_ERROR_RETURN ((LM_ERROR,
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
       " (%P|%t) Unable to initialize the root POA.\n"),
       1);
 
@@ -63,7 +64,7 @@ FT_EventService::run(int argc, ACE_TCHAR* argv[])
     CORBA::Object_var naming_obj =
       orb_->resolve_initial_references ("NameService");
     if (CORBA::is_nil (naming_obj.in ()))
-      ACE_ERROR_RETURN ((LM_ERROR,
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
       " (%P|%t) Unable to initialize the Naming Service.\n"),
       1);
 
@@ -154,7 +155,7 @@ FT_EventService::parse_args (int argc, ACE_TCHAR* argv [])
       }
       else
       {
-        ACE_DEBUG ((LM_DEBUG,
+        ORBSVCS_DEBUG ((LM_DEBUG,
           ACE_TEXT("Unknown scheduling type <%s> ")
           ACE_TEXT("defaulting to local\n"),
           get_opt.opt_arg ()));
@@ -164,7 +165,7 @@ FT_EventService::parse_args (int argc, ACE_TCHAR* argv [])
 
     case '?':
     default:
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
         ACE_TEXT("Usage: %s\n")
         ACE_TEXT("  -j join the object group\n")
         ACE_TEXT("  -p set as primary\n")
@@ -176,7 +177,7 @@ FT_EventService::parse_args (int argc, ACE_TCHAR* argv [])
   }
 
   if (this->num_threads_ < 1)
-    ACE_ERROR_RETURN((LM_ERROR, "Invalid number of threads specified\n"), -1);
+    ORBSVCS_ERROR_RETURN((LM_ERROR, "Invalid number of threads specified\n"), -1);
 
   return 0;
 }
@@ -193,7 +194,7 @@ FT_EventService::setup_scheduler(CosNaming::NamingContext_ptr naming_context)
         scheduler = this->sched_impl_->_this ();
 
         if (ACE_Scheduler_Factory::server(scheduler.in()) == -1)
-            ACE_ERROR((LM_ERROR,"Unable to install scheduler\n"));
+            ORBSVCS_ERROR((LM_ERROR,"Unable to install scheduler\n"));
     }
     else {
         // This is the name we (potentially) register the Scheduling
@@ -242,17 +243,17 @@ FT_EventService::report_factory(CORBA::ORB_ptr orb,
       ACE_SOCK_Connector connector;
       ACE_SOCK_Stream stream;
 
-      ACE_DEBUG((LM_DEBUG,"connecting to %s\n",addr));
+      ORBSVCS_DEBUG((LM_DEBUG,"connecting to %s\n",addr));
       if (connector.connect(stream, factory_addr) == -1)
-        ACE_ERROR_RETURN((LM_ERROR, "(%P|%t) Invalid Factory Address\n"), -1);
+        ORBSVCS_ERROR_RETURN((LM_ERROR, "(%P|%t) Invalid Factory Address\n"), -1);
 
-      ACE_DEBUG((LM_DEBUG,"Factory connected\n"));
+      ORBSVCS_DEBUG((LM_DEBUG,"Factory connected\n"));
       CORBA::String_var my_ior_string = orb->object_to_string(ec);
 
       int len = ACE_OS::strlen(my_ior_string.in()) ;
 
       if (stream.send_n(my_ior_string.in(), len) != len)
-        ACE_ERROR_RETURN((LM_ERROR, "(%P|%t) IOR Transmission Error\n"), -1);
+        ORBSVCS_ERROR_RETURN((LM_ERROR, "(%P|%t) IOR Transmission Error\n"), -1);
 
       stream.close();
     }

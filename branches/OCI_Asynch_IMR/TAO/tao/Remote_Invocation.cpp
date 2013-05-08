@@ -74,7 +74,7 @@ namespace TAO
         {
           if (TAO_debug_level > 0)
             {
-              ACE_ERROR ((LM_ERROR,
+              TAOLIB_ERROR ((LM_ERROR,
                           ACE_TEXT ("TAO (%P|%t) - ")
                           ACE_TEXT ("Remote_Invocation::init_target_spec, ")
                           ACE_TEXT ("Error in finding index for ")
@@ -192,7 +192,7 @@ namespace TAO
 
         if (TAO_debug_level > 2)
           {
-            ACE_DEBUG ((LM_DEBUG,
+            TAOLIB_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("TAO (%P|%t) - ")
                         ACE_TEXT ("Remote_Invocation::send_message, ")
                         ACE_TEXT ("failure while sending message\n")));

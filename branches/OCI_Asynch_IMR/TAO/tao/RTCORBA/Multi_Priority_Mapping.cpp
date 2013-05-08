@@ -31,7 +31,7 @@ TAO_Multi_Priority_Mapping::TAO_Multi_Priority_Mapping (
      {
         if (TAO_debug_level > 2)
         {
-           ACE_DEBUG ((LM_DEBUG,
+           TAOLIB_DEBUG ((LM_DEBUG,
                        "TAO (%P|%t) - Multi_Priority_Mapping::ctor: "
                        " base_native_priority %d out of range [%d,%d]\n",
                         base_native_priority_, this->min_, this->max_));
@@ -44,7 +44,7 @@ TAO_Multi_Priority_Mapping::TAO_Multi_Priority_Mapping (
      {
         if (TAO_debug_level > 2)
         {
-           ACE_DEBUG ((LM_DEBUG,
+           TAOLIB_DEBUG ((LM_DEBUG,
                        "TAO (%P|%t) - Multi_Priority_Mapping::ctor: "
                        " base_native_priority %d out of range [%d,%d]\n",
                         base_native_priority_, this->min_, this->max_));
@@ -56,7 +56,7 @@ TAO_Multi_Priority_Mapping::TAO_Multi_Priority_Mapping (
     {
        if (TAO_debug_level > 2)
          {
-           ACE_DEBUG ((LM_DEBUG,
+           TAOLIB_DEBUG ((LM_DEBUG,
              "TAO (%P|%t) - Multi_Priority_Mapping::ctor: "
              " base_corba_priority %d out of range [%d,%d]\n",
              base_corba_priority_, RTCORBA::minPriority, RTCORBA::maxPriority));
@@ -77,7 +77,7 @@ TAO_Multi_Priority_Mapping::to_native (RTCORBA::Priority corba_priority,
   {
      if (TAO_debug_level > 2)
      {
-        ACE_DEBUG ((LM_DEBUG,
+        TAOLIB_DEBUG ((LM_DEBUG,
                     "TAO (%P|%t) - Multi_Priority_Mapping::to_native: "
                     " corba priority %d out of range [%d,%d]\n",
                     corba_priority, RTCORBA::minPriority, this->base_corba_priority_));
@@ -148,7 +148,7 @@ TAO_Multi_Priority_Mapping::to_CORBA (RTCORBA::NativePriority native_priority,
   {
      if (TAO_debug_level > 2)
      {
-        ACE_DEBUG ((LM_DEBUG,
+        TAOLIB_DEBUG ((LM_DEBUG,
                     "TAO (%P|%t) - Multi_Priority_Mapping::to_CORBA: "
                     " priority %d out of range [%d,%d]\n",
                     native_priority, this->min_, this->base_corba_priority_));

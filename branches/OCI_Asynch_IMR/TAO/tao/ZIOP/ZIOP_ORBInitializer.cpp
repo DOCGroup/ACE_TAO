@@ -27,7 +27,7 @@ TAO_ZIOP_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr info)
   if (CORBA::is_nil (tao_info.in ()))
     {
       if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_ERROR,
+        TAOLIB_ERROR ((LM_ERROR,
                     "ZIOP (%P|%t) TAO_ZIOP_ORBInitializer::pre_init:\n"
                     "ZIOP (%P|%t)    Unable to narrow "
                     "\"PortableInterceptor::ORBInitInfo_ptr\" to\n"

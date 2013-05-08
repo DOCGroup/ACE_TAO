@@ -2,7 +2,7 @@
 
 #include "orbsvcs/IFRService/Options.h"
 #include "ace/Get_Opt.h"
-#include "ace/Log_Msg.h"
+#include "orbsvcs/Log_Macros.h"
 #include "ace/Null_Mutex.h"
 #include "ace/OS_NS_string.h"
 
@@ -56,7 +56,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
           this->using_registry_ = 1;
         break;
 #else /* ACE_WIN32 */
-        ACE_ERROR_RETURN ((
+        ORBSVCS_ERROR_RETURN ((
             LM_ERROR,
             ACE_TEXT ("parse_args: not a win32 platform\n")
           ),
@@ -68,7 +68,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
         break;
       case '?':  // display help for use of the server.
       default:
-        ACE_ERROR_RETURN ((LM_ERROR,
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            "Usage:  %s"
                            " [-o] <ior_output_file>"
                            " [-r]"

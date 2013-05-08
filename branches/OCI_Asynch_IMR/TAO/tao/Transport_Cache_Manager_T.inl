@@ -71,7 +71,7 @@ namespace TAO
       return;
 
     if (TAO_debug_level > 9 && state != entry->item ().is_connected ())
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T")
+      TAOLIB_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T")
                   ACE_TEXT ("::mark_connected, %s Transport[%d]\n"),
                   (state ? ACE_TEXT("true") : ACE_TEXT("false")),
                   entry->item ().transport ()->id ()

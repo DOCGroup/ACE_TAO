@@ -259,7 +259,7 @@ TAO_SHMIOP_Acceptor::open_i (TAO_ORB_Core* orb_core, ACE_Reactor *reactor)
                                  this->concurrency_strategy_) == -1)
     {
       if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_ERROR,
+        TAOLIB_ERROR ((LM_ERROR,
                     ACE_TEXT ("TAO (%P|%t) - SHMIOP_Acceptor::open_i, %p\n\n"),
                     ACE_TEXT ("cannot open acceptor")));
       return -1;
@@ -275,7 +275,7 @@ TAO_SHMIOP_Acceptor::open_i (TAO_ORB_Core* orb_core, ACE_Reactor *reactor)
   if (this->base_acceptor_.acceptor ().get_local_addr (this->address_) != 0)
     {
       if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_ERROR,
+        TAOLIB_ERROR ((LM_ERROR,
                     ACE_TEXT ("TAO (%P|%t) - SHMIOP_Acceptor::open_i, %p\n\n"),
                     ACE_TEXT ("cannot get local addr\n")));
       return -1;
@@ -293,7 +293,7 @@ TAO_SHMIOP_Acceptor::open_i (TAO_ORB_Core* orb_core, ACE_Reactor *reactor)
       if (tmp == 0)
         {
           if (TAO_debug_level > 0)
-            ACE_ERROR ((LM_ERROR,
+            TAOLIB_ERROR ((LM_ERROR,
                         ACE_TEXT ("TAO (%P|%t) - ")
                         ACE_TEXT ("SHMIOP_Acceptor::open_i, ")
                         ACE_TEXT ("- %p, "),
@@ -311,7 +311,7 @@ TAO_SHMIOP_Acceptor::open_i (TAO_ORB_Core* orb_core, ACE_Reactor *reactor)
       if (this->address_.get_host_name (tmp_host, sizeof tmp_host) != 0)
         {
           if (TAO_debug_level > 0)
-            ACE_ERROR ((LM_ERROR,
+            TAOLIB_ERROR ((LM_ERROR,
                         ACE_TEXT ("TAO (%P|%t) - SHMIOP_Acceptor::open_i, - %p\n"),
                         ACE_TEXT ("cannot cache hostname\n")));
           return -1;
@@ -326,7 +326,7 @@ TAO_SHMIOP_Acceptor::open_i (TAO_ORB_Core* orb_core, ACE_Reactor *reactor)
 
   if (TAO_debug_level > 5)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - SHMIOP_Acceptor::open_i, ")
                   ACE_TEXT ("listening on : <%C:%u>\n"),
                   this->host_.c_str (),
@@ -365,7 +365,7 @@ TAO_SHMIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
   {
     if (TAO_debug_level > 0)
       {
-        ACE_DEBUG ((LM_DEBUG,
+        TAOLIB_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) - SHMIOP_Profile::decode, v%d.%d\n"),
                     major,
                     minor));
@@ -382,7 +382,7 @@ TAO_SHMIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
     {
       if (TAO_debug_level > 0)
         {
-          ACE_ERROR ((LM_ERROR,
+          TAOLIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO (%P|%t) - SHMIOP_Acceptor::object_key, ")
                       ACE_TEXT ("error while decoding host/port\n")));
         }
@@ -454,7 +454,7 @@ TAO_SHMIOP_Acceptor::parse_options (const char *str)
         end = len;
 
       if (end == begin)
-        ACE_ERROR_RETURN ((LM_ERROR,
+        TAOLIB_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("TAO (%P|%t) Zero length SHMIOP option.\n")),
                           -1);
       else if (end != ACE_CString::npos)
@@ -465,7 +465,7 @@ TAO_SHMIOP_Acceptor::parse_options (const char *str)
 
           if (slot == len - 1
               || slot == ACE_CString::npos)
-            ACE_ERROR_RETURN ((LM_ERROR,
+            TAOLIB_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("TAO (%P|%t) SHMIOP option <%C> is ")
                                ACE_TEXT ("missing a value.\n"),
                                opt.c_str ()),
@@ -477,20 +477,20 @@ TAO_SHMIOP_Acceptor::parse_options (const char *str)
           begin = end + 1;
 
           if (name.length () == 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
+            TAOLIB_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("TAO (%P|%t) Zero length SHMIOP ")
                                ACE_TEXT ("option name.\n")),
                               -1);
 
           if (name == "priority")
             {
-              ACE_ERROR_RETURN ((LM_ERROR,
+              TAOLIB_ERROR_RETURN ((LM_ERROR,
                                  ACE_TEXT ("TAO (%P|%t) Invalid SHMIOP endpoint format: ")
                                  ACE_TEXT ("endpoint priorities no longer supported.\n")),
                                 -1);
             }
           else
-            ACE_ERROR_RETURN ((LM_ERROR,
+            TAOLIB_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("TAO (%P|%t) Invalid SHMIOP option: <%C>\n"),
                                name.c_str ()),
                               -1);

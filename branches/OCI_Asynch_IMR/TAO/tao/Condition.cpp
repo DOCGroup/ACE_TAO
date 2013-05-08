@@ -3,7 +3,7 @@
 #ifndef TAO_CONDITION_CPP
 #define TAO_CONDITION_CPP
 #include "tao/Condition.h"
-#include "ace/Log_Msg.h"
+#include "tao/debug.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Condition.inl"
@@ -47,7 +47,7 @@ template <class MUTEX>
 TAO_Condition<MUTEX>::~TAO_Condition (void)
 {
   if (this->remove () == -1)
-    ACE_ERROR ((LM_ERROR,
+    TAOLIB_ERROR ((LM_ERROR,
                 ACE_TEXT ("%p\n"),
                 ACE_TEXT ("TAO_Condition::~TAO_Condition")));
 

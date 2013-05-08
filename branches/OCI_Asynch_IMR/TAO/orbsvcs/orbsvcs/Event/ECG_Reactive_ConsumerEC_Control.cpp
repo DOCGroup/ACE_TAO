@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Event/EC_Gateway_IIOP.h"
 #include "orbsvcs/Event/ECG_Reactive_ConsumerEC_Control.h"
 #include "tao/Messaging/Messaging.h"
@@ -170,7 +171,7 @@ TAO_ECG_Reactive_ConsumerEC_Control::event_channel_not_exist (
 {
   try
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   "EC_Reactive_ConsumerControl(%P|%t) - "
                   "channel %x does not exists\n"));
       gateway->cleanup_consumer_ec ();

@@ -29,7 +29,7 @@ TAO_IIOP_Connection_Handler::add_reference (void)
   if (TAO_debug_level > 9)
     {
       TAO_Transport *tport = this->transport ();
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT("TAO (%P|%t) - IIOP_Connection_Handler[%d]::")
                   ACE_TEXT("add_reference, up to %d\n"),
                   tport != 0 ? tport->id () : 0,
@@ -46,7 +46,7 @@ TAO_IIOP_Connection_Handler::remove_reference (void)
   Reference_Count rc = TAO_IIOP_SVC_HANDLER::remove_reference ();
   if (TAO_debug_level > 9)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT("TAO (%P|%t) - IIOP_Connection_Handler[%d]::")
                   ACE_TEXT("remove_reference, down to %d\n"),
                   tport != 0 ? tport->id () : 0,
@@ -84,7 +84,7 @@ TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (
   if (TAO_debug_level > 9)
     {
       TAO_Transport *tport = static_cast<TAO_Transport *> (specific_transport);
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT("TAO (%P|%t) - IIOP_Connection_Handler[%d]::")
                   ACE_TEXT("IIOP_Connection_Handler, ")
                   ACE_TEXT("this=%@\n"),
@@ -101,7 +101,7 @@ TAO_IIOP_Connection_Handler::~TAO_IIOP_Connection_Handler (void)
   if (TAO_debug_level > 9)
     {
       TAO_Transport *tport = this->transport ();
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT("TAO (%P|%t) - IIOP_Connection_Handler[%d]::")
                   ACE_TEXT("~IIOP_Connection_Handler, ")
                   ACE_TEXT("this=%@, transport=%@\n"),
@@ -115,7 +115,7 @@ TAO_IIOP_Connection_Handler::~TAO_IIOP_Connection_Handler (void)
 
   if (result == -1 && TAO_debug_level)
     {
-      ACE_ERROR ((LM_ERROR,
+      TAOLIB_ERROR ((LM_ERROR,
                   ACE_TEXT("TAO (%P|%t) - IIOP_Connection_Handler::")
                   ACE_TEXT("~IIOP_Connection_Handler, ")
                   ACE_TEXT("release_os_resources() failed %m\n")));
@@ -266,7 +266,7 @@ TAO_IIOP_Connection_Handler::open (void*)
         {
           if (TAO_debug_level)
             {
-              ACE_ERROR ((LM_ERROR,
+              TAOLIB_ERROR ((LM_ERROR,
                           ACE_TEXT("TAO (%P|%t) - IIOP_Connection_Handler::open, ")
                           ACE_TEXT("couldn't set hop limit\n\n")));
             }
@@ -293,7 +293,7 @@ TAO_IIOP_Connection_Handler::open (void*)
     return -1;
 
   if (TAO_debug_level > 2)
-    ACE_DEBUG ((LM_DEBUG,
+    TAOLIB_DEBUG ((LM_DEBUG,
                 ACE_TEXT("TAO (%P|%t) - IIOP_Connection_Handler::open, ")
                 ACE_TEXT("The local addr is <%C:%d>\n"),
                 local_addr.get_host_addr (),
@@ -310,7 +310,7 @@ TAO_IIOP_Connection_Handler::open (void*)
                                              sizeof(remote_as_string));
           (void) local_addr.addr_to_string (local_as_string,
                                             sizeof(local_as_string));
-          ACE_ERROR ((LM_ERROR,
+          TAOLIB_ERROR ((LM_ERROR,
                       ACE_TEXT("TAO(%P|%t) - IIOP_Connection_Handler::open, ")
                       ACE_TEXT("Holy Cow! The remote addr and ")
                       ACE_TEXT("local addr are identical (%s == %s)\n"),
@@ -332,7 +332,7 @@ TAO_IIOP_Connection_Handler::open (void*)
           (void) remote_addr.addr_to_string (remote_as_string,
                                              sizeof(remote_as_string));
 
-          ACE_ERROR ((LM_ERROR,
+          TAOLIB_ERROR ((LM_ERROR,
                       ACE_TEXT("TAO (%P|%t) - IIOP_Connection_Handler::open, ")
                       ACE_TEXT("invalid connection from IPv4 mapped IPv6 interface <%s>!\n"),
                       remote_as_string));
@@ -349,7 +349,7 @@ TAO_IIOP_Connection_Handler::open (void*)
       if (remote_addr.addr_to_string (client_addr, sizeof (client_addr)) == -1)
         return -1;
 
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - IIOP_Connection_Handler::open, IIOP ")
                   ACE_TEXT ("connection to peer <%s> on %d\n"),
                   client_addr, this->peer ().get_handle ()));
@@ -390,7 +390,7 @@ TAO_IIOP_Connection_Handler::close_connection (void)
         {
           if (TAO_debug_level)
             {
-              ACE_DEBUG ((LM_DEBUG,
+              TAOLIB_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("TAO (%P|%t) Unable to set ")
                           ACE_TEXT ("SO_LINGER on %d\n"),
                           this->peer ().get_handle ()));
@@ -445,7 +445,7 @@ TAO_IIOP_Connection_Handler::handle_timeout (const ACE_Time_Value &,
   this->reset_state (TAO_LF_Event::LFS_TIMEOUT);
   if (TAO_debug_level > 9)
     {
-      ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - TAO_IIOP_Connection_Handler[%d]::"
+      TAOLIB_DEBUG ((LM_DEBUG, "TAO (%P|%t) - TAO_IIOP_Connection_Handler[%d]::"
                   "handle_timeout reset state to LFS_TIMEOUT\n",
                   this->transport ()-> id()));
     }
@@ -504,7 +504,7 @@ TAO_IIOP_Connection_Handler::process_listen_point_list (
 
   if (TAO_debug_level > 0 && len == 0)
     {
-      ACE_ERROR ((LM_ERROR,
+      TAOLIB_ERROR ((LM_ERROR,
                   ACE_TEXT("TAO (%P|%t) - IIOP_Connection_Handler::")
                   ACE_TEXT("process_listen_point_list, ")
                   ACE_TEXT("Received list of size 0, check client config.\n")));
@@ -541,7 +541,7 @@ TAO_IIOP_Connection_Handler::process_listen_point_list (
 
       if (TAO_debug_level > 0)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT("TAO (%P|%t) - IIOP_Connection_Handler::")
                       ACE_TEXT("process_listen_point_list, ")
                       ACE_TEXT("Listening port [%d] on [%C]\n"),
@@ -591,7 +591,7 @@ TAO_IIOP_Connection_Handler::set_tos (int tos)
         {
           if (TAO_debug_level)
             {
-              ACE_DEBUG ((LM_DEBUG,
+              TAOLIB_DEBUG ((LM_DEBUG,
                           ACE_TEXT("TAO (%P|%t) - IIOP_Connection_Handler::")
                           ACE_TEXT("set_dscp_codepoint -> IPV6_TCLASS not supported yet\n")));
             }
@@ -612,7 +612,7 @@ TAO_IIOP_Connection_Handler::set_tos (int tos)
 
       if (TAO_debug_level)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT("TAO (%P|%t) - IIOP_Connection_Handler::")
                       ACE_TEXT("set_dscp_codepoint -> dscp: %x; result: %d; %C\n"),
                       tos,
@@ -676,7 +676,7 @@ TAO_IIOP_Connection_Handler::abort (void)
     {
       if (TAO_debug_level)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) Unable to set ")
                       ACE_TEXT ("SO_LINGER on %d\n"),
                       this->peer ().get_handle ()));

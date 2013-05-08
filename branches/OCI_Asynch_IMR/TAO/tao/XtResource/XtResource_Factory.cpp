@@ -21,7 +21,7 @@ namespace TAO
     // synchronized by external locks
     if (this->context_ == 0)
     {
-      ACE_ERROR ((LM_ERROR,
+      TAOLIB_ERROR ((LM_ERROR,
                   ACE_TEXT("TAO (%P|%t) - XtAppContext is undefined.")
                   ACE_TEXT(" Cannot create ACE_XtReactor\n")));
       return 0;
@@ -34,7 +34,7 @@ namespace TAO
                       0);
 
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
+        TAOLIB_DEBUG ((LM_DEBUG,
                     "TAO (%P|%t) - ACE_XtReactor created\n"));
     }
 

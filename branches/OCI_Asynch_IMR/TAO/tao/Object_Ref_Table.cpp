@@ -50,7 +50,7 @@ TAO_Object_Ref_Table::unregister_initial_reference (
     {
       if (TAO_debug_level > 1)
         {
-          ACE_ERROR ((LM_ERROR,
+          TAOLIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("(%P|%t) Object_Ref_Table::bind_i: ")
                       ACE_TEXT ("Could not unregister object <%C> ")
                       ACE_TEXT ("from the ORB\n"),
@@ -84,7 +84,7 @@ TAO_Object_Ref_Table::bind_i (const char *id, CORBA::Object_ptr obj)
     {
       if (TAO_debug_level > 1)
         {
-          ACE_ERROR ((LM_ERROR,
+          TAOLIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("(%P|%t) Object_Ref_Table::bind_i: ")
                       ACE_TEXT ("Could not register duplicate object <%C> ")
                       ACE_TEXT ("with the ORB\n"),

@@ -109,7 +109,7 @@ TAO_SCIOP_Endpoint::set (const ACE_INET_Addr &addr,
       if (tmp == 0)
         {
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
+            TAOLIB_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("\n\nTAO (%P|%t) ")
                         ACE_TEXT ("SCIOP_Endpoint::set ")
                         ACE_TEXT ("- %p\n\n"),
@@ -310,7 +310,7 @@ TAO_SCIOP_Endpoint::preferred_interfaces (TAO_ORB_Core *oc)
         CORBA::string_dup (path.c_str ());
 
       if (TAO_debug_level > 3)
-        ACE_DEBUG ((LM_DEBUG,
+        TAOLIB_DEBUG ((LM_DEBUG,
                     "(%P|%t) Adding path [%C] "
                     " as preferred path for [%C]\n",
                     path.c_str (), this->host_.in ()));

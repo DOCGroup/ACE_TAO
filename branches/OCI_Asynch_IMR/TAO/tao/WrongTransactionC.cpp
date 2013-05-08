@@ -156,7 +156,7 @@ CORBA::TypeCode_ptr CORBA::WrongTransaction::_tao_type (void) const
     return adapter->_tao_type_WrongTransaction ();
   else
     {
-      ACE_ERROR ((LM_ERROR,
+      TAOLIB_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) %p\n"),
                   ACE_TEXT ("Unable to find the ")
                   ACE_TEXT ("AnyTypeCode Adapter instance")));

@@ -1,5 +1,7 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/AV/RTCP_Channel.h"
 #include "orbsvcs/AV/RTP.h"
 #include "tao/debug.h"
@@ -198,7 +200,7 @@ RTCP_Channel_In::update_seq(ACE_UINT16 seq)
           this->init_seq (seq);
 
           if (TAO_debug_level > 0)
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       "RTCP_Channel_In: large jump in sequence number",
                       "; init seq\n"));
         }
@@ -222,7 +224,7 @@ RTCP_Channel_In::recv_rtp_packet(ACE_Message_Block *mb,
                                 const ACE_Addr *peer_address)
 {
   if (*peer_address != *this->peer_address_)
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
                 "RTCP_Channel_In::recv_rtp_packet - possible loop/collision detected"));
 
   RTP_Packet data_packet(mb->rd_ptr (), static_cast<int> (mb->length ()));
@@ -231,7 +233,7 @@ RTCP_Channel_In::recv_rtp_packet(ACE_Message_Block *mb,
   if (data_packet.is_valid ())
     this->updateStatistics(&data_packet);
   else
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
                 "RTCP_Channel_In::recvDataPacket - invalid RTP packet\n"));
 }
 

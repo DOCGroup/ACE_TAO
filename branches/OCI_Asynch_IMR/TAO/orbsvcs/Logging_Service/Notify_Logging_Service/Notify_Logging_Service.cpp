@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "Notify_Logging_Service.h"
 #include "ace/Get_Opt.h"
 #include "tao/debug.h"
@@ -32,7 +33,7 @@ Notify_Logging_Service::init_ORB (int& argc, ACE_TCHAR *argv [])
 
   if (this->notify_service_ == 0)
     {
-      ACE_DEBUG ((LM_DEBUG, "Notify Service not found! check conf. file\n"));
+      ORBSVCS_DEBUG ((LM_DEBUG, "Notify Service not found! check conf. file\n"));
       return -1;
     }
 
@@ -40,7 +41,7 @@ Notify_Logging_Service::init_ORB (int& argc, ACE_TCHAR *argv [])
     this->orb_->resolve_initial_references("RootPOA");
 
   if (CORBA::is_nil (poa_object.in ()))
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        " (%P|%t) Unable to resolve the RootPOA.\n"),
                       -1);
 
@@ -87,7 +88,7 @@ Notify_Logging_Service::parse_args (int argc, ACE_TCHAR *argv[])
 
         case '?':
         default:
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       "Usage: %s "
                       "-n service_name "
                       "-o ior_file_name "
@@ -147,7 +148,7 @@ Notify_Logging_Service::init (int argc, ACE_TCHAR *argv[])
       FILE* iorf = ACE_OS::fopen (this->ior_file_name_, ACE_TEXT("w"));
       if (iorf == 0)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
                              "Cannot open output file for writing IOR: %s",
                              this->ior_file_name_),
                             -1);

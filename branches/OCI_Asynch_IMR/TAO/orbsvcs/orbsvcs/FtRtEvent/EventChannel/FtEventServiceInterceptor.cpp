@@ -1,4 +1,5 @@
 // $Id$
+#include "orbsvcs/Log_Macros.h"
 #include "ace/OS_NS_string.h"
 #include "ace/SString.h"
 #include "orbsvcs/FT_CORBA_ORBC.h"
@@ -110,7 +111,7 @@ get_transaction_depth_context(
   }
   catch (const CORBA::BAD_PARAM&)
   {
-    ACE_DEBUG((LM_DEBUG, "Received request without transaction depth context\n"));
+    ORBSVCS_DEBUG((LM_DEBUG, "Received request without transaction depth context\n"));
     return -1;
   }
 

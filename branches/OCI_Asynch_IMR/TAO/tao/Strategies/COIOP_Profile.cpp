@@ -78,7 +78,7 @@ TAO_COIOP_Profile::decode_profile (TAO_InputCDR& cdr)
   if (cdr.read_string (uuid.out ()) == 0)
     {
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
+        TAOLIB_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) COIOP_Profile::decode - ")
                     ACE_TEXT ("error while uuid")));
       return -1;
@@ -264,7 +264,7 @@ TAO_COIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
     encap << this->ref_object_key_->object_key ();
   else
     {
-      ACE_ERROR ((LM_ERROR,
+      TAOLIB_ERROR ((LM_ERROR,
                   "(%P|%t) TAO - COIOP_Profile::create_profile_body "
                   "no object key marshalled\n"));
     }

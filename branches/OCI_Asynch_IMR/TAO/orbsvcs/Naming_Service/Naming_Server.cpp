@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "Naming_Service.h"
 #include "ace/OS_main.h"
 
@@ -27,7 +28,7 @@ void
 Naming_Svc_Shutdown::operator() (int which_signal)
 {
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
                 "Name Service: shutting down on signal %d\n",
                 which_signal));
   (void) this->ns_.shutdown ();
@@ -45,7 +46,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   Service_Shutdown kill_contractor(killer);
 
   if (naming_service.init (argc, argv) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT("Failed to start the Naming Service.\n")),
                       1);
 

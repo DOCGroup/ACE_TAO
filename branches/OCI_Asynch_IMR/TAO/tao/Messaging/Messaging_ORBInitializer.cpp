@@ -25,7 +25,7 @@ TAO_Messaging_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr inf
   if (CORBA::is_nil (tao_info.in ()))
     {
       if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_ERROR,
+        TAOLIB_ERROR ((LM_ERROR,
                     "(%P|%t) TAO_Messaging_ORBInitializer::pre_init:\n"
                     "(%P|%t)    Unable to narrow "
                     "\"PortableInterceptor::ORBInitInfo_ptr\" to\n"
@@ -83,7 +83,7 @@ TAO_Messaging_ORBInitializer::register_value_factory (
   if (CORBA::is_nil (tao_info.in ()))
     {
       if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_ERROR,
+        TAOLIB_ERROR ((LM_ERROR,
                     "(%P|%t) TAO_Messaging_ORBInitializer::register_value_factory:\n"
                     "(%P|%t)    Unable to narrow "
                     "\"PortableInterceptor::ORBInitInfo_ptr\" to\n"
