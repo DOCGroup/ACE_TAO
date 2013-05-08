@@ -54,12 +54,11 @@ ACE_Thread_ID::to_string (char *thr_string) const
   ACE_OS::sprintf (thr_string, "%u",
                    static_cast <unsigned> (this->thread_id_));
 #else
-  // Yes, this is an ugly C-style cast, but the
-  // correct C++ cast is different depending on
-  // whether the t_id is an integral type or a pointer
-  // type. FreeBSD uses a pointer type, but doesn't
-  // have a _np function to get an integral type like
-  // other OSes, so use the bigger hammer.
+  // Yes, this is an ugly C-style cast, but the correct C++ cast is
+  // different depending on whether the t_id is an integral type or a
+  // pointer type. FreeBSD uses a pointer type, but doesn't have a _np
+  // function to get an integral type like other OSes, so use the
+  // bigger hammer.
   ACE_OS::sprintf (thr_string, "%lu",
                    (unsigned long) thread_handle_);
 #endif /* ACE_WIN32 */
