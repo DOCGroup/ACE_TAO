@@ -1,3 +1,9 @@
+Wed May  8 13:52:54 UTC 2013  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/OS_NS_Thread.inl (ACE_OS::thr_id): Replaced the call to
+          ACE_Thread::self() with ACE_OS::thr_self().  Thanks to Johnny
+          Willemsen for reporting this.
+
 Tue May  7 15:04:24 UTC 2013  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/OS_NS_Thread.{h,inl}: Added a new ACE_OS::thr_id() method
