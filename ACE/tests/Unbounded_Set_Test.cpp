@@ -8,7 +8,6 @@
  *    This test illustrates the use of ACE_Unbounded_Set.
  *    No command line arguments are needed to run the test.
  *
- *
  *  @author Rudolf Weber <rfweber@tesionmail.de>
  *  @author ace/tests integration <Oliver.Kellogg@sysde.eads.net>
  */
