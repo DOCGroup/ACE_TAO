@@ -4,7 +4,7 @@
 #include "ace/Thread.h"
 #include "ace/Timer_Queue.h"
 #include "ace/Sig_Handler.h"
-#include "ace/Log_Msg.h"
+#include "ace/Log_Category.h"
 #include "ace/Functor_T.h"
 #include "ace/OS_NS_sys_time.h"
 
@@ -625,7 +625,7 @@ ACE_TP_Reactor::notify_handle (ACE_HANDLE,
                                ACE_Event_Handler *eh,
                                ACE_EH_PTMF)
 {
-  ACE_ERROR ((LM_ERROR,
+  ACELIB_ERROR ((LM_ERROR,
               ACE_TEXT ("ACE_TP_Reactor::notify_handle: ")
               ACE_TEXT ("Wrong version of notify_handle() got called\n")));
 

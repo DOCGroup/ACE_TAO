@@ -1,7 +1,7 @@
 // $Id$
 
 #include "ace/Message_Queue.h"
-#include "ace/Log_Msg.h"
+#include "ace/Log_Category.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Message_Queue.inl"

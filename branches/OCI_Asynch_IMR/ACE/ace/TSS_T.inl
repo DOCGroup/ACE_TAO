@@ -3,7 +3,7 @@
 // $Id$
 
 #include "ace/Thread.h"
-#include "ace/Log_Msg.h"
+#include "ace/Log_Category.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -74,7 +74,7 @@ ACE_TSS<TYPE>::ts_value (ACE_TSS_Adapter *new_tss_adapter) const
   if (ACE_Thread::setspecific (this->key_,
                                (void *) new_tss_adapter) != 0)
     {
-      ACE_ERROR ((LM_ERROR,
+      ACELIB_ERROR ((LM_ERROR,
                   ACE_TEXT ("%p\n"),
                   ACE_TEXT ("Error: ACE_Thread::setspecific() failed!")));
       return -1;
@@ -88,7 +88,7 @@ ACE_TSS<TYPE>::ts_value (TYPE *new_ts_obj) const
 {
   if (ACE_Thread::setspecific (this->key_, (void *) new_ts_obj) != 0)
     {
-      ACE_ERROR ((LM_ERROR,
+      ACELIB_ERROR ((LM_ERROR,
                   ACE_TEXT ("%p\n"),
                   ACE_TEXT ("Error: ACE_Thread::setspecific() failed!")));
       return -1;

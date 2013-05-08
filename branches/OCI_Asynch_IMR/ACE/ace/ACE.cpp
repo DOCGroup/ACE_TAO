@@ -8,7 +8,7 @@
 #include "ace/SString.h"
 #include "ace/Version.h"
 #include "ace/Message_Block.h"
-#include "ace/Log_Msg.h"
+#include "ace/Log_Category.h"
 #include "ace/OS_NS_sys_select.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_strings.h"
@@ -159,7 +159,7 @@ ACE::nibble2hex (u_int n)
 bool
 ACE::debug (void)
 {
-  static const char* debug = ACE_OS::getenv ("ACE_DEBUG");
+  static const char* debug = ACE_OS::getenv ("ACELIB_DEBUG");
   return (ACE::debug_ != 0) ? ACE::debug_ : (debug != 0 ? (*debug != '0') : false);
 }
 

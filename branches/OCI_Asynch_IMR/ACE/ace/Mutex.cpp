@@ -6,7 +6,7 @@
 #include "ace/Mutex.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Log_Msg.h"
+#include "ace/Log_Category.h"
 #include "ace/OS_NS_string.h"
 #include "ace/os_include/sys/os_mman.h"
 
@@ -20,13 +20,13 @@ ACE_Mutex::dump (void) const
 #if defined (ACE_HAS_DUMP)
 // ACE_TRACE ("ACE_Mutex::dump");
 
-  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 #if defined (ACE_HAS_PTHREADS) || defined(ACE_HAS_STHREADS)
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("lockname_ = %s\n"), this->lockname_));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("process_lock_ = %x\n"), this->process_lock_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("lockname_ = %s\n"), this->lockname_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("process_lock_ = %x\n"), this->process_lock_));
 #endif /* ACE_HAS_PTHREADS || ACE_HAS_STHREADS */
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
 
@@ -88,7 +88,7 @@ ACE_Mutex::ACE_Mutex (int type, const ACE_TCHAR *name,
                                  name,
                                  arg) != 0)
         {
-          ACE_ERROR ((LM_ERROR,
+          ACELIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("%p\n"),
                       ACE_TEXT ("ACE_Mutex::ACE_Mutex")));
           return;
@@ -105,7 +105,7 @@ ACE_Mutex::ACE_Mutex (int type, const ACE_TCHAR *name,
                               type,
                               name,
                               arg) != 0)
-        ACE_ERROR ((LM_ERROR,
+        ACELIB_ERROR ((LM_ERROR,
                     ACE_TEXT ("%p\n"),
                     ACE_TEXT ("ACE_Mutex::ACE_Mutex")));
 #if defined(ACE_HAS_PTHREADS) || defined (ACE_HAS_STHREADS)

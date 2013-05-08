@@ -43,24 +43,38 @@ enum ACE_Svc_Handler_Close { NORMAL_CLOSE_OPERATION = 0x00,
  * @brief Defines the interface for a service that exchanges data with
  * its connected peer.
  *
- * This class provides a well-defined interface that the
- * Acceptor and Connector pattern factories use as their target.
- * Typically, client applications will subclass ACE_Svc_Handler
- * and do all the interesting work in the subclass.  One thing
- * that the ACE_Svc_Handler does contain is a PEER_STREAM
- * endpoint that is initialized by an ACE_Acceptor or
- * ACE_Connector when a connection is established successfully.
- * This endpoint is used to exchange data between a
- * ACE_Svc_Handler and the peer it is connected with.
+ * This class provides a well-defined interface that the ACE_Acceptor
+ * and ACE_Connector factories use as their target.  Typically, client
+ * applications will subclass ACE_Svc_Handler and do all the
+ * interesting work in the subclass.  An ACE_Svc_Handler is
+ * parameterized by concrete types that conform to the interfaces of
+ * PEER_ACCEPTOR and SYNCH_TRAITS described below.
+ *
+ * @tparam PEER_STREAM The name of the class that implements the
+ *         PEER_STREAM endpoint (e.g., ACE_SOCK_Stream) that is
+ *         contained in an ACE_Svc_Handler and initialized by an
+ *         ACE_Acceptor or ACE_Connector when a connection is
+ *         established successfully.  A PEER_STREAM implementation
+ *         must provide a PEER_ADDR trait (e.g., ACE_INET_Addr to
+ *         identify the type of address used by the endpoint.  This
+ *         endpoint is used to exchange data between a ACE_Svc_Handler
+ *         and the peer it is connected with.
+ *
+ * @tparam SYNCH_TRAITS The name of the synchronization traits class
+ *         that will be used by the ACE_Svc_Handler (e.g.,
+ *         ACE_NULL_SYNCH or ACE_MT_SYNCH). The synchronization traits
+ *         class provides typedefs for the mutex, condition, and
+ *         semaphore implementations the ACE_Svc_Handler will
+ *         use. @see Synch_Traits.h.
  */
-template <ACE_PEER_STREAM_1, ACE_SYNCH_DECL>
-class ACE_Svc_Handler : public ACE_Task<ACE_SYNCH_USE>
+template <typename PEER_STREAM, typename SYNCH_TRAITS>
+class ACE_Svc_Handler : public ACE_Task<SYNCH_TRAITS>
 {
 public:
 
   // Useful STL-style traits.
-  typedef ACE_PEER_STREAM_ADDR addr_type;
-  typedef ACE_PEER_STREAM      stream_type;
+  typedef typename PEER_STREAM::PEER_ADDR addr_type;
+  typedef PEER_STREAM stream_type;
 
   /**
    * Constructor initializes the @a thr_mgr and @a mq by passing them
@@ -68,15 +82,17 @@ public:
    * the ACE_Event_Handler.
    */
   ACE_Svc_Handler (ACE_Thread_Manager *thr_mgr = 0,
-                   ACE_Message_Queue<ACE_SYNCH_USE> *mq = 0,
+                   ACE_Message_Queue<SYNCH_TRAITS> *mq = 0,
                    ACE_Reactor *reactor = ACE_Reactor::instance ());
 
   /// Destructor.
   virtual ~ACE_Svc_Handler (void);
 
   /// Activate the client handler.  This is typically called by the
-  /// ACE_Acceptor or ACE_Connector.
-  virtual int open (void * = 0);
+  /// ACE_Acceptor or ACE_Connector, which passes "this" in as the
+  /// parameter to open.  If this method returns -1 the Svc_Handler's
+  /// close() method is automatically called.
+  virtual int open (void *acceptor_or_connector = 0);
 
   /**
    * Object termination hook -- application-specific cleanup code goes
@@ -148,8 +164,8 @@ public:
   virtual void set_handle (ACE_HANDLE);
 
   /// Returns the underlying PEER_STREAM.  Used by
-  /// <ACE_Acceptor::accept> and <ACE_Connector::connect> factories
-  ACE_PEER_STREAM &peer (void) const;
+  /// <ACE_Acceptor::accept> and <ACE_Connector::connect> factories.
+  PEER_STREAM &peer (void) const;
 
   /// Overloaded new operator.  This method unobtrusively records if a
   /// <Svc_Handler> is allocated dynamically, which allows it to clean
@@ -234,7 +250,7 @@ public:
 
 protected:
   /// Maintain connection with client.
-  ACE_PEER_STREAM peer_;
+  PEER_STREAM peer_;
 
   /// Have we been dynamically created?
   bool dynamic_;
@@ -262,8 +278,8 @@ protected:
  * queue is "full" or (2) a period of time elapses, at which
  * point the queue is "flushed" via <sendv_n> to the peer.
  */
-template <ACE_PEER_STREAM_1, ACE_SYNCH_DECL>
-class ACE_Buffered_Svc_Handler : public ACE_Svc_Handler<ACE_PEER_STREAM_2, ACE_SYNCH_USE>
+template <typename PEER_STREAM, typename SYNCH_TRAITS>
+class ACE_Buffered_Svc_Handler : public ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>
 {
 public:
   // = Initialization and termination methods.
@@ -277,7 +293,7 @@ public:
    * relative to the current time returned by <ACE_OS::gettimeofday>.
    */
   ACE_Buffered_Svc_Handler (ACE_Thread_Manager *thr_mgr = 0,
-                            ACE_Message_Queue<ACE_SYNCH_USE> *mq = 0,
+                            ACE_Message_Queue<SYNCH_TRAITS> *mq = 0,
                             ACE_Reactor *reactor = ACE_Reactor::instance (),
                             size_t max_buffer_size = 0,
                             ACE_Time_Value *relative_timeout = 0);

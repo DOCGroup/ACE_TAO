@@ -29,7 +29,7 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
     connection_cache_ (caching_s)
 {
   if (this->open (cre_s, con_s, rec_s) == -1)
-    ACE_ERROR ((LM_ERROR,
+    ACELIB_ERROR ((LM_ERROR,
                 ACE_TEXT ("%p\n"),
                 ACE_TEXT ("ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, ATTRIBUTES, MUTEX>\n")));
 }
@@ -643,7 +643,7 @@ ACE_Bounded_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_S
         {
           ACE_ASSERT (0); // just to see it coming
 
-          ACE_ERROR ((LM_ERROR,
+          ACELIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("(%t)ACE_Bounded_Cached_Connect_Strategy<>::")
                       ACE_TEXT ("find_or_create_svc_handler_i - ")
                       ACE_TEXT ("error polling server socket state.\n")));

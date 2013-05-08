@@ -948,32 +948,35 @@ ACE_MAKE_SVC_CONFIG_FACTORY_NAME(ACE_VERSIONED_NAMESPACE_NAME,SERVICE_CLASS) (AC
 #endif /* ACE_WIN32 */
 
 // Handle ACE_Message_Queue.
-#   define ACE_SYNCH_DECL class _ACE_SYNCH
+#   define ACE_SYNCH_DECL typename _ACE_SYNCH
 #   define ACE_SYNCH_USE _ACE_SYNCH
 #   define ACE_SYNCH_MUTEX_T typename _ACE_SYNCH::MUTEX
 #   define ACE_SYNCH_CONDITION_T typename _ACE_SYNCH::CONDITION
 #   define ACE_SYNCH_SEMAPHORE_T typename _ACE_SYNCH::SEMAPHORE
 
 // Handle ACE_Malloc*
-#   define ACE_MEM_POOL_1 class _ACE_MEM_POOL
+#   define ACE_MEM_POOL_1 typename _ACE_MEM_POOL
 #   define ACE_MEM_POOL_2 _ACE_MEM_POOL
 #   define ACE_MEM_POOL _ACE_MEM_POOL
 #   define ACE_MEM_POOL_OPTIONS typename _ACE_MEM_POOL::OPTIONS
 
+// @deprecated These macros are not longer used in ACE_Svc_Handler.
 // Handle ACE_Svc_Handler
-#   define ACE_PEER_STREAM_1 class _ACE_PEER_STREAM
+#   define ACE_PEER_STREAM_1 typename _ACE_PEER_STREAM
 #   define ACE_PEER_STREAM_2 _ACE_PEER_STREAM
 #   define ACE_PEER_STREAM _ACE_PEER_STREAM
 #   define ACE_PEER_STREAM_ADDR typename _ACE_PEER_STREAM::PEER_ADDR
 
+// @deprecated These macros are not longer used in ACE_Acceptor.
 // Handle ACE_Acceptor
-#   define ACE_PEER_ACCEPTOR_1 class _ACE_PEER_ACCEPTOR
+#   define ACE_PEER_ACCEPTOR_1 typename _ACE_PEER_ACCEPTOR
 #   define ACE_PEER_ACCEPTOR_2 _ACE_PEER_ACCEPTOR
 #   define ACE_PEER_ACCEPTOR _ACE_PEER_ACCEPTOR
 #   define ACE_PEER_ACCEPTOR_ADDR typename _ACE_PEER_ACCEPTOR::PEER_ADDR
 
+// @deprecated These macros are not longer used in ACE_Connector.
 // Handle ACE_Connector
-#   define ACE_PEER_CONNECTOR_1 class _ACE_PEER_CONNECTOR
+#   define ACE_PEER_CONNECTOR_1 typename _ACE_PEER_CONNECTOR
 #   define ACE_PEER_CONNECTOR_2 _ACE_PEER_CONNECTOR
 #   define ACE_PEER_CONNECTOR _ACE_PEER_CONNECTOR
 #   define ACE_PEER_CONNECTOR_ADDR typename ACE_PEER_CONNECTOR::PEER_ADDR

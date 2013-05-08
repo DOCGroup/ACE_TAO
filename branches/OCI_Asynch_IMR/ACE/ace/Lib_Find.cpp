@@ -1,7 +1,7 @@
 // $Id$
 
 #include "ace/Lib_Find.h"
-#include "ace/Log_Msg.h"
+#include "ace/Log_Category.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_stdio.h"
@@ -75,13 +75,13 @@ ACE_LD_Symbol_Registry::register_symbol (const ACE_TCHAR* symname,
   int const result = symbol_registry_.bind (symname, symaddr);
   if (result == 1)
     {
-      ACE_DEBUG((LM_INFO, ACE_TEXT ("ACE_LD_Symbol_Registry:")
+      ACELIB_DEBUG((LM_INFO, ACE_TEXT ("ACE_LD_Symbol_Registry:")
                           ACE_TEXT (" duplicate symbol %s registered\n"),
                           ACE_TEXT_ALWAYS_CHAR (symname)));
     }
   else if (result == -1)
     {
-      ACE_ERROR((LM_ERROR, ACE_TEXT ("ACE_LD_Symbol_Registry:")
+      ACELIB_ERROR((LM_ERROR, ACE_TEXT ("ACE_LD_Symbol_Registry:")
                            ACE_TEXT (" failed to register symbol %s\n"),
                            ACE_TEXT_ALWAYS_CHAR (symname)));
     }
@@ -268,7 +268,7 @@ ACE::ldfind (const ACE_TCHAR* filename,
       if (ACE_OS::strcmp (s, dll_suffix) != 0)
 #endif /* ACE_WIN32 */
         {
-          ACE_ERROR ((LM_WARNING,
+          ACELIB_ERROR ((LM_WARNING,
                       ACE_TEXT ("Warning: improper suffix for a ")
                       ACE_TEXT ("shared library on this platform: %s\n"),
                       s));

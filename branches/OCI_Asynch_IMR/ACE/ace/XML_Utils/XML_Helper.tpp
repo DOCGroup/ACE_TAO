@@ -2,6 +2,7 @@
 #include "XML_Helper.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Log_Msg.h"
+#include "ace/Log_Category.h"
 #include "xercesc/util/XMLUniDefs.hpp"
 #include "xercesc/dom/DOM.hpp"
 #include "XML_Error_Handler.h"
@@ -96,10 +97,7 @@ namespace XML
       }
     catch (...)
       {
-        ACE_DEBUG ((LM_DEBUG,
-                    "(%P|%t) Some other exception,"
-                    " returning\n"));
-
+        ACELIB_DEBUG ((LM_DEBUG, "(%P|%t) Some other exception, returning\n"));
         return;
       }
 
@@ -223,8 +221,7 @@ namespace XML
       }
     catch (...)
       {
-        ACE_DEBUG ((LM_DEBUG,
-                    "(%P|%t) Caught an unknown exception \n"));
+        ACELIB_DEBUG ((LM_DEBUG, "(%P|%t) Caught an unknown exception\n"));
         throw;
       }
 
@@ -334,7 +331,7 @@ namespace XML
         char* name = XMLString::transcode (e.getType());
         ACE_Auto_Basic_Array_Ptr<char> cleanup_name (name);
 
-        ACE_ERROR ((LM_ERROR, "Caught exception while serializing DOM to file.\n"
+        ACELIB_ERROR ((LM_ERROR, "Caught exception while serializing DOM to file.\n"
                     "Name: %C\n"
                     "Message: %C\n"
                     "SrcFile: %C\n"

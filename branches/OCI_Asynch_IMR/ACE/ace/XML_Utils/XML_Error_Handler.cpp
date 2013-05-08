@@ -1,7 +1,7 @@
 // $Id$
 
 #include "XML_Error_Handler.h"
-#include "ace/Log_Msg.h"
+#include "ace/Log_Category.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/ACE.h"
 #include <xercesc/util/XMLString.hpp>

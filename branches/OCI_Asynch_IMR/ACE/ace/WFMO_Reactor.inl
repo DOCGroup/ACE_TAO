@@ -19,7 +19,7 @@ ACE_Wakeup_All_Threads_Handler::handle_signal (int /* signum */,
 {
   // This will get called when <WFMO_Reactor->wakeup_all_threads_> event
   // is signaled. There is nothing to be done here.
-  //  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%t) waking up to get updated handle set info\n")));
+  //  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%t) waking up to get updated handle set info\n")));
   return 0;
 }
 
@@ -81,37 +81,37 @@ ACE_WFMO_Reactor_Handler_Repository::Common_Info::dump (void) const
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_WFMO_Reactor_Handler_Repository::Common_Info::dump");
 
-  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 
-  ACE_DEBUG ((LM_DEBUG,
+  ACELIB_DEBUG ((LM_DEBUG,
               ACE_TEXT ("I/O Entry = %d\n"),
               this->io_entry_));
 
-  ACE_DEBUG ((LM_DEBUG,
+  ACELIB_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Event Handler = %d\n"),
               this->event_handler_));
 
-  ACE_DEBUG ((LM_DEBUG,
+  ACELIB_DEBUG ((LM_DEBUG,
               ACE_TEXT ("I/O Handle = %d\n"),
               this->io_handle_));
 
-  ACE_DEBUG ((LM_DEBUG,
+  ACELIB_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Network Events = %d\n"),
               this->network_events_));
 
-  ACE_DEBUG ((LM_DEBUG,
+  ACELIB_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Delete Event = %d\n"),
               this->delete_event_));
 
-  ACE_DEBUG ((LM_DEBUG,
+  ACELIB_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Delete Entry = %d\n"),
               this->delete_entry_));
 
-  ACE_DEBUG ((LM_DEBUG,
+  ACELIB_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Close Masks = %d\n"),
               this->close_masks_));
 
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
 
@@ -164,19 +164,19 @@ ACE_WFMO_Reactor_Handler_Repository::Current_Info::dump (ACE_HANDLE event_handle
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_WFMO_Reactor_Handler_Repository::Current_Info::dump");
 
-  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 
   Common_Info::dump ();
 
-  ACE_DEBUG ((LM_DEBUG,
+  ACELIB_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Event Handle = %d\n"),
               event_handle));
 
-  ACE_DEBUG ((LM_DEBUG,
+  ACELIB_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Suspend Entry = %d\n"),
               this->suspend_entry_));
 
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #else /* !ACE_HAS_DUMP */
   ACE_UNUSED_ARG (event_handle);
 #endif /* ACE_HAS_DUMP */
@@ -237,19 +237,19 @@ ACE_WFMO_Reactor_Handler_Repository::To_Be_Added_Info::dump (void) const
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_WFMO_Reactor_Handler_Repository::To_Be_Added_Info::dump");
 
-  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 
   Common_Info::dump ();
 
-  ACE_DEBUG ((LM_DEBUG,
+  ACELIB_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Event Handle = %d\n"),
               this->event_handle_));
 
-  ACE_DEBUG ((LM_DEBUG,
+  ACELIB_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Suspend Entry = %d\n"),
               this->suspend_entry_));
 
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
 
@@ -308,19 +308,19 @@ ACE_WFMO_Reactor_Handler_Repository::Suspended_Info::dump (void) const
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_WFMO_Reactor_Handler_Repository::Suspended_Info::dump");
 
-  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 
   Common_Info::dump ();
 
-  ACE_DEBUG ((LM_DEBUG,
+  ACELIB_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Event Handle = %d\n"),
               this->event_handle_));
 
-  ACE_DEBUG ((LM_DEBUG,
+  ACELIB_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Resume Entry = %d\n"),
               this->resume_entry_));
 
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
 

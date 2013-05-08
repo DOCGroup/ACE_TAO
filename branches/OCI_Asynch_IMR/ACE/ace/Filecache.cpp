@@ -2,7 +2,7 @@
 
 #include "ace/Filecache.h"
 #include "ace/Object_Manager.h"
-#include "ace/Log_Msg.h"
+#include "ace/Log_Category.h"
 #include "ace/ACE.h"
 #include "ace/Guard_T.h"
 #include "ace/OS_NS_string.h"
@@ -247,7 +247,7 @@ ACE_Filecache::insert_i (const ACE_TCHAR *filename,
                       ACE_Filecache_Object (filename, filelock, 0, mapit),
                       0);
 
-      //      ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("   (%t) CVF: creating %s\n"), filename));
+      //      ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("   (%t) CVF: creating %s\n"), filename));
 
       if (this->hash_.bind (filename, handle) == -1)
         {
@@ -370,7 +370,7 @@ ACE_Filecache::fetch (const ACE_TCHAR *filename, int mapit)
               filelock.release ();
           }
         }
-      //      ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("   (%t) CVF: found %s\n"), filename));
+      //      ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("   (%t) CVF: found %s\n"), filename));
     }
 
   return handle;
@@ -692,7 +692,7 @@ int
 ACE_Filecache_Object::error_i (int error_value, const ACE_TCHAR *s)
 {
   s = s;
-  ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p.\n"), s));
+  ACELIB_ERROR ((LM_ERROR, ACE_TEXT ("%p.\n"), s));
   this->error_ = error_value;
   return error_value;
 }

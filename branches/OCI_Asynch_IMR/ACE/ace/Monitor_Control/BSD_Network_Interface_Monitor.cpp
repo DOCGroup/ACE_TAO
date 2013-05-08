@@ -4,7 +4,7 @@
 
 #if defined (__NetBSD__) || defined (__OpenBSD__)
 
-#include "ace/Log_Msg.h"
+#include "ace/Log_Category.h"
 #include "ace/OS_NS_stdio.h"
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -56,7 +56,7 @@ namespace ACE
 
       if (fd == -1)
         {
-          ACE_ERROR ((LM_ERROR, ACE_TEXT ("socket failed\n")));
+          ACELIB_ERROR ((LM_ERROR, ACE_TEXT ("socket failed\n")));
           return;
         }
 
@@ -64,7 +64,7 @@ namespace ACE
 
       if (getifaddrs (&ifap) < 0)
         {
-          ACE_ERROR ((LM_ERROR, ACE_TEXT ("getifaddrs failed\n")));
+          ACELIB_ERROR ((LM_ERROR, ACE_TEXT ("getifaddrs failed\n")));
           close (fd);
           return;
         }
@@ -96,7 +96,7 @@ namespace ACE
 #endif
           if (ioctl (fd, SIOCGIFDATA, &ifdr) == -1)
             {
-              ACE_ERROR ((LM_ERROR, ACE_TEXT ("SIOCGIFDATA failed\n")));
+              ACELIB_ERROR ((LM_ERROR, ACE_TEXT ("SIOCGIFDATA failed\n")));
             }
 
 #if defined (__OpenBSD__)

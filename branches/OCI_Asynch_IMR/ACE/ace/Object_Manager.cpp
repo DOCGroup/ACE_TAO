@@ -10,7 +10,7 @@
 #  include "ace/Service_Config.h"
 #endif /* ! ACE_LACKS_ACE_SVCCONF */
 #include "ace/Signal.h"
-#include "ace/Log_Msg.h"
+#include "ace/Log_Category.h"
 #include "ace/Malloc.h"
 #include "ace/Sig_Adapter.h"
 #include "ace/Framework_Component.h"
@@ -170,9 +170,9 @@ LONG _stdcall ACE_UnhandledExceptionFilter (PEXCEPTION_POINTERS pExceptionInfo)
   DWORD dwExceptionCode = pExceptionInfo->ExceptionRecord->ExceptionCode;
 
   if (dwExceptionCode == EXCEPTION_ACCESS_VIOLATION)
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("\nERROR: ACCESS VIOLATION\n")));
+    ACELIB_ERROR ((LM_ERROR, ACE_TEXT ("\nERROR: ACCESS VIOLATION\n")));
   else
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("\nERROR: UNHANDLED EXCEPTION\n")));
+    ACELIB_ERROR ((LM_ERROR, ACE_TEXT ("\nERROR: UNHANDLED EXCEPTION\n")));
 
   return EXCEPTION_EXECUTE_HANDLER;
 }

@@ -4,7 +4,7 @@
 
 #if defined (ACE_HAS_WIN32_PDH)
 
-#include "ace/Log_Msg.h"
+#include "ace/Log_Category.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -52,7 +52,7 @@ namespace ACE
 
       if (ERROR_SUCCESS != this->status_)
         {
-          ACE_ERROR ((LM_DEBUG, ACE_TEXT ("PdhOpenQuery failed\n")));
+          ACELIB_ERROR ((LM_DEBUG, ACE_TEXT ("PdhOpenQuery failed\n")));
         }
 
       this->status_ =
@@ -63,7 +63,7 @@ namespace ACE
 
       if (ERROR_SUCCESS != this->status_)
         {
-          ACE_ERROR ((LM_DEBUG,
+          ACELIB_ERROR ((LM_DEBUG,
                       ACE_TEXT ("PdhAddCounter %s failed\n"),
                       this->path_.c_str ()));
         }

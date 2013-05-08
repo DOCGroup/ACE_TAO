@@ -32,6 +32,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ACE_Time_Value;
+class ACE_Log_Category_TSS;
 
 /// Defines the structure of an ACE logging record.
 class ACE_Export ACE_Log_Record
@@ -109,6 +110,11 @@ public:
   /// Set the type of the Log_Record.
   void type (ACE_UINT32);
 
+  /// Get the category of the Log_Record.
+  ACE_Log_Category_TSS* category (void) const;
+  /// Set the category of the Log_Record.
+  void category (ACE_Log_Category_TSS*);
+
   /**
    * Get the priority of the Log_Record <type_>.  This is computed
    * as the base 2 logarithm of <type_> (which must be a power of 2,
@@ -185,6 +191,9 @@ private:
 
   /// Allocated size of msg_data_ in ACE_TCHARs
   size_t msg_data_size_;
+
+  ///
+  ACE_Log_Category_TSS* category_;
 
   /// disallow copying...
   ACE_Log_Record (const ACE_Log_Record& rhs);
