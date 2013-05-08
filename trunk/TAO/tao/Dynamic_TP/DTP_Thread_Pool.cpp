@@ -136,21 +136,26 @@ TAO_DTP_Thread_Pool::new_dynamic_thread (void)
   if (TAO_debug_level > 0)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) DTP Pool %d new_dynamic_thread, max = %d, current = %d\n"),
-                  this->id_, this->definition_.max_threads_, (int)this->threads_.thr_count ()));
+                     ACE_TEXT ("TAO (%P|%t) DTP Pool %d new_dynamic_thread, ")
+                     ACE_TEXT ("max = %d, current = %d\n"),
+                     this->id_, this->definition_.max_threads_,
+                     (int)this->threads_.thr_count ()));
     }
-  if (this->definition_.max_threads_ > 0 &&
-      (int)this->active_count_ >= this->definition_.max_threads_)
-    return false;
+
+  if ((this->manager_.orb_core ().has_shutdown () || this->shutdown_) ||
+      (this->definition_.max_threads_ > 0 &&
+       (int)this->active_count_ >= this->definition_.max_threads_)
+    {
+      return false;
+    }
 
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     mon,
                     this->lock_,
                     false);
 
-  if (!this->manager_.orb_core ().has_shutdown () && !this->shutdown_ &&
-      (this->definition_.max_threads_ == -1 ||
-       (int)this->active_count_ < this->definition_.max_threads_))
+  if (this->definition_.max_threads_ == -1 ||
+      (int)this->active_count_ < this->definition_.max_threads_))
     {
       if (TAO_debug_level > 7)
         TAOLIB_DEBUG ((LM_DEBUG,
