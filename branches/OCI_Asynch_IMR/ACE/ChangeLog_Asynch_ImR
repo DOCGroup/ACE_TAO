@@ -1,0 +1,17 @@
+Wed May  8 21:42:24 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/Countdown_Time_T.cpp:
+        * ace/Countdown_Time_T.h:
+
+          Make the countdown time instances nestable. Prior to this change,
+          if a function using the countdown time to subtract a duration
+          happened to call another function that also used a countdown time
+          instance to subtract from the same instance, the inner countdown
+          would subtract its span and then the outer one would do the same
+          resulting in the same span of time being subtracted twice.
+
+Local Variables:
+mode: change-log
+add-log-time-format: (lambda () (progn (setq tz (getenv "TZ")) (set-time-zone-rule "UTC") (setq time (format-time-string "%a %b %e %H:%M:%S %Z %Y" (current-time))) (set-time-zone-rule tz) time))
+indent-tabs-mode: nil
+End:

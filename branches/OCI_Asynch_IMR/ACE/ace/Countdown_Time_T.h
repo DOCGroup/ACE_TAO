@@ -70,8 +70,11 @@ private:
   /// The policy to return the current time of day
   TIME_POLICY time_policy_;
 
-  /// Maximum time we were willing to wait.
+  /// Maximum time we are monitoring
   ACE_Time_Value *max_wait_time_;
+
+  /// Copy of the maximum time value, used to avoid nested decrements
+  ACE_Time_Value max_wait_value_;
 
   /// Beginning of the start time.
   ACE_Time_Value start_time_;
