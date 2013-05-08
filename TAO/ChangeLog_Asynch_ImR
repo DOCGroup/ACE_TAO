@@ -1,3 +1,12 @@
+Wed May  8 22:13:12 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/Intrusive_Ref_Count_Handle_T.h:
+        * tao/Intrusive_Ref_Count_Handle_T.inl:
+
+          Added an equivalence operator that returns true if the two handles
+          point to the same underlying object. This allows the handle type to
+          be used in generic containers.
+
 Wed May  8 14:15:01 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * : Merge from trunk
