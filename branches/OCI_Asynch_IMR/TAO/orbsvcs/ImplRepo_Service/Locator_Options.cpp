@@ -333,7 +333,6 @@ Options::print_usage (void) const
     ACE_TEXT ("  -t secs         Server startup timeout.(Default = 60s)\n")
     ACE_TEXT ("  -v msecs        Server verification interval.(Default = 10000ms)\n")
     ACE_TEXT ("  -i              Ping servers without activators too. (Default=false)\n")
-    ACE_TEXT ("  --asynch        Servant dispatching using asynch method handling\n")
               ));
 }
 

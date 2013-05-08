@@ -6,7 +6,7 @@
 #include "ace/OS_NS_unistd.h"
 
 int client_num = 0;
-ACE_CString server_ior;
+ACE_TCHAR *server_ior = 0;
 bool expect_transient = false;
 
 int
