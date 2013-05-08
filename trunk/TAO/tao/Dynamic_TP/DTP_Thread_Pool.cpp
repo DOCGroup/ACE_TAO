@@ -142,9 +142,9 @@ TAO_DTP_Thread_Pool::new_dynamic_thread (void)
                      (int)this->threads_.thr_count ()));
     }
 
-  if ((this->manager_.orb_core ().has_shutdown () || this->shutdown_) ||
+  if (this->manager_.orb_core ().has_shutdown () || this->shutdown_ ||
       (this->definition_.max_threads_ > 0 &&
-       (int)this->active_count_ >= this->definition_.max_threads_)
+       (int)this->active_count_ >= this->definition_.max_threads_))
     {
       return false;
     }
@@ -155,7 +155,7 @@ TAO_DTP_Thread_Pool::new_dynamic_thread (void)
                     false);
 
   if (this->definition_.max_threads_ == -1 ||
-      (int)this->active_count_ < this->definition_.max_threads_))
+      (int)this->active_count_ < this->definition_.max_threads_)
     {
       if (TAO_debug_level > 7)
         TAOLIB_DEBUG ((LM_DEBUG,
