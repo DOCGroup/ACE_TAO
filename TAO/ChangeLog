@@ -1,9 +1,17 @@
+Wed May  8 14:42:55 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/Dynamic_TP/DTP_Thread_Pool.cpp:
+
+          Fix for the case when the ORB is shutting down and a POA needs to
+          inform the IMR.
+
 Thu May  2 09:00:38 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
         * orbsvcs/ImplRepo_Service/XML_Backing_Store.cpp:
 
-          Clean up issues related to restarting the locator with persisted info.
+          Clean up issues related to restarting the locator with persisted
+          info.
 
 Wed May  1 21:06:50 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
