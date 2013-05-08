@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "Server_i.h"
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
@@ -45,13 +46,13 @@ Server_i::parse_args (int argc,
           ACE_OS::fopen (get_opts.opt_arg (), ACE_TEXT("a"));
 
         if (this->ior_output_file_ == 0)
-          ACE_ERROR_RETURN ((LM_ERROR,
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT("[SERVER] Process/Thread Id : (%P/%t)Unable to open %s for writing: %p\n"),
                              get_opts.opt_arg ()), -1);
         break;
       case '?':  // display help for use of the server.
       default:
-        ACE_ERROR_RETURN ((LM_ERROR,
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT("[SERVER] Process/Thread Id : (%P/%t)")
                            ACE_TEXT("usage:  %s")
                            ACE_TEXT(" [-d]")
@@ -111,7 +112,7 @@ Server_i::create_server (void)
         this->orb_->object_to_string (server_ref.in ());
 
       // Print the server IOR on the console.
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT("[SERVER] Process/Thread Id : (%P/%t) The Time Service ")
                   ACE_TEXT("SERVER IOR: <%C>\n"),
                   objref_server.in ()));
@@ -176,7 +177,7 @@ Server_i::register_server (void)
       this->naming_client_->rebind (server_name,
                                     this->time_service_server_.in ());
 
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT("Binding ServerContext -> %C\n"),
                   server_name[1].id.in ()));
     }
@@ -212,7 +213,7 @@ Server_i::init (int argc,
                       "time_server");
 
       if (retval == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT("%p\n"),
                            ACE_TEXT("init_child_poa")),
                            -1);
@@ -256,7 +257,7 @@ Server_i::run (void)
   int retval = this->orb_manager_.run ();
 
   if (retval == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT("[SERVER] Process/Thread Id : (%P/%t) Server_i::run")),
                       -1);
   return 0;

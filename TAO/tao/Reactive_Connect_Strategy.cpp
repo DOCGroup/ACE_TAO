@@ -51,7 +51,7 @@ TAO_Reactive_Connect_Strategy::wait_i (TAO_LF_Event *ev,
   if (TAO_debug_level > 2)
     {
       //FUZZ: disable check_for_lack_ACE_OS
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - Waiting in the Reactor for ")
                   ACE_TEXT ("connection completion - wait ()\n")));
       //FUZZ: enable check_for_lack_ACE_OS

@@ -82,7 +82,7 @@ TAO_Marshal_Primitive::skip (CORBA::TypeCode_ptr  tc, TAO_InputCDR *stream)
   else
     {
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((
+        TAOLIB_DEBUG ((
             LM_DEBUG,
             ACE_TEXT ("TAO_Marshal_Primitive::skip detected error\n")
           ));
@@ -179,7 +179,7 @@ TAO_Marshal_TypeCode::skip (CORBA::TypeCode_ptr, TAO_InputCDR *stream)
       else // bad kind_ value to be decoded
         {
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
+            TAOLIB_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("TAO_Marshal_TypeCode::skip: ")
                         ACE_TEXT ("Bad kind_ value in CDR stream\n")));
           throw ::CORBA::BAD_TYPECODE ();
@@ -191,7 +191,7 @@ TAO_Marshal_TypeCode::skip (CORBA::TypeCode_ptr, TAO_InputCDR *stream)
   else
     {
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((
+        TAOLIB_DEBUG ((
             LM_DEBUG,
             ACE_TEXT ("TAO_Marshal_TypeCode::skip detected error\n")
           ));
@@ -218,7 +218,7 @@ TAO_Marshal_Principal::skip (CORBA::TypeCode_ptr, TAO_InputCDR *stream)
   else
     {
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((
+        TAOLIB_DEBUG ((
             LM_DEBUG,
             ACE_TEXT ("TAO_Marshal_Principal::skip detected error\n")
           ));
@@ -275,7 +275,7 @@ TAO_Marshal_ObjRef::skip (CORBA::TypeCode_ptr, TAO_InputCDR *stream)
   else
     {
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((
+        TAOLIB_DEBUG ((
             LM_DEBUG,
             ACE_TEXT ("TAO_Marshal_ObjRef::skip detected error\n")
           ));
@@ -306,7 +306,7 @@ TAO_Marshal_Struct::skip (CORBA::TypeCode_ptr  tc, TAO_InputCDR *stream)
     return TAO::TRAVERSE_CONTINUE;
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
+    TAOLIB_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO_Marshal_Struct::skip detected error\n")));
 
   throw ::CORBA::MARSHAL (0, CORBA::COMPLETED_MAYBE);
@@ -563,7 +563,7 @@ TAO_Marshal_String::skip (CORBA::TypeCode_ptr, TAO_InputCDR *stream)
   else
     {
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
+        TAOLIB_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO_Marshal_String::skip detected error\n")));
       throw ::CORBA::MARSHAL (0, CORBA::COMPLETED_MAYBE);
     }
@@ -584,7 +584,7 @@ TAO_Marshal_Sequence::skip (CORBA::TypeCode_ptr tc, TAO_InputCDR *stream)
 
   if (!continue_skipping)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO_Marshal_Sequence::skip detected error\n")));
       throw ::CORBA::MARSHAL ();
     }
@@ -661,7 +661,7 @@ TAO_Marshal_Sequence::skip (CORBA::TypeCode_ptr tc, TAO_InputCDR *stream)
 
   // error exit
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
+    TAOLIB_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO_Marshal_Sequence::skip detected error\n")));
 
   throw ::CORBA::MARSHAL ();
@@ -745,7 +745,7 @@ TAO_Marshal_Array::skip (CORBA::TypeCode_ptr tc, TAO_InputCDR *stream)
 
   // error exit
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
+    TAOLIB_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO_Marshal_Sequence::skip detected error\n")));
 
   throw ::CORBA::MARSHAL ();
@@ -772,7 +772,7 @@ TAO_Marshal_Alias::skip (CORBA::TypeCode_ptr  tc, TAO_InputCDR *stream)
     return TAO::TRAVERSE_CONTINUE;
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
+    TAOLIB_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO_Marshal_Alias::skip detected error\n")));
 
   throw ::CORBA::MARSHAL (0, CORBA::COMPLETED_MAYBE);
@@ -813,7 +813,7 @@ TAO_Marshal_Except::skip (CORBA::TypeCode_ptr tc, TAO_InputCDR *stream)
     return TAO::TRAVERSE_CONTINUE;
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
+    TAOLIB_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO_Marshal_Except::skip detected error\n")));
 
   throw ::CORBA::MARSHAL (0, CORBA::COMPLETED_MAYBE);
@@ -841,7 +841,7 @@ TAO_Marshal_WString::skip (CORBA::TypeCode_ptr, TAO_InputCDR *stream)
     return TAO::TRAVERSE_CONTINUE;
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
+    TAOLIB_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO_Marshal_WString::skip detected error\n")));
   throw ::CORBA::MARSHAL (0, CORBA::COMPLETED_MAYBE);
 }
@@ -874,7 +874,7 @@ TAO_Marshal_Value::skip (CORBA::TypeCode_ptr tc, TAO_InputCDR *stream)
 
           if (TAO_debug_level > 0)
             {
-              ACE_DEBUG ((LM_WARNING,
+              TAOLIB_DEBUG ((LM_WARNING,
                           "TAO (%P|%t) WARNING: extracting "
                           "valuetype using default ORB_Core\n"));
             }
@@ -967,7 +967,7 @@ TAO_Marshal_Value::skip (CORBA::TypeCode_ptr tc, TAO_InputCDR *stream)
     return TAO::TRAVERSE_CONTINUE;
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
+    TAOLIB_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO_Marshal_Value::skip detected error\n")));
 
   throw ::CORBA::MARSHAL (0, CORBA::COMPLETED_MAYBE);

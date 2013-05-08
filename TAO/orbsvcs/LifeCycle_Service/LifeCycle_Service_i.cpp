@@ -13,6 +13,7 @@
 //=============================================================================
 
 
+#include "orbsvcs/Log_Macros.h"
 #include "ace/Get_Opt.h"
 
 #include "orbsvcs/LifeCycleServiceC.h"
@@ -43,7 +44,7 @@ Life_Cycle_Service_i::create_object (const CosLifeCycle::Key &factory_key,
                                      const CosLifeCycle::Criteria &the_criteria)
 {
   if (this->debug_level_ >= 2)
-    ACE_DEBUG ((LM_DEBUG, "Life_Cycle_Service_i:create_object: called.\n"));
+    ORBSVCS_DEBUG ((LM_DEBUG, "Life_Cycle_Service_i:create_object: called.\n"));
     // Exceptions are forwarded, not handled !!
 
   if (factory_trader_ptr_ != 0)
@@ -51,28 +52,28 @@ Life_Cycle_Service_i::create_object (const CosLifeCycle::Key &factory_key,
       Criteria_Evaluator criteria_Evaluator(the_criteria);
 
       if (this->debug_level_ >= 2)
-        ACE_DEBUG ((LM_DEBUG, "Life_Cycle_Service_i:create_object: new evaluator.\n"));
+        ORBSVCS_DEBUG ((LM_DEBUG, "Life_Cycle_Service_i:create_object: new evaluator.\n"));
 
       if (this->debug_level_ >= 2)
-        ACE_DEBUG ((LM_DEBUG, "Life_Cycle_Service_i:create_object: getFilter will be called.\n"));
+        ORBSVCS_DEBUG ((LM_DEBUG, "Life_Cycle_Service_i:create_object: getFilter will be called.\n"));
 
       char* filter = criteria_Evaluator.getFilter ();
 
       if (this->debug_level_ >= 2)
-        ACE_DEBUG ((LM_DEBUG, "Life_Cycle_Service_i:create_object: query(%s) will be called.\n",filter));
+        ORBSVCS_DEBUG ((LM_DEBUG, "Life_Cycle_Service_i:create_object: query(%s) will be called.\n",filter));
 
       CORBA::Object_ptr genericFactoryObj_ptr = factory_trader_ptr_->query (filter);
 
       if (this->debug_level_ >= 2)
-        ACE_DEBUG ((LM_DEBUG, "Life_Cycle_Service_i:create_object: query was called.\n"));
+        ORBSVCS_DEBUG ((LM_DEBUG, "Life_Cycle_Service_i:create_object: query was called.\n"));
 
       if (CORBA::is_nil (genericFactoryObj_ptr))
-        ACE_ERROR_RETURN ((LM_ERROR,
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            "Life_Cycle_Service_i::create_object: Factory is nil!\n"),
                           0);
       else // everyting is ok
         if (this->debug_level_ >= 2)
-          ACE_DEBUG ((LM_DEBUG, "Life_Cycle_Service_i::create_object: Object reference OK.\n"));
+          ORBSVCS_DEBUG ((LM_DEBUG, "Life_Cycle_Service_i::create_object: Object reference OK.\n"));
 
       // Now we have a proper reference to a Generic Factory
       // the create_object call will be forwarded to this factory
@@ -97,28 +98,28 @@ Life_Cycle_Service_i::create_object (const CosLifeCycle::Key &factory_key,
             }
 
           if (CORBA::is_nil (genericFactory_var.in()))
-            ACE_ERROR_RETURN ((LM_ERROR,
+            ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                "Life_Cycle_Service_i::create_object: Invalid Generic Factory.\n"),
                               0);
 
           if (this->debug_level_ >= 2)
-            ACE_DEBUG ((LM_DEBUG, "Life_Cycle_Service_i::create_object: Generic Factory reference OK.\n"));
+            ORBSVCS_DEBUG ((LM_DEBUG, "Life_Cycle_Service_i::create_object: Generic Factory reference OK.\n"));
 
           // Now retrieve the Object obj ref corresponding to the key.
           CORBA::Object_var object_var = genericFactory_var->create_object (factory_key,
                                                                             the_criteria);
 
           if (this->debug_level_ >= 2)
-            ACE_DEBUG ((LM_DEBUG,
+            ORBSVCS_DEBUG ((LM_DEBUG,
                         "Life_Cycle_Service_i::create_object: Forwarded request.\n"));
 
           if (CORBA::is_nil (object_var.in()))
-            ACE_ERROR_RETURN ((LM_ERROR,
+            ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                "Life_Cycle_Service_i::create_object: Null object refeference returned by factory.\n"),
                               0);
 
           if (this->debug_level_ >= 2)
-            ACE_DEBUG ((LM_DEBUG,
+            ORBSVCS_DEBUG ((LM_DEBUG,
                        "Life_Cycle_Service_i::create_object: Return a object reference to a new object.\n"));
 
           return CORBA::Object::_duplicate (object_var.in());
@@ -145,7 +146,7 @@ Life_Cycle_Service_i::register_factory (const char * name,
   factory_trader_ptr_->_cxx_export (name, location, description, object);
 
   if (this->debug_level_ >= 1)
-    ACE_DEBUG ((LM_DEBUG, "LifeCycle Server: Registered %s\n"
+    ORBSVCS_DEBUG ((LM_DEBUG, "LifeCycle Server: Registered %s\n"
                           "                  Location: %s\n"
                           "                  Description: %s\n",
                 name, location, description));

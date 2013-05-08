@@ -84,7 +84,7 @@ TAO_DTP_POA_Strategy::poa_activated_event_i (TAO_ORB_Core& orb_core)
         {
           if (TAO_debug_level > 0)
             {
-              ACE_DEBUG ((LM_DEBUG,
+              TAOLIB_DEBUG ((LM_DEBUG,
               ACE_TEXT ("TAO (%P|%t) - DTP_POA_Strategy - ")
               ACE_TEXT ("cannot retrieve configuration repo\n")));
             }
@@ -95,7 +95,7 @@ TAO_DTP_POA_Strategy::poa_activated_event_i (TAO_ORB_Core& orb_core)
           TAO_DTP_Definition config_entry;
           if (!config_repo->find (this->dynamic_tp_config_name_, config_entry))
             {
-              ACE_DEBUG ((LM_DEBUG,
+              TAOLIB_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("TAO (%P|%t) - DTP_POA_Strategy - ")
                           ACE_TEXT ("warning: config not found...using ")
                           ACE_TEXT ("defaults!\n")));
@@ -397,7 +397,7 @@ TAO_DTP_POA_Strategy::set_dtp_config (TAO_DTP_Definition &tp_config)
 
     if (TAO_debug_level > 4)
     {
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
           ACE_TEXT ("TAO (%P|%t) - DTP_POA_Strategy: ")
           ACE_TEXT ("Initialized with:\n")
           ACE_TEXT ("TAO (%P|%t) - DTP_POA_Strategy initial_pool_threads_=")

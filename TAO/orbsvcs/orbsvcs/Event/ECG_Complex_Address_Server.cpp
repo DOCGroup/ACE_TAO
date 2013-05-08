@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Event/ECG_Complex_Address_Server.h"
 #include "ace/SString.h"
 #include "ace/streams.h"
@@ -37,7 +38,7 @@ TAO_ECG_Complex_Address_Server::init (const char *arg)
       location = ACE_OS::strchr (data, '@');
       if (!location)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                         "Unable to initialize address "
                                         "server: cannot find <@> separator "
                                         "in initialization string "
@@ -83,7 +84,7 @@ TAO_ECG_Complex_Address_Server::add_entry (const char * key,
       && *key == '*')
     {
       if (this->default_addr_.set (mcast_addr) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, "Unable to initialize: invalid "
+        ORBSVCS_ERROR_RETURN ((LM_ERROR, "Unable to initialize: invalid "
                                      "mcast address specified: %s.\n",
                            mcast_addr),
                           -1);
@@ -95,7 +96,7 @@ TAO_ECG_Complex_Address_Server::add_entry (const char * key,
   CORBA::Long header_value = ACE_OS::strtol (key, &endptr, 0);
   if (*endptr != '\0')
     {
-      ACE_ERROR_RETURN ((LM_ERROR, "Unable to initialize: invalid "
+      ORBSVCS_ERROR_RETURN ((LM_ERROR, "Unable to initialize: invalid "
                                    "source/type specified: %s.\n",
                          key),
                         -1);
@@ -104,7 +105,7 @@ TAO_ECG_Complex_Address_Server::add_entry (const char * key,
   ACE_INET_Addr addr;
   if (addr.set (mcast_addr) == -1)
     {
-      ACE_ERROR_RETURN ((LM_ERROR, "Unable to initialize: invalid "
+      ORBSVCS_ERROR_RETURN ((LM_ERROR, "Unable to initialize: invalid "
                                    "mcast address specified: %s.\n",
                          mcast_addr),
                          -1);
@@ -112,7 +113,7 @@ TAO_ECG_Complex_Address_Server::add_entry (const char * key,
 
   if (this->mcast_mapping_.bind (header_value, addr) == -1)
     {
-      ACE_ERROR_RETURN ((LM_ERROR, "Unable to initialize: error adding "
+      ORBSVCS_ERROR_RETURN ((LM_ERROR, "Unable to initialize: error adding "
                                    "new entry to the mapping.\n"),
                         -1);
     }
@@ -191,7 +192,7 @@ TAO_ECG_Complex_Address_Server::get_address (
 void
 TAO_ECG_Complex_Address_Server::dump_content (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "Default address: %s:%d\n",
+  ORBSVCS_DEBUG ((LM_DEBUG, "Default address: %s:%d\n",
               this->default_addr_.get_host_addr (),
               this->default_addr_.get_port_number ()));
 
@@ -200,7 +201,7 @@ TAO_ECG_Complex_Address_Server::dump_content (void)
        iter++)
     {
       MAP::ENTRY & entry = *iter;
-      ACE_DEBUG ((LM_DEBUG, "%d --> %s:%d\n",
+      ORBSVCS_DEBUG ((LM_DEBUG, "%d --> %s:%d\n",
                   entry.ext_id_,
                   this->default_addr_.get_host_addr (),
                   this->default_addr_.get_port_number ()));

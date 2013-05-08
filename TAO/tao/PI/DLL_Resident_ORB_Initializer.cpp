@@ -21,7 +21,7 @@ PortableInterceptor::DLL_Resident_ORB_Initializer::DLL_Resident_ORB_Initializer 
 {
   if (TAO_debug_level > 8)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
         ACE_TEXT ("TAO (%P|%t) - Construct DLL_Resident_ORB_Initializer for @%@\n"),
         initializer_.operator->()
         ));
@@ -32,7 +32,7 @@ PortableInterceptor::DLL_Resident_ORB_Initializer::~DLL_Resident_ORB_Initializer
 {
   if (TAO_debug_level > 8)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
         ACE_TEXT ("TAO (%P|%t) - Destruct DLL_Resident_ORB_Initializer for @%@\n"),
         initializer_.operator->()
         ));

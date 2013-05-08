@@ -1,5 +1,7 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/AV/AVStreams_i.h"
 #include "orbsvcs/AV/sfp.h"
 #include "orbsvcs/AV/MCast.h"
@@ -79,7 +81,7 @@ TAO_AV_Connector_Registry::open (TAO_Base_StreamEndPoint *endpoint,
            // pluggable protocols are expected to have the ability to
           // create a default endpoint.
 
-          ACE_ERROR_RETURN ((LM_ERROR,
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
                              "Protocol was specified without an endpoint\n"),
                             -1);
         }
@@ -115,7 +117,7 @@ TAO_AV_Connector_Registry::open (TAO_Base_StreamEndPoint *endpoint,
                   entry->transport (transport);
                 }
               else
-                ACE_ERROR_RETURN ((LM_ERROR,
+                ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                    "(%P|%t) Unable to create an "
                                    "connector for <%s>\n",
                                    entry->flowname ()),
@@ -151,7 +153,7 @@ TAO_AV_Connector_Registry::open (TAO_Base_StreamEndPoint *endpoint,
                       entry->protocol_object ()->control_object (entry->control_protocol_object ());
                     }
                   else
-                    ACE_ERROR_RETURN ((LM_ERROR,
+                    ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                        "(%P|%t) Unable to create an "
                                        "connector for <%s>\n",
                                        entry->flowname ()),
@@ -218,7 +220,7 @@ TAO_AV_Acceptor_Registry::open (TAO_Base_StreamEndPoint *endpoint,
   int retv = 0;
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
                 "TAO_AV_Acceptor_Registry::open\n"));
 
   TAO_AV_FlowSpecSetItor last_flowspec
@@ -236,7 +238,7 @@ TAO_AV_Acceptor_Registry::open (TAO_Base_StreamEndPoint *endpoint,
       if (ACE_OS::strcmp (flow_protocol,"") == 0)
         flow_protocol = transport_protocol;
 
-      if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,
+      if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,
                                            "TAO_AV_Acceptor_Registry::protocol for flow %s is %s\n",
                                            entry->flowname (),
                                            transport_protocol));
@@ -296,7 +298,7 @@ TAO_AV_Acceptor_Registry::open (TAO_Base_StreamEndPoint *endpoint,
 
                              }
                            else
-                             ACE_ERROR_RETURN ((LM_ERROR,
+                             ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                                 "(%P|%t) Unable to create an "
                                                 "acceptor for <%s>\n",
                                                 entry->flowname ()),
@@ -304,7 +306,7 @@ TAO_AV_Acceptor_Registry::open (TAO_Base_StreamEndPoint *endpoint,
                         }
                     }
                   else
-                    ACE_ERROR_RETURN ((LM_ERROR,
+                    ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                        "(%P|%t) Unable to create an "
                                        "acceptor for <%s>\n",
                                        entry->flowname ()),
@@ -322,7 +324,7 @@ TAO_AV_Acceptor_Registry::open_default (TAO_Base_StreamEndPoint *endpoint,
                                         TAO_FlowSpec_Entry *entry)
 {
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
                 "TAO_AV_Acceptor_Registry::open_default "));
 
   // No endpoints were specified, we let each protocol pick its own
@@ -339,20 +341,20 @@ TAO_AV_Acceptor_Registry::open_default (TAO_Base_StreamEndPoint *endpoint,
 
   // No matching flow protocol.
   if (flow_factory == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        "TAO (%P|%t) (%N,%l) Unable to match protocol prefix "
                        "for <%s>\n",
                        flow_protocol),
                       -1);
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG((LM_DEBUG, "(%N,%l) Matched flow_protocol: %s, Looking for transport protocol: %s\n", flow_protocol, transport_protocol));
+    ORBSVCS_DEBUG((LM_DEBUG, "(%N,%l) Matched flow_protocol: %s, Looking for transport protocol: %s\n", flow_protocol, transport_protocol));
 
   TAO_AV_Transport_Factory *transport_factory =
     av_core->get_transport_factory (transport_protocol);
 
   if (transport_factory == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
                         "TAO (%P|%t) (%N,%l) Unable to match protocol prefix "
                         "for <%s>\n",
                         transport_protocol),
@@ -363,7 +365,7 @@ TAO_AV_Acceptor_Registry::open_default (TAO_Base_StreamEndPoint *endpoint,
     transport_factory->make_acceptor();
 
   if (acceptor == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
                         "TAO (%P|%t) unable to create "
                         "an acceptor for <%d>\n",
                         transport_protocol),
@@ -374,7 +376,7 @@ TAO_AV_Acceptor_Registry::open_default (TAO_Base_StreamEndPoint *endpoint,
                               entry,
                               flow_factory,
                               TAO_AV_Core::TAO_AV_DATA) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        "TAO (%P|%t) unable to open "
                        "default acceptor for <%s>%p\n",
                        flow_protocol),
@@ -391,7 +393,7 @@ TAO_AV_Acceptor_Registry::open_default (TAO_Base_StreamEndPoint *endpoint,
         av_core->get_flow_protocol_factory (control_flow_factory_name);
 
       if (control_flow_factory == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            "TAO (%P|%t) Unable to match control flow "
                            "for <%s>\n",
                            control_flow_factory_name),
@@ -400,7 +402,7 @@ TAO_AV_Acceptor_Registry::open_default (TAO_Base_StreamEndPoint *endpoint,
       TAO_AV_Acceptor *control_acceptor = transport_factory->make_acceptor ();
 
       if (control_acceptor == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            "TAO (%P|%t) unable to create "
                            "an acceptor for <%d>\n",
                            transport_protocol),
@@ -411,7 +413,7 @@ TAO_AV_Acceptor_Registry::open_default (TAO_Base_StreamEndPoint *endpoint,
                                           entry,
                                           control_flow_factory,
                                           TAO_AV_Core::TAO_AV_CONTROL) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            "TAO (%P|%t) unable to open "
                            "default acceptor for <%s>%p\n",
                            transport_protocol),
@@ -425,7 +427,7 @@ TAO_AV_Acceptor_Registry::open_default (TAO_Base_StreamEndPoint *endpoint,
   if (this->acceptors_.size () == 0)
     {
       if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_ERROR,
+        ORBSVCS_ERROR ((LM_ERROR,
                     "TAO (%P%t) cannot create any default acceptor\n"));
       return -1;
     }
@@ -565,7 +567,7 @@ TAO_AV_Flow_Handler::stop (TAO_FlowSpec_Entry::Role role)
       {
         int result =  this->event_handler ()->reactor ()->cancel_timer (this->timer_id_);
         if (result <  0)
-          if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_Flow_Handler::stop:cancel_timer failed\n"));
+          if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"TAO_AV_Flow_Handler::stop:cancel_timer failed\n"));
       }
       break;
     default:

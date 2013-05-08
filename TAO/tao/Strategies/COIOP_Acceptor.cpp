@@ -236,7 +236,7 @@ TAO_COIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
   {
     if (TAO_debug_level > 0)
       {
-        ACE_DEBUG ((LM_DEBUG,
+        TAOLIB_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) COIOP_Profile::decode - v%d.%d\n"),
                     major,
                     minor));
@@ -251,7 +251,7 @@ TAO_COIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
     {
       if (TAO_debug_level > 0)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) TAO_COIOP_Acceptor::object_key - ")
                       ACE_TEXT ("error while decoding host/port")));
         }
@@ -314,7 +314,7 @@ TAO_COIOP_Acceptor::parse_options (const char *str)
 
       if (end == begin)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
+          TAOLIB_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("TAO (%P|%t) Zero length COIOP option.\n")),
                             -1);
         }
@@ -326,7 +326,7 @@ TAO_COIOP_Acceptor::parse_options (const char *str)
 
           if (slot == len - 1
               || slot == ACE_CString::npos)
-            ACE_ERROR_RETURN ((LM_ERROR,
+            TAOLIB_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("TAO (%P|%t) COIOP option <%C> is ")
                                ACE_TEXT ("missing a value.\n"),
                                opt.c_str ()),
@@ -338,21 +338,21 @@ TAO_COIOP_Acceptor::parse_options (const char *str)
           begin = end + 1;
 
           if (name.length () == 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
+            TAOLIB_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("TAO (%P|%t) Zero length COIOP ")
                                ACE_TEXT ("option name.\n")),
                               -1);
 
           if (name == "priority")
             {
-              ACE_ERROR_RETURN ((LM_ERROR,
+              TAOLIB_ERROR_RETURN ((LM_ERROR,
                                  ACE_TEXT ("TAO (%P|%t) Invalid COIOP endpoint format: ")
                                  ACE_TEXT ("endpoint priorities no longer supported.\n")),
                                 -1);
             }
           else
             {
-              ACE_ERROR_RETURN ((LM_ERROR,
+              TAOLIB_ERROR_RETURN ((LM_ERROR,
                                  ACE_TEXT ("TAO (%P|%t) Invalid COIOP option: <%C>\n"),
                                  name.c_str ()),
                                 -1);

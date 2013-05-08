@@ -31,7 +31,7 @@ namespace TAO
         }
         case ::PortableServer::ORB_CTRL_MODEL :
         {
-          ACE_ERROR ((LM_ERROR, "Incorrect type in ThreadStrategySingleFactoryImpl"));
+          TAOLIB_ERROR ((LM_ERROR, "Incorrect type in ThreadStrategySingleFactoryImpl"));
           break;
         }
       }

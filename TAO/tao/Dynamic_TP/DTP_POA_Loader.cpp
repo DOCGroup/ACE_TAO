@@ -59,7 +59,7 @@ TAO_DTP_POA_Loader::init (int argc, ACE_TCHAR* argv[])
     {
       if (TAO_debug_level > 0)
         {
-          ACE_DEBUG((LM_DEBUG,
+          TAOLIB_DEBUG((LM_DEBUG,
                      ACE_TEXT ("TAO (%P|%t) - DTP_POA_Loader - ")
                      ACE_TEXT ("cannot initialize strategy repo\n")));
         }
@@ -73,7 +73,7 @@ TAO_DTP_POA_Loader::init (int argc, ACE_TCHAR* argv[])
 
       if (TAO_debug_level > 0)
         {
-          ACE_DEBUG((LM_DEBUG,
+          TAOLIB_DEBUG((LM_DEBUG,
                      ACE_TEXT ("TAO (%P|%t) - DTP_POA_Loader - ")
                      ACE_TEXT ("parsing args\n")));
         }
@@ -102,7 +102,7 @@ TAO_DTP_POA_Loader::init (int argc, ACE_TCHAR* argv[])
           */
           if (TAO_debug_level > 0)
             {
-              ACE_ERROR ((LM_ERROR,
+              TAOLIB_ERROR ((LM_ERROR,
                           ACE_TEXT ("DTP_POA_Loader: Missing option\n")
                           ACE_TEXT ("Usage: -DTPPOAConfigMap <comma-separated ")
                           ACE_TEXT ("list of POAs>:<POA Config Name>\n")
@@ -132,7 +132,7 @@ TAO_DTP_POA_Loader::load_poa_map (ACE_TCHAR *map,
     {
       if (TAO_debug_level > 0)
         {
-          ACE_ERROR ((LM_ERROR,
+          TAOLIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("DTP_POA_Loader: Missing option\n")
                       ACE_TEXT ("Usage: -DTPPOAConfigMap <comma-separated ")
                       ACE_TEXT ("list of POAs>:<POA Config Name>\n<%s>.\n"),
@@ -175,7 +175,7 @@ TAO_DTP_POA_Loader::report_option_value_error (const ACE_TCHAR* name,
 {
   if (TAO_debug_level > 0)
     {
-      ACE_DEBUG((LM_DEBUG,
+      TAOLIB_DEBUG((LM_DEBUG,
                  ACE_TEXT ("TAO (%P|%t) - DTP_POA_Loader - unknown ")
                  ACE_TEXT ("argument <%s> for <%s>\n"),
                  value, name));

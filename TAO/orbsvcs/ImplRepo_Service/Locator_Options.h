@@ -90,6 +90,17 @@ public:
   /// Returns the timeout value for program starting.
   ACE_Time_Value startup_timeout (void) const;
 
+  /// Servers may be started externally to the ImR but register with it
+  /// so that clients may still be forwarded to it. Traditionally, such
+  /// servers are not pinged by the ImR in the spirit that since its own
+  /// means were used to activate the service, the ImR should let the client
+  /// deal with the server no matter the consequences. However, the ImR is
+  /// in a position to give more information to the client or lists of
+  /// active servers, so enabling the ping_external_ option will override
+  /// the assumption of liveness and actively ping, based on the existing
+  /// rules, all registered servers.
+  bool ping_external (void) const;
+
   /// If the server hasn't been verified for a while, then we'll
   /// ping it. Note : No timers are currently used. We simply ping()
   /// during indirect invocations, if this interval has elapsed.
@@ -131,6 +142,9 @@ private:
 
   /// Are we running as a service?
   bool service_;
+
+  /// Should the ImR ping servers not started using the ImR?
+  bool ping_external_;
 
   /// The amount of time between successive "are you started yet?" pings.
   ACE_Time_Value ping_interval_;

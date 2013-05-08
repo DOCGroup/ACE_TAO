@@ -1,5 +1,7 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Notify/MonitorControlExt/MonitorConsumerAdmin.h"
 
 #include "ace/Monitor_Size.h"
@@ -116,7 +118,7 @@ TAO_MonitorConsumerAdmin::register_stats_controls (
   if (!cinstance->add (control))
     {
       delete control;
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
                   "Unable to add control: %s\n",
                   this->control_name_.c_str ()));
     }

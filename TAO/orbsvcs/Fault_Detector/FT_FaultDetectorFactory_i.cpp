@@ -10,6 +10,7 @@
  *  @author Dale Wilson <wilson_d@ociweb.com>
  */
 //=============================================================================
+#include "orbsvcs/Log_Macros.h"
 #include "FT_FaultDetectorFactory_i.h"
 #include "Fault_Detector_i.h"
 #include "ace/Get_Opt.h"
@@ -21,7 +22,7 @@
 // Use this macro at the beginning of CORBA methods
 // to aid in debugging.
 #define METHOD_ENTRY(name)    \
-    ACE_DEBUG (( LM_DEBUG,    \
+    ORBSVCS_DEBUG (( LM_DEBUG,    \
     "Enter %s\n", #name       \
       ))
 
@@ -37,7 +38,7 @@
 //  if (cave_is_closing) METHOD_RETURN(Plugh::pirate) aarrggh;
 // Moral:  Always use braces.
 #define METHOD_RETURN(name)   \
-    ACE_DEBUG (( LM_DEBUG,    \
+    ORBSVCS_DEBUG (( LM_DEBUG,    \
       "Leave %s\n", #name     \
       ));                     \
     return /* value goes here */
@@ -115,7 +116,7 @@ int TAO::FT_FaultDetectorFactory_i::write_ior(void)
   }
   else
   {
-    ACE_ERROR ((LM_ERROR,
+    ORBSVCS_ERROR ((LM_ERROR,
       "Open failed for %s\n", ior_output_file_
     ));
   }
@@ -164,7 +165,7 @@ int TAO::FT_FaultDetectorFactory_i::parse_args (int argc, ACE_TCHAR * argv[])
       case '?':
         // fall thru
       default:
-        ACE_ERROR_RETURN ((LM_ERROR,
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s"
                            " -d <FT Domain>"
                            " -l <FT Location>"
@@ -195,7 +196,7 @@ int TAO::FT_FaultDetectorFactory_i::idle (int & result)
     // don't quitOnIdle until something has happened
     if (this->quit_on_idle_ && this->empty_slots_ != 0)
     {
-      ACE_ERROR (( LM_INFO,
+      ORBSVCS_ERROR (( LM_INFO,
         "FaultDetectorFactory exits due to quit on idle option.\n"
         ));
       quit = 1;
@@ -216,7 +217,7 @@ int TAO::FT_FaultDetectorFactory_i::init (CORBA::ORB_ptr orb)
     this->orb_->resolve_initial_references (TAO_OBJID_ROOTPOA);
 
   if (CORBA::is_nil (poa_object.in ()))
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT (" (%P|%t) Unable to initialize the POA.\n")),
                       -1);
 
@@ -227,7 +228,7 @@ int TAO::FT_FaultDetectorFactory_i::init (CORBA::ORB_ptr orb)
 
   if (CORBA::is_nil(this->poa_.in ()))
   {
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT (" (%P|%t) Unable to narrow the POA.\n")),
                       -1);
   }
@@ -277,7 +278,7 @@ int TAO::FT_FaultDetectorFactory_i::init (CORBA::ORB_ptr orb)
           info.the_criteria[0].nam[0].id = CORBA::string_dup(PortableGroup::role_criterion);
           info.the_criteria[0].val <<= CORBA::string_dup(FT::FAULT_DETECTOR_ROLE_NAME);
 
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
             "FaultDetector registering with ReplicationManager.\n"
             ));
           this->factory_registry_->register_factory(
@@ -285,19 +286,19 @@ int TAO::FT_FaultDetectorFactory_i::init (CORBA::ORB_ptr orb)
             FT::FAULT_DETECTOR_ROLE_NAME,
             info);
 
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
             "FaultDetector Registration complete.\n"
             ));
           this->registered_ = 1;
         }
         else
         {
-          ACE_ERROR ((LM_ERROR,"FaultNotifier: ReplicationManager doesn't have RegistrationFactory.\n" ));
+          ORBSVCS_ERROR ((LM_ERROR,"FaultNotifier: ReplicationManager doesn't have RegistrationFactory.\n" ));
         }
       }
       else
       {
-        ACE_ERROR ((LM_ERROR,"FaultNotifier: Can't resolve ReplicationManager, It will not be registered.\n" ));
+        ORBSVCS_ERROR ((LM_ERROR,"FaultNotifier: Can't resolve ReplicationManager, It will not be registered.\n" ));
       }
     }
     catch (const CORBA::Exception& ex)
@@ -308,7 +309,7 @@ int TAO::FT_FaultDetectorFactory_i::init (CORBA::ORB_ptr orb)
   }
   else
   {
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
       "FaultNotifier: ReplicationManager registration disabled.\n"
       ));
   }
@@ -329,7 +330,7 @@ int TAO::FT_FaultDetectorFactory_i::init (CORBA::ORB_ptr orb)
       this->orb_->resolve_initial_references ("NameService");
 
     if (CORBA::is_nil(naming_obj.in ())){
-      ACE_ERROR_RETURN ((LM_ERROR,
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
                          "%T %n (%P|%t) Unable to find the Naming Service\n"),
                         1);
     }
@@ -404,14 +405,14 @@ void TAO::FT_FaultDetectorFactory_i::remove_detector(CORBA::ULong id, TAO::Fault
       this->empty_slots_ += 1;
       if (this->empty_slots_ == this->detectors_.size())
       {
-        ACE_ERROR (( LM_INFO,
+        ORBSVCS_ERROR (( LM_INFO,
           "FaultDetectorFactory is idle.\n"
           ));
       }
     }
     else
     {
-      ACE_ERROR (( LM_ERROR,
+      ORBSVCS_ERROR (( LM_ERROR,
         "Remove detector %d mismatch.\n",
         static_cast<int> (id)
         ));
@@ -419,7 +420,7 @@ void TAO::FT_FaultDetectorFactory_i::remove_detector(CORBA::ULong id, TAO::Fault
   }
   else
   {
-    ACE_ERROR (( LM_ERROR,
+    ORBSVCS_ERROR (( LM_ERROR,
       "Attempt to remove invalid detector %d. Limit %d.\n",
       static_cast<int> (id),
       static_cast<int> (this->detectors_.size())
@@ -453,7 +454,7 @@ void TAO::FT_FaultDetectorFactory_i::change_properties (
   }
   else
   {
-    ACE_ERROR ((LM_ERROR,
+    ORBSVCS_ERROR ((LM_ERROR,
       "Throwing Invalid Property: %s\n",
       FT::FT_FAULT_MONITORING_INTERVAL
       ));
@@ -499,7 +500,7 @@ CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
     }
     else
     {
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
         "FaultDetectorFactory::create_object: Missing parameter %s\n",
         ::FT::FT_NOTIFIER
         ));
@@ -511,7 +512,7 @@ CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
   FT::PullMonitorable_ptr monitorable;
   if (! ::TAO::find (decoder, ::FT::FT_MONITORABLE, monitorable) )
   {
-    ACE_ERROR ((LM_ERROR,
+    ORBSVCS_ERROR ((LM_ERROR,
       "FaultDetectorFactory::create_object: Missing parameter %s\n",
       ::FT::FT_MONITORABLE
       ));
@@ -531,7 +532,7 @@ CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
   {
     domain_id = this->domain_;
 
-//    ACE_ERROR ((LM_ERROR,
+//    ORBSVCS_ERROR ((LM_ERROR,
 //      "FaultDetectorFactory::create_object: Missing parameter %s\n",
 //      ::FT::FT_DOMAIN_ID
 //      ));
@@ -544,7 +545,7 @@ CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
   {
       object_location = & this->location_;
 
-//    ACE_ERROR ((LM_ERROR,
+//    ORBSVCS_ERROR ((LM_ERROR,
 //      "FaultDetectorFactory::create_object: Missing parameter %s\n",
 //      ::FT::FT_LOCATION
 //      ));
@@ -562,7 +563,7 @@ CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
   {
     object_type = const_cast<char *> ("unknown");
     // Not required: missingParameter = 1;
-    ACE_DEBUG ((LM_DEBUG, "Object type not given.\n"));
+    ORBSVCS_DEBUG ((LM_DEBUG, "Object type not given.\n"));
   }
 
   FT::ObjectGroupId group_id = 0;
@@ -573,7 +574,7 @@ CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
 
   if (missingParameter)
   {
-    ACE_ERROR ((LM_ERROR,
+    ORBSVCS_ERROR ((LM_ERROR,
       "Throwing 'InvalidCriteria' due to missing %s\n",
       missingParameterName
       ));
@@ -597,7 +598,7 @@ CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
     group_id));
   if (pFD == 0)
   {
-    ACE_ERROR ((LM_ERROR,
+    ORBSVCS_ERROR ((LM_ERROR,
       "New FaultDetector_i returned NULL.  Throwing ObjectNotCreated.\n"
       ));
     throw PortableGroup::ObjectNotCreated();
@@ -608,7 +609,7 @@ CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
     PortableGroup::GenericFactory::FactoryCreationId);
   if (factory_creation_id.ptr() == 0)
   {
-    ACE_ERROR ((LM_ERROR,
+    ORBSVCS_ERROR ((LM_ERROR,
       "New factory_creation_id returned NULL.  Throwing ObjectNotCreated.\n"
       ));
 

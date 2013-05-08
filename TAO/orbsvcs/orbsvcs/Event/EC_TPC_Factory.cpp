@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Event/EC_TPC_Factory.h"
 
 #include "orbsvcs/Event/EC_TPC_Dispatching.h"
@@ -54,7 +55,7 @@ TAO_EC_TPC_Factory::init (int argc, ACE_TCHAR* argv[])
               // option isn't valid with this factory and that it's
               // being ignored.
 
-              ACE_DEBUG ((LM_ERROR,
+              ORBSVCS_DEBUG ((LM_ERROR,
                             "EC_TPC_Factory - "
                           "-ECDispatching not supported with TPC_Factory; ignoring the option and using thread-per-consumer dispatch strategy\n"));
               arg_shifter.consume_arg ();
@@ -81,7 +82,7 @@ TAO_EC_Dispatching*
 TAO_EC_TPC_Factory::create_dispatching (TAO_EC_Event_Channel_Base *)
 {
   if (TAO_EC_TPC_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG, "EC (%P|%t) EC_TPC_Factory::create_dispatching\n"));
+    ORBSVCS_DEBUG ((LM_DEBUG, "EC (%P|%t) EC_TPC_Factory::create_dispatching\n"));
 
   TAO_EC_Queue_Full_Service_Object* so =
     this->find_service_object (this->queue_full_service_object_name_.fast_rep(),
@@ -99,7 +100,7 @@ TAO_EC_ProxyPushSupplier*
 TAO_EC_TPC_Factory::create_proxy_push_supplier (TAO_EC_Event_Channel_Base *ec)
 {
   if (TAO_EC_TPC_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG, "EC (%P|%t) EC_TPC_Factory::create_proxy_push_supplier\n"));
+    ORBSVCS_DEBUG ((LM_DEBUG, "EC (%P|%t) EC_TPC_Factory::create_proxy_push_supplier\n"));
   return new TAO_EC_TPC_ProxyPushSupplier (ec, this->consumer_validate_connection_);
 }
 
@@ -108,7 +109,7 @@ TAO_EC_ProxyPushConsumer*
 TAO_EC_TPC_Factory::create_proxy_push_consumer (TAO_EC_Event_Channel_Base *ec)
 {
   if (TAO_EC_TPC_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG, "EC (%P|%t) EC_TPC_Factory::create_proxy_push_consumer\n"));
+    ORBSVCS_DEBUG ((LM_DEBUG, "EC (%P|%t) EC_TPC_Factory::create_proxy_push_consumer\n"));
   return new TAO_EC_TPC_ProxyPushConsumer (ec);
 }
 

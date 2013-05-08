@@ -103,7 +103,7 @@ TAO_Advanced_Resource_Factory::init (int argc, ACE_TCHAR** argv)
   // are useless
   if (this->factory_disabled_)
   {
-    ACE_DEBUG ((LM_WARNING,
+    TAOLIB_DEBUG ((LM_WARNING,
                 ACE_TEXT ("TAO (%P|%t) Warning: Resource_Factory options ignored\n")
                 ACE_TEXT ("Advanced Resource Factory is disabled\n")));
     return 0;
@@ -131,7 +131,7 @@ TAO_Advanced_Resource_Factory::init (int argc, ACE_TCHAR** argv)
     {
       if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-ORBReactorRegistry")) == 0)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
+          TAOLIB_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT("TAO_Advanced_Resource_Factory::init - ")
                              ACE_TEXT("-ORBReactorRegistry no longer supported\n")),
                             -1);
@@ -140,7 +140,7 @@ TAO_Advanced_Resource_Factory::init (int argc, ACE_TCHAR** argv)
       else if (0 != (current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBReactorLock"))))
         {
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT("TAO_Advanced_Resource_Factory - obsolete -ORBReactorLock ")
                       ACE_TEXT("option, please use -ORBReactorType\n")));
 
@@ -292,7 +292,7 @@ TAO_Advanced_Resource_Factory::init (int argc, ACE_TCHAR** argv)
   // advantage of the LIFO strategy, select_mt hangs.
   if (this->threadqueue_type_ != TAO_THREAD_QUEUE_NOT_SET &&
       this->reactor_type_ != TAO_REACTOR_TP)
-    ACE_DEBUG ((LM_DEBUG,
+    TAOLIB_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO_Advanced_Resource_Factory: -ORBReactorThreadQueue ")
                 ACE_TEXT ("option can only be used with -ORBReactorType ")
                 ACE_TEXT ("tp.\n")));
@@ -389,7 +389,7 @@ TAO_Advanced_Resource_Factory::init_protocol_factories (void)
         ACE_Dynamic_Service<TAO_Protocol_Factory>::instance (name.c_str ()));
       if ((*factory)->factory () == 0)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
+          TAOLIB_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT("TAO (%P|%t) Unable to load ")
                              ACE_TEXT("protocol <%C>, %m\n"),
                              name.c_str ()),
@@ -398,7 +398,7 @@ TAO_Advanced_Resource_Factory::init_protocol_factories (void)
 
       if (TAO_debug_level > 0)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT("TAO (%P|%t) Loaded protocol <%C>\n"),
                       name.c_str ()));
         }
@@ -635,7 +635,7 @@ TAO_Advanced_Resource_Factory::create_purging_strategy (void)
                       0);
       break;
     default:
-      ACE_ERROR ((LM_ERROR,
+      TAOLIB_ERROR ((LM_ERROR,
                   ACE_TEXT("TAO (%P|%t) - ")
                   ACE_TEXT("Unknown connection purging strategy ")
                   ACE_TEXT("type was found.\n")));
@@ -669,7 +669,7 @@ TAO_Advanced_Resource_Factory::report_option_value_error (
                                  const ACE_TCHAR* option_name,
                                  const ACE_TCHAR* option_value)
 {
-  ACE_DEBUG((LM_DEBUG,
+  TAOLIB_DEBUG((LM_DEBUG,
              ACE_TEXT("Advanced_Resource_Factory - unknown argument")
              ACE_TEXT(" <%s> for <%s>\n"),
              option_value,
@@ -680,7 +680,7 @@ void
 TAO_Advanced_Resource_Factory::report_unsupported_error (
                                  const ACE_TCHAR* option_name)
 {
-  ACE_DEBUG((LM_DEBUG,
+  TAOLIB_DEBUG((LM_DEBUG,
              ACE_TEXT("Advanced_Resource_Factory - <%s>")
              ACE_TEXT(" not supported on this platform\n"),
              option_name));

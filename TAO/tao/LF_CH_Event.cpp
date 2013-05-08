@@ -48,7 +48,7 @@ TAO_LF_CH_Event::state_changed_i (int new_state)
               id = ch->transport ()->id ();
             }
 
-          ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - TAO_LF_CH_Event[%d]::"
+          TAOLIB_DEBUG ((LM_DEBUG, "TAO (%P|%t) - TAO_LF_CH_Event[%d]::"
                       "state_changed_i, state %C->%C\n",
                       id,
                       TAO_LF_Event::state_name(prev_state_),
@@ -146,7 +146,7 @@ TAO_LF_CH_Event::set_state (int new_state)
             {
               id = ch->transport ()->id ();
             }
-          ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - TAO_LF_CH_Event[%d]::set_state, "
+          TAOLIB_DEBUG ((LM_DEBUG, "TAO (%P|%t) - TAO_LF_CH_Event[%d]::set_state, "
                       "state_ is LFS_TIMEOUT\n", id));
         }
     }

@@ -157,7 +157,7 @@ TAO_AMH_Response_Handler::_tao_rh_send_reply (void)
         {
           // No exception but some kind of error, yet a response
           // is required.
-          ACE_ERROR ((
+          TAOLIB_ERROR ((
                       LM_ERROR,
                       ACE_TEXT ("TAO: (%P|%t) %p: cannot send NO_EXCEPTION reply\n"),
                       ACE_TEXT ("TAO_AMH_Response_Handler::_tao_rh_send_reply")
@@ -196,6 +196,7 @@ TAO_AMH_Response_Handler::_tao_rh_send_exception (const CORBA::Exception &ex)
   //    this: the caller already knows this because it is part of the
   //    ExceptionHolder information.
 
+#if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO) && (TAO_HAS_MINIMUM_POA == 0)
   const PortableServer::ForwardRequest *fr =
     PortableServer::ForwardRequest::_downcast (&ex);
   if (fr != 0)
@@ -209,6 +210,7 @@ TAO_AMH_Response_Handler::_tao_rh_send_exception (const CORBA::Exception &ex)
       this->_tao_out << fr->forward_reference;
     }
   else
+#endif
     {
       if (CORBA::SystemException::_downcast (&ex))
         {
@@ -232,7 +234,7 @@ TAO_AMH_Response_Handler::_tao_rh_send_exception (const CORBA::Exception &ex)
                                       TAO_Message_Semantics (TAO_Message_Semantics::TAO_REPLY)) == -1)
     {
       if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_ERROR,
+        TAOLIB_ERROR ((LM_ERROR,
                     ACE_TEXT ("TAO: (%P|%t|%N|%l):  ")
                     ACE_TEXT ("TAO_AMH_Response_Handler:")
                     ACE_TEXT (" could not send exception reply\n")));
@@ -286,7 +288,7 @@ TAO_AMH_Response_Handler::_tao_rh_send_location_forward (CORBA::Object_ptr fwd,
   if (!(this->_tao_out << fwd))
     {
       if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_ERROR,
+        TAOLIB_ERROR ((LM_ERROR,
                     ACE_TEXT ("TAO (%P|%t) ERROR: Unable to marshal ")
                     ACE_TEXT ("forward reference.\n")));
       return;
@@ -299,7 +301,7 @@ TAO_AMH_Response_Handler::_tao_rh_send_location_forward (CORBA::Object_ptr fwd,
                                       TAO_Message_Semantics (TAO_Message_Semantics::TAO_REPLY)) == -1)
     {
       if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_ERROR,
+        TAOLIB_ERROR ((LM_ERROR,
                     ACE_TEXT ("TAO: (%P|%t|%N|%l):  ")
                     ACE_TEXT ("TAO_AMH_Response_Handler: could not send ")
                     ACE_TEXT ("location forward reply\n")));

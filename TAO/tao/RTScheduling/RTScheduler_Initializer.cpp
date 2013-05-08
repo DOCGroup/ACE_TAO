@@ -34,7 +34,7 @@ TAO_RTScheduler_ORB_Initializer::pre_init (
   // orb_core() TAO extension.
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
+    TAOLIB_DEBUG ((LM_DEBUG,
                 "In pre_init\n"));
 
   TAO_ORBInitInfo_var tao_info = TAO_ORBInitInfo::_narrow (info);
@@ -42,7 +42,7 @@ TAO_RTScheduler_ORB_Initializer::pre_init (
   if (CORBA::is_nil (tao_info.in ()))
     {
       if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_ERROR,
+        TAOLIB_ERROR ((LM_ERROR,
                     "(%P|%t) Security_ORBInitializer::pre_init:\n"
                     "(%P|%t)    Unable to narrow "
                     "\"PortableInterceptor::ORBInitInfo_ptr\" to\n"
@@ -125,7 +125,7 @@ TAO_RTScheduler_ORB_Initializer::post_init (PortableInterceptor::ORBInitInfo_ptr
   //                                                          );
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
+    TAOLIB_DEBUG ((LM_DEBUG,
                 "In post_init\n"));
 
   CORBA::Object_var rt_current_obj =
@@ -136,7 +136,7 @@ TAO_RTScheduler_ORB_Initializer::post_init (PortableInterceptor::ORBInitInfo_ptr
 
   if (CORBA::is_nil (rt_current.in ()))
     {
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   "(%P|%t) ::post_init\n"
                   "(%P|%t) Unable to narrow to RTCORBA::Current\n"));
       throw ::CORBA::INTERNAL ();

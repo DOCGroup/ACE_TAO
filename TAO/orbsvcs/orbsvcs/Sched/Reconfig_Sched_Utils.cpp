@@ -12,6 +12,7 @@
 #ifndef TAO_RECONFIG_SCHED_UTILS_C
 #define TAO_RECONFIG_SCHED_UTILS_C
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Sched/Reconfig_Sched_Utils_T.h"
 #include "orbsvcs/Sched/Reconfig_Sched_Utils.h"
 
@@ -134,14 +135,14 @@ TAO_RT_Info_Ex::reset (u_long reset_flags)
       ACE_LONGLONG_TO_PTR (TAO_Reconfig_Scheduler_Entry *,
                            volatile_token);
 
-  //ACE_DEBUG((LM_DEBUG, "Removing Entries for RT_Info: %d, entry_ptr: %x\n", handle, entry_ptr));
+  //ORBSVCS_DEBUG((LM_DEBUG, "Removing Entries for RT_Info: %d, entry_ptr: %x\n", handle, entry_ptr));
   if (entry_ptr)
     {
       entry_ptr->remove_tuples (reset_flags);
     }
   else
     {
-      ACE_ERROR ((LM_ERROR, "Pointer to associated entry is zero."));
+      ORBSVCS_ERROR ((LM_ERROR, "Pointer to associated entry is zero."));
     }
 }
 
@@ -158,7 +159,7 @@ TAO_RT_Info_Ex::enabled_state (RtecScheduler::RT_Info_Enabled_Type_t enabled_in)
     }
   else
     {
-      ACE_ERROR ((LM_ERROR, "Pointer to associated entry is zero."));
+      ORBSVCS_ERROR ((LM_ERROR, "Pointer to associated entry is zero."));
     }
 }
 
@@ -273,7 +274,7 @@ remove_tuples (u_long tuple_flags)
           if (orig_tuple_iter.next (tuple_ptr_ptr) == 0
               || tuple_ptr_ptr == 0 || *tuple_ptr_ptr == 0)
             {
-              ACE_ERROR ((LM_ERROR,
+              ORBSVCS_ERROR ((LM_ERROR,
                           "Failed to access tuple under iterator"));
               return;
             }
@@ -323,7 +324,7 @@ insert_tuple (TAO_RT_Info_Tuple &tuple,
       if (tuple_iter.next (tuple_ptr_ptr) == 0
           || tuple_ptr_ptr == 0 || *tuple_ptr_ptr == 0)
         {
-          ACE_ERROR_RETURN ((LM_ERROR, "Failed to access tuple under iterator"), -1);
+          ORBSVCS_ERROR_RETURN ((LM_ERROR, "Failed to access tuple under iterator"), -1);
         }
 
       // Update existing tuples
@@ -388,7 +389,7 @@ update_tuple (TAO_RT_Info_Ex &info,
       if (tuple_iter.next (tuple_ptr_ptr) == 0
           || tuple_ptr_ptr == 0 || *tuple_ptr_ptr == 0)
         {
-          ACE_ERROR_RETURN ((LM_ERROR, "Failed to access tuple under iterator"), -1);
+          ORBSVCS_ERROR_RETURN ((LM_ERROR, "Failed to access tuple under iterator"), -1);
         }
       else if ((*tuple_ptr_ptr)->period < info.period)
         {
@@ -429,7 +430,7 @@ register_tuples (TAO_RT_Info_Tuple ** tuple_ptr_array,
       if (tuple_iter.next (tuple_ptr_ptr) == 0
           || tuple_ptr_ptr == 0 || *tuple_ptr_ptr == 0)
         {
-          ACE_ERROR_RETURN ((LM_ERROR, "Failed to access tuple under iterator"), -1);
+          ORBSVCS_ERROR_RETURN ((LM_ERROR, "Failed to access tuple under iterator"), -1);
         }
       else
         {

@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Event/EC_Gateway_IIOP.h"
 #include "orbsvcs/Event/ECG_Defaults.h"
 #include "orbsvcs/Event_Utilities.h"
@@ -84,7 +85,7 @@ TAO_EC_Gateway_IIOP::init_i (RtecEventChannelAdmin::EventChannel_ptr supplier_ec
       return 0;
     }
   else
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        "TAO_EC_Gateway_IIOP - init_i "
                        "Supplier and consumer event channel reference "
                        "should be nil.\n"), -1);
@@ -116,7 +117,7 @@ TAO_EC_Gateway_IIOP::cleanup_consumer_proxies (void)
 void
 TAO_EC_Gateway_IIOP::close_i (void)
 {
-  // ACE_DEBUG ((LM_DEBUG, "ECG (%t) Closing gateway\n"));
+  // ORBSVCS_DEBUG ((LM_DEBUG, "ECG (%t) Closing gateway\n"));
   this->disconnect_consumer_proxies_i ();
 
   this->disconnect_supplier_proxy_i ();
@@ -240,7 +241,7 @@ TAO_EC_Gateway_IIOP::update_consumer_i (
       || CORBA::is_nil (this->supplier_ec_.in ()))
     return;
 
-  // ACE_DEBUG ((LM_DEBUG, "ECG (%t) update_consumer_i\n"));
+  // ORBSVCS_DEBUG ((LM_DEBUG, "ECG (%t) update_consumer_i\n"));
 
   this->open_i (c_qos);
 }
@@ -269,7 +270,7 @@ TAO_EC_Gateway_IIOP::open_i (
 
       RtecEventComm::EventSourceID sid = h.source;
 
-      //ACE_DEBUG ((LM_DEBUG,
+      //ORBSVCS_DEBUG ((LM_DEBUG,
       //            "ECG (%t)    trying (%d,%d)\n",
       //           sid, h.type));
 
@@ -285,14 +286,14 @@ TAO_EC_Gateway_IIOP::open_i (
 
       if (this->consumer_proxy_map_.find (sid, proxy) == -1)
         {
-          //ACE_DEBUG ((LM_DEBUG,
+          //ORBSVCS_DEBUG ((LM_DEBUG,
           //            "ECG (%t)    binding source %d\n",
           //            sid));
           proxy = supplier_admin->obtain_push_consumer ();
           this->consumer_proxy_map_.bind (sid, proxy);
         }
     }
-  //ACE_DEBUG ((LM_DEBUG,
+  //ORBSVCS_DEBUG ((LM_DEBUG,
   //            "ECG (%t)    consumer map computed (%d entries)\n",
   //            this->consumer_proxy_map_.current_size ()));
 
@@ -332,7 +333,7 @@ TAO_EC_Gateway_IIOP::open_i (
               pub.publications[c].dependency_info.rt_info = this->consumer_info_;
               c++;
             }
-          //ACE_DEBUG ((LM_DEBUG,
+          //ORBSVCS_DEBUG ((LM_DEBUG,
           //            "ECG (%t) supplier id %d has %d elements\n",
           //            sid, c));
           if (c == 0)
@@ -340,7 +341,7 @@ TAO_EC_Gateway_IIOP::open_i (
 
           pub.publications.length (c);
 
-          // ACE_DEBUG ((LM_DEBUG, "ECG (%P|%t) Gateway/Supplier "));
+          // ORBSVCS_DEBUG ((LM_DEBUG, "ECG (%P|%t) Gateway/Supplier "));
           // ACE_SupplierQOS_Factory::debug (pub);
           (*j).int_id_->connect_push_supplier (supplier_ref.in (),
                                                pub);
@@ -390,7 +391,7 @@ TAO_EC_Gateway_IIOP::open_i (
         supplier_admin->obtain_push_consumer ();
 
       pub.publications.length (c);
-      // ACE_DEBUG ((LM_DEBUG, "ECG (%t) Gateway/Supplier "));
+      // ORBSVCS_DEBUG ((LM_DEBUG, "ECG (%t) Gateway/Supplier "));
       // ACE_SupplierQOS_Factory::debug (pub);
       this->default_consumer_proxy_->connect_push_supplier (supplier_ref.in (),
                                                             pub);
@@ -406,7 +407,7 @@ TAO_EC_Gateway_IIOP::open_i (
   RtecEventComm::PushConsumer_var consumer_ref =
     this->consumer_._this ();
 
-  // ACE_DEBUG ((LM_DEBUG, "ECG (%P|%t) Gateway/Consumer "));
+  // ORBSVCS_DEBUG ((LM_DEBUG, "ECG (%P|%t) Gateway/Consumer "));
   // ACE_ConsumerQOS_Factory::debug (sub);
 
   this->supplier_proxy_->connect_push_consumer (consumer_ref.in (),
@@ -423,7 +424,7 @@ TAO_EC_Gateway_IIOP::update_supplier (
 void
 TAO_EC_Gateway_IIOP::disconnect_push_consumer (void)
 {
-  // ACE_DEBUG ((LM_DEBUG,
+  // ORBSVCS_DEBUG ((LM_DEBUG,
   //             "ECG (%t): Supplier-consumer received "
   //            "disconnect from channel.\n"));
 }
@@ -431,7 +432,7 @@ TAO_EC_Gateway_IIOP::disconnect_push_consumer (void)
 void
 TAO_EC_Gateway_IIOP::disconnect_push_supplier (void)
 {
-  // ACE_DEBUG ((LM_DEBUG,
+  // ORBSVCS_DEBUG ((LM_DEBUG,
   //            "ECG (%t): Supplier received "
   //            "disconnect from channel.\n"));
 }
@@ -439,11 +440,11 @@ TAO_EC_Gateway_IIOP::disconnect_push_supplier (void)
 void
 TAO_EC_Gateway_IIOP::push (const RtecEventComm::EventSet &events)
 {
-  // ACE_DEBUG ((LM_DEBUG, "TAO_EC_Gateway_IIOP::push (%P|%t) -\n"));
+  // ORBSVCS_DEBUG ((LM_DEBUG, "TAO_EC_Gateway_IIOP::push (%P|%t) -\n"));
 
   if (events.length () == 0)
     {
-      // ACE_DEBUG ((LM_DEBUG, "no events\n"));
+      // ORBSVCS_DEBUG ((LM_DEBUG, "no events\n"));
       return;
     }
 
@@ -453,7 +454,7 @@ TAO_EC_Gateway_IIOP::push (const RtecEventComm::EventSet &events)
     this->busy_count_++;
   }
 
-  // ACE_DEBUG ((LM_DEBUG, "ECG: %d event(s)\n", events.length ()));
+  // ORBSVCS_DEBUG ((LM_DEBUG, "ECG: %d event(s)\n", events.length ()));
 
   // @@ TODO, there is an extra data copy here, we should do the event
   // modification without it and only compact the necessary events.
@@ -485,7 +486,7 @@ TAO_EC_Gateway_IIOP::push (const RtecEventComm::EventSet &events)
       if (this->use_ttl_ == 1)
         out[0].header.ttl--;
 
-      // ACE_DEBUG ((LM_DEBUG, "ECG: event sent to proxy\n"));
+      // ORBSVCS_DEBUG ((LM_DEBUG, "ECG: event sent to proxy\n"));
       this->push_to_consumer(proxy, out);
     }
 

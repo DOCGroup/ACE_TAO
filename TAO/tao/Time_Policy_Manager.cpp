@@ -96,7 +96,7 @@ ACE_Timer_Queue * TAO_Time_Policy_Manager::create_timer_queue (void)
                 this->time_policy_name_.c_str ());
         if (this->time_policy_strategy_ == 0)
           {
-            ACE_ERROR ((LM_ERROR,
+            TAOLIB_ERROR ((LM_ERROR,
                         ACE_TEXT ("TAO (%P|%t) - TAO_Time_Policy_Manager: ")
                         ACE_TEXT ("FAILED to load time policy strategy '%C'\n"),
                         this->time_policy_name_.c_str ()));
@@ -105,7 +105,7 @@ ACE_Timer_Queue * TAO_Time_Policy_Manager::create_timer_queue (void)
 
         if (TAO_debug_level > 1)
           {
-            ACE_DEBUG ((LM_INFO,
+            TAOLIB_DEBUG ((LM_INFO,
                 ACE_TEXT ("TAO (%P|%t) - TAO_Time_Policy_Manager: ")
                 ACE_TEXT ("loaded time policy strategy '%C'\n"),
                 this->time_policy_name_.c_str ()));

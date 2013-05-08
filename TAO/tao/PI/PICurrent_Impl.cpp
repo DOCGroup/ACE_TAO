@@ -28,7 +28,7 @@ TAO::PICurrent_Impl::get_slot (PortableInterceptor::SlotId identifier)
       && (&this->lazy_copy_->current_slot_table () == &this->slot_table_))
   {
     if (TAO_debug_level > 0)
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) Lazy copy of self detected at %N,%l\n")));
+      TAOLIB_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) Lazy copy of self detected at %N,%l\n")));
     throw ::CORBA::INTERNAL ();
   }
 

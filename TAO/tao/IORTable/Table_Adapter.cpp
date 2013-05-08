@@ -9,7 +9,6 @@
 
 #include "tao/IORTable/Table_Adapter.h"
 #include "tao/IORTable/IOR_Table_Impl.h"
-#include "tao/IORTable/Locate_ResponseHandler.h"
 
 #include "tao/ORB_Core.h"
 #include "tao/Server_Strategy_Factory.h"

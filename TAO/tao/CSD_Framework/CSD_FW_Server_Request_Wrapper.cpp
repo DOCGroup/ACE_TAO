@@ -100,7 +100,7 @@ TAO::CSD::FW_Server_Request_Wrapper::dispatch (
           // However, in this case, we cannot close the connection
           // down, since it really isn't the client's fault.
 
-          ACE_ERROR ((LM_ERROR,
+          TAOLIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("(%P|%t) exception thrown ")
                       ACE_TEXT ("but client is not waiting a response\n")));
 
@@ -140,7 +140,7 @@ TAO::CSD::FW_Server_Request_Wrapper::dispatch (
           // However, in this case, we cannot close the connection
           // down, since it really isn't the client's fault.
 
-          ACE_ERROR ((LM_ERROR,
+          TAOLIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("(%P|%t) exception thrown ")
                       ACE_TEXT ("but client is not waiting a response\n")));
 
@@ -354,7 +354,7 @@ TAO::CSD::FW_Server_Request_Wrapper::clone (TAO_Operation_Details const *& from,
 
           if (! from_non_const->marshal_args (outcdr))
             {
-              ACE_ERROR ((LM_ERROR,
+              TAOLIB_ERROR ((LM_ERROR,
                           ACE_TEXT("(%P|%T) TAO::CSD::FW_Server_Request_Wrapper::")
                           ACE_TEXT("clone TAO_Operation_Details failed\n")));
               return false;

@@ -4,6 +4,7 @@
 //
 // ============================================================================
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Time_Utilities.h"
 #include "orbsvcs/Scheduler_Factory.h"
 
@@ -70,7 +71,7 @@ ACE_Config_Scheduler::create (const char * entry_point)
     default:
       delete rt_info[0];
       delete[] rt_info;
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
                   "Config_Scheduler::create - register_task failed\n"));
       // @@ TODO: throw something.
       break;
@@ -90,7 +91,7 @@ ACE_Config_Scheduler::lookup (const char * entry_point)
     case BaseSchedImplType::FAILED:
     case BaseSchedImplType::ST_UNKNOWN_TASK:
     default:
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
                   "Config_Scheduler::lookup - get_rt_info failed\n"));
       // @@ TODO: throw something.
       break;
@@ -115,7 +116,7 @@ ACE_Config_Scheduler::get (RtecScheduler::handle_t handle)
     case BaseSchedImplType::FAILED:
     case BaseSchedImplType::ST_UNKNOWN_TASK:
     default:
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
                   "Config_Scheduler::get - lookup_rt_info failed\n"));
       // @@ TODO: throw something.
       break;
@@ -151,7 +152,7 @@ void ACE_Config_Scheduler::set (RtecScheduler::handle_t handle,
     case BaseSchedImplType::FAILED:
     case BaseSchedImplType::ST_UNKNOWN_TASK:
     default:
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
                   "Config_Scheduler::set - lookup_rt_info failed\n"));
       // @@ TODO: throw something.
       break;
@@ -166,7 +167,7 @@ void ACE_Config_Scheduler::priority (RtecScheduler::handle_t handle,
 
   if (impl->priority (handle, priority, p_subpriority, p_priority) == -1)
     {
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
                   "Config_Scheduler::priority - priority failed\n"));
       // TODO: throw something.
     }
@@ -208,7 +209,7 @@ void ACE_Config_Scheduler::add_dependency (RtecScheduler::handle_t handle,
     case BaseSchedImplType::FAILED:
     case BaseSchedImplType::ST_UNKNOWN_TASK:
     default:
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
                   "cannot find %d to add dependency", handle));
       // TODO: throw something.
       break;
@@ -301,7 +302,7 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
         }
 
         // Output the anomaly message
-        ACE_DEBUG ((LM_DEBUG,
+        ORBSVCS_DEBUG ((LM_DEBUG,
                     "%s: %s\n",
                     anomaly_severity_msg,
                     (*anomaly)->description.in ()));
@@ -318,7 +319,7 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
       // On a fatal anomaly abort without generating a schedule.
       case RtecScheduler::ANOMALY_FATAL:
         // TODO: throw something.
-        ACE_ERROR ((LM_ERROR, "Schedule failed due to FATAL anomaly.\n"));
+        ORBSVCS_ERROR ((LM_ERROR, "Schedule failed due to FATAL anomaly.\n"));
         return;
 
       // Otherwise, make sure we didn't get a fatal return type.
@@ -327,25 +328,25 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
         {
           case BaseSchedImplType::ST_BAD_INTERNAL_POINTER :
             // TODO: throw something.
-            ACE_ERROR ((LM_ERROR,
+            ORBSVCS_ERROR ((LM_ERROR,
                         "Schedule failed due to bad internal pointer.\n"));
             return;
 
           case BaseSchedImplType::ST_VIRTUAL_MEMORY_EXHAUSTED :
             // TODO: throw something.
-            ACE_ERROR ((LM_ERROR,
+            ORBSVCS_ERROR ((LM_ERROR,
                         "Schedule failed due to insufficient memory.\n"));
             return;
 
           case BaseSchedImplType::THREAD_COUNT_MISMATCH :
             // TODO: throw something.
-            ACE_ERROR ((LM_ERROR,
+            ORBSVCS_ERROR ((LM_ERROR,
                         "Schedule failed due to thread count mismatch.\n"));
             return;
 
           case BaseSchedImplType::TASK_COUNT_MISMATCH :
             // TODO: throw something.
-            ACE_ERROR ((LM_ERROR,
+            ORBSVCS_ERROR ((LM_ERROR,
                         "Schedule failed due to task count mismatch.\n"));
             return;
 
@@ -376,7 +377,7 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
         case BaseSchedImplType::FAILED:
         case BaseSchedImplType::ST_UNKNOWN_TASK:
         default:
-          ACE_ERROR ((LM_ERROR,
+          ORBSVCS_ERROR ((LM_ERROR,
                       "Config_Scheduler::schedule - lookup_rt_info failed\n"));
           // TODO: throw something.
           break;
@@ -405,7 +406,7 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
         case BaseSchedImplType::FAILED:
         case BaseSchedImplType::ST_UNKNOWN_TASK:
         default:
-          ACE_ERROR ((LM_ERROR,
+          ORBSVCS_ERROR ((LM_ERROR,
                       "Config_Scheduler::schedule - "
                       "lookup_config_info failed\n"));
           // TODO: throw something.
@@ -413,13 +414,13 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
         }
     }
 
-  ACE_DEBUG ((LM_DEBUG, "Schedule prepared.\n"));
-  ACE_DEBUG ((LM_DEBUG, "Dumping to stdout.\n"));
+  ORBSVCS_DEBUG ((LM_DEBUG, "Schedule prepared.\n"));
+  ORBSVCS_DEBUG ((LM_DEBUG, "Dumping to stdout.\n"));
   ACE_Scheduler_Factory::dump_schedule (*(infos.ptr()),
                                         *(dependencies.ptr()),
                                         *(configs.ptr()),
                                         *(anomalies.ptr()), 0);
-  ACE_DEBUG ((LM_DEBUG, "Dump done.\n"));
+  ORBSVCS_DEBUG ((LM_DEBUG, "Dump done.\n"));
 }
 
 
@@ -430,7 +431,7 @@ void ACE_Config_Scheduler::dispatch_configuration (RtecScheduler::Preemption_Pri
 
   if (impl->dispatch_configuration (p_priority, priority, d_type) == -1)
     {
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
                   "Config_Scheduler::dispatch_configuration -"
                   " dispatch_configuration failed\n"));
       // TODO: throw something.
@@ -447,7 +448,7 @@ ACE_Config_Scheduler::last_scheduled_priority (void)
 
   if (priority < 0)
     {
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
                   "Config_Scheduler::last_scheduled_priority - priorities failed\n"));
       // TODO: throw something.
     }

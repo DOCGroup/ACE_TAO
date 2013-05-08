@@ -175,7 +175,7 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
   // are useless
   if (this->factory_disabled_)
     {
-      ACE_DEBUG ((LM_WARNING,
+      TAOLIB_DEBUG ((LM_WARNING,
                   ACE_TEXT ("TAO (%P|%t) - Warning: Resource_Factory options ")
                   ACE_TEXT ("ignored. ")
                   ACE_TEXT ("Default Resource Factory is disabled\n")));
@@ -243,7 +243,7 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
                             TAO_Protocol_Item (ACE_TEXT_ALWAYS_CHAR(argv[curarg])),
                             -1);
             if (pset->insert (item) == -1)
-              ACE_ERROR ((LM_ERROR,
+              TAOLIB_ERROR ((LM_ERROR,
                           ACE_TEXT ("(%P|%t) Unable to add protocol factories ")
                           ACE_TEXT ("for %s: %m\n"),
                           argv[curarg]));
@@ -456,7 +456,7 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
 #if TAO_HAS_SENDFILE == 1
                 this->output_cdr_allocator_type_ = MMAP_ALLOCATOR;
 #else
-                ACE_DEBUG ((LM_WARNING,
+                TAOLIB_DEBUG ((LM_WARNING,
                             ACE_TEXT ("MMAP allocator unsupport on this platform")));
 #endif  /* TAO_HAS_SENDFILE==1 */
               }
@@ -484,7 +484,7 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
 #if TAO_HAS_SENDFILE == 1
         this->output_cdr_allocator_type_ = MMAP_ALLOCATOR;
 #else
-        ACE_DEBUG ((LM_WARNING,
+        TAOLIB_DEBUG ((LM_WARNING,
                     ACE_TEXT ("Zero copy writes unsupported on this platform\n")));
 #endif  /* TAO_HAS_SENDFILE==1 */
       }
@@ -494,14 +494,14 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
       {
         // Can we assume there is an argument after the option?
         // ++curarg;
-        ACE_ERROR ((LM_ERROR,
+        TAOLIB_ERROR ((LM_ERROR,
                     ACE_TEXT ("TAO (%P|%t) - Default_Resource_Factory - ")
                     ACE_TEXT ("unknown option <%s>\n"),
                     argv[curarg]));
       }
     else
       {
-        ACE_DEBUG ((LM_DEBUG,
+        TAOLIB_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) - Default_Resource_Factory - ")
                     ACE_TEXT ("ignoring option <%s>\n"),
                     argv[curarg]));
@@ -655,7 +655,7 @@ TAO_Default_Resource_Factory::init_protocol_factories (void)
         ACE_Dynamic_Service<TAO_Protocol_Factory>::instance (name.c_str ()));
       if ((*factory)->factory () == 0)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
+          TAOLIB_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("TAO (%P|%t) - Unable to load ")
                              ACE_TEXT ("protocol <%C>, %p\n"),
                              name.c_str (),
@@ -665,7 +665,7 @@ TAO_Default_Resource_Factory::init_protocol_factories (void)
 
       if (TAO_debug_level > 0)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - Loaded protocol <%C>\n"),
                       name.c_str ()));
         }
@@ -720,7 +720,7 @@ TAO_Default_Resource_Factory::time_policy_manager (void) const
 
   if (tpm == 0)
     {
-      ACE_ERROR ((LM_ERROR,
+      TAOLIB_ERROR ((LM_ERROR,
                   ACE_TEXT ("TAO (%P|%t) - TAO_Default_Resource_Factory::time_policy_manager: ")
                   ACE_TEXT ("FAILED to retrieve service Time_Policy_Manager\n")));
     }
@@ -1090,7 +1090,7 @@ TAO_Default_Resource_Factory::create_purging_strategy (void)
     }
   else
     {
-      ACE_ERROR ((LM_ERROR,
+      TAOLIB_ERROR ((LM_ERROR,
                   ACE_TEXT ("TAO (%P|%t) - ")
                   ACE_TEXT ("no usable purging strategy ")
                   ACE_TEXT ("was found.\n")));
@@ -1162,7 +1162,7 @@ TAO_Default_Resource_Factory::report_option_value_error (
                                  const ACE_TCHAR* option_name,
                                  const ACE_TCHAR* option_value)
 {
-  ACE_DEBUG((LM_DEBUG,
+  TAOLIB_DEBUG((LM_DEBUG,
              ACE_TEXT ("TAO (%P|%t) - Default_Resource_Factory - unknown ")
              ACE_TEXT ("argument <%s> for <%s>\n"),
              option_value, option_name));
@@ -1174,7 +1174,7 @@ TAO_Default_Resource_Factory::disable_factory (void)
   this->factory_disabled_ = 1;
   if (this->options_processed_)
     {
-      ACE_DEBUG ((LM_WARNING,
+      TAOLIB_DEBUG ((LM_WARNING,
                   ACE_TEXT ("TAO (%P|%t) - Warning: Resource_Factory options ignored\n")
                   ACE_TEXT ("Default Resource Factory is disabled\n")));
     }
@@ -1189,7 +1189,7 @@ TAO_Default_Resource_Factory::codeset_manager(void)
   if (factory == 0)
     {
       if (TAO_debug_level >= 2)
-        ACE_DEBUG ((LM_DEBUG,
+        TAOLIB_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) - Default_Resource_Factory")
                     ACE_TEXT (" - unable to find codeset manager factory.\n")));
       return 0;
@@ -1200,7 +1200,7 @@ TAO_Default_Resource_Factory::codeset_manager(void)
   if (mgr == 0)
     {
       if (TAO_debug_level >= 2)
-        ACE_DEBUG ((LM_INFO,
+        TAOLIB_DEBUG ((LM_INFO,
                     ACE_TEXT ("TAO (%P|%t) - Default_Resource_Factory")
                     ACE_TEXT (" - unable to create codeset manager.\n")));
       return 0;
@@ -1210,7 +1210,7 @@ TAO_Default_Resource_Factory::codeset_manager(void)
   ACE_Auto_Ptr<TAO_Codeset_Manager> safemgr (mgr);
 
   if (TAO_debug_level >= 1)
-    ACE_DEBUG ((LM_DEBUG,
+    TAOLIB_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO (%P|%t) - Default_Resource_Factory - codeset manager=%@\n"),
                 mgr));
 

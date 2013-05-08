@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Notify/Persistent_File_Allocator.h"
 
 #include "tao/debug.h"
@@ -168,7 +169,7 @@ Persistent_File_Allocator::allocate()
     // why not.  What if the disk is full?  Oh, I see we
     // allocate non-existent blocks.  FIX this
   }
-  if (DEBUG_LEVEL > 0) ACE_DEBUG ((LM_DEBUG,
+  if (DEBUG_LEVEL > 0) ORBSVCS_DEBUG ((LM_DEBUG,
     ACE_TEXT ("(%P|%t) Persistent_File_Allocator::allocate: %B\n"),
     block_number
     ));
@@ -181,7 +182,7 @@ Persistent_File_Allocator::allocate_at(size_t block_number)
 {
   Persistent_Storage_Block* result = 0;
   this->used(block_number);
-  if (DEBUG_LEVEL > 0) ACE_DEBUG ((LM_DEBUG,
+  if (DEBUG_LEVEL > 0) ORBSVCS_DEBUG ((LM_DEBUG,
     ACE_TEXT ("(%P|%t) Persistent_File_Allocator::allocate at : %B\n"),
     block_number
     ));
@@ -208,7 +209,7 @@ void
 Persistent_File_Allocator::used(size_t block_number)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->free_blocks_lock_);
-  if (DEBUG_LEVEL > 0) ACE_DEBUG ((LM_DEBUG,
+  if (DEBUG_LEVEL > 0) ORBSVCS_DEBUG ((LM_DEBUG,
     ACE_TEXT ("(%P|%t) Persistent_File_Allocator::used: %B\n"),
     block_number
     ));
@@ -219,7 +220,7 @@ Persistent_File_Allocator::used(size_t block_number)
 void
 Persistent_File_Allocator::free(size_t block_number)
 {
-  if (DEBUG_LEVEL > 0) ACE_DEBUG ((LM_DEBUG,
+  if (DEBUG_LEVEL > 0) ORBSVCS_DEBUG ((LM_DEBUG,
     ACE_TEXT ("(%P|%t) Persistent_File_Allocator::free: %B\n"),
     block_number
     ));
@@ -277,7 +278,7 @@ Persistent_File_Allocator::write(Persistent_Storage_Block* psb)
     Persistent_Storage_Block* ourpsb = psb;
     if (!psb->get_allocator_owns())
     {
-      if (DEBUG_LEVEL) ACE_DEBUG ((LM_DEBUG,
+      if (DEBUG_LEVEL) ORBSVCS_DEBUG ((LM_DEBUG,
         ACE_TEXT ("(%P|%t) Copy PSB %B\n")
         , psb->block_number ()
         ));
@@ -285,7 +286,7 @@ Persistent_File_Allocator::write(Persistent_Storage_Block* psb)
       ourpsb->set_allocator_owns(true);
     }
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->queue_lock_, false);
-    if (DEBUG_LEVEL) ACE_DEBUG ((LM_DEBUG,
+    if (DEBUG_LEVEL) ORBSVCS_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) Queueing PSB to write block %B\n")
       , psb->block_number ()
       ));

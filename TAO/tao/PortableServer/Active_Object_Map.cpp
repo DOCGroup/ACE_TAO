@@ -118,7 +118,7 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (
                         TAO_Multiple_Id_Strategy,
                         CORBA::NO_MEMORY ());
 #else
-      ACE_ERROR ((LM_ERROR,
+      TAOLIB_ERROR ((LM_ERROR,
                   "Multiple Id Strategy not supported with CORBA/e\n"));
 #endif
     }
@@ -137,7 +137,7 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (
                         CORBA::NO_MEMORY ());
 #else
       ACE_UNUSED_ARG (persistent_id_policy);
-      ACE_ERROR ((LM_ERROR,
+      TAOLIB_ERROR ((LM_ERROR,
                   "Persistent Id Strategy not supported with CORBA/e\n"));
 #endif
     }
@@ -160,7 +160,7 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (
                         TAO_User_Id_Strategy,
                         CORBA::NO_MEMORY ());
 #else
-      ACE_ERROR ((LM_ERROR,
+      TAOLIB_ERROR ((LM_ERROR,
                   "User Id Assignment not supported with CORBA/e\n"));
 #endif
     }
@@ -177,7 +177,7 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (
                         TAO_System_Id_With_Multiple_Id_Strategy,
                         CORBA::NO_MEMORY ());
 #else
-      ACE_ERROR ((LM_ERROR,
+      TAOLIB_ERROR ((LM_ERROR,
                   "System Id Assignment with multiple "
                   "not supported with CORBA/e\n"));
 #endif
@@ -222,7 +222,7 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (
                             CORBA::NO_MEMORY ());
           break;
 #else
-          ACE_ERROR ((LM_ERROR,
+          TAOLIB_ERROR ((LM_ERROR,
                       "linear option for "
                       "-ORBUniqueidPolicyReverseDemuxStrategy "
                       "not supported with minimum POA maps. "
@@ -257,7 +257,7 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (
                             CORBA::NO_MEMORY ());
           break;
 #else
-          ACE_ERROR ((LM_ERROR,
+          TAOLIB_ERROR ((LM_ERROR,
                       "linear option for -ORBUseridPolicyDemuxStrategy "
                       "not supported with minimum POA maps. "
                       "Ingoring option to use default...\n"));
@@ -291,7 +291,7 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (
 #else
         case TAO_LINEAR:
         case TAO_DYNAMIC_HASH:
-          ACE_ERROR ((LM_ERROR,
+          TAOLIB_ERROR ((LM_ERROR,
                       "linear and dynamic options for -ORBSystemidPolicyDemuxStrategy "
                       "are not supported with minimum POA maps. "
                       "Ingoring option to use default...\n"));
@@ -514,7 +514,7 @@ TAO_Unique_Id_Strategy::bind_using_user_id (
       ACE_CString hex_idstr;
       hexstring (hex_idstr, idstr.in (), user_id.length ());
 
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   "TAO (%P|%t) - TAO_Unique_Id_Strategy::"
                   "bind_using_user_id: type=%C, id=%C\n",
                   repository_id.in (),
@@ -542,7 +542,7 @@ TAO_Unique_Id_Strategy::unbind_using_user_id (
           ACE_CString hex_idstr;
           hexstring (hex_idstr, idstr.in (), entry->user_id_.length ());
 
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       "TAO (%P|%t) - TAO_Unique_Id_Strategy::unbind_using_user_id: id=%C\n",
                       hex_idstr.c_str()
                       ));
@@ -711,7 +711,7 @@ TAO_Multiple_Id_Strategy::bind_using_user_id (
       ACE_CString hex_idstr;
       hexstring (hex_idstr, idstr.in (), user_id.length ());
 
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   "TAO (%P|%t) - TAO_Multiple_Id_Strategy::"
                   "bind_using_user_id: type=%C, id=%C\n",
                   repository_id.in (),
@@ -739,7 +739,7 @@ TAO_Multiple_Id_Strategy::unbind_using_user_id (
           ACE_CString hex_idstr;
           hexstring (hex_idstr, idstr.in (), entry->user_id_.length ());
 
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       "TAO (%P|%t) - TAO_Multiple_Id_Strategy::unbind_using_user_id: id=%C\n",
                       hex_idstr.c_str()
                       ));
@@ -1011,7 +1011,7 @@ TAO_System_Id_With_Unique_Id_Strategy::bind_using_system_id (
       ACE_CString hex_idstr;
       hexstring (hex_idstr, idstr.in (), entry->user_id_.length ());
 
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   "TAO (%P|%t) - TAO_System_Id_With_Unique_Id_Strategy::"
                   "bind_using_system_id: type=%C, id=%C\n",
                   repository_id.in (),
@@ -1069,7 +1069,7 @@ TAO_System_Id_With_Multiple_Id_Strategy::bind_using_system_id (
       ACE_CString hex_idstr;
       hexstring (hex_idstr, idstr.in (), entry->user_id_.length ());
 
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   "TAO (%P|%t) - TAO_System_Id_With_Multiple_Id_Strategy::"
                   "bind_using_system_id: type=%C, id=%C\n",
                   repository_id.in (),

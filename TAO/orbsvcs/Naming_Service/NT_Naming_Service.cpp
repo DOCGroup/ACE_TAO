@@ -9,6 +9,7 @@
 #include /**/ "Naming_Service.h"
 #include "tao/ORB_Core.h"
 #include "ace/ARGV.h"
+#include "orbsvcs/Log_Macros.h"
 
 #define REGISTRY_KEY_ROOT HKEY_LOCAL_MACHINE
 #define TAO_REGISTRY_SUBKEY ACE_TEXT ("SOFTWARE\\ACE\\TAO")
@@ -23,7 +24,7 @@ AutoFinalizer::AutoFinalizer (TAO_NT_Naming_Service &service)
 AutoFinalizer::~AutoFinalizer ()
 {
   service_.report_status (SERVICE_STOPPED);
-  ACE_DEBUG ((LM_DEBUG, "Reported service stoped\n"));
+  ORBSVCS_DEBUG ((LM_DEBUG, "Reported service stoped\n"));
 }
 
 
@@ -171,19 +172,19 @@ TAO_NT_Naming_Service::svc (void)
       // destructor will inform the OS of our demise.
       AutoFinalizer afinalizer (*this);
 
-      ACE_DEBUG ((LM_INFO, "Notifying Windows of service startup\n"));
+      ORBSVCS_DEBUG ((LM_INFO, "Notifying Windows of service startup\n"));
       report_status (SERVICE_RUNNING);
 
       naming_service.run ();
     }
   catch (const CORBA::Exception& ex)
     {
-      ACE_DEBUG ((LM_INFO, "Exception in service - exitting\n"));
+      ORBSVCS_DEBUG ((LM_INFO, "Exception in service - exitting\n"));
       ex._tao_print_exception ("TAO NT Naming Service");
       return -1;
     }
 
-  ACE_DEBUG ((LM_INFO, "Exiting gracefully\n"));
+  ORBSVCS_DEBUG ((LM_INFO, "Exiting gracefully\n"));
   return 0;
 }
 

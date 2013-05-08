@@ -31,7 +31,7 @@ TAO_GIOP_Message_State::parse_message_header_i (ACE_Message_Block &incoming)
 {
   if (TAO_debug_level > 8)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - GIOP_Message_State::parse_message_header_i\n")
                   ));
     }
@@ -63,13 +63,13 @@ TAO_GIOP_Message_State::parse_message_header_i (ACE_Message_Block &incoming)
               char const * const which =
                 (this->message_type_ == GIOP::CloseConnection) ? "CloseConnection" :
                 (this->message_type_ == GIOP::MessageError) ? "MessageError" : "unknown";
-              ACE_DEBUG ((LM_DEBUG,
+              TAOLIB_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("TAO (%P|%t) - GIOP %C received\n"), which));
             }
           return 0;
         default:
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
+            TAOLIB_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("TAO (%P|%t) - ")
                         ACE_TEXT ("TAO_GIOP_Message_State::parse_magic_bytes, ")
                         ACE_TEXT ("Message of size zero recd.\n")));
@@ -89,7 +89,7 @@ TAO_GIOP_Message_State::parse_magic_bytes (char *buf)
         && buf [3] == 0x50)) // 'P'
     {
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
+        TAOLIB_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) - ")
                     ACE_TEXT ("TAO_GIOP_Message_State::parse_magic_bytes, ")
                     ACE_TEXT ("bad %cIOP header: ")
@@ -109,7 +109,7 @@ TAO_GIOP_Message_State::get_version_info (char *buf)
 {
   if (TAO_debug_level > 8)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   "TAO (%P|%t) - GIOP_Message_State::get_version_info\n"));
     }
 
@@ -124,7 +124,7 @@ TAO_GIOP_Message_State::get_version_info (char *buf)
     {
       if (TAO_debug_level > 0)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - bad version <%d.%d>\n"),
                       incoming_major, incoming_minor));
         }
@@ -144,7 +144,7 @@ TAO_GIOP_Message_State::get_byte_order_info (char *buf)
 {
   if (TAO_debug_level > 8)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - GIOP_Message_State::get_byte_order_info\n") ));
     }
 
@@ -158,7 +158,7 @@ TAO_GIOP_Message_State::get_byte_order_info (char *buf)
         {
           if (TAO_debug_level > 2)
             {
-              ACE_DEBUG ((LM_DEBUG,
+              TAOLIB_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("TAO (%P|%t) - GIOP_Message_State::get_byte_order_info, ")
                           ACE_TEXT ("invalid byte order <%d> for version <1.0>\n"),
                           this->byte_order_));

@@ -40,7 +40,7 @@ namespace TAO
       if (strategy_factory == 0)
         {
           if (TAO_debug_level > 1)
-            ACE_ERROR ((LM_ERROR,
+            TAOLIB_ERROR ((LM_ERROR,
                         ACE_TEXT ("(%P|%t) ERROR, Unable to get %s\n"),
                         strategy_factory_name));
 

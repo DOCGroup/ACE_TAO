@@ -293,7 +293,7 @@ TAO_FlowSpec_Entry::handler (TAO_AV_Flow_Handler *handler)
 //         int result  = event_handler->reactor ()->remove_handler (event_handler,
 //                                                                  ACE_Event_Handler::READ_MASK);
 //         if (result < 0)
-//           ACE_ERROR ((LM_ERROR,"TAO_FlowSpec_Entry::handler\n"));
+//           ORBSVCS_ERROR ((LM_ERROR,"TAO_FlowSpec_Entry::handler\n"));
 //         break;
 //       }
 //     }

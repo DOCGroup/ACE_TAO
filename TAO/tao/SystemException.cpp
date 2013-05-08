@@ -216,7 +216,7 @@ CORBA::SystemException::_tao_minor_code (u_int location, int errno_value)
 void
 CORBA::SystemException::_tao_print_system_exception (FILE *) const
 {
-  ACE_ERROR ((LM_ERROR,
+  TAOLIB_ERROR ((LM_ERROR,
               ACE_TEXT("(%P|%t) system exception, ID '%C'\n"),
               this->_info ().c_str ()));
 }
@@ -945,7 +945,7 @@ CORBA::name ::_tao_type (void) const \
     return adapter->_tao_type_ ## name (); \
   else \
     { \
-      ACE_ERROR ((LM_ERROR, \
+      TAOLIB_ERROR ((LM_ERROR, \
                   ACE_TEXT ("(%P|%t) %p\n"), \
                   ACE_TEXT ("Unable to find the ") \
                   ACE_TEXT ("AnyTypeCode Adapter instance"))); \

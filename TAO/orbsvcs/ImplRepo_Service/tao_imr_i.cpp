@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "tao_imr_i.h"
 
 #include "tao/PortableServer/PortableServer.h"
@@ -29,7 +30,7 @@ TAO_IMR_i::run ()
 {
   if (this->op_.get () == 0)
     {
-      ACE_ERROR ((LM_ERROR, "Unknown operation"));
+      ORBSVCS_ERROR ((LM_ERROR, "Unknown operation"));
       return TAO_IMR_Op::UNKNOWN;
     }
 
@@ -59,7 +60,7 @@ TAO_IMR_i::init (int argc, ACE_TCHAR **argv)
 
       if (CORBA::is_nil (obj.in ()))
         {
-          ACE_ERROR ((LM_ERROR, "Unable to resolve the ImR.\n"));
+          ORBSVCS_ERROR ((LM_ERROR, "Unable to resolve the ImR.\n"));
           return -1;
         }
 
@@ -70,7 +71,7 @@ TAO_IMR_i::init (int argc, ACE_TCHAR **argv)
 
       if (CORBA::is_nil (imr_.in ()))
         {
-          ACE_ERROR ((LM_ERROR, "Unable to narrow the ImR.\n"));
+          ORBSVCS_ERROR ((LM_ERROR, "Unable to narrow the ImR.\n"));
           return -1;
         }
 
@@ -78,7 +79,7 @@ TAO_IMR_i::init (int argc, ACE_TCHAR **argv)
     }
   catch (const CORBA::Exception& ex)
     {
-      ACE_ERROR ((LM_ERROR, "TAO_IMR_i::init - %s\n", exception_message));
+      ORBSVCS_ERROR ((LM_ERROR, "TAO_IMR_i::init - %s\n", exception_message));
       ex._tao_print_exception ("Exception");
       return -1;
     }
@@ -95,7 +96,7 @@ TAO_IMR_i::parse_args (void)
   // Make sure one command was given
   if (this->argc_ < 2)
     {
-      ACE_ERROR((LM_ERROR, "Error: No operation specified.\n"));
+      ORBSVCS_ERROR((LM_ERROR, "Error: No operation specified.\n"));
       this->print_usage ();
       return -1;
     }
@@ -106,7 +107,7 @@ TAO_IMR_i::parse_args (void)
 
   if (this->op_.get () == 0)
     {
-      ACE_ERROR((LM_ERROR, "Error: Unknown operation '%s'.\n", this->argv_[1]));
+      ORBSVCS_ERROR((LM_ERROR, "Error: Unknown operation '%s'.\n", this->argv_[1]));
       this->print_usage ();
       return -1;
     }
@@ -121,7 +122,7 @@ TAO_IMR_i::parse_args (void)
 void
 TAO_IMR_i::print_usage (void)
 {
-  ACE_ERROR ((LM_ERROR, "Usage: tao_imr [options] command [command-arguments]\n"
+  ORBSVCS_ERROR ((LM_ERROR, "Usage: tao_imr [options] command [command-arguments]\n"
     "  where [options] are ORB options\n"
     "  where command is one of the following:\n"
     "    start         Start a server through the ImR\n"
@@ -144,7 +145,7 @@ TAO_IMR_Op::make_op (const ACE_TCHAR *op_name)
 {
   if (ACE_OS::strcasecmp (op_name, ACE_TEXT ("activate")) == 0)
     {
-      ACE_ERROR((LM_ERROR, "Warning: The activate option has been renamed to start.\n"));
+      ORBSVCS_ERROR((LM_ERROR, "Warning: The activate option has been renamed to start.\n"));
       return new TAO_IMR_Op_Activate ();
     }
   else if (ACE_OS::strcasecmp (op_name, ACE_TEXT ("start")) == 0)
@@ -196,7 +197,7 @@ TAO_IMR_Op::display_server_information (const ImplementationRepository::ServerIn
     act = "AUTO_START";
 
   // Print out information
-  ACE_DEBUG ((LM_DEBUG, "Server <%s>\n", info.server.in ()));
+  ORBSVCS_DEBUG ((LM_DEBUG, "Server <%s>\n", info.server.in ()));
 
   const char * locked_out = "";
 
@@ -207,7 +208,7 @@ TAO_IMR_Op::display_server_information (const ImplementationRepository::ServerIn
       locked_out = "  Locked Out\n";
     }
 
-  ACE_DEBUG ((LM_DEBUG,
+  ORBSVCS_DEBUG ((LM_DEBUG,
     "  Activator: %s\n"
     "  Command Line: %s\n"
     "  Working Directory: %s\n"
@@ -221,22 +222,22 @@ TAO_IMR_Op::display_server_information (const ImplementationRepository::ServerIn
     limit - 1,
     locked_out));
   for (CORBA::ULong i = 0; i < info.startup.environment.length (); ++i)
-    ACE_DEBUG ((LM_DEBUG, "Environment Variable: %s=%s\n",
+    ORBSVCS_DEBUG ((LM_DEBUG, "Environment Variable: %s=%s\n",
     info.startup.environment[i].name.in (),
     info.startup.environment[i].value.in ()));
 
   if (info.startup.activation == ImplementationRepository::PER_CLIENT)
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
                 "  No running info available for PER_CLIENT mode\n"));
   else if (ACE_OS::strlen (info.partial_ior.in ()) > 0)
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
                 "  Running at endpoint: %s\n",
                 info.partial_ior.in ()));
   else   // I am assuming that a blank partial_ior means currently not running.
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
                 "  Not currently running\n"));
 
-  ACE_DEBUG ((LM_DEBUG, "\n"));
+  ORBSVCS_DEBUG ((LM_DEBUG, "\n"));
 }
 
 TAO_IMR_Op_List::TAO_IMR_Op_List (void)
@@ -263,7 +264,7 @@ TAO_IMR_Op_Register::TAO_IMR_Op_Register (bool is_add)
 void
 TAO_IMR_Op_Activate::print_usage (void)
 {
-  ACE_ERROR ((LM_ERROR, "Starts a server using its registered Activator.\n"
+  ORBSVCS_ERROR ((LM_ERROR, "Starts a server using its registered Activator.\n"
     "\n"
     "Usage: tao_imr [options] start <name>\n"
     "  where [options] are ORB options\n"
@@ -295,7 +296,7 @@ TAO_IMR_Op_Activate::parse (int argc, ACE_TCHAR **argv)
         this->print_usage ();
         return -1;
       default:
-        ACE_ERROR((LM_ERROR, "ERROR : Unknown option '%c'\n", (char) c));
+        ORBSVCS_ERROR((LM_ERROR, "ERROR : Unknown option '%c'\n", (char) c));
         this->print_usage ();
         return -1;
       }
@@ -306,7 +307,7 @@ TAO_IMR_Op_Activate::parse (int argc, ACE_TCHAR **argv)
 void
 TAO_IMR_Op_Autostart::print_usage (void)
 {
-  ACE_ERROR ((LM_ERROR, "Usage: tao_imr [options] autostart\n"
+  ORBSVCS_ERROR ((LM_ERROR, "Usage: tao_imr [options] autostart\n"
     "  where [options] are ORB options\n"
     "  -h Displays this\n"));
 }
@@ -327,7 +328,7 @@ TAO_IMR_Op_Autostart::parse (int argc, ACE_TCHAR **argv)
         this->print_usage ();
         return -1;
       default:
-        ACE_ERROR((LM_ERROR, "ERROR : Unknown option '%c'\n", (char) c));
+        ORBSVCS_ERROR((LM_ERROR, "ERROR : Unknown option '%c'\n", (char) c));
         this->print_usage ();
         return -1;
       }
@@ -338,7 +339,7 @@ TAO_IMR_Op_Autostart::parse (int argc, ACE_TCHAR **argv)
 void
 TAO_IMR_Op_IOR::print_usage (void)
 {
-  ACE_ERROR ((LM_ERROR, "Creates an IOR for a server that is registered with the IMR and uses\n"
+  ORBSVCS_ERROR ((LM_ERROR, "Creates an IOR for a server that is registered with the IMR and uses\n"
     "the InterOperable Naming Service.  Please see the documentation for\n"
     "more information on which server configurations work with this command.\n"
     "\n"
@@ -366,7 +367,7 @@ TAO_IMR_Op_IOR::parse (int argc, ACE_TCHAR **argv)
   this->server_name_ = ACE_TEXT_ALWAYS_CHAR(argv[1]);
   if (this->server_name_.length() == 0 || this->server_name_[0] == '-')
     {
-      ACE_ERROR((LM_ERROR, "ERROR : name is required.\n"));
+      ORBSVCS_ERROR((LM_ERROR, "ERROR : name is required.\n"));
       this->print_usage ();
       return -1;
     }
@@ -384,7 +385,7 @@ TAO_IMR_Op_IOR::parse (int argc, ACE_TCHAR **argv)
         this->print_usage ();
         return -1;
       default:
-        ACE_ERROR((LM_ERROR, "ERROR : Unknown option '%c'\n", (char) c));
+        ORBSVCS_ERROR((LM_ERROR, "ERROR : Unknown option '%c'\n", (char) c));
         this->print_usage ();
         return -1;
       }
@@ -395,7 +396,7 @@ TAO_IMR_Op_IOR::parse (int argc, ACE_TCHAR **argv)
 void
 TAO_IMR_Op_List::print_usage (void)
 {
-  ACE_ERROR ((LM_ERROR, "Lists all or one of the servers in the Implementation Repository\n"
+  ORBSVCS_ERROR ((LM_ERROR, "Lists all or one of the servers in the Implementation Repository\n"
     "\n"
     "Usage: tao_imr [options] list [name] [command-arguments]\n"
     "  where [options] are ORB options\n"
@@ -437,7 +438,7 @@ TAO_IMR_Op_List::parse (int argc, ACE_TCHAR **argv)
         this->print_usage ();
         return -1;
       default:
-        ACE_ERROR((LM_ERROR, "ERROR : Unknown option '%c'\n", (char) c));
+        ORBSVCS_ERROR((LM_ERROR, "ERROR : Unknown option '%c'\n", (char) c));
         this->print_usage ();
         return -1;
       }
@@ -448,7 +449,7 @@ TAO_IMR_Op_List::parse (int argc, ACE_TCHAR **argv)
 void
 TAO_IMR_Op_Remove::print_usage (void)
 {
-  ACE_ERROR ((LM_ERROR, "Removes a server entry\n"
+  ORBSVCS_ERROR ((LM_ERROR, "Removes a server entry\n"
     "\n"
     "Usage: tao_imr [options] remove <name>\n"
     "  where [options] are ORB options\n"
@@ -480,7 +481,7 @@ TAO_IMR_Op_Remove::parse (int argc, ACE_TCHAR **argv)
         this->print_usage ();
         return -1;
       default:
-        ACE_ERROR((LM_ERROR, "ERROR : Unknown option '%c'\n", (char) c));
+        ORBSVCS_ERROR((LM_ERROR, "ERROR : Unknown option '%c'\n", (char) c));
         this->print_usage ();
         return -1;
       }
@@ -491,7 +492,7 @@ TAO_IMR_Op_Remove::parse (int argc, ACE_TCHAR **argv)
 void
 TAO_IMR_Op_Shutdown::print_usage (void)
 {
-  ACE_ERROR ((LM_ERROR, "Shuts down a server\n"
+  ORBSVCS_ERROR ((LM_ERROR, "Shuts down a server\n"
     "\n"
     "Usage: tao_imr [options] shutdown <name>\n"
     "  where [options] are ORB options\n"
@@ -523,7 +524,7 @@ TAO_IMR_Op_Shutdown::parse (int argc, ACE_TCHAR **argv)
         this->print_usage ();
         return -1;
       default:
-        ACE_ERROR((LM_ERROR, "ERROR : Unknown option '%c'\n", (char) c));
+        ORBSVCS_ERROR((LM_ERROR, "ERROR : Unknown option '%c'\n", (char) c));
         this->print_usage ();
         return -1;
       }
@@ -539,7 +540,7 @@ TAO_IMR_Op_ShutdownRepo::TAO_IMR_Op_ShutdownRepo()
 void
 TAO_IMR_Op_ShutdownRepo::print_usage (void)
 {
-  ACE_ERROR ((LM_ERROR, "Shuts down the ImR\n"
+  ORBSVCS_ERROR ((LM_ERROR, "Shuts down the ImR\n"
     "\n"
     "Usage: tao_imr [options] shutdown-repo [-a]\n"
     "  where [options] are ORB options\n"
@@ -573,7 +574,7 @@ TAO_IMR_Op_ShutdownRepo::parse (int argc, ACE_TCHAR **argv)
         activators_ = true;
         break;
       default:
-        ACE_ERROR((LM_ERROR, "ERROR : Unknown option '%c'\n", (char) c));
+        ORBSVCS_ERROR((LM_ERROR, "ERROR : Unknown option '%c'\n", (char) c));
         this->print_usage ();
         return -1;
       }
@@ -600,7 +601,7 @@ TAO_IMR_Op_Register::addenv (ACE_TCHAR *opt)
 void
 TAO_IMR_Op_Register::print_usage (void)
 {
-  ACE_ERROR ((LM_ERROR,
+  ORBSVCS_ERROR ((LM_ERROR,
     "Adds/Updates a server entry\n"
     "\n"
     "Usage: tao_imr [options] <add|update> <name> [command-arguments]\n"
@@ -622,7 +623,7 @@ TAO_IMR_Op_Register::parse (int argc, ACE_TCHAR **argv)
   // Check for enough arguments (we need at least one for the server name)
   if (argc < 2)
     {
-      ACE_ERROR((LM_ERROR, "Error: Must supply at least a server name.\n"));
+      ORBSVCS_ERROR((LM_ERROR, "Error: Must supply at least a server name.\n"));
       this->print_usage ();
       return -1;
     }
@@ -660,7 +661,7 @@ TAO_IMR_Op_Register::parse (int argc, ACE_TCHAR **argv)
         else if (ACE_OS::strcasecmp (get_opts.opt_arg (), ACE_TEXT("AUTO_START")) == 0)
           this->activation_ = ImplementationRepository::AUTO_START;
         else
-          ACE_ERROR_RETURN ((LM_ERROR,
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
           "Unknown Activation Mode <%s>.\n",
           get_opts.opt_arg ()),
           -1);
@@ -682,7 +683,7 @@ TAO_IMR_Op_Register::parse (int argc, ACE_TCHAR **argv)
         this->print_usage ();
         return -1;
       default:
-        ACE_ERROR((LM_ERROR, "ERROR : Unknown option '%c'\n", (char) c));
+        ORBSVCS_ERROR((LM_ERROR, "ERROR : Unknown option '%c'\n", (char) c));
         this->print_usage ();
         return -1;
       }
@@ -702,20 +703,20 @@ TAO_IMR_Op_Activate::run (void)
   try
     {
       this->imr_->activate_server (this->server_name_.c_str ());
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
         "Successfully Activated server <%C>\n",
         this->server_name_.c_str ()));
     }
   catch (const ImplementationRepository::CannotActivate& ex)
     {
-      ACE_ERROR ((LM_ERROR, "Cannot activate server <%C>, reason: <%s>\n",
+      ORBSVCS_ERROR ((LM_ERROR, "Cannot activate server <%C>, reason: <%s>\n",
         this->server_name_.c_str (),
         ex.reason.in ()));
       return TAO_IMR_Op::CANNOT_ACTIVATE;
     }
   catch (const ImplementationRepository::NotFound&)
     {
-      ACE_ERROR ((LM_ERROR, "Could not find server <%C>.\n", this->server_name_.c_str ()));
+      ORBSVCS_ERROR ((LM_ERROR, "Could not find server <%C>.\n", this->server_name_.c_str ()));
       return TAO_IMR_Op::NOT_FOUND;
     }
   catch (const PortableServer::ForwardRequest&)
@@ -786,7 +787,7 @@ TAO_IMR_Op_IOR::run (void)
         || !this->imr_->_stubobj ()
         || !this->imr_->_stubobj ()->profile_in_use ())
       {
-        ACE_ERROR_RETURN ((
+        ORBSVCS_ERROR_RETURN ((
           LM_ERROR,
           ACE_TEXT ("Invalid ImR IOR.\n")
           ), -1);
@@ -803,7 +804,7 @@ TAO_IMR_Op_IOR::run (void)
 
       if (pos == 0)
       {
-        ACE_ERROR_RETURN ((LM_ERROR, "Could not parse IMR IOR.\n"), -1);
+        ORBSVCS_ERROR_RETURN ((LM_ERROR, "Could not parse IMR IOR.\n"), -1);
       }
       else
       {
@@ -817,7 +818,7 @@ TAO_IMR_Op_IOR::run (void)
         }
         else
         {
-          ACE_ERROR_RETURN ((LM_ERROR, "Could not parse IMR IOR.\n"), -1);
+          ORBSVCS_ERROR_RETURN ((LM_ERROR, "Could not parse IMR IOR.\n"), -1);
         }
       }
       ACE_CString ior (imr_str.in ());
@@ -834,7 +835,7 @@ TAO_IMR_Op_IOR::run (void)
         ior += this->server_name_;
       }
 
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%s\n"), ior.c_str ()));
+      ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("%s\n"), ior.c_str ()));
 
       if (this->filename_.length () > 0)
       {
@@ -842,7 +843,7 @@ TAO_IMR_Op_IOR::run (void)
 
         if (file == 0)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
             ACE_TEXT ("Error: Unable to open %s for writing: %p\n"),
             this->filename_.c_str ()),
             -1);
@@ -882,7 +883,7 @@ TAO_IMR_Op_List::run (void)
 
           if (server_list->length() == 0)
           {
-            ACE_DEBUG((LM_DEBUG, "No servers found.\n"));
+            ORBSVCS_DEBUG((LM_DEBUG, "No servers found.\n"));
             return TAO_IMR_Op::NORMAL;
           }
 
@@ -904,7 +905,7 @@ TAO_IMR_Op_List::run (void)
     }
   catch (const ImplementationRepository::NotFound&)
     {
-      ACE_ERROR ((LM_ERROR, "Could not find server <%C>.\n", this->server_name_.c_str ()));
+      ORBSVCS_ERROR ((LM_ERROR, "Could not find server <%C>.\n", this->server_name_.c_str ()));
       return TAO_IMR_Op::NOT_FOUND;
     }
   catch (const CORBA::Exception& ex)
@@ -925,18 +926,18 @@ TAO_IMR_Op_Remove::run (void)
     {
       this->imr_->remove_server (this->server_name_.c_str ());
 
-      ACE_DEBUG ((LM_DEBUG, "Successfully removed server <%C>\n",
+      ORBSVCS_DEBUG ((LM_DEBUG, "Successfully removed server <%C>\n",
         this->server_name_.c_str ()));
     }
   catch (const ImplementationRepository::NotFound&)
     {
-      ACE_ERROR ((LM_ERROR, "Could not find server <%C>.\n",
+      ORBSVCS_ERROR ((LM_ERROR, "Could not find server <%C>.\n",
         this->server_name_.c_str ()));
       return TAO_IMR_Op::NOT_FOUND;
     }
   catch (const CORBA::NO_PERMISSION&)
     {
-      ACE_ERROR ((LM_ERROR, "No Permission: ImplRepo is in Locked mode\n"));
+      ORBSVCS_ERROR ((LM_ERROR, "No Permission: ImplRepo is in Locked mode\n"));
       return TAO_IMR_Op::NO_PERMISSION;
     }
   catch (const CORBA::Exception& ex)
@@ -957,17 +958,17 @@ TAO_IMR_Op_Shutdown::run (void)
     {
       this->imr_->shutdown_server (this->server_name_.c_str ());
 
-      ACE_DEBUG ((LM_DEBUG, "Successfully shut down server <%C>\n",
+      ORBSVCS_DEBUG ((LM_DEBUG, "Successfully shut down server <%C>\n",
         this->server_name_.c_str ()));
     }
   catch (const ImplementationRepository::NotFound&)
     {
-      ACE_ERROR ((LM_ERROR, "Server <%C> already shut down.\n", this->server_name_.c_str ()));
+      ORBSVCS_ERROR ((LM_ERROR, "Server <%C> already shut down.\n", this->server_name_.c_str ()));
       return TAO_IMR_Op::NOT_FOUND;
     }
   catch (const CORBA::TIMEOUT&)
     {
-      ACE_DEBUG ((LM_DEBUG, "Timeout waiting for <%C> to shutdown.\n",
+      ORBSVCS_DEBUG ((LM_DEBUG, "Timeout waiting for <%C> to shutdown.\n",
         this->server_name_.c_str ()));
     }
   catch (const CORBA::Exception& ex)
@@ -989,11 +990,11 @@ TAO_IMR_Op_ShutdownRepo::run (void)
       bool servers = false; // not implemented yet, if ever
       this->imr_->shutdown (activators_, servers);
 
-      ACE_DEBUG ((LM_DEBUG, "ImR shutdown initiated.\n"));
+      ORBSVCS_DEBUG ((LM_DEBUG, "ImR shutdown initiated.\n"));
     }
   catch (const CORBA::TIMEOUT&)
     {
-      ACE_DEBUG ((LM_DEBUG, "Timeout waiting for ImR shutdown.\n"));
+      ORBSVCS_DEBUG ((LM_DEBUG, "Timeout waiting for ImR shutdown.\n"));
     }
   catch (const CORBA::Exception& ex)
     {
@@ -1022,7 +1023,7 @@ TAO_IMR_Op_Register::run (void)
         {
           if (is_add_)
             {
-              ACE_DEBUG((LM_DEBUG, "Server <%C> already registered.\n", this->server_name_.c_str ()));
+              ORBSVCS_DEBUG((LM_DEBUG, "Server <%C> already registered.\n", this->server_name_.c_str ()));
               return ALREADY_REGISTERED;
             }
           options = &server_information->startup;
@@ -1031,7 +1032,7 @@ TAO_IMR_Op_Register::run (void)
         {
           if (!is_add_)
           {
-            ACE_DEBUG((LM_DEBUG, "Adding Server <%C> on update command.\n", this->server_name_.c_str ()));
+            ORBSVCS_DEBUG((LM_DEBUG, "Adding Server <%C> on update command.\n", this->server_name_.c_str ()));
             is_add_ = true;
           }
           local.activation= ImplementationRepository::NORMAL;
@@ -1062,17 +1063,17 @@ TAO_IMR_Op_Register::run (void)
           char host_name[MAXHOSTNAMELEN + 1];
           ACE_OS::hostname (host_name, MAXHOSTNAMELEN);
           options->activator = CORBA::string_dup (host_name);
-          ACE_DEBUG ((LM_DEBUG, "Updating Server <%C> with default activator of <%s>.\n",
+          ORBSVCS_DEBUG ((LM_DEBUG, "Updating Server <%C> with default activator of <%s>.\n",
             this->server_name_.c_str (), options->activator.in ()));
         }
 
       this->imr_->add_or_update_server (this->server_name_.c_str (), *options);
 
-      ACE_DEBUG((LM_DEBUG, "Successfully registered <%C>.\n", this->server_name_.c_str ()));
+      ORBSVCS_DEBUG((LM_DEBUG, "Successfully registered <%C>.\n", this->server_name_.c_str ()));
     }
   catch (const CORBA::NO_PERMISSION&)
     {
-      ACE_ERROR ((LM_ERROR, "No Permission: ImplRepo is in Locked mode\n"));
+      ORBSVCS_ERROR ((LM_ERROR, "No Permission: ImplRepo is in Locked mode\n"));
       return TAO_IMR_Op::NO_PERMISSION;
     }
   catch (const CORBA::Exception& ex)
@@ -1097,5 +1098,5 @@ TAO_IMR_Op_List::display_server_information (const ImplementationRepository::Ser
   if (this->verbose_server_information_)
     TAO_IMR_Op::display_server_information (info);
   else
-    ACE_DEBUG ((LM_DEBUG, "<%s>\n", info.server.in ()));
+    ORBSVCS_DEBUG ((LM_DEBUG, "<%s>\n", info.server.in ()));
 }

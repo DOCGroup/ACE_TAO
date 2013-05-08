@@ -78,7 +78,7 @@ TAO_POA_Policy_Set::validate_policies (TAO_Policy_Validator &validator,
           // it.
           throw PortableServer::POA::InvalidPolicy ();
 #else
-          ACE_ERROR ((LM_ERROR, "Invalid policy\n"));
+          TAOLIB_ERROR ((LM_ERROR, "Invalid policy\n"));
 #endif
         }
     }

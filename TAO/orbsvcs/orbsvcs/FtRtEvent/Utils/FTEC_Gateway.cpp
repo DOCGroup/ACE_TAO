@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/FtRtEvent/Utils/FTEC_Gateway.h"
 #include "orbsvcs/FtRtEvent/Utils/activate_with_id.h"
 #include "orbsvcs/FtRtEvent/Utils/UUID.h"
@@ -219,7 +220,7 @@ FTEC_Gateway::for_consumers (void)
 RtecEventChannelAdmin::SupplierAdmin_ptr
 FTEC_Gateway::for_suppliers (void)
 {
-  ACE_DEBUG((LM_DEBUG, "FTEC_Gateway::for_suppliers\n"));
+  ORBSVCS_DEBUG((LM_DEBUG, "FTEC_Gateway::for_suppliers\n"));
   return RtecEventChannelAdmin::SupplierAdmin::_duplicate(impl_->supplier_admin.in());
 }
 

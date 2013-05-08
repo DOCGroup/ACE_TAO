@@ -58,7 +58,7 @@ TAO_DIOP_Connection_Handler::~TAO_DIOP_Connection_Handler (void)
 
   if (result == -1 && TAO_debug_level)
     {
-      ACE_ERROR ((LM_ERROR,
+      TAOLIB_ERROR ((LM_ERROR,
                   ACE_TEXT ("TAO (%P|%t) - DIOP_Connection_Handler::")
                   ACE_TEXT ("~DIOP_Connection_Handler, ")
                   ACE_TEXT ("release_os_resources() failed %m\n")));
@@ -178,7 +178,7 @@ TAO_DIOP_Connection_Handler::open (void*)
         {
           if (TAO_debug_level)
             {
-              ACE_ERROR ((LM_ERROR,
+              TAOLIB_ERROR ((LM_ERROR,
                           ACE_TEXT("TAO (%P|%t) - DIOP_Connection_Handler::open, ")
                           ACE_TEXT("couldn't set hop limit\n\n")));
             }
@@ -188,7 +188,7 @@ TAO_DIOP_Connection_Handler::open (void*)
 
   if (TAO_debug_level > 5)
   {
-     ACE_DEBUG ((LM_DEBUG,
+     TAOLIB_DEBUG ((LM_DEBUG,
                  ACE_TEXT("TAO (%P|%t) - DIOP_Connection_Handler::open, ")
                  ACE_TEXT("listening on: <%C:%u>\n"),
                  this->local_addr_.get_host_name (),
@@ -248,7 +248,7 @@ TAO_DIOP_Connection_Handler::open_server (void)
 
   if (TAO_debug_level > 5)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT("TAO (%P|%t) - DIOP_Connection_Handler::open_server, ")
                   ACE_TEXT("listening on %C:%d\n"),
                   this->local_addr_.get_host_name (),
@@ -367,7 +367,7 @@ TAO_DIOP_Connection_Handler::set_tos (int tos)
         {
           if (TAO_debug_level)
             {
-              ACE_DEBUG ((LM_DEBUG,
+              TAOLIB_DEBUG ((LM_DEBUG,
                           "TAO (%P|%t) - DIOP_Connection_Handler::"
                           "set_dscp_codepoint -> IPV6_TCLASS not supported yet\n"));
             }
@@ -388,7 +388,7 @@ TAO_DIOP_Connection_Handler::set_tos (int tos)
 
       if (TAO_debug_level)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       "TAO (%P|%t) - DIOP_Connection_Handler::"
                       "set_dscp_codepoint, dscp: %x; result: %d; %C\n",
                       tos,

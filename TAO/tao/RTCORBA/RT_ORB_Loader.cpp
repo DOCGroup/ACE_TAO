@@ -83,7 +83,7 @@ TAO_RT_ORB_Loader::init (int argc, ACE_TCHAR* argv[])
             priority_mapping_type =
               TAO_RT_ORBInitializer::TAO_PRIORITY_MAPPING_DIRECT;
           else
-            ACE_DEBUG ((LM_DEBUG,
+            TAOLIB_DEBUG ((LM_DEBUG,
                         ACE_TEXT("RT_ORB_Loader - unknown argument")
                         ACE_TEXT(" <%s> for -ORBPriorityMapping\n"),
                         name));
@@ -112,7 +112,7 @@ TAO_RT_ORB_Loader::init (int argc, ACE_TCHAR* argv[])
               sched_policy = THR_SCHED_RR;
             }
           else
-            ACE_DEBUG ((LM_DEBUG,
+            TAOLIB_DEBUG ((LM_DEBUG,
                         ACE_TEXT("RT_ORB_Loader - unknown argument")
                         ACE_TEXT(" <%s> for -ORBSchedPolicy\n"),
                         name));
@@ -129,7 +129,7 @@ TAO_RT_ORB_Loader::init (int argc, ACE_TCHAR* argv[])
                                        ACE_TEXT("PROCESS")) == 0)
             scope_policy = THR_SCOPE_PROCESS;
           else
-            ACE_DEBUG ((LM_DEBUG,
+            TAOLIB_DEBUG ((LM_DEBUG,
                         ACE_TEXT("RT_ORB_Loader - unknown argument")
                         ACE_TEXT(" <%s> for -ORBScopePolicy\n"),
                         name));
@@ -168,7 +168,7 @@ TAO_RT_ORB_Loader::init (int argc, ACE_TCHAR* argv[])
         arg_shifter.ignore_arg ();
         if (TAO_debug_level > 0)
         {
-          ACE_ERROR ((LM_ERROR,
+          TAOLIB_ERROR ((LM_ERROR,
                       ACE_TEXT("RT_ORB_Loader: Unknown option ")
                       ACE_TEXT("<%s>.\n"),
                       argv[curarg]));

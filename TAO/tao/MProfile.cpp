@@ -184,7 +184,7 @@ TAO_MProfile::add_profile (TAO_Profile *pfile)
   pfiles_[last_++] = pfile;
 
   if (pfile && pfile->_incr_refcnt () == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    TAOLIB_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("(%P|%t) Unable to increment reference ")
                        ACE_TEXT ("count in add_profile!\n")),
                       -1);

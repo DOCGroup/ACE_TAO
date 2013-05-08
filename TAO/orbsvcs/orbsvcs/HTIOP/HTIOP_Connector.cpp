@@ -1,5 +1,7 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/HTIOP/HTIOP_Connector.h"
 #include "orbsvcs/HTIOP/HTIOP_Profile.h"
 
@@ -97,7 +99,7 @@ TAO::HTIOP::Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
      {
        if (TAO_debug_level > 0)
          {
-           ACE_DEBUG ((LM_DEBUG,
+           ORBSVCS_DEBUG ((LM_DEBUG,
                        ACE_TEXT ("TAO (%P|%t) TAO_HTIOP connection failed.\n")
                        ACE_TEXT ("TAO (%P|%t) This is most likely ")
                        ACE_TEXT ("due to a hostname lookup ")
@@ -168,7 +170,7 @@ TAO::HTIOP::Connector::make_connection (TAO::Profile_Transport_Resolver *,
     {
       char buffer[BUFSIZ];
       htiop_endpoint->addr_to_string(buffer,BUFSIZ);
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
                 "TAO (%P|%t) - TAO::HTIOP::Connector::make_connection, "
                 "to <%s>\n",
                 buffer));
@@ -202,7 +204,7 @@ TAO::HTIOP::Connector::make_connection (TAO::Profile_Transport_Resolver *,
                       0);
       ACE_NEW_RETURN (session, ACE::HTBP::Session (session_id,proxy, 1), 0);
       if (ACE::HTBP::Session::add_session (session) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            "ACE::HTBP::Initial_Filter::recv_data_header %p",
                            "add_session"),
                           0);
@@ -235,7 +237,7 @@ TAO::HTIOP::Connector::make_connection (TAO::Profile_Transport_Resolver *,
     {
       if (TAO_debug_level)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT("(%P|%t) - TAO::HTIOP::Connector::make_connection, ")
                       ACE_TEXT("connection to  <%s:%d> failed (%p)\n"),
                        htiop_endpoint->host (), htiop_endpoint->port (),
@@ -245,7 +247,7 @@ TAO::HTIOP::Connector::make_connection (TAO::Profile_Transport_Resolver *,
     }
 
   if (TAO_debug_level > 2)
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
                 ACE_TEXT("(%P|%t) - TAO::HTIOP::Connector::make_connection, ")
                 ACE_TEXT("new connection to <%s:%d> on Transport[%d]\n"),
                 htiop_endpoint->host (), htiop_endpoint->port (),
@@ -267,7 +269,7 @@ TAO::HTIOP::Connector::make_connection (TAO::Profile_Transport_Resolver *,
       svc_handler->close();
       if (TAO_debug_level > 0)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT("(%P|%t) - TAO::HTIOP::Connector::make_connection, ")
                       ACE_TEXT("could not add the new")
                       ACE_TEXT(" connection to cache\n")));
@@ -285,7 +287,7 @@ TAO::HTIOP::Connector::make_connection (TAO::Profile_Transport_Resolver *,
 
       if (TAO_debug_level > 0)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT("(%P|%t) - TAO::HTIOP::Connector::make_connection, ")
                       ACE_TEXT("could not register the new connection")
                       ACE_TEXT(" in the reactor\n")));

@@ -165,7 +165,7 @@ TAO_IIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
     {
       if (TAO_debug_level > 0)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - IIOP connection failed.\n")
                       ACE_TEXT ("     This is most likely ")
                       ACE_TEXT ("due to a hostname lookup ")
@@ -200,7 +200,7 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
       // Give users a clue to the problem.
       if (TAO_debug_level > 1)
         {
-          ACE_ERROR ((LM_ERROR,
+          TAOLIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO (%P|%t) - IIOP_Connector::make_connection, ")
                       ACE_TEXT("connection to <%C:%d> failed (%p)\n"),
                       iiop_endpoint->host (),
@@ -231,7 +231,7 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
     {
       if (TAO_debug_level > 1)
         {
-          ACE_ERROR ((LM_ERROR,
+          TAOLIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO (%P|%t) - IIOP_Connector::make_connection, ")
                       ACE_TEXT ("connection to <%C:%d> completed unsuccessfully\n"),
                       iiop_endpoint->host (),
@@ -262,7 +262,7 @@ TAO_IIOP_Connector::make_parallel_connection (
     ++max_count;
 
   if (TAO_debug_level > 2)
-    ACE_DEBUG ((LM_DEBUG,
+    TAOLIB_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO (%P|%t) - IIOP_Connector::")
                 ACE_TEXT ("make_parallel_connection, ")
                 ACE_TEXT ("to %d endpoints\n"), max_count));
@@ -367,7 +367,7 @@ TAO_IIOP_Connector::begin_connection (TAO_IIOP_Connection_Handler *&svc_handler,
 #endif /* ACE_HAS_IPV6 */
 
   if (TAO_debug_level > 2)
-    ACE_DEBUG ((LM_DEBUG,
+    TAOLIB_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO (%P|%t) - IIOP_Connector::begin_connection, ")
                 ACE_TEXT ("to <%C:%d> which should %s\n"),
                 iiop_endpoint->host(),
@@ -474,7 +474,7 @@ TAO_IIOP_Connector::complete_connection (int result,
                                                      timeout))
             {
               if (TAO_debug_level > 2)
-                ACE_ERROR ((LM_ERROR,
+                TAOLIB_ERROR ((LM_ERROR,
                             ACE_TEXT ("TAO (%P|%t) - IIOP_Connector::")
                             ACE_TEXT ("complete_connection, wait for completion ")
                             ACE_TEXT ("failed for 1 pending connect\n")));
@@ -490,7 +490,7 @@ TAO_IIOP_Connector::complete_connection (int result,
                                                      timeout))
             {
               if (TAO_debug_level > 2)
-                ACE_ERROR ((LM_ERROR,
+                TAOLIB_ERROR ((LM_ERROR,
                             ACE_TEXT ("TAO (%P|%t) - IIOP_Connector::")
                             ACE_TEXT ("complete_connection, wait for completion ")
                             ACE_TEXT ("failed for %d pending connects\n"),
@@ -540,7 +540,7 @@ TAO_IIOP_Connector::complete_connection (int result,
         {
           for (unsigned i = 0; i < count; i++)
             {
-              ACE_ERROR ((LM_ERROR,
+              TAOLIB_ERROR ((LM_ERROR,
                           ACE_TEXT ("TAO (%P|%t) - IIOP_Connector::complete_connection,")
                           ACE_TEXT (" connection to <%C:%d> failed (%p)\n"),
                           ep_list[i]->host (),
@@ -570,7 +570,7 @@ TAO_IIOP_Connector::complete_connection (int result,
   if (transport->connection_handler()->error_detected())
     {
       if (TAO_debug_level > 0)
-        ACE_DEBUG((LM_DEBUG,
+        TAOLIB_DEBUG((LM_DEBUG,
                    ACE_TEXT("TAO (%P|%t) - IIOP_Connector::make_connection, ")
                    ACE_TEXT("transport in error before cache!\n")));
       transport->connection_handler()->cancel_pending_connection();
@@ -579,7 +579,7 @@ TAO_IIOP_Connector::complete_connection (int result,
 
   if (TAO_debug_level > 2)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - IIOP_Connector::make_connection, ")
                   ACE_TEXT ("new %s connection to <%C:%d> on Transport[%d]\n"),
                   transport->is_connected() ?
@@ -615,7 +615,7 @@ TAO_IIOP_Connector::complete_connection (int result,
 
       if (TAO_debug_level > 0)
         {
-          ACE_ERROR ((LM_ERROR,
+          TAOLIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO (%P|%t) IIOP_Connector::make_connection, ")
                       ACE_TEXT ("could not add new connection to cache\n")));
         }
@@ -631,7 +631,7 @@ TAO_IIOP_Connector::complete_connection (int result,
   if (svc_handler->error_detected())
     {
       if (TAO_debug_level > 0)
-        ACE_DEBUG((LM_DEBUG,
+        TAOLIB_DEBUG((LM_DEBUG,
                    ACE_TEXT("TAO (%P|%t) - IIOP_Connector::make_connection, ")
                    ACE_TEXT("transport in error after cache!\n")));
       svc_handler->cancel_pending_connection();

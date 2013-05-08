@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/SSLIOP/SSLIOP_Factory.h"
 #include "orbsvcs/SSLIOP/SSLIOP_Acceptor.h"
 #include "orbsvcs/SSLIOP/SSLIOP_Connector.h"
@@ -161,7 +162,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
                                              session_id_len))
   {
     if (TAO_debug_level > 0)
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
                   ACE_TEXT ("TAO (%P|%t) Unable to set the session id ")
                   ACE_TEXT ("context to \'%C\'\n"), session_id_context_));
 
@@ -191,7 +192,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
           if (::SSL_CTX_set_cipher_list (ssl_ctx->context (),
                                          "ALL:eNULL") == 0)
             {
-              ACE_DEBUG ((LM_ERROR,
+              ORBSVCS_DEBUG ((LM_ERROR,
                           ACE_TEXT ("TAO (%P|%t) Unable to set eNULL ")
                           ACE_TEXT ("SSL cipher in SSLIOP ")
                           ACE_TEXT ("factory.\n")));
@@ -280,7 +281,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
 
               if (sscanf (ACE_TEXT_ALWAYS_CHAR(argv[curarg]), "%f", &timeout) != 1
                   || timeout < 0)
-                ACE_ERROR_RETURN ((LM_ERROR,
+                ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                    "ERROR: Invalid -SSLAcceptTimeout "
                                    "value: %s.\n",
                                    argv[curarg]),
@@ -347,7 +348,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
               if (::SSL_CTX_set_cipher_list (ssl_ctx->context (),
                                              ACE_TEXT_ALWAYS_CHAR(argv[curarg])) == 0)
                 {
-                  ACE_DEBUG ((LM_ERROR,
+                  ORBSVCS_DEBUG ((LM_ERROR,
                               ACE_TEXT ("TAO (%P|%t) Unable to set cipher ")
                               ACE_TEXT ("list in SSLIOP ")
                               ACE_TEXT ("factory.\n")));
@@ -374,14 +375,14 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
       if( -1 == ssl_ctx->seed_file (ACE_TEXT_ALWAYS_CHAR(path), -1))
       {
         ++errors;
-        ACE_ERROR ((LM_ERROR,
+        ORBSVCS_ERROR ((LM_ERROR,
                     ACE_TEXT ("TAO (%P|%t) Failed to load ")
                     ACE_TEXT ("more entropy from <%s>: %m\n"), path));
       }
       else
       {
         if (TAO_debug_level > 0)
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) Loaded ")
                       ACE_TEXT ("more entropy from <%s>\n"), path));
       }
@@ -399,7 +400,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
     {
       if (ssl_ctx->load_trusted_ca (ca_file, ca_dir.in ()) != 0)
         {
-          ACE_ERROR ((LM_ERROR,
+          ORBSVCS_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO (%P|%t) Unable to load ")
                       ACE_TEXT ("CA certs from %C%C%C\n"),
                       ((ca_file != 0) ? ca_file : "a file pointed to by "
@@ -416,7 +417,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
       else
         {
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_INFO,
+            ORBSVCS_DEBUG ((LM_INFO,
                         ACE_TEXT ("TAO (%P|%t) SSLIOP loaded ")
                         ACE_TEXT ("Trusted Certificates from %C%C%C\n"),
                         ((ca_file != 0) ? ca_file : "a file pointed to by "
@@ -453,7 +454,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
               // We only want to fail catastrophically if the user specified
               // a dh parameter file and we were unable to actually find it
               // and load from it.
-              ACE_ERROR ((LM_ERROR,
+              ORBSVCS_ERROR ((LM_ERROR,
                           ACE_TEXT ("(%P|%t) SSLIOP_Factory: ")
                           ACE_TEXT ("unable to set ")
                           ACE_TEXT ("DH parameters <%C>\n"),
@@ -463,7 +464,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
           else
             {
               if (TAO_debug_level > 0)
-                ACE_DEBUG ((LM_INFO,
+                ORBSVCS_DEBUG ((LM_INFO,
                             ACE_TEXT ("(%P|%t) SSLIOP_Factory: ")
                             ACE_TEXT ("No DH parameters found in ")
                             ACE_TEXT ("certificate <%C>; either none ")
@@ -475,7 +476,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
       else
         {
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_INFO,
+            ORBSVCS_DEBUG ((LM_INFO,
                         ACE_TEXT ("(%P|%t) SSLIOP loaded ")
                         ACE_TEXT ("Diffie-Hellman params ")
                         ACE_TEXT ("from %C\n"),
@@ -492,7 +493,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
       if (ssl_ctx->certificate (certificate_path,
                                 certificate_type) != 0)
         {
-          ACE_ERROR ((LM_ERROR,
+          ORBSVCS_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO (%P|%t) Unable to set ")
                       ACE_TEXT ("SSL certificate <%C> ")
                       ACE_TEXT ("in SSLIOP factory.\n"),
@@ -503,7 +504,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
       else
         {
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_INFO,
+            ORBSVCS_DEBUG ((LM_INFO,
                         ACE_TEXT ("TAO (%P|%t) SSLIOP loaded ")
                         ACE_TEXT ("SSL certificate ")
                         ACE_TEXT ("from %C\n"),
@@ -516,7 +517,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
       if (ssl_ctx->private_key (private_key_path, private_key_type) != 0)
         {
 
-          ACE_ERROR ((LM_ERROR,
+          ORBSVCS_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO (%P|%t) Unable to set ")
                       ACE_TEXT ("SSL private key ")
                       ACE_TEXT ("<%C> in SSLIOP factory.\n"),
@@ -527,7 +528,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
       else
         {
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_INFO,
+            ORBSVCS_DEBUG ((LM_INFO,
                         ACE_TEXT ("TAO (%P|%t) SSLIOP loaded ")
                         ACE_TEXT ("Private Key ")
                         ACE_TEXT ("from <%C>\n"),

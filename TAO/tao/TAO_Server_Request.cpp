@@ -281,7 +281,7 @@ TAO_ServerRequest::init_reply (void)
 
       if ((*this->outgoing_ << object_ptr) == 0)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - ServerRequest::init_reply, ")
                       ACE_TEXT ("TAO_GIOP_ServerRequest::marshal - ")
                       ACE_TEXT ("marshal encoding forwarded objref failed\n")));
@@ -333,7 +333,7 @@ TAO_ServerRequest::send_no_exception_reply (void)
         {
           // No exception but some kind of error, yet a response
           // is required.
-          ACE_ERROR ((
+          TAOLIB_ERROR ((
                       LM_ERROR,
                       ACE_TEXT ("TAO (%P|%t) - ServerRequest::send_no_exception_reply, ")
                       ACE_TEXT ("cannot send NO_EXCEPTION reply\n")
@@ -360,7 +360,7 @@ TAO_ServerRequest::tao_send_reply (void)
         {
           // No exception but some kind of error, yet a response
           // is required.
-          ACE_ERROR ((LM_ERROR,
+          TAOLIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO (%P|%t) - ServerRequest::tao_send_reply, ")
                       ACE_TEXT ("cannot send reply\n")));
         }
@@ -430,7 +430,7 @@ TAO_ServerRequest::tao_send_reply_exception (const CORBA::Exception &ex)
                                                           reply_params,
                                                           ex) == -1)
             {
-              ACE_ERROR ((LM_ERROR,
+              TAOLIB_ERROR ((LM_ERROR,
                           ACE_TEXT ("TAO (%P|%t) - ServerRequest::")
                           ACE_TEXT ("tao_send_reply_exception, ")
                           ACE_TEXT ("could not make exception reply\n")));
@@ -444,7 +444,7 @@ TAO_ServerRequest::tao_send_reply_exception (const CORBA::Exception &ex)
                                               this,
                                               TAO_Message_Semantics (TAO_Message_Semantics::TAO_REPLY)) == -1)
             {
-              ACE_ERROR ((LM_ERROR,
+              TAOLIB_ERROR ((LM_ERROR,
                           ACE_TEXT ("TAO (%P|%t) - ServerRequest::")
                           ACE_TEXT ("tao_send_reply_exception, ")
                           ACE_TEXT ("could not send exception reply\n")));
@@ -452,7 +452,7 @@ TAO_ServerRequest::tao_send_reply_exception (const CORBA::Exception &ex)
         }
       catch (const ::CORBA::BAD_PARAM &bp_ex)
         {
-          ACE_ERROR ((LM_ERROR,
+          TAOLIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO (%P|%t) - ServerRequest::")
                       ACE_TEXT ("tao_send_reply_exception, ")
                       ACE_TEXT ("could not marshal exception reply\n")));
@@ -467,7 +467,7 @@ TAO_ServerRequest::tao_send_reply_exception (const CORBA::Exception &ex)
       // However, in this case, we cannot close the connection
       // down, since it really isn't the client's fault.
 
-      ACE_ERROR ((LM_ERROR,
+      TAOLIB_ERROR ((LM_ERROR,
                   ACE_TEXT ("TAO (%P|%t) - ServerRequest::tao_send_reply_exception, ")
                   ACE_TEXT ("exception thrown ")
                   ACE_TEXT ("but client is not waiting a response\n")));
@@ -530,7 +530,7 @@ TAO_ServerRequest::send_cached_reply (CORBA::OctetSeq &s)
   if (this->mesg_base_->generate_reply_header (*this->outgoing_,
                                                reply_params) == -1)
     {
-      ACE_ERROR ((LM_ERROR,
+      TAOLIB_ERROR ((LM_ERROR,
                   ACE_TEXT ("TAO (%P|%t) - ServerRequest::send_cached_reply, ")
                   ACE_TEXT ("could not make cached reply\n")));
 
@@ -543,7 +543,7 @@ TAO_ServerRequest::send_cached_reply (CORBA::OctetSeq &s)
 
   if (!this->outgoing_->good_bit ())
     {
-      ACE_ERROR ((LM_ERROR,
+      TAOLIB_ERROR ((LM_ERROR,
                   ACE_TEXT ("TAO (%P|%t) - ServerRequest::send_cached_reply, ")
                   ACE_TEXT ("could not marshal reply\n")));
     }
@@ -556,7 +556,7 @@ TAO_ServerRequest::send_cached_reply (CORBA::OctetSeq &s)
                                       this,
                                       TAO_Message_Semantics (TAO_Message_Semantics::TAO_REPLY)) == -1)
     {
-      ACE_ERROR ((LM_ERROR,
+      TAOLIB_ERROR ((LM_ERROR,
                   ACE_TEXT ("TAO (%P|%t) - ServerRequest::send_cached_reply, ")
                   ACE_TEXT ("could not send cached reply\n")));
     }

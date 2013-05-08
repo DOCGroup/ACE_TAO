@@ -33,6 +33,8 @@
  */
 
 // $Id$
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/AV/ntp-time.h"
 #include "orbsvcs/AV/RTCP.h"
 #include "orbsvcs/AV/media_timer.h"
@@ -71,7 +73,7 @@ TAO_AV_RTCP_Callback::receive_control_frame (ACE_Message_Block *data,
                               &more);
 
             if (!sr.is_valid(first_rtcp_packet))
-              ACE_DEBUG ((LM_DEBUG,
+              ORBSVCS_DEBUG ((LM_DEBUG,
                           "TAO_AV_RTCP_Callback::receive_control_frame - "
                           "warning invalid rtcp packet\n"));
 
@@ -95,7 +97,7 @@ TAO_AV_RTCP_Callback::receive_control_frame (ACE_Message_Block *data,
                               &more);
 
             if (!rr.is_valid(first_rtcp_packet))
-              ACE_DEBUG ((LM_DEBUG,
+              ORBSVCS_DEBUG ((LM_DEBUG,
                           "TAO_AV_RTCP_Callback::receive_control_frame - "
                           "warning invalid rtcp packet\n"));
 
@@ -120,7 +122,7 @@ TAO_AV_RTCP_Callback::receive_control_frame (ACE_Message_Block *data,
                                    &more);
 
             if (!sdes.is_valid(first_rtcp_packet))
-              ACE_DEBUG ((LM_DEBUG,
+              ORBSVCS_DEBUG ((LM_DEBUG,
                           "TAO_AV_RTCP_Callback::receive_control_frame - "
                           "warning invalid rtcp packet\n"));
 
@@ -134,7 +136,7 @@ TAO_AV_RTCP_Callback::receive_control_frame (ACE_Message_Block *data,
                                  &more);
 
             if (!bye.is_valid(first_rtcp_packet))
-              ACE_DEBUG ((LM_DEBUG,
+              ORBSVCS_DEBUG ((LM_DEBUG,
                           "TAO_AV_RTCP_Callback::receive_control_frame - "
                           "warning invalid rtcp packet\n"));
 
@@ -162,13 +164,13 @@ TAO_AV_RTCP_Callback::receive_control_frame (ACE_Message_Block *data,
           }
         case RTCP_PT_APP:
           // If we receive one of these, ignore it.
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       "TAO_AV_RTCP_Callback::receive_control_frame - "
                       "APP packet - ignore\n"));
           more -= (4 + (ACE_UINT16)buf_ptr[length - more + 2]);
           break;
         default:
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       "TAO_AV_RTCP_Callback::receive_control_frame - "
                       "UNKNOWN packet type %u; ignore the rest\n",
                       (int)buf_ptr[length - more + 1]));
@@ -180,7 +182,7 @@ TAO_AV_RTCP_Callback::receive_control_frame (ACE_Message_Block *data,
     }
 
     if (more != 0)
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   "TAO_AV_RTCP_Callback::receive_control_frame - "
                   "Error in overall packet length\n"));
     return 0;
@@ -391,13 +393,13 @@ TAO_AV_RTCP_Object::handle_input (void)
   if (n == 0)
     {
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_ERROR, "TAO_AV_RTCP::handle_input:connection closed\n"));
+        ORBSVCS_DEBUG ((LM_ERROR, "TAO_AV_RTCP::handle_input:connection closed\n"));
       return -1;
     }
   if (n < 0)
     {
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_ERROR,"TAO_AV_RTCP::handle_input:recv error\n"));
+        ORBSVCS_DEBUG ((LM_ERROR,"TAO_AV_RTCP::handle_input:recv error\n"));
       return -1;
     }
   data.wr_ptr (n);

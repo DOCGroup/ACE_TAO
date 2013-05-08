@@ -68,7 +68,7 @@ TAO_SCIOP_Connection_Handler::~TAO_SCIOP_Connection_Handler (void)
 
   if (result == -1 && TAO_debug_level)
     {
-      ACE_ERROR ((LM_ERROR,
+      TAOLIB_ERROR ((LM_ERROR,
                   ACE_TEXT("TAO (%P|%t) - SCIOP_Connection_Handler::")
                   ACE_TEXT("~scIOP_Connection_Handler, ")
                   ACE_TEXT("release_os_resources() failed %m\n")));
@@ -178,7 +178,7 @@ TAO_SCIOP_Connection_Handler::open (void*)
         {
           if (TAO_debug_level)
             {
-              ACE_ERROR ((LM_ERROR,
+              TAOLIB_ERROR ((LM_ERROR,
                           ACE_TEXT("TAO (%P|%t) - SCIOP_Connection_Handler::open, ")
                           ACE_TEXT("couldn't set hop limit\n\n")));
             }
@@ -204,7 +204,7 @@ TAO_SCIOP_Connection_Handler::open (void*)
     return -1;
 
   if (TAO_debug_level > 2)
-    ACE_DEBUG ((LM_DEBUG,
+    TAOLIB_DEBUG ((LM_DEBUG,
                 ACE_TEXT("TAO(%P|%t) - SCIOP_Connection_Handler::open, ")
                 ACE_TEXT("The local addr is (%C)\n"),
                 local_addr.get_host_addr ()));
@@ -221,7 +221,7 @@ TAO_SCIOP_Connection_Handler::open (void*)
                                              sizeof(remote_as_string));
           (void) local_addr.addr_to_string (local_as_string,
                                             sizeof(local_as_string));
-          ACE_ERROR ((LM_ERROR,
+          TAOLIB_ERROR ((LM_ERROR,
                       ACE_TEXT("TAO(%P|%t) - TAO_SCIOP_Connection_Handler::open, ")
                       ACE_TEXT("Holy Cow! The remote addr and ")
                       ACE_TEXT("local addr are identical (%s == %s)\n"),
@@ -238,7 +238,7 @@ TAO_SCIOP_Connection_Handler::open (void*)
       if (remote_addr.addr_to_string (client, sizeof (client)) == -1)
         return -1;
 
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - SCIOP_Connection_Handler::open, SCIOP ")
                   ACE_TEXT ("connection to peer <%s> on %d\n"),
                   client, this->peer ().get_handle ()));
@@ -371,7 +371,7 @@ TAO_SCIOP_Connection_Handler::process_listen_point_list (
 
       if (TAO_debug_level > 0)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT("(%P|%t) Listening port [%d] on [%C]\n"),
                       listen_point.port,
                       listen_point.host.in ()));
@@ -412,7 +412,7 @@ TAO_SCIOP_Connection_Handler::set_tos (int tos)
 
       if (TAO_debug_level)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT("TAO (%P|%t) - SCIOP_Connection_Handler::")
                       ACE_TEXT("set_dscp_codepoint -> dscp: %x; result: %d; %C\n"),
                       tos,

@@ -10,6 +10,8 @@
 //=============================================================================
 
 
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Property/CosPropertyService_i.h"
 #include "ace/ACE.h"
 #include "ace/OS_NS_string.h"
@@ -473,7 +475,7 @@ TAO_PropertySet::define_property (const char *property_name,
       if (this->hash_table_.rebind (hash_key,
                                     hash_value) != 1)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       "TAO_PropertySet::Define Property failed\n"));
           throw CORBA::UNKNOWN ();
         }
@@ -692,7 +694,7 @@ TAO_PropertySet::get_all_property_names (CORBA::ULong how_many,
         if (iterator.next (entry_ptr) != 0)
           if (property_set->hash_table_.bind (entry_ptr->ext_id_,
                                               entry_ptr->int_id_) < 0)
-            ACE_DEBUG ((LM_DEBUG,
+            ORBSVCS_DEBUG ((LM_DEBUG,
                         "Error:TAO_PropertySet::get_all_property_names\n"));
 
       // Make the NamesIterator out of this TAO_PropertySet.
@@ -864,7 +866,7 @@ TAO_PropertySet::get_all_properties (CORBA::ULong how_many,
           if (iterator.next (entry_ptr) != 0
               && prop_set->hash_table_.bind (entry_ptr->ext_id_,
                                              entry_ptr->int_id_) < 0)
-            ACE_DEBUG ((LM_DEBUG,
+            ORBSVCS_DEBUG ((LM_DEBUG,
                         "Error:TAO_PropertySet::get_all_properties\n"));
         }
 

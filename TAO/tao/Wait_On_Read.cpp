@@ -119,7 +119,7 @@ TAO_Wait_On_Read::wait (ACE_Time_Value * max_wait_time,
          return 0;
 
        if (TAO_debug_level > 0)
-         ACE_DEBUG ((LM_DEBUG,
+         TAOLIB_DEBUG ((LM_DEBUG,
                      ACE_TEXT ("TAO (%P|%t) - Wait_On_Read[%d]::wait (), ")
                      ACE_TEXT ("registering handle for cleanup\n"),
                      this->transport_->id ()));
@@ -134,7 +134,7 @@ TAO_Wait_On_Read::wait (ACE_Time_Value * max_wait_time,
                                 ACE_Event_Handler::READ_MASK) == -1)
          {
            if (TAO_debug_level > 0)
-             ACE_ERROR ((LM_ERROR,
+             TAOLIB_ERROR ((LM_ERROR,
                          ACE_TEXT ("TAO (%P|%t) - Wait_On_Read[%d]::wait (), ")
                          ACE_TEXT ("registration with reactor returned an error\n"),
                          this->transport_->id ()));

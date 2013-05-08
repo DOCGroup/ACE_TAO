@@ -59,7 +59,7 @@ public:
   /// Shutdown the orb.
   void shutdown (bool wait_for_completion);
 
-  int debug() const;
+  static int debug (void);
   // Note : See the IDL for descriptions of the operations.
 
   // Activator->Locator
@@ -144,6 +144,7 @@ public:
   Activator_Info_Ptr get_activator (const ACE_CString& name);
 
   void remove_aam (AsyncAccessManager_ptr &aam);
+  void remove_aam (const char *name);
   AsyncAccessManager *find_aam (const char *name);
 
 private:
@@ -176,6 +177,8 @@ private:
 
 private:
 
+  static int debug_;
+
   // The class that handles the forwarding.
   ImR_DSI_Forwarder dsi_forwarder_;
 
@@ -196,12 +199,11 @@ private:
   PortableServer::POA_var root_poa_;
   PortableServer::POA_var imr_poa_;
 
-  int debug_;
-
   auto_ptr<Locator_Repository> repository_;
 
   bool read_only_;
   ACE_Time_Value startup_timeout_;
+  bool ping_external_;
   ACE_Time_Value ping_interval_;
   bool unregister_if_address_reused_;
 };
@@ -214,6 +216,8 @@ class SyncListener : public LiveListener
 {
  public:
   SyncListener (const char *server, CORBA::ORB_ptr orb, LiveCheck &pinger);
+
+  virtual ~SyncListener ();
 
   bool is_alive (void);
 
@@ -269,7 +273,7 @@ public:
       LOC_REMOVE_SERVER,
       LOC_SHUTDOWN_SERVER,
       LOC_SERVER_IS_RUNNING,
-      LOC_SERVER_IS_SHUTTING_DOWN,
+      LOC_SERVER_IS_SHUTTING_DOWN
     };
 
   ImR_Loc_ResponseHandler (Loc_Operation_Id opid,

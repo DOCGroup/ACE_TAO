@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "Trading_Service.h"
 #include "ace/OS_main.h"
 
@@ -19,7 +20,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
           trader.run ();
         }
       else
-        ACE_ERROR_RETURN ((LM_ERROR,
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            "Failed to initialize the trader.\n"),
                           1);
     }

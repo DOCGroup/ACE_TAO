@@ -8,30 +8,73 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 ###############################################################################
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
+use File::Copy;
 
 $status = 0;
 
-my $debug_level = '0';
-my $imr_debug_level = $debug_level;
+my $debug_level = 0;
+my $imr_debug_level = 0;
 my $servers_count = 3;
 my $client_count = 2;
 my $server_reply_delay = 5;
 my $usage = 0;
+my $use_imr_start = 0;
+my $restart_loc = 0;
+my $list_test = 0;
+my $hide_server = 0;
+my $expect_transient = "";
+my $notify_locator = "";
+my $debuglog = "";
+my @srvlogfile = ( "", "", "" );
+my @cltlogfile = ( "", "", "" );
+my $actlogfile = "";
+my $loclogfile = "";
+my $back_store_flag = "";
+my $back_store_file = "";
 
 # Ping interval in milliseconds
 my $verification_interval_msecs = 1000;
 
 if ($#ARGV >= 0) {
     for (my $i = 0; $i <= $#ARGV; $i++) {
-	if ($ARGV[$i] eq '-debug') {
-	    $debug_level = '10';
-	    $imr_debug_level = '10';
-	    $i++;
+	if ($ARGV[$i] eq "-debug") {
+	    $debug_level = 10;
+	    $imr_debug_level = 2;
+            $loclogfile = "imr_loc.log";
+        }
+        elsif ($ARGV[$i] eq "-debuglog") {
+	    $debug_level = 10;
+	    $imr_debug_level = 3;
+            $debuglog = "-ORBVerboseLogging 1 -ORBLogFile ";
+            @srvlogfile = ( "server1.log", "server2.log", "server3.log" );
+            @cltlogfile = ( "client1.log", "client2.log", "client3.log" );
+            $actlogfile = "imr_act.log";
+            $loclogfile = "imr_loc.log";
 	}
-	elsif ($ARGV[$i] eq "-server_reply_delay") {
+	elsif ($ARGV[$i] eq "-delay") {
 	    $i++;
 	    $server_reply_delay = $ARGV[$i];
+            if ($server_reply_delay > 16) {
+                $expect_transient = "-e";
+            }
 	}
+        elsif ($ARGV[$i] eq "-hide_server") {
+            $hide_server = 1;
+            $notify_locator = "-l";
+        }
+        elsif ($ARGV[$i] eq "-imr_start") {
+            $use_imr_start = 1;
+        }
+        elsif ($ARGV[$i] eq "-list") {
+            $imr_debug_level = 3;
+            $list_test = 1;
+        }
+        elsif ($ARGV[$i] eq "-restart_loc") {
+            $restart_loc = 1;
+            $back_store_flag = "--directory";
+            $back_store_file = ".";
+            $server_reply_delay = 0;
+        }
 	elsif ($ARGV[$i] eq "-v") {
 	    $i++;
 	    $verification_interval_msecs = $ARGV[$i];
@@ -51,7 +94,7 @@ my $ti =  PerlACE::TestTarget::create_target (++$tgt_num) || die "Create target 
 my @cli;
 
 # Have list indices match client IDs (C1, C2) with first element of list not being used.
-for(my $i = 0; $i <= $client_count; $i++) {
+for(my $i = 0; $i < $client_count; $i++) {
     push (@cli, PerlACE::TestTarget::create_target (++$tgt_num)) || die "Create target $tgt_num failed\n";
 }
 
@@ -61,11 +104,10 @@ my $port = $imr->RandomPort();
 
 my $forward_on_exception_arg = "-ORBForwardOnceOnTransient 1";
 
-my $debug_arg = "-ORBDebugLevel $debug_level";
-my $imr_debug_arg = "-ORBDebugLevel $imr_debug_level";
-if ($imr_debug_level == 10) {
-    $debug_arg = "-ORBDebugLevel $debug_level -ORBVerboseLogging 1 -ORBLogFile";
-    $imr_debug_arg = $imr_debug_arg . " -ORBVerboseLogging 1 -ORBLogFile imr_loc.log ";
+my $debug_arg = "-ORBDebugLevel $debug_level " . $debuglog;
+my $imr_debug_arg = "-ORBDebugLevel $debug_level ";
+if ($loclogfile ne "") {
+    $imr_debug_arg = $imr_debug_arg . "-ORBVerboseLogging 1 -ORBLogFile $loclogfile ";
 }
 
 my $objprefix = "TestObject";
@@ -94,7 +136,7 @@ my @srv_server_cmd;
 my $debug_log_file = "";
 
 # Have list indices match server IDs (S1, S2, S3) with first element of list not being used.
-for(my $i = 0; $i <= $servers_count; $i++) {
+for(my $i = 0; $i < $servers_count; $i++) {
     push (@srv, PerlACE::TestTarget::create_target (++$tgt_num)) || die "Create target $tgt_num failed\n";
     push (@obj, $objprefix. "_" . $i);
     push (@srviorfile,  $obj[$i] . ".ior");
@@ -108,11 +150,11 @@ for(my $i = 0; $i <= $servers_count; $i++) {
     push (@srv_server_cmd, $imr->LocalFile ($server_cmd));
 }
 
-for(my $i = 0; $i <= $client_count; $i++) {
-    if ($debug_level == 10) {
-        $debug_log_file = "test_client_$i" . ".log";
+for(my $i = 0; $i < $client_count; $i++) {
+    push (@CLI, $cli[$i]->CreateProcess ("client", "$debug_arg $cltlogfile[$i] -k file://$srviorfile[0] -n $i $forward_on_exception_arg $expect_transient"));
+    if ($cltlogfile[$i] ne "") {
+        $cli[$i]->DeleteFile ($cltlogfile[$i]);
     }
-    push (@CLI, $cli[$i]->CreateProcess ("client", "-k file://$srviorfile[1] -n $i $forward_on_exception_arg $debug_arg $debug_log_file"));
 }
 
 sub cleanup_output {
@@ -120,7 +162,7 @@ sub cleanup_output {
     $act->DeleteFile ($imriorfile);
     $ti->DeleteFile ($imriorfile);
     $act->DeleteFile ($actiorfile);
-    for (my $i = 1; $i <= $servers_count; $i++) {
+    for (my $i = 0; $i < $servers_count; $i++) {
 	$srv[$i]->DeleteFile ($srviorfile[$i]);
 	$srv[$i]->DeleteFile ($srvstatusfile[$i]);
     }
@@ -137,8 +179,7 @@ sub run_imr_util {
     my $cmd = shift;
     print "Running ImR utility with $cmd\n";
     $TI->Arguments ("-ORBInitRef ImplRepoService=file://$ti_imriorfile $cmd");
-#    print ">>> " . $TI->CommandLine () . "\n";
-    return $TI->SpawnWaitKill($ti->ProcessStartWaitInterval());
+    return $TI->SpawnWaitKill($ti->ProcessStartWaitInterval() +$server_reply_delay);
 }
 
 # Register a server with ImR to get its IOR, then register again so it can later be invoked.
@@ -151,7 +192,8 @@ sub register_server_with_activator {
         $srv_debug_log = "test_server_$srv_id" . ".log";
     }
     $srv_args =
-	"$debug_arg $srv_debug_log -orbuseimr 1 $refstyle ".
+	"$debug_arg $srvlogfile[$srv_id] -orbuseimr 1 $refstyle ".
+        "$expect_transient ".
 	"$forward_on_exception_arg ".
 	"-ORBInitRef ImplRepoService=file://$imr_imriorfile -n $srv_id";
 
@@ -160,7 +202,7 @@ sub register_server_with_activator {
     print ">>> " . $SRV[$srv_id]->CommandLine () . "\n";
     $SRV[$srv_id]->Spawn ();
     if ($srv[$srv_id]->WaitForFileTimed ($srvstatusfile[$srv_id],
-					 $srv[$srv_id]->ProcessStartWaitInterval() + $srv_reply_delay) == -1) {
+					 $srv[$srv_id]->ProcessStartWaitInterval() + $server_reply_delay) == -1) {
         print STDERR "ERROR: cannot find file $srvstatusfile[$srv_id]\n";
         $IMR->Kill (); $IMR->TimedWait (1);
         return 1;
@@ -170,14 +212,14 @@ sub register_server_with_activator {
 
     run_imr_util("ior $obj[$srv_id] -f $srviorfile[$srv_id]");
     run_imr_util("shutdown $obj[$srv_id]");
-    run_imr_util("update $obj[$srv_id] -c \"server $srv_args\"");
+    run_imr_util("update $obj[$srv_id] -c \"./server $srv_args\"");
 }
 
 my $start_time = time();
 
 cleanup_output ();
 
-sub run_test
+sub init_test
 {
     print "Running test with $servers_count servers and $obj_count objects.\n";
 
@@ -187,9 +229,14 @@ sub run_test
 
     print_msg ("Start ImplRepo");
 
+    if ($loclogfile ne "") {
+        $imr->DeleteFile ($loclogfile);
+    }
+
     $IMR->Arguments ("-o $imr_imriorfile $refstyle -orbendpoint iiop://:$port ".
 		     "$forward_on_exception_arg ".
-		     "-d 1 $imr_debug_arg ".
+                     "$back_store_flag $back_store_file ".
+		     "-d $imr_debug_level $imr_debug_arg ".
 		     "-v $verification_interval_msecs");
     print ">>> " . $IMR->CommandLine () . "\n";
     $IMR_status = $IMR->Spawn ();
@@ -218,7 +265,11 @@ sub run_test
         $IMR->Kill (); $IMR->TimedWait (1);
         return 1;
     }
-    for (my $i = 1; $i <= $servers_count; $i++) {
+    for (my $i = 0; $i < $servers_count; $i++) {
+        if ($srvllogfile[$i] ne "") {
+            $srv[$i]->DeleteFile ($srvlogfile[$i]);
+        }
+
 	if ($srv[$i]->PutFile ($imriorfile) == -1) {
 	    print STDERR "ERROR: cannot set file <$srv_imriorfile>\n";
 	    $IMR->Kill (); $IMR->TimedWait (1);
@@ -229,11 +280,12 @@ sub run_test
     ##### Start Activator #####
 
     print_msg ("Start Activator");
-    my $act_debug_log = "";
-    if ($debug_level == 10) {
-        $act_debug_log = "imr_act.log";
+
+    if ($actlogfile ne "") {
+        $act->DeleteFile ($actlogfile);
     }
-    $ACT->Arguments ("$debug_arg $act_debug_log -d 1 -o $act_actiorfile -ORBInitRef ImplRepoService=file://$act_imriorfile");
+
+    $ACT->Arguments ("$debug_arg $actlogfile $notify_locator -d 2 -o $act_actiorfile -ORBInitRef ImplRepoService=file://$act_imriorfile");
     print ">>> " . $ACT->CommandLine () . "\n";
 
     $ACT_status = $ACT->Spawn ();
@@ -251,69 +303,48 @@ sub run_test
     ##### Start S3 #####
 
     print_msg ("Start S3");
-    my $s3_debug_log = "";
-    if ($debug_level == 10) {
-        $s3_debug_log = "test_server_3.log";
-    }
-    $SRV[3]->Arguments ("$debug_arg $s3_debug_log -orbuseimr 1 $refstyle -ORBInitRef ImplRepoService=file://$imr_imriorfile ".
-			    "-d $server_reply_delay -n 3");
-    print ">>> " . $SRV[3]->CommandLine () . "\n";
-    $SRV[3]-> Spawn();
-    if ($srv[3]->WaitForFileTimed ($srvstatusfile[3], $srv[3]->ProcessStartWaitInterval()) == -1) {
-        print STDERR "ERROR: cannot find file $srvstatusfile[3]\n";
+
+    $SRV[2]->Arguments ("$debug_arg $srvlogfile[2] -orbuseimr 1 $refstyle ".
+                        "-d $server_reply_delay ".
+                        "-ORBInitRef ImplRepoService=file://$imr_imriorfile -n 2");
+
+    print ">>> " . $SRV[2]->CommandLine () . "\n";
+    $SRV[2]-> Spawn();
+    if ($srv[2]->WaitForFileTimed ($srvstatusfile[2], $srv[2]->ProcessStartWaitInterval()) == -1) {
+        print STDERR "ERROR: cannot find file $srvstatusfile[2]\n";
         $IMR->Kill (); $IMR->TimedWait (1);
         return 1;
     }
     # Get its IOR so S2 can use to invoke S3
-    run_imr_util("ior $obj[3] -f $srviorfile[3]");
+    run_imr_util("ior $obj[2] -f $srviorfile[2]");
 
     ##### Register S2 with ImR using Activator #####
 
     print_msg ("Register S2 with ImR to start on demand");
 
-    register_server_with_activator(2, 3);
+    register_server_with_activator(1, 2);
 
     ##### Register S1 with ImR using Activator #####
 
     print_msg ("Register S1 with ImR to start on demand");
 
-    register_server_with_activator(1, 2);
+    register_server_with_activator(0, 1);
 
-    ##### C1 invokes S1 #####
-
-    print_msg ("C1 invokes S1");
-
-    print ">>> " . $CLI[1]->CommandLine () . "\n";
-    $CLI_status = $CLI[1]->Spawn ();
-    if ($CLI_status != 0) {
-	print STDERR "ERROR: client 1 returned $CLI_status\n";
-	return 1;
+    if ($hide_server == 1) {
+        $name = $SRV[0]->Executable();
+        rename ($name, "hidden") or die "Rename ($name, \"hidden\") failed: $!";
     }
+}
 
-    ##### C2 invokes S1 in parallel with C1 after ping interval #####
-
-    print_msg ("C2 invokes S1 in parallel with C1 after ping interval");
-
-    # Let ping interval pass to ensure another ping will be done.
-    sleep ($verification_interval_msecs / 1000 + 1);
-
-    print ">>> " . $CLI[2]->CommandLine () . "\n";
-    $CLI_status = $CLI[2]->Spawn ();
-    if ($CLI_status != 0) {
-	print STDERR "ERROR: client 2 returned $CLI_status\n";
-	return 1;
-    }
-
-    ##### Wait for clients to terminate #####
-    print_msg ("Wait for clients to terminate");
-    for (my $i = 1; $i <= $client_count; $i++) {
-	if ($CLI[$i]->WaitKill ($cli[$i]->ProcessStopWaitInterval () + $server_reply_delay + 20) == -1) {
-	    print STDERR "ERROR: client $i not terminated correctly\n";
-	    $status = 1;
-	}
-    }
+sub fini_test
+{
 
     print_msg ("Shutting down");
+
+    if ($hide_server == 1) {
+        $name = $SRV[0]->Executable();
+        rename ("hidden", "server") or die "Rename ($name, \"hidden\") failed: $!";
+    }
 
     if ($srv[1]->WaitForFileTimed ($srvstatusfile[1], $srv[1]->ProcessStartWaitInterval() + $server_reply_delay) == -1) {
         print STDERR "ERROR: cannot find file $srvstatusfile[1]\n";
@@ -322,7 +353,7 @@ sub run_test
     }
 
     ##### Shutdown servers #####
-    for (my $i = 1; $i <= $servers_count; $i++ ) {
+    for (my $i = 0; $i < $servers_count; $i++ ) {
         # Shutting down any server object within the server will shutdown the whole server
         run_imr_util ("shutdown $obj[$i]");
 	if ($SRV[$i]->WaitKill ($srv[$i]->ProcessStopWaitInterval ()) == -1) {
@@ -351,6 +382,106 @@ sub run_test
     return $status;
 }
 
+sub restart_imr_locator
+{
+    print_msg ("restarting locator");
+    my $IMR_status = $IMR->TerminateWaitKill ($imr->ProcessStopWaitInterval());
+    if ($IMR_status != 0) {
+        print STDERR "ERROR: IMR returned $IMR_status\n";
+        $status = 1;
+    }
+
+    print ">>> " . $IMR->CommandLine () . "\n";
+    $IMR_status = $IMR->Spawn ();
+
+    if ($IMR_status != 0) {
+        print STDERR "ERROR: ImplRepo Service returned $IMR_status\n";
+        return 1;
+    }
+
+    print "sleeping (5).... ";
+    sleep (5);
+    print "done\n";
+}
+
+sub run_imr_start_test
+{
+    init_test ();
+
+    $result = run_imr_util ("start $obj[1]");
+
+    if ($hide_server == 1 && $result == 4) {
+        print_msg ("SUCCESS: tao_imr start $obj[1] returned $result\n");
+        $result = 0
+    }
+
+    $result |= fini_test ();
+
+    return $result;
+}
+
+sub run_list_test
+{
+    init_test ();
+    run_imr_util ("start $obj[1]");
+    run_imr_util ("start $obj[0]");
+    run_imr_util ("list -a");
+
+    if ($restart_loc == 1) {
+        restart_imr_locator ();
+        run_imr_util ("list -a");
+    }
+
+    print "sleeping (20).... ";
+    sleep (20);
+    print "done\n";
+
+    run_imr_util ("list -a");
+
+    fini_test ();
+}
+
+sub run_client_activate_test
+{
+    init_test ();
+
+    ##### C1 invokes S1 #####
+
+    print_msg ("C1 invokes S1");
+
+    print ">>> " . $CLI[0]->CommandLine () . "\n";
+    $CLI_status = $CLI[0]->Spawn ();
+    if ($CLI_status != 0) {
+	print STDERR "ERROR: client 1 returned $CLI_status\n";
+	return 1;
+    }
+
+    ##### C2 invokes S1 in parallel with C1 after ping interval #####
+
+    print_msg ("C2 invokes S1 in parallel with C1 after ping interval");
+
+    # Let ping interval pass to ensure another ping will be done.
+    sleep ($verification_interval_msecs / 1000 + 1);
+
+    print ">>> " . $CLI[1]->CommandLine () . "\n";
+    $CLI_status = $CLI[1]->Spawn ();
+    if ($CLI_status != 0) {
+	print STDERR "ERROR: client 2 returned $CLI_status\n";
+	return 1;
+    }
+
+    ##### Wait for clients to terminate #####
+    print_msg ("Wait for clients to terminate");
+    for (my $i = 0; $i < $client_count; $i++) {
+	if ($CLI[$i]->WaitKill ($cli[$i]->ProcessStopWaitInterval () + $server_reply_delay + 60) == -1) {
+	    print STDERR "ERROR: client $i not terminated correctly\n";
+	    $status = 1;
+	}
+    }
+
+    return fini_test ();
+}
+
 END
 {
     if (! $usage) {
@@ -368,6 +499,15 @@ sub usage() {
 ###############################################################################
 ###############################################################################
 
-my $ret = run_test();
+my $ret = 0;
+if ($use_imr_start == 1) {
+    $ret = run_imr_start_test ();
+}
+elsif ($list_test == 1) {
+    $ret = run_list_test ();
+}
+else {
+    $ret = run_client_activate_test ();
+}
 
 exit $ret;

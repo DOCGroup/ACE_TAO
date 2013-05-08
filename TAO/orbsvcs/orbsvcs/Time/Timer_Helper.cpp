@@ -1,5 +1,7 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Time/Timer_Helper.h"
 #include "orbsvcs/Time/TAO_Time_Service_Clerk.h"
 
@@ -49,7 +51,7 @@ Timer_Helper::handle_timeout (const ACE_Time_Value &,
             (*value)->universal_time ();
 
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
+            ORBSVCS_DEBUG ((LM_DEBUG,
                         "\nTime = %Q\nInaccuracy = %Q\nTimeDiff = %d\nstruct.time = %Q\n"
                         "struct.inacclo = %d\nstruct.inacchi = %d\nstruct.Tdf = %d\n",
                         UTO_server->time (),
@@ -78,7 +80,7 @@ Timer_Helper::handle_timeout (const ACE_Time_Value &,
         }
 
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
+        ORBSVCS_DEBUG ((LM_DEBUG,
                     "\nUpdated time from %d servers in the network",
                     no_of_servers));
 

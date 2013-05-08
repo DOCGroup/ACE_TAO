@@ -86,7 +86,7 @@ namespace TAO
 
     if (TAO_debug_level > 3)
       {
-        ACE_DEBUG ((LM_DEBUG,
+        TAOLIB_DEBUG ((LM_DEBUG,
                     "TAO (%P|%t) - DII_Invocation::"
                     "handle_user_exception\n"));
       }

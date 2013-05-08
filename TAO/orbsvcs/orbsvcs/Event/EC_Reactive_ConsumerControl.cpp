@@ -153,7 +153,7 @@ TAO_EC_Reactive_ConsumerControl::consumer_not_exist (
 {
   try
     {
-      //ACE_DEBUG ((LM_DEBUG,
+      //ORBSVCS_DEBUG ((LM_DEBUG,
       //            "EC_Reactive_ConsumerControl(%P|%t) - "
       //            "Consumer %x does not exists\n", long(proxy)));
       proxy->disconnect_push_supplier ();

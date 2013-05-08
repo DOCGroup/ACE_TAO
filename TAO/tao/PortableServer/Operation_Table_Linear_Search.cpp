@@ -49,7 +49,7 @@ TAO_Linear_Search_OpTable::find (const char *opname,
 
   TAO_operation_db_entry const * const entry = lookup (opname);
   if (entry == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    TAOLIB_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("TAO_Linear_Search_Table:find failed\n")),
                       -1);
 
@@ -70,7 +70,7 @@ TAO_Linear_Search_OpTable::find (const char *opname,
 
   TAO_operation_db_entry const * const entry = lookup (opname);
   if (entry == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    TAOLIB_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("TAO_Linear_Search_Table:find failed\n")),
                       -1);
 

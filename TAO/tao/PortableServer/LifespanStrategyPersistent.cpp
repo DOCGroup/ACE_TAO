@@ -97,7 +97,7 @@ namespace TAO
               // When we don't have a ImR_Client adapter, but the user
               // has specified that the ImR has to be used we have an
               // error situation which has to be reported.
-              ACE_ERROR ((LM_ERROR,
+              TAOLIB_ERROR ((LM_ERROR,
                           ACE_TEXT ("(%P|%t) ERROR: No ImR_Client library ")
                           ACE_TEXT ("available but use IMR has been specified.\n")));
 

@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/SSLIOP/SSLIOP_Invocation_Interceptor.h"
 #include "orbsvcs/SSLIOP/SSLIOP_Current.h"
 
@@ -42,7 +43,7 @@ TAO::SSLIOP::Server_Invocation_Interceptor::Server_Invocation_Interceptor
       if (tao_current != 0)
         {
           if (TAO_debug_level > 3)
-            ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) SSLIOP_Invocation_Interceptor::CTOR--setting up SSLIOP Current with slot %d\n", tss_slot));
+            ORBSVCS_DEBUG ((LM_DEBUG, "TAO (%P|%t) SSLIOP_Invocation_Interceptor::CTOR--setting up SSLIOP Current with slot %d\n", tss_slot));
           tao_current->tss_slot (tss_slot);
         }
       else
@@ -102,7 +103,7 @@ TAO::SSLIOP::Server_Invocation_Interceptor::receive_request (
     this->ssliop_current_->no_context ();
 
   if (TAO_debug_level >= 3)
-    ACE_DEBUG ((LM_DEBUG, "SSLIOP (%P|%t) Interceptor (context), ssl=%d\n", !(no_ssl)));
+    ORBSVCS_DEBUG ((LM_DEBUG, "SSLIOP (%P|%t) Interceptor (context), ssl=%d\n", !(no_ssl)));
 
   // if
   // (1) no SSL session state is available (which means that the
@@ -158,7 +159,7 @@ TAO::SSLIOP::Server_Invocation_Interceptor::receive_request (
                                                 operation_name.in());
       if (TAO_debug_level >= 3)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
             "TAO (%P|%t) SL2::access_allowed_ex returned %s\n",
             it_should_happen ? "true" : "false"));
         }

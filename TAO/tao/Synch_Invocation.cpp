@@ -91,7 +91,7 @@ namespace TAO
                 this->retry_state_->forward_on_exception_increment(FOE_TRANSIENT))
                   {
                     if (TAO_debug_level > 0)
-                      ACE_DEBUG ((LM_INFO,
+                      TAOLIB_DEBUG ((LM_INFO,
                                   ACE_TEXT ("TAO (%P|%t) - Synch_Twoway_Invocation::")
                                   ACE_TEXT ("remote_twoway retrying on TRANSIENT ")
                                   ACE_TEXT ("exception\n")));
@@ -281,7 +281,7 @@ namespace TAO
 
     if (TAO_debug_level > 0 && max_wait_time)
       {
-        ACE_DEBUG ((LM_DEBUG,
+        TAOLIB_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) - Synch_Twoway_Invocation::wait_for_reply, ")
                     ACE_TEXT ("timeout after recv is <%u> status <%d>\n"),
                     max_wait_time->msec (),
@@ -295,7 +295,7 @@ namespace TAO
         // time
         if (TAO_debug_level > 3)
           {
-            ACE_DEBUG ((LM_DEBUG,
+            TAOLIB_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("TAO (%P|%t) - Synch_Twoway_Invocation::")
                         ACE_TEXT ("wait_for_reply, ")
                         ACE_TEXT ("recovering after an error\n")));
@@ -341,7 +341,7 @@ namespace TAO
                 this->retry_state_->forward_on_reply_closed_increment ())
               {
                 if (TAO_debug_level > 4)
-                  ACE_DEBUG ((LM_DEBUG,
+                  TAOLIB_DEBUG ((LM_DEBUG,
                               ACE_TEXT ("TAO (%P|%t) - Synch_Twoway_Invocation::")
                               ACE_TEXT ("wait_for_reply, forward profile on ")
                               ACE_TEXT ("connection closed\n")));
@@ -426,7 +426,7 @@ namespace TAO
                 {
                    // permanent condition not given
                     if (TAO_debug_level > 3)
-                        ACE_DEBUG ((LM_DEBUG,
+                        TAOLIB_DEBUG ((LM_DEBUG,
                                     ACE_TEXT ("TAO (%P|%t) - Synch_Twoway_Invocation::")
                                     ACE_TEXT ("check_reply_status: unexpected ")
                                     ACE_TEXT ("LOCATION_FORWARD_PERM reply\n")));
@@ -480,7 +480,7 @@ namespace TAO
 
     if (TAO_debug_level > 3)
       {
-        ACE_DEBUG ((LM_DEBUG,
+        TAOLIB_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) - Synch_Twoway_Invocation::")
                     ACE_TEXT ("location_forward being handled\n")));
       }
@@ -510,7 +510,7 @@ namespace TAO
                      TAO_INVOKE_FAILURE);
 
     if (TAO_debug_level > 3)
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - Synch_Twoway_Invocation::")
                   ACE_TEXT ("handle_user_exception\n")));
 
@@ -530,7 +530,7 @@ namespace TAO
 
     if (TAO_debug_level > 5)
       {
-        ACE_DEBUG ((LM_DEBUG,
+        TAOLIB_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) - Synch_Twoway_Invocation::")
                     ACE_TEXT ("handle_user_exception - ")
                     ACE_TEXT ("raising exception %C\n"),
@@ -554,7 +554,7 @@ namespace TAO
     Reply_Guard mon (this, TAO_INVOKE_FAILURE);
 
     if (TAO_debug_level > 3)
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - Synch_Twoway_Invocation::")
                   ACE_TEXT ("handle_system_exception\n")));
 
@@ -642,7 +642,7 @@ namespace TAO
         mon.set_status (TAO_INVOKE_RESTART);
 
         if (TAO_debug_level > 4)
-          ACE_DEBUG ((LM_DEBUG,
+          TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - Synch_Twoway_Invocation::")
                       ACE_TEXT ("handle_system_exception, profile forwarding ")
                       ACE_TEXT ("on exception "),
@@ -706,7 +706,7 @@ namespace TAO
     ex->completed (CORBA::CompletionStatus (completion));
 
     if (TAO_debug_level > 4)
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - Synch_Twoway_Invocation::")
                   ACE_TEXT ("handle_system_exception, about to raise\n")));
 
@@ -762,7 +762,7 @@ namespace TAO
                 this->retry_state_->forward_on_exception_increment(FOE_TRANSIENT))
               {
                 if (TAO_debug_level > 0)
-                  ACE_DEBUG ((LM_INFO,
+                  TAOLIB_DEBUG ((LM_INFO,
                               ACE_TEXT ("TAO (%P|%t) - Synch_Oneway_Invocation::")
                               ACE_TEXT ("remote_oneway retrying on TRANSIENT ")
                               ACE_TEXT ("exception\n")));
@@ -819,7 +819,7 @@ namespace TAO
                         if (r->register_handler (eh, ACE_Event_Handler::READ_MASK) == -1)
                           {
                             if (TAO_debug_level > 0)
-                              ACE_ERROR ((LM_ERROR,
+                              TAOLIB_ERROR ((LM_ERROR,
                                           ACE_TEXT ("TAO (%P|%t) - Synch_Oneway_Invocation::")
                                           ACE_TEXT ("remote_oneway transport[%d] ")
                                           ACE_TEXT ("registration withreactor ")
@@ -838,7 +838,7 @@ namespace TAO
             else
               {
                 if (TAO_debug_level > 4)
-                  ACE_DEBUG ((LM_DEBUG,
+                  TAOLIB_DEBUG ((LM_DEBUG,
                               ACE_TEXT ("TAO (%P|%t) - Synch_Oneway_Invocation::")
                               ACE_TEXT ("remote_oneway, queueing message\n")));
 

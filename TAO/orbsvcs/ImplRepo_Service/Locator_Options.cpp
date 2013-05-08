@@ -10,7 +10,7 @@
 
 #include "Locator_Options.h"
 #include "ace/Arg_Shifter.h"
-#include "ace/Log_Msg.h"
+#include "orbsvcs/Log_Macros.h"
 #include "ace/OS_NS_strings.h"
 
 #if defined (ACE_WIN32)
@@ -29,6 +29,7 @@ Options::Options ()
 , debug_ (1)
 , multicast_ (false)
 , service_ (false)
+, ping_external_ (false)
 , ping_interval_ (DEFAULT_PING_INTERVAL)
 , startup_timeout_ (DEFAULT_START_TIMEOUT)
 , readonly_ (false)
@@ -57,7 +58,7 @@ Options::parse_args (int &argc, ACE_TCHAR *argv[])
 
           if (!shifter.is_anything_left () || shifter.get_current ()[0] == '-')
             {
-              ACE_ERROR ((LM_ERROR, "Error: -c option needs a command\n"));
+              ORBSVCS_ERROR ((LM_ERROR, "Error: -c option needs a command\n"));
               this->print_usage ();
               return -1;
             }
@@ -74,7 +75,7 @@ Options::parse_args (int &argc, ACE_TCHAR *argv[])
             }
           else
             {
-              ACE_ERROR ((
+              ORBSVCS_ERROR ((
                 LM_ERROR,
                 ACE_TEXT ("Error: Unknown service command : %s\n"),
                 shifter.get_current ()));
@@ -89,7 +90,7 @@ Options::parse_args (int &argc, ACE_TCHAR *argv[])
 
           if (!shifter.is_anything_left () || shifter.get_current ()[0] == '-')
             {
-              ACE_ERROR ((LM_ERROR, "Error: -d option needs a debuglevel\n"));
+              ORBSVCS_ERROR ((LM_ERROR, "Error: -d option needs a debuglevel\n"));
               this->print_usage ();
               return -1;
             }
@@ -108,7 +109,7 @@ Options::parse_args (int &argc, ACE_TCHAR *argv[])
 
           if (!shifter.is_anything_left () || shifter.get_current ()[0] == '-')
             {
-              ACE_ERROR ((LM_ERROR, "Error: -o option needs a filename\n"));
+              ORBSVCS_ERROR ((LM_ERROR, "Error: -o option needs a filename\n"));
               this->print_usage ();
               return -1;
             }
@@ -140,7 +141,7 @@ Options::parse_args (int &argc, ACE_TCHAR *argv[])
 
           if (!shifter.is_anything_left () || shifter.get_current ()[0] == '-')
             {
-              ACE_ERROR ((LM_ERROR, "Error: -p option needs a filename\n"));
+              ORBSVCS_ERROR ((LM_ERROR, "Error: -p option needs a filename\n"));
               this->print_usage ();
               return -1;
             }
@@ -166,7 +167,7 @@ Options::parse_args (int &argc, ACE_TCHAR *argv[])
 
           if (!shifter.is_anything_left () || shifter.get_current ()[0] == '-')
             {
-              ACE_ERROR ((LM_ERROR, "Error: -x option needs a filename\n"));
+              ORBSVCS_ERROR ((LM_ERROR, "Error: -x option needs a filename\n"));
               this->print_usage ();
               return -1;
             }
@@ -192,7 +193,7 @@ Options::parse_args (int &argc, ACE_TCHAR *argv[])
 
           if (!shifter.is_anything_left () || shifter.get_current ()[0] == '-')
             {
-              ACE_ERROR ((LM_ERROR,
+              ORBSVCS_ERROR ((LM_ERROR,
                 ACE_TEXT ("Error: --directory option needs a filename\n")));
               this->print_usage ();
               return -1;
@@ -220,7 +221,7 @@ Options::parse_args (int &argc, ACE_TCHAR *argv[])
 
           if (!shifter.is_anything_left () || shifter.get_current ()[0] == '-')
             {
-              ACE_ERROR ((LM_ERROR,
+              ORBSVCS_ERROR ((LM_ERROR,
                           ACE_TEXT ("Error: -t option needs a value\n")));
               this->print_usage ();
               return -1;
@@ -229,13 +230,18 @@ Options::parse_args (int &argc, ACE_TCHAR *argv[])
             ACE_Time_Value (ACE_OS::atoi (shifter.get_current ()));
         }
       else if (ACE_OS::strcasecmp (shifter.get_current (),
+                                   ACE_TEXT ("-i")) == 0)
+        {
+          this->ping_external_ = true;
+        }
+      else if (ACE_OS::strcasecmp (shifter.get_current (),
                                    ACE_TEXT ("-v")) == 0)
         {
           shifter.consume_arg ();
 
           if (!shifter.is_anything_left () || shifter.get_current ()[0] == '-')
             {
-              ACE_ERROR ((LM_ERROR,
+              ORBSVCS_ERROR ((LM_ERROR,
                           ACE_TEXT ("Error: -v option needs a value\n")));
               this->print_usage ();
               return -1;
@@ -255,7 +261,7 @@ Options::parse_args (int &argc, ACE_TCHAR *argv[])
   if ((this->imr_type_ == BACKUP_IMR || this->imr_type_ == PRIMARY_IMR) &&
       !directory_persistence_used)
     {
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
                   "Error: Redundancy is used but the "
                   "--directory option is not passed\n"));
       this->print_usage ();
@@ -266,7 +272,7 @@ Options::parse_args (int &argc, ACE_TCHAR *argv[])
        xml_persistence_used)
       > 1)
     {
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
                   "Error: Only one persistence option can be used\n"));
       this->print_usage ();
       return -1;
@@ -304,12 +310,12 @@ Options::init_from_registry (void)
 void
 Options::print_usage (void) const
 {
-  ACE_ERROR ((LM_ERROR,
+  ORBSVCS_ERROR ((LM_ERROR,
     ACE_TEXT ("Usage:\n")
     ACE_TEXT ("\n")
     ACE_TEXT ("ImplRepo_Service [-c cmd] [-d 0|1|2] [-e] [-m] [-o file]\n")
     ACE_TEXT (" [-r|-p file|-x file|--directory dir [--primary|--backup] ]\n")
-    ACE_TEXT (" [-s] [-t secs] [-v secs]\n")
+    ACE_TEXT (" [-s] [-t secs] [-v msecs]\n")
     ACE_TEXT ("  -c command      Runs nt service commands ('install' or 'remove')\n")
     ACE_TEXT ("  -d level        Sets the debug level (default 1)\n")
     ACE_TEXT ("  -e              Erase the persisted repository at startup\n")
@@ -324,8 +330,9 @@ Options::print_usage (void) const
     ACE_TEXT ("  --backup        Replicate the ImplRepo as the backup ImR\n")
     ACE_TEXT ("  -r              Use the registry for storing/loading settings\n")
     ACE_TEXT ("  -s              Run as a service\n")
-    ACE_TEXT ("  -t secs         Server startup timeout.(Default=60s)\n")
-    ACE_TEXT ("  -v msecs        Server verification interval.(Default=10s)\n")
+    ACE_TEXT ("  -t secs         Server startup timeout.(Default = 60s)\n")
+    ACE_TEXT ("  -v msecs        Server verification interval.(Default = 10000ms)\n")
+    ACE_TEXT ("  -i              Ping servers without activators too. (Default=false)\n")
     ACE_TEXT ("  --asynch        Servant dispatching using asynch method handling\n")
               ));
 }
@@ -366,7 +373,12 @@ Options::save_registry_options ()
     (LPBYTE) this->persist_file_name_.c_str (), this->persist_file_name_.length () + 1);
   ACE_ASSERT (err == ERROR_SUCCESS);
 
-  DWORD tmp = this->ping_interval_.msec ();
+  DWORD tmp = this->ping_external_ ? 1 : 0;
+  err = ACE_TEXT_RegSetValueEx (key, ACE_TEXT ("PingExternals"), 0, REG_DWORD,
+    (LPBYTE) &tmp, sizeof (DWORD));
+  ACE_ASSERT (err == ERROR_SUCCESS);
+
+  tmp = this->ping_interval_.msec ();
   err = ACE_TEXT_RegSetValueEx (key, ACE_TEXT ("PingInterval"), 0, REG_DWORD,
     (LPBYTE) &tmp, sizeof (DWORD));
   ACE_ASSERT (err == ERROR_SUCCESS);
@@ -449,6 +461,16 @@ Options::load_registry_options ()
     }
 
   DWORD tmp = 0;
+  sz = sizeof(tmp);
+  err = ACE_TEXT_RegQueryValueEx (key, ACE_TEXT ("PingExternal"), 0, &type,
+    (LPBYTE) &tmp, &sz);
+  if (err == ERROR_SUCCESS)
+    {
+      ACE_ASSERT (type == REG_DWORD);
+      ping_external_ = tmp != 0;
+    }
+
+  tmp = 0;
   sz = sizeof(tmp);
   err = ACE_TEXT_RegQueryValueEx (key, ACE_TEXT ("PingInterval"), 0, &type,
     (LPBYTE) &tmp, &sz);
@@ -564,6 +586,12 @@ ACE_Time_Value
 Options::startup_timeout (void) const
 {
   return this->startup_timeout_;
+}
+
+bool
+Options::ping_external (void) const
+{
+  return this->ping_external_;
 }
 
 ACE_Time_Value

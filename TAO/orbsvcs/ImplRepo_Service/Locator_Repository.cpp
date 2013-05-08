@@ -1,6 +1,9 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "Locator_Repository.h"
+#include "ImR_Locator_i.h"
+
 #include "utils.h"
 #include "tao/ORB_Core.h"
 #include "tao/default_ports.h"
@@ -52,13 +55,13 @@ Locator_Repository::report_ior (PortableServer::POA_ptr )
 {
   if (this->registered_)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
         ACE_TEXT ("ERROR: Repository already reported IOR\n")), -1);
     }
 
   if (this->opts_.debug () > 0)
     {
-      ACE_DEBUG ((LM_INFO, ACE_TEXT ("report_ior <%C>\n"),
+      ORBSVCS_DEBUG ((LM_INFO, ACE_TEXT ("report_ior <%C>\n"),
         this->imr_ior_.in ()));
     }
 
@@ -106,7 +109,7 @@ Locator_Repository::report_ior (PortableServer::POA_ptr )
                                     ACE_TEXT("w"));
           if (fp == 0)
             {
-              ACE_ERROR_RETURN ((LM_ERROR,
+              ORBSVCS_ERROR_RETURN ((LM_ERROR,
                 ACE_TEXT("ImR: Could not open file: %s\n"),
                 this->opts_.ior_filename ().c_str ()), -1);
             }
@@ -125,14 +128,14 @@ Locator_Repository::recover_ior (void)
 {
   if (this->registered_)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
          ACE_TEXT ("ERROR: Repository already registered IOR. ")
          ACE_TEXT ("recover_ior should not be called.\n")), -1);
     }
 
   if (this->opts_.debug () > 0)
     {
-      ACE_DEBUG ((LM_INFO, ACE_TEXT ("recover_ior <%C>\n"),
+      ORBSVCS_DEBUG ((LM_INFO, ACE_TEXT ("recover_ior <%C>\n"),
                   this->opts_.ior_filename ().c_str()));
     }
 
@@ -230,7 +233,7 @@ Locator_Repository::setup_multicast (ACE_Reactor* reactor, const char* ior)
                                  ACE_Event_Handler::READ_MASK) == -1)
     {
       if (this->opts_.debug() > 0)
-        ACE_DEBUG ((LM_DEBUG, "ImR: cannot register Event handler\n"));
+        ORBSVCS_DEBUG ((LM_DEBUG, "ImR: cannot register Event handler\n"));
       return -1;
     }
 #else /* ACE_HAS_IP_MULTICAST*/
@@ -271,11 +274,13 @@ int
 Locator_Repository::unregister_if_address_reused (
   const ACE_CString& server_id,
   const ACE_CString& name,
-  const char* partial_ior)
+  const char* partial_ior,
+  ImR_Locator_i* imr_locator)
+
 {
   if (this->opts_.debug() > 0)
   {
-    ACE_DEBUG ((LM_DEBUG,
+    ORBSVCS_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t)ImR: checking reuse address ")
       ACE_TEXT ("for server \"%C %C\" ior \"%C\"\n"),
       server_id.c_str(),
@@ -293,7 +298,7 @@ Locator_Repository::unregister_if_address_reused (
 
     if (this->opts_.debug() > 0)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
         ACE_TEXT ("(%P|%t)ImR: iterating - registered server")
         ACE_TEXT ("\"%C %C\" ior \"%C\"\n"), info->server_id.c_str(),
         info->name.c_str (), info->partial_ior.c_str ()));
@@ -305,7 +310,7 @@ Locator_Repository::unregister_if_address_reused (
     {
       if (this->opts_.debug() > 0)
       {
-        ACE_DEBUG ((LM_DEBUG,
+        ORBSVCS_DEBUG ((LM_DEBUG,
           ACE_TEXT ("(%P|%t)ImR: reuse address %C so remove server %C \n"),
           info->partial_ior.c_str (), info->name.c_str ()));
       }
@@ -319,7 +324,7 @@ Locator_Repository::unregister_if_address_reused (
   int err = 0;
   for (size_t i = 0; i < srvs.size (); ++i)
   {
-
+    imr_locator->remove_aam (srvs[i].c_str());
     if (this->remove_server (srvs[i]) != 0)
     {
       err = -1;

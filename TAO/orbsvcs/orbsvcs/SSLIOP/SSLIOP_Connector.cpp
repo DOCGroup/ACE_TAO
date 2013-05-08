@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/SSLIOP/SSLIOP_Connector.h"
 #include "orbsvcs/SSLIOP/SSLIOP_OwnCredentials.h"
 #include "orbsvcs/SSLIOP/SSLIOP_Profile.h"
@@ -85,7 +86,7 @@ TAO::SSLIOP::Connector::connect (TAO::Profile_Transport_Resolver *resolver,
                                  ACE_Time_Value *timeout)
 {
   if (TAO_debug_level > 0)
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO_SSLIOP (%P|%t) - Connector::connect, ")
                   ACE_TEXT ("looking for SSLIOP connection.\n")));
 
@@ -137,7 +138,7 @@ TAO::SSLIOP::Connector::connect (TAO::Profile_Transport_Resolver *resolver,
     {
       if (TAO_debug_level > 0)
         {
-          ACE_ERROR ((LM_ERROR,
+          ORBSVCS_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO_SSLIOP (%P|%t) ERROR: ")
                       ACE_TEXT ("Cannot establish trust since ")
                       ACE_TEXT ("no SSLIOP tagged component was ")
@@ -171,7 +172,7 @@ TAO::SSLIOP::Connector::connect (TAO::Profile_Transport_Resolver *resolver,
     {
       if (TAO_debug_level > 0)
         {
-          ACE_ERROR ((LM_ERROR,
+          ORBSVCS_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO_SSLIOP (%P|%t) ERROR: ")
                       ACE_TEXT ("Cannot make secure invocation since ")
                       ACE_TEXT ("no SSLIOP tagged component was ")
@@ -279,7 +280,7 @@ TAO::SSLIOP::Connector::corbaloc_scan (const char *endpoint, size_t &len)
    {
        if (TAO_debug_level)
        {
-            ACE_DEBUG ((LM_DEBUG,
+            ORBSVCS_DEBUG ((LM_DEBUG,
                         ACE_TEXT("(%P|%t) SSLIOP_Connector::corbaloc_scan warning: ")
                         ACE_TEXT("supplied string contains no comma or slash: %s\n"),
                         endpoint));
@@ -433,7 +434,7 @@ TAO::SSLIOP::Connector::ssliop_connect (
     {
       if (TAO_debug_level > 0)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) SSLIOP connection failed.\n")
                       ACE_TEXT ("TAO (%P|%t) This is most likely ")
                       ACE_TEXT ("due to a hostname lookup ")
@@ -456,7 +457,7 @@ TAO::SSLIOP::Connector::ssliop_connect (
   if (!ssl_endpoint->credentials_set ())
     {
       if (TAO_debug_level > 2)
-        ACE_DEBUG ((LM_DEBUG,
+        ORBSVCS_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) Initializing SSLIOP_Endpoint\n")
                     ));
 
@@ -464,7 +465,7 @@ TAO::SSLIOP::Connector::ssliop_connect (
                svc_handler) != 0)
         {
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_ERROR,
+            ORBSVCS_DEBUG ((LM_ERROR,
                         ACE_TEXT ("TAO (%P|%t) Unable to create SSLIOP ")
                         ACE_TEXT ("service handler.\n")));
 
@@ -497,7 +498,7 @@ TAO::SSLIOP::Connector::ssliop_connect (
         safe_handler (svc_handler);
 
       if (TAO_debug_level > 2)
-        ACE_DEBUG ((LM_DEBUG,
+        ORBSVCS_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) - SSLIOP_Connector::ssliop_connect, ")
                     ACE_TEXT ("got existing transport[%d]\n"),
                     transport->id ()));
@@ -510,7 +511,7 @@ TAO::SSLIOP::Connector::ssliop_connect (
                                                      transport,
                                                      max_wait_time))
             {
-              ACE_ERROR ((LM_ERROR,
+              ORBSVCS_ERROR ((LM_ERROR,
                           ACE_TEXT ("TAO (%P|%t) - SSLIOP_Connector::ssliop_connect,")
                           ACE_TEXT ("wait for completion failed\n")));
 
@@ -529,7 +530,7 @@ TAO::SSLIOP::Connector::ssliop_connect (
         {
 
           if (TAO_debug_level > 4)
-            ACE_DEBUG ((LM_DEBUG,
+            ORBSVCS_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("TAO (%P|%t) - SSLIOP_Connector::ssliop_connect, ")
                         ACE_TEXT ("making a new connection\n")));
 
@@ -547,7 +548,7 @@ TAO::SSLIOP::Connector::ssliop_connect (
                    svc_handler) != 0)
             {
               if (TAO_debug_level > 0)
-                ACE_DEBUG ((LM_ERROR,
+                ORBSVCS_DEBUG ((LM_ERROR,
                             ACE_TEXT ("TAO (%P|%t) Unable to create SSLIOP ")
                             ACE_TEXT ("service handler.\n")));
 
@@ -592,7 +593,7 @@ TAO::SSLIOP::Connector::ssliop_connect (
                                         "eNULL") == 0)
             {
               if (TAO_debug_level > 0)
-                ACE_DEBUG ((LM_ERROR,
+                ORBSVCS_DEBUG ((LM_ERROR,
                             ACE_TEXT ("(%P|%t) Unable to set eNULL ")
                             ACE_TEXT ("SSL cipher.\n")));
 
@@ -639,7 +640,7 @@ TAO::SSLIOP::Connector::ssliop_connect (
                                                              max_wait_time))
                     {
                       if (TAO_debug_level > 2)
-                        ACE_ERROR ((LM_ERROR, "TAO (%P|%t) - SSLIOP_Connector::"
+                        ORBSVCS_ERROR ((LM_ERROR, "TAO (%P|%t) - SSLIOP_Connector::"
                                               "ssliop_connect, "
                                               "wait for completion failed\n"));
                     }
@@ -660,7 +661,7 @@ TAO::SSLIOP::Connector::ssliop_connect (
                   char buffer [MAXHOSTNAMELEN + 6 + 1];
                   ssl_endpoint->addr_to_string (buffer,
                                                 sizeof (buffer) - 1);
-                  ACE_DEBUG ((LM_ERROR,
+                  ORBSVCS_DEBUG ((LM_ERROR,
                               ACE_TEXT ("TAO (%P|%t) - SSL connection to ")
                               ACE_TEXT ("<%s:%d> failed (%p)\n"),
                               buffer,
@@ -686,7 +687,7 @@ TAO::SSLIOP::Connector::ssliop_connect (
           // At this point, the connection has be successfully connected.
           // #REFCOUNT# is one.
           if (TAO_debug_level > 2)
-            ACE_DEBUG ((LM_DEBUG,
+            ORBSVCS_DEBUG ((LM_DEBUG,
                         "TAO (%P|%t) - SSLIOP_Connector::ssliop_connect, "
                         "new SSL connection to port %d on transport[%d]\n",
                         remote_address.get_port_number (),
@@ -706,7 +707,7 @@ TAO::SSLIOP::Connector::ssliop_connect (
 
               if (TAO_debug_level > 0)
                 {
-                  ACE_ERROR ((LM_ERROR,
+                  ORBSVCS_ERROR ((LM_ERROR,
                               "TAO (%P|%t) - SLIIOP_Connector::ssliop_connect, "
                               "could not add the new connection to cache\n"));
                 }
@@ -735,7 +736,7 @@ TAO::SSLIOP::Connector::ssliop_connect (
               (void) transport->close_connection ();
 
               if (TAO_debug_level > 0)
-                ACE_ERROR ((LM_ERROR,
+                ORBSVCS_ERROR ((LM_ERROR,
                             "TAO (%P|%t) - SSLIOP_Connector [%d]::ssliop_connect, "
                             "could not register the transport "
                             "in the reactor.\n",

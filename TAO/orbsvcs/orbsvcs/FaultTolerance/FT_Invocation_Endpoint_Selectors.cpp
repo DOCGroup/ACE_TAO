@@ -10,7 +10,7 @@
 #include "tao/Base_Transport_Property.h"
 #include "tao/SystemException.h"
 #include "tao/debug.h"
-#include "ace/Log_Msg.h"
+#include "orbsvcs/Log_Macros.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -219,7 +219,7 @@ TAO_FT_Invocation_Endpoint_Selector::check_profile_for_primary (
 
   if (TAO_debug_level > 2)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO_FT (%P|%t) - Got a primary component\n")));
     }
 

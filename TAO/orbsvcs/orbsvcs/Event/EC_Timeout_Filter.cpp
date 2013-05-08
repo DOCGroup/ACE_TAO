@@ -51,7 +51,7 @@ TAO_EC_Timeout_Filter::TAO_EC_Timeout_Filter (
                             ACE_Time_Value::zero);
     }
 
-  //  ACE_DEBUG ((LM_DEBUG,
+  //  ORBSVCS_DEBUG ((LM_DEBUG,
   //              "EC_Timeout_Filter - interval = %d:%d, ID = %d\n",
   //              tv_interval.sec (), tv_interval.usec (),
   //              this->id_));

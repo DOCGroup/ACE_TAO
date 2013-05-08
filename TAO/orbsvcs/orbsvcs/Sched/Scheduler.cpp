@@ -9,6 +9,7 @@
 //=============================================================================
 
 
+#include "orbsvcs/Log_Macros.h"
 #include "ace/Sched_Params.h"
 #include "orbsvcs/Time_Utilities.h"
 #include "orbsvcs/Sched/Scheduler.h"
@@ -188,7 +189,7 @@ int ACE_Scheduler::number_of_dependencies(RT_Info& rt_info)
 int ACE_Scheduler::add_dependency(RT_Info* rt_info,
                               const Dependency_Info& d)
 {
-  // ACE_DEBUG ((LM_DEBUG, "Sched (%t) adding dependency to: %s\n",
+  // ORBSVCS_DEBUG ((LM_DEBUG, "Sched (%t) adding dependency to: %s\n",
   //              (const char*)rt_info->entry_point));
   RtecScheduler::Dependency_Set& set = rt_info->dependencies;
   int l = set.length();
@@ -249,7 +250,7 @@ ACE_Scheduler::dispatch_configuration (const Preemption_Priority & p_priority,
   Config_Info *config_info;
   if (lookup_config_info (p_priority, config_info) != SUCCEEDED)
   {
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        "Config info for priority %lu could not be found\n",
                        p_priority),
                       -1);

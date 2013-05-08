@@ -1,6 +1,7 @@
 // -*- C++ -*-
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/PortableGroup/PG_FactoryRegistry.h"
 
 #include "ace/Get_Opt.h"
@@ -19,7 +20,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // to aid in debugging.
 #define METHOD_ENTRY(name)            \
   if (TAO_debug_level <= 6){} else    \
-    ACE_DEBUG (( LM_DEBUG,            \
+    ORBSVCS_DEBUG (( LM_DEBUG,            \
     "Enter %C\n", #name               \
       ))
 
@@ -36,7 +37,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // Moral:  Always use braces.
 #define METHOD_RETURN(name)           \
   if (TAO_debug_level <= 6){} else    \
-    ACE_DEBUG (( LM_DEBUG,            \
+    ORBSVCS_DEBUG (( LM_DEBUG,            \
       "Leave %C\n", #name             \
       ));                             \
   return /* value goes here */
@@ -92,7 +93,7 @@ int TAO::PG_FactoryRegistry::parse_args (int argc, ACE_TCHAR * argv[])
       case '?':
         // fall thru
       default:
-        ACE_ERROR_RETURN ((LM_ERROR,
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s"
                            " -o <registry ior file>"
                            " -n <name to use to register with name service>"
@@ -184,7 +185,7 @@ int TAO::PG_FactoryRegistry::init (CORBA::ORB_ptr orb)
     this->orb_->resolve_initial_references (TAO_OBJID_ROOTPOA);
 
   if (CORBA::is_nil (poa_object.in ()))
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT (" (%P|%t) Unable to initialize the POA.\n")),
                       -1);
 
@@ -195,7 +196,7 @@ int TAO::PG_FactoryRegistry::init (CORBA::ORB_ptr orb)
 
   if (CORBA::is_nil (this->poa_.in()))
   {
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT (" (%P|%t) Unable to narrow the POA.\n")),
                       -1);
   }
@@ -233,7 +234,7 @@ int TAO::PG_FactoryRegistry::init (CORBA::ORB_ptr orb)
       this->orb_->resolve_initial_references ("NameService");
 
     if (CORBA::is_nil(naming_obj.in ())){
-      ACE_ERROR_RETURN ((LM_ERROR,
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
                          "%T %n (%P|%t) Unable to find the Naming Service\n"),
                         1);
     }
@@ -288,7 +289,7 @@ void TAO::PG_FactoryRegistry::register_factory (
   auto_ptr<RoleInfo> safe_entry;
   if (this->registry_.find(role, role_info) != 0)
     {
-      ACE_DEBUG(( LM_DEBUG,
+      ORBSVCS_DEBUG(( LM_DEBUG,
                   "%s: adding new role: %s:%s\n",
                   this->identity_.c_str(), role, type_id));
 
@@ -317,7 +318,7 @@ void TAO::PG_FactoryRegistry::register_factory (
       PortableGroup::FactoryInfo & info = infos[nInfo];
       if (info.the_location == factory_info.the_location)
         {
-          ACE_ERROR(( LM_ERROR,
+          ORBSVCS_ERROR(( LM_ERROR,
                       "%s: Attempt to register duplicate location %s for role: %s\n" ,
                       this->identity_.c_str(),
                       static_cast<const char *> (info.the_location[0].id),
@@ -334,7 +335,7 @@ void TAO::PG_FactoryRegistry::register_factory (
     this->registry_.bind(role, safe_entry.release());
   }
 
-  ACE_DEBUG(( LM_DEBUG,
+  ORBSVCS_DEBUG(( LM_DEBUG,
     "%s: Added factory: [%d] %s@%s\n",
       this->identity_.c_str(),
       static_cast<int> (length + 1),
@@ -364,7 +365,7 @@ void TAO::PG_FactoryRegistry::unregister_factory (
       {
         found = 1;
 
-        ACE_ERROR(( LM_INFO,
+        ORBSVCS_ERROR(( LM_INFO,
           "%s: Unregistering  factory %s@%s\n",
             this->identity_.c_str(),
             role,
@@ -386,7 +387,7 @@ void TAO::PG_FactoryRegistry::unregister_factory (
           ACE_ASSERT ( length == 1 );
           if (this->registry_.unbind (role) == 0)
           {
-            ACE_DEBUG(( LM_INFO,
+            ORBSVCS_DEBUG(( LM_INFO,
               "%s: No more factories registered for %s\n",
               this->identity_.c_str(),
               role
@@ -395,7 +396,7 @@ void TAO::PG_FactoryRegistry::unregister_factory (
           }
           else
           {
-            ACE_ERROR ((LM_ERROR,
+            ORBSVCS_ERROR ((LM_ERROR,
               "%s: LOGIC ERROR AT " __FILE__ " (%d): Entry to be deleted disappeared\n",
               this->identity_.c_str(),
               __LINE__));
@@ -406,7 +407,7 @@ void TAO::PG_FactoryRegistry::unregister_factory (
   }
   else
   {
-    ACE_ERROR(( LM_ERROR,
+    ORBSVCS_ERROR(( LM_ERROR,
       "%s, Attempt to unregister factory for unknown role %s\n",
       this->identity_.c_str(),
       role
@@ -419,7 +420,7 @@ void TAO::PG_FactoryRegistry::unregister_factory (
   // check quit-on-idle
   if (registry_.current_size() == 0 && quit_state_ == LIVE)
   {
-    ACE_ERROR(( LM_INFO,
+    ORBSVCS_ERROR(( LM_INFO,
       "%s is idle\n",
       identity()
       ));
@@ -442,7 +443,7 @@ void TAO::PG_FactoryRegistry::unregister_factory_by_role (
   RoleInfo * role_info = 0;
   if (this->registry_.unbind(role, role_info) == 0)
   {
-    ACE_DEBUG(( LM_DEBUG,
+    ORBSVCS_DEBUG(( LM_DEBUG,
       "%s: Unregistering all factories for role %s\n",
       this->identity_.c_str(),
       role
@@ -452,7 +453,7 @@ void TAO::PG_FactoryRegistry::unregister_factory_by_role (
   }
   else
   {
-    ACE_ERROR(( LM_INFO,
+    ORBSVCS_ERROR(( LM_INFO,
       "%s: Unregister_factory_by_role: unknown role: %s\n",
       this->identity_.c_str(),
       role
@@ -464,7 +465,7 @@ void TAO::PG_FactoryRegistry::unregister_factory_by_role (
   // check quit options
   if (registry_.current_size() == 0 && quit_state_ == LIVE)
   {
-    ACE_ERROR(( LM_INFO,
+    ORBSVCS_ERROR(( LM_INFO,
       "%s is idle\n",
       identity()
       ));
@@ -497,7 +498,7 @@ void TAO::PG_FactoryRegistry::unregister_factory_by_location (
     RoleInfo * role_info =  entry.int_id_;
 
     PortableGroup::FactoryInfos & infos = role_info->infos_;
-    // ACE_ERROR((LM_INFO,  "unregister_factory_by_location: Checking role %s\n", role.c_str()  ));
+    // ORBSVCS_ERROR((LM_INFO,  "unregister_factory_by_location: Checking role %s\n", role.c_str()  ));
 
     int found = 0;
     CORBA::ULong length = infos.length();
@@ -507,7 +508,7 @@ void TAO::PG_FactoryRegistry::unregister_factory_by_location (
       if (info.the_location == location)
       {
 
-        ACE_ERROR((LM_INFO,
+        ORBSVCS_ERROR((LM_INFO,
           "%s: Unregister_factory_by_location: Removing: [%d] %s@%s\n",
           this->identity_.c_str(),
           static_cast<int> (nInfo),
@@ -519,7 +520,7 @@ void TAO::PG_FactoryRegistry::unregister_factory_by_location (
         {
           while (nInfo + 1 < length)
           {
-            ACE_ERROR((LM_INFO,
+            ORBSVCS_ERROR((LM_INFO,
               "%s: Unregister_factory_by_location: Move: [%d] %s to [%d]\n",
               this->identity_.c_str(),
               (int)nInfo + 1, role.c_str(), (int)nInfo
@@ -527,7 +528,7 @@ void TAO::PG_FactoryRegistry::unregister_factory_by_location (
             infos[nInfo] = infos[nInfo + 1];
             nInfo += 1;
           }
-          ACE_ERROR((LM_INFO,
+          ORBSVCS_ERROR((LM_INFO,
             "%s: unregister_factory_by_location: New length [%d] %s\n",
             this->identity_.c_str(),
             (int)nInfo, role.c_str()
@@ -536,7 +537,7 @@ void TAO::PG_FactoryRegistry::unregister_factory_by_location (
         }
         else
         {
-          ACE_ERROR((LM_INFO,
+          ORBSVCS_ERROR((LM_INFO,
             "%s: Removed all entries for %s\n",
             this->identity_.c_str(),
             role.c_str()
@@ -553,7 +554,7 @@ void TAO::PG_FactoryRegistry::unregister_factory_by_location (
 
   for (size_t nRole = 0; nRole < emptyRoles.size(); ++nRole)
   {
-    ACE_ERROR((LM_INFO,
+    ORBSVCS_ERROR((LM_INFO,
       "%s: Remove role %s\n",
       this->identity_.c_str(),
       emptyRoles[nRole].c_str()
@@ -565,7 +566,7 @@ void TAO::PG_FactoryRegistry::unregister_factory_by_location (
     }
     else
     {
-      ACE_ERROR ((LM_ERROR,
+      ORBSVCS_ERROR ((LM_ERROR,
         "%s: LOGIC ERROR AT " __FILE__ " (%d): Role to be deleted disappeared\n",
         this->identity_.c_str(),
         __LINE__));
@@ -575,7 +576,7 @@ void TAO::PG_FactoryRegistry::unregister_factory_by_location (
   // If all types are gone...
   if (registry_.current_size() == 0 && quit_state_ == LIVE)
   {
-    ACE_ERROR(( LM_INFO,
+    ORBSVCS_ERROR(( LM_INFO,
       "%s is idle\n",
       identity()
       ));
@@ -610,7 +611,7 @@ void TAO::PG_FactoryRegistry::unregister_factory_by_location (
   else
   {
     type_id = CORBA::string_dup("");
-    ACE_ERROR(( LM_INFO,
+    ORBSVCS_ERROR(( LM_INFO,
       "%s: list_factories_by_role: unknown role %s\n",
       this->identity_.c_str(),
       role
@@ -677,7 +678,7 @@ int TAO::PG_FactoryRegistry::write_ior_file(const ACE_TCHAR * outputFile, const 
   }
   else
   {
-    ACE_ERROR ((LM_ERROR,
+    ORBSVCS_ERROR ((LM_ERROR,
       "Open failed for %s\n", outputFile
     ));
   }

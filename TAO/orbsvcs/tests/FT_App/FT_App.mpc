@@ -91,7 +91,7 @@ project(*Analyzer): taoclient, fault_tolerance, notification_skel, orbsvcsexe {
   }
 }
 
-project(*FaultConsumer): taoserver, fault_tolerance, notification_skel, orbsvcsexe, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+project(*FaultConsumer): taoserver, fault_tolerance, notification_skel, orbsvcsexe, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, svc_utils {
   exename = ft_fault_consumer
   libs    += TAO_ReplicationManagerLib
   after   += FT_ReplicationManager_Lib

@@ -1,6 +1,8 @@
 // -*- C++ -*-
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Time/TAO_Time_Service_Clerk.h"
 #include "orbsvcs/Time/TAO_TIO.h"
 #include "orbsvcs/Time/TAO_UTO.h"
@@ -25,7 +27,7 @@ TAO_Time_Service_Clerk::TAO_Time_Service_Clerk (int timer_value,
        0,
        ACE_Time_Value::zero,
        ACE_Time_Value(timer_value,timer_value_usecs)) == -1)
-    ACE_ERROR ((LM_ERROR,
+    ORBSVCS_ERROR ((LM_ERROR,
                 "%p\n",
                 "schedule_timer ()"));
 }

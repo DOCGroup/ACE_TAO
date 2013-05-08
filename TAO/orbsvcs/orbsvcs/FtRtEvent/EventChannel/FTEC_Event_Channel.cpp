@@ -1,5 +1,6 @@
 // $Id$
 
+#include "orbsvcs/Log_Macros.h"
 #include "ace/Dynamic_Service.h"
 #include "orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel.h"
 #include "orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel_Impl.h"
@@ -50,7 +51,7 @@ void setup_object_group(TAO_FTEC_Event_Channel* es,
           resolve<FtRtecEventChannelAdmin::EventChannel>(naming_context,
             FTRTEC::Identification_Service::instance()->name());
 
-        ACE_DEBUG((LM_DEBUG, "Got Primary address from Naming Service\n"));
+        ORBSVCS_DEBUG((LM_DEBUG, "Got Primary address from Naming Service\n"));
 
         primary->join_group(member_list[0]);
       }
@@ -67,7 +68,7 @@ TAO_FTEC_Event_Channel::activate(TAO_FTEC_Event_Channel::MEMBERSHIP membership)
     detector_loader->init(0, 0);
 
     if (FTRTEC::Identification_Service::instance() == 0)
-      ACE_ERROR_RETURN((LM_ERROR, "No Identification\n"), 0);
+      ORBSVCS_ERROR_RETURN((LM_ERROR, "No Identification\n"), 0);
 
     // initialize naming_contex
     CosNaming::NamingContext_var naming_context
@@ -164,7 +165,7 @@ TAO_FTEC_Event_Channel::for_suppliers (void)
 void
 TAO_FTEC_Event_Channel::set_state (const FTRT::State & s)
 {
-  ACE_DEBUG((LM_DEBUG, "TAO_FTEC_Event_Channel::set_state\n"));
+  ORBSVCS_DEBUG((LM_DEBUG, "TAO_FTEC_Event_Channel::set_state\n"));
   ec_impl_->set_state(s);
 }
 

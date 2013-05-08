@@ -415,7 +415,7 @@ CORBA::Long
 TAO_RT_Protocols_Hooks::get_dscp_codepoint (void)
 {
   if (TAO_debug_level)
-    ACE_DEBUG ((LM_DEBUG,
+    TAOLIB_DEBUG ((LM_DEBUG,
                 "TAO_RT_Protocols_Hooks::get_dscp_codepoint\n"));
 
   CORBA::Long codepoint = 0;
@@ -434,7 +434,7 @@ TAO_RT_Protocols_Hooks::get_dscp_codepoint (void)
         {
           if (TAO_debug_level > 0)
             {
-              ACE_ERROR ((LM_ERROR,
+              TAOLIB_ERROR ((LM_ERROR,
                           "Cannot convert corba priority %d "
                           "to network priority\n",
                           priority));
@@ -533,7 +533,7 @@ TAO_RT_Protocols_Hooks::get_thread_native_priority (
 
   if (ACE_Thread::getprio (current, priority) == -1)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - ")
                   ACE_TEXT ("RT_Protocols_Hooks::get_thread_native_priority: ")
                   ACE_TEXT (" ACE_Thread::get_prio failed\n")));
@@ -624,7 +624,7 @@ TAO_RT_Protocols_Hooks::set_thread_native_priority (
 
   if (ACE_Thread::setprio (current, native_priority) == -1)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
+      TAOLIB_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("(%N,%l) Error setting thread ")
                          ACE_TEXT ("priority to %d, errno %d %m\n"),
                          native_priority,
