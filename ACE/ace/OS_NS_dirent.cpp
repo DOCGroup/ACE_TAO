@@ -10,7 +10,7 @@
 
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_string.h"
-#include "ace/Log_Msg.h"
+#include "ace/Log_Category.h"
 #include "ace/OS_NS_stdlib.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

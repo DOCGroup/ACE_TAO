@@ -5,7 +5,7 @@
 #include "ace/SOCK.h"
 #include "QoS_Manager.h"
 #include "QoS_Session_Impl.h"
-#include "ace/Log_Msg.h"
+#include "ace/Log_Category.h"
 
 #if !defined (__ACE_INLINE__)
 #include "QoS_Session_Impl.inl"
@@ -45,7 +45,7 @@ rsvp_callback (rapi_sid_t /* sid */,
                )
 {
   if (args == 0)
-    ACE_DEBUG ((LM_DEBUG,
+    ACELIB_DEBUG ((LM_DEBUG,
                 "Argument in the call back function is null\n\n"));
 
   ACE_QoS_Session *qos_session = (ACE_QoS_Session *) args;
@@ -54,7 +54,7 @@ rsvp_callback (rapi_sid_t /* sid */,
 
   if (!flow_spec_list)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ACELIB_DEBUG ((LM_DEBUG,
                   "(%N|%l) Null flow_spec_list\n"));
     }
   else
@@ -63,7 +63,7 @@ rsvp_callback (rapi_sid_t /* sid */,
       csxp = &flow_spec_list->specbody_qosx;
       if(!csxp)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
+          ACELIB_ERROR_RETURN ((LM_ERROR,
                             "(%N|%l) Null csxp\n"),
                             -1);
         }
@@ -75,7 +75,7 @@ rsvp_callback (rapi_sid_t /* sid */,
     {
     case RAPI_PATH_EVENT:
       {
-        ACE_DEBUG ((LM_DEBUG,
+        ACELIB_DEBUG ((LM_DEBUG,
                     "RSVP PATH Event received\n"
                     "No. of TSpecs received : %d %d\n",
                     flow_spec_no, &flow_spec_list->len));
@@ -101,7 +101,7 @@ rsvp_callback (rapi_sid_t /* sid */,
                                            0),
                             -1);
 
-            ACE_DEBUG ((LM_DEBUG,
+            ACELIB_DEBUG ((LM_DEBUG,
                         "\nTSpec :\n"
                         "\t Spec Type = %d\n"
                         "\t Rate = %f\n"
@@ -128,7 +128,7 @@ rsvp_callback (rapi_sid_t /* sid */,
 
     case RAPI_RESV_EVENT:
       {
-        ACE_DEBUG ((LM_DEBUG,
+        ACELIB_DEBUG ((LM_DEBUG,
                     "RSVP RESV Event received\n"
                     "No. of FlowSpecs received : %d\n",
                     flow_spec_no));
@@ -167,7 +167,7 @@ rsvp_callback (rapi_sid_t /* sid */,
                 break;
 
               default:
-                ACE_ERROR_RETURN ((LM_ERROR,
+                ACELIB_ERROR_RETURN ((LM_ERROR,
                                   "(%N|%l) Unknown flowspec type: %u.\n", csxp->spec_type),
                                   -1);
             }
@@ -180,7 +180,7 @@ rsvp_callback (rapi_sid_t /* sid */,
 
     case RAPI_PATH_ERROR:
       {
-        ACE_DEBUG ((LM_DEBUG,
+        ACELIB_DEBUG ((LM_DEBUG,
                     "PATH ERROR Event received\n"
                     "Code=%d  Val=%d  Node= %s\n",
                     errcode,
@@ -192,7 +192,7 @@ rsvp_callback (rapi_sid_t /* sid */,
 
     case RAPI_RESV_ERROR:
       {
-        ACE_DEBUG ((LM_DEBUG,
+        ACELIB_DEBUG ((LM_DEBUG,
                     "RESV ERROR Event received\n"
                     "Code=%d  Val=%d  Node= %s\n",
                     errcode,
@@ -204,14 +204,14 @@ rsvp_callback (rapi_sid_t /* sid */,
 
     case RAPI_RESV_CONFIRM:
       {
-        ACE_DEBUG ((LM_DEBUG,
+        ACELIB_DEBUG ((LM_DEBUG,
                     "RESV CONFIRM Event received\n"));
         qos_session->rsvp_event_type (ACE_QoS_Session::RSVP_RESV_CONFIRM);
       }
       break;
 
     default:
-      ACE_DEBUG ((LM_DEBUG,
+      ACELIB_DEBUG ((LM_DEBUG,
                   "Unknown RSVP Event Received\n"));
       break;
 
@@ -241,7 +241,7 @@ ACE_RAPI_Session::open (ACE_INET_Addr dest_addr,
   char buf [BUFSIZ];
   dest_addr.addr_to_string (buf,
                             BUFSIZ);
-  ACE_DEBUG ((LM_DEBUG,
+  ACELIB_DEBUG ((LM_DEBUG,
               "In RAPI SESSION OPEN %s\n",
               buf));
 
@@ -258,11 +258,11 @@ ACE_RAPI_Session::open (ACE_INET_Addr dest_addr,
                                         rsvp_callback,
                                         (void *) this,
                                         &rsvp_error)) == NULL_SID)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ACELIB_ERROR_RETURN ((LM_ERROR,
                        "rapi_session () call fails. Error\n"),
                       -1);
   else
-    ACE_DEBUG ((LM_DEBUG,
+    ACELIB_DEBUG ((LM_DEBUG,
                 "rapi_session () call succeeds. "
                 "Session ID = %d\n",
                 this->session_id_));
@@ -277,12 +277,12 @@ ACE_RAPI_Session::close (void)
   this->rsvp_error = rapi_release(this->session_id_);
 
   if (rsvp_error == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ACELIB_ERROR_RETURN ((LM_ERROR,
                        "Can't release RSVP session:\n\t%s\n",
                        rapi_errlist[rsvp_error]),
                       -1);
   else
-    ACE_DEBUG ((LM_DEBUG,
+    ACELIB_DEBUG ((LM_DEBUG,
                 "rapi session with id %d released successfully.\n",
                 this->session_id_));
   return 0;
@@ -338,12 +338,12 @@ ACE_RAPI_Session::sending_qos (const ACE_QoS &ace_qos)
                                 0,
                                 25);
       if (result != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
+        ACELIB_ERROR_RETURN ((LM_ERROR,
                            "(%N|%l) rapi_sender error %d:\n\tPATH Generation can't be started\n",
                            result),
                           -1);
       else
-        ACE_DEBUG ((LM_DEBUG,
+        ACELIB_DEBUG ((LM_DEBUG,
                     "rapi_sender () call succeeds with PATH Tear!\n"));
 
       return 0;
@@ -351,7 +351,7 @@ ACE_RAPI_Session::sending_qos (const ACE_QoS &ace_qos)
 
   rapi_tspec_t *t_spec = this->init_tspec_simplified (*sending_flowspec);
   if (t_spec == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ACELIB_ERROR_RETURN ((LM_ERROR,
                        "(%N|%l) Error in translating from ACE Flow Spec to"
                        " RAPI TSpec\n"),
                       -1);
@@ -362,12 +362,12 @@ ACE_RAPI_Session::sending_qos (const ACE_QoS &ace_qos)
   // be printed.
 
   (void) rapi_fmt_tspec(t_spec, buffer, sizeof(buffer));
-  ACE_DEBUG ((LM_DEBUG,
+  ACELIB_DEBUG ((LM_DEBUG,
               "\nSender TSpec : %s\n",
               buffer));
 
   // Print out all the fields separately.
-  ACE_DEBUG ((LM_DEBUG,
+  ACELIB_DEBUG ((LM_DEBUG,
               "\nTSpec :\n"
               "\t Spec Type = %d\n"
               "\t Rate = %f\n"
@@ -387,7 +387,7 @@ ACE_RAPI_Session::sending_qos (const ACE_QoS &ace_qos)
   // This the source sender port.
   //  ACE_INET_Addr sender_addr (this->source_port ());
 
-  ACE_DEBUG ((LM_DEBUG,
+  ACELIB_DEBUG ((LM_DEBUG,
               "Making the rapi_sender () call\n"));
 
   // Set the Sender TSpec for this QoS session.
@@ -413,12 +413,12 @@ ACE_RAPI_Session::sending_qos (const ACE_QoS &ace_qos)
                            sending_flowspec->ttl ()) ;
   */
   if(result!= 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ACELIB_ERROR_RETURN ((LM_ERROR,
                        "(%N|%l) rapi_sender error %d:\n\tPATH Generation can't be started\n",
                       result),
                       -1);
   else
-    ACE_DEBUG ((LM_DEBUG,
+    ACELIB_DEBUG ((LM_DEBUG,
                 "rapi_sender () call succeeds !\n"));
   return 0;
 }
@@ -449,11 +449,11 @@ ACE_RAPI_Session::receiving_qos (const ACE_QoS &ace_qos)
                        // WILDCARD.
                        0,
                        0) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
+        ACELIB_ERROR_RETURN ((LM_ERROR,
                            "(%N|%l)rapi_reserve () error:\n\tRESV Generation can't be started\n"),
                           -1);
       else
-        ACE_DEBUG ((LM_DEBUG,
+        ACELIB_DEBUG ((LM_DEBUG,
                     "rapi_reserve () for RESV Tear call succeeds\n"));
 
       return 0;
@@ -463,7 +463,7 @@ ACE_RAPI_Session::receiving_qos (const ACE_QoS &ace_qos)
   rapi_flowspec_t *flow_spec = init_flowspec_simplified (*receiving_flowspec);
 
   if (flow_spec == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ACELIB_ERROR_RETURN ((LM_ERROR,
                        "(%N|%l) Error in translating from ACE Flow Spec to"
                        " RAPI FlowSpec\n"),
                       -1);
@@ -473,12 +473,12 @@ ACE_RAPI_Session::receiving_qos (const ACE_QoS &ace_qos)
   // This formats the flow_spec in a visually intuitive char * that can
   // be printed.
   (void)rapi_fmt_flowspec(flow_spec, buffer, sizeof(buffer));
-  ACE_DEBUG ((LM_DEBUG,
+  ACELIB_DEBUG ((LM_DEBUG,
               "\nReceiver FlowSpec : %s\n",
               buffer));
 
   // Print out all the fields separately.
-  ACE_DEBUG ((LM_DEBUG,
+  ACELIB_DEBUG ((LM_DEBUG,
               "\nFlowSpec :\n"
               "\t Spec Type = %d\n"
               "\t Rate = %f\n"
@@ -517,11 +517,11 @@ ACE_RAPI_Session::receiving_qos (const ACE_QoS &ace_qos)
                    // WILDCARD.
                    1,
                    flow_spec) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ACELIB_ERROR_RETURN ((LM_ERROR,
                        "rapi_reserve () error:\n\tRESV Generation can't be started\n"),
                       -1);
   else
-    ACE_DEBUG ((LM_DEBUG,
+    ACELIB_DEBUG ((LM_DEBUG,
                 "rapi_reserve () call succeeds\n"));
 
   return 0;
@@ -532,7 +532,7 @@ ACE_RAPI_Session::update_qos (void)
 {
   // Update the session QoS Parameters based on the RSVP Event Received.
   if ((rsvp_error = rapi_dispatch ()) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ACELIB_ERROR_RETURN ((LM_ERROR,
                        "Error in rapi_dispatch () : %s\n",
                        rapi_errlist[rsvp_error]),
                       -1);
@@ -610,7 +610,7 @@ ACE_RAPI_Session::init_flowspec_simplified(const ACE_Flow_Spec &flow_spec)
       break;
 
     default:
-      ACE_ERROR_RETURN ((LM_ERROR,
+      ACELIB_ERROR_RETURN ((LM_ERROR,
                          "(%N|%l) Unknown flowspec type: %u\n",flow_spec.service_type () ),
                         0);
     }
@@ -666,7 +666,7 @@ ACE_GQoS_Session::qos (ACE_SOCK *socket,
   // subscribed to by the given socket.
 
   if (qos_manager->qos_session_set ().find (this) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ACELIB_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("This QoS session was not subscribed to")
                        ACE_TEXT (" by the socket\n")),
                       -1);
@@ -681,12 +681,12 @@ ACE_GQoS_Session::qos (ACE_SOCK *socket,
                      ACE_SIO_SET_QOS,
                      qos,
                      &ret_bytes) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
+    ACELIB_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("Error in Qos set ACE_OS::ioctl() %d\n"),
                        ret_bytes),
                       -1);
   else
-    ACE_DEBUG ((LM_DEBUG,
+    ACELIB_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("Setting QoS with ACE_OS::ioctl () succeeds\n")));
 
   return 0;

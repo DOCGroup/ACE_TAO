@@ -20,8 +20,6 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_main.h"
 
-
-
 Options::Options (void)
   : host_ (ACE_DEFAULT_SERVER_HOST),
     port_ (ACE_DEFAULT_SERVER_PORT),
@@ -409,7 +407,7 @@ run_client (void)
   else
     ACE_Thread_Manager::instance ()->wait ();
 #else
-  *(OPTIONS::instance ()->thr_func) ();
+  (void) *(OPTIONS::instance ()->thr_func) ();
 #endif /* ACE_HAS_THREADS */
   return 0;
 }

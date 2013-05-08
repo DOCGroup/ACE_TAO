@@ -4,7 +4,7 @@
 
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
 
-#include "ace/Log_Msg.h"
+#include "ace/Log_Category.h"
 
 #include "ace/ETCL/ETCL_Constraint.h"
 
@@ -39,7 +39,7 @@ namespace ACE
           /// root_ is set in this base class call.
           if (ETCL_Interpreter::build_tree (constraints) != 0)
             {
-              ACE_ERROR_RETURN ((LM_ERROR,
+              ACELIB_ERROR_RETURN ((LM_ERROR,
                                  "Constraint_Interpreter::build_tree() - "
                                  "ETCL_Interpreter::build_tree() failed\n"),
                                 -1);

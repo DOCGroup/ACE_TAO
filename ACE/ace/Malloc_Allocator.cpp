@@ -9,7 +9,7 @@
 
 #include "ace/Guard_T.h"
 #include "ace/Recursive_Thread_Mutex.h"
-#include "ace/Log_Msg.h"  // for ACE_ASSERT
+#include "ace/Log_Category.h"  // for ACE_ASSERT
 #include "ace/OS_NS_string.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -346,13 +346,13 @@ ACE_Static_Allocator_Base::dump (void) const
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Static_Allocator_Base::dump");
 
-  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\noffset_ = %d"), this->offset_));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nsize_ = %d\n"), this->size_));
-  ACE_HEX_DUMP ((LM_DEBUG, this->buffer_, this->size_));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\noffset_ = %d"), this->offset_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nsize_ = %d\n"), this->size_));
+  ACELIB_HEX_DUMP ((LM_DEBUG, this->buffer_, this->size_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
 
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
 

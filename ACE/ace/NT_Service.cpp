@@ -9,7 +9,7 @@
 #include "ace/NT_Service.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Log_Msg.h"
+#include "ace/Log_Category.h"
 #include "ace/Service_Object.h"
 #include "ace/OS_NS_errno.h"
 

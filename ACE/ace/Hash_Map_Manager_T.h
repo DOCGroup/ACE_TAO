@@ -22,7 +22,7 @@
 
 #include "ace/Default_Constants.h"
 #include "ace/Functor_T.h"
-#include "ace/Log_Msg.h"
+#include "ace/Log_Category.h"
 #include <iterator>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

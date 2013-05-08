@@ -193,7 +193,7 @@ ACE_Module<ACE_SYNCH_USE, TIME_POLICY>::ACE_Module (const ACE_TCHAR *module_name
   this->q_pair_[1] = 0;
 
   if (this->open (module_name, writer_q, reader_q, args, flags) == -1)
-    ACE_ERROR ((LM_ERROR,
+    ACELIB_ERROR ((LM_ERROR,
                 ACE_TEXT ("%p\n"),
                 ACE_TEXT ("ACE_Module")));
 }

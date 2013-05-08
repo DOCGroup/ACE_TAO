@@ -35,7 +35,7 @@ ACE_ATM_Connector::ACE_ATM_Connector (ACE_ATM_Stream &new_stream,
                                  flags,
                                  perms) == ACE_INVALID_HANDLE
       && timeout != 0 && !(errno == EWOULDBLOCK || errno == ETIME))
-    ACE_ERROR ((LM_ERROR,  ACE_TEXT ("%p\n"),
+    ACELIB_ERROR ((LM_ERROR,  ACE_TEXT ("%p\n"),
                 ACE_TEXT ("ACE_ATM_Stream::ACE_ATM_Stream")));
 }
 

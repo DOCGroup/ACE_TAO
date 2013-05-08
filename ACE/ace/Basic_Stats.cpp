@@ -1,7 +1,7 @@
 // $Id$
 
 #include "ace/Basic_Stats.h"
-#include "ace/Log_Msg.h"
+#include "ace/Log_Category.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Basic_Stats.inl"
@@ -49,7 +49,7 @@ ACE_Basic_Stats::dump_results (
 #ifndef ACE_NLOGGING
   if (this->samples_count () == 0u)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ACELIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("%s : no data collected\n"), msg));
       return;
     }
@@ -60,7 +60,7 @@ ACE_Basic_Stats::dump_results (
   ACE_UINT64 l_max = this->max_ / sf;
   ACE_UINT64 l_avg = avg / sf;
 
-  ACE_DEBUG ((LM_DEBUG,
+  ACELIB_DEBUG ((LM_DEBUG,
               ACE_TEXT ("%s latency   : %Q[%d]/%Q/%Q[%d] (min/avg/max)\n"),
               msg,
               l_min, this->min_at_,

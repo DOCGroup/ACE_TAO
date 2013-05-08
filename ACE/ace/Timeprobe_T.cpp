@@ -68,7 +68,7 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::ACE_Timeprobe_Ex (const ACE_Timeprobe_Ex<
   // Stupid MSVC is forcing me to define this; please don't use it.
   //
 
-  ACE_ERROR ((LM_ERROR,
+  ACELIB_ERROR ((LM_ERROR,
               ACE_TEXT ("ACE_NOTSUP: %N, line %l\n")));
   errno = ENOTSUP;
 }
@@ -237,14 +237,14 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::print_times (void)
   u_long size = this->report_buffer_full_ ? this->max_size_
                                           : this->current_size_;
 
-  ACE_DEBUG ((LM_DEBUG,
+  ACELIB_DEBUG ((LM_DEBUG,
               "\nACE_Timeprobe_Ex; %u timestamps were recorded:\n",
               size));
 
   if (size == 0)
     return;
 
-  ACE_DEBUG ((LM_DEBUG,
+  ACELIB_DEBUG ((LM_DEBUG,
               "\n%-50.50s %8.8s %13.13s\n\n",
               "Event",
               "thread",
@@ -257,7 +257,7 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::print_times (void)
   // First element
   i = this->report_buffer_full_ ? this->current_size_ : 0;
 
-  ACE_DEBUG ((LM_DEBUG,
+  ACELIB_DEBUG ((LM_DEBUG,
               "%-50.50s %8.8x %13.13s\n",
               this->find_description_i (i),
               this->timeprobes_[i].thread_,
@@ -290,7 +290,7 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::print_times (void)
       // Convert to microseconds.
       time_difference /= gsf;
 
-      ACE_DEBUG ((LM_DEBUG,
+      ACELIB_DEBUG ((LM_DEBUG,
                   "%-50.50s %8.8x %14.3f\n",
                   this->find_description_i (i),
                   this->timeprobes_[i].thread_,
@@ -305,7 +305,7 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::print_times (void)
   if (!inversion_warning_printed && has_timestamp_inversion)
     {
       inversion_warning_printed = true;
-      ACE_DEBUG ((LM_DEBUG,
+      ACELIB_DEBUG ((LM_DEBUG,
                   "\nWARNING: The timestamps recorded by gethrtime() on"
                   " this platform are\n"
                   "not monotonic across different threads.\n"));
@@ -323,14 +323,14 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::print_absolute_times (void)
   u_long size = this->report_buffer_full_ ? this->max_size_
                                           : this->current_size_;
 
-  ACE_DEBUG ((LM_DEBUG,
+  ACELIB_DEBUG ((LM_DEBUG,
               "\nACE_Timeprobe_Ex; %u timestamps were recorded:\n",
               size));
 
   if (size == 0)
     return;
 
-  ACE_DEBUG ((LM_DEBUG,
+  ACELIB_DEBUG ((LM_DEBUG,
               "\n%-50.50s %8.8s %13.13s\n\n",
               "Event",
               "thread",
@@ -343,7 +343,7 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::print_absolute_times (void)
     {
       ACE_High_Res_Timer::hrtime_to_tv (tv, this->timeprobes_ [i].time_);
 
-      ACE_DEBUG ((LM_DEBUG,
+      ACELIB_DEBUG ((LM_DEBUG,
                   "%-50.50s %8.8x %12.12u\n",
                   this->find_description_i (i),
                   this->timeprobes_ [i].thread_,
