@@ -1,3 +1,8 @@
+Thu May  9 17:14:47 UTC 2013  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * tests/Thread_Manager_Test.cpp (worker): Fixed %s to %C to work
+          properly with ACE_DEBUG.  Thanks to Johnny for reporting this.
+
 Thu May  9 14:05:28 UTC 2013  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * tests/Thread_Manager_Test.cpp (worker): Removed unused "len"
