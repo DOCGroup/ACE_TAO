@@ -198,7 +198,7 @@ void AIO_CLD_Acceptor::close (void) {
   ACE_Unbounded_Set_Iterator<AIO_Input_Handler *>
     iter (clients_.begin ());
   AIO_Input_Handler **ih;
-  while (iter.next (ih))
+  for (; iter.next (ih); ++iter)
     delete *ih;
 }
 

@@ -212,6 +212,20 @@ run_main (int, ACE_TCHAR *[])
       retval = -1;
     }
 
+  // Test iterating through a set and deleting elements.
+  {
+    ACE_Unbounded_Set<MyNode*> ubs3;
+    MyNode *n = 0;
+    for (int i = 0; i < 10; ++i)
+      {
+        n = new MyNode (i);
+        ubs3.insert (n);
+      }
+    MyNode **i_n = 0;
+    ACE_Unbounded_Set_Iterator<MyNode*> ubs3_iter (ubs3.begin ());
+    for (; ubs3_iter.next (i_n); ++ubs3_iter)
+      delete *i_n;
+  }
   ACE_END_TEST;
   return retval;
 }
