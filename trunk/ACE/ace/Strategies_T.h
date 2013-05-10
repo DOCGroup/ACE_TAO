@@ -111,7 +111,7 @@ public:
    * unchanged.  Returns -1 on failure, else 0.
    */
   virtual int make_svc_handler (SVC_HANDLER *&sh);
-  
+
   /// Dump the state of an object.
   void dump (void) const;
 
