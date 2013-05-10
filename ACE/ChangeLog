@@ -1,3 +1,8 @@
+Fri May 10 08:59:43 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Compiler_Features_17_Test.cpp:
+          Added another C++11 test case
+
 Thu May  9 17:14:47 UTC 2013  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * tests/Thread_Manager_Test.cpp (worker): Fixed %s to %C to work
@@ -27,8 +32,8 @@ Tue May  7 15:04:24 UTC 2013  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
 Thu Apr 25 16:51:06 UTC 2013  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
-        * ace/Svc_Handler.h: 
-          ace/Connector.h: 
+        * ace/Svc_Handler.h:
+          ace/Connector.h:
           ace/Acceptor.h:  Added template parameter documentation.
           Thanks to Clyde Gerber <clyde_gerber at symantec dot com> for
           contributing this.
