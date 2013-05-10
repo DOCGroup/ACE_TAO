@@ -165,7 +165,6 @@ Fri Apr 12 19:30:05 UTC 2013  Huang-Ming Huang  <huangh@ociweb.com>
         * tests/Log_Msg_Test.cpp:
         Fixed problem for WCHAR build
 
->>>>>>> .r97068
 Thu Apr 11 19:53:22 UTC 2013  Huang-Ming Huang  <huangh@ociweb.com>
 
         * ace/Log_Category.h:
