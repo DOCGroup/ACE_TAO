@@ -1,3 +1,8 @@
+Fri May 10 09:00:38 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * dance/LocalityManager/Daemon/Locality_Manager_Impl.cpp:
+          Fixed gcc 4.8 warning
+
 Fri Apr 12 20:38:29 UTC 2013  Adam Mitz  <mitza@ociweb.com>
 
         * dance/Logger/Log_Macros.h:

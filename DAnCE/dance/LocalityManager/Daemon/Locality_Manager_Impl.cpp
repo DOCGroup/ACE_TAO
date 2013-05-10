@@ -685,8 +685,6 @@ namespace DAnCE
   {
     DANCE_TRACE ("LocalityManager_i::disconnect_connections");
 
-    typedef std::map < std::string, CORBA::ULong > ConnMap;
-
     Deployment_Completion completion (this->scheduler_);
 
     DANCE_DEBUG (DANCE_LOG_MINOR_EVENT,
