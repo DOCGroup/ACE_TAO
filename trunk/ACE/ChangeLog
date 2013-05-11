@@ -1,7 +1,7 @@
 Fri May 10 20:36:13 UTC 2013  Steve Huston  <shuston@riverace.com>
 
         * examples/C++NPv2/AIO_Client_Logging_Daemon.cpp: Advance the
-          iterator whiel freeing items in close() to avoid an infinite
+          iterator while freeing items in close() to avoid an infinite
           loop. Thanks to George Chen for finding this problem.
 
         * tests/Unbounded_Set_Test.cpp: Added a allocate/iterate/free cycle
