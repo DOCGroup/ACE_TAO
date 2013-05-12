@@ -326,6 +326,7 @@ sub init_test
     register_server_with_activator(0, 1);
 
     if ($hide_server == 1) {
+        sleep (2);
         $name = $SRV[0]->Executable();
         rename ($name, "hidden") or die "Rename ($name, \"hidden\") failed: $!";
     }
@@ -338,7 +339,7 @@ sub fini_test
 
     if ($hide_server == 1) {
         $name = $SRV[0]->Executable();
-        rename ("hidden", "server") or die "Rename ($name, \"hidden\") failed: $!";
+        rename ("hidden", $name) or die "Rename ($name, \"hidden\") failed: $!";
     }
 
     if ($srv[1]->WaitForFileTimed ($srvstatusfile[1], $srv[1]->ProcessStartWaitInterval() + $server_reply_delay) == -1) {
@@ -348,8 +349,9 @@ sub fini_test
     }
 
     ##### Shutdown servers #####
-    for (my $i = 0; $i < $servers_count; $i++ ) {
-        # Shutting down any server object within the server will shutdown the whole server
+    for (my $i = $servers_count - 1; $i >= 0; $i-- ) {
+        # Shutting down any server object within the server will
+        # shutdown the whole server
         run_imr_util ("shutdown $obj[$i]");
 	if ($SRV[$i]->WaitKill ($srv[$i]->ProcessStopWaitInterval ()) == -1) {
 	    print STDERR "ERROR: Server $i not terminated correctly\n";
@@ -421,15 +423,14 @@ sub run_list_test
     run_imr_util ("start $obj[1]");
     run_imr_util ("start $obj[0]");
     run_imr_util ("list -a");
+    run_imr_util ("shutdown $obj[1]");
 
     if ($restart_loc == 1) {
         restart_imr_locator ();
         run_imr_util ("list -a");
     }
 
-    print "sleeping (20).... ";
-    sleep (20);
-    print "done\n";
+    run_imr_util ("start $obj[1]");
 
     run_imr_util ("list -a");
 

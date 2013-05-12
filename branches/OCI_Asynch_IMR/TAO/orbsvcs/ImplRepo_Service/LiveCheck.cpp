@@ -28,7 +28,7 @@ LiveListener::server (void) const
 }
 
 LiveListener *
-LiveListener::add_ref (void)
+LiveListener::_add_ref (void)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_, 0);
   ++this->refcount_;
@@ -36,7 +36,7 @@ LiveListener::add_ref (void)
 }
 
 void
-LiveListener::remove_ref (void)
+LiveListener::_remove_ref (void)
 {
   int count = 0;
   {
@@ -47,124 +47,6 @@ LiveListener::remove_ref (void)
     {
       delete this;
     }
-}
-
-//---------------------------------------------------------------------------
-//---------------------------------------------------------------------------
-
-LiveListener_ptr::LiveListener_ptr (void)
-  : val_ (0)
-{
-}
-
-LiveListener_ptr::LiveListener_ptr (LiveListener *ll)
-  :val_ (ll)
-{
-}
-
-LiveListener_ptr::LiveListener_ptr (const LiveListener_ptr &ll_ptr)
-  :val_ (ll_ptr.clone())
-{
-}
-
-LiveListener_ptr::~LiveListener_ptr (void)
-{
-  if (val_ != 0)
-    {
-      val_->remove_ref();
-    }
-}
-
-LiveListener_ptr &
-LiveListener_ptr::operator= (const LiveListener_ptr &ll_ptr)
-{
-  if (val_ != *ll_ptr)
-    {
-      if (val_ != 0)
-        {
-          val_->remove_ref();
-        }
-      val_ = ll_ptr.clone();
-    }
-  return *this;
-}
-
-LiveListener_ptr &
-LiveListener_ptr::operator= (LiveListener *ll)
-{
-  if (val_ != ll)
-    {
-      if (val_ != 0)
-        {
-          val_->remove_ref();
-        }
-      val_ = ll;
-    }
-  return *this;
-}
-
-const LiveListener *
-LiveListener_ptr::operator-> () const
-{
-  return val_;
-}
-
-const LiveListener *
-LiveListener_ptr::operator* () const
-{
-  return val_;
-}
-
-LiveListener *
-LiveListener_ptr::operator-> ()
-{
-  return val_;
-}
-
-LiveListener *
-LiveListener_ptr::operator* ()
-{
-  return val_;
-}
-
-bool
-LiveListener_ptr::operator== (const LiveListener_ptr &ll_ptr) const
-{
-  return val_ == *ll_ptr;
-}
-
-bool
-LiveListener_ptr::operator== (const LiveListener *ll) const
-{
-  return val_ == ll;
-}
-
-LiveListener *
-LiveListener_ptr::clone (void) const
-{
-  if (val_ != 0)
-    {
-      val_->add_ref();
-    }
-  return val_;
-}
-
-LiveListener *
-LiveListener_ptr::_retn (void)
-{
-  LiveListener * ll = val_;
-  val_ = 0;
-  return ll;
-}
-
-void
-LiveListener_ptr::assign (LiveListener *ll)
-{
-  if (val_ != 0)
-    {
-      val_->remove_ref();
-    }
-  val_ = ll;
 }
 
 //---------------------------------------------------------------------------
@@ -230,7 +112,7 @@ void
 LiveEntry::add_listener (LiveListener *ll)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
-  LiveListener_ptr llp(ll->add_ref());
+  LiveListener_ptr llp(ll->_add_ref());
   this->listeners_.insert (llp);
 }
 

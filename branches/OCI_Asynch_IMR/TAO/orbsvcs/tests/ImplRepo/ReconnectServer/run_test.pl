@@ -33,7 +33,7 @@ my $ping_ext = '';
 foreach my $i (@ARGV) {
     if ($i eq '-debug') {
         $debug_level = '10';
-        $imr_debug_level = '1';
+        $imr_debug_level = '3';
     }
     if ($i eq '-forwardalways') {
         $delay = '5';

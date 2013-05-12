@@ -175,15 +175,8 @@ ImR_Locator_i::init_with_orb (CORBA::ORB_ptr orb, Options& opts)
       Locator_Repository::SIMap::ENTRY* entry = 0;
       Locator_Repository::SIMap::ITERATOR it (this->repository_->servers ());
 
-      // Number of servers that will go into the server_list.
-      CORBA::ULong n = this->repository_->servers ().current_size ();
-
-      for (CORBA::ULong i = 0; i < n; i++)
+      for (;it.next (entry) != 0; it.advance ())
         {
-          it.next (entry);
-          it.advance ();
-          ACE_ASSERT (entry != 0);
-
           const Server_Info& info = *(entry->int_id_);
           //          ImplementationRepository::ServerInformation_var imr_info =
           //            info.createImRServerInfo ();
@@ -437,7 +430,7 @@ ImR_Locator_i::notify_child_death
     }
 
   AsyncAccessManager_ptr aam(this->find_aam (name));
-  if (*aam != 0)
+  if (!aam.is_nil())
     {
       aam->notify_child_death ();
     }
@@ -565,7 +558,7 @@ ImR_Locator_i::activate_server_i (UpdateableServerInfo& info,
   else
     {
       aam = this->find_aam (info->name.c_str());
-      if (*aam == 0)
+      if (aam.is_nil())
         {
           AsyncAccessManager *aam_raw;
           ACE_NEW (aam_raw, AsyncAccessManager (*info, manual_start, *this));
@@ -1011,7 +1004,7 @@ ImR_Locator_i::server_is_running
         }
 
       AsyncAccessManager_ptr aam(this->find_aam (name.c_str()));
-      if (*aam != 0)
+      if (!aam.is_nil())
         aam->server_is_running (partial_ior, s.in());
       else
         {
@@ -1058,7 +1051,7 @@ ImR_Locator_i::server_is_shutting_down
       this->pinger_.remove_server (server);
       {
         AsyncAccessManager_ptr aam = this->find_aam (server);
-        if (*aam != 0)
+        if (!aam.is_nil())
           {
             aam->server_is_shutting_down ();
           }
@@ -1092,7 +1085,8 @@ ImR_Locator_i::find
         }
       else
         {
-          ACE_NEW_THROW_EX (imr_info, ImplementationRepository::ServerInformation,
+          ACE_NEW_THROW_EX (imr_info,
+                            ImplementationRepository::ServerInformation,
                             CORBA::NO_MEMORY ());
           imr_info->startup.activation= ImplementationRepository::NORMAL;
           if (debug_ > 1)
@@ -1114,110 +1108,26 @@ void
 ImR_Locator_i::list
 (ImplementationRepository::AMH_AdministrationResponseHandler_ptr _tao_rh,
  CORBA::ULong how_many,
- CORBA::Boolean determine_active_status)
+ CORBA::Boolean active)
 {
-  ImplementationRepository::ServerInformationList_var server_list;
-  ImplementationRepository::ServerInformationIterator_var server_iterator;
 
-  if (debug_ > 1)
-    ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("ImR: List servers.\n")));
-
-  // Initialize the out variables, so if we return early, they will
-  // not be dangling.
-  server_iterator = ImplementationRepository::ServerInformationIterator::_nil ();
-
+  AsyncListManager *l = 0;
   try
     {
-      ACE_NEW_THROW_EX (server_list,
-                        ImplementationRepository::ServerInformationList (0),
+      ACE_NEW_THROW_EX (l,
+                        AsyncListManager (this->repository_.get(),
+                                          this->imr_poa_.in(),
+                                          active ? &this->pinger_ : 0),
                         CORBA::NO_MEMORY ());
+      AsyncListManager_ptr lister (l);
+      l->list (_tao_rh, how_many);
     }
-  catch (CORBA::Exception& ex)
+  catch (CORBA::Exception &ex)
     {
       ImplementationRepository::AMH_AdministrationExceptionHolder h (ex._tao_duplicate());
-      _tao_rh->list_excep (&h);
+      _tao_rh->find_excep (&h);
       return;
     }
-
-  Locator_Repository::SIMap::ENTRY* entry = 0;
-  Locator_Repository::SIMap::ITERATOR it (this->repository_->servers ());
-
-  // Number of servers that will go into the server_list.
-  CORBA::ULong n = this->repository_->servers ().current_size ();
-  if (how_many > 0 && n > how_many)
-    {
-      n = how_many;
-    }
-
-  server_list->length (n);
-
-  if (debug_ > 1)
-    {
-      ORBSVCS_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("ImR_Locator_i::list: Filling ServerList with %d servers\n"),
-                  n));
-    }
-
-  for (CORBA::ULong i = 0; i < n; i++)
-    {
-      it.next (entry);
-      it.advance ();
-      ACE_ASSERT (entry != 0);
-
-      const Server_Info& info = *(entry->int_id_);
-
-      ImplementationRepository::ServerInformation_var imr_info =
-        info.createImRServerInfo ();
-      if (determine_active_status)
-        {
-          UpdateableServerInfo updatable_info (info);
-          if (this->is_alive (updatable_info))
-            {
-              imr_info->activeStatus = ImplementationRepository::ACTIVE_YES;
-            }
-          else
-            {
-              imr_info->activeStatus = ImplementationRepository::ACTIVE_NO;
-              if (debug_ > 0)
-                {
-                  ORBSVCS_DEBUG ((LM_DEBUG,
-                              ACE_TEXT ("ImR: Server %s is not active\n"),
-                              info.name.c_str ()));
-                }
-            }
-        }
-      server_list[i] = *imr_info;
-    }
-
-  if (this->repository_->servers ().current_size () > n)
-    {
-      if (debug_ > 1)
-        ORBSVCS_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("ImR_Locator_i::list: Creating ServerInformation ")
-                    ACE_TEXT ("Iterator\n")));
-
-      try
-        {
-          ImR_Iterator* imr_iter = 0;
-          ACE_NEW_THROW_EX (imr_iter,
-                            ImR_Iterator (n, *this->repository_, this->imr_poa_.in ()),
-                            CORBA::NO_MEMORY ());
-
-          PortableServer::ServantBase_var tmp (imr_iter);
-
-          PortableServer::ObjectId_var id =
-            this->imr_poa_->activate_object (imr_iter);
-          CORBA::Object_var obj = this->imr_poa_->id_to_reference (id.in ());
-          server_iterator = ImplementationRepository::
-            ServerInformationIterator::_unchecked_narrow (obj.in ());
-        }
-      catch (CORBA::Exception& ex)
-        {
-          ImplementationRepository::AMH_AdministrationExceptionHolder h (ex._tao_duplicate());
-          _tao_rh->list_excep (&h);
-        }
-    }
-  _tao_rh->list (server_list.in(), server_iterator.in());
 }
 
 Activator_Info_Ptr
@@ -1434,7 +1344,7 @@ ImR_Locator_i::find_aam (const char *name)
     {
       if ((*i)->has_server (name))
         {
-          return (*i)->add_ref();
+          return (*i)->_add_ref();
         }
     }
   return 0;
