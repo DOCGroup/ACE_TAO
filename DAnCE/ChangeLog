@@ -1,3 +1,32 @@
+Mon May 13 07:14:07 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+          Make 1.1.9 public and prepare for the next minor release
+
+Mon May 13 08:52:11 CEST 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE version 1.1.9 released.
+
+Fri May 10 09:00:38 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * dance/LocalityManager/Daemon/Locality_Manager_Impl.cpp:
+          Fixed gcc 4.8 warning
+
+Fri Apr 12 20:38:29 UTC 2013  Adam Mitz  <mitza@ociweb.com>
+
+        * dance/Logger/Log_Macros.h:
+        * dance/Logger/Log_Macros.cpp:
+
+          Use a distinct ACE Log Category for DAnCE logging.
+
+Thu Apr 11 17:30:55 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/dance_tests.lst:
+          Added ending newline
+
+        * docs/releasenotes/index.html:
+          Updated email address
+
 Thu Mar 14 08:39:07 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * NEWS:
