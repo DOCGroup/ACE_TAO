@@ -10,11 +10,9 @@
  *    group suspension and resumption, and cooperative thread
  *    cancellation mechanisms.
  *
- *
  *  @author Prashant Jain <pjain@cs.wustl.edu> and Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #include "test_config.h"
 #include "ace/Thread_Manager.h"
@@ -22,8 +20,6 @@
 #include "ace/Task.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_sys_time.h"
-
-
 
 #if defined (ACE_HAS_THREADS)
 #include "ace/Barrier.h"
@@ -85,12 +81,6 @@ handler (int /* signum */)
 static void *
 worker (int iterations)
 {
-#if 0
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) %s: stack size is %u\n"),
-              ACE_OS::thr_self (),
-              ACE_OS::thr_min_stack ()));
-#endif /* ACE_HAS_VXTHREADS */
-
 #if !defined (ACE_LACKS_UNIX_SIGNALS)
   // Cache this thread's ID.
   const ACE_thread_t t_id = ACE_OS::thr_self ();
@@ -118,9 +108,13 @@ worker (int iterations)
               // to avoid race conditions for suspend() and resume().
               if (thr_mgr->testcancel (ACE_Thread::self ()) != 0)
                 {
+                  char thr_id[BUFSIZ];
+                  // Test out the ACE_OS::thr_id() method.
+                  ACE_OS::thr_id (thr_id, sizeof thr_id);
                   ACE_DEBUG ((LM_DEBUG,
-                              ACE_TEXT ("(%t) has been cancelled ")
+                              ACE_TEXT ("(%C) has been cancelled ")
                               ACE_TEXT ("before iteration %d!\n"),
+                              thr_id,
                               i));
                   break;
                 }
@@ -130,9 +124,9 @@ worker (int iterations)
             {
               char thr_id[BUFSIZ];
               // Test out the ACE_OS::thr_id() method.
-              ssize_t len = ACE_OS::thr_id (thr_id, sizeof thr_id);
+              ACE_OS::thr_id (thr_id, sizeof thr_id);
               ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%s) has been cancelled ")
+                          ACE_TEXT ("(%C) has been cancelled ")
                           ACE_TEXT ("before iteration %d!\n"),
                           thr_id,
                           i));

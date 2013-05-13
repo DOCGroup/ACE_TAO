@@ -3086,13 +3086,13 @@ ACE_OS::thr_id (char buffer[], size_t buffer_length)
 #if defined (ACE_HAS_SNPRINTF)
   return ACE_OS::snprintf (buffer,
                            buffer_length,
-                           "u",
-                           static_cast <unsigned> (ACE_Thread::self ()));
+                           "%u",
+                           static_cast <unsigned> (ACE_OS::thr_self ()));
 #else
   ACE_UNUSED_ARG (buffer_length);
   return ACE_OS::sprintf (buffer,
-                          "u",
-                          static_cast <unsigned> (ACE_Thread::self ()));
+                          "%u",
+                          static_cast <unsigned> (ACE_OS::thr_self ()));
 #endif /* ACE_HAS_SNPRINTF */
 #else
   ACE_hthread_t t_id;

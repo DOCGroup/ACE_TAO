@@ -11,6 +11,11 @@
 #include <limits>
 #include <stdint.h>
 
+constexpr int get_five()
+{
+  return 5;
+}
+
 class A
 {
 public:
