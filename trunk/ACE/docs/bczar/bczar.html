@@ -316,10 +316,10 @@
         mkdir doxygen<br>
         cd doxygen<br>
         wget https://svn.dre.vanderbilt.edu/viewvc/Middleware/trunk/ACE/docs/svn/config?view=co -O $HOME/.subversion/config<br>
-        svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-6_1_8/ACE ACE_wrappers<br>
-        svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-6_1_8/TAO ACE_wrappers/TAO<br>
-        svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-6_1_8/CIAO ACE_wrappers/TAO/CIAO<br>
-        svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-6_1_8/DAnCE ACE_wrappers/TAO/DAnCE<br>
+        svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-6_1_9/ACE ACE_wrappers<br>
+        svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-6_1_9/TAO ACE_wrappers/TAO<br>
+        svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-6_1_9/CIAO ACE_wrappers/TAO/CIAO<br>
+        svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-6_1_9/DAnCE ACE_wrappers/TAO/DAnCE<br>
         cd ACE_wrappers<br>
         export ACE_ROOT=$PWD<br>
         export TAO_ROOT=$ACE_ROOT/TAO<br>
@@ -485,10 +485,7 @@
       </li>
       <li>Compile once on Win32, Linux and Solaris before cutting a beta.</li>
       <li>Trust the release script when making a release. Don't make tar balls by
-      hand. Make sure that the public ftp directories
-      (/project/beguine/ftp/pub/ACE+TAO-distribution and
-      /project/beguine/ftp/pub/ACE+TAO-distribution/diffs) have the right
-      permissions, so that the release script can copy the tar balls.</li>
+      hand.</li>
       <li>When all hell breaks loose, don't wait for the nightly builds to monitor
       improvement. Instead manually start the builds.</li>
       <li>Maintain private up-to-date workspaces for problem platforms (read as
@@ -501,7 +498,7 @@
       <li>Install your public key to the different machines you have frequent access
       to avoid typing password.</li>
       <li>Update this page if you have any more tips for future build czars :-). This
-      page is in svn under <code>ACE_wrappers/docs/bczar/bczar.html</code></li>
+      page is in git under <code>ACE/docs/bczar/bczar.html</code></li>
     </p></ol>
     <hr>
     <Center>
