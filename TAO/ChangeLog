@@ -1,3 +1,35 @@
+Mon May 13 14:15:13 UTC 2013  Brian Johnson  <johnsonb@ociweb.com>
+
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_App_Ctrl/DMD_App_Ctrl.mpc:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_Inf_Ctrl/DMD_Inf_Ctrl.mpc:
+
+          Renamed mpc file to prevent hitting the maximum filename length on windows.
+
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_App_Ctrl/DeadMemberDetection_App_Ctrl.mpc:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_Inf_Ctrl/DeadMemberDetection_Inf_Ctrl.mpc:
+
+          Removed these files.
+
+Mon May 13 07:14:00 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+          Make 2.1.9 public and prepare for the next minor release
+
+Mon May 13 08:52:11 CEST 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO version 2.1.9 released.
+
+Fri May 10 09:21:17 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/IORTable_Locator/async_server.cpp:
+          Fixed LynxOS compile warning
+
+Thu May  9 19:52:26 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup/run_test.pl:
+
+          Improvements to test performance on windows, aix.
+
 Wed May  8 14:56:24 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/Dynamic_TP/DTP_Thread_Pool.cpp:
