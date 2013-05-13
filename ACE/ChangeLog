@@ -1,3 +1,11 @@
+Mon May 13 17:34:28 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/INET_Addr_Test.cpp:
+          Fixed error in logging
+
+        * tests/Multihomed_INET_Addr_Test.cpp:
+          Unicode fixes
+
 Mon May 13 07:13:57 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * NEWS:

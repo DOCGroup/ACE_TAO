@@ -96,7 +96,7 @@ int run_main (int, ACE_TCHAR *[])
                       ACE_TEXT ("0x%x != 0x%x\n"),
                       ipv4_addresses[i],
                       addr.get_ip_address (),
-                      addr32));
+                      ACE_HTONL (addr32)));
           status = 1;
         }
 
