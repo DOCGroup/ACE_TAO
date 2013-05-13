@@ -158,19 +158,20 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       poa_manager->activate ();
 
       // Create task.
-      IORTable::Locator_var iorloc;
+      IORTable::Locator_ptr iorloc_ptr;
       if (use_async_locator)
         {
-          ACE_NEW_RETURN (iorloc,
+          ACE_NEW_RETURN (iorloc_ptr,
                           AsyncLocatorTask (orb.in ()),
                           1);
         }
       else
         {
-          ACE_NEW_RETURN (iorloc,
+          ACE_NEW_RETURN (iorloc_ptr,
                           SyncLocatorTask (orb.in ()),
                           1);
         }
+      IORTable::Locator_var iorloc = iorloc_ptr;
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("Server - using ior table object: %C\n"),
