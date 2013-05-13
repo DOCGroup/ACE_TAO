@@ -76,8 +76,8 @@ AsyncAccessManager::add_interest (ImR_ResponseHandler *rh)
     {
       // This is not a leak. The listener registers with
       // the pinger and will delete itself when done.
-      AsyncLiveListener *l = 0;
-      ACE_NEW (l, AsyncLiveListener (this->info_->name.c_str(),
+      AccessLiveListener *l = 0;
+      ACE_NEW (l, AccessLiveListener (this->info_->name.c_str(),
                                      this,
                                      this->locator_.pinger()));
       LiveListener_ptr llp(l);
@@ -199,17 +199,17 @@ AsyncAccessManager::server_is_running (const char *partial_ior,
       this->final_state ();
     }
 
-  AsyncLiveListener *l = 0;
+  AccessLiveListener *l = 0;
   if (this->info_->activation_mode == ImplementationRepository::PER_CLIENT)
     {
-      ACE_NEW (l, AsyncLiveListener (this->info_->name.c_str(),
+      ACE_NEW (l, AccessLiveListener (this->info_->name.c_str(),
                                      this,
                                      this->locator_.pinger(),
                                      this->info_->server.in()));
     }
   else
     {
-      ACE_NEW (l, AsyncLiveListener (this->info_->name.c_str(),
+      ACE_NEW (l, AccessLiveListener (this->info_->name.c_str(),
                                      this,
                                      this->locator_.pinger()));
     }
@@ -308,7 +308,7 @@ AsyncAccessManager::send_start_request (void)
 }
 
 AsyncAccessManager *
-AsyncAccessManager::add_ref (void)
+AsyncAccessManager::_add_ref (void)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_, 0);
   ++this->refcount_;
@@ -317,7 +317,7 @@ AsyncAccessManager::add_ref (void)
 }
 
 void
-AsyncAccessManager::remove_ref (void)
+AsyncAccessManager::_remove_ref (void)
 {
   int count = 0;
   {
@@ -333,127 +333,9 @@ AsyncAccessManager::remove_ref (void)
 //---------------------------------------------------------------------------
 //---------------------------------------------------------------------------
 
-AsyncAccessManager_ptr::AsyncAccessManager_ptr (void)
-  : val_ (0)
-{
-}
-
-AsyncAccessManager_ptr::AsyncAccessManager_ptr (AsyncAccessManager *aam)
-  :val_ (aam)
-{
-}
-
-AsyncAccessManager_ptr::AsyncAccessManager_ptr (const AsyncAccessManager_ptr &aam_ptr)
-  :val_ (aam_ptr.clone())
-{
-}
-
-AsyncAccessManager_ptr::~AsyncAccessManager_ptr (void)
-{
-  if (val_ != 0)
-    {
-      val_->remove_ref();
-    }
-}
-
-AsyncAccessManager_ptr &
-AsyncAccessManager_ptr::operator= (const AsyncAccessManager_ptr &aam_ptr)
-{
-  if (val_ != *aam_ptr)
-    {
-      if (val_ != 0)
-        {
-          val_->remove_ref();
-        }
-      val_ = aam_ptr.clone();
-    }
-  return *this;
-}
-
-AsyncAccessManager_ptr &
-AsyncAccessManager_ptr::operator= (AsyncAccessManager *aam)
-{
-  if (val_ != aam)
-    {
-      if (val_ != 0)
-        {
-          val_->remove_ref();
-        }
-      val_ = aam;
-    }
-  return *this;
-}
-
-const AsyncAccessManager *
-AsyncAccessManager_ptr::operator-> () const
-{
-  return val_;
-}
-
-const AsyncAccessManager *
-AsyncAccessManager_ptr::operator* () const
-{
-  return val_;
-}
-
-AsyncAccessManager *
-AsyncAccessManager_ptr::operator-> ()
-{
-  return val_;
-}
-
-AsyncAccessManager *
-AsyncAccessManager_ptr::operator* ()
-{
-  return val_;
-}
-
-bool
-AsyncAccessManager_ptr::operator== (const AsyncAccessManager_ptr &aam_ptr) const
-{
-  return val_ == *aam_ptr;
-}
-
-bool
-AsyncAccessManager_ptr::operator== (const AsyncAccessManager *aam) const
-{
-  return val_ == aam;
-}
-
-AsyncAccessManager *
-AsyncAccessManager_ptr::clone (void) const
-{
-  if (val_ != 0)
-    {
-      val_->add_ref();
-    }
-  return val_;
-}
-
-AsyncAccessManager *
-AsyncAccessManager_ptr::_retn (void)
-{
-  AsyncAccessManager * aam = val_;
-  val_ = 0;
-  return aam;
-}
-
-void
-AsyncAccessManager_ptr::assign (AsyncAccessManager *aam)
-{
-  if (val_ != 0)
-    {
-      val_->remove_ref();
-    }
-  val_ = aam;
-}
-
-//---------------------------------------------------------------------------
-//---------------------------------------------------------------------------
-
 ActivatorReceiver::ActivatorReceiver (AsyncAccessManager *aam,
                                       PortableServer::POA_ptr poa)
-  :aam_ (aam->add_ref ()),
+  :aam_ (aam->_add_ref ()),
    poa_ (PortableServer::POA::_duplicate (poa))
 {
 }
@@ -495,11 +377,11 @@ ActivatorReceiver::shutdown_excep (Messaging::ExceptionHolder * )
 //---------------------------------------------------------------------------
 //---------------------------------------------------------------------------
 
-AsyncLiveListener::AsyncLiveListener (const char *server,
+AccessLiveListener::AccessLiveListener (const char *server,
                                       AsyncAccessManager *aam,
                                       LiveCheck &pinger)
   :LiveListener (server),
-   aam_ (aam->add_ref ()),
+   aam_ (aam->_add_ref ()),
    pinger_ (pinger),
    status_ (LS_UNKNOWN),
    per_client_ (false),
@@ -507,12 +389,12 @@ AsyncLiveListener::AsyncLiveListener (const char *server,
 {
 }
 
-AsyncLiveListener::AsyncLiveListener (const char *server,
+AccessLiveListener::AccessLiveListener (const char *server,
                                       AsyncAccessManager *aam,
                                       LiveCheck &pinger,
                                       ImplementationRepository::ServerObject_ptr ref)
   :LiveListener (server),
-   aam_ (aam->add_ref ()),
+   aam_ (aam->_add_ref ()),
    pinger_ (pinger),
    status_ (LS_UNKNOWN),
    per_client_ (true),
@@ -520,12 +402,12 @@ AsyncLiveListener::AsyncLiveListener (const char *server,
 {
 }
 
-AsyncLiveListener::~AsyncLiveListener (void)
+AccessLiveListener::~AccessLiveListener (void)
 {
 }
 
 bool
-AsyncLiveListener::start (void)
+AccessLiveListener::start (void)
 {
   bool rtn = this->per_client_ ?
     this->pinger_.add_per_client_listener (this, srv_ref_.in()) :
@@ -534,7 +416,7 @@ AsyncLiveListener::start (void)
 }
 
 bool
-AsyncLiveListener::status_changed (LiveStatus status)
+AccessLiveListener::status_changed (LiveStatus status)
 {
   this->status_ = status;
   if (status == LS_TRANSIENT)

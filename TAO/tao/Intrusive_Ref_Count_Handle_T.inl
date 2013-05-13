@@ -132,6 +132,15 @@ TAO_Intrusive_Ref_Count_Handle<T>::_retn()
 
 template <typename T>
 ACE_INLINE
+bool
+TAO_Intrusive_Ref_Count_Handle<T>::operator== (const TAO_Intrusive_Ref_Count_Handle& h) const
+{
+  return this->ptr_ == h.in();
+}
+
+
+template <typename T>
+ACE_INLINE
 void
 TAO_Intrusive_Ref_Count_Handle<T>::claim()
 {

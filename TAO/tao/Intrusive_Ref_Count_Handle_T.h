@@ -117,6 +117,10 @@ public:
   /// Always leaves the smart pointer in the "nil" state upon return.
   T* _retn (void);
 
+  /// Equality operator allows the refcounted object to be used generically
+  /// as a contained object
+  bool operator== (const TAO_Intrusive_Ref_Count_Handle& h) const;
+
 private:
 
   /// Claim a "copy" of the reference-counted object by adding
