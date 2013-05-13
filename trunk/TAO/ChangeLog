@@ -1,7 +1,38 @@
 Mon May 13 19:12:59 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
-        * .:
-        * TAO_IDL:
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.h:
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * orbsvcs/ImplRepo_Service/AsyncListManager.h:
+        * orbsvcs/ImplRepo_Service/AsyncListManager.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
+        * orbsvcs/ImplRepo_Service/Iterator.h:
+        * orbsvcs/ImplRepo_Service/Iterator.cpp:
+        * orbsvcs/ImplRepo_Service/LiveCheck.h:
+        * orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+
+        * orbsvcs/tests/ImplRepo/ReconnectServer/run_test.pl:
+
+        * orbsvcs/tests/ImplRepo/servers_list/Test.idl:
+        * orbsvcs/tests/ImplRepo/servers_list/run_test.pl:
+
+        * tao/Intrusive_Ref_Count_Handle_T.h:
+        * tao/Intrusive_Ref_Count_Handle_T.inl:
+
+        Merge from branch OCI_Asynch_IMR:
+        Mon May 13 15:00:19 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/AsyncListManager.h:
+        * orbsvcs/ImplRepo_Service/AsyncListManager.cpp:
+
+          Clean up runtime failures.
+
+        * orbsvcs/tests/ImplRepo/servers_list/Test.idl:
+
+          Make the abort() operation a oneway so that commfails are avoided
+          in the client.
+
+        Sun May 12 16:45:48 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/AsyncAccessManager.h:
         * orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
@@ -14,137 +45,26 @@ Mon May 13 19:12:59 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
         * orbsvcs/ImplRepo_Service/LiveCheck.h:
         * orbsvcs/ImplRepo_Service/LiveCheck.cpp:
 
-        * orbsvcs/tests/Bug_3673_Regression:
-
-        * orbsvcs/tests/Bug_3673_Regression/Bug_3673_Regression.mpc:
-        * orbsvcs/tests/Bug_3673_Regression/Hello.h:
-        * orbsvcs/tests/Bug_3673_Regression/Hello.cpp:
-        * orbsvcs/tests/Bug_3673_Regression/NamingTask.h:
-        * orbsvcs/tests/Bug_3673_Regression/NamingTask.cpp:
-        * orbsvcs/tests/Bug_3673_Regression/NsShutdown.h:
-        * orbsvcs/tests/Bug_3673_Regression/NsShutdown.cpp:
-        * orbsvcs/tests/Bug_3673_Regression/Test.idl:
-        * orbsvcs/tests/Bug_3673_Regression/client.cpp:
-        * orbsvcs/tests/Bug_3673_Regression/nsmain.cpp:
-        * orbsvcs/tests/Bug_3673_Regression/run_test.pl:
-        * orbsvcs/tests/Bug_3673_Regression/server.cpp:
+          Asynchronous List operation implementation. Since the list operation
+          may trigger pings, it needed to be event driven similar to the access
+          and start up of registered servers.
 
         * orbsvcs/tests/ImplRepo/ReconnectServer/run_test.pl:
-
-        * orbsvcs/tests/ImplRepo/servers_list/Test.idl:
+        * orbsvcs/tests/ImplRepo/servers_interact_on_startup/run_test.pl:
         * orbsvcs/tests/ImplRepo/servers_list/run_test.pl:
 
-        * orbsvcs/tests/Notify/Bug_3646a_Regression:
+          Improve debugging and shutdown performance.
 
-        * orbsvcs/tests/Notify/Bug_3646a_Regression/Bug_3646a_Regression.mpc:
-        * orbsvcs/tests/Notify/Bug_3646a_Regression/Consumer.cpp:
-        * orbsvcs/tests/Notify/Bug_3646a_Regression/run_test.pl:
-
-        * orbsvcs/tests/Notify/Bug_3646b_Regression:
-
-        * orbsvcs/tests/Notify/Bug_3646b_Regression/Bug_3646b_Regression.mpc:
-        * orbsvcs/tests/Notify/Bug_3646b_Regression/DllORB.h:
-        * orbsvcs/tests/Notify/Bug_3646b_Regression/DllORB.cpp:
-        * orbsvcs/tests/Notify/Bug_3646b_Regression/bug3646b_export.h:
-        * orbsvcs/tests/Notify/Bug_3646b_Regression/run_test.pl:
-        * orbsvcs/tests/Notify/Bug_3646b_Regression/server.cpp:
-
-        * orbsvcs/tests/Notify/Bug_3646c_Regression:
-
-        * orbsvcs/tests/Notify/Bug_3646c_Regression/Bug_3646c_Regression.mpc:
-        * orbsvcs/tests/Notify/Bug_3646c_Regression/Consumer.cpp:
-        * orbsvcs/tests/Notify/Bug_3646c_Regression/DllORB.h:
-        * orbsvcs/tests/Notify/Bug_3646c_Regression/DllORB.cpp:
-        * orbsvcs/tests/Notify/Bug_3646c_Regression/bug3646c_export.h:
-        * orbsvcs/tests/Notify/Bug_3646c_Regression/run_test.pl:
-        * orbsvcs/tests/Notify/Bug_3646c_Regression/server.cpp:
-
-        * orbsvcs/tests/Notify/Bug_3646d_Regression:
-
-        * orbsvcs/tests/Notify/Bug_3646d_Regression/Bug_3646d_Regression.mpc:
-        * orbsvcs/tests/Notify/Bug_3646d_Regression/DllORB.h:
-        * orbsvcs/tests/Notify/Bug_3646d_Regression/DllORB.cpp:
-        * orbsvcs/tests/Notify/Bug_3646d_Regression/bug3646d_export.h:
-        * orbsvcs/tests/Notify/Bug_3646d_Regression/run_test.pl:
-        * orbsvcs/tests/Notify/Bug_3646d_Regression/server.cpp:
-
-        * orbsvcs/tests/Notify/Bug_3663_Regression:
-
-        * orbsvcs/tests/Notify/Bug_3663_Regression/Bug_3663_Regression.mpc:
-        * orbsvcs/tests/Notify/Bug_3663_Regression/DllORB.h:
-        * orbsvcs/tests/Notify/Bug_3663_Regression/DllORB.cpp:
-        * orbsvcs/tests/Notify/Bug_3663_Regression/bug3663_export.h:
-        * orbsvcs/tests/Notify/Bug_3663_Regression/run_test.pl:
-        * orbsvcs/tests/Notify/Bug_3663_Regression/server.cpp:
-
-        * orbsvcs/tests/Notify/Bug_3688b_Regression:
-
-        * orbsvcs/tests/Notify/Bug_3688b_Regression/Bug_3688b.mpc:
-        * orbsvcs/tests/Notify/Bug_3688b_Regression/DllORB.h:
-        * orbsvcs/tests/Notify/Bug_3688b_Regression/DllORB.cpp:
-        * orbsvcs/tests/Notify/Bug_3688b_Regression/TestBroadcaster.h:
-        * orbsvcs/tests/Notify/Bug_3688b_Regression/TestBroadcaster.cpp:
-        * orbsvcs/tests/Notify/Bug_3688b_Regression/TestListener.h:
-        * orbsvcs/tests/Notify/Bug_3688b_Regression/TestListener.cpp:
-        * orbsvcs/tests/Notify/Bug_3688b_Regression/bug3688_export.h:
-        * orbsvcs/tests/Notify/Bug_3688b_Regression/run_test.pl:
-        * orbsvcs/tests/Notify/Bug_3688b_Regression/server.cpp:
+        Wed May  8 22:13:12 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/Intrusive_Ref_Count_Handle_T.h:
         * tao/Intrusive_Ref_Count_Handle_T.inl:
 
-        * tests/Bug_3630_Regression:
+          Added an equivalence operator that returns true if the two handles
+          point to the same underlying object. This allows the handle type to
+          be used in generic containers.
 
-        * tests/Bug_3630_Regression/Bug_3630_Regression.mpc:
-        * tests/Bug_3630_Regression/TAO Conf File.conf:
-        * tests/Bug_3630_Regression/TAO_Conf_File.conf:
-        * tests/Bug_3630_Regression/run_test.pl:
-        * tests/Bug_3630_Regression/server.cpp:
 
-        * tests/Bug_3647_Regression/Backend_Impl.h:
-        * tests/Bug_3647_Regression/Middle_Impl.h:
-
-        * tests/Bug_3672_Regression:
-
-        * tests/Bug_3672_Regression/Bug_3672_Regression.mpc:
-        * tests/Bug_3672_Regression/ami_test.idl:
-        * tests/Bug_3672_Regression/ami_test_i.h:
-        * tests/Bug_3672_Regression/ami_test_i.cpp:
-        * tests/Bug_3672_Regression/client.cpp:
-        * tests/Bug_3672_Regression/run_test.pl:
-        * tests/Bug_3672_Regression/server.cpp:
-
-        * tests/Bug_3683_Regression:
-
-        * tests/Bug_3683_Regression/Bug_3683_Regression.mpc:
-        * tests/Bug_3683_Regression/Echo.idl:
-        * tests/Bug_3683_Regression/Echo_Client_i.h:
-        * tests/Bug_3683_Regression/Echo_Client_i.cpp:
-        * tests/Bug_3683_Regression/Echo_i.h:
-        * tests/Bug_3683_Regression/Echo_i.cpp:
-        * tests/Bug_3683_Regression/Simple_util.h:
-        * tests/Bug_3683_Regression/Simple_util.cpp:
-        * tests/Bug_3683_Regression/client.cpp:
-        * tests/Bug_3683_Regression/run_test.pl:
-        * tests/Bug_3683_Regression/server.cpp:
-        * tests/Bug_3683_Regression/svc.conf:
-
-        * tests/Bug_3701_Regression:
-
-        * tests/Bug_3701_Regression/Bug_3701_Regression.mpc:
-        * tests/Bug_3701_Regression/client.cpp:
-        * tests/Bug_3701_Regression/run_test.pl:
-
-        * tests/RTCORBA/Bug_3643_Regression:
-
-        * tests/RTCORBA/Bug_3643_Regression/Bug_3643_Regression.mpc:
-        * tests/RTCORBA/Bug_3643_Regression/client.cpp:
-        * tests/RTCORBA/Bug_3643_Regression/run_test.pl:
-        * tests/RTCORBA/Bug_3643_Regression/server.cpp:
-        * tests/RTCORBA/Bug_3643_Regression/svc.conf.dynamic:
-        * tests/RTCORBA/Bug_3643_Regression/test.idl:
-        * tests/RTCORBA/Bug_3643_Regression/test_i.h:
-        * tests/RTCORBA/Bug_3643_Regression/test_i.cpp:
 
 Mon May 13 14:15:13 UTC 2013  Brian Johnson  <johnsonb@ociweb.com>
 
