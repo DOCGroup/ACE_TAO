@@ -23,6 +23,8 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Intrusive_Ref_Count_Handle_T.h"
+
 class LiveCheck;
 
 //---------------------------------------------------------------------------
@@ -76,8 +78,8 @@ class Locator_Export LiveListener
   /// accessor for the server name. Used by the LiveCheck to associate a listener
   const char *server (void) const;
 
-  LiveListener *add_ref (void);
-  void remove_ref (void);
+  LiveListener *_add_ref (void);
+  void _remove_ref (void);
 
  private:
   ACE_CString server_;
@@ -86,32 +88,7 @@ class Locator_Export LiveListener
   TAO_SYNCH_MUTEX lock_;
 };
 
-class LiveListener_ptr
-{
-public:
-  LiveListener_ptr (void);
-  LiveListener_ptr (LiveListener *aam);
-  LiveListener_ptr (const LiveListener_ptr &aam_ptr);
-  ~LiveListener_ptr (void);
-
-  LiveListener_ptr &operator = (const LiveListener_ptr &aam_ptr);
-  LiveListener_ptr &operator = (LiveListener *aam);
-  const LiveListener * operator-> () const;
-  const LiveListener * operator* () const;
-  LiveListener * operator-> ();
-  LiveListener * operator* ();
-  bool operator== (const LiveListener_ptr &aam_ptr) const;
-  bool operator== (const LiveListener *aam) const;
-
-  LiveListener * clone (void) const;
-  LiveListener * _retn (void);
-
-  void assign (LiveListener *aam);
-
-private:
-  LiveListener * val_;
-};
-
+typedef TAO_Intrusive_Ref_Count_Handle<LiveListener> LiveListener_ptr;
 
 //---------------------------------------------------------------------------
 /*
@@ -153,7 +130,6 @@ class Locator_Export LiveEntry
   ImplementationRepository::ServerObject_var ref_;
   LiveStatus liveliness_;
   ACE_Time_Value next_check_;
-  short retry_count_;
   int repings_;
   int max_retry_;
   bool may_ping_;

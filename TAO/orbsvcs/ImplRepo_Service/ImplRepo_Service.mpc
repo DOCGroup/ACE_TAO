@@ -110,6 +110,7 @@ project(ImR_Locator) : orbsvcslib, orbsvcs_output, conv_lib, avoids_minimum_corb
     Activator_Info.cpp
     Adapter_Activator.cpp
     AsyncAccessManager.cpp
+    AsyncListManager.cpp
     Forwarder.cpp
     ImR_Locator_i.cpp
     ImR_ResponseHandler.cpp
