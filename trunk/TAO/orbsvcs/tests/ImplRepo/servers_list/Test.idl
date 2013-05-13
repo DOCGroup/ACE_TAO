@@ -8,7 +8,7 @@ interface Test
 
   // After replying, abort process
   // delay_secs seconds.
-  void abort ( in short delay_secs );
+  oneway void abort ( in short delay_secs );
 
 };
 

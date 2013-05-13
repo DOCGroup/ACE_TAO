@@ -12,7 +12,36 @@
 
 #include "Iterator.h"
 
-ImR_Iterator::ImR_Iterator (CORBA::ULong n, Locator_Repository& repo, PortableServer::POA_ptr poa)
+
+ImR_AsyncIterator::ImR_AsyncIterator (CORBA::ULong start,
+                                      AsyncListManager *lister)
+  :count_ (start),
+   lister_ (lister->_add_ref ())
+{
+}
+
+void
+ImR_AsyncIterator::next_n
+  (ImplementationRepository::AMH_ServerInformationIteratorResponseHandler_ptr _tao_rh,
+   CORBA::ULong how_many)
+{
+  this->count_ = this->lister_->list (_tao_rh, this->count_, how_many);
+}
+
+void
+ImR_AsyncIterator::destroy
+  (ImplementationRepository::AMH_ServerInformationIteratorResponseHandler_ptr _tao_rh)
+{
+  PortableServer::POA_var poa = this->lister_->poa ();
+  PortableServer::ObjectId_var oid = poa->servant_to_id (this);
+  poa->deactivate_object (oid.in());
+  _tao_rh->destroy ();
+}
+
+//----------------------------------------------------------------------------
+ImR_Iterator::ImR_Iterator (CORBA::ULong n,
+                            Locator_Repository& repo,
+                            PortableServer::POA_ptr poa)
   : repo_(repo)
   , count_(n)
   , poa_(poa)
