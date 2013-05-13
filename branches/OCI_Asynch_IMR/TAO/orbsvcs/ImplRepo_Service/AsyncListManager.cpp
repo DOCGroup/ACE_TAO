@@ -20,10 +20,10 @@ AsyncListManager::AsyncListManager (const Locator_Repository *repo,
    pinger_ (pinger),
    server_list_ (0),
    first_ (0),
+   waiters_ (0),
    refcount_ (1),
    lock_ ()
 {
-
 }
 
 AsyncListManager::~AsyncListManager (void)
@@ -39,20 +39,13 @@ AsyncListManager::poa (void)
 void
 AsyncListManager::final_state (void)
 {
-  CORBA::ULong len = this->server_list_.length ();
-  if (this->pinger_ != 0)
+  if (this->pinger_ != 0 && this->waiters_ > 0)
     {
-      for (CORBA::ULong i = 0; i < len; i++)
-        {
-          if (this->server_list_[i].activeStatus ==
-              ImplementationRepository::ACTIVE_MAYBE)
-            {
-              return;
-            }
-        }
+      return;
     }
 
   bool excepted = false;
+  CORBA::ULong len = this->server_list_.length ();
 
   if (!CORBA::is_nil (this->primary_.in()))
     {
@@ -184,19 +177,30 @@ AsyncListManager::list_i (CORBA::ULong start, CORBA::ULong how_many)
             }
         }
     }
+  if (len == 0 || this->pinger_ == 0)
+    {
+      this->final_state ();
+    }
+  else
+    {
+      this->waiters_ = len;
+    }
 }
 
 
 void
-AsyncListManager::ping_replied (CORBA::ULong index, LiveStatus server)
+AsyncListManager::ping_replied (CORBA::ULong index, LiveStatus status)
 {
-  switch (server)
+  switch (status)
     {
     case LS_ALIVE:
     case LS_LAST_TRANSIENT:
-    case LS_TIMEDOUT:
       this->server_list_[index].activeStatus =
         ImplementationRepository::ACTIVE_YES;
+      break;
+    case LS_TIMEDOUT:
+      this->server_list_[index].activeStatus =
+        ImplementationRepository::ACTIVE_MAYBE;
       break;
     case LS_DEAD:
       this->server_list_[index].activeStatus =
@@ -205,6 +209,7 @@ AsyncListManager::ping_replied (CORBA::ULong index, LiveStatus server)
     default:
       return;
     }
+  this->waiters_--;
   this->final_state();
 }
 

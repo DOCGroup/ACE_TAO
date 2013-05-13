@@ -69,6 +69,7 @@ class AsyncListManager
   LiveCheck *pinger_;
   ImplementationRepository::ServerInformationList server_list_;
   CORBA::ULong first_;
+  CORBA::ULong waiters_;
   int refcount_;
   TAO_SYNCH_MUTEX lock_;
 };
