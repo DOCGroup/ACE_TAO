@@ -1,3 +1,11 @@
+Mon May 13 21:38:06 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/AsyncListManager.cpp:
+
+          Fix a deadlock condition where the lister is waiting for more
+          pings than it will receive because 1 or more target servers was
+          unpingable.
+
 Mon May 13 19:12:59 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/AsyncAccessManager.h:
