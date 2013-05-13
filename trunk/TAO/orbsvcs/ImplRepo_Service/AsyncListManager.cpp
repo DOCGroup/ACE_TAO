@@ -145,6 +145,7 @@ AsyncListManager::list_i (CORBA::ULong start, CORBA::ULong how_many)
       it.advance ();
     }
   this->server_list_.length (len);
+  this->waiters_ = 0;
   for (CORBA::ULong i = 0; i < len; i++)
     {
       it.next (entry);
@@ -175,15 +176,15 @@ AsyncListManager::list_i (CORBA::ULong start, CORBA::ULong how_many)
               this->server_list_[i].activeStatus =
                 ImplementationRepository::ACTIVE_NO;
             }
+          else
+            {
+              this->waiters_++;
+            }
         }
     }
-  if (len == 0 || this->pinger_ == 0)
+  if (this->waiters_ == 0)
     {
       this->final_state ();
-    }
-  else
-    {
-      this->waiters_ = len;
     }
 }
 
