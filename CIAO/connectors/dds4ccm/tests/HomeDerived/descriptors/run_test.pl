@@ -11,7 +11,12 @@ use PerlACE::TestTarget;
 $CIAO_ROOT = "$ENV{'CIAO_ROOT'}";
 $TAO_ROOT = "$ENV{'TAO_ROOT'}";
 $DANCE_ROOT = "$ENV{'DANCE_ROOT'}";
-$DDS_ROOT = "$ENV{'DDS_ROOT'}";
+$DDS4CCM_TRACE_ENABLE = "$ENV{'DDS4CCM_TRACE_ENABLE'}";
+
+#$ENV{'DANCE_LOG_LEVEL'}=10;
+#$ENV{'CIAO_LOG_LEVEL'}=10;
+#$ENV{'DANCE_TRACE_ENABLE'}=1;
+#$ENV{'CIAO_TRACE_ENABLE'}=1;
 
 $daemons_running = 0;
 $em_running = 0;
@@ -19,10 +24,11 @@ $ns_running = 0;
 
 $nr_daemon = 2;
 @ports = ( 60001, 60002 );
-@iorbases = ( "NodeApp1.ior", "NodeApp2.ior" );
+@iorbases = ( "Node1.ior", "Node2.ior" );
 @iorfiles = 0;
-@nodenames = ( "SenderNode", "ReceiverNode" );
+@nodenames = ( "Node1", "Node2" );
 
+# ior files other than daemon
 # ior files other than daemon
 $ior_nsbase = "ns.ior";
 $ior_nsfile = 0;
@@ -42,23 +48,23 @@ $tg_exe_man = 0;
 $tg_executor = 0;
 
 $status = 0;
-$cdp_file = "run_9.cdp";
+$cdp_file = "DeploymentPlan.cdp";
 
 sub create_targets {
     #   naming service
     $tg_naming = PerlACE::TestTarget::create_target (1) || die "Create target for ns failed\n";
-    $tg_naming->AddLibPath ('../../lib');
+    $tg_naming->AddLibPath ('../lib');
     #   daemon
     for ($i = 0; $i < $nr_daemon; ++$i) {
         $tg_daemons[$i] = PerlACE::TestTarget::create_target ($i+1) || die "Create target for daemon $i failed\n";
-        $tg_daemons[$i]->AddLibPath ('../../lib');
+        $tg_daemons[$i]->AddLibPath ('../lib');
     }
     #   execution manager
     $tg_exe_man = PerlACE::TestTarget::create_target (1) || die "Create target for EM failed\n";
-    $tg_exe_man->AddLibPath ('../../lib');
+    $tg_exe_man->AddLibPath ('../lib');
     #   executor (plan_launcher)
     $tg_executor = PerlACE::TestTarget::create_target (1) || die "Create target for executor failed\n";
-    $tg_executor->AddLibPath ('../../lib');
+    $tg_executor->AddLibPath ('../lib');
 }
 
 sub init_ior_files {
@@ -159,7 +165,6 @@ if ($tg_naming->WaitForFileTimed ($ior_nsbase,
 }
 
 $ns_running = 1;
-
 # Set up NamingService environment
 $ENV{"NameServiceIOR"} = "corbaloc:iiop:localhost:60003/NameService";
 
@@ -219,8 +224,8 @@ for ($i = 0; $i < $nr_daemon; ++$i) {
     }
 }
 
-print "Sleeping 60 seconds to allow task to complete\n";
-sleep (60);
+print "Sleeping 10 seconds to allow task to complete\n";
+sleep (10);
 
 # Invoke executor - stop the application -.
 print "Invoking executor - stop the application -\n";
@@ -228,7 +233,8 @@ print "by running dance_plan_launcher.exe with -k file://$ior_emfile -x $cdp_fil
 
 $E = $tg_executor->CreateProcess ("$DANCE_ROOT/bin/dance_plan_launcher",
                         "-k file://$ior_emfile -x $cdp_file -s");
-$pl_status = $E->SpawnWaitKill ($tg_executor->ProcessStartWaitInterval ());
+
+$pl_status = $E->SpawnWaitKill (2 * $tg_executor->ProcessStartWaitInterval ());
 
 if ($pl_status != 0) {
     print STDERR "ERROR: dance_plan_launcher returned $pl_status\n";

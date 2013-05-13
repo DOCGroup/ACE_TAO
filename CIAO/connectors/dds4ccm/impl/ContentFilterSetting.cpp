@@ -90,7 +90,8 @@ namespace CIAO
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                         "CCM_DDS_ContentFilterSetting_i::create_contentfilteredtopic: "
-                        "Error creating ContentfilteredTopic.\n"));
+                        "Error creating ContentFilteredTopic <%C>.\n",
+                        name.get ()));
           throw ::CORBA::INTERNAL ();
         }
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
@@ -112,6 +113,7 @@ namespace CIAO
           ::DDS::ContentFilteredTopic_var cft = this->cft_._retn ();
           if (! ::CORBA::is_nil (dp.in ()) && (! ::CORBA::is_nil (cft.in ())))
             {
+              ::CORBA::String_var name = cft->get_name ();
               ::DDS::ReturnCode_t const retcode =
                 dp->delete_contentfilteredtopic (cft.in ());
 
@@ -119,13 +121,15 @@ namespace CIAO
                 {
                   DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
                                 "CCM_DDS_ContentFilterSetting_i::delete_contentfilteredtopic: "
-                                "successfully deleted ContentfilteredTopic\n"));
+                                "successfully deleted ContentFilteredTopic <%C>\n",
+                                name.in ()));
                 }
               else
                 {
                   DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                                 "CCM_DDS_ContentFilterSetting_i::delete_contentfilteredtopic: "
-                                "Error deleting contentfilteredtopic: <%C>\n",
+                                "Error deleting ContentFilteredTopic <%C>: <%C>\n",
+                                name.in (),
                                 translate_retcode (retcode)));
                   throw ::CCM_DDS::InternalError (retcode, 0);
                 }
@@ -153,7 +157,7 @@ namespace CIAO
         {
           DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
                         "CCM_DDS_ContentFilterSetting_i::set_filter_parameters: "
-                        "successfully set parameters on ContentfilteredTopic\n"));
+                        "successfully set parameters on ContentFilteredTopic\n"));
           this->filter_.parameters = parameters;
         }
       else

@@ -9,6 +9,8 @@
 #ifndef CIAO_LOG_MACROS_H_
 #define CIAO_LOG_MACROS_H_
 
+#include "ace/Log_Category.h"
+
 // default information printed with CIAO logging messages.
 
 #include "CIAO_Logger_Export.h"
@@ -18,6 +20,8 @@
 #endif
 
 extern CIAO_Logger_Export unsigned int CIAO_debug_level;
+
+extern CIAO_Logger_Export ACE_Log_Category CIAO_log_category;
 
 // By default tracing is turned off.
 #if !defined (CIAO_NTRACE)
@@ -62,7 +66,8 @@ extern CIAO_Logger_Export unsigned int CIAO_debug_level;
     if (CIAO_debug_level >= L) \
       { \
         int const __ace_error = ACE_Log_Msg::last_error_adapter (); \
-        ACE_Log_Msg *ace___ = ACE_Log_Msg::instance ();               \
+        ACE_Log_Category_TSS *ace___ = CIAO_log_category.per_thr_obj (); \
+        if (ace___ == 0) break; \
         ace___->conditional_set (__FILE__, __LINE__, -1, __ace_error); \
         ace___->log X; \
       } \
@@ -74,7 +79,8 @@ extern CIAO_Logger_Export unsigned int CIAO_debug_level;
     if (CIAO_debug_level >= L) \
       { \
         int const __ace_error = ACE_Log_Msg::last_error_adapter (); \
-        ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
+        ACE_Log_Category_TSS *ace___ = CIAO_log_category.per_thr_obj (); \
+        if (ace___ == 0) break; \
         ace___->conditional_set (__FILE__, __LINE__, 0, __ace_error); \
         ace___->log X; \
       } \
@@ -86,7 +92,8 @@ extern CIAO_Logger_Export unsigned int CIAO_debug_level;
     if (CIAO_debug_level >= L) \
       { \
         int const __ace_error = ACE_Log_Msg::last_error_adapter (); \
-        ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
+        ACE_Log_Category_TSS *ace___ = CIAO_log_category.per_thr_obj (); \
+        if (ace___ == 0) break; \
         ace___->conditional_set (__FILE__, __LINE__, Y, __ace_error); \
         ace___->log X; \
       } \
