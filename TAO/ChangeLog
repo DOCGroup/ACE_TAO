@@ -1,3 +1,15 @@
+Mon May 13 14:15:13 UTC 2013  Brian Johnson  <johnsonb@ociweb.com>
+
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_App_Ctrl/DMD_App_Ctrl.mpc:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_Inf_Ctrl/DMD_Inf_Ctrl.mpc:
+
+          Renamed mpc file to prevent hitting the maximum filename length on windows.
+
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_App_Ctrl/DeadMemberDetection_App_Ctrl.mpc:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_Inf_Ctrl/DeadMemberDetection_Inf_Ctrl.mpc:
+
+          Removed these files.
+
 Mon May 13 07:14:00 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * NEWS:
