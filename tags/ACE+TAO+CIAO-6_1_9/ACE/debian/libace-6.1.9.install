@@ -1,0 +1,4 @@
+usr/lib/libACE-*.so
+usr/lib/libACE_ETCL-*.so
+usr/lib/libACE_Monitor_Control-*.so
+usr/lib/libACE_ETCL_Parser-*.so

@@ -1,0 +1,28 @@
+#
+# Retry Tests
+#
+
+# Simple Retry Test
+begin
+server_poas=1
+server_poa_objs=1
+client_threads=1
+client_iterations=1
+client_requests=1
+activate_retry=4
+activate_mode=per_client
+run use_invocation
+
+# Simple Ping Test
+begin
+debug_level=2
+activate_mode=manual
+server_poas=1
+server_poa_objs=1
+client_threads=1
+client_iterations=1
+client_requests=1
+env_pause_type=r
+ping_interval=500
+server_activate_pause=10000
+run use_invocation

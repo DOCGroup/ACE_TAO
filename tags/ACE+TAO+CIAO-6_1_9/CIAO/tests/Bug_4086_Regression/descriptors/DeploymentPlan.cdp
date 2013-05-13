@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!-- $Id$ -->
+<Deployment:DeploymentPlan xmlns:Deployment="http://www.omg.org/Deployment" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+
+  <UUID>e4a58f39-c343-4988-b7af-af6ad9ded5e2</UUID>
+
+  <implementation xmi:id="_936b6d23-5a31-4241-b681-1dcd0d4180ee">
+    <name>PICML_default_xme_file.ComponentImplementations.FooImpl.FooImpl</name>
+    <source/>
+    <artifact xmi:idref="_936b6d23-5a31-4241-b682-1dcd0d4180ee"/>
+    <artifact xmi:idref="_936b6d23-5a31-4241-b683-1dcd0d4180ee"/>
+    <execParameter>
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Foo_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>PICML_default_xme_file.ImplementationArtifacts.FooArtifacts.Foo_exec</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Foo_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>PICML_default_xme_file.ImplementationArtifacts.FooArtifacts.Foo_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+  <instance xmi:id="_d6fbd4f9-1bc4-46eb-af5f-2b1ef5bf1ae8">
+    <name>PICML_default_xme_file.ComponentImplementations.ComponentImplementationContainer.ComponentAssembly.Foo</name>
+    <node>NodeOne</node>
+    <source/>
+    <implementation xmi:idref="_936b6d23-5a31-4241-b681-1dcd0d4180ee"/>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>FooImpl.ior</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>supported_short</name>
+      <value>
+        <type>
+          <kind>tk_short</kind>
+        </type>
+        <value>
+          <short>11</short>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <artifact xmi:id="_936b6d23-5a31-4241-b682-1dcd0d4180ee">
+    <name>PICML_default_xme_file.ImplementationArtifacts.FooArtifacts.Foo_svnt</name>
+    <source/>
+    <node/>
+    <location>Foo_svnt</location>
+  </artifact>
+
+  <artifact xmi:id="_936b6d23-5a31-4241-b683-1dcd0d4180ee">
+    <name>PICML_default_xme_file.ImplementationArtifacts.FooArtifacts.Foo_exec</name>
+    <source/>
+    <node/>
+    <location>Foo_exec</location>
+  </artifact>
+
+  <localityConstraint>
+    <constraint>SameProcess</constraint>
+    <constrainedInstance xmi:idref="_d6fbd4f9-1bc4-46eb-af5f-2b1ef5bf1ae8"/>
+  </localityConstraint>
+
+</Deployment:DeploymentPlan>
