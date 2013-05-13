@@ -1,3 +1,7 @@
+Mon May 13 08:52:11 CEST 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE version 1.1.9 released.
+
 Fri May 10 09:00:38 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * dance/LocalityManager/Daemon/Locality_Manager_Impl.cpp:

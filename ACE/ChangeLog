@@ -1,3 +1,7 @@
+Mon May 13 08:52:11 CEST 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE version 6.1.9 released.
+
 Fri May 10 20:36:13 UTC 2013  Steve Huston  <shuston@riverace.com>
 
         * examples/C++NPv2/AIO_Client_Logging_Daemon.cpp: Advance the
