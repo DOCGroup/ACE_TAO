@@ -1,3 +1,131 @@
+Mon May 13 07:14:04 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+          Make 1.1.9 public and prepare for the next minor release
+
+Mon May 13 08:52:11 CEST 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * CIAO version 1.1.9 released.
+
+Tue Apr 23 7:34:41 UTC 2013  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/dds4ccm/tests/HomeDerived/descriptors/run_test.pl:
+          Changed nr of deamons.
+
+Fri Apr 19 10:22:41 UTC 2013  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/dds4ccm/tests/HomeDerived/Sender/Hello_Sender.mpc:
+          Added lib Connector2_stub to svnt
+
+Thu Apr 18 18:37:16 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/CCM_DataReader.h:
+          Layout change
+
+        * connectors/dds4ccm/impl/ContentFilterSetting.cpp:
+          Log name of CFT
+
+Thu Apr 18 14:37:41 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/HomeDerived/Sender/Hello_Sender.mpc:
+          Make project names unique
+
+Thu Apr 18 13:04:48 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/HomeDerived/descriptors/DeploymentPlan.cdp:
+          Don't use qos_profile, not needed for this test
+
+        * connectors/dds4ccm/tests/HomeDerived/descriptors/USER_QOS_PROFILES.xml:
+          Removed this file.
+
+Thu Apr 18 12:42:46 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+          Check if transport config exists before trying to create it,
+          fixes ResetTopic tests
+
+Thu Apr 18 10:25:57 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/06_compilation.html:
+          html fix
+
+Thu Apr 18 09:44:00 UTC 2013  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/dds4ccm/tests/HomeDerived/Connector2/Hello_Connector2.idl:
+        Fuzz error
+
+Thu Apr 18 08:50:34 UTC 2013  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * bin/ciao_tests.lst:
+        * connectors/dds4ccm/tests/HomeDerived:
+        * connectors/dds4ccm/tests/HomeDerived/Base:
+        * connectors/dds4ccm/tests/HomeDerived/Base/Hello_Base.idl:
+        * connectors/dds4ccm/tests/HomeDerived/Base/Hello_Base.mpc:
+        * connectors/dds4ccm/tests/HomeDerived/Connector1:
+        * connectors/dds4ccm/tests/HomeDerived/Connector1/Hello_Connector.idl:
+        * connectors/dds4ccm/tests/HomeDerived/Connector1/Hello_Connector.mpc:
+        * connectors/dds4ccm/tests/HomeDerived/Connector2:
+        * connectors/dds4ccm/tests/HomeDerived/Connector2/Hello_Connector2.idl:
+        * connectors/dds4ccm/tests/HomeDerived/Connector2/Hello_Connector2.mpc:
+        * connectors/dds4ccm/tests/HomeDerived/Sender:
+        * connectors/dds4ccm/tests/HomeDerived/Sender/Hello_Sender.idl:
+        * connectors/dds4ccm/tests/HomeDerived/Sender/Hello_Sender.mpc:
+        * connectors/dds4ccm/tests/HomeDerived/Sender/Hello_Sender_exec.h:
+        * connectors/dds4ccm/tests/HomeDerived/Sender/Hello_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/HomeDerived/descriptors:
+        * connectors/dds4ccm/tests/HomeDerived/descriptors/DeploymentPlan.cdp:
+        * connectors/dds4ccm/tests/HomeDerived/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/HomeDerived/descriptors/run_test.pl:
+        Test with derived homes and derived home components .
+
+Tue Apr 16 17:54:56 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/DDS4CCM-INSTALL.html:
+          Several fixes
+
+Tue Apr 16 17:30:31 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/DDS4CCM-INSTALL.html:
+          Detailed step by step instructions for DDS4CCM with RTI DDS on Linux
+
+Mon Apr 15 18:18:18 UTC 2013  Adam Mitz  <mitza@ociweb.com>
+
+        * CIAO_DAnCE.mwc:
+
+          Added ami4ccm and dds4ccm connectors to this workspace.
+
+Mon Apr 15 08:59:47 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/DDS4CCM-INSTALL.html:
+          Added exact instructions how to compile DDS4CCM with OpenDDS
+          on linux. These can be copied to the console and will compile
+          everything
+
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_1.pl:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_2.pl:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_3.pl:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_4.pl:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_6.pl:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_7.pl:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_8.pl:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_9.pl:
+          Make these running on trunk, only run_8.pl needs some more work
+
+Fri Apr 12 20:40:54 UTC 2013  Adam Mitz  <mitza@ociweb.com>
+
+        * ciao/Logger/Log_Macros.h:
+        * ciao/Logger/Log_Macros.cpp:
+        * connectors/dds4ccm/impl/logger/Log_Macros.h:
+        * connectors/dds4ccm/impl/logger/Log_Macros.cpp:
+
+          Use distinct ACE Log Categories for both CIAO and DDS4CCM.
+
+Thu Apr 11 06:49:15 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDS_Listen_T.h:
+          Added missing includes in case an user includes this template
+          stand alone in his own custom connector
+
 Wed Apr 10 14:08:25 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/DDS4CCM-INSTALL.html:

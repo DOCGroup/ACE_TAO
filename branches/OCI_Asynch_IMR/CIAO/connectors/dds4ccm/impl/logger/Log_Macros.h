@@ -12,6 +12,7 @@
 // default information printed with CIAO logging messages.
 #include "DDS4CCM_Logger_Export.h"
 #include "ace/Log_Msg.h"
+#include "ace/Log_Category.h"
 
 #if !defined (DDS4CCM_INFO)
 #  define DDS4CCM_INFO "(%P|%t) [%M] - %T - "
@@ -30,6 +31,8 @@
 #define DDS4CCM_LOG_LEVEL_DDS_STATUS     10
 
 extern DDS4CCM_Logger_Export unsigned int DDS4CCM_debug_level;
+
+extern DDS4CCM_Logger_Export ACE_Log_Category DDS4CCM_log_category;
 
 // By default tracing is turned off.
 #if !defined (DDS4CCM_NTRACE)
@@ -77,7 +80,8 @@ extern DDS4CCM_Logger_Export unsigned int DDS4CCM_debug_level;
     if (DDS4CCM_debug_level >= L) \
       { \
         int const __ace_error = ACE_Log_Msg::last_error_adapter (); \
-        ACE_Log_Msg *ace___ = ACE_Log_Msg::instance ();               \
+        ACE_Log_Category_TSS *ace___ = DDS4CCM_log_category.per_thr_obj (); \
+        if (ace___ == 0) break; \
         ace___->conditional_set (__FILE__, __LINE__, -1, __ace_error); \
         ace___->log X; \
       } \
@@ -90,7 +94,8 @@ extern DDS4CCM_Logger_Export unsigned int DDS4CCM_debug_level;
     if (DDS4CCM_debug_level >= L) \
       { \
         int const __ace_error = ACE_Log_Msg::last_error_adapter (); \
-        ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
+        ACE_Log_Category_TSS *ace___ = DDS4CCM_log_category.per_thr_obj (); \
+        if (ace___ == 0) break; \
         ace___->conditional_set (__FILE__, __LINE__, 0, __ace_error); \
         ace___->log X; \
       } \
@@ -140,7 +145,8 @@ extern DDS4CCM_Logger_Export unsigned int DDS4CCM_debug_level;
     if (DDS4CCM_debug_level >= L) \
       { \
         int const __ace_error = ACE_Log_Msg::last_error_adapter (); \
-        ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
+        ACE_Log_Category_TSS *ace___ = DDS4CCM_log_category.per_thr_obj (); \
+        if (ace___ == 0) break; \
         ace___->conditional_set (__FILE__, __LINE__, Y, __ace_error); \
         ace___->log X; \
       } \
