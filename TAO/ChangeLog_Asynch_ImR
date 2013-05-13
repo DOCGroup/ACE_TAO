@@ -1,3 +1,15 @@
+Mon May 13 15:00:19 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/AsyncListManager.h:
+        * orbsvcs/ImplRepo_Service/AsyncListManager.cpp:
+
+          Clean up runtime failures.
+
+        * orbsvcs/tests/ImplRepo/servers_list/Test.idl:
+
+          Make the abort() operation a oneway so that commfails are avoided
+          in the client.
+
 Sun May 12 16:45:48 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/AsyncAccessManager.h:
