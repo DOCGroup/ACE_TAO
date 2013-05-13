@@ -1,3 +1,19 @@
+Mon May 13 17:27:37 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        Merging from branch OCI_Asynch_IMR:
+        Wed May  8 21:42:24 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/Countdown_Time_T.cpp:
+        * ace/Countdown_Time_T.h:
+
+          Make the countdown time instances nestable. Prior to this change,
+          if a function using the countdown time to subtract a duration
+          happened to call another function that also used a countdown time
+          instance to subtract from the same instance, the inner countdown
+          would subtract its span and then the outer one would do the same
+          resulting in the same span of time being subtracted twice.
+
+
 Mon May 13 17:34:28 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/INET_Addr_Test.cpp:
