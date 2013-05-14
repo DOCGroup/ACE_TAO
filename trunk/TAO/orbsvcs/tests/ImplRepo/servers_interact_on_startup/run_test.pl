@@ -425,6 +425,7 @@ sub run_multistart_test
 {
     init_test ();
     print_msg ("Running multistart test");
+    $srv[1]->DeleteFile ($srvstatusfile[1]);
 
     my @TICMD;
     print "First async start request\n";
