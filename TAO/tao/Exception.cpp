@@ -35,14 +35,12 @@ CORBA::Exception::Exception (const char * repository_id,
   : id_ (CORBA::string_dup (repository_id)),
     name_ (CORBA::string_dup (local_name))
 {
-  ACE_ASSERT (this->id_.in () != 0 && this->name_.in () != 0);
 }
 
 CORBA::Exception::Exception (const CORBA::Exception &src)
   : id_ (CORBA::string_dup (src.id_)),
     name_ (CORBA::string_dup (src.name_))
 {
-  ACE_ASSERT (this->id_.in () != 0 && this->name_.in () != 0);
 }
 
 // NOTE: It's this code, not anything defined in a subclass, which is
@@ -65,10 +63,7 @@ CORBA::Exception::operator= (const CORBA::Exception &src)
   if (this != &src)
     {
       this->id_ = CORBA::string_dup (src.id_);
-      ACE_ASSERT (this->id_.in () != 0);
-
       this->name_ = CORBA::string_dup (src.name_);
-      ACE_ASSERT (this->name_.in () != 0);
     }
 
   return *this;
