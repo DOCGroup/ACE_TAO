@@ -26,6 +26,9 @@
 #if defined(__RTP__)
 // bzero is in strings.h
 # define ACE_HAS_STRINGS 1
+# if defined ACE_HAS_PTHREADS
+#  define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS
+# endif
 #endif
 
 #include /**/ "ace/post.h"

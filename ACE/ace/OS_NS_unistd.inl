@@ -498,7 +498,7 @@ ACE_OS::getpid (void)
 #elif defined (ACE_WIN32)
   return ::GetCurrentProcessId ();
 #else
-  ACE_OSCALL_RETURN (::getpid (), int, -1);
+  ACE_OSCALL_RETURN (::getpid (), pid_t, -1);
 #endif /* ACE_LACKS_GETPID */
 }
 
