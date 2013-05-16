@@ -1842,7 +1842,9 @@ strategy.
           </tr>
           <tr>
             <td ALIGN="left"><code>&#8209;ORBListenOnAll</code> <em>0 | 1</em></td>
-            <td ALIGN="left">This is a server-side (listener) option that by default is disabled.
+            <td ALIGN="left">This is a server-side (listener) option that by default is disabled; however
+            this option only takes effect where no <code>&#8209;ORBListenerInterfaces</code>
+            directives (if any, see below) match the actual multicast address being set-up.
             <p>If disabled (<em>0</em>) the multicast address will be listened for only on the default multicast
             interface associated with the <CODE>INADDR_ANY</CODE> local address (normally the first such
             local interface on the system), the loopback interface is normally excluded.</p>
@@ -1850,6 +1852,39 @@ strategy.
             interface(s) which are multicast enabled (again the loopback interface is normally excluded).
             </td>
           </tr>
+          <tr>
+            <td ALIGN="left"><code>&#8209;ORBListenerInterfaces</code> <em>targetNetwork=localNetwork[,...] | CopyPreferredInterfaces</em></td>
+            <td ALIGN="left">This is a server-side (listener) option that specifies, on a multihomed host,
+             which network/interface(s) are to be used to listen for communications from the multicast addressed
+             remote client(s). If this option is unspecified (or if none of the given
+             <em>targetNetwork=localNetwork</em> patterns match the current addresses being set-up for
+             the attempted listener) then the default listener will be set-up as specified or defaulted with the
+             <code>&#8209;ORBListenOnAll</code> see above.
+             Otherwise when TAO attempts to establish the listeners for a <em>targetNetwork</em> multicast
+             address(es), it will use the local ip address(es) matching the <em>localNetwork</em> string. Simple
+             wildcards can be used for both parameters, and multiple paired <em>targetNetwork=localNetwork</em>
+             strings can be specified using comma separators (no embedded spaces allowed) or via additional
+             <code>&#8209;ORBListenerInterfaces</code> directives. It is also possiable to specify loopback
+             and/or multiple interfaces at the same time for each listener established via such
+             <code>&#8209;ORBListenerInterfaces</code> directives.
+             <p>
+             For example, for a machine with two network cards identified by the ip addresses
+             <code>192.168.1.10</code> and <code>192.168.1.20</code>, you can use the single directive
+             <code>&#8209;ORBListenerInterfaces 239.255.*=*10,224.255.*=*20</code> or the pair of directives
+             <code>&#8209;ORBListenerInterfaces 239.255.*=*10 &#8209;ORBListenerInterfaces 224.255.*=*20</code>
+             to establish the link to listen for <em>239.255.*</em> multicast addresses on the first interface, and
+             <em>224.255.*</em> multicast addresses on the second interface.</p>
+             <em>targetNetwork</em> can use any string, but must typically match the value writen into the IOR and so
+             will usually be a dotted decimal multicast address in the administrative "site local" range,
+             (<em>224.255.0.0</em> to <em>238.255.255.255</em>) or (<em>239.255.0.0</em> to <em>239.255.255.255</em>).
+             <p><em>localNetwork</em> must use a local dotted decimal address, because it will be matched with
+             the local ip interfaces.</p>
+             The same client-side (sender) assignments as specified by the ORB_init supplied command line option(s)
+             <code>&#8209;ORBPreferredInterfaces</code> can be duplicated by specifying the single special
+             <em>CopyPreferredInterfaces</em> parameter as in <code>&#8209;ORBListenerInterfaces CopyPreferredInterfaces</code>
+             (which may be prefixed and/or postfixed by other <code>&#8209;ORBListenerInterfaces <em>targetNetwork=localNetwork</em></code>
+             options as required).
+        </tr>
         </tbody>
       </table>
   </blockquote>
