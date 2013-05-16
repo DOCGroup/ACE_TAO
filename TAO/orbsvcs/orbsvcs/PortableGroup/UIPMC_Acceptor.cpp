@@ -17,14 +17,16 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_UIPMC_Acceptor::TAO_UIPMC_Acceptor (
-  bool listen_on_all_ifs)
+  bool listen_on_all_ifs,
+  const char *listener_interfaces)
   : TAO_Acceptor (IOP::TAG_UIPMC),
     addrs_ (0),
     hosts_ (0),
     endpoint_count_ (0),
     version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
     orb_core_ (0),
-    listen_on_all_ (listen_on_all_ifs)
+    listen_on_all_ (listen_on_all_ifs),
+    listener_interfaces_ (listener_interfaces)
 {
 }
 
@@ -228,6 +230,56 @@ TAO_UIPMC_Acceptor::open_i (
   const ACE_INET_Addr &addr,
   ACE_Reactor *reactor)
 {
+  // Check for the special "CopyPreferredInterfaces" token(s) stored in the
+  // listener_interfaces_ string. If found, subsitute each one for the actual
+  // -ORBPreferredInterfaces string set on the ORB_init command line.
+  for (ACE_CString::size_type foundToken =
+         this->listener_interfaces_.find (CopyPreferredInterfaceToken);
+       ACE_CString::npos != foundToken;
+       foundToken =
+         this->listener_interfaces_.find (CopyPreferredInterfaceToken))
+    {
+      ACE_CString
+        left =  this->listener_interfaces_.substr (0, foundToken),
+        right = this->listener_interfaces_.substr (foundToken +
+          static_cast<ACE_CString::size_type> (
+            sizeof (CopyPreferredInterfaceToken)-1u ));
+      const char *preferred_interfaces =
+        this->orb_core_->orb_params ()->preferred_interfaces ();
+      if (preferred_interfaces && preferred_interfaces[0])
+        {
+          // Subsitute the token for the actual string, if not null
+          // left/right will always end/start with a ','
+          this->listener_interfaces_ =
+            left + preferred_interfaces + right;
+        }
+      else
+        {
+          // No preferred_interfaces specified
+          if (',' == right[0]) // Right is not null
+            {
+              // Need to remove the token, AND one of the seporating ','
+              this->listener_interfaces_ =
+                left + right.substr (1);
+            }
+          else // Since right must also be a null string
+            {
+              const ACE_CString::size_type length= left.length ();
+              if (length)
+                {
+                  // Since we only have the left, remove the trailing ','
+                  this->listener_interfaces_ = left.substr (0, length-1);
+                }
+              else
+                {
+                  // Since BOTH left and right are empty, removing the
+                  // token leaves an empty string.
+                  this->listener_interfaces_ = "";
+                }
+            }
+        }
+    } // End loop replacing all preferred_interfaces tokens.
+
   // Create our connection handler and pass it our configurtion options.
   TAO_UIPMC_Mcast_Connection_Handler *connection_handler = 0;
   ACE_NEW_RETURN (connection_handler,
@@ -235,6 +287,8 @@ TAO_UIPMC_Acceptor::open_i (
                   -1);
   connection_handler->local_addr (addr);
   connection_handler->listen_on_all (this->listen_on_all_);
+  connection_handler->listener_interfaces (
+    this->listener_interfaces_.c_str ());
   if (connection_handler->open (0))
     {
       ORBSVCS_DEBUG ((LM_ERROR,

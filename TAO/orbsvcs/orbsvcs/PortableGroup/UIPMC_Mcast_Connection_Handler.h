@@ -52,9 +52,7 @@ class TAO_PortableGroup_Export TAO_UIPMC_Mcast_Connection_Handler :
   public TAO_UIPMC_MCAST_SVC_HANDLER,
   public TAO_Connection_Handler
 {
-
 public:
-
   TAO_UIPMC_Mcast_Connection_Handler (ACE_Thread_Manager* t = 0);
 
   /// Constructor. arg parameter is used by the Acceptor to pass the
@@ -100,14 +98,13 @@ public:
   void local_addr (const ACE_INET_Addr &addr);
 
   /// Set this to listen on all interfaces
-  void listen_on_all(bool value);
+  void listen_on_all (bool value);
 
-  // UIPMC Additions - End
+  /// Set this to specify ListenerInterfaces pairs
+  /// (Same as -ORBPreferredInterfaces but for listeners)
+  void listener_interfaces (const char *);
 
 protected:
-
-  // UIPMC Additions - Begin
-
   // This is always the remote address
   ACE_INET_Addr addr_;
 
@@ -117,6 +114,8 @@ protected:
   // Should we listen on all interfaces
   bool listen_on_all_;
 
+  // Which interfaces are to be listening for the group address
+  ACE_CString listener_interfaces_;
   // UIPMC Additions - End
 
   //@{

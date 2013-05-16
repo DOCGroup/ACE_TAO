@@ -1,0 +1,19 @@
+/**
+$Id$
+
+@page McastLocal Test README File
+
+This test is a copy of the McastHello test but modified so that the
+servers are listening only on the loopback interface (via the
+  "-ORBListenerInterface *=127.0.0.1" in the svc_server1.conf for server1
+and the
+  "-ORBListenerInterface CopyPreferredInterfaces" in the svc_server2.conf
+and the server2's otherwise redundant command line
+  "-ORBPreferredInterface *=127.0.0.1" orb_init parameter).
+The client has also been modified to send the broadcast out on the
+loopback interface (via its
+  "-ORBPreferredInterface *=127.0.0.1" orb_init parameter).
+
+This is testing that these configuartion options are correctly working
+for MIOP.
+**/
