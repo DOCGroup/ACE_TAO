@@ -2310,11 +2310,12 @@ sub check_for_ace_log_categories ()
 
     for my $f (@files_h, @files_cpp, @files_inl) {
         my $cat = 'ACE';
-        if ($f =~ /\/ace\/(\w+)/) {
+        $f =~ s!\\!/!g;
+        if ($f =~ /ace\/(\w+)/) {
             next if $1 eq 'Log_Msg' || $` =~ /\/protocols$/;
             $cat = 'ACELIB';
         }
-        elsif ($f =~ /\/tao\//) {
+        elsif ($f =~ /tao\//) {
             $cat = 'TAOLIB';
         }
         elsif ($f =~ /\/orbsvcs\// && $f !~ /tests|examples/i) {
@@ -2323,7 +2324,7 @@ sub check_for_ace_log_categories ()
         elsif ($f =~ /CIAO\// || $f =~ /DAnCE\//) {
             next;
         }
-        elsif ($f =~ /\/tests\/Log_Msg_Test\.cpp/) {
+        elsif ($f =~ /tests\/Log_Msg_Test\.cpp/) {
             next;
         }
 

@@ -350,7 +350,6 @@ sub reboot
                                     Prompt => '/-> $/',
                                     Errmode => 'return');
                 $t->open($ENV{'ACE_RUN_VX_TGTHOST'});
-                $t->print("");
                 if (defined $target_login)  {
                     $t->waitfor('/VxWorks login: $/');
                     $t->print("$target_login");
@@ -359,9 +358,11 @@ sub reboot
                     $t->waitfor('/Password: $/');
                     $t->print("$target_password");
                 }
+                $t->print("");
                 $ok = $t->waitfor('/-> $/');
                 if ($ok) {
                     $t->print($PerlACE::ProcessVX::RebootCmd);
+                    sleep(5);
                 }
                 else {
                     print "ERROR: FAILED to execute 'reboot' command!\n";
