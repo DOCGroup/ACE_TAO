@@ -1,3 +1,30 @@
+Thu May 16 09:01:00 UTC 2013  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * docs/Options.html:
+        * tao/params.h:
+        * tao/params.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Acceptor.h:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Acceptor.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Factory.h:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Factory.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Mcast_Connection_Handler.h:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Mcast_Connection_Handler.cpp:
+        * orbsvcs/tests/Miop/McastLocal/client.cpp:
+        * orbsvcs/tests/Miop/McastLocal/McastHello.cpp:
+        * orbsvcs/tests/Miop/McastLocal/McastHello.h:
+        * orbsvcs/tests/Miop/McastLocal/McastLocal.mpc:
+        * orbsvcs/tests/Miop/McastLocal/README:
+        * orbsvcs/tests/Miop/McastLocal/run_test.pl:
+        * orbsvcs/tests/Miop/McastLocal/server.cpp:
+        * orbsvcs/tests/Miop/McastLocal/svc_client.conf:
+        * orbsvcs/tests/Miop/McastLocal/svc_server1.conf:
+        * orbsvcs/tests/Miop/McastLocal/svc_server2.conf:
+        * orbsvcs/tests/Miop/McastLocal/Test.idl:
+        * bin/tao_other_tests.lst:
+
+          Provide UIPMC Factory configuration option -ORBListenerInterfaces
+          see docs/Options.html for details.
+
 Wed May 15 18:21:40 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Exception.cpp:
