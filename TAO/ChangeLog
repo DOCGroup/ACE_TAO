@@ -1,3 +1,9 @@
+Fri May 17 10:11:00 UTC 2013  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Mcast_Connection_Handler.cpp:
+
+          size_t not CORBA::ULong for ACE_Vector size.
+
 Fri May 17 09:10:00 UTC 2013  Simon Massey  <simon dot massey at prismtech dot com>
 
         * orbsvcs/orbsvcs/PortableGroup/UIPMC_Mcast_Connection_Handler.cpp:
