@@ -1,3 +1,8 @@
+Fri May 17 09:32:04 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/tests.mpc:
+          Add NOMINMAX to macros for compiler features test 16/17
+
 Fri May 17 09:26:22 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Compiler_Features_19_Test.cpp:
