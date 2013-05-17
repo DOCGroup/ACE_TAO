@@ -1,3 +1,9 @@
+Fri May 17 19:02:02 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/AsyncListManager.cpp:
+
+          Added some debugging output.
+
 Fri May 17 13:42:24 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * docs/libraries.html:
