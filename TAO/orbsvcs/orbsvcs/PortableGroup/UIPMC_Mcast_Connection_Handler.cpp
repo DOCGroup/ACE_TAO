@@ -124,22 +124,22 @@ TAO_UIPMC_Mcast_Connection_Handler::open (void *)
         preferred);
       preferred_size= preferred.size ();
 
-#ifndef ALLOW_UNICAST_MIOP
+#ifndef TAO_ALLOW_UNICAST_MIOP
       // If we are attempting to join ANY preferred listener interfaces, at least one join must
       // complete in the loop below for a successful outcome. If we have NO valid preferred
       // listener interfaces, then we are concidered successful HERE so as to allow the
       // default join to be attempted later.
       bool success= !preferred_size;
-#endif // ALLOW_UNICAST_MIOP
+#endif // TAO_ALLOW_UNICAST_MIOP
       for (CORBA::ULong i= 0u; i < preferred_size; ++i)
         if (0 == this->peer ().join (
                    this->local_addr_,
                    1,
                    ACE_TEXT_CHAR_TO_TCHAR (preferred[i].c_str ())))
           {
-#ifndef ALLOW_UNICAST_MIOP
+#ifndef TAO_ALLOW_UNICAST_MIOP
             success= true; // At least one perferred listener interface join succeeded
-#endif // ALLOW_UNICAST_MIOP
+#endif // TAO_ALLOW_UNICAST_MIOP
             if (TAO_debug_level > 5)
               ORBSVCS_DEBUG ((LM_DEBUG,
                               ACE_TEXT("TAO (%P|%t) - UIPMC_Mcast_Connection_Handler::open, ")
@@ -158,10 +158,10 @@ TAO_UIPMC_Mcast_Connection_Handler::open (void *)
                           preferred[i].c_str ()
                         ));
 
-#ifndef ALLOW_UNICAST_MIOP
+#ifndef TAO_ALLOW_UNICAST_MIOP
       if (!success)
         return -1; // No joins worked, we are not listening.
-#endif // ALLOW_UNICAST_MIOP
+#endif // TAO_ALLOW_UNICAST_MIOP
     }
 
   // If we have NO valid preferred listener interfaces matches, then we attempt the
@@ -193,9 +193,9 @@ TAO_UIPMC_Mcast_Connection_Handler::open (void *)
                             ((this->listen_on_all_) ? "All" : "Default")
                           ));
 
-#ifndef ALLOW_UNICAST_MIOP
+#ifndef TAO_ALLOW_UNICAST_MIOP
           return -1; // No joins worked, we are not listening.
-#endif // ALLOW_UNICAST_MIOP
+#endif // TAO_ALLOW_UNICAST_MIOP
         }
     }
 
