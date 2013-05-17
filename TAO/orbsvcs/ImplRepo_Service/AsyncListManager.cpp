@@ -4,6 +4,7 @@
 #include "AsyncListManager.h"
 #include "Iterator.h"
 #include "Locator_Repository.h"
+#include "ImR_Locator_i.h"
 
 #include "orbsvcs/Log_Macros.h"
 
@@ -39,6 +40,14 @@ AsyncListManager::poa (void)
 void
 AsyncListManager::final_state (void)
 {
+  if (ImR_Locator_i::debug() > 4)
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) AsyncListManager::final_state, ")
+                      ACE_TEXT ("waiters count = %d, pinger not null? %d\n"),
+                      this->waiters_, (this->pinger_ != 0)));
+    }
+
   if (this->pinger_ != 0 && this->waiters_ > 0)
     {
       return;
@@ -182,6 +191,15 @@ AsyncListManager::list_i (CORBA::ULong start, CORBA::ULong how_many)
             }
         }
     }
+
+  if (ImR_Locator_i::debug() > 4)
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) AsyncListManager::list_i, %d waiters")
+                      ACE_TEXT (" out of %d regsitered servers\n"),
+                      this->waiters_, (this->pinger_ != 0)));
+    }
+
   if (this->waiters_ == 0)
     {
       this->final_state ();
@@ -208,6 +226,12 @@ AsyncListManager::ping_replied (CORBA::ULong index, LiveStatus status)
         ImplementationRepository::ACTIVE_NO;
       break;
     default:
+      if (ImR_Locator_i::debug() > 4)
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%P|%t) AsyncListManager::ping_replied, index = %d ")
+                          ACE_TEXT ("status = %d\n")));
+        }
       return;
     }
   this->waiters_--;
