@@ -1,3 +1,8 @@
+Fri May 17 09:26:22 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Compiler_Features_19_Test.cpp:
+          Added missing include
+
 Thu May 16 17:52:36 UTC 2013  Adam Mitz  <mitza@ociweb.com>
 
         * ace/Select_Reactor_T.cpp:
