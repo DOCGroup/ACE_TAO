@@ -51,7 +51,6 @@ class TAO_LB_ObjectReferenceFactory
   , public virtual OBV_TAO_LB::ObjectReferenceFactory
 {
  public:
-
   /// Constructor
   TAO_LB_ObjectReferenceFactory (
     PortableInterceptor::ObjectReferenceFactory * old_orf,
@@ -60,6 +59,8 @@ class TAO_LB_ObjectReferenceFactory
     const char * location,
     CORBA::ORB_ptr orb,
     CosLoadBalancing::LoadManager_ptr lm);
+
+  virtual ::CORBA::ValueBase *_copy_value (void);
 
   /**
    * @name PortableInterceptor::ObjectReferenceFactory Methods
@@ -73,7 +74,6 @@ class TAO_LB_ObjectReferenceFactory
       const PortableInterceptor::ObjectId & id);
   //@}
 
-
   typedef ACE_Hash_Map_Manager_Ex<
     ACE_CString,
     PortableGroup::ObjectGroup_var,
@@ -85,7 +85,6 @@ class TAO_LB_ObjectReferenceFactory
     PortableGroup::GenericFactory::FactoryCreationId_var> fcid_list;
 
 protected:
-
   /// Destructor
   /**
    * Protected destructor to enforce proper memory management via
@@ -102,16 +101,13 @@ protected:
   /// Determine if object with given RepositoryId is load managed.
   CORBA::Boolean load_managed_object (const char * repository_id,
                                       CORBA::ULong & i);
-
 private:
-
   /// The old ObjectReferenceFactory used to create object references.
   /**
    * This ObjectReferenceFactory will be used when creating object
    * references for non-load balanced objects.
    */
   PortableInterceptor::ObjectReferenceFactory_var old_orf_;
-
 
   /// List of stringified object group references.
   /**
@@ -161,11 +157,9 @@ private:
    * which can be costly.
    */
   CORBA::Boolean * registered_members_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
 
 #if defined (_MSC_VER)
 #pragma warning(pop)

@@ -60,6 +60,7 @@ namespace TAO
                              const char *orb_id,
                              PortableInterceptor::AdapterName *adapter_name,
                              PortableServer::POA_ptr poa);
+    ::CORBA::ValueBase *_copy_value (void);
 
     /**
      * @name PortableInterceptor::ObjectReferenceTemplate Methods
@@ -88,7 +89,6 @@ namespace TAO
     //@}
 
   protected:
-
     /// Destructor
     /**
      * Protected destructor to enforce proper memory management via

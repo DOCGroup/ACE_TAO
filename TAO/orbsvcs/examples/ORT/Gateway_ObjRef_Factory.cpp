@@ -12,6 +12,22 @@ Gateway_ObjRef_Factory (
   CORBA::add_ref (old_factory);
 }
 
+::CORBA::ValueBase *
+Gateway_ObjRef_Factory::_copy_value (void)
+{
+  Gateway_ObjRef_Factory *ret_val= 0;
+  ACE_NEW_THROW_EX (
+    ret_val,
+    Gateway_ObjRef_Factory (
+      gateway_object_factory_,
+      old_factory_
+    ),
+    ::CORBA::NO_MEMORY ()
+  );
+
+  return ret_val;
+}
+
 CORBA::Object_ptr
 Gateway_ObjRef_Factory::
 make_object (const char *interface_repository_id,

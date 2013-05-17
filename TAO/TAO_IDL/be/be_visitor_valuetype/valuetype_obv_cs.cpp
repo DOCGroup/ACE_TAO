@@ -1,5 +1,3 @@
-
-
 //=============================================================================
 /**
  *  @file    valuetype_obv_cs.cpp
@@ -32,7 +30,6 @@ be_visitor_valuetype_obv_cs::be_visitor_valuetype_obv_cs (
 be_visitor_valuetype_obv_cs::~be_visitor_valuetype_obv_cs (void)
 {
 }
-
 
 // OBV_ class must be in OBV_ namespace
 int
@@ -88,15 +85,47 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
 
   // Destructor.
   *os << node->full_obv_skel_name () << "::~";
-
   if (! node->is_nested ())
     {
       *os << "OBV_";
     }
-
   *os << node->local_name () << " (void)" << be_nl
       << "{}";
 
+  // Virtual _copy_value() only provided in OBV_* class when
+  // ::CORBA::DefaultValueRefCountBase has been included.
+  // The OBV_ class is concrete in this case and so requires
+  // a _copy_value definition. 
+  // Otherwise, the end user must derive from this abstract
+  // OBV_* class and it is up to them to provide the correct
+  // implimentation of the _copy_value() there.
+  if (this->obv_need_ref_counter (node))
+    {
+      *os << be_nl_2
+          << "::CORBA::ValueBase *" << be_nl
+          << node->full_obv_skel_name () << "::_copy_value (void)" << be_nl
+          << "{" << be_idt_nl
+          << "::CORBA::ValueBase *ret_val = 0;" << be_nl
+          << "ACE_NEW_THROW_EX (" << be_idt_nl
+          << "ret_val," << be_nl;
+      if (! node->is_nested ())
+        {
+          *os << "OBV_";
+        }
+      *os << node->local_name () << " (";
+      if (node->has_member ())
+        {
+          unsigned long index = 0ul;
+          *os << be_idt;
+          gen_obv_call_base_constructor_args (node, index);
+          *os << be_uidt_nl;
+        }
+      *os << ")," << be_nl
+          << "::CORBA::NO_MEMORY ()" << be_uidt_nl
+          << ");" << be_nl
+          << "return ret_val;" << be_uidt_nl
+          << "}";
+    }
 
   // OBV_ class has no accessors or modifiers if we are optimizing
   // or the valuetype is abstract.
@@ -248,5 +277,56 @@ be_visitor_valuetype_obv_cs::gen_obv_init_constructor_inits (
       *os << be_nl
           << f->local_name () << " (_tao_init_" << f->local_name ()
           << ");";
+    }
+}
+
+void
+be_visitor_valuetype_obv_cs::gen_obv_call_base_constructor_args (
+  be_valuetype *node,
+  unsigned long &index
+  )
+{
+  TAO_OutStream *os = this->ctx_->stream ();
+
+  // Generate for inherited members first.
+  AST_Type *parent = node->inherits_concrete ();
+  if (parent != 0)
+    {
+      be_valuetype *be_parent =
+        be_valuetype::narrow_from_decl (parent);
+      this->gen_obv_call_base_constructor_args (be_parent, index);
+    }
+
+  // Now generate for each "derived" added members
+  for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next())
+    {
+      // be_attribute inherits from be_field
+      // so we have to also screen out attributes
+      be_field *f = be_field::narrow_from_decl (si.item ());
+      if (f && !be_attribute::narrow_from_decl (si.item ()))
+        {
+          if (index++) // comma before 2nd onwards
+            *os << ",";
+
+          // output each accessor on new line
+          *os << be_nl;
+
+          // Check the member type for nested valuetypes
+          be_type *t = be_type::narrow_from_decl (f->field_type ());
+          if (be_valuetype_fwd::narrow_from_decl (t) ||
+              be_valuetype::narrow_from_decl (t) ||
+              be_valuebox::narrow_from_decl (t) )
+            {
+              // Nested valuetypes/boxes need to be deep copied also
+              *os << "(" << f->local_name () << " () ?" << be_idt_nl
+                  << t->full_name () << "::_downcast (" << f->local_name ()
+                  << " ()->_copy_value ())" << be_nl
+                  << ": 0)" << be_uidt;
+            }
+          else // Simple non-nested type
+            *os << f->local_name () << " ()";
+        }
     }
 }
