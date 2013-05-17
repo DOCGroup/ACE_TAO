@@ -52,6 +52,15 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
       strm.set_##MAPNAME (handle);                                                           \
     } else do {} while (0)
 
+///////////////
+
+#undef TAO_local_COPY_VALUE_IS_PURE
+#if defined(TAO_VALUETYPE_COPYING_ANY_INSERTION_USES_COPY_VALUE) || !defined(TAO_VALUETYPE_COPY_VALUE_IS_NOT_PURE)
+#define TAO_local_COPY_VALUE_IS_PURE =0
+#else
+#define TAO_local_COPY_VALUE_IS_PURE
+#endif
+
 class TAO_Valuetype_Export TAO_ChunkInfo
 {
 public:
@@ -141,21 +150,7 @@ namespace CORBA
 
     typedef ACE_Vector < ACE_CString > Repository_Id_List;
 
-    // This is only temporary, it is _not_ the Right Thing To Do.
-    // Currently nothing should break, as TAO neither uses
-    // _copy_value() nor generates code which uses _copy_value(), and
-    // any user code which depends on the declaration of
-    // _copy_value() must override it anyway, so it should never get
-    // called.
-    // N.B. - see bugzilla #1391 / TAO#84. Fix is pending.
-    virtual CORBA::ValueBase* _copy_value (void)
-    {
-      ACE_VERSIONED_NAMESPACE_NAME::__ace_assert (
-        __FILE__,
-        __LINE__,
-        ACE_TEXT_CHAR_TO_TCHAR ("CORBA::ValueBase::_copy_value() Not implimented see bugzilla #1391"));
-      return 0;
-    };
+    virtual CORBA::ValueBase* _copy_value (void) TAO_local_COPY_VALUE_IS_PURE;
 
     // Reference counting.
     virtual void _add_ref (void) = 0;
@@ -224,18 +219,14 @@ namespace CORBA
                                           const char * const repo_id_expected,
                                           CORBA::Boolean & null_object,
                                           CORBA::Boolean & is_indirected);
-
 #if defined (GEN_OSTREAM_OPS)
-
     /// Used by optionally generated ostream operators for valuetypes
     /// to output the state of the actual type for debugging.
     static std::ostream& _tao_stream (std::ostream &strm, const ValueBase *value);
     virtual std::ostream& _tao_stream_v (std::ostream &strm) const;
-
 #endif /* GEN_OSTREAM_OPS */
 
   public:  // otherwise these cannot be called from a static function
-
     /// During marshal jump to the most derived part
     virtual CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const = 0;
 
@@ -320,8 +311,6 @@ namespace CORBA
     /// accounting for indirection.
     static CORBA::Boolean _tao_read_codebase_url (TAO_InputCDR& strm,
                                                   ACE_CString& codebase_url);
-
-
   private:
     ValueBase & operator= (const ValueBase &);
   }; // ValueBase
@@ -442,6 +431,7 @@ namespace TAO
   };
 }
 
+#undef TAO_local_COPY_VALUE_IS_PURE
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)

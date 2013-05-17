@@ -55,6 +55,25 @@ TAO_ChunkInfo::TAO_ChunkInfo (CORBA::Boolean do_chunking,
 {
 }
 
+CORBA::ValueBase *
+CORBA::ValueBase::_copy_value (void)
+{
+  // Note that TAO traditionally has not enforced this functions PURE
+  // virtual nature, thus the end user didn't have to provide an
+  // implimentaion of _copy_value in their top level valuetype class
+  // that deriveds from the tao_idl generated OBV_* class. If they do
+  // not use _copy_value() then there was no requirement to impliment it.
+  // However as an option TAO can now be built to use _copy_value when
+  // inserting a copy of the valuetype into an any, instead of increasing
+  // it's referance count. It is now possiable that older code may end up
+  // here in error due to the lack of a user's override.
+  ACE_VERSIONED_NAMESPACE_NAME::__ace_assert (
+    __FILE__,
+    __LINE__,
+    ACE_TEXT_CHAR_TO_TCHAR ("Valuetype's _copy_value() should be implimented in user's most derived class"));
+  return 0;
+}
+
 CORBA::ValueBase::ValueBase (void)
   : is_truncatable_(0),
     chunking_(0)
@@ -102,7 +121,6 @@ CORBA::ValueBase::_tao_any_destructor (void *x)
 
 // %! yet much to do ... look for +++ !
 
-
   // 1. Is 'this' yet marshalled ? (->1a)
   //    If not then mark 'this' as marshalled. (->2) +++
   //    Or is it null ? (write null_ref and return ok)
@@ -147,7 +165,6 @@ CORBA::ValueBase::_tao_marshal (TAO_OutputCDR &strm,
   else
     return 1;
 }
-
 
 CORBA::Boolean
 CORBA::ValueBase::_tao_unmarshal (TAO_InputCDR &strm,
@@ -450,7 +467,6 @@ CORBA::ValueBase::_tao_unmarshal_post (TAO_InputCDR &)
   return true;
 }
 
-
 CORBA::Boolean
 CORBA::ValueBase::_tao_validate_box_type (TAO_InputCDR &strm,
                                           TAO_InputCDR &indirected_strm,
@@ -599,7 +615,6 @@ CORBA::ValueBase::_tao_unmarshal_value_indirection (TAO_InputCDR &strm,
   return true;
 }
 
-
 CORBA::Boolean
 CORBA::ValueBase::_tao_unmarshal_repo_id_indirection (TAO_InputCDR &strm,
                                                       ACE_CString& id)
@@ -651,9 +666,7 @@ CORBA::ValueBase::_tao_unmarshal_codebase_url_indirection (TAO_InputCDR &strm,
   return 1;
 }
 
-
 #if defined (GEN_OSTREAM_OPS)
-
 std::ostream &
 CORBA::ValueBase::_tao_stream (std::ostream &strm,
                                const CORBA::ValueBase *value)
@@ -666,11 +679,9 @@ CORBA::ValueBase::_tao_stream_v (std::ostream &strm) const
 {
   return strm << "CORBA::ValueBase";
 }
-
 #endif /* GEN_OSTREAM_OPS */
 
 // =================== methods for chunking ====================
-
 
 CORBA::Boolean
 CORBA::ValueBase::_tao_write_special_value (TAO_OutputCDR &strm,
@@ -739,7 +750,6 @@ CORBA::ValueBase::_tao_write_special_value (TAO_OutputCDR &strm,
   }
 }
 
-
 CORBA::Boolean
 CORBA::ValueBase::_tao_write_value (TAO_OutputCDR &strm,
                                     const CORBA::ValueBase * value,
@@ -757,7 +767,6 @@ CORBA::ValueBase::_tao_write_value (TAO_OutputCDR &strm,
 
   return true;
 }
-
 
 CORBA::Boolean
 CORBA::ValueBase::_tao_write_value_header (TAO_OutputCDR &strm,
@@ -837,7 +846,6 @@ CORBA::ValueBase::_tao_write_value_header (TAO_OutputCDR &strm,
 
   return true;
 }
-
 
 CORBA::Boolean
 CORBA::ValueBase::_tao_write_repository_id (TAO_OutputCDR &strm,
@@ -943,7 +951,6 @@ TAO_ChunkInfo::end_chunk(TAO_OutputCDR &strm)
   return true;
 }
 
-
 CORBA::Boolean
 TAO_ChunkInfo::write_previous_chunk_size(TAO_OutputCDR &strm)
 {
@@ -975,7 +982,6 @@ TAO_ChunkInfo::write_previous_chunk_size(TAO_OutputCDR &strm)
 
   return true;
 }
-
 
 CORBA::Boolean
 TAO_ChunkInfo::reserve_chunk_size(TAO_OutputCDR &strm)
@@ -1087,7 +1093,6 @@ TAO_ChunkInfo::handle_chunking (TAO_InputCDR &strm)
 
   return 1;
 }
-
 
 CORBA::Boolean
 TAO_ChunkInfo::skip_chunks (TAO_InputCDR &strm)
@@ -1241,7 +1246,6 @@ CORBA::ValueBase::_tao_read_repository_id (TAO_InputCDR& strm,
   return 1;
 }
 
-
 CORBA::Boolean
 CORBA::ValueBase::_tao_read_codebase_url (TAO_InputCDR& strm,
                                           ACE_CString& codebase_url)
@@ -1320,13 +1324,11 @@ CORBA::ValueBase::_tao_read_codebase_url (TAO_InputCDR& strm,
   return 1;
 }
 
-
 void
 CORBA::ValueBase::truncation_hook ()
 {
   throw ::CORBA::INTERNAL ();
 }
-
 
 // ================== Typecode initializations ==================
 
@@ -1400,7 +1402,6 @@ CORBA::DefaultValueRefCountBase::DefaultValueRefCountBase (void)
 {
 }
 
-
 // Copy constructor
 CORBA::DefaultValueRefCountBase::DefaultValueRefCountBase
   (const DefaultValueRefCountBase& rhs)
@@ -1409,7 +1410,6 @@ CORBA::DefaultValueRefCountBase::DefaultValueRefCountBase
 
 {
 }
-
 
 void
 CORBA::DefaultValueRefCountBase::_tao_add_ref (void)
@@ -1453,14 +1453,12 @@ operator>> (TAO_InputCDR &strm,
 }
 
 #if defined (GEN_OSTREAM_OPS)
-
 std::ostream&
 operator<< (std::ostream &strm,
             CORBA::ValueBase *_tao_valuetype)
 {
   return CORBA::ValueBase::_tao_stream (strm, _tao_valuetype);
 }
-
 #endif /* GEN_OSTREAM_OPS */
 
 // =============== Template Specializations =====================

@@ -17,6 +17,15 @@ MessageImpl::~MessageImpl()
 }
 
 MessageImpl::MessageImpl
+(Message::AddrList &address,
+ const char* user,
+ const char* subject,
+ const char* txt
+ ) : OBV_Message(address, user, subject, txt)
+{
+}
+
+MessageImpl::MessageImpl
 (const char* address,
  const char* user,
  const char* subject,
@@ -24,6 +33,23 @@ MessageImpl::MessageImpl
  ) : OBV_Message(Message::AddrList(), user, subject, txt)
 {
   addAddress(address);
+}
+
+::CORBA::ValueBase *
+MessageImpl::_copy_value (void)
+{
+  ::CORBA::ValueBase *ret_val= 0;
+  ACE_NEW_THROW_EX (
+    ret_val,
+    MessageImpl (
+      addrs_ (),
+      user (),
+      subject (),
+      text ()
+    ),
+    ::CORBA::NO_MEMORY ()
+  );
+  return ret_val;
 }
 
 Message::AddrList* MessageImpl::getAddresses() {
@@ -59,7 +85,6 @@ void MessageImpl::text(const char* s) {
 }
 
 void MessageImpl::print() {
-
   std::cout << "Message from : " << user_() << std::endl;
 
   AddrList& addrs = addrs_();
@@ -91,5 +116,3 @@ MessageFactory::create_for_unmarshal()
 {
   return new MessageImpl;
 }
-
-

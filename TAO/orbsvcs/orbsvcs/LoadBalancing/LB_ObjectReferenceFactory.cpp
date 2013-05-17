@@ -48,6 +48,14 @@ TAO_LB_ObjectReferenceFactory::TAO_LB_ObjectReferenceFactory (
                   len * sizeof (CORBA::Boolean));
 }
 
+::CORBA::ValueBase *
+TAO_LB_ObjectReferenceFactory::_copy_value (void)
+{
+  ::CORBA::ValueBase *ret_val= 0;
+  // Not implimented
+  return ret_val;
+}
+
 TAO_LB_ObjectReferenceFactory::~TAO_LB_ObjectReferenceFactory (void)
 {
   // No need to call CORBA::remove_ref() on this->old_orf_.  It is a
@@ -225,6 +233,5 @@ TAO_LB_ObjectReferenceFactory::load_managed_object (const char * repository_id,
 
   return false;
 }
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL

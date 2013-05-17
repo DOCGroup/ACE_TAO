@@ -20,6 +20,15 @@ public:
     const char* txt
     );
 
+  MessageImpl(
+    ::Message::AddrList &address,
+    const char* user,
+    const char* subject,
+    const char* txt
+    );
+
+  virtual ::CORBA::ValueBase *_copy_value (void);
+
   virtual ::Message::AddrList* getAddresses();
   virtual void addAddress(const char*);
 
@@ -33,6 +42,7 @@ public:
   virtual void text(const char*);
 
   virtual void print();
+
 protected:
   virtual ~MessageImpl();
 };
@@ -42,6 +52,7 @@ class MessageFactory
 {
 public:
   static void register_new_factory(CORBA::ORB& orb);
+
 private:
   virtual CORBA::ValueBase* create_for_unmarshal();
 };

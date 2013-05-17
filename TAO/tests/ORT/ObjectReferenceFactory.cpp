@@ -3,13 +3,24 @@
 #include "ObjectReferenceFactory.h"
 #include "tao/debug.h"
 
-
 ObjectReferenceFactory::ObjectReferenceFactory (
   PortableInterceptor::ObjectReferenceFactory * old_orf)
   : old_orf_ (old_orf)
 {
   // Claim ownership of the old ObjectReferenceFactory.
   CORBA::add_ref (old_orf);
+}
+
+::CORBA::ValueBase *
+ObjectReferenceFactory::_copy_value (void)
+{
+  ::CORBA::ValueBase *ret_val= 0;
+  ACE_NEW_THROW_EX (
+    ret_val,
+    ObjectReferenceFactory (old_orf_.inout ()),
+    ::CORBA::NO_MEMORY ()
+  );
+  return ret_val;
 }
 
 ObjectReferenceFactory::~ObjectReferenceFactory (void)

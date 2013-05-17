@@ -2,16 +2,15 @@
 #include "Factory.h"
 #include "tao/AnyTypeCode/TypeCode.h"
 
-
 void
-NodeFactory::register_new_factory(CORBA::ORB& orb) {
+NodeFactory::register_new_factory (CORBA::ORB& orb) {
   CORBA::ValueFactoryBase_var mf = new NodeFactory;
-  CORBA::String_var id = ::demo::value::idl::_tc_Node->id();
-  orb.register_value_factory(id.in(), mf.in());
+  CORBA::String_var id = ::demo::value::idl::_tc_Node->id ();
+  orb.register_value_factory (id.in (), mf.in ());
 }
 
 CORBA::ValueBase*
-NodeFactory::create_for_unmarshal(void)
+NodeFactory::create_for_unmarshal (void)
 {
   ::CORBA::ValueBase *ret_val = 0;
   ACE_NEW_THROW_EX (
@@ -22,17 +21,16 @@ NodeFactory::create_for_unmarshal(void)
   return ret_val;
 }
 
-
 void
-BoxedValueFactory::register_new_factory(CORBA::ORB& orb) {
+BoxedValueFactory::register_new_factory (CORBA::ORB& orb) {
   CORBA::ValueFactoryBase_var mf = new BoxedValueFactory;
-  OBV_demo::value::idl::boxedValue bv;
-  CORBA::String_var id = bv._tao_type()->id ();;
-  orb.register_value_factory(id.in(), mf.in());
+  demo::value::idl::boxedValue_var bv (new OBV_demo::value::idl::boxedValue);
+  CORBA::String_var id = bv->_tao_type ()->id ();;
+  orb.register_value_factory (id.in (), mf.in ());
 }
 
 CORBA::ValueBase*
-BoxedValueFactory::create_for_unmarshal(void)
+BoxedValueFactory::create_for_unmarshal (void)
 {
   ::CORBA::ValueBase *ret_val = 0;
   ACE_NEW_THROW_EX (
@@ -43,17 +41,16 @@ BoxedValueFactory::create_for_unmarshal(void)
   return ret_val;
 }
 
-
 void
-BaseValueFactory::register_new_factory(CORBA::ORB& orb) {
+BaseValueFactory::register_new_factory (CORBA::ORB& orb) {
   CORBA::ValueFactoryBase_var mf = new BaseValueFactory;
-  OBV_demo::value::idl::BaseValue bv;
-  CORBA::String_var id = bv._tao_type()->id ();;
-  orb.register_value_factory(id.in(), mf.in());
+  demo::value::idl::BaseValue_var bv (new OBV_demo::value::idl::BaseValue);
+  CORBA::String_var id = bv->_tao_type ()->id ();
+  orb.register_value_factory (id.in (), mf.in ());
 }
 
 CORBA::ValueBase*
-BaseValueFactory::create_for_unmarshal(void)
+BaseValueFactory::create_for_unmarshal (void)
 {
   ::CORBA::ValueBase *ret_val = 0;
   ACE_NEW_THROW_EX (
@@ -64,17 +61,16 @@ BaseValueFactory::create_for_unmarshal(void)
   return ret_val;
 }
 
-
 void
-TValueFactory::register_new_factory(CORBA::ORB& orb) {
+TValueFactory::register_new_factory (CORBA::ORB& orb) {
   CORBA::ValueFactoryBase_var mf = new TValueFactory;
-  OBV_demo::value::idl::TValue bv;
-  CORBA::String_var id = bv._tao_type()->id ();;
-  orb.register_value_factory(id.in(), mf.in());
+  demo::value::idl::TValue_var bv (new OBV_demo::value::idl::TValue);
+  CORBA::String_var id = bv->_tao_type ()->id ();
+  orb.register_value_factory (id.in (), mf.in ());
 }
 
 CORBA::ValueBase*
-TValueFactory::create_for_unmarshal(void)
+TValueFactory::create_for_unmarshal (void)
 {
   ::CORBA::ValueBase *ret_val = 0;
   ACE_NEW_THROW_EX (
@@ -86,15 +82,15 @@ TValueFactory::create_for_unmarshal(void)
 }
 
 void
-ConfigValueFactory::register_new_factory(CORBA::ORB& orb) {
+ConfigValueFactory::register_new_factory (CORBA::ORB& orb) {
   CORBA::ValueFactoryBase_var mf = new ConfigValueFactory;
-  OBV_demo::value::idl::ConfigValue bv;
-  CORBA::String_var id = bv._tao_type()->id ();;
-  orb.register_value_factory(id.in(), mf.in());
+  demo::value::idl::ConfigValue_var bv (new OBV_demo::value::idl::ConfigValue);
+  CORBA::String_var id = bv->_tao_type ()->id ();
+  orb.register_value_factory (id.in (), mf.in ());
 }
 
 CORBA::ValueBase*
-ConfigValueFactory::create_for_unmarshal(void)
+ConfigValueFactory::create_for_unmarshal (void)
 {
   ::CORBA::ValueBase *ret_val = 0;
   ACE_NEW_THROW_EX (
@@ -104,7 +100,6 @@ ConfigValueFactory::create_for_unmarshal(void)
     );
   return ret_val;
 }
-
 
 ConfigValueImpl::ConfigValueImpl (const char* name, const char* value)
 {

@@ -35,6 +35,20 @@ TAO_AMH_DSI_Exception_Holder::~TAO_AMH_DSI_Exception_Holder ()
 {
 }
 
+::CORBA::ValueBase *
+TAO_AMH_DSI_Exception_Holder::_copy_value (void)
+{
+  ::CORBA::ValueBase *ret_val= 0;
+  ACE_NEW_THROW_EX (
+    ret_val,
+    TAO_AMH_DSI_Exception_Holder (
+      exception_
+    ),
+    ::CORBA::NO_MEMORY ()
+  );
+  return ret_val;
+}
+
 void
 tao_TAO_AMH_DSI_Exception_Holder_add_ref (TAO_AMH_DSI_Exception_Holder * p)
 {
