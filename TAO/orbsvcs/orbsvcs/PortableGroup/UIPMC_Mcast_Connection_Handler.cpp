@@ -132,7 +132,10 @@ TAO_UIPMC_Mcast_Connection_Handler::open (void *)
       bool success= !preferred_size;
 #endif // ALLOW_UNICAST_MIOP
       for (CORBA::ULong i= 0u; i < preferred_size; ++i)
-        if (0 == this->peer ().join (this->local_addr_, 1, preferred[i].c_str ()))
+        if (0 == this->peer ().join (
+                   this->local_addr_,
+                   1,
+                   ACE_TEXT_CHAR_TO_TCHAR (preferred[i].c_str ())))
           {
             success= true; // At least one perferred listener interface join succeeded
             if (TAO_debug_level > 5)
