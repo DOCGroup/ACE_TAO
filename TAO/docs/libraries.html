@@ -66,6 +66,16 @@ and the dependencies outlined below are the same. <P>
    <td>anytypecode.mpb</td>
    </tr>
    <tr align=left>
+   <th>libTAO_Async_IORTable.so</th>
+   <td>See libTAO_IORTable.so below for more info. This is a specialization
+    of the TAO_IORTable that allows for AMH-compatible locator use when
+    resolving CORBALOC references. See the INS_Locator portion of the
+    TAO Implementation Repository as an example of use.  Applications
+    have to <code> #include "tao/IORTable/Async_IORTable.h" </code> to get
+    the right symbols.</td>
+   <td>iortable.mpb</td>
+   </tr>
+   <tr align=left>
    <th>libTAO_BiDirGIOP.so</th>
    <td>Support for BiDirectional GIOP as outlined by the CORBA
     spec. Please see $TAO_ROOT/tests/BiDirectional for a simple
@@ -99,6 +109,13 @@ and the dependencies outlined below are the same. <P>
    <td>dynamicany.mpb</td>
    </tr>
    <tr align=left>
+   <th>libTAO_DynamicInterface.so</th>
+   <td>Support for DII and DSI invocations. Applications have to
+    <code> #include "tao/DynamicInterface/Dynamic_Adapter_Impl.h"
+    </code> to get the right symbols.</td>
+   <td>dynamicinterface.mpb</td>
+   </tr>
+   <tr align=left>
    <th>libTAO_EndpointPolicy.so</th>
    <td>Support for the TAO-specific Endpoint Policy. This is used
     to set up constraints on endpoints placed in IORs. The endpoint
@@ -108,13 +125,6 @@ and the dependencies outlined below are the same. <P>
     <code> #include "tao/EndpointPolicy/EndpointPolicy.h" </code> to
     get the right symbols.</td>
    <td>endpointpolicy.mpb</td>
-   </tr>
-   <tr align=left>
-   <th>libTAO_DynamicInterface.so</th>
-   <td>Support for DII and DSI invocations. Applications have to
-    <code> #include "tao/DynamicInterface/Dynamic_Adapter_Impl.h"
-    </code> to get the right symbols.</td>
-   <td>dynamicinterface.mpb</td>
    </tr>
    <tr align=left>
    <th>libTAO_IFR_Client.so</th>
@@ -274,9 +284,9 @@ and the dependencies outlined below are the same. <P>
    </tr>
    <tr align=left>
    <th>libTAO_TC.so</th>
-   <td>Support for TAO::Transport::Current - a generic fremework for aplications that 
-   need access to statistical information about the currently used Transport. See <a 
-   href="transport_current/index.html"> Transport::Current</a>. 
+   <td>Support for TAO::Transport::Current - a generic fremework for aplications that
+   need access to statistical information about the currently used Transport. See <a
+   href="transport_current/index.html"> Transport::Current</a>.
    This library can be loaded statically or dynamically. Applications are required to
     <code> #include "tao/TransportCurrent/Transport_Current.h"
     </code> for static loading.
@@ -285,9 +295,9 @@ and the dependencies outlined below are the same. <P>
    </tr>
    <tr align=left>
    <th>libTAO_TC_IIOP.so</th>
-   <td>Support for TAO::Transport::IIOP::Current - an IIOP-specific plug-in for 
+   <td>Support for TAO::Transport::IIOP::Current - an IIOP-specific plug-in for
    Transport::Current. See <a href="transport_current/index.html"> Transport::Current</a>.
-   This library can be loaded statically or dynamically. 
+   This library can be loaded statically or dynamically.
    Applications are required to <code> #include "tao/TransportCurrent/IIOP_Transport_Current.h"
     </code> for static loading. Depends on libTAO_TC.so.
    </td>

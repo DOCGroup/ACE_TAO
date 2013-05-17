@@ -1,3 +1,14 @@
+Fri May 17 13:42:24 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * docs/libraries.html:
+
+          Add descrption of libTAO_Async_IORTable.so
+
+        * tao/CSD_Framework/CSD_FW_Server_Request_Wrapper.cpp:
+
+          Fix for problem that surfaces when a CSD implementation is used along with
+          server-side portable interceptors.
+
 Fri May 17 13:40:00 UTC 2013  Simon Massey  <simon dot massey at prismtech dot com>
 
         * NEWS:
