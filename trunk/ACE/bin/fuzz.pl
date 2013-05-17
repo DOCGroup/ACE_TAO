@@ -2311,8 +2311,8 @@ sub check_for_ace_log_categories ()
     for my $f (@files_h, @files_cpp, @files_inl) {
         my $cat = 'ACE';
         $f =~ s!\\!/!g;
-        if ($f =~ /ace\/(\w+)/) {
-            next if $1 eq 'Log_Msg' || $` =~ /\/protocols$/;
+        if ($f =~ /\bace\/(\w+)/) {
+            next if $1 eq 'Log_Msg' || $` =~ /\/protocols\/$/;
             $cat = 'ACELIB';
         }
         elsif ($f =~ /tao\//) {
