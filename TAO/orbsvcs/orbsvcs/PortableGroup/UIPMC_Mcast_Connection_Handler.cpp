@@ -137,7 +137,9 @@ TAO_UIPMC_Mcast_Connection_Handler::open (void *)
                    1,
                    ACE_TEXT_CHAR_TO_TCHAR (preferred[i].c_str ())))
           {
+#ifndef ALLOW_UNICAST_MIOP
             success= true; // At least one perferred listener interface join succeeded
+#endif // ALLOW_UNICAST_MIOP
             if (TAO_debug_level > 5)
               ORBSVCS_DEBUG ((LM_DEBUG,
                               ACE_TEXT("TAO (%P|%t) - UIPMC_Mcast_Connection_Handler::open, ")
