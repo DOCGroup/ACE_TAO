@@ -111,7 +111,7 @@ TAO_UIPMC_Mcast_Connection_Handler::open (void *)
   this->local_addr_.get_host_addr (target_multicast_group, sizeof target_multicast_group);
 
   // Check if we are supposed to be listening on specified interface(s)
-  CORBA::ULong preferred_size= 0u;
+  size_t preferred_size= 0u;
   if (this->listener_interfaces_[0])
     {
       // Since we have been told to match some targetNetwork=localNetwork listener interface
@@ -131,7 +131,7 @@ TAO_UIPMC_Mcast_Connection_Handler::open (void *)
       // default join to be attempted later.
       bool success= !preferred_size;
 #endif // TAO_ALLOW_UNICAST_MIOP
-      for (CORBA::ULong i= 0u; i < preferred_size; ++i)
+      for (size_t i= 0u; i < preferred_size; ++i)
         if (0 == this->peer ().join (
                    this->local_addr_,
                    1,
