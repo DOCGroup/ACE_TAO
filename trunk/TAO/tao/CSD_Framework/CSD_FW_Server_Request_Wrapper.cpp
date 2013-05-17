@@ -267,9 +267,7 @@ TAO::CSD::FW_Server_Request_Wrapper::clone (TAO_ServerRequest*& request)
   //#if TAO_HAS_INTERCEPTORS == 1
   // TYPE: size_t
   // ACTION: Primitive data type assignment.
-  //         Just leave this alone for a clone.
-  //
-  //clone_obj->interceptor_count_ = request->interceptor_count_;
+  clone_obj->interceptor_count_ = request->interceptor_count_;
 
   // TYPE: TAO::PICurrent_Impl
   // ACTION: Copy/assignment operator disabled on purpose.
