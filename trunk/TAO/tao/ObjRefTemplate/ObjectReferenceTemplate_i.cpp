@@ -26,6 +26,23 @@ namespace TAO
   {
   }
 
+  ::CORBA::ValueBase *
+  ObjectReferenceTemplate::_copy_value (void)
+  {
+    ::CORBA::ValueBase *ret_val= 0;
+    ACE_NEW_THROW_EX (
+      ret_val,
+      ObjectReferenceTemplate (
+        server_id_,
+        orb_id_,
+        adapter_name_,
+        poa_
+      ),
+      ::CORBA::NO_MEMORY ()
+    );
+    return ret_val;
+  }
+
   char *
   ObjectReferenceTemplate::server_id (void)
   {

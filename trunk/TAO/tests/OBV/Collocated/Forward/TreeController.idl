@@ -19,3 +19,10 @@ interface Test
   // Shutdown the romote ORB
   oneway void shutdown ();
 };
+
+// HOWEVER it is illegal to not include the full definition of the
+// forward declared BaseNode by the end of the compilation unit.
+// (The code generation of the _copy_value() function for TreeController
+// requires to know how to downcast the "root" member to it's corresponding
+// "BaseNode" type; this requires full knowledge of the enclosed type.)
+#include <TreeBase.idl>

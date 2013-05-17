@@ -1,3 +1,50 @@
+Fri May 17 13:40:00 UTC 2013  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * NEWS:
+        * TAO_IDL/be/be_visitor_valuetype/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_obv_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_obv_cs.cpp:
+        * TAO_IDL/be_include/be_visitor_valuetype/valuetype_obv_cs.h:
+        * tao/Valuetype/ValueBase.cpp:
+        * tao/Valuetype/ValueBase.h:
+
+          Fix for Buzilla 1391. Valuetypes now generate a _copy_value()
+          method where appliciable. This is now treated as a pure
+          virtual function (as per the CORBA spec). Build TAO with
+          #define TAO_VALUETYPE_COPY_VALUE_IS_NOT_PURE  in effect to
+          return to the previous "not required" behaviour.
+
+        * tao/ObjRefTemplate/ObjectReferenceTemplate_i.h:
+        * tao/ObjRefTemplate/ObjectReferenceTemplate_i.cpp:
+        * tao/DynamicInterface/AMH_DSI_Response_Handler.cpp:
+        * tao/DynamicInterface/AMH_DSI_Response_Handler.h:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_ObjectReferenceFactory.h:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_ObjectReferenceFactory.cpp:
+        * DevGuideExamples/ValueTypes/Messenger/Message_i.h:
+        * DevGuideExamples/ValueTypes/Messenger/Message_i.cpp:
+        * DevGuideExamples/ValueTypes/Bank/client.cpp:
+        * DevGuideExamples/ValueTypes/Bank/server.cpp:
+        * tests/OBV/Forward/TreeController.idl:
+        * tests/OBV/Truncatable/client.cpp:
+        * tests/OBV/Indirection/Factory.cpp:
+        * tests/OBV/Collocated/Forward/TreeController.idl:
+        * tests/ORT/ObjectReferenceFactory.cpp:
+        * tests/ORT/ObjectReferenceFactory.h:
+        * tests/Bug_2791_Regression/Message_i.h:
+        * tests/Bug_2791_Regression/Message_i.cpp:
+        * examples/OBV/Typed_Events/Event_Types_impl.cpp:
+        * examples/OBV/Typed_Events/Event_Types_impl.h:
+        * orbsvcs/DevGuideExamples/ValueTypes/Notify/Event_i.h:
+        * orbsvcs/examples/ORT/Gateway_ObjRef_Factory.cpp:
+        * orbsvcs/examples/ORT/Gateway_ObjRef_Factory.h:
+
+          Add _copy_value() implimentation where necessary in the examples
+          and ensure all Valuetypes are HEAP allocated, (as all valuetypes
+          are reference counted, they are required to be deletable, not
+          STACK based).
+
 Fri May 17 10:11:00 UTC 2013  Simon Massey  <simon dot massey at prismtech dot com>
 
         * orbsvcs/orbsvcs/PortableGroup/UIPMC_Mcast_Connection_Handler.cpp:

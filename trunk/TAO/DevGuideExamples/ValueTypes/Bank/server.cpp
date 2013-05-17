@@ -44,6 +44,17 @@ class Person_i
   , public virtual CORBA::DefaultValueRefCountBase
 {
 public:
+  ::CORBA::ValueBase *_copy_value ()
+  {
+    ::CORBA::ValueBase *ret_val = 0;
+    ACE_NEW_THROW_EX (
+      ret_val,
+      Person_i (),
+      ::CORBA::NO_MEMORY ()
+    );
+    return ret_val;
+  }
+
   void debit(CORBA::Long amt)
   {
     CORBA::Long tmp = balance();

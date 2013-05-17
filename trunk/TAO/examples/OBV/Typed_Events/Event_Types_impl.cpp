@@ -18,6 +18,14 @@ Event_impl::~Event_impl ()
 {
 }
 
+::CORBA::ValueBase *
+Event_impl::_copy_value (void)
+{
+  ::CORBA::ValueBase *ret_val= 0;
+  // Not implimented
+  return ret_val;
+}
+
 void
 Event_impl::do_print (void)
 {
@@ -25,7 +33,6 @@ Event_impl::do_print (void)
              (CORBA::ULong) this->time_(),
              (CORBA::ULong) this->origin_id_() ));
 }
-
 
 /* Not defined, see header
 Event_factory::~Event_factory ()
@@ -54,6 +61,14 @@ Temperature_impl::~Temperature_impl ()
 {
 }
 
+::CORBA::ValueBase *
+Temperature_impl::_copy_value (void)
+{
+  ::CORBA::ValueBase *ret_val= 0;
+  // Not implimented
+  return ret_val;
+}
+
 void
 Temperature_impl::do_print (void)
 {
@@ -73,7 +88,6 @@ Temperature_factory::create_for_unmarshal (void)
   return new Temperature_impl;
 }
 
-
 // Position implementation  ======================================
 
 Position_impl::Position_impl ()
@@ -88,6 +102,14 @@ Position_impl::Position_impl (Point &p)
 
 Position_impl::~Position_impl ()
 {
+}
+
+::CORBA::ValueBase *
+Position_impl::_copy_value (void)
+{
+  ::CORBA::ValueBase *ret_val= 0;
+  // Not implimented
+  return ret_val;
 }
 
 void
@@ -136,7 +158,6 @@ void Position_impl::z (CORBA::Float z)
   this->xyz()[2] = z;
 }
 
-
 Position_factory::~Position_factory ()
 {
 }
@@ -146,7 +167,6 @@ Position_factory::create_for_unmarshal (void)
 {
   return new Position_impl;
 }
-
 
 // Log_Msg implementation  ===================================
 
@@ -162,6 +182,14 @@ Log_Msg_impl::Log_Msg_impl (CORBA::Short u, const char *m)
 
 Log_Msg_impl::~Log_Msg_impl ()
 {
+}
+
+::CORBA::ValueBase *
+Log_Msg_impl::_copy_value (void)
+{
+  ::CORBA::ValueBase *ret_val= 0;
+  // Not implimented
+  return ret_val;
 }
 
 void
@@ -190,8 +218,6 @@ Log_Msg_factory::create_for_unmarshal (void)
   return new Log_Msg_impl;
 }
 
-
-
 // Event_List_Link implementation  ===================================
 
 Event_List_Link_impl::Event_List_Link_impl ()
@@ -213,6 +239,14 @@ Event_List_Link_impl::~Event_List_Link_impl ()
   // Destructor does nothing explicit, because my_event and next are
   // _var types, which destroy (decrement the reference counter of)
   // the held event resp. the next links.
+}
+
+::CORBA::ValueBase *
+Event_List_Link_impl::_copy_value (void)
+{
+  ::CORBA::ValueBase *ret_val= 0;
+  // Not implimented
+  return ret_val;
 }
 
 Event*
@@ -243,7 +277,6 @@ Event_List_Link_factory::create_for_unmarshal (void)
   return new Event_List_Link_impl;
 }
 
-
 // Event_List implementation  ===================================
 
 Event_List_impl::Event_List_impl (void)
@@ -255,6 +288,14 @@ Event_List_impl::Event_List_impl (void)
 Event_List_impl::~Event_List_impl (void)
 {
   // Destructor does nothing explicit, because the _var types do care.
+}
+
+::CORBA::ValueBase *
+Event_List_impl::_copy_value (void)
+{
+  ::CORBA::ValueBase *ret_val= 0;
+  // Not implimented
+  return ret_val;
 }
 
 void
@@ -275,7 +316,6 @@ Event_List_impl::store_event (Event* e)
    // From pointer to _var the reference count of the pointed to never
    // increased, but the modifier does.
 
-
   if (this->last_link_cache_ == 0)
     {
       // Search the end.
@@ -286,7 +326,6 @@ Event_List_impl::store_event (Event* e)
           this->last_link_cache_ = i;
         }
     }
-
 
   // If still null then the list is empty.
   if (this->last_link_cache_ == 0)
@@ -310,7 +349,6 @@ Event_List_factory::create_for_unmarshal (void)
   return new Event_List_impl;
 }
 
-
 Event_List_Iterator::Event_List_Iterator (Event_List *list)
 {
   this->init (list);
@@ -326,7 +364,6 @@ Event_List_Iterator::~Event_List_Iterator (void)
   // nothing
 }
 
-
 void
 Event_List_Iterator::init (Event_List *list)
 {
@@ -334,7 +371,6 @@ Event_List_Iterator::init (Event_List *list)
   CORBA::add_ref (tmp);
   current_ = tmp;
 }
-
 
 CORBA::Boolean
 Event_List_Iterator::next (Event_var &next)
@@ -373,14 +409,9 @@ Event_List_Iterator::advance ()
     }
 }
 
-
-
 // Checkpoint server side --------------------------------------------
 
-
 // Criterion classes implementation ----------------------------------
-
-
 
 Temperature_Criterion_impl::Temperature_Criterion_impl ()
 {
@@ -398,6 +429,13 @@ Temperature_Criterion_impl::~Temperature_Criterion_impl ()
 {
 }
 
+::CORBA::ValueBase *
+Temperature_Criterion_impl::_copy_value (void)
+{
+  ::CORBA::ValueBase *ret_val= 0;
+  // Not implimented
+  return ret_val;
+}
 
 CORBA::Boolean
 Temperature_Criterion_impl::is_critical (Event* e)
@@ -415,7 +453,6 @@ Temperature_Criterion_impl::is_critical (Event* e)
   return 0;
 }
 
-
 void
 Temperature_Criterion_impl::do_print (void)
 {
@@ -423,7 +460,6 @@ Temperature_Criterion_impl::do_print (void)
              this->origin_id_ () ));
   this->meltingpoint ()->do_print();
 }
-
 
 Temperature_Criterion_factory::~Temperature_Criterion_factory ()
 {
@@ -434,8 +470,6 @@ Temperature_Criterion_factory::create_for_unmarshal (void)
 {
   return new Temperature_Criterion_impl;
 }
-
-
 
 Position_Criterion_impl::Position_Criterion_impl ()
 {
@@ -454,6 +488,13 @@ Position_Criterion_impl::~Position_Criterion_impl ()
 {
 }
 
+::CORBA::ValueBase *
+Position_Criterion_impl::_copy_value (void)
+{
+  ::CORBA::ValueBase *ret_val= 0;
+  // Not implimented
+  return ret_val;
+}
 
 CORBA::Boolean
 Position_Criterion_impl::is_critical (Event* e)
@@ -475,7 +516,6 @@ Position_Criterion_impl::is_critical (Event* e)
   return 0;
 }
 
-
 void
 Position_Criterion_impl::do_print ( )
 {
@@ -496,17 +536,21 @@ Position_Criterion_factory::create_for_unmarshal (void)
   return new Position_Criterion_impl;
 }
 
-
-
 Log_Msg_Criterion_impl::Log_Msg_Criterion_impl ()
 {
 }
-
 
 Log_Msg_Criterion_impl::~Log_Msg_Criterion_impl ()
 {
 }
 
+::CORBA::ValueBase *
+Log_Msg_Criterion_impl::_copy_value (void)
+{
+  ::CORBA::ValueBase *ret_val= 0;
+  // Not implimented
+  return ret_val;
+}
 
 CORBA::Boolean
 Log_Msg_Criterion_impl::is_critical (Event* e)
@@ -520,7 +564,6 @@ Log_Msg_Criterion_impl::is_critical (Event* e)
     }
   return 0;
 }
-
 
 void
 Log_Msg_Criterion_impl::do_print (void)
@@ -539,8 +582,6 @@ Log_Msg_Criterion_factory::create_for_unmarshal (void)
   return new Log_Msg_Criterion_impl;
 }
 
-
-
 Criterion_List_impl::Criterion_List_impl ()
 {
   this->my_list (0);
@@ -554,6 +595,14 @@ Criterion_List_impl::Criterion_List_impl ()
 
 Criterion_List_impl::~Criterion_List_impl ()
 {
+}
+
+::CORBA::ValueBase *
+Criterion_List_impl::_copy_value (void)
+{
+  ::CORBA::ValueBase *ret_val= 0;
+  // Not implimented
+  return ret_val;
 }
 
 void
@@ -597,7 +646,6 @@ Criterion_List_impl::is_critical (Event *e)
   return 0;
 }
 
-
 Criterion_List_Iterator::Criterion_List_Iterator (Criterion_List *list)
 {
   this->init (list);
@@ -608,13 +656,11 @@ Criterion_List_Iterator::~Criterion_List_Iterator ()
   // nothing
 }
 
-
 void
 Criterion_List_Iterator::init (Criterion_List *list)
 {
   iterator_.init (list->my_list());
 }
-
 
 Criterion *
 Criterion_List_Iterator::next ()

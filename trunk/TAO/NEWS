@@ -8,6 +8,48 @@ USER VISIBLE CHANGES BETWEEN TAO-2.1.8 and TAO-2.1.9
   Repository Locator has been reimplemented using AMI/AMH to avoid the
   problem of nested upcalls under heavy load.
 
+. Added the new -ORBListenerInterface UIPMC option to provide detailed control
+  over which IP interfaces are to be listened on for which mutlicast addresses.
+  This works in a similar way to the existing -ORBPreferredInterfaces
+  ORB_init command line option but for UDP server listeners instead of client
+  senders. See the TAO_UIPMC_Protocol_Factory section in the
+  docs/release/TAO/Options.html document for details. This option allows
+  UIPMC/MIOP to control which interfaces are used by the server to listen
+  for broadcast messages instead of only using the "default" interface.
+
+  If TAO is built with the #define TAO_ALLOW_UNICAST_MIOP in effect, the
+  normal error checking on joins is short circuited, such that MIOP can
+  be used to send to a unicast address instead of a broadcast group. In general
+  I would not recommend building TAO with this option set, end users should
+  concider using the DIOP protocol instead.
+
+. Fix for long standing Valuetype non-conformance (Bugzilla_1391):
+
+  tao_idl generated ValueType OBV_* classes now also provide a
+  _copy_value() method where this class is supposed to be the final
+  "most derived" class. It is still left to the end user to provide
+  such a method in their own most derived class when this is not
+  the case (as only the final implimentation of the Valuetype will
+  know how this duplication is performed).
+
+  TAO can be built specifically to treat _copy_value() as a pure virtual
+  function (as per the standard, and now the default behaviour) or,
+  if #define TAO_VALUETYPE_COPY_VALUE_IS_NOT_PURE is defined during the
+  building of TAO, a non-pure virtual function (in which TAO does not
+  require an implimentation to provide the _copy_value() function as per
+  the previous TAO implimentations).
+
+  TAO doesn't normally use the _copy_value() fuction itself, but if
+  #define TAO_VALUETYPE_COPYING_ANY_INSERTION_USES_COPY_VALUE
+  is in effect during the build, valuetypes "copy" inserted into an any
+  will call _copy_value() instead of increasing the reference count of the
+  actual valuetype being "copied". In such cases obviosuly the _copy_value()
+  method is required to be implemented. There are problems taking this
+  general approach however, as the automatically generated _copy_value() is
+  not capable of duplicating cyclic graphs held in valuetypes, which
+  realistially require the reference counting insertions to be utalised
+  and/or knowledge of the actual use of the valuetype itself. This setting
+  is not recommended.
 
 USER VISIBLE CHANGES BETWEEN TAO-2.1.7 and TAO-2.1.8
 ====================================================

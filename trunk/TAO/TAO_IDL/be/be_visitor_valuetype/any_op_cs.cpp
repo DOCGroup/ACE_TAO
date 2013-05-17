@@ -99,8 +99,16 @@ be_visitor_valuetype_any_op_cs::visit_valuetype (be_valuetype *node)
           << node->local_name () << " *_tao_elem" << be_uidt_nl
           << ")" << be_uidt_nl
           << "{" << be_idt_nl
+          << "#ifdef TAO_VALUETYPE_COPYING_ANY_INSERTION_USES_COPY_VALUE" << be_idt_nl
+          << node->local_name () << " *_tao_copy =" << be_idt_nl
+          << "_tao_elem ?" << be_idt_nl
+          << node->local_name () << "::_downcast (_tao_elem->_copy_value ())" << be_nl
+          << ": 0;" << be_uidt << be_uidt_nl
+          << "_tao_any <<= &_tao_copy;" << be_uidt_nl
+          << "#else" << be_idt_nl
           << "::CORBA::add_ref (_tao_elem);" << be_nl
           << "_tao_any <<= &_tao_elem;" << be_uidt_nl
+          << "#endif" << be_uidt_nl
           << "}" << be_nl_2;
 
       *os << "// Non-copying insertion." << be_nl
@@ -151,8 +159,16 @@ be_visitor_valuetype_any_op_cs::visit_valuetype (be_valuetype *node)
       << node->full_name () << " *_tao_elem" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
+      << "#ifdef TAO_VALUETYPE_COPYING_ANY_INSERTION_USES_COPY_VALUE" << be_idt_nl
+      << node->full_name () << " *_tao_copy =" << be_idt_nl
+      << "_tao_elem ?" << be_idt_nl
+      << node->full_name () << "::_downcast (_tao_elem->_copy_value ())" << be_nl
+      << ": 0;" << be_uidt << be_uidt_nl
+      << "_tao_any <<= &_tao_copy;" << be_uidt_nl
+      << "#else" << be_idt_nl
       << "::CORBA::add_ref (_tao_elem);" << be_nl
       << "_tao_any <<= &_tao_elem;" << be_uidt_nl
+      << "#endif" << be_uidt_nl
       << "}" << be_nl_2;
 
   *os << "// Non-copying insertion." << be_nl
@@ -203,4 +219,3 @@ be_visitor_valuetype_any_op_cs::visit_eventtype (be_eventtype *node)
 {
   return this->visit_valuetype (node);
 }
-

@@ -174,12 +174,13 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
 
   if (is_an_amh_exception_holder)
     {
-      // Generate the constructor and destructor.
+      // Generate the constructor and destructor and _copy_value.
       *os << be_nl_2
           << node->local_name () << " ( ::CORBA::Exception *ex)" << be_idt_nl
           << ": exception (ex)" << be_uidt_nl
           << "{}" << be_nl_2
-          << "virtual ~" << node->local_name () << " (void);";
+          << "virtual ~" << node->local_name () << " (void);" << be_nl
+          << "virtual ::CORBA::ValueBase *_copy_value (void);";
     }
 
   *os << be_nl_2

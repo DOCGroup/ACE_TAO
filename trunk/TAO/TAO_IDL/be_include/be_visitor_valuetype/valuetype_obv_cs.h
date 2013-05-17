@@ -15,7 +15,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_VALUETYPE_VALUETYPE_OBV_CS_H_
 #define _BE_VALUETYPE_VALUETYPE_OBV_CS_H_
 
@@ -47,7 +46,11 @@ private:
   /// Called by method above to generate base class constructor call.
   void gen_obv_init_base_constructor_args (be_valuetype *node,
                                            unsigned long &index);
+
+  /// Called to generate the initalizing constructor call for the
+  /// generated _copy_value method.
+  void gen_obv_call_base_constructor_args (be_valuetype *node,
+                                           unsigned long &index);
 };
 
 #endif /* _BE_VALUETYPE_VALUETYPE_OBV_CS_H_ */
-

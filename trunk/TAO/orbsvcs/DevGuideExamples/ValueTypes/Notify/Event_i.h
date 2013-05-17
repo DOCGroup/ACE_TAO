@@ -23,6 +23,20 @@ public:
     kind(k);
   }
 
+  virtual ::CORBA::ValueBase *_copy_value (void)
+  {
+    ::CORBA::ValueBase *ret_val = 0;
+    ACE_NEW_THROW_EX (
+      ret_val,
+      MyEvent_i (
+        name (),
+        kind ()
+      ),
+      ::CORBA::NO_MEMORY ()
+    );
+    return ret_val;
+  }
+
   virtual void dump ()
   {
     CORBA::LongSeq& pl = payload();
@@ -52,7 +66,6 @@ class MyEventFactory
   : public virtual CORBA::ValueFactoryBase
 {
 public:
-
   virtual CORBA::ValueBase * create_for_unmarshal ()
   {
     // It doesn't matter what values we construct it with
@@ -61,6 +74,4 @@ public:
   }
 };
 
-
 #endif /* EVENT_H_  */
-

@@ -50,6 +50,7 @@ class Event_impl : public virtual OBV_Event,
  public:
   Event_impl ();
   virtual ~Event_impl ();
+  virtual ::CORBA::ValueBase *_copy_value (void);
 
   virtual void do_print (void);
   // Implementation of the do_print () operation the valuetype should have.
@@ -80,19 +81,15 @@ class Event_impl : public virtual OBV_Event,
 class Event_factory : public CORBA::ValueFactoryBase
 {
 public:
-
   // create (...) would go here
 
 protected:
-
   virtual ~Event_factory ();
 
 private:
-
   TAO_OBV_CREATE_RETURN_TYPE (Event) create_for_unmarshal (void);
 };
 #endif /* is not defined */
-
 
 // The procedure to register your instance is currently not much like
 // OBV specs says. This implementation has currently one
@@ -105,14 +102,12 @@ private:
 // for first experiments.
 // Exceptions are not yet implemented in this area.
 
-
 // Temperature implementation classes ===================================
 
 // The Temperature_impl should inherit its own OBV_Temperature and
 // the implementation of Event. (so-called ladder style implementation
 // inheritance, I guess.) Its yet there, but purists
 // can additionally inherit public virtual from the CORBA::DefaultVal...
-
 
 class Temperature_impl : public virtual OBV_Temperature,
                          public virtual Event_impl
@@ -126,6 +121,7 @@ public:
   // But it is more simple to do so here.
 
   virtual ~Temperature_impl ();
+  virtual ::CORBA::ValueBase *_copy_value (void);
 
   virtual void do_print (void);
   // Overrides Event_impl::do_print (). Note that a new declaration
@@ -135,19 +131,16 @@ public:
 class Temperature_factory : public CORBA::ValueFactoryBase
 {
   friend class Temperature;
-public:
 
+public:
   // create (...) would go here
 
 protected:
-
   virtual ~Temperature_factory ();
 
 private:
-
   TAO_OBV_CREATE_RETURN_TYPE (Temperature) create_for_unmarshal (void);
 };
-
 
 // Position implementation classes =====================================
 
@@ -158,6 +151,7 @@ public:
   Position_impl ();
   Position_impl (Point &p);
   virtual ~Position_impl ();
+  virtual ::CORBA::ValueBase *_copy_value (void);
 
   virtual CORBA::Float x (void);
   virtual void x (CORBA::Float);
@@ -173,18 +167,16 @@ public:
 class Position_factory : public CORBA::ValueFactoryBase
 {
   friend class Position;
+
 public:
-
   // create (...) would go here
-protected:
 
+protected:
   virtual ~Position_factory ();
 
 private:
-
   TAO_OBV_CREATE_RETURN_TYPE (Position)  create_for_unmarshal (void);
 };
-
 
 // Log_Msg implementation classes =====================================
 
@@ -195,6 +187,7 @@ public:
   Log_Msg_impl ();
   Log_Msg_impl (CORBA::Short urgency_p, const char *message_p);
   virtual ~Log_Msg_impl ();
+  virtual ::CORBA::ValueBase *_copy_value (void);
 
   virtual void do_print (void);
 };
@@ -202,18 +195,16 @@ public:
 class Log_Msg_factory : public CORBA::ValueFactoryBase
 {
   friend class Log_Msg;
-public:
 
+public:
   // create (...) would go here
 
 protected:
   virtual ~Log_Msg_factory ();
 
 private:
-
   TAO_OBV_CREATE_RETURN_TYPE (Log_Msg)  create_for_unmarshal (void);
 };
-
 
 // Event_List_Link implementation classes =====================================
 
@@ -231,6 +222,7 @@ class Event_List_Link_impl : public virtual OBV_Event_List_Link,
   Event_List_Link_impl ();
   Event_List_Link_impl (Event *e);
   virtual ~Event_List_Link_impl ();
+  virtual ::CORBA::ValueBase *_copy_value (void);
 
   Event *get_event (void);
 
@@ -241,20 +233,16 @@ class Event_List_Link_impl : public virtual OBV_Event_List_Link,
   // Attach a chain at the end.
 };
 
-
 class Event_List_Link_factory : public CORBA::ValueFactoryBase
 {
   friend class Event_List_Link;
 
 protected:
-
   virtual ~Event_List_Link_factory ();
 
 private:
-
   TAO_OBV_CREATE_RETURN_TYPE (Event_List_Link)  create_for_unmarshal (void);
 };
-
 
 // The event list itself.   ----------------------------------
 
@@ -262,9 +250,11 @@ class Event_List_impl : public virtual OBV_Event_List,
                         public virtual CORBA::DefaultValueRefCountBase
 {
   friend class Event_List_Iterator;
+
  public:
   Event_List_impl ();
   virtual ~Event_List_impl ();
+  virtual ::CORBA::ValueBase *_copy_value (void);
 
   void store_event (Event* e);
 
@@ -284,20 +274,16 @@ class Event_List_impl : public virtual OBV_Event_List,
   // of the last list link at the receiving end of an invocation.
 };
 
-
 class Event_List_factory : public CORBA::ValueFactoryBase
 {
   friend class Event_List;
-protected:
 
+protected:
   virtual ~Event_List_factory ();
 
 private:
-
   TAO_OBV_CREATE_RETURN_TYPE (Event_List)  create_for_unmarshal (void);
-
 };
-
 
 class Event_List_Iterator
 {
@@ -325,18 +311,14 @@ class Event_List_Iterator
   Event_List_Link_var current_;
 };
 
-
 // Checkpoint server side --------------------------------------------
 
-
 // Criterion classes -------------------------------------------------
-
 
 // Criterion itself has no implementation since it is abstract.
 
 // It is necessary to inherit from OBV_Event (or an Event implementation)
 // for implementing the state members of Event.
-
 
 class Temperature_Criterion_impl :
                            public virtual OBV_Temperature_Criterion,
@@ -348,6 +330,7 @@ public:
   Temperature_Criterion_impl (CORBA::ULong origin_id, CORBA::Float temp);
 
   virtual ~Temperature_Criterion_impl ();
+  virtual ::CORBA::ValueBase *_copy_value (void);
 
   CORBA::Boolean is_critical (Event* e);
 
@@ -357,12 +340,11 @@ public:
 class Temperature_Criterion_factory : public CORBA::ValueFactoryBase
 {
   friend class Temperature;
+
 private:
   virtual ~Temperature_Criterion_factory ();
   TAO_OBV_CREATE_RETURN_TYPE (Temperature_Criterion) create_for_unmarshal (void);
 };
-
-
 
 class Position_Criterion_impl :
                             public virtual OBV_Position_Criterion,
@@ -375,6 +357,7 @@ public:
                            Position *lb,
                            Position *tr);
   virtual ~Position_Criterion_impl ();
+  virtual ::CORBA::ValueBase *_copy_value (void);
 
   CORBA::Boolean is_critical (Event* e);
 
@@ -384,16 +367,13 @@ public:
 class Position_Criterion_factory : public CORBA::ValueFactoryBase
 {
   friend class Position;
-protected:
 
+protected:
   virtual ~Position_Criterion_factory ();
 
 private:
-
   TAO_OBV_CREATE_RETURN_TYPE (Position_Criterion)  create_for_unmarshal (void);
 };
-
-
 
 class Log_Msg_Criterion_impl : public virtual OBV_Log_Msg_Criterion,
                                public virtual OBV_Event,
@@ -402,6 +382,7 @@ class Log_Msg_Criterion_impl : public virtual OBV_Log_Msg_Criterion,
 public:
   Log_Msg_Criterion_impl ();
   virtual ~Log_Msg_Criterion_impl ();
+  virtual ::CORBA::ValueBase *_copy_value (void);
 
   CORBA::Boolean is_critical (Event* e);
 
@@ -411,14 +392,13 @@ public:
 class Log_Msg_Criterion_factory : public CORBA::ValueFactoryBase
 {
   friend class Log_Msg;
-protected:
 
+protected:
   virtual ~Log_Msg_Criterion_factory ();
 
 private:
   TAO_OBV_CREATE_RETURN_TYPE (Log_Msg_Criterion)  create_for_unmarshal (void);
 };
-
 
 class Criterion_List_impl : public virtual OBV_Criterion_List,
                         public virtual CORBA::DefaultValueRefCountBase
@@ -426,11 +406,11 @@ class Criterion_List_impl : public virtual OBV_Criterion_List,
  public:
   Criterion_List_impl ();
   virtual ~Criterion_List_impl ();
+  virtual ::CORBA::ValueBase *_copy_value (void);
 
   void store_criterion (Criterion *c);
   CORBA::Boolean is_critical (Event *e);
 };
-
 
 // This is just a wrapper and it uses the Event_List_Iterator on
 // the underlaying Event_List. Better would be a template for all the
@@ -455,7 +435,6 @@ class Criterion_List_Iterator
  private:
   Event_List_Iterator iterator_;
 };
-
 
 // Some origin_id's
 
