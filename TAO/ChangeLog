@@ -1,3 +1,9 @@
+Sun May 19 13:20:04 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/CSD_Framework/CSD_FW_Server_Request_Wrapper.cpp:
+
+          fix compile issue on platforms that don't have interceptors enabled.
+
 Fri May 17 19:02:02 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/AsyncListManager.cpp:
