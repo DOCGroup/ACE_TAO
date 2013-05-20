@@ -55,6 +55,28 @@ LiveListener::_remove_ref (void)
 const int LiveEntry::reping_msec_[] = {10, 100, 500, 1000, 1000, 2000, 2000, 5000, 5000};
 int LiveEntry::reping_limit_ = sizeof (LiveEntry::reping_msec_) / sizeof (int);
 
+const ACE_TCHAR *
+LiveEntry::status_name (LiveStatus s)
+{
+  switch (s)
+    {
+    case LS_UNKNOWN:
+      return ACE_TEXT ("UNKNOWN");
+    case LS_PING_AWAY:
+      return ACE_TEXT ("PING_AWAY");
+    case LS_DEAD:
+      return ACE_TEXT ("DEAD");
+    case LS_ALIVE:
+      return ACE_TEXT ("ALIVE");
+    case LS_TRANSIENT:
+      return ACE_TEXT ("TRANSIENT");
+    case LS_LAST_TRANSIENT:
+      return ACE_TEXT ("LAST_TRANSIENT");
+    case LS_TIMEDOUT:
+      return ACE_TEXT ("TIMEDOUT");
+    }
+}
+
 void
 LiveEntry::set_reping_limit (int max)
 {
@@ -194,8 +216,10 @@ LiveEntry::status (LiveStatus l)
       if (ImR_Locator_i::debug () > 2)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%P|%t) LiveEntry::status change, server = %C status = %d\n"),
-                          this->server_.c_str(), this->liveliness_));
+                          ACE_TEXT ("(%P|%t) LiveEntry::status change, ")
+                          ACE_TEXT ("server = %C status = %s\n"),
+                          this->server_.c_str(),
+                          status_name (this->liveliness_)));
         }
       this->owner_->schedule_ping (this);
     }
@@ -222,8 +246,8 @@ LiveEntry::validate_ping (bool &want_reping, ACE_Time_Value& next)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("(%P|%t) LiveEntry::validate_ping, status ")
-                          ACE_TEXT ("= %d, listeners = %d server %C\n"),
-                          this->liveliness_, this->listeners_.size (),
+                          ACE_TEXT ("= %s, listeners = %d server %C\n"),
+                          status_name (this->liveliness_), this->listeners_.size (),
                           this->server_.c_str()));
         }
       return false;
@@ -242,10 +266,10 @@ LiveEntry::validate_ping (bool &want_reping, ACE_Time_Value& next)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("(%P|%t) LiveEntry::validate_ping, ")
-                          ACE_TEXT ("status = %d, listeners = %d, ")
+                          ACE_TEXT ("status = %s, listeners = %d, ")
                           ACE_TEXT ("diff = %d,%d, msec = %d ")
                           ACE_TEXT ("server %C\n"),
-                          this->liveliness_, this->listeners_.size (),
+                          status_name (this->liveliness_), this->listeners_.size (),
                           diff.sec(), diff.usec(), msec,
                           this->server_.c_str()));
         }
@@ -315,11 +339,23 @@ LiveEntry::do_ping (PortableServer::POA_ptr poa)
   try
     {
       this->ref_->sendc_ping (cb.in());
+      if (ImR_Locator_i::debug () > 3)
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%P|%t) LiveEntry::do_ping, ")
+                          ACE_TEXT ("sendc_ping returned OK\n")));
+        }
       ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
       this->liveliness_ = LS_PING_AWAY;
     }
-  catch (CORBA::Exception &)
+  catch (CORBA::Exception &ex)
     {
+      if (ImR_Locator_i::debug () > 3)
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%P|%t) LiveEntry::do_ping, ")
+                          ACE_TEXT ("sendc_ping threw %C\n"), ex._name()));
+        }
       this->status (LS_DEAD);
     }
 }
@@ -469,7 +505,7 @@ LiveCheck::handle_timeout (const ACE_Time_Value &,
         }
       else
         {
-          if (ImR_Locator_i::debug () > 5)
+          if (ImR_Locator_i::debug () > 4)
             {
               ORBSVCS_DEBUG ((LM_DEBUG,
                               ACE_TEXT ("(%P|%t) LiveCheck::handle_timeout(%d)")
@@ -509,8 +545,8 @@ LiveCheck::handle_timeout (const ACE_Time_Value &,
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("(%P|%t) LiveCheck::handle_timeout(%d),")
-                          ACE_TEXT (" want reping, delay = %d,%d\n"),
-                          token, delay.sec(), delay.usec()));
+                          ACE_TEXT (" want reping(%d), delay = %d,%d\n"),
+                          token, this->token_, delay.sec(), delay.usec()));
         }
       this->reactor()->schedule_timer (this, reinterpret_cast<void *>(this->token_), delay);
     }
