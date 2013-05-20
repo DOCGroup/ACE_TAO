@@ -48,6 +48,7 @@ $SV2 = $server2->CreateProcess ("server",
                               "-o $server2_ior2file");
 
 $CL = $client->CreateProcess ("client",
+                              "-ORBdebuglevel $debug_level " .
                               "-ORBSvcconf svc_client.conf " .
                               "-ORBPreferredInterfaces *=127.0.0.1 " .
                               "-k file://$ior1file");
