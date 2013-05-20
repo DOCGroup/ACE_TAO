@@ -16,6 +16,9 @@
 static constexpr uint32_t bound = std::numeric_limits<uint32_t>::max();
 
 namespace CORBA {
+  // First forward declare TCKind, this is legal with C++11
+  enum class TCKind : uint32_t;
+
   enum class TCKind : uint32_t
   {
     tk_null,

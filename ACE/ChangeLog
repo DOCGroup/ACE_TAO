@@ -1,3 +1,8 @@
+Mon May 20 18:40:20 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Compiler_Features_16_Test.cpp:
+          Added also a forward declared enum
+
 Fri May 17 13:48:34 UTC 2013  Adam Mitz  <mitza@ociweb.com>
 
         * bin/fuzz.pl:
