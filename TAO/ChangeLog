@@ -1,3 +1,10 @@
+Mon May 20 12:15:00 UTC 2013  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * bin/tao_other_tests.lst:
+
+          Added !NO_LOOPBACK_MCAST config item to McastLocal/Mcast & McastPreferredInterfaces
+          tests.
+
 Mon May 20 09:59:30 UTC 2013  Simon Massey  <simon dot massey at prismtech dot com>
 
         * orbsvcs/tests/miop/McastHello/McastHello.cpp:
