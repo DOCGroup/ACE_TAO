@@ -26,6 +26,7 @@
 #include "tao/Intrusive_Ref_Count_Handle_T.h"
 
 class LiveCheck;
+class LiveEntry;
 
 //---------------------------------------------------------------------------
 /*
@@ -34,9 +35,11 @@ class LiveCheck;
  * @brief indication of the known condition of a target server
  *
  *  LS_UNKNOWN   - The server hasn't yet been pinged
+ *  LS_PING_AWAY - A ping request has been issued, waiting for reply
  *  LS_DEAD      - The ping failed for reasons other than POA Activation
  *  LS_ALIVE     - The server positively acknowledged a ping
  *  LS_TRANSIENT - The server connected, but acively raised a transient
+ *  LS_LAST_TRANSIENT - The maximum number of retries is reached
  *  LS_TIMEDOUT  - The server connected, but never returned any result.
  */
 enum LiveStatus {
@@ -71,6 +74,12 @@ class Locator_Export LiveListener
 
   virtual ~LiveListener (void);
 
+  /// sets the initial status volue, set by entry during an add_listener call
+  void entry (const LiveEntry *entry);
+
+  /// Query the status of the associated entry
+  LiveStatus status (void) const;
+
   /// called by the asynch ping receiver when a reply or an exception
   /// is received. Returns true if finished listening
   virtual bool status_changed (LiveStatus status) = 0;
@@ -81,9 +90,11 @@ class Locator_Export LiveListener
   LiveListener *_add_ref (void);
   void _remove_ref (void);
 
- private:
+ protected:
   ACE_CString server_;
+  const LiveEntry *entry_;
 
+ private:
   int refcount_;
   TAO_SYNCH_MUTEX lock_;
 };
@@ -114,6 +125,9 @@ class Locator_Export LiveEntry
   LiveStatus status (void) const;
   void status (LiveStatus l);
   void reset_status (void);
+
+  /// the current state value as text
+  static const char *status_name (LiveStatus s);
 
   void update_listeners (void);
   bool validate_ping (bool &want_reping, ACE_Time_Value &next);

@@ -283,7 +283,7 @@ ListLiveListener::~ListLiveListener (void)
 bool
 ListLiveListener::start (void)
 {
-  bool rtn = this->pinger_.add_listener (this);
+  bool rtn = this->pinger_.add_poll_listener (this);
   return rtn;
 }
 
