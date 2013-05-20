@@ -95,7 +95,7 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
   // Virtual _copy_value() only provided in OBV_* class when
   // ::CORBA::DefaultValueRefCountBase has been included.
   // The OBV_ class is concrete in this case and so requires
-  // a _copy_value definition. 
+  // a _copy_value definition.
   // Otherwise, the end user must derive from this abstract
   // OBV_* class and it is up to them to provide the correct
   // implimentation of the _copy_value() there.
