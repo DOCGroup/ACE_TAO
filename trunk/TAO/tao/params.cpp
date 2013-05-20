@@ -226,7 +226,6 @@ TAO_ORB_Parameters::check_preferred_interfaces_string (const char *s)
   // treated as wildcards.
   bool expect_assign = false;
   bool expect_comma = false;
-  bool expect_char = true;
   bool expect_wild = true;
   bool found_remote = false;
 
@@ -242,7 +241,6 @@ TAO_ORB_Parameters::check_preferred_interfaces_string (const char *s)
         return false;
       found_remote = true;
       expect_assign = false;
-      expect_char = true;
       expect_comma = false;
       expect_wild = true;
       break;
@@ -252,7 +250,6 @@ TAO_ORB_Parameters::check_preferred_interfaces_string (const char *s)
         return false;
       found_remote = false;
       expect_assign = false;
-      expect_char = true;
       expect_comma = false;
       expect_wild = true;
       break;
@@ -262,16 +259,12 @@ TAO_ORB_Parameters::check_preferred_interfaces_string (const char *s)
       if (!expect_wild)
         return false;
       expect_assign = !found_remote;
-      expect_char = true;
       expect_comma = found_remote;
       expect_wild = false;
       break;
 
     default:
-      if (!expect_char)
-        return false;
       expect_assign = !found_remote;
-      expect_char = true;
       expect_comma = found_remote;
       expect_wild = true;
       break;

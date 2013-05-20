@@ -1,3 +1,9 @@
+Mon May 20 13:10:00 UTC 2013  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * tao/params.cpp:
+
+          Remove dead code and unused state variable (expect_char).
+
 Mon May 20 12:15:00 UTC 2013  Simon Massey  <simon dot massey at prismtech dot com>
 
         * bin/tao_other_tests.lst:
