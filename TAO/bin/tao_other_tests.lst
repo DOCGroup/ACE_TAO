@@ -205,7 +205,7 @@ TAO/orbsvcs/tests/Security/EndpointPolicy/run_test.pl: SSL !STATIC !DISABLE_INTE
 TAO/orbsvcs/tests/Security/Null_Cipher/run_test.pl: SSL !STATIC !DISABLE_INTERCEPTORS !ACE_FOR_TAO !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/orbsvcs/tests/Security/MT_BiDir_SSL/run_test.pl: SSL !STATIC !DISABLE_INTERCEPTORS !ACE_FOR_TAO !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !GIOP10 !DISABLE_BIDIR !LynxOS
 TAO/orbsvcs/tests/Miop/McastHello/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !STATIC !NO_MCAST
-TAO/orbsvcs/tests/Miop/McastLocal/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !STATIC !NO_MCAST
+TAO/orbsvcs/tests/Miop/McastLocal/run_test.pl -debug: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !STATIC !NO_MCAST
 TAO/orbsvcs/tests/Miop/McastZIOP/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !STATIC !NO_MCAST ZLIB
 TAO/orbsvcs/tests/Miop/McastPreferredInterfaces/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !STATIC !NO_MCAST
 TAO/orbsvcs/tests/Miop/McastPreferredInterfaces/run_test_ipv6.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !STATIC !NO_MCAST IPV6
