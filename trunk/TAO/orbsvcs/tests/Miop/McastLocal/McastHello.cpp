@@ -36,8 +36,8 @@ McastHello::send_large_octet_array (const Test::Octets &payload)
         {
           ACE_ERROR ((LM_ERROR,
                       "ERROR: (%P|%t) McastHello::send_large_octet_array, "
-                      "unexpected value at index %d (%d != %d)\n",
-                      i, payload [i], i % 256));
+                      "instance %d, unexpected value at index %d (%d != %d)\n",
+                      instance_, i, payload [i], i % 256));
           valid_payload = 0;
           break;
         }
