@@ -16,4 +16,17 @@ loopback interface (via its
 
 This is testing that these configuartion options are correctly working
 for MIOP.
+***********************************
+Note
+This test currently fails on Solaris (at least ultra10)
+as loopback multicasting seems to have a hardcoded (and unchangeable) SndSock
+size of 0. It then throws away all data that is being sent by the client,
+therefore the servers will timeout as they won't receive any message.
+
+Some other systems (AIX and MacOS) also have problems with loopback
+multicasting issuing errno such as "Network/address unreachable" for each
+send.
+
+This test should be disabled on such systems. There is a !NO_LOOPBACK_MCAST
+config item in TAO/bin/tao_other_tests.lst to cater for this.
 **/

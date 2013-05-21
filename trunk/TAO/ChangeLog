@@ -1,3 +1,10 @@
+Tue May 21 13:17:00 UTC 2013  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * orbsvcs/tests/Miop/McastLocal/README:
+
+          Add note about failures on Solaris, AIX and MacOS due to problems
+          with sending data via multicast on loopback.
+
 Tue May 21 11:12:00 UTC 2013  Simon Massey  <simon dot massey at prismtech dot com>
 
         * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.cpp:
