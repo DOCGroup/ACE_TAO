@@ -274,7 +274,21 @@ TAO_UIPMC_Connection_Handler::open (void*)
           // internal data structures seporating each packet) and this doubled
           // value is what is returned by the get_option, so it is best to halve.
           this->send_hi_water_mark_ >>= 1;
-          if (TAO_debug_level)
+
+          // Also Note that some kernals return stupid values (such as solaris
+          // when using the loopback interface) so cater for rediculously small
+          // values.
+	  if (this->send_hi_water_mark_ < 256u)
+	    {
+              this->send_hi_water_mark_ = 256u;
+              if (TAO_debug_level)
+                ACE_ERROR ((LM_ERROR,
+                            ACE_TEXT ("TAO (%P|%t) - UIPMC_Connection_Handler::")
+                            ACE_TEXT ("open, -ORBSendHighWaterMark not specified, ")
+                            ACE_TEXT ("using value of %u bytes\n"),
+                            this->send_hi_water_mark_));
+            }
+          else if (TAO_debug_level)
             ORBSVCS_ERROR ((LM_ERROR,
                         ACE_TEXT ("TAO (%P|%t) - UIPMC_Connection_Handler::")
                         ACE_TEXT ("open, -ORBSendHighWaterMark not specified, ")
