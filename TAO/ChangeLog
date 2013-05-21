@@ -1,3 +1,14 @@
+Tue May 21 13:22:47 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Iterator.h:
+        * orbsvcs/ImplRepo_Service/Iterator.cpp:
+
+          Removed obsolete class.
+
+        * orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+
+          scoreboard cleanup.
+
 Tue May 21 13:17:00 UTC 2013  Simon Massey  <simon dot massey at prismtech dot com>
 
         * orbsvcs/tests/Miop/McastLocal/README:
