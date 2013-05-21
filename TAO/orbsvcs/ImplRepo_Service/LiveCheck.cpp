@@ -75,6 +75,7 @@ LiveEntry::status_name (LiveStatus s)
     case LS_TIMEDOUT:
       return ACE_TEXT ("TIMEDOUT");
     }
+  return ACE_TEXT ("<undefined status>");
 }
 
 void
