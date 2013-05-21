@@ -1,3 +1,8 @@
+Tue May 21 17:24:39 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Compiler_Features_16_Test.cpp:
+          Added a forward declared enum after it has been declared
+
 Mon May 20 18:40:20 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Compiler_Features_16_Test.cpp:
