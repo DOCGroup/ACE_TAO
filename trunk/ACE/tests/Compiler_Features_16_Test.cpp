@@ -25,6 +25,10 @@ namespace CORBA {
     tk_void,
     tk_event
   };// TCKind
+
+  // And another forward declared TCKind, after it has been
+  // declared
+  enum class TCKind : uint32_t;
 };
 
 std::ostream& operator<<
