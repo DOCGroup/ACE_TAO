@@ -1,8 +1,8 @@
-Tue May 21 11:07:00 UTC 2013  Simon Massey  <simon dot massey at prismtech dot com>
+Tue May 21 11:12:00 UTC 2013  Simon Massey  <simon dot massey at prismtech dot com>
 
         * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.cpp:
 
-          Add sanity check for SndSock value obtained from system.
+          Add sanity check for SndSock value obtained from system (without TABS)
 
 Mon May 20 16:41:51 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
