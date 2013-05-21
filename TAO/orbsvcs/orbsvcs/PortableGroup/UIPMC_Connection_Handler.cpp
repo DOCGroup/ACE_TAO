@@ -1,4 +1,4 @@
-// $Id$
+ // $Id$
 
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/PortableGroup/UIPMC_Connection_Handler.h"
@@ -278,8 +278,8 @@ TAO_UIPMC_Connection_Handler::open (void*)
           // Also Note that some kernals return stupid values (such as solaris
           // when using the loopback interface) so cater for rediculously small
           // values.
-	  if (this->send_hi_water_mark_ < 256u)
-	    {
+          if (this->send_hi_water_mark_ < 256u)
+            {
               this->send_hi_water_mark_ = 256u;
               if (TAO_debug_level)
                 ACE_ERROR ((LM_ERROR,
