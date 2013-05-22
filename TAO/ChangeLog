@@ -1,3 +1,9 @@
+Wed May 22 15:15:34 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.cpp:
+
+          Fuzz fix.
+
 Tue May 21 13:22:47 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/Iterator.h:
