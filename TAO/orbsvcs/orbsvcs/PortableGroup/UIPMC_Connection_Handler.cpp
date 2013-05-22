@@ -282,7 +282,7 @@ TAO_UIPMC_Connection_Handler::open (void*)
             {
               this->send_hi_water_mark_ = 256u;
               if (TAO_debug_level)
-                ACE_ERROR ((LM_ERROR,
+                ORBSVCS_ERROR ((LM_ERROR,
                             ACE_TEXT ("TAO (%P|%t) - UIPMC_Connection_Handler::")
                             ACE_TEXT ("open, -ORBSendHighWaterMark not specified, ")
                             ACE_TEXT ("using value of %u bytes\n"),
