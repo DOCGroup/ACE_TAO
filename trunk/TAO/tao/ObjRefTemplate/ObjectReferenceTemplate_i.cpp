@@ -36,7 +36,7 @@ namespace TAO
         server_id_,
         orb_id_,
         adapter_name_,
-        poa_
+        poa_.in ()
       ),
       ::CORBA::NO_MEMORY ()
     );
