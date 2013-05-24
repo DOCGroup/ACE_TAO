@@ -1,3 +1,12 @@
+Fri May 24 07:55:00 UTC 2013  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * tao/ObjRefTemplate/ObjectReferenceTemplate_i.cpp:
+        * orbsvcs/examples/ORT/Gateway_ObjRef_Factory.cpp:
+
+          Add .in () accessor to vars being duplicated. This stops some older
+          compilers issuing warnings about which pointer accessor they are
+          automatically selecting.
+
 Wed May 22 15:15:34 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.cpp:

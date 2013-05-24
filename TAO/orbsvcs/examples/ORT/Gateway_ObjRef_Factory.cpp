@@ -19,7 +19,7 @@ Gateway_ObjRef_Factory::_copy_value (void)
   ACE_NEW_THROW_EX (
     ret_val,
     Gateway_ObjRef_Factory (
-      gateway_object_factory_,
+      gateway_object_factory_.in (),
       old_factory_
     ),
     ::CORBA::NO_MEMORY ()
