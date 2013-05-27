@@ -1,3 +1,9 @@
+Mon May 27 17:46:40 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * debian/libtao-orbsvcs-2.2.0.install:
+        * debian/libtao-orbsvcs-dev.install:
+          Added new libTAO_Async_ImR_Client_IDL
+
 Mon May 27 12:46:56 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * debian/libtao-2.2.0.install:
