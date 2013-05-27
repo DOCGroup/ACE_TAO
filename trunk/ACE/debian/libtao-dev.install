@@ -34,6 +34,7 @@ usr/include/tao/IORManipulation
 usr/lib/libTAO_IORManip.so
 usr/include/tao/IORTable
 usr/lib/libTAO_IORTable.so
+usr/lib/libTAO_Async_IORTable.so
 usr/include/tao/Messaging
 usr/lib/libTAO_Messaging.so
 usr/include/tao/ObjRefTemplate
@@ -99,6 +100,7 @@ usr/lib/pkgconfig/TAO_Monitor.pc
 usr/lib/pkgconfig/TAO_Compression.pc
 usr/lib/pkgconfig/TAO_Strategies.pc
 usr/lib/pkgconfig/TAO_IORTable.pc
+usr/lib/pkgconfig/TAO_Async_IORTable.pc
 usr/lib/pkgconfig/TAO_CSD_ThreadPool.pc
 usr/lib/pkgconfig/TAO_CodecFactory.pc
 usr/lib/pkgconfig/TAO_EndpointPolicy.pc

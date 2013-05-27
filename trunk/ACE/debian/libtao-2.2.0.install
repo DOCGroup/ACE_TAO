@@ -14,6 +14,7 @@ usr/lib/libTAO_IFR_Client_skel-*.so
 usr/lib/libTAO_IORInterceptor-*.so
 usr/lib/libTAO_IORManip-*.so
 usr/lib/libTAO_IORTable-*.so
+usr/lib/libTAO_Async_IORTable-*.so
 usr/lib/libTAO_Messaging-*.so
 usr/lib/libTAO_ObjRefTemplate-*.so
 usr/lib/libTAO_PI-*.so
