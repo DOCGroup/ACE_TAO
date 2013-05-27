@@ -63,6 +63,7 @@ usr/lib/libTAO_CosTime_Skel-*.so
 usr/lib/libTAO_Catior_i-*.so
 usr/lib/libTAO_ImR_Locator_IDL-*.so
 usr/lib/libTAO_ImR_Activator-*.so
+usr/lib/libTAO_Async_ImR_Client_IDL-*.so
 usr/lib/libTAO_ReplicationManagerLib-*.so
 usr/lib/libTAO_ImR_Activator_IDL-*.so
 usr/lib/libTAO_ImR_Locator-*.so
