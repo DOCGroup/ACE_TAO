@@ -31,7 +31,7 @@
           guy</a>
       knows most of the information. Ask him to help you out with known problems.
       <li>
-        Keep an eye on the <a href="http://www.dre.vanderbilt.edu/Stats">footprint and
+        Keep an eye on the <a href="http://atcdstats.theaceorb.nl/index.shtml">footprint and
           performance</a> stats. Any abnormal changes should be brought to the
         attention of the developer responsible for it or to the <a href="mailto:devo-group@list.isis.vanderbilt.edu">
           devo group</a>.
@@ -65,6 +65,12 @@
     <p>Pro-active involvement by the build czar is necessary. Being a pro-active
       build czar requires monitoring the subversion archive carefully and responding
       quickly to suspected changes to keep the repo stays stable.</p>
+    <p>After an email from the Coverity scan project check the Coverity project and
+       check that there are no new errors reported. If so, contact the person who
+       introduced the error.</p>
+    <p>Check the daily test statistics email to determine any drop in test failures.
+       Do note that when there are a lot of compile errors the test results are really
+       unusable.</p>
     <hr>
     <h2>Recipe for Cutting a Beta/Minor Kit</h2>
     <P>
@@ -112,7 +118,7 @@
           </ul>
           If you want to perform a full build with qt support, than run:
           <ul>
-            <li><code>yum install clang make patch libcgroup-devel ant setuptool system-config-network-tui system-config-firewall-tui lcov gnuplot java-1.7.0-openjdk git-svn perl svn screen pysvn automake doxygen bzip2 tar gzip openssh graphviz zip libtool gcc-c++ boost-devel valgrind openssl-devel gcc qt4 fltk-devel bzip2-devel rsync openssl lzo-devel zziplib-devel acpid acpi nfs-utils java xerces-c xerces-c-devel mc qt qt-devel icecream ruby ruby-devel lksctp-tools-devel git glibc.i686 libstdc++.i686 ncurses-libs.i686 zlib.i686 telnet GitPython NetworkManager wget mailx</code></li>
+            <li><code>yum install rubygems clang make patch libcgroup-devel ant setuptool system-config-network-tui system-config-firewall-tui lcov gnuplot java-1.7.0-openjdk git-svn perl svn screen pysvn automake doxygen bzip2 tar gzip openssh graphviz zip libtool gcc-c++ boost-devel valgrind openssl-devel gcc qt4 fltk-devel bzip2-devel rsync openssl lzo-devel zziplib-devel acpid acpi nfs-utils java xerces-c xerces-c-devel mc qt qt-devel icecream ruby ruby-devel lksctp-tools-devel git glibc.i686 libstdc++.i686 ncurses-libs.i686 zlib.i686 telnet GitPython NetworkManager wget mailx</code></li>
           </ul>
         </li>
         <li>
@@ -316,10 +322,10 @@
         mkdir doxygen<br>
         cd doxygen<br>
         wget https://svn.dre.vanderbilt.edu/viewvc/Middleware/trunk/ACE/docs/svn/config?view=co -O $HOME/.subversion/config<br>
-        svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-6_1_9/ACE ACE_wrappers<br>
-        svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-6_1_9/TAO ACE_wrappers/TAO<br>
-        svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-6_1_9/CIAO ACE_wrappers/TAO/CIAO<br>
-        svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-6_1_9/DAnCE ACE_wrappers/TAO/DAnCE<br>
+        svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-6_2_0/ACE ACE_wrappers<br>
+        svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-6_2_0/TAO ACE_wrappers/TAO<br>
+        svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-6_2_0/CIAO ACE_wrappers/TAO/CIAO<br>
+        svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-6_2_0/DAnCE ACE_wrappers/TAO/DAnCE<br>
         cd ACE_wrappers<br>
         export ACE_ROOT=$PWD<br>
         export TAO_ROOT=$ACE_ROOT/TAO<br>
