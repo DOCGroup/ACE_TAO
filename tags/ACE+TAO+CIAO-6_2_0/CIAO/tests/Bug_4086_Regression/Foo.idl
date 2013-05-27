@@ -1,0 +1,21 @@
+// $Id$
+
+#ifndef FOO_IDL_
+#define FOO_IDL_
+
+#include <Components.idl>
+
+interface FooSupportBase
+{
+    attribute short supported_short;
+};
+
+interface FooSupport : FooSupportBase
+{
+};
+
+component Foo supports FooSupport
+{
+};
+
+#endif /* FOO_IDL_ */

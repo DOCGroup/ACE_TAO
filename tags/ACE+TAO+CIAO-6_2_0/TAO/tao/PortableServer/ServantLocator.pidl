@@ -1,0 +1,48 @@
+/**
+ * @file ServantLocator.pidl
+ *
+ * $Id$
+ *
+ * @brief Pre-compiled IDL source for the PortableServer module.
+ */
+
+#ifndef _PORTABLESERVER_SERVANTLOCATOR_IDL_
+#define _PORTABLESERVER_SERVANTLOCATOR_IDL_
+
+///FUZZ: disable check_for_include/
+#include "tao/orb_types.pidl"
+#include "tao/PortableServer/PS_Forward.pidl"
+#include "tao/PortableServer/ServantManager.pidl"
+#include "tao/PortableServer/ForwardRequest.pidl"
+
+#pragma prefix "omg.org"
+
+#if ! defined (CORBA_E_COMPACT) && ! defined (CORBA_E_MICRO) && !defined (TAO_HAS_MINIMUM_POA)
+
+module PortableServer
+{
+# pragma version PortableServer 2.3
+
+  local interface ServantLocator : ServantManager
+  {
+#   pragma version ServantLocator 2.3
+
+    native Cookie;
+
+    Servant preinvoke (in ObjectId oid,
+                       in POA adapter,
+                       in CORBA::Identifier operation,
+                       out Cookie the_cookie)
+      raises (ForwardRequest);
+
+    void postinvoke (in ObjectId oid,
+                     in POA adapter,
+                     in CORBA::Identifier operation,
+                     in Cookie  the_cookie,
+                     in Servant the_servant);
+  };
+};
+
+#endif
+
+#endif // _PORTABLESERVER_SERVANTLOCATOR_IDL_

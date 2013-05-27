@@ -1,0 +1,14 @@
+// -*- IDL -*-
+// $Id$
+
+#ifndef TAO_CORBA_USHORT_SEQ_IDL
+#define TAO_CORBA_USHORT_SEQ_IDL
+
+#pragma prefix "omg.org"
+
+module CORBA
+{
+  typedef sequence<unsigned short> UShortSeq;
+};
+
+#endif  /* TAO_CORBA_U_SHORT_SEQ_IDL */

@@ -1,0 +1,54 @@
+// -*- MPC -*-
+// $Id$
+
+project(TAO_IDL_BE) : acelib, conv_lib, tao_output, tao_vc8warnings, tao_idl_fe {
+  sharedname   = TAO_IDL_BE
+  dynamicflags += TAO_IDL_BE_BUILD_DLL
+  includes    += $(TAO_ROOT)
+  includes    += include be_include fe
+
+  specific {
+    // Override the template value for optimize.  Building the backend
+    // with optimization turned on doesn't seem to work (at least not with
+    // vc6 or vc71).  This is due to the use of addresses of static objects
+    // within the code.
+    optimize =
+  }
+
+  Source_Files {
+    be
+    be/be_visitor_argument
+    be/be_visitor_array
+    be/be_visitor_attribute
+    be/be_visitor_component
+    be/be_visitor_component_fwd
+    be/be_visitor_connector
+    be/be_visitor_constant
+    be/be_visitor_enum
+    be/be_visitor_exception
+    be/be_visitor_field
+    be/be_visitor_home
+    be/be_visitor_interface
+    be/be_visitor_interface_fwd
+    be/be_visitor_module
+    be/be_visitor_native
+    be/be_visitor_operation
+    be/be_visitor_root
+    be/be_visitor_sequence
+    be/be_visitor_structure
+    be/be_visitor_structure_fwd
+    be/be_visitor_typecode
+    be/be_visitor_typedef
+    be/be_visitor_union
+    be/be_visitor_union_branch
+    be/be_visitor_union_fwd
+    be/be_visitor_valuebox
+    be/be_visitor_valuetype
+    be/be_visitor_valuetype_fwd
+  }
+
+  Header_Files {
+    be_include
+  }
+}
+

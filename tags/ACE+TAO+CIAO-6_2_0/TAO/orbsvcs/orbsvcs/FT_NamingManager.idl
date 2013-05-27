@@ -1,0 +1,63 @@
+/* -*- IDL -*- */
+//=============================================================================
+/**
+ *  @file    FT_NamingManager.idl
+ *
+ *  $Id$
+ *
+ *  This file is part of Fault Tolerant Naming Service.
+ *
+ *  @author Kevin Stanley <stanleyk@ociweb.com>
+ */
+//=============================================================================
+
+#ifndef _FT_NAMING_MANAGER_IDL_
+#define _FT_NAMING_MANAGER_IDL_
+
+#include "orbsvcs/PortableGroup.idl"
+
+module FT_Naming
+{
+  typedef PortableGroup::ObjectGroup ObjectGroup;
+
+  const string TAO_FT_OBJECT_GROUP_NAME = "TAO_FT_GroupName";
+  const string TAO_FT_LOAD_BALANCING_STRATEGY = "TAO_FT_LB_Strategy";
+
+  typedef long LoadBalancingStrategyValue;
+  const LoadBalancingStrategyValue ROUND_ROBIN = 0;
+  const LoadBalancingStrategyValue RANDOM = 1;
+  const LoadBalancingStrategyValue LEAST  = 2;
+
+  typedef string GroupName;
+  typedef sequence<string> GroupNames;
+
+  // Specification of NamingManager Interface
+  interface NamingManager : PortableGroup::PropertyManager,
+                            PortableGroup::ObjectGroupManager
+  {
+    ObjectGroup create_object_group (in GroupName group_name,
+                                     in LoadBalancingStrategyValue lb_strategy,
+                                     in PortableGroup::Criteria the_criteria)
+      raises (PortableGroup::ObjectNotCreated,
+              PortableGroup::InvalidCriteria,
+              PortableGroup::InvalidProperty,
+              PortableGroup::CannotMeetCriteria);
+
+    void delete_object_group (in string group_name)
+      raises (PortableGroup::ObjectGroupNotFound);
+
+    ObjectGroup get_object_group_ref_from_name (
+      in string group_name)
+      raises (PortableGroup::ObjectGroupNotFound);
+
+    void set_load_balancing_strategy (in string group_name,
+                                      in LoadBalancingStrategyValue lb_strategy);
+
+    // Return names of all groups defined in the NamingManager
+    GroupNames groups (in LoadBalancingStrategyValue target_stategy);
+
+  };
+};
+
+
+#endif // _FT_NAMING_MANAGER_IDL_

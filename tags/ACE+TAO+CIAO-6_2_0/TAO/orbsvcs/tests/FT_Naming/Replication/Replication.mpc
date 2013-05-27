@@ -1,0 +1,7 @@
+// -*- MPC -*-
+// $Id$
+
+project(*Client) : ftnaming {
+  exename  = client
+}
+
