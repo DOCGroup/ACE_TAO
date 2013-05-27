@@ -1,3 +1,14 @@
+Mon May 27 10:18:26 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+        * bin/diff-builds-and-group-fixed-tests-only.sh:
+        * debian/debian.changelog:
+        * docs/bczar/bczar.html:
+          Updates in preparation of releasing x.2.0
+
+        * bin/make_release.py:
+          Fixed generation of ace.dsc file
+
 Mon May 27 10:09:24 CEST 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ACE version 6.2.0 released.
