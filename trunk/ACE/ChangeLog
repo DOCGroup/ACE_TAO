@@ -1,3 +1,9 @@
+Tue May 28 09:12:20 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/Download.html:
+        * etc/index.html:
+          Make x.2.0 links available to the public
+
 Mon May 27 17:46:40 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * debian/libtao-orbsvcs-2.2.0.install:
