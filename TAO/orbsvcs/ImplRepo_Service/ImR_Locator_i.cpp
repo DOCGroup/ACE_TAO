@@ -554,7 +554,7 @@ ImR_Locator_i::activate_server_i (UpdateableServerInfo& info,
       ACE_NEW (aam_raw, AsyncAccessManager (*info, manual_start, *this));
       aam = aam_raw;
       this->aam_set_.insert_tail (aam);
-  }
+    }
   else
     {
       aam = this->find_aam (info->name.c_str());
