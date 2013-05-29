@@ -24,7 +24,7 @@ TAO_Service_Type_Exporter::~TAO_Service_Type_Exporter (void)
   {
     this->remove_all_types ();
   }
-  catch (const CORBA::Exception& exp)
+  catch (const CORBA::Exception&)
   {
   };
 }
