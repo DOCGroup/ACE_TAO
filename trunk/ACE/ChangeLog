@@ -1,3 +1,11 @@
+Wed May 29 13:57:15 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/auto_run_tests.pl:
+        * tests/run_test.pl:
+          Commented out setting of the Coverity environment variables
+          seperately for each test, that looks to cause a huge additonal
+          resource usage
+
 Wed May 29 06:58:53 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-sunos5.7.h:
