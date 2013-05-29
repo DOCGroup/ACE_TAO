@@ -1,3 +1,28 @@
+Wed May 29 21:32:51 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/AsyncListManager.h:
+        * orbsvcs/ImplRepo_Service/AsyncListManager.cpp:
+
+          Add in the "jacorb" prefix for JacORB based server identifiers.
+          Also add the testing of initial status to avoid waiting for non-
+          pingable servers. Add some higher verbosity level debug output.
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+
+          Minor code style fix.
+
+        * orbsvcs/ImplRepo_Service/LiveCheck.h:
+        * orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+
+          Support the initial setting of of state when a listener is added.
+
+          Prevent redundant timeout registrations by deferring a timer schedule
+          if one is currently being processed. This could happen if a ping
+          required a non-blocking connect, allowing a new request to be received.
+          Subsequent pings may still be requested, but only the next closest
+          time will be schheduled after a current handle timeout is completed.
+
+
 Wed May 29 19:27:35 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Trading/Offer_Exporter.cpp:
