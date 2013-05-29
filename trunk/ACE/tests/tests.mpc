@@ -36,7 +36,6 @@ project(Framework Component DLL) : acelib {
   }
 }
 
-
 project(DLL Test Parent Lib) : acelib {
   libout       = .
   sharedname   = DLL_Test_Parent
@@ -679,6 +678,23 @@ project(Compiler_Features_19_Test) : acetest {
     Compiler_Features_19_Test.cpp
   }
 }
+
+project(Compiler_Features_20_Test) : acelib {
+  libout       = .
+  sharedname   = Compiler_Features_20
+  dynamicflags += COMPILER_FEATURES_20_DLL_BUILD_DLL
+
+  Source_Files {
+    Compiler_Features_20_DLL.cpp
+  }
+  Header_Files {
+    Compiler_Features_20_DLL.h
+    Compiler_Features_20_DLL_Export.h
+  }
+  Resource_Files {
+  }
+}
+
 
 project(Config Test) : acetest {
   avoids += ace_for_tao
