@@ -4,7 +4,6 @@
 #include "ace/INET_Addr.h"
 #include "ace/OS_NS_stdio.h"
 
-
 TAO_Offer_Exporter::
 TAO_Offer_Exporter (CosTrading::Lookup_ptr lookup_if,
                     CORBA::Boolean verbose)
@@ -307,7 +306,7 @@ TAO_Offer_Exporter::grab_offerids (void)
                                  offer_id_seq_result.out(),
                                  offer_id_iter.out());
 
-      // We might already have seq results but may have to process additional 
+      // We might already have seq results but may have to process additional
       // iterator result fragments.
       if (!CORBA::is_nil (offer_id_iter.in()))
         {

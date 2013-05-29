@@ -2,8 +2,6 @@
 
 #include "Service_Type_Exporter.h"
 
-
-
 TAO_Service_Type_Exporter::
 TAO_Service_Type_Exporter (CosTrading::Lookup_ptr lookup_if,
                            CORBA::Boolean verbose)
@@ -107,7 +105,7 @@ TAO_Service_Type_Exporter::add_all_types_to_all (void)
       catch (const CORBA::Exception& e)
         {
           e._tao_print_exception ("TAO_Service_Type_Exporter::add_all_types_to_all");
-          throw;                    
+          throw;
         }
 
       this->add_all_types_to (str);
@@ -202,7 +200,7 @@ TAO_Service_Type_Exporter::list_all_types (void)
   catch (const CORBA::Exception& e)
     {
       e._tao_print_exception ("TAO_Service_Type_Exporter::list_all_types");
-      throw;                    
+      throw;
     }
 }
 

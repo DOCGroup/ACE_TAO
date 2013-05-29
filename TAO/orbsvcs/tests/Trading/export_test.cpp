@@ -21,15 +21,15 @@ parse_args_spec (int argc, ACE_TCHAR *argv[], int help)
                 "Test the trader's exporter role, the options are:\n"
                 "-ORBInitRef <orb_options> E.g. '-ORBInitRef TradingService=iiop://localhost:8901/TradingService'\n"
                 "-quiet or -q              (optional) Run the tests in quiet mode, don't show the query and list results.\n"
-                "-federate or -f           (optional) Setup for federated trader tests.\n"   
-                "-iorfile or -i            (optional) Get TradingService reference through IOR instead of resolve.\n"   
+                "-federate or -f           (optional) Setup for federated trader tests.\n"
+                "-iorfile or -i            (optional) Get TradingService reference through IOR instead of resolve.\n"
                 "-d <done_file>            (optional) Filename for signalling that we are ready for serving dynamic properties (for import_test).\n"
                 "\n"
                 "This test needs an external TradingServer running, example:\n"
                 "   Trading_Service -ORBEndpoint iiop://:8901 -TSdumpior trading.ior\n"
                 "See also TAO/docs/releasenotes/trader.html.\n\n"
                 ) ));
-    return -1;           
+    return -1;
   }
   else
   {
@@ -106,7 +106,7 @@ int failure = 0;
       type_exporter.describe_all_types ();
 
       type_exporter.fully_describe_all_types ();
-                                        
+
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT("*** Service Type Exporter tests complete.\n")));
 
       // Run the Offer Exporter tests.
@@ -142,7 +142,7 @@ int failure = 0;
 
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT("*** Offer Exporter tests complete.\n")));
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT("*** Now serving dynamic properties.\n")));
-      
+
       // Next file can flag other external apps that we now arrived at serving
       // dynamic properties.
       size_t offset = 0;

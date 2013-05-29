@@ -63,7 +63,7 @@ int failure = 0;
 
       //-------------------------------------------------------------------------
       ACE_DEBUG ((LM_DEBUG, "*** Setup an embedded TradingService.\n"));
-      // Create a Service Type Repository and a Trader Object so the test can 
+      // Create a Service Type Repository and a Trader Object so the test can
       // run without an external trading service.
       // Start of Trading service scope.
       {
@@ -71,61 +71,61 @@ int failure = 0;
         auto_ptr<TAO_Trader_Factory::TAO_TRADER> trader (TAO_Trader_Factory::create_trader (argc, argv));
         TAO_Support_Attributes_i& sup_attr = trader->support_attributes ();
         TAO_Trading_Components_i& trd_comp = trader->trading_components ();
-  
+
         // Set the service type repository
         sup_attr.type_repos (type_repos._this ());
-  
+
         CosTrading::Lookup_var lookup_if = CosTrading::Lookup::_duplicate(
             trd_comp.lookup_if());
 
         // Run the POA manager.
         orb_manager.activate_poa_manager();
-        
+
         // Run the Service Type Exporter tests.
         ACE_DEBUG ((LM_DEBUG, "*** Running the Service Type Exporter tests.\n"));
         TAO_Service_Type_Exporter type_exporter(lookup_if.in(), verbose);
-  
+
         type_exporter.remove_all_types ();
-  
+
         type_exporter.add_all_types ();
-  
+
         type_exporter.list_all_types ();
-  
+
         type_exporter.describe_all_types ();
-  
+
         type_exporter.fully_describe_all_types ();
-  
+
         // Run the Offer Exporter tests.
         ACE_DEBUG ((LM_DEBUG, "*** Running the Offer Exporter tests.\n"));
         TAO_Offer_Exporter offer_exporter(lookup_if.in(), verbose);
-  
+
         offer_exporter.withdraw_offers ();
-  
+
         offer_exporter.export_offers ();
-  
+
         offer_exporter.describe_offers ();
-  
+
         offer_exporter.modify_offers ();
-  
+
         offer_exporter.describe_offers ();
-  
+
         offer_exporter.withdraw_offers_using_constraints ();
-  
+
         offer_exporter.describe_offers ();
-  
+
         offer_exporter.withdraw_offers ();
-  
+
         offer_exporter.export_offers ();
-  
+
         offer_exporter.describe_offers ();
-  
+
         // Run the Offer Importer tests.
         ACE_DEBUG ((LM_DEBUG, "*** Running the Offer Importer tests.\n"));
         TAO_Offer_Importer offer_importer(lookup_if.in(), verbose);
-  
+
         offer_importer.perform_queries ();
-  
-      }; // End of Trading service scope. 
+
+      }; // End of Trading service scope.
       //-----------------------------------------------------------------------
       ACE_DEBUG ((LM_DEBUG, "*** Shutting down.\n"));
       orb_manager.fini();

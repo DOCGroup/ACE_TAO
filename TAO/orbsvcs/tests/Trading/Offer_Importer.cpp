@@ -2,8 +2,6 @@
 
 #include "Offer_Importer.h"
 
-
-
 TAO_Offer_Importer::TAO_Offer_Importer (CosTrading::Lookup_ptr lookup_if,
                                         CORBA::Boolean verbose)
   : verbose_ (verbose),
@@ -124,7 +122,7 @@ TAO_Offer_Importer::perform_queries_with_policies (
 
       CosTrading::PropertyNameSeq prop_name_seq (4, 4, props, 0);
       desired_props.prop_names (prop_name_seq);
-      
+
       for (int i = 0; i < TT_Info::NUM_QUERIES; i++)
         {
           ACE_DEBUG ((LM_DEBUG, "\n"));
@@ -138,7 +136,7 @@ TAO_Offer_Importer::perform_queries_with_policies (
           // Test with different how_many amount, both should work.
           // Initially try to get this amount in the sequence.
           CORBA::ULong how_many = 8;
-          if (i&0x0001) 
+          if (i&0x0001)
           {
             how_many=0; // 0: Don't retrieve in offers but all in iterator.
           };
@@ -167,7 +165,7 @@ TAO_Offer_Importer::perform_queries_with_policies (
                         ,expected
                         ,i
                         ,seqlen
-                        ,itrlen                              
+                        ,itrlen
                         ,total
                         ));
             throw CORBA::TRANSIENT(); // Try again later?
@@ -179,11 +177,11 @@ TAO_Offer_Importer::perform_queries_with_policies (
                         ,expected
                         ,i
                         ,seqlen
-                        ,itrlen                              
+                        ,itrlen
                         ,total
                         ));
           };
-          
+
           if (this->verbose_)
             {
               ACE_DEBUG ((LM_DEBUG, "*** Results:\n\n"));
@@ -221,7 +219,7 @@ TAO_Offer_Importer::display_results (const CosTrading::OfferSeq& offer_seq,
       for (CORBA::ULong i = 0; i < offer_seq.length (); i++)
         {
           // Call back to the exported object.
-          // FIXME: shouldn't this be done in a separate 'verify_results' method? 
+          // FIXME: shouldn't this be done in a separate 'verify_results' method?
           //        (confirm () now skipped in quiet mode)
           TAO_Trader_Test::Remote_Output_var remote_output =
             TAO_Trader_Test::Remote_Output::_narrow (offer_seq[i].reference.in ());
@@ -240,17 +238,17 @@ TAO_Offer_Importer::display_results (const CosTrading::OfferSeq& offer_seq,
           do
             {
               CosTrading::OfferSeq_var offers;
-              // Use of iterator->max_left() to get all iterator results is not 
-              // recommended? (see p.879 Advanced CORBA programming book) 
+              // Use of iterator->max_left() to get all iterator results is not
+              // recommended? (see p.879 Advanced CORBA programming book)
               // Howmany to process is a choice between next_n call 'dispatch
               // costs' and 'larges results marshalling bandwidth costs'.
-              CORBA::ULong how_many = 100; 
+              CORBA::ULong how_many = 100;
               any_left = offer_iterator->next_n (how_many, offers.out());
-              
+
               for (CORBA::ULong i = 0; i < offers->length (); i++)
                 {
                   // Call back to the exported object.
-                  // FIXME: shouldn't this be done in a separate 'verify_results' method? 
+                  // FIXME: shouldn't this be done in a separate 'verify_results' method?
                   //        (confirm () now skipped in quiet mode)
                   TAO_Trader_Test::Remote_Output_var remote_output =
                     TAO_Trader_Test::Remote_Output::_narrow ((*offers)[i].reference.in ());
