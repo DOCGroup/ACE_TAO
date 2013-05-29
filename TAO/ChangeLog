@@ -1,3 +1,9 @@
+Wed May 29 19:27:35 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Trading/Offer_Exporter.cpp:
+        * orbsvcs/tests/Trading/Service_Type_Exporter.cpp:
+          Attempt to fix windows warnings
+
 Wed May 29 13:44:23 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Bounded_Basic_String_Sequence_T.h:
