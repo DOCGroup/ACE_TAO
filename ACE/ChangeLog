@@ -1,3 +1,11 @@
+Wed May 29 03:35:59 UTC 2013  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Connector.h: Used reinterpret_cast<const
+          peer_addr_type&>(peer_addr_type::sap_any) instead of C cast to
+          avoid a warning when compiling with -Wcast-qual.  Thanks to
+          Milan Cvetkovic <milan dot cvetkovic at mpathix dot com> for
+          reporting this.
+
 Wed May 29 13:57:15 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/auto_run_tests.pl:
