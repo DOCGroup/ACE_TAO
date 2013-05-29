@@ -101,15 +101,15 @@ A bug should typically follow this life cycle:<p>
 At all times, we'll have a build czar.  The role may be shared by
 multiple people.  The build czar is responsible for ensuring that the
 next kits are clean, <em>i.e.</em>, it builds and runs cleanly on all
-platforms.  The status of all ACE+TAO builds is tracked automatically
-<A HREF="http://tao.doc.wustl.edu/scoreboard/"</A>online</A>.<p>
+platforms.  The status of all ACE+TAO+CIAO+DAnCE builds is tracked automatically
+<A HREF="www.dre.vanderbilt.edu/scoreboard"</A>online</A>.<p>
 
 A comprehensive summary of the build czar's role is available <A HREF="bczar/bczar.html">here</A>.
 This role is briefly summarized below:<p>
 <ul>
   <li>Remind people to check build logs.  Developers are still
     responsible for verifying that their changes are clean.
-  <li>Fix minor problems caused by compilation errors.  More complex
+  <li>Trigger other developers to fix problems caused by compilation errors.  All
       problems should be fixed by the developers who caused them.  The
       build czar should help track down the guilty parties.
   <li>Freeze the source repository when it's decided to no more
@@ -131,22 +131,22 @@ violator.  This is also intentional, desirable, beneficial, and the
 Right Thing[TM] to do.<p>
 
 <p><hr>
-<H3>The ACE+TAO+CIAO Release Process</H3>
+<H3>The ACE+TAO+CIAO+DAnCE Release Process</H3>
 <P>
 
-Minor releases of ACE+TAO+CIAO occur periodically, typically twice a
+Minor releases of ACE+TAO+CIAO+DAnCE occur periodically, typically twice a
 year. Minor releases have two-digit numbers, <EM>e.g.,</EM> 5.3.
 Major releases are released infrequently, typically once a year.
 Major releases are 1-digit numbers, <EM>e.g.,</EM>5, that include 
 substantially new functionality.  Both major and minor releases are
 carefully tested on all platforms the ACE+TAO run on.  In particular,
-we do not put out major or minor releases of ACE+TAO+CIAO until all the
+we do not put out major or minor releases of ACE+TAO+CIAO+DAnCE until all the
 compilations and regression tests work successful on all the platform
 we support. <P>
 
 Between major/minor releases, we release micro releases periodically,
-<EM>e.g.,</EM> 3-4 times per year, so that ACE+TAO+CIAO users can
-download and test our latest work in progress.  ACE+TAO+CIAO micro
+<EM>e.g.,</EM> 3-4 times per year, so that ACE+TAO+CIAO+DAnCE users can
+download and test our latest work in progress.  ACE+TAO+CIAO+DAnCE micro
 release kits have three-digit numbers, <EM>e.g.,</EM> 5.3.1.  Micro
 releases often contain important fixes that aren't in the major/minor
 releases and will compile cleanly and pass most tests on most
