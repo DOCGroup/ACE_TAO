@@ -161,8 +161,15 @@ AsyncListManager::list_i (CORBA::ULong start, CORBA::ULong how_many)
       it.advance ();
 
       Server_Info_Ptr info = entry->int_id_;
-
-      this->server_list_[i].server = info->name.c_str ();
+      if (info->jacorb_server)
+        {
+          ACE_CString jacorb_name (ACE_TEXT ("JACORB:") + info->name);
+         this->server_list_[i].server = jacorb_name.c_str ();
+        }
+      else
+        {
+          this->server_list_[i].server = info->name.c_str ();
+        }
       this->server_list_[i].startup.command_line = info->cmdline.c_str ();
       this->server_list_[i].startup.environment = info->env_vars;
       this->server_list_[i].startup.working_directory = info->dir.c_str ();
@@ -187,7 +194,10 @@ AsyncListManager::list_i (CORBA::ULong start, CORBA::ULong how_many)
             }
           else
             {
-              this->waiters_++;
+              if (!evaluate_status (i,l->status()))
+                {
+                  this->waiters_++;
+                }
             }
         }
     }
@@ -197,7 +207,7 @@ AsyncListManager::list_i (CORBA::ULong start, CORBA::ULong how_many)
       ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) AsyncListManager::list_i, %d waiters")
                       ACE_TEXT (" out of %d regsitered servers\n"),
-                      this->waiters_, (this->pinger_ != 0)));
+                      this->waiters_, len));
     }
 
   if (this->waiters_ == 0)
@@ -206,10 +216,10 @@ AsyncListManager::list_i (CORBA::ULong start, CORBA::ULong how_many)
     }
 }
 
-
-void
-AsyncListManager::ping_replied (CORBA::ULong index, LiveStatus status)
+bool
+AsyncListManager::evaluate_status (CORBA::ULong index, LiveStatus status)
 {
+  bool is_final = true;
   switch (status)
     {
     case LS_ALIVE:
@@ -226,16 +236,26 @@ AsyncListManager::ping_replied (CORBA::ULong index, LiveStatus status)
         ImplementationRepository::ACTIVE_NO;
       break;
     default:
-      if (ImR_Locator_i::debug() > 4)
-        {
-          ORBSVCS_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%P|%t) AsyncListManager::ping_replied, index = %d ")
-                          ACE_TEXT ("status = %d\n")));
-        }
+      is_final = false;
+    }
+  return is_final;
+}
+
+void
+AsyncListManager::ping_replied (CORBA::ULong index, LiveStatus status)
+{
+  if (evaluate_status (index, status))
+    {
+      this->waiters_--;
+      this->final_state();
       return;
     }
-  this->waiters_--;
-  this->final_state();
+  if (ImR_Locator_i::debug() > 4)
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) AsyncListManager::ping_replied, index = %d ")
+                      ACE_TEXT ("status = %d\n")));
+    }
 }
 
 AsyncListManager *
@@ -272,7 +292,8 @@ ListLiveListener::ListLiveListener (const char *server,
    owner_ (owner->_add_ref ()),
    pinger_ (pinger),
    status_ (LS_UNKNOWN),
-   index_ (index)
+   index_ (index),
+   started_ (false)
 {
 }
 
@@ -284,7 +305,14 @@ bool
 ListLiveListener::start (void)
 {
   bool rtn = this->pinger_.add_poll_listener (this);
+  this->started_ = true;
   return rtn;
+}
+
+LiveStatus
+ListLiveListener::status (void)
+{
+  return this->status_;
 }
 
 bool
@@ -297,7 +325,8 @@ ListLiveListener::status_changed (LiveStatus status)
     }
   else
     {
-      this->owner_->ping_replied (this->index_, status);
+      if (this->started_)
+        this->owner_->ping_replied (this->index_, status);
     }
   return true;
 }
