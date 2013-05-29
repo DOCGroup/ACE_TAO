@@ -176,9 +176,9 @@ foreach my $test_lst (@file_list) {
 
         if (! $is_ace_test) {
             print "auto_run_tests: $test\n";
-            $ENV{COVERITY_TEST_NAME} = $test;
-            $ENV{COVERITY_SUITE_NAME} = $test_lst;
-            $ENV{COVERITY_TEST_SOURCE} = "$directory/$program";
+            #$ENV{COVERITY_TEST_NAME} = $test;
+            #$ENV{COVERITY_SUITE_NAME} = $test_lst;
+            #$ENV{COVERITY_TEST_SOURCE} = "$directory/$program";
         }
 
         my($orig_dir) = $directory;
