@@ -1,3 +1,17 @@
+Wed May 29 06:58:53 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-sunos5.7.h:
+          Fixed possible redefinition warning
+
+        * docs/ACE-development-process.html:
+          Extended bczar instructions, updated link
+
+        * tests/Compiler_Features_20_DLL.h:
+        * tests/Compiler_Features_20_DLL.cpp:
+        * tests/Compiler_Features_20_DLL_Export.h:
+        * tests/tests.mpc:
+          New C++11 compiler feature test
+
 Tue May 28 09:12:20 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/Download.html:
