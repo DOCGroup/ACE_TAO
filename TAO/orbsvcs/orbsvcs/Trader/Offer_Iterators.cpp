@@ -2,8 +2,6 @@
 
 #include "orbsvcs/Trader/Offer_Iterators.h"
 
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Offer_Iterator::TAO_Offer_Iterator (const TAO_Property_Filter& pfilter)
@@ -244,7 +242,7 @@ TAO_Offer_Id_Iterator::next_n (CORBA::ULong n,
   ACE_NEW_RETURN (_ids,
                   CosTrading::OfferIdSeq(returnable_items),
                   (items_left > 0));
-  _ids->length(returnable_items);                  
+  _ids->length(returnable_items);
 
   // Transfer OfferIds chunk.
   for (CORBA::ULong i = 0; i < returnable_items; i++)

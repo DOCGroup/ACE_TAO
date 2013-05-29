@@ -3,8 +3,6 @@
 #include "tao/Utils/ORB_Manager.h"
 #include "Offer_Importer.h"
 
-
-
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
@@ -19,13 +17,13 @@ int failure = 0;
                     "Test the trader's importer role, the options are:\n"
                     "-ORBInitRef <orb_options> E.g. '-ORBInitRef TradingService=file://trading.ior'\n"
                     "-quiet or -q              (optional) Run the tests in quiet mode, don't show the query and list results.\n"
-                    "-federate or -f           (optional) Perform federated trader tests.\n"   
-                    "-iorfile or -i            (optional) Get TradingService reference through IOR instead of resolve.\n"   
+                    "-federate or -f           (optional) Perform federated trader tests.\n"
+                    "-iorfile or -i            (optional) Get TradingService reference through IOR instead of resolve.\n"
                     "\n"
                     "This test needs the 'export_test' running so the trader has the right offers.\n"
                     "See also TAO/docs/releasenotes/trader.html.\n\n"
                     ) ));
-        return 1;           
+        return 1;
       };
       TAO_ORB_Manager orb_manager;
       orb_manager.init (argc, argv);
