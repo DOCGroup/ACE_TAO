@@ -234,45 +234,24 @@ CORBA::Boolean
 TAO_Offer_Id_Iterator::next_n (CORBA::ULong n,
                                CosTrading::OfferIdSeq_out _ids)
 {
-  // Calculate the number of Ids to be returned in this.
+  // Calculate the number of Ids to be returned.
   CORBA::ULong items_left = static_cast<CORBA::ULong> (this->ids_.size());
   int difference = items_left - n;
   CORBA::ULong returnable_items = (difference >= 0) ? n : items_left;
   CORBA::Boolean return_value = (CORBA::Boolean) (difference > 0);
 
-  if (returnable_items == 0)
-    ACE_NEW_RETURN (_ids,
-                    CosTrading::OfferIdSeq,
-                    return_value);
-  else
+  // Allocate result sequence.
+  ACE_NEW_RETURN (_ids,
+                  CosTrading::OfferIdSeq(returnable_items),
+                  (items_left > 0));
+  _ids->length(returnable_items);                  
+
+  // Transfer OfferIds chunk.
+  for (CORBA::ULong i = 0; i < returnable_items; i++)
     {
-      // Allocate space for the returned OfferIds.
-      CosTrading::OfferId* id_buf =
-        CosTrading::OfferIdSeq::allocbuf (returnable_items);
-
-      if (id_buf != 0)
-        {
-          // Copy in those ids!
-          for (CORBA::ULong i = 0; i < returnable_items; i++)
-            {
-              CosTrading::OfferId offer_id = 0;
-
-              this->ids_.dequeue_head (offer_id);
-              id_buf[i] = offer_id;
-            }
-
-          // Place them into an OfferIdSeq.
-          ACE_NEW_RETURN (_ids,
-                          CosTrading::OfferIdSeq (returnable_items,
-                                                  returnable_items,
-                                                  id_buf,
-                                                  1),
-                          return_value);
-        }
-      else
-        ACE_NEW_RETURN (_ids,
-                        CosTrading::OfferIdSeq,
-                        return_value);
+      CosTrading::OfferId offer_id = 0;
+      this->ids_.dequeue_head (offer_id);
+      (*_ids)[i] = offer_id;
     }
 
   // Return true only if there are items left to be returned in

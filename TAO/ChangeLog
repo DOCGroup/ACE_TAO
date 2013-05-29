@@ -1,3 +1,24 @@
+Wed May 29 07:00:03 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Trader/Constraint_Visitors.cpp:
+        * orbsvcs/orbsvcs/Trader/Offer_Iterators.cpp:
+        * orbsvcs/orbsvcs/Trader/Service_Type_Repository.cpp:
+        * orbsvcs/tests/Trading/Offer_Exporter.cpp:
+        * orbsvcs/tests/Trading/Offer_Importer.cpp:
+        * orbsvcs/tests/Trading/Service_Type_Exporter.h:
+        * orbsvcs/tests/Trading/Service_Type_Exporter.cpp:
+        * orbsvcs/tests/Trading/TT_Info.cpp:
+        * orbsvcs/tests/Trading/colocated_test.cpp:
+        * orbsvcs/tests/Trading/export_test.cpp:
+        * orbsvcs/tests/Trading/import_test.cpp:
+          Fixed several memory leaks in the trading service and
+          also extensions to the unit test. Thanks to Rudy Pot
+          <rpot at aweta dot nl> for delivering the patches. This
+          fixed bugzilla 4100
+
+        * tao/PortableServer/Operation_Table_Dynamic_Hash.h:
+          Doxygen fix
+
 Mon May 27 10:18:30 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * NEWS:

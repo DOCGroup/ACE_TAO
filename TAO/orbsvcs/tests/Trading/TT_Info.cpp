@@ -247,7 +247,7 @@ TT_Info::dump_properties (const CosTrading::PropertySeq& prop_seq,
                 }
               else if ((*value) >>= float_val)
                 {
-                  ACE_DEBUG ((LM_DEBUG, "%f\n", long_val));
+                  ACE_DEBUG ((LM_DEBUG, "%f\n", float_val));
                 }
               else if ((*value) >>= double_val)
                 {
