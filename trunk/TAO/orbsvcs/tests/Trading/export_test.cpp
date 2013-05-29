@@ -12,28 +12,36 @@
 const ACE_TCHAR *done_file = ACE_TEXT("export_test_ready");
 
 int
-parse_args_spec (int argc, ACE_TCHAR *argv[])
+parse_args_spec (int argc, ACE_TCHAR *argv[], int help)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("d:"));
-  int c;
-
-  while ((c = get_opts ()) != -1)
-    switch (c)
+  if (help!=0)
+  {
+    ACE_DEBUG ((LM_INFO,
+                ACE_TEXT("\nUsage: export_test <options>\n"
+                "Test the trader's exporter role, the options are:\n"
+                "-ORBInitRef <orb_options> E.g. '-ORBInitRef TradingService=iiop://localhost:8901/TradingService'\n"
+                "-quiet or -q              (optional) Run the tests in quiet mode, don't show the query and list results.\n"
+                "-federate or -f           (optional) Setup for federated trader tests.\n"   
+                "-iorfile or -i            (optional) Get TradingService reference through IOR instead of resolve.\n"   
+                "-d <done_file>            (optional) Filename for signalling that we are ready for serving dynamic properties (for import_test).\n"
+                "\n"
+                "This test needs an external TradingServer running, example:\n"
+                "   Trading_Service -ORBEndpoint iiop://:8901 -TSdumpior trading.ior\n"
+                "See also TAO/docs/releasenotes/trader.html.\n\n"
+                ) ));
+    return -1;           
+  }
+  else
+  {
+    ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("d:"));
+    for (int opt; (opt = get_opts()) != -1;)
+    {
+      if (opt == 'd')
       {
-      case 'd':
-          done_file = get_opts.opt_arg ();
-                  break;
-
-      case '?':
-      default:
-             ACE_ERROR_RETURN ((LM_ERROR,
-                                     "usage:  %s "
-                                     "-d <done_file> "
-                                     "\n",
-                                     argv [0]),
-                                    -1);
-
-      }
+        done_file = get_opts.opt_arg ();
+      };
+    };
+  };
   return 0;
 }
 
@@ -41,21 +49,25 @@ parse_args_spec (int argc, ACE_TCHAR *argv[])
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
+int failure = 0;
+
   try
     {
+      int help=(argc<=1);
+
       TAO_ORB_Manager orb_manager;
       orb_manager.init (argc, argv);
 
-      // Command line argument interpretation.
-      TT_Parse_Args parse_args (argc, argv);
+      // Command line argument parser for use with comlex pearl tests.
+      if (parse_args_spec (argc, argv, help) != 0)
+        return 1;
 
-      //Command line argument parser for
-      if (parse_args_spec (argc, argv) != 0)
-          return 1;
+      // Command line argument parser for the trading tests.
+      TT_Parse_Args parse_args (argc, argv);
 
       // Init the orb and bootstrap to the trading service.
       CORBA::ORB_var orb = orb_manager.orb ();
-      ACE_DEBUG ((LM_ERROR, "*** Bootstrap to the Lookup interface.\n"));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT("*** Bootstrap to the Lookup interface.\n")));
 
       char* ior = parse_args.ior ();
       CORBA::Object_var trading_obj = (ior == 0) ?
@@ -64,18 +76,17 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       if (CORBA::is_nil (trading_obj.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to bootstrap to the Trading Service.\n"),
-                           -1);
+                           ACE_TEXT("ERROR, Unable to bootstrap to the Trading Service!\n")),
+                           1);
 
       // Narrow the lookup interface.
-      ACE_DEBUG ((LM_DEBUG, "*** Narrowing the lookup interface.\n"));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT("*** Narrowing the lookup interface.\n")));
       CosTrading::Lookup_var lookup_if =
         CosTrading::Lookup::_narrow (trading_obj.in ());
 
-      // Run the Service Type Exporter tests
-      ACE_DEBUG ((LM_DEBUG, "*** Running the Service Type Exporter tests.\n"));
-      TAO_Service_Type_Exporter type_exporter (lookup_if.in (),
-                                               ! parse_args.quiet ());
+      // Run the Service Type Exporter tests.
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT("*** Running the Service Type Exporter tests.\n")));
+      TAO_Service_Type_Exporter type_exporter (lookup_if.in (), ! parse_args.quiet ());
 
       type_exporter.remove_all_types ();
 
@@ -95,11 +106,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       type_exporter.describe_all_types ();
 
       type_exporter.fully_describe_all_types ();
+                                        
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT("*** Service Type Exporter tests complete.\n")));
 
-      ACE_DEBUG ((LM_DEBUG, "*** Service Type Exporter tests complete.\n"));
-
-      // Run the Offer Exporter tests
-      ACE_DEBUG ((LM_DEBUG, "*** Running the Offer Exporter tests.\n"));
+      // Run the Offer Exporter tests.
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT("*** Running the Offer Exporter tests.\n")));
       TAO_Offer_Exporter offer_exporter (lookup_if.in (), ! parse_args.quiet ());
 
       // = Test series.
@@ -129,9 +140,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       offer_exporter.describe_offers ();
 
-      ACE_DEBUG ((LM_DEBUG, "*** Offer Exporter tests complete.\n"));
-      ACE_DEBUG ((LM_DEBUG, "*** Now serving dynamic properties.\n"));
-
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT("*** Offer Exporter tests complete.\n")));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT("*** Now serving dynamic properties.\n")));
+      
+      // Next file can flag other external apps that we now arrived at serving
+      // dynamic properties.
       size_t offset = 0;
       ACE_TCHAR file[1024];
       ACE_OS::strcpy(file, argv[0]);
@@ -147,15 +160,16 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         ACE_OS::fclose (ready_file);
       }
       else {
-        ACE_DEBUG ((LM_WARNING, "Unable to open %s for output.\n", file));
+        ACE_DEBUG ((LM_WARNING, ACE_TEXT("Unable to open %s for output.\n"), file));
       }
 
       orb_manager.run ();
     }
-  catch (const CORBA::Exception&)
+  catch (const CORBA::Exception& e)
     {
-      ACE_ERROR_RETURN ((LM_ERROR, "Trader Export Tests Failed\n"), -1);
+      e._tao_print_exception ("Trader export test ERROR!");
+      failure = 1;
     }
 
-  return 0;
+  return failure;
 }

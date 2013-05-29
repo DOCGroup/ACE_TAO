@@ -753,8 +753,8 @@ operator () (TAO_DynSequence_i& dyn_any,
   int return_value = 0;
   try
     {
-      const char* value = dyn_any.get_string ();
-      return_value = (ACE_OS::strcmp (value, element) == 0);
+      CORBA::String_var value = dyn_any.get_string ();
+      return_value = (ACE_OS::strcmp (value.in(), element) == 0);
     }
   catch (const CORBA::Exception&){}
   return return_value;
