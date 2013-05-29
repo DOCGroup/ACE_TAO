@@ -1,3 +1,14 @@
+Wed May 29 13:44:23 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Bounded_Basic_String_Sequence_T.h:
+        * tao/Bounded_Object_Reference_Sequence_T.h:
+        * tao/Bounded_Value_Sequence_T.h:
+        * tao/Unbounded_Basic_String_Sequence_T.h:
+        * tao/Unbounded_Object_Reference_Sequence_T.h:
+          Doxygen doesn't support copydoc with templates, maybe in
+          the future, so just made them general C++ comments so that
+          we easily could add this in the future
+
 Wed May 29 07:00:03 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Trader/Constraint_Visitors.cpp:
