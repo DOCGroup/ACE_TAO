@@ -319,12 +319,14 @@ TAO_Offer_Exporter::grab_offerids (void)
                                        offer_id_seq_remaining.out());
 
               // Grow our result sequence with the remaining fragments.
-              int offers = offer_id_seq_remaining->length ();
-              int old_length = offer_id_seq_result->length ();
+              CORBA::ULong offers = offer_id_seq_remaining->length ();
+              CORBA::ULong old_length = offer_id_seq_result->length ();
               offer_id_seq_result->length (old_length + offers);
 
-              for (int i = 0; i < offers; i++)
-                offer_id_seq_result[i + old_length] = offer_id_seq_remaining[i];
+              for (CORBA::ULong i = 0; i < offers; i++)
+                {
+                  offer_id_seq_result[i + old_length] = CORBA::string_dup (offer_id_seq_remaining[i].in ());
+                }
 
             }
           while (any_left);
@@ -335,7 +337,7 @@ TAO_Offer_Exporter::grab_offerids (void)
       if (this->verbose_)
         {
           ACE_DEBUG ((LM_DEBUG, "The following offer ids are registered:\n"));
-          for (unsigned int i=0; i<offer_id_seq_result->length(); i++)
+          for (CORBA::ULong i=0; i<offer_id_seq_result->length(); i++)
             ACE_DEBUG ((LM_DEBUG, "Offer Id: %C\n", offer_id_seq_result[i].in()));
         }
     }
