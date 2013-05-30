@@ -17,7 +17,7 @@ parse_args_spec (int argc, ACE_TCHAR *argv[], int help)
   if (help!=0)
   {
     ACE_DEBUG ((LM_INFO,
-                ACE_TEXT("\nUsage: export_test <options>\n"
+                "\nUsage: export_test <options>\n"
                 "Test the trader's exporter role, the options are:\n"
                 "-ORBInitRef <orb_options> E.g. '-ORBInitRef TradingService=iiop://localhost:8901/TradingService'\n"
                 "-quiet or -q              (optional) Run the tests in quiet mode, don't show the query and list results.\n"
@@ -27,8 +27,7 @@ parse_args_spec (int argc, ACE_TCHAR *argv[], int help)
                 "\n"
                 "This test needs an external TradingServer running, example:\n"
                 "   Trading_Service -ORBEndpoint iiop://:8901 -TSdumpior trading.ior\n"
-                "See also TAO/docs/releasenotes/trader.html.\n\n"
-                ) ));
+                "See also TAO/docs/releasenotes/trader.html.\n\n"));
     return -1;
   }
   else

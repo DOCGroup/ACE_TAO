@@ -25,7 +25,7 @@ parse_args (int argc, ACE_TCHAR *argv[],
 
       case 'h':
       ACE_DEBUG ((LM_INFO,
-                  ACE_TEXT("\nUsage: colocated_test <options>\n"
+                  "\nUsage: colocated_test <options>\n"
                   "Test both the trader's exporter and importer roles.\n"
                   "The options are:\n"
                   "-quiet or -q   (optional) Run the tests in quiet mode, don't show the query and\n"
@@ -37,8 +37,7 @@ parse_args (int argc, ACE_TCHAR *argv[],
                   "then use the other tests:\n"
                   " - 'export_test' (needs running 'Trading_Service')\n"
                   " - 'import_test'\n"
-                  "See also TAO/docs/releasenotes/trader.html.\n\n"
-                  ) ));
+                  "See also TAO/docs/releasenotes/trader.html.\n\n"));
         return -1;
     }
   }
