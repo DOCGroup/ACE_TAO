@@ -13,7 +13,7 @@ int failure = 0;
       if (argc<=1)
       {
         ACE_DEBUG ((LM_INFO,
-                    ACE_TEXT("\nUsage: import_test <options>\n"
+                    "\nUsage: import_test <options>\n"
                     "Test the trader's importer role, the options are:\n"
                     "-ORBInitRef <orb_options> E.g. '-ORBInitRef TradingService=file://trading.ior'\n"
                     "-quiet or -q              (optional) Run the tests in quiet mode, don't show the query and list results.\n"
@@ -21,8 +21,7 @@ int failure = 0;
                     "-iorfile or -i            (optional) Get TradingService reference through IOR instead of resolve.\n"
                     "\n"
                     "This test needs the 'export_test' running so the trader has the right offers.\n"
-                    "See also TAO/docs/releasenotes/trader.html.\n\n"
-                    ) ));
+                    "See also TAO/docs/releasenotes/trader.html.\n\n"));
         return 1;
       };
       TAO_ORB_Manager orb_manager;
