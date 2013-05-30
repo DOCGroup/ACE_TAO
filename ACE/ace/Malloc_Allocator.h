@@ -44,8 +44,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * This class uses the new/delete operators to allocate and free up
  * memory.  Please note that the only methods that are supported are
- * <malloc>, <calloc>, and <free>. All other methods are no-ops that
- * return -1 and set @c errno to <ENOTSUP>.  If you require this
+ * malloc(), calloc(), and free(). All other methods are no-ops that
+ * return -1 and set @c errno to @c ENOTSUP.  If you require this
  * functionality, please use: ACE_Allocator_Adapter <ACE_Malloc
  * <ACE_LOCAL_MEMORY_POOL, MUTEX> >, which will allow you to use the
  * added functionality of bind/find/etc. while using the new/delete
@@ -88,11 +88,11 @@ private:
  * @brief Defines a class that provided a highly optimized memory
  * management scheme for allocating memory statically.
  *
- * This class manages a fixed-size <POOL_SIZE> of memory.  Every
- * time <malloc>/<calloc> is called, it simply moves an internal
+ * This class manages a fixed-size @c POOL_SIZE of memory.  Every
+ * time malloc()/calloc() is called, it simply moves an internal
  * index forward and returns a pointer to the requested chunk.
  * All memory is allocated statically (typically via the
- * ACE_Static_Allocator template) and <free> is a no-op.  This
+ * ACE_Static_Allocator template) and free() is a no-op.  This
  * behavior is useful for use-cases where all the memory
  * allocation needs are known in advance and no deletions ever
  * occur.
