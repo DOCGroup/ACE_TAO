@@ -1716,8 +1716,6 @@ run_test (::Components::Events_ptr source,
       ++ret;
     }
   return ret;
-
-  return ret;
 }
 
 int

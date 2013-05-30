@@ -1,3 +1,8 @@
+Thu May 30 15:31:48 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/CIF/Events/client.cpp:
+          Removed dead code
+
 Mon May 27 10:18:33 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * NEWS:
