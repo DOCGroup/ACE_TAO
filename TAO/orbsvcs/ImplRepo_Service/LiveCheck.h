@@ -92,7 +92,6 @@ class Locator_Export LiveListener
 
  protected:
   ACE_CString server_;
-  const LiveEntry *entry_;
 
  private:
   int refcount_;
