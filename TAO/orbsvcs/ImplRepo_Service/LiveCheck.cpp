@@ -11,9 +11,9 @@
 #include "ace/High_Res_Timer.h"
 
 LiveListener::LiveListener (const char *server)
-  : server_(server),
-    refcount_(1),
-    lock_()
+  : server_ (server),
+    refcount_ (1),
+    lock_ ()
 {
 }
 
