@@ -1,3 +1,12 @@
+Thu May 30 18:50:44 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Malloc_Allocator.h:
+        * ace/Shared_Memory_Pool.h:
+          Doxygen changes
+
+        * ace/Shared_Memory_Pool.cpp:
+          Fixed Coverity 300041 Dereference after null check
+
 Wed May 29 03:35:59 UTC 2013  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/Connector.h: Used reinterpret_cast<const

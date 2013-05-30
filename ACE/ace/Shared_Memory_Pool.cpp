@@ -144,37 +144,39 @@ ACE_Shared_Memory_Pool::commit_backing_store_name (size_t rounded_bytes,
   return 0;
 }
 
-// Handle SIGSEGV and SIGBUS signals to remap shared memory properly.
-
+/// Handle SIGSEGV and SIGBUS signals to remap shared memory properly.
 int
-ACE_Shared_Memory_Pool::handle_signal (int , siginfo_t *siginfo, ucontext_t *)
+ACE_Shared_Memory_Pool::handle_signal (int, siginfo_t *siginfo, ucontext_t *)
 {
   ACE_TRACE ("ACE_Shared_Memory_Pool::handle_signal");
-  // ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("signal %S occurred\n"), signum));
 
   // While FreeBSD 5.X has a siginfo_t struct with a si_addr field,
   // it does not define SEGV_MAPERR.
 #if defined (ACE_HAS_SIGINFO_T) && !defined (ACE_LACKS_SI_ADDR) && \
         (defined (SEGV_MAPERR) || defined (SEGV_MEMERR))
+  if (siginfo == 0)
+    return -1;
+
   ACE_OFF_T offset;
+
   // Make sure that the pointer causing the problem is within the
   // range of the backing store.
-
-  if (siginfo != 0)
+  // ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%P|%t) si_signo = %d, si_code = %d, addr = %u\n"), siginfo->si_signo, siginfo->si_code, siginfo->si_addr));
+  size_t counter = 0;
+  if (this->in_use (offset, counter) == -1)
     {
-      // ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%P|%t) si_signo = %d, si_code = %d, addr = %u\n"), siginfo->si_signo, siginfo->si_code, siginfo->si_addr));
-      size_t counter;
-      if (this->in_use (offset, counter) == -1)
-        ACELIB_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) %p\n"),
-                    ACE_TEXT ("in_use")));
-      else if (!(siginfo->si_code == SEGV_MAPERR
-           && siginfo->si_addr < (((char *) this->base_addr_) + offset)
-           && siginfo->si_addr >= ((char *) this->base_addr_)))
-        ACELIB_ERROR_RETURN ((LM_ERROR,
-                           "(%P|%t) address %u out of range\n",
-                           siginfo->si_addr),
-                          -1);
+      ACELIB_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) %p\n"),
+                  ACE_TEXT ("in_use")));
+    }
+  else if (!(siginfo->si_code == SEGV_MAPERR
+        && siginfo->si_addr < (((char *) this->base_addr_) + offset)
+        && siginfo->si_addr >= ((char *) this->base_addr_)))
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                          "(%P|%t) address %u out of range\n",
+                          siginfo->si_addr),
+                        -1);
     }
 
   // The above if case will check to see that the address is in the
@@ -182,8 +184,7 @@ ACE_Shared_Memory_Pool::handle_signal (int , siginfo_t *siginfo, ucontext_t *)
   // pointer wants to point into.  Find the segment that someone else
   // has used and attach to it (flabar@vais.net)
 
-  size_t counter; // ret value to get shmid from the st table.
-
+  counter = 0; // ret value to get shmid from the st table.
   if (this->find_seg (siginfo->si_addr, offset, counter) == -1)
       ACELIB_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("(%P|%t) %p\n"),
