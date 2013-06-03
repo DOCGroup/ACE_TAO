@@ -1005,9 +1005,21 @@ ImR_Locator_i::server_is_running
 
       AsyncAccessManager_ptr aam(this->find_aam (name.c_str()));
       if (!aam.is_nil())
-        aam->server_is_running (partial_ior, s.in());
+        {
+          if (ImR_Locator_i::debug () > 4)
+            {
+              ORBSVCS_DEBUG ((LM_DEBUG,
+                              ACE_TEXT ("(%P|%t) ImR_Locator_i::send_start_request aam is not nil\n")));
+            }
+          aam->server_is_running (partial_ior, s.in());
+        }
       else
         {
+          if (ImR_Locator_i::debug () > 4)
+            {
+              ORBSVCS_DEBUG ((LM_DEBUG,
+                              ACE_TEXT ("(%P|%t) ImR_Locator_i::send_start_request aam is nil\n")));
+            }
           if (info->activation_mode != ImplementationRepository::PER_CLIENT)
             {
               AsyncAccessManager *aam_raw;

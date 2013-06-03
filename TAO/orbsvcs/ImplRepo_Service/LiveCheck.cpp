@@ -123,12 +123,33 @@ LiveEntry::LiveEntry (LiveCheck *owner,
     max_retry_ (LiveEntry::reping_limit_),
     may_ping_ (may_ping),
     listeners_ (),
-    lock_ ()
+    lock_ (),
+    callback_ (0)
 {
+  if (ImR_Locator_i::debug () > 4)
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) LiveEntry::ctor server = %s, may_ping = %d\n"),
+                      server, may_ping));
+    }
 }
 
 LiveEntry::~LiveEntry (void)
 {
+  if (this->callback_.in () != 0)
+    {
+      PingReceiver *rec = dynamic_cast<PingReceiver *>(this->callback_.in());
+      if (rec != 0)
+        {
+          rec->cancel ();
+        }
+    }
+}
+
+void
+LiveEntry::release_callback (void)
+{
+  this->callback_ = 0;
 }
 
 void
@@ -248,6 +269,12 @@ LiveEntry::next_check (void) const
   return this->next_check_;
 }
 
+const char *
+LiveEntry::server_name (void) const
+{
+  return this->server_.c_str();
+}
+
 bool
 LiveEntry::validate_ping (bool &want_reping, ACE_Time_Value& next)
 {
@@ -352,8 +379,8 @@ LiveEntry::validate_ping (bool &want_reping, ACE_Time_Value& next)
 void
 LiveEntry::do_ping (PortableServer::POA_ptr poa)
 {
-  PortableServer::ServantBase_var callback = new PingReceiver (this, poa);
-  PortableServer::ObjectId_var oid = poa->activate_object (callback.in());
+  this->callback_ = new PingReceiver (this, poa);
+  PortableServer::ObjectId_var oid = poa->activate_object (this->callback_.in());
   CORBA::Object_var obj = poa->id_to_reference (oid.in());
   ImplementationRepository::AMI_ServerObjectHandler_var cb =
     ImplementationRepository::AMI_ServerObjectHandler::_narrow (obj.in());
@@ -397,9 +424,32 @@ PingReceiver::~PingReceiver (void)
 }
 
 void
+PingReceiver::cancel (void)
+{
+  if (ImR_Locator_i::debug () > 4)
+    {
+      const char *server = "<not available>";
+      if (this->entry_ != 0)
+        {
+          server = this->entry_->server_name ();
+        }
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) PingReceiver::cancel server = %s\n"),
+                      server));
+    }
+
+  this->entry_ = 0;
+  PortableServer::ObjectId_var oid = this->poa_->servant_to_id (this);
+  poa_->deactivate_object (oid.in());
+}
+
+void
 PingReceiver::ping (void)
 {
-  this->entry_->status (LS_ALIVE);
+  if (this->entry_ != 0)
+    {
+      this->entry_->status (LS_ALIVE);
+    }
   PortableServer::ObjectId_var oid = this->poa_->servant_to_id (this);
   poa_->deactivate_object (oid.in());
 }
@@ -419,22 +469,34 @@ PingReceiver::ping_excep (Messaging::ExceptionHolder * excep_holder)
         case TAO_POA_DISCARDING:
         case TAO_POA_HOLDING:
           {
-            this->entry_->status (LS_TRANSIENT);
+            if (this->entry_ != 0)
+              {
+                this->entry_->status (LS_TRANSIENT);
+              }
             break;
           }
         default: //case TAO_INVOCATION_SEND_REQUEST_MINOR_CODE:
           {
-            this->entry_->status (LS_DEAD);
+            if (this->entry_ != 0)
+              {
+                this->entry_->status (LS_DEAD);
+              }
           }
         }
     }
   catch (CORBA::TIMEOUT &)
     {
-      this->entry_->status (LS_TIMEDOUT);
+      if (this->entry_ != 0)
+        {
+          this->entry_->status (LS_TIMEDOUT);
+        }
     }
   catch (CORBA::Exception &)
     {
-      this->entry_->status (LS_DEAD);
+      if (this->entry_ != 0)
+        {
+          this->entry_->status (LS_DEAD);
+        }
     }
 
   PortableServer::ObjectId_var oid = this->poa_->servant_to_id (this);

@@ -1,3 +1,40 @@
+Mon Jun  3 21:16:43 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * bin/tao_other_tests.lst:
+
+          Add new test to suite.
+
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+
+          Add more high-verbosity logging output.
+
+        * orbsvcs/ImplRepo_Service/LiveCheck.h:
+        * orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+
+          Add code to guard against server termination while waiting
+          for a ping response. This can happen if the target POA gets
+          shutdown while another thread was handling a ping request from
+          the IMR. If the POA's server_is_shutting_down call gets back
+          to the ImR before the ping reply. The ImR was not properly
+          cleaning up the callback object, this would lead to a call
+          to a deleted object triggering the crash.
+
+        * orbsvcs/tests/ImplRepo/ping_interrupt/README:
+        * orbsvcs/tests/ImplRepo/ping_interrupt/Server_ORBInitializer.h:
+        * orbsvcs/tests/ImplRepo/ping_interrupt/Server_ORBInitializer.cpp:
+        * orbsvcs/tests/ImplRepo/ping_interrupt/Test.idl:
+        * orbsvcs/tests/ImplRepo/ping_interrupt/Test_i.h:
+        * orbsvcs/tests/ImplRepo/ping_interrupt/Test_i.cpp:
+        * orbsvcs/tests/ImplRepo/ping_interrupt/ping_interrupt.mpc:
+        * orbsvcs/tests/ImplRepo/ping_interrupt/run_test.pl:
+        * orbsvcs/tests/ImplRepo/ping_interrupt/server.cpp:
+        * orbsvcs/tests/ImplRepo/ping_interrupt/server_interceptor.h:
+        * orbsvcs/tests/ImplRepo/ping_interrupt/server_interceptor.cpp:
+
+          Added a test to simulate the above by using a server interceptor
+          to trigger the POA shutdown before sending the ping result.
+
 Thu May 30 18:52:55 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Trading/colocated_test.cpp:
