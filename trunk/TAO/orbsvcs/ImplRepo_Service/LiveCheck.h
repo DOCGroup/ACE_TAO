@@ -27,6 +27,7 @@
 
 class LiveCheck;
 class LiveEntry;
+class PingReceiver;
 
 //---------------------------------------------------------------------------
 /*
@@ -120,6 +121,7 @@ class Locator_Export LiveEntry
              ImplementationRepository::ServerObject_ptr ref);
   ~LiveEntry (void);
 
+  void release_callback (void);
   void add_listener (LiveListener *ll);
   LiveStatus status (void) const;
   void status (LiveStatus l);
@@ -136,6 +138,7 @@ class Locator_Export LiveEntry
   bool reping_available (void);
   int next_reping (void);
   void max_retry_msec (int max);
+  const char *server_name (void) const;
 
  private:
   LiveCheck *owner_;
@@ -150,6 +153,8 @@ class Locator_Export LiveEntry
   typedef ACE_Unbounded_Set<LiveListener_ptr> Listen_Set;
   Listen_Set listeners_;
   TAO_SYNCH_MUTEX lock_;
+  PortableServer::ServantBase_var callback_;
+
   static const int reping_msec_ [];
   static int reping_limit_;
 
@@ -170,6 +175,10 @@ class Locator_Export PingReceiver :
  public:
   PingReceiver (LiveEntry * entry, PortableServer::POA_ptr poa);
   virtual ~PingReceiver (void);
+
+  /// Called by the entry if it is no longer interested in the result of
+  /// a ping.
+  void cancel (void);
 
   /// Called when an anticipated ping reply is received
   void ping (void);
