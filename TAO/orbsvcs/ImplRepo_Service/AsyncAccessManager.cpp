@@ -23,6 +23,13 @@ AsyncAccessManager::AsyncAccessManager (const Server_Info &info,
    lock_()
 {
   this->info_ = new Server_Info (info);
+  if (ImR_Locator_i::debug () > 4)
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) AsyncAccessManager::ctor server = %s\n"),
+                      this->info_->name.c_str()));
+    }
+
 }
 
 AsyncAccessManager::~AsyncAccessManager (void)
@@ -50,6 +57,12 @@ AsyncAccessManager::add_interest (ImR_ResponseHandler *rh)
     ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
     this->rh_list_.push_back (rh);
   }
+  if (ImR_Locator_i::debug () > 4)
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) AsyncAccessManager::add_interest\n")));
+    }
+
 
   if (this->info_->activation_mode == ImplementationRepository::PER_CLIENT)
     {
@@ -189,6 +202,12 @@ void
 AsyncAccessManager::server_is_running (const char *partial_ior,
                                        ImplementationRepository::ServerObject_ptr ref)
 {
+  if (ImR_Locator_i::debug () > 4)
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) AsyncAccessManager::server_is_running\n")));
+    }
+
   this->status (AAM_WAIT_FOR_ALIVE);
   this->info_->partial_ior = partial_ior;
   this->info_->server = ImplementationRepository::ServerObject::_duplicate (ref);
@@ -238,6 +257,13 @@ AsyncAccessManager::notify_child_death (void)
 void
 AsyncAccessManager::ping_replied (LiveStatus server)
 {
+  if (ImR_Locator_i::debug () > 4)
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) AsyncAccessManager::ping_replied %s\n"),
+                      LiveEntry::status_name (server)));
+    }
+
   switch (server)
     {
     case LS_ALIVE:
@@ -269,6 +295,12 @@ AsyncAccessManager::ping_replied (LiveStatus server)
 bool
 AsyncAccessManager::send_start_request (void)
 {
+  if (ImR_Locator_i::debug () > 4)
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) AsyncAccessManager::send_start_request\n")));
+    }
+
   if (this->info_->activation_mode == ImplementationRepository::MANUAL &&
       !this->manual_start_)
     {
