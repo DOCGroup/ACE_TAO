@@ -1,3 +1,9 @@
+Tue Jun  4 19:30:32 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+
+          Clean up an error at shutdown time.
+
 Mon Jun  3 21:16:43 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * bin/tao_other_tests.lst:
