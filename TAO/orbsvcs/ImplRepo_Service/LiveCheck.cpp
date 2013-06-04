@@ -439,8 +439,20 @@ PingReceiver::cancel (void)
     }
 
   this->entry_ = 0;
-  PortableServer::ObjectId_var oid = this->poa_->servant_to_id (this);
-  poa_->deactivate_object (oid.in());
+  try
+    {
+      PortableServer::ObjectId_var oid = this->poa_->servant_to_id (this);
+      poa_->deactivate_object (oid.in());
+    }
+  catch (CORBA::Exception &ex)
+    {
+      if (ImR_Locator_i::debug () > 4)
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%P|%t) PingReceiver::cancel caught %C\n"),
+                          ex._name ()));
+        }
+    }
 }
 
 void
@@ -449,6 +461,7 @@ PingReceiver::ping (void)
   if (this->entry_ != 0)
     {
       this->entry_->status (LS_ALIVE);
+      this->entry_->release_callback ();
     }
   PortableServer::ObjectId_var oid = this->poa_->servant_to_id (this);
   poa_->deactivate_object (oid.in());
@@ -472,7 +485,8 @@ PingReceiver::ping_excep (Messaging::ExceptionHolder * excep_holder)
             if (this->entry_ != 0)
               {
                 this->entry_->status (LS_TRANSIENT);
-              }
+                this->entry_->release_callback ();
+             }
             break;
           }
         default: //case TAO_INVOCATION_SEND_REQUEST_MINOR_CODE:
@@ -480,7 +494,8 @@ PingReceiver::ping_excep (Messaging::ExceptionHolder * excep_holder)
             if (this->entry_ != 0)
               {
                 this->entry_->status (LS_DEAD);
-              }
+                this->entry_->release_callback ();
+             }
           }
         }
     }
@@ -489,6 +504,7 @@ PingReceiver::ping_excep (Messaging::ExceptionHolder * excep_holder)
       if (this->entry_ != 0)
         {
           this->entry_->status (LS_TIMEDOUT);
+          this->entry_->release_callback ();
         }
     }
   catch (CORBA::Exception &)
@@ -496,6 +512,7 @@ PingReceiver::ping_excep (Messaging::ExceptionHolder * excep_holder)
       if (this->entry_ != 0)
         {
           this->entry_->status (LS_DEAD);
+          this->entry_->release_callback ();
         }
     }
 
