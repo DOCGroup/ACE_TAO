@@ -27,6 +27,7 @@
 #include "ace/FlReactor/FlReactor.h"
 #include "ace/Event_Handler.h"
 #include "ace/Acceptor.h"
+#include "ace/Argv_Type_Converter.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/Service_Config.h"
@@ -177,7 +178,8 @@ Connection_Handler::open (void*)
       from.addr_to_string (buf, bufsiz, 0);
 
       static char msg[256];
-      ACE_OS::sprintf (msg, "connection from <%s>\n", buf);
+      ACE_OS::sprintf (msg, "connection from <%s>\n",
+                       ACE_TEXT_ALWAYS_CHAR (buf));
 
       this->box_->label (msg);
       this->box_->redraw ();
@@ -259,13 +261,17 @@ int run_main (int argc, ACE_TCHAR *argv[])
   address.addr_to_string (buf, bufsiz, 0);
 
   char msg[2 * bufsiz];
-  ACE_OS::sprintf (msg, "Listening on <%s>\n", buf);
+  ACE_OS::sprintf (msg, "Listening on <%s>\n",
+                   ACE_TEXT_ALWAYS_CHAR (buf));
 
   box->label (msg);
   box->redraw ();
 
   window.end ();
-  window.show (argc, argv);
+
+  ACE_Argv_Type_Converter ct (argc, argv);
+
+  window.show (argc, ct.get_ASCII_argv ());
   tw.show ();
 
   int const retval = Fl::run ();
