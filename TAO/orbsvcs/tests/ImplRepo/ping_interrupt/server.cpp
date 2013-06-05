@@ -66,15 +66,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       for (int i = 1; i < argc; i++)
         {
           ACE_TCHAR *c = argv[i];
-          if (ACE_OS::strcasecmp ("-n", c) == 0)
+          if (ACE_OS::strcasecmp (ACE_TEXT ("-n"), c) == 0)
             {
               server_num = ACE_OS::atoi (argv[++i]);
             }
-          else if (ACE_OS::strcasecmp ("-?",c) == 0)
+          else if (ACE_OS::strcasecmp (ACE_TEXT ("-?"),c) == 0)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "usage: %s "
-                          "-n Number of the server\n",
+                          ACE_TEXT ("usage: %C ")
+                          ACE_TEXT ("-n Number of the server\n"),
                           argv[0]));
               return 1;
             }

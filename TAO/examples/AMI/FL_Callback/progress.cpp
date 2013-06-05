@@ -73,7 +73,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       window.end ();
 
-      char* targv[] = { argv[0] };
+      char* targv[] = { ACE_TEXT_ALWAYS_CHAR (argv[0]) };
       window.show (1, targv);
 
       sw.show ();
