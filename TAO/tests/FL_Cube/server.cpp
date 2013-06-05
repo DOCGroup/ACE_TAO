@@ -54,7 +54,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      char* targv[] = { argv[0] };
+      char* targv[] = { ACE_TEXT_ALWAYS_CHAR (argv[0]) };
       window.show (1, targv);
 
       sw.show ();

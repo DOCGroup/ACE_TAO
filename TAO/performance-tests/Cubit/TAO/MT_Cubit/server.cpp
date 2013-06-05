@@ -21,6 +21,7 @@
 #endif /* ACE_VXWORKS && !__RTP__ */
 
 #include "server.h"
+#include "ace/OS_NS_string.h"
 #include "ace/Sched_Params.h"
 #include "tao/Strategies/advanced_resource.h"
 
@@ -171,17 +172,17 @@ Server::write_iors (void)
 int
 Server::activate_high_servant (void)
 {
-  char orbendpoint[BUFSIZ];
+  ACE_TCHAR orbendpoint[BUFSIZ];
 
-  ACE_OS::sprintf (orbendpoint,
-                   "-ORBEndpoint %s ",
-                   ACE_TEXT_ALWAYS_CHAR (GLOBALS::instance ()->endpoint));
+  ACE_OS::strcpy (orbendpoint, ACE_TEXT ("-ORBEndpoint "));
+  ACE_OS::strcat (orbendpoint, GLOBALS::instance ()->endpoint);
 
-  char *high_second_argv[] =
-    {orbendpoint,
-     const_cast<char *> ("-ORBSndSock 32768 "),
-     const_cast<char *> ("-ORBRcvSock 32768 "),
-     0};
+  ACE_TCHAR *high_second_argv[] =
+    { orbendpoint,
+      const_cast<ACE_TCHAR *> (ACE_TEXT ("-ORBSndSock 32768 ")),
+      const_cast<ACE_TCHAR *> (ACE_TEXT ("-ORBRcvSock 32768 ")),
+      ACE_TEXT (0)
+    };
   ACE_NEW_RETURN (this->high_argv_,
                   ACE_ARGV (this->argv_, high_second_argv),
                   -1);
