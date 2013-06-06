@@ -1,3 +1,15 @@
+Thu Jun  6 17:02:06 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * include/makeinclude/rules.lib.GNU:
+
+          The rule for generating versioned_so=2 style libraries would create
+          names such as "-6.2.0.so" in cases where the SHLIB was reset to empty,
+          for instance if a precondition isn't met. As an example, ACE_TkReactor
+          should skip the build if macro tk=1 isn't set. but with versioned_so=2
+          the VSHLIB target was non-empty so the build was attempted. Now the
+          VSHLIB and related targets are modified only if the source libname
+          is not empty.
+
 Wed Jun  5 20:09:59 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/FlReactor_Test.cpp:
