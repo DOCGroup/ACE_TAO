@@ -34,79 +34,73 @@
 class TAO_Trading_Serv_Export TAO_Trading_Loader : public TAO_Object_Loader
 {
 public:
-
+  /// Constructor
   TAO_Trading_Loader (void);
-  // Constructor
 
+  /// Destructor
   ~TAO_Trading_Loader (void);
-  // Destructor
 
+  /// Called by the Service Configurator framework to initialize the
+  /// Event Service. Defined in <ace/Service_Config.h>
   virtual int init (int argc, ACE_TCHAR *argv[]);
-  // Called by the Service Configurator framework to initialize the
-  // Event Service. Defined in <ace/Service_Config.h>
 
+  /// Called by the Service Configurator framework to remove the
+  /// Event Service. Defined in <ace/Service_Config.h>
   virtual int fini (void);
-  // Called by the Service Configurator framework to remove the
-  // Event Service. Defined in <ace/Service_Config.h>
 
+  /// Run the Trading Service
   int run (void);
-  // Run the Trading Service
 
+  /// This function call initializes the Trading Service given a reference to the
+  /// ORB and the command line parameters.
   CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
                                    int argc,
                                    ACE_TCHAR *argv[]);
-  // This function call initializes the Trading Service given a reference to the
-  // ORB and the command line parameters.
 
 protected:
 
+  /// Enable the Trading Service to answer multicast requests for its
+  /// IOR.
   int init_multicast_server (void);
-  // Enable the Trading Service to answer multicast requests for its
-  // IOR.
 
+  /// Bootstrap to another trader, and attach to its trader network.
   int bootstrap_to_federation (void);
-  // Bootstrap to another trader, and attach to its trader network.
 
+  /// Parses the command line arguments
   int parse_args (int &argc, ACE_TCHAR *argv []);
-  // Parses the command line arguments
 
+  /// The ORB manager.
   TAO_ORB_Manager orb_manager_;
-  // The ORB manager.
 
+  /// Pointer to the linked trader.
   auto_ptr<TAO_Trader_Factory::TAO_TRADER> trader_;
-  // Pointer to the linked trader.
 
+  /// Service Type Repository used by the trading service.
   TAO_Service_Type_Repository type_repos_;
-  // Service Type Repository used by the trading service.
 
+  /// IOR of the trader kept around for handiness purposes.
   CORBA::String_var ior_;
-  // IOR of the trader kept around for handiness purposes.
 
+  /// Flag indicating whether this trader should join the federation.
   CORBA::Boolean federate_;
-  // Flag indicating whether this trader should join the federation.
 
+  /// File to output the Naming Service IOR.
   FILE *ior_output_file_;
-  // File to output the Naming Service IOR.
 
+  /// Name of this trading service: "hostname:pid".
   CORBA::String_var name_;
-  // Name of this trading service: "hostname:pid".
 
+  /// Event handler that responds to resolve_initial_references
+  /// requests.
   TAO_IOR_Multicast ior_multicast_;
-  // Event handler that responds to resolve_initial_references
-  // requests.
 
+  /// Flag inidicating whether we're the trader others are bootstrapping to.
   CORBA::Boolean bootstrapper_;
-  // Flag inidicating whether we're the trader others are bootstrapping to.
-
-  CORBA::Boolean dumpior_;
-  // Flag indication whether to dump the ior to standard output
 
 private:
-
   // Disallow copying and assignment.
   TAO_Trading_Loader (const TAO_Trading_Loader &);
   TAO_Trading_Loader &operator= (const TAO_Trading_Loader &);
-
 };
 
 ACE_FACTORY_DECLARE (TAO_Trading_Serv, TAO_Trading_Loader)

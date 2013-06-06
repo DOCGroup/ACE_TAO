@@ -224,6 +224,8 @@ lookup_offer (const char* type, CORBA::ULong id)
 template <class LOCK_TYPE> TAO_Offer_Id_Iterator*
 TAO_Offer_Database<LOCK_TYPE>::retrieve_all_offer_ids (void)
 {
+  ACE_READ_GUARD_RETURN (LOCK_TYPE, ace_mon, this->db_lock_, 0);
+
   // Fill an TAO_Offer_Id_Iterator with the offer_ids of all offers
   // exported to the TAO_Offer_Database. Iterates through the entire
   // map, cramming offer_id strings into a newly constructed
@@ -232,7 +234,6 @@ TAO_Offer_Database<LOCK_TYPE>::retrieve_all_offer_ids (void)
   ACE_NEW_RETURN (id_iterator,
                   TAO_Offer_Id_Iterator (),
                   0);
-  ACE_READ_GUARD_RETURN (LOCK_TYPE, ace_mon, this->db_lock_, 0);
 
   for (typename Offer_Database::iterator type_iter (this->offer_db_);
        ! type_iter.done ();
