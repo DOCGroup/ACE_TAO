@@ -36,7 +36,7 @@ ifneq ($(versioned_so),0)
   ifeq ($(SONAME),)
     ifeq ($(versioned_so),1)
       SONAME = $(SHLIB)$(SOVERSION)
-    else 
+    else
       ifeq ($(versioned_so),2)
         SONAME = $(patsubst %.$(SOEXT),%,$(SHLIB))$(SOVERSION).$(SOEXT)
       endif
@@ -66,9 +66,9 @@ ifneq ($(versioned_so),2)
   CLEANUP_VSHLIB = $(CLEANUP_VSHLIB_NO_VER:%=%$(SOVERSION))
   SHLIB_WITH_VER = $(SHLIB:%=%$(SOVERSION))
 else
-  VSHLIB = $(patsubst %.$(SOEXT),%,$(VSHLIB_NO_VER))$(SOVERSION).$(SOEXT)
-  CLEANUP_VSHLIB = $(patsubst %.$(SOEXT),%,$(CLEANUP_VSHLIB_NO_VER))$(SOVERSION).$(SOEXT)
-  SHLIB_WITH_VER = $(patsubst %.$(SOEXT),%,$(SHLIB))$(SOVERSION).$(SOEXT)
+  VSHLIB = $(if $(VSHLIB_NO_VER), $(patsubst %.$(SOEXT),%,$(VSHLIB_NO_VER))$(SOVERSION).$(SOEXT))
+  CLEANUP_VSHLIB = $(if $(CLEANUP_VSHLIB_NO_VER), $(patsubst %.$(SOEXT),%,$(CLEANUP_VSHLIB_NO_VER))$(SOVERSION).$(SOEXT))
+  SHLIB_WITH_VER = $(if $(SHLIB), $(patsubst %.$(SOEXT),%,$(SHLIB))$(SOVERSION).$(SOEXT))
 endif
 
 SHLIBA ?=
