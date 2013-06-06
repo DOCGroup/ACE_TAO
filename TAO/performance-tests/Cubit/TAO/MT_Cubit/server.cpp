@@ -181,7 +181,7 @@ Server::activate_high_servant (void)
     { orbendpoint,
       const_cast<ACE_TCHAR *> (ACE_TEXT ("-ORBSndSock 32768 ")),
       const_cast<ACE_TCHAR *> (ACE_TEXT ("-ORBRcvSock 32768 ")),
-      ACE_TEXT (0)
+      0
     };
   ACE_NEW_RETURN (this->high_argv_,
                   ACE_ARGV (this->argv_, high_second_argv),
