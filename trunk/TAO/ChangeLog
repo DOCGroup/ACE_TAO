@@ -1,3 +1,11 @@
+Thu Jun  6 12:10:48 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Trader/Offer_Database.cpp:
+          Fixed Coverity warning
+
+        * orbsvcs/orbsvcs/Trader/Trading_Loader.h:
+          Fixed Coverity warning and doxygen changes
+
 Wed Jun  5 20:11:23 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * examples/AMI/FL_Callback/progress.cpp:
