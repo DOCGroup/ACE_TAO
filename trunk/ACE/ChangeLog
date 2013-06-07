@@ -1,3 +1,9 @@
+Fri Jun  7 14:39:01 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/SOCK_Dgram_Test.cpp:
+
+          Potential fix for a warning on the wchar scoreboard.
+
 Thu Jun  6 17:02:06 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * include/makeinclude/rules.lib.GNU:
