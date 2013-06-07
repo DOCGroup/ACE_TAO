@@ -1,3 +1,10 @@
+Fri Jun  7 13:26:15 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/IPV6/run_test.pl:
+
+          Added verbose debugging to suspect client too in case the problem is
+          in parsing the constructed address.
+
 Thu Jun  6 23:19:04 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/IIOP_Endpoint.cpp:
