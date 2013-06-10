@@ -49,7 +49,7 @@ Ping_Death_Request_Interceptor::receive_request_service_contexts (
     {
       ++(*counter_);
     }
-  if (CORBA::is_nil(this->poa_))
+  if (CORBA::is_nil(this->poa_.in()))
     {
       return;
     }
