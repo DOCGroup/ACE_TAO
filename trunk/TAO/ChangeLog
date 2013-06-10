@@ -1,3 +1,9 @@
+Mon Jun 10 21:03:58 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/tests/ImplRepo/ping_interrupt/server_interceptor.cpp:
+
+          Fix an ambiguity tripping up the OpenVMS build.
+
 Fri Jun  7 13:26:15 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/IPV6/run_test.pl:
