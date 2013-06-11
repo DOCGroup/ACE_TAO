@@ -1,0 +1,24 @@
+/**
+
+$Id$
+
+@page Hello Test README File
+
+Simple Test to test the functionality and usage of HTIOP protocol
+
+	Please refrain from "improving", extending or expanding this
+test, if you need to change
+
+	To run the test use the run_test.pl script:
+
+$ ./run_test.pl
+
+	the script returns 0 if the test was successful.
+
+
+This test also demonstrates how one could use HTIOP with the corbaloc
+or corbaname syntax. Note that corbaloc support requires the server register
+the object reference with the IOR table internally, the corbaname support
+requires the NamingService running.
+
+*/

@@ -1,0 +1,23 @@
+// $Id$
+
+project(*IDL): taoserver, messaging, gen_ostream {
+  custom_only=1
+  IDL_Files {
+    idlflags += -as
+    Bug_4097_Regression.idl
+  }
+}
+
+project(*Main): taoserver, messaging, gen_ostream {
+  exename = Bug_4097_Regression
+  after += *IDL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Bug_4097_Regression.cpp
+    Bug_4097_RegressionC.cpp
+    Bug_4097_RegressionS.cpp
+  }
+}

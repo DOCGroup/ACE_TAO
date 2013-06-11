@@ -1,0 +1,17 @@
+// $Id$ 
+
+project(*Server): portableserver, orbsvcsexe, security, ssliop {
+  Source_Files {
+    Messenger_i.cpp
+    MessengerServer.cpp
+  }
+}
+
+project(*Client): orbsvcsexe, security, ssliop {
+  after += *Server
+
+  Source_Files {
+    MessengerC.cpp
+    MessengerClient.cpp
+  }
+}

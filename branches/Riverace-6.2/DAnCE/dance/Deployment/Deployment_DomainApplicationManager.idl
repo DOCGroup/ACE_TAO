@@ -1,0 +1,19 @@
+// $Id$
+
+#ifndef DOMAINAPPLICATIONMANAGER_IDL
+#define DOMAINAPPLICATIONMANAGER_IDL
+
+#include "dance/Deployment/Deployment_DeploymentPlan.idl"
+#include "dance/Deployment/Deployment_ApplicationManager.idl"
+
+module Deployment {
+  interface DomainApplicationManager : ApplicationManager
+   {
+     Applications getApplications ();
+     DeploymentPlan getPlan ();
+   };
+
+   typedef sequence < DomainApplicationManager > DomainApplicationManagers;
+};
+
+#endif /* DOMAINAPPLICATIONMANAGER_IDL */

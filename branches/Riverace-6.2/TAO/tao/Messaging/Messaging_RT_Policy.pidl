@@ -1,0 +1,32 @@
+// -*- IDL -*-
+
+/**
+ *  @file   Messaging_RT_Policy.pidl
+ *
+ *  $Id$
+ */
+
+#ifndef TAO_MESSAGING_RT_POLICY_PIDL
+#define TAO_MESSAGING_RT_POLICY_PIDL
+
+#include "tao/TimeBase.pidl"
+#include "tao/Policy.pidl"
+#include "tao/Messaging/Messaging_Types.pidl"
+
+#pragma prefix "omg.org"
+
+module Messaging
+{
+  /// Synchronization Policy (default = WITH_TRANSPORT)
+  typedef TimeBase::TimeT Timeout;
+
+  //
+  // Locally-Constrained Policy Objects
+  //
+  local interface RelativeRoundtripTimeoutPolicy : CORBA::Policy {
+    readonly attribute TimeBase::TimeT relative_expiry;
+  };
+
+};
+
+#endif /*TAO_MESSAGING_RT_POLICY_PIDL*/

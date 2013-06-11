@@ -1,0 +1,610 @@
+Mon May 27 10:09:24 CEST 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * CIAO version 1.2.0 released.
+
+Mon May 13 07:14:04 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+          Make 1.1.9 public and prepare for the next minor release
+
+Mon May 13 08:52:11 CEST 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * CIAO version 1.1.9 released.
+
+Tue Apr 23 7:34:41 UTC 2013  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/dds4ccm/tests/HomeDerived/descriptors/run_test.pl:
+          Changed nr of deamons.
+
+Fri Apr 19 10:22:41 UTC 2013  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/dds4ccm/tests/HomeDerived/Sender/Hello_Sender.mpc:
+          Added lib Connector2_stub to svnt
+
+Thu Apr 18 18:37:16 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/CCM_DataReader.h:
+          Layout change
+
+        * connectors/dds4ccm/impl/ContentFilterSetting.cpp:
+          Log name of CFT
+
+Thu Apr 18 14:37:41 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/HomeDerived/Sender/Hello_Sender.mpc:
+          Make project names unique
+
+Thu Apr 18 13:04:48 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/HomeDerived/descriptors/DeploymentPlan.cdp:
+          Don't use qos_profile, not needed for this test
+
+        * connectors/dds4ccm/tests/HomeDerived/descriptors/USER_QOS_PROFILES.xml:
+          Removed this file.
+
+Thu Apr 18 12:42:46 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+          Check if transport config exists before trying to create it,
+          fixes ResetTopic tests
+
+Thu Apr 18 10:25:57 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/06_compilation.html:
+          html fix
+
+Thu Apr 18 09:44:00 UTC 2013  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/dds4ccm/tests/HomeDerived/Connector2/Hello_Connector2.idl:
+        Fuzz error
+
+Thu Apr 18 08:50:34 UTC 2013  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * bin/ciao_tests.lst:
+        * connectors/dds4ccm/tests/HomeDerived:
+        * connectors/dds4ccm/tests/HomeDerived/Base:
+        * connectors/dds4ccm/tests/HomeDerived/Base/Hello_Base.idl:
+        * connectors/dds4ccm/tests/HomeDerived/Base/Hello_Base.mpc:
+        * connectors/dds4ccm/tests/HomeDerived/Connector1:
+        * connectors/dds4ccm/tests/HomeDerived/Connector1/Hello_Connector.idl:
+        * connectors/dds4ccm/tests/HomeDerived/Connector1/Hello_Connector.mpc:
+        * connectors/dds4ccm/tests/HomeDerived/Connector2:
+        * connectors/dds4ccm/tests/HomeDerived/Connector2/Hello_Connector2.idl:
+        * connectors/dds4ccm/tests/HomeDerived/Connector2/Hello_Connector2.mpc:
+        * connectors/dds4ccm/tests/HomeDerived/Sender:
+        * connectors/dds4ccm/tests/HomeDerived/Sender/Hello_Sender.idl:
+        * connectors/dds4ccm/tests/HomeDerived/Sender/Hello_Sender.mpc:
+        * connectors/dds4ccm/tests/HomeDerived/Sender/Hello_Sender_exec.h:
+        * connectors/dds4ccm/tests/HomeDerived/Sender/Hello_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/HomeDerived/descriptors:
+        * connectors/dds4ccm/tests/HomeDerived/descriptors/DeploymentPlan.cdp:
+        * connectors/dds4ccm/tests/HomeDerived/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/HomeDerived/descriptors/run_test.pl:
+        Test with derived homes and derived home components .
+
+Tue Apr 16 17:54:56 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/DDS4CCM-INSTALL.html:
+          Several fixes
+
+Tue Apr 16 17:30:31 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/DDS4CCM-INSTALL.html:
+          Detailed step by step instructions for DDS4CCM with RTI DDS on Linux
+
+Mon Apr 15 18:18:18 UTC 2013  Adam Mitz  <mitza@ociweb.com>
+
+        * CIAO_DAnCE.mwc:
+
+          Added ami4ccm and dds4ccm connectors to this workspace.
+
+Mon Apr 15 08:59:47 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/DDS4CCM-INSTALL.html:
+          Added exact instructions how to compile DDS4CCM with OpenDDS
+          on linux. These can be copied to the console and will compile
+          everything
+
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_1.pl:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_2.pl:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_3.pl:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_4.pl:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_6.pl:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_7.pl:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_8.pl:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_9.pl:
+          Make these running on trunk, only run_8.pl needs some more work
+
+Fri Apr 12 20:40:54 UTC 2013  Adam Mitz  <mitza@ociweb.com>
+
+        * ciao/Logger/Log_Macros.h:
+        * ciao/Logger/Log_Macros.cpp:
+        * connectors/dds4ccm/impl/logger/Log_Macros.h:
+        * connectors/dds4ccm/impl/logger/Log_Macros.cpp:
+
+          Use distinct ACE Log Categories for both CIAO and DDS4CCM.
+
+Thu Apr 11 06:49:15 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDS_Listen_T.h:
+          Added missing includes in case an user includes this template
+          stand alone in his own custom connector
+
+Wed Apr 10 14:08:25 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/DDS4CCM-INSTALL.html:
+          Extended instructions for OpenDDS
+
+Thu Mar 14 12:42:30 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * CIAO_TAO_DAnCE_OpenDDS_shapes.mwc:
+          New workspace for compiling just the shapes example with everything
+          related to it
+
+Thu Mar 14 08:39:03 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+          Updated for next release
+
+        * connectors/dds4ccm/examples/Shapes/Receiver/Shapes_Receiver_exec.cpp:
+        * connectors/dds4ccm/examples/Shapes/Sender/Shapes_Sender_exec.cpp:
+          Log topic_name with each message
+
+Thu Mar 14 09:04:46 CET 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * CIAO version 1.1.8 released.
+
+Tue Mar 12 13:49:26 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_1.cdp:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_1.pl:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_2.cdp:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_2.pl:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_2.xml:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_3.cdp:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_3.pl:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_3.xml:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_4.cdp:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_4.pl:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_4.xml:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_6.cdp:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_6.pl:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_7.cdp:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_7.pl:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_8.cdp:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_8.pl:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_8.xml:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_9.cdp:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_9.pl:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_9.xml:
+          Various plans for 2013 DDS interop demo
+
+Mon Mar  4 12:55:09 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Shapes/Base/Shapes_Base.idl:
+        * connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector.idl:
+        * connectors/dds4ccm/examples/Shapes/Receiver/Shapes_Receiver_exec.h:
+        * connectors/dds4ccm/examples/Shapes/Sender/Shapes_Sender_exec.h:
+        * connectors/dds4ccm/examples/Shapes/descriptors/Plan.cdp:
+          Moved the ShapeType into a nested module and update the cdp
+          to set a fixed typename. Matches the 2013 version of the
+          shapes example
+
+Wed Feb 27 08:17:40 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/idl/dds4ccm_Connector.idl:
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.h:
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.h:
+        * connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.cpp:
+          Added a type_name attribute to the DDS TopicBase connector.
+          When the user doesn't specifiy this in the cdp we will
+          default to the DDS vendor specific type_name which is
+          not standardized. In case of interoperability problems
+          this type_name could be needed. This addition has been
+          reported to the OMG as issue 18499. Updated a few logging
+          statements to include type_name and don't use CORBA::is_nil
+          for checking whether a String_var has content
+
+Wed Feb 13 22:38:40 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * CIAO_TAO_OpenDDS.mwc:
+          Added exclude for nsgroup since it is not using the FT_Naming
+          service. Was causing build errors due to missing FT_NamingManager.
+
+Wed Feb  6 23:17:27 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * CIAO_TAO.mwc:
+          Added exclude for nsgroup since it is not using the FT_Naming
+          service. Was causing build errors due to missing FT_NamingManager.
+
+Mon Feb  4 08:11:50 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp (activate_topic):
+          Fixed logic error, when no listener is passed in we create
+          the default one, but always install a listener. Thanks to
+          Jiang Wei <jiangwei_1976 at yahoo dot com dot cn> for
+          reporting this problem. This fixes bugzilla 4089
+
+Sun Feb  3 18:37:32 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/ciao_tests.lst:
+          Added !NO_IDL3_TO_IDL2 to Bug_4087_Regression, invoking idl3_to_idl2
+          means we need gcc which we don't have on all targets
+
+Thu Jan 31 11:33:37 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/ciao_tests.lst:
+          Fixed path 4087 test
+
+Tue Jan 29 12:20:08 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.cpp:
+          Fixed bugzilla 4087, thanks to
+          Jiang Wei <jiangwei_1976 at yahoo dot com dot cn> for
+          providing this patch
+
+Tue Jan 29 12:17:09 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/ciao_tests.lst:
+        * tests/Bug_4087_Regression:
+        * tests/Bug_4087_Regression/run_test.pl:
+        * tests/Bug_4087_Regression/test.idl:
+          New unit test for idl3_to_idl2, currently failing. Thanks to
+          Jiang Wei <jiangwei_1976 at yahoo dot com dot cn> for
+          creating this test.
+
+Mon Jan 28 10:11:13 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/ciao_tests.lst:
+        * tests/Bug_4086_Regression/Bug_4086_Regression.mpc:
+        * tests/Bug_4086_Regression/Foo.idl:
+        * tests/Bug_4086_Regression/Foo_exec.h:
+        * tests/Bug_4086_Regression/Foo_exec.cpp:
+        * tests/Bug_4086_Regression/descriptors/DeploymentPlan.cdp:
+        * tests/Bug_4086_Regression/descriptors/run_test.pl:
+        * tests/Bug_4086_Regression/descriptors/run_test_cdr.pl:
+          New test for components with attributes as part of
+          supported interfaces. Thanks to Jiang Wei
+          <jiangwei_1976 at yahoo dot com dot cn> for reporting this and
+          providing the patch and unit test
+
+Mon Jan 21 08:16:41 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/ciao_tests.lst:
+          QueryCondition DDS tests are NDDS only
+
+Thu Dec 27 09:19:07 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+          Updated in preparation of next release
+
+Thu Dec 27 10:00:49 CET 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * CIAO version 1.1.7 released.
+
+Sun Dec 23 11:44:31 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tools/IDL3_to_XMI/IDL3_TO_XMI.mpc:
+          Fixed post install
+
+Sat Dec 22 15:22:31 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Base/CIAO_Base.mpc:
+          Fixed location of ciao tools
+
+Thu Dec 20 13:55:46 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tools/IDL3_to_IDL2/IDL3_to_IDL2.mpc:
+          Fixed post install
+
+Thu Dec 20 07:13:50 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/taoidl3toxmidefaults.mpb:
+          Updated location of tao_idl3_to_xmi
+
+Wed Dec 19 14:44:43 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/taobaseidl3toidl2defaults.mpb:
+        * docs/fm/CIAO.htm:
+        * tests/IDL3_to_XMI/Bug_3607_Regression/run_test.pl:
+        * tests/IDL3_to_XMI/IDL2XMI_Test/run_test.pl:
+        * tests/IDL3_to_XMI/XMI_For_Array/run_test.pl:
+        * tests/IDL3_to_XMI/XMI_For_Included_File/run_test.pl:
+        * tests/IDL3_to_XMI/XMI_For_Module_Reopen/run_test.pl:
+        * tests/IDL3_to_XMI/XMI_For_Native/run_test.pl:
+        * tests/IDL3_to_XMI/XMI_For_Sequence/run_test.pl:
+        * tools/IDL3_to_IDL2/IDL3_to_IDL2.mpc:
+        * tools/IDL3_to_XMI/IDL3_TO_XMI.mpc:
+          Install tao_idl3_to_idl2 and tao_idl3_to_xmi into ACE_ROOT/bin
+          to handle cross compilation in a flat layout more easily, this
+          way we can use the same approach as tao_idl does
+
+Wed Dec 19 08:30:15 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/idl/ndds/ndds_dcps.idl:
+        * connectors/dds4ccm/impl/Utils.h:
+          Extended PresentationQosPolicyAccessScopeKind and
+          SampleRejectedStatusKind. Both enums are extended by
+          RTI DDS 5.0.0 with some new enum values.
+
+Mon Dec 17 18:49:30 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/Condition.cpp:
+        * connectors/dds4ccm/impl/ndds/ContentFilteredTopic.cpp:
+        * connectors/dds4ccm/impl/ndds/DataWriter.cpp:
+        * connectors/dds4ccm/impl/ndds/DomainParticipantListener.h:
+        * connectors/dds4ccm/impl/ndds/QueryCondition.cpp:
+        * connectors/dds4ccm/impl/ndds/WaitSet.cpp:
+          Don't include ndds_cpp.h as first include, fixes problems
+          with msvc release mode compilation
+
+Mon Dec 17 10:14:59 UTC 2012  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/Bug_3769_Regression/Foo_exec.cpp:
+          Using ACE::is_inequal to compare floating point and
+          double values.
+
+Sun Dec 16 09:49:50 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/Policies/dr_qos_test.cpp:
+        * connectors/dds4ccm/tests/Policies/typeconsistencyenforcement_qos_test.h:
+        * connectors/dds4ccm/tests/Policies/typeconsistencyenforcement_qos_test.cpp:
+          Fixed compile error with RTI DDS < 5
+
+Fri Dec 14 18:38:56 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/convertors/DataReaderQos.h:
+          Fixed compile error with RTI DDS < 5
+
+Thu Dec 13 08:40:18 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/idl/ndds/ndds_dcps.idl:
+        * connectors/dds4ccm/impl/ndds/convertors/DataReaderQos.h:
+        * connectors/dds4ccm/impl/ndds/convertors/TypeConsistencyEnforcementQosPolicy.h:
+        * connectors/dds4ccm/tests/Policies/dr_qos_test.cpp:
+        * connectors/dds4ccm/tests/Policies/policies.mpc:
+        * connectors/dds4ccm/tests/Policies/typeconsistencyenforcement_qos_test.h:
+        * connectors/dds4ccm/tests/Policies/typeconsistencyenforcement_qos_test.cpp:
+          Added support for the new DDS TypeConsistencyEnforcementQosPolicy
+          which is coming from the DDS X-Types specification.
+
+        * connectors/dds4ccm/tests/On_Inconsistent_Topic/Base/OIT_Test_Base.idl:
+          Made both topics completely inconsistent, the topics
+          we had where seen as concistent by the DDS X-Types
+          specification
+
+Sun Dec  9 19:36:14 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DomainParticipantFactory.cpp:
+          Fixed coverity error
+
+Fri Nov 30 10:11:11 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/idl/ndds/ndds_dcps.idl:
+        * connectors/dds4ccm/impl/Utils.h:
+          Extended SampleRejectedStatusKind with the RTI defined extensions,
+          detected by Coverity
+
+Sat Nov 24 14:18:41 UTC 2012  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/Bug_3769_Regression/Foo_exec.cpp:
+          Fuzz : Trailing whitespaces
+
+Fri Nov 23 12:53:17 UTC 2012  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/Bug_3769_Regression/Foo_exec.cpp:
+          Fixed fuzz and test.
+
+        * tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
+          Fixed fuzz.
+
+Fri Nov 23 10:56:41 UTC 2012  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/Bug_3769_Regression/Foo_exec.cpp:
+          Minor layout change.
+
+        * tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
+          Added new attribute.
+
+        * bin/ciao_tests.lst:
+        * tests/Bug_3769_Regression/descriptors/run_test_cdr.pl:
+          New test: using CDR as input for the plan launcher.
+
+Fri Nov 23 10:28:23 UTC 2012  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/Bug_3769_Regression/Foo.idl:
+        * tests/Bug_3769_Regression/Foo_exec.h:
+        * tests/Bug_3769_Regression/Foo_exec.cpp:
+          Expanded test. Added a struct within a struct which
+          is placed in a separate module. checking whether the
+          correct values are set.
+
+Mon Nov 19 18:15:16 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/DataReaderListener_T.cpp:
+          Layout changes
+
+        * connectors/dds4ccm/impl/DomainParticipantManager.cpp:
+          Check for (un)registration of nil domain participants, log
+          profile during unregistration
+
+Mon Nov 12 10:07:05 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+          Updated for next release
+
+Mon Nov 12 09:34:14 CET 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * CIAO version 1.1.6 released.
+
+Fri Oct 12 11:18:03 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ccm/CCM_Transaction.idl:
+          Removed old comment
+
+        * ciao/Deployment/Interceptors/Deployment_Interceptors.cpp:
+          Fixed some logging statements
+
+Fri Oct 12 10:53:23 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+          Updated for x.1.5
+
+Fri Oct 12 11:20:25 CEST 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * CIAO version 1.1.5 released.
+
+Mon Oct  8 08:02:52 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Deployment/Handlers/Component_Handler.cpp:
+        * ciao/Deployment/Handlers/Home_Handler.cpp:
+          Fixed logging messages
+
+Fri Oct  5 06:26:38 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Hello_Event/descriptors/run_test_shs.pl:
+          Fixed path
+
+Wed Oct  3 06:19:55 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Containers/Session/Session_Container.cpp:
+          Fixed typo in error message
+
+        * connectors/dds4ccm/impl/ndds/Topic.cpp:
+          layout changes
+
+        * connectors/dds4ccm/tests/Policies/run_test.pl:
+        * connectors/dds4ccm/tests/TimeConversion/run_test.pl:
+        * connectors/dds4ccm/tests/TypeSupport/run_test.pl:
+          Check all return values, directly exit when the test has ended
+
+        * examples/Hello_Event/descriptors/run_test_shs.pl:
+          Corrected path of sender
+
+Tue Oct  2 17:50:55 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/convertors/StringSeq.h:
+        * connectors/dds4ccm/tests/Policies/main.cpp:
+        * connectors/dds4ccm/tests/Policies/policies.mpc:
+        * connectors/dds4ccm/tests/Policies/string_seq.h:
+        * connectors/dds4ccm/tests/Policies/string_seq.cpp:
+          Test StringSeq conversion and fixed a bug in the conversion
+          from a tao sequence to a RTI sequence
+
+Tue Oct  2 17:29:33 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DataReader_T.cpp:
+          Only call the RTI narrow with a valid pointer, calling it with
+          null causes RTI to log an error
+
+Tue Oct  2 08:27:28 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Containers/Container_Base_T.cpp:
+          Simplified logging statement
+
+Tue Oct  2 06:48:39 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Hello_Event/descriptors/run_test.pl:
+        * examples/Hello_Event/descriptors/run_test_PlanLocality_DifferentProcesses.pl:
+        * examples/Hello_Event/descriptors/run_test_PlanLocality_SameProcess.pl:
+        * examples/Hello_Event/descriptors/run_test_shs.pl:
+        * examples/Hello_Event/descriptors/run_test_without_ns.pl:
+          Updated location of the starter
+
+Mon Oct  1 18:26:08 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/DataReaderListener_T.cpp:
+        * connectors/dds4ccm/impl/DataReaderStateListener_T.cpp:
+        * connectors/dds4ccm/impl/PortStatusListener.cpp:
+        * connectors/dds4ccm/impl/PublisherListener.cpp:
+        * connectors/dds4ccm/impl/SubscriberListener.cpp:
+        * connectors/dds4ccm/impl/TopicListener.cpp:
+          Catch everywhere C++ exceptions and log a CORBA::BAD_INV_ORDER
+          at a lower priority, because that is a signal that the system
+          is shutting down
+
+Fri Sep 28 09:39:27 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Hello/Sender/Hello_Sender_exec.h:
+          Added missing file
+
+Thu Sep 27 09:29:38 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/ciao_tests.lst:
+        * examples/Hello:
+          Added new Hello test that isn't dependent on CCM events
+
+Thu Sep 27 08:59:45 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/ciao_tests.lst:
+        * examples/Hello:
+        * examples/Hello_Event:
+          Renamed Hello to Hello_Event, this version of the
+          Hello example uses the CCM events, will add another
+          version that just uses facet/receptacles
+
+        * examples/Null_Component/Null_Interface.idl:
+          Doxygen change
+
+Tue Sep 25 18:00:53 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Deployment/Handlers/Component_Handler.h:
+        * ciao/Deployment/Handlers/Container_Handler.h:
+        * ciao/Deployment/Handlers/Home_Handler.h:
+        * ciao/Deployment/Handlers/Homed_Component_Handler.h:
+          Only locality manager stubs are used here
+
+Fri Sep 21 07:52:43 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/logger/Log_Macros.h:
+          Added DDS4CCM_PRINT_CORBA_EXCEPTION also in case there is no
+          logging
+
+Thu Sep 20 07:08:30 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Containers/Container_Base_T.cpp:
+          Removed not needed ObjectId_to_string, the result is never
+          used
+
+        * ciao/Valuetype_Factories/Cookies.h:
+          Removed not needed include
+
+Thu Sep 20 07:06:41 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDSCallbackStatusHandler.cpp:
+        * connectors/dds4ccm/impl/DataReaderHandler_T.cpp:
+        * connectors/dds4ccm/impl/logger/Log_Macros.h:
+          During shutdown it can happen that still event handlers are
+          registered in the reactor and the DDS entities are already
+          removed. At that moment we get BAD_INV_ORDER exceptions which
+          is the only case we could get them, log them as warning
+          messages at that moment instead of real errors
+
+Wed Aug 29 07:36:27 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * CIAO_TAO.mwc:
+        * CIAO_TAO_DAnCE.mwc:
+        * CIAO_TAO_DAnCE_OpenDDS.mwc:
+        * CIAO_TAO_OpenDDS.mwc:
+          Be more specific in what we build
+
+        * tests/tests.mwc:
+          Removed this file.
+
+Wed Aug 29 07:34:37 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ChangeLog:
+        * ChangeLogs/ChangeLog-2012a:
+        * NEWS:
+          Prepared for the next release
+
+Wed Aug 29 08:16:04 CEST 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * CIAO version 1.1.4 released.
+
+Local Variables:
+mode: change-log
+add-log-time-format: (lambda () (progn (setq tz (getenv "TZ")) (set-time-zone-rule "UTC") (setq time (format-time-string "%a %b %e %H:%M:%S %Z %Y" (current-time))) (set-time-zone-rule tz) time))
+indent-tabs-mode: nil
+End:
