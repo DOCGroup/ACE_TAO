@@ -53,7 +53,6 @@ class AsyncListManager
   CORBA::ULong list (ImplementationRepository::AMH_ServerInformationIteratorResponseHandler_ptr _tao_rh,
                      CORBA::ULong start, CORBA::ULong count);
 
-  bool evaluate_status (CORBA::ULong index, LiveStatus status);
   void ping_replied (CORBA::ULong index, LiveStatus status);
 
   AsyncListManager *_add_ref (void);
@@ -91,7 +90,7 @@ class ListLiveListener : public LiveListener
 
   virtual ~ListLiveListener (void);
   bool start (void);
-  LiveStatus status (void);
+
   bool status_changed (LiveStatus status);
 
  private:
@@ -99,7 +98,6 @@ class ListLiveListener : public LiveListener
   LiveCheck &pinger_;
   LiveStatus status_;
   CORBA::ULong index_;
-  bool started_;
 };
 
 

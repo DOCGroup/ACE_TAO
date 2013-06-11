@@ -2,7 +2,6 @@
 
 #include "test_i.h"
 #include "ace/Get_Opt.h"
-#include "ace/Argv_Type_Converter.h"
 
 // who defines index macro?
 #ifdef index
@@ -53,8 +52,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     return 1;
 
   // Qt specific stuff for running with TAO...
-  ACE_Argv_Type_Converter ct (argc, argv);
-  QApplication app (argc,  ct.get_ASCII_argv());
+  QApplication app (argc, argv);
   TAO::QtResource_Loader qt_resources (&app);
 
   try

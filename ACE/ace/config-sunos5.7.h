@@ -51,9 +51,7 @@
 #define ACE_HAS_SOCKLEN_T
 
 #if defined (__sparcv9)
-#if !defined (_LP64)
-# define _LP64
-#endif /* _LP64 */
+#define _LP64
 #define ACE_SIZEOF_LONG 8 /* Needed to circumvent compiler bug #4294969 */
 #endif /* __sparcv9 */
 

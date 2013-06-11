@@ -46,7 +46,6 @@
 #include "ace/Time_Value.h"
 #include "ace/QtReactor/QtReactor.h"
 #include "ace/Event_Handler.h"
-#include "ace/Argv_Type_Converter.h"
 #include "ace/Acceptor.h"
 #include "ace/Connector.h"
 #include "ace/SOCK_Acceptor.h"
@@ -892,9 +891,7 @@ void testQtReactor (int argc, ACE_TCHAR *argv[])
   // Qt specific code
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("Testing QtReactor\n")));
 
-  ACE_Argv_Type_Converter ct (argc, argv);
-  QTestApplication app (argc, ct.get_ASCII_argv ());
-
+  QTestApplication app (argc, argv);
   ACE_QtReactor    qtReactor (&app);
   ACE_Reactor      reactor (&qtReactor);
   HandlersRegister handlersRegister (&reactor);

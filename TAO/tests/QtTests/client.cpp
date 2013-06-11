@@ -2,7 +2,6 @@
 
 #include "testC.h"
 #include "ace/Get_Opt.h"
-#include "ace/Argv_Type_Converter.h"
 #include "tao/QtResource/QtResource_Loader.h"
 
 #include "client.h"
@@ -10,10 +9,9 @@
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-
-  ACE_Argv_Type_Converter ct (argc, argv);
-  QApplication app (argc,  ct.get_ASCII_argv ());
+  QApplication app (argc, argv);
   TAO::QtResource_Loader qt_resources (&app);
+
 
   try
     {

@@ -155,17 +155,15 @@ list_types (const CosTradingRepos::ServiceTypeRepository::SpecifiedServiceTypes 
 {
   ACE_READ_GUARD_THROW_EX (ACE_Lock, ace_mon, *this->lock_, CORBA::INTERNAL ());
 
-  CORBA::ULong const length = static_cast<CORBA::ULong>(this->type_map_.current_size ());
-  CORBA::ULong found = 0;
-  // Initial allocate a result seq for maximum expected results.
-  CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq_var types;
-  ACE_NEW_RETURN (types,
-                  CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq(length),
-                  0);
-  types->length(this->type_map_.current_size ());
+  CORBA::ULong i = 0;
+  CORBA::ULong length = static_cast<CORBA::ULong> (this->type_map_.current_size ());
+  CosTrading::ServiceTypeName *types =
+    CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq::allocbuf (length);
 
-  bool const all = which_types._d () == CosTradingRepos::ServiceTypeRepository::all;
-  // FIXME: && (which_types.all_ () == true) ?
+  if (types == 0)
+    return 0;
+
+  int all = which_types._d () == CosTradingRepos::ServiceTypeRepository::all;
 
   CosTradingRepos::ServiceTypeRepository::IncarnationNumber num =
     which_types.incarnation ();
@@ -180,13 +178,21 @@ list_types (const CosTradingRepos::ServiceTypeRepository::SpecifiedServiceTypes 
       if (all
           || num < type_info->type_struct_.incarnation)
         {
-          (*types)[found++] = CORBA::string_dup (type_name);
+          CORBA::string_free (types[i]);
+          types[i++] = CORBA::string_dup (type_name);
         }
     }
 
-  // Truncate to results we have found.
-  types->length(found);
-  return types._retn();
+  CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq *tmp = 0;
+
+  ACE_NEW_RETURN (tmp,
+                  CosTradingRepos::ServiceTypeRepository::
+                  ServiceTypeNameSeq (length,
+                                      i,
+                                      types,
+                                      1),
+                  0);
+  return tmp;
 }
 
 CosTradingRepos::ServiceTypeRepository::TypeStruct *

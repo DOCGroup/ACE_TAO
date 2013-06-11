@@ -26,8 +26,6 @@ public:
   TAO_Service_Type_Exporter (CosTrading::Lookup_ptr lookup_if,
                              CORBA::Boolean verbose);
 
-  ~TAO_Service_Type_Exporter (void);
-
   void remove_all_types (void);
   // Remove all service types from the trading service instance.
 

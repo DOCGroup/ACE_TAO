@@ -2,6 +2,8 @@
 
 #include "Service_Type_Exporter.h"
 
+
+
 TAO_Service_Type_Exporter::
 TAO_Service_Type_Exporter (CosTrading::Lookup_ptr lookup_if,
                            CORBA::Boolean verbose)
@@ -16,17 +18,6 @@ TAO_Service_Type_Exporter (CosTrading::Lookup_ptr lookup_if,
 
   // Build the service type descriptions.
   this->create_types ();
-}
-
-TAO_Service_Type_Exporter::~TAO_Service_Type_Exporter (void)
-{
-  try
-  {
-    this->remove_all_types ();
-  }
-  catch (const CORBA::Exception&)
-  {
-  };
 }
 
 void
@@ -48,12 +39,12 @@ TAO_Service_Type_Exporter::remove_all_types (void)
               if (excp.type.in () != 0)
                 ACE_DEBUG ((LM_DEBUG, "Service type not yet registered: %C\n", excp.type.in ()));
             }
-          // Don't re-throw, this one is expected in the test.
+
         }
-      catch (const CORBA::Exception& e)
+      catch (const CORBA::Exception& ex)
         {
-          e._tao_print_exception ("TAO_Service_Type_Exporter::remove_all_types");
-          throw;
+          ex._tao_print_exception (
+            "TAO_Service_Type_Exporter::remove_all_types");
         }
     }
 }
@@ -102,12 +93,12 @@ TAO_Service_Type_Exporter::add_all_types_to_all (void)
             CosTradingRepos::ServiceTypeRepository::_narrow (remote_repos.in ());
 
         }
-      catch (const CORBA::Exception& e)
+      catch (const CORBA::Exception&)
         {
-          e._tao_print_exception ("TAO_Service_Type_Exporter::add_all_types_to_all");
-          throw;
+          // @@ Seth, Ignore all these exceptions?
         }
 
+      // @@ Seth, But this one?
       this->add_all_types_to (str);
     }
 }
@@ -129,37 +120,34 @@ add_all_types_to (CosTradingRepos::ServiceTypeRepository_ptr repos)
         const CosTradingRepos::ServiceTypeRepository::ServiceTypeExists& ste)
         {
           ste._tao_print_exception (
-            "TAO_Service_Type_Exporter::add_all_types_to");
+            "TAO_Service_Type_Exporter::add_all_types");
 
           if (ste.name.in () != 0)
             ACE_DEBUG ((LM_DEBUG, "Invalid name: %C\n", ste.name.in ()));
-          throw;
         }
       catch (const CosTrading::IllegalPropertyName& excp)
         {
           excp._tao_print_exception (
-            "TAO_Service_Type_Exporter::add_all_types_to");
+            "TAO_Service_Type_Exporter::add_all_types");
 
           if (excp.name.in () != 0)
             ACE_DEBUG ((LM_DEBUG, "Invalid name: %C\n", excp.name.in ()));
-          throw;
         }
       catch (
         const CosTradingRepos::ServiceTypeRepository::ValueTypeRedefinition& vtr)
         {
           vtr._tao_print_exception (
-            "TAO_Service_Type_Exporter::add_all_types_to");
+            "TAO_Service_Type_Exporter::add_all_types");
 
           if (vtr.type_1.in () != 0)
             ACE_DEBUG ((LM_DEBUG, "Type One: %C\n", vtr.type_2.in ()));
           if (vtr.type_2.in () != 0)
             ACE_DEBUG ((LM_DEBUG, "Type Two: %C\n", vtr.type_2.in ()));
-          throw;
         }
-      catch (const CORBA::Exception& e)
+      catch (const CORBA::Exception& ex)
         {
-          e._tao_print_exception (
-            "TAO_Service_Type_Exporter::add_all_types_to");
+          ex._tao_print_exception (
+            "TAO_Service_Type_Exporter::add_all_types");
           throw;
         }
     }
@@ -178,28 +166,20 @@ TAO_Service_Type_Exporter::list_all_types (void)
       CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq_var type_names =
         this->repos_->list_types (sst);
 
-      if (type_names.ptr()!=0)
-      {
-        CORBA::ULong l = type_names->length ();
-        for (CORBA::ULong i = 0; i != l; ++i)
-          {
-            CORBA::ULong index = l - 1 - i;
-            if (this->verbose_)
-              {
-                ACE_DEBUG ((LM_DEBUG, "type name: %C\n",
-                            static_cast<const char *> (type_names[index])));
-              }
-          }
-      }
-      else
-      {
-        ACE_ERROR ((LM_ERROR, ACE_TEXT("ERROR, TAO_Service_Type_Exporter::list_all_types got list nil ptr!\n")));
-        throw CORBA::TRANSIENT(); // Try again later?
-      };
+      CORBA::ULong l = type_names->length ();
+      for (CORBA::ULong i = 0; i != l; ++i)
+        {
+          CORBA::ULong index = l - 1 - i;
+          if (this->verbose_)
+            {
+              ACE_DEBUG ((LM_DEBUG, "type name: %C\n",
+                          static_cast<const char *> (type_names[index])));
+            }
+        }
     }
-  catch (const CORBA::Exception& e)
+  catch (const CORBA::Exception& ex)
     {
-      e._tao_print_exception ("TAO_Service_Type_Exporter::list_all_types");
+      ex._tao_print_exception ("TAO_Service_Type_Exporter::list_all_types");
       throw;
     }
 }
@@ -224,9 +204,10 @@ TAO_Service_Type_Exporter::describe_all_types (void)
             }
         }
     }
-  catch (const CORBA::Exception& e)
+  catch (const CORBA::Exception& ex)
     {
-      e._tao_print_exception ("TAO_Service_Type_Exporter::describe_all_types");
+      ex._tao_print_exception (
+        "TAO_Service_Type_Exporter::describe_all_types");
       throw;
     }
 }
@@ -251,9 +232,10 @@ TAO_Service_Type_Exporter::fully_describe_all_types (void)
             }
         }
     }
-  catch (const CORBA::Exception& e)
+  catch (const CORBA::Exception& ex)
     {
-      e._tao_print_exception ("TAO_Service_Type_Exporter::fully_describe_all_types");
+      ex._tao_print_exception (
+        "TAO_Service_Type_Exporter::fully_describe_all_types");
       throw;
     }
 }
@@ -301,7 +283,7 @@ TAO_Service_Type_Exporter::create_types (void)
   this->type_structs_[TT_Info::REMOTE_IO].props[0].mode       =
     CosTradingRepos::ServiceTypeRepository::PROP_MANDATORY_READONLY;
   this->type_structs_[TT_Info::REMOTE_IO].props[1].name       =
-    TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::LOCATION] ;
+    TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::LOCATION];
   this->type_structs_[TT_Info::REMOTE_IO].props[1].value_type =
     CORBA::TypeCode::_duplicate (CORBA::_tc_string);
   this->type_structs_[TT_Info::REMOTE_IO].props[1].mode       =
@@ -330,6 +312,7 @@ TAO_Service_Type_Exporter::create_types (void)
     CORBA::TypeCode::_duplicate (CORBA::_tc_string);
   this->type_structs_[TT_Info::REMOTE_IO].props[5].mode       =
     CosTradingRepos::ServiceTypeRepository::PROP_NORMAL;
+
   this->type_structs_[TT_Info::REMOTE_IO].if_name =
     ro._interface_repository_id ();
 

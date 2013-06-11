@@ -11,9 +11,9 @@
 #include "ace/High_Res_Timer.h"
 
 LiveListener::LiveListener (const char *server)
-  : server_ (server),
-    refcount_ (1),
-    lock_ ()
+  : server_(server),
+    refcount_(1),
+    lock_()
 {
 }
 
@@ -123,33 +123,12 @@ LiveEntry::LiveEntry (LiveCheck *owner,
     max_retry_ (LiveEntry::reping_limit_),
     may_ping_ (may_ping),
     listeners_ (),
-    lock_ (),
-    callback_ (0)
+    lock_ ()
 {
-  if (ImR_Locator_i::debug () > 4)
-    {
-      ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) LiveEntry::ctor server = %s, may_ping = %d\n"),
-                      server, may_ping));
-    }
 }
 
 LiveEntry::~LiveEntry (void)
 {
-  if (this->callback_.in () != 0)
-    {
-      PingReceiver *rec = dynamic_cast<PingReceiver *>(this->callback_.in());
-      if (rec != 0)
-        {
-          rec->cancel ();
-        }
-    }
-}
-
-void
-LiveEntry::release_callback (void)
-{
-  this->callback_ = 0;
 }
 
 void
@@ -170,25 +149,13 @@ LiveEntry::reset_status (void)
       this->repings_ = 0;
       this->next_check_ = ACE_High_Res_Timer::gettimeofday_hr();
     }
-  if (ImR_Locator_i::debug () > 2)
-    {
-      ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) LiveEntry::reset_status this = %x, ")
-                      ACE_TEXT ("server = %C status = %s\n"),
-                      this, this->server_.c_str(),
-                      status_name (this->liveliness_)));
-    }
-
 }
 
 LiveStatus
 LiveEntry::status (void) const
 {
   if (!this->may_ping_)
-    {
-      return LS_ALIVE;
-    }
-
+    return LS_ALIVE;
 
   if ( this->liveliness_ == LS_ALIVE &&
        this->owner_->ping_interval() != ACE_Time_Value::zero )
@@ -269,12 +236,6 @@ LiveEntry::next_check (void) const
   return this->next_check_;
 }
 
-const char *
-LiveEntry::server_name (void) const
-{
-  return this->server_.c_str();
-}
-
 bool
 LiveEntry::validate_ping (bool &want_reping, ACE_Time_Value& next)
 {
@@ -282,7 +243,7 @@ LiveEntry::validate_ping (bool &want_reping, ACE_Time_Value& next)
       this->liveliness_ == LS_DEAD ||
       this->listeners_.size () == 0)
     {
-      if (ImR_Locator_i::debug () > 4)
+      if (ImR_Locator_i::debug () > 5)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("(%P|%t) LiveEntry::validate_ping, status ")
@@ -339,14 +300,6 @@ LiveEntry::validate_ping (bool &want_reping, ACE_Time_Value& next)
               }
             ACE_Time_Value next (ms / 1000, (ms % 1000) * 1000);
             this->next_check_ = now + next;
-            if (ImR_Locator_i::debug () > 4)
-              {
-                ORBSVCS_DEBUG ((LM_DEBUG,
-                                ACE_TEXT ("(%P|%t) LiveEntry::validate_ping, ")
-                                ACE_TEXT ("transient, reping in %d ms, ")
-                                ACE_TEXT ("server %C\n"),
-                                ms, this->server_.c_str()));
-              }
           }
         else
           {
@@ -379,15 +332,11 @@ LiveEntry::validate_ping (bool &want_reping, ACE_Time_Value& next)
 void
 LiveEntry::do_ping (PortableServer::POA_ptr poa)
 {
-  this->callback_ = new PingReceiver (this, poa);
-  PortableServer::ObjectId_var oid = poa->activate_object (this->callback_.in());
+  PortableServer::ServantBase_var callback = new PingReceiver (this, poa);
+  PortableServer::ObjectId_var oid = poa->activate_object (callback.in());
   CORBA::Object_var obj = poa->id_to_reference (oid.in());
   ImplementationRepository::AMI_ServerObjectHandler_var cb =
     ImplementationRepository::AMI_ServerObjectHandler::_narrow (obj.in());
-  {
-    ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
-    this->liveliness_ = LS_PING_AWAY;
-  }
   try
     {
       this->ref_->sendc_ping (cb.in());
@@ -397,6 +346,8 @@ LiveEntry::do_ping (PortableServer::POA_ptr poa)
                           ACE_TEXT ("(%P|%t) LiveEntry::do_ping, ")
                           ACE_TEXT ("sendc_ping returned OK\n")));
         }
+      ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
+      this->liveliness_ = LS_PING_AWAY;
     }
   catch (CORBA::Exception &ex)
     {
@@ -424,45 +375,9 @@ PingReceiver::~PingReceiver (void)
 }
 
 void
-PingReceiver::cancel (void)
-{
-  if (ImR_Locator_i::debug () > 4)
-    {
-      const char *server = "<not available>";
-      if (this->entry_ != 0)
-        {
-          server = this->entry_->server_name ();
-        }
-      ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) PingReceiver::cancel server = %s\n"),
-                      server));
-    }
-
-  this->entry_ = 0;
-  try
-    {
-      PortableServer::ObjectId_var oid = this->poa_->servant_to_id (this);
-      poa_->deactivate_object (oid.in());
-    }
-  catch (CORBA::Exception &ex)
-    {
-      if (ImR_Locator_i::debug () > 4)
-        {
-          ORBSVCS_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%P|%t) PingReceiver::cancel caught %C\n"),
-                          ex._name ()));
-        }
-    }
-}
-
-void
 PingReceiver::ping (void)
 {
-  if (this->entry_ != 0)
-    {
-      this->entry_->status (LS_ALIVE);
-      this->entry_->release_callback ();
-    }
+  this->entry_->status (LS_ALIVE);
   PortableServer::ObjectId_var oid = this->poa_->servant_to_id (this);
   poa_->deactivate_object (oid.in());
 }
@@ -482,38 +397,22 @@ PingReceiver::ping_excep (Messaging::ExceptionHolder * excep_holder)
         case TAO_POA_DISCARDING:
         case TAO_POA_HOLDING:
           {
-            if (this->entry_ != 0)
-              {
-                this->entry_->status (LS_TRANSIENT);
-                this->entry_->release_callback ();
-             }
+            this->entry_->status (LS_TRANSIENT);
             break;
           }
         default: //case TAO_INVOCATION_SEND_REQUEST_MINOR_CODE:
           {
-            if (this->entry_ != 0)
-              {
-                this->entry_->status (LS_DEAD);
-                this->entry_->release_callback ();
-             }
+            this->entry_->status (LS_DEAD);
           }
         }
     }
   catch (CORBA::TIMEOUT &)
     {
-      if (this->entry_ != 0)
-        {
-          this->entry_->status (LS_TIMEDOUT);
-          this->entry_->release_callback ();
-        }
+      this->entry_->status (LS_TIMEDOUT);
     }
   catch (CORBA::Exception &)
     {
-      if (this->entry_ != 0)
-        {
-          this->entry_->status (LS_DEAD);
-          this->entry_->release_callback ();
-        }
+      this->entry_->status (LS_DEAD);
     }
 
   PortableServer::ObjectId_var oid = this->poa_->servant_to_id (this);
@@ -523,74 +422,10 @@ PingReceiver::ping_excep (Messaging::ExceptionHolder * excep_holder)
 //---------------------------------------------------------------------------
 //---------------------------------------------------------------------------
 
-LC_TimeoutGuard::LC_TimeoutGuard (LiveCheck *owner, int token)
-  :owner_ (owner),
-   token_ (token),
-   blocked_ (owner->handle_timeout_busy_ == 0)
-{
-  if (!blocked_)
-    {
-      --owner_->handle_timeout_busy_;
-    }
-}
-
-LC_TimeoutGuard::~LC_TimeoutGuard (void)
-{
-  if (blocked_)
-    {
-      return;
-    }
-
-  ++owner_->handle_timeout_busy_;
-  if (owner_->want_timeout_)
-    {
-      ACE_Time_Value delay = ACE_Time_Value::zero;
-      if (owner_->deferred_timeout_ != ACE_Time_Value::zero)
-        {
-          ACE_Time_Value now (ACE_High_Res_Timer::gettimeofday_hr());
-          if (owner_->deferred_timeout_ > now)
-            delay = owner_->deferred_timeout_ - now;
-        }
-      ++owner_->token_;
-      if (ImR_Locator_i::debug () > 2)
-        {
-          ORBSVCS_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%P|%t) LC_TimeoutGuard(%d)::dtor,")
-                          ACE_TEXT ("scheduling new timeout(%d), delay = %d,%d\n"),
-                          this->token_, owner_->token_, delay.sec(), delay.usec()));
-        }
-      owner_->reactor()->schedule_timer (owner_,
-                                         reinterpret_cast<void *>(owner_->token_),
-                                         delay);
-      owner_->want_timeout_ = false;
-    }
-  else
-    {
-      if (ImR_Locator_i::debug () > 3)
-        {
-          ORBSVCS_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%P|%t) LC_TimeoutGuard(%d)::dtor,")
-                          ACE_TEXT ("no pending timeouts requested\n"),
-                          this->token_));
-        }
-    }
-}
-
-bool LC_TimeoutGuard::blocked (void)
-{
-  return this->blocked_;
-}
-
-//---------------------------------------------------------------------------
-//---------------------------------------------------------------------------
-
 LiveCheck::LiveCheck ()
   :ping_interval_(),
    running_ (false),
-   token_ (100),
-   handle_timeout_busy_ (1),
-   want_timeout_ (false),
-   deferred_timeout_ (0,0)
+   token_ (100)
 {
 }
 
@@ -650,17 +485,15 @@ LiveCheck::handle_timeout (const ACE_Time_Value &,
   if (!this->running_)
     return -1;
 
-  LC_TimeoutGuard tg (this, static_cast<int>(token));
-  if (tg.blocked ())
-    return 0;
-
+  bool want_reping = false;
+  ACE_Time_Value next;
   LiveEntryMap::iterator le_end = this->entry_map_.end();
   for (LiveEntryMap::iterator le = this->entry_map_.begin();
        le != le_end;
        ++le)
     {
       LiveEntry *entry = le->item ();
-      if (entry->validate_ping (this->want_timeout_, this->deferred_timeout_))
+      if (entry->validate_ping (want_reping, next))
         {
           entry->do_ping (poa_.in ());
           if (ImR_Locator_i::debug () > 2)
@@ -691,7 +524,7 @@ LiveCheck::handle_timeout (const ACE_Time_Value &,
       LiveEntry *entry = *pe;
       if (entry != 0)
         {
-          if (entry->validate_ping (this->want_timeout_, this->deferred_timeout_))
+          if (entry->validate_ping (want_reping, next))
             {
               entry->do_ping (poa_.in ());
             }
@@ -701,6 +534,22 @@ LiveCheck::handle_timeout (const ACE_Time_Value &,
               this->per_client_.remove (entry);
             }
         }
+    }
+
+
+  if (want_reping)
+    {
+      ACE_Time_Value now (ACE_High_Res_Timer::gettimeofday_hr());
+      ACE_Time_Value delay = next - now;
+      ++this->token_;
+      if (ImR_Locator_i::debug () > 2)
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%P|%t) LiveCheck::handle_timeout(%d),")
+                          ACE_TEXT (" want reping(%d), delay = %d,%d\n"),
+                          token, this->token_, delay.sec(), delay.usec()));
+        }
+      this->reactor()->schedule_timer (this, reinterpret_cast<void *>(this->token_), delay);
     }
 
   return 0;
@@ -765,18 +614,10 @@ LiveCheck::add_per_client_listener (LiveListener *l,
     {
       entry->add_listener (l);
 
-      if (this->handle_timeout_busy_ > 0)
-        {
-          ++this->token_;
-          this->reactor()->schedule_timer (this,
-                                           reinterpret_cast<void *>(this->token_),
-                                           ACE_Time_Value::zero);
-        }
-      else
-        {
-          this->want_timeout_ = true;
-          this->deferred_timeout_ = ACE_Time_Value::zero;
-        }
+      ++this->token_;
+      this->reactor()->schedule_timer (this,
+                                       reinterpret_cast<void *>(this->token_),
+                                       ACE_Time_Value::zero);
       return true;
     }
   return false;
@@ -798,7 +639,6 @@ LiveCheck::add_poll_listener (LiveListener *l)
 
   entry->add_listener (l);
   entry->reset_status ();
-  l->status_changed (entry->status());
   return this->schedule_ping (entry);
 }
 
@@ -834,38 +674,34 @@ LiveCheck::schedule_ping (LiveEntry *entry)
 
   ACE_Time_Value now (ACE_High_Res_Timer::gettimeofday_hr());
   ACE_Time_Value next = entry->next_check ();
-
-  if (this->handle_timeout_busy_ > 0)
+  ++this->token_;
+  if (next <= now)
     {
-      ACE_Time_Value delay = ACE_Time_Value::zero;
-      if (next > now)
-        {
-          delay = next - now;
-        }
-      ++this->token_;
       if (ImR_Locator_i::debug () > 2)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%P|%t) LiveCheck::schedule_ping (%d),")
+                          ACE_TEXT ("(%P|%t) LiveCheck::Schdedule_ping(%d),")
+                          ACE_TEXT (" immediate\n"),
+                          this->token_));
+        }
+
+      this->reactor()->schedule_timer (this,
+                                       reinterpret_cast<void *>(this->token_),
+                                       ACE_Time_Value::zero);
+    }
+  else
+    {
+      ACE_Time_Value delay = next - now;
+      if (ImR_Locator_i::debug () > 2)
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%P|%t) LiveCheck::Schdedule_ping(%d),")
                           ACE_TEXT (" delay = %d,%d\n"),
                           this->token_, delay.sec(), delay.usec()));
         }
       this->reactor()->schedule_timer (this,
                                        reinterpret_cast<void *>(this->token_),
                                        delay);
-    }
-  else
-    {
-      if (ImR_Locator_i::debug () > 2)
-        {
-          ORBSVCS_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%P|%t) LiveCheck::schedule_ping deferred")));
-        }
-      if (!this->want_timeout_ || next < this->deferred_timeout_)
-        {
-          this->want_timeout_ = true;
-          this->deferred_timeout_ = next;
-        }
     }
   return true;
 }

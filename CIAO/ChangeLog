@@ -1,13 +1,3 @@
-Thu May 30 15:31:48 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * tests/CIF/Events/client.cpp:
-          Removed dead code
-
-Mon May 27 10:18:33 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * NEWS:
-          Updates in preparation of releasing x.2.0
-
 Mon May 27 10:09:24 CEST 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * CIAO version 1.2.0 released.
