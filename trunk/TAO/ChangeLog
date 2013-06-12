@@ -1,3 +1,9 @@
+Wed Jun 12 13:03:47 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/IPV6/run_test.pl:
+
+          Remove the verbose debugging, it is no longer needed.
+
 Mon Jun 10 21:03:58 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/tests/ImplRepo/ping_interrupt/server_interceptor.cpp:
