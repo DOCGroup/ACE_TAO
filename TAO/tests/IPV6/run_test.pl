@@ -61,8 +61,8 @@ $client_arg = "-k file://$client_iorfile ";
          url_address => "",
      },{
          description => "Testing IPV4 server with client and URL-style IOR",
-         server => "$server_arg -ORBDebuglevel 10 -ORBListenEndpoints iiop://0.0.0.0 -ORBObjRefStyle url",
-         client => "$client_arg -ORBDebuglevel 10",
+         server => "$server_arg -ORBListenEndpoints iiop://0.0.0.0 -ORBObjRefStyle url",
+         client => "$client_arg",
          error => 0,
          url => 0,
          url_address => "",
