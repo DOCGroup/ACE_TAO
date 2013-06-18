@@ -213,7 +213,6 @@ protected:
   /// Indicates the state of the queue, which can be
   /// <ACTIVATED>, <DEACTIVATED>, or <PULSED>.
   int state_;
-
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
