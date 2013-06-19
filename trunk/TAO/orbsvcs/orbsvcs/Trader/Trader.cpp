@@ -123,7 +123,7 @@ TAO_Trader_Base::is_valid_identifier_name (const char* ident)
       }
 
     size_t length =
-      pos ? pos - ident : ACE_OS::strlen (ident);
+      pos ? static_cast<size_t>(pos - ident) : ACE_OS::strlen (ident);
 
     if (length >= 1 && ACE_OS::ace_isalpha (ident[0]))
       {

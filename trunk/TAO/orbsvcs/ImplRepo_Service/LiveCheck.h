@@ -75,12 +75,6 @@ class Locator_Export LiveListener
 
   virtual ~LiveListener (void);
 
-  /// sets the initial status volue, set by entry during an add_listener call
-  void entry (const LiveEntry *entry);
-
-  /// Query the status of the associated entry
-  LiveStatus status (void) const;
-
   /// called by the asynch ping receiver when a reply or an exception
   /// is received. Returns true if finished listening
   virtual bool status_changed (LiveStatus status) = 0;
