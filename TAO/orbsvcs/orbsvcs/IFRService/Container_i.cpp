@@ -692,8 +692,8 @@ TAO_Container_i::describe_contents_i (CORBA::DefinitionKind limit_type,
   else
     {
       ret_len = length < static_cast<CORBA::ULong> (max_returned_objs)
-                ? length
-                : max_returned_objs;
+        ? length
+        : static_cast<CORBA::ULong> (max_returned_objs);
     }
 
   CORBA::Container::DescriptionSeq *desc_seq;

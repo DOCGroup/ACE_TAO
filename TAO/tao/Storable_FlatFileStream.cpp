@@ -122,6 +122,7 @@ TAO::Storable_FlatFileStream::Storable_FlatFileStream (const ACE_CString & file,
                                                        const char * mode,
                                                        bool use_backup)
   : Storable_Base(use_backup)
+  , filelock_ ()
   , fl_ (0)
   , file_(file)
   , mode_(mode)
