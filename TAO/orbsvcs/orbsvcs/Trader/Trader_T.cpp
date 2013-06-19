@@ -277,8 +277,8 @@ TAO_Link_Attributes<IF>::max_link_follow_policy (void)
 
 template <class ELEMENT_TYPE> int
 TAO_Element_Equal<ELEMENT_TYPE>::
-operator () (TAO_DynSequence_i& dyn_any,
-             const ELEMENT_TYPE& element)
+operator () (TAO_DynSequence_i& ,
+             const ELEMENT_TYPE&)
 {
   return 1;
 }

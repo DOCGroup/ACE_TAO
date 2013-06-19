@@ -12,7 +12,7 @@ TAO::HTIOP::Connect_Creation_Strategy<SVC_HANDLER>::
 Connect_Creation_Strategy (ACE_Thread_Manager* t,
                                      TAO_ORB_Core *orb_core,
                                      void *arg,
-                                     CORBA::Boolean flag)
+                                     CORBA::Boolean )
   : ACE_Creation_Strategy <SVC_HANDLER> (t),
     orb_core_ (orb_core),
     arg_ (arg)

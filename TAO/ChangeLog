@@ -1,3 +1,32 @@
+Wed Jun 19 22:41:28 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * NEWS:
+
+          Add a comment about IMR List function fix.
+
+        * orbsvcs/ImplRepo_Service/LiveCheck.h:
+
+          removed unreferenced/unimplemented signatures.
+
+        * orbsvcs/orbsvcs/FtRtecEventChannelAdmin.idl:
+
+          Cleaning up scoreboard warning. The best fix would be to replace
+          the union with a struct, since there is only the one member, but I
+          went with a non-boolean union (to shut up the clang compiler) to
+          ensure the generated code kept the same acccessor operations.
+          Changing to a struct would be more efficient, but represents an
+          interface change that might break existing code.
+
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Connector_Impl.cpp:
+        * orbsvcs/orbsvcs/IFRService/Container_i.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Mcast_Transport.cpp:
+        * orbsvcs/orbsvcs/Trader/Trader.cpp:
+        * orbsvcs/orbsvcs/Trader/Trader_T.cpp:
+        * orbsvcs/tests/ImplRepo/servers_list/server.cpp:
+        * tao/Storable_FlatFileStream.cpp:
+
+          Clean up various scoreboard warnings.
+
 Wed Jun 12 13:03:47 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/IPV6/run_test.pl:

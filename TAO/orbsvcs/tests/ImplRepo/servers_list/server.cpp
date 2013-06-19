@@ -114,6 +114,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     // to avoid forwarding requests back to the ImR.
 
     TAO_Root_POA* tpoa = dynamic_cast<TAO_Root_POA*>(test_poa.in());
+    ACE_ASSERT (tpoa != 0);
+
     obj = tpoa->id_to_reference_i(object_id.in(), false);
     CORBA::String_var test_ior = orb->object_to_string(obj.in());
     obj = orb->resolve_initial_references("IORTable");

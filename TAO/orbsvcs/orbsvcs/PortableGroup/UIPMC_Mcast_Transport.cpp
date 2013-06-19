@@ -328,8 +328,8 @@ TAO_UIPMC_Mcast_Transport::recv_all (TAO_Resume_Handle &rh)
 
           ACE_INET_Addr from_addr;
           CORBA::UShort packet_length;
-          CORBA::ULong packet_number;
-          bool stop_packet;
+          CORBA::ULong packet_number = 0;
+          bool stop_packet = false;
           u_long id_hash;
 
           char *start_data =
