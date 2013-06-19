@@ -70,7 +70,9 @@ List_Node::List_Node (char *k, int len)
     length (len),
     slot (0)
 {
-  char *ptr = new char[(option[ALLCHARS] ? len : option.max_keysig_size ()) + 1];
+  char *ptr = new char[(option[ALLCHARS] ?
+                        static_cast<u_int>(len) :
+                        option.max_keysig_size ()) + 1];
   keysig = ptr;
   k[len] = '\0';             // Null terminate KEY to separate it from REST.
 
