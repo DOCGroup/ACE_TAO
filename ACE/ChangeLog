@@ -1,3 +1,10 @@
+Thu Jun 20 16:24:03 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * protocols/ace/INet/FTP_Response.h:
+
+          Change the name of the "NONE" value in the status subtype enum
+          to avoid a conflict on VxWorks builds.
+
 Wed Jun 19 22:33:03 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/Filecache.h:
