@@ -84,7 +84,7 @@ namespace ACE
                 INFORMATION = 1,
                 CONNECTION = 2,
                 AUTHENTICATION = 3,
-                NONE = 4,
+                SUBTYPE_NONE = 4,  // "NONE" conflicts with a macro on VxWorks.
                 FILESYSTEM = 5
               };
 
