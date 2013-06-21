@@ -84,12 +84,15 @@ run_main (int, ACE_TCHAR *[])
       ACE_ERROR((LM_ERROR,
                  ACE_TEXT("dynamic_cast returns null, expected value\n")));
     }
-  d1->value = 42;
-  if (d.value != 42)
+  else
     {
-      ACE_ERROR((LM_ERROR,
-                 ACE_TEXT("Wrong value after dynamic_cast, expected %d, got %d\n"),
-                 42, d.value));
+      d1->value = 42;
+      if (d.value != 42)
+        {
+          ACE_ERROR((LM_ERROR,
+                    ACE_TEXT("Wrong value after dynamic_cast, expected %d, got %d\n"),
+                    42, d.value));
+        }
     }
 
   // Make sure dynamic cast detects invalid casts
