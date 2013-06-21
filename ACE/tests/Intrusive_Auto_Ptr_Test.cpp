@@ -28,7 +28,7 @@ class One {
   int ref;
 
 public:
-  One (int refcount): ref(refcount)
+  One (int refcount) : m2(0), ref(refcount)
   {
     released = false;
   }
