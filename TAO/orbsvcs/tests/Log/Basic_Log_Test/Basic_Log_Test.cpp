@@ -14,7 +14,7 @@ const char* BasicLog_Test::basic_log_factory_name_= "BasicLogFactory";
 const char* BasicLog_Test::naming_sevice_name_ = "NameService";
 
 BasicLog_Test::BasicLog_Test(void)
-  : logServiceIor_ (0)
+  : argc_ (0), argv_(0), logServiceIor_ (0)
 {
 }
 
