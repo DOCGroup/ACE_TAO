@@ -1,3 +1,8 @@
+Fri Jun 21 07:42:50 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Log/Basic_Log_Test/Basic_Log_Test.cpp:
+          Fixed coverity reported error
+
 Wed Jun 19 22:41:28 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * NEWS:
