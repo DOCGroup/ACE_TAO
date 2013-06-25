@@ -1,3 +1,9 @@
+Tue Jun 25 16:50:15 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/orbsvcs/FtRtecEventChannelAdmin.idl:
+
+          further refinement to warning-generating IDL.
+
 Fri Jun 21 07:42:50 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Log/Basic_Log_Test/Basic_Log_Test.cpp:
