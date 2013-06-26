@@ -1,5 +1,5 @@
 // $Id$
-  //FUZZ: disable check_for_lack_ACE_OS
+//FUZZ: disable check_for_lack_ACE_OS
 
 #include <iostream>
 #include <assert.h>
@@ -14,7 +14,6 @@
 // platform-specific ones.
 //
 // This test has not been made to work on Windows and vxWorks, yet ...
-
 
 #if defined (ACE_HAS_THREADS)
 #  define CAN_USE_THREADS
@@ -134,9 +133,6 @@ void* unloadDll(void*)
   PRINTF ("unloadDll - leaving\n");
   return 0;
 }
-
-
-
 
 void * loadunloadDll(void *pp)
 {
