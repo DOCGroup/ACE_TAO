@@ -1720,8 +1720,8 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   const char* thr_name (void);
 
-  // Stores a string version of the current thread id into buffer and
-  // returns the size of this thread id in bytes.
+  /// Stores a string version of the current thread id into buffer and
+  /// returns the size of this thread id in bytes.
   ACE_NAMESPACE_INLINE_FUNCTION
   ssize_t thr_id (char buffer[], size_t buffer_length);
 
