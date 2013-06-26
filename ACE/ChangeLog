@@ -1,3 +1,8 @@
+Wed Jun 26 11:32:43 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/coverity_profile.txt:
+          Added coverity profile
+
 Tue Jun 25 18:13:02 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_Thread.h:
