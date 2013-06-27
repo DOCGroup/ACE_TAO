@@ -1,3 +1,13 @@
+Thu Jun 27 09:50:25 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Service_Config_Test.cpp:
+          Extended this test to run the usage of service config
+          with multiple threads to check if we don't leak any TSS keys
+          on Windows when ACE is used from a non ACE thread. With
+          this addition I couldn't reproduce bugzilla 1797, but I still
+          have to double check if the TSS is really triggered by
+          my test addition
+
 Wed Jun 26 14:20:47 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/coverity_profile.txt:
