@@ -658,6 +658,7 @@ testNonACEThread ()
   if (thr_h == 0)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("_beginthreadex")));
+      ++error;
     }
   else
     {
@@ -671,6 +672,7 @@ testNonACEThread ()
     {
       errno = status;
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("pthread_create")));
+      ++error;
     }
   else
     {
@@ -680,10 +682,12 @@ testNonACEThread ()
 
   if (error != errors_before)  // The test failed; see if we can still see it
     {
-      if (0 != ACE_Service_Config::instance()->find
-          (ACE_TEXT ("Test_Object_1_Thr")))
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("Main thr %t cannot find Test_Object_1_Thr\n")));
+      if (0 != ACE_Service_Config::instance()->find (ACE_TEXT ("Test_Object_1_Thr")))
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Main thr %t cannot find Test_Object_1_Thr\n")));
+          ++error;
+        }
       else
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("Main thr %t DOES find Test_Object_1_Thr\n")));
@@ -695,9 +699,11 @@ testNonACEThread ()
                   ACE_TEXT ("%p\n"),
                   ACE_TEXT ("Error removing service")));
       ++error;
-      return;
     }
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Non-ACE thread lookup test completed\n")));
+  else
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Non-ACE thread lookup test completed\n")));
+    }
 }
 #endif /* ACE_HAS_WTHREADS || ACE_HAS_PTHREADS */
 
@@ -714,7 +720,16 @@ run_main (int argc, ACE_TCHAR *argv[])
   testLimits (argc, argv);
   testrepository (argc, argv);
 #if defined (ACE_HAS_WTHREADS) || defined (ACE_HAS_PTHREADS)
-  testNonACEThread();
+  unsigned int n_threads = 64;
+#if defined (ACE_DEFAULT_THREAD_KEYS)
+  n_threads = 2 * ACE_DEFAULT_THREAD_KEYS;
+#endif
+  // Test with a large amount of threads to determine whether
+  // TSS works correctly with non ACE threads
+  for (unsigned int i = 0 ; i < n_threads; i++)
+    {
+      testNonACEThread();
+    }
 #endif
 
   ACE_END_TEST;
