@@ -30,6 +30,7 @@ module FtRtecEventChannelAdmin
 
   union ProxyPushConsumerConnectionParamter switch (short)
   {
+  case 0:
   default:
     ProxyPushConsumerConnectionInfo info;
   };

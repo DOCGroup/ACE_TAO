@@ -1,3 +1,9 @@
+Thu Jun 27 16:27:29 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/orbsvcs/FtRtecEventChannelAdmin.idl:
+
+          Missed the other warning-generating IDL change.
+
 Tue Jun 25 16:50:15 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/orbsvcs/FtRtecEventChannelAdmin.idl:
