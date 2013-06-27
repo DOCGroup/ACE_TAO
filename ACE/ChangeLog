@@ -1,3 +1,8 @@
+Thu Jun 27 17:03:05 UTC 2013  Huang-Ming Huang  <huangh@ociweb.com>
+
+        * ace/Log_Category.h:
+          Refine the class documentation to avoid confusion. 
+
 Thu Jun 27 09:50:25 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Service_Config_Test.cpp:
