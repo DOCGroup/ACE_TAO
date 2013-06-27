@@ -183,7 +183,14 @@ private:
  * This class added another level of abstraction to
  * @c ACE_Log_Msg to separate log messages into different
  * categories. Logs in different categories can be independently
- * enabled or disabled. Each cateogry can have a name which
+ * enabled or disabled. However, they will all be affected by the
+ * priority_mask setting in ACE_Log_Msg. That is to say, if a
+ * given priority level is disabled using @c ACE_Log_Msg::priority_mask(),
+ * all messages of that priority level logged via any @c ACE_Log_Category
+ * object would also be disabled regardless of the @c priority_mask
+ * setting in the  @c ACE_Log_Category object.
+ *
+ * Each cateogry can have a name which
  * is fixed at construction. The name is not used for
  * formating the messages. However, it can be used by a
  * message backend object for identification and reformat
