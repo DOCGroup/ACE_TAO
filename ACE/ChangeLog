@@ -6,7 +6,8 @@ Fri Jun 28 09:34:03 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 Thu Jun 27 17:03:05 UTC 2013  Huang-Ming Huang  <huangh@ociweb.com>
 
         * ace/Log_Category.h:
-          Refine the class documentation to avoid confusion.
+          Refine the class documentation to avoid confusion.  Thanks to 
+          Piotr Kow <pkow88776 at onet dot pl> for motivating this.
 
 Thu Jun 27 09:50:25 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -16,7 +17,7 @@ Thu Jun 27 09:50:25 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
           on Windows when ACE is used from a non ACE thread. With
           this addition I couldn't reproduce bugzilla 1797, but I still
           have to double check if the TSS is really triggered by
-          my test addition
+          my test addition.
 
 Wed Jun 26 14:20:47 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
