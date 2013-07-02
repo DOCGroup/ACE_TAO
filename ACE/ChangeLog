@@ -1,3 +1,10 @@
+Tue Jul  2 20:52:26 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * contrib/minizip/zip.c:
+        * performance-tests/UDP/udp_test.cpp:
+
+          Minor coverity fixes.
+
 Fri Jun 28 09:34:03 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/vc12nmake.mpb:
@@ -6,7 +13,7 @@ Fri Jun 28 09:34:03 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 Thu Jun 27 17:03:05 UTC 2013  Huang-Ming Huang  <huangh@ociweb.com>
 
         * ace/Log_Category.h:
-          Refine the class documentation to avoid confusion.  Thanks to 
+          Refine the class documentation to avoid confusion.  Thanks to
           Piotr Kow <pkow88776 at onet dot pl> for motivating this.
 
 Thu Jun 27 09:50:25 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>

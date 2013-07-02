@@ -932,8 +932,8 @@ extern MINIZIP_EXPORT int zipWriteInFileInZip (zipFile file,const void* buf,unsi
         {
           if (zipFlushWriteBuffer(zi) == ZIP_ERRNO)
             err = ZIP_ERRNO;
-            zi->ci.stream.avail_out = (uInt)Z_BUFSIZE;
-            zi->ci.stream.next_out = zi->ci.buffered_data;
+          zi->ci.stream.avail_out = (uInt)Z_BUFSIZE;
+          zi->ci.stream.next_out = zi->ci.buffered_data;
         }
 
 
