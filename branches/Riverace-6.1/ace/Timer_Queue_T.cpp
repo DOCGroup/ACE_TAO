@@ -120,6 +120,8 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::calculate_timeout (ACE_
   if (the_timeout == 0)
     return 0;
 
+  ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, max_wait_time));
+
   if (this->is_empty ())
     {
       // Nothing on the Timer_Queue, so use whatever the caller gave us.
