@@ -15,7 +15,7 @@
 
 
 #ifndef _BE_VISITOR_OPERATION_RETTYPE_RETURN_CS_H_
-#define _BE_VISITOR_OPERATION_RETTYPE_CS_H_
+#define _BE_VISITOR_OPERATION_RETTYPE_RETURN_CS_H_
 
 // ************************************************************
 // Operation visitor for returning the return val

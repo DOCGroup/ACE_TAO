@@ -1,3 +1,12 @@
+Wed Jul 24 14:55:23 UTC 2013  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be_include/be_visitor_operation/rettype_return_cs.h:
+        * TAO_IDL/be_include/be_visitor_valuetype/field_cdr_cs.h:
+
+          Fixed bad #ifndef include guards in source code. Thanks to
+          Yogesh Sharma <Yogesh dot Sharma at saabsensis dot com> for
+          reporting the bug and supplying a patch. Closes [BUGID:4117].
+
 Mon Jul  1 16:50:09 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/orbsvcs/LoadBalancing/LB_Random.cpp:
