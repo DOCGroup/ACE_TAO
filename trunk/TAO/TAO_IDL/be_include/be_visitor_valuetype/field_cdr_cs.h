@@ -13,8 +13,8 @@
 //=============================================================================
 
 
-#ifndef _BE_VISITOR_VALUETYPE_FIELD_CDR_C_H_
-#define _BE_VISITOR_VALUETYPE_FIELD_CDR_CI_H_
+#ifndef _BE_VISITOR_VALUETYPE_FIELD_CDR_CS_H_
+#define _BE_VISITOR_VALUETYPE_FIELD_CDR_CS_H_
 
 #include "be_visitor_scope.h"
 
@@ -123,4 +123,4 @@ public:
   virtual int visit_typedef (be_typedef *node);
 };
 
-#endif /*  _BE_VISITOR_VALUETYPE_FIELD_CDR_CI_H_ */
+#endif /*  _BE_VISITOR_VALUETYPE_FIELD_CDR_CS_H_ */
