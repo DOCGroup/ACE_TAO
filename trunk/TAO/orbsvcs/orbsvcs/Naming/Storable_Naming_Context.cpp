@@ -596,6 +596,8 @@ TAO_Storable_Naming_Context::rebind (const CosNaming::Name& n,
       // This had been a read on the file so now we are done with it
       flck.release();
 
+      ace_mon.release ();
+
       CosNaming::NamingContext_var context =
         get_context (n);
 
@@ -648,7 +650,7 @@ TAO_Storable_Naming_Context::bind_context (const CosNaming::Name &n,
                       CORBA::INTERNAL ());
 
   // Open the backing file
-  File_Open_Lock_and_Check flck(this, name_len > 1 ? SFG::ACCESSOR : SFG::MUTATOR);
+  File_Open_Lock_and_Check flck (this, name_len > 1 ? SFG::ACCESSOR : SFG::MUTATOR);
 
   // Check to make sure this object didn't have <destroy> method
   // invoked on it.
@@ -661,7 +663,9 @@ TAO_Storable_Naming_Context::bind_context (const CosNaming::Name &n,
   if (name_len > 1)
     {
       // This had been a read on the file so now we are done with it
-      flck.release();
+      flck.release ();
+
+      ace_mon.release ();
 
       CosNaming::NamingContext_var context =
         get_context (n);
@@ -708,7 +712,7 @@ TAO_Storable_Naming_Context::rebind_context (const CosNaming::Name &n,
                       CORBA::INTERNAL ());
 
   // Open the backing file
-  File_Open_Lock_and_Check flck(this, name_len > 1 ? SFG::ACCESSOR : SFG::MUTATOR);
+  File_Open_Lock_and_Check flck (this, name_len > 1 ? SFG::ACCESSOR : SFG::MUTATOR);
 
   // Check to make sure this object didn't have <destroy> method
   // invoked on it.
@@ -721,7 +725,9 @@ TAO_Storable_Naming_Context::rebind_context (const CosNaming::Name &n,
   if (name_len > 1)
     {
       // This had been a read on the file so now we are done with it
-      flck.release();
+      flck.release ();
+
+      ace_mon.release ();
 
       CosNaming::NamingContext_var context =
         get_context (n);
@@ -762,36 +768,36 @@ TAO_Storable_Naming_Context::resolve (const CosNaming::Name& n)
   if (name_len == 0)
     throw CosNaming::NamingContext::InvalidName();
 
-  // we didn't need a lock to check the input arg, but now we do
-  ACE_GUARD_THROW_EX (ACE_SYNCH_RECURSIVE_MUTEX, ace_mon, this->lock_,
-                      CORBA::INTERNAL ());
-
-  // Open the backing file
-  File_Open_Lock_and_Check flck(this, SFG::ACCESSOR);
-
-  // Check to make sure this object didn't have <destroy> method
-  // invoked on it.
-  if (this->destroyed_)
-    throw CORBA::OBJECT_NOT_EXIST ();
-
-  // Resolve the first component of the name.
-  flck.release();
-
   // Stores the binding type for the first name component.
   CosNaming::BindingType type;
   // Stores the object reference bound to the first name component.
-  CORBA::Object_ptr obj = CORBA::Object::_nil ();
+  CORBA::Object_var result;
 
-  if (this->context_->find (n[0].id,
-                            n[0].kind,
-                            obj,
-                            type) == -1)
-    throw CosNaming::NamingContext::NotFound(
-      CosNaming::NamingContext::missing_node,
-      n);
+  {
+    // we didn't need a lock to check the input arg, but now we do
+    ACE_GUARD_THROW_EX (ACE_SYNCH_RECURSIVE_MUTEX, ace_mon, this->lock_,
+                        CORBA::INTERNAL ());
 
-  // Store the value in var to avoid memory leaks.
-  CORBA::Object_var result = obj;
+    // Open the backing file
+    File_Open_Lock_and_Check flck (this, SFG::ACCESSOR);
+
+    // Check to make sure this object didn't have <destroy> method
+    // invoked on it.
+    if (this->destroyed_)
+      throw CORBA::OBJECT_NOT_EXIST ();
+
+    // Resolve the first component of the name.
+    flck.release();
+
+    if (this->context_->find (n[0].id,
+                              n[0].kind,
+                              result.out (),
+                              type) == -1)
+      {
+        throw CosNaming::NamingContext::NotFound
+          (CosNaming::NamingContext::missing_node, n);
+      }
+  }
 
   // If the name we have to resolve is a compound name, we need to
   // resolve it recursively.
@@ -856,8 +862,8 @@ TAO_Storable_Naming_Context::unbind (const CosNaming::Name& n)
                       CORBA::INTERNAL ());
 
   // Open the backing file
-  File_Open_Lock_and_Check flck(this, name_len > 1 ?
-                                SFG::ACCESSOR : SFG::MUTATOR);
+  File_Open_Lock_and_Check flck (this, name_len > 1 ?
+                                 SFG::ACCESSOR : SFG::MUTATOR);
 
   // Check to make sure this object didn't have <destroy> method
   // invoked on it.
@@ -870,7 +876,9 @@ TAO_Storable_Naming_Context::unbind (const CosNaming::Name& n)
   if (name_len > 1)
     {
       // This had been a read on the file so now we are done with it
-      flck.release();
+      flck.release ();
+
+      ace_mon.release ();
 
       CosNaming::NamingContext_var context =
         get_context (n);
@@ -916,8 +924,8 @@ TAO_Storable_Naming_Context::bind_new_context (const CosNaming::Name& n)
     throw CORBA::OBJECT_NOT_EXIST ();
 
   // Open the backing file
-  File_Open_Lock_and_Check flck(this, name_len > 1 ?
-                                SFG::ACCESSOR : SFG::MUTATOR);
+  File_Open_Lock_and_Check flck (this, name_len > 1 ?
+                                 SFG::ACCESSOR : SFG::MUTATOR);
 
   // Check to make sure this object didn't have <destroy> method
   // invoked on it.
@@ -930,7 +938,9 @@ TAO_Storable_Naming_Context::bind_new_context (const CosNaming::Name& n)
   if (name_len > 1)
     {
       // This had been a read on the file so now we are done with it
-      flck.release();
+      flck.release ();
+
+      ace_mon.release ();
 
       CosNaming::NamingContext_var context =
         get_context (n);
@@ -997,10 +1007,7 @@ TAO_Storable_Naming_Context::destroy (void)
     throw CosNaming::NamingContext::NotEmpty();
 
   // Destroy is a no-op on a root context.
-  if (root ())
-    return;
-
-  else
+  if (!root ())
     {
       this->destroyed_ = 2;
 
@@ -1039,7 +1046,7 @@ TAO_Storable_Naming_Context::is_obsolete (time_t stored_time)
 
 void
 TAO_Storable_Naming_Context::bind (const CosNaming::Name& n,
-                               CORBA::Object_ptr obj)
+                                   CORBA::Object_ptr obj)
 {
   ACE_TRACE("TAO_Storable_Naming_Context::bind");
   // Get the length of the name.
@@ -1070,9 +1077,10 @@ TAO_Storable_Naming_Context::bind (const CosNaming::Name& n,
     {
       // This had been a read on the file so now we are done with it
       flck.release();
+      // Need to release the lock before nested invocation
+      ace_mon.release();
 
-      CosNaming::NamingContext_var context =
-        get_context (n);
+      CosNaming::NamingContext_var context = get_context (n);
 
       CosNaming::Name simple_name;
       simple_name.length (1);
