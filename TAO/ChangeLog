@@ -1,3 +1,10 @@
+Mon Jul 29 20:10:32 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/tests/Bug_4118_Regression/README:
+        * orbsvcs/tests/Bug_4118_Regression/run_test.pl:
+
+          Added a readme file and cleaned up the test script.
+
 Mon Jul 29 16:22:16 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp:
