@@ -1,3 +1,20 @@
+Mon Jul 29 16:22:16 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp:
+
+          fix for Bug 4118. The context held on to a lock too long
+          and in certain situations this could cause a deadlock.
+
+        * orbsvcs/tests/Bug_4118_Regression/run_test.pl:
+
+          This is a test that verifies the fix is effective. The test
+          should run quickly if all is well, but will fail with a timeout
+          if the deadlock reappears.
+
+        * bin/tao_other_tests.lst:
+
+          Added new regression test to the list.
+
 Wed Jul 24 14:55:23 UTC 2013  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be_include/be_visitor_operation/rettype_return_cs.h:
