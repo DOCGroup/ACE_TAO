@@ -1,3 +1,11 @@
+Tue Jul 30 15:38:17 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/tests/Bug_4118_Regression/run_test.pl:
+
+          Make the script run $ACE_ROOT/bin/tao_nsadd, since some
+          windows builds just put it there rather than the build
+          directory.
+
 Mon Jul 29 20:10:32 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/tests/Bug_4118_Regression/README:
