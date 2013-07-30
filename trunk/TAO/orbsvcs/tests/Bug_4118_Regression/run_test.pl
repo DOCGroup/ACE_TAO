@@ -64,7 +64,7 @@ sub start_name_server
 sub nsadd
 {
     my $args = "--ns file://$test_iorfile "."@_"." ";
-    my $prog = "$startdir/../../../utils/nslist/tao_nsadd";
+    my $prog = "$ENV{ACE_ROOT}/bin/tao_nsadd";
 
     $CL = $test->CreateProcess ("$prog", "$args");
 
