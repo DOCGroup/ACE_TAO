@@ -169,15 +169,15 @@ TAO_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *sh,
 
       if (TAO_debug_level > 0)
          {
-           const ACE_TCHAR *error = 0;
+           const ACE_TCHAR *error_message = 0;
            if (f->activate_server_connections ())
-             error = ACE_TEXT("could not activate new connection");
+             error_message = ACE_TEXT("could not activate new connection");
            else
-             error = ACE_TEXT("could not register new connection in the reactor");
+             error_message = ACE_TEXT("could not register new connection in the reactor");
 
            TAOLIB_ERROR ((LM_ERROR,
                        ACE_TEXT("TAO (%P|%t) - Concurrency_Strategy::activate_svc_handler, ")
-                       ACE_TEXT("%s\n"), error));
+                       ACE_TEXT("%s\n"), error_message));
          }
 
       return -1;
