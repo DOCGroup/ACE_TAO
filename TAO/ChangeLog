@@ -1,3 +1,9 @@
+Wed Jul 31 17:39:26 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Acceptor_Impl.cpp:
+          Rename local variable to not trigger any false errors
+          on the scoreboard
+
 Tue Jul 30 15:38:17 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/tests/Bug_4118_Regression/run_test.pl:
