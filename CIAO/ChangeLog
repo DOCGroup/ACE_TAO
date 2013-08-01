@@ -1,3 +1,544 @@
+Thu Aug  1 11:49:07 UTC 2013  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/Bug_3769_Regression/Foo.idl:
+        * tests/Bug_3769_Regression/Foo_exec.h:
+        * tests/Bug_3769_Regression/Foo_exec.cpp:
+
+        * tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
+
+          Added extended tests for array attributes. Expanded the 
+          Bug_3769_Regression to test this. Added some more attributes
+          to test more cases.
+          Log:
+              commit d76669ffd4319f509fb70a23357bc625bd439394
+              Author: Johnny Willemsen <jwillemsen@remedy.nl>
+              Date:   Thu Aug 1 13:03:49 2013 +0200
+
+                        Removed commented out code (issue #1551)
+                      * DAnCE/tools/Config_Handlers/DynAny_Handler/DynAlias_Handler.cpp:
+
+              commit c48685af6b186881a3dd5c04e3f81bebc594a3c6
+              Author: Marcel Smit <msmit@remedy.nl>
+              Date:   Thu Aug 1 11:57:18 2013 +0200
+
+                  Changes after review
+                  (refs #1551)
+                  
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
+                        Fixed some faulty error logs.
+                  
+                      * CIAO/tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
+                        Removed commented out code.
+                  
+                      * DAnCE/tools/Config_Handlers/DynAny_Handler/DynArray_Handler.cpp:
+                        Fixed logging.
+
+              commit 332899620e9b6eaf272f69eff58daf9d8efbd54f
+              Author: Marcel Smit <msmit@remedy.nl>
+              Date:   Thu Aug 1 11:03:04 2013 +0200
+
+                  Removed commented out code
+                  (refs #1551)
+                  
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
+
+              commit 9ee6750d39e778a291333c09ec5520add22ab102
+              Author: Marcel Smit <msmit@remedy.nl>
+              Date:   Thu Aug 1 10:02:20 2013 +0200
+
+                  Fixed compile issues on windows by disabling the long double. Added
+                  comments.
+                  (refs #1551)
+                  
+                      * DAnCE/tools/Config_Handlers/DynAny_Handler/DynAny_Handler.cpp:
+
+              commit 075179c1cdf06b39d53bddba009a32285e3bf7ad
+              Author: Marcel Smit <msmit@remedy.nl>
+              Date:   Thu Aug 1 09:35:20 2013 +0200
+
+                  Documented why chars and long doubles are not supported.
+                  Removed defaults in arguments of check_array.
+                  (refs #1551)
+                  
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
+
+              commit 1c90d97e9afceeebad6a71fc5c879cf2d4839f28
+              Author: Marcel Smit <msmit@remedy.nl>
+              Date:   Thu Aug 1 09:20:26 2013 +0200
+
+                  Removed TODO list.
+                  (refs #1551)
+                  
+                      * CIAO/tests/Bug_3769_Regression/Foo.idl:
+
+              commit c781f16d4730a6f5a493fc7df52786d5ffb03f14
+              Author: Marcel Smit <msmit@remedy.nl>
+              Date:   Wed Jul 31 10:16:55 2013 +0200
+
+                  Layout changes.
+                  (refs #1551)
+                  
+                      * CIAO/tests/Bug_3769_Regression/Foo.idl:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.h:
+
+              commit 72a9515e4c3e3ee403283711eb3f01cb61299caf
+              Author: Marcel Smit <msmit@remedy.nl>
+              Date:   Wed Jul 31 10:02:21 2013 +0200
+
+                  Added a test for sequences in arrays.
+                  (refs #1551)
+                  
+                      * CIAO/tests/Bug_3769_Regression/Foo.idl:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.h:
+                      * CIAO/tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
+
+              commit a6e12df7fe89528a5b168e820590488b053dc062
+              Author: Marcel Smit <msmit@remedy.nl>
+              Date:   Wed Jul 31 09:32:33 2013 +0200
+
+                  Added a sequence of arrays to test.
+                  (refs #1551)
+                  
+                      * CIAO/tests/Bug_3769_Regression/Foo.idl:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.h:
+                      * CIAO/tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
+
+              commit 6422409ab6f5ec56e998b1a570aee3234a5edafd
+              Author: Marcel Smit <msmit@remedy.nl>
+              Date:   Wed Jul 31 08:44:22 2013 +0200
+
+                  Disabled long doubles since a longdouble is defined in the xsd as double.
+                  We are then creating a long double initialized from a regular
+                  double. This is a very tricky conversion and doesn't work in
+                  combination with certain (versions of) compilers.
+                  (refs #1551)
+                  
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.h:
+                      * CIAO/tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
+                        Removed long double checks
+                  
+                      * DAnCE/tools/Config_Handlers/DynAny_Handler/DynAny_Handler.cpp:
+                        Don't assign the type code in case a long double. Added comments
+                        above.
+
+              commit d539f68dc768da7032f08a9f3ae2537bd1fabe1a
+              Author: Marcel Smit <msmit@remedy.nl>
+              Date:   Tue Jul 30 20:36:49 2013 +0200
+
+                  Updated todo list.
+                  (refs #1551)
+                  
+                      * CIAO/tests/Bug_3769_Regression/Foo.idl:
+
+              commit 4160bc932f390e837244eb800dea190f272bcb85
+              Author: Marcel Smit <msmit@remedy.nl>
+              Date:   Tue Jul 30 20:35:55 2013 +0200
+
+                  Added a plain boolean attribute to test.
+                  (refs #1551)
+                  
+                      * CIAO/tests/Bug_3769_Regression/Foo.idl:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.h:
+                      * CIAO/tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
+
+              commit a9b2197ca6320b481484f69f0abeb12f474acddf
+              Author: Marcel Smit <msmit@remedy.nl>
+              Date:   Tue Jul 30 20:24:31 2013 +0200
+
+                  Added an octet and a long double as attribute to the Foo component.
+                  (refs #1551)
+                  
+                      * CIAO/tests/Bug_3769_Regression/Foo.idl:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.h:
+                      * CIAO/tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
+
+              commit 2d59676cd472ab12bf14ac0ad17e75d615d46d84
+              Author: Johnny Willemsen <jwillemsen@remedy.nl>
+              Date:   Tue Jul 30 20:09:35 2013 +0200
+
+                        Added some more todo
+                      * CIAO/tests/Bug_3769_Regression/Foo.idl:
+
+              commit e8f011ebb02e44895bc158525d6aef13cec64a24
+              Author: Marcel Smit <msmit@remedy.nl>
+              Date:   Tue Jul 30 16:37:00 2013 +0200
+
+                  Added checks on the array of octets.
+                  (refs #1551)
+                  
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.h:
+
+              commit 22970ae42a26d7d0df31e89bf080aa6f83853adb
+              Author: Marcel Smit <msmit@remedy.nl>
+              Date:   Tue Jul 30 16:26:48 2013 +0200
+
+                  Enabled an array of octets.
+                  (refs #1551)
+                  
+                      * CIAO/tests/Bug_3769_Regression/Foo.idl:
+                      * CIAO/tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
+
+              commit 5345db6e8dfb1acfcaf8082e1ce4b58b48ce8c7d
+              Author: Johnny Willemsen <jwillemsen@remedy.nl>
+              Date:   Tue Jul 30 16:20:42 2013 +0200
+
+                        Cleanup octet/longdouble support and logging improvements
+                      * DAnCE/tools/Config_Handlers/DynAny_Handler/DynAlias_Handler.cpp:
+                      * DAnCE/tools/Config_Handlers/DynAny_Handler/DynAny_Handler.cpp:
+                      * DAnCE/tools/Config_Handlers/DynAny_Handler/DynSequence_Handler.cpp:
+
+              commit 6e23dde3fa5a79a47e9d20c80bec18b56adba5a9
+              Author: Johnny Willemsen <jwillemsen@remedy.nl>
+              Date:   Tue Jul 30 15:59:42 2013 +0200
+
+                        Const fix
+                      * DAnCE/tools/Config_Handlers/DynAny_Handler/DynArray_Handler.cpp:
+
+              commit 6769ad6d4e5adc000c84e628ff7783f9b9cf2d2d
+              Author: Marcel Smit <msmit@remedy.nl>
+              Date:   Tue Jul 30 15:58:29 2013 +0200
+
+                  References issue #1551
+                  
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.h:
+                        Fixed compile issue
+                  
+                      * CIAO/tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
+                        Enabled long double test again.
+                  
+                      * DAnCE/tools/Config_Handlers/DynAny_Handler/DynAny_Handler.cpp:
+                      * DAnCE/tools/Config_Handlers/DynAny_Handler/DynArray_Handler.cpp:
+                      * DAnCE/tools/Config_Handlers/DynAny_Handler/DynSequence_Handler.cpp:
+                        Work in progress: Hunting the long double bug...
+
+              commit cacb9ef80d659eb1c925517d1e4a6f5d939daa45
+              Author: Marcel Smit <msmit@remedy.nl>
+              Date:   Tue Jul 30 14:04:24 2013 +0200
+
+                  Added an array of booleans.
+                  Added char and wstring arrays although these are not supported.
+                  (refs #1551)
+                  
+                      * CIAO/tests/Bug_3769_Regression/Foo.idl:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.h:
+                      * CIAO/tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
+
+              commit ba45f218640e65e3c2f6ad23e9bbb06b0ba62a8e
+              Author: Marcel Smit <msmit@remedy.nl>
+              Date:   Tue Jul 30 13:47:44 2013 +0200
+
+                  References issue #1551
+                  
+                      * CIAO/tests/Bug_3769_Regression/Foo.idl:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.h:
+                      * CIAO/tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
+                        Added float and longdouble arrays. Long double arrays do appear to
+                        have errors.
+                  
+                      * DAnCE/tools/Config_Handlers/Any_Handler.cpp:
+                        Removed newline character in exception logging.
+
+              commit 804983d47b0061dd55dec0b5d5e254c2a0d40903
+              Author: Marcel Smit <msmit@remedy.nl>
+              Date:   Tue Jul 30 12:56:34 2013 +0200
+
+                  Added an array of doubles. Skipped an array of chars since this is
+                  not supported.
+                  (refs #1551)
+                  
+                      * CIAO/tests/Bug_3769_Regression/Foo.idl:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
+                      * CIAO/tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
+                  
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.h:
+                        Also layout changes
+
+              commit 3938d99a1a3705e99b888b192a189464f940d032
+              Author: Marcel Smit <msmit@remedy.nl>
+              Date:   Tue Jul 30 11:11:47 2013 +0200
+
+                  Added (unsigned) short arrays
+                  (refs #1551)
+                  
+                      * CIAO/tests/Bug_3769_Regression/Foo.idl:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.h:
+                      * CIAO/tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
+
+              commit d563ee6d2dcb4b8b843ee11b20df21a7bf40c035
+              Author: Marcel Smit <msmit@remedy.nl>
+              Date:   Tue Jul 30 11:03:04 2013 +0200
+
+                  Added a test for an array with unsigned long long values.
+                  (refs #1551)
+                  
+                      * CIAO/tests/Bug_3769_Regression/Foo.idl:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.h:
+                      * CIAO/tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
+
+              commit 17dfa9a0d26e48f39d9e41cce5644e05ef01da90
+              Author: Marcel Smit <msmit@remedy.nl>
+              Date:   Tue Jul 30 10:48:33 2013 +0200
+
+                  Added a long long array test.
+                  Also added a template class which check whether the content
+                  of the arrays are correct. This'll prevent multiple times the
+                  same code.
+                  (refs #1551)
+                  
+                      * CIAO/tests/Bug_3769_Regression/Foo.idl:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.h:
+                      * CIAO/tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
+
+              commit 92c6bf4f6d01c70b7b39df632312fc89133db6ef
+              Author: Marcel Smit <msmit@remedy.nl>
+              Date:   Tue Jul 30 09:55:28 2013 +0200
+
+                  Added a ulong array as test. Prepared the other basic types in arrays.
+                  (refs #1551)
+                  
+                      * CIAO/tests/Bug_3769_Regression/Foo.idl:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.h:
+                      * CIAO/tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
+
+              commit 8f76f00815805c094310085928bd2b61f4a132fa
+              Author: Marcel Smit <msmit@remedy.nl>
+              Date:   Tue Jul 30 08:47:56 2013 +0200
+
+                  Layout changes.
+                  (refs #1551)
+                  
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
+
+              commit 756c6c355b7c89ba1b6cefcc91d7b5ee3d738748
+              Author: Marcel Smit <msmit@remedy.nl>
+              Date:   Tue Jul 30 08:37:30 2013 +0200
+
+                  Added a sequence in sequence test.
+                  (refs #1551)
+                  
+                      * CIAO/tests/Bug_3769_Regression/Foo.idl:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.h:
+                      * CIAO/tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
+
+              commit 6831e1364639cf497f81c49b9eb33f51b0ea1c20
+              Author: Marcel Smit <msmit@remedy.nl>
+              Date:   Mon Jul 29 16:51:29 2013 +0200
+
+                  References issue #1551
+                  
+                      * CIAO/tests/Bug_3769_Regression/Foo.idl:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.h:
+                      * CIAO/tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
+                        Added an array in array tests.
+                  
+                      * DAnCE/tools/Config_Handlers/DynAny_Handler/DynArray_Handler.cpp:
+                        Fixed issues regarding array in arrays and sequences in arrays.
+                  
+                      * DAnCE/tools/Config_Handlers/DynAny_Handler/DynSequence_Handler.cpp:
+                        Fixed issues regarding sequences in sequences and arrays. Need to add
+                        an extra test for this.
+
+              commit 99c188e25d6ecaecbd4ce57a22cb457adce5c627
+              Author: Marcel Smit <msmit@remedy.nl>
+              Date:   Mon Jul 29 14:31:24 2013 +0200
+
+                  Added test for a struct, containing one member which is an array of structs.
+                  (refs #1551)
+                  
+                      * CIAO/tests/Bug_3769_Regression/Foo.idl:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.h:
+                      * CIAO/tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
+
+              commit 8d21f4afe29e0f5d23957614ed74b959cbd3a666
+              Author: Marcel Smit <msmit@remedy.nl>
+              Date:   Mon Jul 29 13:46:34 2013 +0200
+
+                  Enabled the check on an array of bar structs. Prepared the next
+                  check as well.
+                  (refs #1551)
+                  
+                      * CIAO/tests/Bug_3769_Regression/Foo.idl:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
+                      * CIAO/tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
+
+              commit 66b903a90ed5166633cd57729796cd2b72a8c76c
+              Author: Johnny Willemsen <jwillemsen@remedy.nl>
+              Date:   Mon Jul 29 13:22:18 2013 +0200
+
+                        Remove commented out line
+                      * DAnCE/tools/Config_Handlers/DynAny_Handler/DynArray_Handler.cpp:
+
+              commit 21432ee084eae5293a6799fe98091966ba789a14
+              Author: Marcel Smit <msmit@remedy.nl>
+              Date:   Mon Jul 29 13:15:02 2013 +0200
+
+                  Renamed error_ postfix to success_.
+                  (refs #1551)
+                  
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.h:
+
+              commit 34e1be7229a58cccea99581d7657100cea1196ba
+              Author: Marcel Smit <msmit@remedy.nl>
+              Date:   Mon Jul 29 13:00:32 2013 +0200
+
+                  References issue #1551
+                  
+                      * CIAO/tests/Bug_3769_Regression/Foo.idl:
+                        String array contains 3 instead of 5 entries.
+                  
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.h:
+                        Improved naming of booleans by adding 'error_'.
+
+              commit 47985c348d9fc416c4e0406b8c259048c10e624b
+              Author: Marcel Smit <msmit@remedy.nl>
+              Date:   Mon Jul 29 11:52:57 2013 +0200
+
+                  Added test for arrays of strings.
+                  (issue #1551)
+                  
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.h:
+                      * CIAO/tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
+
+              commit c17d5178d0c5095b2476043bc5d8014e05d55bb0
+              Author: Marcel Smit <msmit@remedy.nl>
+              Date:   Mon Jul 29 11:31:54 2013 +0200
+
+                  Improved error logging in ccm_activate.
+                  (issue #1551)
+                  
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
+
+              commit 8241a2b161d6e0b5d56b08aaf3626f46f78e4f98
+              Author: Johnny Willemsen <jwillemsen@remedy.nl>
+              Date:   Wed Jul 24 13:44:39 2013 +0200
+
+                        Fixed problems introduced by regeneration related to string
+                        unicode comparison and wrong namespace
+                      * DAnCE/tools/Config_Handlers/Basic_Deployment_Data.cpp:
+
+              commit 87b32e82230e087aae351d59e430b41aa31f86d1
+              Author: Johnny Willemsen <jwillemsen@remedy.nl>
+              Date:   Wed Jul 24 12:21:07 2013 +0200
+
+                        Removed comments from tao_idl
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.h:
+
+              commit 4898ab76fa271668e935891b5ae7bd7f7310a6cf
+              Author: Johnny Willemsen <jwillemsen@remedy.nl>
+              Date:   Wed Jul 24 11:49:41 2013 +0200
+
+                        Test long array, commented out the other array, test needs major
+                        extensions
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.h:
+
+              commit 17a8a51ff550444f7e6d1646f0e94db31265ddb5
+              Author: Johnny Willemsen <jwillemsen@remedy.nl>
+              Date:   Wed Jul 24 11:37:41 2013 +0200
+
+                        Added long array to the cdp
+                      * CIAO/tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
+
+              commit 26f5dccb4aec965f6b3a7bdfd3afaa004f20cd08
+              Author: Johnny Willemsen <jwillemsen@remedy.nl>
+              Date:   Wed Jul 24 11:37:29 2013 +0200
+
+                        Extended IDL
+                      * CIAO/tests/Bug_3769_Regression/Foo.idl:
+
+              commit aa8d6195c6d2359a09c855d979432d911910c4c1
+              Author: Johnny Willemsen <jwillemsen@remedy.nl>
+              Date:   Wed Jul 24 11:37:15 2013 +0200
+
+                        Fixed typecode handling
+                      * DAnCE/tools/Config_Handlers/DynAny_Handler/DynArray_Handler.cpp:
+
+              commit 15ca519cf1bd8277e518fc846b58aec44cb5e84b
+              Author: Johnny Willemsen <jwillemsen@remedy.nl>
+              Date:   Wed Jul 24 11:21:21 2013 +0200
+
+                        First try to add an array to the cdp
+                      * CIAO/tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
+
+              commit e80ae72952d7253519ccb17873de1e15da023aa0
+              Author: Johnny Willemsen <jwillemsen@remedy.nl>
+              Date:   Tue Jul 23 21:21:43 2013 +0200
+
+                        Added length to array definition
+                      * DAnCE/tools/Config_Handlers/Basic_Deployment_Data.cpp:
+                      * DAnCE/tools/Config_Handlers/Basic_Deployment_Data.hpp:
+                      * DAnCE/tools/Config_Handlers/DynAny_Handler/DynArray_Handler.cpp:
+
+              commit 2a439e37fe257e48b6471e5c8287cd79d46c9b40
+              Author: Johnny Willemsen <jwillemsen@remedy.nl>
+              Date:   Tue Jul 23 21:16:55 2013 +0200
+
+                        Implemented some more array handling
+                      * DAnCE/docs/schema/Basic_Deployment_Data.xsd:
+                      * DAnCE/tools/Config_Handlers/Basic_Deployment_Data.cpp:
+                      * DAnCE/tools/Config_Handlers/Basic_Deployment_Data.hpp:
+                      * DAnCE/tools/Config_Handlers/DynAny_Handler/DynAny_Handler.cpp:
+                      * DAnCE/tools/Config_Handlers/DynAny_Handler/DynArray_Handler.cpp:
+                      * DAnCE/tools/Config_Handlers/DynAny_Handler/DynArray_Handler.h:
+
+              commit f44210381907f568d4295beb9cbf0a75743375b7
+              Author: Johnny Willemsen <jwillemsen@remedy.nl>
+              Date:   Tue Jul 23 20:55:24 2013 +0200
+
+                        Updated array definition
+                      * DAnCE/docs/schema/Basic_Deployment_Data.xsd:
+
+              commit 5309ae3c49a7507b6c626e2c1b05e5cc60bed393
+              Author: Johnny Willemsen <jwillemsen@remedy.nl>
+              Date:   Tue Jul 23 16:10:14 2013 +0200
+
+                        Initial copied files for DynArray support
+                      * DAnCE/tools/Config_Handlers/DynAny_Handler/DynArray_Handler.cpp:
+                      * DAnCE/tools/Config_Handlers/DynAny_Handler/DynArray_Handler.h:
+                        Added.
+                  
+                      * DAnCE/tools/Config_Handlers/DynAny_Handler/DynAny_Handler.cpp:
+                      * DAnCE/tools/Config_Handlers/DynAny_Handler/DynAny_Handler.mpc:
+
+              commit 1313b0f422d0420208e41c5f466ff0b961180bc9
+              Author: Johnny Willemsen <jwillemsen@remedy.nl>
+              Date:   Tue Jul 23 16:00:47 2013 +0200
+
+                        Some initial test extensions
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.h:
+                      * CIAO/tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
+                      * CIAO/tests/Bug_3769_Regression/descriptors/run_test.pl:
+                      * CIAO/tests/Bug_3769_Regression/descriptors/run_test_cdr.pl:
+
+              commit 2fcba7d1938c0b37fff2c94fa0e65b78bef0def8
+              Author: Johnny Willemsen <jwillemsen@remedy.nl>
+              Date:   Tue Jul 23 15:50:30 2013 +0200
+
+                        Extended xsd with support for arrays
+                      * DAnCE/docs/schema/Basic_Deployment_Data.xsd:
+                      * DAnCE/tools/Config_Handlers/Basic_Deployment_Data.cpp:
+                      * DAnCE/tools/Config_Handlers/Basic_Deployment_Data.hpp:
+
 Thu May 30 15:31:48 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/CIF/Events/client.cpp:
