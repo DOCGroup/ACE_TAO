@@ -60,6 +60,7 @@
     <node>NodeOne</node>
     <source/>
     <implementation xmi:idref="_669DBD2E-E130-11DE-B471-00242C889DAA"/>
+
     <configProperty>
       <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
       <value>
@@ -71,6 +72,31 @@
         </value>
       </value>
     </configProperty>
+
+    <configProperty>
+      <name>my_octet</name>
+      <value>
+        <type>
+          <kind>tk_octet</kind>
+        </type>
+        <value>
+          <octet>20</octet>
+        </value>
+      </value>
+    </configProperty>
+
+    <configProperty>
+      <name>my_boolean</name>
+      <value>
+        <type>
+          <kind>tk_boolean</kind>
+        </type>
+        <value>
+          <boolean>true</boolean>
+        </value>
+      </value>
+    </configProperty>
+
     <configProperty>
       <name>my_short</name>
       <value>
@@ -82,6 +108,7 @@
         </value>
       </value>
     </configProperty>
+
     <configProperty>
       <name>my_long</name>
       <value>
@@ -93,6 +120,830 @@
         </value>
       </value>
     </configProperty>
+
+    <configProperty>
+      <name>my_string_array</name>
+      <value>
+        <type>
+          <kind>tk_array</kind>
+          <array>
+            <length>2</length>
+            <elementType>
+              <kind>tk_string</kind>
+            </elementType>
+          </array>
+        </type>
+        <value>
+          <element>
+            <string>Hello</string>
+          </element>
+          <element>
+            <string>World</string>
+          </element>
+        </value>
+      </value>
+    </configProperty>
+
+    <configProperty>
+      <name>my_double_array</name>
+      <value>
+        <type>
+          <kind>tk_array</kind>
+          <array>
+            <length>3</length>
+            <elementType>
+              <kind>tk_double</kind>
+            </elementType>
+          </array>
+        </type>
+        <value>
+          <element>
+            <double>0.123</double>
+          </element>
+          <element>
+            <double>4.56</double>
+          </element>
+          <element>
+            <double>78.9</double>
+          </element>
+        </value>
+      </value>
+    </configProperty>
+
+    <configProperty>
+      <name>my_float_array</name>
+      <value>
+        <type>
+          <kind>tk_array</kind>
+          <array>
+            <length>3</length>
+            <elementType>
+              <kind>tk_float</kind>
+            </elementType>
+          </array>
+        </type>
+        <value>
+          <element>
+            <float>0.369</float>
+          </element>
+          <element>
+            <float>13.68</float>
+          </element>
+          <element>
+            <float>236.7</float>
+          </element>
+        </value>
+      </value>
+    </configProperty>
+
+    <configProperty>
+      <name>my_boolean_array</name>
+      <value>
+        <type>
+          <kind>tk_array</kind>
+          <array>
+            <length>2</length>
+            <elementType>
+              <kind>tk_boolean</kind>
+            </elementType>
+          </array>
+        </type>
+        <value>
+          <element>
+            <boolean>true</boolean>
+          </element>
+          <element>
+            <boolean>false</boolean>
+          </element>
+        </value>
+      </value>
+    </configProperty>
+
+    <configProperty>
+      <name>my_octet_array</name>
+      <value>
+        <type>
+          <kind>tk_array</kind>
+          <array>
+            <length>2</length>
+            <elementType>
+              <kind>tk_octet</kind>
+            </elementType>
+          </array>
+        </type>
+        <value>
+          <element>
+            <octet>1</octet>
+          </element>
+          <element>
+            <octet>2</octet>
+          </element>
+        </value>
+      </value>
+    </configProperty>
+
+    <configProperty>
+      <name>my_bar_array</name>
+      <value>
+        <type>
+          <kind>tk_array</kind>
+          <array>
+            <length>3</length>
+            <elementType>
+              <kind>tk_struct</kind>
+              <struct>
+                <name>Bar</name>
+                <typeId>IDL:Bar:1.0</typeId>
+                <member>
+                  <name>s</name>
+                  <type>
+                    <kind>tk_short</kind>
+                  </type>
+                </member>
+                <member>
+                  <name>l</name>
+                  <type>
+                    <kind>tk_long</kind>
+                  </type>
+                </member>
+                <member>
+                  <name>f</name>
+                  <type>
+                    <kind>tk_float</kind>
+                  </type>
+                </member>
+                <member>
+                  <name>d</name>
+                  <type>
+                    <kind>tk_double</kind>
+                  </type>
+                </member>
+              </struct>
+            </elementType>
+          </array>
+        </type>
+        <value>
+          <element>
+            <member>
+              <name>s</name>
+              <value>
+                <short>1</short>
+              </value>
+            </member>
+            <member>
+              <name>l</name>
+              <value>
+                <long>2</long>
+              </value>
+            </member>
+            <member>
+              <name>f</name>
+              <value>
+                <float>3.4</float>
+              </value>
+            </member>
+            <member>
+              <name>d</name>
+              <value>
+                <double>5.6</double>
+              </value>
+            </member>
+          </element>
+          <element>
+            <member>
+              <name>s</name>
+              <value>
+                <short>2</short>
+              </value>
+            </member>
+            <member>
+              <name>l</name>
+              <value>
+                <long>3</long>
+              </value>
+            </member>
+            <member>
+              <name>f</name>
+              <value>
+                <float>4.5</float>
+              </value>
+            </member>
+            <member>
+              <name>d</name>
+              <value>
+                <double>6.7</double>
+              </value>
+            </member>
+          </element>
+          <element>
+            <member>
+              <name>s</name>
+              <value>
+                <short>3</short>
+              </value>
+            </member>
+            <member>
+              <name>l</name>
+              <value>
+                <long>4</long>
+              </value>
+            </member>
+            <member>
+              <name>f</name>
+              <value>
+                <float>5.6</float>
+              </value>
+            </member>
+            <member>
+              <name>d</name>
+              <value>
+                <double>7.8</double>
+              </value>
+            </member>
+          </element>
+        </value>
+      </value>
+    </configProperty>
+
+    <configProperty>
+      <name>my_bar_array_2</name>
+      <value>
+        <type>
+          <kind>tk_array</kind>
+          <array>
+            <length>2</length>
+            <elementType>
+              <kind>tk_array</kind>
+              <array>
+                <length>3</length>
+                <elementType>
+                  <kind>tk_struct</kind>
+                  <struct>
+                    <name>Bar</name>
+                    <typeId>IDL:Bar:1.0</typeId>
+                    <member>
+                      <name>s</name>
+                      <type>
+                        <kind>tk_short</kind>
+                      </type>
+                    </member>
+                    <member>
+                      <name>l</name>
+                      <type>
+                        <kind>tk_long</kind>
+                      </type>
+                    </member>
+                    <member>
+                      <name>f</name>
+                      <type>
+                        <kind>tk_float</kind>
+                      </type>
+                    </member>
+                    <member>
+                      <name>d</name>
+                      <type>
+                        <kind>tk_double</kind>
+                      </type>
+                    </member>
+                  </struct>
+                </elementType>
+              </array>
+            </elementType>
+          </array>
+        </type>
+        <value>
+          <element>
+            <element>
+              <member>
+                <name>s</name>
+                <value>
+                  <short>1</short>
+                </value>
+              </member>
+              <member>
+                <name>l</name>
+                <value>
+                  <long>2</long>
+                </value>
+              </member>
+              <member>
+                <name>f</name>
+                <value>
+                  <float>3.4</float>
+                </value>
+              </member>
+              <member>
+                <name>d</name>
+                <value>
+                  <double>5.6</double>
+                </value>
+              </member>
+            </element>
+            <element>
+              <member>
+                <name>s</name>
+                <value>
+                  <short>2</short>
+                </value>
+              </member>
+              <member>
+                <name>l</name>
+                <value>
+                  <long>3</long>
+                </value>
+              </member>
+              <member>
+                <name>f</name>
+                <value>
+                  <float>4.5</float>
+                </value>
+              </member>
+              <member>
+                <name>d</name>
+                <value>
+                  <double>6.7</double>
+                </value>
+              </member>
+            </element>
+            <element>
+              <member>
+                <name>s</name>
+                <value>
+                  <short>3</short>
+                </value>
+              </member>
+              <member>
+                <name>l</name>
+                <value>
+                  <long>4</long>
+                </value>
+              </member>
+              <member>
+                <name>f</name>
+                <value>
+                  <float>5.6</float>
+                </value>
+              </member>
+              <member>
+                <name>d</name>
+                <value>
+                  <double>7.8</double>
+                </value>
+              </member>
+            </element>
+          </element>
+          <element>
+            <element>
+              <member>
+                <name>s</name>
+                <value>
+                  <short>11</short>
+                </value>
+              </member>
+              <member>
+                <name>l</name>
+                <value>
+                  <long>12</long>
+                </value>
+              </member>
+              <member>
+                <name>f</name>
+                <value>
+                  <float>13.4</float>
+                </value>
+              </member>
+              <member>
+                <name>d</name>
+                <value>
+                  <double>15.6</double>
+                </value>
+              </member>
+            </element>
+            <element>
+              <member>
+                <name>s</name>
+                <value>
+                  <short>12</short>
+                </value>
+              </member>
+              <member>
+                <name>l</name>
+                <value>
+                  <long>13</long>
+                </value>
+              </member>
+              <member>
+                <name>f</name>
+                <value>
+                  <float>14.5</float>
+                </value>
+              </member>
+              <member>
+                <name>d</name>
+                <value>
+                  <double>16.7</double>
+                </value>
+              </member>
+            </element>
+            <element>
+              <member>
+                <name>s</name>
+                <value>
+                  <short>13</short>
+                </value>
+              </member>
+              <member>
+                <name>l</name>
+                <value>
+                  <long>14</long>
+                </value>
+              </member>
+              <member>
+                <name>f</name>
+                <value>
+                  <float>15.6</float>
+                </value>
+              </member>
+              <member>
+                <name>d</name>
+                <value>
+                  <double>17.8</double>
+                </value>
+              </member>
+            </element>
+          </element>
+        </value>
+      </value>
+    </configProperty>
+
+    <configProperty>
+      <name>my_sequence_array</name>
+      <value>
+        <type>
+          <kind>tk_array</kind>
+          <array>
+            <length>2</length>
+            <elementType>
+              <kind>tk_sequence</kind>
+              <sequence>
+                <elementType>
+                  <kind>tk_string</kind>
+                </elementType>
+              </sequence>
+            </elementType>
+          </array>
+        </type>
+        <value>
+          <element>
+            <element>
+              <string>Hi</string>
+            </element>
+            <element>
+              <string>World</string>
+            </element>
+          </element>
+          <element>
+            <element>
+              <string>Bye</string>
+            </element>
+            <element>
+              <string>World</string>
+            </element>
+          </element>
+        </value>
+      </value>
+    </configProperty>
+
+    <configProperty>
+      <name>my_bar_struct_array</name>
+      <value>
+        <type>
+          <kind>tk_struct</kind>
+          <struct>
+            <name>BarStruct</name>
+            <typeId>IDL:BarStruct:1.0</typeId>
+            <member>
+              <name>bar</name>
+              <type>
+                <kind>tk_array</kind>
+                <array>
+                  <length>3</length>
+                  <elementType>
+                    <kind>tk_struct</kind>
+                    <struct>
+                      <name>Bar</name>
+                      <typeId>IDL:Bar:1.0</typeId>
+                      <member>
+                        <name>s</name>
+                        <type>
+                          <kind>tk_short</kind>
+                        </type>
+                      </member>
+                      <member>
+                        <name>l</name>
+                        <type>
+                          <kind>tk_long</kind>
+                        </type>
+                      </member>
+                      <member>
+                        <name>f</name>
+                        <type>
+                          <kind>tk_float</kind>
+                        </type>
+                      </member>
+                      <member>
+                        <name>d</name>
+                        <type>
+                          <kind>tk_double</kind>
+                        </type>
+                      </member>
+                    </struct>
+                  </elementType>
+                </array>
+              </type>
+            </member>
+          </struct>
+        </type>
+        <value>
+          <member>
+            <name>bar</name>
+            <value>
+              <element>
+                <member>
+                  <name>s</name>
+                  <value>
+                    <short>1</short>
+                  </value>
+                </member>
+                <member>
+                  <name>l</name>
+                  <value>
+                    <long>2</long>
+                  </value>
+                </member>
+                <member>
+                  <name>f</name>
+                  <value>
+                    <float>3.4</float>
+                  </value>
+                </member>
+                <member>
+                  <name>d</name>
+                  <value>
+                    <double>5.6</double>
+                  </value>
+                </member>
+              </element>
+              <element>
+                <member>
+                  <name>s</name>
+                  <value>
+                    <short>2</short>
+                  </value>
+                </member>
+                <member>
+                  <name>l</name>
+                  <value>
+                    <long>3</long>
+                  </value>
+                </member>
+                <member>
+                  <name>f</name>
+                  <value>
+                    <float>4.5</float>
+                  </value>
+                </member>
+                <member>
+                  <name>d</name>
+                  <value>
+                    <double>6.7</double>
+                  </value>
+                </member>
+              </element>
+              <element>
+                <member>
+                  <name>s</name>
+                  <value>
+                    <short>3</short>
+                  </value>
+                </member>
+                <member>
+                  <name>l</name>
+                  <value>
+                    <long>4</long>
+                  </value>
+                </member>
+                <member>
+                  <name>f</name>
+                  <value>
+                    <float>5.6</float>
+                  </value>
+                </member>
+                <member>
+                  <name>d</name>
+                  <value>
+                    <double>7.8</double>
+                  </value>
+                </member>
+              </element>
+            </value>
+          </member>
+        </value>
+      </value>
+    </configProperty>
+
+    <configProperty>
+      <name>my_long_array</name>
+      <value>
+        <type>
+          <kind>tk_array</kind>
+          <array>
+            <length>5</length>
+            <elementType>
+              <kind>tk_long</kind>
+            </elementType>
+          </array>
+        </type>
+        <value>
+          <element>
+            <long>1</long>
+          </element>
+          <element>
+            <long>2</long>
+          </element>
+          <element>
+            <long>3</long>
+          </element>
+          <element>
+            <long>4</long>
+          </element>
+          <element>
+            <long>5</long>
+          </element>
+        </value>
+      </value>
+    </configProperty>
+
+    <configProperty>
+      <name>my_ulong_array</name>
+      <value>
+        <type>
+          <kind>tk_array</kind>
+          <array>
+            <length>5</length>
+            <elementType>
+              <kind>tk_ulong</kind>
+            </elementType>
+          </array>
+        </type>
+        <value>
+          <element>
+            <ulong>2</ulong>
+          </element>
+          <element>
+            <ulong>4</ulong>
+          </element>
+          <element>
+            <ulong>6</ulong>
+          </element>
+          <element>
+            <ulong>8</ulong>
+          </element>
+          <element>
+            <ulong>10</ulong>
+          </element>
+        </value>
+      </value>
+    </configProperty>
+
+    <configProperty>
+      <name>my_longlong_array</name>
+      <value>
+        <type>
+          <kind>tk_array</kind>
+          <array>
+            <length>5</length>
+            <elementType>
+              <kind>tk_longlong</kind>
+            </elementType>
+          </array>
+        </type>
+        <value>
+          <element>
+            <longlong>3</longlong>
+          </element>
+          <element>
+            <longlong>6</longlong>
+          </element>
+          <element>
+            <longlong>9</longlong>
+          </element>
+          <element>
+            <longlong>12</longlong>
+          </element>
+          <element>
+            <longlong>15</longlong>
+          </element>
+        </value>
+      </value>
+    </configProperty>
+
+    <configProperty>
+      <name>my_ulonglong_array</name>
+      <value>
+        <type>
+          <kind>tk_array</kind>
+          <array>
+            <length>5</length>
+            <elementType>
+              <kind>tk_ulonglong</kind>
+            </elementType>
+          </array>
+        </type>
+        <value>
+          <element>
+            <ulonglong>4</ulonglong>
+          </element>
+          <element>
+            <ulonglong>8</ulonglong>
+          </element>
+          <element>
+            <ulonglong>12</ulonglong>
+          </element>
+          <element>
+            <ulonglong>16</ulonglong>
+          </element>
+          <element>
+            <ulonglong>20</ulonglong>
+          </element>
+        </value>
+      </value>
+    </configProperty>
+
+    <configProperty>
+      <name>my_short_array</name>
+      <value>
+        <type>
+          <kind>tk_array</kind>
+          <array>
+            <length>5</length>
+            <elementType>
+              <kind>tk_short</kind>
+            </elementType>
+          </array>
+        </type>
+        <value>
+          <element>
+            <short>5</short>
+          </element>
+          <element>
+            <short>10</short>
+          </element>
+          <element>
+            <short>15</short>
+          </element>
+          <element>
+            <short>20</short>
+          </element>
+          <element>
+            <short>25</short>
+          </element>
+        </value>
+      </value>
+    </configProperty>
+
+    <configProperty>
+      <name>my_ushort_array</name>
+      <value>
+        <type>
+          <kind>tk_array</kind>
+          <array>
+            <length>5</length>
+            <elementType>
+              <kind>tk_ushort</kind>
+            </elementType>
+          </array>
+        </type>
+        <value>
+          <element>
+            <ushort>6</ushort>
+          </element>
+          <element>
+            <ushort>12</ushort>
+          </element>
+          <element>
+            <ushort>18</ushort>
+          </element>
+          <element>
+            <ushort>24</ushort>
+          </element>
+          <element>
+            <ushort>30</ushort>
+          </element>
+        </value>
+      </value>
+    </configProperty>
+
     <configProperty>
       <name>my_float</name>
       <value>
@@ -104,6 +955,7 @@
         </value>
       </value>
     </configProperty>
+
     <configProperty>
       <name>my_variable_string</name>
       <value>
@@ -115,8 +967,9 @@
         </value>
       </value>
     </configProperty>
+
     <configProperty>
-      <name>my_fixed_string</name>
+      <name>my_bounded_string</name>
       <value>
         <type>
           <kind>tk_string</kind>
@@ -126,6 +979,7 @@
         </value>
       </value>
     </configProperty>
+
     <configProperty>
       <name>my_double</name>
       <value>
@@ -137,6 +991,7 @@
         </value>
       </value>
     </configProperty>
+
     <configProperty>
       <name>my_short_sequence</name>
       <value>
@@ -161,6 +1016,7 @@
         </value>
       </value>
     </configProperty>
+
     <configProperty>
       <name>my_empty_sequence</name>
       <value>
@@ -175,6 +1031,7 @@
         <value />
       </value>
     </configProperty>
+
     <configProperty>
       <name>my_long_sequence</name>
       <value>
@@ -199,6 +1056,7 @@
         </value>
       </value>
     </configProperty>
+
     <configProperty>
       <name>my_string_sequence</name>
       <value>
@@ -220,6 +1078,82 @@
         </value>
       </value>
     </configProperty>
+
+    <configProperty>
+      <name>my_string_sequence_2</name>
+      <value>
+        <type>
+          <kind>tk_sequence</kind>
+          <sequence>
+            <elementType>
+              <kind>tk_sequence</kind>
+              <sequence>
+                <elementType>
+                  <kind>tk_string</kind>
+                </elementType>
+              </sequence>
+            </elementType>
+          </sequence>
+        </type>
+        <value>
+          <element>
+            <element>
+              <string>Hi</string>
+            </element>
+            <element>
+              <string>World</string>
+            </element>
+          </element>
+          <element>
+            <element>
+              <string>Bye</string>
+            </element>
+            <element>
+              <string>World</string>
+            </element>
+          </element>
+        </value>
+      </value>
+    </configProperty>
+
+    <configProperty>
+      <name>my_array_sequence</name>
+      <value>
+        <type>
+          <kind>tk_sequence</kind>
+          <sequence>
+            <elementType>
+              <kind>tk_array</kind>
+              <array>
+                <length>2</length>
+                <elementType>
+                  <kind>tk_string</kind>
+                </elementType>
+              </array>
+            </elementType>
+          </sequence>
+        </type>
+        <value>
+          <element>
+            <element>
+              <string>Hi</string>
+            </element>
+            <element>
+              <string>World</string>
+            </element>
+          </element>
+          <element>
+            <element>
+              <string>Bye</string>
+            </element>
+            <element>
+              <string>World</string>
+            </element>
+          </element>
+        </value>
+      </value>
+    </configProperty>
+
     <configProperty>
       <name>my_float_sequence</name>
       <value>
@@ -244,6 +1178,7 @@
         </value>
       </value>
     </configProperty>
+
     <configProperty>
       <name>my_double_sequence</name>
       <value>
@@ -268,6 +1203,7 @@
         </value>
       </value>
     </configProperty>
+
     <configProperty>
       <name>my_bar_struct</name>
       <value>
@@ -330,6 +1266,7 @@
         </value>
       </value>
     </configProperty>
+
     <configProperty>
       <name>my_baz_struct</name>
       <value>
@@ -531,6 +1468,7 @@
         </value>
       </value>
     </configProperty>
+
     <configProperty>
       <name>supported_short</name>
       <value>
@@ -573,7 +1511,6 @@
                 </struct>
               </type>
             </member>
-
             <member>
               <name>type</name>
               <type>
@@ -587,7 +1524,6 @@
                 </enum>
               </type>
             </member>
-
           </struct>
         </type>
         <value>
@@ -608,7 +1544,6 @@
               </member>
             </value>
           </member>
-
           <member>
             <name>type</name>
             <value>
@@ -616,7 +1551,6 @@
             </value>
           </member>
         </value>
-
       </value>
     </configProperty>
   </instance>

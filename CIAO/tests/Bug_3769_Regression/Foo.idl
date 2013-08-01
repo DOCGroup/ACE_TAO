@@ -10,10 +10,31 @@ typedef sequence<long>   long_sequence;
 typedef sequence<float>  float_sequence;
 typedef sequence<double> double_sequence;
 typedef sequence<string> string_sequence;
+
 typedef long long_array[5];
-typedef string string_array[5];
-typedef string<50> fixed_string;
-typedef wstring<50> fixed_wstring;
+typedef unsigned long ulong_array[5];
+
+typedef long long longlong_array[5];
+typedef unsigned long long ulonglong_array[5];
+
+typedef short short_array[5];
+typedef unsigned short ushort_array[5];
+
+typedef string string_array[2];
+typedef wstring wstring_array[2];
+
+typedef char char_array[2];
+typedef wchar wchar_array[2];
+
+typedef double double_array[3];
+typedef long double longdouble_array[3];
+
+typedef float float_array[3];
+typedef boolean boolean_array[2];
+typedef octet octet_array[2];
+
+typedef string<50> bounded_string;
+typedef wstring<50> bounded_wstring;
 
 struct Bar
 {
@@ -24,6 +45,19 @@ struct Bar
 };
 
 typedef sequence<Bar, 5> BarSeq;
+typedef Bar BarArray[3];
+
+// Array in array
+typedef BarArray BarArray2[2];
+
+// Sequence in sequence
+typedef sequence<string_sequence> string_sequence2;
+
+// Sequence in array
+typedef string_sequence SequenceArray[2];
+
+// Array in sequence
+typedef sequence<string_array> array_sequence;
 
 struct Baz
 {
@@ -86,31 +120,59 @@ module StructModule
   };
 };
 
+struct BarStruct
+{
+  BarArray bar;
+};
+
 component Foo supports FooSupport
 {
-  attribute short  my_short;
-  attribute long   my_long;
-  attribute float  my_float;
-  attribute double my_double;
-  attribute fixed_string my_fixed_string;
-  attribute string my_variable_string;
-  attribute fixed_wstring my_fixed_wstring;
-  attribute wstring my_variable_wstring;
+  attribute char    my_char;
+  attribute octet   my_octet;
+  attribute boolean my_boolean;
+  attribute short   my_short;
+  attribute long    my_long;
+  attribute float   my_float;
+  attribute double  my_double;
+  attribute long double     my_longdouble;
+  attribute bounded_string  my_bounded_string;
+  attribute string          my_variable_string;
+  attribute bounded_wstring my_bounded_wstring;
+  attribute wstring         my_variable_wstring;
 
-  attribute long_array my_long_array;
-  attribute string_array my_string_array;
+  attribute long_array        my_long_array;
+  attribute ulong_array       my_ulong_array;
+  attribute longlong_array    my_longlong_array;
+  attribute ulonglong_array   my_ulonglong_array;
+  attribute short_array       my_short_array;
+  attribute ushort_array      my_ushort_array;
+  attribute string_array      my_string_array;
+  attribute wstring_array     my_wstring_array;
+  attribute char_array        my_char_array;
+  attribute wchar_array       my_wchar_array;
+  attribute double_array      my_double_array;
+  attribute longdouble_array  my_longdouble_array;
+  attribute float_array       my_float_array;
+  attribute boolean_array     my_boolean_array;
+  attribute octet_array       my_octet_array;
 
-  attribute short_sequence  my_short_sequence;
-  attribute short_sequence  my_empty_sequence;
-  attribute long_sequence   my_long_sequence;
-  attribute float_sequence  my_float_sequence;
-  attribute double_sequence my_double_sequence;
-  attribute string_sequence my_string_sequence;
+  attribute short_sequence    my_short_sequence;
+  attribute short_sequence    my_empty_sequence;
+  attribute long_sequence     my_long_sequence;
+  attribute float_sequence    my_float_sequence;
+  attribute double_sequence   my_double_sequence;
+  attribute string_sequence   my_string_sequence;
+  attribute string_sequence2  my_string_sequence_2;
+  attribute array_sequence    my_array_sequence;
 
-  attribute Bar my_bar_struct;
-  attribute Baz my_baz_struct;
-  attribute Data my_data_union;
-  attribute Data2 my_var_data_union;
+  attribute Bar           my_bar_struct;
+  attribute BarArray      my_bar_array;
+  attribute BarArray2     my_bar_array_2;
+  attribute SequenceArray my_sequence_array;
+  attribute BarStruct     my_bar_struct_array;
+  attribute Baz           my_baz_struct;
+  attribute Data          my_data_union;
+  attribute Data2         my_var_data_union;
   attribute StructModule::StructStruct my_struct_struct;
 };
 

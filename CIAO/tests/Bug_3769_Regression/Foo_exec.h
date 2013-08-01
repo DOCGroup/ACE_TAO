@@ -26,134 +26,84 @@ namespace CIAO_Foo_Impl
     //@{
     /** Supported operations and attributes. */
 
-    virtual ::CORBA::Short
-    supported_short (void);
+    virtual ::CORBA::Short supported_short (void);
 
-    virtual void
-    supported_short (
-        ::CORBA::Short supported_short);
+    virtual void supported_short (::CORBA::Short supported_short);
     //@}
 
     //@{
     /** Component attributes and port operations. */
+    virtual ::CORBA::Char my_char (void);
 
+    virtual void my_char (::CORBA::Char my_char);
 
-    // TAO_IDL - Generated from
-    // c:\middleware\ace_devo\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:42
+    virtual ::CORBA::Octet my_octet (void);
 
-    virtual ::CORBA::Short
-    my_short (void);
+    virtual void my_octet (::CORBA::Octet my_octet);
 
-    // TAO_IDL - Generated from
-    // c:\middleware\ace_devo\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:42
+    virtual ::CORBA::Short my_short (void);
 
-    virtual void
-    my_short (
-      ::CORBA::Short my_short);
+    virtual void my_short (::CORBA::Short my_short);
 
-    // TAO_IDL - Generated from
-    // c:\middleware\ace_devo\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:42
+    virtual ::CORBA::Boolean my_boolean (void);
 
-    virtual ::CORBA::Long
-    my_long (void);
+    virtual void my_boolean (::CORBA::Boolean my_boolean);
 
-    // TAO_IDL - Generated from
-    // c:\middleware\ace_devo\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:42
+    virtual ::CORBA::Long my_long (void);
 
-    virtual void
-    my_long (
-      ::CORBA::Long my_long);
+    virtual void my_long (::CORBA::Long my_long);
 
-    // TAO_IDL - Generated from
-    // c:\middleware\ace_devo\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:42
+    virtual ::CORBA::Float my_float (void);
 
-    virtual ::CORBA::Float
-    my_float (void);
+    virtual void my_float (::CORBA::Float my_float);
 
-    // TAO_IDL - Generated from
-    // c:\middleware\ace_devo\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:42
+    virtual ::CORBA::Double my_double (void);
 
-    virtual void
-    my_float (
-      ::CORBA::Float my_float);
+    virtual void my_double (::CORBA::Double my_double);
 
-    // TAO_IDL - Generated from
-    // c:\middleware\ace_devo\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:42
+    virtual ::CORBA::LongDouble my_longdouble (void);
 
-    virtual ::CORBA::Double
-    my_double (void);
+    virtual void my_longdouble (::CORBA::LongDouble my_longdouble);
 
-    // TAO_IDL - Generated from
-    // c:\middleware\ace_devo\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:42
+    virtual ::short_sequence * my_short_sequence (void);
 
-    virtual void
-    my_double (
-      ::CORBA::Double my_double);
+    virtual void my_short_sequence (const ::short_sequence & my_empty_sequence);
 
-    // TAO_IDL - Generated from
-    // c:\middleware\ace_devo\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:42
+    virtual ::short_sequence * my_empty_sequence (void);
 
-    virtual ::short_sequence *
-    my_short_sequence (void);
+    virtual void my_empty_sequence (const ::short_sequence & my_empty_sequence);
 
-    // TAO_IDL - Generated from
-    // c:\middleware\ace_devo\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:42
+    virtual ::long_sequence * my_long_sequence (void);
 
-    virtual void
-    my_short_sequence (
-      const ::short_sequence & my_empty_sequence);
+    virtual void my_long_sequence (const ::long_sequence & my_long_sequence);
 
-    virtual ::short_sequence *
-    my_empty_sequence (void);
+    virtual ::float_sequence * my_float_sequence (void);
 
-    // TAO_IDL - Generated from
-    // c:\middleware\ace_devo\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:42
+    virtual void my_float_sequence (const ::float_sequence & my_float_sequence);
 
-    virtual void
-    my_empty_sequence (
-      const ::short_sequence & my_empty_sequence);
+    virtual ::double_sequence * my_double_sequence (void);
 
-    // TAO_IDL - Generated from
-    // c:\middleware\ace_devo\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:42
-
-    virtual ::long_sequence *
-    my_long_sequence (void);
-
-    // TAO_IDL - Generated from
-    // c:\middleware\ace_devo\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:42
-
-    virtual void
-    my_long_sequence (
-      const ::long_sequence & my_long_sequence);
-
-    // TAO_IDL - Generated from
-    // c:\middleware\ace_devo\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:42
-
-    virtual ::float_sequence *
-    my_float_sequence (void);
-
-    // TAO_IDL - Generated from
-    // c:\middleware\ace_devo\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:42
-
-    virtual void
-    my_float_sequence (
-      const ::float_sequence & my_float_sequence);
-
-    // TAO_IDL - Generated from
-    // c:\middleware\ace_devo\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:42
-
-    virtual ::double_sequence *
-    my_double_sequence (void);
-
-    // TAO_IDL - Generated from
-    // c:\middleware\ace_devo\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:42
-
-    virtual void my_double_sequence (
-      const ::double_sequence & my_double_sequence);
+    virtual void my_double_sequence (const ::double_sequence & my_double_sequence);
 
     virtual ::Bar my_bar_struct (void);
 
     virtual void my_bar_struct (const ::Bar & my_bar_struct);
+
+    virtual ::BarArray_slice* my_bar_array (void);
+
+    virtual void my_bar_array (const ::BarArray my_bar_array);
+
+    virtual ::BarArray2_slice * my_bar_array_2 (void);
+
+    virtual void my_bar_array_2 (const ::BarArray2 my_bar_array_2);
+
+    virtual ::SequenceArray_slice * my_sequence_array (void);
+
+    virtual void my_sequence_array (const ::SequenceArray my_sequence_array);
+
+    virtual ::BarStruct my_bar_struct_array (void);
+
+    virtual void my_bar_struct_array (const ::BarStruct & my_bar_struct_array);
 
     virtual ::Baz *my_baz_struct (void);
 
@@ -172,17 +122,25 @@ namespace CIAO_Foo_Impl
     virtual void my_string_sequence (
       const ::string_sequence & my_string_sequence);
 
-    virtual char *my_fixed_string (void);
+    virtual ::string_sequence2 * my_string_sequence_2 (void);
 
-    virtual void my_fixed_string (const char * my_fixed_string);
+    virtual void my_string_sequence_2 (const ::string_sequence2 & my_string_sequence_2);
+
+    virtual ::array_sequence * my_array_sequence (void);
+
+    virtual void my_array_sequence (const ::array_sequence & my_array_sequence);
+
+    virtual char *my_bounded_string (void);
+
+    virtual void my_bounded_string (const char * my_bounded_string);
 
     virtual char *my_variable_string (void);
 
     virtual void my_variable_string (const char * my_variable_string);
 
-    virtual ::CORBA::WChar *my_fixed_wstring (void);
+    virtual ::CORBA::WChar *my_bounded_wstring (void);
 
-    virtual void my_fixed_wstring (const ::CORBA::WChar * my_fixed_wstring);
+    virtual void my_bounded_wstring (const ::CORBA::WChar * my_bounded_wstring);
 
     virtual ::CORBA::WChar *my_variable_wstring (void);
 
@@ -193,9 +151,61 @@ namespace CIAO_Foo_Impl
 
     virtual void my_long_array (const ::long_array my_long_array);
 
-    virtual ::string_array_slice *my_string_array (void);
+    virtual ::ulong_array_slice *my_ulong_array (void);
+
+    virtual void my_ulong_array (const ::ulong_array my_ulong_array);
+
+    virtual ::longlong_array_slice * my_longlong_array (void);
+
+    virtual void my_longlong_array (const ::longlong_array my_longlong_array);
+
+    virtual ::ulonglong_array_slice * my_ulonglong_array (void);
+
+    virtual void my_ulonglong_array (const ::ulonglong_array my_ulonglong_array);
+
+    virtual ::short_array_slice * my_short_array (void);
+
+    virtual void my_short_array (const ::short_array my_short_array);
+
+    virtual ::ushort_array_slice * my_ushort_array (void);
+
+    virtual void my_ushort_array (const ::ushort_array my_ushort_array);
+
+    virtual ::string_array_slice * my_string_array (void);
 
     virtual void my_string_array (const ::string_array my_string_array);
+
+    virtual ::wstring_array_slice * my_wstring_array (void);
+
+    virtual void my_wstring_array (const ::wstring_array my_wstring_array);
+
+    virtual ::char_array_slice * my_char_array (void);
+
+    virtual void my_char_array (const ::char_array my_char_array);
+
+    virtual ::wchar_array_slice * my_wchar_array (void);
+
+    virtual void my_wchar_array (const ::wchar_array my_wchar_array);
+
+    virtual ::double_array_slice * my_double_array (void);
+
+    virtual void my_double_array (const ::double_array my_double_array);
+
+    virtual ::longdouble_array_slice *my_longdouble_array (void);
+
+    virtual void my_longdouble_array (const ::longdouble_array my_longdouble_array);
+
+    virtual ::float_array_slice * my_float_array (void);
+
+    virtual void my_float_array (const ::float_array my_float_array);
+
+    virtual ::boolean_array_slice * my_boolean_array (void);
+
+    virtual void my_boolean_array (const ::boolean_array my_boolean_array);
+
+    virtual ::octet_array_slice * my_octet_array (void);
+
+    virtual void my_octet_array (const ::octet_array my_octet_array);
 
     virtual StructModule::StructStruct my_struct_struct (void);
 
@@ -222,22 +232,41 @@ namespace CIAO_Foo_Impl
     ::CCM_Foo_Context_var context_;
 
     bool
-      my_short_,
-      my_long_,
-      my_float_,
-      my_double_,
-      my_short_sequence_,
-      my_empty_sequence_,
-      my_long_sequence_,
-      my_float_sequence_,
-      my_double_sequence_,
-      my_bar_struct_,
-      my_baz_struct_,
-      my_string_sequence_,
-      my_fixed_string_,
-      my_variable_string_,
-      supported_short_,
-      my_struct_struct_;
+      my_octet_success_,
+      my_short_success_,
+      my_boolean_success_,
+      my_long_success_,
+      my_float_success_,
+      my_double_success_,
+      my_short_sequence_success_,
+      my_empty_sequence_success_,
+      my_long_sequence_success_,
+      my_long_array_success_,
+      my_ulong_array_success_,
+      my_longlong_array_success_,
+      my_ulonglong_array_success_,
+      my_short_array_success_,
+      my_ushort_array_success_,
+      my_string_array_success_,
+      my_double_array_success_,
+      my_float_array_success_,
+      my_boolean_array_success_,
+      my_octet_array_success_,
+      my_float_sequence_success_,
+      my_double_sequence_success_,
+      my_bar_struct_success_,
+      my_bar_array_success_,
+      my_bar_array_2_success_,
+      my_sequence_array_success_,
+      my_bar_struct_array_success_,
+      my_baz_struct_success_,
+      my_string_sequence_success_,
+      my_string_sequence_2_success_,
+      my_array_sequence_success_,
+      my_bounded_string_success_,
+      my_variable_string_success_,
+      supported_short_success_,
+      my_struct_struct_success_;
 
   };
 
